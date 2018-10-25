@@ -7,10 +7,9 @@ describe VariantOverride do
   describe "scopes" do
     let(:hub1) { create(:distributor_enterprise) }
     let(:hub2) { create(:distributor_enterprise) }
-    let(:v) { create(:variant) }
-    let!(:vo1) { create(:variant_override, hub: hub1, variant: v) }
-    let!(:vo2) { create(:variant_override, hub: hub2, variant: v) }
-    let!(:vo3) { create(:variant_override, hub: hub1, variant: v, permission_revoked_at: Time.now) }
+    let!(:vo1) { create(:variant_override, hub: hub1, variant: variant, import_date: Time.zone.now.yesterday) }
+    let!(:vo2) { create(:variant_override, hub: hub2, variant: variant, import_date: Time.zone.now) }
+    let!(:vo3) { create(:variant_override, hub: hub1, variant: variant, permission_revoked_at: Time.now) }
 
     it "ignores variant_overrides with revoked_permissions by default" do
       expect(VariantOverride.all).to_not include vo3
@@ -21,10 +20,17 @@ describe VariantOverride do
       VariantOverride.for_hubs([hub1, hub2]).should match_array [vo1, vo2]
     end
 
+    it "fetches import dates for hubs in descending order" do
+      import_dates = VariantOverride.distinct_import_dates.pluck :import_date
+
+      expect(import_dates[0].to_i).to eq(vo2.import_date.to_i)
+      expect(import_dates[1].to_i).to eq(vo1.import_date.to_i)
+    end
+
     describe "fetching variant overrides indexed by variant" do
       it "gets indexed variant overrides for one hub" do
-        VariantOverride.indexed(hub1).should == {v => vo1}
-        VariantOverride.indexed(hub2).should == {v => vo2}
+        VariantOverride.indexed(hub1).should == {variant => vo1}
+        VariantOverride.indexed(hub2).should == {variant => vo2}
       end
     end
   end

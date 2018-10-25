@@ -55,6 +55,7 @@ en_US:
     user_registrations:
       spree_user:
         signed_up_but_unconfirmed: "A message with a confirmation link has been sent to your email address. Please open the link to activate your account."
+        unknown_error: "Oops! Something went wrong while creating your account. Please check your email address and try again."
     failure:
       invalid: |
           Invalid email or password.
@@ -147,7 +148,7 @@ en_US:
   cancel_order: "Cancel Order"
   confirm_send_invoice: "An invoice for this order will be sent to the customer. Are you sure you want to continue?"
   confirm_resend_order_confirmation: "Are you sure you want to resend the order confirmation email?"
-  must_have_valid_business_number: " %{enterprise_name}must have a company registration # before invoices can be sent."
+  must_have_valid_business_number: " %{enterprise_name}must have a Tax ID or W9  before invoices can be sent."
   invoice: "Invoice"
   percentage_of_sales: "%{percentage} of sales"
   capped_at_cap: "capped at %{cap}"
@@ -458,11 +459,12 @@ en_US:
         conditional_blank: can't be blank if unit_type is blank
         no_product: did not match any products in the database
         not_found: not found in database
+        not_updatable: cannot be updated on existing products via product import
         blank: can't be blank
         products_no_permission: you do not have permission to manage products for this enterprise
         inventory_no_permission: you do not have permission to create inventory for this producer
         none_saved: did not save any products successfully
-        line: Line
+        line_number: "Line %{number}:"
       index:
         select_file: Select a spreadsheet to upload
         spreadsheet: Spreadsheet
@@ -498,6 +500,7 @@ en_US:
         no_name: No name
         blank_supplier: some products have blank supplier name
         reset_absent?: Reset absent products
+        reset_absent_tip: Set stock to zero for all existing products not present in the file
         overwrite_all: Overwrite all
         overwrite_empty: Overwrite if empty
         default_stock: Set stock level
@@ -505,6 +508,7 @@ en_US:
         default_shipping_cat: Set shipping category
         default_available_date: Set available date
         validation_overview: Import validation overview
+        entries_found: Entries found in imported file
         entries_with_errors: Items contain errors and will not be imported
         products_to_create: Products will be created
         products_to_update: Products will be updated
@@ -514,6 +518,9 @@ en_US:
         inventory_to_reset: Existing inventory items will have their stock reset to zero
         line: Line
         item_line: Item line
+      import_review:
+        not_updatable_tip: "The following fields cannot be updated via bulk import for existing products:"
+        fields_ignored: These fields will be ignored when the imported products are saved.
       save_results:
         final_results: Import final results
         products_created: Products created
@@ -554,9 +561,6 @@ en_US:
       controls:
         back_to_my_inventory: Back to my inventory
     orders:
-      index:
-        capture: "Capture"
-        ship: "Ship"
       invoice_email_sent: 'Invoice email has been sent'
       order_email_resent: 'Order email has been resent'
       bulk_management:
@@ -597,7 +601,7 @@ en_US:
           desc_long: About Us
           desc_long_placeholder: Tell customers about yourself. This information appears on your public profile.
         business_details:
-          abn: Tax ID Number
+          abn: Tax ID Number or EIN (optional)
           abn_placeholder: eg. 123456789
           acn: Legal Business Name
           acn_placeholder: eg. Martin's Produce LLC
@@ -1124,7 +1128,7 @@ en_US:
   tax_total: "Total tax (%{rate}):"
   total_excl_tax: "Total (Excl. tax):"
   total_incl_tax: "Total (Incl. tax):"
-  abn: "Tax ID No."
+  abn: "Tax ID Number or EIN (optional)"
   acn: "Legal Business Name"
   invoice_issued_on: "Invoice issued on:"
   order_number: "Invoice number:"
@@ -1786,7 +1790,7 @@ en_US:
   enterprise_long_desc_placeholder: "This is your opportunity to tell the story of your enterprise - what makes you different and wonderful? We'd suggest keeping your description to under 600 characters or 150 words."
   enterprise_long_desc_length: "%{num} characters / up to 600 recommended"
   enterprise_limit: Enterprise Limit
-  enterprise_abn: "Tax ID No."
+  enterprise_abn: "Tax ID Number or EIN (optional)"
   enterprise_abn_placeholder: "eg. 123456789"
   enterprise_acn: "Legal Business Name"
   enterprise_acn_placeholder: "eg. Justins Produce LLC"
@@ -2283,7 +2287,7 @@ en_US:
     unsaved_changes: You have unsaved changes
     all_changes_saved_successfully: All changes saved successfully
     oh_no: "Oh no! I was unable to save your changes."
-    unauthorized: "You are unauthorised to access this page."
+    unauthorized: "You are unauthorized to access this page."
     error: Error
     unavailable: Unavailable
     profile: Profile
@@ -2492,6 +2496,12 @@ en_US:
         index:
           inherits_properties_checkbox_hint: "Inherit properties from %{supplier}? (unless overridden above)"
       orders:
+        index:
+          capture: "Capture"
+          ship: "Ship"
+          edit: "Edit"
+          next: "Next"
+          no_orders_found: "No Orders Found"
         invoice:
           issued_on: Issued on
           tax_invoice: TAX INVOICE
@@ -2551,6 +2561,7 @@ en_US:
             inherits_properties?: Inherits Properties?
             available_on: Available On
             av_on: "Av. On"
+            import_date: "Import Date"
           products_variant:
             variant_has_n_overrides: "This variant has %{n} override(s)"
             new_variant: "New variant"
@@ -2598,6 +2609,8 @@ en_US:
       js_format: 'yy-mm-dd'
     inventory: Inventory
     orders:
+      edit:
+        login_to_view_order: "Please log in to view your order."
       bought:
         item: "Already ordered in this cycle"
     order_mailer:
@@ -2689,5 +2702,15 @@ en_US:
         total: Total
         paid?: Paid?
         view: View
+      saved_cards:
+        default?: Default?
+        delete?: Delete?
+      cards:
+        authorised_shops: Authorized Shops
+        authorised_shops_popover: This is the list of shops which are permitted to charge your default credit card for any subscriptions (ie. repeating orders) you may have. Your card details will be kept secure and will not be shared with shop owners. You will always be notified when you are charged.
+        saved_cards_popover: This is the list of cards you have opted to save for later use. Your 'default' will be selected automatically when you checkout an order, and can be charged by any shops you have allowed to do so (see right).
+      authorised_shops:
+        shop_name: "Shop Name"
+        allow_charges?: "Allow Charges?"
     localized_number:
       invalid_format: has an invalid format. Please enter a number.
