@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Spree::Order do
+  include OpenFoodNetwork::EmailHelper
+
   describe "setting variant attributes" do
     it "sets attributes on line items for variants" do
       d = create(:distributor_enterprise)
@@ -495,10 +497,7 @@ describe Spree::Order do
   describe "scopes" do
     describe "not_state" do
       before do
-        Spree::MailMethod.create!(
-          environment: Rails.env,
-          preferred_mails_from: 'spree@example.com'
-        )
+        setup_email
       end
 
       it "finds only orders not in specified state" do

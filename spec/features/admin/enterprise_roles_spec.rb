@@ -6,6 +6,7 @@ feature %q{
 }, js: true do
   include AuthenticationWorkflow
   include WebHelper
+  include OpenFoodNetwork::EmailHelper
 
 
   context "as a site administrator" do
@@ -137,7 +138,7 @@ feature %q{
       end
 
       it "can invite unregistered users to be managers" do
-        create(:mail_method)
+        setup_email
         find('a.button.help-modal').click
         expect(page).to have_css '#invite-manager-modal'
 

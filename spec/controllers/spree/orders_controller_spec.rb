@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Spree::OrdersController, type: :controller do
+  include OpenFoodNetwork::EmailHelper
+
   let(:distributor) { double(:distributor) }
   let(:order) { create(:order) }
   let(:order_cycle) { create(:simple_order_cycle) }
@@ -372,10 +374,7 @@ describe Spree::OrdersController, type: :controller do
         let(:order) { create(:completed_order_with_totals, user: user) }
 
         before do
-          Spree::MailMethod.create!(
-            environment: Rails.env,
-            preferred_mails_from: 'spree@example.com'
-          )
+          setup_email
         end
 
         it "responds with success" do

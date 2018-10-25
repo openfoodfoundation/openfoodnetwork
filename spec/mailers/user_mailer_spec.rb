@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Spree::UserMailer do
+  include OpenFoodNetwork::EmailHelper
+
   let(:user) { build(:user) }
 
   after do
@@ -12,7 +14,7 @@ describe Spree::UserMailer do
     ActionMailer::Base.perform_deliveries = true
     ActionMailer::Base.deliveries = []
 
-    Spree::MailMethod.create!(environment: 'test')
+    setup_email
   end
 
   it "sends an email when given a user" do

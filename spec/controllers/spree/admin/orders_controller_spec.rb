@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Spree::Admin::OrdersController, type: :controller do
   include AuthenticationWorkflow
+  include OpenFoodNetwork::EmailHelper
 
   context "updating an order with line items" do
     let!(:order) { create(:order) }
@@ -181,10 +182,7 @@ describe Spree::Admin::OrdersController, type: :controller do
         context "when the distributor's ABN has been set" do
           before { distributor.update_attribute(:abn, "123") }
           before do
-            Spree::MailMethod.create!(
-              environment: Rails.env,
-              preferred_mails_from: 'spree@example.com'
-            )
+            setup_email
           end
           it "should allow me to send order invoices" do
             expect do
