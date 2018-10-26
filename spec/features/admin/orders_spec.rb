@@ -223,28 +223,22 @@ feature %q{
                         tax_rate_name: "Tax 1")
         Spree::TaxRate.adjust(@order)
 
-        visit spree.admin_order_path(@order)
+        visit spree.edit_admin_order_path(@order)
       end
 
       scenario "shows a list of line_items" do
         within('table.index tbody', match: :first) do
           @order.line_items.each do |item|
             expect(page).to have_selector "td", match: :first, text: item.full_name
-            expect(page).to have_selector "td.price", text: item.single_display_amount
-            expect(page).to have_selector "td.qty", text: item.quantity
-            expect(page).to have_selector "td.total", text: item.display_amount
+            expect(page).to have_selector "td.item-price", text: item.single_display_amount
+            expect(page).to have_selector "td.item-qty-show", text: item.quantity
+            expect(page).to have_selector "td.item-total", text: item.display_amount
           end
         end
       end
 
-      scenario "shows the order subtotal" do
-        within('table.index tbody#subtotal') do
-          expect(page).to have_selector "td.total", text: @order.display_item_total
-        end
-      end
-
       scenario "shows the order charges (non-tax adjustments)" do
-        within('table.index tbody#order-charges') do
+        within('tbody#order-charges') do
           @order.adjustments.eligible.each do |adjustment|
             next if (adjustment.originator_type == 'Spree::TaxRate') && (adjustment.amount == 0)
             expect(page).to have_selector "td", match: :first, text: adjustment.label
@@ -254,8 +248,8 @@ feature %q{
       end
 
       scenario "shows the order total" do
-        within('table.index tbody#order-total') do
-          expect(page).to have_selector "td.total", text: @order.display_total
+        within('fieldset#order-total') do
+          expect(page).to have_selector "span.order-total", text: @order.display_total
         end
       end
 
@@ -341,9 +335,7 @@ feature %q{
       expect(o.distributor).to eq distributor1
       expect(o.order_cycle).to eq order_cycle1
     end
-
   end
-
 
   # Working around intermittent click failing
   # Possible causes of failure:
