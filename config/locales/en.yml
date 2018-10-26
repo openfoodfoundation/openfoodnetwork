@@ -2045,6 +2045,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   ok: OK
   not_visible: not visible
   you_have_no_orders_yet: "You have no orders yet"
+  show_only_complete_orders: "Only show complete orders"
   running_balance: "Running balance"
   outstanding_balance: "Outstanding balance"
   admin_enterprise_relationships: "Enterprise Permissions"
