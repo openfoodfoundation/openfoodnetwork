@@ -31,7 +31,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
   describe "#index" do
     context "as a regular user" do
-      before { controller.stub spree_current_user: create_enterprise_user }
+      before { allow(controller).to receive(:spree_current_user) { create_enterprise_user } }
 
       it "should deny me access to the index action" do
         spree_get :index
@@ -42,9 +42,7 @@ describe Spree::Admin::OrdersController, type: :controller do
     context "as an enterprise user" do
       let!(:order) { create(:order_with_distributor) }
 
-      before do
-        controller.stub spree_current_user: order.distributor.owner
-      end
+      before { allow(controller).to receive(:spree_current_user) { order.distributor.owner } }
 
       it "should allow access" do
         expect(response.status).to eq 200
@@ -60,7 +58,7 @@ describe Spree::Admin::OrdersController, type: :controller do
     let(:params) { { id: order.number } }
 
     context "as a normal user" do
-      before { controller.stub spree_current_user: user }
+      before { allow(controller).to receive(:spree_current_user) { user } }
 
       it "should prevent me from sending order invoices" do
         spree_get :invoice, params
@@ -70,7 +68,8 @@ describe Spree::Admin::OrdersController, type: :controller do
 
     context "as an enterprise user" do
       context "which is not a manager of the distributor for an order" do
-        before { controller.stub spree_current_user: user }
+        before { allow(controller).to receive(:spree_current_user) { user } }
+
         it "should prevent me from sending order invoices" do
           spree_get :invoice, params
           expect(response).to redirect_to spree.unauthorized_path
@@ -78,7 +77,8 @@ describe Spree::Admin::OrdersController, type: :controller do
       end
 
       context "which is a manager of the distributor for an order" do
-        before { controller.stub spree_current_user: distributor.owner }
+        before { allow(controller).to receive(:spree_current_user) { distributor.owner } }
+
         context "when the distributor's ABN has not been set" do
           before { distributor.update_attribute(:abn, "") }
           it "should allow me to send order invoices" do
@@ -117,7 +117,7 @@ describe Spree::Admin::OrdersController, type: :controller do
     let(:params) { { id: order.number } }
 
     context "as a normal user" do
-      before { controller.stub spree_current_user: user }
+      before { allow(controller).to receive(:spree_current_user) { user } }
 
       it "should prevent me from sending order invoices" do
         spree_get :print, params
@@ -127,7 +127,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
     context "as an enterprise user" do
       context "which is not a manager of the distributor for an order" do
-        before { controller.stub spree_current_user: user }
+        before { allow(controller).to receive(:spree_current_user) { user } }
         it "should prevent me from sending order invoices" do
           spree_get :print, params
           expect(response).to redirect_to spree.unauthorized_path
@@ -135,7 +135,7 @@ describe Spree::Admin::OrdersController, type: :controller do
       end
 
       context "which is a manager of the distributor for an order" do
-        before { controller.stub spree_current_user: distributor.owner }
+        before { allow(controller).to receive(:spree_current_user) { distributor.owner } }
         it "should allow me to send order invoices" do
           spree_get :print, params
           expect(response).to render_template :invoice
