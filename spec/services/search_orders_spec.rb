@@ -22,16 +22,14 @@ describe SearchOrders do
     let(:service) { SearchOrders.new(params, enterprise_user) }
 
     it 'returns pagination data' do
+      pagination_data = {
+        results: 3,
+        pages: 1,
+        page: 1,
+        per_page: 15
+      }
+
       expect(service.pagination_data).to eq pagination_data
     end
-  end
-
-  def pagination_data
-    {
-      results: 3,
-      pages: 1,
-      page: 1,
-      per_page: 15
-    }
   end
 end

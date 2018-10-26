@@ -127,6 +127,13 @@ module Api
         it 'returns pagination data when query params contain :per_page]' do
           get :index, per_page: 15, page: 1
 
+          pagination_data = {
+            'results' => 2,
+            'pages' => 1,
+            'page' => 1,
+            'per_page' => 15
+          }
+
           expect(json_response['pagination']).to eq pagination_data
         end
       end
@@ -146,15 +153,6 @@ module Api
         :payments_path, :shipments_path, :ship_path, :ready_to_ship, :created_at,
         :distributor_name, :special_instructions, :payment_capture_path
       ]
-    end
-
-    def pagination_data
-      {
-        'results' => 2,
-        'pages' => 1,
-        'page' => 1,
-        'per_page' => 15
-      }
     end
   end
 end
