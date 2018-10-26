@@ -8,7 +8,8 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
     {id: 50, name: t('js.admin.orders.index.per_page', results: 50)},
     {id: 100, name: t('js.admin.orders.index.per_page', results: 100)}
   ]
-  $scope.selected_orders = {}
+  $scope.selected_orders = []
+  $scope.checkboxes = {}
   $scope.selected = false
   $scope.select_all = false
 
@@ -41,13 +42,24 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
     })
 
   $scope.resetSelected = ->
-    $scope.selected_orders = {}
+    $scope.selected_orders.length = 0
     $scope.selected = false
     $scope.select_all = false
+    $scope.checkboxes = {}
+
+  $scope.toggleSelection = (id) ->
+    index = $scope.selected_orders.indexOf(id)
+
+    if index == -1
+      $scope.selected_orders.push(id)
+    else
+      $scope.selected_orders.splice(index, 1)
 
   $scope.toggleAll = ->
+    $scope.selected_orders.length = 0
     $scope.orders.forEach (order) ->
-      $scope.selected_orders[order.id] = $scope.select_all
+      $scope.checkboxes[order.id] = $scope.select_all
+      $scope.selected_orders.push order.id if $scope.select_all
 
   $scope.$watch 'sortOptions', (sort) ->
     if sort && sort.predicate != ""
@@ -56,24 +68,14 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
       $scope.fetchResults()
   , true
 
-  $scope.$watchCollection 'selected_orders', (selected_orders) ->
-    if selected_orders
-      orders_selected = false
-      angular.forEach selected_orders, (checked, order_id) ->
-        if checked
-          orders_selected = true
-          return
-
-      $scope.selected = orders_selected
-
   $scope.changePage = (newPage) ->
     $scope.page = newPage
     $scope.fetchResults(newPage)
 
   $scope.bulkInvoice = ->
     params = ''
-    angular.forEach $scope.selected_orders, (selected, order_id) ->
-      params += 'order_ids[]='+order_id+'&' if selected
+    angular.forEach $scope.selected_orders, (order_id) ->
+      params += 'order_ids[]='+order_id+'&'
 
     $window.open('/admin/orders/bulk_invoice?'+params)
     true

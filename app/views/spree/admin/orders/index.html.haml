@@ -19,7 +19,7 @@
 .row.index-controls{'ng-show' => '!RequestMonitor.loading && orders.length > 0'}
   = render partial: 'per_page_controls'
 
-  %button{'ng-click' => 'bulkInvoice()', 'ng-disabled' => '!selected'}
+  %button{'ng-click' => 'bulkInvoice()', 'ng-disabled' => 'selected_orders.length == 0'}
     = t('.print_invoices')
 
 %table#listing_orders.index.responsive{width: "100%", 'ng-init' => 'initialise()', 'ng-show' => "!RequestMonitor.loading && orders.length > 0" }
@@ -45,7 +45,7 @@
   %tbody
     %tr{ng: {repeat: 'order in orders track by $index', class: {even: "'even'", odd: "'odd'"}}, 'ng-class' => "'state-{{order.state}}'"}
       %td.align-center
-        %input{type: 'checkbox', 'ng-model' => 'selected_orders[order.id]'}
+        %input{type: 'checkbox', 'ng-model' => 'checkboxes[order.id]', 'ng-change' => 'toggleSelection(order.id)'}
       %td.align-center
         {{order.distributor_name}}
       %td.align-center
