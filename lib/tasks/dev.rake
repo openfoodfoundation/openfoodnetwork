@@ -38,7 +38,7 @@ namespace :openfoodnetwork do
         taxonomy_root = taxonomy.root
 
         ['Vegetables', 'Fruit', 'Oils', 'Preserves and Sauces', 'Dairy', 'Meat and Fish'].each do |taxon_name|
-          FactoryBot.create(:taxon, name: taxon_name, parent_id: taxonomy_root.id)
+          FactoryBot.create(:taxon, name: taxon_name, parent_id: taxonomy_root.id, taxonomy_id: taxonomy.id)
         end
       end
 
