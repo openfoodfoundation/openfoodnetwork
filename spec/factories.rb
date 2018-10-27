@@ -565,7 +565,7 @@ FactoryBot.modify do
     end
   end
 
-  factory :shipping_method do
+  factory :shipping_method, parent: :base_shipping_method do
     distributors { [Enterprise.is_distributor.first || FactoryBot.create(:distributor_enterprise)] }
     display_on ''
   end
