@@ -40,9 +40,17 @@ before_script:
       npm install -g karma-cli@0.1.2
     fi
 
+  # Codeclimate report
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
 script:
   - 'if [ "$KARMA" = "true" ]; then bundle exec rake karma:run; else echo "Skipping karma run"; fi'
   - "bundle exec rake 'knapsack:rspec[--format progress --tag ~performance]'"
+
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 after_success:
   - >
