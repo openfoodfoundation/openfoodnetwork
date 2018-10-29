@@ -3,7 +3,7 @@ require 'spec_helper'
 module Spree
   describe ShippingMethod do
     it "is valid when built from factory" do
-      build(:shipping_method).should be_valid
+      create(:shipping_method).should be_valid
     end
 
     it "can have distributors" do
