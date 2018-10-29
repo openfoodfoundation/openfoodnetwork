@@ -23,7 +23,8 @@ Spree::Admin::OrdersController.class_eval do
   respond_to :html, :json
 
   def index
-    # Moved to api. Overriding the action so we only render the page template.
+    # Overriding the action so we only render the page template. An angular request
+    # within the page then fetches the data it needs from Api::OrdersController
   end
 
   # Overwrite to use confirm_email_for_customer instead of confirm_email.
