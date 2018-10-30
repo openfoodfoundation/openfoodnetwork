@@ -3,7 +3,7 @@ angular.module("admin.productImport").controller "ImportFormCtrl", ($scope, $htt
   $scope.entries = {}
   $scope.update_counts = {}
   $scope.reset_counts = {}
-  $scope.supplier_product_counts = ams_data.supplier_product_counts
+  $scope.enterprise_product_counts = ams_data.enterprise_product_counts
 
   $scope.updates = {}
   $scope.updated_total = 0
@@ -19,7 +19,7 @@ angular.module("admin.productImport").controller "ImportFormCtrl", ($scope, $htt
   }
 
   $scope.countResettable = () ->
-    angular.forEach $scope.supplier_product_counts, (value, key) ->
+    angular.forEach $scope.enterprise_product_counts, (value, key) ->
       $scope.reset_counts[key] = value
       if $scope.update_counts[key]
         $scope.reset_counts[key] -= $scope.update_counts[key]

@@ -4,10 +4,10 @@ module ProductImport
       @excluded_items_ids = excluded_items_ids
     end
 
-    def reset(supplier_ids)
-      @supplier_ids = supplier_ids
+    def reset(enterprise_ids)
+      @enterprise_ids = enterprise_ids
 
-      if supplier_ids.present?
+      if enterprise_ids.present?
         relation.update_all(count_on_hand: 0)
       else
         0
@@ -16,13 +16,13 @@ module ProductImport
 
     private
 
-    attr_reader :excluded_items_ids, :supplier_ids
+    attr_reader :excluded_items_ids, :enterprise_ids
 
     def relation
       relation = Spree::Variant
         .joins(:product)
         .where(
-          spree_products: { supplier_id: supplier_ids },
+          spree_products: { supplier_id: enterprise_ids },
           spree_variants: { is_master: false, deleted_at: nil }
         )
 

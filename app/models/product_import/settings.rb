@@ -6,8 +6,8 @@ module ProductImport
 
     def defaults(entry)
       @import_settings.key?(:settings) &&
-        settings[entry.supplier_id.to_s] &&
-        settings[entry.supplier_id.to_s]['defaults']
+        settings[entry.enterprise_id.to_s] &&
+        settings[entry.enterprise_id.to_s]['defaults']
     end
 
     def settings

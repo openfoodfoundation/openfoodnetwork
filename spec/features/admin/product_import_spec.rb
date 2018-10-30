@@ -33,7 +33,7 @@ feature "Product Import", js: true do
 
     it "validates entries and saves them if they are all valid and allows viewing new items in Bulk Products" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type"]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type"]
         csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g"]
         csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1", "kg"]
       end
@@ -76,7 +76,7 @@ feature "Product Import", js: true do
 
     it "displays info about invalid entries but no save button if all items are invalid" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type"]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type"]
         csv << ["Bad Carrots", "Unkown Enterprise", "Mouldy vegetables", "666", "3.20", "", "g"]
         csv << ["Bad Potatoes", "", "Vegetables", "6", "6", "6", ""]
       end
@@ -100,7 +100,7 @@ feature "Product Import", js: true do
 
     it "handles saving of named tax and shipping categories" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "tax_category", "shipping_category"]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "tax_category", "shipping_category"]
         csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", tax_category.name, shipping_category.name]
       end
       File.write('/tmp/test.csv', csv_data)
@@ -129,7 +129,7 @@ feature "Product Import", js: true do
 
     it "records a timestamp on import that can be viewed and filtered under Bulk Edit Products" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type"]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type"]
         csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g"]
         csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1", "kg"]
       end
@@ -176,7 +176,7 @@ feature "Product Import", js: true do
 
     it "can reset product stock to zero for products not present in the CSV" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type"]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type"]
         csv << ["Carrots", "User Enterprise", "Vegetables", "500", "3.20", "500", "g"]
       end
       File.write('/tmp/test.csv', csv_data)
@@ -203,7 +203,7 @@ feature "Product Import", js: true do
 
     it "can save a new product and variant of that product at the same time, add variant to existing product" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "display_name"]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "display_name"]
         csv << ["Potatoes", "User Enterprise", "Vegetables", "5", "3.50", "500", "g", "Small Bag"]
         csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "5.50", "2", "kg", "Big Bag"]
         csv << ["Beans", "User Enterprise", "Vegetables", "7", "2.50", "250", "g", nil]
@@ -241,7 +241,7 @@ feature "Product Import", js: true do
 
     it "can import items into inventory" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "producer", "category", "on_hand", "price", "units"]
+        csv << ["name", "distributor", "producer", "category", "on_hand", "price", "units"]
         csv << ["Beans", "Another Enterprise", "User Enterprise", "Vegetables", "5", "3.20", "500"]
         csv << ["Sprouts", "Another Enterprise", "User Enterprise", "Vegetables", "6", "6.50", "500"]
         csv << ["Cabbage", "Another Enterprise", "User Enterprise", "Vegetables", "2001", "1.50", "500"]
@@ -338,7 +338,7 @@ feature "Product Import", js: true do
 
     it "only allows product import into enterprises the user is permitted to manage" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type"]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type"]
         csv << ["My Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g"]
         csv << ["Your Potatoes", "Another Enterprise", "Vegetables", "6", "6.50", "1", "kg"]
       end
