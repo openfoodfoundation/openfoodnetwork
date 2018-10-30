@@ -1,5 +1,5 @@
 it:
-  language_name: "Inglese"
+  language_name: "Italiano"
   activerecord:
     attributes:
       spree/order:
@@ -358,7 +358,6 @@ it:
         products_no_permission: non sei abilitato a gestire i prodotti per questa azienda
         inventory_no_permission: non sei abilitato a creare l'inventario per questo produttore
         none_saved: Nessun prodotto salvato con successo
-        line: Linea
       index:
         select_file: Seleziona un foglio di calcolo da caricare
         spreadsheet: Foglio di calcolo
@@ -392,7 +391,6 @@ it:
         no_permission: Non hai il permesso di gestire questa attività
         not_found: l'azienda non è stata trovata nel database
         no_name: Nessun nome
-        blank_supplier: Alcuni prodotti non hanno il nome del produttore
         reset_absent?: Elimina i prodotti assenti
         reset_absent_tip: Imposta la scorta a zero per tutti i prodotti esistenti non presenti in questo file
         overwrite_all: Sovrascrivi tutto
@@ -448,8 +446,6 @@ it:
       controls:
         back_to_my_inventory: Indietro al mio inventario
     orders:
-      index:
-        ship: "Spedizione"
       invoice_email_sent: 'La mail con la fattura è stata inviata'
       order_email_resent: 'La mail con la gentile richiesta è stata re-inviata'
       bulk_management:
@@ -2021,6 +2017,11 @@ it:
     time: "Ora"
     admin:
       orders:
+        index:
+          ship: "Spedizione"
+          edit: "Modifica"
+          next: "Prossimo"
+          no_orders_found: "Nessuna gentile richiesta trovata"
         invoice:
           code: Codice
           from: Da

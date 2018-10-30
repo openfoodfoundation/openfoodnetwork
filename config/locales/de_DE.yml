@@ -464,7 +464,6 @@ de_DE:
         products_no_permission: Sie sind nicht berechtigt, Produkte für dieses Unternehmen zu verwalten
         inventory_no_permission: Sie sind nicht berechtigt, Bestand für diesen Produzenten zu erstellen
         none_saved: hat keine Produkte erfolgreich gespeichert
-        line: Zeile
       index:
         select_file: Wählen Sie eine Tabelle zum Hochladen
         spreadsheet: Kalkulationstabelle
@@ -498,7 +497,6 @@ de_DE:
         no_permission: Sie sind nicht berechtigt, dieses Unternehmen zu verwalten
         not_found: Unternehmen konnte nicht in der Datenbank gefunden werden
         no_name: Kein Name
-        blank_supplier: Manche Produkte haben einen leeren Anbieternamen
         reset_absent?: Fehlende Produkte zurücksetzen
         reset_absent_tip: Den Bestand für alle nicht in der Datei vorhandenen Produkte auf Null setzen
         overwrite_all: Alles überschreiben
@@ -520,6 +518,9 @@ de_DE:
         item_line: Artikelzeile
       import_review:
         not_updatable_tip: "Die folgenden Felder können nicht über den Bulk-Import für bestehende Produkte aktualisiert werden:"
+        fields_ignored: Diese Felder werden ignoriert, wenn die importierten Produkte gespeichert werden.
+      entries_table:
+        not_updatable: Dieses Feld kann nicht über den Bulk-Import für vorhandene Produkte aktualisiert werden
       save_results:
         final_results: Endgültige Ergebnisse importieren
         products_created: Produkte erstellt
@@ -1139,13 +1140,13 @@ de_DE:
   ticket_column_unit_price: "Stückpreis"
   ticket_column_total_price: "Gesamtpreis"
   menu_1_title: "Läden"
-  menu_1_url: "/ läden"
+  menu_1_url: "/ shops"
   menu_2_title: "Karte"
-  menu_2_url: "/karte"
+  menu_2_url: "/map"
   menu_3_title: "Erzeuger"
-  menu_3_url: "/ erzeuger"
+  menu_3_url: "/ producers"
   menu_4_title: "Gruppen"
-  menu_4_url: "/ gruppen"
+  menu_4_url: "/ groups"
   menu_5_title: "Über Uns"
   menu_5_url: "http://www.openfoodnetwork.org/"
   menu_6_title: "Verbinden"
@@ -1284,6 +1285,7 @@ de_DE:
       cookies_policy_link: "Hinweise zu Cookies"
       cookies_accept_button: "Cookies akzeptieren"
   home_shop: Jetzt einkaufen
+  brandstory_headline: "Essen, ohne eigene Rechtspersönlichkeit."
   brandstory_intro: "Manchmal ist der beste Weg, das System zu reparieren, ein neues zu starten ..."
   brandstory_part1: "Wir beginnen von Grund auf. Mit Bauern und Züchtern, die bereit sind, ihre Geschichten stolz und wahrhaftig zu erzählen. Mit Händlern, die bereit sind, Menschen mit Produkten fair und ehrlich zu verbinden. Mit Käufern, die glauben, dass bessere wöchentliche Einkaufsentscheidungen die Welt ernsthaft verändern können."
   brandstory_part2: "Dann brauchen wir einen Weg, um es real zu machen. Ein Weg, jeden zu stärken, der Lebensmittel anbaut, verkauft und kauft. Ein Weg, um alle Geschichten zu erzählen, um die gesamte Logistik zu bewältigen. Eine Möglichkeit, Transaktionen jeden Tag in Transformation umzuwandeln."
@@ -2500,10 +2502,18 @@ de_DE:
           inherits_properties_checkbox_hint: "Vererben Eigenschaften von %{supplier}? (außer oben aufgehoben)"
       orders:
         index:
+          listing_orders: "Bestellungen auflisten"
+          new_order: "Neue Bestellung"
           capture: "Erfassung"
           ship: "Liefern"
           edit: "Bearbeiten"
+          note: "Hinweis"
+          first: "Zuerst"
+          last: "Letzte"
+          previous: "Bisherige"
           next: "Weiter"
+          loading: "Wird geladen"
+          no_orders_found: "Keine Bestellungen gefunden"
         invoice:
           issued_on: Ausgegeben am
           tax_invoice: Steuerrechnung
