@@ -842,7 +842,8 @@ describe Spree::Order do
 
   describe '#charge_shipping_and_payment_fees!' do
     let(:order) do
-      build(:order, shipping_method: build(:shipping_method))
+      shipment = build(:shipment_with, :shipping_method, shipping_method: build(:shipping_method))
+      build(:order, shipments: [shipment] )
     end
 
     context 'after transitioning to payment' do

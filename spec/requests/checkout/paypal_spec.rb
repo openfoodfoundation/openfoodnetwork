@@ -26,7 +26,6 @@ describe "checking out an order with a paypal express payment method", type: :re
 
   before do
     order.reload.update_totals
-    order.shipping_method = shipping_method
     expect(order.next).to be true # => address
     expect(order.next).to be true # => delivery
     expect(order.next).to be true # => payment
