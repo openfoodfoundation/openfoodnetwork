@@ -30,16 +30,14 @@
           = t(:shipment)
           \:
         %dd#shipment_status
-          %span.state
-            = @order.shipment_state
-          = t(@order.shipment_state, scope: :shipment_states, default: [:missing, none])
+          %span{class: "state #{@order.shipment_state}"}
+            = t(@order.shipment_state, scope: :shipment_states, default: [:missing, "none"])
         %dt
           = t(:payment)
           \:
         %dd#payment_status
-          %span.state
-            = @order.payment_state
-          = t(@order.payment_state, scope: :payment_states, default: [:missing, none])
+          %span{class: "state #{@order.payment_state}"}
+            = t(@order.payment_state, scope: :payment_states, default: [:missing, "none"])
         %dt
           = t(:date_completed)
           \:
