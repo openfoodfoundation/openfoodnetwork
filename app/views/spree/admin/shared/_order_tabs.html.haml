@@ -45,7 +45,7 @@
           = pretty_time(@order.completed_at)
 
   %nav.menu
-    %ul{"data-hook" => "admin_order_tabs"}
+    %ul
       %li{ class: "#{'active' if true}" }
       = link_to_with_icon 'icon-edit', t(:order_details), edit_admin_order_url(@order)
       %li{"#{'class=active' if current == 'Customer Details'}"}
