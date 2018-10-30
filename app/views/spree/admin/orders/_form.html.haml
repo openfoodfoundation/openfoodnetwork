@@ -1,0 +1,68 @@
+%div{"data-hook" => "admin_order_form_fields"}
+  - if @line_item.try(:errors).present?
+    = render partial: 'spree/shared/error_messages', locals: { target: @line_item }
+  = form_for @order, url: admin_order_url(@order), method: :put do |f|
+    %fieldset.no-border-top
+      = f.hidden_field :number
+      %table.index{"ng-show" => "distributionChosen()"}
+        %colgroup
+          %col{style: "width: 49%;"}/
+          %col{style: "width: 14%;"}/
+          %col{style: "width: 10%;"}/
+          %col{style: "width: 14%;"}/
+          %col{style: "width: 8%;"}/
+        %thead#line-items
+          %tr{"data-hook" => "admin_order_form_line_items_headers"}
+            %th
+              = t(:item_description)
+            %th.price
+              = t(:price)
+            %th.qty
+              = t(:qty)
+            %th.total
+              %span
+                = t(:total)
+            %th.orders-actions.actions{"data-hook" => "admin_order_form_line_items_header_actions"}
+        %tbody{"data-hook" => "admin_order_form_line_items"}
+          = f.fields_for :line_items do |li_form|
+            = render partial: 'spree/admin/orders/line_item', locals: { f: li_form }
+        %tbody#subtotal.no-border-top{"data-hook" => "admin_order_form_subtotal"}
+          %tr#subtotal-row
+            %td{colspan: "3"}
+              %b
+                = t(:subtotal)
+                \:
+            %td.total.align-center
+              %span
+                = @order.display_item_total.to_html
+            %td.actions
+        %tbody#order-charges.no-border-top{"data-hook" => "admin_order_form_adjustments"}
+          - @order.adjustments.eligible.each do |adjustment|
+            %tr
+              %td{colspan: "3"}
+                %strong
+                  = adjustment.label
+                  \:
+              %td.total.align-center
+                %span= adjustment.display_amount.to_html
+              %td.actions
+        %tbody#order-total.grand-total.no-border-top{"data-hook" => "admin_order_form_total"}
+          %tr
+            %td{colspan: "3"}
+              %b
+                = t(:order_total)
+                \:
+            %td.total.align-center
+              %span#order_total
+                = @order.display_total.to_html
+            %td.actions
+
+      = render partial: 'spree/admin/orders/_form/distribution_fields'
+
+      .filter-actions.actions{"data-hook" => "admin_order_form_buttons", "ng-show" => "distributionChosen()"}
+        = button t(:update_and_recalculate_fees), 'icon-refresh'
+        %span.or
+          = t(:or)
+        = link_to_with_icon 'button icon-arrow-left', t(:back), admin_orders_url
+  = javascript_tag do
+    = render partial: 'spree/admin/shared/update_order_state', handlers: [:js]
