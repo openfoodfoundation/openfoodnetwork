@@ -429,7 +429,6 @@ pt:
         products_no_permission: não tem permissões para gerir produtos desta organização
         inventory_no_permission: não tem permissões para criar inventário para este produtor
         none_saved: não gravou nenhum produto com sucesso
-        line: Linha
       index:
         select_file: Selecione uma folha de cálculo para carregar
         spreadsheet: Folha de cálculo
@@ -452,7 +451,6 @@ pt:
         no_permission: não tem permissões para gerir esta organização
         not_found: organização não encontrada
         no_name: Sem nome
-        blank_supplier: alguns produtos têm o nome do fornecedor vazio
         overwrite_all: Substituir todos
         overwrite_empty: Substituir se vazio
         default_stock: Definir nível de stock
@@ -507,9 +505,6 @@ pt:
       controls:
         back_to_my_inventory: Voltar ao inventário
     orders:
-      index:
-        capture: "Capturar"
-        ship: "Enviar"
       invoice_email_sent: 'Email de facturação enviado'
       order_email_resent: 'Email de encomenda reenviado'
       bulk_management:
@@ -1317,7 +1312,7 @@ pt:
   shopping_contact_social: "Seguir"
   shopping_groups_part_of: "é parte de:"
   shopping_producers_of_hub: "Produtores de %{hub}:"
-  enterprises_next_closing: "As encomendas fecham em"
+  enterprises_next_closing: "As encomendas fecham"
   enterprises_ready_for: "Pronto para"
   enterprises_choose: "Escolha para quando quer a sua encomenda:"
   maps_open: "Aberto"
@@ -2351,6 +2346,12 @@ pt:
     time: "Hora"
     admin:
       orders:
+        index:
+          capture: "Capturar"
+          ship: "Enviar"
+          edit: "Editar"
+          next: "Seguinte"
+          no_orders_found: "Nenhuma encomenda encontrada"
         invoice:
           issued_on: Emitido em
           tax_invoice: FACTURA FISCAL

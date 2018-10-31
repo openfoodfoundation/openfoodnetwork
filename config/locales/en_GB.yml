@@ -498,7 +498,6 @@ en_GB:
         no_permission: you do not have permission to manage this enterprise
         not_found: enterprise could not be found in database
         no_name: No name
-        blank_supplier: some products have blank supplier name
         reset_absent?: Reset absent products
         reset_absent_tip: Set stock to zero for all exiting products not present in the file
         overwrite_all: Overwrite all
@@ -2503,11 +2502,19 @@ en_GB:
       orders:
         index:
           listing_orders: "Listing Orders"
+          new_order: "New Order"
           capture: "Capture"
           ship: "Ship"
           edit: "Edit"
+          note: "Note"
+          first: "First"
+          last: "Last"
+          previous: "Previous"
           next: "Next"
+          loading: "Loading"
           no_orders_found: "No Orders Found"
+          results_found: "%{number} Results found."
+          viewing: "Viewing %{start} to %{end}."
         invoice:
           issued_on: Issued on
           tax_invoice: TAX INVOICE
@@ -2615,6 +2622,8 @@ en_GB:
       js_format: 'yy-mm-dd'
     inventory: Inventory
     orders:
+      edit:
+        login_to_view_order: "Please log in to view your order."
       bought:
         item: "Already ordered in this order cycle"
     order_mailer:
@@ -2713,5 +2722,8 @@ en_GB:
         authorised_shops: Authorised Shops
         authorised_shops_popover: This is the list of shops which are permitted to charge your default credit card for any subscriptions (ie. repeating orders) you may have. Your card details will be kept secure and will not be shared with shop owners. You will always be notified when you are charged.
         saved_cards_popover: This is the list of cards you have opted to save for later use. Your 'default' will be selected automatically when you checkout an order, and can be charged by any shops you have allowed to do so (see right).
+      authorised_shops:
+        shop_name: "Shop Name"
+        allow_charges?: "Allow Charges?"
     localized_number:
       invalid_format: has an invalid format. Please enter a number.

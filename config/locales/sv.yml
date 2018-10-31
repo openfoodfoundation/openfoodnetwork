@@ -304,9 +304,6 @@ sv:
       controls:
         back_to_my_inventory: Tillbaka till mitt lager
     orders:
-      index:
-        capture: "Fånga"
-        ship: "Frakta"
       bulk_management:
         tip: "Använd den här sidan för att ändra produktkvantitet på ett antal order. Om så önskas kan produkter tas bort helt från flera order."
         shared: "Delad Resurs?"
@@ -1868,6 +1865,11 @@ sv:
   spree:
     admin:
       orders:
+        index:
+          capture: "Fånga"
+          ship: "Frakta"
+          edit: "Redigera"
+          next: "Näst"
         invoice:
           issued_on: Utfärdat den
           tax_invoice: FAKTURA
