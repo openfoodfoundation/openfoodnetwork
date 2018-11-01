@@ -193,7 +193,7 @@ GEM
     atomic (1.1.101)
     awesome_nested_set (2.1.5)
       activerecord (>= 3.0.0)
-    awesome_print (1.0.2)
+    awesome_print (1.8.0)
     aws-sdk (1.11.1)
       json (~> 1.4)
       nokogiri (>= 1.4.4)
@@ -769,7 +769,6 @@ DEPENDENCIES
   capybara (>= 2.15.4)
   coffee-rails (~> 3.2.1)
   compass-rails
-  web!
   custom_error_message!
   daemons
   dalli
@@ -846,6 +845,7 @@ DEPENDENCIES
   uglifier (>= 1.0.3)
   unicorn
   unicorn-rails
+  web!
   webmock
   whenever
   wicked_pdf
