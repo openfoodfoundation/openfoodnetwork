@@ -1,6 +1,7 @@
 require "open_food_network/reports"
 require "order_management/reports/enterprise_fee_summary/parameters"
 require "order_management/reports/enterprise_fee_summary/permissions"
+require "order_management/reports/enterprise_fee_summary/authorizer"
 require "order_management/reports/enterprise_fee_summary/report_service"
 require "order_management/reports/enterprise_fee_summary/renderers/csv_renderer"
 require "order_management/reports/enterprise_fee_summary/renderers/html_renderer"
@@ -11,13 +12,19 @@ module Spree
       class EnterpriseFeeSummaryReportController < BaseController
         before_filter :load_report_parameters, only: [:index]
         before_filter :load_permissions, only: [:index]
+        before_filter :load_authorizer, only: [:index]
 
         def index
           return render_report_form if params[:report].blank?
           return respond_to_invalid_parameters unless @report_parameters.valid?
 
+          @authorizer.authorize!
           @report = report_klass::ReportService.new(@report_parameters, report_renderer_klass)
+
           render_report
+        rescue OpenFoodNetwork::Reports::Authorizer::ParameterNotAllowedError => e
+          flash[:error] = e.message
+          render_report_form
         end
 
         private
@@ -45,6 +52,10 @@ module Spree
 
         def load_permissions
           @permissions = report_klass::Permissions.new(spree_current_user)
+        end
+
+        def load_authorizer
+          @authorizer = report_klass::Authorizer.new(@report_parameters, @permissions)
         end
 
         def render_report

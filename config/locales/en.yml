@@ -2684,6 +2684,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     reports:
       enterprise_fee_summary:
         date_end_before_start_error: "must be after start"
+        parameter_not_allowed_error: "You are not authorized to use one or more selected filters for this report."
         fee_calculated_on_transfer_through_all: "All"
         fee_type:
           payment_method: "Payment Transaction"
