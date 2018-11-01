@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20181020103501) do
+ActiveRecord::Schema.define(:version => 20181031105158) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
