@@ -6,7 +6,7 @@ describe Spree::Admin::Reports::EnterpriseFeeSummaryReportController, type: :con
   let(:current_user) { admin }
 
   before do
-    allow(controller).to receive(:spree_current_user) { admin }
+    allow(controller).to receive(:spree_current_user) { current_user }
   end
 
   describe "#index" do
@@ -35,6 +35,21 @@ describe Spree::Admin::Reports::EnterpriseFeeSummaryReportController, type: :con
 
         expect(flash[:error]).to eq(I18n.t("invalid_filter_parameters", scope: i18n_scope))
         expect(response).to render_template(view_template_path)
+      end
+    end
+
+    context "when some parameters are now allowed" do
+      let!(:distributor) { create(:distributor_enterprise) }
+      let!(:other_distributor) { create(:distributor_enterprise) }
+
+      let(:current_user) { distributor.owner }
+
+      it "renders the report form with an error" do
+        get :index, report: { distributor_ids: [other_distributor.id] }, report_format: "csv"
+
+        expect(flash[:error]).to eq(report_klass::Authorizer::PARAMETER_NOT_ALLOWED_ERROR)
+        expect(response)
+          .to render_template("spree/admin/reports/enterprise_fee_summary_report/index")
       end
     end
   end
