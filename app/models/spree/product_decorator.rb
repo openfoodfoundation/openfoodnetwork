@@ -215,7 +215,7 @@ Spree::Product.class_eval do
         self.supplier.touch
         touch_distributors
 
-        ExchangeVariant.where('exchange_variants.variant_id IN (?)', self.variants_including_master_and_deleted).destroy_all
+        ExchangeVariant.where('exchange_variants.variant_id IN (?)', self.variants_including_master.with_deleted).destroy_all
 
         delete_without_delete_from_order_cycles
       end
