@@ -14,7 +14,6 @@ module Spree
       let(:li1) { create(:line_item, order: o, product: p1) }
       let(:li2) { create(:line_item, order: o, product: p2) }
 
-
       let(:p3) {create(:product, name: 'Clear Honey') }
       let(:p4) {create(:product, name: 'Apricots') }
       let(:v1) {create(:variant, product: p3, unit_value: 500) }
@@ -190,8 +189,6 @@ module Spree
       let!(:li) { create(:line_item, variant: v, order: o, quantity: 5, max_quantity: 5) }
 
       before do
-        Spree::Config.set allow_backorders: false
-
         # li#scoper is memoised, and this makes it difficult to update test conditions
         # so we reset it after the line_item is created for each spec
         li.remove_instance_variable(:@scoper)
