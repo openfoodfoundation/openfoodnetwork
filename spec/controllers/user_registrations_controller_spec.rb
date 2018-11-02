@@ -2,9 +2,10 @@ require 'spec_helper'
 require 'spree/api/testing_support/helpers'
 
 describe UserRegistrationsController, type: :controller do
+  include OpenFoodNetwork::EmailHelper
 
   before(:all) do
-    create(:mail_method)
+    setup_email
   end
 
   before do

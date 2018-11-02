@@ -2,8 +2,9 @@ require 'spec_helper'
 
 describe SubscriptionMailer do
   include ActionView::Helpers::SanitizeHelper
+  include OpenFoodNetwork::EmailHelper
 
-  let!(:mail_method) { create(:mail_method, preferred_mails_from: 'spree@example.com') }
+  before { setup_email }
 
   describe "order placement" do
     let(:shop) { create(:enterprise) }

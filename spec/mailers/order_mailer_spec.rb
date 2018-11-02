@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Spree::OrderMailer do
-  let!(:mail_method) { create(:mail_method, preferred_mails_from: 'spree@example.com') }
+  include OpenFoodNetwork::EmailHelper
 
   describe "order confimation" do
     after do
@@ -9,6 +9,7 @@ describe Spree::OrderMailer do
     end
 
     before do
+      setup_email
       ActionMailer::Base.delivery_method = :test
       ActionMailer::Base.perform_deliveries = true
       ActionMailer::Base.deliveries = []
