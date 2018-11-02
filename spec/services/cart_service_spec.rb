@@ -164,6 +164,7 @@ describe CartService do
       expect(cart_service).to receive(:check_order_cycle_provided_for).with(variant).and_return(true)
       expect(cart_service).to receive(:check_variant_available_under_distribution).with(variant).
         and_return(true)
+      expect(variant).to receive(:on_demand).and_return(false)
       expect(order).to receive(:add_variant).with(variant, quantity, nil, currency)
 
       cart_service.attempt_cart_add(333, quantity.to_s)
@@ -199,6 +200,10 @@ describe CartService do
     let(:v) { double(:variant, on_hand: 10) }
 
     context "when backorders are not allowed" do
+      before do
+        expect(v).to receive(:on_demand).and_return(false)
+      end
+
       context "when max_quantity is not provided" do
         it "returns full amount when available" do
           expect(cart_service.quantities_to_add(v, 5, nil)).to eq([5, nil])
@@ -220,9 +225,9 @@ describe CartService do
       end
     end
 
-    context "when backorders are allowed" do
+    context "when variant is on_demand" do
       before do
-        Spree::Config.allow_backorders = true
+        expect(v).to receive(:on_demand).and_return(true)
       end
 
       it "does not limit quantity" do
