@@ -103,6 +103,8 @@ Openfoodnetwork::Application.routes.draw do
       get :accessible, on: :collection
     end
 
+    resources :orders, only: [:index]
+
     resource :status do
       get :job_queue
     end
