@@ -22,10 +22,12 @@ describe CartController, type: :controller do
     describe "generating stock levels" do
       let!(:order) { create(:order) }
       let!(:li) { create(:line_item, order: order, variant: v, quantity: 2, max_quantity: 3) }
-      let!(:v) { create(:variant, count_on_hand: 4) }
-      let!(:v2) { create(:variant, count_on_hand: 2) }
+      let!(:v) { create(:variant) }
+      let!(:v2) { create(:variant) }
 
       before do
+        v.count_on_hand = 4
+        v2.count_on_hand = 2
         order.reload
         allow(controller).to receive(:current_order) { order }
       end
@@ -50,9 +52,10 @@ describe CartController, type: :controller do
       end
 
       describe "encoding Infinity" do
-        let!(:v) { create(:variant, on_demand: true, count_on_hand: 0) }
+        let!(:v) { create(:variant, on_demand: true) }
 
         it "encodes Infinity as a large, finite integer" do
+          v.count_on_hand = 0
           expect(controller.stock_levels(order, [v.id])).to eq(
             {v.id => {quantity: 2, max_quantity: 3, on_hand: 2147483647}}
           )
