@@ -55,6 +55,7 @@ en_GB:
     user_registrations:
       spree_user:
         signed_up_but_unconfirmed: "A message with a confirmation link has been sent to your email address. Please open the link to activate your account."
+        unknown_error: "Something went wrong while creating your account. Check your email address and try again."
     failure:
       invalid: |
           Invalid email or password.
@@ -64,6 +65,9 @@ en_GB:
     user_passwords:
       spree_user:
         updated_not_active: "Your password has been reset, but your email has not been confirmed yet."
+  models:
+    order_cycle:
+      cloned_order_cycle_name: "COPY OF %{order_cycle}"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
@@ -71,9 +75,26 @@ en_GB:
       subject: "%{enterprise} is now on %{sitename}"
     invite_manager:
       subject: "%{enterprise} has invited you to be a manager"
+  order_mailer:
+    cancel_email:
+      dear_customer: "Dear Customer,"
+      instructions: "Your order has been CANCELED.  Please retain this cancellation information for your records."
+      order_summary_canceled: "Order Summary [CANCELED]"
+      subject: "Cancellation of Order"
+      subtotal: "Subtotal: %{subtotal}"
+      total: "Order Total: %{total}"
   producer_mailer:
     order_cycle:
       subject: "Order cycle report for %{producer}"
+  shipment_mailer:
+    shipped_email:
+      dear_customer: "Dear Customer,"
+      instructions: "Your order has been shipped"
+      shipment_summary: "Shipment Summary"
+      subject: "Shipment Notification"
+      thanks: "Thank you for your order with us."
+      track_information: "Tracking Information: %{tracking}"
+      track_link: "Tracking Link: %{url}"
   subscription_mailer:
     placement_summary_email:
       subject: A summary of recently placed subscription orders
@@ -438,11 +459,12 @@ en_GB:
         conditional_blank: can't be blank if unit_type is blank
         no_product: did not match any products in the database
         not_found: not found in database
+        not_updatable: cannot be updated on existing products via product import
         blank: can't be blank
         products_no_permission: you do not have permission to manage products for this enterprise
         inventory_no_permission: you do not have permission to create inventory for this producer
         none_saved: did not save any products successfully
-        line: Line
+        line_number: "Line %{number}:"
       index:
         select_file: Select a spreadsheet to upload
         spreadsheet: Spreadsheet
@@ -496,6 +518,11 @@ en_GB:
         inventory_to_reset: Existing inventory items will have their stock reset to zero
         line: Line
         item_line: Item line
+      import_review:
+        not_updatable_tip: "The following fields cannot be updated via bulk import for existing products:"
+        fields_ignored: These fields will be ignored when the imported products are saved.
+      entries_table:
+        not_updatable: This field is not updatable via bulk import on existing products
       save_results:
         final_results: Import final results
         products_created: Products created
@@ -536,9 +563,6 @@ en_GB:
       controls:
         back_to_my_inventory: Back to my inventory
     orders:
-      index:
-        capture: "Capture"
-        ship: "Ship"
       invoice_email_sent: 'Invoice email has been sent'
       order_email_resent: 'Order email has been resent'
       bulk_management:
@@ -745,7 +769,7 @@ en_GB:
       change_type_form:
         producer_profile: Producer Profile
         connect_ofn: Connect through OFN
-        always_free: ALWAYS FREE
+        always_free: Plans starting from £1/month
         producer_description_text: Add your products to Open Food Network, allowing hubs to stock your products in their stores.
         producer_shop: Producer Shop
         sell_your_produce: Sell your own produce
@@ -782,6 +806,14 @@ en_GB:
       new:
         title: New Enterprise
         back_link: Back to enterprises list
+      remove_logo:
+        remove: "Remove Image"
+        removed_successfully: "Logo removed successfully"
+        immediate_removal_warning: "The logo will be removed immediately after you confirm."
+      remove_promo_image:
+        remove: "Remove Image"
+        removed_successfully: "Promo image removed successfully"
+        immediate_removal_warning: "The promo image will be removed immediately after you confirm."
       welcome:
         welcome_title: Welcome to the Open Food Network!
         welcome_text: You have successfully created a
@@ -815,7 +847,10 @@ en_GB:
       coordinator_fees:
         add: Add coordinator fee
       filters:
+        search_by_order_cycle_name: "Search by Order Cycle name..."
         involving: "Involving"
+        any_enterprise: "Any Enterprise"
+        any_schedule: "Any Schedule"
       form:
         incoming: Incoming
         supplier: Supplier
@@ -1020,6 +1055,11 @@ en_GB:
         stripe_connect_fail: Sorry, the connection of your Stripe account failed
       stripe_connect_settings:
         resource: Stripe Connect configuration
+  api:
+    enterprise_logo:
+      destroy_attachment_does_not_exist: "Logo does not exist"
+    enterprise_promo_image:
+      destroy_attachment_does_not_exist: "Promo image does not exist"
   checkout:
     already_ordered:
       cart: "cart"
@@ -1105,6 +1145,8 @@ en_GB:
   menu_2_url: "/map"
   menu_3_title: "Services"
   menu_3_url: "https://about.openfoodnetwork.org.uk/services"
+  menu_4_title: "Groups"
+  menu_4_url: "/groups"
   menu_5_title: "About"
   menu_5_url: "https://about.openfoodnetwork.org.uk"
   menu_6_title: "Blog"
@@ -1126,6 +1168,7 @@ en_GB:
   footer_email: "Email"
   footer_links_md: "Links"
   footer_about_url: "About URL"
+  user_guide_link: "User Guide Link"
   name: Name
   first_name: First Name
   last_name: Last Name
@@ -1218,6 +1261,7 @@ en_GB:
       statistics_cookies_desc: "The following are not strictly necessary, but help to provide you with the best user experience by allowing us to analyse user behaviour, identify which features you use most, or don’t use, understand user experience issues, etc."
       statistics_cookies_analytics_desc_html: "To collect and analyse platform usage data, we use Google Analytics."
       statistics_cookies_matomo_desc_html: "To collect and analyse platform usage data, we use <a href='https://matomo.org/' target='_blank'>Matomo</a> (ex Piwik), an open source analytics tool that is GDPR compliant and protects your privacy."
+      statistics_cookies_matomo_optout: "Would you like to opt-out of Matomo analytics? We use Matomo to help us improve our service, but we don't collect any personal data."
       cookie_analytics_utma_desc: "Used to distinguish users and sessions. The cookie is created when the javascript library executes and no existing __utma cookies exists. The cookie is updated every time data is sent to Google Analytics."
       cookie_analytics_utmt_desc: "Used to throttle request rate."
       cookie_analytics_utmb_desc: "Used to determine new sessions/visits. The cookie is created when the javascript library executes and no existing __utmb cookies exists. The cookie is updated every time data is sent to Google Analytics."
@@ -2285,13 +2329,13 @@ en_GB:
         saving: SAVING
         enterprise_package:
           hub_profile: Hub Profile
-          hub_profile_cost: "COST: Pay What You Can"
+          hub_profile_cost: "COST: Plans starting from £1/month"
           hub_profile_text1: >
               People can find and contact you on the Open Food Network. Your enterprise
               will be visible on the map, and will be searchable in listings.
           hub_profile_text2: >
-              Having a profile, and making connections within your local food system
-              through the Open Food Network will always be free.
+              As a producer, making connections within your local food system through
+              the Open Food Network will always be free.
           hub_shop: Hub Shop
           hub_shop_text1: >
               Your enterprise is the backbone of your local food system. You aggregate
@@ -2311,7 +2355,7 @@ en_GB:
               Click on an option to see more detailed information about each package,
               and hit the red SAVE button when you are done!
           profile_only: Profile Only
-          profile_only_cost: "COST: Pay What You Can"
+          profile_only_cost: "COST: Plans starting from £1/month"
           profile_only_text1: >
               A profile makes you visible and contactable to others and is a way to
               share your story.
@@ -2342,7 +2386,7 @@ en_GB:
               so no matter your situation, we want to provide the tools you need to
               run your organisation or local food business.
           get_listing: Get a listing
-          always_free: Pay What You Can
+          always_free: Plans starting from £1/month
           sell_produce_others: Sell produce from others
           sell_own_produce: Sell your own produce
           sell_both: Sell produce from self and others
@@ -2374,6 +2418,9 @@ en_GB:
           resolve: Resolve
       new_tag_rule_dialog:
         select_rule_type: "Select a rule type:"
+      orders:
+        index:
+          per_page: "%{results} per page"
       resend_user_email_confirmation:
         resend: "Resend"
         sending: "Resend..."
@@ -2422,7 +2469,9 @@ en_GB:
           This will set stock level to zero on all products for this
           enterprise that are not present in the uploaded file.
     order_cycles:
+      create_failure: "Failed to create order cycle"
       update_success: 'Your order cycle has been updated.'
+      update_failure: "Failed to update order cycle"
       no_distributors: There are no distributors in this order cycle. This order cycle will not be visible to customers until you add one. Would you like to continue saving this order cycle?'
     enterprises:
       producer: "Producer"
@@ -2443,8 +2492,22 @@ en_GB:
     my_account: "My account"
     date: "Date"
     time: "Time"
+    layouts:
+      admin:
+        header:
+          store: Store
     admin:
+      product_properties:
+        index:
+          inherits_properties_checkbox_hint: "Inherit properties from %{supplier}? (unless overridden above)"
       orders:
+        index:
+          listing_orders: "Listing Orders"
+          capture: "Capture"
+          ship: "Ship"
+          edit: "Edit"
+          next: "Next"
+          no_orders_found: "No Orders Found"
         invoice:
           issued_on: Issued on
           tax_invoice: TAX INVOICE

@@ -4,18 +4,22 @@ feature "Account Settings", js: true do
   include AuthenticationWorkflow
 
   describe "as a logged in user" do
-    let(:user) { create(:user, email: 'old@email.com') }
+    let(:user) do
+      create(:user,
+             email: 'old@email.com',
+             password: 'OriginalPassword',
+             password_confirmation: 'OriginalPassword')
+    end
 
     before do
       create(:mail_method)
       quick_login_as user
-    end
-
-    it "allows me to update my account details" do
       visit "/account"
-
       click_link I18n.t('spree.users.show.tabs.settings')
       expect(page).to have_content I18n.t('spree.users.form.account_settings')
+    end
+
+    it "allows the user to update their email address" do
       fill_in 'user_email', with: 'new@email.com'
 
       expect do
@@ -31,6 +35,18 @@ feature "Account Settings", js: true do
       expect(user.unconfirmed_email).to eq 'new@email.com'
       click_link I18n.t('spree.users.show.tabs.settings')
       expect(page).to have_content I18n.t('spree.users.show.unconfirmed_email', unconfirmed_email: 'new@email.com')
+    end
+
+    it "allows the user to change their password" do
+      initial_password = user.encrypted_password
+
+      fill_in 'user_password', with: 'NewPassword'
+      fill_in 'user_password_confirmation', with: 'NewPassword'
+
+      click_button I18n.t(:update)
+      expect(find(".alert-box.success").text.strip).to eq "#{I18n.t(:account_updated)} ×"
+
+      expect(user.reload.encrypted_password).to_not eq initial_password
     end
   end
 end

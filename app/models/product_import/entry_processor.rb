@@ -135,7 +135,7 @@ module ProductImport
         @inventory_created += 1
         @updated_ids.push new_item.id
       else
-        @importer.errors.add("#{I18n.t('admin.product_import.model.line')} #{line_number}:", new_item.errors.full_messages)
+        assign_errors new_item.errors.full_messages, entry.line_number
       end
     end
 
@@ -149,7 +149,7 @@ module ProductImport
         @inventory_updated += 1
         @updated_ids.push existing_item.id
       else
-        @importer.errors.add("#{I18n.t('admin.product_import.model.line')} #{line_number}:", existing_item.errors.full_messages)
+        assign_errors existing_item.errors.full_messages, entry.line_number
       end
     end
 
@@ -173,7 +173,7 @@ module ProductImport
         @products_created += 1
         @updated_ids.push product.variants.first.id
       else
-        @importer.errors.add("#{I18n.t('admin.product_import.model.line')} #{line_number}:", product.errors.full_messages)
+        assign_errors product.errors.full_messages, entry.line_number
       end
 
       @already_created[entry.supplier_id] = { entry.name => product.id }
@@ -188,9 +188,17 @@ module ProductImport
         @updated_ids.push variant.id
         true
       else
-        @importer.errors.add("#{I18n.t('admin.product_import.model.line')} #{line_number}:", variant.errors.full_messages)
+        assign_errors variant.errors.full_messages, entry.line_number
         false
       end
+    end
+
+    def assign_errors(errors, line_number)
+      @importer.errors.add(
+        I18n.t('admin.product_import.model.line_number',
+               number: line_number),
+        errors
+      )
     end
 
     def assign_defaults(object, entry)

@@ -1,31 +1,44 @@
 require 'spec_helper'
 
 describe Spree::Address do
+  let(:address) { build(:address) }
+  let(:enterprise_address) { build(:address, enterprise: build(:enterprise)) }
+
   describe "associations" do
-    it { should have_one(:enterprise) }
+    it { is_expected.to have_one(:enterprise) }
   end
 
   describe "delegation" do
-    it { should delegate(:name).to(:state).with_prefix }
+    it { is_expected.to delegate(:name).to(:state).with_prefix }
+  end
+
+  describe "destroy" do
+    it "can be deleted" do
+      expect { address.destroy }.to_not raise_error
+    end
+
+    it "cannot be deleted with associated enterprise" do
+      expect do
+        enterprise_address.destroy
+      end.to raise_error ActiveRecord::DeleteRestrictionError
+    end
   end
 
   describe "geocode address" do
-    let(:address) { FactoryBot.build(:address) }
-
     it "should include address1, address2, zipcode, city, state and country" do
-      address.geocode_address.should include(address.address1)
-      address.geocode_address.should include(address.address2)
-      address.geocode_address.should include(address.zipcode)
-      address.geocode_address.should include(address.city)
-      address.geocode_address.should include(address.state.name)
-      address.geocode_address.should include(address.country.name)
+      expect(address.geocode_address).to include(address.address1)
+      expect(address.geocode_address).to include(address.address2)
+      expect(address.geocode_address).to include(address.zipcode)
+      expect(address.geocode_address).to include(address.city)
+      expect(address.geocode_address).to include(address.state.name)
+      expect(address.geocode_address).to include(address.country.name)
     end
 
     it "should not include empty fields" do
       address.address2 = nil
       address.city = ""
 
-      address.geocode_address.split(',').length.should eql(4)
+      expect(address.geocode_address.split(',').length).to eql(4)
     end
   end
 
@@ -33,40 +46,27 @@ describe Spree::Address do
     let(:address) { FactoryBot.build(:address) }
 
     it "should include address1, address2, zipcode, city and state" do
-      address.full_address.should include(address.address1)
-      address.full_address.should include(address.address2)
-      address.full_address.should include(address.zipcode)
-      address.full_address.should include(address.city)
-      address.full_address.should include(address.state.name)
-      address.full_address.should_not include(address.country.name)
+      expect(address.full_address).to include(address.address1)
+      expect(address.full_address).to include(address.address2)
+      expect(address.full_address).to include(address.zipcode)
+      expect(address.full_address).to include(address.city)
+      expect(address.full_address).to include(address.state.name)
+      expect(address.full_address).not_to include(address.country.name)
     end
 
     it "should not include empty fields" do
       address.address2 = nil
       address.city = ""
 
-      address.full_address.split(',').length.should eql(3)
+      expect(address.full_address.split(',').length).to eql(3)
     end
   end
 
   describe "setters" do
     it "lets us set a country" do
-      expect { Spree::Address.new.country = "A country" }.to raise_error ActiveRecord::AssociationTypeMismatch
-    end
-  end
-
-  describe "notifying bugsnag when saved with missing data" do
-    it "notifies on create" do
-      Bugsnag.should_receive(:notify)
-      a = Spree::Address.new zipcode: nil
-      a.save validate: false
-    end
-
-    it "notifies on update" do
-      Bugsnag.should_receive(:notify)
-      a = create(:address)
-      a.zipcode = nil
-      a.save validate: false
+      expect do
+        Spree::Address.new.country = "A country"
+      end.to raise_error ActiveRecord::AssociationTypeMismatch
     end
   end
 end

@@ -61,12 +61,7 @@ Spree::Admin::OrdersController.class_eval do
       format.json do
         render json: {
           orders: ActiveModel::ArraySerializer.new(@orders, each_serializer: Api::Admin::OrderSerializer),
-          pagination: {
-            results: @orders.total_count,
-            pages: @orders.num_pages.to_i,
-            page: params[:page].to_i,
-            per_page: params[:per_page].to_i
-          }
+          pagination: pagination_data
         }
       end
     end
@@ -115,7 +110,30 @@ Spree::Admin::OrdersController.class_eval do
       @search.result.includes([:user, :shipments, :payments]).distributed_by_user(spree_current_user)
     end
 
-    @search.result.page(params[:page]).per(params[:per_page] || Spree::Config[:orders_per_page])
+    search_results
+  end
+
+  def search_results
+    if using_pagination?
+      @search.result.page(params[:page]).per(params[:per_page] || Spree::Config[:orders_per_page])
+    else
+      @search.result
+    end
+  end
+
+  def using_pagination?
+    params[:per_page]
+  end
+
+  def pagination_data
+    if using_pagination?
+      {
+        results: @orders.total_count,
+        pages: @orders.num_pages,
+        page: params[:page].to_i,
+        per_page: params[:per_page].to_i
+      }
+    end
   end
 
   def require_distributor_abn

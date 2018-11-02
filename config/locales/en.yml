@@ -519,7 +519,7 @@ en:
         products_no_permission: you do not have permission to manage products for this enterprise
         inventory_no_permission: you do not have permission to create inventory for this producer
         none_saved: did not save any products successfully
-        line: Line
+        line_number: "Line %{number}:"
       index:
         select_file: Select a spreadsheet to upload
         spreadsheet: Spreadsheet
