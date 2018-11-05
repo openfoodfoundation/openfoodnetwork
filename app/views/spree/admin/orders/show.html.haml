@@ -1,8 +1,12 @@
+- content_for :app_wrapper_attrs do
+  = "ng-app='ofn.admin'"
+
 - content_for :page_actions do
   %li
     = button_link_to t(:cancel), fire_admin_order_url(@order.number, { :e => 'cancel' }), :icon => 'icon-trash', :data => { :confirm => t(:are_you_sure) } if @order.can_cancel?
   %li
     = button_link_to t(:edit), edit_admin_order_url(@order.number), :icon => 'icon-edit'
+  %li.links-dropdown#links-dropdown{ links: order_links(@order).to_json }
   %li
     = button_link_to t(:back_to_orders_list), admin_orders_path, :icon => 'icon-arrow-left'
 
