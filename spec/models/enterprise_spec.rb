@@ -33,7 +33,7 @@ describe Enterprise do
       EnterpriseRole.where(id: role.id).should be_empty
     end
 
-    it "destroys supplied products upon destroy" do
+    xit "destroys supplied products upon destroy" do
       s = create(:supplier_enterprise)
       p = create(:simple_product, supplier: s)
 
