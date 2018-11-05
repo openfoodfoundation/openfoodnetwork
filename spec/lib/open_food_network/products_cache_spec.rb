@@ -1,4 +1,5 @@
 require 'open_food_network/products_cache'
+require 'spec_helper'
 
 module OpenFoodNetwork
   describe ProductsCache do
@@ -144,7 +145,7 @@ module OpenFoodNetwork
       let(:product) { create(:simple_product, supplier: s) }
       let(:v1) { create(:variant, product: product) }
       let(:v2) { create(:variant, product: product) }
-      let(:v_deleted) { create(:variant, product: product, deleted_at: Time.now) }
+      let(:v_deleted) { create(:variant, product: product) }
       let(:d1) { create(:distributor_enterprise) }
       let(:d2) { create(:distributor_enterprise) }
       let(:d3) { create(:distributor_enterprise) }
@@ -154,6 +155,8 @@ module OpenFoodNetwork
       let!(:ex3) { create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d3, variants: [product.master, v_deleted]) }
 
       before do
+        v_deleted.deleted_at = Time.now
+        v_deleted.save
         s.set_producer_property :organic, 'NASAA 12345'
       end
 
