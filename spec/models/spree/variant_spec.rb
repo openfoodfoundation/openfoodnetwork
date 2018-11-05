@@ -15,7 +15,9 @@ module Spree
     describe "scopes" do
       it "finds non-deleted variants" do
         v_not_deleted = create(:variant)
-        v_deleted = create(:variant, deleted_at: Time.zone.now)
+        v_deleted = create(:variant)
+        v_deleted.deleted_at = Time.zone.now
+        v_deleted.save
 
         Spree::Variant.not_deleted.should     include v_not_deleted
         Spree::Variant.not_deleted.should_not include v_deleted

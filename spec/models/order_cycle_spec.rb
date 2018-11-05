@@ -211,13 +211,16 @@ describe OrderCycle do
     }
     let!(:p0) { create(:simple_product) }
     let!(:p1) { create(:simple_product) }
-    let!(:p1_v_deleted) { create(:variant, product: p1, deleted_at: Time.zone.now) }
+    let!(:p1_v_deleted) { create(:variant, product: p1) }
     let!(:p1_v_visible) { create(:variant, product: p1, inventory_items: [create(:inventory_item, enterprise: d2, visible: true)]) }
     let!(:p1_v_hidden) { create(:variant, product: p1, inventory_items: [create(:inventory_item, enterprise: d2, visible: false)]) }
     let!(:p2) { create(:simple_product) }
     let!(:p2_v) { create(:variant, product: p2) }
 
     before(:each) do
+      p1_v_deleted.deleted_at = Time.zone.now
+      p1_v_deleted.save
+
       e0.variants << p0.master
       e1.variants << p1.master
       e1.variants << p2.master
