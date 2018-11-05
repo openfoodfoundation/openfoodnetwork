@@ -66,6 +66,10 @@ Spree::Admin::OrdersController.class_eval do
     end
   end
 
+  def show
+    # Adding this action back in, as it has been removed in Spree 2.0
+  end
+
   # Overwrite to use confirm_email_for_customer instead of confirm_email.
   # This uses a new template. See mailers/spree/order_mailer_decorator.rb.
   def resend
