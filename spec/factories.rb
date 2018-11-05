@@ -286,7 +286,7 @@ FactoryBot.define do
 
     after(:create) do |order|
       p = create(:simple_product, :distributors => [order.distributor])
-      FactoryBot.create(:line_item, :order => order, :product => p)
+      FactoryBot.create(:line_item_with_shipment, :order => order, :product => p)
       order.reload
     end
   end
