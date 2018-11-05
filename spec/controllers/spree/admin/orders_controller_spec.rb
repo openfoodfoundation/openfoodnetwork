@@ -182,7 +182,9 @@ describe Spree::Admin::OrdersController, type: :controller do
           before { distributor.update_attribute(:abn, "123") }
           before do
             Spree::Config[:mails_from] = "spree@example.com"
+            ActionMailer::Base.perform_deliveries = true
           end
+
           it "should allow me to send order invoices" do
             expect do
               spree_get :invoice, params
