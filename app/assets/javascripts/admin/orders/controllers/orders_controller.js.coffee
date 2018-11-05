@@ -77,5 +77,5 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
     angular.forEach $scope.selected_orders, (order_id) ->
       params += 'order_ids[]='+order_id+'&'
 
-    $window.open('/admin/orders/bulk_invoice?'+params)
+    $window.open('/admin/orders/invoices/show?'+params)
     true
