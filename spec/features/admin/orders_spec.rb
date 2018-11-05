@@ -88,7 +88,7 @@ feature %q{
     quick_login_as_admin
     visit '/admin/orders'
 
-    click_edit
+    click_icon :edit
 
     targetted_select2_search @product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
 
@@ -111,7 +111,7 @@ feature %q{
     uncheck 'Only show complete orders'
     page.find('a.icon-search').click
 
-    click_edit
+    click_icon :edit
 
     select2_select d.name, from: 'order_distributor_id'
     select2_select oc.name, from: 'order_order_cycle_id'
@@ -334,23 +334,6 @@ feature %q{
       o = Spree::Order.last
       expect(o.distributor).to eq distributor1
       expect(o.order_cycle).to eq order_cycle1
-    end
-  end
-
-  # Working around intermittent click failing
-  # Possible causes of failure:
-  #  - the link moves
-  #  - the missing content (font icon only)
-  #  - the screen is not big enough
-  # However, some operations before the click or a second click on failure work.
-  #
-  # A lot of people had similar problems:
-  # https://github.com/teampoltergeist/poltergeist/issues/520
-  # https://github.com/thoughtbot/capybara-webkit/issues/494
-  def click_edit
-    click_result = click_icon :edit
-    unless click_result['status'] == 'success'
-      click_icon :edit
     end
   end
 end
