@@ -1,4 +1,4 @@
-%div.admin_order_form_fields
+%div
   - if @line_item.try(:errors).present?
     = render partial: 'spree/shared/error_messages', locals: { target: @line_item }
   = form_for @order, url: admin_order_url(@order), method: :put do |f|
