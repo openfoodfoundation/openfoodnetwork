@@ -1,6 +1,7 @@
 require "spec_helper"
 
 require "order_management/reports/enterprise_fee_summary/report_service"
+require "order_management/reports/enterprise_fee_summary/permissions"
 require "order_management/reports/enterprise_fee_summary/parameters"
 
 describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
@@ -76,13 +77,16 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
   let!(:customer) { create(:customer, name: "Sample Customer") }
   let!(:another_customer) { create(:customer, name: "Another Customer") }
 
+  let!(:current_user) { create(:admin_user) }
+
   describe "grouping and sorting of entries" do
     let!(:customer_order) { prepare_order(customer: customer) }
     let!(:second_customer_order) { prepare_order(customer: customer) }
     let!(:other_customer_order) { prepare_order(customer: another_customer) }
 
-    let(:parameters) { OrderManagement::Reports::EnterpriseFeeSummary::Parameters.new }
-    let(:service) { described_class.new(parameters, nil) }
+    let(:permissions) { report_klass::Permissions.new(current_user) }
+    let(:parameters) { report_klass::Parameters.new }
+    let(:service) { described_class.new(permissions, parameters, nil) }
 
     it "groups and sorts entries correctly" do
       totals = service.enterprise_fee_type_totals
@@ -140,9 +144,57 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
     end
   end
 
+  describe "filtering results based on permissions" do
+    let!(:distributor_a) do
+      create(:distributor_enterprise, name: "Distributor A", payment_methods: [payment_method],
+                                      shipping_methods: [shipping_method])
+    end
+    let!(:distributor_b) do
+      create(:distributor_enterprise, name: "Distributor B", payment_methods: [payment_method],
+                                      shipping_methods: [shipping_method])
+    end
+
+    let!(:order_cycle_a) { create(:simple_order_cycle, coordinator: coordinator) }
+    let!(:order_cycle_b) { create(:simple_order_cycle, coordinator: coordinator) }
+
+    let!(:variant_a) { prepare_variant(distributor: distributor_a, order_cycle: order_cycle_a) }
+    let!(:variant_b) { prepare_variant(distributor: distributor_b, order_cycle: order_cycle_b) }
+
+    let!(:order_a) { prepare_order(order_cycle: order_cycle_a, distributor: distributor_a) }
+    let!(:order_b) { prepare_order(order_cycle: order_cycle_b, distributor: distributor_b) }
+
+    let(:permissions) { report_klass::Permissions.new(current_user) }
+    let(:parameters) { report_klass::Parameters.new({}) }
+    let(:service) { described_class.new(permissions, parameters, nil) }
+
+    context "when admin" do
+      let!(:current_user) { create(:admin_user) }
+
+      it "includes all order cycles" do
+        totals = service.enterprise_fee_type_totals.list
+
+        expect_total_matches(totals, 2, fee_type: "Shipment")
+        expect_total_matches(totals, 1, fee_type: "Shipment", enterprise_name: "Distributor A")
+        expect_total_matches(totals, 1, fee_type: "Shipment", enterprise_name: "Distributor B")
+      end
+    end
+
+    context "when enterprise owner for distributor" do
+      let!(:current_user) { distributor_a.owner }
+
+      it "does not include unrelated order cycles" do
+        totals = service.enterprise_fee_type_totals.list
+
+        expect_total_matches(totals, 1, fee_type: "Shipment")
+        expect_total_matches(totals, 1, fee_type: "Shipment", enterprise_name: "Distributor A")
+      end
+    end
+  end
+
   describe "filters entries correctly" do
+    let(:permissions) { report_klass::Permissions.new(current_user) }
     let(:parameters) { report_klass::Parameters.new(parameters_attributes) }
-    let(:service) { described_class.new(parameters, nil) }
+    let(:service) { described_class.new(permissions, parameters, nil) }
 
     context "filtering by completion date" do
       let(:timestamp) { Time.zone.local(2018, 1, 5, 14, 30, 5) }
