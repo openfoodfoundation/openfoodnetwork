@@ -9,11 +9,19 @@ class Api::Admin::ProductSerializer < ActiveModel::Serializer
   has_one :master, serializer: Api::Admin::VariantSerializer
 
   def image_url
-    object.images.present? ? object.images.first.attachment.url(:product) : "/assets/noimage/product.png"
+    if object.images.present?
+      object.images.first.attachment.url(:product)
+    else
+      "/assets/noimage/product.png"
+    end
   end
 
   def thumb_url
-    object.images.present? ? object.images.first.attachment.url(:mini) : "/assets/noimage/mini.png"
+    if object.images.present?
+      object.images.first.attachment.url(:mini)
+    else
+      "/assets/noimage/mini.png"
+    end
   end
 
   def on_hand
