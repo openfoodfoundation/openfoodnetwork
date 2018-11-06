@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe Spree::Admin::Reports::EnterpriseFeeSummaryReportController, type: :controller do
+  let(:report_klass) { OrderManagement::Reports::EnterpriseFeeSummary }
+
   let!(:admin) { create(:admin_user) }
 
   let(:current_user) { admin }
@@ -50,6 +52,22 @@ describe Spree::Admin::Reports::EnterpriseFeeSummaryReportController, type: :con
         expect(flash[:error]).to eq(report_klass::Authorizer::PARAMETER_NOT_ALLOWED_ERROR)
         expect(response)
           .to render_template("spree/admin/reports/enterprise_fee_summary_report/index")
+      end
+    end
+
+    describe "filtering results based on permissions" do
+      let!(:distributor) { create(:distributor_enterprise) }
+      let!(:other_distributor) { create(:distributor_enterprise) }
+
+      let!(:order_cycle) { create(:simple_order_cycle, coordinator: distributor) }
+      let!(:other_order_cycle) { create(:simple_order_cycle, coordinator: other_distributor) }
+
+      let(:current_user) { distributor.owner }
+
+      it "applies permissions to report" do
+        get :index, report: {}, report_format: "csv"
+
+        expect(assigns(:permissions).allowed_order_cycles.to_a).to eq([order_cycle])
       end
     end
   end

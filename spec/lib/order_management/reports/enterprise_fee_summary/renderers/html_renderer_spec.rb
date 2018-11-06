@@ -1,14 +1,16 @@
 require "spec_helper"
 
 require "order_management/reports/enterprise_fee_summary/parameters"
+require "order_management/reports/enterprise_fee_summary/permissions"
 require "order_management/reports/enterprise_fee_summary/report_service"
 require "order_management/reports/enterprise_fee_summary/renderers/html_renderer"
 
 describe OrderManagement::Reports::EnterpriseFeeSummary::Renderers::HtmlRenderer do
   let(:report_klass) { OrderManagement::Reports::EnterpriseFeeSummary }
 
+  let!(:permissions) { report_klass::Permissions.new(current_user) }
   let!(:parameters) { report_klass::Parameters.new }
-  let!(:service) { report_klass::ReportService.new(parameters, described_class) }
+  let!(:service) { report_klass::ReportService.new(permissions, parameters, described_class) }
 
   let!(:enterprise_fee_type_totals) do
     instance = report_klass::ReportData::EnterpriseFeeTypeTotals.new
@@ -36,6 +38,8 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::Renderers::HtmlRenderer
       )
     end
   end
+
+  let(:current_user) { nil }
 
   before do
     allow(service).to receive(:enterprise_fee_type_totals) { enterprise_fee_type_totals }

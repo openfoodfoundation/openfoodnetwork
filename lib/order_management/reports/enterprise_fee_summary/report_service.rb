@@ -9,15 +9,16 @@ module OrderManagement
       class ReportService
         delegate :render, :filename, to: :renderer
 
-        attr_accessor :parameters, :renderer_klass
+        attr_accessor :permissions, :parameters, :renderer_klass
 
-        def initialize(parameters, renderer_klass)
+        def initialize(permissions, parameters, renderer_klass)
+          @permissions = permissions
           @parameters = parameters
           @renderer_klass = renderer_klass
         end
 
         def enterprise_fees_by_customer
-          Scope.new.apply_filters(parameters).result
+          Scope.new.apply_filters(permission_filters).apply_filters(parameters).result
         end
 
         def enterprise_fee_type_totals
@@ -29,6 +30,10 @@ module OrderManagement
         end
 
         private
+
+        def permission_filters
+          Parameters.new(order_cycle_ids: permissions.allowed_order_cycles.map(&:id))
+        end
 
         def enterprise_fee_type_total_list
           enterprise_fees_by_customer.map do |total_data|
