@@ -1278,7 +1278,7 @@ en:
   no_shipping_or_payment: no shipping or payment methods
   unconfirmed: unconfirmed
   days: days
-
+  authorization_failure: "Authorization Failure"
 
   label_shop: "Shop"
   label_shops: "Shops"
