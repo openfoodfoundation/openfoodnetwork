@@ -1,6 +1,6 @@
 class Api::Admin::OrderSerializer < ActiveModel::Serializer
   attributes :id, :number, :full_name, :email, :phone, :completed_at, :display_total
-  attributes :show_path, :edit_path, :state, :payment_state, :shipment_state
+  attributes :edit_path, :state, :payment_state, :shipment_state
   attributes :payments_path, :ship_path, :ready_to_ship, :created_at
   attributes :distributor_name, :special_instructions, :payment_capture_path
 
@@ -13,11 +13,6 @@ class Api::Admin::OrderSerializer < ActiveModel::Serializer
 
   def distributor_name
     object.distributor.andand.name
-  end
-
-  def show_path
-    return '' unless object.id
-    spree_routes_helper.admin_order_path(object)
   end
 
   def edit_path

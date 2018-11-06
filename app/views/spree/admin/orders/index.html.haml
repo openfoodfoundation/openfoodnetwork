@@ -46,7 +46,7 @@
       %td.align-center
         = @show_only_completed ? '{{order.completed_at}}' : '{{order.created_at}}'
       %td
-        %a{'ng-href' => '{{order.show_path}}'}
+        %a{'ng-href' => '{{order.edit_path}}'}
           {{order.number}}
         %div{'ng-if' => 'order.special_instructions'}
           %br
