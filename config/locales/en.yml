@@ -524,6 +524,8 @@ en:
         inventory_no_permission: you do not have permission to create inventory for this producer
         none_saved: did not save any products successfully
         line_number: "Line %{number}:"
+        encoding_error: "Please check the language setting of your source file and ensure it is saved with UTF-8 encoding"
+        unexpected_error: "Product Import encountered an unexpected error whilst opening the file: %{error_message}"
       index:
         select_file: Select a spreadsheet to upload
         spreadsheet: Spreadsheet

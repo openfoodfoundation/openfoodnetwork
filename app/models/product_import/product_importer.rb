@@ -226,6 +226,14 @@ module ProductImport
       (2..@sheet.last_row).map do |i|
         @sheet.row(i)
       end
+    rescue ArgumentError => e
+      if e.message.include? 'invalid byte sequence'
+        errors.add(:importer, I18n.t('admin.product_import.model.encoding_error'))
+      else
+        errors.add(:importer, I18n.t('admin.product_import.model.unexpected_error',
+                                     error_message: e.message))
+      end
+      []
     end
 
     def build_entries_in_range
