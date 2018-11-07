@@ -205,7 +205,7 @@ module ProductImport
 
     def open_spreadsheet
       if accepted_mimetype
-        Roo::Spreadsheet.open(@file, extension: accepted_mimetype)
+        Roo::Spreadsheet.open(@file, extension: accepted_mimetype, encoding: Encoding::UTF_8)
       else
         errors.add(:importer, I18n.t(:product_importer_spreadsheet_error))
         delete_uploaded_file
