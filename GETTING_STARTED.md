@@ -72,6 +72,10 @@ Tests, both unit and integration, are based on RSpec. To run the test suite, fir
 Then the tests can be run with:
 
     bundle exec rspec spec
+    
+Note: If your OS is not explicitly supported in the setup guides then not all tests may pass. However, you may still be able to develop. Get in touch with the [#dev][slack-dev] channel on Slack to troubleshoot issues and determine if they will preclude you from contributing to OFN.
+
+Additionally, make sure that the time zone on your machine matches the one defined in `config/application.yml`. If there is a discrepancy, it may cause some RSpec tests to fail.
 
 The project is configured to use [Zeus][zeus] to reduce the pre-test startup time while Rails loads. See the [Zeus GitHub page][zeus] for usage instructions.
 
@@ -102,3 +106,5 @@ You can run rubocop against your changes using:
 [zeus]: https://github.com/burke/zeus
 [rubocop]: https://rubocop.readthedocs.io/en/latest/
 [karma]: https://github.com/openfoodfoundation/openfoodnetwork/wiki/Karma
+[slack-dev]: https://openfoodnetwork.slack.com/messages/C2GQ45KNU
+
