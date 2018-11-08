@@ -46,7 +46,7 @@ First, you need to create the database user the app will use by manually typing 
 $ sudo -u postgres psql -c "CREATE USER ofn WITH SUPERUSER CREATEDB PASSWORD 'f00d'"
 ```
 
-This will create the "ofn" user as superuser and allowing it to create databases. If this command fails, check the [troubleshooting guide](#creating-the-database) for an alternative.
+This will create the "ofn" user as superuser and allowing it to create databases. If this command fails, check the [troubleshooting section](#creating-the-database) for an alternative.
 
 Once done, run `script/setup`. If the script succeeds you're ready to start developing. If not, take a look at the output as it should be informative enough to help you troubleshoot.
 
@@ -104,7 +104,7 @@ Below are fixes to potential issues that can happen during the installation proc
 #### Creating the database
 
 If the ```$ sudo -u postgres psql -c "CREATE USER ofn WITH SUPERUSER CREATEDB PASSWORD 'f00d'"``` command doesn't work, you can run the following commands instead:
-```sh
+```
 $ createuser --superuser --pwprompt ofn
 Enter password for new role: f00d
 Enter it again: f00d
