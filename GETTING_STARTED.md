@@ -46,7 +46,7 @@ First, you need to create the database user the app will use by manually typing 
 $ sudo -u postgres psql -c "CREATE USER ofn WITH SUPERUSER CREATEDB PASSWORD 'f00d'"
 ```
 
-This will create the "ofn" user as superuser and allowing it to create databases.
+This will create the "ofn" user as superuser and allowing it to create databases. If this command fails, check the [troubleshooting guide](#creating-the-database) for an alternative.
 
 Once done, run `script/setup`. If the script succeeds you're ready to start developing. If not, take a look at the output as it should be informative enough to help you troubleshoot.
 
@@ -97,7 +97,23 @@ You can run rubocop against your changes using:
 
     rubocop
 
+### Troubleshooting
 
+Below are fixes to potential issues that can happen during the installation process. If these don't solve the problem, or it's not listed, feel free to reach out to the [Developer Community][slack-dev] on slack. We usually respond pretty quickly.
+
+#### Creating the database
+
+If the ```$ sudo -u postgres psql -c "CREATE USER ofn WITH SUPERUSER CREATEDB PASSWORD 'f00d'"``` command doesn't work, you can run the following commands instead:
+```sh
+$ createuser --superuser --pwprompt ofn
+Enter password for new role: f00d
+Enter it again: f00d
+$ createdb open_food_network_dev --owner=ofn
+$ createdb open_food_network_test --owner=ofn
+```
+If these commands succeed, you should be able to [continue the setup process](#get-it-running).
+
+### Resources
 [developer-wiki]: https://github.com/openfoodfoundation/openfoodnetwork/wiki
 [sierra]: https://github.com/openfoodfoundation/openfoodnetwork/wiki/Development-Environment-Setup:-macOS-(Sierra)
 [el-capitan]: https://github.com/openfoodfoundation/openfoodnetwork/wiki/Development-Environment-Setup:-OS-X-(El-Capitan)
