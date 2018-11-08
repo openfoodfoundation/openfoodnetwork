@@ -185,6 +185,7 @@ class AbilityDecorator
 
     # Reports page
     can [:admin, :index, :customers, :orders_and_distributors, :group_buys, :bulk_coop, :payments, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :packing], :report
+    can [:admin, :index], :enterprise_fee_summary_report
   end
 
   def add_order_cycle_management_abilities(user)
@@ -257,6 +258,7 @@ class AbilityDecorator
 
     # Reports page
     can [:admin, :index, :customers, :group_buys, :bulk_coop, :sales_tax, :payments, :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :xero_invoices], :report
+    can [:admin, :index], :enterprise_fee_summary_report
 
     can [:create], Customer
     can [:admin, :index, :update, :destroy, :show], Customer, enterprise_id: Enterprise.managed_by(user).pluck(:id)
