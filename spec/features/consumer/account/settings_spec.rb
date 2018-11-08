@@ -2,6 +2,7 @@ require 'spec_helper'
 
 feature "Account Settings", js: true do
   include AuthenticationWorkflow
+  include OpenFoodNetwork::EmailHelper
 
   describe "as a logged in user" do
     let(:user) do
@@ -12,7 +13,7 @@ feature "Account Settings", js: true do
     end
 
     before do
-      create(:mail_method)
+      setup_email
       quick_login_as user
       visit "/account"
       click_link I18n.t('spree.users.show.tabs.settings')

@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Spree.user_class do
+  include OpenFoodNetwork::EmailHelper
+
   describe "associations" do
     it { should have_many(:owned_enterprises) }
 
@@ -72,7 +74,7 @@ describe Spree.user_class do
 
   context "#create" do
     it "should send a confirmation email" do
-      create(:mail_method)
+      setup_email
 
       expect do
         create(:user, email: 'new_user@example.com', confirmation_sent_at: nil, confirmed_at: nil)
@@ -100,7 +102,7 @@ describe Spree.user_class do
 
   context "confirming email" do
     it "should send a welcome email" do
-      create(:mail_method)
+      setup_email
 
       expect do
         create(:user, confirmed_at: nil).confirm!

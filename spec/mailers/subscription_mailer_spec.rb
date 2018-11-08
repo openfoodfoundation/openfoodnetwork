@@ -2,6 +2,9 @@ require 'spec_helper'
 
 xdescribe SubscriptionMailer do
   include ActionView::Helpers::SanitizeHelper
+  include OpenFoodNetwork::EmailHelper
+
+  before { setup_email }
 
   describe "order placement" do
     let(:shop) { create(:enterprise) }

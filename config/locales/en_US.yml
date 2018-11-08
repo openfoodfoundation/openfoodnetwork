@@ -498,7 +498,6 @@ en_US:
         no_permission: you do not have permission to manage this enterprise
         not_found: enterprise could not be found in database
         no_name: No name
-        blank_supplier: some products have blank supplier name
         reset_absent?: Reset absent products
         reset_absent_tip: Set stock to zero for all existing products not present in the file
         overwrite_all: Overwrite all
@@ -521,6 +520,8 @@ en_US:
       import_review:
         not_updatable_tip: "The following fields cannot be updated via bulk import for existing products:"
         fields_ignored: These fields will be ignored when the imported products are saved.
+      entries_table:
+        not_updatable: This field is not updatable via bulk import on existing products
       save_results:
         final_results: Import final results
         products_created: Products created
@@ -2416,6 +2417,9 @@ en_US:
           resolve: Resolve
       new_tag_rule_dialog:
         select_rule_type: "Select a rule type:"
+      orders:
+        index:
+          per_page: "%{results} per page"
       resend_user_email_confirmation:
         resend: "Resend"
         sending: "Resend..."
@@ -2497,11 +2501,20 @@ en_US:
           inherits_properties_checkbox_hint: "Inherit properties from %{supplier}? (unless overridden above)"
       orders:
         index:
+          listing_orders: "Listing Orders"
+          new_order: "New Order"
           capture: "Capture"
           ship: "Ship"
           edit: "Edit"
+          note: "Note"
+          first: "First"
+          last: "Last"
+          previous: "Previous"
           next: "Next"
+          loading: "Loading"
           no_orders_found: "No Orders Found"
+          results_found: "%{number} Results found."
+          viewing: "Viewing %{start} to %{end}."
         invoice:
           issued_on: Issued on
           tax_invoice: TAX INVOICE

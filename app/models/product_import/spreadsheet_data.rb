@@ -7,12 +7,13 @@
 
 module ProductImport
   class SpreadsheetData
-    def initialize(entries)
+    def initialize(entries, import_settings)
       @entries = entries
+      @import_settings = import_settings
     end
 
-    def suppliers_index
-      @suppliers_index || create_suppliers_index
+    def enterprises_index
+      @enterprises_index || create_enterprises_index
     end
 
     def producers_index
@@ -33,15 +34,24 @@ module ProductImport
 
     private
 
-    def create_suppliers_index
-      @suppliers_index = {}
+    def import_into_inventory?
+      @import_settings[:settings].andand['import_into'] == 'inventories'
+    end
+
+    def create_enterprises_index
+      @enterprises_index = {}
       @entries.each do |entry|
-        supplier_name = entry.supplier
-        next if @suppliers_index.key? supplier_name
-        enterprise = Enterprise.find_by_name(supplier_name, select: 'id, name, is_primary_producer')
-        @suppliers_index[supplier_name] = { id: enterprise.try(:id), is_primary_producer: enterprise.try(:is_primary_producer) }
+        enterprise_name = import_into_inventory? ? entry.distributor : entry.producer
+
+        next if @enterprises_index.key? enterprise_name
+
+        enterprise = Enterprise.find_by_name(enterprise_name, select: 'id, is_primary_producer')
+
+        @enterprises_index[enterprise_name] =
+          { id: enterprise.try(:id),
+            is_primary_producer: enterprise.try(:is_primary_producer) }
       end
-      @suppliers_index
+      @enterprises_index
     end
 
     def create_producers_index

@@ -2,10 +2,11 @@ require "spec_helper"
 
 feature "Managing users" do
   include AuthenticationWorkflow
+  include OpenFoodNetwork::EmailHelper
 
   context "as super-admin" do
     before do
-      create(:mail_method)
+      setup_email
       quick_login_as_admin
     end
 

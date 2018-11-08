@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe UserConfirmationsController, type: :controller do
   include AuthenticationWorkflow
+  include OpenFoodNetwork::EmailHelper
+
   let!(:user) { create_enterprise_user }
   let!(:confirmed_user) { create_enterprise_user(confirmed_at: nil) }
   let!(:unconfirmed_user) { create_enterprise_user(confirmed_at: nil) }
@@ -57,7 +59,7 @@ describe UserConfirmationsController, type: :controller do
   end
 
   context "requesting confirmation instructions to be resent" do
-    before { create(:mail_method) }
+    before { setup_email }
 
     it "redirects the user to login" do
       spree_post :create, { spree_user: { email: unconfirmed_user.email } }

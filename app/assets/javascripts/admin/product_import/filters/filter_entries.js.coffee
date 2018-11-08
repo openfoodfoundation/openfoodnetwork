@@ -18,15 +18,15 @@ angular.module("admin.productImport").filter 'entriesFilterValid', ->
 
     filtered
 
-angular.module("admin.productImport").filter 'entriesFilterSupplier', ->
-  (entries, supplier) ->
-    if supplier == 'all'
+angular.module("admin.productImport").filter 'entriesFilterEnterprise', ->
+  (entries, enterprise) ->
+    if enterprise == 'all'
       return entries
 
     filtered = {}
 
     angular.forEach entries, (entry, line_number) ->
-      if supplier == entry.attributes['supplier']
+      if enterprise == entry.attributes['enterprise']
         filtered[line_number] = entry
 
     filtered

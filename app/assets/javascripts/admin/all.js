@@ -54,12 +54,14 @@
 //= require i18n/translations
 //= require darkswarm/i18n.translate.js
 //= require moment
+//= require moment/de.js
 //= require moment/en-gb.js
 //= require moment/es.js
 //= require moment/fr.js
 //= require moment/it.js
 //= require moment/nb.js
 //= require moment/pt-br.js
+//= require moment/pt.js
 //= require moment/sv.js
 //= require ../shared/mm-foundation-tpls-0.9.0-20180826174721.min.js
 //= require angularjs-file-upload

@@ -65,13 +65,6 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
       DirtyProducts.clear()
       StatusMessage.clear()
 
-    # $scope.matchProducer = (product) ->
-    #   for producer in $scope.producers
-    #     if angular.equals(producer.id, product.producer)
-    #       product.producer = producer
-    #       break
-
-
     $scope.updateOnHand = (product) ->
       on_demand_variants = []
       if product.variants

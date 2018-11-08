@@ -463,7 +463,6 @@ fr_CA:
         products_no_permission: vous n'avez pas les droits requis pour gérer les produits de cette entreprise
         inventory_no_permission: Vous n'avez pas la permission de créer un catalogue boutique pour ce producteur
         none_saved: n'a pu sauvegarder aucun produit :-(
-        line: Ligne
       index:
         select_file: Sélectionner une feuille de calcul à uploader
         spreadsheet: Feuille de calcul
@@ -497,7 +496,6 @@ fr_CA:
         no_permission: vous n'avez pas les droits requis pour gérer les produits de cette entreprise
         not_found: entreprise non trouvée dans la base de donnée
         no_name: Pas de nom
-        blank_supplier: certains produits ne sont associés à aucun fournisseur
         reset_absent?: Mettre à zéro le produits absents du fichier
         reset_absent_tip: Remettre le sock à zero pour les produits non présents dans le fichier.
         overwrite_all: Modifier tous
@@ -557,9 +555,6 @@ fr_CA:
       controls:
         back_to_my_inventory: Retour à mon catalogue boutique
     orders:
-      index:
-        capture: "Payée"
-        ship: "Expédier"
       invoice_email_sent: 'L''email de facturation a bien été envoyé'
       order_email_resent: 'L''email de commande a de nouveau été envoyé'
       bulk_management:
@@ -2472,7 +2467,9 @@ fr_CA:
           Cette action remettra tous les niveaux de stock à zero pour cette
           entreprises pour les produits non présents dans ce fichier.
     order_cycles:
+      create_failure: "La création du cycle de vente a échoué"
       update_success: 'Votre cycle de vente a été mis à jour.'
+      update_failure: "La mise à jour du cycle de vente à échoué"
       no_distributors: Il n'y a pas de distributeur pour ce cycle de vente. Il ne sera pas visible aux acheteurs tant qu'il n'y aura pas de distributeur. Voulez-vous tout de même sauvegarder ce cycle de vente ?
     enterprises:
       producer: "Producteur"
@@ -2493,8 +2490,21 @@ fr_CA:
     my_account: "Mon compte"
     date: "Date"
     time: "Heure"
+    layouts:
+      admin:
+        header:
+          store: Vue acheteur
     admin:
+      product_properties:
+        index:
+          inherits_properties_checkbox_hint: "Hériter des propriétés de %{supplier}? (non applicable si information de remplacement déjà saisie)"
       orders:
+        index:
+          capture: "Payée"
+          ship: "Expédier"
+          edit: "Modifier"
+          next: "Suivant"
+          no_orders_found: "Aucune commande trouvée"
         invoice:
           issued_on: Editée le
           tax_invoice: FACTURE
@@ -2529,6 +2539,11 @@ fr_CA:
           account_id: Identifiant Compte
           business_name: Nom de l'entreprise
           charges_enabled: Frais activés
+      payments:
+        source_forms:
+          stripe:
+            error_saving_payment: Erreur à l'enregistrement du paiement
+            submitting_payment: Envoi du paiement...
       products:
         new:
           title: 'Nouveau Produit'
@@ -2597,6 +2612,8 @@ fr_CA:
       js_format: 'yy-mm-dd'
     inventory: Catalogue boutique
     orders:
+      edit:
+        login_to_view_order: "Veuillez vous connecter pour voir votre commande."
       bought:
         item: "Déjà commandé dans ce cycle de vente"
     order_mailer:
@@ -2696,5 +2713,8 @@ fr_CA:
         authorised_shops: Boutiques autorisées
         authorised_shops_popover: Ceci est la liste des magasins qui sont autorisés à facturer votre carte de crédit par défaut pour les abonnements (c'est-à-dire les commandes répétées) que vous pourriez avoir. Les détails de votre carte seront conservés en sécurité et ne seront pas partagés avec les propriétaires de boutique. Vous serez toujours informé lorsque vous êtes facturé.
         saved_cards_popover: C'est la liste des cartes que vous avez choisi d'enregistrer pour une utilisation ultérieure. Votre carte 'par défaut' sera automatiquement sélectionnée lorsque vous passerez votre commande, et pourra être facturé par tous les magasins que vous avez autorisés à le faire (voir à droite).
+      authorised_shops:
+        shop_name: "Nom de la boutique"
+        allow_charges?: "Autoriser les prélèvements ?"
     localized_number:
       invalid_format: n'est pas un format valide. Veuillez entrer un nombre.

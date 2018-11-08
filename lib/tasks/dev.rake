@@ -188,7 +188,7 @@ namespace :openfoodnetwork do
                              name: 'Pickup',
                              zone: zone,
                              require_ship_address: true,
-                             calculator_type: 'OpenFoodNetwork::Calculator::Weight',
+                             calculator_type: 'Calculator::Weight',
                              distributors: [enterprise2])
       enterprise2.payment_methods << Spree::PaymentMethod.last
       enterprise2.save!

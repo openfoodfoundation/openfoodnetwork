@@ -247,6 +247,9 @@ en:
   pick_up: Pick up
   ok: Ok
   copy: Copy
+  password_confirmation: Password Confirmation
+  reset_password_token: Reset password token
+  expired: has expired, please request a new one
 
   actions:
     create_and_add_another: "Create and Add Another"
@@ -553,7 +556,7 @@ en:
         no_permission: you do not have permission to manage this enterprise
         not_found: enterprise could not be found in database
         no_name: No name
-        blank_supplier: some products have blank supplier name
+        blank_enterprise: some products do not have an enterprise defined
         reset_absent?: Reset absent products
         reset_absent_tip: Set stock to zero for all exiting products not present in the file
         overwrite_all: Overwrite all
@@ -1480,7 +1483,7 @@ To activate your Profile we need to confirm this email address."
   email_confirmation_link_label: "Confirm this email address »"
   email_confirmation_help_html: "After confirming your email you can access your administration account for this enterprise.
 See the %{link} to find out more about %{sitename}'s features and to start using your profile or online store."
-  email_confirmation_notice_unexpected: "You received this message because you signed up on %{sitename}, or were invited to sign up by someone you probably know. If you don't understand why you are receiving this email, please write to %{contact}." 
+  email_confirmation_notice_unexpected: "You received this message because you signed up on %{sitename}, or were invited to sign up by someone you probably know. If you don't understand why you are receiving this email, please write to %{contact}."
   email_social: "Connect with Us:"
   email_contact: "Email us:"
   email_signoff: "Cheers,"

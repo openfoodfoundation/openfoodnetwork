@@ -2,6 +2,7 @@ require 'spec_helper'
 
 feature "Order Management", js: true do
   include AuthenticationWorkflow
+  include OpenFoodNetwork::EmailHelper
 
   describe "viewing a completed order" do
     let!(:distributor) { create(:distributor_enterprise) }
@@ -120,7 +121,7 @@ feature "Order Management", js: true do
 
     context "when the distributor allows changes to be made to orders" do
       before do
-        Spree::Config[:mails_from] = "spree@example.com"
+        setup_email
       end
       before do
         order.distributor.update_attributes(allow_order_changes: true)

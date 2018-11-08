@@ -1,34 +1,36 @@
 %div{"data-hook" => "admin_orders_index_search"}
-  = search_form_for [:admin, @search], html: { name: "orders_form", "ng-submit" => "fetchResults()"} do |f|
+  = form_tag false, {name: "orders_form", "ng-submit" => "fetchResults()"} do
     .field-block.alpha.four.columns
       .date-range-filter.field
         = label_tag nil, t(:date_range)
         .date-range-fields
-          = f.text_field :created_at_gt, class: 'datepicker', datepicker: 'q.created_at_gt', 'ng-model' => 'q.created_at_gt', :value => params[:q][:created_at_gt], :placeholder => t(:start)
+          = text_field_tag "q[created_at_gt]", nil, class: 'datepicker', datepicker: 'q.created_at_gt', 'ng-model' => 'q.created_at_gt', :placeholder => t(:start)
           %span.range-divider
             %i.icon-arrow-right
-          = f.text_field :created_at_lt, class: 'datepicker', datepicker: 'q.created_at_lt', 'ng-model' => 'q.created_at_lt', :value => params[:q][:created_at_lt], :placeholder => t(:stop)
+          = text_field_tag "q[created_at_lt]", nil, class: 'datepicker', datepicker: 'q.created_at_lt', 'ng-model' => 'q.created_at_lt', :placeholder => t(:stop)
       .field
         = label_tag nil, t(:status)
-        = f.select :state_eq, Spree::Order.state_machines[:state].states.collect {|s| [t("order_state.#{s.name}"), s.value]}, {:include_blank => true}, :class => 'select2', 'ng-model' => 'q.state_eq'
+        = select_tag("q[state_eq]",
+            options_for_select(Spree::Order.state_machines[:state].states.collect {|s| [t("order_state.#{s.name}"), s.value]}),
+            {include_blank: true, class: 'select2', 'ng-model' => 'q.state_eq'})
     .four.columns
       .field
         = label_tag nil, t(:order_number)
-        = f.text_field :number_cont, 'ng-model' => 'q.number_cont'
+        = text_field_tag "q[number_cont]", nil, 'ng-model' => 'q.number_cont'
       .field
         = label_tag nil, t(:email)
-        = f.email_field :email_cont, 'ng-model' => 'q.email_cont'
+        = email_field_tag "q[email_cont", nil, 'ng-model' => 'q.email_cont'
     .four.columns
       .field
         = label_tag nil, t(:first_name_begins_with)
-        = f.text_field :bill_address_firstname_start, :size => 25, 'ng-model' => 'q.bill_address_firstname_start'
+        = text_field_tag "q[bill_address_firstname_start]", nil, size: 25, 'ng-model' => 'q.bill_address_firstname_start'
       .field
         = label_tag nil, t(:last_name_begins_with)
-        = f.text_field :bill_address_lastname_start, :size => 25, 'ng-model' => 'q.bill_address_lastname_start'
+        = text_field_tag "q[bill_address_lastname_start]", nil, size: 25, 'ng-model' => 'q.bill_address_lastname_start'
     .omega.four.columns
       .field.checkbox
         %label
-          = f.check_box :completed_at_not_null, {:checked => @show_only_completed, 'ng-model' => 'q.completed_at_not_null'}, '1', ''
+          = check_box_tag "q[completed_at_not_null]", 1, true, {'ng-model' => 'q.completed_at_not_null'}
           = t(:show_only_complete_orders)
     .field-block.alpha.eight.columns
       = label_tag nil, t(:distributors)

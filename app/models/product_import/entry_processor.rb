@@ -5,8 +5,8 @@
 module ProductImport
   class EntryProcessor
     attr_reader :inventory_created, :inventory_updated, :products_created,
-                :variants_created, :variants_updated, :supplier_products,
-                :total_supplier_products, :products_reset_count
+                :variants_created, :variants_updated, :enterprise_products,
+                :total_enterprise_products, :products_reset_count
 
     def initialize(importer, validator, import_settings, spreadsheet_data, editable_enterprises, import_time, updated_ids)
       @importer = importer
@@ -23,13 +23,13 @@ module ProductImport
       @variants_created = 0
       @variants_updated = 0
       @products_reset_count = 0
-      @supplier_products = {}
-      @total_supplier_products = 0
+      @enterprise_products = {}
+      @total_enterprise_products = 0
     end
 
     def save_all(entries)
       entries.each do |entry|
-        if import_into_inventory?(entry)
+        if settings.importing_into_inventory?
           save_to_inventory(entry)
         else
           save_to_product_list(entry)
@@ -40,24 +40,24 @@ module ProductImport
     end
 
     def count_existing_items
-      @spreadsheet_data.suppliers_index.each do |_supplier_name, attrs|
-        supplier_id = attrs[:id]
-        next unless supplier_id && permission_by_id?(supplier_id)
+      @spreadsheet_data.enterprises_index.each do |_enterprise_name, attrs|
+        enterprise_id = attrs[:id]
+        next unless enterprise_id && permission_by_id?(enterprise_id)
 
         products_count =
           if settings.importing_into_inventory?
-            VariantOverride.where('variant_overrides.hub_id IN (?)', supplier_id).count
+            VariantOverride.for_hubs([enterprise_id]).count
           else
             Spree::Variant.
               not_deleted.
               not_master.
               joins(:product).
-              where('spree_products.supplier_id IN (?)', supplier_id).
+              where('spree_products.supplier_id IN (?)', enterprise_id).
               count
           end
 
-        @supplier_products[supplier_id] = products_count
-        @total_supplier_products += products_count
+        @enterprise_products[enterprise_id] = products_count
+        @total_enterprise_products += products_count
       end
     end
 
@@ -88,8 +88,8 @@ module ProductImport
       @products_created + @variants_created + @variants_updated + @inventory_created + @inventory_updated
     end
 
-    def permission_by_id?(supplier_id)
-      @editable_enterprises.value?(Integer(supplier_id))
+    def permission_by_id?(enterprise_id)
+      @editable_enterprises.value?(Integer(enterprise_id))
     end
 
     private
@@ -119,10 +119,6 @@ module ProductImport
       end
 
       @variants_updated += 1
-    end
-
-    def import_into_inventory?(entry)
-      entry.supplier_id && settings.importing_into_inventory?
     end
 
     def save_new_inventory_item(entry)
@@ -158,14 +154,17 @@ module ProductImport
       # If we've already added a new product with these attributes
       # from this spreadsheet, mark this entry as a new variant with
       # the new product id, as this is a now variant of that product...
-      if @already_created[entry.supplier_id] && @already_created[entry.supplier_id][entry.name]
-        product_id = @already_created[entry.supplier_id][entry.name]
+      if @already_created[entry.enterprise_id] &&
+         @already_created[entry.enterprise_id][entry.name]
+
+        product_id = @already_created[entry.enterprise_id][entry.name]
         @validator.mark_as_new_variant(entry, product_id)
         return
       end
 
       product = Spree::Product.new
       product.assign_attributes(entry.attributes.except('id'))
+      product.supplier_id = entry.producer_id
       assign_defaults(product, entry)
 
       if product.save
@@ -176,7 +175,7 @@ module ProductImport
         assign_errors product.errors.full_messages, entry.line_number
       end
 
-      @already_created[entry.supplier_id] = { entry.name => product.id }
+      @already_created[entry.enterprise_id] = { entry.name => product.id }
     end
 
     def save_variant(entry)
@@ -214,7 +213,10 @@ module ProductImport
         when 'overwrite_all'
           object.assign_attributes(attribute => setting['value'])
         when 'overwrite_empty'
-          if object.public_send(attribute).blank? || ((attribute == 'on_hand' || attribute == 'count_on_hand') && entry.on_hand_nil)
+          if object.public_send(attribute).blank? ||
+             ((attribute == 'on_hand' || attribute == 'count_on_hand') &&
+             entry.on_hand_nil)
+
             object.assign_attributes(attribute => setting['value'])
           end
         end
@@ -223,7 +225,10 @@ module ProductImport
 
     def display_in_inventory(variant_override, is_new = false)
       unless is_new
-        existing_item = InventoryItem.where(variant_id: variant_override.variant_id, enterprise_id: variant_override.hub_id).first
+        existing_item = InventoryItem.where(
+          variant_id: variant_override.variant_id,
+          enterprise_id: variant_override.hub_id
+        ).first
 
         if existing_item
           existing_item.assign_attributes(visible: true)
@@ -232,7 +237,11 @@ module ProductImport
         end
       end
 
-      InventoryItem.new(variant_id: variant_override.variant_id, enterprise_id: variant_override.hub_id, visible: true).save
+      InventoryItem.new(
+        variant_id: variant_override.variant_id,
+        enterprise_id: variant_override.hub_id,
+        visible: true
+      ).save
     end
 
     def ensure_variant_updated(product, entry)
