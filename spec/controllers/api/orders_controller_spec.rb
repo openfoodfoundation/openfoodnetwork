@@ -25,19 +25,19 @@ module Api
                        distributor: distributor, billing_address: create(:address) )
       end
       let!(:line_item1) do
-        create(:line_item, order: order1,
+        create(:line_item_with_shipment, order: order1,
                            product: create(:product, supplier: supplier))
       end
       let!(:line_item2) do
-        create(:line_item, order: order2,
+        create(:line_item_with_shipment, order: order2,
                            product: create(:product, supplier: supplier))
       end
       let!(:line_item3) do
-        create(:line_item, order: order2,
+        create(:line_item_with_shipment, order: order2,
                            product: create(:product, supplier: supplier))
       end
       let!(:line_item4) do
-        create(:line_item, order: order3,
+        create(:line_item_with_shipment, order: order3,
                            product: create(:product, supplier: supplier))
       end
       let!(:regular_user) { create(:user) }
