@@ -3,6 +3,8 @@ plugins:
   rubocop:
     enabled: true
     channel: "rubocop-0-57"
+    config:
+      file: ".rubocop_styleguide.yml"
   scss-lint:
     enabled: true
     checks:

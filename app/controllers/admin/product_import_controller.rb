@@ -90,7 +90,7 @@ module Admin
       {
         filepath: @filepath,
         item_count: @importer.item_count,
-        supplier_product_counts: @importer.supplier_products,
+        enterprise_product_counts: @importer.enterprise_products,
         import_url: main_app.admin_product_import_process_async_path,
         save_url: main_app.admin_product_import_save_async_path,
         reset_url: main_app.admin_product_import_reset_async_path,

@@ -464,7 +464,6 @@ es:
         products_no_permission: no tienes permiso para administrar productos para esta organización
         inventory_no_permission: no tienes permiso para crear inventario para esta productora
         none_saved: No se guardó ningún producto con éxito
-        line: Línea
       index:
         select_file: Selecciona una hoja de cálculo para subir
         spreadsheet: Hoja de cálculo
@@ -498,7 +497,6 @@ es:
         no_permission: no tienes permiso para administrar esta organización
         not_found: no se pudo encontrar la organización en la base de datos
         no_name: Sin nombre
-        blank_supplier: algunos productos tienen un nombre de proveedor en blanco
         reset_absent?: Restablecer productos ausentes
         reset_absent_tip: Establezca el stock en cero para todos los productos existentes que no estén presentes en el archivo.
         overwrite_all: Sobrescribir todo
@@ -1142,13 +1140,13 @@ es:
   ticket_column_unit_price: "Precio por unidad"
   ticket_column_total_price: "Precio total"
   menu_1_title: "Tiendas"
-  menu_1_url: "/tiendas"
+  menu_1_url: "/shops"
   menu_2_title: "Mapa"
-  menu_2_url: "/mapa"
+  menu_2_url: "/map"
   menu_3_title: "Productoras"
-  menu_3_url: "/productoras"
+  menu_3_url: "/producers"
   menu_4_title: "Redes"
-  menu_4_url: "/redes"
+  menu_4_url: "/groups"
   menu_5_title: "Acerca de"
   menu_5_url: "http://katuma.org/"
   menu_6_title: "Conectar"
@@ -1272,6 +1270,10 @@ es:
       cookie_matomo_ignore_desc: "Cookie utilizada para excluir al usuario de ser rastreado."
       disabling_cookies_header: "Advertencia sobre la desactivación de cookies"
       disabling_cookies_desc: "Como usuario, siempre puede permitir, bloquear o eliminar las cookies de Open Food Network o cualquier otra página web cuando lo desee a través del control de configuración de su navegador. Cada navegador tiene una operativa diferente. Aquí están los enlaces:"
+      disabling_cookies_firefox_link: "https://support.mozilla.org/es/kb/habilitar-y-deshabilitar-cookies-sitios-web-rastrear-preferencias"
+      disabling_cookies_chrome_link: "https://support.google.com/chrome/answer/95647"
+      disabling_cookies_ie_link: "https://support.microsoft.com/es-es/help/17442/windows-internet-explorer-delete-manage-cookies"
+      disabling_cookies_safari_link: "https://www.apple.com/legal/privacy/es/cookies/"
       disabling_cookies_note: "Pero tenga en cuenta que si elimina o modifica las cookies esenciales utilizadas por Open Food Network, el sitio web no funcionará, no podrá agregar nada a su carrito ni realizar pedidos, por ejemplo."
     cookies_banner:
       cookies_usage: "Este sitio utiliza cookies para que su navegación sea fluida y segura, y para ayudarnos a comprender cómo lo usa para mejorar las funciones que ofrecemos."
@@ -2712,8 +2714,14 @@ es:
         paid?: ¿Pagado?
         view: Ver
       saved_cards:
+        default?: ¿Por defecto?
         delete?: ¿Borrar?
       cards:
         authorised_shops: Tiendas autorizadas
+        authorised_shops_popover: Esta es la lista de tiendas a las que se les permite cobrar a su tarjeta de crédito predeterminada por sus suscripciones (es decir, pedidos repetidos) que pueda tener. Los detalles de su tarjeta se mantendrán seguros y no se compartirán con los propietarios de las tiendas. Siempre se le notificará cuando se le cobra.
+        saved_cards_popover: Esta es la lista de tarjetas que ha optado por guardar para su uso posterior. Su "valor predeterminado" se seleccionará automáticamente al momento de realizar un pedido, y puede ser cobrado por cualquier tienda que tenga permitido hacerlo (ver a la derecha).
+      authorised_shops:
+        shop_name: "Nombre de tienda"
+        allow_charges?: "¿Permitir cargos?"
     localized_number:
       invalid_format: tiene un formato invalido. Por favor introduzca un numero.

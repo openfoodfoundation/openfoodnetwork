@@ -156,7 +156,6 @@ Layout/EmptyLines:
     - 'app/models/exchange.rb'
     - 'app/models/exchange_fee.rb'
     - 'app/models/inventory_item.rb'
-    - 'app/models/open_food_network/calculator/weight.rb'
     - 'app/models/order_cycle.rb'
     - 'app/models/producer_property.rb'
     - 'app/models/product_distribution.rb'
@@ -679,7 +678,6 @@ Layout/SpaceAroundOperators:
     - 'spec/jobs/update_billable_periods_spec.rb'
     - 'spec/lib/open_food_network/order_grouper_spec.rb'
     - 'spec/lib/stripe/account_connector_spec.rb'
-    - 'spec/models/calculator/weight_spec.rb'
     - 'spec/spec_helper.rb'
     - 'spec/support/cancan_helper.rb'
     - 'spec/support/seeds.rb'
@@ -1279,7 +1277,6 @@ Naming/VariableNumber:
   Exclude:
     - 'spec/archive/features/consumer/checkout_spec.rb'
     - 'spec/lib/open_food_network/products_and_inventory_report_spec.rb'
-    - 'spec/models/calculator/weight_spec.rb'
 
 # Offense count: 1
 Performance/Caller:
@@ -1682,7 +1679,6 @@ Style/ClassAndModuleChildren:
     - 'app/controllers/spree/store_controller_decorator.rb'
     - 'app/helpers/angular_form_helper.rb'
     - 'app/models/calculator/flat_percent_per_item.rb'
-    - 'app/models/open_food_network/calculator/weight.rb'
     - 'app/models/spree/gateway/migs.rb'
     - 'app/models/spree/gateway/pin.rb'
     - 'app/models/spree/preferences/file_configuration.rb'
@@ -1932,7 +1928,6 @@ Style/HashSyntax:
     - 'app/models/enterprise_group.rb'
     - 'app/models/enterprise_role.rb'
     - 'app/models/exchange_variant.rb'
-    - 'app/models/open_food_network/calculator/weight.rb'
     - 'app/models/order_cycle.rb'
     - 'app/models/product_distribution.rb'
     - 'app/models/spree/adjustment_decorator.rb'
@@ -2022,7 +2017,6 @@ Style/HashSyntax:
     - 'spec/lib/open_food_network/order_grouper_spec.rb'
     - 'spec/lib/open_food_network/tag_rule_applicator_spec.rb'
     - 'spec/mailers/order_mailer_spec.rb'
-    - 'spec/models/calculator/weight_spec.rb'
     - 'spec/models/enterprise_fee_spec.rb'
     - 'spec/models/enterprise_spec.rb'
     - 'spec/models/exchange_spec.rb'
@@ -2288,7 +2282,6 @@ Style/RedundantSelf:
     - 'app/models/calculator/flat_percent_per_item.rb'
     - 'app/models/enterprise.rb'
     - 'app/models/exchange.rb'
-    - 'app/models/open_food_network/calculator/weight.rb'
     - 'app/models/order_cycle.rb'
     - 'app/models/producer_property.rb'
     - 'app/models/spree/calculator/flat_percent_item_total_decorator.rb'

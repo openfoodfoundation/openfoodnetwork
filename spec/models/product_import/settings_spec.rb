@@ -15,7 +15,7 @@ describe ProductImport::Settings do
 
     context 'when there are settings' do
       let(:entry) do
-        instance_double(ProductImport::SpreadsheetEntry, supplier_id: 1)
+        instance_double(ProductImport::SpreadsheetEntry, enterprise_id: 1)
       end
       let(:import_settings) { { settings: {} } }
 

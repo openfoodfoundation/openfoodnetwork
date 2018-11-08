@@ -1,7 +1,7 @@
 %h5= t('admin.product_import.import.options_and_defaults')
 %br
 
-- @importer.suppliers_index.each do |name, attrs|
+- @importer.enterprises_index.each do |name, attrs|
   - if name and attrs[:id] and @importer.permission_by_id?(attrs[:id])
     %div.panel-section.import-settings
       %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active}'}}
@@ -32,7 +32,7 @@
           %i.fa.fa-warning
         %div.header-description
           = t('admin.product_import.import.no_name')
-          %span.header-error= " - #{t('admin.product_import.import.blank_supplier')}"
+          %span.header-error= " - #{t('admin.product_import.import.blank_enterprise')}"
 
 %br.panels.clearfix
 %br

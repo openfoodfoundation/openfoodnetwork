@@ -1,12 +1,15 @@
 require 'spec_helper'
 
 describe Spree::OrderMailer do
+  include OpenFoodNetwork::EmailHelper
+
   describe "order confimation" do
     after do
       ActionMailer::Base.deliveries.clear
     end
 
     before do
+      setup_email
       ActionMailer::Base.delivery_method = :test
       ActionMailer::Base.perform_deliveries = true
       ActionMailer::Base.deliveries = []

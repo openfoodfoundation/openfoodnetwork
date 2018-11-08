@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe OrderCycle do
+  include OpenFoodNetwork::EmailHelper
+
   it "should be valid when built from factory" do
     build(:simple_order_cycle).should be_valid
   end
@@ -528,7 +530,7 @@ describe OrderCycle do
     let!(:order5) { create(:completed_order_with_totals, distributor: shop, user: user, order_cycle: oc)  }
 
     before do
-      Spree::Config[:mails_from] = "spree@example.com"
+      setup_email
     end
     before { order5.cancel }
 

@@ -2,6 +2,8 @@ require 'spec_helper'
 require 'spree/api/testing_support/helpers'
 
 describe UserPasswordsController, type: :controller do
+  include OpenFoodNetwork::EmailHelper
+
   let(:user) { create(:user) }
   let(:unconfirmed_user) { create(:user, confirmed_at: nil) }
 
@@ -32,6 +34,7 @@ describe UserPasswordsController, type: :controller do
   end
 
   it "renders Darkswarm" do
+    setup_email
     clear_jobs
 
     user.send_reset_password_instructions

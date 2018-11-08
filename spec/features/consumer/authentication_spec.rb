@@ -2,6 +2,7 @@ require 'spec_helper'
 
 feature "Authentication", js: true, retry: 3 do
   include UIComponentHelper
+  include OpenFoodNetwork::EmailHelper
 
   # Attempt to address intermittent failures in these specs
   around do |example|
@@ -75,7 +76,7 @@ feature "Authentication", js: true, retry: 3 do
           end
 
           scenario "Signing up successfully" do
-            create(:mail_method)
+            setup_email
             fill_in "Email", with: "test@foo.com"
             fill_in "Choose a password", with: "test12345"
             fill_in "Confirm password", with: "test12345"

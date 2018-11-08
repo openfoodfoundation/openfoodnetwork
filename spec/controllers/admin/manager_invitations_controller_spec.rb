@@ -2,6 +2,8 @@ require 'spec_helper'
 
 module Admin
   describe ManagerInvitationsController, type: :controller do
+    include OpenFoodNetwork::EmailHelper
+
     let!(:enterprise_owner) { create(:user) }
     let!(:other_enterprise_user) { create(:user) }
     let!(:existing_user) { create(:user) }
@@ -25,7 +27,7 @@ module Admin
 
       context "signing up a new user" do
         before do
-          create(:mail_method)
+          setup_email
           controller.stub spree_current_user: admin
         end
 
@@ -46,7 +48,7 @@ module Admin
     describe "with enterprise permissions" do
       context "as user with proper enterprise permissions" do
         before do
-          create(:mail_method)
+          setup_email
           controller.stub spree_current_user: enterprise_owner
         end
 
