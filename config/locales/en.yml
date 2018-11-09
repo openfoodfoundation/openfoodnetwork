@@ -1072,7 +1072,9 @@ en:
         description: Invoices for import into Xero
       packing:
         name: Packing Reports
-
+      enterprise_fee_summary:
+        name: "Enterprise Fee Summary"
+        description: "Summary of Enterprise Fees collected"
     subscriptions:
       subscriptions: Subscriptions
       new: New Subscription
