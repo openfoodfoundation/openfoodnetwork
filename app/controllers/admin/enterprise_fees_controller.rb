@@ -2,7 +2,6 @@ module Admin
   class EnterpriseFeesController < ResourceController
     before_filter :load_enterprise_fee_set, :only => :index
     before_filter :load_data
-    before_filter :do_not_destroy_referenced_fees, :only => :destroy
 
 
     def index
@@ -44,22 +43,6 @@ module Admin
 
 
     private
-
-    def do_not_destroy_referenced_fees
-      product_distribution = ProductDistribution.where(:enterprise_fee_id => @object).first
-      if product_distribution
-        p = product_distribution.product
-        error = I18n.t(:enterprise_fees_destroy_error, id: p.id, name: p.name)
-
-        respond_with(@object) do |format|
-          format.html do
-            flash[:error] = error
-            redirect_to collection_url
-          end
-          format.js { render text: error, status: 403 }
-        end
-      end
-    end
 
     def load_enterprise_fee_set
       @enterprise_fee_set = EnterpriseFeeSet.new :collection => collection
