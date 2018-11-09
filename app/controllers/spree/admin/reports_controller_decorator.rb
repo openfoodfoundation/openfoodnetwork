@@ -40,6 +40,9 @@ Spree::Admin::ReportsController.class_eval do
         [I18n.t('admin.reports.mailing_list'), :mailing_list],
         [I18n.t('admin.reports.addresses'), :addresses]
       ],
+      enterprise_fee_summary: [
+        [I18n.t("admin.reports.enterprise_fee_summary"), :enterprise_fee_summary]
+      ],
       order_cycle_management: [
         [I18n.t('admin.reports.payment_methods'), :payment_methods],
         [I18n.t('admin.reports.delivery'), :delivery]
@@ -275,6 +278,7 @@ Spree::Admin::ReportsController.class_eval do
       :products_and_inventory,
       :sales_total,
       :users_and_enterprises,
+      :enterprise_fee_summary,
       :order_cycle_management,
       :sales_tax,
       :xero_invoices,
