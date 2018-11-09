@@ -8,8 +8,11 @@ Spree::Address.class_eval do
 
   delegate :name, to: :state, prefix: true, allow_nil: true
 
+  # Google recommends to use the formatting convention of the country.
+  # This format is fairly general and hopefully applies to most countries.
+  # Otherwise we need a library to format it depending on the country.
   def geocode_address
-    render_address([address1, address2, zipcode, city, country.andand.name, state.andand.name])
+    render_address([address1, address2, zipcode, city, state.andand.name, country.andand.name])
   end
 
   def full_address
