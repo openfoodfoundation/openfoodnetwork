@@ -149,8 +149,8 @@ module Api
     def order_attributes
       [
         :id, :number, :full_name, :email, :phone, :completed_at, :display_total,
-        :show_path, :edit_path, :state, :payment_state, :shipment_state,
-        :payments_path, :shipments_path, :ship_path, :ready_to_ship, :created_at,
+        :edit_path, :state, :payment_state, :shipment_state,
+        :payments_path, :ship_path, :ready_to_ship, :created_at,
         :distributor_name, :special_instructions, :payment_capture_path
       ]
     end
