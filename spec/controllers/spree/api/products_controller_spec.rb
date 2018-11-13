@@ -8,6 +8,7 @@ module Spree
     let(:supplier2) { create(:supplier_enterprise) }
     let!(:product1) { create(:product, supplier: supplier) }
     let(:product_other_supplier) { create(:product, supplier: supplier2) }
+    let(:product_with_image) { create(:product_with_image, supplier: supplier) }
     let(:attributes) { [:id, :name, :supplier, :price, :on_hand, :available_on, :permalink_live] }
 
     let(:current_api_user) { build_stubbed(:user) }
@@ -144,6 +145,12 @@ module Spree
           spree_post :clone, product_id: product1.id, format: :json
           expect(json_response['name']).to eq("COPY OF #{product1.name}")
         end
+
+        it 'clones a product with image' do
+          spree_post :clone, product_id: product_with_image.id, format: :json
+          expect(response.status).to eq(201)
+          expect(json_response['name']).to eq("COPY OF #{product_with_image.name}")
+        end
       end
 
       context 'as an administrator' do
@@ -161,6 +168,12 @@ module Spree
         it 'clones the product' do
           spree_post :clone, product_id: product1.id, format: :json
           expect(json_response['name']).to eq("COPY OF #{product1.name}")
+        end
+
+        it 'clones a product with image' do
+          spree_post :clone, product_id: product_with_image.id, format: :json
+          expect(response.status).to eq(201)
+          expect(json_response['name']).to eq("COPY OF #{product_with_image.name}")
         end
       end
     end
