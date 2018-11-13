@@ -26,6 +26,8 @@ module Spree
       else
         update_failed
       end
+      rescue ArgumentError => e
+        update_failed
     end
 
     def destroy
