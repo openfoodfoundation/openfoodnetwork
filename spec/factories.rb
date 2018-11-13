@@ -281,12 +281,16 @@ FactoryBot.define do
   end
 
   factory :order_with_totals_and_distribution, parent: :order do
+    transient do
+      shipping_fee 3
+    end
+
     distributor { create(:distributor_enterprise) }
     order_cycle { create(:simple_order_cycle) }
 
-    after(:create) do |order|
-      p = create(:simple_product, :distributors => [order.distributor])
-      FactoryBot.create(:line_item_with_shipment, :order => order, :product => p)
+    after(:create) do |order, proxy|
+      p = create(:simple_product, distributors: [order.distributor])
+      FactoryBot.create(:line_item_with_shipment, shipping_fee: proxy.shipping_fee, order: order, product: p)
       order.reload
     end
   end
@@ -372,14 +376,25 @@ FactoryBot.define do
     end
   end
 
-  factory :shipment_with, parent: :shipment do
+  factory :shipment_with, class: Spree::Shipment do
+    tracking 'U10000'
+    number '100'
+    cost 100.00
+    state 'pending'
+    order
+    address
+    stock_location
+
     trait :shipping_method do
       transient do
         shipping_method { create(:shipping_method) }
       end
       after(:create) do |shipment, evaluator|
-        shipment.shipping_rates.destroy_all
         shipment.add_shipping_method(evaluator.shipping_method, true)
+
+        shipment.order.line_items.each do |line_item|
+          line_item.quantity.times { shipment.inventory_units.create(variant_id: line_item.variant_id) }
+        end
       end
     end
   end
@@ -391,15 +406,12 @@ FactoryBot.define do
 
   factory :completed_order_with_fees, parent: :order_with_totals_and_distribution do
     transient do
-      shipping_fee 3
       payment_fee 5
     end
 
     ship_address { create(:address) }
 
     after(:create) do |order, evaluator|
-      create(:shipping_method_with, :shipping_fee, shipping_fee: evaluator.shipping_fee)
-
       create(:line_item, order: order)
       payment_calculator = build(:calculator_per_item, preferred_amount: evaluator.payment_fee)
       payment_method = create(:payment_method, calculator: payment_calculator)
@@ -410,7 +422,18 @@ FactoryBot.define do
   end
 
   factory :line_item_with_shipment, parent: :line_item do
-    target_shipment { create(:shipment, order: order) }
+    transient do
+      shipping_fee 3
+    end
+
+    target_shipment do
+      shipment = order.reload.shipments.first
+      if shipment.nil?
+        shipping_method = create(:shipping_method_with, :shipping_fee, shipping_fee: shipping_fee)
+        shipment = create(:shipment_with, :shipping_method, shipping_method: shipping_method, order: order)
+      end
+      shipment
+    end
   end
 
   factory :zone_with_member, :parent => :zone do
