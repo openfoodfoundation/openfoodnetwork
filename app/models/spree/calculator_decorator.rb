@@ -1,6 +1,5 @@
 module Spree
   Calculator.class_eval do
-
     private
 
     # Given an object which might be an Order or a LineItem (amongst
