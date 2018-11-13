@@ -36,7 +36,7 @@ class OrderFactory
   end
 
   def create_attrs
-    create_attrs = attrs.slice(:customer_id, :order_cycle_id, :distributor_id, :shipping_method_id)
+    create_attrs = attrs.slice(:customer_id, :order_cycle_id, :distributor_id)
     create_attrs[:email] = customer.email
     create_attrs
   end
