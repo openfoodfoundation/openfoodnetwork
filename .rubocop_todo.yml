@@ -71,7 +71,6 @@ Layout/AlignParameters:
     - 'app/serializers/api/enterprise_serializer.rb'
     - 'app/serializers/api/shipping_method_serializer.rb'
     - 'lib/spree/product_filters.rb'
-    - 'lib/tasks/dev.rake'
     - 'spec/controllers/enterprises_controller_spec.rb'
     - 'spec/controllers/shop_controller_spec.rb'
     - 'spec/features/admin/enterprise_fees_spec.rb'
@@ -196,7 +195,6 @@ Layout/EmptyLines:
     - 'lib/open_food_network/xero_invoices_report.rb'
     - 'lib/spree/core/controller_helpers/order_decorator.rb'
     - 'lib/tasks/cache.rake'
-    - 'lib/tasks/dev.rake'
     - 'lib/tasks/enterprises.rake'
     - 'spec/archive/features/consumer/checkout_spec.rb'
     - 'spec/controllers/admin/column_preferences_controller_spec.rb'
@@ -279,7 +277,6 @@ Layout/EmptyLinesAroundBlockBody:
     - 'app/models/spree/option_value_decorator.rb'
     - 'lib/open_food_network/group_buy_report.rb'
     - 'lib/spree/money_decorator.rb'
-    - 'lib/tasks/dev.rake'
     - 'spec/controllers/admin/order_cycles_controller_spec.rb'
     - 'spec/controllers/admin/tag_rules_controller_spec.rb'
     - 'spec/controllers/spree/admin/orders_controller_spec.rb'
@@ -455,12 +452,6 @@ Layout/IndentationWidth:
     - 'spec/mailers/enterprise_mailer_spec.rb'
     - 'spec/models/enterprise_spec.rb'
     - 'spec/models/spree/calculator/flexi_rate_spec.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Layout/LeadingBlankLines:
-  Exclude:
-    - 'lib/tasks/dev.rake'
 
 # Offense count: 44
 # Cop supports --auto-correct.
@@ -744,7 +735,6 @@ Layout/SpaceInsideBlockBraces:
     - 'app/models/column_preference.rb'
     - 'app/models/spree/order_decorator.rb'
     - 'lib/spree/product_filters.rb'
-    - 'lib/tasks/dev.rake'
     - 'lib/tasks/karma.rake'
     - 'spec/archive/features/consumer/checkout_spec.rb'
     - 'spec/controllers/admin/accounts_and_billing_settings_controller_spec.rb'
