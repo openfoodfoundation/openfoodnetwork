@@ -134,6 +134,11 @@ GIT
       railties (>= 3.0)
 
 PATH
+  remote: engines/order_management
+  specs:
+    order_management (0.0.1)
+
+PATH
   remote: engines/web
   specs:
     web (0.0.1)
@@ -826,6 +831,7 @@ DEPENDENCIES
   oauth2 (~> 1.4.1)
   ofn-qz!
   oj
+  order_management!
   paper_trail (~> 5.2.3)
   paperclip
   pg
