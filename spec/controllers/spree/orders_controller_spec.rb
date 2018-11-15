@@ -240,19 +240,17 @@ describe Spree::OrdersController, type: :controller do
     end
   end
 
-  describe "removing items from a completed order" do
-    let(:order) { create(:completed_order_with_totals) }
-    let!(:line_item) { order.reload.line_items.first }
-    let(:params) { { order: {} } }
+  describe "request to remove items from a completed order" do
+    let(:order) { create(:completed_order_with_totals, line_items_count: 2) }
+    let(:params) { { order: { line_items_attributes: {
+        "0" => { id: order.line_items.first.id, quantity: 1 },
+        "1" => { id: order.line_items.second.id, quantity: 0 }
+    } } } }
 
     before { allow(subject).to receive(:order_to_update) { order } }
 
-    context "when more than one item remains" do
-      before do
-        params[:order][:line_items_attributes] = { "0" => {quantity: "1", id: line_item.id} }
-      end
-
-      it "removes the item" do
+    context "one item would remain in the order" do
+      it "removes the items" do
         spree_post :update, params
         expect(flash[:error]).to be nil
         expect(response).to redirect_to spree.order_path(order)
@@ -260,16 +258,14 @@ describe Spree::OrdersController, type: :controller do
       end
     end
 
-    context "when only one item remains" do
-      before do
-        params[:order][:line_items_attributes] = { "0" => {quantity: "0", id: line_item.id} }
-      end
+    context "no item would remain in the order" do
+      before { params[:order][:line_items_attributes]["0"][:quantity] = 0 }
 
-      it "does not remove the item, flash suggests cancellation" do
+      it "does not remove items, flash suggests cancellation" do
         spree_post :update, params
         expect(flash[:error]).to eq I18n.t(:orders_cannot_remove_the_final_item)
         expect(response).to redirect_to spree.order_path(order)
-        expect(order.reload.line_items.count).to eq 1
+        expect(order.reload.line_items.count).to eq 2
       end
     end
   end
