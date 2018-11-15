@@ -53,9 +53,9 @@ feature %q{
       end
 
       it "displays a column for order date" do
-        expect(page).to have_selector "th.date", text: "ORDER DATE", :visible => true
-        expect(page).to have_selector "td.date", text: o1.completed_at.strftime('%B %d, %Y'), :visible => true
-        expect(page).to have_selector "td.date", text: o2.completed_at.strftime('%B %d, %Y'), :visible => true
+        expect(page).to have_selector "th.date", text: I18n.t("admin.orders.bulk_management.order_date").upcase, visible: true
+        expect(page).to have_selector "td.date", text: o1.completed_at.strftime('%B %d, %Y'), visible: true
+        expect(page).to have_selector "td.date", text: o2.completed_at.strftime('%B %d, %Y'), visible: true
       end
 
       it "displays a column for producer" do
@@ -240,7 +240,7 @@ feature %q{
         visit '/admin/orders/bulk_management'
 
         expect(page).to have_selector "th", :text => "NAME"
-        expect(page).to have_selector "th", :text => "ORDER DATE"
+        expect(page).to have_selector "th", text: I18n.t("admin.orders.bulk_management.order_date").upcase
         expect(page).to have_selector "th", :text => "PRODUCER"
         expect(page).to have_selector "th", :text => "PRODUCT: UNIT"
         expect(page).to have_selector "th", :text => "QUANTITY"
@@ -252,7 +252,7 @@ feature %q{
 
         expect(page).to have_no_selector "th", :text => "PRODUCER"
         expect(page).to have_selector "th", :text => "NAME"
-        expect(page).to have_selector "th", :text => "ORDER DATE"
+        expect(page).to have_selector "th", text: I18n.t("admin.orders.bulk_management.order_date").upcase
         expect(page).to have_selector "th", :text => "PRODUCT: UNIT"
         expect(page).to have_selector "th", :text => "QUANTITY"
         expect(page).to have_selector "th", :text => "MAX"
