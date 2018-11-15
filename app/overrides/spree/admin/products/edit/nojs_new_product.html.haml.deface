@@ -1,3 +1,0 @@
-/ replace_contents "#new_product_link"
-
-= button_link_to t(:new_product), new_object_url, {:icon => 'icon-plus', :id => 'admin_new_product' }

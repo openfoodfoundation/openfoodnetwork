@@ -1,3 +1,0 @@
-/ insert_after "div[class='variant_units_form']"
-
-= render 'spree/admin/products/primary_taxon_form', f: f
