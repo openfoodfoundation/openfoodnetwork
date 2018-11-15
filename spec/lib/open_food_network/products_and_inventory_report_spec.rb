@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module OpenFoodNetwork
-  describe ProductsAndInventoryReport do
+  xdescribe ProductsAndInventoryReport do
     context "As a site admin" do
       let(:user) do
         user = create(:user)
