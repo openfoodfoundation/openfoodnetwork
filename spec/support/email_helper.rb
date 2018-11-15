@@ -5,7 +5,7 @@ module OpenFoodNetwork
     # It's here in a single place to allow an easy upgrade to Spree 2 which
     # needs a different implementation of this method.
     def setup_email
-      create(:mail_method)
+      Spree::Config[:mails_from] = "test@ofn.example.org"
     end
   end
 end
