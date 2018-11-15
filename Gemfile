@@ -13,7 +13,7 @@ gem 'nokogiri', '>= 1.6.7.1'
 gem 'web', path: './engines/web'
 
 gem 'pg'
-gem 'spree', github: 'openfoodfoundation/spree', branch: 'step-6a', ref: '69db1c090f3711088d84b524f1b94d25e6d21616'
+gem 'spree', github: 'openfoodfoundation/spree', branch: 'step-6a', ref: '41906362d931695e0616194341a68d2c4c85aaaf'
 gem 'spree_i18n', github: 'spree/spree_i18n', branch: '1-3-stable'
 gem 'spree_auth_devise', github: 'openfoodfoundation/spree_auth_devise', branch: 'spree-upgrade-intermediate'
 
