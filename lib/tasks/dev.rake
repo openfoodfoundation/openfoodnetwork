@@ -1,8 +1,5 @@
-
 namespace :openfoodnetwork do
-
   namespace :dev do
-
     desc 'load sample data'
     task load_sample_data: :environment do
       require_relative '../../spec/factories'
@@ -34,11 +31,16 @@ namespace :openfoodnetwork do
       # -- Taxonomies
       unless Spree::Taxonomy.find_by_name 'Products'
         puts "[#{task_name}] Seeding taxonomies"
-        taxonomy = Spree::Taxonomy.find_by_name('Products') || FactoryBot.create(:taxonomy, name: 'Products')
+        taxonomy = Spree::Taxonomy.find_by_name('Products') || FactoryBot.create(:taxonomy,
+                                                                                 name: 'Products')
         taxonomy_root = taxonomy.root
 
-        ['Vegetables', 'Fruit', 'Oils', 'Preserves and Sauces', 'Dairy', 'Meat and Fish'].each do |taxon_name|
-          FactoryBot.create(:taxon, name: taxon_name, parent_id: taxonomy_root.id)
+        taxons = ['Vegetables', 'Fruit', 'Oils', 'Preserves and Sauces', 'Dairy', 'Meat and Fish']
+        taxons.each do |taxon_name|
+          FactoryBot.create(:taxon,
+                            name: taxon_name,
+                            parent_id: taxonomy_root.id,
+                            taxonomy_id: taxonomy.id)
         end
       end
 
@@ -46,140 +48,251 @@ namespace :openfoodnetwork do
       unless Spree::Address.find_by_zipcode "3160"
         puts "[#{task_name}] Seeding addresses"
 
-        FactoryBot.create(:address, address1: "25 Myrtle Street", zipcode: "3153", city: "Bayswater", country: country, state: state)
-        FactoryBot.create(:address, address1: "6 Rollings Road", zipcode: "3156", city: "Upper Ferntree Gully", country: country, state: state)
-        FactoryBot.create(:address, address1: "72 Lake Road", zipcode: "3130", city: "Blackburn", country: country, state: state)
-        FactoryBot.create(:address, address1: "7 Verbena Street", zipcode: "3195", city: "Mordialloc", country: country, state: state)
-        FactoryBot.create(:address, address1: "20 Galvin Street", zipcode: "3018", city: "Altona", country: country, state: state)
-        FactoryBot.create(:address, address1: "59 Websters Road", zipcode: "3106", city: "Templestowe", country: country, state: state)
-        FactoryBot.create(:address, address1: "17 Torresdale Drive", zipcode: "3155", city: "Boronia", country: country, state: state)
-        FactoryBot.create(:address, address1: "21 Robina CRT", zipcode: "3764", city: "Kilmore", country: country, state: state)
-        FactoryBot.create(:address, address1: "25 Kendall Street", zipcode: "3134", city: "Ringwood", country: country, state: state)
-        FactoryBot.create(:address, address1: "2 Mines Road", zipcode: "3135", city: "Ringwood East", country: country, state: state)
-        FactoryBot.create(:address, address1: "183 Millers Road", zipcode: "3025", city: "Altona North", country: country, state: state)
-        FactoryBot.create(:address, address1: "310 Pascoe Vale Road", zipcode: "3040", city: "Essendon", country: country, state: state)
-        FactoryBot.create(:address, address1: "6 Martin Street", zipcode: "3160", city: "Belgrave", country: country, state: state)
+        FactoryBot.create(:address,
+                          address1: "25 Myrtle Street",
+                          zipcode: "3153",
+                          city: "Bayswater",
+                          country: country,
+                          state: state)
+        FactoryBot.create(:address,
+                          address1: "6 Rollings Road",
+                          zipcode: "3156",
+                          city: "Upper Ferntree Gully",
+                          country: country,
+                          state: state)
+        FactoryBot.create(:address,
+                          address1: "72 Lake Road",
+                          zipcode: "3130",
+                          city: "Blackburn",
+                          country: country,
+                          state: state)
+        FactoryBot.create(:address,
+                          address1: "7 Verbena Street",
+                          zipcode: "3195",
+                          city: "Mordialloc",
+                          country: country,
+                          state: state)
+        FactoryBot.create(:address,
+                          address1: "20 Galvin Street",
+                          zipcode: "3018",
+                          city: "Altona",
+                          country: country,
+                          state: state)
+        FactoryBot.create(:address,
+                          address1: "59 Websters Road",
+                          zipcode: "3106",
+                          city: "Templestowe",
+                          country: country,
+                          state: state)
+        FactoryBot.create(:address,
+                          address1: "17 Torresdale Drive",
+                          zipcode: "3155",
+                          city: "Boronia",
+                          country: country,
+                          state: state)
+        FactoryBot.create(:address,
+                          address1: "21 Robina CRT",
+                          zipcode: "3764",
+                          city: "Kilmore",
+                          country: country,
+                          state: state)
+        FactoryBot.create(:address,
+                          address1: "25 Kendall Street",
+                          zipcode: "3134",
+                          city: "Ringwood",
+                          country: country,
+                          state: state)
+        FactoryBot.create(:address,
+                          address1: "2 Mines Road",
+                          zipcode: "3135",
+                          city: "Ringwood East",
+                          country: country,
+                          state: state)
+        FactoryBot.create(:address,
+                          address1: "183 Millers Road",
+                          zipcode: "3025",
+                          city: "Altona North",
+                          country: country,
+                          state: state)
+        FactoryBot.create(:address,
+                          address1: "310 Pascoe Vale Road",
+                          zipcode: "3040",
+                          city: "Essendon",
+                          country: country,
+                          state: state)
+        FactoryBot.create(:address,
+                          address1: "6 Martin Street",
+                          zipcode: "3160",
+                          city: "Belgrave",
+                          country: country,
+                          state: state)
       end
 
       # -- Enterprises
-      unless Enterprise.count > 1
+      if Enterprise.count < 2
         puts "[#{task_name}] Seeding enterprises"
 
-        3.times { FactoryBot.create(:supplier_enterprise, address: Spree::Address.find_by_zipcode("3160")) }
+        3.times do
+          FactoryBot.create(:supplier_enterprise,
+                            address: Spree::Address.find_by_zipcode("3160"))
+        end
 
-        FactoryBot.create(:distributor_enterprise, name: "Green Grass", address: Spree::Address.find_by_zipcode("3153"))
-        FactoryBot.create(:distributor_enterprise, name: "AusFarmers United", address: Spree::Address.find_by_zipcode("3156"))
-        FactoryBot.create(:distributor_enterprise, name: "Blackburn FreeGrossers", address: Spree::Address.find_by_zipcode("3130"))
-        FactoryBot.create(:distributor_enterprise, name: "MegaFoods", address: Spree::Address.find_by_zipcode("3195"))
-        FactoryBot.create(:distributor_enterprise, name: "Eco Butchers", address: Spree::Address.find_by_zipcode("3018"))
-        FactoryBot.create(:distributor_enterprise, name: "Western Wines", address: Spree::Address.find_by_zipcode("3106"))
-        FactoryBot.create(:distributor_enterprise, name: "QuickFresh", address: Spree::Address.find_by_zipcode("3155"))
-        FactoryBot.create(:distributor_enterprise, name: "Fooderers", address: Spree::Address.find_by_zipcode("3764"))
-        FactoryBot.create(:distributor_enterprise, name: "Food Local", address: Spree::Address.find_by_zipcode("3134"))
-        FactoryBot.create(:distributor_enterprise, name: "Green Food Trading Corporation", address: Spree::Address.find_by_zipcode("3135"))
-        FactoryBot.create(:distributor_enterprise, name: "Better Food", address: Spree::Address.find_by_zipcode("3025"))
-        FactoryBot.create(:distributor_enterprise, name: "Gippsland Poultry", address: Spree::Address.find_by_zipcode("3040"))
+        FactoryBot.create(:distributor_enterprise,
+                          name: "Green Grass",
+                          address: Spree::Address.find_by_zipcode("3153"))
+        FactoryBot.create(:distributor_enterprise,
+                          name: "AusFarmers United",
+                          address: Spree::Address.find_by_zipcode("3156"))
+        FactoryBot.create(:distributor_enterprise,
+                          name: "Blackburn FreeGrossers",
+                          address: Spree::Address.find_by_zipcode("3130"))
+        FactoryBot.create(:distributor_enterprise,
+                          name: "MegaFoods",
+                          address: Spree::Address.find_by_zipcode("3195"))
+        FactoryBot.create(:distributor_enterprise,
+                          name: "Eco Butchers",
+                          address: Spree::Address.find_by_zipcode("3018"))
+        FactoryBot.create(:distributor_enterprise,
+                          name: "Western Wines",
+                          address: Spree::Address.find_by_zipcode("3106"))
+        FactoryBot.create(:distributor_enterprise,
+                          name: "QuickFresh",
+                          address: Spree::Address.find_by_zipcode("3155"))
+        FactoryBot.create(:distributor_enterprise,
+                          name: "Fooderers",
+                          address: Spree::Address.find_by_zipcode("3764"))
+        FactoryBot.create(:distributor_enterprise,
+                          name: "Food Local",
+                          address: Spree::Address.find_by_zipcode("3134"))
+        FactoryBot.create(:distributor_enterprise,
+                          name: "Green Food Trading Corporation",
+                          address: Spree::Address.find_by_zipcode("3135"))
+        FactoryBot.create(:distributor_enterprise,
+                          name: "Better Food",
+                          address: Spree::Address.find_by_zipcode("3025"))
+        FactoryBot.create(:distributor_enterprise,
+                          name: "Gippsland Poultry",
+                          address: Spree::Address.find_by_zipcode("3040"))
       end
 
       # -- Enterprise users
-      unless Spree::User.count > 1
+      if Spree::User.count < 2
         puts "[#{task_name}] Seeding enterprise users"
 
         pw = "spree123"
 
-        u = FactoryBot.create(:user, email: "sup@example.com", password: pw, password_confirmation: pw)
+        u = FactoryBot.create(:user,
+                              email: "sup@example.com",
+                              password: pw,
+                              password_confirmation: pw)
         u.enterprises << Enterprise.is_primary_producer.first
         u.enterprises << Enterprise.is_primary_producer.second
-        puts "  Supplier User created:    #{u.email}/#{pw}  (" + u.enterprise_roles.map{ |er| er.enterprise.name}.join(", ") + ")"
 
-        u = FactoryBot.create(:user, email: "dist@example.com", password: pw, password_confirmation: pw)
+        user_enterprises = u.enterprise_roles.map{ |er| er.enterprise.name }.join(", ")
+        puts "  Supplier User created:    #{u.email}/#{pw}  (" + user_enterprises + ")"
+
+        u = FactoryBot.create(:user,
+                              email: "dist@example.com",
+                              password: pw,
+                              password_confirmation: pw)
         u.enterprises << Enterprise.is_distributor.first
         u.enterprises << Enterprise.is_distributor.second
-        puts "  Distributor User created: #{u.email}/#{pw} (" + u.enterprise_roles.map{ |er| er.enterprise.name}.join(", ") + ")"
+        user_enterprises = u.enterprise_roles.map{ |er| er.enterprise.name }.join(", ")
+        puts "  Distributor User created: #{u.email}/#{pw} (" + user_enterprises + ")"
       end
 
       # -- Enterprise fees
-      unless EnterpriseFee.count > 1
+      if EnterpriseFee.count < 2
         Enterprise.is_distributor.each do |distributor|
           FactoryBot.create(:enterprise_fee, enterprise: distributor)
         end
       end
 
       # -- Enterprise Payment Methods
-      unless Spree::PaymentMethod.count > 1
+      if Spree::PaymentMethod.count < 2
         Enterprise.is_distributor.each do |distributor|
-          FactoryBot.create(:payment_method, distributors: [distributor], name: "Cheque (#{distributor.name})", environment: 'development')
+          FactoryBot.create(:payment_method,
+                            distributors: [distributor],
+                            name: "Cheque (#{distributor.name})",
+                            environment: 'development')
         end
       end
 
       # -- Products
-      unless Spree::Product.count > 0
+      if Spree::Product.count < 1
         puts "[#{task_name}] Seeding products"
 
+        distributors = Enterprise.is_distributor
+
         prod1 = FactoryBot.create(:product,
-                           name: 'Garlic', price: 20.00,
-                           supplier: Enterprise.is_primary_producer[0],
-                           taxons: [Spree::Taxon.find_by_name('Vegetables')])
+                                  name: 'Garlic',
+                                  price: 20.00,
+                                  supplier: Enterprise.is_primary_producer[0],
+                                  taxons: [Spree::Taxon.find_by_name('Vegetables')])
 
         ProductDistribution.create(product: prod1,
-                                   distributor: Enterprise.is_distributor[0],
-                                   enterprise_fee: Enterprise.is_distributor[0].enterprise_fees.first)
-
+                                   distributor: distributors[0],
+                                   enterprise_fee: distributors[0].enterprise_fees.first)
 
         prod2 = FactoryBot.create(:product,
-                           name: 'Fuji Apple', price: 5.00,
-                           supplier: Enterprise.is_primary_producer[1],
-                           taxons: [Spree::Taxon.find_by_name('Fruit')])
+                                  name: 'Fuji Apple',
+                                  price: 5.00,
+                                  supplier: Enterprise.is_primary_producer[1],
+                                  taxons: [Spree::Taxon.find_by_name('Fruit')])
 
         ProductDistribution.create(product: prod2,
-                                   distributor: Enterprise.is_distributor[1],
-                                   enterprise_fee: Enterprise.is_distributor[1].enterprise_fees.first)
+                                   distributor: distributors[1],
+                                   enterprise_fee: distributors[1].enterprise_fees.first)
 
         prod3 = FactoryBot.create(:product,
-                           name: 'Beef - 5kg Trays', price: 50.00,
-                           supplier: Enterprise.is_primary_producer[2],
-                           taxons: [Spree::Taxon.find_by_name('Meat and Fish')])
+                                  name: 'Beef - 5kg Trays',
+                                  price: 50.00,
+                                  supplier: Enterprise.is_primary_producer[2],
+                                  taxons: [Spree::Taxon.find_by_name('Meat and Fish')])
 
         ProductDistribution.create(product: prod3,
-                                   distributor: Enterprise.is_distributor[2],
-                                   enterprise_fee: Enterprise.is_distributor[2].enterprise_fees.first)
+                                   distributor: distributors[2],
+                                   enterprise_fee: distributors[2].enterprise_fees.first)
 
         prod4 = FactoryBot.create(:product,
-                                   name: 'Carrots', price: 3.00,
-                                   supplier: Enterprise.is_primary_producer[2],
-                                   taxons: [Spree::Taxon.find_by_name('Meat and Fish')])
+                                  name: 'Carrots',
+                                  price: 3.00,
+                                  supplier: Enterprise.is_primary_producer[2],
+                                  taxons: [Spree::Taxon.find_by_name('Meat and Fish')])
 
         ProductDistribution.create(product: prod4,
-                                   distributor: Enterprise.is_distributor[2],
-                                   enterprise_fee: Enterprise.is_distributor[2].enterprise_fees.first)
+                                   distributor: distributors[2],
+                                   enterprise_fee: distributors[2].enterprise_fees.first)
 
         prod5 = FactoryBot.create(:product,
-                                   name: 'Potatoes', price: 2.00,
-                                   supplier: Enterprise.is_primary_producer[2],
-                                   taxons: [Spree::Taxon.find_by_name('Meat and Fish')])
+                                  name: 'Potatoes',
+                                  price: 2.00,
+                                  supplier: Enterprise.is_primary_producer[2],
+                                  taxons: [Spree::Taxon.find_by_name('Meat and Fish')])
 
         ProductDistribution.create(product: prod5,
-                                   distributor: Enterprise.is_distributor[2],
-                                   enterprise_fee: Enterprise.is_distributor[2].enterprise_fees.first)
+                                   distributor: distributors[2],
+                                   enterprise_fee: distributors[2].enterprise_fees.first)
 
         prod6 = FactoryBot.create(:product,
-                                   name: 'Tomatoes', price: 2.00,
-                                   supplier: Enterprise.is_primary_producer[2],
-                                   taxons: [Spree::Taxon.find_by_name('Meat and Fish')])
+                                  name: 'Tomatoes',
+                                  price: 2.00,
+                                  supplier: Enterprise.is_primary_producer[2],
+                                  taxons: [Spree::Taxon.find_by_name('Meat and Fish')])
 
         ProductDistribution.create(product: prod6,
-                                   distributor: Enterprise.is_distributor[2],
-                                   enterprise_fee: Enterprise.is_distributor[2].enterprise_fees.first)
+                                   distributor: distributors[2],
+                                   enterprise_fee: distributors[2].enterprise_fees.first)
 
         prod7 = FactoryBot.create(:product,
-                                   name: 'Potatoes', price: 2.00,
-                                   supplier: Enterprise.is_primary_producer[2],
-                                   taxons: [Spree::Taxon.find_by_name('Meat and Fish')])
+                                  name: 'Potatoes',
+                                  price: 2.00,
+                                  supplier: Enterprise.is_primary_producer[2],
+                                  taxons: [Spree::Taxon.find_by_name('Meat and Fish')])
 
         ProductDistribution.create(product: prod7,
-                                   distributor: Enterprise.is_distributor[2],
-                                   enterprise_fee: Enterprise.is_distributor[2].enterprise_fees.first)
-
+                                   distributor: distributors[2],
+                                   enterprise_fee: distributors[2].enterprise_fees.first)
       end
 
       enterprise2 = Enterprise.find_by_name('Enterprise 2')

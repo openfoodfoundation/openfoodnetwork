@@ -80,8 +80,6 @@ class Enterprise < ActiveRecord::Base
   before_validation :set_unused_address_fields
   after_validation :geocode_address
 
-  validates :instagram, format: /\A@[a-zA-Z0-9._]{1,30}\z/, allow_blank: true
-
   after_touch :touch_distributors
   after_create :set_default_contact
   after_create :relate_to_owners_enterprises
@@ -332,10 +330,6 @@ class Enterprise < ActiveRecord::Base
     abn.present?
   end
 
-  def instagram=(value)
-    write_attribute(:instagram, value.try(:gsub, instagram_regex, '@\1'))
-  end
-
   protected
 
   def devise_mailer
@@ -343,10 +337,6 @@ class Enterprise < ActiveRecord::Base
   end
 
   private
-
-  def instagram_regex
-    %r{\A(?:https?://)?(?:www\.)?instagram\.com/([a-zA-Z0-9._]{1,30})/?\z}
-  end
 
   def name_is_unique
     dups = Enterprise.where(name: name)
