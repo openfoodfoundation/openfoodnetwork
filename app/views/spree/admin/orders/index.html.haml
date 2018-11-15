@@ -34,7 +34,8 @@
             %span{'ng-show' => "sorting == 'completed_at desc' || sorting === undefined"}= "&#x25BC;".html_safe
       - else
         %th
-          = render partial: 'sortable_header', locals: {column_name: 'created_at'}
+          = render partial: 'sortable_header', locals: {column_name: 'completed_at'}
+
       - ['number', 'state', 'payment_state', 'shipment_state', 'email', 'total'].each do |column_name|
         %th
           = render partial: 'sortable_header', locals: {column_name: column_name}
@@ -44,7 +45,7 @@
       %td.align-center
         {{order.distributor_name}}
       %td.align-center
-        = @show_only_completed ? '{{order.completed_at}}' : '{{order.created_at}}'
+        {{order.completed_at}}
       %td
         %a{'ng-href' => '{{order.show_path}}'}
           {{order.number}}
