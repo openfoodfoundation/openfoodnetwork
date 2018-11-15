@@ -1441,7 +1441,6 @@ Rails/HttpStatus:
     - 'app/controllers/shop_controller.rb'
     - 'app/controllers/spree/admin/line_items_controller_decorator.rb'
     - 'app/controllers/spree/admin/products_controller_decorator.rb'
-    - 'app/controllers/spree/credit_cards_controller.rb'
     - 'app/controllers/spree/store_controller_decorator.rb'
     - 'app/controllers/stripe/callbacks_controller.rb'
     - 'app/controllers/stripe/webhooks_controller.rb'
@@ -1976,7 +1975,6 @@ Style/HashSyntax:
     - 'spec/controllers/spree/admin/payments_controller_spec.rb'
     - 'spec/controllers/spree/api/products_controller_spec.rb'
     - 'spec/controllers/spree/api/variants_controller_spec.rb'
-    - 'spec/controllers/spree/credit_cards_controller_spec.rb'
     - 'spec/controllers/spree/user_sessions_controller_spec.rb'
     - 'spec/controllers/user_registrations_controller_spec.rb'
     - 'spec/features/admin/bulk_order_management_spec.rb'
@@ -2255,7 +2253,6 @@ Style/RedundantReturn:
   Exclude:
     - 'app/controllers/admin/enterprise_fees_controller.rb'
     - 'app/controllers/admin/enterprises_controller.rb'
-    - 'app/controllers/spree/credit_cards_controller.rb'
     - 'app/models/enterprise_fee.rb'
     - 'app/models/spree/adjustment_decorator.rb'
     - 'app/models/spree/classification_decorator.rb'
