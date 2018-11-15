@@ -26,19 +26,16 @@
     %tr
       %th
         = t(:products_distributor)
-      - if @show_only_completed
         %th
           %a{'ng-click' => "sortOptions.toggle('completed_at')"}
             = t(:completed_at, scope: 'activerecord.attributes.spree/order')
             %span{'ng-show' => "sorting == 'completed_at asc'"}= "&#x25B2;".html_safe
             %span{'ng-show' => "sorting == 'completed_at desc' || sorting === undefined"}= "&#x25BC;".html_safe
-      - else
-        %th
-          = render partial: 'sortable_header', locals: {column_name: 'completed_at'}
 
       - ['number', 'state', 'payment_state', 'shipment_state', 'email', 'total'].each do |column_name|
         %th
           = render partial: 'sortable_header', locals: {column_name: column_name}
+
       %th.actions
   %tbody
     %tr{ng: {repeat: 'order in orders track by $index', class: {even: "'even'", odd: "'odd'"}}, 'ng-class' => "'state-{{order.state}}'"}
