@@ -30,6 +30,13 @@ describe "ordersCtrl", ->
       expect(Orders.index).toHaveBeenCalled()
       expect($scope.orders).toEqual orders
 
+    it "fetches them sorted by completed_at by default", ->
+      $scope.initialise()
+      expect(Orders.index).toHaveBeenCalledWith(jasmine.objectContaining({
+        'q[s]': 'completed_at desc'
+      }))
+
+
   describe "using pagination", ->
     it "changes the page", ->
       $scope.changePage(2)

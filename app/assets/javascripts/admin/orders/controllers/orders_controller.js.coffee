@@ -30,7 +30,7 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
       'q[distributor_id_in]': $scope['q']['distributor_id_in'],
       'q[order_cycle_id_in]': $scope['q']['order_cycle_id_in'],
       'q[order_cycle_id_in]': $scope['q']['order_cycle_id_in'],
-      'q[s]': $scope.sorting || 'id desc',
+      'q[s]': $scope.sorting || 'completed_at desc',
       per_page: $scope.per_page,
       page: page
     })
