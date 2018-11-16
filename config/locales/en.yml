@@ -1765,6 +1765,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   orders_bought_edit_button: Edit confirmed items
   orders_bought_already_confirmed: "* already confirmed"
   orders_confirm_cancel: Are you sure you want to cancel this order?
+  order_processed_successfully: "Your order has been processed successfully"
 
   products_cart_distributor_choice: "Distributor for your order:"
   products_cart_distributor_change: "Your distributor for this order will be changed to %{name} if you add this product to your cart."
