@@ -223,7 +223,8 @@ describe CheckoutController, type: :controller do
     let!(:payment_failed) { create(:payment, order: order, state: 'failed') }
 
     before do
-      order.update_attribute(:shipping_method_id, shipment_pending.shipping_method_id)
+      order.shipments << shipment_pending
+      order.save
       controller.instance_variable_set(:@order, order.reload)
     end
 
