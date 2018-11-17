@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Admin::ProxyOrdersController, type: :controller do
+xdescribe Admin::ProxyOrdersController, type: :controller do
   include AuthenticationWorkflow
 
   describe 'cancel' do
