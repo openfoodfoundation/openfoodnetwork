@@ -64,19 +64,18 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
       let(:user) { create(:user) }
 
       def fill_out_form
-        toggle_shipping
         choose sm1.name
-        toggle_payment
         choose pm1.name
-        toggle_details
+
         within "#details" do
           fill_in "First Name", with: "Will"
           fill_in "Last Name", with: "Marshall"
           fill_in "Email", with: "test@test.com"
           fill_in "Phone", with: "0468363090"
         end
-        toggle_billing
+
         check "Save as default billing address"
+
         within "#billing" do
           fill_in "City", with: "Melbourne"
           fill_in "Postcode", with: "3066"
@@ -85,7 +84,6 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
           select "Victoria", from: "State"
         end
 
-        toggle_shipping
         check "Shipping address same as billing address?"
         check "Save as default shipping address"
       end
@@ -149,7 +147,6 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
         it "checks out successfully" do
           visit checkout_path
           choose sm2.name
-          toggle_payment
           choose pm1.name
 
           expect do
@@ -192,7 +189,6 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
 
           visit checkout_path
           fill_out_form
-          toggle_payment
           choose stripe_pm.name
         end
 
@@ -228,7 +224,6 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
       end
 
       it "shows a breakdown of the order price" do
-        toggle_shipping
         choose sm2.name
 
         page.should have_selector 'orderdetails .cart-total', text: with_currency(11.23)
@@ -242,7 +237,6 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
       end
 
       it "shows all shipping methods in order by name" do
-        toggle_shipping
         within '#shipping' do
           expect(page).to have_selector "label", count: 4 # Three shipping methods + instructions label
           labels = page.all('label').map(&:text)
@@ -254,7 +248,6 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
 
       context "when shipping method requires an address" do
         before do
-          toggle_shipping
           choose sm1.name
         end
         it "shows ship address forms when 'same as billing address' is unchecked" do
@@ -269,7 +262,6 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
 
         it "shows shipping methods allowed by the rule" do
           # No rules in effect
-          toggle_shipping
           page.should have_content "Frogs"
           page.should have_content "Donkeys"
           page.should have_content "Local"
@@ -315,7 +307,6 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
       before do
         visit checkout_path
         checkout_as_guest
-        toggle_payment
       end
 
       it "shows all available payment methods" do
@@ -326,16 +317,12 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
 
       describe "purchasing" do
         it "takes us to the order confirmation page when we submit a complete form" do
-          toggle_details
-
           within "#details" do
             fill_in "First Name", with: "Will"
             fill_in "Last Name", with: "Marshall"
             fill_in "Email", with: "test@test.com"
             fill_in "Phone", with: "0468363090"
           end
-
-          toggle_billing
 
           within "#billing" do
             fill_in "Address", with: "123 Your Face"
@@ -345,14 +332,10 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
             fill_in "Postcode", with: "3066"
           end
 
-          toggle_shipping
-
           within "#shipping" do
             choose sm2.name
             fill_in 'Any comments or special instructions?', with: "SpEcIaL NoTeS"
           end
-
-          toggle_payment
 
           within "#payment" do
             choose pm1.name
@@ -382,18 +365,16 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
 
         context "with basic details filled" do
           before do
-            toggle_shipping
             choose sm1.name
-            toggle_payment
             choose pm1.name
-            toggle_details
+
             within "#details" do
               fill_in "First Name", with: "Will"
               fill_in "Last Name", with: "Marshall"
               fill_in "Email", with: "test@test.com"
               fill_in "Phone", with: "0468363090"
             end
-            toggle_billing
+
             within "#billing" do
               fill_in "City", with: "Melbourne"
               fill_in "Postcode", with: "3066"
@@ -401,7 +382,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
               select "Australia", from: "Country"
               select "Victoria", from: "State"
             end
-            toggle_shipping
+
             check "Shipping address same as billing address?"
           end
 
@@ -441,7 +422,6 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
               expect(page).to have_selector ".transaction-fee td", text: with_currency(0.00)
               expect(page).to have_selector ".total", text: with_currency(11.23)
 
-              toggle_payment
               choose "#{pm2.name} (#{with_currency(5.67)})"
 
               expect(page).to have_selector ".transaction-fee td", text: with_currency(5.67)
@@ -463,7 +443,6 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
                 let!(:pm1) { create(:payment_method, distributors: [distributor], name: "Roger rabbit", type: gateway_type) }
 
                 it "takes us to the order confirmation page when submitted with a valid credit card" do
-                  toggle_payment
                   fill_in 'Card Number', with: "4111111111111111"
                   select 'February', from: 'secrets.card_month'
                   select (Date.current.year+1).to_s, from: 'secrets.card_year'
@@ -478,7 +457,6 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
                 end
 
                 it "shows the payment processing failed message when submitted with an invalid credit card" do
-                  toggle_payment
                   fill_in 'Card Number', with: "9999999988887777"
                   select 'February', from: 'secrets.card_month'
                   select (Date.current.year+1).to_s, from: 'secrets.card_year'
