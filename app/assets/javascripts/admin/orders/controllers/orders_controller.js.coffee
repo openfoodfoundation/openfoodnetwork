@@ -18,8 +18,8 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
 
   $scope.fetchResults = (page=1) ->
     Orders.index({
-      'q[created_at_lt]': $scope['q']['created_at_lt'],
-      'q[created_at_gt]': $scope['q']['created_at_gt'],
+      'q[completed_at_lt]': $scope['q']['completed_at_lt'],
+      'q[completed_at_gt]': $scope['q']['completed_at_gt'],
       'q[state_eq]': $scope['q']['state_eq'],
       'q[number_cont]': $scope['q']['number_cont'],
       'q[email_cont]': $scope['q']['email_cont'],
@@ -30,7 +30,7 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
       'q[distributor_id_in]': $scope['q']['distributor_id_in'],
       'q[order_cycle_id_in]': $scope['q']['order_cycle_id_in'],
       'q[order_cycle_id_in]': $scope['q']['order_cycle_id_in'],
-      'q[s]': $scope.sorting || 'id desc',
+      'q[s]': $scope.sorting || 'completed_at desc',
       per_page: $scope.per_page,
       page: page
     })
