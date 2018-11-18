@@ -169,6 +169,6 @@ feature "Order Management", js: true do
   end
 
   def be_confirmed_order_page
-    have_content /Order #\w+ Confirmed NOT PAID/
+    have_content /Order #\w+ Confirmed PAID/
   end
 end
