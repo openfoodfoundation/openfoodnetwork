@@ -145,11 +145,11 @@ feature "Order Management", js: true do
         expect(find("tr.variant-#{item2.variant.id}")).to have_content item2.product.name
         expect(find("tr.variant-#{item3.variant.id}")).to have_content item3.product.name
         expect(find("tr.order-adjustment")).to have_content "Shipping"
-        expect(find("tr.order-adjustment")).to have_content "$5.00"
+        expect(find("tr.order-adjustment")).to have_content "5.00"
 
         click_button I18n.t(:save_changes)
 
-        expect(find(".order-total.grand-total")).to have_content "$45.00"
+        expect(find(".order-total.grand-total")).to have_content "85.00"
         expect(item1.reload.quantity).to eq 2
 
         # Deleting an item
@@ -157,7 +157,7 @@ feature "Order Management", js: true do
           click_link "delete_line_item_#{item2.id}"
         end
 
-        expect(find(".order-total.grand-total")).to have_content "$35.00"
+        expect(find(".order-total.grand-total")).to have_content "75.00"
         expect(Spree::LineItem.find_by_id(item2.id)).to be nil
 
         # Cancelling the order
