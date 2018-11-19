@@ -1,28 +1,16 @@
-require 'combine_pdf'
-
 module Spree
   module Admin
     class InvoicesController < Spree::Admin::BaseController
-      def show
-        combined_pdf = CombinePDF.new
+      def create
+        Delayed::Job.enqueue BulkInvoiceJob.new(params[:order_ids], filename)
 
-        Spree::Order.where(id: params[:order_ids]).each do |order|
-          @order = order
-          pdf_data = render_to_string pdf: "invoice-#{order.number}.pdf",
-                                      template: invoice_template,
-                                      formats: [:html], encoding: "UTF-8"
-
-          combined_pdf << CombinePDF.parse(pdf_data)
-        end
-
-        send_data combined_pdf.to_pdf, filename: "invoices.pdf",
-                                       type: "application/pdf", disposition: :inline
+        render text: filename, status: :ok
       end
 
       private
 
-      def invoice_template
-        Spree::Config.invoice_style2? ? "spree/admin/orders/invoice2" : "spree/admin/orders/invoice"
+      def filename
+        @filename ||= Time.zone.now.to_i.to_s
       end
     end
   end

@@ -73,9 +73,7 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
     $scope.fetchResults(newPage)
 
   $scope.bulkInvoice = ->
-    params = ''
-    angular.forEach $scope.selected_orders, (order_id) ->
-      params += 'order_ids[]='+order_id+'&'
-
-    $window.open('/admin/orders/invoices/show?'+params)
-    true
+    $http.post("/admin/orders/invoices", {order_ids: $scope.selected_orders}).success (data) ->
+      console.log(data)
+    .error (data) ->
+      console.log(data)
