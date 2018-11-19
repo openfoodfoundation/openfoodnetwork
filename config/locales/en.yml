@@ -2590,6 +2590,10 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       orders:
         index:
           per_page: "%{results} per page"
+          view_file: View File
+          compiling_invoices: Compiling Invoices
+          bulk_invoice_created: Bulk Invoice created
+          bulk_invoice_failed: Failed to create Bulk Invoice
       resend_user_email_confirmation:
         resend: "Resend"
         sending: "Resend..."

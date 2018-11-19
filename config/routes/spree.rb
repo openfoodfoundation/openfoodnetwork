@@ -76,7 +76,9 @@ Spree::Core::Engine.routes.prepend do
       get :managed, on: :collection
 
       collection do
-        resources :invoices, only: [:create]
+        resources :invoices, only: [:create, :show] do
+          get :poll
+        end
       end
     end
   end

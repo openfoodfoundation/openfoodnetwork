@@ -114,3 +114,23 @@ table.index td.actions {
     }
   }
 }
+
+.bulk-invoice-modal {
+  text-align: center;
+
+  .modal-title {
+    margin-bottom: 1.5em;
+  }
+
+  .message {
+    margin-bottom: 1em;
+  }
+
+  .error {
+    margin-bottom: 1em;
+  }
+
+  .spinner {
+
+  }
+}

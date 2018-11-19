@@ -1,18 +1,15 @@
-BulkInvoiceJob = Struct.new(:order_ids, :filename) do
+class BulkInvoiceJob
   include WickedPdf::PdfHelper
 
-  def perform
-    generate_pdf
-  rescue StandardError => e
-    log e
+  def initialize(order_ids, directory, filename)
+    @order_ids = order_ids
+    @directory = directory
+    @filename = filename
   end
 
-  private
-
-  def generate_pdf
+  def perform
     pdf = CombinePDF.new
-    orders = Spree::Order.where(id: order_ids)
-    renderer = ApplicationController.new
+    orders = Spree::Order.where(id: @order_ids)
 
     orders.each do |order|
       invoice = renderer.render_to_string pdf: "invoice-#{order.number}.pdf",
@@ -23,21 +20,21 @@ BulkInvoiceJob = Struct.new(:order_ids, :filename) do
       pdf << CombinePDF.parse(invoice)
     end
 
-    pdf.save "#{directory}/#{filename}.pdf"
+    pdf.save "#{file_directory}/#{@filename}.pdf"
+  end
+
+  private
+
+  def renderer
+    ApplicationController.new
   end
 
   def invoice_template
     Spree::Config.invoice_style2? ? "spree/admin/orders/invoice2" : "spree/admin/orders/invoice"
   end
 
-  def log(error)
-    logger = Logger.new('bulkinvoice.log')
-    logger.debug e.message
-    logger.debug e.backtrace[0]
-  end
-
-  def directory
-    dir = 'tmp/invoices'
+  def file_directory
+    dir = @directory
     Dir.mkdir(dir) unless File.exist?(dir)
     dir
   end

@@ -1,4 +1,4 @@
-angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor, Orders, SortOptions, $http, $window, $filter) ->
+angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor, Orders, SortOptions, $http, $timeout, $window, $filter) ->
   $scope.RequestMonitor = RequestMonitor
   $scope.pagination = Orders.pagination
   $scope.orders = Orders.all
@@ -12,6 +12,7 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
   $scope.checkboxes = {}
   $scope.selected = false
   $scope.select_all = false
+  $scope.poll = 0
 
   $scope.initialise = ->
     $scope.per_page = 15
@@ -72,8 +73,32 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
     $scope.page = newPage
     $scope.fetchResults(newPage)
 
-  $scope.bulkInvoice = ->
-    $http.post("/admin/orders/invoices", {order_ids: $scope.selected_orders}).success (data) ->
-      console.log(data)
-    .error (data) ->
-      console.log(data)
+  $scope.createBulkInvoice = ->
+    $scope.invoice_id = null
+    $scope.poll = 1
+    $scope.loading = true
+    $scope.message = null
+    $scope.error = null
+
+    $http.post('/admin/orders/invoices', {order_ids: $scope.selected_orders}).success (data) ->
+      $scope.invoice_id = data
+      $scope.pollBulkInvoice()
+
+  $scope.pollBulkInvoice = ->
+    console.log('Polling... ')
+
+    $timeout(->
+      $http.get('/admin/orders/invoices/'+$scope.invoice_id+'/poll').success (data) ->
+        $scope.loading = false
+        $scope.message = t('js.admin.orders.index.bulk_invoice_created')
+
+      .error (data) ->
+        $scope.poll++
+
+        if $scope.poll > 10
+          $scope.loading = false
+          $scope.error = t('js.admin.orders.index.bulk_invoice_failed')
+          return
+
+        $scope.pollBulkInvoice()
+    , 5000)
