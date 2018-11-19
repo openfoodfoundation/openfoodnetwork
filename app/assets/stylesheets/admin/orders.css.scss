@@ -115,22 +115,18 @@ table.index td.actions {
   }
 }
 
-.bulk-invoice-modal {
+.simple-modal {
   text-align: center;
 
   .modal-title {
     margin-bottom: 1.5em;
   }
 
-  .message {
+  .message, .error {
     margin-bottom: 1em;
   }
 
   .error {
-    margin-bottom: 1em;
-  }
-
-  .spinner {
-
+    color: $warning-red;
   }
 }

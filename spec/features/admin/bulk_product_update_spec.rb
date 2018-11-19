@@ -759,9 +759,9 @@ feature %q{
       end
 
       # Shows upload modal
-      expect(page).to have_selector "div.reveal-modal.product-image-upload"
+      expect(page).to have_selector "div.reveal-modal"
 
-      within "div.reveal-modal.product-image-upload" do
+      within "div.reveal-modal" do
         # Shows preview of current image
         expect(page).to have_css "img.preview"
 
@@ -773,7 +773,7 @@ feature %q{
         expect(page).to have_no_css "img.spinner", visible: true
       end
 
-      expect(page).to have_no_selector "div.reveal-modal.product-image-upload"
+      expect(page).to have_no_selector "div.reveal-modal"
 
       within "table#listing_products tr#p_#{product.id}" do
         # New thumbnail is shown in image column
@@ -783,7 +783,7 @@ feature %q{
         page.find("a.image-modal").trigger('click')
       end
 
-      expect(page).to have_selector "div.reveal-modal.product-image-upload"
+      expect(page).to have_selector "div.reveal-modal"
     end
   end
 end
