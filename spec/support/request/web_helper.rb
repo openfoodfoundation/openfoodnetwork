@@ -105,10 +105,6 @@ module WebHelper
     click_link 'redirected' if response.status == 302
   end
 
-  def trigger_manual_event(field_selector, event = 'change')
-    page.execute_script("$('#{field_selector}').trigger('#{event}');")
-  end
-
   def dirty_form_dialog
     DirtyFormDialog.new(page)
   end
