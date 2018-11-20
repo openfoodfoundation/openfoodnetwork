@@ -451,7 +451,7 @@ GEM
       rspec-core (~> 3.0)
       ruby-progressbar (~> 1.4)
     geocoder (1.1.8)
-    gmaps4rails (1.5.6)
+    gmaps4rails (2.1.2)
     guard (2.14.1)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
