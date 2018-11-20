@@ -98,7 +98,7 @@ module Spree
       end
 
       it "caps at zero when stock is negative" do
-        v.update_attributes(on_hand: -2)
+        v.update_attributes! on_hand: -2
         li.cap_quantity_at_stock!
         expect(li.reload.quantity).to eq 0
       end

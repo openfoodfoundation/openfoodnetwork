@@ -16,6 +16,7 @@ module VariantStock
   extend ActiveSupport::Concern
 
   included do
+    attr_accessible :on_hand
     after_update :save_stock
   end
 
