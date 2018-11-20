@@ -2644,6 +2644,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       closes: closes
       closed: closed
       close_date_not_set: Close date not set
+    spree:
+      users:
+        order: "Order"
   producers:
     signup:
       start_free_profile: "Start with a free profile, and expand when you're ready!"
