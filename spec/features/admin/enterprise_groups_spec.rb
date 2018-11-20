@@ -40,8 +40,8 @@ feature %q{
     fill_in 'enterprise_group_address_attributes_address1', with: 'My Street'
     fill_in 'enterprise_group_address_attributes_city', with: 'Block'
     fill_in 'enterprise_group_address_attributes_zipcode', with: '0000'
-    select2_search 'Australia', :from => 'Country'
-    select2_search 'Victoria', :from => 'State'
+    select2_select 'Australia', :from => 'enterprise_group_address_attributes_country_id'
+    select2_select 'Victoria', :from => 'enterprise_group_address_attributes_state_id'
     click_button 'Create'
 
     page.should have_content 'Enterprise group "EGEGEG" has been successfully created!'
