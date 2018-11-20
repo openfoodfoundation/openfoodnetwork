@@ -14,7 +14,6 @@ ENV["RAILS_ENV"] ||= 'test'
 require_relative "../config/environment"
 require 'rspec/rails'
 require 'capybara'
-require 'database_cleaner'
 require 'rspec/retry'
 require 'paper_trail/frameworks/rspec'
 
@@ -69,7 +68,7 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = false
+  config.use_transactional_fixtures = true
 
   # If true, the base class of anonymous controllers will be inferred
   # automatically. This will be the default behavior in future versions of
@@ -82,16 +81,9 @@ RSpec.configure do |config|
   # Retry
   config.verbose_retry = true
 
-  # DatabaseCleaner
-  config.before(:suite)          { DatabaseCleaner.clean_with :deletion, {except: ['spree_countries', 'spree_states']} }
-  config.before(:each)           { DatabaseCleaner.strategy = :transaction }
-  config.before(:each, js: true) { DatabaseCleaner.strategy = :deletion, {except: ['spree_countries', 'spree_states']} }
-  config.before(:each)           { DatabaseCleaner.start }
-  config.after(:each)            { DatabaseCleaner.clean }
   config.after(:each, js:true) do
     Capybara.reset_sessions!
     RackRequestBlocker.wait_for_requests_complete
-    DatabaseCleaner.clean
   end
 
   def restart_phantomjs
