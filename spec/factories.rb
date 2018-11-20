@@ -296,7 +296,7 @@ FactoryBot.define do
   end
 
   factory :order_with_taxes, parent: :completed_order_with_totals do
-    ignore do
+    transient do
       product_price 0
       tax_rate_amount 0
       tax_rate_name ""
