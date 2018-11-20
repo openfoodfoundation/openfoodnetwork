@@ -78,12 +78,12 @@ feature "Using embedded shopfront functionality", js: true do
 
         toggle_shipping
         within "#shipping" do
-          find('input[type="radio"]').trigger 'click'
+          find('input[type="radio"]').click
         end
 
         toggle_payment
         within "#payment" do
-          find('input[type="radio"]').trigger 'click'
+          find('input[type="radio"]').click
         end
 
         place_order
