@@ -69,9 +69,13 @@ Tests, both unit and integration, are based on RSpec. To run the test suite, fir
 
     bundle exec rake db:test:prepare
 
-Then the tests can be run with:
+Then the main application tests can be run with:
 
     bundle exec rspec spec
+
+The tests of all custom engines can be run with:
+
+    bundle exec rake openfoodnetwork:specs:engines:rspec
 
 Note: If your OS is not explicitly supported in the setup guides then not all tests may pass. However, you may still be able to develop. Get in touch with the [#dev][slack-dev] channel on Slack to troubleshoot issues and determine if they will preclude you from contributing to OFN.
 
