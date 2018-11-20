@@ -567,7 +567,6 @@ es:
         tip: "Usa esta página para alterar la cantidad del producto en varios pedidos a la vez. Los productos pueden ser eliminados de los pedidos si es necesario. "
         shared: "¿Recurso compartido?"
         order_no: "Pedido Nº"
-        order_date: "Fecha de Pedido"
         max: "Max"
         product_unit: "Producto: Unidad"
         weight_volume: "Peso/Volumen"

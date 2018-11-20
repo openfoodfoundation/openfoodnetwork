@@ -77,9 +77,9 @@ fr_BE:
       subject: "%{enterprise} vous a invité comme manager"
   order_mailer:
     cancel_email:
-      dear_customer: "Cher Acheteur,"
-      instructions: "Votre commande a été ANNULEE. Veuillez en prendre note et conserver pour preuve si besoin cette confirmation."
-      order_summary_canceled: "Résumé de la commande [ANNULEE]"
+      dear_customer: "Cher Client,"
+      instructions: "Votre commande a été ANNULÉE. Veuillez en prendre note et conserver pour preuve si besoin cette confirmation."
+      order_summary_canceled: "Résumé de la commande [ANNULÉE]"
       subject: "Annulation de Commande"
       subtotal: "Sous-total : %{subtotal}"
       total: "Total Commande : %{total}"
@@ -88,7 +88,7 @@ fr_BE:
       subject: "Rapport de cycle de vente pour %{producer}"
   shipment_mailer:
     shipped_email:
-      dear_customer: "Cher Acheteur,"
+      dear_customer: "Cher Client,"
       instructions: "Votre commande a été expédiée"
       shipment_summary: "Résumé de l'envoi"
       subject: "Notification d'expédition"
@@ -130,12 +130,12 @@ fr_BE:
       other:
         title: Autre échec (%{count} commandes)
         explainer: Le traitement automatique de ces commandes a échoué pour une raison inconnue. Cela n'aurait pas dû arriver, veuillez nous contacter si vous constatez quelque chose d'anormal.
-  home: "OFF"
-  title: Open Food France
+  home: "OFN"
+  title: Open Food Network
   welcome_to: 'Bienvenue sur '
   site_meta_description: "Tout commence dans le sol. Avec ces paysans, agriculteurs, producteurs, engagés pour une agriculture durable et régénératrice, et désireux de partager leur histoire et leur passion avec fierté. Avec ces distributeurs souhaitant reconnecter les individus à leurs aliments et aux gens qui les produisent, soutenir les prises de conscience, dans une démarche de transparence, d'honnêteté, en assurant une juste rémunération des producteurs.  Avec ces acheteurs qui croient que de meilleures décisions d'achats peuvent ..."
-  search_by_name: Recherche par nom ou département...
-  producers_join: Les producteurs et autres hubs basés en France sont invités à rejoindre Open Food France.
+  search_by_name: Recherche par nom ou province...
+  producers_join: Les producteurs et autres magasins basés en Belgique sont invités à rejoindre Open Food Network.
   charges_sales_tax: Soumis à la TVA?
   print_invoice: "Imprimer la facture"
   print_ticket: "Imprimer ticket de caisse"
@@ -184,7 +184,7 @@ fr_BE:
   enterprises: Entreprises
   enterprise_groups: Groupes
   reports: Rapports
-  variant_overrides: Catalogue boutique
+  variant_overrides: Catalogue magasin
   spree_products: Produits
   all: Tous
   current: Actuel
@@ -211,13 +211,13 @@ fr_BE:
   notes: Commentaires
   error: Erreur
   processing_payment: Paiement en cours...
-  show_only_unfulfilled_orders: Ne montrer que les commandes non finalisées
+  show_only_unfulfilled_orders: Montrer que les commandes non finalisées
   filter_results: Filtrer les résultats
   quantity: Quantité
   pick_up: Retrait
   copy: Copier
   actions:
-    create_and_add_another: "Créer et ajouter nouveau"
+    create_and_add_another: "Créer et ajouter un nouveau"
   admin:
     begins_at: Commence
     begins_on: Commence le
@@ -244,7 +244,7 @@ fr_BE:
     shipping_method: Option d'expédition
     shop: Boutique
     sku: Référence produit
-    status_state: Département
+    status_state: Province
     tags: Tags
     variant: Variante
     weight: Poids
@@ -324,7 +324,7 @@ fr_BE:
         minimum_monthly_billable_turnover_tip: "Chiffre d'affaire mensuel au delà duquel le hub devra payer le service Open Food France. Les hubs n'atteignant pas ce chiffre d'affaire mensuel ne seront pas facturés, ni sur le montant fixe ni sur la commission variable."
         example_bill_calculator: "Exemple de calcul de facture"
         example_bill_calculator_legend: "Changer le chiffre d'affaire pour voir l'impact des paramètres définis à gauche."
-        example_monthly_turnover: "Exemple de CA mensuel"
+        example_monthly_turnover: "Exemple de chiffre d'affaire mensuel"
         example_monthly_turnover_tip: "Exemple de chiffre d'affaire mensuel qui sert de base de calcul pour voir quel est le montant qui sera facturé au hub concerné."
         cap_reached?: "Seuil atteint?"
         cap_reached?_tip: "On voit ici si le seuil (défini à gauche) a été atteint, en fonction du chiffre d'affaire et du paramétrage du seuil."
@@ -347,7 +347,7 @@ fr_BE:
         enable_receipt_printing?: Afficher les options d'impression de tickets de caisse dans le menu déroulant des commandes?
     stripe_connect_settings:
       edit:
-        title: "Stripe Connect"
+        title: "connexion Stripe"
         settings: "Paramètres"
         stripe_connect_enabled: Permettre aux boutiques d'accepter les paiements via Stripe Connect ?
         no_api_key_msg: Aucun compte Stripe n'existe pour cette entreprise.
@@ -358,7 +358,7 @@ fr_BE:
         account_id: Identifiant Compte
         business_name: Nom de l'entreprise
         charges_enabled: Frais activés
-        charges_enabled_warning: "Attention : les Frais ne sont pas activés pour votre compte"
+        charges_enabled_warning: "Attention : les frais ne sont pas activés pour votre compte"
         auth_fail_error: La clé de l'API est invalide
         empty_api_key_error_html: Aucune clé d'API Stripe n'a été fournie. Pour mettre en place votre clé d'API, veuillez suivre <a href="https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance" target="_blank">ces instructions</a>
     matomo_settings:
@@ -380,12 +380,12 @@ fr_BE:
         bill_address: "Adresse de facturation"
         ship_address: "Adresse de livraison"
         update_address_success: 'Adresse mise à jour avec succès.'
-        update_address_error: 'Oups! Veuillez remplir tous les champs obligatoires!'
+        update_address_error: 'Pardon! Veuillez remplir tous les champs obligatoires!'
         edit_bill_address: 'Modifier l''adresse de facturation'
         edit_ship_address: 'Modifier l''adresse de livraison'
         required_fileds: 'Les champs obligatoires sont indiqués avec un astérisque *'
         select_country: 'Choisir le pays'
-        select_state: 'Choisir le département'
+        select_state: 'Choisir la Province'
         edit: 'Modifier'
         update_address: 'Mettre à jour l''adresse'
         confirm_delete: 'Confirmer suppression?'
@@ -568,7 +568,6 @@ fr_BE:
         tip: "Utilisez cette page pour changer les quantités d'un produit sur plusieurs commandes. Les produits peuvent aussi être supprimés de toutes les commandes, si nécessaire."
         shared: "Ressource partagée?"
         order_no: "N° commande"
-        order_date: "Date commande"
         max: "Max"
         product_unit: "Produit: Unité"
         weight_volume: "Poids/Volume"
@@ -669,7 +668,7 @@ fr_BE:
           permalink: Nom pour URL (sans espace)
           permalink_tip: "Ce nom permanent est utilisé pour créer l'url de votre boutique: %{link}ma-boutique/shop"
           link_to_front: Lien URL de la boutique
-          link_to_front_tip: C'est le lien qui permet d'accéder en direct à votre boutique sur Open Food France.
+          link_to_front_tip: C'est le lien qui permet d'accéder en direct à votre boutique sur Open Food Network.
         shipping_methods:
           name: Nom
           applies: Active?
@@ -712,14 +711,14 @@ fr_BE:
           twitter_placeholder: ex. @OpenFoodNet_fr
         stripe_connect:
           connect_with_stripe: "Connecter avec Stripe"
-          stripe_connect_intro: "Pour accepter des paiements utilisant la carte bancaire, vous devez connecter votre compte Stripe à Open Food France. Cliquez sur le bouton à droite pour commencer."
+          stripe_connect_intro: "Pour accepter des paiements utilisant la carte bancaire, vous devez connecter votre compte Stripe à Open Food Network. Cliquez sur le bouton à droite pour commencer."
           stripe_account_connected: "Compte Stripe connecté."
           disconnect: "Déconnecter le compte"
           confirm_modal:
             title: Connecter avec Stripe
             part1: Stripe est un système de paiement qui permet aux boutiques sur Open Food France d'accepter des paiements par carte bancaire de leurs acheteurs.
             part2: Pour utiliser cette fonctionnalité, vous devez connecter votre compte Stripe à Open Food France. En cliquant sur "J'accepte" ci-dessous, vous serez redirigé vers le site internet de Stripe, où vous pourrez connecter votre compte existant ou en créer un si vous n'en avez pas encore.
-            part3: Cela permettra à Open Food France d'accepter en votre nom les paiements par carte de crédit en provenance de vos acheteurs. Veuillez noter que c'est à vous de gérer votre compte Stripe, de payer les frais dus à Stripe et de gérer les éventuels remboursements et le service après vente.
+            part3: Cela permettra à Open Food Network d'accepter en votre nom les paiements par carte de crédit en provenance de vos acheteurs. Veuillez noter que c'est à vous de gérer votre compte Stripe, de payer les frais dus à Stripe et de gérer les éventuels remboursements et le service après vente.
             i_agree: J'accepte
             cancel: Annuler
         tag_rules:
@@ -770,18 +769,18 @@ fr_BE:
         producer_profile: Profil producteur
         connect_ofn: Gagnez en visibilité via OFFrance
         always_free: GRATUIT
-        producer_description_text: Saisissez votre catalogue produits sur Open Food France, ce qui permettra aux hubs-distributeurs utilisant la plateforme de les proposer dans leurs boutiques (sur votre autorisation).
+        producer_description_text: Saisissez votre catalogue produits sur Open Food Network, ce qui permettra aux hubs-distributeurs utilisant la plateforme de les proposer dans leurs boutiques (sur votre autorisation).
         producer_shop: Boutique Producteur
         sell_your_produce: Vendez vos propres produits
-        producer_shop_description_text: Vendez vos produits en direct aux mangeurs/restaurateurs/etc. via votre propre Boutique Producteur sur Open Food France.
+        producer_shop_description_text: Vendez vos produits en direct aux mangeurs/restaurateurs/etc. via votre propre Boutique Producteur sur Open Food Network.
         producer_shop_description_text2: Une Boutique Producteur vous permet de vendre uniquement vos propres produits. Si vous voulez vendre d'autres produits, sélectionnez "Hub Producteur"
         producer_hub: Hub Producteur
         producer_hub_text: Vendez vos produits et ceux d'autres fournisseurs
         producer_hub_description_text: Vous vendez non seulement vos produits, mais aussi des produits d'autres producteurs de votre région, artisans, ou distributeurs afin de proposer une offre complète dans votre boutique. Vous soutenez ainsi le développement de votre système alimentaire territorial !
         profile: Profil uniquement
         get_listing: Référencez votre hub/point de vente
-        profile_description_text: Les visiteurs peuvent vous trouver sur Open Food France et vous contacter. Votre entreprise sera visible sur la carte.
-        hub_shop: Boutique Hub
+        profile_description_text: Les visiteurs peuvent vous trouver sur Open Food Network et vous contacter. Votre entreprise sera visible sur la carte.
+        hub_shop: Magasin Hub
         hub_shop_text: Vendez des produits de multiples fournisseurs différents
         hub_shop_description_text: Vous proposez des produits de différents producteurs de votre région, artisans, ou distributeurs afin de proposer une offre complète dans votre boutique. Vous soutenez ainsi le développement de votre système alimentaire territorial !
         choose_option: Veuilliez choisir l'une des options ci-dessus.
@@ -815,7 +814,7 @@ fr_BE:
         removed_successfully: "Bannière supprimée avec succès"
         immediate_removal_warning: "La bannière sera supprimée juste après votre confirmation."
       welcome:
-        welcome_title: Bienvenue sur Open Food France !
+        welcome_title: Bienvenue sur Open Food Network !
         welcome_text: 'Vous avez créé avec succès '
         next_step: Etape suivante
         choose_starting_point: 'Choisir votre type d''entreprise:'
@@ -916,7 +915,7 @@ fr_BE:
         user_guide: Guide utilisateur
     overview:
       enterprises_header:
-        ofn_with_tip: Les Entreprises sont des Producteurs et/ou Hubs distributeurs, et sont donc les organisations de base qui utilisent Open Food France.
+        ofn_with_tip: Les Entreprises sont des Producteurs et/ou Hubs distributeurs, et sont donc les organisations de base qui utilisent Open Food Network.
       enterprises_hubs_tabs:
         has_no_payment_methods: "%{enterprise} n'a pas défini de méthode de paiement"
         has_no_shipping_methods: "%{enterprise} n'a pas défini de méthode de livraison"
@@ -1075,7 +1074,7 @@ fr_BE:
         checkout: "Poursuivre la commande"
         already_ordered_products: "Déjà commandé dans ce cycle de vente"
     register_call:
-      selling_on_ofn: "Vous souhaitez proposer vos produits sur Open Food France?"
+      selling_on_ofn: "Vous souhaitez proposer vos produits sur Open Food Network?"
       register: "Démarrez ici"
     footer:
       footer_global_headline: "OFN Global"
@@ -1088,12 +1087,12 @@ fr_BE:
       footer_sites_community: "Communauté"
       footer_sites_userguide: "Guide utilisateur"
       footer_secure: "Fiable et sécurisé."
-      footer_secure_text: "Open Food France utilise un certificat type SSL (2048 bit RSA) pour garantir la confidentialité de votre commandes et données bancaires. Nos serveurs ne conservent pas vos données bancaires et les paiements sont effectués conformément aux normes de sécurité PCI."
+      footer_secure_text: "Open Food Network utilise un certificat type SSL (2048 bit RSA) pour garantir la confidentialité de votre commandes et données bancaires. Nos serveurs ne conservent pas vos données bancaires et les paiements sont effectués conformément aux normes de sécurité PCI."
       footer_contact_headline: "Restez en contact"
       footer_contact_email: "Nous écrire"
       footer_nav_headline: "Naviguer"
       footer_join_headline: "Nous rejoindre"
-      footer_join_body: "Créer un profil, une boutique ou un groupe sur Open Food France."
+      footer_join_body: "Créer un profil, une boutique ou un groupe sur Open Food Network."
       footer_join_cta: "Je veux en savoir plus!"
       footer_legal_call: "Lire nos"
       footer_legal_tos: "Termes et conditions"
@@ -1237,11 +1236,11 @@ fr_BE:
   card_has_been_removed: "Votre carte a été supprimée (numéro : %{number})"
   card_could_not_be_removed: Désolée, la carte n'a pas pu être supprimée :-(
   ie_warning_headline: "Votre navigateur n'est pas à jour :-("
-  ie_warning_text: "Pour une expérience optimale sur Open Food France, nous vous recommandons fortement de mettre à jour votre navigateur:"
+  ie_warning_text: "Pour une expérience optimale sur Open Food Network, nous vous recommandons fortement de mettre à jour votre navigateur:"
   ie_warning_chrome: Télécharger Chrome
   ie_warning_firefox: Télécharger Firefox
   ie_warning_ie: Mettre à jour Internet Explorer
-  ie_warning_other: "Impossible de mettre à jour votre navigateur? Essayez Open Food France sur votre smartphone :-)"
+  ie_warning_other: "Impossible de mettre à jour votre navigateur? Essayez Open Food Network sur votre smartphone :-)"
   legal:
     cookies_policy:
       header: "Notre usage des Cookies"
@@ -1271,12 +1270,12 @@ fr_BE:
       cookie_matomo_heatmap_desc: "Utilisé par Matomo pour enregistrer les sessions et \"cartes thermiques\" (représentations graphiques des données)"
       cookie_matomo_ignore_desc: "Cookie utilisé pour se souvenir qu'un utilisateur a souhaité explicitement que sa navigation ne soit pas analysée par Matomo, et exclure cet utilisateur du suivi du site."
       disabling_cookies_header: "Mises en garde sur la désactivation des cookies"
-      disabling_cookies_desc: "En tant qu'utilisateur, vous pouvez toujours autoriser, bloquer ou supprimer tous les cookies utilisés par Open Food France ou tout autre site web via les paramètres de votre navigateur. Chaque navigateur a un chemin spécifique pour effectuer cette désactivation:"
+      disabling_cookies_desc: "En tant qu'utilisateur, vous pouvez toujours autoriser, bloquer ou supprimer tous les cookies utilisés par Open Food Network ou tout autre site web via les paramètres de votre navigateur. Chaque navigateur a un chemin spécifique pour effectuer cette désactivation:"
       disabling_cookies_firefox_link: "https://support.mozilla.org/fr/kb/activer-desactiver-cookies-preferences"
       disabling_cookies_chrome_link: "https://support.google.com/chrome/answer/95647?hl=fr"
       disabling_cookies_ie_link: "https://support.microsoft.com/fr-fr/help/17442/windows-internet-explorer-delete-manage-cookies"
       disabling_cookies_safari_link: "https://www.apple.com/legal/privacy/fr-ww/cookies/"
-      disabling_cookies_note: "Mais gardez bien en tête que si vous supprimez ou modifiez un des cookies essentiels utilisés par Open Food France, le site ne fonctionnera pas correctement, vous ne pourrez pas ajouter des produits à votre panier ni finaliser votre commande par exemple."
+      disabling_cookies_note: "Mais gardez bien en tête que si vous supprimez ou modifiez un des cookies essentiels utilisés par Open Food Network, le site ne fonctionnera pas correctement, vous ne pourrez pas ajouter des produits à votre panier ni finaliser votre commande par exemple."
     cookies_banner:
       cookies_usage: "Ce site utilise des cookies pour rendre votre navigation fluide et sécurisée, et nous aider à comprendre l'usage que vous faites de la plateforme afin d'améliorer les fonctionnalités offertes."
       cookies_definition: "Les cookies sont de tout petits fichiers texte qui sont stockés sur votre ordinateur quand vous naviguez sur certains sites web."
@@ -1489,7 +1488,7 @@ fr_BE:
   products_update_error_data: "Échec de l'enregistrement dû à des données non valides."
   products_changes_saved: "Modifications enregistrées."
   search_no_results_html: "Désolé, aucun résultat pour %{query}. Autre recherche?"
-  components_profiles_popover: "Certaines entreprises ont juste créé leur profil sur Open Food France mais ne vendent pas via la plateforme. Elles ont peut-être une boutique physique, ou une boutique en ligne sur une autre plateforme."
+  components_profiles_popover: "Certaines entreprises ont juste créé leur profil sur Open Food Network mais ne vendent pas via la plateforme. Elles ont peut-être une boutique physique, ou une boutique en ligne sur une autre plateforme."
   components_profiles_show: "Afficher aussi les profils"
   components_filters_nofilters: "Pas de filtre"
   components_filters_clearfilters: "Vider les filtres"
@@ -1534,14 +1533,14 @@ fr_BE:
   modal_groups_content1: Voilà les organisations et les relations inter-hubs qui constituent l'Open Food Network.
   modal_groups_content2: Certains groupes sont regroupés pas localisation ou région, d'autres sur des smilitudes non géographiques.
   modal_how: "Comment ça marche"
-  modal_how_shop: Faire vos courses sur Open Food France
+  modal_how_shop: Faire vos courses sur Open Food Network
   modal_how_shop_explained: Recherchez un food hub près de chez vous et commencez vos achats! Vous pouvez afficher plus d'infos sur chaque food hub pour voir le type de produits qu'il propose, et cliquer sur le hub pour commencer vos achats. (Vous ne pouvez faire vos courses que dans un food hub à la fois.)
   modal_how_pickup: Frais de retrait, livraison et transport
   modal_how_pickup_explained: Certains food hubs livrent à domicile, d'autres vous demandent de venir récupérer vos achats dans un point de retrait. Vous pouvez voir quelle options sont proposées sur la page d'accueil du hub, et sélectionner votre choix au moment de la validation de la commande. La livraison à domicile coûtera souvent plus cher, et les prix diffèrent selon le hub. Chaque food hub est un point de vente et gère de façon indépendante ses opérations et sa logistique - attendez-vous donc à des disparités de fonctionnement entre les hubs.
   modal_how_more: En savoir plus
-  modal_how_more_explained: "Pour en savoir plus sur Open Food France, comment ça marche, et contribuer, allez voir:"
+  modal_how_more_explained: "Pour en savoir plus sur Open Food Network, comment ça marche, et contribuer, allez voir:"
   modal_producers: "Producteurs"
-  modal_producers_explained: "Nos producteurs font pousser et fabriquent tous les délicieux produits que vous pouvez acheter sur Open Food France."
+  modal_producers_explained: "Nos producteurs font pousser et fabriquent tous les délicieux produits que vous pouvez acheter sur Open Food Network."
   producers_about: A propos
   producers_buy: Acheter
   producers_contact: Contact
@@ -1554,7 +1553,7 @@ fr_BE:
   producers_title: Producteurs
   producers_headline: Trouvez un producteur local
   producers_signup_title: S'inscrire en tant que producteur
-  producers_signup_headline: Des producteurs, indépendants
+  producers_signup_headline: Des producteurs, autonomes
   producers_signup_motivation: Vendez vos produits et racontez vos histoires pour toucher de nouveaux marchés. Gagnez du temps et de l'argent sur la gestion des opérations courantes. Vous pouvez innover sans prendre de risque. Nous nivellons le terrain de jeu pour des échanges plus équitables.
   producers_signup_send: Rejoindre le réseau
   producers_signup_enterprise: Comptes entreprises
@@ -1571,21 +1570,21 @@ fr_BE:
   products_price: "Prix"
   register_title: S'inscrire
   sell_title: "S'inscrire"
-  sell_headline: "Aller sur Open Food France!"
-  sell_motivation: "Mettez en avant vos beaux aliments."
+  sell_headline: "Rejoignez l'Open Food Network !"
+  sell_motivation: "Promouvez vos aliments."
   sell_producers: "Producteurs"
   sell_hubs: "Hubs"
   sell_groups: "Groupes"
-  sell_producers_detail: "Créer un profil pour votre entreprise sur OFFrance en quelques minutes. A tout moment vous pourrez créer une boutique en ligne pour vendre vos produits en direct aux acheteurs."
-  sell_hubs_detail: "Créer un profil pour votre entreprise de distribution ou organisation sur OFFrance. A tout moment vous pourrez créer une boutique multi-fournisseurs."
+  sell_producers_detail: "Créer un profil pour votre entreprise sur OFN en quelques minutes. A tout moment vous pourrez créer une boutique en ligne pour vendre vos produits en direct aux acheteurs."
+  sell_hubs_detail: "Créer un profil pour votre entreprise de distribution ou organisation sur OFN. A tout moment vous pourrez créer une boutique multi-fournisseurs."
   sell_groups_detail: "Créer un répertoire sur mesure (regroupant différents producteurs et hubs de distribution) pour votre région ou votre organisation."
   sell_user_guide: "En savoir plus en explorant le guide utilisateur."
-  sell_listing_price: "La création d'un profil sur OFFrance est entièrement libre. Si vous ouvrez et gérez une boutique sur OFFrance, ou créez un groupe pour votre organisation ou réseau régional, nous vous invitons à contribuer au commun Open Food France que vous utilisez. En effet, faire tourner la plateforme Open Food France a un coût, et nous comptons sur VOUS pour contribuer à couvrir ces frais de fonctionnement (location et maintenance des serveurs, support utilisateur, nouveaux développements...). Par exemple, en reversant sous forme de don à l'association 2% de votre chiffre d'affaire, et/ou un montant fixe tous les mois. Vous pouvez aussi contribuer au commun \"en compétences\" (développement de fonctionnalités, recherche de financement, support utilisateur, etc.)"
-  sell_embed: "Nous pouvons aussi intégrer votre boutique OFFrance dans votre propre site web ou construire un site web d'alimentation locale sur mesure pour votre région."
-  sell_ask_services: "Nous consulter sur les services des partenaires OFFrance."
+  sell_listing_price: "La création d'un profil sur OFN, ouvrir, gérer une boutique ou créer un groupe pour votre organisation ou réseau régional sur l'OFN est à contribution libre. Afin de maintenir et développer ce commun numérique, nous avons besoin de compétences et des fonds.  Nous vous invitons à contribuer au commun \"en compétences\" (développement de fonctionnalités, recherche de financement, support utilisateur, etc.) ou \"en argent\" d'un montant fixe par mois et/ou 2% de votre chiffre d'affaires par les mois. "
+  sell_embed: "Nous pouvons aussi intégrer votre boutique OFN dans votre propre site web ou construire un site web d'alimentation locale sur mesure pour votre région."
+  sell_ask_services: "Nous consulter sur les services des partenaires OFN."
   shops_title: Boutiques
   shops_headline: Des achats qui transforment.
-  shops_text: Les aliments poussent selon des cycles naturels, les fermiers récoltent en cycles. Alors ici, nous achetons aussi en cycles. Si un cycle de vente est terminé, attendez le suivant ou demandez des infos au hub !
+  shops_text: Les aliments poussent selon des cycles naturels, les fermiers récoltent en cycles, nous achetons aussi en cycles. Si un cycle de vente est terminé, attendez le suivant ou demandez des infos à votre la boutique préférée.
   shops_signup_title: S'inscrire en tant que hub
   shops_signup_headline: Des hubs divers et variés
   shops_signup_motivation: Quel que soit votre modèle, vous pouvez vous appuyer sur Open Food France. Si vous voulez le faire évoluer, nous sommes là pour vous aider. Nous agissons selon des principes de non-lucrativité, d'indépendance, et de transparence. Et nous faisons tout notre possible pour répondre à vos besoins et vous accompagner en toute circonstance.
@@ -1689,7 +1688,7 @@ fr_BE:
   choose_password: "Choisissez un mot de passe"
   confirm_password: "Confirmez votre mot de passe"
   action_signup: "S'inscrire"
-  welcome_to_ofn: "Bienvenue sur Open Food France"
+  welcome_to_ofn: "Bienvenue sur Open Food Network"
   signup_or_login: "Commencez par vous inscrire (ou connexion)"
   have_an_account: "Déjà inscrit?"
   action_login: "Se connecter."
@@ -1784,7 +1783,7 @@ fr_BE:
   logo_placeholder: "Votre logo apparaîtra ici pour validation une fois uploadé"
   enterprise_about_headline: "Bien joué!"
   enterprise_about_message: "A présent, allons un peu plus dans les détails concernant"
-  enterprise_success: "Opération réussie ! %{enterprise} a été ajoutée à Open Food France"
+  enterprise_success: "Opération réussie ! %{enterprise} a été ajoutée à Open Food Network"
   enterprise_registration_exit_message: "Si vous quittez ce module, vous pourrez continuer la création de votre profil via l'interface d'administration."
   enterprise_description: "Description courte"
   enterprise_description_placeholder: "Une phrase pour décrire votre organisation"
@@ -1800,7 +1799,7 @@ fr_BE:
   enterprise_final_step: "Dernière étape!"
   enterprise_social_text: "Comment trouver la boutique en ligne %{enterprise} ?"
   website: "Site internet"
-  website_placeholder: "ex: openfoodfrance.fr"
+  website_placeholder: "ex: openfoodnetwork.be"
   facebook: "Facebook"
   facebook_placeholder: "ex: www.facebook.com/NomDeLaPage"
   linkedin: "LinkedIn"
@@ -1820,13 +1819,13 @@ fr_BE:
   registration_promo_image: "Une image bannière pour votre profil"
   registration_about_us: "Un texte \"A propos\""
   registration_outcome_headline: "Qu'est-ce que ça m'apporte?"
-  registration_outcome1_html: "Votre profil permet aux gens de vous <strong>trouver</strong> et de vous <strong>contacter</strong> via Open Food France."
+  registration_outcome1_html: "Votre profil permet aux gens de vous <strong>trouver</strong> et de vous <strong>contacter</strong> via Open Food Network."
   registration_outcome2: "Utilisez cet espace pour raconter l'histoire de votre entreprise, et stimuler les visites vers vos points de présence en ligne."
-  registration_outcome3: "C'est aussi le premier pas vers la vente via Open Food France, ou l'ouverture de votre boutique en ligne."
+  registration_outcome3: "C'est aussi le premier pas vers la vente via Open Food Network, ou l'ouverture de votre boutique en ligne."
   registration_finished_headline: "C'est terminé!"
   registration_finished_thanks: "Merci d'avoir complété le profil de %{enterprise}"
-  registration_finished_login: "Vous pouvez modifier ou mettre à jour les détails de votre entreprise à tout moment en vous connectant sur Open Food France, rubrique Admin."
-  registration_finished_action: "Accueil Open Food France"
+  registration_finished_login: "Vous pouvez modifier ou mettre à jour les détails de votre entreprise à tout moment en vous connectant sur Open Food Network, rubrique Admin."
+  registration_finished_action: "Accueil Open Food Network"
   registration_contact_name: 'Nom du contact principal'
   registration_type_headline: "Dernière étape pour ajouter %{enterprise}!"
   registration_type_question: "Etes-vous un producteur?"
@@ -1919,7 +1918,7 @@ fr_BE:
   admin_enterprise_groups_web_twitter: "ex: @OpenFoodNet_fr"
   admin_enterprise_groups_web_website_placeholder: "ex: www.maferme.fr"
   admin_order_cycles: "Gérer les cycles de vente"
-  open: "Ouvre"
+  open: "Ouvert"
   close: "Ferme"
   create: "Créer"
   search: "Rechercher"
@@ -2003,7 +2002,7 @@ fr_BE:
   spree_user_enterprise_limit_error: "^ %{email} ne peut pas créer de nouvelles entreprises (limite actuelle : %{enterprise_limit} entreprises )."
   spree_variant_product_error: doit avoir au moins une variante
   your_profil_live: "Votre profil en ligne"
-  on_ofn_map: "sur la carte Open Food France"
+  on_ofn_map: "sur la carte Open Food Network"
   see: "Voir"
   live: "en ligne"
   manage: "Gérer"
@@ -2336,7 +2335,7 @@ fr_BE:
               Les visiteurs voient votre profil sur la carte, et peuvent vous contacter.
               Vous augmentez ainsi votre visibilité.
           hub_profile_text2: >
-              Créez votre profil et utilisez Open Food France pour vous connecter
+              Créez votre profil et utilisez Open Food Network pour vous connecter
               à votre système alimentaire territorial.
           hub_shop: Boutique Hub
           hub_shop_text1: >
@@ -2367,15 +2366,15 @@ fr_BE:
           profile_only_text2: >
               Si vous souhaitez vous concentrer sur votre activité de production,
               et laisser à d'autre le soin de distribuer vos produits, vous n'avez
-              pas besoin d'une boutique sur Open Food France.
+              pas besoin d'une boutique sur Open Food Network.
           profile_only_text3: >
-              Saisissez votre catalogue produits sur Open Food France, ce qui permettra
+              Saisissez votre catalogue produits sur Open Food Network, ce qui permettra
               aux hubs-distributeurs utilisant la plateforme de les proposer dans
               leurs boutiques (sur votre autorisation).
           producer_shop: Boutique Producteur
           producer_shop_text1: >
               Vendez vos produits en direct aux mangeurs/restaurateurs/etc. via votre
-              propre Boutique Producteur sur Open Food France.
+              propre Boutique Producteur sur Open Food Network.
           producer_shop_text2: >
               Une Boutique Producteur vous permet de vendre uniquement vos propres
               produits. Si vous voulez vendre d'autres produits, sélectionnez "Hub
@@ -2390,7 +2389,7 @@ fr_BE:
               Un hub producteur peut prendre différentes formes, une boutique de vente
               directe, un magasin de producteurs en ligne, un drive fermier, etc.
           producer_hub_text3: >
-              Open Food France soutient tous les modèles de hubs alimentaires, nous
+              Open Food Network soutient tous les modèles de hubs alimentaires, nous
               pensons que la résilience du système viendra de la diversité des modèles.
               Donc quel que soit votre modèle, nous souhaitons vous apporter les outils
               de gestion donc vous avez besoin pour opérer votre circuit court.
@@ -2408,11 +2407,11 @@ fr_BE:
           producer_text2: >
               Un producteur peut aussi avoir d'autres rôles, comme par exemple stocker
               et distribuer des produits d'autres producteurs à travers une boutique
-              sur Open Food France.
+              sur Open Food Network.
           non_producer: Non-producteur
           non_producer_text1: >
               Les entreprises qui ne produisent pas ne peuvent pas créer leur propre
-              catalogue produits pour les vendre sur Open Food France.
+              catalogue produits pour les vendre sur Open Food Network.
           non_producer_text2: >
               Ces entreprises vont plutôt faire le lien entre des producteurs et des
               mangeurs/restaurateurs, en proposant un modèle opérationnel pour agréger,
