@@ -76,11 +76,11 @@ feature "Using embedded shopfront functionality", js: true do
         end
 
         within "#shipping" do
-          find('input[type="radio"]').trigger 'click'
+          find('input[type="radio"]').click
         end
 
         within "#payment" do
-          find('input[type="radio"]').trigger 'click'
+          find('input[type="radio"]').click
         end
 
         place_order
