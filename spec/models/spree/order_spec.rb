@@ -821,7 +821,7 @@ describe Spree::Order do
   end
 
   describe '#restart_checkout!' do
-    let(:order) { build(:order) }
+    let(:order) { build(:order, line_items: [build(:line_item)]) }
 
     context 'when the order is complete' do
       before { order.completed_at = Time.zone.now }

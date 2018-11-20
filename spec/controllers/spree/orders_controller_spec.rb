@@ -214,7 +214,7 @@ describe Spree::OrdersController, type: :controller do
       let(:enterprise_fee) { create(:enterprise_fee, calculator: build(:calculator_per_item) ) }
       let!(:exchange) { create(:exchange, incoming: true, sender: variant.product.supplier, receiver: order_cycle.coordinator, variants: [variant], enterprise_fees: [enterprise_fee]) }
       let!(:order) do
-        order = create(:completed_order_with_totals, user: user, distributor: distributor, order_cycle: order_cycle)
+        order = create(:completed_order_with_totals, line_items_count: 1, user: user, distributor: distributor, order_cycle: order_cycle)
         order.reload.line_items.first.update_attributes(variant_id: variant.id)
         while !order.completed? do break unless order.next! end
         order.update_distribution_charge!
