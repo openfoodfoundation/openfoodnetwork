@@ -70,7 +70,7 @@ feature 'Subscriptions' do
         # Viewing Products
         within "tr#so_#{subscription.id}" do
           expect(page).to have_selector "td.items.panel-toggle", text: 3
-          page.find("td.items.panel-toggle").trigger('click')
+          page.find("td.items.panel-toggle").click
         end
 
         within "#subscription-line-items" do
