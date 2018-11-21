@@ -216,6 +216,9 @@ en_GB:
   quantity: Quantity
   pick_up: Pick up
   copy: Copy
+  password_confirmation: Password Confirmation
+  reset_password_token: Reset password
+  expired: has expired, please request a new one
   actions:
     create_and_add_another: "Create and Add Another"
   admin:
@@ -498,6 +501,7 @@ en_GB:
         no_permission: you do not have permission to manage this enterprise
         not_found: enterprise could not be found in database
         no_name: No name
+        blank_enterprise: some products do not have an enterprise defined
         reset_absent?: Reset absent products
         reset_absent_tip: Set stock to zero for all exiting products not present in the file
         overwrite_all: Overwrite all
@@ -568,7 +572,7 @@ en_GB:
         tip: "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required."
         shared: "Shared Resource?"
         order_no: "Order No."
-        order_date: "Order Date"
+        order_date: "Completed at"
         max: "Max"
         product_unit: "Product: Unit"
         weight_volume: "Weight/Volume"
@@ -2337,13 +2341,17 @@ en_GB:
               the Open Food Network will always be free.
           hub_shop: Hub Shop
           hub_shop_text1: >
-              Your enterprise is the backbone of your local food system. You aggregate
-              produce from other enterprises and can sell it through your shop on
-              the Open Food Network.
+              Hubs can take many forms - CSA, veg box scheme, food co-op, community
+              buying group, farmers’ market, an online shop front for an independent
+              shop and many others…
           hub_shop_text2: >
-              Hubs can take many forms, whether they be a food co-op, a buying group,
-              a veggie-box program, or a local grocery store.
+              Products aggregated from lots of local food enterprises can be stocked
+              and sold via your shop front. Hubs can form the backbone of your local
+              food economy.
           hub_shop_text3: >
+              Open Food Network aims to provide the tools and support for you to run
+              your organisation or business in a manner which suits you.
+
               If you also want to sell your own products, you will need to switch
               this enterprise to be a producer.
           choose_package: Please Choose a Package
@@ -2354,62 +2362,64 @@ en_GB:
               Click on an option to see more detailed information about each package,
               and hit the red SAVE button when you are done!
           profile_only: Profile Only
-          profile_only_cost: "COST: Plans starting from £1/month"
+          profile_only_cost: "There is no cost for a Producer Profile without a shop front."
           profile_only_text1: >
               A profile makes you visible and contactable to others and is a way to
               share your story.
           profile_only_text2: >
-              If you prefer to focus on producing food, and want to leave the work
-              of selling it to someone else, you won't require a shop on the Open
-              Food Network.
+              You can set up your products and invite other people to sell them for
+              you.
           profile_only_text3: >
-              Add your products to Open Food Network, allowing hubs to stock your
-              products in their stores.
+              You can choose which Open Food Network ‘hubs’ you would like to stock
+              and sell your products.  Leave the hassle of selling your food to someone
+              else and focus on growing, making, brewing, baking...
           producer_shop: Producer Shop
           producer_shop_text1: >
-              Sell your products directly to customers through your very own Open
-              Food Network shopfront.
+              Sell only your own products directly to customers and buyers with your
+              own Open Food Network shopfront.
           producer_shop_text2: >
-              A Producer Shop is for your produce only, if you want to sell produce
-              grown/produced off site, please select 'Producer Hub'.
+              If you would also like to stock items grown/baked/made by others, please
+              select ‘Hub’.
           producer_hub: Producer Hub
           producer_hub_text1: >
-              Your enterprise is the backbone of your local food system. You can sell
-              your own produce as well as produce aggregated from other enterprises
-              through your shopfront on the Open Food Network.
+              Hubs can take many forms - CSA, veg box scheme, food co-op, community
+              buying group, farmers’ market, an online shop front for an independent
+              shop and many others…
           producer_hub_text2: >
-              Producer Hubs can take many forms, whether they be a CSA, a veggie-box
-              program, or a food co-op with a rooftop garden.
+              Products aggregated from lots of local food enterprises (including your
+              own, if you are also a food producer) can be stocked and sold via your
+              shop front. Hubs can form the backbone of your local food economy.
           producer_hub_text3: >
-              The Open Food Network aims to support as many hub models as possible,
-              so no matter your situation, we want to provide the tools you need to
-              run your organisation or local food business.
+              Open Food Network aims to provide the tools and support for you to run
+              your organisation or business in a manner which suits you.
           get_listing: Get a listing
           always_free: Plans starting from £1/month
           sell_produce_others: Sell produce from others
           sell_own_produce: Sell your own produce
-          sell_both: Sell produce from self and others
+          sell_both: Sell products from multiple producers.
         enterprise_producer:
           producer: Producer
           producer_text1: >
-              Producers make yummy things to eat or drink. You're a producer if you
-              grow it, raise it, brew it, bake it, ferment it, milk it or mould it.
+              Farmers, growers, small holders, crofters, cottage enterprises, market
+              gardens, CSAs, community gardens, city farms that make yummy things
+              to eat or drink. You're a food producer if you grow it, raise it, brew
+              it, bake it, ferment it, milk it or mould it.
           producer_text2: >
-              Producers can also perform other functions, such as aggregating food
-              from other enterprises and selling it through a shop on the Open Food
-              Network.
+              Food producers can also sell their products (and those of others) through
+              Shops or Hubs on the Open Food Network.
           non_producer: Non-producer
           non_producer_text1: >
-              Non-producers do not produce any food themselves, meaning that they
-              cannot create their own products for sale through the Open Food Network.
+              A ‘Non-producer’, such as a Farmers’ Market or veg box co-ordinator,
+              specialises in aggregating food from local producers (eg. farmers, growers,
+              cottage enterprises, community/city gardens) to sell to customers. They
+              do not offer food that they produced themselves for sale.
           non_producer_text2: >
-              Instead, non-producers specialise in linking producers to the end eater,
-              whether it be by aggregating, grading, packing, selling or delivering
-              food.
-          producer_desc: Producers of food
-          producer_example: eg. GROWERS, BAKERS, BREWERS, MAKERS
-          non_producer_desc: All other food enterprises
-          non_producer_example: eg. Grocery stores, Food co-ops, Buying groups
+              This option is best suited for those wishing to operate Open Food Network
+              ‘Hubs’ but not produce their own food.
+          producer_desc: Producer
+          producer_example: eg. Farmers, growers, small holders, crofters, cottage enterprises, market gardens, CSAs, community gardens, city farms...
+          non_producer_desc: Non-producer
+          non_producer_example: eg. Farmers’ Market/Veg Box Scheme/Community group co-ordinators, Food Hubs, Retail Shops, Wholesale Distributors, Buying Groups, Food Co-ops…
         enterprise_status:
           status_title: "%{name} is set up and ready to go!"
           severity: Severity
