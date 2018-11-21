@@ -10,7 +10,8 @@
   %td.on_hand{ ng: { show: 'columns.on_hand.visible' } }
     %input{name: 'variant-overrides-{{ variant.id }}-count_on_hand', type: 'text', ng: {model: 'variantOverrides[hub_id][variant.id].count_on_hand'}, placeholder: '{{ variant.on_hand }}', 'ofn-track-variant-override' => 'count_on_hand'}
   %td.on_demand{ ng: { show: 'columns.on_demand.visible' } }
-    %input.field{ :type => 'checkbox', name: 'variant-overrides-{{ variant.id }}-on_demand', ng: { model: 'variantOverrides[hub_id][variant.id].on_demand' }, 'ofn-track-variant-override' => 'on_demand' }
+    %select{ name: 'variant-overrides-{{ variant.id }}-on_demand', ng: { model: 'variantOverrides[hub_id][variant.id].on_demand', options: 'option.value as option.description for option in onDemandOptions' }, 'ofn-track-variant-override' => 'on_demand' }
+      %option{ value: '' }= t(".on_demand.use_producer_settings")
   %td.reset{ ng: { show: 'columns.reset.visible' } }
     %input{name: 'variant-overrides-{{ variant.id }}-resettable', type: 'checkbox', ng: {model: 'variantOverrides[hub_id][variant.id].resettable'}, placeholder: '{{ variant.resettable }}', 'ofn-track-variant-override' => 'resettable'}
   %td.reset{ ng: { show: 'columns.reset.visible' } }

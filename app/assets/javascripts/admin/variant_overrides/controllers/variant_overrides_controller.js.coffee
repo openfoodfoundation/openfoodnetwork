@@ -13,6 +13,10 @@ angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl",
   $scope.RequestMonitor = RequestMonitor
   $scope.selectView = Views.selectView
   $scope.currentView = -> Views.currentView
+  $scope.onDemandOptions = [
+    { description: t('js.yes'), value: true },
+    { description: t('js.no'), value: false }
+  ]
 
   $scope.views = Views.setViews
     inventory:    { name: t('js.variant_overrides.inventory_products'), visible: true }

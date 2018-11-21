@@ -623,6 +623,9 @@ en:
         new_powertip: These products are available to be added to your inventory. Click 'Add' to add a product to your inventory, or 'Hide' to hide it from view. You can always change your mind later!
       controls:
         back_to_my_inventory: Back to my inventory
+      products_variants:
+        on_demand:
+          use_producer_settings: "Use producer settings"
     orders:
       invoice_email_sent: 'Invoice email has been sent'
       order_email_resent: 'Order email has been resent'
@@ -2445,6 +2448,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     pending: Pending
     shipped: Shipped
   js:
+    "yes": "Yes"
+    "no": "No"
     saving: 'Saving...'
     changes_saved: 'Changes saved.'
     save_changes_first: Save changes first.

@@ -141,7 +141,7 @@ feature %q{
             fill_in "variant-overrides-#{variant.id}-sku", with: 'NEWSKU'
             fill_in "variant-overrides-#{variant.id}-price", with: '777.77'
             fill_in "variant-overrides-#{variant.id}-count_on_hand", with: '123'
-            check "variant-overrides-#{variant.id}-on_demand"
+            select I18n.t("js.yes"), from: "variant-overrides-#{variant.id}-on_demand"
             page.should have_content "Changes to one override remain unsaved."
 
             expect do
@@ -218,7 +218,7 @@ feature %q{
         end
 
         context "with overrides" do
-          let!(:vo) { create(:variant_override, variant: variant, hub: hub, price: 77.77, count_on_hand: 11111, default_stock: 1000, resettable: true, tag_list: ["tag1","tag2","tag3"]) }
+          let!(:vo) { create(:variant_override, variant: variant, hub: hub, price: 77.77, on_demand: true, count_on_hand: 11111, default_stock: 1000, resettable: true, tag_list: ["tag1","tag2","tag3"]) }
           let!(:vo_no_auth) { create(:variant_override, variant: variant, hub: hub2, price: 1, count_on_hand: 2) }
           let!(:product2) { create(:simple_product, supplier: producer, variant_unit: 'weight', variant_unit_scale: 1) }
           let!(:variant2) { create(:variant, product: product2, unit_value: 8, price: 1.00, on_hand: 12) }
@@ -236,6 +236,7 @@ feature %q{
           it "product values are affected by overrides" do
             page.should have_input "variant-overrides-#{variant.id}-price", with: '77.77', placeholder: '1.23'
             page.should have_input "variant-overrides-#{variant.id}-count_on_hand", with: '11111', placeholder: '12'
+            expect(page).to have_select "variant-overrides-#{variant.id}-on_demand", selected: I18n.t("js.yes")
           end
 
           it "updates existing overrides" do
@@ -255,10 +256,32 @@ feature %q{
             vo.count_on_hand.should == 8888
           end
 
+          it "updates on_demand settings" do
+            select I18n.t("js.no"), from: "variant-overrides-#{variant.id}-on_demand"
+            click_button I18n.t("save_changes")
+            expect(page).to have_content I18n.t("js.changes_saved")
+
+            vo.reload
+            expect(vo.on_demand).to eq(false)
+
+            select I18n.t("js.yes"), from: "variant-overrides-#{variant.id}-on_demand"
+            click_button I18n.t("save_changes")
+            expect(page).to have_content I18n.t("js.changes_saved")
+
+            vo.reload
+            expect(vo.on_demand).to eq(true)
+
+            select I18n.t("admin.variant_overrides.products_variants.on_demand.use_producer_settings"), from: "variant-overrides-#{variant.id}-on_demand"
+            click_button I18n.t("save_changes")
+            expect(page).to have_content I18n.t("js.changes_saved")
+
+            vo.reload
+            expect(vo.on_demand).to be_nil
+          end
+
           # Any new fields added to the VO model need to be added to this test
           it "deletes overrides when values are cleared" do
             first("div#columns-dropdown", :text => "COLUMNS").click
-            first("div#columns-dropdown div.menu div.menu_item", text: "On Demand").click
             first("div#columns-dropdown div.menu div.menu_item", text: "Enable Stock Reset?").click
             first("div#columns-dropdown div.menu div.menu_item", text: "Tags").click
             first("div#columns-dropdown", :text => "COLUMNS").click
@@ -272,6 +295,7 @@ feature %q{
             # Clearing values manually
             fill_in "variant-overrides-#{variant.id}-price", with: ''
             fill_in "variant-overrides-#{variant.id}-count_on_hand", with: ''
+            select I18n.t("admin.variant_overrides.products_variants.on_demand.use_producer_settings"), from: "variant-overrides-#{variant.id}-on_demand"
             fill_in "variant-overrides-#{variant.id}-default_stock", with: ''
             within "tr#v_#{variant.id}" do
               vo.tag_list.each do |tag|
