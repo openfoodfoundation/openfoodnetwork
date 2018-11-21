@@ -2659,6 +2659,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     my_account: "My account"
     date: "Date"
     time: "Time"
+    errors:
+      messages:
+        blank: "can't be blank"
     layouts:
       admin:
         header:
