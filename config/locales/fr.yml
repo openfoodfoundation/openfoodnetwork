@@ -216,6 +216,9 @@ fr:
   quantity: Quantité
   pick_up: Retrait
   copy: Copier
+  password_confirmation: Confirmation de mot de passe
+  reset_password_token: La demande de réinitialisation du mot de passe
+  expired: a expiré, veuillez faire une nouvelle demande.
   actions:
     create_and_add_another: "Créer et ajouter nouveau"
   admin:
@@ -498,6 +501,7 @@ fr:
         no_permission: vous n'avez pas l'autorisation de gérer cette entreprise
         not_found: l'entreprise n'a pas été trouvée dans la base de données
         no_name: Pas de nom
+        blank_enterprise: certains produits n'ont pas d'entreprise associée
         reset_absent?: Mettre à zéro le produits absents du fichier
         reset_absent_tip: Remettre le sock à zero pour les produits non présents dans le fichier.
         overwrite_all: Modifier pour tous
@@ -568,7 +572,7 @@ fr:
         tip: "Utilisez cette page pour changer les quantités d'un produit sur plusieurs commandes. Les produits peuvent aussi être supprimés de toutes les commandes, si nécessaire."
         shared: "Ressource partagée?"
         order_no: "N° commande"
-        order_date: "Date commande"
+        order_date: "Passée le"
         max: "Max"
         product_unit: "Produit: Unité"
         weight_volume: "Poids/Volume"
