@@ -41,14 +41,14 @@ feature %q{
 
   scenario "modifying taxed adjustments on an order" do
     # Given a taxed adjustment
-    adjustment = create(:adjustment, adjustable: order, amount: 110, included_tax: 10)
+    adjustment = create(:adjustment, label: "Extra Adjustment", adjustable: order, amount: 110, included_tax: 10)
 
     # When I go to the adjustments page for the order
     login_to_admin_section
     visit spree.admin_orders_path
     page.find('td.actions a.icon-edit').click
     click_link 'Adjustments'
-    page.find('tr', text: 'Shipping').find('a.icon-edit').click
+    page.find('tr', text: 'Extra Adjustment').find('a.icon-edit').click
 
     # Then I should see the uneditable included tax and our tax rate as the default
     expect(page).to have_field :adjustment_included_tax, with: '10.00', disabled: true
@@ -65,14 +65,14 @@ feature %q{
 
   scenario "modifying an untaxed adjustment on an order" do
     # Given an untaxed adjustment
-    adjustment = create(:adjustment, adjustable: order, amount: 110, included_tax: 0)
+    adjustment = create(:adjustment, label: "Extra Adjustment", adjustable: order, amount: 110, included_tax: 0)
 
     # When I go to the adjustments page for the order
     login_to_admin_section
     visit spree.admin_orders_path
     page.find('td.actions a.icon-edit').click
     click_link 'Adjustments'
-    page.find('tr', text: 'Shipping').find('a.icon-edit').click
+    page.find('tr', text: 'Extra Adjustment').find('a.icon-edit').click
 
     # Then I should see the uneditable included tax and 'Remove tax' as the default tax rate
     expect(page).to have_field :adjustment_included_tax, with: '0.00', disabled: true
