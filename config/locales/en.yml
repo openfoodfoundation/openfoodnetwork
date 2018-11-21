@@ -251,6 +251,7 @@ en:
   password_confirmation: Password Confirmation
   reset_password_token: Reset password token
   expired: has expired, please request a new one
+  back_to_payments_list: "Back to Payments List"
 
   actions:
     create_and_add_another: "Create and Add Another"
