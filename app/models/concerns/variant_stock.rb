@@ -2,7 +2,7 @@ require 'active_support/concern'
 
 # These methods were available in Spree 1, but were removed in Spree 2.  We
 # would still like to use them so that we still give support to the consumers
-# of this methods, making the upgrade backward compatible.
+# of these methods, making the upgrade backward compatible.
 #
 # Therefore we use only a single stock item per variant, which is associated to
 # a single stock location per instance (default stock location) and use it to
@@ -85,7 +85,7 @@ module VariantStock
   # https://github.com/openfoodfoundation/spree/commit/20b5ad9835dca7f41a40ad16c7b45f987eea6dcc
   def on_demand
     warn_deprecation(__method__, 'StockItem#backorderable?')
-    stock_items.first.backorderable?
+    stock_item.backorderable?
   end
 
   # Sets whether the variant can be ordered on demand or not. Note that
@@ -117,7 +117,7 @@ module VariantStock
   # https://github.com/openfoodfoundation/spree/blob/43950c3689a77a7f493cc6d805a0edccfe75ebc2/core/app/models/spree/stock_item.rb#L3-L4
   # for details.
   def save_stock
-    stock_items.first.save
+    stock_item.save
   end
 
   def raise_error_if_no_stock_item_available
@@ -130,9 +130,13 @@ module VariantStock
   # takes a value to add to the current stock level and uses proper locking.
   # But this should work the same as in Spree 1.3.
   def overwrite_stock_levels(new_level)
-    # There shouldn't be any other stock items, because we should
-    # have only one stock location.
-    stock_items.first.__send__(:count_on_hand=, new_level)
+    stock_item.__send__(:count_on_hand=, new_level)
+  end
+
+  # There shouldn't be any other stock items, because we should
+  # have only one stock location.
+  def stock_item
+    stock_items.first
   end
 
   def warn_deprecation(method_name, new_method_name)
