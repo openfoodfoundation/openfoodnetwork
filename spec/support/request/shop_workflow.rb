@@ -13,7 +13,7 @@ module ShopWorkflow
   end
 
   def set_order(order)
-    ApplicationController.any_instance.stub(:session).and_return({order_id: order.id, access_token: order.token})
+    allow_any_instance_of(ApplicationController).to receive(:session).and_return({order_id: order.id, access_token: order.token})
   end
 
   def add_product_to_cart(order, product, quantity: 1)
