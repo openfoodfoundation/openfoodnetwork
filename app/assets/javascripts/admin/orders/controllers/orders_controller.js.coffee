@@ -85,20 +85,20 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
       $scope.pollBulkInvoice()
 
   $scope.pollBulkInvoice = ->
-    console.log('Polling... ')
+    $timeout($scope.nextPoll, 5000)
 
-    $timeout(->
-      $http.get('/admin/orders/invoices/'+$scope.invoice_id+'/poll').success (data) ->
+  $scope.nextPoll = ->
+    $http.get('/admin/orders/invoices/'+$scope.invoice_id+'/poll').success (data) ->
+      $scope.loading = false
+      $scope.message = t('js.admin.orders.index.bulk_invoice_created')
+
+    .error (data) ->
+      $scope.poll++
+
+      if $scope.poll > 10
         $scope.loading = false
-        $scope.message = t('js.admin.orders.index.bulk_invoice_created')
+        $scope.error = t('js.admin.orders.index.bulk_invoice_failed')
+        return
 
-      .error (data) ->
-        $scope.poll++
+      $scope.pollBulkInvoice()
 
-        if $scope.poll > 10
-          $scope.loading = false
-          $scope.error = t('js.admin.orders.index.bulk_invoice_failed')
-          return
-
-        $scope.pollBulkInvoice()
-    , 5000)
