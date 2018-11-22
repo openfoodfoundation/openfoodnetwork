@@ -14,7 +14,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
   let(:enterprise_fee) { create(:enterprise_fee, amount: 1.23, tax_category: product.tax_category) }
   let(:product) { create(:taxed_product, supplier: supplier, price: 10, zone: zone, tax_rate_amount: 0.1) }
   let(:variant) { product.variants.first }
-  let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor) }
+  let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor, bill_address_id: nil, ship_address_id: nil) }
 
   before do
     Spree::Config.shipment_inc_vat = true
@@ -47,6 +47,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
 
     describe "when I have an out of stock product in my cart" do
       before do
+        variant.on_demand = false
         variant.on_hand = 0
         variant.save!
       end
@@ -411,6 +412,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
           end
 
           it "takes us to the cart page with an error when a product becomes out of stock just before we purchase", js: true do
+            variant.on_demand = false
             variant.on_hand = 0
             variant.save!
 
@@ -418,7 +420,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
 
             page.should_not have_content "Your order has been processed successfully"
             page.should have_selector 'closing', text: "Your shopping cart"
-            page.should have_content "Out of Stock"
+            page.should have_content "Out Of Stock"
           end
 
           context "when we are charged a shipping fee" do

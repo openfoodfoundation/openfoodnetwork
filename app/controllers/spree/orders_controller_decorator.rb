@@ -28,7 +28,7 @@ Spree::OrdersController.class_eval do
       associate_user
 
       if @order.insufficient_stock_lines.present?
-        flash[:error] = t(:spree_inventory_error_flash_for_insufficient_quantity)
+        flash[:error] = t("spree.inventory_error_flash_for_insufficient_quantity")
       end
     end
   end
