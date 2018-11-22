@@ -46,7 +46,7 @@ First, you need to create the database user the app will use by manually typing 
 $ sudo -u postgres psql -c "CREATE USER ofn WITH SUPERUSER CREATEDB PASSWORD 'f00d'"
 ```
 
-This will create the "ofn" user as superuser and allowing it to create databases.
+This will create the "ofn" user as superuser and allowing it to create databases. If this command fails, check the [troubleshooting section](#creating-the-database) for an alternative.
 
 Once done, run `script/setup`. If the script succeeds you're ready to start developing. If not, take a look at the output as it should be informative enough to help you troubleshoot.
 
@@ -73,6 +73,10 @@ Then the tests can be run with:
 
     bundle exec rspec spec
 
+Note: If your OS is not explicitly supported in the setup guides then not all tests may pass. However, you may still be able to develop. Get in touch with the [#dev][slack-dev] channel on Slack to troubleshoot issues and determine if they will preclude you from contributing to OFN.
+
+Note: The time zone on your machine should match the one defined in `config/application.yml`.
+
 The project is configured to use [Zeus][zeus] to reduce the pre-test startup time while Rails loads. See the [Zeus GitHub page][zeus] for usage instructions.
 
 Once [npm dependencies are installed][karma], AngularJS tests can be run with:
@@ -93,6 +97,21 @@ You can run rubocop against your changes using:
 
     rubocop
 
+### Troubleshooting
+
+Below are fixes to potential issues that can happen during the installation process. If these don't solve the problem, or it's not listed, feel free to reach out to the [Developer Community][slack-dev] on slack. We usually respond pretty quickly.
+
+#### Creating the database
+
+If the ```$ sudo -u postgres psql -c "CREATE USER ofn WITH SUPERUSER CREATEDB PASSWORD 'f00d'"``` command doesn't work, you can run the following commands instead:
+```
+$ createuser --superuser --pwprompt ofn
+Enter password for new role: f00d
+Enter it again: f00d
+$ createdb open_food_network_dev --owner=ofn
+$ createdb open_food_network_test --owner=ofn
+```
+If these commands succeed, you should be able to [continue the setup process](#get-it-running).
 
 [developer-wiki]: https://github.com/openfoodfoundation/openfoodnetwork/wiki
 [sierra]: https://github.com/openfoodfoundation/openfoodnetwork/wiki/Development-Environment-Setup:-macOS-(Sierra)
@@ -102,3 +121,4 @@ You can run rubocop against your changes using:
 [zeus]: https://github.com/burke/zeus
 [rubocop]: https://rubocop.readthedocs.io/en/latest/
 [karma]: https://github.com/openfoodfoundation/openfoodnetwork/wiki/Karma
+[slack-dev]: https://openfoodnetwork.slack.com/messages/C2GQ45KNU
