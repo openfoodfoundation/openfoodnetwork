@@ -4,39 +4,27 @@ module Spree
       respond_to :json
 
       def create
-        Delayed::Job.enqueue BulkInvoiceJob.new(params[:order_ids], directory, filename)
+        invoice_service = BulkInvoiceService.new
+        invoice_service.create_bulk_invoice(params[:order_ids])
 
-        render text: filename, status: :ok
+        render json: invoice_service.id, status: :ok
       end
 
       def show
         invoice_id = params[:id]
+        invoice_pdf = BulkInvoiceService.new.filepath(invoice_id)
 
-        send_file(filepath(invoice_id), type: 'application/pdf', disposition: :inline)
+        send_file(invoice_pdf, type: 'application/pdf', disposition: :inline)
       end
 
       def poll
         invoice_id = params[:invoice_id]
 
-        if File.exist? filepath(invoice_id)
+        if BulkInvoiceService.new.invoice_created? invoice_id
           render json: { created: true }, status: :ok
         else
           render json: { created: false }, status: :unprocessable_entity
         end
-      end
-
-      private
-
-      def filename
-        @filename ||= Time.zone.now.to_i.to_s
-      end
-
-      def directory
-        'tmp/invoices'
-      end
-
-      def filepath(invoice_id)
-        @filepath ||= "#{directory}/#{invoice_id}.pdf"
       end
     end
   end

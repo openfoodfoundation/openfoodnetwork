@@ -2,16 +2,19 @@ require 'spec_helper'
 
 describe Spree::Admin::InvoicesController, type: :controller do
   let(:order) { create(:order_with_totals_and_distribution) }
+  let(:user) { create(:admin_user) }
 
   before do
-    controller.stub spree_current_user: create(:admin_user)
+    allow(controller).to receive(:spree_current_user) { user }
   end
 
   describe "#create" do
     it "enqueues a job to create a bulk invoice and returns the filename" do
       expect do
         spree_post :create, order_ids: [order.id]
-      end.to enqueue_job BulkInvoiceJob
+      end.to enqueue_job Delayed::PerformableMethod
+
+      expect(Delayed::Job.last.payload_object.method_name).to eq :create_bulk_invoice_without_delay
     end
   end
 
