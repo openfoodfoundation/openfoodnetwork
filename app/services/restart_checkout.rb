@@ -5,11 +5,29 @@ class RestartCheckout
   end
 
   def restart_checkout
-    return if @order.state == 'cart'
-    @order.restart_checkout! # resets state to 'cart'
-    @order.update_attributes!(shipping_method_id: nil)
-    @order.shipments.with_state(:pending).destroy_all
-    @order.payments.with_state(:checkout).destroy_all
-    @order.reload
+    return if order.cart?
+
+    reset_state_to_cart
+    clear_shipments
+    clear_payments
+
+    order.reload
+  end
+
+  private
+
+  attr_reader :order
+
+  def reset_state_to_cart
+    order.restart_checkout!
+  end
+
+  def clear_shipments
+    order.update_attributes!(shipping_method_id: nil)
+    order.shipments.with_state(:pending).destroy_all
+  end
+
+  def clear_payments
+    order.payments.with_state(:checkout).destroy_all
   end
 end
