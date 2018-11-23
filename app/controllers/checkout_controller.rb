@@ -159,10 +159,6 @@ class CheckoutController < Spree::CheckoutController
     end
   end
 
-  def restart_checkout
-    RestartCheckout.new(@order).restart_checkout
-  end
-
   def skip_state_validation?
     true
   end
