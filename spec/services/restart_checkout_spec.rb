@@ -28,20 +28,20 @@ describe RestartCheckout do
       # 'pending' when the order has not been completed, so this is not a case that requires testing.
       it "resets the order state, and clears incomplete shipments and payments" do
         expect(order).to receive(:restart_checkout!).and_call_original
-        expect(order.shipping_method_id).to_not be nil
-        expect(order.shipments.count).to be 1
-        expect(order.adjustments.shipping.count).to be 1
-        expect(order.payments.count).to be 2
-        expect(order.adjustments.payment_fee.count).to be 2
+        expect(order.shipping_method_id).to_not eq nil
+        expect(order.shipments.count).to eq 1
+        expect(order.adjustments.shipping.count).to eq 1
+        expect(order.payments.count).to eq 2
+        expect(order.adjustments.payment_fee.count).to eq 2
 
         RestartCheckout.new(order).restart_checkout
 
         expect(order.reload.state).to eq 'cart'
-        expect(order.shipping_method_id).to be nil
-        expect(order.shipments.count).to be 0
-        expect(order.adjustments.shipping.count).to be 0
-        expect(order.payments.count).to be 1
-        expect(order.adjustments.payment_fee.count).to be 1
+        expect(order.shipping_method_id).to eq nil
+        expect(order.shipments.count).to eq 0
+        expect(order.adjustments.shipping.count).to eq 0
+        expect(order.payments.count).to eq 1
+        expect(order.adjustments.payment_fee.count).to eq 1
       end
     end
   end
