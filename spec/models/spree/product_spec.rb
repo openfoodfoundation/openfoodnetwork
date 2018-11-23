@@ -100,14 +100,15 @@ module Spree
           let!(:product){ Spree::Product.new }
 
           before do
+            create(:stock_location)
             product.primary_taxon = create(:taxon)
             product.supplier = create(:supplier_enterprise)
             product.name = "Product1"
             product.variant_unit = "weight"
             product.variant_unit_scale = 1000
             product.unit_value = 1
-            product.on_hand = 3
             product.price = 4.27
+            product.shipping_category = create(:shipping_category)
             product.save!
           end
 

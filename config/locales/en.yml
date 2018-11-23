@@ -2659,7 +2659,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     my_account: "My account"
     date: "Date"
     time: "Time"
-    inventory_error_flash_for_insufficient_quantity: "An item in your cart has become unavailable"
+    inventory_error_flash_for_insufficient_quantity: "An item in your cart has become unavailable."
     errors:
       messages:
         blank: "can't be blank"
