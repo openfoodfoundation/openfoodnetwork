@@ -105,6 +105,7 @@ module VariantStock
     # unknown reasons, it does not pass the test.
     stock_items.each do |item|
       item.backorderable = new_value
+      item.save
     end
   end
 
