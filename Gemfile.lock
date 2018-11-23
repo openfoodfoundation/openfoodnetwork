@@ -721,7 +721,7 @@ GEM
     unicorn (5.4.1)
       kgio (~> 2.6)
       raindrops (~> 0.7)
-    unicorn-rails (1.1.0)
+    unicorn-rails (2.2.1)
       rack
       unicorn
     uuidtools (2.1.5)
