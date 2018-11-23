@@ -189,7 +189,7 @@ describe CheckoutController, type: :controller do
 
   describe "Paypal routing" do
     let(:payment_method) { create(:payment_method, type: "Spree::Gateway::PayPalExpress") }
-    let(:restart_checkout) { instance_double(RestartCheckout, restart_checkout: true) }
+    let(:restart_checkout) { instance_double(RestartCheckout, call: true) }
 
     before do
       allow(controller).to receive(:current_distributor) { distributor }
@@ -208,9 +208,7 @@ describe CheckoutController, type: :controller do
   end
 
   describe "#update_failed" do
-    let(:restart_checkout) do
-      instance_double(RestartCheckout, restart_checkout: true)
-    end
+    let(:restart_checkout) { instance_double(RestartCheckout, call: true) }
 
     before do
       controller.instance_variable_set(:@order, order)
@@ -219,7 +217,7 @@ describe CheckoutController, type: :controller do
 
     it "clears the shipping address and restarts the checkout" do
       expect(controller).to receive(:clear_ship_address)
-      expect(restart_checkout).to receive(:restart_checkout)
+      expect(restart_checkout).to receive(:call)
       expect(controller).to receive(:respond_to)
 
       controller.send(:update_failed)

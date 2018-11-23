@@ -18,7 +18,7 @@ class CheckoutController < Spree::CheckoutController
     # This is only required because of spree_paypal_express. If we implement
     # a version of paypal that uses this controller, and more specifically
     # the #update_failed method, then we can remove this call
-    RestartCheckout.new(@order).restart_checkout
+    RestartCheckout.new(@order).call
   end
 
   def update
@@ -139,7 +139,7 @@ class CheckoutController < Spree::CheckoutController
 
   def update_failed
     clear_ship_address
-    RestartCheckout.new(@order).restart_checkout
+    RestartCheckout.new(@order).call
 
     respond_to do |format|
       format.html do

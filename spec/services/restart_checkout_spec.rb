@@ -3,11 +3,11 @@ require 'spec_helper'
 describe RestartCheckout do
   let(:order) { create(:order) }
 
-  describe "#restart_checkout" do
+  describe "#call" do
     context "when the order is already in the 'cart' state" do
       it "does nothing" do
         expect(order).to_not receive(:restart_checkout!)
-        RestartCheckout.new(order).restart_checkout
+        RestartCheckout.new(order).call
       end
     end
 
@@ -25,7 +25,7 @@ describe RestartCheckout do
       # with a state other than 'pending' when the order has not been
       # completed, so this is not a case that requires testing.
       it "resets the order state, and clears incomplete shipments and payments" do
-        RestartCheckout.new(order).restart_checkout
+        RestartCheckout.new(order).call
 
         expect(order.state).to eq 'cart'
         expect(order.shipping_method_id).to eq nil

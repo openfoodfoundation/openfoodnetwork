@@ -4,7 +4,7 @@ class RestartCheckout
     @order = order
   end
 
-  def restart_checkout
+  def call
     return if order.cart?
 
     reset_state_to_cart
