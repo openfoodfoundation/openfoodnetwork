@@ -216,6 +216,9 @@ nb:
   quantity: Mengde
   pick_up: Hent
   copy: Kopier
+  password_confirmation: Passordbekreftelse
+  reset_password_token: Tilbakestill passordtoken
+  expired: er utløpt, vennligst be om en ny
   actions:
     create_and_add_another: "Opprett og legg til en annen"
   admin:
@@ -498,6 +501,7 @@ nb:
         no_permission: du har ikke tillatelse til å administrere denne bedriften
         not_found: bedriften kunne ikke bli funnet i databasen
         no_name: Ingen navn
+        blank_enterprise: noen produkter har ikke en bedrift definert
         reset_absent?: Tilbakestill fraværende produkter
         reset_absent_tip: Sett lager til null for alle gjeldende produkter som ikke er til stede i filen
         overwrite_all: Overskrive alt
@@ -568,7 +572,6 @@ nb:
         tip: "Bruk denne siden for å endre produktantall på tvers av flere bestillinger. Produkter kan også fjernes fra bestillinger helt, hvis påkrevd."
         shared: "Delt Ressurs?"
         order_no: "Bestillingsnr."
-        order_date: "Bestillingsdato"
         max: "Max"
         product_unit: "Produkt: Enhet"
         weight_volume: "Vekt/Volum"

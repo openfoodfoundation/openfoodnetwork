@@ -452,7 +452,6 @@ it:
         tip: "Usa questa pagina per modificare le quantità su ordini multipli. I prodotti possono anche essere rimossi del tutto dagli ordini, se necessario."
         shared: "Risorsa condivisa?"
         order_no: "Ordine num."
-        order_date: "Data dell'ordine"
         max: "Max"
         product_unit: "Prodotto: Unità"
         weight_volume: "Peso/Volume"

@@ -511,7 +511,6 @@ pt:
         tip: "Use esta página para alterar a quantidade de produtos entre múltiplas encomendas. Os produtos podem ser removidos completamente das encomendas, se necessário"
         shared: "Recurso Compartilhado?"
         order_no: "Encomenda Nº"
-        order_date: "Data da Encomenda"
         max: "Máximo"
         product_unit: "Produto: Unidade"
         weight_volume: "Peso/Volume"

@@ -572,7 +572,6 @@ en_BE:
         tip: "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required."
         shared: "Shared Resource?"
         order_no: "Order No."
-        order_date: "Order Date"
         max: "Max"
         product_unit: "Product: Unit"
         weight_volume: "Weight/Volume"
