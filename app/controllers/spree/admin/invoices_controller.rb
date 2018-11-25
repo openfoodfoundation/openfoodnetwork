@@ -5,7 +5,7 @@ module Spree
 
       def create
         invoice_service = BulkInvoiceService.new
-        invoice_service.create_bulk_invoice(params[:order_ids])
+        invoice_service.start_pdf_job(params[:order_ids])
 
         render json: invoice_service.id, status: :ok
       end

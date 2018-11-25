@@ -6,7 +6,7 @@ class BulkInvoiceService
     @id = new_invoice_id
   end
 
-  def create_bulk_invoice(order_ids)
+  def start_pdf_job(order_ids)
     pdf = CombinePDF.new
     orders = Spree::Order.where(id: order_ids)
 
@@ -21,7 +21,7 @@ class BulkInvoiceService
 
     pdf.save "#{file_directory}/#{@id}.pdf"
   end
-  handle_asynchronously :create_bulk_invoice
+  handle_asynchronously :start_pdf_job
 
   def invoice_created?(invoice_id)
     File.exist? filepath(invoice_id)

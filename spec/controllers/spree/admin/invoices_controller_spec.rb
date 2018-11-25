@@ -14,7 +14,7 @@ describe Spree::Admin::InvoicesController, type: :controller do
         spree_post :create, order_ids: [order.id]
       end.to enqueue_job Delayed::PerformableMethod
 
-      expect(Delayed::Job.last.payload_object.method_name).to eq :create_bulk_invoice_without_delay
+      expect(Delayed::Job.last.payload_object.method_name).to eq :start_pdf_job_without_delay
     end
   end
 
