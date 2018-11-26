@@ -4,18 +4,16 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   include SerializerHelper
 
   cached
-  #delegate :cache_key, to: :object
 
   def cache_key
     object.andand.cache_key
   end
 
-
   attributes :name, :id, :description, :latitude, :longitude,
-    :long_description, :website, :instagram, :linkedin, :twitter,
-    :facebook, :is_primary_producer, :is_distributor, :phone, :visible,
-    :email_address, :hash, :logo, :promo_image, :path, :pickup, :delivery,
-    :icon, :icon_font, :producer_icon_font, :category, :producers, :hubs
+             :long_description, :website, :instagram, :linkedin, :twitter,
+             :facebook, :is_primary_producer, :is_distributor, :phone, :visible,
+             :email_address, :hash, :logo, :promo_image, :path, :pickup, :delivery,
+             :icon, :icon_font, :producer_icon_font, :category, :producers, :hubs
 
   attributes :taxons, :supplied_taxons
 
@@ -88,11 +86,11 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
     # This results in 3 queries per enterprise
 
     if active
-      product_properties  = Spree::Property.currently_sold_by(object)
+      product_properties = Spree::Property.currently_sold_by(object)
       producer_property_ids = ProducerProperty.currently_sold_by(object).pluck(:property_id)
 
     else
-      product_properties  = Spree::Property.ever_sold_by(object)
+      product_properties = Spree::Property.ever_sold_by(object)
       producer_property_ids = ProducerProperty.ever_sold_by(object).pluck(:property_id)
     end
 
@@ -108,11 +106,11 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   # Map svg icons.
   def icon
     icons = {
-      :hub => "/assets/map_005-hub.svg",
-      :hub_profile => "/assets/map_006-hub-profile.svg",
-      :producer_hub => "/assets/map_005-hub.svg",
-      :producer_shop => "/assets/map_003-producer-shop.svg",
-      :producer => "/assets/map_001-producer-only.svg",
+      hub: "/assets/map_005-hub.svg",
+      hub_profile: "/assets/map_006-hub-profile.svg",
+      producer_hub: "/assets/map_005-hub.svg",
+      producer_shop: "/assets/map_003-producer-shop.svg",
+      producer: "/assets/map_001-producer-only.svg",
     }
     icons[object.category]
   end
@@ -120,11 +118,11 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   # Choose regular icon font for enterprises.
   def icon_font
     icon_fonts = {
-      :hub => "ofn-i_063-hub",
-      :hub_profile => "ofn-i_064-hub-reversed",
-      :producer_hub => "ofn-i_063-hub",
-      :producer_shop => "ofn-i_059-producer",
-      :producer => "ofn-i_059-producer",
+      hub: "ofn-i_063-hub",
+      hub_profile: "ofn-i_064-hub-reversed",
+      producer_hub: "ofn-i_063-hub",
+      producer_shop: "ofn-i_059-producer",
+      producer: "ofn-i_059-producer",
     }
     icon_fonts[object.category]
   end
@@ -134,11 +132,11 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   # producer-hub has a producer icon without needing to duplicate the category logic in angular.
   def producer_icon_font
     icon_fonts = {
-      :hub => "",
-      :hub_profile => "",
-      :producer_hub => "ofn-i_059-producer",
-      :producer_shop => "ofn-i_059-producer",
-      :producer => "ofn-i_059-producer",
+      hub: "",
+      hub_profile: "",
+      producer_hub: "ofn-i_059-producer",
+      producer_shop: "ofn-i_059-producer",
+      producer: "ofn-i_059-producer",
     }
     icon_fonts[object.category]
   end
