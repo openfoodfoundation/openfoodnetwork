@@ -141,7 +141,7 @@ feature %q{
             fill_in "variant-overrides-#{variant.id}-sku", with: 'NEWSKU'
             fill_in "variant-overrides-#{variant.id}-price", with: '777.77'
             fill_in "variant-overrides-#{variant.id}-count_on_hand", with: '123'
-            select I18n.t("js.yes"), from: "variant-overrides-#{variant.id}-on_demand"
+            select I18n.t("js.variant_overrides.on_demand.yes"), from: "variant-overrides-#{variant.id}-on_demand"
             page.should have_content "Changes to one override remain unsaved."
 
             expect do
@@ -236,7 +236,7 @@ feature %q{
           it "product values are affected by overrides" do
             page.should have_input "variant-overrides-#{variant.id}-price", with: '77.77', placeholder: '1.23'
             page.should have_input "variant-overrides-#{variant.id}-count_on_hand", with: '11111', placeholder: '12'
-            expect(page).to have_select "variant-overrides-#{variant.id}-on_demand", selected: I18n.t("js.yes")
+            expect(page).to have_select "variant-overrides-#{variant.id}-on_demand", selected: I18n.t("js.variant_overrides.on_demand.yes")
           end
 
           it "updates existing overrides" do
@@ -257,14 +257,14 @@ feature %q{
           end
 
           it "updates on_demand settings" do
-            select I18n.t("js.no"), from: "variant-overrides-#{variant.id}-on_demand"
+            select I18n.t("js.variant_overrides.on_demand.no"), from: "variant-overrides-#{variant.id}-on_demand"
             click_button I18n.t("save_changes")
             expect(page).to have_content I18n.t("js.changes_saved")
 
             vo.reload
             expect(vo.on_demand).to eq(false)
 
-            select I18n.t("js.yes"), from: "variant-overrides-#{variant.id}-on_demand"
+            select I18n.t("js.variant_overrides.on_demand.yes"), from: "variant-overrides-#{variant.id}-on_demand"
             click_button I18n.t("save_changes")
             expect(page).to have_content I18n.t("js.changes_saved")
 

@@ -14,8 +14,8 @@ angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl",
   $scope.selectView = Views.selectView
   $scope.currentView = -> Views.currentView
   $scope.onDemandOptions = [
-    { description: t('js.yes'), value: true },
-    { description: t('js.no'), value: false }
+    { description: t('js.variant_overrides.on_demand.yes'), value: true },
+    { description: t('js.variant_overrides.on_demand.no'), value: false }
   ]
 
   $scope.views = Views.setViews
