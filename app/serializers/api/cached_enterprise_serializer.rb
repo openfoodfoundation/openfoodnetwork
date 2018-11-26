@@ -75,16 +75,13 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   end
 
   def product_properties
-    Spree::Property
-      .joins(product_properties: { product: :supplier })
-      .where(spree_products: { supplier_id: enterprise })
+    enterprise.supplied_products.flat_map(&:properties)
   end
 
   def producer_properties
     enterprise.properties
   end
 
-  # This results in 3 queries per enterprise
   def supplied_properties
     (product_properties + producer_properties).uniq do |property_object|
       property_object.property.presentation

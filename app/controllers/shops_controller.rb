@@ -8,6 +8,7 @@ class ShopsController < BaseController
       .activated
       .includes(address: :state)
       .includes(:properties)
+      .includes(supplied_products: :properties)
       .all
   end
 end
