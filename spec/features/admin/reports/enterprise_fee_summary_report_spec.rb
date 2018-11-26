@@ -15,15 +15,12 @@ feature "enterprise fee summary report" do
   end
 
   describe "navigation" do
-    let(:current_user) { distributor.owner }
-
-    before do
-      visit spree.admin_reports_path
-      click_on "Enterprise Fee Summary"
-    end
-
     context "when accessing the report as an enterprise user" do
+      let(:current_user) { distributor.owner }
+
       it "allows access to the report" do
+        visit spree.admin_reports_path
+        click_on I18n.t("admin.reports.enterprise_fee_summary.name")
         expect(page).to have_button(I18n.t("generate_report", scope: i18n_scope))
       end
     end
@@ -31,11 +28,10 @@ feature "enterprise fee summary report" do
     context "when accessing the report as an enterprise user without sufficient permissions" do
       let(:current_user) { create(:user) }
 
-      before do
-        visit spree.enterprise_fee_summary_admin_reports_path
-      end
-
       it "does not allow access to the report" do
+        visit spree.admin_reports_path
+        expect(page).to have_no_link(I18n.t("admin.reports.enterprise_fee_summary.name"))
+        visit spree.enterprise_fee_summary_admin_reports_path
         expect(page).to have_content(I18n.t("unauthorized"))
       end
     end
