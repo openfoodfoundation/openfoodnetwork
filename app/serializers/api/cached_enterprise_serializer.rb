@@ -86,7 +86,9 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
 
   # This results in 3 queries per enterprise
   def supplied_properties
-    OpenFoodNetwork::PropertyMerge.merge product_properties, producer_properties
+    (product_properties + producer_properties).uniq do |property_object|
+      property_object.property.presentation
+    end
   end
 
   def distributed_properties
