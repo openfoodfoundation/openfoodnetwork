@@ -12,14 +12,14 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::Parameters do
     end
 
     context "for type of parameters" do
-      it { expect(subject).to validate_date_time_format_of(:start_at) }
-      it { expect(subject).to validate_date_time_format_of(:end_at) }
-      it { expect(subject).to validate_integer_array(:distributor_ids) }
-      it { expect(subject).to validate_integer_array(:producer_ids) }
-      it { expect(subject).to validate_integer_array(:order_cycle_ids) }
-      it { expect(subject).to validate_integer_array(:enterprise_fee_ids) }
-      it { expect(subject).to validate_integer_array(:shipping_method_ids) }
-      it { expect(subject).to validate_integer_array(:payment_method_ids) }
+      it { is_expected.to validate_date_time_format_of(:start_at) }
+      it { is_expected.to validate_date_time_format_of(:end_at) }
+      it { is_expected.to validate_integer_array(:distributor_ids) }
+      it { is_expected.to validate_integer_array(:producer_ids) }
+      it { is_expected.to validate_integer_array(:order_cycle_ids) }
+      it { is_expected.to validate_integer_array(:enterprise_fee_ids) }
+      it { is_expected.to validate_integer_array(:shipping_method_ids) }
+      it { is_expected.to validate_integer_array(:payment_method_ids) }
 
       it "allows integer arrays to include blank string and cleans it up" do
         subject.distributor_ids = ["", "1"]
