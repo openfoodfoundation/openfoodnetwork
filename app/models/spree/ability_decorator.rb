@@ -184,7 +184,9 @@ class AbilityDecorator
     can [:admin, :index, :guide, :import, :save, :save_data, :validate_data, :reset_absent_products], ProductImport::ProductImporter
 
     # Reports page
-    can [:admin, :index, :customers, :orders_and_distributors, :group_buys, :bulk_coop, :payments, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :packing, :enterprise_fee_summary], :report
+    can [:admin, :index, :customers, :orders_and_distributors, :group_buys, :bulk_coop, :payments,
+         :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :packing,
+         :enterprise_fee_summary], :report
     can [:admin, :index], :enterprise_fee_summary_report
   end
 
@@ -257,7 +259,9 @@ class AbilityDecorator
     end
 
     # Reports page
-    can [:admin, :index, :customers, :group_buys, :bulk_coop, :sales_tax, :payments, :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :xero_invoices, :enterprise_fee_summary], :report
+    can [:admin, :index, :customers, :group_buys, :bulk_coop, :sales_tax, :payments,
+         :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory,
+         :order_cycle_management, :xero_invoices, :enterprise_fee_summary], :report
     can [:admin, :index], :enterprise_fee_summary_report
 
     can [:create], Customer
