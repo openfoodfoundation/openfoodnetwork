@@ -74,11 +74,16 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
     ids_to_objs options[:data].supplied_taxons[object.id]
   end
 
-  def supplied_properties
-    # This results in 3 queries per enterprise
-    product_properties  = Spree::Property.applied_by(object)
-    producer_properties = object.properties
+  def product_properties
+    Spree::Property.applied_by(object)
+  end
 
+  def producer_properties
+    enterprise.properties
+  end
+
+  # This results in 3 queries per enterprise
+  def supplied_properties
     OpenFoodNetwork::PropertyMerge.merge product_properties, producer_properties
   end
 
@@ -139,5 +144,11 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
       producer: "ofn-i_059-producer",
     }
     icon_fonts[object.category]
+  end
+
+  private
+
+  def enterprise
+    object
   end
 end
