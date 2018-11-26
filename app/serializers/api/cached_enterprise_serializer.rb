@@ -75,7 +75,9 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   end
 
   def product_properties
-    Spree::Property.applied_by(object)
+    Spree::Property
+      .joins(product_properties: { product: :supplier })
+      .where(spree_products: { supplier_id: enterprise })
   end
 
   def producer_properties
