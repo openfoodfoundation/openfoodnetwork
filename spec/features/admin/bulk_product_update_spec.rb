@@ -55,15 +55,14 @@ feature %q{
     end
 
     it "displays an on hand count in a span for each product" do
-      p1 = FactoryBot.create(:product, on_hand: 15)
+      p1 = FactoryBot.create(:product)
       v1 = p1.variants.first
-      v1.on_hand = 4
-      v1.save!
+      v1.update_attribute(:on_demand, false)
+      v1.update_attribute(:on_hand, 4)
 
       visit spree.admin_products_path
 
       within "#p_#{p1.id}" do
-        expect(page).to have_no_field "on_hand", with: "15"
         expect(page).to have_selector "span[name='on_hand']", text: "4"
       end
     end
@@ -122,8 +121,14 @@ feature %q{
 
     it "displays an on_hand input (for each variant) for each product" do
       p1 = FactoryBot.create(:product)
+      v0 = p1.variants.first
+      v0.update_attribute(:on_demand, false)
       v1 = FactoryBot.create(:variant, product: p1, is_master: false, on_hand: 15)
+      v1.update_attribute(:on_demand, false)
+      p1.variants << v1
       v2 = FactoryBot.create(:variant, product: p1, is_master: false, on_hand: 6)
+      v2.update_attribute(:on_demand, false)
+      p1.variants << v2
 
       visit spree.admin_products_path
       expect(page).to have_selector "a.view-variants", count: 1
@@ -309,9 +314,11 @@ feature %q{
     s1 = FactoryBot.create(:supplier_enterprise)
     s2 = FactoryBot.create(:supplier_enterprise)
     p = FactoryBot.create(:product, supplier: s1, available_on: Date.current, variant_unit: 'volume', variant_unit_scale: 0.001,
-      price: 3.0, on_hand: 9, unit_value: 0.25, unit_description: '(bottle)' )
+      price: 3.0, unit_value: 0.25, unit_description: '(bottle)' )
     v = p.variants.first
-    v.update_column(:sku, "VARIANTSKU")
+    v.update_attribute(:sku, "VARIANTSKU")
+    v.update_attribute(:on_demand, false)
+    v.update_attribute(:on_hand, 9)
 
     quick_login_as_admin
     visit spree.admin_products_path
@@ -630,10 +637,10 @@ feature %q{
     let(:supplier_permitted) { create(:supplier_enterprise, name: 'Supplier Permitted') }
     let(:distributor_managed) { create(:distributor_enterprise, name: 'Distributor Managed') }
     let(:distributor_unmanaged) { create(:distributor_enterprise, name: 'Distributor Unmanaged') }
-    let!(:product_supplied) { create(:product, supplier: supplier_managed1, price: 10.0, on_hand: 6) }
+    let!(:product_supplied) { create(:product, supplier: supplier_managed1, price: 10.0) }
     let!(:product_not_supplied) { create(:product, supplier: supplier_unmanaged) }
-    let!(:product_supplied_permitted) { create(:product, name: 'Product Permitted', supplier: supplier_permitted, price: 10.0, on_hand: 6) }
-    let(:product_supplied_inactive) { create(:product, supplier: supplier_managed1, price: 10.0, on_hand: 6, available_on: 1.week.from_now) }
+    let!(:product_supplied_permitted) { create(:product, name: 'Product Permitted', supplier: supplier_permitted, price: 10.0) }
+    let(:product_supplied_inactive) { create(:product, supplier: supplier_managed1, price: 10.0, available_on: 1.week.from_now) }
 
     let!(:supplier_permitted_relationship) do
       create(:enterprise_relationship, parent: supplier_permitted, child: supplier_managed1,
@@ -699,6 +706,7 @@ feature %q{
     it "allows me to update a product" do
       p = product_supplied_permitted
       v = p.variants.first
+      v.update_attribute(:on_demand, false)
 
       visit spree.admin_products_path
       find("div#columns-dropdown", :text => "COLUMNS").click
