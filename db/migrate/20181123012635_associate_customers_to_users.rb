@@ -29,11 +29,11 @@ class AssociateCustomersToUsers < ActiveRecord::Migration
       joins("INNER JOIN spree_users ON customers.email = spree_users.email").
       where(user_id: nil).all
 
-    File.write(backup_file, Marshal.dump(customers))
+    File.write(backup_file, YAML.dump(customers))
   end
 
   def backed_up_customers
-    Marshal.load(File.read(backup_file))
+    YAML.load(File.read(backup_file))
   end
 
   def backup_file
