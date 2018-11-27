@@ -16,7 +16,7 @@ module VariantStock
   extend ActiveSupport::Concern
 
   included do
-    attr_accessible :on_hand
+    attr_accessible :on_hand, :on_demand
     after_update :save_stock
   end
 
@@ -105,6 +105,7 @@ module VariantStock
     # unknown reasons, it does not pass the test.
     stock_items.each do |item|
       item.backorderable = new_value
+      item.save
     end
   end
 
@@ -126,11 +127,8 @@ module VariantStock
   end
 
   # Backwards compatible setting of stock levels in Spree 2.0.
-  # It would be better to use `Spree::StockItem.adjust_count_on_hand` which
-  # takes a value to add to the current stock level and uses proper locking.
-  # But this should work the same as in Spree 1.3.
   def overwrite_stock_levels(new_level)
-    stock_item.__send__(:count_on_hand=, new_level)
+    stock_item.adjust_count_on_hand(new_level - stock_item.count_on_hand)
   end
 
   # There shouldn't be any other stock items, because we should
