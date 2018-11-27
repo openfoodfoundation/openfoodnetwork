@@ -308,7 +308,6 @@ sv:
         tip: "Använd den här sidan för att ändra produktkvantitet på ett antal order. Om så önskas kan produkter tas bort helt från flera order."
         shared: "Delad Resurs?"
         order_no: "Ordernummer"
-        order_date: "Beställningsdatum"
         max: "Max"
         product_unit: "Produkt: Enhet"
         weight_volume: "Vikten/Volymen"

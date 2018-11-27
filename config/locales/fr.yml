@@ -216,6 +216,7 @@ fr:
   quantity: Quantité
   pick_up: Retrait
   copy: Copier
+  password_confirmation: Confirmation de mot de passe
   actions:
     create_and_add_another: "Créer et ajouter nouveau"
   admin:
@@ -568,7 +569,6 @@ fr:
         tip: "Utilisez cette page pour changer les quantités d'un produit sur plusieurs commandes. Les produits peuvent aussi être supprimés de toutes les commandes, si nécessaire."
         shared: "Ressource partagée?"
         order_no: "N° commande"
-        order_date: "Date commande"
         max: "Max"
         product_unit: "Produit: Unité"
         weight_volume: "Poids/Volume"
