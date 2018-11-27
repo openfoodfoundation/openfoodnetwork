@@ -1,2 +1,0 @@
-add_to_attributes 'fieldset.no-border-top'
-attributes 'ng-app' => 'admin.products'
