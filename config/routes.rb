@@ -111,6 +111,8 @@ Openfoodnetwork::Application.routes.draw do
 
     resources :customers, only: [:index, :update]
 
+    resources :enterprise_fees, only: [:destroy]
+
     post '/product_images/:product_id', to: 'product_images#update_product_image'
   end
 
