@@ -484,7 +484,7 @@ GEM
       multi_json (~> 1.0)
       multi_xml
     i18n (0.6.11)
-    i18n-js (3.0.11)
+    i18n-js (3.1.0)
       i18n (>= 0.6.6, < 2)
     immigrant (0.3.6)
       activerecord (>= 3.0)
@@ -792,7 +792,7 @@ DEPENDENCIES
   guard-rspec (~> 4.7.3)
   haml
   i18n (~> 0.6.11)
-  i18n-js (~> 3.0.0)
+  i18n-js (~> 3.1.0)
   immigrant
   jquery-migrate-rails
   jquery-rails
