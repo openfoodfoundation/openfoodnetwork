@@ -140,8 +140,8 @@ feature %q{
 
             fill_in "variant-overrides-#{variant.id}-sku", with: 'NEWSKU'
             fill_in "variant-overrides-#{variant.id}-price", with: '777.77'
+            select I18n.t("js.variant_overrides.on_demand.no"), from: "variant-overrides-#{variant.id}-on_demand"
             fill_in "variant-overrides-#{variant.id}-count_on_hand", with: '123'
-            select I18n.t("js.variant_overrides.on_demand.yes"), from: "variant-overrides-#{variant.id}-on_demand"
             page.should have_content "Changes to one override remain unsaved."
 
             expect do
@@ -154,14 +154,15 @@ feature %q{
             vo.hub_id.should == hub.id
             vo.sku.should == "NEWSKU"
             vo.price.should == 777.77
+            expect(vo.on_demand).to eq(false)
             vo.count_on_hand.should == 123
-            vo.on_demand.should == true
           end
 
           describe "creating and then updating the new override" do
             it "updates the same override instead of creating a duplicate" do
               # When I create a new override
               fill_in "variant-overrides-#{variant.id}-price", with: '777.77'
+              select I18n.t("js.variant_overrides.on_demand.no"), from: "variant-overrides-#{variant.id}-on_demand"
               fill_in "variant-overrides-#{variant.id}-count_on_hand", with: '123'
               page.should have_content "Changes to one override remain unsaved."
 
@@ -186,6 +187,7 @@ feature %q{
               vo.variant_id.should == variant.id
               vo.hub_id.should == hub.id
               vo.price.should == 111.11
+              expect(vo.on_demand).to eq(false)
               vo.count_on_hand.should == 111
             end
           end
@@ -241,6 +243,7 @@ feature %q{
 
           it "updates existing overrides" do
             fill_in "variant-overrides-#{variant.id}-price", with: '22.22'
+            select I18n.t("js.variant_overrides.on_demand.no"), from: "variant-overrides-#{variant.id}-on_demand"
             fill_in "variant-overrides-#{variant.id}-count_on_hand", with: '8888'
             page.should have_content "Changes to one override remain unsaved."
 
@@ -253,6 +256,7 @@ feature %q{
             vo.variant_id.should == variant.id
             vo.hub_id.should == hub.id
             vo.price.should == 22.22
+            expect(vo.on_demand).to eq(false)
             vo.count_on_hand.should == 8888
           end
 
@@ -341,27 +345,15 @@ feature %q{
           end
 
           describe "ensuring that on demand and count on hand settings are compatible" do
-            it "changes to limited stock when count on hand is set" do
-              # It sets on_demand to false when count_on_hand is filled.
-              fill_in "variant-overrides-#{variant.id}-count_on_hand", with: "200"
-              expect(page).to have_select "variant-overrides-#{variant.id}-on_demand", selected: I18n.t("js.variant_overrides.on_demand.no")
-
-              # It saves the changes.
-              click_button I18n.t("save_changes")
-              expect(page).to have_content I18n.t("js.changes_saved")
-
-              vo.reload
-              expect(vo.count_on_hand).to eq(200)
-              expect(vo.on_demand).to eq(false)
-            end
-
             it "clears count on hand when not limited stock" do
               # It clears count_on_hand when selecting true on_demand.
+              select I18n.t("js.variant_overrides.on_demand.no"), from: "variant-overrides-#{variant.id}-on_demand"
               fill_in "variant-overrides-#{variant.id}-count_on_hand", with: "200"
               select I18n.t("js.variant_overrides.on_demand.yes"), from: "variant-overrides-#{variant.id}-on_demand"
               expect(page).to have_input "variant-overrides-#{variant.id}-count_on_hand", with: ""
 
               # It clears count_on_hand when selecting nil on_demand.
+              select I18n.t("js.variant_overrides.on_demand.no"), from: "variant-overrides-#{variant.id}-on_demand"
               fill_in "variant-overrides-#{variant.id}-count_on_hand", with: "200"
               select I18n.t("admin.variant_overrides.products_variants.on_demand.use_producer_settings"), from: "variant-overrides-#{variant.id}-on_demand"
               expect(page).to have_input "variant-overrides-#{variant.id}-count_on_hand", with: ""
