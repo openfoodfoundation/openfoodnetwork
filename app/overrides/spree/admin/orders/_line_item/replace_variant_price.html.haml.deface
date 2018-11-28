@@ -1,3 +1,0 @@
-/ replace 'code[erb-loud]:contains(\'f.object.variant.display_amount\')'
-
-= f.object.single_money

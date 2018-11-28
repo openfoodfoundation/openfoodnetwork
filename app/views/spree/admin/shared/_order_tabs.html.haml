@@ -1,0 +1,75 @@
+- content_for :page_title do
+  = t(:order)
+  \#
+  = @order.number
+
+- if @order.bill_address.present?
+  = @order.bill_address.firstname
+  = @order.bill_address.lastname
+  \-
+
+- content_for :sidebar_title do
+  = t(:order_information)
+
+- content_for :sidebar do
+  %header#order_tab_summary
+    %dl.additional-info
+      %dt#order_status
+        = t(:status)
+      %dd
+        - order_state_classes = "state #{@order.state}"
+        %span{ class: order_state_classes }
+          = t(@order.state, scope: :order_state)
+      %dt
+        = t(:total)
+        \:
+      %dd#order_total
+        = @order.display_total.to_html
+
+      - if @order.completed?
+        %dt
+          = t(:shipment)
+          \:
+        %dd#shipment_status
+          - shipment_state_classes = "state #{@order.shipment_state}"
+          %span{ class: shipment_state_classes }
+            = t(@order.shipment_state, scope: :shipment_states, default: [:missing, "none"])
+        %dt
+          = t(:payment)
+          \:
+        %dd#payment_status
+          - payment_state_classes = "state #{@order.payment_state}"
+          %span{ class: payment_state_classes }
+            = t(@order.payment_state, scope: :payment_states, default: [:missing, "none"])
+        %dt
+          = t(:date_completed)
+          \:
+        %dd#date_complete
+          = pretty_time(@order.completed_at)
+
+  %nav.menu
+    %ul
+      - order_details_classes = "active" if current == "Order Details"
+      %li{ class: order_details_classes }
+      = link_to_with_icon 'icon-edit', t(:order_details), edit_admin_order_url(@order)
+
+      - customer_details_classes = "active" if current == "Customer Details"
+      %li{ class: customer_details_classes }
+      = link_to_with_icon 'icon-user', t(:customer_details), admin_order_customer_url(@order)
+
+      - adjustments_classes = "active" if current == "Adjustments"
+      %li{ class: adjustments_classes }
+      = link_to_with_icon 'icon-cogs', t(:adjustments), admin_order_adjustments_url(@order)
+
+      - payments_classes = "active" if current == "Payments"
+      %li{ class: payments_classes }
+      = link_to_with_icon 'icon-credit-card', t(:payments), admin_order_payments_url(@order)
+
+      - shipments_classes = "active" if current == "Shipments"
+      %li{ class: shipments_classes }
+      = link_to_with_icon 'icon-road', t(:shipments), admin_order_shipments_url(@order)
+
+      - if @order.completed?
+        - authorizations_classes = "active" if current == "Return Authorizations"
+        %li{ class: authorizations_classes }
+        = link_to_with_icon 'icon-share-alt', t(:return_authorizations), admin_order_return_authorizations_url(@order)

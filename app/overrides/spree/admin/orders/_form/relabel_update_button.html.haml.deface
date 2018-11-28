@@ -1,3 +1,0 @@
-/ replace "code[erb-loud]:contains('button t(:update)')"
-
-= button t(:update_and_recalculate_fees), 'icon-refresh'
