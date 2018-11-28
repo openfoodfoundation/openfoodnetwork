@@ -15,6 +15,18 @@ module Spree
       end
     end
 
+    # The shipment manifest is built by loading inventory units and variants from the DB
+    # These variants come unscoped
+    # So, we need to scope the variants just after the manifest is built
+    def manifest_with_scoping
+      manifest_without_scoping.each { |item| scoper.scope(item.variant) }
+    end
+    alias_method_chain :manifest, :scoping
+
+    def scoper
+      @scoper ||= OpenFoodNetwork::ScopeVariantToHub.new(order.distributor)
+    end
+
     private
 
     # NOTE: This is an override of spree's method, needed to allow orders
