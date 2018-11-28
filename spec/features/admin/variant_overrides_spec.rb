@@ -339,9 +339,43 @@ feature %q{
             first("div#bulk-actions-dropdown div.menu div.menu_item", text: "Reset Stock Levels To Defaults").click
             page.should have_content "Save changes first"
           end
+
+          describe "ensuring that on demand and count on hand settings are compatible" do
+            it "changes to limited stock when count on hand is set" do
+              # It sets on_demand to false when count_on_hand is filled.
+              fill_in "variant-overrides-#{variant.id}-count_on_hand", with: "200"
+              expect(page).to have_select "variant-overrides-#{variant.id}-on_demand", selected: I18n.t("js.variant_overrides.on_demand.no")
+
+              # It saves the changes.
+              click_button I18n.t("save_changes")
+              expect(page).to have_content I18n.t("js.changes_saved")
+
+              vo.reload
+              expect(vo.count_on_hand).to eq(200)
+              expect(vo.on_demand).to eq(false)
+            end
+
+            it "clears count on hand when not limited stock" do
+              # It clears count_on_hand when selecting true on_demand.
+              fill_in "variant-overrides-#{variant.id}-count_on_hand", with: "200"
+              select I18n.t("js.variant_overrides.on_demand.yes"), from: "variant-overrides-#{variant.id}-on_demand"
+              expect(page).to have_input "variant-overrides-#{variant.id}-count_on_hand", with: ""
+
+              # It clears count_on_hand when selecting nil on_demand.
+              fill_in "variant-overrides-#{variant.id}-count_on_hand", with: "200"
+              select I18n.t("admin.variant_overrides.products_variants.on_demand.use_producer_settings"), from: "variant-overrides-#{variant.id}-on_demand"
+              expect(page).to have_input "variant-overrides-#{variant.id}-count_on_hand", with: ""
+
+              # It saves the changes.
+              click_button I18n.t("save_changes")
+              expect(page).to have_content I18n.t("js.changes_saved")
+              vo.reload
+              expect(vo.count_on_hand).to be_nil
+              expect(vo.on_demand).to be_nil
+            end
+          end
         end
       end
-
     end
 
     describe "when manually placing an order" do

@@ -87,3 +87,66 @@ describe "VariantOverridesCtrl", ->
       $httpBackend.flush()
       expect(VariantOverrides.updateData).toHaveBeenCalledWith variant_overrides_mock
       expect(StatusMessage.display).toHaveBeenCalledWith 'success', 'Stocks reset to defaults.'
+
+  describe "ensuring that on demand and count on hand settings are compatible", ->
+    describe "changing to limited stock when count on hand is set", ->
+      beforeEach ->
+        scope.variantOverrides = {123: {2: {id: 5, on_demand: true}}}
+
+      describe "when count on hand is set", ->
+        beforeEach ->
+          scope.variantOverrides[123][2].count_on_hand = 1
+
+        it "changes to limited stock and registers dirty attribute", ->
+          scope.selectLimitedStockIfCountOnHandSet(123, 2)
+          expect(scope.variantOverrides[123][2].on_demand).toBe(false)
+          dirtyVariantOverride = DirtyVariantOverrides.dirtyVariantOverrides[123][2]
+          expect(dirtyVariantOverride.on_demand).toBe(false)
+
+      describe "when count on hand is null", ->
+        beforeEach ->
+          scope.variantOverrides[123][2].count_on_hand = null
+
+        it "does not change to limited stock", ->
+          scope.selectLimitedStockIfCountOnHandSet(123, 2)
+          expect(scope.variantOverrides[123][2].on_demand).toBe(true)
+
+      describe "when count on hand is blank string", ->
+        beforeEach ->
+          scope.variantOverrides[123][2].count_on_hand = ''
+
+        it "does not change to limited stock", ->
+          scope.selectLimitedStockIfCountOnHandSet(123, 2)
+          expect(scope.variantOverrides[123][2].on_demand).toBe(true)
+
+    describe "clearing count on hand when not limited stock", ->
+      beforeEach ->
+        scope.variantOverrides = {123: {2: {id: 5, count_on_hand: 1}}}
+
+      describe "when on demand is false", ->
+        beforeEach ->
+          scope.variantOverrides[123][2].on_demand = false
+
+        it "does not clear count on hand", ->
+          scope.clearCountOnHandUnlessLimitedStock(123, 2)
+          expect(scope.variantOverrides[123][2].count_on_hand).toEqual(1)
+
+      describe "when on demand is true", ->
+        beforeEach ->
+          scope.variantOverrides[123][2].on_demand = true
+
+        it "clears count on hand and registers dirty attribute", ->
+          scope.clearCountOnHandUnlessLimitedStock(123, 2)
+          expect(scope.variantOverrides[123][2].count_on_hand).toBeNull()
+          dirtyVariantOverride = DirtyVariantOverrides.dirtyVariantOverrides[123][2]
+          expect(dirtyVariantOverride.count_on_hand).toBeNull()
+
+      describe "when on demand is null", ->
+        beforeEach ->
+          scope.variantOverrides[123][2].on_demand = null
+
+        it "clears count on hand and registers dirty attribute", ->
+          scope.clearCountOnHandUnlessLimitedStock(123, 2)
+          expect(scope.variantOverrides[123][2].count_on_hand).toBeNull()
+          dirtyVariantOverride = DirtyVariantOverrides.dirtyVariantOverrides[123][2]
+          expect(dirtyVariantOverride.count_on_hand).toBeNull()

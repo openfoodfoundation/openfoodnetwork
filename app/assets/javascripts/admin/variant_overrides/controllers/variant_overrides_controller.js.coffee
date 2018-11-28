@@ -109,3 +109,15 @@ angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl",
         StatusMessage.display 'success', t('js.variant_overrides.stock_reset')
       .error (data, status) ->
         $timeout -> StatusMessage.display 'failure', $scope.updateError(data, status)
+
+  $scope.selectLimitedStockIfCountOnHandSet = (hubId, variantId) ->
+    variantOverride = $scope.variantOverrides[hubId][variantId]
+    if variantOverride.count_on_hand? && variantOverride.count_on_hand != '' && variantOverride.on_demand != false
+      variantOverride.on_demand = false
+      DirtyVariantOverrides.set hubId, variantId, variantOverride.id, 'on_demand', false
+
+  $scope.clearCountOnHandUnlessLimitedStock = (hubId, variantId) ->
+    variantOverride = $scope.variantOverrides[hubId][variantId]
+    unless variantOverride.on_demand == false && variantOverride.count_on_hand?
+      variantOverride.count_on_hand = null
+      DirtyVariantOverrides.set hubId, variantId, variantOverride.id, 'count_on_hand', null
