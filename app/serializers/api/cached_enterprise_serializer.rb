@@ -74,14 +74,6 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
     ids_to_objs options[:data].supplied_taxons[object.id]
   end
 
-  def product_properties
-    enterprise.supplied_products.flat_map(&:properties)
-  end
-
-  def producer_properties
-    enterprise.properties
-  end
-
   def supplied_properties
     (product_properties + producer_properties).uniq do |property_object|
       property_object.property.presentation
@@ -148,6 +140,14 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   end
 
   private
+
+  def product_properties
+    enterprise.supplied_products.flat_map(&:properties)
+  end
+
+  def producer_properties
+    enterprise.properties
+  end
 
   def enterprise
     object
