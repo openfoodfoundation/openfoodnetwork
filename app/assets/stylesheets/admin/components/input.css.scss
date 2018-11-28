@@ -1,0 +1,8 @@
+.container {
+  input {
+    &[readonly] {
+      background-color: $disabled-light;
+      cursor: default;
+    }
+  }
+}
