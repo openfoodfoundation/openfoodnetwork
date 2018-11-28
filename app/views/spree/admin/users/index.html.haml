@@ -1,8 +1,8 @@
 - content_for :page_title do
-  = Spree.t(:listing_users)
+  = t(".listing_users")
 - content_for :page_actions do
   %li
-    = button_link_to Spree.t(:new_user), new_object_url, icon: "icon-plus", id: "admin_new_user_link"
+    = button_link_to t(".new_user"), new_object_url, icon: "icon-plus", id: "admin_new_user_link"
 
 = render "admin/shared/users_sub_menu"
 
@@ -13,8 +13,8 @@
     %col{ style: "width: 15%" }
   %thead
     %tr
-      %th= sort_link @search,:email, Spree.t(:user), {}, {title: "users_email_title"}
-      %th= sort_link @search,:enterprise_limit, t(:enterprise_limit)
+      %th= sort_link @search,:email, t(".user"), {}, {title: "users_email_title"}
+      %th= sort_link @search,:enterprise_limit, t(".enterprise_limit")
       %th.actions
   %tbody
     - @users.each do |user|
@@ -28,13 +28,13 @@
           = link_to_delete user, no_text: true
 = paginate @users
 - content_for :sidebar_title do
-  = Spree.t(:search)
+  = t(".search")
 - content_for :sidebar do
   .box.align-center
     = search_form_for [:admin, @search] do |f|
       .field
-        = f.label Spree.t(:email)
+        = f.label t(".email")
         %br
         = f.text_field :email_cont, class: "fullwidth"
       %div
-        = button Spree.t(:search), "icon-search"
+        = button t(".search"), "icon-search"

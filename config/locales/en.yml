@@ -209,7 +209,6 @@ en:
   distributors: Distributors
   distribution: Distribution
   order_cycles: Order Cycles
-  enterprise_limit: Enterprise Limit
   bulk_order_management: Bulk Order Management
   enterprises: Enterprises
   enterprise_groups: Groups
@@ -1940,7 +1939,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   enterprise_long_desc: "Long Description"
   enterprise_long_desc_placeholder: "This is your opportunity to tell the story of your enterprise - what makes you different and wonderful? We'd suggest keeping your description to under 600 characters or 150 words."
   enterprise_long_desc_length: "%{num} characters / up to 600 recommended"
-  enterprise_limit: Enterprise Limit
   enterprise_abn: "ABN"
   enterprise_abn_placeholder: "eg. 99 123 456 789"
   enterprise_acn: "ACN"
@@ -2757,6 +2755,23 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           bulk_coop_packing_sheets: 'Bulk Co-op - Packing Sheets'
           bulk_coop_customer_payments: 'Bulk Co-op - Customer Payments'
       users:
+        index:
+          listing_users: "Listing Users"
+          new_user: "New User"
+          user: "User"
+          enterprise_limit: "Enterprise Limit"
+          search: "Search"
+          email: "Email"
+        edit:
+          editing_user: "Editing User"
+          back_to_users_list: "Back To Users List"
+          general_settings: "General Settings"
+        form:
+          email: "Email"
+          roles: "Roles"
+          enterprise_limit: "Enterprise Limit"
+          confirm_password: "Confirm Password"
+          password: "Password"
         email_confirmation:
           confirmation_pending: "Email confirmation is pending. We've sent a confirmation email to %{address}."
       variants:
