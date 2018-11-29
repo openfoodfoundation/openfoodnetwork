@@ -2448,8 +2448,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     pending: Pending
     shipped: Shipped
   js:
-    "yes": "Yes"
-    "no": "No"
     saving: 'Saving...'
     changes_saved: 'Changes saved.'
     save_changes_first: Save changes first.
