@@ -2696,6 +2696,12 @@ See the %{link} to find out more about %{sitename}'s features and to start using
             other: "You have %{count} active order cycles."
           manage_order_cycles: "MANAGE ORDER CYCLES"
       payment_methods:
+        new:
+          new_payment_method: "New Payment Method"
+          back_to_payment_methods_list: "Back To Payment Methods List"
+        edit:
+          editing_payment_method: "Editing Payment Method"
+          back_to_payment_methods_list: "Back To Payment Methods List"
         stripe_connect:
           enterprise_select_placeholder: Choose...
           loading_account_information_msg: Loading account information from stripe, please wait...
