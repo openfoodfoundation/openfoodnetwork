@@ -173,7 +173,6 @@ feature "shopping with variant overrides defined", js: true, retry: 3 do
       fill_in "Phone", with: "0456789012"
     end
 
-    toggle_billing
     within "#billing" do
       fill_in "Address", with: "123 Street"
       select "Australia", from: "Country"
@@ -182,12 +181,10 @@ feature "shopping with variant overrides defined", js: true, retry: 3 do
       fill_in "Postcode", with: "3066"
     end
 
-    toggle_shipping
     within "#shipping" do
       choose sm.name
     end
 
-    toggle_payment
     within "#payment" do
       choose pm.name
     end
@@ -201,5 +198,4 @@ feature "shopping with variant overrides defined", js: true, retry: 3 do
       wait_until_enabled 'li.cart a.button'
       first(:link, 'Checkout now').click
   end
-
 end

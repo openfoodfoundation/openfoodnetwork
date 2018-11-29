@@ -2,11 +2,11 @@ window.FieldsetMixin = ($scope)->
   $scope.next = (event = false)->
     event.preventDefault() if event
     return unless $scope.nextPanel
+    $scope.accordion[$scope.name] = false
     $scope.show $scope.nextPanel
 
   $scope.onTimeout = ->
-    if $scope[$scope.name].$valid
-      $scope.next()
+    $scope.accordion[$scope.name] = !$scope[$scope.name].$valid
 
   $scope.valid = ->
     $scope.form().$valid
