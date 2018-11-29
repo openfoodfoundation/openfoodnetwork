@@ -28,7 +28,8 @@ module OpenFoodNetwork
         on_demand || (count_on_hand > 0)
       end
 
-      def count_on_hand
+      # Uses variant_override.count_on_hand instead of Stock::Quantifier.stock_items.count_on_hand
+      def total_on_hand
         @variant_override.andand.count_on_hand || super
       end
 
@@ -46,17 +47,13 @@ module OpenFoodNetwork
         end
       end
 
-      def decrement!(attribute, by = 1)
-        if attribute == :count_on_hand && @variant_override.andand.stock_overridden?
-          @variant_override.decrement_stock! by
-        else
-          super
-        end
-      end
-
-      def increment!(attribute, by = 1)
-        if attribute == :count_on_hand && @variant_override.andand.stock_overridden?
-          @variant_override.increment_stock! by
+      # If it is an variant override with a count_on_hand value:
+      #   - updates variant_override.count_on_hand
+      #   - does not create stock_movement
+      #   - does not update stock_item.count_on_hand
+      def move(quantity, originator = nil)
+        if @variant_override.andand.stock_overridden?
+          @variant_override.move_stock! quantity
         else
           super
         end

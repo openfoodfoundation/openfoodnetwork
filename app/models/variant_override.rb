@@ -59,6 +59,14 @@ class VariantOverride < ActiveRecord::Base
     count_on_hand.present?
   end
 
+  def move_stock!(quantity)
+    if quantity > 0
+      increment_stock! quantity
+    elsif quantity < 0
+      decrement_stock! -quantity
+    end
+  end
+
   def decrement_stock!(quantity)
     if stock_overridden?
       decrement! :count_on_hand, quantity
