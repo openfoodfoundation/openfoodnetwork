@@ -110,6 +110,10 @@ angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl",
       .error (data, status) ->
         $timeout -> StatusMessage.display 'failure', $scope.updateError(data, status)
 
+  # Variant override count_on_hand field placeholder logic:
+  #     on_demand true  -- Show "On Demand"
+  #     on_demand false -- Show empty value to be set by the user
+  #     on_demand nil   -- Show producer on_hand value
   $scope.countOnHandPlaceholder = (variant, hubId) ->
     variantOverride = $scope.variantOverrides[hubId][variant.id]
 
