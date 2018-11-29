@@ -110,6 +110,16 @@ angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl",
       .error (data, status) ->
         $timeout -> StatusMessage.display 'failure', $scope.updateError(data, status)
 
+  $scope.countOnHandPlaceholder = (variant, hubId) ->
+    variantOverride = $scope.variantOverrides[hubId][variant.id]
+
+    if variantOverride.on_demand
+      t('js.variants.on_demand.yes')
+    else if variantOverride.on_demand == false
+      ''
+    else
+      variant.on_hand
+
   $scope.clearCountOnHandUnlessLimitedStock = (hubId, variantId) ->
     variantOverride = $scope.variantOverrides[hubId][variantId]
     unless variantOverride.on_demand == false && variantOverride.count_on_hand?

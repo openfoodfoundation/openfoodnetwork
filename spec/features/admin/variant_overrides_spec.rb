@@ -237,7 +237,7 @@ feature %q{
 
           it "product values are affected by overrides" do
             page.should have_input "variant-overrides-#{variant.id}-price", with: '77.77', placeholder: '1.23'
-            page.should have_input "variant-overrides-#{variant.id}-count_on_hand", with: '11111', placeholder: '12'
+            page.should have_input "variant-overrides-#{variant.id}-count_on_hand", with: '11111', placeholder: I18n.t("js.variants.on_demand.yes")
             expect(page).to have_select "variant-overrides-#{variant.id}-on_demand", selected: I18n.t("js.variant_overrides.on_demand.yes")
           end
 
@@ -325,7 +325,7 @@ feature %q{
             first("div#bulk-actions-dropdown div.menu div.menu_item", text: "Reset Stock Levels To Defaults").click
             page.should have_content 'Stocks reset to defaults.'
             vo.reload
-            page.should have_input "variant-overrides-#{variant.id}-count_on_hand", with: '1000', placeholder: '12'
+            page.should have_input "variant-overrides-#{variant.id}-count_on_hand", with: '1000', placeholder: I18n.t("js.variants.on_demand.yes")
             vo.count_on_hand.should == 1000
           end
 

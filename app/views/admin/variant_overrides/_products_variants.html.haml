@@ -8,7 +8,7 @@
   %td.price{ ng: { show: 'columns.price.visible' } }
     %input{name: 'variant-overrides-{{ variant.id }}-price', type: 'text', ng: {model: 'variantOverrides[hub_id][variant.id].price'}, placeholder: '{{ variant.price }}', 'ofn-track-variant-override' => 'price'}
   %td.on_hand{ ng: { show: 'columns.on_hand.visible' } }
-    %input{name: 'variant-overrides-{{ variant.id }}-count_on_hand', type: 'text', ng: { model: 'variantOverrides[hub_id][variant.id].count_on_hand', readonly: 'variantOverrides[hub_id][variant.id].on_demand != false' }, placeholder: '{{ variant.on_hand }}', 'ofn-track-variant-override' => 'count_on_hand'}
+    %input{name: 'variant-overrides-{{ variant.id }}-count_on_hand', type: 'text', ng: { model: 'variantOverrides[hub_id][variant.id].count_on_hand', readonly: 'variantOverrides[hub_id][variant.id].on_demand != false' }, placeholder: '{{ countOnHandPlaceholder(variant, hub_id) }}', 'ofn-track-variant-override' => 'count_on_hand'}
   %td.on_demand{ ng: { show: 'columns.on_demand.visible' } }
     %select{ name: 'variant-overrides-{{ variant.id }}-on_demand', ng: { model: 'variantOverrides[hub_id][variant.id].on_demand', change: 'clearCountOnHandUnlessLimitedStock(hub_id, variant.id)', options: 'option.value as option.description for option in onDemandOptions' }, 'ofn-track-variant-override' => 'on_demand' }
       %option{ value: '' }= t(".on_demand.use_producer_settings")
