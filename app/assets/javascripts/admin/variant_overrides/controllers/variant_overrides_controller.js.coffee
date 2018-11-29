@@ -120,8 +120,20 @@ angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl",
     else
       variant.on_hand
 
-  $scope.clearCountOnHandUnlessLimitedStock = (hubId, variantId) ->
-    variantOverride = $scope.variantOverrides[hubId][variantId]
-    unless variantOverride.on_demand == false && variantOverride.count_on_hand?
-      variantOverride.count_on_hand = null
-      DirtyVariantOverrides.set hubId, variantId, variantOverride.id, 'count_on_hand', null
+  # This method should only be used when the variant override on_demand is changed.
+  #
+  # Change the count_on_hand value to a suggested value.
+  $scope.updateCountOnHand = (variant, hubId) ->
+    variantOverride = $scope.variantOverrides[hubId][variant.id]
+
+    suggested = $scope.countOnHandSuggestion(variant, hubId)
+    unless suggested == variantOverride.count_on_hand
+      variantOverride.count_on_hand = suggested
+      DirtyVariantOverrides.set hubId, variant.id, variantOverride.id, 'count_on_hand', suggested
+
+  # Suggest producer count_on_hand if variant has limited stock and variant override forces limited
+  # stock. Otherwise, clear whatever value is set.
+  $scope.countOnHandSuggestion = (variant, hubId) ->
+    variantOverride = $scope.variantOverrides[hubId][variant.id]
+    return null unless !variant.on_demand && variantOverride.on_demand == false
+    variant.on_hand
