@@ -10,6 +10,8 @@ class VariantOverride < ActiveRecord::Base
   # Default stock can be nil, indicating stock should not be reset or zero, meaning reset to zero. Need to ensure this can be set by the user.
   validates :default_stock, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
 
+  before_validation :require_compatible_on_demand_and_count_on_hand
+
   after_save :refresh_products_cache_from_save
   after_destroy :refresh_products_cache_from_destroy
 
@@ -103,5 +105,39 @@ class VariantOverride < ActiveRecord::Base
 
   def refresh_products_cache_from_destroy
     OpenFoodNetwork::ProductsCache.variant_override_destroyed self
+  end
+
+  def require_compatible_on_demand_and_count_on_hand
+    disallow_count_on_hand_if_using_producer_stock_settings
+    disallow_count_on_hand_if_on_demand
+    require_count_on_hand_if_limited_stock
+  end
+
+  def disallow_count_on_hand_if_using_producer_stock_settings
+    return unless on_demand.nil? && count_on_hand.present?
+
+    error_message = I18n.t("using_producer_stock_settings_but_count_on_hand_set",
+                           scope: [i18n_scope_for_error, "count_on_hand"])
+    errors.add(:count_on_hand, error_message)
+  end
+
+  def disallow_count_on_hand_if_on_demand
+    return unless on_demand? && count_on_hand.present?
+
+    error_message = I18n.t("on_demand_but_count_on_hand_set",
+                           scope: [i18n_scope_for_error, "count_on_hand"])
+    errors.add(:count_on_hand, error_message)
+  end
+
+  def require_count_on_hand_if_limited_stock
+    return unless on_demand == false && count_on_hand.blank?
+
+    error_message = I18n.t("limited_stock_but_no_count_on_hand",
+                           scope: [i18n_scope_for_error, "count_on_hand"])
+    errors.add(:count_on_hand, error_message)
+  end
+
+  def i18n_scope_for_error
+    "activerecord.errors.models.variant_override"
   end
 end
