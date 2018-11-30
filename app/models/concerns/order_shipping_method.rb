@@ -23,12 +23,13 @@ module OrderShippingMethod
   #
   # @return [Shipment]
   def select_shipping_method(shipping_method_id)
-    return if shipping_method_id.nil? || shipments.empty?
+    return if shipping_method_id.blank? || shipments.empty?
     shipment = shipments.first
 
     shipping_rate = shipment.shipping_rates.find_by_shipping_method_id(shipping_method_id)
     return unless shipping_rate
 
     shipment.selected_shipping_rate_id=(shipping_rate.id)
+    shipment.shipping_method
   end
 end
