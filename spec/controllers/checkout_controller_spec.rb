@@ -85,6 +85,42 @@ describe CheckoutController, type: :controller do
       controller.send(:clear_ship_address)
     end
 
+    context "#update with shipping_method_id" do
+      let(:test_shipping_method_id) { "111" }
+
+      before do
+        # stub order and resetorderservice
+        allow(ResetOrderService).to receive(:new).with(controller, order) { reset_order_service }
+        allow(reset_order_service).to receive(:call)
+        allow(order).to receive(:update_attributes).and_return true
+        controller.stub(:current_order).and_return(order)
+
+        # make order workflow pass through delivery
+        order.stub(:next).twice do
+          if order.state == 'cart'
+            order.update_column :state, 'delivery'
+          else
+            order.update_column :state, 'complete'
+          end
+        end
+      end
+
+      it "does not fail to update" do
+        expect(controller).to_not receive(:clear_ship_address)
+        spree_post :update, order: {shipping_method_id: test_shipping_method_id}
+      end
+
+      it "does not send shipping_method_id to the order model as an attribute" do
+        expect(order).to receive(:update_attributes).with({})
+        spree_post :update, order: {shipping_method_id: test_shipping_method_id}
+      end
+
+      it "selects the shipping_method in the order" do
+        expect(order).to receive(:select_shipping_method).with(test_shipping_method_id)
+        spree_post :update, order: {shipping_method_id: test_shipping_method_id}
+      end
+    end
+
     context 'when completing the order' do
       before do
         order.state = 'complete'
