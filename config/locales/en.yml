@@ -247,6 +247,8 @@ en:
   pick_up: Pick up
   ok: Ok
   copy: Copy
+  change_my_password: "Change my password"
+  update_password: "Update password"
   password_confirmation: Password Confirmation
   reset_password_token: Reset password token
   expired: has expired, please request a new one
