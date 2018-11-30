@@ -33,53 +33,20 @@ class VariantOverride < ActiveRecord::Base
     ]
   end
 
-  def self.price_for(hub, variant)
-    self.for(hub, variant).andand.price
-  end
-
-  def self.count_on_hand_for(hub, variant)
-    self.for(hub, variant).andand.count_on_hand
-  end
-
-  def self.stock_overridden?(hub, variant)
-    count_on_hand_for(hub, variant).present?
-  end
-
-  def self.decrement_stock!(hub, variant, quantity)
-    vo = self.for(hub, variant)
-
-    if vo.nil?
-      Bugsnag.notify RuntimeError.new "Attempting to decrement stock level for a variant without a VariantOverride."
-    else
-      vo.decrement_stock! quantity
-    end
-  end
-
   def stock_overridden?
     count_on_hand.present?
   end
 
   def move_stock!(quantity)
+    unless stock_overridden?
+      Bugsnag.notify RuntimeError.new "Attempting to move stock of a VariantOverride without a count_on_hand specified."
+      return
+    end
+
     if quantity > 0
-      increment_stock! quantity
-    elsif quantity < 0
-      decrement_stock! -quantity
-    end
-  end
-
-  def decrement_stock!(quantity)
-    if stock_overridden?
-      decrement! :count_on_hand, quantity
-    else
-      Bugsnag.notify RuntimeError.new "Attempting to decrement stock level on a VariantOverride without a count_on_hand specified."
-    end
-  end
-
-  def increment_stock!(quantity)
-    if stock_overridden?
       increment! :count_on_hand, quantity
-    else
-      Bugsnag.notify RuntimeError.new "Attempting to decrement stock level on a VariantOverride without a count_on_hand specified."
+    elsif quantity < 0
+      decrement! :count_on_hand, -quantity
     end
   end
 
@@ -100,10 +67,6 @@ class VariantOverride < ActiveRecord::Base
   end
 
   private
-
-  def self.for(hub, variant)
-    VariantOverride.where(variant_id: variant, hub_id: hub).first
-  end
 
   def refresh_products_cache_from_save
     OpenFoodNetwork::ProductsCache.variant_override_changed self
