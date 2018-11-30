@@ -140,7 +140,7 @@ feature %q{
 
             fill_in "variant-overrides-#{variant.id}-sku", with: 'NEWSKU'
             fill_in "variant-overrides-#{variant.id}-price", with: '777.77'
-            select I18n.t("js.variant_overrides.on_demand.no"), from: "variant-overrides-#{variant.id}-on_demand"
+            select_on_demand variant, :no
             fill_in "variant-overrides-#{variant.id}-count_on_hand", with: '123'
             page.should have_content "Changes to one override remain unsaved."
 
@@ -162,7 +162,7 @@ feature %q{
             it "updates the same override instead of creating a duplicate" do
               # When I create a new override
               fill_in "variant-overrides-#{variant.id}-price", with: '777.77'
-              select I18n.t("js.variant_overrides.on_demand.no"), from: "variant-overrides-#{variant.id}-on_demand"
+              select_on_demand variant, :no
               fill_in "variant-overrides-#{variant.id}-count_on_hand", with: '123'
               page.should have_content "Changes to one override remain unsaved."
 
@@ -243,7 +243,7 @@ feature %q{
 
           it "updates existing overrides" do
             fill_in "variant-overrides-#{variant.id}-price", with: '22.22'
-            select I18n.t("js.variant_overrides.on_demand.no"), from: "variant-overrides-#{variant.id}-on_demand"
+            select_on_demand variant, :no
             fill_in "variant-overrides-#{variant.id}-count_on_hand", with: '8888'
             page.should have_content "Changes to one override remain unsaved."
 
@@ -261,21 +261,21 @@ feature %q{
           end
 
           it "updates on_demand settings" do
-            select I18n.t("js.variant_overrides.on_demand.no"), from: "variant-overrides-#{variant.id}-on_demand"
+            select_on_demand variant, :no
             click_button I18n.t("save_changes")
             expect(page).to have_content I18n.t("js.changes_saved")
 
             vo.reload
             expect(vo.on_demand).to eq(false)
 
-            select I18n.t("js.variant_overrides.on_demand.yes"), from: "variant-overrides-#{variant.id}-on_demand"
+            select_on_demand variant, :yes
             click_button I18n.t("save_changes")
             expect(page).to have_content I18n.t("js.changes_saved")
 
             vo.reload
             expect(vo.on_demand).to eq(true)
 
-            select I18n.t("admin.variant_overrides.products_variants.on_demand.use_producer_settings"), from: "variant-overrides-#{variant.id}-on_demand"
+            select_on_demand variant, :use_producer_settings
             click_button I18n.t("save_changes")
             expect(page).to have_content I18n.t("js.changes_saved")
 
@@ -299,7 +299,7 @@ feature %q{
             # Clearing values manually
             fill_in "variant-overrides-#{variant.id}-price", with: ''
             fill_in "variant-overrides-#{variant.id}-count_on_hand", with: ''
-            select I18n.t("admin.variant_overrides.products_variants.on_demand.use_producer_settings"), from: "variant-overrides-#{variant.id}-on_demand"
+            select_on_demand variant, :use_producer_settings
             fill_in "variant-overrides-#{variant.id}-default_stock", with: ''
             within "tr#v_#{variant.id}" do
               vo.tag_list.each do |tag|
@@ -347,15 +347,15 @@ feature %q{
           describe "ensuring that on demand and count on hand settings are compatible" do
             it "clears count on hand when not limited stock" do
               # It clears count_on_hand when selecting true on_demand.
-              select I18n.t("js.variant_overrides.on_demand.no"), from: "variant-overrides-#{variant.id}-on_demand"
+              select_on_demand variant, :no
               fill_in "variant-overrides-#{variant.id}-count_on_hand", with: "200"
-              select I18n.t("js.variant_overrides.on_demand.yes"), from: "variant-overrides-#{variant.id}-on_demand"
+              select_on_demand variant, :yes
               expect(page).to have_input "variant-overrides-#{variant.id}-count_on_hand", with: ""
 
               # It clears count_on_hand when selecting nil on_demand.
-              select I18n.t("js.variant_overrides.on_demand.no"), from: "variant-overrides-#{variant.id}-on_demand"
+              select_on_demand variant, :no
               fill_in "variant-overrides-#{variant.id}-count_on_hand", with: "200"
-              select I18n.t("admin.variant_overrides.products_variants.on_demand.use_producer_settings"), from: "variant-overrides-#{variant.id}-on_demand"
+              select_on_demand variant, :use_producer_settings
               expect(page).to have_input "variant-overrides-#{variant.id}-count_on_hand", with: ""
 
               # It saves the changes.
@@ -431,5 +431,17 @@ feature %q{
         end
       end
     end
+  end
+
+  def select_on_demand(variant, value_sym)
+    option_label = case value_sym
+                   when :no
+                     I18n.t("js.variant_overrides.on_demand.no")
+                   when :yes
+                     I18n.t("js.variant_overrides.on_demand.yes")
+                   when :use_producer_settings
+                     I18n.t("admin.variant_overrides.products_variants.on_demand.use_producer_settings")
+                   end
+    select option_label, from: "variant-overrides-#{variant.id}-on_demand"
   end
 end
