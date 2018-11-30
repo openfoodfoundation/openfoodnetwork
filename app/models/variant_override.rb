@@ -6,7 +6,8 @@ class VariantOverride < ActiveRecord::Base
   belongs_to :hub, class_name: 'Enterprise'
   belongs_to :variant, class_name: 'Spree::Variant'
 
-  validates_presence_of :hub_id, :variant_id
+  validates :hub_id, presence: true
+  validates :variant_id, presence: true
   # Default stock can be nil, indicating stock should not be reset or zero, meaning reset to zero. Need to ensure this can be set by the user.
   validates :default_stock, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
 
@@ -58,7 +59,7 @@ class VariantOverride < ActiveRecord::Base
     if resettable
       if default_stock?
         self.attributes = { count_on_hand: default_stock }
-        self.save
+        save
       else
         Bugsnag.notify RuntimeError.new "Attempting to reset stock level for a variant with no default stock level."
       end
