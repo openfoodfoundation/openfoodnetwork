@@ -26,20 +26,26 @@ module Admin
       end
 
       context "signing up a new user" do
+        let(:manager_invitation) { instance_double(ManagerInvitationJob) }
+
         before do
           setup_email
           controller.stub spree_current_user: admin
         end
 
-        it "creates a new user, sends an invitation email, and returns the user id" do
-          expect do
-            spree_post :create, {email: 'un.registered@email.com', enterprise_id: enterprise.id}
-          end.to send_confirmation_instructions
+        it 'enqueues an invitation email' do
+          allow(ManagerInvitationJob)
+            .to receive(:new).with(enterprise.id, kind_of(Integer)) { manager_invitation }
+
+          expect(Delayed::Job).to receive(:enqueue).with(manager_invitation)
+
+          spree_post :create, { email: 'un.registered@email.com', enterprise_id: enterprise.id }
+        end
+
+        it "returns the user id" do
+          spree_post :create, { email: 'un.registered@email.com', enterprise_id: enterprise.id }
 
           new_user = Spree::User.find_by_email('un.registered@email.com')
-
-          expect(new_user.reset_password_token).to_not be_nil
-          expect(response.status).to eq 200
           expect(json_response['user']).to eq new_user.id
         end
       end
