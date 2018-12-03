@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Spree::Admin::Reports::EnterpriseFeeSummaryReportController, type: :controller do
+describe Spree::Admin::Reports::EnterpriseFeeSummariesController, type: :controller do
   let(:report_klass) { OrderManagement::Reports::EnterpriseFeeSummary }
 
   let!(:admin) { create(:admin_user) }
@@ -51,7 +51,7 @@ describe Spree::Admin::Reports::EnterpriseFeeSummaryReportController, type: :con
 
         expect(flash[:error]).to eq(report_klass::Authorizer::PARAMETER_NOT_ALLOWED_ERROR)
         expect(response)
-          .to render_template("spree/admin/reports/enterprise_fee_summary_report/index")
+          .to render_template("spree/admin/reports/enterprise_fee_summaries/index")
       end
     end
 
@@ -77,6 +77,6 @@ describe Spree::Admin::Reports::EnterpriseFeeSummaryReportController, type: :con
   end
 
   def view_template_path
-    "spree/admin/reports/enterprise_fee_summary_report/index"
+    "spree/admin/reports/enterprise_fee_summaries/index"
   end
 end
