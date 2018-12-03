@@ -33,6 +33,8 @@ feature "Managing users" do
       let(:user) { create :user, confirmed_at: nil }
 
       it "displays success" do
+        ActionMailer::Base.perform_deliveries = true
+
         visit spree.edit_admin_user_path user
 
         expect do

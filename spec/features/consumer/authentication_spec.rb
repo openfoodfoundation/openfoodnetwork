@@ -71,6 +71,8 @@ feature "Authentication", js: true do
           end
 
           scenario "Signing up successfully" do
+            ActionMailer::Base.perform_deliveries = true
+
             setup_email
             fill_in "Email", with: "test@foo.com"
             fill_in "Choose a password", with: "test12345"

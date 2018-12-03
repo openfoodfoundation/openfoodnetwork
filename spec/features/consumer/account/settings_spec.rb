@@ -21,6 +21,8 @@ feature "Account Settings", js: true do
     end
 
     it "allows the user to update their email address" do
+      ActionMailer::Base.perform_deliveries = true
+
       fill_in 'user_email', with: 'new@email.com'
 
       expect do
