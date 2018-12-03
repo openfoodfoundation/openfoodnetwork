@@ -55,7 +55,7 @@ module EnterprisesHelper
     if enterprise.sells == 'none'
       enterprise.producer_profile_only ? I18n.t(:profile) : I18n.t(:supplier_only)
     else
-      "Has Shopfront"
+      I18n.t(:has_shopfront)
     end
   end
 

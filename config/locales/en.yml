@@ -209,7 +209,6 @@ en:
   distributors: Distributors
   distribution: Distribution
   order_cycles: Order Cycles
-  enterprise_limit: Enterprise Limit
   bulk_order_management: Bulk Order Management
   enterprises: Enterprises
   enterprise_groups: Groups
@@ -225,6 +224,7 @@ en:
   admin_and_handling: Admin & Handling
   profile: Profile
   supplier_only: Supplier Only
+  has_shopfront: Has Shopfront
   weight: Weight
   volume: Volume
   items: Items
@@ -252,6 +252,7 @@ en:
   password_confirmation: Password Confirmation
   reset_password_token: Reset password token
   expired: has expired, please request a new one
+  back_to_payments_list: "Back to Payments List"
 
   actions:
     create_and_add_another: "Create and Add Another"
@@ -1941,7 +1942,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   enterprise_long_desc: "Long Description"
   enterprise_long_desc_placeholder: "This is your opportunity to tell the story of your enterprise - what makes you different and wonderful? We'd suggest keeping your description to under 600 characters or 150 words."
   enterprise_long_desc_length: "%{num} characters / up to 600 recommended"
-  enterprise_limit: Enterprise Limit
   enterprise_abn: "ABN"
   enterprise_abn_placeholder: "eg. 99 123 456 789"
   enterprise_acn: "ACN"
@@ -2402,6 +2402,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   validation_msg_relationship_already_established: "^That relationship is already established."
   validation_msg_at_least_one_hub: "^At least one hub must be selected"
   validation_msg_product_category_cant_be_blank: "^Product Category cant be blank"
+  validation_msg_tax: "^Tax Category is required"
   validation_msg_tax_category_cant_be_blank: "^Tax Category can't be blank"
   validation_msg_is_associated_with_an_exising_customer: "is associated with an existing customer"
   content_configuration_pricing_table: "(TODO: Pricing table)"
@@ -2769,6 +2770,23 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           bulk_coop_packing_sheets: 'Bulk Co-op - Packing Sheets'
           bulk_coop_customer_payments: 'Bulk Co-op - Customer Payments'
       users:
+        index:
+          listing_users: "Listing Users"
+          new_user: "New User"
+          user: "User"
+          enterprise_limit: "Enterprise Limit"
+          search: "Search"
+          email: "Email"
+        edit:
+          editing_user: "Editing User"
+          back_to_users_list: "Back To Users List"
+          general_settings: "General Settings"
+        form:
+          email: "Email"
+          roles: "Roles"
+          enterprise_limit: "Enterprise Limit"
+          confirm_password: "Confirm Password"
+          password: "Password"
         email_confirmation:
           confirmation_pending: "Email confirmation is pending. We've sent a confirmation email to %{address}."
       variants:
