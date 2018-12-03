@@ -1,13 +1,8 @@
 require 'spec_helper'
 
-feature "Authentication", js: true, retry: 3 do
+feature "Authentication", js: true do
   include UIComponentHelper
   include OpenFoodNetwork::EmailHelper
-
-  # Attempt to address intermittent failures in these specs
-  around do |example|
-    Capybara.using_wait_time(120) { example.run }
-  end
 
   describe "login" do
     let(:user) { create(:user, password: "password", password_confirmation: "password") }
