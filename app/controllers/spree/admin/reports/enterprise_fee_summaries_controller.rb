@@ -9,7 +9,7 @@ require "order_management/reports/enterprise_fee_summary/renderers/html_renderer
 module Spree
   module Admin
     module Reports
-      class EnterpriseFeeSummaryReportController < BaseController
+      class EnterpriseFeeSummariesController < BaseController
         before_filter :load_report_parameters, only: [:index]
         before_filter :load_permissions, only: [:index]
         before_filter :load_authorizer, only: [:index]
