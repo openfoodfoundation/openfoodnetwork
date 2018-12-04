@@ -23,13 +23,11 @@ module Spree
       end
 
       it "does not save when master is invalid" do
-        s = create(:supplier_enterprise)
-        t = create(:taxon)
-        product = Product.new supplier_id: s.id, name: "Apples", price: 1, primary_taxon_id: t.id, variant_unit: "weight", variant_unit_scale: 1000, unit_value: 1
-        product.on_hand = "10,000"
-        expect(product.save).to be false
+        product = build(:product)
+        product.variant_unit = 'weight'
+        product.master.unit_value = nil
 
-        expect(product.errors[:count_on_hand]).to include "is not a number"
+        expect(product.save).to eq(false)
       end
 
       it "defaults available_on to now" do
