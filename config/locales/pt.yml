@@ -1651,7 +1651,6 @@ pt:
   enterprise_long_desc: "Descrição Longa"
   enterprise_long_desc_placeholder: "Esta é a oportunidade para contar a história da sua organização - o quê que a torna diferente e maravilhosa? Sugerimos um parágrafo com 600 caracteres ou 150 palavras, no máximo. "
   enterprise_long_desc_length: "%{num} caracteres / recomendamos até 600"
-  enterprise_limit: Limite da Organização
   enterprise_abn: "NIPC"
   enterprise_abn_placeholder: "ex: 99 123 456 789"
   enterprise_acn: "NIF"
@@ -2423,6 +2422,17 @@ pt:
           bulk_coop_allocation: 'Cooperativa por Atacado - Alocação'
           bulk_coop_packing_sheets: 'Cooperativa por Atacado - Folhas de Empacotamento'
           bulk_coop_customer_payments: 'Cooperativa por Atacado - Pagamentos do Consumidor'
+      users:
+        index:
+          user: "Utilizador"
+          enterprise_limit: "Limite da Organização"
+          search: "Procurar"
+          email: "Email"
+        form:
+          email: "Email"
+          roles: "Papeis"
+          enterprise_limit: "Limite da Organização"
+          password: "Palavra-passe"
       variants:
         autocomplete:
           producer_name: Produtor

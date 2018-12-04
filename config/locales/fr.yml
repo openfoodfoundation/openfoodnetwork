@@ -74,7 +74,7 @@ fr:
     welcome:
       subject: "%{enterprise} est maintenant sur %{sitename}"
     invite_manager:
-      subject: "%{enterprise} vous a invité comme manager"
+      subject: "%{enterprise} vous a invité comme gestionnaire"
   order_mailer:
     cancel_email:
       dear_customer: "Cher Acheteur,"
@@ -217,6 +217,8 @@ fr:
   pick_up: Retrait
   copy: Copier
   password_confirmation: Confirmation de mot de passe
+  reset_password_token: La demande de réinitialisation du mot de passe
+  expired: a expiré, veuillez faire une nouvelle demande.
   actions:
     create_and_add_another: "Créer et ajouter nouveau"
   admin:
@@ -499,6 +501,7 @@ fr:
         no_permission: vous n'avez pas l'autorisation de gérer cette entreprise
         not_found: l'entreprise n'a pas été trouvée dans la base de données
         no_name: Pas de nom
+        blank_enterprise: certains produits n'ont pas d'entreprise associée
         reset_absent?: Mettre à zéro le produits absents du fichier
         reset_absent_tip: Remettre le sock à zero pour les produits non présents dans le fichier.
         overwrite_all: Modifier pour tous
@@ -569,6 +572,7 @@ fr:
         tip: "Utilisez cette page pour changer les quantités d'un produit sur plusieurs commandes. Les produits peuvent aussi être supprimés de toutes les commandes, si nécessaire."
         shared: "Ressource partagée?"
         order_no: "N° commande"
+        order_date: "Passée le"
         max: "Max"
         product_unit: "Produit: Unité"
         weight_volume: "Poids/Volume"
@@ -735,18 +739,18 @@ fr:
         users:
           email_confirmation_notice_html: "L'email de confirmation n'a pas encore été validé. Il a été envoyé à %{email}."
           resend: Renvoyer
-          owner: 'Manager principal'
+          owner: 'Gestionnaire principal'
           contact: "Contact"
-          contact_tip: "Le manager qui recevra les emails de confirmation de commande et autres notifications de l'entreprise. Il doit avoir confirmé son adresse email pour pouvoir être sélectionné."
-          owner_tip: Manager principal de cette entreprise.
+          contact_tip: "Le gestionnaire qui recevra les emails de confirmation de commande et autres notifications de l'entreprise. Il doit avoir confirmé son adresse email pour pouvoir être sélectionné."
+          owner_tip: Gestionnaire principal de cette entreprise.
           notifications: Notifications
           notifications_tip: Une notification de commande sera envoyée à cette adresse email pour chaque commande passée dans votre boutique.
           notifications_placeholder: 'ex: bernard@maferme.fr'
           notifications_note: 'A noter: si vous saisissez une nouvelle adresse, un email de confirmation sera envoyé à cette adresse avec un lien de validation à cliquer.'
-          managers: Managers
+          managers: Gestionnaires
           managers_tip: Sélectionner ici les utilisateurs ayant la permission de gérer cette entreprise. Ils doivent avoir un compte sur Open Food France pour être sélectionnés.
-          invite_manager: "Inviter un manager"
-          invite_manager_tip: "Inviter un nouvel utilisateur à créer son compte et le nommer comme manager de cette entreprise."
+          invite_manager: "Inviter un gestionnaire"
+          invite_manager_tip: "Inviter un nouvel utilisateur à créer son compte et le nommer comme gestionnaire de cette entreprise."
           add_unregistered_user: "Ajouter un nouvel utilisateur"
           email_confirmed: "Email confirmé"
           email_not_confirmed: "Email non confirmé"
@@ -764,7 +768,7 @@ fr:
         role: Role
         sells: Produits vendus
         visible: Visible?
-        owner: Manager principal
+        owner: Gestionnaire principal
         producer: Producteur
       change_type_form:
         producer_profile: Profil producteur
@@ -796,8 +800,8 @@ fr:
         package: "Pack"
         status: "Statut"
       new_form:
-        owner: Manager principal
-        owner_tip: Le manager principal est l'individu qui porte la responsabilité principale de l'entreprise dans le contexte de l'utilisation d'Open Food France.
+        owner: Gestionnaire principal
+        owner_tip: Le gestionnaire principal est l'individu qui porte la responsabilité principale de l'entreprise dans le contexte de l'utilisation d'Open Food France.
         i_am_producer: Je suis un producteur
         contact_name: Nom du contact principal
       edit:
@@ -967,8 +971,8 @@ fr:
         name: Total des Ventes
         description: Total des Ventes pour toutes les Commandes
       users_and_enterprises:
-        name: Managers & Entreprises
-        description: Managers de l'Entreprise & Droits
+        name: Gestionnaires & Entreprises
+        description: Gestionnaires de l'Entreprise & Droits
       order_cycle_management:
         name: Gestion des Cycles de Vente
       sales_tax:
@@ -1452,8 +1456,8 @@ fr:
   enterprises_next_closing: "Clôture des commandes pour ce cycle"
   enterprises_ready_for: "Prêt pour"
   enterprises_choose: "Choisissez votre option:"
-  maps_open: "Ouvre"
-  maps_closed: "Fermée"
+  maps_open: "Ouvert"
+  maps_closed: "Fermé"
   hubs_buy: "Acheter:"
   hubs_shopping_here: "Achats en cours"
   hubs_orders_closed: "Boutique fermée"
@@ -1791,7 +1795,6 @@ fr:
   enterprise_long_desc: "Description longue"
   enterprise_long_desc_placeholder: "Vous pouvez ici raconter l'histoire de votre organisation - votre projet, les valeurs que vous défendez. Nous vous conseillons de ne pas dépasser 600 caractères ou 150 mots."
   enterprise_long_desc_length: "%{num} caractères / inférieur à 600 recommandé"
-  enterprise_limit: Nombre max d'entreprises
   enterprise_abn: "SIRET"
   enterprise_abn_placeholder: "ex: 404 833 048 00022"
   enterprise_acn: "n° TVA intracommunautaire"
@@ -1900,10 +1903,10 @@ fr:
   admin_enterprise_relationships_button_create: "Créer"
   admin_enterprise_groups: "Groupes d'entreprises"
   admin_enterprise_groups_name: "Produit/Variante"
-  admin_enterprise_groups_owner: "Manager principal"
+  admin_enterprise_groups_owner: "Gestionnaire principal"
   admin_enterprise_groups_on_front_page: "Sur la page d'accueil?"
   admin_enterprise_groups_enterprise: "Entreprises"
-  admin_enterprise_groups_data_powertip: "Le manager principal en charge de ce groupe."
+  admin_enterprise_groups_data_powertip: "Le gestionnaire principal en charge de ce groupe."
   admin_enterprise_groups_data_powertip_logo: "Il s'agit du logo du groupe"
   admin_enterprise_groups_data_powertip_promo_image: "Cette image est affichée en haut du profil Groupe."
   admin_enterprise_groups_contact: "Contact"
@@ -2054,7 +2057,7 @@ fr:
   report_all: 'tous'
   report_order_cycle: "Cycle de vente:"
   report_enterprises: "Entreprises:"
-  report_users: "Managers:"
+  report_users: "Utilisateurs :"
   report_tax_rates: TVA par taux
   report_tax_types: TVA par type de produit/service
   report_header_order_cycle: Cycle de Vente
@@ -2207,11 +2210,11 @@ fr:
   unsaved_changes_confirmation: "Les changements non sauvegardés seront perdus. Continuer?"
   one_product_unsaved: "Des changements sur un produit n'ont pas été sauvegardés."
   products_unsaved: "Des changements sur %{n} produits n'ont pas été sauvegardés."
-  is_already_manager: "est déjà manager!"
+  is_already_manager: "est déjà gestionnaire !"
   no_change_to_save: "Pas de changement à sauvegarder"
   user_invited: "%{email}a été invité à gérer cette entreprise"
   add_manager: "Ajouter un utilisateur existant"
-  users: "Managers"
+  users: "Utilisateurs"
   about: "A propos"
   images: "Images"
   web: "Web"
@@ -2238,7 +2241,7 @@ fr:
   content_configuration_pricing_table: "(A FAIRE : Tableau des tarifs)"
   content_configuration_case_studies: "(A FAIRE : Etudes de Cas)"
   content_configuration_detail: "(A FAIRE : Détails)"
-  enterprise_name_error: "est déjà utilisé. Si vous êtes le gérant de cette entreprise et que vous souhaitez demander le transfert du compte, ou bien si vous souhaitez distribuer les produits de cette entreprise, merci de contacter le manager actuel du profil à %{email}."
+  enterprise_name_error: "est déjà utilisé. Si vous êtes le gérant de cette entreprise et que vous souhaitez demander le transfert du compte, ou bien si vous souhaitez distribuer les produits de cette entreprise, merci de contacter le gestionnaire principal du profil à %{email}."
   enterprise_owner_error: "^ %{email} ne peut pas créer de nouvelles entreprises (limite actuelle : %{enterprise_limit} entreprises )."
   enterprise_role_uniqueness_error: "^Ce rôle existe déjà."
   inventory_item_visibility_error: doit être vrai ou faux
@@ -2607,6 +2610,16 @@ fr:
           bulk_coop_packing_sheets: 'Achats groupés - Feuilles de préparation des paniers'
           bulk_coop_customer_payments: 'Achats groupés - Paiement des acheteurs'
       users:
+        index:
+          user: "Utilisateur"
+          enterprise_limit: "Nombre max d'entreprises"
+          search: "Rechercher"
+          email: "Email"
+        form:
+          email: "Email"
+          roles: "Roles"
+          enterprise_limit: "Nombre max d'entreprises"
+          password: "Mot de passe"
         email_confirmation:
           confirmation_pending: "L'email de confirmation n'a pas encore été validé. Il a été envoyé à %{address}."
       variants:

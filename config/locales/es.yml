@@ -1788,7 +1788,6 @@ es:
   enterprise_long_desc: "Descripción larga"
   enterprise_long_desc_placeholder: "Esta es tu oportunidad de contar la historia de tu organización - ¿qué la hace diferente? Sugerimos mantener la descripción en menos de 600 caracteres o 150 palabras."
   enterprise_long_desc_length: "%{num} caracteres / recomentdamos hasta 600"
-  enterprise_limit: Límite de la Organización
   enterprise_abn: "NIF"
   enterprise_abn_placeholder: "eg. 99 123 456 789"
   enterprise_acn: "ACN"
@@ -2592,6 +2591,16 @@ es:
           bulk_coop_packing_sheets: 'Bulk Co-op - Hojas de Empaquetado'
           bulk_coop_customer_payments: 'Bulk Co-op - Pagos de las Consumidoras'
       users:
+        index:
+          user: "Usuaria"
+          enterprise_limit: "Límite de la Organización"
+          search: "Buscar"
+          email: "Email"
+        form:
+          email: "Email"
+          roles: "Roles"
+          enterprise_limit: "Límite de la Organización"
+          password: "Contraseña"
         email_confirmation:
           confirmation_pending: "La confirmación por correo electrónico está pendiente. Hemos enviado un correo electrónico de confirmación a %{address}."
       variants:
