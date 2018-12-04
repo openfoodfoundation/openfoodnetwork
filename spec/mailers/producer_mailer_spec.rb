@@ -1,12 +1,11 @@
 require 'spec_helper'
 require 'yaml'
 
-describe ProducerMailer do
+describe ProducerMailer, type: :mailer do
   include OpenFoodNetwork::EmailHelper
 
-  before do
-    setup_email
-  end
+  before { setup_email }
+
   let!(:zone) { create(:zone_with_member) }
   let!(:tax_rate) { create(:tax_rate, included_in_price: true, calculator: Spree::Calculator::DefaultTax.new, zone: zone, amount: 0.1) }
   let!(:tax_category) { create(:tax_category, tax_rates: [tax_rate]) }
@@ -47,12 +46,8 @@ describe ProducerMailer do
     order.save
     order
   end
-  let(:mail) { ActionMailer::Base.deliveries.last }
 
-  before do
-    ActionMailer::Base.deliveries.clear
-    ProducerMailer.order_cycle_report(s1, order_cycle).deliver
-  end
+  let(:mail) { ProducerMailer.order_cycle_report(s1, order_cycle) }
 
   it "should send an email when an order cycle is closed" do
     ActionMailer::Base.deliveries.count.should == 1
