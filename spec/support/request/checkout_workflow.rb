@@ -18,16 +18,4 @@ module CheckoutWorkflow
   def toggle_details
     toggle_accordion :details
   end
-
-  def toggle_billing
-    toggle_accordion :billing
-  end
-
-  def toggle_shipping
-    toggle_accordion :shipping
-  end
-
-  def toggle_payment
-    toggle_accordion :payment
-  end
 end

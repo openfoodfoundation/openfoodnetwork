@@ -1,11 +1,11 @@
 .row
   .alpha.five.columns
     = f.field_container :email do
-      = f.label :email, Spree.t(:email)
+      = f.label :email, t(".email")
       = f.email_field :email, class: "fullwidth"
       = error_message_on :user, :email
     .field
-      = label_tag nil, Spree.t(:roles)
+      = label_tag nil, t(".roles")
       %ul
         - @roles.each do |role|
           %li
@@ -13,14 +13,14 @@
             = label_tag role.name
       = hidden_field_tag "user[spree_role_ids][]", ""
     = f.field_container :enterprise_limit do
-      = f.label :enterprise_limit, t(:enterprise_limit)
+      = f.label :enterprise_limit, t(".enterprise_limit")
       = f.text_field :enterprise_limit, class: "fullwidth"
   .omega.five.columns
     = f.field_container :password do
-      = f.label :password, Spree.t(:password)
+      = f.label :password, t(".password")
       = f.password_field :password, class: "fullwidth"
       = f.error_message_on :password
     = f.field_container :password do
-      = f.label :password_confirmation, Spree.t(:confirm_password)
+      = f.label :password_confirmation, t(".confirm_password")
       = f.password_field :password_confirmation, class: "fullwidth"
       = f.error_message_on :password_confirmation

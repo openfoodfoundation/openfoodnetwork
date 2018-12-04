@@ -5,7 +5,7 @@ Darkswarm.controller "BillingCtrl", ($scope, $timeout) ->
 
   $scope.summary = ->
     [$scope.order.bill_address.address1,
-    $scope.order.bill_address.city, 
+    $scope.order.bill_address.city,
     $scope.order.bill_address.zipcode]
 
-  $timeout $scope.onTimeout 
+  $timeout $scope.onTimeout

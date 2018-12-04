@@ -186,6 +186,9 @@ Lint/AssignmentInCondition:
 Metrics/AbcSize:
   Max: 15
 
+Metrics/BlockLength:
+  ExcludedMethods: ["describe", "context"]
+
 Metrics/BlockNesting:
   Max: 3
 

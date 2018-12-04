@@ -90,7 +90,7 @@ describe Spree::Admin::LineItemsController, type: :controller do
 
           it 'returns an HTML response with the order form' do
             spree_put :update, params
-            expect(response.body).to match(/admin_order_form_fields/)
+            expect(response.body).to match(/edit_order/)
           end
         end
       end

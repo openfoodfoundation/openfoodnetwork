@@ -100,7 +100,8 @@ module ProductImport
         entries[entry.line_number] = {
           attributes: entry.displayable_attributes,
           validates_as: entry.validates_as,
-          errors: entry.invalid_attributes
+          errors: entry.invalid_attributes,
+          product_validations: entry.product_validations
         }
       end
       entries.to_json

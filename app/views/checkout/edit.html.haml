@@ -16,7 +16,7 @@
 
   = render partial: "shopping_shared/details"
 
-  %accordion{"close-others" => "true"}
+  %accordion{"close-others" => "false"}
     %checkout.row{"ng-controller" => "CheckoutCtrl"}
       .small-12.medium-8.large-9.columns
         - unless spree_current_user

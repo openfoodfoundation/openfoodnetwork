@@ -67,7 +67,6 @@ feature "Using embedded shopfront functionality", js: true do
           fill_in "Phone", with: "0456789012"
         end
 
-        toggle_billing
         within "#billing" do
           fill_in "Address", with: "123 Street"
           select "Australia", from: "Country"
@@ -76,12 +75,10 @@ feature "Using embedded shopfront functionality", js: true do
           fill_in "Postcode", with: "3066"
         end
 
-        toggle_shipping
         within "#shipping" do
           find('input[type="radio"]').trigger 'click'
         end
 
-        toggle_payment
         within "#payment" do
           find('input[type="radio"]').trigger 'click'
         end
