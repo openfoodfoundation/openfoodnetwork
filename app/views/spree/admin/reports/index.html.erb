@@ -1,0 +1,21 @@
+<% content_for :page_title do %>
+  <%= t(:listing_reports) %>
+<% end %>
+
+<table class="index">
+  <thead>
+    <tr data-hook="reports_header">
+      <th><%= t(:name) %></th>
+      <th><%= t(:description) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @reports.each do |key, value| %>
+    <tr data-hook="reports_row">
+      <td><%= link_to value[:name], send("#{key}_admin_reports_url".to_sym) %></td>
+      <td><%= value[:description] %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
