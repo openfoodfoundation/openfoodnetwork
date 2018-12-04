@@ -10,14 +10,15 @@ module Spree
   module Admin
     module Reports
       class EnterpriseFeeSummariesController < BaseController
-        before_filter :load_report_parameters, only: [:index]
-        before_filter :load_permissions, only: [:index]
-        before_filter :load_authorizer, only: [:index]
+        before_filter :load_report_parameters
+        before_filter :load_permissions
 
-        def index
-          return render_report_form if params[:report].blank?
+        def new; end
+
+        def create
           return respond_to_invalid_parameters unless @report_parameters.valid?
 
+          @authorizer = report_klass::Authorizer.new(@report_parameters, @permissions)
           @authorizer.authorize!
           @report = report_klass::ReportService.new(@permissions, @report_parameters,
                                                     report_renderer_klass)
@@ -39,7 +40,7 @@ module Spree
         end
 
         def render_report_form
-          render action: :index
+          render action: :new
         end
 
         def report_klass
@@ -52,10 +53,6 @@ module Spree
 
         def load_permissions
           @permissions = report_klass::Permissions.new(spree_current_user)
-        end
-
-        def load_authorizer
-          @authorizer = report_klass::Authorizer.new(@report_parameters, @permissions)
         end
 
         def render_report

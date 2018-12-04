@@ -1,4 +1,4 @@
-= form_for @report_parameters, as: :report, url: spree.enterprise_fee_summary_admin_reports_path, method: :get do |f|
+= form_for @report_parameters, as: :report, url: spree.admin_reports_enterprise_fee_summary_path, method: :post do |f|
   .row.date-range-filter
     .sixteen.columns.alpha
       = label_tag nil, t(".date_range")

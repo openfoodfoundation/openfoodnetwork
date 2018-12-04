@@ -11,19 +11,19 @@ describe Spree::Admin::Reports::EnterpriseFeeSummariesController, type: :control
     allow(controller).to receive(:spree_current_user) { current_user }
   end
 
-  describe "#index" do
-    context "when there are no parameters" do
-      it "renders the report form" do
-        get :index
+  describe "#new" do
+    it "renders the report form" do
+      get :new
 
-        expect(response).to be_success
-        expect(response).to render_template(view_template_path)
-      end
+      expect(response).to be_success
+      expect(response).to render_template(new_template_path)
     end
+  end
 
+  describe "#create" do
     context "when the parameters are valid" do
       it "sends the generated report in the correct format" do
-        get :index, report: { start_at: "2018-10-09 07:30:00" }, report_format: "csv"
+        post :create, report: { start_at: "2018-10-09 07:30:00" }, report_format: "csv"
 
         expect(response).to be_success
         expect(response.body).not_to be_blank
@@ -33,10 +33,10 @@ describe Spree::Admin::Reports::EnterpriseFeeSummariesController, type: :control
 
     context "when the parameters are invalid" do
       it "renders the report form with an error" do
-        get :index, report: { start_at: "invalid date" }, report_format: "csv"
+        post :create, report: { start_at: "invalid date" }, report_format: "csv"
 
         expect(flash[:error]).to eq(I18n.t("invalid_filter_parameters", scope: i18n_scope))
-        expect(response).to render_template(view_template_path)
+        expect(response).to render_template(new_template_path)
       end
     end
 
@@ -47,11 +47,10 @@ describe Spree::Admin::Reports::EnterpriseFeeSummariesController, type: :control
       let(:current_user) { distributor.owner }
 
       it "renders the report form with an error" do
-        get :index, report: { distributor_ids: [other_distributor.id] }, report_format: "csv"
+        post :create, report: { distributor_ids: [other_distributor.id] }, report_format: "csv"
 
         expect(flash[:error]).to eq(report_klass::Authorizer::PARAMETER_NOT_ALLOWED_ERROR)
-        expect(response)
-          .to render_template("spree/admin/reports/enterprise_fee_summaries/index")
+        expect(response).to render_template(new_template_path)
       end
     end
 
@@ -65,7 +64,7 @@ describe Spree::Admin::Reports::EnterpriseFeeSummariesController, type: :control
       let(:current_user) { distributor.owner }
 
       it "applies permissions to report" do
-        get :index, report: {}, report_format: "csv"
+        post :create, report: {}, report_format: "csv"
 
         expect(assigns(:permissions).allowed_order_cycles.to_a).to eq([order_cycle])
       end
@@ -76,7 +75,7 @@ describe Spree::Admin::Reports::EnterpriseFeeSummariesController, type: :control
     "order_management.reports.enterprise_fee_summary"
   end
 
-  def view_template_path
-    "spree/admin/reports/enterprise_fee_summaries/index"
+  def new_template_path
+    "spree/admin/reports/enterprise_fee_summaries/new"
   end
 end
