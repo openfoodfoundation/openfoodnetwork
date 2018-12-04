@@ -109,6 +109,20 @@ module VariantStock
     end
   end
 
+  # We can have this responsibility here in the variant because there is only one stock item per variant
+  #
+  # This enables us to override this behaviour for variant overrides
+  def move(quantity, originator = nil)
+    raise_error_if_no_stock_item_available
+
+    # Creates a stock movement: it updates stock_item.count_on_hand and fills backorders
+    #
+    # This is the original Spree::StockLocation#move,
+    #   except that we raise an error if the stock item is missing,
+    #   because, unlike Spree, we should always have exactly one stock item per variant.
+    stock_item.stock_movements.create!(quantity: quantity, originator: originator)
+  end
+
   private
 
   # Persists the single stock item associated to this variant. As defined in
@@ -126,7 +140,10 @@ module VariantStock
     raise message if stock_items.empty?
   end
 
-  # Backwards compatible setting of stock levels in Spree 2.0.
+  # Overwrites stock_item.count_on_hand
+  #
+  # Calling stock_item.adjust_count_on_hand will bypass filling backorders and creating stock movements
+  # If that was required we could call self.move
   def overwrite_stock_levels(new_level)
     stock_item.adjust_count_on_hand(new_level - stock_item.count_on_hand)
   end

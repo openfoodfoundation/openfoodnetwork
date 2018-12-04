@@ -245,7 +245,6 @@ Layout/EmptyLines:
     - 'spec/models/spree/product_spec.rb'
     - 'spec/models/spree/shipping_method_spec.rb'
     - 'spec/models/spree/variant_spec.rb'
-    - 'spec/models/variant_override_spec.rb'
     - 'spec/serializers/admin/exchange_serializer_spec.rb'
     - 'spec/serializers/admin/for_order_cycle/enterprise_serializer_spec.rb'
     - 'spec/serializers/admin/for_order_cycle/supplied_product_serializer_spec.rb'
@@ -389,7 +388,6 @@ Layout/ExtraSpacing:
     - 'spec/models/spree/adjustment_spec.rb'
     - 'spec/models/spree/gateway/stripe_connect_spec.rb'
     - 'spec/models/spree/order_spec.rb'
-    - 'spec/models/variant_override_spec.rb'
     - 'spec/serializers/admin/for_order_cycle/enterprise_serializer_spec.rb'
     - 'spec/serializers/admin/for_order_cycle/supplied_product_serializer_spec.rb'
     - 'spec/spec_helper.rb'
@@ -557,7 +555,6 @@ Layout/SpaceAfterColon:
     - 'spec/features/admin/variants_spec.rb'
     - 'spec/features/consumer/account_spec.rb'
     - 'spec/models/spree/ability_spec.rb'
-    - 'spec/models/variant_override_spec.rb'
     - 'spec/spec_helper.rb'
 
 # Offense count: 83
@@ -870,7 +867,6 @@ Layout/SpaceInsideHashLiteralBraces:
     - 'spec/models/spree/taxon_spec.rb'
     - 'spec/models/spree/variant_spec.rb'
     - 'spec/models/tag_rule/discount_order_spec.rb'
-    - 'spec/models/variant_override_spec.rb'
     - 'spec/performance/orders_controller_spec.rb'
     - 'spec/requests/checkout/failed_checkout_spec.rb'
     - 'spec/requests/checkout/stripe_connect_spec.rb'
@@ -965,7 +961,6 @@ Lint/DuplicateMethods:
 Lint/IneffectiveAccessModifier:
   Exclude:
     - 'app/models/column_preference.rb'
-    - 'app/models/variant_override.rb'
     - 'lib/open_food_network/feature_toggle.rb'
     - 'lib/open_food_network/products_cache.rb'
     - 'lib/open_food_network/property_merge.rb'
@@ -1130,7 +1125,6 @@ Lint/Void:
     - 'spec/models/spree/payment_spec.rb'
     - 'spec/models/spree/product_spec.rb'
     - 'spec/models/spree/variant_spec.rb'
-    - 'spec/models/variant_override_spec.rb'
     - 'spec/serializers/enterprise_serializer_spec.rb'
     - 'spec/support/request/web_helper.rb'
 
@@ -1522,7 +1516,6 @@ Rails/TimeZone:
     - 'spec/lib/open_food_network/products_cache_refreshment_spec.rb'
     - 'spec/lib/open_food_network/products_cache_spec.rb'
     - 'spec/models/enterprise_relationship_spec.rb'
-    - 'spec/models/variant_override_spec.rb'
 
 # Offense count: 1
 # Configuration parameters: Environments.
@@ -1545,7 +1538,6 @@ Rails/Validation:
     - 'app/models/order_cycle.rb'
     - 'app/models/product_distribution.rb'
     - 'app/models/spree/product_decorator.rb'
-    - 'app/models/variant_override.rb'
 
 # Offense count: 18
 # Cop supports --auto-correct.
@@ -2283,7 +2275,6 @@ Style/RedundantSelf:
     - 'app/models/spree/taxon_decorator.rb'
     - 'app/models/spree/user_decorator.rb'
     - 'app/models/spree/variant_decorator.rb'
-    - 'app/models/variant_override.rb'
     - 'lib/open_food_network/locking.rb'
     - 'lib/open_food_network/rack_request_blocker.rb'
     - 'lib/open_food_network/reports/report.rb'
