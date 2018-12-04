@@ -270,7 +270,13 @@ Spree::Admin::ReportsController.class_eval do
         locals: { report_types: report_types[report] }
       ).html_safe
     end
-    { name: name, description: description }
+    { name: name, url: url_for_report(report), description: description }
+  end
+
+  def url_for_report(report)
+    public_send("#{report}_admin_reports_url".to_sym)
+  rescue NoMethodError
+    url_for([:new, :admin, :reports, report.to_s.singularize])
   end
 
   def timestamp

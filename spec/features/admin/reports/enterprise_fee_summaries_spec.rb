@@ -31,7 +31,7 @@ feature "enterprise fee summaries" do
       it "does not allow access to the report" do
         visit spree.admin_reports_path
         expect(page).to have_no_link(I18n.t("admin.reports.enterprise_fee_summary.name"))
-        visit spree.enterprise_fee_summary_admin_reports_path
+        visit spree.new_admin_reports_enterprise_fee_summary_path
         expect(page).to have_content(I18n.t("unauthorized"))
       end
     end
@@ -39,7 +39,7 @@ feature "enterprise fee summaries" do
 
   describe "smoke test for filters" do
     before do
-      visit spree.enterprise_fee_summary_admin_reports_path
+      visit spree.new_admin_reports_enterprise_fee_summary_path
     end
 
     context "when logged in as admin" do
@@ -63,7 +63,7 @@ feature "enterprise fee summaries" do
 
   describe "smoke test for generation of report based on permissions" do
     before do
-      visit spree.enterprise_fee_summary_admin_reports_path
+      visit spree.new_admin_reports_enterprise_fee_summary_path
     end
 
     context "when logged in as admin" do
@@ -105,7 +105,7 @@ feature "enterprise fee summaries" do
     let(:current_user) { create(:admin_user) }
 
     before do
-      visit spree.enterprise_fee_summary_admin_reports_path
+      visit spree.new_admin_reports_enterprise_fee_summary_path
     end
 
     it "generates file with data for selected order cycle" do
