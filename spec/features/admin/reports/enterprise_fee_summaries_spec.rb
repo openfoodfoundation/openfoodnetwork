@@ -21,7 +21,7 @@ feature "enterprise fee summaries" do
       it "allows access to the report" do
         visit spree.admin_reports_path
         click_on I18n.t("admin.reports.enterprise_fee_summary.name")
-        expect(page).to have_button(I18n.t("generate_report", scope: i18n_scope))
+        expect(page).to have_button(I18n.t("filters.generate_report", scope: i18n_scope))
       end
     end
 
@@ -72,8 +72,8 @@ feature "enterprise fee summaries" do
       let(:current_user) { create(:admin_user) }
 
       it "generates file with data for all enterprises" do
-        check I18n.t("spree.admin.reports.enterprise_fee_summaries.filters.report_format_csv")
-        click_on I18n.t("spree.admin.reports.enterprise_fee_summaries.filters.generate_report")
+        check I18n.t("filters.report_format_csv", scope: i18n_scope)
+        click_on I18n.t("filters.generate_report", scope: i18n_scope)
         expect(page.response_headers['Content-Type']).to eq "text/csv"
         expect(page.body).to have_content(distributor.name)
       end
@@ -86,8 +86,8 @@ feature "enterprise fee summaries" do
       let(:current_user) { distributor.owner }
 
       it "generates file with data for the enterprise" do
-        check I18n.t("spree.admin.reports.enterprise_fee_summaries.filters.report_format_csv")
-        click_on I18n.t("spree.admin.reports.enterprise_fee_summaries.filters.generate_report")
+        check I18n.t("filters.report_format_csv", scope: i18n_scope)
+        click_on I18n.t("filters.generate_report", scope: i18n_scope)
         expect(page.response_headers['Content-Type']).to eq "text/csv"
         expect(page.body).to have_content(distributor.name)
         expect(page.body).not_to have_content(other_distributor.name)
@@ -110,8 +110,8 @@ feature "enterprise fee summaries" do
 
     it "generates file with data for selected order cycle" do
       select order_cycle.name, from: "report_order_cycle_ids"
-      check I18n.t("spree.admin.reports.enterprise_fee_summaries.filters.report_format_csv")
-      click_on I18n.t("spree.admin.reports.enterprise_fee_summaries.filters.generate_report")
+      check I18n.t("filters.report_format_csv", scope: i18n_scope)
+      click_on I18n.t("filters.generate_report", scope: i18n_scope)
       expect(page.response_headers['Content-Type']).to eq "text/csv"
       expect(page.body).to have_content(distributor.name)
       expect(page.body).not_to have_content(second_distributor.name)
@@ -119,6 +119,6 @@ feature "enterprise fee summaries" do
   end
 
   def i18n_scope
-    "spree.admin.reports.enterprise_fee_summaries.filters"
+    "spree.admin.reports.enterprise_fee_summaries"
   end
 end
