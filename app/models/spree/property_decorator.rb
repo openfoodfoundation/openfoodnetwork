@@ -26,6 +26,9 @@ module Spree
     # When a Property is destroyed, dependent-destroy will destroy all ProductProperties,
     # which will take care of refreshing the products cache
 
+    def property
+      self
+    end
 
     private
 
