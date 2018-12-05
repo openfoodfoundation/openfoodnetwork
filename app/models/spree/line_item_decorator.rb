@@ -127,6 +127,12 @@ Spree::LineItem.class_eval do
 
   private
 
+  def update_inventory_with_scoping
+    scoper.scope(variant)
+    update_inventory_without_scoping
+  end
+  alias_method_chain :update_inventory, :scoping
+
   # Override of Spree validation method
   # Added check for in-memory :skip_stock_check attribute
   def stock_availability
@@ -135,8 +141,7 @@ Spree::LineItem.class_eval do
   end
 
   def scoper
-	  return @scoper unless @scoper.nil?
-	  @scoper = OpenFoodNetwork::ScopeVariantToHub.new(order.distributor)
+    @scoper ||= OpenFoodNetwork::ScopeVariantToHub.new(order.distributor)
   end
 
   def calculate_final_weight_volume
