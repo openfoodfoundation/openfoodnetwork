@@ -93,10 +93,10 @@ describe CheckoutController, type: :controller do
         allow(ResetOrderService).to receive(:new).with(controller, order) { reset_order_service }
         allow(reset_order_service).to receive(:call)
         allow(order).to receive(:update_attributes).and_return true
-        controller.stub(:current_order).and_return(order)
+        allow(controller).to receive(:current_order).and_return order
 
         # make order workflow pass through delivery
-        order.stub(:next).twice do
+        allow(order).to receive(:next).twice do
           if order.state == 'cart'
             order.update_column :state, 'delivery'
           else
