@@ -195,6 +195,7 @@ en_GB:
   admin_and_handling: Admin & Handling
   profile: Profile
   supplier_only: Supplier Only
+  has_shopfront: Has Shopfront
   weight: Weight
   volume: Volume
   items: Items
@@ -219,6 +220,7 @@ en_GB:
   password_confirmation: Password Confirmation
   reset_password_token: Reset password
   expired: has expired, please request a new one
+  back_to_payments_list: "Back to Payments List"
   actions:
     create_and_add_another: "Create and Add Another"
   admin:
@@ -2235,6 +2237,7 @@ en_GB:
   validation_msg_relationship_already_established: "^That relationship is already established."
   validation_msg_at_least_one_hub: "^At least one hub must be selected"
   validation_msg_product_category_cant_be_blank: "^Product Category cant be blank"
+  validation_msg_tax: "^Tax Category is required"
   validation_msg_tax_category_cant_be_blank: "^Tax Category can't be blank"
   validation_msg_is_associated_with_an_exising_customer: "is associated with an existing customer"
   content_configuration_pricing_table: "(TODO: Pricing table)"
@@ -2605,14 +2608,21 @@ en_GB:
           bulk_coop_customer_payments: 'Bulk Co-op - Customer Payments'
       users:
         index:
+          listing_users: "Listing Users"
+          new_user: "New User"
           user: "User"
           enterprise_limit: "Enterprise Limit"
           search: "Search"
           email: "Email"
+        edit:
+          editing_user: "Editing User"
+          back_to_users_list: "Back To Users List"
+          general_settings: "General Settings"
         form:
           email: "Email"
           roles: "Roles"
           enterprise_limit: "Enterprise Limit"
+          confirm_password: "Confirm Password"
           password: "Password"
         email_confirmation:
           confirmation_pending: "Email confirmation is pending. We've sent a confirmation email to %{address}."

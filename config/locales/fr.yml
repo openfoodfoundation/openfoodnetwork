@@ -195,6 +195,7 @@ fr:
   admin_and_handling: Frais si par commande
   profile: Profil
   supplier_only: Uniquement Producteur
+  has_shopfront: (gère une boutique)
   weight: Poids
   volume: Volume
   items: Pièces
@@ -219,6 +220,7 @@ fr:
   password_confirmation: Confirmation de mot de passe
   reset_password_token: La demande de réinitialisation du mot de passe
   expired: a expiré, veuillez faire une nouvelle demande.
+  back_to_payments_list: "Retour à la liste des paiements"
   actions:
     create_and_add_another: "Créer et ajouter nouveau"
   admin:
@@ -2236,6 +2238,7 @@ fr:
   validation_msg_relationship_already_established: "^Un lien est déjà établi entre ces entreprises."
   validation_msg_at_least_one_hub: "^Sélectionnez au moins  un hub"
   validation_msg_product_category_cant_be_blank: "^Veuillez sélectionner la catégorie produit"
+  validation_msg_tax: "^La TVA applicable est requise"
   validation_msg_tax_category_cant_be_blank: "^Veuillez sélectionner la TVA applicable"
   validation_msg_is_associated_with_an_exising_customer: "est associé à un acheteur existant"
   content_configuration_pricing_table: "(A FAIRE : Tableau des tarifs)"
@@ -2611,14 +2614,21 @@ fr:
           bulk_coop_customer_payments: 'Achats groupés - Paiement des acheteurs'
       users:
         index:
+          listing_users: "Liste des utilisateurs"
+          new_user: "Nouvel utilisateur"
           user: "Utilisateur"
           enterprise_limit: "Nombre max d'entreprises"
           search: "Rechercher"
           email: "Email"
+        edit:
+          editing_user: "Modifier l'utilisateur"
+          back_to_users_list: "Retour à la liste utilisateurs"
+          general_settings: "Configurations générales"
         form:
           email: "Email"
           roles: "Roles"
           enterprise_limit: "Nombre max d'entreprises"
+          confirm_password: "Confirmez votre mot de passe"
           password: "Mot de passe"
         email_confirmation:
           confirmation_pending: "L'email de confirmation n'a pas encore été validé. Il a été envoyé à %{address}."
