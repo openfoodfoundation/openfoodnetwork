@@ -1,18 +1,18 @@
-@import 'darkswarm/branding';
+@import 'darkswarm/base/colors';
 
 .cookies-banner {
-  background: $dark-grey;
+  background: $cookies-banner-background-color;
   bottom: 0;
   position: fixed;
   top: 15% !important;
   z-index: 100000;
 
   button {
-    background-color: $clr-turquoise;
+    background-color: $cookies-banner-button-background-color;
   }
 
   p {
-    color: $white;
+    color: $cookies-banner-text-color;
     font-size: .75rem;
   }
 
