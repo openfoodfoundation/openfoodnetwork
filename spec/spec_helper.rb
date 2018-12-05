@@ -91,7 +91,6 @@ RSpec.configure do |config|
   config.after(:each, js:true) do
     Capybara.reset_sessions!
     RackRequestBlocker.wait_for_requests_complete
-    DatabaseCleaner.clean
   end
 
   def restart_phantomjs
