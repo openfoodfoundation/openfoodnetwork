@@ -434,14 +434,7 @@ feature %q{
   end
 
   def select_on_demand(variant, value_sym)
-    option_label = case value_sym
-                   when :no
-                     I18n.t("js.variant_overrides.on_demand.no")
-                   when :yes
-                     I18n.t("js.variant_overrides.on_demand.yes")
-                   when :use_producer_settings
-                     I18n.t("admin.variant_overrides.products_variants.on_demand.use_producer_settings")
-                   end
+    option_label = I18n.t(value_sym, scope: "js.variant_overrides.on_demand")
     select option_label, from: "variant-overrides-#{variant.id}-on_demand"
   end
 end
