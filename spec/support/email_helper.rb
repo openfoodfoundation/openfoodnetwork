@@ -7,5 +7,17 @@ module OpenFoodNetwork
     def setup_email
       Spree::Config[:mails_from] = "test@ofn.example.org"
     end
+
+    # Ensures the value `perform_deliveries` had is restored. This saves us
+    # from messing up with the test suite's global state which is cause of
+    # trouble.
+    def performing_deliveries
+      old_value = ActionMailer::Base.perform_deliveries
+      ActionMailer::Base.perform_deliveries = true
+
+      yield
+
+      ActionMailer::Base.perform_deliveries = old_value
+    end
   end
 end

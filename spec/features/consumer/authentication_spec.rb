@@ -71,17 +71,17 @@ feature "Authentication", js: true do
           end
 
           scenario "Signing up successfully" do
-            ActionMailer::Base.perform_deliveries = true
+            performing_deliveries do
+              setup_email
+              fill_in "Email", with: "test@foo.com"
+              fill_in "Choose a password", with: "test12345"
+              fill_in "Confirm password", with: "test12345"
 
-            setup_email
-            fill_in "Email", with: "test@foo.com"
-            fill_in "Choose a password", with: "test12345"
-            fill_in "Confirm password", with: "test12345"
-
-            expect do
-              click_signup_button
-              expect(page).to have_content I18n.t('devise.user_registrations.spree_user.signed_up_but_unconfirmed')
-            end.to send_confirmation_instructions
+              expect do
+                click_signup_button
+                expect(page).to have_content I18n.t('devise.user_registrations.spree_user.signed_up_but_unconfirmed')
+              end.to send_confirmation_instructions
+            end
           end
         end
 
