@@ -13,9 +13,9 @@
 
       .row.buttons.pad-top{ ng: { if: "imageStep == 'logo'" } }
         .small-12.columns
-          %input.button.secondary{ type: "button", value: "Back", ng: { click: "select('about')" } }
+          %input.button.secondary{ type: "button", value: "{{'back' | t}}", ng: { click: "select('about')" } }
           &nbsp;
-          %input.button.primary.right{ type: "button", value: "Continue", ng: { click: "imageSelect('promo')" } }
+          %input.button.primary.right{ type: "button", value: "{{'continue' | t}}", ng: { click: "imageSelect('promo')" } }
 
       .row.buttons.pad-top{ ng: { if: "imageStep == 'promo'" } }
         .small-12.columns
