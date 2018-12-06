@@ -15,7 +15,9 @@ module I18nHelper
   end
 
   def valid_locale(object_with_locale)
-    if object_with_locale.present? && object_with_locale.locale.present? && available_locale?(object_with_locale.locale)
+    if object_with_locale.present? &&
+       object_with_locale.locale.present? &&
+       available_locale?(object_with_locale.locale)
       object_with_locale.locale
     else
       I18n.default_locale
