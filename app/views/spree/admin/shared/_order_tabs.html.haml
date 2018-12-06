@@ -65,10 +65,6 @@
       %li{ class: payments_classes }
       = link_to_with_icon 'icon-credit-card', t(:payments), admin_order_payments_url(@order)
 
-      - shipments_classes = "active" if current == "Shipments"
-      %li{ class: shipments_classes }
-      = link_to_with_icon 'icon-road', t(:shipments), admin_order_shipments_url(@order)
-
       - if @order.completed?
         - authorizations_classes = "active" if current == "Return Authorizations"
         %li{ class: authorizations_classes }
