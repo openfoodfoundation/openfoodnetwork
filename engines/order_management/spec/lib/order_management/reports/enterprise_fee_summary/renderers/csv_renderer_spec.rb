@@ -10,7 +10,17 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::Renderers::CsvRenderer 
 
   let!(:permissions) { report_klass::Permissions.new(current_user) }
   let!(:parameters) { report_klass::Parameters.new }
-  let!(:service) { report_klass::ReportService.new(permissions, parameters, described_class) }
+  let!(:service) { report_klass::ReportService.new(permissions, parameters) }
+  let!(:renderer) { described_class.new(service) }
+
+  # Context which will be passed to the renderer. The response object is not automatically prepared,
+  # so this has to be assigned explicitly.
+  let!(:response) { ActionController::TestResponse.new }
+  let!(:controller) do
+    ActionController::Base.new.tap do |controller_mock|
+      controller_mock.instance_variable_set(:@_response, response)
+    end
+  end
 
   let!(:enterprise_fee_type_totals) do
     instance = report_klass::ReportData::EnterpriseFeeTypeTotals.new
@@ -46,7 +56,8 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::Renderers::CsvRenderer 
   end
 
   it "generates CSV header" do
-    result = service.render
+    renderer.render(controller)
+    result = response.body
     csv = CSV.parse(result)
     header_row = csv[0]
 
@@ -56,7 +67,8 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::Renderers::CsvRenderer 
   end
 
   it "generates CSV data rows" do
-    result = service.render
+    renderer.render(controller)
+    result = response.body
     csv = CSV.parse(result, headers: true)
 
     expect(csv.length).to eq(2)
@@ -69,7 +81,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::Renderers::CsvRenderer 
 
   it "generates filename correctly" do
     Timecop.freeze(Time.zone.local(2018, 10, 9, 7, 30, 0)) do
-      filename = service.filename
+      filename = renderer.__send__(:filename)
       expect(filename).to eq("enterprise_fee_summary_20181009.csv")
     end
   end

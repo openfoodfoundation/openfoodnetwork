@@ -10,7 +10,9 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::Renderers::HtmlRenderer
 
   let!(:permissions) { report_klass::Permissions.new(current_user) }
   let!(:parameters) { report_klass::Parameters.new }
-  let!(:service) { report_klass::ReportService.new(permissions, parameters, described_class) }
+  let!(:controller) { Spree::Admin::Reports::EnterpriseFeeSummariesController.new }
+  let!(:service) { report_klass::ReportService.new(permissions, parameters) }
+  let!(:renderer) { described_class.new(service) }
 
   let!(:enterprise_fee_type_totals) do
     instance = report_klass::ReportData::EnterpriseFeeTypeTotals.new
@@ -46,7 +48,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::Renderers::HtmlRenderer
   end
 
   it "generates header values" do
-    header_row = service.renderer.header
+    header_row = renderer.header
 
     # Test all header cells have values
     expect(header_row.length).to eq(8)
@@ -54,8 +56,8 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::Renderers::HtmlRenderer
   end
 
   it "generates data rows" do
-    header_row = service.renderer.header
-    result = service.renderer.data_rows
+    header_row = renderer.header
+    result = renderer.data_rows
 
     expect(result.length).to eq(2)
 

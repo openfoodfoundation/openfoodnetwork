@@ -20,9 +20,8 @@ module Spree
 
           @authorizer = report_klass::Authorizer.new(@report_parameters, @permissions)
           @authorizer.authorize!
-          @report = report_klass::ReportService.new(@permissions, @report_parameters,
-                                                    report_renderer_klass)
-          render_report
+          @report = report_klass::ReportService.new(@permissions, @report_parameters)
+          renderer.render(self)
         rescue OpenFoodNetwork::Reports::Authorizer::ParameterNotAllowedError => e
           flash[:error] = e.message
           render_report_form
@@ -55,15 +54,6 @@ module Spree
           @permissions = report_klass::Permissions.new(spree_current_user)
         end
 
-        def render_report
-          return render_html_report unless @report.renderer.independent_file?
-          send_data(@report.render, filename: @report.filename)
-        end
-
-        def render_html_report
-          render action: :index
-        end
-
         def report_renderer_klass
           case params[:report_format]
           when "csv"
@@ -73,6 +63,10 @@ module Spree
           else
             raise OpenFoodNetwork::Reports::UnsupportedReportFormatException
           end
+        end
+
+        def renderer
+          @renderer ||= report_renderer_klass.new(@report)
         end
       end
     end
