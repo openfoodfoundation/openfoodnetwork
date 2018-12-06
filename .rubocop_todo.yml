@@ -845,7 +845,6 @@ Layout/SpaceInsideHashLiteralBraces:
     - 'spec/features/admin/reports_spec.rb'
     - 'spec/features/consumer/shopping/checkout_spec.rb'
     - 'spec/helpers/checkout_helper_spec.rb'
-    - 'spec/helpers/i18n_helper_spec.rb'
     - 'spec/helpers/order_cycles_helper_spec.rb'
     - 'spec/lib/open_food_network/enterprise_fee_calculator_spec.rb'
     - 'spec/lib/open_food_network/feature_toggle_spec.rb'
