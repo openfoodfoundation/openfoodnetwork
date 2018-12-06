@@ -1,4 +1,5 @@
 class ProducerMailer < Spree::BaseMailer
+  include I18nHelper
 
   def order_cycle_report(producer, order_cycle)
     @producer = producer
@@ -10,9 +11,10 @@ class ProducerMailer < Spree::BaseMailer
     @total = total_from_line_items(line_items)
     @tax_total = tax_total_from_line_items(line_items)
 
-    subject = "[#{Spree::Config.site_name}] #{I18n.t('producer_mailer.order_cycle.subject', producer: producer.name)}"
+    I18n.with_locale valid_locale(@producer.owner.locale) do
+      subject = "[#{Spree::Config.site_name}] #{I18n.t('producer_mailer.order_cycle.subject', producer: producer.name)}"
 
-    if has_orders?(order_cycle, producer)
+      return unless has_orders?(order_cycle, producer)
       mail(
         to: @producer.contact.email,
         from: from_address,
@@ -22,7 +24,6 @@ class ProducerMailer < Spree::BaseMailer
       )
     end
   end
-
 
   private
 
