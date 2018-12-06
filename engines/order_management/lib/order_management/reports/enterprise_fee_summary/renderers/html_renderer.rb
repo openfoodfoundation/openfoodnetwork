@@ -5,6 +5,11 @@ module OrderManagement
     module EnterpriseFeeSummary
       module Renderers
         class HtmlRenderer < OpenFoodNetwork::Reports::Renderers::Base
+          def render(context)
+            context.instance_variable_set :@renderer, self
+            context.render(action: :create, renderer: self)
+          end
+
           def header
             data_row_attributes.map do |attribute|
               header_label(attribute)

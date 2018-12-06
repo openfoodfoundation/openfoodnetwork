@@ -86,7 +86,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
 
     let(:permissions) { report_klass::Permissions.new(current_user) }
     let(:parameters) { report_klass::Parameters.new }
-    let(:service) { described_class.new(permissions, parameters, nil) }
+    let(:service) { described_class.new(permissions, parameters) }
 
     it "groups and sorts entries correctly" do
       totals = service.enterprise_fee_type_totals
@@ -165,7 +165,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
 
     let(:permissions) { report_klass::Permissions.new(current_user) }
     let(:parameters) { report_klass::Parameters.new({}) }
-    let(:service) { described_class.new(permissions, parameters, nil) }
+    let(:service) { described_class.new(permissions, parameters) }
 
     context "when admin" do
       let!(:current_user) { create(:admin_user) }
@@ -194,7 +194,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
   describe "filters entries correctly" do
     let(:permissions) { report_klass::Permissions.new(current_user) }
     let(:parameters) { report_klass::Parameters.new(parameters_attributes) }
-    let(:service) { described_class.new(permissions, parameters, nil) }
+    let(:service) { described_class.new(permissions, parameters) }
 
     context "filtering by completion date" do
       let(:timestamp) { Time.zone.local(2018, 1, 5, 14, 30, 5) }
