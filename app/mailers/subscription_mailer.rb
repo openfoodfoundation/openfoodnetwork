@@ -47,7 +47,7 @@ class SubscriptionMailer < Spree::BaseMailer
   private
 
   def send_mail(order)
-    I18n.with_locale valid_locale(order.user.locale) do
+    I18n.with_locale valid_locale(order.user) do
       subject = "#{Spree::Config[:site_name]} #{t('order_mailer.confirm_email.subject')} ##{order.number}"
       mail(to: order.email,
            from: from_address,

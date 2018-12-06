@@ -14,9 +14,9 @@ module I18nHelper
     I18n.locale = spree_current_user.andand.locale || cookies[:locale] || I18n.default_locale
   end
 
-  def valid_locale(locale)
-    if available_locale?(locale)
-      locale
+  def valid_locale(object_with_locale)
+    if object_with_locale.present? && object_with_locale.locale.present? && available_locale?(object_with_locale.locale)
+      object_with_locale.locale
     else
       I18n.default_locale
     end

@@ -6,7 +6,7 @@ Spree::OrderMailer.class_eval do
 
   def cancel_email(order, resend = false)
     @order = find_order(order)
-    I18n.with_locale valid_locale(@order.user.locale) do
+    I18n.with_locale valid_locale(@order.user) do
       subject = (resend ? "[#{t(:resend).upcase}] " : '')
       subject += "#{Spree::Config[:site_name]} #{t('order_mailer.cancel_email.subject')} ##{order.number}"
       mail(to: order.email, from: from_address, subject: subject)
@@ -15,7 +15,7 @@ Spree::OrderMailer.class_eval do
 
   def confirm_email_for_customer(order, resend = false)
     find_order(order) # Finds an order instance from an id
-    I18n.with_locale valid_locale(@order.user.locale) do
+    I18n.with_locale valid_locale(@order.user) do
       subject = (resend ? "[#{t(:resend).upcase}] " : '')
       subject += "#{Spree::Config[:site_name]} #{t('order_mailer.confirm_email.subject')} ##{@order.number}"
       mail(:to => @order.email,
@@ -27,7 +27,7 @@ Spree::OrderMailer.class_eval do
 
   def confirm_email_for_shop(order, resend = false)
     find_order(order) # Finds an order instance from an id
-    I18n.with_locale valid_locale(@order.user.locale) do
+    I18n.with_locale valid_locale(@order.user) do
       subject = (resend ? "[#{t(:resend).upcase}] " : '')
       subject += "#{Spree::Config[:site_name]} #{t('order_mailer.confirm_email.subject')} ##{@order.number}"
       mail(:to => @order.distributor.contact.email,
@@ -38,7 +38,7 @@ Spree::OrderMailer.class_eval do
 
   def invoice_email(order, pdf)
     find_order(order) # Finds an order instance from an id
-    I18n.with_locale valid_locale(@order.user.locale) do
+    I18n.with_locale valid_locale(@order.user) do
       attachments["invoice-#{@order.number}.pdf"] = pdf if pdf.present?
       subject = "#{Spree::Config[:site_name]} #{t(:invoice)} ##{@order.number}"
       mail(:to => @order.email,
