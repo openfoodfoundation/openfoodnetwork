@@ -505,7 +505,7 @@ GEM
       activesupport (>= 3.0.0)
       railties (>= 3.0.0)
     kgio (2.11.2)
-    knapsack (1.16.0)
+    knapsack (1.17.1)
       rake
     launchy (2.4.3)
       addressable (~> 2.3)
