@@ -365,6 +365,27 @@ feature %q{
               expect(vo.count_on_hand).to be_nil
               expect(vo.on_demand).to be_nil
             end
+
+            it "provides explanation when attempting to save variant override with incompatible stock settings" do
+              # Successfully change stock settings.
+              select_on_demand variant, :no
+              fill_in "variant-overrides-#{variant.id}-count_on_hand", with: "1111"
+              click_button I18n.t("save_changes")
+              expect(page).to have_content I18n.t("js.changes_saved")
+
+              # Make stock settings incompatible.
+              select_on_demand variant, :no
+              fill_in "variant-overrides-#{variant.id}-count_on_hand", with: ""
+
+              # It does not save the changes.
+              click_button I18n.t("save_changes")
+              expect(page).to have_content I18n.t("activerecord.errors.models.variant_override.count_on_hand.limited_stock_but_no_count_on_hand")
+              expect(page).to have_no_content I18n.t("js.changes_saved")
+
+              vo.reload
+              expect(vo.count_on_hand).to eq(1111)
+              expect(vo.on_demand).to eq(false)
+            end
           end
         end
       end
