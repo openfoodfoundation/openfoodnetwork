@@ -22,7 +22,7 @@ feature "shopping with variant overrides defined", js: true, retry: 3 do
   let(:v4) { create(:variant, product: p1, price: 44.44, unit_value: 4) }
   let(:v5) { create(:variant, product: p3, price: 55.55, unit_value: 5, on_demand: true) }
   let(:v6) { create(:variant, product: p3, price: 66.66, unit_value: 6, on_demand: true) }
-  let!(:vo1) { create(:variant_override, hub: hub, variant: v1, price: 55.55, count_on_hand: nil, default_stock: nil, resettable: false) }
+  let!(:vo1) { create(:variant_override, :use_producer_stock_settings, hub: hub, variant: v1, price: 55.55, default_stock: nil, resettable: false) }
   let!(:vo2) { create(:variant_override, hub: hub, variant: v2, count_on_hand: 0, default_stock: nil, resettable: false) }
   let!(:vo3) { create(:variant_override, hub: hub, variant: v3, count_on_hand: 0, default_stock: nil, resettable: false) }
   let!(:vo4) { create(:variant_override, hub: hub, variant: v4, count_on_hand: 3, default_stock: nil, resettable: false) }

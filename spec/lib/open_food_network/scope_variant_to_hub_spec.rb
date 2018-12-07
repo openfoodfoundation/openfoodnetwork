@@ -5,7 +5,7 @@ module OpenFoodNetwork
     let(:hub) { create(:distributor_enterprise) }
     let(:v)   { create(:variant, price: 11.11, count_on_hand: 1, on_demand: true, sku: "VARIANTSKU") }
     let(:vo)  { create(:variant_override, hub: hub, variant: v, price: 22.22, count_on_hand: 2, on_demand: false, sku: "VOSKU") }
-    let(:vo_price_only) { create(:variant_override, hub: hub, variant: v, price: 22.22, count_on_hand: nil) }
+    let(:vo_price_only) { create(:variant_override, :use_producer_stock_settings, hub: hub, variant: v, price: 22.22) }
     let(:scoper) { ScopeVariantToHub.new(hub) }
 
     describe "overriding price" do

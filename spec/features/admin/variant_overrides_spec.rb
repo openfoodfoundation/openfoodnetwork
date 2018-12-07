@@ -220,7 +220,7 @@ feature %q{
         end
 
         context "with overrides" do
-          let!(:vo) { create(:variant_override, variant: variant, hub: hub, price: 77.77, on_demand: true, count_on_hand: 11111, default_stock: 1000, resettable: true, tag_list: ["tag1","tag2","tag3"]) }
+          let!(:vo) { create(:variant_override, :on_demand, variant: variant, hub: hub, price: 77.77, default_stock: 1000, resettable: true, tag_list: ["tag1","tag2","tag3"]) }
           let!(:vo_no_auth) { create(:variant_override, variant: variant, hub: hub2, price: 1, count_on_hand: 2) }
           let!(:product2) { create(:simple_product, supplier: producer, variant_unit: 'weight', variant_unit_scale: 1) }
           let!(:variant2) { create(:variant, product: product2, unit_value: 8, price: 1.00, on_hand: 12) }
@@ -237,8 +237,10 @@ feature %q{
 
           it "product values are affected by overrides" do
             page.should have_input "variant-overrides-#{variant.id}-price", with: '77.77', placeholder: '1.23'
-            page.should have_input "variant-overrides-#{variant.id}-count_on_hand", with: '11111', placeholder: I18n.t("js.variants.on_demand.yes")
+            expect(page).to have_input "variant-overrides-#{variant.id}-count_on_hand", with: "", placeholder: I18n.t("js.variants.on_demand.yes")
             expect(page).to have_select "variant-overrides-#{variant.id}-on_demand", selected: I18n.t("js.variant_overrides.on_demand.yes")
+
+            expect(page).to have_input "variant-overrides-#{variant2.id}-count_on_hand", with: "40", placeholder: ""
           end
 
           it "updates existing overrides" do
