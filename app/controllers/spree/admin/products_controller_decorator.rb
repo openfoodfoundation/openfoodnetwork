@@ -31,6 +31,18 @@ Spree::Admin::ProductsController.class_eval do
     @show_latest_import = params[:latest_import] || false
   end
 
+  def create
+    delete_stock_params_and_set_after do
+      super
+    end
+  end
+
+  def update
+    delete_stock_params_and_set_after do
+      super
+    end
+  end
+
   def bulk_update
     collection_hash = Hash[params[:products].each_with_index.map { |p,i| [i,p] }]
     product_set = Spree::ProductSet.new({:collection_attributes => collection_hash})
@@ -118,5 +130,23 @@ Spree::Admin::ProductsController.class_eval do
         params[:product][:product_properties_attributes].delete key unless names.include? property[:property_name]
       end
     end
+  end
+
+  def delete_stock_params_and_set_after
+    on_demand = params[:product].delete(:on_demand)
+    on_hand = params[:product].delete(:on_hand)
+
+    yield
+
+    set_stock_levels(@product, on_hand, on_demand) if @product.valid?
+  end
+
+  def set_stock_levels(product, on_hand, on_demand)
+    variant = product.master
+    if product.variants.any?
+      variant = product.variants.first
+    end
+    variant.on_demand = on_demand if on_demand.present?
+    variant.on_hand = on_hand.to_i if on_hand.present?
   end
 end
