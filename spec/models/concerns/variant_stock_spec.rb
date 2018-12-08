@@ -103,27 +103,39 @@ describe VariantStock do
   end
 
   describe '#on_demand' do
-    context 'when the stock items is backorderable' do
-      before do
-        variant.stock_items.first.update_attribute(
-          :backorderable, true
-        )
+    context 'when the variant has a stock item' do
+      let(:variant) { create(:variant) }
+
+      context 'when the stock item is backorderable' do
+        before do
+          variant.stock_items.first.update_attribute(
+            :backorderable, true
+          )
+        end
+
+        it 'returns true' do
+          expect(variant.on_demand).to be_truthy
+        end
       end
 
-      it 'returns true' do
-        expect(variant.on_demand).to be_truthy
+      context 'when the stock items is not backorderable' do
+        before do
+          variant.stock_items.first.update_attribute(
+            :backorderable, false
+          )
+        end
+
+        it 'returns false' do
+          expect(variant.on_demand).to be_falsy
+        end
       end
     end
 
-    context 'when the stock items is backorderable' do
-      before do
-        variant.stock_items.first.update_attribute(
-          :backorderable, false
-        )
-      end
+    context 'when the variant has no stock item' do
+      let(:variant) { build(:variant) }
 
-      it 'returns false' do
-        expect(variant.on_demand).to be_falsy
+      it 'returns stock location default' do
+        expect(variant.on_demand).to be_truthy
       end
     end
   end

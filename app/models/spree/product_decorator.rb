@@ -1,10 +1,10 @@
 require 'open_food_network/permalink_generator'
 require 'open_food_network/property_merge'
-require 'concerns/product_on_demand'
+require 'concerns/product_stock'
 
 Spree::Product.class_eval do
   include PermalinkGenerator
-  include ProductOnDemand
+  include ProductStock
 
   # We have an after_destroy callback on Spree::ProductOptionType. However, if we
   # don't specify dependent => destroy on this association, it is not called. See:
@@ -129,14 +129,6 @@ Spree::Product.class_eval do
 
 
   # -- Methods
-
-  def on_hand
-    if has_variants?
-      variants.map(&:on_hand).reduce(:+)
-    else
-      master.on_hand
-    end
-  end
 
   # Called by Spree::Product::duplicate before saving.
   def duplicate_extra(parent)

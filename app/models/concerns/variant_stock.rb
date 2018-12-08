@@ -85,6 +85,11 @@ module VariantStock
   # https://github.com/openfoodfoundation/spree/commit/20b5ad9835dca7f41a40ad16c7b45f987eea6dcc
   def on_demand
     warn_deprecation(__method__, 'StockItem#backorderable?')
+
+    # A variant that has not been saved yet, doesn't have a stock item
+    #   This provides a default value for variant.on_demand using Spree::StockLocation.backorderable_default
+    return Spree::StockLocation.first.backorderable_default if stock_items.empty?
+
     stock_item.backorderable?
   end
 
