@@ -63,16 +63,16 @@ class Spree::ProductSet < ModelSet
 
   def update_product_master(product, attributes)
     return true unless attributes[:master_attributes]
-    update_variant(product, attributes[:master_attributes])
+    create_or_update_variant(product, attributes[:master_attributes])
   end
 
   def update_variants_attributes(product, variants_attributes)
     variants_attributes.each do |attributes|
-      update_variant(product, attributes)
+      create_or_update_variant(product, attributes)
     end
   end
 
-  def update_variant(product, variant_attributes)
+  def create_or_update_variant(product, variant_attributes)
     found_variant = product.variants_including_master.find do |variant|
       variant.id.to_s == variant_attributes[:id].to_s && variant.persisted?
     end
@@ -80,8 +80,18 @@ class Spree::ProductSet < ModelSet
     if found_variant.present?
       found_variant.update_attributes(variant_attributes.except(:id))
     else
-      product.variants.create(variant_attributes)
+      create_variant(product, variant_attributes)
     end
+  end
+
+  def create_variant(product, variant_attributes)
+      on_hand = variant_attributes.delete(:on_hand)
+      on_demand = variant_attributes.delete(:on_demand)
+
+      variant = product.variants.create(variant_attributes)
+
+      variant.on_demand = on_demand if on_demand.present?
+      variant.on_hand = on_hand.to_i if on_hand.present?
   end
 
   def collection_attributes=(attributes)
