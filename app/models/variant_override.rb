@@ -84,7 +84,7 @@ class VariantOverride < ActiveRecord::Base
   def reset_stock!
     if resettable
       if default_stock?
-        self.attributes = { count_on_hand: default_stock }
+        self.attributes = { on_demand: false, count_on_hand: default_stock }
         self.save
       else
         Bugsnag.notify RuntimeError.new "Attempting to reset stock level for a variant with no default stock level."

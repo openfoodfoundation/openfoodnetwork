@@ -325,7 +325,7 @@ feature %q{
             first("div#bulk-actions-dropdown div.menu div.menu_item", text: "Reset Stock Levels To Defaults").click
             page.should have_content 'Stocks reset to defaults.'
             vo.reload
-            page.should have_input "variant-overrides-#{variant.id}-count_on_hand", with: '1000', placeholder: I18n.t("js.variants.on_demand.yes")
+            expect(page).to have_input "variant-overrides-#{variant.id}-count_on_hand", with: "1000", placeholder: ""
             vo.count_on_hand.should == 1000
           end
 
@@ -333,7 +333,7 @@ feature %q{
             first("div#bulk-actions-dropdown").click
             first("div#bulk-actions-dropdown div.menu div.menu_item", text: "Reset Stock Levels To Defaults").click
             vo_no_reset.reload
-            page.should have_input "variant-overrides-#{variant2.id}-count_on_hand", with: '40', placeholder: '12'
+            expect(page).to have_input "variant-overrides-#{variant2.id}-count_on_hand", with: "40", placeholder: ""
             vo_no_reset.count_on_hand.should == 40
           end
 

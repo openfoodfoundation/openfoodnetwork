@@ -210,17 +210,42 @@ describe VariantOverride do
   end
 
   describe "resetting stock levels" do
-    it "resets the on hand level to the value in the default_stock field" do
-      vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12, default_stock: 20, resettable: true)
-      vo.reset_stock!
-      vo.reload.count_on_hand.should == 20
+    describe "forcing the on hand level to the value in the default_stock field" do
+      it "succeeds for variant override that forces limited stock" do
+        vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12, default_stock: 20, resettable: true)
+        vo.reset_stock!
+
+        vo.reload
+        expect(vo.on_demand).to eq(false)
+        expect(vo.count_on_hand).to eq(20)
+      end
+
+      it "succeeds for variant override that forces unlimited stock" do
+        vo = create(:variant_override, :on_demand, variant: variant, hub: hub, default_stock: 20, resettable: true)
+        vo.reset_stock!
+
+        vo.reload
+        expect(vo.on_demand).to eq(false)
+        expect(vo.count_on_hand).to eq(20)
+      end
+
+      it "succeeds for variant override that uses producer stock settings" do
+        vo = create(:variant_override, :use_producer_stock_settings, variant: variant, hub: hub, default_stock: 20, resettable: true)
+        vo.reset_stock!
+
+        vo.reload
+        expect(vo.on_demand).to eq(false)
+        expect(vo.count_on_hand).to eq(20)
+      end
     end
+
     it "silently logs an error if the variant override doesn't have a default stock level" do
       vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12, default_stock:nil, resettable: true)
       Bugsnag.should_receive(:notify)
       vo.reset_stock!
       vo.reload.count_on_hand.should == 12
     end
+
     it "doesn't reset the level if the behaviour is disabled" do
       vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12, default_stock: 10, resettable: false)
       vo.reset_stock!
