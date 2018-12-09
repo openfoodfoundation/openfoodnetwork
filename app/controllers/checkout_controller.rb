@@ -22,8 +22,7 @@ class CheckoutController < Spree::CheckoutController
   end
 
   def update
-    shipping_method_id = object_params[:shipping_method_id]
-    object_params.delete(:shipping_method_id)
+    shipping_method_id = object_params.delete(:shipping_method_id)
 
     return update_failed unless @order.update_attributes(object_params)
 

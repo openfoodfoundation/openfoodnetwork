@@ -19,9 +19,12 @@ module OrderShippingMethod
     shipments.first.shipping_method
   end
 
-  # Finds the shipment shipping_rate for the given shipping_method_id and selects that shipping_rate
+  # Finds the shipment's shipping_rate for the given shipping_method_id and selects that shipping_rate.
+  # If the selection is successful, it persists it in the database by saving the shipment.
+  # If it fails, it does not clear the current shipping_method selection.
   #
-  # @return [Shipment]
+  # @return [ShippingMethod] the selected shipping method, or nil if the given shipping_method_id is
+  #   empty or if it cannot find the given shipping_method_id in the order
   def select_shipping_method(shipping_method_id)
     return if shipping_method_id.blank? || shipments.empty?
     shipment = shipments.first
