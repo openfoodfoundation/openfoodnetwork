@@ -322,14 +322,12 @@ module ProductImport
     end
 
     def create_inventory_item(entry, existing_variant)
-      variant_override = find_or_initialize_variant_override(entry, existing_variant)
+      find_or_initialize_variant_override(entry, existing_variant).tap do |variant_override|
+        check_variant_override_stock_settings(entry, variant_override)
 
-      check_variant_override_stock_settings(entry, variant_override)
-
-      variant_override.assign_attributes(import_date: @import_time)
-      variant_override.assign_attributes(entry.attributes.slice('price', 'on_demand'))
-
-      variant_override
+        variant_override.assign_attributes(import_date: @import_time)
+        variant_override.assign_attributes(entry.attributes.slice('price', 'on_demand'))
+      end
     end
 
     def mark_as_inventory_item(entry, variant_override)
