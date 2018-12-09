@@ -323,8 +323,10 @@ module ProductImport
 
     def create_inventory_item(entry, existing_variant)
       variant_override = find_or_initialize_variant_override(entry, existing_variant)
-      variant_override.assign_attributes(count_on_hand: entry.on_hand, import_date: @import_time)
-      check_on_hand_nil(entry, variant_override)
+
+      check_variant_override_stock_settings(entry, variant_override)
+
+      variant_override.assign_attributes(import_date: @import_time)
       variant_override.assign_attributes(entry.attributes.slice('price', 'on_demand'))
 
       variant_override
@@ -357,6 +359,12 @@ module ProductImport
       object.on_hand = 0 if object.respond_to?(:on_hand)
       object.count_on_hand = 0 if object.respond_to?(:count_on_hand)
       entry.on_hand_nil = true
+    end
+
+    def check_variant_override_stock_settings(entry, object)
+      object.count_on_hand = entry.on_hand.presence
+      object.on_demand = object.count_on_hand.blank? if entry.on_demand.blank?
+      entry.on_hand_nil = object.count_on_hand.blank?
     end
   end
 end
