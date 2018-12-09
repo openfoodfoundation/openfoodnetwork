@@ -68,6 +68,18 @@ module ProductImport
 
     private
 
+    def find_or_initialize_variant_override(entry, existing_variant)
+      existing_variant_override = VariantOverride.where(
+        variant_id: existing_variant.id,
+        hub_id: entry.enterprise_id
+      ).first
+
+      existing_variant_override || VariantOverride.new(
+        variant_id: existing_variant.id,
+        hub_id: entry.enterprise_id
+      )
+    end
+
     def enterprise_validation(entry)
       return if name_presence_error entry
       return if enterprise_not_found_error entry
@@ -310,16 +322,7 @@ module ProductImport
     end
 
     def create_inventory_item(entry, existing_variant)
-      existing_variant_override = VariantOverride.where(
-        variant_id: existing_variant.id,
-        hub_id: entry.enterprise_id
-      ).first
-
-      variant_override = existing_variant_override || VariantOverride.new(
-        variant_id: existing_variant.id,
-        hub_id: entry.enterprise_id
-      )
-
+      variant_override = find_or_initialize_variant_override(entry, existing_variant)
       variant_override.assign_attributes(count_on_hand: entry.on_hand, import_date: @import_time)
       check_on_hand_nil(entry, variant_override)
       variant_override.assign_attributes(entry.attributes.slice('price', 'on_demand'))
