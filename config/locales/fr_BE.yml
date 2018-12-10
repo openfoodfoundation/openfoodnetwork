@@ -7,7 +7,7 @@ fr_BE:
         shipment_state: Statut livraison
         completed_at: 'Passée à '
         number: N° commande
-        email: Email acheteur
+        email: Adresse électronique acheteur
       spree/payment:
         amount: Montant
       order_cycle:
@@ -17,7 +17,7 @@ fr_BE:
         spree/user:
           attributes:
             email:
-              taken: "Un compte existe déjà pour cet e-mail. Connectez-vous ou demandez un nouveau mot de passe."
+              taken: "Un compte existe déjà pour cette adresse électronique. Connectez-vous ou demandez un nouveau mot de passe."
         spree/order:
           no_card: Aucune carte de paiement autorisée disponible
         order_cycle:
@@ -55,7 +55,7 @@ fr_BE:
     user_registrations:
       spree_user:
         signed_up_but_unconfirmed: "Un message avec un lien de confirmation a été envoyé à l'adresse email indiquée. Veuillez cliquer sur ce lien pour activer votre compte."
-        unknown_error: "Une erreur s'est glissée lors de la création de votre compte. Vérifiez votre addresse email et recommencez."
+        unknown_error: "Une erreur s'est glissée lors de la création de votre compte. Vérifiez votre adresse email et recommencez."
     failure:
       invalid: |
           Email / mot de passe incorrect.
@@ -289,7 +289,7 @@ fr_BE:
         finalise_invoice: "Finaliser les factures"
         auto_finalise_invoices: "Finaliser automatiquement les factures le 2 de chaque mois à 01:30"
         manually_run_task: "Tâche exécutée manuellement"
-        update_user_invoice_explained: "Cliquez ici pour mettre à jour immédiatement les factures pour le mois en cours pour toutes les entreprises utilisant le système. Cette tache peut être définie pour s'effectuer automatiquement chaque nuit."
+        update_user_invoice_explained: "Cliquez ici pour mettre à jour immédiatement les factures pour le mois en cours pour toutes les entreprises utilisant le système. Cette tâche peut être définie pour s'effectuer automatiquement chaque nuit."
         finalise_user_invoices: "Finaliser les factures utilisateurs"
         finalise_user_invoice_explained: "Cliquez ici pour finaliser toutes les factures pour le mois calendaire précédent. Cette tâche peut-être définie pour être opérée automatiquement une fois par mois."
         update_user_invoices: "Mettre à jour les factures utilisateurs"
@@ -435,7 +435,7 @@ fr_BE:
         import_date: Importé
         upload_an_image: Importer une image
       product_search_keywords: Mots-clés de recherche produits
-      product_search_tip: Saisissez des mots qui peuvent simplifier la recherche de vo produits dans les boutiques. Laissez un espace entre chaque mot-clé.
+      product_search_tip: Saisissez des mots qui peuvent simplifier la recherche de vos produits dans les boutiques. Laissez un espace entre chaque mot-clé.
       SEO_keywords: Mot-clés de référencement web
       seo_tip: Saisissez des mots qui peuvent simplifier la recherche de vos produits sur le web. Laissez un espace entre chaque mot-clé.
       Search: Rechercher
@@ -511,56 +511,56 @@ fr_BE:
         entries_with_errors: Certaines lignes contiennent des erreurs et les produits correspondant ne seront pas importés
         products_to_create: Ces produits vont être crées
         products_to_update: Ces produits vont être mis à jour
-        inventory_to_create: Ces produits vont être ajoutés au catalogue boutique
-        inventory_to_update: Les informations de ces produits dans le catalogue boutique vont être mises à jour
+        inventory_to_create: Ces produits vont être ajoutés au catalogue du magasin
+        inventory_to_update: Les informations de ces produits dans le catalogue du magasin vont être mises à jour
         products_to_reset: Le stock des produits existants va être remis à zero
-        inventory_to_reset: Dans le catalogue boutique, le stock des produits existants va être remis à zéro
+        inventory_to_reset: Dans le catalogue du magasin, le stock des produits existants va être remis à zéro
         line: Ligne
         item_line: Ligne produit concernée
       import_review:
         not_updatable_tip: "Les champs suivants ne peuvent pas être mis à jour pour des produits existants via la fonctionnalité d'import de fichier produits :"
         fields_ignored: Ces champs seront ignorés à l'enregistrement des produits importés.
       entries_table:
-        not_updatable: Ce champs ne peut pas être mis à jour pour des produits existants via la fonctionnalité d'import de fichier produits
+        not_updatable: Ce champ ne peut pas être mis à jour pour des produits existants via la fonctionnalité d'import de fichier produits
       save_results:
         final_results: Importer les informations produits confirmées
         products_created: produits crées
         products_updated: produits mis à jour
-        inventory_created: produits ajoutés dans le catalogue boutique
-        inventory_updated: produits mis à jour dans le catalogue boutique
+        inventory_created: produits ajoutés dans le catalogue du magasin
+        inventory_updated: produits mis à jour dans le catalogue du magasin
         products_reset: produits ont vu leur niveau de stock remis à zéro
-        inventory_reset: produits ont vu leur niveau de stock remis à zéro dans le catalogue boutique
+        inventory_reset: produits ont vu leur niveau de stock remis à zéro dans le catalogue du magasin
         all_saved: "Tous les produits ont été sauvegardés avec succès"
         some_saved: "produits sauvegardés avec succès"
         save_errors: Sauvegarder les erreurs
         import_again: Importer un autre fichier
         view_products: Aller à la page Produits
-        view_inventory: Aller à la page Catalogues Boutiques
+        view_inventory: Aller à la page Catalogues Magasins
     variant_overrides:
       loading_flash:
-        loading_inventory: Catalogue boutique en cours de chargement...
+        loading_inventory: Catalogue du magasin en cours de chargement...
       index:
-        title: Catalogue boutique
+        title: Catalogue du magasin
         description: Utilisez cette page pour gérer le catalogue de votre entreprise. Les détails produits saisis ici remplaceront ceux de la page "Produit" pour votre entreprise uniquement.
         enable_reset?: Autoriser réinitialisation du stock (retour configurations par défaut)?
         inherit?: Hériter?
         add: Ajouter
         hide: Masquer
         import_date: Importé
-        select_a_shop: Choisir une boutique
+        select_a_shop: Choisir un magasin
         review_now: Vérifier maintenant
         new_products_alert_message: Il y a %{new_product_count} nouveaux produits disponibles pouvant être ajoutés à votre catalogue.
         currently_empty: Votre catalogue est actuellement vide
         no_matching_products: Pas de produits correspondants dans votre catalogue
         no_hidden_products: Aucun produit masqué dans ce catalogue
-        no_matching_hidden_products: Aucune produit masqué ne répond à la recherche
+        no_matching_hidden_products: Aucun produit masqué ne répond à la recherche
         no_new_products: Pas de nouveaux produits à ajouter à ce catalogue
         no_matching_new_products: Pas de nouveaux produits répondant à la recherche
         inventory_powertip: Ceci est votre catalogue produits. Pour ajouter des produits à votre catalogue, sélectionnez "Nouveaux Produits" dans le menu déroulant.
         hidden_powertip: Ces produits ont été masqués de votre catalogue, vous ne pourrez pas les proposer dans votre boutique. Vous pouvez cliquer sur "Ajouter" pour ajouter un produit à votre catalogue.
         new_powertip: Ces produits peuvent être ajoutés à votre catalogue. Cliquez sur "Ajouter" pour ajouter un produit à votre catalogue, ou 'Masquer" pour ne plus l'afficher. Vous pourrez changer d'avis plus tard!
       controls:
-        back_to_my_inventory: Retour à mon catalogue boutique
+        back_to_my_inventory: Retour à mon catalogue magasin
     orders:
       invoice_email_sent: 'L''email de facturation a bien été envoyé'
       order_email_resent: 'L''email de commande a de nouveau été envoyé'
@@ -631,15 +631,15 @@ fr_BE:
           promo_image_note3: La bannière est affichée en haut de la page de votre entreprise et dans sa version condensée (pop-up).
         inventory_settings:
           text1: Vous pouvez choisir de gérer vos stocks et prix via votre
-          inventory: catalogue boutique
+          inventory: catalogue magasin
           text2: >
-              Si vous utilisez l'outil "catalogue boutique", vous pouvez choisir si
+              Si vous utilisez l'outil "catalogue magasin", vous pouvez choisir si
               les nouveaux produits ajoutés par vos fournisseurs doivent être référencés
-              dans votre catalogue boutique avant qu'ils puissent mis en vente dans
-              votre boutique. Si vous n'utilisez pas cet outil, choisissez l'option
+              dans votre catalogue magasin avant qu'ils puissent être mis en vente
+              dans votre magasin Si vous n'utilisez pas cet outil, choisissez l'option
               indiquant "recommandé" ci-dessous:
-          preferred_product_selection_from_inventory_only_yes: Les nouveaux produits des producteurs peuvent être ajoutés à ma boutique en ligne (recommandé)
-          preferred_product_selection_from_inventory_only_no: Les nouveaux produits des producteurs doivent être ajoutés à mon catalogue boutique avant de pouvoir être ajoutés à ma boutique en ligne
+          preferred_product_selection_from_inventory_only_yes: Les nouveaux produits des producteurs peuvent être ajoutés à mon magasin en ligne (recommandé)
+          preferred_product_selection_from_inventory_only_no: Les nouveaux produits des producteurs doivent être ajoutés à mon catalogue magasin avant de pouvoir être ajoutés à mon magasin en ligne
         payment_methods:
           name: Nom
           applies: Active?
@@ -662,13 +662,13 @@ fr_BE:
           sells: Produits vendus
           sells_tip: "Aucun - l'entreprise ne vend pas en direct aux acheteurs.<br />Les miens - l'entreprise vend ses propres produits aux acheteurs.<br />Tous - l'entreprise vend ses propres produits et/ou les produits d'autres entreprises.<br />"
           visible_in_search: Apparaît sur la plateforme?
-          visible_in_search_tip: Indiquez si vous souhaitez ou ne souhaitez pas que votre entreprise apparaisse sur la carte et dans la liste des boutiques.
+          visible_in_search_tip: Indiquez si vous souhaitez ou ne souhaitez pas que votre entreprise apparaisse sur la carte et dans la liste des magasins.
           visible: Visible
           not_visible: Invisible
           permalink: Nom pour URL (sans espace)
-          permalink_tip: "Ce nom permanent est utilisé pour créer l'url de votre boutique: %{link}ma-boutique/shop"
-          link_to_front: Lien URL de la boutique
-          link_to_front_tip: C'est le lien qui permet d'accéder en direct à votre boutique sur Open Food Network.
+          permalink_tip: "Ce nom permanent est utilisé pour créer l'url de votre magasin: %{link}ma-boutique/shop"
+          link_to_front: Lien URL du magasin
+          link_to_front_tip: C'est le lien qui permet d'accéder en direct à votre magasin sur Open Food Network.
         shipping_methods:
           name: Nom
           applies: Active?
@@ -677,8 +677,8 @@ fr_BE:
           create_one_button: En créer une maintenant
           no_method_yet: Vous n'avez pas encore paramétré de méthode de livraison.
         shop_preferences:
-          shopfront_requires_login: "Boutique visible par tous?"
-          shopfront_requires_login_tip: "Choisissez si les acheteurs doivent être connectés pour voir la boutique ou si la boutique est visible par tout le monde."
+          shopfront_requires_login: "Magasin visible par tous?"
+          shopfront_requires_login_tip: "Choisissez si les acheteurs doivent être connectés pour voir le magasin ou si le magasin est visible par tout le monde."
           shopfront_requires_login_false: "Visible par tous"
           shopfront_requires_login_true: "Visible uniquement pour les acheteurs logués"
           recommend_require_login: "Nous recommandons de demander aux utilisateurs de se connecter si vous souhaitez leur permettre de modifier leur commande."
@@ -694,16 +694,15 @@ fr_BE:
           enable_subscriptions_tip: "Activer la fonction abonnements?"
           enable_subscriptions_false: "Désactivé"
           enable_subscriptions_true: "Activé"
-          shopfront_message: Message d'accueil boutique ouverte
+          shopfront_message: Message d'accueil magasin ouvert
           shopfront_message_placeholder: >
-              Vous pouvez ici expliquer à vos acheteurs comment votre boutique fonctionne.
-              Ce texte s'affiche dans votre boutique, au-dessus de la liste de produits.
-          shopfront_closed_message: Message d'accueil boutique fermée
+              Vous pouvez ici expliquer à vos acheteurs comment votre magasin fonctionne.
+              Ce texte s'affiche dans votre magasin, au-dessus de la liste de produits.
+          shopfront_closed_message: Message d'accueil magasin fermé
           shopfront_closed_message_placeholder: >
-              Vous pouvez ici expliquer à vos acheteurs pourquoi votre boutique est
-              fermée et/ou quand elle ouvrira. Ce texte s'affiche uniquement quand
-              il n'y a pas de cycle de vente en cours (donc quand votre boutique est
-              fermée).
+              Vous pouvez ici expliquer à vos acheteurs pourquoi votre magasin est
+              fermé et/ou quand il ouvrira. Ce texte s'affiche uniquement quand il
+              n'y a pas de cycle de vente en cours (donc quand votre magasin est fermé).
           shopfront_category_ordering: Ordre d'affichage des catégories
           open_date: Date d'ouverture
           close_date: Date de fermeture
@@ -716,7 +715,7 @@ fr_BE:
           disconnect: "Déconnecter le compte"
           confirm_modal:
             title: Connecter avec Stripe
-            part1: Stripe est un système de paiement qui permet aux boutiques sur Open Food France d'accepter des paiements par carte bancaire de leurs acheteurs.
+            part1: Stripe est un système de paiement qui permet aux magasins sur Open Food France d'accepter des paiements par carte bancaire de leurs acheteurs.
             part2: Pour utiliser cette fonctionnalité, vous devez connecter votre compte Stripe à Open Food France. En cliquant sur "J'accepte" ci-dessous, vous serez redirigé vers le site internet de Stripe, où vous pourrez connecter votre compte existant ou en créer un si vous n'en avez pas encore.
             part3: Cela permettra à Open Food Network d'accepter en votre nom les paiements par carte de crédit en provenance de vos acheteurs. Veuillez noter que c'est à vous de gérer votre compte Stripe, de payer les frais dus à Stripe et de gérer les éventuels remboursements et le service après vente.
             i_agree: J'accepte
@@ -739,7 +738,7 @@ fr_BE:
           contact_tip: "Le manager qui recevra les emails de confirmation de commande et autres notifications de l'entreprise. Il doit avoir confirmé son adresse email pour pouvoir être sélectionné."
           owner_tip: Manager principal de cette entreprise.
           notifications: Notifications
-          notifications_tip: Une notification de commande sera envoyée à cette adresse email pour chaque commande passée dans votre boutique.
+          notifications_tip: Une notification de commande sera envoyée à cette adresse email pour chaque commande passée dans votre magasin.
           notifications_placeholder: 'ex: bernard@maferme.fr'
           notifications_note: 'A noter: si vous saisissez une nouvelle adresse, un email de confirmation sera envoyé à cette adresse avec un lien de validation à cliquer.'
           managers: Managers
@@ -769,20 +768,20 @@ fr_BE:
         producer_profile: Profil producteur
         connect_ofn: Gagnez en visibilité via OFFrance
         always_free: GRATUIT
-        producer_description_text: Saisissez votre catalogue produits sur Open Food Network, ce qui permettra aux hubs-distributeurs utilisant la plateforme de les proposer dans leurs boutiques (sur votre autorisation).
-        producer_shop: Boutique Producteur
+        producer_description_text: Saisissez votre catalogue produits sur Open Food Network, ce qui permettra aux hubs-distributeurs utilisant la plateforme de les proposer dans leurs magasins (sur votre autorisation).
+        producer_shop: Magasin Producteur
         sell_your_produce: Vendez vos propres produits
-        producer_shop_description_text: Vendez vos produits en direct aux mangeurs/restaurateurs/etc. via votre propre Boutique Producteur sur Open Food Network.
-        producer_shop_description_text2: Une Boutique Producteur vous permet de vendre uniquement vos propres produits. Si vous voulez vendre d'autres produits, sélectionnez "Hub Producteur"
+        producer_shop_description_text: Vendez vos produits en direct aux consommateurs via votre propre Magasin Producteur sur Open Food Network.
+        producer_shop_description_text2: Un Magasin Producteur vous permet de vendre uniquement vos propres produits. Si vous voulez vendre d'autres produits, sélectionnez "Hub Producteur"
         producer_hub: Hub Producteur
         producer_hub_text: Vendez vos produits et ceux d'autres fournisseurs
-        producer_hub_description_text: Vous vendez non seulement vos produits, mais aussi des produits d'autres producteurs de votre région, artisans, ou distributeurs afin de proposer une offre complète dans votre boutique. Vous soutenez ainsi le développement de votre système alimentaire territorial !
+        producer_hub_description_text: Vous vendez non seulement vos produits, mais aussi des produits d'autres producteurs de votre région, artisans, ou distributeurs afin de proposer une offre complète dans votre magasin. Vous soutenez ainsi le développement de votre système alimentaire territorial !
         profile: Profil uniquement
         get_listing: Référencez votre hub/point de vente
         profile_description_text: Les visiteurs peuvent vous trouver sur Open Food Network et vous contacter. Votre entreprise sera visible sur la carte.
         hub_shop: Magasin Hub
         hub_shop_text: Vendez des produits de multiples fournisseurs différents
-        hub_shop_description_text: Vous proposez des produits de différents producteurs de votre région, artisans, ou distributeurs afin de proposer une offre complète dans votre boutique. Vous soutenez ainsi le développement de votre système alimentaire territorial !
+        hub_shop_description_text: Vous proposez des produits de différents producteurs de votre région, artisans, ou distributeurs afin de proposer une offre complète dans votre magasin. Vous soutenez ainsi le développement de votre système alimentaire territorial !
         choose_option: Veuilliez choisir l'une des options ci-dessus.
         change_now: Changer
       enterprise_user_index:
@@ -839,8 +838,8 @@ fr_BE:
         add_distributor: 'Ajouter un distributeur'
       advanced_settings:
         title: Paramétrages avancés
-        choose_product_tip: Vous pouvez choisir de limiter le choix des produits pouvant être mis en vente dans votre boutique à ceux figurant dans le catalogue boutique de %{inventory}.
-        preferred_product_selection_from_coordinator_inventory_only_here: Uniquement les produits du catalogue boutique
+        choose_product_tip: Vous pouvez choisir de limiter le choix des produits pouvant être mis en vente dans votre magasin à ceux figurant dans le catalogue magasin de %{inventory}.
+        preferred_product_selection_from_coordinator_inventory_only_here: Uniquement les produits du catalogue magasin
         preferred_product_selection_from_coordinator_inventory_only_all: Tous les produits disponibles dans les catalogues producteurs
         save_reload: Sauvegarder et rafraichir la page
       coordinator_fees:
@@ -894,7 +893,7 @@ fr_BE:
         products: Produits
         fees: Commissions
       destroy_errors:
-        orders_present: Ce cycle de vente a déjà été utilisé par un acheteur et ne peut être supprimé. Pour empêcher aux acheteurs d'y accéder, veuillez plutôt le fermer.
+        orders_present: Ce cycle de vente a déjà été utilisé par un acheteur et ne peut être supprimé. Pour empêcher les acheteurs d'y accéder, veuillez plutôt le fermer.
         schedule_present: Ce cycle de vente est lié à un rythme d'abonnement et ne peut pas être supprimé. Veuillez d'abord supprimer ce lien ou supprimer le rythme d'abonnement.
       bulk_update:
         no_data: Une erreur s'est produite. Aucune donnée trouvée.
@@ -1074,7 +1073,7 @@ fr_BE:
         checkout: "Poursuivre la commande"
         already_ordered_products: "Déjà commandé dans ce cycle de vente"
     register_call:
-      selling_on_ofn: "Vous souhaitez proposer vos produits sur Open Food Network?"
+      selling_on_ofn: "Intéressé à participer à Open Food Network?"
       register: "Démarrez ici"
     footer:
       footer_global_headline: "OFN Global"
@@ -1138,8 +1137,8 @@ fr_BE:
   ticket_column_item: "Produit"
   ticket_column_unit_price: "Prix unitaire"
   ticket_column_total_price: "Prix total"
-  menu_1_title: "Boutiques"
-  menu_1_url: "/shops"
+  menu_1_title: "Magasins"
+  menu_1_url: "/magasins"
   menu_2_title: "Carte"
   menu_2_url: "/map"
   menu_3_title: "Producteurs"
@@ -1194,7 +1193,7 @@ fr_BE:
   unconfirmed: non confirmé
   days: jours
   label_shop: "Boutique"
-  label_shops: "Boutiques"
+  label_shops: "Magasins"
   label_map: "Carte"
   label_producer: "Producteur"
   label_producers: "Producteurs"
@@ -1575,16 +1574,16 @@ fr_BE:
   sell_producers: "Producteurs"
   sell_hubs: "Hubs"
   sell_groups: "Groupes"
-  sell_producers_detail: "Créer un profil pour votre entreprise sur OFN en quelques minutes. A tout moment vous pourrez créer une boutique en ligne pour vendre vos produits en direct aux acheteurs."
+  sell_producers_detail: "Créer un profil pour votre entreprise sur OFN en quelques minutes. A tout moment vous pourrez créer un magasin en ligne pour vendre vos produits en direct aux acheteurs."
   sell_hubs_detail: "Créer un profil pour votre entreprise de distribution ou organisation sur OFN. A tout moment vous pourrez créer une boutique multi-fournisseurs."
   sell_groups_detail: "Créer un répertoire sur mesure (regroupant différents producteurs et hubs de distribution) pour votre région ou votre organisation."
   sell_user_guide: "En savoir plus en explorant le guide utilisateur."
-  sell_listing_price: "La création d'un profil sur OFN, ouvrir, gérer une boutique ou créer un groupe pour votre organisation ou réseau régional sur l'OFN est à contribution libre. Afin de maintenir et développer ce commun numérique, nous avons besoin de compétences et des fonds.  Nous vous invitons à contribuer au commun \"en compétences\" (développement de fonctionnalités, recherche de financement, support utilisateur, etc.) ou \"en argent\" d'un montant fixe par mois et/ou 2% de votre chiffre d'affaires par les mois. "
+  sell_listing_price: "La création d'un profil sur OFN, ouvrir, gérer un magasin ou créer un groupe pour votre organisation ou réseau régional sur l'OFN est à contribution libre. Afin de maintenir et développer ce commun numérique, nous avons besoin de compétences et des fonds.  Nous vous invitons à contribuer au commun \"en compétences\" (développement de fonctionnalités, recherche de financement, support utilisateur, etc.) ou \"en argent\" d'un montant fixe par mois et/ou 2% de votre chiffre d'affaires par les mois. "
   sell_embed: "Nous pouvons aussi intégrer votre boutique OFN dans votre propre site web ou construire un site web d'alimentation locale sur mesure pour votre région."
   sell_ask_services: "Nous consulter sur les services des partenaires OFN."
   shops_title: Boutiques
   shops_headline: Des achats qui transforment.
-  shops_text: Les aliments poussent selon des cycles naturels, les fermiers récoltent en cycles, nous achetons aussi en cycles. Si un cycle de vente est terminé, attendez le suivant ou demandez des infos à votre la boutique préférée.
+  shops_text: Les aliments poussent selon des cycles naturels, les fermiers récoltent en cycles, nous achetons aussi en cycles. Si un cycle de vente est terminé, attendez le suivant ou demandez des infos à votre magasin préféré.
   shops_signup_title: S'inscrire en tant que hub
   shops_signup_headline: Des hubs divers et variés
   shops_signup_motivation: Quel que soit votre modèle, vous pouvez vous appuyer sur Open Food France. Si vous voulez le faire évoluer, nous sommes là pour vous aider. Nous agissons selon des principes de non-lucrativité, d'indépendance, et de transparence. Et nous faisons tout notre possible pour répondre à vos besoins et vous accompagner en toute circonstance.
@@ -1790,7 +1789,6 @@ fr_BE:
   enterprise_long_desc: "Description longue"
   enterprise_long_desc_placeholder: "Vous pouvez ici raconter l'histoire de votre organisation - votre projet, les valeurs que vous défendez. Nous vous conseillons de ne pas dépasser 600 caractères ou 150 mots."
   enterprise_long_desc_length: "%{num} caractères / inférieur à 600 recommandé"
-  enterprise_limit: Nombre max d'entreprises
   enterprise_abn: "SIRET"
   enterprise_abn_placeholder: "ex: 404 833 048 00022"
   enterprise_acn: "n° TVA intracommunautaire"
@@ -2606,6 +2604,16 @@ fr_BE:
           bulk_coop_packing_sheets: 'Achats groupés - Feuilles de préparation des paniers'
           bulk_coop_customer_payments: 'Achats groupés - Paiement des acheteurs'
       users:
+        index:
+          user: "Utilisateur"
+          enterprise_limit: "Nombre max d'entreprises"
+          search: "Rechercher"
+          email: "Email"
+        form:
+          email: "Email"
+          roles: "Roles"
+          enterprise_limit: "Nombre max d'entreprises"
+          password: "Mot de passe"
         email_confirmation:
           confirmation_pending: "L'email de confirmation n'a pas encore été validé. Il a été envoyé à %{address}."
       variants:
@@ -2733,7 +2741,7 @@ fr_BE:
       cards:
         authorised_shops: Boutiques autorisées.
         authorised_shops_popover: Voilà la liste des boutiques que vous avez autorisées à débiter votre carte de paiement par défaut dans le cadre de vos abonnements en cours (commandes récurrentes). Les informations concernant votre carte de paiement sont sécurisées et ne sont pas accessibles par le gérant de la boutique. Vous recevrez systématiquement une notification avant tout débit sur votre carte.
-        saved_cards_popover: Voilà la liste des cartes de paiement que vous avez enregistrées. Votre carte par défaut sera automatiquement sélectionnée au moment de la finalisation d'une commande, et pourra être débitée par les boutiques auxquelles vous avez donné cette autorisation (voir à droite).
+        saved_cards_popover: Voilà la liste des cartes de paiement que vous avez enregistrées. Votre carte par défaut sera automatiquement sélectionnée au moment de la finalisation d'une commande, et pourra être débitée par les magasins auxquels vous avez donné cette autorisation (voir à droite).
       authorised_shops:
         shop_name: "Nom de la boutique"
         allow_charges?: "Autoriser les prélèvements ?"

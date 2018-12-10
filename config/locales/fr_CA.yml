@@ -1780,7 +1780,6 @@ fr_CA:
   enterprise_long_desc: "Description longue"
   enterprise_long_desc_placeholder: "Vous pouvez ici raconter l'histoire de votre organisation - votre projet, les valeurs que vous défendez. Nous vous conseillons de ne pas dépasser 600 caractères ou 150 mots."
   enterprise_long_desc_length: "%{num} caractères / inférieur à 600 recommandé"
-  enterprise_limit: Nombre max d'entreprises
   enterprise_abn: "SIRET"
   enterprise_abn_placeholder: "ex: 404 833 048 00022"
   enterprise_acn: "n° TVA intracommunautaire"
@@ -2584,6 +2583,16 @@ fr_CA:
           bulk_coop_packing_sheets: 'Achats groupés - Feuilles de préparation des paniers'
           bulk_coop_customer_payments: 'Achats groupés - Paiement des acheteurs'
       users:
+        index:
+          user: "Utilisateur"
+          enterprise_limit: "Nombre max d'entreprises"
+          search: "Chercher"
+          email: "Email"
+        form:
+          email: "Email"
+          roles: "Roles"
+          enterprise_limit: "Nombre max d'entreprises"
+          password: "Mot de passe"
         email_confirmation:
           confirmation_pending: "L'email de confirmation n'a pas encore été validé. Il a été envoyé à %{address}."
       variants:

@@ -1215,7 +1215,6 @@ sv:
   enterprise_long_desc: "Lång beskrivning"
   enterprise_long_desc_placeholder: "Detta är ditt tillfälle att beskriva ditt företag - vad som gör dig speciell och intressant. Vi föreslår att du begränsar beskrivningen till 600 tecken eller 150 ord."
   enterprise_long_desc_length: "%{num} tecken / upp till 600 rekommenderas"
-  enterprise_limit: Företagets gräns
   enterprise_abn: "ABN"
   enterprise_abn_placeholder: "t.ex. 99 123 456 789"
   enterprise_acn: "ACN"
@@ -1912,6 +1911,17 @@ sv:
           bulk_coop_allocation: 'Bulk Co-op - Allokering'
           bulk_coop_packing_sheets: 'Bulk Co-op - Förpackningssedlar'
           bulk_coop_customer_payments: 'Bulk Co-op - kundbetalningar'
+      users:
+        index:
+          user: "Användare"
+          enterprise_limit: "Företagets gräns"
+          search: "Sök"
+          email: "E-post"
+        form:
+          email: "E-post"
+          roles: "Uppgifter"
+          enterprise_limit: "Företagets gräns"
+          password: "Lösenord"
       variants:
         autocomplete:
           producer_name: Producent
