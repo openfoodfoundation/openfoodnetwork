@@ -1793,7 +1793,6 @@ en_US:
   enterprise_long_desc: "Long Description"
   enterprise_long_desc_placeholder: "This is your opportunity to tell the story of your enterprise - what makes you different and wonderful? We'd suggest keeping your description to under 600 characters or 150 words."
   enterprise_long_desc_length: "%{num} characters / up to 600 recommended"
-  enterprise_limit: Enterprise Limit
   enterprise_abn: "Tax ID Number or EIN (optional)"
   enterprise_abn_placeholder: "eg. 123456789"
   enterprise_acn: "Legal Business Name"
@@ -2598,6 +2597,16 @@ en_US:
           bulk_coop_packing_sheets: 'Bulk Co-op - Packing Sheets'
           bulk_coop_customer_payments: 'Bulk Co-op - Customer Payments'
       users:
+        index:
+          user: "User"
+          enterprise_limit: "Enterprise Limit"
+          search: "Search"
+          email: "Email"
+        form:
+          email: "Email"
+          roles: "Roles"
+          enterprise_limit: "Enterprise Limit"
+          password: "Password"
         email_confirmation:
           confirmation_pending: "Email confirmation is pending. We've sent a confirmation email to %{address}."
       variants:

@@ -170,7 +170,7 @@ nb:
   remove: Fjern
   or: eller
   collapse_all: Skjul alle
-  expand_all: Vis alle
+  expand_all: Utvid alle
   loading: Laster...
   show_more: Vis mer
   show_all: Vis alle
@@ -314,8 +314,8 @@ nb:
         bill_calculation_settings: "Kalkulatorinnstillinger for Regninger"
         bill_calculation_settings_tip: "Tilpass hvor mye bedrifter skal faktureres for hver måned for bruken av OFN."
         shop_trial_length: "Lengde på prøveperiode for butikker (dager)"
-        shop_trial_length_tip: "Antall dager prøveperiode for en bedrift som er satt opp som butikk."
-        fixed_monthly_charge: "Fast månedlig belastning"
+        shop_trial_length_tip: "Hvor lang tid (i dager) bedrifter som er satt opp som butikker, kan kjøre som prøveperiode."
+        fixed_monthly_charge: "Fast Månedlig Belastning"
         fixed_monthly_charge_tip: "En fast månedlig belastning for alle bedrifter som er satt opp som butikk og har overskredet minimum fakturert omsetning (hvis konfigurert)."
         percentage_of_turnover: "Prosent av omsetning"
         percentage_of_turnover_tip: "Når større enn null, gjelder denne raten (0.0 - 1.0) på total omsetning for hver butikk og lagt til enhver fast rate (til venstre) for å beregne den månedlige fakturaen."
@@ -572,6 +572,7 @@ nb:
         tip: "Bruk denne siden for å endre produktantall på tvers av flere bestillinger. Produkter kan også fjernes fra bestillinger helt, hvis påkrevd."
         shared: "Delt Ressurs?"
         order_no: "Bestillingsnr."
+        order_date: "Fullført på"
         max: "Max"
         product_unit: "Produkt: Enhet"
         weight_volume: "Vekt/Volum"
@@ -1491,7 +1492,7 @@ nb:
   products_update_error_data: "Lagring mislyktes på grunn av ugyldige data:"
   products_changes_saved: "Endringene er lagret."
   search_no_results_html: "Beklager, ingen treff på %{query}. Prøv på nytt?"
-  components_profiles_popover: "Profiler har ikke butikkvindu på Open Food Network men kan ha sin egen fysiske butikk eller nettbutikk et annet sted"
+  components_profiles_popover: "Profiler har ikke butikk på Open Food Network men kan ha sin egen fysiske butikk eller nettbutikk et annet sted"
   components_profiles_show: "Vis profiler"
   components_filters_nofilters: "Ingen filter"
   components_filters_clearfilters: "Fjern alle filtre"
@@ -1793,7 +1794,6 @@ nb:
   enterprise_long_desc: "Lang beskrivelse"
   enterprise_long_desc_placeholder: "Dette er muligheten din til å fortelle historien om din virksomhet - hva gjør deg annerledes og flott? Vi vil foreslå å holde din beskrivelse til under 600 tegn eller 150 ord."
   enterprise_long_desc_length: "%{num} tegn / opptil 600 anbefales"
-  enterprise_limit: Bedriftsgrense
   enterprise_abn: "Org. nr."
   enterprise_abn_placeholder: "f.eks. 999 000 123"
   enterprise_acn: "MVA nr."
@@ -2597,6 +2597,16 @@ nb:
           bulk_coop_packing_sheets: 'Bulk Co-op - Pakkseddel'
           bulk_coop_customer_payments: 'Bulk Co-op - Kunde Betalinger'
       users:
+        index:
+          user: "Bruker"
+          enterprise_limit: "Bedriftsgrense"
+          search: "Søk"
+          email: "Epost"
+        form:
+          email: "Epost"
+          roles: "Roller"
+          enterprise_limit: "Bedriftsgrense"
+          password: "Passord"
         email_confirmation:
           confirmation_pending: "Epostbekreftelse venter. Vi har sendt en bekreftelses-epost til %{address}."
       variants:

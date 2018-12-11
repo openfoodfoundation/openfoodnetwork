@@ -1145,7 +1145,7 @@ de_DE:
   menu_3_title: "Erzeuger"
   menu_3_url: "/ producers"
   menu_4_title: "Gruppen"
-  menu_4_url: "/ groups"
+  menu_4_url: "/groups"
   menu_5_title: "Über Uns"
   menu_5_url: "http://www.openfoodnetwork.org/"
   menu_6_title: "Verbinden"
@@ -1790,7 +1790,6 @@ de_DE:
   enterprise_long_desc: "Ausführliche Beschreibung"
   enterprise_long_desc_placeholder: "Dies ist Ihre Chance, die Geschichte Ihres Unternehmens zu erzählen - was macht Sie anders und wundervoll? Wir empfehlen, Ihre Beschreibung auf unter 600 Zeichen oder 150 Wörter zu beschränken."
   enterprise_long_desc_length: "%{num} Zeichen / bis zu 600 empfohlen"
-  enterprise_limit: Unternehmensgrenze
   enterprise_abn: "USt-IdNr."
   enterprise_abn_placeholder: "z.B. 99 123 456 789"
   enterprise_acn: "St.-Nr."
@@ -2593,6 +2592,14 @@ de_DE:
           bulk_coop_packing_sheets: 'Massenkoop - Verpackungsblätter'
           bulk_coop_customer_payments: 'Massenkoop - Kundenzahlungen'
       users:
+        index:
+          user: "Benutzer"
+          search: "Suche"
+          email: "E-Mail"
+        form:
+          email: "E-Mail"
+          roles: "Rollen"
+          password: "Passwort"
         email_confirmation:
           confirmation_pending: "E-Mail-Bestätigung steht aus. Wir haben eine Bestätigungs-E-Mail an %{address} gesendet."
       variants:

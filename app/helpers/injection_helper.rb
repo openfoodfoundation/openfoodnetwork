@@ -1,8 +1,13 @@
 require 'open_food_network/enterprise_injection_data'
 
 module InjectionHelper
-  def inject_enterprises
-    inject_json_ams "enterprises", Enterprise.activated.includes(address: :state).all, Api::EnterpriseSerializer, enterprise_injection_data
+  def inject_enterprises(enterprises = Enterprise.activated.includes(address: :state).all)
+    inject_json_ams(
+      'enterprises',
+      enterprises,
+      Api::EnterpriseSerializer,
+      enterprise_injection_data
+    )
   end
 
   def inject_enterprise_and_relatives

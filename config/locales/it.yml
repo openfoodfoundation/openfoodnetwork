@@ -1455,7 +1455,6 @@ it:
   enterprise_long_desc: "Descrizione lunga"
   enterprise_long_desc_placeholder: "Questa è la tua opportunità per raccontare la storia della tua azienda - cosa ti rende differente e fantastico? Ti suggeriamo di mantenere la descrizione sotto i 600 caratteri o le 150 parole."
   enterprise_long_desc_length: "%{num} caratteri / fino a 600 raccomandati"
-  enterprise_limit: Limite azienda
   enterprise_abn: "Partita IVA"
   enterprise_abn_placeholder: "es. 99 123 456 789"
   enterprise_acn: "Codice fiscale"
@@ -2065,6 +2064,16 @@ it:
         table:
           select_and_search: "Seleziona i filtri e clicca su CERCA per accedere ai tuoi dati"
       users:
+        index:
+          user: "Utente"
+          enterprise_limit: "Limite azienda"
+          search: "Cerca"
+          email: "Email"
+        form:
+          email: "Email"
+          roles: "Ruoli"
+          enterprise_limit: "Limite azienda"
+          password: "Password"
         email_confirmation:
           confirmation_pending: "Email di conferma in sospeso. Abbiamo inviato una mail di conferma a %{address}."
       variants:
