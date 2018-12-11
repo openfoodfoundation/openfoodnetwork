@@ -172,8 +172,11 @@ feature %q{
 
 
   scenario "creating a new product" do
-    s = FactoryBot.create(:supplier_enterprise)
-    d = FactoryBot.create(:distributor_enterprise)
+    create(:stock_location, backorderable_default: false)
+
+    supplier = create(:supplier_enterprise)
+    distributor = create(:distributor_enterprise)
+    shipping_category = create(:shipping_category)
     taxon = create(:taxon)
 
     quick_login_as_admin
@@ -183,11 +186,12 @@ feature %q{
     expect(page).to have_content 'NEW PRODUCT'
 
     fill_in 'product_name', :with => 'Big Bag Of Apples'
-    select s.name, :from => 'product_supplier_id'
+    select supplier.name, :from => 'product_supplier_id'
     select 'Weight (g)', from: 'product_variant_unit_with_scale'
     fill_in 'product_unit_value_with_description', with: '100'
     fill_in 'product_price', :with => '10.00'
     select taxon.name, from: 'product_primary_taxon_id'
+    select shipping_category.name, from: 'product_shipping_category_id'
     click_button 'Create'
 
     expect(URI.parse(current_url).path).to eq spree.admin_products_path
@@ -681,6 +685,7 @@ feature %q{
 
     it "allows me to create a product" do
       taxon = create(:taxon, name: 'Fruit')
+      shipping_category = create(:shipping_category)
 
       visit spree.admin_products_path
 
@@ -695,6 +700,7 @@ feature %q{
         fill_in 'product_unit_value_with_description', with: '100'
         fill_in 'product_price', with: '10.00'
         select taxon.name, from: 'product_primary_taxon_id'
+        select shipping_category.name, from: 'product_shipping_category_id'
       end
       click_button 'Create'
 
