@@ -74,46 +74,31 @@ describe Spree::Admin::ProductsController, type: :controller do
   end
 
   context "creating a new product" do
-    before { login_as_admin }
+    let(:supplier) { create(:supplier_enterprise) }
+    let(:taxon) { create(:taxon) }
+    let(:shipping_category) { create(:shipping_category) }
+
+    let(:product_attrs) {
+      attributes_for(:product).merge(
+        shipping_category_id: shipping_category.id,
+        supplier_id: supplier.id,
+        primary_taxon_id: taxon.id
+      )
+    }
+
+    before do
+      login_as_admin
+      create(:stock_location)
+    end
 
     it "redirects to products when the user hits 'create'" do
-      s = create(:supplier_enterprise)
-      t = create(:taxon)
-      spree_post :create, {
-        product: {
-          name: "Product1",
-          supplier_id: s.id,
-          price: 5.0,
-          on_hand: 5,
-          variant_unit: 'weight',
-          variant_unit_scale: 1000,
-          unit_value: 10,
-          unit_description: "",
-          primary_taxon_id: t.id
-        },
-        button: 'create'
-      }
+      spree_post :create, { product: product_attrs, button: 'create' }
       response.should redirect_to spree.admin_products_path
     end
 
     it "redirects to new when the user hits 'add_another'" do
-      s = create(:supplier_enterprise)
-      t = create(:taxon)
-      spree_post :create, {
-        product: {
-          name: "Product1",
-          supplier_id: s.id,
-          price: 5.0,
-          on_hand: 5,
-          variant_unit: 'weight',
-          variant_unit_scale: 1000,
-          unit_value: 10,
-          unit_description: "",
-          primary_taxon_id: t.id
-        },
-        button: 'add_another'
-      }
-      response.should redirect_to "/admin/products/new"
+      spree_post :create, { product: product_attrs, button: 'add_another' }
+      response.should redirect_to spree.new_admin_product_path
     end
   end
 
