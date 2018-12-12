@@ -158,7 +158,7 @@
   "spec/requests/checkout/failed_checkout_spec.rb": 1.9082491397857666,
   "spec/requests/embedded_shopfronts_headers_spec.rb": 0.8479242324829102,
   "spec/models/spree/calculator/price_sack_spec.rb": 0.671210527420044,
-  "spec/models/concerns/product_on_demand_spec.rb": 0.43450260162353516,
+  "spec/models/concerns/product_stock_spec.rb": 0.43450260162353516,
   "spec/lib/open_food_network/order_and_distributor_report_spec.rb": 0.61724853515625,
   "spec/features/admin/caching_spec.rb": 0.7170243263244629,
   "spec/controllers/api/customers_controller_spec.rb": 0.49866557121276855,
