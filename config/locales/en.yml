@@ -2590,6 +2590,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         sending: "Resend..."
         done: "Resend done ✓"
         failed: "Resend failed ✗"
+    insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
     out_of_stock:
       reduced_stock_available: Reduced stock available
       out_of_stock_text: >
@@ -2819,6 +2820,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         login_to_view_order: "Please log in to view your order."
       bought:
         item: "Already ordered in this order cycle"
+      line_item:
+        insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
+        out_of_stock: "Out of Stock"
     shipment_states:
       backorder: backorder
       partial: partial
