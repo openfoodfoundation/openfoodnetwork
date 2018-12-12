@@ -275,19 +275,23 @@ Spree::Product.class_eval do
   # This fixes any problems arising from failing master saves, without the need for a validates_associated on
   # master, while giving us more specific errors as to why saving failed
   def save_master
-    begin
-      if master && (master.changed? || master.new_record? || (master.default_price && (master.default_price.changed? || master.default_price.new_record?)))
-        master.save!
-      end
+    if master && (
+        master.changed? || master.new_record? || (
+          master.default_price && (
+            master.default_price.changed? || master.default_price.new_record?
+          )
+        )
+      )
+      master.save!
+    end
 
     # If the master cannot be saved, the Product object will get its errors
     # and will be destroyed
-    rescue ActiveRecord::RecordInvalid
-      master.errors.each do |att, error|
-        self.errors.add(att, error)
-      end
-      raise
+  rescue ActiveRecord::RecordInvalid
+    master.errors.each do |att, error|
+      self.errors.add(att, error)
     end
+    raise
   end
 
   def sanitize_permalink
