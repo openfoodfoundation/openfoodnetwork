@@ -11,7 +11,7 @@
 #
 # Furthermore, this will allow all existing variant overrides to satisfy the newly added model
 # validation rules.
-class SimplifyVariantOverrideOnDemandAndCountOnHand < ActiveRecord::Migration
+class SimplifyVariantOverrideStockSettings < ActiveRecord::Migration
   def up
     # When on_demand is nil but count_on_hand is set, force limited stock.
     VariantOverride.where(on_demand: nil).where("count_on_hand IS NOT NULL")
