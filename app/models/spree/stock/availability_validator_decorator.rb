@@ -4,6 +4,7 @@ Spree::Stock::AvailabilityValidator.class_eval do
     return if line_item.skip_stock_check
 
     quantity = adapt_line_item_quantity_to_inventory_units(line_item)
+    return if quantity == 0
 
     validate_quantity(line_item, quantity)
   end
