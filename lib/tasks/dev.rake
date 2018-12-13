@@ -316,6 +316,15 @@ namespace :ofn do
       if EnterpriseRole.count < 1
         EnterpriseRole.create!(user: Spree::User.first, enterprise: enterprise2)
       end
+      puts <<WARNING
+
+  Warning: This task is going to be replaced by:
+
+    $ bundle exec rake openfoodnetwork:sample_data
+
+  It contains more sample data.
+
+WARNING
     end
   end
 end
