@@ -49,7 +49,13 @@ class SimplifyVariantOverrideStockSettings < ActiveRecord::Migration
     end
   end
 
-  def down; end
+  def down
+    CSV.foreach(csv_path, headers: true) do |row|
+      VariantOverride.where(id: row["variant_override_id"])
+        .update_all(on_demand: row["previous_on_demand"],
+                    count_on_hand: row["previous_count_on_hand"])
+    end
+  end
 
   private
 
