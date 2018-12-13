@@ -18,22 +18,37 @@ class SimplifyVariantOverrideStockSettings < ActiveRecord::Migration
   end
 
   def up
-    # When on_demand is nil but count_on_hand is set, force limited stock.
-    VariantOverride.where(on_demand: nil).with_count_on_hand.find_each do |variant_override|
-      variant_override.update_attributes!(on_demand: false)
-    end
-
-    # Clear count_on_hand if forcing on demand.
-    VariantOverride.where(on_demand: true).with_count_on_hand.find_each do |variant_override|
-      variant_override.update_attributes!(count_on_hand: nil)
-    end
-
-    # When on_demand is false but count on hand is not specified, set this to use producer stock
-    # settings.
-    VariantOverride.where(on_demand: false).without_count_on_hand.find_each do |variant_override|
-      variant_override.update_attributes!(on_demand: nil)
-    end
+    update_use_producer_stock_settings_with_count_on_hand
+    update_on_demand_with_count_on_hand
+    update_limited_stock_without_count_on_hand
   end
 
   def down; end
+
+  private
+
+  # When on_demand is nil but count_on_hand is set, force limited stock.
+  def update_use_producer_stock_settings_with_count_on_hand
+    variant_overrides = VariantOverride.where(on_demand: nil).with_count_on_hand
+    variant_overrides.find_each do |variant_override|
+      variant_override.update_attributes!(on_demand: false)
+    end
+  end
+
+  # Clear count_on_hand if forcing on demand.
+  def update_on_demand_with_count_on_hand
+    variant_overrides = VariantOverride.where(on_demand: true).with_count_on_hand
+    variant_overrides.find_each do |variant_override|
+      variant_override.update_attributes!(count_on_hand: nil)
+    end
+  end
+
+  # When on_demand is false but count on hand is not specified, set this to use producer stock
+  # settings.
+  def update_limited_stock_without_count_on_hand
+    variant_overrides = VariantOverride.where(on_demand: false).without_count_on_hand
+    variant_overrides.find_each do |variant_override|
+      variant_override.update_attributes!(on_demand: nil)
+    end
+  end
 end
