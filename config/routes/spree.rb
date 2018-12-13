@@ -29,12 +29,6 @@ Spree::Core::Engine.routes.prepend do
   match '/admin/payment_methods/show_provider_preferences' => 'admin/payment_methods#show_provider_preferences', :via => :get
   put 'credit_cards/new_from_token', to: 'credit_cards#new_from_token'
 
-  namespace :admin do
-    namespace :reports do
-      resource :enterprise_fee_summary, only: [:new, :create]
-    end
-  end
-
   resources :credit_cards
 
   namespace :api, :defaults => { :format => 'json' } do
