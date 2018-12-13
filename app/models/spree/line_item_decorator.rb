@@ -8,7 +8,7 @@ Spree::LineItem.class_eval do
   # Redefining here to add the inverse_of option
   belongs_to :order, :class_name => "Spree::Order", inverse_of: :line_items
 
-  # Allows manual skipping of stock_availability check
+  # Allows manual skipping of Stock::AvailabilityValidator
   attr_accessor :skip_stock_check
 
   attr_accessible :max_quantity, :final_weight_volume, :price
@@ -132,13 +132,6 @@ Spree::LineItem.class_eval do
     update_inventory_without_scoping
   end
   alias_method_chain :update_inventory, :scoping
-
-  # Override of Spree validation method
-  # Added check for in-memory :skip_stock_check attribute
-  def stock_availability
-    return if skip_stock_check || sufficient_stock?
-    errors.add(:quantity, I18n.t('validation.exceeds_available_stock'))
-  end
 
   def scoper
     @scoper ||= OpenFoodNetwork::ScopeVariantToHub.new(order.distributor)

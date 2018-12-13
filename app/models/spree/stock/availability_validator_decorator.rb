@@ -1,5 +1,8 @@
 Spree::Stock::AvailabilityValidator.class_eval do
   def validate(line_item)
+    # OFN specific check for in-memory :skip_stock_check attribute
+    return if line_item.skip_stock_check
+
     quantity = adapt_line_item_quantity_to_inventory_units(line_item)
 
     validate_quantity(line_item, quantity)
