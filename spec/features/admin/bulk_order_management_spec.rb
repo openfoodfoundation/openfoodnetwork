@@ -139,11 +139,10 @@ feature %q{
     end
 
     context "submitting data to the server" do
-      let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
-      let!(:li1) { create(:line_item_with_shipment, order: o1, :quantity => 5 ) }
+      let!(:order) { create(:completed_order_with_fees) }
 
       before :each do
-        li1.variant.update_attributes(on_hand: 1, on_demand: false)
+        order.line_items.second.destroy # we keep only one line item for this test
         visit '/admin/orders/bulk_management'
       end
 
@@ -162,13 +161,14 @@ feature %q{
       context "when unacceptable data is sent to the server" do
         it "displays an update button which submits pending changes" do
           expect(page).to have_no_selector "#save-bar"
-          fill_in "quantity", :with => li1.variant.on_hand + li1.quantity + 10
+          line_item = order.line_items.first
+          fill_in "quantity", :with => line_item.variant.on_hand + line_item.quantity + 10
           expect(page).to have_selector "input[name='quantity'].ng-dirty"
           expect(page).to have_selector "#save-bar", text: "You have unsaved changes"
           click_button "Save Changes"
           expect(page).to have_selector "#save-bar", text: "Fields with red borders contain errors."
           expect(page).to have_selector "input[name='quantity'].ng-dirty.update-error"
-          expect(page).to have_content "exceeds available stock. Please ensure line items have a valid quantity."
+          expect(page).to have_content "is out of stock"
         end
       end
     end
