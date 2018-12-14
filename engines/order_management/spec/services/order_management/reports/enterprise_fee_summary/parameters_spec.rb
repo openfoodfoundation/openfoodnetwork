@@ -1,7 +1,6 @@
 require "spec_helper"
 
 require "date_time_string_validator"
-require "order_management/reports/enterprise_fee_summary/parameters"
 
 describe OrderManagement::Reports::EnterpriseFeeSummary::Parameters do
   describe "validation" do

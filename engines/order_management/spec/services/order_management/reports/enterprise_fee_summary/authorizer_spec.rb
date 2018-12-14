@@ -1,9 +1,5 @@
 require "spec_helper"
 
-require "order_management/reports/enterprise_fee_summary/parameters"
-require "order_management/reports/enterprise_fee_summary/permissions"
-require "order_management/reports/enterprise_fee_summary/authorizer"
-
 describe OrderManagement::Reports::EnterpriseFeeSummary::Authorizer do
   let(:report_klass) { OrderManagement::Reports::EnterpriseFeeSummary }
   let(:user) { create(:user) }

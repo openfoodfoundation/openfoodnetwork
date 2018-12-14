@@ -1,7 +1,5 @@
 require "spec_helper"
 
-require "order_management/reports/enterprise_fee_summary/report_data/enterprise_fee_type_total"
-
 describe OrderManagement::Reports::EnterpriseFeeSummary::ReportData::EnterpriseFeeTypeTotal do
   it "sorts instances according to their attributes" do
     instance_a = described_class.new(

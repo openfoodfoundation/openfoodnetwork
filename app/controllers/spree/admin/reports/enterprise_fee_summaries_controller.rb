@@ -1,10 +1,3 @@
-require "order_management/reports/enterprise_fee_summary/parameters"
-require "order_management/reports/enterprise_fee_summary/permissions"
-require "order_management/reports/enterprise_fee_summary/authorizer"
-require "order_management/reports/enterprise_fee_summary/report_service"
-require "order_management/reports/enterprise_fee_summary/renderers/csv_renderer"
-require "order_management/reports/enterprise_fee_summary/renderers/html_renderer"
-
 module Spree
   module Admin
     module Reports

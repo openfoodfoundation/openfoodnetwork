@@ -1,10 +1,5 @@
 require "spec_helper"
 
-require "order_management/reports/enterprise_fee_summary/parameters"
-require "order_management/reports/enterprise_fee_summary/permissions"
-require "order_management/reports/enterprise_fee_summary/report_service"
-require "order_management/reports/enterprise_fee_summary/renderers/csv_renderer"
-
 describe OrderManagement::Reports::EnterpriseFeeSummary::Renderers::CsvRenderer do
   let(:report_klass) { OrderManagement::Reports::EnterpriseFeeSummary }
 
