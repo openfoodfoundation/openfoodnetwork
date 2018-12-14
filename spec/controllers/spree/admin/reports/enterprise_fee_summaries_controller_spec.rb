@@ -49,7 +49,7 @@ describe Spree::Admin::Reports::EnterpriseFeeSummariesController, type: :control
       it "renders the report form with an error" do
         post :create, report: { distributor_ids: [other_distributor.id] }, report_format: "csv"
 
-        expect(flash[:error]).to eq(report_klass::Authorizer::PARAMETER_NOT_ALLOWED_ERROR)
+        expect(flash[:error]).to eq(report_klass::Authorizer.parameter_not_allowed_error_message)
         expect(response).to render_template(new_template_path)
       end
     end

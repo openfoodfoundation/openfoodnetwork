@@ -2,10 +2,6 @@ module OrderManagement
   module Reports
     module EnterpriseFeeSummary
       class Parameters < ::Reports::Parameters::Base
-        @i18n_scope = "order_management.reports.enterprise_fee_summary"
-
-        DATE_END_BEFORE_START_ERROR = I18n.t("date_end_before_start_error", scope: @i18n_scope)
-
         extend ActiveModel::Naming
         extend ActiveModel::Translation
         include ActiveModel::Validations
@@ -22,6 +18,11 @@ module OrderManagement
         validates :shipping_method_ids, :payment_method_ids, integer_array: true
 
         validate :require_valid_datetime_range
+
+        def self.date_end_before_start_error_message
+          i18n_scope = "order_management.reports.enterprise_fee_summary"
+          I18n.t("date_end_before_start_error", scope: i18n_scope)
+        end
 
         def initialize(attributes = {})
           self.distributor_ids = []
@@ -44,7 +45,8 @@ module OrderManagement
         def require_valid_datetime_range
           return if start_at.blank? || end_at.blank?
 
-          errors.add(:end_at, DATE_END_BEFORE_START_ERROR) unless start_at < end_at
+          error_message = self.class.date_end_before_start_error_message
+          errors.add(:end_at, error_message) unless start_at < end_at
         end
 
         # Remove the blank strings that Rails multiple selects add by default to
