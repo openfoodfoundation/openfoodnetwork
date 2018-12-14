@@ -40,6 +40,8 @@ class SimplifyVariantOverrideStockSettings < ActiveRecord::Migration
   class Enterprise < ActiveRecord::Base; end
 
   def up
+    ensure_reports_path_exists
+
     CSV.open(csv_path, "w") do |csv|
       csv << csv_header_row
 
@@ -59,8 +61,16 @@ class SimplifyVariantOverrideStockSettings < ActiveRecord::Migration
 
   private
 
+  def reports_path
+    Rails.root.join("reports", "SimplifyVariantOverrideStockSettings")
+  end
+
+  def ensure_reports_path_exists
+    Dir.mkdir(reports_path) unless File.exist?(reports_path)
+  end
+
   def csv_path
-    Rails.root.join("reports", "SimplifyVariantOverrideStockSettings-changed_variant_overrides.csv")
+    reports_path.join("changed_variant_overrides.csv")
   end
 
   # When on_demand is nil but count_on_hand is set, force limited stock.
