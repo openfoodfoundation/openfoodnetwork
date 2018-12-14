@@ -59,4 +59,29 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::Parameters do
       end
     end
   end
+
+  describe "smoke authorization" do
+    let!(:order_cycle) { create(:order_cycle) }
+    let!(:user) { create(:user) }
+
+    let(:permissions) do
+      report_klass::Permissions.new(nil).tap do |instance|
+        instance.stub(allowed_order_cycles: [order_cycle])
+      end
+    end
+
+    it "does not raise error when the parameters are allowed" do
+      parameters = described_class.new(order_cycle_ids: [order_cycle.id.to_s])
+      expect { parameters.authorize!(permissions) }.not_to raise_error
+    end
+
+    it "raises error when the parameters are not allowed" do
+      parameters = described_class.new(order_cycle_ids: [(order_cycle.id + 1).to_s])
+      expect { parameters.authorize!(permissions) }.to raise_error(OpenFoodNetwork::Reports::Authorizer::ParameterNotAllowedError)
+    end
+  end
+
+  def report_klass
+    OrderManagement::Reports::EnterpriseFeeSummary
+  end
 end
