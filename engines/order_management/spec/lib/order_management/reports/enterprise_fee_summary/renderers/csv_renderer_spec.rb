@@ -23,9 +23,8 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::Renderers::CsvRenderer 
   end
 
   let!(:enterprise_fee_type_totals) do
-    instance = report_klass::ReportData::EnterpriseFeeTypeTotals.new
-    instance.tap do |totals|
-      totals.list << report_klass::ReportData::EnterpriseFeeTypeTotal.new(
+    [
+      report_klass::ReportData::EnterpriseFeeTypeTotal.new(
         fee_type: "Fee Type A",
         enterprise_name: "Enterprise A",
         fee_name: "Fee A",
@@ -34,9 +33,8 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::Renderers::CsvRenderer 
         fee_calculated_on_transfer_through_name: "Transfer Enterprise A",
         tax_category_name: "Tax Category A",
         total_amount: "1.00"
-      )
-
-      totals.list << report_klass::ReportData::EnterpriseFeeTypeTotal.new(
+      ),
+      report_klass::ReportData::EnterpriseFeeTypeTotal.new(
         fee_type: "Fee Type B",
         enterprise_name: "Enterprise B",
         fee_name: "Fee C",
@@ -46,13 +44,13 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::Renderers::CsvRenderer 
         tax_category_name: "Tax Category G",
         total_amount: "2.00"
       )
-    end
+    ]
   end
 
   let(:current_user) { nil }
 
   before do
-    allow(service).to receive(:enterprise_fee_type_totals) { enterprise_fee_type_totals }
+    allow(service).to receive(:list) { enterprise_fee_type_totals }
   end
 
   it "generates CSV header" do

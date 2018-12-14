@@ -89,9 +89,9 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
     let(:service) { described_class.new(permissions, parameters) }
 
     it "groups and sorts entries correctly" do
-      totals = service.enterprise_fee_type_totals
+      totals = service.list
 
-      expect(totals.list.length).to eq(16)
+      expect(totals.length).to eq(16)
 
       # Data is sorted by the following, in order:
       # * fee_type
@@ -139,7 +139,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
       ]
 
       expected_result.each_with_index do |expected_attributes, row_index|
-        expect_total_attributes(totals.list[row_index], expected_attributes)
+        expect_total_attributes(totals[row_index], expected_attributes)
       end
     end
   end
@@ -171,7 +171,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
       let!(:current_user) { create(:admin_user) }
 
       it "includes all order cycles" do
-        totals = service.enterprise_fee_type_totals.list
+        totals = service.list
 
         expect_total_matches(totals, 2, fee_type: "Shipment")
         expect_total_matches(totals, 1, fee_type: "Shipment", enterprise_name: "Distributor A")
@@ -183,7 +183,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
       let!(:current_user) { distributor_a.owner }
 
       it "does not include unrelated order cycles" do
-        totals = service.enterprise_fee_type_totals.list
+        totals = service.list
 
         expect_total_matches(totals, 1, fee_type: "Shipment")
         expect_total_matches(totals, 1, fee_type: "Shipment", enterprise_name: "Distributor A")
@@ -225,7 +225,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
         let(:parameters_attributes) { { start_at: timestamp } }
 
         it "filters entries" do
-          totals = service.enterprise_fee_type_totals.list
+          totals = service.list
 
           expect_total_matches(totals, 0, fee_type: "Shipment", customer_name: "Customer A")
           expect_total_matches(totals, 1, fee_type: "Shipment", customer_name: "Customer B")
@@ -237,7 +237,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
         let(:parameters_attributes) { { end_at: timestamp } }
 
         it "filters entries" do
-          totals = service.enterprise_fee_type_totals.list
+          totals = service.list
 
           expect_total_matches(totals, 1, fee_type: "Shipment", customer_name: "Customer A")
           expect_total_matches(totals, 1, fee_type: "Shipment", customer_name: "Customer B")
@@ -267,7 +267,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
       let(:parameters_attributes) { { distributor_ids: [distributor_a.id, distributor_b.id] } }
 
       it "filters entries" do
-        totals = service.enterprise_fee_type_totals.list
+        totals = service.list
 
         expect_total_matches(totals, 1, fee_type: "Shipment", enterprise_name: "Distributor A")
         expect_total_matches(totals, 1, fee_type: "Shipment", enterprise_name: "Distributor B")
@@ -305,7 +305,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
       let(:parameters_attributes) { { producer_ids: [producer_a.id, producer_b.id] } }
 
       it "filters entries" do
-        totals = service.enterprise_fee_type_totals.list
+        totals = service.list
 
         expect_total_matches(totals, 1, fee_name: "Fee A", enterprise_name: "Producer A")
         expect_total_matches(totals, 1, fee_name: "Fee B", enterprise_name: "Producer B")
@@ -342,7 +342,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
       let(:parameters_attributes) { { order_cycle_ids: [order_cycle_a.id, order_cycle_b.id] } }
 
       it "filters entries" do
-        totals = service.enterprise_fee_type_totals.list
+        totals = service.list
 
         expect_total_matches(totals, 1, fee_type: "Shipment", enterprise_name: "Distributor A")
         expect_total_matches(totals, 1, fee_type: "Shipment", enterprise_name: "Distributor B")
@@ -362,7 +362,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
       let(:parameters_attributes) { { enterprise_fee_ids: [fee_a.id, fee_b.id] } }
 
       it "filters entries" do
-        totals = service.enterprise_fee_type_totals.list
+        totals = service.list
 
         expect_total_matches(totals, 1, fee_name: "Fee A")
         expect_total_matches(totals, 1, fee_name: "Fee B")
@@ -390,7 +390,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
       end
 
       it "filters entries" do
-        totals = service.enterprise_fee_type_totals.list
+        totals = service.list
 
         expect_total_matches(totals, 1, fee_name: "Shipping A")
         expect_total_matches(totals, 1, fee_name: "Shipping B")
@@ -418,7 +418,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
       end
 
       it "filters entries" do
-        totals = service.enterprise_fee_type_totals.list
+        totals = service.list
 
         expect_total_matches(totals, 1, fee_name: "Payment A")
         expect_total_matches(totals, 1, fee_name: "Payment B")

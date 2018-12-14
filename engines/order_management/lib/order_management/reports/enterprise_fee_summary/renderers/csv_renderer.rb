@@ -11,7 +11,7 @@ module OrderManagement
             CSV.generate do |csv|
               render_header(csv)
 
-              report_data.enterprise_fee_type_totals.list.each do |data|
+              report_data.list.each do |data|
                 render_data_row(csv, data)
               end
             end

@@ -1,6 +1,5 @@
 require "order_management/reports/enterprise_fee_summary/scope"
 require "order_management/reports/enterprise_fee_summary/enterprise_fee_type_total_summarizer"
-require "order_management/reports/enterprise_fee_summary/report_data/enterprise_fee_type_totals"
 require "order_management/reports/enterprise_fee_summary/report_data/enterprise_fee_type_total"
 
 module OrderManagement
@@ -18,8 +17,8 @@ module OrderManagement
           Scope.new.apply_filters(permission_filters).apply_filters(parameters).result
         end
 
-        def enterprise_fee_type_totals
-          ReportData::EnterpriseFeeTypeTotals.new(list: enterprise_fee_type_total_list.sort)
+        def list
+          enterprise_fee_type_total_list.sort
         end
 
         private
