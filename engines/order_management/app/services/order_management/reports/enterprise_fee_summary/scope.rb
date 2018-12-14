@@ -82,6 +82,7 @@ module OrderManagement
                 ON (
                   spree_adjustments.adjustable_type = 'Spree::Order'
                     AND spree_orders.id = spree_adjustments.adjustable_id
+                    AND spree_orders.completed_at IS NOT NULL
                 )
             JOIN_STRING
           )
