@@ -1,10 +1,8 @@
-require "open_food_network/reports/renderers/base"
-
 module OrderManagement
   module Reports
     module EnterpriseFeeSummary
       module Renderers
-        class CsvRenderer < OpenFoodNetwork::Reports::Renderers::Base
+        class CsvRenderer < ::Reports::Renderers::Base
           def render(context)
             context.send_data(generate, filename: filename)
           end

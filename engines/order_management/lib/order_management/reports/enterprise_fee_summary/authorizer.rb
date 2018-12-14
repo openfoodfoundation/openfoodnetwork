@@ -1,9 +1,7 @@
-require "open_food_network/reports/authorizer"
-
 module OrderManagement
   module Reports
     module EnterpriseFeeSummary
-      class Authorizer < OpenFoodNetwork::Reports::Authorizer
+      class Authorizer < ::Reports::Authorizer
         @i18n_scope = "order_management.reports.enterprise_fee_summary"
 
         PARAMETER_NOT_ALLOWED_ERROR = I18n.t("parameter_not_allowed_error", scope: @i18n_scope)
@@ -28,7 +26,7 @@ module OrderManagement
         end
 
         def require_ids_allowed(array, allowed_objects)
-          error_klass = OpenFoodNetwork::Reports::Authorizer::ParameterNotAllowedError
+          error_klass = ::Reports::Authorizer::ParameterNotAllowedError
           error_message = PARAMETER_NOT_ALLOWED_ERROR
           ids_allowed = (array - allowed_objects.map(&:id).map(&:to_s)).blank?
 

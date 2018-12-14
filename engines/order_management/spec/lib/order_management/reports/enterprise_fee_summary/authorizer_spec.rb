@@ -3,7 +3,6 @@ require "spec_helper"
 require "order_management/reports/enterprise_fee_summary/parameters"
 require "order_management/reports/enterprise_fee_summary/permissions"
 require "order_management/reports/enterprise_fee_summary/authorizer"
-require "open_food_network/reports/authorizer"
 
 describe OrderManagement::Reports::EnterpriseFeeSummary::Authorizer do
   let(:report_klass) { OrderManagement::Reports::EnterpriseFeeSummary }
@@ -33,7 +32,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::Authorizer do
 
       it "raises ParameterNotAllowedError" do
         expect { authorizer.authorize! }
-          .to raise_error(OpenFoodNetwork::Reports::Authorizer::ParameterNotAllowedError)
+          .to raise_error(Reports::Authorizer::ParameterNotAllowedError)
       end
     end
   end
@@ -58,7 +57,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::Authorizer do
 
       it "raises ParameterNotAllowedError" do
         expect { authorizer.authorize! }
-          .to raise_error(OpenFoodNetwork::Reports::Authorizer::ParameterNotAllowedError)
+          .to raise_error(Reports::Authorizer::ParameterNotAllowedError)
       end
     end
   end
@@ -83,7 +82,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::Authorizer do
 
       it "raises ParameterNotAllowedError" do
         expect { authorizer.authorize! }
-          .to raise_error(OpenFoodNetwork::Reports::Authorizer::ParameterNotAllowedError)
+          .to raise_error(Reports::Authorizer::ParameterNotAllowedError)
       end
     end
   end
@@ -108,7 +107,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::Authorizer do
 
       it "raises ParameterNotAllowedError" do
         expect { authorizer.authorize! }
-          .to raise_error(OpenFoodNetwork::Reports::Authorizer::ParameterNotAllowedError)
+          .to raise_error(Reports::Authorizer::ParameterNotAllowedError)
       end
     end
   end
@@ -133,7 +132,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::Authorizer do
 
       it "raises ParameterNotAllowedError" do
         expect { authorizer.authorize! }
-          .to raise_error(OpenFoodNetwork::Reports::Authorizer::ParameterNotAllowedError)
+          .to raise_error(Reports::Authorizer::ParameterNotAllowedError)
       end
     end
   end
@@ -158,7 +157,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::Authorizer do
 
       it "raises ParameterNotAllowedError" do
         expect { authorizer.authorize! }
-          .to raise_error(OpenFoodNetwork::Reports::Authorizer::ParameterNotAllowedError)
+          .to raise_error(Reports::Authorizer::ParameterNotAllowedError)
       end
     end
   end

@@ -1,9 +1,7 @@
-require "open_food_network/reports/permissions"
-
 module OrderManagement
   module Reports
     module EnterpriseFeeSummary
-      class Permissions < OpenFoodNetwork::Reports::Permissions
+      class Permissions < ::Reports::Permissions
         def allowed_order_cycles
           @allowed_order_cycles ||= OrderCycle.accessible_by(user)
         end

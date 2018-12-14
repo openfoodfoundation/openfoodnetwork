@@ -1,10 +1,8 @@
-require "open_food_network/reports/renderers/base"
-
 module OrderManagement
   module Reports
     module EnterpriseFeeSummary
       module Renderers
-        class HtmlRenderer < OpenFoodNetwork::Reports::Renderers::Base
+        class HtmlRenderer < ::Reports::Renderers::Base
           def render(context)
             context.instance_variable_set :@renderer, self
             context.render(action: :create, renderer: self)

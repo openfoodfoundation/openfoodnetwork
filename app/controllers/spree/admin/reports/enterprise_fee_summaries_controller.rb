@@ -1,4 +1,3 @@
-require "open_food_network/reports"
 require "order_management/reports/enterprise_fee_summary/parameters"
 require "order_management/reports/enterprise_fee_summary/permissions"
 require "order_management/reports/enterprise_fee_summary/authorizer"
@@ -22,7 +21,7 @@ module Spree
 
           @report = report_klass::ReportService.new(@permissions, @report_parameters)
           renderer.render(self)
-        rescue OpenFoodNetwork::Reports::Authorizer::ParameterNotAllowedError => e
+        rescue ::Reports::Authorizer::ParameterNotAllowedError => e
           flash[:error] = e.message
           render_report_form
         end
@@ -61,7 +60,7 @@ module Spree
           when nil, "", "html"
             report_klass::Renderers::HtmlRenderer
           else
-            raise OpenFoodNetwork::Reports::UnsupportedReportFormatException
+            raise Reports::UnsupportedReportFormatException
           end
         end
 
