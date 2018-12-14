@@ -2,9 +2,10 @@ module OrderManagement
   module Reports
     module EnterpriseFeeSummary
       class Authorizer < ::Reports::Authorizer
-        @i18n_scope = "order_management.reports.enterprise_fee_summary"
-
-        PARAMETER_NOT_ALLOWED_ERROR = I18n.t("parameter_not_allowed_error", scope: @i18n_scope)
+        def self.parameter_not_allowed_error_message
+          i18n_scope = "order_management.reports.enterprise_fee_summary"
+          I18n.t("parameter_not_allowed_error", scope: i18n_scope)
+        end
 
         def authorize!
           authorize_by_distribution!
@@ -27,7 +28,7 @@ module OrderManagement
 
         def require_ids_allowed(array, allowed_objects)
           error_klass = ::Reports::Authorizer::ParameterNotAllowedError
-          error_message = PARAMETER_NOT_ALLOWED_ERROR
+          error_message = self.class.parameter_not_allowed_error_message
           ids_allowed = (array - allowed_objects.map(&:id).map(&:to_s)).blank?
 
           raise error_klass, error_message unless ids_allowed
