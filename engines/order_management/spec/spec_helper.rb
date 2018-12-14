@@ -1,5 +1,6 @@
 ENV["RAILS_ENV"] = "test"
 
+require "order_management"
 require "../../spec/spec_helper"
 
 # Require factories in Spree and main application.

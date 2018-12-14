@@ -1,9 +1,5 @@
 require "spec_helper"
 
-require "order_management/reports/enterprise_fee_summary/report_service"
-require "order_management/reports/enterprise_fee_summary/permissions"
-require "order_management/reports/enterprise_fee_summary/parameters"
-
 describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
   let(:report_klass) { OrderManagement::Reports::EnterpriseFeeSummary }
 

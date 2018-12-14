@@ -1,7 +1,3 @@
-require "order_management/reports/enterprise_fee_summary/scope"
-require "order_management/reports/enterprise_fee_summary/enterprise_fee_type_total_summarizer"
-require "order_management/reports/enterprise_fee_summary/report_data/enterprise_fee_type_total"
-
 module OrderManagement
   module Reports
     module EnterpriseFeeSummary
