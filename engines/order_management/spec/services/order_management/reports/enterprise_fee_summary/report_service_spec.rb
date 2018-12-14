@@ -77,6 +77,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
 
   describe "grouping and sorting of entries" do
     let!(:customer_order) { prepare_order(customer: customer) }
+    let!(:customer_incomplete_order) { setup_order(customer: customer) }
     let!(:second_customer_order) { prepare_order(customer: customer) }
     let!(:other_customer_order) { prepare_order(customer: another_customer) }
 
