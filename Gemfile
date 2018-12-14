@@ -116,7 +116,7 @@ group :test, :development do
   gem 'shoulda-matchers'
   gem "factory_bot_rails", require: false
   gem 'capybara', '>= 2.15.4'
-  gem 'database_cleaner', '0.7.1', require: false
+  gem 'database_cleaner', '1.7.0', require: false
   gem 'awesome_print'
   gem 'letter_opener', '>= 1.4.1'
   gem 'timecop'
