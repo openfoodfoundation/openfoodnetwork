@@ -1,7 +1,5 @@
 require "spec_helper"
 
-require "order_management/reports/enterprise_fee_summary/permissions"
-
 describe OrderManagement::Reports::EnterpriseFeeSummary::Permissions do
   let!(:order_cycle) { create(:simple_order_cycle) }
   let!(:incoming_exchange) { create(:exchange, incoming: true, order_cycle: order_cycle) }
