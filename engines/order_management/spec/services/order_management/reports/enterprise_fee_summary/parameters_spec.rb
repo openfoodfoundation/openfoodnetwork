@@ -46,7 +46,8 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::Parameters do
           allow(subject).to receive(:end_at) { (now - 1.hour).to_s }
 
           expect(subject).not_to be_valid
-          expect(subject.errors[:end_at]).to eq([described_class::DATE_END_BEFORE_START_ERROR])
+          error_message = described_class.date_end_before_start_error_message
+          expect(subject.errors[:end_at]).to eq([error_message])
         end
 
         it "does not add error when start_at is before end_at" do
