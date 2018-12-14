@@ -18,8 +18,8 @@ module Spree
         def create
           return respond_to_invalid_parameters unless @report_parameters.valid?
 
-          @authorizer = report_klass::Authorizer.new(@report_parameters, @permissions)
-          @authorizer.authorize!
+          @report_parameters.authorize!(@permissions)
+
           @report = report_klass::ReportService.new(@permissions, @report_parameters)
           renderer.render(self)
         rescue OpenFoodNetwork::Reports::Authorizer::ParameterNotAllowedError => e

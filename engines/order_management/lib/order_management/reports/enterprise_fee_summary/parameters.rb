@@ -36,6 +36,11 @@ module OrderManagement
           super(attributes)
         end
 
+        def authorize!(permissions)
+          authorizer = Authorizer.new(self, permissions)
+          authorizer.authorize!
+        end
+
         protected
 
         def require_valid_datetime_range
