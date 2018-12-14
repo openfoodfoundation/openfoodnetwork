@@ -1,9 +1,7 @@
-require "open_food_network/reports/parameters/base"
-
 module OrderManagement
   module Reports
     module EnterpriseFeeSummary
-      class Parameters < OpenFoodNetwork::Reports::Parameters::Base
+      class Parameters < ::Reports::Parameters::Base
         @i18n_scope = "order_management.reports.enterprise_fee_summary"
 
         DATE_END_BEFORE_START_ERROR = I18n.t("date_end_before_start_error", scope: @i18n_scope)
