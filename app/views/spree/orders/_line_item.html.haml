@@ -19,7 +19,7 @@
 
     - if @insufficient_stock_lines.andand.include? line_item
       %span.out-of-stock
-        = variant.in_stock? ? t(:insufficient_stock, :on_hand => variant.on_hand) : t(:out_of_stock)
+        = variant.in_stock? ? t(".insufficient_stock", :on_hand => variant.on_hand) : t(".out_of_stock")
         %br/
 
   %td.text-right.cart-item-price{"data-hook" => "cart_item_price"}
