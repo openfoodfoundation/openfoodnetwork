@@ -15,7 +15,7 @@ module OrderManagement
           end
 
           def data_rows
-            report_data.enterprise_fee_type_totals.list.map do |data|
+            report_data.list.map do |data|
               data_row_attributes.map do |attribute|
                 data.public_send(attribute)
               end
