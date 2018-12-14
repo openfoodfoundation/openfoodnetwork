@@ -3,10 +3,10 @@ Spree::Stock::AvailabilityValidator.class_eval do
     # OFN specific check for in-memory :skip_stock_check attribute
     return if line_item.skip_stock_check
 
-    quantity = adapt_line_item_quantity_to_inventory_units(line_item)
-    return if quantity == 0
+    quantity_to_validate = line_item.quantity - quantity_in_shipment(line_item)
+    return if quantity_to_validate < 1
 
-    validate_quantity(line_item, quantity)
+    validate_quantity(line_item, quantity_to_validate)
   end
 
   private
@@ -14,12 +14,12 @@ Spree::Stock::AvailabilityValidator.class_eval do
   # This is an adapted version of a fix to the inventory_units not being considered here.
   # See #3090 for details.
   # This can be removed after upgrading to Spree 2.4.
-  def adapt_line_item_quantity_to_inventory_units(line_item)
+  def quantity_in_shipment(line_item)
     shipment = line_item_shipment(line_item)
-    return line_item.quantity unless shipment
+    return 0 unless shipment
 
     units = shipment.inventory_units_for(line_item.variant)
-    line_item.quantity - units.count
+    units.count
   end
 
   def line_item_shipment(line_item)
