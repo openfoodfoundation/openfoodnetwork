@@ -49,6 +49,8 @@ class SimplifyVariantOverrideStockSettings < ActiveRecord::Migration
       update_on_demand_with_count_on_hand(csv)
       update_limited_stock_without_count_on_hand(csv)
     end
+
+    split_csv_by_distributor
   end
 
   def down
@@ -71,6 +73,10 @@ class SimplifyVariantOverrideStockSettings < ActiveRecord::Migration
 
   def csv_path
     reports_path.join("changed_variant_overrides.csv")
+  end
+
+  def distributor_csv_path(name, id)
+    reports_path.join("changed_variant_overrides-#{name.parameterize('_')}-#{id}.csv")
   end
 
   # When on_demand is nil but count_on_hand is set, force limited stock.
@@ -136,5 +142,24 @@ class SimplifyVariantOverrideStockSettings < ActiveRecord::Migration
     yield variant_override
 
     row + [variant_override.on_demand, variant_override.count_on_hand]
+  end
+
+  def split_csv_by_distributor
+    table = CSV.read(csv_path)
+    distributor_ids = table[1..-1].map { |row| row[2] }.uniq # Don't use the header row.
+
+    distributor_ids.each do |distributor_id|
+      distributor_data_rows = filter_data_rows_for_distributor(table[1..-1], distributor_id)
+      distributor_name = distributor_data_rows.first[1]
+
+      CSV.open(distributor_csv_path(distributor_name, distributor_id), "w") do |csv|
+        csv << table[0] # Header row
+        distributor_data_rows.each { |row| csv << row }
+      end
+    end
+  end
+
+  def filter_data_rows_for_distributor(data_rows, distributor_id)
+    data_rows.select { |row| row[2] == distributor_id }
   end
 end
