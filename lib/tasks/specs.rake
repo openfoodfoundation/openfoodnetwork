@@ -25,6 +25,20 @@ namespace :openfoodnetwork do
           end
         end
       end
+
+      namespace :all do
+        task :rspec do
+          success = true
+
+          engine_paths.each do |engine_path|
+            success = !!execute_rspec_for_engine(engine_path) && success
+          end
+
+          abort "Failure encountered when running tests for engines" unless success
+        end
+      end
+
+      task rspec: "all:rspec"
     end
   end
 end
