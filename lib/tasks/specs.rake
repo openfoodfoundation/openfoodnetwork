@@ -19,6 +19,7 @@ namespace :openfoodnetwork do
         engine_name = engine_name_for_engine(engine_path)
 
         namespace engine_name do
+          desc "Run RSpec tests for engine \"#{engine_name}\""
           task :rspec do
             success = execute_rspec_for_engine(engine_path)
             abort "Failure when running tests for engine \"#{engine_name}\"" unless success
@@ -27,6 +28,7 @@ namespace :openfoodnetwork do
       end
 
       namespace :all do
+        desc "Run RSpec tests for all engines"
         task :rspec do
           success = true
 
@@ -38,6 +40,7 @@ namespace :openfoodnetwork do
         end
       end
 
+      desc "Alias for openfoodnetwork:specs:engines:all:rspec"
       task rspec: "all:rspec"
     end
   end
