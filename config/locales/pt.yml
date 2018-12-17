@@ -60,6 +60,9 @@ pt:
     user_passwords:
       spree_user:
         updated_not_active: "A sua palavra-passe foi redefinida, mas o seu email ainda não foi confirmado."
+  models:
+    order_cycle:
+      cloned_order_cycle_name: "CÓPIA DE%{order_cycle}"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Por favor confirme o endereço de email de %{enterprise}"
@@ -67,9 +70,26 @@ pt:
       subject: "%{enterprise} está agora em %{sitename}"
     invite_manager:
       subject: "%{enterprise} convidou-o/a para gestor/a"
+  order_mailer:
+    cancel_email:
+      dear_customer: "Caro Consumidor,"
+      instructions: "A sua encomenda foi cancelada. Por favor guarde está informação para seu registo."
+      order_summary_canceled: "Sumário de Encomenda [CANCELADA]"
+      subject: "Cancelamento de Encomenda"
+      subtotal: "Subtotal: %{subtotal}"
+      total: "Total da Encomenda: %{total}"
   producer_mailer:
     order_cycle:
       subject: "Relatório de ciclo de encomendas de %{producer}"
+  shipment_mailer:
+    shipped_email:
+      dear_customer: "Caro Consumidor,"
+      instructions: "A sua encomenda foi enviada"
+      shipment_summary: "Sumário de Envio"
+      subject: "Notificação de Envio"
+      thanks: "Obrigado."
+      track_information: "Informação de envio: %{tracking}"
+      track_link: "Link de envio: %{url}"
   subscription_mailer:
     placement_summary_email:
       subject: Um resumo das encomendas de subscrição feitas recentemente
@@ -170,6 +190,7 @@ pt:
   admin_and_handling: Administração & Logística
   profile: Perfil
   supplier_only: Só Fornecedor
+  has_shopfront: Tem Loja
   weight: Peso
   volume: Volume
   items: Itens
@@ -191,6 +212,10 @@ pt:
   quantity: Quantidade
   pick_up: Levantamento
   copy: Copiar
+  password_confirmation: Confirmação de Palavra-passe
+  reset_password_token: Redefinir palavra-passe
+  expired: expirou, por favor peça uma nova
+  back_to_payments_list: "Voltar à lista de pagamentos"
   actions:
     create_and_add_another: "Criar e acrescentar outro"
   admin:
@@ -336,6 +361,13 @@ pt:
         charges_enabled_warning: "Aviso: As taxas não estão activas para a sua conta"
         auth_fail_error: A chave da API que indicou não é válida
         empty_api_key_error_html: Não foi fornecida nenhuma chave de API Stripe. Para definir a sua chave de API, por favor siga <a href="https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance" target="_blank">estas instruções</a>
+    matomo_settings:
+      edit:
+        title: "Configurações Matomo"
+        matomo_url: "URL Matomo"
+        matomo_site_id: "Site ID Matomo"
+        info_html: "Matomo é uma ferramenta de análise web e mobile. Pode instalar o Matomo no seu servidor ou utilizar um serviço na cloud. Veja <a href='http://matomo.org' target='_blank'>matomo.org</a> para mais informações."
+        config_instructions_html: "Aqui pode configurar a integração com Matomo. O URL Matomo em baixo deve apontar para o serviror para onde a informação de tracking de utilizadores será enviada; se deixado vazio, o tracking de utilizadores através do Matomo ficará desactivado. O campo Site ID não é obrigatório mas útil se estive a fazer tracking de mais do que um website numa instância única do Matomo; pode ser encontrado na consola da instância Matomo."
     customers:
       index:
         add_customer: "Adicionar Consumidor/a"
@@ -358,6 +390,7 @@ pt:
         update_address: 'Actualizar Morada'
         confirm_delete: 'De certeza que é para apagar? '
         search_by_email: "Pesquisar por e-mail/código"
+        guest_label: 'Finalizar compra como convidado'
       destroy:
         has_associated_orders: 'Não foi possível apagar: o/a consumidor/a tem encomendas associadas a esta loja.'
     contents:
@@ -368,6 +401,7 @@ pt:
         producer_signup_page: Página de registo de Produtor/a
         hub_signup_page: Página de registo de Hub
         group_signup_page: Página de registo de Grupo
+        main_links: Links do Menu Principal
         footer_and_external_links: Rodapé e Ligações Externas
         your_content: O seu conteúdo
         user_guide: Manual do Utilizador
@@ -425,17 +459,23 @@ pt:
         conditional_blank: não pode ser vazio se tipo de unidade é vazio
         no_product: não foram encontrados produtos
         not_found: não encontrado
+        not_updatable: não pode ser actualizado em produtos existentes através da importação de produtos
         blank: não pode ser vazio
         products_no_permission: não tem permissões para gerir produtos desta organização
         inventory_no_permission: não tem permissões para criar inventário para este produtor
         none_saved: não gravou nenhum produto com sucesso
+        line_number: "Linha %{number}:"
       index:
         select_file: Selecione uma folha de cálculo para carregar
         spreadsheet: Folha de cálculo
+        import_into: Tipo de importação
         product_list: Lista de produtos
         inventories: Inventários
         import: Importar
         upload: Carregar
+        product_categories: Categorias de Produtos
+        tax_categories: Categorias de Impostos
+        shipping_categories: Categorias de Envio
       import:
         review: Rever
         import: Importar
@@ -584,7 +624,7 @@ pt:
           preferred_product_selection_from_inventory_only_no: Novos produtos têm de ser adicionados ao meu inventário antes de serem colocados na minha loja
         payment_methods:
           name: Nome
-          applies: Aplica?
+          applies: Aplicável?
           manage: Gerir métodos de pagamento
           not_method_yet: Não tem nenhum método de pagamento.
           create_button: Criar Novo Método de Pagamento
@@ -613,13 +653,13 @@ pt:
           link_to_front_tip: Um link direto para a sua loja no Open Food Network.
         shipping_methods:
           name: Nome
-          applies: Aplica?
+          applies: Aplicável?
           manage: Gerir Métodos de Envio
           create_button: Criar Nova Forma de Envio
           create_one_button: Criar um agora
           no_method_yet: Ainda não tem nenhuma forma de envio.
         shop_preferences:
-          shopfront_requires_login: "Mercado visível publicamente?"
+          shopfront_requires_login: "Loja visível publicamente?"
           shopfront_requires_login_tip: "Escolha se os consumidores vão precisar de fazer login para ver a loja, ou se esta estará visível para toda a gente."
           shopfront_requires_login_false: "Público"
           shopfront_requires_login_true: "Visível somente para consumidores registados"
@@ -647,7 +687,7 @@ pt:
               da sua loja estar fechada e quando é que os consumidores podem esperar
               que abra novamente. A ser exibida quando não houver nenhum ciclo de
               encomendas activo.
-          shopfront_category_ordering: Categoria de pedidos da loja
+          shopfront_category_ordering: Ordem das Categorias da Loja
           open_date: Dia de Abertura
           close_date: Data de fecho
         social:
@@ -1055,11 +1095,17 @@ pt:
   menu_1_title: "Lojas"
   menu_1_url: "/shops"
   menu_2_title: "Mapa"
+  menu_2_url: "/map"
   menu_3_title: "Produtores"
+  menu_3_url: "/producers"
   menu_4_title: "Grupos"
+  menu_4_url: "/groups"
   menu_5_title: "Sobre"
+  menu_5_url: "http://www.openfoodnetwork.org/"
   menu_6_title: "Conectar"
+  menu_6_url: "https://openfoodnetwork.org"
   menu_7_title: "Aprender"
+  menu_7_url: "https://openfoodnetwork.org"
   logo: "Logo (640x130)"
   logo_mobile: "logo mobile (75x26)"
   logo_mobile_svg: "Logo mobile (svg)"
@@ -1398,7 +1444,7 @@ pt:
   modal_how: "Como funciona"
   modal_how_shop: Compre na Open Food Network
   modal_how_shop_explained: Procure por um mercado próximo e comece as suas compras! Em cada mercado pode ver, em detalhe, quais os produtos que são oferecidos (só pode comprar num mercado de cada vez).
-  modal_how_pickup: 'Custos de coleta e entrega. '
+  modal_how_pickup: 'Custos de levantamento e entrega. '
   modal_how_pickup_explained: Alguns mercados entregam em sua casa, outros oferecem um local para que levante os produtos. É possível ver quais as opções que estão disponíveis no perfil individual de cada um, e fazer a sua escolha no momento do checkout. Provavelmente será cobrada uma taxa de entrega, que pode variar de mercado para mercado.
   modal_how_more: Saiba mais
   modal_how_more_explained: "Para saber mais sobre a Open Food Network, como funciona, e participar, visite:"
@@ -1752,6 +1798,7 @@ pt:
   you_have_no_orders_yet: "Ainda não tem encomendas"
   running_balance: "Saldo corrente"
   outstanding_balance: "Saldo pendente"
+  admin_enterprise_relationships: "Permissões das Organizações"
   admin_enterprise_relationships_everything: "Tudo"
   admin_enterprise_relationships_permits: "permite"
   admin_enterprise_relationships_seach_placeholder: "Procurar"
@@ -1844,11 +1891,11 @@ pt:
   spree_admin_overview_check_your_inbox: "Por favor, verifique a sua caixa de correio para mais instruções. Obrigada!"
   spree_admin_unit_value: Valor Unitário
   spree_admin_unit_description: Descrição Unitária
-  spree_admin_variant_unit: Unidade variante
+  spree_admin_variant_unit: Unidade da Variante
   spree_admin_variant_unit_scale: Escala de unidade variante
   spree_admin_supplier: Fornecedor
   spree_admin_product_category: Categoria de Produto
-  spree_admin_variant_unit_name: Nome de unidade variante
+  spree_admin_variant_unit_name: Nome da Unidade da Variante
   change_package: "Modificar Embalagem"
   spree_admin_single_enterprise_hint: "Dica: Para permitir que as pessoas te encontrem, ative sua visibilidade em"
   spree_admin_eg_pickup_from_school: "ex: \"Levantar na Escola Primária\""
@@ -1875,6 +1922,7 @@ pt:
   edit_profile_details_etc: "Modificar o seu perfil: descrição, imagem, etc."
   order_cycle: "Ciclo de Encomendas"
   order_cycles: "Ciclos de Encomendas"
+  enterprise_relationships: "Permissões das organizações"
   remove_tax: "Remover imposto"
   enterprise_tos_link: "Ligação para Termos de Serviço da Organização"
   enterprise_tos_message: "Queremos trabalhar com pessoas que partilham os nossos objectivos e valores. Por isso pedimos às organizações novas que concordem com os nossos"
@@ -2023,7 +2071,7 @@ pt:
   report_header_product_total_price: "Total do Produto (%{currency})"
   report_header_shipping_total_price: "Total do Envio (%{currency})"
   report_header_outstanding_balance_price: "Saldo pendente (%{currency})"
-  report_header_eft_price: "EFT (%{currency})"
+  report_header_eft_price: "Transferência (%{currency})"
   report_header_paypal_price: "Paypal (%{currency})"
   report_header_sku: SKU
   report_header_amount: Quantia
@@ -2044,7 +2092,7 @@ pt:
   report_header_total_taxable_produce: Total tributável de produtos (inclui impostos)
   report_header_total_untaxable_fees: Total não tributável de taxas (sem impostos)
   report_header_total_taxable_fees: Total tributável de taxas (com impostos)
-  report_header_delivery_shipping_cost: Custo de Envio e Entrega (inclui impostos)
+  report_header_delivery_shipping_cost: Custo de Envio (inclui impostos)
   report_header_transaction_fee: Taxa de transacção (sem impostos)
   report_header_total_untaxable_admin: Total de ajustes de administração não taxáveis (sem impostos)
   report_header_total_taxable_admin: Total de ajustes de administração taxáveis (inclui impostos)
@@ -2083,7 +2131,7 @@ pt:
   payment_methods: "Métodos de Pagamento"
   payment_method_fee: "Taxa de transação"
   inventory_settings: "Configurações de Inventário"
-  tag_rules: "Regras para tag"
+  tag_rules: "Regras para Etiquetas"
   shop_preferences: "Preferências da Loja"
   enterprise_fee_whole_order: Encomenda completa
   enterprise_fee_by: "Taxa %{type} por %{role}%{enterprise_name}"
@@ -2167,7 +2215,7 @@ pt:
           title: Regras de Etiquetas
           overview: Visão geral
           overview_text: >
-              As regras de tag permitem descrever quais os itens que são visíveis
+              As regras de etiquetas permitem descrever quais os itens que são visíveis
               ou não e para que clientes. Os itens podem ser métodos de envio, formas
               de pagamento, produtos e ciclos de encomendas.
           by_default_rules: "Regras 'Por Defeito...'"
@@ -2345,11 +2393,19 @@ pt:
     admin:
       orders:
         index:
+          listing_orders: "Lista de Encomendas"
+          new_order: "Nova Encomenda"
           capture: "Capturar"
           ship: "Enviar"
           edit: "Editar"
+          note: "Nota"
+          first: "Primeiro"
+          last: "Último"
+          previous: "Anterior"
           next: "Seguinte"
+          loading: "A carregar"
           no_orders_found: "Nenhuma encomenda encontrada"
+          viewing: "A ver de %{start}a %{end}."
         invoice:
           issued_on: Emitido em
           tax_invoice: FACTURA FISCAL
@@ -2377,13 +2433,18 @@ pt:
           stripe_disabled_msg: Os pagamentos por Stripe foram desactivados pelo administrador de sistema.
           request_failed_msg: Pedimos desculpa. Algo correu mal quando tentámos verificar os detalhes de conta com o Stripe...
           account_missing_msg: 'Não existem contas Stripe associadas a esta organização. '
-          connect_one: Ligar Uma
+          connect_one: Ligar
           access_revoked_msg: O acesso a esta conta Stripe foi revogado, por favor volte a ligar a sua conta.
           status: Estado
           connected: Ligado
           account_id: ID de Conta
           business_name: Nome do Negócio
           charges_enabled: Taxas activas
+      payments:
+        source_forms:
+          stripe:
+            error_saving_payment: Erro a gravar pagamento
+            submitting_payment: A submeter pagamento...
       products:
         new:
           title: 'Novo Produto'
@@ -2417,6 +2478,8 @@ pt:
         display_as:
           display_as: Mostrar como
       reports:
+        table:
+          select_and_search: "Selecione os filtros e click em Pesquisar para obter resultados."
         bulk_coop:
           bulk_coop_supplier_report: 'Cooperativa por Atacado - Totais por Fornecedor'
           bulk_coop_allocation: 'Cooperativa por Atacado - Alocação'
@@ -2424,20 +2487,31 @@ pt:
           bulk_coop_customer_payments: 'Cooperativa por Atacado - Pagamentos do Consumidor'
       users:
         index:
+          listing_users: "Lista de Utilizadores"
+          new_user: "Novo Utilizador"
           user: "Utilizador"
           enterprise_limit: "Limite da Organização"
           search: "Procurar"
           email: "Email"
+        edit:
+          editing_user: "Editar Utilizador"
+          back_to_users_list: "Voltar à lista de utilizadores"
+          general_settings: "Configurações Gerais"
         form:
           email: "Email"
           roles: "Papeis"
           enterprise_limit: "Limite da Organização"
+          confirm_password: "Confirme a palavra-passe"
           password: "Palavra-passe"
+        email_confirmation:
+          confirmation_pending: "A confirmação de email está pendente. Enviamos um email de confirmação para %{address}"
       variants:
         autocomplete:
           producer_name: Produtor
       general_settings:
         edit:
+          legal_settings: "Configurações Legais"
+          privacy_policy_url: "URL da Politíca de Privacidade"
           enterprises_require_tos: "As organizações têm de aceitar os Termos de Serviço"
           footer_tos_url: "URL dos Termos de Serviço"
     checkout:
@@ -2453,6 +2527,8 @@ pt:
       js_format: 'aa-mm-dd'
     inventory: Inventário
     orders:
+      edit:
+        login_to_view_order: "Por favor faça login para ver a sua encomenda."
       bought:
         item: "Já encomendou neste ciclo"
     order_mailer:
@@ -2546,5 +2622,10 @@ pt:
       saved_cards:
         default?: Por defeito?
         delete?: Apagar?
+      cards:
+        authorised_shops: Lojas Autorizadas
+      authorised_shops:
+        shop_name: "Nome da Loja"
+        allow_charges?: "Permitir Taxas?"
     localized_number:
       invalid_format: tem um formato inválido. Por favor introduza um número.

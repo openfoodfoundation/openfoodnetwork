@@ -1,5 +1,5 @@
 sv:
-  language_name: "English"
+  language_name: "Svenska"
   activerecord:
     attributes:
       spree/order:
