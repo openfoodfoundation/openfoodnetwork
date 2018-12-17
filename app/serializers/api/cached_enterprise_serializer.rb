@@ -7,7 +7,7 @@ module Api
     cached
 
     def cache_key
-      object.andand.cache_key
+      enterprise.andand.cache_key
     end
 
     attributes :name, :id, :description, :latitude, :longitude,
@@ -24,55 +24,55 @@ module Api
     has_many :distributed_properties, serializer: PropertySerializer
 
     def pickup
-      services = data.shipping_method_services[object.id]
+      services = data.shipping_method_services[enterprise.id]
       services ? services[:pickup] : false
     end
 
     def delivery
-      services = data.shipping_method_services[object.id]
+      services = data.shipping_method_services[enterprise.id]
       services ? services[:delivery] : false
     end
 
     def email_address
-      object.email_address.to_s.reverse
+      enterprise.email_address.to_s.reverse
     end
 
     def hash
-      object.to_param
+      enterprise.to_param
     end
 
     def logo
-      object.logo(:medium) if object.logo?
+      enterprise.logo(:medium) if enterprise.logo?
     end
 
     def promo_image
-      object.promo_image(:large) if object.promo_image?
+      enterprise.promo_image(:large) if enterprise.promo_image?
     end
 
     def path
-      enterprise_shop_path(object)
+      enterprise_shop_path(enterprise)
     end
 
     def producers
-      relatives = data.relatives[object.id]
+      relatives = data.relatives[enterprise.id]
       ids_to_objs(relatives.andand[:producers])
     end
 
     def hubs
-      relatives = data.relatives[object.id]
+      relatives = data.relatives[enterprise.id]
       ids_to_objs(relatives.andand[:distributors])
     end
 
     def taxons
       if active
-        ids_to_objs data.current_distributed_taxons[object.id]
+        ids_to_objs data.current_distributed_taxons[enterprise.id]
       else
-        ids_to_objs data.all_distributed_taxons[object.id]
+        ids_to_objs data.all_distributed_taxons[enterprise.id]
       end
     end
 
     def supplied_taxons
-      ids_to_objs data.supplied_taxons[object.id]
+      ids_to_objs data.supplied_taxons[enterprise.id]
     end
 
     def supplied_properties
@@ -97,7 +97,7 @@ module Api
     end
 
     def active
-      data.active_distributors.andand.include? object
+      data.active_distributors.andand.include? enterprise
     end
 
     # Map svg icons.
@@ -109,7 +109,7 @@ module Api
         producer_shop: "/assets/map_003-producer-shop.svg",
         producer: "/assets/map_001-producer-only.svg",
       }
-      icons[object.category]
+      icons[enterprise.category]
     end
 
     # Choose regular icon font for enterprises.
@@ -121,7 +121,7 @@ module Api
         producer_shop: "ofn-i_059-producer",
         producer: "ofn-i_059-producer",
       }
-      icon_fonts[object.category]
+      icon_fonts[enterprise.category]
     end
 
     # Choose producer page icon font - yes, sadly its got to be different.
@@ -135,7 +135,7 @@ module Api
         producer_shop: "ofn-i_059-producer",
         producer: "ofn-i_059-producer",
       }
-      icon_fonts[object.category]
+      icon_fonts[enterprise.category]
     end
 
     private
