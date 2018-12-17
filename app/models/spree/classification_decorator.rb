@@ -8,7 +8,8 @@ Spree::Classification.class_eval do
   private
 
   def refresh_products_cache
-    Spree::Product.with_deleted.find(product_id).refresh_products_cache
+    product = Spree::Product.with_deleted.find(product_id) unless product.present?  
+    product.refresh_products_cache
   end
 
   def dont_destroy_if_primary_taxon
