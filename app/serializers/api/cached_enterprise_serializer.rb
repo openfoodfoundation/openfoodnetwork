@@ -81,16 +81,14 @@ module Api
       end
     end
 
+    # This results in 3 queries per enterprise
     def distributed_properties
-      # This results in 3 queries per enterprise
-
       if active
-        product_properties = Spree::Property.currently_sold_by(object)
-        producer_property_ids = ProducerProperty.currently_sold_by(object).pluck(:property_id)
-
+        product_properties = Spree::Property.currently_sold_by(enterprise)
+        producer_property_ids = ProducerProperty.currently_sold_by(enterprise).pluck(:property_id)
       else
-        product_properties = Spree::Property.ever_sold_by(object)
-        producer_property_ids = ProducerProperty.ever_sold_by(object).pluck(:property_id)
+        product_properties = Spree::Property.ever_sold_by(enterprise)
+        producer_property_ids = ProducerProperty.ever_sold_by(enterprise).pluck(:property_id)
       end
 
       producer_properties = Spree::Property.where(id: producer_property_ids)
