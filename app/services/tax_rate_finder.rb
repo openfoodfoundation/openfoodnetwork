@@ -4,6 +4,13 @@
 class TaxRateFinder
   # @return [Array<Spree::TaxRate>]
   def tax_rates(originator, source, amount, included_tax)
+    find_associated_tax_rate(originator, source) ||
+      find_closest_tax_rates_from_included_tax(amount, included_tax)
+  end
+
+  private
+
+  def find_associated_tax_rate(originator, source)
     case originator
     when Spree::TaxRate
       [originator]
@@ -15,12 +22,8 @@ class TaxRateFinder
       when Spree::Order
         originator.tax_category ? originator.tax_category.tax_rates.match(source) : []
       end
-    else
-      find_closest_tax_rates_from_included_tax(amount, included_tax)
     end
   end
-
-  private
 
   # shipping fees and adjustments created from the admin panel have
   # taxes set at creation in the included_tax field without relation

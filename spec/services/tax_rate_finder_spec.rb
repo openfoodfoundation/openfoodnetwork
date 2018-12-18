@@ -51,7 +51,7 @@ describe TaxRateFinder do
     # There is a bug that leaves orphan adjustments on an order after
     # associated line items have been removed.
     # https://github.com/openfoodfoundation/openfoodnetwork/issues/3127
-    pending "deals with a missing line item" do
+    it "deals with a missing line item" do
       rates = TaxRateFinder.new.tax_rates(
         enterprise_fee,
         nil,
