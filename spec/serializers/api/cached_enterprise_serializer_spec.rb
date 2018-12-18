@@ -35,10 +35,12 @@ describe Api::CachedEnterpriseSerializer do
     end
 
     let(:property) { create(:property, presentation: 'One') }
+    let(:duplicate_property) { create(:property, presentation: 'One') }
 
     before do
-      producer = create(:supplier_enterprise)
-      product = create(:product, supplier: producer, properties: [property])
+      product = create(:product, properties: [property])
+      producer = create(:supplier_enterprise, properties: [duplicate_property])
+      producer.supplied_products << product
 
       create(
         :simple_order_cycle,
