@@ -24,6 +24,8 @@ module Api
         create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now,
                        distributor: distributor, billing_address: create(:address) )
       end
+      let!(:order4) { create(:completed_order_with_fees) }
+      let!(:order5) { create(:order, state: 'cart', completed_at: nil) }
       let!(:line_item1) do
         create(:line_item_with_shipment, order: order1,
                            product: create(:product, supplier: supplier))
@@ -119,6 +121,24 @@ module Api
         end
       end
 
+      context 'using search filters' do
+        before do
+          allow(controller).to receive(:spree_current_user) { admin_user }
+        end
+
+        it 'can show only completed orders' do
+          get :index, format: :json, q: { completed_at_not_null: true, s: 'created_at desc' }
+
+          expect(json_response['orders']).to eq serialized_orders([order4, order3, order2, order1])
+        end
+
+        it 'can show only unfulfilled orders' do
+          get :index, format: :json, q: { inventory_units_shipment_id_null: true, s: 'created_at desc' }
+
+          expect(json_response['orders']).to eq serialized_orders([order3, order2, order1])
+        end
+      end
+
       context 'with pagination' do
         before do
           allow(controller).to receive(:spree_current_user) { distributor.owner }
@@ -128,7 +148,7 @@ module Api
           get :index, per_page: 15, page: 1
 
           pagination_data = {
-            'results' => 2,
+            'results' => 3,
             'pages' => 1,
             'page' => 1,
             'per_page' => 15
@@ -140,6 +160,16 @@ module Api
     end
 
     private
+
+    def serialized_orders(orders)
+      serialized_orders = ActiveModel::ArraySerializer.new(
+        orders,
+        each_serializer: Api::Admin::OrderSerializer,
+        root: false
+      )
+
+      JSON.parse(serialized_orders.to_json)
+    end
 
     def returns_orders(response)
       keys = response['orders'].first.keys.map(&:to_sym)

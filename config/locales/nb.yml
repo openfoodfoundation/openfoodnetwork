@@ -1,5 +1,5 @@
 nb:
-  language_name: "Engelsk"
+  language_name: "Norsk"
   activerecord:
     attributes:
       spree/order:
@@ -195,6 +195,7 @@ nb:
   admin_and_handling: Admin & Håndtering
   profile: Profil
   supplier_only: Kun leverandør
+  has_shopfront: Har Butikk
   weight: Vekt
   volume: Volum
   items: Elementer
@@ -219,6 +220,7 @@ nb:
   password_confirmation: Passordbekreftelse
   reset_password_token: Tilbakestill passordtoken
   expired: er utløpt, vennligst be om en ny
+  back_to_payments_list: "Tilbake til betalingsliste"
   actions:
     create_and_add_another: "Opprett og legg til en annen"
   admin:
@@ -381,11 +383,11 @@ nb:
         code: Kode
         duplicate_code: "Denne koden er allerede brukt."
         bill_address: "Fakturaadresse"
-        ship_address: "Leveringsstatus"
+        ship_address: "Leveringsadresse"
         update_address_success: 'Adresse oppdatert.'
         update_address_error: 'Beklager! Vennligst skriv alle de obligatoriske feltene!'
         edit_bill_address: 'Rediger fakturaadresse'
-        edit_ship_address: 'Rediger leveringsadresse'
+        edit_ship_address: 'Rediger Leveringsadresse'
         required_fileds: 'Obligatoriske felt er merket med en stjerne'
         select_country: 'Velg Land'
         select_state: 'Velg Fylke'
@@ -1153,9 +1155,9 @@ nb:
   menu_5_title: "Om"
   menu_5_url: "https://openfoodnetwork.org/ofn-local/open-food-network-scandinavia/"
   menu_6_title: "Koble til"
-  menu_6_url: " "
+  menu_6_url: "https://openfoodnetwork.org/au/connect/"
   menu_7_title: "Lære"
-  menu_7_url: " "
+  menu_7_url: "https://openfoodnetwork.org/au/learn/"
   logo: "Logo (640x130)"
   logo_mobile: "Mobil logo (75x26)"
   logo_mobile_svg: "Mobil logo (SVG)"
@@ -2235,6 +2237,7 @@ nb:
   validation_msg_relationship_already_established: "^Den relasjonen er allerede etablert."
   validation_msg_at_least_one_hub: "^Minst én hub må være valgt"
   validation_msg_product_category_cant_be_blank: "^Produktkategori kan ikke være blank"
+  validation_msg_tax: "^Avgiftskategori er påkrevd"
   validation_msg_tax_category_cant_be_blank: "^Avgiftskategori kan ikke være blank"
   validation_msg_is_associated_with_an_exising_customer: "er assosiert med en eksisterende kunde"
   content_configuration_pricing_table: "(TODO: Pristabell)"
@@ -2598,14 +2601,21 @@ nb:
           bulk_coop_customer_payments: 'Bulk Co-op - Kunde Betalinger'
       users:
         index:
+          listing_users: "Lister opp brukere"
+          new_user: "Ny Bruker"
           user: "Bruker"
           enterprise_limit: "Bedriftsgrense"
           search: "Søk"
           email: "Epost"
+        edit:
+          editing_user: "Redigerer Bruker"
+          back_to_users_list: "Tilbake til brukerlisten"
+          general_settings: "Generelle innstillinger"
         form:
           email: "Epost"
           roles: "Roller"
           enterprise_limit: "Bedriftsgrense"
+          confirm_password: "Bekreft Passord"
           password: "Passord"
         email_confirmation:
           confirmation_pending: "Epostbekreftelse venter. Vi har sendt en bekreftelses-epost til %{address}."
