@@ -85,13 +85,11 @@ module Api
     def distributed_properties
       if active
         product_properties = Spree::Property.currently_sold_by(enterprise)
-        producer_property_ids = ProducerProperty.currently_sold_by(enterprise).pluck(:property_id)
+        producer_properties = ProducerProperty.currently_sold_by(enterprise)
       else
         product_properties = Spree::Property.ever_sold_by(enterprise)
-        producer_property_ids = ProducerProperty.ever_sold_by(enterprise).pluck(:property_id)
+        producer_properties = ProducerProperty.ever_sold_by(enterprise)
       end
-
-      producer_properties = Spree::Property.where(id: producer_property_ids)
 
       (product_properties + producer_properties).uniq do |property_object|
         property_object.property.presentation
