@@ -30,9 +30,6 @@ describe Api::CachedEnterpriseSerializer do
     let(:shop) { create(:distributor_enterprise) }
 
     let(:options) { { data: enterprise_injection_data } }
-    let(:enterprise_injection_data) do
-      instance_double(OpenFoodNetwork::EnterpriseInjectionData, active_distributors: [])
-    end
 
     let(:property) { create(:property, presentation: 'One') }
     let(:duplicate_property) { create(:property, presentation: 'One') }
@@ -51,9 +48,26 @@ describe Api::CachedEnterpriseSerializer do
       )
     end
 
-    it 'does not duplicate properties' do
-      properties = cached_enterprise_serializer.distributed_properties
-      expect(properties).to eq([property])
+    context 'when the enterprise is not an active distributor' do
+      let(:enterprise_injection_data) do
+        instance_double(OpenFoodNetwork::EnterpriseInjectionData, active_distributors: [])
+      end
+
+      it 'does not duplicate properties' do
+        properties = cached_enterprise_serializer.distributed_properties
+        expect(properties).to eq([property])
+      end
+    end
+
+    context 'when the enterprise is an active distributor' do
+      let(:enterprise_injection_data) do
+        instance_double(OpenFoodNetwork::EnterpriseInjectionData, active_distributors: [shop])
+      end
+
+      it 'does not duplicate properties' do
+        properties = cached_enterprise_serializer.distributed_properties
+        expect(properties).to eq([property])
+      end
     end
   end
 end
