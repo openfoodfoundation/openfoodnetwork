@@ -33,10 +33,10 @@ describe Api::CachedEnterpriseSerializer do
 
     let(:property) { create(:property, presentation: 'One') }
     let(:duplicate_property) { create(:property, presentation: 'One') }
+    let(:producer) { create(:supplier_enterprise, properties: [duplicate_property]) }
 
     before do
       product = create(:product, properties: [property])
-      producer = create(:supplier_enterprise, properties: [duplicate_property])
       producer.supplied_products << product
 
       create(
@@ -57,6 +57,14 @@ describe Api::CachedEnterpriseSerializer do
         properties = cached_enterprise_serializer.distributed_properties
         expect(properties).to eq([property])
       end
+
+      it 'fetches producer properties' do
+        distributed_producer_properties = cached_enterprise_serializer
+          .distributed_producer_properties
+
+        expect(distributed_producer_properties)
+          .to eq(producer.producer_properties.map(&:property))
+      end
     end
 
     context 'when the enterprise is an active distributor' do
@@ -67,6 +75,14 @@ describe Api::CachedEnterpriseSerializer do
       it 'does not duplicate properties' do
         properties = cached_enterprise_serializer.distributed_properties
         expect(properties).to eq([property])
+      end
+
+      it 'fetches producer properties' do
+        distributed_producer_properties = cached_enterprise_serializer
+          .distributed_producer_properties
+
+        expect(distributed_producer_properties)
+          .to eq(producer.producer_properties.map(&:property))
       end
     end
   end
