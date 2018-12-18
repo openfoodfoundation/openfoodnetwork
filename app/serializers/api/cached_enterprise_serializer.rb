@@ -93,7 +93,9 @@ module Api
 
       producer_properties = Spree::Property.where(id: producer_property_ids)
 
-      OpenFoodNetwork::PropertyMerge.merge product_properties, producer_properties
+      (product_properties + producer_properties).uniq do |property_object|
+        property_object.property.presentation
+      end
     end
 
     def active
