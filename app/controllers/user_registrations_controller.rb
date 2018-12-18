@@ -5,9 +5,13 @@ class UserRegistrationsController < Spree::UserRegistrationsController
 
   before_filter :set_checkout_redirect, only: :create
 
+  include I18nHelper
+  before_filter :set_locale
+
   # POST /resource/sign_up
   def create
     @user = build_resource(params[:spree_user])
+    @user.locale = I18n.locale.to_s
     unless resource.save
       return render_error(@user.errors)
     end
