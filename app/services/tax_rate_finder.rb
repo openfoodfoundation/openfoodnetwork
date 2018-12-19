@@ -15,13 +15,25 @@ class TaxRateFinder
     when Spree::TaxRate
       [originator]
     when EnterpriseFee
-      case source
-      when Spree::LineItem
-        tax_category = originator.inherits_tax_category? ? source.product.tax_category : originator.tax_category
-        tax_category ? tax_category.tax_rates.match(source.order) : []
-      when Spree::Order
-        originator.tax_category ? originator.tax_category.tax_rates.match(source) : []
-      end
+      enterprise_fee_tax_rates(originator, source)
+    end
+  end
+
+  def enterprise_fee_tax_rates(enterprise_fee, source)
+    case source
+    when Spree::LineItem
+      tax_category = line_item_tax_category(enterprise_fee, source)
+      tax_category ? tax_category.tax_rates.match(source.order) : []
+    when Spree::Order
+      enterprise_fee.tax_category ? enterprise_fee.tax_category.tax_rates.match(source) : []
+    end
+  end
+
+  def line_item_tax_category(enterprise_fee, line_item)
+    if enterprise_fee.inherits_tax_category?
+      line_item.product.tax_category
+    else
+      enterprise_fee.tax_category
     end
   end
 
