@@ -3,6 +3,16 @@
 # for the tax included in the packaging fee.
 class TaxRateFinder
   # @return [Array<Spree::TaxRate>]
+  def self.tax_rates_of(adjustment)
+    new.tax_rates(
+      adjustment.originator,
+      adjustment.source,
+      adjustment.amount,
+      adjustment.included_tax
+    )
+  end
+
+  # @return [Array<Spree::TaxRate>]
   def tax_rates(originator, source, amount, included_tax)
     find_associated_tax_rate(originator, source) ||
       find_closest_tax_rates_from_included_tax(amount, included_tax)

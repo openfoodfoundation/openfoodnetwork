@@ -40,11 +40,6 @@ module Spree
       included_tax > 0
     end
 
-    # @return [Array<Spree::TaxRate>]
-    def tax_rates
-      TaxRateFinder.new.tax_rates(originator, source, amount, included_tax)
-    end
-
     def self.without_callbacks
       skip_callback :save, :after, :update_adjustable
       skip_callback :destroy, :after, :update_adjustable
