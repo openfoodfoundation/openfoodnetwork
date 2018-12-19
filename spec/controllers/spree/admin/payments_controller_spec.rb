@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Spree::Admin::PaymentsController, type: :controller do
   let!(:shop) { create(:enterprise) }
   let!(:user) { shop.owner }
-  let!(:order) { create(:order, distributor: shop) }
+  let!(:order) { create(:order, distributor: shop, state: 'complete') }
   let!(:line_item) { create(:line_item, order: order, price: 5.0) }
 
   context "as an enterprise user" do
