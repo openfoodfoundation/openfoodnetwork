@@ -8,7 +8,8 @@ describe CartController, type: :controller do
 
     it "returns stock levels as JSON" do
       allow(controller).to receive(:variant_ids_in) { [123] }
-      allow(controller).to receive(:stock_levels) { 'my_stock_levels' }
+      allow(VariantsStockLevels).to receive(:new).and_return(variant_stock_levels = double())
+      allow(variant_stock_levels).to receive(:call) { 'my_stock_levels' }
       allow(CartService).to receive(:new).and_return(cart_service = double())
       allow(cart_service).to receive(:populate) { true }
       allow(cart_service).to receive(:variants_h) { {} }
@@ -17,47 +18,6 @@ describe CartController, type: :controller do
 
       data = JSON.parse(response.body)
       expect(data['stock_levels']).to eq('my_stock_levels')
-    end
-
-    describe "generating stock levels" do
-      let!(:order) { create(:order) }
-      let!(:li) { create(:line_item, order: order, variant: v, quantity: 2, max_quantity: 3) }
-      let!(:v) { create(:variant, count_on_hand: 4) }
-      let!(:v2) { create(:variant, count_on_hand: 2) }
-
-      before do
-        order.reload
-        allow(controller).to receive(:current_order) { order }
-      end
-
-      it "returns a hash with variant id, quantity, max_quantity and stock on hand" do
-        expect(controller.stock_levels(order, [v.id])).to eq(
-          {v.id => {quantity: 2, max_quantity: 3, on_hand: 4}}
-        )
-      end
-
-      it "includes all line items, even when the variant_id is not specified" do
-        expect(controller.stock_levels(order, [])).to eq(
-          {v.id => {quantity: 2, max_quantity: 3, on_hand: 4}}
-        )
-      end
-
-      it "includes an empty quantity entry for variants that aren't in the order" do
-        expect(controller.stock_levels(order, [v.id, v2.id])).to eq(
-          {v.id  => {quantity: 2, max_quantity: 3, on_hand: 4},
-           v2.id => {quantity: 0, max_quantity: 0, on_hand: 2}}
-        )
-      end
-
-      describe "encoding Infinity" do
-        let!(:v) { create(:variant, on_demand: true, count_on_hand: 0) }
-
-        it "encodes Infinity as a large, finite integer" do
-          expect(controller.stock_levels(order, [v.id])).to eq(
-            {v.id => {quantity: 2, max_quantity: 3, on_hand: 2147483647}}
-          )
-        end
-      end
     end
 
     it "extracts variant ids from the cart service" do
@@ -105,4 +65,3 @@ describe CartController, type: :controller do
     end
   end
 end
-
