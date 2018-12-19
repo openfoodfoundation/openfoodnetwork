@@ -26,11 +26,11 @@ class SearchOrders
     @search = OpenFoodNetwork::Permissions.new(current_user).editable_orders.ransack(params[:q])
 
     return paginated_results if using_pagination?
-    @search.result
+    @search.result(distinct: true)
   end
 
   def paginated_results
-    @search.result
+    @search.result(distinct: true)
       .page(params[:page])
       .per(params[:per_page])
   end

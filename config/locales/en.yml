@@ -1849,6 +1849,11 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   update_and_recalculate_fees: "Update And Recalculate Fees"
   registration:
     steps:
+      images:
+        continue: "Continue"
+        back: "Back"
+        headline: "Thanks!"
+        description: "Let's upload some pretty pictures so your profile looks great! :)"
       type:
         headline: "Last step to add %{enterprise}!"
         question: "Are you a producer?"
@@ -1988,9 +1993,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   registration_type_producer_help: "Producers make yummy things to eat and/or drink. You're a producer if you grow it, raise it, brew it, bake it, ferment it, milk it or mould it."
   registration_type_no_producer_help: "If you’re not a producer, you’re probably someone who sells and distributes food. You might be a hub, coop, buying group, retailer, wholesaler or other."
   # END
-
-  registration_images_headline: "Thanks!"
-  registration_images_description: "Let's upload some pretty pictures so your profile looks great! :)"
 
 
   # TODO: Remove these once the enterprise.registration.modal keys are translated
@@ -2712,6 +2714,12 @@ See the %{link} to find out more about %{sitename}'s features and to start using
             other: "You have %{count} active order cycles."
           manage_order_cycles: "MANAGE ORDER CYCLES"
       payment_methods:
+        new:
+          new_payment_method: "New Payment Method"
+          back_to_payment_methods_list: "Back To Payment Methods List"
+        edit:
+          editing_payment_method: "Editing Payment Method"
+          back_to_payment_methods_list: "Back To Payment Methods List"
         stripe_connect:
           enterprise_select_placeholder: Choose...
           loading_account_information_msg: Loading account information from stripe, please wait...
