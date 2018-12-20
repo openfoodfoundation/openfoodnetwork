@@ -21,7 +21,7 @@ describe CartService do
 
     describe "populate" do
       it "adds a variant" do
-        cart_service.populate({variants: {v.id.to_s => {quantity: '1', max_quantity: '2'}}}, true)
+        cart_service.populate({ variants: { v.id.to_s => { quantity: '1', max_quantity: '2' } } }, true)
         li = order.find_line_item_by_variant(v)
         expect(li).to be
         expect(li.quantity).to eq(1)
@@ -32,7 +32,7 @@ describe CartService do
       it "updates a variant's quantity, max quantity and final_weight_volume" do
         order.add_variant v, 1, 2
 
-        cart_service.populate({variants: {v.id.to_s => {quantity: '2', max_quantity: '3'}}}, true)
+        cart_service.populate({ variants: { v.id.to_s => { quantity: '2', max_quantity: '3' } } }, true)
         li = order.find_line_item_by_variant(v)
         expect(li).to be
         expect(li.quantity).to eq(2)
@@ -43,7 +43,7 @@ describe CartService do
       it "removes a variant" do
         order.add_variant v, 1, 2
 
-        cart_service.populate({variants: {}}, true)
+        cart_service.populate({ variants: {} }, true)
         order.line_items(:reload)
         li = order.find_line_item_by_variant(v)
         expect(li).not_to be
@@ -73,7 +73,7 @@ describe CartService do
 
     it "attempts cart add with max_quantity" do
       allow(cart_service).to receive(:distribution_can_supply_products_in_cart).and_return true
-      params = {variants: {"1" => {quantity: 1, max_quantity: 2}}}
+      params = { variants: { "1" => { quantity: 1, max_quantity: 2 } } }
       allow(order).to receive(:with_lock).and_yield
       allow(cart_service).to receive(:varies_from_cart) { true }
       allow(cart_service).to receive(:variants_removed) { [] }
@@ -87,45 +87,45 @@ describe CartService do
 
     it "returns true when item is not in cart and a quantity is specified" do
       expect(cart_service).to receive(:line_item_for_variant_id).with(variant.id).and_return(nil)
-      expect(cart_service.send(:varies_from_cart, {variant_id: variant.id, quantity: '2'})).to be true
+      expect(cart_service.send(:varies_from_cart, variant_id: variant.id, quantity: '2')).to be true
     end
 
     it "returns true when item is not in cart and a max_quantity is specified" do
       expect(cart_service).to receive(:line_item_for_variant_id).with(variant.id).and_return(nil)
-      expect(cart_service.send(:varies_from_cart, {variant_id: variant.id, quantity: '0', max_quantity: '2'})).to be true
+      expect(cart_service.send(:varies_from_cart, variant_id: variant.id, quantity: '0', max_quantity: '2')).to be true
     end
 
     it "returns false when item is not in cart and no quantity or max_quantity are specified" do
       expect(cart_service).to receive(:line_item_for_variant_id).with(variant.id).and_return(nil)
-      expect(cart_service.send(:varies_from_cart, {variant_id: variant.id, quantity: '0'})).to be false
+      expect(cart_service.send(:varies_from_cart, variant_id: variant.id, quantity: '0')).to be false
     end
 
     it "returns true when quantity varies" do
       li = double(:line_item, quantity: 1, max_quantity: nil)
       allow(cart_service).to receive(:line_item_for_variant_id) { li }
 
-      expect(cart_service.send(:varies_from_cart, {variant_id: variant.id, quantity: '2'})).to be true
+      expect(cart_service.send(:varies_from_cart, variant_id: variant.id, quantity: '2')).to be true
     end
 
     it "returns true when max_quantity varies" do
       li = double(:line_item, quantity: 1, max_quantity: nil)
       allow(cart_service).to receive(:line_item_for_variant_id) { li }
 
-      expect(cart_service.send(:varies_from_cart, {variant_id: variant.id, quantity: '1', max_quantity: '3'})).to be true
+      expect(cart_service.send(:varies_from_cart, variant_id: variant.id, quantity: '1', max_quantity: '3')).to be true
     end
 
     it "returns false when max_quantity varies only in nil vs 0" do
       li = double(:line_item, quantity: 1, max_quantity: nil)
       allow(cart_service).to receive(:line_item_for_variant_id) { li }
 
-      expect(cart_service.send(:varies_from_cart, {variant_id: variant.id, quantity: '1'})).to be false
+      expect(cart_service.send(:varies_from_cart, variant_id: variant.id, quantity: '1')).to be false
     end
 
     it "returns false when both are specified and neither varies" do
       li = double(:line_item, quantity: 1, max_quantity: 2)
       allow(cart_service).to receive(:line_item_for_variant_id) { li }
 
-      expect(cart_service.send(:varies_from_cart, {variant_id: variant.id, quantity: '1', max_quantity: '2'})).to be false
+      expect(cart_service.send(:varies_from_cart, variant_id: variant.id, quantity: '1', max_quantity: '2')).to be false
     end
   end
 
@@ -137,12 +137,12 @@ describe CartService do
 
     it "returns nothing when all items in the cart are provided" do
       allow(cart_service).to receive(:variant_ids_in_cart) { [123] }
-      expect(cart_service.send(:variants_removed, [{variant_id: '123'}])).to eq([])
+      expect(cart_service.send(:variants_removed, [{ variant_id: '123' }])).to eq([])
     end
 
     it "returns nothing when items are added to cart" do
       allow(cart_service).to receive(:variant_ids_in_cart) { [123] }
-      expect(cart_service.send(:variants_removed, [{variant_id: '123'}, {variant_id: '456'}])).to eq([])
+      expect(cart_service.send(:variants_removed, [{ variant_id: '123' }, { variant_id: '456' }])).to eq([])
     end
 
     it "does not return duplicates" do
@@ -288,7 +288,6 @@ describe CartService do
     end
   end
 
-
   describe "support" do
     describe "checking if order cycle is required for a variant" do
       it "requires an order cycle when the product has no product distributions" do
@@ -307,8 +306,7 @@ describe CartService do
     it "provides the distributor and order cycle for the order" do
       expect(order).to receive(:distributor).and_return(distributor)
       expect(order).to receive(:order_cycle).and_return(order_cycle)
-      expect(cart_service.send(:distributor_and_order_cycle)).to eq([distributor,
-                                                       order_cycle])
+      expect(cart_service.send(:distributor_and_order_cycle)).to eq([distributor, order_cycle])
     end
   end
 end

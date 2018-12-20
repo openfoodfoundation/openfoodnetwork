@@ -23,9 +23,7 @@ Layout/AlignArray:
     - 'lib/open_food_network/order_and_distributor_report.rb'
     - 'lib/open_food_network/orders_and_fulfillments_report.rb'
     - 'lib/open_food_network/packing_report.rb'
-    - 'spec/controllers/cart_controller_spec.rb'
     - 'spec/lib/open_food_network/order_grouper_spec.rb'
-    - 'spec/services/cart_service_spec.rb'
 
 # Offense count: 122
 # Cop supports --auto-correct.
@@ -246,7 +244,6 @@ Layout/EmptyLines:
     - 'spec/serializers/admin/for_order_cycle/enterprise_serializer_spec.rb'
     - 'spec/serializers/admin/for_order_cycle/supplied_product_serializer_spec.rb'
     - 'spec/serializers/credit_card_serializer_spec.rb'
-    - 'spec/services/cart_service_spec.rb'
     - 'spec/support/delayed_job_helper.rb'
     - 'spec/support/matchers/table_matchers.rb'
 
@@ -646,7 +643,6 @@ Layout/SpaceAroundOperators:
     - 'lib/open_food_network/xero_invoices_report.rb'
     - 'lib/spree/product_filters.rb'
     - 'spec/controllers/admin/enterprises_controller_spec.rb'
-    - 'spec/controllers/cart_controller_spec.rb'
     - 'spec/features/admin/bulk_order_management_spec.rb'
     - 'spec/features/admin/bulk_product_update_spec.rb'
     - 'spec/features/consumer/shopping/checkout_spec.rb'
@@ -811,7 +807,6 @@ Layout/SpaceInsideHashLiteralBraces:
     - 'spec/controllers/admin/order_cycles_controller_spec.rb'
     - 'spec/controllers/admin/subscriptions_controller_spec.rb'
     - 'spec/controllers/api/statuses_controller_spec.rb'
-    - 'spec/controllers/cart_controller_spec.rb'
     - 'spec/controllers/checkout_controller_spec.rb'
     - 'spec/controllers/enterprises_controller_spec.rb'
     - 'spec/controllers/shop_controller_spec.rb'
@@ -862,7 +857,6 @@ Layout/SpaceInsideHashLiteralBraces:
     - 'spec/requests/checkout/failed_checkout_spec.rb'
     - 'spec/requests/checkout/stripe_connect_spec.rb'
     - 'spec/serializers/enterprise_serializer_spec.rb'
-    - 'spec/services/cart_service_spec.rb'
     - 'spec/services/order_syncer_spec.rb'
     - 'spec/services/subscription_form_spec.rb'
     - 'spec/spec_helper.rb'
@@ -899,14 +893,6 @@ Layout/Tab:
     - 'app/models/spree/line_item_decorator.rb'
     - 'spec/lib/spree/product_filters_spec.rb'
     - 'spec/models/spree/line_item_spec.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: final_newline, final_blank_line
-Layout/TrailingBlankLines:
-  Exclude:
-    - 'spec/controllers/cart_controller_spec.rb'
 
 # Offense count: 57
 # Cop supports --auto-correct.
@@ -1390,7 +1376,6 @@ Rails/HttpStatus:
     - 'app/controllers/api/enterprise_fees_controller.rb'
     - 'app/controllers/api/enterprises_controller.rb'
     - 'app/controllers/application_controller.rb'
-    - 'app/controllers/cart_controller.rb'
     - 'app/controllers/checkout_controller.rb'
     - 'app/controllers/enterprises_controller.rb'
     - 'app/controllers/line_items_controller.rb'
@@ -1564,7 +1549,6 @@ Style/BracesAroundHashParameters:
     - 'spec/controllers/admin/manager_invitations_controller_spec.rb'
     - 'spec/controllers/admin/order_cycles_controller_spec.rb'
     - 'spec/controllers/api/order_cycles_controller_spec.rb'
-    - 'spec/controllers/cart_controller_spec.rb'
     - 'spec/controllers/enterprises_controller_spec.rb'
     - 'spec/controllers/line_items_controller_spec.rb'
     - 'spec/controllers/spree/admin/adjustments_controller_spec.rb'
@@ -1597,7 +1581,6 @@ Style/BracesAroundHashParameters:
     - 'spec/models/spree/product_spec.rb'
     - 'spec/models/spree/taxon_spec.rb'
     - 'spec/serializers/admin/customer_serializer_spec.rb'
-    - 'spec/services/cart_service_spec.rb'
     - 'spec/spec_helper.rb'
     - 'spec/support/cancan_helper.rb'
     - 'spec/support/request/authentication_workflow.rb'
@@ -1919,7 +1902,6 @@ Style/HashSyntax:
     - 'spec/controllers/admin/stripe_connect_settings_controller_spec.rb'
     - 'spec/controllers/api/order_cycles_controller_spec.rb'
     - 'spec/controllers/base_controller_spec.rb'
-    - 'spec/controllers/cart_controller_spec.rb'
     - 'spec/controllers/spree/admin/payment_methods_controller_spec.rb'
     - 'spec/controllers/spree/admin/payments_controller_spec.rb'
     - 'spec/controllers/spree/api/products_controller_spec.rb'
@@ -2007,7 +1989,6 @@ Style/MethodCallWithoutArgsParentheses:
   Exclude:
     - 'app/controllers/spree/admin/payment_methods_controller_decorator.rb'
     - 'app/views/json/_groups.rabl'
-    - 'spec/controllers/cart_controller_spec.rb'
     - 'spec/features/consumer/registration_spec.rb'
     - 'spec/models/spree/payment_method_spec.rb'
     - 'spec/support/request/ui_component_helper.rb'

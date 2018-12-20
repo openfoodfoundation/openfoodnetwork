@@ -20,11 +20,11 @@ class CartController < BaseController
 
         variant_ids = variant_ids_in(cart_service.variants_h)
 
-        render json: { error: false, stock_levels: VariantsStockLevels.new().call(current_order, variant_ids) },
-               status: 200
-
+        render json: { error: false,
+                       stock_levels: VariantsStockLevels.new.call(current_order, variant_ids) },
+               status: :ok
       else
-        render json: { error: true }, status: 412
+        render json: { error: true }, status: :precondition_failed
       end
     end
     populate_variant_attributes
