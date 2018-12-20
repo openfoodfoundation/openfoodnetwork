@@ -465,50 +465,106 @@ describe ProductImport::ProductImporter do
   end
 
   describe "importing items into inventory" do
-    before do
-      csv_data = CSV.generate do |csv|
-        csv << ["name", "distributor", "producer", "on_hand", "price", "units", "unit_type"]
-        csv << ["Beans", "Another Enterprise", "User Enterprise", "5", "3.20", "500", "g"]
-        csv << ["Sprouts", "Another Enterprise", "User Enterprise", "6", "6.50", "500", "g"]
-        csv << ["Cabbage", "Another Enterprise", "User Enterprise", "2001", "1.50", "500", "g"]
+    describe "creating and updating inventory" do
+      before do
+        csv_data = CSV.generate do |csv|
+          csv << ["name", "distributor", "producer", "on_hand", "price", "units", "unit_type"]
+          csv << ["Beans", "Another Enterprise", "User Enterprise", "5", "3.20", "500", "g"]
+          csv << ["Sprouts", "Another Enterprise", "User Enterprise", "6", "6.50", "500", "g"]
+          csv << ["Cabbage", "Another Enterprise", "User Enterprise", "2001", "1.50", "500", "g"]
+        end
+        File.write('/tmp/test-m.csv', csv_data)
+        file = File.new('/tmp/test-m.csv')
+        settings = {'import_into' => 'inventories'}
+        @importer = ProductImport::ProductImporter.new(file, admin, start: 1, end: 100, settings: settings)
       end
-      File.write('/tmp/test-m.csv', csv_data)
-      file = File.new('/tmp/test-m.csv')
-      settings = {'import_into' => 'inventories'}
-      @importer = ProductImport::ProductImporter.new(file, admin, start: 1, end: 100, settings: settings)
+      after { File.delete('/tmp/test-m.csv') }
+
+      it "validates entries" do
+        @importer.validate_entries
+        entries = JSON.parse(@importer.entries_json)
+
+        expect(filter('valid', entries)).to eq 3
+        expect(filter('invalid', entries)).to eq 0
+        expect(filter('create_inventory', entries)).to eq 2
+        expect(filter('update_inventory', entries)).to eq 1
+      end
+
+      it "saves and updates inventory" do
+        @importer.save_entries
+
+        expect(@importer.inventory_created_count).to eq 2
+        expect(@importer.inventory_updated_count).to eq 1
+        expect(@importer.updated_ids).to be_a(Array)
+        expect(@importer.updated_ids.count).to eq 3
+
+        beans_override = VariantOverride.where(variant_id: product2.variants.first.id, hub_id: enterprise2.id).first
+        sprouts_override = VariantOverride.where(variant_id: product3.variants.first.id, hub_id: enterprise2.id).first
+        cabbage_override = VariantOverride.where(variant_id: product4.variants.first.id, hub_id: enterprise2.id).first
+
+        expect(Float(beans_override.price)).to eq 3.20
+        expect(beans_override.count_on_hand).to eq 5
+
+        expect(Float(sprouts_override.price)).to eq 6.50
+        expect(sprouts_override.count_on_hand).to eq 6
+
+        expect(Float(cabbage_override.price)).to eq 1.50
+        expect(cabbage_override.count_on_hand).to eq 2001
+      end
     end
-    after { File.delete('/tmp/test-m.csv') }
 
-    it "validates entries" do
-      @importer.validate_entries
-      entries = JSON.parse(@importer.entries_json)
+    describe "updating existing inventory referenced by display_name" do
+      before do
+        csv_data = CSV.generate do |csv|
+          csv << ["name", "display_name", "distributor", "producer", "on_hand", "price", "units"]
+          csv << ["Oats", "Porridge Oats", "Another Enterprise", "User Enterprise", "900", "", "500"]
+        end
+        File.write('/tmp/test-m.csv', csv_data)
+        file = File.new('/tmp/test-m.csv')
+        settings = {'import_into' => 'inventories'}
+        @importer = ProductImport::ProductImporter.new(file, admin, start: 1, end: 100, settings: settings)
+      end
+      after { File.delete('/tmp/test-m.csv') }
 
-      expect(filter('valid', entries)).to eq 3
-      expect(filter('invalid', entries)).to eq 0
-      expect(filter('create_inventory', entries)).to eq 2
-      expect(filter('update_inventory', entries)).to eq 1
+      it "updates inventory item correctly" do
+        @importer.save_entries
+
+        expect(@importer.inventory_created_count).to eq 1
+
+        override = VariantOverride.where(variant_id: variant2.id, hub_id: enterprise2.id).first
+        visible = InventoryItem.where(variant_id: variant2.id, enterprise_id: enterprise2.id).first.visible
+
+        expect(override.count_on_hand).to eq 900
+        expect(visible).to be_truthy
+      end
     end
 
-    it "saves and updates inventory" do
-      @importer.save_entries
+    describe "updating existing item that was set to hidden in inventory" do
+      before do
+        InventoryItem.create(variant_id: product4.variants.first.id, enterprise_id: enterprise2.id, visible: false)
 
-      expect(@importer.inventory_created_count).to eq 2
-      expect(@importer.inventory_updated_count).to eq 1
-      expect(@importer.updated_ids).to be_a(Array)
-      expect(@importer.updated_ids.count).to eq 3
+        csv_data = CSV.generate do |csv|
+          csv << ["name", "distributor", "producer", "on_hand", "price", "units"]
+          csv << ["Cabbage", "Another Enterprise", "User Enterprise", "900", "", "500"]
+        end
+        File.write('/tmp/test-m.csv', csv_data)
+        file = File.new('/tmp/test-m.csv')
+        settings = {'import_into' => 'inventories'}
+        @importer = ProductImport::ProductImporter.new(file, admin, start: 1, end: 100, settings: settings)
+      end
+      after { File.delete('/tmp/test-m.csv') }
 
-      beans_override = VariantOverride.where(variant_id: product2.variants.first.id, hub_id: enterprise2.id).first
-      sprouts_override = VariantOverride.where(variant_id: product3.variants.first.id, hub_id: enterprise2.id).first
-      cabbage_override = VariantOverride.where(variant_id: product4.variants.first.id, hub_id: enterprise2.id).first
+      it "sets the item to visible in inventory when the item is updated" do
+        @importer.save_entries
 
-      expect(Float(beans_override.price)).to eq 3.20
-      expect(beans_override.count_on_hand).to eq 5
+        expect(@importer.inventory_updated_count).to eq 1
 
-      expect(Float(sprouts_override.price)).to eq 6.50
-      expect(sprouts_override.count_on_hand).to eq 6
+        override = VariantOverride.where(variant_id: product4.variants.first.id, hub_id: enterprise2.id).first
+        visible = InventoryItem.where(variant_id: product4.variants.first.id, enterprise_id: enterprise2.id).first.visible
 
-      expect(Float(cabbage_override.price)).to eq 1.50
-      expect(cabbage_override.count_on_hand).to eq 2001
+        expect(override.count_on_hand).to eq 900
+        expect(visible).to be_truthy
+      end
     end
   end
 
