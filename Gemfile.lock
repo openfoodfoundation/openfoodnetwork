@@ -186,7 +186,7 @@ GEM
       railties (>= 3.1)
       sprockets (~> 2.0)
       tilt
-    angularjs-file-upload-rails (1.1.6)
+    angularjs-file-upload-rails (2.4.1)
     angularjs-rails (1.5.5)
     arel (3.0.3)
     ast (2.4.0)
@@ -758,7 +758,7 @@ DEPENDENCIES
   acts-as-taggable-on (~> 3.4)
   andand
   angular-rails-templates (~> 0.3.0)
-  angularjs-file-upload-rails (~> 1.1.6)
+  angularjs-file-upload-rails (~> 2.4.1)
   angularjs-rails (= 1.5.5)
   atomic
   awesome_print
