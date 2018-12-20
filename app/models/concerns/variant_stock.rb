@@ -130,6 +130,23 @@ module VariantStock
     can_supply?(quantity)
   end
 
+  # Moving Spree::StockLocation.fill_status to the variant enables us to override this behaviour for variant overrides
+  # We can have this responsibility here in the variant because there is only one stock item per variant
+  #
+  # Here we depend only on variant.total_on_hand and variant.on_demand.
+  #   This way, variant_overrides only need to override variant.total_on_hand and variant.on_demand.
+  def fill_status(quantity)
+    if count_on_hand >= quantity
+      on_hand = quantity
+      backordered = 0
+    else
+      on_hand = [0, total_on_hand].max
+      backordered = on_demand ? (quantity - on_hand) : 0
+    end
+
+    [on_hand, backordered]
+  end
+
   # We can have this responsibility here in the variant because there is only one stock item per variant
   #
   # This enables us to override this behaviour for variant overrides
