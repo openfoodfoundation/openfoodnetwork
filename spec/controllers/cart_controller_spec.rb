@@ -28,6 +28,46 @@ describe CartController, type: :controller do
     end
   end
 
+  context "handles variant overrides correctly" do
+    let(:product) { create(:simple_product, supplier: producer) }
+    let(:producer) { create(:supplier_enterprise) }
+    let!(:variant_in_the_order) { create(:variant, count_on_hand: 4) }
+    let!(:variant_not_in_the_order) { create(:variant, count_on_hand: 2) }
+
+    let(:hub) { create(:distributor_enterprise, with_payment_and_shipping: true) }
+    let!(:variant_override_in_the_order) { create(:variant_override, hub: hub, variant: variant_in_the_order, price: 55.55, count_on_hand: 20, default_stock: nil, resettable: false) }
+    let!(:variant_override_not_in_the_order) { create(:variant_override, hub: hub, variant: variant_not_in_the_order, count_on_hand: 7, default_stock: nil, resettable: false) }
+
+    let(:order_cycle) { create(:simple_order_cycle, suppliers: [producer], coordinator: hub, distributors: [hub]) }
+    let!(:order) { subject.current_order(true) }
+    let!(:line_item) { create(:line_item, order: order, variant: variant_in_the_order, quantity: 2, max_quantity: 3) }
+
+    before do
+      order_cycle.exchanges.outgoing.first.variants = [variant_in_the_order, variant_not_in_the_order]
+      order.order_cycle = order_cycle
+      order.distributor = hub
+      order.save
+    end
+
+    it "returns the variant override stock levels of the variant in the order" do
+      spree_post :populate, variants: { variant_in_the_order.id => 1 }
+
+      data = JSON.parse(response.body)
+      expect(data['stock_levels'][variant_in_the_order.id.to_s]["on_hand"]).to eq 20
+    end
+
+    it "returns the variant override stock levels of the variant requested but not in the order" do
+      # This test passes because the variant requested gets added to the order
+      # If the variant was not added to the order, VariantsStockLevels alternative calculation would fail
+      # See #3222 for more details
+      # This indicates that the VariantsStockLevels alternative calculation is never reached
+      spree_post :populate, variants: { variant_not_in_the_order.id => 1 }
+
+      data = JSON.parse(response.body)
+      expect(data['stock_levels'][variant_not_in_the_order.id.to_s]["on_hand"]).to eq 7
+    end
+  end
+
   context "adding a group buy product to the cart" do
     it "sets a variant attribute for the max quantity" do
       distributor_product = create(:distributor_enterprise)

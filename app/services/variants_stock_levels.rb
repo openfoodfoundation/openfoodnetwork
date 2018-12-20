@@ -5,6 +5,9 @@ class VariantsStockLevels
   def call(order, requested_variant_ids)
     variant_stock_levels = variant_stock_levels(order.line_items)
 
+    # Potentially, the following lines are dead code, they are never reached
+    # Additionally, the variants are not scoped here and so the stock levels reported would be incorrect
+    # See cart_controller_spec for more details and #3222
     li_variant_ids = variant_stock_levels.keys
     (requested_variant_ids - li_variant_ids).each do |variant_id|
       variant_on_hand = Spree::Variant.find(variant_id).on_hand
