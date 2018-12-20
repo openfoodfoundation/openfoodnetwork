@@ -24,18 +24,26 @@ Spree::Stock::AvailabilityValidator.class_eval do
 
   def line_item_shipment(line_item)
     return line_item.target_shipment if line_item.target_shipment
-    return line_item.order.shipments.first if line_item.order.present? && line_item.order.shipments.any?
+    return line_item.order.shipments.first if line_item.order.andand.shipments.any?
   end
 
-  # This is the spree v2.0.4 implementation of validate
-  # But using the calculated quantity instead of the line_item.quantity.
+  # Overrides Spree v2.0.4 validate method version to:
+  #   - scope variants to hub and thus acivate variant overrides
+  #   - use calculated quantity instead of the line_item.quantity
+  #   - rely on Variant.can_supply? instead of Stock::Quantified.can_supply?
+  #       so that it works correctly for variant overrides
   def validate_quantity(line_item, quantity)
-    quantifier = Spree::Stock::Quantifier.new(line_item.variant_id)
-    return if quantifier.can_supply? quantity
+    line_item.scoper.scope(line_item.variant)
 
+    add_out_of_stock_error(line_item) unless line_item.variant.can_supply? quantity
+  end
+
+  def add_out_of_stock_error(line_item)
     variant = line_item.variant
-    display_name = %Q{#{variant.name}}
-    display_name += %Q{ (#{variant.options_text})} unless variant.options_text.blank?
-    line_item.errors[:quantity] << Spree.t(:out_of_stock, :scope => :order_populator, :item => display_name.inspect)
+    display_name = %{#{variant.name}}
+    display_name += %{(#{variant.options_text})} if variant.options_text.present?
+    line_item.errors[:quantity] << Spree.t(:out_of_stock,
+                                           scope: :order_populator,
+                                           item: display_name.inspect)
   end
 end

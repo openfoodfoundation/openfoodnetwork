@@ -114,6 +114,17 @@ module VariantStock
     end
   end
 
+  # Moving Spree::Stock::Quantifier.can_supply? to the variant enables us to override this behaviour for variant overrides
+  # We can have this responsibility here in the variant because there is only one stock item per variant
+  #
+  # Here we depend only on variant.total_on_hand and variant.on_demand.
+  #   This way, variant_overrides only need to override variant.total_on_hand and variant.on_demand.
+  def can_supply?(quantity)
+    return true unless Spree::Config[:track_inventory_levels]
+
+    on_demand || total_on_hand >= quantity
+  end
+
   # We can have this responsibility here in the variant because there is only one stock item per variant
   #
   # This enables us to override this behaviour for variant overrides

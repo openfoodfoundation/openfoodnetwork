@@ -125,6 +125,10 @@ Spree::LineItem.class_eval do
     end
   end
 
+  def scoper
+    @scoper ||= OpenFoodNetwork::ScopeVariantToHub.new(order.distributor)
+  end
+
   private
 
   def update_inventory_with_scoping
@@ -132,10 +136,6 @@ Spree::LineItem.class_eval do
     update_inventory_without_scoping
   end
   alias_method_chain :update_inventory, :scoping
-
-  def scoper
-    @scoper ||= OpenFoodNetwork::ScopeVariantToHub.new(order.distributor)
-  end
 
   def calculate_final_weight_volume
     if final_weight_volume.present? && quantity_was > 0
