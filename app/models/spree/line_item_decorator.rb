@@ -111,18 +111,15 @@ Spree::LineItem.class_eval do
     final_weight_volume / quantity
   end
 
-  # MONKEYPATCH of Spree method
-  # Enables scoping of variant to hub/shop, so we check stock against relevant overrides if they exist
-  # Also skips stock check if requested quantity is zero
+  # Overrides Spree version to:
+  #   - skip stock check if skip_stock_check flag is active
+  #   - skip stock check if requested quantity is zero or negative
+  #   - scope variants to hub and thus acivate variant overrides
   def sufficient_stock?
-    return true if quantity == 0 # This line added
-    scoper.scope(variant) # This line added
-    return true if variant.on_demand
-    if new_record? || !order.completed?
-      variant.on_hand >= quantity
-    else
-      variant.on_hand >= (quantity - self.changed_attributes['quantity'].to_i)
-    end
+    return true if skip_stock_check
+    return true if quantity <= 0
+    scoper.scope(variant)
+    variant.can_supply?(quantity)
   end
 
   def scoper
