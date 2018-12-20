@@ -87,3 +87,115 @@ describe "VariantOverridesCtrl", ->
       $httpBackend.flush()
       expect(VariantOverrides.updateData).toHaveBeenCalledWith variant_overrides_mock
       expect(StatusMessage.display).toHaveBeenCalledWith 'success', 'Stocks reset to defaults.'
+
+  describe "suggesting count_on_hand when on_demand is changed", ->
+    variant = null
+
+    beforeEach ->
+      scope.variantOverrides = {123: {}}
+
+    describe "when variant is on demand", ->
+      beforeEach ->
+        # Ideally, count_on_hand is blank when the variant is on demand. However, this rule is not
+        # enforced.
+        variant = {id: 2, on_demand: true, count_on_hand: 20, on_hand: "On demand"}
+
+      it "clears count_on_hand when variant override uses producer stock settings", ->
+        scope.variantOverrides[123][2] = {on_demand: null, count_on_hand: 1}
+        scope.updateCountOnHand(variant, 123)
+
+        expect(scope.variantOverrides[123][2].count_on_hand).toBeNull()
+        dirtyVariantOverride = DirtyVariantOverrides.dirtyVariantOverrides[123][2]
+        expect(dirtyVariantOverride.count_on_hand).toBeNull()
+
+      it "clears count_on_hand when variant override forces on demand", ->
+        scope.variantOverrides[123][2] = {on_demand: true, count_on_hand: 1}
+        scope.updateCountOnHand(variant, 123)
+
+        expect(scope.variantOverrides[123][2].count_on_hand).toBeNull()
+        dirtyVariantOverride = DirtyVariantOverrides.dirtyVariantOverrides[123][2]
+        expect(dirtyVariantOverride.count_on_hand).toBeNull()
+
+      it "clears count_on_hand when variant override forces limited stock", ->
+        scope.variantOverrides[123][2] = {on_demand: false, count_on_hand: 1}
+        scope.updateCountOnHand(variant, 123)
+
+        expect(scope.variantOverrides[123][2].count_on_hand).toBeNull()
+        dirtyVariantOverride = DirtyVariantOverrides.dirtyVariantOverrides[123][2]
+        expect(dirtyVariantOverride.count_on_hand).toBeNull()
+
+    describe "when variant has limited stock", ->
+      beforeEach ->
+        variant = {id: 2, on_demand: false, count_on_hand: 20, on_hand: 20}
+
+      it "clears count_on_hand when variant override uses producer stock settings", ->
+        scope.variantOverrides[123][2] = {on_demand: null, count_on_hand: 1}
+        scope.updateCountOnHand(variant, 123)
+
+        expect(scope.variantOverrides[123][2].count_on_hand).toBeNull()
+        dirtyVariantOverride = DirtyVariantOverrides.dirtyVariantOverrides[123][2]
+        expect(dirtyVariantOverride.count_on_hand).toBeNull()
+
+      it "clears count_on_hand when variant override forces on demand", ->
+        scope.variantOverrides[123][2] = {on_demand: true, count_on_hand: 1}
+        scope.updateCountOnHand(variant, 123)
+
+        expect(scope.variantOverrides[123][2].count_on_hand).toBeNull()
+        dirtyVariantOverride = DirtyVariantOverrides.dirtyVariantOverrides[123][2]
+        expect(dirtyVariantOverride.count_on_hand).toBeNull()
+
+      it "sets to producer count_on_hand when variant override forces limited stock", ->
+        scope.variantOverrides[123][2] = {on_demand: false, count_on_hand: 1}
+        scope.updateCountOnHand(variant, 123)
+
+        expect(scope.variantOverrides[123][2].count_on_hand).toBe(20)
+        dirtyVariantOverride = DirtyVariantOverrides.dirtyVariantOverrides[123][2]
+        expect(dirtyVariantOverride.count_on_hand).toBe(20)
+
+  describe "count on hand placeholder", ->
+    beforeEach ->
+      scope.variantOverrides = {123: {}}
+
+    describe "when variant is on demand", ->
+      variant = null
+
+      beforeEach ->
+        # Ideally, count_on_hand is blank when the variant is on demand. However, this rule is not
+        # enforced.
+        variant = {id: 2, on_demand: true, count_on_hand: 20, on_hand: t("on_demand")}
+
+      it "is 'On demand' when variant override uses producer stock settings", ->
+        scope.variantOverrides[123][2] = {on_demand: null, count_on_hand: 1}
+        placeholder = scope.countOnHandPlaceholder(variant, 123)
+        expect(placeholder).toBe(t("on_demand"))
+
+      it "is 'On demand' when variant override is on demand", ->
+        scope.variantOverrides[123][2] = {on_demand: true, count_on_hand: 1}
+        placeholder = scope.countOnHandPlaceholder(variant, 123)
+        expect(placeholder).toBe(t("js.variants.on_demand.yes"))
+
+      it "is blank when variant override is limited stock", ->
+        scope.variantOverrides[123][2] = {on_demand: false, count_on_hand: 1}
+        placeholder = scope.countOnHandPlaceholder(variant, 123)
+        expect(placeholder).toBe('')
+
+    describe "when variant is limited stock", ->
+      variant = null
+
+      beforeEach ->
+        variant = {id: 2, on_demand: false, count_on_hand: 20, on_hand: 20}
+
+      it "is variant count on hand when variant override uses producer stock settings", ->
+        scope.variantOverrides[123][2] = {on_demand: null, count_on_hand: 1}
+        placeholder = scope.countOnHandPlaceholder(variant, 123)
+        expect(placeholder).toBe(20)
+
+      it "is 'On demand' when variant override is on demand", ->
+        scope.variantOverrides[123][2] = {on_demand: true, count_on_hand: 1}
+        placeholder = scope.countOnHandPlaceholder(variant, 123)
+        expect(placeholder).toBe(t("js.variants.on_demand.yes"))
+
+      it "is blank when variant override is limited stock", ->
+        scope.variantOverrides[123][2] = {on_demand: false, count_on_hand: 1}
+        placeholder = scope.countOnHandPlaceholder(variant, 123)
+        expect(placeholder).toBe('')

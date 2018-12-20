@@ -47,6 +47,11 @@ en:
           attributes:
             orders_close_at:
               after_orders_open_at: must be after open date
+        variant_override:
+          count_on_hand:
+            using_producer_stock_settings_but_count_on_hand_set: "must be blank because using producer stock settings"
+            on_demand_but_count_on_hand_set: "must be blank if on demand"
+            limited_stock_but_no_count_on_hand: "must be specified because forcing limited stock"
   activemodel:
     errors:
       models:
@@ -2592,7 +2597,14 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         in your cart have reduced. Here's what's changed:
       now_out_of_stock: is now out of stock.
       only_n_remainging: "now only has %{num} remaining."
+    variants:
+      on_demand:
+        "yes": "On demand"
     variant_overrides:
+      on_demand:
+        use_producer_settings: "Use producer stock settings"
+        "yes": "Yes"
+        "no": "No"
       inventory_products: "Inventory Products"
       hidden_products: "Hidden Products"
       new_products: "New Products"

@@ -1,0 +1,10 @@
+@import '../../darkswarm/branding';
+
+.container {
+  input {
+    &[readonly] {
+      background-color: $disabled-light;
+      cursor: default;
+    }
+  }
+}

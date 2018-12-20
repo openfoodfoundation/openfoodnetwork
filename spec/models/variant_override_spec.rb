@@ -35,6 +35,81 @@ describe VariantOverride do
     end
   end
 
+  describe "validation" do
+    describe "ensuring that on_demand and count_on_hand are compatible" do
+      let(:variant_override) { build(:variant_override, hub: hub, variant: variant,
+                                     on_demand: on_demand, count_on_hand: count_on_hand) }
+
+      context "when using producer stock settings" do
+        let(:on_demand) { nil }
+
+        context "when count_on_hand is blank" do
+          let(:count_on_hand) { nil }
+
+          it "is valid" do
+            expect(variant_override.save).to be_truthy
+          end
+        end
+
+        context "when count_on_hand is set" do
+          let(:count_on_hand) { 1 }
+
+          it "is invalid" do
+            expect(variant_override.save).to be_falsey
+            error_message = I18n.t("using_producer_stock_settings_but_count_on_hand_set",
+                                   scope: [i18n_scope_for_error, "count_on_hand"])
+            expect(variant_override.errors[:count_on_hand]).to eq([error_message])
+          end
+        end
+      end
+
+      context "when on demand" do
+        let(:on_demand) { true }
+
+        context "when count_on_hand is blank" do
+          let(:count_on_hand) { nil }
+
+          it "is valid" do
+            expect(variant_override.save).to be_truthy
+          end
+        end
+
+        context "when count_on_hand is set" do
+          let(:count_on_hand) { 1 }
+
+          it "is invalid" do
+            expect(variant_override.save).to be_falsey
+            error_message = I18n.t("on_demand_but_count_on_hand_set",
+                                   scope: [i18n_scope_for_error, "count_on_hand"])
+            expect(variant_override.errors[:count_on_hand]).to eq([error_message])
+          end
+        end
+      end
+
+      context "when limited stock" do
+        let(:on_demand) { false }
+
+        context "when count_on_hand is blank" do
+          let(:count_on_hand) { nil }
+
+          it "is invalid" do
+            expect(variant_override.save).to be_falsey
+            error_message = I18n.t("limited_stock_but_no_count_on_hand",
+                                   scope: [i18n_scope_for_error, "count_on_hand"])
+            expect(variant_override.errors[:count_on_hand]).to eq([error_message])
+          end
+        end
+
+        context "when count_on_hand is set" do
+          let(:count_on_hand) { 1 }
+
+          it "is valid" do
+            expect(variant_override.save).to be_truthy
+          end
+        end
+      end
+    end
+  end
 
   describe "callbacks" do
     let!(:vo) { create(:variant_override, hub: hub, variant: variant) }
@@ -51,7 +126,6 @@ describe VariantOverride do
     end
   end
 
-
   describe "looking up prices" do
     it "returns the numeric price when present" do
       VariantOverride.create!(variant: variant, hub: hub, price: 12.34)
@@ -65,7 +139,7 @@ describe VariantOverride do
 
   describe "looking up count on hand" do
     it "returns the numeric stock level when present" do
-      VariantOverride.create!(variant: variant, hub: hub, count_on_hand: 12)
+      VariantOverride.create!(variant: variant, hub: hub, count_on_hand: 12, on_demand: false)
       VariantOverride.count_on_hand_for(hub, variant).should == 12
     end
 
@@ -76,12 +150,12 @@ describe VariantOverride do
 
   describe "checking if stock levels have been overriden" do
     it "returns true when stock level has been overridden" do
-      create(:variant_override, variant: variant, hub: hub, count_on_hand: 12)
+      create(:variant_override, variant: variant, hub: hub, on_demand: false, count_on_hand: 12)
       VariantOverride.stock_overridden?(hub, variant).should be true
     end
 
     it "returns false when the override has no stock level" do
-      create(:variant_override, variant: variant, hub: hub, count_on_hand: nil)
+      create(:variant_override, variant: variant, hub: hub, on_demand: nil, count_on_hand: nil)
       VariantOverride.stock_overridden?(hub, variant).should be false
     end
 
@@ -136,17 +210,42 @@ describe VariantOverride do
   end
 
   describe "resetting stock levels" do
-    it "resets the on hand level to the value in the default_stock field" do
-      vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12, default_stock: 20, resettable: true)
-      vo.reset_stock!
-      vo.reload.count_on_hand.should == 20
+    describe "forcing the on hand level to the value in the default_stock field" do
+      it "succeeds for variant override that forces limited stock" do
+        vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12, default_stock: 20, resettable: true)
+        vo.reset_stock!
+
+        vo.reload
+        expect(vo.on_demand).to eq(false)
+        expect(vo.count_on_hand).to eq(20)
+      end
+
+      it "succeeds for variant override that forces unlimited stock" do
+        vo = create(:variant_override, :on_demand, variant: variant, hub: hub, default_stock: 20, resettable: true)
+        vo.reset_stock!
+
+        vo.reload
+        expect(vo.on_demand).to eq(false)
+        expect(vo.count_on_hand).to eq(20)
+      end
+
+      it "succeeds for variant override that uses producer stock settings" do
+        vo = create(:variant_override, :use_producer_stock_settings, variant: variant, hub: hub, default_stock: 20, resettable: true)
+        vo.reset_stock!
+
+        vo.reload
+        expect(vo.on_demand).to eq(false)
+        expect(vo.count_on_hand).to eq(20)
+      end
     end
+
     it "silently logs an error if the variant override doesn't have a default stock level" do
       vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12, default_stock:nil, resettable: true)
       Bugsnag.should_receive(:notify)
       vo.reset_stock!
       vo.reload.count_on_hand.should == 12
     end
+
     it "doesn't reset the level if the behaviour is disabled" do
       vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12, default_stock: 10, resettable: false)
       vo.reset_stock!
@@ -156,5 +255,9 @@ describe VariantOverride do
 
   context "extends LocalizedNumber" do
     it_behaves_like "a model using the LocalizedNumber module", [:price]
+  end
+
+  def i18n_scope_for_error
+    "activerecord.errors.models.variant_override"
   end
 end

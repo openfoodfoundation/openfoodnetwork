@@ -41,3 +41,5 @@ libpeerconnection.log
 node_modules
 vendor/bundle/
 coverage
+/reports/
+!/reports/README.md
