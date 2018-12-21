@@ -13,8 +13,8 @@ describe RestartCheckout do
 
     context "when the order is in a subsequent state" do
       let!(:shipment_pending) { create(:shipment, order: order, state: 'pending') }
-      let!(:payment_checkout) { create(:payment, order: order, state: 'checkout') }
       let!(:payment_failed) { create(:payment, order: order, state: 'failed') }
+      let!(:payment_checkout) { create(:payment, order: order, state: 'checkout') }
 
       before do
         order.update_attribute(:state, "payment")
