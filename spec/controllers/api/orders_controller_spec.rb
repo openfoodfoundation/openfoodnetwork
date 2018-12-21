@@ -24,7 +24,7 @@ module Api
         create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now,
                        distributor: distributor, billing_address: create(:address) )
       end
-      let!(:order4) { create(:completed_order_with_fees) }
+      let!(:order4) { create(:completed_order_with_fees, distributor: distributor) }
       let!(:order5) { create(:order, state: 'cart', completed_at: nil) }
       let!(:line_item1) do
         create(:line_item_with_shipment, order: order1,
@@ -130,12 +130,6 @@ module Api
           get :index, format: :json, q: { completed_at_not_null: true, s: 'created_at desc' }
 
           expect(json_response['orders']).to eq serialized_orders([order4, order3, order2, order1])
-        end
-
-        it 'can show only unfulfilled orders' do
-          get :index, format: :json, q: { inventory_units_shipment_id_null: true, s: 'created_at desc' }
-
-          expect(json_response['orders']).to eq serialized_orders([order3, order2, order1])
         end
       end
 
