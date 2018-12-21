@@ -3,14 +3,34 @@ require 'spec_helper'
 describe CartController, type: :controller do
   let(:order) { create(:order) }
 
-  describe "returning stock levels in JSON on success" do
-    let(:product) { create(:simple_product) }
+  describe "basic behaviour" do
+    let(:cart_service) { double }
 
-    it "returns stock levels as JSON" do
+    before do
+      allow(CartService).to receive(:new).and_return(cart_service)
+    end
+
+    it "returns HTTP success when successful" do
+      allow(cart_service).to receive(:populate) { true }
+      allow(cart_service).to receive(:variants_h) { {} }
+      xhr :post, :populate, use_route: :spree, format: :json
+      expect(response.status).to eq(200)
+    end
+
+    it "returns failure when unsuccessful" do
+      allow(cart_service).to receive(:populate).and_return false
+      xhr :post, :populate, use_route: :spree, format: :json
+      expect(response.status).to eq(412)
+    end
+
+    it "tells cart_service to overwrite" do
+      expect(cart_service).to receive(:populate).with({}, true)
+      xhr :post, :populate, use_route: :spree, format: :json
+    end
+
+    it "returns stock levels as JSON on success" do
       allow(controller).to receive(:variant_ids_in) { [123] }
-      allow(VariantsStockLevels).to receive(:new).and_return(variant_stock_levels = double)
-      allow(variant_stock_levels).to receive(:call) { 'my_stock_levels' }
-      allow(CartService).to receive(:new).and_return(cart_service = double)
+      allow_any_instance_of(VariantsStockLevels).to receive(:call).and_return("my_stock_levels")
       allow(cart_service).to receive(:populate) { true }
       allow(cart_service).to receive(:variants_h) { {} }
 
@@ -28,7 +48,7 @@ describe CartController, type: :controller do
     end
   end
 
-  context "handles variant overrides correctly" do
+  context "handling variant overrides correctly" do
     let(:product) { create(:simple_product, supplier: producer) }
     let(:producer) { create(:supplier_enterprise) }
     let!(:variant_in_the_order) { create(:variant, count_on_hand: 4) }
@@ -81,27 +101,6 @@ describe CartController, type: :controller do
       expect do
         spree_post :populate, variants: { p.master.id => 1 }, variant_attributes: { p.master.id => { max_quantity: 3 } }
       end.to change(Spree::LineItem, :count).by(1)
-    end
-
-    it "returns HTTP success when successful" do
-      allow(CartService).to receive(:new).and_return(cart_service = double)
-      allow(cart_service).to receive(:populate) { true }
-      allow(cart_service).to receive(:variants_h) { {} }
-      xhr :post, :populate, use_route: :spree, format: :json
-      expect(response.status).to eq(200)
-    end
-
-    it "returns failure when unsuccessful" do
-      allow(CartService).to receive(:new).and_return(cart_service = double)
-      allow(cart_service).to receive(:populate).and_return false
-      xhr :post, :populate, use_route: :spree, format: :json
-      expect(response.status).to eq(412)
-    end
-
-    it "tells cart_service to overwrite" do
-      allow(CartService).to receive(:new).and_return(cart_service = double)
-      expect(cart_service).to receive(:populate).with({}, true)
-      xhr :post, :populate, use_route: :spree, format: :json
     end
   end
 end
