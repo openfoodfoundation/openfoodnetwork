@@ -21,7 +21,7 @@ angular.module("admin.orders").controller "bulkInvoiceCtrl", ($scope, $http, $ti
     .error (data) ->
       $scope.poll++
 
-      if $scope.poll > 10
+      if $scope.poll > 30
         $scope.loading = false
         $scope.error = t('js.admin.orders.index.bulk_invoice_failed')
         return
