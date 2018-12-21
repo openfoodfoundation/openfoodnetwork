@@ -20,14 +20,6 @@ module OpenFoodNetwork
         Spree::Price.new(amount: price, currency: currency)
       end
 
-      # Old Spree has the same logic as here and doesn't need this override.
-      # But we need this to use VariantOverrides with Spree 2.0.
-      def in_stock?
-        return true unless Spree::Config[:track_inventory_levels]
-
-        on_demand || (count_on_hand > 0)
-      end
-
       # Uses variant_override.count_on_hand instead of Stock::Quantifier.stock_items.count_on_hand
       def total_on_hand
         @variant_override.andand.count_on_hand || super
