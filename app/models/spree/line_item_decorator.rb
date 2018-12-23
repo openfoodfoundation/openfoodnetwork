@@ -132,6 +132,10 @@ Spree::LineItem.class_eval do
   def update_inventory_with_scoping
     scoper.scope(variant)
     update_inventory_without_scoping
+
+    # This is required because update_inventory may delete the last shipment in the order
+    #   and that makes update_order fail if we don't reload the shipments relation here
+    order.shipments.reload
   end
   alias_method_chain :update_inventory, :scoping
 
