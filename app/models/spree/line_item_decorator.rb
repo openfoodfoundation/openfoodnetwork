@@ -17,7 +17,9 @@ Spree::LineItem.class_eval do
 
   before_save :calculate_final_weight_volume, if: :quantity_changed?, unless: :final_weight_volume_changed?
   after_save :update_units
+
   before_destroy :make_quantity_zero, :update_inventory
+  after_destroy :reload_order_shipments, :update_order
 
   delegate :unit_description, to: :variant
 
@@ -132,10 +134,6 @@ Spree::LineItem.class_eval do
   def update_inventory_with_scoping
     scoper.scope(variant)
     update_inventory_without_scoping
-
-    # This is required because update_inventory may delete the last shipment in the order
-    #   and that makes update_order fail if we don't reload the shipments relation here
-    order.shipments.reload
   end
   alias_method_chain :update_inventory, :scoping
 
@@ -143,6 +141,13 @@ Spree::LineItem.class_eval do
   #   so that update_inventory will restore stock to the variant
   def make_quantity_zero
     self.quantity = 0
+  end
+
+  # TThis is necessary after destroying the line item
+  #   because update_inventory may delete the last shipment in the order
+  #   and that makes update_order fail if we don't reload the shipments
+  def reload_order_shipments
+    order.shipments.reload
   end
 
   def calculate_final_weight_volume
