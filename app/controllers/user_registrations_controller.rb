@@ -5,25 +5,29 @@ class UserRegistrationsController < Spree::UserRegistrationsController
 
   before_filter :set_checkout_redirect, only: :create
 
+  include I18nHelper
+  before_filter :set_locale
+
   # POST /resource/sign_up
   def create
     @user = build_resource(params[:spree_user])
-    if resource.save
-      session[:spree_user_signup] = true
-      session[:confirmation_return_url] = params[:return_url]
-      associate_user
+    @user.locale = I18n.locale.to_s
+    unless resource.save
+      return render_error(@user.errors)
+    end
 
-      respond_to do |format|
-        format.html do
-          set_flash_message(:success, :signed_up_but_unconfirmed)
-          redirect_to after_sign_in_path_for(@user)
-        end
-        format.js do
-          render json: { email: @user.email }
-        end
+    session[:spree_user_signup] = true
+    session[:confirmation_return_url] = params[:return_url]
+    associate_user
+
+    respond_to do |format|
+      format.html do
+        set_flash_message(:success, :signed_up_but_unconfirmed)
+        redirect_to after_sign_in_path_for(@user)
       end
-    else
-      render_error(@user.errors)
+      format.js do
+        render json: { email: @user.email }
+      end
     end
   rescue StandardError => error
     OpenFoodNetwork::ErrorLogger.notify(error)

@@ -1,7 +1,7 @@
 module I18nHelper
   def set_locale
     # Save a given locale
-    if params[:locale] && Rails.application.config.i18n.available_locales.include?(params[:locale])
+    if params[:locale] && available_locale?(params[:locale])
       spree_current_user.update_attributes!(locale: params[:locale]) if spree_current_user
       cookies[:locale] = params[:locale]
     end
@@ -12,5 +12,21 @@ module I18nHelper
     end
 
     I18n.locale = spree_current_user.andand.locale || cookies[:locale] || I18n.default_locale
+  end
+
+  def valid_locale(user)
+    if user.present? &&
+       user.locale.present? &&
+       available_locale?(user.locale)
+      user.locale
+    else
+      I18n.default_locale
+    end
+  end
+
+  private
+
+  def available_locale?(locale)
+    Rails.application.config.i18n.available_locales.include?(locale)
   end
 end

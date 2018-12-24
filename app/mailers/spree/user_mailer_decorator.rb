@@ -1,8 +1,12 @@
 Spree::UserMailer.class_eval do
+  include I18nHelper
+
   def signup_confirmation(user)
     @user = user
-    mail(:to => user.email, :from => from_address,
-         :subject => t(:welcome_to) + Spree::Config[:site_name])
+    I18n.with_locale valid_locale(@user) do
+      mail(:to => user.email, :from => from_address,
+           :subject => t(:welcome_to) + Spree::Config[:site_name])
+    end
   end
 
   # Overriding `Spree::UserMailer.confirmation_instructions` which is
@@ -12,10 +16,12 @@ Spree::UserMailer.class_eval do
     @instance = Spree::Config[:site_name]
     @contact = ContentConfig.footer_email
 
-    subject = t('spree.user_mailer.confirmation_instructions.subject')
-    mail(to: confirmation_email_address,
-         from: from_address,
-         subject: subject)
+    I18n.with_locale valid_locale(@user) do
+      subject = t('spree.user_mailer.confirmation_instructions.subject')
+      mail(to: confirmation_email_address,
+           from: from_address,
+           subject: subject)
+    end
   end
 
   private
