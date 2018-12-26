@@ -43,3 +43,4 @@ vendor/bundle/
 coverage
 /reports/
 !/reports/README.md
+bin/
