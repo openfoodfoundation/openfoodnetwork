@@ -647,6 +647,9 @@ FactoryBot.modify do
   factory :stock_location, class: Spree::StockLocation do
     # keeps the test stock_location unique
     initialize_with { Spree::StockLocation.find_or_create_by_name(name)}
+
+    # sets the default value for variant.on_demand
+    backorderable_default false
   end
 
   factory :shipment, class: Spree::Shipment do
