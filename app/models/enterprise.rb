@@ -333,7 +333,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def instagram=(value)
-    write_attribute(:instagram, value.try(:gsub, instagram_regex, '\1'))
+    self[:instagram] = value.try(:gsub, instagram_regex, '\1')
   end
 
   protected
