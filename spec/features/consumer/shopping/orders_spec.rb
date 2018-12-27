@@ -36,7 +36,7 @@ feature "Order Management", js: true do
     end
 
     context "when checking out as an anonymous guest" do
-      let(:user) { nil }
+      let(:user) { Spree::User.anonymous! }
 
       it "allows the user to see the details" do
         # Cannot load the page without token
