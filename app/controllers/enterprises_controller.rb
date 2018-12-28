@@ -7,12 +7,27 @@ class EnterprisesController < BaseController
 
   # These prepended filters are in the reverse order of execution
   prepend_before_filter :set_order_cycles, :require_distributor_chosen, :reset_order, only: :shop
-  before_filter :check_stock_levels, :set_noindex_meta_tag, only: :shop
 
   before_filter :clean_permalink, only: :check_permalink
   before_filter :enable_embedded_shopfront
 
   respond_to :js, only: :permalink_checker
+
+  def shop
+    check_stock_levels
+    set_noindex_meta_tag
+
+    order_cycles = if current_order_cycle
+                     [current_order_cycle]
+                   else
+                     OrderCycle.not_closed.with_distributor(current_distributor)
+                   end
+
+    enterprises = current_distributor.plus_relatives_and_oc_producers(order_cycles).activated.includes(address: :state).all
+    enterprises = inject_json_ams('enterprises', enterprises)
+
+    render locals: { enterprises: enterprises }
+  end
 
   def relatives
     set_enterprise
@@ -87,5 +102,15 @@ class EnterprisesController < BaseController
 
   def set_noindex_meta_tag
     @noindex_meta_tag = true unless current_distributor.visible?
+  end
+
+  def inject_json_ams(name, object)
+    options = {
+      each_serializer: Api::EnterpriseSerializer,
+      data: OpenFoodNetwork::EnterpriseInjectionData.new
+    }
+    serializer_instance = ActiveModel::ArraySerializer.new(object, options)
+
+    { name: name, json: serializer_instance.to_json }
   end
 end
