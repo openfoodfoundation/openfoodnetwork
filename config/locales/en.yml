@@ -1266,9 +1266,7 @@ en:
   ticket_column_total_price: "Total Price"
 
   menu_1_title: "Shops"
-  menu_1_url: "/shops"
   menu_2_title: "Map"
-  menu_2_url: "/map"
   menu_3_title: "Producers"
   menu_3_url: "/producers"
   menu_4_title: "Groups"
