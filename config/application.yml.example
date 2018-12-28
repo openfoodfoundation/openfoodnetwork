@@ -62,3 +62,6 @@ SMTP_PASSWORD: 'f00d'
 # STRIPE_INSTANCE_PUBLISHABLE_KEY: "pk_test_xxxx" # This can be a test key or a live key
 # STRIPE_CLIENT_ID: "ca_xxxx" # This can be a development ID or a production ID
 # STRIPE_ENDPOINT_SECRET: "whsec_xxxx"
+
+# URLs for the site's main menu
+# MENU_3_URL: https://about.openfoodnetwork.org.uk/services

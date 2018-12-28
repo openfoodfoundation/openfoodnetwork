@@ -8,11 +8,11 @@ class MenuURL
 
   def initialize(id)
     @id = id.to_sym
-    @key = "#{id}_url".freeze
+    @key = "#{id}_url".upcase.freeze
   end
 
   def to_s
-    I18n.t(key, default: ROUTES.fetch(id))
+    ENV.fetch(key, ROUTES.fetch(id))
   end
 
   private

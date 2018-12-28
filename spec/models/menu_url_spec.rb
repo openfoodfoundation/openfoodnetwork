@@ -11,9 +11,9 @@ describe MenuURL do
 
     context 'when the passed menu item has no configured URL' do
       before do
-        allow(I18n.config.backend)
-          .to receive(:translate)
-          .with(:en, 'menu_1_url', default: shops_path)
+        allow(ENV)
+          .to receive(:fetch)
+          .with('MENU_1_URL', shops_path)
           .and_return(shops_path)
       end
 
@@ -22,20 +22,20 @@ describe MenuURL do
         expect(menu_url.to_s).to eq(shops_path)
       end
 
-      it 'fetches the translation' do
+      it 'fetches the configuration value' do
         described_class.new('menu_1').to_s
 
-        expect(I18n.config.backend)
-          .to have_received(:translate)
-          .with(:en, 'menu_1_url', default: shops_path)
+        expect(ENV)
+          .to have_received(:fetch)
+          .with('MENU_1_URL', shops_path)
       end
     end
 
     context 'when the passed menu item has a configured URL' do
       before do
-        allow(I18n.config.backend)
-          .to receive(:translate)
-          .with(:en, 'menu_4_url', default: groups_path)
+        allow(ENV)
+          .to receive(:fetch)
+          .with('MENU_4_URL', groups_path)
           .and_return('/foo')
       end
 
@@ -44,12 +44,12 @@ describe MenuURL do
         expect(menu_url.to_s).to eq('/foo')
       end
 
-      it 'fetches the translation' do
+      it 'fetches the configuration value' do
         described_class.new('menu_4').to_s
 
-        expect(I18n.config.backend)
-          .to have_received(:translate)
-          .with(:en, 'menu_4_url', default: groups_path)
+        expect(ENV)
+          .to have_received(:fetch)
+          .with('MENU_4_URL', groups_path)
       end
     end
   end
