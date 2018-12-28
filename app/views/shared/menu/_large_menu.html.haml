@@ -11,7 +11,7 @@
           %a{href: '/'}
             = t 'title'
     %ul.center
-      - [*1..2].each do |menu_number|
+      - [*1..4].each do |menu_number|
         - menu_name = "menu_#{menu_number}"
         - if ContentConfig[menu_name].present?
           %li
@@ -19,7 +19,7 @@
               %span.nav-primary
                 = t "#{menu_name}_title"
 
-      - [*3..7].each do |menu_number|
+      - [*5..7].each do |menu_number|
         - menu_name = "menu_#{menu_number}"
         - if ContentConfig[menu_name].present?
           %li
