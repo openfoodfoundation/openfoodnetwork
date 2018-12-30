@@ -52,11 +52,18 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
       end
 
       it "returns me to the cart with an error message" do
+        require 'fake_google_maps'
+        instance = FakeGoogleMaps.new
+        server = Capybara::Server.new(instance, 4567)
+        server.boot
+
         visit checkout_path
 
         page.should_not have_selector 'closing', text: "Checkout now"
         page.should have_selector 'closing', text: "Your shopping cart"
         page.should have_content "An item in your cart has become unavailable"
+
+        server.close
       end
     end
 

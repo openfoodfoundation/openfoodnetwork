@@ -1,9 +1,11 @@
-require 'sinatra'
+require 'sinatra/base'
 
-get '/maps' do
-  file_path = File.join(File.dirname(__FILE__), 'maps.googleapis.js')
+class FakeGoogleMaps < Sinatra::Base
+  get '/maps' do
+    file_path = File.join(File.dirname(__FILE__), 'maps.googleapis.js')
 
-  content_type 'text/javascript'
-  status 200
-  IO.read(file_path)
+    content_type 'text/javascript'
+    status 200
+    IO.read(file_path)
+  end
 end
