@@ -14,7 +14,7 @@ class EnterprisesController < BaseController
   respond_to :js, only: :permalink_checker
 
   def shop
-    check_stock_levels
+    return redirect_to spree.cart_path unless enough_stock?
     set_noindex_meta_tag
 
     order_cycles = if current_order_cycle
@@ -63,10 +63,8 @@ class EnterprisesController < BaseController
     params[:permalink] = params[:permalink].parameterize
   end
 
-  def check_stock_levels
-    if current_order(true).insufficient_stock_lines.present?
-      redirect_to spree.cart_path
-    end
+  def enough_stock?
+    current_order(true).insufficient_stock_lines.blank?
   end
 
   def reset_order
