@@ -151,5 +151,7 @@ module Openfoodnetwork
     config.assets.precompile += ['qz/*']
 
     config.active_support.escape_html_entities_in_json = true
+
+    config.googleapis_url = '//maps.googleapis.com/maps/api/js'
   end
 end

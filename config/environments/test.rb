@@ -53,6 +53,8 @@ Openfoodnetwork::Application.configure do
   require 'open_food_network/rack_request_blocker'
   # Make sure the middleware is inserted first in middleware chain
   config.middleware.insert_before('ActionDispatch::Static', 'RackRequestBlocker')
+
+  config.googleapis_url = '//localhost:4567/maps'
 end
 
 # Allows us to use _url helpers in Rspec

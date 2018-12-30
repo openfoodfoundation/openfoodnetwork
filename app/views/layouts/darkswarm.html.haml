@@ -16,7 +16,7 @@
 
     = yield :scripts
     %script{:src => "https://js.stripe.com/v3/", :type => "text/javascript"}
-    %script{src: "#{ENV['GOOGLEAPIS_URL']}?libraries=places,geometry#{ ENV['GOOGLE_MAPS_API_KEY'] ? '&key=' + ENV['GOOGLE_MAPS_API_KEY'] : ''} "}
+    %script{src: "#{Rails.configuration.googleapis_url}?libraries=places,geometry#{ ENV['GOOGLE_MAPS_API_KEY'] ? '&key=' + ENV['GOOGLE_MAPS_API_KEY'] : ''} "}
     = stylesheet_link_tag "darkswarm/all"
     = javascript_include_tag "darkswarm/all"
     = javascript_include_tag "web/all"
