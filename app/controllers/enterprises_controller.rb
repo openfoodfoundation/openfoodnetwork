@@ -23,7 +23,11 @@ class EnterprisesController < BaseController
                      OrderCycle.not_closed.with_distributor(current_distributor)
                    end
 
-    enterprises = current_distributor.plus_relatives_and_oc_producers(order_cycles).activated.includes(address: :state).all
+    enterprises = current_distributor
+      .plus_relatives_and_oc_producers(order_cycles)
+      .activated
+      .includes(address: :state)
+      .all
     enterprises = inject_json_ams('enterprises', enterprises)
 
     render locals: { enterprises: enterprises }
