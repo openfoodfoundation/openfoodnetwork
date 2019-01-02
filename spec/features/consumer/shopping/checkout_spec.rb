@@ -401,7 +401,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
 
             page.should_not have_content "Your order has been processed successfully"
             page.should have_selector 'closing', text: "Your shopping cart"
-            page.should have_content "Out Of Stock"
+            page.should have_content "An item in your cart has become unavailable."
           end
 
           context "when we are charged a shipping fee" do
