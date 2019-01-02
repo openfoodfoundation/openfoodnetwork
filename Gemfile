@@ -118,7 +118,6 @@ group :test, :development do
   gem 'letter_opener', '>= 1.4.1'
   gem 'timecop'
   gem 'poltergeist', '>= 1.16.0'
-  gem 'rspec-retry'
   gem 'json_spec', '~> 1.1.4'
   gem 'unicorn-rails'
   gem 'atomic'

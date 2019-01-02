@@ -19,7 +19,6 @@ require_relative "../config/environment"
 require 'rspec/rails'
 require 'capybara'
 require 'database_cleaner'
-require 'rspec/retry'
 require 'paper_trail/frameworks/rspec'
 
 # Allow connections to phantomjs/selenium whilst raising errors
@@ -82,9 +81,6 @@ RSpec.configure do |config|
 
   # Filters
   config.filter_run_excluding :skip => true, :future => true, :to_figure_out => true
-
-  # Retry
-  config.verbose_retry = true
 
   # DatabaseCleaner
   config.before(:suite)          { DatabaseCleaner.clean_with :deletion, {except: ['spree_countries', 'spree_states']} }
