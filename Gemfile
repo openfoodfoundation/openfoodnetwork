@@ -38,7 +38,7 @@ gem 'daemons'
 gem 'simple_form', github: 'RohanM/simple_form'
 
 gem 'unicorn'
-gem 'angularjs-rails', '1.5.5'
+gem 'angularjs-rails', '1.6.8'
 gem 'bugsnag'
 gem 'haml'
 gem 'sass', "~> 3.3"
