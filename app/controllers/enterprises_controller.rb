@@ -17,17 +17,12 @@ class EnterprisesController < BaseController
     return redirect_to spree.cart_path unless enough_stock?
     set_noindex_meta_tag
 
-    order_cycles = if current_order_cycle
-                     [current_order_cycle]
-                   else
-                     OrderCycle.not_closed.with_distributor(current_distributor)
-                   end
-
     enterprises = current_distributor
-      .plus_relatives_and_oc_producers(order_cycles)
+      .plus_relatives_and_oc_producers(shop_order_cycles)
       .activated
       .includes(address: :state)
       .all
+
     enterprises = inject_json_ams('enterprises', enterprises)
 
     render locals: { enterprises: enterprises }
@@ -100,6 +95,14 @@ class EnterprisesController < BaseController
   def reset_order_cycle(order, distributor)
     order_cycle_options = OrderCycle.active.with_distributor(distributor)
     order.order_cycle = order_cycle_options.first if order_cycle_options.count == 1
+  end
+
+  def shop_order_cycles
+    if current_order_cycle
+      [current_order_cycle]
+    else
+      OrderCycle.not_closed.with_distributor(current_distributor)
+    end
   end
 
   def set_noindex_meta_tag
