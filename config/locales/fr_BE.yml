@@ -1144,7 +1144,7 @@ fr_BE:
   ticket_column_unit_price: "Prix unitaire"
   ticket_column_total_price: "Prix total"
   menu_1_title: "Comptoir"
-  menu_1_url: "/Comptoir"
+  menu_1_url: "/shops"
   menu_2_title: "Carte"
   menu_2_url: "/map"
   menu_3_title: "Producteurs"
