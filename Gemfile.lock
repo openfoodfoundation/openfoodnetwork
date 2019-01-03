@@ -733,7 +733,7 @@ GEM
       railties (>= 3.0)
     warden (1.2.7)
       rack (>= 1.0)
-    webmock (3.4.2)
+    webmock (3.5.1)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
