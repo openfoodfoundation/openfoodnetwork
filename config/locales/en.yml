@@ -2674,6 +2674,25 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         header:
           store: Store
     admin:
+      tab:
+        dashboard: "Dashboard"
+        orders: "Orders"
+        bulk_order_management: "Bulk Order Management"
+        subscriptions: "Subscriptions"
+        products: "Products"
+        option_types: "Option Types"
+        properties: "Properties"
+        prototypes: "Prototypes"
+        variant_overrides: "Inventory"
+        reports: "Reports"
+        configuration: "Configuration"
+        users: "Users"
+        roles: "Roles"
+        order_cycles: "Order Cycles"
+        enterprises: "Enterprises"
+        enterprise_relationships: "Permissions"
+        customers: "Customers"
+        groups: "Groups"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Inherit properties from %{supplier}? (unless overridden above)"
