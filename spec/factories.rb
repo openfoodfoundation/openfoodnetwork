@@ -270,6 +270,12 @@ FactoryBot.define do
     calculator { build(:calculator_per_item, preferred_amount: amount) }
 
     after(:create) { |ef| ef.calculator.save! }
+
+    trait :per_item do
+      transient { amount 1 }
+
+      calculator { build(:calculator_per_item, preferred_amount: amount) }
+    end
   end
 
   factory :product_distribution, :class => ProductDistribution do
