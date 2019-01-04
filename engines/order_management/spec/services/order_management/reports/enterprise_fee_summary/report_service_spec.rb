@@ -35,7 +35,8 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
 
   # Set up other requirements for ordering.
   let!(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator) }
-  let!(:product) { create(:product, tax_category: prepare_tax_category("Sample Product Tax")) }
+  let!(:product) { create(:product, tax_category: product_tax_category) }
+  let!(:product_tax_category) { create(:tax_category, name: "Sample Product Tax") }
   let!(:variant) { prepare_variant }
 
   # Create customers.
@@ -63,34 +64,37 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
       [
         create(:enterprise_fee, name: "Coordinator Fee 1", enterprise: coordinator,
                                 fee_type: "admin", calculator: per_item_calculator(512.0),
-                                tax_category: prepare_tax_category("Sample Coordinator Tax")),
+                                tax_category: coordinator_tax_category),
         create(:enterprise_fee, name: "Coordinator Fee 2", enterprise: coordinator,
                                 fee_type: "sales", calculator: per_item_calculator(1024.0),
                                 inherits_tax_category: true)
       ]
     end
+    let!(:coordinator_tax_category) { create(:tax_category, name: "Sample Coordinator Tax") }
 
     let!(:variant_incoming_exchange_fees) do
       [
         create(:enterprise_fee, name: "Producer Fee 1", enterprise: producer, fee_type: "sales",
                                 calculator: per_item_calculator(64.0),
-                                tax_category: prepare_tax_category("Sample Producer Tax")),
+                                tax_category: producer_tax_category),
         create(:enterprise_fee, name: "Producer Fee 2", enterprise: producer, fee_type: "sales",
                                 calculator: per_item_calculator(128.0),
                                 inherits_tax_category: true)
       ]
     end
+    let!(:producer_tax_category) { create(:tax_category, name: "Sample Producer Tax") }
 
     let!(:variant_outgoing_exchange_fees) do
       [
         create(:enterprise_fee, name: "Distributor Fee 1", enterprise: distributor,
                                 fee_type: "admin", calculator: per_item_calculator(4.0),
-                                tax_category: prepare_tax_category("Sample Distributor Tax")),
+                                tax_category: distributor_tax_category),
         create(:enterprise_fee, name: "Distributor Fee 2", enterprise: distributor,
                                 fee_type: "sales", calculator: per_item_calculator(8.0),
                                 inherits_tax_category: true)
       ]
     end
+    let!(:distributor_tax_category) { create(:tax_category, name: "Sample Distributor Tax") }
 
     let!(:customer_order) { prepare_order(customer: customer) }
     let!(:customer_incomplete_order) { setup_order(customer: customer) }
@@ -443,10 +447,6 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
 
   def expect_total_matches(totals, count, attributes)
     expect(count_totals(totals, attributes)).to eq(count)
-  end
-
-  def prepare_tax_category(name)
-    create(:tax_category, name: name)
   end
 
   def default_order_options
