@@ -23,15 +23,9 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
   let!(:coordinator) { create(:enterprise, name: "Sample Coordinator") }
 
   # Add some fee noise.
-  let!(:other_distributor_fee) do
-    create(:enterprise_fee, enterprise: distributor, calculator: per_item_calculator(1))
-  end
-  let!(:other_producer_fee) do
-    create(:enterprise_fee, enterprise: producer, calculator: per_item_calculator(1))
-  end
-  let!(:other_coordinator_fee) do
-    create(:enterprise_fee, enterprise: coordinator, calculator: per_item_calculator(1))
-  end
+  let!(:other_distributor_fee) { create(:enterprise_fee, :per_item, enterprise: distributor) }
+  let!(:other_producer_fee) { create(:enterprise_fee, :per_item, enterprise: producer) }
+  let!(:other_coordinator_fee) { create(:enterprise_fee, :per_item, enterprise: coordinator) }
 
   # Set up other requirements for ordering.
   let!(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator) }
@@ -62,36 +56,36 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
 
     let!(:order_cycle_fees) do
       [
-        create(:enterprise_fee, name: "Coordinator Fee 1", enterprise: coordinator,
-                                fee_type: "admin", calculator: per_item_calculator(512.0),
-                                tax_category: coordinator_tax_category),
-        create(:enterprise_fee, name: "Coordinator Fee 2", enterprise: coordinator,
-                                fee_type: "sales", calculator: per_item_calculator(1024.0),
-                                inherits_tax_category: true)
+        create(:enterprise_fee, :per_item, name: "Coordinator Fee 1", enterprise: coordinator,
+                                           fee_type: "admin", amount: 512.0,
+                                           tax_category: coordinator_tax_category),
+        create(:enterprise_fee, :per_item, name: "Coordinator Fee 2", enterprise: coordinator,
+                                           fee_type: "sales", amount: 1024.0,
+                                           inherits_tax_category: true)
       ]
     end
     let!(:coordinator_tax_category) { create(:tax_category, name: "Sample Coordinator Tax") }
 
     let!(:variant_incoming_exchange_fees) do
       [
-        create(:enterprise_fee, name: "Producer Fee 1", enterprise: producer, fee_type: "sales",
-                                calculator: per_item_calculator(64.0),
-                                tax_category: producer_tax_category),
-        create(:enterprise_fee, name: "Producer Fee 2", enterprise: producer, fee_type: "sales",
-                                calculator: per_item_calculator(128.0),
-                                inherits_tax_category: true)
+        create(:enterprise_fee, :per_item, name: "Producer Fee 1", enterprise: producer,
+                                           fee_type: "sales", amount: 64.0,
+                                           tax_category: producer_tax_category),
+        create(:enterprise_fee, :per_item, name: "Producer Fee 2", enterprise: producer,
+                                           fee_type: "sales", amount: 128.0,
+                                           inherits_tax_category: true)
       ]
     end
     let!(:producer_tax_category) { create(:tax_category, name: "Sample Producer Tax") }
 
     let!(:variant_outgoing_exchange_fees) do
       [
-        create(:enterprise_fee, name: "Distributor Fee 1", enterprise: distributor,
-                                fee_type: "admin", calculator: per_item_calculator(4.0),
-                                tax_category: distributor_tax_category),
-        create(:enterprise_fee, name: "Distributor Fee 2", enterprise: distributor,
-                                fee_type: "sales", calculator: per_item_calculator(8.0),
-                                inherits_tax_category: true)
+        create(:enterprise_fee, :per_item, name: "Distributor Fee 1", enterprise: distributor,
+                                           fee_type: "admin", amount: 4.0,
+                                           tax_category: distributor_tax_category),
+        create(:enterprise_fee, :per_item, name: "Distributor Fee 2", enterprise: distributor,
+                                           fee_type: "sales", amount: 8.0,
+                                           inherits_tax_category: true)
       ]
     end
     let!(:distributor_tax_category) { create(:tax_category, name: "Sample Distributor Tax") }
