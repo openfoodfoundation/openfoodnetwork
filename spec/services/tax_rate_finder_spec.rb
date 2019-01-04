@@ -2,11 +2,9 @@ require 'spec_helper'
 
 describe TaxRateFinder do
   describe "getting the corresponding tax rate" do
-    let(:amount) { BigDecimal(100) }
+    let(:amount) { BigDecimal(120) }
     let(:included_tax) { BigDecimal(20) }
     let(:tax_rate) { create_rate(0.2) }
-    let(:close_tax_rate) { create_rate(0.25) }
-    let(:other_tax_rate) { create_rate(0.3) }
     let(:tax_category) { create(:tax_category, tax_rates: [tax_rate]) }
     # This zone is used by :order_with_taxes and needs to match it
     let(:zone) { create(:zone, name: "GlobalZone") }
@@ -25,8 +23,11 @@ describe TaxRateFinder do
     end
 
     it "finds a close match" do
-      close_tax_rate
-      other_tax_rate
+      tax_rate.destroy
+      close_tax_rate = create_rate(tax_rate.amount + 0.05)
+      # other tax rates, not as close to the real one
+      create_rate(tax_rate.amount + 0.06)
+      create_rate(tax_rate.amount - 0.06)
 
       rates = TaxRateFinder.new.tax_rates(
         nil,
