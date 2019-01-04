@@ -3,6 +3,7 @@ require "spec_helper"
 describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
   let(:report_klass) { OrderManagement::Reports::EnterpriseFeeSummary }
 
+  # Basic data.
   let!(:shipping_method) do
     create(:shipping_method, name: "Sample Shipping Method", calculator: per_item_calculator(1.0))
   end
@@ -11,79 +12,90 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
     create(:payment_method, name: "Sample Payment Method", calculator: per_item_calculator(2.0))
   end
 
+  # Create enterprises.
   let!(:distributor) do
     create(:distributor_enterprise, name: "Sample Distributor").tap do |enterprise|
       payment_method.distributors << enterprise
       shipping_method.distributors << enterprise
     end
   end
-  let!(:distributor_fees) do
-    [
-      create(:enterprise_fee, name: "Included Distributor Fee 1", enterprise: distributor,
-                              fee_type: "admin", calculator: per_item_calculator(4.0),
-                              tax_category: prepare_tax_category("Sample Distributor Tax")),
-      create(:enterprise_fee, name: "Included Distributor Fee 2", enterprise: distributor,
-                              fee_type: "sales", calculator: per_item_calculator(8.0),
-                              inherits_tax_category: true),
-      create(:enterprise_fee, name: "Excluded Distributor Fee", enterprise: distributor,
-                              fee_type: "sales", calculator: per_item_calculator(16.0))
-    ]
-  end
-
   let!(:producer) { create(:supplier_enterprise, name: "Sample Producer") }
-  let!(:producer_fees) do
-    [
-      create(:enterprise_fee, name: "Excluded Producer Fee", enterprise: producer,
-                              fee_type: "admin", calculator: per_item_calculator(32.0)),
-      create(:enterprise_fee, name: "Included Producer Fee 1", enterprise: producer,
-                              fee_type: "sales", calculator: per_item_calculator(64.0),
-                              tax_category: prepare_tax_category("Sample Producer Tax")),
-      create(:enterprise_fee, name: "Included Producer Fee 2", enterprise: producer,
-                              fee_type: "sales", calculator: per_item_calculator(128.0),
-                              inherits_tax_category: true)
-    ]
-  end
-
   let!(:coordinator) { create(:enterprise, name: "Sample Coordinator") }
-  let!(:coordinator_fees) do
-    [
-      create(:enterprise_fee, name: "Excluded Coordinator Fee", enterprise: coordinator,
-                              fee_type: "admin", calculator: per_item_calculator(256.0)),
-      create(:enterprise_fee, name: "Included Coordinator Fee 1", enterprise: coordinator,
-                              fee_type: "admin", calculator: per_item_calculator(512.0),
-                              tax_category: prepare_tax_category("Sample Coordinator Tax")),
-      create(:enterprise_fee, name: "Included Coordinator Fee 2", enterprise: coordinator,
-                              fee_type: "sales", calculator: per_item_calculator(1024.0),
-                              inherits_tax_category: true)
-    ]
+
+  # Add some fee noise.
+  let!(:other_distributor_fee) do
+    create(:enterprise_fee, enterprise: distributor, calculator: per_item_calculator(1))
+  end
+  let!(:other_producer_fee) do
+    create(:enterprise_fee, enterprise: producer, calculator: per_item_calculator(1))
+  end
+  let!(:other_coordinator_fee) do
+    create(:enterprise_fee, enterprise: coordinator, calculator: per_item_calculator(1))
   end
 
-  let!(:order_cycle) do
-    create(:simple_order_cycle, coordinator: coordinator,
-                                coordinator_fees: [coordinator_fees[1], coordinator_fees[2]])
-  end
-
+  # Set up other requirements for ordering.
+  let!(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator) }
   let!(:product) { create(:product, tax_category: prepare_tax_category("Sample Product Tax")) }
+  let!(:variant) { prepare_variant }
 
-  let!(:variant) do
-    prepare_variant(incoming_exchange_fees: [producer_fees[1], producer_fees[2]],
-                    outgoing_exchange_fees: [distributor_fees[0], distributor_fees[1]])
-  end
-
+  # Create customers.
   let!(:customer) { create(:customer, name: "Sample Customer") }
   let!(:another_customer) { create(:customer, name: "Another Customer") }
 
+  # Setup up permissions and report.
   let!(:current_user) { create(:admin_user) }
 
+  let(:permissions) { report_klass::Permissions.new(current_user) }
+  let(:parameters) { report_klass::Parameters.new }
+  let(:service) { described_class.new(permissions, parameters) }
+
   describe "grouping and sorting of entries" do
+    let!(:order_cycle) do
+      create(:simple_order_cycle, coordinator: coordinator, coordinator_fees: order_cycle_fees)
+    end
+
+    let!(:variant) do
+      prepare_variant(incoming_exchange_fees: variant_incoming_exchange_fees,
+                      outgoing_exchange_fees: variant_outgoing_exchange_fees)
+    end
+
+    let!(:order_cycle_fees) do
+      [
+        create(:enterprise_fee, name: "Coordinator Fee 1", enterprise: coordinator,
+                                fee_type: "admin", calculator: per_item_calculator(512.0),
+                                tax_category: prepare_tax_category("Sample Coordinator Tax")),
+        create(:enterprise_fee, name: "Coordinator Fee 2", enterprise: coordinator,
+                                fee_type: "sales", calculator: per_item_calculator(1024.0),
+                                inherits_tax_category: true)
+      ]
+    end
+
+    let!(:variant_incoming_exchange_fees) do
+      [
+        create(:enterprise_fee, name: "Producer Fee 1", enterprise: producer, fee_type: "sales",
+                                calculator: per_item_calculator(64.0),
+                                tax_category: prepare_tax_category("Sample Producer Tax")),
+        create(:enterprise_fee, name: "Producer Fee 2", enterprise: producer, fee_type: "sales",
+                                calculator: per_item_calculator(128.0),
+                                inherits_tax_category: true)
+      ]
+    end
+
+    let!(:variant_outgoing_exchange_fees) do
+      [
+        create(:enterprise_fee, name: "Distributor Fee 1", enterprise: distributor,
+                                fee_type: "admin", calculator: per_item_calculator(4.0),
+                                tax_category: prepare_tax_category("Sample Distributor Tax")),
+        create(:enterprise_fee, name: "Distributor Fee 2", enterprise: distributor,
+                                fee_type: "sales", calculator: per_item_calculator(8.0),
+                                inherits_tax_category: true)
+      ]
+    end
+
     let!(:customer_order) { prepare_order(customer: customer) }
     let!(:customer_incomplete_order) { setup_order(customer: customer) }
     let!(:second_customer_order) { prepare_order(customer: customer) }
     let!(:other_customer_order) { prepare_order(customer: another_customer) }
-
-    let(:permissions) { report_klass::Permissions.new(current_user) }
-    let(:parameters) { report_klass::Parameters.new }
-    let(:service) { described_class.new(permissions, parameters) }
 
     it "groups and sorts entries correctly" do
       totals = service.list
@@ -101,33 +113,33 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
       # * total_amount
 
       expected_result = [
-        ["Admin", "Sample Coordinator", "Included Coordinator Fee 1", "Another Customer",
+        ["Admin", "Sample Coordinator", "Coordinator Fee 1", "Another Customer",
          "Coordinator", "All", "Sample Coordinator Tax", "512.00"],
-        ["Admin", "Sample Coordinator", "Included Coordinator Fee 1", "Sample Customer",
+        ["Admin", "Sample Coordinator", "Coordinator Fee 1", "Sample Customer",
          "Coordinator", "All", "Sample Coordinator Tax", "1024.00"],
-        ["Admin", "Sample Distributor", "Included Distributor Fee 1", "Another Customer",
+        ["Admin", "Sample Distributor", "Distributor Fee 1", "Another Customer",
          "Outgoing", "Sample Coordinator", "Sample Distributor Tax", "4.00"],
-        ["Admin", "Sample Distributor", "Included Distributor Fee 1", "Sample Customer",
+        ["Admin", "Sample Distributor", "Distributor Fee 1", "Sample Customer",
          "Outgoing", "Sample Coordinator", "Sample Distributor Tax", "8.00"],
         ["Payment Transaction", "Sample Distributor", "Sample Payment Method", "Another Customer",
          nil, nil, nil, "2.00"],
         ["Payment Transaction", "Sample Distributor", "Sample Payment Method", "Sample Customer",
          nil, nil, nil, "4.00"],
-        ["Sales", "Sample Coordinator", "Included Coordinator Fee 2", "Another Customer",
+        ["Sales", "Sample Coordinator", "Coordinator Fee 2", "Another Customer",
          "Coordinator", "All", "Sample Product Tax", "1024.00"],
-        ["Sales", "Sample Coordinator", "Included Coordinator Fee 2", "Sample Customer",
+        ["Sales", "Sample Coordinator", "Coordinator Fee 2", "Sample Customer",
          "Coordinator", "All", "Sample Product Tax", "2048.00"],
-        ["Sales", "Sample Distributor", "Included Distributor Fee 2", "Another Customer",
+        ["Sales", "Sample Distributor", "Distributor Fee 2", "Another Customer",
          "Outgoing", "Sample Coordinator", "Sample Product Tax", "8.00"],
-        ["Sales", "Sample Distributor", "Included Distributor Fee 2", "Sample Customer",
+        ["Sales", "Sample Distributor", "Distributor Fee 2", "Sample Customer",
          "Outgoing", "Sample Coordinator", "Sample Product Tax", "16.00"],
-        ["Sales", "Sample Producer", "Included Producer Fee 1", "Another Customer",
+        ["Sales", "Sample Producer", "Producer Fee 1", "Another Customer",
          "Incoming", "Sample Producer", "Sample Producer Tax", "64.00"],
-        ["Sales", "Sample Producer", "Included Producer Fee 1", "Sample Customer",
+        ["Sales", "Sample Producer", "Producer Fee 1", "Sample Customer",
          "Incoming", "Sample Producer", "Sample Producer Tax", "128.00"],
-        ["Sales", "Sample Producer", "Included Producer Fee 2", "Another Customer",
+        ["Sales", "Sample Producer", "Producer Fee 2", "Another Customer",
          "Incoming", "Sample Producer", "Sample Product Tax", "128.00"],
-        ["Sales", "Sample Producer", "Included Producer Fee 2", "Sample Customer",
+        ["Sales", "Sample Producer", "Producer Fee 2", "Sample Customer",
          "Incoming", "Sample Producer", "Sample Product Tax", "256.00"],
         ["Shipment", "Sample Distributor", "Sample Shipping Method", "Another Customer",
          nil, nil, "Platform Rate", "1.00"],
@@ -160,10 +172,6 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
     let!(:order_a) { prepare_order(order_cycle: order_cycle_a, distributor: distributor_a) }
     let!(:order_b) { prepare_order(order_cycle: order_cycle_b, distributor: distributor_b) }
 
-    let(:permissions) { report_klass::Permissions.new(current_user) }
-    let(:parameters) { report_klass::Parameters.new({}) }
-    let(:service) { described_class.new(permissions, parameters) }
-
     context "when admin" do
       let!(:current_user) { create(:admin_user) }
 
@@ -189,9 +197,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
   end
 
   describe "filters entries correctly" do
-    let(:permissions) { report_klass::Permissions.new(current_user) }
     let(:parameters) { report_klass::Parameters.new(parameters_attributes) }
-    let(:service) { described_class.new(permissions, parameters) }
 
     context "filtering by completion date" do
       let(:timestamp) { Time.zone.local(2018, 1, 5, 14, 30, 5) }
@@ -352,7 +358,8 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
       let!(:fee_b) { create(:enterprise_fee, name: "Fee B", enterprise: distributor) }
       let!(:fee_c) { create(:enterprise_fee, name: "Fee C", enterprise: distributor) }
 
-      let!(:variant) { prepare_variant(outgoing_exchange_fees: [fee_a, fee_b, fee_c]) }
+      let!(:variant) { prepare_variant(outgoing_exchange_fees: variant_outgoing_exchange_fees) }
+      let!(:variant_outgoing_exchange_fees) { [fee_a, fee_b, fee_c] }
 
       let!(:order) { prepare_order(variant: variant) }
 
