@@ -151,6 +151,63 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
     end
   end
 
+  describe "handling of more complex cases" do
+    context "with non-sender fee for incoming exchange and non-receiver fee for outgoing" do
+      let!(:variant) do
+        prepare_variant(incoming_exchange_fees: variant_incoming_exchange_fees,
+                        outgoing_exchange_fees: variant_outgoing_exchange_fees)
+      end
+      let!(:variant_incoming_exchange_fees) { [coordinator_fee, distributor_fee] }
+      let!(:variant_outgoing_exchange_fees) { [producer_fee, coordinator_fee] }
+
+      let!(:producer_fee) do
+        tax_category = create(:tax_category, name: "Sample Producer Tax")
+        create(:enterprise_fee, :per_item, name: "Sample Producer Fee", enterprise: producer,
+                                           fee_type: "sales", amount: 64.0,
+                                           tax_category: tax_category)
+      end
+      let!(:coordinator_fee) do
+        tax_category = create(:tax_category, name: "Sample Coordinator Tax")
+        create(:enterprise_fee, :per_item, name: "Sample Coordinator Fee", enterprise: coordinator,
+                                           fee_type: "admin", amount: 512.0,
+                                           tax_category: tax_category)
+      end
+      let!(:distributor_fee) do
+        tax_category = create(:tax_category, name: "Sample Distributor Tax")
+        create(:enterprise_fee, :per_item, name: "Sample Distributor Fee", enterprise: distributor,
+                                           fee_type: "admin", amount: 4.0,
+                                           tax_category: tax_category)
+      end
+
+      let!(:customer_order) { prepare_order(customer: customer) }
+
+      it "fetches data correctly" do
+        totals = service.list
+
+        expect(totals.length).to eq(6)
+
+        expected_result = [
+          ["Admin", "Sample Coordinator", "Sample Coordinator Fee", "Sample Customer",
+           "Incoming", "Sample Producer", "Sample Coordinator Tax", "512.00"],
+          ["Admin", "Sample Coordinator", "Sample Coordinator Fee", "Sample Customer",
+           "Outgoing", "Sample Coordinator", "Sample Coordinator Tax", "512.00"],
+          ["Admin", "Sample Distributor", "Sample Distributor Fee", "Sample Customer",
+           "Incoming", "Sample Producer", "Sample Distributor Tax", "4.00"],
+          ["Payment Transaction", "Sample Distributor", "Sample Payment Method", "Sample Customer",
+           nil, nil, nil, "2.00"],
+          ["Sales", "Sample Producer", "Sample Producer Fee", "Sample Customer",
+           "Outgoing", "Sample Coordinator", "Sample Producer Tax", "64.00"],
+          ["Shipment", "Sample Distributor", "Sample Shipping Method", "Sample Customer",
+           nil, nil, "Platform Rate", "1.00"]
+        ]
+
+        expected_result.each_with_index do |expected_attributes, row_index|
+          expect_total_attributes(totals[row_index], expected_attributes)
+        end
+      end
+    end
+  end
+
   describe "filtering results based on permissions" do
     let!(:distributor_a) do
       create(:distributor_enterprise, name: "Distributor A", payment_methods: [payment_method],
