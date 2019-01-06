@@ -230,10 +230,16 @@ feature %q{
         within('table.index tbody', match: :first) do
           @order.line_items.each do |item|
             expect(page).to have_selector "td", match: :first, text: item.full_name
-            expect(page).to have_selector "td.item-price", text: item.single_display_amount
-            expect(page).to have_selector "td.item-qty-show", text: item.quantity
-            expect(page).to have_selector "td.item-total", text: item.display_amount
+            expect(page).to have_selector "td.price", text: item.single_display_amount
+            expect(page).to have_selector "input.qty[value='#{item.quantity}']"
+            expect(page).to have_selector "td.total", text: item.display_amount
           end
+        end
+      end
+
+      scenario "shows the order subtotal" do
+        within('table.index tbody#subtotal') do
+          expect(page).to have_selector "td.total", text: @order.display_item_total
         end
       end
 
@@ -248,8 +254,8 @@ feature %q{
       end
 
       scenario "shows the order total" do
-        within('fieldset#order-total') do
-          expect(page).to have_selector "span.order-total", text: @order.display_total
+        within('table.index tbody#order-total') do
+          expect(page).to have_selector "td.total", text: @order.display_total
         end
       end
 
@@ -263,11 +269,9 @@ feature %q{
       scenario "shows the dropdown menu" do
         find("#links-dropdown .ofn-drop-down").click
         within "#links-dropdown" do
-          expect(page).to have_link "Edit", href: spree.edit_admin_order_path(@order)
           expect(page).to have_link "Resend Confirmation", href: spree.resend_admin_order_path(@order)
           expect(page).to have_link "Send Invoice", href: spree.invoice_admin_order_path(@order)
           expect(page).to have_link "Print Invoice", href: spree.print_admin_order_path(@order)
-          # expect(page).to have_link "Ship Order", href: spree.fire_admin_order_path(@order, :e => 'ship')
           expect(page).to have_link "Cancel Order", href: spree.fire_admin_order_path(@order, :e => 'cancel')
         end
       end
