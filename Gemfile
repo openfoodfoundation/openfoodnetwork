@@ -145,6 +145,8 @@ group :development do
   gem 'guard-rails'
   gem 'guard-rspec', '~> 4.7.3'
   gem 'rubocop', '>= 0.49.1'
+  gem 'spring', '=1.1.3'
+  gem 'spring-commands-rspec'
 
   # 1.0.9 fixed openssl issues on macOS https://github.com/eventmachine/eventmachine/issues/602
   # While we don't require this gem directly, no dependents forced the upgrade to a version
