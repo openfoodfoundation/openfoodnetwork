@@ -577,6 +577,8 @@ it:
           shopfront_category_ordering: Categorie disponibili in Vetrina
           open_date: Data apertura
           close_date: Data chiusura
+        social:
+          facebook_placeholder: p.es. www.facebook.com/PageNameHere
         stripe_connect:
           confirm_modal:
             cancel: Annulla
@@ -1373,6 +1375,11 @@ it:
   update_and_recalculate_fees: "Aggiorna e ricalcola tariffe"
   registration:
     steps:
+      images:
+        continue: "Continua"
+        back: "Indietro"
+        headline: "Grazie!"
+        description: "Carichiamo qualche immagine per rendere più bello il tuo profilo! :)"
       type:
         headline: "Ultimo passo per aggiungere %{enterprise}!"
         question: "Sei un produttore?"
@@ -1498,8 +1505,6 @@ it:
   registration_type_error: "Per favore scegline uno. Sei un produttore?"
   registration_type_producer_help: "I produttori fanno cose buone da mangiare e/o bere. Sei un produttore se le coltivi, le allevi, le infondi, le cucini, le fai fermentare, le mungi o le modelli."
   registration_type_no_producer_help: "Se non sei un produttore, probabilmente sei qualcuno che vende e distribuisce cibo. potresti essere un hub, una cooperativa, un gruppo d'acquisto, un rivenditore al dettaglio o all'ingrosso, o altro."
-  registration_images_headline: "Grazie!"
-  registration_images_description: "Carichiamo qualche immagine per rendere più bello il tuo profilo! :)"
   registration_detail_headline: "Cominciamo"
   registration_detail_enterprise: "Wow! Prima abbiamo bisogno di saperne un po' di più della tua impresa:"
   registration_detail_producer: "Wow! Prima abbiamo bisogno di saperne un po' di più della tua azienda agricola:"
@@ -1966,7 +1971,13 @@ it:
           nel tuo carrello sono diminuite. Ecco cosa è cambiato:
       now_out_of_stock: non è al momento disponibile
       only_n_remainging: "attualmente solo %{num} rimasto."
+    variants:
+      on_demand:
+        'yes': "A richiesta"
     variant_overrides:
+      on_demand:
+        'yes': "Sì"
+        'no': "No"
       inventory_products: "Inventario Prodotti"
       hidden_products: "Prodotti Nascosti"
       new_products: "Nuovi Prodotti"

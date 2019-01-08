@@ -1987,7 +1987,7 @@ fr:
   spree_admin_overview_enterprises_header: "Mes entreprises"
   spree_admin_overview_enterprises_footer: "GÉRER MES ENTREPRISES"
   spree_admin_enterprises_hubs_name: "Nom"
-  spree_admin_enterprises_create_new: "CRÉER NOUVELLE"
+  spree_admin_enterprises_create_new: "CRÉER NOUVEAU"
   spree_admin_enterprises_shipping_methods: "Méthodes de livraison"
   spree_admin_enterprises_fees: "Marges et commissions"
   spree_admin_enterprises_none_create_a_new_enterprise: "CRÉER UNE NOUVELLE ENTREPRISE"
@@ -2570,7 +2570,7 @@ fr:
             zero: "Vous n'avez aucun cycle de vente actif."
             one: "Vous avez un cycle de vente actif."
             other: "Vous avez %{count} cycles de vente actifs."
-          manage_order_cycles: "GERER LES CYCLES DE VENTE"
+          manage_order_cycles: "GÉRER LES CYCLES DE VENTE"
       payment_methods:
         new:
           new_payment_method: "Nouvelle méthode de paiement"
