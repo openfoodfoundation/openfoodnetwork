@@ -7,7 +7,7 @@ Spree::OrderMailer.class_eval do
   def cancel_email(order_or_order_id, resend = false)
     @order = find_order(order_or_order_id)
     I18n.with_locale valid_locale(@order.user) do
-      mail(to: order.email,
+      mail(to: @order.email,
            from: from_address,
            subject: mail_subject(t('order_mailer.cancel_email.subject'), resend))
     end
