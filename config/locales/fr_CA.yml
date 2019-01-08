@@ -702,6 +702,7 @@ fr_CA:
           close_date: Date de fermeture
         social:
           twitter_placeholder: ex. @OpenFoodNet_fr
+          facebook_placeholder: 'ex: www.facebook.com/NomDeLaPage'
         stripe_connect:
           connect_with_stripe: "Connecter avec Stripe"
           stripe_connect_intro: "Pour accepter des paiements utilisant la carte bancaire, vous devez connecter votre compte Stripe à Open Food Network. Cliquez sur le bouton à droite pour commencer."
@@ -1689,6 +1690,11 @@ fr_CA:
   update_and_recalculate_fees: "Mettre à jour et recalculer les frais"
   registration:
     steps:
+      images:
+        continue: "Suivant"
+        back: "Retour"
+        headline: "Merci!"
+        description: "Ajoutez maintenant de jolies photos pour que votre profil soit attractif! :)"
       type:
         headline: "Dernière étape pour ajouter %{enterprise} !"
         question: "Etes-vous un producteur?"
@@ -1823,8 +1829,6 @@ fr_CA:
   registration_type_error: "Veuillez faire un choix. Etes vous un producteur?"
   registration_type_producer_help: "Un producteur fabrique de bonnes choses à boire et à manger. Vous êtes un producteur si vous les faites pousser, les élevez, les pétrissez, transformez, fermentez, les réduisez en grains, etc."
   registration_type_no_producer_help: "Si vous n'êtes pas un producteur, vous êtes probablement un revendeur ou distributeur alimentaire: un \"hub\", une coopérative, un groupement d'achat, un revendeur, un grossiste, ou autre."
-  registration_images_headline: "Merci!"
-  registration_images_description: "Ajoutez maintenant de jolies photos pour que votre profil soit attractif! :)"
   registration_detail_headline: "Commençons"
   registration_detail_enterprise: "Woohoo! Dites-nous déjà quelques mots à propos de votre entreprise:"
   registration_detail_producer: "Woohoo! Dites-nous déjà quelques mots à propos de votre ferme:"
@@ -2429,7 +2433,13 @@ fr_CA:
           à votre demande. Voilà les modifications opérées:
       now_out_of_stock: est maintenant en rupture de stock.
       only_n_remainging: "plus que %{num} en stock."
+    variants:
+      on_demand:
+        'yes': "A volonté"
     variant_overrides:
+      on_demand:
+        'yes': "Oui"
+        'no': "Non"
       inventory_products: "Produits du Catalogue Boutique"
       hidden_products: "Produits Masqués"
       new_products: "Nouveaux Produits"

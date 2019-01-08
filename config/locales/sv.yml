@@ -441,6 +441,7 @@ sv:
           close_date: Stängningsdatum
         social:
           twitter_placeholder: t.ex. @the_prof
+          facebook_placeholder: eg. www.facebook.com/PageNameHere
         tag_rules:
           default_rules:
             by_default: Som standard
@@ -1172,6 +1173,11 @@ sv:
   who_is_managing_enterprise: "Vem är ansvarig hos  %{enterprise}?"
   registration:
     steps:
+      images:
+        continue: "Fortsätt"
+        back: "Backa"
+        headline: "Tack!"
+        description: "Låt oss ladda några säljande bilder så att din profil ser lockande ut! :)"
       type:
         headline: "Sista steget för att lägga till %{enterprise}!"
         question: "Är du en producent?"
@@ -1257,8 +1263,6 @@ sv:
   registration_type_error: "Var vänlig välj en. Är du en producent?"
   registration_type_producer_help: "Producenter gör smakfulla rätter att äta och/eller dricka. Du är en producent om du odlar det, föder upp det, brygger det, bakar det  behandlar det, förädlar det eller formar det."
   registration_type_no_producer_help: "Om du inte ät en producent är du antagligen någon som säljer och distribuerar mat. Du borde bli ett matställe, kooperation, inköpsgrupp, detaljhandlare,grossist eller annat. "
-  registration_images_headline: "Tack!"
-  registration_images_description: "Låt oss ladda några säljande bilder så att din profil ser lockande ut! :)"
   registration_detail_headline: "Låt oss börja"
   registration_detail_enterprise: "Hej! Först bejöver vi veta lite om ditt företag:"
   registration_detail_producer: "Hej! Först behöver vi veta lite om din gård:"
@@ -1814,7 +1818,13 @@ sv:
           kundvagn minskat. Detta har ändrats:
       now_out_of_stock: Är nu slut
       only_n_remainging: "nu  återstår endast %{num}"
+    variants:
+      on_demand:
+        'yes': "På begäran "
     variant_overrides:
+      on_demand:
+        'yes': "Ja"
+        'no': "Nej"
       inventory_products: "Lagerstatus produkter"
       hidden_products: "Dolda produkter"
       new_products: "Nya produkter"
