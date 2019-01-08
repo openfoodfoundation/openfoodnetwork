@@ -24,6 +24,11 @@ en_GB:
           attributes:
             orders_close_at:
               after_orders_open_at: must be after open date
+        variant_override:
+          count_on_hand:
+            using_producer_stock_settings_but_count_on_hand_set: "must be blank because using producer stock settings"
+            on_demand_but_count_on_hand_set: "must be blank if on demand"
+            limited_stock_but_no_count_on_hand: "must be specified because forcing limited stock"
   activemodel:
     errors:
       models:
@@ -715,7 +720,9 @@ en_GB:
           close_date: Close Date
         social:
           twitter_placeholder: eg. @the_prof
+          instagram_placeholder: eg. the_prof
           facebook_placeholder: eg. www.facebook.com/PageNameHere
+          linkedin_placeholder: eg. www.linkedin.com/in/YourNameHere
         stripe_connect:
           connect_with_stripe: "Connect with Stripe"
           stripe_connect_intro: "To accept payments using credit card, you will need to connect your stripe account to the Open Food Network. Use the button to the right to get started."
@@ -2453,6 +2460,7 @@ en_GB:
         'yes': "Unlimited"
     variant_overrides:
       on_demand:
+        use_producer_settings: "Use producer stock settings"
         'yes': "Yes"
         'no': "No"
       inventory_products: "Inventory Products"
@@ -2558,6 +2566,12 @@ en_GB:
             other: "You have %{count} active order cycles."
           manage_order_cycles: "MANAGE ORDER CYCLES"
       payment_methods:
+        new:
+          new_payment_method: "New Payment Method"
+          back_to_payment_methods_list: "Back To Payment Methods List"
+        edit:
+          editing_payment_method: "Editing Payment Method"
+          back_to_payment_methods_list: "Back To Payment Methods List"
         stripe_connect:
           enterprise_select_placeholder: Choose...
           loading_account_information_msg: Loading account information from stripe, please wait...
