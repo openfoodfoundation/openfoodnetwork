@@ -68,6 +68,18 @@ module ProductImport
 
     private
 
+    def find_or_initialize_variant_override(entry, existing_variant)
+      existing_variant_override = VariantOverride.where(
+        variant_id: existing_variant.id,
+        hub_id: entry.enterprise_id
+      ).first
+
+      existing_variant_override || VariantOverride.new(
+        variant_id: existing_variant.id,
+        hub_id: entry.enterprise_id
+      )
+    end
+
     def enterprise_validation(entry)
       return if name_presence_error entry
       return if enterprise_not_found_error entry
@@ -310,21 +322,12 @@ module ProductImport
     end
 
     def create_inventory_item(entry, existing_variant)
-      existing_variant_override = VariantOverride.where(
-        variant_id: existing_variant.id,
-        hub_id: entry.enterprise_id
-      ).first
+      find_or_initialize_variant_override(entry, existing_variant).tap do |variant_override|
+        check_variant_override_stock_settings(entry, variant_override)
 
-      variant_override = existing_variant_override || VariantOverride.new(
-        variant_id: existing_variant.id,
-        hub_id: entry.enterprise_id
-      )
-
-      variant_override.assign_attributes(count_on_hand: entry.on_hand, import_date: @import_time)
-      check_on_hand_nil(entry, variant_override)
-      variant_override.assign_attributes(entry.attributes.slice('price', 'on_demand'))
-
-      variant_override
+        variant_override.assign_attributes(import_date: @import_time)
+        variant_override.assign_attributes(entry.attributes.slice('price', 'on_demand'))
+      end
     end
 
     def mark_as_inventory_item(entry, variant_override)
@@ -354,6 +357,12 @@ module ProductImport
       object.on_hand = 0 if object.respond_to?(:on_hand)
       object.count_on_hand = 0 if object.respond_to?(:count_on_hand)
       entry.on_hand_nil = true
+    end
+
+    def check_variant_override_stock_settings(entry, object)
+      object.count_on_hand = entry.on_hand.presence
+      object.on_demand = object.count_on_hand.blank? if entry.on_demand.blank?
+      entry.on_hand_nil = object.count_on_hand.blank?
     end
   end
 end

@@ -2,32 +2,47 @@ Spree::OrderMailer.class_eval do
   helper HtmlHelper
   helper CheckoutHelper
   helper SpreeCurrencyHelper
+  include I18nHelper
+
+  def cancel_email(order_or_order_id, resend = false)
+    @order = find_order(order_or_order_id)
+    I18n.with_locale valid_locale(@order.user) do
+      mail(to: order.email,
+           from: from_address,
+           subject: mail_subject(t('order_mailer.cancel_email.subject'), resend))
+    end
+  end
 
   def confirm_email_for_customer(order_or_order_id, resend = false)
     @order = find_order(order_or_order_id)
-    subject = build_subject(t('order_mailer.confirm_email.subject'), resend)
-    mail(:to => @order.email,
-         :from => from_address,
-         :subject => subject,
-         :reply_to => @order.distributor.contact.email)
+    I18n.with_locale valid_locale(@order.user) do
+      subject = mail_subject(t('order_mailer.confirm_email.subject'), resend)
+      mail(:to => @order.email,
+           :from => from_address,
+           :subject => subject,
+           :reply_to => @order.distributor.contact.email)
+    end
   end
 
   def confirm_email_for_shop(order_or_order_id, resend = false)
     @order = find_order(order_or_order_id)
-    subject = build_subject(t('order_mailer.confirm_email.subject'), resend)
-    mail(:to => @order.distributor.contact.email,
-         :from => from_address,
-         :subject => subject)
+    I18n.with_locale valid_locale(@order.user) do
+      subject = mail_subject(t('order_mailer.confirm_email.subject'), resend)
+      mail(:to => @order.distributor.contact.email,
+           :from => from_address,
+           :subject => subject)
+    end
   end
 
   def invoice_email(order_or_order_id, pdf)
     @order = find_order(order_or_order_id)
-    subject = build_subject(t(:invoice))
-    attachments["invoice-#{@order.number}.pdf"] = pdf if pdf.present?
-    mail(:to => @order.email,
-         :from => from_address,
-         :subject => subject,
-         :reply_to => @order.distributor.contact.email)
+    attach_file("invoice-#{@order.number}.pdf", pdf)
+    I18n.with_locale valid_locale(@order.user) do
+      mail(to: @order.email,
+           from: from_address,
+           subject: mail_subject(t(:invoice), false),
+           reply_to: @order.distributor.contact.email)
+    end
   end
 
   private
@@ -37,8 +52,12 @@ Spree::OrderMailer.class_eval do
     order_or_order_id.respond_to?(:id) ? order_or_order_id : Spree::Order.find(order_or_order_id)
   end
 
-  def build_subject( subject_text, resend = false )
-    subject = (resend ? "[#{t(:resend).upcase}] " : "")
-    subject += "#{Spree::Config[:site_name]} #{subject_text} ##{@order.number}"
+  def mail_subject(base_subject, resend)
+    resend_prefix = (resend ? "[#{t(:resend).upcase}] " : '')
+    "#{resend_prefix}#{Spree::Config[:site_name]} #{base_subject} ##{@order.number}"
+  end
+
+  def attach_file(filename, file)
+    attachments[filename] = file if file.present?
   end
 end
