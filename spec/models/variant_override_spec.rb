@@ -135,7 +135,7 @@ describe VariantOverride do
   end
 
   describe "with nil count on hand" do
-    let(:variant_override) { create(:variant_override, variant: variant, hub: hub, count_on_hand: nil) }
+    let(:variant_override) { create(:variant_override, variant: variant, hub: hub, count_on_hand: nil, on_demand: true) }
 
     describe "stock_overridden?" do
       it "returns false" do
