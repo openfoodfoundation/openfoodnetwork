@@ -76,15 +76,18 @@ class ProductFactory
       unit_value: 1,
       on_demand: true
     )
-    create_product_with_distribution(params)
+    create_product_with_distribution(params, hash[:supplier])
   end
 
-  def create_product_with_distribution(params)
-    product = Spree::Product.create_with(params).find_or_create_by_name(params[:name])
-    ProductDistribution.create(
-      product: product,
-      distributor: params[:distributor]
-    )
+  def create_product_with_distribution(params, supplier)
+    product = Spree::Product.create_with(params).find_or_create_by_name!(params[:name])
+
+    distribution_params = {
+      distributor_id: params[:distributor].id,
+      enterprise_fee_id: supplier.enterprise_fees.first.id
+    }
+    ProductDistribution.create_with(distribution_params).find_or_create_by_product_id!(product.id)
+
     product
   end
 end

@@ -15,7 +15,7 @@ module Addressing
 
   def zone
     zone = Spree::Zone.find_or_create_by_name!("Australia")
-    zone.members.create(zonable: country)
+    zone.members.create!(zonable: country)
     zone
   end
 

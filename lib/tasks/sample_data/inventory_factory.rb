@@ -18,7 +18,7 @@ class InventoryFactory
       enterprise: shop,
       variant: product.variants.first,
       visible: true
-    ).find_or_create_by_variant_id(product.variants.first.id)
+    ).find_or_create_by_variant_id!(product.variants.first.id)
     create_override(shop, product)
   end
 
@@ -29,6 +29,6 @@ class InventoryFactory
       price: 12,
       on_demand: false,
       count_on_hand: 5
-    ).find_or_create_by_variant_id(product.variants.first.id)
+    ).find_or_create_by_variant_id!(product.variants.first.id)
   end
 end
