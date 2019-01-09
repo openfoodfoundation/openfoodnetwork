@@ -432,6 +432,7 @@ FactoryBot.define do
       create(:payment, order: order, amount: order.total, payment_method: payment_method, state: 'checkout')
 
       while !order.completed? do break unless order.next! end
+      order.updater.update_adjustments # this is required to clean up duplicated shipping fees
     end
   end
 
