@@ -9,9 +9,6 @@ addons:
 
 # Set the timezone for phantomjs with TZ
 # Set the timezone for karma with TIMEZONE
-#
-# The test cases are roughly split according to their test times.
-# It would be better to use https://github.com/ArturT/knapsack.
 env:
   global:
     - TZ="Australia/Melbourne"
@@ -21,7 +18,7 @@ env:
     - CI_NODE_INDEX=0
     - CI_NODE_INDEX=1
     - CI_NODE_INDEX=2
-    - CI_NODE_INDEX=3
+    - CI_NODE_INDEX=3 RSPEC_ENGINES="true"
     - CI_NODE_INDEX=4 KARMA="true" GITHUB_DEPLOY="true"
 
 before_script:
@@ -42,6 +39,7 @@ before_script:
 
 script:
   - 'if [ "$KARMA" = "true" ]; then bundle exec rake karma:run; else echo "Skipping karma run"; fi'
+  - 'if [ "$RSPEC_ENGINES" = "true" ]; then bundle exec rake openfoodnetwork:specs:engines:rspec; else echo "Skipping RSpec run in engines"; fi'
   - "bundle exec rake 'knapsack:rspec[--format progress --tag ~performance]'"
 
 after_success:

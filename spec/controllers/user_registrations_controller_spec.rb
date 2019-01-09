@@ -48,6 +48,16 @@ describe UserRegistrationsController, type: :controller do
       expect(json).to eq({"email" => "test@test.com"})
       expect(controller.spree_current_user).to be_nil
     end
+
+    it "sets user.locale from cookie on create" do
+      original_locale_cookie = cookies[:locale]
+      cookies[:locale] = "pt"
+
+      xhr :post, :create, spree_user: user_params, use_route: :spree
+
+      expect(assigns[:user].locale).to eq("pt")
+      cookies[:locale] = original_locale_cookie
+    end
   end
 
   context "when registration fails" do
