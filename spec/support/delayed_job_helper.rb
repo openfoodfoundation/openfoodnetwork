@@ -60,7 +60,10 @@ module OpenFoodNetwork
       end
 
       failure_message do |event_proc|
-        @exception || "expected #{klass} to be enqueued matching #{options.inspect} (#{@jobs_created.count} others enqueued)"
+        count = 0
+        count = @jobs_created.count if @jobs_created
+
+        @exception || "expected #{klass} to be enqueued matching #{options.inspect} (#{count} others enqueued)"
       end
 
       failure_message_when_negated do |event_proc|
