@@ -2774,7 +2774,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           display_as: Display As
       reports:
         table:
-          select_and_search: "Select filters and click on SEARCH to access your data."
+          select_and_search: "Select filters and click on %{option} to access your data."
         bulk_coop:
           bulk_coop_supplier_report: 'Bulk Co-op - Totals by Supplier'
           bulk_coop_allocation: 'Bulk Co-op - Allocation'
