@@ -12,11 +12,11 @@ module OpenFoodNetwork
       let!(:o1) { create(:order_with_totals_and_distribution,
                           user: user1, distributor: hub1,
                           completed_at: 1.day.ago)
-      } #total=10
+      } #total=13 (10 + 3 shipping fee)
       let!(:o2) { create(:order_with_totals_and_distribution,
                           user: user1, distributor: hub1,
                           completed_at: 1.day.ago)
-      } #total=10
+      } #total=13 (10 + 3 shipping fee)
       let!(:p1) { create(:payment, order: o1, amount: 15.00,
                           state: "completed")
       }
@@ -25,7 +25,7 @@ module OpenFoodNetwork
       }
 
       it "finds the correct balance for this email and enterprise" do
-        UserBalanceCalculator.new(o1.email, hub1).balance.should == -3
+        UserBalanceCalculator.new(o1.email, hub1).balance.should == -9 # = 15 + 2 - 13 - 13
       end
 
       context "with another hub" do
@@ -33,13 +33,13 @@ module OpenFoodNetwork
         let!(:o3) { create(:order_with_totals_and_distribution,
                             user: user1, distributor: hub2,
                             completed_at: 1.day.ago)
-        } #total=10
+        } #total=13 (10 + 3 shipping fee)
         let!(:p3) { create(:payment, order: o3, amount: 15.00,
                             state: "completed") 
         }
 
         it "does not find the balance for other enterprises" do
-          UserBalanceCalculator.new(o3.email, hub2).balance.should == 5
+          UserBalanceCalculator.new(o3.email, hub2).balance.should == 2 # = 15 - 13
         end
       end
 
@@ -48,13 +48,13 @@ module OpenFoodNetwork
         let!(:o4) { create(:order_with_totals_and_distribution,
                            user: user2, distributor: hub1,
                            completed_at: 1.day.ago) 
-        } #total=10
+        } #total=13 (10 + 3 shipping fee)
         let!(:p3) { create(:payment, order: o4, amount: 20.00,
                             state: "completed") 
         }
 
         it "does not find the balance for other users" do
-          UserBalanceCalculator.new(o4.email, hub1).balance.should == 10
+          UserBalanceCalculator.new(o4.email, hub1).balance.should == 7 # = 20 - 13
         end
       end
 
@@ -68,7 +68,7 @@ module OpenFoodNetwork
         }
 
         it "does not include canceled orders in the balance" do
-          UserBalanceCalculator.new(o4.email, hub1).balance.should == -3
+          UserBalanceCalculator.new(o4.email, hub1).balance.should == -9 # = 15 + 2 - 13 - 13
         end
       end
     end
