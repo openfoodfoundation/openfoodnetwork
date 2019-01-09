@@ -303,6 +303,9 @@ FactoryBot.define do
       p = create(:simple_product, distributors: [order.distributor])
       FactoryBot.create(:line_item_with_shipment, shipping_fee: proxy.shipping_fee, order: order, product: p)
       order.reload
+
+      # this will update order shipping fees and also order totals (through order.update!)
+      order.update_shipping_fees!
     end
   end
 
