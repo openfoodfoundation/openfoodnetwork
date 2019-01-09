@@ -47,7 +47,6 @@ Metrics/LineLength:
   - app/controllers/base_controller.rb
   - app/controllers/cart_controller.rb
   - app/controllers/checkout_controller.rb
-  - app/controllers/enterprises_controller.rb
   - app/controllers/shop_controller.rb
   - app/controllers/spree/admin/adjustments_controller_decorator.rb
   - app/controllers/spree/admin/base_controller_decorator.rb
@@ -435,7 +434,6 @@ Metrics/AbcSize:
   - app/controllers/cart_controller.rb
   - app/controllers/checkout_controller.rb
   - app/controllers/discourse_sso_controller.rb
-  - app/controllers/enterprises_controller.rb
   - app/controllers/spree/admin/adjustments_controller_decorator.rb
   - app/controllers/spree/admin/line_items_controller_decorator.rb
   - app/controllers/spree/admin/orders_controller_decorator.rb
