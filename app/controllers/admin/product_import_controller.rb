@@ -16,8 +16,7 @@ module Admin
       @original_filename = params[:file].try(:original_filename)
       @non_updatable_fields = ProductImport::EntryValidator.non_updatable_fields
 
-      check_file_errors @importer
-      check_spreadsheet_has_data @importer
+      return if contains_errors? @importer
 
       @ams_data = ams_data
     end
@@ -63,15 +62,19 @@ module Admin
       true
     end
 
-    def check_file_errors(importer)
+    def contains_errors?(importer)
       if importer.errors.present?
         redirect_to '/admin/product_import', notice: @importer.errors.full_messages.to_sentence
+        return true
       end
+
+      check_spreadsheet_has_data importer
     end
 
     def check_spreadsheet_has_data(importer)
       unless importer.item_count
         redirect_to '/admin/product_import', notice: I18n.t(:product_import_no_data_in_spreadsheet_notice)
+        true
       end
     end
 
