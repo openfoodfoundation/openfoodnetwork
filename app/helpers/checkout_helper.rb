@@ -54,7 +54,7 @@ module CheckoutHelper
   end
 
   def display_adjustment_tax_rates(adjustment)
-    tax_rates = adjustment.tax_rates
+    tax_rates = TaxRateFinder.tax_rates_of(adjustment)
     tax_rates.map { |tr| number_to_percentage(tr.amount * 100, :precision => 1) }.join(", ")
   end
 

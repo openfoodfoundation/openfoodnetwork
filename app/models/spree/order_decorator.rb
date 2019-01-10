@@ -293,7 +293,7 @@ Spree::Order.class_eval do
 
   def tax_adjustment_totals
     tax_adjustments.each_with_object(Hash.new) do |adjustment, hash|
-      tax_rates = adjustment.tax_rates
+      tax_rates = TaxRateFinder.tax_rates_of(adjustment)
       tax_rates_hash = Hash[tax_rates.collect do |tax_rate|
         tax_amount = tax_rates.one? ? adjustment.included_tax : tax_rate.compute_tax(adjustment.amount)
         [tax_rate, tax_amount]
