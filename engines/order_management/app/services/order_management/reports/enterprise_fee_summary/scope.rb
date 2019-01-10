@@ -282,7 +282,7 @@ module OrderManagement
           join_scope(
             <<-JOIN_STRING.strip_heredoc
               LEFT OUTER JOIN enterprises AS outgoing_exchange_enterprises
-                ON (outgoing_exchange_enterprises.id = outgoing_exchanges.sender_id)
+                ON (outgoing_exchange_enterprises.id = outgoing_exchanges.receiver_id)
             JOIN_STRING
           )
         end
