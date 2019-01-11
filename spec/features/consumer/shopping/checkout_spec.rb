@@ -149,10 +149,17 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
           choose sm2.name
           choose pm1.name
 
-          expect do
-            place_order
-            page.should have_content "Your order has been processed successfully"
-          end.to enqueue_job ConfirmOrderJob
+          place_order
+
+          expect(page).to have_content "Your order has been processed successfully"
+        end
+
+        it 'enqueues a job' do
+          visit checkout_path
+          choose sm2.name
+          choose pm1.name
+
+          expect { place_order }.to enqueue_job ConfirmOrderJob
         end
       end
 
