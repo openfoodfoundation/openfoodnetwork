@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'open_food_network/permissions'
 
-xdescribe ProductImport::ProductImporter do
+describe ProductImport::ProductImporter do
   include AuthenticationWorkflow
 
   let!(:admin) { create(:admin_user) }
