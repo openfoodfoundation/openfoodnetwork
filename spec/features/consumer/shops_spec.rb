@@ -17,7 +17,7 @@ feature 'Shops', js: true do
     producer.set_producer_property 'Organic', 'NASAA 12345'
   end
 
-  pending "searches by URL" do
+  it "searches by URL" do
     visit shops_path(anchor: "/?query=xyzzy")
     expect(page).to have_content "Sorry, no results found for xyzzy"
   end
