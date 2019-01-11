@@ -656,10 +656,11 @@ end
 
 FactoryBot.modify do
   factory :stock_location, class: Spree::StockLocation do
-    name { 'default' }
-
     # keeps the test stock_location unique
     initialize_with { DefaultStockLocation.find_or_create }
+
+    # Ensures the name attribute is not assigned after instantiating the default location
+    transient { name 'default' }
   end
 
   factory :shipment, class: Spree::Shipment do

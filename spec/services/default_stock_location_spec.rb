@@ -4,7 +4,7 @@ describe DefaultStockLocation do
   describe '.create!' do
     it "names the location 'OFN default'" do
       stock_location = described_class.create!
-      expect(stock_location.name).to eq('OFN default')
+      expect(stock_location.name).to eq('default')
     end
 
     it 'sets the location in the default country' do
@@ -21,12 +21,45 @@ describe DefaultStockLocation do
   end
 
   describe '.destroy_all' do
-    it "removes all stock locations named 'OFN default'" do
-      create(:stock_location, name: 'OFN default')
-      create(:stock_location, name: 'OFN default')
+    it "removes all stock locations named 'default'" do
+      create(:stock_location, name: 'default')
 
       expect { described_class.destroy_all }
-        .to change { Spree::StockLocation.count }.from(2).to(0)
+        .to change { Spree::StockLocation.count }.to(0)
+    end
+  end
+
+  describe '.find_or_create' do
+    context 'when a location named default already exists' do
+      let!(:location) do
+        country = create(:country)
+        state = create(:state, country: country)
+        Spree::StockLocation.create!(
+          name: 'default',
+          country_id: country.id,
+          state_id: state.id
+        )
+      end
+
+      it 'returns the location' do
+        expect(described_class.find_or_create).to eq(location)
+      end
+
+      it 'does not create any other location' do
+        expect { described_class.find_or_create }.not_to change(Spree::StockLocation, :count)
+      end
+    end
+
+    context 'when a location named default does not exist' do
+      it 'returns the location' do
+        location = described_class.find_or_create
+        expect(location.name).to eq('default')
+      end
+
+      it 'does not create any other location' do
+        expect { described_class.find_or_create }
+          .to change(Spree::StockLocation, :count).from(0).to(1)
+      end
     end
   end
 end
