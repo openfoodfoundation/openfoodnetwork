@@ -4,6 +4,7 @@ feature %q{
   As an Administrator
   I want to be able to manage orders in bulk
 } , js: true do
+  include AdminHelper
   include AuthenticationWorkflow
   include WebHelper
 
@@ -189,11 +190,7 @@ feature %q{
     context "modifying the weight/volume of a line item" do
       it "price is altered" do
         visit '/admin/orders/bulk_management'
-        find("div#columns-dropdown", :text => "COLUMNS").click
-        find("div#columns-dropdown div.menu div.menu_item", text: "Weight/Volume").click
-        find("div#columns-dropdown div.menu div.menu_item", text: "Price").click
-        # hide dropdown
-        find("div#columns-dropdown", :text => "COLUMNS").click
+        toggle_columns "Weight/Volume", "Price"
         within "tr#li_#{li1.id}" do
           expect(page).to have_field "price", with: "50.00"
           fill_in "final_weight_volume", :with => 2000
@@ -210,9 +207,7 @@ feature %q{
     context "modifying the quantity of a line item" do
       it "price is altered" do
         visit '/admin/orders/bulk_management'
-        find("div#columns-dropdown", :text => "COLUMNS").click
-        find("div#columns-dropdown div.menu div.menu_item", text: "Price").click
-        find("div#columns-dropdown", :text => "COLUMNS").click
+        toggle_columns "Price"
         within "tr#li_#{li1.id}" do
           expect(page).to have_field "price", with: "#{format("%.2f",li1.price * 5)}"
           fill_in "quantity", :with => 6
@@ -224,9 +219,7 @@ feature %q{
     context "modifying the quantity of a line item" do
       it "weight/volume is altered" do
         visit '/admin/orders/bulk_management'
-        find("div#columns-dropdown", :text => "COLUMNS").click
-        find("div#columns-dropdown div.menu div.menu_item", text: "Weight/Volume").click
-        find("div#columns-dropdown", :text => "COLUMNS").click
+        toggle_columns "Weight/Volume"
         within "tr#li_#{li1.id}" do
           expect(page).to have_field "final_weight_volume", with: "#{li1.final_weight_volume.round}"
           fill_in "quantity", :with => 6
@@ -246,9 +239,7 @@ feature %q{
         expect(page).to have_selector "th", :text => "QUANTITY"
         expect(page).to have_selector "th", :text => "MAX"
 
-        find("div#columns-dropdown", :text => "COLUMNS").click
-        find("div#columns-dropdown div.menu div.menu_item", text: "Producer").click
-        find("div#columns-dropdown", :text => "COLUMNS").click
+        toggle_columns "Producer"
 
         expect(page).to have_no_selector "th", :text => "PRODUCER"
         expect(page).to have_selector "th", :text => "NAME"

@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 feature 'Subscriptions' do
+  include AdminHelper
   include AuthenticationWorkflow
   include WebHelper
 
@@ -62,8 +63,7 @@ feature 'Subscriptions' do
         # Toggling columns
         expect(page).to have_selector "th.customer"
         expect(page).to have_content subscription.customer.email
-        first("div#columns-dropdown", :text => "COLUMNS").click
-        first("div#columns-dropdown div.menu div.menu_item", text: "Customer").click
+        toggle_columns "Customer"
         expect(page).to have_no_selector "th.customer"
         expect(page).to have_no_content subscription.customer.email
 
