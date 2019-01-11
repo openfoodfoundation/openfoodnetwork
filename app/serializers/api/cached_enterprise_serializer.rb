@@ -101,12 +101,11 @@ module Api
     end
 
     def distributed_producer_properties
-      properties = Spree::Property
-        .joins(
-          producer_properties: {
-            producer: { supplied_products: { variants: { exchanges: :order_cycle } } }
-          }
-        )
+      properties = Spree::Property.joins(
+        producer_properties: {
+          producer: { supplied_products: { variants: { exchanges: :order_cycle } } }
+        }
+      )
         .merge(Exchange.outgoing)
         .merge(Exchange.to_enterprise(enterprise))
         .select('DISTINCT spree_properties.*')
