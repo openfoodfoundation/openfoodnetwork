@@ -3,7 +3,7 @@ require 'spec_helper'
 include AuthenticationWorkflow
 
 module OpenFoodNetwork
-  xdescribe OrderCycleManagementReport do
+  describe OrderCycleManagementReport do
     context "as a site admin" do
       let(:user) do
         user = create(:user)

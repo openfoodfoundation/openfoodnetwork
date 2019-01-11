@@ -63,7 +63,7 @@ describe Spree::Admin::ReportsController, type: :controller do
   let(:resulting_products) { assigns(:report).table_items.map(&:product) }
 
   # As manager of a coordinator (coordinator1)
-  xcontext "Coordinator Enterprise User" do
+  context "Coordinator Enterprise User" do
     let!(:present_objects) { [orderA1, orderA2, orderB1, orderB2] }
 
     before { login_as_enterprise_user [coordinator1] }
@@ -79,7 +79,7 @@ describe Spree::Admin::ReportsController, type: :controller do
   end
 
   # As a Distributor Enterprise user for distributor1
-  xcontext "Distributor Enterprise User" do
+  context "Distributor Enterprise User" do
     before { login_as_enterprise_user [distributor1] }
 
     describe 'Orders and Distributors' do
@@ -148,7 +148,7 @@ describe Spree::Admin::ReportsController, type: :controller do
     before { login_as_enterprise_user [supplier1] }
 
     describe 'index' do
-      xit "loads reports relevant to producers" do
+      it "loads reports relevant to producers" do
         spree_get :index
 
         report_types = assigns(:reports).keys
@@ -157,7 +157,7 @@ describe Spree::Admin::ReportsController, type: :controller do
       end
     end
 
-    xdescribe 'Bulk Coop' do
+    describe 'Bulk Coop' do
       context "where I have granted P-OC to the distributor" do
         let!(:present_objects) { [orderA1, orderA2] }
 
@@ -182,7 +182,7 @@ describe Spree::Admin::ReportsController, type: :controller do
       end
     end
 
-    xdescribe 'Orders & Fulfillment' do
+    describe 'Orders & Fulfillment' do
       let!(:present_objects) { [orderA1, orderA2] }
 
       context "where I have granted P-OC to the distributor" do

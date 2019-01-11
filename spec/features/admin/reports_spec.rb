@@ -1,6 +1,6 @@
 require "spec_helper"
 
-xfeature %q{
+feature %q{
     As an administrator
     I want numbers, all the numbers!
 } do

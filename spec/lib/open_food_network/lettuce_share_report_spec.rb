@@ -3,7 +3,7 @@ require 'spec_helper'
 require 'open_food_network/lettuce_share_report'
 
 module OpenFoodNetwork
-  xdescribe LettuceShareReport do
+  describe LettuceShareReport do
     let(:user) { create(:user) }
     let(:report) { LettuceShareReport.new user, {}, true }
     let(:variant) { create(:variant) }
