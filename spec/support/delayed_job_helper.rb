@@ -1,3 +1,5 @@
+require './spec/support/enqueue_job_matcher'
+
 module OpenFoodNetwork
   module DelayedJobHelper
     def run_job(job)
@@ -26,53 +28,9 @@ module OpenFoodNetwork
       Delayed::Job.delete_all
     end
 
-
     # expect { foo }.to enqueue_job MyJob, field1: 'foo', field2: 'bar'
-    RSpec::Matchers.define :enqueue_job do |klass, options = {}|
-      match do |event_proc|
-        last_job_id_before = Delayed::Job.last.andand.id || 0
-
-        begin
-          event_proc.call
-        rescue StandardError => e
-          @exception = e
-          raise e
-        end
-
-        @jobs_created = Delayed::Job.where('id > ?', last_job_id_before)
-
-        @jobs_created.any? do |job|
-          job = job.payload_object
-
-          match = true
-          match &= (job.class == klass)
-
-          options.each_pair do |k, v|
-            begin
-              match &= (job[k] == v)
-            rescue NameError
-              match = false
-            end
-          end
-
-          match
-        end
-      end
-
-      failure_message do |event_proc|
-        count = 0
-        count = @jobs_created.count if @jobs_created
-
-        @exception || "expected #{klass} to be enqueued matching #{options.inspect} (#{count} others enqueued)"
-      end
-
-      failure_message_when_negated do |event_proc|
-        @exception || "expected #{klass} to not be enqueued matching #{options.inspect}"
-      end
-
-      def supports_block_expectations?
-        true
-      end
+    def enqueue_job(job, options = {})
+      EnqueueJobMatcher.new(job, options)
     end
   end
 end
