@@ -460,43 +460,13 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
   end
 
   def default_variant_options
-    { product: product, producer: producer, coordinator: coordinator, distributor: distributor,
-      order_cycle: order_cycle }
+    { product: product, producer: producer, is_master: false, coordinator: coordinator,
+      distributor: distributor, order_cycle: order_cycle }
   end
 
   def prepare_variant(options = {})
-    target = default_variant_options.merge(options)
-
-    create(:variant, product: target[:product], is_master: false).tap do |variant|
-      exchange_options = { producer: target[:producer], coordinator: target[:coordinator],
-                           distributor: target[:distributor],
-                           incoming_exchange_fees: target[:incoming_exchange_fees],
-                           outgoing_exchange_fees: target[:outgoing_exchange_fees] }
-      setup_exchanges(target[:order_cycle], variant, exchange_options)
-    end
-  end
-
-  def setup_exchanges(order_cycle, variant, options)
-    setup_exchange(order_cycle, variant, true, sender: options[:producer],
-                                               receiver: options[:coordinator],
-                                               enterprise_fees: options[:incoming_exchange_fees])
-    setup_exchange(order_cycle, variant, false, sender: options[:coordinator],
-                                                receiver: options[:distributor],
-                                                enterprise_fees: options[:outgoing_exchange_fees])
-  end
-
-  def setup_exchange(order_cycle, variant, incoming, options)
-    exchange_attributes = { order_cycle_id: order_cycle.id, incoming: incoming,
-                            sender_id: options[:sender].id, receiver_id: options[:receiver].id }
-    exchange = Exchange.where(exchange_attributes).first || create(:exchange, exchange_attributes)
-    exchange.variants << variant
-    attach_enterprise_fees(exchange, options[:enterprise_fees] || [])
-  end
-
-  def attach_enterprise_fees(exchange, enterprise_fees)
-    enterprise_fees.each do |enterprise_fee|
-      exchange.enterprise_fees << enterprise_fee
-    end
+    target_options = default_variant_options.merge(options)
+    create(:variant, :with_order_cycle, target_options)
   end
 
   def per_item_calculator(amount)
