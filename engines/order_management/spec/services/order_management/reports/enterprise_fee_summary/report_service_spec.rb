@@ -91,7 +91,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
     let!(:distributor_tax_category) { create(:tax_category, name: "Sample Distributor Tax") }
 
     let!(:customer_order) { prepare_order(customer: customer) }
-    let!(:customer_incomplete_order) { setup_order(customer: customer) }
+    let!(:customer_incomplete_order) { prepare_incomplete_order(customer: customer) }
     let!(:second_customer_order) { prepare_order(customer: customer) }
     let!(:other_customer_order) { prepare_order(customer: another_customer) }
 
@@ -448,7 +448,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
       shipping_method: shipping_method, variant: variant }
   end
 
-  def setup_order(options = {})
+  def prepare_incomplete_order(options = {})
     target_options = default_order_options.merge(options)
     create(:order, :with_line_item, target_options)
   end
