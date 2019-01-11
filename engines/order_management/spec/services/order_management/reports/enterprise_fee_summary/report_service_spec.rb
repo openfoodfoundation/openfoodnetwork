@@ -5,11 +5,11 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
 
   # Basic data.
   let!(:shipping_method) do
-    create(:shipping_method, name: "Sample Shipping Method", calculator: per_item_calculator(1.0))
+    create(:shipping_method, :per_item, amount: 1, name: "Sample Shipping Method")
   end
 
   let!(:payment_method) do
-    create(:payment_method, name: "Sample Payment Method", calculator: per_item_calculator(2.0))
+    create(:payment_method, :per_item, amount: 2, name: "Sample Payment Method")
   end
 
   # Create enterprises.
@@ -467,10 +467,6 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
   def prepare_variant(options = {})
     target_options = default_variant_options.merge(options)
     create(:variant, :with_order_cycle, target_options)
-  end
-
-  def per_item_calculator(amount)
-    Spree::Calculator::PerItem.new(preferred_amount: amount)
   end
 
   def count_totals(totals, attributes)
