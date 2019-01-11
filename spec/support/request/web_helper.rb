@@ -26,11 +26,6 @@ module WebHelper
     have_selector selector
   end
 
-  def current_path_should_be path
-    current_path = URI.parse(current_url).path
-    expect(page).to have_current_path path
-  end
-
   def fill_in_fields(field_values)
     field_values.each do |key, value|
       begin
@@ -46,49 +41,8 @@ module WebHelper
     page.find_by_id(from).find("option[value='#{value}']").select_option
   end
 
-  def should_have_failed
-    page.status_code.should == 200
-    errors.count.should > 0
-  end
-
-  def successful?
-    page.status_code.should == 200
-    errors.count.should == 0
-    flash_message.should include 'successful'
-  end
-
-  def updated_field(field, value)
-    wait_for_ajax
-    yield(field, value)
-  rescue Capybara::TimeoutError
-    flunk "Expected #{field} to update to #{value}."
-  end
-
-  def updated_css(css)
-    wait_for_ajax
-    yield(css)
-  rescue Capybara::TimeoutError
-    flunk "Expected updated css: #{css}."
-  end
-
-  def user_nav
-    find('div.user/div.name').text
-  end
-
   def flash_message
     find('.flash', visible: false).text.strip
-  end
-
-  def errors
-    all('.error')
-  end
-
-  def property_name
-    find('.property-name').text
-  end
-
-  def error_messages
-    errors.map(&:text)
   end
 
   def handle_js_confirm(accept=true)
@@ -96,21 +50,9 @@ module WebHelper
     yield
   end
 
-  def click_dialog_button(button_content)
-    page.find(:xpath, "//div[@class=\"ui-dialog-buttonset\"]//span[contains(text(),\"#{button_content}\")]").click
-  end
-
   def visit_delete(url)
     response = Capybara.current_session.driver.delete url
     click_link 'redirected' if response.status == 302
-  end
-
-  def trigger_manual_event(field_selector, event = 'change')
-    page.execute_script("$('#{field_selector}').trigger('#{event}');")
-  end
-
-  def dirty_form_dialog
-    DirtyFormDialog.new(page)
   end
 
   def set_i18n_locale(locale = 'en')
