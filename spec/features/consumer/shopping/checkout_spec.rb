@@ -7,6 +7,8 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
   include WebHelper
   include UIComponentHelper
 
+  before { Spree::MailMethod.create(environment: 'test') }
+
   let!(:zone) { create(:zone_with_member) }
   let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true) }
   let(:supplier) { create(:supplier_enterprise) }
