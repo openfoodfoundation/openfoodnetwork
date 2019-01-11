@@ -1,6 +1,6 @@
 require "spec_helper"
 
-xdescribe OrderSyncer do
+describe OrderSyncer do
   describe "updating the shipping method" do
     let!(:subscription) { create(:subscription, with_items: true, with_proxy_orders: true) }
     let!(:order) { subscription.proxy_orders.first.initialise_order! }
@@ -156,7 +156,7 @@ xdescribe OrderSyncer do
       end
 
       context "when the bill_address on the order matches that on the subscription" do
-        xit "updates all bill_address attrs and ship_address names + phone" do
+        it "updates all bill_address attrs and ship_address names + phone" do
           subscription.assign_attributes(params)
           expect(syncer.sync!).to be true
           expect(syncer.order_update_issues.keys).to_not include order.id
@@ -174,7 +174,7 @@ xdescribe OrderSyncer do
 
       context "when the bill_address on the order doesn't match that on the subscription" do
         before { order.bill_address.update_attributes(firstname: "Jane") }
-        xit "does not update bill_address or ship_address on the order" do
+        it "does not update bill_address or ship_address on the order" do
           subscription.assign_attributes(params)
           expect(syncer.sync!).to be true
           expect(syncer.order_update_issues.keys).to include order.id

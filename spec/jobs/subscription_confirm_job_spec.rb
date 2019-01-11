@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-xdescribe SubscriptionConfirmJob do
+describe SubscriptionConfirmJob do
   include OpenFoodNetwork::EmailHelper
 
   let(:job) { SubscriptionConfirmJob.new }
