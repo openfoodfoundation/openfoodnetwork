@@ -656,8 +656,10 @@ end
 
 FactoryBot.modify do
   factory :stock_location, class: Spree::StockLocation do
+    name { 'default' }
+
     # keeps the test stock_location unique
-    initialize_with { Spree::StockLocation.find_or_create_by_name(name)}
+    initialize_with { DefaultStockLocation.find_or_create }
   end
 
   factory :shipment, class: Spree::Shipment do
