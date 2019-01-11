@@ -289,6 +289,11 @@ feature %q{
             # Clearing values by 'inheriting'
             toggle_columns "Inherit?"
             check "variant-overrides-#{variant3.id}-inherit"
+            # Hide the Inherit column again. When that column is visible, the
+            # size of the Tags column is too short and tags can't be removed.
+            # This is a bug and the next line can be removed once it is fixed:
+            # https://github.com/openfoodfoundation/openfoodnetwork/issues/3310
+            toggle_columns "Inherit?"
 
             # Clearing values manually
             fill_in "variant-overrides-#{variant.id}-price", with: ''
