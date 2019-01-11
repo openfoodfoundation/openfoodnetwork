@@ -53,6 +53,16 @@ en:
             on_demand_but_count_on_hand_set: "must be blank if on demand"
             limited_stock_but_no_count_on_hand: "must be specified because forcing limited stock"
   activemodel:
+    attributes:
+      order_management/reports/enterprise_fee_summary/parameters:
+        start_at: "Start"
+        end_at: "End"
+        distributor_ids: "Hubs"
+        producer_ids: "Producers"
+        order_cycle_ids: "Order Cycles"
+        enterprise_fee_ids: "Fees Names"
+        shipping_method_ids: "Shipping Methods"
+        payment_method_ids: "Payment Methods"
     errors:
       models:
         subscription_validator:
@@ -98,6 +108,14 @@ en:
   models:
     order_cycle:
       cloned_order_cycle_name: "COPY OF %{order_cycle}"
+
+  validators:
+    date_time_string_validator:
+      not_string_error: "must be a string"
+      invalid_format_error: "must be valid"
+    integer_array_validator:
+      not_array_error: "must be an array"
+      invalid_element_error: "must contain only valid integers"
 
   enterprise_mailer:
     confirmation_instructions:
@@ -1053,7 +1071,9 @@ en:
         description: Invoices for import into Xero
       packing:
         name: Packing Reports
-
+      enterprise_fee_summary:
+        name: "Enterprise Fee Summary"
+        description: "Summary of Enterprise Fees collected"
     subscriptions:
       subscriptions: Subscriptions
       new: New Subscription
@@ -1346,7 +1366,6 @@ en:
   ie_warning_firefox: Download Firefox
   ie_warning_ie: Upgrade Internet Explorer
   ie_warning_other: "Can't upgrade your browser? Try Open Food Network on your smartphone :-)"
-
   legal:
     cookies_policy:
       header: "How We Use Cookies"
@@ -2663,6 +2682,44 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     signup:
       start_free_profile: "Start with a free profile, and expand when you're ready!"
 
+  order_management:
+    reports:
+      enterprise_fee_summary:
+        date_end_before_start_error: "must be after start"
+        parameter_not_allowed_error: "You are not authorized to use one or more selected filters for this report."
+        fee_calculated_on_transfer_through_all: "All"
+        fee_type:
+          payment_method: "Payment Transaction"
+          shipping_method: "Shipment"
+        fee_placements:
+          supplier: "Incoming"
+          distributor: "Outgoing"
+          coordinator: "Coordinator"
+        tax_category_name:
+          shipping_instance_rate: "Platform Rate"
+        formats:
+          csv:
+            header:
+              fee_type: "Fee Type"
+              enterprise_name: "Enterprise Owner"
+              fee_name: "Fee Name"
+              customer_name: "Customer"
+              fee_placement: "Fee Placement"
+              fee_calculated_on_transfer_through_name: "Fee Calc on Transfer Through"
+              tax_category_name: "Tax Category"
+              total_amount: "$$ SUM"
+          html:
+            header:
+              fee_type: "Fee Type"
+              enterprise_name: "Enterprise Owner"
+              fee_name: "Fee Name"
+              customer_name: "Customer"
+              fee_placement: "Fee Placement"
+              fee_calculated_on_transfer_through_name: "Fee Calc on Transfer Through"
+              tax_category_name: "Tax Category"
+              total_amount: "$$ SUM"
+        invalid_filter_parameters: "The filters you selected for this report are invalid."
+
   spree:
     # TODO: remove `email` key once we get to Spree 2.0
     email: Email
@@ -2780,6 +2837,14 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           bulk_coop_allocation: 'Bulk Co-op - Allocation'
           bulk_coop_packing_sheets: 'Bulk Co-op - Packing Sheets'
           bulk_coop_customer_payments: 'Bulk Co-op - Customer Payments'
+        enterprise_fee_summaries:
+          filters:
+            date_range: "Date Range"
+            report_format_csv: "Download as CSV"
+            generate_report: "Generate Report"
+          report:
+            none: "None"
+            select_and_search: "Select filters and click on GENERATE REPORT to access your data."
       users:
         index:
           listing_users: "Listing Users"

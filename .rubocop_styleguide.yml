@@ -194,6 +194,8 @@ Metrics/BlockNesting:
 
 Metrics/ClassLength:
   Max: 100
+  Exclude:
+  - engines/order_management/app/services/order_management/reports/enterprise_fee_summary/scope.rb
 
 Metrics/ModuleLength:
   Max: 100
@@ -203,6 +205,8 @@ Metrics/CyclomaticComplexity:
 
 Metrics/MethodLength:
   Max: 10
+  Exclude:
+  - engines/order_management/app/services/order_management/reports/enterprise_fee_summary/scope.rb
 
 Metrics/ParameterLists:
   Max: 5

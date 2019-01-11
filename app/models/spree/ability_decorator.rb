@@ -184,7 +184,10 @@ class AbilityDecorator
     can [:admin, :index, :guide, :import, :save, :save_data, :validate_data, :reset_absent_products], ProductImport::ProductImporter
 
     # Reports page
-    can [:admin, :index, :customers, :orders_and_distributors, :group_buys, :bulk_coop, :payments, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :packing], :report
+    can [:admin, :index, :customers, :orders_and_distributors, :group_buys, :bulk_coop, :payments,
+         :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :packing,
+         :enterprise_fee_summary], :report
+    can [:admin, :new, :create], :enterprise_fee_summary
   end
 
   def add_order_cycle_management_abilities(user)
@@ -254,7 +257,10 @@ class AbilityDecorator
     end
 
     # Reports page
-    can [:admin, :index, :customers, :group_buys, :bulk_coop, :sales_tax, :payments, :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :xero_invoices], :report
+    can [:admin, :index, :customers, :group_buys, :bulk_coop, :sales_tax, :payments,
+         :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory,
+         :order_cycle_management, :xero_invoices, :enterprise_fee_summary], :report
+    can [:admin, :new, :create], :enterprise_fee_summary
 
     can [:create], Customer
     can [:admin, :index, :update, :destroy, :show], Customer, enterprise_id: Enterprise.managed_by(user).pluck(:id)
