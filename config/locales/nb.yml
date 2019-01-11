@@ -24,6 +24,11 @@ nb:
           attributes:
             orders_close_at:
               after_orders_open_at: må være etter åpningsdato
+        variant_override:
+          count_on_hand:
+            using_producer_stock_settings_but_count_on_hand_set: "må være tomt fordi du bruker produsentens lagerinnstillinger"
+            on_demand_but_count_on_hand_set: "må være tom hvis på forespørsel"
+            limited_stock_but_no_count_on_hand: "må spesifiseres fordi det tvinger begrenset lager"
   activemodel:
     errors:
       models:
@@ -715,6 +720,9 @@ nb:
           close_date: Stengedato
         social:
           twitter_placeholder: f.eks. @the_prof
+          instagram_placeholder: f.eks. the_prof
+          facebook_placeholder: f.eks. www.facebook.com/FirmaNavnHer
+          linkedin_placeholder: f.eks. www.linkedin.com/in/YourNameHere
         stripe_connect:
           connect_with_stripe: "Koble til Stripe"
           stripe_connect_intro: "For å akseptere betaling med kredittkort må du koble din Stripe konto til Open Food Network. Bruk knappen til høyre for å komme i gang."
@@ -1264,7 +1272,7 @@ nb:
       cookie_stripe_desc: "Data samlet inn av betalingsprosessoren vår Stripe for svindeloppdagelse https://stripe.com/cookies-policy/legal. Ikke alle butikker bruker Stripe som betalingsmetode, men det er en god praksis å forhindre at svindel gjelder for alle sider. Stripe bygger sannsynligvis et bilde av hvilke av våre sider som til vanlig samhandler med API-en og deretter flagge alt uvanlig. Så å sette Stripe-cookien har en bredere funksjon enn bare å levere en betalingsmetode til en bruker. Fjerning av det kan påvirke sikkerheten til selve tjenesten. Du kan lære mer om Stripe og lese retningslinjene for personvern på https://stripe.com/privacy."
       statistics_cookies: "Statistikkkapsler"
       statistics_cookies_desc: "Følgende er ikke strengt nødvendige, men hjelper deg med å gi deg den beste brukeropplevelsen ved å tillate oss å analysere brukeradferd, identifisere hvilke funksjoner du bruker mest, eller ikke bruker, forstå brukeropplevelsesproblemer osv."
-      statistics_cookies_analytics_desc_html: "For å samle og analysere plattformbruksdata bruker vi Google Analytics, da det var standardtjenesten som var koblet til Spree (ehandel open source programvare som vi bygde på), men visjonen vår er å bytte til <a href = 'https: / /matomo.org/ 'target =' _ blank '> Matomo </a> (ex Piwik, open source analyseverktøy som er GDPR-kompatibelt og beskytter ditt privatliv) så snart vi kan."
+      statistics_cookies_analytics_desc_html: "For å samle og analysere plattformbruksdata bruker vi Google Analytics, da det var standardtjenesten som var koblet til Spree (ehandel open source programvare som vi bygde på), men visjonen vår er å bytte til <a href='https://matomo.org/' target='_blank'>Matomo</a> (ex Piwik, open source analyseverktøy som er GDPR-kompatibelt og beskytter ditt privatliv) så snart vi kan."
       statistics_cookies_matomo_desc_html: "For å samle og analysere plattformbruksdata bruker vi <a href='https://matomo.org/' target='_blank'> Matomo </a> (ex Piwik), et åpen kildekodeanalyseverktøy som er kompatibelt med GDPR og beskytter personvernet ditt."
       statistics_cookies_matomo_optout: "Ønsker du å melde deg av Matomo analytics? Vi samler ikke inn personlige data, og Matomo hjelper oss med å forbedre vår tjeneste, men vi respekterer ditt valg :-)"
       cookie_analytics_utma_desc: "Brukes til å skille mellom brukere og økter. Kapselen er opprettet når javascriptbiblioteket utføres, og ingen eksisterende __utma-informasjonskapsler eksisterer. Cookien oppdateres hver gang data sendes til Google Analytics."
@@ -1705,6 +1713,11 @@ nb:
   update_and_recalculate_fees: "Oppdater og regn avgifter på nytt"
   registration:
     steps:
+      images:
+        continue: "Fortsett"
+        back: "Tilbake"
+        headline: "Takk!"
+        description: "La oss laste opp noen fine bilder så profilen din ser flott ut! :)"
       type:
         headline: "Siste skritt for å legge til %{enterprise}!"
         question: "Er du en produsent?"
@@ -1839,8 +1852,6 @@ nb:
   registration_type_error: "Vennligst velg en. Er du produsent?"
   registration_type_producer_help: "Produsenter lager deilige ting å spise og/eller drikke. Du er en produsent hvis du dyrker det, driver med det, brygger det, baker det, fermenterer det, melker det eller former det."
   registration_type_no_producer_help: "Hvis du ikke er en produsent, er du sannsynligvis noen som selger og distribuerer mat. Du kan være en hub, samvirke, kjøpegruppe, forhandler, grossist eller annet."
-  registration_images_headline: "Takk!"
-  registration_images_description: "La oss laste opp noen fine bilder så profilen din ser flott ut! :)"
   registration_detail_headline: "La oss komme i gang"
   registration_detail_enterprise: "Kult! Først må vi vite litt om bedriften:"
   registration_detail_producer: "Kult! Først må vi vite litt om gården din:"
@@ -2438,7 +2449,14 @@ nb:
           i din handlekurv gått ned. Her er hva som er endret.
       now_out_of_stock: er nå ikke på lager.
       only_n_remainging: "har nå kun %{num} igjen."
+    variants:
+      on_demand:
+        'yes': "Ved forespørsel"
     variant_overrides:
+      on_demand:
+        use_producer_settings: "Bruk produsentens lagerinnstillinger"
+        'yes': "Ja"
+        'no': "Nei"
       inventory_products: "Produkter i Varelager"
       hidden_products: "Skjulte Produkter"
       new_products: "Nye Produkter"
@@ -2541,6 +2559,12 @@ nb:
             other: "Du har %{count} aktive bestillingssykluser."
           manage_order_cycles: "BEHANDLE BESTILLINGSRUNDER"
       payment_methods:
+        new:
+          new_payment_method: "Ny Betalingsmetode"
+          back_to_payment_methods_list: "Tilbake til listen over betalingsmetoder"
+        edit:
+          editing_payment_method: "Redigerer betalingsmetode"
+          back_to_payment_methods_list: "Tilbake til listen over betalingsmetoder"
         stripe_connect:
           enterprise_select_placeholder: Velg...
           loading_account_information_msg: Laster inn kontoinformasjon fra Stripe, vennligst vent ...

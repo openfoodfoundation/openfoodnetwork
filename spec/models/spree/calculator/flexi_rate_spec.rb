@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Spree::Calculator::FlexiRate do
-  let(:line_item) { instance_double(Spree::LineItem, amount: 10, quantity: quantity) }
+  let(:line_item) { build(:line_item, quantity: quantity) }
   let(:calculator) do
     Spree::Calculator::FlexiRate.new(
       preferred_first_item: 2,

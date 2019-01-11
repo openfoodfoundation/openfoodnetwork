@@ -712,6 +712,7 @@ en_BE:
           close_date: Close Date
         social:
           twitter_placeholder: eg. @the_prof
+          facebook_placeholder: eg. www.facebook.com/PageNameHere
         stripe_connect:
           connect_with_stripe: "Connect with Stripe"
           stripe_connect_intro: "To accept payments using credit card, you will need to connect your stripe account to the Open Food Network. Use the button to the right to get started."
@@ -1702,6 +1703,11 @@ en_BE:
   update_and_recalculate_fees: "Update And Recalculate Fees"
   registration:
     steps:
+      images:
+        continue: "Continue"
+        back: "Back"
+        headline: "Thanks!"
+        description: "Let's upload some pretty pictures so your profile looks great! :)"
       type:
         headline: "Last step to add %{enterprise}!"
         question: "Are you a producer?"
@@ -1836,8 +1842,6 @@ en_BE:
   registration_type_error: "Please choose one. Are you are producer?"
   registration_type_producer_help: "Producers make yummy things to eat and/or drink. You're a producer if you grow it, raise it, brew it, bake it, ferment it, milk it or mould it."
   registration_type_no_producer_help: "If you’re not a producer, you’re probably someone who sells and distributes food. You might be a hub, coop, buying group, retailer, wholesaler or other."
-  registration_images_headline: "Thanks!"
-  registration_images_description: "Let's upload some pretty pictures so your profile looks great! :)"
   registration_detail_headline: "Let's Get Started"
   registration_detail_enterprise: "Woot! First we need to know a little bit about your enterprise:"
   registration_detail_producer: "Woot! First we need to know a little bit about your farm:"
@@ -2434,7 +2438,13 @@ en_BE:
           in your cart have reduced. Here's what's changed:
       now_out_of_stock: is now out of stock.
       only_n_remainging: "now only has %{num} remaining."
+    variants:
+      on_demand:
+        'yes': "On demand"
     variant_overrides:
+      on_demand:
+        'yes': "Yes"
+        'no': "No"
       inventory_products: "Inventory Products"
       hidden_products: "Hidden Products"
       new_products: "New Products"

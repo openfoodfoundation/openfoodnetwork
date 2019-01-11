@@ -73,7 +73,7 @@ pt:
   order_mailer:
     cancel_email:
       dear_customer: "Caro Consumidor,"
-      instructions: "A sua encomenda foi cancelada. Por favor guarde está informação para seu registo."
+      instructions: "A sua encomenda foi cancelada. Por favor guarde esta informação para seu registo."
       order_summary_canceled: "Sumário de Encomenda [CANCELADA]"
       subject: "Cancelamento de Encomenda"
       subtotal: "Subtotal: %{subtotal}"
@@ -692,6 +692,7 @@ pt:
           close_date: Data de fecho
         social:
           twitter_placeholder: 'ex:  @o_prof'
+          facebook_placeholder: ex. www.facebook.com/asuapagina
         stripe_connect:
           connect_with_stripe: "Conectar com o Stripe"
           stripe_connect_intro: "Para aceitar pagamentos com cartão de crédito, vai ser necessário ligar a sua conta Stripe à Open Food Network. Use o botão à direita para começar."
@@ -1607,6 +1608,11 @@ pt:
   update_and_recalculate_fees: "Actualizar e Recalcular Taxas"
   registration:
     steps:
+      images:
+        continue: "Continuar"
+        back: "Voltar"
+        headline: "Obrigado!"
+        description: "Vamos adicionar umas boas imagens para o seu perfil ficar impecável!"
       type:
         headline: "Último passo para adicionar %{enterprise}!"
         question: "É produtor/a?"
@@ -1740,8 +1746,6 @@ pt:
   registration_type_error: "Por favor escolha uma opção. É produtor/a?"
   registration_type_producer_help: "Produtores/as são quem faz coisas deliciosas para comer e/ou beber. É produtor/a se planta, cria, fermenta, amassa, munge ou molda algo."
   registration_type_no_producer_help: "Se não é produtor/a, é provavelmente alguém que vende e distribui alimentos. Pode ser uma cooperativa, um grupo de consumo, um distribuidor, um retalhista, ou outro."
-  registration_images_headline: "Obrigado!"
-  registration_images_description: "Vamos adicionar umas boas imagens para o seu perfil ficar impecável!"
   registration_detail_headline: "Vamos Começar"
   registration_detail_enterprise: "Primeiro precisamos saber mais sobre a sua organização:"
   registration_detail_producer: "Primeiro precisamos saber mais sobre sua produção:"
@@ -2334,7 +2338,13 @@ pt:
           carrinho baixou. Aqui está o que mudou:
       now_out_of_stock: está agora sem stock.
       only_n_remainging: "agora só tem %{num}restantes."
+    variants:
+      on_demand:
+        'yes': "Sob encomenda"
     variant_overrides:
+      on_demand:
+        'yes': "Sim"
+        'no': "Não"
       inventory_products: "Produtos de Inventário"
       hidden_products: "Produtos Escondidos"
       new_products: "Novos Produtos"

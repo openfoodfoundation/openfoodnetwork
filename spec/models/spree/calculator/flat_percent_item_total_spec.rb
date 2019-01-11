@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Spree::Calculator::FlatPercentItemTotal do
   let(:calculator) { Spree::Calculator::FlatPercentItemTotal.new }
-  let(:line_item) { instance_double(Spree::LineItem, amount: 10) }
+  let(:line_item) { build(:line_item, price: 10, quantity: 1) }
 
   before { calculator.stub preferred_flat_percent: 10 }
 

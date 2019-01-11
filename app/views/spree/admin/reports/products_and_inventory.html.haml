@@ -30,5 +30,5 @@
   = check_box_tag :csv
   = label_tag :csv, t(:report_customers_csv)
   %br
-  = button t(:search)
-= render "table", id: "listing_products"
+  = button t(:go)
+= render "table", id: "listing_products", msg_option: t(:go)
