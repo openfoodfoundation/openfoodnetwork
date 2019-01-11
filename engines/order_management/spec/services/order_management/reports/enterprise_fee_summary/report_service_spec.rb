@@ -449,28 +449,14 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
   end
 
   def setup_order(options = {})
-    target = default_order_options.merge(options)
-
-    create(:order, customer: target[:customer], distributor: target[:distributor],
-                   order_cycle: target[:order_cycle],
-                   shipping_method: target[:shipping_method]).tap do |order|
-      create(:line_item, order: order, variant: target[:variant])
-      order.reload
-    end
+    target_options = default_order_options.merge(options)
+    create(:order, :with_line_item, target_options)
   end
 
   def prepare_order(options = {})
-    order = setup_order(options)
-    complete_order(order, options)
-    order.reload
-  end
-
-  def complete_order(order, options)
-    order.create_shipment!
-    create(:payment, state: "checkout", order: order, amount: order.total,
-                     payment_method: options[:payment_method] || payment_method)
-    order.update_distribution_charge!
-    while !order.completed? do break unless order.next! end
+    factory_trait_options = { payment_method: payment_method }
+    target_options = default_order_options.merge(factory_trait_options).merge(options)
+    create(:order, :with_line_item, :completed, target_options)
   end
 
   def default_variant_options
