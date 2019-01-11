@@ -10,10 +10,10 @@ feature "full-page cart", js: true do
     let!(:zone) { create(:zone_with_member) }
     let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true) }
     let(:supplier) { create(:supplier_enterprise) }
-    let!(:order_cycle) { create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], coordinator: create(:distributor_enterprise), variants: [product_tax.variants.first, product_fee.variants.first]) }
-    let(:enterprise_fee) { create(:enterprise_fee, amount: 11.00, tax_category: product_tax.tax_category) }
-    let(:product_tax) { create(:taxed_product, supplier: supplier, zone: zone, price: 110.00, tax_rate_amount: 0.1) }
-    let(:product_fee) { create(:simple_product, supplier: supplier, price: 0.86, on_hand: 100) }
+    let!(:order_cycle) { create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], coordinator: create(:distributor_enterprise), variants: [product_with_tax.variants.first, product_with_fee.variants.first]) }
+    let(:enterprise_fee) { create(:enterprise_fee, amount: 11.00, tax_category: product_with_tax.tax_category) }
+    let(:product_with_tax) { create(:taxed_product, supplier: supplier, zone: zone, price: 110.00, tax_rate_amount: 0.1) }
+    let(:product_with_fee) { create(:simple_product, supplier: supplier, price: 0.86, on_hand: 100) }
     let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor) }
 
     before do
@@ -22,7 +22,7 @@ feature "full-page cart", js: true do
 
     describe "product description" do
       it "does not link to the product page" do
-        add_product_to_cart order, product_fee, quantity: 2
+        add_product_to_cart order, product_with_fee, quantity: 2
         visit spree.cart_path
         expect(page).to have_no_selector '.item-thumb-image a'
       end
@@ -33,7 +33,7 @@ feature "full-page cart", js: true do
 
       before do
         add_enterprise_fee percentage_fee
-        add_product_to_cart order, product_fee, quantity: 8
+        add_product_to_cart order, product_with_fee, quantity: 8
         visit spree.cart_path
       end
 
@@ -48,17 +48,17 @@ feature "full-page cart", js: true do
     end
 
     describe "admin and handling flat fees" do
-      context 'when there are fees' do
+      context "when there are fees" do
         let(:handling_fee) { create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 1),
           enterprise: order_cycle.coordinator, fee_type: 'admin') }
 
         before do
           add_enterprise_fee handling_fee
-          add_product_to_cart order, product_fee, quantity: 3
+          add_product_to_cart order, product_with_fee, quantity: 3
           visit spree.cart_path
         end
 
-        it 'shows admin and handlings row' do
+        it "shows admin and handlings row" do
           expect(page).to have_selector('#cart-detail')
           expect(page).to have_content('Admin & Handling')
           expect(page).to have_selector '.cart-item-price',                 text: with_currency(0.86)
@@ -68,13 +68,13 @@ feature "full-page cart", js: true do
         end
       end
 
-      context 'when there are no admin and handling fees' do
+      context "when there are no admin and handling fees" do
         before do
-          add_product_to_cart order, product_fee, quantity: 2
+          add_product_to_cart order, product_with_fee, quantity: 2
           visit spree.cart_path
         end
 
-        it 'hides admin and handlings row' do
+        it "hides admin and handlings row" do
           expect(page).to have_selector('#cart-detail')
           expect(page).to have_no_content('Admin & Handling')
           expect(page).to have_selector '.cart-item-price',         text: with_currency(0.86)
@@ -83,10 +83,37 @@ feature "full-page cart", js: true do
       end
     end
 
+    describe "admin weight calculated fees" do
+      context "order with 2 line items" do
+        let(:admin_fee) { create(:enterprise_fee, calculator: Calculator::Weight.new(preferred_per_kg: 1),
+          enterprise: order_cycle.coordinator, fee_type: 'admin') }
+
+        before do
+          product_with_fee.variants.first.update_attributes(unit_value: '2000.0')
+          product_with_tax.variants.first.update_attributes(unit_value: '5000.0')
+
+          add_enterprise_fee admin_fee
+
+          cart_service = CartService.new(order)
+          cart_service.populate(variants: { product_with_fee.variants.first.id => 3, product_with_tax.variants.first.id => 3 })
+          order.update_distribution_charge!
+
+          visit spree.cart_path
+        end
+
+        it "shows the correct weight calculations" do
+          expect(page).to have_selector('#cart-detail')
+          expect(page).to have_selector '.cart-item-price',                 text: with_currency(2.86) # price + (1eur * 2kg)
+          expect(page).to have_selector '.cart-item-price',                 text: with_currency(115.0) # price + (1eur * 5kg)
+          expect(page).to have_selector '.order-total.grand-total',         text: with_currency(353.58) # above * 3 items
+        end
+      end
+    end
+
     describe "tax" do
       before do
         add_enterprise_fee enterprise_fee
-        add_product_to_cart order, product_tax
+        add_product_to_cart order, product_with_tax
         visit spree.cart_path
       end
 
@@ -97,10 +124,10 @@ feature "full-page cart", js: true do
 
     describe "updating quantities with insufficient stock available" do
       let(:li) { order.line_items(true).last }
-      let(:variant) { product_tax.variants.first }
+      let(:variant) { product_with_tax.variants.first }
 
       before do
-        add_product_to_cart order, product_tax
+        add_product_to_cart order, product_with_tax
       end
 
       around do |example|
@@ -146,7 +173,7 @@ feature "full-page cart", js: true do
         order.save
         order.distributor.allow_order_changes = true
         order.distributor.save
-        add_product_to_cart order, product_tax
+        add_product_to_cart order, product_with_tax
         quick_login_as user
         visit spree.cart_path
       end
