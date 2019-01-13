@@ -26,7 +26,7 @@ describe ProductImport::ProductImporter do
   let!(:variant) { create(:variant, product_id: product.id, price: '8.50', on_hand: '100', unit_value: '500', display_name: 'Preexisting Banana') }
   let!(:product2) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Beans', unit_value: '500', primary_taxon_id: category.id, description: nil) }
   let!(:product3) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Sprouts', unit_value: '500', primary_taxon_id: category.id) }
-  let!(:product4) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Cabbage', unit_value: '500', primary_taxon_id: category.id) }
+  let!(:product4) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Cabbage', unit_value: '1', variant_unit_scale: nil, variant_unit: "items", variant_unit_name: "Whole", primary_taxon_id: category.id) }
   let!(:product5) { create(:simple_product, supplier: enterprise2, on_hand: '100', name: 'Lettuce', unit_value: '500', primary_taxon_id: category.id) }
   let!(:product6) { create(:simple_product, supplier: enterprise3, on_hand: '100', name: 'Beetroot', unit_value: '500', on_demand: true, variant_unit_scale: 1, variant_unit: 'weight', primary_taxon_id: category.id, description: nil) }
   let!(:product7) { create(:simple_product, supplier: enterprise3, on_hand: '100', name: 'Tomato', unit_value: '500', variant_unit_scale: 1, variant_unit: 'weight', primary_taxon_id: category.id, description: nil) }
@@ -468,10 +468,10 @@ describe ProductImport::ProductImporter do
     describe "creating and updating inventory" do
       before do
         csv_data = CSV.generate do |csv|
-          csv << ["name", "distributor", "producer", "on_hand", "price", "units", "unit_type"]
-          csv << ["Beans", "Another Enterprise", "User Enterprise", "5", "3.20", "500", "g"]
-          csv << ["Sprouts", "Another Enterprise", "User Enterprise", "6", "6.50", "500", "g"]
-          csv << ["Cabbage", "Another Enterprise", "User Enterprise", "2001", "1.50", "500", "g"]
+          csv << ["name", "distributor", "producer", "on_hand", "price", "units", "unit_type", "variant_unit_name"]
+          csv << ["Beans", "Another Enterprise", "User Enterprise", "5", "3.20", "500", "g", ""]
+          csv << ["Sprouts", "Another Enterprise", "User Enterprise", "6", "6.50", "500", "g", ""]
+          csv << ["Cabbage", "Another Enterprise", "User Enterprise", "2001", "1.50", "1", "", "Whole"]
         end
         File.write('/tmp/test-m.csv', csv_data)
         file = File.new('/tmp/test-m.csv')
@@ -544,8 +544,8 @@ describe ProductImport::ProductImporter do
         InventoryItem.create(variant_id: product4.variants.first.id, enterprise_id: enterprise2.id, visible: false)
 
         csv_data = CSV.generate do |csv|
-          csv << ["name", "distributor", "producer", "on_hand", "price", "units"]
-          csv << ["Cabbage", "Another Enterprise", "User Enterprise", "900", "", "500"]
+          csv << ["name", "distributor", "producer", "on_hand", "price", "units", "variant_unit_name"]
+          csv << ["Cabbage", "Another Enterprise", "User Enterprise", "900", "", "1", "Whole"]
         end
         File.write('/tmp/test-m.csv', csv_data)
         file = File.new('/tmp/test-m.csv')
