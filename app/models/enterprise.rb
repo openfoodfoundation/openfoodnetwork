@@ -37,7 +37,6 @@ class Enterprise < ActiveRecord::Base
   has_many :distributor_shipping_methods, foreign_key: :distributor_id
   has_many :shipping_methods, through: :distributor_shipping_methods
   has_many :customers
-  has_many :billable_periods
   has_many :inventory_items
   has_many :tag_rules
   has_one :stripe_account, dependent: :destroy
