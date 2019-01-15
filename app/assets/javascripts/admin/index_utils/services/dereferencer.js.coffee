@@ -9,4 +9,4 @@ angular.module("admin.indexUtils").factory 'Dereferencer', ->
     dereferenceAttr: (array, attr, data)->
       if array
         for object in array
-          object[attr] = data[object[attr].id] unless object[attr] == null
+          object[attr] = data[object[attr].id] if object[attr]
