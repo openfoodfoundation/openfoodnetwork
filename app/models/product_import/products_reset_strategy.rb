@@ -7,18 +7,16 @@ module ProductImport
     def reset(enterprise_ids)
       @enterprise_ids = enterprise_ids
 
-      if enterprise_ids.present?
-        relation.update_all(count_on_hand: 0)
-      else
-        0
-      end
+      return 0 if enterprise_ids.blank?
+
+      reset_variants_count_on_hand(enterprise_variants_relation)
     end
 
     private
 
     attr_reader :excluded_items_ids, :enterprise_ids
 
-    def relation
+    def enterprise_variants_relation
       relation = Spree::Variant
         .joins(:product)
         .where(
@@ -29,6 +27,24 @@ module ProductImport
       return relation if excluded_items_ids.blank?
 
       relation.where('spree_variants.id NOT IN (?)', excluded_items_ids)
+    end
+
+    def reset_variants_count_on_hand(variants)
+      updated_records_count = 0
+      variants.each do |variant|
+        updated_records_count += 1 if reset_variant_count_on_hand(variant)
+      end
+      updated_records_count
+    end
+
+    def reset_variant_count_on_hand(variant)
+      begin
+        variant.count_on_hand = 0
+        return true if variant.count_on_hand.zero?
+      rescue StandardError => e
+        Rails.logger.info "Could not reset variant count on hand: #{e.message}"
+      end
+      false
     end
   end
 end
