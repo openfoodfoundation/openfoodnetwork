@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'open_food_network/permissions'
 
 feature "Product Import", js: true do
+  include AdminHelper
   include AuthenticationWorkflow
   include WebHelper
 
@@ -156,9 +157,7 @@ feature "Product Import", js: true do
 
       expect(page).to have_field "product_name", with: carrots.name
       expect(page).to have_field "product_name", with: potatoes.name
-      find("div#columns-dropdown", text: "COLUMNS").click
-      find("div#columns-dropdown div.menu div.menu_item", text: "Import").click
-      find("div#columns-dropdown", text: "COLUMNS").click
+      toggle_columns "Import"
 
       within "tr#p_#{carrots.id} td.import_date" do
         expect(page).to have_content Time.zone.now.year

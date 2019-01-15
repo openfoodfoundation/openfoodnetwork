@@ -4,6 +4,7 @@ feature %q{
     As an administrator
     I want to manage order cycles
 }, js: true do
+  include AdminHelper
   include AuthenticationWorkflow
   include WebHelper
 
@@ -45,10 +46,7 @@ feature %q{
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc5.id}.closed"
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc6.id}.closed"
 
-    find("div#columns-dropdown", :text => "COLUMNS").click
-    find("div#columns-dropdown div.menu div.menu_item", text: "Producers").click
-    find("div#columns-dropdown div.menu div.menu_item", text: "Shops").click
-    find("div#columns-dropdown", :text => "COLUMNS").click
+    toggle_columns "Producers", "Shops"
 
     # And I should see all the details for an order cycle
     within('table#listing_order_cycles tbody tr:nth-child(2)') do
@@ -245,10 +243,7 @@ feature %q{
 
       oc = OrderCycle.last
 
-      find("div#columns-dropdown", :text => "COLUMNS").click
-      find("div#columns-dropdown div.menu div.menu_item", text: "Producers").click
-      find("div#columns-dropdown div.menu div.menu_item", text: "Shops").click
-      find("div#columns-dropdown", :text => "COLUMNS").click
+      toggle_columns "Producers", "Shops"
 
       expect(page).to have_input "oc#{oc.id}[name]", value: "Plums & Avos"
       expect(page).to have_input "oc#{oc.id}[orders_open_at]", value: order_cycle_opening_time
@@ -388,10 +383,7 @@ feature %q{
 
       oc = OrderCycle.last
 
-      find("div#columns-dropdown", :text => "COLUMNS").click
-      find("div#columns-dropdown div.menu div.menu_item", text: "Producers").click
-      find("div#columns-dropdown div.menu div.menu_item", text: "Shops").click
-      find("div#columns-dropdown", :text => "COLUMNS").click
+      toggle_columns "Producers", "Shops"
 
       expect(page).to have_input "oc#{oc.id}[name]", value: "Plums & Avos"
       expect(page).to have_input "oc#{oc.id}[orders_open_at]", value: order_cycle_opening_time
@@ -705,10 +697,7 @@ feature %q{
         expect(page).to have_selector "tr.order-cycle-#{oc_user_coordinating.id}"
         expect(page).to_not have_selector "tr.order-cycle-#{oc_for_other_user.id}"
 
-        find("div#columns-dropdown", :text => "COLUMNS").click
-        find("div#columns-dropdown div.menu div.menu_item", text: "Producers").click
-        find("div#columns-dropdown div.menu div.menu_item", text: "Shops").click
-        find("div#columns-dropdown", :text => "COLUMNS").click
+        toggle_columns "Producers", "Shops"
 
         # The order cycle should show all enterprises in the order cycle
         page.should have_selector 'td.producers', text: supplier_managed.name

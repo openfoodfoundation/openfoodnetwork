@@ -4,6 +4,7 @@ feature %q{
   As an Administrator
   I want to be able to manage products in bulk
 } , js: true do
+  include AdminHelper
   include AuthenticationWorkflow
   include WebHelper
 
@@ -46,9 +47,7 @@ feature %q{
       p2 = FactoryBot.create(:product, available_on: Date.current-1)
 
       visit spree.admin_products_path
-      find("div#columns-dropdown", :text => "COLUMNS").click
-      find("div#columns-dropdown div.menu div.menu_item", text: "Available On").click
-      find("div#columns-dropdown", :text => "COLUMNS").click
+      toggle_columns "Available On"
 
       expect(page).to have_field "available_on", with: p1.available_on.strftime("%F %T")
       expect(page).to have_field "available_on", with: p2.available_on.strftime("%F %T")
@@ -246,12 +245,7 @@ feature %q{
     quick_login_as_admin
     visit spree.admin_products_path
 
-    find("div#columns-dropdown", :text => "COLUMNS").click
-    find("div#columns-dropdown div.menu div.menu_item", text: "Available On").click
-    find("div#columns-dropdown div.menu div.menu_item", text: /^Category?/).click
-    find("div#columns-dropdown div.menu div.menu_item", text: "Inherits Properties?").click
-    find("div#columns-dropdown div.menu div.menu_item", text: "SKU").click
-    find("div#columns-dropdown", :text => "COLUMNS").click
+    toggle_columns "Available On", /^Category?/, "Inherits Properties?", "SKU"
 
     within "tr#p_#{p.id}" do
       expect(page).to have_field "product_name", with: p.name
@@ -318,9 +312,7 @@ feature %q{
     expect(page).to have_selector "a.view-variants", count: 1
     find("a.view-variants").trigger('click')
 
-    find("div#columns-dropdown", :text => "COLUMNS").click
-    find("div#columns-dropdown div.menu div.menu_item", text: "SKU").click
-    find("div#columns-dropdown", :text => "COLUMNS").click
+    toggle_columns "SKU"
 
     expect(page).to have_field "variant_sku", with: "VARIANTSKU"
     expect(page).to have_field "variant_price", with: "3.0"
@@ -566,9 +558,7 @@ feature %q{
 
         visit spree.admin_products_path
 
-        find("div#columns-dropdown", :text => "COLUMNS").click
-        find("div#columns-dropdown div.menu div.menu_item", text: "Available On").click
-        find("div#columns-dropdown", :text => "COLUMNS").click
+        toggle_columns "Available On"
 
         expect(page).to have_selector "th", :text => "NAME"
         expect(page).to have_selector "th", :text => "PRODUCER"
@@ -576,9 +566,7 @@ feature %q{
         expect(page).to have_selector "th", :text => "ON HAND"
         expect(page).to have_selector "th", :text => "AV. ON"
 
-        find("div#columns-dropdown", :text => "COLUMNS").click
-        find("div#columns-dropdown div.menu div.menu_item", text: /^.{0,1}Producer$/).click
-        find("div#columns-dropdown", :text => "COLUMNS").click
+        toggle_columns /^.{0,1}Producer$/
 
         expect(page).to have_no_selector "th", :text => "PRODUCER"
         expect(page).to have_selector "th", :text => "NAME"
@@ -701,9 +689,7 @@ feature %q{
       v = p.variants.first
 
       visit spree.admin_products_path
-      find("div#columns-dropdown", :text => "COLUMNS").click
-      find("div#columns-dropdown div.menu div.menu_item", text: "Available On").click
-      find("div#columns-dropdown", :text => "COLUMNS").click
+      toggle_columns "Available On"
 
       within "tr#p_#{p.id}" do
         expect(page).to have_field "product_name", with: p.name
