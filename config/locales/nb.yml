@@ -475,6 +475,8 @@ nb:
         inventory_no_permission: du har ikke tillatelse til å opprette lager for denne produsenten
         none_saved: kunne ikke lagre noen produkter
         line_number: "Linje %{number}:"
+        encoding_error: "Vennligst sjekk språkinnstillingen til kildefilen din og kontroller at den er lagret med UTF-8-koding"
+        unexpected_error: "Produktimport støtte på en uventet feil ved åpning av filen: %{error_message}"
       index:
         select_file: Velg et regneark for å laste opp
         spreadsheet: Regneark
@@ -2617,7 +2619,7 @@ nb:
           display_as: Vis som
       reports:
         table:
-          select_and_search: "Velg filtre og klikk på SØK for å få tilgang til dataene dine."
+          select_and_search: "Velg filtre og klikk på %{option} for å få tilgang til dine data."
         bulk_coop:
           bulk_coop_supplier_report: 'Bulk Co-op - Totaler etter Leverandør'
           bulk_coop_allocation: 'Bulk Co-op - Allokering'
