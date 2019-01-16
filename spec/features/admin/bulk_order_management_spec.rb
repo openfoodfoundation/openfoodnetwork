@@ -474,13 +474,17 @@ feature %q{
       end
 
       it "displays only line items whose orders meet the date restriction criteria, when changed" do
-        fill_in "start_date_filter", :with => (Time.zone.today - 8.days).strftime("%F")
+        find('#start_date_filter').click
+        select_date(Time.zone.today - 8.days)
+
         expect(page).to have_selector "tr#li_#{li1.id}"
         expect(page).to have_selector "tr#li_#{li2.id}"
         expect(page).to have_selector "tr#li_#{li3.id}"
         expect(page).to have_no_selector "tr#li_#{li4.id}"
 
-        fill_in "end_date_filter", :with => (Time.zone.today + 1.day).strftime("%F")
+        find('#end_date_filter').click
+        select_date(Time.zone.today + 1.day)
+
         expect(page).to have_selector "tr#li_#{li1.id}"
         expect(page).to have_selector "tr#li_#{li2.id}"
         expect(page).to have_selector "tr#li_#{li3.id}"
@@ -733,5 +737,13 @@ feature %q{
       expect(page).to have_selector "tr#li_#{line_item_distributed.id}", :visible => true
       expect(page).to have_no_selector "tr#li_#{line_item_not_distributed.id}", :visible => true
     end
+  end
+
+  def select_date(date)
+    current_month = Time.zone.today.strftime("%B")
+    target_month = date.strftime("%B")
+
+    find('#ui-datepicker-div .ui-datepicker-header .ui-datepicker-prev').click if current_month != target_month
+    find('#ui-datepicker-div .ui-datepicker-calendar .ui-state-default', text: date.strftime("%e").to_s.strip, exact_text: true).click
   end
 end
