@@ -3,11 +3,14 @@ require "spec_helper"
 describe Spree::Admin::Reports::EnterpriseFeeSummariesController, type: :controller do
   let(:report_klass) { OrderManagement::Reports::EnterpriseFeeSummary }
 
-  let!(:admin) { create(:admin_user) }
+  let!(:distributor) { create(:distributor_enterprise) }
 
-  let(:current_user) { admin }
+  let(:current_user) { distributor.owner }
 
   before do
+    feature_flags = instance_double(FeatureFlags, enterprise_fee_summary_enabled?: true)
+    allow(FeatureFlags).to receive(:new).with(current_user) { feature_flags }
+
     allow(controller).to receive(:spree_current_user) { current_user }
   end
 
@@ -17,6 +20,15 @@ describe Spree::Admin::Reports::EnterpriseFeeSummariesController, type: :control
 
       expect(response).to be_success
       expect(response).to render_template(new_template_path)
+    end
+
+    context "when feature flag is in effect" do
+      before { allow(FeatureFlags).to receive(:new).with(current_user).and_call_original }
+
+      it "is unauthorized" do
+        get :new
+        expect(response).to redirect_to spree.unauthorized_path
+      end
     end
   end
 
@@ -28,6 +40,15 @@ describe Spree::Admin::Reports::EnterpriseFeeSummariesController, type: :control
         expect(response).to be_success
         expect(response.body).not_to be_blank
         expect(response.header["Content-Type"]).to eq("text/csv")
+      end
+
+      context "when feature flag is in effect" do
+        before { allow(FeatureFlags).to receive(:new).with(current_user).and_call_original }
+
+        it "is unauthorized" do
+          post :create, report: { start_at: "2018-10-09 07:30:00" }, report_format: "csv"
+          expect(response).to redirect_to spree.unauthorized_path
+        end
       end
     end
 
