@@ -41,7 +41,7 @@ module OpenFoodNetwork
     end
 
     def adjustment_tax(adjustment)
-      tax_rates = adjustment.tax_rates
+      tax_rates = TaxRateFinder.tax_rates_of(adjustment)
 
       tax_rates.select(&:included_in_price).sum do |rate|
         rate.compute_tax adjustment.amount
