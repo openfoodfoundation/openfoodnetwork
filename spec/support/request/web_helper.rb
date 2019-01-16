@@ -192,6 +192,10 @@ module WebHelper
     page.execute_script(%Q{$("div.select2-result-label:contains('#{value}')").mouseup()})
   end
 
+  def accept_js_alert
+    page.driver.browser.switch_to.alert.accept
+  end
+
   private
 
   def wait_for_ajax
