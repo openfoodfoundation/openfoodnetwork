@@ -509,7 +509,7 @@ GEM
       rake
     launchy (2.4.3)
       addressable (~> 2.3)
-    letter_opener (1.6.0)
+    letter_opener (1.7.0)
       launchy (~> 2.2)
     libv8 (3.16.14.19)
     listen (3.0.8)
