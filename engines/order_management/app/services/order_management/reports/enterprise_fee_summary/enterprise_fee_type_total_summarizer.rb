@@ -7,6 +7,8 @@ module OrderManagement
         COORDINATOR_FEE_SOURCE_TYPE = 3
         INCOMING_EXCHANGE_LINE_ITEM_FEE_SOURCE_TYPE = 4
         OUTGOING_EXCHANGE_LINE_ITEM_FEE_SOURCE_TYPE = 5
+        INCOMING_EXCHANGE_ORDER_FEE_SOURCE_TYPE = 6
+        OUTGOING_EXCHANGE_ORDER_FEE_SOURCE_TYPE = 7
 
         attr_accessor :data
 
@@ -66,6 +68,9 @@ module OrderManagement
               data["incoming_exchange_enterprise_name"]
             when OUTGOING_EXCHANGE_LINE_ITEM_FEE_SOURCE_TYPE
               data["outgoing_exchange_enterprise_name"]
+            when INCOMING_EXCHANGE_ORDER_FEE_SOURCE_TYPE, OUTGOING_EXCHANGE_ORDER_FEE_SOURCE_TYPE
+              i18n_translate("fee_calculated_on_transfer_through_entire_orders",
+                             distributor: data["adjustment_source_distributor_name"])
             end
         end
 
@@ -75,8 +80,13 @@ module OrderManagement
               nil
             when SHIPPING_METHOD_SOURCE_TYPE
               i18n_translate("tax_category_name.shipping_instance_rate")
-            else
+            when COORDINATOR_FEE_SOURCE_TYPE
+              data["tax_category_name"] \
+                || (i18n_translate("tax_category_various") if enterprise_fee_inherits_tax_category?)
+            when INCOMING_EXCHANGE_LINE_ITEM_FEE_SOURCE_TYPE, OUTGOING_EXCHANGE_LINE_ITEM_FEE_SOURCE_TYPE
               data["tax_category_name"] || data["product_tax_category_name"]
+            when INCOMING_EXCHANGE_ORDER_FEE_SOURCE_TYPE, OUTGOING_EXCHANGE_ORDER_FEE_SOURCE_TYPE
+              data["tax_category_name"] || i18n_translate("tax_category_various")
             end
         end
 
@@ -90,8 +100,10 @@ module OrderManagement
           return PAYMENT_METHOD_SOURCE_TYPE if for_payment_method?
           return SHIPPING_METHOD_SOURCE_TYPE if for_shipping_method?
           return COORDINATOR_FEE_SOURCE_TYPE if for_coordinator_fee?
-          return INCOMING_EXCHANGE_LINE_ITEM_FEE_SOURCE_TYPE if for_incoming_exchange?
-          return OUTGOING_EXCHANGE_LINE_ITEM_FEE_SOURCE_TYPE if for_outgoing_exchange?
+          return INCOMING_EXCHANGE_LINE_ITEM_FEE_SOURCE_TYPE if for_incoming_exchange? && for_line_item_adjustment_source?
+          return OUTGOING_EXCHANGE_LINE_ITEM_FEE_SOURCE_TYPE if for_outgoing_exchange? && for_line_item_adjustment_source?
+          return INCOMING_EXCHANGE_ORDER_FEE_SOURCE_TYPE if for_incoming_exchange? && for_order_adjustment_source?
+          return OUTGOING_EXCHANGE_ORDER_FEE_SOURCE_TYPE if for_outgoing_exchange? && for_order_adjustment_source?
         end
 
         def for_payment_method?
@@ -100,6 +112,10 @@ module OrderManagement
 
         def for_shipping_method?
           data["shipping_method_name"].present?
+        end
+
+        def for_enterprise_fee?
+          data["fee_name"].present?
         end
 
         def for_coordinator_fee?
@@ -114,8 +130,21 @@ module OrderManagement
           data["placement_enterprise_role"] == "distributor"
         end
 
-        def i18n_translate(translation_key)
-          I18n.t("order_management.reports.enterprise_fee_summary.#{translation_key}")
+        def for_order_adjustment_source?
+          data["adjustment_source_type"] == "Spree::Order"
+        end
+
+        def for_line_item_adjustment_source?
+          data["adjustment_source_type"] == "Spree::LineItem"
+        end
+
+        def enterprise_fee_inherits_tax_category?
+          for_enterprise_fee? && data["tax_category_name"].blank? \
+            && data["enterprise_fee_inherits_tax_category"] == "t"
+        end
+
+        def i18n_translate(translation_key, options = {})
+          I18n.t("order_management.reports.enterprise_fee_summary.#{translation_key}", options)
         end
       end
     end
