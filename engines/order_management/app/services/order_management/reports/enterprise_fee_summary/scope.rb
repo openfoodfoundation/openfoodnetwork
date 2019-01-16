@@ -31,7 +31,7 @@ module OrderManagement
           include_payment_fee_details
           include_shipping_fee_details
           include_enterprise_fee_details
-          include_line_item_details
+          include_line_item_source_details
           include_incoming_exchange_details
           include_outgoing_exchange_details
 
@@ -169,14 +169,14 @@ module OrderManagement
           )
         end
 
-        # If for line item - Use data only if spree_line_items.id is present
+        # If for line item source - Use data only if spree_line_items.id is present
         #
         # Includes:
         # * Line item
         # * Variant
         # * Product
         # * Tax category of product, if enterprise fee tells to inherit
-        def include_line_item_details
+        def include_line_item_source_details
           join_scope(
             <<-JOIN_STRING.strip_heredoc
               LEFT OUTER JOIN spree_line_items
