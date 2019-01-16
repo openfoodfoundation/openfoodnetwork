@@ -94,6 +94,9 @@ feature 'shipping methods' do
 
       check "shipping_method_distributor_ids_#{distributor1.id}"
       find(:css, "tags-input .tags input").set "local\n"
+      within(".tags .tag-list") do
+        expect(page).to have_css '.tag-item'
+      end
 
       click_button 'Create'
 

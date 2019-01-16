@@ -42,7 +42,7 @@ module WebHelper
   end
 
   def flash_message
-    find('.flash', visible: false).text.strip
+    find('.flash', visible: false).text(:all).strip
   end
 
   def handle_js_confirm(accept=true)
