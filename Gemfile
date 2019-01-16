@@ -27,7 +27,7 @@ gem 'stripe', '~> 3.3.2'
 # which is needed for Pin Payments (and possibly others).
 gem 'activemerchant', '~> 1.78'
 
-gem 'oauth2', '~> 1.2.0' # Used for Stripe Connect
+gem 'oauth2', '~> 1.4.1' # Used for Stripe Connect
 gem 'jwt', '~> 1.5'
 
 gem 'delayed_job_active_record'
