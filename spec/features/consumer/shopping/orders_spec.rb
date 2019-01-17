@@ -156,7 +156,9 @@ feature "Order Management", js: true do
         expect(Spree::LineItem.find_by_id(item2.id)).to be nil
 
         # Cancelling the order
-        click_link(I18n.t(:cancel_order))
+        accept_alert do
+          click_link(I18n.t(:cancel_order))
+        end
         expect(page).to have_content I18n.t(:orders_show_cancelled)
         expect(order.reload).to be_canceled
       end

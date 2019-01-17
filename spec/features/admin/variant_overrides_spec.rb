@@ -303,7 +303,7 @@ feature %q{
             within "tr#v_#{variant.id}" do
               vo.tag_list.each do |tag|
                 within "li.tag-item", text: "#{tag} ✖" do
-                  find("a.remove-button").trigger('click')
+                  find("a.remove-button").click
                 end
               end
             end
