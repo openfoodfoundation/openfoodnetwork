@@ -1,10 +1,12 @@
 module UIComponentHelper
   def browse_as_medium
-    page.driver.resize(1024, 768)
+    Capybara.current_session.current_window
+      .resize_to(1024, 768)
   end
 
   def browse_as_large
-    page.driver.resize(1280, 800)
+    Capybara.current_session.current_window
+      .resize_to(1280, 800)
   end
 
   def click_login_button
@@ -43,7 +45,7 @@ module UIComponentHelper
   end
 
   def open_enterprise_modal(enterprise)
-    page.find("a", text: enterprise.name).trigger "click"
+    page.find("a", text: enterprise.name).click
   end
 
   def modal_should_be_open_for(object)

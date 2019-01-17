@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 xfeature 'Subscriptions' do
+  include AdminHelper
   include AuthenticationWorkflow
   include WebHelper
 
@@ -62,15 +63,14 @@ xfeature 'Subscriptions' do
         # Toggling columns
         expect(page).to have_selector "th.customer"
         expect(page).to have_content subscription.customer.email
-        first("div#columns-dropdown", :text => "COLUMNS").click
-        first("div#columns-dropdown div.menu div.menu_item", text: "Customer").click
+        toggle_columns "Customer"
         expect(page).to have_no_selector "th.customer"
         expect(page).to have_no_content subscription.customer.email
 
         # Viewing Products
         within "tr#so_#{subscription.id}" do
           expect(page).to have_selector "td.items.panel-toggle", text: 3
-          page.find("td.items.panel-toggle").trigger('click')
+          page.find("td.items.panel-toggle").click
         end
 
         within "#subscription-line-items" do
@@ -82,7 +82,7 @@ xfeature 'Subscriptions' do
         # Viewing Orders
         within "tr#so_#{subscription.id}" do
           expect(page).to have_selector "td.orders.panel-toggle", text: 1
-          page.find("td.orders.panel-toggle").trigger('click')
+          page.find("td.orders.panel-toggle").click
         end
 
         within ".subscription-orders" do
@@ -93,14 +93,14 @@ xfeature 'Subscriptions' do
           within "tr#po_#{proxy_order.id}" do
             expect(page).to have_no_content 'CANCELLED'
             accept_alert 'Are you sure?' do
-              find("a.cancel-order").trigger('click')
+              find("a.cancel-order").click
             end
             expect(page).to have_content 'CANCELLED'
             expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
 
             # Resuming an order
             accept_alert 'Are you sure?' do
-              find("a.resume-order").trigger('click')
+              find("a.resume-order").click
             end
             # Note: the order itself was not complete when 'cancelled', so state remained as cart
             expect(page).to have_content 'PENDING'
@@ -215,7 +215,7 @@ xfeature 'Subscriptions' do
         expect(page).to have_content 'Please add at least one product'
 
         # Adding a product and getting a price estimate
-        select2_search product1.name, from: I18n.t(:name_or_sku), dropdown_css: '.select2-drop'
+        select2_search_async product1.name, from: I18n.t(:name_or_sku), dropdown_css: '.select2-drop'
         fill_in 'add_quantity', with: 2
         click_link 'Add'
         within 'table#subscription-line-items tr.item', match: :first do
@@ -241,7 +241,7 @@ xfeature 'Subscriptions' do
         click_button('edit-products')
 
         # Adding a new product
-        select2_search product2.name, from: I18n.t(:name_or_sku), dropdown_css: '.select2-drop'
+        select2_search_async product2.name, from: I18n.t(:name_or_sku), dropdown_css: '.select2-drop'
         fill_in 'add_quantity', with: 3
         click_link 'Add'
         within 'table#subscription-line-items tr.item', match: :first do
@@ -255,14 +255,18 @@ xfeature 'Subscriptions' do
 
         expect{
           click_button('Create Subscription')
-          expect(page).to have_content 'Saved'
+          expect(page).to have_current_path admin_subscriptions_path
         }.to change(Subscription, :count).by(1)
 
-        # Prices are shown
+        select2_select shop.name, from: "shop_id"
+        expect(page).to have_selector "td.items.panel-toggle"
+        first("td.items.panel-toggle").click
+
+        # Prices are shown in the index
         within 'table#subscription-line-items tr.item', match: :first do
           expect(page).to have_selector 'td.description', text: "#{product2.name} - #{variant2.full_name}"
           expect(page).to have_selector 'td.price', text: "$7.75"
-          expect(page).to have_selector 'td.quantity', text: "3"
+          expect(page).to have_input 'quantity', with: "3"
           expect(page).to have_selector 'td.total', text: "$23.25"
         end
 
@@ -343,7 +347,7 @@ xfeature 'Subscriptions' do
           expect(page).to have_content 'Please add at least one product'
 
           # Add variant2 to the subscription
-          select2_search product2.name, from: I18n.t(:name_or_sku), dropdown_css: '.select2-drop'
+          select2_search_async product2.name, from: I18n.t(:name_or_sku), dropdown_css: '.select2-drop'
           fill_in 'add_quantity', with: 1
           click_link 'Add'
           within "#sli_0" do
@@ -357,7 +361,7 @@ xfeature 'Subscriptions' do
           expect(page).to have_selector '#order_form_total', text: "$7.75"
 
           # Add variant3 to the subscription (even though it is not available)
-          select2_search product3.name, from: I18n.t(:name_or_sku), dropdown_css: '.select2-drop'
+          select2_search_async product3.name, from: I18n.t(:name_or_sku), dropdown_css: '.select2-drop'
           fill_in 'add_quantity', with: 1
           click_link 'Add'
           within "#sli_1" do
@@ -379,7 +383,11 @@ xfeature 'Subscriptions' do
           end
 
           click_button 'Save Changes'
-          expect(page).to have_content 'Saved'
+          expect(page).to have_current_path admin_subscriptions_path
+
+          select2_select shop.name, from: "shop_id"
+          expect(page).to have_selector "td.items.panel-toggle"
+          first("td.items.panel-toggle").click
 
           # Total should be $7.75
           expect(page).to have_selector '#order_form_total', text: "$7.75"

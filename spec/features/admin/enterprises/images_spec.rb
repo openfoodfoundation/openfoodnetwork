@@ -54,6 +54,7 @@ feature "Managing enterprise images" do
         # Removing image
         within ".page-admin-enterprises-form__logo-field-group" do
           click_on "Remove Image"
+          accept_js_alert
         end
 
         expect(page).to have_content("Logo removed successfully")
@@ -91,6 +92,7 @@ feature "Managing enterprise images" do
         # Removing image
         within ".page-admin-enterprises-form__promo-image-field-group" do
           click_on "Remove Image"
+          accept_js_alert
         end
 
         expect(page).to have_content("Promo image removed successfully")

@@ -33,7 +33,7 @@ fi
 
 # Set up Ruby dependencies via Bundler
 if ! command -v bundle > /dev/null; then
-  gem install bundler
+  ./script/install-bundler
 fi
 
 # Install all dependencies
