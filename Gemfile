@@ -68,7 +68,7 @@ gem 'roadie-rails', '~> 1.1.1'
 gem 'figaro'
 gem 'blockenspiel'
 gem 'acts-as-taggable-on', '~> 3.4'
-gem 'paper_trail', '~> 3.0.8'
+gem 'paper_trail', '~> 5.2.3'
 gem 'diffy'
 gem 'skylight', '< 2.0'
 
