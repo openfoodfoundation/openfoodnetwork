@@ -4,7 +4,7 @@ describe FeatureFlags do
   let(:user) { build_stubbed(:user) }
   let(:feature_flags) { described_class.new(user) }
 
-  describe '.product_import_enabled?' do
+  describe '#product_import_enabled?' do
     context 'when the user is superadmin' do
       before do
         allow(user).to receive(:has_spree_role?).with('admin') { true }
@@ -26,7 +26,7 @@ describe FeatureFlags do
     end
   end
 
-  describe ".enterprise_fee_summary_enabled?" do
+  describe "#enterprise_fee_summary_enabled?" do
     context "when the user is superadmin" do
       let!(:user) { create(:admin_user) }
 
