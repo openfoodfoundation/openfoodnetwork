@@ -1,4 +1,5 @@
 require 'whenever'
+require 'yaml'
 
 # Learn more: http://github.com/javan/whenever
 
