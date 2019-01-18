@@ -16,14 +16,19 @@
 - content_for :table_filter do
   = render partial: 'filters'
 
-.row
+.row.index-controls{'ng-show' => '!RequestMonitor.loading && orders.length > 0'}
   = render partial: 'per_page_controls'
+
+  %button.invoices-modal{'ng-controller' => 'bulkInvoiceCtrl', 'ng-click' => 'createBulkInvoice()', 'ng-disabled' => 'selected_orders.length == 0'}
+    = t('.print_invoices')
 
 %table#listing_orders.index.responsive{width: "100%", 'ng-init' => 'initialise()', 'ng-show' => "!RequestMonitor.loading && orders.length > 0" }
   %colgroup
-    %col{style: "width: 10%"}
+    %col{style: "width: 3%"}
   %thead
     %tr
+      %th
+        %input{type: 'checkbox', 'ng-click' => 'toggleAll()', 'ng-model' => 'select_all'}
       %th
         = t(:products_distributor)
         %th
@@ -39,6 +44,8 @@
       %th.actions
   %tbody
     %tr{ng: {repeat: 'order in orders track by $index', class: {even: "'even'", odd: "'odd'"}}, 'ng-class' => "'state-{{order.state}}'"}
+      %td.align-center
+        %input{type: 'checkbox', 'ng-model' => 'checkboxes[order.id]', 'ng-change' => 'toggleSelection(order.id)'}
       %td.align-center
         {{order.distributor_name}}
       %td.align-center

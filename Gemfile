@@ -72,6 +72,7 @@ gem 'paper_trail', '~> 5.2.3'
 gem 'diffy'
 gem 'skylight', '< 2.0'
 
+gem 'combine_pdf'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 
