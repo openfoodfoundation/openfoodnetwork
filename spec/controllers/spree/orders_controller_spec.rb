@@ -181,8 +181,8 @@ describe Spree::OrdersController, type: :controller do
       } } } }
 
       before do
-        Spree::Config.shipment_inc_vat = true
-        Spree::Config.shipping_tax_rate = 0.25
+        allow(Spree::Config).to receive(:shipment_inc_vat) { true }
+        allow(Spree::Config).to receive(:shipping_tax_rate) { 0.25 }
 
         # Sanity check the fees
         expect(order.adjustments.length).to eq 2
