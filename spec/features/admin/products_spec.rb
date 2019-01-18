@@ -209,7 +209,9 @@ feature %q{
       page.should have_field 'product_product_properties_attributes_0_value', with: 'fooval'
 
       # And I delete the property
-      page.all('a.delete-resource').first.click
+      accept_alert do
+        page.all('a.delete-resource').first.click
+      end
       click_button 'Update'
 
       # Then the property should have been deleted
