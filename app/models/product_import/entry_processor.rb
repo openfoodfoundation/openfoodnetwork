@@ -163,7 +163,7 @@ module ProductImport
       end
 
       product = Spree::Product.new
-      product.assign_attributes(entry.attributes.except('id'))
+      product.assign_attributes(entry.attributes.except('id', 'on_hand', 'on_demand'))
       product.supplier_id = entry.producer_id
       assign_defaults(product, entry)
 
@@ -249,6 +249,7 @@ module ProductImport
       variant = product.variants.first
       variant.display_name = entry.display_name if entry.display_name
       variant.on_demand = entry.on_demand if entry.on_demand
+      variant.on_hand = entry.on_hand if entry.on_hand
       variant.import_date = @import_time
       variant.save
     end
