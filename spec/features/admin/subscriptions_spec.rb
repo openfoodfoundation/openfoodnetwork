@@ -449,27 +449,22 @@ feature 'Subscriptions' do
       end
 
       it "permit creating and editing of the subscription" do
-        select2_select customer.email, from: "customer_id"
-        select2_select schedule.name, from: "schedule_id"
-        select2_select payment_method.name, from: "payment_method_id"
-        select2_select shipping_method.name, from: "shipping_method_id"
-        find_field("begins_at").click
-        choose_today_from_datepicker
+        # Fill in other details
+        fill_in_subscription_basic_details
         click_button "Next"
-
         expect(page).to have_content "BILLING ADDRESS"
         click_button "Next"
 
         # Add products
         expect(page).to have_content "NAME OR SKU"
         add_variant_to_subscription shop_variant, 3
-        expect(page).to have_content variant_not_in_open_or_upcoming_order_cycle_warning, count: 1
+        expect_not_in_open_or_upcoming_order_cycle_warning 1
         add_variant_to_subscription permitted_supplier_variant, 4
-        expect(page).to have_content variant_not_in_open_or_upcoming_order_cycle_warning, count: 2
+        expect_not_in_open_or_upcoming_order_cycle_warning 2
         add_variant_to_subscription incoming_exchange_variant, 5
-        expect(page).to have_content variant_not_in_open_or_upcoming_order_cycle_warning, count: 3
+        expect_not_in_open_or_upcoming_order_cycle_warning 3
         add_variant_to_subscription outgoing_exchange_variant, 6
-        expect(page).to have_content variant_not_in_open_or_upcoming_order_cycle_warning, count: 3
+        expect_not_in_open_or_upcoming_order_cycle_warning 3
         click_button "Next"
 
         # Submit form
@@ -501,6 +496,20 @@ feature 'Subscriptions' do
         expect(page).to have_selector "#subscription-line-items .item", count: 3
       end
     end
+  end
+
+  def fill_in_subscription_basic_details
+    select2_select customer.email, from: "customer_id"
+    select2_select schedule.name, from: "schedule_id"
+    select2_select payment_method.name, from: "payment_method_id"
+    select2_select shipping_method.name, from: "shipping_method_id"
+
+    find_field("begins_at").click
+    choose_today_from_datepicker
+  end
+
+  def expect_not_in_open_or_upcoming_order_cycle_warning(count)
+    expect(page).to have_content variant_not_in_open_or_upcoming_order_cycle_warning, count: count
   end
 
   def add_variant_to_subscription(variant, quantity)
