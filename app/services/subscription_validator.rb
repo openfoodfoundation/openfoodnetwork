@@ -2,6 +2,8 @@
 # Public interface consists of #valid? method provided by ActiveModel::Validations
 # and #json_errors which compiles a serializable hash of errors
 
+require "open_food_network/subscription_service"
+
 class SubscriptionValidator
   include ActiveModel::Naming
   include ActiveModel::Conversion
@@ -97,15 +99,12 @@ class SubscriptionValidator
     errors.add(:subscription_line_items, :not_available, name: name)
   end
 
-  # TODO: Extract this into a separate class
   def available_variant_ids
-    @available_variant_ids ||=
-      Spree::Variant.joins(exchanges: { order_cycle: :schedules })
-        .where(id: subscription_line_items.map(&:variant_id))
-        .where(schedules: { id: schedule }, exchanges: { incoming: false, receiver_id: shop })
-        .merge(OrderCycle.not_closed)
-        .select('DISTINCT spree_variants.id')
-        .pluck(:id)
+    return @available_variant_ids if @available_variant_ids.present?
+
+    subscription_variant_ids = subscription_line_items.map(&:variant_id)
+    @available_variant_ids = OpenFoodNetwork::SubscriptionService.eligible_variants(shop)
+      .where(id: subscription_variant_ids).pluck(:id)
   end
 
   def build_msg_from(k, msg)

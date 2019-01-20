@@ -1,6 +1,7 @@
 require 'open_food_network/permissions'
 require 'open_food_network/order_cycle_permissions'
 require 'open_food_network/scope_variant_to_hub'
+require "open_food_network/subscription_service"
 
 module Admin
   class SubscriptionLineItemsController < ResourceController
@@ -26,7 +27,7 @@ module Admin
       @shop = Enterprise.managed_by(spree_current_user).find_by_id(params[:shop_id])
       @schedule = permissions.editable_schedules.find_by_id(params[:schedule_id])
       @order_cycle = @schedule.andand.current_or_next_order_cycle
-      @variant = Spree::Variant.stockable_by(@shop).find_by_id(params[:subscription_line_item][:variant_id])
+      @variant = variant_if_eligible(params[:subscription_line_item][:variant_id]) if @shop.present?
     end
 
     def new_actions
@@ -49,6 +50,10 @@ module Admin
       fee_calculator = OpenFoodNetwork::EnterpriseFeeCalculator.new(@shop, @order_cycle)
       OpenFoodNetwork::ScopeVariantToHub.new(@shop).scope(@variant)
       @variant.price + fee_calculator.indexed_fees_for(@variant)
+    end
+
+    def variant_if_eligible(variant_id)
+      OpenFoodNetwork::SubscriptionService.eligible_variants(@shop).find_by_id(variant_id)
     end
   end
 end

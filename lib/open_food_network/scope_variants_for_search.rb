@@ -5,6 +5,8 @@ require 'open_food_network/scope_variant_to_hub'
 # Further restrictions on the schedule, order_cycle or distributor through which the
 # products are available are also possible
 
+require "open_food_network/subscription_service"
+
 module OpenFoodNetwork
   class ScopeVariantsForSearch
     def initialize(params)
@@ -33,6 +35,10 @@ module OpenFoodNetwork
       Spree::Variant.where(is_master: false).ransack(search_params.merge(m: 'or')).result
     end
 
+    def distributor
+      Enterprise.find params[:distributor_id]
+    end
+
     def scope_to_schedule
       @variants = @variants.in_schedule(params[:schedule_id])
     end
@@ -42,12 +48,29 @@ module OpenFoodNetwork
     end
 
     def scope_to_distributor
-      distributor = Enterprise.find params[:distributor_id]
+      if params[:eligible_for_subscriptions]
+        scope_to_eligible_for_subscriptions_in_distributor
+      else
+        scope_to_available_for_orders_in_distributor
+      end
+    end
+
+    def scope_to_available_for_orders_in_distributor
       @variants = @variants.in_distributor(distributor)
+      scope_variants_to_distributor(@variants, distributor)
+    end
+
+    def scope_to_eligible_for_subscriptions_in_distributor
+      eligible_variants_scope = OpenFoodNetwork::SubscriptionService.eligible_variants(distributor)
+      @variants = @variants.merge(eligible_variants_scope)
+      scope_variants_to_distributor(@variants, distributor)
+    end
+
+    def scope_variants_to_distributor(variants, distributor)
       scoper = OpenFoodNetwork::ScopeVariantToHub.new(distributor)
       # Perform scoping after all filtering is done.
       # Filtering could be a problem on scoped variants.
-      @variants.each { |v| scoper.scope(v) }
+      variants.each { |v| scoper.scope(v) }
     end
   end
 end

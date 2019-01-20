@@ -341,7 +341,7 @@ describe Admin::SubscriptionsController, type: :controller do
         end
 
         context 'with subscription_line_items params' do
-          let!(:product2) { create(:product, supplier: shop) }
+          let!(:product2) { create(:product) }
           let!(:variant2) { create(:variant, product: product2, unit_value: '1000', price: 6.00, option_values: []) }
 
           before do
