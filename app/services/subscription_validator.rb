@@ -2,8 +2,6 @@
 # Public interface consists of #valid? method provided by ActiveModel::Validations
 # and #json_errors which compiles a serializable hash of errors
 
-require "open_food_network/subscription_service"
-
 class SubscriptionValidator
   include ActiveModel::Naming
   include ActiveModel::Conversion
@@ -103,7 +101,7 @@ class SubscriptionValidator
     return @available_variant_ids if @available_variant_ids.present?
 
     subscription_variant_ids = subscription_line_items.map(&:variant_id)
-    @available_variant_ids = OpenFoodNetwork::SubscriptionService.eligible_variants(shop)
+    @available_variant_ids = SubscriptionVariantsService.eligible_variants(shop)
       .where(id: subscription_variant_ids).pluck(:id)
   end
 

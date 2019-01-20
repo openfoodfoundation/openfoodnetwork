@@ -5,8 +5,6 @@ require 'open_food_network/scope_variant_to_hub'
 # Further restrictions on the schedule, order_cycle or distributor through which the
 # products are available are also possible
 
-require "open_food_network/subscription_service"
-
 module OpenFoodNetwork
   class ScopeVariantsForSearch
     def initialize(params)
@@ -61,7 +59,7 @@ module OpenFoodNetwork
     end
 
     def scope_to_eligible_for_subscriptions_in_distributor
-      eligible_variants_scope = OpenFoodNetwork::SubscriptionService.eligible_variants(distributor)
+      eligible_variants_scope = SubscriptionVariantsService.eligible_variants(distributor)
       @variants = @variants.merge(eligible_variants_scope)
       scope_variants_to_distributor(@variants, distributor)
     end

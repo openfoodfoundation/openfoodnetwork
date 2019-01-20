@@ -1,7 +1,6 @@
 require 'open_food_network/permissions'
 require 'open_food_network/order_cycle_permissions'
 require 'open_food_network/scope_variant_to_hub'
-require "open_food_network/subscription_service"
 
 module Admin
   class SubscriptionLineItemsController < ResourceController
@@ -54,7 +53,7 @@ module Admin
     end
 
     def variant_if_eligible(variant_id)
-      OpenFoodNetwork::SubscriptionService.eligible_variants(@shop).find_by_id(variant_id)
+      SubscriptionVariantsService.eligible_variants(@shop).find_by_id(variant_id)
     end
   end
 end
