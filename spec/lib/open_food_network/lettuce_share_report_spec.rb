@@ -32,7 +32,7 @@ module OpenFoodNetwork
 
     describe "table" do
       it "handles no items" do
-        report.send(:table).should eq []
+        report.table.should eq []
       end
 
       describe "lists" do
@@ -46,13 +46,13 @@ module OpenFoodNetwork
 
         it "all items" do
           report.stub(:child_variants) { Spree::Variant.where(id: [variant, variant2, variant3]) }
-          report.send(:table).count.should eq 3
+          report.table.count.should eq 3
         end
 
         it "only available items" do
           variant.count_on_hand = 0
           report.stub(:child_variants) { Spree::Variant.where(id: [variant, variant2, variant3, variant4]) }
-          report.send(:table).count.should eq 3
+          report.table.count.should eq 3
         end
 
         it "only available items considering overrides" do
@@ -62,7 +62,7 @@ module OpenFoodNetwork
           variant3_override
           report.stub(:child_variants) { Spree::Variant.where(id: [variant, variant2, variant3]) }
           report.stub(:params) { {distributor_id: hub.id} }
-          rows = report.send(:table)
+          rows = report.table
           rows.count.should eq 2
           rows.map{ |row| row[0] }.should include variant.product.name, variant2.product.name
         end
