@@ -551,19 +551,26 @@ FactoryBot.define do
       on_hand { 5 }
     end
     after(:create) do |product, evaluator|
-      product.variants.first.tap do |variant|
-        variant.on_demand = evaluator.on_demand
-        variant.count_on_hand = evaluator.on_hand
-        variant.save
-      end
+      product.master.on_demand = evaluator.on_demand
+      product.master.on_hand = evaluator.on_hand
+      product.variants.first.on_demand = evaluator.on_demand
+      product.variants.first.on_hand = evaluator.on_hand
     end
   end
 end
 
-
 FactoryBot.modify do
   factory :product do
+    transient do
+      on_hand { 5 }
+    end
+
     primary_taxon { Spree::Taxon.first || FactoryBot.create(:taxon) }
+
+    after(:create) do |product, evaluator|
+      product.master.on_hand = evaluator.on_hand
+      product.variants.first.on_hand = evaluator.on_hand
+    end
   end
 
   factory :base_product do
@@ -661,6 +668,9 @@ FactoryBot.modify do
 
     # Ensures the name attribute is not assigned after instantiating the default location
     transient { name 'default' }
+
+    # sets the default value for variant.on_demand
+    backorderable_default false
   end
 
   factory :shipment, class: Spree::Shipment do

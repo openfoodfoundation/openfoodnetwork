@@ -135,7 +135,7 @@ describe VariantStock do
       let(:variant) { build(:variant) }
 
       it 'returns stock location default' do
-        expect(variant.on_demand).to be_truthy
+        expect(variant.on_demand).to be_falsy
       end
     end
   end
