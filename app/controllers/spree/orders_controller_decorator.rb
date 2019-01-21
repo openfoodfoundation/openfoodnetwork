@@ -42,7 +42,11 @@ Spree::OrdersController.class_eval do
     end
 
     if @order.update_attributes(params[:order])
-      @order.line_items = @order.line_items.select {|li| li.quantity > 0 }
+      discard_empty_line_items
+
+      @order.adjustments.each(&:open)
+      @order.update!
+      @order.shipment.ensure_correct_adjustment_with_included_tax if @order.shipment
 
       render :edit and return unless apply_coupon_code
 
@@ -129,6 +133,10 @@ Spree::OrdersController.class_eval do
 
 
   private
+
+  def discard_empty_line_items
+    @order.line_items = @order.line_items.select { |li| li.quantity > 0 }
+  end
 
   def require_order_authentication
     return if session[:access_token] || params[:token] || spree_current_user
