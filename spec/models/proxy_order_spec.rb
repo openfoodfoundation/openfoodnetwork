@@ -196,6 +196,6 @@ describe ProxyOrder, type: :model do
     # We still need to use be_within, because the Database timestamp is not as
     # accurate as the Rails timestamp. If we use `eq`, we have differing nano
     # seconds.
-    expect(subject.reload.canceled_at).to be_within(1.second).of Time.zone.now
+    expect(subject.reload.canceled_at).to be_within(2.second).of Time.zone.now
   end
 end
