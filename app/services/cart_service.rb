@@ -80,9 +80,17 @@ class CartService
   end
 
   def read_products_hash(data)
+    # This is most probably dead code, this bugsnag notification will confirm it
+    notify_bugsnag(data) if data[:products].present?
+
     (data[:products] || []).map do |_product_id, variant_id|
       { variant_id: variant_id, quantity: data[:quantity] }
     end
+  end
+
+  def notify_bugsnag(data)
+    Bugsnag.notify(RuntimeError.new("CartService.populate called with products hash"),
+                   data: data.as_json)
   end
 
   def read_variants_hash(data)

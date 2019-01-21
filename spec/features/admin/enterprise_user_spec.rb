@@ -6,7 +6,6 @@ feature %q{
 } do
   include AuthenticationWorkflow
   include WebHelper
-  include AdminHelper
 
   let!(:user) { create_enterprise_user }
   let!(:supplier1) { create(:supplier_enterprise, name: 'Supplier 1') }

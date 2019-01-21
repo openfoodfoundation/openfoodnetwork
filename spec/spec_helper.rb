@@ -39,16 +39,14 @@ require 'spree/testing_support/authorization_helpers'
 require 'spree/testing_support/preferences'
 
 # Capybara config
-require 'capybara/poltergeist'
-Capybara.javascript_driver = :poltergeist
+require 'selenium-webdriver'
+Capybara.javascript_driver = :chrome
 
-Capybara.register_driver :poltergeist do |app|
-  options = {phantomjs_options: ['--load-images=no', '--ssl-protocol=any'], window_size: [1280, 3600], timeout: 2.minutes}
-  # Extend poltergeist's timeout to allow ample time to use pry in browser thread
-  #options.merge! {timeout: 5.minutes}
-  # Enable the remote inspector: Use page.driver.debug to open a remote debugger in chrome
-  #options.merge! {inspector: true}
-  Capybara::Poltergeist::Driver.new(app, options)
+Capybara.register_driver :chrome do |app|
+  options = Selenium::WebDriver::Chrome::Options.new(
+    args: %w[headless disable-gpu no-sandbox window-size=1280,768]
+  )
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
 
 Capybara.default_max_wait_time = 30
@@ -99,8 +97,8 @@ RSpec.configure do |config|
 
   def restart_phantomjs
     Capybara.send('session_pool').values
-      .select { |s| s.driver.is_a?(Capybara::Poltergeist::Driver) }
-      .each { |s| s.driver.restart}
+      .select { |s| s.driver.is_a?(Capybara::Selenium::Driver) }
+      .each { |s| s.driver.reset! }
   end
 
   config.before(:all) { restart_phantomjs }

@@ -2,15 +2,11 @@ RSpec::Matchers.define :have_table_row do |row|
 
   match do |node|
     @row = row
-
-    node.has_selector? "tr", text: row.join(" ").strip # Check for appearance
     rows_under(node).include? row # Robust check of columns
   end
 
   match_when_negated do |node|
     @row = row
-
-    node.has_no_selector? "tr", text: row.join(" ").strip # Check for appearance
     !rows_under(node).include? row # Robust check of columns
   end
 

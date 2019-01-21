@@ -31,7 +31,7 @@ gem 'stripe', '~> 3.3.2'
 # which is needed for Pin Payments (and possibly others).
 gem 'activemerchant', '~> 1.78'
 
-gem 'oauth2', '~> 1.2.0' # Used for Stripe Connect
+gem 'oauth2', '~> 1.4.1' # Used for Stripe Connect
 gem 'jwt', '~> 1.5'
 
 gem 'delayed_job_active_record'
@@ -121,7 +121,8 @@ group :test, :development do
   gem 'awesome_print'
   gem 'letter_opener', '>= 1.4.1'
   gem 'timecop'
-  gem 'poltergeist', '>= 1.16.0'
+  gem 'selenium-webdriver'
+  gem 'chromedriver-helper'
   gem 'rspec-retry'
   gem 'json_spec', '~> 1.1.4'
   gem 'unicorn-rails'
@@ -146,7 +147,7 @@ group :development do
   gem 'guard-rails'
   gem 'guard-rspec', '~> 4.7.3'
   gem 'rubocop', '>= 0.49.1'
-  gem 'spring', '=1.1.3'
+  gem 'spring', '1.7.2'
   gem 'spring-commands-rspec'
 
   # 1.0.9 fixed openssl issues on macOS https://github.com/eventmachine/eventmachine/issues/602

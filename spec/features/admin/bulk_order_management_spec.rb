@@ -4,6 +4,7 @@ feature %q{
   As an Administrator
   I want to be able to manage orders in bulk
 } , js: true do
+  include AdminHelper
   include AuthenticationWorkflow
   include WebHelper
 
@@ -189,11 +190,7 @@ feature %q{
     context "modifying the weight/volume of a line item" do
       it "price is altered" do
         visit '/admin/orders/bulk_management'
-        find("div#columns-dropdown", :text => "COLUMNS").click
-        find("div#columns-dropdown div.menu div.menu_item", text: "Weight/Volume").click
-        find("div#columns-dropdown div.menu div.menu_item", text: "Price").click
-        # hide dropdown
-        find("div#columns-dropdown", :text => "COLUMNS").click
+        toggle_columns "Weight/Volume", "Price"
         within "tr#li_#{li1.id}" do
           expect(page).to have_field "price", with: "50.00"
           fill_in "final_weight_volume", :with => 2000
@@ -210,9 +207,7 @@ feature %q{
     context "modifying the quantity of a line item" do
       it "price is altered" do
         visit '/admin/orders/bulk_management'
-        find("div#columns-dropdown", :text => "COLUMNS").click
-        find("div#columns-dropdown div.menu div.menu_item", text: "Price").click
-        find("div#columns-dropdown", :text => "COLUMNS").click
+        toggle_columns "Price"
         within "tr#li_#{li1.id}" do
           expect(page).to have_field "price", with: "#{format("%.2f",li1.price * 5)}"
           fill_in "quantity", :with => 6
@@ -224,9 +219,7 @@ feature %q{
     context "modifying the quantity of a line item" do
       it "weight/volume is altered" do
         visit '/admin/orders/bulk_management'
-        find("div#columns-dropdown", :text => "COLUMNS").click
-        find("div#columns-dropdown div.menu div.menu_item", text: "Weight/Volume").click
-        find("div#columns-dropdown", :text => "COLUMNS").click
+        toggle_columns "Weight/Volume"
         within "tr#li_#{li1.id}" do
           expect(page).to have_field "final_weight_volume", with: "#{li1.final_weight_volume.round}"
           fill_in "quantity", :with => 6
@@ -246,9 +239,7 @@ feature %q{
         expect(page).to have_selector "th", :text => "QUANTITY"
         expect(page).to have_selector "th", :text => "MAX"
 
-        find("div#columns-dropdown", :text => "COLUMNS").click
-        find("div#columns-dropdown div.menu div.menu_item", text: "Producer").click
-        find("div#columns-dropdown", :text => "COLUMNS").click
+        toggle_columns "Producer"
 
         expect(page).to have_no_selector "th", :text => "PRODUCER"
         expect(page).to have_selector "th", :text => "NAME"
@@ -483,13 +474,17 @@ feature %q{
       end
 
       it "displays only line items whose orders meet the date restriction criteria, when changed" do
-        fill_in "start_date_filter", :with => (Time.zone.today - 8.days).strftime("%F")
+        find('#start_date_filter').click
+        select_date(Time.zone.today - 8.days)
+
         expect(page).to have_selector "tr#li_#{li1.id}"
         expect(page).to have_selector "tr#li_#{li2.id}"
         expect(page).to have_selector "tr#li_#{li3.id}"
         expect(page).to have_no_selector "tr#li_#{li4.id}"
 
-        fill_in "end_date_filter", :with => (Time.zone.today + 1.day).strftime("%F")
+        find('#end_date_filter').click
+        select_date(Time.zone.today + 1.day)
+
         expect(page).to have_selector "tr#li_#{li1.id}"
         expect(page).to have_selector "tr#li_#{li2.id}"
         expect(page).to have_selector "tr#li_#{li3.id}"
@@ -638,7 +633,9 @@ feature %q{
 
         it "removes a line item when the relevant delete button is clicked" do
           expect(page).to have_selector "a.delete-line-item", :count => 2
-          find("tr#li_#{li1.id} a.delete-line-item").click
+          accept_alert do
+            find("tr#li_#{li1.id} a.delete-line-item").click
+          end
           expect(page).to have_no_selector "a.delete-line-item", :count => 2
           expect(page).to have_selector "a.delete-line-item", :count => 1
           visit '/admin/orders/bulk_management'
@@ -740,5 +737,13 @@ feature %q{
       expect(page).to have_selector "tr#li_#{line_item_distributed.id}", :visible => true
       expect(page).to have_no_selector "tr#li_#{line_item_not_distributed.id}", :visible => true
     end
+  end
+
+  def select_date(date)
+    current_month = Time.zone.today.strftime("%B")
+    target_month = date.strftime("%B")
+
+    find('#ui-datepicker-div .ui-datepicker-header .ui-datepicker-prev').click if current_month != target_month
+    find('#ui-datepicker-div .ui-datepicker-calendar .ui-state-default', text: date.strftime("%e").to_s.strip, exact_text: true).click
   end
 end
