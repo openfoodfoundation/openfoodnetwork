@@ -176,10 +176,6 @@ describe Spree::OrdersController, type: :controller do
       let(:payment_fee) { 5 }
       let(:item_num) { order.line_items.length }
       let(:expected_fees) { item_num * (shipping_fee + payment_fee) }
-      let(:params) { { order: { line_items_attributes: {
-        "0" => {id: line_item1.id, quantity: 1},
-        "1" => {id: line_item2.id, quantity: 0}
-      } } } }
 
       before do
         allow(Spree::Config).to receive(:shipment_inc_vat) { true }
@@ -196,10 +192,13 @@ describe Spree::OrdersController, type: :controller do
       end
 
       it "updates the fees" do
-        # Setting quantity of an item to zero
-        spree_post :update, params
+        spree_post :update, {
+          order: { line_items_attributes: {
+            "0" => { id: line_item1.id, quantity: 1 },
+            "1" => { id: line_item2.id, quantity: 0 }
+          } }
+        }
 
-        # Check if fees got updated
         order.reload
         expect(order.line_items.count).to eq 1
         expect(order.adjustment_total).to eq expected_fees - shipping_fee - payment_fee
