@@ -201,7 +201,7 @@ describe Spree::OrdersController, type: :controller do
 
         order.reload
         expect(order.line_items.count).to eq 1
-        expect(order.adjustment_total).to eq expected_fees - shipping_fee - payment_fee
+        expect(order.adjustment_total).to eq((item_num - 1) * (shipping_fee + payment_fee))
         expect(order.shipment.adjustment.included_tax).to eq 0.6
       end
     end
