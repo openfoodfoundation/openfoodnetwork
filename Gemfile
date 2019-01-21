@@ -28,7 +28,7 @@ gem 'stripe', '~> 3.3.2'
 gem 'activemerchant', '~> 1.78'
 
 gem 'oauth2', '~> 1.4.1' # Used for Stripe Connect
-gem 'jwt', '~> 1.5'
+gem 'jwt', '~> 2.1'
 
 gem 'delayed_job_active_record'
 gem 'daemons'
