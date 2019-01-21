@@ -43,10 +43,7 @@ Spree::OrdersController.class_eval do
 
     if @order.update_attributes(params[:order])
       discard_empty_line_items
-
-      @order.adjustments.each(&:open)
-      @order.update!
-      @order.shipment.ensure_correct_adjustment_with_included_tax if @order.shipment
+      with_open_adjustments { update_totals_and_taxes }
 
       render :edit and return unless apply_coupon_code
 
@@ -133,6 +130,20 @@ Spree::OrdersController.class_eval do
 
 
   private
+
+  # Updates the various denormalized total attributes of the order and
+  # recalculates the shipment taxes
+  def update_totals_and_taxes
+    @order.updater.update_totals
+    @order.shipment.ensure_correct_adjustment_with_included_tax if @order.shipment
+  end
+
+  # Sets the adjustments to open to perform the block's action and closes them back again
+  def with_open_adjustments
+    @order.adjustments.each(&:open)
+    yield
+    @order.adjustments.each(&:close)
+  end
 
   def discard_empty_line_items
     @order.line_items = @order.line_items.select { |li| li.quantity > 0 }
