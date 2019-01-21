@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe OrderShippingMethod do
+describe OrderShipment do
   let(:order) { create(:order) }
 
   describe "#shipping_method" do
