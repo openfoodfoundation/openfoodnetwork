@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-xdescribe SubscriptionMailer do
+describe SubscriptionMailer, type: :mailer do
   include ActionView::Helpers::SanitizeHelper
   include OpenFoodNetwork::EmailHelper
 
