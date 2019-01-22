@@ -1103,7 +1103,7 @@ en:
         details: Details
         address: Address
         products: Products
-        no_open_or_upcoming_order_cycle: "No Upcoming OC"
+        no_open_or_upcoming_order_cycle: "No Upcoming Order Cycle"
       product_already_in_order: This product has already been added to the order. Please edit the quantity directly.
       orders:
         number: Number
