@@ -138,11 +138,19 @@ Spree::OrdersController.class_eval do
     @order.shipment.ensure_correct_adjustment_with_included_tax if @order.shipment
   end
 
-  # Sets the adjustments to open to perform the block's action and closes them back again
+  # Sets the adjustments to open to perform the block's action and restores
+  # their state to whatever the they had.
   def with_open_adjustments
+    previous_states = @order.adjustments.each_with_object({}) do |adjustment, hash|
+      hash[adjustment.id] = adjustment.state
+    end
     @order.adjustments.each(&:open)
+
     yield
-    @order.adjustments.each(&:close)
+
+    @order.adjustments.each_with_index do |adjustment, index|
+      adjustment.update_attribute(:state, previous_states[adjustment.id])
+    end
   end
 
   def discard_empty_line_items

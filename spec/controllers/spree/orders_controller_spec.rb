@@ -164,6 +164,18 @@ describe Spree::OrdersController, type: :controller do
         "1" => {quantity: "99", id: li.id}
       })
     end
+
+    it "keeps the adjustments' previous state" do
+      order = subject.current_order(true)
+      line_item = order.add_variant(create(:simple_product, on_hand: 110).variants.first)
+      adjustment = create(:adjustment, adjustable: order)
+
+      spree_get :update, order: { line_items_attributes: {
+        "1" => { quantity: "99", id: line_item.id }
+      }}
+
+      expect(adjustment.state).to eq('open')
+    end
   end
 
   describe "removing items from a completed order" do
@@ -202,6 +214,17 @@ describe Spree::OrdersController, type: :controller do
         expect(order.line_items.count).to eq 1
         expect(order.adjustment_total).to eq((item_num - 1) * (shipping_fee + payment_fee))
         expect(order.shipment.adjustment.included_tax).to eq 0.6
+      end
+
+      it "keeps the adjustments' previous state" do
+        spree_post :update, {
+          order: { line_items_attributes: {
+            "0" => { id: line_item1.id, quantity: 1 },
+            "1" => { id: line_item2.id, quantity: 0 }
+          } }
+        }
+
+        expect(order.adjustments.map(&:state)).to eq(['closed', 'closed', 'closed'])
       end
     end
 
