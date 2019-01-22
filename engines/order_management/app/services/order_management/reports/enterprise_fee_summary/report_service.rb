@@ -25,7 +25,7 @@ module OrderManagement
 
         def enterprise_fee_type_total_list
           enterprise_fees_by_customer.map do |total_data|
-            summarizer = EnterpriseFeeTypeTotalSummarizer.new(total_data)
+            summarizer = Summarizer.new(total_data)
 
             ReportData::EnterpriseFeeTypeTotal.new.tap do |total|
               enterprise_fee_type_summarizer_to_total_attributes.each do |attribute|

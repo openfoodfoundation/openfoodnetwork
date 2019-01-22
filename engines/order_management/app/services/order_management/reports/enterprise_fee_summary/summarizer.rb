@@ -1,7 +1,7 @@
 module OrderManagement
   module Reports
     module EnterpriseFeeSummary
-      class EnterpriseFeeTypeTotalSummarizer
+      class Summarizer
         attr_reader :data
 
         delegate :fee_type, :enterprise_name, :fee_name, :fee_placement,
