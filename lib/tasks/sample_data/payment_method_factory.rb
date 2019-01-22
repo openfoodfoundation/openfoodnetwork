@@ -46,7 +46,7 @@ class PaymentMethodFactory
       description: description,
       distributor_ids: [enterprise.id]
     )
-    card.calculator = calculator
-    card.save!
+    calculator.calculable = card
+    calculator.save!
   end
 end
