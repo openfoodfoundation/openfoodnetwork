@@ -2716,6 +2716,10 @@ See the %{link} to find out more about %{sitename}'s features and to start using
             distributor: "Distributor:"
             order_cycle: "Order cycle:"
       overview:
+        products:
+          you_have: "You have"
+          active_products: "active products"
+          active_product: "active product"
         order_cycles:
           order_cycles: "Order Cycles"
           order_cycles_tip: "Order cycles determine when and where your products are available to customers."

@@ -12,7 +12,7 @@
     - if @product_count > 0
       %div.seven.columns.alpha.list-item
         %span.six.columns.alpha
-          = "You have #{@product_count} active product#{@product_count > 1 ? "s" : ""}."
+          = t(".you_have") + " #{@product_count} #{@product_count > 1 ? t(".active_products") : t(".active_product")}."
         %span.one.column.omega
           %span.icon-ok-sign
       %a.seven.columns.alpha.button.bottom.blue{ href: "#{admin_products_path}" }
