@@ -2,7 +2,7 @@ module OrderManagement
   module Reports
     module EnterpriseFeeSummary
       module DataRepresentations
-        class ExchangeOrderFee < AssociatedEnterpriseFee
+        class ExchangeOrderFee < UsingEnterpriseFee
           def fee_calculated_on_transfer_through_name
             context.i18n_translate("fee_calculated_on_transfer_through_entire_orders",
                                    distributor: context.data["adjustment_source_distributor_name"])

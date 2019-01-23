@@ -2,7 +2,7 @@ module OrderManagement
   module Reports
     module EnterpriseFeeSummary
       module DataRepresentations
-        class IncomingExchangeLineItemFee < AssociatedEnterpriseFee
+        class IncomingExchangeLineItemFee < UsingEnterpriseFee
           def fee_calculated_on_transfer_through_name
             context.data["incoming_exchange_enterprise_name"]
           end
