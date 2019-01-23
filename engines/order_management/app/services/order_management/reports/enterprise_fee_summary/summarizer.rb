@@ -19,10 +19,6 @@ module OrderManagement
           data["total_amount"]
         end
 
-        def i18n_translate(translation_key, options = {})
-          I18n.t("order_management.reports.enterprise_fee_summary.#{translation_key}", options)
-        end
-
         private
 
         def representation

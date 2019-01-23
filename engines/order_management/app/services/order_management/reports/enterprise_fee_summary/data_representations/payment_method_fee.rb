@@ -6,6 +6,8 @@ module OrderManagement
     module EnterpriseFeeSummary
       module DataRepresentations
         class PaymentMethodFee
+          include WithI18n
+
           attr_reader :context
 
           def initialize(context)
@@ -13,7 +15,7 @@ module OrderManagement
           end
 
           def fee_type
-            context.i18n_translate("fee_type.payment_method")
+            i18n_translate("fee_type.payment_method")
           end
 
           def enterprise_name

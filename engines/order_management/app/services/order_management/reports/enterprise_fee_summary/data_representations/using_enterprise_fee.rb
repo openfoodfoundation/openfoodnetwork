@@ -10,6 +10,8 @@ module OrderManagement
     module EnterpriseFeeSummary
       module DataRepresentations
         module UsingEnterpriseFee
+          include WithI18n
+
           attr_reader :context
 
           def initialize(context)
@@ -29,7 +31,7 @@ module OrderManagement
           end
 
           def fee_placement
-            context.i18n_translate("fee_placements.#{context.data['placement_enterprise_role']}")
+            i18n_translate("fee_placements.#{context.data['placement_enterprise_role']}")
           end
         end
       end
