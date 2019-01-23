@@ -677,11 +677,9 @@ describe Spree::Order do
 
     context "removing line_items" do
       it "updates shipping and transaction fees" do
-        # Setting quantity of an item to zero
-        order.update_attributes(line_items_attributes: [{id: order.line_items.first.id, quantity: 0}])
+        order.line_items.first.update_attribute(:quantity, 0)
+        order.save
 
-        # Check if fees got updated
-        order.reload
         expect(order.adjustment_total).to eq expected_fees - shipping_fee - payment_fee
         expect(order.shipment.adjustment.included_tax).to eq 0.6
       end
