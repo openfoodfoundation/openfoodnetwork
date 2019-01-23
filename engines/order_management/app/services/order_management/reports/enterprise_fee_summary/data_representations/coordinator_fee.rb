@@ -1,3 +1,6 @@
+# This module provides EnterpriseFeeSummary::Scope DB result to report mappings for coordinator fees
+# in an order cycle.
+
 module OrderManagement
   module Reports
     module EnterpriseFeeSummary

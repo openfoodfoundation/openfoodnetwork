@@ -1,3 +1,10 @@
+# Different EnterpriseFeeSummary::Scope DB result attributes are checked when dealing with
+# enterprise fees that are attached to an order cycle in different ways.
+#
+# This module provides DB result to report mappings that are common among all rows for enterprise
+# fees. These mappings are not complete and should be supplemented with mappings that are specific
+# to the way that the enterprise fee is attached to the order cycle.
+
 module OrderManagement
   module Reports
     module EnterpriseFeeSummary

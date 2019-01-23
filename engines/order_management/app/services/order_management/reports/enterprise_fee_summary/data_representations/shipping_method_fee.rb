@@ -1,3 +1,6 @@
+# This module provides EnterpriseFeeSummary::Scope DB result to report mappings for shipping method
+# fees.
+
 module OrderManagement
   module Reports
     module EnterpriseFeeSummary

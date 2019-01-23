@@ -1,3 +1,6 @@
+# This module provides EnterpriseFeeSummary::Scope DB result to report mappings for outgoing
+# exchange fees that use line item -based calculators.
+
 module OrderManagement
   module Reports
     module EnterpriseFeeSummary
