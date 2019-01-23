@@ -12,26 +12,26 @@ module OrderManagement
         module UsingEnterpriseFee
           include WithI18n
 
-          attr_reader :context
+          attr_reader :data
 
-          def initialize(context)
-            @context = context
+          def initialize(data)
+            @data = data
           end
 
           def fee_type
-            context.data["fee_type"].try(:capitalize)
+            data["fee_type"].try(:capitalize)
           end
 
           def enterprise_name
-            context.data["enterprise_name"]
+            data["enterprise_name"]
           end
 
           def fee_name
-            context.data["fee_name"]
+            data["fee_name"]
           end
 
           def fee_placement
-            i18n_translate("fee_placements.#{context.data['placement_enterprise_role']}")
+            i18n_translate("fee_placements.#{data['placement_enterprise_role']}")
           end
         end
       end

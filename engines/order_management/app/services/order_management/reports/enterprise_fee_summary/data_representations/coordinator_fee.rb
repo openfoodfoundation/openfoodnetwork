@@ -13,12 +13,12 @@ module OrderManagement
           end
 
           def tax_category_name
-            return context.data["tax_category_name"] if context.data["tax_category_name"].present?
+            return data["tax_category_name"] if data["tax_category_name"].present?
             i18n_translate("tax_category_various") if inherits_tax_category?
           end
 
           def inherits_tax_category?
-            context.data["enterprise_fee_inherits_tax_category"] == "t"
+            data["enterprise_fee_inherits_tax_category"] == "t"
           end
         end
       end

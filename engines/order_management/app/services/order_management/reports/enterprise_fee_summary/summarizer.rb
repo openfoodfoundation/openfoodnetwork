@@ -22,7 +22,7 @@ module OrderManagement
         private
 
         def representation
-          @representation ||= representation_klass.new(self)
+          @representation ||= representation_klass.new(data)
         end
 
         def representation_klass

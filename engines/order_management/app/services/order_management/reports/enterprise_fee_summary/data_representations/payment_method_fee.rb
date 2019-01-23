@@ -8,10 +8,10 @@ module OrderManagement
         class PaymentMethodFee
           include WithI18n
 
-          attr_reader :context
+          attr_reader :data
 
-          def initialize(context)
-            @context = context
+          def initialize(data)
+            @data = data
           end
 
           def fee_type
@@ -19,11 +19,11 @@ module OrderManagement
           end
 
           def enterprise_name
-            context.data["hub_name"]
+            data["hub_name"]
           end
 
           def fee_name
-            context.data["payment_method_name"]
+            data["payment_method_name"]
           end
 
           def fee_placement; end
