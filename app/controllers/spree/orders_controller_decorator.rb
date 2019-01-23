@@ -139,17 +139,21 @@ Spree::OrdersController.class_eval do
   end
 
   # Sets the adjustments to open to perform the block's action and restores
-  # their state to whatever the they had.
+  # their state to whatever the they had. Note that it does not change any new
+  # adjustments that might get created in the yielded block.
   def with_open_adjustments
     previous_states = @order.adjustments.each_with_object({}) do |adjustment, hash|
-      hash[adjustment.id] = adjustment.state
+      hash[adjustment.id] = { adjustment: adjustment, previous_state: adjustment.state }
     end
     @order.adjustments.each(&:open)
 
     yield
 
-    @order.adjustments.each_with_index do |adjustment, index|
-      adjustment.update_attribute(:state, previous_states[adjustment.id])
+    previous_states.each do |adjustment_id, adjustment_pair|
+      adjustment = adjustment_pair[:adjustment]
+      previous_state = adjustment_pair[:previous_state]
+
+      adjustment.update_attribute(:state, previous_state)
     end
   end
 
