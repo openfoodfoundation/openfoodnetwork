@@ -2,7 +2,9 @@ module OrderManagement
   module Reports
     module EnterpriseFeeSummary
       module DataRepresentations
-        class CoordinatorFee < UsingEnterpriseFee
+        class CoordinatorFee
+          include UsingEnterpriseFee
+
           def fee_calculated_on_transfer_through_name
             context.i18n_translate("fee_calculated_on_transfer_through_all")
           end

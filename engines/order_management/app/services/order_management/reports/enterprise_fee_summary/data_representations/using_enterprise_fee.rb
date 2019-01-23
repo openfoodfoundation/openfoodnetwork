@@ -2,7 +2,7 @@ module OrderManagement
   module Reports
     module EnterpriseFeeSummary
       module DataRepresentations
-        class UsingEnterpriseFee
+        module UsingEnterpriseFee
           attr_reader :context
 
           def initialize(context)
