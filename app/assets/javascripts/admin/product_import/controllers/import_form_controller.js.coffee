@@ -10,6 +10,7 @@ angular.module("admin.productImport").controller "ImportFormCtrl", ($scope, $htt
   $scope.updated_ids = []
   $scope.update_errors = []
 
+  $scope.batchSize = 50
   $scope.step = 'settings'
   $scope.chunks = 0
   $scope.completed = 0
@@ -51,14 +52,13 @@ angular.module("admin.productImport").controller "ImportFormCtrl", ($scope, $htt
   $scope.start = () ->
     $scope.started = true
     total = ams_data.item_count
-    size = 50
-    $scope.chunks = Math.ceil(total / size)
+    $scope.chunks = Math.ceil(total / $scope.batchSize)
 
     i = 0
 
     while i < $scope.chunks
-      start = (i*size)+1
-      end = (i+1)*size
+      start = (i * $scope.batchSize) + 1
+      end = (i + 1) * $scope.batchSize
       if $scope.step == 'import'
         $scope.processImport(start, end)
       if $scope.step == 'save'
