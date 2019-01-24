@@ -361,6 +361,58 @@ feature "Product Import", js: true do
     end
   end
 
+  describe "handling a large file (120 data rows)" do
+    let!(:producer) { enterprise }
+
+    let(:tmp_csv_path) { "/tmp/test.csv" }
+
+    before do
+      quick_login_as admin
+      visit main_app.admin_product_import_path
+    end
+
+    context "when importing to product list" do
+      def write_tmp_csv_file
+        CSV.open(tmp_csv_path, "w") do |csv|
+          csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
+                  "tax_category", "shipping_category"]
+          120.times do |i|
+            csv << ["Imported Product #{i + 1}", producer.name, category.name, 1, "1.00", "500",
+                    "g", tax_category.name, shipping_category.name]
+          end
+        end
+      end
+
+      before { write_tmp_csv_file }
+
+      it "validates and saves all batches" do
+        # Upload and validate file.
+        attach_file "file", tmp_csv_path
+        click_button I18n.t("admin.product_import.index.upload")
+        proceed_to_validation
+
+        # Check that all rows are validated.
+        heading = "120 #{I18n.t("admin.product_import.import.products_to_create")}"
+        find(".panel-header", text: heading).click
+        expect(page).to have_content "Imported Product 10"
+        expect(page).to have_content "Imported Product 60"
+        expect(page).to have_content "Imported Product 110"
+
+        # Save file.
+        proceed_with_save
+
+        # Be extra patient.
+        expect_progress_percentages "33%", "67%", "100%"
+        expect_import_completed
+
+        # Check that all rows are saved.
+        expect(producer.supplied_products.find_by_name("Imported Product 10")).to be_present
+        expect(producer.supplied_products.find_by_name("Imported Product 60")).to be_present
+        expect(producer.supplied_products.find_by_name("Imported Product 110")).to be_present
+      end
+    end
+  end
+
   private
 
   def import_data
@@ -372,8 +424,26 @@ feature "Product Import", js: true do
 
   def save_data
     expect(page).to have_selector 'a.button.proceed', visible: true
-    click_link I18n.t('admin.product_import.import.save')
+    proceed_with_save
     expect(page).to have_selector 'div.save-results', visible: true
+    expect_import_completed
+  end
+
+  def expect_progress_percentages(*percentages)
+    percentages.each do |percentage|
+      expect(page).to have_selector ".progress-interface", text: percentage
+    end
+  end
+
+  def proceed_to_validation
+    import_data
+  end
+
+  def proceed_with_save
+    click_link I18n.t("admin.product_import.import.save")
+  end
+
+  def expect_import_completed
     expect(page).to have_content I18n.t('admin.product_import.save_results.final_results')
   end
 end
