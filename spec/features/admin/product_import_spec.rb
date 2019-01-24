@@ -46,7 +46,7 @@ feature "Product Import", js: true do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
-      import_data
+      proceed_to_validation
 
       expect(page).to have_selector '.item-count', text: "2"
       expect(page).to have_no_selector '.invalid-count'
@@ -89,7 +89,7 @@ feature "Product Import", js: true do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
-      import_data
+      proceed_to_validation
 
       expect(page).to have_selector '.item-count', text: "2"
       expect(page).to have_selector '.invalid-count', text: "2"
@@ -112,7 +112,7 @@ feature "Product Import", js: true do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
-      import_data
+      proceed_to_validation
 
       expect(page).to have_selector '.item-count', text: "1"
       expect(page).to have_selector '.create-count', text: "1"
@@ -142,7 +142,7 @@ feature "Product Import", js: true do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
-      import_data
+      proceed_to_validation
 
       save_data
 
@@ -188,7 +188,7 @@ feature "Product Import", js: true do
 
       click_button 'Upload'
 
-      import_data
+      proceed_to_validation
 
       save_data
 
@@ -213,7 +213,7 @@ feature "Product Import", js: true do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
-      import_data
+      proceed_to_validation
 
       expect(page).to have_selector '.item-count', text: "3"
       expect(page).to_not have_selector '.invalid-count'
@@ -252,7 +252,7 @@ feature "Product Import", js: true do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
-      import_data
+      proceed_to_validation
 
       expect(page).to have_selector '.item-count', text: "3"
       expect(page).to have_no_selector '.invalid-count'
@@ -349,7 +349,7 @@ feature "Product Import", js: true do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
-      import_data
+      proceed_to_validation
 
       expect(page).to have_content I18n.t('admin.product_import.import.validation_overview')
       expect(page).to have_selector '.item-count', text: "2"
@@ -415,7 +415,7 @@ feature "Product Import", js: true do
 
   private
 
-  def import_data
+  def proceed_to_validation
     expect(page).to have_selector 'a.button.proceed', visible: true
     click_link I18n.t('admin.product_import.import.import')
     expect(page).to have_selector 'form.product-import', visible: true
@@ -433,10 +433,6 @@ feature "Product Import", js: true do
     percentages.each do |percentage|
       expect(page).to have_selector ".progress-interface", text: percentage
     end
-  end
-
-  def proceed_to_validation
-    import_data
   end
 
   def proceed_with_save
