@@ -54,16 +54,24 @@ angular.module("admin.productImport").controller "ImportFormCtrl", ($scope, $htt
     total = ams_data.item_count
     $scope.chunks = Math.ceil(total / $scope.batchSize)
 
-    i = 0
+    # Process only the first batch.
+    $scope.processBatch($scope.step, 0, $scope.chunks)
 
-    while i < $scope.chunks
-      start = (i * $scope.batchSize) + 1
-      end = (i + 1) * $scope.batchSize
-      if $scope.step == 'import'
-        $scope.processImport(start, end)
-      if $scope.step == 'save'
-        $scope.processSave(start, end)
-      i++
+  $scope.processBatch = (step, batchIndex, batchCount) ->
+    start = (batchIndex * $scope.batchSize) + 1
+    end = (batchIndex + 1) * $scope.batchSize
+    withNextBatch = batchIndex + 1 < batchCount
+
+    promise = if step == 'import'
+      $scope.processImport(start, end)
+    else if step == 'save'
+      $scope.processSave(start, end)
+
+    processNextBatch = ->
+      $scope.processBatch(step, batchIndex + 1, batchCount)
+
+    # Process next batch whether or not processing of the current batch succeeds.
+    promise.then(processNextBatch, processNextBatch) if withNextBatch
 
   $scope.processImport = (start, end) ->
     $http(
