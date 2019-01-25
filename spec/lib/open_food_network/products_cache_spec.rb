@@ -98,7 +98,7 @@ module OpenFoodNetwork
 
       it "refreshes the cache based on exchanges the variant was in before destruction" do
         expect(ProductsCache).to receive(:refresh_cache).with(distributor, oc)
-        product.delete
+        product.destroy
       end
 
       it "performs the cache refresh after the product has been removed from the order cycle" do
@@ -106,7 +106,7 @@ module OpenFoodNetwork
           expect(product.reload.deleted_at).not_to be_nil
         end
 
-        product.delete
+        product.destroy
       end
     end
 

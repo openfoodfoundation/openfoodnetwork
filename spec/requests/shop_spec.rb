@@ -24,7 +24,7 @@ describe "Shop API", type: :request do
       set_order order
 
       v61.update_attribute(:count_on_hand, 1)
-      p6.delete
+      p6.destroy
       v71.update_attribute(:count_on_hand, 1)
       v41.update_attribute(:count_on_hand, 1)
       v42.update_attribute(:count_on_hand, 0)
