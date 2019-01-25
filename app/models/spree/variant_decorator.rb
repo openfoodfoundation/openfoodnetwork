@@ -105,14 +105,6 @@ Spree::Variant.class_eval do
     OpenFoodNetwork::EnterpriseFeeCalculator.new(distributor, order_cycle).fees_by_type_for self
   end
 
-  def delete
-    transaction do
-      self.update_column(:deleted_at, Time.zone.now)
-      ExchangeVariant.where(variant_id: self).destroy_all
-      self
-    end
-  end
-
   def refresh_products_cache
     if is_master?
       product.refresh_products_cache

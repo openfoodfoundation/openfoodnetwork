@@ -6,7 +6,7 @@ class VariantDeleter
       return false
     end
 
-    variant.delete
+    variant.destroy
   end
 
   private
