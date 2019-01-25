@@ -55,15 +55,6 @@ module Spree
         end
       end
 
-
-      it "does not allow the last variant to be deleted" do
-        product = create(:simple_product)
-        expect(product.variants(:reload).length).to eq 1
-        v = product.variants.last
-        v.delete
-        expect(v.errors[:product]).to include "must have at least one variant"
-      end
-
       context "when the product has variants" do
         let(:product) do
           product = create(:simple_product)

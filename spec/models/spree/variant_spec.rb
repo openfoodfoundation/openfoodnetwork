@@ -535,22 +535,5 @@ module Spree
       v.destroy
       e.reload.variant_ids.should be_empty
     end
-
-    context "as the last variant of a product" do
-      let!(:extra_variant) { create(:variant) }
-      let!(:product) { extra_variant.product }
-      let!(:first_variant) { product.variants.first }
-
-      before { product.reload }
-
-      it "cannot be deleted" do
-        expect(product.variants.length).to eq 2
-        expect(extra_variant.delete).to eq extra_variant
-        expect(product.variants(:reload).length).to eq 1
-        expect(first_variant.delete).to be false
-        expect(product.variants(:reload).length).to eq 1
-        expect(first_variant.errors[:product]).to include "must have at least one variant"
-      end
-    end
   end
 end
