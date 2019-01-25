@@ -78,8 +78,13 @@ Spree::Admin::ProductsController.class_eval do
     params[:q][:deleted_at_null] ||= "1"
 
     params[:q][:s] ||= "name asc"
-
-    @search = Spree::Product.ransack(params[:q]) # this line is modified - hit Spree::Product instead of super, avoiding cancan error for fetching records with block permissions via accessible_by
+    # The next line is modified.
+    # Hit Spree::Product instead of super, avoiding cancan error for fetching
+    # records with block permissions via accessible_by.
+    @collection = Spree::Product
+    @collection = @collection.with_deleted if params[:q].delete(:deleted_at_null).blank?
+    # @search needs to be defined as this is passed to search_form_for
+    @search = @collection.ransack(params[:q])
     @collection = @search.result.
       managed_by(spree_current_user). # this line is added to the original spree code!!!!!
       group_by_products_id.
