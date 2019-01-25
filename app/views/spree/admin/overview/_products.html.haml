@@ -12,7 +12,10 @@
     - if @product_count > 0
       %div.seven.columns.alpha.list-item
         %span.six.columns.alpha
-          = t(".you_have") + " #{@product_count} #{@product_count > 1 ? t(".active_products") : t(".active_product")}."
+          - if @product_count == 1
+            = t(".active_products_count_single", product_count: @product_count )
+          - else
+            = t(".active_products_count_multiple", product_count: @product_count )
         %span.one.column.omega
           %span.icon-ok-sign
       %a.seven.columns.alpha.button.bottom.blue{ href: "#{admin_products_path}" }
