@@ -49,7 +49,6 @@ module ProductImport
             VariantOverride.for_hubs([enterprise_id]).count
           else
             Spree::Variant.
-              not_deleted.
               not_master.
               joins(:product).
               where('spree_products.supplier_id IN (?)', enterprise_id).
