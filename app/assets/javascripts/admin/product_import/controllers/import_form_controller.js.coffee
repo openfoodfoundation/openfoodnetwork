@@ -60,18 +60,20 @@ angular.module("admin.productImport").controller "ImportFormCtrl", ($scope, $htt
   $scope.processBatch = (step, batchIndex, batchCount) ->
     start = (batchIndex * $scope.batchSize) + 1
     end = (batchIndex + 1) * $scope.batchSize
-    withNextBatch = batchIndex + 1 < batchCount
+    isLastBatch = batchCount == batchIndex + 1
 
     promise = if step == 'import'
       $scope.processImport(start, end)
     else if step == 'save'
       $scope.processSave(start, end)
 
+    return if isLastBatch
+
     processNextBatch = ->
       $scope.processBatch(step, batchIndex + 1, batchCount)
 
     # Process next batch whether or not processing of the current batch succeeds.
-    promise.then(processNextBatch, processNextBatch) if withNextBatch
+    promise.then(processNextBatch, processNextBatch)
 
   $scope.processImport = (start, end) ->
     $http(
