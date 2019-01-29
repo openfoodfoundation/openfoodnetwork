@@ -7,6 +7,7 @@ es:
         shipment_state: Estado del envío
         completed_at: Completado en
         number: Número
+        state: Provincia
         email: E-mail del consumidor
       spree/payment:
         amount: Cantidad
@@ -2623,8 +2624,6 @@ es:
         display_as:
           display_as: Mostrar como
       reports:
-        table:
-          select_and_search: "Selecciona filtros y haz clic en BUSCAR para acceder a tus datos."
         bulk_coop:
           bulk_coop_supplier_report: 'Bulk Co-op - Totales por Proveedor'
           bulk_coop_allocation: 'Bulk Co-op - Asignación'

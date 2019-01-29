@@ -7,6 +7,7 @@ en_US:
         shipment_state: Shipment State
         completed_at: Completed At
         number: Number
+        state: State
         email: Customer E-mail
       spree/payment:
         amount: Amount
@@ -2617,8 +2618,6 @@ en_US:
         display_as:
           display_as: Display As
       reports:
-        table:
-          select_and_search: "Select filters and click on SEARCH to access your data."
         bulk_coop:
           bulk_coop_supplier_report: 'Bulk Co-op - Totals by Supplier'
           bulk_coop_allocation: 'Bulk Co-op - Allocation'

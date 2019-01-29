@@ -7,6 +7,7 @@ pt:
         shipment_state: Estado do envio
         completed_at: Concluído Em
         number: Número
+        state: Região
         email: Email do/a Consumidor/a
       spree/payment:
         amount: Quantia
@@ -2488,8 +2489,6 @@ pt:
         display_as:
           display_as: Mostrar como
       reports:
-        table:
-          select_and_search: "Selecione os filtros e click em Pesquisar para obter resultados."
         bulk_coop:
           bulk_coop_supplier_report: 'Cooperativa por Atacado - Totais por Fornecedor'
           bulk_coop_allocation: 'Cooperativa por Atacado - Alocação'

@@ -7,6 +7,7 @@ fr:
         shipment_state: Statut livraison
         completed_at: 'Passée à '
         number: N° commande
+        state: Département
         email: Email acheteur
       spree/payment:
         amount: Montant
@@ -475,6 +476,8 @@ fr:
         inventory_no_permission: vous n'avez pas l'autorisation d'ajouter les produits de ce producteur à votre catalogue boutique
         none_saved: n'a pu sauvegarder aucun produit :-(
         line_number: "Ligne %{number} :"
+        encoding_error: "Veuillez vérifier le paramètre de langue de votre code source et vous assurer qu'il est encodé en UTF-8"
+        unexpected_error: "L'import de fichier produits à rencontré une erreur inconnue à l'ouverture du fichier : %{error_message}"
       index:
         select_file: Sélectionner le fichier (tableur sous format csv) à importer
         spreadsheet: Tableur csv
@@ -2630,7 +2633,7 @@ fr:
           display_as: Unité affichéé
       reports:
         table:
-          select_and_search: "Sélectionnez les filtres et cliquez sur RECHERCHER pour accéder à vos données."
+          select_and_search: "Sélectionner les filtres et cliquez sur %{option} pour accéder aux données."
         bulk_coop:
           bulk_coop_supplier_report: 'Achats groupés - Totaux par Producteur'
           bulk_coop_allocation: 'Achats groupés - Allocation'
