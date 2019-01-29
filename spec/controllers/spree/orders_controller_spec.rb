@@ -164,25 +164,34 @@ describe Spree::OrdersController, type: :controller do
         "1" => {quantity: "99", id: li.id}
       })
     end
+
+    it "keeps the adjustments' previous state" do
+      order = subject.current_order(true)
+      line_item = order.add_variant(create(:simple_product, on_hand: 110).variants.first)
+      adjustment = create(:adjustment, adjustable: order)
+
+      spree_get :update, order: { line_items_attributes: {
+        "1" => { quantity: "99", id: line_item.id }
+      }}
+
+      expect(adjustment.state).to eq('open')
+    end
   end
 
   describe "removing items from a completed order" do
     context "with shipping and transaction fees" do
-      let(:order) { create(:completed_order_with_fees, shipping_fee: shipping_fee, payment_fee: payment_fee) }
+      let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true, allow_order_changes: true) }
+      let(:order) { create(:completed_order_with_fees, distributor: distributor, shipping_fee: shipping_fee, payment_fee: payment_fee) }
       let(:line_item1) { order.line_items.first }
       let(:line_item2) { order.line_items.second }
       let(:shipping_fee) { 3 }
       let(:payment_fee) { 5 }
       let(:item_num) { order.line_items.length }
       let(:expected_fees) { item_num * (shipping_fee + payment_fee) }
-      let(:params) { { order: { line_items_attributes: {
-        "0" => {id: line_item1.id, quantity: 1},
-        "1" => {id: line_item2.id, quantity: 0}
-      } } } }
 
       before do
-        Spree::Config.shipment_inc_vat = true
-        Spree::Config.shipping_tax_rate = 0.25
+        allow(Spree::Config).to receive(:shipment_inc_vat) { true }
+        allow(Spree::Config).to receive(:shipping_tax_rate) { 0.25 }
 
         # Sanity check the fees
         expect(order.adjustments.length).to eq 2
@@ -195,14 +204,27 @@ describe Spree::OrdersController, type: :controller do
       end
 
       it "updates the fees" do
-        # Setting quantity of an item to zero
-        spree_post :update, params
+        spree_post :update, {
+          order: { line_items_attributes: {
+            "0" => { id: line_item1.id, quantity: 1 },
+            "1" => { id: line_item2.id, quantity: 0 }
+          } }
+        }
 
-        # Check if fees got updated
-        order.reload
         expect(order.line_items.count).to eq 1
-        expect(order.adjustment_total).to eq expected_fees - shipping_fee - payment_fee
+        expect(order.adjustment_total).to eq((item_num - 1) * (shipping_fee + payment_fee))
         expect(order.shipment.adjustment.included_tax).to eq 0.6
+      end
+
+      it "keeps the adjustments' previous state" do
+        spree_post :update, {
+          order: { line_items_attributes: {
+            "0" => { id: line_item1.id, quantity: 1 },
+            "1" => { id: line_item2.id, quantity: 0 }
+          } }
+        }
+
+        expect(order.adjustments.map(&:state)).to eq(['closed', 'closed', 'closed'])
       end
     end
 
