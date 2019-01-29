@@ -7,19 +7,57 @@ module OpenFoodNetwork
     let(:order_cycle) { double(:order_cycle, id: 456) }
     let(:cpr) { CachedProductsRenderer.new(distributor, order_cycle) }
 
+    # keeps global state unchanged
+    around do |example|
+      original_config = Spree::Config[:enable_products_cache?]
+      example.run
+      Spree::Config[:enable_products_cache?] = original_config
+    end
+
     describe "#products_json" do
-      context "when in testing / development" do
-        let(:products_renderer) do
-          double(ProductsRenderer, products_json: 'uncached products')
-        end
+      let(:products_renderer) do
+        double(ProductsRenderer, products_json: 'uncached products')
+      end
 
+      before do
+        allow(ProductsRenderer)
+          .to receive(:new)
+          .with(distributor, order_cycle) { products_renderer }
+      end
+
+      context "products cache toggle" do
         before do
-          allow(ProductsRenderer)
-            .to receive(:new)
-            .with(distributor, order_cycle) { products_renderer }
+          allow(Rails.env).to receive(:production?) { true }
+          Rails.cache.write "products-json-#{distributor.id}-#{order_cycle.id}", 'products'
         end
 
-        it "returns uncaches products JSON" do
+        context "disabled" do
+          before do
+            Spree::Config[:enable_products_cache?] = false
+          end
+
+          it "returns uncached products JSON" do
+            expect(cpr.products_json).to eq 'uncached products'
+          end
+        end
+
+        context "enabled" do
+          before do
+            Spree::Config[:enable_products_cache?] = true
+          end
+
+          it "returns the cached JSON" do
+              expect(cpr.products_json).to eq 'products'
+          end
+        end
+      end
+
+      context "when in testing / development" do
+        before do
+          allow(Rails.env).to receive(:production?) { false }
+        end
+
+        it "returns uncached products JSON" do
           expect(cpr.products_json).to eq 'uncached products'
         end
       end

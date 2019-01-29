@@ -409,13 +409,14 @@ en:
         total_monthly_bill_incl_tax_tip: "The example total monthly bill with tax included, given the settings and the turnover provided."
 
     cache_settings:
-      show:
-        title: Caching
-        distributor: Distributor
-        order_cycle: Order Cycle
-        status: Status
-        diff: Diff
-        error: Error
+      edit:
+        title: "Caching"
+        distributor: "Distributor"
+        order_cycle: "Order Cycle"
+        status: "Status"
+        diff: "Diff"
+        error: "Error"
+        enable_products_cache: "Enable Products Cache?"
 
     invoice_settings:
       edit:
