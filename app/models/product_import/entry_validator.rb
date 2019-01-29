@@ -287,10 +287,18 @@ module ProductImport
     end
 
     def attributes_match?(attribute, existing_product, entry)
-      if existing_product.public_send(attribute).is_a?(Numeric) || entry.public_send(attribute).is_a?(Numeric)
-        return existing_product.public_send(attribute).to_i == entry.public_send(attribute).to_i
+      existing_product_value = existing_product.public_send(attribute)
+      entry_value = entry.public_send(attribute)
+      existing_product_value == convert_to_trusted_type(entry_value, existing_product_value)
+    end
+
+    def convert_to_trusted_type(untrusted_attribute, trusted_attribute)
+      if trusted_attribute.is_a? Integer
+        untrusted_attribute.to_i
+      elsif trusted_attribute.is_a? Float
+        untrusted_attribute.to_f
       else
-        return existing_product.public_send(attribute).to_s == entry.public_send(attribute).to_s
+        untrusted_attribute.to_s
       end
     end
 
