@@ -51,4 +51,4 @@ end
 spree_user = Spree::User.first
 spree_user && spree_user.confirm!
 
-DefaultStockLocation.create!
+DefaultStockLocation.find_or_create
