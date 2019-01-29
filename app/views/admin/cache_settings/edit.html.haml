@@ -1,6 +1,19 @@
 - content_for :page_title do
   = t(:cache_settings)
 
+= form_tag main_app.admin_cache_settings_path, :method => :put do
+  .field
+    = hidden_field_tag 'preferences[enable_products_cache?]', '0'
+    = check_box_tag 'preferences[enable_products_cache?]', '1',  Spree::Config[:enable_products_cache?]
+    = label_tag nil, t('.enable_products_cache')
+  .form-buttons
+    = button t(:update), 'icon-refresh'
+
+%br
+%br
+
+%h4= t(:cache_state)
+%br
 %table.index
   %thead
     %tr
