@@ -74,6 +74,12 @@ Spree::Core::Engine.routes.prepend do
       get :print, on: :member
       get :print_ticket, on: :member
       get :managed, on: :collection
+
+      collection do
+        resources :invoices, only: [:create, :show] do
+          get :poll
+        end
+      end
     end
   end
 

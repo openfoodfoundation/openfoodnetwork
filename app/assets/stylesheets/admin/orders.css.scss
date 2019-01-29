@@ -103,3 +103,34 @@ table.index td.actions {
     font-size: 1.2em;
   }
 }
+
+.index-controls {
+
+  button {
+    float: right;
+
+    &:disabled {
+      background-color: $disabled-button;
+    }
+  }
+}
+
+.simple-modal {
+  text-align: center;
+
+  .modal-title {
+    margin-bottom: 1.5em;
+  }
+
+  .message, .error {
+    margin-bottom: 1em;
+  }
+
+  .spinner {
+    margin-bottom: 1em;
+  }
+
+  .error {
+    color: $warning-red;
+  }
+}
