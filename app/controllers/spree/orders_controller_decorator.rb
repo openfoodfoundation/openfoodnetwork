@@ -143,17 +143,15 @@ Spree::OrdersController.class_eval do
   # adjustments that might get created in the yielded block.
   def with_open_adjustments
     previous_states = @order.adjustments.each_with_object({}) do |adjustment, hash|
-      hash[adjustment.id] = { adjustment: adjustment, previous_state: adjustment.state }
+      hash[adjustment.id] = adjustment.state
     end
     @order.adjustments.each(&:open)
 
     yield
 
-    previous_states.each do |adjustment_id, adjustment_pair|
-      adjustment = adjustment_pair[:adjustment]
-      previous_state = adjustment_pair[:previous_state]
-
-      adjustment.update_attribute(:state, previous_state)
+    @order.adjustments.each do |adjustment|
+      previous_state = previous_states[adjustment.id]
+      adjustment.update_attribute(:state, previous_state) if previous_state
     end
   end
 
