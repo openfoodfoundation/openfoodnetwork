@@ -293,9 +293,10 @@ module ProductImport
     end
 
     def convert_to_trusted_type(untrusted_attribute, trusted_attribute)
-      if trusted_attribute.is_a? Integer
+      case trusted_attribute
+      when Integer
         untrusted_attribute.to_i
-      elsif trusted_attribute.is_a? Float
+      when Float
         untrusted_attribute.to_f
       else
         untrusted_attribute.to_s
