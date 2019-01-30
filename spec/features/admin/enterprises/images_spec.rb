@@ -35,8 +35,7 @@ feature "Managing enterprise images" do
 
         go_to_images
         within ".page-admin-enterprises-form__logo-field-group" do
-          expect(page).to have_selector(".image-field-group__preview-image")
-          expect(html).to include("logo-white.png")
+          expect(page).to have_selector(".image-field-group__preview-image[src*='logo-white.png']")
         end
 
         # Replacing image
@@ -47,8 +46,7 @@ feature "Managing enterprise images" do
 
         go_to_images
         within ".page-admin-enterprises-form__logo-field-group" do
-          expect(page).to have_selector(".image-field-group__preview-image")
-          expect(html).to include("logo-black.png")
+          expect(page).to have_selector(".image-field-group__preview-image[src*='logo-black.png']")
         end
 
         # Removing image
@@ -73,8 +71,7 @@ feature "Managing enterprise images" do
 
         go_to_images
         within ".page-admin-enterprises-form__promo-image-field-group" do
-          expect(page).to have_selector(".image-field-group__preview-image")
-          expect(html).to include("logo-white.jpg")
+          expect(page).to have_selector(".image-field-group__preview-image[src*='logo-white.jpg']")
         end
 
         # Replacing image
@@ -85,8 +82,7 @@ feature "Managing enterprise images" do
 
         go_to_images
         within ".page-admin-enterprises-form__promo-image-field-group" do
-          expect(page).to have_selector(".image-field-group__preview-image")
-          expect(html).to include("logo-black.jpg")
+          expect(page).to have_selector(".image-field-group__preview-image[src*='logo-black.jpg']")
         end
 
         # Removing image
