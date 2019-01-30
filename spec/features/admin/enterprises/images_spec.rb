@@ -58,7 +58,7 @@ feature "Managing enterprise images" do
         expect(page).to have_content("Logo removed successfully")
 
         within ".page-admin-enterprises-form__logo-field-group" do
-          expect(page).to have_no_selector(".image-field-group__preview-image")
+          expect_no_preview_image
         end
       end
 
@@ -94,7 +94,7 @@ feature "Managing enterprise images" do
         expect(page).to have_content("Promo image removed successfully")
 
         within ".page-admin-enterprises-form__promo-image-field-group" do
-          expect(page).to have_no_selector(".image-field-group__preview-image")
+          expect_no_preview_image
         end
       end
     end
@@ -102,5 +102,9 @@ feature "Managing enterprise images" do
 
   def expect_preview_image(file_name)
     expect(page).to have_selector(".image-field-group__preview-image[src*='#{file_name}']")
+  end
+
+  def expect_no_preview_image
+    expect(page).to have_no_selector(".image-field-group__preview-image")
   end
 end
