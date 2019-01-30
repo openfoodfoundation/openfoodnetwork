@@ -198,8 +198,8 @@ xfeature %q{
     let!(:adj_shipping) { create(:adjustment, adjustable: order1, label: "Shipping", amount: 100.55) }
 
     before do
-      Spree::Config.shipment_inc_vat = true
-      Spree::Config.shipping_tax_rate = 0.2
+      allow(Spree::Config).to receive(:shipment_inc_vat) { true }
+      allow(Spree::Config).to receive(:shipping_tax_rate) { 0.2 }
 
       3.times { order1.next }
       order1.reload.update_distribution_charge!
@@ -411,8 +411,8 @@ xfeature %q{
     let(:product2) { create(:taxed_product, zone: zone, price: 500.15, tax_rate_amount: 0.2, sku: 'sku2') }
 
     before do
-      Spree::Config.shipment_inc_vat = true
-      Spree::Config.shipping_tax_rate = 0.1
+      allow(Spree::Config).to receive(:shipment_inc_vat) { true }
+      allow(Spree::Config).to receive(:shipping_tax_rate) { 0.1 }
     end
 
     describe "with adjustments" do
