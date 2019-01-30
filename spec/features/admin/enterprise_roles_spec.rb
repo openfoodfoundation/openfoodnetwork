@@ -99,6 +99,7 @@ feature %q{
         click_link 'Enterprises'
         click_link 'Test Enterprise'
         within('.side_menu') { click_link 'Users' }
+        expect(page).to have_selector "table.managers"
       end
 
       it "lists managers and shows icons for owner, contact, and email confirmation" do
