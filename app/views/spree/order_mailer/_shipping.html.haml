@@ -50,6 +50,6 @@
   - if @order.order_cycle.andand.pickup_instructions_for(@order.distributor).present?
     %p
       %strong
-        = t :email_shipping_collection_time
+        = t :email_shipping_collection_instructions
       %br
       #{@order.order_cycle.pickup_instructions_for(@order.distributor)}

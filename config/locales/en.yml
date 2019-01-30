@@ -2601,6 +2601,11 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       orders:
         index:
           per_page: "%{results} per page"
+          view_file: View File
+          compiling_invoices: Compiling Invoices
+          bulk_invoice_created: Bulk Invoice created
+          bulk_invoice_failed: Failed to create Bulk Invoice
+          please_wait: Please wait until the PDF is ready before closing this modal.
       resend_user_email_confirmation:
         resend: "Resend"
         sending: "Resend..."
@@ -2733,6 +2738,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           no_orders_found: "No Orders Found"
           results_found: "%{number} Results found."
           viewing: "Viewing %{start} to %{end}."
+          print_invoices: "Print Invoices"
         invoice:
           issued_on: Issued on
           tax_invoice: TAX INVOICE

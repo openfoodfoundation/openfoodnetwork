@@ -115,13 +115,15 @@ feature "Using embedded shopfront functionality", js: true do
   end
 
   def login_with_modal
-    expect(page).to have_selector 'div.login-modal', visible: true
+    page.has_selector? 'div.login-modal', visible: true
 
     within 'div.login-modal' do
       fill_in "Email", with: user.email
       fill_in "Password", with: user.password
       find('input[type="submit"]').click
     end
+
+    page.has_no_selector? 'div.login-modal', visible: true
   end
 
   def logout_via_navigation

@@ -1,4 +1,4 @@
-angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor, Orders, SortOptions) ->
+angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor, Orders, SortOptions, $window, $filter) ->
   $scope.RequestMonitor = RequestMonitor
   $scope.pagination = Orders.pagination
   $scope.orders = Orders.all
@@ -8,6 +8,11 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
     {id: 50, name: t('js.admin.orders.index.per_page', results: 50)},
     {id: 100, name: t('js.admin.orders.index.per_page', results: 100)}
   ]
+  $scope.selected_orders = []
+  $scope.checkboxes = {}
+  $scope.selected = false
+  $scope.select_all = false
+  $scope.poll = 0
 
   $scope.initialise = ->
     $scope.per_page = 15
@@ -17,6 +22,7 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
     $scope.fetchResults()
 
   $scope.fetchResults = (page=1) ->
+    $scope.resetSelected()
     Orders.index({
       'q[completed_at_lt]': $scope['q']['completed_at_lt'],
       'q[completed_at_gt]': $scope['q']['completed_at_gt'],
@@ -34,6 +40,26 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
       per_page: $scope.per_page,
       page: page
     })
+
+  $scope.resetSelected = ->
+    $scope.selected_orders.length = 0
+    $scope.selected = false
+    $scope.select_all = false
+    $scope.checkboxes = {}
+
+  $scope.toggleSelection = (id) ->
+    index = $scope.selected_orders.indexOf(id)
+
+    if index == -1
+      $scope.selected_orders.push(id)
+    else
+      $scope.selected_orders.splice(index, 1)
+
+  $scope.toggleAll = ->
+    $scope.selected_orders.length = 0
+    $scope.orders.forEach (order) ->
+      $scope.checkboxes[order.id] = $scope.select_all
+      $scope.selected_orders.push order.id if $scope.select_all
 
   $scope.$watch 'sortOptions', (sort) ->
     if sort && sort.predicate != ""

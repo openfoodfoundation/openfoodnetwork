@@ -514,5 +514,89 @@ module Spree
         end
       end
     end
+
+    describe "permissions for variant overrides" do
+      let!(:distributor) { create(:distributor_enterprise) }
+      let!(:producer) { create(:supplier_enterprise) }
+      let!(:product) { create(:product, supplier: producer) }
+      let!(:variant) { create(:variant, product: product) }
+      let!(:variant_override) { create(:variant_override, hub: distributor, variant: variant) }
+
+      subject { user }
+
+      let(:manage_actions) { [:admin, :index, :read, :update, :bulk_update, :bulk_reset] }
+
+      describe "when admin" do
+        let(:user) { create(:admin_user) }
+
+        it "should have permission" do
+          is_expected.to have_ability(manage_actions, for: variant_override)
+        end
+      end
+
+      describe "when user of the producer" do
+        let(:user) { producer.owner }
+
+        it "should not have permission" do
+          is_expected.not_to have_ability(manage_actions, for: variant_override)
+        end
+      end
+
+      describe "when user of the distributor" do
+        let(:user) { distributor.owner }
+
+        it "should not have permission" do
+          is_expected.not_to have_ability(manage_actions, for: variant_override)
+        end
+      end
+
+      describe "when user of the distributor which is also the producer" do
+        let(:user) { distributor.owner }
+        let!(:distributor) { create(:distributor_enterprise, is_primary_producer: true, sells: "any") }
+        let!(:producer) { distributor }
+
+        it "should have permission" do
+          is_expected.to have_ability(manage_actions, for: variant_override)
+        end
+      end
+
+      describe "when owner of the distributor with add_to_order_cycle permission to the producer" do
+        let!(:unauthorized_enterprise) do
+          create(:enterprise, sells: "any").tap do |record|
+            create(:enterprise_relationship, parent: producer, child: record, permissions_list: [:add_to_order_cycle])
+          end
+        end
+        let(:user) { unauthorized_enterprise.owner }
+
+        it "should not have permission" do
+          is_expected.not_to have_ability(manage_actions, for: variant_override)
+        end
+      end
+
+      describe "when owner of the enterprise with create_variant_overrides permission to the producer" do
+        let!(:authorized_enterprise) do
+          create(:enterprise, sells: "any").tap do |record|
+            create(:enterprise_relationship, parent: producer, child: record, permissions_list: [:create_variant_overrides])
+          end
+        end
+        let(:user) { authorized_enterprise.owner }
+
+        it "should not have permission" do
+          is_expected.not_to have_ability(manage_actions, for: variant_override)
+        end
+
+        describe "when the enterprise is not a distributor" do
+          let!(:authorized_enterprise) do
+            create(:enterprise, sells: "none").tap do |record|
+              create(:enterprise_relationship, parent: producer, child: record, permissions_list: [:create_variant_overrides])
+            end
+          end
+
+          it "should not have permission" do
+            is_expected.not_to have_ability(manage_actions, for: variant_override)
+          end
+        end
+      end
+    end
   end
 end

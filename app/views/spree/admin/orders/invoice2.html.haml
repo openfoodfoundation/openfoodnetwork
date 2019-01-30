@@ -45,7 +45,7 @@
         = t :invoice_billing_address
         %br
         %strong= @order.ship_address.full_name
-        - if @order.customer.code.present?
+        - if @order.andand.customer.andand.code.present?
           %br
           = "Code: #{@order.customer.code}"
         %br
