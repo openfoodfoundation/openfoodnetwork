@@ -1,4 +1,4 @@
-namespace :openfoodnetwork do
+namespace :ofn do
   namespace :specs do
     namespace :engines do
       def detect_engine_paths

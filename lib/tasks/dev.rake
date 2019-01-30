@@ -1,4 +1,4 @@
-namespace :openfoodnetwork do
+namespace :ofn do
   namespace :dev do
     desc 'load sample data'
     task load_sample_data: :environment do
