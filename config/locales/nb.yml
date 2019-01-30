@@ -2037,6 +2037,8 @@ nb:
   order_cycles: "Bestillingsrunder"
   enterprise_relationships: "Bedriftsrettigheter"
   remove_tax: "Fjern avgift"
+  first_name_begins_with: "Fornavn begynner med"
+  last_name_begins_with: "Etternavn begynner med"
   enterprise_tos_link: "Lenke til Tjenestevilkår for Bedrifter"
   enterprise_tos_message: "Vi ønsker å jobbe med bedrifter som deler våre mål og verdier. Derfor ber vi nye bedrifter om å godta vår"
   enterprise_tos_link_text: "Tjenestevilkår."
@@ -2440,6 +2442,11 @@ nb:
       orders:
         index:
           per_page: "%{results} per side"
+          view_file: Se fil
+          compiling_invoices: Samler Fakturaer
+          bulk_invoice_created: Samlefaktura opprettet
+          bulk_invoice_failed: Kunne ikke opprette samlefaktura
+          please_wait: Vennligst vent til PDF-filen er klar før du lukker dette vinduet.
       resend_user_email_confirmation:
         resend: "Send på nytt"
         sending: "Send på nytt ..."
@@ -2541,6 +2548,7 @@ nb:
           no_orders_found: "Ingen bestillinger funnet"
           results_found: "%{number} Resultater funnet."
           viewing: "Ser %{start} til %{end}."
+          print_invoices: "Skriv ut fakturaer"
         invoice:
           issued_on: Utstedt på
           tax_invoice: AVGIFTSFAKTURA

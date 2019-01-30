@@ -2038,6 +2038,8 @@ fr:
   order_cycles: "Cycles de Vente"
   enterprise_relationships: "Permissions inter-entreprises"
   remove_tax: "Retirer TVA"
+  first_name_begins_with: "Prénom commence par"
+  last_name_begins_with: "Nom de famille commence par"
   enterprise_tos_link: "Lien vers les Conditions Générales d'Utilisation"
   enterprise_tos_message: "Nous soutenons la mise en place d'un système alimentaire résilient et durable, et souhaitons œuvrer avec des entreprises qui partagent nos valeurs et notre vision. Ainsi, nous demandons aux entreprises s'enregistrant sur Open Food France de valider nos "
   enterprise_tos_link_text: "Conditions d'utilisation"
@@ -2451,6 +2453,11 @@ fr:
       orders:
         index:
           per_page: "%{results} par page"
+          view_file: Voir le fichier
+          compiling_invoices: Compilation des factures en cours
+          bulk_invoice_created: Facture compilée générée
+          bulk_invoice_failed: Échec dans la compilation des factures
+          please_wait: Veuillez attendre que le PDF soit prêt avant de fermer cette fenêtre.
       resend_user_email_confirmation:
         resend: "Renvoyer"
         sending: "Renvoi...."
@@ -2554,6 +2561,7 @@ fr:
           no_orders_found: "Aucune commande trouvée pour ces critères"
           results_found: "%{number} résultats trouvés"
           viewing: "Résultats %{start} à %{end} affichés."
+          print_invoices: "Imprimer les factures"
         invoice:
           issued_on: Editée le
           tax_invoice: FACTURE
