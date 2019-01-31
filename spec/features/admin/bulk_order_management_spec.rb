@@ -567,6 +567,7 @@ feature %q{
       context "when a filter has been applied" do
         it "only toggles checkboxes which are in filteredLineItems" do
           fill_in "quick_search", with: o1.number
+          expect(page).to have_no_selector "tr#li_#{li2.id}"
           check "toggle_bulk"
           fill_in "quick_search", with: ''
           expect(find("tr#li_#{li1.id} input[type='checkbox'][name='bulk']").checked?).to be true
@@ -577,11 +578,13 @@ feature %q{
         it "only applies the delete action to filteredLineItems" do
           check "toggle_bulk"
           fill_in "quick_search", with: o1.number
+          expect(page).to have_no_selector "tr#li_#{li2.id}"
           find("div#bulk-actions-dropdown").click
           find("div#bulk-actions-dropdown div.menu_item", :text => "Delete Selected" ).click
-          fill_in "quick_search", with: ''
           expect(page).to have_no_selector "tr#li_#{li1.id}"
+          fill_in "quick_search", with: ''
           expect(page).to have_selector "tr#li_#{li2.id}"
+          expect(page).to have_no_selector "tr#li_#{li1.id}"
         end
       end
     end
