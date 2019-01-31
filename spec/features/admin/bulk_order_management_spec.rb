@@ -743,6 +743,9 @@ feature %q{
     current_month = Time.zone.today.strftime("%B")
     target_month = date.strftime("%B")
 
+    # Wait for datepicker to open and be associated to the datepicker trigger.
+    expect(page).to have_selector("#ui-datepicker-div")
+
     find('#ui-datepicker-div .ui-datepicker-header .ui-datepicker-prev').click if current_month != target_month
     find('#ui-datepicker-div .ui-datepicker-calendar .ui-state-default', text: date.strftime("%e").to_s.strip, exact_text: true).click
   end
