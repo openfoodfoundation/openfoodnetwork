@@ -112,7 +112,7 @@
 
   .margin-bottom-50{ 'ng-hide' => 'RequestMonitor.loading || filteredLineItems.length == 0' }
     %form{ name: 'bulk_order_form' }
-      %table.index#listing_orders.bulk{ :class => "sixteen columns alpha" }
+      %table.index#listing_orders.bulk{ :class => "sixteen columns alpha", ng: { show: "initialized" } }
         %thead
           %tr{ ng: { controller: "ColumnsCtrl" } }
             %th.bulk
