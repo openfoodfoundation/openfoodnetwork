@@ -72,7 +72,7 @@ feature %q{
     expect(page).not_to have_selector '#errorExplanation'
     expect(page).to have_content 'ADD PRODUCT'
     targetted_select2_search @product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
-    click_link 'Add'
+    find('button.add_variant').click
     page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr"  # Wait for JS
     expect(page).to have_selector 'td', text: @product.name
 
@@ -92,7 +92,7 @@ feature %q{
 
     targetted_select2_search @product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
 
-    click_link 'Add'
+    find('button.add_variant').click
 
     expect(page).to have_selector 'td', text: @product.name
     expect(@order.line_items(true).map(&:product)).to include @product
@@ -112,7 +112,6 @@ feature %q{
     page.find('a.icon-search').click
 
     click_icon :edit
-
     select2_select d.name, from: 'order_distributor_id'
     select2_select oc.name, from: 'order_order_cycle_id'
 
@@ -157,14 +156,14 @@ feature %q{
     quick_login_as @user
     new_order_with_distribution(@distributor, @order_cycle)
     targetted_select2_search @product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
-    click_link 'Add'
+    find('button.add_variant').click
     page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr"  # Wait for JS
     click_button 'Update'
     expect(page).to have_selector 'h1.page-title', text: "Customer Details"
 
     # And I select that customer's email address and save the order
     targetted_select2_search @customer.email, from: '#customer_search_override', dropdown_css: '.select2-drop'
-    click_button 'Continue'
+    click_button 'Update'
     expect(page).to have_selector "h1.page-title", text: "Shipments"
 
     # Then their addresses should be associated with the order
@@ -230,16 +229,16 @@ feature %q{
         within('table.index tbody', match: :first) do
           @order.line_items.each do |item|
             expect(page).to have_selector "td", match: :first, text: item.full_name
-            expect(page).to have_selector "td.price", text: item.single_display_amount
-            expect(page).to have_selector "input.qty[value='#{item.quantity}']"
-            expect(page).to have_selector "td.total", text: item.display_amount
+            expect(page).to have_selector "td.item-price", text: item.single_display_amount
+            expect(page).to have_selector "input#quantity[value='#{item.quantity}']", visible: false
+            expect(page).to have_selector "td.item-total", text: item.display_amount
           end
         end
       end
 
-      scenario "shows the order subtotal" do
-        within('table.index tbody#subtotal') do
-          expect(page).to have_selector "td.total", text: @order.display_item_total
+      scenario "shows the order items total" do
+        within('fieldset#order-total') do
+          expect(page).to have_selector "span.order-total", text: @order.display_item_total
         end
       end
 
@@ -254,13 +253,11 @@ feature %q{
       end
 
       scenario "shows the order total" do
-        within('table.index tbody#order-total') do
-          expect(page).to have_selector "td.total", text: @order.display_total
-        end
+        expect(page).to have_selector "fieldset#order-total", text: @order.display_total
       end
 
       scenario "shows the order taxes" do
-        within('table.index tbody#price-adjustments') do
+        within('tbody#order-charges') do
           expect(page).to have_selector "td", match: :first, text: "Tax 1"
           expect(page).to have_selector "td.total", text: Spree::Money.new(10)
         end
@@ -324,7 +321,7 @@ feature %q{
       expect(page).to have_content 'ADD PRODUCT'
       targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
 
-      click_link 'Add'
+      find('button.add_variant').click
       page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr"  # Wait for JS
       expect(page).to have_selector 'td', text: product.name
 

@@ -16,15 +16,19 @@
   - unless params["suppress_error_msg"]
     = render partial: "spree/shared/error_messages", :locals => { :target => @order }
 
-= render :partial => 'add_product' if can?(:update, @order)
+  = admin_inject_shops(module: 'admin.orders')
+  = admin_inject_order_cycles
+  %div{"ng-app" => "admin.orders", "ng-controller" => "orderCtrl", "ofn-distributor-id" => @order.distributor_id, "ofn-order-cycle-id" => @order.order_cycle_id}
 
-- if @order.line_items.empty?
-  .no-objects-found
-    = Spree.t(:your_order_is_empty_add_product)
+    = render :partial => 'add_product' if can?(:update, @order)
 
-%div{"data-hook" => "admin_order_edit_form"}
-  #order-form-wrapper
-    = render :partial => 'form', :locals => { :order => @order }
+    - if @order.line_items.empty?
+      .no-objects-found
+        = Spree.t(:your_order_is_empty_add_product)
+
+    %div{"data-hook" => "admin_order_edit_form"}
+      #order-form-wrapper
+        = render :partial => 'form', :locals => { :order => @order }
 
 - content_for :head do
   = javascript_tag 'var expand_variants = true;'
