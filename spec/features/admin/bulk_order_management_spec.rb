@@ -439,7 +439,7 @@ feature %q{
         expect(page).to have_selector "tr#li_#{li3.id}"
         fill_in "quick_search", :with => o1.email
         expect(page).to have_selector "tr#li_#{li1.id}"
-        expect(page).to have_no_selector "tr#li_#{li2.id}",  true
+        expect(page).to have_no_selector "tr#li_#{li2.id}"
         expect(page).to have_no_selector "tr#li_#{li3.id}"
       end
     end
