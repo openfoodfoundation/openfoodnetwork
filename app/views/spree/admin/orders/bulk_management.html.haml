@@ -181,6 +181,6 @@
             %input.show-dirty{ :type => 'text', :name => 'price', :id => 'price', :ng => { value: 'line_item.price * line_item.quantity | currency:""', readonly: "true", class: '{"update-error": line_item.errors.price}' } }
             %span.error{ ng: { bind: 'line_item.errors.price' } }
           %td.actions
-            %a{ href: "/admin/orders/{{line_item.order.number}}/edit", :class => "edit-order icon-edit no-text", 'confirm-link-click' => 'confirmRefresh()' }
+            %a{ ng: { href: "/admin/orders/{{line_item.order.number}}/edit" }, :class => "edit-order icon-edit no-text", 'confirm-link-click' => 'confirmRefresh()' }
           %td.actions
             %a{ 'ng-click' => "deleteLineItem(line_item)", :class => "delete-line-item icon-trash no-text" }
