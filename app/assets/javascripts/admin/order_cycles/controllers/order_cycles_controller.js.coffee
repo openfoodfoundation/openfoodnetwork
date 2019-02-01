@@ -1,4 +1,4 @@
-angular.module("admin.orderCycles").controller "OrderCyclesCtrl", ($scope, $q, Columns, StatusMessage, RequestMonitor, OrderCycles, Enterprises, Schedules, Dereferencer) ->
+angular.module("admin.orderCycles").controller "OrderCyclesCtrl", ($scope, $q, $sce, Columns, StatusMessage, RequestMonitor, OrderCycles, Enterprises, Schedules, Dereferencer) ->
   $scope.RequestMonitor = RequestMonitor
   $scope.columns = Columns.columns
   $scope.saveAll = -> OrderCycles.saveChanges($scope.order_cycles_form)
@@ -15,7 +15,9 @@ angular.module("admin.orderCycles").controller "OrderCyclesCtrl", ($scope, $q, C
       Dereferencer.dereference(schedule.order_cycles, OrderCycles.byID)
     for orderCycle in $scope.orderCycles
       coordinator = Enterprises.byID[orderCycle.coordinator.id]
-      orderCycle.coordinator = coordinator if coordinator?
+      if coordinator?
+        orderCycle.coordinator = coordinator
+        orderCycle.coordinator.name = $sce.trustAsHtml(coordinator.name)
       Dereferencer.dereference(orderCycle.producers, Enterprises.byID)
       Dereferencer.dereference(orderCycle.shops, Enterprises.byID)
       Dereferencer.dereference(orderCycle.schedules, Schedules.byID)

@@ -57,6 +57,7 @@ feature %q{
       expect(page).to have_content oc1.coordinator.name
 
       # And I should see the suppliers and distributors
+      # binding.pry
       oc1.suppliers.each    { |s| page.should have_content s.name }
       oc1.distributors.each { |d| page.should have_content d.name }
 

@@ -26,7 +26,7 @@ describe "OrderCyclesCtrl", ->
     producer = { id: 1, name: "Producer" }
     shop = { id: 5, name: "Shop" }
     schedule = { id: 7, name: 'Weekly', order_cycles: [{id: 4}]}
-    orderCycle = { id: 4, schedules: [{id: 7}], name: "OC1", coordinator: {id: 3}, shops: [{id: 3},{id: 5}], producers: [{id: 1}] }
+    orderCycle = { id: 4, schedules: [{id: 7}], name: "OC1", coordinator: coordinator, shops: [{id: 3},{id: 5}], producers: [{id: 1}] }
 
     httpBackend.expectGET("/admin/enterprises/visible.json?ams_prefix=basic").respond [coordinator, producer, shop]
     httpBackend.expectGET("/admin/schedules.json").respond [schedule]

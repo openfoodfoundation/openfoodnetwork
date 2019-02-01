@@ -19,8 +19,7 @@
         {{ orderCycle.producers.length }}
         = t('.suppliers')
       %span{ ng: { hide: 'orderCycle.producers.length > 3', bind: 'orderCycle.producerNames' } }
-    %td.coordinator{ ng: { show: 'columns.coordinator.visible' } }
-      {{ orderCycle.coordinator.name }}
+    %td.coordinator{ ng: { show: 'columns.coordinator.visible', bind_html: 'orderCycle.coordinator.name' } }
     %td.shops{ ng: { show: 'columns.shops.visible' } }
       %span{'ofn-with-tip' => '{{ orderCycle.shopNames }}', ng: { show: 'orderCycle.shops.length > 3' } }
         {{ orderCycle.shops.length }}
