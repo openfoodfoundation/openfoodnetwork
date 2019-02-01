@@ -38,13 +38,8 @@ module ProductImport
     end
 
     def reset_variant_count_on_hand(variant)
-      begin
-        variant.count_on_hand = 0
-        return true if variant.count_on_hand.zero?
-      rescue StandardError => e
-        Rails.logger.info "Could not reset variant count on hand: #{e.message}"
-      end
-      false
+      variant.count_on_hand = 0
+      variant.count_on_hand.zero?
     end
   end
 end

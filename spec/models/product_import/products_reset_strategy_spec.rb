@@ -80,12 +80,11 @@ describe ProductImport::ProductsResetStrategy do
 
         context 'and there is an unresetable variant' do
           before do
-            variant.stock_items = [] # this makes variant.count_on_hand fail
+            variant.stock_items = [] # this makes variant.count_on_hand raise an error
           end
 
           it 'returns correct number of resetted variants' do
-            updated_records_count = products_reset.reset(supplier_ids)
-            expect(updated_records_count).to eq(0) # the variant is not updated
+            expect { products_reset.reset(supplier_ids) }.to raise_error RuntimeError
           end
         end
       end
