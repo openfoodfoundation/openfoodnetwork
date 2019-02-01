@@ -11,17 +11,41 @@ feature "enterprise fee summaries" do
   let!(:other_order_cycle) { create(:simple_order_cycle, coordinator: other_distributor) }
 
   before do
+    feature_flags = instance_double(FeatureFlags, enterprise_fee_summary_enabled?: true)
+    allow(FeatureFlags).to receive(:new).with(current_user) { feature_flags }
+
     login_as current_user
   end
 
   describe "navigation" do
-    context "when accessing the report as an enterprise user" do
-      let(:current_user) { distributor.owner }
+    context "when accessing the report as an superadmin" do
+      let(:current_user) { create(:admin_user) }
 
-      it "allows access to the report" do
+      it "shows link and allows access to the report" do
         visit spree.admin_reports_path
         click_on I18n.t("admin.reports.enterprise_fee_summary.name")
         expect(page).to have_button(I18n.t("filters.generate_report", scope: i18n_scope))
+      end
+    end
+
+    context "when accessing the report as an admin" do
+      let(:current_user) { distributor.owner }
+
+      it "shows link and allows access to the report" do
+        visit spree.admin_reports_path
+        click_on I18n.t("admin.reports.enterprise_fee_summary.name")
+        expect(page).to have_button(I18n.t("filters.generate_report", scope: i18n_scope))
+      end
+
+      context "when feature flag is in effect" do
+        before { allow(FeatureFlags).to receive(:new).with(current_user).and_call_original }
+
+        it "does not show link now allow direct access to the report" do
+          visit spree.admin_reports_path
+          expect(page).to have_no_link I18n.t("admin.reports.enterprise_fee_summary.name")
+          visit spree.new_admin_reports_enterprise_fee_summary_path
+          expect(page).to have_no_button(I18n.t("filters.generate_report", scope: i18n_scope))
+        end
       end
     end
 
@@ -33,6 +57,17 @@ feature "enterprise fee summaries" do
         expect(page).to have_no_link(I18n.t("admin.reports.enterprise_fee_summary.name"))
         visit spree.new_admin_reports_enterprise_fee_summary_path
         expect(page).to have_content(I18n.t("unauthorized"))
+      end
+
+      context "when feature flag is in effect" do
+        before { allow(FeatureFlags).to receive(:new).with(current_user).and_call_original }
+
+        it "does not show link now allow direct access to the report" do
+          visit spree.admin_reports_path
+          expect(page).to have_no_link I18n.t("admin.reports.enterprise_fee_summary.name")
+          visit spree.new_admin_reports_enterprise_fee_summary_path
+          expect(page).to have_no_button(I18n.t("filters.generate_report", scope: i18n_scope))
+        end
       end
     end
   end
