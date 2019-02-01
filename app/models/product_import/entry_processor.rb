@@ -212,12 +212,20 @@ module ProductImport
         case setting['mode']
         when 'overwrite_all'
           object.assign_attributes(attribute => setting['value'])
+          # In case of new products, some attributes are saved on the variant.
+          # We write them to the entry here to be copied to the variant later.
+          if entry.respond_to? "#{attribute}="
+            entry.public_send("#{attribute}=", setting['value'])
+          end
         when 'overwrite_empty'
           if object.public_send(attribute).blank? ||
              ((attribute == 'on_hand' || attribute == 'count_on_hand') &&
              entry.on_hand_nil)
 
             object.assign_attributes(attribute => setting['value'])
+            if entry.respond_to? "#{attribute}="
+              entry.public_send("#{attribute}=", setting['value'])
+            end
           end
         end
       end
