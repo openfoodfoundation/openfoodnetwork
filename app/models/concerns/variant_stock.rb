@@ -125,11 +125,6 @@ module VariantStock
     on_demand || total_on_hand >= quantity
   end
 
-  # We override Spree::Variant.in_stock? to avoid depending on the non-overidable method Spree::Stock::Quantifier.can_supply?
-  def in_stock?(quantity = 1)
-    can_supply?(quantity)
-  end
-
   # Moving Spree::StockLocation.fill_status to the variant enables us to override this behaviour for variant overrides
   # We can have this responsibility here in the variant because there is only one stock item per variant
   #
