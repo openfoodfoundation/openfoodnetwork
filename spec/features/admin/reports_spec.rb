@@ -182,13 +182,13 @@ xfeature %q{
     let(:distributor2) { create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true) }
     let(:user1) { create_enterprise_user enterprises: [distributor1] }
     let(:user2) { create_enterprise_user enterprises: [distributor2] }
-    let(:shipping_method) { create(:shipping_method_with, :expensive_name) }
-    let(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
+    let!(:shipping_method) { create(:shipping_method_with, :expensive_name) }
     let(:enterprise_fee) { create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 120.0)) }
     let(:order_cycle) { create(:simple_order_cycle, coordinator: distributor1, coordinator_fees: [enterprise_fee], distributors: [distributor1], variants: [product1.master]) }
 
     let!(:zone) { create(:zone_with_member) }
-    let(:order1) { create(:order, order_cycle: order_cycle, distributor: user1.enterprises.first, shipments: [shipment], bill_address: create(:address)) }
+    let(:address) { create(:address) }
+    let(:order1) { create(:order, order_cycle: order_cycle, distributor: user1.enterprises.first, ship_address: address, bill_address: address) }
     let(:product1) { create(:taxed_product, zone: zone, price: 12.54, tax_rate_amount: 0) }
     let(:product2) { create(:taxed_product, zone: zone, price: 500.15, tax_rate_amount: 0.2) }
 
@@ -201,13 +201,14 @@ xfeature %q{
       Spree::Config.shipment_inc_vat = true
       Spree::Config.shipping_tax_rate = 0.2
 
-      3.times { order1.next }
+      2.times { order1.next }
+      order1.select_shipping_method shipping_method.id
       order1.reload.update_distribution_charge!
-
       order1.finalize!
 
-      quick_login_as user1
+      quick_login_as_admin
       visit spree.admin_reports_path
+
       click_link "Sales Tax"
       select("Tax types", from: "report_type")
     end
@@ -307,11 +308,11 @@ xfeature %q{
       product2.set_property 'Organic', 'NASAA 12345'
       product1.taxons = [taxon]
       product2.taxons = [taxon]
-      variant1.update_column(:count_on_hand, 10)
+      variant1.count_on_hand = 10
       variant1.update_column(:sku, "sku1")
-      variant2.update_column(:count_on_hand, 20)
+      variant2.count_on_hand = 20
       variant2.update_column(:sku, "sku2")
-      variant3.update_column(:count_on_hand, 9)
+      variant3.count_on_hand = 9
       variant3.update_column(:sku, "")
       variant1.option_values = [create(:option_value, :presentation => "Test")]
       variant2.option_values = [create(:option_value, :presentation => "Something")]
