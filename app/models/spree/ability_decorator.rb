@@ -186,7 +186,7 @@ class AbilityDecorator
     # Reports page
     can [:admin, :index, :customers, :orders_and_distributors, :group_buys, :bulk_coop, :payments,
          :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :packing],
-         :report
+        :report
     add_enterprise_fee_summary_abilities(user)
   end
 
