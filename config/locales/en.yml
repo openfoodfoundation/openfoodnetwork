@@ -2717,8 +2717,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
             order_cycle: "Order cycle:"
       overview:
         products:
-          active_products_count_single: "You have %{product_count} active product"
-          active_products_count_multiple: "You have %{product_count} active products"
+          active_products:
+            one: "You have one active product"
+            other: "You have %{count} active products"
         order_cycles:
           order_cycles: "Order Cycles"
           order_cycles_tip: "Order cycles determine when and where your products are available to customers."
