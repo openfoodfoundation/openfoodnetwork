@@ -101,10 +101,11 @@ feature %q{
   scenario "displays error when incorrect distribution for products is chosen" do
     d = create(:distributor_enterprise)
     oc = create(:simple_order_cycle, distributors: [d])
-    puts d.name
-    puts @distributor.name
 
-    @order.state = 'cart'; @order.completed_at = nil; @order.save
+    # Moves the order back to the cart state
+    #   A nil user keeps the order in the cart state
+    #   Even if the edit page tries to automatically progress the order workflow
+    @order.state = 'cart'; @order.user = nil; @order.completed_at = nil; @order.save
 
     quick_login_as_admin
     visit '/admin/orders'
