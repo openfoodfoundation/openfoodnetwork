@@ -13,6 +13,15 @@ GIT
     custom_error_message (1.1.1)
 
 GIT
+  remote: https://github.com/openfoodfoundation/better_spree_paypal_express.git
+  revision: 27ad7165ea4c6e8c5f120b42b676cb9c2c272100
+  branch: 2-0-stable
+  specs:
+    spree_paypal_express (2.0.3)
+      paypal-sdk-merchant (= 1.106.1)
+      spree_core (~> 2.0.3)
+
+GIT
   remote: https://github.com/openfoodfoundation/ofn-qz.git
   revision: 60da2ae4c44cbb4c8d602f59fb5fff8d0f21db3c
   ref: 60da2ae4c44cbb4c8d602f59fb5fff8d0f21db3c
@@ -76,15 +85,6 @@ GIT
       stringex (~> 1.5.1)
     spree_sample (2.0.4)
       spree_core (= 2.0.4)
-
-GIT
-  remote: https://github.com/spree-contrib/better_spree_paypal_express.git
-  revision: 1206925d1c85bdc4b68b728d6676150ab0785486
-  branch: 2-0-stable
-  specs:
-    spree_paypal_express (2.0.3)
-      paypal-sdk-merchant (= 1.106.1)
-      spree_core (~> 2.0.3)
 
 GIT
   remote: https://github.com/spree/spree_auth_devise.git
