@@ -175,7 +175,7 @@ module ProductImport
         assign_errors product.errors.full_messages, entry.line_number
       end
 
-      @already_created[entry.enterprise_id] = { entry.name => product.id }
+      @already_created.deep_merge! entry.enterprise_id => { entry.name => product.id }
     end
 
     def save_variant(entry)
