@@ -147,11 +147,16 @@ feature %q{
 
   scenario "filling customer details" do
     # Given a customer with an order, which includes their shipping and billing address
+
+    # We change the 1st order's address details
+    #   This way we validate that the original details (stored in customer) are picked up in the 2nd order
     @order.ship_address = create(:address, lastname: 'Ship')
     @order.bill_address = create(:address, lastname: 'Bill')
-    shipping_method = create(:shipping_method_with, :delivery)
-    @order.shipments << create(:shipment_with, :shipping_method, shipping_method: shipping_method)
     @order.save!
+
+    # We set the existing shipping method to delivery, this shipping method will be used in the 2nd order
+    #   Otherwise order_updater.shipping_address_from_distributor will set the 2nd order address to the distributor address
+    @order.shipping_method.update_attribute :require_ship_address, true
 
     # When I create a new order
     quick_login_as @user
@@ -160,12 +165,13 @@ feature %q{
     find('button.add_variant').click
     page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr"  # Wait for JS
     click_button 'Update'
+
     expect(page).to have_selector 'h1.page-title', text: "Customer Details"
 
     # And I select that customer's email address and save the order
     targetted_select2_search @customer.email, from: '#customer_search_override', dropdown_css: '.select2-drop'
     click_button 'Update'
-    expect(page).to have_selector "h1.page-title", text: "Shipments"
+    expect(page).to have_selector "h1.page-title", text: "Customer Details"
 
     # Then their addresses should be associated with the order
     order = Spree::Order.last
