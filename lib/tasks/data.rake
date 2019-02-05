@@ -1,4 +1,4 @@
-namespace :openfoodnetwork do
+namespace :ofn do
   namespace :data do
     desc "Adding relationships based on recent order cycles"
     task :create_order_cycle_relationships => :environment do

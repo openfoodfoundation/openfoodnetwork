@@ -13,7 +13,7 @@ job_type :enqueue_job,  "cd :path; :environment_variable=:environment bundle exe
 
 
 every 1.hour do
-  rake 'openfoodnetwork:cache:check_products_integrity'
+  rake 'ofn:cache:check_products_integrity'
 end
 
 every 1.day, at: '12:05am' do
@@ -35,10 +35,10 @@ every 5.minutes do
 end
 
 every 1.day, at: '1:00am' do
-  rake 'openfoodnetwork:billing:update_account_invoices'
+  rake 'ofn:billing:update_account_invoices'
 end
 
 # On the 2nd of every month at 1:30am
 every '30 1 2 * *' do
-  rake 'openfoodnetwork:billing:finalize_account_invoices'
+  rake 'ofn:billing:finalize_account_invoices'
 end
