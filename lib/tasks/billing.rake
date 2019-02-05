@@ -1,4 +1,4 @@
-namespace :openfoodnetwork do
+namespace :ofn do
   namespace :billing do
     desc 'Update enterprise user invoices'
     task update_account_invoices: :environment do

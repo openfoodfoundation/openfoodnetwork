@@ -7,6 +7,7 @@ fr_CA:
         shipment_state: Statut de la livraison
         completed_at: 'Passée à '
         number: N° commande
+        state: Département
         email: Email acheteur
       spree/payment:
         amount: Montant
@@ -24,6 +25,11 @@ fr_CA:
           attributes:
             orders_close_at:
               after_orders_open_at: doit être après la date d'ouverture
+        variant_override:
+          count_on_hand:
+            using_producer_stock_settings_but_count_on_hand_set: "doit être vide car utilise les informations de stock du producteur"
+            on_demand_but_count_on_hand_set: "doit être vide si \"à volonté\""
+            limited_stock_but_no_count_on_hand: "doit être spécifié car pas \"à volonté\""
   activemodel:
     errors:
       models:
@@ -55,6 +61,7 @@ fr_CA:
     user_registrations:
       spree_user:
         signed_up_but_unconfirmed: "Un message avec un lien de confirmation a été envoyé à l'adresse email indiquée. Veuillez cliquer sur ce lien pour activer votre compte."
+        unknown_error: "Une erreur s'est glissée lors de la création de votre compte. Vérifiez votre addresse email et recommencez."
     failure:
       invalid: |
           Email / mot de passe incorrect.
@@ -195,6 +202,7 @@ fr_CA:
   admin_and_handling: Admin et gestion
   profile: Profil
   supplier_only: Uniquement Fournisseur
+  has_shopfront: gère une boutique
   weight: Poids
   volume: Volume
   items: Pièces
@@ -216,6 +224,10 @@ fr_CA:
   quantity: Quantité
   pick_up: Retrait
   copy: Copier
+  password_confirmation: Confirmation de mot de passe
+  reset_password_token: La demande de réinitialisation du mot de passe
+  expired: a expiré, veuillez faire une nouvelle demande.
+  back_to_payments_list: "Retour à la liste des paiements"
   actions:
     create_and_add_another: "Créer et ajouter nouveau"
   admin:
@@ -459,10 +471,14 @@ fr_CA:
         conditional_blank: Champ obligatoire si le type d'unité est vide
         no_product: 'aucun produit trouvé '
         not_found: n'a pas été trouvé dans la base de donnée
+        not_updatable: ne peut pas être mis à jour pour des produits existants via la fonctionnalité d'import de fichier produits
         blank: Champ obligatoire
         products_no_permission: vous n'avez pas les droits requis pour gérer les produits de cette entreprise
         inventory_no_permission: Vous n'avez pas la permission de créer un catalogue boutique pour ce producteur
         none_saved: n'a pu sauvegarder aucun produit :-(
+        line_number: "Ligne :%{number}"
+        encoding_error: "Veuillez vérifier le paramètre de langue de votre code source et vous assurer qu'il est encodé en UTF-8"
+        unexpected_error: "L'import de fichier produits à rencontré une erreur inconnue à l'ouverture du fichier : %{error_message}"
       index:
         select_file: Sélectionner une feuille de calcul à uploader
         spreadsheet: Feuille de calcul
@@ -496,6 +512,7 @@ fr_CA:
         no_permission: vous n'avez pas les droits requis pour gérer les produits de cette entreprise
         not_found: entreprise non trouvée dans la base de donnée
         no_name: Pas de nom
+        blank_enterprise: certains produits n'ont pas d'entreprise associée
         reset_absent?: Mettre à zéro le produits absents du fichier
         reset_absent_tip: Remettre le sock à zero pour les produits non présents dans le fichier.
         overwrite_all: Modifier tous
@@ -515,6 +532,11 @@ fr_CA:
         inventory_to_reset: Les produits du catalogue boutique auront leurs stocks remis à zéro
         line: Ligne
         item_line: 'Ligne produit '
+      import_review:
+        not_updatable_tip: "Les champs suivants ne peuvent pas être mis à jour pour des produits existants via la fonctionnalité d'import de fichier produits :"
+        fields_ignored: Ces champs seront ignorés à l'enregistrement des produits importés.
+      entries_table:
+        not_updatable: Ce champs ne peut pas être mis à jour pour des produits existants via la fonctionnalité d'import de fichier produits
       save_results:
         final_results: 'Importer les derniers résultats '
         products_created: Produits crées
@@ -561,6 +583,7 @@ fr_CA:
         tip: "Utilisez cette page pour changer les quantités d'un produit sur plusieurs commandes. Les produits peuvent aussi être supprimés de toutes les commandes, si nécessaire."
         shared: "Ressource partagée?"
         order_no: "N° commande"
+        order_date: "Passée le"
         max: "Max"
         product_unit: "Produit: Unité"
         weight_volume: "Poids/Volume"
@@ -702,7 +725,9 @@ fr_CA:
           close_date: Date de fermeture
         social:
           twitter_placeholder: ex. @OpenFoodNet_fr
+          instagram_placeholder: ex. @OpenFoodNet_fr
           facebook_placeholder: 'ex: www.facebook.com/NomDeLaPage'
+          linkedin_placeholder: 'ex: www.linkedin.com/VotreNom'
         stripe_connect:
           connect_with_stripe: "Connecter avec Stripe"
           stripe_connect_intro: "Pour accepter des paiements utilisant la carte bancaire, vous devez connecter votre compte Stripe à Open Food Network. Cliquez sur le bouton à droite pour commencer."
@@ -1142,7 +1167,9 @@ fr_CA:
   menu_5_title: "A propos"
   menu_5_url: "http://www.openfoodnetwork.org"
   menu_6_title: "Se connecter"
+  menu_6_url: "https://openfoodnetwork.org/au/connect/"
   menu_7_title: "Apprendre"
+  menu_7_url: "https://openfoodnetwork.org/au/learn/"
   logo: "Logo (640x130)"
   logo_mobile: "Logo smartphone (75x26)"
   logo_mobile_svg: "Logo  smartphone (SVG)"
@@ -2011,6 +2038,8 @@ fr_CA:
   order_cycles: "Cycles de Vente"
   enterprise_relationships: "Permissions Inter-entreprises"
   remove_tax: "Retirer taxe"
+  first_name_begins_with: "Prénom commence par"
+  last_name_begins_with: "Nom de famille commence par"
   enterprise_tos_link: "Lien vers les Conditions Générales d'Utilisation"
   enterprise_tos_message: "Nous soutenons la mise en place d'un système alimentaire résilient et durable, et souhaitons œuvrer avec des entreprises qui partagent nos valeurs et notre vision. Ainsi, nous demandons aux entreprises s'enregistrant sur Open Food Network de valider nos "
   enterprise_tos_link_text: "Conditions d'utilisation"
@@ -2225,6 +2254,7 @@ fr_CA:
   validation_msg_relationship_already_established: "^Un lien est déjà établi."
   validation_msg_at_least_one_hub: "^Sélectionnez au moins  un hub"
   validation_msg_product_category_cant_be_blank: "^Veuillez sélectionner la catégorie produit"
+  validation_msg_tax: "^La TVA applicable est requise"
   validation_msg_tax_category_cant_be_blank: "^Veuillez sélectionner le type de taxe"
   validation_msg_is_associated_with_an_exising_customer: "est associé à un acheteur existant"
   content_configuration_pricing_table: "(A FAIRE : Tableau des tarifs)"
@@ -2420,6 +2450,14 @@ fr_CA:
           resolve: Résoudre
       new_tag_rule_dialog:
         select_rule_type: "Choisir le type de règle:"
+      orders:
+        index:
+          per_page: " %{results}par page"
+          view_file: Voir le fichier
+          compiling_invoices: Compilation des factures en cours
+          bulk_invoice_created: Facture compilée générée
+          bulk_invoice_failed: Échec dans la compilation des factures
+          please_wait: Veuillez attendre que le PDF soit prêt avant de fermer cette fenêtre.
       resend_user_email_confirmation:
         resend: "Renvoyer"
         sending: "Renvoyer"
@@ -2438,6 +2476,7 @@ fr_CA:
         'yes': "A volonté"
     variant_overrides:
       on_demand:
+        use_producer_settings: "Utiliser les infos de stock producteur"
         'yes': "Oui"
         'no': "Non"
       inventory_products: "Produits du Catalogue Boutique"
@@ -2508,11 +2547,21 @@ fr_CA:
           inherits_properties_checkbox_hint: "Hériter des propriétés de %{supplier}? (non applicable si information de remplacement déjà saisie)"
       orders:
         index:
+          listing_orders: "Liste des commandes"
+          new_order: "Nouvelle commande"
           capture: "Payée"
           ship: "Expédier"
           edit: "Modifier"
+          note: "Note"
+          first: "Début"
+          last: "Fin"
+          previous: "Précédent"
           next: "Suivant"
+          loading: "Chargement en cours"
           no_orders_found: "Aucune commande trouvée"
+          results_found: " %{number}résultats trouvés"
+          viewing: "Résultats %{start} à %{end}affichés."
+          print_invoices: "Imprimer les factures"
         invoice:
           issued_on: Editée le
           tax_invoice: FACTURE
@@ -2534,6 +2583,12 @@ fr_CA:
             other: "Vous avez %{count} cycles de vente actifs."
           manage_order_cycles: "GERER LES CYCLES DE VENTE"
       payment_methods:
+        new:
+          new_payment_method: "Nouvelle méthode de paiement"
+          back_to_payment_methods_list: "Retour à la liste des méthodes de paiement"
+        edit:
+          editing_payment_method: "Modification de la méthode de paiement"
+          back_to_payment_methods_list: "Retour à la liste des méthodes de paiement"
         stripe_connect:
           enterprise_select_placeholder: Choisir...
           loading_account_information_msg: Informations de compte en cours de chargement depuis Stripe, veuillez patienter...
@@ -2586,7 +2641,7 @@ fr_CA:
           display_as: Unité affichéé
       reports:
         table:
-          select_and_search: "Sélectionner les filtres et cliquez sur RECHERCHER pour accéder aux données."
+          select_and_search: "Sélectionner les filtres et cliquez sur %{option}pour accéder aux données."
         bulk_coop:
           bulk_coop_supplier_report: 'Achats groupés - Totaux par Producteur'
           bulk_coop_allocation: 'Achats groupés - Allocation'
@@ -2594,14 +2649,21 @@ fr_CA:
           bulk_coop_customer_payments: 'Achats groupés - Paiement des acheteurs'
       users:
         index:
+          listing_users: "Liste des utilisateurs"
+          new_user: "Nouvel utilisateur"
           user: "Utilisateur"
           enterprise_limit: "Nombre max d'entreprises"
           search: "Chercher"
           email: "Email"
+        edit:
+          editing_user: "Modifier l'utilisateur"
+          back_to_users_list: "Retour à la liste utilisateurs"
+          general_settings: "Configurations générales"
         form:
           email: "Email"
           roles: "Roles"
           enterprise_limit: "Nombre max d'entreprises"
+          confirm_password: "Confirmez votre mot de passe"
           password: "Mot de passe"
         email_confirmation:
           confirmation_pending: "L'email de confirmation n'a pas encore été validé. Il a été envoyé à %{address}."

@@ -7,6 +7,7 @@ en_GB:
         shipment_state: Shipment State
         completed_at: Completed At
         number: Number
+        state: County
         email: Customer E-Mail
       spree/payment:
         amount: Amount
@@ -2036,6 +2037,8 @@ en_GB:
   order_cycles: "Order Cycles"
   enterprise_relationships: "Enterprise permissions"
   remove_tax: "Remove tax"
+  first_name_begins_with: "First name begins with"
+  last_name_begins_with: "Surname begins with"
   enterprise_tos_link: "Enterprise Terms of Service link"
   enterprise_tos_message: "We want to work with people that share our aims and values. As such we ask new enterprises to agree to our "
   enterprise_tos_link_text: "Terms of Service."
@@ -2445,6 +2448,11 @@ en_GB:
       orders:
         index:
           per_page: "%{results} per page"
+          view_file: View File
+          compiling_invoices: Compiling Invoices
+          bulk_invoice_created: Bulk Invoice created
+          bulk_invoice_failed: Failed to create Bulk Invoice
+          please_wait: Please wait until the PDF is ready before closing this window.
       resend_user_email_confirmation:
         resend: "Resend"
         sending: "Resend..."
@@ -2547,6 +2555,7 @@ en_GB:
           no_orders_found: "No Orders Found"
           results_found: "%{number} Results found."
           viewing: "Viewing %{start} to %{end}."
+          print_invoices: "Print Invoices"
         invoice:
           issued_on: Issued on
           tax_invoice: TAX INVOICE

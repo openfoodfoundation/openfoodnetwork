@@ -5,6 +5,7 @@ sv:
       spree/order:
         payment_state: Betalningstatus
         shipment_state: Leveransstatus
+        state: Region
     errors:
       models:
         spree/user:

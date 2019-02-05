@@ -1,6 +1,6 @@
 require 'csv'
 
-namespace :openfoodnetwork do
+namespace :ofn do
   namespace :dev do
     desc 'export enterprises to CSV'
     task :export_enterprises => :environment do

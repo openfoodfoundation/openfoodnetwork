@@ -7,6 +7,7 @@ de_DE:
         shipment_state: Lieferstatus
         completed_at: Erfolgt am
         number: Nummer
+        state: Status
         email: E-Mail des Kunden
       spree/payment:
         amount: Betrag
@@ -2591,8 +2592,6 @@ de_DE:
         display_as:
           display_as: Darstellen als
       reports:
-        table:
-          select_and_search: "Wählen Sie Filter und klicken Sie auf SEARCH, um auf Ihre Daten zuzugreifen."
         bulk_coop:
           bulk_coop_supplier_report: 'Massen-Kooperative - Summen nach Anbieter'
           bulk_coop_allocation: 'Massenkoop - Zuteilung'
