@@ -21,7 +21,7 @@ require "tasks/sample_data/user_factory"
 # - https://community.openfoodnetwork.org/t/seed-data-development-provisioning-deployment/910
 # - https://github.com/openfoodfoundation/openfoodnetwork/issues/2072
 #
-namespace :openfoodnetwork do
+namespace :ofn do
   desc 'load sample data for development or staging'
   task sample_data: :environment do
     raise "Please run `rake db:seed` first." unless seeded?

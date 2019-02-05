@@ -327,7 +327,7 @@ namespace :ofn do
 
   This task is going to be replaced by:
 
-    $ bundle exec rake openfoodnetwork:sample_data
+    $ bundle exec rake ofn:sample_data
 
   It contains more sample data.
 WARNING
