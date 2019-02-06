@@ -119,7 +119,6 @@ group :test, :development do
   gem 'letter_opener', '>= 1.4.1'
   gem 'timecop'
   gem 'selenium-webdriver'
-  gem 'chromedriver-helper'
   gem 'rspec-retry'
   gem 'json_spec', '~> 1.1.4'
   gem 'unicorn-rails'
