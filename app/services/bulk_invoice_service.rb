@@ -10,7 +10,7 @@ class BulkInvoiceService
     orders = Spree::Order.where(id: order_ids)
 
     orders.each do |order|
-      invoice = InvoiceRenderer.new.render_to_string(order)
+      invoice = renderer.render_to_string(order)
 
       pdf << CombinePDF.parse(invoice)
     end
@@ -35,6 +35,10 @@ class BulkInvoiceService
 
   def directory
     'tmp/invoices'
+  end
+
+  def renderer
+    @renderer ||= InvoiceRenderer.new
   end
 
   def file_directory
