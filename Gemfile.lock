@@ -632,7 +632,7 @@ GEM
       trollop (~> 2.1)
     rdoc (3.12.2)
       json (~> 1.4)
-    redcarpet (3.2.3)
+    redcarpet (3.4.0)
     ref (2.0.0)
     request_store (1.4.1)
       rack (>= 1.4)
