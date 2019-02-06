@@ -37,7 +37,7 @@ Spree::Admin::OrdersController.class_eval do
   end
 
   def invoice
-    pdf = InvoiceRenderer.new.render(@order)
+    pdf = InvoiceRenderer.new.render_to_string(@order)
 
     Spree::OrderMailer.invoice_email(@order.id, pdf).deliver
     flash[:success] = t('admin.orders.invoice_email_sent')
