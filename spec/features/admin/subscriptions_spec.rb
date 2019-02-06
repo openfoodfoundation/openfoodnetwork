@@ -145,23 +145,25 @@ feature 'Subscriptions' do
       let!(:customer_user) { create(:user) }
       let!(:credit_card1) { create(:credit_card, user: customer_user, cc_type: 'visa', last_digits: 1111, month: 10, year: 2030) }
       let!(:customer) { create(:customer, enterprise: shop, bill_address: address, user: customer_user, allow_charges: true) }
-      let!(:product1) { create(:product, supplier: shop) }
-      let!(:product2) { create(:product, supplier: shop) }
-      let!(:variant1) { create(:variant, product: product1, unit_value: '100', price: 12.00, option_values: []) }
-      let!(:variant2) { create(:variant, product: product2, unit_value: '1000', price: 6.00, option_values: []) }
+      let!(:test_product) { create(:product, supplier: shop, distributors: []) }
+      let!(:test_variant) { create(:variant, product: test_product, unit_value: "100", price: 12.00, option_values: []) }
+      let!(:shop_product) { create(:product, supplier: shop, distributors: [shop]) }
+      let!(:shop_variant) { create(:variant, product: shop_product, unit_value: "1000", price: 6.00, option_values: []) }
       let!(:enterprise_fee) { create(:enterprise_fee, amount: 1.75) }
       let!(:order_cycle) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 2.days.from_now, orders_close_at: 7.days.from_now) }
-      let!(:outgoing_exchange) { order_cycle.exchanges.create(sender: shop, receiver: shop, variants: [variant1, variant2], enterprise_fees: [enterprise_fee]) }
+      let!(:outgoing_exchange) { order_cycle.exchanges.create(sender: shop, receiver: shop, variants: [test_variant, shop_variant], enterprise_fees: [enterprise_fee]) }
       let!(:schedule) { create(:schedule, order_cycles: [order_cycle]) }
       let!(:payment_method) { create(:stripe_payment_method, name: 'Credit Card', distributors: [shop], preferred_enterprise_id: shop.id) }
       let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
 
-      it "passes the smoke test" do
+      before do
         visit admin_subscriptions_path
-        click_link 'New Subscription'
-        select2_select shop.name, from: 'new_subscription_shop_id'
-        click_button 'Continue'
+        click_link "New Subscription"
+        select2_select shop.name, from: "new_subscription_shop_id"
+        click_button "Continue"
+      end
 
+      it "passes the smoke test" do
         select2_select customer.email, from: 'customer_id'
         select2_select schedule.name, from: 'schedule_id'
         select2_select payment_method.name, from: 'payment_method_id'
@@ -215,11 +217,9 @@ feature 'Subscriptions' do
         expect(page).to have_content 'Please add at least one product'
 
         # Adding a product and getting a price estimate
-        select2_search_async product1.name, from: I18n.t(:name_or_sku), dropdown_css: '.select2-drop'
-        fill_in 'add_quantity', with: 2
-        click_link 'Add'
+        add_variant_to_subscription test_variant, 2
         within 'table#subscription-line-items tr.item', match: :first do
-          expect(page).to have_selector 'td.description', text: "#{product1.name} - #{variant1.full_name}"
+          expect(page).to have_selector '.description', text: "#{test_product.name} - #{test_variant.full_name}"
           expect(page).to have_selector 'td.price', text: "$13.75"
           expect(page).to have_input 'quantity', with: "2"
           expect(page).to have_selector 'td.total', text: "$27.50"
@@ -241,11 +241,9 @@ feature 'Subscriptions' do
         click_button('edit-products')
 
         # Adding a new product
-        select2_search_async product2.name, from: I18n.t(:name_or_sku), dropdown_css: '.select2-drop'
-        fill_in 'add_quantity', with: 3
-        click_link 'Add'
+        add_variant_to_subscription shop_variant, 3
         within 'table#subscription-line-items tr.item', match: :first do
-          expect(page).to have_selector 'td.description', text: "#{product2.name} - #{variant2.full_name}"
+          expect(page).to have_selector '.description', text: "#{shop_product.name} - #{shop_variant.full_name}"
           expect(page).to have_selector 'td.price', text: "$7.75"
           expect(page).to have_input 'quantity', with: "3"
           expect(page).to have_selector 'td.total', text: "$23.25"
@@ -264,7 +262,7 @@ feature 'Subscriptions' do
 
         # Prices are shown in the index
         within 'table#subscription-line-items tr.item', match: :first do
-          expect(page).to have_selector 'td.description', text: "#{product2.name} - #{variant2.full_name}"
+          expect(page).to have_selector '.description', text: "#{shop_product.name} - #{shop_variant.full_name}"
           expect(page).to have_selector 'td.price', text: "$7.75"
           expect(page).to have_input 'quantity', with: "3"
           expect(page).to have_selector 'td.total', text: "$23.25"
@@ -282,142 +280,249 @@ feature 'Subscriptions' do
         # Standing Line Items are created
         expect(subscription.subscription_line_items.count).to eq 1
         subscription_line_item = subscription.subscription_line_items.first
-        expect(subscription_line_item.variant).to eq variant2
+        expect(subscription_line_item.variant).to eq shop_variant
         expect(subscription_line_item.quantity).to eq 3
       end
+    end
 
-      context 'editing an existing subscription' do
-        let!(:customer) { create(:customer, enterprise: shop) }
-        let!(:product1) { create(:product, supplier: shop) }
-        let!(:product2) { create(:product, supplier: shop) }
-        let!(:product3) { create(:product, supplier: shop) }
-        let!(:variant1) { create(:variant, product: product1, unit_value: '100', price: 12.00, option_values: []) }
-        let!(:variant2) { create(:variant, product: product2, unit_value: '1000', price: 6.00, option_values: []) }
-        let!(:variant3) { create(:variant, product: product3, unit_value: '10000', price: 22.00, option_values: []) }
-        let!(:enterprise_fee) { create(:enterprise_fee, amount: 1.75) }
-        let!(:order_cycle) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 2.days.from_now, orders_close_at: 7.days.from_now) }
-        let!(:outgoing_exchange) { order_cycle.exchanges.create(sender: shop, receiver: shop, variants: [variant1, variant2], enterprise_fees: [enterprise_fee]) }
-        let!(:schedule) { create(:schedule, order_cycles: [order_cycle]) }
-        let!(:variant3_oc) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 2.days.from_now, orders_close_at: 7.days.from_now) }
-        let!(:variant3_ex) { variant3_oc.exchanges.create(sender: shop, receiver: shop, variants: [variant3]) }
-        let!(:payment_method) { create(:payment_method, distributors: [shop]) }
-        let!(:stripe_payment_method) { create(:stripe_payment_method, name: 'Credit Card', distributors: [shop], preferred_enterprise_id: shop.id) }
-        let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
-        let!(:subscription) {
-          create(:subscription,
-                 shop: shop,
-                 customer: customer,
-                 schedule: schedule,
-                 payment_method: payment_method,
-                 shipping_method: shipping_method,
-                 subscription_line_items: [create(:subscription_line_item, variant: variant1, quantity: 2, price_estimate: 13.75)],
-                 with_proxy_orders: true)
-        }
+    context 'editing an existing subscription' do
+      let!(:customer) { create(:customer, enterprise: shop) }
+      let!(:product1) { create(:product, supplier: shop) }
+      let!(:product2) { create(:product, supplier: shop) }
+      let!(:product3) { create(:product, supplier: shop) }
+      let!(:variant1) { create(:variant, product: product1, unit_value: '100', price: 12.00, option_values: []) }
+      let!(:variant2) { create(:variant, product: product2, unit_value: '1000', price: 6.00, option_values: []) }
+      let!(:variant3) { create(:variant, product: product3, unit_value: '10000', price: 22.00, option_values: []) }
+      let!(:enterprise_fee) { create(:enterprise_fee, amount: 1.75) }
+      let!(:order_cycle) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 2.days.from_now, orders_close_at: 7.days.from_now) }
+      let!(:outgoing_exchange) { order_cycle.exchanges.create(sender: shop, receiver: shop, variants: [variant1, variant2], enterprise_fees: [enterprise_fee]) }
+      let!(:schedule) { create(:schedule, order_cycles: [order_cycle]) }
+      let!(:variant3_oc) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 2.days.from_now, orders_close_at: 7.days.from_now) }
+      let!(:variant3_ex) { variant3_oc.exchanges.create(sender: shop, receiver: shop, variants: [variant3]) }
+      let!(:payment_method) { create(:payment_method, distributors: [shop]) }
+      let!(:stripe_payment_method) { create(:stripe_payment_method, name: 'Credit Card', distributors: [shop], preferred_enterprise_id: shop.id) }
+      let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
+      let!(:subscription) {
+        create(:subscription,
+               shop: shop,
+               customer: customer,
+               schedule: schedule,
+               payment_method: payment_method,
+               shipping_method: shipping_method,
+               subscription_line_items: [create(:subscription_line_item, variant: variant1, quantity: 2, price_estimate: 13.75)],
+               with_proxy_orders: true)
+      }
 
-        it "passes the smoke test" do
-          visit edit_admin_subscription_path(subscription)
+      it "passes the smoke test" do
+        visit edit_admin_subscription_path(subscription)
 
-          # Customer and Schedule cannot be edited
-          click_button 'edit-details'
-          expect(page).to have_selector '#s2id_customer_id.select2-container-disabled'
-          expect(page).to have_selector '#s2id_schedule_id.select2-container-disabled'
+        # Customer and Schedule cannot be edited
+        click_button 'edit-details'
+        expect(page).to have_selector '#s2id_customer_id.select2-container-disabled'
+        expect(page).to have_selector '#s2id_schedule_id.select2-container-disabled'
 
-          # Can't use a Stripe payment method because customer does not allow it
-          select2_select stripe_payment_method.name, from: 'payment_method_id'
-          expect(page).to have_content I18n.t('admin.subscriptions.details.charges_not_allowed')
-          click_button 'Save Changes'
-          expect(page).to have_content 'Credit card charges are not allowed by this customer'
-          select2_select payment_method.name, from: 'payment_method_id'
-          click_button 'Review'
+        # Can't use a Stripe payment method because customer does not allow it
+        select2_select stripe_payment_method.name, from: 'payment_method_id'
+        expect(page).to have_content I18n.t('admin.subscriptions.details.charges_not_allowed')
+        click_button 'Save Changes'
+        expect(page).to have_content 'Credit card charges are not allowed by this customer'
+        select2_select payment_method.name, from: 'payment_method_id'
+        click_button 'Review'
 
-          # Existing products should be visible
-          click_button 'edit-products'
-          within "#sli_0" do
-            expect(page).to have_selector 'td.description', text: "#{product1.name} - #{variant1.full_name}"
-            expect(page).to have_selector 'td.price', text: "$13.75"
-            expect(page).to have_input 'quantity', with: "2"
-            expect(page).to have_selector 'td.total', text: "$27.50"
+        # Existing products should be visible
+        click_button 'edit-products'
+        within "#sli_0" do
+          expect(page).to have_selector '.description', text: "#{product1.name} - #{variant1.full_name}"
+          expect(page).to have_selector 'td.price', text: "$13.75"
+          expect(page).to have_input 'quantity', with: "2"
+          expect(page).to have_selector 'td.total', text: "$27.50"
 
-            # Remove variant1 from the subscription
-            find("a.delete-item").click
-          end
-
-          # Attempting to submit without a product
-          click_button 'Save Changes'
-          expect(page).to have_content 'Please add at least one product'
-
-          # Add variant2 to the subscription
-          select2_search_async product2.name, from: I18n.t(:name_or_sku), dropdown_css: '.select2-drop'
-          fill_in 'add_quantity', with: 1
-          click_link 'Add'
-          within "#sli_0" do
-            expect(page).to have_selector 'td.description', text: "#{product2.name} - #{variant2.full_name}"
-            expect(page).to have_selector 'td.price', text: "$7.75"
-            expect(page).to have_input 'quantity', with: "1"
-            expect(page).to have_selector 'td.total', text: "$7.75"
-          end
-
-          # Total should be $7.75
-          expect(page).to have_selector '#order_form_total', text: "$7.75"
-
-          # Add variant3 to the subscription (even though it is not available)
-          select2_search_async product3.name, from: I18n.t(:name_or_sku), dropdown_css: '.select2-drop'
-          fill_in 'add_quantity', with: 1
-          click_link 'Add'
-          within "#sli_1" do
-            expect(page).to have_selector 'td.description', text: "#{product3.name} - #{variant3.full_name}"
-            expect(page).to have_selector 'td.price', text: "$22.00"
-            expect(page).to have_input 'quantity', with: "1"
-            expect(page).to have_selector 'td.total', text: "$22.00"
-          end
-
-          # Total should be $29.75
-          expect(page).to have_selector '#order_form_total', text: "$29.75"
-
-          click_button 'Save Changes'
-          expect(page).to have_content "#{product3.name} - #{variant3.full_name} is not available from the selected schedule"
-
-          # Remove variant3 from the subscription
-          within '#sli_1' do
-            find("a.delete-item").click
-          end
-
-          click_button 'Save Changes'
-          expect(page).to have_current_path admin_subscriptions_path
-
-          select2_select shop.name, from: "shop_id"
-          expect(page).to have_selector "td.items.panel-toggle"
-          first("td.items.panel-toggle").click
-
-          # Total should be $7.75
-          expect(page).to have_selector '#order_form_total', text: "$7.75"
-          expect(page).to have_selector 'tr.item', count: 1
-          expect(subscription.reload.subscription_line_items.length).to eq 1
-          expect(subscription.subscription_line_items.first.variant).to eq variant2
+          # Remove variant1 from the subscription
+          find("a.delete-item").click
         end
 
-        context "with initialised order that has been changed" do
-          let(:proxy_order) { subscription.proxy_orders.first }
-          let(:order) { proxy_order.initialise_order! }
-          let(:line_item) { order.line_items.first }
+        # Attempting to submit without a product
+        click_button 'Save Changes'
+        expect(page).to have_content 'Please add at least one product'
 
-          before { line_item.update_attributes(quantity: 3) }
+        # Add variant2 to the subscription
+        add_variant_to_subscription(variant2, 1)
+        within "#sli_0" do
+          expect(page).to have_selector '.description', text: "#{product2.name} - #{variant2.full_name}"
+          expect(page).to have_selector 'td.price', text: "$7.75"
+          expect(page).to have_input 'quantity', with: "1"
+          expect(page).to have_selector 'td.total', text: "$7.75"
+        end
 
-          it "reports issues encountered during the update" do
-            visit edit_admin_subscription_path(subscription)
-            click_button 'edit-products'
+        # Total should be $7.75
+        expect(page).to have_selector '#order_form_total', text: "$7.75"
 
-            within "#sli_0" do
-              fill_in 'quantity', with: "1"
-            end
+        # Add variant3 to the subscription (even though it is not available)
+        add_variant_to_subscription(variant3, 1)
+        within "#sli_1" do
+          expect(page).to have_selector '.description', text: "#{product3.name} - #{variant3.full_name}"
+          expect(page).to have_selector 'td.price', text: "$22.00"
+          expect(page).to have_input 'quantity', with: "1"
+          expect(page).to have_selector 'td.total', text: "$22.00"
+        end
 
-            click_button 'Save Changes'
-            expect(page).to have_content 'Saved'
+        # Total should be $29.75
+        expect(page).to have_selector '#order_form_total', text: "$29.75"
 
-            expect(page).to have_selector "#order_update_issues_dialog .message", text: I18n.t("admin.subscriptions.order_update_issues_msg")
+        # Remove variant3 from the subscription
+        within '#sli_1' do
+          find("a.delete-item").click
+        end
+
+        click_button 'Save Changes'
+        expect(page).to have_current_path admin_subscriptions_path
+
+        select2_select shop.name, from: "shop_id"
+        expect(page).to have_selector "td.items.panel-toggle"
+        first("td.items.panel-toggle").click
+
+        # Total should be $7.75
+        expect(page).to have_selector '#order_form_total', text: "$7.75"
+        expect(page).to have_selector 'tr.item', count: 1
+        expect(subscription.reload.subscription_line_items.length).to eq 1
+        expect(subscription.subscription_line_items.first.variant).to eq variant2
+      end
+
+      context "with initialised order that has been changed" do
+        let(:proxy_order) { subscription.proxy_orders.first }
+        let(:order) { proxy_order.initialise_order! }
+        let(:line_item) { order.line_items.first }
+
+        before { line_item.update_attributes(quantity: 3) }
+
+        it "reports issues encountered during the update" do
+          visit edit_admin_subscription_path(subscription)
+          click_button 'edit-products'
+
+          within "#sli_0" do
+            fill_in 'quantity', with: "1"
           end
+
+          click_button 'Save Changes'
+          expect(page).to have_content 'Saved'
+
+          expect(page).to have_selector "#order_update_issues_dialog .message", text: I18n.t("admin.subscriptions.order_update_issues_msg")
         end
       end
     end
+
+    describe "allowed variants" do
+      let!(:customer) { create(:customer, enterprise: shop, allow_charges: true) }
+      let!(:credit_card) { create(:credit_card, user: customer.user) }
+      let!(:shop_product) { create(:product, supplier: shop, distributors: [shop]) }
+      let!(:shop_variant) { create(:variant, product: shop_product, unit_value: "2000") }
+      let!(:permitted_supplier) do
+        create(:supplier_enterprise).tap do |supplier|
+          create(:enterprise_relationship, child: shop, parent: supplier, permissions_list: [:add_to_order_cycle])
+        end
+      end
+      let!(:permitted_supplier_product) { create(:product, supplier: permitted_supplier, distributors: [shop]) }
+      let!(:permitted_supplier_variant) { create(:variant, product: permitted_supplier_product, unit_value: "2000") }
+      let!(:incoming_exchange_product) { create(:product, distributors: [shop]) }
+      let!(:incoming_exchange_variant) do
+        create(:variant, product: incoming_exchange_product, unit_value: "2000").tap do |variant|
+          create(:exchange, order_cycle: order_cycle, incoming: true, receiver: shop, variants: [variant])
+        end
+      end
+      let!(:outgoing_exchange_product) { create(:product, distributors: [shop]) }
+      let!(:outgoing_exchange_variant) do
+        create(:variant, product: outgoing_exchange_product, unit_value: "2000").tap do |variant|
+          create(:exchange, order_cycle: order_cycle, incoming: false, receiver: shop, variants: [variant])
+        end
+      end
+      let!(:enterprise_fee) { create(:enterprise_fee, amount: 1.75) }
+      let!(:order_cycle) { create(:simple_order_cycle, coordinator: shop) }
+      let!(:schedule) { create(:schedule, order_cycles: [order_cycle]) }
+      let!(:payment_method) { create(:stripe_payment_method, distributors: [shop], preferred_enterprise_id: shop.id) }
+      let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
+
+      before do
+        visit admin_subscriptions_path
+        click_link "New Subscription"
+        select2_select shop.name, from: "new_subscription_shop_id"
+        click_button "Continue"
+      end
+
+      it "permit creating and editing of the subscription" do
+        # Fill in other details
+        fill_in_subscription_basic_details
+        click_button "Next"
+        expect(page).to have_content "BILLING ADDRESS"
+        click_button "Next"
+
+        # Add products
+        expect(page).to have_content "NAME OR SKU"
+        add_variant_to_subscription shop_variant, 3
+        expect_not_in_open_or_upcoming_order_cycle_warning 1
+        add_variant_to_subscription permitted_supplier_variant, 4
+        expect_not_in_open_or_upcoming_order_cycle_warning 2
+        add_variant_to_subscription incoming_exchange_variant, 5
+        expect_not_in_open_or_upcoming_order_cycle_warning 3
+        add_variant_to_subscription outgoing_exchange_variant, 6
+        expect_not_in_open_or_upcoming_order_cycle_warning 3
+        click_button "Next"
+
+        # Submit form
+        expect {
+          click_button "Create Subscription"
+          expect(page).to have_current_path admin_subscriptions_path
+        }.to change(Subscription, :count).by(1)
+
+        # Subscription line items are created
+        subscription = Subscription.last
+        expect(subscription.subscription_line_items.count).to eq 4
+
+        # Edit the subscription
+        visit edit_admin_subscription_path(subscription)
+
+        # Remove shop_variant from the subscription
+        click_button "edit-products"
+        within "#sli_0" do
+          expect(page).to have_selector ".description", text: shop_variant.name
+          find("a.delete-item").click
+        end
+
+        # Submit form
+        click_button "Save Changes"
+        expect(page).to have_current_path admin_subscriptions_path
+
+        # Subscription is saved
+        visit edit_admin_subscription_path(subscription)
+        expect(page).to have_selector "#subscription-line-items .item", count: 3
+      end
+    end
+  end
+
+  def fill_in_subscription_basic_details
+    select2_select customer.email, from: "customer_id"
+    select2_select schedule.name, from: "schedule_id"
+    select2_select payment_method.name, from: "payment_method_id"
+    select2_select shipping_method.name, from: "shipping_method_id"
+
+    find_field("begins_at").click
+    choose_today_from_datepicker
+  end
+
+  def expect_not_in_open_or_upcoming_order_cycle_warning(count)
+    expect(page).to have_content variant_not_in_open_or_upcoming_order_cycle_warning, count: count
+  end
+
+  def add_variant_to_subscription(variant, quantity)
+    row_count = all("#subscription-line-items .item").length
+    variant_name = variant.full_name.present? ? "#{variant.name} - #{variant.full_name}" : variant.name
+    select2_search variant.name, from: I18n.t(:name_or_sku), dropdown_css: ".select2-drop", select_text: variant_name
+    fill_in "add_quantity", with: quantity
+    click_link "Add"
+    expect(page).to have_selector("#subscription-line-items .item", count: row_count + 1)
+  end
+
+  def variant_not_in_open_or_upcoming_order_cycle_warning
+    I18n.t("not_in_open_and_upcoming_order_cycles_warning",
+           scope: "admin.subscriptions.subscription_line_items")
   end
 end

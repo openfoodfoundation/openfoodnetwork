@@ -6,7 +6,11 @@ angular.module("admin.subscriptions").controller "SubscriptionController", ($sco
   $scope.schedules = Schedules.all
   $scope.paymentMethods = PaymentMethods.all
   $scope.shippingMethods = ShippingMethods.all
-  $scope.distributor_id = $scope.subscription.shop_id # variant selector requires distributor_id
+
+  # Variant selector requires these
+  $scope.distributor_id = $scope.subscription.shop_id
+  $scope.eligible_for_subscriptions = true
+
   $scope.view = if $scope.subscription.id? then 'review' else 'details'
   $scope.nextCallbacks = {}
   $scope.backCallbacks = {}
