@@ -509,7 +509,7 @@ GEM
     json_spec (1.1.5)
       multi_json (~> 1.0)
       rspec (>= 2.0, < 4.0)
-    jwt (1.5.6)
+    jwt (2.1.0)
     kaminari (0.13.0)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -817,7 +817,7 @@ DEPENDENCIES
   jquery-migrate-rails
   jquery-rails
   json_spec (~> 1.1.4)
-  jwt (~> 1.5)
+  jwt (~> 2.1)
   knapsack
   letter_opener (>= 1.4.1)
   listen (= 3.0.8)
