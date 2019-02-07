@@ -171,4 +171,149 @@ describe Admin::CustomersController, type: :controller do
       end
     end
   end
+
+  describe '#destroy' do
+    let(:enterprise) { create(:distributor_enterprise) }
+    let(:customer) { create(:customer, enterprise: enterprise) }
+
+    before do
+      allow(controller).to receive(:spree_current_user) { enterprise.owner }
+    end
+
+    context 'when rendering json' do
+      context 'and the customer has no orders' do
+        it 'invokes before destroy callbacks' do
+          allow(controller).to receive(:invoke_callbacks).with(:destroy, :after)
+
+          expect(controller).to receive(:invoke_callbacks).with(:destroy, :before)
+          spree_delete :destroy, id: customer, format: :json
+        end
+
+        it 'returns a no_content status code' do
+          spree_delete :destroy, id: customer, format: :json
+          expect(response).to have_http_status(:no_content)
+        end
+
+        it 'invokes after destroy callbacks' do
+          allow(controller).to receive(:invoke_callbacks).with(:destroy, :before)
+
+          expect(controller).to receive(:invoke_callbacks).with(:destroy, :after)
+          spree_delete :destroy, id: customer, format: :json
+        end
+      end
+
+      context 'and the customer has orders' do
+        before { customer.orders << build(:order) }
+
+        it 'invokes before destroy callbacks' do
+          allow(controller).to receive(:invoke_callbacks).with(:destroy, :fails)
+
+          expect(controller).to receive(:invoke_callbacks).with(:destroy, :before)
+          spree_delete :destroy, id: customer, format: :json
+        end
+
+        it 'renders the errors' do
+          spree_delete :destroy, id: customer, format: :json
+          expect(response.body).to match(I18n.t('admin.customers.destroy.has_associated_orders'))
+        end
+
+        it 'returns conflict HTTP status code' do
+          spree_delete :destroy, id: customer, format: :json
+          expect(response).to have_http_status(:conflict)
+        end
+
+        it 'invokes failure destroy callbacks' do
+          allow(controller).to receive(:invoke_callbacks).with(:destroy, :before)
+
+          expect(controller).to receive(:invoke_callbacks).with(:destroy, :fails)
+          spree_delete :destroy, id: customer, format: :json
+        end
+      end
+    end
+
+    context 'when rendering html' do
+      context 'and the customer has no orders' do
+        it 'invokes before destroy callbacks' do
+          allow(controller).to receive(:location_after_destroy) { '/fix_location_after_destroy' }
+          allow(controller).to receive(:invoke_callbacks).with(:destroy, :after)
+
+          expect(controller).to receive(:invoke_callbacks).with(:destroy, :before)
+          spree_delete :destroy, id: customer, format: :html
+        end
+
+        it 'raises due to missing #location_after_destroy' do
+          expect {
+            spree_delete :destroy, id: customer, format: :html
+          }.to raise_error(NameError, /location_after_destroy/)
+        end
+
+        it 'invokes after destroy callbacks' do
+          allow(controller).to receive(:location_after_destroy) { '/fix_location_after_destroy' }
+          allow(controller).to receive(:invoke_callbacks).with(:destroy, :before)
+
+          expect(controller).to receive(:invoke_callbacks).with(:destroy, :after)
+          spree_delete :destroy, id: customer, format: :html
+        end
+      end
+
+      context 'and the customer has orders' do
+        before { customer.orders << build(:order) }
+
+        it 'invokes before destroy callbacks' do
+          allow(controller).to receive(:location_after_destroy) { '/fix_location_after_destroy' }
+          allow(controller).to receive(:invoke_callbacks).with(:destroy, :fails)
+
+          expect(controller).to receive(:invoke_callbacks).with(:destroy, :before)
+          spree_delete :destroy, id: customer, format: :html
+        end
+
+        it 'raises due to missing #location_after_destroy' do
+          expect {
+            spree_delete :destroy, id: customer, format: :html
+          }.to raise_error(NameError, /location_after_destroy/)
+        end
+
+        it 'invokes failure destroy callbacks' do
+          allow(controller).to receive(:location_after_destroy) { '/fix_location_after_destroy' }
+          allow(controller).to receive(:invoke_callbacks).with(:destroy, :before)
+
+          expect(controller).to receive(:invoke_callbacks).with(:destroy, :fails)
+          spree_delete :destroy, id: customer, format: :html
+        end
+      end
+    end
+
+    context 'when rendering js' do
+      context 'and the customer has no orders' do
+        it 'invokes before destroy callbacks' do
+          allow(controller).to receive(:invoke_callbacks).with(:destroy, :after)
+
+          expect(controller).to receive(:invoke_callbacks).with(:destroy, :before)
+          spree_delete :destroy, id: customer, format: :js
+        end
+
+        it 'renders the spree/admin/shared/destroy partial' do
+          spree_delete :destroy, id: customer, format: :js
+          expect(response).to render_template('spree/admin/shared/_destroy')
+        end
+
+        it 'invokes after destroy callbacks' do
+          allow(controller).to receive(:invoke_callbacks).with(:destroy, :before)
+
+          expect(controller).to receive(:invoke_callbacks).with(:destroy, :after)
+          spree_delete :destroy, id: customer, format: :js
+        end
+      end
+
+      context 'and the customer has orders' do
+        before { customer.orders << build(:order) }
+
+        it 'raises due to missing template' do
+          expect {
+            spree_delete :destroy, id: customer, format: :js
+          }.to raise_error(ActionView::MissingTemplate)
+        end
+      end
+    end
+  end
 end
