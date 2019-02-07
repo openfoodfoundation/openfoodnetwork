@@ -1718,6 +1718,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   products_available: Available?
   products_producer: "Producer"
   products_price: "Price"
+  name_or_sku: "NAME OR SKU"
 
   register_title: Register
 

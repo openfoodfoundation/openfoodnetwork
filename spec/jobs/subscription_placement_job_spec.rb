@@ -71,8 +71,6 @@ describe SubscriptionPlacementJob do
     let!(:line_item2) { create(:line_item, order: order, variant: variant2, quantity: 3) }
     let!(:line_item3) { create(:line_item, order: order, variant: variant3, quantity: 3) }
 
-    before { Spree::Config.set(:allow_backorders, false) }
-
     context "when all items are available from the order cycle" do
       before { [variant1, variant2, variant3].each { |v| ex.variants << v } }
 
