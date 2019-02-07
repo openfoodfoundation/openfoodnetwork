@@ -41,7 +41,7 @@ gem 'unicorn'
 gem 'angularjs-rails', '1.5.5'
 gem 'bugsnag'
 gem 'haml'
-gem 'sass', "~> 3.3"
+gem 'sass', "~> 3.4"
 gem 'sass-rails', '~> 3.2.3', groups: [:default, :assets]
 gem 'redcarpet'
 gem 'aws-sdk'

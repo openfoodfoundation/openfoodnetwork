@@ -685,7 +685,7 @@ GEM
     ruby-rc4 (0.1.5)
     rubyzip (1.2.2)
     safe_yaml (1.0.4)
-    sass (3.3.14)
+    sass (3.4.25)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
@@ -843,7 +843,7 @@ DEPENDENCIES
   rspec-rails (>= 3.5.2)
   rspec-retry
   rubocop (>= 0.49.1)
-  sass (~> 3.3)
+  sass (~> 3.4)
   sass-rails (~> 3.2.3)
   selenium-webdriver
   shoulda-matchers
