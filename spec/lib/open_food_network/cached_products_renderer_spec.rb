@@ -5,7 +5,7 @@ module OpenFoodNetwork
   describe CachedProductsRenderer do
     let(:distributor) { double(:distributor, id: 123) }
     let(:order_cycle) { double(:order_cycle, id: 456) }
-    let(:cpr) { CachedProductsRenderer.new(distributor, order_cycle) }
+    let(:cached_products_renderer) { CachedProductsRenderer.new(distributor, order_cycle) }
 
     # keeps global state unchanged
     around do |example|
@@ -37,7 +37,7 @@ module OpenFoodNetwork
           end
 
           it "returns uncached products JSON" do
-            expect(cpr.products_json).to eq 'uncached products'
+            expect(cached_products_renderer.products_json).to eq 'uncached products'
           end
         end
 
@@ -47,7 +47,7 @@ module OpenFoodNetwork
           end
 
           it "returns the cached JSON" do
-              expect(cpr.products_json).to eq 'products'
+              expect(cached_products_renderer.products_json).to eq 'products'
           end
         end
       end
@@ -58,7 +58,7 @@ module OpenFoodNetwork
         end
 
         it "returns uncached products JSON" do
-          expect(cpr.products_json).to eq 'uncached products'
+          expect(cached_products_renderer.products_json).to eq 'uncached products'
         end
       end
 
@@ -68,10 +68,10 @@ module OpenFoodNetwork
         end
 
         describe "when the distribution is not set" do
-          let(:cpr) { CachedProductsRenderer.new(nil, nil) }
+          let(:cached_products_renderer) { CachedProductsRenderer.new(nil, nil) }
 
           it "raises an exception and returns no products" do
-            expect { cpr.products_json }.to raise_error CachedProductsRenderer::NoProducts
+            expect { cached_products_renderer.products_json }.to raise_error CachedProductsRenderer::NoProducts
           end
         end
 
@@ -81,12 +81,12 @@ module OpenFoodNetwork
           end
 
           it "returns the cached JSON" do
-            expect(cpr.products_json).to eq 'products'
+            expect(cached_products_renderer.products_json).to eq 'products'
           end
 
           it "raises an exception when there are no products" do
             Rails.cache.write "products-json-#{distributor.id}-#{order_cycle.id}", nil
-            expect { cpr.products_json }.to raise_error CachedProductsRenderer::NoProducts
+            expect { cached_products_renderer.products_json }.to raise_error CachedProductsRenderer::NoProducts
           end
         end
 
@@ -108,11 +108,11 @@ module OpenFoodNetwork
 
           describe "when there are products" do
             it "returns products as JSON" do
-              expect(cpr.products_json).to eq 'fresh products'
+              expect(cached_products_renderer.products_json).to eq 'fresh products'
             end
 
             it "caches the JSON" do
-              cpr.products_json
+              cached_products_renderer.products_json
               expect(cached_json).to eq 'fresh products'
             end
           end
@@ -129,11 +129,11 @@ module OpenFoodNetwork
             end
 
             it "raises an error" do
-              expect { cpr.products_json }.to raise_error CachedProductsRenderer::NoProducts
+              expect { cached_products_renderer.products_json }.to raise_error CachedProductsRenderer::NoProducts
             end
 
             it "caches the products as nil" do
-              expect { cpr.products_json }.to raise_error CachedProductsRenderer::NoProducts
+              expect { cached_products_renderer.products_json }.to raise_error CachedProductsRenderer::NoProducts
               expect(cache_present).to be
               expect(cached_json).to be_nil
             end
