@@ -159,4 +159,44 @@ describe VariantStock do
       end
     end
   end
+
+  describe '#can_supply?' do
+    context 'when variant on_demand' do
+      let(:variant) { create(:variant, on_demand: true) }
+
+      it "returns true for zero" do
+        expect(variant.can_supply?(0)).to eq(true)
+      end
+      it "returns true for large quantity" do
+        expect(variant.can_supply?(100000)).to eq(true)
+      end
+    end
+
+    context 'when variant not on_demand' do
+      context 'when variant in stock' do
+        it "returns true for zero" do
+          expect(variant.can_supply?(0)).to eq(true)
+        end
+        it "returns true for number equal to stock level" do
+          expect(variant.can_supply?(variant.total_on_hand)).to eq(true)
+        end
+
+        it "returns false for number above stock level" do
+          expect(variant.can_supply?(variant.total_on_hand + 1)).to eq(false)
+        end        
+      end
+
+      context 'when variant out of stock' do
+        before { variant.count_on_hand = 0 }
+
+        it "returns true for zero" do
+          expect(variant.can_supply?(0)).to eq(true)
+        end
+
+        it "returns false for one" do
+          expect(variant.can_supply?(1)).to eq(false)
+        end
+      end
+    end
+  end
 end

@@ -87,6 +87,12 @@ Spree::Variant.class_eval do
     ]
   end
 
+  # We override in_stock? to avoid depending on the non-overridable method Spree::Stock::Quantifier.can_supply?
+  #   VariantStock implements can_supply? itself which depends on overridable methods
+  def in_stock?(quantity = 1)
+    can_supply?(quantity)
+  end
+
   def price_with_fees(distributor, order_cycle)
     price + fees_for(distributor, order_cycle)
   end
