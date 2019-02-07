@@ -224,7 +224,7 @@ describe Spree::OrdersController, type: :controller do
           } }
         }
 
-        expect(order.adjustments.map(&:state)).to eq(['closed', 'closed', 'closed'])
+        expect(order.adjustments.map(&:state)).to eq(['closed', 'open', 'closed'])
       end
     end
 
