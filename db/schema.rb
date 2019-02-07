@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20181128054803) do
+ActiveRecord::Schema.define(:version => 20190207172740) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -83,9 +83,11 @@ ActiveRecord::Schema.define(:version => 20181128054803) do
     t.integer  "ship_address_id"
     t.string   "name"
     t.boolean  "allow_charges",   :default => false, :null => false
+    t.datetime "deleted_at"
   end
 
   add_index "customers", ["bill_address_id"], :name => "index_customers_on_bill_address_id"
+  add_index "customers", ["deleted_at"], :name => "index_customers_on_deleted_at"
   add_index "customers", ["email"], :name => "index_customers_on_email"
   add_index "customers", ["enterprise_id", "code"], :name => "index_customers_on_enterprise_id_and_code", :unique => true
   add_index "customers", ["ship_address_id"], :name => "index_customers_on_ship_address_id"
@@ -1275,7 +1277,6 @@ ActiveRecord::Schema.define(:version => 20181128054803) do
   add_foreign_key "spree_option_values_variants", "spree_option_values", name: "spree_option_values_variants_option_value_id_fk", column: "option_value_id"
   add_foreign_key "spree_option_values_variants", "spree_variants", name: "spree_option_values_variants_variant_id_fk", column: "variant_id"
 
-  add_foreign_key "spree_orders", "customers", name: "spree_orders_customer_id_fk"
   add_foreign_key "spree_orders", "enterprises", name: "spree_orders_distributor_id_fk", column: "distributor_id"
   add_foreign_key "spree_orders", "order_cycles", name: "spree_orders_order_cycle_id_fk"
   add_foreign_key "spree_orders", "spree_addresses", name: "spree_orders_bill_address_id_fk", column: "bill_address_id"

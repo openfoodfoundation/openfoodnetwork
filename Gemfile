@@ -78,6 +78,7 @@ gem 'wkhtmltopdf-binary'
 
 gem 'foreigner'
 gem 'immigrant'
+gem 'paranoia', '~> 1.3'
 gem 'roo', '~> 2.7.0'
 gem 'roo-xls', '~> 1.1.0'
 

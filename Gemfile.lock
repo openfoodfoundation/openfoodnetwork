@@ -565,6 +565,8 @@ GEM
       cocaine (~> 0.5.3)
       mime-types
     parallel (1.11.2)
+    paranoia (1.3.4)
+      activerecord (~> 3.1)
     parser (2.5.1.0)
       ast (~> 2.4.0)
     paypal-sdk-core (0.2.10)
@@ -828,6 +830,7 @@ DEPENDENCIES
   oj
   paper_trail (~> 5.2.3)
   paperclip
+  paranoia (~> 1.3)
   pg
   pry-byebug (>= 3.4.3)
   rabl

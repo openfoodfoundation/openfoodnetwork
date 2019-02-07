@@ -51,6 +51,7 @@ module Admin
         respond_with(@object) do |format|
           format.html { redirect_to location_after_destroy }
           format.js   { render partial: "spree/admin/shared/destroy" }
+          format.json { render_as_json @object, ams_prefix: params[:ams_prefix] }
         end
       else
         invoke_callbacks(:destroy, :fails)

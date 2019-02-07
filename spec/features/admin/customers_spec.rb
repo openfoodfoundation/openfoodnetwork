@@ -73,24 +73,19 @@ feature 'Customers' do
 
         # Deleting
         create(:order, customer: customer1)
-        expect{
-          within "tr#c_#{customer1.id}" do
-            accept_alert do
-              find("a.delete-customer").click
-            end
+        within "tr#c_#{customer1.id}" do
+          accept_alert do
+            find("a.delete-customer").click
           end
-          expect(page).to have_selector "#info-dialog .text", text: I18n.t('admin.customers.destroy.has_associated_orders')
-          click_button "OK"
-        }.to_not change{Customer.count}
+        end
+        expect(page).to have_no_selector "tr#c_#{customer1.id}"
 
-        expect{
-          within "tr#c_#{customer2.id}" do
-            accept_alert do
-              find("a.delete-customer").click
-            end
+        within "tr#c_#{customer2.id}" do
+          accept_alert do
+            find("a.delete-customer").click
           end
-          expect(page).to have_no_selector "tr#c_#{customer2.id}"
-        }.to change{Customer.count}.by(-1)
+        end
+        expect(page).to have_no_selector "tr#c_#{customer2.id}"
       end
 
       it "allows updating of attributes" do

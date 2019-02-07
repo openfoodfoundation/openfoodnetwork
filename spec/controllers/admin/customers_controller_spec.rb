@@ -181,7 +181,7 @@ describe Admin::CustomersController, type: :controller do
     end
 
     context 'when rendering json' do
-      context 'and the customer has no orders' do
+      context 'and the destroy succeeds' do
         it 'invokes before destroy callbacks' do
           allow(controller).to receive(:invoke_callbacks).with(:destroy, :after)
 
@@ -191,7 +191,7 @@ describe Admin::CustomersController, type: :controller do
 
         it 'returns a no_content status code' do
           spree_delete :destroy, id: customer, format: :json
-          expect(response).to have_http_status(:no_content)
+          expect(JSON.parse(response.body)['id']).to eq customer.id
         end
 
         it 'invokes after destroy callbacks' do
@@ -202,8 +202,11 @@ describe Admin::CustomersController, type: :controller do
         end
       end
 
-      context 'and the customer has orders' do
-        before { customer.orders << build(:order) }
+      context 'and the destroy fails' do
+        before do
+          allow(Customer).to receive(:find).with(customer.id.to_s).and_return(customer)
+          allow(customer).to receive(:destroy).and_return(false)
+        end
 
         it 'invokes before destroy callbacks' do
           allow(controller).to receive(:invoke_callbacks).with(:destroy, :fails)
@@ -214,7 +217,7 @@ describe Admin::CustomersController, type: :controller do
 
         it 'renders the errors' do
           spree_delete :destroy, id: customer, format: :json
-          expect(response.body).to match(I18n.t('admin.customers.destroy.has_associated_orders'))
+          expect(response.body).to match('errors')
         end
 
         it 'returns conflict HTTP status code' do
@@ -232,7 +235,7 @@ describe Admin::CustomersController, type: :controller do
     end
 
     context 'when rendering html' do
-      context 'and the customer has no orders' do
+      context 'and the destroy succeeds' do
         it 'invokes before destroy callbacks' do
           allow(controller).to receive(:location_after_destroy) { '/fix_location_after_destroy' }
           allow(controller).to receive(:invoke_callbacks).with(:destroy, :after)
@@ -256,8 +259,11 @@ describe Admin::CustomersController, type: :controller do
         end
       end
 
-      context 'and the customer has orders' do
-        before { customer.orders << build(:order) }
+      context 'and the destroy fails' do
+        before do
+          allow(Customer).to receive(:find).with(customer.id.to_s).and_return(customer)
+          allow(customer).to receive(:destroy).and_return(false)
+        end
 
         it 'invokes before destroy callbacks' do
           allow(controller).to receive(:location_after_destroy) { '/fix_location_after_destroy' }
@@ -284,7 +290,7 @@ describe Admin::CustomersController, type: :controller do
     end
 
     context 'when rendering js' do
-      context 'and the customer has no orders' do
+      context 'and the destroy succeeds' do
         it 'invokes before destroy callbacks' do
           allow(controller).to receive(:invoke_callbacks).with(:destroy, :after)
 
@@ -305,8 +311,11 @@ describe Admin::CustomersController, type: :controller do
         end
       end
 
-      context 'and the customer has orders' do
-        before { customer.orders << build(:order) }
+      context 'and the destroy fails' do
+        before do
+          allow(Customer).to receive(:find).with(customer.id.to_s).and_return(customer)
+          allow(customer).to receive(:destroy).and_return(false)
+        end
 
         it 'raises due to missing template' do
           expect {

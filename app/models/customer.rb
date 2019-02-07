@@ -1,10 +1,10 @@
 class Customer < ActiveRecord::Base
   acts_as_taggable
+  acts_as_paranoid
 
   belongs_to :enterprise
   belongs_to :user, class_name: Spree.user_class
   has_many :orders, class_name: Spree::Order
-  before_destroy :check_for_orders
 
   belongs_to :bill_address, foreign_key: :bill_address_id, class_name: Spree::Address
   alias_attribute :billing_address, :bill_address
@@ -42,11 +42,5 @@ class Customer < ActiveRecord::Base
 
   def associate_user
     self.user = user || Spree::User.find_by_email(email)
-  end
-
-  def check_for_orders
-    return true unless orders.any?
-    errors[:base] << I18n.t('admin.customers.destroy.has_associated_orders')
-    false
   end
 end
