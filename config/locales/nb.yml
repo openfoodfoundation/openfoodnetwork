@@ -1027,6 +1027,7 @@ nb:
         this_is_an_estimate: |
             De viste prisene er bare et estimat og beregnet på det tidspunktet abonnementet endres.
             Hvis du endrer priser eller avgifter, vil ordrer bli oppdatert, men abonnementet vil fortsatt vise de gamle verdiene.
+        not_in_open_and_upcoming_order_cycles_warning: "Det er ingen åpne eller kommende bestillingsrunder for dette produktet."
       details:
         details: Detaljer
         invalid_error: Oops! Vennligst fyll inn alle obligatoriske felter...
@@ -1041,6 +1042,7 @@ nb:
         details: Detaljer
         address: Adresse
         products: Produkter
+        no_open_or_upcoming_order_cycle: "Ingen kommende bestillingsrunde"
       product_already_in_order: Dette produktet er allerede lagt til i bestillingen. Vennligst rediger mengden direkte.
       orders:
         number: Antall
