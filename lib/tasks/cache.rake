@@ -1,6 +1,6 @@
 require 'open_food_network/products_cache_integrity_checker'
 
-namespace :openfoodnetwork do
+namespace :ofn do
   namespace :cache do
     desc 'check the integrity of the products cache'
     task :check_products_integrity => :environment do

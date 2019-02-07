@@ -7,6 +7,7 @@ fr_BE:
         shipment_state: Statut livraison
         completed_at: 'Passée à '
         number: N° commande
+        state: Province
         email: Adresse électronique acheteur
       spree/payment:
         amount: Montant
@@ -2616,8 +2617,6 @@ fr_BE:
         display_as:
           display_as: Unité affichéé
       reports:
-        table:
-          select_and_search: "Sélectionnez les filtres et cliquez sur RECHERCHER pour accéder à vos données."
         bulk_coop:
           bulk_coop_supplier_report: 'Achats groupés - Totaux par Producteur'
           bulk_coop_allocation: 'Achats groupés - Allocation'

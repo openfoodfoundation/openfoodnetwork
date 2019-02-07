@@ -39,7 +39,7 @@ before_script:
 
 script:
   - 'if [ "$KARMA" = "true" ]; then bundle exec rake karma:run; else echo "Skipping karma run"; fi'
-  - 'if [ "$RSPEC_ENGINES" = "true" ]; then bundle exec rake openfoodnetwork:specs:engines:rspec; else echo "Skipping RSpec run in engines"; fi'
+  - 'if [ "$RSPEC_ENGINES" = "true" ]; then bundle exec rake ofn:specs:engines:rspec; else echo "Skipping RSpec run in engines"; fi'
   - "bundle exec rake 'knapsack:rspec[--format progress --tag ~performance]'"
 
 after_success:
