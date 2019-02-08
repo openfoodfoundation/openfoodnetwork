@@ -476,6 +476,8 @@ es:
         inventory_no_permission: no tienes permiso para crear inventario para esta productora
         none_saved: No se guardó ningún producto con éxito
         line_number: "Línea %{number}:"
+        encoding_error: "Verifique la configuración de idioma de su archivo fuente y asegúrese de que esté guardado con la codificación UTF-8"
+        unexpected_error: "La importación de productos encontró un error inesperado al abrir el archivo: %{error_message}"
       index:
         select_file: Selecciona una hoja de cálculo para subir
         spreadsheet: Hoja de cálculo
@@ -1027,6 +1029,7 @@ es:
         this_is_an_estimate: |
             Los precios mostrados son solo una estimación y se calculan en el momento en que se cambia la suscripción.
             Si cambias precios o tarifas, los pedidos se actualizarán pero la suscripción seguirá mostrando los valores anteriores.
+        not_in_open_and_upcoming_order_cycles_warning: "No hay ciclos de pedidos abiertos o próximos para este producto."
       details:
         details: Detalles
         invalid_error: Ups! Por favor complete todos los campos requeridos ...
@@ -1041,6 +1044,7 @@ es:
         details: Detalles
         address: Dirección
         products: Productos
+        no_open_or_upcoming_order_cycle: "No hay ciclo de pedido próximo"
       product_already_in_order: Este producto ya ha sido agregado a la orden. Por favor edite la cantidad directamente.
       orders:
         number: Número
@@ -2020,7 +2024,7 @@ es:
   spree_distributors_error: "Se debe seleccionar al menos un Grupo"
   spree_user_enterprise_limit_error: "^ %{email} no está autorizado a tener más organizaciones (el límite es %{enterprise_limit})."
   spree_variant_product_error: Debes tener al menos una variante
-  your_profil_live: "Tu perfil en directo"
+  your_profil_live: "Tu perfil online"
   on_ofn_map: "en el mapa Open Food Network"
   see: "Ver"
   live: "En directo"
@@ -2037,6 +2041,8 @@ es:
   order_cycles: "Ciclos de Pedidos"
   enterprise_relationships: "Permisos de la organización"
   remove_tax: "Eliminar impuesto"
+  first_name_begins_with: "El nombre comienza con"
+  last_name_begins_with: "El apellido comienza con"
   enterprise_tos_link: "Enlace a los Términos del Servicio de la Organización"
   enterprise_tos_message: "Queremos trabajar con personas que compartan nuestros objetivos y valores. Por ello, pedimos a las nuevas organizaciones que acepten"
   enterprise_tos_link_text: "Términos del Servicio."
@@ -2184,7 +2190,7 @@ es:
   report_header_product_total_price: "Producto Total (%{currency})"
   report_header_shipping_total_price: "Total envíos (%{currency})"
   report_header_outstanding_balance_price: "Saldo pendiente (%{currency})"
-  report_header_eft_price: "EFT (%{currency})"
+  report_header_eft_price: "Transferencia (%{currency})"
   report_header_paypal_price: "PayPal (%{currency})"
   report_header_sku: SKU
   report_header_amount: Cantidad
@@ -2444,6 +2450,11 @@ es:
       orders:
         index:
           per_page: "%{results} por página"
+          view_file: Ver archivo
+          compiling_invoices: Generando facturas
+          bulk_invoice_created: Factura conjunta creada
+          bulk_invoice_failed: Error al crear la factura conjunta
+          please_wait: Por favor, espere hasta que el PDF esté listo antes de cerrar esta ventana.
       resend_user_email_confirmation:
         resend: "Reenviar"
         sending: "Reenviar..."
@@ -2546,6 +2557,7 @@ es:
           no_orders_found: "No se encontraron pedidos"
           results_found: "%{number} Resultados encontrados."
           viewing: "Viendo de %{start}a %{end}."
+          print_invoices: "Imprimir facturas"
         invoice:
           issued_on: Emitido el
           tax_invoice: FACTURA DE IMPUESTOS
@@ -2624,6 +2636,8 @@ es:
         display_as:
           display_as: Mostrar como
       reports:
+        table:
+          select_and_search: "Seleccione filtros y haga clic en %{option} para acceder a sus datos."
         bulk_coop:
           bulk_coop_supplier_report: 'Bulk Co-op - Totales por Proveedor'
           bulk_coop_allocation: 'Bulk Co-op - Asignación'
