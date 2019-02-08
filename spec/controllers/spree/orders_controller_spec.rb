@@ -224,6 +224,15 @@ describe Spree::OrdersController, type: :controller do
           } }
         }
 
+        # Before issuing the update the secod adjustment, which is associated
+        # to the shipment, is already open thus restoring its state leaves it
+        # also open.
+        #
+        # The third adjustment is originated from an EnterpriseFee and it gets
+        # created by #update_distribution_charge! in
+        # app/models/spree/order_decorator.rb:220, which is in turn triggered
+        # by the `contents_changed` notification event defined in
+        # app/models/spree/order_decorator.rb:7
         expect(order.adjustments.map(&:state)).to eq(['closed', 'open', 'closed'])
       end
     end
