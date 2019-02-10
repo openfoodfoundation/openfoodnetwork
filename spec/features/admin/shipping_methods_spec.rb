@@ -32,7 +32,8 @@ feature 'shipping methods' do
       click_button 'Create'
 
       # Then the shipping method should have its distributor set
-      flash_message.should == 'Shipping method "Carrier Pidgeon" has been successfully created!'
+      message = "Shipping method \"Carrier Pidgeon\" has been successfully created!"
+      expect(page).to have_flash_message message
 
       sm = Spree::ShippingMethod.last
       sm.name.should == 'Carrier Pidgeon'
@@ -100,7 +101,9 @@ feature 'shipping methods' do
 
       click_button 'Create'
 
-      flash_message.should == 'Shipping method "Teleport" has been successfully created!'
+      message = "Shipping method \"Teleport\" has been successfully created!"
+      expect(page).to have_flash_message message
+
       expect(first('tags-input .tag-list ti-tag-item')).to have_content "local"
 
       shipping_method = Spree::ShippingMethod.find_by_name('Teleport')
