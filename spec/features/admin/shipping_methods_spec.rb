@@ -29,10 +29,13 @@ feature 'shipping methods' do
       fill_in 'shipping_method_name', with: 'Carrier Pidgeon'
       check "shipping_method_distributor_ids_#{d1.id}"
       check "shipping_method_distributor_ids_#{d2.id}"
-      click_button 'Create'
+      click_button I18n.t("actions.create")
+
+      expect(page).to have_no_button I18n.t("actions.create")
 
       # Then the shipping method should have its distributor set
-      flash_message.should == 'Shipping method "Carrier Pidgeon" has been successfully created!'
+      message = "Shipping method \"Carrier Pidgeon\" has been successfully created!"
+      expect(page).to have_flash_message message
 
       sm = Spree::ShippingMethod.last
       sm.name.should == 'Carrier Pidgeon'
@@ -98,9 +101,12 @@ feature 'shipping methods' do
         expect(page).to have_css '.tag-item'
       end
 
-      click_button 'Create'
+      click_button I18n.t("actions.create")
 
-      flash_message.should == 'Shipping method "Teleport" has been successfully created!'
+      expect(page).to have_no_button I18n.t("actions.create")
+      message = "Shipping method \"Teleport\" has been successfully created!"
+      expect(page).to have_flash_message message
+
       expect(first('tags-input .tag-list ti-tag-item')).to have_content "local"
 
       shipping_method = Spree::ShippingMethod.find_by_name('Teleport')
