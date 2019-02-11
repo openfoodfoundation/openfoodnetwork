@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'open_food_network/permissions'
 
-xdescribe ProductImport::ProductImporter do
+describe ProductImport::ProductImporter do
   include AuthenticationWorkflow
 
   let!(:admin) { create(:admin_user) }
@@ -42,15 +42,17 @@ xdescribe ProductImport::ProductImporter do
 
   let(:permissions) { OpenFoodNetwork::Permissions.new(user) }
 
+  let(:shipping_category_id_str) { Spree::ShippingCategory.all.first.id.to_s }
+
   describe "importing products from a spreadsheet" do
     before do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "variant_unit_name", "on_demand"]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", "", ""]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "2", "kg", "", ""]
-        csv << ["Pea Soup", "User Enterprise", "Vegetables", "8", "5.50", "750", "ml", "", "0"]
-        csv << ["Salad", "User Enterprise", "Vegetables", "7", "4.50", "1", "", "bags", ""]
-        csv << ["Hot Cross Buns", "User Enterprise", "Cake", "7", "3.50", "1", "", "buns", "1"]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "variant_unit_name", "on_demand", "shipping_category_id"]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", "", "", shipping_category_id_str]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "2", "kg", "", "", shipping_category_id_str]
+        csv << ["Pea Soup", "User Enterprise", "Vegetables", "8", "5.50", "750", "ml", "", "0", shipping_category_id_str]
+        csv << ["Salad", "User Enterprise", "Vegetables", "7", "4.50", "1", "", "bags", "", shipping_category_id_str]
+        csv << ["Hot Cross Buns", "User Enterprise", "Cake", "7", "3.50", "1", "", "buns", "1", shipping_category_id_str]
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
@@ -135,9 +137,9 @@ xdescribe ProductImport::ProductImporter do
   describe "when uploading a spreadsheet with some invalid entries" do
     before do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type"]
-        csv << ["Good Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g"]
-        csv << ["Bad Potatoes", "", "Vegetables", "6", "6.50", "1", ""]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "shipping_category_id"]
+        csv << ["Good Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", shipping_category_id_str]
+        csv << ["Bad Potatoes", "", "Vegetables", "6", "6.50", "1", "", shipping_category_id_str]
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
@@ -199,9 +201,9 @@ xdescribe ProductImport::ProductImporter do
   describe "adding new variants to existing products and updating exiting products" do
     before do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "display_name"]
-        csv << ["Hypothetical Cake", "Another Enterprise", "Cake", "5", "5.50", "500", "g", "Preexisting Banana"]
-        csv << ["Hypothetical Cake", "Another Enterprise", "Cake", "6", "3.50", "500", "g", "Emergent Coffee"]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "display_name", "shipping_category_id"]
+        csv << ["Hypothetical Cake", "Another Enterprise", "Cake", "5", "5.50", "500", "g", "Preexisting Banana", shipping_category_id_str]
+        csv << ["Hypothetical Cake", "Another Enterprise", "Cake", "6", "3.50", "500", "g", "Emergent Coffee", shipping_category_id_str]
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
@@ -245,9 +247,9 @@ xdescribe ProductImport::ProductImporter do
   describe "adding new product and sub-variant at the same time" do
     before do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "display_name"]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "5", "3.50", "500", "g", "Small Bag"]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "5.50", "2", "kg", "Big Bag"]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "display_name", "shipping_category_id"]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "5", "3.50", "500", "g", "Small Bag", shipping_category_id_str]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "5.50", "2", "kg", "Big Bag", shipping_category_id_str]
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
@@ -289,9 +291,9 @@ xdescribe ProductImport::ProductImporter do
   describe "updating various fields" do
     before do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "on_demand", "sku"]
-        csv << ["Beetroot", "And Another Enterprise", "Vegetables", "5", "3.50", "500", "g", "0", nil]
-        csv << ["Tomato", "And Another Enterprise", "Vegetables", "6", "5.50", "500", "g", "1", "TOMS"]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "on_demand", "sku", "shipping_category_id"]
+        csv << ["Beetroot", "And Another Enterprise", "Vegetables", "5", "3.50", "500", "g", "0", nil, shipping_category_id_str]
+        csv << ["Tomato", "And Another Enterprise", "Vegetables", "6", "5.50", "500", "g", "1", "TOMS", shipping_category_id_str]
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
@@ -358,12 +360,12 @@ xdescribe ProductImport::ProductImporter do
   describe "when more than one product of the same name already exists with multiple variants each" do
     before do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "description", "on_hand", "price", "units", "unit_type", "display_name"]
-        csv << ["Oats", "User Enterprise", "Cereal", "", "50", "3.50", "500", "g", "Rolled Oats"]   # Update
-        csv << ["Oats", "User Enterprise", "Cereal", "", "80", "3.75", "500", "g", "Flaked Oats"]   # Update
-        csv << ["Oats", "User Enterprise", "Cereal", "", "60", "5.50", "500", "g", "Magic Oats"]    # Add
-        csv << ["Oats", "User Enterprise", "Cereal", "", "70", "8.50", "500", "g", "French Oats"]   # Add
-        csv << ["Oats", "User Enterprise", "Cereal", "", "70", "8.50", "500", "g", "Scottish Oats"] # Add
+        csv << ["name", "producer", "category", "description", "on_hand", "price", "units", "unit_type", "display_name", "shipping_category_id"]
+        csv << ["Oats", "User Enterprise", "Cereal", "", "50", "3.50", "500", "g", "Rolled Oats", shipping_category_id_str]   # Update
+        csv << ["Oats", "User Enterprise", "Cereal", "", "80", "3.75", "500", "g", "Flaked Oats", shipping_category_id_str]   # Update
+        csv << ["Oats", "User Enterprise", "Cereal", "", "60", "5.50", "500", "g", "Magic Oats", shipping_category_id_str]    # Add
+        csv << ["Oats", "User Enterprise", "Cereal", "", "70", "8.50", "500", "g", "French Oats", shipping_category_id_str]   # Add
+        csv << ["Oats", "User Enterprise", "Cereal", "", "70", "8.50", "500", "g", "Scottish Oats", shipping_category_id_str] # Add
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
@@ -398,12 +400,12 @@ xdescribe ProductImport::ProductImporter do
   describe "when importer processes create and update across multiple stages" do
     before do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "display_name"]
-        csv << ["Bag of Oats", "User Enterprise", "Cereal", "60", "5.50", "500", "g", "Magic Oats"]     # Add
-        csv << ["Bag of Oats", "User Enterprise", "Cereal", "70", "8.50", "500", "g", "French Oats"]    # Add
-        csv << ["Bag of Oats", "User Enterprise", "Cereal", "80", "9.50", "500", "g", "Organic Oats"]   # Add
-        csv << ["Bag of Oats", "User Enterprise", "Cereal", "90", "7.50", "500", "g", "Scottish Oats"]  # Add
-        csv << ["Bag of Oats", "User Enterprise", "Cereal", "30", "6.50", "500", "g", "Breakfast Oats"] # Add
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "display_name", "shipping_category_id"]
+        csv << ["Bag of Oats", "User Enterprise", "Cereal", "60", "5.50", "500", "g", "Magic Oats", shipping_category_id_str]     # Add
+        csv << ["Bag of Oats", "User Enterprise", "Cereal", "70", "8.50", "500", "g", "French Oats", shipping_category_id_str]    # Add
+        csv << ["Bag of Oats", "User Enterprise", "Cereal", "80", "9.50", "500", "g", "Organic Oats", shipping_category_id_str]   # Add
+        csv << ["Bag of Oats", "User Enterprise", "Cereal", "90", "7.50", "500", "g", "Scottish Oats", shipping_category_id_str]  # Add
+        csv << ["Bag of Oats", "User Enterprise", "Cereal", "30", "6.50", "500", "g", "Breakfast Oats", shipping_category_id_str] # Add
       end
       File.write('/tmp/test-m.csv', csv_data)
       @file = File.new('/tmp/test-m.csv')
@@ -517,9 +519,9 @@ xdescribe ProductImport::ProductImporter do
 
     it "only allows product import into enterprises the user is permitted to manage" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type"]
-        csv << ["My Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g"]
-        csv << ["Your Potatoes", "Another Enterprise", "Vegetables", "6", "6.50", "1", "kg"]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "shipping_category_id"]
+        csv << ["My Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", shipping_category_id_str]
+        csv << ["Your Potatoes", "Another Enterprise", "Vegetables", "6", "6.50", "1", "kg", shipping_category_id_str]
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
@@ -601,9 +603,9 @@ xdescribe ProductImport::ProductImporter do
 
     it "can reset all products for an enterprise that are not present in the uploaded file to zero stock" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type"]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g"]
-        csv << ["Beans", "User Enterprise", "Vegetables", "6", "6.50", "500", "g"]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "shipping_category_id"]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", shipping_category_id_str]
+        csv << ["Beans", "User Enterprise", "Vegetables", "6", "6.50", "500", "g", shipping_category_id_str]
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
@@ -681,9 +683,9 @@ xdescribe ProductImport::ProductImporter do
 
     it "can overwrite fields with selected defaults when importing to product list" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "tax_category_id", "available_on"]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", tax_category.id, ""]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1", "kg", "", ""]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "tax_category_id", "available_on", "shipping_category_id"]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", tax_category.id, "", shipping_category_id_str]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1", "kg", "", "", shipping_category_id_str]
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')

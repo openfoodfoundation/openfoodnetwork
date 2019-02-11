@@ -178,7 +178,7 @@ module VariantStock
   # Calling stock_item.adjust_count_on_hand will bypass filling backorders and creating stock movements
   # If that was required we could call self.move
   def overwrite_stock_levels(new_level)
-    stock_item.adjust_count_on_hand(new_level - stock_item.count_on_hand)
+    stock_item.adjust_count_on_hand(new_level.to_i - stock_item.count_on_hand)
   end
 
   # There shouldn't be any other stock items, because we should
