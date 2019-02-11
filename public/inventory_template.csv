@@ -1,1 +1,1 @@
-producer,distributor,name,display_name,units,unit_type,price,on_hand
+producer,distributor,name,display_name,variant_unit_name,sku,units,unit_type,price,on_hand,on_demand

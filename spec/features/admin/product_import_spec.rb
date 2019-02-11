@@ -46,7 +46,7 @@ feature "Product Import", js: true do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
-      import_data
+      proceed_to_validation
 
       expect(page).to have_selector '.item-count', text: "2"
       expect(page).to have_no_selector '.invalid-count'
@@ -89,7 +89,7 @@ feature "Product Import", js: true do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
-      import_data
+      proceed_to_validation
 
       expect(page).to have_selector '.item-count', text: "2"
       expect(page).to have_selector '.invalid-count', text: "2"
@@ -112,7 +112,7 @@ feature "Product Import", js: true do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
-      import_data
+      proceed_to_validation
 
       expect(page).to have_selector '.item-count', text: "1"
       expect(page).to have_selector '.create-count', text: "1"
@@ -142,7 +142,7 @@ feature "Product Import", js: true do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
-      import_data
+      proceed_to_validation
 
       save_data
 
@@ -164,7 +164,7 @@ feature "Product Import", js: true do
       end
 
       expect(page).to have_selector 'div#s2id_import_date_filter'
-      import_time = carrots.import_date.to_date.to_formatted_s(:long).gsub('  ', ' ')
+      import_time = carrots.import_date.to_date.to_formatted_s(:long)
       select2_select import_time, from: "import_date_filter"
 
       expect(page).to have_field "product_name", with: carrots.name
@@ -188,7 +188,7 @@ feature "Product Import", js: true do
 
       click_button 'Upload'
 
-      import_data
+      proceed_to_validation
 
       save_data
 
@@ -213,7 +213,7 @@ feature "Product Import", js: true do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
-      import_data
+      proceed_to_validation
 
       expect(page).to have_selector '.item-count', text: "3"
       expect(page).to_not have_selector '.invalid-count'
@@ -252,7 +252,7 @@ feature "Product Import", js: true do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
-      import_data
+      proceed_to_validation
 
       expect(page).to have_selector '.item-count', text: "3"
       expect(page).to have_no_selector '.invalid-count'
@@ -291,6 +291,49 @@ feature "Product Import", js: true do
         expect(page).to have_content 'Sprouts'
         expect(page).to have_content 'Cabbage'
       end
+    end
+
+    it "handles on_demand and on_hand validations with inventory" do
+      csv_data = CSV.generate do |csv|
+        csv << ["name", "distributor", "producer", "category", "on_hand", "price", "units", "on_demand"]
+        csv << ["Beans", "Another Enterprise", "User Enterprise", "Vegetables", nil, "3.20", "500", "true"]
+        csv << ["Sprouts", "Another Enterprise", "User Enterprise", "Vegetables", "6", "6.50", "500", "false"]
+        csv << ["Cabbage", "Another Enterprise", "User Enterprise", "Vegetables", nil, "1.50", "500", nil]
+      end
+      File.write('/tmp/test.csv', csv_data)
+
+      visit main_app.admin_product_import_path
+      select2_select I18n.t('admin.product_import.index.inventories'), from: "settings_import_into"
+      attach_file 'file', '/tmp/test.csv'
+      click_button 'Upload'
+
+      import_data
+
+      expect(page).to have_selector '.item-count', text: "3"
+      expect(page).to have_no_selector '.invalid-count'
+      expect(page).to have_selector '.inv-create-count', text: '2'
+      expect(page).to have_selector '.inv-update-count', text: '1'
+
+      save_data
+
+      expect(page).to have_selector '.inv-created-count', text: '2'
+      expect(page).to have_selector '.inv-updated-count', text: '1'
+
+      beans_override = VariantOverride.where(variant_id: product2.variants.first.id, hub_id: enterprise2.id).first
+      sprouts_override = VariantOverride.where(variant_id: product3.variants.first.id, hub_id: enterprise2.id).first
+      cabbage_override = VariantOverride.where(variant_id: product4.variants.first.id, hub_id: enterprise2.id).first
+
+      expect(Float(beans_override.price)).to eq 3.20
+      expect(beans_override.count_on_hand).to be_nil
+      expect(beans_override.on_demand).to be_truthy
+
+      expect(Float(sprouts_override.price)).to eq 6.50
+      expect(sprouts_override.count_on_hand).to eq 6
+      expect(sprouts_override.on_demand).to eq false
+
+      expect(Float(cabbage_override.price)).to eq 1.50
+      expect(cabbage_override.count_on_hand).to be_nil
+      expect(cabbage_override.on_demand).to be_nil
     end
   end
 
@@ -349,7 +392,7 @@ feature "Product Import", js: true do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
-      import_data
+      proceed_to_validation
 
       expect(page).to have_content I18n.t('admin.product_import.import.validation_overview')
       expect(page).to have_selector '.item-count', text: "2"
@@ -361,9 +404,61 @@ feature "Product Import", js: true do
     end
   end
 
+  describe "handling a large file (120 data rows)" do
+    let!(:producer) { enterprise }
+
+    let(:tmp_csv_path) { "/tmp/test.csv" }
+
+    before do
+      quick_login_as admin
+      visit main_app.admin_product_import_path
+    end
+
+    context "when importing to product list" do
+      def write_tmp_csv_file
+        CSV.open(tmp_csv_path, "w") do |csv|
+          csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
+                  "tax_category", "shipping_category"]
+          120.times do |i|
+            csv << ["Imported Product #{i + 1}", producer.name, category.name, 1, "1.00", "500",
+                    "g", tax_category.name, shipping_category.name]
+          end
+        end
+      end
+
+      before { write_tmp_csv_file }
+
+      it "validates and saves all batches" do
+        # Upload and validate file.
+        attach_file "file", tmp_csv_path
+        click_button I18n.t("admin.product_import.index.upload")
+        proceed_to_validation
+
+        # Check that all rows are validated.
+        heading = "120 #{I18n.t("admin.product_import.import.products_to_create")}"
+        find(".panel-header", text: heading).click
+        expect(page).to have_content "Imported Product 10"
+        expect(page).to have_content "Imported Product 60"
+        expect(page).to have_content "Imported Product 110"
+
+        # Save file.
+        proceed_with_save
+
+        # Be extra patient.
+        expect_progress_percentages "33%", "67%", "100%"
+        expect_import_completed
+
+        # Check that all rows are saved.
+        expect(producer.supplied_products.find_by_name("Imported Product 10")).to be_present
+        expect(producer.supplied_products.find_by_name("Imported Product 60")).to be_present
+        expect(producer.supplied_products.find_by_name("Imported Product 110")).to be_present
+      end
+    end
+  end
+
   private
 
-  def import_data
+  def proceed_to_validation
     expect(page).to have_selector 'a.button.proceed', visible: true
     click_link I18n.t('admin.product_import.import.import')
     expect(page).to have_selector 'form.product-import', visible: true
@@ -372,8 +467,22 @@ feature "Product Import", js: true do
 
   def save_data
     expect(page).to have_selector 'a.button.proceed', visible: true
-    click_link I18n.t('admin.product_import.import.save')
+    proceed_with_save
     expect(page).to have_selector 'div.save-results', visible: true
+    expect_import_completed
+  end
+
+  def expect_progress_percentages(*percentages)
+    percentages.each do |percentage|
+      expect(page).to have_selector ".progress-interface", text: percentage
+    end
+  end
+
+  def proceed_with_save
+    click_link I18n.t("admin.product_import.import.save")
+  end
+
+  def expect_import_completed
     expect(page).to have_content I18n.t('admin.product_import.save_results.final_results')
   end
 end

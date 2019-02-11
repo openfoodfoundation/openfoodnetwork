@@ -602,6 +602,7 @@ it:
           desc_long_placeholder: Racconta di te ai consumatori. Questa informazione comparirà nel tuo profilo pubblico.
         business_details:
           abn: ABN
+          abn_placeholder: es. 99 123 456 789
           acn: ACN
           acn_placeholder: es. 123 456 789
           display_invoice_logo: Mostra logo nelle fatture
@@ -1131,6 +1132,7 @@ it:
   total_excl_tax: "Totale (Tasse escl.):"
   total_incl_tax: "Totale (Tasse incl.):"
   abn: "CF:"
+  acn: "ACN:"
   invoice_issued_on: "Fattura emessa il"
   order_number: "Numero fattura:"
   date_of_transaction: "Data della transazione:"
@@ -1149,7 +1151,9 @@ it:
   menu_5_title: "About"
   menu_5_url: "http://www.openfoodnetwork.org/"
   menu_6_title: "Connetti"
+  menu_6_url: "https://openfoodnetwork.org/au/connect/"
   menu_7_title: "Impara"
+  menu_7_url: "https://openfoodnetwork.org/au/learn/"
   logo: "Logo (640x130)"
   logo_mobile: "Mobile logo (75x26)"
   logo_mobile_svg: "Mobile logo (SVG)"
@@ -2216,6 +2220,9 @@ it:
   validation_msg_tax: "^Categoria d'imposta richiesta"
   validation_msg_tax_category_cant_be_blank: "^Categoria di tassa non può essere vuoto"
   validation_msg_is_associated_with_an_exising_customer: "è associato con un cliente esistente"
+  content_configuration_pricing_table: "(TODO: tabella dei prezzi)"
+  content_configuration_case_studies: "(TODO: Casi studio)"
+  content_configuration_detail: "(TODO: Dettaglio)"
   enterprise_name_error: "è già stato utilizzato. Se questo è il nome della tua azienda e vorresti reclamarne la proprietà, o se vuoi contattare questa azienda, puoi contattare l'attuale referente di questo profilo a %{email}."
   enterprise_owner_error: "^%{email}non può gestire altre aziende (il limite è %{enterprise_limit})."
   enterprise_role_uniqueness_error: "^Questo ruolo è già presente."
@@ -2253,6 +2260,7 @@ it:
   back_to_orders_list: "Indietro alla lista delle gentili richieste"
   no_orders_found: "Nessuna gentile richiesta trovata"
   order_information: "Informazioni Gentile Richiesta"
+  date_completed: "Data di completamento"
   amount: "Quantità"
   state_names:
     ready: Pronto
@@ -2275,6 +2283,7 @@ it:
     choose: Scegli
     resolve_errors: 'Per favore risolvi i seguenti errori:'
     more_items: "+ %{count} ancora"
+    default_card_updated: Carta predefinita aggiornata
     admin:
       enterprise_limit_reached: "Hai raggiunto il limite standard di aziende per account. Scrivi a  %{contact_email} se hai bisogno di aumentarlo."
       modals:
@@ -2368,14 +2377,18 @@ it:
           non_producer_example: es. Botteghe, Food Coop, GAS
         enterprise_status:
           status_title: "%{name} è impostato e pronto a partire!"
+          severity: Gravità
           description: Descrizione
           resolve: Risolvi
       new_tag_rule_dialog:
         select_rule_type: "Seleziona un tipo di regola:"
       orders:
         index:
+          per_page: "%{results} per pagina"
           view_file: Vedi file
           compiling_invoices: Compilazione fatture
+          bulk_invoice_created: Fattura all'ingrosso creata
+          bulk_invoice_failed: Creazione fattura all'ingrosso fallita
           please_wait: Si prega di attendere che il PDF sia pronto prima di chiudere questo modale
       resend_user_email_confirmation:
         resend: "Invia nuovamente"
@@ -2394,6 +2407,7 @@ it:
         'yes': "A richiesta"
     variant_overrides:
       on_demand:
+        use_producer_settings: "Usa le impostazioni dello stock del produttore"
         'yes': "Sì"
         'no': "No"
       inventory_products: "Inventario Prodotti"
@@ -2401,6 +2415,9 @@ it:
       new_products: "Nuovi Prodotti"
       reset_stock_levels: Resetta le quantità disponibili alla quantità predefinita
       changes_to: Cambia in
+      one_override: una si è sovrascritta
+      overrides: sovrascrive
+      remain_unsaved: restano da memorizzare
       no_changes_to_save: Nessuna modifica da salvare.
       no_authorisation: "Non abbiamo l'autorizzazione per salvare queste modifiche. "
       some_trouble: "Abbiamo avuto problemi durante il salvataggio: %{errors}"
@@ -2449,16 +2466,23 @@ it:
     admin:
       orders:
         index:
+          listing_orders: "Listino Ordini"
           new_order: "Nuovo ordine"
+          capture: "Cattura"
           ship: "Spedizione"
           edit: "Modifica"
+          note: "Nota"
+          first: "Primo"
+          last: "Ultimo"
           previous: "Precedente"
           next: "Prossimo"
           loading: "Caricamento"
           no_orders_found: "Nessuna gentile richiesta trovata"
           results_found: "%{number} Risultati trovati."
+          viewing: "Guardando da %{start} a %{end}"
           print_invoices: "Stampa fatture"
         invoice:
+          issued_on: Emesso il
           tax_invoice: FATTURA DELLE TASSE
           code: Codice
           from: Da
@@ -2490,12 +2514,18 @@ it:
           stripe_disabled_msg: I pagamenti Stripe sono stati disabilitati dall'amministratore di sistema.
           request_failed_msg: Spiacenti, qualcosa è andato storto mentre cercavamo di verificare i dettagli dell'account con Stripe...
           account_missing_msg: Non esiste un account Stripe per questa azienda.
+          connect_one: Connetti One
           access_revoked_msg: L'accesso a questo account Stripe è stato revocato, per favore ricollega il tuo account.
           status: Stato
           connected: Connesso
           account_id: Account ID
           business_name: Ragione sociale
           charges_enabled: Cambi Consentiti
+      payments:
+        source_forms:
+          stripe:
+            error_saving_payment: Errore memorizzando il pagamento
+            submitting_payment: Eseguendo il pagamento
       products:
         new:
           title: 'Nuovo prodotto'
@@ -2514,7 +2544,9 @@ it:
             inherits_properties?: Eredita proprietà?
             available_on: Disponibile il
             av_on: "Disp. il"
+            import_date: "Data di importazione"
           products_variant:
+            variant_has_n_overrides: "Questa variante ha %{n} sostituzione/i"
             new_variant: "Nuova variante"
           product_name: Nome Prodotto
         primary_taxon_form:
@@ -2523,14 +2555,19 @@ it:
           group_buy: "Acquisto di gruppo?"
         display_as:
           display_as: Visualizza come
+      reports:
+        table:
+          select_and_search: "Seleziona filtri e clicca su %{option} per accedere al tuo dato"
       users:
         index:
+          listing_users: "Elenco Utenti"
           new_user: "Nuovo utente"
           user: "Utente"
           enterprise_limit: "Limite azienda"
           search: "Cerca"
           email: "Email"
         edit:
+          editing_user: "Modificando Utente"
           back_to_users_list: "Torna all'elenco degli utenti"
           general_settings: "Impostazioni generali"
         form:
@@ -2548,6 +2585,7 @@ it:
         edit:
           legal_settings: "Impostazioni Legali"
           cookies_consent_banner_toggle: "Mostra banner di consenso per i cookie"
+          privacy_policy_url: "Privacy Policy URL"
           enterprises_require_tos: "Le aziende devono accettare i Termini di Servizio"
           cookies_policy_matomo_section: "Visualizza la sezione di Matomo nella pagina della cookie policy"
           cookies_policy_ga_section: "Visualizza la sezione di Google Analytics nella pagina della cookie policy"
@@ -2556,7 +2594,12 @@ it:
       payment:
         stripe:
           choose_one: Scegli uno
+          enter_new_card: Inserire dettagli per una nuova carta
+          used_saved_card: "usare la carta salvata"
+          or_enter_new_card: "Oppure, inserire dettagli di una nuova carta"
+          remember_this_card: Ricordare questa Carta?
     date_picker:
+      format: '%Y-%m-%d'
       js_format: 'aa-mm-gg'
     inventory: Inventario
     orders:
@@ -2567,6 +2610,7 @@ it:
     order_mailer:
       invoice_email:
         hi: "Ciao %{name}"
+        invoice_attached_text: 'Aggiunge una fattura per il tuo recente ordine di '
     order_state:
       address: indirizzo
       adjustments: aggiustamenti
@@ -2659,5 +2703,6 @@ it:
         authorised_shops: Negozi autorizzati
       authorised_shops:
         shop_name: "Nome del negozio"
+        allow_charges?: "Consentire ricarichi"
     localized_number:
       invalid_format: 'Formato non valido: inserire un numero.'

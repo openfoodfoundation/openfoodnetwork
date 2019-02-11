@@ -56,7 +56,7 @@
           %input#edit-products{ type: "button", value: t(:edit), ng: { click: "setView('products')" } }
       .row
         .seven.columns.alpha.omega
-          %table#subscription-line-items
+          %table#subscription-line-items.admin-subscription-review-subscription-line-items
             %colgroup
               %col{:style => "width: 62%;"}/
               %col{:style => "width: 14%;"}/
@@ -71,7 +71,10 @@
                   %span= t(:total)
             %tbody
               %tr.item{ id: "sli_{{$index}}", ng: { repeat: "item in subscription.subscription_line_items | filter:{ _destroy: '!true' }", class: { even: 'even', odd: 'odd' } } }
-                %td.description {{ item.description }}
+                %td
+                  .description {{ item.description }}
+                  .not-in-open-and-upcoming-order-cycles-warning{ ng: { if: '!item.in_open_and_upcoming_order_cycles' } }
+                    = t(".no_open_or_upcoming_order_cycle")
                 %td.price.align-center {{ item.price_estimate | currency }}
                 %td.quantity {{ item.quantity }}
                 %td.total.align-center {{ (item.price_estimate * item.quantity) | currency }}
