@@ -307,7 +307,7 @@ feature "Product Import", js: true do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
-      import_data
+      proceed_to_validation
 
       expect(page).to have_selector '.item-count', text: "3"
       expect(page).to have_no_selector '.invalid-count'
