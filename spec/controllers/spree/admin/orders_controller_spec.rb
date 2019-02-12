@@ -4,29 +4,69 @@ describe Spree::Admin::OrdersController, type: :controller do
   include AuthenticationWorkflow
   include OpenFoodNetwork::EmailHelper
 
-  context "updating an order with line items" do
-    let!(:order) { create(:order) }
-    let(:line_item) { create(:line_item) }
+  context "#update" do
+    let(:params) do
+      { id: order,
+        order: { number: order.number,
+                 distributor_id: order.distributor_id,
+                 order_cycle_id: order.order_cycle_id } }
+    end
+
     before { login_as_admin }
 
-    it "updates distribution charges" do
-      order.line_items << line_item
-      order.save
-      Spree::Order.any_instance.should_receive(:update_distribution_charge!)
-      spree_put :update, {
-        id: order,
-        order: {
-          number: order.number,
-          distributor_id: order.distributor_id,
-          order_cycle_id: order.order_cycle_id,
-          line_items_attributes: [
-            {
-              id: line_item.id,
-              quantity: line_item.quantity
-            }
-          ]
-        }
-      }
+    context "complete order" do
+      let(:order) { create :completed_order_with_totals }
+
+      it "updates distribution charges and redirects to order details page" do
+        Spree::Order.any_instance.should_receive(:update_distribution_charge!)
+
+        spree_put :update, params
+
+        expect(response).to redirect_to spree.edit_admin_order_path(order)
+      end
+    end
+
+    context "incomplete order" do
+      let(:order) { create(:order) }
+      let(:line_item) { create(:line_item) }
+
+      context "without line items" do
+        it "redirects to order details page with flash error" do
+          spree_put :update, params
+
+          expect(flash[:error]).to eq "Line items can't be blank"
+          expect(response).to redirect_to spree.edit_admin_order_path(order)
+        end
+      end
+
+      context "with line items" do
+        before do
+          order.line_items << line_item
+          order.save
+          params[:order][:line_items_attributes] = [{ id: line_item.id, quantity: line_item.quantity }]
+        end
+
+        context "and no errors" do
+          it "updates distribution charges and redirects to customer details page" do
+            Spree::Order.any_instance.should_receive(:update_distribution_charge!)
+
+            spree_put :update, params
+
+            expect(response).to redirect_to spree.admin_order_customer_path(order)
+          end
+        end
+
+        context "with invalid distributor" do
+          it "redirects to order details page with flash error" do
+            params[:order][:distributor_id] = create(:distributor_enterprise).id
+
+            spree_put :update, params
+
+            expect(flash[:error]).to eq "Distributor or order cycle cannot supply the products in your cart"
+            expect(response).to redirect_to spree.edit_admin_order_path(order)
+          end
+        end
+      end
     end
   end
 
