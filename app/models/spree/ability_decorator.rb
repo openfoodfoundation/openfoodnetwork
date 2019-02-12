@@ -184,7 +184,10 @@ class AbilityDecorator
     can [:admin, :index, :guide, :import, :save, :save_data, :validate_data, :reset_absent_products], ProductImport::ProductImporter
 
     # Reports page
-    can [:admin, :index, :customers, :orders_and_distributors, :group_buys, :bulk_coop, :payments, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :packing], :report
+    can [:admin, :index, :customers, :orders_and_distributors, :group_buys, :bulk_coop, :payments,
+         :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :packing],
+        :report
+    add_enterprise_fee_summary_abilities(user)
   end
 
   def add_order_cycle_management_abilities(user)
@@ -257,7 +260,10 @@ class AbilityDecorator
     end
 
     # Reports page
-    can [:admin, :index, :customers, :group_buys, :bulk_coop, :sales_tax, :payments, :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :xero_invoices], :report
+    can [:admin, :index, :customers, :group_buys, :bulk_coop, :sales_tax, :payments,
+         :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory,
+         :order_cycle_management, :xero_invoices], :report
+    add_enterprise_fee_summary_abilities(user)
 
     can [:create], Customer
     can [:admin, :index, :update, :destroy, :show], Customer, enterprise_id: Enterprise.managed_by(user).pluck(:id)
@@ -279,6 +285,16 @@ class AbilityDecorator
     can [:destroy], EnterpriseRelationship do |enterprise_relationship|
       user.enterprises.include? enterprise_relationship.parent
     end
+  end
+
+  def add_enterprise_fee_summary_abilities(user)
+    feature_enabled = FeatureFlags.new(user).enterprise_fee_summary_enabled?
+    return unless feature_enabled
+
+    # Reveal the report link in spree/admin/reports#index
+    can [:enterprise_fee_summary], :report
+    # Allow direct access to the report resource
+    can [:admin, :new, :create], :enterprise_fee_summary
   end
 end
 

@@ -31,7 +31,6 @@ Spree::Core::Engine.routes.prepend do
 
   resources :credit_cards
 
-
   namespace :api, :defaults => { :format => 'json' } do
     resources :users do
       get :authorise_api, on: :collection
