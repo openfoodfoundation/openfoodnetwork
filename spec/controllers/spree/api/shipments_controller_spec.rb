@@ -36,7 +36,7 @@ describe Spree::Api::ShipmentsController, type: :controller do
 
         spree_post :create, params
 
-        validate_response
+        expect_valid_response
         expect(json_response["inventory_units"].size).to eq 2
         expect(order.reload.line_items.first.variant.price).to eq(variant.price)
       end
@@ -47,7 +47,7 @@ describe Spree::Api::ShipmentsController, type: :controller do
         spree_post :create, params
 
         expect(json_response["id"]). to eq(original_shipment_id)
-        validate_response
+        expect_valid_response
         expect(json_response["inventory_units"].size).to eq 2
         expect(order.reload.line_items.first.variant.price).to eq(variant.price)
       end
@@ -59,7 +59,7 @@ describe Spree::Api::ShipmentsController, type: :controller do
 
         spree_post :create, params
 
-        validate_response
+        expect_valid_response
         expect(json_response["inventory_units"].size).to eq 2
         expect(order.reload.line_items.first.price).to eq(variant_override.price)
       end
@@ -73,8 +73,8 @@ describe Spree::Api::ShipmentsController, type: :controller do
       it 'adds a variant to the shipment' do
         spree_put :add, params
 
-        validate_response
-        expect(inventory_units_for_variant(json_response["inventory_units"], variant).size).to eq 2
+        expect_valid_response
+        expect(inventory_units_for(json_response["inventory_units"], variant).size).to eq 2
       end
 
       it 'removes a variant from the shipment' do
@@ -83,8 +83,8 @@ describe Spree::Api::ShipmentsController, type: :controller do
 
         spree_put :remove, params
 
-        validate_response
-        expect(inventory_units_for_variant(json_response["inventory_units"], variant).size).to eq 0
+        expect_valid_response
+        expect(inventory_units_for(json_response["inventory_units"], variant).size).to eq 0
       end
 
       it 'adds a variant override to the shipment' do
@@ -94,17 +94,17 @@ describe Spree::Api::ShipmentsController, type: :controller do
 
         spree_put :add, params
 
-        validate_response
-        expect(inventory_units_for_variant(json_response["inventory_units"], variant).size).to eq 2
+        expect_valid_response
+        expect(inventory_units_for(json_response["inventory_units"], variant).size).to eq 2
         expect(order.reload.line_items.last.price).to eq(variant_override.price)
       end
 
-      def inventory_units_for_variant(inventory_units, variant)
+      def inventory_units_for(inventory_units, variant)
         inventory_units.select { |unit| unit['variant_id'] == variant.id }
       end
     end
 
-    def validate_response
+    def expect_valid_response
       expect(response.status).to eq 200
       attributes.all?{ |attr| json_response.key? attr.to_s }
       expect(json_response["shipping_method"]["name"]).to eq order.shipping_method.name
