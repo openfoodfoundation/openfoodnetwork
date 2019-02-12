@@ -224,7 +224,7 @@ describe Spree::OrdersController, type: :controller do
           } }
         }
 
-        # Before issuing the update the secod adjustment, which is associated
+        # Before issuing the update, the second adjustment, which is associated
         # to the shipment, is already open thus restoring its state leaves it
         # also open.
         #
