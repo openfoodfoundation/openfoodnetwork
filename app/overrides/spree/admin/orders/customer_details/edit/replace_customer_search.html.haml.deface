@@ -1,4 +1,4 @@
-/ replace "code[erb-loud]:contains('hidden_field_tag :customer_search')"
+/ replace "erb[loud]:contains('hidden_field_tag :customer_search')"
 
 - content_for :app_wrapper_attrs do
   = 'ng-app=admin.orders'

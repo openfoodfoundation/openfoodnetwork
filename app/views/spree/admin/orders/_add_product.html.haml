@@ -1,17 +1,11 @@
-= render partial: "spree/admin/variants/autocomplete", formats: :js
-#add-line-item
-  %fieldset
-    %legend{align: "center"}
-      = t(:add_product)
-    .field.eight.columns.alpha
-      = label_tag :add_product_name, t(:name_or_sku)
-      = hidden_field_tag :add_variant_id, "", class: "variant_autocomplete fullwidth"
-    .field.two.columns
-      = label_tag :add_quantity, t(:qty)
-      = number_field_tag :add_quantity,  1, min: 0
-    .actions.two.columns.omega
-      = link_to_with_icon 'icon-plus', t(:add), admin_order_line_items_url(@order),
-        method: :post,
-        id: 'add_line_item_to_order',
-        class: 'button fullwidth',
-        'data-update' => 'order-form-wrapper'
+= render :partial => "spree/admin/variants/autocomplete", :formats => :js
+
+#add-line-item{"data-hook" => ""}
+  %fieldset.no-border-bottom
+    %legend{:align => "center"}= Spree.t(:add_product)
+
+    .field.twelve.columns.alpha{"data-hook" => "add_product_name"}
+      = label_tag :add_variant_id, Spree.t(:name_or_sku)
+      = hidden_field_tag :add_variant_id, "", :class => "variant_autocomplete fullwidth"
+      
+  #stock_details
