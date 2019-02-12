@@ -2,6 +2,7 @@ module Spree
   module Admin
     class InvoicesController < Spree::Admin::BaseController
       respond_to :json
+      authorize_resource class: false
 
       def create
         invoice_service = BulkInvoiceService.new

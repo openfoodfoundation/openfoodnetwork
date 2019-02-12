@@ -14,6 +14,13 @@ class FeatureFlags
     superadmin?
   end
 
+  # Checks whether the "Enterprise Fee Summary" is enabled for the specified user
+  #
+  # @return [Boolean]
+  def enterprise_fee_summary_enabled?
+    superadmin?
+  end
+
   private
 
   attr_reader :user

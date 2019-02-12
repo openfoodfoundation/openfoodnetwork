@@ -1,4 +1,4 @@
-%table#subscription-line-items
+%table#subscription-line-items.admin-subscription-form-subscription-line-items
   %colgroup
     %col{:style => "width: 49%;"}/
     %col{:style => "width: 14%;"}/
@@ -15,7 +15,10 @@
       %th.orders-actions.actions
   %tbody
     %tr.item{ id: "sli_{{$index}}", ng: { repeat: "item in subscription.subscription_line_items | filter:{ _destroy: '!true' }", class: { even: 'even', odd: 'odd' } } }
-      %td.description {{ item.description }}
+      %td
+        .description {{ item.description }}
+        .not-in-open-and-upcoming-order-cycles-warning{ ng: { if: '!item.in_open_and_upcoming_order_cycles' } }
+          = t(".not_in_open_and_upcoming_order_cycles_warning")
       %td.price.align-center {{ item.price_estimate | currency }}
       %td.quantity
         %input{ name: 'quantity', type: 'number', min: 0, ng: { model: 'item.quantity' } }
