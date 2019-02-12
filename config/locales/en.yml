@@ -2170,7 +2170,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   spree_admin_enterprises_none_text: "You don't have any enterprises yet"
   spree_admin_enterprises_tabs_hubs: "HUBS"
   spree_admin_enterprises_producers_manage_products: "MANAGE PRODUCTS"
-  spree_admin_enterprises_any_active_products_text: "You don't have any active products."
   spree_admin_enterprises_create_new_product: "CREATE A NEW PRODUCT"
   spree_admin_single_enterprise_alert_mail_confirmation: "Please confirm the email address for"
   spree_admin_single_enterprise_alert_mail_sent: "We've sent an email to"
@@ -2775,6 +2774,11 @@ See the %{link} to find out more about %{sitename}'s features and to start using
             distributor: "Distributor:"
             order_cycle: "Order cycle:"
       overview:
+        products:
+          active_products:
+            zero: "You don't have any active products."
+            one: "You have one active product"
+            other: "You have %{count} active products"
         order_cycles:
           order_cycles: "Order Cycles"
           order_cycles_tip: "Order cycles determine when and where your products are available to customers."
