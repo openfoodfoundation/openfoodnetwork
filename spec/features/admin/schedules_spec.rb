@@ -108,7 +108,9 @@ feature 'Schedules', js: true do
         end
 
         within "#schedule-dialog" do
-          click_button "Delete Schedule"
+          accept_alert do
+            click_button "Delete Schedule"
+          end
         end
 
         save_bar = find("#save-bar")

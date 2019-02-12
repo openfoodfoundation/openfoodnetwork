@@ -103,14 +103,16 @@ feature "As a consumer I want to shop with a distributor", js: true do
             within("li.cart") { page.should have_content with_currency(1020.99) }
 
             # -- Changing order cycle
-            select "frogs", from: "order_cycle_id"
+            accept_alert do
+              select "frogs", from: "order_cycle_id"
+            end
             page.should have_content with_currency(19.99)
 
             # -- Cart should be cleared
-            # ng-animate means that the old product row is likely to be present, so we explicitly
-            # fill in the quantity in the incoming row
+            # ng-animate means that the old product row is likely to be present, so we ensure
+            # that we are not filling in the quantity on the outgoing row
             page.should_not have_selector "tr.product-cart"
-            within('product.ng-enter') { fill_in "variants[#{variant.id}]", with: 1 }
+            within('product:not(.ng-leave)') { fill_in "variants[#{variant.id}]", with: 1 }
             within("li.cart") { page.should have_content with_currency(19.99) }
           end
 

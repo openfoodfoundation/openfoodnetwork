@@ -7,6 +7,7 @@ es:
         shipment_state: Estado del envío
         completed_at: Completado en
         number: Número
+        state: Provincia
         email: E-mail del consumidor
       spree/payment:
         amount: Cantidad
@@ -24,6 +25,11 @@ es:
           attributes:
             orders_close_at:
               after_orders_open_at: debe ser después de la fecha de apertura
+        variant_override:
+          count_on_hand:
+            using_producer_stock_settings_but_count_on_hand_set: "debe estar en blanco porque estás usando la configuración de estoc de la productora"
+            on_demand_but_count_on_hand_set: "debe estar en blanco si está bajo demanda"
+            limited_stock_but_no_count_on_hand: "se debe especificar porque se ha definido estoc limitado"
   activemodel:
     errors:
       models:
@@ -195,6 +201,7 @@ es:
   admin_and_handling: Administración y Manejo
   profile: Perfil
   supplier_only: Sólo Proveedor
+  has_shopfront: Tiene tienda
   weight: Peso
   volume: Volumen
   items: Elementos
@@ -216,6 +223,10 @@ es:
   quantity: Cantidad
   pick_up: Recogida
   copy: Copia
+  password_confirmation: Confirmación de contraseña
+  reset_password_token: token de restablecimiento de contraseña
+  expired: ha expirado, por favor solicite una nueva
+  back_to_payments_list: "Volver a la lista de pagos"
   actions:
     create_and_add_another: "Crear y agregar otro"
   admin:
@@ -464,6 +475,7 @@ es:
         products_no_permission: no tienes permiso para administrar productos para esta organización
         inventory_no_permission: no tienes permiso para crear inventario para esta productora
         none_saved: No se guardó ningún producto con éxito
+        line_number: "Línea %{number}:"
       index:
         select_file: Selecciona una hoja de cálculo para subir
         spreadsheet: Hoja de cálculo
@@ -497,6 +509,7 @@ es:
         no_permission: no tienes permiso para administrar esta organización
         not_found: no se pudo encontrar la organización en la base de datos
         no_name: Sin nombre
+        blank_enterprise: Algunos productos no tienen una organización definida.
         reset_absent?: Restablecer productos ausentes
         reset_absent_tip: Establezca el stock en cero para todos los productos existentes que no estén presentes en el archivo.
         overwrite_all: Sobrescribir todo
@@ -567,6 +580,7 @@ es:
         tip: "Usa esta página para alterar la cantidad del producto en varios pedidos a la vez. Los productos pueden ser eliminados de los pedidos si es necesario. "
         shared: "¿Recurso compartido?"
         order_no: "Pedido Nº"
+        order_date: "Completado en"
         max: "Max"
         product_unit: "Producto: Unidad"
         weight_volume: "Peso/Volumen"
@@ -709,6 +723,9 @@ es:
           close_date: Fecha de Finalización
         social:
           twitter_placeholder: 'ej: the_prof'
+          instagram_placeholder: p.ej. @mi_huerta
+          facebook_placeholder: eg. www.facebook.com/NombreDePáginaAquí
+          linkedin_placeholder: p.ej. www.linkedin.com/in/YourNameHere
         stripe_connect:
           connect_with_stripe: "Conectar con Stripe"
           stripe_connect_intro: "Para aceptar pagos con tarjeta de crédito, necesitarás conectar tu cuenta Stripe con Open Food Network. Usa el botón a la derecha para comenzar."
@@ -1149,7 +1166,9 @@ es:
   menu_5_title: "Acerca de"
   menu_5_url: "http://katuma.org/"
   menu_6_title: "Conectar"
+  menu_6_url: " "
   menu_7_title: "Aprender"
+  menu_7_url: " "
   logo: "Logo (640x130)"
   logo_mobile: "Logo para móvil (75x26)"
   logo_mobile_svg: "Logo para móvil (SVG)"
@@ -1697,6 +1716,11 @@ es:
   update_and_recalculate_fees: "Actualizar y recalcular tarifas"
   registration:
     steps:
+      images:
+        continue: "Continuar"
+        back: "Atrás"
+        headline: "¡Ya casi lo tenemos!"
+        description: "¡Sube algunas fotografías así el perfil se verá mucho mejor! :)"
       type:
         headline: "Último paso para añadir %{enterprise}!"
         question: "¿Eres una productora?"
@@ -1831,8 +1855,6 @@ es:
   registration_type_error: "Escoja una. ¿Es una productora?"
   registration_type_producer_help: "Las productoras hacen cosas deliciosas para comer y/o beber. Eres una productora si lo cultivas, lo haces crecer, lo preparas, lo horneas, lo fermentas, lo ordeñas, ..."
   registration_type_no_producer_help: "Si no eres una productora, probablemente conozcas a alguien que venda o distribuya comida. También podrías convertirte en un grupo de consumo u otro tipo de organización."
-  registration_images_headline: "¡Ya casi lo tenemos!"
-  registration_images_description: "¡Sube algunas fotografías así el perfil se verá mucho mejor! :)"
   registration_detail_headline: "Empecemos..."
   registration_detail_enterprise: "¡Bien! Primero necesitamos saber un poco más sobre tu organización:"
   registration_detail_producer: "¡Bien! Primero necesitamos saber un poco más sobre tu productora:"
@@ -2229,6 +2251,7 @@ es:
   validation_msg_relationship_already_established: "^Esta relación ya existe."
   validation_msg_at_least_one_hub: "^Al menos se debe seleccionar un grupo de consumo"
   validation_msg_product_category_cant_be_blank: "^La Categoría del Producto no puede estar en vacía"
+  validation_msg_tax: "^ Se requiere categoría de impuestos"
   validation_msg_tax_category_cant_be_blank: "^La Categoría del Impuesto no puede estar vacía"
   validation_msg_is_associated_with_an_exising_customer: "Está asociado con un consumidor existente"
   content_configuration_pricing_table: "(TODO: tabla de precios)"
@@ -2418,6 +2441,9 @@ es:
           resolve: Resolver
       new_tag_rule_dialog:
         select_rule_type: "Selecciona un tipo de regla:"
+      orders:
+        index:
+          per_page: "%{results} por página"
       resend_user_email_confirmation:
         resend: "Reenviar"
         sending: "Reenviar..."
@@ -2430,7 +2456,14 @@ es:
           de tu carrito se han reducido. Aquí está lo que ha cambiado:
       now_out_of_stock: está ahora fuera de stock.
       only_n_remainging: "Solo quedan %{num} ."
+    variants:
+      on_demand:
+        'yes': "Bajo demanda"
     variant_overrides:
+      on_demand:
+        use_producer_settings: "Utilizar la configuración de estoc de la productora."
+        'yes': "Sí"
+        'no': "No"
       inventory_products: "Productos del Inventario"
       hidden_products: "Productos ocultos"
       new_products: "Nuevos productos"
@@ -2511,6 +2544,8 @@ es:
           next: "Siguiente"
           loading: "Cargando"
           no_orders_found: "No se encontraron pedidos"
+          results_found: "%{number} Resultados encontrados."
+          viewing: "Viendo de %{start}a %{end}."
         invoice:
           issued_on: Emitido el
           tax_invoice: FACTURA DE IMPUESTOS
@@ -2532,6 +2567,12 @@ es:
             other: "Tienes %{count} ciclos de pedido activos."
           manage_order_cycles: "GESTIONA LOS CICLOS DE PEDIDO"
       payment_methods:
+        new:
+          new_payment_method: "Nuevo método de pago"
+          back_to_payment_methods_list: "Volver a la lista de métodos de pago"
+        edit:
+          editing_payment_method: "Edición del método de pago"
+          back_to_payment_methods_list: "Volver a la lista de métodos de pago"
         stripe_connect:
           enterprise_select_placeholder: Escoge...
           loading_account_information_msg: Cargando la información de la cuenta de Stripe, espere un momento ...
@@ -2583,8 +2624,6 @@ es:
         display_as:
           display_as: Mostrar como
       reports:
-        table:
-          select_and_search: "Selecciona filtros y haz clic en BUSCAR para acceder a tus datos."
         bulk_coop:
           bulk_coop_supplier_report: 'Bulk Co-op - Totales por Proveedor'
           bulk_coop_allocation: 'Bulk Co-op - Asignación'
@@ -2592,14 +2631,21 @@ es:
           bulk_coop_customer_payments: 'Bulk Co-op - Pagos de las Consumidoras'
       users:
         index:
+          listing_users: "Listado de Usuarias"
+          new_user: "Nueva usuaria"
           user: "Usuaria"
           enterprise_limit: "Límite de la Organización"
           search: "Buscar"
           email: "Email"
+        edit:
+          editing_user: "Editando usuarias"
+          back_to_users_list: "Volver a la lista de usuarias"
+          general_settings: "Configuración general"
         form:
           email: "Email"
           roles: "Roles"
           enterprise_limit: "Límite de la Organización"
+          confirm_password: "Confirmar contraseña"
           password: "Contraseña"
         email_confirmation:
           confirmation_pending: "La confirmación por correo electrónico está pendiente. Hemos enviado un correo electrónico de confirmación a %{address}."

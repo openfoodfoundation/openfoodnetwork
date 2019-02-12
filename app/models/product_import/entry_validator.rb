@@ -54,7 +54,11 @@ module ProductImport
     end
 
     def mark_as_new_variant(entry, product_id)
-      new_variant = Spree::Variant.new(entry.attributes.except('id', 'product_id'))
+      new_variant = Spree::Variant.new(entry.attributes.except('id', 'product_id', 'on_hand', 'on_demand'))
+      new_variant.save
+      new_variant.on_demand = entry.attributes['on_demand'] if entry.attributes['on_demand'].present?
+      new_variant.on_hand = entry.attributes['on_hand'] if entry.attributes['on_hand'].present?
+
       new_variant.product_id = product_id
       check_on_hand_nil(entry, new_variant)
 
@@ -283,7 +287,20 @@ module ProductImport
     end
 
     def attributes_match?(attribute, existing_product, entry)
-      existing_product.public_send(attribute) == entry.public_send(attribute)
+      existing_product_value = existing_product.public_send(attribute)
+      entry_value = entry.public_send(attribute)
+      existing_product_value == convert_to_trusted_type(entry_value, existing_product_value)
+    end
+
+    def convert_to_trusted_type(untrusted_attribute, trusted_attribute)
+      case trusted_attribute
+      when Integer
+        untrusted_attribute.to_i
+      when Float
+        untrusted_attribute.to_f
+      else
+        untrusted_attribute.to_s
+      end
     end
 
     def attributes_blank?(attribute, existing_product, entry)

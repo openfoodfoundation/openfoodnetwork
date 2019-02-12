@@ -23,6 +23,7 @@ angular.module("admin.utils").directive "variantAutocomplete", ($timeout) ->
               distributor_id: scope.distributor_id
               order_cycle_id: scope.order_cycle_id
             results: (data, page) ->
+              window.variants = data # this is how spree auto complete JS code picks up variants
               results: data
           formatResult: (variant) ->
             if variant["images"][0] != undefined && variant["images"][0].image != undefined

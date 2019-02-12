@@ -30,13 +30,14 @@
         &nbsp;
       %td{ :align => "right" }
         %strong= "#{t('.to')}: #{@order.ship_address.full_name}"
-        - if @order.customer.code.present?
+        - if @order.andand.customer.andand.code.present?
           %br
           = "#{t('.code')}: #{@order.customer.code}"
         %br
         = @order.ship_address.full_address
         %br
-        = "#{@order.customer.email},"
+        - if @order.andand.customer.andand.email.present?
+          = "#{@order.customer.email},"
         = "#{@order.bill_address.phone}"
 
 = render 'spree/admin/orders/invoice_table'

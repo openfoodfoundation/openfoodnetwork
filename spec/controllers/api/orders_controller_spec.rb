@@ -11,7 +11,9 @@ module Api
       let!(:distributor2) { create(:distributor_enterprise) }
       let!(:supplier) { create(:supplier_enterprise) }
       let!(:coordinator) { create(:distributor_enterprise) }
+      let!(:coordinator2) { create(:distributor_enterprise) }
       let!(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator) }
+      let!(:order_cycle2) { create(:simple_order_cycle, coordinator: coordinator2) }
       let!(:order1) do
         create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now,
                        distributor: distributor, billing_address: create(:address) )
@@ -24,7 +26,9 @@ module Api
         create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now,
                        distributor: distributor, billing_address: create(:address) )
       end
-      let!(:order4) { create(:completed_order_with_fees, distributor: distributor) }
+      let!(:order4) do
+        create(:completed_order_with_fees, order_cycle: order_cycle2, distributor: distributor2)
+      end
       let!(:order5) { create(:order, state: 'cart', completed_at: nil) }
       let!(:line_item1) do
         create(:line_item_with_shipment, order: order1,
@@ -142,7 +146,7 @@ module Api
           get :index, per_page: 15, page: 1
 
           pagination_data = {
-            'results' => 3,
+            'results' => 2,
             'pages' => 1,
             'page' => 1,
             'per_page' => 15

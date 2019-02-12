@@ -8,8 +8,12 @@ require 'active_support/concern'
 # for details.
 #
 # Methods in this module may become deprecated.
-module OrderShippingMethod
+module OrderShipment
   extend ActiveSupport::Concern
+
+  def shipment
+    shipments.first
+  end
 
   # Returns the shipping method of the first and only shipment in the order
   #

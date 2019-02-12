@@ -30,6 +30,7 @@ en:
         shipment_state: Shipment State
         completed_at: Completed At
         number: Number
+        state: State
         email: Customer E-Mail
       spree/payment:
         amount: Amount
@@ -531,6 +532,8 @@ en:
         inventory_no_permission: you do not have permission to create inventory for this producer
         none_saved: did not save any products successfully
         line_number: "Line %{number}:"
+        encoding_error: "Please check the language setting of your source file and ensure it is saved with UTF-8 encoding"
+        unexpected_error: "Product Import encountered an unexpected error whilst opening the file: %{error_message}"
       index:
         select_file: Select a spreadsheet to upload
         spreadsheet: Spreadsheet
@@ -1715,6 +1718,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   products_available: Available?
   products_producer: "Producer"
   products_price: "Price"
+  name_or_sku: "NAME OR SKU"
 
   register_title: Register
 
@@ -2193,6 +2197,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   order_cycles: "Order Cycles"
   enterprise_relationships: "Enterprise permissions"
   remove_tax: "Remove tax"
+  first_name_begins_with: "First name begins with"
+  last_name_begins_with: "Last name begins with"
 
   enterprise_tos_link: "Enterprise Terms of Service link"
   enterprise_tos_message: "We want to work with people that share our aims and values. As such we ask new enterprises to agree to our "
@@ -2596,6 +2602,11 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       orders:
         index:
           per_page: "%{results} per page"
+          view_file: View File
+          compiling_invoices: Compiling Invoices
+          bulk_invoice_created: Bulk Invoice created
+          bulk_invoice_failed: Failed to create Bulk Invoice
+          please_wait: Please wait until the PDF is ready before closing this modal.
       resend_user_email_confirmation:
         resend: "Resend"
         sending: "Resend..."
@@ -2728,6 +2739,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           no_orders_found: "No Orders Found"
           results_found: "%{number} Results found."
           viewing: "Viewing %{start} to %{end}."
+          print_invoices: "Print Invoices"
         invoice:
           issued_on: Issued on
           tax_invoice: TAX INVOICE
@@ -2807,7 +2819,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           display_as: Display As
       reports:
         table:
-          select_and_search: "Select filters and click on SEARCH to access your data."
+          select_and_search: "Select filters and click on %{option} to access your data."
         bulk_coop:
           bulk_coop_supplier_report: 'Bulk Co-op - Totals by Supplier'
           bulk_coop_allocation: 'Bulk Co-op - Allocation'

@@ -39,12 +39,10 @@ feature "shopping with variant overrides defined", js: true, retry: 3 do
   end
 
   describe "viewing products" do
-    it "shows the overridden price" do
-      page.should_not have_price with_currency(12.22) # product1_variant1.price ($11.11) + 10% fee
+    it "shows price and stock from the override" do
       page.should have_price with_currency(61.11) # product1_variant1_override.price ($55.55) + 10% fee
-    end
+      page.should_not have_price with_currency(12.22) # product1_variant1.price ($11.11) + 10% fee
 
-    it "looks up stock from the override" do
       # Product should appear but one of the variants is out of stock
       page.should_not have_content product1_variant2.options_text
 
@@ -150,7 +148,7 @@ feature "shopping with variant overrides defined", js: true, retry: 3 do
     end
 
     it "does not show out of stock flags on order confirmation page" do
-      product1_variant3.update_attribute :count_on_hand, 0
+      product1_variant3.count_on_hand = 0
       fill_in "variants[#{product1_variant3.id}]", with: "2"
       click_checkout
 

@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'open_food_network/scope_variant_to_hub'
 
 module OpenFoodNetwork
@@ -103,6 +104,58 @@ module OpenFoodNetwork
           it "returns the variant's on_demand" do
             scoper.scope v
             expect(v.on_demand).to be true
+          end
+        end
+      end
+
+      # in_stock? is indirectly overridden through can_supply?
+      #   can_supply? is indirectly overridden by on_demand and total_on_hand
+      #   these tests validate this chain is working correctly
+      describe "overriding in_stock?" do
+        before { v.on_demand = false }
+
+        context "when an override exists" do
+          before { vo }
+        
+          context "when variant in stock" do
+            it "returns true if VO in stock" do
+              scoper.scope v
+              expect(v.in_stock?).to eq(true)
+            end
+
+            it "returns false if VO out of stock" do
+              vo.update_attribute :count_on_hand, 0
+              scoper.scope v
+              expect(v.in_stock?).to eq(false)
+            end            
+          end
+
+          context "when variant out of stock" do
+            before { v.count_on_hand = 0 }
+            
+            it "returns true if VO in stock" do
+              scoper.scope v
+              expect(v.in_stock?).to eq(true)
+            end
+
+            it "returns false if VO out of stock" do
+              vo.update_attribute :count_on_hand, 0
+              scoper.scope v
+              expect(v.in_stock?).to eq(false)
+            end            
+          end
+        end
+
+        context "when there's no override" do
+          it "returns true if variant in stock" do
+            scoper.scope v
+            expect(v.in_stock?).to eq(true)
+          end
+
+          it "returns false if variant out of stock" do
+            v.count_on_hand = 0
+            scoper.scope v
+            expect(v.in_stock?).to eq(false)
           end
         end
       end

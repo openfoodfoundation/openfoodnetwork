@@ -7,6 +7,7 @@ de_DE:
         shipment_state: Lieferstatus
         completed_at: Erfolgt am
         number: Nummer
+        state: Status
         email: E-Mail des Kunden
       spree/payment:
         amount: Betrag
@@ -1699,6 +1700,9 @@ de_DE:
   update_and_recalculate_fees: "Aktualisieren und Gebühren neu berechnen"
   registration:
     steps:
+      images:
+        back: "Zurück"
+        headline: "Dankeschön!"
       type:
         headline: "Letzter Schritt zum Hinzufügen von %{enterprise}!"
         question: "Sind Sie ein Produzent?"
@@ -1833,8 +1837,6 @@ de_DE:
   registration_type_error: "Bitte wählen Sie: Sind Sie ein Produzent?"
   registration_type_producer_help: "Hersteller machen leckere Dinge zu essen und / oder zu trinken. Du bist ein Produzent, wenn du ihn anbaust, erziehst ihn, braue ihn, backe ihn, gähre ihn, melke ihn oder forme ihn."
   registration_type_no_producer_help: "Wenn Sie kein Produzent sind, sind Sie wahrscheinlich jemand, der Lebensmittel verkauft und verteilt. Sie könnten ein Hub, Coop, Einkaufsgruppe, Einzelhändler, Großhändler oder andere sein."
-  registration_images_headline: "Dankeschön!"
-  registration_images_description: "Lass uns ein paar schöne Bilder hochladen, damit dein Profil gut aussieht! :)"
   registration_detail_headline: "Lass uns anfangen"
   registration_detail_enterprise: "Woot! Zuerst müssen wir ein wenig über Ihr Unternehmen wissen:"
   registration_detail_producer: "Woot! Zuerst müssen wir ein wenig über Ihre Farm wissen:"
@@ -2431,7 +2433,13 @@ de_DE:
           in Ihrem Warenkorb verringert. Das Folgende hat sich geändert:
       now_out_of_stock: ist jetzt ausverkauft.
       only_n_remainging: "Jetzt hat nur noch %{num} übrig."
+    variants:
+      on_demand:
+        'yes': "Auf Anfrage"
     variant_overrides:
+      on_demand:
+        'yes': "Ja"
+        'no': "Nein"
       inventory_products: "Katalogprodukte"
       hidden_products: "Ausgeblendete Produkte"
       new_products: "Neue Produkte"
@@ -2584,8 +2592,6 @@ de_DE:
         display_as:
           display_as: Darstellen als
       reports:
-        table:
-          select_and_search: "Wählen Sie Filter und klicken Sie auf SEARCH, um auf Ihre Daten zuzugreifen."
         bulk_coop:
           bulk_coop_supplier_report: 'Massen-Kooperative - Summen nach Anbieter'
           bulk_coop_allocation: 'Massenkoop - Zuteilung'

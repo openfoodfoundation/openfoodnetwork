@@ -4,6 +4,7 @@ feature %q{
   As an Administrator
   I want to be able to manage products in bulk
 } , js: true do
+  include AdminHelper
   include AuthenticationWorkflow
   include WebHelper
 
@@ -46,9 +47,7 @@ feature %q{
       p2 = FactoryBot.create(:product, available_on: Date.current-1)
 
       visit spree.admin_products_path
-      find("div#columns-dropdown", :text => "COLUMNS").click
-      find("div#columns-dropdown div.menu div.menu_item", text: "Available On").click
-      find("div#columns-dropdown", :text => "COLUMNS").click
+      toggle_columns "Available On"
 
       expect(page).to have_field "available_on", with: p1.available_on.strftime("%F %T")
       expect(page).to have_field "available_on", with: p2.available_on.strftime("%F %T")
@@ -74,7 +73,7 @@ feature %q{
 
       visit spree.admin_products_path
       expect(page).to have_selector "a.view-variants", count: 1
-      find("a.view-variants").trigger('click')
+      find("a.view-variants").click
 
       expect(page).to have_no_selector "span[name='on_hand']", text: "On demand", visible: true
       expect(page).to     have_field "variant_on_hand", with: "4"
@@ -111,7 +110,7 @@ feature %q{
 
       visit spree.admin_products_path
       expect(page).to have_selector "a.view-variants", count: 2
-      all("a.view-variants").each { |e| e.trigger('click') }
+      all("a.view-variants").each { |e| e.click }
 
       expect(page).to have_field "product_name", with: v1.product.name
       expect(page).to have_field "product_name", with: v2.product.name
@@ -132,7 +131,7 @@ feature %q{
 
       visit spree.admin_products_path
       expect(page).to have_selector "a.view-variants", count: 1
-      all("a.view-variants").each { |e| e.trigger('click') }
+      all("a.view-variants").each { |e| e.click }
 
       expect(page).to have_selector "span[name='on_hand']", text: p1.variants.sum{ |v| v.on_hand }.to_s
       expect(page).to have_field "variant_on_hand", with: "15"
@@ -147,7 +146,7 @@ feature %q{
 
       visit spree.admin_products_path
       expect(page).to have_selector "a.view-variants", count: 1
-      all("a.view-variants").each { |e| e.trigger('click') }
+      all("a.view-variants").each { |e| e.click }
 
       expect(page).to have_field "price", with: "2.0", visible: false
       expect(page).to have_field "variant_price", with: "12.75"
@@ -161,7 +160,7 @@ feature %q{
 
       visit spree.admin_products_path
       expect(page).to have_selector "a.view-variants", count: 1
-      all("a.view-variants").each { |e| e.trigger('click') }
+      all("a.view-variants").each { |e| e.click }
 
       expect(page).to have_field "variant_unit_value_with_description", with: "1.2 (small bag)"
       expect(page).to have_field "variant_unit_value_with_description", with: "4.8 (large bag)"
@@ -207,18 +206,20 @@ feature %q{
     visit spree.admin_products_path
 
     # I should see an add variant button
-    page.find('a.view-variants').trigger('click')
+    page.find('a.view-variants').click
 
     # When I add three variants
-    page.find('a.add-variant', visible: true).trigger('click')
-    page.find('a.add-variant', visible: true).trigger('click')
+    page.find('a.add-variant', visible: true).click
+    page.find('a.add-variant', visible: true).click
 
     # They should be added, and should not see edit buttons for new variants
     expect(page).to have_selector "tr.variant", count: 3
     expect(page).to have_selector "a.edit-variant", count: 1
 
     # When I remove two, they should be removed
-    page.all('a.delete-variant', visible: true).first.click
+    accept_alert do
+      page.all('a.delete-variant', visible: true).first.click
+    end
     expect(page).to have_selector "tr.variant", count: 2
     page.all('a.delete-variant', visible: true).first.click
     expect(page).to have_selector "tr.variant", count: 1
@@ -255,12 +256,7 @@ feature %q{
     quick_login_as_admin
     visit spree.admin_products_path
 
-    find("div#columns-dropdown", :text => "COLUMNS").click
-    find("div#columns-dropdown div.menu div.menu_item", text: "Available On").click
-    find("div#columns-dropdown div.menu div.menu_item", text: /^Category?/).click
-    find("div#columns-dropdown div.menu div.menu_item", text: "Inherits Properties?").click
-    find("div#columns-dropdown div.menu div.menu_item", text: "SKU").click
-    find("div#columns-dropdown", :text => "COLUMNS").click
+    toggle_columns "Available On", /^Category?/, "Inherits Properties?", "SKU"
 
     within "tr#p_#{p.id}" do
       expect(page).to have_field "product_name", with: p.name
@@ -327,11 +323,9 @@ feature %q{
     quick_login_as_admin
     visit spree.admin_products_path
     expect(page).to have_selector "a.view-variants", count: 1
-    find("a.view-variants").trigger('click')
+    find("a.view-variants").click
 
-    find("div#columns-dropdown", :text => "COLUMNS").click
-    find("div#columns-dropdown div.menu div.menu_item", text: "SKU").click
-    find("div#columns-dropdown", :text => "COLUMNS").click
+    toggle_columns "SKU"
 
     expect(page).to have_field "variant_sku", with: "VARIANTSKU"
     expect(page).to have_field "variant_price", with: "3.0"
@@ -365,7 +359,7 @@ feature %q{
     quick_login_as_admin
     visit spree.admin_products_path
     expect(page).to have_selector "a.view-variants", count: 1
-    find("a.view-variants").trigger('click')
+    find("a.view-variants").click
 
     expect(page).to have_field "variant_price", with: "3.0"
 
@@ -477,7 +471,9 @@ feature %q{
         expect(page).to have_selector "a.delete-product", :count => 2
 
         within "tr#p_#{p1.id}" do
-          find("a.delete-product").click
+          accept_alert do
+            find("a.delete-product").click
+          end
         end
 
         expect(page).to have_selector "a.delete-product", :count => 1
@@ -489,19 +485,21 @@ feature %q{
 
       it "shows a delete button for variants, which deletes the appropriate variant when clicked" do
         expect(page).to have_selector "a.view-variants"
-        all("a.view-variants").each { |e| e.trigger('click') }
+        all("a.view-variants").each { |e| e.click }
 
         expect(page).to have_selector "a.delete-variant", :count => 3
 
         within "tr#v_#{v3.id}" do
-          find("a.delete-variant").click
+          accept_alert do
+            find("a.delete-variant").click
+          end
         end
 
         expect(page).to have_selector "a.delete-variant", :count => 2
 
         visit spree.admin_products_path
         expect(page).to have_selector "a.view-variants"
-        all("a.view-variants").select { |e| e.visible? }.each { |e| e.trigger('click') }
+        all("a.view-variants").select { |e| e.visible? }.each { |e| e.click }
 
         expect(page).to have_selector "a.delete-variant", :count => 2
       end
@@ -530,7 +528,7 @@ feature %q{
 
       it "shows an edit button for variants, which takes the user to the standard edit page for that variant" do
         expect(page).to have_selector "a.view-variants"
-        all("a.view-variants").each { |e| e.trigger('click') }
+        all("a.view-variants").each { |e| e.click }
 
         expect(page).to have_selector "a.edit-variant", :count => 2
 
@@ -577,9 +575,7 @@ feature %q{
 
         visit spree.admin_products_path
 
-        find("div#columns-dropdown", :text => "COLUMNS").click
-        find("div#columns-dropdown div.menu div.menu_item", text: "Available On").click
-        find("div#columns-dropdown", :text => "COLUMNS").click
+        toggle_columns "Available On"
 
         expect(page).to have_selector "th", :text => "NAME"
         expect(page).to have_selector "th", :text => "PRODUCER"
@@ -587,9 +583,7 @@ feature %q{
         expect(page).to have_selector "th", :text => "ON HAND"
         expect(page).to have_selector "th", :text => "AV. ON"
 
-        find("div#columns-dropdown", :text => "COLUMNS").click
-        find("div#columns-dropdown div.menu div.menu_item", text: /^.{0,1}Producer$/).click
-        find("div#columns-dropdown", :text => "COLUMNS").click
+        toggle_columns /^.{0,1}Producer$/
 
         expect(page).to have_no_selector "th", :text => "PRODUCER"
         expect(page).to have_selector "th", :text => "NAME"
@@ -715,9 +709,7 @@ feature %q{
       v.update_attribute(:on_demand, false)
 
       visit spree.admin_products_path
-      find("div#columns-dropdown", :text => "COLUMNS").click
-      find("div#columns-dropdown div.menu div.menu_item", text: "Available On").click
-      find("div#columns-dropdown", :text => "COLUMNS").click
+      toggle_columns "Available On"
 
       within "tr#p_#{p.id}" do
         expect(page).to have_field "product_name", with: p.name
@@ -729,7 +721,7 @@ feature %q{
         fill_in "available_on", with: (3.days.ago.beginning_of_day).strftime("%F %T")
         select "Weight (kg)", from: "variant_unit_with_scale"
 
-        find("a.view-variants").trigger('click')
+        find("a.view-variants").click
       end
 
       within "#v_#{v.id}" do
@@ -769,13 +761,13 @@ feature %q{
         expect(page).to have_css "img[src='/assets/noimage/mini.png']"
 
         # Click image
-        page.find("a.image-modal").trigger('click')
+        page.find("a.image-modal").click
       end
 
       # Shows upload modal
-      expect(page).to have_selector "div.reveal-modal.product-image-upload"
+      expect(page).to have_selector "div.reveal-modal"
 
-      within "div.reveal-modal.product-image-upload" do
+      within "div.reveal-modal" do
         # Shows preview of current image
         expect(page).to have_css "img.preview"
 
@@ -787,17 +779,17 @@ feature %q{
         expect(page).to have_no_css "img.spinner", visible: true
       end
 
-      expect(page).to have_no_selector "div.reveal-modal.product-image-upload"
+      expect(page).to have_no_selector "div.reveal-modal"
 
       within "table#listing_products tr#p_#{product.id}" do
         # New thumbnail is shown in image column
         @new_thumb_src = page.find("a.image-modal img")['src']
         expect(@old_thumb_src) != @new_thumb_src
 
-        page.find("a.image-modal").trigger('click')
+        page.find("a.image-modal").click
       end
 
-      expect(page).to have_selector "div.reveal-modal.product-image-upload"
+      expect(page).to have_selector "div.reveal-modal"
     end
   end
 end

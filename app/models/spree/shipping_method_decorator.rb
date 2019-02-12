@@ -42,6 +42,14 @@ Spree::ShippingMethod.class_eval do
     ]
   end
 
+  # This method is overriden so that we can remove the restriction added in Spree
+  #   Spree restricts shipping method calculators to the ones that inherit from Spree::Shipping::ShippingCalculator
+  #   Spree::Shipping::ShippingCalculator makes sure that calculators are able to handle packages and not orders as input
+  #   This is not necessary in OFN because calculators in OFN are already customized to work with different types of input
+  def self.calculators
+    spree_calculators.send model_name_without_spree_namespace
+  end
+
   def has_distributor?(distributor)
     self.distributors.include?(distributor)
   end

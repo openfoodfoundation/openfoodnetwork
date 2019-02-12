@@ -33,7 +33,7 @@ fi
 
 # Set up Ruby dependencies via Bundler
 if ! command -v bundle > /dev/null; then
-  gem install bundler
+  ./script/install-bundler
 fi
 
 # Install all dependencies
@@ -52,7 +52,7 @@ printf '\n\n' | bundle exec rake db:setup db:test:prepare
 printf '\n'
 
 # Load some default data for your environment
-bundle exec rake openfoodnetwork:dev:load_sample_data
+bundle exec rake ofn:dev:load_sample_data
 printf '\n'
 
 printf "${YELLOW}WELCOME TO OPEN FOOD NETWORK!\n"

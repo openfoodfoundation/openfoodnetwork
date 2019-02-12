@@ -42,7 +42,8 @@ Spree::OrdersController.class_eval do
     end
 
     if @order.update_attributes(params[:order])
-      @order.line_items = @order.line_items.select {|li| li.quantity > 0 }
+      discard_empty_line_items
+      with_open_adjustments { update_totals_and_taxes }
 
       render :edit and return unless apply_coupon_code
 
@@ -129,6 +130,34 @@ Spree::OrdersController.class_eval do
 
 
   private
+
+  # Updates the various denormalized total attributes of the order and
+  # recalculates the shipment taxes
+  def update_totals_and_taxes
+    @order.updater.update_totals
+    @order.shipment.ensure_correct_adjustment_with_included_tax if @order.shipment
+  end
+
+  # Sets the adjustments to open to perform the block's action and restores
+  # their state to whatever the they had. Note that it does not change any new
+  # adjustments that might get created in the yielded block.
+  def with_open_adjustments
+    previous_states = @order.adjustments.each_with_object({}) do |adjustment, hash|
+      hash[adjustment.id] = adjustment.state
+    end
+    @order.adjustments.each(&:open)
+
+    yield
+
+    @order.adjustments.each do |adjustment|
+      previous_state = previous_states[adjustment.id]
+      adjustment.update_attribute(:state, previous_state) if previous_state
+    end
+  end
+
+  def discard_empty_line_items
+    @order.line_items = @order.line_items.select { |li| li.quantity > 0 }
+  end
 
   def require_order_authentication
     return if session[:access_token] || params[:token] || spree_current_user

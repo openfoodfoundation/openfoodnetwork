@@ -30,7 +30,7 @@ feature %q{
   end
 
 
-  pending "searches by URL" do
+  it "searches by URL" do
     visit producers_path(anchor: "/?query=xyzzy")
     expect(page).to have_content "Sorry, no results found for xyzzy"
   end

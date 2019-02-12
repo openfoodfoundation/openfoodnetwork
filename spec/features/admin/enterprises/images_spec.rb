@@ -35,8 +35,7 @@ feature "Managing enterprise images" do
 
         go_to_images
         within ".page-admin-enterprises-form__logo-field-group" do
-          expect(page).to have_selector(".image-field-group__preview-image")
-          expect(html).to include("logo-white.png")
+          expect_preview_image "logo-white.png"
         end
 
         # Replacing image
@@ -47,19 +46,19 @@ feature "Managing enterprise images" do
 
         go_to_images
         within ".page-admin-enterprises-form__logo-field-group" do
-          expect(page).to have_selector(".image-field-group__preview-image")
-          expect(html).to include("logo-black.png")
+          expect_preview_image "logo-black.png"
         end
 
         # Removing image
         within ".page-admin-enterprises-form__logo-field-group" do
           click_on "Remove Image"
+          accept_js_alert
         end
 
         expect(page).to have_content("Logo removed successfully")
 
         within ".page-admin-enterprises-form__logo-field-group" do
-          expect(page).to have_no_selector(".image-field-group__preview-image")
+          expect_no_preview_image
         end
       end
 
@@ -72,8 +71,7 @@ feature "Managing enterprise images" do
 
         go_to_images
         within ".page-admin-enterprises-form__promo-image-field-group" do
-          expect(page).to have_selector(".image-field-group__preview-image")
-          expect(html).to include("logo-white.jpg")
+          expect_preview_image "logo-white.jpg"
         end
 
         # Replacing image
@@ -84,21 +82,29 @@ feature "Managing enterprise images" do
 
         go_to_images
         within ".page-admin-enterprises-form__promo-image-field-group" do
-          expect(page).to have_selector(".image-field-group__preview-image")
-          expect(html).to include("logo-black.jpg")
+          expect_preview_image "logo-black.jpg"
         end
 
         # Removing image
         within ".page-admin-enterprises-form__promo-image-field-group" do
           click_on "Remove Image"
+          accept_js_alert
         end
 
         expect(page).to have_content("Promo image removed successfully")
 
         within ".page-admin-enterprises-form__promo-image-field-group" do
-          expect(page).to have_no_selector(".image-field-group__preview-image")
+          expect_no_preview_image
         end
       end
     end
+  end
+
+  def expect_preview_image(file_name)
+    expect(page).to have_selector(".image-field-group__preview-image[src*='#{file_name}']")
+  end
+
+  def expect_no_preview_image
+    expect(page).to have_no_selector(".image-field-group__preview-image")
   end
 end

@@ -2,14 +2,14 @@ require 'open_food_network/enterprise_fee_calculator'
 require 'open_food_network/distribution_change_validator'
 require 'open_food_network/feature_toggle'
 require 'open_food_network/tag_rule_applicator'
-require 'concerns/order_shipping_method'
+require 'concerns/order_shipment'
 
 ActiveSupport::Notifications.subscribe('spree.order.contents_changed') do |name, start, finish, id, payload|
   payload[:order].reload.update_distribution_charge!
 end
 
 Spree::Order.class_eval do
-  include OrderShippingMethod
+  prepend OrderShipment
 
   belongs_to :order_cycle
   belongs_to :distributor, class_name: 'Enterprise'
@@ -289,7 +289,7 @@ Spree::Order.class_eval do
 
   def tax_adjustment_totals
     tax_adjustments.each_with_object(Hash.new) do |adjustment, hash|
-      tax_rates = adjustment.tax_rates
+      tax_rates = TaxRateFinder.tax_rates_of(adjustment)
       tax_rates_hash = Hash[tax_rates.collect do |tax_rate|
         tax_amount = tax_rates.one? ? adjustment.included_tax : tax_rate.compute_tax(adjustment.amount)
         [tax_rate, tax_amount]
@@ -398,9 +398,11 @@ Spree::Order.class_eval do
 
   def update_adjustment!(adjustment)
     return if adjustment.finalized?
+
     state = adjustment.state
     adjustment.state = 'open'
     adjustment.update!
+    update!
     adjustment.state = state
   end
 

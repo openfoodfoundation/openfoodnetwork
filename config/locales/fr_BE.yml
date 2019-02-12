@@ -7,6 +7,7 @@ fr_BE:
         shipment_state: Statut livraison
         completed_at: 'Passée à '
         number: N° commande
+        state: Province
         email: Adresse électronique acheteur
       spree/payment:
         amount: Montant
@@ -246,7 +247,7 @@ fr_BE:
     schedule: Rythme d'abonnement
     shipping: Expédition
     shipping_method: Option d'expédition
-    shop: Boutique
+    shop: Comptoir
     sku: Référence produit
     status_state: Province
     tags: Tags
@@ -302,8 +303,8 @@ fr_BE:
         default_payment_method: 'doit être défini si vous souhaitez générer des factures pour les utilisateurs entreprises. '
         default_shipping_method: doit être défini si vous souhaitez générer des factures pour les utilisateurs entreprises.
     shopfront_settings:
-      embedded_shopfront_settings: "Paramètres Boutiques Intégrées"
-      enable_embedded_shopfronts: "Autoriser l'intégration des boutiques"
+      embedded_shopfront_settings: "Paramètres comptoir Intégrées"
+      enable_embedded_shopfronts: "Autoriser l'intégration des comptoirs"
       embedded_shopfronts_whitelist: "Liste blanche des Domaines Externes"
     number_localization:
       number_localization_settings: "Gestion localisation des nombres"
@@ -396,7 +397,7 @@ fr_BE:
         search_by_email: "Recherche par email/code..."
         guest_label: 'Commande en mode invité'
       destroy:
-        has_associated_orders: 'Suppression impossible: des commandes sont associées à cet acheteur pour cette boutique'
+        has_associated_orders: 'Suppression impossible: des commandes sont associées à cet acheteur pour ce comptoir'
     contents:
       edit:
         title: Contenu
@@ -552,7 +553,7 @@ fr_BE:
         add: Ajouter
         hide: Masquer
         import_date: Importé
-        select_a_shop: Choisir un magasin
+        select_a_shop: Choisir un comptoir
         review_now: Vérifier maintenant
         new_products_alert_message: Il y a %{new_product_count} nouveaux produits disponibles pouvant être ajoutés à votre catalogue.
         currently_empty: Votre catalogue est actuellement vide
@@ -562,7 +563,7 @@ fr_BE:
         no_new_products: Pas de nouveaux produits à ajouter à ce catalogue
         no_matching_new_products: Pas de nouveaux produits répondant à la recherche
         inventory_powertip: Ceci est votre catalogue produits. Pour ajouter des produits à votre catalogue, sélectionnez "Nouveaux Produits" dans le menu déroulant.
-        hidden_powertip: Ces produits ont été masqués de votre catalogue, vous ne pourrez pas les proposer dans votre boutique. Vous pouvez cliquer sur "Ajouter" pour ajouter un produit à votre catalogue.
+        hidden_powertip: Ces produits ont été masqués de votre catalogue, vous ne pourrez pas les proposer dans votre comptoir. Vous pouvez cliquer sur "Ajouter" pour ajouter un produit à votre catalogue.
         new_powertip: Ces produits peuvent être ajoutés à votre catalogue. Cliquez sur "Ajouter" pour ajouter un produit à votre catalogue, ou 'Masquer" pour ne plus l'afficher. Vous pourrez changer d'avis plus tard!
       controls:
         back_to_my_inventory: Retour à mon catalogue magasin
@@ -644,8 +645,8 @@ fr_BE:
               dans votre catalogue magasin avant qu'ils puissent être mis en vente
               dans votre magasin Si vous n'utilisez pas cet outil, choisissez l'option
               indiquant "recommandé" ci-dessous:
-          preferred_product_selection_from_inventory_only_yes: Les nouveaux produits des producteurs peuvent être ajoutés à mon magasin en ligne (recommandé)
-          preferred_product_selection_from_inventory_only_no: Les nouveaux produits des producteurs doivent être ajoutés à mon catalogue magasin avant de pouvoir être ajoutés à mon magasin en ligne
+          preferred_product_selection_from_inventory_only_yes: Les nouveaux produits des producteurs peuvent être ajoutés à mon comptoir en ligne (recommandé)
+          preferred_product_selection_from_inventory_only_no: Les nouveaux produits des producteurs doivent être ajoutés à mon catalogue comptoir avant de pouvoir être ajoutés à mon comptoir en ligne
         payment_methods:
           name: Nom
           applies: Active?
@@ -672,9 +673,9 @@ fr_BE:
           visible: Visible
           not_visible: Invisible
           permalink: Nom pour URL (sans espace)
-          permalink_tip: "Ce nom permanent est utilisé pour créer l'url de votre magasin: %{link}ma-boutique/shop"
-          link_to_front: Lien URL du magasin
-          link_to_front_tip: C'est le lien qui permet d'accéder en direct à votre magasin sur Open Food Network.
+          permalink_tip: "Ce nom permanent est utilisé pour créer l'url de votre comptoir: %{link}ma-boutique/shop"
+          link_to_front: Lien URL du comptoir
+          link_to_front_tip: C'est le lien qui permet d'accéder en direct à votre comptoir sur Open Food Network.
         shipping_methods:
           name: Nom
           applies: Active?
@@ -683,8 +684,8 @@ fr_BE:
           create_one_button: En créer une maintenant
           no_method_yet: Vous n'avez pas encore paramétré de méthode de livraison.
         shop_preferences:
-          shopfront_requires_login: "Magasin visible par tous?"
-          shopfront_requires_login_tip: "Choisissez si les acheteurs doivent être connectés pour voir le magasin ou si le magasin est visible par tout le monde."
+          shopfront_requires_login: "Comptoir visible par tous?"
+          shopfront_requires_login_tip: "Choisissez si les acheteurs doivent être connectés pour voir le magasin ou si le comptoir est visible par tout le monde."
           shopfront_requires_login_false: "Visible par tous"
           shopfront_requires_login_true: "Visible uniquement pour les acheteurs logués"
           recommend_require_login: "Nous recommandons de demander aux utilisateurs de se connecter si vous souhaitez leur permettre de modifier leur commande."
@@ -700,20 +701,22 @@ fr_BE:
           enable_subscriptions_tip: "Activer la fonction abonnements?"
           enable_subscriptions_false: "Désactivé"
           enable_subscriptions_true: "Activé"
-          shopfront_message: Message d'accueil magasin ouvert
+          shopfront_message: Message d'accueil comptoir ouvert
           shopfront_message_placeholder: >
-              Vous pouvez ici expliquer à vos acheteurs comment votre magasin fonctionne.
-              Ce texte s'affiche dans votre magasin, au-dessus de la liste de produits.
-          shopfront_closed_message: Message d'accueil magasin fermé
+              Vous pouvez ici expliquer à vos acheteurs comment votre comptoir fonctionne.
+              Ce texte s'affiche dans votre comptoir, au-dessus de la liste de produits.
+          shopfront_closed_message: Message d'accueil comptoir fermé
           shopfront_closed_message_placeholder: >
-              Vous pouvez ici expliquer à vos acheteurs pourquoi votre magasin est
+              Vous pouvez ici expliquer à vos acheteurs pourquoi votre comptoir est
               fermé et/ou quand il ouvrira. Ce texte s'affiche uniquement quand il
-              n'y a pas de cycle de vente en cours (donc quand votre magasin est fermé).
+              n'y a pas de cycle de vente en cours (donc quand votre comptoir est
+              fermé).
           shopfront_category_ordering: Ordre d'affichage des catégories
           open_date: Date d'ouverture
           close_date: Date de fermeture
         social:
           twitter_placeholder: ex. @OpenFoodNet_fr
+          facebook_placeholder: 'ex: www.facebook.com/NomDeLaPage'
         stripe_connect:
           connect_with_stripe: "Connecter avec Stripe"
           stripe_connect_intro: "Pour accepter des paiements utilisant la carte bancaire, vous devez connecter votre compte Stripe à Open Food Network. Cliquez sur le bouton à droite pour commencer."
@@ -775,19 +778,19 @@ fr_BE:
         connect_ofn: Gagnez en visibilité via OFFrance
         always_free: GRATUIT
         producer_description_text: Saisissez votre catalogue produits sur Open Food Network, ce qui permettra aux comptoirs utilisant la plateforme de les proposer dans leurs magasins (sur votre autorisation).
-        producer_shop: Magasin Producteur
+        producer_shop: Comptoir Producteur
         sell_your_produce: Vendez vos propres produits
-        producer_shop_description_text: Vendez vos produits en direct aux consommateurs via votre propre Magasin Producteur sur Open Food Network.
+        producer_shop_description_text: Vendez vos produits en direct aux consommateurs via votre propre Comptoir Producteur sur Open Food Network.
         producer_shop_description_text2: Un Magasin Producteur vous permet de vendre uniquement vos propres produits. Si vous voulez vendre d'autres produits, sélectionnez "Comptoir Producteur"
         producer_hub: Comptoir Producteur
         producer_hub_text: Vendez vos produits et ceux d'autres fournisseurs
-        producer_hub_description_text: Vous vendez non seulement vos produits, mais aussi des produits d'autres producteurs de votre région, artisans, ou distributeurs afin de proposer une offre complète dans votre magasin. Vous soutenez ainsi le développement de votre système alimentaire territorial !
+        producer_hub_description_text: Vous vendez non seulement vos produits, mais aussi des produits d'autres producteurs de votre région, artisans, ou distributeurs afin de proposer une offre complète dans votre comptoir. Vous soutenez ainsi le développement de votre système alimentaire territorial !
         profile: Profil uniquement
         get_listing: Référencez votre hub/point de vente
         profile_description_text: Les visiteurs peuvent vous trouver sur Open Food Network et vous contacter. Votre entreprise sera visible sur la carte.
         hub_shop: Magasin comptoir
         hub_shop_text: Vendez des produits de multiples fournisseurs différents
-        hub_shop_description_text: Vous proposez des produits de différents producteurs de votre région, artisans, ou distributeurs afin de proposer une offre complète dans votre magasin. Vous soutenez ainsi le développement de votre système alimentaire territorial !
+        hub_shop_description_text: Vous proposez des produits de différents producteurs de votre région, artisans, ou distributeurs afin de proposer une offre complète dans votre comptoir. Vous soutenez ainsi le développement de votre système alimentaire territorial !
         choose_option: Veuilliez choisir l'une des options ci-dessus.
         change_now: Changer
       enterprise_user_index:
@@ -987,7 +990,7 @@ fr_BE:
       new: Nouvel abonnement
       create: Créer abonnement
       index:
-        please_select_a_shop: Veuillez choisir une boutique
+        please_select_a_shop: Veuillez choisir un comptoir
         edit_subscription: Mettre à jour Abonnement
         pause_subscription: Mettre en pause Abonnement
         unpause_subscription: Reprendre Abonnement
@@ -995,8 +998,8 @@ fr_BE:
       setup_explanation:
         just_a_few_more_steps: 'Encore quelques étapes avant de pouvoir commencer:'
         enable_subscriptions: "Activez la fonction abonnements pour au moins une de vos comptoirs"
-        enable_subscriptions_step_1_html: 1. Allez à %{enterprises_link}, trouvez votre boutique, et cliquez sur "Gérer"
-        enable_subscriptions_step_2: 2. Sous "Préférences boutiques", activez la fonction Abonnements
+        enable_subscriptions_step_1_html: 1. Allez à %{enterprises_link}, trouvez votre comptoir, et cliquez sur "Gérer"
+        enable_subscriptions_step_2: 2. Sous "Préférences comptoir", activez la fonction Abonnements
         set_up_shipping_and_payment_methods_html: Paramétrez au moins une méthode d'%{shipping_link} et une méthode de %{payment_link}
         set_up_shipping_and_payment_methods_note_html: Notez bien que seules des méthodes de paiement de type "cash" ou "Stripe" pourront<br /> être utilisées pour les Abonnements
         ensure_at_least_one_customer_html: Assurez-vous qu'au moins un %{customer_link} est enregistré dans votre liste d'acheteurs.
@@ -1113,7 +1116,7 @@ fr_BE:
       login: "Se connecter"
       register: "s'inscrire"
       contact: "contacter"
-      require_customer_login: "La boutique est réservée aux membres."
+      require_customer_login: "Le comptoir est réservée aux membres."
       require_login_html: "Déjà inscrit? %{login}. Sinon, %{register} pour pouvoir faire vos achats."
       require_customer_html: "Veuillez %{contact} %{enterprise} pour devenir membre."
   card_could_not_be_updated: La carte bancaire n'a pas pu être mise à jour
@@ -1143,7 +1146,7 @@ fr_BE:
   ticket_column_item: "Produit"
   ticket_column_unit_price: "Prix unitaire"
   ticket_column_total_price: "Prix total"
-  menu_1_title: "Comptoir"
+  menu_1_title: "Comptoirs"
   menu_1_url: "/shops"
   menu_2_title: "Carte"
   menu_2_url: "/map"
@@ -1198,8 +1201,8 @@ fr_BE:
   no_shipping_or_payment: pas de méthode de livraison ou de paiement
   unconfirmed: non confirmé
   days: jours
-  label_shop: "Boutique"
-  label_shops: "Comptoir"
+  label_shop: "Comptoir"
+  label_shops: "Comptoirs"
   label_map: "Carte"
   label_producer: "Producteur"
   label_producers: "Producteurs"
@@ -1430,7 +1433,7 @@ fr_BE:
   email_signup_confirmed_email: "Merci d'avoir confirmé votre email."
   email_signup_shop_html: "Vous pouvez maintenant vous connecter sur %{link}."
   email_signup_text: "Merci d'avoir rejoint le réseau. Si vous êtes un client, nous sommes impatients de vous faire découvrir de nombreux agriculteurs fantastiques, de merveilleux comptoirs et des plats délicieux! Si vous êtes un producteur ou autre entreprise alimentaire, nous sommes ravis de vous compter parmi les membres du réseau."
-  email_signup_help_html: "Vos questions et commentaire sont les bienvenus! Cliquez sur le bouton <em>Envoyer un commentaire</em> sur le site ou envoyez-nous un email à %{email}"
+  email_signup_help_html: "Vos questions et commentaires sont les bienvenus! Cliquez sur le bouton <em>Envoyer un commentaire</em> sur le site ou envoyez-nous un email à %{email}"
   invite_email:
     greeting: "Bonjour!"
     invited_to_manage: "Vous avez été invité(e) à gérer %{enterprise} sur %{instance}."
@@ -1604,7 +1607,7 @@ fr_BE:
   orders_edit_title: Panier
   orders_edit_headline: Votre panier
   orders_edit_time: Commande prête pour
-  orders_edit_continue: Retour à la boutique
+  orders_edit_continue: Retour au comptoir
   orders_edit_checkout: Etape suivante (coordonnées)
   orders_form_empty_cart: "Vider le panier"
   orders_form_subtotal: Sous-total
@@ -1704,6 +1707,11 @@ fr_BE:
   update_and_recalculate_fees: "Mettre à jour et recalculer les frais"
   registration:
     steps:
+      images:
+        continue: "Suivant"
+        back: "Retour"
+        headline: "Merci!"
+        description: "Ajoutez maintenant de jolies photos pour que votre profil soit attractif! :)"
       type:
         headline: "Dernière étape pour ajouter %{enterprise} !"
         question: "Etes-vous un producteur ?"
@@ -1838,8 +1846,6 @@ fr_BE:
   registration_type_error: "Veuillez faire un choix. Etes vous un producteur?"
   registration_type_producer_help: "Un producteur fabrique de bonnes choses à boire et à manger. Vous êtes un producteur si vous les faites pousser, les élevez, les pétrissez, transformez, fermentez, les réduisez en grains, etc."
   registration_type_no_producer_help: "Si vous n'êtes pas un producteur, vous êtes probablement un revendeur ou distributeur alimentaire: un comptoir, une coopérative, un groupement d'achat, un revendeur, un grossiste, ou autre."
-  registration_images_headline: "Merci!"
-  registration_images_description: "Ajoutez maintenant de jolies photos pour que votre profil soit attractif! :)"
   registration_detail_headline: "Commençons"
   registration_detail_enterprise: "Woohoo! Dites-nous déjà quelques mots à propos de votre entreprise:"
   registration_detail_producer: "Woohoo! Dites-nous déjà quelques mots à propos de votre ferme:"
@@ -1870,8 +1876,8 @@ fr_BE:
   shop_variant_quantity_min: "min"
   shop_variant_quantity_max: "max"
   follow: "Suivre"
-  shop_for_products_html: "Acheter les produits de <span class=\"turquoise\">%{enterprise}</span> dans les boutiques suivantes:"
-  change_shop: "Changer de boutique pour:"
+  shop_for_products_html: "Acheter les produits de <span class=\"turquoise\">%{enterprise}</span> dans les comptoirs suivants:"
+  change_shop: "Changer de comptoir pour:"
   shop_at: "Acheter maintenant :"
   price_breakdown: "Détail du prix:"
   admin_fee: "Frais de gestion admin"
@@ -1979,7 +1985,7 @@ fr_BE:
   spree_admin_enterprises_fees: "Marges et commissions"
   spree_admin_enterprises_none_create_a_new_enterprise: "CRÉER UNE NOUVELLE ENTREPRISE"
   spree_admin_enterprises_none_text: "Vous n'avez pas encore d'entreprise"
-  spree_admin_enterprises_tabs_hubs: "COMPTOIR"
+  spree_admin_enterprises_tabs_hubs: "COMPTOIRS"
   spree_admin_enterprises_producers_manage_products: "GÉRER LES PRODUITS"
   spree_admin_enterprises_any_active_products_text: "Vous n'avez aucun produit actif."
   spree_admin_enterprises_create_new_product: "CRÉER UN NOUVEAU PRODUIT"
@@ -2034,7 +2040,7 @@ fr_BE:
   admin_share_zipcode: "Code postal"
   admin_share_country: "Pays"
   admin_share_state: "Département"
-  hub_sidebar_hubs: "Comptoir"
+  hub_sidebar_hubs: "Comptoirs"
   hub_sidebar_none_available: "Aucun disponible"
   hub_sidebar_manage: "Gérer"
   hub_sidebar_at_least: "Sélectionnez un/des comptoir/s"
@@ -2230,7 +2236,7 @@ fr_BE:
   payment_method_fee: "Frais de transaction"
   inventory_settings: "Catalogue boutique"
   tag_rules: "Règles de tag"
-  shop_preferences: "Préférences boutique"
+  shop_preferences: "Préférences comptoir"
   enterprise_fee_whole_order: Commande totale
   enterprise_fee_by: "%{type}marges/frais par %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Un lien est déjà établi entre ces entreprises."
@@ -2300,7 +2306,7 @@ fr_BE:
     unavailable: Non disponible
     profile: Profil
     hub: Comptoir
-    shop: Boutique
+    shop: Comptoir
     choose: Choisir
     resolve_errors: Veuillez corriger les erreurs suivantes
     more_items: "+ %{count} en plus"
@@ -2346,7 +2352,7 @@ fr_BE:
           hub_shop_text1: >
               Vous proposez des produits de différents producteurs de votre région,
               artisans, ou distributeurs afin de proposer une offre complète dans
-              votre boutique. Vous soutenez ainsi le développement de votre système
+              votre comptoir. Vous soutenez ainsi le développement de votre système
               alimentaire territorial !
           hub_shop_text2: >
               Un comptoir n'a pas de modèle figé, il peut s'agir d'un groupement d'achat,
@@ -2371,24 +2377,24 @@ fr_BE:
           profile_only_text2: >
               Si vous souhaitez vous concentrer sur votre activité de production,
               et laisser à d'autre le soin de distribuer vos produits, vous n'avez
-              pas besoin d'une boutique sur Open Food Network.
+              pas besoin d'un comptoir sur Open Food Network.
           profile_only_text3: >
               Saisissez votre catalogue produits sur Open Food Network, ce qui permettra
               aux comptoirs utilisant la plateforme de les proposer dans leurs boutiques
               (sur votre autorisation).
-          producer_shop: Boutique Producteur
+          producer_shop: Comptoir Producteur
           producer_shop_text1: >
               Vendez vos produits en direct aux mangeurs/restaurateurs/etc. via votre
               propre Boutique Producteur sur Open Food Network.
           producer_shop_text2: >
-              Une Boutique Producteur vous permet de vendre uniquement vos propres
+              Une Comptoir Producteur vous permet de vendre uniquement vos propres
               produits. Si vous voulez vendre d'autres produits, sélectionnez "Comptoir
               Producteur"
           producer_hub: Comptoir Producteur
           producer_hub_text1: >
               Vous vendez non seulement vos produits, mais aussi des produits d'autres
               producteurs de votre région, artisans, ou distributeurs afin de proposer
-              une offre complète dans votre boutique. Vous soutenez ainsi le développement
+              une offre complète dans votre comptoir. Vous soutenez ainsi le développement
               de votre système alimentaire territorial !
           producer_hub_text2: >
               Un comptoir producteur peut prendre différentes formes, une boutique
@@ -2413,7 +2419,7 @@ fr_BE:
               transformez, fermentez, les réduisez en grains, etc.
           producer_text2: >
               Un producteur peut aussi avoir d'autres rôles, comme par exemple stocker
-              et distribuer des produits d'autres producteurs à travers une boutique
+              et distribuer des produits d'autres producteurs à travers une comptoir
               sur Open Food Network.
           non_producer: Non-producteur
           non_producer_text1: >
@@ -2450,7 +2456,13 @@ fr_BE:
           à votre demande. Voilà les modifications opérées:
       now_out_of_stock: est maintenant en rupture de stock.
       only_n_remainging: "plus que %{num} en stock."
+    variants:
+      on_demand:
+        'yes': "A volonté"
     variant_overrides:
+      on_demand:
+        'yes': "Oui"
+        'no': "Non"
       inventory_products: "Produits du Catalogue Boutique"
       hidden_products: "Produits Masqués"
       new_products: "Nouveaux Produits"
@@ -2465,10 +2477,10 @@ fr_BE:
       changing_on_hand_stock: Modification des niveaux de stock en cours...
       stock_reset: Les niveaux de stock ont été réinitiatlisés (valeurs par défaut)
     tag_rules:
-      show_hide_variants: 'Afficher ou Masquer les variantes dans ma boutique'
+      show_hide_variants: 'Afficher ou Masquer les variantes dans mon comptoir'
       show_hide_shipping: 'Afficher ou Montrer les méthodes de livraison lors de la finalisation de commande'
       show_hide_payment: 'Afficher ou Montrer les méthodes de paiement lors de la finalisation de commande'
-      show_hide_order_cycles: 'Afficher ou Masquer les cycles de vente de ma boutique'
+      show_hide_order_cycles: 'Afficher ou Masquer les cycles de vente de mon comptoir'
       visible: VISIBLE
       not_visible: INVISIBLE
     services:
@@ -2494,7 +2506,7 @@ fr_BE:
       producer: "Producteur"
       non_producer: "Non-producteur"
     customers:
-      select_shop: 'Veuillez d''abord choisir une boutique'
+      select_shop: 'Veuillez d''abord choisir un comptoir'
       could_not_create: Oups ! Création impossible...
     subscriptions:
       closes: fermer
@@ -2605,8 +2617,6 @@ fr_BE:
         display_as:
           display_as: Unité affichéé
       reports:
-        table:
-          select_and_search: "Sélectionnez les filtres et cliquez sur RECHERCHER pour accéder à vos données."
         bulk_coop:
           bulk_coop_supplier_report: 'Achats groupés - Totaux par Producteur'
           bulk_coop_allocation: 'Achats groupés - Allocation'
@@ -2745,7 +2755,7 @@ fr_BE:
         until: Jusqu'à
       past_orders:
         order: Commandes à venir
-        shop: Boutique
+        shop: Comptoir
         completed_at: Date
         items: Produits
         total: Total
@@ -2759,7 +2769,7 @@ fr_BE:
         authorised_shops_popover: Voilà la liste des comptoirs que vous avez autorisées à débiter votre carte de paiement par défaut dans le cadre de vos abonnements en cours (commandes récurrentes). Les informations concernant votre carte de paiement sont sécurisées et ne sont pas accessibles par le gérant de la boutique. Vous recevrez systématiquement une notification avant tout débit sur votre carte.
         saved_cards_popover: Voilà la liste des cartes de paiement que vous avez enregistrées. Votre carte par défaut sera automatiquement sélectionnée au moment de la finalisation d'une commande, et pourra être débitée par les comptoirs auxquels vous avez donné cette autorisation (voir à droite).
       authorised_shops:
-        shop_name: "Nom de la boutique"
+        shop_name: "Nom du comptoir"
         allow_charges?: "Autoriser les prélèvements ?"
     localized_number:
       invalid_format: n'est pas un format valide. Veuillez entrer un nombre.

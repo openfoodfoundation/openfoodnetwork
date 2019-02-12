@@ -7,6 +7,7 @@ fr:
         shipment_state: Statut livraison
         completed_at: 'Passée à '
         number: N° commande
+        state: Département
         email: Email acheteur
       spree/payment:
         amount: Montant
@@ -475,6 +476,8 @@ fr:
         inventory_no_permission: vous n'avez pas l'autorisation d'ajouter les produits de ce producteur à votre catalogue boutique
         none_saved: n'a pu sauvegarder aucun produit :-(
         line_number: "Ligne %{number} :"
+        encoding_error: "Veuillez vérifier le paramètre de langue de votre code source et vous assurer qu'il est encodé en UTF-8"
+        unexpected_error: "L'import de fichier produits à rencontré une erreur inconnue à l'ouverture du fichier : %{error_message}"
       index:
         select_file: Sélectionner le fichier (tableur sous format csv) à importer
         spreadsheet: Tableur csv
@@ -1987,7 +1990,7 @@ fr:
   spree_admin_overview_enterprises_header: "Mes entreprises"
   spree_admin_overview_enterprises_footer: "GÉRER MES ENTREPRISES"
   spree_admin_enterprises_hubs_name: "Nom"
-  spree_admin_enterprises_create_new: "CRÉER NOUVELLE"
+  spree_admin_enterprises_create_new: "CRÉER NOUVEAU"
   spree_admin_enterprises_shipping_methods: "Méthodes de livraison"
   spree_admin_enterprises_fees: "Marges et commissions"
   spree_admin_enterprises_none_create_a_new_enterprise: "CRÉER UNE NOUVELLE ENTREPRISE"
@@ -2035,6 +2038,8 @@ fr:
   order_cycles: "Cycles de Vente"
   enterprise_relationships: "Permissions inter-entreprises"
   remove_tax: "Retirer TVA"
+  first_name_begins_with: "Prénom commence par"
+  last_name_begins_with: "Nom de famille commence par"
   enterprise_tos_link: "Lien vers les Conditions Générales d'Utilisation"
   enterprise_tos_message: "Nous soutenons la mise en place d'un système alimentaire résilient et durable, et souhaitons œuvrer avec des entreprises qui partagent nos valeurs et notre vision. Ainsi, nous demandons aux entreprises s'enregistrant sur Open Food France de valider nos "
   enterprise_tos_link_text: "Conditions d'utilisation"
@@ -2448,6 +2453,11 @@ fr:
       orders:
         index:
           per_page: "%{results} par page"
+          view_file: Voir le fichier
+          compiling_invoices: Compilation des factures en cours
+          bulk_invoice_created: Facture compilée générée
+          bulk_invoice_failed: Échec dans la compilation des factures
+          please_wait: Veuillez attendre que le PDF soit prêt avant de fermer cette fenêtre.
       resend_user_email_confirmation:
         resend: "Renvoyer"
         sending: "Renvoi...."
@@ -2551,6 +2561,7 @@ fr:
           no_orders_found: "Aucune commande trouvée pour ces critères"
           results_found: "%{number} résultats trouvés"
           viewing: "Résultats %{start} à %{end} affichés."
+          print_invoices: "Imprimer les factures"
         invoice:
           issued_on: Editée le
           tax_invoice: FACTURE
@@ -2570,7 +2581,7 @@ fr:
             zero: "Vous n'avez aucun cycle de vente actif."
             one: "Vous avez un cycle de vente actif."
             other: "Vous avez %{count} cycles de vente actifs."
-          manage_order_cycles: "GERER LES CYCLES DE VENTE"
+          manage_order_cycles: "GÉRER LES CYCLES DE VENTE"
       payment_methods:
         new:
           new_payment_method: "Nouvelle méthode de paiement"
@@ -2630,7 +2641,7 @@ fr:
           display_as: Unité affichéé
       reports:
         table:
-          select_and_search: "Sélectionnez les filtres et cliquez sur RECHERCHER pour accéder à vos données."
+          select_and_search: "Sélectionner les filtres et cliquez sur %{option} pour accéder aux données."
         bulk_coop:
           bulk_coop_supplier_report: 'Achats groupés - Totaux par Producteur'
           bulk_coop_allocation: 'Achats groupés - Allocation'

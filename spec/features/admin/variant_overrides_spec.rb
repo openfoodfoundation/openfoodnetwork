@@ -6,6 +6,7 @@ feature %q{
   I want to override the stock level and price of those products
   Without affecting other hubs that share the same products
 }, js: true do
+  include AdminHelper
   include AuthenticationWorkflow
   include WebHelper
 
@@ -112,9 +113,7 @@ feature %q{
             expect(page).to have_selector "tr#v_#{variant_related.id}"
 
             # Show/Hide products
-            first("div#columns-dropdown", :text => "COLUMNS").click
-            first("div#columns-dropdown div.menu div.menu_item", text: "Hide").click
-            first("div#columns-dropdown", :text => "COLUMNS").click
+            toggle_columns "Hide"
             expect(page).to have_selector "tr#v_#{variant.id}"
             expect(page).to have_selector "tr#v_#{variant_related.id}"
             within "tr#v_#{variant.id}" do click_button 'Hide' end
@@ -134,9 +133,7 @@ feature %q{
           end
 
           it "creates new overrides" do
-            first("div#columns-dropdown", :text => "COLUMNS").click
-            first("div#columns-dropdown div.menu div.menu_item", text: "SKU").click
-            first("div#columns-dropdown", :text => "COLUMNS").click
+            toggle_columns "SKU"
 
             fill_in "variant-overrides-#{variant.id}-sku", with: 'NEWSKU'
             fill_in "variant-overrides-#{variant.id}-price", with: '777.77'
@@ -287,16 +284,16 @@ feature %q{
 
           # Any new fields added to the VO model need to be added to this test
           it "deletes overrides when values are cleared" do
-            first("div#columns-dropdown", :text => "COLUMNS").click
-            first("div#columns-dropdown div.menu div.menu_item", text: "Enable Stock Reset?").click
-            first("div#columns-dropdown div.menu div.menu_item", text: "Tags").click
-            first("div#columns-dropdown", :text => "COLUMNS").click
+            toggle_columns "Enable Stock Reset?", "Tags"
 
             # Clearing values by 'inheriting'
-            first("div#columns-dropdown", :text => "COLUMNS").click
-            first("div#columns-dropdown div.menu div.menu_item", text: "Inherit?").click
-            first("div#columns-dropdown", :text => "COLUMNS").click
+            toggle_columns "Inherit?"
             check "variant-overrides-#{variant3.id}-inherit"
+            # Hide the Inherit column again. When that column is visible, the
+            # size of the Tags column is too short and tags can't be removed.
+            # This is a bug and the next line can be removed once it is fixed:
+            # https://github.com/openfoodfoundation/openfoodnetwork/issues/3310
+            toggle_columns "Inherit?"
 
             # Clearing values manually
             fill_in "variant-overrides-#{variant.id}-price", with: ''
@@ -306,7 +303,7 @@ feature %q{
             within "tr#v_#{variant.id}" do
               vo.tag_list.each do |tag|
                 within "li.tag-item", text: "#{tag} ✖" do
-                  find("a.remove-button").trigger('click')
+                  find("a.remove-button").click
                 end
               end
             end
@@ -410,7 +407,7 @@ feature %q{
       # Reproducing a bug, issue #1446
       it "shows the overridden price" do
         targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
-        click_link 'Add'
+        find('button.add_variant').click
         expect(page).to have_selector("table.index tbody tr") # Wait for JS
         expect(page).to have_content(product.variants.first.variant_overrides.first.price)
       end

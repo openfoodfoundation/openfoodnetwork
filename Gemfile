@@ -25,13 +25,13 @@ gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '2-0-stable'
 # Our branch contains two changes
 # - Pass customer email and phone number to PayPal (merged to upstream master)
 # - Change type of password from string to password to hide it in the form
-gem 'spree_paypal_express', github: "spree-contrib/better_spree_paypal_express", branch: "2-0-stable"
+gem 'spree_paypal_express', github: "openfoodfoundation/better_spree_paypal_express", branch: "2-0-stable"
 gem 'stripe', '~> 3.3.2'
 # We need at least this version to have Digicert's root certificate
 # which is needed for Pin Payments (and possibly others).
 gem 'activemerchant', '~> 1.78'
 
-gem 'oauth2', '~> 1.2.0' # Used for Stripe Connect
+gem 'oauth2', '~> 1.4.1' # Used for Stripe Connect
 gem 'jwt', '~> 1.5'
 
 gem 'delayed_job_active_record'
@@ -72,10 +72,11 @@ gem 'roadie-rails', '~> 1.1.1'
 gem 'figaro'
 gem 'blockenspiel'
 gem 'acts-as-taggable-on', '~> 3.4'
-gem 'paper_trail', '~> 3.0.8'
+gem 'paper_trail', '~> 5.2.3'
 gem 'diffy'
 gem 'skylight', '< 2.0'
 
+gem 'combine_pdf'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 
@@ -92,10 +93,7 @@ group :assets do
   gem 'compass-rails'
   gem 'coffee-rails', '~> 3.2.1'
 
-  gem 'mini_racer'
-  # We found that the following version of libv8 breaks the compilation of mini_racer.
-  # Nothing else depends on libv8.
-  gem 'libv8', '!= 6.7.288.46.1'
+  gem 'therubyracer', '=0.12.0'
 
   gem 'uglifier', '>= 1.0.3'
 
@@ -124,7 +122,8 @@ group :test, :development do
   gem 'awesome_print'
   gem 'letter_opener', '>= 1.4.1'
   gem 'timecop'
-  gem 'poltergeist', '>= 1.16.0'
+  gem 'selenium-webdriver'
+  gem 'chromedriver-helper'
   gem 'rspec-retry'
   gem 'json_spec', '~> 1.1.4'
   gem 'unicorn-rails'
@@ -149,7 +148,7 @@ group :development do
   gem 'guard-rails'
   gem 'guard-rspec', '~> 4.7.3'
   gem 'rubocop', '>= 0.49.1'
-  gem 'spring', '=1.1.3'
+  gem 'spring', '1.7.2'
   gem 'spring-commands-rspec'
 
   # 1.0.9 fixed openssl issues on macOS https://github.com/eventmachine/eventmachine/issues/602

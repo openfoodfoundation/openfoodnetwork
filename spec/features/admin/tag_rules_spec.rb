@@ -13,9 +13,6 @@ feature 'Tag Rules', js: true do
     end
 
     it "allows creation of rules of each type" do
-      # Make the whole page visible
-      page.driver.resize(1280, 2000)
-
       click_link "Tag Rules"
 
       # Creating a new tag
@@ -123,9 +120,6 @@ feature 'Tag Rules', js: true do
     end
 
     it "saves changes to rules of each type" do
-      # Make the whole page visible
-      page.driver.resize(1280, 2000)
-
       click_link "Tag Rules"
 
       # Tag groups exist
@@ -135,20 +129,20 @@ feature 'Tag Rules', js: true do
       expect(page).to have_selector '.customer_tag .header tags-input .tag-list ti-tag-item', text: "wholesale", count: 1
       expect(page).to have_selector '.customer_tag .header tags-input .tag-list ti-tag-item', text: "trusted", count: 1
       all(:css, ".customer_tag .header tags-input").each do |node|
-        node.find("li.tag-item a.remove-button").trigger('click')
+        node.find("li.tag-item a.remove-button").click
         node.find(".tags input").set "volunteer\n"
       end
 
       # DEFAULT FilterShippingMethods rule
       within ".default_rules #tr_0" do
-        within "li.tag-item", text: "local ✖" do find("a.remove-button").trigger('click') end
+        within "li.tag-item", text: "local ✖" do find("a.remove-button").click end
         find(:css, "tags-input .tags input").set "volunteers-only\n"
         expect(page).to have_content "not visible"
       end
 
       # FilterProducts rule
       within ".customer_tag #tr_1" do
-        within "li.tag-item", text: "member ✖" do find("a.remove-button").trigger('click') end
+        within "li.tag-item", text: "member ✖" do find("a.remove-button").click end
         find(:css, "tags-input .tags input").set "volunteers-only1\n"
         expect(page).to have_select2 "enterprise_tag_rules_attributes_1_preferred_matched_variants_visibility", selected: 'VISIBLE'
         select2_select 'NOT VISIBLE', from: "enterprise_tag_rules_attributes_1_preferred_matched_variants_visibility"
@@ -156,7 +150,7 @@ feature 'Tag Rules', js: true do
 
       # FilterPaymentMethods rule
       within ".customer_tag #tr_2" do
-        within "li.tag-item", text: "trusted ✖" do find("a.remove-button").trigger('click') end
+        within "li.tag-item", text: "trusted ✖" do find("a.remove-button").click end
         find(:css, "tags-input .tags input").set "volunteers-only2\n"
         expect(page).to have_select2 "enterprise_tag_rules_attributes_2_preferred_matched_payment_methods_visibility", selected: 'NOT VISIBLE'
         select2_select 'VISIBLE', from: "enterprise_tag_rules_attributes_2_preferred_matched_payment_methods_visibility"
@@ -164,7 +158,7 @@ feature 'Tag Rules', js: true do
 
       # FilterOrderCycles rule
       within ".customer_tag #tr_3" do
-        within "li.tag-item", text: "wholesale ✖" do find("a.remove-button").trigger('click') end
+        within "li.tag-item", text: "wholesale ✖" do find("a.remove-button").click end
         find(:css, "tags-input .tags input").set "volunteers-only3\n"
         expect(page).to have_select2 "enterprise_tag_rules_attributes_3_preferred_matched_order_cycles_visibility", selected: 'VISIBLE'
         select2_select 'NOT VISIBLE', from: "enterprise_tag_rules_attributes_3_preferred_matched_order_cycles_visibility"
@@ -172,7 +166,7 @@ feature 'Tag Rules', js: true do
 
       # FilterShippingMethods rule
       within ".customer_tag #tr_4" do
-        within "li.tag-item", text: "local ✖" do find("a.remove-button").trigger('click') end
+        within "li.tag-item", text: "local ✖" do find("a.remove-button").click end
         find(:css, "tags-input .tags input").set "volunteers-only4\n"
         expect(page).to have_select2 "enterprise_tag_rules_attributes_4_preferred_matched_shipping_methods_visibility", selected: 'NOT VISIBLE'
         select2_select 'VISIBLE', from: "enterprise_tag_rules_attributes_4_preferred_matched_shipping_methods_visibility"
@@ -234,15 +228,16 @@ feature 'Tag Rules', js: true do
     end
 
     it "deletes both default and customer rules from the database" do
-      # Make the whole page visible
-      page.driver.resize(1280, 2000)
-
       click_link "Tag Rules"
 
       expect do
-        within "#tr_1" do first("a.delete-tag-rule").click end
+        accept_alert do
+          within "#tr_1" do first("a.delete-tag-rule").click end
+        end
         expect(page).to have_no_selector "#tr_1"
-        within "#tr_0" do first("a.delete-tag-rule").click end
+        accept_alert do
+          within "#tr_0" do first("a.delete-tag-rule").click end
+        end
         expect(page).to have_no_selector "#tr_0"
       end.to change{TagRule.count}.by(-2)
     end

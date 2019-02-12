@@ -135,27 +135,12 @@ describe VariantStock do
       let(:variant) { build(:variant) }
 
       it 'returns stock location default' do
-        expect(variant.on_demand).to be_truthy
+        expect(variant.on_demand).to be_falsy
       end
     end
   end
 
   describe '#on_demand=' do
-    context 'when the variant has multiple stock items' do
-      let(:variant) { create(:variant) }
-
-      before do
-        # Spree creates a stock_item for each variant when creating a stock
-        # location by means of #propagate_variant
-        create(:stock_location, name: 'location')
-        create(:stock_location, name: 'another location')
-      end
-
-      it 'raises' do
-        expect { variant.on_demand = true }.to raise_error(StandardError)
-      end
-    end
-
     context 'when the variant has a stock item' do
       let(:variant) { create(:variant, on_demand: true) }
 
@@ -171,6 +156,46 @@ describe VariantStock do
 
       it 'raises' do
         expect { variant.on_demand = 3 }.to raise_error(StandardError)
+      end
+    end
+  end
+
+  describe '#can_supply?' do
+    context 'when variant on_demand' do
+      let(:variant) { create(:variant, on_demand: true) }
+
+      it "returns true for zero" do
+        expect(variant.can_supply?(0)).to eq(true)
+      end
+      it "returns true for large quantity" do
+        expect(variant.can_supply?(100000)).to eq(true)
+      end
+    end
+
+    context 'when variant not on_demand' do
+      context 'when variant in stock' do
+        it "returns true for zero" do
+          expect(variant.can_supply?(0)).to eq(true)
+        end
+        it "returns true for number equal to stock level" do
+          expect(variant.can_supply?(variant.total_on_hand)).to eq(true)
+        end
+
+        it "returns false for number above stock level" do
+          expect(variant.can_supply?(variant.total_on_hand + 1)).to eq(false)
+        end        
+      end
+
+      context 'when variant out of stock' do
+        before { variant.count_on_hand = 0 }
+
+        it "returns true for zero" do
+          expect(variant.can_supply?(0)).to eq(true)
+        end
+
+        it "returns false for one" do
+          expect(variant.can_supply?(1)).to eq(false)
+        end
       end
     end
   end

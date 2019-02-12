@@ -76,11 +76,11 @@ feature "Using embedded shopfront functionality", js: true do
         end
 
         within "#shipping" do
-          find('input[type="radio"]').trigger 'click'
+          find('input[type="radio"]').click
         end
 
         within "#payment" do
-          find('input[type="radio"]').trigger 'click'
+          find('input[type="radio"]').click
         end
 
         place_order
@@ -91,10 +91,11 @@ feature "Using embedded shopfront functionality", js: true do
 
     it "redirects to embedded hub on logout when embedded" do
       on_embedded_page do
-
+        wait_for_shop_loaded
         find('ul.right li#login-link a').click
         login_with_modal
 
+        wait_for_shop_loaded
         wait_until { page.find('ul.right li.user-menu.has-dropdown').value.present? }
         logout_via_navigation
 
@@ -105,14 +106,24 @@ feature "Using embedded shopfront functionality", js: true do
 
   private
 
+  # When you have pending changes and try to navigate away from a page, it asks you "Are you sure?".
+  # When we click the "Update" button to save changes, we need to wait
+  #   until it is actually saved and "loading" disappears before doing anything else.
+  def wait_for_shop_loaded
+    page.has_no_content? "Loading"
+    page.has_no_css? "input[value='Updating cart...']"
+  end
+
   def login_with_modal
-    expect(page).to have_selector 'div.login-modal', visible: true
+    page.has_selector? 'div.login-modal', visible: true
 
     within 'div.login-modal' do
       fill_in "Email", with: user.email
       fill_in "Password", with: user.password
       find('input[type="submit"]').click
     end
+
+    page.has_no_selector? 'div.login-modal', visible: true
   end
 
   def logout_via_navigation

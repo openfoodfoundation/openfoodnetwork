@@ -43,6 +43,8 @@ feature %q{
       select 'One', from: 'enterprise_role_enterprise_id'
       click_button 'Create'
 
+      # Wait for row to appear since have_relationship doesn't wait
+      page.should have_selector 'tr', count: 3
       page.should have_relationship u, e
       EnterpriseRole.where(user_id: u, enterprise_id: e).should be_present
     end
@@ -73,9 +75,13 @@ feature %q{
       page.should have_relationship u, e
 
       within("#enterprise_role_#{er.id}") do
-        find("a.delete-enterprise-role").click
+        accept_alert do
+          find("a.delete-enterprise-role").click
+        end
       end
 
+      # Wait for row to disappear, otherwise have_relationship waits 30 seconds.
+      page.should_not have_selector "#enterprise_role_#{er.id}"
       page.should_not have_relationship u, e
       EnterpriseRole.where(id: er.id).should be_empty
     end
@@ -93,6 +99,7 @@ feature %q{
         click_link 'Enterprises'
         click_link 'Test Enterprise'
         within('.side_menu') { click_link 'Users' }
+        expect(page).to have_selector "table.managers"
       end
 
       it "lists managers and shows icons for owner, contact, and email confirmation" do
@@ -122,7 +129,7 @@ feature %q{
       end
 
       it "shows changes to enterprise contact or owner" do
-        select user2.email, from: 'receives_notifications_dropdown', visible: false
+        select2_select user2.email, from: 'receives_notifications_dropdown'
         within('#save-bar') { click_button 'Update' }
         within('.side_menu') { click_link 'Users' }
 
