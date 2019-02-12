@@ -303,9 +303,6 @@ FactoryBot.define do
       p = create(:simple_product, distributors: [order.distributor])
       FactoryBot.create(:line_item_with_shipment, shipping_fee: proxy.shipping_fee, order: order, product: p)
       order.reload
-
-      # this will update order shipping fees and also order totals (through order.update!)
-      order.update_shipping_fees!
     end
   end
 
@@ -403,9 +400,10 @@ FactoryBot.define do
       transient do
         shipping_method { create(:shipping_method) }
       end
-      after(:create) do |shipment, evaluator|
-        shipment.add_shipping_method(evaluator.shipping_method, true)
 
+      shipping_rates { [Spree::ShippingRate.create(shipping_method: shipping_method, selected: true)] }
+
+      after(:create) do |shipment, evaluator|
         shipment.order.line_items.each do |line_item|
           line_item.quantity.times { shipment.inventory_units.create(variant_id: line_item.variant_id) }
         end
@@ -432,7 +430,6 @@ FactoryBot.define do
       create(:payment, order: order, amount: order.total, payment_method: payment_method, state: 'checkout')
 
       while !order.completed? do break unless order.next! end
-      order.updater.update_adjustments # this is required to clean up duplicated shipping fees
     end
   end
 

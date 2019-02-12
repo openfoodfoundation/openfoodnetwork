@@ -3,9 +3,7 @@ require 'spec_helper'
 
 module OpenFoodNetwork
   describe UserBalanceCalculator do
-
     describe "finding the account balance of a user with a hub" do
-
       let!(:user1) { create(:user) }
       let!(:hub1) { create(:distributor_enterprise) }
 
