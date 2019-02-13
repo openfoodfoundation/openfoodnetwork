@@ -1,6 +1,6 @@
 require "spec_helper"
 
-feature "enterprise fee summaries" do
+xfeature "enterprise fee summaries", js: true do
   include AuthenticationWorkflow
   include WebHelper
 
