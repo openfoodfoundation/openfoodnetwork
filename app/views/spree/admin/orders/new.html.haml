@@ -11,7 +11,7 @@
 
 = csrf_meta_tags
 
-%div{"data-hook" => "admin_order_new_header"}
+%div
   = render 'spree/shared/error_messages', :target => @order
 
 %div{"ng-app" => "admin.orders", "ng-controller" => "orderCtrl"}
@@ -19,9 +19,8 @@
     = render 'add_product'
 
   - unless @order.line_items.any?
-    %div{"data-hook" => "admin_order_new_form"}
-      #order-form-wrapper
-        = render 'form'
+    %div
+      = render 'form'
 
 - content_for :head do
   = javascript_tag 'var expand_variants = true;'
