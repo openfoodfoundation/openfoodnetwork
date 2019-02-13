@@ -160,8 +160,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
         let!(:stripe_pm) do
           create(:stripe_payment_method,
             distributors: [distributor],
-            name: "Stripe",
-            preferred_enterprise_id: distributor.id)
+            name: "Stripe")
         end
 
         let!(:saved_card) do
