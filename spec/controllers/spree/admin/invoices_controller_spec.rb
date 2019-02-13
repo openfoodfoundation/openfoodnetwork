@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Admin::InvoicesController, type: :controller do
+xdescribe Spree::Admin::InvoicesController, type: :controller do
   let(:order) { create(:order_with_totals_and_distribution) }
   let(:user) { create(:admin_user) }
 
