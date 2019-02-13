@@ -8,6 +8,16 @@
 
 require 'spree/product_filters'
 
+# Due to a bug in ActiveRecord we need to load the tagging code in Gateway which
+# should have inherited it from its parent PaymentMethod.
+# We have to call it before loading the PaymentMethod decorator because the
+# tagging code won't load twice within the inheritance chain.
+# https://github.com/openfoodfoundation/openfoodnetwork/issues/3121
+Spree::Gateway.class_eval do
+  acts_as_taggable
+  attr_accessible :tag_list
+end
+
 require "#{Rails.root}/app/models/spree/payment_method_decorator"
 require "#{Rails.root}/app/models/spree/gateway_decorator"
 
