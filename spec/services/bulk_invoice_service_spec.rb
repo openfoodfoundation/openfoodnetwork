@@ -17,8 +17,7 @@ describe BulkInvoiceService do
       order.bill_address = order.ship_address
       order.save!
 
-      service.start_pdf_job([order.id])
-      Delayed::Job.last.invoke_job
+      service.start_pdf_job_without_delay([order.id])
 
       expect(service.invoice_created?(service.id)).to be_truthy
     end
