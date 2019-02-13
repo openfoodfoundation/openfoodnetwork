@@ -1,3 +1,10 @@
+<script type="text/javascript">
+window.onbeforeunload = confirmExit;
+function confirmExit()
+{
+return "Do you want to leave this page without saving?";
+}
+</script>
 %tr.product{ :id => "p_{{product.id}}" }
   %td.left-actions
     %a{ 'ofn-toggle-variants' => 'true', :class => "view-variants", 'ng-show' => 'hasVariants(product)' }
