@@ -23,7 +23,9 @@ xdescribe Spree::Admin::InvoicesController, type: :controller do
 
     context "when the file is available" do
       it "returns true" do
-        allow(File).to receive(:exist?).and_return(true)
+        allow(File).to receive(:exist?)
+        allow(File).to receive(:exist?).with("tmp/invoices/#{invoice_id}.pdf").and_return(true)
+
         spree_get :poll, invoice_id: invoice_id
 
         expect(response.body).to eq({ created: true }.to_json)
