@@ -280,6 +280,7 @@ en:
 
   actions:
     create_and_add_another: "Create and Add Another"
+    create: "Create"
   admin:
     # Common properties / models
     begins_at: Begins At
