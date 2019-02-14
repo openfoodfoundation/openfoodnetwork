@@ -1,8 +1,4 @@
 module AddToCartHelper
-  def product_out_of_stock
-    !@product.has_stock? && !Spree::Config[:allow_backorders]
-  end
-
   def distributor_available_for?(order, product)
     DistributionChangeValidator.new(order).distributor_available_for?(product)
   end
