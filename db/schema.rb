@@ -533,9 +533,9 @@ ActiveRecord::Schema.define(:version => 20181128054803) do
     t.datetime "updated_at",                                         :null => false
     t.integer  "max_quantity"
     t.string   "currency"
-    t.decimal  "distribution_fee",     :precision => 10, :scale => 2
-    t.decimal  "final_weight_volume",  :precision => 10, :scale => 2
-    t.decimal  "cost_price",           :precision => 8,  :scale => 2
+    t.decimal  "distribution_fee",    :precision => 10, :scale => 2
+    t.decimal  "final_weight_volume", :precision => 10, :scale => 2
+    t.decimal  "cost_price",          :precision => 8,  :scale => 2
     t.integer  "tax_category_id"
   end
 
@@ -966,6 +966,7 @@ ActiveRecord::Schema.define(:version => 20181128054803) do
     t.string   "name"
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
+    t.boolean  "active",                 :default => true
     t.string   "address1"
     t.string   "address2"
     t.string   "city"
@@ -974,7 +975,6 @@ ActiveRecord::Schema.define(:version => 20181128054803) do
     t.integer  "country_id"
     t.string   "zipcode"
     t.string   "phone"
-    t.boolean  "active",                 :default => true
     t.boolean  "backorderable_default",  :default => false
     t.boolean  "propagate_all_variants", :default => true
   end
