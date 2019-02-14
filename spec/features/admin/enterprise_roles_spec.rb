@@ -99,6 +99,7 @@ feature %q{
         click_link 'Enterprises'
         click_link 'Test Enterprise'
         navigate_to_enterprise_users
+        expect(page).to have_selector "table.managers"
       end
 
       it "lists managers and shows icons for owner, contact, and email confirmation" do
@@ -131,6 +132,7 @@ feature %q{
         select2_select user2.email, from: 'receives_notifications_dropdown'
         within('#save-bar') { click_button 'Update' }
         navigate_to_enterprise_users
+        expect(page).to have_selector "table.managers"
 
         within 'table.managers' do
           within "tr#manager-#{user1.id}" do
@@ -178,8 +180,6 @@ feature %q{
     within ".side_menu" do
       click_link "Users"
     end
-
-    expect(page).to have_selector "table.managers"
   end
 
   def have_relationship(user, enterprise)
