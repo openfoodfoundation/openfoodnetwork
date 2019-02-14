@@ -88,15 +88,25 @@ feature "Order Management", js: true do
     let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true) }
     let(:order_cycle) { create(:order_cycle) }
     let(:shipping_method) { distributor.shipping_methods.first }
-    let(:order) { create(:completed_order_with_totals, order_cycle: order_cycle, distributor: distributor, user: user, bill_address: address, ship_address: address) }
+    let(:order) do
+      create(
+        :completed_order_with_totals,
+        order_cycle: order_cycle,
+        distributor: distributor,
+        user: user,
+        bill_address: address,
+        ship_address: address
+      )
+    end
     let!(:item1) { order.reload.line_items.first }
     let!(:item2) { create(:line_item, order: order) }
     let!(:item3) { create(:line_item, order: order) }
 
     before do
-      shipping_method.calculator.update_attributes(preferred_amount: 5.0)
-      order.shipments = [create(:shipment_with, :shipping_method, shipping_method: shipping_method)]
-      order.reload.save
+      order.shipment.shipping_method.calculator.update_attributes(preferred_amount: 5.0)
+      order.save
+      order.reload
+
       quick_login_as user
     end
 
