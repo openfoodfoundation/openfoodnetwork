@@ -1,8 +1,11 @@
+require "spec_helper"
+
 describe SubscriptionValidator do
-  let(:shop) { instance_double(Enterprise, name: "Shop") }
+  let(:owner) { create(:user) }
+  let(:shop) { create(:enterprise, name: "Shop", owner: owner) }
 
   describe "delegation" do
-    let(:subscription) { create(:subscription) }
+    let(:subscription) { create(:subscription, shop: shop) }
     let(:validator) { SubscriptionValidator.new(subscription) }
 
     it "delegates to subscription" do
@@ -438,6 +441,7 @@ describe SubscriptionValidator do
 
         context "but some variants are unavailable" do
           let(:product) { instance_double(Spree::Product, name: "some_name") }
+
           before do
             allow(validator).to receive(:available_variant_ids) { [variant2.id] }
             allow(variant1).to receive(:product) { product }
@@ -451,7 +455,9 @@ describe SubscriptionValidator do
         end
 
         context "and all requested variants are available" do
-          before { allow(validator).to receive(:available_variant_ids) { [variant1.id, variant2.id] } }
+          before do
+            allow(validator).to receive(:available_variant_ids) { [variant1.id, variant2.id] }
+          end
 
           it "returns true" do
             expect(validator.valid?).to be true

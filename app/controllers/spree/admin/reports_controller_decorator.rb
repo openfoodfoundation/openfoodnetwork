@@ -1,4 +1,6 @@
 require 'csv'
+
+require 'open_food_network/reports/list'
 require 'open_food_network/order_and_distributor_report'
 require 'open_food_network/products_and_inventory_report'
 require 'open_food_network/lettuce_share_report'
@@ -24,35 +26,7 @@ Spree::Admin::ReportsController.class_eval do
   before_filter :load_data, only: [:customers, :products_and_inventory, :order_cycle_management, :packing]
 
   def report_types
-    {
-      orders_and_fulfillment: [
-        [I18n.t('admin.reports.supplier_totals'), :order_cycle_supplier_totals],
-        [I18n.t('admin.reports.supplier_totals_by_distributor'), :order_cycle_supplier_totals_by_distributor],
-        [I18n.t('admin.reports.totals_by_supplier'), :order_cycle_distributor_totals_by_supplier],
-        [I18n.t('admin.reports.customer_totals'), :order_cycle_customer_totals]
-      ],
-      products_and_inventory: [
-        [I18n.t('admin.reports.all_products'), :all_products],
-        [I18n.t('admin.reports.inventory'), :inventory],
-        [I18n.t('admin.reports.lettuce_share'), :lettuce_share]
-      ],
-      customers: [
-        [I18n.t('admin.reports.mailing_list'), :mailing_list],
-        [I18n.t('admin.reports.addresses'), :addresses]
-      ],
-      order_cycle_management: [
-        [I18n.t('admin.reports.payment_methods'), :payment_methods],
-        [I18n.t('admin.reports.delivery'), :delivery]
-      ],
-      sales_tax: [
-        [I18n.t('admin.reports.tax_types'), :tax_types],
-        [I18n.t('admin.reports.tax_rates'), :tax_rates]
-      ],
-      packing: [
-        [I18n.t('admin.reports.pack_by_customer'), :pack_by_customer],
-        [I18n.t('admin.reports.pack_by_supplier'), :pack_by_supplier]
-      ]
-    }
+    OpenFoodNetwork::Reports::List.all
   end
 
   # Override spree reports list.
@@ -275,6 +249,7 @@ Spree::Admin::ReportsController.class_eval do
       :products_and_inventory,
       :sales_total,
       :users_and_enterprises,
+      :enterprise_fee_summary,
       :order_cycle_management,
       :sales_tax,
       :xero_invoices,
@@ -295,7 +270,13 @@ Spree::Admin::ReportsController.class_eval do
         locals: { report_types: report_types[report] }
       ).html_safe
     end
-    { name: name, description: description }
+    { name: name, url: url_for_report(report), description: description }
+  end
+
+  def url_for_report(report)
+    public_send("#{report}_admin_reports_url".to_sym)
+  rescue NoMethodError
+    url_for([:new, :admin, :reports, report.to_s.singularize])
   end
 
   def timestamp

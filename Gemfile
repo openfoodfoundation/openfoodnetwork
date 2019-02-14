@@ -10,6 +10,7 @@ gem 'i18n-js', '~> 3.1.0'
 # Patched version. See http://rubysec.com/advisories/CVE-2015-5312/.
 gem 'nokogiri', '>= 1.6.7.1'
 
+gem "order_management", path: "./engines/order_management"
 gem 'web', path: './engines/web'
 
 gem 'pg'
@@ -26,13 +27,13 @@ gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '2-0-stable'
 # - Pass customer email and phone number to PayPal (merged to upstream master)
 # - Change type of password from string to password to hide it in the form
 gem 'spree_paypal_express', github: "openfoodfoundation/better_spree_paypal_express", branch: "2-0-stable"
-gem 'stripe', '~> 3.3.2'
+gem 'stripe', '~> 4.5.0'
 # We need at least this version to have Digicert's root certificate
 # which is needed for Pin Payments (and possibly others).
 gem 'activemerchant', '~> 1.78'
 
 gem 'oauth2', '~> 1.4.1' # Used for Stripe Connect
-gem 'jwt', '~> 1.5'
+gem 'jwt', '~> 2.1'
 
 gem 'delayed_job_active_record'
 gem 'daemons'

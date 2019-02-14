@@ -439,7 +439,7 @@ feature %q{
         expect(page).to have_selector "tr#li_#{li3.id}"
         fill_in "quick_search", :with => o1.email
         expect(page).to have_selector "tr#li_#{li1.id}"
-        expect(page).to have_no_selector "tr#li_#{li2.id}",  true
+        expect(page).to have_no_selector "tr#li_#{li2.id}"
         expect(page).to have_no_selector "tr#li_#{li3.id}"
       end
     end
@@ -567,6 +567,7 @@ feature %q{
       context "when a filter has been applied" do
         it "only toggles checkboxes which are in filteredLineItems" do
           fill_in "quick_search", with: o1.number
+          expect(page).to have_no_selector "tr#li_#{li2.id}"
           check "toggle_bulk"
           fill_in "quick_search", with: ''
           expect(find("tr#li_#{li1.id} input[type='checkbox'][name='bulk']").checked?).to be true
@@ -577,11 +578,13 @@ feature %q{
         it "only applies the delete action to filteredLineItems" do
           check "toggle_bulk"
           fill_in "quick_search", with: o1.number
+          expect(page).to have_no_selector "tr#li_#{li2.id}"
           find("div#bulk-actions-dropdown").click
           find("div#bulk-actions-dropdown div.menu_item", :text => "Delete Selected" ).click
-          fill_in "quick_search", with: ''
           expect(page).to have_no_selector "tr#li_#{li1.id}"
+          fill_in "quick_search", with: ''
           expect(page).to have_selector "tr#li_#{li2.id}"
+          expect(page).to have_no_selector "tr#li_#{li1.id}"
         end
       end
     end
@@ -740,10 +743,11 @@ feature %q{
   end
 
   def select_date(date)
-    current_month = Time.zone.today.strftime("%B")
-    target_month = date.strftime("%B")
+    # Wait for datepicker to open and be associated to the datepicker trigger.
+    expect(page).to have_selector("#ui-datepicker-div")
 
-    find('#ui-datepicker-div .ui-datepicker-header .ui-datepicker-prev').click if current_month != target_month
+    navigate_datepicker_to_month date
+
     find('#ui-datepicker-div .ui-datepicker-calendar .ui-state-default', text: date.strftime("%e").to_s.strip, exact_text: true).click
   end
 end

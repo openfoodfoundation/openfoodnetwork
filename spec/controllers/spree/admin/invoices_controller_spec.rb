@@ -2,10 +2,11 @@ require 'spec_helper'
 
 xdescribe Spree::Admin::InvoicesController, type: :controller do
   let(:order) { create(:order_with_totals_and_distribution) }
-  let(:user) { create(:admin_user) }
+  let(:enterprise_user) { create(:user) }
+  let!(:enterprise) { create(:enterprise, owner: enterprise_user) }
 
   before do
-    allow(controller).to receive(:spree_current_user) { user }
+    allow(controller).to receive(:spree_current_user) { enterprise_user }
   end
 
   describe "#create" do
