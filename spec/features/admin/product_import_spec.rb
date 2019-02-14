@@ -294,6 +294,49 @@ feature "Product Import", js: true do
         expect(page).to have_content 'Cabbage'
       end
     end
+
+    it "handles on_demand and on_hand validations with inventory" do
+      csv_data = CSV.generate do |csv|
+        csv << ["name", "distributor", "producer", "category", "on_hand", "price", "units", "on_demand"]
+        csv << ["Beans", "Another Enterprise", "User Enterprise", "Vegetables", nil, "3.20", "500", "true"]
+        csv << ["Sprouts", "Another Enterprise", "User Enterprise", "Vegetables", "6", "6.50", "500", "false"]
+        csv << ["Cabbage", "Another Enterprise", "User Enterprise", "Vegetables", nil, "1.50", "500", nil]
+      end
+      File.write('/tmp/test.csv', csv_data)
+
+      visit main_app.admin_product_import_path
+      select2_select I18n.t('admin.product_import.index.inventories'), from: "settings_import_into"
+      attach_file 'file', '/tmp/test.csv'
+      click_button 'Upload'
+
+      proceed_to_validation
+
+      expect(page).to have_selector '.item-count', text: "3"
+      expect(page).to have_no_selector '.invalid-count'
+      expect(page).to have_selector '.inv-create-count', text: '2'
+      expect(page).to have_selector '.inv-update-count', text: '1'
+
+      save_data
+
+      expect(page).to have_selector '.inv-created-count', text: '2'
+      expect(page).to have_selector '.inv-updated-count', text: '1'
+
+      beans_override = VariantOverride.where(variant_id: product2.variants.first.id, hub_id: enterprise2.id).first
+      sprouts_override = VariantOverride.where(variant_id: product3.variants.first.id, hub_id: enterprise2.id).first
+      cabbage_override = VariantOverride.where(variant_id: product4.variants.first.id, hub_id: enterprise2.id).first
+
+      expect(Float(beans_override.price)).to eq 3.20
+      expect(beans_override.count_on_hand).to be_nil
+      expect(beans_override.on_demand).to be_truthy
+
+      expect(Float(sprouts_override.price)).to eq 6.50
+      expect(sprouts_override.count_on_hand).to eq 6
+      expect(sprouts_override.on_demand).to eq false
+
+      expect(Float(cabbage_override.price)).to eq 1.50
+      expect(cabbage_override.count_on_hand).to be_nil
+      expect(cabbage_override.on_demand).to be_nil
+    end
   end
 
   describe "when dealing with uploaded files" do

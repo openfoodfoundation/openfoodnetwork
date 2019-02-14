@@ -12,7 +12,7 @@
     - if @product_count > 0
       %div.seven.columns.alpha.list-item
         %span.six.columns.alpha
-          = "You have #{@product_count} active product#{@product_count > 1 ? "s" : ""}."
+          = t(".active_products", count: @product_count )
         %span.one.column.omega
           %span.icon-ok-sign
       %a.seven.columns.alpha.button.bottom.blue{ href: "#{admin_products_path}" }
@@ -21,7 +21,7 @@
     - else
       %div.seven.columns.alpha.list-item.red
         %span.six.columns.alpha
-          = t "spree_admin_enterprises_any_active_products_text"
+          = t(".active_products", count: @product_count )
         %span.one.column.omega
           %span.icon-remove-sign
       %a.seven.columns.alpha.button.bottom.red{ href: "#{new_admin_product_path}" }

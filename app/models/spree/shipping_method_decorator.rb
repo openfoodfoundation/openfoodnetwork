@@ -20,6 +20,10 @@ Spree::ShippingMethod.class_eval do
     end
   }
 
+  scope :for_distributors, ->(distributors) {
+    non_unique_matches = unscoped.joins(:distributors).where(enterprises: { id: distributors })
+    where(id: non_unique_matches.map(&:id))
+  }
   scope :for_distributor, lambda { |distributor|
     joins(:distributors).
       where('enterprises.id = ?', distributor)

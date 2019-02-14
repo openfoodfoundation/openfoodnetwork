@@ -4,9 +4,11 @@ require 'support/cancan_helper'
 
 module Spree
   describe User do
-
     describe "broad permissions" do
       subject { AbilityDecorator.new(user) }
+
+      include ::AbilityHelper
+
       let(:user) { create(:user) }
       let(:enterprise_any) { create(:enterprise, sells: 'any') }
       let(:enterprise_own) { create(:enterprise, sells: 'own') }
@@ -215,6 +217,8 @@ module Spree
           should have_ability([:admin, :index, :customers, :bulk_coop, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management], for: :report)
         end
 
+        include_examples "allows access to Enterprise Fee Summary only if feature flag enabled"
+
         it "should not be able to read other reports" do
           should_not have_ability([:sales_total, :group_buys, :payments, :orders_and_distributors, :users_and_enterprises, :xero_invoices], for: :report)
         end
@@ -405,6 +409,8 @@ module Spree
         it "should be able to read some reports" do
           should have_ability([:admin, :index, :customers, :sales_tax, :group_buys, :bulk_coop, :payments, :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :xero_invoices], for: :report)
         end
+
+        include_examples "allows access to Enterprise Fee Summary only if feature flag enabled"
 
         it "should not be able to read other reports" do
           should_not have_ability([:sales_total, :users_and_enterprises], for: :report)

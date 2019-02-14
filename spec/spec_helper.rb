@@ -135,6 +135,7 @@ RSpec.configure do |config|
   config.extend  Spree::Api::TestingSupport::Setup, :type => :controller
   config.include Spree::Api::TestingSupport::Helpers, :type => :controller
   config.include OpenFoodNetwork::ControllerHelper, :type => :controller
+  config.include Features::DatepickerHelper, type: :feature
   config.include OpenFoodNetwork::FeatureToggleHelper
   config.include OpenFoodNetwork::FiltersHelper
   config.include OpenFoodNetwork::EnterpriseGroupsHelper

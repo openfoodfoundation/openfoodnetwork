@@ -26,9 +26,8 @@
       .no-objects-found
         = Spree.t(:your_order_is_empty_add_product)
 
-    %div{"data-hook" => "admin_order_edit_form"}
-      #order-form-wrapper
-        = render :partial => 'form', :locals => { :order => @order }
+    %div
+      = render :partial => 'form', :locals => { :order => @order }
 
 - content_for :head do
   = javascript_tag 'var expand_variants = true;'
