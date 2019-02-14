@@ -229,8 +229,8 @@ describe Spree::Order do
 
     context "with a taxed shipment" do
       before do
-        Spree::Config.shipment_inc_vat = true
-        Spree::Config.shipping_tax_rate = 0.25
+        allow(Spree::Config).to receive(:shipment_inc_vat).and_return(true)
+        allow(Spree::Config).to receive(:shipping_tax_rate).and_return(0.25)
       end
 
       let!(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method, order: order) }
@@ -261,8 +261,8 @@ describe Spree::Order do
 
   describe "getting the total tax" do
     before do
-      Spree::Config.shipment_inc_vat = true
-      Spree::Config.shipping_tax_rate = 0.25
+      allow(Spree::Config).to receive(:shipment_inc_vat).and_return(true)
+      allow(Spree::Config).to receive(:shipping_tax_rate).and_return(0.25)
     end
 
     let(:order) { create(:order) }
@@ -321,8 +321,8 @@ describe Spree::Order do
     end
 
     before do
-      Spree::Config.shipment_inc_vat = true
-      Spree::Config.shipping_tax_rate = tax_rate15.amount
+      allow(Spree::Config).to receive(:shipment_inc_vat).and_return(true)
+      allow(Spree::Config).to receive(:shipping_tax_rate).and_return(tax_rate15.amount)
     end
 
     let(:shipping_method) { create(:shipping_method, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 46.0)) }
