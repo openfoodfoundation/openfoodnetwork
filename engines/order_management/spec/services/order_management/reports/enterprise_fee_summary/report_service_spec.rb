@@ -151,6 +151,36 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
     end
   end
 
+  describe "data exclusions" do
+    describe "invalid adjustments (through 'eligible') like failed payments" do
+      let!(:customer_order) { prepare_order(customer: customer) }
+
+      before do
+        # Make the payment fail. See Spree::Payment#revoke_adjustment_eligibility.
+        payment = customer_order.payments.first
+        payment.state = "failed"
+        payment.save!
+      end
+
+      it "is included" do
+        totals = service.list
+
+        expect(totals.length).to eq(2)
+
+        expected_result = [
+          ["Payment Transaction", "Sample Distributor", "Sample Payment Method", "Sample Customer",
+           nil, nil, nil, "2.00"],
+          ["Shipment", "Sample Distributor", "Sample Shipping Method", "Sample Customer",
+           nil, nil, "Platform Rate", "1.00"]
+        ]
+
+        expected_result.each_with_index do |expected_attributes, row_index|
+          expect_total_attributes(totals[row_index], expected_attributes)
+        end
+      end
+    end
+  end
+
   describe "handling of more complex cases" do
     context "with non-sender fee for incoming exchange and non-receiver fee for outgoing" do
       let!(:variant) do
