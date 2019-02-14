@@ -224,9 +224,8 @@ describe Spree::Order do
   end
 
   describe "getting the shipping tax" do
+    let(:order) { create(:order) }
     let(:shipping_method) { create(:shipping_method_with, :flat_rate) }
-    let(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
-    let(:order)    { create(:order, shipments: [shipment]) }
 
     context "with a taxed shipment" do
       before do
@@ -234,13 +233,17 @@ describe Spree::Order do
         Spree::Config.shipping_tax_rate = 0.25
       end
 
+      let!(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method, order: order) }
+
       it "returns the shipping tax" do
         order.shipping_tax.should == 10
       end
     end
 
-    it "returns zero when the order has not been shipped" do
-      order.shipping_tax.should == 0
+    context 'when the order has not been shipped' do
+      it "returns zero when the order has not been shipped" do
+        order.shipping_tax.should == 0
+      end
     end
   end
 
@@ -257,21 +260,33 @@ describe Spree::Order do
   end
 
   describe "getting the total tax" do
-    let(:shipping_method) { create(:shipping_method_with, :flat_rate) }
-    let(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
-    let(:order)          { create(:order, shipments: [shipment]) }
-    let(:enterprise_fee) { create(:enterprise_fee) }
-
     before do
       Spree::Config.shipment_inc_vat = true
       Spree::Config.shipping_tax_rate = 0.25
+    end
 
-      create(:adjustment, adjustable: order, originator: enterprise_fee, label: "EF", amount: 123, included_tax: 2)
+    let(:order) { create(:order) }
+    let(:shipping_method) { create(:shipping_method_with, :flat_rate) }
+    let!(:shipment) do
+      create(:shipment_with, :shipping_method, shipping_method: shipping_method, order: order)
+    end
+    let(:enterprise_fee) { create(:enterprise_fee) }
+
+    before do
+      create(
+        :adjustment,
+        adjustable: order,
+        originator: enterprise_fee,
+        label: "EF",
+        amount: 123,
+        included_tax: 2
+      )
       order.reload
     end
 
     it "returns a sum of all tax on the order" do
-      order.total_tax.should == 12
+      # 12 = 2 (of the enterprise fee adjustment) + 10 (of the shipment adjustment)
+      expect(order.total_tax).to eq(12)
     end
   end
 
@@ -289,19 +304,31 @@ describe Spree::Order do
     let(:tax_category25)  { create(:tax_category, tax_rates: [tax_rate25]) }
 
     let(:variant)         { create(:variant, product: create(:product, tax_category: tax_category10)) }
-    let(:shipping_method) { create(:shipping_method, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 46.0)) }
-    let(:shipment)        { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
     let(:enterprise_fee)  { create(:enterprise_fee, enterprise: coordinator, tax_category: tax_category20, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 48.0)) }
     let(:additional_adjustment) { create(:adjustment, amount: 50.0, included_tax: tax_rate25.compute_tax(50.0)) }
 
     let(:order_cycle)     { create(:simple_order_cycle, coordinator: coordinator, coordinator_fees: [enterprise_fee], distributors: [coordinator], variants: [variant]) }
     let(:line_item)       { create(:line_item, variant: variant, price: 44.0) }
-    let(:order)           { create(:order, line_items: [line_item], shipments: [shipment], bill_address: create(:address), order_cycle: order_cycle, distributor: coordinator, adjustments: [additional_adjustment]) }
+    let(:order) do
+      create(
+        :order,
+        line_items: [line_item],
+        bill_address: create(:address),
+        order_cycle: order_cycle,
+        distributor: coordinator,
+        adjustments: [additional_adjustment]
+      )
+    end
 
     before do
       Spree::Config.shipment_inc_vat = true
       Spree::Config.shipping_tax_rate = tax_rate15.amount
+    end
 
+    let(:shipping_method) { create(:shipping_method, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 46.0)) }
+    let!(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method, order: order) }
+
+    before do
       order.create_tax_charge!
       order.update_distribution_charge!
     end
