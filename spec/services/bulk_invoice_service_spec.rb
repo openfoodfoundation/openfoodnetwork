@@ -11,6 +11,16 @@ describe BulkInvoiceService do
 
       expect(Delayed::Job.last.payload_object.method_name).to eq :start_pdf_job_without_delay
     end
+
+    it "creates a PDF invoice" do
+      order = create(:completed_order_with_fees)
+      order.bill_address = order.ship_address
+      order.save!
+
+      service.start_pdf_job_without_delay([order.id])
+
+      expect(service.invoice_created?(service.id)).to be_truthy
+    end
   end
 
   describe "#invoice_created?" do
