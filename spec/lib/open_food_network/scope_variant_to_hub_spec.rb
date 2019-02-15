@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'open_food_network/scope_variant_to_hub'
 
 module OpenFoodNetwork
@@ -82,9 +83,9 @@ module OpenFoodNetwork
             before { vo.update_column(:on_demand, nil) }
 
             context "when count_on_hand is set" do
-              it "returns false" do
+              it "returns variant's on_demand" do
                 scoper.scope v
-                expect(v.on_demand).to be false
+                expect(v.on_demand).to be true
               end
             end
 
