@@ -400,9 +400,10 @@ FactoryBot.define do
       transient do
         shipping_method { create(:shipping_method) }
       end
-      after(:create) do |shipment, evaluator|
-        shipment.add_shipping_method(evaluator.shipping_method, true)
 
+      shipping_rates { [Spree::ShippingRate.create(shipping_method: shipping_method, selected: true)] }
+
+      after(:create) do |shipment, evaluator|
         shipment.order.line_items.each do |line_item|
           line_item.quantity.times { shipment.inventory_units.create(variant_id: line_item.variant_id) }
         end
