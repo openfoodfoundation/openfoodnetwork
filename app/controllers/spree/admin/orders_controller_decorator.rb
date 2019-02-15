@@ -3,7 +3,6 @@ require 'open_food_network/spree_api_key_loader'
 Spree::Admin::OrdersController.class_eval do
   include OpenFoodNetwork::SpreeApiKeyLoader
   helper CheckoutHelper
-  before_filter :load_spree_api_key, :only => :bulk_management
   before_filter :load_order, only: %i[show edit update fire resend invoice print print_ticket]
 
   before_filter :load_distribution_choices, only: [:new, :edit, :update]
@@ -21,6 +20,10 @@ Spree::Admin::OrdersController.class_eval do
   before_filter :require_distributor_abn, only: :invoice
 
   respond_to :html, :json
+
+  def bulk_management
+    load_spree_api_key
+  end
 
   def index
     # Overriding the action so we only render the page template. An angular request
