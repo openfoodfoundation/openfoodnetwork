@@ -68,9 +68,11 @@ describe UserConfirmationsController, type: :controller do
     end
 
     it "sends the confirmation email" do
-      expect do
-        spree_post :create, { spree_user: { email: unconfirmed_user.email } }
-      end.to send_confirmation_instructions
+      performing_deliveries do
+        expect do
+          spree_post :create, { spree_user: { email: unconfirmed_user.email } }
+        end.to send_confirmation_instructions
+      end
     end
   end
 end
