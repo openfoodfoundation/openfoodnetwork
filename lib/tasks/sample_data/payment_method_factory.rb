@@ -44,6 +44,7 @@ class PaymentMethodFactory
     card = enterprise.payment_methods.new(
       name: name,
       description: description,
+      environment: Rails.env,
       distributor_ids: [enterprise.id]
     )
     calculator.calculable = card
