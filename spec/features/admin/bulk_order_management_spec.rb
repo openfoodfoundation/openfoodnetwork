@@ -43,9 +43,7 @@ feature %q{
       let!(:li1) { create(:line_item, order: o1 ) }
       let!(:li2) { create(:line_item, order: o2, product: create(:product_with_option_types) ) }
 
-      before :each do
-        visit '/admin/orders/bulk_management'
-      end
+      before { visit spree.admin_bulk_order_management_path }
 
       it "displays a column for user's full name" do
         expect(page).to have_selector "th.full_name", text: "NAME", :visible => true
