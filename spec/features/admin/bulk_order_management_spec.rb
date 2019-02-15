@@ -53,7 +53,7 @@ feature %q{
 
       it "displays a column for order date" do
         expect(page).to have_selector "th.date", text: I18n.t("admin.orders.bulk_management.order_date").upcase, visible: true
-        expect(page).to have_selector "td.date", text: o1.completed_at.strftime('%B %d, %Y'), visible: true
+        expect(page).to have_selector "td.date", text: o1.completed_at.strftime('%B %d, %Y'), visible: true, wait: 4
         expect(page).to have_selector "td.date", text: o2.completed_at.strftime('%B %d, %Y'), visible: true
       end
 
