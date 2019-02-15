@@ -31,6 +31,16 @@ nb:
             on_demand_but_count_on_hand_set: "må være tom hvis på forespørsel"
             limited_stock_but_no_count_on_hand: "må spesifiseres fordi det tvinger begrenset lager"
   activemodel:
+    attributes:
+      order_management/reports/enterprise_fee_summary/parameters:
+        start_at: "Start"
+        end_at: "Slutt"
+        distributor_ids: "Hubs"
+        producer_ids: "Produsenter"
+        order_cycle_ids: "Bestillingsrunder"
+        enterprise_fee_ids: "Avgiftsnavn"
+        shipping_method_ids: "Leveringsmetoder"
+        payment_method_ids: "Betalingsmetoder"
     errors:
       models:
         subscription_validator:
@@ -74,6 +84,13 @@ nb:
   models:
     order_cycle:
       cloned_order_cycle_name: "KOPI AV %{order_cycle}"
+  validators:
+    date_time_string_validator:
+      not_string_error: "må være en streng"
+      invalid_format_error: "må være gyldig"
+    integer_array_validator:
+      not_array_error: "må være en tabell"
+      invalid_element_error: "må kun inneholde gyldige heltall"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Vennligst bekreft epostadressen til %{enterprise}"
@@ -256,7 +273,7 @@ nb:
     shop: Butikk
     sku: SKU
     status_state: Tilstand
-    tags: Merker
+    tags: Merkelapper
     variant: Variant
     weight: Vekt
     volume: Volum
@@ -314,7 +331,7 @@ nb:
       embedded_shopfronts_whitelist: "Hviteliste for Eksterne Domener"
     number_localization:
       number_localization_settings: "Innstillinger for nummerlokalisering"
-      enable_localized_number: "Bruk den internasjonale tusen/desimal tegn-logikken"
+      enable_localized_number: "Bruk internasjonale tusen- og desimalskilletegn"
     business_model_configuration:
       edit:
         business_model_configuration: "Forretningsmodell"
@@ -747,7 +764,7 @@ nb:
           no_rules_yet: Ingen regler gjelder for dette emnet ennå
           for_customers_tagged: 'For kunder merket:'
           add_new_rule: '+ Legg til En Ny Regel'
-          add_new_tag: '+ Legg til Et Nytt Merke'
+          add_new_tag: '+ Legg til ny Merkelapp'
         users:
           email_confirmation_notice_html: "Epostbekreftelse venter. Vi har sendt en bekreftelsesepost til %{email}."
           resend: Send på nytt
@@ -875,7 +892,7 @@ nb:
         outgoing: Utgående
         distributor: Distributør
         products: Produkter
-        tags: Merker
+        tags: Merkelapper
         add_a_tag: Legg til en merkelapp
         delivery_details: Hente-/Leveringsdetaljer
         debug_info: Debuginformasjon
@@ -994,6 +1011,9 @@ nb:
         description: Fakturaer for import til Xero
       packing:
         name: Pakkerapporter
+      enterprise_fee_summary:
+        name: "Sammendrag Bedriftsavgift"
+        description: "Sammendrag av bedriftsavgifter innsamlet"
     subscriptions:
       subscriptions: Abonnement
       new: Nytt abonnement
@@ -1998,7 +2018,6 @@ nb:
   spree_admin_enterprises_none_text: "Du har ingen bedrifter ennå"
   spree_admin_enterprises_tabs_hubs: "HUBS"
   spree_admin_enterprises_producers_manage_products: "ADMINISTRER PRODUKTER"
-  spree_admin_enterprises_any_active_products_text: "Du har ingen aktive produkter."
   spree_admin_enterprises_create_new_product: "OPPRETT NYTT PRODUKT"
   spree_admin_single_enterprise_alert_mail_confirmation: "Vennligst bekreft epostadressen for"
   spree_admin_single_enterprise_alert_mail_sent: "Vi har sendt epost til"
@@ -2520,6 +2539,45 @@ nb:
   producers:
     signup:
       start_free_profile: "Start med en gratis profil, og utvid når du er klar!"
+  order_management:
+    reports:
+      enterprise_fee_summary:
+        date_end_before_start_error: "må være etter start"
+        parameter_not_allowed_error: "Du er ikke autorisert til å bruke ett eller flere utvalgte filtre for denne rapporten."
+        fee_calculated_on_transfer_through_all: "Alle"
+        fee_calculated_on_transfer_through_entire_orders: "Hele bestillinger gjennom %{distributor}"
+        tax_category_various: "Diverse"
+        fee_type:
+          payment_method: "Betalingstransaksjon"
+          shipping_method: "Leveranse"
+        fee_placements:
+          supplier: "Innkommende"
+          distributor: "Utgående"
+          coordinator: "Koordinator"
+        tax_category_name:
+          shipping_instance_rate: "Plattformrate"
+        formats:
+          csv:
+            header:
+              fee_type: "Avfgiftstype"
+              enterprise_name: "Bedriftseier"
+              fee_name: "Avgiftsnavn"
+              customer_name: "Kunde"
+              fee_placement: "Avgiftsplassering"
+              fee_calculated_on_transfer_through_name: "Avgift beregnes ved overføring gjennom"
+              tax_category_name: "Avgiftskategori"
+              total_amount: "$$ SUM"
+          html:
+            header:
+              fee_type: "Avfgiftstype"
+              enterprise_name: "Bedriftseier"
+              fee_name: "Avgiftsnavn"
+              customer_name: "Kunde"
+              fee_placement: "Avgiftsplassering"
+              fee_calculated_on_transfer_through_name: "Avgift beregnes ved overføring gjennom"
+              tax_category_name: "Avgiftskategori"
+              total_amount: "$$ SUM"
+        invalid_filter_parameters: "Filtrene du valgte for denne rapporten er ugyldige."
   spree:
     email: Epost
     account_updated: "Konto oppdatert!"
@@ -2563,6 +2621,11 @@ nb:
             distributor: "Distributør:"
             order_cycle: "Bestillingsrunde:"
       overview:
+        products:
+          active_products:
+            zero: "Du har ingen aktive produkter."
+            one: "Du har ett aktivt produkt"
+            other: "Du har %{count} aktive produkter"
         order_cycles:
           order_cycles: "Bestillingsrunder"
           order_cycles_tip: "Bestillingsrundene bestemmer når og hvor produktene dine er tilgjengelige for kundene."
@@ -2636,6 +2699,14 @@ nb:
           bulk_coop_allocation: 'Bulk Co-op - Allokering'
           bulk_coop_packing_sheets: 'Bulk Co-op - Pakkseddel'
           bulk_coop_customer_payments: 'Bulk Co-op - Kunde Betalinger'
+        enterprise_fee_summaries:
+          filters:
+            date_range: "Datointervall"
+            report_format_csv: "Last ned som CSV"
+            generate_report: "Generer rapport"
+          report:
+            none: "Ingen"
+            select_and_search: "Velg filtre og klikk på GENERER RAPPORT for å få tilgang til dataene dine."
       users:
         index:
           listing_users: "Lister opp brukere"
