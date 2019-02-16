@@ -591,8 +591,9 @@ feature %q{
 
     context "using action buttons" do
       context "using edit buttons" do
-        let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
-        let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
+        let(:address) { create(:address) }
+        let!(:o1) { create(:order_with_distributor, ship_address: address, state: 'complete', completed_at: Time.zone.now ) }
+        let!(:o2) { create(:order_with_distributor, ship_address: address, state: 'complete', completed_at: Time.zone.now ) }
         let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
         let!(:li2) { create(:line_item_with_shipment, order: o2 ) }
 
@@ -620,6 +621,7 @@ feature %q{
           within "tr#li_#{li1.id}" do
             find("a.edit-order").click
           end
+
           expect(URI.parse(current_url).path).to eq "/admin/orders/#{o1.number}/edit"
         end
       end
