@@ -179,6 +179,45 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
         end
       end
     end
+
+    describe "non-mandatory $0 adjustments (through 'eligible')" do
+      let!(:variant) { prepare_variant(outgoing_exchange_fees: [enterprise_fee]) }
+
+      let!(:enterprise_fee) do
+        create(:enterprise_fee, :per_item, name: "Sample Enterprise Fee", enterprise: distributor,
+                                           fee_type: "admin", amount: 0)
+      end
+
+      let!(:customer_order) { prepare_order(customer: customer) }
+
+      before do
+        # Change "eligible" in enterprise fee adjustment to false. $0 adjustments that are not
+        # mandatory are set to be ineligible, but there are no non-mandatory adjustments supported
+        # by the report yet.
+        adjustment = Spree::Adjustment.where(originator_type: "EnterpriseFee").first
+        adjustment.eligible = false
+        adjustment.save!
+      end
+
+      it "is included" do
+        totals = service.list
+
+        expect(totals.length).to eq(3)
+
+        expected_result = [
+          ["Admin", "Sample Distributor", "Sample Enterprise Fee", "Sample Customer",
+           "Outgoing", "Sample Distributor", nil, "0.00"],
+          ["Payment Transaction", "Sample Distributor", "Sample Payment Method", "Sample Customer",
+           nil, nil, nil, "2.00"],
+          ["Shipment", "Sample Distributor", "Sample Shipping Method", "Sample Customer",
+           nil, nil, "Platform Rate", "1.00"]
+        ]
+
+        expected_result.each_with_index do |expected_attributes, row_index|
+          expect_total_attributes(totals[row_index], expected_attributes)
+        end
+      end
+    end
   end
 
   describe "handling of more complex cases" do
