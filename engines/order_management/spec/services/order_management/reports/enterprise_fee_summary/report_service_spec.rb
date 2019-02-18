@@ -214,6 +214,31 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
         end
       end
     end
+
+    describe "$0 mandatory adjustments" do
+      let!(:payment_method) do
+        create(:payment_method, :per_item, amount: 0, name: "Sample Payment Method")
+      end
+
+      let!(:customer_order) { prepare_order(customer: customer) }
+
+      it "is included" do
+        totals = service.list
+
+        expect(totals.length).to eq(2)
+
+        expected_result = [
+          ["Payment Transaction", "Sample Distributor", "Sample Payment Method", "Sample Customer",
+           nil, nil, nil, "0.00"],
+          ["Shipment", "Sample Distributor", "Sample Shipping Method", "Sample Customer",
+           nil, nil, "Platform Rate", "1.00"]
+        ]
+
+        expected_result.each_with_index do |expected_attributes, row_index|
+          expect_total_attributes(totals[row_index], expected_attributes)
+        end
+      end
+    end
   end
 
   describe "handling of more complex cases" do
