@@ -2,7 +2,7 @@ angular.module("ofn.admin").controller "AdminEnterpriseRelationshipsCtrl", ($sco
   $scope.EnterpriseRelationships = EnterpriseRelationships
   $scope.Enterprises = Enterprises
   $scope.permissions = {}
-
+  
   $scope.create = ->
     $scope.EnterpriseRelationships.create($scope.parent_id, $scope.child_id, $scope.permissions)
 

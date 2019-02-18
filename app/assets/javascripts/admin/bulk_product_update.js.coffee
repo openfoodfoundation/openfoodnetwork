@@ -98,7 +98,12 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
       if (DirtyProducts.count() > 0 and confirm(t("unsaved_changes_confirmation"))) or (DirtyProducts.count() == 0)
         window.location = "/admin/products/" + product.permalink_live + ((if variant then "/variants/" + variant.id else "")) + "/edit"
 
-
+    $scope.$on('$routeChangeStart', function (event, next, current) {
+       if(confirm("Are you sure you want to leave without saving?")){
+             event.preventDefault();
+       }
+    });
+    
     $scope.toggleShowAllVariants = ->
       showVariants = !DisplayProperties.showVariants 0
       $scope.filteredProducts.forEach (product) ->
@@ -122,6 +127,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
       $scope.variantIdCounter = 0 unless $scope.variantIdCounter?
       $scope.variantIdCounter -= 1
       $scope.variantIdCounter
+
 
     $scope.deleteProduct = (product) ->
       if confirm("Are you sure?")
