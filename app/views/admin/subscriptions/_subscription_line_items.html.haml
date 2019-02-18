@@ -19,10 +19,10 @@
         .description {{ item.description }}
         .not-in-open-and-upcoming-order-cycles-warning{ ng: { if: '!item.in_open_and_upcoming_order_cycles' } }
           = t(".not_in_open_and_upcoming_order_cycles_warning")
-      %td.price.align-center {{ item.price_estimate | currency }}
+      %td.price.align-center {{ item.price_estimate | localizeCurrency }}
       %td.quantity
         %input{ name: 'quantity', type: 'number', min: 0, ng: { model: 'item.quantity' } }
-      %td.total.align-center {{ (item.price_estimate * item.quantity) | currency }}
+      %td.total.align-center {{ (item.price_estimate * item.quantity) | localizeCurrency }}
       %td.actions
         %a.delete-item.icon-trash.no-text{ ng: { click: 'removeSubscriptionLineItem(item)'}, :href => "javascript:void(0)" }
   %tbody#subtotal.no-border-top{"data-hook" => "admin_order_form_subtotal"}
@@ -32,7 +32,7 @@
           = t(:subtotal)
           \:
       %td.total.align-center
-        %span#order_subtotal {{ subscription.estimatedSubtotal() | currency }}
+        %span#order_subtotal {{ subscription.estimatedSubtotal() | localizeCurrency }}
       %td.actions
   %tbody#fees.no-border-top{ ng: { show: "subscription.estimatedFees() > 0" } }
     %tr#fees-row
@@ -41,7 +41,7 @@
           = t(:fees)
           \:
       %td.total.align-center
-        %span#order_fees {{ subscription.estimatedFees() | currency }}
+        %span#order_fees {{ subscription.estimatedFees() | localizeCurrency }}
       %td.actions
   %tbody#order-total.grand-total.no-border-top{"data-hook" => "admin_order_form_total"}
     %tr
@@ -50,7 +50,7 @@
           = t(:order_total_price)
           \:
       %td.total.align-center
-        %span#order_form_total {{ subscription.estimatedTotal() | currency }}
+        %span#order_form_total {{ subscription.estimatedTotal() | localizeCurrency }}
       %td.actions
 %p.notice
   = t ".this_is_an_estimate"
