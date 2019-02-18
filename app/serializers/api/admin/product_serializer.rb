@@ -25,7 +25,8 @@ class Api::Admin::ProductSerializer < ActiveModel::Serializer
   end
 
   def on_hand
-    object.on_hand.nil? ? 0 : object.on_hand.to_f.finite? ? object.on_hand : I18n.t(:on_demand)
+    return 0 if object.on_hand.nil?
+    object.on_hand
   end
 
   def price
