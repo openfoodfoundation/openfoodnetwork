@@ -225,11 +225,9 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
       it "is included" do
         totals = service.list
 
-        expect(totals.length).to eq(2)
+        expect(totals.length).to eq(1)
 
         expected_result = [
-          ["Payment Transaction", "Sample Distributor", "Sample Payment Method", "Sample Customer",
-           nil, nil, nil, "0.00"],
           ["Shipment", "Sample Distributor", "Sample Shipping Method", "Sample Customer",
            nil, nil, "Platform Rate", "1.00"]
         ]
