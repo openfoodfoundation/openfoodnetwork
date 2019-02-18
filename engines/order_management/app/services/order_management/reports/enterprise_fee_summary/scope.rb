@@ -46,7 +46,7 @@ module OrderManagement
 
         def find_adjustments
           chain_to_scope do
-            Spree::Adjustment
+            Spree::Adjustment.eligible
           end
         end
 
