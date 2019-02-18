@@ -55,7 +55,7 @@ describe OrderFactory do
     context "when requested quantity is greater than available stock" do
       context "when no override is present" do
         before do
-          variant1.update_attribute(:count_on_hand, 2)
+          variant1.update_attribute(:on_hand, 2)
           attrs[:line_items].first[:quantity] = 5
         end
 

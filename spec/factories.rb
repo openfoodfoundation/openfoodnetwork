@@ -602,7 +602,7 @@ FactoryBot.modify do
 
     after(:create) do |variant, evaluator|
       variant.on_demand = evaluator.on_demand
-      variant.count_on_hand = evaluator.on_hand
+      variant.on_hand = evaluator.on_hand
       variant.save
     end
   end

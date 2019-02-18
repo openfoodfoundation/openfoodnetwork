@@ -62,12 +62,12 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
 
       for li in @line_items when li.quantity > 0
         if stockLevels[li.variant.id]?
-          li.variant.count_on_hand = stockLevels[li.variant.id].on_hand
-          if li.quantity > li.variant.count_on_hand
-            li.quantity = li.variant.count_on_hand
+          li.variant.on_hand = stockLevels[li.variant.id].on_hand
+          if li.quantity > li.variant.on_hand
+            li.quantity = li.variant.on_hand
             scope.variants.push li.variant
-          if li.variant.count_on_hand == 0 && li.max_quantity > li.variant.count_on_hand
-            li.max_quantity = li.variant.count_on_hand
+          if li.variant.on_hand == 0 && li.max_quantity > li.variant.on_hand
+            li.max_quantity = li.variant.on_hand
             scope.variants.push(li.variant) unless li.variant in scope.variants
 
       if scope.variants.length > 0

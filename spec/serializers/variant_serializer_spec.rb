@@ -10,7 +10,7 @@ describe Api::VariantSerializer do
       :id,
         :name_to_display,
         :is_master,
-        :count_on_hand,
+        :on_hand,
         :name_to_display,
         :unit_to_display,
         :unit_value,

@@ -16,7 +16,7 @@ module ProductImport
                   :distributor_id, :name, :display_name, :sku, :unit_value,
                   :unit_description, :variant_unit, :variant_unit_scale,
                   :variant_unit_name, :display_as, :category, :primary_taxon_id,
-                  :price, :on_hand, :count_on_hand, :on_demand,
+                  :price, :on_hand, :on_demand,
                   :tax_category_id, :shipping_category_id, :description,
                   :import_date, :enterprise, :enterprise_id
 

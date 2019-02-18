@@ -76,9 +76,9 @@ describe SubscriptionPlacementJob do
 
       context "and insufficient stock exists to fulfil the order for some items" do
         before do
-          variant1.update_attribute(:count_on_hand, 5)
-          variant2.update_attribute(:count_on_hand, 2)
-          variant3.update_attribute(:count_on_hand, 0)
+          variant1.update_attribute(:on_hand, 5)
+          variant2.update_attribute(:on_hand, 2)
+          variant3.update_attribute(:on_hand, 0)
         end
 
         xit "caps quantity at the stock level for stock-limited items, and reports the change" do
@@ -98,9 +98,9 @@ describe SubscriptionPlacementJob do
 
       context "and insufficient stock exists to fulfil the order for some items" do
         before do
-          variant1.update_attribute(:count_on_hand, 5)
-          variant2.update_attribute(:count_on_hand, 2)
-          variant3.update_attribute(:count_on_hand, 0)
+          variant1.update_attribute(:on_hand, 5)
+          variant2.update_attribute(:on_hand, 2)
+          variant3.update_attribute(:on_hand, 0)
         end
 
         xit "sets quantity to 0 for unavailable items, and reports the change" do

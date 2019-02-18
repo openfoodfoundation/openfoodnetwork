@@ -22,7 +22,7 @@ module Spree
         it "applies variant overrides" do
           spree_get :search, q: 'Prod', distributor_id: d.id.to_s
           assigns(:variants).should == [v1]
-          assigns(:variants).first.count_on_hand.should == 44
+          assigns(:variants).first.on_hand.should == 44
         end
 
         it "filters by order cycle" do

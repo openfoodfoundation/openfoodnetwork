@@ -123,7 +123,7 @@ feature "shopping with variant overrides defined", js: true, retry: 3 do
       expect do
         expect do
           complete_checkout
-        end.to change { product1_variant3.reload.count_on_hand }.by(0)
+        end.to change { product1_variant3.reload.on_hand }.by(0)
       end.to change { product1_variant3_override.reload.count_on_hand }.by(-2)
     end
 
@@ -134,7 +134,7 @@ feature "shopping with variant overrides defined", js: true, retry: 3 do
       expect do
         expect do
           complete_checkout
-        end.to change { product3_variant2.reload.count_on_hand }.by(0)
+        end.to change { product3_variant2.reload.on_hand }.by(0)
       end.to change { product3_variant2_override.reload.count_on_hand }.by(-2)
     end
 
@@ -143,12 +143,12 @@ feature "shopping with variant overrides defined", js: true, retry: 3 do
       click_checkout
       expect do
         complete_checkout
-      end.to change { product1_variant1.reload.count_on_hand }.by(-2)
+      end.to change { product1_variant1.reload.on_hand }.by(-2)
       product1_variant1_override.reload.count_on_hand.should be_nil
     end
 
     it "does not show out of stock flags on order confirmation page" do
-      product1_variant3.count_on_hand = 0
+      product1_variant3.on_hand = 0
       fill_in "variants[#{product1_variant3.id}]", with: "2"
       click_checkout
 

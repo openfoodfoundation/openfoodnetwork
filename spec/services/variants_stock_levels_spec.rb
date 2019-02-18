@@ -12,8 +12,8 @@ describe VariantsStockLevels do
   let(:variant_stock_levels) { VariantsStockLevels.new }
 
   before do
-    variant_in_the_order.count_on_hand = 4
-    variant_not_in_the_order.count_on_hand = 2
+    variant_in_the_order.on_hand = 4
+    variant_not_in_the_order.on_hand = 2
     order.reload
   end
 
@@ -40,7 +40,7 @@ describe VariantsStockLevels do
   describe "encoding Infinity" do
     let!(:variant_in_the_order) { create(:variant, on_demand: true) }
 
-    before { variant_in_the_order.count_on_hand = 0 }
+    before { variant_in_the_order.on_hand = 0 }
 
     it "encodes Infinity as a large, finite integer" do
       expect(variant_stock_levels.call(order, [variant_in_the_order.id])).to eq(
