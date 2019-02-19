@@ -84,7 +84,8 @@ module Admin
       directory = 'tmp/product_import'
       Dir.mkdir(directory) unless File.exist?(directory)
       File.open(Rails.root.join(directory, filename + extension), 'wb') do |f|
-        f.write(upload.read)
+        data = UploadSanitizer.new(upload.read).call
+        f.write(data)
         f.path
       end
     end
