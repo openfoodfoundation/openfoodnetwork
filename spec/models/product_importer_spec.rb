@@ -247,6 +247,7 @@ describe ProductImport::ProductImporter do
       csv_data = CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "display_name"]
         csv << ["Potatoes", "User Enterprise", "Vegetables", "5", "3.50", "500", "g", "Small Bag"]
+        csv << ["Chives", "User Enterprise", "Vegetables", "6", "4.50", "500", "g", "Small Bag"]
         csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "5.50", "2", "kg", "Big Bag"]
       end
       File.write('/tmp/test-m.csv', csv_data)
@@ -260,17 +261,17 @@ describe ProductImport::ProductImporter do
       @importer.validate_entries
       entries = JSON.parse(@importer.entries_json)
 
-      expect(filter('valid', entries)).to eq 2
+      expect(filter('valid', entries)).to eq 3
       expect(filter('invalid', entries)).to eq 0
-      expect(filter('create_product', entries)).to eq 2
+      expect(filter('create_product', entries)).to eq 3
     end
 
     it "saves and updates" do
       @importer.save_entries
 
-      expect(@importer.products_created_count).to eq 2
+      expect(@importer.products_created_count).to eq 3
       expect(@importer.updated_ids).to be_a(Array)
-      expect(@importer.updated_ids.count).to eq 2
+      expect(@importer.updated_ids.count).to eq 3
 
       small_bag = Spree::Variant.find_by_display_name('Small Bag')
       expect(small_bag.product.name).to eq 'Potatoes'
