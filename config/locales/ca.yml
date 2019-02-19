@@ -442,6 +442,7 @@ ca:
         tax_category: Categoria d'impostos
         inherits_properties?: Hereda propietats?
         available_on: Disponible el
+        av_on: "Disp. via"
         import_date: S'ha importat
         upload_an_image: Penja una imatge
       product_search_keywords: Paraules clau de cerca de producte
@@ -475,6 +476,8 @@ ca:
         inventory_no_permission: no tens el permís per crear inventari per a aquesta productora
         none_saved: no s'han desat cap producte amb èxit
         line_number: "Línia %{number}:"
+        encoding_error: "Comproveu la configuració de l'idioma del vostre fitxer d'origen i assegureu-vos que es desa amb la codificació UTF-8"
+        unexpected_error: "La importació de productes ha detectat un error inesperat mentre obria el fitxer: %{error_message}"
       index:
         select_file: Selecciona un full de càlcul per pujar-lo
         spreadsheet: Full de càlcul
@@ -966,6 +969,9 @@ ca:
       orders_and_distributors:
         name: Comandes i distribuïdores
         description: Comandes amb detalls de la distribuïdora
+      bulk_coop:
+        name: Compra grupal
+        description: Informes per a comandes de compra grupal
       payments:
         name: Informes de pagament
         description: Informes per a pagaments
@@ -1023,6 +1029,7 @@ ca:
         this_is_an_estimate: |
             Els preus que es mostren són només una estimació i es calculen en el moment en què es canvia la subscripció.
             Si canvieu els preus o les comissions, les comandes s'actualitzaran, però la subscripció continuarà mostrant els valors anteriors.
+        not_in_open_and_upcoming_order_cycles_warning: "No hi ha cicles de comandes oberts o futurs per a aquest producte."
       details:
         details: Detalls
         invalid_error: Oops! Si us plau ompliu tots els camps obligatoris ...
@@ -1037,6 +1044,7 @@ ca:
         details: Detalls
         address: Adreça
         products: 'Productes '
+        no_open_or_upcoming_order_cycle: "No hi ha cap cicle de comandes proper"
       product_already_in_order: Aquest producte ja s'ha afegit a la comanda. Editeu-ne la quantitat directament.
       orders:
         number: Número
@@ -1128,6 +1136,7 @@ ca:
   card_could_not_be_saved: no s'ha pogut desar la targeta
   spree_gateway_error_flash_for_checkout: "Hi ha hagut un problema amb la vostra informació de pagament: %{error}"
   invoice_billing_address: "Adreça de facturació:"
+  invoice_column_tax: "IVA"
   invoice_column_price: "Preu"
   invoice_column_item: "Article"
   invoice_column_qty: "Quantitat"
@@ -1136,10 +1145,13 @@ ca:
   invoice_column_price_with_taxes: "Preu total (IVA inclòs)"
   invoice_column_price_without_taxes: "Preu total (sense impostos)"
   invoice_column_tax_rate: "Taxa d'impost"
+  invoice_tax_total: "Total IVA:"
   tax_invoice: "FACTURA D'IMPOSTOS"
   tax_total: "Impost total (%{rate}):"
   total_excl_tax: "Total (impostos exclòs):"
   total_incl_tax: "Total (impost inclòs):"
+  abn: "NIF:"
+  acn: "IVA intracomunitari:"
   invoice_issued_on: "Factura emesa el:"
   order_number: "Nombre de factura:"
   date_of_transaction: "Data de la transacció:"
@@ -1233,6 +1245,7 @@ ca:
   card_securitycode: "Codi de seguretat"
   card_expiry_date: Data de caducitat
   card_masked_digit: "X"
+  card_expiry_abbreviation: "Exp"
   new_credit_card: "Nova targeta de crèdit"
   my_credit_cards: Les meves targetes de crèdit
   add_new_credit_card: 'Afegeix una nova targeta de crèdit '
@@ -1275,6 +1288,7 @@ ca:
       cookie_analytics_utmc_desc: "No s'utilitza a ga.js. Estableix la interoperabilitat amb urchin.js. Històricament, aquesta cookie funcionava juntament amb la cookie __utmb per determinar si l'usuari estava en una nova sessió / visita."
       cookie_analytics_utmz_desc: "Emmagatzema l'origen del codi o la campanya que explica com l'usuari ha arribat al vostre lloc. La cookie es crea quan s'executa i s'actualitza la biblioteca javascript cada vegada que s'envien dades a Google Analytics."
       cookie_matomo_basics_desc: "Les primeres cookies de Matomo per recollir estadístiques."
+      cookie_matomo_heatmap_desc: "Galeta d'enregistrament de sessió i heatmap de Matomo"
       cookie_matomo_ignore_desc: "La cookie usada per excloure l'usuari de ser seguit."
       disabling_cookies_header: "Advertència sobre la desactivació de cookies"
       disabling_cookies_desc: "Com a usuari sempre podeu permetre, bloquejar o eliminar les cookies Open Food Network o qualsevol altra pàgina web sempre que vulgueu mitjançant el control de configuració del vostre navegador. Cada navegador té una operativa diferent. Aquests són els enllaços:"
@@ -1586,6 +1600,7 @@ ca:
   sell_hubs_detail: "Configura un perfil per a la teva organització alimentària a Katuma. En qualsevol moment, pots modificar i convertir el teu perfil en una botiga de diverses productores."
   sell_groups_detail: "Configura un directori personalitzat d'empreses (productores i altres empreses alimentàries) per a la teva regió o per a la teva xarxa, organització."
   sell_user_guide: "Troba més informació a la nostra Guia d'usuari."
+  sell_listing_price: "Aparèixer a OFN és gratuït. Obrir i executar una botiga a OFN és gratuït. La configuració d'un directori de grup d'OFN per a la vostra organització o xarxa regional és gratuït."
   sell_embed: "També podem incrustar una botiga OFN al vostre web personalitzat o crear un lloc web personalitzat de la xarxa alimentària per a la teva regió."
   sell_ask_services: "Pregunta'ns sobre els serveis d'OFN."
   shops_title: Botigues
@@ -1608,6 +1623,7 @@ ca:
   orders_edit_continue: Continuar comprant
   orders_edit_checkout: Realitza la compra
   orders_form_empty_cart: "Cistella buida"
+  orders_form_subtotal: Subtotal
   orders_form_admin: Administració i manipulació
   orders_form_total: Total
   orders_oc_expired_headline: S'han tancat les comandes per a aquest cicle de comanda
@@ -1672,6 +1688,7 @@ ca:
   error_not_found_in_database: "%{name} no s'ha trobat a la base de dades"
   error_not_primary_producer: "%{name} no està habilitat com a productora"
   error_no_permission_for_enterprise: "\"%{name}\": no tens permís per gestionar els productes d'aquesta organització"
+  item_handling_fees: "Comissions de gestió d'articles (incloses en els totals d'articles)"
   january: "Gener"
   february: "Febrer"
   march: "Març"
@@ -1693,6 +1710,7 @@ ca:
   confirm_password: "Confirma la contrassenya"
   action_signup: "Registra't ara"
   welcome_to_ofn: "Benvingut a la xarxa Open Food Network!"
+  signup_or_login: "Comenceu registrant-vos (o iniciant sessió)"
   have_an_account: "Ja tens un compte?"
   action_login: "Inicia la sessió ara."
   forgot_password: "Has oblidat la contrasenya?"
@@ -1806,6 +1824,7 @@ ca:
   enterprise_final_step: "Pas final!"
   enterprise_social_text: "Com poden la gent trobar %{enterprise}en línia?"
   website: "Lloc web"
+  website_placeholder: "per exemple: katuma.org"
   facebook: "Facebook"
   facebook_placeholder: "p .ex: www.facebook.com/NomDeLaPàgina"
   linkedin: "LinkedIn"
@@ -1831,6 +1850,7 @@ ca:
   registration_finished_headline: "Acabat!"
   registration_finished_thanks: "Gràcies per omplir els detalls de%{enterprise}."
   registration_finished_login: "Pots canviar o actualitzar la teva organització en qualsevol moment accedint a Katuma i anant a Admin."
+  registration_finished_action: "Inici"
   registration_contact_name: 'Nom de contacte'
   registration_type_headline: "El darrer pas per afegir %{enterprise}!"
   registration_type_question: "Ets productora?"
@@ -1865,11 +1885,14 @@ ca:
   accounts_and_billing_start_task_notice: "Tasca en cua"
   fees: "Tarifes"
   item_cost: "Cost de l'article"
+  bulk: "A granel"
   shop_variant_quantity_min: "min"
   shop_variant_quantity_max: "màx"
   follow: "Segueix"
   shop_for_products_html: "Compra productes de <span class = \"turquesa\"> %{enterprise} </ span> a:"
+  change_shop: "Canvia la botiga a:"
   shop_at: "Compra ara a:"
+  price_breakdown: "Desglossament complet del preu"
   admin_fee: "Comissió d'administració"
   sales_fee: "Comissió de venda"
   packing_fee: "Comissió d'embalatge"
@@ -1877,17 +1900,21 @@ ca:
   fundraising_fee: "Comissió d'autogestió"
   price_graph: "Gràfic de preus"
   included_tax: "Impostos incloses"
+  balance: "Balanç"
   transaction: "Transacció"
   transaction_date: "Data"
   payment_state: "Estat del pagament"
   shipping_state: "Estat d'enviament"
   value: "Valor"
+  balance_due: "A pagar"
   credit: "Crèdit"
   Paid: "Pagat"
   Ready: "Llest"
   ok: D'acord
   not_visible: no visible
   you_have_no_orders_yet: "Encara no tens comandes"
+  running_balance: "Balanç corrent"
+  outstanding_balance: "Balanç pendent"
   admin_enterprise_relationships: "Permisos de l'organització"
   admin_enterprise_relationships_everything: "Marcar tots"
   admin_enterprise_relationships_permits: "Permet"
@@ -1896,6 +1923,7 @@ ca:
   admin_enterprise_groups: "Grups d'organització"
   admin_enterprise_groups_name: "Nom"
   admin_enterprise_groups_owner: "Propietària"
+  admin_enterprise_groups_on_front_page: "A la primera pàgina?"
   admin_enterprise_groups_enterprise: "Organitzacions"
   admin_enterprise_groups_data_powertip: "La usuària principal responsable d'aquest grup."
   admin_enterprise_groups_data_powertip_logo: "Això és el logotip del grup"
@@ -1920,6 +1948,7 @@ ca:
   supplier: "Proveïdora"
   product_name: "Nom del producte"
   product_description: "Descripció del producte"
+  units: "Mida d'unitat"
   coordinator: "Coordinador"
   distributor: "Distribuïdora"
   enterprise_fees: "Honoraris de l'organització"
@@ -1934,6 +1963,7 @@ ca:
   flat_rate_per_item: "Tarifa fixa (per article)"
   flat_rate_per_order: "Tarifa fixa (per comanda)"
   flexible_rate: "Tarifa Flexible"
+  price_sack: "Preu sac"
   new_order_cycles: "Nou cicle de comanda"
   new_order_cycle: "Nou cicle de comanda"
   select_a_coordinator_for_your_order_cycle: "Selecciona una coordinadora per al vostre cicle de comanda"
@@ -1978,21 +2008,29 @@ ca:
   spree_admin_overview_check_your_inbox: "Si us plat comproveu la vostra safata d'entrada per obtenir més instruccions. Gràcies!"
   spree_admin_unit_value: Valor de la unitat
   spree_admin_unit_description: Descripció de la unitat
+  spree_admin_variant_unit: Unitat de variants
+  spree_admin_variant_unit_scale: Escala de unitat de variants
   spree_admin_supplier: Proveïdora
   spree_admin_product_category: Categoria del producte
+  spree_admin_variant_unit_name: Nom de unitat de variants
   change_package: "Canvia el perfil"
   spree_admin_single_enterprise_hint: "Suggeriment: per permetre que la gent us trobi, activeu la vostra visibilitat"
   spree_admin_eg_pickup_from_school: "p. ex: 'Recollida al local del grup de consum'"
   spree_admin_eg_collect_your_order: "p. ex: \"Recolliu la vostra comanda al c/Ample, n. 123'"
+  spree_classification_primary_taxon_error: "El taxó %{taxon} és el principal taxó d'%{product} i no es pot eliminar"
   spree_order_availability_error: "La distribuïdora o el cicle de comanda no pot subministrar els productes de la vostra cistella"
   spree_order_populator_error: "Aquesta distribuïdora o cicle de comanda no pot subministrar tots els productes de la vostra cistella. Si us plau trieu-ne d'altres."
   spree_order_populator_availability_error: "Aquest producte no està disponible des de la distribuïdora o cicle de comanda seleccionat."
   spree_distributors_error: "Cal seleccionar almenys un grup"
   spree_user_enterprise_limit_error: "^ %{email} no està autoritzat a tenir més organitzacions (el límit és %{enterprise_limit})."
   spree_variant_product_error: ha de tenir com a mínim una variant
+  your_profil_live: "El teu perfil online"
   on_ofn_map: "al mapa d'Open Food Network"
+  see: "Veure"
+  live: "online"
   manage: "Gestiona"
   resend: "Reenviar"
+  trial: Prova
   add_and_manage_products: "Afegeix & gestiona productes"
   add_and_manage_order_cycles: "Afegeix & gestiona cicles de comanda"
   manage_order_cycles: "Gestiona els cicles de comanda"
@@ -2001,10 +2039,16 @@ ca:
   edit_profile_details_etc: "Canvia la descripció del perfil, les imatges, etc."
   order_cycle: "Cicle de Comanda"
   order_cycles: "Cicles de comanda"
+  enterprise_relationships: "Permisos d'organització"
   remove_tax: "Suprimeix comissions"
+  first_name_begins_with: "El nom comença amb"
+  last_name_begins_with: "El cognom comença amb"
+  enterprise_tos_link: "Enllaç a les condicions d'ús de l'organització"
   enterprise_tos_message: "Volem treballar amb persones que comparteixen els nostres objectius i valors. Com a tal, demanem a les noves organitzacions que acceptin la nostra"
   enterprise_tos_link_text: "Termes del servei."
   enterprise_tos_agree: "Accepto els Termes i condicions anteriors"
+  tax_settings: "Configuració fiscal"
+  products_require_tax_category: "els productes requereixen una categoria fiscal"
   admin_shared_address_1: "Adreça"
   admin_shared_address_2: "Adreça (cont.)"
   admin_share_city: "Municipi"
@@ -2075,11 +2119,16 @@ ca:
   report_header_special_instructions: Instruccions especials
   report_header_order_number: Número de comanda
   report_header_date: Data
+  report_header_confirmation_date: Data de confirmació
   report_header_tags: Etiquetes
   report_header_items: Articles
   report_header_items_total: "Total d'articles %{currency_symbol}"
+  report_header_taxable_items_total: "Total d'articles subjectes a impostos (%{currency_symbol})"
+  report_header_sales_tax: "Impost sobre vendes (%{currency_symbol})"
   report_header_delivery_charge: "Càrrec de lliurament (%{currency_symbol})"
   report_header_tax_on_delivery: "Impost sobre el lliurament (%{currency_symbol})"
+  report_header_tax_on_fees: "Impost sobre les tarifes (%{currency_symbol})"
+  report_header_total_tax: "Impost total (%{currency_symbol})"
   report_header_enterprise: Organització
   report_header_customer: Consumidora
   report_header_customer_code: Codi de la consumidora
@@ -2092,23 +2141,32 @@ ca:
   report_header_variant_unit: Unitat de la variant
   report_header_total_available: Total disponible
   report_header_unallocated: Sense assignar
+  report_header_max_quantity_excess: Quantitat màxima d'excés
+  report_header_taxons: Taxons
   report_header_supplier: Proveïdora
   report_header_producer: Productora
+  report_header_producer_suburb: barri de la productora
   report_header_unit: Unitat
+  report_header_group_buy_unit_quantity: Quantitat de la unitat de compra del grup
   report_header_cost: Cost
   report_header_shipping_cost: Despeses d'enviament
+  report_header_curr_cost_per_unit: Cost per unitat
   report_header_total_shipping_cost: Cost total d'enviament
   report_header_payment_method: Mètode de pagament
   report_header_sells: Ven
   report_header_visible: Visible
   report_header_price: Preu
+  report_header_unit_size: Mida d'unitat
   report_header_distributor: Distribuïdora
   report_header_distributor_address: Adreça de la distribuïdora
   report_header_distributor_city: Ciutat de la distribuïdora
   report_header_distributor_postcode: Codi postal de la distribuïdora
   report_header_delivery_address: Adreça de lliurament
   report_header_delivery_postcode: Codi postal de lliurament
+  report_header_bulk_unit_size: Mida de la unitat a granel
   report_header_weight: Pes
+  report_header_sum_total: Suma total
+  report_header_date_of_order: Data de la comanda
   report_header_amount_owing: Import adeutat
   report_header_amount_paid: Import pagat
   report_header_units_required: Unitats necessàries
@@ -2124,20 +2182,47 @@ ca:
   report_header_payment_state: Estat del pagament
   report_header_payment_type: Tipus de pagament
   report_header_item_price: "Article (%{currency})"
+  report_header_item_fees_price: "Article + Comissions (%{currency})"
+  report_header_admin_handling_fees: "Administració i manipulació (%{currency})"
+  report_header_ship_price: "Enviar (%{currency})"
+  report_header_pay_fee_price: "Pagar comissió (%{currency})"
   report_header_total_price: "Total (%{currency})"
   report_header_product_total_price: "Total del producte (%{currency})"
   report_header_shipping_total_price: "Enviament total (%{currency})"
+  report_header_outstanding_balance_price: "Balanç pendent (%{currency})"
+  report_header_eft_price: "Transferència (%{currency})"
   report_header_paypal_price: "PayPal (%{currency})"
   report_header_sku: Número de referència (SKU)
   report_header_amount: Import
+  report_header_balance: Balanç
+  report_header_total_cost: "Cost total"
+  report_header_total_ordered: Total demanat
+  report_header_total_max: Máx Total
+  report_header_total_units: Unitats totals
+  report_header_sum_max_total: "Suma Max Total"
   report_header_total_excl_vat: "Total excl. impostos (%{currency_symbol})"
   report_header_total_incl_vat: "Total incl. impostos (%{currency_symbol})"
   report_header_temp_controlled: Control de temperatura?
   report_header_is_producer: Productor?
+  report_header_not_confirmed: No confirmat
+  report_header_gst_on_income: IVA sobre ingressos
+  report_header_gst_free_income: Ingressos sense IVA
+  report_header_total_untaxable_produce: Total de productes no tributables (sense impostos)
+  report_header_total_taxable_produce: Total de productes tributables (IVA inclòs)
+  report_header_total_untaxable_fees: Total de comissions no tributables (sense impostos)
+  report_header_total_taxable_fees: Total de les comissions imposables (IVA inclòs)
+  report_header_delivery_shipping_cost: Cost de l'enviament (impostos inclosos)
+  report_header_transaction_fee: Comissió de transacció (sense impostos)
+  report_header_total_untaxable_admin: Total d'ajustaments d'administració no imputables (sense impostos)
+  report_header_total_taxable_admin: Total d'ajustaments administratius imposables (impostos inclosos)
   initial_invoice_number: "Número de la comanda inicial:"
   invoice_date: "Data del comprovant de compra:"
+  due_date: "Data de venciment:"
+  account_code: "Codi del compte:"
+  equals: "És igual a"
   contains: "conté"
   discount: "Descompte"
+  filter_products: "Productes de filtre"
   delete_product_variant: "L'última variant no es pot esborrar!"
   progress: "progressió"
   saving: "Desant..."
@@ -2168,12 +2253,19 @@ ca:
   tag_rules: "Regles d'etiqueta"
   shop_preferences: "Preferències de la botiga"
   enterprise_fee_whole_order: Comanda sencera
+  enterprise_fee_by: "Comissió %{type} per %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^ Aquesta relació ja està establerta."
   validation_msg_at_least_one_hub: "^ Cal seleccionar com a mínim un grup"
   validation_msg_product_category_cant_be_blank: "^ La categoria de producte no pot estar en blanc"
+  validation_msg_tax: "^ La categoria d'impostos és obligatòria"
+  validation_msg_tax_category_cant_be_blank: "^ La categoria d'impostos no es pot deixar en blanc"
   validation_msg_is_associated_with_an_exising_customer: "Està associada amb una consumidora existent"
+  content_configuration_pricing_table: "(TODO: Taula de preus)"
+  content_configuration_case_studies: "(TODO: Casos d'estudi)"
+  content_configuration_detail: "(TODO: detall)"
   enterprise_name_error: "ja ha estat agafat. Si aquesta és la vostra organització i voleu reclamar-ne la propietat o si voleu comerciar amb aquesta organització, poseu-vos en contacte amb l'administradora actual d'aquest perfil %{email}."
   enterprise_owner_error: "^ %{email} no està autoritzat a tenir més organitzacions (el límit és %{enterprise_limit})."
+  enterprise_role_uniqueness_error: "^ Aquest rol ja està present."
   inventory_item_visibility_error: ha de ser veritable o falsa
   product_importer_file_error: "error: no s'ha carregat cap fitxer"
   product_importer_spreadsheet_error: "no s'ha pogut processar el fitxer: tipus de fitxer no vàlid"
@@ -2182,7 +2274,17 @@ ca:
   product_import_no_data_in_spreadsheet_notice: 'No s''ha trobat cap dada al full de càlcul'
   order_choosing_hub_notice: El teu grup ha estat seleccionat.
   order_cycle_selecting_notice: S'ha seleccionat el teu cicle de comanda.
+  adjustments_tax_rate_error: "^ Si us plau, comproveu que el tipus impositiu d'aquest ajust és correcte."
+  active_distributors_not_ready_for_checkout_message_singular: >-
+      El grup %{distributor_names} apareix en un cicle de comanda actiu, però no té
+      mètodes de pagament i enviament vàlids. Fins que no ho configureu, els clients
+      no podran comprar en aquest grup.
+  active_distributors_not_ready_for_checkout_message_plural: >-
+      Els grups %{distributor_names} s'enumeren en un cicle de comandes actiu, però
+      no tenen mètodes de pagament i enviament vàlids. Fins que no ho configureu,
+      els clients no podran comprar en aquests grups.
   enterprise_fees_update_notice: S'han actualitzat les comissions de l'organització.
+  enterprise_fees_destroy_error: "Aquesta comissió d'organització no es pot eliminar perquè està referenciat per una distribució de producte: %{id} - %{name}."
   enterprise_register_package_error: "Si us plau, selecciona un perfil"
   enterprise_register_error: "No es pot completar el registre de %{enterprise}"
   enterprise_register_success_notice: "Enhorabona! El registre de %{enterprise} s'ha completat!"
@@ -2221,6 +2323,7 @@ ca:
     choose: Escull
     resolve_errors: Si us plau, resol els errors següents
     more_items: "+ %{count} Més"
+    default_card_updated: Targeta predeterminada actualitzada
     admin:
       enterprise_limit_reached: "Has assolit el límit estàndard d'organitzacions per compte. Escriu a %{contact_email} si necessites augmentar-lo."
       modals:
@@ -2337,6 +2440,8 @@ ca:
           non_producer_desc: Totes les altres organitzacions alimentàries
           non_producer_example: 'p. ex: botigues de queviures, cooperatives d''aliments, grups de compra...'
         enterprise_status:
+          status_title: "%{name} està configurat i llest!"
+          severity: Severitat
           description: Descripció
           resolve: Resoldre
       new_tag_rule_dialog:
@@ -2344,6 +2449,11 @@ ca:
       orders:
         index:
           per_page: "%{results} per pàgina"
+          view_file: Mostra el fitxer
+          compiling_invoices: Generant factures
+          bulk_invoice_created: S'ha creat la factura conjunta
+          bulk_invoice_failed: No s'ha pogut crear la factura conjunta
+          please_wait: Espereu fins que el PDF estigui preparat abans de tancar aquesta finestra.
       resend_user_email_confirmation:
         resend: "Reenviar"
         sending: "Reenviar..."
@@ -2368,6 +2478,9 @@ ca:
       hidden_products: "Productes ocults"
       new_products: "Nous productes"
       reset_stock_levels: Restablir els nivells d'existències a valors predeterminats
+      changes_to: Canvis a
+      one_override: una sobreescriptura
+      overrides: sobreescriptures
       remain_unsaved: romanen sense desar.
       no_changes_to_save: No hi ha canvis per desar.
       no_authorisation: "No he pogut obtenir l'autorització per guardar aquests canvis, de manera que romanen sense desar."
@@ -2391,6 +2504,10 @@ ca:
       add_products_to_inventory: "afegeix productes a l'inventari"
     resources:
       could_not_delete_customer: 'No s''ha pogut eliminar la consumidora'
+    product_import:
+      confirmation: |
+          Això establirà el nivell d'estoc a zero en tots els productes per aquesta
+          organització que no estan presents al fitxer carregat.
     order_cycles:
       create_failure: "No s'ha pogut crear el cicle de comanda"
       update_success: 'S''ha actualitzat el cicle de comanda.'
@@ -2420,8 +2537,12 @@ ca:
         header:
           store: Botiga
     admin:
+      product_properties:
+        index:
+          inherits_properties_checkbox_hint: "heredar propietats de %{supplier}? (llevat que es sobreescrigui a dalt)"
       orders:
         index:
+          listing_orders: "Llistant comandes"
           new_order: "Nova comanda"
           capture: "Captura"
           ship: "Enviament"
@@ -2429,11 +2550,13 @@ ca:
           note: "Nota"
           first: "Primer"
           last: "Últim"
+          previous: "Anterior"
           next: "Següent"
           loading: "S'està carregant"
           no_orders_found: "No s'ha trobat cap comanda"
           results_found: "%{number} Resultats trobats."
           viewing: "Veient %{start} a %{end}."
+          print_invoices: "Imprimir factures"
         invoice:
           issued_on: Publicat a
           tax_invoice: FACTURA D'IMPOSTOS
@@ -2467,6 +2590,7 @@ ca:
           stripe_disabled_msg: Els pagaments de Stripe han estat inhabilitat per l'administrador del sistema.
           request_failed_msg: Ho sentim. S'ha produït un error en provar de verificar els detalls del compte amb Stripe...
           account_missing_msg: No hi ha cap compte de Stripe per a aquesta organització.
+          connect_one: Connecta un
           access_revoked_msg: S'ha revocat l'accés a aquest compte de Stripe, si us plau torna a connectar el teu compte.
           status: Estat
           connected: Connectat
@@ -2481,6 +2605,7 @@ ca:
       products:
         new:
           title: 'Nou producte'
+        unit_name_placeholder: 'per exemple: manat'
         index:
           header:
             title: Edició de productes en bloc
@@ -2496,15 +2621,27 @@ ca:
             tax_category: Categoria d'impostos
             inherits_properties?: Hereda propietats?
             available_on: Disponible el
+            av_on: "Disp. via"
+            import_date: "Data d'importació"
           products_variant:
+            variant_has_n_overrides: "Aquesta variant té %{n} sobreescriptura/es"
             new_variant: "Nova variant"
           product_name: Nom del producte
         primary_taxon_form:
           product_category: Categoria del producte
         group_buy_form:
           group_buy: "Compra en grup?"
+          bulk_unit_size: Mida de la unitat a granel
         display_as:
           display_as: Mostra com
+      reports:
+        table:
+          select_and_search: "Seleccioneu els filtres i feu clic a %{option} per accedir a les vostres dades."
+        bulk_coop:
+          bulk_coop_supplier_report: 'Compra grupal - Totals per proveïdor'
+          bulk_coop_allocation: 'Compra grupal - Assignació'
+          bulk_coop_packing_sheets: 'Compra grupal - Fulls de preparació de cistelles'
+          bulk_coop_customer_payments: 'Compra grupal - Pagaments de les consumidores'
       users:
         index:
           listing_users: "Llistat d'usuàries"
@@ -2530,10 +2667,13 @@ ca:
           producer_name: Productor
       general_settings:
         edit:
+          legal_settings: "Paràmetres legals"
           cookies_consent_banner_toggle: "Mostra banner de consentiment de cookies"
           privacy_policy_url: "URL de la política de privacitat "
+          enterprises_require_tos: "Les organitzacions han d'acceptar les condicions del servei"
           cookies_policy_matomo_section: "Mostra la secció de Matomo a la pàgina de política de cookies"
           cookies_policy_ga_section: "Mostra la secció de Google Analytics a la pàgina de política de cookies"
+          footer_tos_url: "URL de les condicions d'ús"
     checkout:
       payment:
         stripe:
@@ -2542,6 +2682,9 @@ ca:
           used_saved_card: "Utilitza una targeta desada:"
           or_enter_new_card: "O bé introdueix els detalls d'una nova targeta:"
           remember_this_card: Recordar aquesta targeta?
+    date_picker:
+      format: '%d-% m-% Y'
+      js_format: 'dd-mm-yy'
     inventory: Inventari
     orders:
       edit:
@@ -2574,7 +2717,9 @@ ca:
       paused: en pausa
       canceled: cancel·lat
     payment_states:
+      balance_due: a pagar
       completed: completat
+      checkout: fer comanda
       credit_owed: crèdit a deure
       failed: error
       paid: pagat
