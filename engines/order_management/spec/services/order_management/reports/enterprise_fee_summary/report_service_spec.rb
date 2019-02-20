@@ -124,9 +124,9 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
         ["Payment Transaction", "Sample Distributor", "Sample Payment Method", "Sample Customer",
          nil, nil, nil, "4.00"],
         ["Sales", "Sample Coordinator", "Coordinator Fee 2", "Another Customer",
-         "Coordinator", "All", "Sample Product Tax", "1024.00"],
+         "Coordinator", "All", "Various", "1024.00"],
         ["Sales", "Sample Coordinator", "Coordinator Fee 2", "Sample Customer",
-         "Coordinator", "All", "Sample Product Tax", "2048.00"],
+         "Coordinator", "All", "Various", "2048.00"],
         ["Sales", "Sample Distributor", "Distributor Fee 2", "Another Customer",
          "Outgoing", "Sample Distributor", "Sample Product Tax", "8.00"],
         ["Sales", "Sample Distributor", "Distributor Fee 2", "Sample Customer",
@@ -197,6 +197,98 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
            nil, nil, nil, "2.00"],
           ["Sales", "Sample Producer", "Sample Producer Fee", "Sample Customer",
            "Outgoing", "Sample Distributor", "Sample Producer Tax", "64.00"],
+          ["Shipment", "Sample Distributor", "Sample Shipping Method", "Sample Customer",
+           nil, nil, "Platform Rate", "1.00"]
+        ]
+
+        expected_result.each_with_index do |expected_attributes, row_index|
+          expect_total_attributes(totals[row_index], expected_attributes)
+        end
+      end
+    end
+
+    context "with order-based enterprise fee calculator" do
+      let!(:producer_fee) do
+        tax_category = create(:tax_category, name: "Producer Tax A")
+        create(:enterprise_fee, :flat_rate, name: "Producer Fee A", enterprise: producer,
+                                            fee_type: "sales", tax_category: tax_category,
+                                            amount: 10)
+      end
+      let!(:coordinator_fee) do
+        tax_category = create(:tax_category, name: "Coordinator Tax A")
+        create(:enterprise_fee, :flat_rate, name: "Coordinator Fee A", enterprise: coordinator,
+                                            fee_type: "admin", tax_category: tax_category,
+                                            amount: 15)
+      end
+      let!(:coordinator_fee_inheriting_product_tax_category) do
+        create(:enterprise_fee, :flat_rate, name: "Coordinator Fee B", enterprise: coordinator,
+                                            fee_type: "admin", inherits_tax_category: true,
+                                            amount: 20)
+      end
+      let!(:coordinator_fee_without_tax) do
+        create(:enterprise_fee, :flat_rate, name: "Coordinator Fee C", enterprise: coordinator,
+                                            fee_type: "admin", inherits_tax_category: false,
+                                            amount: 25)
+      end
+      let!(:distributor_fee) do
+        tax_category = create(:tax_category, name: "Distributor Tax A")
+        create(:enterprise_fee, :flat_rate, name: "Distributor Fee A", enterprise: distributor,
+                                            fee_type: "admin", inherits_tax_category: false,
+                                            amount: 30)
+      end
+
+      let!(:coordinator_fees) do
+        [
+          coordinator_fee,
+          coordinator_fee_inheriting_product_tax_category,
+          coordinator_fee_without_tax
+        ]
+      end
+
+      let!(:order_cycle) do
+        create(:simple_order_cycle, coordinator: coordinator, coordinator_fees: coordinator_fees)
+      end
+
+      let!(:variant_incoming_exchange_fees) { [producer_fee, coordinator_fee, distributor_fee] }
+      let!(:variant_outgoing_exchange_fees) { [producer_fee, coordinator_fee, distributor_fee] }
+
+      let!(:variant) do
+        prepare_variant(incoming_exchange_fees: variant_incoming_exchange_fees,
+                        outgoing_exchange_fees: variant_outgoing_exchange_fees)
+      end
+
+      let!(:customer_order) { prepare_order(customer: customer) }
+
+      it "fetches data correctly" do
+        totals = service.list
+
+        expect(totals.length).to eq(11)
+
+        entire_orders_text = i18n_translate("fee_calculated_on_transfer_through_entire_orders",
+                                             distributor: "Sample Distributor")
+        various_tax_categories_text = i18n_translate("tax_category_various")
+
+        expected_result = [
+          ["Admin", "Sample Coordinator", "Coordinator Fee A", "Sample Customer",
+           "Coordinator", "All", "Coordinator Tax A", "15.00"],
+          ["Admin", "Sample Coordinator", "Coordinator Fee A", "Sample Customer",
+           "Incoming", entire_orders_text, "Coordinator Tax A", "15.00"],
+          ["Admin", "Sample Coordinator", "Coordinator Fee A", "Sample Customer",
+           "Outgoing", entire_orders_text, "Coordinator Tax A", "15.00"],
+          ["Admin", "Sample Coordinator", "Coordinator Fee B", "Sample Customer",
+           "Coordinator", "All", various_tax_categories_text, "20.00"],
+          ["Admin", "Sample Coordinator", "Coordinator Fee C", "Sample Customer",
+           "Coordinator", "All", nil, "25.00"],
+          ["Admin", "Sample Distributor", "Distributor Fee A", "Sample Customer",
+           "Incoming", entire_orders_text, various_tax_categories_text, "30.00"],
+          ["Admin", "Sample Distributor", "Distributor Fee A", "Sample Customer",
+           "Outgoing", entire_orders_text, various_tax_categories_text, "30.00"],
+          ["Payment Transaction", "Sample Distributor", "Sample Payment Method", "Sample Customer",
+           nil, nil, nil, "2.00"],
+          ["Sales", "Sample Producer", "Producer Fee A", "Sample Customer",
+           "Incoming", entire_orders_text, "Producer Tax A", "10.00"],
+          ["Sales", "Sample Producer", "Producer Fee A", "Sample Customer",
+           "Outgoing", entire_orders_text, "Producer Tax A", "10.00"],
           ["Shipment", "Sample Distributor", "Sample Shipping Method", "Sample Customer",
            nil, nil, "Platform Rate", "1.00"]
         ]
@@ -487,6 +579,10 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
   end
 
   # Helper methods for example group
+
+  def i18n_translate(translation_key, options = {})
+    I18n.t("order_management.reports.enterprise_fee_summary.#{translation_key}", options)
+  end
 
   def expect_total_attributes(total, expected_attribute_list)
     actual_attribute_list = [total.fee_type, total.enterprise_name, total.fee_name,

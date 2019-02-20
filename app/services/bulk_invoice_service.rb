@@ -1,5 +1,4 @@
 class BulkInvoiceService
-  include WickedPdf::PdfHelper
   attr_reader :id
 
   def initialize
@@ -11,10 +10,7 @@ class BulkInvoiceService
     orders = Spree::Order.where(id: order_ids)
 
     orders.each do |order|
-      invoice = renderer.render_to_string pdf: "invoice-#{order.number}.pdf",
-                                          template: invoice_template,
-                                          formats: [:html], encoding: "UTF-8",
-                                          locals: { :@order => order }
+      invoice = renderer.render_to_string(order)
 
       pdf << CombinePDF.parse(invoice)
     end
@@ -42,11 +38,7 @@ class BulkInvoiceService
   end
 
   def renderer
-    ApplicationController.new
-  end
-
-  def invoice_template
-    Spree::Config.invoice_style2? ? "spree/admin/orders/invoice2" : "spree/admin/orders/invoice"
+    @renderer ||= InvoiceRenderer.new
   end
 
   def file_directory

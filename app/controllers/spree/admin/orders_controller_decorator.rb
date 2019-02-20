@@ -54,9 +54,7 @@ Spree::Admin::OrdersController.class_eval do
   end
 
   def invoice
-    pdf = render_to_string pdf: "invoice-#{@order.number}.pdf",
-                           template: invoice_template,
-                           formats: [:html], encoding: "UTF-8"
+    pdf = InvoiceRenderer.new.render_to_string(@order)
 
     Spree::OrderMailer.invoice_email(@order.id, pdf).deliver
     flash[:success] = t('admin.orders.invoice_email_sent')
@@ -65,7 +63,7 @@ Spree::Admin::OrdersController.class_eval do
   end
 
   def print
-    render pdf: "invoice-#{@order.number}", template: invoice_template, encoding: "UTF-8"
+    render InvoiceRenderer.new.args(@order)
   end
 
   def print_ticket
@@ -77,10 +75,6 @@ Spree::Admin::OrdersController.class_eval do
   end
 
   private
-
-  def invoice_template
-    Spree::Config.invoice_style2? ? "spree/admin/orders/invoice2" : "spree/admin/orders/invoice"
-  end
 
   def require_distributor_abn
     unless @order.distributor.abn.present?

@@ -75,9 +75,9 @@
                   .description {{ item.description }}
                   .not-in-open-and-upcoming-order-cycles-warning{ ng: { if: '!item.in_open_and_upcoming_order_cycles' } }
                     = t(".no_open_or_upcoming_order_cycle")
-                %td.price.align-center {{ item.price_estimate | currency }}
+                %td.price.align-center {{ item.price_estimate | localizeCurrency }}
                 %td.quantity {{ item.quantity }}
-                %td.total.align-center {{ (item.price_estimate * item.quantity) | currency }}
+                %td.total.align-center {{ (item.price_estimate * item.quantity) | localizeCurrency }}
             %tbody#subtotal.no-border-top{"data-hook" => "admin_order_form_subtotal"}
               %tr#subtotal-row
                 %td{:colspan => "3"}
@@ -85,7 +85,7 @@
                     = t(:subtotal)
                     \:
                 %td.total.align-center
-                  %span {{ subscription.estimatedSubtotal() | currency }}
+                  %span {{ subscription.estimatedSubtotal() | localizeCurrency }}
             %tbody#order-total.grand-total.no-border-top{"data-hook" => "admin_order_form_total"}
               %tr
                 %td{:colspan => "3"}
@@ -93,6 +93,6 @@
                     = t(:order_total_price)
                     \:
                 %td.total.align-center
-                  %span#order_form_total {{ subscription.estimatedTotal() | currency }}
+                  %span#order_form_total {{ subscription.estimatedTotal() | localizeCurrency }}
           %p.notice
             = t "this_is_an_estimate", scope: 'admin.subscriptions.subscription_line_items'

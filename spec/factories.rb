@@ -531,6 +531,8 @@ FactoryBot.define do
   factory :stripe_payment_method, :class => Spree::Gateway::StripeConnect do
     name 'Stripe'
     environment 'test'
+    distributors { [FactoryBot.create(:enterprise)] }
+    preferred_enterprise_id { distributors.first.id }
   end
 
   factory :stripe_account do

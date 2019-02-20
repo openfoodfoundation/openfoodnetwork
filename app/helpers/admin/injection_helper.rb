@@ -65,6 +65,10 @@ module Admin
       admin_inject_json_ams_array opts[:module], "columns", column_preferences, Api::Admin::ColumnPreferenceSerializer
     end
 
+    def admin_inject_currency_config
+      admin_inject_json_ams 'admin.utils', "currencyConfig", {}, Api::CurrencyConfigSerializer
+    end
+
     def admin_inject_enterprise_permissions
       permissions =
         {can_manage_shipping_methods: can?(:manage_shipping_methods, @enterprise),
