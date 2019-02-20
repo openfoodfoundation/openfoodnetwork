@@ -57,7 +57,9 @@ class VariantOverride < ActiveRecord::Base
   end
 
   def stock_overridden?
-    on_demand == false && count_on_hand.present?
+    # If count_on_hand is present, it means on_demand is false
+    #   See StockSettingsOverrideValidation for details
+    count_on_hand.present?
   end
 
   def decrement_stock!(quantity)
