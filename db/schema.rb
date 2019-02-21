@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20181128054803) do
+ActiveRecord::Schema.define(:version => 20190221131741) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -533,9 +533,9 @@ ActiveRecord::Schema.define(:version => 20181128054803) do
     t.datetime "updated_at",                                         :null => false
     t.integer  "max_quantity"
     t.string   "currency"
-    t.decimal  "distribution_fee",     :precision => 10, :scale => 2
-    t.decimal  "final_weight_volume",  :precision => 10, :scale => 2
-    t.decimal  "cost_price",           :precision => 8,  :scale => 2
+    t.decimal  "distribution_fee",    :precision => 10, :scale => 2
+    t.decimal  "final_weight_volume", :precision => 10, :scale => 2
+    t.decimal  "cost_price",          :precision => 8,  :scale => 2
     t.integer  "tax_category_id"
   end
 
