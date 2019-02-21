@@ -64,10 +64,6 @@ module Admin
 
       attributes = { sells: params[:sells], visible: true }
 
-      if ['own', 'any'].include? params[:sells]
-        attributes[:shop_trial_start_date] = @enterprise.shop_trial_start_date || Time.zone.now
-      end
-
       if @enterprise.update_attributes(attributes)
         flash[:success] = I18n.t(:enterprise_register_success_notice, enterprise: @enterprise.name)
         redirect_to admin_path

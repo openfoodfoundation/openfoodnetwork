@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20190221131741) do
+ActiveRecord::Schema.define(:version => 20190221214542) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -233,7 +233,6 @@ ActiveRecord::Schema.define(:version => 20190221131741) do
     t.string   "linkedin"
     t.integer  "owner_id",                                     :null => false
     t.string   "sells",                    :default => "none", :null => false
-    t.datetime "shop_trial_start_date"
     t.boolean  "producer_profile_only",    :default => false
     t.string   "permalink",                                    :null => false
     t.boolean  "charges_sales_tax",        :default => false,  :null => false

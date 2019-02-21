@@ -202,17 +202,9 @@ en:
   confirm_resend_order_confirmation: "Are you sure you want to resend the order confirmation email?"
   must_have_valid_business_number: "%{enterprise_name} must have a valid ABN before invoices can be sent."
   invoice: "Invoice"
-  percentage_of_sales: "%{percentage} of sales"
-  capped_at_cap: "capped at %{cap}"
-  per_month: "per month"
-  free: "free"
-  free_trial: "free trial"
-  plus_tax: "plus GST"
-  min_bill_turnover_desc: "once turnover exceeds %{mbt_amount}"
   more: "More"
   say_no: "No"
   say_yes: "Yes"
-  then: then
   ongoing: Ongoing
   bill_address: Billing Address
   ship_address: Shipping Address
@@ -1767,10 +1759,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   products_distributor_info: When you select a distributor for your order, their address and pickup times will be displayed here.
   products_distribution_adjustment_label: "Product distribution by %{distributor} for %{product}"
 
-  shop_trial_expires_in: "Your shopfront trial expires in"
-  shop_trial_expired_notice: "Good news! We have decided to extend shopfront trials until further notice."
-
-
   # keys used in javascript
   password: Password
   remember_me: Remember Me
@@ -2154,7 +2142,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   live: "live"
   manage: "Manage"
   resend: "Resend"
-  trial: Trial
   add_and_manage_products: "Add & manage products"
   add_and_manage_order_cycles: "Add & manage order cycles"
   manage_order_cycles: "Manage order cycles"
@@ -2187,7 +2174,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   hub_sidebar_at_least: "At least one hub must be selected"
   hub_sidebar_blue: "blue"
   hub_sidebar_red: "red"
-  shop_trial_in_progress: "Your shopfront trial expires in %{days}."
   report_customers_distributor: "Distributor"
   report_customers_supplier: "Supplier"
   report_customers_cycle: "Order Cycle"

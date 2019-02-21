@@ -344,90 +344,20 @@ module Admin
             enterprise.save!
           end
 
-          context "if the trial has finished" do
-            let(:trial_start) { 30.days.ago.beginning_of_day }
-
-            before do
-              enterprise.update_attribute(:shop_trial_start_date, trial_start)
-            end
-
-            it "is allowed" do
-              Timecop.freeze(Time.zone.local(2015, 4, 16, 14, 0, 0)) do
-                spree_post :register, { id: enterprise, sells: 'own' }
-                expect(response).to redirect_to spree.admin_path
-                expect(enterprise.reload.sells).to eq 'own'
-                expect(enterprise.shop_trial_start_date).to eq trial_start
-              end
-            end
-          end
-
-          context "if the trial has not finished" do
-            let(:trial_start) { Date.current.to_time }
-
-            before do
-              enterprise.update_attribute(:shop_trial_start_date, trial_start)
-            end
-
-            it "is allowed, but trial start date is not reset" do
-              spree_post :register, { id: enterprise, sells: 'own' }
-              expect(response).to redirect_to spree.admin_path
-              expect(enterprise.reload.sells).to eq 'own'
-              expect(enterprise.shop_trial_start_date).to eq trial_start
-            end
-          end
-
-          context "if a trial has not started" do
-            it "is allowed" do
-              spree_post :register, { id: enterprise, sells: 'own' }
-              expect(response).to redirect_to spree.admin_path
-              expect(flash[:success]).to eq "Congratulations! Registration for #{enterprise.name} is complete!"
-              expect(enterprise.reload.sells).to eq 'own'
-              expect(enterprise.reload.shop_trial_start_date).to be > Time.zone.now-(1.minute)
-            end
+          it "is allowed" do
+            spree_post :register, { id: enterprise, sells: 'own' }
+            expect(response).to redirect_to spree.admin_path
+            expect(flash[:success]).to eq "Congratulations! Registration for #{enterprise.name} is complete!"            
+            expect(enterprise.reload.sells).to eq 'own'
           end
         end
 
         context "setting 'sells' to any" do
-          context "if the trial has finished" do
-            let(:trial_start) { 30.days.ago.beginning_of_day }
-
-            before do
-              enterprise.update_attribute(:shop_trial_start_date, trial_start)
-            end
-
-            it "is allowed" do
-              Timecop.freeze(Time.zone.local(2015, 4, 16, 14, 0, 0)) do
-                spree_post :register, { id: enterprise, sells: 'any' }
-                expect(response).to redirect_to spree.admin_path
-                expect(enterprise.reload.sells).to eq 'any'
-                expect(enterprise.shop_trial_start_date).to eq trial_start
-              end
-            end
-          end
-
-          context "if the trial has not finished" do
-            let(:trial_start) { Date.current.to_time }
-
-            before do
-              enterprise.update_attribute(:shop_trial_start_date, trial_start)
-            end
-
-            it "is allowed, but trial start date is not reset" do
-              spree_post :register, { id: enterprise, sells: 'any' }
-              expect(response).to redirect_to spree.admin_path
-              expect(enterprise.reload.sells).to eq 'any'
-              expect(enterprise.shop_trial_start_date).to eq trial_start
-            end
-          end
-
-          context "if a trial has not started" do
-            it "is allowed" do
-              spree_post :register, { id: enterprise, sells: 'any' }
-              expect(response).to redirect_to spree.admin_path
-              expect(flash[:success]).to eq "Congratulations! Registration for #{enterprise.name} is complete!"
-              expect(enterprise.reload.sells).to eq 'any'
-              expect(enterprise.reload.shop_trial_start_date).to be > Time.zone.now-(1.minute)
-            end
+          it "is allowed" do
+            spree_post :register, { id: enterprise, sells: 'any' }
+            expect(response).to redirect_to spree.admin_path
+            expect(flash[:success]).to eq "Congratulations! Registration for #{enterprise.name} is complete!"            
+            expect(enterprise.reload.sells).to eq 'any'
           end
         end
 

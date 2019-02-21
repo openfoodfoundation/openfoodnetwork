@@ -321,10 +321,6 @@ class Enterprise < ActiveRecord::Base
     end
   end
 
-  def shop_trial_expiry
-    shop_trial_start_date.andand + Spree::Config[:shop_trial_length_days].days
-  end
-
   def can_invoice?
     abn.present?
   end
