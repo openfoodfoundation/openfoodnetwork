@@ -62,6 +62,10 @@ class VariantOverride < ActiveRecord::Base
     count_on_hand.present?
   end
 
+  def use_producer_settings?
+    on_demand.nil?
+  end
+
   def decrement_stock!(quantity)
     if stock_overridden?
       decrement! :count_on_hand, quantity

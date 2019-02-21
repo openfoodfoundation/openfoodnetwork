@@ -29,15 +29,19 @@ module OpenFoodNetwork
       end
 
       def count_on_hand
-        return super unless @variant_override.andand.stock_overridden?
-
-        @variant_override.count_on_hand
+        if @variant_override.present? && @variant_override.stock_overridden?
+          @variant_override.count_on_hand
+        else
+          super
+        end
       end
 
       def on_demand
-        return super if @variant_override.andand.on_demand.nil?
-
-        @variant_override.andand.on_demand
+        if @variant_override.present? && !@variant_override.use_producer_settings?
+          @variant_override.on_demand
+        else
+          super
+        end
       end
 
       def decrement!(attribute, by = 1)
