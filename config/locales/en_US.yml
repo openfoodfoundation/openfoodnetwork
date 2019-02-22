@@ -31,6 +31,16 @@ en_US:
             on_demand_but_count_on_hand_set: "must be blank if on demand"
             limited_stock_but_no_count_on_hand: "must be specified because forcing limited stock"
   activemodel:
+    attributes:
+      order_management/reports/enterprise_fee_summary/parameters:
+        start_at: "Start"
+        end_at: "End"
+        distributor_ids: "Hubs"
+        producer_ids: "Producers"
+        order_cycle_ids: "Order Cycles"
+        enterprise_fee_ids: "Fee Names"
+        shipping_method_ids: "Shipping Methods"
+        payment_method_ids: "Payment Methods"
     errors:
       models:
         subscription_validator:
@@ -74,6 +84,13 @@ en_US:
   models:
     order_cycle:
       cloned_order_cycle_name: "COPY OF %{order_cycle}"
+  validators:
+    date_time_string_validator:
+      not_string_error: "must be a string"
+      invalid_format_error: "must be valid"
+    integer_array_validator:
+      not_array_error: "must be an array"
+      invalid_element_error: "must contain only valid integers"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
@@ -994,6 +1011,9 @@ en_US:
         description: Invoices for import into Xero
       packing:
         name: Packing Reports
+      enterprise_fee_summary:
+        name: "Enterprise Fee Summary"
+        description: "Summary of Enterprise Fees collected"
     subscriptions:
       subscriptions: Subscriptions
       new: New Subscription
@@ -1027,6 +1047,7 @@ en_US:
         this_is_an_estimate: |
             The displayed prices are only an estimate and calculated at the time the subscription is changed.
             If you change prices or fees, orders will be updated, but the subscription will still display the old values.
+        not_in_open_and_upcoming_order_cycles_warning: "There are no open or upcoming order cycles for this product."
       details:
         details: Details
         invalid_error: Oops! Please fill in all of the required fields...
@@ -1041,6 +1062,7 @@ en_US:
         details: Details
         address: Address
         products: Products
+        no_open_or_upcoming_order_cycle: "No Upcoming Order Cycles"
       product_already_in_order: This product has already been added to the order. Please edit the quantity directly.
       orders:
         number: Number
@@ -1996,7 +2018,6 @@ en_US:
   spree_admin_enterprises_none_text: "You don't have any enterprises yet"
   spree_admin_enterprises_tabs_hubs: "HUBS"
   spree_admin_enterprises_producers_manage_products: "MANAGE PRODUCTS"
-  spree_admin_enterprises_any_active_products_text: "You don't have any active products."
   spree_admin_enterprises_create_new_product: "CREATE A NEW PRODUCT"
   spree_admin_single_enterprise_alert_mail_confirmation: "Please confirm the email address for"
   spree_admin_single_enterprise_alert_mail_sent: "We've sent an email to"
@@ -2519,6 +2540,45 @@ en_US:
   producers:
     signup:
       start_free_profile: "Start with a free profile, and expand when you're ready!"
+  order_management:
+    reports:
+      enterprise_fee_summary:
+        date_end_before_start_error: "must be after start"
+        parameter_not_allowed_error: "You are not authorized to use one or more selected filters for this report."
+        fee_calculated_on_transfer_through_all: "All"
+        fee_calculated_on_transfer_through_entire_orders: "Entire Orders through %{distributor}"
+        tax_category_various: "Various"
+        fee_type:
+          payment_method: "Payment Transaction"
+          shipping_method: "Shipment"
+        fee_placements:
+          supplier: "Incoming"
+          distributor: "Outgoing"
+          coordinator: "Coordinator"
+        tax_category_name:
+          shipping_instance_rate: "Platform Rate"
+        formats:
+          csv:
+            header:
+              fee_type: "Fee Type"
+              enterprise_name: "Enterprise Owner"
+              fee_name: "Fee Name"
+              customer_name: "Customer"
+              fee_placement: "Fee Placement"
+              fee_calculated_on_transfer_through_name: "Fee Calc on Transfer Through"
+              tax_category_name: "Tax Category"
+              total_amount: "$$ SUM"
+          html:
+            header:
+              fee_type: "Fee Type"
+              enterprise_name: "Enterprise Owner"
+              fee_name: "Fee Name"
+              customer_name: "Customer"
+              fee_placement: "Fee Placement"
+              fee_calculated_on_transfer_through_name: "Fee Calc on Transfer Through"
+              tax_category_name: "Tax Category"
+              total_amount: "$$ SUM"
+        invalid_filter_parameters: "The filters you selected for this report are invalid."
   spree:
     email: Email
     account_updated: "Account updated!"
@@ -2562,6 +2622,11 @@ en_US:
             distributor: "Distributor:"
             order_cycle: "Order cycle:"
       overview:
+        products:
+          active_products:
+            zero: "You don't have any active products."
+            one: "You have one active product"
+            other: "You have %{count} active products"
         order_cycles:
           order_cycles: "Order Cycles"
           order_cycles_tip: "Order cycles determine when and where your products are available to customers."
@@ -2635,6 +2700,14 @@ en_US:
           bulk_coop_allocation: 'Bulk Co-op - Allocation'
           bulk_coop_packing_sheets: 'Bulk Co-op - Packing Sheets'
           bulk_coop_customer_payments: 'Bulk Co-op - Customer Payments'
+        enterprise_fee_summaries:
+          filters:
+            date_range: "Date Range"
+            report_format_csv: "Download as CSV"
+            generate_report: "Generate Report"
+          report:
+            none: "None"
+            select_and_search: "Select filters and click on GENERATE REPORT to access your data."
       users:
         index:
           listing_users: "Listing Users"

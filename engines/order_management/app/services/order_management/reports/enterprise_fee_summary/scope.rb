@@ -31,7 +31,8 @@ module OrderManagement
           include_payment_fee_details
           include_shipping_fee_details
           include_enterprise_fee_details
-          include_line_item_details
+          include_order_source_details
+          include_line_item_source_details
           include_incoming_exchange_details
           include_outgoing_exchange_details
 
@@ -169,14 +170,38 @@ module OrderManagement
           )
         end
 
-        # If for line item - Use data only if spree_line_items.id is present
+        # If for order source
+        #
+        # Includes:
+        # * Source order
+        # * Distributor
+        def include_order_source_details
+          join_scope(
+            <<-JOIN_STRING.strip_heredoc
+              LEFT OUTER JOIN spree_orders AS adjustment_source_orders
+                ON (
+                  spree_adjustments.source_type = 'Spree::Order'
+                    AND adjustment_source_orders.id = spree_adjustments.source_id
+                )
+            JOIN_STRING
+          )
+
+          join_scope(
+            <<-JOIN_STRING.strip_heredoc
+              LEFT OUTER JOIN enterprises AS adjustment_source_distributors
+                ON (adjustment_source_distributors.id = adjustment_source_orders.distributor_id)
+            JOIN_STRING
+          )
+        end
+
+        # If for line item source - Use data only if spree_line_items.id is present
         #
         # Includes:
         # * Line item
         # * Variant
         # * Product
         # * Tax category of product, if enterprise fee tells to inherit
-        def include_line_item_details
+        def include_line_item_source_details
           join_scope(
             <<-JOIN_STRING.strip_heredoc
               LEFT OUTER JOIN spree_line_items
@@ -316,7 +341,8 @@ module OrderManagement
             group("enterprise_fees.id", "enterprises.id", "customers.id", "hubs.id",
                   "spree_payment_methods.id", "spree_shipping_methods.id",
                   "adjustment_metadata.enterprise_role", "spree_tax_categories.id",
-                  "product_tax_categories.id", "incoming_exchange_enterprises.id",
+                  "product_tax_categories.id", "spree_adjustments.source_type",
+                  "adjustment_source_distributors.id", "incoming_exchange_enterprises.id",
                   "outgoing_exchange_enterprises.id")
           end
         end
@@ -331,8 +357,11 @@ module OrderManagement
                   enterprise_fees.fee_type AS fee_type, customers.name AS customer_name,
                   customers.email AS customer_email, enterprise_fees.fee_type AS fee_type,
                   enterprise_fees.name AS fee_name, spree_tax_categories.name AS tax_category_name,
+                  enterprise_fees.inherits_tax_category AS enterprise_fee_inherits_tax_category,
                   product_tax_categories.name AS product_tax_category_name,
                   adjustment_metadata.enterprise_role AS placement_enterprise_role,
+                  spree_adjustments.source_type AS adjustment_source_type,
+                  adjustment_source_distributors.name AS adjustment_source_distributor_name,
                   incoming_exchange_enterprises.name AS incoming_exchange_enterprise_name,
                   outgoing_exchange_enterprises.name AS outgoing_exchange_enterprise_name
               JOIN_STRING
