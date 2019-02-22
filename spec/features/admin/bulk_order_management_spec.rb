@@ -45,6 +45,7 @@ feature %q{
 
       before :each do
         visit '/admin/orders/bulk_management'
+        wait_for_angular_requests
       end
 
       it "displays a column for user's full name" do
@@ -456,6 +457,7 @@ feature %q{
 
       before :each do
         visit '/admin/orders/bulk_management'
+        wait_for_angular_requests
       end
 
       it "displays date fields for filtering orders, with default values set" do
