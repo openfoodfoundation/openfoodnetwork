@@ -62,7 +62,7 @@ class VariantOverride < ActiveRecord::Base
     count_on_hand.present?
   end
 
-  def use_producer_settings?
+  def use_producer_stock_settings?
     on_demand.nil?
   end
 

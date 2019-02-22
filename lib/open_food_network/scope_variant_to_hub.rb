@@ -37,7 +37,7 @@ module OpenFoodNetwork
       end
 
       def on_demand
-        if @variant_override.present? && !@variant_override.use_producer_settings?
+        if @variant_override.present? && !@variant_override.use_producer_stock_settings?
           @variant_override.on_demand
         else
           super
