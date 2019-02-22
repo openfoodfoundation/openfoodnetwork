@@ -166,7 +166,22 @@ describe "filtering products for submission to database", ->
       variant_unit_scale: 1
     ]
 
-  # TODO Not an exhaustive test, is there a better way to do this?
+  it "returns stock properties of a product if no variant is provided", ->
+    available_on = new Date()
+
+    testProduct =
+      id: 1
+      name: "TestProduct"
+      on_hand: 0
+      on_demand: false
+
+    expect(filterSubmitProducts([testProduct])).toEqual [
+      id: 1
+      name: "TestProduct"
+      on_hand: 0
+      on_demand: false
+    ]
+
   it "only returns the properties of products which ought to be updated", ->
     available_on = new Date()
 
@@ -183,12 +198,11 @@ describe "filtering products for submission to database", ->
       shipping_category_id: null
       created_at: null
       updated_at: null
-      count_on_hand: 0
+      on_hand: 0
+      on_demand: false
       producer_id: 5
-
       group_buy: null
       group_buy_unit_size: null
-      on_demand: false
       master:
         id: 2
         unit_value: 250
