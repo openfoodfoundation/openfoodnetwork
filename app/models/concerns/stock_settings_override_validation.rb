@@ -1,3 +1,21 @@
+# Validates the combination of on_demand and count_on_hand values.
+#
+# `on_demand` can have three values: true, false or nil
+# `count_on_hand` can either be: nil or a number
+#
+# This means that a variant override can be in six different stock states
+# but only three of them are valid.
+#
+# | on_demand | count_on_hand | stock_overridden? | use_producer_stock_settings? | valid? |
+# |-----------|---------------|-------------------|------------------------------|--------|
+# | 1         | nil           | false             | false                        | true   |
+# | 0         | x             | true              | false                        | true   |
+# | nil       | nil           | false             | true                         | true   |
+# | 1         | x             | ?                 | ?                            | false  |
+# | 0         | nil           | ?                 | ?                            | false  |
+# | nil       | x             | ?                 | ?                            | false  |
+#
+# This module has one method for each invalid case.
 module StockSettingsOverrideValidation
   extend ActiveSupport::Concern
 
