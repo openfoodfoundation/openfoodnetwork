@@ -152,15 +152,17 @@ module WebHelper
     page.driver.browser.switch_to.alert.accept
   end
 
-  def wait_for_angular_requests
-    wait_until { angular_requests_finished }
+  def angular_http_requests_finished(angular_controller=nil)
+    scope_element = angular_controller ? "[ng-controller=#{angular_controller}]" : '.ng-scope'
+    page.evaluate_script("angular.element(document.querySelector('#{scope_element}')).injector().get('$http').pendingRequests.length == 0")
+  end
+
+  def request_monitor_finished(angular_controller=nil)
+    scope_element = angular_controller ? "[ng-controller=#{angular_controller}]" : '.ng-scope'
+    page.evaluate_script("angular.element(document.querySelector('#{scope_element}')).scope().RequestMonitor.loading == false")
   end
 
   private
-
-  def angular_requests_finished
-    page.evaluate_script('angular.element(".ng-scope").injector().get("$http").pendingRequests.length === 0')
-  end
 
   def wait_for_ajax
     wait_until { page.evaluate_script("$.active") == 0 }
