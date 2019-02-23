@@ -103,9 +103,8 @@ feature 'shipping methods' do
 
       click_button I18n.t("actions.create")
 
-      expect(page).to have_no_button I18n.t("actions.create")
-      message = "Shipping method \"Teleport\" has been successfully created!"
-      expect(page).to have_flash_message message
+      expect(page).to have_content I18n.t('editing_shipping_method')
+      expect(flash_message).to eq I18n.t('successfully_created', resource: 'Shipping method "Teleport"')
 
       expect(first('tags-input .tag-list ti-tag-item')).to have_content "local"
 
