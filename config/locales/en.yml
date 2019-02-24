@@ -2746,7 +2746,209 @@ See the %{link} to find out more about %{sitename}'s features and to start using
               total_amount: "$$ SUM"
         invalid_filter_parameters: "The filters you selected for this report are invalid."
 
+  order: "Order"
+  order_state:
+    address: "address"
+    adjustments: "adjustments"
+    awaiting_return: "awaiting return"
+    canceled: "cancelled"
+    cart: "cart"
+    complete: "complete"
+    confirm: "confirm"
+    delivery: "delivery"
+    paused: "paused"
+    payment: "payment"
+    pending: "pending"
+    resumed: "resumed"
+    returned: "returned"
+    skrill: "skrill"
+  distribution: "Distribution"
+  order_details: "Order Details"
+  customer_details: "Customer Details"
+  adjustments: "Adjustments"
+  payments: "Payments"
+
+  payment: "Payment"
+  payment_method: "Payment Method"
+  shipment: "Shipment"
+  shipment_inc_vat: "Shipment including VAT"
+  shipping_tax_rate: "Shipping Tax Rate"
+  category: "Category"
+  delivery: "Delivery"
+  temperature_controlled: "Temperature Controlled"
+  new_product: "New Product"
+
+  administration: "Administration"
+  logged_in_as: "Logged in as"
+  account: "Account"
+  logout: "Logout"
+
+  date_range: "Date Range"
+  status: "status"
+  new: "New"
+  start: "Start"
+  stop: "Stop"
+  first: "First"
+  previous: "Previous"
+  last: "Last"
+
   spree:
+    your_order_is_empty_add_product: "Your order is empty, please search for and add a product above"
+    add_product: "Add Product"
+    name_or_sku: "Name or SKU (enter at least first 4 characters of product name)"
+    resend: Resend
+    back_to_orders_list: Back To Orders List
+    select_stock: "Select stock"
+    location: "Location"
+    count_on_hand: "Count On Hand"
+    quantity: "Quantity"
+    package_from: "package from"
+    item_description: "Item Description"
+    price: "Price"
+    total: "Total"
+    edit: "Edit"
+    split: "Split"
+    delete: "Delete"
+    cannot_set_shipping_method_without_address: "Cannot set shipping method until customer details are provided."
+    no_tracking_present: "No tracking details provided."
+    order_total: "Order Total"
+    customer_details: "Customer Details"
+    customer_search: "Customer Search"
+    choose_a_customer: "Choose a customer"
+    account: "Account"
+    billing_address: "Billing Address"
+    shipping_address: "Shipping Address"
+    first_name: "First name"
+    last_name: "Last name"
+    street_address: "Street Address"
+    street_address_2: "Street Address (cont'd)"
+    city: "City"
+    zip: "Zip"
+    country: "Country"
+    state: "State"
+    phone: "Phone"
+    update: "Update"
+    use_billing_address: "Use Billing Address"
+    adjustments: "Adjustments"
+    continue: "Continue"
+    fill_in_customer_info: "Please fill in customer info"
+    new_payment: "New Payment"
+
+    configurations: "Configurations"
+    general_settings: "General Settings"
+    site_name: "Site Name"
+    site_url: "Site URL"
+    default_seo_title: "Default Seo Title"
+    default_meta_description: "Default Meta Description"
+    default_meta_keywords: "Default Meta Keywords"
+    security_settings: "Security Settings"
+    allow_ssl_in_development_and_test: "Allow SSL to be used when in development and test modes"
+    allow_ssl_in_production: "Allow SSL to be used in production mode"
+    allow_ssl_in_staging: "Allow SSL to be used in staging mode"
+    check_for_spree_alerts: "Check for Spree alerts"
+    currency_decimal_mark: "Currency decimal mark"
+    currency_settings: "Currency Settings"
+    currency_symbol_position: Put "currency symbol before or after dollar amount?"
+    currency_thousands_separator: "Currency thousands separator"
+    hide_cents: "Hide cents"
+    display_currency: "Display currency"
+    choose_currency: "Choose Currency"
+
+    mail_method_settings: "Mail Method Settings"
+    general: "General"
+    enable_mail_delivery: "Enable Mail Delivery"
+    send_mails_as: "Send Mails As"
+    smtp_send_all_emails_as_from_following_address: "Send all mails as from the following address."
+    send_copy_of_all_mails_to: "Send Copy of All Mails To"
+    smtp_send_copy_to_this_addresses: "Sends a copy of all outgoing mails to this address. For multiple addresses, separate with commas."
+    intercept_email_address: "Intercept Email Address"
+    intercept_email_instructions: "Override email recipient and replace with this address."
+    smtp: "SMTP"
+    smtp_domain: "SMTP Domain"
+    smtp_mail_host: "SMTP Mail Host"
+    smtp_port: "SMTP Port"
+    secure_connection_type: "Secure Connection Type"
+    smtp_authentication_type: "SMTP Authentication Type"
+    smtp_username: "SMTP Username"
+    smtp_password: "SMTP Password"
+
+    image_settings: "Image Settings"
+    image_settings_warning: "You will need to regenerate thumbnails if you update the paperclip styles. Use rake paperclip:refresh:thumbnails CLASS=Spree::Image to do this."
+    attachment_default_style: Attachments Style
+    attachment_default_url: "Attachments Default URL"
+    attachment_path: "Attachments Path"
+    attachment_styles: "Paperclip Styles"
+    attachment_url: "Attachments URL"
+    add_new_style: "Add New Style"
+    image_settings_updated: "Image Settings successfully updated."
+
+    tax_categories: "Tax Categories"
+    listing_tax_categories: "Listing Tax Categories"
+    back_to_tax_categories_list: "Back To Tax Categories List"
+
+    tax rate: "Tax Rates"
+    new_tax_rate: "New Tax Rate"
+    tax_category: "Tax Category"
+    rate: "Rate"
+    tax_rate_amount_explanation: "Tax rates are a decimal amount to aid in calculations, (i.e. if the tax rate is 5% then enter 0.05)"
+    included_in_price: "Included in Price"
+    show_rate_in_label: "Show rate in label"
+    back_to_tax_rates_list: "Back to Tax Rates List"
+
+    tax_settings: "Tax Settings"
+    zones: "Zones"
+    new_zone: "New Zone"
+    default_tax: "Default Tax"
+    default_tax_zone: "Default Tax Zone"
+    country_based: "Country Based"
+    state_based: "State Based"
+
+    countries: "Countries"
+    listing_countries: "Listing Countries"
+    iso_name: "ISO Name"
+    states_required: "States Required"
+    editing_country: "Editing Country"
+    back_to_countries_list: "Back to Countries List"
+
+    states: "States"
+    abbreviation: "Abbreviation"
+    new_state: "New State"
+
+    payment_methods: "Payment Methods"
+    new_payment_method: "New Payment Method"
+    provider: "Provider"
+
+    taxonomies: "Taxonomies"
+    new_taxonomy: "New Taxonomy"
+    back_to_taxonomies_list: "Back to Taxonomies List"
+
+    shipping_methods: "Shipping Methods"
+
+    shipping_categories: "Shipping Categories"
+    new_shipping_category: "NEWEW Shipping Categories"
+    back_to_shipping_categories: "Back To Shipping Categories"
+
+    analytics_trackers: "Analytics Trackers"
+    no_trackers_found: "No Trackers Found"
+    new_tracker: "New Tracker"
+    add_one: "Add One"
+    google_analytics_id: "Analytics ID"
+    back_to_trackers_list: "Back to Trackers List"
+
+    name: "Name"
+    description: "Description"
+    type: "Type"
+    default: "default"
+    calculator: "Calculator"
+    zone: "Zone"
+    display: "Display"
+    environment: "Environment"
+    active: "Active"
+    nore: "More"
+    no_results: "No results"
+    create: "Create"
+    loading: "Loading"
+
     # TODO: remove `email` key once we get to Spree 2.0
     email: Email
     # TODO: remove 'account_updated' key once we get to Spree 2.0
@@ -2755,6 +2957,12 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     date: "Date"
     time: "Time"
     inventory_error_flash_for_insufficient_quantity: "An item in your cart has become unavailable."
+    inventory: Inventory
+    zipcode: Postcode
+    weight: Weight (per kg)
+
+    actions:
+      update: "Update"
     errors:
       messages:
         blank: "can't be blank"
@@ -2943,8 +3151,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     date_picker:
       format: ! '%Y-%m-%d'
       js_format: 'yy-mm-dd'
-    inventory: Inventory
-    zipcode: Postcode
     orders:
       edit:
         login_to_view_order: "Please log in to view your order."
@@ -3024,8 +3230,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           If you continue to have problems please feel free to contact us.
       confirmation_instructions:
         subject: Please confirm your OFN account
-    weight: Weight (per kg)
-    zipcode: Postcode
     users:
       form:
         account_settings: Account Settings
