@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-xdescribe ProxyOrder, type: :model do
+describe ProxyOrder, type: :model do
   describe "cancel" do
     let(:order_cycle) { create(:simple_order_cycle) }
     let(:subscription) { create(:subscription) }

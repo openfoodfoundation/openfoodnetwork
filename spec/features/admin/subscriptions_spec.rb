@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-xfeature 'Subscriptions' do
+feature 'Subscriptions' do
   include AdminHelper
   include AuthenticationWorkflow
   include WebHelper

@@ -11,7 +11,7 @@ describe OrderSyncer do
     context "when the shipping method on an order is the same as the subscription" do
       let(:params) { { shipping_method_id: new_shipping_method.id } }
 
-      xit "updates the shipping_method on the order and on shipments" do
+      it "updates the shipping_method on the order and on shipments" do
         expect(order.shipments.first.shipping_method_id_was).to eq shipping_method.id
         subscription.assign_attributes(params)
         expect(syncer.sync!).to be true
@@ -34,7 +34,7 @@ describe OrderSyncer do
           expect(syncer.sync!).to be true
         end
 
-        xit "does not update the shipping_method on the subscription or on the pre-altered shipment" do
+        it "does not update the shipping_method on the subscription or on the pre-altered shipment" do
           expect(order.reload.shipping_method).to eq new_shipping_method
           expect(order.reload.shipments.first.shipping_method).to eq new_shipping_method
           expect(syncer.order_update_issues[order.id]).to be nil
@@ -54,7 +54,7 @@ describe OrderSyncer do
           expect(syncer.sync!).to be true
         end
 
-        xit "does not update the shipping_method on the subscription or on the pre-altered shipment" do
+        it "does not update the shipping_method on the subscription or on the pre-altered shipment" do
           expect(order.reload.shipping_method).to eq changed_shipping_method
           expect(order.reload.shipments.first.shipping_method).to eq changed_shipping_method
           expect(syncer.order_update_issues[order.id]).to include "Shipping Method"
@@ -226,7 +226,7 @@ describe OrderSyncer do
     context "when a ship address is not required" do
       before { shipping_method.update_attributes(require_ship_address: false) }
 
-      xit "does not change the ship address" do
+      it "does not change the ship address" do
         subscription.assign_attributes(params)
         expect(syncer.sync!).to be true
         expect(syncer.order_update_issues.keys).to_not include order.id
@@ -241,7 +241,7 @@ describe OrderSyncer do
         let(:new_shipping_method) { create(:shipping_method, require_ship_address: true) }
         before { params.merge!(shipping_method_id: new_shipping_method.id) }
 
-        xit "updates ship_address attrs" do
+        it "updates ship_address attrs" do
           subscription.assign_attributes(params)
           expect(syncer.sync!).to be true
           expect(syncer.order_update_issues.keys).to_not include order.id
@@ -272,7 +272,7 @@ describe OrderSyncer do
 
       context "when the ship address on the order doesn't match that on the subscription" do
         before { order.ship_address.update_attributes(firstname: "Jane") }
-        xit "does not update ship_address on the order" do
+        it "does not update ship_address on the order" do
           subscription.assign_attributes(params)
           expect(syncer.sync!).to be true
           expect(syncer.order_update_issues.keys).to include order.id
@@ -312,7 +312,7 @@ describe OrderSyncer do
       let(:params) { { subscription_line_items_attributes: [{ id: sli.id, quantity: 3}] } }
       let(:syncer) { OrderSyncer.new(subscription) }
 
-      xit "updates the line_item quantities and totals on all orders" do
+      it "updates the line_item quantities and totals on all orders" do
         expect(order.reload.total.to_f).to eq 59.97
         subscription.assign_attributes(params)
         expect(syncer.sync!).to be true
