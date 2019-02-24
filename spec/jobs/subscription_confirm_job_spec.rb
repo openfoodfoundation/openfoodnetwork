@@ -58,6 +58,12 @@ describe SubscriptionConfirmJob do
       proxy_order.update_attributes!(confirmed_at: 1.second.ago)
       expect(proxy_orders).to_not include proxy_order
     end
+
+    it "ignores orders that have been cancelled" do
+      setup_email
+      proxy_order.order.cancel!
+      expect(proxy_orders).to_not include proxy_order
+    end
   end
 
   describe "performing the job" do
