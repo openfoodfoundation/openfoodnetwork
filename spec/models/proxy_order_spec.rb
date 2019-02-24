@@ -78,7 +78,7 @@ xdescribe ProxyOrder, type: :model do
   describe "resume" do
     let!(:payment_method) { create(:payment_method) }
     let!(:shipment) { create(:shipment) }
-    let(:order) { create(:order_with_totals, shipments: [shipment]) }
+    let(:order) { create(:order_with_totals, ship_address: create(:address), shipments: [shipment]) }
     let(:proxy_order) { create(:proxy_order, order: order, canceled_at: Time.zone.now) }
     let(:order_cycle) { proxy_order.order_cycle }
 
