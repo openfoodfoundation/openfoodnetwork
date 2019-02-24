@@ -2961,8 +2961,31 @@ See the %{link} to find out more about %{sitename}'s features and to start using
             other: "You have %{count} active order cycles."
           manage_order_cycles: "MANAGE ORDER CYCLES"
       shipping_methods:
+        index:
+          shipping_methods: "Shipping Methods"
+          new_shipping_method: "New Shipping Method"
+          name: "Name"
+          products_distributor: "Distributor"
+          zone: "Zone"
+          calculator: "Calculator"
+          display: "Display"
+          both: "Both"
+          front_end: "Front End"
+          back_end: "Back End"
+          no_shipping_methods_found: "No shipping methods found"
+        new:
+          new_shipping_method: "New Shipping Method"
+          back_to_shipping_methods_list: "Back To Shipping Methods List"
         edit:
           editing_shipping_method: "Editing Shipping Method"
+          new: "New"
+          back_to_shipping_methods_list: "Back To Shipping Methods List"
+        form:
+          categories: "Categories"
+          zones: "Zones"
+          both: "Both"
+          front_end: "Front End"
+          back_end: "Back End"
       payment_methods:
         new:
           new_payment_method: "New Payment Method"

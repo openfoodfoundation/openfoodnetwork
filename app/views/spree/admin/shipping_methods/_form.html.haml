@@ -18,7 +18,7 @@
       .alpha.three.columns
         = f.label :display_on, t(:display)
       .omega.eight.columns
-        = select(:shipping_method, :display_on, Spree::ShippingMethod::DISPLAY.collect { |display| [t(display), display == :both ? nil : display.to_s] }, {}, {class: 'select2 fullwidth'})
+        = select(:shipping_method, :display_on, Spree::ShippingMethod::DISPLAY.collect { |display| [t(".#{display}"), display == :both ? nil : display.to_s] }, {}, {class: 'select2 fullwidth'})
         = error_message_on :shipping_method, :display_on
 
   .row
@@ -49,7 +49,7 @@
 .alpha.six.columns
   .alpha.six.columns
     %fieldset.categories.no-border-bottom
-      %legend{align: "center"}= Spree.t(:categories)
+      %legend{align: "center"}= t('.categories')
       = f.field_container :categories do
         - Spree::ShippingCategory.all.each do |category|
           = label_tag do
@@ -60,7 +60,7 @@
 
   .alpha.six.columns
     %fieldset.no-border-bottom
-      %legend{align: "center"}= Spree.t(:zones)
+      %legend{align: "center"}= t('.zones')
       = f.field_container :zones do
         - shipping_method_zones = @shipping_method.zones.to_a
         - Spree::Zone.all.each do |zone|
