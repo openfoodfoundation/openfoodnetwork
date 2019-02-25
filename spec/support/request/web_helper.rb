@@ -152,17 +152,22 @@ module WebHelper
     page.driver.browser.switch_to.alert.accept
   end
 
-  def angular_http_requests_finished(angular_controller=nil)
-    scope_element = angular_controller ? "[ng-controller=#{angular_controller}]" : '.ng-scope'
-    page.evaluate_script("angular.element(document.querySelector('#{scope_element}')).injector().get('$http').pendingRequests.length == 0")
+  def angular_http_requests_finished(controller=nil)
+    page.evaluate_script("#{angular_scope(controller)}.injector().get('$http').pendingRequests.length == 0")
   end
 
-  def request_monitor_finished(angular_controller=nil)
-    scope_element = angular_controller ? "[ng-controller=#{angular_controller}]" : '.ng-scope'
-    page.evaluate_script("angular.element(document.querySelector('#{scope_element}')).scope().RequestMonitor.loading == false")
+  def request_monitor_finished(controller=nil)
+    page.evaluate_script("#{angular_scope(controller)}.scope().RequestMonitor.loading == false")
   end
 
   private
+
+  # Takes an optional angular controller name eg: "LineItemsCtrl",
+  # otherwise finds the first object in the DOM with an angular scope
+  def angular_scope(controller=nil)
+    element = controller ? "[ng-controller=#{controller}]" : '.ng-scope'
+    "angular.element(document.querySelector('#{element}'))"
+  end
 
   def wait_for_ajax
     wait_until { page.evaluate_script("$.active") == 0 }
