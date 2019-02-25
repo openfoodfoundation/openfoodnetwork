@@ -26,7 +26,7 @@
       .no-objects-found
         = Spree.t(:your_order_is_empty_add_product)
 
-    %div
+    %div{"data-hook" => "admin_order_edit_form"}
       = render :partial => 'form', :locals => { :order => @order }
 
 - content_for :head do
