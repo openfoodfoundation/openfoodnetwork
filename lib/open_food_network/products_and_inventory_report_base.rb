@@ -31,11 +31,7 @@ module OpenFoodNetwork
     end
 
     def filter(variants)
-      filter_on_hand filter_to_distributor filter_to_order_cycle filter_to_supplier filter_not_deleted variants
-    end
-
-    def filter_not_deleted(variants)
-      variants.not_deleted
+      filter_on_hand filter_to_distributor filter_to_order_cycle filter_to_supplier variants
     end
 
     # Using the `in_stock?` method allows overrides by distributors.

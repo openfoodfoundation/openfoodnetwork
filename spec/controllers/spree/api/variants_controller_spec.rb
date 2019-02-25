@@ -69,6 +69,16 @@ module Spree
         lambda { variant.reload }.should_not raise_error
         variant.deleted_at.should_not be_nil
       end
+
+      it "doesn't delete the only variant of the product" do
+        product = create(:product)
+        variant = product.variants.first
+
+        spree_delete :soft_delete, {variant_id: variant.to_param, product_id: product.to_param, format: :json}
+
+        expect(variant.reload).to_not be_deleted
+        expect(assigns(:variant).errors[:product]).to include "must have at least one variant"
+      end
     end
   end
 end

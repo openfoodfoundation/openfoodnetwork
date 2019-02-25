@@ -1,3 +1,5 @@
+require "spec_helper"
+
 describe Api::Admin::ForOrderCycle::EnterpriseSerializer do
   let(:coordinator) { create(:distributor_enterprise) }
   let(:order_cycle) { double(:order_cycle, coordinator: coordinator) }
@@ -14,7 +16,7 @@ describe Api::Admin::ForOrderCycle::EnterpriseSerializer do
 
   let(:serialized_enterprise) do
     Api::Admin::ForOrderCycle::EnterpriseSerializer.new(
-      enterprise,
+      enterprise.reload, # load the products that were created after the enterprise
       order_cycle: order_cycle,
       spree_current_user: enterprise.owner
     ).to_json

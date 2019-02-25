@@ -35,7 +35,6 @@ Spree::Variant.class_eval do
 
   scope :with_order_cycles_inner, joins(exchanges: :order_cycle)
 
-  scope :not_deleted, where(deleted_at: nil)
   scope :not_master, where(is_master: false)
   scope :in_order_cycle, lambda { |order_cycle|
     with_order_cycles_inner.
@@ -103,19 +102,6 @@ Spree::Variant.class_eval do
 
   def fees_by_type_for(distributor, order_cycle)
     OpenFoodNetwork::EnterpriseFeeCalculator.new(distributor, order_cycle).fees_by_type_for self
-  end
-
-  def delete
-    if product.variants == [self] # Only variant left on product
-      errors.add :product, I18n.t(:spree_variant_product_error)
-      false
-    else
-      transaction do
-        self.update_column(:deleted_at, Time.zone.now)
-        ExchangeVariant.where(variant_id: self).destroy_all
-        self
-      end
-    end
   end
 
   def refresh_products_cache
