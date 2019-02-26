@@ -89,23 +89,23 @@ module Api
     end
 
     def distributed_product_properties
-      if active
-        Spree::Property.currently_sold_by(enterprise)
-      else
-        Spree::Property
-          .joins(products: { variants: { exchanges: :order_cycle } })
-          .merge(Exchange.outgoing)
-          .merge(Exchange.to_enterprise(enterprise))
-          .select('DISTINCT spree_properties.*')
-      end
+      properties = Spree::Property
+        .joins(products: { variants: { exchanges: :order_cycle } })
+        .merge(Exchange.outgoing)
+        .merge(Exchange.to_enterprise(enterprise))
+        .select('DISTINCT spree_properties.*')
+
+      return properties.merge(OrderCycle.active) if active
+      properties
     end
 
     def distributed_producer_properties
-      properties = Spree::Property.joins(
-        producer_properties: {
-          producer: { supplied_products: { variants: { exchanges: :order_cycle } } }
-        }
-      )
+      properties = Spree::Property
+        .joins(
+          producer_properties: {
+            producer: { supplied_products: { variants: { exchanges: :order_cycle } } }
+          }
+        )
         .merge(Exchange.outgoing)
         .merge(Exchange.to_enterprise(enterprise))
         .select('DISTINCT spree_properties.*')
