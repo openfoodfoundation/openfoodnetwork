@@ -59,14 +59,14 @@
             = t('.note')
       %td.align-center
         %span.state{'ng-class' => 'order.state'}
-          {{'order_state.' + order.state | t}}
+          {{'js.admin.orders.order_state.' + order.state | t}}
       %td.align-center
         %span.state{'ng-class' => 'order.payment_state', 'ng-if' => 'order.payment_state'}
           %a{'ng-href' => '{{order.payments_path}}' }
-            {{'payment_states.' + order.payment_state | t}}
+            {{'js.admin.orders.payment_states.' + order.payment_state | t}}
       %td.align-center
         %span.state{'ng-class' => 'order.shipment_state', 'ng-if' => 'order.shipment_state'}
-          {{'shipment_states.' + order.shipment_state | t}}
+          {{'js.admin.orders.shipment_states.' + order.shipment_state | t}}
       %td
         = mail_to "{{order.email}}"
       %td.align-center
