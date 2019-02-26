@@ -197,11 +197,11 @@ feature 'Customers' do
           fill_in 'address1', with: "New Address1"
           click_button 'Update Address'
 
-          expect(page).to have_selector "th.bill_address"
           expect(page).to have_content 'Address updated successfully.'
-          expect(page).to have_link 'New Address1'
           expect(customer4.reload.bill_address.address1).to eq 'New Address1'
+          expect(page).to have_selector 'th.bill_address'
 
+          expect(page).to have_link 'New Address1'
           first('#bill-address-link').click
           
           expect(page).to have_content 'Edit Billing Address'
