@@ -202,20 +202,18 @@ Spree::Product.class_eval do
     end
   end
 
-  def delete_with_delete_from_order_cycles
+  def destroy_with_delete_from_order_cycles
     transaction do
       OpenFoodNetwork::ProductsCache.product_deleted(self) do
-        # Touch supplier and distributors as we would on #destroy
-        self.supplier.touch
         touch_distributors
 
         ExchangeVariant.where('exchange_variants.variant_id IN (?)', self.variants_including_master.with_deleted).destroy_all
 
-        delete_without_delete_from_order_cycles
+        destroy_without_delete_from_order_cycles
       end
     end
   end
-  alias_method_chain :delete, :delete_from_order_cycles
+  alias_method_chain :destroy, :delete_from_order_cycles
 
 
   def refresh_products_cache

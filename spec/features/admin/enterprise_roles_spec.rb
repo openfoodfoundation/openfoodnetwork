@@ -98,7 +98,7 @@ feature %q{
       before do
         click_link 'Enterprises'
         click_link 'Test Enterprise'
-        within('.side_menu') { click_link 'Users' }
+        navigate_to_enterprise_users
         expect(page).to have_selector "table.managers"
       end
 
@@ -131,7 +131,8 @@ feature %q{
       it "shows changes to enterprise contact or owner" do
         select2_select user2.email, from: 'receives_notifications_dropdown'
         within('#save-bar') { click_button 'Update' }
-        within('.side_menu') { click_link 'Users' }
+        navigate_to_enterprise_users
+        expect(page).to have_selector "table.managers"
 
         within 'table.managers' do
           within "tr#manager-#{user1.id}" do
@@ -156,6 +157,9 @@ feature %q{
           click_button I18n.t('js.admin.modals.close')
         end
 
+        expect(page).not_to have_selector "#invite-manager-modal"
+        expect(page).to have_selector "table.managers"
+
         new_user = Spree::User.find_by_email_and_confirmed_at(new_email, nil)
         expect(Enterprise.managed_by(new_user)).to include enterprise
 
@@ -170,8 +174,13 @@ feature %q{
     end
   end
 
-
   private
+
+  def navigate_to_enterprise_users
+    within ".side_menu" do
+      click_link "Users"
+    end
+  end
 
   def have_relationship(user, enterprise)
     have_table_row [user.email, 'manages', enterprise.name, '']

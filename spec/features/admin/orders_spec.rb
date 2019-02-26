@@ -221,6 +221,8 @@ feature %q{
     end
 
     feature "viewing the edit page" do
+      let!(:different_shipping_method) { create(:shipping_method, name: "Different Shipping Method") }
+
       background do
         Spree::Config[:enable_receipt_printing?] = true
 
@@ -281,6 +283,28 @@ feature %q{
           expect(page).to have_link "Print Invoice", href: spree.print_admin_order_path(@order)
           expect(page).to have_link "Cancel Order", href: spree.fire_admin_order_path(@order, :e => 'cancel')
         end
+      end
+
+      scenario "can edit shipping method" do
+        expect(page).to_not have_content different_shipping_method.name
+
+        find('.edit-method').click
+        expect(page).to have_select2 'selected_shipping_rate_id', with_options: [different_shipping_method.name]
+        select2_select different_shipping_method.name, from: 'selected_shipping_rate_id'
+        find('.save-method').click
+
+        expect(page).to have_content different_shipping_method.name
+      end
+
+      scenario "can edit tracking number" do
+        test_tracking_number = "ABCCBA"
+        expect(page).to_not have_content test_tracking_number
+
+        find('.edit-tracking').click
+        fill_in "tracking", with: test_tracking_number
+        find('.save-tracking').click
+
+        expect(page).to have_content test_tracking_number
       end
 
       scenario "can print an order's ticket" do

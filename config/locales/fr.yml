@@ -31,6 +31,16 @@ fr:
             on_demand_but_count_on_hand_set: "doit être vide si \"à volonté\""
             limited_stock_but_no_count_on_hand: "doit être spécifié car pas \"à volonté\""
   activemodel:
+    attributes:
+      order_management/reports/enterprise_fee_summary/parameters:
+        start_at: "Début"
+        end_at: "Fin"
+        distributor_ids: "Hubs"
+        producer_ids: "Producteurs"
+        order_cycle_ids: "Cycles de vente"
+        enterprise_fee_ids: "Nom des marges et commissions"
+        shipping_method_ids: "Méthodes de livraison"
+        payment_method_ids: "Méthodes de paiement"
     errors:
       models:
         subscription_validator:
@@ -74,6 +84,13 @@ fr:
   models:
     order_cycle:
       cloned_order_cycle_name: "Copie de %{order_cycle}"
+  validators:
+    date_time_string_validator:
+      not_string_error: "doit être une série"
+      invalid_format_error: "doit être valide"
+    integer_array_validator:
+      not_array_error: "doit être une séquence"
+      invalid_element_error: "doit contenir uniquement des nombres entiers"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Confirmez l'adresse email pour %{enterprise}"
@@ -995,6 +1012,9 @@ fr:
         description: Factures pour import dans Xero
       packing:
         name: Rapports de préparation des paniers
+      enterprise_fee_summary:
+        name: "Résumé des marges et commissions"
+        description: "Résumé des marges et commissions collectées"
     subscriptions:
       subscriptions: Abonnements
       new: Nouvel abonnement
@@ -1028,6 +1048,7 @@ fr:
         this_is_an_estimate: |
             Les prix affichés ne sont qu'une estimation calculée au moment de la dernière modification de l'abonnement.
             Si vous modifiez les prix ou marges et commissions appliquées, les commandes seront mises à jour, mais l'abonnement affichera toujours les anciennes valeurs.
+        not_in_open_and_upcoming_order_cycles_warning: "Il n'y a pas de cycle de vente ouvert ou à venir pour ce produit."
       details:
         details: Informations
         invalid_error: Oups! Veuillez remplir tous les champs obligatoires...
@@ -1042,6 +1063,7 @@ fr:
         details: Informations
         address: Adresse
         products: Produits
+        no_open_or_upcoming_order_cycle: "Pas de cycles de vente prévus."
       product_already_in_order: Ce produit a déjà été ajouté à la commande. Veuillez directement modifier la quantité.
       orders:
         number: Nombre
@@ -1997,7 +2019,6 @@ fr:
   spree_admin_enterprises_none_text: "Vous n'avez pas encore d'entreprise"
   spree_admin_enterprises_tabs_hubs: "HUBS"
   spree_admin_enterprises_producers_manage_products: "GÉRER LES PRODUITS"
-  spree_admin_enterprises_any_active_products_text: "Vous n'avez aucun produit actif."
   spree_admin_enterprises_create_new_product: "CRÉER UN NOUVEAU PRODUIT"
   spree_admin_single_enterprise_alert_mail_confirmation: "Veuillez confirmer l'adresse mail pour"
   spree_admin_single_enterprise_alert_mail_sent: "Email envoyé à "
@@ -2531,6 +2552,45 @@ fr:
   producers:
     signup:
       start_free_profile: "Commencez par créer votre profil entreprise, et changez de formule quand vous êtes prêt !"
+  order_management:
+    reports:
+      enterprise_fee_summary:
+        date_end_before_start_error: "doit être après date début"
+        parameter_not_allowed_error: "Vous n'êtes pas authorisé.e à utiliser un ou plusieurs des filtres sélectionnés pour ce rapport."
+        fee_calculated_on_transfer_through_all: "Tous"
+        fee_calculated_on_transfer_through_entire_orders: "Commandes complètes via %{distributor}"
+        tax_category_various: "Multiples"
+        fee_type:
+          payment_method: "Méthodes de paiement"
+          shipping_method: "Livraison"
+        fee_placements:
+          supplier: "Produits entrants (pouvant être mis en vente par les hubs)"
+          distributor: "Produits sortants (mis en vente par/via un ou plusieurs hubs)"
+          coordinator: "Coordinateur"
+        tax_category_name:
+          shipping_instance_rate: "Marge de la plateforme"
+        formats:
+          csv:
+            header:
+              fee_type: "Type de marge"
+              enterprise_name: "Gestionnaire de l'entreprise"
+              fee_name: "Nom de la marge/commission"
+              customer_name: "Acheteur"
+              fee_placement: "Capture des frais"
+              fee_calculated_on_transfer_through_name: "Calc. des frais sur les transferts via"
+              tax_category_name: "TVA applicable"
+              total_amount: "€ total"
+          html:
+            header:
+              fee_type: "Type de marge"
+              enterprise_name: "Gestionnaire de l'entreprise"
+              fee_name: "Nom de la marge/commission"
+              customer_name: "Acheteur"
+              fee_placement: "Saisie de la marge"
+              fee_calculated_on_transfer_through_name: "Calc. des frais sur les transferts via"
+              tax_category_name: "TVA applicable"
+              total_amount: "€ total"
+        invalid_filter_parameters: "Les filtres sélectionnés pour ce rapport sont invalides."
   spree:
     email: Email
     account_updated: "Compte mis à jour!"
@@ -2574,6 +2634,11 @@ fr:
             distributor: "Distributeur : "
             order_cycle: "Cycle de vente : "
       overview:
+        products:
+          active_products:
+            zero: "Vous n'avez aucun produit actif."
+            one: "Vous avez un produit actif"
+            other: "Vous avez %{count} produits actifs"
         order_cycles:
           order_cycles: "Cycles de vente"
           order_cycles_tip: "Les cycles de vente définissent quand et où vos produits peuvent être commandés par vos acheteurs."
@@ -2647,6 +2712,14 @@ fr:
           bulk_coop_allocation: 'Achats groupés - Allocation'
           bulk_coop_packing_sheets: 'Achats groupés - Feuilles de préparation des paniers'
           bulk_coop_customer_payments: 'Achats groupés - Paiement des acheteurs'
+        enterprise_fee_summaries:
+          filters:
+            date_range: "Période"
+            report_format_csv: "Télécharger le CSV"
+            generate_report: "Générer le rapport"
+          report:
+            none: "Aucun"
+            select_and_search: "Sélectionnez les filtres et cliquez sur \"générer le rapport\" pour accéder aux données."
       users:
         index:
           listing_users: "Liste des utilisateurs"

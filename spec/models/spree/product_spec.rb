@@ -55,15 +55,6 @@ module Spree
         end
       end
 
-
-      it "does not allow the last variant to be deleted" do
-        product = create(:simple_product)
-        expect(product.variants(:reload).length).to eq 1
-        v = product.variants.last
-        v.delete
-        expect(v.errors[:product]).to include "must have at least one variant"
-      end
-
       context "when the product has variants" do
         let(:product) do
           product = create(:simple_product)
@@ -172,7 +163,7 @@ module Spree
 
       it "refreshes the products cache on delete" do
         expect(OpenFoodNetwork::ProductsCache).to receive(:product_deleted).with(product)
-        product.delete
+        product.destroy
       end
 
       # On destroy, all distributed variants are refreshed by a Variant around_destroy
@@ -185,11 +176,15 @@ module Spree
         let!(:oc) { create(:simple_order_cycle, distributors: [distributor], variants: [product.variants.first]) }
 
         it "touches the supplier" do
-          expect { product.delete }.to change { supplier.reload.updated_at }
+          expect { product.destroy }.to change { supplier.reload.updated_at }
         end
 
         it "touches all distributors" do
-          expect { product.delete }.to change { distributor.reload.updated_at }
+          expect { product.destroy }.to change { distributor.reload.updated_at }
+        end
+
+        it "removes variants from order cycles" do
+          expect { product.destroy }.to change { ExchangeVariant.count }
         end
       end
 
@@ -701,13 +696,13 @@ module Spree
 
       it "removes the master variant from all order cycles" do
         e.variants << p.master
-        p.delete
+        p.destroy
         e.variants(true).should be_empty
       end
 
       it "removes all other variants from order cycles" do
         e.variants << v
-        p.delete
+        p.destroy
         e.variants(true).should be_empty
       end
     end

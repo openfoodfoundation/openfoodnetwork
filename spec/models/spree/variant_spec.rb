@@ -13,16 +13,6 @@ module Spree
     end
 
     describe "scopes" do
-      it "finds non-deleted variants" do
-        v_not_deleted = create(:variant)
-        v_deleted = create(:variant)
-        v_deleted.deleted_at = Time.zone.now
-        v_deleted.save
-
-        Spree::Variant.not_deleted.should     include v_not_deleted
-        Spree::Variant.not_deleted.should_not include v_deleted
-      end
-
       describe "finding variants in a distributor" do
         let!(:d1) { create(:distributor_enterprise) }
         let!(:d2) { create(:distributor_enterprise) }
@@ -534,23 +524,6 @@ module Spree
 
       v.destroy
       e.reload.variant_ids.should be_empty
-    end
-
-    context "as the last variant of a product" do
-      let!(:extra_variant) { create(:variant) }
-      let!(:product) { extra_variant.product }
-      let!(:first_variant) { product.variants.first }
-
-      before { product.reload }
-
-      it "cannot be deleted" do
-        expect(product.variants.length).to eq 2
-        expect(extra_variant.delete).to eq extra_variant
-        expect(product.variants(:reload).length).to eq 1
-        expect(first_variant.delete).to be false
-        expect(product.variants(:reload).length).to eq 1
-        expect(first_variant.errors[:product]).to include "must have at least one variant"
-      end
     end
   end
 end

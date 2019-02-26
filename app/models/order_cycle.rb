@@ -146,7 +146,6 @@ class OrderCycle < ActiveRecord::Base
     Spree::Variant.
       joins(:exchanges).
       merge(Exchange.in_order_cycle(self)).
-      not_deleted.
       select('DISTINCT spree_variants.*').
       to_a # http://stackoverflow.com/q/15110166
   end
@@ -163,9 +162,8 @@ class OrderCycle < ActiveRecord::Base
   def variants_distributed_by(distributor)
     return Spree::Variant.where("1=0") unless distributor.present?
     Spree::Variant.
-      not_deleted.
-      merge(distributor.inventory_variants).
       joins(:exchanges).
+      merge(distributor.inventory_variants).
       merge(Exchange.in_order_cycle(self)).
       merge(Exchange.outgoing).
       merge(Exchange.to_enterprise(distributor))

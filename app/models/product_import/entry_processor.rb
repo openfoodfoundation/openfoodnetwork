@@ -49,7 +49,6 @@ module ProductImport
             VariantOverride.for_hubs([enterprise_id]).count
           else
             Spree::Variant.
-              not_deleted.
               not_master.
               joins(:product).
               where('spree_products.supplier_id IN (?)', enterprise_id).
@@ -175,7 +174,7 @@ module ProductImport
         assign_errors product.errors.full_messages, entry.line_number
       end
 
-      @already_created[entry.enterprise_id] = { entry.name => product.id }
+      @already_created.deep_merge! entry.enterprise_id => { entry.name => product.id }
     end
 
     def save_variant(entry)
@@ -212,12 +211,20 @@ module ProductImport
         case setting['mode']
         when 'overwrite_all'
           object.assign_attributes(attribute => setting['value'])
+          # In case of new products, some attributes are saved on the variant.
+          # We write them to the entry here to be copied to the variant later.
+          if entry.respond_to? "#{attribute}="
+            entry.public_send("#{attribute}=", setting['value'])
+          end
         when 'overwrite_empty'
           if object.public_send(attribute).blank? ||
              ((attribute == 'on_hand') &&
              entry.on_hand_nil)
 
             object.assign_attributes(attribute => setting['value'])
+            if entry.respond_to? "#{attribute}="
+              entry.public_send("#{attribute}=", setting['value'])
+            end
           end
         end
       end
