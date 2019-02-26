@@ -42,6 +42,19 @@ describe OrderFactory do
       expect(order.complete?).to be false
     end
 
+    it "retains address, delivery, and payment attributes until completion of the order" do
+      while !order.completed? do break unless order.next! end
+
+      order.reload
+
+      expect(order.customer).to eq customer
+      expect(order.shipping_method).to eq shipping_method
+      expect(order.payments.first.payment_method).to eq payment_method
+      expect(order.bill_address).to eq bill_address
+      expect(order.ship_address).to eq ship_address
+      expect(order.total).to eq 38.0
+    end
+
     context "when the customer does not have a user associated with it" do
       before { customer.update_attribute(:user_id, nil) }
 

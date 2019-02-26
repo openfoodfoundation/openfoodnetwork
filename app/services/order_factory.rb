@@ -15,8 +15,10 @@ class OrderFactory
     set_user
     build_line_items
     set_addresses
+    create_shipment
     set_shipping_method
     create_payment
+
     @order
   end
 
@@ -64,6 +66,10 @@ class OrderFactory
 
   def set_addresses
     @order.update_attributes(attrs.slice(:bill_address_attributes, :ship_address_attributes))
+  end
+
+  def create_shipment
+    @order.create_proposed_shipments
   end
 
   def set_shipping_method
