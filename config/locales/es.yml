@@ -31,6 +31,16 @@ es:
             on_demand_but_count_on_hand_set: "debe estar en blanco si está bajo demanda"
             limited_stock_but_no_count_on_hand: "se debe especificar porque se ha definido estoc limitado"
   activemodel:
+    attributes:
+      order_management/reports/enterprise_fee_summary/parameters:
+        start_at: "Inicio"
+        end_at: "Final"
+        distributor_ids: "Hubs"
+        producer_ids: "Productoras"
+        order_cycle_ids: "Ciclos de Pedido"
+        enterprise_fee_ids: "Nombres de las comisiones"
+        shipping_method_ids: "Métodos de envío"
+        payment_method_ids: "Métodos de Pago"
     errors:
       models:
         subscription_validator:
@@ -74,6 +84,13 @@ es:
   models:
     order_cycle:
       cloned_order_cycle_name: "COPIA DE %{order_cycle}"
+  validators:
+    date_time_string_validator:
+      not_string_error: "debe ser una cadena"
+      invalid_format_error: "debe ser válido"
+    integer_array_validator:
+      not_array_error: "debe ser una matriz"
+      invalid_element_error: "debe contener solo enteros válidos"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Confirma la dirección de correo electrónico de %{enterprise}"
@@ -851,7 +868,7 @@ es:
         pickup_instructions_tip: Estas instrucciones se muestran a las consumidoras después de completar un pedido.
         pickup_time_placeholder: "Listo para ( Fecha / Hora)"
         receival_instructions_placeholder: "Instrucciones de recepción"
-        add_fee: 'Añadir tarifa'
+        add_fee: 'Añadir comisión'
         selected: 'seleccionado'
       add_exchange_form:
         add_supplier: 'Añadir proveedora'
@@ -868,7 +885,7 @@ es:
         search_by_order_cycle_name: "Buscar por nombre del Ciclo de Pedido..."
         involving: "Involucrando"
         any_enterprise: "Cualquier organización"
-        any_schedule: "Cualquier horario"
+        any_schedule: "Cualquier programación"
       form:
         incoming: Entrante
         supplier: Proveedora
@@ -882,19 +899,19 @@ es:
         delivery_details: Detalles de Recogida / Entrega
         debug_info: Información de Debug
       index:
-        schedule: Horario
-        schedules: Horarios
-        adding_a_new_schedule: Agregar un nuevo horario
-        updating_a_schedule: Actualización de un horario
-        new_schedule: Nuevo horario
-        create_schedule: Crear horario
-        update_schedule: Actualizar horario
-        delete_schedule: Eliminar horario
-        created_schedule: Horario creado
-        updated_schedule: Horario actualizado
-        deleted_schedule: Horario eliminado
-        schedule_name_placeholder: Nombre del horario
-        name_required_error: Por favor ingrese un nombre para este horario
+        schedule: Programación
+        schedules: Programación
+        adding_a_new_schedule: Agregar una nueva programación
+        updating_a_schedule: Actualización de una programación
+        new_schedule: Nueva programación
+        create_schedule: Crear programación
+        update_schedule: Actualizar programación
+        delete_schedule: Eliminar programación
+        created_schedule: Programación creada
+        updated_schedule: Programación actualizada
+        deleted_schedule: Programación eliminada
+        schedule_name_placeholder: Nombre de la programación
+        name_required_error: Por favor ingrese un nombre para esta programación
         no_order_cycles_error: Seleccione al menos un ciclo de pedido (arrastrar y soltar)
       name_and_timing_form:
         name: Nombre
@@ -914,7 +931,7 @@ es:
         fees: Comisiones
       destroy_errors:
         orders_present: Ese ciclo de pedido ha sido seleccionado por un cliente y no puede ser eliminado. Para evitar que los clientes accedan a él, ciérrelo.
-        schedule_present: Ese ciclo de pedido está vinculado a un horario y no puede ser eliminado. Desvincula o elimina el calendario primero.
+        schedule_present: Ese ciclo de pedido está vinculado a una programación y no puede ser eliminado. Desvincula o elimina la programación primero.
       bulk_update:
         no_data: Hm, algo salió mal. No se encontraron datos de ciclo de pedido.
       date_warning:
@@ -996,6 +1013,9 @@ es:
         description: Facturas para la importación en Xero
       packing:
         name: Informes de empaquetado
+      enterprise_fee_summary:
+        name: "Resumen de las comisiones de la organización"
+        description: "Resumen de las comisiones de la organización recolectadas"
     subscriptions:
       subscriptions: Suscripciones
       new: Nueva suscripción
@@ -1014,10 +1034,10 @@ es:
         set_up_shipping_and_payment_methods_html: Configurar los métodos %{shipping_link} y %{payment_link}
         set_up_shipping_and_payment_methods_note_html: Tenga en cuenta que solo se pueden usar <br /> métodos de pago en efectivo y Stripe con las suscripciones
         ensure_at_least_one_customer_html: Asegúrese de que exista al menos un %{customer_link}
-        create_at_least_one_schedule: Crear al menos un horario
+        create_at_least_one_schedule: Crear al menos una programación
         create_at_least_one_schedule_step_1_html: 1. Vaya a la página %{order_cycles_link}
         create_at_least_one_schedule_step_2: 2. Crea un ciclo de pedido si aún no lo has hecho
-        create_at_least_one_schedule_step_3: 3. Haga clic en '+ Nuevo horario' y complete el formulario
+        create_at_least_one_schedule_step_3: 3. Haga clic en '+ Nueva programación' y complete el formulario
         once_you_are_done_you_can_html: Una vez que haya terminado, puede %{reload_this_page_link}
         reload_this_page: recarga esta página
       steps:
@@ -1028,7 +1048,7 @@ es:
       subscription_line_items:
         this_is_an_estimate: |
             Los precios mostrados son solo una estimación y se calculan en el momento en que se cambia la suscripción.
-            Si cambias precios o tarifas, los pedidos se actualizarán pero la suscripción seguirá mostrando los valores anteriores.
+            Si cambias precios o comisiones, los pedidos se actualizarán pero la suscripción seguirá mostrando los valores anteriores.
         not_in_open_and_upcoming_order_cycles_warning: "No hay ciclos de pedidos abiertos o próximos para este producto."
       details:
         details: Detalles
@@ -1616,7 +1636,7 @@ es:
   shops_signup_help_text: Usted necesita un mejor retorno. Usted necesita nuevos compradores y socios de logística. Usted necesita que su historia sea contada a través de ventas al por mayor, al detalle y en la mesa de la cocina.
   shops_signup_detail: Aquí está el detalle.
   orders: Pedidos
-  orders_fees: Tarifas...
+  orders_fees: Comisiones...
   orders_edit_title: Carrito de compras
   orders_edit_headline: Su carrito de compras
   orders_edit_time: Pedido listo para
@@ -1688,7 +1708,7 @@ es:
   error_not_found_in_database: "%{name} no se encuentra en la base de datos"
   error_not_primary_producer: "%{name} no está habilitado como productora"
   error_no_permission_for_enterprise: "\"%{name}\": no tiene permiso para administrar productos para esta organización"
-  item_handling_fees: "Tarifa de manejo de artículo (incluída en el total de artículos)"
+  item_handling_fees: "Comisiones de manejo de artículos (incluída en el total de artículos)"
   january: "Enero"
   february: "Febrero"
   march: "Marzo"
@@ -1717,7 +1737,7 @@ es:
   password_reset_sent: "¡Le enviamos un correo electrónico con instrucciones para restaurar la contraseña!"
   reset_password: "Restaurar contraseña"
   who_is_managing_enterprise: "¿Quién es responsable de administrar %{enterprise}?"
-  update_and_recalculate_fees: "Actualizar y recalcular tarifas"
+  update_and_recalculate_fees: "Actualizar y recalcular comisiones"
   registration:
     steps:
       images:
@@ -1883,7 +1903,7 @@ es:
   shipping_method_destroy_error: "Ese método de envío no puede ser eliminado ya que se hace referencia en un pedido: %{number}."
   accounts_and_billing_task_already_running_error: "Se está ejecutando una tarea, espere hasta que haya finalizado"
   accounts_and_billing_start_task_notice: "Tarea en cola"
-  fees: "Tarifas"
+  fees: "Comisiones"
   item_cost: "Costo del artículo"
   bulk: "Agrupar"
   shop_variant_quantity_min: "mínimo"
@@ -1893,11 +1913,11 @@ es:
   change_shop: "Cambiar de tienda:"
   shop_at: "Comprar en:"
   price_breakdown: "Desglose de precios completo"
-  admin_fee: "Tarifa de administración"
-  sales_fee: "Tarifa de ventas"
-  packing_fee: "Tarifa de empaquetado"
-  transport_fee: "Tarifa de transporte"
-  fundraising_fee: "Tarifa para recaudación de fondos"
+  admin_fee: "Comisión de administración"
+  sales_fee: "Comisión de ventas"
+  packing_fee: "Comisión de empaquetado"
+  transport_fee: "Comisión de transporte"
+  fundraising_fee: "Comisión para recaptación de fondos"
   price_graph: "Gráfico de precios"
   included_tax: "Impuesto incluido"
   balance: "Saldo"
@@ -2000,7 +2020,6 @@ es:
   spree_admin_enterprises_none_text: "No tienes ninguna organización"
   spree_admin_enterprises_tabs_hubs: "HUBS"
   spree_admin_enterprises_producers_manage_products: "GESTIONAR PRODUCTOS"
-  spree_admin_enterprises_any_active_products_text: "No tienes ningún producto activo"
   spree_admin_enterprises_create_new_product: "CREAR UN NUEVO PRODUCTO"
   spree_admin_single_enterprise_alert_mail_confirmation: "Confirma la dirección de email para"
   spree_admin_single_enterprise_alert_mail_sent: "Te hemos enviado un mail a"
@@ -2127,7 +2146,7 @@ es:
   report_header_sales_tax: "Impuesto sobre las Ventas (%{currency_symbol})"
   report_header_delivery_charge: "Gastos de Envío (%{currency_symbol})"
   report_header_tax_on_delivery: "Impuestos sobre la entrega (%{currency_symbol})"
-  report_header_tax_on_fees: "Impuesto sobre las tasas (%{currency_symbol})"
+  report_header_tax_on_fees: "Impuesto sobre las comisiones (%{currency_symbol})"
   report_header_total_tax: "Total Impuestos (%{currency_symbol})"
   report_header_enterprise: Organización
   report_header_customer: Consumidora
@@ -2209,7 +2228,7 @@ es:
   report_header_gst_free_income: Ingresos sin IVA
   report_header_total_untaxable_produce: Total productos sin impuestos
   report_header_total_taxable_produce: Total productos con impuestos
-  report_header_total_untaxable_fees: Total comisiones sin impuestos
+  report_header_total_untaxable_fees: Total comisiones no imponibles (sin impuestos)
   report_header_total_taxable_fees: Total de impuestos imponibles (impuestos incluidos)
   report_header_delivery_shipping_cost: Gastos de envío (impuestos incluidos)
   report_header_transaction_fee: Comisión por transacción (sin impuestos)
@@ -2248,7 +2267,7 @@ es:
   shipping: "Envío"
   shipping_methods: "Métodos de envío"
   payment_methods: "Métodos de Pago"
-  payment_method_fee: "Tarifa de Transacción"
+  payment_method_fee: "Comisión de Transacción"
   inventory_settings: "Configuración del Inventario"
   tag_rules: "Reglas de las Etiquetas"
   shop_preferences: "Configuración de la tienda"
@@ -2527,6 +2546,45 @@ es:
   producers:
     signup:
       start_free_profile: "Empieze con un perfil gratuito, y amplíelo cuando esté preparado!"
+  order_management:
+    reports:
+      enterprise_fee_summary:
+        date_end_before_start_error: "debe ser después del comienzo"
+        parameter_not_allowed_error: "No está autorizado a usar uno o más filtros seleccionados para este informe."
+        fee_calculated_on_transfer_through_all: "Todos"
+        fee_calculated_on_transfer_through_entire_orders: "Pedidos completos a través de %{distributor}"
+        tax_category_various: "Varios"
+        fee_type:
+          payment_method: "Transaccion de pago"
+          shipping_method: "Envío"
+        fee_placements:
+          supplier: "Entrante"
+          distributor: "Saliente"
+          coordinator: "Coordinadora"
+        tax_category_name:
+          shipping_instance_rate: "Tarifa de plataforma"
+        formats:
+          csv:
+            header:
+              fee_type: "Tipo de Comisión"
+              enterprise_name: "Propietario de la organización"
+              fee_name: "Nombre de la comisión"
+              customer_name: "Consumidora"
+              fee_placement: "Asignación de comisiones"
+              fee_calculated_on_transfer_through_name: "Cálculo de comisiones a través de transferencias"
+              tax_category_name: "Categoría de impuestos"
+              total_amount: "€€ SUM"
+          html:
+            header:
+              fee_type: "Tipo de Comisión"
+              enterprise_name: "Propietario de la organización"
+              fee_name: "Nombre de la comisión"
+              customer_name: "Consumidora"
+              fee_placement: "Asignación de comisiones"
+              fee_calculated_on_transfer_through_name: "Cálculo de comisiones a través de transferencias"
+              tax_category_name: "Categoría de impuestos"
+              total_amount: "€€ SUM"
+        invalid_filter_parameters: "Los filtros que seleccionó para este informe no son válidos."
   spree:
     email: Email
     account_updated: "Cuenta actualizada!"
@@ -2570,6 +2628,11 @@ es:
             distributor: "Distribuidora:"
             order_cycle: "Ciclo de pedido:"
       overview:
+        products:
+          active_products:
+            zero: "No tienes ningún producto activo"
+            one: "Tiene un producto activo."
+            other: "Tiene %{count} productos activos"
         order_cycles:
           order_cycles: "Ciclos de Pedido"
           order_cycles_tip: "Los ciclos de pedido determinan cuándo y dónde los productos están disponibles para las consumidoras."
@@ -2643,6 +2706,14 @@ es:
           bulk_coop_allocation: 'Bulk Co-op - Asignación'
           bulk_coop_packing_sheets: 'Bulk Co-op - Hojas de Empaquetado'
           bulk_coop_customer_payments: 'Bulk Co-op - Pagos de las Consumidoras'
+        enterprise_fee_summaries:
+          filters:
+            date_range: "Rango de fechas"
+            report_format_csv: "Descargar como CSV"
+            generate_report: "Generar informe"
+          report:
+            none: "Ninguno"
+            select_and_search: "Seleccione los filtros y haga clic en GENERAR INFORME para acceder a sus datos."
       users:
         index:
           listing_users: "Listado de Usuarias"
