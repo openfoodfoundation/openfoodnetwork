@@ -66,12 +66,13 @@ class OrderSyncer
   end
 
   def update_shipment_for(order)
-    shipment = order.shipments.with_state('pending').where(shipping_method_id: shipping_method_id_was).last
-    if shipment
+    shipment = order.shipment
+
+    if shipment.andand.state == "pending" && shipment.shipping_method.id == shipping_method_id_was
       shipment.update_attributes(shipping_method_id: shipping_method_id)
       order.update_attribute(:shipping_method_id, shipping_method_id)
     else
-      unless order.shipments.with_state('pending').where(shipping_method_id: shipping_method_id).any?
+      unless shipment.andand.state == "pending" && shipment.shipping_method.id == shipping_method_id
         order_update_issues.add(order, I18n.t('admin.shipping_method'))
       end
     end
