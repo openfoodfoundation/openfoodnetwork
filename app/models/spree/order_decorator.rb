@@ -33,9 +33,6 @@ Spree::Order.class_eval do
   before_validation :associate_customer, unless: :customer_id?
   before_validation :ensure_customer, unless: :customer_is_valid?
 
-  before_save :update_shipping_fees!, if: :complete?
-  before_save :update_payment_fees!, if: :complete?
-
   # Orders are confirmed with their payment, we don't use the confirm step.
   # Here we remove that step from Spree's checkout state machine.
   # See: https://guides.spreecommerce.org/developer/checkout.html#modifying-the-checkout-flow
@@ -159,28 +156,6 @@ Spree::Order.class_eval do
 
     reload
     current_item
-  end
-
-  # After changing line items of a completed order
-  # TODO: perhaps this should be triggered from a controller
-  # rather than an after_save callback?
-  def update_shipping_fees!
-    shipments.each do |shipment|
-      next if shipment.shipped?
-      update_adjustment! shipment.adjustment if shipment.adjustment
-      shipment.save # updates included tax
-    end
-  end
-
-  # After changing line items of a completed order
-  # TODO: perhaps this should be triggered from a controller
-  # rather than an after_save callback?
-  def update_payment_fees!
-    payments.each do |payment|
-      next if payment.completed?
-      update_adjustment! payment.adjustment if payment.adjustment
-      payment.save
-    end
   end
 
   def cap_quantity_at_stock!
