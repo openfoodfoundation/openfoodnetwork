@@ -2624,11 +2624,43 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       orders:
         index:
           per_page: "%{results} per page"
-          view_file: View File
-          compiling_invoices: Compiling Invoices
-          bulk_invoice_created: Bulk Invoice created
-          bulk_invoice_failed: Failed to create Bulk Invoice
-          please_wait: Please wait until the PDF is ready before closing this modal.
+          view_file: "View File"
+          compiling_invoices: "Compiling Invoices"
+          bulk_invoice_created: "Bulk Invoice created"
+          bulk_invoice_failed: "Failed to create Bulk Invoice"
+          please_wait: "Please wait until the PDF is ready before closing this modal."
+        order_state:
+          address: "address"
+          adjustments: "adjustments"
+          awaiting_return: "awaiting return"
+          canceled: "cancelled"
+          cart: "cart"
+          complete: "complete"
+          confirm: "confirm"
+          delivery: "delivery"
+          paused: "paused"
+          payment: "payment"
+          pending: "pending"
+          resumed: "resumed"
+          returned: "returned"
+          skrill: "skrill"
+        shipment_states:
+          backorder: "backorder"
+          partial: "partial"
+          pending: "pending"
+          ready: "ready"
+          shipped: "shipped"
+        payment_states:
+          balance_due: "balance due"
+          completed: "completed"
+          checkout: "checkout"
+          credit_owed: "credit owed"
+          failed: "failed"
+          paid: "paid"
+          pending: "pending"
+          processing: "processing"
+          void: "void"
+          invalid: "invalid"
       resend_user_email_confirmation:
         resend: "Resend"
         sending: "Resend..."
@@ -2747,21 +2779,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         invalid_filter_parameters: "The filters you selected for this report are invalid."
 
   order: "Order"
-  order_state:
-    address: "address"
-    adjustments: "adjustments"
-    awaiting_return: "awaiting return"
-    canceled: "cancelled"
-    cart: "cart"
-    complete: "complete"
-    confirm: "confirm"
-    delivery: "delivery"
-    paused: "paused"
-    payment: "payment"
-    pending: "pending"
-    resumed: "resumed"
-    returned: "returned"
-    skrill: "skrill"
   distribution: "Distribution"
   order_details: "Order Details"
   customer_details: "Customer Details"
@@ -3010,15 +3027,22 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           results_found: "%{number} Results found."
           viewing: "Viewing %{start} to %{end}."
           print_invoices: "Print Invoices"
+        sortable_header:
+          payment_state: "Payment State"
+          shipment_state: "Shipment State"
+          completed_at: "Completed At"
+          number: "Number"
+          state: "State"
+          email: "Customer E-Mail"
         invoice:
-          issued_on: Issued on
-          tax_invoice: TAX INVOICE
-          code: Code
-          from: From
-          to: To
+          issued_on: "Issued on"
+          tax_invoice: "TAX INVOICE"
+          code: "Code"
+          from: "From"
+          to: "To"
         form:
           distribution_fields:
-            title: Distribution
+            title: "Distribution"
             distributor: "Distributor:"
             order_cycle: "Order cycle:"
       overview:
@@ -3201,23 +3225,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       ended: ended
       paused: paused
       canceled: cancelled
-    payment_states:
-      balance_due: balance due
-      completed: completed
-      checkout: checkout
-      credit_owed: credit owed
-      failed: failed
-      paid: paid
-      pending: pending
-      processing: processing
-      void: void
-      invalid: invalid
-    shipment_states:
-      backorder: backorder
-      partial: partial
-      pending: pending
-      ready: ready
-      shipped: shipped
     user_mailer:
       reset_password_instructions:
         request_sent_text: |
