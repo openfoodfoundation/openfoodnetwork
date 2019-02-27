@@ -596,7 +596,7 @@ GEM
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
-    rails (3.2.22.5)
+    rails (4.0.13)
       actionmailer (= 3.2.22.5)
       actionpack (= 3.2.22.5)
       activerecord (= 3.2.22.5)
@@ -793,7 +793,7 @@ DEPENDENCIES
   database_cleaner (= 0.7.1)
   db2fog
   debugger-linecache
-  deface (= 1.0.0)
+  deface (1.0.2)
   delayed_job_active_record
   diffy
   eventmachine (>= 1.2.3)
