@@ -14,7 +14,7 @@ module Addressing
   end
 
   def zone
-    zone = Spree::Zone.find_or_create_by_name!("Australia")
+    zone = Spree::Zone.find_or_create_by_name!(ENV.fetch('CHECKOUT_ZONE'))
     zone.members.create!(zonable: country)
     zone
   end
