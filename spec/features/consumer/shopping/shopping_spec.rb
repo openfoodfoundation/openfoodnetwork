@@ -302,6 +302,15 @@ feature "As a consumer I want to shop with a distributor", js: true do
         Spree::LineItem.where(id: li).should be_empty
       end
 
+      it "lets us add a quantity greater than on_hand value if product is on_demand" do
+        variant.update_attributes on_hand: 5, on_demand: true
+        visit shop_path
+
+        fill_in "variants[#{variant.id}]", with: '10'
+
+        page.should have_field "variants[#{variant.id}]", with: '10'
+      end
+
       it "alerts us when we enter a quantity greater than the stock available" do
         variant.update_attributes on_hand: 5
         visit shop_path
@@ -339,6 +348,18 @@ feature "As a consumer I want to shop with a distributor", js: true do
           page.should have_selector "#variant-#{variant.id}.out-of-stock"
           page.should have_selector "#variants_#{variant.id}[ofn-on-hand='0']"
           page.should have_selector "#variants_#{variant.id}[disabled='disabled']"
+        end
+
+        it 'does not show out of stock modal if product is on_demand' do
+          expect(page).to have_content "Product"
+
+          variant.update_attributes! on_hand: 0, on_demand: true
+
+          expect(page).to have_input "variants[#{variant.id}]"
+          fill_in "variants[#{variant.id}]", with: '1'
+          wait_until { !cart_dirty }
+
+          expect(page).to_not have_selector '.out-of-stock-modal'
         end
 
         context "group buy products" do

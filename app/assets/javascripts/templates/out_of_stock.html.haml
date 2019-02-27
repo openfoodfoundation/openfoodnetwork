@@ -9,7 +9,7 @@
 
 %p{'ng-repeat' => "v in variants"}
   %em {{ v.name_to_display }} - {{ v.unit_to_display }}
-  %span{'ng-if' => "v.count_on_hand == 0"}
+  %span{'ng-if' => "v.on_hand == 0"}
     {{ 'js.out_of_stock.now_out_of_stock' | t }}
-  %span{'ng-if' => "v.count_on_hand > 0"}
-    {{ 'js.out_of_stock.only_n_remainging' | t:{ num: v.count_on_hand } }}
+  %span{'ng-if' => "v.on_hand > 0"}
+    {{ 'js.out_of_stock.only_n_remainging' | t:{ num: v.on_hand } }}

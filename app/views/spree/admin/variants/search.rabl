@@ -2,7 +2,7 @@
 # overriding spree/core/app/views/spree/admin/variants/search.rabl
 #
 collection @variants
-attributes :sku, :options_text, :in_stock?, :on_demand, :count_on_hand, :id, :cost_price
+attributes :sku, :options_text, :in_stock?, :on_demand, :on_hand, :id, :cost_price
 
 node(:name) do |v|
   # TODO: when products must have a unit, full_name will always be present

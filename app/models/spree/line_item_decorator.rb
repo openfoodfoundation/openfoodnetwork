@@ -64,6 +64,7 @@ Spree::LineItem.class_eval do
 
   def cap_quantity_at_stock!
     scoper.scope(variant)
+    return if variant.on_demand
     update_attributes!(quantity: variant.on_hand) if quantity > variant.on_hand
   end
 

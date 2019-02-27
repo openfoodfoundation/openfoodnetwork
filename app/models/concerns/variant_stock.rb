@@ -20,61 +20,30 @@ module VariantStock
     after_update :save_stock
   end
 
-  # Returns the number of items of the variant available in the stock. When
-  # allowing on demand, it returns infinite.
-  #
-  # Spree computes it as the sum of the count_on_hand of all its stock_items.
+  # Returns the number of items of the variant available.
+  # Spree computes total_on_hand as the sum of the count_on_hand of all its stock_items.
   #
   # @return [Float|Integer]
   def on_hand
     warn_deprecation(__method__, '#total_on_hand')
 
-    if on_demand
-      Float::INFINITY
-    else
-      total_on_hand
-    end
-  end
-
-  # Returns the number of items available in the stock for this variant
-  #
-  # @return [Float|Integer]
-  def count_on_hand
-    warn_deprecation(__method__, '#total_on_hand')
     total_on_hand
   end
 
-  # Sets the stock level when `track_inventory_levels` config is
-  # set. It raises otherwise.
+  # Sets the stock level of the variant.
+  # This will only work if `track_inventory_levels` config is set
+  #   and if there is a stock item for the variant.
   #
-  # @raise [StandardError] when the track_inventory_levels config
-  # key is not set.
+  # @raise [StandardError] when the track_inventory_levels config key is not set
+  #   and when the variant has no stock item
   def on_hand=(new_level)
     warn_deprecation(__method__, '#total_on_hand')
 
     error = 'Cannot set on_hand value when Spree::Config[:track_inventory_levels] is false'
     raise error unless Spree::Config.track_inventory_levels
 
-    self.count_on_hand = new_level
-  end
-
-  # Sets the stock level. As opposed to #on_hand= it does not check
-  # `track_inventory_levels`'s value as it was previously an ActiveModel
-  # setter of the database column of the `spree_variants` table. That is why
-  # #on_hand= is more widely used in Spree's codebase using #count_on_hand=
-  # underneath.
-  #
-  # So, if #count_on_hand= is used, `track_inventory_levels` won't be taken
-  # into account thus dismissing instance's configuration.
-  #
-  # It does ensure there's a stock item for the variant however. See
-  # #raise_error_if_no_stock_item_available for details.
-  #
-  # @raise [StandardError] when the variant has no stock item yet
-  def count_on_hand=(new_level)
-    warn_deprecation(__method__, '#total_on_hand')
-
     raise_error_if_no_stock_item_available
+
     overwrite_stock_levels(new_level)
   end
 
@@ -131,7 +100,7 @@ module VariantStock
   # Here we depend only on variant.total_on_hand and variant.on_demand.
   #   This way, variant_overrides only need to override variant.total_on_hand and variant.on_demand.
   def fill_status(quantity)
-    if count_on_hand >= quantity
+    if on_hand >= quantity
       on_hand = quantity
       backordered = 0
     else

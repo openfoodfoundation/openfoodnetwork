@@ -183,7 +183,7 @@ describe "filtering products for submission to database", ->
       shipping_category_id: null
       created_at: null
       updated_at: null
-      count_on_hand: 0
+      on_hand: 0
       producer_id: 5
 
       group_buy: null

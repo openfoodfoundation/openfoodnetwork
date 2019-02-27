@@ -308,11 +308,11 @@ xfeature %q{
       product2.set_property 'Organic', 'NASAA 12345'
       product1.taxons = [taxon]
       product2.taxons = [taxon]
-      variant1.count_on_hand = 10
+      variant1.on_hand = 10
       variant1.update_column(:sku, "sku1")
-      variant2.count_on_hand = 20
+      variant2.on_hand = 20
       variant2.update_column(:sku, "sku2")
-      variant3.count_on_hand = 9
+      variant3.on_hand = 9
       variant3.update_column(:sku, "")
       variant1.option_values = [create(:option_value, :presentation => "Test")]
       variant2.option_values = [create(:option_value, :presentation => "Something")]

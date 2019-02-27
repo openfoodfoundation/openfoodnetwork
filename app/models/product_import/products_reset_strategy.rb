@@ -9,7 +9,7 @@ module ProductImport
 
       return 0 if enterprise_ids.blank?
 
-      reset_variants_count_on_hand(enterprise_variants_relation)
+      reset_variants_on_hand(enterprise_variants_relation)
     end
 
     private
@@ -29,17 +29,17 @@ module ProductImport
       relation.where('spree_variants.id NOT IN (?)', excluded_items_ids)
     end
 
-    def reset_variants_count_on_hand(variants)
+    def reset_variants_on_hand(variants)
       updated_records_count = 0
       variants.each do |variant|
-        updated_records_count += 1 if reset_variant_count_on_hand(variant)
+        updated_records_count += 1 if reset_variant_on_hand(variant)
       end
       updated_records_count
     end
 
-    def reset_variant_count_on_hand(variant)
-      variant.count_on_hand = 0
-      variant.count_on_hand.zero?
+    def reset_variant_on_hand(variant)
+      variant.on_hand = 0
+      variant.on_hand.zero?
     end
   end
 end

@@ -16,7 +16,7 @@
       </ul>
       <ul class='variant-data'>
         <li class='variant-sku'><strong><%= t('admin.sku') %>:</strong> {{variant.sku}}</li>
-        <li class='variant-on_hand'><strong><%= t('on_hand') %>:</strong> {{variant.count_on_hand}}</li>
+        <li class='variant-on_hand'><strong><%= t('on_hand') %>:</strong> {{variant.on_hand}}</li>
       </ul>
 
       {{#if variant.option_values}}
@@ -41,7 +41,7 @@
         </colgroup>
         <thead>
           <th><%= Spree.t(:location) %></th>
-          <th><%= Spree.t(:count_on_hand) %></th>
+          <th><%= Spree.t(:on_hand) %></th>
           <th><%= Spree.t(:quantity) %></th>
           <th class="actions"></th>
         </thead>
@@ -53,7 +53,7 @@
                 <td>Spree.t(:on_demand)</td>
               {{else}}
                 <td>
-                  {{variant.count_on_hand}}
+                  {{variant.on_hand}}
                 </td>
               {{/if}}                  
               <td>
