@@ -4,6 +4,8 @@ module Spree
   Payment.class_eval do
     extend Spree::LocalizedNumber
 
+    delegate :line_items, to: :order
+
     has_one :adjustment, as: :source, dependent: :destroy
 
     after_save :ensure_correct_adjustment, :update_order
@@ -28,11 +30,6 @@ module Spree
 
     def adjustment_label
       I18n.t('payment_method_fee')
-    end
-
-    # This is called by the calculator of a payment method
-    def line_items
-      order.line_items
     end
 
     # Pin payments lacks void and credit methods, but it does have refund
