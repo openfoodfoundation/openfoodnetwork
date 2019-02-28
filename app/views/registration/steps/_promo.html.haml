@@ -3,42 +3,42 @@
     .row
       .small-12.columns.center
         %h4
-          {{'select_promo_image' | t}}
+          = t(".select_promo_image")
     .row
       .small-12.medium-12.large-5.columns.center
         .row
           .small-12.columns.center
             %span.small
-              {{'promo_image_tip' | t}}
+              = t(".promo_image_tip")
         .row.pad-top
           .small-12.columns
             .image-select.small-12.columns
-              %label.small-12.columns.button{ for: 'image-select' } {{'promo_image_label' | t}}
+              %label.small-12.columns.button{ for: 'image-select' }= t(".promo_image_label")
               %input#image-select{ type: 'file', hidden: true, 'nv-file-select' => true, uploader: "imageUploader", options: '{ alias: imageStep }' }
       .large-2.columns
         %span#or.horizontal.large-12.columns
-          {{'action_or' | t}}
+          = t("action_or")
       .large-5.columns
         #image-over{ 'nv-file-over' => true, uploader: "imageUploader" }
-          {{'promo_image_drag' | t}}
+          = t(".promo_image_drag")
   .small-12.medium-12.large-12.columns.pad-top
     .row
       .small-12.columns.center
         %h4
-          {{'review_promo_image' | t}}
+          = t(".review_promo_image")
     .row
       .small-12.columns.center
         .row
           .small-12.columns.center
             %span.small
-              {{'review_promo_image_tip' | t}}
+              = t(".review_promo_image_tip")
         .row.pad-top
           .small-12.columns.center
             #image-placeholder.promo
               %img{ ng: { show: "imageSrc() && !imageUploader.isUploading", src: '{{ imageSrc() }}' } }
               .message{ ng: { hide: "imageSrc() || imageUploader.isUploading" } }
-                {{'promo_image_placeholder' | t}}
+                = t(".promo_image_placeholder")
               .loading{ ng: { hide: "!imageUploader.isUploading" } }
                 %img.spinner{ src: "/assets/spinning-circles.svg" }
                 %br/
-                {{'uploading' | t}}
+                = t("registration.steps.images.uploading")
