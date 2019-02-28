@@ -1,2 +1,0 @@
-/ replace_contents '#shipping_method legend'
-= t(:delivery_method)

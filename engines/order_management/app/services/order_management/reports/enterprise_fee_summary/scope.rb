@@ -17,7 +17,7 @@ module OrderManagement
         end
 
         def result
-          group_data.select_attributes
+          group_data.exclude_groups_with_zero_total.select_attributes
           @scope.all
         end
 
@@ -46,7 +46,7 @@ module OrderManagement
 
         def find_adjustments
           chain_to_scope do
-            Spree::Adjustment
+            Spree::Adjustment.eligible
           end
         end
 
@@ -334,6 +334,10 @@ module OrderManagement
             if params.shipping_method_ids.present?
           filter_scope(spree_payment_methods: { id: params.payment_method_ids }) \
             if params.payment_method_ids.present?
+        end
+
+        def exclude_groups_with_zero_total
+          filter_scope("spree_adjustments.amount != 0")
         end
 
         def group_data

@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'open_food_network/scope_variant_to_hub'
 
 module OpenFoodNetwork
@@ -81,19 +82,19 @@ module OpenFoodNetwork
           context "without an on_demand set" do
             before { vo.update_column(:on_demand, nil) }
 
-            context "when count_on_hand is set" do
-              it "returns false" do
-                scoper.scope v
-                expect(v.on_demand).to be false
-              end
-            end
-
             context "when count_on_hand is not set" do
               before { vo.update_column(:count_on_hand, nil) }
 
               it "returns the variant's on_demand" do
                 scoper.scope v
                 expect(v.on_demand).to be true
+              end
+            end
+
+            context "when count_on_hand is set" do
+              it "should return validation error on save" do
+                scoper.scope v
+                expect{ vo.save! }.to raise_error ActiveRecord::RecordInvalid
               end
             end
           end
