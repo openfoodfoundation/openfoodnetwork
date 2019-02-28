@@ -23,6 +23,10 @@ module Spree
 
     localize_number :amount
 
+    def immutable?
+      finalized?
+    end
+
     def set_included_tax!(rate)
       tax = amount - (amount / (1 + rate))
       set_absolute_included_tax! tax

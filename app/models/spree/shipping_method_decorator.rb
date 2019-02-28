@@ -58,6 +58,18 @@ Spree::ShippingMethod.class_eval do
     self.distributors.include?(distributor)
   end
 
+  def update_adjustment(adjustment, calculable)
+    amount = compute_amount(calculable)
+    adjustment.update_attribute_without_callbacks(:amount, amount)
+    #adjustment.source.update_adjustment_included_tax # cant do this because it will trigger callsbacks
+    if Spree::Config.shipment_inc_vat && (adjustment.adjustable.distributor.nil? || adjustment.adjustable.distributor.charges_sales_tax)
+      tax = amount - (amount / (1 + Spree::Config.shipping_tax_rate))
+    else
+      tax = 0
+    end
+    adjustment.update_attribute_without_callbacks(:included_tax, tax.round(2))
+  end
+
   def adjustment_label
     I18n.t('shipping')
   end
