@@ -1,1 +1,1 @@
-producer,sku,name,display_name,category,units,unit_type,variant_unit_name,price,on_hand,available_on,on_demand,shipping_category,tax_category
+producer,sku,name,display_name,category,description,units,unit_type,variant_unit_name,price,on_hand,available_on,on_demand,shipping_category,tax_category
