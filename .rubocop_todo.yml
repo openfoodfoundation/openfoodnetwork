@@ -1872,7 +1872,6 @@ Style/HashSyntax:
     - 'app/overrides/remove_search_bar.rb'
     - 'app/overrides/remove_side_bar.rb'
     - 'app/overrides/replace_checkout_payment_button.rb'
-    - 'app/overrides/replace_order_details_steps_data.rb'
     - 'app/overrides/replace_payment_name_with_description.rb'
     - 'app/overrides/replace_shipping_address_form_with_distributor_details.rb'
     - 'app/overrides/set_auth_token_in_backend.rb'

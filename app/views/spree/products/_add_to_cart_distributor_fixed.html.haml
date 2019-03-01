@@ -1,7 +1,0 @@
-= hidden_field_tag "distributor_id", distributor.id
-
-.distributor-fixed
-  - if changing_distributor
-    = t :products_cart_distributor_change, name: distributor.name
-  - else
-    = t :products_cart_distributor_is, name: distributor.name
