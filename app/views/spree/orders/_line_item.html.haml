@@ -1,12 +1,4 @@
 %tr.line-item{class: "variant-#{variant.id}"}
-
-  / removed image thumbnail on shopping cart & checkout to simplify
-  / %td.cart-item-image{"data-hook" => "cart_item_image"}
-  /   - if variant.images.length == 0
-  /     = link_to small_image(variant.product), variant.product
-  /   - else
-  /     = link_to image_tag(variant.images.first.attachment.url(:small)), variant.product
-
   %td.cart-item-description{'data-hook' => "cart_item_description"}
 
     %div.item-thumb-image{"data-hook" => "cart_item_image"}
@@ -24,11 +16,6 @@
 
   %td.text-right.cart-item-price{"data-hook" => "cart_item_price"}
     = line_item.single_display_amount_with_adjustments.to_html
-    -# Now in a template in app/assets/javascripts/templates !
-    -# %price-breakdown{"price-breakdown" => "_", variant: "variant",
-    -#   "price-breakdown-append-to-body" => "true",
-    -#   "price-breakdown-placement" => "left",
-    -#   "price-breakdown-animation" => true}
   %td.text-center.cart-item-quantity{"data-hook" => "cart_item_quantity"}
     = item_form.number_field :quantity, :min => 0, "ofn-on-hand" => variant.on_hand, "ng-model" => "line_item_#{line_item.id}", :class => "line_item_quantity", :size => 5
   %td.cart-item-total.text-right{"data-hook" => "cart_item_total"}

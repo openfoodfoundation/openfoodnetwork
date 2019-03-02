@@ -51,37 +51,6 @@ describe CartService do
     end
   end
 
-  describe "populate" do
-    before do
-      expect(cart_service).to receive(:distributor_and_order_cycle).
-        and_return([distributor, order_cycle])
-    end
-
-    it "checks that distribution can supply all products in the cart" do
-      expect(cart_service).to receive(:distribution_can_supply_products_in_cart).
-        with(distributor, order_cycle).and_return(false)
-
-      expect(cart_service.populate(params)).to be false
-      expect(cart_service.errors.to_a).to eq(["That distributor or order cycle can't supply all the products in your cart. Please choose another."])
-    end
-
-    it "locks the order" do
-      allow(cart_service).to receive(:distribution_can_supply_products_in_cart).and_return(true)
-      expect(order).to receive(:with_lock)
-      cart_service.populate(params, true)
-    end
-
-    it "attempts cart add with max_quantity" do
-      allow(cart_service).to receive(:distribution_can_supply_products_in_cart).and_return true
-      params = { variants: { "1" => { quantity: 1, max_quantity: 2 } } }
-      allow(order).to receive(:with_lock).and_yield
-      allow(cart_service).to receive(:varies_from_cart) { true }
-      allow(cart_service).to receive(:variants_removed) { [] }
-      expect(cart_service).to receive(:attempt_cart_add).with("1", 1, 2).and_return true
-      cart_service.populate(params, true)
-    end
-  end
-
   describe "varies_from_cart" do
     let(:variant) { double(:variant, id: 123) }
 
@@ -236,15 +205,6 @@ describe CartService do
   end
 
   describe "validations" do
-    describe "determining if distributor can supply products in cart" do
-      it "delegates to DistributionChangeValidator" do
-        dcv = double(:dcv)
-        expect(dcv).to receive(:can_change_to_distribution?).with(distributor, order_cycle).and_return(true)
-        expect(DistributionChangeValidator).to receive(:new).with(order).and_return(dcv)
-        expect(cart_service.send(:distribution_can_supply_products_in_cart, distributor, order_cycle)).to be true
-      end
-    end
-
     describe "checking order cycle is provided for a variant, OR is not needed" do
       let(:variant) { double(:variant) }
 
