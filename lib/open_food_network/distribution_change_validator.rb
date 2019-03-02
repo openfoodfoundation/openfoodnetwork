@@ -9,8 +9,10 @@ class DistributionChangeValidator
   end
 
   def variants_available_for_distribution(distributor, order_cycle)
-    product_distribution_variants = distributor.andand.product_distribution_variants || []
-    order_cycle_variants = order_cycle.andand.variants_distributed_by(distributor) || []
+    product_distribution_variants = []
+    product_distribution_variants = distributor.product_distribution_variants if distributor
+    order_cycle_variants = []
+    order_cycle_variants = order_cycle.variants_distributed_by(distributor) if order_cycle
 
     product_distribution_variants + order_cycle_variants
   end
