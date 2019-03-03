@@ -29,12 +29,8 @@ module Spree
         collection
       end
 
-      # This method was originally written because ProductDistributions referenced shipping
-      # methods, and deleting a referenced shipping method would break all the reports that
-      # queried it.
-      # This has changed, and now all we're protecting is Orders, which is a spree resource.
-      # Do we really need to protect it ourselves? Does spree do this, or provide some means
-      # of preserving the shipping method information for past orders?
+      # Spree allows soft deletes of shipping_methods but our reports are not adapted to that.
+      #   So, here we prevent the deletion (even soft) of shipping_methods used in orders.
       def do_not_destroy_referenced_shipping_methods
         order = Order.where(:shipping_method_id => @object).first
         if order

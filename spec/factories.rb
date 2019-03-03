@@ -272,12 +272,6 @@ FactoryBot.define do
     after(:create) { |ef| ef.calculator.save! }
   end
 
-  factory :product_distribution, :class => ProductDistribution do
-    product         { |pd| Spree::Product.first || FactoryBot.create(:product) }
-    distributor     { |pd| Enterprise.is_distributor.first || FactoryBot.create(:distributor_enterprise) }
-    enterprise_fee  { |pd| FactoryBot.create(:enterprise_fee, enterprise: pd.distributor) }
-  end
-
   factory :adjustment_metadata, :class => AdjustmentMetadata do
     adjustment { FactoryBot.create(:adjustment) }
     enterprise { FactoryBot.create(:distributor_enterprise) }
@@ -296,8 +290,8 @@ FactoryBot.define do
     order_cycle { create(:simple_order_cycle) }
 
     after(:create) do |order|
-      p = create(:simple_product, :distributors => [order.distributor])
-      FactoryBot.create(:line_item, :order => order, :product => p)
+      product = create(:simple_product)
+      FactoryBot.create(:line_item, :order => order, :product => product)
       order.reload
     end
   end
@@ -320,7 +314,7 @@ FactoryBot.define do
       order.distributor.update_attribute(:charges_sales_tax, true)
       Spree::Zone.global.update_attribute(:default_tax, true)
 
-      p = FactoryBot.create(:taxed_product, zone: Spree::Zone.global, price: proxy.product_price, tax_rate_amount: proxy.tax_rate_amount, tax_rate_name: proxy.tax_rate_name, distributors: [order.distributor])
+      p = FactoryBot.create(:taxed_product, zone: Spree::Zone.global, price: proxy.product_price, tax_rate_amount: proxy.tax_rate_amount, tax_rate_name: proxy.tax_rate_name)
       FactoryBot.create(:line_item, order: order, product: p, price: p.price)
       order.reload
     end
