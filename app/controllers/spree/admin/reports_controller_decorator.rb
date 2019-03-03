@@ -49,8 +49,8 @@ Spree::Admin::ReportsController.class_eval do
     my_distributors = Enterprise.is_distributor.managed_by(spree_current_user)
     my_suppliers = Enterprise.is_primary_producer.managed_by(spree_current_user)
 
-    # My distributors and any distributors distributing products I supply
-    @distributors = my_distributors | Enterprise.with_distributed_products_outer.merge(Spree::Product.in_any_supplier(my_suppliers))
+    # My distributors
+    @distributors = my_distributors
     # My suppliers and any suppliers supplying products I distribute
     @suppliers = my_suppliers | my_distributors.map { |d| Spree::Product.in_distributor(d) }.flatten.map(&:supplier).uniq
     @order_cycles = OrderCycle.active_or_complete.accessible_by(spree_current_user).order('orders_close_at DESC')
@@ -72,8 +72,8 @@ Spree::Admin::ReportsController.class_eval do
     my_distributors = Enterprise.is_distributor.managed_by(spree_current_user)
     my_suppliers = Enterprise.is_primary_producer.managed_by(spree_current_user)
 
-    # My distributors and any distributors distributing products I supply
-    @distributors = my_distributors | Enterprise.with_distributed_products_outer.merge(Spree::Product.in_any_supplier(my_suppliers))
+    # My distributors
+    @distributors = my_distributors
     # My suppliers and any suppliers supplying products I distribute
     @suppliers = my_suppliers | my_distributors.map { |d| Spree::Product.in_distributor(d) }.flatten.map(&:supplier).uniq
     @order_cycles = OrderCycle.active_or_complete.accessible_by(spree_current_user).order('orders_close_at DESC')
@@ -231,8 +231,7 @@ Spree::Admin::ReportsController.class_eval do
     # Load distributors either owned by the user or selling their enterprises products.
     my_distributors = Enterprise.is_distributor.managed_by(spree_current_user)
     my_suppliers = Enterprise.is_primary_producer.managed_by(spree_current_user)
-    distributors_of_my_products = Enterprise.with_distributed_products_outer.merge(Spree::Product.in_any_supplier(my_suppliers))
-    @distributors = my_distributors | distributors_of_my_products
+    @distributors = my_distributors
     # Load suppliers either owned by the user or supplying products their enterprises distribute.
     suppliers_of_products_i_distribute = my_distributors.map { |d| Spree::Product.in_distributor(d) }.flatten.map(&:supplier).uniq
     @suppliers = my_suppliers | suppliers_of_products_i_distribute
