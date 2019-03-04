@@ -33,12 +33,3 @@ every 5.minutes do
   enqueue_job 'SubscriptionPlacementJob', priority: 0
   enqueue_job 'SubscriptionConfirmJob', priority: 0
 end
-
-every 1.day, at: '1:00am' do
-  rake 'ofn:billing:update_account_invoices'
-end
-
-# On the 2nd of every month at 1:30am
-every '30 1 2 * *' do
-  rake 'ofn:billing:finalize_account_invoices'
-end

@@ -485,26 +485,6 @@ FactoryBot.define do
     bill_address { create(:address) }
   end
 
-  factory :billable_period do
-    begins_at { Time.zone.now.beginning_of_month }
-    ends_at { Time.zone.now.beginning_of_month + 1.month }
-    sells { 'any' }
-    trial { false }
-    enterprise
-    owner { enterprise.owner }
-    turnover { rand(100000).to_f/100 }
-    account_invoice do
-      AccountInvoice.where(user_id: owner_id, year: begins_at.year, month: begins_at.month).first ||
-      FactoryBot.create(:account_invoice, user: owner, year: begins_at.year, month: begins_at.month)
-    end
-  end
-
-  factory :account_invoice do
-    user { FactoryBot.create :user }
-    year { 2000 + rand(100) }
-    month { 1 + rand(12) }
-  end
-
   factory :filter_order_cycles_tag_rule, class: TagRule::FilterOrderCycles do
     enterprise { FactoryBot.create :distributor_enterprise }
   end

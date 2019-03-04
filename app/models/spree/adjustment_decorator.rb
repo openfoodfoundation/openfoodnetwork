@@ -11,7 +11,6 @@ module Spree
     belongs_to :tax_rate, foreign_key: 'originator_id', conditions: "spree_adjustments.originator_type = 'Spree::TaxRate'"
 
     scope :enterprise_fee,  where(originator_type: 'EnterpriseFee')
-    scope :billable_period, where(source_type: 'BillablePeriod')
     scope :admin,           where(source_type: nil, originator_type: nil)
     scope :included_tax,    where(originator_type: 'Spree::TaxRate', adjustable_type: 'Spree::LineItem')
 

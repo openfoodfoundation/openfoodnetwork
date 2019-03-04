@@ -202,17 +202,9 @@ en:
   confirm_resend_order_confirmation: "Are you sure you want to resend the order confirmation email?"
   must_have_valid_business_number: "%{enterprise_name} must have a valid ABN before invoices can be sent."
   invoice: "Invoice"
-  percentage_of_sales: "%{percentage} of sales"
-  capped_at_cap: "capped at %{cap}"
-  per_month: "per month"
-  free: "free"
-  free_trial: "free trial"
-  plus_tax: "plus GST"
-  min_bill_turnover_desc: "once turnover exceeds %{mbt_amount}"
   more: "More"
   say_no: "No"
   say_yes: "Yes"
-  then: then
   ongoing: Ongoing
   bill_address: Billing Address
   ship_address: Shipping Address
@@ -348,28 +340,6 @@ en:
     unsaved_confirm_leave: "There are unsaved changed on this page. Continue without saving?"
     unsaved_changes: "You have unsaved changes"
 
-    accounts_and_billing_settings:
-      method_settings:
-        default_accounts_payment_method: "Default Accounts Payment Method"
-        default_accounts_shipping_method: "Default Accounts Shipping Method"
-      edit:
-        accounts_and_billing: "Accounts & Billing"
-        accounts_administration_distributor: "Accounts Administration Distributor"
-        admin_settings: "Settings"
-        update_invoice: "Update Invoices"
-        auto_update_invoices: "Auto-update invoices nightly at 1:00am"
-        finalise_invoice: "Finalise Invoices"
-        auto_finalise_invoices: "Auto-finalise invoices monthly on the 2nd at 1:30am"
-        manually_run_task: "Manually Run Task "
-        update_user_invoice_explained: "Use this button to immediately update invoices for the month to date for each enterprise user in the system. This task can be set up to run automatically every night."
-        finalise_user_invoices: "Finalise User Invoices"
-        finalise_user_invoice_explained: "Use this button to finalize all invoices in the system for the previous calendar month. This task can be set up to run automatically once a month."
-        update_user_invoices: "Update User Invoices"
-      errors:
-        accounts_distributor: must be set if you wish to create invoices for enterprise users.
-        default_payment_method: must be set if you wish to create invoices for enterprise users.
-        default_shipping_method: must be set if you wish to create invoices for enterprise users.
-
     shopfront_settings:
       embedded_shopfront_settings: "Embedded Shopfront Settings"
       enable_embedded_shopfronts: "Enable Embedded Shopfronts"
@@ -378,35 +348,6 @@ en:
     number_localization:
       number_localization_settings: "Number Localization Settings"
       enable_localized_number: "Use the international thousand/decimal separator logic"
-
-    business_model_configuration:
-      edit:
-        business_model_configuration: "Business Model"
-        business_model_configuration_tip: "Configure the rate at which shops will be charged each month for use of the Open Food Network."
-        bill_calculation_settings: "Bill Calculation Settings"
-        bill_calculation_settings_tip: "Adjust the amount that enterprises will be billed each month for use of the OFN."
-        shop_trial_length: "Shop Trial Length (Days)"
-        shop_trial_length_tip: "The length of time (in days) that enterprises who are set up as shops can run as a trial period."
-        fixed_monthly_charge: "Fixed Monthly Charge"
-        fixed_monthly_charge_tip: "A fixed monthly charge for all enterprises who are set up as a shop and have exceeded the minimum billable turnover (if set)."
-        percentage_of_turnover: "Percentage of turnover"
-        percentage_of_turnover_tip: "When greater than zero, this rate (0.0 - 1.0) will be applied to the total turnover of each shop and added to any fixed charges (to the left) to calculate the monthly bill."
-        monthly_cap_excl_tax: "monthly cap (excl. GST)"
-        monthly_cap_excl_tax_tip: "When greater than zero, this value will be used as a cap on the amount that shops will be charged each month."
-        tax_rate: "Tax Rate"
-        tax_rate_tip: "Tax rate that applies to the the monthly bill that enterprises are charged for using the system."
-        minimum_monthly_billable_turnover: "Minimum Monthly Billable Turnover"
-        minimum_monthly_billable_turnover_tip: "Minimum monthly turnover before a shopfront will be charged for using OFN. Enterprises turning over less than this amount in a month will not be charged, either as a percentage or fixed rate."
-        example_bill_calculator: "Example Bill Calculator"
-        example_bill_calculator_legend: "Alter the example turnover to visualise the effect of the settings to the left."
-        example_monthly_turnover: "Example Monthly Turnover"
-        example_monthly_turnover_tip: "An example monthly turnover for an enterprise which will be used to generate calculate an example monthly bill below."
-        cap_reached?: "Cap Reached ?"
-        cap_reached?_tip: "Whether the cap (specified to the left) has been reached, given the settings and the turnover provided."
-        included_tax: "Included tax"
-        included_tax_tip: "The total tax included in the example monthly bill, given the settings and the turnover provided."
-        total_monthly_bill_incl_tax: "Total Monthly Bill (Incl. Tax)"
-        total_monthly_bill_incl_tax_tip: "The example total monthly bill with tax included, given the settings and the turnover provided."
 
     cache_settings:
       show:
@@ -1818,10 +1759,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   products_distributor_info: When you select a distributor for your order, their address and pickup times will be displayed here.
   products_distribution_adjustment_label: "Product distribution by %{distributor} for %{product}"
 
-  shop_trial_expires_in: "Your shopfront trial expires in"
-  shop_trial_expired_notice: "Good news! We have decided to extend shopfront trials until further notice."
-
-
   # keys used in javascript
   password: Password
   remember_me: Remember Me
@@ -2053,8 +1990,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   registration_detail_country_error: "Please select a country"
   # END
   shipping_method_destroy_error: "That shipping method cannot be deleted as it is referenced by an order: %{number}."
-  accounts_and_billing_task_already_running_error: "A task is already running, please wait until it has finished"
-  accounts_and_billing_start_task_notice: "Task Queued"
   fees: "Fees"
   item_cost: "Item cost"
   bulk: "Bulk"
@@ -2207,7 +2142,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   live: "live"
   manage: "Manage"
   resend: "Resend"
-  trial: Trial
   add_and_manage_products: "Add & manage products"
   add_and_manage_order_cycles: "Add & manage order cycles"
   manage_order_cycles: "Manage order cycles"
@@ -2240,7 +2174,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   hub_sidebar_at_least: "At least one hub must be selected"
   hub_sidebar_blue: "blue"
   hub_sidebar_red: "red"
-  shop_trial_in_progress: "Your shopfront trial expires in %{days}."
   report_customers_distributor: "Distributor"
   report_customers_supplier: "Supplier"
   report_customers_cycle: "Order Cycle"

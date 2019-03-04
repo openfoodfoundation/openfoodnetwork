@@ -23,11 +23,6 @@ class Customer < ActiveRecord::Base
 
   scope :of, ->(enterprise) { where(enterprise_id: enterprise) }
 
-  scope :of_regular_shops, lambda {
-    next scoped unless Spree::Config.accounts_distributor_id
-    where('enterprise_id <> ?', Spree::Config.accounts_distributor_id)
-  }
-
   before_create :associate_user
 
   private

@@ -89,7 +89,7 @@ module OpenFoodNetwork
       rows = []
 
       rows += produce_summary_rows(order, invoice_number, opts)  unless detail?
-      rows += fee_summary_rows(order, invoice_number, opts)      unless detail? && order.account_invoice?
+      rows += fee_summary_rows(order, invoice_number, opts)
       rows += shipping_summary_rows(order, invoice_number, opts)
       rows += payment_summary_rows(order, invoice_number, opts)
       rows += admin_adjustment_summary_rows(order, invoice_number, opts) unless detail?
@@ -158,18 +158,11 @@ module OpenFoodNetwork
     end
 
     def adjustments(order)
-      account_invoice_adjustments(order) + order.adjustments.admin
-    end
-
-    def account_invoice_adjustments(order)
-      order.adjustments.
-        billable_period.
-        select { |a| a.source.present? }
+      order.adjustments.admin
     end
 
     def adjustment_order(adjustment)
-      adjustment.source.andand.account_invoice.andand.order ||
-        (adjustment.adjustable.is_a?(Spree::Order) ? adjustment.adjustable : nil)
+      adjustment.adjustable.is_a?(Spree::Order) ? adjustment.adjustable : nil
     end
 
     def invoice_number_for(order, i)
