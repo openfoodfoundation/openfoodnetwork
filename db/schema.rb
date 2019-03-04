@@ -533,9 +533,9 @@ ActiveRecord::Schema.define(:version => 20181128054803) do
     t.datetime "updated_at",                                         :null => false
     t.integer  "max_quantity"
     t.string   "currency"
-    t.decimal  "distribution_fee",     :precision => 10, :scale => 2
-    t.decimal  "final_weight_volume",  :precision => 10, :scale => 2
-    t.decimal  "cost_price",           :precision => 8,  :scale => 2
+    t.decimal  "distribution_fee",    :precision => 10, :scale => 2
+    t.decimal  "final_weight_volume", :precision => 10, :scale => 2
+    t.decimal  "cost_price",          :precision => 8,  :scale => 2
     t.integer  "tax_category_id"
   end
 
