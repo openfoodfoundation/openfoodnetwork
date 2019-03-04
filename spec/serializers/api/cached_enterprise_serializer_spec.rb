@@ -44,7 +44,7 @@ describe Api::CachedEnterpriseSerializer do
         coordinator: shop,
         suppliers: [producer],
         distributors: [shop],
-        variants: [product.variants]
+        variants: product.variants
       )
     end
 
