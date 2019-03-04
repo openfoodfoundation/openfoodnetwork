@@ -410,7 +410,6 @@ Metrics/LineLength:
   - spec/support/request/shop_workflow.rb
   - spec/support/request/web_helper.rb
   - spec/support/seeds.rb
-  - spec/support/spree/init.rb
 
 Metrics/AbcSize:
   Max: 15
