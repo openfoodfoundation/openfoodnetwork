@@ -1,0 +1,2 @@
+/* Custom fix */
+.ui-timepicker-div.ui-timepicker-oneLine dl dd { width: 25%; }
