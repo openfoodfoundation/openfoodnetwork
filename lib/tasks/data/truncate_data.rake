@@ -1,0 +1,75 @@
+# This task can be used to significantly reduce the size of a database
+#   This is used for example when loading live data into a staging server
+#   This way the staging server is not overloaded with too much data
+namespace :ofn do
+  namespace :data do
+    desc 'Truncate data'
+    task truncate: :environment do
+      guard_and_warn
+
+      date = 3.months.ago
+
+      where_ocs_to_delete = "where orders_close_at < '#{date}'"
+      where_oc_id_in_ocs_to_delete = "
+        where order_cycle_id in (select id from order_cycles #{where_ocs_to_delete} )"
+      where_order_id_in_orders_to_delete = "
+        where order_id in (select id from spree_orders #{where_oc_id_in_ocs_to_delete})"
+
+      sql_delete_from "
+        spree_inventory_units #{where_order_id_in_orders_to_delete}"
+      sql_delete_from "
+        spree_adjustments where source_type = 'Spree::Order'
+        and source_id in (select id from spree_orders #{where_oc_id_in_ocs_to_delete})"
+      sql_delete_from "
+        spree_adjustments where source_type = 'Spree::Shipment'
+        and source_id in (select id from spree_shipments #{where_order_id_in_orders_to_delete})"
+      sql_delete_from "
+        spree_adjustments where source_type = 'Spree::Payment'
+        and source_id in (select id from spree_payments #{where_order_id_in_orders_to_delete})"
+      sql_delete_from "
+        spree_adjustments where source_type = 'Spree::LineItem'
+        and source_id in (select id from spree_line_items #{where_order_id_in_orders_to_delete})"
+      sql_delete_from "spree_line_items #{where_order_id_in_orders_to_delete}"
+      sql_delete_from "spree_payments #{where_order_id_in_orders_to_delete}"
+      sql_delete_from "spree_shipments #{where_order_id_in_orders_to_delete}"
+      sql_delete_from "billable_periods"
+      sql_delete_from "account_invoices"
+      Spree::ReturnAuthorization.delete_all
+
+      sql_delete_from "coordinator_fees #{where_oc_id_in_ocs_to_delete}"
+      sql_delete_from "
+        exchange_variants where exchange_id
+        in (select id from exchanges #{where_oc_id_in_ocs_to_delete})"
+      sql_delete_from "
+        exchange_fees where exchange_id
+        in (select id from exchanges #{where_oc_id_in_ocs_to_delete})"
+      sql_delete_from "exchanges #{where_oc_id_in_ocs_to_delete}"
+      sql_delete_from "proxy_orders #{where_oc_id_in_ocs_to_delete}"
+
+      sql_delete_from "spree_orders #{where_oc_id_in_ocs_to_delete}"
+      sql_delete_from "order_cycle_schedules #{where_oc_id_in_ocs_to_delete}"
+      sql_delete_from "order_cycles #{where_ocs_to_delete}"
+
+      # Truncating addresses like this takes many hours to run on top of 300k records
+      #   The sanitize task will work well with the ful range of 300k addresses
+      # sql_delete_from "spree_addresses where
+      #  id not in (select address_id from enterprise_groups) and
+      #  id not in (select address_id from enterprises) and
+      #  id not in (select bill_address_id from spree_orders where bill_address_id is not null) and
+      #  id not in (select ship_address_id from spree_orders where ship_address_id is not null) and
+      #  id not in (select address_id from spree_shipments where address_id is not null) and
+      #  id not in (select address_id from spree_shipments where address_id is not null) and
+      #  id not in (select bill_address_id from customers where bill_address_id is not null) and
+      #  id not in (select ship_address_id from customers where ship_address_id is not null)"
+
+      Spree::TokenizedPermission.where("created_at < '#{date}'").delete_all
+      Spree::StateChange.delete_all
+      Spree::LogEntry.delete_all
+      sql_delete_from "sessions"
+    end
+
+    def sql_delete_from(sql)
+      ActiveRecord::Base.connection.execute("delete from #{sql}")
+    end
+  end
+end
