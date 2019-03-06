@@ -24,7 +24,7 @@ class PaymentMethodFactory
 
   def create_cash_method(enterprise)
     create_payment_method(
-      "Spree::PaymentMethod::Check",
+      Spree::PaymentMethod::Check,
       enterprise,
       "Cash on collection",
       "Pay on collection!",
@@ -34,7 +34,7 @@ class PaymentMethodFactory
 
   def create_card_method(enterprise)
     create_payment_method(
-      "Spree::Gateway::Bogus",
+      Spree::Gateway::Bogus,
       enterprise,
       "Credit card (fake)",
       "We charge 1%, but won't ask for your details. ;-)",
@@ -43,7 +43,7 @@ class PaymentMethodFactory
   end
 
   def create_payment_method(provider_class, enterprise, name, description, calculator)
-    payment_method = provider_class.constantize.new(
+    payment_method = provider_class.new(
       name: name,
       description: description,
       environment: Rails.env,
