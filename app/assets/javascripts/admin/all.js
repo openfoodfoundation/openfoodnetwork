@@ -8,8 +8,8 @@
 //= require jquery
 //= require jquery-migrate-min
 //= require jquery_ujs
-//= require jquery.ui.all
-//= require shared/jquery-ui-timepicker-addon
+//= require jquery-ui
+//= require jquery-ui-timepicker-addon
 //= require angular
 //= require angular-resource
 //= require angular-animate

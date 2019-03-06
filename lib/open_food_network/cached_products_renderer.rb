@@ -27,17 +27,19 @@ module OpenFoodNetwork
     private
 
     def cached_products_json
-      if Rails.env.production? || Rails.env.staging?
-        Rails.cache.fetch("products-json-#{@distributor.id}-#{@order_cycle.id}") do
-          begin
-            uncached_products_json
-          rescue ProductsRenderer::NoProducts
-            nil
-          end
+      return uncached_products_json unless use_cached_products?
+
+      Rails.cache.fetch("products-json-#{@distributor.id}-#{@order_cycle.id}") do
+        begin
+          uncached_products_json
+        rescue ProductsRenderer::NoProducts
+          nil
         end
-      else
-        uncached_products_json
       end
+    end
+
+    def use_cached_products?
+      Spree::Config[:enable_products_cache?] && (Rails.env.production? || Rails.env.staging?)
     end
 
     def uncached_products_json

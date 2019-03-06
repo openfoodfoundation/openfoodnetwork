@@ -31,6 +31,16 @@ ca:
             on_demand_but_count_on_hand_set: "ha d'estar en blanc si és sota demanda"
             limited_stock_but_no_count_on_hand: "cal especificar-se perquè força existències limitades"
   activemodel:
+    attributes:
+      order_management/reports/enterprise_fee_summary/parameters:
+        start_at: "Començar"
+        end_at: "Acabar"
+        distributor_ids: "Grups"
+        producer_ids: "Productors"
+        order_cycle_ids: "Cicles de comanda"
+        enterprise_fee_ids: "Noms de les comissions"
+        shipping_method_ids: "Mètodes d'enviament"
+        payment_method_ids: "Mètodes de Pagament"
     errors:
       models:
         subscription_validator:
@@ -74,6 +84,13 @@ ca:
   models:
     order_cycle:
       cloned_order_cycle_name: "CÒPIA DE %{order_cycle}"
+  validators:
+    date_time_string_validator:
+      not_string_error: "ha de ser una seqüència"
+      invalid_format_error: "ha de ser vàlid"
+    integer_array_validator:
+      not_array_error: "ha de ser una matriu"
+      invalid_element_error: "ha de contenir només nombres enters vàlids"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Sisplau, confirma l'adreça electrònica d'%{enterprise}"
@@ -318,7 +335,7 @@ ca:
     business_model_configuration:
       edit:
         business_model_configuration: "Model de sostenibilitat"
-        business_model_configuration_tip: "Configureu la tarifa què es cobrarà a les botigues cada mes per utilitzar la Xarxa Open Food."
+        business_model_configuration_tip: "Configureu la tarifa què es cobrarà a les botigues cada mes per utilitzar Open Food Network."
         bill_calculation_settings: "Configuració del càlcul de ticket"
         bill_calculation_settings_tip: "Ajusteu la quantitat que es facturarà a les organitzacions cada mes per utilitzar l'OFN."
         shop_trial_length: "Durada de la prova de la botiga (dies)"
@@ -418,9 +435,9 @@ ca:
         user_guide: Guia de l'usuari
     enterprise_fees:
       index:
-        title: Tarifes de l'organització
+        title: Comissions de l'organització
         enterprise: Organització
-        fee_type: Tipus de tarifa
+        fee_type: Tipus de comissió
         name: Nom
         tax_category: Categoria d'impostos
         calculator: Calculadora
@@ -634,8 +651,8 @@ ca:
           website_placeholder: 'p. ex.: www.hortajosepribes.com'
         enterprise_fees:
           name: Nom
-          fee_type: Tipus de tarifa
-          manage_fees: Gestioneu les tarifes de l'organització
+          fee_type: Tipus de comissió
+          manage_fees: Gestioneu les comissions de l'organització
           no_fees_yet: Encara no tens cap tipus de comissió de l'organització
           create_button: Crea'n una ara
         images:
@@ -737,7 +754,7 @@ ca:
             title: Connectar amb Stripe
             part1: Stripe és un servei de processament de pagaments que permet que les botigues de l'OFN acceptin els pagaments amb targeta de crèdit de les consumidores.
             part2: Per utilitzar aquesta funció heu de connectar el vostre compte Stripe a l'OFN. Si feu clic a "Accepto", us redirigirem al lloc web de Stripe on podeu connectar un compte Stripe existent o bé crear-ne un si encara no en teniu cap.
-            part3: Això permetrà que Open Food Network accepti pagaments amb targeta de crèdit de consumidores en nom vostre. Tingueu en compte que haureu de mantenir el vostre propi compte de Stripe, pagar-ne les tarifes i mantenir el servei a les consumidores pel teu compte.
+            part3: Això permetrà que Open Food Network accepti pagaments amb targeta de crèdit de consumidores en nom vostre. Tingueu en compte que haureu de mantenir el vostre propi compte de Stripe, pagar-ne les comissions i mantenir el servei a les consumidores pel teu compte.
             i_agree: Accepto
             cancel: Cancel·lar
         tag_rules:
@@ -775,7 +792,7 @@ ca:
         payment_methods_tip: Aquesta organització no té mètodes de pagament
         shipping_methods: Mètodes d'enviament
         shipping_methods_tip: 'Aquesta organització té mètodes d''enviament '
-        enterprise_fees: Honoraris de l'organització
+        enterprise_fees: Comissions de l'organització
         enterprise_fees_tip: Aquesta organització no té comissions
       admin_index:
         name: Nom
@@ -873,7 +890,7 @@ ca:
         incoming: Entrant
         supplier: Proveïdora
         receival_details: Detalls de recepció
-        fees: Tarifes
+        fees: Comissions
         outgoing: Sortint
         distributor: Distribuïdora
         products: Productes
@@ -911,7 +928,7 @@ ca:
         customer_instructions: Instruccions de la consumidora
         customer_instructions_placeholder: Notes de recollida o de lliurament
         products: Productes
-        fees: Tarifes
+        fees: Comissions
       destroy_errors:
         orders_present: Una consumidora ha seleccionat aquest Cicle de Comanda i no es pot esborrar. Per evitar que les consumidores hi accedeixin, tanqueu-lo.
         schedule_present: Aquest cicle de comanda està vinculat a una programació i no es pot esborrar. Desenllaça o suprimeix primer la programació.
@@ -996,6 +1013,9 @@ ca:
         description: Factures per a la importació a Xero
       packing:
         name: Informes d'embalatge
+      enterprise_fee_summary:
+        name: "Resum de les comissions de l'organització"
+        description: "Resum de les comissions de l'organització recollides"
     subscriptions:
       subscriptions: Subscripcions
       new: Nova subscripció
@@ -1883,7 +1903,7 @@ ca:
   shipping_method_destroy_error: "Aquest mètode d'enviament no es pot esborrar perquè s'hi fa referència en una comanda: %{number}."
   accounts_and_billing_task_already_running_error: "Ja s'està executant una tasca, espera fins que hagi acabat"
   accounts_and_billing_start_task_notice: "Tasca en cua"
-  fees: "Tarifes"
+  fees: "Comissions"
   item_cost: "Cost de l'article"
   bulk: "A granel"
   shop_variant_quantity_min: "min"
@@ -1955,7 +1975,7 @@ ca:
   process_my_order: "Processa la meva comanda"
   delivery_instructions: Instruccions de lliurament
   delivery_method: Mètode de lliurament
-  fee_type: "Tipus de tarifa"
+  fee_type: "Tipus de comissió"
   tax_category: "Categoria d'impostos"
   calculator: "Calculadora"
   calculator_values: "Valors de la calculadora"
@@ -2000,7 +2020,6 @@ ca:
   spree_admin_enterprises_none_text: "Encara no tens cap organització"
   spree_admin_enterprises_tabs_hubs: "GRUPS"
   spree_admin_enterprises_producers_manage_products: "GESTIONA ELS PRODUCTES"
-  spree_admin_enterprises_any_active_products_text: "No tens cap producte actiu."
   spree_admin_enterprises_create_new_product: "CREA UN NOU PRODUCTE"
   spree_admin_single_enterprise_alert_mail_confirmation: "Si us plau confirma l'adreça de correu electrònic de"
   spree_admin_single_enterprise_alert_mail_sent: "Hem enviat un correu electrònic a"
@@ -2127,7 +2146,7 @@ ca:
   report_header_sales_tax: "Impost sobre vendes (%{currency_symbol})"
   report_header_delivery_charge: "Càrrec de lliurament (%{currency_symbol})"
   report_header_tax_on_delivery: "Impost sobre el lliurament (%{currency_symbol})"
-  report_header_tax_on_fees: "Impost sobre les tarifes (%{currency_symbol})"
+  report_header_tax_on_fees: "Impost sobre les comissions (%{currency_symbol})"
   report_header_total_tax: "Impost total (%{currency_symbol})"
   report_header_enterprise: Organització
   report_header_customer: Consumidora
@@ -2248,7 +2267,7 @@ ca:
   shipping: "Enviament"
   shipping_methods: "Mètodes d'enviament"
   payment_methods: "Mètodes de Pagament"
-  payment_method_fee: "Tarifa de transacció"
+  payment_method_fee: "Comissió de transacció"
   inventory_settings: "Configuració de l'inventari"
   tag_rules: "Regles d'etiqueta"
   shop_preferences: "Preferències de la botiga"
@@ -2526,6 +2545,45 @@ ca:
   producers:
     signup:
       start_free_profile: "Comença amb un perfil gratuït i amplia'l quan estiguis preparada."
+  order_management:
+    reports:
+      enterprise_fee_summary:
+        date_end_before_start_error: "ha de ser després de l'inici"
+        parameter_not_allowed_error: "No esteu autoritzats a utilitzar un o més filtres seleccionats per a aquest informe."
+        fee_calculated_on_transfer_through_all: "Tots"
+        fee_calculated_on_transfer_through_entire_orders: "Comandes completades a través de"
+        tax_category_various: "Varis"
+        fee_type:
+          payment_method: "Transacció de pagament"
+          shipping_method: "Enviament"
+        fee_placements:
+          supplier: "Entrant"
+          distributor: "Sortint"
+          coordinator: "Coordinador"
+        tax_category_name:
+          shipping_instance_rate: "Tarifa de la plataforma"
+        formats:
+          csv:
+            header:
+              fee_type: "Tipus de comissió"
+              enterprise_name: "Propietària de l'organització"
+              fee_name: "Nom de la comissió"
+              customer_name: "Consumidora"
+              fee_placement: "Col·locació de comissions"
+              fee_calculated_on_transfer_through_name: "Càlcul de comissions a través de transferència"
+              tax_category_name: "Categoria d'impostos"
+              total_amount: "€€ SUM"
+          html:
+            header:
+              fee_type: "Tipus de comissió"
+              enterprise_name: "Propietària de l'organització"
+              fee_name: "Nom de la comissió"
+              customer_name: "Consumidora"
+              fee_placement: "Col·locació de comissions"
+              fee_calculated_on_transfer_through_name: "Càlcul de comissions a través de transferència"
+              tax_category_name: "Categoria d'impostos"
+              total_amount: "€€ SUM"
+        invalid_filter_parameters: "Els filtres que heu seleccionat per a aquest informe no són vàlids."
   spree:
     email: Correu electrònic
     account_updated: "Compte actualitzat!"
@@ -2569,6 +2627,11 @@ ca:
             distributor: "Distribuïdora:"
             order_cycle: "Cicle de comanda:"
       overview:
+        products:
+          active_products:
+            zero: "No tens cap producte actiu."
+            one: "Teniu un producte actiu"
+            other: "Teniu %{count} productes actius"
         order_cycles:
           order_cycles: "Cicles de comanda"
           order_cycles_tip: "Els cicles de comanda determinen quan i on els teus productes estan disponibles per a les consumidores."
@@ -2642,6 +2705,14 @@ ca:
           bulk_coop_allocation: 'Compra grupal - Assignació'
           bulk_coop_packing_sheets: 'Compra grupal - Fulls de preparació de cistelles'
           bulk_coop_customer_payments: 'Compra grupal - Pagaments de les consumidores'
+        enterprise_fee_summaries:
+          filters:
+            date_range: "Interval de dates"
+            report_format_csv: "Descarrega com a CSV"
+            generate_report: "Generar informe"
+          report:
+            none: "No productora"
+            select_and_search: "Seleccioneu els filtres i feu clic a GENERAR INFORME per accedir a les dades."
       users:
         index:
           listing_users: "Llistat d'usuàries"
