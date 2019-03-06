@@ -133,6 +133,28 @@ module Spree
         order.reload.update!
       end
 
+      context "when order-based calculator" do
+        let!(:shop) { create(:enterprise) }
+        let!(:payment_method) { create(:payment_method, calculator: calculator) }
+
+        let!(:calculator) do
+          Spree::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10)
+        end
+
+        context "when order complete and inventory tracking enabled" do
+          let!(:order) { create(:completed_order_with_totals, distributor: shop) }
+          let!(:variant) { order.line_items.first.variant }
+          let!(:inventory_item) { create(:inventory_item, enterprise: shop, variant: variant) }
+
+          it "creates adjustment" do
+            payment = create(:payment, order: order, payment_method: payment_method,
+                                       amount: order.total)
+            expect(payment.adjustment).to be_present
+            expect(payment.adjustment.amount).not_to eq(0)
+          end
+        end
+      end
+
       context "to Stripe payments" do
         let(:shop) { create(:enterprise) }
         let(:payment_method) { create(:stripe_payment_method, distributor_ids: [create(:distributor_enterprise).id], preferred_enterprise_id: shop.id) }
