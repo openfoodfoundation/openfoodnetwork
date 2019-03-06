@@ -6,11 +6,13 @@ describe RefreshProductsCacheJob do
   let(:order_cycle) { create(:simple_order_cycle) }
 
   context 'when the enterprise and the order cycle exist' do
-    it "renders products and writes them to cache" do
-      RefreshProductsCacheJob.any_instance.stub(:products_json) { 'products' }
+    before do
+      refresh_products_cache_job = instance_double(OpenFoodNetwork::ProductsRenderer, products_json: 'products')
+      allow(OpenFoodNetwork::ProductsRenderer).to receive(:new).with(distributor, order_cycle) { refresh_products_cache_job }
+    end
 
+    it 'renders products and writes them to cache' do
       run_job RefreshProductsCacheJob.new distributor.id, order_cycle.id
-
       expect(Rails.cache.read("products-json-#{distributor.id}-#{order_cycle.id}")).to eq 'products'
     end
   end
