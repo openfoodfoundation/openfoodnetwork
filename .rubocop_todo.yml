@@ -310,7 +310,6 @@ Layout/EmptyLinesAroundBlockBody:
 Layout/EmptyLinesAroundClassBody:
   Exclude:
     - 'app/controllers/admin/account_controller.rb'
-    - 'app/controllers/admin/cache_settings_controller.rb'
     - 'app/controllers/admin/enterprise_fees_controller.rb'
     - 'app/controllers/admin/inventory_items_controller.rb'
     - 'app/controllers/admin/tag_rules_controller.rb'
@@ -763,7 +762,6 @@ Layout/SpaceInsideBlockBraces:
 # SupportedStylesForEmptyBraces: space, no_space
 Layout/SpaceInsideHashLiteralBraces:
   Exclude:
-    - 'app/controllers/admin/cache_settings_controller.rb'
     - 'app/controllers/admin/enterprise_relationships_controller.rb'
     - 'app/controllers/admin/enterprise_roles_controller.rb'
     - 'app/controllers/api/statuses_controller.rb'
@@ -1601,7 +1599,6 @@ Style/ClassAndModuleChildren:
     - 'app/controllers/admin/account_controller.rb'
     - 'app/controllers/admin/accounts_and_billing_settings_controller.rb'
     - 'app/controllers/admin/business_model_configuration_controller.rb'
-    - 'app/controllers/admin/cache_settings_controller.rb'
     - 'app/controllers/spree/store_controller_decorator.rb'
     - 'app/helpers/angular_form_helper.rb'
     - 'app/models/calculator/flat_percent_per_item.rb'
