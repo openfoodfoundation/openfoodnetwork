@@ -151,7 +151,6 @@ Layout/EmptyLines:
     - 'app/models/exchange.rb'
     - 'app/models/exchange_fee.rb'
     - 'app/models/inventory_item.rb'
-    - 'app/models/order_cycle.rb'
     - 'app/models/producer_property.rb'
     - 'app/models/product_distribution.rb'
     - 'app/models/spree/calculator_decorator.rb'

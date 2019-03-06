@@ -50,7 +50,6 @@ class OrderCycle < ActiveRecord::Base
     joins(:exchanges).merge(Exchange.outgoing).merge(Exchange.to_enterprise(distributor))
   }
 
-
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
       scoped
@@ -172,14 +171,6 @@ class OrderCycle < ActiveRecord::Base
 
   def products_distributed_by(distributor)
     variants_distributed_by(distributor).map(&:product).uniq
-  end
-
-  # If a product without variants is added to an order cycle, and then some variants are added
-  # to that product, but not the order cycle, then the master variant should not available for customers
-  # to purchase.
-  # This method filters out such products so that the customer cannot purchase them.
-  def valid_products_distributed_by(distributor)
-    DistributedValidProducts.new(self, distributor).all
   end
 
   def products

@@ -32,15 +32,16 @@ module OpenFoodNetwork
     private
 
     def load_products
-      if @order_cycle
-        scoper = ScopeProductToHub.new(@distributor)
+      return unless @order_cycle
+      scoper = ScopeProductToHub.new(@distributor)
 
-        @order_cycle.
-          valid_products_distributed_by(@distributor).
-          order(taxon_order).
-          each { |p| scoper.scope(p) }.
-          select { |p| !p.deleted? && p.has_stock_for_distribution?(@order_cycle, @distributor) }
-      end
+      DistributedValidProducts.new(@order_cycle, @distributor).
+        relation.
+        order(taxon_order).
+        each { |product| scoper.scope(product) }.
+        select do |product|
+          !product.deleted? && product.has_stock_for_distribution?(@order_cycle, @distributor)
+        end
     end
 
     def taxon_order

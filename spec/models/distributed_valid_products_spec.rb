@@ -18,7 +18,7 @@ describe DistributedValidProducts do
 
     distributed_valid_products = described_class.new(order_cycle, distributor)
 
-    expect(distributed_valid_products.all).to eq([valid_product])
+    expect(distributed_valid_products.relation).to eq([valid_product])
   end
 
   context 'when the product has only an obsolete master variant in a distribution' do
@@ -34,7 +34,7 @@ describe DistributedValidProducts do
 
     it 'does not return the obsolete product' do
       distributed_valid_products = described_class.new(order_cycle, distributor)
-      expect(distributed_valid_products.all).to eq([unassociated_variant.product])
+      expect(distributed_valid_products.relation).to eq([unassociated_variant.product])
     end
   end
 
@@ -51,7 +51,7 @@ describe DistributedValidProducts do
 
     it 'returns the product' do
       distributed_valid_products = described_class.new(order_cycle, distributor)
-      expect(distributed_valid_products.all).to eq([product])
+      expect(distributed_valid_products.relation).to eq([product])
     end
   end
 
@@ -69,7 +69,7 @@ describe DistributedValidProducts do
 
     it 'returns the product' do
       distributed_valid_products = described_class.new(order_cycle, distributor)
-      expect(distributed_valid_products.all).to eq([product])
+      expect(distributed_valid_products.relation).to eq([product])
     end
   end
 
@@ -87,7 +87,7 @@ describe DistributedValidProducts do
 
     it 'returns the product' do
       distributed_valid_products = described_class.new(order_cycle, distributor)
-      expect(distributed_valid_products.all).to eq([product])
+      expect(distributed_valid_products.relation).to eq([product])
     end
   end
 end
