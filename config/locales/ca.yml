@@ -113,7 +113,7 @@ ca:
     shipped_email:
       dear_customer: "Benvolguda consumidora:"
       instructions: "La vostra comanda s'ha enviat"
-      shipment_summary: "Detalls de l'enviament"
+      shipment_summary: "Resum de l'enviament"
       subject: "Notificació d'enviament"
       thanks: "Gràcies per la teva compra."
       track_information: "Informació del seguiment: %{tracking}"
@@ -207,6 +207,7 @@ ca:
   enterprise_groups: Grups
   reports: Informes
   variant_overrides: Inventari
+  import: Importa
   spree_products: Productes Spree
   all: Tots
   current: Actual
@@ -363,13 +364,14 @@ ca:
         total_monthly_bill_incl_tax: "Factura mensual total (impostos inclosos)"
         total_monthly_bill_incl_tax_tip: "L'exemple total de la factura mensual amb impostos inclosos, tenint en compte la configuració i la facturació proporcionada."
     cache_settings:
-      show:
-        title: Emmagatzematge ocult
-        distributor: Distribuïdora
-        order_cycle: Cicle de Comanda
-        status: Estat
-        diff: Diferència
-        error: Error
+      edit:
+        title: "Emmagatzematge ocult"
+        distributor: "Distribuïdora"
+        order_cycle: "Cicle de comanda"
+        status: "Estat"
+        diff: "Diferència"
+        error: "Error"
+        enable_products_cache: "Habilitar el caché productes?"
     invoice_settings:
       edit:
         title: Configuració de la factura
@@ -1423,12 +1425,12 @@ ca:
   email_signature: "Equip %{sitename}"
   email_confirm_customer_greeting: "Hola %{name},"
   email_confirm_customer_intro_html: "Gràcies per comprar a <strong> %{distributor} </ strong>."
-  email_confirm_customer_number_html: "Confirmació de la comanda <strong> # %{number} "
+  email_confirm_customer_number_html: "Confirmació de la comanda <strong> # %{number} </strong>"
   email_confirm_customer_details_html: "Aquests són els detalls de la teva comanda de <strong> %{distributor} </ strong>:"
   email_confirm_customer_signoff: "Salutacions cordials,"
   email_confirm_shop_greeting: "Hola %{name},"
   email_confirm_shop_order_html: "Que bé! Tens una nova comanda per <strong> %{distributor} </ strong>."
-  email_confirm_shop_number_html: "Confirmació de la comanda <strong> # %{number}"
+  email_confirm_shop_number_html: "Confirmació de la comanda <strong> # %{number}</strong>"
   email_order_summary_item: "Article"
   email_order_summary_quantity: "quant."
   email_order_summary_price: "Preu"
