@@ -1,63 +1,93 @@
 require 'spec_helper'
 
 describe DistributedValidProducts do
-  it "returns valid products but not invalid products" do
-    p_valid = create(:product)
-    p_invalid = create(:product)
-    v_valid = p_valid.variants.first
-    v_invalid = p_invalid.variants.first
+  let(:order_cycle) { OrderCycle.new }
+  let(:distributor) { instance_double(Enterprise) }
 
-    d = create(:distributor_enterprise)
-    oc = create(:simple_order_cycle, distributors: [d], variants: [v_valid, p_invalid.master])
+  it 'returns valid products but not invalid products' do
+    valid_product = create(:product)
+    invalid_product = create(:product)
+    valid_variant = valid_product.variants.first
 
-    expect(oc.valid_products_distributed_by(d)).to eq([p_valid])
+    distributor = create(:distributor_enterprise)
+    order_cycle = create(
+      :simple_order_cycle,
+      distributors: [distributor],
+      variants: [valid_variant, invalid_product.master]
+    )
+
+    distributed_valid_products = described_class.new(order_cycle, distributor)
+
+    expect(distributed_valid_products.all).to eq([valid_product])
   end
 
-  describe "checking if a product has only an obsolete master variant in a distributution" do
-    it "returns true when so" do
-      master = double(:master)
-      unassociated_variant = double(:variant)
-      product = double(:product, has_variants?: true, master: master, variants: [])
-      distributed_variants = [master, unassociated_variant]
+  context 'when the product has only an obsolete master variant in a distribution' do
+    let(:master) { create(:variant, product: product) }
+    let(:product) { create(:product, variants: [build(:variant)]) }
+    let(:unassociated_variant) { create(:variant) }
+    let(:distributed_variants) { [product.master, unassociated_variant] }
 
-      oc = OrderCycle.new
-      distributed_valid_products = described_class.new(oc, nil)
-
-      expect(distributed_valid_products.send(:product_has_only_obsolete_master_in_distribution?, product, distributed_variants)).to be true
+    before do
+      allow(order_cycle)
+        .to receive(:variants_distributed_by).with(distributor) { distributed_variants }
     end
 
-    it "returns false when the product doesn't have variants" do
-      master = double(:master)
-      product = double(:product, has_variants?: false, master: master, variants: [])
-      distributed_variants = [master]
+    it 'does not return the obsolete product' do
+      distributed_valid_products = described_class.new(order_cycle, distributor)
+      expect(distributed_valid_products.all).to eq([unassociated_variant.product])
+    end
+  end
 
-      oc = OrderCycle.new
-      distributed_valid_products = described_class.new(oc, nil)
+  context "when the product doesn't have variants" do
+    let(:master) { build(:variant) }
+    let(:product) { create(:product, master: master) }
+    let(:distributed_variants) { [master] }
 
-      expect(distributed_valid_products.send(:product_has_only_obsolete_master_in_distribution?, product, distributed_variants)).to be false
+    before do
+      allow(product).to receive(:has_variants?) { false }
+      allow(order_cycle)
+        .to receive(:variants_distributed_by).with(distributor) { distributed_variants }
     end
 
-    it "returns false when the master isn't distributed" do
-      master = double(:master)
-      product = double(:product, has_variants?: true, master: master, variants: [])
-      distributed_variants = []
+    it 'returns the product' do
+      distributed_valid_products = described_class.new(order_cycle, distributor)
+      expect(distributed_valid_products.all).to eq([product])
+    end
+  end
 
-      oc = OrderCycle.new
-      distributed_valid_products = described_class.new(oc, nil)
+  context "when the master isn't distributed" do
+    let(:master) { build(:variant) }
+    let(:variant) { build(:variant) }
+    let(:product) { create(:product, master: master, variants: [variant]) }
+    let(:distributed_variants) { [variant] }
 
-      expect(distributed_valid_products.send(:product_has_only_obsolete_master_in_distribution?, product, distributed_variants)).to be false
+    before do
+      allow(product).to receive(:has_variants?) { true }
+      allow(order_cycle)
+        .to receive(:variants_distributed_by).with(distributor) { distributed_variants }
     end
 
-    it "returns false when the product has other variants distributed" do
-      master = double(:master)
-      variant = double(:variant)
-      product = double(:product, has_variants?: true, master: master, variants: [variant])
-      distributed_variants = [master, variant]
+    it 'returns the product' do
+      distributed_valid_products = described_class.new(order_cycle, distributor)
+      expect(distributed_valid_products.all).to eq([product])
+    end
+  end
 
-      oc = OrderCycle.new
-      distributed_valid_products = described_class.new(oc, nil)
+  context 'when the product has the master and other variants distributed' do
+    let(:master) { build(:variant) }
+    let(:variant) { build(:variant) }
+    let(:product) { create(:product, master: master, variants: [variant]) }
+    let(:distributed_variants) { [master, variant] }
 
-      expect(distributed_valid_products.send(:product_has_only_obsolete_master_in_distribution?, product, distributed_variants)).to be false
+    before do
+      allow(product).to receive(:has_variants?) { true }
+      allow(order_cycle)
+        .to receive(:variants_distributed_by).with(distributor) { distributed_variants }
+    end
+
+    it 'returns the product' do
+      distributed_valid_products = described_class.new(order_cycle, distributor)
+      expect(distributed_valid_products.all).to eq([product])
     end
   end
 end
