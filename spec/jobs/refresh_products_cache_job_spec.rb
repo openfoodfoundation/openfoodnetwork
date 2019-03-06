@@ -38,12 +38,16 @@ describe RefreshProductsCacheJob do
   end
 
   describe "fetching products JSON" do
-    let(:job) { RefreshProductsCacheJob.new distributor.id, order_cycle.id }
-    let(:pr) { double(:products_renderer, products_json: nil) }
+    let(:job) { RefreshProductsCacheJob.new(distributor.id, order_cycle.id) }
+    let(:products_renderer) { instance_double(OpenFoodNetwork::ProductsRenderer, products_json: nil) }
+
+    before do
+      allow(OpenFoodNetwork::ProductsRenderer).to receive(:new).with(distributor, order_cycle) { products_renderer }
+    end
 
     it "fetches products JSON" do
-      expect(OpenFoodNetwork::ProductsRenderer).to receive(:new).with(distributor, order_cycle) { pr }
-      job.send(:products_json)
+      job.perform
+      expect(OpenFoodNetwork::ProductsRenderer).to have_received(:new).with(distributor, order_cycle) { products_renderer }
     end
   end
 end
