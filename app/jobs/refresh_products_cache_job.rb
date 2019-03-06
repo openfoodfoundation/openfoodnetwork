@@ -3,6 +3,8 @@ require 'open_food_network/products_renderer'
 RefreshProductsCacheJob = Struct.new(:distributor_id, :order_cycle_id) do
   def perform
     Rails.cache.write(key, products_json)
+  rescue ActiveRecord::RecordNotFound
+    true
   end
 
   private
