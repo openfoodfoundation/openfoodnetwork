@@ -371,7 +371,7 @@ ca:
         status: "Estat"
         diff: "Diferència"
         error: "Error"
-        enable_products_cache: "Habilitar el caché productes?"
+        enable_products_cache: "Habilitar la memòria cau de productes?"
     invoice_settings:
       edit:
         title: Configuració de la factura
@@ -2701,7 +2701,7 @@ ca:
     smtp_username: "Nom d'usuari SMTP"
     smtp_password: "Contrasenya SMTP"
     image_settings: "Configuració de la imatge"
-    image_settings_warning: "Haureu de regenerar thumbnails si actualitzeu els estils de paperclip. Feu servir paperclip:refresh:thumbnails CLASS=Spree::Image per fer-ho."
+    image_settings_warning: "Haureu de regenerar thumbnails si actualitzeu els estils de paperclip. Feu servir rake paperclip:refresh:thumbnails CLASS=Spree::Image per fer-ho."
     attachment_default_style: Estil de fitxers adjunts
     attachment_default_url: "URL predeterminada de fitxers adjunts"
     attachment_path: "Ruta de fitxers adjunts"

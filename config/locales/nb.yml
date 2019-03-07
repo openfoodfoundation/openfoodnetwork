@@ -207,6 +207,7 @@ nb:
   enterprise_groups: Grupper
   reports: Rapporter
   variant_overrides: Varelager
+  import: Import
   spree_products: Spree Produkter
   all: Alle
   current: Nåværende
@@ -363,13 +364,13 @@ nb:
         total_monthly_bill_incl_tax: "Total Månedlig Regning (Inkl. Avgift)"
         total_monthly_bill_incl_tax_tip: "Eksempel på total månedlig regning inkludert avgift, gitt innstillingene og omsetningen som er satt."
     cache_settings:
-      show:
-        title: Mellomlagring
-        distributor: Distributør
-        order_cycle: Bestillingsrunde
-        status: Status
-        diff: Forskjell
-        error: Feil
+      edit:
+        title: "Mellomlagring"
+        distributor: "Distributør"
+        order_cycle: "Bestillingsrunde"
+        status: "Status"
+        diff: "Forskjell"
+        error: "Feil"
     invoice_settings:
       edit:
         title: Fakturainnstillinger
