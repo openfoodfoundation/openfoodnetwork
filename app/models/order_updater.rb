@@ -84,11 +84,8 @@ class OrderUpdater < SimpleDelegator
   # shipments using a shipping method that doesn't require address, such us
   # a pickup.
   def shipping_address_from_distributor
-    shipments.each do |shipment|
-      shipping_method = shipment.shipping_method
-      next if shipping_method.require_ship_address
+    return if order.shipping_method.blank? || order.shipping_method.require_ship_address
 
-      order.ship_address = order.distributor.address
-    end
+    order.ship_address = order.__send__(:address_from_distributor)
   end
 end
