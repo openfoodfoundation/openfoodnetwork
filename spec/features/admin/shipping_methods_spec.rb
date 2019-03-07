@@ -109,7 +109,7 @@ feature 'shipping methods' do
 
       click_button I18n.t("actions.create")
 
-      expect(page).to have_content I18n.t('editing_shipping_method')
+      expect(page).to have_content I18n.t('spree.admin.shipping_methods.edit.editing_shipping_method')
       expect(flash_message).to eq I18n.t('successfully_created', resource: 'Shipping method "Teleport"')
 
       expect(first('tags-input .tag-list ti-tag-item')).to have_content "local"

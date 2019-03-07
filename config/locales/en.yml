@@ -2949,6 +2949,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
             one: "You have one active order cycle."
             other: "You have %{count} active order cycles."
           manage_order_cycles: "MANAGE ORDER CYCLES"
+      shipping_methods:
+        edit:
+          editing_shipping_method: "Editing Shipping Method"
       payment_methods:
         new:
           new_payment_method: "New Payment Method"
