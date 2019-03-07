@@ -25,7 +25,7 @@ Spree::Product.class_eval do
 
   # validates_presence_of :variants, unless: :new_record?, message: "Product must have at least one variant"
   validates_presence_of :supplier
-  validates :primary_taxon, presence: { message: I18n.t("validation_msg_product_category_cant_be_blank") }
+  validates :primary_taxon, presence: true
   validates :tax_category_id, presence: { message: I18n.t("validation_msg_tax") }, if: "Spree::Config.products_require_tax_category"
 
   validates_presence_of :variant_unit
