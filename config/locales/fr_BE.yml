@@ -25,7 +25,21 @@ fr_BE:
           attributes:
             orders_close_at:
               after_orders_open_at: doit être postérieure à Date d'ouverture
+        variant_override:
+          count_on_hand:
+            using_producer_stock_settings_but_count_on_hand_set: "doit être vide car les paramètres de stock du producteur sont utilisés"
+            on_demand_but_count_on_hand_set: "doit être vide si à la demande"
+            limited_stock_but_no_count_on_hand: "doit être spécifié car le stock limité est forcé"
   activemodel:
+    attributes:
+      order_management/reports/enterprise_fee_summary/parameters:
+        start_at: "Début"
+        end_at: "Fin"
+        distributor_ids: "Comptoirs"
+        producer_ids: "Producteurs"
+        order_cycle_ids: "Cycles de vente"
+        shipping_method_ids: "Méthodes de livraison"
+        payment_method_ids: "Méthodes de paiement"
     errors:
       models:
         subscription_validator:
@@ -180,12 +194,12 @@ fr_BE:
   edit: Modifier
   clone: Dupliquer
   distributors: Distributeurs
-  distribution: Distribution
   bulk_order_management: Gestion des commandes par lot
   enterprises: Entreprises
   enterprise_groups: Groupes
   reports: Rapports
   variant_overrides: Catalogue magasin
+  import: Importer
   spree_products: Produits
   all: Tous
   current: Actuel
@@ -217,12 +231,14 @@ fr_BE:
   quantity: Quantité
   pick_up: Retrait
   copy: Copier
+  update_password: "Mise à jour du mot de passe"
   password_confirmation: confirmation du mot de passe
   reset_password_token: réinitialisation du mot de passe
-  expired: a expiré, s'il vous plaît demander un nouveau
-  back_to_payments_list: "Retour sur la liste des paiements"
+  expired: a expiré, veuillez en demander un nouveau
+  back_to_payments_list: "Retour à la liste des paiements"
   actions:
     create_and_add_another: "Créer et ajouter un nouveau"
+    create: "Créer"
   admin:
     begins_at: Commence
     begins_on: Commence le
@@ -338,13 +354,13 @@ fr_BE:
         total_monthly_bill_incl_tax: "Facture mensuelle totale (taxes incluses)"
         total_monthly_bill_incl_tax_tip: "Exemple du total TTC facturé pour le mois, selon paramétrages et chiffre d'affaire du mois."
     cache_settings:
-      show:
-        title: Mise en cache
-        distributor: Hub (distributeur)
-        order_cycle: Cycle de vente
-        status: Statut
-        diff: Diff
-        error: Erreur
+      edit:
+        title: "Mise en cache"
+        distributor: "Distributeur"
+        order_cycle: "Cycle de vente"
+        status: "Statut"
+        diff: "Diff"
+        error: "Erreur"
     invoice_settings:
       edit:
         title: Paramètres de facturation
@@ -470,6 +486,8 @@ fr_BE:
         inventory_no_permission: vous n'avez pas l'autorisation d'ajouter les produits de ce producteur à votre catalogue boutique
         none_saved: n'a pu sauvegarder aucun produit :-(
         line_number: "Ligne %{number} :"
+        encoding_error: "Veuillez vérifier la langage de votre fichier source et l'enregistrer avec un encodage UTF-8"
+        unexpected_error: "L'import du produit à provoqué une erreur à l'ouverture du fichier: %{error_message}"
       index:
         select_file: Sélectionner le fichier (tableur sous format csv) à importer
         spreadsheet: Tableur csv
@@ -716,7 +734,9 @@ fr_BE:
           close_date: Date de fermeture
         social:
           twitter_placeholder: ex. @OpenFoodNet_fr
+          instagram_placeholder: 'ex: le_prof'
           facebook_placeholder: 'ex: www.facebook.com/NomDeLaPage'
+          linkedin_placeholder: 'ex: www.linkedin.com/VotreNom'
         stripe_connect:
           connect_with_stripe: "Connecter avec Stripe"
           stripe_connect_intro: "Pour accepter des paiements utilisant la carte bancaire, vous devez connecter votre compte Stripe à Open Food Network. Cliquez sur le bouton à droite pour commencer."
@@ -1018,6 +1038,7 @@ fr_BE:
         this_is_an_estimate: |
             Les prix affichés ne sont qu'une estimation calculée au moment de la dernière modification de l'abonnement.
             Si vous modifiez les prix ou marges et commissions appliquées, les commandes seront mises à jour, mais l'abonnement affichera toujours les anciennes valeurs.
+        not_in_open_and_upcoming_order_cycles_warning: "Aucun cycle de vente actif ou futur pour ce produit."
       details:
         details: Informations
         invalid_error: Oups! Veuillez remplir tous les champs obligatoires...
@@ -1032,6 +1053,7 @@ fr_BE:
         details: Informations
         address: Adresse
         products: Produits
+        no_open_or_upcoming_order_cycle: "Pas de cycle de vente à venir"
       product_already_in_order: Ce produit a déjà été ajouté à la commande. Veuillez directement modifier la quantité.
       orders:
         number: Nombre
@@ -1459,8 +1481,8 @@ fr_BE:
   enterprises_next_closing: "Clôture des commandes pour ce cycle"
   enterprises_ready_for: "Prêt pour"
   enterprises_choose: "Choisissez votre option:"
-  maps_open: "Ouvre"
-  maps_closed: "Fermée"
+  maps_open: "Ouvert"
+  maps_closed: "Fermé"
   hubs_buy: "Acheter:"
   hubs_shopping_here: "Achats en cours"
   hubs_orders_closed: "Boutique fermée"
@@ -1633,6 +1655,7 @@ fr_BE:
   orders_bought_edit_button: Modifier les produits confirmés
   orders_bought_already_confirmed: "* déjà confirmé"
   orders_confirm_cancel: Voulez-vous vraiment annuler cette commande ?
+  order_processed_successfully: "Votre commande est passée avec succès"
   products_cart_distributor_choice: "Distributeur pour votre commande:"
   products_cart_distributor_change: "Vore distributeur pour cette commande sera dorénavant %{name} si vous ajoutez ce produit à votre panier."
   products_cart_distributor_is: "Votre distributeur pour cette commande est %{name}."
@@ -1696,23 +1719,59 @@ fr_BE:
   choose_password: "Choisissez un mot de passe"
   confirm_password: "Confirmez votre mot de passe"
   action_signup: "S'inscrire"
-  welcome_to_ofn: "Bienvenue sur Open Food Network!"
-  signup_or_login: "Commencez par vous inscrire (ou connexion)"
-  have_an_account: "Déjà inscrit?"
-  action_login: "Se connecter."
   forgot_password: "Mot de passe oublié?"
   password_reset_sent: "Un email contenant les instructions pour changer votre mot de passe a été envoyé!"
   reset_password: "Changer de mot de passe"
-  who_is_managing_enterprise: "Qui gère %{enterprise}?"
   update_and_recalculate_fees: "Mettre à jour et recalculer les frais"
   registration:
     steps:
-      images:
-        continue: "Suivant"
-        back: "Retour"
-        headline: "Merci!"
-        description: "Ajoutez maintenant de jolies photos pour que votre profil soit attractif! :)"
+      introduction:
+        registration_greeting: "Bonjour!"
+        registration_intro: "Vous pouvez maintenant créer votre profil \"Producteur\" ou \"Comptoir\""
+        registration_checklist: "Vous aurez besoin de"
+        registration_time: "5-10 minutes"
+        registration_enterprise_address: "L'adresse de l'entreprise"
+        registration_contact_details: "Les détails du contact référent"
+        registration_logo: "Votre logo"
+        registration_promo_image: "Une image bannière pour votre profil"
+        registration_about_us: "Un texte \"A propos\""
+        registration_outcome_headline: "Qu'est-ce que ça m'apporte?"
+        registration_outcome1_html: "Votre profil permet aux gens de vous <strong>trouver</strong> et de vous <strong>contacter</strong> via Open Food Network."
+        registration_outcome2: "Mettez à profit cet espace pour raconter l'histoire de votre entreprise, pour vous aider à gérer votre présence en ligne et sur les réseaux sociaux. "
+        registration_outcome3: "C'est aussi le premier pas vers la vente via Open Food Network, ou l'ouverture de votre boutique en ligne."
+        registration_action: "Démarrons!"
+      details:
+        title: "Informations"
+        headline: "Commençons"
+        producer: "Woohoo! Dites-nous déjà quelques mots à propos de votre ferme:"
+        enterprise_name_field: "Nom de l'entreprise :"
+        producer_name_field: "Nom de la ferme:"
+        producer_name_field_placeholder: "ex: La super ferme de Charlie"
+        producer_name_field_error: "Veuillez choisir le nom de votre entreprise"
+        address1_field: "Adresse ligne 1"
+        address1_field_placeholder: "ex: 123 rue des étangs"
+        address1_field_error: "Veuillez saisir une adresse"
+        address2_field: "Adresse ligne 2"
+        suburb_field: "Ville:"
+        suburb_field_placeholder: "ex : Nantes"
+        suburb_field_error: "Veuillez saisir une ville"
+        postcode_field: "Code postal:"
+        postcode_field_placeholder: "ex: 44000"
+        postcode_field_error: "Veuillez saisir le code postal"
+        state_field: "Département:"
+        state_field_error: "Veuillez saisir un Département"
+        country_field: "Pays:"
+        country_field_error: "Veuillez saisir une Pays"
+      contact:
+        title: "Contact"
+        who_is_managing_enterprise: "Qui gère %{enterprise}?"
+        contact_field: "Personne référente"
+        contact_field_placeholder: "Nom du contact principal"
+        contact_field_required: "Vous devez saisir une personne référente"
+        phone_field: "Numéro de téléphone"
+        phone_field_placeholder: "ex : 06 24 53 26 53"
       type:
+        title: "Catégorie"
         headline: "Dernière étape pour ajouter %{enterprise} !"
         question: "Etes-vous un producteur ?"
         yes_producer: "Oui, je suis un producteur"
@@ -1721,152 +1780,73 @@ fr_BE:
         yes_producer_help: "Un producteur fabrique de bonnes choses à boire et à manger. Vous êtes un producteur si vous les faites pousser, les élevez, les pétrissez, transformez, fermentez, les réduisez en grains, etc."
         no_producer_help: "Si vous n'êtes pas un producteur, vous êtes probablement un revendeur ou distributeur alimentaire : un comptoir, une coopérative, un groupement d'achat, un revendeur, un grossiste, ou autre."
         create_profile: "Créer votre profil"
-  enterprise:
-    registration:
-      modal:
-        steps:
-          details:
-            title: 'Détails'
-            headline: "Commençons !"
-            enterprise: "Hey ! Nous avons d'abord besoin de quelques informations sur votre entreprise :"
-            producer: "Hey ! Nous avons d'abord besoin de quelques informations sur votre ferme :"
-            enterprise_name_field: "Nom de l'entreprise :"
-            producer_name_field: "Nom de la ferme :"
-            producer_name_field_placeholder: "ex: La Ferme du Marais"
-            producer_name_field_error: "Veuillez choisir le nom de votre entreprise"
-            address1_field: "Adresse ligne 1"
-            address1_field_placeholder: "ex : 35 rue du bac"
-            address1_field_error: "Veuillez saisir une adresse"
-            address2_field: "Adresse ligne 2"
-            suburb_field: "Ville :"
-            suburb_field_placeholder: "ex : Nantes"
-            suburb_field_error: "Veuillez saisir une ville"
-            postcode_field: "Code postal :"
-            postcode_field_placeholder: "ex : 44000"
-            postcode_field_error: "Veuillez saisir le code postal"
-            state_field: "Département :"
-            state_field_error: "Veuillez saisir un Département"
-            country_field: "Pays :"
-            country_field_error: "Veuillez saisir une Pays"
-          contact:
-            title: 'Contact'
-            contact_field: 'Personne référente'
-            contact_field_placeholder: 'Nom du contact principal'
-            contact_field_required: "Vous devez saisir une personne référente"
-            email_field: 'Adresse email'
-            email_field_placeholder: 'ex : robert@mabelleferme.fr'
-            phone_field: 'Numéro de téléphone'
-            phone_field_placeholder: 'ex : 06 24 53 26 53'
-          type:
-            title: 'Catégorie'
-          about:
-            title: 'A propos'
-          images:
-            title: 'Images'
-          social:
-            title: 'Réseaux sociaux'
-  enterprise_contact: "Personne référente"
-  enterprise_contact_placeholder: "Nom du contact principal"
-  enterprise_contact_required: "Vous devez saisir une personne référente"
-  enterprise_email_address: "Adresse email"
-  enterprise_email_placeholder: "ex : robert@mabelleferme.fr"
-  enterprise_phone: "Numéro de téléphone"
-  enterprise_phone_placeholder: "ex : 06 24 53 26 53"
+      about:
+        title: "A propos"
+        headline: "Bien joué!"
+        message: "A présent, allons un peu plus dans les détails concernant"
+        success: "Bravo %{enterprise}est ajoutée sur Open Food Network"
+        registration_exit_message: "Si vous quittez ce module, vous pourrez continuer la création de votre profil via l'interface d'administration."
+        enterprise_description: "Description courte"
+        enterprise_description_placeholder: "Une phrase pour décrire votre organisation"
+        enterprise_long_desc: "Description longue"
+        enterprise_long_desc_placeholder: "Vous pouvez ici raconter l'histoire de votre organisation - votre projet, les valeurs que vous défendez. Nous vous conseillons de ne pas dépasser 600 caractères ou 150 mots."
+        enterprise_long_desc_length: "%{num} caractères / inférieur à 600 recommandé"
+        enterprise_abn: "SIRET"
+        enterprise_abn_placeholder: "ex: 404 833 048 00022"
+        enterprise_acn: "n° TVA intracommunautaire"
+        enterprise_acn_placeholder: "ex: 404 833 048"
+        enterprise_tax_required: "Merci de choisir."
+      images:
+        title: "Images"
+        headline: "Merci!"
+        description: "Ajoutez maintenant de jolies photos pour que votre profil soit attractif! :)"
+        uploading: "Upload en cours..."
+        continue: "Suivant"
+        back: "Retour"
+      logo:
+        select_logo: "Etape 1. Insérez votre logo"
+        logo_tip: "Conseil: utilisez un format d'image carré de préférence, min 300×300px"
+        logo_label: "Insérez votre logo"
+        logo_drag: "Glissez déplacez votre logo ici"
+        review_logo: "Etape 2: Validez votre logo"
+        review_logo_tip: "Conseil: pour un résultat optimal, votre logo doit être adapté à l'espace disponible"
+        logo_placeholder: "Votre logo apparaîtra ici pour validation une fois uploadé"
+      promo:
+        select_promo_image: "Etape 3. Sélectionnez une image promotionnelle"
+        promo_image_tip: "Conseil: affichée en format bannière, taille optimale 1200×260px"
+        promo_image_label: "Choisissez une image promotionnelle"
+        promo_image_drag: "Glissez déplacez votre image promotionnelle ici"
+        review_promo_image: "Etape 4. Validez votre bannière promotionnelle"
+        review_promo_image_tip: "Conseil: pour un résultat optimal, votre image promotionnelle doit être adaptée à l'espace disponible"
+        promo_image_placeholder: "Votre logo apparaîtra ici pour validation une fois uploadé"
+      social:
+        title: "Réseaux sociaux"
+        enterprise_final_step: "Dernière étape!"
+        enterprise_social_text: "Comment trouver la boutique en ligne %{enterprise} ?"
+        website: "Site internet"
+        website_placeholder: "ex: openfoodnetwork.be"
+        facebook: "Facebook"
+        facebook_placeholder: "ex: www.facebook.com/NomDeLaPage"
+        linkedin: "LinkedIn"
+        linkedin_placeholder: "ex: www.linkedin.com/VotreNom"
+        twitter: "Twitter"
+        twitter_placeholder: "ex: @twitter_pseudo"
+        instagram: "Instagram"
+        instagram_placeholder: "ex: @instagram_pseudo"
+      limit_reached:
+        headline: "Oh non!"
+        message: "Vous avez atteint la limite!"
+        text: "Vous avez atteint la limite du nombre d'entreprises que vous êtes autorisés à gérer sur"
+        action: "Retour sur la page d'accueil"
+      finished:
+        headline: "C'est terminé!"
+        thanks: "Merci d'avoir complété le profil de %{enterprise}"
+        login: "Vous pouvez modifier ou mettre à jour les détails de votre entreprise à tout moment en vous connectant sur Open Food Network, rubrique Admin."
+        action: "Accueil Open Food Network"
   back: "Retour"
   continue: "Suivant"
-  limit_reached_headline: "Oh non!"
-  limit_reached_message: "Vous avez atteint la limite!"
-  limit_reached_text: "Vous avez atteint la limite du nombre d'entreprises que vous êtes autorisés à gérer sur"
-  limit_reached_action: "Retour sur la page d'accueil"
-  select_promo_image: "Etape 3. Sélectionnez une image promotionnelle"
-  promo_image_tip: "Conseil: affichée en format bannière, taille optimale 1200×260px"
-  promo_image_label: "Choisissez une image promotionnelle"
   action_or: "OU"
-  promo_image_drag: "Glissez déplacez votre image promotionnelle ici"
-  review_promo_image: "Etape 4. Validez votre bannière promotionnelle"
-  review_promo_image_tip: "Conseil: pour un résultat optimal, votre image promotionnelle doit être adaptée à l'espace disponible"
-  promo_image_placeholder: "Votre logo apparaîtra ici pour validation une fois uploadé"
-  uploading: "Upload en cours..."
-  select_logo: "Etape 1. Insérez votre logo"
-  logo_tip: "Conseil: utilisez un format d'image carré de préférence, min 300×300px"
-  logo_label: "Insérez votre logo"
-  logo_drag: "Glissez déplacez votre logo ici"
-  review_logo: "Etape 2: Validez votre logo"
-  review_logo_tip: "Conseil: pour un résultat optimal, votre logo doit être adapté à l'espace disponible"
-  logo_placeholder: "Votre logo apparaîtra ici pour validation une fois uploadé"
-  enterprise_about_headline: "Bien joué!"
-  enterprise_about_message: "A présent, allons un peu plus dans les détails concernant"
-  enterprise_success: "Opération réussie ! %{enterprise} a été ajoutée à Open Food Network"
-  enterprise_registration_exit_message: "Si vous quittez ce module, vous pourrez continuer la création de votre profil via l'interface d'administration."
-  enterprise_description: "Description courte"
-  enterprise_description_placeholder: "Une phrase pour décrire votre organisation"
-  enterprise_long_desc: "Description longue"
-  enterprise_long_desc_placeholder: "Vous pouvez ici raconter l'histoire de votre organisation - votre projet, les valeurs que vous défendez. Nous vous conseillons de ne pas dépasser 600 caractères ou 150 mots."
-  enterprise_long_desc_length: "%{num} caractères / inférieur à 600 recommandé"
-  enterprise_abn: "SIRET"
-  enterprise_abn_placeholder: "ex: 404 833 048 00022"
-  enterprise_acn: "n° TVA intracommunautaire"
-  enterprise_acn_placeholder: "ex: 404 833 048"
-  enterprise_tax_required: "Merci de choisir."
-  enterprise_final_step: "Dernière étape!"
-  enterprise_social_text: "Comment trouver la boutique en ligne %{enterprise} ?"
-  website: "Site internet"
-  website_placeholder: "ex: openfoodnetwork.be"
-  facebook: "Facebook"
-  facebook_placeholder: "ex: www.facebook.com/NomDeLaPage"
-  linkedin: "LinkedIn"
-  linkedin_placeholder: "ex: www.linkedin.com/VotreNom"
-  twitter: "Twitter"
-  twitter_placeholder: "ex: @twitter_pseudo"
-  instagram: "Instagram"
-  instagram_placeholder: "ex: @instagram_pseudo"
-  registration_greeting: "Bonjour!"
-  registration_intro: "Vous pouvez maintenant créer votre profil \"Producteur\" ou \"Comptoir\""
-  registration_action: "Démarrons!"
-  registration_checklist: "Vous aurez besoin de"
-  registration_time: "5-10 minutes"
-  registration_enterprise_address: "L'adresse de l'entreprise"
-  registration_contact_details: "Les détails du contact référent"
-  registration_logo: "Votre logo"
-  registration_promo_image: "Une image bannière pour votre profil"
-  registration_about_us: "Un texte \"A propos\""
-  registration_outcome_headline: "Qu'est-ce que ça m'apporte?"
-  registration_outcome1_html: "Votre profil permet aux gens de vous <strong>trouver</strong> et de vous <strong>contacter</strong> via Open Food Network."
-  registration_outcome2: "Utilisez cet espace pour raconter l'histoire de votre entreprise, et stimuler les visites vers vos points de présence en ligne."
-  registration_outcome3: "C'est aussi le premier pas vers la vente via Open Food Network, ou l'ouverture de votre boutique en ligne."
-  registration_finished_headline: "C'est terminé!"
-  registration_finished_thanks: "Merci d'avoir complété le profil de %{enterprise}"
-  registration_finished_login: "Vous pouvez modifier ou mettre à jour les détails de votre entreprise à tout moment en vous connectant sur Open Food Network, rubrique Admin."
-  registration_finished_action: "Accueil Open Food Network"
-  registration_contact_name: 'Nom du contact principal'
-  registration_type_headline: "Dernière étape pour ajouter %{enterprise}!"
-  registration_type_question: "Etes-vous un producteur?"
-  registration_type_producer: "Oui, je suis un producteur"
-  registration_type_no_producer: "Non, je ne suis pas un producteur"
-  registration_type_error: "Veuillez faire un choix. Etes vous un producteur?"
-  registration_type_producer_help: "Un producteur fabrique de bonnes choses à boire et à manger. Vous êtes un producteur si vous les faites pousser, les élevez, les pétrissez, transformez, fermentez, les réduisez en grains, etc."
-  registration_type_no_producer_help: "Si vous n'êtes pas un producteur, vous êtes probablement un revendeur ou distributeur alimentaire: un comptoir, une coopérative, un groupement d'achat, un revendeur, un grossiste, ou autre."
-  registration_detail_headline: "Commençons"
-  registration_detail_enterprise: "Woohoo! Dites-nous déjà quelques mots à propos de votre entreprise:"
-  registration_detail_producer: "Woohoo! Dites-nous déjà quelques mots à propos de votre ferme:"
-  registration_detail_name_enterprise: "Nom de l'entreprise:"
-  registration_detail_name_producer: "Nom de la ferme:"
-  registration_detail_name_placeholder: "ex: La super ferme de Charlie"
-  registration_detail_name_error: "Veuillez choisir le nom de votre entreprise"
-  registration_detail_address1: "Adresse ligne 1"
-  registration_detail_address1_placeholder: "ex: 123 rue des étangs"
-  registration_detail_address1_error: "Veuillez saisir une adresse"
-  registration_detail_address2: "Adresse ligne 2"
-  registration_detail_suburb: "Ville:"
-  registration_detail_suburb_placeholder: "ex: Vendée"
-  registration_detail_suburb_error: "Veuillez saisir une ville"
-  registration_detail_postcode: "Code postal:"
-  registration_detail_postcode_placeholder: "ex: 44000"
-  registration_detail_postcode_error: "Veuillez saisir le code postal"
-  registration_detail_state: "Département:"
-  registration_detail_state_error: "Veuillez saisir un Département"
-  registration_detail_country: "Pays:"
-  registration_detail_country_error: "Veuillez saisir une Pays"
+  enterprise_limit: Nombre max d'entreprises
   shipping_method_destroy_error: "Cette méthode de livraison ne peut pas être supprimée car elle est référencée dans une commande : %{number}."
   accounts_and_billing_task_already_running_error: "Une autre tache est en cours, merci de patienter un instant..."
   accounts_and_billing_start_task_notice: "Tache mise en file d'attente"
@@ -1900,6 +1880,10 @@ fr_BE:
   ok: OK
   not_visible: invisible
   you_have_no_orders_yet: "Vous n'avez pas encore de commande"
+  show_only_complete_orders: "Montrer uniquement les commandes complètes "
+  successfully_created: '%{resource}est crée avec succès! '
+  successfully_removed: '%{resource}est été supprimé avec succès! '
+  successfully_updated: '%{resource}a été enregistrée avec succès'
   running_balance: "Solde courant"
   outstanding_balance: "Solde restant"
   admin_enterprise_relationships: "Permissions Inter-entreprises"
@@ -1987,7 +1971,6 @@ fr_BE:
   spree_admin_enterprises_none_text: "Vous n'avez pas encore d'entreprise"
   spree_admin_enterprises_tabs_hubs: "COMPTOIRS"
   spree_admin_enterprises_producers_manage_products: "GÉRER LES PRODUITS"
-  spree_admin_enterprises_any_active_products_text: "Vous n'avez aucun produit actif."
   spree_admin_enterprises_create_new_product: "CRÉER UN NOUVEAU PRODUIT"
   spree_admin_single_enterprise_alert_mail_confirmation: "Veuillez confirmer l'adresse mail pour"
   spree_admin_single_enterprise_alert_mail_sent: "Email envoyé à "
@@ -2028,6 +2011,8 @@ fr_BE:
   order_cycles: "Cycles de Vente"
   enterprise_relationships: "Permissions inter-entreprises"
   remove_tax: "Retirer TVA"
+  first_name_begins_with: "Début du prénom"
+  last_name_begins_with: "Début du nom de famille"
   enterprise_tos_link: "Lien vers les Conditions Générales d'Utilisation"
   enterprise_tos_message: "Nous soutenons la mise en place d'un système alimentaire résilient et durable, et souhaitons œuvrer avec des entreprises qui partagent nos valeurs et notre vision. Ainsi, nous demandons aux entreprises s'enregistrant sur Open Food France de valider nos "
   enterprise_tos_link_text: "Conditions d'utilisation"
@@ -2234,6 +2219,8 @@ fr_BE:
   shipping_methods: "Méthodes de livraison"
   payment_methods: "Méthodes de paiement"
   payment_method_fee: "Frais de transaction"
+  payment_processing_failed: "Le paiement n' a pu être effectué , merci de vérifier les données rentrées"
+  payment_updated: "Paiement mis à jour "
   inventory_settings: "Catalogue boutique"
   tag_rules: "Règles de tag"
   shop_preferences: "Préférences comptoir"
@@ -2443,11 +2430,49 @@ fr_BE:
       orders:
         index:
           per_page: "%{results} par page"
+          view_file: "Voir fichier"
+          compiling_invoices: "Compile les factures"
+          bulk_invoice_created: "Factures créées"
+          bulk_invoice_failed: "La création des factures a échoué"
+          please_wait: "Veuillez attendre que le PDF soit disponible avant de fermé ce dialogue."
+        order_state:
+          address: "adresse"
+          adjustments: "ajustements"
+          awaiting_return: "attente du retour"
+          canceled: "annulé"
+          cart: "panier"
+          complete: "terminer"
+          confirm: "confirmer"
+          delivery: "livraison"
+          paused: "mis en pause"
+          payment: "paiement"
+          pending: "en attente"
+          resumed: "recommencé"
+          returned: "retourné"
+          skrill: "cash"
+        shipment_states:
+          backorder: "réapprovisionnement"
+          partial: "partiel"
+          pending: "en attente"
+          ready: "prêt"
+          shipped: "envoyé"
+        payment_states:
+          balance_due: "solde dû"
+          completed: "effectué"
+          checkout: "passer commande"
+          credit_owed: "crédit acheteur"
+          failed: "échec"
+          paid: "payé"
+          pending: "en attente"
+          processing: "en traitement"
+          void: "faire un avoir"
+          invalid: "invalide"
       resend_user_email_confirmation:
         resend: "Renvoyer"
         sending: "Renvoi...."
         done: "Renvoi effectué ✓"
         failed: "Renvoi échoué ✗"
+    insufficient_stock: "Stock disponible insuffisant , il ne reste que %{on_hand}"
     out_of_stock:
       reduced_stock_available: Stock disponible
       out_of_stock_text: >
@@ -2512,20 +2537,134 @@ fr_BE:
       closes: fermer
       closed: fermé
       close_date_not_set: Date de fin non renseignée
+    spree:
+      users:
+        order: "Commandes à venir"
+    registration:
+      welcome_to_ofn: "Bienvenue sur Open Food Network!"
+      signup_or_login: "Commencez par vous inscrire (ou connexion)"
+      have_an_account: "Déjà inscrit?"
+      action_login: "Se connecter."
   producers:
     signup:
       start_free_profile: "Commencez par créer votre profil entreprise, et changez de formule quand vous êtes prêt !"
+  order_management:
+    reports:
+      enterprise_fee_summary:
+        fee_calculated_on_transfer_through_all: "Tous"
+        fee_calculated_on_transfer_through_entire_orders: "Commandes complétées par %{distributor}"
+        fee_type:
+          payment_method: "Transaction de paiement"
+          shipping_method: "Envoi"
+        fee_placements:
+          supplier: "Produits entrants (pouvant être mis en vente par les hubs)"
+          distributor: "Produits sortants (mis en vente par/via un ou plusieurs hubs)"
+          coordinator: "Coordinateur"
+        formats:
+          csv:
+            header:
+              fee_type: "Type de marge"
+              enterprise_name: "Bedrijfsbeheerder"
+              customer_name: "Acheteur"
+              tax_category_name: "TVA applicable"
+          html:
+            header:
+              fee_type: "Type de marge"
+              enterprise_name: "Bedrijfsbeheerder"
+              customer_name: "Acheteur"
+              tax_category_name: "TVA applicable"
+  order: "Commandes à venir"
+  distribution: "Distribution"
+  payments: "Paiements"
+  payment: "Paiement"
+  payment_method: "Méthode de paiement"
+  shipment: "Verzending"
+  category: "Catégorie"
+  delivery: "Livraison"
+  new_product: "Nouveau Produit"
+  administration: "Administration"
+  account: "Compte"
+  logout: "Déconnexion"
+  status: "statut"
+  new: "Nouveau"
+  start: "Début"
+  first: "Début"
+  previous: "Précédent"
+  last: "Fin"
   spree:
+    your_order_is_empty_add_product: "Votre commande est vide, merci de chercher et d'ajouter un des produits ci-dessus"
+    add_product: "Ajoutez un produit"
+    resend: Renvoyer
+    quantity: "Nb commandé"
+    price: "Prix"
+    total: "Total"
+    edit: "Modifier"
+    delete: "Supprimer"
+    order_total: "Total commande "
+    account: "Compte"
+    billing_address: "Adresse de facturation"
+    shipping_address: "Adresse de livraison"
+    first_name: "Prénom"
+    last_name: "Nom de famille"
+    city: "Ville"
+    country: "Pays"
+    state: "Province"
+    phone: "Téléphone"
+    update: "Mettre à jour"
+    continue: "Suivant"
+    new_payment: "Nouveau paiement"
+    general_settings: "Réglages Généraux"
+    send_copy_of_all_mails_to: "Envoyez une copie de tous les mails à "
+    tax_categories: "TVA applicable"
+    tax rate: "Par taux de taxe"
+    tax_category: "TVA applicable"
+    included_in_price: "Inclus dans le prix "
+    tax_settings: "Paramètres TVA"
+    payment_methods: "Méthodes de paiement"
+    new_payment_method: "Nouvelle méthode de paiement"
+    shipping_methods: "Méthodes de livraison"
+    shipping_categories: "Condition de transport"
+    add_one: "Ajoutez un"
+    name: "Nom"
+    description: "Description"
+    type: "Catégorie"
+    calculator: "Calculateur"
+    nore: "Plus"
+    create: "Créer"
+    loading: "Chargement en cours"
     email: Email
     account_updated: "Compte mis à jour!"
     my_account: "Mon compte"
     date: "Date"
     time: "Heure"
+    inventory: Catalogue boutique
+    zipcode: Code postal
+    weight: Poids (au kg)
+    actions:
+      update: "Mettre à jour"
+    errors:
+      messages:
+        blank: "Champ obligatoire"
     layouts:
       admin:
         header:
           store: Vue acheteur
     admin:
+      tab:
+        dashboard: "Tableau de bord"
+        orders: "Commandes"
+        bulk_order_management: "Gestion des commandes"
+        subscriptions: "Abonnements"
+        products: "Produits"
+        properties: "Labels / propriétés"
+        variant_overrides: "Catalogue du magasin"
+        reports: "Rapports"
+        users: "Managers"
+        roles: "Roles"
+        order_cycles: "Cycles de vente"
+        enterprises: "Entreprises"
+        customers: "Acheteurs"
+        groups: "Groupes"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Hériter des propriétés de %{supplier} ? (non applicable si information de remplacement déjà saisie)"
@@ -2545,18 +2684,31 @@ fr_BE:
           no_orders_found: "Aucune commande trouvée pour ces critères"
           results_found: "%{number} résultats trouvés"
           viewing: "Résultats %{start} à %{end} affichés."
+          print_invoices: "Imprimer les factures"
+        sortable_header:
+          payment_state: "Statut du Paiement"
+          shipment_state: "Statut livraison"
+          completed_at: "Date"
+          number: "N° commande"
+          state: "Province"
+          email: "Adresse électronique acheteur"
         invoice:
-          issued_on: Editée le
-          tax_invoice: FACTURE
-          code: Code
-          from: De
-          to: A
+          issued_on: "Editée le"
+          tax_invoice: "FACTURE"
+          code: "Code"
+          from: "De"
+          to: "A"
         form:
           distribution_fields:
-            title: Distribution
+            title: "Distribution"
             distributor: "Distributeur : "
             order_cycle: "Cycle de vente : "
       overview:
+        products:
+          active_products:
+            zero: "Vous n'avez aucun produit actif."
+            one: "U heeft één aktieve product"
+            other: "Vous avez %{count}des produits actifs"
         order_cycles:
           order_cycles: "Cycles de vente"
           order_cycles_tip: "Les cycles de vente définissent quand et où vos produits peuvent être commandés par vos acheteurs."
@@ -2566,6 +2718,12 @@ fr_BE:
             other: "Vous avez %{count} cycles de vente actifs."
           manage_order_cycles: "GERER LES CYCLES DE VENTE"
       payment_methods:
+        new:
+          new_payment_method: "Nouvelle méthode de paiement"
+          back_to_payment_methods_list: "Retour à la liste des paiements"
+        edit:
+          editing_payment_method: "Modification des méthodes de paiement en cours"
+          back_to_payment_methods_list: "Retour à la liste des paiements"
         stripe_connect:
           enterprise_select_placeholder: Choisir...
           loading_account_information_msg: Informations de compte en cours de chargement depuis Stripe, veuillez patienter...
@@ -2617,11 +2775,16 @@ fr_BE:
         display_as:
           display_as: Unité affichéé
       reports:
+        table:
+          select_and_search: "Sélectionnez les filtres et cliquez sur %{option} pour accéder à vos données."
         bulk_coop:
           bulk_coop_supplier_report: 'Achats groupés - Totaux par Producteur'
           bulk_coop_allocation: 'Achats groupés - Allocation'
           bulk_coop_packing_sheets: 'Achats groupés - Feuilles de préparation des paniers'
           bulk_coop_customer_payments: 'Achats groupés - Paiement des acheteurs'
+        enterprise_fee_summaries:
+          report:
+            none: "Aucun"
       users:
         index:
           listing_users: "Utilisateur d'annonces"
@@ -2665,12 +2828,30 @@ fr_BE:
     date_picker:
       format: '%Y-%m-%d'
       js_format: 'yy-mm-dd'
-    inventory: Catalogue boutique
     orders:
       edit:
         login_to_view_order: "Veuillez vous connecter pour voir votre commande."
       bought:
         item: "Déjà commandé dans ce cycle de vente"
+      line_item:
+        insufficient_stock: "Stock disponible insuffisant , il ne reste que %{on_hand}"
+    shipment_states:
+      backorder: réapprovisionnement
+      partial: partiel
+      pending: en attente
+      ready: prêt
+      shipped: envoyé
+    payment_states:
+      balance_due: solde dû
+      completed: effectué
+      checkout: passer commande
+      credit_owed: crédit acheteur
+      failed: échec
+      paid: payé
+      pending: en attente
+      processing: en traitement
+      void: faire un avoir
+      invalid: invalide
     order_mailer:
       invoice_email:
         hi: "Bonjour %{name}"
@@ -2696,23 +2877,6 @@ fr_BE:
       ended: terminé
       paused: mis en pause
       canceled: annulé
-    payment_states:
-      balance_due: solde dû
-      completed: effectué
-      checkout: passer commande
-      credit_owed: crédit acheteur
-      failed: échec
-      paid: payé
-      pending: en attente
-      processing: en traitement
-      void: faire un avoir
-      invalid: invalide
-    shipment_states:
-      backorder: réapprovisionnement
-      partial: partiel
-      pending: en attente
-      ready: prêt
-      shipped: envoyé
     user_mailer:
       reset_password_instructions:
         request_sent_text: |
@@ -2726,8 +2890,6 @@ fr_BE:
             Si le problème persiste, n'hésitez pas à nous contacter.
       confirmation_instructions:
         subject: Veuillez confirmer votre compte
-    weight: Poids (au kg)
-    zipcode: Code postal
     users:
       form:
         account_settings: Paramètres du Compte
