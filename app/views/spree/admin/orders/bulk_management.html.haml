@@ -49,7 +49,7 @@
 
   %hr.divider.sixteen.columns.alpha.omega{ ng: { show: 'unitsVariantSelected()' } }
 
-  %div.sixteen.columns.alpha.omega#group_buy_calculation{ ng: { show: 'unitsVariantSelected()' } }
+  %div.sixteen.columns.alpha.omega#group_buy_calculation{ ng: { show: 'unitsVariantSelected()', cloak: true } }
     %div.shared_resource{ :class => "four columns alpha" }
       %span{ :class => 'three columns alpha' }
         %input{ type: 'checkbox', :id => 'shared_resource', 'ng-model' => 'sharedResource'}
@@ -106,11 +106,11 @@
     %h1
       = t("admin.orders.bulk_management.loading")
 
-  %div{ :class => "sixteen columns alpha", 'ng-show' => '!RequestMonitor.loading && filteredLineItems.length == 0'}
+  %div{ class: "sixteen columns alpha", ng: {show: '!RequestMonitor.loading && filteredLineItems.length == 0', cloak: true}}
     %h1#no_results
       = t("admin.orders.bulk_management.no_results")
 
-  .margin-bottom-50{ 'ng-hide' => 'RequestMonitor.loading || filteredLineItems.length == 0' }
+  .margin-bottom-50{ ng: {hide: 'RequestMonitor.loading || filteredLineItems.length == 0', cloak: true } }
     %form{ name: 'bulk_order_form' }
       %table.index#listing_orders.bulk{ :class => "sixteen columns alpha", ng: { show: "initialized" } }
         %thead
@@ -157,7 +157,7 @@
               = t("admin.orders.bulk_management.ask")
               %input{ :type => 'checkbox', 'ng-model' => "confirmDelete" }
 
-        %tr.line_item{ 'ng-repeat' => "line_item in filteredLineItems = ( lineItems | filter:quickSearch | selectFilter:supplierFilter:distributorFilter:orderCycleFilter | variantFilter:selectedUnitsProduct:selectedUnitsVariant:sharedResource | orderBy:sorting.predicate:sorting.reverse )", 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", ng: { attr: { id: "li_{{line_item.id}}" } } }
+        %tr.line_item{ ng: {repeat: "line_item in filteredLineItems = ( lineItems | filter:quickSearch | selectFilter:supplierFilter:distributorFilter:orderCycleFilter | variantFilter:selectedUnitsProduct:selectedUnitsVariant:sharedResource | orderBy:sorting.predicate:sorting.reverse )", 'class-even' => "'even'", 'class-odd' => "'odd'", attr: { id: "li_{{line_item.id}}" } } }
           %td.bulk
             %input{ :type => "checkbox", :name => 'bulk', 'ng-model' => 'line_item.checked', 'ignore-dirty' => true }
           %td.order_no{ 'ng-show' => 'columns.order_no.visible' } {{ line_item.order.number }}
