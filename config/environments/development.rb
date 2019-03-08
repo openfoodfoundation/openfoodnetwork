@@ -7,6 +7,9 @@ Openfoodnetwork::Application.configure do
   config.cache_classes = false
   config.cache_store = :memory_store
 
+  # Enable cache instrumentation, which is disabled by default
+  ActiveSupport::Cache::Store.instrument = true
+
   # Log error messages when you accidentally call methods on nil.
   config.whiny_nils = true
 
