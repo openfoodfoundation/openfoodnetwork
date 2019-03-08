@@ -45,11 +45,9 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
       RequestMonitor.load $scope.orderCycles = OrderCycles.index(ams_prefix: "basic", as: "distributor", "q[orders_close_at_gt]": "#{moment().subtract(90,'days').format()}")
       RequestMonitor.load $scope.suppliers = Enterprises.index(action: "visible", ams_prefix: "basic", "q[is_primary_producer_eq]": "true")
 
-    RequestMonitor.load $q.all([$scope.orders.$promise, $scope.distributors.$promise, $scope.orderCycles.$promise]).then ->
+    RequestMonitor.load $q.all([$scope.orders.$promise, $scope.distributors.$promise, $scope.orderCycles.$promise, $scope.suppliers.$promise, $scope.lineItems.$promise]).then ->
       Dereferencer.dereferenceAttr $scope.orders, "distributor", Enterprises.byID
       Dereferencer.dereferenceAttr $scope.orders, "order_cycle", OrderCycles.byID
-
-    RequestMonitor.load $q.all([$scope.orders.$promise, $scope.suppliers.$promise, $scope.lineItems.$promise]).then ->
       Dereferencer.dereferenceAttr $scope.lineItems, "supplier", Enterprises.byID
       Dereferencer.dereferenceAttr $scope.lineItems, "order", Orders.byID
       $scope.bulk_order_form.$setPristine()
