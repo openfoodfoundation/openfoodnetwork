@@ -746,7 +746,7 @@ feature %q{
 
   def visit_bulk_order_management
     visit spree.admin_bulk_order_management_path
-    wait_until { request_monitor_finished 'LineItemsCtrl' }
+    expect(page).to have_no_text 'Loading orders'
   end
 
   def select_date(date)
