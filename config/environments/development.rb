@@ -5,7 +5,9 @@ Openfoodnetwork::Application.configure do
   # every request.  This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
-  config.cache_store = :memory_store
+
+  # :file_store is used by default when no cache store is specifically configured.
+  # config.cache_store = :file_store
 
   # Enable cache instrumentation, which is disabled by default
   ActiveSupport::Cache::Store.instrument = true
