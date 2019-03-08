@@ -14,7 +14,7 @@ feature %q{
     end
 
     it "displays a message when number of line items is zero" do
-      visit '/admin/orders/bulk_management'
+      visit_bulk_order_management
       expect(page).to have_text 'No orders found.'
     end
 
@@ -27,7 +27,7 @@ feature %q{
       let!(:li3) { create(:line_item, order: o3 ) }
 
       before :each do
-        visit '/admin/orders/bulk_management'
+        visit_bulk_order_management
       end
 
       it "displays a list of line items" do
@@ -44,8 +44,7 @@ feature %q{
       let!(:li2) { create(:line_item, order: o2, product: create(:product_with_option_types) ) }
 
       before :each do
-        visit '/admin/orders/bulk_management'
-        wait_until { request_monitor_finished 'LineItemsCtrl' }
+        visit_bulk_order_management
       end
 
       it "displays a column for user's full name" do
@@ -92,8 +91,7 @@ feature %q{
       let!(:li2) { create(:line_item, order: o2) }
 
       before do
-        visit spree.admin_bulk_order_management_path
-        wait_until { request_monitor_finished 'LineItemsCtrl' }
+        visit_bulk_order_management
       end
 
       it "sorts by customer name when the customer name header is clicked" do
@@ -131,7 +129,7 @@ feature %q{
       let!(:li1) { create(:line_item, order: o1, :quantity => 5 ) }
 
       before :each do
-        visit '/admin/orders/bulk_management'
+        visit_bulk_order_management
       end
 
       it "adds the class 'ng-dirty' to input elements when value is altered" do
@@ -147,7 +145,7 @@ feature %q{
 
       before :each do
         li1.variant.update_attributes(on_hand: 1, on_demand: false)
-        visit '/admin/orders/bulk_management'
+        visit_bulk_order_management
       end
 
       context "when acceptable data is sent to the server" do
@@ -191,7 +189,7 @@ feature %q{
 
     context "modifying the weight/volume of a line item" do
       it "price is altered" do
-        visit '/admin/orders/bulk_management'
+        visit_bulk_order_management
         toggle_columns "Weight/Volume", "Price"
         within "tr#li_#{li1.id}" do
           expect(page).to have_field "price", with: "50.00"
@@ -208,7 +206,7 @@ feature %q{
 
     context "modifying the quantity of a line item" do
       it "price is altered" do
-        visit '/admin/orders/bulk_management'
+        visit_bulk_order_management
         toggle_columns "Price"
         within "tr#li_#{li1.id}" do
           expect(page).to have_field "price", with: "#{format("%.2f",li1.price * 5)}"
@@ -220,7 +218,7 @@ feature %q{
 
     context "modifying the quantity of a line item" do
       it "weight/volume is altered" do
-        visit '/admin/orders/bulk_management'
+        visit_bulk_order_management
         toggle_columns "Weight/Volume"
         within "tr#li_#{li1.id}" do
           expect(page).to have_field "final_weight_volume", with: "#{li1.final_weight_volume.round}"
@@ -232,7 +230,7 @@ feature %q{
 
     context "using column display toggle" do
       it "shows a column display toggle button, which shows a list of columns when clicked" do
-        visit '/admin/orders/bulk_management'
+        visit_bulk_order_management
 
         expect(page).to have_selector "th", :text => "NAME"
         expect(page).to have_selector "th", text: I18n.t("admin.orders.bulk_management.order_date").upcase
@@ -261,8 +259,7 @@ feature %q{
         let!(:li2) { create(:line_item, order: o1, product: create(:product, supplier: s2) ) }
 
         before :each do
-          visit '/admin/orders/bulk_management'
-          wait_until { request_monitor_finished 'LineItemsCtrl' }
+          visit_bulk_order_management
         end
 
         it "displays a select box for producers, which filters line items by the selected supplier" do
@@ -300,8 +297,7 @@ feature %q{
         let!(:li2) { create(:line_item, order: o2 ) }
 
         before :each do
-          visit '/admin/orders/bulk_management'
-          wait_until { request_monitor_finished 'LineItemsCtrl' }
+          visit_bulk_order_management
         end
 
         it "displays a select box for distributors, which filters line items by the selected distributor" do
@@ -340,8 +336,7 @@ feature %q{
         let!(:li2) { create(:line_item, order: o2 ) }
 
         before do
-          visit '/admin/orders/bulk_management'
-          wait_until { request_monitor_finished 'LineItemsCtrl' }
+          visit_bulk_order_management
         end
 
         it "displays a select box for order cycles, which filters line items by the selected order cycle" do
@@ -381,8 +376,7 @@ feature %q{
         let!(:li2) { create(:line_item, order: o2, product: p2 ) }
 
         before :each do
-          visit '/admin/orders/bulk_management'
-          wait_until { request_monitor_finished 'LineItemsCtrl' }
+          visit_bulk_order_management
         end
 
         it "allows filters to be used in combination" do
@@ -432,8 +426,7 @@ feature %q{
       let!(:li3) { create(:line_item, order: o3 ) }
 
       before :each do
-        visit '/admin/orders/bulk_management'
-        wait_until { request_monitor_finished 'LineItemsCtrl' }
+        visit_bulk_order_management
       end
 
       it "displays a quick search input" do
@@ -462,8 +455,7 @@ feature %q{
       let!(:li4) { create(:line_item, order: o4, :quantity => 4 ) }
 
       before :each do
-        visit '/admin/orders/bulk_management'
-        wait_until { request_monitor_finished 'LineItemsCtrl' }
+        visit_bulk_order_management
       end
 
       it "displays date fields for filtering orders, with default values set" do
@@ -535,8 +527,7 @@ feature %q{
       let!(:li2) { create(:line_item, order: o2 ) }
 
       before :each do
-        visit '/admin/orders/bulk_management'
-        wait_until { request_monitor_finished 'LineItemsCtrl' }
+        visit_bulk_order_management
       end
 
       it "displays a checkbox for each line item in the list" do
@@ -608,7 +599,7 @@ feature %q{
         let!(:li2) { create(:line_item, order: o2 ) }
 
         before :each do
-          visit '/admin/orders/bulk_management'
+          visit_bulk_order_management
         end
 
         it "shows an edit button for line_items, which takes the user to the standard edit page for the order" do
@@ -642,7 +633,7 @@ feature %q{
         let!(:li2) { create(:line_item, order: o2 ) }
 
         before :each do
-          visit '/admin/orders/bulk_management'
+          visit_bulk_order_management
         end
 
         it "removes a line item when the relevant delete button is clicked" do
@@ -652,7 +643,7 @@ feature %q{
           end
           expect(page).to have_no_selector "a.delete-line-item", :count => 2
           expect(page).to have_selector "a.delete-line-item", :count => 1
-          visit '/admin/orders/bulk_management'
+          visit_bulk_order_management
           expect(page).to have_selector "a.delete-line-item", :count => 1
         end
       end
@@ -670,7 +661,7 @@ feature %q{
       let!(:li4) { create(:line_item, order: o2, variant: v3, quantity: 1, max_quantity: 3 ) }
 
       before :each do
-        visit '/admin/orders/bulk_management'
+        visit_bulk_order_management
         within "tr#li_#{li3.id}" do
           find("a", text: li3.product.name + ": " + li3.variant.options_text).click
         end
@@ -746,11 +737,16 @@ feature %q{
     end
 
     it "shows only line item from orders that I distribute, and not those that I supply" do
-      visit '/admin/orders/bulk_management'
+      visit_bulk_order_management
 
       expect(page).to have_selector "tr#li_#{line_item_distributed.id}", :visible => true
       expect(page).to have_no_selector "tr#li_#{line_item_not_distributed.id}", :visible => true
     end
+  end
+
+  def visit_bulk_order_management
+    visit spree.admin_bulk_order_management_path
+    wait_until { request_monitor_finished 'LineItemsCtrl' }
   end
 
   def select_date(date)
