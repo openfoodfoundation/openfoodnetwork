@@ -57,8 +57,6 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
         $timeout ->
           $scope.resetSelectFilters()
 
-  $scope.refreshData()
-
   $scope.$watch 'bulk_order_form.$dirty', (newVal, oldVal) ->
     if newVal == true
       StatusMessage.display 'notice', t('js.unsaved_changes')
@@ -152,3 +150,5 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     if lineItem.quantity > 0
       lineItem.final_weight_volume = LineItems.pristineByID[lineItem.id].final_weight_volume * lineItem.quantity / LineItems.pristineByID[lineItem.id].quantity
       $scope.weightAdjustedPrice(lineItem)
+
+  $scope.refreshData()
