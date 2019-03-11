@@ -9,9 +9,6 @@ Openfoodnetwork::Application.configure do
   # :file_store is used by default when no cache store is specifically configured.
   # config.cache_store = :file_store
 
-  # Enable cache instrumentation, which is disabled by default
-  ActiveSupport::Cache::Store.instrument = true
-
   # Log error messages when you accidentally call methods on nil.
   config.whiny_nils = true
 
@@ -45,4 +42,6 @@ Openfoodnetwork::Application.configure do
   # Show emails using Letter Opener
   config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.default_url_options = { host: "0.0.0.0:3000" }
+
+  config.log_level = :debug
 end
