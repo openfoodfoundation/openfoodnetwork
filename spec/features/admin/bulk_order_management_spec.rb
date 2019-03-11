@@ -315,10 +315,8 @@ feature %q{
         end
 
         it "displays all line items when 'All' is selected from distributor filter" do
-          expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
           select2_select d1.name, from: "distributor_filter"
-          expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_no_selector "tr#li_#{li2.id}"
           select2_select "All", from: "distributor_filter"
           expect(page).to have_selector "tr#li_#{li1.id}"
