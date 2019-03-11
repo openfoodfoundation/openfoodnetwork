@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe DistributedValidProducts do
+describe OrderCycleDistributedProducts do
   let(:order_cycle) { OrderCycle.new }
   let(:distributor) { instance_double(Enterprise) }
 

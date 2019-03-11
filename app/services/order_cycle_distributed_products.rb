@@ -4,7 +4,7 @@
 # variants are added to that product, but not the order cycle, then the master
 # variant should not available for customers to purchase. This class filters
 # out such products so that the customer cannot purchase them.
-class DistributedValidProducts
+class OrderCycleDistributedProducts
   def initialize(order_cycle, distributor)
     @order_cycle = order_cycle
     @distributor = distributor
