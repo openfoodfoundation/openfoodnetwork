@@ -45,6 +45,7 @@ feature %q{
 
       before :each do
         visit '/admin/orders/bulk_management'
+        wait_until { request_monitor_finished 'LineItemsCtrl' }
       end
 
       it "displays a column for user's full name" do
@@ -92,6 +93,7 @@ feature %q{
 
       before do
         visit spree.admin_bulk_order_management_path
+        wait_until { request_monitor_finished 'LineItemsCtrl' }
       end
 
       it "sorts by customer name when the customer name header is clicked" do
@@ -260,6 +262,7 @@ feature %q{
 
         before :each do
           visit '/admin/orders/bulk_management'
+          wait_until { request_monitor_finished 'LineItemsCtrl' }
         end
 
         it "displays a select box for producers, which filters line items by the selected supplier" do
@@ -298,6 +301,7 @@ feature %q{
 
         before :each do
           visit '/admin/orders/bulk_management'
+          wait_until { request_monitor_finished 'LineItemsCtrl' }
         end
 
         it "displays a select box for distributors, which filters line items by the selected distributor" do
@@ -337,6 +341,7 @@ feature %q{
 
         before do
           visit '/admin/orders/bulk_management'
+          wait_until { request_monitor_finished 'LineItemsCtrl' }
         end
 
         it "displays a select box for order cycles, which filters line items by the selected order cycle" do
@@ -377,6 +382,7 @@ feature %q{
 
         before :each do
           visit '/admin/orders/bulk_management'
+          wait_until { request_monitor_finished 'LineItemsCtrl' }
         end
 
         it "allows filters to be used in combination" do
@@ -427,6 +433,7 @@ feature %q{
 
       before :each do
         visit '/admin/orders/bulk_management'
+        wait_until { request_monitor_finished 'LineItemsCtrl' }
       end
 
       it "displays a quick search input" do
@@ -456,6 +463,7 @@ feature %q{
 
       before :each do
         visit '/admin/orders/bulk_management'
+        wait_until { request_monitor_finished 'LineItemsCtrl' }
       end
 
       it "displays date fields for filtering orders, with default values set" do
@@ -528,6 +536,7 @@ feature %q{
 
       before :each do
         visit '/admin/orders/bulk_management'
+        wait_until { request_monitor_finished 'LineItemsCtrl' }
       end
 
       it "displays a checkbox for each line item in the list" do
@@ -570,6 +579,7 @@ feature %q{
           expect(page).to have_no_selector "tr#li_#{li2.id}"
           check "toggle_bulk"
           fill_in "quick_search", with: ''
+          wait_until { request_monitor_finished 'LineItemsCtrl' }
           expect(find("tr#li_#{li1.id} input[type='checkbox'][name='bulk']").checked?).to be true
           expect(find("tr#li_#{li2.id} input[type='checkbox'][name='bulk']").checked?).to be false
           expect(find("input[type='checkbox'][name='toggle_bulk']").checked?).to be false
@@ -583,6 +593,7 @@ feature %q{
           find("div#bulk-actions-dropdown div.menu_item", :text => "Delete Selected" ).click
           expect(page).to have_no_selector "tr#li_#{li1.id}"
           fill_in "quick_search", with: ''
+          wait_until { request_monitor_finished 'LineItemsCtrl' }
           expect(page).to have_selector "tr#li_#{li2.id}"
           expect(page).to have_no_selector "tr#li_#{li1.id}"
         end

@@ -1,8 +1,7 @@
 require 'open_food_network/products_cache_integrity_checker'
 
 class Admin::CacheSettingsController < Spree::Admin::BaseController
-
-  def show
+  def edit
     @results = Exchange.cachable.map do |exchange|
       checker = OpenFoodNetwork::ProductsCacheIntegrityChecker.new(exchange.receiver, exchange.order_cycle)
 
@@ -10,4 +9,10 @@ class Admin::CacheSettingsController < Spree::Admin::BaseController
     end
   end
 
+  def update
+    Spree::Config.set(params[:preferences])
+    respond_to do |format|
+      format.html { redirect_to main_app.edit_admin_cache_settings_path }
+    end
+  end
 end

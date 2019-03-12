@@ -22,20 +22,18 @@ module OpenFoodNetwork
 
       # Uses variant_override.count_on_hand instead of Stock::Quantifier.stock_items.count_on_hand
       def total_on_hand
-        @variant_override.andand.count_on_hand || super
+        if @variant_override.present? && @variant_override.stock_overridden?
+          @variant_override.count_on_hand
+        else
+          super
+        end
       end
 
       def on_demand
-        if @variant_override.andand.on_demand.nil?
-          if @variant_override.andand.count_on_hand.present?
-            # If we're overriding the stock level of an on_demand variant, show it as not
-            # on_demand, so our stock control can take effect.
-            false
-          else
-            super
-          end
+        if @variant_override.present? && !@variant_override.use_producer_stock_settings?
+          @variant_override.on_demand
         else
-          @variant_override.andand.on_demand
+          super
         end
       end
 

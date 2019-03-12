@@ -79,11 +79,9 @@ module Admin
     end
 
     def save_uploaded_file(upload)
-      filename = 'import' + Time.zone.now.strftime('%d-%m-%Y-%H-%M-%S')
-      extension = '.' + upload.original_filename.split('.').last
-      directory = 'tmp/product_import'
-      Dir.mkdir(directory) unless File.exist?(directory)
-      File.open(Rails.root.join(directory, filename + extension), 'wb') do |f|
+      extension = File.extname(upload.original_filename)
+      directory = Dir.mktmpdir 'product_import'
+      File.open(File.join(directory, "import#{extension}"), 'wb') do |f|
         data = UploadSanitizer.new(upload.read).call
         f.write(data)
         f.path

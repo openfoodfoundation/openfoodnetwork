@@ -139,7 +139,7 @@ feature "Registration", js: true do
         fill_in "Email", with: user.email
         fill_in "Password", with: user.password
         click_button 'Login'
-        expect(page).to have_content I18n.t('limit_reached_headline')
+        expect(page).to have_content I18n.t('registration.steps.limit_reached.headline')
       end
     end
   end

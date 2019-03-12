@@ -37,4 +37,7 @@ Spree::AppConfiguration.class_eval do
 
   # Number localization
   preference :enable_localized_number?, :boolean, default: false
+
+  # Enable cache
+  preference :enable_products_cache?, :boolean, default: true
 end
