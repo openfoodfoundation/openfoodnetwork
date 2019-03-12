@@ -11,6 +11,8 @@ nb:
         email: Epost Kunde
       spree/payment:
         amount: Beløp
+      spree/product:
+        primary_taxon: Produktkategori
       order_cycle:
         orders_close_at: Lukkedato
     errors:
@@ -371,6 +373,7 @@ nb:
         status: "Status"
         diff: "Forskjell"
         error: "Feil"
+        enable_products_cache: "Aktiver Mellomlagring for Produkter?"
     invoice_settings:
       edit:
         title: Fakturainnstillinger
@@ -2243,8 +2246,6 @@ nb:
   enterprise_fee_by: "%{type} avgift ved %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Den relasjonen er allerede etablert."
   validation_msg_at_least_one_hub: "^Minst én hub må være valgt"
-  validation_msg_product_category_cant_be_blank: "^Produktkategori kan ikke være blank"
-  validation_msg_tax: "^Avgiftskategori er påkrevd"
   validation_msg_tax_category_cant_be_blank: "^Avgiftskategori kan ikke være blank"
   validation_msg_is_associated_with_an_exising_customer: "er assosiert med en eksisterende kunde"
   content_configuration_pricing_table: "(TODO: Pristabell)"
