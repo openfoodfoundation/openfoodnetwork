@@ -257,14 +257,6 @@ module Spree
 
           Product.in_distributor(d).should be_empty
         end
-
-        it "shows products in both without duplicates" do
-          s = create(:supplier_enterprise)
-          d = create(:distributor_enterprise)
-          p = create(:product)
-          create(:simple_order_cycle, suppliers: [s], distributors: [d], variants: [p.master])
-          Product.in_distributor(d).should == [p]
-        end
       end
 
       describe "in_supplier_or_distributor" do
