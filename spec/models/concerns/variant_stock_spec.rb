@@ -18,15 +18,15 @@ describe VariantStock do
   end
 
   describe '#on_hand' do
-    context 'when the variant is ordered on demand' do
+    context 'when the variant is on demand' do
       before do
         variant.stock_items.first.update_attribute(
           :backorderable, true
         )
       end
 
-      it 'returns infinite' do
-        expect(variant.on_hand).to eq(Float::INFINITY)
+      it 'returns the total items in stock anyway' do
+        expect(variant.on_hand).to eq(variant.stock_items.sum(&:count_on_hand))
       end
     end
 
@@ -44,28 +44,27 @@ describe VariantStock do
     end
   end
 
-  describe '#count_on_hand' do
-    before { allow(variant).to receive(:total_on_hand) }
-
-    it 'delegates to #total_on_hand' do
-      variant.count_on_hand
-      expect(variant).to have_received(:total_on_hand)
-    end
-  end
-
   describe '#on_hand=' do
     context 'when track_inventory_levels is set' do
       before do
-        allow(variant).to receive(:count_on_hand=)
         allow(Spree::Config)
           .to receive(:track_inventory_levels) { true }
       end
 
-      it 'delegates to #count_on_hand=' do
+      it 'sets the new level as the stock item\'s count_on_hand' do
         variant.on_hand = 3
-        expect(variant)
-          .to have_received(:count_on_hand=).with(3)
+        unique_stock_item = variant.stock_items.first
+        expect(unique_stock_item.count_on_hand).to eq(3)
       end
+
+      context 'when the variant has no stock item' do
+        let(:variant) { build(:variant) }
+
+        it 'raises' do
+          expect { variant.on_hand = 3 }
+            .to raise_error(StandardError)
+        end
+      end      
     end
 
     context 'when track_inventory_levels is not set' do
@@ -76,27 +75,6 @@ describe VariantStock do
 
       it 'raises' do
         expect { variant.on_hand = 3 }
-          .to raise_error(StandardError)
-      end
-    end
-  end
-
-  describe '#count_on_hand=' do
-    context 'when the variant has a stock item' do
-      let(:variant) { create(:variant) }
-
-      it 'sets the new level as the stock item\'s count_on_hand' do
-        variant.count_on_hand = 3
-        unique_stock_item = variant.stock_items.first
-        expect(unique_stock_item.count_on_hand).to eq(3)
-      end
-    end
-
-    context 'when the variant has no stock item' do
-      let(:variant) { build(:variant) }
-
-      it 'raises' do
-        expect { variant.count_on_hand = 3 }
           .to raise_error(StandardError)
       end
     end
@@ -187,7 +165,7 @@ describe VariantStock do
       end
 
       context 'when variant out of stock' do
-        before { variant.count_on_hand = 0 }
+        before { variant.on_hand = 0 }
 
         it "returns true for zero" do
           expect(variant.can_supply?(0)).to eq(true)

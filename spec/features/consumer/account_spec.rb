@@ -13,12 +13,9 @@ feature %q{
   let!(:distributor2) { create(:distributor_enterprise) }
   let!(:distributor_credit) { create(:distributor_enterprise) }
   let!(:distributor_without_orders) { create(:distributor_enterprise) }
-  let!(:accounts_distributor) {create :distributor_enterprise}
-  let!(:order_account_invoice) { create(:order, distributor: accounts_distributor, state: 'complete', user: user) }
 
   context "as a logged in user" do
     before do
-      Spree::Config.accounts_distributor_id = accounts_distributor.id
       login_as user
     end
 
@@ -42,9 +39,6 @@ feature %q{
 
         expect(page).to have_content I18n.t('spree.users.orders.past_orders')
 
-        # Doesn't show orders from the special Accounts & Billing distributor
-        expect(page).not_to have_content accounts_distributor.name
-
         # Lists all other orders
         expect(page).to have_content d1o1.number.to_s
         expect(page).to have_content d1o2.number.to_s
@@ -59,8 +53,6 @@ feature %q{
         expect(page).to have_content distributor2.name
         expect(page).not_to have_content distributor_without_orders.name
 
-        # Exclude the special Accounts & Billing distributor
-        expect(page).not_to have_content accounts_distributor.name
         expect(page).to have_content distributor1.name + " " + "Balance due"
         expect(page).to have_content distributor_credit.name + " Credit"
 

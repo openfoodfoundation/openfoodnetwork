@@ -63,8 +63,8 @@ describe CartController, type: :controller do
     let!(:line_item) { create(:line_item, order: order, variant: variant_in_the_order, quantity: 2, max_quantity: 3) }
 
     before do
-      variant_in_the_order.count_on_hand = 4
-      variant_not_in_the_order.count_on_hand = 2
+      variant_in_the_order.on_hand = 4
+      variant_not_in_the_order.on_hand = 2
       order_cycle.exchanges.outgoing.first.variants = [variant_in_the_order, variant_not_in_the_order]
       order.order_cycle = order_cycle
       order.distributor = hub

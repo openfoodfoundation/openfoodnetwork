@@ -308,11 +308,11 @@ xfeature %q{
       product2.set_property 'Organic', 'NASAA 12345'
       product1.taxons = [taxon]
       product2.taxons = [taxon]
-      variant1.count_on_hand = 10
+      variant1.on_hand = 10
       variant1.update_column(:sku, "sku1")
-      variant2.count_on_hand = 20
+      variant2.on_hand = 20
       variant2.update_column(:sku, "sku2")
-      variant3.count_on_hand = 9
+      variant3.on_hand = 9
       variant3.update_column(:sku, "")
       variant1.option_values = [create(:option_value, :presentation => "Test")]
       variant2.option_values = [create(:option_value, :presentation => "Something")]
@@ -493,36 +493,6 @@ xfeature %q{
           xero_invoice_summary_row('Delivery Shipping Cost (tax inclusive)', 100.55,  'GST on Income',   opts)
         ]
       end
-
-      describe "account invoices" do
-        let(:accounts_distributor)  { create(:distributor_enterprise) }
-        let(:billable_period) { create(:billable_period, account_invoice: account_invoice) }
-        let(:account_invoice) { create(:account_invoice, order: account_invoice_order) }
-        let!(:account_invoice_order) { create(:order, order_cycle: order_cycle, distributor: accounts_distributor) }
-        let!(:adjustment) { create(:adjustment, adjustable: account_invoice_order, source: billable_period, label: 'Account invoice item', amount: 12.34) } # Tax?
-
-        before do
-          Spree::Config.accounts_distributor_id = accounts_distributor.id
-
-          account_invoice_order.update_attribute :email, 'customer@email.com'
-          Timecop.travel(Time.zone.local(2015, 4, 25, 14, 0, 0)) { account_invoice_order.finalize! }
-
-          visit current_path
-        end
-
-        it "generates a detailed report for account invoices" do
-          select 'Detailed', from: 'report_type'
-          select accounts_distributor.name, from: 'q_distributor_id_eq'
-          click_button 'Search'
-
-          opts = {}
-
-          expect(xero_invoice_table).to match_table [
-            xero_invoice_header,
-            xero_invoice_account_invoice_row(adjustment)
-          ]
-        end
-      end
     end
 
     private
@@ -547,11 +517,6 @@ xfeature %q{
     def xero_invoice_adjustment_row(adjustment, opts={})
       tax_type = adjustment.has_tax? ? 'GST on Income' : 'GST Free Income'
       xero_invoice_row('', adjustment.label, adjustment.amount, '1', tax_type, opts)
-    end
-
-    def xero_invoice_account_invoice_row(adjustment, opts={})
-      opts.reverse_merge!({customer_name: '', address1: '', city: '', state: '', zipcode: '', country: '', invoice_number: account_invoice_order.number, order_number: account_invoice_order.number})
-      xero_invoice_adjustment_row(adjustment, opts)
     end
 
     def xero_invoice_row(sku, description, amount, quantity, tax_type, opts={})

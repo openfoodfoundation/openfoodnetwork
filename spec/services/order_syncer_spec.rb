@@ -292,7 +292,7 @@ describe OrderSyncer do
     let(:sli) { subscription.subscription_line_items.first }
     let(:variant) { sli.variant }
 
-    before { variant.update_attribute(:count_on_hand, 2) }
+    before { variant.update_attribute(:on_hand, 2) }
 
     context "when quantity is within available stock" do
       let(:params) { { subscription_line_items_attributes: [{ id: sli.id, quantity: 2}] } }
@@ -327,7 +327,7 @@ describe OrderSyncer do
       let(:syncer) { OrderSyncer.new(subscription) }
       let(:changed_line_item) { order.line_items.find_by_variant_id(sli.variant_id) }
 
-      before { variant.update_attribute(:count_on_hand, 3) }
+      before { variant.update_attribute(:on_hand, 3) }
 
       context "when the changed line_item quantity matches the new quantity on the subscription line item" do
         before { changed_line_item.update_attributes(quantity: 3) }

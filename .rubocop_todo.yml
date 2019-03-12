@@ -143,7 +143,6 @@ Layout/EmptyLines:
     - 'app/helpers/angular_form_helper.rb'
     - 'app/helpers/injection_helper.rb'
     - 'app/helpers/spree/admin/base_helper_decorator.rb'
-    - 'app/jobs/finalize_account_invoices.rb'
     - 'app/jobs/products_cache_integrity_checker_job.rb'
     - 'app/jobs/refresh_products_cache_job.rb'
     - 'app/models/coordinator_fee.rb'
@@ -218,7 +217,6 @@ Layout/EmptyLines:
     - 'spec/features/consumer/shopping/variant_overrides_spec.rb'
     - 'spec/features/consumer/shops_spec.rb'
     - 'spec/helpers/checkout_helper_spec.rb'
-    - 'spec/jobs/finalize_account_invoices_spec.rb'
     - 'spec/jobs/heartbeat_job_spec.rb'
     - 'spec/lib/open_food_network/enterprise_fee_calculator_spec.rb'
     - 'spec/lib/open_food_network/option_value_namer_spec.rb'
@@ -278,17 +276,14 @@ Layout/EmptyLinesAroundBlockBody:
     - 'spec/features/consumer/shopping/embedded_groups_spec.rb'
     - 'spec/features/consumer/shopping/embedded_shopfronts_spec.rb'
     - 'spec/features/consumer/shopping/shopping_spec.rb'
-    - 'spec/helpers/admin/business_model_configuration_helper_spec.rb'
     - 'spec/helpers/shared_helper_spec.rb'
     - 'spec/helpers/shop_helper_spec.rb'
     - 'spec/helpers/spree/orders_helper_spec.rb'
-    - 'spec/jobs/update_billable_periods_spec.rb'
     - 'spec/lib/open_food_network/group_buy_report_spec.rb'
     - 'spec/lib/open_food_network/lettuce_share_report_spec.rb'
     - 'spec/lib/open_food_network/order_grouper_spec.rb'
     - 'spec/lib/open_food_network/referer_parser_spec.rb'
     - 'spec/lib/open_food_network/user_balance_calculator_spec.rb'
-    - 'spec/models/billable_period_spec.rb'
     - 'spec/models/product_distribution_spec.rb'
     - 'spec/models/spree/ability_spec.rb'
     - 'spec/models/spree/product_spec.rb'
@@ -307,7 +302,6 @@ Layout/EmptyLinesAroundBlockBody:
 # SupportedStyles: empty_lines, empty_lines_except_namespace, empty_lines_special, no_empty_lines, beginning_only, ending_only
 Layout/EmptyLinesAroundClassBody:
   Exclude:
-    - 'app/controllers/admin/account_controller.rb'
     - 'app/controllers/admin/cache_settings_controller.rb'
     - 'app/controllers/admin/enterprise_fees_controller.rb'
     - 'app/controllers/admin/inventory_items_controller.rb'
@@ -358,7 +352,6 @@ Layout/ExtraSpacing:
     - 'lib/open_food_network/variant_and_line_item_naming.rb'
     - 'lib/spree/product_filters.rb'
     - 'lib/tasks/karma.rake'
-    - 'spec/controllers/admin/accounts_and_billing_settings_controller_spec.rb'
     - 'spec/features/admin/bulk_order_management_spec.rb'
     - 'spec/features/admin/bulk_product_update_spec.rb'
     - 'spec/features/admin/orders_spec.rb'
@@ -409,7 +402,6 @@ Layout/IndentationConsistency:
     - 'lib/open_food_network/permissions.rb'
     - 'spec/controllers/admin/tag_rules_controller_spec.rb'
     - 'spec/features/consumer/shopping/checkout_spec.rb'
-    - 'spec/helpers/admin/business_model_configuration_helper_spec.rb'
     - 'spec/models/spree/line_item_spec.rb'
     - 'spec/models/spree/product_spec.rb'
 
@@ -425,7 +417,6 @@ Layout/IndentationWidth:
     - 'app/serializers/api/admin/for_order_cycle/supplied_product_serializer.rb'
     - 'app/serializers/api/admin/order_cycle_serializer.rb'
     - 'spec/features/consumer/shopping/variant_overrides_spec.rb'
-    - 'spec/helpers/admin/business_model_configuration_helper_spec.rb'
     - 'spec/helpers/groups_helper_spec.rb'
     - 'spec/lib/open_food_network/enterprise_fee_calculator_spec.rb'
     - 'spec/lib/open_food_network/order_grouper_spec.rb'
@@ -439,7 +430,6 @@ Layout/IndentationWidth:
 Layout/LeadingCommentSpace:
   Exclude:
     - 'Gemfile'
-    - 'app/models/billable_period.rb'
     - 'app/models/content_configuration.rb'
     - 'app/models/spree/inventory_unit_decorator.rb'
     - 'app/models/spree/taxon_decorator.rb'
@@ -449,7 +439,6 @@ Layout/LeadingCommentSpace:
     - 'spec/controllers/spree/api/line_items_controller_spec.rb'
     - 'spec/features/admin/products_spec.rb'
     - 'spec/features/admin/reports_spec.rb'
-    - 'spec/jobs/finalize_account_invoices_spec.rb'
     - 'spec/lib/open_food_network/order_grouper_spec.rb'
     - 'spec/lib/open_food_network/user_balance_calculator_spec.rb'
     - 'spec/models/enterprise_spec.rb'
@@ -471,7 +460,6 @@ Layout/MultilineBlockLayout:
     - 'spec/features/admin/variant_overrides_spec.rb'
     - 'spec/features/consumer/shopping/cart_spec.rb'
     - 'spec/helpers/enterprises_helper_spec.rb'
-    - 'spec/jobs/update_billable_periods_spec.rb'
     - 'spec/lib/open_food_network/enterprise_fee_calculator_spec.rb'
     - 'spec/lib/open_food_network/permissions_spec.rb'
     - 'spec/lib/open_food_network/user_balance_calculator_spec.rb'
@@ -489,7 +477,6 @@ Layout/MultilineBlockLayout:
 Layout/MultilineHashBraceLayout:
   Exclude:
     - 'app/controllers/spree/admin/products_controller_decorator.rb'
-    - 'app/models/billable_period.rb'
     - 'lib/spree/product_filters.rb'
     - 'spec/support/request/authentication_workflow.rb'
 
@@ -528,7 +515,6 @@ Layout/MultilineOperationIndentation:
     - 'app/models/producer_property.rb'
     - 'app/models/spree/ability_decorator.rb'
     - 'app/models/variant_override_set.rb'
-    - 'lib/open_food_network/accounts_and_billing_settings_validator.rb'
     - 'lib/open_food_network/order_cycle_permissions.rb'
     - 'lib/open_food_network/sales_tax_report.rb'
     - 'lib/open_food_network/users_and_enterprises_report.rb'
@@ -551,8 +537,6 @@ Layout/SpaceAfterComma:
     - 'app/controllers/spree/orders_controller_decorator.rb'
     - 'app/models/column_preference.rb'
     - 'lib/discourse/single_sign_on.rb'
-    - 'lib/open_food_network/accounts_and_billing_settings_validator.rb'
-    - 'lib/open_food_network/business_model_configuration_validator.rb'
     - 'lib/open_food_network/order_cycle_form_applicator.rb'
     - 'lib/open_food_network/users_and_enterprises_report.rb'
     - 'spec/controllers/admin/enterprises_controller_spec.rb'
@@ -561,7 +545,6 @@ Layout/SpaceAfterComma:
     - 'spec/features/admin/bulk_product_update_spec.rb'
     - 'spec/features/admin/customers_spec.rb'
     - 'spec/features/admin/variant_overrides_spec.rb'
-    - 'spec/jobs/update_account_invoices_spec.rb'
     - 'spec/lib/open_food_network/group_buy_report_spec.rb'
     - 'spec/lib/open_food_network/subscription_summary_spec.rb'
     - 'spec/models/content_configuration_spec.rb'
@@ -608,9 +591,6 @@ Layout/SpaceAroundEqualsInParameterDefault:
     - 'app/models/spree/taxon_decorator.rb'
     - 'app/models/variant_override_set.rb'
     - 'lib/discourse/single_sign_on.rb'
-    - 'lib/open_food_network/accounts_and_billing_settings_validator.rb'
-    - 'lib/open_food_network/bill_calculator.rb'
-    - 'lib/open_food_network/business_model_configuration_validator.rb'
     - 'lib/open_food_network/enterprise_fee_calculator.rb'
     - 'lib/open_food_network/enterprise_issue_validator.rb'
     - 'lib/open_food_network/order_cycle_form_applicator.rb'
@@ -631,8 +611,6 @@ Layout/SpaceAroundEqualsInParameterDefault:
 Layout/SpaceAroundOperators:
   Exclude:
     - 'app/controllers/checkout_controller.rb'
-    - 'app/helpers/admin/business_model_configuration_helper.rb'
-    - 'app/jobs/update_billable_periods.rb'
     - 'app/overrides/remove_search_bar.rb'
     - 'app/overrides/remove_side_bar.rb'
     - 'app/overrides/replace_shipping_address_form_with_distributor_details.rb'
@@ -644,7 +622,6 @@ Layout/SpaceAroundOperators:
     - 'spec/features/consumer/shopping/checkout_spec.rb'
     - 'spec/helpers/checkout_helper_spec.rb'
     - 'spec/helpers/order_cycles_helper_spec.rb'
-    - 'spec/jobs/update_billable_periods_spec.rb'
     - 'spec/lib/open_food_network/order_grouper_spec.rb'
     - 'spec/lib/stripe/account_connector_spec.rb'
     - 'spec/spec_helper.rb'
@@ -694,7 +671,6 @@ Layout/SpaceInsideArrayLiteralBrackets:
     - 'lib/open_food_network/users_and_enterprises_report.rb'
     - 'spec/controllers/admin/variant_overrides_controller_spec.rb'
     - 'spec/features/admin/reports_spec.rb'
-    - 'spec/jobs/update_billable_periods_spec.rb'
     - 'spec/lib/open_food_network/order_grouper_spec.rb'
     - 'spec/lib/open_food_network/users_and_enterprises_report_spec.rb'
     - 'spec/models/spree/order_spec.rb'
@@ -715,8 +691,6 @@ Layout/SpaceInsideBlockBraces:
     - 'lib/spree/product_filters.rb'
     - 'lib/tasks/karma.rake'
     - 'spec/archive/features/consumer/checkout_spec.rb'
-    - 'spec/controllers/admin/accounts_and_billing_settings_controller_spec.rb'
-    - 'spec/controllers/admin/business_model_configuration_controller_spec.rb'
     - 'spec/controllers/admin/inventory_items_controller_spec.rb'
     - 'spec/controllers/admin/tag_rules_controller_spec.rb'
     - 'spec/controllers/admin/variant_overrides_controller_spec.rb'
@@ -732,9 +706,6 @@ Layout/SpaceInsideBlockBraces:
     - 'spec/helpers/enterprises_helper_spec.rb'
     - 'spec/helpers/injection_helper_spec.rb'
     - 'spec/helpers/spree/orders_helper_spec.rb'
-    - 'spec/jobs/finalize_account_invoices_spec.rb'
-    - 'spec/jobs/update_account_invoices_spec.rb'
-    - 'spec/jobs/update_billable_periods_spec.rb'
     - 'spec/lib/open_food_network/order_cycle_form_applicator_spec.rb'
     - 'spec/lib/open_food_network/order_grouper_spec.rb'
     - 'spec/lib/open_food_network/orders_and_fulfillments_report_spec.rb'
@@ -767,7 +738,6 @@ Layout/SpaceInsideHashLiteralBraces:
     - 'app/controllers/spree/admin/line_items_controller_decorator.rb'
     - 'app/controllers/spree/admin/products_controller_decorator.rb'
     - 'app/controllers/spree/admin/search_controller_decorator.rb'
-    - 'app/helpers/admin/business_model_configuration_helper.rb'
     - 'app/helpers/admin/injection_helper.rb'
     - 'app/helpers/angular_form_builder.rb'
     - 'app/helpers/injection_helper.rb'
@@ -775,9 +745,7 @@ Layout/SpaceInsideHashLiteralBraces:
     - 'app/helpers/serializer_helper.rb'
     - 'app/helpers/spree/admin/base_helper_decorator.rb'
     - 'app/helpers/spree/admin/navigation_helper_decorator.rb'
-    - 'app/jobs/update_billable_periods.rb'
     - 'app/mailers/spree/base_mailer_decorator.rb'
-    - 'app/models/billable_period.rb'
     - 'app/models/enterprise.rb'
     - 'app/models/enterprise_group.rb'
     - 'app/models/enterprise_relationship.rb'
@@ -796,8 +764,6 @@ Layout/SpaceInsideHashLiteralBraces:
     - 'lib/open_food_network/sales_tax_report.rb'
     - 'lib/open_food_network/variant_and_line_item_naming.rb'
     - 'lib/open_food_network/xero_invoices_report.rb'
-    - 'spec/controllers/admin/accounts_and_billing_settings_controller_spec.rb'
-    - 'spec/controllers/admin/business_model_configuration_controller_spec.rb'
     - 'spec/controllers/admin/enterprises_controller_spec.rb'
     - 'spec/controllers/admin/manager_invitations_controller_spec.rb'
     - 'spec/controllers/admin/order_cycles_controller_spec.rb'
@@ -816,7 +782,6 @@ Layout/SpaceInsideHashLiteralBraces:
     - 'spec/controllers/spree/user_sessions_controller_spec.rb'
     - 'spec/controllers/user_passwords_controller_spec.rb'
     - 'spec/controllers/user_registrations_controller_spec.rb'
-    - 'spec/features/admin/accounts_and_billing_settings_spec.rb'
     - 'spec/features/admin/image_settings_spec.rb'
     - 'spec/features/admin/products_spec.rb'
     - 'spec/features/admin/reports_spec.rb'
@@ -972,7 +937,6 @@ Lint/ShadowingOuterLocalVariable:
 # Cop supports --auto-correct.
 Lint/StringConversionInInterpolation:
   Exclude:
-    - 'app/controllers/admin/accounts_and_billing_settings_controller.rb'
     - 'app/controllers/enterprises_controller.rb'
     - 'app/helpers/admin/injection_helper.rb'
     - 'app/helpers/injection_helper.rb'
@@ -1025,8 +989,6 @@ Lint/UnusedMethodArgument:
     - 'app/helpers/angular_form_helper.rb'
     - 'app/helpers/order_cycles_helper.rb'
     - 'app/helpers/spree/base_helper_decorator.rb'
-    - 'app/jobs/finalize_account_invoices.rb'
-    - 'app/jobs/update_account_invoices.rb'
     - 'app/models/spree/ability_decorator.rb'
     - 'app/models/spree/product_decorator.rb'
     - 'lib/open_food_network/enterprise_fee_applicator.rb'
@@ -1337,8 +1299,6 @@ Rails/HasAndBelongsToMany:
 # Include: app/models/**/*.rb
 Rails/HasManyOrHasOneDependent:
   Exclude:
-    - 'app/models/account_invoice.rb'
-    - 'app/models/billable_period.rb'
     - 'app/models/customer.rb'
     - 'app/models/enterprise.rb'
     - 'app/models/order_cycle.rb'
@@ -1394,8 +1354,6 @@ Rails/OutputSafety:
 Rails/PluralizationGrammar:
   Exclude:
     - 'spec/features/admin/order_cycles_spec.rb'
-    - 'spec/jobs/update_account_invoices_spec.rb'
-    - 'spec/jobs/update_billable_periods_spec.rb'
     - 'spec/models/order_cycle_spec.rb'
     - 'spec/models/spree/product_spec.rb'
 
@@ -1515,15 +1473,9 @@ Style/BracesAroundHashParameters:
     - 'app/controllers/checkout_controller.rb'
     - 'app/controllers/spree/admin/products_controller_decorator.rb'
     - 'app/controllers/spree/admin/search_controller_decorator.rb'
-    - 'app/helpers/admin/account_helper.rb'
-    - 'app/helpers/admin/business_model_configuration_helper.rb'
     - 'app/helpers/angular_form_builder.rb'
     - 'app/helpers/checkout_helper.rb'
     - 'app/helpers/spree/admin/orders_helper_decorator.rb'
-    - 'app/jobs/finalize_account_invoices.rb'
-    - 'app/jobs/update_account_invoices.rb'
-    - 'app/jobs/update_billable_periods.rb'
-    - 'app/models/billable_period.rb'
     - 'app/models/exchange.rb'
     - 'app/models/spree/adjustment_decorator.rb'
     - 'app/models/spree/line_item_decorator.rb'
@@ -1533,8 +1485,6 @@ Style/BracesAroundHashParameters:
     - 'lib/open_food_network/reports/rule.rb'
     - 'lib/open_food_network/variant_and_line_item_naming.rb'
     - 'lib/open_food_network/xero_invoices_report.rb'
-    - 'spec/controllers/admin/accounts_and_billing_settings_controller_spec.rb'
-    - 'spec/controllers/admin/business_model_configuration_controller_spec.rb'
     - 'spec/controllers/admin/enterprises_controller_spec.rb'
     - 'spec/controllers/admin/manager_invitations_controller_spec.rb'
     - 'spec/controllers/admin/order_cycles_controller_spec.rb'
@@ -1552,19 +1502,14 @@ Style/BracesAroundHashParameters:
     - 'spec/controllers/spree/orders_controller_spec.rb'
     - 'spec/controllers/user_confirmations_controller_spec.rb'
     - 'spec/controllers/user_registrations_controller_spec.rb'
-    - 'spec/features/admin/accounts_and_billing_settings_spec.rb'
-    - 'spec/features/admin/business_model_configuration_spec.rb'
     - 'spec/features/admin/order_cycles_spec.rb'
     - 'spec/features/admin/products_spec.rb'
     - 'spec/features/admin/reports_spec.rb'
     - 'spec/features/admin/tax_settings_spec.rb'
     - 'spec/helpers/order_cycles_helper_spec.rb'
-    - 'spec/jobs/finalize_account_invoices_spec.rb'
-    - 'spec/jobs/update_account_invoices_spec.rb'
     - 'spec/lib/open_food_network/feature_toggle_spec.rb'
     - 'spec/lib/open_food_network/order_cycle_form_applicator_spec.rb'
     - 'spec/lib/open_food_network/subscription_summarizer_spec.rb'
-    - 'spec/models/billable_period_spec.rb'
     - 'spec/models/product_distribution_spec.rb'
     - 'spec/models/spree/ability_spec.rb'
     - 'spec/models/spree/order_spec.rb'
@@ -1588,9 +1533,6 @@ Style/CaseEquality:
 # SupportedStyles: nested, compact
 Style/ClassAndModuleChildren:
   Exclude:
-    - 'app/controllers/admin/account_controller.rb'
-    - 'app/controllers/admin/accounts_and_billing_settings_controller.rb'
-    - 'app/controllers/admin/business_model_configuration_controller.rb'
     - 'app/controllers/admin/cache_settings_controller.rb'
     - 'app/controllers/spree/store_controller_decorator.rb'
     - 'app/helpers/angular_form_helper.rb'
@@ -1758,7 +1700,6 @@ Style/FormatStringToken:
 # Configuration parameters: MinBodyLength.
 Style/GuardClause:
   Exclude:
-    - 'app/controllers/admin/accounts_and_billing_settings_controller.rb'
     - 'app/controllers/admin/enterprises_controller.rb'
     - 'app/controllers/admin/order_cycles_controller.rb'
     - 'app/controllers/admin/product_import_controller.rb'
@@ -1775,8 +1716,6 @@ Style/GuardClause:
     - 'app/controllers/spree/orders_controller_decorator.rb'
     - 'app/controllers/spree/paypal_controller_decorator.rb'
     - 'app/jobs/products_cache_integrity_checker_job.rb'
-    - 'app/jobs/update_account_invoices.rb'
-    - 'app/jobs/update_billable_periods.rb'
     - 'app/models/enterprise.rb'
     - 'app/models/enterprise_group.rb'
     - 'app/models/producer_property.rb'
@@ -1786,7 +1725,6 @@ Style/GuardClause:
     - 'app/models/spree/product_decorator.rb'
     - 'app/models/spree/user_decorator.rb'
     - 'lib/discourse/single_sign_on.rb'
-    - 'lib/open_food_network/accounts_and_billing_settings_validator.rb'
     - 'lib/open_food_network/order_cycle_form_applicator.rb'
     - 'lib/open_food_network/products_cache.rb'
     - 'lib/open_food_network/products_renderer.rb'
@@ -1805,7 +1743,6 @@ Style/GuardClause:
 # SupportedStyles: ruby19, hash_rockets, no_mixed_keys, ruby19_no_mixed_keys
 Style/HashSyntax:
   Exclude:
-    - 'app/controllers/admin/accounts_and_billing_settings_controller.rb'
     - 'app/controllers/admin/contents_controller.rb'
     - 'app/controllers/admin/enterprise_fees_controller.rb'
     - 'app/controllers/admin/enterprises_controller.rb'
@@ -1823,7 +1760,6 @@ Style/HashSyntax:
     - 'app/controllers/spree/paypal_controller_decorator.rb'
     - 'app/controllers/spree/store_controller_decorator.rb'
     - 'app/controllers/user_passwords_controller.rb'
-    - 'app/helpers/admin/account_helper.rb'
     - 'app/helpers/angular_form_builder.rb'
     - 'app/helpers/application_helper.rb'
     - 'app/helpers/checkout_helper.rb'
@@ -1832,7 +1768,6 @@ Style/HashSyntax:
     - 'app/helpers/spree/admin/orders_helper_decorator.rb'
     - 'app/mailers/enterprise_mailer.rb'
     - 'app/mailers/spree/user_mailer_decorator.rb'
-    - 'app/models/billable_period.rb'
     - 'app/models/calculator/flat_percent_per_item.rb'
     - 'app/models/enterprise.rb'
     - 'app/models/enterprise_fee.rb'
@@ -2090,9 +2025,7 @@ Style/NumericLiterals:
 Style/NumericPredicate:
   Exclude:
     - 'spec/**/*'
-    - 'app/helpers/admin/business_model_configuration_helper.rb'
     - 'app/helpers/checkout_helper.rb'
-    - 'app/jobs/update_account_invoices.rb'
     - 'app/models/spree/calculator/flexi_rate_decorator.rb'
     - 'app/models/spree/line_item_decorator.rb'
     - 'app/models/spree/order_decorator.rb'
@@ -2181,7 +2114,6 @@ Style/RedundantReturn:
 # Cop supports --auto-correct.
 Style/RedundantSelf:
   Exclude:
-    - 'app/models/billable_period.rb'
     - 'app/models/calculator/flat_percent_per_item.rb'
     - 'app/models/enterprise.rb'
     - 'app/models/exchange.rb'
@@ -2295,7 +2227,6 @@ Style/StabbyLambdaParentheses:
 Style/StringLiteralsInInterpolation:
   Exclude:
     - 'app/controllers/application_controller.rb'
-    - 'app/jobs/update_billable_periods.rb'
     - 'lib/discourse/single_sign_on.rb'
     - 'lib/open_food_network/users_and_enterprises_report.rb'
     - 'spec/features/admin/bulk_order_management_spec.rb'
@@ -2373,12 +2304,9 @@ Style/UnneededCondition:
 # Cop supports --auto-correct.
 Style/UnneededInterpolation:
   Exclude:
-    - 'app/controllers/admin/accounts_and_billing_settings_controller.rb'
     - 'app/controllers/admin/resource_controller.rb'
-    - 'app/helpers/admin/business_model_configuration_helper.rb'
     - 'app/helpers/angular_form_builder.rb'
     - 'app/helpers/injection_helper.rb'
-    - 'app/jobs/update_billable_periods.rb'
     - 'lib/discourse/single_sign_on.rb'
     - 'spec/features/admin/bulk_order_management_spec.rb'
     - 'spec/features/admin/bulk_product_update_spec.rb'

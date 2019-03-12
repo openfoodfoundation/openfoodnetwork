@@ -117,7 +117,7 @@ feature %q{
   end
 
   describe 'listing order cycles with other locales' do
-    let!(:oc_de) { create(:simple_order_cycle, name: 'oc', orders_open_at: '2012-01-01 00:00:00') }
+    let!(:oc_de) { create(:simple_order_cycle, name: 'oc', orders_open_at: '2012-01-01 00:00') }
 
     around(:each) do |spec|
       I18n.locale = :de
@@ -131,7 +131,7 @@ feature %q{
         visit admin_order_cycles_path
 
         within("tr.order-cycle-#{oc_de.id}") do
-          expect(find('input.datetimepicker', match: :first).value).to start_with '2012-01-01 00:00:00'
+          expect(find('input.datetimepicker', match: :first).value).to start_with '2012-01-01 00:00'
           find('img.ui-datepicker-trigger', match: :first).click
         end
 
@@ -143,7 +143,7 @@ feature %q{
         end
 
         within("tr.order-cycle-#{oc_de.id}") do
-          expect(find('input.datetimepicker', match: :first).value).to eq '2012-01-30 00:00:00'
+          expect(find('input.datetimepicker', match: :first).value).to eq '2012-01-30 00:00'
         end
       end
     end
@@ -556,7 +556,7 @@ feature %q{
 
     within("tr.order-cycle-#{oc3.id}") do
       # Then that date/time should appear on the form
-      expect(find("input#oc#{oc3.id}_orders_open_at").value).to eq "2040-12-01 00:00:00"
+      expect(find("input#oc#{oc3.id}_orders_open_at").value).to eq "2040-12-01 00:00"
 
       # Manually fill out time
       find("input#oc#{oc3.id}_name").set "Updated Order Cycle 3"

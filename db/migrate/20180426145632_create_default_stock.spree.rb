@@ -1,3 +1,10 @@
+Spree::Stock::Quantifier.class_eval do
+  def initialize(variant)
+    @variant = variant
+    @stock_items = Spree::StockItem.joins(:stock_location).where(:variant_id => @variant)
+  end
+end
+
 # This migration comes from spree (originally 20130213191427)
 class CreateDefaultStock < ActiveRecord::Migration
   def up

@@ -291,17 +291,16 @@ FactoryBot.define do
     after(:create) { |c| c.set_preference(:per_kg, 0.5); c.save! }
   end
 
-  factory :order_with_totals_and_distribution, parent: :order do
+  factory :order_with_totals_and_distribution, parent: :order_with_distributor do
     transient do
       shipping_fee 3
     end
 
-    distributor { create(:distributor_enterprise) }
     order_cycle { create(:simple_order_cycle) }
 
     after(:create) do |order, proxy|
       p = create(:simple_product, distributors: [order.distributor])
-      FactoryBot.create(:line_item_with_shipment, shipping_fee: proxy.shipping_fee, order: order, product: p)
+      create(:line_item_with_shipment, shipping_fee: proxy.shipping_fee, order: order, product: p)
       order.reload
     end
   end
@@ -416,19 +415,27 @@ FactoryBot.define do
     allow_order_changes { true }
   end
 
-  factory :completed_order_with_fees, parent: :order_with_totals_and_distribution do
+  factory :completed_order_with_fees, parent: :order_with_distributor do
     transient do
       payment_fee 5
+      shipping_fee 3
     end
 
     ship_address { create(:address) }
+    order_cycle { create(:simple_order_cycle) }
 
     after(:create) do |order, evaluator|
       create(:line_item, order: order)
+      product = create(:simple_product, distributors: [order.distributor])
+      create(:line_item, order: order, product: product)
+
       payment_calculator = build(:calculator_per_item, preferred_amount: evaluator.payment_fee)
       payment_method = create(:payment_method, calculator: payment_calculator)
       create(:payment, order: order, amount: order.total, payment_method: payment_method, state: 'checkout')
 
+      create(:shipping_method_with, :shipping_fee, shipping_fee: evaluator.shipping_fee)
+
+      order.reload
       while !order.completed? do break unless order.next! end
     end
   end
@@ -483,26 +490,6 @@ FactoryBot.define do
     code { SecureRandom.base64(150) }
     user
     bill_address { create(:address) }
-  end
-
-  factory :billable_period do
-    begins_at { Time.zone.now.beginning_of_month }
-    ends_at { Time.zone.now.beginning_of_month + 1.month }
-    sells { 'any' }
-    trial { false }
-    enterprise
-    owner { enterprise.owner }
-    turnover { rand(100000).to_f/100 }
-    account_invoice do
-      AccountInvoice.where(user_id: owner_id, year: begins_at.year, month: begins_at.month).first ||
-      FactoryBot.create(:account_invoice, user: owner, year: begins_at.year, month: begins_at.month)
-    end
-  end
-
-  factory :account_invoice do
-    user { FactoryBot.create :user }
-    year { 2000 + rand(100) }
-    month { 1 + rand(12) }
   end
 
   factory :filter_order_cycles_tag_rule, class: TagRule::FilterOrderCycles do
@@ -604,7 +591,7 @@ FactoryBot.modify do
 
     after(:create) do |variant, evaluator|
       variant.on_demand = evaluator.on_demand
-      variant.count_on_hand = evaluator.on_hand
+      variant.on_hand = evaluator.on_hand
       variant.save
     end
   end

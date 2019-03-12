@@ -50,7 +50,7 @@ module OpenFoodNetwork
 
       it "doesn't return products not in stock" do
         variant.update_attribute(:on_demand, false)
-        variant.update_attribute(:count_on_hand, 0)
+        variant.update_attribute(:on_hand, 0)
         pr.products_json.should_not include product.name
       end
 

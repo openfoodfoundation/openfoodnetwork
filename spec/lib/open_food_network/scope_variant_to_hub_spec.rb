@@ -39,12 +39,12 @@ module OpenFoodNetwork
       it "returns the overridden stock level when one is present" do
         vo
         scoper.scope v
-        v.count_on_hand.should == 2
+        v.on_hand.should == 2
       end
 
       it "returns the variant's stock level otherwise" do
         scoper.scope v
-        v.count_on_hand.should == 1
+        v.on_hand.should == 1
       end
 
       describe "overriding stock on an on_demand variant" do
@@ -82,19 +82,19 @@ module OpenFoodNetwork
           context "without an on_demand set" do
             before { vo.update_column(:on_demand, nil) }
 
-            context "when count_on_hand is set" do
-              it "returns false" do
-                scoper.scope v
-                expect(v.on_demand).to be false
-              end
-            end
-
             context "when count_on_hand is not set" do
               before { vo.update_column(:count_on_hand, nil) }
 
               it "returns the variant's on_demand" do
                 scoper.scope v
                 expect(v.on_demand).to be true
+              end
+            end
+
+            context "when count_on_hand is set" do
+              it "should return validation error on save" do
+                scoper.scope v
+                expect{ vo.save! }.to raise_error ActiveRecord::RecordInvalid
               end
             end
           end
@@ -131,7 +131,7 @@ module OpenFoodNetwork
           end
 
           context "when variant out of stock" do
-            before { v.count_on_hand = 0 }
+            before { v.on_hand = 0 }
             
             it "returns true if VO in stock" do
               scoper.scope v
@@ -153,7 +153,7 @@ module OpenFoodNetwork
           end
 
           it "returns false if variant out of stock" do
-            v.count_on_hand = 0
+            v.on_hand = 0
             scoper.scope v
             expect(v.in_stock?).to eq(false)
           end

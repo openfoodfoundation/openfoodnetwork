@@ -462,7 +462,7 @@ feature "Product Import", js: true do
 
   def proceed_to_validation
     expect(page).to have_selector 'a.button.proceed', visible: true
-    click_link I18n.t('admin.product_import.import.import')
+    within("#content") { click_link I18n.t('admin.product_import.import.import') }
     expect(page).to have_selector 'form.product-import', visible: true
     expect(page).to have_content I18n.t('admin.product_import.import.validation_overview')
   end

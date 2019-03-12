@@ -372,7 +372,6 @@ module ProductImport
       return if entry.on_hand.present?
 
       object.on_hand = 0 if object.respond_to?(:on_hand)
-      object.count_on_hand = 0 if object.respond_to?(:count_on_hand)
       entry.on_hand_nil = true
     end
 

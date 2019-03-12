@@ -50,7 +50,7 @@ module OpenFoodNetwork
         end
 
         it "only available items" do
-          variant.count_on_hand = 0
+          variant.on_hand = 0
           report.stub(:child_variants) { Spree::Variant.where(id: [variant, variant2, variant3, variant4]) }
           report.table.count.should eq 3
         end

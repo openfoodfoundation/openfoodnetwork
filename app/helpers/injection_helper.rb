@@ -65,7 +65,7 @@ module InjectionHelper
   end
 
   def inject_shops
-    customers = spree_current_user.customers.of_regular_shops
+    customers = spree_current_user.customers
     shops = Enterprise.where(id: @orders.pluck(:distributor_id).uniq | customers.pluck(:enterprise_id))
     inject_json_ams "shops", shops.all, Api::ShopForOrdersSerializer
   end

@@ -7,9 +7,10 @@
  *= require admin/spree_backend
  *= require admin/spree_auth
 
- *= require shared/jquery-ui-timepicker-addon
+ *= require jquery-ui-timepicker-addon
  *= require shared/textAngular
  *= require shared/ng-tags-input.min
+ *= require admin/custom
 
  *= require_self
 */

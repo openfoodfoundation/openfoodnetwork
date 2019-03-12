@@ -10,8 +10,8 @@ class VariantsStockLevels
     order_variant_ids = variant_stock_levels.keys
     missing_variant_ids = requested_variant_ids - order_variant_ids
     missing_variant_ids.each do |variant_id|
-      variant_on_hand = Spree::Variant.find(variant_id).on_hand
-      variant_stock_levels[variant_id] = { quantity: 0, max_quantity: 0, on_hand: variant_on_hand }
+      variant = Spree::Variant.find(variant_id)
+      variant_stock_levels[variant_id] = { quantity: 0, max_quantity: 0, on_hand: variant.on_hand, on_demand: variant.on_demand }
     end
 
     # The code above is most probably dead code, this bugsnag notification will confirm it
@@ -37,14 +37,9 @@ class VariantsStockLevels
         [line_item.variant.id,
          { quantity: line_item.quantity,
            max_quantity: line_item.max_quantity,
-           on_hand: wrap_json_infinity(line_item.variant.on_hand) }]
+           on_hand: line_item.variant.on_hand,
+           on_demand: line_item.variant.on_demand }]
       end
     ]
-  end
-
-  # Rails to_json encodes Float::INFINITY as Infinity, which is not valid JSON
-  # Return it as a large integer (max 32 bit signed int)
-  def wrap_json_infinity(number)
-    number == Float::INFINITY ? 2_147_483_647 : number
   end
 end
