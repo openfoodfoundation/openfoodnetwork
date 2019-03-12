@@ -67,13 +67,12 @@ class OrderSyncer
 
   def update_shipment_for(order)
     shipment = order.shipment
+    return track_shipping_method_issue(order) if shipment.blank?
 
-    if shipment.andand.state == "pending" && shipment.shipping_method.id == shipping_method_id_was
+    if shipment.state == "pending" && shipment.shipping_method.id == shipping_method_id_was
       order.select_shipping_method(shipping_method_id)
-    else
-      unless shipment.andand.state == "pending" && shipment.shipping_method.id == shipping_method_id
-        order_update_issues.add(order, I18n.t('admin.shipping_method'))
-      end
+    elsif !(shipment.state == "pending" && shipment.shipping_method.id == shipping_method_id)
+      track_shipping_method_issue(order)
     end
   end
 
@@ -105,5 +104,9 @@ class OrderSyncer
     relevant_address_attrs.all? do |attr|
       order.ship_address[attr] == distributor_address[attr]
     end
+  end
+
+  def track_shipping_method_issue(order)
+    order_update_issues.add(order, I18n.t('admin.shipping_method'))
   end
 end
