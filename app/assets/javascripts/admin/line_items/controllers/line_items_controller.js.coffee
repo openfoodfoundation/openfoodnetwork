@@ -26,18 +26,21 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
       $scope.startDate = moment(OrderCycles.byID[$scope.orderCycleFilter].orders_open_at).format('YYYY-MM-DD')
       $scope.endDate = moment(OrderCycles.byID[$scope.orderCycleFilter].orders_close_at).startOf('day').format('YYYY-MM-DD')
 
+    formatted_start_date = moment($scope.startDate).format()
+    formatted_end_date = moment($scope.endDate).add(1,'day').format()
+
     RequestMonitor.load $scope.orders = Orders.index(
       "q[state_not_eq]": "canceled",
       "q[completed_at_not_null]": "true",
-      "q[completed_at_gteq]": "#{moment($scope.startDate).format()}",
-      "q[completed_at_lt]": "#{moment($scope.endDate).add(1,'day').format()}"
+      "q[completed_at_gteq]": formatted_start_date,
+      "q[completed_at_lt]": formatted_end_date
     )
 
     RequestMonitor.load $scope.lineItems = LineItems.index(
       "q[order][state_not_eq]": "canceled",
       "q[order][completed_at_not_null]": "true",
-      "q[order][completed_at_gteq]": "#{moment($scope.startDate).format()}",
-      "q[order][completed_at_lt]": "#{moment($scope.endDate).add(1,'day').format()}"
+      "q[order][completed_at_gteq]": formatted_start_date,
+      "q[order][completed_at_lt]": formatted_end_date
     )
 
     unless $scope.initialized
