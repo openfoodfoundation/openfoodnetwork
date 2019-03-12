@@ -30,8 +30,7 @@ Spree::Admin::OrdersController.class_eval do
   def edit
     @order.shipments.map &:refresh_rates
 
-    # Transition as far as we can go
-    while @order.next; end
+    AdvanceOrderService.new(@order).call
 
     # The payment step shows an error of 'No pending payments'
     # Clearing the errors from the order object will stop this error
