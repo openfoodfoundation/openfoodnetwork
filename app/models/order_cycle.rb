@@ -39,13 +39,6 @@ class OrderCycle < ActiveRecord::Base
 
   scope :by_name, order('name')
 
-  scope :distributing_product, lambda { |product|
-    joins(:exchanges).
-      merge(Exchange.outgoing).
-      merge(Exchange.with_product(product)).
-      select('DISTINCT order_cycles.*')
-  }
-
   scope :with_distributor, lambda { |distributor|
     joins(:exchanges).merge(Exchange.outgoing).merge(Exchange.to_enterprise(distributor))
   }
@@ -156,7 +149,6 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def distributed_variants
-    # TODO: only used in DistributionChangeValidator, can we remove?
     self.exchanges.outgoing.map(&:variants).flatten.uniq.reject(&:deleted?)
   end
 

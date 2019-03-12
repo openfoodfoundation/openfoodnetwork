@@ -13,12 +13,6 @@ class CartService
 
   def populate(from_hash, overwrite = false)
     @distributor, @order_cycle = distributor_and_order_cycle
-    # Refactor: We may not need this validation - we can't change distribution here, so
-    # this validation probably can't fail
-    if !distribution_can_supply_products_in_cart(@distributor, @order_cycle)
-      errors.add(:base, I18n.t(:spree_order_populator_error))
-      return false
-    end
 
     @order.with_lock do
       variants = read_variants from_hash
@@ -114,10 +108,6 @@ class CartService
 
   def distributor_and_order_cycle
     [@order.distributor, @order.order_cycle]
-  end
-
-  def distribution_can_supply_products_in_cart(distributor, order_cycle)
-    DistributionChangeValidator.new(@order).can_change_to_distribution?(distributor, order_cycle)
   end
 
   def varies_from_cart(variant_data)

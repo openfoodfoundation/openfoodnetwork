@@ -1,7 +1,0 @@
-= hidden_field_tag "order_cycle_id", order_cycle.id
-
-.order-cycle-fixed
-  - if changing_order_cycle
-    = t :products_oc_change, name: order_cycle.name
-  - else
-    = t :products_oc_is, name: order_cycle.name
