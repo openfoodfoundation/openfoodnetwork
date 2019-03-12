@@ -81,6 +81,18 @@ describe EnterprisesController, type: :controller do
       controller.current_order.line_items.size.should == 0
     end
 
+    it "should not empty an order if returning to the same distributor" do
+      product = create(:product)
+      create(:simple_order_cycle, distributors: [current_distributor], variants: [product.variants.first])
+      line_item = create(:line_item, variant: product.variants.first)
+      controller.current_order.line_items << line_item
+
+      spree_get :shop, {id: current_distributor}
+
+      expect(controller.current_order.distributor).to eq current_distributor
+      expect(controller.current_order.line_items.first.variant).to eq product.variants.first
+    end
+
     describe "when an out of stock item is in the cart" do
       let(:variant) { create(:variant, on_demand: false, on_hand: 10) }
       let(:line_item) { create(:line_item, variant: variant) }
