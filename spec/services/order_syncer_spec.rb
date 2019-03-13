@@ -1,3 +1,5 @@
+require "spec_helper"
+
 describe OrderSyncer do
   describe "updating the shipping method" do
     let(:subscription) { create(:subscription, with_items: true, with_proxy_orders: true) }
