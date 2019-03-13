@@ -1,6 +1,37 @@
 Spree::Admin::PaymentsController.class_eval do
   append_before_filter :filter_payment_methods
 
+  def create
+    @payment = @order.payments.build(object_params)
+    if @payment.payment_method.is_a?(Spree::Gateway) && @payment.payment_method.payment_profiles_supported? && params[:card].present? and params[:card] != 'new'
+      @payment.source = CreditCard.find_by_id(params[:card])
+    end
+
+    begin
+      unless @payment.save
+        redirect_to admin_order_payments_path(@order)
+        return
+      end
+
+      if @order.completed?
+        @payment.process!
+        flash[:success] = flash_message_for(@payment, :successfully_created)
+
+         redirect_to admin_order_payments_path(@order)
+      else
+        #This is the first payment (admin created order)
+        until @order.completed?
+          @order.next!
+        end
+        flash[:success] = Spree.t(:new_order_completed)
+        redirect_to edit_admin_order_url(@order)
+      end
+
+    rescue Spree::Core::GatewayError => e
+      flash[:error] = "#{e.message}"
+      redirect_to new_admin_order_payment_path(@order)
+    end
+  end
 
   # When a user fires an event, take them back to where they came from
   # (we can't use respond_override because Spree no longer uses respond_with)
