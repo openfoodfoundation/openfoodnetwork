@@ -25,7 +25,6 @@ Metrics/LineLength:
   - app/controllers/admin/accounts_and_billing_settings_controller.rb
   - app/controllers/admin/bulk_line_items_controller.rb
   - app/controllers/admin/business_model_configuration_controller.rb
-  - app/controllers/admin/cache_settings_controller.rb
   - app/controllers/admin/contents_controller.rb
   - app/controllers/admin/customers_controller.rb
   - app/controllers/admin/enterprise_fees_controller.rb
