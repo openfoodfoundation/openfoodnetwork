@@ -19,10 +19,8 @@ Spree::Admin::PaymentsController.class_eval do
 
          redirect_to admin_order_payments_path(@order)
       else
-        #This is the first payment (admin created order)
-        until @order.completed?
-          @order.next!
-        end
+        AdvanceOrderService.new(@order).call(true)
+
         flash[:success] = Spree.t(:new_order_completed)
         redirect_to edit_admin_order_url(@order)
       end
