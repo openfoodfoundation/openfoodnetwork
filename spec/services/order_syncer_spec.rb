@@ -126,7 +126,15 @@ describe OrderSyncer do
   end
 
   describe "changing the billing address" do
-    let(:subscription) { create(:subscription, with_items: true, with_proxy_orders: true) }
+    let!(:distributor_address) { create(:address, address1: "Distributor Address") }
+    let!(:distributor) { create(:distributor_enterprise, address: distributor_address) }
+    let!(:original_ship_address) { create(:address) }
+
+    let(:subscription) do
+      create(:subscription, shop: distributor, ship_address: original_ship_address,
+                            with_items: true, with_proxy_orders: true)
+    end
+
     let(:shipping_method) { subscription.shipping_method }
     let!(:order) { subscription.proxy_orders.first.initialise_order! }
     let!(:bill_address_attrs) { subscription.bill_address.attributes }
@@ -149,7 +157,7 @@ describe OrderSyncer do
           expect(order.bill_address.phone).to eq "1123581321"
           expect(order.ship_address.firstname).to eq "Bill"
           expect(order.ship_address.lastname).to eq ship_address_attrs["lastname"]
-          expect(order.ship_address.address1).to eq ship_address_attrs["address1"]
+          expect(order.ship_address.address1).to eq distributor_address.address1
           expect(order.ship_address.phone).to eq "1123581321"
         end
       end
@@ -167,7 +175,7 @@ describe OrderSyncer do
           expect(order.bill_address.phone).to eq bill_address_attrs["phone"]
           expect(order.ship_address.firstname).to eq "Jane"
           expect(order.ship_address.lastname).to eq ship_address_attrs["lastname"]
-          expect(order.ship_address.address1).to eq ship_address_attrs["address1"]
+          expect(order.ship_address.address1).to eq distributor_address.address1
           expect(order.ship_address.phone).to eq ship_address_attrs["phone"]
         end
       end
@@ -215,7 +223,15 @@ describe OrderSyncer do
   end
 
   describe "changing the ship address" do
-    let(:subscription) { create(:subscription, with_items: true, with_proxy_orders: true) }
+    let!(:distributor_address) { create(:address, address1: "Distributor Address") }
+    let!(:distributor) { create(:distributor_enterprise, address: distributor_address) }
+    let!(:original_ship_address) { create(:address) }
+
+    let(:subscription) do
+      create(:subscription, shop: distributor, ship_address: original_ship_address,
+                            with_items: true, with_proxy_orders: true)
+    end
+
     let(:shipping_method) { subscription.shipping_method }
     let!(:order) { subscription.proxy_orders.first.initialise_order! }
     let!(:bill_address_attrs) { subscription.bill_address.attributes }
@@ -233,23 +249,28 @@ describe OrderSyncer do
         order.reload;
         expect(order.ship_address.firstname).to eq ship_address_attrs["firstname"]
         expect(order.ship_address.lastname).to eq ship_address_attrs["lastname"]
-        expect(order.ship_address.address1).to eq ship_address_attrs["address1"]
+        expect(order.ship_address.address1).to eq distributor_address.address1
         expect(order.ship_address.phone).to eq ship_address_attrs["phone"]
       end
 
       context "but the shipping method is being changed to one that requires a ship_address" do
         let(:new_shipping_method) { create(:shipping_method, require_ship_address: true) }
+
         before { params.merge!(shipping_method_id: new_shipping_method.id) }
 
-        it "updates ship_address attrs" do
-          subscription.assign_attributes(params)
-          expect(syncer.sync!).to be true
-          expect(syncer.order_update_issues.keys).to_not include order.id
-          order.reload;
-          expect(order.ship_address.firstname).to eq "Ship"
-          expect(order.ship_address.lastname).to eq ship_address_attrs["lastname"]
-          expect(order.ship_address.address1).to eq "123 abc st"
-          expect(order.ship_address.phone).to eq "1123581321"
+        context "when the original ship address is the same as the distributor address" do
+          let!(:original_ship_address) { create(:address, address1: distributor_address.address1) }
+
+          it "updates ship_address attrs" do
+            subscription.assign_attributes(params)
+            expect(syncer.sync!).to be true
+            expect(syncer.order_update_issues.keys).to_not include order.id
+            order.reload;
+            expect(order.ship_address.firstname).to eq "Ship"
+            expect(order.ship_address.lastname).to eq ship_address_attrs["lastname"]
+            expect(order.ship_address.address1).to eq "123 abc st"
+            expect(order.ship_address.phone).to eq "1123581321"
+          end
         end
       end
     end
