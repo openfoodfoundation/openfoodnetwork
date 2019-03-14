@@ -66,13 +66,12 @@ class OrderSyncer
   end
 
   def update_shipment_for(order)
-    shipment = order.shipment
-    return track_shipping_method_issue(order) if shipment.blank?
+    return if pending_shipment_with?(order, shipping_method_id) # No need to do anything.
 
-    if shipment.state == "pending" && shipment.shipping_method.id == shipping_method_id_was
+    if pending_shipment_with?(order, shipping_method_id_was)
       order.select_shipping_method(shipping_method_id)
-    elsif !(shipment.state == "pending" && shipment.shipping_method.id == shipping_method_id)
-      track_shipping_method_issue(order)
+    else
+      order_update_issues.add(order, I18n.t('admin.shipping_method'))
     end
   end
 
@@ -106,7 +105,8 @@ class OrderSyncer
     end
   end
 
-  def track_shipping_method_issue(order)
-    order_update_issues.add(order, I18n.t('admin.shipping_method'))
+  def pending_shipment_with?(order, shipping_method_id)
+    return false unless order.shipment.present? && order.shipment.state == "pending"
+    order.shipping_method.id == shipping_method_id
   end
 end
