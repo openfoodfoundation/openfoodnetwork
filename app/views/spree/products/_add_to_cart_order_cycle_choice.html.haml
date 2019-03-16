@@ -1,3 +1,0 @@
-%div
-  = t :products_oc
-= select_tag "order_cycle_id", options_from_collection_for_select([OrderCycle.new(name: t(:none))]+order_cycle_collection, "id", "name", current_order_cycle.andand.id)

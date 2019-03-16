@@ -47,7 +47,7 @@ ca:
           attributes:
             subscription_line_items:
               at_least_one_product: "^Afegiu com a mínim un producte"
-              not_available: "^ %{name} no està disponible a l'horari seleccionat"
+              not_available: "^ %{name} no està disponible a la programació seleccionada"
             ends_at:
               after_begins_at: "ha de ser després de"
             customer:
@@ -57,7 +57,7 @@ ca:
             payment_method:
               not_available_to_shop: "no està disponible per %{shop}"
               invalid_type: "el mètode ha de ser Efectiu o Stripe"
-              charges_not_allowed: "^ Els càrrecs de la targeta de crèdit no estan permesos per aquest consumidora"
+              charges_not_allowed: "^ Aquesta consumidora no permet càrrecs a la targeta de crèdit"
               no_default_card: "^ No hi ha cap targeta predeterminada disponible per a aquesta consumidora"
             shipping_method:
               not_available_to_shop: "no està disponible per %{shop}"
@@ -75,7 +75,7 @@ ca:
     failure:
       invalid: |
           Correu electrònic o contrasenya no vàlids.
-          Va ser un convitat la última vegada? Potser vostè necessita crear un compte o restablir la contrasenya.
+          Va ser un convidat l'última vegada? Potser vostè necessita crear un compte o restablir la contrasenya.
       unconfirmed: "Heu de confirmar el vostre compte abans de continuar."
       already_registered: "Aquesta adreça electrònica ja està registrada. Inicieu sessió per continuar o torneu endarrere per utilitzar una altra adreça de correu electrònic."
     user_passwords:
@@ -102,9 +102,9 @@ ca:
     cancel_email:
       dear_customer: "Benvolguda consumidora:"
       instructions: "S'ha cancel·lat la vostra comanda. Conserveu aquesta informació com a comprovant de la cancel·lació."
-      order_summary_canceled: "Resum de comanda [CANCEL·LAT]"
+      order_summary_canceled: "Resum de comanda [CANCEL·LADA]"
       subject: "Cancel·lació de la comanda"
-      subtotal: "Total parcial: %{subtotal}"
+      subtotal: "Subtotal: %{subtotal}"
       total: "Total comanda: %{total}"
   producer_mailer:
     order_cycle:
@@ -113,7 +113,7 @@ ca:
     shipped_email:
       dear_customer: "Benvolguda consumidora:"
       instructions: "La vostra comanda s'ha enviat"
-      shipment_summary: "Detalls de l'enviament"
+      shipment_summary: "Resum de l'enviament"
       subject: "Notificació d'enviament"
       thanks: "Gràcies per la teva compra."
       track_information: "Informació del seguiment: %{tracking}"
@@ -122,7 +122,7 @@ ca:
     placement_summary_email:
       subject: Un resum de les comandes per subscripció recentment establertes
       greeting: "Hola %{name},"
-      intro: "A continuació es mostra un resum de les comandes per subscripció que s'acaben de col·locar per %{shop}."
+      intro: "A continuació es mostra un resum de les comandes per subscripció que s'acaben de realitzar per %{shop}."
     confirmation_summary_email:
       subject: Un resum de les comandes per subscripció confirmades recentment
       greeting: "Hola %{name},"
@@ -131,58 +131,58 @@ ca:
       total: S'ha marcat un total de subscripcions %{count} per al processament automàtic.
       success_zero: D'aquestes, cap d'elles s'ha processat correctament.
       success_some: D'aquests, %{count} s'han processat correctament.
-      success_all: Tots s'han processat correctament.
+      success_all: Totes s'han processat correctament.
       issues: A continuació es detallen els problemes trobats.
     summary_detail:
       no_message_provided: No s'ha proporcionat cap missatge d'error
       changes:
         title: Stock insuficient (%{count} comandes)
-        explainer: Aquestes comandes es van processar, però no hi havia suficients estocs per a alguns articles sol·licitats
+        explainer: Aquestes comandes es van processar, però no hi havia suficient estoc per a alguns articles sol·licitats
       empty:
         title: Sense Stock (%{count} comandes)
-        explainer: Aquestes comandes no s'han pogut processar perquè no hi ha disponible cap estoc per a cap dels elements sol·licitats
+        explainer: Aquestes comandes no s'han pogut processar perquè no hi ha disponible estoc per a cap dels elements sol·licitats
       complete:
         title: Ja està processat (%{count} comandes)
-        explainer: Aquestes comandes ja estaven marcades com a completes i, per tant, no es modificarán
+        explainer: Aquestes comandes ja estaven marcades com a completes i, per tant, no es modificaran
       processing:
         title: S'ha trobat un error (%{count} comandes)
         explainer: El processament automàtic d'aquestes comandes ha fallat a causa d'un error. L'error es mostra sempre que sigui possible.
       failed_payment:
         title: Pagament erroni (%{count} comandes)
-        explainer: La tramitació automàtica del pagament d'aquestes comandes va fallar a causa d'un error. L'error es mostra sempre que sigui possible.
+        explainer: La tramitació automàtica del pagament d'aquestes comandes ha fallat a causa d'un error. L'error es mostra sempre que sigui possible.
       other:
         title: Altres errors (%{count} comandes)
         explainer: El processament automàtic d'aquestes comandes va fallar per un motiu desconegut. Això no hauria de passar, si us plau, contacteu amb nosaltres si esteu veient això.
   home: "OFN"
   title: Open Food Network
-  welcome_to: 'Benvingut a'
+  welcome_to: 'Benvingut a '
   site_meta_description: "Comencem des de baix. Amb agricultors i productors disposats a explicar les seves històries amb orgull i sinceritat. Amb distribuïdors connectant persones i productes de manera justa i honesta. Amb compradors que creuen que millors decisions de compra setmanal poden ..."
   search_by_name: Cercar per nom o barri ...
-  producers_join: Els productors australians son ara benvinguts a unir-se a la Open Food Network.
+  producers_join: Els productors australians son ara benvinguts a unir-se a Open Food Network.
   charges_sales_tax: Càrrecs GST?
   print_invoice: "Imprimir Factura"
-  print_ticket: "Imprimir Ticket"
-  select_ticket_printer: "Seleccionar la impressora de tickets"
+  print_ticket: "Imprimir tiquet"
+  select_ticket_printer: "Seleccionar la impressora de tiquets"
   send_invoice: "Enviar Factura"
   resend_confirmation: "Reenviar Confirmació"
   view_order: "Veure Comanda"
   edit_order: "Editar Comanda"
   ship_order: "Enviar Comanda"
   cancel_order: "Cancel·lar Comanda"
-  confirm_send_invoice: "Una factura per aquesta comanda s'enviarà al client. Està segur de continuar?"
+  confirm_send_invoice: " S'enviarà al client una factura per a aquesta comanda Està segur de continuar?"
   confirm_resend_order_confirmation: "Segur que vol reenviar el correu de confirmació de la comanda?"
-  must_have_valid_business_number: "%{enterprise_name} ha de tenir un ABN vàlid abans de les factures es poden enviar."
+  must_have_valid_business_number: "%{enterprise_name} ha de tenir un NIF vàlid abans de poder enviar les factures."
   invoice: "Factura"
   percentage_of_sales: "%{percentage} de vendes"
   capped_at_cap: "llimitat a %{cap}"
   per_month: "al mes"
   free: "gratuït"
   free_trial: "prova gratuïta"
-  plus_tax: "més GST"
-  min_bill_turnover_desc: "una vegada que el volum de negocis supere %{mbt_amount}"
+  plus_tax: "més IVA"
+  min_bill_turnover_desc: "una vegada que el volum de negocis superi %{mbt_amount}"
   more: "Més"
   say_no: "No"
-  say_yes: "Si"
+  say_yes: "Sí"
   then: llavors
   ongoing: En marxa
   bill_address: Adreça de facturació
@@ -192,8 +192,8 @@ ca:
   select_continue: Seleccionar i Continuar
   remove: Eliminar
   or: o
-  collapse_all: Col·lapsar tot
-  expand_all: Expandir tot
+  collapse_all: Plegar-los tots
+  expand_all: Expandeix tots
   loading: Carregant...
   show_more: Mostrar més
   show_all: Mostrar tots
@@ -202,12 +202,12 @@ ca:
   edit: Editar
   clone: Clonar
   distributors: Distribuïdors
-  distribution: Distribució
   bulk_order_management: Gestió de comandes en bloc
   enterprises: Organitzacions
   enterprise_groups: Grups
   reports: Informes
   variant_overrides: Inventari
+  import: Importa
   spree_products: Productes Spree
   all: Tots
   current: Actual
@@ -234,18 +234,21 @@ ca:
   allow_cookies: "Permet les galetes"
   notes: Notes
   error: Error
-  processing_payment: S'està processant el pagament ...
+  processing_payment: S'està processant el pagament...
   show_only_unfulfilled_orders: Mostra només comandes no realitzades
-  filter_results: Resultats del filtre
+  filter_results: Aplicar filtre
   quantity: Quantitat
   pick_up: Recollida
   copy: Còpia
+  change_my_password: "Canviar la meva contrasenya"
+  update_password: "Actualitzar la contrasenya"
   password_confirmation: Confirmació de la contrassenya
   reset_password_token: Reinicia el token de contrasenya
   expired: ha caducat, si us plau, sol·liciteu-ne un de nou
   back_to_payments_list: "Torna a la llista de pagaments"
   actions:
     create_and_add_another: "Crea i afegeix-ne una altra"
+    create: "Crear"
   admin:
     begins_at: Comença a
     begins_on: Comença
@@ -267,7 +270,7 @@ ca:
     image: Imatge
     product: Producte
     quantity: Quantitat
-    schedule: Horari
+    schedule: Programació
     shipping: Enviament
     shipping_method: Mètode d'enviament
     shop: Botiga
@@ -279,7 +282,7 @@ ca:
     volume: Volum
     items: Articles
     select_all: Seleccionar tot
-    obsolete_master: Mestre obsolet
+    obsolete_master: Mestra obsoleta
     quick_search: Cerca Ràpida
     clear_all: Esborrar tot
     start_date: "Data d'inici"
@@ -310,7 +313,7 @@ ca:
         default_accounts_shipping_method: "Mètode d'enviament de comptes predeterminades"
       edit:
         accounts_and_billing: "Comptes i facturació"
-        accounts_administration_distributor: "'administració de comptes de distribuïdora"
+        accounts_administration_distributor: "Administració de comptes de distribuïdora"
         admin_settings: "Configuració"
         update_invoice: "Actualitza les factures"
         auto_update_invoices: "Actualitzeu les factures cada dia a la 1:00 a.m."
@@ -361,13 +364,14 @@ ca:
         total_monthly_bill_incl_tax: "Factura mensual total (impostos inclosos)"
         total_monthly_bill_incl_tax_tip: "L'exemple total de la factura mensual amb impostos inclosos, tenint en compte la configuració i la facturació proporcionada."
     cache_settings:
-      show:
-        title: Emmagatzematge ocult
-        distributor: Distribuïdora
-        order_cycle: Cicle de Comanda
-        status: Estat
-        diff: Diferència
-        error: Error
+      edit:
+        title: "Emmagatzematge ocult"
+        distributor: "Distribuïdora"
+        order_cycle: "Cicle de comanda"
+        status: "Estat"
+        diff: "Diferència"
+        error: "Error"
+        enable_products_cache: "Habilitar la memòria cau de productes?"
     invoice_settings:
       edit:
         title: Configuració de la factura
@@ -885,7 +889,7 @@ ca:
         search_by_order_cycle_name: "Cerca pel nom del Cicle de Comanda..."
         involving: "Implica"
         any_enterprise: "Qualsevol organització"
-        any_schedule: "Qualsevol horari"
+        any_schedule: "Qualsevol programació"
       form:
         incoming: Entrant
         supplier: Proveïdora
@@ -899,8 +903,8 @@ ca:
         delivery_details: Detalls de recollida / lliurament
         debug_info: Informació de depuració
       index:
-        schedule: Horari
-        schedules: Horaris
+        schedule: Programació
+        schedules: Programacions
         adding_a_new_schedule: Afegir una nova programació
         updating_a_schedule: Actualització una programació
         new_schedule: Nova programació
@@ -1234,6 +1238,7 @@ ca:
   no_shipping_or_payment: sense mètodes d'enviament o pagament
   unconfirmed: no confirmat
   days: dies
+  authorization_failure: "Error d'autorització"
   label_shop: "Botiga"
   label_shops: "Botigues"
   label_map: "Mapa"
@@ -1420,12 +1425,12 @@ ca:
   email_signature: "Equip %{sitename}"
   email_confirm_customer_greeting: "Hola %{name},"
   email_confirm_customer_intro_html: "Gràcies per comprar a <strong> %{distributor} </ strong>."
-  email_confirm_customer_number_html: "Confirmació de la comanda <strong> # %{number} </ strong>"
+  email_confirm_customer_number_html: "Confirmació de la comanda <strong> # %{number} </strong>"
   email_confirm_customer_details_html: "Aquests són els detalls de la teva comanda de <strong> %{distributor} </ strong>:"
   email_confirm_customer_signoff: "Salutacions cordials,"
   email_confirm_shop_greeting: "Hola %{name},"
   email_confirm_shop_order_html: "Que bé! Tens una nova comanda per <strong> %{distributor} </ strong>."
-  email_confirm_shop_number_html: "Confirmació de la comanda <strong> # %{number} </ strong>"
+  email_confirm_shop_number_html: "Confirmació de la comanda <strong> # %{number}</strong>"
   email_order_summary_item: "Article"
   email_order_summary_quantity: "quant."
   email_order_summary_price: "Preu"
@@ -1609,6 +1614,7 @@ ca:
   products_available: Disponible?
   products_producer: "Productor"
   products_price: "Preu"
+  name_or_sku: "NOM O CODI"
   register_title: Registra't
   sell_title: "Registra't"
   sell_headline: "Afegiu-vos a Katuma!"
@@ -1666,6 +1672,7 @@ ca:
   orders_bought_edit_button: Edita articles confirmats
   orders_bought_already_confirmed: "* ja confirmat"
   orders_confirm_cancel: Estàs segur que vols cancel·lar aquesta comanda?
+  order_processed_successfully: "La teva comanda s'ha processat amb èxit"
   products_cart_distributor_choice: "Distribuïdora de la teva comanda:"
   products_cart_distributor_change: "La teva distribuïdora d'aquesta comanda canviarà a %{name} si afegeixes aquest producte a la teva cistella."
   products_cart_distributor_is: "La distribuïdora d'aquesta comanda és %{name}."
@@ -1729,23 +1736,60 @@ ca:
   choose_password: "Escull una contrasenya"
   confirm_password: "Confirma la contrassenya"
   action_signup: "Registra't ara"
-  welcome_to_ofn: "Benvingut a la xarxa Open Food Network!"
-  signup_or_login: "Comenceu registrant-vos (o iniciant sessió)"
-  have_an_account: "Ja tens un compte?"
-  action_login: "Inicia la sessió ara."
   forgot_password: "Has oblidat la contrasenya?"
   password_reset_sent: "S'ha enviat un correu electrònic amb instruccions per restablir la teva contrasenya."
   reset_password: "Restablir la contrasenya"
-  who_is_managing_enterprise: "Qui és responsable de gestionar %{enterprise}?"
   update_and_recalculate_fees: "Actualitza i recalcula les comissions"
   registration:
     steps:
-      images:
-        continue: "Continua"
-        back: "Enrere"
-        headline: "Gràcies!"
-        description: "Som-hi, pugem unes imatges perquè el teu perfil es vegi bonic. :)"
+      introduction:
+        registration_greeting: "Hola!"
+        registration_intro: "Ara pots crear un perfil per productora o grup de consum"
+        registration_checklist: "Necessitaràs"
+        registration_time: "5-10 minuts"
+        registration_enterprise_address: "Adreça de l'organització"
+        registration_contact_details: "Dades de contacte principals"
+        registration_logo: "Imatge del logotip"
+        registration_promo_image: "Imatge promocional per al vostre perfil"
+        registration_about_us: "Text \"Sobre nosaltres\""
+        registration_outcome_headline: "Què aconsegueixo?"
+        registration_outcome1_html: "El vostre perfil ajuda els usuaris <strong> a trobar </ strong> i <strong> contactar </ strong> a l'Open Food Network."
+        registration_outcome2: "Utilitzeu aquest espai per explicar la història de la vostra organització, per ajudar a connectar amb la vostra presència social i en línia."
+        registration_outcome3: "També és el primer pas cap al comenrç a través d'Open Food Network o per obrir una botiga en línia."
+        registration_action: "Comencem!"
+      details:
+        title: "Detalls"
+        headline: "Comencem!"
+        enterprise: "Ep! Primer ens cal saber una mica sobre la vostra organització:"
+        producer: "Ep! Primer necessitem saber una mica sobre la teva granja:"
+        enterprise_name_field: "Nom de l'organització:"
+        producer_name_field: "Nom de la granja:"
+        producer_name_field_placeholder: "p. ex: Horta Josep Ribes  "
+        producer_name_field_error: "Si us plau, selecciona un únic nom per a la teva organització"
+        address1_field: "Adreça línia 1: "
+        address1_field_placeholder: "p. ex: Carrer Ample, 123 "
+        address1_field_error: "Si us plau, introdueix una adreça"
+        address2_field: "Adreça (línia 2):"
+        suburb_field: "Barri: "
+        suburb_field_placeholder: "p. ex: Les Corts "
+        suburb_field_error: "Si us plau, introdueix un barri "
+        postcode_field: "Codi postal:"
+        postcode_field_placeholder: "p. ex: 08870"
+        postcode_field_error: "El codi postal és obligatori"
+        state_field: "Estat:"
+        state_field_error: "Estat obligatori"
+        country_field: "País:"
+        country_field_error: "Si us plau, selecciona un país"
+      contact:
+        title: "Contacte"
+        who_is_managing_enterprise: "Qui és responsable de gestionar %{enterprise}?"
+        contact_field: "Contacte principal"
+        contact_field_placeholder: "Nom de contacte"
+        contact_field_required: "Has d'introduir un contacte principal."
+        phone_field: "Número de telèfon "
+        phone_field_placeholder: "p. ex. 012 345 678 "
       type:
+        title: "Tipus"
         headline: "El darrer pas per afegir %{enterprise}!"
         question: "Ets productora?"
         yes_producer: "Sí, sóc productora"
@@ -1754,152 +1798,73 @@ ca:
         yes_producer_help: "Les productores fan coses delicioses per menjar i/o beure. Ets productora si cultives, cries, elabores, cous, fermentes..."
         no_producer_help: "Si no ets productora, probablement ets algú que ven i distribueix aliments. Pot ser un grup de consum, cooperativa, minorista, majorista o altres."
         create_profile: "Crea un perfil"
-  enterprise:
-    registration:
-      modal:
-        steps:
-          details:
-            title: 'Detalls'
-            headline: "Comencem!"
-            enterprise: "Ep! Primer necessitem saber una mica sobre la vostra organització:"
-            producer: "Ep! Primer necessitem saber una mica sobre la teva granja:"
-            enterprise_name_field: "Nom de l'organització:"
-            producer_name_field: "Nom de la granja:"
-            producer_name_field_placeholder: "p. ex: Horta Josep Ribes"
-            producer_name_field_error: "Si us plau, selecciona un únic nom per a la teva organització"
-            address1_field: "Adreça línia 1:"
-            address1_field_placeholder: "p. ex: Carrer Ample, 123"
-            address1_field_error: "Si us plau, introdueix una adreça"
-            address2_field: "Adreça (línia 2):"
-            suburb_field: "Barri:"
-            suburb_field_placeholder: "p. ex: Les Corts"
-            suburb_field_error: "Si us plau, introdueix un barri"
-            postcode_field: "Codi postal:"
-            postcode_field_placeholder: "p. ex: 08870"
-            postcode_field_error: "El codi postal és obligatori"
-            state_field: "Estat:"
-            state_field_error: "Estat obligatori"
-            country_field: "País:"
-            country_field_error: "Si us plau, selecciona un país"
-          contact:
-            title: 'Contacte'
-            contact_field: 'Contacte principal'
-            contact_field_placeholder: 'Nom de contacte'
-            contact_field_required: "Has d'introduir un contacte principal."
-            email_field: 'Correu electrònic'
-            email_field_placeholder: 'ex: josep@hortajosepribes.com'
-            phone_field: 'Número de telèfon'
-            phone_field_placeholder: 'p. ex. 012 345 678'
-          type:
-            title: 'Tipus'
-          about:
-            title: 'Sobre'
-          images:
-            title: 'Imatges'
-          social:
-            title: 'Social'
-  enterprise_contact: "Contacte principal"
-  enterprise_contact_placeholder: "Nom de contacte"
-  enterprise_contact_required: "Has d'introduir un contacte principal."
-  enterprise_email_address: "Correu electrònic"
-  enterprise_email_placeholder: "ex: josep@hortajosepribes.com"
-  enterprise_phone: "Número de telèfon "
-  enterprise_phone_placeholder: "p. ex. 012 345 678 "
+      about:
+        title: "Sobre"
+        headline: "Bona!"
+        message: "Ara expliqueu-ne els detalls"
+        success: "Enhorabona! %{enterprise} s'ha afegit a Open Food Network"
+        registration_exit_message: "Si surts de l'assistent en qualsevol moment, podràs continuar creant el teu perfil anant a la interfície d'administració."
+        enterprise_description: "Descripció breu"
+        enterprise_description_placeholder: "Una frase breu que descrigui la teva organització"
+        enterprise_long_desc: "Descripció llarga"
+        enterprise_long_desc_placeholder: "Aquesta és la teva oportunitat per explicar la història de la vostra organització: què et fa diferent i meravellós? Et suggerim que la descripció sigui inferior a 600 caràcters o 150 paraules."
+        enterprise_long_desc_length: "%{num} caràcters / fins a 600 recomanats"
+        enterprise_abn: "NIF"
+        enterprise_abn_placeholder: "p. ex. F987654321"
+        enterprise_acn: "NIF"
+        enterprise_acn_placeholder: "p. ex. 123 456 789"
+        enterprise_tax_required: "Has de fer una selecció."
+      images:
+        title: "Imatges"
+        headline: "Gràcies!"
+        description: "Som-hi, pugem unes imatges perquè el teu perfil es vegi bonic. :)"
+        uploading: "Carregant..."
+        continue: "Continua"
+        back: "Enrere"
+      logo:
+        select_logo: "Pas 1. Selecciona imatge del logotip"
+        logo_tip: "Consell: les imatges quadrades funcionaran millor, preferiblement com a mínim 300×300 px"
+        logo_label: "Escull una imatge de logotip"
+        logo_drag: "Arrossega i deixa anar el teu logotip aquí"
+        review_logo: "Pas 2. Revisa el teu logotip"
+        review_logo_tip: "Consell: per obtenir millors resultats, el teu logotip ha d'omplir l'espai disponible"
+        logo_placeholder: "El teu logotip apareixerà aquí per a la seva revisió una vegada que s'hagi carregat "
+      promo:
+        select_promo_image: "Pas 3. Selecciona una imatge promocional"
+        promo_image_tip: "Consell: es mostra com a banner, la mida recomanada és de 1200 × 260 píxels"
+        promo_image_label: "Escull una imatge promocional"
+        promo_image_drag: "Arrossegueu i deixeu anar la vostra imatge promocional aquí"
+        review_promo_image: "Pas 4. Reviseu el vostre banner promocional"
+        review_promo_image_tip: "Consell: per obtenir millors resultats, la teva imatge de promoció hauria d'omplir l'espai disponible"
+        promo_image_placeholder: "El teu logotip apareixerà aquí per a la seva revisió una vegada que s'hagi carregat "
+      social:
+        title: "Social"
+        enterprise_final_step: "Pas final!"
+        enterprise_social_text: "Com poden la gent trobar %{enterprise}en línia?"
+        website: "Lloc web"
+        website_placeholder: "per exemple: katuma.org"
+        facebook: "Facebook"
+        facebook_placeholder: "p .ex: www.facebook.com/NomDeLaPàgina"
+        linkedin: "LinkedIn"
+        linkedin_placeholder: "p. ex: www.linkedin.com/YourNameHere"
+        twitter: "Twitter"
+        twitter_placeholder: "p. ex: @twitter_hortajosepribes"
+        instagram: "Instagram"
+        instagram_placeholder: "p. ex: @instagram_hortajosepribes"
+      limit_reached:
+        headline: "Oh, no!"
+        message: "Has arribat al límit!"
+        text: "Has arribat al límit de la quantitat de les organitzacions de les quals pots ser propietari a"
+        action: "Torna a la pàgina d'inici"
+      finished:
+        headline: "Acabat!"
+        thanks: "Gràcies per omplir els detalls de%{enterprise}."
+        login: "Pots canviar o actualitzar la teva organització en qualsevol moment accedint a Katuma i anant a Admin."
+        action: "Inici"
   back: "Enrere"
   continue: "Continua"
-  limit_reached_headline: "Oh, no!"
-  limit_reached_message: "Has arribat al límit!"
-  limit_reached_text: "Has arribat al límit de la quantitat de les organitzacions de les quals pots ser propietari a"
-  limit_reached_action: "Torna a la pàgina d'inici"
-  select_promo_image: "Pas 3. Selecciona una imatge promocional"
-  promo_image_tip: "Consell: es mostra com a banner, la mida recomanada és de 1200 × 260 píxels"
-  promo_image_label: "Escull una imatge promocional"
   action_or: "O"
-  promo_image_drag: "Arrossegueu i deixeu anar la vostra imatge promocional aquí"
-  review_promo_image: "Pas 4. Reviseu el vostre banner promocional"
-  review_promo_image_tip: "Consell: per obtenir millors resultats, la teva imatge de promoció hauria d'omplir l'espai disponible"
-  promo_image_placeholder: "El teu logotip apareixerà aquí per a la seva revisió una vegada que s'hagi carregat"
-  uploading: "Carregant..."
-  select_logo: "Pas 1. Selecciona imatge del logotip"
-  logo_tip: "Consell: les imatges quadrades funcionaran millor, preferiblement com a mínim 300×300 px"
-  logo_label: "Escull una imatge de logotip"
-  logo_drag: "Arrossega i deixa anar el teu logotip aquí"
-  review_logo: "Pas 2. Revisa el teu logotip"
-  review_logo_tip: "Consell: per obtenir millors resultats, el teu logotip ha d'omplir l'espai disponible"
-  logo_placeholder: "El teu logotip apareixerà aquí per a la seva revisió una vegada que s'hagi carregat "
-  enterprise_about_headline: "Bona!"
-  enterprise_about_message: "Ara expliqueu-ne els detalls"
-  enterprise_success: "Enhorabona! %{enterprise} s'ha afegit a Open Food Network"
-  enterprise_registration_exit_message: "Si surts de l'assistent en qualsevol moment, podràs continuar creant el teu perfil anant a la interfície d'administració."
-  enterprise_description: "Descripció breu"
-  enterprise_description_placeholder: "Una frase breu que descrigui la teva organització"
-  enterprise_long_desc: "Descripció llarga"
-  enterprise_long_desc_placeholder: "Aquesta és la teva oportunitat per explicar la història de la vostra organització: què et fa diferent i meravellós? Et suggerim que la descripció sigui inferior a 600 caràcters o 150 paraules."
-  enterprise_long_desc_length: "%{num} caràcters / fins a 600 recomanats"
-  enterprise_abn: "NIF"
-  enterprise_abn_placeholder: "ex. 99 123 456 789"
-  enterprise_acn: "IVA"
-  enterprise_acn_placeholder: "p. ex. 123 456 789"
-  enterprise_tax_required: "Has de fer una selecció."
-  enterprise_final_step: "Pas final!"
-  enterprise_social_text: "Com poden la gent trobar %{enterprise}en línia?"
-  website: "Lloc web"
-  website_placeholder: "per exemple: katuma.org"
-  facebook: "Facebook"
-  facebook_placeholder: "p .ex: www.facebook.com/NomDeLaPàgina"
-  linkedin: "LinkedIn"
-  linkedin_placeholder: "p. ex: www.linkedin.com/YourNameHere"
-  twitter: "Twitter"
-  twitter_placeholder: "p. ex: @twitter_hortajosepribes"
-  instagram: "Instagram"
-  instagram_placeholder: "p. ex: @instagram_hortajosepribes"
-  registration_greeting: "Hola!"
-  registration_intro: "Ara pots crear un perfil per productora o grup de consum"
-  registration_action: "Comencem!"
-  registration_checklist: "Necessitaràs"
-  registration_time: "5-10 minuts"
-  registration_enterprise_address: "Adreça de l'organització"
-  registration_contact_details: "Dades de contacte principals"
-  registration_logo: "Imatge del logotip"
-  registration_promo_image: "Imatge promocional per al vostre perfil"
-  registration_about_us: "Text \"Sobre nosaltres\""
-  registration_outcome_headline: "Què aconsegueixo?"
-  registration_outcome1_html: "El vostre perfil ajuda els usuaris <strong> a trobar </ strong> i <strong> contactar </ strong> a l'Open Food Network."
-  registration_outcome2: "Utilitza aquest espai per explicar la història de la teva organització, per ajudar a connectar-te amb la vostra presència social i a les xarxes."
-  registration_outcome3: "També és el primer pas cap al comenrç a través d'Open Food Network o per obrir una botiga en línia."
-  registration_finished_headline: "Acabat!"
-  registration_finished_thanks: "Gràcies per omplir els detalls de%{enterprise}."
-  registration_finished_login: "Pots canviar o actualitzar la teva organització en qualsevol moment accedint a Katuma i anant a Admin."
-  registration_finished_action: "Inici"
-  registration_contact_name: 'Nom de contacte'
-  registration_type_headline: "El darrer pas per afegir %{enterprise}!"
-  registration_type_question: "Ets productora?"
-  registration_type_producer: "Sí, sóc productora"
-  registration_type_no_producer: "No, no sóc productora"
-  registration_type_error: "Si us plau, escull una de les opcions. Ets productora?"
-  registration_type_producer_help: "Les productores fan coses delicioses per menjar i/o beure. Ets productora si cultives, cries, elabores, cous, fermentes..."
-  registration_type_no_producer_help: "Si no ets productora, probablement ets algú que ven i distribueix aliments. Pot ser un grup de consum, cooperativa, minorista, majorista o altres."
-  registration_detail_headline: "Comencem!"
-  registration_detail_enterprise: "Ep! Primer necessitem saber una mica sobre la vostra organització:"
-  registration_detail_producer: "Ep! Primer necessitem saber una mica sobre la teva granja:"
-  registration_detail_name_enterprise: "Nom de l'organització:"
-  registration_detail_name_producer: "Nom de la granja:"
-  registration_detail_name_placeholder: "p. ex: Horta Josep Ribes  "
-  registration_detail_name_error: "Si us plau, selecciona un únic nom per a la teva organització"
-  registration_detail_address1: "Adreça línia 1: "
-  registration_detail_address1_placeholder: "p. ex: Carrer Ample, 123 "
-  registration_detail_address1_error: "Si us plau, introdueix una adreça"
-  registration_detail_address2: "Adreça (línia 2):"
-  registration_detail_suburb: "Barri: "
-  registration_detail_suburb_placeholder: "p. ex: Les Corts "
-  registration_detail_suburb_error: "Si us plau, introdueix un barri "
-  registration_detail_postcode: "Codi postal:"
-  registration_detail_postcode_placeholder: "p. ex: 08870"
-  registration_detail_postcode_error: "El codi postal és obligatori"
-  registration_detail_state: "Estat:"
-  registration_detail_state_error: "Estat obligatori"
-  registration_detail_country: "País:"
-  registration_detail_country_error: "Si us plau, selecciona un país"
+  enterprise_limit: Límit d'organitzacions
   shipping_method_destroy_error: "Aquest mètode d'enviament no es pot esborrar perquè s'hi fa referència en una comanda: %{number}."
   accounts_and_billing_task_already_running_error: "Ja s'està executant una tasca, espera fins que hagi acabat"
   accounts_and_billing_start_task_notice: "Tasca en cua"
@@ -1933,6 +1898,10 @@ ca:
   ok: D'acord
   not_visible: no visible
   you_have_no_orders_yet: "Encara no tens comandes"
+  show_only_complete_orders: "Mostra només comandes completades"
+  successfully_created: '%{resource} s''ha creat correctament.'
+  successfully_removed: 'S''ha eliminat correctament %{resource}.'
+  successfully_updated: '%{resource} s''ha actualitzat correctament.'
   running_balance: "Balanç corrent"
   outstanding_balance: "Balanç pendent"
   admin_enterprise_relationships: "Permisos de l'organització"
@@ -1971,7 +1940,7 @@ ca:
   units: "Mida d'unitat"
   coordinator: "Coordinador"
   distributor: "Distribuïdora"
-  enterprise_fees: "Honoraris de l'organització"
+  enterprise_fees: "Comissions de l'organització"
   process_my_order: "Processa la meva comanda"
   delivery_instructions: Instruccions de lliurament
   delivery_method: Mètode de lliurament
@@ -2013,9 +1982,9 @@ ca:
   spree_admin_overview_enterprises_header: "Les meves organitzacions"
   spree_admin_overview_enterprises_footer: "GESTIONAR LES MEVES ORGANITZACIONS"
   spree_admin_enterprises_hubs_name: "Nom"
-  spree_admin_enterprises_create_new: "CREA'N UNA DE NOVA"
+  spree_admin_enterprises_create_new: "CREA'N UN DE NOU"
   spree_admin_enterprises_shipping_methods: "Mètodes d'enviament"
-  spree_admin_enterprises_fees: "Honoraris de l'organització"
+  spree_admin_enterprises_fees: "Comissions de l'organització"
   spree_admin_enterprises_none_create_a_new_enterprise: "CREA UNA NOVA ORGANITZACIÓ"
   spree_admin_enterprises_none_text: "Encara no tens cap organització"
   spree_admin_enterprises_tabs_hubs: "GRUPS"
@@ -2268,6 +2237,8 @@ ca:
   shipping_methods: "Mètodes d'enviament"
   payment_methods: "Mètodes de Pagament"
   payment_method_fee: "Comissió de transacció"
+  payment_processing_failed: "El pagament no s'ha pogut processar, comproveu les dades que heu introduït"
+  payment_updated: "Pagament actualitzat"
   inventory_settings: "Configuració de l'inventari"
   tag_rules: "Regles d'etiqueta"
   shop_preferences: "Preferències de la botiga"
@@ -2468,16 +2439,49 @@ ca:
       orders:
         index:
           per_page: "%{results} per pàgina"
-          view_file: Mostra el fitxer
-          compiling_invoices: Generant factures
-          bulk_invoice_created: S'ha creat la factura conjunta
-          bulk_invoice_failed: No s'ha pogut crear la factura conjunta
-          please_wait: Espereu fins que el PDF estigui preparat abans de tancar aquesta finestra.
+          view_file: "Mostra el fitxer"
+          compiling_invoices: "Generant factures"
+          bulk_invoice_created: "S'ha creat la factura conjunta"
+          bulk_invoice_failed: "No s'ha pogut crear la factura conjunta"
+          please_wait: "Espereu fins que el PDF estigui preparat abans de tancar aquesta finestra."
+        order_state:
+          address: "adreça"
+          adjustments: "ajustaments"
+          awaiting_return: "esperant el retorn"
+          canceled: "cancel·lat"
+          cart: "cistella"
+          complete: "completa"
+          confirm: "confirma"
+          delivery: "lliurament"
+          paused: "en pausa"
+          payment: "pagament"
+          pending: "pendents"
+          resumed: "reprès"
+          returned: "retornat"
+          skrill: "habilitat"
+        shipment_states:
+          backorder: "per tornar"
+          partial: "parcial"
+          pending: "pendents"
+          ready: "llest"
+          shipped: "enviat"
+        payment_states:
+          balance_due: "a pagar"
+          completed: "completat"
+          checkout: "fer comanda"
+          credit_owed: "crèdit a deure"
+          failed: "error"
+          paid: "pagat"
+          pending: "pendents"
+          processing: "processant"
+          void: "buit"
+          invalid: "invàlid"
       resend_user_email_confirmation:
         resend: "Reenviar"
         sending: "Reenviar..."
         done: "Reenviament fet ✓"
         failed: "Reenviament fallit ✗"
+    insufficient_stock: "No hi ha prou estoc disponible, només queda %{on_hand}"
     out_of_stock:
       reduced_stock_available: Estoc reduït disponible
       out_of_stock_text: >
@@ -2542,6 +2546,14 @@ ca:
       closes: tanca
       closed: tancat
       close_date_not_set: La data de tancament no està establerta
+    spree:
+      users:
+        order: "Comanda"
+    registration:
+      welcome_to_ofn: "Benvingut a la Katuma - Open Food Network!"
+      signup_or_login: "Comenceu registrant-vos (o iniciant sessió)"
+      have_an_account: "Ja tens un compte?"
+      action_login: "Inicia la sessió ara."
   producers:
     signup:
       start_free_profile: "Comença amb un perfil gratuït i amplia'l quan estiguis preparada."
@@ -2584,17 +2596,213 @@ ca:
               tax_category_name: "Categoria d'impostos"
               total_amount: "€€ SUM"
         invalid_filter_parameters: "Els filtres que heu seleccionat per a aquest informe no són vàlids."
+  order: "Comanda"
+  distribution: "Distribució"
+  order_details: "Detalls de la comanda"
+  customer_details: "Detalls de la consumidora"
+  adjustments: "Ajustaments"
+  payments: "Pagaments"
+  payment: "Pagament"
+  payment_method: "Mètode de pagament"
+  shipment: "Enviament"
+  shipment_inc_vat: "Enviament incloent VAT"
+  shipping_tax_rate: "Taxa d'impostos d'enviament"
+  category: "Categoria"
+  delivery: "Lliurament "
+  temperature_controlled: "Control de temperatura"
+  new_product: "Nou producte"
+  administration: "Administració"
+  logged_in_as: "Has entrat com a"
+  account: "Compte"
+  logout: "Tanca sessió"
+  date_range: "Interval de dates"
+  status: "estat"
+  new: "Nou"
+  start: "Començar"
+  stop: "Aturar"
+  first: "Primer"
+  previous: "Anterior"
+  last: "Últim"
   spree:
+    your_order_is_empty_add_product: "La comanda està buida, si us plau cerca i afegeix un producte a dalt"
+    add_product: "Afegeix un producte"
+    name_or_sku: "Nom o codi (introduïu com a mínim els primers 4 caràcters del nom del producte)"
+    resend: Reenviar
+    back_to_orders_list: Tornar a la llista de comandes
+    select_stock: "Seleccioneu existències"
+    location: "Ubicació"
+    count_on_hand: "Compte disponible"
+    quantity: "Quantitat"
+    package_from: "perfil de"
+    item_description: "Descripció de l'article"
+    price: "Preu"
+    total: "Total"
+    edit: "Editar"
+    split: "Dividir"
+    delete: "Suprimir"
+    cannot_set_shipping_method_without_address: "No es pot establir el mètode d'enviament fins que no es proporcionin les dades del client."
+    no_tracking_present: "No es proporcionen dades de seguiment."
+    order_total: "Total comanda"
+    customer_details: "Detalls de la consumidora"
+    customer_search: "Cerca la consumidora"
+    choose_a_customer: "Tria una consumidora"
+    account: "Compte"
+    billing_address: "Adreça de facturació"
+    shipping_address: "Adreça d'enviament"
+    first_name: "Nom"
+    last_name: "Cognom"
+    street_address: "Adreça"
+    street_address_2: "Adreça (cont.)"
+    city: "Municipi"
+    zip: "Codi postal"
+    country: "País"
+    state: "Estat"
+    phone: "Telèfon"
+    update: "Actualitzar"
+    use_billing_address: "Utilitzeu l'adreça de facturació"
+    adjustments: "Ajustaments"
+    continue: "Continua"
+    fill_in_customer_info: "Ompliu la informació de la consumidora"
+    new_payment: "Nou pagament"
+    configurations: "Configuracions"
+    general_settings: "Configuració general"
+    site_name: "Nom del lloc"
+    site_url: "URL del lloc"
+    default_seo_title: "Títol Seo predeterminat "
+    default_meta_description: "Descripció Meta predeterminada"
+    default_meta_keywords: "Paraules clau meta predeterminades"
+    security_settings: "Configuració de seguretat"
+    allow_ssl_in_development_and_test: "Permet que s'utilitzi SSL quan s'utilitzi el desenvolupament i els modes de prova"
+    allow_ssl_in_production: "Permet que SSL s'utilitzi en mode de producció"
+    allow_ssl_in_staging: "Permet que SSL s'utilitzi en mode de staging"
+    check_for_spree_alerts: "Comproveu si hi ha alertes Spree"
+    currency_decimal_mark: "Separador decimal de moneda"
+    currency_settings: "Configuració de moneda"
+    currency_symbol_position: Posa "símbol de moneda abans o després d'una quantitat"?
+    currency_thousands_separator: "Separador de milers de la moneda "
+    hide_cents: "Amaga els cèntims"
+    display_currency: "Moneda de visualització"
+    choose_currency: "Escull la moneda"
+    mail_method_settings: "Configuració del mètode de correu"
+    general: "General"
+    enable_mail_delivery: "Habilita el lliurament de correu"
+    send_mails_as: "Enviar missatges com"
+    smtp_send_all_emails_as_from_following_address: "Envieu tots els correus com a la següent adreça."
+    send_copy_of_all_mails_to: "Enviar còpia de tots els missatges a"
+    smtp_send_copy_to_this_addresses: "Envia una còpia de tots els correus sortints a aquesta adreça. Per a diverses adreces, separeu amb comes."
+    intercept_email_address: "Intercepta adreça de correu"
+    intercept_email_instructions: "Invalida el destinatari de correu electrònic i reemplaça amb aquesta adreça."
+    smtp: "SMTP"
+    smtp_domain: "Domini SMTP"
+    smtp_mail_host: "Servidor de correu SMTP"
+    smtp_port: "Port SMTP"
+    secure_connection_type: "Tipus de connexió segura"
+    smtp_authentication_type: "Tipus d'autenticació SMTP"
+    smtp_username: "Nom d'usuari SMTP"
+    smtp_password: "Contrasenya SMTP"
+    image_settings: "Configuració de la imatge"
+    image_settings_warning: "Haureu de regenerar thumbnails si actualitzeu els estils de paperclip. Feu servir rake paperclip:refresh:thumbnails CLASS=Spree::Image per fer-ho."
+    attachment_default_style: Estil de fitxers adjunts
+    attachment_default_url: "URL predeterminada de fitxers adjunts"
+    attachment_path: "Ruta de fitxers adjunts"
+    attachment_styles: "Estils de paperclip"
+    attachment_url: "URL dels fitxers adjunts"
+    add_new_style: "Afegeix un estil nou"
+    image_settings_updated: "La configuració de la imatge s'ha actualitzat correctament."
+    tax_categories: "Tipus d'impostos"
+    listing_tax_categories: "Llista de categories d'impostos"
+    back_to_tax_categories_list: "Tornar a la llista de categories d'impostos"
+    tax rate: "Tarifes fiscals"
+    new_tax_rate: "Nou impost"
+    tax_category: "Categoria d'impostos"
+    rate: "Taxa"
+    tax_rate_amount_explanation: "Les taxes impositives són un import decimal per ajudar en els càlculs (és a dir, si el tipus impositiu és del 5%, introduïu 0,05)"
+    included_in_price: "Inclòs al preu"
+    show_rate_in_label: "Mostra l'impost a l'etiqueta"
+    back_to_tax_rates_list: "Tornar a la llista d'impostos"
+    tax_settings: "Configuració fiscal"
+    zones: "Zones"
+    new_zone: "Nova zona"
+    default_tax: "Impost predeterminat"
+    default_tax_zone: "Zona d'impostos predeterminada"
+    country_based: "Basat en el país"
+    state_based: "Basat en l'Estat"
+    countries: "Països"
+    listing_countries: "Llistat de països"
+    iso_name: "Nom ISO"
+    states_required: "Estats obligatoris"
+    editing_country: "Editar el país"
+    back_to_countries_list: "Torna a la llista de països"
+    states: "Estats"
+    abbreviation: "Abreviatura"
+    new_state: "Nou estat"
+    payment_methods: "Mètodes de Pagament"
+    new_payment_method: "Nou mètode de pagament"
+    provider: "Proveïdor"
+    taxonomies: "Taxonomies"
+    new_taxonomy: "Nova taxonomia"
+    back_to_taxonomies_list: "Torna a la llista de taxonomies"
+    shipping_methods: "Mètodes d'enviament"
+    shipping_categories: "Tipus d'enviament"
+    new_shipping_category: "NOVES Categories d'enviament"
+    back_to_shipping_categories: "Tornar a les categories d'enviament"
+    analytics_trackers: "Rastrejadors d'anàlisi"
+    no_trackers_found: "No s'ha trobat cap rastrejador"
+    new_tracker: "Nou rastrejador"
+    add_one: "Afegeix-ne un"
+    google_analytics_id: "ID d'Analytics"
+    back_to_trackers_list: "Torna a la llista de rastrejadors"
+    name: "Nom"
+    description: "Descripció"
+    type: "Tipus"
+    default: "per defecte"
+    calculator: "Calculadora"
+    zone: "Zona"
+    display: "Mostra"
+    environment: "Ambient"
+    active: "Actiu"
+    nore: "Més"
+    no_results: "Sense resultats"
+    create: "Crear"
+    loading: "S'està carregant"
     email: Correu electrònic
     account_updated: "Compte actualitzat!"
     my_account: "El meu compte"
     date: "Data"
     time: "Hora"
+    inventory_error_flash_for_insufficient_quantity: "Un article de la teva cistella ha deixat d'estar disponible."
+    inventory: Inventari
+    zipcode: Codi postal
+    weight: Pes (per kg)
+    actions:
+      update: "Actualitzar"
+    errors:
+      messages:
+        blank: "no es pot deixar en blanc"
     layouts:
       admin:
         header:
           store: Botiga
     admin:
+      tab:
+        dashboard: "Panell"
+        orders: "Comandes"
+        bulk_order_management: "Gestió de comandes en bloc"
+        subscriptions: "Subscripcions"
+        products: "Productes "
+        option_types: "Tipus d'opcions"
+        properties: "Propietats"
+        prototypes: "Prototips"
+        variant_overrides: "Inventari"
+        reports: "Informes"
+        configuration: "Configuració"
+        users: "Usuàries"
+        roles: "Rols"
+        order_cycles: "Cicles de comanda"
+        enterprises: "Organitzacions"
+        enterprise_relationships: "Permisos"
+        customers: "Consumidores"
+        groups: "Grups"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "heredar propietats de %{supplier}? (llevat que es sobreescrigui a dalt)"
@@ -2615,15 +2823,22 @@ ca:
           results_found: "%{number} Resultats trobats."
           viewing: "Veient %{start} a %{end}."
           print_invoices: "Imprimir factures"
+        sortable_header:
+          payment_state: "Estat del pagament"
+          shipment_state: "Estat de la Tramesa"
+          completed_at: "Completat a"
+          number: "Número"
+          state: "Estat"
+          email: "Correu electrònic de la consumidora"
         invoice:
-          issued_on: Publicat a
-          tax_invoice: FACTURA D'IMPOSTOS
-          code: Codi
-          from: De
-          to: Per a
+          issued_on: "Publicat a"
+          tax_invoice: "FACTURA D'IMPOSTOS"
+          code: "Codi"
+          from: "De"
+          to: "Per a"
         form:
           distribution_fields:
-            title: Distribució
+            title: "Distribució"
             distributor: "Distribuïdora:"
             order_cycle: "Cicle de comanda:"
       overview:
@@ -2638,7 +2853,7 @@ ca:
           you_have_active:
             zero: "No tens cicles de comanda actius."
             one: "Tens un cicle de comanda actiu."
-            other: "Tens %{count}cicles de comanda actius"
+            other: "Tens %{count} cicles de comanda actius"
           manage_order_cycles: "GESTIONA ELS CICLES DE COMANDA"
       payment_methods:
         new:
@@ -2756,12 +2971,31 @@ ca:
     date_picker:
       format: '%d-% m-% Y'
       js_format: 'dd-mm-yy'
-    inventory: Inventari
     orders:
       edit:
         login_to_view_order: "Si us plau inicia sessió per veure la teva comanda."
       bought:
         item: "Ja està demanat en aquest cicle de comandes"
+      line_item:
+        insufficient_stock: "No hi ha prou estoc disponible, només queda %{on_hand}"
+        out_of_stock: "Fora d'existència"
+    shipment_states:
+      backorder: per tornar
+      partial: parcial
+      pending: pendents
+      ready: llest
+      shipped: enviat
+    payment_states:
+      balance_due: a pagar
+      completed: completat
+      checkout: fer comanda
+      credit_owed: crèdit a deure
+      failed: error
+      paid: pagat
+      pending: pendents
+      processing: processant
+      void: buit
+      invalid: invàlid
     order_mailer:
       invoice_email:
         hi: "Hola %{name}"
@@ -2787,23 +3021,6 @@ ca:
       ended: acabat
       paused: en pausa
       canceled: cancel·lat
-    payment_states:
-      balance_due: a pagar
-      completed: completat
-      checkout: fer comanda
-      credit_owed: crèdit a deure
-      failed: error
-      paid: pagat
-      pending: pendents
-      processing: processant
-      void: buit
-      invalid: invàlid
-    shipment_states:
-      backorder: per tornar
-      partial: parcial
-      pending: pendents
-      ready: llest
-      shipped: enviat
     user_mailer:
       reset_password_instructions:
         request_sent_text: |
@@ -2816,8 +3033,6 @@ ca:
             Si continues tenint problemes, no dubtis en contactar-nos.
       confirmation_instructions:
         subject: Si us plau confirma el teu compte d'OFN
-    weight: Pes (per kg)
-    zipcode: Codi postal
     users:
       form:
         account_settings: Configuració del compte

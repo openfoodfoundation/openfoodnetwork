@@ -11,6 +11,8 @@ nb:
         email: Epost Kunde
       spree/payment:
         amount: Beløp
+      spree/product:
+        primary_taxon: Produktkategori
       order_cycle:
         orders_close_at: Lukkedato
     errors:
@@ -202,12 +204,12 @@ nb:
   edit: Endre
   clone: Klon
   distributors: Distributører
-  distribution: Distribusjon
   bulk_order_management: Bulk ordrehåndtering
   enterprises: Bedrifter
   enterprise_groups: Grupper
   reports: Rapporter
   variant_overrides: Varelager
+  import: Import
   spree_products: Spree Produkter
   all: Alle
   current: Nåværende
@@ -240,12 +242,15 @@ nb:
   quantity: Mengde
   pick_up: Hent
   copy: Kopier
+  change_my_password: "Endre passordet mitt"
+  update_password: "Oppdater passord"
   password_confirmation: Passordbekreftelse
   reset_password_token: Tilbakestill passordtoken
   expired: er utløpt, vennligst be om en ny
   back_to_payments_list: "Tilbake til betalingsliste"
   actions:
     create_and_add_another: "Opprett og legg til en annen"
+    create: "Opprett"
   admin:
     begins_at: Begynner på
     begins_on: Begynner på
@@ -361,13 +366,14 @@ nb:
         total_monthly_bill_incl_tax: "Total Månedlig Regning (Inkl. Avgift)"
         total_monthly_bill_incl_tax_tip: "Eksempel på total månedlig regning inkludert avgift, gitt innstillingene og omsetningen som er satt."
     cache_settings:
-      show:
-        title: Mellomlagring
-        distributor: Distributør
-        order_cycle: Bestillingsrunde
-        status: Status
-        diff: Forskjell
-        error: Feil
+      edit:
+        title: "Mellomlagring"
+        distributor: "Distributør"
+        order_cycle: "Bestillingsrunde"
+        status: "Status"
+        diff: "Forskjell"
+        error: "Feil"
+        enable_products_cache: "Aktiver Mellomlagring for Produkter?"
     invoice_settings:
       edit:
         title: Fakturainnstillinger
@@ -1232,6 +1238,7 @@ nb:
   no_shipping_or_payment: ingen leveringsmetoder eller betalingsmetoder
   unconfirmed: ubekreftet
   days: dager
+  authorization_failure: "Autorisasjonsfeil"
   label_shop: "Butikk"
   label_shops: "Butikker"
   label_map: "Kart"
@@ -1607,6 +1614,7 @@ nb:
   products_available: Tilgjengelig?
   products_producer: "Produsent"
   products_price: "Pris"
+  name_or_sku: "NAME eller SKU"
   register_title: Registrer
   sell_title: "Registrer"
   sell_headline: "Bli med på Open Food Network!"
@@ -1664,6 +1672,7 @@ nb:
   orders_bought_edit_button: Rediger bekreftede varer
   orders_bought_already_confirmed: "* allerede bekreftet"
   orders_confirm_cancel: Er du sikker på at du vil avbryte denne bestillingen?
+  order_processed_successfully: "Behandlingen av din bestilling var vellykket"
   products_cart_distributor_choice: "Distributør for bestillingen:"
   products_cart_distributor_change: "Din distributør for denne ordren vil bli endret til %{name} hvis du legger til dette produktet i handlekurven din."
   products_cart_distributor_is: "Din distributør for denne ordren er %{name}."
@@ -1727,23 +1736,60 @@ nb:
   choose_password: "Velg et passord"
   confirm_password: "Bekreft passord"
   action_signup: "Registrer deg nå"
-  welcome_to_ofn: "Velkommen til Open Food Network!"
-  signup_or_login: "Kom i gang ved å registrere deg (eller logge inn)"
-  have_an_account: "Har du allerede en konto?"
-  action_login: "Logg inn nå."
   forgot_password: "Glemt passord?"
   password_reset_sent: "En epost med instruksjoner om å nullstille passordet har blitt sendt!"
   reset_password: "Tilbakestill passord"
-  who_is_managing_enterprise: "Hvem er ansvarlig for å administrere %{enterprise}?"
   update_and_recalculate_fees: "Oppdater og regn avgifter på nytt"
   registration:
     steps:
-      images:
-        continue: "Fortsett"
-        back: "Tilbake"
-        headline: "Takk!"
-        description: "La oss laste opp noen fine bilder så profilen din ser flott ut! :)"
+      introduction:
+        registration_greeting: "Hei der!"
+        registration_intro: "Du kan nå opprette en profil for din Produsent eller Hub"
+        registration_checklist: "Du trenger"
+        registration_time: "5-10 minutter"
+        registration_enterprise_address: "Bedriftsadresse"
+        registration_contact_details: "Kontaktdetaljer"
+        registration_logo: "Ditt logo-bilde"
+        registration_promo_image: "Profilbilde i landskapsformat"
+        registration_about_us: "'Om oss' tekst"
+        registration_outcome_headline: "Hva får jeg?"
+        registration_outcome1_html: "Profilen din hjelper folk å <strong>finne</ strong> og <strong>kontakte</ strong> deg på Open Food Network"
+        registration_outcome2: "Bruk denne plassen til å fortelle historien om bedriften din, for å hjelpe koblingen til din sosiale og online tilstedeværelse."
+        registration_outcome3: "Det er også det første skrittet mot handel på Open Food Network eller å åpne en nettbutikk."
+        registration_action: "La oss komme i gang!"
+      details:
+        title: "Detaljer"
+        headline: "La oss komme i gang"
+        enterprise: "Woot! Først må du vite litt om bedriften din:"
+        producer: "Woot! Først må vi vite litt om gården din:"
+        enterprise_name_field: "Bedriftsnavn:"
+        producer_name_field: "Gårdsnavn:"
+        producer_name_field_placeholder: "f.eks Olas Fantastiske Gård"
+        producer_name_field_error: "Vennligst velg et unikt navn for bedriften din"
+        address1_field: "Adresselinje 1:"
+        address1_field_placeholder: "f.eks 123 Blåbærveien"
+        address1_field_error: "Vennligst skriv inn en adresse"
+        address2_field: "Adresselinje 2:"
+        suburb_field: "Forstad:"
+        suburb_field_placeholder: "f.eks Northcote"
+        suburb_field_error: "Vennligst skriv inn en forstad"
+        postcode_field: "Postnummer:"
+        postcode_field_placeholder: "f.eks 3070"
+        postcode_field_error: "Postnummer kreves"
+        state_field: "Fylke:"
+        state_field_error: "Fylke påkrevd"
+        country_field: "Land:"
+        country_field_error: "Vennligst velg et land"
+      contact:
+        title: "Kontakt"
+        who_is_managing_enterprise: "Hvem er ansvarlig for å administrere %{enterprise}?"
+        contact_field: "Hovedkontakt"
+        contact_field_placeholder: "Kontaktnavn"
+        contact_field_required: "Du må legge inn en hovedkontakt."
+        phone_field: "Telefonnummer"
+        phone_field_placeholder: "f.eks. (03) 1234 5678"
       type:
+        title: "Type"
         headline: "Siste skritt for å legge til %{enterprise}!"
         question: "Er du en produsent?"
         yes_producer: "Ja, jeg er produsent"
@@ -1752,152 +1798,73 @@ nb:
         yes_producer_help: "Produsenter lager deilige ting å spise og/eller drikke. Du er en produsent hvis du vokser den, hever den, brygger den, baker den, gjærer den, melker den eller støper den."
         no_producer_help: "Hvis du ikke er produsent, er du sannsynligvis noen som selger og distribuerer mat. Du kan være en hub, kooperativ, kjøpegruppe, forhandler, grossist eller annet."
         create_profile: "Opprett profil"
-  enterprise:
-    registration:
-      modal:
-        steps:
-          details:
-            title: 'Detaljer'
-            headline: "La oss komme i gang"
-            enterprise: "Woot! Først må vi vite litt om bedriften din:"
-            producer: "Woot! Først må vi vite litt om gården din:"
-            enterprise_name_field: "Bedriftsnavn:"
-            producer_name_field: "Gårdsnavn:"
-            producer_name_field_placeholder: "f.eks Olas Fantastiske Gård"
-            producer_name_field_error: "Vennligst velg et unikt navn for bedriften din"
-            address1_field: "Adresselinje 1:"
-            address1_field_placeholder: "f.eks 123 Blåbærveien"
-            address1_field_error: "Vennligst skriv inn en adresse"
-            address2_field: "Adresselinje 2:"
-            suburb_field: "Forstad:"
-            suburb_field_placeholder: "f.eks Northcote"
-            suburb_field_error: "Vennligst skriv inn en forstad"
-            postcode_field: "Postnummer:"
-            postcode_field_placeholder: "f.eks 3070"
-            postcode_field_error: "Postnummer kreves"
-            state_field: "Fylke:"
-            state_field_error: "Fylke påkrevd"
-            country_field: "Land:"
-            country_field_error: "Vennligst velg et land"
-          contact:
-            title: 'Kontakt'
-            contact_field: 'Hovedkontakt'
-            contact_field_placeholder: 'Kontaktnavn'
-            contact_field_required: "Du må legge inn en hovedkontakt."
-            email_field: 'Epostadresse'
-            email_field_placeholder: 'f.eks. ola@gården.com'
-            phone_field: 'Telefonnummer'
-            phone_field_placeholder: 'f.eks. (03) 1234 5678'
-          type:
-            title: 'Type'
-          about:
-            title: 'Om'
-          images:
-            title: 'Bilder'
-          social:
-            title: 'Sosial'
-  enterprise_contact: "Primærkontakt"
-  enterprise_contact_placeholder: "Kontaktnavn"
-  enterprise_contact_required: "Du må oppgi en primærkontakt."
-  enterprise_email_address: "Epostadresse"
-  enterprise_email_placeholder: "f.eks. ola@gården.com"
-  enterprise_phone: "Telefonnummer"
-  enterprise_phone_placeholder: "f.eks. (03) 1234 5678"
+      about:
+        title: "Om"
+        headline: "Bra!"
+        message: "Nå la oss finne ut detaljene om"
+        success: "Suksess! %{enterprise} lagt til Open Food Network"
+        registration_exit_message: "Hvis du avslutter denne veiviseren på et hvilket som helst tidspunkt, kan du fortsette å opprette profilen din ved å gå til administrasjonsgrensesnittet."
+        enterprise_description: "Kort Beskrivelse"
+        enterprise_description_placeholder: "En kort setning som beskriver virksomheten din"
+        enterprise_long_desc: "Lang beskrivelse"
+        enterprise_long_desc_placeholder: "Dette er muligheten din til å fortelle historien om din virksomhet - hva gjør deg annerledes og flott? Vi vil foreslå å holde din beskrivelse til under 600 tegn eller 150 ord."
+        enterprise_long_desc_length: "%{num} tegn / opptil 600 anbefales"
+        enterprise_abn: "Org. nr."
+        enterprise_abn_placeholder: "f.eks. 999 000 123"
+        enterprise_acn: "MVA nr."
+        enterprise_acn_placeholder: "f.eks. 999 000 123"
+        enterprise_tax_required: "Du må gjøre et valg."
+      images:
+        title: "Bilder"
+        headline: "Takk!"
+        description: "La oss laste opp noen fine bilder så profilen din ser flott ut! :)"
+        uploading: "Laster opp..."
+        continue: "Fortsett"
+        back: "Tilbake"
+      logo:
+        select_logo: "Steg 1. Velg Logo-bilde"
+        logo_tip: "Tips: Firkantede bilder vil fungere best, helst minst 300 × 300px"
+        logo_label: "Velg et logo-bilde"
+        logo_drag: "Dra og slipp logoen her"
+        review_logo: "Steg 2. Sjekk din Logo"
+        review_logo_tip: "Tips: For best resultat bør logoen fylle det tilgjengelige området"
+        logo_placeholder: "Logoen din vil vises her til vurdering når den er lastet opp"
+      promo:
+        select_promo_image: "Steg 3. Velg Promo-bilde"
+        promo_image_tip: "Tips: Vises som en banner, foretrukket størrelse er 1200 × 260px"
+        promo_image_label: "Velg et promo-bilde"
+        promo_image_drag: "Dra og slipp promo her"
+        review_promo_image: "Steg 4. Sjekk din Promo-banner"
+        review_promo_image_tip: "Tips: For best resultat bør promo-bildet fylle det tilgjengelige området"
+        promo_image_placeholder: "Logoen din vil vises her til vurdering når den er lastet opp"
+      social:
+        title: "Sosial"
+        enterprise_final_step: "Siste steg!"
+        enterprise_social_text: "Hvordan kan folk finne %{enterprise} på nettet?"
+        website: "Hjemmeside"
+        website_placeholder: "f.eks. openfoodnetwork.no"
+        facebook: "Facebook"
+        facebook_placeholder: "f.eks. www.facebook.com/FirmaNavnHer"
+        linkedin: "LinkedIn"
+        linkedin_placeholder: "f.eks. www.linkedin.com/DittNavnHer"
+        twitter: "Twitter"
+        twitter_placeholder: "f.eks. @twitter_handle"
+        instagram: "Instagram"
+        instagram_placeholder: "f.eks. @instagram_handle"
+      limit_reached:
+        headline: "Å nei!"
+        message: "Du har nådd grensen!"
+        text: "Du har nådd grensen for antall foretak du har lov til å eie på"
+        action: "Gå tilbake til hjemmesiden"
+      finished:
+        headline: "Ferdig!"
+        thanks: "Takk for at du fyller ut detaljene for %{enterprise}."
+        login: "Du kan endre eller oppdatere din virksomhet når som helst ved å logge inn på Open Food Network og gå til Admin."
+        action: "Open Food Network hjem"
   back: "Tilbake"
   continue: "Fortsett"
-  limit_reached_headline: "Å nei!"
-  limit_reached_message: "Du har nådd grensen!"
-  limit_reached_text: "Du har nådd grensen for antall foretak du har lov til å eie på"
-  limit_reached_action: "Gå tilbake til hjemmesiden"
-  select_promo_image: "Steg 3. Velg Promo-bilde"
-  promo_image_tip: "Tips: Vises som en banner, foretrukket størrelse er 1200 × 260px"
-  promo_image_label: "Velg et promo-bilde"
   action_or: "ELLER"
-  promo_image_drag: "Dra og slipp promo her"
-  review_promo_image: "Steg 4. Sjekk din Promo-banner"
-  review_promo_image_tip: "Tips: For best resultat bør promo-bildet fylle det tilgjengelige området"
-  promo_image_placeholder: "Logoen din vil vises her til vurdering når den er lastet opp"
-  uploading: "Laster opp..."
-  select_logo: "Steg 1. Velg Logo-bilde"
-  logo_tip: "Tips: Firkantede bilder vil fungere best, helst minst 300 × 300px"
-  logo_label: "Velg et logo-bilde"
-  logo_drag: "Dra og slipp logoen her"
-  review_logo: "Steg 2. Sjekk din Logo"
-  review_logo_tip: "Tips: For best resultat bør logoen fylle det tilgjengelige området"
-  logo_placeholder: "Logoen din vil vises her til vurdering når den er lastet opp"
-  enterprise_about_headline: "Bra!"
-  enterprise_about_message: "Nå la oss finne ut detaljene om"
-  enterprise_success: "Suksess! %{enterprise} lagt til Open Food Network"
-  enterprise_registration_exit_message: "Hvis du avslutter denne veiviseren på et hvilket som helst tidspunkt, kan du fortsette å opprette profilen din ved å gå til administrasjonsgrensesnittet."
-  enterprise_description: "Kort beskrivelse"
-  enterprise_description_placeholder: "En kort setning som beskriver virksomheten din"
-  enterprise_long_desc: "Lang beskrivelse"
-  enterprise_long_desc_placeholder: "Dette er muligheten din til å fortelle historien om din virksomhet - hva gjør deg annerledes og flott? Vi vil foreslå å holde din beskrivelse til under 600 tegn eller 150 ord."
-  enterprise_long_desc_length: "%{num} tegn / opptil 600 anbefales"
-  enterprise_abn: "Org. nr."
-  enterprise_abn_placeholder: "f.eks. 999 000 123"
-  enterprise_acn: "MVA nr."
-  enterprise_acn_placeholder: "f.eks. 999 000 123"
-  enterprise_tax_required: "Du må gjøre et valg."
-  enterprise_final_step: "Siste steg!"
-  enterprise_social_text: "Hvordan kan folk finne %{enterprise} på nettet?"
-  website: "Hjemmeside"
-  website_placeholder: "f.eks. openfoodnetwork.no"
-  facebook: "Facebook"
-  facebook_placeholder: "f.eks. www.facebook.com/FirmaNavnHer"
-  linkedin: "LinkedIn"
-  linkedin_placeholder: "f.eks. www.linkedin.com/DittNavnHer"
-  twitter: "Twitter"
-  twitter_placeholder: "f.eks. @twitter_handle"
-  instagram: "Instagram"
-  instagram_placeholder: "f.eks. @instagram_handle"
-  registration_greeting: "Hei der!"
-  registration_intro: "Du kan nå opprette en profil for din Produsent eller Hub"
-  registration_action: "La oss komme i gang!"
-  registration_checklist: "Du trenger"
-  registration_time: "5-10 minutter"
-  registration_enterprise_address: "Bedriftsadresse"
-  registration_contact_details: "Kontaktdetaljer"
-  registration_logo: "Ditt logo-bilde"
-  registration_promo_image: "Profilbilde i landskapsformat"
-  registration_about_us: "'Om oss' tekst"
-  registration_outcome_headline: "Hva får jeg?"
-  registration_outcome1_html: "Profilen din hjelper folk å <strong>finne</ strong> og <strong>kontakte</ strong> deg på Open Food Network"
-  registration_outcome2: "Bruk denne plassen til å fortelle historien om din bedrift for å øke antall koblinger til dine sosiale og online media."
-  registration_outcome3: "Det er også det første skrittet mot handel på Open Food Network eller å åpne en nettbutikk."
-  registration_finished_headline: "Ferdig!"
-  registration_finished_thanks: "Takk for at du fyller ut detaljene for %{enterprise}."
-  registration_finished_login: "Du kan endre eller oppdatere din virksomhet når som helst ved å logge inn på Open Food Network og gå til Admin."
-  registration_finished_action: "Open Food Network hjem"
-  registration_contact_name: 'Kontaktnavn'
-  registration_type_headline: "Siste stegfor å legge til %{enterprise}!"
-  registration_type_question: "Er du en produsent?"
-  registration_type_producer: "Ja, jeg er en produsent"
-  registration_type_no_producer: "Nei, jeg er ikke en produsent"
-  registration_type_error: "Vennligst velg en. Er du produsent?"
-  registration_type_producer_help: "Produsenter lager deilige ting å spise og/eller drikke. Du er en produsent hvis du dyrker det, driver med det, brygger det, baker det, fermenterer det, melker det eller former det."
-  registration_type_no_producer_help: "Hvis du ikke er en produsent, er du sannsynligvis noen som selger og distribuerer mat. Du kan være en hub, samvirke, kjøpegruppe, forhandler, grossist eller annet."
-  registration_detail_headline: "La oss komme i gang"
-  registration_detail_enterprise: "Kult! Først må vi vite litt om bedriften:"
-  registration_detail_producer: "Kult! Først må vi vite litt om gården din:"
-  registration_detail_name_enterprise: "Bedriftsnavn:"
-  registration_detail_name_producer: "Gårdsnavn:"
-  registration_detail_name_placeholder: "f.eks. Hønemor Gård"
-  registration_detail_name_error: "Vennligst velg et unikt navn for din bedrift"
-  registration_detail_address1: "Adresselinje 1:"
-  registration_detail_address1_placeholder: "f.eks. Kongleveien 2"
-  registration_detail_address1_error: "Vennligst oppgi en adresse"
-  registration_detail_address2: "Adresselinje 2:"
-  registration_detail_suburb: "Område:"
-  registration_detail_suburb_placeholder: "f.eks. Nesodden"
-  registration_detail_suburb_error: "Vennligst fyll inn område"
-  registration_detail_postcode: "Postnummer:"
-  registration_detail_postcode_placeholder: "f.eks. 1450"
-  registration_detail_postcode_error: "Postnummer kreves"
-  registration_detail_state: "Fylke:"
-  registration_detail_state_error: "Fylke kreves"
-  registration_detail_country: "Land:"
-  registration_detail_country_error: "Vennligst velg et land"
+  enterprise_limit: Bedriftsgrense
   shipping_method_destroy_error: "Den fraktmetoden kan ikke slettes fordi den er referert til av en bestilling: %{number}."
   accounts_and_billing_task_already_running_error: "En oppgave kjører allerede, vennligst vent til den er ferdig"
   accounts_and_billing_start_task_notice: "Oppgave satt i kø"
@@ -1931,6 +1898,10 @@ nb:
   ok: OK
   not_visible: ikke synlig
   you_have_no_orders_yet: "Du har ingen bestilinger enda"
+  show_only_complete_orders: "Vis kun fullførte bestillinger"
+  successfully_created: 'Opprettelsen av %{resource} var vellykket!'
+  successfully_removed: 'Fjerning av%{resource} var vellykket!'
+  successfully_updated: 'Oppdatering av%{resource} var vellykket!'
   running_balance: "Løpende balanse"
   outstanding_balance: "Utestående balanse"
   admin_enterprise_relationships: "Bedriftsrettigheter"
@@ -2210,12 +2181,12 @@ nb:
   report_header_eft_price: "EFT (%{currency})"
   report_header_paypal_price: "PayPal (%{currency})"
   report_header_sku: SKU
-  report_header_amount: Beløp
+  report_header_amount: Antall
   report_header_balance: Balanse
   report_header_total_cost: "Totalkostnad"
   report_header_total_ordered: Total bestilt
   report_header_total_max: Total Maks
-  report_header_total_units: Totalt antall enheter
+  report_header_total_units: Total Mengde
   report_header_sum_max_total: "Sum Maks. Total"
   report_header_total_excl_vat: "Sum eks. avgift (%{currency_symbol})"
   report_header_total_incl_vat: "Sum inkl. avgift (%{currency_symbol})"
@@ -2266,6 +2237,8 @@ nb:
   shipping_methods: "Leveringsmetoder"
   payment_methods: "Betalingsmetoder"
   payment_method_fee: "Transaksjongebyr"
+  payment_processing_failed: "Betalingen kunne ikke behandles, vennligst sjekk detaljene du skrev inn"
+  payment_updated: "Betaling Oppdatert"
   inventory_settings: "Beholdningsinnstillinger"
   tag_rules: "Regler merkelapper"
   shop_preferences: "Butikkvalg"
@@ -2273,8 +2246,6 @@ nb:
   enterprise_fee_by: "%{type} avgift ved %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Den relasjonen er allerede etablert."
   validation_msg_at_least_one_hub: "^Minst én hub må være valgt"
-  validation_msg_product_category_cant_be_blank: "^Produktkategori kan ikke være blank"
-  validation_msg_tax: "^Avgiftskategori er påkrevd"
   validation_msg_tax_category_cant_be_blank: "^Avgiftskategori kan ikke være blank"
   validation_msg_is_associated_with_an_exising_customer: "er assosiert med en eksisterende kunde"
   content_configuration_pricing_table: "(TODO: Pristabell)"
@@ -2463,16 +2434,49 @@ nb:
       orders:
         index:
           per_page: "%{results} per side"
-          view_file: Se fil
-          compiling_invoices: Samler Fakturaer
-          bulk_invoice_created: Samlefaktura opprettet
-          bulk_invoice_failed: Kunne ikke opprette samlefaktura
-          please_wait: Vennligst vent til PDF-filen er klar før du lukker dette vinduet.
+          view_file: "Se fil"
+          compiling_invoices: "Samler Fakturaer"
+          bulk_invoice_created: "Samlefaktura opprettet"
+          bulk_invoice_failed: "Kunne ikke opprette samlefaktura"
+          please_wait: "Vennligst vent til PDF-filen er klar før du lukker dette vinduet."
+        order_state:
+          address: "adresse"
+          adjustments: "justeringer"
+          awaiting_return: "avventer retur"
+          canceled: "avbrutt"
+          cart: "handlekurv"
+          complete: "fullført"
+          confirm: "bekreft"
+          delivery: "levering"
+          paused: "pauset"
+          payment: "betaling"
+          pending: "i påvente av"
+          resumed: "gjenopptatt"
+          returned: "returnert"
+          skrill: "skrill"
+        shipment_states:
+          backorder: "restordre"
+          partial: "delvis"
+          pending: "i påvente av"
+          ready: "klar"
+          shipped: "sendt"
+        payment_states:
+          balance_due: "balanse forfaller"
+          completed: "fullført"
+          checkout: "kasse"
+          credit_owed: "kreditt skyldt"
+          failed: "feilet"
+          paid: "betalt"
+          pending: "i påvente av"
+          processing: "behandler"
+          void: "ugyldig"
+          invalid: "ugyldig"
       resend_user_email_confirmation:
         resend: "Send på nytt"
         sending: "Send på nytt ..."
         done: "Sending på nytt ferdig ✓"
         failed: "Sending på nytt mislyktes ✗"
+    insufficient_stock: "Utilstrekkelig lager tilgjengelig, kun %{on_hand} gjenværende"
     out_of_stock:
       reduced_stock_available: Redusert lager tilgjengelig
       out_of_stock_text: >
@@ -2536,6 +2540,14 @@ nb:
       closes: stenger
       closed: stengt
       close_date_not_set: Stengedato ikke angitt
+    spree:
+      users:
+        order: "Bestilling"
+    registration:
+      welcome_to_ofn: "Velkommen til Open Food Network!"
+      signup_or_login: "Kom i gang ved å registrere deg (eller logge inn)"
+      have_an_account: "Har du allerede en konto?"
+      action_login: "Logg inn nå."
   producers:
     signup:
       start_free_profile: "Start med en gratis profil, og utvid når du er klar!"
@@ -2578,17 +2590,213 @@ nb:
               tax_category_name: "Avgiftskategori"
               total_amount: "$$ SUM"
         invalid_filter_parameters: "Filtrene du valgte for denne rapporten er ugyldige."
+  order: "Bestilling"
+  distribution: "Distribusjon"
+  order_details: "Ordredetaljer"
+  customer_details: "Kundedetaljer"
+  adjustments: "Justeringer"
+  payments: "Betalinger"
+  payment: "Betaling"
+  payment_method: "Betalingsmetode"
+  shipment: "Leveranse"
+  shipment_inc_vat: "Levering inkludert MVA"
+  shipping_tax_rate: "Rate Leveringsavgift"
+  category: "Kategori"
+  delivery: "Levering"
+  temperature_controlled: "Temperaturkontrollert"
+  new_product: "Nytt produkt"
+  administration: "Administrasjon"
+  logged_in_as: "Logget inn som"
+  account: "Konto"
+  logout: "Logg ut"
+  date_range: "Datointervall"
+  status: "Status"
+  new: "Ny"
+  start: "Start"
+  stop: "Stopp"
+  first: "Først"
+  previous: "Tidligere"
+  last: "Siste"
   spree:
+    your_order_is_empty_add_product: "Bestillingen din er tom, vennligst søk etter og legg til et produkt over"
+    add_product: "Legg til produkt"
+    name_or_sku: "Navn eller SKU (skriv inn minst 4 tegn av produktnavn)"
+    resend: Send på nytt
+    back_to_orders_list: Tilbake til Bestillingsliste
+    select_stock: "Velg lager"
+    location: "Plassering"
+    count_on_hand: "Antall På Lager"
+    quantity: "Mengde"
+    package_from: "pakke fra"
+    item_description: "Beskrivelse Element"
+    price: "Pris"
+    total: "Total"
+    edit: "Rediger"
+    split: "Del"
+    delete: "Slett"
+    cannot_set_shipping_method_without_address: "Kan ikke angi leveringsmetode før kundedetaljer er oppgitt."
+    no_tracking_present: "Ingen sporingsdetaljer gitt."
+    order_total: "Bestilling Totalt"
+    customer_details: "Kundedetaljer"
+    customer_search: "Kundesøk"
+    choose_a_customer: "Velg en kunde"
+    account: "Konto"
+    billing_address: "Fakturaadresse"
+    shipping_address: "Leveringsadresse"
+    first_name: "Fornavn"
+    last_name: "Etternavn"
+    street_address: "Gateadresse"
+    street_address_2: "Gateadresse (forts.)"
+    city: "By"
+    zip: "Postkode"
+    country: "Land"
+    state: "Tilstand"
+    phone: "Telefon"
+    update: "Oppdater"
+    use_billing_address: "Bruk Fakturaadresse"
+    adjustments: "Justeringer"
+    continue: "Fortsett"
+    fill_in_customer_info: "Vennligst fyll inn kundeinformasjon"
+    new_payment: "Ny betaling"
+    configurations: "Konfigurasjoner"
+    general_settings: "Generelle innstillinger"
+    site_name: "Sidenavn"
+    site_url: "Side URL"
+    default_seo_title: "Standard SEO Tittel"
+    default_meta_description: "Standard Meta Beskrivelse"
+    default_meta_keywords: "Standard Meta Nøkkelord"
+    security_settings: "Sikkerhetsinnstillinger"
+    allow_ssl_in_development_and_test: "Tillat at SSL brukes i utviklings- og testmodus"
+    allow_ssl_in_production: "Tillat at SSL brukes i produksjonsmodus"
+    allow_ssl_in_staging: "Tillat at SSL brukes i staging-modus"
+    check_for_spree_alerts: "Se etter Spree-varsler"
+    currency_decimal_mark: "Valuta desimaltegn"
+    currency_settings: "Valutainnstillinger"
+    currency_symbol_position: Sett "valutasymbol før eller etter dollarbeløp?"
+    currency_thousands_separator: "Valuta tusen-separator"
+    hide_cents: "Skjul cents"
+    display_currency: "Vis valuta"
+    choose_currency: "Velg Valuta"
+    mail_method_settings: "Innstillinger for epost-metode"
+    general: "Generelt"
+    enable_mail_delivery: "Aktiver epost-levering"
+    send_mails_as: "Send Eposter Som"
+    smtp_send_all_emails_as_from_following_address: "Send alle epostene fra følgende adresse."
+    send_copy_of_all_mails_to: "Send kopi av alle epostene til"
+    smtp_send_copy_to_this_addresses: "Sender en kopi av alle utgående eposter til denne adressen. For flere adresser, skill med komma."
+    intercept_email_address: "Avskjær epostadresse"
+    intercept_email_instructions: "Overstyr epost mottaker og erstatt med denne adressen."
+    smtp: "SMTP"
+    smtp_domain: "SMTP-domene"
+    smtp_mail_host: "SMTP epost-vert"
+    smtp_port: "SMTP-port"
+    secure_connection_type: "Sikker tilkoblingstype"
+    smtp_authentication_type: "SMTP-godkjenningstype"
+    smtp_username: "SMTP Brukernavn"
+    smtp_password: "SMTP-passord"
+    image_settings: "Bildeinnstillinger"
+    image_settings_warning: "Du må regenerere miniatyrbilder hvis du oppdaterer paperclip-stiler. Bruk rake paperclip:refresh:thumbnails CLASS=Spree::Image for å gjøre dette"
+    attachment_default_style: Vedlegg Stil
+    attachment_default_url: "Vedlegg Standard URL"
+    attachment_path: "Vedlegg Sti"
+    attachment_styles: "Paperclip Stiler"
+    attachment_url: "Vedlegg URL"
+    add_new_style: "Legg til ny stil"
+    image_settings_updated: "Oppdatering av bildeinnstillinger var vellykket."
+    tax_categories: "Avgiftskategorier"
+    listing_tax_categories: "Oppføring av Avgiftskategorier"
+    back_to_tax_categories_list: "Tilbake til Avgiftskategorier Liste"
+    tax rate: "Avgiftsrater"
+    new_tax_rate: "Ny Avgiftssats"
+    tax_category: "Avgiftskategori"
+    rate: "Sats"
+    tax_rate_amount_explanation: "Avgiftssatser er et desimalbeløp til hjelp i beregninger, (dvs. dersom avgiftssatsen er 5%, angi 0,05)"
+    included_in_price: "Inkludert i Pris"
+    show_rate_in_label: "Vis sats på merkelapp"
+    back_to_tax_rates_list: "Tilbake til siden for Avgiftssats"
+    tax_settings: "Avgiftsinnstillinger"
+    zones: "Soner"
+    new_zone: "Ny Sone"
+    default_tax: "Standard Avgift"
+    default_tax_zone: "Standard Avgiftssone"
+    country_based: "Landbasert"
+    state_based: "Regionbasert"
+    countries: "Land"
+    listing_countries: "Lister opp land"
+    iso_name: "ISO-navn"
+    states_required: "Regioner Påkrevd"
+    editing_country: "Redigerer Land"
+    back_to_countries_list: "Tilbake til Landlisten"
+    states: "Regioner"
+    abbreviation: "Forkortelse"
+    new_state: "Ny Region"
+    payment_methods: "Betalingsmetoder"
+    new_payment_method: "Ny Betalingsmetode"
+    provider: "Tilbyder"
+    taxonomies: "Taksonomier"
+    new_taxonomy: "Ny Taksonomi"
+    back_to_taxonomies_list: "Tilbake til Taksonomiliste"
+    shipping_methods: "Leveringsmetoder"
+    shipping_categories: "Fraktkategorier"
+    new_shipping_category: "NEWEW Leveringskategorier"
+    back_to_shipping_categories: "Tilbake til Leveringskategorier"
+    analytics_trackers: "Analyseverktøy"
+    no_trackers_found: "Ingen sporingsverktøy funnet"
+    new_tracker: "Nytt Sporingsverktøy"
+    add_one: "Legg til en"
+    google_analytics_id: "Analytics ID"
+    back_to_trackers_list: "Tilbake til Liste over Sporingsverktøy"
+    name: "Navn"
+    description: "Beskrivelse"
+    type: "Type"
+    default: "standard"
+    calculator: "Kalkulator"
+    zone: "Sone"
+    display: "Visning"
+    environment: "Miljø"
+    active: "Aktiv"
+    nore: "Mer"
+    no_results: "Ingen resultater"
+    create: "Opprett"
+    loading: "Laster"
     email: Epost
     account_updated: "Konto oppdatert!"
     my_account: "Min konto"
     date: "Dato"
     time: "Tid"
+    inventory_error_flash_for_insufficient_quantity: "Et element i handlekurven din er blitt utilgjengelig."
+    inventory: Varelager
+    zipcode: Postnummer
+    weight: Vekt (per kg)
+    actions:
+      update: "Oppdater"
+    errors:
+      messages:
+        blank: "kan ikke være tomt"
     layouts:
       admin:
         header:
           store: Butikk
     admin:
+      tab:
+        dashboard: "Dashboard"
+        orders: "Bestillinger"
+        bulk_order_management: "Bulk ordrehåndtering"
+        subscriptions: "Abonnement"
+        products: "Produkter"
+        option_types: "Valgtyper"
+        properties: "Egenskaper"
+        prototypes: "Prototyper"
+        variant_overrides: "Varelager"
+        reports: "Rapporter"
+        configuration: "Konfigurasjon"
+        users: "Brukere"
+        roles: "Roller"
+        order_cycles: "Bestillingsrunder"
+        enterprises: "Bedrifter"
+        enterprise_relationships: "Tillatelser"
+        customers: "Kunder"
+        groups: "Grupper"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Arve egenskaper fra %{supplier}? (med mindre overstyrt over)"
@@ -2609,15 +2817,22 @@ nb:
           results_found: "%{number} Resultater funnet."
           viewing: "Ser %{start} til %{end}."
           print_invoices: "Skriv ut fakturaer"
+        sortable_header:
+          payment_state: "Betalingsstatus"
+          shipment_state: "Leveringsstatus"
+          completed_at: "Fullført på"
+          number: "Antall"
+          state: "Tilstand"
+          email: "Epost Kunde"
         invoice:
-          issued_on: Utstedt på
-          tax_invoice: AVGIFTSFAKTURA
-          code: Kode
-          from: Fra
-          to: Til
+          issued_on: "Utstedt på"
+          tax_invoice: "AVGIFTSFAKTURA"
+          code: "Kode"
+          from: "Fra"
+          to: "Til"
         form:
           distribution_fields:
-            title: Distribusjon
+            title: "Distribusjon"
             distributor: "Distributør:"
             order_cycle: "Bestillingsrunde:"
       overview:
@@ -2750,12 +2965,31 @@ nb:
     date_picker:
       format: '%Y-%m-%d'
       js_format: 'yy-mm-dd'
-    inventory: Varelager
     orders:
       edit:
         login_to_view_order: "Vennligst logg inn for å se bestillingen din."
       bought:
         item: "Allerede bestilt i denne bestillingssyklusen"
+      line_item:
+        insufficient_stock: "Utilstrekkelig lager tilgjengelig, kun%{on_hand} gjenværende"
+        out_of_stock: "Ikke på Lager"
+    shipment_states:
+      backorder: restordre
+      partial: delvis
+      pending: ventende
+      ready: klar
+      shipped: sendt
+    payment_states:
+      balance_due: balanse forfaller
+      completed: fullført
+      checkout: kasse
+      credit_owed: kreditt skyldt
+      failed: feilet
+      paid: betalt
+      pending: ventende
+      processing: behandler
+      void: ugyldig
+      invalid: ugyldig
     order_mailer:
       invoice_email:
         hi: "Hei %{name}"
@@ -2781,23 +3015,6 @@ nb:
       ended: avsluttet
       paused: pauset
       canceled: avbrutt
-    payment_states:
-      balance_due: balanse forfaller
-      completed: fullført
-      checkout: kasse
-      credit_owed: kreditt skyldt
-      failed: feilet
-      paid: betalt
-      pending: ventende
-      processing: behandler
-      void: ugyldig
-      invalid: ugyldig
-    shipment_states:
-      backorder: restordre
-      partial: delvis
-      pending: ventende
-      ready: klar
-      shipped: sendt
     user_mailer:
       reset_password_instructions:
         request_sent_text: |
@@ -2810,8 +3027,6 @@ nb:
             Hvis du fortsatt har problemer vennligst ta kontakt.
       confirmation_instructions:
         subject: Vennligst bekreft OFN-kontoen din
-    weight: Vekt (per kg)
-    zipcode: Postnummer
     users:
       form:
         account_settings: Kontoinnstillinger

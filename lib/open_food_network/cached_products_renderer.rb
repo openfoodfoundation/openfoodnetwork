@@ -39,7 +39,7 @@ module OpenFoodNetwork
     end
 
     def use_cached_products?
-      Spree::Config[:enable_products_cache?] && (Rails.env.production? || Rails.env.staging?)
+      Spree::Config[:enable_products_cache?]
     end
 
     def uncached_products_json

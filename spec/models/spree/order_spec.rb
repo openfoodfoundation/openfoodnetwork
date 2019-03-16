@@ -483,42 +483,6 @@ describe Spree::Order do
     end
   end
 
-  context "validating distributor changes" do
-    it "checks that a distributor is available when changing" do
-      set_feature_toggle :order_cycles, false
-      order_enterprise = FactoryBot.create(:enterprise, id: 1, :name => "Order Enterprise")
-      subject.distributor = order_enterprise
-      product1 = FactoryBot.create(:product)
-      product2 = FactoryBot.create(:product)
-      product3 = FactoryBot.create(:product)
-      variant11 = FactoryBot.create(:variant, product: product1)
-      variant12 = FactoryBot.create(:variant, product: product1)
-      variant21 = FactoryBot.create(:variant, product: product2)
-      variant31 = FactoryBot.create(:variant, product: product3)
-      variant32 = FactoryBot.create(:variant, product: product3)
-
-      # Product Distributions
-      # Order Enterprise sells product 1 and product 3
-      FactoryBot.create(:product_distribution, product: product1, distributor: order_enterprise)
-      FactoryBot.create(:product_distribution, product: product3, distributor: order_enterprise)
-
-      # Build the current order
-      line_item1 = FactoryBot.create(:line_item, order: subject, variant: variant11)
-      line_item2 = FactoryBot.create(:line_item, order: subject, variant: variant12)
-      line_item3 = FactoryBot.create(:line_item, order: subject, variant: variant31)
-      subject.reload
-      subject.line_items = [line_item1,line_item2,line_item3]
-
-      test_enterprise = FactoryBot.create(:enterprise, id: 2, :name => "Test Enterprise")
-      # Test Enterprise sells only product 1
-      FactoryBot.create(:product_distribution, product: product1, distributor: test_enterprise)
-
-      subject.distributor = test_enterprise
-      subject.should_not be_valid
-      subject.errors.messages.should == {:base => ["Distributor or order cycle cannot supply the products in your cart"]}
-    end
-  end
-
   describe "scopes" do
     describe "not_state" do
       before do

@@ -12,6 +12,14 @@ sv:
           attributes:
             email:
               taken: "Det finns redan ett konto med denna mailadress. Logga in eller återställ ditt lösenord."
+  activemodel:
+    attributes:
+      order_management/reports/enterprise_fee_summary/parameters:
+        distributor_ids: "Hubbar"
+        producer_ids: "Producenter "
+        order_cycle_ids: "Beställningsomgångar"
+        shipping_method_ids: "Transportsätt"
+        payment_method_ids: "Betalningssätt"
   devise:
     failure:
       invalid: |
@@ -69,7 +77,6 @@ sv:
   cancel: Avbryt
   edit: Redigera
   distributors: Distributörer
-  distribution: Distribution
   bulk_order_management: Hantera flera beställningar
   enterprises: Företag
   enterprise_groups: Grupper
@@ -97,6 +104,8 @@ sv:
   powered_by: Drivs av
   blocked_cookies_alert: "Din webbläsare kan blockera cookies som behövs för att använda den här butiken. Klicka nedan för att tillåta cookies och ladda om sidan."
   allow_cookies: "Tillåt cookies"
+  actions:
+    create: "Skapa"
   admin:
     date: Datum
     email: epost
@@ -192,13 +201,13 @@ sv:
         total_monthly_bill_incl_tax: "Totalt månadsfaktura (inkl moms)"
         total_monthly_bill_incl_tax_tip: "Exemplets totala månadsfaktura med skatt inkluderad enligt de inställningar och den omsättning som var angiven."
     cache_settings:
-      show:
-        title: Inkomst
-        distributor: Distributör
-        order_cycle: Beställningsomgång
-        status: Status
-        diff: Differens
-        error: Fel
+      edit:
+        title: "Inkomst"
+        distributor: "Distributör"
+        order_cycle: "Beställningsomgång"
+        status: "Status"
+        diff: "Differens"
+        error: "Fel"
     invoice_settings:
       edit:
         title: Fakturainställningar
@@ -1164,22 +1173,55 @@ sv:
   choose_password: "Välj ett lösenord"
   confirm_password: "Bekräfta lösenord"
   action_signup: "Underteckna nu"
-  welcome_to_ofn: "Välkommen till Open Food Network!"
-  signup_or_login: "Börja genom att underteckna (eller logga in)"
-  have_an_account: "Har du redan ett konto?"
-  action_login: "Logga in nu."
   forgot_password: "Glömt lösenordet?"
   password_reset_sent: "Ett e-postmeddelande med instruktioner hur lösenordet återställs har översänts!"
   reset_password: "Återställ lösenordet"
-  who_is_managing_enterprise: "Vem är ansvarig hos  %{enterprise}?"
   registration:
     steps:
-      images:
-        continue: "Fortsätt"
-        back: "Backa"
-        headline: "Tack!"
-        description: "Låt oss ladda några säljande bilder så att din profil ser lockande ut! :)"
+      introduction:
+        registration_greeting: "Hallå där!"
+        registration_intro: "Nu kan du skapa en profil för din producent eller matställe"
+        registration_checklist: "Du kommer att behöva"
+        registration_time: "5-10 minuter"
+        registration_enterprise_address: "Företagets adress"
+        registration_contact_details: "Uppgifter hur man får kontakt"
+        registration_logo: "Din logotype"
+        registration_promo_image: "Landskapsbild för din profil"
+        registration_about_us: "\"Om oss\" text"
+        registration_outcome_headline: "Vad får jag?"
+        registration_outcome1_html: "Din profil folk <strong>find</strong> och <strong>contact</strong> dig på  Open Food Network."
+        registration_outcome3: "Det är också det första steget mot handel via  Open Food Network eller öppna en nätbutik."
+        registration_action: "Låt oss börja!"
+      details:
+        headline: "Låt oss börja"
+        producer: "Hej! Först behöver vi veta lite om din gård:"
+        enterprise_name_field: "Företagets namn:"
+        producer_name_field: "Gårdens namn:"
+        producer_name_field_placeholder: "ex Gården"
+        producer_name_field_error: "Var vänlig välj ett unikt namn för ditt företag"
+        address1_field: "Adress rad 1:"
+        address1_field_placeholder: "ex 123 123"
+        address1_field_error: "Var vänlig skriv in en adress"
+        address2_field: "Adress rad 2:"
+        suburb_field: "Förort:"
+        suburb_field_placeholder: "ex  spånga"
+        suburb_field_error: "Var vänlig skriv in en förort"
+        postcode_field: "Postkod:"
+        postcode_field_placeholder: "t.ex. 3070"
+        postcode_field_error: "Postkod saknas"
+        state_field: "Land:"
+        state_field_error: "Land måste fyllas i "
+        country_field: "Område:"
+        country_field_error: "Var vänlig ange ett område"
+      contact:
+        title: "Kontakt"
+        who_is_managing_enterprise: "Vem är ansvarig hos  %{enterprise}?"
+        contact_field: "Kontaktperson"
+        contact_field_placeholder: "Kontaktperson"
+        contact_field_required: "Du måste ange en kontaktperson."
+        phone_field: "Telefonnummer"
       type:
+        title: "Typ"
         headline: "Sista steget för att lägga till %{enterprise}!"
         question: "Är du en producent?"
         yes_producer: "Ja, jag är en procucdent"
@@ -1188,103 +1230,71 @@ sv:
         yes_producer_help: "Producenter gör smakfulla rätter att äta och/eller dricka. Du är en producent om du odlar det, föder upp det, brygger det, bakar det  behandlar det, förädlar det eller formar det."
         no_producer_help: "Om du inte ät en producent är du antagligen någon som säljer och distribuerar mat. Du borde bli ett matställe, kooperation, inköpsgrupp, detaljhandlare,grossist eller annat. "
         create_profile: "Skapa en profil"
-  enterprise_contact: "Kontaktperson"
-  enterprise_contact_required: "Du måste ange en kontaktperson."
-  enterprise_email_address: "E-postadress"
-  enterprise_phone: "Telefonnummer"
+      about:
+        title: "Om oss"
+        headline: "Snygg sak"
+        message: "Låt oss nu bli lite mer detaljerade om"
+        enterprise_description: "Kort beskrivning"
+        enterprise_description_placeholder: "En kort mening som beskriver ditt företag"
+        enterprise_long_desc: "Lång beskrivning"
+        enterprise_long_desc_placeholder: "Detta är ditt tillfälle att beskriva ditt företag - vad som gör dig speciell och intressant. Vi föreslår att du begränsar beskrivningen till 600 tecken eller 150 ord."
+        enterprise_long_desc_length: "%{num} tecken / upp till 600 rekommenderas"
+        enterprise_abn: "ABN"
+        enterprise_abn_placeholder: "ex 070 56 78 90"
+        enterprise_acn: "ACN"
+        enterprise_acn_placeholder: "ex 123 456 789"
+        enterprise_tax_required: "Du måste göra ett val"
+      images:
+        title: "Bilder"
+        headline: "Tack!"
+        description: "Låt oss ladda några säljande bilder så att din profil ser lockande ut! :)"
+        uploading: "Laddning pågår..."
+        continue: "Fortsätt"
+        back: "Backa"
+      logo:
+        select_logo: "Steg 1. Välj logotype"
+        logo_tip: "Tips: Kvadratiska format fungerar bäst, minst 300 x 300px"
+        logo_label: "Välj en logotype"
+        logo_drag: "Drag och släpp din logotype här"
+        review_logo: "Steg 2. Kontrollera dinlogotype"
+        review_logo_tip: "Tips: för att uppnå bästa resultat skall logotypen fylla hela det tillgängliga utrymmet"
+        logo_placeholder: "Din logotype kommer att stå här så fort den är registrerad"
+      promo:
+        select_promo_image: "Steg 3. Välj företagssymbol"
+        promo_image_tip: "Tips: Visas som banderoll i storlek 1200 x 260px"
+        promo_image_label: "Välj företagssymbol"
+        promo_image_drag: "Drag och släpp din symbol här"
+        review_promo_image: "Steg 4. Kontrollera din företagssymbol"
+        review_promo_image_tip: "Tips: för ett bra resultat skall symbolen fylla hela det tillgängliga utrymmet"
+        promo_image_placeholder: "Din logotype kommer att stå här så fort den är registrerad"
+      social:
+        title: "Social"
+        enterprise_final_step: "Sista steget!"
+        enterprise_social_text: "Hur kan folk hitta %{enterprise} på nätet?"
+        website: "Hemsida"
+        website_placeholder: "ex openfoodnetwork.se"
+        facebook: "Facebook"
+        facebook_placeholder: "eg. www.facebook.com/PageNameHere"
+        linkedin: "Linkedin"
+        linkedin_placeholder: "eg. www.linkedin.com/YourNameHere"
+        twitter: "Twitter"
+        twitter_placeholder: "ex  @twitter_handle"
+        instagram: "Instagram"
+        instagram_placeholder: "ex  @instagram_handle"
+      limit_reached:
+        headline: "Oh nej!"
+        message: "Du har nått gränsen!"
+        text: "Du har nått gränsen för antalet företag du har tillåtelse att äga på"
+        action: "Återvänd till hemsidan"
+      finished:
+        headline: "Klar!"
+        thanks: "Tack för att du fyllt i alla uppgifter för %{enterprise}."
+        login: "Du kan ändra eller uppdatera dina uppgifter när som helst genom att logga in på Open Food Network och klicka på Admin."
+        action: "Open Food Network hem"
   back: "Backa"
   continue: "Fortsätt"
-  limit_reached_headline: "Oh nej!"
-  limit_reached_message: "Du har nått gränsen!"
-  limit_reached_text: "Du har nått gränsen för antalet företag du har tillåtelse att äga på"
-  limit_reached_action: "Återvänd till hemsidan"
-  select_promo_image: "Steg 3. Välj företagssymbol"
-  promo_image_tip: "Tips: Visas som banderoll i storlek 1200 x 260px"
-  promo_image_label: "Välj företagssymbol"
   action_or: "Eller"
-  promo_image_drag: "Drag och släpp din symbol här"
-  review_promo_image: "Steg 4. Kontrollera din företagssymbol"
-  review_promo_image_tip: "Tips: för ett bra resultat skall symbolen fylla hela det tillgängliga utrymmet"
-  promo_image_placeholder: "Din logotype kommer att stå här så fort den är registrerad"
-  uploading: "Laddning pågår..."
-  select_logo: "Steg 1. Välj logotype"
-  logo_tip: "Tips: Kvadratiska format fungerar bäst, minst 300 x 300px"
-  logo_label: "Välj en logotype"
-  logo_drag: "Drag och släpp din logotype här"
-  review_logo: "Steg 2. Kontrollera dinlogotype"
-  review_logo_tip: "Tips: för att uppnå bästa resultat skall logotypen fylla hela det tillgängliga utrymmet"
-  logo_placeholder: "Din logotype kommer att stå här så fort den är registrerad"
-  enterprise_about_headline: "Snygg sak"
-  enterprise_about_message: "Låt oss nu bli lite mer detaljerade om"
-  enterprise_success: "Succé! %{enterprise} ingår nu i Open Food Network "
-  enterprise_description: "Kort beslrivning"
-  enterprise_description_placeholder: "En kort mening som beskriver ditt företag"
-  enterprise_long_desc: "Lång beskrivning"
-  enterprise_long_desc_placeholder: "Detta är ditt tillfälle att beskriva ditt företag - vad som gör dig speciell och intressant. Vi föreslår att du begränsar beskrivningen till 600 tecken eller 150 ord."
-  enterprise_long_desc_length: "%{num} tecken / upp till 600 rekommenderas"
-  enterprise_abn: "ABN"
-  enterprise_abn_placeholder: "t.ex. 99 123 456 789"
-  enterprise_acn: "ACN"
-  enterprise_acn_placeholder: "t.ex. 123 456 789"
-  enterprise_tax_required: "Du måste göra ett val"
-  enterprise_final_step: "Sista steget!"
-  enterprise_social_text: "Hur kan folk hitta %{enterprise} på nätet?"
-  website: "Hemsida"
-  website_placeholder: "ex openfoodnetwork.se"
-  facebook: "Facebook"
-  facebook_placeholder: "eg. www.facebook.com/PageNameHere"
-  linkedin: "Linkedin"
-  linkedin_placeholder: "eg. www.linkedin.com/YourNameHere"
-  twitter: "Twitter"
-  twitter_placeholder: "ex  @twitter_handle"
-  instagram: "Instagram"
-  instagram_placeholder: "ex  @instagram_handle"
-  registration_greeting: "Hallå där!"
-  registration_intro: "Nu kan du skapa en profil för din producent eller matställe"
-  registration_action: "Låt oss börja!"
-  registration_checklist: "Du kommer att behöva"
-  registration_time: "5-10 minuter"
-  registration_enterprise_address: "Företagets adress"
-  registration_contact_details: "Uppgifter hur man får kontakt"
-  registration_logo: "Din logotype"
-  registration_promo_image: "Landskapsbild för din profil"
-  registration_about_us: "\"Om oss\" text"
-  registration_outcome_headline: "Vad får jag?"
-  registration_outcome1_html: "Din profil folk <strong>find</strong> och <strong>contact</strong> dig på  Open Food Network."
-  registration_outcome2: "Använd denna plats för att beskriva ditt företag, som hjälp att skapa kopplingar till dina kunder."
-  registration_outcome3: "Det är också det första steget mot handel via  Open Food Network eller öppna en nätbutik."
-  registration_finished_headline: "Klar!"
-  registration_finished_thanks: "Tack för att du fyllt i alla uppgifter för %{enterprise}."
-  registration_finished_login: "Du kan ändra eller uppdatera dina uppgifter när som helst genom att logga in på Open Food Network och klicka på Admin."
-  registration_finished_action: "Open Food Network hem"
-  registration_type_headline: "Sista steget för att lägga till %{enterprise}!"
-  registration_type_question: "Är du en producent?"
-  registration_type_producer: "Ja, jag är en procucdent"
-  registration_type_no_producer: "Nej, jag är inte en producent"
-  registration_type_error: "Var vänlig välj en. Är du en producent?"
-  registration_type_producer_help: "Producenter gör smakfulla rätter att äta och/eller dricka. Du är en producent om du odlar det, föder upp det, brygger det, bakar det  behandlar det, förädlar det eller formar det."
-  registration_type_no_producer_help: "Om du inte ät en producent är du antagligen någon som säljer och distribuerar mat. Du borde bli ett matställe, kooperation, inköpsgrupp, detaljhandlare,grossist eller annat. "
-  registration_detail_headline: "Låt oss börja"
-  registration_detail_enterprise: "Hej! Först bejöver vi veta lite om ditt företag:"
-  registration_detail_producer: "Hej! Först behöver vi veta lite om din gård:"
-  registration_detail_name_enterprise: "Företagets namn:"
-  registration_detail_name_producer: "Gårdens namn:"
-  registration_detail_name_placeholder: "ex Gården"
-  registration_detail_name_error: "Var vänlig välj ett unikt namn för ditt företag"
-  registration_detail_address1: "Adress rad 1:"
-  registration_detail_address1_placeholder: "ex 123 123"
-  registration_detail_address1_error: "Var vänlig skriv in en adress"
-  registration_detail_address2: "Adress rad 2:"
-  registration_detail_suburb: "Förort:"
-  registration_detail_suburb_placeholder: "ex  spånga"
-  registration_detail_suburb_error: "Var vänlig skriv in en förort"
-  registration_detail_postcode: "Postkod:"
-  registration_detail_postcode_placeholder: "t.ex. 3070"
-  registration_detail_postcode_error: "Postkod saknas"
-  registration_detail_state: "Land:"
-  registration_detail_state_error: "Land måste fyllas i "
-  registration_detail_country: "Område:"
-  registration_detail_country_error: "Var vänlig ange ett område"
+  enterprise_limit: Företagets gräns
   shipping_method_destroy_error: "Denna leveransmetod kan inte raderas eftersom den hänvisas till av beställning: %{number}."
   accounts_and_billing_task_already_running_error: "En jobb är redan igång. Vänta tills den är klar"
   accounts_and_billing_start_task_notice: "Jobbet lades till kön"
@@ -1395,7 +1405,6 @@ sv:
   spree_admin_enterprises_none_text: "Du har inget företag ännu"
   spree_admin_enterprises_tabs_hubs: "MATSTÄLLEN"
   spree_admin_enterprises_producers_manage_products: "HANTERA PRODUKTER"
-  spree_admin_enterprises_any_active_products_text: "Du har inga aktiva produkter."
   spree_admin_enterprises_create_new_product: "SKAPA EN NY PRODUKT"
   spree_admin_single_enterprise_alert_mail_confirmation: "Var vänlig och fastställ e-postadressen för"
   spree_admin_single_enterprise_alert_mail_sent: "Vi har sänt e-post till "
@@ -1810,6 +1819,37 @@ sv:
           resolve: Besluta
       new_tag_rule_dialog:
         select_rule_type: "Välj en regeltyp:"
+      orders:
+        order_state:
+          address: "adress"
+          adjustments: "justeringar"
+          awaiting_return: "väntar återsändning"
+          cart: "vagn"
+          complete: "komplett"
+          confirm: "bekräfta"
+          delivery: "leverans"
+          payment: "betalning"
+          pending: "oavslutad"
+          resumed: "återupptagen"
+          returned: "returnerad"
+          skrill: "skrill"
+        shipment_states:
+          backorder: "restorder"
+          partial: "delvis"
+          pending: "oavslutad"
+          ready: "klar"
+          shipped: "levererad"
+        payment_states:
+          balance_due: "behållning"
+          completed: "avslutad"
+          checkout: "leveranskontroll"
+          credit_owed: "kredit i skuld"
+          failed: "misslyckades"
+          paid: "betald"
+          pending: "oavslutad"
+          processing: "behandlas"
+          void: "annulerad"
+          invalid: "felaktig"
       resend_user_email_confirmation:
         resend: "Återsänd"
     out_of_stock:
@@ -1868,29 +1908,117 @@ sv:
     customers:
       select_shop: 'Var god välj en butik först'
       could_not_create: Tyvärr, det gick inte att skapa
+    spree:
+      users:
+        order: "Beställningar"
+    registration:
+      welcome_to_ofn: "Välkommen till OFN!"
+      signup_or_login: "Börja genom att underteckna (eller logga in)"
+      have_an_account: "Har du redan ett konto?"
+      action_login: "Logga in nu."
   producers:
     signup:
       start_free_profile: "Börja med en gratis profil och uppgradera när du är redo!"
+  order_management:
+    reports:
+      enterprise_fee_summary:
+        fee_calculated_on_transfer_through_all: "Alla"
+        fee_placements:
+          supplier: "Inkommande"
+          distributor: "Utgående"
+          coordinator: "Koordinator"
+        formats:
+          csv:
+            header:
+              fee_type: "Avgiftstyp"
+              customer_name: "Kund"
+              tax_category_name: "Skattekategori"
+          html:
+            header:
+              fee_type: "Avgiftstyp"
+              customer_name: "Kund"
+              tax_category_name: "Skattekategori"
+  order: "Beställningar"
+  distribution: "Distribution"
+  payment: "Betalning "
+  payment_method: "Betalningsmetod"
+  category: "Kategori"
+  delivery: "Leverans"
+  administration: "Administration"
+  account: "Konto"
+  logout: "Logga ut"
   spree:
+    resend: Återsänd
+    quantity: "Antal"
+    price: "Pris"
+    total: "Summa"
+    edit: "Redigera"
+    account: "Konto"
+    billing_address: "Fakturerirngsadress"
+    shipping_address: "Leveransadress"
+    city: "Ort"
+    country: "Land"
+    state: "Region"
+    phone: "Telefonnummer"
+    update: "Uppdatera"
+    continue: "Fortsätt"
+    tax rate: "Skattesatser"
+    tax_category: "Skattekategori"
+    tax_settings: "Skatteskalor"
+    payment_methods: "Betalningssätt"
+    shipping_methods: "Transportsätt"
+    name: "Namn"
+    description: "Beskrivning"
+    type: "Typ"
+    calculator: "Beräkning"
+    create: "Skapa"
+    inventory: Lager
+    zipcode: Postkod
+    weight: Vikt (kg)
+    actions:
+      update: "Uppdatera"
+    errors:
+      messages:
+        blank: "kan inte vara blank"
     admin:
+      tab:
+        dashboard: "Panel"
+        bulk_order_management: "Hantera flera beställningar"
+        products: "Produkter"
+        properties: "Egenskaper"
+        variant_overrides: "Lager"
+        reports: "Rapporter"
+        users: "Användare"
+        roles: "Uppgifter"
+        order_cycles: "Beställningsomgångar"
+        enterprises: "Företag"
+        customers: "Kunder"
+        groups: "Grupper"
       orders:
         index:
           capture: "Fånga"
           ship: "Frakta"
           edit: "Redigera"
           next: "Näst"
+        sortable_header:
+          payment_state: "Betalningsstatus"
+          shipment_state: "Leveransstatus"
+          state: "Region"
         invoice:
-          issued_on: Utfärdat den
-          tax_invoice: FAKTURA
-          code: Kod
-          from: Från
-          to: Till
+          issued_on: "Utfärdat den"
+          tax_invoice: "FAKTURA"
+          code: "Kod"
+          from: "Från"
+          to: "Till"
         form:
           distribution_fields:
-            title: Distribution
+            title: "Distribution"
             distributor: "Distributör:"
             order_cycle: "Beställningsomgång:"
       overview:
+        products:
+          active_products:
+            zero: "Du har inga aktiva produkter."
         order_cycles:
           order_cycles: "Beställningsomgångar"
           order_cycles_tip: "Beställningsomgångar bestämmer när och var dina produkter är tillgängliga för kunderna."
@@ -1922,6 +2050,9 @@ sv:
           bulk_coop_allocation: 'Bulk Co-op - Allokering'
           bulk_coop_packing_sheets: 'Bulk Co-op - Förpackningssedlar'
           bulk_coop_customer_payments: 'Bulk Co-op - kundbetalningar'
+        enterprise_fee_summaries:
+          report:
+            none: "Ingen"
       users:
         index:
           user: "Användare"
@@ -1943,10 +2074,26 @@ sv:
     date_picker:
       format: '%Y-%m-%d'
       js_format: 'åå-mm-dd'
-    inventory: Lager
     orders:
       bought:
         item: "Redan beställd i denna beställningsomgång"
+    shipment_states:
+      backorder: restorder
+      partial: delvis
+      pending: oavslutad
+      ready: klar
+      shipped: levererad
+    payment_states:
+      balance_due: behållning
+      completed: avslutad
+      checkout: leveranskontroll
+      credit_owed: kredit i skuld
+      failed: misslyckades
+      paid: betald
+      pending: oavslutad
+      processing: behandlas
+      void: annulerad
+      invalid: felaktig
     order_mailer:
       invoice_email:
         hi: "Hi %{name}"
@@ -1963,23 +2110,6 @@ sv:
       resumed: återupptagen
       returned: returnerad
       skrill: skrill
-    payment_states:
-      balance_due: behållning
-      completed: avslutad
-      checkout: leveranskontroll
-      credit_owed: kredit i skuld
-      failed: misslyckades
-      paid: betald
-      pending: oavslutad
-      processing: behandlas
-      void: annulerad
-      invalid: felaktig
-    shipment_states:
-      backorder: restorder
-      partial: delvis
-      pending: oavslutad
-      ready: klar
-      shipped: levererad
     user_mailer:
       reset_password_instructions:
         request_sent_text: |
@@ -1990,8 +2120,6 @@ sv:
         issue_text: |
             Om den ovan nämnda webbadressen inte fungerar kan du försöka kopiera och klistra in den i webbläsaren.
             Om du får problem, var god kontakta oss.
-    weight: Vikt (kg)
-    zipcode: Postkod
     users:
       open_orders:
         order: Beställningar

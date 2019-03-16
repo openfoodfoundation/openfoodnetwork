@@ -27,8 +27,8 @@ Spree::Product.class_eval do
   attr_accessible :inherits_properties, :sku
 
   validates_presence_of :supplier
-  validates :primary_taxon, presence: { message: I18n.t("validation_msg_product_category_cant_be_blank") }
-  validates :tax_category_id, presence: { message: I18n.t("validation_msg_tax") }, if: "Spree::Config.products_require_tax_category"
+  validates :primary_taxon, presence: true
+  validates :tax_category_id, presence: true, if: "Spree::Config.products_require_tax_category"
 
   validates_presence_of :variant_unit
   validates_presence_of :variant_unit_scale,

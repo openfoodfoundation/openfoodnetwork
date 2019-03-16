@@ -39,17 +39,9 @@ class OrderCycle < ActiveRecord::Base
 
   scope :by_name, order('name')
 
-  scope :distributing_product, lambda { |product|
-    joins(:exchanges).
-      merge(Exchange.outgoing).
-      merge(Exchange.with_product(product)).
-      select('DISTINCT order_cycles.*')
-  }
-
   scope :with_distributor, lambda { |distributor|
     joins(:exchanges).merge(Exchange.outgoing).merge(Exchange.to_enterprise(distributor))
   }
-
 
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
@@ -155,7 +147,6 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def distributed_variants
-    # TODO: only used in DistributionChangeValidator, can we remove?
     self.exchanges.outgoing.map(&:variants).flatten.uniq.reject(&:deleted?)
   end
 
@@ -171,17 +162,6 @@ class OrderCycle < ActiveRecord::Base
 
   def products_distributed_by(distributor)
     variants_distributed_by(distributor).map(&:product).uniq
-  end
-
-  # If a product without variants is added to an order cycle, and then some variants are added
-  # to that product, but not the order cycle, then the master variant should not available for customers
-  # to purchase.
-  # This method filters out such products so that the customer cannot purchase them.
-  def valid_products_distributed_by(distributor)
-    variants = variants_distributed_by(distributor)
-    products = variants.map(&:product).uniq
-    product_ids = products.reject{ |p| product_has_only_obsolete_master_in_distribution?(p, variants) }.map(&:id)
-    Spree::Product.where(id: product_ids)
   end
 
   def products
@@ -262,17 +242,6 @@ class OrderCycle < ActiveRecord::Base
   end
 
   private
-
-  # If a product without variants is added to an order cycle, and then some variants are added
-  # to that product, but not the order cycle, then the master variant should not available for customers
-  # to purchase.
-  # This method is used by #valid_products_distributed_by to filter out such products so that
-  # the customer cannot purchase them.
-  def product_has_only_obsolete_master_in_distribution?(product, distributed_variants)
-    product.has_variants? &&
-      distributed_variants.include?(product.master) &&
-      (product.variants & distributed_variants).empty?
-  end
 
   def orders_close_at_after_orders_open_at?
     return if orders_open_at.blank? || orders_close_at.blank?

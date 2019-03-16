@@ -1,9 +1,0 @@
-%fieldset#product-distributor-details.columns.five.omega
-  %legend
-    = t :products_distributor
-  .distributor-details
-    - order = current_order(false)
-    - if order.andand.distributor.present?
-      = render 'enterprises/distributor_details', :distributor => order.distributor
-    - else
-      = t :products_distributor_info

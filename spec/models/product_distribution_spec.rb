@@ -23,47 +23,6 @@ describe ProductDistribution do
 
 
   describe "adjusting orders" do
-    context "integration" do
-      let(:distributor) { create(:distributor_enterprise) }
-      let(:product) { create(:product, name: 'Pear') }
-      let(:enterprise_fee) { create(:enterprise_fee, calculator: build(:calculator), enterprise: distributor) }
-      let!(:product_distribution) { create(:product_distribution, product: product, distributor: distributor, enterprise_fee: enterprise_fee) }
-      let(:order) { create(:order, distributor: distributor) }
-
-      it "creates an adjustment for product distributions" do
-        enterprise_fee.calculator.preferred_amount = 1.23
-        enterprise_fee.calculator.save!
-
-        # When I add the product to the order, an adjustment should be made
-        expect do
-          cart_service = CartService.new order
-          cart_service.populate products: {product.id => product.master.id}, quantity: 1, distributor_id: distributor.id
-
-          # Normally the controller would fire this event when the order's contents are changed
-          fire_order_contents_changed_event(order.user, order)
-        end.to change(Spree::Adjustment, :count).by(1)
-
-        # And it should have the correct data
-        order.reload
-        adjustments = order.adjustments.where(:originator_type => 'EnterpriseFee')
-        expect(adjustments.count).to eq 1
-        adjustment = adjustments.first
-
-        expect(adjustment.source).to eq order.line_items.last
-        expect(adjustment.originator).to eq enterprise_fee
-        expect(adjustment.label).to eq "Product distribution by #{distributor.name} for Pear"
-        expect(adjustment.amount).to eq 1.23
-
-        # TODO ROB this has an intermittent failure
-        # And it should have some associated metadata
-        md = adjustment.metadata
-        expect(md.enterprise).to eq distributor
-        expect(md.fee_name).to eq enterprise_fee.name
-        expect(md.fee_type).to eq enterprise_fee.fee_type
-        expect(md.enterprise_role).to eq 'distributor'
-      end
-    end
-
     describe "finding our adjustment for a line item" do
       it "returns nil when not present" do
         line_item = build(:line_item)
