@@ -48,6 +48,7 @@ class ShippingMethodFactory
     params[:distributor_ids] = [enterprise.id]
     method = enterprise.shipping_methods.new(params)
     method.zone = zone
+    method.shipping_categories << Spree::ShippingCategory.find_or_create_by_name('Default')
     method.save!
     method
   end
