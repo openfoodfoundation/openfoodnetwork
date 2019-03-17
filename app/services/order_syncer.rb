@@ -31,8 +31,19 @@ class OrderSyncer
 
   def update_associations_for(order)
     update_bill_address_for(order) if (bill_address.changes.keys & relevant_address_attrs).any?
-    update_ship_address_for(order) if (ship_address.changes.keys & relevant_address_attrs).any?
     update_shipment_for(order) if shipping_method_id_changed?
+
+    # The conditions here are to achieve the same behaviour in earlier versions of Spree, where
+    # switching from pick-up to delivery affects whether simultaneous changes to shipping address
+    # are ignored or not.
+    pickup_to_delivery = force_ship_address_required?(order)
+    if (ship_address.changes.keys & relevant_address_attrs).any?
+      update_ship_address_for(order) unless pickup_to_delivery && order.shipment.blank?
+    end
+    unless pickup_to_delivery && order.shipment.present?
+      order.updater.__send__(:shipping_address_from_distributor)
+    end
+
     update_payment_for(order) if payment_method_id_changed?
   end
 
