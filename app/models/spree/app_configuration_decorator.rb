@@ -39,5 +39,5 @@ Spree::AppConfiguration.class_eval do
   preference :enable_localized_number?, :boolean, default: false
 
   # Enable cache
-  preference :enable_products_cache?, :boolean, default: !Rails.env.development?
+  preference :enable_products_cache?, :boolean, default: (Rails.env.production? || Rails.env.staging?)
 end
