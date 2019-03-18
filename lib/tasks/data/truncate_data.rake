@@ -50,18 +50,6 @@ namespace :ofn do
       sql_delete_from "order_cycle_schedules #{where_oc_id_in_ocs_to_delete}"
       sql_delete_from "order_cycles #{where_ocs_to_delete}"
 
-      # Truncating addresses like this takes many hours to run on top of 300k records
-      #   The sanitize task will work well with the ful range of 300k addresses
-      # sql_delete_from "spree_addresses where
-      #  id not in (select address_id from enterprise_groups) and
-      #  id not in (select address_id from enterprises) and
-      #  id not in (select bill_address_id from spree_orders where bill_address_id is not null) and
-      #  id not in (select ship_address_id from spree_orders where ship_address_id is not null) and
-      #  id not in (select address_id from spree_shipments where address_id is not null) and
-      #  id not in (select address_id from spree_shipments where address_id is not null) and
-      #  id not in (select bill_address_id from customers where bill_address_id is not null) and
-      #  id not in (select ship_address_id from customers where ship_address_id is not null)"
-
       Spree::TokenizedPermission.where("created_at < '#{date}'").delete_all
       Spree::StateChange.delete_all
       Spree::LogEntry.delete_all
