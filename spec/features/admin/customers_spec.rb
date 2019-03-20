@@ -184,6 +184,7 @@ feature 'Customers' do
         it 'updates the existing billing address' do
           expect(page).to have_content 'BILLING ADDRESS'
           first('#bill-address-link').click
+          wait_for_modal_fade_in
 
           expect(page).to have_content 'Edit Billing Address'
           expect(page).to have_select2 'country_id', selected: 'Australia'
@@ -211,6 +212,7 @@ feature 'Customers' do
           expect(page).to have_content 'SHIPPING ADDRESS'
 
           first('#ship-address-link').click
+          wait_for_modal_fade_in
           expect(page).to have_content 'Edit Shipping Address'
 
           fill_in 'firstname', with: "First"
@@ -234,6 +236,15 @@ feature 'Customers' do
           expect(ship_address.address1).to eq 'New Address1'
           expect(ship_address.phone).to eq '12345678'
           expect(ship_address.city).to eq 'Melbourne'
+        end
+
+        # Modal animations are defined in:
+        # app/assets/javascripts/admin/utils/services/dialog_defaults.js.coffee
+        #
+        # Without waiting, `fill_in` can fail randomly:
+        # https://github.com/teamcapybara/capybara/issues/1890
+        def wait_for_modal_fade_in(time = 0.4)
+          sleep time
         end
       end
 
