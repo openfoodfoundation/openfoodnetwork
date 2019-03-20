@@ -20,17 +20,6 @@ feature "full-page cart", js: true do
       set_order order
     end
 
-    it "shows the right registration link" do
-      # We have an issue with the registration link within Spree controllers.
-      # The `registration_path` helper resolves to `/signup` due to
-      # spree_auth_device > config > routes.rb. This spec verifies that we have
-      # a solution to that problem.
-      add_product_to_cart order, product_with_fee
-      visit spree.cart_path
-      register_page = window_opened_by { click_link "Register here" }
-      within_window(register_page) { expect(page).to have_content "Welcome" }
-    end
-
     describe "product description" do
       it "does not link to the product page" do
         add_product_to_cart order, product_with_fee, quantity: 2
