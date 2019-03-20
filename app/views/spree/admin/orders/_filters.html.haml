@@ -11,7 +11,7 @@
       .field
         = label_tag nil, t(:status)
         = select_tag("q[state_eq]",
-            options_for_select(Spree::Order.state_machines[:state].states.collect {|s| [t("order_state.#{s.name}"), s.value]}),
+            options_for_select(Spree::Order.state_machines[:state].states.collect {|s| [t("spree.order_state.#{s.name}"), s.value]}),
             {include_blank: true, class: 'select2', 'ng-model' => 'q.state_eq'})
     .four.columns
       .field

@@ -19,7 +19,7 @@
       %dd
         - order_state_classes = "state #{@order.state}"
         %span{ class: order_state_classes }
-          = t(@order.state, scope: :order_state)
+          = t(@order.state, scope: "spree.order_state")
       %dt
         = t(:total)
         \:
