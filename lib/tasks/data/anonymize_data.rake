@@ -2,8 +2,8 @@ require 'highline'
 
 namespace :ofn do
   namespace :data do
-    desc 'Sanitize data'
-    task sanitize: :environment do
+    desc 'Anonymize data'
+    task anonymize: :environment do
       guard_and_warn
 
       Spree::User.update_all("email = concat(id, '_ofn_user@example.com'),
@@ -24,7 +24,7 @@ namespace :ofn do
         company = null, latitude = null, longitude = null")
       Spree::TokenizedPermission.update_all("token = null")
 
-      # Sanitize payments related entities
+      # Anonymize payments related entities
       Spree::PaymentMethod.update_all("name = concat('Dummy Payment Method', id),
                                        description = name")
       Spree::CreditCard.update_all("
