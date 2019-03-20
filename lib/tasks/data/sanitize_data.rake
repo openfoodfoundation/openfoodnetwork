@@ -9,13 +9,18 @@ namespace :ofn do
       Spree::User.update_all("email = concat(id, '_ofn_user@example.com'),
                               login = concat(id, '_ofn_user@example.com'),
                               unconfirmed_email = concat(id, '_ofn_user@example.com')")
-      Spree::Customer.update_all("email = concat(id, '_ofn_customer@example.com'),
-                                  name = concat('Customer Number ', id)")
+      Customer.where("user_id IS NULL")
+                     .update_all("email = concat(id, '_ofn_customer@example.com'),
+                                  name = concat('Customer Number ', id, ' (without connected User)')")
+      Customer.where("user_id IS NOT NULL")
+                     .update_all("email = concat(user_id, '_ofn_user@example.com'),
+                                  name = concat('Customer Number ', id, ' - User ', user_id)")
+
       Spree::Order.update_all("email = concat(id, '_ofn_order@example.com')")
       Spree::Address.update_all("
         firstname = concat('Ms. Number', id), lastname = 'Jones',  phone = '01234567890',
         alternative_phone = '01234567890', address1 = 'Dummy address',
-        address2 = 'Dummy address continuation', city = 'Dummy City', zipcode = '0000',
+        address2 = 'Dummy address continuation',
         company = null, latitude = null, longitude = null")
       Spree::TokenizedPermission.update_all("token = null")
 
