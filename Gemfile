@@ -3,7 +3,7 @@ ruby "2.1.5"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
 gem 'rails', '~> 4.0.0'
-gem 'rails-i18n', '~> 4.0.0'
+# gem 'rails-i18n', '~> 4.0'
 gem 'i18n', '~> 0.6.11'
 gem 'i18n-js', '~> 3.2.1'
 
@@ -21,16 +21,16 @@ gem 'pg'
 gem 'spree', github: 'openfoodfoundation/spree', branch: '2-1-0-stable'
 
 gem 'spree_i18n', github: 'spree/spree_i18n', branch: '1-3-stable'
-gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '2-1-stable', ref: '1c436c738d0f086b2ca0f75a977ac16bc6cb98b9'
+# gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '2-1-stable', ref: '1c436c738d0f086b2ca0f75a977ac16bc6cb98b9'
 
 # Our branch contains two changes
 # - Pass customer email and phone number to PayPal (merged to upstream master)
 # - Change type of password from string to password to hide it in the form
-gem 'spree_paypal_express', github: "openfoodfoundation/better_spree_paypal_express", branch: "2-0-stable"
+# gem 'spree_paypal_express', github: "openfoodfoundation/better_spree_paypal_express", branch: "2-0-stable"
 gem 'stripe', '~> 4.5.0'
 # We need at least this version to have Digicert's root certificate
 # which is needed for Pin Payments (and possibly others).
-gem 'activemerchant', '~> 1.78'
+# gem 'activemerchant', '~> 1.78'
 
 gem 'oauth2', '~> 1.4.1' # Used for Stripe Connect
 gem 'jwt', '~> 2.1'
@@ -40,14 +40,13 @@ gem 'daemons'
 
 # Fix bug in simple_form preventing collection_check_boxes usage within form_for block
 # When merged, revert to upstream gem
-gem 'simple_form', github: 'RohanM/simple_form'
+# gem 'simple_form', github: 'RohanM/simple_form'
 
 gem 'unicorn'
 gem 'angularjs-rails', '1.5.5'
 gem 'bugsnag'
 gem 'haml'
-gem 'sass', "~> 3.3"
-gem 'sass-rails', '~> 4.0.0', groups: [:default, :assets]
+gem 'sass-rails', groups: [:default, :assets]
 gem 'redcarpet'
 gem 'aws-sdk'
 gem 'db2fog'
@@ -59,7 +58,7 @@ gem 'rabl'
 # Once Rails is updated to 5.x we should bump directly to 0.10.x
 gem "active_model_serializers", "0.8.4"
 gem 'oj'
-gem 'deface', '1.0.0'
+gem 'deface'
 gem 'paperclip', '~> 3.4.1'
 gem 'dalli'
 gem 'geocoder'
@@ -98,19 +97,26 @@ group :assets do
 
   gem 'uglifier', '>= 1.0.3'
 
-  gem 'turbo-sprockets-rails3'
+  # gem 'turbo-sprockets-rails3'
   gem 'foundation-icons-sass-rails'
   gem 'momentjs-rails'
   gem 'angular-rails-templates', '~> 0.3.0'
 end
 
-gem "foundation-rails"
-gem 'foundation_rails_helper', github: 'willrjmarshall/foundation_rails_helper', branch: "rails3"
+# Bundler could not find compatible versions for gem "sass":
+# In Gemfile:
+#   foundation-rails was resolved to 5.5.2.1, which depends on
+#     sass (< 3.5, >= 3.3.0)
+#
+#   sass-rails was resolved to 5.0.7, which depends on
+#     sass (~> 3.1)
+# gem "foundation-rails"
+# gem 'foundation_rails_helper', github: 'willrjmarshall/foundation_rails_helper', branch: "rails3"
 
 gem 'jquery-rails', '3.0.0'
 gem 'jquery-migrate-rails'
 
-gem 'ofn-qz', github: 'openfoodfoundation/ofn-qz', ref: '60da2ae4c44cbb4c8d602f59fb5fff8d0f21db3c'
+# gem 'ofn-qz', github: 'openfoodfoundation/ofn-qz', ref: '60da2ae4c44cbb4c8d602f59fb5fff8d0f21db3c'
 
 group :test, :development do
   # Pretty printed test output
@@ -149,7 +155,7 @@ group :development do
   gem 'guard-rails'
   gem 'guard-rspec', '~> 4.7.3'
   gem 'rubocop', '>= 0.49.1'
-  gem 'spring', '1.7.2'
+  gem 'spring'
   gem 'spring-commands-rspec'
 
   # 1.0.9 fixed openssl issues on macOS https://github.com/eventmachine/eventmachine/issues/602
