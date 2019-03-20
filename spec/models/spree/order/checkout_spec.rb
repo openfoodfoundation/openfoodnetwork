@@ -36,9 +36,7 @@ describe Spree::Order do
       order.order_cycle = create(:simple_order_cycle,
                                  distributors: [order.distributor],
                                  variants: [order.line_items.first.variant, other_variant])
-      order.line_items = [order.line_items.first, create(:line_item,
-                                                         order: order,
-                                                         variant: other_variant)]
+      order.line_items << create(:line_item, order: order, variant: other_variant)
     end
 
     it "can progress to delivery" do
