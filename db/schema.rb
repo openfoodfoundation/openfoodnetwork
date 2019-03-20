@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20190315224423) do
+ActiveRecord::Schema.define(:version => 20190320111312) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
