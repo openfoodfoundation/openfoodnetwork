@@ -150,7 +150,6 @@ Layout/EmptyLines:
     - 'app/models/exchange.rb'
     - 'app/models/exchange_fee.rb'
     - 'app/models/inventory_item.rb'
-    - 'app/models/order_cycle.rb'
     - 'app/models/producer_property.rb'
     - 'app/models/product_distribution.rb'
     - 'app/models/spree/classification_decorator.rb'
@@ -302,7 +301,6 @@ Layout/EmptyLinesAroundBlockBody:
 # SupportedStyles: empty_lines, empty_lines_except_namespace, empty_lines_special, no_empty_lines, beginning_only, ending_only
 Layout/EmptyLinesAroundClassBody:
   Exclude:
-    - 'app/controllers/admin/cache_settings_controller.rb'
     - 'app/controllers/admin/enterprise_fees_controller.rb'
     - 'app/controllers/admin/inventory_items_controller.rb'
     - 'app/controllers/admin/tag_rules_controller.rb'
@@ -730,7 +728,6 @@ Layout/SpaceInsideBlockBraces:
 # SupportedStylesForEmptyBraces: space, no_space
 Layout/SpaceInsideHashLiteralBraces:
   Exclude:
-    - 'app/controllers/admin/cache_settings_controller.rb'
     - 'app/controllers/admin/enterprise_relationships_controller.rb'
     - 'app/controllers/admin/enterprise_roles_controller.rb'
     - 'app/controllers/api/statuses_controller.rb'
@@ -1533,7 +1530,6 @@ Style/CaseEquality:
 # SupportedStyles: nested, compact
 Style/ClassAndModuleChildren:
   Exclude:
-    - 'app/controllers/admin/cache_settings_controller.rb'
     - 'app/controllers/spree/store_controller_decorator.rb'
     - 'app/helpers/angular_form_helper.rb'
     - 'app/models/calculator/flat_percent_per_item.rb'
@@ -1789,17 +1785,9 @@ Style/HashSyntax:
     - 'app/models/spree/product_decorator.rb'
     - 'app/models/spree/taxon_decorator.rb'
     - 'app/models/spree/user_decorator.rb'
-    - 'app/overrides/add_distributor_details_js_to_product.rb'
-    - 'app/overrides/add_distributor_details_to_product.rb'
-    - 'app/overrides/add_distributor_to_add_to_cart_form.rb'
     - 'app/overrides/add_enterprise_fees_to_admin_configurations_menu.rb'
-    - 'app/overrides/add_source_to_product.rb'
     - 'app/overrides/remove_search_bar.rb'
     - 'app/overrides/remove_side_bar.rb'
-    - 'app/overrides/replace_checkout_payment_button.rb'
-    - 'app/overrides/replace_order_details_steps_data.rb'
-    - 'app/overrides/replace_payment_name_with_description.rb'
-    - 'app/overrides/replace_shipping_address_form_with_distributor_details.rb'
     - 'app/overrides/set_auth_token_in_backend.rb'
     - 'app/overrides/set_auth_token_in_frontend.rb'
     - 'app/presenters/variant_presenter.rb'

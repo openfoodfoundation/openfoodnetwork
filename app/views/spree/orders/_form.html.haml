@@ -25,10 +25,6 @@
       %tfoot#edit-cart
         = render 'spree/orders/form/cart_actions_row' if @order.cart?
 
-        / This is the fees row which we want to replace with the pop-over
-        -# - unless @order.adjustments.eligible.blank?
-        -#   = render "spree/orders/adjustments"
-
         %tr
           %td.text-right{colspan:"3"}
             = t :orders_form_subtotal

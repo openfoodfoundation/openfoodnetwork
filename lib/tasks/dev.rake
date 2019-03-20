@@ -315,6 +315,22 @@ namespace :ofn do
       unless EnterpriseRole.where( user_id: Spree::User.first, enterprise_id: enterprise2 ).any?
         EnterpriseRole.create!(user: Spree::User.first, enterprise: enterprise2)
       end
+      display_deprecation_warning
+    end
+
+    def display_deprecation_warning
+      behaviour = ActiveSupport::Deprecation.behavior = :stderr
+      ActiveSupport::Deprecation.behavior = :stderr
+      ActiveSupport::Deprecation.warn(<<WARNING)
+
+
+  This task is going to be replaced by:
+
+    $ bundle exec rake ofn:sample_data
+
+  It contains more sample data.
+WARNING
+      ActiveSupport::Deprecation.behavior = behaviour
     end
   end
 end
