@@ -2897,7 +2897,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     shipping_methods: "Shipping Methods"
 
     shipping_categories: "Shipping Categories"
-    new_shipping_category: "NEWEW Shipping Categories"
+    new_shipping_category: "New Shipping Category"
     back_to_shipping_categories: "Back To Shipping Categories"
 
     analytics_trackers: "Analytics Trackers"

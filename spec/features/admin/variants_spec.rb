@@ -58,6 +58,47 @@ feature %q{
     v.unit_description.should == 'bar'
   end
 
+  describe "editing on hand and on demand values", js:true do
+    let(:product) { create(:simple_product) }
+    let(:variant) { product.variants.first }
+
+    before do
+      login_to_admin_section
+    end
+
+    it "allows changing the on_hand value" do
+      visit spree.edit_admin_product_variant_path(product, variant)
+
+      page.should have_field "variant_on_hand", with: variant.on_hand
+      page.should have_unchecked_field "variant_on_demand"
+
+      fill_in "variant_on_hand", with: "123"
+      click_button 'Update'
+      page.should have_content %Q(Variant "#{product.name}" has been successfully updated!)
+    end
+
+    it "allows changing the on_demand value" do
+      visit spree.edit_admin_product_variant_path(product, variant)
+      check "variant_on_demand"
+
+      # on_hand reflects the change in on_demand
+      page.should have_field "variant_on_hand", with: "Infinity", disabled: true
+
+      click_button 'Update'
+      page.should have_content %Q(Variant "#{product.name}" has been successfully updated!)
+    end
+
+    it "memorizes on_hand value previously entered if enabling and disabling on_demand" do
+      visit spree.edit_admin_product_variant_path(product, variant)
+      fill_in "variant_on_hand", with: "123"
+      check "variant_on_demand"
+      uncheck "variant_on_demand"
+
+      # on_hand shows the memorized value, not the original DB value
+      page.should have_field "variant_on_hand", with: "123"
+    end
+  end
+
   it "soft-deletes variants", js: true do
     p = create(:simple_product)
     v = create(:variant, product: p)
