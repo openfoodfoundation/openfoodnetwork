@@ -132,8 +132,6 @@ feature %q{
   end
 
   scenario "can't change distributor or order cycle once order has been finalized" do
-    @order.update_attributes order_cycle_id: nil
-
     quick_login_as_admin
     visit '/admin/orders'
     page.find('td.actions a.icon-edit').click
@@ -142,7 +140,7 @@ feature %q{
     expect(page).not_to have_select2 'order_order_cycle_id'
 
     expect(page).to have_selector 'p', text: "Distributor: #{@order.distributor.name}"
-    expect(page).to have_selector 'p', text: "Order cycle: None"
+    expect(page).to have_selector 'p', text: "Order cycle: #{@order.order_cycle.name}"
   end
 
   scenario "filling customer details" do

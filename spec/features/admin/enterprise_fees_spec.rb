@@ -106,31 +106,6 @@ feature %q{
     expect(page).to have_no_selector "input[value='#{fee.name}']"
   end
 
-  scenario "deleting a shipping method referenced by a product distribution" do
-    # Given an enterprise fee referenced by a product distribution
-    fee = create(:enterprise_fee)
-    p = create(:product)
-    d = create(:distributor_enterprise)
-    create(:product_distribution, product: p, distributor: d, enterprise_fee: fee)
-
-    # When I go to the enterprise fees page
-    quick_login_as_admin
-    visit admin_enterprise_fees_path
-
-    # And I click delete
-    accept_alert  do
-      find("a.delete-resource").click
-    end
-
-    # Then I should see an error
-    expect(page).to have_content "That enterprise fee cannot be deleted as it is referenced by a product distribution: #{p.id} - #{p.name}."
-
-    # And my enterprise fee should not have been deleted
-    visit admin_enterprise_fees_path
-    expect(page).to have_selector "input[value='#{fee.name}']"
-    expect(EnterpriseFee.find(fee.id)).not_to be_nil
-  end
-
   context "as an enterprise manager" do
     let(:enterprise_user) { create_enterprise_user }
     let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }

@@ -27,8 +27,6 @@ class Enterprise < ActiveRecord::Base
   has_many :supplied_products, :class_name => 'Spree::Product', :foreign_key => 'supplier_id', :dependent => :destroy
   has_many :distributed_orders, :class_name => 'Spree::Order', :foreign_key => 'distributor_id'
   belongs_to :address, :class_name => 'Spree::Address'
-  has_many :product_distributions, :foreign_key => 'distributor_id', :dependent => :destroy
-  has_many :distributed_products, :through => :product_distributions, :source => :product
   has_many :enterprise_fees
   has_many :enterprise_roles, :dependent => :destroy
   has_many :users, through: :enterprise_roles
@@ -109,11 +107,11 @@ class Enterprise < ActiveRecord::Base
   scope :is_primary_producer, where(:is_primary_producer => true)
   scope :is_distributor, where('sells != ?', 'none')
   scope :is_hub, where(sells: 'any')
-  scope :supplying_variant_in, lambda { |variants| joins(:supplied_products => :variants_including_master).where('spree_variants.id IN (?)', variants).select('DISTINCT enterprises.*') }
-
-  scope :with_distributed_products_outer,
-    joins('LEFT OUTER JOIN product_distributions ON product_distributions.distributor_id = enterprises.id').
-    joins('LEFT OUTER JOIN spree_products ON spree_products.id = product_distributions.product_id')
+  scope :supplying_variant_in, lambda { |variants|
+    joins(:supplied_products => :variants_including_master).
+      where('spree_variants.id IN (?)', variants).
+      select('DISTINCT enterprises.*')
+  }
 
   scope :with_order_cycles_as_supplier_outer,
     joins("LEFT OUTER JOIN exchanges ON (exchanges.sender_id = enterprises.id AND exchanges.incoming = 't')").
@@ -139,16 +137,15 @@ class Enterprise < ActiveRecord::Base
   }
 
   scope :distributing_products, lambda { |products|
-    # TODO: remove this when we pull out product distributions
-    pds = joins("INNER JOIN product_distributions ON product_distributions.distributor_id = enterprises.id").
-      where("product_distributions.product_id IN (?)", products).select('DISTINCT enterprises.id')
-
-    exs = joins("INNER JOIN exchanges ON (exchanges.receiver_id = enterprises.id AND exchanges.incoming = 'f')").
+    exchanges = joins("
+        INNER JOIN exchanges
+          ON (exchanges.receiver_id = enterprises.id AND exchanges.incoming = 'f')
+      ").
       joins('INNER JOIN exchange_variants ON (exchange_variants.exchange_id = exchanges.id)').
       joins('INNER JOIN spree_variants ON (spree_variants.id = exchange_variants.variant_id)').
       where('spree_variants.product_id IN (?)', products).select('DISTINCT enterprises.id')
 
-    where(id: pds | exs)
+    where(id: exchanges)
   }
 
   scope :managed_by, lambda { |user|
@@ -248,14 +245,6 @@ class Enterprise < ActiveRecord::Base
 
   def distributed_variants
     Spree::Variant.joins(:product).merge(Spree::Product.in_distributor(self)).select('spree_variants.*')
-  end
-
-  def product_distribution_variants
-    Spree::Variant.joins(:product).merge(Spree::Product.in_product_distribution_by(self)).select('spree_variants.*')
-  end
-
-  def available_variants
-    Spree::Variant.joins(:product => :product_distributions).where('product_distributions.distributor_id=?', self.id)
   end
 
   def is_distributor

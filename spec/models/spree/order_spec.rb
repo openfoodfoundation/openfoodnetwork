@@ -6,7 +6,7 @@ describe Spree::Order do
   describe "setting variant attributes" do
     it "sets attributes on line items for variants" do
       d = create(:distributor_enterprise)
-      p = create(:product, :distributors => [d])
+      p = create(:product)
 
       subject.distributor = d
       subject.save!
@@ -28,31 +28,6 @@ describe Spree::Order do
 
     it "clears all enterprise fee adjustments on the order" do
       EnterpriseFee.should_receive(:clear_all_adjustments_on_order).with(subject)
-      subject.update_distribution_charge!
-    end
-
-    it "ensures the correct adjustment(s) are created for the product distribution" do
-      EnterpriseFee.stub(:clear_all_adjustments_on_order)
-      line_item = double(:line_item)
-      subject.stub(:line_items) { [line_item] }
-      subject.stub(:provided_by_order_cycle?) { false }
-
-      product_distribution = double(:product_distribution)
-      product_distribution.should_receive(:create_adjustment_for).with(line_item)
-      subject.stub(:product_distribution_for) { product_distribution }
-
-
-      subject.update_distribution_charge!
-    end
-
-    it "skips line items that don't have a product distribution" do
-      EnterpriseFee.stub(:clear_all_adjustments_on_order)
-      line_item = double(:line_item)
-      subject.stub(:line_items) { [line_item] }
-      subject.stub(:provided_by_order_cycle?) { false }
-
-      subject.stub(:product_distribution_for) { nil }
-
       subject.update_distribution_charge!
     end
 
@@ -122,17 +97,6 @@ describe Spree::Order do
 
       subject.send(:provided_by_order_cycle?, line_item).should be false
     end
-  end
-
-  it "looks up product distribution enterprise fees for a line item" do
-    product = double(:product)
-    variant = double(:variant, product: product)
-    line_item = double(:line_item, variant: variant)
-
-    product_distribution = double(:product_distribution)
-    product.should_receive(:product_distribution_for).with(subject.distributor) { product_distribution }
-
-    subject.send(:product_distribution_for, line_item).should == product_distribution
   end
 
   describe "getting the admin and handling charge" do
@@ -455,6 +419,41 @@ describe Spree::Order do
 
       subject.order_cycle.should be_nil
       subject.distributor.should == d
+    end
+  end
+
+  context "change distributor and order cycle" do
+    let(:variant1) { create(:product).variants.first }
+    let(:variant2) { create(:product).variants.first }
+    let(:distributor) { create(:enterprise) }
+
+    before do
+      subject.order_cycle = create(:simple_order_cycle, distributors: [distributor], variants: [variant1, variant2])
+      subject.distributor = distributor
+
+      line_item1 = create(:line_item, order: subject, variant: variant1)
+      line_item2 = create(:line_item, order: subject, variant: variant2)
+      subject.reload
+      subject.line_items = [line_item1,line_item2]
+    end
+
+    it "allows the change when all variants in the order are provided by the new distributor in the new order cycle" do
+      new_distributor = create(:enterprise)
+      new_order_cycle = create(:simple_order_cycle, distributors: [new_distributor], variants: [variant1, variant2])
+
+      subject.distributor = new_distributor
+      subject.should_not be_valid
+      subject.order_cycle = new_order_cycle
+      subject.should be_valid
+    end
+
+    it "does not allow the change when not all variants in the order are provided by the new distributor" do
+      new_distributor = create(:enterprise)
+      create(:simple_order_cycle, distributors: [new_distributor], variants: [variant1])
+
+      subject.distributor = new_distributor
+      subject.should_not be_valid
+      subject.errors.messages.should == {:base => ["Distributor or order cycle cannot supply the products in your cart"]}
     end
   end
 

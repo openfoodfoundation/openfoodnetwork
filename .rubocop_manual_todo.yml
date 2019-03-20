@@ -98,7 +98,6 @@ Metrics/LineLength:
   - app/models/exchange.rb
   - app/models/inventory_item.rb
   - app/models/order_cycle.rb
-  - app/models/product_distribution.rb
   - app/models/product_import/entry_processor.rb
   - app/models/product_import/entry_validator.rb
   - app/models/product_import/product_importer.rb
@@ -348,7 +347,6 @@ Metrics/LineLength:
   - spec/models/model_set_spec.rb
   - spec/models/order_cycle_spec.rb
   - spec/models/producer_property_spec.rb
-  - spec/models/product_distribution_spec.rb
   - spec/models/product_importer_spec.rb
   - spec/models/proxy_order_spec.rb
   - spec/models/spree/ability_spec.rb
@@ -411,7 +409,6 @@ Metrics/LineLength:
   - spec/support/request/shop_workflow.rb
   - spec/support/request/web_helper.rb
   - spec/support/seeds.rb
-  - spec/support/spree/init.rb
 
 Metrics/AbcSize:
   Max: 15

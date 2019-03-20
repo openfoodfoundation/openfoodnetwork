@@ -89,7 +89,6 @@
   "spec/controllers/spree/api/variants_controller_spec.rb": 6.177022218704224,
   "spec/controllers/admin/variant_overrides_controller_spec.rb": 7.0243120193481445,
   "spec/lib/open_food_network/lettuce_share_report_spec.rb": 4.769379615783691,
-  "spec/models/product_distribution_spec.rb": 4.708523988723755,
   "spec/models/producer_property_spec.rb": 4.007659435272217,
   "spec/lib/open_food_network/customers_report_spec.rb": 3.967031240463257,
   "spec/models/spree/shipping_method_spec.rb": 3.9209978580474854,

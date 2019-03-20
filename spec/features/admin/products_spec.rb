@@ -162,27 +162,6 @@ feature %q{
       product.group_buy_unit_size.should == 10.0
     end
 
-    scenario "editing product distributions" do
-      product = create(:simple_product, supplier: @supplier2)
-
-      visit spree.edit_admin_product_path product
-      within('#sidebar') { click_link 'Product Distributions' }
-
-      check @distributors[0].name
-      select @enterprise_fees[0].name, :from => 'product_product_distributions_attributes_0_enterprise_fee_id'
-
-      # Should only have distributors listed which the user can manage
-      within "#product_product_distributions_field" do
-        page.should_not have_content @distributors[1].name
-        page.should_not have_content @distributors[2].name
-      end
-
-      click_button 'Update'
-      flash_message.should == "Product \"#{product.name}\" has been successfully updated!"
-
-      product.distributors.should == [@distributors[0]]
-    end
-
     scenario "editing product Search" do
       product = product = create(:simple_product, supplier: @supplier2)
       visit spree.edit_admin_product_path product

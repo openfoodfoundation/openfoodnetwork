@@ -252,7 +252,6 @@ feature %q{
       let(:distributor_address) { create(:address, :address1 => "distributor address", :city => 'The Shire', :zipcode => "1234") }
       let(:distributor) { create(:distributor_enterprise, :address => distributor_address) }
       let(:product) { create(:product) }
-      let(:product_distribution) { create(:product_distribution, :product => product, :distributor => distributor) }
       let(:shipping_instructions) { "pick up on thursday please!" }
       let(:order1) { create(:order, :distributor => distributor, :bill_address => bill_address, :special_instructions => shipping_instructions) }
       let(:order2) { create(:order, :distributor => distributor, :bill_address => bill_address, :special_instructions => shipping_instructions) }
