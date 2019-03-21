@@ -128,23 +128,15 @@ describe OrderSyncer do
   describe "changing the billing address" do
     let!(:distributor_address) { create(:address, address1: "Distributor Address") }
     let!(:distributor) { create(:distributor_enterprise, address: distributor_address) }
-    let!(:original_bill_address) do
-      create(:address, firstname: "Walter", lastname: "Wolf", address1: "White")
-    end
-    let!(:original_ship_address) do
-      create(:address, firstname: "Melanie", lastname: "Miller", address1: "Magenta")
-    end
     let!(:shipping_method) { create(:shipping_method, distributors: [distributor]) }
-
     let(:subscription) do
-      create(:subscription, shop: distributor, bill_address: original_bill_address,
-                            ship_address: original_ship_address, shipping_method: shipping_method,
-                            with_items: true, with_proxy_orders: true)
+      create(:subscription, shop: distributor, shipping_method: shipping_method, with_items: true,
+                            with_proxy_orders: true)
     end
-
     let!(:order) { subscription.proxy_orders.first.initialise_order! }
     let!(:bill_address_attrs) { subscription.bill_address.attributes }
     let!(:ship_address_attrs) { subscription.ship_address.attributes }
+
     let(:params) { { bill_address_attributes: { id: bill_address_attrs["id"], firstname: "Bill", address1: "123 abc st", phone: "1123581321" } } }
     let(:syncer) { OrderSyncer.new(subscription) }
 
@@ -184,7 +176,7 @@ describe OrderSyncer do
           expect(order.ship_address.firstname).to eq "Jane"
           expect(order.ship_address.lastname).to eq bill_address_attrs["lastname"]
           expect(order.ship_address.address1).to eq distributor_address.address1
-          expect(order.ship_address.phone).to eq ship_address_attrs["phone"]
+          expect(order.ship_address.phone).to eq bill_address_attrs["phone"]
         end
       end
     end
@@ -235,20 +227,13 @@ describe OrderSyncer do
   describe "changing the ship address" do
     let!(:distributor_address) { create(:address, address1: "Distributor Address") }
     let!(:distributor) { create(:distributor_enterprise, address: distributor_address) }
-    let!(:original_bill_address) do
-      create(:address, firstname: "Walter", lastname: "Wolf", address1: "White")
-    end
-    let!(:original_ship_address) do
-      create(:address, firstname: "Melanie", lastname: "Miller", address1: "Magenta")
-    end
     let!(:shipping_method) do
       create(:shipping_method, distributors: [distributor], require_ship_address: true)
     end
 
     let(:subscription) do
-      create(:subscription, shop: distributor, bill_address: original_bill_address,
-                            ship_address: original_ship_address, shipping_method: shipping_method,
-                            with_items: true, with_proxy_orders: true)
+      create(:subscription, shop: distributor, shipping_method: shipping_method, with_items: true,
+                            with_proxy_orders: true)
     end
 
     let(:shipping_method) { subscription.shipping_method }
@@ -271,7 +256,7 @@ describe OrderSyncer do
         expect(order.ship_address.firstname).to eq bill_address_attrs["firstname"]
         expect(order.ship_address.lastname).to eq bill_address_attrs["lastname"]
         expect(order.ship_address.address1).to eq distributor_address.address1
-        expect(order.ship_address.phone).to eq ship_address_attrs["phone"]
+        expect(order.ship_address.phone).to eq bill_address_attrs["phone"]
       end
 
       context "but the shipping method is being changed to one that requires a ship_address" do
@@ -280,10 +265,18 @@ describe OrderSyncer do
         before { params.merge!(shipping_method_id: new_shipping_method.id) }
 
         context "when the original ship address is the bill contact using distributor address" do
+          let!(:original_bill_address) { create(:address, :randomized) }
           let!(:original_ship_address) do
             create(:address, firstname: original_bill_address.firstname,
                              lastname: original_bill_address.lastname,
-                             address1: distributor_address.address1)
+                             address1: distributor_address.address1,
+                             phone: original_bill_address.phone)
+          end
+          let(:subscription) do
+            create(:subscription, shop: distributor, bill_address: original_bill_address,
+                                  ship_address: original_ship_address,
+                                  shipping_method: shipping_method, with_items: true,
+                                  with_proxy_orders: true)
           end
 
           before do

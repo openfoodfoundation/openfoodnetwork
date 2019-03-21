@@ -142,8 +142,8 @@ FactoryBot.define do
     shop { create :enterprise }
     schedule { create(:schedule, order_cycles: [create(:simple_order_cycle, coordinator: shop)]) }
     customer { create(:customer, enterprise: shop) }
-    bill_address { create(:address, firstname: "Walter", lastname: "Wolf", address1: "White") }
-    ship_address { create(:address, firstname: "Melanie", lastname: "Miller", address1: "Magenta") }
+    bill_address { create(:address, :randomized) }
+    ship_address { create(:address, :randomized) }
     payment_method { create(:payment_method, distributors: [shop]) }
     shipping_method { create(:shipping_method, distributors: [shop]) }
     begins_at { 1.month.ago }
