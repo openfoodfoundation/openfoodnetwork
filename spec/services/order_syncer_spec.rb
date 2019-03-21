@@ -126,9 +126,8 @@ describe OrderSyncer do
   end
 
   describe "changing the billing address" do
-    let!(:distributor_address) { create(:address, address1: "Distributor Address") }
+    let!(:distributor_address) { create(:address, :randomized) }
     let!(:distributor) { create(:distributor_enterprise, address: distributor_address) }
-    let!(:shipping_method) { create(:shipping_method, distributors: [distributor]) }
     let(:subscription) do
       create(:subscription, shop: distributor, shipping_method: shipping_method, with_items: true,
                             with_proxy_orders: true)
@@ -225,21 +224,16 @@ describe OrderSyncer do
   end
 
   describe "changing the ship address" do
-    let!(:distributor_address) { create(:address, address1: "Distributor Address") }
+    let!(:distributor_address) { create(:address, :randomized) }
     let!(:distributor) { create(:distributor_enterprise, address: distributor_address) }
-    let!(:shipping_method) do
-      create(:shipping_method, distributors: [distributor], require_ship_address: true)
-    end
-
-    let(:subscription) do
+    let!(:subscription) do
       create(:subscription, shop: distributor, shipping_method: shipping_method, with_items: true,
                             with_proxy_orders: true)
     end
-
-    let(:shipping_method) { subscription.shipping_method }
     let!(:order) { subscription.proxy_orders.first.initialise_order! }
     let!(:bill_address_attrs) { subscription.bill_address.attributes }
     let!(:ship_address_attrs) { subscription.ship_address.attributes }
+
     let(:params) { { ship_address_attributes: { id: ship_address_attrs["id"], firstname: "Ship", address1: "123 abc st", phone: "1123581321" } } }
     let(:syncer) { OrderSyncer.new(subscription) }
 
