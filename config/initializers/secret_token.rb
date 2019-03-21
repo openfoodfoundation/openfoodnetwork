@@ -9,3 +9,5 @@ Openfoodnetwork::Application.config.secret_token = if Rails.env.development? or 
 else
   ENV["SECRET_TOKEN"]
 end
+
+Openfoodnetwork::Application.config.secret_key_base = 'ceb1eb86c50285e696f899b2e7ea306d1ec1e81fe5c7af0e5cbc238bebe3fd60f19df7b9076fab836182821ebe14e41b64bdcdb4370520dc5bb711c1bc0ae616'
