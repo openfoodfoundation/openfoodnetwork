@@ -7,28 +7,11 @@ namespace :ofn do
     task truncate: :environment do
       guard_and_warn
 
-      date = 3.months.ago
-
-      where_ocs_to_delete = "where orders_close_at < '#{date}'"
-      where_oc_id_in_ocs_to_delete = "
-        where order_cycle_id in (select id from order_cycles #{where_ocs_to_delete} )"
-      where_order_id_in_orders_to_delete = "
-        where order_id in (select id from spree_orders #{where_oc_id_in_ocs_to_delete})"
-
       sql_delete_from "
         spree_inventory_units #{where_order_id_in_orders_to_delete}"
-      sql_delete_from "
-        spree_adjustments where source_type = 'Spree::Order'
-        and source_id in (select id from spree_orders #{where_oc_id_in_ocs_to_delete})"
-      sql_delete_from "
-        spree_adjustments where source_type = 'Spree::Shipment'
-        and source_id in (select id from spree_shipments #{where_order_id_in_orders_to_delete})"
-      sql_delete_from "
-        spree_adjustments where source_type = 'Spree::Payment'
-        and source_id in (select id from spree_payments #{where_order_id_in_orders_to_delete})"
-      sql_delete_from "
-        spree_adjustments where source_type = 'Spree::LineItem'
-        and source_id in (select id from spree_line_items #{where_order_id_in_orders_to_delete})"
+
+      truncate_adjustments
+
       sql_delete_from "spree_line_items #{where_order_id_in_orders_to_delete}"
       sql_delete_from "spree_payments #{where_order_id_in_orders_to_delete}"
       sql_delete_from "spree_shipments #{where_order_id_in_orders_to_delete}"
@@ -36,14 +19,8 @@ namespace :ofn do
       sql_delete_from "account_invoices"
       Spree::ReturnAuthorization.delete_all
 
-      sql_delete_from "coordinator_fees #{where_oc_id_in_ocs_to_delete}"
-      sql_delete_from "
-        exchange_variants where exchange_id
-        in (select id from exchanges #{where_oc_id_in_ocs_to_delete})"
-      sql_delete_from "
-        exchange_fees where exchange_id
-        in (select id from exchanges #{where_oc_id_in_ocs_to_delete})"
-      sql_delete_from "exchanges #{where_oc_id_in_ocs_to_delete}"
+      truncate_order_cycle_data
+
       sql_delete_from "proxy_orders #{where_oc_id_in_ocs_to_delete}"
 
       sql_delete_from "spree_orders #{where_oc_id_in_ocs_to_delete}"
@@ -58,6 +35,46 @@ namespace :ofn do
 
     def sql_delete_from(sql)
       ActiveRecord::Base.connection.execute("delete from #{sql}")
+    end
+
+    private
+
+    def date
+      3.months.ago
+    end
+
+    def where_ocs_to_delete
+      "where orders_close_at < '#{date}'"
+    end
+
+    def where_oc_id_in_ocs_to_delete
+      "where order_cycle_id in (select id from order_cycles #{where_ocs_to_delete} )"
+    end
+
+    def where_order_id_in_orders_to_delete
+      "where order_id in (select id from spree_orders #{where_oc_id_in_ocs_to_delete})"
+    end
+
+    def truncate_adjustments
+      sql_delete_from "spree_adjustments where source_type = 'Spree::Order'
+        and source_id in (select id from spree_orders #{where_oc_id_in_ocs_to_delete})"
+      sql_delete_from "spree_adjustments where source_type = 'Spree::Shipment'
+        and source_id in (select id from spree_shipments #{where_order_id_in_orders_to_delete})"
+      sql_delete_from "spree_adjustments where source_type = 'Spree::Payment'
+        and source_id in (select id from spree_payments #{where_order_id_in_orders_to_delete})"
+      sql_delete_from "spree_adjustments where source_type = 'Spree::LineItem'
+        and source_id in (select id from spree_line_items #{where_order_id_in_orders_to_delete})"
+    end
+
+    def truncate_order_cycle_data
+      sql_delete_from "coordinator_fees #{where_oc_id_in_ocs_to_delete}"
+      sql_delete_from "
+        exchange_variants where exchange_id
+        in (select id from exchanges #{where_oc_id_in_ocs_to_delete})"
+      sql_delete_from "
+        exchange_fees where exchange_id
+        in (select id from exchanges #{where_oc_id_in_ocs_to_delete})"
+      sql_delete_from "exchanges #{where_oc_id_in_ocs_to_delete}"
     end
   end
 end
