@@ -62,7 +62,7 @@ class OrderCycle < ActiveRecord::Base
       scoped
     else
       with_exchanging_enterprises_outer.
-        where('order_cycles.coordinator_id IN (?) OR enterprises.id IN (?)', user.enterprises, user.enterprises).
+        where('order_cycles.coordinator_id IN (?) OR enterprises.id IN (?)', user.enterprises.map(&:id), user.enterprises.map(&:id)).
         select('DISTINCT order_cycles.*')
     end
   }
@@ -78,7 +78,7 @@ class OrderCycle < ActiveRecord::Base
     # Order cycles where I managed an enterprise at either end of an outgoing exchange
     # ie. coordinator or distributor
     joins(:exchanges).merge(Exchange.outgoing).
-      where('exchanges.receiver_id IN (?) OR exchanges.sender_id IN (?)', enterprises, enterprises).
+      where('exchanges.receiver_id IN (?) OR exchanges.sender_id IN (?)', enterprises.pluck(:id), enterprises.pluck(:id)).
       select('DISTINCT order_cycles.*')
   }
 
@@ -88,7 +88,7 @@ class OrderCycle < ActiveRecord::Base
     # Order cycles where I managed an enterprise at either end of an incoming exchange
     # ie. coordinator or producer
     joins(:exchanges).merge(Exchange.incoming).
-      where('exchanges.receiver_id IN (?) OR exchanges.sender_id IN (?)', enterprises, enterprises).
+      where('exchanges.receiver_id IN (?) OR exchanges.sender_id IN (?)', enterprises.pluck(:id), enterprises.pluck(:id)).
       select('DISTINCT order_cycles.*')
   }
 
