@@ -2748,6 +2748,7 @@ fr:
     back_to_taxonomies_list: "Retour à la liste des taxonomies"
     shipping_methods: "Méthodes de livraison"
     shipping_categories: "Condition de transport"
+    new_shipping_category: "Nouvelle catégorie d'expédition"
     back_to_shipping_categories: "Retour aux catégories d'expédition"
     analytics_trackers: "Traqueurs analyse navigation"
     no_trackers_found: "Pas de traqueur trouvé"
