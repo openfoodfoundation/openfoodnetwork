@@ -34,4 +34,22 @@ describe AdvanceOrderService do
       expect(order.shipping_method).to eq(shipping_method_b)
     end
   end
+
+  context "when raising on error" do
+    it "transitions the order multiple steps" do
+      service.call!
+      order.reload
+      expect(order.state).to eq("complete")
+    end
+
+    context "when order cannot advance to the next state" do
+      let!(:order) do
+        create(:order, distributor: distributor)
+      end
+
+      it "raises error" do
+        expect { service.call! }.to raise_error(StateMachine::InvalidTransition)
+      end
+    end
+  end
 end

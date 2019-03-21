@@ -5,13 +5,20 @@ class AdvanceOrderService
     @order = order
   end
 
-  def call(raise_on_error = false)
-    shipping_method_id = order.shipping_method.id if order.shipping_method.present?
-    options = { shipping_method_id: shipping_method_id }
-    raise_on_error ? advance_order!(options) : advance_order(options)
+  def call
+    advance_order(advance_order_options)
+  end
+
+  def call!
+    advance_order!(advance_order_options)
   end
 
   private
+
+  def advance_order_options
+    shipping_method_id = order.shipping_method.id if order.shipping_method.present?
+    { shipping_method_id: shipping_method_id }
+  end
 
   def advance_order(options)
     until order.state == "complete"
