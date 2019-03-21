@@ -2735,6 +2735,7 @@ nb:
     back_to_taxonomies_list: "Tilbake til Taksonomiliste"
     shipping_methods: "Leveringsmetoder"
     shipping_categories: "Fraktkategorier"
+    new_shipping_category: "Ny Fraktkategori"
     back_to_shipping_categories: "Tilbake til Leveringskategorier"
     analytics_trackers: "Analyseverktøy"
     no_trackers_found: "Ingen sporingsverktøy funnet"
