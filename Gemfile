@@ -7,30 +7,31 @@ gem 'rails', '~> 4.0.0'
 gem 'i18n', '~> 0.6.11'
 gem 'i18n-js', '~> 3.2.1'
 
-# Patched version. See http://rubysec.com/advisories/CVE-2015-5312/.
-gem 'nokogiri', '>= 1.6.7.1'
+gem 'nokogiri', '~> 1.6.8.1'
 
 gem "order_management", path: "./engines/order_management"
 gem 'web', path: './engines/web'
 
-gem 'pg'
+gem 'pg', '~> 0.21'
 
 # OFN-maintained and patched version of Spree v2.0.4. See
 # https://github.com/openfoodfoundation/openfoodnetwork/wiki/Spree-2.0-upgrade
 # for details.
-gem 'spree', github: 'openfoodfoundation/spree', branch: '2-1-0-stable'
+#gem 'spree', github: 'openfoodfoundation/spree', branch: '2-1-0-stable'
+gem 'spree', path: '../spree'
 
 gem 'spree_i18n', github: 'spree/spree_i18n', branch: '1-3-stable'
-# gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '2-1-stable', ref: '1c436c738d0f086b2ca0f75a977ac16bc6cb98b9'
+gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '2-1-stable', ref: '1c436c738d0f086b2ca0f75a977ac16bc6cb98b9'
 
 # Our branch contains two changes
 # - Pass customer email and phone number to PayPal (merged to upstream master)
 # - Change type of password from string to password to hide it in the form
 # gem 'spree_paypal_express', github: "openfoodfoundation/better_spree_paypal_express", branch: "2-0-stable"
 gem 'stripe', '~> 4.5.0'
+
 # We need at least this version to have Digicert's root certificate
 # which is needed for Pin Payments (and possibly others).
-# gem 'activemerchant', '~> 1.78'
+gem 'activemerchant', '~> 1.78.0'
 
 gem 'oauth2', '~> 1.4.1' # Used for Stripe Connect
 gem 'jwt', '~> 2.1'
@@ -57,6 +58,8 @@ gem 'rabl'
 # AMS is pinned to 0.8.4 because 0.9.x is a complete re-write, as is 0.10.x
 # Once Rails is updated to 5.x we should bump directly to 0.10.x
 gem "active_model_serializers", "0.8.4"
+gem 'protected_attributes'
+gem 'activerecord-session_store'
 gem 'oj'
 gem 'deface'
 gem 'paperclip', '~> 3.4.1'

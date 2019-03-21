@@ -1,5 +1,5 @@
 module ApplicationHelper
-  include FoundationRailsHelper::FlashHelper
+  #include FoundationRailsHelper::FlashHelper
 
   def feature?(feature)
     OpenFoodNetwork::FeatureToggle.enabled? feature

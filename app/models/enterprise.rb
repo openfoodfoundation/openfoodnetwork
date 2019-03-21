@@ -17,7 +17,7 @@ class Enterprise < ActiveRecord::Base
 
   self.inheritance_column = nil
 
-  acts_as_gmappable :process_geocoding => false
+  # acts_as_gmappable :process_geocoding => false
 
   has_many :relationships_as_parent, class_name: 'EnterpriseRelationship', foreign_key: 'parent_id', dependent: :destroy
   has_many :relationships_as_child, class_name: 'EnterpriseRelationship', foreign_key: 'child_id', dependent: :destroy
