@@ -68,7 +68,7 @@ Openfoodnetwork::Application.routes.draw do
       get :map_by_tag, on: :collection
     end
 
-    resource :content
+    resource :contents
 
     resource :cache_settings
 

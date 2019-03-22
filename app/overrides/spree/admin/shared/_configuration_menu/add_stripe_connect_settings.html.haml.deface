@@ -1,4 +1,0 @@
-// insert_bottom "[data-hook='admin_configurations_sidebar_menu']"
-
-%li
-  = link_to t('admin.stripe_connect_settings.edit.title'), main_app.edit_admin_stripe_connect_settings_path
