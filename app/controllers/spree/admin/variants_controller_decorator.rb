@@ -10,7 +10,8 @@ Spree::Admin::VariantsController.class_eval do
 
   def destroy
     @variant = Spree::Variant.find(params[:id])
-    @variant.delete # This line changed, as well as removal of following conditional
+    @variant.delete_and_refresh_cache
+
     flash[:success] = I18n.t('notice_messages.variant_deleted')
 
     respond_with(@variant) do |format|

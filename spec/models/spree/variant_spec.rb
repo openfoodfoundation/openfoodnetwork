@@ -196,7 +196,6 @@ module Spree
         end
 
         it "refreshes the products cache for the entire product on destroy" do
-          # Does this ever happen?
           expect(OpenFoodNetwork::ProductsCache).to receive(:product_changed).with(product)
           expect(OpenFoodNetwork::ProductsCache).to receive(:variant_destroyed).never
           master.destroy
@@ -548,6 +547,28 @@ module Spree
         expect(first_variant.delete).to be false
         expect(product.variants(:reload).length).to eq 1
         expect(first_variant.errors[:product]).to include "must have at least one variant"
+      end
+    end
+  end
+
+  describe '#delete_and_refresh_cache' do
+    context 'when it is not the master variant' do
+      let(:variant) { create(:variant) }
+
+      it 'refreshes the products cache on delete' do
+        expect(OpenFoodNetwork::ProductsCache).to receive(:variant_destroyed).with(variant)
+        variant.delete_and_refresh_cache
+      end
+    end
+
+    context "when it is the master variant" do
+      let(:product) { create(:simple_product) }
+      let(:master) { product.master }
+
+      it 'refreshes the products cache for the entire product on delete' do
+        expect(OpenFoodNetwork::ProductsCache).to receive(:product_changed).with(product)
+        expect(OpenFoodNetwork::ProductsCache).to receive(:variant_destroyed).never
+        master.delete_and_refresh_cache
       end
     end
   end
