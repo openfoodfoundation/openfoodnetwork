@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-xdescribe Admin::ProxyOrdersController, type: :controller do
+describe Admin::ProxyOrdersController, type: :controller do
   include AuthenticationWorkflow
 
   describe 'cancel' do
@@ -107,7 +107,7 @@ xdescribe Admin::ProxyOrdersController, type: :controller do
           before { shop.update_attributes(owner: user) }
 
           context "when resuming succeeds" do
-            it 'renders the resumed proxy_order as json' do
+            xit 'renders the resumed proxy_order as json' do
               spree_get :resume, params
               json_response = JSON.parse(response.body)
               expect(json_response['state']).to eq "resumed"

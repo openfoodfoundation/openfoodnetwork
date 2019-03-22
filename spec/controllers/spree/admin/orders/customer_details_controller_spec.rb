@@ -39,6 +39,14 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
         login_as_enterprise_user [order.distributor]
       end
 
+      it "advances the order state" do
+        expect {
+          spree_post :update, order: { email: user.email, bill_address_attributes: address_params,
+                                       ship_address_attributes: address_params },
+                              order_id: order.number
+        }.to change { order.reload.state }.from("cart").to("complete")
+      end
+
       context "when adding details of a registered user" do
         it "redirects to shipments on success" do
           spree_post :update, order: { email: user.email, bill_address_attributes: address_params, ship_address_attributes: address_params }, order_id: order.number
