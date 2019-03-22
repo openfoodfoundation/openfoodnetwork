@@ -4,14 +4,14 @@ include AuthenticationWorkflow
 
 module OpenFoodNetwork
   describe OrdersAndFulfillmentsReport do
-    let(:d1) { create(:distributor_enterprise) }
-    let(:oc1) { create(:simple_order_cycle) }
-    let(:o1) { create(:order, completed_at: 1.day.ago, order_cycle: oc1, distributor: d1) }
-    let(:li1) { build(:line_item) }
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:order_cycle) { create(:simple_order_cycle) }
+    let(:order) { create(:order, completed_at: 1.day.ago, order_cycle: order_cycle, distributor: distributor) }
+    let(:line_item) { build(:line_item) }
     let(:user) { create(:user)}
     let(:admin_user) { create(:admin_user)}
 
-    before { o1.line_items << li1 }
+    before { order.line_items << line_item }
 
     describe "fetching orders" do
       context "as a site admin" do
@@ -20,13 +20,13 @@ module OpenFoodNetwork
         it "fetches completed orders" do
           o2 = create(:order)
           o2.line_items << build(:line_item)
-          subject.table_items.should == [li1]
+          subject.table_items.should == [line_item]
         end
 
         it "does not show cancelled orders" do
           o2 = create(:order, state: "canceled", completed_at: 1.day.ago)
           o2.line_items << build(:line_item)
-          subject.table_items.should == [li1]
+          subject.table_items.should == [line_item]
         end
       end
 
@@ -40,12 +40,12 @@ module OpenFoodNetwork
         end
 
         context "that has granted P-OC to the distributor" do
-          let(:o2) { create(:order, distributor: d1, completed_at: 1.day.ago, bill_address: create(:address), ship_address: create(:address)) }
+          let(:o2) { create(:order, distributor: distributor, completed_at: 1.day.ago, bill_address: create(:address), ship_address: create(:address)) }
           let(:li2) { build(:line_item, product: create(:simple_product, supplier: s1)) }
 
           before do
             o2.line_items << li2
-            create(:enterprise_relationship, parent: s1, child: d1, permissions_list: [:add_to_order_cycle])
+            create(:enterprise_relationship, parent: s1, child: distributor, permissions_list: [:add_to_order_cycle])
           end
 
           it "shows line items supplied by my producers, with names hidden" do
@@ -55,7 +55,7 @@ module OpenFoodNetwork
         end
 
         context "that has not granted P-OC to the distributor" do
-          let(:o2) { create(:order, distributor: d1, completed_at: 1.day.ago, bill_address: create(:address), ship_address: create(:address)) }
+          let(:o2) { create(:order, distributor: distributor, completed_at: 1.day.ago, bill_address: create(:address), ship_address: create(:address)) }
           let(:li2) { build(:line_item, product: create(:simple_product, supplier: s1)) }
 
           before do
@@ -72,7 +72,7 @@ module OpenFoodNetwork
         subject { OrdersAndFulfillmentsReport.new user, {}, true }
 
         before do
-          d1.enterprise_roles.create!(user: user)
+          distributor.enterprise_roles.create!(user: user)
         end
 
         it "only shows line items distributed by enterprises managed by the current user" do
@@ -80,15 +80,15 @@ module OpenFoodNetwork
           d2.enterprise_roles.create!(user: create(:user))
           o2 = create(:order, distributor: d2, completed_at: 1.day.ago)
           o2.line_items << build(:line_item)
-          subject.table_items.should == [li1]
+          subject.table_items.should == [line_item]
         end
 
         it "only shows the selected order cycle" do
           oc2 = create(:simple_order_cycle)
-          o2 = create(:order, distributor: d1, order_cycle: oc2)
+          o2 = create(:order, distributor: distributor, order_cycle: oc2)
           o2.line_items << build(:line_item)
-          subject.stub(:params).and_return(order_cycle_id_in: oc1.id)
-          subject.table_items.should == [li1]
+          subject.stub(:params).and_return(order_cycle_id_in: order_cycle.id)
+          subject.table_items.should == [line_item]
         end
       end
     end
