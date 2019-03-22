@@ -11,6 +11,8 @@ ca:
         email: Correu electrònic de la consumidora
       spree/payment:
         amount: Import
+      spree/product:
+        primary_taxon: Categoria del producte
       order_cycle:
         orders_close_at: Data de tancament
     errors:
@@ -476,7 +478,6 @@ ca:
         inherited_property: Propietat heretada
       variants:
         to_order_tip: "Els articles preparats per encàrrec no tenen un nivell fixat d'existències, com ara pa fet sota comanda."
-      product_distributions: "Distribucions de productes"
       group_buy_options: "Opcions de compra en grup"
       back_to_products_list: "Torna a la llista de productes"
     product_import:
@@ -1685,7 +1686,6 @@ ca:
   products_max_quantity: Quantitat màxima
   products_distributor: Distribuïdora
   products_distributor_info: Quan seleccionis una distribuïdora per a la teva comanda, aquí es mostraran la seva d'adreça i hores de recollida.
-  products_distribution_adjustment_label: "Distribució del producte per part de %{distributor} per a %{product}"
   shop_trial_expires_in: "El període de prova de la vostra botiga caduca en"
   shop_trial_expired_notice: "Bones notícies! Hem decidit ampliar els període de prova de la botiga fins a un altre avís."
   password: Contrasenya
@@ -2246,8 +2246,6 @@ ca:
   enterprise_fee_by: "Comissió %{type} per %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^ Aquesta relació ja està establerta."
   validation_msg_at_least_one_hub: "^ Cal seleccionar com a mínim un grup"
-  validation_msg_product_category_cant_be_blank: "^ La categoria de producte no pot estar en blanc"
-  validation_msg_tax: "^ La categoria d'impostos és obligatòria"
   validation_msg_tax_category_cant_be_blank: "^ La categoria d'impostos no es pot deixar en blanc"
   validation_msg_is_associated_with_an_exising_customer: "Està associada amb una consumidora existent"
   content_configuration_pricing_table: "(TODO: Taula de preus)"
@@ -2274,7 +2272,6 @@ ca:
       no tenen mètodes de pagament i enviament vàlids. Fins que no ho configureu,
       els clients no podran comprar en aquests grups.
   enterprise_fees_update_notice: S'han actualitzat les comissions de l'organització.
-  enterprise_fees_destroy_error: "Aquesta comissió d'organització no es pot eliminar perquè està referenciat per una distribució de producte: %{id} - %{name}."
   enterprise_register_package_error: "Si us plau, selecciona un perfil"
   enterprise_register_error: "No es pot completar el registre de %{enterprise}"
   enterprise_register_success_notice: "Enhorabona! El registre de %{enterprise} s'ha completat!"
@@ -2744,7 +2741,6 @@ ca:
     back_to_taxonomies_list: "Torna a la llista de taxonomies"
     shipping_methods: "Mètodes d'enviament"
     shipping_categories: "Tipus d'enviament"
-    new_shipping_category: "NOVES Categories d'enviament"
     back_to_shipping_categories: "Tornar a les categories d'enviament"
     analytics_trackers: "Rastrejadors d'anàlisi"
     no_trackers_found: "No s'ha trobat cap rastrejador"

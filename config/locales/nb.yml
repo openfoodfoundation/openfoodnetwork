@@ -478,7 +478,6 @@ nb:
         inherited_property: Arvet egenskap
       variants:
         to_order_tip: "Varer laget for bestilling har ikke et lagernivå, slik som ferske skiver brød laget for bestilling."
-      product_distributions: "Produktdistribusjoner"
       group_buy_options: "Gruppekjøpsalternativer"
       back_to_products_list: "Tilbake til produktlisten"
     product_import:
@@ -1685,7 +1684,6 @@ nb:
   products_max_quantity: Max mengde
   products_distributor: Distributør
   products_distributor_info: Når du velger en distributør for din bestilling, vil deres adresse og hentetider vises her.
-  products_distribution_adjustment_label: "Produktfordeling etter %{distributor} for %{product}"
   shop_trial_expires_in: "Din prøveperiode på butikkfront går ut om "
   shop_trial_expired_notice: "Gode nyheter! Vi har bestemt å forlenge butikkprøveperioder inntil ytterligere beskjed."
   password: Passord
@@ -2272,7 +2270,6 @@ nb:
       frakt- og betalingsmetoder. Inntil du setter disse opp, vil kundene ikke kunne
       handle på disse hubene.
   enterprise_fees_update_notice: Bedriftsavgiftene dine er oppdatert.
-  enterprise_fees_destroy_error: "Det bedriftsgebyret kan ikke slettes da det refereres av en produktdistribusjon: %{id} - %{name}."
   enterprise_register_package_error: "Vennligst velg en pakke"
   enterprise_register_error: "Kunne ikke fullføre registreringen for %{enterprise}"
   enterprise_register_success_notice: "Gratulerer! Registrering for %{enterprise} er fullført!"
@@ -2738,7 +2735,6 @@ nb:
     back_to_taxonomies_list: "Tilbake til Taksonomiliste"
     shipping_methods: "Leveringsmetoder"
     shipping_categories: "Fraktkategorier"
-    new_shipping_category: "NEWEW Leveringskategorier"
     back_to_shipping_categories: "Tilbake til Leveringskategorier"
     analytics_trackers: "Analyseverktøy"
     no_trackers_found: "Ingen sporingsverktøy funnet"

@@ -130,7 +130,7 @@ describe CartService do
     end
 
     it "performs additional validations" do
-      expect(cart_service).to receive(:check_order_cycle_provided_for).with(variant).and_return(true)
+      expect(cart_service).to receive(:check_order_cycle_provided) { true }
       expect(cart_service).to receive(:check_variant_available_under_distribution).with(variant).
         and_return(true)
       expect(variant).to receive(:on_demand).and_return(false)
@@ -143,7 +143,7 @@ describe CartService do
       expect(cart_service).to receive(:quantities_to_add).with(variant, 123, 123).
         and_return([5, 5])
 
-      allow(cart_service).to receive(:check_order_cycle_provided_for) { true }
+      allow(cart_service).to receive(:check_order_cycle_provided) { true }
       allow(cart_service).to receive(:check_variant_available_under_distribution) { true }
 
       expect(order).to receive(:add_variant).with(variant, 5, 5, currency)
@@ -155,7 +155,7 @@ describe CartService do
       expect(cart_service).to receive(:quantities_to_add).with(variant, 123, 123).
         and_return([0, 0])
 
-      allow(cart_service).to receive(:check_order_cycle_provided_for) { true }
+      allow(cart_service).to receive(:check_order_cycle_provided) { true }
       allow(cart_service).to receive(:check_variant_available_under_distribution) { true }
 
       expect(order).to receive(:remove_variant).with(variant)
@@ -213,19 +213,14 @@ describe CartService do
     describe "checking order cycle is provided for a variant, OR is not needed" do
       let(:variant) { double(:variant) }
 
-      it "returns false and errors when order cycle is not provided and is required" do
-        allow(cart_service).to receive(:order_cycle_required_for).and_return true
-        expect(cart_service.send(:check_order_cycle_provided_for, variant)).to be false
+      it "returns false and errors when order cycle is not provided" do
+        expect(cart_service.send(:check_order_cycle_provided)).to be false
         expect(cart_service.errors.to_a).to eq(["Please choose an order cycle for this order."])
       end
+
       it "returns true when order cycle is provided" do
-        allow(cart_service).to receive(:order_cycle_required_for).and_return true
         cart_service.instance_variable_set :@order_cycle,  double(:order_cycle)
-        expect(cart_service.send(:check_order_cycle_provided_for, variant)).to be true
-      end
-      it "returns true when order cycle is not required" do
-        allow(cart_service).to receive(:order_cycle_required_for).and_return false
-        expect(cart_service.send(:check_order_cycle_provided_for, variant)).to be true
+        expect(cart_service.send(:check_order_cycle_provided)).to be true
       end
     end
 
@@ -250,28 +245,6 @@ describe CartService do
         expect(cart_service.send(:check_variant_available_under_distribution, variant)).to be false
         expect(cart_service.errors.to_a).to eq(["That product is not available from the chosen distributor or order cycle."])
       end
-    end
-  end
-
-  describe "support" do
-    describe "checking if order cycle is required for a variant" do
-      it "requires an order cycle when the product has no product distributions" do
-        product = double(:product, product_distributions: [])
-        variant = double(:variant, product: product)
-        expect(cart_service.send(:order_cycle_required_for, variant)).to be true
-      end
-
-      it "does not require an order cycle when the product has product distributions" do
-        product = double(:product, product_distributions: [1])
-        variant = double(:variant, product: product)
-        expect(cart_service.send(:order_cycle_required_for, variant)).to be false
-      end
-    end
-
-    it "provides the distributor and order cycle for the order" do
-      expect(order).to receive(:distributor).and_return(distributor)
-      expect(order).to receive(:order_cycle).and_return(order_cycle)
-      expect(cart_service.send(:distributor_and_order_cycle)).to eq([distributor, order_cycle])
     end
   end
 end

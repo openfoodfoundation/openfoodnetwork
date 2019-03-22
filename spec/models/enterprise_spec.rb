@@ -21,7 +21,6 @@ describe Enterprise do
     it { should have_many(:supplied_products) }
     it { should have_many(:distributed_orders) }
     it { should belong_to(:address) }
-    it { should have_many(:product_distributions) }
 
     it "destroys enterprise roles upon its own demise" do
       e = create(:enterprise)
@@ -356,37 +355,18 @@ describe Enterprise do
     end
 
     describe "distributing_products" do
-      it "returns enterprises distributing via a product distribution" do
-        d = create(:distributor_enterprise)
-        p = create(:product, distributors: [d])
-        Enterprise.distributing_products(p).should == [d]
-      end
+      let(:distributor) { create(:distributor_enterprise) }
+      let(:product) { create(:product) }
 
       it "returns enterprises distributing via an order cycle" do
-        d = create(:distributor_enterprise)
-        p = create(:product)
-        oc = create(:simple_order_cycle, distributors: [d], variants: [p.master])
-        Enterprise.distributing_products(p).should == [d]
-      end
-
-      it "returns enterprises distributing via a product distribution" do
-        d = create(:distributor_enterprise)
-        p = create(:product, distributors: [d])
-        Enterprise.distributing_products([p]).should == [d]
-      end
-
-      it "returns enterprises distributing via an order cycle" do
-        d = create(:distributor_enterprise)
-        p = create(:product)
-        oc = create(:simple_order_cycle, distributors: [d], variants: [p.master])
-        Enterprise.distributing_products([p]).should == [d]
+        order_cycle = create(:simple_order_cycle, distributors: [distributor], variants: [product.master])
+        Enterprise.distributing_products(product).should == [distributor]
       end
 
       it "does not return duplicate enterprises" do
-        d = create(:distributor_enterprise)
-        p1 = create(:product, distributors: [d])
-        p2 = create(:product, distributors: [d])
-        Enterprise.distributing_products([p1, p2]).should == [d]
+        another_product = create(:product)
+        order_cycle = create(:simple_order_cycle, distributors: [distributor], variants: [product.master, another_product.master])
+        Enterprise.distributing_products([product, another_product]).should == [distributor]
       end
     end
 
@@ -490,39 +470,13 @@ describe Enterprise do
   end
 
   describe "finding variants distributed by the enterprise" do
-    it "finds master and other variants" do
-      d = create(:distributor_enterprise)
-      p = create(:product, distributors: [d])
-      v = p.variants.first
-      d.distributed_variants.should match_array [p.master, v]
-    end
+    it "finds variants, including master, distributed by order cycle" do
+      distributor = create(:distributor_enterprise)
+      product = create(:product)
+      variant = product.variants.first
+      create(:simple_order_cycle, distributors: [distributor], variants: [variant])
 
-    pending "finds variants distributed by order cycle" do
-      # there isn't actually a method for this on Enterprise?
-      d = create(:distributor_enterprise)
-      p = create(:product)
-      v = p.variants.first
-      oc = create(:simple_order_cycle, distributors: [d], variants: [v])
-
-      # This method doesn't do what this test says it does...
-      d.distributed_variants.should match_array [v]
-    end
-  end
-
-  describe "finding variants distributed by the enterprise in a product distribution only" do
-    it "finds master and other variants" do
-      d = create(:distributor_enterprise)
-      p = create(:product, distributors: [d])
-      v = p.variants.first
-      d.product_distribution_variants.should match_array [p.master, v]
-    end
-
-    it "does not find variants distributed by order cycle" do
-      d = create(:distributor_enterprise)
-      p = create(:product)
-      v = p.variants.first
-      oc = create(:simple_order_cycle, distributors: [d], variants: [v])
-      d.product_distribution_variants.should == []
+      distributor.distributed_variants.should match_array [product.master, variant]
     end
   end
 

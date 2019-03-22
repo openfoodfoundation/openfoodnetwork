@@ -11,6 +11,8 @@ it:
         email: Mail consumatore
       spree/payment:
         amount: Quantità
+      spree/product:
+        primary_taxon: Categoria prodotto
       order_cycle:
         orders_close_at: Data chiusura
     errors:
@@ -449,7 +451,6 @@ it:
         inherited_property: Proprietà Ereditata
       variants:
         to_order_tip: "Gli articoli messi in ordine non hanno un livello di stock impostato, come ad esempio il Pane fresco su ordinazione."
-      product_distributions: "Distribuzione prodotti"
       group_buy_options: "Opzioni Acquisti di gruppo"
       back_to_products_list: "Indietro alla lista dei prodotti"
     product_import:
@@ -1629,7 +1630,6 @@ it:
   products_max_quantity: Quantità massima
   products_distributor: Distributore
   products_distributor_info: Quando selezioni un distributore per il tuo ordine, i suoi indirizzi e tempi di ritiro saranno mostrati qui.
-  products_distribution_adjustment_label: "Distribuzione del prodotto di %{distributor} per %{product}"
   shop_trial_expires_in: "La prova per la tua vetrina scadrà in"
   shop_trial_expired_notice: "Buone notizie! Abbiamo deciso di estendere le prove dei negozi fino a nuova notifica."
   password: Password
@@ -2178,8 +2178,6 @@ it:
   enterprise_fee_by: "%{type} tariffa da %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Questa relazione è già stabilita."
   validation_msg_at_least_one_hub: "^Almeno un hub deve essere selezionato"
-  validation_msg_product_category_cant_be_blank: "^Categoria di prodotto non può essere vuoto"
-  validation_msg_tax: "^Categoria d'imposta richiesta"
   validation_msg_tax_category_cant_be_blank: "^Categoria di tassa non può essere vuoto"
   validation_msg_is_associated_with_an_exising_customer: "è associato con un cliente esistente"
   content_configuration_pricing_table: "(TODO: tabella dei prezzi)"
@@ -2206,7 +2204,6 @@ it:
       hanno metodi di consegna e di pagamento validi. Finché non li imposti, i consumatori
       non potranno acquistare da questi hub.
   enterprise_fees_update_notice: Le tariffe della tua azienda sono state aggiornate.
-  enterprise_fees_destroy_error: "Questa tariffa dell'azienda non può essere annullata perchè è collegata ad una distribuzione: %{id} - %{name}."
   enterprise_register_package_error: "Per favore seleziona un pacchetto"
   enterprise_register_error: "Non abbiamo potuto completare la registrazione per %{enterprise}"
   enterprise_register_success_notice: "Congratulazioni! L registrazione di %{enterprise} è completa!"
@@ -2591,6 +2588,7 @@ it:
         products:
           active_products:
             zero: "Non hai prodotti attivi."
+            other: "Hai il %{count} di prodotti disponibili"
         order_cycles:
           order_cycles: "Cicli di richiesteCicli di richieste"
           order_cycles_tip: "I cicli di richieste determinano dove e quando i tuoi prodotti sono disponibili per i consumatori."

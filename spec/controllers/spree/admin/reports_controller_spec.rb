@@ -14,9 +14,9 @@ describe Spree::Admin::ReportsController, type: :controller do
   let(:distributor1) { create(:distributor_enterprise) }
   let(:distributor2) { create(:distributor_enterprise) }
   let(:distributor3) { create(:distributor_enterprise) }
-  let(:product1) { create(:product, price: 12.34, distributors: [distributor1], supplier: supplier1) }
-  let(:product2) { create(:product, price: 23.45, distributors: [distributor2], supplier: supplier2) }
-  let(:product3) { create(:product, price: 34.56, distributors: [distributor3], supplier: supplier3) }
+  let(:product1) { create(:product, price: 12.34, supplier: supplier1) }
+  let(:product2) { create(:product, price: 23.45, supplier: supplier2) }
+  let(:product3) { create(:product, price: 34.56, supplier: supplier3) }
 
   # Given two order cycles with both distributors
   let(:ocA) { create(:simple_order_cycle, coordinator: coordinator1, distributors: [distributor1, distributor2], suppliers: [supplier1, supplier2, supplier3], variants: [product1.master, product3.master]) }

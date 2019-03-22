@@ -18,7 +18,7 @@ module Spree
       end
 
       # Spree allows soft deletes of shipping_methods but our reports are not adapted to that.
-      # So, this method prevents the deletion (even soft) of shipping_methods that are referenced in orders.
+      #   So, this method prevents the deletion (even soft) of shipping_methods that are referenced in orders.
       def do_not_destroy_referenced_shipping_methods
         order = Order.joins(shipments: :shipping_rates).where( spree_shipping_rates: { :shipping_method_id => @object } ).first
         if order

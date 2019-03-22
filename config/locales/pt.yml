@@ -7,10 +7,12 @@ pt:
         shipment_state: Estado do envio
         completed_at: Concluído Em
         number: Número
-        state: Região
+        state: Estado
         email: Email do/a Consumidor/a
       spree/payment:
         amount: Quantia
+      spree/product:
+        primary_taxon: Categoria de Produto
       order_cycle:
         orders_close_at: Data de fecho
     errors:
@@ -253,7 +255,7 @@ pt:
     shipping_method: Método de Envio
     shop: Loja
     sku: SKU
-    status_state: Região
+    status_state: Estado
     tags: Etiquetas
     variant: Variante
     weight: Peso
@@ -343,12 +345,13 @@ pt:
         total_monthly_bill_incl_tax_tip: "O exemplo de conta mensal total incluindo taxas, dadas as definições e o volume de negócios indicado."
     cache_settings:
       edit:
-        title: "A carregar"
+        title: "Cache"
         distributor: "Distribuidor"
         order_cycle: "Ciclo de Encomendas"
         status: "Estado"
         diff: "Diff"
         error: "Erro"
+        enable_products_cache: "Activar Cache?"
     invoice_settings:
       edit:
         title: Configuração de Faturas
@@ -453,7 +456,6 @@ pt:
         inherited_property: Propriedade herdada
       variants:
         to_order_tip: "Os itens feitos por encomenda não têm um nível de stock definido, como pão fresco, por exemplo."
-      product_distributions: "Distribuições de Produto"
       group_buy_options: "Opções de Compra Colectiva"
       back_to_products_list: "Voltar à lista de produtos"
     product_import:
@@ -1556,7 +1558,6 @@ pt:
   products_max_quantity: Quantidade máxima
   products_distributor: Distribuidor
   products_distributor_info: Quando seleccionar um distribuidor para a sua encomenda, a morada e data de levantamento serão exibidos aqui.
-  products_distribution_adjustment_label: "Distribuição de produto por %{distributor} para %{product}."
   shop_trial_expires_in: "O período de avaliação do mercado termina em "
   shop_trial_expired_notice: "Boa notícia! Decidimos extender o período avaliação do mercado. "
   password: Palavra-passe
@@ -2104,7 +2105,6 @@ pt:
   enterprise_fee_by: "Taxa %{type} por %{role}%{enterprise_name}"
   validation_msg_relationship_already_established: "^Essa relação já foi estabelecida."
   validation_msg_at_least_one_hub: "^Pelo menos uma central deve ser selecionada"
-  validation_msg_product_category_cant_be_blank: "^A Categoria do Produto deve ser preenchida"
   validation_msg_tax_category_cant_be_blank: "^A Categoria de Imposto deve ser preenchida"
   validation_msg_is_associated_with_an_exising_customer: "está associado com um consumidor existente"
   content_configuration_pricing_table: "(AFAZER: Tabela de preços)"
@@ -2131,7 +2131,6 @@ pt:
       mas não tem métodos de envio e pagamento válidos. Enquanto isto não for definido,
       os consumidores não conseguirão fazer compras nestes hubs.
   enterprise_fees_update_notice: As suas taxas de organização foram actualizadas.
-  enterprise_fees_destroy_error: "Essa taxa de organização não pode ser apagada porque está referenciada numa distribuição de produto: %{id} - %{name}."
   enterprise_register_package_error: "Por favor selecione um pacote"
   enterprise_register_error: "Não foi possível finalizar o registo de %{enterprise}"
   enterprise_register_success_notice: "Parabéns! O registo de %{enterprise} está finalizado!"
@@ -2317,7 +2316,7 @@ pt:
         payment_states:
           balance_due: "saldo pendente"
           completed: "completado"
-          checkout: "finalizar compra"
+          checkout: "em finalização de compra"
           credit_owed: "crédito devido"
           failed: "falhou"
           paid: "pago"
@@ -2450,7 +2449,21 @@ pt:
     tax_categories: "Categorias de Impostos"
     tax rate: "Taxas de Imposto"
     tax_category: "Categoria de Imposto"
+    included_in_price: "Incluído no Preço"
+    show_rate_in_label: "Mostrar taxa na etiqueta"
+    back_to_tax_rates_list: "Voltar à lista de Taxas de Imposto"
     tax_settings: "Configurações de Impostos"
+    zones: "Zonas"
+    new_zone: "Nova Zona"
+    default_tax: "Imposto por defeito"
+    default_tax_zone: "Zona do Imposto por Defeito"
+    country_based: "Com base no País"
+    state_based: "Com base na Região"
+    countries: "Países"
+    listing_countries: "Lista de Países"
+    iso_name: "Nome ISO"
+    states_required: "Regiões obrigatórias"
+    editing_country: "Editar País"
     payment_methods: "Métodos de pagamento"
     shipping_methods: "Métodos de Envio"
     shipping_categories: "Categorias de Envio"
@@ -2510,7 +2523,7 @@ pt:
           shipment_state: "Estado do envio"
           completed_at: "Concluído Em"
           number: "Número"
-          state: "Região"
+          state: "Estado"
           email: "Email do/a Consumidor/a"
         invoice:
           issued_on: "Emitido em"

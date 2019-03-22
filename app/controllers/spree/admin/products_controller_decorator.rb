@@ -23,9 +23,6 @@ Spree::Admin::ProductsController.class_eval do
       render :new
     } } }
 
-  def product_distributions
-  end
-
   def index
     @current_user = spree_current_user
     @show_latest_import = params[:latest_import] || false

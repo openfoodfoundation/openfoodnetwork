@@ -26,18 +26,21 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
       $scope.startDate = moment(OrderCycles.byID[$scope.orderCycleFilter].orders_open_at).format('YYYY-MM-DD')
       $scope.endDate = moment(OrderCycles.byID[$scope.orderCycleFilter].orders_close_at).startOf('day').format('YYYY-MM-DD')
 
+    formatted_start_date = moment($scope.startDate).format()
+    formatted_end_date = moment($scope.endDate).add(1,'day').format()
+
     RequestMonitor.load $scope.orders = Orders.index(
       "q[state_not_eq]": "canceled",
       "q[completed_at_not_null]": "true",
-      "q[completed_at_gteq]": "#{moment($scope.startDate).format()}",
-      "q[completed_at_lt]": "#{moment($scope.endDate).add(1,'day').format()}"
+      "q[completed_at_gteq]": formatted_start_date,
+      "q[completed_at_lt]": formatted_end_date
     )
 
     RequestMonitor.load $scope.lineItems = LineItems.index(
       "q[order][state_not_eq]": "canceled",
       "q[order][completed_at_not_null]": "true",
-      "q[order][completed_at_gteq]": "#{moment($scope.startDate).format()}",
-      "q[order][completed_at_lt]": "#{moment($scope.endDate).add(1,'day').format()}"
+      "q[order][completed_at_gteq]": formatted_start_date,
+      "q[order][completed_at_lt]": formatted_end_date
     )
 
     unless $scope.initialized
@@ -45,11 +48,9 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
       RequestMonitor.load $scope.orderCycles = OrderCycles.index(ams_prefix: "basic", as: "distributor", "q[orders_close_at_gt]": "#{moment().subtract(90,'days').format()}")
       RequestMonitor.load $scope.suppliers = Enterprises.index(action: "visible", ams_prefix: "basic", "q[is_primary_producer_eq]": "true")
 
-    RequestMonitor.load $q.all([$scope.orders.$promise, $scope.distributors.$promise, $scope.orderCycles.$promise]).then ->
+    RequestMonitor.load $q.all([$scope.orders.$promise, $scope.distributors.$promise, $scope.orderCycles.$promise, $scope.suppliers.$promise, $scope.lineItems.$promise]).then ->
       Dereferencer.dereferenceAttr $scope.orders, "distributor", Enterprises.byID
       Dereferencer.dereferenceAttr $scope.orders, "order_cycle", OrderCycles.byID
-
-    RequestMonitor.load $q.all([$scope.orders.$promise, $scope.suppliers.$promise, $scope.lineItems.$promise]).then ->
       Dereferencer.dereferenceAttr $scope.lineItems, "supplier", Enterprises.byID
       Dereferencer.dereferenceAttr $scope.lineItems, "order", Orders.byID
       $scope.bulk_order_form.$setPristine()
@@ -58,8 +59,6 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
         $scope.initialized = true
         $timeout ->
           $scope.resetSelectFilters()
-
-  $scope.refreshData()
 
   $scope.$watch 'bulk_order_form.$dirty', (newVal, oldVal) ->
     if newVal == true
@@ -154,3 +153,5 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     if lineItem.quantity > 0
       lineItem.final_weight_volume = LineItems.pristineByID[lineItem.id].final_weight_volume * lineItem.quantity / LineItems.pristineByID[lineItem.id].quantity
       $scope.weightAdjustedPrice(lineItem)
+
+  $scope.refreshData()

@@ -478,7 +478,6 @@ en_US:
         inherited_property: Inherited Property
       variants:
         to_order_tip: "Items made to order do not have a set stock level, such as loaves of bread made fresh to order."
-      product_distributions: "Product Distributions"
       group_buy_options: "Group Buy Options"
       back_to_products_list: "Back to products list"
     product_import:
@@ -1685,7 +1684,6 @@ en_US:
   products_max_quantity: Max quantity
   products_distributor: Distributor
   products_distributor_info: When you select a distributor for your order, their address and pickup times will be displayed here.
-  products_distribution_adjustment_label: "Product distribution by %{distributor} for %{product}"
   shop_trial_expires_in: "Your shopfront trial expires in"
   shop_trial_expired_notice: "Good news! We have decided to extend shopfront trials until further notice."
   password: Password
@@ -2272,7 +2270,6 @@ en_US:
       have valid shipping and payment methods. Until you set these up, customers will
       not be able to shop at these hubs.
   enterprise_fees_update_notice: Your enterprise fees have been updated.
-  enterprise_fees_destroy_error: "That enterprise fee cannot be deleted as it is referenced by a product distribution: %{id} - %{name}."
   enterprise_register_package_error: "Please select a package"
   enterprise_register_error: "Could not complete registration for %{enterprise}"
   enterprise_register_success_notice: "Congratulations! Registration for %{enterprise} is complete!"
@@ -2739,7 +2736,6 @@ en_US:
     back_to_taxonomies_list: "Back to Taxonomies List"
     shipping_methods: "Shipping Methods"
     shipping_categories: "Shipping Categories"
-    new_shipping_category: "NEW Shipping Categories"
     back_to_shipping_categories: "Back To Shipping Categories"
     analytics_trackers: "Analytics Trackers"
     no_trackers_found: "No Trackers Found"

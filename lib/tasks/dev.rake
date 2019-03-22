@@ -3,7 +3,6 @@ namespace :ofn do
     desc 'load sample data'
     task load_sample_data: :environment do
       require_relative '../../spec/factories'
-      require_relative '../../spec/support/spree/init'
       task_name = "openfoodnetwork:dev:load_sample_data"
 
       country = Spree::Country.find_by_iso(ENV.fetch('DEFAULT_COUNTRY_CODE'))
@@ -222,77 +221,47 @@ namespace :ofn do
       if Spree::Product.count < 1
         puts "[#{task_name}] Seeding products"
 
-        distributors = Enterprise.is_distributor
+        FactoryBot.create(:product,
+                          name: 'Garlic',
+                          price: 20.00,
+                          supplier: Enterprise.is_primary_producer[0],
+                          taxons: [Spree::Taxon.find_by_name('Vegetables')])
 
-        prod1 = FactoryBot.create(:product,
-                                  name: 'Garlic',
-                                  price: 20.00,
-                                  supplier: Enterprise.is_primary_producer[0],
-                                  taxons: [Spree::Taxon.find_by_name('Vegetables')])
+        FactoryBot.create(:product,
+                          name: 'Fuji Apple',
+                          price: 5.00,
+                          supplier: Enterprise.is_primary_producer[1],
+                          taxons: [Spree::Taxon.find_by_name('Fruit')])
 
-        ProductDistribution.create(product: prod1,
-                                   distributor: distributors[0],
-                                   enterprise_fee: distributors[0].enterprise_fees.first)
+        FactoryBot.create(:product,
+                          name: 'Beef - 5kg Trays',
+                          price: 50.00,
+                          supplier: Enterprise.is_primary_producer[2],
+                          taxons: [Spree::Taxon.find_by_name('Meat and Fish')])
 
-        prod2 = FactoryBot.create(:product,
-                                  name: 'Fuji Apple',
-                                  price: 5.00,
-                                  supplier: Enterprise.is_primary_producer[1],
-                                  taxons: [Spree::Taxon.find_by_name('Fruit')])
+        FactoryBot.create(:product,
+                          name: 'Carrots',
+                          price: 3.00,
+                          supplier: Enterprise.is_primary_producer[2],
+                          taxons: [Spree::Taxon.find_by_name('Meat and Fish')])
 
-        ProductDistribution.create(product: prod2,
-                                   distributor: distributors[1],
-                                   enterprise_fee: distributors[1].enterprise_fees.first)
+        FactoryBot.create(:product,
+                          name: 'Potatoes',
+                          price: 2.00,
+                          supplier: Enterprise.is_primary_producer[2],
+                          taxons: [Spree::Taxon.find_by_name('Meat and Fish')])
 
-        prod3 = FactoryBot.create(:product,
-                                  name: 'Beef - 5kg Trays',
-                                  price: 50.00,
-                                  supplier: Enterprise.is_primary_producer[2],
-                                  taxons: [Spree::Taxon.find_by_name('Meat and Fish')])
+        FactoryBot.create(:product,
+                          name: 'Tomatoes',
+                          price: 2.00,
+                          supplier: Enterprise.is_primary_producer[2],
+                          taxons: [Spree::Taxon.find_by_name('Meat and Fish')])
 
-        ProductDistribution.create(product: prod3,
-                                   distributor: distributors[2],
-                                   enterprise_fee: distributors[2].enterprise_fees.first)
-
-        prod4 = FactoryBot.create(:product,
-                                  name: 'Carrots',
-                                  price: 3.00,
-                                  supplier: Enterprise.is_primary_producer[2],
-                                  taxons: [Spree::Taxon.find_by_name('Meat and Fish')])
-
-        ProductDistribution.create(product: prod4,
-                                   distributor: distributors[2],
-                                   enterprise_fee: distributors[2].enterprise_fees.first)
-
-        prod5 = FactoryBot.create(:product,
-                                  name: 'Potatoes',
-                                  price: 2.00,
-                                  supplier: Enterprise.is_primary_producer[2],
-                                  taxons: [Spree::Taxon.find_by_name('Meat and Fish')])
-
-        ProductDistribution.create(product: prod5,
-                                   distributor: distributors[2],
-                                   enterprise_fee: distributors[2].enterprise_fees.first)
-
-        prod6 = FactoryBot.create(:product,
-                                  name: 'Tomatoes',
-                                  price: 2.00,
-                                  supplier: Enterprise.is_primary_producer[2],
-                                  taxons: [Spree::Taxon.find_by_name('Meat and Fish')])
-
-        ProductDistribution.create(product: prod6,
-                                   distributor: distributors[2],
-                                   enterprise_fee: distributors[2].enterprise_fees.first)
-
-        prod7 = FactoryBot.create(:product,
-                                  name: 'Potatoes',
-                                  price: 2.00,
-                                  supplier: Enterprise.is_primary_producer[2],
-                                  taxons: [Spree::Taxon.find_by_name('Meat and Fish')])
-
-        ProductDistribution.create(product: prod7,
-                                   distributor: distributors[2],
-                                   enterprise_fee: distributors[2].enterprise_fees.first)
+        FactoryBot.create(:product,
+                          name: 'Potatoes',
+                          price: 2.00,
+                          supplier: Enterprise.is_primary_producer[2],
+                          taxons: [Spree::Taxon.find_by_name('Meat and Fish')])
       end
 
       enterprise2 = Enterprise.find_by_name('Enterprise 2')

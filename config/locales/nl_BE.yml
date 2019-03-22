@@ -475,7 +475,6 @@ nl_BE:
         inherited_property: Onroerend goed uit het verleden
       variants:
         to_order_tip: "Op bestelling gemaakte artikelen hebben geen vast voorraadniveau, zoals broden die vers op bestelling worden gemaakt."
-      product_distributions: "Distributie van producten"
       group_buy_options: "Group Buy Options"
       back_to_products_list: "Terug naar productenlijst"
     product_import:
@@ -1678,7 +1677,6 @@ nl_BE:
   products_max_quantity: Maximale hoeveelheid
   products_distributor: Distributeur
   products_distributor_info: Wanneer je een verdeler selecteert voor je bestelling, zal hun adres en ophaaltijden hier afgebeeld worden.
-  products_distribution_adjustment_label: "Product verdeling door %{distributor} voor %{product}"
   shop_trial_expires_in: "Jouw etalage testperiode vervalt binnen"
   shop_trial_expired_notice: "Goed nieuws! We hebben beslist om de testperiodes voor de etalages te verlengen tot nader order."
   password: Wachtwoord
@@ -2260,7 +2258,6 @@ nl_BE:
       maar heeft geen leverings- en/of betalingswijze ingesteld. Deze winkels blijven
       onbereikbaar tot een leverings- en een betalingswijze ingesteld worden.
   enterprise_fees_update_notice: De marges en de commissies van uw bedrijf zijn bijgewerkt.
-  enterprise_fees_destroy_error: "Deze marge of commissie kan niet worden verwijdert want wordt gebruikt voor de volgende verkoop : 1 %{id} -  2 %{name}. "
   enterprise_register_package_error: "Gelieve een optie te kiezen "
   enterprise_register_error: "De inschrijving is gefaald 1 %{enterprise}"
   enterprise_register_success_notice: "Gefeliciteerd ! Uw bedrijf 1 %{enterprise}  is nu ingeschreven op Open Food Belgium"

@@ -330,18 +330,6 @@ ActiveRecord::Schema.define(:version => 20190313142540) do
   add_index "producer_properties", ["producer_id"], :name => "index_producer_properties_on_producer_id"
   add_index "producer_properties", ["property_id"], :name => "index_producer_properties_on_property_id"
 
-  create_table "product_distributions", :force => true do |t|
-    t.integer  "product_id"
-    t.integer  "distributor_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "enterprise_fee_id"
-  end
-
-  add_index "product_distributions", ["distributor_id"], :name => "index_product_distributions_on_distributor_id"
-  add_index "product_distributions", ["enterprise_fee_id"], :name => "index_product_distributions_on_enterprise_fee_id"
-  add_index "product_distributions", ["product_id"], :name => "index_product_distributions_on_product_id"
-
   create_table "proxy_orders", :force => true do |t|
     t.integer  "subscription_id", :null => false
     t.integer  "order_id"
@@ -1325,10 +1313,6 @@ ActiveRecord::Schema.define(:version => 20190313142540) do
 
   add_foreign_key "producer_properties", "enterprises", name: "producer_properties_producer_id_fk", column: "producer_id"
   add_foreign_key "producer_properties", "spree_properties", name: "producer_properties_property_id_fk", column: "property_id"
-
-  add_foreign_key "product_distributions", "enterprise_fees", name: "product_distributions_enterprise_fee_id_fk"
-  add_foreign_key "product_distributions", "enterprises", name: "product_distributions_distributor_id_fk", column: "distributor_id"
-  add_foreign_key "product_distributions", "spree_products", name: "product_distributions_product_id_fk", column: "product_id"
 
   add_foreign_key "proxy_orders", "order_cycles", name: "proxy_orders_order_cycle_id_fk"
   add_foreign_key "proxy_orders", "spree_orders", name: "order_id_fk", column: "order_id"
