@@ -35,6 +35,58 @@ module Spree
           assigns(:variants).should match_array [v1, v2]
         end
       end
+
+      describe '#destroy' do
+        let(:variant) { create(:variant) }
+
+        context 'when requesting with js' do
+          before do
+            allow(Spree::Variant).to receive(:find).with(variant.id.to_s) { variant }
+            allow(variant).to receive(:delete)
+          end
+
+          it 'deletes the variant' do
+            spree_delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'js'
+            expect(variant).to have_received(:delete)
+          end
+
+          it 'shows a success flash message' do
+            spree_delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'js'
+            expect(flash[:success]).to eq(I18n.t('notice_messages.variant_deleted'))
+          end
+
+          it 'renders spree/admin/shared/destroy' do
+            spree_delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'js'
+            expect(response).to render_template('spree/admin/shared/_destroy')
+          end
+        end
+
+        context 'when requesting with html' do
+          before do
+            allow(Spree::Variant).to receive(:find).with(variant.id.to_s) { variant }
+            allow(variant).to receive(:delete)
+          end
+
+          it 'deletes the variant' do
+            spree_delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'html'
+            expect(variant).to have_received(:delete)
+          end
+
+          it 'shows a success flash message' do
+            spree_delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'html'
+            expect(flash[:success]).to eq(I18n.t('notice_messages.variant_deleted'))
+          end
+
+          it 'redirects to admin_product_variants_url' do
+            spree_delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'html'
+            expect(response).to redirect_to(
+              controller: 'spree/admin/variants',
+              action: :index,
+              product_id: variant.product.permalink
+            )
+          end
+        end
+      end
     end
   end
 end

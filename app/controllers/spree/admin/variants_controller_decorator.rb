@@ -15,7 +15,7 @@ Spree::Admin::VariantsController.class_eval do
 
     respond_with(@variant) do |format|
       format.html { redirect_to admin_product_variants_url(params[:product_id]) }
-      format.js   { render_js_for_destroy }
+      format.js { render_js_for_destroy }
     end
   end
 
