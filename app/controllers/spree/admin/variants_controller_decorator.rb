@@ -6,9 +6,13 @@ Spree::Admin::VariantsController.class_eval do
   def create
     on_demand = params[:variant].delete(:on_demand)
     on_hand = params[:variant].delete(:on_hand)
+
     super
-    @object.on_demand = on_demand if @object.present?
-    @object.on_hand = on_hand.to_i if @object.present?
+
+    if @object.present? && @object.valid?
+      @object.on_demand = on_demand if on_demand.present?
+      @object.on_hand = on_hand.to_i if on_hand.present?
+    end
   end
 
   def search
