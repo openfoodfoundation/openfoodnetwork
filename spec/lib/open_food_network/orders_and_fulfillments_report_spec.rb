@@ -4,17 +4,18 @@ include AuthenticationWorkflow
 
 module OpenFoodNetwork
   describe OrdersAndFulfillmentsReport do
+    let(:d1) { create(:distributor_enterprise) }
+    let(:oc1) { create(:simple_order_cycle) }
+    let(:o1) { create(:order, completed_at: 1.day.ago, order_cycle: oc1, distributor: d1) }
+    let(:li1) { build(:line_item) }
+    let(:user) { create(:user)}
+    let(:admin_user) { create(:admin_user)}
+
+    before { o1.line_items << li1 }
+
     describe "fetching orders" do
-      let(:d1) { create(:distributor_enterprise) }
-      let(:oc1) { create(:simple_order_cycle) }
-      let(:o1) { create(:order, completed_at: 1.day.ago, order_cycle: oc1, distributor: d1) }
-      let(:li1) { build(:line_item) }
-
-      before { o1.line_items << li1 }
-
       context "as a site admin" do
-        let(:user) { create(:admin_user) }
-        subject { PackingReport.new user, {}, true }
+        subject { PackingReport.new admin_user, {}, true }
 
         it "fetches completed orders" do
           o2 = create(:order)
@@ -30,7 +31,6 @@ module OpenFoodNetwork
       end
 
       context "as a manager of a supplier" do
-        let!(:user) { create(:user) }
         subject { OrdersAndFulfillmentsReport.new user, {}, true }
 
         let(:s1) { create(:supplier_enterprise) }
@@ -69,7 +69,6 @@ module OpenFoodNetwork
       end
 
       context "as a manager of a distributor" do
-        let!(:user) { create(:user) }
         subject { OrdersAndFulfillmentsReport.new user, {}, true }
 
         before do
@@ -95,19 +94,11 @@ module OpenFoodNetwork
     end
 
     describe "columns are aligned" do
-      let(:d1) { create(:distributor_enterprise) }
-      let(:oc1) { create(:simple_order_cycle) }
-      let(:o1) { create(:order, completed_at: 1.day.ago, order_cycle: oc1, distributor: d1) }
-      let(:li1) { build(:line_item) }
-      let(:user) { create(:admin_user)}
-
-      before { o1.line_items << li1 }
-
       it 'has aligned columsn' do
         report_types = ["", "order_cycle_supplier_totals", "order_cycle_supplier_totals_by_distributor", "order_cycle_distributor_totals_by_supplier", "order_cycle_customer_totals"]
 
         report_types.each do |report_type|
-          report = OrdersAndFulfillmentsReport.new user, report_type: report_type
+          report = OrdersAndFulfillmentsReport.new admin_user, report_type: report_type
           report.header.size.should == report.columns.size
         end
       end
