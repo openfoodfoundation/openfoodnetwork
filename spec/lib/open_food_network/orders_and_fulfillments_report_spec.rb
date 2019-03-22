@@ -5,12 +5,14 @@ describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
 
   let(:distributor) { create(:distributor_enterprise) }
   let(:order_cycle) { create(:simple_order_cycle) }
+  let(:address) { create(:address) }
   let(:order) {
     create(
       :order,
       completed_at: 1.day.ago,
       order_cycle: order_cycle,
-      distributor: distributor
+      distributor: distributor,
+      bill_address: address
     )
   }
   let(:line_item) { build(:line_item) }
@@ -134,6 +136,30 @@ describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
         report = described_class.new admin_user, report_type: report_type
         expect(report.header.size).to eq(report.columns.size)
       end
+    end
+  end
+
+  describe "order_cycle_customer_totals" do
+    let(:product) { line_item.product }
+    let(:fuji) { product.variants.first }
+    let(:items) {
+      report = described_class.new(admin_user, { report_type: "order_cycle_customer_totals" }, true)
+      OpenFoodNetwork::OrderGrouper.new(report.rules, report.columns).table(report.table_items)
+    }
+
+    it "has a product row" do
+      product_name_field = items.first[5]
+      expect(product_name_field).to eq product.name
+    end
+
+    it "has a summary row" do
+      product_name_field = items.last[5]
+      expect(product_name_field).to eq "TOTAL"
+    end
+
+    it "contain the right SKU" do
+      sku_field = items.first[23]
+      expect(sku_field).to eq product.sku
     end
   end
 end
