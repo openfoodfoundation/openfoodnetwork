@@ -420,7 +420,7 @@ FactoryBot.define do
 
     after(:create) do |order, evaluator|
       create(:line_item, order: order)
-      product = create(:simple_product, distributors: [order.distributor])
+      product = create(:simple_product)
       create(:line_item, order: order, product: product)
 
       payment_calculator = build(:calculator_per_item, preferred_amount: evaluator.payment_fee)
