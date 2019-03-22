@@ -15,7 +15,7 @@ module OpenFoodNetwork
 
     describe "fetching orders" do
       context "as a site admin" do
-        subject { PackingReport.new admin_user, {}, true }
+        subject { OrdersAndFulfillmentsReport.new admin_user, {}, true }
 
         it "fetches completed orders" do
           o2 = create(:order)
