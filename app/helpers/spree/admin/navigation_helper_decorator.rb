@@ -20,6 +20,7 @@ module Spree
         klass = Spree::Order if klass == :bulk_order_management
         klass = EnterpriseGroup if klass == :group
         klass = VariantOverride if klass == :Inventory
+        klass = Spree::Admin::ReportsController if klass == :report
         klass
       end
       alias_method_chain :klass_for, :sym_fallback

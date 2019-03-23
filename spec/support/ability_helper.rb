@@ -18,7 +18,7 @@ module AbilityHelper
     end
 
     def have_link_to_enterprise_fee_summary
-      have_ability([:enterprise_fee_summary], for: :report)
+      have_ability([:enterprise_fee_summary], for: Spree::Admin::ReportsController)
     end
 
     def have_direct_access_to_enterprise_fee_summary

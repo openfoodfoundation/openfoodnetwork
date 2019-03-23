@@ -187,7 +187,7 @@ class AbilityDecorator
     # Reports page
     can [:admin, :index, :customers, :orders_and_distributors, :group_buys, :bulk_coop, :payments,
          :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :packing],
-        :report
+        Spree::Admin::ReportsController
     add_enterprise_fee_summary_abilities(user)
   end
 
@@ -263,7 +263,7 @@ class AbilityDecorator
     # Reports page
     can [:admin, :index, :customers, :group_buys, :bulk_coop, :sales_tax, :payments,
          :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory,
-         :order_cycle_management, :xero_invoices], :report
+         :order_cycle_management, :xero_invoices], Spree::Admin::ReportsController
     add_enterprise_fee_summary_abilities(user)
 
     can [:create], Customer
@@ -293,7 +293,7 @@ class AbilityDecorator
     return unless feature_enabled
 
     # Reveal the report link in spree/admin/reports#index
-    can [:enterprise_fee_summary], :report
+    can [:enterprise_fee_summary], Spree::Admin::ReportsController
     # Allow direct access to the report resource
     can [:admin, :new, :create], :enterprise_fee_summary
   end

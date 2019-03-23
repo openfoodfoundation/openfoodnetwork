@@ -9,7 +9,11 @@ module Spree
         end
 
         it "returns a symbol when there's no available class" do
-          helper.klass_for('reports').should == :report
+          helper.klass_for('lions').should == :lion
+        end
+
+        it "returns Spree::Admin::ReportsController for reports" do
+          helper.klass_for('reports').should == Spree::Admin::ReportsController
         end
 
         it "returns :overview for the dashboard" do
