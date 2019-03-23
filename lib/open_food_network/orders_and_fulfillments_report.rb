@@ -149,6 +149,8 @@ module OpenFoodNetwork
 
           { group_by: proc { |line_item| line_item.product },
           sort_by: proc { |product| product.name } },
+          { group_by: proc { |line_item| line_item.variant },
+          sort_by: proc { |variant| variant.full_name } },
           { group_by: proc { |line_item| line_item.full_name },
            sort_by: proc { |full_name| full_name } } ]
       else
@@ -222,7 +224,7 @@ module OpenFoodNetwork
           proc { |line_items| line_items.first.order.ship_address.andand.state if rsa.call(line_items) },
 
           proc { |line_items| "" },
-          proc { |line_items| line_items.first.product.sku },
+          proc { |line_items| line_items.first.variant.sku },
 
           proc { |line_items| line_items.first.order.order_cycle.andand.name },
           proc { |line_items| line_items.first.order.payments.first.andand.payment_method.andand.name },

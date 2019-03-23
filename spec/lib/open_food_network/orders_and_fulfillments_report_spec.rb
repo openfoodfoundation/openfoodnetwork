@@ -19,9 +19,9 @@ describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
   let(:user) { create(:user) }
   let(:admin_user) { create(:admin_user) }
 
-  before { order.line_items << line_item }
-
   describe "fetching orders" do
+    before { order.line_items << line_item }
+
     context "as a site admin" do
       subject { described_class.new admin_user, {}, true }
 
@@ -140,12 +140,20 @@ describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
   end
 
   describe "order_cycle_customer_totals" do
-    let(:product) { line_item.product }
-    let(:fuji) { product.variants.first }
+    let!(:product) { line_item.product }
+    let!(:fuji) { build(:variant, product: product, display_name: "Fuji", sku: "FUJI", on_hand: 100) }
+    let!(:gala) { build(:variant, product: product, display_name: "Gala", sku: "GALA", on_hand: 100) }
+
     let(:items) {
       report = described_class.new(admin_user, { report_type: "order_cycle_customer_totals" }, true)
       OpenFoodNetwork::OrderGrouper.new(report.rules, report.columns).table(report.table_items)
     }
+
+    before do
+      # Clear price so it will be computed based on quantity and variant price.
+      order.line_items << build(:line_item, variant: fuji, price: nil, quantity: 1)
+      order.line_items << build(:line_item, variant: gala, price: nil, quantity: 2)
+    end
 
     it "has a product row" do
       product_name_field = items.first[5]
@@ -157,9 +165,78 @@ describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
       expect(product_name_field).to eq "TOTAL"
     end
 
-    it "contain the right SKU" do
-      sku_field = items.first[23]
-      expect(sku_field).to eq product.sku
+    # Expected Report for Scenario:
+    #
+    # Row 1: Armstrong Amari, Fuji Apple, price: 8
+    # Row 2: SUMMARY
+    # Row 3: Bartoletti Brooklyn, Fuji Apple, price: 1 + 4
+    # Row 4: Bartoletti Brooklyn, Gala Apple, price: 2
+    # Row 5: SUMMARY
+    describe "grouping of line items" do
+      let!(:address) { create(:address, last_name: "Bartoletti", first_name: "Brooklyn") }
+
+      let!(:second_address) { create(:address, last_name: "Armstrong", first_name: "Amari") }
+      let!(:second_order) do
+        create(:order, completed_at: 1.day.ago, order_cycle: order_cycle, distributor: distributor,
+                       bill_address: second_address)
+      end
+
+      before do
+        # Add a second line item for Fuji variant to the order, to test grouping in this edge case.
+        order.line_items << build(:line_item, variant: fuji, price: nil, quantity: 4)
+
+        second_order.line_items << build(:line_item, variant: fuji, price: nil, quantity: 8)
+      end
+
+      it "groups line items by variant and order" do
+        expect(items.length).to eq(5)
+
+        # Row 1: Armstrong Amari, Fuji Apple, price: 8
+        row_data = items[0]
+        expect(customer_name(row_data)).to eq(second_address.full_name)
+        expect(amount(row_data)).to eq(fuji.price * 8)
+        expect(variant_sku(row_data)).to eq(fuji.sku)
+
+        # Row 2: SUMMARY
+        row_data = items[1]
+        expect(totals_row?(row_data)).to eq(true)
+        expect(customer_name(row_data)).to eq(second_address.full_name)
+        expect(amount(row_data)).to eq(fuji.price * 8)
+
+        # Row 3: Bartoletti Brooklyn, Fuji Apple, price: 1 + 4
+        row_data = items[2]
+        expect(customer_name(row_data)).to eq(address.full_name)
+        expect(amount(row_data)).to eq(fuji.price * 5)
+        expect(variant_sku(row_data)).to eq(fuji.sku)
+
+        # Row 4: Bartoletti Brooklyn, Gala Apple, price: 2
+        row_data = items[3]
+        expect(customer_name(row_data)).to eq(address.full_name)
+        expect(amount(row_data)).to eq(gala.price * 2)
+        expect(variant_sku(row_data)).to eq(gala.sku)
+
+        # Row 5: SUMMARY
+        row_data = items[4]
+        expect(totals_row?(row_data)).to eq(true)
+        expect(customer_name(row_data)).to eq(address.full_name)
+        expect(amount(row_data)).to eq(fuji.price * 5 + gala.price * 2)
+      end
+    end
+
+    def totals_row?(row_data)
+      row_data[5] == I18n.t("admin.reports.total")
+    end
+
+    def customer_name(row_data)
+      row_data[1]
+    end
+
+    def amount(row_data)
+      row_data[8]
+    end
+
+    def variant_sku(row_data)
+      row_data[23]
     end
   end
 end
