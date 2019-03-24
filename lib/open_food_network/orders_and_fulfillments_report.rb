@@ -115,12 +115,12 @@ module OpenFoodNetwork
             proc { |line_items| "" },
 
             proc { |line_items| "" },
-            proc { |line_items| line_items.sum { |li| li.amount } },
-            proc { |line_items| line_items.sum { |li| li.amount_with_adjustments } },
-            proc { |line_items| line_items.map { |li| li.order }.uniq.sum { |o| o.admin_and_handling_total } },
-            proc { |line_items| line_items.map { |li| li.order }.uniq.sum { |o| o.ship_total } },
-            proc { |line_items| line_items.map { |li| li.order }.uniq.sum { |o| o.payment_fee } },
-            proc { |line_items| line_items.map { |li| li.order }.uniq.sum { |o| o.total } },
+            proc { |line_items| line_items.sum(&:amount) },
+            proc { |line_items| line_items.sum(&:amount_with_adjustments) },
+            proc { |line_items| line_items.map(&:order).uniq.sum(&:admin_and_handling_total) },
+            proc { |line_items| line_items.map(&:order).uniq.sum(&:ship_total) },
+            proc { |line_items| line_items.map(&:order).uniq.sum(&:payment_fee) },
+            proc { |line_items| line_items.map(&:order).uniq.sum(&:total) },
             proc { |line_items| line_items.all? { |li| li.order.paid? } ? I18n.t(:yes) : I18n.t(:no) },
 
             proc { |line_items| "" },
