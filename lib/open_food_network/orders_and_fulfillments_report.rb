@@ -104,10 +104,10 @@ module OpenFoodNetwork
         [ { group_by: proc { |line_item| line_item.order.distributor },
           sort_by: proc { |distributor| distributor.name } },
           { group_by: proc { |line_item| line_item.order },
-          sort_by: proc { |order| order.bill_address.lastname + " " + order.bill_address.firstname },
+          sort_by: proc { |order| order.bill_address.full_name_reverse },
           summary_columns: [
             proc { |line_items| line_items.first.order.distributor.name },
-            proc { |line_items| line_items.first.order.bill_address.firstname + " " + line_items.first.order.bill_address.lastname },
+            proc { |line_items| line_items.first.order.bill_address.full_name },
             proc { |line_items| "" },
             proc { |line_items| "" },
             proc { |line_items| "" },
