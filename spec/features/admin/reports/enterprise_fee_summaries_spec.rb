@@ -120,8 +120,9 @@ xfeature "enterprise fee summaries", js: true do
         it "generates file with data for all enterprises" do
           check I18n.t("filters.report_format_csv", scope: i18n_scope)
           click_on I18n.t("filters.generate_report", scope: i18n_scope)
-          expect(page.response_headers['Content-Type']).to eq "text/csv"
-          expect(page.body).to have_content(distributor.name)
+
+          expect(downloaded_filename).to include ".csv"
+          expect(downloaded_content).to have_content(distributor.name)
         end
       end
 
@@ -139,9 +140,11 @@ xfeature "enterprise fee summaries", js: true do
         it "generates file with data for the enterprise" do
           check I18n.t("filters.report_format_csv", scope: i18n_scope)
           click_on I18n.t("filters.generate_report", scope: i18n_scope)
-          expect(page.response_headers['Content-Type']).to eq "text/csv"
-          expect(page.body).to have_content(distributor.name)
-          expect(page.body).not_to have_content(other_distributor.name)
+
+          expect(downloaded_filename).to include ".csv"
+          csv_content = downloaded_content
+          expect(csv_content).to have_content(distributor.name)
+          expect(csv_content).not_to have_content(other_distributor.name)
         end
       end
     end
@@ -169,9 +172,11 @@ xfeature "enterprise fee summaries", js: true do
         select order_cycle.name, from: "report_order_cycle_ids"
         check I18n.t("filters.report_format_csv", scope: i18n_scope)
         click_on I18n.t("filters.generate_report", scope: i18n_scope)
-        expect(page.response_headers['Content-Type']).to eq "text/csv"
-        expect(page.body).to have_content(distributor.name)
-        expect(page.body).not_to have_content(second_distributor.name)
+
+        expect(downloaded_filename).to include ".csv"
+        csv_content = downloaded_content
+        expect(csv_content).to have_content(distributor.name)
+        expect(csv_content).not_to have_content(second_distributor.name)
       end
     end
   end
