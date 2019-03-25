@@ -86,8 +86,10 @@ xfeature "enterprise fee summaries", js: true do
     end
 
     context "when logged in as enterprise user" do
-      let!(:order) { create(:completed_order_with_fees, order_cycle: order_cycle, distributor: distributor) }
-
+      let!(:order) do
+        create(:completed_order_with_fees, order_cycle: order_cycle,
+                                           distributor: distributor)
+      end
       let(:current_user) { distributor.owner }
 
       it "shows available options for the enterprise" do
@@ -102,8 +104,10 @@ xfeature "enterprise fee summaries", js: true do
     end
 
     context "when logged in as admin" do
-      let!(:order) { create(:completed_order_with_fees, order_cycle: order_cycle, distributor: distributor) }
-
+      let!(:order) do
+        create(:completed_order_with_fees, order_cycle: order_cycle,
+                                           distributor: distributor)
+      end
       let(:current_user) { create(:admin_user) }
 
       it "generates file with data for all enterprises" do
@@ -115,9 +119,14 @@ xfeature "enterprise fee summaries", js: true do
     end
 
     context "when logged in as enterprise user" do
-      let!(:order) { create(:completed_order_with_fees, order_cycle: order_cycle, distributor: distributor) }
-      let!(:other_order) { create(:completed_order_with_fees, order_cycle: other_order_cycle, distributor: other_distributor) }
-
+      let!(:order) do
+        create(:completed_order_with_fees, order_cycle: order_cycle,
+                                           distributor: distributor)
+      end
+      let!(:other_order) do
+        create(:completed_order_with_fees, order_cycle: other_order_cycle,
+                                           distributor: other_distributor)
+      end
       let(:current_user) { distributor.owner }
 
       it "generates file with data for the enterprise" do
@@ -134,8 +143,14 @@ xfeature "enterprise fee summaries", js: true do
     let!(:second_distributor) { create(:distributor_enterprise) }
     let!(:second_order_cycle) { create(:simple_order_cycle, coordinator: second_distributor) }
 
-    let!(:order) { create(:completed_order_with_fees, order_cycle: order_cycle, distributor: distributor) }
-    let!(:second_order) { create(:completed_order_with_fees, order_cycle: second_order_cycle, distributor: second_distributor) }
+    let!(:order) do
+      create(:completed_order_with_fees, order_cycle: order_cycle,
+                                         distributor: distributor)
+    end
+    let!(:second_order) do
+      create(:completed_order_with_fees, order_cycle: second_order_cycle,
+                                         distributor: second_distributor)
+    end
 
     let(:current_user) { create(:admin_user) }
 
