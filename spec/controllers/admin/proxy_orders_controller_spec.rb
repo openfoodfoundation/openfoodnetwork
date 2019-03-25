@@ -68,17 +68,18 @@ describe Admin::ProxyOrdersController, type: :controller do
     let!(:order_cycle) { create(:simple_order_cycle, orders_close_at: 1.day.from_now) }
     let!(:payment_method) { create(:payment_method) }
     let!(:shipping_method) { create(:shipping_method) }
-    let!(:subscription) { create(:subscription, shop: shop, with_items: true) }
+    let!(:subscription) do
+      create(:subscription, shipping_method: shipping_method, shop: shop, with_items: true)
+    end
     let!(:proxy_order) { create(:proxy_order, subscription: subscription, order_cycle: order_cycle) }
     let(:order) { proxy_order.initialise_order! }
 
     before do
       # Processing order to completion
       allow(Spree::OrderMailer).to receive(:cancel_email) { double(:email, deliver: true) }
-      order.update_attribute(:shipping_method_id, shipping_method.id)
-      while !order.completed? do break unless order.next! end
-      proxy_order.update_attribute(:canceled_at, Time.zone.now)
-      order.cancel
+      AdvanceOrderService.new(order).call!
+      proxy_order.reload
+      proxy_order.cancel
       allow(controller).to receive(:spree_current_user) { user }
     end
 
@@ -107,7 +108,7 @@ describe Admin::ProxyOrdersController, type: :controller do
           before { shop.update_attributes(owner: user) }
 
           context "when resuming succeeds" do
-            xit 'renders the resumed proxy_order as json' do
+            it 'renders the resumed proxy_order as json' do
               spree_get :resume, params
               json_response = JSON.parse(response.body)
               expect(json_response['state']).to eq "resumed"
