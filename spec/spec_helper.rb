@@ -46,7 +46,17 @@ Capybara.register_driver :chrome do |app|
   options = Selenium::WebDriver::Chrome::Options.new(
     args: %w[headless disable-gpu no-sandbox window-size=1280,768]
   )
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+  driver = Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+
+  ### Allow file downloads in headless chrome
+  ### https://bugs.chromium.org/p/chromium/issues/detail?id=696481#c89
+  bridge = driver.browser.send(:bridge)
+  path = '/session/:session_id/chromium/send_command'
+  path[':session_id'] = bridge.session_id
+  bridge.http.call(:post, path, cmd: 'Page.setDownloadBehavior',
+                                params: { behavior: 'allow', downloadPath: DownloadsHelper.path.to_s })
+
+  driver
 end
 
 Capybara.default_max_wait_time = 30
@@ -145,6 +155,7 @@ RSpec.configure do |config|
   config.include ActionView::Helpers::DateHelper
   config.include OpenFoodNetwork::DelayedJobHelper
   config.include OpenFoodNetwork::PerformanceHelper
+  config.include DownloadsHelper
 
   # FactoryBot
   require 'factory_bot_rails'
