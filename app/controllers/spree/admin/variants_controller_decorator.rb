@@ -3,6 +3,18 @@ require 'open_food_network/scope_variants_for_search'
 Spree::Admin::VariantsController.class_eval do
   helper 'spree/products'
 
+  def create
+    on_demand = params[:variant].delete(:on_demand)
+    on_hand = params[:variant].delete(:on_hand)
+
+    super
+
+    if @object.present? && @object.valid?
+      @object.on_demand = on_demand if on_demand.present?
+      @object.on_hand = on_hand.to_i if on_hand.present?
+    end
+  end
+
   def search
     scoper = OpenFoodNetwork::ScopeVariantsForSearch.new(params)
     @variants = scoper.search

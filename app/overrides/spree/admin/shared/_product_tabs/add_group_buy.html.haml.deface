@@ -1,5 +1,0 @@
-/ insert_bottom "[data-hook='admin_product_tabs']"
-
-- klass = current == 'Group Buy Options' ? 'active' : ''
-%li{:class => klass}
-  = link_to_with_icon 'icon-tasks', t('admin.products.group_buy_options'), group_buy_options_admin_product_url(@product)
