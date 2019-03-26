@@ -108,7 +108,6 @@
   "spec/serializers/admin/enterprise_serializer_spec.rb": 1.8613076210021973,
   "spec/features/admin/enterprise_user_spec.rb": 0.9945759773254395,
   "spec/lib/open_food_network/customers_report_spec.rb": 2.756126880645752,
-  "spec/models/product_distribution_spec.rb": 2.369915246963501,
   "spec/models/product_import/inventory_reset_strategy_spec.rb": 3.0745999813079834,
   "spec/features/admin/multilingual_spec.rb": 2.2706894874572754,
   "spec/lib/open_food_network/subscription_payment_updater_spec.rb": 3.8399856090545654,

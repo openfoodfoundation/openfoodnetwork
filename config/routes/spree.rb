@@ -61,7 +61,6 @@ Spree::Core::Engine.routes.prepend do
     get '/search/customer_addresses' => 'search#customer_addresses', :as => :search_customer_addresses
 
     resources :products do
-      get :product_distributions, on: :member
       get :group_buy_options, on: :member
       get :seo, on: :member
 

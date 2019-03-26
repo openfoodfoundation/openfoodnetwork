@@ -66,14 +66,12 @@ class OrderSyncer
   end
 
   def update_shipment_for(order)
-    shipment = order.shipments.with_state('pending').where(shipping_method_id: shipping_method_id_was).last
-    if shipment
-      shipment.update_attributes(shipping_method_id: shipping_method_id)
-      order.update_attribute(:shipping_method_id, shipping_method_id)
+    return if pending_shipment_with?(order, shipping_method_id) # No need to do anything.
+
+    if pending_shipment_with?(order, shipping_method_id_was)
+      order.select_shipping_method(shipping_method_id)
     else
-      unless order.shipments.with_state('pending').where(shipping_method_id: shipping_method_id).any?
-        order_update_issues.add(order, I18n.t('admin.shipping_method'))
-      end
+      order_update_issues.add(order, I18n.t('admin.shipping_method'))
     end
   end
 
@@ -105,5 +103,10 @@ class OrderSyncer
     relevant_address_attrs.all? do |attr|
       order.ship_address[attr] == distributor_address[attr]
     end
+  end
+
+  def pending_shipment_with?(order, shipping_method_id)
+    return false unless order.shipment.present? && order.shipment.state == "pending"
+    order.shipping_method.id == shipping_method_id
   end
 end

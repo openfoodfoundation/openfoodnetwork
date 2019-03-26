@@ -40,7 +40,8 @@ describe SubscriptionPlacementJob do
 
   describe "performing the job" do
     context "when unplaced proxy_orders exist" do
-      let!(:proxy_order) { create(:proxy_order) }
+      let!(:subscription) { create(:subscription, with_items: true) }
+      let!(:proxy_order) { create(:proxy_order, subscription: subscription) }
 
       before do
         allow(job).to receive(:proxy_orders) { ProxyOrder.where(id: proxy_order.id) }

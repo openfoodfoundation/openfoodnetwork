@@ -7,6 +7,9 @@ describe OrderFactory do
   let(:customer) { create(:customer, user: user) }
   let(:shop) { create(:distributor_enterprise) }
   let(:order_cycle) { create(:simple_order_cycle) }
+  let!(:other_shipping_method_a) { create(:shipping_method) }
+  let!(:shipping_method) { create(:shipping_method) }
+  let!(:other_shipping_method_b) { create(:shipping_method) }
   let(:payment_method) { create(:payment_method) }
   let(:ship_address) { create(:address) }
   let(:bill_address) { create(:address) }
@@ -21,6 +24,7 @@ describe OrderFactory do
       attrs[:customer_id] = customer.id
       attrs[:distributor_id] = shop.id
       attrs[:order_cycle_id] = order_cycle.id
+      attrs[:shipping_method_id] = shipping_method.id
       attrs[:payment_method_id] = payment_method.id
       attrs[:bill_address_attributes] = bill_address.attributes.except("id")
       attrs[:ship_address_attributes] = ship_address.attributes.except("id")
@@ -35,11 +39,25 @@ describe OrderFactory do
       expect(order.user).to eq user
       expect(order.distributor).to eq shop
       expect(order.order_cycle).to eq order_cycle
+      expect(order.shipments.first.shipping_method).to eq shipping_method
       expect(order.payments.first.payment_method).to eq payment_method
       expect(order.bill_address).to eq bill_address
       expect(order.ship_address).to eq ship_address
       expect(order.total).to eq 38.0
       expect(order.complete?).to be false
+    end
+
+    it "retains address, delivery, and payment attributes until completion of the order" do
+      AdvanceOrderService.new(order).call
+
+      order.reload
+
+      expect(order.customer).to eq customer
+      expect(order.shipping_method).to eq shipping_method
+      expect(order.payments.first.payment_method).to eq payment_method
+      expect(order.bill_address).to eq bill_address
+      expect(order.ship_address).to eq ship_address
+      expect(order.total).to eq 38.0
     end
 
     context "when the customer does not have a user associated with it" do

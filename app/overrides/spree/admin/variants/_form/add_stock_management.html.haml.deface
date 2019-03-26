@@ -1,0 +1,11 @@
+/ insert_bottom "[data-hook='admin_variant_form_fields']"
+
+- if Spree::Config[:track_inventory_levels]
+  .field.checkbox
+    %label
+      = f.check_box :on_demand
+      = t(:on_demand)
+  .field
+    = f.label :on_hand, t(:on_hand)
+    .fullwidth
+      = f.text_field :on_hand

@@ -126,8 +126,8 @@ module Spree
       let(:d1) { create(:distributor_enterprise) }
       let(:d2) { create(:distributor_enterprise) }
 
-      let(:p1) { create(:product, supplier: s1, distributors:[d1, d2]) }
-      let(:p2) { create(:product, supplier: s2, distributors:[d1, d2]) }
+      let(:p1) { create(:product, supplier: s1) }
+      let(:p2) { create(:product, supplier: s2) }
       let(:p_related) { create(:product, supplier: s_related) }
 
       let(:er1) { create(:enterprise_relationship, parent: s1, child: d1) }
@@ -149,18 +149,18 @@ module Spree
         let(:order) { create(:order) }
 
         it "should be able to read/write their enterprises' products and variants" do
-          should have_ability([:admin, :read, :update, :product_distributions, :bulk_update, :clone, :destroy], for: p1)
+          should have_ability([:admin, :read, :update, :bulk_update, :clone, :destroy], for: p1)
           should have_ability([:admin, :index, :read, :edit, :update, :search, :destroy, :delete], for: p1.master)
         end
 
         it "should be able to read/write related enterprises' products and variants with manage_products permission" do
           er_ps
-          should have_ability([:admin, :read, :update, :product_distributions, :bulk_update, :clone, :destroy], for: p_related)
+          should have_ability([:admin, :read, :update, :bulk_update, :clone, :destroy], for: p_related)
           should have_ability([:admin, :index, :read, :edit, :update, :search, :destroy, :delete], for: p_related.master)
         end
 
         it "should not be able to read/write other enterprises' products and variants" do
-          should_not have_ability([:admin, :read, :update, :product_distributions, :bulk_update, :clone, :destroy], for: p2)
+          should_not have_ability([:admin, :read, :update, :bulk_update, :clone, :destroy], for: p2)
           should_not have_ability([:admin, :index, :read, :edit, :update, :search, :destroy], for: p2.master)
         end
 

@@ -127,11 +127,11 @@ class CartService
   end
 
   def valid_variant?(variant)
-    check_order_cycle_provided_for(variant) && check_variant_available_under_distribution(variant)
+    check_order_cycle_provided && check_variant_available_under_distribution(variant)
   end
 
-  def check_order_cycle_provided_for(variant)
-    order_cycle_provided = (!order_cycle_required_for(variant) || @order_cycle.present?)
+  def check_order_cycle_provided
+    order_cycle_provided = @order_cycle.present?
     errors.add(:base, "Please choose an order cycle for this order.") unless order_cycle_provided
     order_cycle_provided
   end
@@ -141,10 +141,6 @@ class CartService
 
     errors.add(:base, I18n.t(:spree_order_populator_availability_error))
     false
-  end
-
-  def order_cycle_required_for(variant)
-    variant.product.product_distributions.empty?
   end
 
   def line_item_for_variant_id(variant_id)

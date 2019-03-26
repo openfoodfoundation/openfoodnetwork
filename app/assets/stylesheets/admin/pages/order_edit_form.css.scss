@@ -1,0 +1,5 @@
+// Hides the split button introduced by spree in the order form
+//   We only have one stock location in OFN so it's meaningless to split the order between stock locations
+table td.actions [class*='icon-'].split-item {
+  display: none;
+}

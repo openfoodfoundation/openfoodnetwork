@@ -92,16 +92,19 @@ describe CartController, type: :controller do
 
   context "adding a group buy product to the cart" do
     it "sets a variant attribute for the max quantity" do
-      distributor_product = create(:distributor_enterprise)
-      p = create(:product, distributors: [distributor_product], group_buy: true)
+      distributor = create(:distributor_enterprise)
+      product = create(:product, group_buy: true)
+      variant = product.variants.first
+      order_cycle = create(:simple_order_cycle, distributors: [distributor], variants: [variant])
 
       order = subject.current_order(true)
-      allow(order).to receive(:distributor) { distributor_product }
-      expect(order).to receive(:set_variant_attributes).with(p.master, max_quantity: '3')
+      allow(order).to receive(:distributor) { distributor }
+      allow(order).to receive(:order_cycle) { order_cycle }
+      expect(order).to receive(:set_variant_attributes).with(variant, max_quantity: '3')
       allow(controller).to receive(:current_order).and_return(order)
 
       expect do
-        spree_post :populate, variants: { p.master.id => 1 }, variant_attributes: { p.master.id => { max_quantity: 3 } }
+        spree_post :populate, variants: { variant.id => 1 }, variant_attributes: { variant.id => { max_quantity: 3 } }
       end.to change(Spree::LineItem, :count).by(1)
     end
   end

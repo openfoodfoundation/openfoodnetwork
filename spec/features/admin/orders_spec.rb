@@ -135,8 +135,6 @@ feature %q{
   end
 
   scenario "can't change distributor or order cycle once order has been finalized" do
-    @order.update_attributes order_cycle_id: nil
-
     quick_login_as_admin
     visit '/admin/orders'
     page.find('td.actions a.icon-edit').click
@@ -145,7 +143,7 @@ feature %q{
     expect(page).not_to have_select2 'order_order_cycle_id'
 
     expect(page).to have_selector 'p', text: "Distributor: #{@order.distributor.name}"
-    expect(page).to have_selector 'p', text: "Order cycle: None"
+    expect(page).to have_selector 'p', text: "Order cycle: #{@order.order_cycle.name}"
   end
 
   scenario "filling customer details" do
@@ -283,6 +281,11 @@ feature %q{
           expect(page).to have_link "Print Invoice", href: spree.print_admin_order_path(@order)
           expect(page).to have_link "Cancel Order", href: spree.fire_admin_order_path(@order, :e => 'cancel')
         end
+      end
+
+      scenario "cannot split the order in different stock locations" do
+        # There's only 1 stock location in OFN, so the split functionality that comes with spree should be hidden
+        expect(page).to_not have_selector '.split-item'
       end
 
       scenario "can edit shipping method" do

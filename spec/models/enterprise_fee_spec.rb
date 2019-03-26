@@ -102,51 +102,17 @@ describe EnterpriseFee do
     end
   end
 
-  describe "clearing all enterprise fee adjustments for a line item" do
-    it "clears adjustments originating from many different enterprise fees" do
-      p = create(:simple_product)
-      d1, d2 = create(:distributor_enterprise), create(:distributor_enterprise)
-      pd1 = create(:product_distribution, product: p, distributor: d1)
-      pd2 = create(:product_distribution, product: p, distributor: d2)
-      line_item = create(:line_item, product: p)
-      pd1.enterprise_fee.create_adjustment('foo1', line_item.order, line_item, true)
-      pd2.enterprise_fee.create_adjustment('foo2', line_item.order, line_item, true)
-
-      expect do
-        EnterpriseFee.clear_all_adjustments_for line_item
-      end.to change(line_item.order.adjustments, :count).by(-2)
-    end
-
-    it "does not clear adjustments originating from another source" do
-      p = create(:simple_product)
-      pd = create(:product_distribution)
-      line_item = create(:line_item, product: pd.product)
-      tax_rate = create(:tax_rate, calculator: build(:calculator, preferred_amount: 10))
-      tax_rate.create_adjustment('foo', line_item.order, line_item)
-
-      expect do
-        EnterpriseFee.clear_all_adjustments_for line_item
-      end.to change(line_item.order.adjustments, :count).by(0)
-    end
-  end
-
   describe "clearing all enterprise fee adjustments on an order" do
     it "clears adjustments from many fees and on all line items" do
-      order = create(:order)
+      order_cycle = create(:order_cycle)
+      order = create(:order, order_cycle: order_cycle)
+      line_item1 = create(:line_item, order: order, variant: order_cycle.variants.first)
+      line_item2 = create(:line_item, order: order, variant: order_cycle.variants.second)
 
-      p1 = create(:simple_product)
-      p2 = create(:simple_product)
-      d1, d2 = create(:distributor_enterprise), create(:distributor_enterprise)
-      pd1 = create(:product_distribution, product: p1, distributor: d1)
-      pd2 = create(:product_distribution, product: p1, distributor: d2)
-      pd3 = create(:product_distribution, product: p2, distributor: d1)
-      pd4 = create(:product_distribution, product: p2, distributor: d2)
-      line_item1 = create(:line_item, order: order, product: p1)
-      line_item2 = create(:line_item, order: order, product: p2)
-      pd1.enterprise_fee.create_adjustment('foo1', line_item1.order, line_item1, true)
-      pd2.enterprise_fee.create_adjustment('foo2', line_item1.order, line_item1, true)
-      pd3.enterprise_fee.create_adjustment('foo3', line_item2.order, line_item2, true)
-      pd4.enterprise_fee.create_adjustment('foo4', line_item2.order, line_item2, true)
+      order_cycle.coordinator_fees[0].create_adjustment('foo1', line_item1.order, line_item1, true)
+      order_cycle.coordinator_fees[0].create_adjustment('foo2', line_item2.order, line_item2, true)
+      order_cycle.exchanges[0].enterprise_fees[0].create_adjustment('foo3', line_item1.order, line_item1, true)
+      order_cycle.exchanges[0].enterprise_fees[0].create_adjustment('foo4', line_item2.order, line_item2, true)
 
       expect do
         EnterpriseFee.clear_all_adjustments_on_order order
@@ -155,9 +121,9 @@ describe EnterpriseFee do
 
     it "clears adjustments from per-order fees" do
       order = create(:order)
-      ef = create(:enterprise_fee)
-      efa = OpenFoodNetwork::EnterpriseFeeApplicator.new(ef, nil, 'coordinator')
-      efa.create_order_adjustment(order)
+      enterprise_fee = create(:enterprise_fee)
+      enterprise_fee_aplicator = OpenFoodNetwork::EnterpriseFeeApplicator.new(enterprise_fee, nil, 'coordinator')
+      enterprise_fee_aplicator.create_order_adjustment(order)
 
       expect do
         EnterpriseFee.clear_all_adjustments_on_order order

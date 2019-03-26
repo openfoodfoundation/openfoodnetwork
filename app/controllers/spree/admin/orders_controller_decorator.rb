@@ -27,6 +27,17 @@ Spree::Admin::OrdersController.class_eval do
     # within the page then fetches the data it needs from Api::OrdersController
   end
 
+  def edit
+    @order.shipments.map &:refresh_rates
+
+    AdvanceOrderService.new(@order).call
+
+    # The payment step shows an error of 'No pending payments'
+    # Clearing the errors from the order object will stop this error
+    # appearing on the edit page where we don't want it to.
+    @order.errors.clear
+  end
+
   # Re-implement spree method so that it redirects to edit instead of rendering edit
   #   This allows page reloads while adding variants to the order (/edit), without being redirected to customer details page (/update)
   def update

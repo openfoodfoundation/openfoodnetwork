@@ -7,10 +7,12 @@ fr:
         shipment_state: Statut livraison
         completed_at: 'Passée à '
         number: N° commande
-        state: Département
+        state: Etat
         email: Email acheteur
       spree/payment:
         amount: Montant
+      spree/product:
+        primary_taxon: Catégorie Produit
       order_cycle:
         orders_close_at: Date de fermeture
     errors:
@@ -275,7 +277,7 @@ fr:
     shipping_method: Option d'expédition
     shop: Boutique
     sku: Référence produit
-    status_state: Département
+    status_state: Etat
     tags: Tags
     variant: Variante
     weight: Poids
@@ -476,7 +478,6 @@ fr:
         inherited_property: Label producteur appliqué par défaut
       variants:
         to_order_tip: "Les articles fabriqués sur commande n'ont pas un niveau de stock défini, comme des pains faits à la main."
-      product_distributions: "Lieux de distribution"
       group_buy_options: "Options d'achat par lot"
       back_to_products_list: "Retour à la liste produits"
     product_import:
@@ -1428,7 +1429,7 @@ fr:
   email_confirm_customer_details_html: "Détails de votre commande chez <strong>%{distributor}</strong>:"
   email_confirm_customer_signoff: "Cordialement,"
   email_confirm_shop_greeting: "Bonjour %{name},"
-  email_confirm_shop_order_html: "Bravo! Vous avez reçu une nouvelle commande automatique pour <strong>%{distributor}</strong>!"
+  email_confirm_shop_order_html: "Bravo! Vous avez reçu une nouvelle commande pour <strong>%{distributor}</strong>!"
   email_confirm_shop_number_html: "Confirmation de commande <strong>#%{number}</strong>"
   email_order_summary_item: "Produit"
   email_order_summary_quantity: "Qté"
@@ -1684,7 +1685,6 @@ fr:
   products_max_quantity: Quantité max
   products_distributor: Distributeur
   products_distributor_info: Quand vous choisissez un distributeur pour votre commande, les adresse et date de retrait seront affichées ici.
-  products_distribution_adjustment_label: "Distribution par %{distributor}du produit %{product}"
   shop_trial_expires_in: "Votre période de test se termine dans"
   shop_trial_expired_notice: "Vous pouvez continuer à utiliser la plateforme en contrepartie d'une contribution libre et volontaire. Merci de nous informer de la façon dont vous souhaitez contribuer :-)"
   password: Mot de passe
@@ -2245,8 +2245,6 @@ fr:
   enterprise_fee_by: "%{type}marges/frais par %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Un lien est déjà établi entre ces entreprises."
   validation_msg_at_least_one_hub: "^Sélectionnez au moins  un hub"
-  validation_msg_product_category_cant_be_blank: "^Veuillez sélectionner la catégorie produit"
-  validation_msg_tax: "^La TVA applicable est requise"
   validation_msg_tax_category_cant_be_blank: "^Veuillez sélectionner la TVA applicable"
   validation_msg_is_associated_with_an_exising_customer: "est associé à un acheteur existant"
   content_configuration_pricing_table: "(A FAIRE : Tableau des tarifs)"
@@ -2275,7 +2273,6 @@ fr:
       de paiement. Les boutiques de ces hubs resteront inaccessibles jusqu'à ce qu'une
       méthode de livraison et une méthode de paiement aient été paramétrées.
   enterprise_fees_update_notice: Les marges et commissions de votre entreprise ont été mises à jour.
-  enterprise_fees_destroy_error: "Cette marge ou commission ne peut être supprimée car elle est utilisée par la vente suivante : %{id} - %{name}."
   enterprise_register_package_error: "Veuillez choisir une option"
   enterprise_register_error: "L'inscription a échoué pour %{enterprise}"
   enterprise_register_success_notice: "Bravo ! L'entreprise %{enterprise} est maintenant inscrite sur Open Food France :-)"
@@ -2751,7 +2748,6 @@ fr:
     back_to_taxonomies_list: "Retour à la liste des taxonomies"
     shipping_methods: "Méthodes de livraison"
     shipping_categories: "Condition de transport"
-    new_shipping_category: "Nouvelle catégorie d'expédition"
     back_to_shipping_categories: "Retour aux catégories d'expédition"
     analytics_trackers: "Traqueurs analyse navigation"
     no_trackers_found: "Pas de traqueur trouvé"
@@ -2835,7 +2831,7 @@ fr:
           shipment_state: "Statut livraison"
           completed_at: "Date"
           number: "Nombre"
-          state: "Département"
+          state: "Etat"
           email: "Email acheteur"
         invoice:
           issued_on: "Editée le"
@@ -2921,7 +2917,7 @@ fr:
           display_as: Unité affichéé
       reports:
         table:
-          select_and_search: "Sélectionner les filtres et cliquez sur %{option} pour accéder aux données."
+          select_and_search: "Sélectionner les filtres et cliquer sur %{option} pour accéder aux données."
         bulk_coop:
           bulk_coop_supplier_report: 'Achats groupés - Totaux par Producteur'
           bulk_coop_allocation: 'Achats groupés - Allocation'

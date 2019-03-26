@@ -3,7 +3,7 @@
 - content_for :page_title do
   = t('.title')
 
-= form_tag main_app.admin_content_path, method: :put, multipart: true do
+= form_tag main_app.admin_contents_path, method: :put, multipart: true do
   #preferences
     - @preference_sections.each do |preference_section|
       = render 'fieldset', name: preference_section[:name], preferences: preference_section[:preferences]
@@ -11,4 +11,4 @@
     .form-buttons.filter-actions.actions{"data-hook" => "buttons"}
       = button t(:update), 'icon-refresh'
       %span.or= t(:or)
-      = link_to_with_icon 'icon-remove', t(:cancel), main_app.edit_admin_content_path, class: 'button'
+      = link_to_with_icon 'icon-remove', t(:cancel), main_app.edit_admin_contents_path, class: 'button'

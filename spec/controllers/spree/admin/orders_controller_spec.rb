@@ -4,6 +4,18 @@ describe Spree::Admin::OrdersController, type: :controller do
   include AuthenticationWorkflow
   include OpenFoodNetwork::EmailHelper
 
+  describe "#edit" do
+    let!(:order) { create(:order_with_totals_and_distribution, ship_address: create(:address)) }
+
+    before { login_as_admin }
+
+    it "advances the order state" do
+      expect {
+        spree_get :edit, id: order
+      }.to change { order.reload.state }.from("cart").to("complete")
+    end
+  end
+
   context "#update" do
     let(:params) do
       { id: order,

@@ -11,6 +11,8 @@ es:
         email: E-mail del consumidor
       spree/payment:
         amount: Cantidad
+      spree/product:
+        primary_taxon: categoría del producto
       order_cycle:
         orders_close_at: Fecha de cierre
     errors:
@@ -476,7 +478,6 @@ es:
         inherited_property: Propiedad Heredada
       variants:
         to_order_tip: "Los artículos hechos según demanda no tienen un nivel de stock, como por ejemplo panes hechos según demanda."
-      product_distributions: "Distribuciones de productos"
       group_buy_options: "Opciones de compra grupales"
       back_to_products_list: "Volver a la lista de productos"
     product_import:
@@ -1685,7 +1686,6 @@ es:
   products_max_quantity: Cantidad máxima
   products_distributor: Distribuidor
   products_distributor_info: Cuando selecciones una distribuidora para tu pedido, tu dirección y tiempo de recolección se mostrarán aquí.
-  products_distribution_adjustment_label: "Distribución del producto por %{distributor} para %{product}"
   shop_trial_expires_in: "Tu periodo de prueba para la tienda termina en"
   shop_trial_expired_notice: "¡Buenas noticias! Hemos decidido extender los periodos de prueba para las tiendas hasta nuevo aviso."
   password: Contraseña
@@ -2246,8 +2246,6 @@ es:
   enterprise_fee_by: "%{type} comisión por %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Esta relación ya existe."
   validation_msg_at_least_one_hub: "^Al menos se debe seleccionar un grupo de consumo"
-  validation_msg_product_category_cant_be_blank: "^La Categoría del Producto no puede estar en vacía"
-  validation_msg_tax: "^ Se requiere categoría de impuestos"
   validation_msg_tax_category_cant_be_blank: "^La Categoría del Impuesto no puede estar vacía"
   validation_msg_is_associated_with_an_exising_customer: "Está asociado con un consumidor existente"
   content_configuration_pricing_table: "(TODO: tabla de precios)"
@@ -2274,7 +2272,6 @@ es:
       no tienen métodos de envío y pago válidos. Hasta que los configure, los clientes
       no podrán comprar en estos concentradores.
   enterprise_fees_update_notice: Las comisiones de tu Organización se han actualizado.
-  enterprise_fees_destroy_error: "Esta comisión no puede eliminarse ya que la distribución de un producto hace referencia a ella: %{id} - %{name}."
   enterprise_register_package_error: "Seleccione un paquete"
   enterprise_register_error: "No se pudo completar el registro para %{enterprise}"
   enterprise_register_success_notice: "¡Felicidades! ¡Se ha completado el registro de %{enterprise}!"
@@ -2745,7 +2742,6 @@ es:
     back_to_taxonomies_list: "Volver a la Lista de Taxonomías"
     shipping_methods: "Métodos de envío"
     shipping_categories: "Categorías de envío"
-    new_shipping_category: "NUEVAS Categorías de envío"
     back_to_shipping_categories: "Volver a las categorías de envío"
     analytics_trackers: "Analizadores de seguimiento"
     no_trackers_found: "No se encontraron rastreadores"
