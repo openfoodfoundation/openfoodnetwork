@@ -1124,7 +1124,6 @@ sv:
   products_max_quantity: Maxkvantitet
   products_distributor: Distributör
   products_distributor_info: När du väljer distributör för din order kommer leveranstider att visas här
-  products_distribution_adjustment_label: "Distribution för %{distributor} av %{product}"
   shop_trial_expires_in: "Din försökstid för skyltfönster gå ut om"
   shop_trial_expired_notice: "Goda nyheter! Vi har beslutat utöka butikens pröva-på period tills vidare. "
   password: Lösenord
@@ -1652,7 +1651,6 @@ sv:
   enterprise_fee_by: "%{type} avgift vid %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Den förbindelsen är redan upprättad."
   validation_msg_at_least_one_hub: "^Åtminstone ett matställe måste väljas"
-  validation_msg_product_category_cant_be_blank: "^Produktkategori kan inte vara blank"
   validation_msg_tax_category_cant_be_blank: "^Skattekategori kan inte vara blank"
   validation_msg_is_associated_with_an_exising_customer: "är knuten till en existerande kund"
   content_configuration_pricing_table: "(TODO: Pristabell)"
@@ -1678,7 +1676,6 @@ sv:
       har inga giltiga frakt- och betalningsmetoder. Kunderna kommer inte kunna handla
       tills du konfigurerar dessa satser.
   enterprise_fees_update_notice: Dina företagsavgifter har uppdaterats.
-  enterprise_fees_destroy_error: "Denna företagsavgift kan inte raderas eftersom den hänvisas till av en produktdistribution: %{id} - %{name}."
   enterprise_register_package_error: "Vänligen välj ett paket"
   enterprise_register_error: "Det gick inte att slutföra registreringen för %{enterprise}"
   enterprise_register_success_notice: "Grattis! Registrering för %{enterprise} är klar!"

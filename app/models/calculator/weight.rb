@@ -1,7 +1,11 @@
+require 'spree/localized_number'
+
 module Calculator
   class Weight < Spree::Calculator
+    extend Spree::LocalizedNumber
     preference :per_kg, :decimal, default: 0.0
     attr_accessible :preferred_per_kg
+    localize_number :preferred_per_kg
 
     def self.description
       I18n.t('spree.weight')

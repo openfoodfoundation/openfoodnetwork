@@ -11,6 +11,8 @@ fr_BE:
         email: Adresse électronique acheteur
       spree/payment:
         amount: Montant
+      spree/product:
+        primary_taxon: Catégorie Produit
       order_cycle:
         orders_close_at: Date de fermeture
     errors:
@@ -465,7 +467,6 @@ fr_BE:
         inherited_property: Label producteur appliqué par défaut
       variants:
         to_order_tip: "Les articles fabriqués sur commande n'ont pas un niveau de stock défini, comme des pains faits à la main."
-      product_distributions: "Lieux de distribution"
       group_buy_options: "Options d'achat par lot"
       back_to_products_list: "Retour à la liste produits"
     product_import:
@@ -1668,7 +1669,6 @@ fr_BE:
   products_max_quantity: Quantité max
   products_distributor: Distributeur
   products_distributor_info: Quand vous choisissez un distributeur pour votre commande, les adresse et date de retrait seront affichées ici.
-  products_distribution_adjustment_label: "Distribution par %{distributor}du produit %{product}"
   shop_trial_expires_in: "Votre période de test se termine dans"
   shop_trial_expired_notice: "Vous pouvez continuer à utiliser la plateforme en contrepartie d'une contribution libre et volontaire. Merci de nous informer de la façon dont vous souhaitez contribuer :-)"
   password: Mot de passe
@@ -2228,8 +2228,6 @@ fr_BE:
   enterprise_fee_by: "%{type}marges/frais par %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Un lien est déjà établi entre ces entreprises."
   validation_msg_at_least_one_hub: "^Sélectionnez au moins  un comptoir"
-  validation_msg_product_category_cant_be_blank: "^Veuillez sélectionner la catégorie produit"
-  validation_msg_tax: "Les catégories de taxes sont obligatoires"
   validation_msg_tax_category_cant_be_blank: "^Veuillez sélectionner la TVA applicable"
   validation_msg_is_associated_with_an_exising_customer: "est associé à un acheteur existant"
   content_configuration_pricing_table: "(A FAIRE : Tableau des tarifs)"
@@ -2258,7 +2256,6 @@ fr_BE:
       de paiement. Les comptoirs resteront inaccessibles jusqu'à ce qu'une méthode
       de livraison et une méthode de paiement aient été paramétrées.
   enterprise_fees_update_notice: Les marges et commissions de votre entreprise ont été mises à jour.
-  enterprise_fees_destroy_error: "Cette marge ou commission ne peut être supprimée car elle est utilisée par la vente suivante : %{id} - %{name}."
   enterprise_register_package_error: "Veuillez choisir une option"
   enterprise_register_error: "L'inscription a échoué pour %{enterprise}"
   enterprise_register_success_notice: "Bravo ! L'entreprise %{enterprise} est maintenant inscrite sur Open Food France :-)"

@@ -25,9 +25,6 @@
         - klass = current == 'Product Properties' ? 'active' : ''
         %li{:class => klass}
           = link_to_with_icon 'icon-tasks', Spree.t(:product_properties), admin_product_product_properties_url(@product)
-      - klass = current == 'Product Distributions' ? 'active' : ''
-      %li{:class => klass}
-        = link_to_with_icon 'icon-tasks', t('admin.products.product_distributions'), product_distributions_admin_product_url(@product)
       - klass = current == 'Group Buy Options' ? 'active' : ''
       %li{:class => klass}
         = link_to_with_icon 'icon-tasks', t('admin.products.group_buy_options'), group_buy_options_admin_product_url(@product)

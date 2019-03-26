@@ -24,25 +24,10 @@ describe DistributionChangeValidator do
     end
   end
 
-  describe "finding variants that are available through a particular distribution" do
-    it "finds variants distributed by product distribution" do
-      variant = double(:variant)
-      distributor = double(:distributor, product_distribution_variants: [variant])
-      order_cycle = double(:order_cycle, variants_distributed_by: [])
-
-      expect(subject.variants_available_for_distribution(distributor, order_cycle)).to eq [variant]
-    end
-
-    it "finds variants distributed by product distribution when order cycle is nil" do
-      variant = double(:variant)
-      distributor = double(:distributor, product_distribution_variants: [variant])
-
-      expect(subject.variants_available_for_distribution(distributor, nil)).to eq [variant]
-    end
-
+  describe "finding variants that are available through a particular order cycle" do
     it "finds variants distributed by order cycle" do
       variant = double(:variant)
-      distributor = double(:distributor, product_distribution_variants: [])
+      distributor = double(:distributor)
       order_cycle = double(:order_cycle)
 
       order_cycle.should_receive(:variants_distributed_by).with(distributor) { [variant] }
@@ -50,7 +35,7 @@ describe DistributionChangeValidator do
       expect(subject.variants_available_for_distribution(distributor, order_cycle)).to eq [variant]
     end
 
-    it "returns an empty array when distributor and order cycle are both nil" do
+    it "returns an empty array when order cycle is nil" do
       expect(subject.variants_available_for_distribution(nil, nil)).to eq []
     end
   end

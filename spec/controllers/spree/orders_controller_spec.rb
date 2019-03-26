@@ -116,7 +116,7 @@ describe Spree::OrdersController, type: :controller do
       expect(flash[:info]).to eq("The hub you have selected is temporarily closed for orders. Please try again later.")
     end
 
-    describe "when an item has insufficient stock" do
+    describe "when an item is in the cart" do
       let(:order) { subject.current_order(true) }
       let(:oc) { create(:simple_order_cycle, distributors: [d], variants: [variant]) }
       let(:d) { create(:distributor_enterprise, shipping_methods: [create(:shipping_method)], payment_methods: [create(:payment_method)]) }
@@ -126,13 +126,40 @@ describe Spree::OrdersController, type: :controller do
       before do
         order.set_distribution! d, oc
         order.add_variant variant, 5
-        variant.update_attributes! on_hand: 3
       end
 
-      it "displays a flash message when we view the cart" do
-        spree_get :edit
-        expect(response.status).to eq 200
-        expect(flash[:error]).to eq("An item in your cart has become unavailable.")
+      describe "the page" do
+        render_views
+
+        pending "provides the right registration path" do
+          # We have an issue with the registration link within Spree controllers.
+          # The `registration_path` helper resolves to `/signup` due to
+          # spree_auth_device > config > routes.rb, but it should be `/register`.
+          #
+          # When this is true, we can use registration_path in views again.
+          expect(subject.registration_path).to eq registration_path
+        end
+
+        it "shows the right registration link" do
+          # We fixed our view by hardcoding the link.
+          spree_registration_path = '/signup'
+          ofn_registration_path = '/register'
+          spree_get :edit
+          expect(response.body).to_not match spree_registration_path
+          expect(response.body).to match ofn_registration_path
+        end
+      end
+
+      describe "when an item has insufficient stock" do
+        before do
+          variant.update_attributes! on_hand: 3
+        end
+
+        it "displays a flash message when we view the cart" do
+          spree_get :edit
+          expect(response.status).to eq 200
+          expect(flash[:error]).to eq("An item in your cart has become unavailable.")
+        end
       end
     end
   end

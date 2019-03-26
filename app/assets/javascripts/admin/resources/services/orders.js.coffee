@@ -9,7 +9,7 @@ angular.module("admin.resources").factory 'Orders', ($q, OrderResource, RequestM
       request = OrderResource.index params, (data) =>
         @load(data)
         (callback || angular.noop)(data)
-      RequestMonitor.load(request.$promise)
+      @all.$promise = request.$promise
       @all
 
     load: (data) ->

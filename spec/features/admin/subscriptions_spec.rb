@@ -145,9 +145,9 @@ feature 'Subscriptions' do
       let!(:customer_user) { create(:user) }
       let!(:credit_card1) { create(:credit_card, user: customer_user, cc_type: 'visa', last_digits: 1111, month: 10, year: 2030) }
       let!(:customer) { create(:customer, enterprise: shop, bill_address: address, user: customer_user, allow_charges: true) }
-      let!(:test_product) { create(:product, supplier: shop, distributors: []) }
+      let!(:test_product) { create(:product, supplier: shop) }
       let!(:test_variant) { create(:variant, product: test_product, unit_value: "100", price: 12.00, option_values: []) }
-      let!(:shop_product) { create(:product, supplier: shop, distributors: [shop]) }
+      let!(:shop_product) { create(:product, supplier: shop) }
       let!(:shop_variant) { create(:variant, product: shop_product, unit_value: "1000", price: 6.00, option_values: []) }
       let!(:enterprise_fee) { create(:enterprise_fee, amount: 1.75) }
       let!(:order_cycle) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 2.days.from_now, orders_close_at: 7.days.from_now) }
@@ -414,22 +414,22 @@ feature 'Subscriptions' do
     describe "allowed variants" do
       let!(:customer) { create(:customer, enterprise: shop, allow_charges: true) }
       let!(:credit_card) { create(:credit_card, user: customer.user) }
-      let!(:shop_product) { create(:product, supplier: shop, distributors: [shop]) }
+      let!(:shop_product) { create(:product, supplier: shop) }
       let!(:shop_variant) { create(:variant, product: shop_product, unit_value: "2000") }
       let!(:permitted_supplier) do
         create(:supplier_enterprise).tap do |supplier|
           create(:enterprise_relationship, child: shop, parent: supplier, permissions_list: [:add_to_order_cycle])
         end
       end
-      let!(:permitted_supplier_product) { create(:product, supplier: permitted_supplier, distributors: [shop]) }
+      let!(:permitted_supplier_product) { create(:product, supplier: permitted_supplier) }
       let!(:permitted_supplier_variant) { create(:variant, product: permitted_supplier_product, unit_value: "2000") }
-      let!(:incoming_exchange_product) { create(:product, distributors: [shop]) }
+      let!(:incoming_exchange_product) { create(:product) }
       let!(:incoming_exchange_variant) do
         create(:variant, product: incoming_exchange_product, unit_value: "2000").tap do |variant|
           create(:exchange, order_cycle: order_cycle, incoming: true, receiver: shop, variants: [variant])
         end
       end
-      let!(:outgoing_exchange_product) { create(:product, distributors: [shop]) }
+      let!(:outgoing_exchange_product) { create(:product) }
       let!(:outgoing_exchange_variant) do
         create(:variant, product: outgoing_exchange_product, unit_value: "2000").tap do |variant|
           create(:exchange, order_cycle: order_cycle, incoming: false, receiver: shop, variants: [variant])

@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Calculator::Weight do
+  it_behaves_like "a model using the LocalizedNumber module", [:preferred_per_kg]
+
   it "computes shipping cost for an order by total weight" do
     variant1 = build(:variant, weight: 10)
     variant2 = build(:variant, weight: 20)
