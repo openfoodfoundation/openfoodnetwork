@@ -170,13 +170,16 @@ describe SubscriptionConfirmJob do
         end
 
         context "when payments are processed without error" do
+          around do |example|
+            performing_deliveries { example.run }
+          end
+
           before do
             expect(payment).to receive(:process!) { true }
             expect(payment).to receive(:completed?) { true }
           end
 
           it "sends only a subscription confirm email, no regular confirmation emails" do
-            ActionMailer::Base.perform_deliveries = true
             ActionMailer::Base.deliveries.clear
             expect{ job.send(:process!) }.to_not enqueue_job ConfirmOrderJob
             expect(job).to have_received(:send_confirm_email).once
