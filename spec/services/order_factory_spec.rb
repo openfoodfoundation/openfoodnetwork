@@ -8,7 +8,7 @@ describe OrderFactory do
   let(:shop) { create(:distributor_enterprise) }
   let(:order_cycle) { create(:simple_order_cycle) }
   let!(:other_shipping_method_a) { create(:shipping_method) }
-  let!(:shipping_method) { create(:shipping_method) }
+  let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
   let!(:other_shipping_method_b) { create(:shipping_method) }
   let(:payment_method) { create(:payment_method) }
   let(:ship_address) { create(:address) }

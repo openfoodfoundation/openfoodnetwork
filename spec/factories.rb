@@ -443,6 +443,7 @@ FactoryBot.define do
       shipment = order.reload.shipments.first
       if shipment.nil?
         shipping_method = create(:shipping_method_with, :shipping_fee, shipping_fee: shipping_fee)
+        shipping_method.distributors << order.distributor if order.distributor
         shipment = create(:shipment_with, :shipping_method, shipping_method: shipping_method, order: order)
       end
       shipment
