@@ -2599,6 +2599,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           pending: "pending"
           ready: "ready"
           shipped: "shipped"
+          canceled: "cancelled"
         payment_states:
           balance_due: "balance due"
           completed: "completed"
