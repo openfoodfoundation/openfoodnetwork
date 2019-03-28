@@ -15,8 +15,10 @@ module DownloadsHelper
     File.read(downloaded_filename)
   end
 
-  def clear_downloads
-    FileUtils.rm_f(downloaded_filenames)
+  def with_empty_downloads_folder
+    remove_downloaded_files
+    yield
+    remove_downloaded_files
   end
 
   private
@@ -37,5 +39,9 @@ module DownloadsHelper
 
   def downloading?
     downloaded_filenames.grep(/\.crdownload$/).any?
+  end
+
+  def remove_downloaded_files
+    FileUtils.rm_f(downloaded_filenames)
   end
 end

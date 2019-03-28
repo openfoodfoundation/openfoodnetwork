@@ -100,9 +100,7 @@ feature "enterprise fee summaries", js: true do
 
   describe "csv downloads" do
     around do |example|
-      clear_downloads
-      example.run
-      clear_downloads
+      with_empty_downloads_folder { example.run }
     end
 
     describe "smoke test for generation of report based on permissions" do
