@@ -10,7 +10,8 @@ module OpenFoodNetwork
     end
 
     def header
-      [I18n.t(:report_header_order_date),
+      [
+        I18n.t(:report_header_order_date),
         I18n.t(:report_header_order_id),
         I18n.t(:report_header_customer_name),
         I18n.t(:report_header_customer_email),
@@ -28,7 +29,9 @@ module OpenFoodNetwork
         I18n.t(:report_header_distributor_address),
         I18n.t(:report_header_distributor_city),
         I18n.t(:report_header_distributor_postcode),
-        I18n.t(:report_header_shipping_instructions)]
+        I18n.t(:report_header_shipping_method),
+        I18n.t(:report_header_shipping_instructions)
+      ]
     end
 
     def search
@@ -95,6 +98,7 @@ module OpenFoodNetwork
         order.distributor.address.address1,
         order.distributor.address.city,
         order.distributor.address.zipcode,
+        order.shipping_method.name,
         order.special_instructions
       ]
     end
