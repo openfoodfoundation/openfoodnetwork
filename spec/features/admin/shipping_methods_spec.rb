@@ -104,7 +104,7 @@ feature 'shipping methods' do
       check "shipping_method_shipping_categories_"
       find(:css, "tags-input .tags input").set "local\n"
       within(".tags .tag-list") do
-        expect(page).to have_css '.tag-item'
+        expect(page).to have_css '.tag-item', text: "local"
       end
 
       click_button I18n.t("actions.create")
