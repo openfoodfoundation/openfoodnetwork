@@ -4,7 +4,8 @@
     %p
       = t('.welcome_text')
       %strong
-        = "#{"producer " if @enterprise.is_primary_producer}profile"
+      - profile_translation_key = @enterprise.is_primary_producer ? '.producer_profile' : '.profile'
+      = t(profile_translation_key)
 
     %section
       %h2= t('.next_step')
