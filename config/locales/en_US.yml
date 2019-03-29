@@ -2736,6 +2736,7 @@ en_US:
     back_to_taxonomies_list: "Back to Taxonomies List"
     shipping_methods: "Shipping Methods"
     shipping_categories: "Shipping Categories"
+    new_shipping_category: "New Shipping Category"
     back_to_shipping_categories: "Back To Shipping Categories"
     analytics_trackers: "Analytics Trackers"
     no_trackers_found: "No Trackers Found"

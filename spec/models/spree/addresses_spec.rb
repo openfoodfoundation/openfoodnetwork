@@ -24,6 +24,26 @@ describe Spree::Address do
     end
   end
 
+  describe "#full_name_reverse" do
+    it "joins last name and first name" do
+      address.firstname = "Jane"
+      address.lastname = "Doe"
+      expect(address.full_name_reverse).to eq("Doe Jane")
+    end
+
+    it "is last name when first name is blank" do
+      address.firstname = ""
+      address.lastname = "Doe"
+      expect(address.full_name_reverse).to eq("Doe")
+    end
+
+    it "is first name when last name is blank" do
+      address.firstname = "Jane"
+      address.lastname = ""
+      expect(address.full_name_reverse).to eq("Jane")
+    end
+  end
+
   describe "geocode address" do
     it "should include address1, address2, zipcode, city, state and country" do
       expect(address.geocode_address).to include(address.address1)

@@ -855,6 +855,8 @@ en:
         welcome_text: You have successfully created a
         next_step: Next step
         choose_starting_point: 'Choose your package:'
+        profile: 'Profile'
+        producer_profile: 'Producer Profile'
       invite_manager:
         user_already_exists: "User already exists"
         error: "Something went wrong"
@@ -2531,6 +2533,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           pending: "pending"
           ready: "ready"
           shipped: "shipped"
+          canceled: "cancelled"
         payment_states:
           balance_due: "balance due"
           completed: "completed"
