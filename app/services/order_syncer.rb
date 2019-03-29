@@ -38,7 +38,7 @@ class OrderSyncer
     # are ignored or not.
     pickup_to_delivery = force_ship_address_required?(order)
     if !pickup_to_delivery || order.shipment.present?
-      update_ship_address_for(order) if (ship_address.changes.keys & relevant_address_attrs).any?
+      save_ship_address_in_order(order) if (ship_address.changes.keys & relevant_address_attrs).any?
     end
     if !pickup_to_delivery || order.shipment.blank?
       order.updater.__send__(:shipping_address_from_distributor)
@@ -57,11 +57,6 @@ class OrderSyncer
       return order_update_issues.add(order, I18n.t('bill_address'))
     end
     order.bill_address.update_attributes(bill_address.attributes.slice(*relevant_address_attrs))
-  end
-
-  def update_ship_address_for(order)
-    return unless ship_address_updatable?(order)
-    order.ship_address.update_attributes(ship_address.attributes.slice(*relevant_address_attrs))
   end
 
   def update_payment_for(order)
@@ -114,6 +109,11 @@ class OrderSyncer
     relevant_address_attrs.all? do |attr|
       order.ship_address[attr] == distributor_address[attr]
     end
+  end
+
+  def save_ship_address_in_order(order)
+    return unless ship_address_updatable?(order)
+    order.ship_address.update_attributes(ship_address.attributes.slice(*relevant_address_attrs))
   end
 
   def pending_shipment_with?(order, shipping_method_id)
