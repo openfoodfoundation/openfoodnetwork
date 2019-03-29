@@ -21,6 +21,15 @@ class OrderUpdater < SimpleDelegator
     shipping_address_from_distributor
   end
 
+  # Sets the distributor's address as shipping address of the order for those
+  # shipments using a shipping method that doesn't require address, such us
+  # a pickup.
+  def shipping_address_from_distributor
+    return if order.shipping_method.blank? || order.shipping_method.require_ship_address
+
+    order.ship_address = order.__send__(:address_from_distributor)
+  end
+
   private
 
   def infer_payment_state
@@ -78,14 +87,5 @@ class OrderUpdater < SimpleDelegator
 
   def failed_payments?
     payments.present? && payments.valid.empty?
-  end
-
-  # Sets the distributor's address as shipping address of the order for those
-  # shipments using a shipping method that doesn't require address, such us
-  # a pickup.
-  def shipping_address_from_distributor
-    return if order.shipping_method.blank? || order.shipping_method.require_ship_address
-
-    order.ship_address = order.__send__(:address_from_distributor)
   end
 end

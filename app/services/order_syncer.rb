@@ -79,7 +79,7 @@ class OrderSyncer
       save_ship_address_in_order(order) if (ship_address.changes.keys & relevant_address_attrs).any?
     end
     if !pickup_to_delivery || order.shipment.blank?
-      order.updater.__send__(:shipping_address_from_distributor)
+      order.updater.shipping_address_from_distributor
     end
   end
 
