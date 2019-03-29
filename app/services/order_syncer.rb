@@ -107,7 +107,7 @@ class OrderSyncer
   # address on the order matches the shop's address
   def force_ship_address_required?(order)
     return false unless shipping_method.require_ship_address?
-    distributor_address = order.__send__(:address_from_distributor)
+    distributor_address = order.address_from_distributor
     relevant_address_attrs.all? do |attr|
       order.ship_address[attr] == distributor_address[attr]
     end

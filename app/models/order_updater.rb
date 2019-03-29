@@ -27,7 +27,7 @@ class OrderUpdater < SimpleDelegator
   def shipping_address_from_distributor
     return if order.shipping_method.blank? || order.shipping_method.require_ship_address
 
-    order.ship_address = order.__send__(:address_from_distributor)
+    order.ship_address = order.address_from_distributor
   end
 
   private
