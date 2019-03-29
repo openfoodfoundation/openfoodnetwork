@@ -34,7 +34,7 @@ feature "Product Import", js: true do
     before { quick_login_as_admin }
     after { File.delete('/tmp/test.csv') }
 
-    xit "validates entries and saves them if they are all valid and allows viewing new items in Bulk Products" do
+    it "validates entries and saves them if they are all valid and allows viewing new items in Bulk Products" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "shipping_category_id"]
         csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", shipping_category_id_str]
@@ -101,7 +101,7 @@ feature "Product Import", js: true do
       expect(page).to have_no_selector 'input[type=submit][value="Save"]'
     end
 
-    xit "handles saving of named tax and shipping categories" do
+    it "handles saving of named tax and shipping categories" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "tax_category", "shipping_category"]
         csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", tax_category.name, shipping_category.name]
@@ -130,7 +130,7 @@ feature "Product Import", js: true do
       expect(carrots.shipping_category).to eq shipping_category
     end
 
-    xit "records a timestamp on import that can be viewed and filtered under Bulk Edit Products" do
+    it "records a timestamp on import that can be viewed and filtered under Bulk Edit Products" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "shipping_category_id"]
         csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", shipping_category_id_str]
@@ -175,7 +175,7 @@ feature "Product Import", js: true do
       expect(page).to have_no_field "product_name", with: product2.name
     end
 
-    xit "can reset product stock to zero for products not present in the CSV" do
+    it "can reset product stock to zero for products not present in the CSV" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "shipping_category_id"]
         csv << ["Carrots", "User Enterprise", "Vegetables", "500", "3.20", "500", "g", shipping_category_id_str]
@@ -202,7 +202,7 @@ feature "Product Import", js: true do
       expect(Spree::Product.find_by_name('Beans').on_hand).to eq 0
     end
 
-    xit "can save a new product and variant of that product at the same time, add variant to existing product" do
+    it "can save a new product and variant of that product at the same time, add variant to existing product" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "display_name", "shipping_category_id"]
         csv << ["Potatoes", "User Enterprise", "Vegetables", "5", "3.50", "500", "g", "Small Bag", shipping_category_id_str]
@@ -240,7 +240,7 @@ feature "Product Import", js: true do
     end
 
 
-    xit "can import items into inventory" do
+    it "can import items into inventory" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "distributor", "producer", "category", "on_hand", "price", "units"]
         csv << ["Beans", "Another Enterprise", "User Enterprise", "Vegetables", "5", "3.20", "500"]
@@ -380,7 +380,7 @@ feature "Product Import", js: true do
   describe "handling enterprise permissions" do
     after { File.delete('/tmp/test.csv') }
 
-    xit "only allows product import into enterprises the user is permitted to manage" do
+    it "only allows product import into enterprises the user is permitted to manage" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "shipping_category_id"]
         csv << ["My Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", shipping_category_id_str]
