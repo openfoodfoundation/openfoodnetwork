@@ -118,6 +118,11 @@ Spree::Variant.class_eval do
     end
   end
 
+  # Deletes the record, skipping callbacks, but it also refreshes the cache
+  def delete_and_refresh_cache
+    destruction { delete }
+  end
+
   private
 
   def update_weight_from_unit_value
