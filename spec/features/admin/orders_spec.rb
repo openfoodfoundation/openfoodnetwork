@@ -350,6 +350,16 @@ feature %q{
           end
         end
       end
+
+      scenario "editing shipping fees" do
+        click_link "Adjustments"
+        page.find('td.actions a.icon-edit').click
+
+        fill_in "Amount", with: "5"
+        click_button "Continue"
+
+        expect(page.find("td.amount")).to have_content "$5.00"
+      end
     end
 
     scenario "creating an order with distributor and order cycle" do
