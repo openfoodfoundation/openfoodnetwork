@@ -37,10 +37,10 @@ class OrderSyncer
     # switching from pick-up to delivery affects whether simultaneous changes to shipping address
     # are ignored or not.
     pickup_to_delivery = force_ship_address_required?(order)
-    if (ship_address.changes.keys & relevant_address_attrs).any?
-      update_ship_address_for(order) unless pickup_to_delivery && order.shipment.blank?
+    if !pickup_to_delivery || order.shipment.present?
+      update_ship_address_for(order) if (ship_address.changes.keys & relevant_address_attrs).any?
     end
-    unless pickup_to_delivery && order.shipment.present?
+    if !pickup_to_delivery || order.shipment.blank?
       order.updater.__send__(:shipping_address_from_distributor)
     end
 
