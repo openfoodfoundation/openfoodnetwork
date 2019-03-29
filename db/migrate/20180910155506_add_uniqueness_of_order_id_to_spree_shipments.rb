@@ -20,9 +20,16 @@ class AddUniquenessOfOrderIdToSpreeShipments < ActiveRecord::Migration
       joins("INNER JOIN (#{latest_shipments.to_sql}) latest_shipments ON spree_shipments.order_id = latest_shipments.order_id")
     backup_to_csv(all_duplicated_shipments)
 
-    Spree::Shipment.
-      joins("INNER JOIN (#{latest_shipments.to_sql}) latest_shipments ON spree_shipments.order_id=latest_shipments.order_id AND spree_shipments.updated_at != latest_shipments.updated_at").
-      destroy_all
+    shipments_to_delete = Spree::Shipment.
+      joins("INNER JOIN (#{latest_shipments.to_sql}) latest_shipments ON spree_shipments.order_id = latest_shipments.order_id AND spree_shipments.updated_at != latest_shipments.updated_at")
+    remove_association_to_adjustments(shipments_to_delete)
+    shipments_to_delete.destroy_all
+  end
+
+  def remove_association_to_adjustments(shipments)
+    Spree::Adjustment.
+      joins("INNER JOIN (#{shipments.to_sql}) shipments_to_delete ON shipments_to_delete.id = spree_adjustments.source_id and spree_adjustments.source_type = 'Spree::Shipment'").
+      update_all(source_id: nil, source_type: nil, originator_id: nil, originator_type: nil, mandatory: nil)
   end
 
   def backup_to_csv(shipments)
@@ -38,16 +45,16 @@ class AddUniquenessOfOrderIdToSpreeShipments < ActiveRecord::Migration
   def csv_header_row
     %w(
       id
-      shipment.tracking
+      tracking
       number
+      order_number
+      shipping_method_name
       cost
+      state
       shipped_at
-      order_id
-      shipping_method_id
-      address_id
       created_at
       updated_at
-      state
+      address_json
     )
   end
 
@@ -56,14 +63,14 @@ class AddUniquenessOfOrderIdToSpreeShipments < ActiveRecord::Migration
       shipment.id,
       shipment.tracking,
       shipment.number,
+      shipment.order.number,
+      shipment.shipping_method.andand.name,
       shipment.cost,
+      shipment.state,
       shipment.shipped_at,
-      shipment.order_id,
-      shipment.shipping_method_id,
-      shipment.address_id,
       shipment.created_at,
       shipment.updated_at,
-      shipment.state
+      shipment.address.to_json
     ]
   end
 
