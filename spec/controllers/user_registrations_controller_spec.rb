@@ -60,14 +60,6 @@ describe UserRegistrationsController, type: :controller do
     end
   end
 
-  context "when registration fails" do
-    it "renders new" do
-      spree_post :create, spree_user: {}
-      expect(response.status).to eq(200)
-      expect(response).to render_template "spree/user_registrations/new"
-    end
-  end
-
   context "when registration succeeds" do
     context "when referer is not '/checkout'" do
       it "redirects to root" do

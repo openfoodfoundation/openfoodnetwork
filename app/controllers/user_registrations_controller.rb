@@ -39,9 +39,6 @@ class UserRegistrationsController < Spree::UserRegistrationsController
   def render_error(errors = {})
     clean_up_passwords(resource)
     respond_to do |format|
-      format.html do
-        render :new
-      end
       format.js do
         render json: errors, status: :unauthorized
       end
