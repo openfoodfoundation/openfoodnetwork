@@ -141,8 +141,12 @@ describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
 
   describe "order_cycle_customer_totals" do
     let!(:product) { line_item.product }
-    let!(:fuji) { build(:variant, product: product, display_name: "Fuji", sku: "FUJI", on_hand: 100) }
-    let!(:gala) { build(:variant, product: product, display_name: "Gala", sku: "GALA", on_hand: 100) }
+    let!(:fuji) do
+      create(:variant, product: product, display_name: "Fuji", sku: "FUJI", on_hand: 100)
+    end
+    let!(:gala) do
+      create(:variant, product: product, display_name: "Gala", sku: "GALA", on_hand: 100)
+    end
 
     let(:items) {
       report = described_class.new(admin_user, { report_type: "order_cycle_customer_totals" }, true)
