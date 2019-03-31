@@ -1,7 +1,7 @@
 require 'spree/core/controller_helpers/order_decorator'
 require 'spree/core/controller_helpers/auth_decorator'
 
-Spree::OrdersController.class_eval do
+class Spree::OrdersController < Spree::StoreController
   before_filter :update_distribution, only: :update
   before_filter :filter_order_params, only: :update
   before_filter :enable_embedded_shopfront

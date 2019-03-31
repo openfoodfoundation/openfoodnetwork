@@ -1,4 +1,4 @@
-class Spree::StoreController
+class Spree::StoreController < Spree::BaseController
   layout 'darkswarm'
 
   include I18nHelper

@@ -1,7 +1,6 @@
 require 'open_food_network/address_finder'
 
-Spree::CheckoutController.class_eval do
-
+class Spree::CheckoutController < Spree::StoreController
   include CheckoutHelper
 
   before_filter :enable_embedded_shopfront
