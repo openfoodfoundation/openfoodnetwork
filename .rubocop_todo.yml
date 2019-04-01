@@ -20,7 +20,6 @@ Layout/AlignArray:
   Exclude:
     - 'lib/open_food_network/bulk_coop_report.rb'
     - 'lib/open_food_network/customers_report.rb'
-    - 'lib/open_food_network/order_and_distributor_report.rb'
     - 'lib/open_food_network/orders_and_fulfillments_report.rb'
     - 'lib/open_food_network/packing_report.rb'
     - 'spec/lib/open_food_network/order_grouper_spec.rb'
