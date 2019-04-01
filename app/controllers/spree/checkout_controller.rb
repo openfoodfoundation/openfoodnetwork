@@ -15,7 +15,6 @@ class Spree::CheckoutController < Spree::StoreController
   before_filter :ensure_order_not_completed
   before_filter :ensure_checkout_allowed
   before_filter :ensure_sufficient_stock_lines
-  before_filter :ensure_valid_state
 
   before_filter :associate_user
   before_filter :check_authorization
@@ -31,56 +30,17 @@ class Spree::CheckoutController < Spree::StoreController
     redirect_to main_app.checkout_path
   end
 
+  private
+
   ####################################
   #### Copied from Spree Frontend ####
   ####################################
-  # Updates the order and advances to the next state (when possible.)
-  def update
-    if @order.update_attributes(object_params)
-      fire_event('spree.checkout.update')
-
-      unless @order.next
-        flash[:error] = @order.errors[:base].join("\n")
-        redirect_to checkout_state_path(@order.state) and return
-      end
-
-      if @order.completed?
-        session[:order_id] = nil
-        flash.notice = Spree.t(:order_processed_successfully)
-        flash[:commerce_tracking] = "nothing special"
-        redirect_to completion_route
-      else
-        redirect_to checkout_state_path(@order.state)
-      end
-    else
-      render :edit
-    end
-  end
-
-  private
-
-  def ensure_valid_state
-    unless skip_state_validation?
-      if (params[:state] && !@order.has_checkout_step?(params[:state])) ||
-         (!params[:state] && !@order.has_checkout_step?(@order.state))
-        @order.state = 'cart'
-        redirect_to checkout_state_path(@order.checkout_steps.first)
-      end
-    end
-  end
-
-  # Should be overriden if you have areas of your checkout that don't match
-  # up to a step within checkout_steps, such as a registration step
-  def skip_state_validation?
-    false
-  end
-
   def load_order
     @order = current_order
     redirect_to spree.cart_path and return unless @order
 
     if params[:state]
-      redirect_to checkout_state_path(@order.state) if @order.can_go_to_state?(params[:state]) && !skip_state_validation?
+      redirect_to checkout_state_path(@order.state) if @order.can_go_to_state?(params[:state])
       @order.state = params[:state]
     end
     setup_for_current_state
@@ -106,27 +66,6 @@ class Spree::CheckoutController < Spree::StoreController
   # Provides a route to redirect after order completion
   def completion_route
     spree.order_path(@order)
-  end
-
-  # For payment step, filter order parameters to produce the expected nested
-  # attributes for a single payment and its source, discarding attributes
-  # for payment methods other than the one selected
-  def object_params
-    # respond_to check is necessary due to issue described in #2910
-    if @order.has_checkout_step?("payment") && @order.payment?
-      if params[:payment_source].present?
-        source_params = params.delete(:payment_source)[params[:order][:payments_attributes].first[:payment_method_id].underscore]
-
-        if source_params
-          params[:order][:payments_attributes].first[:source_attributes] = source_params
-        end
-      end
-
-      if (params[:order][:payments_attributes])
-        params[:order][:payments_attributes].first[:amount] = @order.total
-      end
-    end
-    params[:order]
   end
 
   def setup_for_current_state
