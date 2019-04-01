@@ -314,6 +314,7 @@ module ProductImport
     def product_field_errors(entry, existing_product)
       EntryValidator.non_updatable_fields.each do |display_name, attribute|
         next if attributes_match?(attribute, existing_product, entry) || attributes_blank?(attribute, existing_product, entry)
+        next if attribute == :description
         mark_as_invalid(entry, attribute: display_name, error: I18n.t('admin.product_import.model.not_updatable'))
       end
     end
