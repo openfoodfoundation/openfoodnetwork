@@ -1,0 +1,11 @@
+#admin-menu {
+  li {
+    a {
+      font-weight: 600;
+    }
+
+    a::before {
+      font-weight: normal;
+    }
+  }
+}
