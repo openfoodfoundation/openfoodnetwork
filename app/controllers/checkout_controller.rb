@@ -175,10 +175,6 @@ class CheckoutController < Spree::CheckoutController
     end
   end
 
-  def skip_state_validation?
-    true
-  end
-
   def load_order
     @order = current_order
     redirect_to(main_app.shop_path) && return unless @order && @order.checkout_allowed?
