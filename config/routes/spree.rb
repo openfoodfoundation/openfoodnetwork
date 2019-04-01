@@ -87,8 +87,6 @@ Spree::Core::Engine.routes.prepend do
     put :cancel, on: :member
   end
 
-  root :to => 'home#index'
-
   resources :products
 
   match '/locale/set', :to => 'locale#set'
