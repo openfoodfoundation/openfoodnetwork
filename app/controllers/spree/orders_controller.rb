@@ -102,8 +102,6 @@ class Spree::OrdersController < Spree::StoreController
       discard_empty_line_items
       with_open_adjustments { update_totals_and_taxes }
 
-      render(:edit) && return unless apply_coupon_code
-
       if @order == current_order
         fire_event('spree.order.contents_changed')
       else
