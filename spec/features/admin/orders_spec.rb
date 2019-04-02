@@ -267,7 +267,7 @@ feature %q{
       end
 
       scenario "shows the order tax adjustments" do
-        within('tbody#order-charges') do
+        within('fieldset', text: 'LINE ITEM ADJUSTMENTS') do
           expect(page).to have_selector "td", match: :first, text: "Tax 1"
           expect(page).to have_selector "td.total", text: Spree::Money.new(10)
         end

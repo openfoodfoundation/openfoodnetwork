@@ -6,7 +6,7 @@
         %tr
           %th= Spree.t('name')
           %th= Spree.t('amount')
-      %tbody#order-charges.with-border
+      %tbody.with-border
         - adjustments.each do |adjustment|
           - if (adjustment.originator_type != 'Spree::ShippingMethod') && !(adjustment.originator_type == 'Spree::TaxRate' && adjustment.amount == 0)
             %tr.total
