@@ -4,12 +4,12 @@
 
   = render :partial => "spree/admin/orders/shipment", :collection => @order.shipments, :locals => { :order => order }
 
-  = render :partial => "spree/admin/orders/_form/adjustments", :locals => { :adjustments => @order.price_adjustments, :title => Spree.t(:line_item_adjustments)}
-  = render :partial => "spree/admin/orders/_form/adjustments", :locals => { :adjustments => order_adjustments(@order), :title => Spree.t(:order_adjustments)}
+  = render :partial => "spree/admin/orders/_form/adjustments", :locals => { :adjustments => @order.price_adjustments, :title => t(".line_item_adjustments")}
+  = render :partial => "spree/admin/orders/_form/adjustments", :locals => { :adjustments => order_adjustments(@order), :title => t(".order_adjustments")}
 
   - if order.line_items.exists?
     %fieldset#order-total.no-border-bottom{"data-hook" => "order_details_total"}
-      %legend= Spree.t(:order_total)
+      %legend= t(".order_total")
       %span.order-total= order.display_total
 
   = form_for @order, url: admin_order_url(@order), method: :put do |f|
