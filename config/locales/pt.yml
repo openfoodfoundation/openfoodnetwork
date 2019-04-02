@@ -204,7 +204,7 @@ pt:
   edit: Editar
   clone: Clonar
   distributors: Distribuidores
-  bulk_order_management: Gestão de Encomendas por Atacado
+  bulk_order_management: Gestão de Encomendas em Massa
   enterprises: Organizações
   enterprise_groups: Grupos
   reports: Relatórios
@@ -609,7 +609,7 @@ pt:
         product_unit: "Produto: Unidade"
         weight_volume: "Peso/Volume"
         ask: "Perguntar?"
-        page_title: "Gestão de Encomendas por Atacado"
+        page_title: "Gestão de Encomendas em Massa"
         actions_delete: "Apagar o Selecionado"
         loading: "Carregando encomendas"
         no_results: "Nenhuma encomenda encontrada. "
@@ -858,6 +858,8 @@ pt:
         welcome_text: Você criou com sucesso uma
         next_step: Passo seguinte
         choose_starting_point: 'Escolha o seu pacote:'
+        profile: 'Perfil'
+        producer_profile: 'Perfil do Produtor'
       invite_manager:
         user_already_exists: "O/A utilizador/a já existe"
         error: "Algo correu mal"
@@ -991,8 +993,8 @@ pt:
         name: Encomendas e Distribuidores
         description: Encomendas com detalhes do distribuidor
       bulk_coop:
-        name: Cooperativa por Atacado
-        description: Relatórios de Encomendas de Cooperativas por Atacado
+        name: Compra em Grupo
+        description: Relatórios de Encomendas de Compra em Grupo
       payments:
         name: Relatórios de Pagamentos
         description: Relatórios de Pagamentos
@@ -1869,7 +1871,7 @@ pt:
   accounts_and_billing_start_task_notice: "Tarefa colocada em fila"
   fees: "Taxas"
   item_cost: "Custo da unidade"
-  bulk: "Por Atacado"
+  bulk: "Em Massa"
   shop_variant_quantity_min: "mín."
   shop_variant_quantity_max: "max."
   follow: "Seguir"
@@ -2150,7 +2152,7 @@ pt:
   report_header_distributor_postcode: Código postal do distribuidor
   report_header_delivery_address: Morada de Entrega
   report_header_delivery_postcode: Código Postal da Entrega
-  report_header_bulk_unit_size: Tamanho Unitário por Atacado
+  report_header_bulk_unit_size: Tamanho Unitário em Massa
   report_header_weight: Peso
   report_header_sum_total: Soma Total
   report_header_date_of_order: Data da encomenda
@@ -2460,6 +2462,7 @@ pt:
           pending: "pendente"
           ready: "pronto"
           shipped: "enviado"
+          canceled: "cancelado"
         payment_states:
           balance_due: "saldo pendente"
           completed: "completado"
@@ -2781,7 +2784,7 @@ pt:
       tab:
         dashboard: "Painel de controlo"
         orders: "Encomendas"
-        bulk_order_management: "Gestão de Encomendas por Atacado"
+        bulk_order_management: "Gestão de Encomendas em Massa"
         subscriptions: "Subscrições"
         products: "Produtos"
         option_types: "Tipos de Opções"
@@ -2880,7 +2883,7 @@ pt:
         unit_name_placeholder: 'ex: ramos'
         index:
           header:
-            title: Editar Produtos por Atacado
+            title: Editar Produtos
           indicators:
             title: A CARREGAR PRODUTOS
             no_products: "Ainda sem produtos. Porque não acrescenta alguns?"
@@ -2903,17 +2906,17 @@ pt:
           product_category: Categoria de Produto
         group_buy_form:
           group_buy: "Compra em grupo?"
-          bulk_unit_size: Tamanho unitário por atacado
+          bulk_unit_size: Tamanho unitário em massa
         display_as:
           display_as: Mostrar como
       reports:
         table:
           select_and_search: "Selecione os filtros e carregue em %{option} para ver os seus dados."
         bulk_coop:
-          bulk_coop_supplier_report: 'Cooperativa por Atacado - Totais por Fornecedor'
-          bulk_coop_allocation: 'Cooperativa por Atacado - Alocação'
-          bulk_coop_packing_sheets: 'Cooperativa por Atacado - Folhas de Empacotamento'
-          bulk_coop_customer_payments: 'Cooperativa por Atacado - Pagamentos do Consumidor'
+          bulk_coop_supplier_report: 'Compra em Grupo - Totais por Fornecedor'
+          bulk_coop_allocation: 'Compra em Grupo - Alocação'
+          bulk_coop_packing_sheets: 'Compra em Grupo - Folhas de Empacotamento'
+          bulk_coop_customer_payments: 'Compra em Grupo - Pagamentos do Consumidor'
         enterprise_fee_summaries:
           filters:
             date_range: "Intervalo de Datas"
