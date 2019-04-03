@@ -25,7 +25,9 @@ describe Spree::Api::ShipmentsController, type: :controller do
     let(:error_message) { "broken shipments creation" }
 
     before do
-      order.update_attribute(:ship_address_id, order_ship_address.id)
+      order.update_attribute :ship_address_id, order_ship_address.id
+      order.update_attribute :distributor, variant.product.supplier
+      shipment.shipping_method.distributors << variant.product.supplier
     end
 
     sign_in_as_admin!
@@ -56,6 +58,7 @@ describe Spree::Api::ShipmentsController, type: :controller do
       it 'updates existing shipment with variant override if an VO is sent' do
         hub = create(:distributor_enterprise)
         order.update_attribute(:distributor, hub)
+        shipment.shipping_method.distributors << hub
         variant_override = create(:variant_override, hub: hub, variant: variant)
 
         spree_post :create, params
