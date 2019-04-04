@@ -202,11 +202,11 @@ class CheckoutController < Spree::CheckoutController
   def redirect_to_cart_path
     respond_to do |format|
       format.html do
-        redirect_to cart_path
+        redirect_to main_app.cart_path
       end
 
       format.json do
-        render json: { path: cart_path }, status: :bad_request
+        render json: { path: main_app.cart_path }, status: :bad_request
       end
     end
   end

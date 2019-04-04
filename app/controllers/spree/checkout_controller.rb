@@ -28,7 +28,7 @@ class Spree::CheckoutController < Spree::StoreController
 
   def load_order
     @order = current_order
-    redirect_to spree.cart_path and return unless @order
+    redirect_to main_app.cart_path and return unless @order
 
     if params[:state]
       redirect_to checkout_state_path(@order.state) if @order.can_go_to_state?(params[:state])
@@ -39,18 +39,18 @@ class Spree::CheckoutController < Spree::StoreController
 
   def ensure_checkout_allowed
     unless @order.checkout_allowed?
-      redirect_to spree.cart_path
+      redirect_to main_app.cart_path
     end
   end
 
   def ensure_order_not_completed
-    redirect_to spree.cart_path if @order.completed?
+    redirect_to main_app.cart_path if @order.completed?
   end
 
   def ensure_sufficient_stock_lines
     if @order.insufficient_stock_lines.present?
       flash[:error] = Spree.t(:inventory_error_flash_for_insufficient_quantity)
-      redirect_to spree.cart_path
+      redirect_to main_app.cart_path
     end
   end
 

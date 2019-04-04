@@ -23,7 +23,7 @@ feature "full-page cart", js: true do
     describe "product description" do
       it "does not link to the product page" do
         add_product_to_cart order, product_with_fee, quantity: 2
-        visit spree.cart_path
+        visit main_app.cart_path
         expect(page).to have_no_selector '.item-thumb-image a'
       end
     end
@@ -34,7 +34,7 @@ feature "full-page cart", js: true do
       before do
         add_enterprise_fee percentage_fee
         add_product_to_cart order, product_with_fee, quantity: 8
-        visit spree.cart_path
+        visit main_app.cart_path
       end
 
       it "rounds fee calculations correctly" do
@@ -57,7 +57,7 @@ feature "full-page cart", js: true do
         before do
           add_enterprise_fee handling_fee
           add_product_to_cart order, product_with_fee, quantity: 3
-          visit spree.cart_path
+          visit main_app.cart_path
         end
 
         it "shows admin and handlings row" do
@@ -73,7 +73,7 @@ feature "full-page cart", js: true do
       context "when there are no admin and handling fees" do
         before do
           add_product_to_cart order, product_with_fee, quantity: 2
-          visit spree.cart_path
+          visit main_app.cart_path
         end
 
         it "hides admin and handlings row" do
@@ -102,7 +102,7 @@ feature "full-page cart", js: true do
           cart_service.populate(variants: { product_with_fee.variants.first.id => 3, product_with_tax.variants.first.id => 3 })
           order.update_distribution_charge!
 
-          visit spree.cart_path
+          visit main_app.cart_path
         end
 
         it "shows the correct weight calculations" do
@@ -118,7 +118,7 @@ feature "full-page cart", js: true do
       before do
         add_enterprise_fee enterprise_fee
         add_product_to_cart order, product_with_tax
-        visit spree.cart_path
+        visit main_app.cart_path
       end
 
       it "shows the total tax for the order, including product tax and tax on fees" do
@@ -137,7 +137,7 @@ feature "full-page cart", js: true do
       it "prevents me from entering an invalid value" do
         # Given we have 2 on hand, and we've loaded the page after that fact
         variant.update_attributes!(on_hand: 2, on_demand: false)
-        visit spree.cart_path
+        visit main_app.cart_path
 
         accept_alert 'Insufficient stock available, only 2 remaining' do
           fill_in "order_line_items_attributes_0_quantity", with: '4'
@@ -149,7 +149,7 @@ feature "full-page cart", js: true do
         # Given we load the page with 3 on hand, then the number available drops to 2
         variant.update_attributes! on_demand: false
         variant.update_attributes! on_hand: 3
-        visit spree.cart_path
+        visit main_app.cart_path
         variant.update_attributes! on_hand: 2
 
         accept_alert do
@@ -175,7 +175,7 @@ feature "full-page cart", js: true do
         order.distributor.save
         add_product_to_cart order, product_with_tax
         quick_login_as user
-        visit spree.cart_path
+        visit main_app.cart_path
       end
 
       it "shows already ordered line items" do
@@ -199,7 +199,7 @@ feature "full-page cart", js: true do
         expect(page).to have_no_content item1.variant.name
         expect(page).to have_content item2.variant.name
 
-        visit spree.cart_path
+        visit main_app.cart_path
 
         find("td.toggle-bought").click
         expect(page).to have_no_content item1.variant.name

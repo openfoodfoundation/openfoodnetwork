@@ -33,7 +33,7 @@ class Spree::OrdersController < Spree::StoreController
       @order.empty!
     end
 
-    redirect_to spree.cart_path
+    redirect_to main_app.cart_path
   end
 
   def check_authorization
@@ -90,7 +90,7 @@ class Spree::OrdersController < Spree::StoreController
           elsif @order.complete?
             redirect_to order_path(@order)
           else
-            redirect_to cart_path
+            redirect_to main_app.cart_path
           end
         end
       end

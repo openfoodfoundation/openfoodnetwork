@@ -94,8 +94,6 @@ Spree::Core::Engine.routes.prepend do
   resources :states, :only => :index
   resources :countries, :only => :index
 
-  match '/orders/:id/token/:token' => 'orders#show', :via => :get, :as => :token_order
-
   # route globbing for pretty nested taxon and product paths
   match '/t/*id', :to => 'taxons#show', :as => :nested_taxons
 

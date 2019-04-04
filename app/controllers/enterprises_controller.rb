@@ -14,7 +14,7 @@ class EnterprisesController < BaseController
   respond_to :js, only: :permalink_checker
 
   def shop
-    return redirect_to spree.cart_path unless enough_stock?
+    return redirect_to main_app.cart_path unless enough_stock?
     set_noindex_meta_tag
 
     enterprises = current_distributor
