@@ -12,12 +12,12 @@
             = t 'title'
     %ul.center
       - [*1..7].each do |menu_number|
-        - menu_name = "menu_#{menu_number}"
-        - if ContentConfig[menu_name].present?
+        - menu_item = MenuItem.new(menu_number)
+        - if ContentConfig[menu_item.name].present?
           %li
-            %a{href: MenuURL.new(menu_number) }
+            %a{href: menu_item.url }
               %span.nav-primary
-                = t "#{menu_name}_title"
+                = menu_item.title
     %ul.right
       - if OpenFoodNetwork::I18nConfig.selectable_locales.count > 1
         %li.language-switcher.has-dropdown
