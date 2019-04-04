@@ -1,7 +1,7 @@
 Openfoodnetwork::Application.routes.draw do
   namespace :admin do
 
-    authenticated :spree_user, -> user { user.has_spree_role?('admin') } do
+    authenticated :spree_user, -> user { user.superadmin? } do
       mount DelayedJobWeb, at: '/delayed_job'
     end
 

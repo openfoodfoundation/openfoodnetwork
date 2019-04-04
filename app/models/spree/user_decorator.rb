@@ -74,6 +74,14 @@ Spree.user_class.class_eval do
     credit_cards.where(is_default: true).first
   end
 
+  # Checks whether the specified user is a superadmin, with full control of the
+  # instance
+  #
+  # @return [Boolean]
+  def superadmin?
+    has_spree_role?('admin')
+  end
+
   private
 
   def limit_owned_enterprises
