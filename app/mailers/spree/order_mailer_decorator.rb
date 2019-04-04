@@ -9,7 +9,7 @@ Spree::OrderMailer.class_eval do
     I18n.with_locale valid_locale(@order.user) do
       mail(to: @order.email,
            from: from_address,
-           subject: mail_subject(t('order_mailer.cancel_email.subject'), resend))
+           subject: mail_subject(t('spree.order_mailer.cancel_email.subject'), resend))
     end
   end
 
