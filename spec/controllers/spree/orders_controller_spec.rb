@@ -417,7 +417,7 @@ describe Spree::OrdersController, type: :controller do
       end
 
       context "when the order is complete" do
-        let(:order) { create(:completed_order_with_totals, user: user) }
+        let(:order) { create(:completed_order_with_totals, user: user, distributor: create(:distributor_enterprise)) }
 
         before do
           setup_email
