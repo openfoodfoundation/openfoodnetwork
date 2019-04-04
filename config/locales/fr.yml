@@ -2848,7 +2848,7 @@ fr:
             title: "Distribution"
             distributor: "Distributeur : "
             order_cycle: "Cycle de vente : "
-          line_item_adjustments: "Ajustements sur ligne produit"
+          line_item_adjustments: "Ajustements sur la ligne produit"
           order_adjustments: "Ajustements sur la commande"
           order_total: "Total Commande"
       overview:
