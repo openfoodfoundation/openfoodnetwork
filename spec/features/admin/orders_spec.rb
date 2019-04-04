@@ -255,7 +255,6 @@ feature %q{
       scenario "shows the order non-tax adjustments" do
         within('table.index tbody') do
           @order.adjustments.eligible.each do |adjustment|
-            next if (adjustment.originator_type == 'Spree::TaxRate') && (adjustment.amount == 0)
             expect(page).to have_selector "td", match: :first, text: adjustment.label
             expect(page).to have_selector "td.total", text: adjustment.display_amount
           end
