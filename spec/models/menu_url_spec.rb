@@ -4,7 +4,7 @@ describe MenuURL do
   describe '#to_s' do
     context 'when the passed menu item does not exist' do
       it 'raises' do
-        menu_url = described_class.new('menu_0')
+        menu_url = described_class.new(0)
         expect { menu_url.to_s }.to raise_error(KeyError)
       end
     end
@@ -18,12 +18,12 @@ describe MenuURL do
       end
 
       it 'returns the default URL' do
-        menu_url = described_class.new('menu_1')
+        menu_url = described_class.new(1)
         expect(menu_url.to_s).to eq(shops_path)
       end
 
       it 'fetches the configuration value' do
-        described_class.new('menu_1').to_s
+        described_class.new(1).to_s
 
         expect(ENV)
           .to have_received(:fetch)
@@ -40,12 +40,12 @@ describe MenuURL do
       end
 
       it 'returns the configured URL' do
-        menu_url = described_class.new('menu_4')
+        menu_url = described_class.new(4)
         expect(menu_url.to_s).to eq('/foo')
       end
 
       it 'fetches the configuration value' do
-        described_class.new('menu_4').to_s
+        described_class.new(4).to_s
 
         expect(ENV)
           .to have_received(:fetch)

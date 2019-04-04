@@ -18,6 +18,11 @@ describe 'shared/menu/_large_menu.html.haml', type: :view do
     expect(rendered).to have_link(t(:menu_2_title), href: map_path)
   end
 
+  it 'displays the about page' do
+    render partial: 'shared/menu/large_menu', locals: { spree_current_user: current_user }
+    expect(rendered).to have_link(t(:menu_5_title), href: t(:menu_5_url))
+  end
+
   context 'when the third menu item is not configured' do
     it 'renders /producers as href' do
       render partial: 'shared/menu/large_menu', locals: { spree_current_user: current_user }

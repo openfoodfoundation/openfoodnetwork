@@ -11,19 +11,11 @@
           %a{href: '/'}
             = t 'title'
     %ul.center
-      - [*1..4].each do |menu_number|
+      - [*1..7].each do |menu_number|
         - menu_name = "menu_#{menu_number}"
         - if ContentConfig[menu_name].present?
           %li
-            %a{href: MenuURL.new(menu_name) }
-              %span.nav-primary
-                = t "#{menu_name}_title"
-
-      - [*5..7].each do |menu_number|
-        - menu_name = "menu_#{menu_number}"
-        - if ContentConfig[menu_name].present?
-          %li
-            %a{href: t("#{menu_name}_url") }
+            %a{href: MenuURL.new(menu_number) }
               %span.nav-primary
                 = t "#{menu_name}_title"
     %ul.right
