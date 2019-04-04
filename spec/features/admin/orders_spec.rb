@@ -267,7 +267,7 @@ feature %q{
       end
 
       scenario "shows the order tax adjustments" do
-        within('fieldset', text: 'LINE ITEM ADJUSTMENTS') do
+        within('fieldset', text: I18n.t('spree.admin.orders.form.line_item_adjustments').upcase) do
           expect(page).to have_selector "td", match: :first, text: "Tax 1"
           expect(page).to have_selector "td.total", text: Spree::Money.new(10)
         end
