@@ -858,6 +858,8 @@ fr:
         welcome_text: 'Vous avez créé avec succès '
         next_step: Etape suivante
         choose_starting_point: 'Choisir votre type d''entreprise:'
+        profile: 'Profil'
+        producer_profile: 'Profil producteur'
       invite_manager:
         user_already_exists: "Le compte existe déjà"
         error: "Un problème est survenu"
@@ -2468,6 +2470,7 @@ fr:
           pending: "en attente"
           ready: "prêt"
           shipped: "envoyé"
+          canceled: "annulé"
         payment_states:
           balance_due: "solde dû"
           completed: "effectué"
@@ -2845,6 +2848,9 @@ fr:
             title: "Distribution"
             distributor: "Distributeur : "
             order_cycle: "Cycle de vente : "
+          line_item_adjustments: "Ajustements sur ligne produit"
+          order_adjustments: "Ajustements sur la commande"
+          order_total: "Total Commande"
       overview:
         products:
           active_products:
