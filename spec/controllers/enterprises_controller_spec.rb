@@ -109,7 +109,7 @@ describe EnterprisesController, type: :controller do
       it "redirects to the cart" do
         spree_get :shop, {id: current_distributor}
 
-        expect(response).to redirect_to spree.cart_path
+        expect(response).to redirect_to cart_path
       end
     end
 

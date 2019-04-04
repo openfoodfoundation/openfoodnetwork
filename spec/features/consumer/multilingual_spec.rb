@@ -54,7 +54,7 @@ feature 'Multilingual', js: true do
       end
 
       scenario "in the cart page" do
-        visit spree.cart_path(locale: 'es')
+        visit main_app.cart_path(locale: 'es')
 
         expect_menu_and_cookie_in_es
         expect(page).to have_content 'Precio'
