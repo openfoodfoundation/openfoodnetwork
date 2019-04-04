@@ -9,11 +9,4 @@ class Spree::StoreController < Spree::BaseController
   def unauthorized
     render 'shared/unauthorized', status: :unauthorized
   end
-
-  #######
-  protected
-  def config_locale
-    Spree::Frontend::Config[:locale]
-  end
-  #######
 end

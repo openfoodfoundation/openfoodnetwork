@@ -2,7 +2,9 @@ require 'spree/core/controller_helpers/order_decorator'
 require 'spree/core/controller_helpers/auth_decorator'
 
 class Spree::OrdersController < Spree::StoreController
-  #########
+  include OrderCyclesHelper
+  layout 'darkswarm'
+
   ssl_required :show
 
   before_filter :check_authorization
@@ -10,7 +12,7 @@ class Spree::OrdersController < Spree::StoreController
   helper 'spree/products', 'spree/orders'
 
   respond_to :html
-  ########
+  respond_to :json
 
   before_filter :update_distribution, only: :update
   before_filter :filter_order_params, only: :update
@@ -22,12 +24,6 @@ class Spree::OrdersController < Spree::StoreController
   before_filter :check_hub_ready_for_checkout, only: :edit
   before_filter :check_at_least_one_line_item, only: :update
 
-  include OrderCyclesHelper
-  layout 'darkswarm'
-
-  respond_to :json
-
-  ########
   def show
     @order = Spree::Order.find_by_number!(params[:id])
   end
@@ -40,10 +36,6 @@ class Spree::OrdersController < Spree::StoreController
     redirect_to spree.cart_path
   end
 
-  def accurate_title
-    @order && @order.completed? ? "#{Spree.t(:order)} #{@order.number}" : Spree.t(:shopping_cart)
-  end
-
   def check_authorization
     session[:access_token] ||= params[:token]
     order = Spree::Order.find_by_number(params[:id]) || current_order
@@ -54,7 +46,6 @@ class Spree::OrdersController < Spree::StoreController
       authorize! :create, Spree::Order
     end
   end
-  ######
 
   # Patching to redirect to shop if order is empty
   def edit
