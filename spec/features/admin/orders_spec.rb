@@ -282,19 +282,6 @@ feature %q{
         end
       end
 
-      scenario "shows only eligible adjustments" do
-        adjustment = create(
-          :adjustment,
-          adjustable: @order,
-          label: "invalid adjustment",
-          amount: 0
-        )
-
-        visit spree.edit_admin_order_path(@order)
-
-        expect(page).to have_no_content adjustment.label
-      end
-
       scenario "cannot split the order in different stock locations" do
         # There's only 1 stock location in OFN, so the split functionality that comes with spree should be hidden
         expect(page).to_not have_selector '.split-item'
