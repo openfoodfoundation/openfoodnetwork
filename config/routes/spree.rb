@@ -94,10 +94,6 @@ Spree::Core::Engine.routes.prepend do
   resources :states, :only => :index
   resources :countries, :only => :index
 
-  # non-restful checkout stuff
-  put '/checkout/update/:state', :to => 'checkout#update', :as => :update_checkout
-  get '/checkout/:state', :to => 'checkout#edit', :as => :checkout_state
-
   match '/orders/:id/token/:token' => 'orders#show', :via => :get, :as => :token_order
 
   # route globbing for pretty nested taxon and product paths

@@ -3,11 +3,6 @@ require 'open_food_network/address_finder'
 class Spree::CheckoutController < Spree::StoreController
   include CheckoutHelper
 
-  before_filter :enable_embedded_shopfront
-
-  ####################################
-  #### Copied from Spree Frontend ####
-  ####################################
   ssl_required
 
   before_filter :load_order
@@ -18,12 +13,11 @@ class Spree::CheckoutController < Spree::StoreController
 
   before_filter :associate_user
   before_filter :check_authorization
+  before_filter :enable_embedded_shopfront
 
   helper 'spree/orders'
 
   rescue_from Spree::Core::GatewayError, :with => :rescue_from_spree_gateway_error
-  ####################################
-  ####################################
 
   def edit
     flash.keep
@@ -32,9 +26,6 @@ class Spree::CheckoutController < Spree::StoreController
 
   private
 
-  ####################################
-  #### Copied from Spree Frontend ####
-  ####################################
   def load_order
     @order = current_order
     redirect_to spree.cart_path and return unless @order
@@ -63,36 +54,9 @@ class Spree::CheckoutController < Spree::StoreController
     end
   end
 
-  # Provides a route to redirect after order completion
-  def completion_route
-    spree.order_path(@order)
-  end
-
   def setup_for_current_state
     method_name = :"before_#{@order.state}"
     send(method_name) if respond_to?(method_name, true)
-  end
-
-  def before_delivery
-    return if params[:order].present?
-
-    packages = @order.shipments.map { |s| s.to_package }
-    @differentiator = Spree::Stock::Differentiator.new(@order, packages)
-  end
-
-  def rescue_from_spree_gateway_error
-    flash[:error] = Spree.t(:spree_gateway_error_flash_for_checkout)
-    render :edit
-  end
-
-  def check_authorization
-    authorize!(:edit, current_order, session[:access_token])
-  end
-  ####################################
-  ####################################
-
-  def before_payment
-    current_order.payments.destroy_all if request.put?
   end
 
   # Adapted from spree_last_address gem: https://github.com/TylerRick/spree_last_address
@@ -105,5 +69,25 @@ class Spree::CheckoutController < Spree::StoreController
 
     @order.bill_address = finder.bill_address
     @order.ship_address = finder.ship_address
+  end
+
+  def before_delivery
+    return if params[:order].present?
+
+    packages = @order.shipments.map { |s| s.to_package }
+    @differentiator = Spree::Stock::Differentiator.new(@order, packages)
+  end
+
+  def before_payment
+    current_order.payments.destroy_all if request.put?
+  end
+
+  def rescue_from_spree_gateway_error
+    flash[:error] = Spree.t(:spree_gateway_error_flash_for_checkout)
+    render :edit
+  end
+
+  def check_authorization
+    authorize!(:edit, current_order, session[:access_token])
   end
 end
