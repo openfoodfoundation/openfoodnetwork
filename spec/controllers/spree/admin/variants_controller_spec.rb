@@ -42,17 +42,17 @@ module Spree
         context 'when requesting with js' do
           before do
             allow(Spree::Variant).to receive(:find).with(variant.id.to_s) { variant }
-            allow(variant).to receive(:delete)
+            allow(variant).to receive(:destroy).and_call_original
           end
 
-          it 'deletes the variant' do
+          it 'destroys the variant' do
             spree_delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'js'
-            expect(variant).to have_received(:delete)
+            expect(variant).to have_received(:destroy)
           end
 
           it 'shows a success flash message' do
             spree_delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'js'
-            expect(flash[:success]).to eq(I18n.t('notice_messages.variant_deleted'))
+            expect(flash[:success]).to be
           end
 
           it 'renders spree/admin/shared/destroy' do
@@ -77,17 +77,17 @@ module Spree
         context 'when requesting with html' do
           before do
             allow(Spree::Variant).to receive(:find).with(variant.id.to_s) { variant }
-            allow(variant).to receive(:delete)
+            allow(variant).to receive(:destroy).and_call_original
           end
 
           it 'deletes the variant' do
             spree_delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'html'
-            expect(variant).to have_received(:delete)
+            expect(variant).to have_received(:destroy)
           end
 
           it 'shows a success flash message' do
             spree_delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'html'
-            expect(flash[:success]).to eq(I18n.t('notice_messages.variant_deleted'))
+            expect(flash[:success]).to be
           end
 
           it 'redirects to admin_product_variants_url' do
