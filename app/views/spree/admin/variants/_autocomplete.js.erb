@@ -34,23 +34,20 @@
     <legend align="center"><%= Spree.t(:select_stock) %></legend>
       <table class="stock-levels" data-hook="stock-levels">
         <colgroup>
+          <col style="width: 60%;" />
           <col style="width: 30%;" />
-          <col style="width: 40%;" />
-          <col style="width: 20%;" />
           <col style="width: 10%;" />
         </colgroup>
         <thead>
-          <th><%= Spree.t(:location) %></th>
           <th><%= Spree.t(:on_hand) %></th>
           <th><%= Spree.t(:quantity) %></th>
           <th class="actions"></th>
         </thead>
         <tbody>
           <tr>
-            <td>{{variant.stock_location_name}}</td>
             {{#if variant.[in_stock?]}}
               {{#if variant.on_demand}}
-                <td>Spree.t(:on_demand)</td>
+                <td><%= Spree.t(:on_demand) %></td>
               {{else}}
                 <td>
                   {{variant.on_hand}}
