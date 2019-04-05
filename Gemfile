@@ -27,7 +27,7 @@ gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '2-0-stable'
 # - Pass customer email and phone number to PayPal (merged to upstream master)
 # - Change type of password from string to password to hide it in the form
 gem 'spree_paypal_express', github: "openfoodfoundation/better_spree_paypal_express", branch: "2-0-stable"
-gem 'stripe', '~> 4.11.0'
+gem 'stripe'
 
 # We need at least this version to have Digicert's root certificate
 # which is needed for Pin Payments (and possibly others).

@@ -134,6 +134,32 @@ module OpenFoodNetwork
           subject.stub(:params).and_return(distributor_id: distributor.id)
           subject.filter(variants).should == [product2.variants.first]
         end
+
+        it "ignores variant overrides without filter" do
+          distributor = create(:distributor_enterprise)
+          product = create(:simple_product, supplier: supplier, price: 5)
+          variant = product.variants.first
+          order_cycle = create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], variants: [product.variants.first])
+          create(:variant_override, hub: distributor, variant: variant, price: 2)
+
+          result = subject.filter(variants)
+
+          expect(result.first.price).to eq 5
+        end
+
+        it "considers variant overrides with distributor" do
+          distributor = create(:distributor_enterprise)
+          product = create(:simple_product, supplier: supplier, price: 5)
+          variant = product.variants.first
+          order_cycle = create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], variants: [product.variants.first])
+          create(:variant_override, hub: distributor, variant: variant, price: 2)
+
+          allow(subject).to receive(:params).and_return(distributor_id: distributor.id)
+          result = subject.filter(variants)
+
+          expect(result.first.price).to eq 2
+        end
+
         it "filters to a specific order cycle" do
           distributor = create(:distributor_enterprise)
           product1 = create(:simple_product, supplier: supplier)
