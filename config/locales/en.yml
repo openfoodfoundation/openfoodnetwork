@@ -1025,6 +1025,7 @@ en:
       subscriptions: Subscriptions
       new: New Subscription
       create: Create Subscription
+      edit: Edit Subscription
       index:
         please_select_a_shop: Please select a shop
         edit_subscription: Edit Subscription
