@@ -216,7 +216,7 @@ module OpenFoodNetwork
 
     def order_cycle_exchange_ids_involving_my_enterprises
       # Any exchanges that my managed enterprises are involved in directly
-      @order_cycle.exchanges.involving(managed_enterprises).pluck :id
+      @order_cycle.exchanges.involving(managed_enterprises.select(:id)).pluck :id
     end
 
     def order_cycle_exchange_ids_with_distributable_variants
