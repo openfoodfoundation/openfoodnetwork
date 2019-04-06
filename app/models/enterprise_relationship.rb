@@ -25,8 +25,8 @@ class EnterpriseRelationship < ActiveRecord::Base
     where('parent_id IN (?) OR child_id IN (?)', enterprises, enterprises)
   }
 
-  scope :permitting, ->(enterprises) { where('child_id IN (?)', enterprises) }
-  scope :permitted_by, ->(enterprises) { where('parent_id IN (?)', enterprises) }
+  scope :permitting, ->(enterprise_ids) { where('child_id IN (?)', enterprise_ids) }
+  scope :permitted_by, ->(enterprise_ids) { where('parent_id IN (?)', enterprise_ids) }
 
   scope :with_permission, ->(permission) {
     joins(:permissions).

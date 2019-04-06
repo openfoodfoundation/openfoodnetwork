@@ -24,7 +24,7 @@ class SubscriptionVariantsService
 
   def self.permitted_producer_ids(distributor)
     other_permitted_producer_ids = EnterpriseRelationship.joins(:parent)
-      .permitting(distributor).with_permission(:add_to_order_cycle)
+      .permitting(distributor.id).with_permission(:add_to_order_cycle)
       .merge(Enterprise.is_primary_producer)
       .pluck(:parent_id)
 
