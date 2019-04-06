@@ -56,7 +56,7 @@ gem 'haml'
 gem 'rabl'
 gem 'redcarpet'
 #gem 'sass', "~> 3.3"
-gem 'sass-rails', groups: [:default, :assets]
+gem 'sass-rails', groups: [:default]
 gem 'truncate_html'
 gem 'unicorn'
 
@@ -95,21 +95,17 @@ gem 'roo-xls', '~> 1.1.0'
 
 gem 'whenever', require: false
 
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  gem 'coffee-rails', '~> 4.0.0'
-  gem 'compass-rails'
-
-  gem 'therubyracer', '=0.12.0'
-
-  gem 'uglifier', '>= 1.0.3'
-
-  gem 'angular-rails-templates', '~> 0.3.0'
-  gem 'foundation-icons-sass-rails'
-  gem 'momentjs-rails'
-  # gem 'turbo-sprockets-rails3'
-end
+##########################################
+###### Used to be the assets group #######
+gem 'compass-rails'
+gem 'coffee-rails', '~> 4.0.0'
+gem 'therubyracer', '=0.12.0'
+gem 'uglifier', '>= 1.0.3'
+# gem 'turbo-sprockets-rails3'
+gem 'foundation-icons-sass-rails'
+gem 'momentjs-rails'
+gem 'angular-rails-templates', '~> 0.3.0'
+##########################################
 
 gem 'foundation-rails', '= 5.5.2.1'
 gem 'foundation_rails_helper', github: 'willrjmarshall/foundation_rails_helper', branch: 'rails3'
