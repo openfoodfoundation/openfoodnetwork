@@ -43,7 +43,7 @@ module OpenFoodNetwork
       # Permissions granted by create_variant_overrides relationship from producer to hub
       permissions = Hash[
            EnterpriseRelationship.
-             permitting(hubs).
+             permitting(hubs.select(:id)).
              with_permission(:create_variant_overrides).
              group_by(&:child_id).
              map { |child_id, ers| [child_id, ers.map(&:parent_id)] }
@@ -183,7 +183,8 @@ module OpenFoodNetwork
 
     def related_enterprises_granting(permission, options = {})
       parent_ids = EnterpriseRelationship.
-        permitting(options[:to] || managed_enterprises).
+        # this options[:to].id needs to be verified/tested
+        permitting(options[:to].select(:id) || managed_enterprises.select(:id)).
         with_permission(permission).
         pluck(:parent_id)
 
@@ -192,7 +193,7 @@ module OpenFoodNetwork
 
     def related_enterprises_granted(permission, options = {})
       child_ids = EnterpriseRelationship.
-        permitted_by(options[:by] || managed_enterprises).
+        permitted_by(options[:by].select(:id) || managed_enterprises.select(:id)).
         with_permission(permission).
         pluck(:child_id)
 

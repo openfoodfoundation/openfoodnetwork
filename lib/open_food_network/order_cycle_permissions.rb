@@ -90,8 +90,8 @@ module OpenFoodNetwork
         Spree::Variant.joins(:product).where('spree_products.supplier_id = (?)', producer)
       else
         # All variants of the producer if it has granted P-OC to any of my managed hubs that are in this order cycle
-        permitted = EnterpriseRelationship.permitting(managed_participating_hubs).
-          permitted_by(producer).with_permission(:add_to_order_cycle).present?
+        permitted = EnterpriseRelationship.permitting(managed_participating_hubs.select(:id)).
+          permitted_by(producer.id).with_permission(:add_to_order_cycle).present?
         if permitted
           Spree::Variant.joins(:product).where('spree_products.supplier_id = (?)', producer)
         else
