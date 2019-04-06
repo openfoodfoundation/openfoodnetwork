@@ -112,7 +112,7 @@ Spree::Product.class_eval do
     if user.has_spree_role?('admin')
       scoped
     else
-      where('supplier_id IN (?)', user.enterprises)
+      where('supplier_id IN (?)', user.enterprises.select("enterprises.id"))
     end
   }
 
