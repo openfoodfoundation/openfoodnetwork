@@ -249,7 +249,7 @@ describe ProductImport::ProductImporter do
       csv_data = CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "display_name", "shipping_category_id"]
         csv << ["Potatoes", "User Enterprise", "Vegetables", "5", "3.50", "500", "g", "Small Bag", shipping_category_id_str]
-        csv << ["Chives", "User Enterprise", "Vegetables", "6", "4.50", "500", "g", "Small Bag", shipping_category_id_str]
+        csv << ["Chives", "User Enterprise", "Vegetables", "6", "4.50", "500", "g", "Bag of Chives", shipping_category_id_str]
         csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "5.50", "2", "kg", "Big Bag", shipping_category_id_str]
       end
       File.write('/tmp/test-m.csv', csv_data)
