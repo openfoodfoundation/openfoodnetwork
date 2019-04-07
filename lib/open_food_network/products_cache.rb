@@ -5,13 +5,13 @@ require 'open_food_network/products_cache_refreshment'
 module OpenFoodNetwork
   class ProductsCache
     def self.variant_changed(variant)
-      exchanges_featuring_variants(variant).each do |exchange|
+      exchanges_featuring_variants(variant.id).each do |exchange|
         refresh_cache exchange.receiver, exchange.order_cycle
       end
     end
 
     def self.variant_destroyed(variant, &block)
-      exchanges = exchanges_featuring_variants(variant).to_a
+      exchanges = exchanges_featuring_variants(variant.id).to_a
 
       block.call
 
@@ -21,13 +21,13 @@ module OpenFoodNetwork
     end
 
     def self.product_changed(product)
-      exchanges_featuring_variants(product.variants).each do |exchange|
+      exchanges_featuring_variants(product.variants.map(&:id)).each do |exchange|
         refresh_cache exchange.receiver, exchange.order_cycle
       end
     end
 
     def self.product_deleted(product, &block)
-      exchanges = exchanges_featuring_variants(product.reload.variants).to_a
+      exchanges = exchanges_featuring_variants(product.reload.variants.map(&:id)).to_a
 
       block.call
 
@@ -37,7 +37,7 @@ module OpenFoodNetwork
     end
 
     def self.variant_override_changed(variant_override)
-      exchanges_featuring_variants(variant_override.variant, distributor: variant_override.hub).each do |exchange|
+      exchanges_featuring_variants(variant_override.variant.id, distributor: variant_override.hub).each do |exchange|
         refresh_cache exchange.receiver, exchange.order_cycle
       end
     end
@@ -52,7 +52,7 @@ module OpenFoodNetwork
         where(is_master: false, deleted_at: nil).
         where(product_id: products)
 
-      exchanges_featuring_variants(variants).each do |exchange|
+      exchanges_featuring_variants(variants.select(:id)).each do |exchange|
         refresh_cache exchange.receiver, exchange.order_cycle
       end
     end
@@ -94,17 +94,17 @@ module OpenFoodNetwork
     end
 
     def self.inventory_item_changed(inventory_item)
-      exchanges_featuring_variants(inventory_item.variant, distributor: inventory_item.enterprise).each do |exchange|
+      exchanges_featuring_variants(inventory_item.variant.id, distributor: inventory_item.enterprise).each do |exchange|
         refresh_cache exchange.receiver, exchange.order_cycle
       end
     end
 
     private
 
-    def self.exchanges_featuring_variants(variants, distributor: nil)
+    def self.exchanges_featuring_variants(variant_ids, distributor: nil)
       exchanges = Exchange.
         outgoing.
-        with_any_variant(variants).
+        with_any_variant(variant_ids).
         joins(:order_cycle).
         merge(OrderCycle.dated).
         merge(OrderCycle.not_closed)

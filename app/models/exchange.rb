@@ -29,7 +29,7 @@ class Exchange < ActiveRecord::Base
   scope :involving, lambda { |enterprises| where('exchanges.receiver_id IN (?) OR exchanges.sender_id IN (?)', enterprises, enterprises).select('DISTINCT exchanges.*') }
   scope :supplying_to, lambda { |distributor| where('exchanges.incoming OR exchanges.receiver_id = ?', distributor) }
   scope :with_variant, lambda { |variant| joins(:exchange_variants).where('exchange_variants.variant_id = ?', variant) }
-  scope :with_any_variant, lambda { |variants| joins(:exchange_variants).where('exchange_variants.variant_id IN (?)', variants).select('DISTINCT exchanges.*') }
+  scope :with_any_variant, lambda { |variant_ids| joins(:exchange_variants).where('exchange_variants.variant_id IN (?)', variant_ids).select('DISTINCT exchanges.*') }
   scope :with_product, lambda { |product| joins(:exchange_variants).where('exchange_variants.variant_id IN (?)', product.variants_including_master) }
   scope :by_enterprise_name, -> {
     joins('INNER JOIN enterprises AS sender   ON (sender.id   = exchanges.sender_id)').

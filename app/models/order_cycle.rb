@@ -52,7 +52,7 @@ class OrderCycle < ActiveRecord::Base
     if user.has_spree_role?('admin')
       scoped
     else
-      where('coordinator_id IN (?)', user.enterprises)
+      where('coordinator_id IN (?)', user.enterprises.map(&:id))
     end
   }
 
@@ -217,7 +217,7 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def exchanges_supplying(order)
-    exchanges.supplying_to(order.distributor).with_any_variant(order.variants)
+    exchanges.supplying_to(order.distributor).with_any_variant(order.variants.map(&:id))
   end
 
   def coordinated_by?(user)

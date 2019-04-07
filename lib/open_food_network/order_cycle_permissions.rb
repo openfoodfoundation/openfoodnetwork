@@ -55,7 +55,7 @@ module OpenFoodNetwork
           # TODO: Remove this when all P-OC are sorted out
           # Any hubs that currently have outgoing exchanges distributing variants of producers I manage
           variants = Spree::Variant.joins(:product).where('spree_products.supplier_id IN (?)', managed_enterprises.is_primary_producer)
-          active_exchanges = @order_cycle.exchanges.outgoing.with_any_variant(variants)
+          active_exchanges = @order_cycle.exchanges.outgoing.with_any_variant(variants.select("spree_variants.id"))
           hubs_active = active_exchanges.map(&:receiver_id)
 
           # TODO: Remove this when all P-OC are sorted out
@@ -249,7 +249,7 @@ module OpenFoodNetwork
       # outgoing exchange to those where the producer had granted P-OC to the distributor
       # For any of my managed producers, any outgoing exchanges with their variants
       variants = Spree::Variant.joins(:product).where('spree_products.supplier_id IN (?)', producers)
-      active_exchanges = @order_cycle.exchanges.outgoing.with_any_variant(variants).pluck :id
+      active_exchanges = @order_cycle.exchanges.outgoing.with_any_variant(variants.select("spree_variants.id")).pluck :id
 
       permitted_exchanges | active_exchanges
     end
