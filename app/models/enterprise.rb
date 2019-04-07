@@ -111,7 +111,7 @@ class Enterprise < ActiveRecord::Base
     joins(:shipping_methods).
       joins(:payment_methods).
       merge(Spree::PaymentMethod.available).
-      select('DISTINCT enterprises.*')
+      select('DISTINCT enterprises.id')
   }
   scope :not_ready_for_checkout, lambda {
     # When ready_for_checkout is empty, return all rows when there are no enterprises ready for
@@ -165,14 +165,14 @@ class Enterprise < ActiveRecord::Base
       select('DISTINCT enterprises.*')
   }
 
-  scope :distributing_products, lambda { |products|
+  scope :distributing_products, lambda { |product_ids|
     exchanges = joins("
         INNER JOIN exchanges
           ON (exchanges.receiver_id = enterprises.id AND exchanges.incoming = 'f')
       ").
       joins('INNER JOIN exchange_variants ON (exchange_variants.exchange_id = exchanges.id)').
       joins('INNER JOIN spree_variants ON (spree_variants.id = exchange_variants.variant_id)').
-      where('spree_variants.product_id IN (?)', products).select('DISTINCT enterprises.id')
+      where('spree_variants.product_id IN (?)', product_ids).select('DISTINCT enterprises.id')
 
     where(id: exchanges)
   }
@@ -449,7 +449,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def touch_distributors
-    Enterprise.distributing_products(supplied_products).
+    Enterprise.distributing_products(supplied_products.select(:id)).
       where('enterprises.id != ?', id).
       find_each(&:touch)
   end
