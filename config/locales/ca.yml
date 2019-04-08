@@ -859,6 +859,8 @@ ca:
         welcome_text: Heu creat correctament un
         next_step: Següent pas
         choose_starting_point: 'Escull el teu perfil:'
+        profile: 'Perfil'
+        producer_profile: 'Perfil de productora'
       invite_manager:
         user_already_exists: "L'usuari ja existeix"
         error: "Alguna cosa ha anat malament"
@@ -2462,6 +2464,7 @@ ca:
           pending: "pendents"
           ready: "llest"
           shipped: "enviat"
+          canceled: "cancel·lat"
         payment_states:
           balance_due: "a pagar"
           completed: "completat"
@@ -2741,6 +2744,7 @@ ca:
     back_to_taxonomies_list: "Torna a la llista de taxonomies"
     shipping_methods: "Mètodes d'enviament"
     shipping_categories: "Tipus d'enviament"
+    new_shipping_category: "Nova categoria d’enviament"
     back_to_shipping_categories: "Tornar a les categories d'enviament"
     analytics_trackers: "Rastrejadors d'anàlisi"
     no_trackers_found: "No s'ha trobat cap rastrejador"
