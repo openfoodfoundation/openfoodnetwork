@@ -41,7 +41,7 @@ en_CA:
         producer_ids: "Producers"
         order_cycle_ids: "Order Cycles"
         enterprise_fee_ids: "Names for Fees"
-        shipping_method_ids: "Delivery/Pick-up Methods"
+        shipping_method_ids: "Shipping Methods"
         payment_method_ids: "Payment Methods"
     errors:
       models:
@@ -638,10 +638,10 @@ en_CA:
           desc_long: About Us
           desc_long_placeholder: Tell customers about yourself. This information appears on your public profile.
         business_details:
-          abn: Business number if available
-          abn_placeholder: Number will show on invoices
-          acn: Business Number
-          acn_placeholder: eg. 123 456 789
+          abn: Business Number
+          abn_placeholder: eg. 80781 2466
+          acn: Busines Number
+          acn_placeholder: eg.80781 2466
           display_invoice_logo: Display logo in invoices
           invoice_text: Add customized text at the end of invoices
         contact:
@@ -857,6 +857,8 @@ en_CA:
         welcome_text: You have successfully created a
         next_step: Next step
         choose_starting_point: 'Choose your package:'
+        profile: 'Profile'
+        producer_profile: 'Producer Profile'
       invite_manager:
         user_already_exists: "User already exists"
         error: "Something went wrong"
@@ -929,7 +931,7 @@ en_CA:
         ready_for: Ready for
         ready_for_placeholder: Date / time
         customer_instructions: Customer instructions
-        customer_instructions_placeholder: Pick-up or delivery notes
+        customer_instructions_placeholder: 'Notes:'
         products: Products
         fees: Fees
       destroy_errors:
@@ -1225,7 +1227,7 @@ en_CA:
   city_placeholder: eg. Northcote
   postcode: Postal Code
   postcode_placeholder: eg. 3070
-  state: State
+  state: Province
   country: Country
   unauthorized: Unauthorized
   terms_of_service: "Terms of service"
@@ -2457,6 +2459,7 @@ en_CA:
           pending: "pending"
           ready: "ready"
           shipped: "shipped"
+          canceled: "cancelled"
         payment_states:
           balance_due: "balance due"
           completed: "completed"
@@ -2648,7 +2651,7 @@ en_CA:
     city: "City"
     zip: "Postal Code"
     country: "Country"
-    state: "Province"
+    state: "State"
     phone: "Phone"
     update: "Update"
     use_billing_address: "Use Billing Address"
@@ -2820,7 +2823,7 @@ en_CA:
           shipment_state: "Shipment State"
           completed_at: "Completed At"
           number: "Number"
-          state: "Province"
+          state: "State"
           email: "Customer E-Mail"
         invoice:
           issued_on: "Issued on"
@@ -2833,6 +2836,7 @@ en_CA:
             title: "Distribution"
             distributor: "Distributor:"
             order_cycle: "Order cycle:"
+          order_total: "Order Total"
       overview:
         products:
           active_products:

@@ -2841,6 +2841,7 @@ ca:
             title: "Distribució"
             distributor: "Distribuïdora:"
             order_cycle: "Cicle de comanda:"
+          order_total: "Total comanda"
       overview:
         products:
           active_products:
