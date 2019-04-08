@@ -857,6 +857,8 @@ nb:
         welcome_text: Du har opprettet en
         next_step: Neste steg
         choose_starting_point: 'Velg din pakke:'
+        profile: 'Profil'
+        producer_profile: 'Produsentprofil'
       invite_manager:
         user_already_exists: "Brukeren eksisterer allerede"
         error: "Noe gikk galt"
@@ -2457,6 +2459,7 @@ nb:
           pending: "i påvente av"
           ready: "klar"
           shipped: "sendt"
+          canceled: "avbrutt"
         payment_states:
           balance_due: "balanse forfaller"
           completed: "fullført"
@@ -2832,6 +2835,7 @@ nb:
             title: "Distribusjon"
             distributor: "Distributør:"
             order_cycle: "Bestillingsrunde:"
+          order_total: "Bestilling Totalt"
       overview:
         products:
           active_products:

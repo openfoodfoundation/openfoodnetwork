@@ -2842,6 +2842,7 @@ es:
             title: "Distribución"
             distributor: "Distribuidora:"
             order_cycle: "Ciclo de pedido:"
+          order_total: "Total del pedido"
       overview:
         products:
           active_products:
