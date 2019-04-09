@@ -52,7 +52,7 @@ describe ProductImport::ProductImporter do
         csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "2", "kg", "", "", shipping_category_id_str]
         csv << ["Pea Soup", "User Enterprise", "Vegetables", "8", "5.50", "750", "ml", "", "0", shipping_category_id_str]
         csv << ["Salad", "User Enterprise", "Vegetables", "7", "4.50", "1", "", "bags", "", shipping_category_id_str]
-        csv << ["Hot Cross Buns", "User Enterprise", "Cake", "7", "3.50", "1", "", "buns", "1", shipping_category_id_str]
+        csv << ["Hot Cross Buns", "User Enterprise", "Cake", nil, "3.50", "1", "", "buns", "1", shipping_category_id_str]
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
@@ -124,7 +124,7 @@ describe ProductImport::ProductImporter do
 
       buns = Spree::Product.find_by_name('Hot Cross Buns')
       expect(buns.supplier).to eq enterprise
-      # buns.on_hand).to eq Infinity
+      expect(buns.on_hand).to eq 0
       expect(buns.price).to eq 3.50
       expect(buns.unit_value).to eq 1
       expect(buns.variant_unit).to eq 'items'
@@ -249,7 +249,7 @@ describe ProductImport::ProductImporter do
       csv_data = CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "display_name", "shipping_category_id"]
         csv << ["Potatoes", "User Enterprise", "Vegetables", "5", "3.50", "500", "g", "Small Bag", shipping_category_id_str]
-        csv << ["Chives", "User Enterprise", "Vegetables", "6", "4.50", "500", "g", "Small Bag", shipping_category_id_str]
+        csv << ["Chives", "User Enterprise", "Vegetables", "6", "4.50", "500", "g", "Bag of Chives", shipping_category_id_str]
         csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "5.50", "2", "kg", "Big Bag", shipping_category_id_str]
       end
       File.write('/tmp/test-m.csv', csv_data)

@@ -33,7 +33,6 @@ public/images
 public/spree
 config/abr.yml
 config/initializers/feature_toggle.rb
-config/initializers/db2fog.rb
 NERD_tree*
 coverage
 libpeerconnection.log

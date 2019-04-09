@@ -188,7 +188,6 @@ module Spree
         end
 
         it "refreshes the products cache for the entire product on destroy" do
-          # Does this ever happen?
           expect(OpenFoodNetwork::ProductsCache).to receive(:product_changed).with(product)
           expect(OpenFoodNetwork::ProductsCache).to receive(:variant_destroyed).never
           master.destroy
