@@ -21,10 +21,6 @@ class UserRegistrationsController < Spree::UserRegistrationsController
     associate_user
 
     respond_to do |format|
-      format.html do
-        set_flash_message(:success, :signed_up_but_unconfirmed)
-        redirect_to after_sign_in_path_for(@user)
-      end
       format.js do
         render json: { email: @user.email }
       end
