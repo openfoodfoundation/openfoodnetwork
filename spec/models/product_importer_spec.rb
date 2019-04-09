@@ -175,6 +175,27 @@ describe ProductImport::ProductImporter do
     end
   end
 
+  describe "when shipping category is missing" do
+    before do
+      csv_data = CSV.generate do |csv|
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "variant_unit_name", "on_demand", "shipping_category"]
+        csv << ["Shipping Test", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", "", nil, nil]
+      end
+      File.write('/tmp/test-m.csv', csv_data)
+      file = File.new('/tmp/test-m.csv')
+      settings = {'import_into' => 'product_list'}
+      @importer = ProductImport::ProductImporter.new(file, admin, start: 1, end: 100, settings: settings)
+    end
+    after { File.delete('/tmp/test-m.csv') }
+
+    it "raises an error" do
+      @importer.validate_entries
+      entries = JSON.parse(@importer.entries_json)
+
+      expect(entries['2']['errors']['shipping_category']).to eq "Shipping_category can't be blank"
+    end
+  end
+
   describe "when enterprises are not valid" do
     before do
       csv_data = CSV.generate do |csv|
