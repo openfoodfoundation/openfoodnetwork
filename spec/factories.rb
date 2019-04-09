@@ -427,7 +427,7 @@ FactoryBot.define do
       payment_method = create(:payment_method, calculator: payment_calculator)
       create(:payment, order: order, amount: order.total, payment_method: payment_method, state: 'checkout')
 
-      create(:shipping_method_with, :shipping_fee, shipping_fee: evaluator.shipping_fee)
+      create(:shipping_method_with, :shipping_fee, shipping_fee: evaluator.shipping_fee, distributors: [order.distributor])
 
       order.reload
       while !order.completed? do break unless order.next! end
@@ -443,6 +443,7 @@ FactoryBot.define do
       shipment = order.reload.shipments.first
       if shipment.nil?
         shipping_method = create(:shipping_method_with, :shipping_fee, shipping_fee: shipping_fee)
+        shipping_method.distributors << order.distributor if order.distributor
         shipment = create(:shipment_with, :shipping_method, shipping_method: shipping_method, order: order)
       end
       shipment
