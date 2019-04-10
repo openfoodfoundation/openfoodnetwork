@@ -74,8 +74,6 @@ GIT
       spree_api (= 2.0.4)
       spree_core (= 2.0.4)
       stringex (~> 1.5.1)
-    spree_sample (2.0.4)
-      spree_core (= 2.0.4)
 
 GIT
   remote: https://github.com/spree/spree_auth_devise.git
@@ -863,10 +861,8 @@ DEPENDENCIES
   spree_auth_devise!
   spree_backend!
   spree_core!
-  spree_frontend!
   spree_i18n!
   spree_paypal_express!
-  spree_sample!
   spring (= 1.7.2)
   spring-commands-rspec
   stripe
