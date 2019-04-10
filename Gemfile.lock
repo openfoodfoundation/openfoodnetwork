@@ -34,13 +34,6 @@ GIT
   revision: 46d6f8f5fd434105b0c69958276d1727a3066a97
   branch: 2-0-4-stable
   specs:
-    spree (2.0.4)
-      spree_api (= 2.0.4)
-      spree_backend (= 2.0.4)
-      spree_cmd (= 2.0.4)
-      spree_core (= 2.0.4)
-      spree_frontend (= 2.0.4)
-      spree_sample (= 2.0.4)
     spree_api (2.0.4)
       rabl (= 0.8.4)
       spree_core (= 2.0.4)
@@ -53,8 +46,6 @@ GIT
       select2-rails (~> 3.4.7)
       spree_api (= 2.0.4)
       spree_core (= 2.0.4)
-    spree_cmd (2.0.4)
-      thor (>= 0.14.6)
     spree_core (2.0.4)
       activemerchant (~> 1.34)
       acts_as_list (= 0.2.0)
@@ -868,10 +859,14 @@ DEPENDENCIES
   simplecov
   skylight (< 2.0)
   spinjs-rails
-  spree!
+  spree_api!
   spree_auth_devise!
+  spree_backend!
+  spree_core!
+  spree_frontend!
   spree_i18n!
   spree_paypal_express!
+  spree_sample!
   spring (= 1.7.2)
   spring-commands-rspec
   stripe
