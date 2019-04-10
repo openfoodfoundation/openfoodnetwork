@@ -12,7 +12,7 @@ describe Spree::Admin::OrdersController, type: :controller do
     it "advances the order state" do
       expect {
         spree_get :edit, id: order
-      }.to change { order.reload.state }.from("cart").to("complete")
+      }.to change { order.reload.state }.from("cart").to("payment")
     end
 
     describe "view" do

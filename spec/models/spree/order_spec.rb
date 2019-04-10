@@ -742,7 +742,7 @@ describe Spree::Order do
   describe "payments" do
     let(:payment_method) { create(:payment_method) }
     let(:shipping_method) { create(:shipping_method) }
-    let(:order) { create(:order_with_totals) }
+    let(:order) { create(:order_with_totals_and_distribution) }
 
     before { order.update_totals }
 
@@ -754,9 +754,7 @@ describe Spree::Order do
       it "advances to payment state" do
         advance_to_delivery_state(order)
 
-        order.next!
-
-        expect(order.state).to eq "payment"
+        expect { order.next! }.to change { order.state }.from("delivery").to("payment")
       end
     end
 
@@ -790,23 +788,20 @@ describe Spree::Order do
         it "skips the payment state" do
           advance_to_delivery_state(order)
 
-          order.next!
-
-          expect(order.state).to eq "complete"
+          expect { order.next! }.to change { order.state }.from("delivery").to("complete")
         end
       end
     end
 
     def advance_to_delivery_state(order)
       # advance to address state
-      create(:shipment_with, :shipping_method, shipping_method: shipping_method, order: order)
-      order.reload
       order.ship_address = create(:address)
       order.next!
+      expect(order.state).to eq "address"
 
       # advance to delivery state
-      create(:payment, order: order, payment_method: payment_method)
       order.next!
+      expect(order.state).to eq "delivery"
     end
   end
 
