@@ -956,9 +956,6 @@ en:
     shared:
       user_guide_link:
         user_guide: User Guide
-    overview:
-      enterprises_header:
-        ofn_with_tip: Enterprises are Producers and/or Hubs and are the basic unit of organisation within the Open Food Network.
       enterprises_hubs_tabs:
         has_no_payment_methods: "%{enterprise} has no payment methods"
         has_no_shipping_methods: "%{enterprise} has no shipping methods"
@@ -2941,6 +2938,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           order_adjustments: "Order Adjustments"
           order_total: "Order Total"
       overview:
+        enterprises_header:
+          ofn_with_tip: Enterprises are Producers and/or Hubs and are the basic unit of organisation within the Open Food Network.
         products:
           active_products:
             zero: "You don't have any active products."
