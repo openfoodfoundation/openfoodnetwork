@@ -89,6 +89,14 @@ Spree::Core::Engine.routes.prepend do
 
   resources :products
 
+  # For some reason we need the orders populate route to make product import routes work
+  # See #3670 for more details
+  populate_redirect = redirect do |params, request|
+    request.flash[:error] = Spree.t(:populate_get_error)
+    request.referer || '/cart'
+  end
+  get '/orders/populate', :via => :get, :to => populate_redirect
+
   get '/locale/set', :to => 'locale#set'
 
   resources :states, :only => :index
