@@ -14,6 +14,23 @@ describe Spree::Admin::OrdersController, type: :controller do
         spree_get :edit, id: order
       }.to change { order.reload.state }.from("cart").to("complete")
     end
+
+    describe "view" do
+      render_views
+
+      it "shows only eligible adjustments" do
+        adjustment = create(
+          :adjustment,
+          adjustable: order,
+          label: "invalid adjustment",
+          amount: 0
+        )
+
+        spree_get :edit, id: order
+
+        expect(response.body).to_not match adjustment.label
+      end
+    end
   end
 
   context "#update" do

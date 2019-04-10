@@ -3,12 +3,12 @@
     %legend= title
     %table>
       %thead
-        %th= Spree.t('name')
-        %th= Spree.t('amount')
-      %tbody#order-charges.with-border
+        %tr
+          %th= Spree.t('name')
+          %th= Spree.t('amount')
+      %tbody.with-border
         - adjustments.each do |adjustment|
-          - if (adjustment.originator_type != 'Spree::ShippingMethod') && !(adjustment.originator_type == 'Spree::TaxRate' && adjustment.amount == 0)
-            %tr.total
-              %td.strong= adjustment.label + ":"
-              %td.total.align-center
-                %span= Spree::Money.new(adjustment.amount)
+          %tr.total
+            %td.strong= adjustment.label + ":"
+            %td.total.align-center
+              %span= Spree::Money.new(adjustment.amount)

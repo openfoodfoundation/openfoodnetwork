@@ -255,7 +255,6 @@ feature %q{
       scenario "shows the order non-tax adjustments" do
         within('table.index tbody') do
           @order.adjustments.eligible.each do |adjustment|
-            next if (adjustment.originator_type == 'Spree::TaxRate') && (adjustment.amount == 0)
             expect(page).to have_selector "td", match: :first, text: adjustment.label
             expect(page).to have_selector "td.total", text: adjustment.display_amount
           end
@@ -267,7 +266,7 @@ feature %q{
       end
 
       scenario "shows the order tax adjustments" do
-        within('tbody#order-charges') do
+        within('fieldset', text: I18n.t('spree.admin.orders.form.line_item_adjustments').upcase) do
           expect(page).to have_selector "td", match: :first, text: "Tax 1"
           expect(page).to have_selector "td.total", text: Spree::Money.new(10)
         end
