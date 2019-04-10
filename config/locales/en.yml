@@ -276,6 +276,7 @@ en:
   actions:
     create_and_add_another: "Create and Add Another"
     create: "Create"
+    cancel: "Cancel"
   admin:
     # Common properties / models
     begins_at: Begins At
@@ -2054,6 +2055,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   product: "Product"
   price: "Price"
   on_hand: "On hand"
+  review: "Review"
   save_changes: "Save Changes"
   order_saved: "Order Saved"
   no_products: No Products
