@@ -55,15 +55,24 @@ module Spree
         lambda { variant.reload }.should_not raise_error
         variant.deleted_at.should be_nil
       end
+
+      context 'when the variant is not the master' do
+        before { variant.update_attribute(:is_master, false) }
+
+        it 'refreshes the cache' do
+          expect(OpenFoodNetwork::ProductsCache).to receive(:variant_destroyed).with(variant)
+          spree_delete :soft_delete, variant_id: variant.id, product_id: variant.product.permalink, format: :json
+        end
+      end
     end
 
     context "as an administrator" do
       sign_in_as_admin!
 
-      it "soft deletes a variant" do
-        product = create(:product)
-        variant = product.master
+      let(:product) { create(:product) }
+      let(:variant) { product.master }
 
+      it "soft deletes a variant" do
         spree_delete :soft_delete, {variant_id: variant.to_param, product_id: product.to_param, format: :json}
         response.status.should == 204
         lambda { variant.reload }.should_not raise_error
@@ -78,6 +87,15 @@ module Spree
 
         expect(variant.reload).to_not be_deleted
         expect(assigns(:variant).errors[:product]).to include "must have at least one variant"
+      end
+
+      context 'when the variant is not the master' do
+        before { variant.update_attribute(:is_master, false) }
+
+        it 'refreshes the cache' do
+          expect(OpenFoodNetwork::ProductsCache).to receive(:variant_destroyed).with(variant)
+          spree_delete :soft_delete, variant_id: variant.id, product_id: variant.product.permalink, format: :json
+        end
       end
     end
   end
