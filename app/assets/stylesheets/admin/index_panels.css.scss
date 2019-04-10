@@ -110,6 +110,12 @@ tbody.panel-ctrl {
       border-color: #6788a2;
       padding: 0;
       .panel {
+        .actions {
+          .button {
+            display: inline-block;
+          }
+        }
+
         .row{
           margin: 0px -4px;
 
