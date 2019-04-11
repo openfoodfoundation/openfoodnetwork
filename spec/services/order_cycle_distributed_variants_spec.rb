@@ -1,4 +1,4 @@
-require 'open_food_network/order_cycle_distributed_variants'
+require 'spec_helper'
 
 describe OrderCycleDistributedVariants do
   let(:order) { double(:order) }

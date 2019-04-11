@@ -1,5 +1,4 @@
 require 'open_food_network/enterprise_fee_calculator'
-require 'open_food_network/order_cycle_distributed_variants'
 require 'open_food_network/feature_toggle'
 require 'open_food_network/tag_rule_applicator'
 require 'concerns/order_shipment'
