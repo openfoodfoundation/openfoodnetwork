@@ -80,7 +80,7 @@ Spree::Order.class_eval do
   # -- Methods
   def products_available_from_new_distribution
     # Check that the line_items in the current order are available from a newly selected distribution
-    errors.add(:base, I18n.t(:spree_order_availability_error)) unless OrderCycleDistributedVariants.new(self).can_change_to_distribution?(distributor, order_cycle)
+    errors.add(:base, I18n.t(:spree_order_availability_error)) unless OrderCycleDistributedVariants.new(order_cycle, distributor).distributes_order_variants?(self)
   end
 
   def using_guest_checkout?

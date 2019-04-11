@@ -1,15 +1,15 @@
 class OrderCycleDistributedVariants
-
-  def initialize order
-    @order = order
+  def initialize(order_cycle, distributor)
+    @order_cycle = order_cycle
+    @distributor = distributor    
   end
 
-  def can_change_to_distribution?(distributor, order_cycle)
-    (@order.line_item_variants - variants_available_for_distribution(distributor, order_cycle)).empty?
+  def distributes_order_variants?(order)
+    (order.line_item_variants - available_variants).empty?
   end
 
-  def variants_available_for_distribution(distributor, order_cycle)
-    return [] unless order_cycle
-    order_cycle.variants_distributed_by(distributor)
+  def available_variants
+    return [] unless @order_cycle
+    @order_cycle.variants_distributed_by(@distributor)
   end
 end
