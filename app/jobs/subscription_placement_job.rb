@@ -67,7 +67,7 @@ class SubscriptionPlacementJob
   end
 
   def available_variants_for(order)
-    DistributionChangeValidator.new(order).variants_available_for_distribution(order.distributor, order.order_cycle)
+    OrderCycleDistributedVariants.new(order).variants_available_for_distribution(order.distributor, order.order_cycle)
   end
 
   def send_placement_email(order, changes)

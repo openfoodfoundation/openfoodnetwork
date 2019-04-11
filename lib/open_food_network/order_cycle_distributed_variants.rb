@@ -1,4 +1,4 @@
-class DistributionChangeValidator
+class OrderCycleDistributedVariants
 
   def initialize order
     @order = order

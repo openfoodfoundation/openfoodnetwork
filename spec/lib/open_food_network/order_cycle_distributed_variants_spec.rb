@@ -1,8 +1,8 @@
-require 'open_food_network/distribution_change_validator'
+require 'open_food_network/order_cycle_distributed_variants'
 
-describe DistributionChangeValidator do
+describe OrderCycleDistributedVariants do
   let(:order) { double(:order) }
-  let(:subject) { DistributionChangeValidator.new(order) }
+  let(:subject) { OrderCycleDistributedVariants.new(order) }
   let(:product) { double(:product) }
 
   describe "checking if an order can change to a specified new distribution" do

@@ -228,19 +228,19 @@ describe CartService do
       let(:product) { double(:product) }
       let(:variant) { double(:variant, product: product) }
 
-      it "delegates to DistributionChangeValidator, returning true when available" do
+      it "delegates to OrderCycleDistributedVariants, returning true when available" do
         dcv = double(:dcv)
         expect(dcv).to receive(:variants_available_for_distribution).with(123, 234).and_return([variant])
-        expect(DistributionChangeValidator).to receive(:new).with(order).and_return(dcv)
+        expect(OrderCycleDistributedVariants).to receive(:new).with(order).and_return(dcv)
         cart_service.instance_eval { @distributor = 123; @order_cycle = 234 }
         expect(cart_service.send(:check_variant_available_under_distribution, variant)).to be true
         expect(cart_service.errors).to be_empty
       end
 
-      it "delegates to DistributionChangeValidator, returning false and erroring otherwise" do
+      it "delegates to OrderCycleDistributedVariants, returning false and erroring otherwise" do
         dcv = double(:dcv)
         expect(dcv).to receive(:variants_available_for_distribution).with(123, 234).and_return([])
-        expect(DistributionChangeValidator).to receive(:new).with(order).and_return(dcv)
+        expect(OrderCycleDistributedVariants).to receive(:new).with(order).and_return(dcv)
         cart_service.instance_eval { @distributor = 123; @order_cycle = 234 }
         expect(cart_service.send(:check_variant_available_under_distribution, variant)).to be false
         expect(cart_service.errors.to_a).to eq(["That product is not available from the chosen distributor or order cycle."])
