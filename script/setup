@@ -46,6 +46,12 @@ if [ ! -f config/application.yml ]; then
   printf "${YELLOW}Copied config/application.yml Make sure to fill it with the appropriate configuration values.\n\n${NO_COLOR}"
 fi
 
+# Set up newrelic.yml for development environment, used by the newrelic_rpm gem
+if [ ! -f config/newrelic.yml ]; then
+  cp config/newrelic.yml.example config/newrelic.yml
+  printf "${YELLOW}Copied config/newrelic.yml which configures the development environment for the newrelic_rpm gem.\n\n${NO_COLOR}"
+fi
+
 # Set up the database for both development and test
 # Confirming the default user and password Spree prompts
 printf '\n\n' | bundle exec rake db:setup db:test:prepare
