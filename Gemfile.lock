@@ -542,6 +542,7 @@ GEM
     nenv (0.3.0)
     net-http-persistent (3.0.0)
       connection_pool (~> 2.2)
+    newrelic_rpm (3.18.1.330)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
     notiffany (0.1.1)
@@ -824,6 +825,7 @@ DEPENDENCIES
   letter_opener (>= 1.4.1)
   listen (= 3.0.8)
   momentjs-rails
+  newrelic_rpm (~> 3.0)
   nokogiri (>= 1.6.7.1)
   oauth2 (~> 1.4.1)
   ofn-qz!
