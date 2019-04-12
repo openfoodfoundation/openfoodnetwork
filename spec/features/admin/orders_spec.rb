@@ -219,7 +219,9 @@ feature %q{
     end
 
     feature "viewing the edit page" do
-      let!(:different_shipping_method) { create(:shipping_method, name: "Different Shipping Method") }
+      let!(:shipping_method_for_distributor1) { create(:shipping_method, name: "Normal", distributors: [distributor1]) }
+      let!(:different_shipping_method_for_distributor1) { create(:shipping_method, name: "Different", distributors: [distributor1]) }
+      let!(:shipping_method_for_distributor2) { create(:shipping_method, name: "Other", distributors: [distributor2]) }
 
       background do
         Spree::Config[:enable_receipt_printing?] = true
@@ -227,10 +229,12 @@ feature %q{
         distributor1.update_attribute(:abn, '12345678')
         @order = create(:order_with_taxes,
                         distributor: distributor1,
+                        ship_address: create(:address),
                         product_price: 110,
                         tax_rate_amount: 0.1,
                         tax_rate_name: "Tax 1")
         Spree::TaxRate.adjust(@order)
+        @order.update_shipping_fees!
 
         visit spree.edit_admin_order_path(@order)
       end
@@ -288,14 +292,14 @@ feature %q{
       end
 
       scenario "can edit shipping method" do
-        expect(page).to_not have_content different_shipping_method.name
+        expect(page).to_not have_content different_shipping_method_for_distributor1.name
 
         find('.edit-method').click
-        expect(page).to have_select2 'selected_shipping_rate_id', with_options: [different_shipping_method.name]
-        select2_select different_shipping_method.name, from: 'selected_shipping_rate_id'
+        expect(page).to have_select2 'selected_shipping_rate_id', with_options: [shipping_method_for_distributor1.name, different_shipping_method_for_distributor1.name], without_options: [shipping_method_for_distributor2.name]
+        select2_select different_shipping_method_for_distributor1.name, from: 'selected_shipping_rate_id'
         find('.save-method').click
 
-        expect(page).to have_content different_shipping_method.name
+        expect(page).to have_content different_shipping_method_for_distributor1.name
       end
 
       scenario "can edit tracking number" do
