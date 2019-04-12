@@ -1,0 +1,4 @@
+development:
+  app_name: Open Food Network (Development)
+  developer_mode: true
+  monitor_mode: false
