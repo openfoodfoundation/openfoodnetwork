@@ -37,6 +37,7 @@ NERD_tree*
 coverage
 libpeerconnection.log
 /config/application.yml
+/config/newrelic.yml
 node_modules
 vendor/bundle/
 coverage
