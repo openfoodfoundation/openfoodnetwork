@@ -21,14 +21,15 @@ Spree::OrdersController.class_eval do
   def edit
     @order = current_order(true)
     @insufficient_stock_lines = @order.insufficient_stock_lines
+    @unavailable_order_variants = OrderCycleDistributedVariants.new(current_order_cycle, current_distributor).unavailable_order_variants(@order)
 
     if @order.line_items.empty?
       redirect_to main_app.shop_path
     else
       associate_user
 
-      if @order.insufficient_stock_lines.present?
-        flash[:error] = t("spree.inventory_error_flash_for_insufficient_quantity")
+      if @order.insufficient_stock_lines.present? || @unavailable_order_variants.present?
+        flash[:error] = t("spree.orders.error_flash_for_unavailable_items")
       end
     end
   end

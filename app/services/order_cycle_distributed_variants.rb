@@ -5,7 +5,11 @@ class OrderCycleDistributedVariants
   end
 
   def distributes_order_variants?(order)
-    (order.line_item_variants - available_variants).empty?
+    unavailable_order_variants(order).empty?
+  end
+
+  def unavailable_order_variants(order)
+    order.line_item_variants - available_variants
   end
 
   def available_variants
