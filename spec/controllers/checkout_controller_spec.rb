@@ -36,22 +36,40 @@ describe CheckoutController, type: :controller do
     flash[:info].should == "The hub you have selected is temporarily closed for orders. Please try again later."
   end
 
-  it "redirects to the cart when some items are out of stock" do
-    controller.stub(:current_distributor).and_return(distributor)
-    controller.stub(:current_order_cycle).and_return(order_cycle)
-    controller.stub(:current_order).and_return(order)
-    order.stub_chain(:insufficient_stock_lines, :present?).and_return true
-    get :edit
-    response.should redirect_to spree.cart_path
-  end
+  describe "redirection to the cart" do
+    let(:order_cycle_distributed_variants) { double(:order_cycle_distributed_variants) }
 
-  it "renders when both distributor and order cycle is selected" do
-    controller.stub(:current_distributor).and_return(distributor)
-    controller.stub(:current_order_cycle).and_return(order_cycle)
-    controller.stub(:current_order).and_return(order)
-    order.stub_chain(:insufficient_stock_lines, :present?).and_return false
-    get :edit
-    response.should be_success
+    before do
+      controller.stub(:current_order).and_return(order)
+      order.stub(:distributor).and_return(distributor)
+      order.order_cycle = order_cycle
+
+      allow(OrderCycleDistributedVariants).to receive(:new).with(order_cycle, distributor).and_return(order_cycle_distributed_variants)      
+    end
+
+    it "redirects when some items are out of stock" do
+      allow(order).to receive_message_chain(:insufficient_stock_lines, :empty?).and_return false
+
+      get :edit
+      expect(response).to redirect_to spree.cart_path
+    end
+
+    it "redirects when some items are not available" do
+      allow(order).to receive_message_chain(:insufficient_stock_lines, :empty?).and_return true
+      expect(order_cycle_distributed_variants).to receive(:distributes_order_variants?).with(order).and_return(false)
+
+      get :edit
+      expect(response).to redirect_to spree.cart_path
+    end
+
+
+    it "does not redirect when items are available and in stock" do
+      allow(order).to receive_message_chain(:insufficient_stock_lines, :empty?).and_return true
+      expect(order_cycle_distributed_variants).to receive(:distributes_order_variants?).with(order).and_return(true)
+
+      get :edit
+      expect(response).to be_success
+    end
   end
 
   describe "building the order" do

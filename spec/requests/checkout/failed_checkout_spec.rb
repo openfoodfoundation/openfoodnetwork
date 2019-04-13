@@ -23,6 +23,10 @@ describe "checking out an order that initially fails", type: :request do
   end
 
   before do
+    order_cycle_distributed_variants = double(:order_cycle_distributed_variants)
+    allow(OrderCycleDistributedVariants).to receive(:new).and_return(order_cycle_distributed_variants)
+    allow(order_cycle_distributed_variants).to receive(:distributes_order_variants?).and_return(true)
+
     order.reload.update_totals
     set_order order
   end

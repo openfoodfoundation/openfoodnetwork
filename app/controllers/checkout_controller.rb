@@ -169,7 +169,7 @@ class CheckoutController < Spree::CheckoutController
   def load_order
     @order = current_order
     redirect_to main_app.shop_path and return unless @order and @order.checkout_allowed?
-    raise_insufficient_quantity and return if @order.insufficient_stock_lines.present?
+    redirect_to_cart_path and return unless valid_order_line_items?
     redirect_to main_app.shop_path and return if @order.completed?
     before_address
     setup_for_current_state
@@ -184,8 +184,11 @@ class CheckoutController < Spree::CheckoutController
     @order.ship_address = finder.ship_address
   end
 
-  # Overriding Spree's methods
-  def raise_insufficient_quantity
+  def valid_order_line_items?
+    @order.insufficient_stock_lines.empty? && OrderCycleDistributedVariants.new(@order.order_cycle, @order.distributor).distributes_order_variants?(@order)
+  end
+
+  def redirect_to_cart_path
     respond_to do |format|
       format.html do
         redirect_to cart_path
