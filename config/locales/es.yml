@@ -859,6 +859,8 @@ es:
         welcome_text: Has creado correctamente un
         next_step: Siguiente paso
         choose_starting_point: 'Selecciona tu perfil:'
+        profile: 'Perfil'
+        producer_profile: 'Perfil Productora'
       invite_manager:
         user_already_exists: "El usuario ya existe"
         error: "Algo salió mal"
@@ -2463,6 +2465,7 @@ es:
           pending: "pendiente"
           ready: "Listo"
           shipped: "enviado"
+          canceled: "cancelado"
         payment_states:
           balance_due: "saldo debido"
           completed: "completado"
@@ -2742,6 +2745,7 @@ es:
     back_to_taxonomies_list: "Volver a la Lista de Taxonomías"
     shipping_methods: "Métodos de envío"
     shipping_categories: "Categorías de envío"
+    new_shipping_category: "Nueva categoría de envío"
     back_to_shipping_categories: "Volver a las categorías de envío"
     analytics_trackers: "Analizadores de seguimiento"
     no_trackers_found: "No se encontraron rastreadores"
@@ -2838,6 +2842,7 @@ es:
             title: "Distribución"
             distributor: "Distribuidora:"
             order_cycle: "Ciclo de pedido:"
+          order_total: "Total del pedido"
       overview:
         products:
           active_products:

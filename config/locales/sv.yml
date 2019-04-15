@@ -533,6 +533,8 @@ sv:
         welcome_title: Välkommen till OFN!
         welcome_text: Du har korrekt slutfört en
         next_step: Nästa steg
+        profile: 'Profil'
+        producer_profile: 'Producentprofil'
     order_cycles:
       edit:
         advanced_settings: Avancerade inställningar
