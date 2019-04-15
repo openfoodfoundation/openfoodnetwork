@@ -1427,7 +1427,7 @@ ca:
   email_signoff: "Salut,"
   email_signature: "Equip %{sitename}"
   email_confirm_customer_greeting: "Hola %{name},"
-  email_confirm_customer_intro_html: "Gràcies per comprar a <strong> %{distributor} </ strong>."
+  email_confirm_customer_intro_html: "Gràcies per comprar a <strong> %{distributor}."
   email_confirm_customer_number_html: "Confirmació de la comanda <strong> # %{number} </strong>"
   email_confirm_customer_details_html: "Aquests són els detalls de la teva comanda de <strong> %{distributor} </ strong>:"
   email_confirm_customer_signoff: "Salutacions cordials,"
