@@ -906,18 +906,7 @@ en:
       index:
         schedule: Schedule
         schedules: Schedules
-        adding_a_new_schedule: Adding A New Schedule
-        updating_a_schedule: Updating A Schedule
         new_schedule: New Schedule
-        create_schedule: Create Schedule
-        update_schedule: Update Schedule
-        delete_schedule: Delete Schedule
-        created_schedule: Created schedule
-        updated_schedule: Updated schedule
-        deleted_schedule: Deleted schedule
-        schedule_name_placeholder: Schedule Name
-        name_required_error: Please enter a name for this schedule
-        no_order_cycles_error: Please select at least one order cycle (drag and drop)
       name_and_timing_form:
         name: Name
         orders_open: Orders open at
@@ -2550,6 +2539,21 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         sending: "Resend..."
         done: "Resend done ✓"
         failed: "Resend failed ✗"
+      order_cycles:
+        schedules:
+          adding_a_new_schedule: "Adding A New Schedule"
+          updating_a_schedule: "Updating A Schedule"
+          create_schedule: "Create Schedule"
+          update_schedule: "Update Schedule"
+          delete_schedule: "Delete Schedule"
+          schedule_name_placeholder: "Schedule Name"
+          created_schedule: "Created schedule"
+          updated_schedule: "Updated schedule"
+          deleted_schedule: "Deleted schedule"
+          name_required_error: "Please enter a name for this schedule"
+          no_order_cycles_error: "Please select at least one order cycle (drag and drop)"
+          available: "Available"
+          selected: "Selected"
     insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
     out_of_stock:
       reduced_stock_available: Reduced stock available
