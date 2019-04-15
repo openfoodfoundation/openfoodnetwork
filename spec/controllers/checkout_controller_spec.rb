@@ -40,8 +40,8 @@ describe CheckoutController, type: :controller do
     let(:order_cycle_distributed_variants) { double(:order_cycle_distributed_variants) }
 
     before do
-      controller.stub(:current_order).and_return(order)
-      order.stub(:distributor).and_return(distributor)
+      allow(controller).to receive(:current_order).and_return(order)
+      allow(order).to receive(:distributor).and_return(distributor)
       order.order_cycle = order_cycle
 
       allow(OrderCycleDistributedVariants).to receive(:new).with(order_cycle, distributor).and_return(order_cycle_distributed_variants)      
@@ -61,7 +61,6 @@ describe CheckoutController, type: :controller do
       get :edit
       expect(response).to redirect_to spree.cart_path
     end
-
 
     it "does not redirect when items are available and in stock" do
       allow(order).to receive_message_chain(:insufficient_stock_lines, :empty?).and_return true
