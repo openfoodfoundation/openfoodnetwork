@@ -2841,6 +2841,8 @@ ca:
             title: "Distribució"
             distributor: "Distribuïdora:"
             order_cycle: "Cicle de comanda:"
+          line_item_adjustments: "Ajustaments de la línia de comanda"
+          order_adjustments: "Ajustaments de comandes"
           order_total: "Total comanda"
       overview:
         products:
