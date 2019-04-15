@@ -14,6 +14,7 @@ tbody.panel-ctrl {
     i.icon-chevron::before {
       font-size: 1.2rem;
       content: "\f078";
+      padding: 0;
     }
 
     &.error::before {
@@ -109,6 +110,12 @@ tbody.panel-ctrl {
       border-color: #6788a2;
       padding: 0;
       .panel {
+        .actions {
+          .button {
+            display: inline-block;
+          }
+        }
+
         .row{
           margin: 0px -4px;
 
