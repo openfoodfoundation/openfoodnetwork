@@ -2842,6 +2842,8 @@ es:
             title: "Distribución"
             distributor: "Distribuidora:"
             order_cycle: "Ciclo de pedido:"
+          line_item_adjustments: "Ajustes de artículo"
+          order_adjustments: "Ajustes de pedido"
           order_total: "Total del pedido"
       overview:
         products:
