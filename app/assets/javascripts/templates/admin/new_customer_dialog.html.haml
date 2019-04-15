@@ -1,15 +1,15 @@
 #new-customer-dialog
   .text-normal.margin-bottom-30.text-center
-    {{ 'admin.customers.index.add_a_new_customer_for' | t:{ shop_name: CurrentShop.shop.name } }}
+    {{ 'js.admin.customers.index.add_a_new_customer_for' | t:{ shop_name: CurrentShop.shop.name } }}
 
   %form{ name: 'new_customer_form', novalidate: true, ng: { submit: "addCustomer()" }}
 
     .text-center.margin-bottom-30
-      %input.fullwidth{ type: 'email', name: 'email', required: true, placeholder: t('admin.customers.index.customer_placeholder'), ng: { model: "email" } }
+      %input.fullwidth{ type: 'email', name: 'email', required: true, placeholder: "{{ 'js.admin.customers.index.customer_placeholder' | t }}", ng: { model: "email" } }
       %div{ ng: { show: "submitted && new_customer_form.$pristine" } }
         .error{ ng: { show: "(new_customer_form.email.$error.email || new_customer_form.email.$error.required)" } }
-          {{ 'admin.customers.index.valid_email_error' | t }}
+          {{ 'js.admin.customers.index.valid_email_error' | t }}
         .error{ ng: { repeat: "error in errors", bind: "error" } }
 
     .text-center
-      %input.button.red.icon-plus{ type: 'submit', value: t('admin.customers.index.add_customer') }
+      %input.button.red.icon-plus{ type: 'submit', value: "{{ 'js.admin.customers.index.add_customer' | t }}" }

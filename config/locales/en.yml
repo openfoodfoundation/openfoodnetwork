@@ -396,11 +396,7 @@ en:
 
     customers:
       index:
-        add_customer: "Add Customer"
         new_customer: "New Customer"
-        customer_placeholder: "customer@example.org"
-        valid_email_error: Please enter a valid email address
-        add_a_new_customer_for: Add a new customer for %{shop_name}
         code: Code
         duplicate_code: "This code is used already."
         bill_address: "Billing Address"
@@ -2554,6 +2550,12 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           no_order_cycles_error: "Please select at least one order cycle (drag and drop)"
           available: "Available"
           selected: "Selected"
+      customers:
+        index:
+          add_customer: "Add Customer"
+          add_a_new_customer_for: "Add a new customer for %{shop_name}"
+          customer_placeholder: "customer@example.org"
+          valid_email_error: "Please enter a valid email address"
     insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
     out_of_stock:
       reduced_stock_available: Reduced stock available
