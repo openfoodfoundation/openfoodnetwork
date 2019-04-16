@@ -1,6 +1,6 @@
 require "spec_helper"
 
-xfeature "enterprise fee summaries", js: true do
+feature "enterprise fee summaries", js: true do
   include AuthenticationWorkflow
   include WebHelper
 
@@ -86,8 +86,10 @@ xfeature "enterprise fee summaries", js: true do
     end
 
     context "when logged in as enterprise user" do
-      let!(:order) { create(:completed_order_with_fees, order_cycle: order_cycle, distributor: distributor) }
-
+      let!(:order) do
+        create(:completed_order_with_fees, order_cycle: order_cycle,
+                                           distributor: distributor)
+      end
       let(:current_user) { distributor.owner }
 
       it "shows available options for the enterprise" do
@@ -96,60 +98,84 @@ xfeature "enterprise fee summaries", js: true do
     end
   end
 
-  describe "smoke test for generation of report based on permissions" do
-    before do
-      visit spree.new_admin_reports_enterprise_fee_summary_path
+  describe "csv downloads" do
+    around do |example|
+      with_empty_downloads_folder { example.run }
     end
 
-    context "when logged in as admin" do
-      let!(:order) { create(:completed_order_with_fees, order_cycle: order_cycle, distributor: distributor) }
+    describe "smoke test for generation of report based on permissions" do
+      before do
+        visit spree.new_admin_reports_enterprise_fee_summary_path
+      end
+
+      context "when logged in as admin" do
+        let!(:order) do
+          create(:completed_order_with_fees, order_cycle: order_cycle,
+                                             distributor: distributor)
+        end
+        let(:current_user) { create(:admin_user) }
+
+        it "generates file with data for all enterprises" do
+          check I18n.t("filters.report_format_csv", scope: i18n_scope)
+          click_on I18n.t("filters.generate_report", scope: i18n_scope)
+
+          expect(downloaded_filename).to include ".csv"
+          expect(downloaded_content).to have_content(distributor.name)
+        end
+      end
+
+      context "when logged in as enterprise user" do
+        let!(:order) do
+          create(:completed_order_with_fees, order_cycle: order_cycle,
+                                             distributor: distributor)
+        end
+        let!(:other_order) do
+          create(:completed_order_with_fees, order_cycle: other_order_cycle,
+                                             distributor: other_distributor)
+        end
+        let(:current_user) { distributor.owner }
+
+        it "generates file with data for the enterprise" do
+          check I18n.t("filters.report_format_csv", scope: i18n_scope)
+          click_on I18n.t("filters.generate_report", scope: i18n_scope)
+
+          expect(downloaded_filename).to include ".csv"
+          csv_content = downloaded_content
+          expect(csv_content).to have_content(distributor.name)
+          expect(csv_content).not_to have_content(other_distributor.name)
+        end
+      end
+    end
+
+    describe "smoke test for filtering report based on filters" do
+      let!(:second_distributor) { create(:distributor_enterprise) }
+      let!(:second_order_cycle) { create(:simple_order_cycle, coordinator: second_distributor) }
+
+      let!(:order) do
+        create(:completed_order_with_fees, order_cycle: order_cycle,
+                                           distributor: distributor)
+      end
+      let!(:second_order) do
+        create(:completed_order_with_fees, order_cycle: second_order_cycle,
+                                           distributor: second_distributor)
+      end
 
       let(:current_user) { create(:admin_user) }
 
-      it "generates file with data for all enterprises" do
+      before do
+        visit spree.new_admin_reports_enterprise_fee_summary_path
+      end
+
+      it "generates file with data for selected order cycle" do
+        select order_cycle.name, from: "report_order_cycle_ids"
         check I18n.t("filters.report_format_csv", scope: i18n_scope)
         click_on I18n.t("filters.generate_report", scope: i18n_scope)
-        expect(page.response_headers['Content-Type']).to eq "text/csv"
-        expect(page.body).to have_content(distributor.name)
+
+        expect(downloaded_filename).to include ".csv"
+        csv_content = downloaded_content
+        expect(csv_content).to have_content(distributor.name)
+        expect(csv_content).not_to have_content(second_distributor.name)
       end
-    end
-
-    context "when logged in as enterprise user" do
-      let!(:order) { create(:completed_order_with_fees, order_cycle: order_cycle, distributor: distributor) }
-      let!(:other_order) { create(:completed_order_with_fees, order_cycle: other_order_cycle, distributor: other_distributor) }
-
-      let(:current_user) { distributor.owner }
-
-      it "generates file with data for the enterprise" do
-        check I18n.t("filters.report_format_csv", scope: i18n_scope)
-        click_on I18n.t("filters.generate_report", scope: i18n_scope)
-        expect(page.response_headers['Content-Type']).to eq "text/csv"
-        expect(page.body).to have_content(distributor.name)
-        expect(page.body).not_to have_content(other_distributor.name)
-      end
-    end
-  end
-
-  describe "smoke test for filtering report based on filters" do
-    let!(:second_distributor) { create(:distributor_enterprise) }
-    let!(:second_order_cycle) { create(:simple_order_cycle, coordinator: second_distributor) }
-
-    let!(:order) { create(:completed_order_with_fees, order_cycle: order_cycle, distributor: distributor) }
-    let!(:second_order) { create(:completed_order_with_fees, order_cycle: second_order_cycle, distributor: second_distributor) }
-
-    let(:current_user) { create(:admin_user) }
-
-    before do
-      visit spree.new_admin_reports_enterprise_fee_summary_path
-    end
-
-    it "generates file with data for selected order cycle" do
-      select order_cycle.name, from: "report_order_cycle_ids"
-      check I18n.t("filters.report_format_csv", scope: i18n_scope)
-      click_on I18n.t("filters.generate_report", scope: i18n_scope)
-      expect(page.response_headers['Content-Type']).to eq "text/csv"
-      expect(page.body).to have_content(distributor.name)
-      expect(page.body).not_to have_content(second_distributor.name)
     end
   end
 
