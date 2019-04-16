@@ -489,7 +489,7 @@ describe Spree::Order do
       end
 
       it "finds only orders not in specified state" do
-        o = FactoryBot.create(:completed_order_with_totals)
+        o = FactoryBot.create(:completed_order_with_totals, distributor: create(:distributor_enterprise))
         o.cancel!
         Spree::Order.not_state(:canceled).should_not include o
       end
