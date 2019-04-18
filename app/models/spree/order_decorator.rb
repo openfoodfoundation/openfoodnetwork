@@ -316,32 +316,21 @@ Spree::Order.class_eval do
     complete? && distributor.andand.allow_order_changes? && order_cycle.andand.open?
   end
 
-  # Override of existing Spree method. Can remove when we reach 2-0-stable
-  # See commit: https://github.com/spree/spree/commit/5fca58f658273451193d5711081d018c317814ed
-  # Allows GatewayError to show useful error messages in checkout
-  def process_payments!
-    pending_payments.each do |payment|
-      break if payment_total >= total
-
-      payment.process!
-
-      if payment.completed?
-        self.payment_total += payment.amount
-      end
-    end
-  rescue Spree::Core::GatewayError => e # This section changed
-    result = !!Spree::Config[:allow_checkout_on_gateway_error]
-    errors.add(:base, e.message) and return result
-  end
-
-  # Override or Spree method. Used to prevent payments on subscriptions from being processed in the normal way.
-  # ie. they are 'hidden' from processing logic until after the order cycle has closed.
-  def pending_payments
-    return [] if subscription.present? && order_cycle.orders_close_at.andand > Time.zone.now
-    payments.select {|p| p.state == "checkout"} # Original definition
+  # Override Spree method to allow unpaid orders to be completed.
+  # Subscriptions place orders at the beginning of an order cycle. They need to
+  # be completed to draw from stock levels and trigger emails.
+  # Spree doesn't allow this. Other options would be to introduce an additional
+  # order state or implement a special proxy payment method.
+  # https://github.com/openfoodfoundation/openfoodnetwork/pull/3012#issuecomment-438146484
+  def payment_required?
+    total.to_f > 0.0 && !skip_payment_for_subscription?
   end
 
   private
+
+  def skip_payment_for_subscription?
+    subscription.present? && order_cycle.orders_close_at.andand > Time.zone.now
+  end
 
   def address_from_distributor
     address = distributor.address.clone
