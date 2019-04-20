@@ -1,6 +1,7 @@
 angular.module('admin.enterpriseFees').controller 'enterpriseFeesCtrl', ($scope, $http, $window, enterprises, tax_categories, calculators) ->
   $scope.enterprises = enterprises
   $scope.tax_categories =  [{id: -1, name: ('js.admin.enterprise_fees.inherit_from_product' | t) }].concat tax_categories
+  $scope.tax_categories =  [{id: -1, name: t('js.admin.enterprise_fees.inherit_from_product') }].concat tax_categories
   $scope.calculators = calculators
 
   $scope.enterpriseFeesUrl = ->
