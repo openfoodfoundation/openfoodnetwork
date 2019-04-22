@@ -14,6 +14,7 @@ class Exchange < ActiveRecord::Base
 
   validates_presence_of :order_cycle, :sender, :receiver
   validates_uniqueness_of :sender_id, scope: [:order_cycle_id, :receiver_id, :incoming]
+  validates_length_of :pickup_instructions, :maximum => 255
 
   after_save :refresh_products_cache
   after_destroy :refresh_products_cache_from_destroy
