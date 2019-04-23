@@ -775,7 +775,7 @@ GEM
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
-    whenever (0.10.0)
+    whenever (0.11.0)
       chronic (>= 0.6.3)
     wicked_pdf (1.1.0)
     wkhtmltopdf-binary (0.12.4)
