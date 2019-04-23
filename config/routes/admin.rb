@@ -1,10 +1,5 @@
 Openfoodnetwork::Application.routes.draw do
   namespace :admin do
-
-    authenticated :spree_user, -> user { user.superadmin? } do
-      mount DelayedJobWeb, at: '/delayed_job'
-    end
-
     resources :bulk_line_items
 
     resources :order_cycles do

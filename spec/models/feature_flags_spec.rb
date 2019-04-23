@@ -7,7 +7,7 @@ describe FeatureFlags do
   describe '#product_import_enabled?' do
     context 'when the user is superadmin' do
       before do
-        allow(user).to receive(:superadmin?) { true }
+        allow(user).to receive(:has_spree_role?).with('admin') { true }
       end
 
       it 'returns true' do
@@ -17,7 +17,7 @@ describe FeatureFlags do
 
     context 'when the user is not superadmin' do
       before do
-        allow(user).to receive(:superadmin?) { false }
+        allow(user).to receive(:has_spree_role?).with('admin') { false }
       end
 
       it 'returns false' do

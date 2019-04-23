@@ -2842,8 +2842,6 @@ en_GB:
             title: "Distribution"
             distributor: "Distributor:"
             order_cycle: "Order cycle:"
-          line_item_adjustments: "Line Item Adjustments"
-          order_adjustments: "Order Adjustments"
           order_total: "Order Total"
       overview:
         products:

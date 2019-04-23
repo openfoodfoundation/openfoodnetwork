@@ -20,13 +20,6 @@ Spree.config do |config|
   # Auto-capture payments. Without this option, payments must be manually captured in the paypal interface.
   config.auto_capture = true
   #config.override_actionmailer_config = false
-
-  # S3 settings
-  config.s3_bucket = ENV['S3_BUCKET'] if ENV['S3_BUCKET']
-  config.s3_access_key = ENV['S3_ACCESS_KEY'] if ENV['S3_ACCESS_KEY']
-  config.s3_secret = ENV['S3_SECRET'] if ENV['S3_SECRET']
-  config.use_s3 = true if ENV['S3_ACCESS_KEY'] && ENV['S3_SECRET']
-  config.s3_protocol = ENV.fetch('S3_PROTOCOL', 'https')
 end
 
 # Don't log users out when setting a new password

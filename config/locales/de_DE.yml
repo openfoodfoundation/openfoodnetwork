@@ -2841,9 +2841,6 @@ de_DE:
             title: "Verteilung"
             distributor: "Verteiler:"
             order_cycle: "Bestellzyklus:"
-          line_item_adjustments: "Anpassungen der Werbebuchung"
-          order_adjustments: "Bestellanpassungen"
-          order_total: "Auftrag insgesamt"
       overview:
         products:
           active_products:

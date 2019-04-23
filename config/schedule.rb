@@ -21,11 +21,11 @@ every 1.day, at: '12:05am' do
 end
 
 every 1.day, at: '2:45am' do
-  rake 'db2fog:clean' if ENV['S3_BACKUPS_BUCKET']
+  rake 'db2fog:clean'
 end
 
 every 4.hours do
-  rake 'db2fog:backup' if ENV['S3_BACKUPS_BUCKET']
+  rake 'db2fog:backup'
 end
 
 every 5.minutes do
