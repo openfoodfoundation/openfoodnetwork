@@ -11,6 +11,7 @@ angular.module("admin.enterprises", [
   'admin.dropdown',
   'ngSanitize']
 )
+# For more options: https://github.com/textAngular/textAngular/blob/master/src/textAngularSetup.js
 .config [
   '$provide', ($provide) ->
     $provide.decorator 'taTranslations', [
