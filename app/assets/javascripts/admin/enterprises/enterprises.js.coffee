@@ -18,8 +18,8 @@ angular.module("admin.enterprises", [
       '$delegate'
       (taTranslations) ->
         taTranslations.insertLink = {
-          tooltip: 'Insert / edit link',
-          dialogPrompt: "Please enter a URL to insert"
+          tooltip: "{{'admin.enterprises.form.shop_preferences.shopfront_message_link_tooltip' | t}}",
+          dialogPrompt: "{{'admin.enterprises.form.shop_preferences.shopfront_message_link_prompt' | t}}"
         }
         taTranslations
     ]
