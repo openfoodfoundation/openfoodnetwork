@@ -27,12 +27,20 @@ en_BE:
           attributes:
             orders_close_at:
               after_orders_open_at: must be after open date
+        variant_override:
+          count_on_hand:
+            using_producer_stock_settings_but_count_on_hand_set: "must be blank because using producer stock settings"
+            on_demand_but_count_on_hand_set: "must be blank if on demand"
+            limited_stock_but_no_count_on_hand: "must be specified because forcing limited stock"
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
+        start_at: "Start"
+        end_at: "End"
         distributor_ids: "Hubs"
         producer_ids: "Producers"
         order_cycle_ids: "Order Cycles"
+        enterprise_fee_ids: "Fees Names"
         shipping_method_ids: "Shipping Methods"
         payment_method_ids: "Payment Methods"
     errors:
@@ -78,6 +86,13 @@ en_BE:
   models:
     order_cycle:
       cloned_order_cycle_name: "COPY OF %{order_cycle}"
+  validators:
+    date_time_string_validator:
+      not_string_error: "must be a string"
+      invalid_format_error: "must be valid"
+    integer_array_validator:
+      not_array_error: "must be an array"
+      invalid_element_error: "must contain only valid integers"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
@@ -205,6 +220,7 @@ en_BE:
   admin_and_handling: Admin & Handling
   profile: Profile
   supplier_only: Supplier Only
+  has_shopfront: Has Shopfront
   weight: Weight
   volume: Volume
   items: Items
@@ -226,9 +242,12 @@ en_BE:
   quantity: Quantity
   pick_up: Pick up
   copy: Copy
+  change_my_password: "Change my password"
+  update_password: "Update password"
   password_confirmation: Password Confirmation
   reset_password_token: Reset password token
   expired: has expired, please request a new one
+  back_to_payments_list: "Back to Payments List"
   actions:
     create_and_add_another: "Create and Add Another"
     create: "Create"
@@ -354,6 +373,7 @@ en_BE:
         status: "Status"
         diff: "Diff"
         error: "Error"
+        enable_products_cache: "Enable Products Cache?"
     invoice_settings:
       edit:
         title: Invoice Settings
@@ -478,6 +498,7 @@ en_BE:
         inventory_no_permission: you do not have permission to create inventory for this producer
         none_saved: did not save any products successfully
         line_number: "Line %{number}:"
+        encoding_error: "Please check the language setting of your source file and ensure it is saved with UTF-8 encoding"
         unexpected_error: "Product Import encountered an unexpected error whilst opening the file: %{error_message}"
       index:
         select_file: Select a spreadsheet to upload
@@ -583,6 +604,7 @@ en_BE:
         tip: "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required."
         shared: "Shared Resource?"
         order_no: "Order No."
+        order_date: "Completed at"
         max: "Max"
         product_unit: "Product: Unit"
         weight_volume: "Weight/Volume"
@@ -723,7 +745,9 @@ en_BE:
           close_date: Close Date
         social:
           twitter_placeholder: eg. @the_prof
+          instagram_placeholder: eg. the_prof
           facebook_placeholder: eg. www.facebook.com/PageNameHere
+          linkedin_placeholder: eg. www.linkedin.com/in/YourNameHere
         stripe_connect:
           connect_with_stripe: "Connect with Stripe"
           stripe_connect_intro: "To accept payments using credit card, you will need to connect your stripe account to the Open Food Network. Use the button to the right to get started."
@@ -994,6 +1018,9 @@ en_BE:
         description: Invoices for import into Xero
       packing:
         name: Packing Reports
+      enterprise_fee_summary:
+        name: "Enterprise Fee Summary"
+        description: "Summary of Enterprise Fees collected"
     subscriptions:
       subscriptions: Subscriptions
       new: New Subscription
@@ -1027,6 +1054,7 @@ en_BE:
         this_is_an_estimate: |
             The displayed prices are only an estimate and calculated at the time the subscription is changed.
             If you change prices or fees, orders will be updated, but the subscription will still display the old values.
+        not_in_open_and_upcoming_order_cycles_warning: "There are no open or upcoming order cycles for this product."
       details:
         details: Details
         invalid_error: Oops! Please fill in all of the required fields...
@@ -1041,6 +1069,7 @@ en_BE:
         details: Details
         address: Address
         products: Products
+        no_open_or_upcoming_order_cycle: "No Upcoming Order Cycle"
       product_already_in_order: This product has already been added to the order. Please edit the quantity directly.
       orders:
         number: Number
@@ -1210,6 +1239,7 @@ en_BE:
   no_shipping_or_payment: no shipping or payment methods
   unconfirmed: unconfirmed
   days: days
+  authorization_failure: "Authorization Failure"
   label_shop: "Shop"
   label_shops: "Shops"
   label_map: "Map"
@@ -1585,6 +1615,7 @@ en_BE:
   products_available: Available?
   products_producer: "Producer"
   products_price: "Price"
+  name_or_sku: "NAME OR SKU"
   register_title: Register
   sell_title: "Register"
   sell_headline: "Get on the Open Food Network!"
@@ -1642,6 +1673,7 @@ en_BE:
   orders_bought_edit_button: Edit confirmed items
   orders_bought_already_confirmed: "* already confirmed"
   orders_confirm_cancel: Are you sure you want to cancel this order?
+  order_processed_successfully: "Your order has been processed successfully"
   products_cart_distributor_choice: "Distributor for your order:"
   products_cart_distributor_change: "Your distributor for this order will be changed to %{name} if you add this product to your cart."
   products_cart_distributor_is: "Your distributor for this order is %{name}."
@@ -1722,11 +1754,13 @@ en_BE:
         registration_about_us: "'About Us' text"
         registration_outcome_headline: "What do I get?"
         registration_outcome1_html: "Your profile helps people <strong>find</strong> and <strong>contact</strong> you on the Open Food Network."
+        registration_outcome2: "Use this space to tell the story of your enterprise, to help drive connections to your social and online presence."
         registration_outcome3: "It's also the first step towards trading on the Open Food Network, or opening an online store."
         registration_action: "Let's get started!"
       details:
         title: "Details"
         headline: "Let's Get Started"
+        enterprise: "Woot! First need to know a little bit about your enterprise:"
         producer: "Woot! First we need to know a little bit about your farm:"
         enterprise_name_field: "Enterprise Name:"
         producer_name_field: "Farm Name:"
@@ -1864,6 +1898,7 @@ en_BE:
   ok: OK
   not_visible: not visible
   you_have_no_orders_yet: "You have no orders yet"
+  show_only_complete_orders: "Only show complete orders"
   successfully_created: '%{resource} has been successfully created! '
   successfully_removed: ' %{resource} has been successfully removed!'
   successfully_updated: '%{resource} has been successfully updated!'
@@ -1994,6 +2029,8 @@ en_BE:
   order_cycles: "Order Cycles"
   enterprise_relationships: "Enterprise permissions"
   remove_tax: "Remove tax"
+  first_name_begins_with: "First name begins with"
+  last_name_begins_with: "Last name begins with"
   enterprise_tos_link: "Enterprise Terms of Service link"
   enterprise_tos_message: "We want to work with people that share our aims and values. As such we ask new enterprises to agree to our "
   enterprise_tos_link_text: "Terms of Service."
@@ -2200,6 +2237,8 @@ en_BE:
   shipping_methods: "Shipping Methods"
   payment_methods: "Payment Methods"
   payment_method_fee: "Transaction fee"
+  payment_processing_failed: "Payment could not be processed, please check the details you entered"
+  payment_updated: "Payment Updated"
   inventory_settings: "Inventory Settings"
   tag_rules: "Tag Rules"
   shop_preferences: "Shop Preferences"
@@ -2394,6 +2433,11 @@ en_BE:
       orders:
         index:
           per_page: "%{results} per page"
+          view_file: "View File"
+          compiling_invoices: "Compiling Invoices"
+          bulk_invoice_created: "Bulk Invoice created"
+          bulk_invoice_failed: "Failed to create Bulk Invoice"
+          please_wait: "Please wait until the PDF is ready before closing this modal."
         order_state:
           address: "address"
           adjustments: "adjustments"
@@ -2445,6 +2489,7 @@ en_BE:
         'yes': "On demand"
     variant_overrides:
       on_demand:
+        use_producer_settings: "Use producer stock settings"
         'yes': "Yes"
         'no': "No"
       inventory_products: "Inventory Products"
@@ -2510,64 +2555,209 @@ en_BE:
   order_management:
     reports:
       enterprise_fee_summary:
+        date_end_before_start_error: "must be after start"
+        parameter_not_allowed_error: "You are not authorized to use one or more selected filters for this report."
         fee_calculated_on_transfer_through_all: "All"
         fee_calculated_on_transfer_through_entire_orders: "Entire Orders through %{distributor}"
+        tax_category_various: "Various"
+        fee_type:
+          payment_method: "Payment Transaction"
+          shipping_method: "Shipment"
         fee_placements:
           supplier: "Incoming"
           distributor: "Outgoing"
           coordinator: "Coordinator"
+        tax_category_name:
+          shipping_instance_rate: "Platform Rate"
         formats:
           csv:
             header:
               fee_type: "Fee Type"
+              enterprise_name: "Enterprise Owner"
+              fee_name: "Fee Name"
               customer_name: "Customer"
+              fee_placement: "Fee Placement"
+              fee_calculated_on_transfer_through_name: "Fee Calc on Transfer Through"
               tax_category_name: "Tax Category"
+              total_amount: "€€ SUM"
           html:
             header:
               fee_type: "Fee Type"
+              enterprise_name: "Enterprise Owner"
+              fee_name: "Fee Name"
               customer_name: "Customer"
+              fee_placement: "Fee Placement"
+              fee_calculated_on_transfer_through_name: "Fee Calc on Transfer Through"
               tax_category_name: "Tax Category"
+              total_amount: "€€ SUM"
+        invalid_filter_parameters: "The filters you selected for this report are invalid."
   order: "Order"
   distribution: "Distribution"
+  order_details: "Order Details"
+  customer_details: "Customer Details"
+  adjustments: "Adjustments"
+  payments: "Payments"
   payment: "Payment"
   payment_method: "Payment Method"
+  shipment: "Shipment"
+  shipment_inc_vat: "Shipment including VAT"
+  shipping_tax_rate: "Shipping Tax Rate"
   category: "Category"
   delivery: "Delivery"
+  temperature_controlled: "Temperature Controlled"
   new_product: "New Product"
   administration: "Administration"
+  logged_in_as: "Logged in as"
   account: "Account"
   logout: "Logout"
+  date_range: "Date Range"
+  status: "status"
+  new: "New"
+  start: "Start"
+  stop: "Stop"
   first: "First"
   previous: "Previous"
   last: "Last"
   spree:
+    your_order_is_empty_add_product: "Your order is empty, please search for and add a product above"
+    add_product: "Add Product"
+    name_or_sku: "Name or SKU (enter at least first 4 characters of product name)"
     resend: Resend
+    back_to_orders_list: Back To Orders List
+    select_stock: "Select stock"
+    location: "Location"
+    count_on_hand: "Count On Hand"
     quantity: "Quantity"
+    package_from: "package from"
+    item_description: "Item Description"
     price: "Price"
     total: "Total"
     edit: "Edit"
+    split: "Split"
     delete: "Delete"
+    cannot_set_shipping_method_without_address: "Cannot set shipping method until customer details are provided."
+    no_tracking_present: "No tracking details provided."
+    order_total: "Order Total"
+    customer_details: "Customer Details"
+    customer_search: "Customer Search"
+    choose_a_customer: "Choose a customer"
     account: "Account"
     billing_address: "Billing Address"
     shipping_address: "Shipping Address"
+    first_name: "First name"
+    last_name: "Last name"
+    street_address: "Street Address"
+    street_address_2: "Street Address (cont'd)"
     city: "City"
+    zip: "Zip"
     country: "Country"
     state: "State"
     phone: "Phone"
     update: "Update"
+    use_billing_address: "Use Billing Address"
+    adjustments: "Adjustments"
     continue: "Continue"
+    fill_in_customer_info: "Please fill in customer info"
+    new_payment: "New Payment"
+    configurations: "Configurations"
+    general_settings: "General Settings"
+    site_name: "Site Name"
+    site_url: "Site URL"
+    default_seo_title: "Default Seo Title"
+    default_meta_description: "Default Meta Description"
+    default_meta_keywords: "Default Meta Keywords"
+    security_settings: "Security Settings"
+    allow_ssl_in_development_and_test: "Allow SSL to be used when in development and test modes"
+    allow_ssl_in_production: "Allow SSL to be used in production mode"
+    allow_ssl_in_staging: "Allow SSL to be used in staging mode"
+    check_for_spree_alerts: "Check for Spree alerts"
+    currency_decimal_mark: "Currency decimal mark"
+    currency_settings: "Currency Settings"
+    currency_symbol_position: Put "currency symbol before or after euros amount?"
+    currency_thousands_separator: "Currency thousands separator"
+    hide_cents: "Hide cents"
+    display_currency: "Display currency"
+    choose_currency: "Choose Currency"
+    mail_method_settings: "Mail Method Settings"
+    general: "General"
+    enable_mail_delivery: "Enable Mail Delivery"
+    send_mails_as: "Send Mails As"
+    smtp_send_all_emails_as_from_following_address: "Send all mails as from the following address."
+    send_copy_of_all_mails_to: "Send Copy of All Mails To"
+    smtp_send_copy_to_this_addresses: "Sends a copy of all outgoing mails to this address. For multiple addresses, separate with commas."
+    intercept_email_address: "Intercept Email Address"
+    intercept_email_instructions: "Override email recipient and replace with this address."
+    smtp: "SMTP"
+    smtp_domain: "SMTP Domain"
+    smtp_mail_host: "SMTP Mail Host"
+    smtp_port: "SMTP Port"
+    secure_connection_type: "Secure Connection Type"
+    smtp_authentication_type: "SMTP Authentication Type"
+    smtp_username: "SMTP Username"
+    smtp_password: "SMTP Password"
+    image_settings: "Image Settings"
+    image_settings_warning: "You will need to regenerate thumbnails if you update the paperclip styles. Use rake paperclip:refresh:thumbnails CLASS=Spree::Image to do this."
+    attachment_default_style: Attachments Style
+    attachment_default_url: "Attachments Default URL"
+    attachment_path: "Attachments Path"
+    attachment_styles: "Paperclip Styles"
+    attachment_url: "Attachments URL"
+    add_new_style: "Add New Style"
+    image_settings_updated: "Image Settings successfully updated."
     tax_categories: "Tax Categories"
+    listing_tax_categories: "Listing Tax Categories"
+    back_to_tax_categories_list: "Back To Tax Categories List"
     tax rate: "Tax Rates"
+    new_tax_rate: "New Tax Rate"
     tax_category: "Tax Category"
+    rate: "Rate"
+    tax_rate_amount_explanation: "Tax rates are a decimal amount to aid in calculations, (i.e. if the tax rate is 5% then enter 0.05)"
+    included_in_price: "Included in Price"
+    show_rate_in_label: "Show rate in label"
+    back_to_tax_rates_list: "Back to Tax Rates List"
     tax_settings: "Tax Settings"
+    zones: "Zones"
+    new_zone: "New Zone"
+    default_tax: "Default Tax"
+    default_tax_zone: "Default Tax Zone"
+    country_based: "Country Based"
+    state_based: "State Based"
+    countries: "Countries"
+    listing_countries: "Listing Countries"
+    iso_name: "ISO Name"
+    states_required: "States Required"
+    editing_country: "Editing Country"
+    back_to_countries_list: "Back to Countries List"
+    states: "States"
+    abbreviation: "Abbreviation"
+    new_state: "New State"
     payment_methods: "Payment Methods"
+    new_payment_method: "New Payment Method"
+    provider: "Provider"
+    taxonomies: "Taxonomies"
+    new_taxonomy: "New Taxonomy"
+    back_to_taxonomies_list: "Back to Taxonomies List"
     shipping_methods: "Shipping Methods"
     shipping_categories: "Shipping Categories"
+    new_shipping_category: "New Shipping Category"
+    back_to_shipping_categories: "Back To Shipping Categories"
+    analytics_trackers: "Analytics Trackers"
+    no_trackers_found: "No Trackers Found"
+    new_tracker: "New Tracker"
+    add_one: "Add One"
+    google_analytics_id: "Analytics ID"
+    back_to_trackers_list: "Back to Trackers List"
     name: "Name"
     description: "Description"
     type: "Type"
+    default: "default"
     calculator: "Calculator"
+    zone: "Zone"
+    display: "Display"
+    environment: "Environment"
+    active: "Active"
     nore: "More"
+    no_results: "No results"
     create: "Create"
     loading: "Loading"
     email: Email
@@ -2575,6 +2765,7 @@ en_BE:
     my_account: "My account"
     date: "Date"
     time: "Time"
+    inventory_error_flash_for_insufficient_quantity: "An item in your cart has become unavailable."
     inventory: Inventory
     zipcode: Postcode
     weight: Weight (per kg)
@@ -2594,13 +2785,17 @@ en_BE:
         bulk_order_management: "Bulk Order Management"
         subscriptions: "Subscriptions"
         products: "Products"
+        option_types: "Option Types"
         properties: "Properties"
+        prototypes: "Prototypes"
         variant_overrides: "Inventory"
         reports: "Reports"
+        configuration: "Configuration"
         users: "Users"
         roles: "Roles"
         order_cycles: "Order Cycles"
         enterprises: "Enterprises"
+        enterprise_relationships: "Permissions"
         customers: "Customers"
         groups: "Groups"
       product_properties:
@@ -2622,6 +2817,7 @@ en_BE:
           no_orders_found: "No Orders Found"
           results_found: "%{number} Results found."
           viewing: "Viewing %{start} to %{end}."
+          print_invoices: "Print Invoices"
         sortable_header:
           payment_state: "Payment State"
           shipment_state: "Shipment State"
@@ -2640,10 +2836,14 @@ en_BE:
             title: "Distribution"
             distributor: "Distributor:"
             order_cycle: "Order cycle:"
+          line_item_adjustments: "Line Item Adjustments"
+          order_adjustments: "Order Adjustments"
+          order_total: "Order Total"
       overview:
         products:
           active_products:
             zero: "You don't have any active products."
+            one: "You have one active product"
             other: "You have %{count} active products"
         order_cycles:
           order_cycles: "Order Cycles"
@@ -2654,6 +2854,12 @@ en_BE:
             other: "You have %{count} active order cycles."
           manage_order_cycles: "MANAGE ORDER CYCLES"
       payment_methods:
+        new:
+          new_payment_method: "New Payment Method"
+          back_to_payment_methods_list: "Back To Payment Methods List"
+        edit:
+          editing_payment_method: "Editing Payment Method"
+          back_to_payment_methods_list: "Back To Payment Methods List"
         stripe_connect:
           enterprise_select_placeholder: Choose...
           loading_account_information_msg: Loading account information from stripe, please wait...
@@ -2713,18 +2919,30 @@ en_BE:
           bulk_coop_packing_sheets: 'Bulk Co-op - Packing Sheets'
           bulk_coop_customer_payments: 'Bulk Co-op - Customer Payments'
         enterprise_fee_summaries:
+          filters:
+            date_range: "Date Range"
+            report_format_csv: "Download as CSV"
+            generate_report: "Generate Report"
           report:
             none: "None"
+            select_and_search: "Select filters and click on GENERATE REPORT to access your data."
       users:
         index:
+          listing_users: "Listing Users"
+          new_user: "New User"
           user: "User"
           enterprise_limit: "Enterprise Limit"
           search: "Search"
           email: "Email"
+        edit:
+          editing_user: "Editing User"
+          back_to_users_list: "Back To Users List"
+          general_settings: "General Settings"
         form:
           email: "Email"
           roles: "Roles"
           enterprise_limit: "Enterprise Limit"
+          confirm_password: "Confirm Password"
           password: "Password"
         email_confirmation:
           confirmation_pending: "Email confirmation is pending. We've sent a confirmation email to %{address}."
@@ -2758,6 +2976,7 @@ en_BE:
         item: "Already ordered in this order cycle"
       line_item:
         insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
+        out_of_stock: "Out of Stock"
     shipment_states:
       backorder: backorder
       partial: partial
