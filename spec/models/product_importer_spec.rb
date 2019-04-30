@@ -122,7 +122,7 @@ describe ProductImport::ProductImporter do
 
       buns = Spree::Product.find_by_name('Hot Cross Buns')
       expect(buns.supplier).to eq enterprise
-      expect(buns.on_hand).to eq 0
+      expect(buns.on_hand).to eq 7
       expect(buns.price).to eq 3.50
       expect(buns.unit_value).to eq 1
       expect(buns.variant_unit).to eq 'items'
