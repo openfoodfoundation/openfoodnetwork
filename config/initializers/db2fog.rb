@@ -7,3 +7,5 @@ DB2Fog.config = {
     :directory             => ENV['S3_BACKUPS_BUCKET'],
     :provider              => 'AWS'
 }
+
+DB2Fog.config[:region] = ENV['S3_REGION'] if ENV['S3_REGION']
