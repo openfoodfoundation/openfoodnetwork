@@ -6,7 +6,7 @@
   = render "admin/enterprise_fees/data"
   = render :partial => 'spree/shared/error_messages', :locals => { :target => @enterprise_fee_set }
 
-  %input.search{'ng-model' => 'query', 'placeholder' => 'Search'}
+  %input.search{'ng-model' => 'query', 'placeholder' => t('.search')}
 
   %table.index#listing_enterprise_fees
     %thead

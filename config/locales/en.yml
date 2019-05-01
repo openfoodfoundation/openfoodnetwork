@@ -501,6 +501,7 @@ en:
         tax_category: Tax Category
         calculator: Calculator
         calculator_values: Calculator Values
+        search: "Search"
 
     enterprise_groups:
       index:
@@ -2572,6 +2573,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           resolve: Resolve
       new_tag_rule_dialog:
         select_rule_type: "Select a rule type:"
+      enterprise_fees:
+        inherit_from_product: "Inherit From Product"
       orders:
         index:
           per_page: "%{results} per page"
