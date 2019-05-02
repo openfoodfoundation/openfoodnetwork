@@ -89,6 +89,9 @@ describe Spree::OrdersController, type: :controller do
       allow(controller).to receive(:current_order).and_return order
       allow(order).to receive_message_chain(:line_items, :empty?).and_return true
       allow(order).to receive(:insufficient_stock_lines).and_return []
+      allow(order).to receive(:line_item_variants).and_return []
+      allow(order_cycle).to receive(:variants_distributed_by).and_return []
+
       session[:access_token] = order.token
       spree_get :edit
       expect(response).to redirect_to shop_path
@@ -153,6 +156,18 @@ describe Spree::OrdersController, type: :controller do
       describe "when an item has insufficient stock" do
         before do
           variant.update_attributes! on_hand: 3
+        end
+
+        it "displays a flash message when we view the cart" do
+          spree_get :edit
+          expect(response.status).to eq 200
+          expect(flash[:error]).to eq("An item in your cart has become unavailable.")
+        end
+      end
+
+      describe "when an item is unavailable" do
+        before do
+          order.order_cycle = create(:simple_order_cycle, distributors: [d], variants: [])
         end
 
         it "displays a flash message when we view the cart" do

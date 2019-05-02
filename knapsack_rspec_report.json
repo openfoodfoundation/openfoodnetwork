@@ -164,7 +164,7 @@
   "spec/serializers/admin/for_order_cycle/enterprise_serializer_spec.rb": 0.7021048069000244,
   "spec/features/admin/tax_settings_spec.rb": 0.4577906131744385,
   "spec/models/spree/product_property_spec.rb": 0.4479696750640869,
-  "spec/lib/open_food_network/distribution_change_validator_spec.rb": 0.2241048812866211,
+  "spec/services/order_cycle_distributed_variants_spec.rb": 0.2241048812866211,
   "spec/models/spree/option_value_spec.rb": 0.5916051864624023,
   "spec/controllers/spree/api/line_items_controller_spec.rb": 0.5350861549377441,
   "spec/helpers/order_cycles_helper_spec.rb": 0.40488767623901367,

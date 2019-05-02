@@ -3065,6 +3065,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       format: ! '%Y-%m-%d'
       js_format: 'yy-mm-dd'
     orders:
+      error_flash_for_unavailable_items: "An item in your cart has become unavailable."
       edit:
         login_to_view_order: "Please log in to view your order."
       bought:
@@ -3072,6 +3073,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       line_item:
         insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
         out_of_stock: "Out of Stock"
+        unavailable_item: "Currently unavailable"
     shipment_states:
       backorder: backorder
       partial: partial

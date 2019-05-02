@@ -14,6 +14,11 @@
         = variant.in_stock? ? t(".insufficient_stock", :on_hand => variant.on_hand) : t(".out_of_stock")
         %br/
 
+    - if @unavailable_order_variants.andand.include? line_item.variant
+      %span.out-of-stock
+        = t(".unavailable_item")
+        %br/
+
   %td.text-right.cart-item-price{"data-hook" => "cart_item_price"}
     = line_item.single_display_amount_with_adjustments.to_html
   %td.text-center.cart-item-quantity{"data-hook" => "cart_item_quantity"}

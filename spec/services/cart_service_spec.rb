@@ -227,21 +227,23 @@ describe CartService do
     describe "checking variant is available under the distributor" do
       let(:product) { double(:product) }
       let(:variant) { double(:variant, product: product) }
+      let(:order_cycle_distributed_variants) { double(:order_cycle_distributed_variants) }
 
-      it "delegates to DistributionChangeValidator, returning true when available" do
-        dcv = double(:dcv)
-        expect(dcv).to receive(:variants_available_for_distribution).with(123, 234).and_return([variant])
-        expect(DistributionChangeValidator).to receive(:new).with(order).and_return(dcv)
+      before do
+        expect(OrderCycleDistributedVariants).to receive(:new).with(234, 123).and_return(order_cycle_distributed_variants)
         cart_service.instance_eval { @distributor = 123; @order_cycle = 234 }
+      end
+
+      it "delegates to OrderCycleDistributedVariants, returning true when available" do
+        expect(order_cycle_distributed_variants).to receive(:available_variants).and_return([variant])
+
         expect(cart_service.send(:check_variant_available_under_distribution, variant)).to be true
         expect(cart_service.errors).to be_empty
       end
 
-      it "delegates to DistributionChangeValidator, returning false and erroring otherwise" do
-        dcv = double(:dcv)
-        expect(dcv).to receive(:variants_available_for_distribution).with(123, 234).and_return([])
-        expect(DistributionChangeValidator).to receive(:new).with(order).and_return(dcv)
-        cart_service.instance_eval { @distributor = 123; @order_cycle = 234 }
+      it "delegates to OrderCycleDistributedVariants, returning false and erroring otherwise" do
+        expect(order_cycle_distributed_variants).to receive(:available_variants).and_return([])        
+
         expect(cart_service.send(:check_variant_available_under_distribution, variant)).to be false
         expect(cart_service.errors.to_a).to eq(["That product is not available from the chosen distributor or order cycle."])
       end
