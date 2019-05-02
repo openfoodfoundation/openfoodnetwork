@@ -2588,7 +2588,7 @@ nl_BE:
               fee_placement: "invulplaats voor de commissie "
               fee_calculated_on_transfer_through_name: "Berekening van de commissie op verdracht door"
               tax_category_name: "Belastingcategorie"
-              total_amount: "$$ SUM"
+              total_amount: "€€ SUM"
           html:
             header:
               fee_type: "Sprookjesachtig type"
@@ -2598,7 +2598,7 @@ nl_BE:
               fee_placement: "invulplaats van de commissie "
               fee_calculated_on_transfer_through_name: "Berekening van de commissie op verdracht door"
               tax_category_name: "Belastingcategorie"
-              total_amount: "$$ SUM"
+              total_amount: "€€ SUM"
         invalid_filter_parameters: "De filters voor dit verslag zijn ongeldig."
   order: "Bestelling"
   distribution: "Distributie"
