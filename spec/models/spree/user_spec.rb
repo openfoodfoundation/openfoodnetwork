@@ -162,4 +162,22 @@ describe Spree.user_class do
       end
     end
   end
+
+  describe '#superadmin?' do
+    let(:user) { create(:user) }
+
+    context 'when the user has an admin spree role' do
+      before { user.spree_roles << Spree::Role.create(name: 'admin') }
+
+      it 'returns true' do
+        expect(user.superadmin?).to eq(true)
+      end
+    end
+
+    context 'when the user does not have an admin spree role' do
+      it 'returns false' do
+        expect(user.superadmin?).to eq(false)
+      end
+    end
+  end
 end

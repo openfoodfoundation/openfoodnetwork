@@ -859,6 +859,8 @@ de_DE:
         welcome_text: 'Erfolgreich erstellt:'
         next_step: Nächster Schritt
         choose_starting_point: 'Wählen Sie Ihr Paket:'
+        profile: 'Profil'
+        producer_profile: 'Erzeuger Profil'
       invite_manager:
         user_already_exists: "Benutzer existiert bereits"
         error: "Etwas ist schief gelaufen"
@@ -2462,6 +2464,7 @@ de_DE:
           pending: "steht aus"
           ready: "fertig"
           shipped: "versendet"
+          canceled: "abgebrochen"
         payment_states:
           balance_due: "Betrag offen"
           completed: "fertig gestellt"
@@ -2838,6 +2841,9 @@ de_DE:
             title: "Verteilung"
             distributor: "Verteiler:"
             order_cycle: "Bestellzyklus:"
+          line_item_adjustments: "Anpassungen der Werbebuchung"
+          order_adjustments: "Bestellanpassungen"
+          order_total: "Auftrag insgesamt"
       overview:
         products:
           active_products:

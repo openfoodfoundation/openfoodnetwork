@@ -40,6 +40,7 @@ fr_BE:
         distributor_ids: "Comptoirs"
         producer_ids: "Producteurs"
         order_cycle_ids: "Cycles de vente"
+        enterprise_fee_ids: "Nom des commissions "
         shipping_method_ids: "Méthodes de livraison"
         payment_method_ids: "Méthodes de paiement"
     errors:
@@ -85,6 +86,13 @@ fr_BE:
   models:
     order_cycle:
       cloned_order_cycle_name: "Copie de %{order_cycle}"
+  validators:
+    date_time_string_validator:
+      not_string_error: "doit être une chaîne"
+      invalid_format_error: "doit être valide "
+    integer_array_validator:
+      not_array_error: "doit être un array"
+      invalid_element_error: "doit contenir uniquement des nombres entiers"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Confirmez l'adresse email pour %{enterprise}"
@@ -212,6 +220,7 @@ fr_BE:
   admin_and_handling: Frais si par commande
   profile: Profil
   supplier_only: Uniquement Producteur
+  has_shopfront: 'A une vitrine '
   weight: Poids
   volume: Volume
   items: Pièces
@@ -233,6 +242,7 @@ fr_BE:
   quantity: Quantité
   pick_up: Retrait
   copy: Copier
+  change_my_password: "Changer mon mot de passe"
   update_password: "Mise à jour du mot de passe"
   password_confirmation: confirmation du mot de passe
   reset_password_token: réinitialisation du mot de passe
@@ -363,6 +373,7 @@ fr_BE:
         status: "Statut"
         diff: "Diff"
         error: "Erreur"
+        enable_products_cache: "Permettre des produits en approvisionnement? "
     invoice_settings:
       edit:
         title: Paramètres de facturation
@@ -627,7 +638,7 @@ fr_BE:
           desc_long: A propos de nous
           desc_long_placeholder: Parlez de vous à vos acheteurs ! Ces informations seront visibles sur votre profil public.
         business_details:
-          abn: SIRET
+          abn: Numéro d'entreprise
           abn_placeholder: 'ex: 404 833 048 00022'
           acn: n° TVA intracommunautaire
           acn_placeholder: 'ex: 404 833 048'
@@ -847,6 +858,8 @@ fr_BE:
         welcome_text: 'Vous avez créé avec succès '
         next_step: Etape suivante
         choose_starting_point: 'Choisir votre type d''entreprise:'
+        profile: 'Profil'
+        producer_profile: 'Profil producteur'
       invite_manager:
         user_already_exists: "Le compte existe déjà"
         error: "Un problème est survenu"
@@ -1006,6 +1019,9 @@ fr_BE:
         description: Factures pour import dans Xero
       packing:
         name: Rapports de préparation des paniers
+      enterprise_fee_summary:
+        name: "Récapitulatif de la commission d'entreprise "
+        description: "Récapitulatif des commissions d'entreprise perçues"
     subscriptions:
       subscriptions: Abonnements
       new: Nouvel abonnement
@@ -1160,7 +1176,7 @@ fr_BE:
   tax_total: "Total taxe (%{rate}) :"
   total_excl_tax: "Total HT :"
   total_incl_tax: "Total TTC :"
-  abn: "SIRET"
+  abn: "Numéro d'entreprise : "
   acn: "n° TVA intracommunautaire"
   invoice_issued_on: "Date de facture :"
   order_number: "N° de facture :"
@@ -1224,6 +1240,7 @@ fr_BE:
   no_shipping_or_payment: pas de méthode de livraison ou de paiement
   unconfirmed: non confirmé
   days: jours
+  authorization_failure: "Echec autorisation "
   label_shop: "Comptoir"
   label_shops: "Comptoirs"
   label_map: "Carte"
@@ -1599,6 +1616,7 @@ fr_BE:
   products_available: Disponible?
   products_producer: "Producteur"
   products_price: "Prix"
+  name_or_sku: "NOM OU NUMÉRO D'ARTICLE "
   register_title: S'inscrire
   sell_title: "S'inscrire"
   sell_headline: "Rejoignez l'Open Food Network !"
@@ -1743,6 +1761,7 @@ fr_BE:
       details:
         title: "Informations"
         headline: "Commençons"
+        enterprise: "Bien! D'abord quelques mots sur votre entreprise"
         producer: "Woohoo! Dites-nous déjà quelques mots à propos de votre ferme:"
         enterprise_name_field: "Nom de l'entreprise :"
         producer_name_field: "Nom de la ferme:"
@@ -1791,7 +1810,7 @@ fr_BE:
         enterprise_long_desc: "Description longue"
         enterprise_long_desc_placeholder: "Vous pouvez ici raconter l'histoire de votre organisation - votre projet, les valeurs que vous défendez. Nous vous conseillons de ne pas dépasser 600 caractères ou 150 mots."
         enterprise_long_desc_length: "%{num} caractères / inférieur à 600 recommandé"
-        enterprise_abn: "SIRET"
+        enterprise_abn: "Numéro d'entreprise "
         enterprise_abn_placeholder: "ex: 404 833 048 00022"
         enterprise_acn: "n° TVA intracommunautaire"
         enterprise_acn_placeholder: "ex: 404 833 048"
@@ -2453,6 +2472,7 @@ fr_BE:
           pending: "en attente"
           ready: "prêt"
           shipped: "envoyé"
+          canceled: "annulé"
         payment_states:
           balance_due: "solde dû"
           completed: "effectué"
@@ -2483,6 +2503,7 @@ fr_BE:
         'yes': "A volonté"
     variant_overrides:
       on_demand:
+        use_producer_settings: "Utiliser les stocks producteur "
         'yes': "Oui"
         'no': "Non"
       inventory_products: "Produits du Catalogue Boutique"
@@ -2548,8 +2569,11 @@ fr_BE:
   order_management:
     reports:
       enterprise_fee_summary:
+        date_end_before_start_error: "Doit être après le départ"
+        parameter_not_allowed_error: "Vous n'êtes pas autorisé à employer un ou plusieurs filtres de ce rapport."
         fee_calculated_on_transfer_through_all: "Tous"
         fee_calculated_on_transfer_through_entire_orders: "Commandes complétées par %{distributor}"
+        tax_category_various: "Autres"
         fee_type:
           payment_method: "Transaction de paiement"
           shipping_method: "Envoi"
@@ -2557,76 +2581,197 @@ fr_BE:
           supplier: "Produits entrants (pouvant être mis en vente par les hubs)"
           distributor: "Produits sortants (mis en vente par/via un ou plusieurs hubs)"
           coordinator: "Coordinateur"
+        tax_category_name:
+          shipping_instance_rate: "Taux de commission de la plateforme "
         formats:
           csv:
             header:
               fee_type: "Type de marge"
               enterprise_name: "Bedrijfsbeheerder"
+              fee_name: "Nom de la commission "
               customer_name: "Acheteur"
+              fee_placement: "Emplacement commission"
+              fee_calculated_on_transfer_through_name: "Calcul de la commission sur cession par"
               tax_category_name: "TVA applicable"
+              total_amount: "€€ SOMME"
           html:
             header:
               fee_type: "Type de marge"
               enterprise_name: "Bedrijfsbeheerder"
+              fee_name: "Nom de la commission "
               customer_name: "Acheteur"
+              fee_placement: "Emplacement commission"
+              fee_calculated_on_transfer_through_name: "Calcul de la commission sur cession par"
               tax_category_name: "TVA applicable"
+              total_amount: "€€ SOMME"
+        invalid_filter_parameters: "Les filtres sélectionnés pour ce rapport ne sont pas valides."
   order: "Commandes à venir"
   distribution: "Distribution"
+  order_details: "Données de la commande  "
+  customer_details: "Données client"
+  adjustments: "Corrections"
   payments: "Paiements"
   payment: "Paiement"
   payment_method: "Méthode de paiement"
-  shipment: "Verzending"
+  shipment: "Envoi"
+  shipment_inc_vat: "Expédition TVA incluse "
+  shipping_tax_rate: "TVA applicable pour l'expédition "
   category: "Catégorie"
   delivery: "Livraison"
+  temperature_controlled: "Tempéré"
   new_product: "Nouveau Produit"
   administration: "Administration"
+  logged_in_as: "Saisi comme "
   account: "Compte"
   logout: "Déconnexion"
+  date_range: "Plage de dates"
   status: "statut"
   new: "Nouveau"
   start: "Début"
+  stop: "Arrêter"
   first: "Début"
   previous: "Précédent"
   last: "Fin"
   spree:
     your_order_is_empty_add_product: "Votre commande est vide, merci de chercher et d'ajouter un des produits ci-dessus"
     add_product: "Ajoutez un produit"
+    name_or_sku: "Nom ou N° d'article (entrer au moins 4 lettres du nom du produit) "
     resend: Renvoyer
+    back_to_orders_list: 'Retour vers la liste des commandes '
+    select_stock: "Selectionner stock"
+    location: "Site"
+    count_on_hand: "Compté à la main"
     quantity: "Nb commandé"
+    package_from: "colis provenant de "
+    item_description: "Description de l'article "
     price: "Prix"
     total: "Total"
     edit: "Modifier"
+    split: "Scinder"
     delete: "Supprimer"
+    cannot_set_shipping_method_without_address: "Impossible d'indiquer le mode d'expédition avant de compléter les données client"
+    no_tracking_present: "Pas de traçage des données fournies."
     order_total: "Total commande "
+    customer_details: "Données client"
+    customer_search: "Recherche client"
+    choose_a_customer: "Choisir un client"
     account: "Compte"
     billing_address: "Adresse de facturation"
     shipping_address: "Adresse de livraison"
     first_name: "Prénom"
     last_name: "Nom de famille"
+    street_address: "Nom de la rue "
+    street_address_2: "Nom de la rue (suite)"
     city: "Ville"
+    zip: "Zip"
     country: "Pays"
     state: "Province"
     phone: "Téléphone"
     update: "Mettre à jour"
+    use_billing_address: "Utiliser l'adresse de facturation"
+    adjustments: "Corrections"
     continue: "Suivant"
+    fill_in_customer_info: "Merci de remplir les informations client"
     new_payment: "Nouveau paiement"
+    configurations: "Configurations"
     general_settings: "Réglages Généraux"
+    site_name: "Nom du site"
+    site_url: "Site URL"
+    default_seo_title: "Titre SEO par défaut"
+    default_meta_description: "Meta Description par défaut"
+    default_meta_keywords: "Meta Mots-clés par défaut"
+    security_settings: "Paramètres de sécurité "
+    allow_ssl_in_development_and_test: "Autoriser l’utilisation de SSL pendant le développement et les modes test"
+    allow_ssl_in_production: "Autoriser SSL en mode production "
+    allow_ssl_in_staging: "Autoriser SSL quand est employé en mode visible "
+    check_for_spree_alerts: "Attention aux alertes en série "
+    currency_decimal_mark: "Devise à la décimale "
+    currency_settings: "Devise "
+    currency_symbol_position: Mettez "symbole monétaire avant ou après le montant en euros?"
+    currency_thousands_separator: "Devise avec séparateur de mille"
+    hide_cents: "Masquer les cents"
+    display_currency: "Afficher devise "
+    choose_currency: "Choisir devise "
+    mail_method_settings: "Paramètres du moyen mail"
+    general: "Généralement"
+    enable_mail_delivery: "Possible de livrer le mail"
+    send_mails_as: "Envoyer les mails comme "
+    smtp_send_all_emails_as_from_following_address: "Envoyer tous les mails comme de l'adresse suivante."
     send_copy_of_all_mails_to: "Envoyez une copie de tous les mails à "
+    smtp_send_copy_to_this_addresses: "Envoit une copie de tous les mails sortants vers cette adresse. En cas de plusieurs adresses, séparer par une virgule."
+    intercept_email_address: "Intercepter les adresses mail"
+    intercept_email_instructions: "Ignorer le destinataire et le remplacer par cette adresse."
+    smtp: "SMTP"
+    smtp_domain: "Domaine SMPT"
+    smtp_mail_host: "SMPT Serveur mail"
+    smtp_port: "SMTP Port"
+    secure_connection_type: "Type de connexion sécurisée"
+    smtp_authentication_type: "Type d'authentification SMTP"
+    smtp_username: "  SMPT Nom d’utilisateur "
+    smtp_password: "SMPT Mot de passe"
+    image_settings: "Paramètres image"
+    image_settings_warning: "Il est nécessaire de régénérer des logos lors de la mise à jour des styles de trombones . Utiliser ratisser trombone:rafraîchir:logos CLASS=Spree::Image pour faire ceci. "
+    attachment_default_style: Style Pièces  jointes
+    attachment_default_url: "Joint à URL par défaut"
+    attachment_path: "Pièces jointes liés"
+    attachment_styles: "Styles trombones"
+    attachment_url: "URL lié"
+    add_new_style: "Ajouter un nouveau style "
+    image_settings_updated: "Paramètres Image mis à jour avec succès."
     tax_categories: "TVA applicable"
+    listing_tax_categories: "Liste catégories TVA"
+    back_to_tax_categories_list: "Retour à la liste des catégories de TVA"
     tax rate: "Par taux de taxe"
+    new_tax_rate: "Nouveau taux de TVA"
     tax_category: "TVA applicable"
+    rate: "Taux "
+    tax_rate_amount_explanation: "Les taux sont décimaux pour faciliter les calculs (par ex. un taux de 5% sera entré en tant que 0.05) "
     included_in_price: "Inclus dans le prix "
+    show_rate_in_label: "Montrer le taux sur l'étiquette "
+    back_to_tax_rates_list: "Retour à la liste des taux de TVA"
     tax_settings: "Paramètres TVA"
+    zones: "Zones"
+    new_zone: "Nouvelle zone "
+    default_tax: "TVA par défaut"
+    default_tax_zone: "Zone TVA par défaut"
+    country_based: "Basé sur le pays"
+    state_based: "Basé sur la Province"
+    countries: "Pays"
+    listing_countries: "Liste des pays"
+    iso_name: "Nom ISO"
+    states_required: "Provinces requises"
+    editing_country: "Pays d'édition"
+    back_to_countries_list: "Retouner vers la liste des pays"
+    states: "Province"
+    abbreviation: "Abréviation"
+    new_state: "Nouvelle Province"
     payment_methods: "Méthodes de paiement"
     new_payment_method: "Nouvelle méthode de paiement"
+    provider: "Fournisseur"
+    taxonomies: "Taxonomies "
+    new_taxonomy: "Nouvelle taxonomie"
+    back_to_taxonomies_list: "Retour à la liste des taxonomies"
     shipping_methods: "Méthodes de livraison"
     shipping_categories: "Condition de transport"
+    new_shipping_category: "Nouvelle catégorie d'expédition "
+    back_to_shipping_categories: "Retour vers les catégories d'expédition"
+    analytics_trackers: "Analyse trackers"
+    no_trackers_found: "Aucun tracker trouvé"
+    new_tracker: "Nouveau tracker"
     add_one: "Ajoutez un"
+    google_analytics_id: "Analyse ID"
+    back_to_trackers_list: "Retour à la liste des trackers "
     name: "Nom"
     description: "Description"
     type: "Catégorie"
+    default: "Erreur"
     calculator: "Calculateur"
+    zone: "Zone"
+    display: "Ecran"
+    environment: "Environnement"
+    active: "Actif"
     nore: "Plus"
+    no_results: "Aucun résultat"
     create: "Créer"
     loading: "Chargement en cours"
     email: Email
@@ -2634,6 +2779,7 @@ fr_BE:
     my_account: "Mon compte"
     date: "Date"
     time: "Heure"
+    inventory_error_flash_for_insufficient_quantity: "Une donnée n'est plus disponible sur votre carte."
     inventory: Catalogue boutique
     zipcode: Code postal
     weight: Poids (au kg)
@@ -2653,13 +2799,17 @@ fr_BE:
         bulk_order_management: "Gestion des commandes"
         subscriptions: "Abonnements"
         products: "Produits"
+        option_types: "Option Types "
         properties: "Labels / propriétés"
+        prototypes: "Prototypes"
         variant_overrides: "Catalogue du magasin"
         reports: "Rapports"
+        configuration: "Configuration"
         users: "Managers"
         roles: "Roles"
         order_cycles: "Cycles de vente"
         enterprises: "Entreprises"
+        enterprise_relationships: "Permissions"
         customers: "Acheteurs"
         groups: "Groupes"
       product_properties:
@@ -2700,6 +2850,9 @@ fr_BE:
             title: "Distribution"
             distributor: "Distributeur : "
             order_cycle: "Cycle de vente : "
+          line_item_adjustments: "Ajustements d'élément de ligne"
+          order_adjustments: "Ajustement de commandes"
+          order_total: "Total commande "
       overview:
         products:
           active_products:
@@ -2780,8 +2933,13 @@ fr_BE:
           bulk_coop_packing_sheets: 'Achats groupés - Feuilles de préparation des paniers'
           bulk_coop_customer_payments: 'Achats groupés - Paiement des acheteurs'
         enterprise_fee_summaries:
+          filters:
+            date_range: "Plage de dates"
+            report_format_csv: "Télécharger comme valeur décimale "
+            generate_report: "Générer un rapport"
           report:
             none: "Aucun"
+            select_and_search: "Sélectionner les filtres et cliquer sur GENERER RAPPORT pour accéder à vos données."
       users:
         index:
           listing_users: "Utilisateur d'annonces"
@@ -2832,6 +2990,7 @@ fr_BE:
         item: "Déjà commandé dans ce cycle de vente"
       line_item:
         insufficient_stock: "Stock disponible insuffisant , il ne reste que %{on_hand}"
+        out_of_stock: "Pas en stock"
     shipment_states:
       backorder: réapprovisionnement
       partial: partiel

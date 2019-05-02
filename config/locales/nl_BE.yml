@@ -242,6 +242,8 @@ nl_BE:
   quantity: Kwantiteit
   pick_up: Afhalen
   copy: Exemplaar
+  change_my_password: "Mijn paswoord wijzigen "
+  update_password: "Wachtwoord wijzigen "
   password_confirmation: Wachtwoord Bevestiging
   reset_password_token: Reset wachtwoord token
   expired: is verlopen, gelieve een nieuwe aan te vragen
@@ -371,6 +373,7 @@ nl_BE:
         status: "Status"
         diff: "Diffuus"
         error: "Fout"
+        enable_products_cache: "Produkten in voorraad toelaten? "
     invoice_settings:
       edit:
         title: Factuur instellingen
@@ -857,6 +860,8 @@ nl_BE:
         welcome_text: U heeft met succes een
         next_step: Volgende stap
         choose_starting_point: 'Kies je pakket:'
+        profile: 'Profiel'
+        producer_profile: 'Producentsprofiel'
       invite_manager:
         user_already_exists: "Gebruikersnaam al in gebruik"
         error: "Er ging iets mis"
@@ -957,7 +962,7 @@ nl_BE:
         ofn_with_tip: Ondernemingen zijn producenten en/of hubs en zijn de basiseenheid van de organisatie binnen het Open Food Network.
       enterprises_hubs_tabs:
         has_no_payment_methods: "1%(enterprise) heeft geen betaalmethode"
-        has_no_shipping_methods: "heeft geen verzendmethodes"
+        has_no_shipping_methods: "%{enterprise} heeft geen verzendmethodes"
         has_no_enterprise_fees: "%{enterprise} geen bedrijfskosten heeft"
     enterprise_issues:
       create_new: Nieuw bericht
@@ -1173,6 +1178,8 @@ nl_BE:
   tax_total: "BTW Totaal (%{rate}):"
   total_excl_tax: "Totaal (Excl. BTW):"
   total_incl_tax: "Totaal (Incl. BTW):"
+  abn: "Bedrijfsnummer : "
+  acn: "Intracommunautaire BTW nr. : "
   invoice_issued_on: "Aanmaakdatum Factuur:"
   order_number: "Factuurnummer:"
   date_of_transaction: "Transactiedatum:"
@@ -1191,7 +1198,9 @@ nl_BE:
   menu_5_title: "Over"
   menu_5_url: "http://www.openfoodnetwork.org/"
   menu_6_title: "Connecteer je "
+  menu_6_url: "https://openfoodnetwork.org/au/connect/"
   menu_7_title: "Ontdek"
+  menu_7_url: "https://openfoodnetwork.org/au/learn/"
   logo: "Logo (640x130)"
   logo_mobile: "Logo Mobiel (75x26)"
   logo_mobile_svg: "Logo Mobiel (SVG)"
@@ -1233,6 +1242,7 @@ nl_BE:
   no_shipping_or_payment: geen lever-of-betaalmethodes
   unconfirmed: Niet bevestigd
   days: dagen
+  authorization_failure: "Faling toelating "
   label_shop: "winkel"
   label_shops: "Winkels"
   label_map: "Kaart"
@@ -1608,6 +1618,7 @@ nl_BE:
   products_available: Beschikbaar?
   products_producer: "Producent"
   products_price: "Prijs"
+  name_or_sku: "BESCHRIJVING OF ARTKELNUMMER"
   register_title: Registreer
   sell_title: "Registreer"
   sell_headline: "Sluit je aan op het Open Food Network!"
@@ -1665,6 +1676,7 @@ nl_BE:
   orders_bought_edit_button: Pas de bevestigde artikels aan
   orders_bought_already_confirmed: "* reeds bevestigd"
   orders_confirm_cancel: Ben je zeker dat je deze bestelling wil annuleren?
+  order_processed_successfully: "Je bestelling is met succes geplaatst"
   products_cart_distributor_choice: "Verdeler voor jouw bestelling:"
   products_cart_distributor_change: "Je verdeler voor deze bestelling zal vervangen worden door %{name} indien je dit product toevoegt aan je winkelwagentje."
   products_cart_distributor_is: "Je verdeler voor deze bestelling heet %{name}."
@@ -1745,11 +1757,13 @@ nl_BE:
         registration_about_us: "'Over Ons' tekst"
         registration_outcome_headline: "Wat krijg ik?"
         registration_outcome1_html: "Je profiel helpt mensen je <strong>te vinden</strong>en <strong>te contacteren</strong>op het Open Food Network."
+        registration_outcome2: "Maak gebruik van deze ruimte om het verhaal te doen van je onderneming,help verbindingen te maken naar jouw sociale en online aanwezigheid "
         registration_outcome3: "Het is ook de eerste stap naar handel op het Open Food Network, of om een online winkel te openen."
         registration_action: "Laten we beginnen !"
       details:
         title: "Details"
         headline: "Laten we beginnen"
+        enterprise: "Goed bezig! Eerst een woordje over je bedrijf. "
         producer: "Goed bezig! Eerst moeten we nog wat meer weten over je kweekbedrijf:"
         enterprise_name_field: "Naam bedrijf : "
         producer_name_field: "Naam boerderij : "
@@ -1887,6 +1901,7 @@ nl_BE:
   ok: OK
   not_visible: niet zichtbaar
   you_have_no_orders_yet: "U heeft geen bestellingen momenteel"
+  show_only_complete_orders: "Uitsluitend de volledige bestellingen tonen"
   successfully_created: '%{resource}is met succes gedaan! '
   successfully_removed: '%{resource}is succesvol verwijderd!'
   successfully_updated: '%{resource}is succesvol bijgewerkt!'
@@ -2225,6 +2240,8 @@ nl_BE:
   shipping_methods: "Verzendmethodes"
   payment_methods: "Betaalmethodes"
   payment_method_fee: "Transactiekosten (excl.BTW)"
+  payment_processing_failed: "De betaling is niet succesvol, gelieve de  ingevoerde gegevens na te kijken"
+  payment_updated: "Betaling is bijgewerkt"
   inventory_settings: "Catalogus winkel"
   tag_rules: "Tagregels"
   shop_preferences: "Voorkeuren winkel"
@@ -2451,6 +2468,7 @@ nl_BE:
           pending: "in afwachting"
           ready: "klaar"
           shipped: "verzonden"
+          canceled: "geschrapt"
         payment_states:
           balance_due: "openstaande bedrag"
           completed: "voltooid"
@@ -2546,9 +2564,11 @@ nl_BE:
   order_management:
     reports:
       enterprise_fee_summary:
+        date_end_before_start_error: "moet zijn na het starten "
         parameter_not_allowed_error: "Je hebt geen machtiging om één of meerdere geselecteerde filters toe te passen op dit verslag."
         fee_calculated_on_transfer_through_all: "Universum"
         fee_calculated_on_transfer_through_entire_orders: "Volledige Bestelling verzorgd door %{distributor}"
+        tax_category_various: "Verscheidene"
         fee_type:
           payment_method: "Betaaltransactie"
           shipping_method: "Verzending"
@@ -2556,64 +2576,197 @@ nl_BE:
           supplier: "Binnenkomend"
           distributor: "Uitgaande"
           coordinator: "Coördinator"
+        tax_category_name:
+          shipping_instance_rate: " Commissiepercentage  van de hub"
         formats:
           csv:
             header:
               fee_type: "Sprookjesachtig type"
               enterprise_name: "Bedrijfsbeheerder"
+              fee_name: "Naam van de commissie "
               customer_name: "Klant"
+              fee_placement: "invulplaats voor de commissie "
+              fee_calculated_on_transfer_through_name: "Berekening van de commissie op verdracht door"
               tax_category_name: "Belastingcategorie"
+              total_amount: "$$ SUM"
           html:
             header:
               fee_type: "Sprookjesachtig type"
               enterprise_name: "Bedrijfsbeheerder"
+              fee_name: "Naam van de commissie "
               customer_name: "Klant"
+              fee_placement: "invulplaats van de commissie "
+              fee_calculated_on_transfer_through_name: "Berekening van de commissie op verdracht door"
               tax_category_name: "Belastingcategorie"
+              total_amount: "$$ SUM"
+        invalid_filter_parameters: "De filters voor dit verslag zijn ongeldig."
   order: "Bestelling"
   distribution: "Distributie"
+  order_details: "Bestellingsgegevens"
+  customer_details: "Klantengegevens "
+  adjustments: "Correcties "
+  payments: "Betalingen "
   payment: "Betaling"
   payment_method: "Betaalmethode"
   shipment: "Verzending"
+  shipment_inc_vat: "Verzending BTW inbegrepen"
+  shipping_tax_rate: "Toegepaste BTW op verzending "
   category: "Categorie"
   delivery: "Levering"
+  temperature_controlled: "Temperatuurgestuurd"
   new_product: "Nieuw product"
   administration: "Administratie"
+  logged_in_as: "Ingevoerd als"
   account: "Account"
   logout: "Log uit"
+  date_range: "Datumbereik"
+  status: "status"
+  new: "Nieuw"
   start: "Start"
+  stop: "Stop"
   first: "Eerst"
   previous: "Voorgaande"
   last: "Laatst"
   spree:
+    your_order_is_empty_add_product: "Je bestelling is leeg, gelieve hierboven  een product te zoeken en toe te voegen "
+    add_product: "Voeg een product toe"
+    name_or_sku: "Beschrijving of artikelnummer ( tenminste 4 letters van de productnaam invoeren )"
     resend: Zend opnieuw
+    back_to_orders_list: Terug naar de bestellingslijst
+    select_stock: "Selecteer voorraad"
+    location: "Locatie"
+    count_on_hand: "Count On Hand"
     quantity: "Kwantiteit"
+    package_from: "pakje van "
+    item_description: "Artikelbeschrijving"
     price: "Prijs"
     total: "Totaal"
     edit: "bewerking"
+    split: "Splits"
     delete: "Uitwissen "
+    cannot_set_shipping_method_without_address: "Verzendingswijze onmogelijk aan te duiden zolang de klantgegevens niet zijn ingevuld"
+    no_tracking_present: "Geen opvolging van de geleverde gegevens."
+    order_total: "Totaal bestelling"
+    customer_details: "Klantengegevens "
+    customer_search: "Opzoeken klant"
+    choose_a_customer: "Kies een klant"
     account: "Account"
     billing_address: "Factuuradres"
     shipping_address: "Adres Levering"
+    first_name: "Voornaam"
+    last_name: "Familienaam"
+    street_address: "Straat"
+    street_address_2: "Straat (vervolg)"
     city: "Stad"
+    zip: "Zip"
     country: "Land"
     state: "Staat"
     phone: "Telefoon"
     update: "Update"
+    use_billing_address: "Fakturatieadres gebruiken"
+    adjustments: "Correcties "
     continue: "Ga verder"
+    fill_in_customer_info: "Gelieve informatie over klant in te vullen"
+    new_payment: "Nieuwe betaling"
+    configurations: "configuraties "
     general_settings: "Algemene instellingen"
+    site_name: "Website Naam"
+    site_url: "website URL"
+    default_seo_title: "Standaardtitel SEO"
+    default_meta_description: "Standaard Meta Beschrijving"
+    default_meta_keywords: "Standaard Meta Sleutelwoorden "
+    security_settings: "Beveiligheidsinstellingen"
+    allow_ssl_in_development_and_test: "SSL toelaten bij ontwikkeling en testmode"
+    allow_ssl_in_production: "SSl toelaten wanneer  in productiemode wordt gebruikt "
+    allow_ssl_in_staging: "SSL toelaten wanneer in mode zichtbaar wordt gebruikt"
+    check_for_spree_alerts: "Let op voor spree alerten "
+    currency_decimal_mark: "Valuta 1 decimaal bij"
+    currency_settings: "Gebruikte munt"
+    currency_symbol_position: Zet "muntsymbool voor of na het bedrag?"
+    currency_thousands_separator: "Valuta met scheiding van duizenden"
+    hide_cents: "Verberg centen"
+    display_currency: "Munt tonen"
+    choose_currency: "Munt kiezen "
+    mail_method_settings: "instellingen mailwijze "
+    general: "Algemeen"
+    enable_mail_delivery: "Mogelijk de mail te leveren"
+    send_mails_as: "Stuur mail als"
+    smtp_send_all_emails_as_from_following_address: "Stuur alle mails als van het volgend adres"
+    send_copy_of_all_mails_to: "Stuur kopie van alle mails naar"
+    smtp_send_copy_to_this_addresses: "Stuurt een kopie van alle uitgaande mails naar dit adres. In geval van meerdere adressen, die met een comma scheiden."
+    intercept_email_address: "Email adres onderscheppen"
+    intercept_email_instructions: "De mailontvanger omzeilen en door dit adres vervangen. "
+    smtp: "SMTP"
+    smtp_domain: "SMTP Domein"
+    smtp_mail_host: "SMPT Mail Host"
+    smtp_port: "SMTP Port"
+    secure_connection_type: "Secure Connection Type"
+    smtp_authentication_type: "SMTP Authentication Type"
+    smtp_username: "SMPT Gebruikersnaam"
+    smtp_password: "SMPT Wachtwoord"
+    image_settings: "Beeldinstellingen "
+    image_settings_warning: "Logos regeneren als de paperclips stylen bijgewerkt worden. Paperclip harken gebruiken :opfrissen:logos CLASS=Spree::Image om het doen. "
+    attachment_default_style: Bijlagestijl
+    attachment_default_url: "Standaard Band met URL"
+    attachment_path: "Pad bijlagen"
+    attachment_styles: "Paperclipstijlen"
+    attachment_url: "URL bijlagen"
+    add_new_style: "Een nieuwe stijl toevoegen"
+    image_settings_updated: "Beeldinstellingen zijn met succes bijgewerkt."
     tax_categories: "Belastingcategorieën"
+    listing_tax_categories: "Lijst BTW categoriëen "
+    back_to_tax_categories_list: "Terug naar de lijst BTW categoriëen "
     tax rate: "Percentage belasting"
+    new_tax_rate: "Nieuwe BTW percentage"
     tax_category: "Belastingcategorie"
+    rate: "Percentage"
+    tax_rate_amount_explanation: "BTW percentages zijn decimaal om de berekening gemakkelijker te maken, (bv. als de percentage 5% is dan 0.05 invoeren)"
+    included_in_price: "In de prijs inbegrepen "
+    show_rate_in_label: "Toon de percentahe op de label "
+    back_to_tax_rates_list: "Terug naar de lijst BTW percentages"
     tax_settings: "Belastings Instellingen"
+    zones: "Zones "
+    new_zone: "Nieuwe zone"
+    default_tax: "Standaard BTW "
+    default_tax_zone: "Standaard BTW zone "
+    country_based: "Land gebaseerd"
+    state_based: "Provincie gebaseerd"
+    countries: "Landen"
+    listing_countries: "Listing Landen"
+    iso_name: "ISO Naam"
+    states_required: "Staten Vereist"
+    editing_country: "Editing Land"
+    back_to_countries_list: "Terug naar landenlijst"
+    states: "Provincies"
+    abbreviation: "Afkortingen "
+    new_state: "Nieuw Provincie"
     payment_methods: "Betalingsmethode"
     new_payment_method: "Nieuwe betalingswijze"
+    provider: "Leverancier"
+    taxonomies: "Taxonomies "
+    new_taxonomy: "Nieuwe taxonomie "
+    back_to_taxonomies_list: "Terug naar de lijst Taxonomies"
     shipping_methods: "Methode Verzending"
     shipping_categories: "Verzendingscategorieën"
+    new_shipping_category: "Nieuwe verzendingscategorie"
+    back_to_shipping_categories: "Terug naar verzendingscategoriëen"
+    analytics_trackers: "Analyse van Trackers"
+    no_trackers_found: "Geen Trackers gevonden"
+    new_tracker: "Nieuwe Tracker"
+    add_one: "Eén toevoegen"
+    google_analytics_id: "ID analyse "
+    back_to_trackers_list: "Terug naar de Trackerslijst"
     name: "Naam"
     description: "Beschrijving"
     type: "Type"
+    default: "Standaard"
     calculator: "Rekenmachine"
+    zone: "Zone"
+    display: "Display"
+    environment: "Omgeving"
+    active: "Aktief"
     nore: "Meer"
+    no_results: "Geen resultaten "
     create: "Maak"
     loading: "Aan het opladen"
     email: Email
@@ -2621,6 +2774,7 @@ nl_BE:
     my_account: "Mijn rekening"
     date: "Afspraakje"
     time: "Uur"
+    inventory_error_flash_for_insufficient_quantity: "Een gegeven op je kaart is onbereikbaar."
     inventory: Inventarisatie
     zipcode: Postcode
     weight: Gewicht (per kg)
@@ -2640,13 +2794,17 @@ nl_BE:
         bulk_order_management: "Beheer van bulkorders"
         subscriptions: "Abonnementen"
         products: "Producten"
+        option_types: "Optietypen"
         properties: "Eigenschappen"
+        prototypes: "Prototypes "
         variant_overrides: "Inventarisatie"
         reports: "Rapporten"
+        configuration: "Instelling"
         users: "Gebruikers"
         roles: "Rollen"
         order_cycles: "Bestel cycli"
         enterprises: "Ondernemingen"
+        enterprise_relationships: "Toelatingen"
         customers: "Klanten"
         groups: "Groepen"
       product_properties:
@@ -2687,6 +2845,9 @@ nl_BE:
             title: "Distributie"
             distributor: "Verdeler"
             order_cycle: "Bestelcyclus"
+          line_item_adjustments: "Regelitems aanpassen"
+          order_adjustments: "Orden aanpassingen"
+          order_total: "Totaal bestelling"
       overview:
         products:
           active_products:
@@ -2768,6 +2929,7 @@ nl_BE:
           bulk_coop_customer_payments: 'Groepsaankoop-betalingen van de klanten'
         enterprise_fee_summaries:
           filters:
+            date_range: "Datumbereik"
             report_format_csv: "Opladen als CSV"
             generate_report: "Ontwikkel verslag"
           report:
@@ -2823,6 +2985,7 @@ nl_BE:
         item: "Reeds besteld in de huidige bestelcyclus"
       line_item:
         insufficient_stock: "Onvoldoende voorraad beschikbaar, alleen %{on_hand}resterend"
+        out_of_stock: "Geen voorraad"
     shipment_states:
       backorder: aanvulling
       partial: gedeeltelijk

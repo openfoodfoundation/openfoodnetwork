@@ -859,6 +859,8 @@ fr_CA:
         welcome_text: 'Vous avez créé avec succès '
         next_step: Etape suivante
         choose_starting_point: 'Choisir le type de compte souhaité'
+        profile: 'Profil'
+        producer_profile: 'Profil producteur'
       invite_manager:
         user_already_exists: "Le compte existe déjà"
         error: "Un problème est survenu"
@@ -2468,6 +2470,7 @@ fr_CA:
           pending: "en attente"
           ready: "prêt"
           shipped: "envoyé"
+          canceled: "annulé"
         payment_states:
           balance_due: "solde dû"
           completed: "effectué"
@@ -2845,6 +2848,7 @@ fr_CA:
             title: "Distribution"
             distributor: "Distributeur : "
             order_cycle: "Cycle de vente : "
+          order_total: "Total Commande:"
       overview:
         products:
           active_products:

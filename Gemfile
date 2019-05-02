@@ -38,6 +38,7 @@ gem 'jwt', '~> 2.1'
 
 gem 'delayed_job_active_record'
 gem 'daemons'
+gem 'delayed_job_web'
 
 # Fix bug in simple_form preventing collection_check_boxes usage within form_for block
 # When merged, revert to upstream gem
