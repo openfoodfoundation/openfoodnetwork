@@ -32,6 +32,13 @@ Spree.config do |config|
 
   config.package_factory = Stock::Package
   config.order_updater_decorator = OrderUpdater
+
+  # S3 settings
+  config.s3_bucket = ENV['S3_BUCKET'] if ENV['S3_BUCKET']
+  config.s3_access_key = ENV['S3_ACCESS_KEY'] if ENV['S3_ACCESS_KEY']
+  config.s3_secret = ENV['S3_SECRET'] if ENV['S3_SECRET']
+  config.use_s3 = true if ENV['S3_BUCKET']
+  config.s3_protocol = ENV.fetch('S3_PROTOCOL', 'https')
 end
 
 # Spree 2.0 recommends explicitly setting this here when using spree_auth_devise

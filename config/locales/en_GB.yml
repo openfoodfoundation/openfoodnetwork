@@ -178,7 +178,7 @@ en_GB:
   percentage_of_sales: "%{percentage} of sales"
   capped_at_cap: "capped at %{cap}"
   per_month: "per month"
-  free: "pay what you can"
+  free: "Plans starting from £1/month"
   free_trial: "free trial"
   plus_tax: "plus VAT"
   min_bill_turnover_desc: "once turnover exceeds %{mbt_amount}"
@@ -807,7 +807,7 @@ en_GB:
       change_type_form:
         producer_profile: Producer Profile
         connect_ofn: Connect through OFN
-        always_free: Plans starting from £1/month
+        always_free: Free
         producer_description_text: Add your products to Open Food Network, allowing hubs to stock your products in their stores.
         producer_shop: Producer Shop
         sell_your_produce: Sell your own produce
@@ -857,6 +857,8 @@ en_GB:
         welcome_text: You have successfully created a
         next_step: Next step
         choose_starting_point: 'Choose your package:'
+        profile: 'Profile'
+        producer_profile: 'Producer Profile'
       invite_manager:
         user_already_exists: "User already exists"
         error: "Something went wrong"
@@ -2463,6 +2465,7 @@ en_GB:
           pending: "pending"
           ready: "ready"
           shipped: "shipped"
+          canceled: "cancelled"
         payment_states:
           balance_due: "balance due"
           completed: "completed"
@@ -2839,6 +2842,9 @@ en_GB:
             title: "Distribution"
             distributor: "Distributor:"
             order_cycle: "Order cycle:"
+          line_item_adjustments: "Line Item Adjustments"
+          order_adjustments: "Order Adjustments"
+          order_total: "Order Total"
       overview:
         products:
           active_products:

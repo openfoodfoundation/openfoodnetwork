@@ -859,6 +859,8 @@ de_DE:
         welcome_text: 'Erfolgreich erstellt:'
         next_step: Nächster Schritt
         choose_starting_point: 'Wählen Sie Ihr Paket:'
+        profile: 'Profil'
+        producer_profile: 'Erzeuger Profil'
       invite_manager:
         user_already_exists: "Benutzer existiert bereits"
         error: "Etwas ist schief gelaufen"
@@ -1193,7 +1195,7 @@ de_DE:
   menu_4_title: "Gruppen"
   menu_4_url: "/groups"
   menu_5_title: "Über Uns"
-  menu_5_url: "http://www.openfoodnetwork.org/"
+  menu_5_url: "https://wp.openfoodnetwork.de"
   menu_6_title: "Verbinden"
   menu_6_url: "https://openfoodnetwork.org/au/connect/"
   menu_7_title: "Mehr Erfahren"
@@ -1212,7 +1214,7 @@ de_DE:
   footer_pinterest_url: "Pinterest URL"
   footer_email: "E-Mail:"
   footer_links_md: "Links"
-  footer_about_url: "Über URL"
+  footer_about_url: "Über Uns URL"
   user_guide_link: "Benutzerhandbuch-Link"
   name: Name
   first_name: Vorname
@@ -1971,7 +1973,7 @@ de_DE:
   loading_customers: "Kunden werden geladen"
   no_customers_found: "Keine Kunden gefunden"
   go: "Gehen"
-  hub: "Nabe"
+  hub: "Hub"
   producer: "Produzent"
   product: "Produkt"
   price: "Preis"
@@ -2043,7 +2045,7 @@ de_DE:
   admin_share_zipcode: "Postleitzahl"
   admin_share_country: "Land"
   admin_share_state: "Bundesland"
-  hub_sidebar_hubs: "Naben"
+  hub_sidebar_hubs: "Hubs"
   hub_sidebar_none_available: "Keine verfügbar"
   hub_sidebar_manage: "Verwalten"
   hub_sidebar_at_least: "Mindestens ein Hub muss ausgewählt sein"
@@ -2057,7 +2059,7 @@ de_DE:
   report_customers_csv: "Download als CSV"
   report_producers: "Erzeuger:"
   report_type: "Berichtsart:"
-  report_hubs: "Naben:"
+  report_hubs: "Hubs:"
   report_payment: "Zahlungsarten:"
   report_distributor: "Verteiler:"
   report_payment_by: 'Zahlungen nach Art'
@@ -2081,9 +2083,9 @@ de_DE:
   report_header_address: Adresse
   report_header_billing_address: Rechnungsadresse
   report_header_relationship: Beziehung
-  report_header_hub: Nabe
+  report_header_hub: Hub
   report_header_hub_address: Hubadresse
-  report_header_to_hub: Zu Nabe
+  report_header_to_hub: Zu Hub
   report_header_hub_code: Hub-Code
   report_header_code: Code
   report_header_paid: Bezahlt?
@@ -2305,7 +2307,7 @@ de_DE:
     error: Fehler
     unavailable: Nicht verfügbar
     profile: Profil
-    hub: Nabe
+    hub: Hub
     shop: Laden
     choose: Wählen
     resolve_errors: Bitte beheben Sie die folgenden Fehler
@@ -2462,6 +2464,7 @@ de_DE:
           pending: "steht aus"
           ready: "fertig"
           shipped: "versendet"
+          canceled: "abgebrochen"
         payment_states:
           balance_due: "Betrag offen"
           completed: "fertig gestellt"
@@ -2838,6 +2841,9 @@ de_DE:
             title: "Verteilung"
             distributor: "Verteiler:"
             order_cycle: "Bestellzyklus:"
+          line_item_adjustments: "Anpassungen der Werbebuchung"
+          order_adjustments: "Bestellanpassungen"
+          order_total: "Auftrag insgesamt"
       overview:
         products:
           active_products:
@@ -3017,50 +3023,52 @@ de_DE:
       pending: steht aus
       ended: beendet
       paused: pausiert
-      canceled: abgebrochen
+      canceled: storniert
     user_mailer:
       reset_password_instructions:
         request_sent_text: |
-            Es wurde angefragt, das Passwort zurückzusetzen. Falls dies nicht der Fall ist, bitten wir dieses Email zu ignorieren.
+            Es wurde angefragt, das Passwort zurückzusetzen.
+            Sollte kein neues Passwort angefordert werden, bitte dieses E-Mail ignorieren.
         link_text: >
-            Möchtest Du das Passwort zurücksetzen? Bitte den Link unten auszuwählen.
+            Sollte ein neues Passwort angefordert werden, bitte den folgenden Aktivierungslink
+            bestätigen.
         issue_text: |
-            Falls die URL unten nicht funktionieren sollte, versuche die Adresse mit Hilfe von "copy and paste" in dein Browserfenster zu übertragen.
+            Falls die URL nicht funktioniert, bitte den Link kopieren und in die Adresszeile Ihres Browsers einfügen
       confirmation_instructions:
-        subject: Bitte bestätigen Sie Ihr OFN-Konto
+        subject: Bitte OFN-Konto bestätigen
     users:
       form:
         account_settings: Konto Einstellungen
       show:
         tabs:
-          orders: Aufträge
+          orders: Bestellungen
           cards: Kreditkarten
           transactions: Transaktionen
           settings: Konto Einstellungen
         unconfirmed_email: "Ausstehende E-Mail-Bestätigung für: %{unconfirmed_email}. Ihre E-Mail-Adresse wird aktualisiert, sobald die neue E-Mail bestätigt wurde."
       orders:
         open_orders: Offene Bestellungen
-        past_orders: Frühere Bestellungen
+        past_orders: Vergangene Bestellungen
       transactions:
-        transaction_history: Verlauf der Transaktionen
+        transaction_history: Transaktionsverlauf
       open_orders:
         order: Bestellung
         shop: Laden
-        changes_allowed_until: Änderungen erlaubt bis
-        items: Artikel
+        changes_allowed_until: Änderung möglich bis
+        items: Produkte
         total: Gesamt
-        edit: Bearbeite
-        cancel: Abrechen
-        closed: Geschlossen
+        edit: Bearbeiten
+        cancel: Abbrechen
+        closed: Abgeschlossen
         until: Bis
       past_orders:
-        order: Auftrag
+        order: Bestellung
         shop: Laden
-        completed_at: Erfolgt am
+        completed_at: Abgeschlossen am
         items: Artikel
         total: Gesamt
         paid?: Bezahlt?
-        view: Aussicht
+        view: Ansehen
       saved_cards:
         default?: Standard?
         delete?: Löschen?
@@ -3069,7 +3077,7 @@ de_DE:
         authorised_shops_popover: Dies ist die Liste der Shops, die Ihre Standardkreditkarte für eventuell vorhandene Abonnements (dh wiederkehrende Bestellungen) belasten dürfen. Ihre Kartendetails werden sicher aufbewahrt und nicht an Ladenbesitzer weitergegeben. Sie werden immer benachrichtigt, wenn Sie belastet werden.
         saved_cards_popover: Dies ist die Liste der Karten, die Sie für spätere Verwendung gespeichert haben. Ihr "Standard" wird automatisch beim Abschließen einer Bestellung ausgewählt und kann von allen Geschäften belastet werden, die Sie dazu berechtigt haben (siehe rechts).
       authorised_shops:
-        shop_name: "Laden Name"
+        shop_name: "Ladenname"
         allow_charges?: "Gebühren erlauben?"
     localized_number:
-      invalid_format: hat ein ungültiges Format. Bitte gebe eine Nummer ein.
+      invalid_format: hat ein ungültiges Format. Bitte Ziffern eingeben.
