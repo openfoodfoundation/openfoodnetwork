@@ -73,9 +73,9 @@ describe Admin::VariantOverridesController, type: :controller do
             let(:deleted_variant) { create(:variant) }
             let!(:variant_override_of_deleted_variant) { create(:variant_override, hub: hub, variant: deleted_variant) }
 
-            it "allows to update other variant overrides" do
-              deleted_variant.update_attribute :deleted_at, Time.zone.now
+            before { deleted_variant.update_attribute :deleted_at, Time.zone.now }
 
+            it "allows to update other variant overrides" do
               spree_put :bulk_update, format: format, variant_overrides: variant_override_params
 
               expect(response).to_not redirect_to spree.unauthorized_path
