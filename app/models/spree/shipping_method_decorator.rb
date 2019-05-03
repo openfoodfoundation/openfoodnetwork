@@ -46,18 +46,12 @@ Spree::ShippingMethod.class_eval do
     ]
   end
 
-  def available_to_order_with_distributor_check?(order)
-    available_to_order_without_distributor_check?(order) &&
-      self.distributors.include?(order.distributor)
-  end
-  alias_method_chain :available_to_order?, :distributor_check
-
-  def within_zone?(order)
-    if order.ship_address
-      zone && zone.include?(order.ship_address)
-    else
-      true # Shipping methods are available before we've selected an address
-    end
+  # This method is overriden so that we can remove the restriction added in Spree
+  #   Spree restricts shipping method calculators to the ones that inherit from Spree::Shipping::ShippingCalculator
+  #   Spree::Shipping::ShippingCalculator makes sure that calculators are able to handle packages and not orders as input
+  #   This is not necessary in OFN because calculators in OFN are already customized to work with different types of input
+  def self.calculators
+    spree_calculators.send model_name_without_spree_namespace
   end
 
   def has_distributor?(distributor)

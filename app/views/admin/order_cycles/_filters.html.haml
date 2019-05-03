@@ -12,10 +12,10 @@
       %label{ :for => 'schedule_filter' }=t('admin.order_cycles.index.schedule')
       %br
       %input.ofn-select2.fullwidth{ id: 'schedule_filter', type: 'number', blank: "{id: 0, name: '#{j t(".any_schedule")}'}", data: 'schedules', ng: { model: 'scheduleFilter' } }
-    .two.columns &nbsp;
+    .one.columns &nbsp;
   - else
-    .six.columns &nbsp;
-  .filter_clear.two.columns.omega
+    .five.columns &nbsp;
+  .filter_clear.three.columns.omega
     %label{ :for => 'clear_all_filters' }
     %br
     %input.red.fullwidth{ :type => 'button', :id => 'clear_all_filters', :value => "#{t('admin.clear_all')}", ng: { click: "resetSelectFilters()" } }

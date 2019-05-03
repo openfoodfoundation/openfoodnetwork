@@ -20,13 +20,15 @@ feature "Product Import", js: true do
   let!(:shipping_category) { create(:shipping_category) }
 
   let!(:product) { create(:simple_product, supplier: enterprise2, name: 'Hypothetical Cake') }
-  let!(:variant) { create(:variant, product_id: product.id, price: '8.50', on_hand: '100', unit_value: '500', display_name: 'Preexisting Banana') }
-  let!(:product2) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Beans', unit_value: '500', description: '', primary_taxon_id: category.id) }
-  let!(:product3) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Sprouts', unit_value: '500') }
-  let!(:product4) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Cabbage', unit_value: '500') }
-  let!(:product5) { create(:simple_product, supplier: enterprise2, on_hand: '100', name: 'Lettuce', unit_value: '500') }
+  let!(:variant) { create(:variant, product_id: product.id, price: '8.50', on_hand: 100, unit_value: '500', display_name: 'Preexisting Banana') }
+  let!(:product2) { create(:simple_product, supplier: enterprise, on_hand: 100, name: 'Beans', unit_value: '500', description: '', primary_taxon_id: category.id) }
+  let!(:product3) { create(:simple_product, supplier: enterprise, on_hand: 100, name: 'Sprouts', unit_value: '500') }
+  let!(:product4) { create(:simple_product, supplier: enterprise, on_hand: 100, name: 'Cabbage', unit_value: '500') }
+  let!(:product5) { create(:simple_product, supplier: enterprise2, on_hand: 100, name: 'Lettuce', unit_value: '500') }
   let!(:variant_override) { create(:variant_override, variant_id: product4.variants.first.id, hub: enterprise2, count_on_hand: 42) }
   let!(:variant_override2) { create(:variant_override, variant_id: product5.variants.first.id, hub: enterprise, count_on_hand: 96) }
+
+  let(:shipping_category_id_str) { Spree::ShippingCategory.all.first.id.to_s }
 
   describe "when importing products from uploaded file" do
     before { quick_login_as_admin }
@@ -34,9 +36,9 @@ feature "Product Import", js: true do
 
     it "validates entries and saves them if they are all valid and allows viewing new items in Bulk Products" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type"]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g"]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1", "kg"]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "shipping_category_id"]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", shipping_category_id_str]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1", "kg", shipping_category_id_str]
       end
       File.write('/tmp/test.csv', csv_data)
 
@@ -130,9 +132,9 @@ feature "Product Import", js: true do
 
     it "records a timestamp on import that can be viewed and filtered under Bulk Edit Products" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type"]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g"]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1", "kg"]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "shipping_category_id"]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", shipping_category_id_str]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1", "kg", shipping_category_id_str]
       end
       File.write('/tmp/test.csv', csv_data)
 
@@ -175,8 +177,8 @@ feature "Product Import", js: true do
 
     it "can reset product stock to zero for products not present in the CSV" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type"]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "500", "3.20", "500", "g"]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "shipping_category_id"]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "500", "3.20", "500", "g", shipping_category_id_str]
       end
       File.write('/tmp/test.csv', csv_data)
 
@@ -202,10 +204,10 @@ feature "Product Import", js: true do
 
     it "can save a new product and variant of that product at the same time, add variant to existing product" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "display_name"]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "5", "3.50", "500", "g", "Small Bag"]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "5.50", "2", "kg", "Big Bag"]
-        csv << ["Beans", "User Enterprise", "Vegetables", "7", "2.50", "250", "g", nil]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "display_name", "shipping_category_id"]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "5", "3.50", "500", "g", "Small Bag", shipping_category_id_str]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "5.50", "2", "kg", "Big Bag", shipping_category_id_str]
+        csv << ["Beans", "User Enterprise", "Vegetables", "7", "2.50", "250", "g", nil, shipping_category_id_str]
       end
       File.write('/tmp/test.csv', csv_data)
 
@@ -380,9 +382,9 @@ feature "Product Import", js: true do
 
     it "only allows product import into enterprises the user is permitted to manage" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type"]
-        csv << ["My Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g"]
-        csv << ["Your Potatoes", "Another Enterprise", "Vegetables", "6", "6.50", "1", "kg"]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "shipping_category_id"]
+        csv << ["My Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", shipping_category_id_str]
+        csv << ["Your Potatoes", "Another Enterprise", "Vegetables", "6", "6.50", "1", "kg", shipping_category_id_str]
       end
       File.write('/tmp/test.csv', csv_data)
 

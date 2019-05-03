@@ -1,7 +1,7 @@
 class Api::Admin::ProductSerializer < ActiveModel::Serializer
-  attributes :id, :name, :sku, :variant_unit, :variant_unit_scale, :variant_unit_name, :on_demand, :inherits_properties
-
-  attributes :on_hand, :price, :available_on, :permalink_live, :tax_category_id, :import_date, :image_url, :thumb_url
+  attributes :id, :name, :sku, :variant_unit, :variant_unit_scale, :variant_unit_name,
+             :inherits_properties, :on_hand, :price, :available_on, :permalink_live,
+             :tax_category_id, :import_date, :image_url, :thumb_url
 
   has_one :supplier, key: :producer_id, embed: :id
   has_one :primary_taxon, key: :category_id, embed: :id
@@ -25,7 +25,8 @@ class Api::Admin::ProductSerializer < ActiveModel::Serializer
   end
 
   def on_hand
-    object.on_hand.nil? ? 0 : object.on_hand.to_f.finite? ? object.on_hand : I18n.t(:on_demand)
+    return 0 if object.on_hand.nil?
+    object.on_hand
   end
 
   def price

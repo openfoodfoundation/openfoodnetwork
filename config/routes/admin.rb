@@ -73,20 +73,9 @@ Openfoodnetwork::Application.routes.draw do
       get :map_by_tag, on: :collection
     end
 
-    resource :content
-
-    resource :accounts_and_billing_settings, only: [:edit, :update] do
-      collection do
-        get :show_methods
-        get :start_job
-      end
-    end
-
-    resource :business_model_configuration, only: [:edit, :update], controller: 'business_model_configuration'
+    resource :contents
 
     resource :cache_settings
-
-    resource :account, only: [:show], controller: 'account'
 
     resources :column_preferences, only: [], format: :json do
       put :bulk_update, on: :collection

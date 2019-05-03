@@ -40,7 +40,8 @@ describe SubscriptionPlacementJob do
 
   describe "performing the job" do
     context "when unplaced proxy_orders exist" do
-      let!(:proxy_order) { create(:proxy_order) }
+      let!(:subscription) { create(:subscription, with_items: true) }
+      let!(:proxy_order) { create(:proxy_order, subscription: subscription) }
 
       before do
         allow(job).to receive(:proxy_orders) { ProxyOrder.where(id: proxy_order.id) }
@@ -64,23 +65,21 @@ describe SubscriptionPlacementJob do
     let(:shop) { order_cycle.coordinator }
     let(:order) { create(:order, order_cycle: order_cycle, distributor: shop) }
     let(:ex) { create(:exchange, :order_cycle => order_cycle, :sender => shop, :receiver => shop, :incoming => false) }
-    let(:variant1) { create(:variant, count_on_hand: 5) }
-    let(:variant2) { create(:variant, count_on_hand: 5) }
-    let(:variant3) { create(:variant, count_on_hand: 5) }
+    let(:variant1) { create(:variant, on_hand: 5) }
+    let(:variant2) { create(:variant, on_hand: 5) }
+    let(:variant3) { create(:variant, on_hand: 5) }
     let!(:line_item1) { create(:line_item, order: order, variant: variant1, quantity: 3) }
     let!(:line_item2) { create(:line_item, order: order, variant: variant2, quantity: 3) }
     let!(:line_item3) { create(:line_item, order: order, variant: variant3, quantity: 3) }
-
-    before { Spree::Config.set(:allow_backorders, false) }
 
     context "when all items are available from the order cycle" do
       before { [variant1, variant2, variant3].each { |v| ex.variants << v } }
 
       context "and insufficient stock exists to fulfil the order for some items" do
         before do
-          variant1.update_attribute(:count_on_hand, 5)
-          variant2.update_attribute(:count_on_hand, 2)
-          variant3.update_attribute(:count_on_hand, 0)
+          variant1.update_attribute(:on_hand, 5)
+          variant2.update_attribute(:on_hand, 2)
+          variant3.update_attribute(:on_hand, 0)
         end
 
         it "caps quantity at the stock level for stock-limited items, and reports the change" do
@@ -100,9 +99,9 @@ describe SubscriptionPlacementJob do
 
       context "and insufficient stock exists to fulfil the order for some items" do
         before do
-          variant1.update_attribute(:count_on_hand, 5)
-          variant2.update_attribute(:count_on_hand, 2)
-          variant3.update_attribute(:count_on_hand, 0)
+          variant1.update_attribute(:on_hand, 5)
+          variant2.update_attribute(:on_hand, 2)
+          variant3.update_attribute(:on_hand, 0)
         end
 
         it "sets quantity to 0 for unavailable items, and reports the change" do

@@ -13,11 +13,10 @@ describe RestartCheckout do
 
     context "when the order is in a subsequent state" do
       let!(:shipment_pending) { create(:shipment, order: order, state: 'pending') }
-      let!(:payment_checkout) { create(:payment, order: order, state: 'checkout') }
       let!(:payment_failed) { create(:payment, order: order, state: 'failed') }
+      let!(:payment_checkout) { create(:payment, order: order, state: 'checkout') }
 
       before do
-        order.shipping_method_id = shipment_pending.shipping_method_id
         order.update_attribute(:state, "payment")
       end
 
@@ -28,7 +27,6 @@ describe RestartCheckout do
         RestartCheckout.new(order).call
 
         expect(order.state).to eq 'cart'
-        expect(order.shipping_method_id).to eq nil
         expect(order.shipments.count).to eq 0
         expect(order.adjustments.shipping.count).to eq 0
         expect(order.payments.count).to eq 1

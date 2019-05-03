@@ -14,7 +14,6 @@ module Spree
       let(:li1) { create(:line_item, order: o, product: p1) }
       let(:li2) { create(:line_item, order: o, product: p2) }
 
-
       let(:p3) {create(:product, name: 'Clear Honey') }
       let(:p4) {create(:product, name: 'Apricots') }
       let(:v1) {create(:variant, product: p3, unit_value: 500) }
@@ -99,7 +98,7 @@ module Spree
       end
 
       it "caps at zero when stock is negative" do
-        v.update_attributes(on_hand: -2)
+        v.update_attributes! on_hand: -2
         li.cap_quantity_at_stock!
         expect(li.reload.quantity).to eq 0
       end
@@ -190,8 +189,6 @@ module Spree
       let!(:li) { create(:line_item, variant: v, order: o, quantity: 5, max_quantity: 5) }
 
       before do
-        Spree::Config.set allow_backorders: false
-
         # li#scoper is memoised, and this makes it difficult to update test conditions
         # so we reset it after the line_item is created for each spec
         li.remove_instance_variable(:@scoper)
@@ -586,25 +583,6 @@ module Spree
         expect {
           li.delete_unit_option_values
         }.to change(Spree::OptionValue, :count).by(0)
-      end
-    end
-
-    describe "checking stock availability" do
-      let(:line_item) { LineItem.new }
-
-      context "when skip_stock_check is not set" do
-        it "checks stock" do
-          expect(line_item).to receive(:sufficient_stock?) { true }
-          line_item.send(:stock_availability)
-        end
-      end
-
-      context "when skip_stock_check is set to true" do
-        before { line_item.skip_stock_check = true }
-        it "does not check stock" do
-          expect(line_item).to_not receive(:sufficient_stock?)
-          line_item.send(:stock_availability)
-        end
       end
     end
   end

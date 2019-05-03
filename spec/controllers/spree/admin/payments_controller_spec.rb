@@ -3,12 +3,30 @@ require 'spec_helper'
 describe Spree::Admin::PaymentsController, type: :controller do
   let!(:shop) { create(:enterprise) }
   let!(:user) { shop.owner }
-  let!(:order) { create(:order, distributor: shop) }
+  let!(:order) { create(:order, distributor: shop, state: 'complete') }
   let!(:line_item) { create(:line_item, order: order, price: 5.0) }
+
+  before do
+    allow(controller).to receive(:spree_current_user) { user }
+  end
+
+  context "#create" do
+    let!(:payment_method) { create(:payment_method, distributors: [ shop ]) }
+    let!(:order) do
+      create(:order_with_totals_and_distribution, distributor: shop, state: "payment")
+    end
+
+    let(:params) { { amount: order.total, payment_method_id: payment_method.id } }
+
+    it "advances the order state" do
+      expect {
+        spree_post :create, payment: params, order_id: order.number
+      }.to change { order.reload.state }.from("payment").to("complete")
+    end
+  end
 
   context "as an enterprise user" do
     before do
-      allow(controller).to receive(:spree_current_user) { user }
       order.reload.update_totals
     end
 

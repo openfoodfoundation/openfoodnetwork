@@ -72,7 +72,7 @@ feature %q{
     expect(page).not_to have_selector '#errorExplanation'
     expect(page).to have_content 'ADD PRODUCT'
     targetted_select2_search @product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
-    click_link 'Add'
+    find('button.add_variant').click
     page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr"  # Wait for JS
     expect(page).to have_selector 'td', text: @product.name
 
@@ -88,11 +88,11 @@ feature %q{
     quick_login_as_admin
     visit '/admin/orders'
 
-    click_edit
+    click_icon :edit
 
     targetted_select2_search @product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
 
-    click_link 'Add'
+    find('button.add_variant').click
 
     expect(page).to have_selector 'td', text: @product.name
     expect(@order.line_items(true).map(&:product)).to include @product
@@ -101,18 +101,21 @@ feature %q{
   scenario "displays error when incorrect distribution for products is chosen" do
     d = create(:distributor_enterprise)
     oc = create(:simple_order_cycle, distributors: [d])
-    puts d.name
-    puts @distributor.name
 
-    @order.state = 'cart'; @order.completed_at = nil; @order.save
+    # Move the order back to the cart state
+    @order.state = 'cart'
+    @order.completed_at = nil
+    # A nil user keeps the order in the cart state
+    #   Even if the edit page tries to automatically progress the order workflow
+    @order.user = nil
+    @order.save
 
     quick_login_as_admin
     visit '/admin/orders'
     uncheck 'Only show complete orders'
     page.find('a.icon-search').click
 
-    click_edit
-
+    click_icon :edit
     select2_select d.name, from: 'order_distributor_id'
     select2_select oc.name, from: 'order_order_cycle_id'
 
@@ -145,24 +148,31 @@ feature %q{
 
   scenario "filling customer details" do
     # Given a customer with an order, which includes their shipping and billing address
+
+    # We change the 1st order's address details
+    #   This way we validate that the original details (stored in customer) are picked up in the 2nd order
     @order.ship_address = create(:address, lastname: 'Ship')
     @order.bill_address = create(:address, lastname: 'Bill')
-    @order.shipping_method = create(:shipping_method, require_ship_address: true)
     @order.save!
+
+    # We set the existing shipping method to delivery, this shipping method will be used in the 2nd order
+    #   Otherwise order_updater.shipping_address_from_distributor will set the 2nd order address to the distributor address
+    @order.shipping_method.update_attribute :require_ship_address, true
 
     # When I create a new order
     quick_login_as @user
     new_order_with_distribution(@distributor, @order_cycle)
     targetted_select2_search @product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
-    click_link 'Add'
+    find('button.add_variant').click
     page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr"  # Wait for JS
     click_button 'Update'
+
     expect(page).to have_selector 'h1.page-title', text: "Customer Details"
 
     # And I select that customer's email address and save the order
     targetted_select2_search @customer.email, from: '#customer_search_override', dropdown_css: '.select2-drop'
-    click_button 'Continue'
-    expect(page).to have_selector "h1.page-title", text: "Shipments"
+    click_button 'Update'
+    expect(page).to have_selector "h1.page-title", text: "Customer Details"
 
     # Then their addresses should be associated with the order
     order = Spree::Order.last
@@ -209,41 +219,46 @@ feature %q{
     end
 
     feature "viewing the edit page" do
+      let!(:shipping_method_for_distributor1) { create(:shipping_method, name: "Normal", distributors: [distributor1]) }
+      let!(:different_shipping_method_for_distributor1) { create(:shipping_method, name: "Different", distributors: [distributor1]) }
+      let!(:shipping_method_for_distributor2) { create(:shipping_method, name: "Other", distributors: [distributor2]) }
+
       background do
         Spree::Config[:enable_receipt_printing?] = true
 
         distributor1.update_attribute(:abn, '12345678')
         @order = create(:order_with_taxes,
                         distributor: distributor1,
+                        ship_address: create(:address),
                         product_price: 110,
                         tax_rate_amount: 0.1,
                         tax_rate_name: "Tax 1")
         Spree::TaxRate.adjust(@order)
+        @order.update_shipping_fees!
 
-        visit spree.admin_order_path(@order)
+        visit spree.edit_admin_order_path(@order)
       end
 
       scenario "shows a list of line_items" do
         within('table.index tbody', match: :first) do
           @order.line_items.each do |item|
             expect(page).to have_selector "td", match: :first, text: item.full_name
-            expect(page).to have_selector "td.price", text: item.single_display_amount
-            expect(page).to have_selector "td.qty", text: item.quantity
-            expect(page).to have_selector "td.total", text: item.display_amount
+            expect(page).to have_selector "td.item-price", text: item.single_display_amount
+            expect(page).to have_selector "input#quantity[value='#{item.quantity}']", visible: false
+            expect(page).to have_selector "td.item-total", text: item.display_amount
           end
         end
       end
 
-      scenario "shows the order subtotal" do
-        within('table.index tbody#subtotal') do
-          expect(page).to have_selector "td.total", text: @order.display_item_total
+      scenario "shows the order items total" do
+        within('fieldset#order-total') do
+          expect(page).to have_selector "span.order-total", text: @order.display_item_total
         end
       end
 
-      scenario "shows the order charges (non-tax adjustments)" do
-        within('table.index tbody#order-charges') do
+      scenario "shows the order non-tax adjustments" do
+        within('table.index tbody') do
           @order.adjustments.eligible.each do |adjustment|
-            next if (adjustment.originator_type == 'Spree::TaxRate') && (adjustment.amount == 0)
             expect(page).to have_selector "td", match: :first, text: adjustment.label
             expect(page).to have_selector "td.total", text: adjustment.display_amount
           end
@@ -251,13 +266,11 @@ feature %q{
       end
 
       scenario "shows the order total" do
-        within('table.index tbody#order-total') do
-          expect(page).to have_selector "td.total", text: @order.display_total
-        end
+        expect(page).to have_selector "fieldset#order-total", text: @order.display_total
       end
 
-      scenario "shows the order taxes" do
-        within('table.index tbody#price-adjustments') do
+      scenario "shows the order tax adjustments" do
+        within('fieldset', text: I18n.t('spree.admin.orders.form.line_item_adjustments').upcase) do
           expect(page).to have_selector "td", match: :first, text: "Tax 1"
           expect(page).to have_selector "td.total", text: Spree::Money.new(10)
         end
@@ -266,13 +279,38 @@ feature %q{
       scenario "shows the dropdown menu" do
         find("#links-dropdown .ofn-drop-down").click
         within "#links-dropdown" do
-          expect(page).to have_link "Edit", href: spree.edit_admin_order_path(@order)
           expect(page).to have_link "Resend Confirmation", href: spree.resend_admin_order_path(@order)
           expect(page).to have_link "Send Invoice", href: spree.invoice_admin_order_path(@order)
           expect(page).to have_link "Print Invoice", href: spree.print_admin_order_path(@order)
-          # expect(page).to have_link "Ship Order", href: spree.fire_admin_order_path(@order, :e => 'ship')
           expect(page).to have_link "Cancel Order", href: spree.fire_admin_order_path(@order, :e => 'cancel')
         end
+      end
+
+      scenario "cannot split the order in different stock locations" do
+        # There's only 1 stock location in OFN, so the split functionality that comes with spree should be hidden
+        expect(page).to_not have_selector '.split-item'
+      end
+
+      scenario "can edit shipping method" do
+        expect(page).to_not have_content different_shipping_method_for_distributor1.name
+
+        find('.edit-method').click
+        expect(page).to have_select2 'selected_shipping_rate_id', with_options: [shipping_method_for_distributor1.name, different_shipping_method_for_distributor1.name], without_options: [shipping_method_for_distributor2.name]
+        select2_select different_shipping_method_for_distributor1.name, from: 'selected_shipping_rate_id'
+        find('.save-method').click
+
+        expect(page).to have_content different_shipping_method_for_distributor1.name
+      end
+
+      scenario "can edit tracking number" do
+        test_tracking_number = "ABCCBA"
+        expect(page).to_not have_content test_tracking_number
+
+        find('.edit-tracking').click
+        fill_in "tracking", with: test_tracking_number
+        find('.save-tracking').click
+
+        expect(page).to have_content test_tracking_number
       end
 
       scenario "can print an order's ticket" do
@@ -315,6 +353,16 @@ feature %q{
           end
         end
       end
+
+      scenario "editing shipping fees" do
+        click_link "Adjustments"
+        page.find('td.actions a.icon-edit').click
+
+        fill_in "Amount", with: "5"
+        click_button "Continue"
+
+        expect(page.find("td.amount")).to have_content "$5.00"
+      end
     end
 
     scenario "creating an order with distributor and order cycle" do
@@ -323,7 +371,7 @@ feature %q{
       expect(page).to have_content 'ADD PRODUCT'
       targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
 
-      click_link 'Add'
+      find('button.add_variant').click
       page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr"  # Wait for JS
       expect(page).to have_selector 'td', text: product.name
 
@@ -339,25 +387,6 @@ feature %q{
       o = Spree::Order.last
       expect(o.distributor).to eq distributor1
       expect(o.order_cycle).to eq order_cycle1
-    end
-
-  end
-
-
-  # Working around intermittent click failing
-  # Possible causes of failure:
-  #  - the link moves
-  #  - the missing content (font icon only)
-  #  - the screen is not big enough
-  # However, some operations before the click or a second click on failure work.
-  #
-  # A lot of people had similar problems:
-  # https://github.com/teampoltergeist/poltergeist/issues/520
-  # https://github.com/thoughtbot/capybara-webkit/issues/494
-  def click_edit
-    click_result = click_icon :edit
-    unless click_result['status'] == 'success'
-      click_icon :edit
     end
   end
 end

@@ -1,49 +1,44 @@
 require 'open_food_network/enterprise_fee_calculator'
-require 'open_food_network/distribution_change_validator'
 require 'open_food_network/feature_toggle'
 require 'open_food_network/tag_rule_applicator'
+require 'concerns/order_shipment'
 
 ActiveSupport::Notifications.subscribe('spree.order.contents_changed') do |name, start, finish, id, payload|
   payload[:order].reload.update_distribution_charge!
 end
 
 Spree::Order.class_eval do
+  prepend OrderShipment
+
   belongs_to :order_cycle
   belongs_to :distributor, class_name: 'Enterprise'
   belongs_to :customer
   has_one :proxy_order
   has_one :subscription, through: :proxy_order
 
+  # This removes "inverse_of: source" which breaks shipment adjustment calculations
+  #   This change is done in Spree 2.1 (see https://github.com/spree/spree/commit/3fa44165c7825f79a2fa4eb79b99dc29944c5d55)
+  #   When OFN gets to Spree 2.1, this can be removed
+  has_many :adjustments,
+    as: :adjustable,
+    dependent: :destroy,
+    order: "#{Spree::Adjustment.table_name}.created_at ASC"
+
   validates :customer, presence: true, if: :require_customer?
   validate :products_available_from_new_distribution, :if => lambda { distributor_id_changed? || order_cycle_id_changed? }
   validate :disallow_guest_order
   attr_accessible :order_cycle_id, :distributor_id, :customer_id
 
-  before_validation :shipping_address_from_distributor
   before_validation :associate_customer, unless: :customer_id?
   before_validation :ensure_customer, unless: :customer_is_valid?
 
   before_save :update_shipping_fees!, if: :complete?
   before_save :update_payment_fees!, if: :complete?
 
-  checkout_flow do
-    go_to_state :address
-    go_to_state :delivery
-    go_to_state :payment, :if => lambda { |order|
-      # Fix for #2191
-      if order.shipping_method.andand.delivery?
-        if order.ship_address.andand.valid?
-          order.create_shipment!
-          order.update_totals
-        end
-      end
-      order.payment_required?
-    }
-    # NOTE: :confirm step was removed because we were not actually using it
-    # go_to_state :confirm, :if => lambda { |order| order.confirmation_required? }
-    go_to_state :complete
-    remove_transition :from => :delivery, :to => :confirm
-  end
+  # Orders are confirmed with their payment, we don't use the confirm step.
+  # Here we remove that step from Spree's checkout state machine.
+  # See: https://guides.spreecommerce.org/developer/checkout.html#modifying-the-checkout-flow
+  remove_checkout_step :confirm
 
   state_machine.after_transition to: :payment, do: :charge_shipping_and_payment_fees!
 
@@ -85,7 +80,7 @@ Spree::Order.class_eval do
   # -- Methods
   def products_available_from_new_distribution
     # Check that the line_items in the current order are available from a newly selected distribution
-    errors.add(:base, I18n.t(:spree_order_availability_error)) unless DistributionChangeValidator.new(self).can_change_to_distribution?(distributor, order_cycle)
+    errors.add(:base, I18n.t(:spree_order_availability_error)) unless OrderCycleDistributedVariants.new(order_cycle, distributor).distributes_order_variants?(self)
   end
 
   def using_guest_checkout?
@@ -105,7 +100,7 @@ Spree::Order.class_eval do
   def empty_with_clear_shipping_and_payments!
     empty_without_clear_shipping_and_payments!
     payments.clear
-    update_attributes(shipping_method_id: nil)
+    shipments.destroy_all
   end
   alias_method_chain :empty!, :clear_shipping_and_payments
 
@@ -171,7 +166,7 @@ Spree::Order.class_eval do
   def update_shipping_fees!
     shipments.each do |shipment|
       next if shipment.shipped?
-      update_adjustment! shipment.adjustment
+      update_adjustment! shipment.adjustment if shipment.adjustment
       shipment.save # updates included tax
     end
   end
@@ -182,7 +177,7 @@ Spree::Order.class_eval do
   def update_payment_fees!
     payments.each do |payment|
       next if payment.completed?
-      update_adjustment! payment.adjustment
+      update_adjustment! payment.adjustment if payment.adjustment
       payment.save
     end
   end
@@ -309,14 +304,9 @@ Spree::Order.class_eval do
     not line_items.with_tax.empty?
   end
 
-  def account_invoice?
-    distributor_id == Spree::Config.accounts_distributor_id
-  end
-
   # Overrride of Spree method, that allows us to send separate confirmation emails to user and shop owners
-  # And separately, to skip sending confirmation email completely for user invoice orders
   def deliver_order_confirmation_email
-    unless account_invoice? || subscription.present?
+    unless subscription.present?
       Delayed::Job.enqueue ConfirmOrderJob.new(id)
     end
   end
@@ -325,43 +315,14 @@ Spree::Order.class_eval do
     complete? && distributor.andand.allow_order_changes? && order_cycle.andand.open?
   end
 
-  # Override of existing Spree method. Can remove when we reach 2-0-stable
-  # See commit: https://github.com/spree/spree/commit/5fca58f658273451193d5711081d018c317814ed
-  # Allows GatewayError to show useful error messages in checkout
-  def process_payments!
-    pending_payments.each do |payment|
-      break if payment_total >= total
-
-      payment.process!
-
-      if payment.completed?
-        self.payment_total += payment.amount
-      end
-    end
-  rescue Spree::Core::GatewayError => e # This section changed
-    result = !!Spree::Config[:allow_checkout_on_gateway_error]
-    errors.add(:base, e.message) and return result
-  end
-
-  # Override or Spree method. Used to prevent payments on subscriptions from being processed in the normal way.
-  # ie. they are 'hidden' from processing logic until after the order cycle has closed.
-  def pending_payments
-    return [] if subscription.present? && order_cycle.orders_close_at.andand > Time.zone.now
-    payments.select {|p| p.state == "checkout"} # Original definition
-  end
-
-  private
-
-  def shipping_address_from_distributor
-    if distributor
-      # This method is confusing to conform to the vagaries of the multi-step checkout
-      # We copy over the shipping address when we have no shipping method selected
-      # We can refactor this when we drop the multi-step checkout option
-      #
-      if shipping_method.andand.require_ship_address == false
-        self.ship_address = address_from_distributor
-      end
-    end
+  # Override Spree method to allow unpaid orders to be completed.
+  # Subscriptions place orders at the beginning of an order cycle. They need to
+  # be completed to draw from stock levels and trigger emails.
+  # Spree doesn't allow this. Other options would be to introduce an additional
+  # order state or implement a special proxy payment method.
+  # https://github.com/openfoodfoundation/openfoodnetwork/pull/3012#issuecomment-438146484
+  def payment_required?
+    total.to_f > 0.0 && !skip_payment_for_subscription?
   end
 
   def address_from_distributor
@@ -372,6 +333,12 @@ Spree::Order.class_eval do
       address.phone = bill_address.phone
     end
     address
+  end
+
+  private
+
+  def skip_payment_for_subscription?
+    subscription.present? && order_cycle.orders_close_at.andand > Time.zone.now
   end
 
   def provided_by_order_cycle?(line_item)
@@ -406,9 +373,11 @@ Spree::Order.class_eval do
 
   def update_adjustment!(adjustment)
     return if adjustment.finalized?
+
     state = adjustment.state
     adjustment.state = 'open'
-    adjustment.update!(self)
+    adjustment.update!
+    update!
     adjustment.state = state
   end
 

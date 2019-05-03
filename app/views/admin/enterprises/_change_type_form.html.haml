@@ -1,5 +1,4 @@
 = admin_inject_enterprise
-= admin_inject_monthly_bill_description
 
 = form_for @enterprise, url: main_app.register_admin_enterprise_path(@enterprise),
   html: { name: "change_type", id: "change_type", novalidate: true, "ng-app" => "admin.enterprises", "ng-controller"=> 'changeTypeFormCtrl' } do |change_type_form|
@@ -23,9 +22,6 @@
             .top
               %h3= t('.producer_shop')
               %p= t('.sell_your_produce')
-            .bottom
-              %monthly-pricing-description{ joiner: "newline" }
-
           %p.description
             = t('.producer_shop_description_text')
             %br
@@ -37,17 +33,8 @@
             .top
               %h3= t('.producer_hub')
               %p= t('.producer_hub_text')
-            .bottom
-              %monthly-pricing-description{ joiner: "newline" }
-
           %p.description
             = t('.producer_hub_description_text')
-
-          -# %p.description
-          -#   Test out having your own shopfront with full access to all Shopfront features for 30 days.
-          -#   %br
-          -#   %br
-          -#   At the end of your trial, there is a one-off $200 fee to fully activate your account. Then you will be billed for 2% of your actual transactions, capped at $50 a month (so if you don’t sell anything you don’t pay anything, but you never pay more than $50 a month).
 
       - else
         .two.columns.alpha
@@ -66,8 +53,6 @@
             .top
               %h3= t('.hub_shop')
               %p= t('.hub_shop_text')
-            .bottom
-              %monthly-pricing-description{ joiner: "newline" }
           %p.description
             = t('.hub_shop_description_text')
         .two.columns.omega
@@ -77,14 +62,7 @@
     .sixteen.columns.alpha
       %span.error{ ng: { show: "(change_type.sells.$error.required || change_type.sells.$error.pattern) && submitted" } }
         = t('.choose_option')
-      - if @enterprise.sells == 'unspecified' && @enterprise.shop_trial_start_date.nil?
-        -if free_use?
-          %input.button.big{ type: 'submit', value: t(:select_continue), ng: { click: "submit(change_type)" } }
-        - else
-          - trial_length = Spree::Config[:shop_trial_length_days]
-          %input.button.big{ type: 'submit', value: "Start #{trial_length}-Day Shop Trial", ng: { click: "submit(change_type)", show: "sells=='own' || sells=='any'" } }
-          %input.button.big{ type: 'submit', value: t(:select_continue), ng: { click: "submit(change_type)", hide: "sells=='own' || sells=='any'" } }
-      - elsif @enterprise.sells == 'unspecified'
+      - if @enterprise.sells == 'unspecified'
         %input.button.big{ type: 'submit', value: t(:select_continue), ng: { click: "submit(change_type)" } }
       - else
         %input.button.big{ type: 'submit', value: t('.change_now'), ng: { click: "submit(change_type)" } }

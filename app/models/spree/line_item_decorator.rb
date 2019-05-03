@@ -8,7 +8,7 @@ Spree::LineItem.class_eval do
   # Redefining here to add the inverse_of option
   belongs_to :order, :class_name => "Spree::Order", inverse_of: :line_items
 
-  # Allows manual skipping of stock_availability check
+  # Allows manual skipping of Stock::AvailabilityValidator
   attr_accessor :skip_stock_check
 
   attr_accessible :max_quantity, :final_weight_volume, :price
@@ -17,6 +17,8 @@ Spree::LineItem.class_eval do
 
   before_save :calculate_final_weight_volume, if: :quantity_changed?, unless: :final_weight_volume_changed?
   after_save :update_units
+
+  before_destroy :update_inventory_before_destroy
 
   delegate :unit_description, to: :variant
 
@@ -62,6 +64,7 @@ Spree::LineItem.class_eval do
 
   def cap_quantity_at_stock!
     scoper.scope(variant)
+    return if variant.on_demand
     update_attributes!(quantity: variant.on_hand) if quantity > variant.on_hand
   end
 
@@ -111,60 +114,40 @@ Spree::LineItem.class_eval do
     final_weight_volume / quantity
   end
 
-  # MONKEYPATCH of Spree method
-  # Enables scoping of variant to hub/shop, stock drawn down from inventory
-  def update_inventory
-    return true unless order.completed?
-
-    scoper.scope(variant) # this line added
-
-    if new_record?
-      Spree::InventoryUnit.increase(order, variant, quantity)
-    elsif old_quantity = self.changed_attributes['quantity']
-      if old_quantity < quantity
-        Spree::InventoryUnit.increase(order, variant, (quantity - old_quantity))
-      elsif old_quantity > quantity
-        Spree::InventoryUnit.decrease(order, variant, (old_quantity - quantity))
-      end
-    end
-  end
-
-  # MONKEYPATCH of Spree method
-  # Enables scoping of variant to hub/shop, stock replaced to inventory
-  def remove_inventory
-    return true unless order.completed?
-
-    scoper.scope(variant) # this line added
-
-    Spree::InventoryUnit.decrease(order, variant, quantity)
-  end
-
-  # MONKEYPATCH of Spree method
-  # Enables scoping of variant to hub/shop, so we check stock against relevant overrides if they exist
-  # Also skips stock check if requested quantity is zero
+  # Overrides Spree version to:
+  #   - skip stock check if skip_stock_check flag is active
+  #   - skip stock check if requested quantity is zero or negative
+  #   - scope variants to hub and thus acivate variant overrides
   def sufficient_stock?
-    return true if quantity == 0 # This line added
-    scoper.scope(variant) # This line added
-    return true if Spree::Config[:allow_backorders]
-    if new_record? || !order.completed?
-      variant.on_hand >= quantity
-    else
-      variant.on_hand >= (quantity - self.changed_attributes['quantity'].to_i)
-    end
+    return true if skip_stock_check
+    return true if quantity <= 0
+    scoper.scope(variant)
+    variant.can_supply?(quantity)
+  end
+
+  def scoper
+    @scoper ||= OpenFoodNetwork::ScopeVariantToHub.new(order.distributor)
   end
 
   private
 
-  # Override of Spree validation method
-  # Added check for in-memory :skip_stock_check attribute
-  def stock_availability
-    return if skip_stock_check || sufficient_stock?
-    errors.add(:quantity, I18n.t('validation.exceeds_available_stock'))
+  def update_inventory_with_scoping
+    scoper.scope(variant)
+    update_inventory_without_scoping
   end
+  alias_method_chain :update_inventory, :scoping
 
-  def scoper
-	  return @scoper unless @scoper.nil?
-	  @scoper = OpenFoodNetwork::ScopeVariantToHub.new(order.distributor)
+  def update_inventory_before_destroy
+    # This is necessary before destroying the line item
+    #   so that update_inventory will restore stock to the variant
+    self.quantity = 0
+
+    update_inventory
+
+    # This is necessary after updating inventory
+    #   because update_inventory may delete the last shipment in the order
+    #   and that makes update_order fail if we don't reload the shipments
+    order.shipments.reload
   end
 
   def calculate_final_weight_volume

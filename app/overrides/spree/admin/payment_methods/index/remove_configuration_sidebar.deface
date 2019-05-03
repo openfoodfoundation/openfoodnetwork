@@ -1,1 +1,1 @@
-remove "code[erb-loud]:contains(\"render :partial => 'spree/admin/shared/configuration_menu'\")"
+remove "erb[loud]:contains(\"render :partial => 'spree/admin/shared/configuration_menu'\")"

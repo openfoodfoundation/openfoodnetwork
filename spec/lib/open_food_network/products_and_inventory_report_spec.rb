@@ -105,7 +105,7 @@ module OpenFoodNetwork
         it "should filter deleted products" do
           product1 = create(:simple_product, supplier: supplier)
           product2 = create(:simple_product, supplier: supplier)
-          product2.delete
+          product2.destroy
           subject.filter(Spree::Variant.scoped).should match_array [product1.master, product1.variants.first]
         end
         describe "based on report type" do

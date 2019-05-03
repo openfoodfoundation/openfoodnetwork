@@ -1,6 +1,0 @@
-/ insert_after "[data-hook='admin_shipping_methods_index_rows'] td:first-child"
-
-%td.align-center
-  - shipping_method.distributors.each do |distributor|
-    = distributor.name
-    %br/

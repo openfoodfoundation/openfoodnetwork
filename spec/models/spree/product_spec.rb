@@ -22,13 +22,11 @@ module Spree
       end
 
       it "does not save when master is invalid" do
-        s = create(:supplier_enterprise)
-        t = create(:taxon)
-        product = Product.new supplier_id: s.id, name: "Apples", price: 1, primary_taxon_id: t.id, variant_unit: "weight", variant_unit_scale: 1000, unit_value: 1
-        product.on_hand = "10,000"
-        expect(product.save).to be false
+        product = build(:product)
+        product.variant_unit = 'weight'
+        product.master.unit_value = nil
 
-        expect(product.errors[:count_on_hand]).to include "is not a number"
+        expect(product.save).to eq(false)
       end
 
       it "defaults available_on to now" do
@@ -54,15 +52,6 @@ module Spree
             end
           end
         end
-      end
-
-
-      it "does not allow the last variant to be deleted" do
-        product = create(:simple_product)
-        expect(product.variants(:reload).length).to eq 1
-        v = product.variants.last
-        v.delete
-        expect(v.errors[:product]).to include "must have at least one variant"
       end
 
       context "when the product has variants" do
@@ -99,14 +88,15 @@ module Spree
           let!(:product){ Spree::Product.new }
 
           before do
+            create(:stock_location)
             product.primary_taxon = create(:taxon)
             product.supplier = create(:supplier_enterprise)
             product.name = "Product1"
             product.variant_unit = "weight"
             product.variant_unit_scale = 1000
             product.unit_value = 1
-            product.on_hand = 3
             product.price = 4.27
+            product.shipping_category = create(:shipping_category)
             product.save!
           end
 
@@ -172,7 +162,7 @@ module Spree
 
       it "refreshes the products cache on delete" do
         expect(OpenFoodNetwork::ProductsCache).to receive(:product_deleted).with(product)
-        product.delete
+        product.destroy
       end
 
       # On destroy, all distributed variants are refreshed by a Variant around_destroy
@@ -185,11 +175,15 @@ module Spree
         let!(:oc) { create(:simple_order_cycle, distributors: [distributor], variants: [product.variants.first]) }
 
         it "touches the supplier" do
-          expect { product.delete }.to change { supplier.reload.updated_at }
+          expect { product.destroy }.to change { supplier.reload.updated_at }
         end
 
         it "touches all distributors" do
-          expect { product.delete }.to change { distributor.reload.updated_at }
+          expect { product.destroy }.to change { distributor.reload.updated_at }
+        end
+
+        it "removes variants from order cycles" do
+          expect { product.destroy }.to change { ExchangeVariant.count }
         end
       end
 
@@ -478,7 +472,6 @@ module Spree
       end
     end
 
-
     describe "variant units" do
       context "when the product already has a variant unit set (and all required option types exist)" do
         let!(:p) { create(:simple_product,
@@ -572,14 +565,14 @@ module Spree
     describe "stock filtering" do
       it "considers products that are on_demand as being in stock" do
         product = create(:simple_product, on_demand: true)
-        product.master.update_attribute(:count_on_hand, 0)
+        product.master.update_attribute(:on_hand, 0)
         product.has_stock?.should == true
       end
 
       describe "finding products in stock for a particular distribution" do
         it "returns on-demand products" do
           p = create(:simple_product, on_demand: true)
-          p.variants.first.update_attributes!(count_on_hand: 0, on_demand: true)
+          p.variants.first.update_attributes!(on_hand: 0, on_demand: true)
           d = create(:distributor_enterprise)
           oc = create(:simple_order_cycle, distributors: [d])
           oc.exchanges.outgoing.first.variants << p.variants.first
@@ -590,7 +583,7 @@ module Spree
         it "returns products with in-stock variants" do
           p = create(:simple_product)
           v = create(:variant, product: p)
-          v.update_attribute(:count_on_hand, 1)
+          v.update_attribute(:on_hand, 1)
           d = create(:distributor_enterprise)
           oc = create(:simple_order_cycle, distributors: [d])
           oc.exchanges.outgoing.first.variants << v
@@ -601,7 +594,7 @@ module Spree
         it "returns products with on-demand variants" do
           p = create(:simple_product)
           v = create(:variant, product: p, on_demand: true)
-          v.update_attribute(:count_on_hand, 0)
+          v.update_attribute(:on_hand, 0)
           d = create(:distributor_enterprise)
           oc = create(:simple_order_cycle, distributors: [d])
           oc.exchanges.outgoing.first.variants << v
@@ -611,7 +604,7 @@ module Spree
 
         it "does not return products that have stock not in the distribution" do
           p = create(:simple_product)
-          p.master.update_attribute(:count_on_hand, 1)
+          p.master.update_attribute(:on_hand, 1)
           d = create(:distributor_enterprise)
           oc = create(:simple_order_cycle, distributors: [d])
 
@@ -639,13 +632,13 @@ module Spree
 
       it "removes the master variant from all order cycles" do
         e.variants << p.master
-        p.delete
+        p.destroy
         e.variants(true).should be_empty
       end
 
       it "removes all other variants from order cycles" do
         e.variants << v
-        p.delete
+        p.destroy
         e.variants(true).should be_empty
       end
     end

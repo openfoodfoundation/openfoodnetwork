@@ -59,77 +59,83 @@ module Spree
       end
 
       describe "Shipment adjustments" do
-        let!(:order)          { create(:order, distributor: hub, shipping_method: shipping_method) }
         let(:hub)             { create(:distributor_enterprise, charges_sales_tax: true) }
-        let!(:line_item)      { create(:line_item, order: order) }
-        let(:shipping_method) { create(:shipping_method, calculator: Calculator::FlatRate.new(preferred_amount: 50.0)) }
-        let(:adjustment)      { order.adjustments(:reload).shipping.first }
+        let(:order)           { create(:order, distributor: hub) }
+        let(:line_item)       { create(:line_item, order: order) }
 
-        it "has a shipping charge of $50" do
-          order.create_shipment!
-          adjustment.amount.should == 50
+        let(:shipping_method) { create(:shipping_method_with, :flat_rate) }
+        let(:shipment)        { create(:shipment_with, :shipping_method, shipping_method: shipping_method, order: order) }
+
+
+        describe "the shipping charge" do
+          it "is the adjustment amount" do
+            order.shipments = [shipment]
+            expect(order.adjustments.first.amount).to eq(50)
+          end
         end
 
         describe "when tax on shipping is disabled" do
-          it "records 0% tax on shipment adjustments" do
-            Config.shipment_inc_vat = false
-            Config.shipping_tax_rate = 0
-            order.create_shipment!
+          before do
+            allow(Config).to receive(:shipment_inc_vat).and_return(false)
+          end
 
-            adjustment.included_tax.should == 0
+          it "records 0% tax on shipment adjustments" do
+            allow(Config).to receive(:shipping_tax_rate).and_return(0)
+            order.shipments = [shipment]
+
+            expect(order.adjustments.first.included_tax).to eq(0)
           end
 
           it "records 0% tax on shipments when a rate is set but shipment_inc_vat is false" do
-            Config.shipment_inc_vat = false
-            Config.shipping_tax_rate = 0.25
-            order.create_shipment!
+            allow(Config).to receive(:shipping_tax_rate).and_return(0.25)
+            order.shipments = [shipment]
 
-            adjustment.included_tax.should == 0
+            expect(order.adjustments.first.included_tax).to eq(0)
           end
         end
 
         describe "when tax on shipping is enabled" do
           before do
-            Config.shipment_inc_vat = true
-            Config.shipping_tax_rate = 0.25
-            order.create_shipment!
+            allow(Config).to receive(:shipment_inc_vat).and_return(true)
           end
 
           it "takes the shipment adjustment tax included from the system setting" do
+            allow(Config).to receive(:shipping_tax_rate).and_return(0.25)
+            order.shipments = [shipment]
+
             # Finding the tax included in an amount that's already inclusive of tax:
             # total - ( total / (1 + rate) )
             # 50    - ( 50    / (1 + 0.25) )
             # = 10
-            adjustment.included_tax.should == 10.00
+            expect(order.adjustments.first.included_tax).to eq(10.00)
           end
 
           it "records 0% tax on shipments when shipping_tax_rate is not set" do
-            Config.shipment_inc_vat = true
-            Config.shipping_tax_rate = nil
-            order.create_shipment!
+            allow(Config).to receive(:shipping_tax_rate).and_return(0)
+            order.shipments = [shipment]
 
-            adjustment.included_tax.should == 0
+            expect(order.adjustments.first.included_tax).to eq(0)
           end
 
           it "records 0% tax on shipments when the distributor does not charge sales tax" do
             order.distributor.update_attributes! charges_sales_tax: false
-            order.reload.create_shipment!
+            order.shipments = [shipment]
 
-            adjustment.included_tax.should == 0
+            expect(order.adjustments.first.included_tax).to eq(0)
           end
         end
       end
 
       describe "EnterpriseFee adjustments" do
-        let!(:zone)                { create(:zone_with_member) }
-        let(:fee_tax_rate)             { create(:tax_rate, included_in_price: true, calculator: Calculator::DefaultTax.new, zone: zone, amount: 0.1) }
-        let(:fee_tax_category)         { create(:tax_category, tax_rates: [fee_tax_rate]) }
+        let(:zone)             { create(:zone_with_member) }
+        let(:fee_tax_rate)     { create(:tax_rate, included_in_price: true, calculator: Calculator::DefaultTax.new, zone: zone, amount: 0.1) }
+        let(:fee_tax_category) { create(:tax_category, tax_rates: [fee_tax_rate]) }
 
         let(:coordinator) { create(:distributor_enterprise, charges_sales_tax: true) }
         let(:variant)     { create(:variant, product: create(:product, tax_category: nil)) }
         let(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator, coordinator_fees: [enterprise_fee], distributors: [coordinator], variants: [variant]) }
-        let!(:order)      { create(:order, order_cycle: order_cycle, distributor: coordinator) }
-        let!(:line_item)  { create(:line_item, order: order, variant: variant) }
+        let(:line_item)   { create(:line_item, variant: variant) }
+        let(:order)       { create(:order, line_items: [line_item], order_cycle: order_cycle, distributor: coordinator) }
         let(:adjustment)  { order.adjustments(:reload).enterprise_fee.first }
 
         context "when enterprise fees have a fixed tax_category" do
@@ -175,7 +181,6 @@ module Spree
             end
           end
 
-
           context "when enterprise fees are taxed per-item" do
             let(:enterprise_fee) { create(:enterprise_fee, enterprise: coordinator, tax_category: fee_tax_category, calculator: Calculator::PerItem.new(preferred_amount: 50.0)) }
 
@@ -200,14 +205,15 @@ module Spree
           end
         end
 
-        context "when enterprise fees inherit their tax_category product they are applied to" do
+        context "when enterprise fees inherit their tax_category from the product they are applied to" do
           let(:product_tax_rate)             { create(:tax_rate, included_in_price: true, calculator: Calculator::DefaultTax.new, zone: zone, amount: 0.2) }
           let(:product_tax_category)         { create(:tax_category, tax_rates: [product_tax_rate]) }
 
           before do
             variant.product.update_attribute(:tax_category_id, product_tax_category.id)
-            order.reload.create_tax_charge! # Updating line_item or order has the same effect
-            order.reload.update_distribution_charge!
+
+            order.create_tax_charge! # Updating line_item or order has the same effect
+            order.update_distribution_charge!
           end
 
           context "when enterprise fees are taxed per-order" do
@@ -239,7 +245,6 @@ module Spree
               end
             end
           end
-
 
           context "when enterprise fees are taxed per-item" do
             let(:enterprise_fee) { create(:enterprise_fee, enterprise: coordinator, inherits_tax_category: true, calculator: Calculator::PerItem.new(preferred_amount: 50.0)) }

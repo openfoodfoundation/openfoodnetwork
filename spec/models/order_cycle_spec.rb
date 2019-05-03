@@ -181,13 +181,16 @@ describe OrderCycle do
     }
     let!(:p0) { create(:simple_product) }
     let!(:p1) { create(:simple_product) }
-    let!(:p1_v_deleted) { create(:variant, product: p1, deleted_at: Time.zone.now) }
+    let!(:p1_v_deleted) { create(:variant, product: p1) }
     let!(:p1_v_visible) { create(:variant, product: p1, inventory_items: [create(:inventory_item, enterprise: d2, visible: true)]) }
     let!(:p1_v_hidden) { create(:variant, product: p1, inventory_items: [create(:inventory_item, enterprise: d2, visible: false)]) }
     let!(:p2) { create(:simple_product) }
     let!(:p2_v) { create(:variant, product: p2) }
 
     before(:each) do
+      p1_v_deleted.deleted_at = Time.zone.now
+      p1_v_deleted.save
+
       e0.variants << p0.master
       e1.variants << p1.master
       e1.variants << p2.master
@@ -434,20 +437,31 @@ describe OrderCycle do
     let(:shop) { create(:enterprise) }
     let(:user) { create(:user) }
     let(:oc) { create(:order_cycle) }
-    let!(:order1) { create(:completed_order_with_totals, distributor: shop, user: user, order_cycle: oc)  }
-    let!(:order2) { create(:completed_order_with_totals, distributor: create(:enterprise), user: user, order_cycle: oc)  }
-    let!(:order3) { create(:completed_order_with_totals, distributor: shop, user: create(:user), order_cycle: oc)  }
-    let!(:order4) { create(:completed_order_with_totals, distributor: shop, user: user, order_cycle: create(:order_cycle))  }
-    let!(:order5) { create(:completed_order_with_totals, distributor: shop, user: user, order_cycle: oc)  }
+    let!(:order) { create(:completed_order_with_totals, distributor: shop, user: user, order_cycle: oc)  }
+    let!(:order_from_other_hub) { create(:completed_order_with_totals, distributor: create(:enterprise), user: user, order_cycle: oc)  }
+    let!(:order_from_other_user) { create(:completed_order_with_totals, distributor: shop, user: create(:user), order_cycle: oc)  }
+    let!(:order_from_other_oc) { create(:completed_order_with_totals, distributor: shop, user: user, order_cycle: create(:order_cycle))  }
+    let!(:order_cancelled) { create(:completed_order_with_totals, distributor: shop, user: user, order_cycle: oc)  }
 
     before do
       setup_email
     end
-    before { order5.cancel }
+    before { order_cancelled.cancel }
 
     it "only returns items from non-cancelled orders in the OC, placed by the user at the shop" do
       items = oc.items_bought_by_user(user, shop)
-      expect(items).to eq order1.reload.line_items
+      expect(items).to match_array order.reload.line_items
+    end
+
+    it "returns items with scoped variants" do
+      overridden_variant = order.line_items.first.variant
+      create(:variant_override, hub: shop, variant: overridden_variant, count_on_hand: 1000)
+
+      items = oc.items_bought_by_user(user, shop)
+
+      expect(items).to match_array order.reload.line_items
+      item_with_overridden_variant = items.find { |item| item.variant_id == overridden_variant.id }
+      expect(item_with_overridden_variant.variant.on_hand).to eq(1000)
     end
   end
 end

@@ -13,5 +13,13 @@ module Api
     def respond_with_conflict(json_hash)
       render json: json_hash, status: :conflict
     end
+
+    private
+
+    # Use logged in user (spree_current_user) for API authentication (current_api_user)
+    def authenticate_user
+      @current_api_user = try_spree_current_user
+      super
+    end
   end
 end

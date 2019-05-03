@@ -3,6 +3,18 @@ require 'open_food_network/scope_variants_for_search'
 Spree::Admin::VariantsController.class_eval do
   helper 'spree/products'
 
+  def create
+    on_demand = params[:variant].delete(:on_demand)
+    on_hand = params[:variant].delete(:on_hand)
+
+    super
+
+    if @object.present? && @object.valid?
+      @object.on_demand = on_demand if on_demand.present?
+      @object.on_hand = on_hand.to_i if on_hand.present?
+    end
+  end
+
   def search
     scoper = OpenFoodNetwork::ScopeVariantsForSearch.new(params)
     @variants = scoper.search
@@ -10,9 +22,11 @@ Spree::Admin::VariantsController.class_eval do
 
   def destroy
     @variant = Spree::Variant.find(params[:id])
-    @variant.delete_and_refresh_cache
-
-    flash[:success] = I18n.t('notice_messages.variant_deleted')
+    if VariantDeleter.new.delete(@variant) # This line changed
+      flash[:success] = Spree.t('notice_messages.variant_deleted')
+    else
+      flash[:success] = Spree.t('notice_messages.variant_not_deleted')
+    end
 
     respond_with(@variant) do |format|
       format.html { redirect_to admin_product_variants_url(params[:product_id]) }

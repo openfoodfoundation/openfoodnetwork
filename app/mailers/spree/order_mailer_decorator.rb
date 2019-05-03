@@ -4,36 +4,38 @@ Spree::OrderMailer.class_eval do
   helper SpreeCurrencyHelper
   include I18nHelper
 
-  def cancel_email(order, resend = false)
-    @order = find_order(order)
-    I18n.with_locale valid_locale(@order.user) do
-      mail(to: order.email,
-           from: from_address,
-           subject: mail_subject(t('order_mailer.cancel_email.subject'), resend))
-    end
-  end
-
-  def confirm_email_for_customer(order, resend = false)
-    find_order(order) # Finds an order instance from an id
+  def cancel_email(order_or_order_id, resend = false)
+    @order = find_order(order_or_order_id)
     I18n.with_locale valid_locale(@order.user) do
       mail(to: @order.email,
            from: from_address,
-           subject: mail_subject(t('order_mailer.confirm_email.subject'), resend),
-           reply_to: @order.distributor.contact.email)
+           subject: mail_subject(t('spree.order_mailer.cancel_email.subject'), resend))
     end
   end
 
-  def confirm_email_for_shop(order, resend = false)
-    find_order(order) # Finds an order instance from an id
+  def confirm_email_for_customer(order_or_order_id, resend = false)
+    @order = find_order(order_or_order_id)
     I18n.with_locale valid_locale(@order.user) do
-      mail(to: @order.distributor.contact.email,
-           from: from_address,
-           subject: mail_subject(t('order_mailer.confirm_email.subject'), resend))
+      subject = mail_subject(t('spree.order_mailer.confirm_email.subject'), resend)
+      mail(:to => @order.email,
+           :from => from_address,
+           :subject => subject,
+           :reply_to => @order.distributor.contact.email)
     end
   end
 
-  def invoice_email(order, pdf)
-    find_order(order) # Finds an order instance from an id
+  def confirm_email_for_shop(order_or_order_id, resend = false)
+    @order = find_order(order_or_order_id)
+    I18n.with_locale valid_locale(@order.user) do
+      subject = mail_subject(t('spree.order_mailer.confirm_email.subject'), resend)
+      mail(:to => @order.distributor.contact.email,
+           :from => from_address,
+           :subject => subject)
+    end
+  end
+
+  def invoice_email(order_or_order_id, pdf)
+    @order = find_order(order_or_order_id)
     attach_file("invoice-#{@order.number}.pdf", pdf)
     I18n.with_locale valid_locale(@order.user) do
       mail(to: @order.email,
@@ -43,11 +45,12 @@ Spree::OrderMailer.class_eval do
     end
   end
 
-  def find_order(order)
-    @order = order.respond_to?(:id) ? order : Spree::Order.find(order)
-  end
-
   private
+
+  # Finds an order instance from an order or from an order id
+  def find_order(order_or_order_id)
+    order_or_order_id.respond_to?(:id) ? order_or_order_id : Spree::Order.find(order_or_order_id)
+  end
 
   def mail_subject(base_subject, resend)
     resend_prefix = (resend ? "[#{t(:resend).upcase}] " : '')

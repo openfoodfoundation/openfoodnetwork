@@ -36,22 +36,39 @@ describe CheckoutController, type: :controller do
     flash[:info].should == "The hub you have selected is temporarily closed for orders. Please try again later."
   end
 
-  it "redirects to the cart when some items are out of stock" do
-    controller.stub(:current_distributor).and_return(distributor)
-    controller.stub(:current_order_cycle).and_return(order_cycle)
-    controller.stub(:current_order).and_return(order)
-    order.stub_chain(:insufficient_stock_lines, :present?).and_return true
-    get :edit
-    response.should redirect_to spree.cart_path
-  end
+  describe "redirection to the cart" do
+    let(:order_cycle_distributed_variants) { double(:order_cycle_distributed_variants) }
 
-  it "renders when both distributor and order cycle is selected" do
-    controller.stub(:current_distributor).and_return(distributor)
-    controller.stub(:current_order_cycle).and_return(order_cycle)
-    controller.stub(:current_order).and_return(order)
-    order.stub_chain(:insufficient_stock_lines, :present?).and_return false
-    get :edit
-    response.should be_success
+    before do
+      allow(controller).to receive(:current_order).and_return(order)
+      allow(order).to receive(:distributor).and_return(distributor)
+      order.order_cycle = order_cycle
+
+      allow(OrderCycleDistributedVariants).to receive(:new).with(order_cycle, distributor).and_return(order_cycle_distributed_variants)      
+    end
+
+    it "redirects when some items are out of stock" do
+      allow(order).to receive_message_chain(:insufficient_stock_lines, :empty?).and_return false
+
+      get :edit
+      expect(response).to redirect_to spree.cart_path
+    end
+
+    it "redirects when some items are not available" do
+      allow(order).to receive_message_chain(:insufficient_stock_lines, :empty?).and_return true
+      expect(order_cycle_distributed_variants).to receive(:distributes_order_variants?).with(order).and_return(false)
+
+      get :edit
+      expect(response).to redirect_to spree.cart_path
+    end
+
+    it "does not redirect when items are available and in stock" do
+      allow(order).to receive_message_chain(:insufficient_stock_lines, :empty?).and_return true
+      expect(order_cycle_distributed_variants).to receive(:distributes_order_variants?).with(order).and_return(true)
+
+      get :edit
+      expect(response).to be_success
+    end
   end
 
   describe "building the order" do
@@ -83,6 +100,42 @@ describe CheckoutController, type: :controller do
       order.stub_chain(:shipping_method, :andand, :require_ship_address).and_return false
       order.should_receive(:ship_address=)
       controller.send(:clear_ship_address)
+    end
+
+    context "#update with shipping_method_id" do
+      let(:test_shipping_method_id) { "111" }
+
+      before do
+        # stub order and resetorderservice
+        allow(ResetOrderService).to receive(:new).with(controller, order) { reset_order_service }
+        allow(reset_order_service).to receive(:call)
+        allow(order).to receive(:update_attributes).and_return true
+        allow(controller).to receive(:current_order).and_return order
+
+        # make order workflow pass through delivery
+        allow(order).to receive(:next).twice do
+          if order.state == 'cart'
+            order.update_column :state, 'delivery'
+          else
+            order.update_column :state, 'complete'
+          end
+        end
+      end
+
+      it "does not fail to update" do
+        expect(controller).to_not receive(:clear_ship_address)
+        spree_post :update, order: {shipping_method_id: test_shipping_method_id}
+      end
+
+      it "does not send shipping_method_id to the order model as an attribute" do
+        expect(order).to receive(:update_attributes).with({})
+        spree_post :update, order: {shipping_method_id: test_shipping_method_id}
+      end
+
+      it "selects the shipping_method in the order" do
+        expect(order).to receive(:select_shipping_method).with(test_shipping_method_id)
+        spree_post :update, order: {shipping_method_id: test_shipping_method_id}
+      end
     end
 
     context 'when completing the order' do

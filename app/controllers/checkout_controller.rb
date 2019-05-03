@@ -22,45 +22,48 @@ class CheckoutController < Spree::CheckoutController
   end
 
   def update
-    if @order.update_attributes(object_params)
-      check_order_for_phantom_fees
-      fire_event('spree.checkout.update')
-      while @order.state != "complete"
-        if @order.state == "payment"
-          return if redirect_to_paypal_express_form_if_needed
-        end
+    shipping_method_id = object_params.delete(:shipping_method_id)
 
-        next if advance_order_state(@order)
+    return update_failed unless @order.update_attributes(object_params)
 
-        if @order.errors.present?
-          flash[:error] = @order.errors.full_messages.to_sentence
-        else
-          flash[:error] = t(:payment_processing_failed)
-        end
-        update_failed
-        return
+    check_order_for_phantom_fees
+    fire_event('spree.checkout.update')
+
+    while @order.state != "complete"
+      if @order.state == "payment"
+        return if redirect_to_paypal_express_form_if_needed
       end
-      if @order.state == "complete" ||  @order.completed?
-        set_default_bill_address
-        set_default_ship_address
 
-        ResetOrderService.new(self, current_order).call
-        session[:access_token] = current_order.token
+      if @order.state == "delivery"
+        @order.select_shipping_method(shipping_method_id)
+      end
 
-        flash[:notice] = t(:order_processed_successfully)
-        respond_to do |format|
-          format.html do
-            respond_with(@order, :location => order_path(@order))
-          end
-          format.json do
-            render json: {path: order_path(@order)}, status: 200
-          end
-        end
+      next if advance_order_state(@order)
+
+      if @order.errors.present?
+        flash[:error] = @order.errors.full_messages.to_sentence
       else
-        update_failed
+        flash[:error] = t(:payment_processing_failed)
       end
-    else
       update_failed
+      return
+    end
+    return update_failed unless @order.state == "complete" ||  @order.completed?
+
+    set_default_bill_address
+    set_default_ship_address
+
+    ResetOrderService.new(self, current_order).call
+    session[:access_token] = current_order.token
+
+    flash[:notice] = t(:order_processed_successfully)
+    respond_to do |format|
+      format.html do
+        respond_with(@order, :location => order_path(@order))
+      end
+      format.json do
+        render json: {path: order_path(@order)}, status: 200
+      end
     end
   end
 
@@ -166,7 +169,7 @@ class CheckoutController < Spree::CheckoutController
   def load_order
     @order = current_order
     redirect_to main_app.shop_path and return unless @order and @order.checkout_allowed?
-    raise_insufficient_quantity and return if @order.insufficient_stock_lines.present?
+    redirect_to_cart_path and return unless valid_order_line_items?
     redirect_to main_app.shop_path and return if @order.completed?
     before_address
     setup_for_current_state
@@ -181,8 +184,11 @@ class CheckoutController < Spree::CheckoutController
     @order.ship_address = finder.ship_address
   end
 
-  # Overriding Spree's methods
-  def raise_insufficient_quantity
+  def valid_order_line_items?
+    @order.insufficient_stock_lines.empty? && OrderCycleDistributedVariants.new(@order.order_cycle, @order.distributor).distributes_order_variants?(@order)
+  end
+
+  def redirect_to_cart_path
     respond_to do |format|
       format.html do
         redirect_to cart_path

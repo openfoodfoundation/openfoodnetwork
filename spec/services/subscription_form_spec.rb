@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe SubscriptionForm do
   describe "creating a new subscription" do
     let!(:shop) { create(:distributor_enterprise) }
@@ -7,7 +9,7 @@ describe SubscriptionForm do
     let!(:product3) { create(:product, supplier: shop) }
     let!(:variant1) { create(:variant, product: product1, unit_value: '100', price: 12.00, option_values: []) }
     let!(:variant2) { create(:variant, product: product2, unit_value: '1000', price: 6.00, option_values: []) }
-    let!(:variant3) { create(:variant, product: product2, unit_value: '1000', price: 2.50, option_values: [], count_on_hand: 1) }
+    let!(:variant3) { create(:variant, product: product2, unit_value: '1000', price: 2.50, option_values: [], on_hand: 1) }
     let!(:enterprise_fee) { create(:enterprise_fee, amount: 1.75) }
     let!(:order_cycle1) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 9.days.ago, orders_close_at: 2.days.ago) }
     let!(:order_cycle2) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 2.days.ago, orders_close_at: 5.days.from_now) }
@@ -44,7 +46,6 @@ describe SubscriptionForm do
     let(:form) { SubscriptionForm.new(subscription, params) }
 
     it "creates orders for each order cycle in the schedule" do
-      Spree::Config.set allow_backorders: false
       expect(form.save).to be true
 
       expect(subscription.proxy_orders.count).to be 2
@@ -61,11 +62,11 @@ describe SubscriptionForm do
       proxy_order2 = subscription.proxy_orders.find_by_order_cycle_id(order_cycle2.id)
       expect(proxy_order2).to be_a ProxyOrder
       order2 = proxy_order2.initialise_order!
-      expect(order2.line_items.count).to be 3
+      expect(order2.line_items.count).to eq 3
       expect(order2.line_items.find_by_variant_id(variant3.id).quantity).to be 3
-      expect(order2.shipments.count).to be 1
+      expect(order2.shipments.count).to eq 1
       expect(order2.shipments.first.shipping_method).to eq shipping_method
-      expect(order2.payments.count).to be 1
+      expect(order2.payments.count).to eq 1
       expect(order2.payments.first.payment_method).to eq payment_method
       expect(order2.payments.first.state).to eq 'checkout'
       expect(order2.total).to eq 42
@@ -77,11 +78,11 @@ describe SubscriptionForm do
       expect(proxy_order3).to be_a ProxyOrder
       order3 = proxy_order3.initialise_order!
       expect(order3).to be_a Spree::Order
-      expect(order3.line_items.count).to be 3
+      expect(order3.line_items.count).to eq 3
       expect(order2.line_items.find_by_variant_id(variant3.id).quantity).to be 3
-      expect(order3.shipments.count).to be 1
+      expect(order3.shipments.count).to eq 1
       expect(order3.shipments.first.shipping_method).to eq shipping_method
-      expect(order3.payments.count).to be 1
+      expect(order3.payments.count).to eq 1
       expect(order3.payments.first.payment_method).to eq payment_method
       expect(order3.payments.first.state).to eq 'checkout'
       expect(order3.total).to eq 31.50

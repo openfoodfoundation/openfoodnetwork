@@ -11,7 +11,7 @@ module Spree
     let(:product_with_image) { create(:product_with_image, supplier: supplier) }
     let(:attributes) { [:id, :name, :supplier, :price, :on_hand, :available_on, :permalink_live] }
 
-    let(:current_api_user) { build_stubbed(:user) }
+    let(:current_api_user) { build(:user) }
 
     before do
       allow(controller).to receive(:spree_current_user) { current_api_user }

@@ -1,13 +1,8 @@
 require 'spec_helper'
 
-feature "Authentication", js: true, retry: 3 do
+feature "Authentication", js: true do
   include UIComponentHelper
   include OpenFoodNetwork::EmailHelper
-
-  # Attempt to address intermittent failures in these specs
-  around do |example|
-    Capybara.using_wait_time(120) { example.run }
-  end
 
   describe "login" do
     let(:user) { create(:user, password: "password", password_confirmation: "password") }
@@ -76,15 +71,17 @@ feature "Authentication", js: true, retry: 3 do
           end
 
           scenario "Signing up successfully" do
-            setup_email
-            fill_in "Email", with: "test@foo.com"
-            fill_in "Choose a password", with: "test12345"
-            fill_in "Confirm password", with: "test12345"
+            performing_deliveries do
+              setup_email
+              fill_in "Email", with: "test@foo.com"
+              fill_in "Choose a password", with: "test12345"
+              fill_in "Confirm password", with: "test12345"
 
-            expect do
-              click_signup_button
-              expect(page).to have_content I18n.t('devise.user_registrations.spree_user.signed_up_but_unconfirmed')
-            end.to send_confirmation_instructions
+              expect do
+                click_signup_button
+                expect(page).to have_content I18n.t('devise.user_registrations.spree_user.signed_up_but_unconfirmed')
+              end.to send_confirmation_instructions
+            end
           end
         end
 

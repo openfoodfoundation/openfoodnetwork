@@ -1,0 +1,14 @@
+- if adjustments.present?
+  %fieldset.no-border-bottom
+    %legend= title
+    %table>
+      %thead
+        %tr
+          %th= Spree.t('name')
+          %th= Spree.t('amount')
+      %tbody.with-border
+        - adjustments.each do |adjustment|
+          %tr.total
+            %td.strong= adjustment.label + ":"
+            %td.total.align-center
+              %span= Spree::Money.new(adjustment.amount)

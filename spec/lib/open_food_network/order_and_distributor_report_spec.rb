@@ -20,12 +20,13 @@ module OpenFoodNetwork
         let(:product) { create(:product) }
         let(:shipping_method) { create(:shipping_method) }
         let(:shipping_instructions) { 'pick up on thursday please!' }
-        let(:order) { create(:order, state: 'complete', completed_at: Time.zone.now, distributor: distributor, bill_address: bill_address, shipping_method: shipping_method, special_instructions: shipping_instructions) }
+        let(:order) { create(:order, state: 'complete', completed_at: Time.zone.now, distributor: distributor, bill_address: bill_address, special_instructions: shipping_instructions) }
         let(:payment_method) { create(:payment_method, distributors: [distributor]) }
         let(:payment) { create(:payment, payment_method: payment_method, order: order) }
-        let(:line_item) { create(:line_item, product: product, order: order) }
+        let(:line_item) { create(:line_item_with_shipment, product: product, order: order) }
 
         before do
+          order.select_shipping_method(shipping_method.id)
           order.payments << payment
           order.line_items << line_item
         end

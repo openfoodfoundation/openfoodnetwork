@@ -10,9 +10,17 @@ describe SubscriptionConfirmJob do
     let(:order_cycle1) { create(:simple_order_cycle, coordinator: shop, orders_close_at: 59.minutes.ago, updated_at: 1.day.ago) }
     let(:order_cycle2) { create(:simple_order_cycle, coordinator: shop, orders_close_at: 61.minutes.ago, updated_at: 1.day.ago) }
     let(:schedule) { create(:schedule, order_cycles: [order_cycle1, order_cycle2]) }
-    let(:subscription) { create(:subscription, shop: shop, schedule: schedule) }
-    let!(:proxy_order) { create(:proxy_order, subscription: subscription, order_cycle: order_cycle1, placed_at: 5.minutes.ago, order: create(:order, completed_at: 1.minute.ago)) }
+    let(:subscription) { create(:subscription, with_items: true, shop: shop, schedule: schedule) }
+    let!(:proxy_order) do
+      create(:proxy_order, subscription: subscription, order_cycle: order_cycle1,
+                           placed_at: 5.minutes.ago)
+    end
+    let!(:order) { proxy_order.initialise_order! }
     let(:proxy_orders) { job.send(:proxy_orders) }
+
+    before do
+      AdvanceOrderService.new(order).call!
+    end
 
     it "returns proxy orders that meet all of the criteria" do
       expect(proxy_orders).to include proxy_order
@@ -119,7 +127,7 @@ describe SubscriptionConfirmJob do
     let(:order) { proxy_order.initialise_order! }
 
     before do
-      while !order.completed? do break unless order.next! end
+      AdvanceOrderService.new(order).call!
       allow(job).to receive(:send_confirm_email).and_call_original
       job.instance_variable_set(:@order, order)
       setup_email
@@ -133,6 +141,7 @@ describe SubscriptionConfirmJob do
       before do
         allow(order).to receive(:payment_total) { 0 }
         allow(order).to receive(:total) { 10 }
+        allow(order).to receive(:payment_required?) { true }
         allow(order).to receive(:pending_payments) { [payment] }
       end
 
@@ -162,6 +171,10 @@ describe SubscriptionConfirmJob do
         end
 
         context "when payments are processed without error" do
+          around do |example|
+            performing_deliveries { example.run }
+          end
+
           before do
             expect(payment).to receive(:process!) { true }
             expect(payment).to receive(:completed?) { true }

@@ -27,6 +27,34 @@ Spree::Admin::OrdersController.class_eval do
     # within the page then fetches the data it needs from Api::OrdersController
   end
 
+  def edit
+    @order.shipments.map &:refresh_rates
+
+    AdvanceOrderService.new(@order).call
+
+    # The payment step shows an error of 'No pending payments'
+    # Clearing the errors from the order object will stop this error
+    # appearing on the edit page where we don't want it to.
+    @order.errors.clear
+  end
+
+  # Re-implement spree method so that it redirects to edit instead of rendering edit
+  #   This allows page reloads while adding variants to the order (/edit), without being redirected to customer details page (/update)
+  def update
+    unless @order.update_attributes(params[:order]) && @order.line_items.present?
+      @order.errors.add(:line_items, Spree.t('errors.messages.blank')) if @order.line_items.empty?
+      return redirect_to edit_admin_order_path(@order), :flash => { :error => @order.errors.full_messages.join(', ') }
+    end
+
+    @order.update!
+    if @order.complete?
+      redirect_to edit_admin_order_path(@order)
+    else
+      # Jump to next step if order is not complete
+      redirect_to admin_order_customer_path(@order)
+    end
+  end
+
   # Overwrite to use confirm_email_for_customer instead of confirm_email.
   # This uses a new template. See mailers/spree/order_mailer_decorator.rb.
   def resend

@@ -1,12 +1,14 @@
+require 'spree/concerns/payment_method_distributors'
+
 Spree::PaymentMethod.class_eval do
   include Spree::Core::CalculatedAdjustments
+  include Spree::PaymentMethodDistributors
 
   acts_as_taggable
 
-  has_and_belongs_to_many :distributors, join_table: 'distributors_payment_methods', :class_name => 'Enterprise', association_foreign_key: 'distributor_id'
   has_many :credit_cards, class_name: "Spree::CreditCard" # from Spree v.2.3.0 d470b31798f37
 
-  attr_accessible :distributor_ids, :tag_list
+  attr_accessible :tag_list
 
   after_initialize :init
 

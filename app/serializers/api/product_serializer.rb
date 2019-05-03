@@ -4,7 +4,7 @@ class Api::ProductSerializer < ActiveModel::Serializer
   # TODO
   # Prices can't be cached? How?
   def serializable_hash
-    cached_serializer_hash.merge uncached_serializer_hash
+    cached_serializer_hash.merge(uncached_serializer_hash)
   end
 
   private
@@ -36,7 +36,7 @@ class Api::CachedProductSerializer < ActiveModel::Serializer
   include ActionView::Helpers::SanitizeHelper
 
   attributes :id, :name, :permalink, :meta_keywords
-  attributes :on_demand, :group_buy, :notes, :description, :description_html
+  attributes :group_buy, :notes, :description, :description_html
   attributes :properties_with_values
 
   has_many :variants, serializer: Api::VariantSerializer

@@ -8,6 +8,7 @@ module Spree
             user.stub(:has_spree_role?).with("admin").and_return(false)
             user.stub(:enterprises) { [] }
             user.stub(:owned_groups) { [] }
+            user.stub(:spree_api_key) { "spree_api_key" }
             user
           end
         end
@@ -37,6 +38,7 @@ module Spree
             user.stub(:enterprises) { [] }
             user.stub(:owned_groups) { [] }
 
+            user.stub(:spree_api_key) { "admin_spree_api_key" }
             user
           end
         end

@@ -14,16 +14,21 @@ gem "order_management", path: "./engines/order_management"
 gem 'web', path: './engines/web'
 
 gem 'pg'
-gem 'spree', github: 'openfoodfoundation/spree', branch: 'step-6a', ref: '41906362d931695e0616194341a68d2c4c85aaaf'
+
+# OFN-maintained and patched version of Spree v2.0.4. See
+# https://github.com/openfoodfoundation/openfoodnetwork/wiki/Spree-2.0-upgrade
+# for details.
+gem 'spree', github: 'openfoodfoundation/spree', branch: '2-0-4-stable'
+
 gem 'spree_i18n', github: 'spree/spree_i18n', branch: '1-3-stable'
-gem 'spree_auth_devise', github: 'openfoodfoundation/spree_auth_devise', branch: 'spree-upgrade-intermediate'
+gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '2-0-stable'
 
 # Our branch contains two changes
 # - Pass customer email and phone number to PayPal (merged to upstream master)
 # - Change type of password from string to password to hide it in the form
-gem 'spree_paypal_express', github: "openfoodfoundation/better_spree_paypal_express", branch: "spree-upgrade-intermediate"
-#gem 'spree_paypal_express', github: "spree-contrib/better_spree_paypal_express", branch: "1-3-stable"
+gem 'spree_paypal_express', github: "openfoodfoundation/better_spree_paypal_express", branch: "2-0-stable"
 gem 'stripe'
+
 # We need at least this version to have Digicert's root certificate
 # which is needed for Pin Payments (and possibly others).
 gem 'activemerchant', '~> 1.78'
@@ -56,8 +61,8 @@ gem 'rabl'
 # Once Rails is updated to 5.x we should bump directly to 0.10.x
 gem "active_model_serializers", "0.8.4"
 gem 'oj'
-gem 'deface', github: 'spree/deface', ref: '1110a13'
-gem 'paperclip'
+gem 'deface', '1.0.0'
+gem 'paperclip', '~> 3.4.1'
 gem 'dalli'
 gem 'geocoder'
 gem 'gmaps4rails'
@@ -104,7 +109,7 @@ end
 gem "foundation-rails"
 gem 'foundation_rails_helper', github: 'willrjmarshall/foundation_rails_helper', branch: "rails3"
 
-gem 'jquery-rails'
+gem 'jquery-rails', '3.0.0'
 gem 'jquery-migrate-rails'
 
 gem 'ofn-qz', github: 'openfoodfoundation/ofn-qz', ref: '60da2ae4c44cbb4c8d602f59fb5fff8d0f21db3c'
@@ -138,6 +143,7 @@ end
 
 group :development do
   gem 'byebug', '~> 9.0.0' # 9.1 requires ruby 2.2
+  gem "newrelic_rpm", "~> 3.0"
   gem 'pry-byebug', '>= 3.4.3'
   gem 'debugger-linecache'
   gem 'guard'

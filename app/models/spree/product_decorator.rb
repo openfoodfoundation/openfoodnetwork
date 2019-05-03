@@ -1,8 +1,11 @@
 require 'open_food_network/permalink_generator'
 require 'open_food_network/property_merge'
+require 'concerns/product_stock'
 
 Spree::Product.class_eval do
   include PermalinkGenerator
+  include ProductStock
+
   # We have an after_destroy callback on Spree::ProductOptionType. However, if we
   # don't specify dependent => destroy on this association, it is not called. See:
   # https://github.com/rails/rails/issues/7618
@@ -170,20 +173,18 @@ Spree::Product.class_eval do
     end
   end
 
-  def delete_with_delete_from_order_cycles
+  def destroy_with_delete_from_order_cycles
     transaction do
       OpenFoodNetwork::ProductsCache.product_deleted(self) do
-        # Touch supplier and distributors as we would on #destroy
-        self.supplier.touch
         touch_distributors
 
-        ExchangeVariant.where('exchange_variants.variant_id IN (?)', self.variants_including_master_and_deleted).destroy_all
+        ExchangeVariant.where('exchange_variants.variant_id IN (?)', self.variants_including_master.with_deleted).destroy_all
 
-        delete_without_delete_from_order_cycles
+        destroy_without_delete_from_order_cycles
       end
     end
   end
-  alias_method_chain :delete, :delete_from_order_cycles
+  alias_method_chain :destroy, :delete_from_order_cycles
 
 
   def refresh_products_cache
@@ -227,7 +228,6 @@ Spree::Product.class_eval do
       variant = self.master.dup
       variant.product = self
       variant.is_master = false
-      variant.on_demand = self.on_demand
       self.variants << variant
     end
   end
@@ -236,19 +236,23 @@ Spree::Product.class_eval do
   # This fixes any problems arising from failing master saves, without the need for a validates_associated on
   # master, while giving us more specific errors as to why saving failed
   def save_master
-    begin
-      if master && (master.changed? || master.new_record? || (master.default_price && (master.default_price.changed? || master.default_price.new_record?)))
-        master.save!
-      end
+    if master && (
+        master.changed? || master.new_record? || (
+          master.default_price && (
+            master.default_price.changed? || master.default_price.new_record?
+          )
+        )
+      )
+      master.save!
+    end
 
     # If the master cannot be saved, the Product object will get its errors
     # and will be destroyed
-    rescue ActiveRecord::RecordInvalid
-      master.errors.each do |att, error|
-        self.errors.add(att, error)
-      end
-      raise
+  rescue ActiveRecord::RecordInvalid
+    master.errors.each do |att, error|
+      self.errors.add(att, error)
     end
+    raise
   end
 
   def sanitize_permalink

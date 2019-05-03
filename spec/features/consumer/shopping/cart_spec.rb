@@ -130,16 +130,9 @@ feature "full-page cart", js: true do
         add_product_to_cart order, product_with_tax
       end
 
-      around do |example|
-        original = Spree::Config.allow_backorders
-        Spree::Config.allow_backorders = false
-        example.run
-        Spree::Config.allow_backorders = original
-      end
-
       it "prevents me from entering an invalid value" do
         # Given we have 2 on hand, and we've loaded the page after that fact
-        variant.update_attributes! on_hand: 2
+        variant.update_attributes!({ on_hand: 2, on_demand: false })
         visit spree.cart_path
 
         accept_alert 'Insufficient stock available, only 2 remaining' do
@@ -150,6 +143,7 @@ feature "full-page cart", js: true do
 
       it "shows the quantities saved, not those submitted" do
         # Given we load the page with 3 on hand, then the number available drops to 2
+        variant.update_attributes! on_demand: false
         variant.update_attributes! on_hand: 3
         visit spree.cart_path
         variant.update_attributes! on_hand: 2

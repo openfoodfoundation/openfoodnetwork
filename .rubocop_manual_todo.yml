@@ -22,9 +22,7 @@
 Metrics/LineLength:
   Max: 100
   Exclude:
-  - app/controllers/admin/accounts_and_billing_settings_controller.rb
   - app/controllers/admin/bulk_line_items_controller.rb
-  - app/controllers/admin/business_model_configuration_controller.rb
   - app/controllers/admin/contents_controller.rb
   - app/controllers/admin/customers_controller.rb
   - app/controllers/admin/enterprise_fees_controller.rb
@@ -62,7 +60,6 @@ Metrics/LineLength:
   - app/controllers/stripe/callbacks_controller.rb
   - app/controllers/user_confirmations_controller.rb
   - app/helpers/admin/account_helper.rb
-  - app/helpers/admin/business_model_configuration_helper.rb
   - app/helpers/admin/injection_helper.rb
   - app/helpers/angular_form_builder.rb
   - app/helpers/angular_form_helper.rb
@@ -78,16 +75,12 @@ Metrics/LineLength:
   - app/helpers/spree/admin/navigation_helper_decorator.rb
   - app/helpers/spree/admin/orders_helper_decorator.rb
   - app/helpers/spree/orders_helper.rb
-  - app/jobs/finalize_account_invoices.rb
   - app/jobs/products_cache_integrity_checker_job.rb
   - app/jobs/subscription_confirm_job.rb
   - app/jobs/subscription_placement_job.rb
-  - app/jobs/update_account_invoices.rb
-  - app/jobs/update_billable_periods.rb
   - app/mailers/producer_mailer.rb
   - app/mailers/spree/order_mailer_decorator.rb
   - app/mailers/subscription_mailer.rb
-  - app/models/billable_period.rb
   - app/models/column_preference.rb
   - app/models/content_configuration.rb
   - app/models/customer.rb
@@ -158,13 +151,10 @@ Metrics/LineLength:
   - engines/web/app/helpers/web/cookies_policy_helper.rb
   - Gemfile
   - lib/discourse/single_sign_on.rb
-  - lib/open_food_network/accounts_and_billing_settings_validator.rb
   - lib/open_food_network/available_payment_method_filter.rb
-  - lib/open_food_network/bill_calculator.rb
   - lib/open_food_network/bulk_coop_report.rb
-  - lib/open_food_network/business_model_configuration_validator.rb
   - lib/open_food_network/customers_report.rb
-  - lib/open_food_network/distribution_change_validator.rb
+  - app/services/order_cycle_distributed_variants.rb
   - lib/open_food_network/enterprise_fee_applicator.rb
   - lib/open_food_network/enterprise_fee_calculator.rb
   - lib/open_food_network/enterprise_issue_validator.rb
@@ -199,7 +189,6 @@ Metrics/LineLength:
   - lib/tasks/dev.rake
   - lib/tasks/enterprises.rake
   - spec/archive/features/consumer/checkout_spec.rb
-  - spec/controllers/admin/accounts_and_billing_settings_controller_spec.rb
   - spec/controllers/admin/bulk_line_items_controller_spec.rb
   - spec/controllers/admin/column_preferences_controller_spec.rb
   - spec/controllers/admin/customers_controller_spec.rb
@@ -243,7 +232,6 @@ Metrics/LineLength:
   - spec/controllers/stripe/webhooks_controller_spec.rb
   - spec/controllers/user_confirmations_controller_spec.rb
   - spec/controllers/user_registrations_controller_spec.rb
-  - spec/features/admin/accounts_and_billing_settings_spec.rb
   - spec/features/admin/adjustments_spec.rb
   - spec/features/admin/bulk_order_management_spec.rb
   - spec/features/admin/bulk_product_update_spec.rb
@@ -287,7 +275,6 @@ Metrics/LineLength:
   - spec/features/consumer/shopping/shopping_spec.rb
   - spec/features/consumer/shopping/variant_overrides_spec.rb
   - spec/features/consumer/shops_spec.rb
-  - spec/helpers/admin/business_model_configuration_helper_spec.rb
   - spec/helpers/admin/subscriptions_helper_spec.rb
   - spec/helpers/checkout_helper_spec.rb
   - spec/helpers/enterprises_helper_spec.rb
@@ -296,17 +283,14 @@ Metrics/LineLength:
   - spec/helpers/order_cycles_helper_spec.rb
   - spec/helpers/spree/admin/base_helper_spec.rb
   - spec/jobs/confirm_order_job_spec.rb
-  - spec/jobs/finalize_account_invoices_spec.rb
   - spec/jobs/refresh_products_cache_job_spec.rb
   - spec/jobs/subscription_confirm_job_spec.rb
   - spec/jobs/subscription_placement_job_spec.rb
-  - spec/jobs/update_account_invoices_spec.rb
-  - spec/jobs/update_billable_periods_spec.rb
   - spec/lib/open_food_network/address_finder_spec.rb
   - spec/lib/open_food_network/bulk_coop_report_spec.rb
   - spec/lib/open_food_network/cached_products_renderer_spec.rb
   - spec/lib/open_food_network/customers_report_spec.rb
-  - spec/lib/open_food_network/distribution_change_validator_spec.rb
+  - spec/services/order_cycle_distributed_variants.rb
   - spec/lib/open_food_network/enterprise_fee_applicator_spec.rb
   - spec/lib/open_food_network/enterprise_fee_calculator_spec.rb
   - spec/lib/open_food_network/enterprise_injection_data_spec.rb
@@ -334,7 +318,6 @@ Metrics/LineLength:
   - spec/mailers/order_mailer_spec.rb
   - spec/mailers/producer_mailer_spec.rb
   - spec/mailers/subscription_mailer_spec.rb
-  - spec/models/billable_period_spec.rb
   - spec/models/column_preference_spec.rb
   - spec/models/customer_spec.rb
   - spec/models/enterprise_caching_spec.rb
@@ -447,18 +430,13 @@ Metrics/AbcSize:
   - app/controllers/user_confirmations_controller.rb
   - app/controllers/user_passwords_controller.rb
   - app/controllers/user_registrations_controller.rb
-  - app/helpers/admin/business_model_configuration_helper.rb
   - app/helpers/checkout_helper.rb
   - app/helpers/i18n_helper.rb
   - app/helpers/order_cycles_helper.rb
   - app/helpers/spree/admin/orders_helper_decorator.rb
   - app/helpers/spree/orders_helper.rb
-  - app/jobs/finalize_account_invoices.rb
   - app/jobs/subscription_placement_job.rb
-  - app/jobs/update_account_invoices.rb
-  - app/jobs/update_billable_periods.rb
   - app/mailers/producer_mailer.rb
-  - app/models/billable_period.rb
   - app/models/calculator/flat_percent_per_item.rb
   - app/models/column_preference.rb
   - app/models/enterprise_group.rb
@@ -487,7 +465,6 @@ Metrics/AbcSize:
   - app/services/order_syncer.rb
   - app/services/subscription_validator.rb
   - lib/discourse/single_sign_on.rb
-  - lib/open_food_network/bill_calculator.rb
   - lib/open_food_network/bulk_coop_report.rb
   - lib/open_food_network/customers_report.rb
   - lib/open_food_network/enterprise_issue_validator.rb
@@ -529,13 +506,10 @@ Metrics/CyclomaticComplexity:
   - app/controllers/checkout_controller.rb
   - app/controllers/spree/admin/orders_controller_decorator.rb
   - app/controllers/spree/orders_controller_decorator.rb
-  - app/helpers/admin/business_model_configuration_helper.rb
   - app/helpers/checkout_helper.rb
   - app/helpers/i18n_helper.rb
   - app/helpers/order_cycles_helper.rb
   - app/helpers/spree/admin/orders_helper_decorator.rb
-  - app/jobs/update_account_invoices.rb
-  - app/jobs/update_billable_periods.rb
   - app/models/enterprise.rb
   - app/models/enterprise_relationship.rb
   - app/models/product_import/entry_processor.rb
@@ -548,7 +522,6 @@ Metrics/CyclomaticComplexity:
   - app/models/variant_override_set.rb
   - app/services/cart_service.rb
   - lib/discourse/single_sign_on.rb
-  - lib/open_food_network/bill_calculator.rb
   - lib/open_food_network/bulk_coop_report.rb
   - lib/open_food_network/enterprise_issue_validator.rb
   - lib/open_food_network/orders_and_fulfillments_report.rb
@@ -564,12 +537,10 @@ Metrics/PerceivedComplexity:
   - app/controllers/checkout_controller.rb
   - app/controllers/spree/admin/orders_controller_decorator.rb
   - app/controllers/spree/orders_controller_decorator.rb
-  - app/helpers/admin/business_model_configuration_helper.rb
   - app/helpers/checkout_helper.rb
   - app/helpers/i18n_helper.rb
   - app/helpers/order_cycles_helper.rb
   - app/helpers/spree/admin/orders_helper_decorator.rb
-  - app/jobs/update_account_invoices.rb
   - app/models/enterprise_relationship.rb
   - app/models/product_import/entry_processor.rb
   - app/models/product_import/entry_validator.rb
@@ -619,12 +590,8 @@ Metrics/MethodLength:
   - app/helpers/checkout_helper.rb
   - app/helpers/order_cycles_helper.rb
   - app/helpers/spree/admin/orders_helper_decorator.rb
-  - app/jobs/finalize_account_invoices.rb
   - app/jobs/subscription_placement_job.rb
-  - app/jobs/update_account_invoices.rb
-  - app/jobs/update_billable_periods.rb
   - app/mailers/producer_mailer.rb
-  - app/models/billable_period.rb
   - app/models/column_preference.rb
   - app/models/enterprise.rb
   - app/models/enterprise_relationship.rb

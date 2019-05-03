@@ -1,5 +1,6 @@
 require 'open_food_network/enterprise_fee_calculator'
 require 'open_food_network/variant_and_line_item_naming'
+require 'concerns/variant_stock'
 require 'open_food_network/products_cache'
 
 Spree::Variant.class_eval do
@@ -9,6 +10,7 @@ Spree::Variant.class_eval do
   # removing the Spree method to prevent error.
   remove_method :options_text if instance_methods(false).include? :options_text
   include OpenFoodNetwork::VariantAndLineItemNaming
+  include VariantStock
 
   has_many :exchange_variants
   has_many :exchanges, through: :exchange_variants
@@ -33,7 +35,6 @@ Spree::Variant.class_eval do
 
   scope :with_order_cycles_inner, joins(exchanges: :order_cycle)
 
-  scope :not_deleted, where(deleted_at: nil)
   scope :not_master, where(is_master: false)
   scope :in_order_cycle, lambda { |order_cycle|
     with_order_cycles_inner.
@@ -85,6 +86,12 @@ Spree::Variant.class_eval do
     ]
   end
 
+  # We override in_stock? to avoid depending on the non-overridable method Spree::Stock::Quantifier.can_supply?
+  #   VariantStock implements can_supply? itself which depends on overridable methods
+  def in_stock?(quantity = 1)
+    can_supply?(quantity)
+  end
+
   def price_with_fees(distributor, order_cycle)
     price + fees_for(distributor, order_cycle)
   end
@@ -97,30 +104,12 @@ Spree::Variant.class_eval do
     OpenFoodNetwork::EnterpriseFeeCalculator.new(distributor, order_cycle).fees_by_type_for self
   end
 
-  def delete
-    if product.variants == [self] # Only variant left on product
-      errors.add :product, I18n.t(:spree_variant_product_error)
-      false
-    else
-      transaction do
-        self.update_column(:deleted_at, Time.zone.now)
-        ExchangeVariant.where(variant_id: self).destroy_all
-        self
-      end
-    end
-  end
-
   def refresh_products_cache
     if is_master?
       product.refresh_products_cache
     else
       OpenFoodNetwork::ProductsCache.variant_changed self
     end
-  end
-
-  # Deletes the record, skipping callbacks, but it also refreshes the cache
-  def delete_and_refresh_cache
-    destruction { delete }
   end
 
   private

@@ -3,10 +3,10 @@
     = f.object.variant.product.name
     = "(#{f.object.full_name})" unless f.object.variant.option_values.empty?
   %td.price.align-center
-    = f.object.variant.display_amount
+    = f.object.single_display_amount
   %td.qty
     = f.number_field :quantity, min: 0, class: "qty"
   %td.total.align-center
-    = f.object.single_money
+    = f.object.display_amount
   %td.actions
     = link_to_delete f.object, {url: admin_order_line_item_url(@order.number, f.object), no_text: true}

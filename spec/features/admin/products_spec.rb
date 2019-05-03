@@ -9,6 +9,8 @@ feature %q{
 
 
   let!(:taxon) { create(:taxon) }
+  let!(:stock_location) { create(:stock_location, backorderable_default: false) }
+  let!(:shipping_category) { create(:shipping_category, name: 'Test Shipping Category') }
 
   background do
     @supplier = create(:supplier_enterprise, :name => 'New supplier')
@@ -18,7 +20,6 @@ feature %q{
 
   describe "creating a product" do
     let!(:tax_category) { create(:tax_category, name: 'Test Tax Category') }
-    let!(:shipping_category) { create(:shipping_category, name: 'Test Shipping Category') }
 
     scenario "assigning important attributes", js: true do
       login_to_admin_section
@@ -116,6 +117,7 @@ feature %q{
           select 'Weight (g)', from: 'product_variant_unit_with_scale'
           fill_in 'product_unit_value_with_description', with: '500'
           select taxon.name, from: "product_primary_taxon_id"
+          select 'Test Shipping Category', from: 'product_shipping_category_id'
           select 'None', from: "product_tax_category_id"
 
           # Should only have suppliers listed which the user can manage
@@ -186,7 +188,9 @@ feature %q{
       page.should have_field 'product_product_properties_attributes_0_value', with: 'fooval'
 
       # And I delete the property
-      page.all('a.remove_fields').first.click
+      accept_alert do
+        page.all('a.delete-resource').first.click
+      end
       click_button 'Update'
 
       # Then the property should have been deleted

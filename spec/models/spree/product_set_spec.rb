@@ -8,6 +8,7 @@ describe Spree::ProductSet do
       end
 
       context 'when the product does not exist yet' do
+        let!(:stock_location) { create(:stock_location, backorderable_default: false) }
         let(:collection_hash) do
           {
             0 => {
@@ -18,7 +19,8 @@ describe Spree::ProductSet do
               primary_taxon_id: create(:taxon).id,
               unit_description: 'description',
               variant_unit: 'items',
-              variant_unit_name: 'bunches'
+              variant_unit_name: 'bunches',
+              shipping_category_id: create(:shipping_category).id
             }
           }
         end

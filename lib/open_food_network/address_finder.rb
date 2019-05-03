@@ -79,7 +79,7 @@ module OpenFoodNetwork
 
     def last_used_ship_address
       return nil unless allow_search_by_email?
-      Spree::Order.complete.joins(:ship_address, :shipping_method).order('id DESC')
+      Spree::Order.complete.joins(:ship_address, shipments: :shipping_methods).order('id DESC')
         .where(email: email, spree_shipping_methods: { require_ship_address: true })
         .first.andand.ship_address
     end

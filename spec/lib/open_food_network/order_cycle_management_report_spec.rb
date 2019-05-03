@@ -54,7 +54,7 @@ module OpenFoodNetwork
         it "does not show orders through a hub that the current user does not manage" do
           # Given a supplier enterprise with an order for one of its products
           supplier.enterprise_roles.create!(user: user)
-          order.line_items << create(:line_item, product: product)
+          order.line_items << create(:line_item_with_shipment, product: product)
 
           # When I fetch orders, I should see no orders
           subject.should_receive(:filter).with([]).and_return([])
@@ -69,7 +69,8 @@ module OpenFoodNetwork
         let!(:oc1) { create(:simple_order_cycle) }
         let!(:pm1) { create(:payment_method, name: "PM1") }
         let!(:sm1) { create(:shipping_method, name: "ship1") }
-        let!(:order1) { create(:order, shipping_method: sm1, order_cycle: oc1) }
+        let!(:s1) { create(:shipment_with, :shipping_method, shipping_method: sm1) }
+        let!(:order1) { create(:order, shipments: [s1], order_cycle: oc1) }
         let!(:payment1) { create(:payment, order: order1, payment_method: pm1) }
 
         it "returns all orders sans-params" do
@@ -89,7 +90,6 @@ module OpenFoodNetwork
           pm3 = create(:payment_method, name: "PM3")
           order2 = create(:order, payments: [create(:payment, payment_method: pm2)])
           order3 = create(:order, payments: [create(:payment, payment_method: pm3)])
-          # payment2 = create(:payment, order: order2, payment_method: pm2)
 
           subject.stub(:params).and_return(payment_method_in: [pm1.id, pm3.id] )
           subject.filter(orders).should match_array [order1, order3]
@@ -98,8 +98,10 @@ module OpenFoodNetwork
         it "filters to a shipping method" do
           sm2 = create(:shipping_method, name: "ship2")
           sm3 = create(:shipping_method, name: "ship3")
-          order2 = create(:order, shipping_method: sm2)
-          order3 = create(:order, shipping_method: sm3)
+          s2 = create(:shipment_with, :shipping_method, shipping_method: sm2)
+          s3 = create(:shipment_with, :shipping_method, shipping_method: sm3)
+          order2 = create(:order, shipments: [s2])
+          order3 = create(:order, shipments: [s3])
 
           subject.stub(:params).and_return(shipping_method_in: [sm1.id, sm3.id])
           expect(subject.filter(orders)).to match_array [order1, order3]

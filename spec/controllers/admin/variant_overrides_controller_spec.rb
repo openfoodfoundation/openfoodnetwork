@@ -68,6 +68,21 @@ describe Admin::VariantOverridesController, type: :controller do
               expect(VariantOverride.find_by_id(variant_override.id)).to be_nil
             end
           end
+
+          context "and there is a variant override for a deleted variant" do
+            let(:deleted_variant) { create(:variant) }
+            let!(:variant_override_of_deleted_variant) { create(:variant_override, hub: hub, variant: deleted_variant) }
+
+            before { deleted_variant.update_attribute :deleted_at, Time.zone.now }
+
+            it "allows to update other variant overrides" do
+              spree_put :bulk_update, format: format, variant_overrides: variant_override_params
+
+              expect(response).to_not redirect_to spree.unauthorized_path
+              variant_override.reload
+              expect(variant_override.price).to eq 123.45
+            end
+          end
         end
       end
     end

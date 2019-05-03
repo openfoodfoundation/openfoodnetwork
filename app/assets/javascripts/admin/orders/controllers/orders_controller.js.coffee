@@ -33,7 +33,6 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
       'q[bill_address_lastname_start]': $scope['q']['bill_address_lastname_start'],
       # Set default checkbox values to null. See: https://github.com/openfoodfoundation/openfoodnetwork/pull/3076#issuecomment-440010498
       'q[completed_at_not_null]': $scope['q']['completed_at_not_null'] || null,
-      'q[inventory_units_shipment_id_null]': $scope['q']['inventory_units_shipment_id_null'] || null,
       'q[distributor_id_in]': $scope['q']['distributor_id_in'],
       'q[order_cycle_id_in]': $scope['q']['order_cycle_id_in'],
       'q[order_cycle_id_in]': $scope['q']['order_cycle_id_in'],
