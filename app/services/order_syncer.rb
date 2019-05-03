@@ -31,8 +31,8 @@ class OrderSyncer
 
   def update_associations_for(order)
     update_bill_address_for(order) if (bill_address.changes.keys & relevant_address_attrs).any?
-    update_ship_address_for(order) if (ship_address.changes.keys & relevant_address_attrs).any?
     update_shipment_for(order) if shipping_method_id_changed?
+    update_ship_address_for(order)
     update_payment_for(order) if payment_method_id_changed?
   end
 
@@ -46,11 +46,6 @@ class OrderSyncer
       return order_update_issues.add(order, I18n.t('bill_address'))
     end
     order.bill_address.update_attributes(bill_address.attributes.slice(*relevant_address_attrs))
-  end
-
-  def update_ship_address_for(order)
-    return unless ship_address_updatable?(order)
-    order.ship_address.update_attributes(ship_address.attributes.slice(*relevant_address_attrs))
   end
 
   def update_payment_for(order)
@@ -72,6 +67,19 @@ class OrderSyncer
       order.select_shipping_method(shipping_method_id)
     else
       order_update_issues.add(order, I18n.t('admin.shipping_method'))
+    end
+  end
+
+  def update_ship_address_for(order)
+    # The conditions here are to achieve the same behaviour in earlier versions of Spree, where
+    # switching from pick-up to delivery affects whether simultaneous changes to shipping address
+    # are ignored or not.
+    pickup_to_delivery = force_ship_address_required?(order)
+    if !pickup_to_delivery || order.shipment.present?
+      save_ship_address_in_order(order) if (ship_address.changes.keys & relevant_address_attrs).any?
+    end
+    if !pickup_to_delivery || order.shipment.blank?
+      order.updater.shipping_address_from_distributor
     end
   end
 
@@ -99,10 +107,15 @@ class OrderSyncer
   # address on the order matches the shop's address
   def force_ship_address_required?(order)
     return false unless shipping_method.require_ship_address?
-    distributor_address = order.__send__(:address_from_distributor)
+    distributor_address = order.address_from_distributor
     relevant_address_attrs.all? do |attr|
       order.ship_address[attr] == distributor_address[attr]
     end
+  end
+
+  def save_ship_address_in_order(order)
+    return unless ship_address_updatable?(order)
+    order.ship_address.update_attributes(ship_address.attributes.slice(*relevant_address_attrs))
   end
 
   def pending_shipment_with?(order, shipping_method_id)

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-xdescribe OrderSyncer do
+describe OrderSyncer do
   describe "updating the shipping method" do
     let!(:subscription) { create(:subscription, with_items: true, with_proxy_orders: true) }
     let!(:order) { subscription.proxy_orders.first.initialise_order! }
@@ -156,7 +156,7 @@ xdescribe OrderSyncer do
       end
 
       context "when the bill_address on the order matches that on the subscription" do
-        xit "updates all bill_address attrs and ship_address names + phone" do
+        it "updates all bill_address attrs and ship_address names + phone" do
           subscription.assign_attributes(params)
           expect(syncer.sync!).to be true
           expect(syncer.order_update_issues.keys).to_not include order.id
@@ -173,8 +173,12 @@ xdescribe OrderSyncer do
       end
 
       context "when the bill_address on the order doesn't match that on the subscription" do
-        before { order.bill_address.update_attributes(firstname: "Jane") }
-        xit "does not update bill_address or ship_address on the order" do
+        before do
+          order.bill_address.update_attributes!(firstname: "Jane")
+          order.update!
+        end
+
+        it "does not update bill_address or ship_address on the order" do
           subscription.assign_attributes(params)
           expect(syncer.sync!).to be true
           expect(syncer.order_update_issues.keys).to include order.id
@@ -214,7 +218,10 @@ xdescribe OrderSyncer do
       end
 
       context "when the bill_address on the order doesn't match that on the subscription" do
-        before { order.bill_address.update_attributes(firstname: "Jane") }
+        before do
+          order.bill_address.update_attributes!(firstname: "Jane")
+          order.update!
+        end
 
         it "does not update bill_address or ship_address on the order" do
           subscription.assign_attributes(params)
@@ -265,7 +272,7 @@ xdescribe OrderSyncer do
       end
 
       context "but the shipping method is being changed to one that requires a ship_address" do
-        let(:new_shipping_method) { create(:shipping_method, require_ship_address: true) }
+        let(:new_shipping_method) { create(:shipping_method, distributors: [distributor], require_ship_address: true) }
 
         before { params.merge!(shipping_method_id: new_shipping_method.id) }
 
@@ -284,22 +291,27 @@ xdescribe OrderSyncer do
                                   with_proxy_orders: true)
           end
 
-          before do
-            subscription.assign_attributes(params)
-          end
+          context "when there is no pending shipment using the former shipping method" do
+            before do
+              order.shipment.destroy
+              subscription.assign_attributes(params)
+            end
 
-          it "updates ship_address attrs" do
-            expect(syncer.sync!).to be true
-            expect(syncer.order_update_issues.keys).to include order.id
-            order.reload
-            expect(order.ship_address.firstname).to eq ship_address_attrs["firstname"]
-            expect(order.ship_address.lastname).to eq ship_address_attrs["lastname"]
-            expect(order.ship_address.address1).to eq ship_address_attrs["address1"]
-            expect(order.ship_address.phone).to eq ship_address_attrs["phone"]
+            it "updates ship_address attrs" do
+              expect(syncer.sync!).to be true
+              expect(syncer.order_update_issues.keys).to include order.id
+              order.reload
+              expect(order.ship_address.firstname).to eq ship_address_attrs["firstname"]
+              expect(order.ship_address.lastname).to eq ship_address_attrs["lastname"]
+              expect(order.ship_address.address1).to eq ship_address_attrs["address1"]
+              expect(order.ship_address.phone).to eq ship_address_attrs["phone"]
+            end
           end
 
           context "when the order has a pending shipment using the former shipping method" do
-            let!(:shipment) { create(:shipment, order: order, shipping_method: shipping_method) }
+            before do
+              subscription.assign_attributes(params)
+            end
 
             it "updates ship_address attrs" do
               expect(syncer.sync!).to be true
@@ -334,7 +346,11 @@ xdescribe OrderSyncer do
       end
 
       context "when the ship address on the order doesn't match that on the subscription" do
-        before { order.ship_address.update_attributes(firstname: "Jane") }
+        before do
+          order.ship_address.update_attributes(firstname: "Jane")
+          order.update!
+        end
+
         it "does not update ship_address on the order" do
           subscription.assign_attributes(params)
           expect(syncer.sync!).to be true

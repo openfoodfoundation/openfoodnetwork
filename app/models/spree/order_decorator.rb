@@ -325,12 +325,6 @@ Spree::Order.class_eval do
     total.to_f > 0.0 && !skip_payment_for_subscription?
   end
 
-  private
-
-  def skip_payment_for_subscription?
-    subscription.present? && order_cycle.orders_close_at.andand > Time.zone.now
-  end
-
   def address_from_distributor
     address = distributor.address.clone
     if bill_address
@@ -339,6 +333,12 @@ Spree::Order.class_eval do
       address.phone = bill_address.phone
     end
     address
+  end
+
+  private
+
+  def skip_payment_for_subscription?
+    subscription.present? && order_cycle.orders_close_at.andand > Time.zone.now
   end
 
   def provided_by_order_cycle?(line_item)

@@ -131,7 +131,7 @@ describe OrderUpdater do
 
       it "populates the shipping address from distributor" do
         order_updater.before_save_hook
-        expect(order.ship_address.firstname).to eq(distributor.address.firstname)
+        expect(order.ship_address.address1).to eq(distributor.address.address1)
       end
     end
 
