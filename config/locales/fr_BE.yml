@@ -1228,7 +1228,7 @@ fr_BE:
   city_placeholder: 'ex: Nantes'
   postcode: Code postal
   postcode_placeholder: 'ex: 44000'
-  state: Département
+  state: Province
   country: Pays
   unauthorized: Non authorisé
   terms_of_service: "Conditions d'utilisation"
@@ -1692,7 +1692,7 @@ fr_BE:
   password: Mot de passe
   remember_me: Se souvenir de moi
   are_you_sure: "Confirmer?"
-  orders_open: Boutique ouverte
+  orders_open: Comptoir ouvert
   closing: "Fermeture "
   going_back_to_home_page: "Retour à la page d'accueil"
   creating: Création
@@ -1777,8 +1777,8 @@ fr_BE:
         postcode_field: "Code postal:"
         postcode_field_placeholder: "ex: 44000"
         postcode_field_error: "Veuillez saisir le code postal"
-        state_field: "Département:"
-        state_field_error: "Veuillez saisir un Département"
+        state_field: "Province:"
+        state_field_error: "Veuillez saisir une Province"
         country_field: "Pays:"
         country_field_error: "Veuillez saisir une Pays"
       contact:
@@ -1925,7 +1925,7 @@ fr_BE:
   admin_enterprise_groups_contact_city_placeholder: "ex: Nantes"
   admin_enterprise_groups_contact_zipcode: "Code postal"
   admin_enterprise_groups_contact_zipcode_placeholder: "ex: 44000"
-  admin_enterprise_groups_contact_state_id: "Département"
+  admin_enterprise_groups_contact_state_id: "Province"
   admin_enterprise_groups_contact_country_id: "Pays"
   admin_enterprise_groups_web: "Liens web"
   admin_enterprise_groups_web_twitter: "ex: @OpenFoodNet_fr"
@@ -2043,7 +2043,7 @@ fr_BE:
   admin_share_city: "Ville"
   admin_share_zipcode: "Code postal"
   admin_share_country: "Pays"
-  admin_share_state: "Département"
+  admin_share_state: "Province"
   hub_sidebar_hubs: "Comptoirs"
   hub_sidebar_none_available: "Aucun disponible"
   hub_sidebar_manage: "Gérer"
@@ -2096,14 +2096,14 @@ fr_BE:
   report_header_ship_street_2: ' Rue (2) Livraison'
   report_header_ship_city: Ville Livraison
   report_header_ship_postcode: Code Postal Livraison
-  report_header_ship_state: Département Livraison
+  report_header_ship_state: Province Livraison
   report_header_billing_street: Rue Facturation
   report_header_billing_street_2: Rue (2) Facturation
   report_header_billing_street_3: Rue (3) Facturation
   report_header_billing_street_4: Rue (4) Facturation
   report_header_billing_city: Ville Facturation
   report_header_billing_postcode: Code Postal Facturation
-  report_header_billing_state: Département Facturation
+  report_header_billing_state: Province Facturation
   report_header_incoming_transport: Transport réception
   report_header_special_instructions: Note au producteur
   report_header_order_number: N° commande
@@ -2742,7 +2742,7 @@ fr_BE:
     states_required: "Provinces requises"
     editing_country: "Pays d'édition"
     back_to_countries_list: "Retouner vers la liste des pays"
-    states: "Province"
+    states: "Provinces"
     abbreviation: "Abréviation"
     new_state: "Nouvelle Province"
     payment_methods: "Méthodes de paiement"
