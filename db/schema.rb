@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20190501143327) do
+ActiveRecord::Schema.define(:version => 20190504151144) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -247,7 +247,6 @@ ActiveRecord::Schema.define(:version => 20190501143327) do
     t.integer  "order_cycle_id"
     t.integer  "sender_id"
     t.integer  "receiver_id"
-    t.integer  "payment_enterprise_id"
     t.string   "pickup_time"
     t.string   "pickup_instructions"
     t.datetime "created_at",                               :null => false
@@ -257,7 +256,6 @@ ActiveRecord::Schema.define(:version => 20190501143327) do
   end
 
   add_index "exchanges", ["order_cycle_id"], :name => "index_exchanges_on_order_cycle_id"
-  add_index "exchanges", ["payment_enterprise_id"], :name => "index_exchanges_on_payment_enterprise_id"
   add_index "exchanges", ["receiver_id"], :name => "index_exchanges_on_receiver_id"
   add_index "exchanges", ["sender_id"], :name => "index_exchanges_on_sender_id"
 
@@ -1265,7 +1263,6 @@ ActiveRecord::Schema.define(:version => 20190501143327) do
   add_foreign_key "exchange_variants", "exchanges", name: "exchange_variants_exchange_id_fk"
   add_foreign_key "exchange_variants", "spree_variants", name: "exchange_variants_variant_id_fk", column: "variant_id"
 
-  add_foreign_key "exchanges", "enterprises", name: "exchanges_payment_enterprise_id_fk", column: "payment_enterprise_id"
   add_foreign_key "exchanges", "enterprises", name: "exchanges_receiver_id_fk", column: "receiver_id"
   add_foreign_key "exchanges", "enterprises", name: "exchanges_sender_id_fk", column: "sender_id"
   add_foreign_key "exchanges", "order_cycles", name: "exchanges_order_cycle_id_fk"
