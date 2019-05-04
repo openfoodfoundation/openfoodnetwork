@@ -14,7 +14,7 @@
             on_hand.attr('disabled', on_demand_checked);
             if(on_demand_checked) {
               on_hand.attr('data-stock', on_hand.val());
-              on_hand.val("Infinity");
+              on_hand.val(t('admin.products.variants.infinity'));
             }
         }
 
