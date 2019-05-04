@@ -467,6 +467,7 @@ en:
         property_name: Property Name
         inherited_property: Inherited Property
       variants:
+        infinity: "Infinity"
         to_order_tip: "Items made to order do not have a set stock level, such as loaves of bread made fresh to order."
       group_buy_options: "Group Buy Options"
       back_to_products_list: "Back to products list"
