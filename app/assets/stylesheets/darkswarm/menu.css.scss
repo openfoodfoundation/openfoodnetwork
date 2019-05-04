@@ -140,6 +140,10 @@ nav.top-bar {
 
 .tab-bar {
   background-color: white;
+  position: fixed;
+  width: 100%;
+  height: 2.8em;
+  z-index: 1;
 
   .cart-span {
     background-color: #f4704c;
@@ -172,7 +176,6 @@ nav.top-bar {
     }
   }
 }
-
 
 .off-canvas-list li.language-switcher ul li {
   list-style-type: none;
