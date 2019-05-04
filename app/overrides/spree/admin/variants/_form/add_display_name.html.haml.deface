@@ -1,8 +1,0 @@
-/ insert_top "[data-hook='variants']"
-
-.field
-  = f.label :display_name, t(:display_name)
-  = f.text_field :display_name, class: "fullwidth"
-.field
-  = f.label :display_as, t(:display_as)
-  = f.text_field :display_as, class: "fullwidth"
