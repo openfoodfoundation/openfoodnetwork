@@ -118,4 +118,29 @@ feature %q{
     v.reload
     v.deleted_at.should_not be_nil
   end
+
+  scenario "editing display name for a variant", js:true do
+    p = create(:simple_product)
+    v = p.variants.first
+
+    # When I view the variant
+    login_to_admin_section
+    visit spree.admin_product_variants_path p
+    page.find('table.index .icon-edit').click
+
+    # It should allow the display name to be changed
+    page.should have_field "variant_display_name"
+    page.should have_field "variant_display_as"
+
+    # When I update the fields and save the variant
+    fill_in "variant_display_name", with: "Display Name"
+    fill_in "variant_display_as", with: "Display As This"
+    click_button 'Update'
+    page.should have_content %Q(Variant "#{p.name}" has been successfully updated!)
+
+    # Then the displayed values should have been saved
+    v.reload
+    v.display_name.should == "Display Name"
+    v.display_as.should == "Display As This"
+  end
 end
