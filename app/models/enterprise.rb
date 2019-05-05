@@ -96,12 +96,10 @@ class Enterprise < ActiveRecord::Base
   scope :not_ready_for_checkout, lambda {
     # When ready_for_checkout is empty, ActiveRecord generates the SQL:
     # id NOT IN (NULL)
-    # I would have expected this to return all rows, but instead it returns none. To
-    # work around this, we use the "OR ?=0" clause to return all rows when there are
-    # no enterprises ready for checkout.
-    where('id NOT IN (?) OR ?=0',
-          Enterprise.ready_for_checkout,
-          Enterprise.ready_for_checkout.count)
+    # I would have expected this to return all rows, but instead it returns none. But we want to
+    # return all rows when there are no enterprises ready for checkout.
+    ready_enterprises = Enterprise.ready_for_checkout
+    ready_enterprises.present? ? where("id NOT IN (?)", ready_enterprises) : where("TRUE")
   }
   scope :is_primary_producer, where(:is_primary_producer => true)
   scope :is_distributor, where('sells != ?', 'none')
