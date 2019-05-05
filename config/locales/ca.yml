@@ -876,7 +876,6 @@ ca:
         pickup_time_placeholder: "Preparat per (és a dir, data / hora)"
         receival_instructions_placeholder: "Instruccions de recepció"
         add_fee: 'Afegeix una comissió'
-        remove: Eliminar
         selected: 'seleccionat'
       add_exchange_form:
         add_supplier: 'Afegeix proveïdora'

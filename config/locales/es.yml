@@ -875,7 +875,6 @@ es:
         pickup_instructions_tip: Estas instrucciones se muestran a las consumidoras después de completar un pedido.
         pickup_time_placeholder: "Listo para ( Fecha / Hora)"
         receival_instructions_placeholder: "Instrucciones de recepción"
-        remove: Eliminar
         add_fee: 'Añadir comisión'
         selected: 'seleccionado'
       add_exchange_form:

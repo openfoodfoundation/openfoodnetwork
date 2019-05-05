@@ -811,7 +811,6 @@ nb:
         pickup_instructions_tip: Disse instruksjonene vises til kunder etter at de har fullført en bestilling
         pickup_time_placeholder: "Klar til (dvs. Dato/Tid)"
         receival_instructions_placeholder: "Mottaksinstruksjoner"
-        remove: Fjern
         add_fee: 'Legg til gebyr'
         selected: 'valgt'
       add_exchange_form:

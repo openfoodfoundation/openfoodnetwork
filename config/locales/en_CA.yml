@@ -873,7 +873,6 @@ en_CA:
         pickup_instructions_tip: These instructions are shown to customers after they complete an order
         pickup_time_placeholder: "Ready for (ie. Date / Time)"
         receival_instructions_placeholder: "Receival instructions"
-        remove: Remove
         add_fee: 'Add fee'
         selected: 'selected'
       add_exchange_form:

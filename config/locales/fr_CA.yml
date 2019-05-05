@@ -875,7 +875,6 @@ fr_CA:
         pickup_instructions_tip: Ces instructions sont affichées aux acheteurs après passage d'une commande
         pickup_time_placeholder: "Prêt pour (ex : jour + créneau horaire)"
         receival_instructions_placeholder: "Modalités de livraison"
-        remove: Supprimer
         add_fee: 'Ajouter une commission'
         selected: 'sélectionné'
       add_exchange_form:
