@@ -876,6 +876,7 @@ nl_BE:
         pickup_instructions_tip: Deze aanwijzingen worden getoond nadat de klant z'n bestelling heeft vervolledigd.
         pickup_time_placeholder: "Klaar voor (d.w.z. Datum/ Uur)"
         receival_instructions_placeholder: "Ontvangst instructies"
+        remove: Verwijderen
         add_fee: 'Voeg vergoeding to'
         selected: 'Geselecteerd'
       add_exchange_form:

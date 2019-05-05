@@ -814,6 +814,7 @@ de_DE:
         pickup_instructions_tip: Diese Informationen werden Kunden nach Abschluss einer Bestellung angezeigt
         pickup_time_placeholder: "Bereit für (dh Datum / Uhrzeit)"
         receival_instructions_placeholder: "Lieferinformation"
+        remove: Entfernen
         add_fee: 'Gebühr hinzufügen'
         selected: 'ausgewählt'
       add_exchange_form:

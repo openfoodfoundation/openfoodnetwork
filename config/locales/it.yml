@@ -875,6 +875,7 @@ it:
         pickup_instructions_tip: Queste istruzioni saranno visibili agli utenti dopo che hanno completato una gentile richiesta
         pickup_time_placeholder: "Pronto per (es. Data / Ora)"
         receival_instructions_placeholder: "Istruzioni per il ritiro"
+        remove: Rimuovi
         add_fee: 'Aggiungi tariffa'
         selected: 'selezionato'
       add_exchange_form:

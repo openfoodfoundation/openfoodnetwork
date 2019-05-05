@@ -812,6 +812,7 @@ pt:
         pickup_instructions_tip: Estas instruções são mostradas aos consumidores depois de finalizarem as suas encomendas
         pickup_time_placeholder: "Pronto para (dia/hora)"
         receival_instructions_placeholder: "Instruções de recebimento"
+        remove: Remover
         add_fee: 'Acrescentar taxa'
         selected: 'selecionado'
       add_exchange_form:
