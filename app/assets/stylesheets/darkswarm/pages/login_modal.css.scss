@@ -57,3 +57,13 @@
 .collapsible-checkbox:checked + .lbl-toggle > ::before {
   transform: rotate(90deg) translateX(-3px);
 }
+
+@media only screen and (min-width: 1025px) {
+  .lbl-toggle > ::before {
+    display: none;
+  }
+
+  .collapsible-content {
+    max-height: 350px;
+  }
+}
