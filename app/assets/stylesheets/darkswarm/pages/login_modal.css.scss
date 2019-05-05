@@ -66,4 +66,9 @@
   .collapsible-content {
     max-height: 350px;
   }
+
+  // make sure styling doesn't get messed up if resizing down and back up
+  .collapsible-menus-container {
+    min-height: 250px;
+  }
 }
