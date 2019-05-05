@@ -10,27 +10,33 @@
 
   .row{ 'data-equalizer' => true }
     .small-12.medium-12.large-6.columns.pad-top{ 'data-equalizer-watch' => true }
-      %h5= t(".registration_checklist")+":"
-      %ul.check-list
-        %li
-          = t(".registration_time")
-        %li
-          = t(".registration_enterprise_address")
-        %li
-          = t(".registration_contact_details")
-        %li
-          = t(".registration_logo")
-        %li
-          = t(".registration_promo_image")
-        %li
-          = t(".registration_about_us")
+      %input#collapsible-registration-checklist.collapsible-checkbox{:type => "checkbox"}
+      %label.lbl-toggle{:for => "collapsible-registration-checklist"}
+        %h5= t(".registration_checklist")+":"
+      .collapsible-content
+        %ul.check-list
+          %li
+            = t(".registration_time")
+          %li
+            = t(".registration_enterprise_address")
+          %li
+            = t(".registration_contact_details")
+          %li
+            = t(".registration_logo")
+          %li
+            = t(".registration_promo_image")
+          %li
+            = t(".registration_about_us")
 
     .small-9.medium-8.large-5.columns.pad-top.end{ 'data-equalizer-watch' => true}
-      %h5
-        = t(".registration_outcome_headline")
-      %p= t(".registration_outcome1_html")
-      %p= t(".registration_outcome2")
-      %p= t(".registration_outcome3")
+      %input#collapsible-registration-outcome.collapsible-checkbox{:type => "checkbox"}
+      %label.lbl-toggle{:for => "collapsible-registration-outcome"}
+        %h5
+          = t(".registration_outcome_headline")
+      .collapsible-content
+        %p= t(".registration_outcome1_html")
+        %p= t(".registration_outcome2")
+        %p= t(".registration_outcome3")
 
   .row{'ng-init' => "tos_required=#{Spree::Config.enterprises_require_tos}" }
     %hr
