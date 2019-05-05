@@ -45,12 +45,12 @@ Darkswarm.controller "ProductsCtrl", ($scope, $filter, $rootScope, Products, Ord
   $scope.appliedTaxonsList = ->
     $scope.activeTaxons.map( (taxon_id) ->
       Taxons.taxons_by_id[taxon_id].name
-    ).join(t(' products_or ')) if $scope.activeTaxons?
+    ).join(" #{t('products_or')} ") if $scope.activeTaxons?
 
   $scope.appliedPropertiesList = ->
     $scope.activeProperties.map( (property_id) ->
       Properties.properties_by_id[property_id].name
-    ).join(t(' products_or ')) if $scope.activeProperties?
+    ).join(" #{t('products_or')} ") if $scope.activeProperties?
 
   $scope.clearAll = ->
     $scope.query = ""
