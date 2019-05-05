@@ -856,6 +856,9 @@ en:
         user_already_exists: "User already exists"
         error: "Something went wrong"
     order_cycles:
+      loading_flash:
+        loading_order_cycles: LOADING ORDER CYCLES
+        loading: LOADING...
       edit:
         advanced_settings: Advanced Settings
         update_and_close: Update and Close
