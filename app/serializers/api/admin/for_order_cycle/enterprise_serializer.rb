@@ -37,9 +37,7 @@ class Api::Admin::ForOrderCycle::EnterpriseSerializer < ActiveModel::Serializer
   end
 
   def products
-    return @products unless @products.nil?
-
-    @products = products_scope.includes(:supplier, master: [:images])
+    @products ||= products_scope.includes(:supplier, master: [:images])
   end
 
   def order_cycle
