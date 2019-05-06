@@ -97,7 +97,11 @@ class Enterprise < ActiveRecord::Base
     # When ready_for_checkout is empty, return all rows when there are no enterprises ready for
     # checkout.
     ready_enterprises = Enterprise.ready_for_checkout
-    ready_enterprises.present? ? where("id NOT IN (?)", ready_enterprises) : where("TRUE")
+    if ready_enterprises.present?
+      where("id NOT IN (?)", ready_enterprises)
+    else
+      where("TRUE")
+    end
   }
   scope :is_primary_producer, where(:is_primary_producer => true)
   scope :is_distributor, where('sells != ?', 'none')
