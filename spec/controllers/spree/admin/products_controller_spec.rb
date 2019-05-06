@@ -71,6 +71,57 @@ describe Spree::Admin::ProductsController, type: :controller do
         )
       end
     end
+
+    context 'when passing empty variants_attributes' do
+      let(:producer) { create(:enterprise) }
+      let!(:product) do
+        create(
+          :simple_product,
+          supplier: producer,
+          variant_unit: 'items',
+          variant_unit_scale: nil,
+          variant_unit_name: 'bunches',
+          unit_value: nil,
+          unit_description: 'bunches'
+        )
+      end
+      let!(:another_product) do
+        create(
+          :simple_product,
+          supplier: producer,
+          variant_unit: 'weight',
+          variant_unit_scale: 1000,
+          variant_unit_name: nil
+        )
+      end
+
+      before { login_as_enterprise_user([producer]) }
+
+      it 'does not fail' do
+        spree_post :bulk_update, {
+          "products" => [
+            {
+              "id" => another_product.id,
+              "variants_attributes" => [{}]
+            },
+            {
+              "id" => product.id,
+              "variants_attributes" => [
+                {
+                  "on_hand" => 2,
+                  "price" => "5.0",
+                  "unit_value" => 4,
+                  "unit_description" => "",
+                  "display_name" => "name"
+                }
+              ]
+            }
+          ]
+        }
+
+        expect(response).to have_http_status(:found)
+      end
+    end
   end
 
   context "creating a new product" do
