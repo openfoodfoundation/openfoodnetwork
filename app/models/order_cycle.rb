@@ -9,7 +9,7 @@ class OrderCycle < ActiveRecord::Base
   has_many :exchanges, :dependent => :destroy
 
   # These scope names are prepended with "cached_" because there are existing accessor methods
-  # :incoming_exchanges and :outgoing_exchanges. Future work can be done to name these properly.
+  # :incoming_exchanges and :outgoing_exchanges.
   has_many :cached_incoming_exchanges, conditions: { incoming: true }, class_name: "Exchange"
   has_many :cached_outgoing_exchanges, conditions: { incoming: false }, class_name: "Exchange"
 
@@ -18,9 +18,6 @@ class OrderCycle < ActiveRecord::Base
 
   has_and_belongs_to_many :schedules, join_table: 'order_cycle_schedules'
 
-  # TODO: DRY the incoming/outgoing clause used in several cases below
-  # See Spree::Product definition, scopes variants and variants_including_master
-  # This will require these accessors to be renamed
   attr_accessor :incoming_exchanges, :outgoing_exchanges
 
   validates_presence_of :name, :coordinator_id
