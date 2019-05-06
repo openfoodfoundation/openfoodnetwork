@@ -47,6 +47,12 @@ module Api
       end
     end
 
+    def shopfront
+      enterprise = Enterprise.find_by_id(params[:id])
+
+      render text: Api::EnterpriseShopfrontSerializer.new(enterprise).to_json, status: :ok
+    end
+
     private
 
     def override_owner

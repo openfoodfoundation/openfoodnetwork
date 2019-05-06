@@ -96,6 +96,10 @@ Openfoodnetwork::Application.routes.draw do
 
       resource :logo, only: [:destroy]
       resource :promo_image, only: [:destroy]
+
+      member do
+        get :shopfront
+      end
     end
 
     resources :order_cycles do
