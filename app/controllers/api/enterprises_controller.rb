@@ -1,5 +1,5 @@
 module Api
-  class EnterprisesController < Spree::Api::BaseController
+  class EnterprisesController < BaseController
 
     before_filter :override_owner, only: [:create, :update]
     before_filter :check_type, only: :update
