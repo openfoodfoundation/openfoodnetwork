@@ -72,6 +72,7 @@ class Spree::ProductSet < ModelSet
     end
   end
 
+  # Updates or creates a variant of the product with the products attributes.
   def create_or_update_variant(product, variant_attributes)
     found_variant = product.variants_including_master.find do |variant|
       variant.id.to_s == variant_attributes[:id].to_s && variant.persisted?
