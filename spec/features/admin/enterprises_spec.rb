@@ -205,6 +205,12 @@ feature %q{
     page.should have_checked_field "enterprise_preferred_shopfront_order_cycle_order_orders_open_at"
     expect(page).to have_checked_field "enterprise_require_login_true"
     expect(page).to have_checked_field "enterprise_enable_subscriptions_true"
+
+    # Test that the right input alert text is displayed
+    accept_alert('Please enter a URL to insert') do
+      first('.ta-text').click
+      first('button[name="insertLink"]').click
+    end
   end
 
   describe "producer properties" do

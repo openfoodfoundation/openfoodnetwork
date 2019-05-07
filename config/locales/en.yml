@@ -724,23 +724,25 @@ en:
           enable_subscriptions_tip: "Enable subscriptions functionality?"
           enable_subscriptions_false: "Disabled"
           enable_subscriptions_true: "Enabled"
-          shopfront_message: Shopfront Message
+          shopfront_message: "Shopfront Message"
           shopfront_message_placeholder: >
             An optional explanation for customers detailing how your shopfront works,
             to be displayed above the product list on your shop page.
-          shopfront_closed_message: Shopfront Closed Message
+          shopfront_message_link_tooltip: "Insert / edit link"
+          shopfront_message_link_prompt: "Please enter a URL to insert"
+          shopfront_closed_message: "Shopfront Closed Message"
           shopfront_closed_message_placeholder: >
             A message which provides a more detailed explanation about why your shop is
             closed and/or when customers can expect it to open again. This is displayed
             on your shop only when you have no active order cycles (ie. shop is closed).
-          shopfront_category_ordering: Shopfront Category Ordering
-          open_date: Open Date
-          close_date: Close Date
+          shopfront_category_ordering: "Shopfront Category Ordering"
+          open_date: "Open Date"
+          close_date: "Close Date"
         social:
-          twitter_placeholder: eg. @the_prof
-          instagram_placeholder: eg. the_prof
-          facebook_placeholder: eg. www.facebook.com/PageNameHere
-          linkedin_placeholder: eg. www.linkedin.com/in/YourNameHere
+          twitter_placeholder: "eg. @the_prof"
+          instagram_placeholder: "eg. the_prof"
+          facebook_placeholder: "eg. www.facebook.com/PageNameHere"
+          linkedin_placeholder: "eg. www.linkedin.com/in/YourNameHere"
         stripe_connect:
           connect_with_stripe: "Connect with Stripe"
           stripe_connect_intro: "To accept payments using credit card, you will need to connect your stripe account to the Open Food Network. Use the button to the right to get started."
