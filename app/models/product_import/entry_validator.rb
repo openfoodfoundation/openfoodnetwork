@@ -40,6 +40,7 @@ module ProductImport
           category_validation(entry)
           tax_and_shipping_validation(entry, 'tax', entry.tax_category, @spreadsheet_data.tax_index)
           tax_and_shipping_validation(entry, 'shipping', entry.shipping_category, @spreadsheet_data.shipping_index)
+          shipping_presence_validation(entry)
           product_validation(entry)
         end
       end
@@ -231,6 +232,10 @@ module ProductImport
       else
         mark_as_invalid(entry, attribute: "#{type}_category", error: I18n.t('admin.product_import.model.not_found'))
       end
+    end
+
+    def shipping_presence_validation(entry)
+      mark_as_invalid(entry, attribute: "shipping_category", error: I18n.t(:error_required)) unless entry.shipping_category_id
     end
 
     def product_validation(entry)
