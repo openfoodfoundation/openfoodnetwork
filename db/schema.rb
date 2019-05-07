@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20190504151144) do
+ActiveRecord::Schema.define(:version => 20190507090132) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -1089,6 +1089,7 @@ ActiveRecord::Schema.define(:version => 20190504151144) do
     t.datetime "import_date"
   end
 
+  add_index "spree_variants", ["deleted_at"], :name => "index_spree_variants_on_deleted_at"
   add_index "spree_variants", ["product_id"], :name => "index_variants_on_product_id"
   add_index "spree_variants", ["sku"], :name => "index_spree_variants_on_sku"
 
