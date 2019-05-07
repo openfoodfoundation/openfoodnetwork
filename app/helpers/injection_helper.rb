@@ -10,6 +10,14 @@ module InjectionHelper
     )
   end
 
+  def inject_enterprise_shopfront_list
+    inject_json_ams(
+      'enterprises',
+      Enterprise.activated.includes(address: :state).all,
+      Api::EnterpriseShopfrontListSerializer
+    )
+  end
+
   def inject_enterprise_and_relatives
     inject_json_ams "enterprises", current_distributor.relatives_including_self.activated.includes(address: :state).all, Api::EnterpriseSerializer, enterprise_injection_data
   end

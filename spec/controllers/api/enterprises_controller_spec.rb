@@ -81,5 +81,27 @@ module Api
         end
       end
     end
+
+    describe "fetching shopfronts data" do
+      let!(:hub) {
+        create(:distributor_enterprise, with_payment_and_shipping: true, name: 'Shopfront Test Hub')
+      }
+      let!(:producer) { create(:supplier_enterprise, name: 'Shopfront Test Producer') }
+      let!(:category) { create(:taxon, name: 'Fruit') }
+      let!(:product) { create(:product, supplier: producer, primary_taxon: category ) }
+      let!(:relationship) { create(:enterprise_relationship, parent: hub, child: producer) }
+
+      before do
+        allow(controller).to receive(:spree_current_user) { Spree::User.anonymous! }
+      end
+
+      it "returns data for an enterprise" do
+        spree_get :shopfront, id: producer.id, format: :json
+
+        expect(json_response['name']).to eq 'Shopfront Test Producer'
+        expect(json_response['hubs'][0]['name']).to eq 'Shopfront Test Hub'
+        expect(json_response['supplied_taxons'][0]['name']).to eq 'Fruit'
+      end
+    end
   end
 end
