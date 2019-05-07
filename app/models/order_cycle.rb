@@ -8,11 +8,16 @@ class OrderCycle < ActiveRecord::Base
 
   has_many :exchanges, :dependent => :destroy
 
+  # These scope names are prepended with "cached_" because there are existing accessor methods
+  # :incoming_exchanges and :outgoing_exchanges.
+  has_many :cached_incoming_exchanges, conditions: { incoming: true }, class_name: "Exchange"
+  has_many :cached_outgoing_exchanges, conditions: { incoming: false }, class_name: "Exchange"
+
+  has_many :suppliers, source: :sender, through: :cached_incoming_exchanges, uniq: true
+  has_many :distributors, source: :receiver, through: :cached_outgoing_exchanges, uniq: true
+
   has_and_belongs_to_many :schedules, join_table: 'order_cycle_schedules'
 
-  # TODO: DRY the incoming/outgoing clause used in several cases below
-  # See Spree::Product definition, scopes variants and variants_including_master
-  # This will require these accessors to be renamed
   attr_accessor :incoming_exchanges, :outgoing_exchanges
 
   validates_presence_of :name, :coordinator_id
@@ -122,16 +127,6 @@ class OrderCycle < ActiveRecord::Base
     oc.save!
     self.exchanges.each { |e| e.clone!(oc) }
     oc.reload
-  end
-
-  def suppliers
-    enterprise_ids = self.exchanges.incoming.pluck :sender_id
-    Enterprise.where('enterprises.id IN (?)', enterprise_ids)
-  end
-
-  def distributors
-    enterprise_ids = self.exchanges.outgoing.pluck :receiver_id
-    Enterprise.where('enterprises.id IN (?)', enterprise_ids)
   end
 
   def variants
