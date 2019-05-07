@@ -20,6 +20,7 @@ class Api::Admin::CustomerSerializer < ActiveModel::Serializer
     end
   end
 
+  # returns true if user has a default_card associated.
   def default_card_present?
     return unless object.user
     object.user.default_card.present?
