@@ -1,6 +1,8 @@
 require 'open_food_network/enterprise_injection_data'
 
 module InjectionHelper
+  include SerializerHelper
+
   def inject_enterprises(enterprises = Enterprise.activated.includes(address: :state).all)
     inject_json_ams(
       'enterprises',
@@ -11,9 +13,11 @@ module InjectionHelper
   end
 
   def inject_enterprise_shopfront_list
+    select_only = required_attributes Enterprise, Api::EnterpriseShopfrontListSerializer
+
     inject_json_ams(
       'enterprises',
-      Enterprise.activated.includes(address: :state).all,
+      Enterprise.activated.select(select_only).includes(address: :state).all,
       Api::EnterpriseShopfrontListSerializer
     )
   end
