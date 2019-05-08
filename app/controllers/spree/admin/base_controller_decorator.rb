@@ -6,7 +6,7 @@ Spree::Admin::BaseController.class_eval do
   layout 'spree/layouts/admin'
 
   before_filter :set_locale
-  before_filter :warn_invalid_order_cycles
+  before_filter :warn_invalid_order_cycles, if: :html_request?
 
   # Warn the user when they have an active order cycle with hubs that are not ready
   # for checkout (ie. does not have valid shipping and payment methods).

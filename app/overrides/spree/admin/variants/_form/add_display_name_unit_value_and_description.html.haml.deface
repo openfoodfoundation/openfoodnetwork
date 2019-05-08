@@ -1,5 +1,12 @@
 / insert_top "[data-hook='admin_variant_form_fields']"
 
+.field
+  = f.label :display_name, t(:display_name)
+  = f.text_field :display_name, class: "fullwidth"
+.field
+  = f.label :display_as, t(:display_as)
+  = f.text_field :display_as, class: "fullwidth"
+
 - if product_has_variant_unit_option_type?(@product)
   - if @product.variant_unit != 'items'
     .field{"data-hook" => "unit_value", 'ng-controller' => 'variantUnitsCtrl'}

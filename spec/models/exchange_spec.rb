@@ -293,7 +293,6 @@ describe Exchange do
     let(:oc) { create(:order_cycle) }
     let(:exchange) do
       exchange = oc.exchanges.last
-      exchange.payment_enterprise = Enterprise.last
       exchange.save!
       exchange.stub(:variant_ids) { [1835, 1834] } # Test id ordering
       exchange.stub(:enterprise_fee_ids) { [1493, 1492] } # Test id ordering
@@ -305,7 +304,7 @@ describe Exchange do
         {'id' => exchange.id, 'order_cycle_id' => oc.id,
         'sender_id' => exchange.sender_id, 'receiver_id' => exchange.receiver_id,
         'incoming' => exchange.incoming,
-        'payment_enterprise_id' => exchange.payment_enterprise_id, 'variant_ids' => exchange.variant_ids.sort,
+        'variant_ids' => exchange.variant_ids.sort,
         'enterprise_fee_ids' => exchange.enterprise_fee_ids.sort,
         'pickup_time' => exchange.pickup_time, 'pickup_instructions' => exchange.pickup_instructions,
         'receival_instructions' => exchange.receival_instructions,
@@ -316,7 +315,7 @@ describe Exchange do
       exchange.to_h(true).should ==
         {'sender_id' => exchange.sender_id, 'receiver_id' => exchange.receiver_id,
          'incoming' => exchange.incoming,
-         'payment_enterprise_id' => exchange.payment_enterprise_id, 'variant_ids' => exchange.variant_ids.sort,
+         'variant_ids' => exchange.variant_ids.sort,
          'enterprise_fee_ids' => exchange.enterprise_fee_ids.sort,
          'pickup_time' => exchange.pickup_time, 'pickup_instructions' => exchange.pickup_instructions,
          'receival_instructions' => exchange.receival_instructions}
