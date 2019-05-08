@@ -27,7 +27,7 @@ Openfoodnetwork::Application.routes.draw do
   get "/cart", :to => "spree/orders#edit", :as => :cart
   put "/cart", :to => "spree/orders#update", :as => :update_cart
   put "/cart/empty", :to => 'spree/orders#empty', :as => :empty_cart
-  match '/orders/:id/token/:token' => 'spree/orders#show', :via => :get, :as => :token_order
+  get '/orders/:id/token/:token' => 'spree/orders#show', :as => :token_order
 
   resource :cart, controller: "cart" do
     post :populate
