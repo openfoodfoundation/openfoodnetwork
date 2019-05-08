@@ -100,14 +100,6 @@ pt:
       subject: "%{enterprise} está agora em %{sitename}"
     invite_manager:
       subject: "%{enterprise} convidou-o/a para gestor/a"
-  order_mailer:
-    cancel_email:
-      dear_customer: "Caro Consumidor,"
-      instructions: "A sua encomenda foi cancelada. Por favor guarde esta informação para seu registo."
-      order_summary_canceled: "Sumário de Encomenda [CANCELADA]"
-      subject: "Cancelamento de Encomenda"
-      subtotal: "Subtotal: %{subtotal}"
-      total: "Total da Encomenda: %{total}"
   producer_mailer:
     order_cycle:
       subject: "Relatório de ciclo de encomendas de %{producer}"
@@ -175,17 +167,9 @@ pt:
   confirm_resend_order_confirmation: "Tem a certeza que deseja enviar novamente o email de confirmação de encomenda? "
   must_have_valid_business_number: "%{enterprise_name}tem de ter um NIPC/NIF válido antes de se poder enviar facturas."
   invoice: "Factura"
-  percentage_of_sales: "%{percentage} de vendas"
-  capped_at_cap: "limitado em %{cap}"
-  per_month: "por mês"
-  free: "gratuito"
-  free_trial: "experimentar sem pagar"
-  plus_tax: "mais IVA"
-  min_bill_turnover_desc: "assim que o volume de negócios exceder %{mbt_amount}"
   more: "Mais"
   say_no: "Não"
   say_yes: "Sim"
-  then: então
   ongoing: A decorrer
   bill_address: Morada de Faturação
   ship_address: Morada de Envio
@@ -237,7 +221,6 @@ pt:
   notes: Notas
   error: Erro
   processing_payment: Pagamento em processamento...
-  show_only_unfulfilled_orders: Mostrar só encomendas por cumprir
   filter_results: Filtrar resultados
   quantity: Quantidade
   pick_up: Levantamento
@@ -251,6 +234,7 @@ pt:
   actions:
     create_and_add_another: "Criar e acrescentar outro"
     create: "Criar"
+    cancel: "Cancelar"
   admin:
     begins_at: Começa às
     begins_on: Começa em
@@ -309,27 +293,6 @@ pt:
     has_n_rules: "tem %{num} regras"
     unsaved_confirm_leave: "Existem alterações por guardar nesta página. Continuar sem guardar? "
     unsaved_changes: "Tem alterações por guardar"
-    accounts_and_billing_settings:
-      method_settings:
-        default_accounts_payment_method: "Método de pagamento da conta por defeito"
-        default_accounts_shipping_method: "Método de envio da conta por defeito"
-      edit:
-        accounts_and_billing: "Contabilidade & Facturação"
-        accounts_administration_distributor: "Administração de contas de distribuidor"
-        admin_settings: "Configurações"
-        update_invoice: "Actualizar facturas"
-        auto_update_invoices: "Actualizar automaticamente as facturas todas as noites à 1:00"
-        finalise_invoice: "Finalizar facturas"
-        auto_finalise_invoices: "Fecho automático de facturas todos os meses no dia 2 às 1:30"
-        manually_run_task: "Executar tarefa manualmente"
-        update_user_invoice_explained: "Use este botão para actualizar imediatamente as facturas do mês, até ao dia de hoje, para cada organização no sistema. Esta tarefa pode ser configurada para ser realizada automaticamente todas as noites."
-        finalise_user_invoices: "Lançar Facturas de Utilizador"
-        finalise_user_invoice_explained: "Use este botão para lançar no sistema todas as facturas relativas ao mês anterior. Esta tarefa pode ser configurada para ser realizada automaticamente uma vez por mês."
-        update_user_invoices: "Actualizar Facturas de Utilizador"
-      errors:
-        accounts_distributor: deve estar definido, se desejar criar facturas para organizações
-        default_payment_method: deve estar definido se desejar criar facturas para organizações
-        default_shipping_method: deve estar definido se desejar criar facturas para organizações registadas
     shopfront_settings:
       embedded_shopfront_settings: "Definições de Loja Embutida"
       enable_embedded_shopfronts: "Permitir Lojas Embutidas"
@@ -337,34 +300,6 @@ pt:
     number_localization:
       number_localization_settings: "Definições de Localização de Números"
       enable_localized_number: "Utilizar a lógica do separador de milhares/décimas internacional"
-    business_model_configuration:
-      edit:
-        business_model_configuration: "Modelo de Negócio"
-        business_model_configuration_tip: "Configure a taxa a que as lojas serão cobradas mensalmente por usar o Open Food Network"
-        bill_calculation_settings: "Configurações de Cálculo de Conta"
-        bill_calculation_settings_tip: "Configure a quantia que será cobrada mensalmente às organizações pela utilização da OFN"
-        shop_trial_length: "Duração da Loja Experimental (Dias)"
-        shop_trial_length_tip: "Duração (em número de dias) do período experimental para as organizações definidas como lojas."
-        fixed_monthly_charge: "Taxa Mensal Fixa"
-        fixed_monthly_charge_tip: "Uma taxa mensal fixa para todas as organizações definidas como loja e que tenham excedido o volume de negócios mínimo facturável (se definido)."
-        percentage_of_turnover: "Percentagem do volume de negócios"
-        percentage_of_turnover_tip: "Quando maior que zero, esta taxa (0,0 - 1,0) será aplicada ao volume de negócios total de cada loja e somada a  qualquer taxa fixa (à esquerda) para calcular a conta mensal."
-        monthly_cap_excl_tax: "tecto mensal (excluindo IVA)"
-        monthly_cap_excl_tax_tip: "Quando maior do que zero, este valor será usado como o limite na quantia cobrada às lojas em cada mês."
-        tax_rate: "Taxa de Impostos"
-        tax_rate_tip: "Taxa de impostos que se aplica à conta mensal que é cobrada às organizações por usarem o sistema."
-        minimum_monthly_billable_turnover: "Volume de Negócios Mínimo Facturável"
-        minimum_monthly_billable_turnover_tip: "Volume de negócios mensal mínimo até ao qual não será cobrada a utilização da OFN. Às organizações com volumes inferiores a este valor num mês, não será cobrada nem percentagem nem taxa fixa."
-        example_bill_calculator: "Exemplo de Calculador de Conta"
-        example_bill_calculator_legend: "Alterar o exemplo de volume de negócios para visualizar o efeito nas definições à esquerda."
-        example_monthly_turnover: "Exemplo de Volume de Negócios Mensal"
-        example_monthly_turnover_tip: "Exemplo de volume de negócios mensal de uma organização que será usado para calcular a conta mensal dada como exemplo abaixo."
-        cap_reached?: "Atingido o limite?"
-        cap_reached?_tip: "Se o \"tecto\" (limite definido à esquerda) foi atingido, dadas as definições e o volume de negócios indicado."
-        included_tax: "Taxa incluída"
-        included_tax_tip: "A taxa total incluída no exemplo de conta mensal, dadas as definições e o volume de negócios indicado."
-        total_monthly_bill_incl_tax: "Total da Conta Mensal (taxa incluída)"
-        total_monthly_bill_incl_tax_tip: "O exemplo de conta mensal total incluindo taxas, dadas as definições e o volume de negócios indicado."
     cache_settings:
       edit:
         title: "Cache"
@@ -448,6 +383,7 @@ pt:
         tax_category: Categoria de Imposto
         calculator: Calculadora
         calculator_values: Valores da calculadora
+        search: "Procurar"
     enterprise_groups:
       index:
         new_button: Novo grupo de organizações
@@ -477,6 +413,7 @@ pt:
         property_name: Nome da propriedade
         inherited_property: Propriedade herdada
       variants:
+        infinity: "Infinito"
         to_order_tip: "Os itens feitos por encomenda não têm um nível de stock definido, como pão fresco, por exemplo."
       group_buy_options: "Opções de Compra Colectiva"
       back_to_products_list: "Voltar à lista de produtos"
@@ -955,9 +892,6 @@ pt:
     shared:
       user_guide_link:
         user_guide: Manual do Utilizador
-    overview:
-      enterprises_header:
-        ofn_with_tip: As Organizações são Produtores e/ou Hubs e representam a unidade básica de organização dentro da Open Food Network.
       enterprises_hubs_tabs:
         has_no_payment_methods: "%{enterprise} não tem métodos de pagamento"
         has_no_shipping_methods: "%{enterprise}não tem métodos de envio"
@@ -1687,8 +1621,6 @@ pt:
   products_max_quantity: Quantidade máxima
   products_distributor: Distribuidor
   products_distributor_info: Quando seleccionar um distribuidor para a sua encomenda, a morada e data de levantamento serão exibidos aqui.
-  shop_trial_expires_in: "O período de avaliação do mercado termina em "
-  shop_trial_expired_notice: "Boa notícia! Decidimos extender o período avaliação do mercado. "
   password: Palavra-passe
   remember_me: Lembrar meu login
   are_you_sure: "Tem a certeza?"
@@ -1867,8 +1799,6 @@ pt:
   action_or: "OU"
   enterprise_limit: Limite da Organização
   shipping_method_destroy_error: "Este método de envio não pode ser apagado porque está referenciado por uma encomenda: %{number}."
-  accounts_and_billing_task_already_running_error: "Já está a decorrer uma tarefa, por favor aguarde que esteja terminada"
-  accounts_and_billing_start_task_notice: "Tarefa colocada em fila"
   fees: "Taxas"
   item_cost: "Custo da unidade"
   bulk: "Em Massa"
@@ -1977,6 +1907,7 @@ pt:
   product: "Produto"
   price: "Preço"
   on_hand: "Disponível"
+  review: "Rever"
   save_changes: "Guardar Modificações"
   order_saved: "Encomenda Guardada"
   no_products: Sem Produtos
@@ -2019,7 +1950,6 @@ pt:
   live: "online"
   manage: "Gerir"
   resend: "Reenviar"
-  trial: Experiência
   add_and_manage_products: "Adicionar e gerir produtos"
   add_and_manage_order_cycles: "Adicionar e gerir ciclos de encomendas"
   manage_order_cycles: "Gerir ciclos de encomendas"
@@ -2050,7 +1980,6 @@ pt:
   hub_sidebar_at_least: "Tem de selecionar pelo menos uma central"
   hub_sidebar_blue: "azul"
   hub_sidebar_red: "vermelho"
-  shop_trial_in_progress: "O período de avaliação do mercado termina em %{days}."
   report_customers_distributor: "Distribuidor"
   report_customers_supplier: "Fornecedor"
   report_customers_cycle: "Ciclo de Encomendas"
@@ -2433,6 +2362,8 @@ pt:
           resolve: Resolver
       new_tag_rule_dialog:
         select_rule_type: "Selecionar um tipo de regra:"
+      enterprise_fees:
+        inherit_from_product: "Herdar do Produto"
       orders:
         index:
           per_page: "%{results} por página"
@@ -2457,7 +2388,7 @@ pt:
           returned: "retornado"
           skrill: "skrill"
         shipment_states:
-          backorder: "rutura de stock"
+          backorder: "pendente"
           partial: "parcial"
           pending: "pendente"
           ready: "pronto"
@@ -2842,6 +2773,8 @@ pt:
           order_adjustments: "Ajustes à Encomenda"
           order_total: "Total da Encomenda"
       overview:
+        enterprises_header:
+          ofn_with_tip: As Organizações são Produtores e/ou Hubs e representam a unidade básica de organização dentro da Open Food Network.
         products:
           active_products:
             zero: "Não tem nenhum produto ativo."
@@ -2855,6 +2788,9 @@ pt:
             one: "Tem um ciclo de encomendas activo."
             other: "Tem %{count}ciclos de encomendas activos."
           manage_order_cycles: "GERIR CICLOS DE ENCOMENDAS"
+      shipping_methods:
+        edit:
+          editing_shipping_method: "Editar Método de Envio"
       payment_methods:
         new:
           new_payment_method: "Novo Método de Pagamento"
@@ -2972,6 +2908,7 @@ pt:
       format: '%Y-%m-%d'
       js_format: 'aa-mm-dd'
     orders:
+      error_flash_for_unavailable_items: "Um item do seu carrinho ficou indisponível."
       edit:
         login_to_view_order: "Por favor faça login para ver a sua encomenda."
       bought:
@@ -2979,8 +2916,9 @@ pt:
       line_item:
         insufficient_stock: "Stock disponível insuficiente, apenas %{on_hand} disponíveis"
         out_of_stock: "Sem Stock"
+        unavailable_item: "Indisponível"
     shipment_states:
-      backorder: rutura de stock
+      backorder: pendente
       partial: parcial
       pending: pendente
       ready: pronto
@@ -2997,6 +2935,13 @@ pt:
       void: vazio
       invalid: inválido
     order_mailer:
+      cancel_email:
+        customer_greeting: "Olá %{name}!"
+        instructions: "A sua encomenda foi cancelada. Para seu registo, por favor guarde esta informação de cancelamento."
+        order_summary_canceled: "Sumário de Encomenda [CANCELADA]"
+        subject: "Cancelamento de Encomenda"
+      confirm_email:
+        subject: "Confimação de Encomenda"
       invoice_email:
         hi: "Olá %{name}"
         invoice_attached_text: Pode encontrar em anexo um recibo da encomenda que fez recentemente a

@@ -100,14 +100,6 @@ nb:
       subject: "%{enterprise} er nå på %{sitename}"
     invite_manager:
       subject: "%{enterprise} har invitert deg til å være en administrator"
-  order_mailer:
-    cancel_email:
-      dear_customer: "Kjære Kunde,"
-      instructions: "Din bestilling har blitt KANSELLERT. Vennligst behold denne kanselleringsinformasjonen som referanse."
-      order_summary_canceled: "Bestillingssammendrag [KANSELLERT]"
-      subject: "Kansellering av bestilling"
-      subtotal: "Subtotal: %{subtotal}"
-      total: "Ordre Totalt: %{total}"
   producer_mailer:
     order_cycle:
       subject: "Bestillingsrunderapport for %{producer}"
@@ -175,17 +167,9 @@ nb:
   confirm_resend_order_confirmation: "Er du sikker på at du vil sende ordrebekreftelse via epost på nytt?"
   must_have_valid_business_number: "%{enterprise_name} må ha et gyldig ORG nr. før fakturaer kan sendes."
   invoice: "Faktura"
-  percentage_of_sales: "%{percentage} av handel"
-  capped_at_cap: "tak på %{cap}"
-  per_month: "pr. måned"
-  free: "gratis"
-  free_trial: "gratis prøveperiode"
-  plus_tax: "pluss MVA"
-  min_bill_turnover_desc: "når omsettning overstiger %{mbt_amount}"
   more: "Mer"
   say_no: "Nei"
   say_yes: "Ja"
-  then: vil
   ongoing: Pågående
   bill_address: Fakturaadresse
   ship_address: Leveringssadresse
@@ -237,7 +221,6 @@ nb:
   notes: Merknader
   error: Feil
   processing_payment: Behandler betaling ...
-  show_only_unfulfilled_orders: Vis kun uoppfylte ordrer
   filter_results: Filtrer Resultater
   quantity: Mengde
   pick_up: Hent
@@ -251,6 +234,7 @@ nb:
   actions:
     create_and_add_another: "Opprett og legg til en annen"
     create: "Opprett"
+    cancel: "Avbryt"
   admin:
     begins_at: Begynner på
     begins_on: Begynner på
@@ -309,27 +293,6 @@ nb:
     has_n_rules: "har %{num} regler"
     unsaved_confirm_leave: "Det finnes ulagrede endringer på denne siden. Fortsett uten å lagre?"
     unsaved_changes: "Du har ulagrede endringer"
-    accounts_and_billing_settings:
-      method_settings:
-        default_accounts_payment_method: "Standard Betalingsmetode for Bokføring"
-        default_accounts_shipping_method: "Standard Leveringsmetode for Bokføring"
-      edit:
-        accounts_and_billing: "Bokføring & Fakturering"
-        accounts_administration_distributor: "Distributør bokføringsadministrasjon"
-        admin_settings: "Innstillinger"
-        update_invoice: "Oppdater Fakturaer"
-        auto_update_invoices: "Auto-oppdater fakturaer hver natt kl. 1:00am"
-        finalise_invoice: "Ferdigstill Fakturaer"
-        auto_finalise_invoices: "Auto-ferdigstill fakturaer månedlig den 2. kl. 1:30am"
-        manually_run_task: "Kjør oppgaver manuelt"
-        update_user_invoice_explained: "Bruk denne knappen til umiddelbart å oppdatere fakturaer for denne måneden frem til i dag for hver bedriftsbruker i systemet. Denne oppgaven kan settes opp til å kjøre automatisk hver natt."
-        finalise_user_invoices: "Ferdigstill Brukerfakturaer"
-        finalise_user_invoice_explained: "Bruk denne knappen til å ferdigstille alle fakturaer i systemet for forrige kalendermåned. Denne oppgaven kan settes opp til å kjøre automatisk en gang i måneden."
-        update_user_invoices: "Oppdater Brukerfakturaer"
-      errors:
-        accounts_distributor: Må settes hvis du ønsker å opprette fakturaer for brukere.
-        default_payment_method: Må settes hvis du ønsker å opprette fakturaer for brukere.
-        default_shipping_method: Må settes hvis du ønsker å opprette fakturaer for brukere.
     shopfront_settings:
       embedded_shopfront_settings: "Innstillinger Innebygd Nettbutikk"
       enable_embedded_shopfronts: "Aktiver Innebygd Nettbutikk"
@@ -337,34 +300,6 @@ nb:
     number_localization:
       number_localization_settings: "Innstillinger for nummerlokalisering"
       enable_localized_number: "Bruk internasjonale tusen- og desimalskilletegn"
-    business_model_configuration:
-      edit:
-        business_model_configuration: "Forretningsmodell"
-        business_model_configuration_tip: "Konfigurer hvor ofte butikker skal belastes hver måned for å bruke Open Food Network."
-        bill_calculation_settings: "Kalkulatorinnstillinger for Regninger"
-        bill_calculation_settings_tip: "Tilpass hvor mye bedrifter skal faktureres for hver måned for bruken av OFN."
-        shop_trial_length: "Lengde på prøveperiode for butikker (dager)"
-        shop_trial_length_tip: "Hvor lang tid (i dager) bedrifter som er satt opp som butikker, kan kjøre som prøveperiode."
-        fixed_monthly_charge: "Fast Månedlig Belastning"
-        fixed_monthly_charge_tip: "En fast månedlig belastning for alle bedrifter som er satt opp som butikk og har overskredet minimum fakturert omsetning (hvis konfigurert)."
-        percentage_of_turnover: "Prosent av omsetning"
-        percentage_of_turnover_tip: "Når større enn null, gjelder denne raten (0.0 - 1.0) på total omsetning for hver butikk og lagt til enhver fast rate (til venstre) for å beregne den månedlige fakturaen."
-        monthly_cap_excl_tax: "månedlig tak (eks. MVA)"
-        monthly_cap_excl_tax_tip: "Når større enn null vil denne verdien bli brukt som et tak på hvor mye butikker vil bli belastet hver måned."
-        tax_rate: "Avgiftsrate"
-        tax_rate_tip: "Avgiftsrate som gjelder månedlig regning som bedrifter blir belastet for å bruke systemet."
-        minimum_monthly_billable_turnover: "Minimum Månedlig Fakturerbar Omsetning"
-        minimum_monthly_billable_turnover_tip: "Minimum månedlig omsetning før en butikk vil bli belastet for å bruke OFN. Bedrifter som omsetter for mindre enn dette på en måned vil ikke bli belastet, enten som en prosent eller en fast rate."
-        example_bill_calculator: "Eksempel på Regningskalkulator"
-        example_bill_calculator_legend: "Endre eksempelomsetningen for å se effekten av innstillingene til venstre."
-        example_monthly_turnover: "Eksempel på Månedlig Omsetning"
-        example_monthly_turnover_tip: "Eksempel på månedlig omsetning for en bedrift som vil bli brukt for å generere beregning av eksempel på månedlig regning under."
-        cap_reached?: "Tak Nådd?"
-        cap_reached?_tip: "Om taket (spesifisert til venstre) er nådd, gitt innstillingene og omsetningen som er satt."
-        included_tax: "Inkludert avgift"
-        included_tax_tip: "Total avgift inkludert i eksemplet på månedlig regning, gitt innstillingene og omsetningen som er satt."
-        total_monthly_bill_incl_tax: "Total Månedlig Regning (Inkl. Avgift)"
-        total_monthly_bill_incl_tax_tip: "Eksempel på total månedlig regning inkludert avgift, gitt innstillingene og omsetningen som er satt."
     cache_settings:
       edit:
         title: "Mellomlagring"
@@ -448,6 +383,7 @@ nb:
         tax_category: Avgiftskategori
         calculator: Kalkulator
         calculator_values: Kalkulatorverdier
+        search: "Søk"
     enterprise_groups:
       index:
         new_button: Ny Bedriftsgruppe
@@ -477,6 +413,7 @@ nb:
         property_name: Navn på egenskap
         inherited_property: Arvet egenskap
       variants:
+        infinity: "Uendelig"
         to_order_tip: "Varer laget for bestilling har ikke et lagernivå, slik som ferske skiver brød laget for bestilling."
       group_buy_options: "Gruppekjøpsalternativer"
       back_to_products_list: "Tilbake til produktlisten"
@@ -954,9 +891,6 @@ nb:
     shared:
       user_guide_link:
         user_guide: Brukermanual
-    overview:
-      enterprises_header:
-        ofn_with_tip: Bedrifter er Produsenter og / eller Hubs og er den grunnleggende organisasjonsenheten innen Open Food Network.
       enterprises_hubs_tabs:
         has_no_payment_methods: "%{enterprise} har ingen betalingsmetoder"
         has_no_shipping_methods: "%{enterprise} har ingen fraktmetoder"
@@ -1686,8 +1620,6 @@ nb:
   products_max_quantity: Max mengde
   products_distributor: Distributør
   products_distributor_info: Når du velger en distributør for din bestilling, vil deres adresse og hentetider vises her.
-  shop_trial_expires_in: "Din prøveperiode på butikkfront går ut om "
-  shop_trial_expired_notice: "Gode nyheter! Vi har bestemt å forlenge butikkprøveperioder inntil ytterligere beskjed."
   password: Passord
   remember_me: Husk meg
   are_you_sure: "Er du sikker?"
@@ -1866,8 +1798,6 @@ nb:
   action_or: "ELLER"
   enterprise_limit: Bedriftsgrense
   shipping_method_destroy_error: "Den fraktmetoden kan ikke slettes fordi den er referert til av en bestilling: %{number}."
-  accounts_and_billing_task_already_running_error: "En oppgave kjører allerede, vennligst vent til den er ferdig"
-  accounts_and_billing_start_task_notice: "Oppgave satt i kø"
   fees: "Gebyrer"
   item_cost: "Varepris"
   bulk: "Bulk"
@@ -1976,6 +1906,7 @@ nb:
   product: "Produkt"
   price: "Pris"
   on_hand: "På lager"
+  review: "Anmeldelse"
   save_changes: "Lagre Endringer"
   order_saved: "Bestilling lagret"
   no_products: Ingen produkter
@@ -2018,7 +1949,6 @@ nb:
   live: "live"
   manage: "Administrer"
   resend: "Send på nytt"
-  trial: Prøve
   add_and_manage_products: "Legg til & administrer produkter"
   add_and_manage_order_cycles: "Legg til & administrer bestillingsrunder"
   manage_order_cycles: "Administrer bestillingsrunder"
@@ -2049,7 +1979,6 @@ nb:
   hub_sidebar_at_least: "Minst én hub må være valgt"
   hub_sidebar_blue: "blå"
   hub_sidebar_red: "rød"
-  shop_trial_in_progress: "Din prøveperiode på butikkfront går ut om %{days}."
   report_customers_distributor: "Distributør"
   report_customers_supplier: "Leverandør"
   report_customers_cycle: "Bestillingsrunde"
@@ -2430,6 +2359,8 @@ nb:
           resolve: Løse
       new_tag_rule_dialog:
         select_rule_type: "Velg en regeltype:"
+      enterprise_fees:
+        inherit_from_product: "Arv fra Produkt"
       orders:
         index:
           per_page: "%{results} per side"
@@ -2835,8 +2766,12 @@ nb:
             title: "Distribusjon"
             distributor: "Distributør:"
             order_cycle: "Bestillingsrunde:"
+          line_item_adjustments: "Artikkeljustering"
+          order_adjustments: "Bestillingsjusteringer"
           order_total: "Bestilling Totalt"
       overview:
+        enterprises_header:
+          ofn_with_tip: Bedrifter er Produsenter og / eller Hubs og er den grunnleggende organisasjonsenheten innen Open Food Network.
         products:
           active_products:
             zero: "Du har ingen aktive produkter."
@@ -2850,6 +2785,9 @@ nb:
             one: "Du har en aktiv bestillingsrunde"
             other: "Du har %{count} aktive bestillingssykluser."
           manage_order_cycles: "BEHANDLE BESTILLINGSRUNDER"
+      shipping_methods:
+        edit:
+          editing_shipping_method: "Redigerer Leveringsmetode"
       payment_methods:
         new:
           new_payment_method: "Ny Betalingsmetode"
@@ -2967,6 +2905,7 @@ nb:
       format: '%Y-%m-%d'
       js_format: 'yy-mm-dd'
     orders:
+      error_flash_for_unavailable_items: "Et element i handlekurven din er blitt utilgjengelig."
       edit:
         login_to_view_order: "Vennligst logg inn for å se bestillingen din."
       bought:
@@ -2974,6 +2913,7 @@ nb:
       line_item:
         insufficient_stock: "Utilstrekkelig lager tilgjengelig, kun%{on_hand} gjenværende"
         out_of_stock: "Ikke på Lager"
+        unavailable_item: "For tiden ikke tilgjengelig"
     shipment_states:
       backorder: restordre
       partial: delvis
@@ -2992,6 +2932,13 @@ nb:
       void: ugyldig
       invalid: ugyldig
     order_mailer:
+      cancel_email:
+        customer_greeting: "Hei %{name}!"
+        instructions: "Din bestilling har blitt avbrutt. Vennligst behold denne avbestillingsinformasjonen som referanse."
+        order_summary_canceled: "Bestillingssammendrag [KANSELLERT]"
+        subject: "Kansellering av bestilling"
+      confirm_email:
+        subject: "Ordrebekreftelse"
       invoice_email:
         hi: "Hei %{name}"
         invoice_attached_text: Vennligst finn vedlagt en faktura for din nylige bestilling fra
