@@ -126,12 +126,12 @@ group :test, :development do
   gem 'letter_opener', '>= 1.4.1'
   gem 'timecop'
   gem 'selenium-webdriver'
-  gem 'webdrivers', '3.8.1'
   gem 'rspec-retry'
   gem 'json_spec', '~> 1.1.4'
   gem 'unicorn-rails'
   gem 'atomic'
   gem 'knapsack'
+  gem 'webdrivers', '3.8.1'
 end
 
 group :test do
