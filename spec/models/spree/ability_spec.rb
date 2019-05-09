@@ -458,7 +458,7 @@ module Spree
         end
 
         it "should not be able to read/write OrderCycles they are not the co-ordinator of" do
-          is_expected.not_to have_ability([:admin, :index, :read, :create, :edit, :update, :bulk_update, :clone, :destroy], for: oc2)
+          should_not have_ability([:admin, :index, :read, :create, :edit, :update, :bulk_update, :clone, :destroy], for: oc2)
         end
 
         it "should be able to create OrderCycles" do
