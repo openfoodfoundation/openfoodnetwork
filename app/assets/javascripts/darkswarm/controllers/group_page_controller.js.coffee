@@ -1,12 +1,10 @@
-Darkswarm.controller "GroupPageCtrl", ($scope, group_enterprises, Enterprises, MapConfiguration, OfnMap, visibleFilter, Navigation) ->
+Darkswarm.controller "GroupPageCtrl", ($scope, enterprises, Enterprises, MapConfiguration, OfnMap, visibleFilter, Navigation) ->
   $scope.Enterprises = Enterprises
 
-  all_enterprises_by_id = Enterprises.enterprises_by_id
+  enterprises_by_id = enterprises.map (enterprise) =>
+    Enterprises.enterprises_by_id[enterprise.id]
 
-  dereferenced_enterprises = group_enterprises.map (enterprise) =>
-    all_enterprises_by_id[enterprise.id]
-
-  visible_enterprises = visibleFilter dereferenced_enterprises
+  visible_enterprises = visibleFilter enterprises_by_id
 
   # TODO: this is duplicate code with app/assets/javascripts/darkswarm/services/enterprises.js.coffee
   # It would be better to load only the needed enterprises (group + related shops).

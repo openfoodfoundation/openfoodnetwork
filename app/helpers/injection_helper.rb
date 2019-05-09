@@ -37,7 +37,12 @@ module InjectionHelper
   end
 
   def inject_group_enterprises
-    inject_json_ams "group_enterprises", @group.enterprises.activated.all, Api::EnterpriseSerializer, enterprise_injection_data
+    inject_json_ams(
+      "enterprises",
+      @group.enterprises.activated.all,
+      Api::EnterpriseSerializer,
+      enterprise_injection_data
+    )
   end
 
   def inject_current_hub
@@ -116,7 +121,6 @@ module InjectionHelper
     json = serializer_instance.to_json
     render partial: "json/injection_ams", locals: {name: name, json: json}
   end
-
 
   private
 
