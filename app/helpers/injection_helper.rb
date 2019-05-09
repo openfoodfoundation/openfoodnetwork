@@ -12,6 +12,16 @@ module InjectionHelper
     )
   end
 
+  def inject_groups
+    select_only = required_attributes EnterpriseGroup, Api::GroupListSerializer
+
+    inject_json_ams(
+      'groups',
+      EnterpriseGroup.on_front_page.by_position.select(select_only).includes(address: :state).all,
+      Api::GroupListSerializer
+    )
+  end
+
   def inject_enterprise_shopfront_list
     select_only = required_attributes Enterprise, Api::EnterpriseShopfrontListSerializer
 
