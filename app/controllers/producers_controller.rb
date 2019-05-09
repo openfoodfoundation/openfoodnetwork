@@ -3,5 +3,13 @@ class ProducersController < BaseController
 
   before_filter :enable_embedded_shopfront
 
-  def index; end
+  def index
+    @enterprises = Enterprise
+      .activated
+      .is_primary_producer
+      .includes(address: :state)
+      .includes(:properties)
+      .includes(supplied_products: :properties)
+      .all
+  end
 end

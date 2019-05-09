@@ -1,24 +1,26 @@
 .row.active_table_row{"ng-click" => "toggle($event)", "ng-class" => "{'closed' : !open(), 'is_distributor' : producer.is_distributor}"}
-  .columns.small-12.medium-8.large-8.skinny-head
+  .columns.small-12.medium-7.large-7.skinny-head
     %span{"ng-if" => "::producer.is_distributor" }
-      %a.is_distributor{"ng-href" => "{{::producer.path}}", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined}}"}
-        .row.vertical-align-middle
-          .columns.small-2.medium-2.large-2
+      .row.vertical-align-middle
+        .columns.small-12
+          %a.is_distributor{"ng-href" => "{{::producer.path}}", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined}}", "data-is-link" => "true"}
             %i{ng: {class: "::producer.producer_icon_font"}}
-          .columns.small-10.medium-10.large-10
             %span.margin-top
               %strong{"ng-bind" => "::producer.name"}
+
     %span.producer-name{"ng-if" => "::!producer.is_distributor" }
       .row.vertical-align-middle
-        .columns.small-2.medium-2.large-2
+        .columns.small-12
           %i{ng: {class: "::producer.producer_icon_font"}}
-        .columns.small-10.medium-10.large-10
           %span.margin-top
             %strong{"ng-bind" => "::producer.name"}
-  .columns.small-6.medium-2.large-2
+
+  .columns.small-6.medium-3.large-3
     %span.margin-top{"ng-bind" => "::producer.address.city"}
+
   .columns.small-4.medium-1.large-1
     %span.margin-top{"ng-bind" => "::producer.address.state_name"}
+
   .columns.small-2.medium-1.large-1.text-right
     %span.margin-top
       %i{"ng-class" => "{'ofn-i_005-caret-down' : !open(), 'ofn-i_006-caret-up' : open()}"}
