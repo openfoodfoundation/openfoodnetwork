@@ -5,7 +5,7 @@ module InjectionHelper
 
   def inject_enterprises(enterprises = Enterprise.activated.includes(address: :state).all)
     inject_json_ams(
-      'enterprises',
+      "enterprises",
       enterprises,
       Api::EnterpriseSerializer,
       enterprise_injection_data
@@ -16,7 +16,7 @@ module InjectionHelper
     select_only = required_attributes EnterpriseGroup, Api::GroupListSerializer
 
     inject_json_ams(
-      'groups',
+      "groups",
       EnterpriseGroup.on_front_page.by_position.select(select_only).includes(address: :state).all,
       Api::GroupListSerializer
     )
@@ -26,7 +26,7 @@ module InjectionHelper
     select_only = required_attributes Enterprise, Api::EnterpriseShopfrontListSerializer
 
     inject_json_ams(
-      'enterprises',
+      "enterprises",
       Enterprise.activated.select(select_only).includes(address: :state).all,
       Api::EnterpriseShopfrontListSerializer
     )
@@ -98,11 +98,7 @@ module InjectionHelper
   end
 
   def inject_saved_credit_cards
-    data = if spree_current_user
-             spree_current_user.credit_cards.with_payment_profile.all
-           else
-             []
-           end
+    data = spree_current_user ? spree_current_user.credit_cards.with_payment_profile.all : []
 
     inject_json_ams "savedCreditCards", data, Api::CreditCardSerializer
   end
