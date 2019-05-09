@@ -6,6 +6,7 @@ class ShopsController < BaseController
   def index
     @enterprises = Enterprise
       .activated
+      .is_distributor
       .includes(address: :state)
       .includes(:properties)
       .includes(supplied_products: :properties)

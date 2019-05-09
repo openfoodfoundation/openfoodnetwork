@@ -1,14 +1,18 @@
 Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer, visibleFilter, Matcher, Geo, $rootScope) ->
   new class Enterprises
     enterprises_by_id: {}
+
     constructor: ->
       # Populate Enterprises.enterprises from json in page.
       @enterprises = enterprises
+
       # Map enterprises to id/object pairs for lookup.
       for enterprise in enterprises
         @enterprises_by_id[enterprise.id] = enterprise
+
       # Replace enterprise and taxons ids with actual objects.
       @dereferenceEnterprises()
+
       @visible_enterprises = visibleFilter @enterprises
       @producers = @visible_enterprises.filter (enterprise)->
         enterprise.category in ["producer_hub", "producer_shop", "producer"]
@@ -22,8 +26,6 @@ Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer,
         @dereferenceEnterprise enterprise
 
     dereferenceEnterprise: (enterprise) ->
-      @dereferenceProperty(enterprise, 'hubs', @enterprises_by_id)
-      @dereferenceProperty(enterprise, 'producers', @enterprises_by_id)
       @dereferenceProperty(enterprise, 'taxons', Taxons.taxons_by_id)
       @dereferenceProperty(enterprise, 'supplied_taxons', Taxons.taxons_by_id)
 

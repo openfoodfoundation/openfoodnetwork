@@ -1,6 +1,8 @@
 - content_for(:title) do
   = t :shops_title
 
+= inject_enterprises(@enterprises)
+
 #panes
   #shops.pane
     .row
