@@ -16,40 +16,40 @@ module Spree
       describe "getting preferences" do
         it "returns regular preferences" do
           c.name = 'foo'
-          c.get_preference(:name).should == 'foo'
+          expect(c.get_preference(:name)).to eq('foo')
         end
 
         it "returns file preferences" do
-          c.get_preference(:logo).should be_a Paperclip::Attachment
+          expect(c.get_preference(:logo)).to be_a Paperclip::Attachment
         end
 
         it "returns regular preferences via []" do
           c.name = 'foo'
-          c[:name].should == 'foo'
+          expect(c[:name]).to eq('foo')
         end
 
         it "returns file preferences via []" do
-          c[:logo].should be_a Paperclip::Attachment
+          expect(c[:logo]).to be_a Paperclip::Attachment
         end
       end
 
       describe "getting preference types" do
         it "returns regular preference types" do
-          c.preference_type(:name).should == :string
+          expect(c.preference_type(:name)).to eq(:string)
         end
 
         it "returns file preference types" do
-          c.preference_type(:logo).should == :file
+          expect(c.preference_type(:logo)).to eq(:file)
         end
       end
 
       describe "respond_to?" do
         it "responds to preference getters" do
-          c.respond_to?(:name).should be true
+          expect(c.respond_to?(:name)).to be true
         end
 
         it "responds to preference setters" do
-          c.respond_to?(:name=).should be true
+          expect(c.respond_to?(:name=)).to be true
         end
       end
     end

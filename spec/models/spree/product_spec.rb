@@ -4,21 +4,21 @@ module Spree
   describe Product do
 
     describe "associations" do
-      it { should belong_to(:supplier) }
-      it { should belong_to(:primary_taxon) }
+      it { is_expected.to belong_to(:supplier) }
+      it { is_expected.to belong_to(:primary_taxon) }
     end
 
     describe "validations and defaults" do
       it "is valid when built from factory" do
-        build(:product).should be_valid
+        expect(build(:product)).to be_valid
       end
 
       it "requires a primary taxon" do
-        build(:simple_product, taxons: [], primary_taxon: nil).should_not be_valid
+        expect(build(:simple_product, taxons: [], primary_taxon: nil)).not_to be_valid
       end
 
       it "requires a supplier" do
-        build(:simple_product, supplier: nil).should_not be_valid
+        expect(build(:simple_product, supplier: nil)).not_to be_valid
       end
 
       it "does not save when master is invalid" do
@@ -32,7 +32,7 @@ module Spree
       it "defaults available_on to now" do
         Timecop.freeze do
           product = Product.new
-          product.available_on.should == Time.zone.now
+          expect(product.available_on).to eq(Time.zone.now)
         end
       end
 
@@ -40,7 +40,7 @@ module Spree
         context "when a tax category is required" do
           it "is invalid when a tax category is not provided" do
             with_products_require_tax_category(true) do
-              build(:product, tax_category_id: nil).should_not be_valid
+              expect(build(:product, tax_category_id: nil)).not_to be_valid
             end
           end
         end
@@ -48,7 +48,7 @@ module Spree
         context "when a tax category is not required" do
           it "is valid when a tax category is not provided" do
             with_products_require_tax_category(false) do
-              build(:product, tax_category_id: nil).should be_valid
+              expect(build(:product, tax_category_id: nil)).to be_valid
             end
           end
         end
@@ -63,7 +63,7 @@ module Spree
 
         it "requires a unit" do
           product.variant_unit = nil
-          product.should_not be_valid
+          expect(product).not_to be_valid
         end
 
         %w(weight volume).each do |unit|
@@ -72,14 +72,14 @@ module Spree
               product.variant_unit = unit
               product.variant_unit_scale = 1
               product.variant_unit_name = nil
-              product.should be_valid
+              expect(product).to be_valid
             end
 
             it "is invalid when unit scale is not set" do
               product.variant_unit = unit
               product.variant_unit_scale = nil
               product.variant_unit_name = nil
-              product.should_not be_valid
+              expect(product).not_to be_valid
             end
           end
         end
@@ -118,14 +118,14 @@ module Spree
             product.variant_unit = 'items'
             product.variant_unit_name = 'loaf'
             product.variant_unit_scale = nil
-            product.should be_valid
+            expect(product).to be_valid
           end
 
           it "is invalid when unit name is not set" do
             product.variant_unit = 'items'
             product.variant_unit_name = nil
             product.variant_unit_scale = nil
-            product.should_not be_valid
+            expect(product).not_to be_valid
           end
         end
       end
@@ -146,7 +146,7 @@ module Spree
           product.variant_unit_scale = nil
           product.variant_unit_name = nil
 
-          product.should_not be_valid
+          expect(product).not_to be_valid
         end
       end
     end
@@ -211,7 +211,7 @@ module Spree
           s2 = create(:supplier_enterprise)
           p1 = create(:product, supplier: s1)
           p2 = create(:product, supplier: s2)
-          Product.in_supplier(s1).should == [p1]
+          expect(Product.in_supplier(s1)).to eq([p1])
         end
       end
 
@@ -224,7 +224,7 @@ module Spree
           p2 = create(:product)
           create(:simple_order_cycle, suppliers: [s], distributors: [d1], variants: [p1.master])
           create(:simple_order_cycle, suppliers: [s], distributors: [d2], variants: [p2.master])
-          Product.in_distributor(d1).should == [p1]
+          expect(Product.in_distributor(d1)).to eq([p1])
         end
 
         it "shows products in order cycle distribution by variant" do
@@ -237,7 +237,7 @@ module Spree
           v2 = create(:variant, product: p2)
           create(:simple_order_cycle, suppliers: [s], distributors: [d1], variants: [v1])
           create(:simple_order_cycle, suppliers: [s], distributors: [d2], variants: [v2])
-          Product.in_distributor(d1).should == [p1]
+          expect(Product.in_distributor(d1)).to eq([p1])
         end
 
         it "doesn't show products listed in the incoming exchange only" do
@@ -249,7 +249,7 @@ module Spree
           ex = oc.exchanges.incoming.first
           ex.variants << p.master
 
-          Product.in_distributor(d).should be_empty
+          expect(Product.in_distributor(d)).to be_empty
         end
       end
 
@@ -259,7 +259,7 @@ module Spree
           s2 = create(:supplier_enterprise)
           p1 = create(:product, supplier: s1)
           p2 = create(:product, supplier: s2)
-          Product.in_supplier_or_distributor(s1).should == [p1]
+          expect(Product.in_supplier_or_distributor(s1)).to eq([p1])
         end
 
         it "shows products in order cycle distribution" do
@@ -270,7 +270,7 @@ module Spree
           p2 = create(:product)
           create(:simple_order_cycle, suppliers: [s], distributors: [d1], variants: [p1.master])
           create(:simple_order_cycle, suppliers: [s], distributors: [d2], variants: [p2.master])
-          Product.in_supplier_or_distributor(d1).should == [p1]
+          expect(Product.in_supplier_or_distributor(d1)).to eq([p1])
         end
 
         it "shows products in all three without duplicates" do
@@ -278,7 +278,7 @@ module Spree
           d = create(:distributor_enterprise)
           p = create(:product, supplier: s)
           create(:simple_order_cycle, suppliers: [s], distributors: [d], variants: [p.master])
-          [s, d].each { |e| Product.in_supplier_or_distributor(e).should == [p] }
+          [s, d].each { |e| expect(Product.in_supplier_or_distributor(e)).to eq([p]) }
         end
       end
 
@@ -291,7 +291,7 @@ module Spree
           p2 = create(:product)
           oc1 = create(:simple_order_cycle, suppliers: [s], distributors: [d1], variants: [p1.master])
           oc2 = create(:simple_order_cycle, suppliers: [s], distributors: [d2], variants: [p2.master])
-          Product.in_order_cycle(oc1).should == [p1]
+          expect(Product.in_order_cycle(oc1)).to eq([p1])
         end
       end
 
@@ -305,7 +305,7 @@ module Spree
           p3 = create(:product)
           oc2 = create(:simple_order_cycle, suppliers: [s], distributors: [d2], variants: [p2.master], orders_open_at: 8.days.ago, orders_close_at: 1.day.ago)
           oc2 = create(:simple_order_cycle, suppliers: [s], distributors: [d3], variants: [p3.master], orders_close_at: Date.tomorrow)
-          Product.in_an_active_order_cycle.should == [p3]
+          expect(Product.in_an_active_order_cycle).to eq([p3])
         end
       end
 
@@ -323,17 +323,17 @@ module Spree
           @e1.enterprise_roles.build(user: user).save
 
           product = Product.managed_by user
-          product.count.should == 1
-          product.should include @p1
+          expect(product.count).to eq(1)
+          expect(product).to include @p1
         end
 
         it "shows all products for admin user" do
           user = create(:admin_user)
 
           product = Product.managed_by user
-          product.count.should == 2
-          product.should include @p1
-          product.should include @p2
+          expect(product.count).to eq(2)
+          expect(product).to include @p1
+          expect(product).to include @p2
         end
       end
 
@@ -380,7 +380,7 @@ module Spree
         product.set_property 'Organic Certified', 'NASAA 12345'
         property = product.properties.last
 
-        product.properties_including_inherited.should == [{id: property.id, name: "Organic Certified", value: 'NASAA 12345'}]
+        expect(product.properties_including_inherited).to eq([{id: property.id, name: "Organic Certified", value: 'NASAA 12345'}])
       end
 
       it "returns producer properties as a hash" do
@@ -390,7 +390,7 @@ module Spree
         supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
         property = supplier.properties.last
 
-        product.properties_including_inherited.should == [{id: property.id, name: "Organic Certified", value: 'NASAA 54321'}]
+        expect(product.properties_including_inherited).to eq([{id: property.id, name: "Organic Certified", value: 'NASAA 54321'}])
       end
 
       it "overrides producer properties with product properties" do
@@ -401,7 +401,7 @@ module Spree
         supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
         property = product.properties.last
 
-        product.properties_including_inherited.should == [{id: property.id, name: "Organic Certified", value: 'NASAA 12345'}]
+        expect(product.properties_including_inherited).to eq([{id: property.id, name: "Organic Certified", value: 'NASAA 12345'}])
       end
 
       context "when product has an inherit_properties value set to true" do
@@ -412,7 +412,7 @@ module Spree
           supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
           property = supplier.properties.last
 
-          product.properties_including_inherited.should == [{id: property.id, name: "Organic Certified", value: 'NASAA 54321'}]
+          expect(product.properties_including_inherited).to eq([{id: property.id, name: "Organic Certified", value: 'NASAA 54321'}])
         end
       end
 
@@ -423,7 +423,7 @@ module Spree
         it "does not inherit producer properties" do
           supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
 
-          product.properties_including_inherited.should == []
+          expect(product.properties_including_inherited).to eq([])
         end
       end
 
@@ -439,10 +439,11 @@ module Spree
         product.product_properties.create!({property_id: pc.id, value: '3', position: 3}, {without_protection: true})
         supplier.producer_properties.create!({property_id: pb.id, value: '2', position: 2}, {without_protection: true})
 
-        product.properties_including_inherited.should ==
+        expect(product.properties_including_inherited).to eq(
           [{id: pa.id, name: "A", value: '1'},
            {id: pb.id, name: "B", value: '2'},
            {id: pc.id, name: "C", value: '3'}]
+        )
       end
     end
 
@@ -455,8 +456,8 @@ module Spree
         oc1 = create(:simple_order_cycle, :distributors => [d1], :variants => [p1.master])
         oc2 = create(:simple_order_cycle, :distributors => [d2], :variants => [p2.master])
 
-        p1.should be_in_distributor d1
-        p1.should_not be_in_distributor d2
+        expect(p1).to be_in_distributor d1
+        expect(p1).not_to be_in_distributor d2
       end
 
       it "queries its membership of a particular order cycle" do
@@ -467,8 +468,8 @@ module Spree
         oc1 = create(:simple_order_cycle, :distributors => [d1], :variants => [p1.master])
         oc2 = create(:simple_order_cycle, :distributors => [d2], :variants => [p2.master])
 
-        p1.should be_in_order_cycle oc1
-        p1.should_not be_in_order_cycle oc2
+        expect(p1).to be_in_order_cycle oc1
+        expect(p1).not_to be_in_order_cycle oc2
       end
     end
 
@@ -484,11 +485,11 @@ module Spree
 
         it "removes the old option type and assigns the new one" do
           p.update_attributes!(variant_unit: 'volume', variant_unit_scale: 0.001)
-          p.option_types.should == [ot_volume]
+          expect(p.option_types).to eq([ot_volume])
         end
 
         it "does not remove and re-add the option type if it is not changed" do
-          p.option_types.should_receive(:delete).never
+          expect(p.option_types).to receive(:delete).never
           p.update_attributes!(name: 'foo')
         end
 
@@ -497,14 +498,14 @@ module Spree
           v = create(:variant, unit_value: 1, product: p)
           p.reload
 
-          v.option_values.map(&:name).include?("1L").should == false
-          v.option_values.map(&:name).include?("1g").should == true
+          expect(v.option_values.map(&:name).include?("1L")).to eq(false)
+          expect(v.option_values.map(&:name).include?("1g")).to eq(true)
                     expect {
             p.update_attributes!(variant_unit: 'volume', variant_unit_scale: 0.001)
           }.to change(p.master.option_values(true), :count).by(0)
           v.reload
-          v.option_values.map(&:name).include?("1L").should == true
-          v.option_values.map(&:name).include?("1g").should == false
+          expect(v.option_values.map(&:name).include?("1L")).to eq(true)
+          expect(v.option_values.map(&:name).include?("1g")).to eq(false)
         end
 
         it "removes the related option values from its master variant and replaces them" do
@@ -512,14 +513,14 @@ module Spree
           p.master.update_attributes!(unit_value: 1)
           p.reload
 
-          p.master.option_values.map(&:name).include?("1L").should == false
-          p.master.option_values.map(&:name).include?("1g").should == true
+          expect(p.master.option_values.map(&:name).include?("1L")).to eq(false)
+          expect(p.master.option_values.map(&:name).include?("1g")).to eq(true)
                     expect {
             p.update_attributes!(variant_unit: 'volume', variant_unit_scale: 0.001)
           }.to change(p.master.option_values(true), :count).by(0)
           p.reload
-          p.master.option_values.map(&:name).include?("1L").should == true
-          p.master.option_values.map(&:name).include?("1g").should == false
+          expect(p.master.option_values.map(&:name).include?("1L")).to eq(true)
+          expect(p.master.option_values.map(&:name).include?("1g")).to eq(false)
         end
       end
 
@@ -529,7 +530,7 @@ module Spree
         ot3 = create(:option_type, name: 'unit_items', presentation: 'Items')
         ot4 = create(:option_type, name: 'foo_unit_bar', presentation: 'Foo')
 
-        Spree::Product.all_variant_unit_option_types.should match_array [ot1, ot2, ot3]
+        expect(Spree::Product.all_variant_unit_option_types).to match_array [ot1, ot2, ot3]
       end
     end
 
@@ -553,11 +554,11 @@ module Spree
           p.option_type_ids = p.option_type_ids.reject { |id| id == ot.id }
 
           # Then the associated option values should have been removed from the variants
-          v1.option_values(true).should_not include ov1
-          v2.option_values(true).should_not include ov2
+          expect(v1.option_values(true)).not_to include ov1
+          expect(v2.option_values(true)).not_to include ov2
 
           # And the option values themselves should still exist
-          Spree::OptionValue.where(id: [ov1.id, ov2.id]).count.should == 2
+          expect(Spree::OptionValue.where(id: [ov1.id, ov2.id]).count).to eq(2)
         end
       end
     end
@@ -566,7 +567,7 @@ module Spree
       it "considers products that are on_demand as being in stock" do
         product = create(:simple_product, on_demand: true)
         product.master.update_attribute(:on_hand, 0)
-        product.has_stock?.should == true
+        expect(product.has_stock?).to eq(true)
       end
 
       describe "finding products in stock for a particular distribution" do
@@ -577,7 +578,7 @@ module Spree
           oc = create(:simple_order_cycle, distributors: [d])
           oc.exchanges.outgoing.first.variants << p.variants.first
 
-          p.should have_stock_for_distribution(oc, d)
+          expect(p).to have_stock_for_distribution(oc, d)
         end
 
         it "returns products with in-stock variants" do
@@ -588,7 +589,7 @@ module Spree
           oc = create(:simple_order_cycle, distributors: [d])
           oc.exchanges.outgoing.first.variants << v
 
-          p.should have_stock_for_distribution(oc, d)
+          expect(p).to have_stock_for_distribution(oc, d)
         end
 
         it "returns products with on-demand variants" do
@@ -599,7 +600,7 @@ module Spree
           oc = create(:simple_order_cycle, distributors: [d])
           oc.exchanges.outgoing.first.variants << v
 
-          p.should have_stock_for_distribution(oc, d)
+          expect(p).to have_stock_for_distribution(oc, d)
         end
 
         it "does not return products that have stock not in the distribution" do
@@ -608,7 +609,7 @@ module Spree
           d = create(:distributor_enterprise)
           oc = create(:simple_order_cycle, distributors: [d])
 
-          p.should_not have_stock_for_distribution(oc, d)
+          expect(p).not_to have_stock_for_distribution(oc, d)
         end
       end
     end
@@ -619,7 +620,7 @@ module Spree
       let(:product) { create(:simple_product) }
 
       it "returns the first taxon as the primary taxon" do
-        product.taxons.should == [product.primary_taxon]
+        expect(product.taxons).to eq([product.primary_taxon])
       end
     end
 
@@ -633,13 +634,13 @@ module Spree
       it "removes the master variant from all order cycles" do
         e.variants << p.master
         p.destroy
-        e.variants(true).should be_empty
+        expect(e.variants(true)).to be_empty
       end
 
       it "removes all other variants from order cycles" do
         e.variants << v
         p.destroy
-        e.variants(true).should be_empty
+        expect(e.variants(true)).to be_empty
       end
     end
   end

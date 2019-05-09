@@ -25,7 +25,7 @@ module Spree
       let!(:p1) { create(:simple_product, supplier: e, taxons: [t1, t2]) }
 
       it "finds taxons" do
-        Taxon.supplied_taxons.should == {e.id => Set.new(p1.taxons.map(&:id))}
+        expect(Taxon.supplied_taxons).to eq({e.id => Set.new(p1.taxons.map(&:id))})
       end
     end
 

@@ -10,7 +10,7 @@ describe ModelSet do
 
       expect { ms.save }.to change(EnterpriseRelationshipPermission, :count).by(2)
 
-      EnterpriseRelationshipPermission.where(name: ['s1', 's2']).count.should == 2
+      expect(EnterpriseRelationshipPermission.where(name: ['s1', 's2']).count).to eq(2)
     end
 
 
@@ -25,7 +25,7 @@ describe ModelSet do
 
       expect { ms.save }.to change(EnterpriseGroup, :count).by(0)
 
-      EnterpriseGroup.where(name: ['e1zz', 'e2yy']).count.should == 2
+      expect(EnterpriseGroup.where(name: ['e1zz', 'e2yy']).count).to eq(2)
     end
 
 
@@ -41,8 +41,8 @@ describe ModelSet do
 
       expect { ms.save }.to change(Enterprise, :count).by(-1)
 
-      Enterprise.where(id: e1.id).should be_empty
-      Enterprise.where(id: e2.id).should be_present
+      expect(Enterprise.where(id: e1.id)).to be_empty
+      expect(Enterprise.where(id: e2.id)).to be_present
     end
 
 
