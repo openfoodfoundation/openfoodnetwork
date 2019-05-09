@@ -5,12 +5,6 @@
 - content_for(:image) do
   = @group.logo.url
 
--# inject all enterprises as "enterprises"
--# it could be more efficient to inject only the enterprises that are related to the group
-= inject_enterprises
-
--# inject enterprises in this group
--# further hubs and producers of these enterprises can't be resolved within this small subset
 = inject_group_enterprises
 
 #group-page.row.pad-top.footer-pad{"ng-controller" => "GroupPageCtrl"}
