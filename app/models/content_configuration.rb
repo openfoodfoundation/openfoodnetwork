@@ -12,25 +12,14 @@ class ContentConfiguration < Spree::Preferences::FileConfiguration
   has_attached_file :logo_mobile_svg, default_url: "/assets/ofn-logo-mobile.svg"
 
   # Home page
-  #
-  # I intended to set a default for home_page_alert_html including I18n text.
-  #
-  #      default: "<a href='/register' target='_blank'>
-  #             #{I18n.t('shared.register_call.selling_on_ofn')}&nbsp;
-  #             <strong>#{I18n.t('shared.register_call.register')}
-  #             <i class='ofn-i_054-point-right'></i></strong>
-  #             </a>"
-  #
-  # Unfortunately, this configuration is initialised and cached before locales
-  # are loaded. So I chose to not set a default and use a translatable view instead.
-  # All the following defaults using I18n don't work.
-  # https://github.com/openfoodfoundation/openfoodnetwork/issues/3816
   preference :home_page_alert_html, :text
   preference :home_hero, :file
   preference :home_show_stats, :boolean, default: true
   has_attached_file :home_hero, default_url: "/assets/home/home.jpg"
 
   # Producer sign-up page
+  # All the following defaults using I18n don't work.
+  # https://github.com/openfoodfoundation/openfoodnetwork/issues/3816
   preference :producer_signup_pricing_table_html, :text, default: I18n.t(:content_configuration_pricing_table)
   preference :producer_signup_case_studies_html, :text, default: I18n.t(:content_configuration_case_studies)
   preference :producer_signup_detail_html, :text, default: I18n.t(:content_configuration_detail)
