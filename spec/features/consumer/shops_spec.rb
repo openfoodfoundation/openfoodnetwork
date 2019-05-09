@@ -55,21 +55,6 @@ feature 'Shops', js: true do
       follow_active_table_node distributor.name
       expect(page).to have_current_path enterprise_shop_path(distributor)
     end
-
-    describe "showing profiles" do
-      before do
-        check "Show profiles"
-      end
-
-      it "still shows hubs" do
-        expect(page).to have_content distributor.name
-      end
-
-      # https://github.com/openfoodfoundation/openfoodnetwork/issues/1718
-      it "shows profiles" do
-        expect(page).to have_content profile.name
-      end
-    end
   end
 
   describe "showing available hubs" do
