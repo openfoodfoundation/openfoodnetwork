@@ -3,7 +3,7 @@ require 'open_food_network/products_cache_integrity_checker'
 module Admin
   class CacheSettingsController < Spree::Admin::BaseController
     def edit
-      @results = Exchange.cachable.map do |exchange|
+      @results = Exchange.cachable.limit(5).map do |exchange|
         checker = OpenFoodNetwork::ProductsCacheIntegrityChecker
           .new(exchange.receiver, exchange.order_cycle)
 
