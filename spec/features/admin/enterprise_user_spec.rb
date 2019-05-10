@@ -40,12 +40,12 @@ feature '
 
     scenario "should not be able to see system configuration" do
       visit spree.edit_admin_general_settings_path
-      page.should have_content 'Unauthorized'
+      expect(page).to have_content 'Unauthorized'
     end
 
     scenario "should not be able to see user management" do
       visit spree.admin_users_path
-      page.should have_content 'Unauthorized'
+      expect(page).to have_content 'Unauthorized'
     end
   end
 end
