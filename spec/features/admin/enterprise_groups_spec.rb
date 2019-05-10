@@ -17,9 +17,9 @@ feature '
 
     click_link 'Groups'
 
-    page.should have_selector 'td', text: group.name
-    page.should have_selector 'td', text: 'Y'
-    page.should have_selector 'td', text: e.name
+    expect(page).to have_selector 'td', text: group.name
+    expect(page).to have_selector 'td', text: 'Y'
+    expect(page).to have_selector 'td', text: e.name
   end
 
   scenario "creating a new enterprise group", js: true do
@@ -44,13 +44,13 @@ feature '
     select2_select 'Victoria', from: 'enterprise_group_address_attributes_state_id'
     click_button 'Create'
 
-    page.should have_content 'Enterprise group "EGEGEG" has been successfully created!'
+    expect(page).to have_content 'Enterprise group "EGEGEG" has been successfully created!'
 
     eg = EnterpriseGroup.last
-    eg.name.should == 'EGEGEG'
-    eg.description.should == 'This is a description'
-    eg.on_front_page.should be true
-    eg.enterprises.should match_array [e1, e2]
+    expect(eg.name).to eq('EGEGEG')
+    expect(eg.description).to eq('This is a description')
+    expect(eg.on_front_page).to be true
+    expect(eg.enterprises).to match_array [e1, e2]
   end
 
   scenario "editing an enterprise group" do
@@ -61,9 +61,9 @@ feature '
     click_link 'Groups'
     first("a.edit-enterprise-group").click
 
-    page.should have_field 'enterprise_group_name', with: 'EGEGEG'
-    page.should have_checked_field 'enterprise_group_on_front_page'
-    page.should have_select 'enterprise_group_enterprise_ids', selected: [e1.name, e2.name]
+    expect(page).to have_field 'enterprise_group_name', with: 'EGEGEG'
+    expect(page).to have_checked_field 'enterprise_group_on_front_page'
+    expect(page).to have_select 'enterprise_group_enterprise_ids', selected: [e1.name, e2.name]
 
     fill_in 'enterprise_group_name', with: 'xyzzy'
     uncheck 'enterprise_group_on_front_page'
@@ -72,12 +72,12 @@ feature '
     select e2.name, from: 'enterprise_group_enterprise_ids'
     click_button 'Update'
 
-    page.should have_content 'Enterprise group "xyzzy" has been successfully updated!'
+    expect(page).to have_content 'Enterprise group "xyzzy" has been successfully updated!'
 
     eg = EnterpriseGroup.last
-    eg.name.should == 'xyzzy'
-    eg.on_front_page.should be false
-    eg.enterprises.should == [e2]
+    expect(eg.name).to eq('xyzzy')
+    expect(eg.on_front_page).to be false
+    expect(eg.enterprises).to eq([e2])
   end
 
   scenario "re-ordering enterprise groups" do
@@ -86,11 +86,11 @@ feature '
 
     click_link 'Groups'
 
-    page.all('td.name').map(&:text).should == ['A', 'B']
+    expect(page.all('td.name').map(&:text)).to eq(['A', 'B'])
     all("a.move-down").first.click
-    page.all('td.name').map(&:text).should == ['B', 'A']
+    expect(page.all('td.name').map(&:text)).to eq(['B', 'A'])
     all("a.move-up").last.click
-    page.all('td.name').map(&:text).should == ['A', 'B']
+    expect(page.all('td.name').map(&:text)).to eq(['A', 'B'])
   end
 
   scenario "deleting an enterprise group", js: true do
@@ -101,9 +101,9 @@ feature '
       first("a.delete-resource").click
     end
 
-    page.should have_no_content 'EGEGEG'
+    expect(page).to have_no_content 'EGEGEG'
 
-    EnterpriseGroup.all.should_not include eg
+    expect(EnterpriseGroup.all).not_to include eg
   end
 
   context "as an enterprise user" do
