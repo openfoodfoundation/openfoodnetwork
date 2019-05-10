@@ -9,21 +9,21 @@ module OpenFoodNetwork
       product = create(:simple_product)
 
       efa = EnterpriseFeeApplicator.new enterprise_fee, product.master, 'role'
-      efa.stub(:line_item_adjustment_label) { 'label' }
+      allow(efa).to receive(:line_item_adjustment_label) { 'label' }
       efa.create_line_item_adjustment line_item
 
       adjustment = Spree::Adjustment.last
-      adjustment.label.should == 'label'
-      adjustment.adjustable.should == line_item.order
-      adjustment.source.should == line_item
-      adjustment.originator.should == enterprise_fee
-      adjustment.should be_mandatory
+      expect(adjustment.label).to eq('label')
+      expect(adjustment.adjustable).to eq(line_item.order)
+      expect(adjustment.source).to eq(line_item)
+      expect(adjustment.originator).to eq(enterprise_fee)
+      expect(adjustment).to be_mandatory
 
       md = adjustment.metadata
-      md.enterprise.should == enterprise_fee.enterprise
-      md.fee_name.should == enterprise_fee.name
-      md.fee_type.should == enterprise_fee.fee_type
-      md.enterprise_role.should == 'role'
+      expect(md.enterprise).to eq(enterprise_fee.enterprise)
+      expect(md.fee_name).to eq(enterprise_fee.name)
+      expect(md.fee_type).to eq(enterprise_fee.fee_type)
+      expect(md.enterprise_role).to eq('role')
     end
 
     it "creates an adjustment for an order" do
@@ -32,21 +32,21 @@ module OpenFoodNetwork
       product = create(:simple_product)
 
       efa = EnterpriseFeeApplicator.new enterprise_fee, nil, 'role'
-      efa.stub(:order_adjustment_label) { 'label' }
+      allow(efa).to receive(:order_adjustment_label) { 'label' }
       efa.create_order_adjustment order
 
       adjustment = Spree::Adjustment.last
-      adjustment.label.should == 'label'
-      adjustment.adjustable.should == order
-      adjustment.source.should == order
-      adjustment.originator.should == enterprise_fee
-      adjustment.should be_mandatory
+      expect(adjustment.label).to eq('label')
+      expect(adjustment.adjustable).to eq(order)
+      expect(adjustment.source).to eq(order)
+      expect(adjustment.originator).to eq(enterprise_fee)
+      expect(adjustment).to be_mandatory
 
       md = adjustment.metadata
-      md.enterprise.should == enterprise_fee.enterprise
-      md.fee_name.should == enterprise_fee.name
-      md.fee_type.should == enterprise_fee.fee_type
-      md.enterprise_role.should == 'role'
+      expect(md.enterprise).to eq(enterprise_fee.enterprise)
+      expect(md.fee_name).to eq(enterprise_fee.name)
+      expect(md.fee_type).to eq(enterprise_fee.fee_type)
+      expect(md.enterprise_role).to eq('role')
     end
 
     it "makes an adjustment label for a line item" do
@@ -55,7 +55,7 @@ module OpenFoodNetwork
 
       efa = EnterpriseFeeApplicator.new enterprise_fee, variant, 'distributor'
 
-      efa.send(:line_item_adjustment_label).should == "Bananas - packing fee by distributor Ballantyne"
+      expect(efa.send(:line_item_adjustment_label)).to eq("Bananas - packing fee by distributor Ballantyne")
     end
 
     it "makes an adjustment label for an order" do
@@ -63,7 +63,7 @@ module OpenFoodNetwork
 
       efa = EnterpriseFeeApplicator.new enterprise_fee, nil, 'distributor'
 
-      efa.send(:order_adjustment_label).should == "Whole order - packing fee by distributor Ballantyne"
+      expect(efa.send(:order_adjustment_label)).to eq("Whole order - packing fee by distributor Ballantyne")
     end
   end
 end

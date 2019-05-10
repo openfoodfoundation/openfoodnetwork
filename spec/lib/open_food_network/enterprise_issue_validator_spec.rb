@@ -7,8 +7,8 @@ module OpenFoodNetwork
       let(:warnings) { EnterpriseIssueValidator.new(enterprise_invisible).warnings }
 
       it "reports invisible enterprises" do
-        warnings.count.should == 1
-        warnings.first[:description].should include "is not visible"
+        expect(warnings.count).to eq(1)
+        expect(warnings.first[:description]).to include "is not visible"
       end
     end
   end

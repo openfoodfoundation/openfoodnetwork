@@ -46,7 +46,7 @@ module OpenFoodNetwork
     it "should return a header row describing the report" do
       subject = GroupBuyReport.new [@order1]
       header = subject.header
-      header.should == ["Supplier", "Product", "Unit Size", "Variant", "Weight", "Total Ordered", "Total Max"]
+      expect(header).to eq(["Supplier", "Product", "Unit Size", "Variant", "Weight", "Total Ordered", "Total Max"])
     end
 
     it "should provide the required variant and quantity information in a table" do
@@ -59,7 +59,7 @@ module OpenFoodNetwork
       sum_quantities = line_items.map { |li| li.quantity }.sum
       sum_max_quantities = line_items.map { |li| li.max_quantity || 0 }.sum
 
-      table[0].should == [@variant1.product.supplier.name,@variant1.product.name,"UNITSIZE",@variant1.options_text,@variant1.weight,sum_quantities,sum_max_quantities]
+      expect(table[0]).to eq([@variant1.product.supplier.name,@variant1.product.name,"UNITSIZE",@variant1.options_text,@variant1.weight,sum_quantities,sum_max_quantities])
     end
 
     it "should return a table wherein each rows contains the same number of columns as the heading" do
@@ -69,7 +69,7 @@ module OpenFoodNetwork
       columns = subject.header.length
 
       table.each do |r|
-        r.length.should == columns
+        expect(r.length).to eq(columns)
       end
     end
 
@@ -85,9 +85,9 @@ module OpenFoodNetwork
       variant_groups = variant_rows.group_by { |r| r.variant }
       product_groups = product_rows.group_by { |r| r.product }
 
-      supplier_groups.length.should == 2
-      variant_groups.length.should == 3
-      product_groups.length.should == 3
+      expect(supplier_groups.length).to eq(2)
+      expect(variant_groups.length).to eq(3)
+      expect(product_groups.length).to eq(3)
     end
   end
 end
