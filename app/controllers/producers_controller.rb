@@ -6,6 +6,7 @@ class ProducersController < BaseController
   def index
     @enterprises = Enterprise
       .activated
+      .visible
       .is_primary_producer
       .includes(address: :state)
       .includes(:properties)

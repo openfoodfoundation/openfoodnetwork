@@ -27,7 +27,7 @@ module InjectionHelper
 
     inject_json_ams(
       "enterprises",
-      Enterprise.activated.select(select_only).includes(address: :state).all,
+      Enterprise.activated.visible.select(select_only).includes(address: :state).all,
       Api::EnterpriseShopfrontListSerializer
     )
   end
