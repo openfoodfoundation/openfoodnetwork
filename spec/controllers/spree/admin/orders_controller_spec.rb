@@ -47,7 +47,7 @@ describe Spree::Admin::OrdersController, type: :controller do
       let(:order) { create :completed_order_with_totals }
 
       it "updates distribution charges and redirects to order details page" do
-        Spree::Order.any_instance.should_receive(:update_distribution_charge!)
+        expect_any_instance_of(Spree::Order).to receive(:update_distribution_charge!)
 
         spree_put :update, params
 
@@ -77,7 +77,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
         context "and no errors" do
           it "updates distribution charges and redirects to customer details page" do
-            Spree::Order.any_instance.should_receive(:update_distribution_charge!)
+            expect_any_instance_of(Spree::Order).to receive(:update_distribution_charge!)
 
             spree_put :update, params
 

@@ -14,13 +14,13 @@ describe UserPasswordsController, type: :controller do
   describe "create" do
     it "returns errors" do
       spree_post :create, spree_user: {}
-      response.should be_success
-      response.should render_template "spree/user_passwords/new"
+      expect(response).to be_success
+      expect(response).to render_template "spree/user_passwords/new"
     end
 
     it "redirects to login when data is valid" do
       spree_post :create, spree_user: { email: user.email}
-      response.should be_redirect
+      expect(response).to be_redirect
     end
   end
 

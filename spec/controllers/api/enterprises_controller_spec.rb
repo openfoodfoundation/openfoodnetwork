@@ -33,10 +33,10 @@ module Api
 
         it "creates as sells=any when it is not a producer" do
           spree_post :create, new_enterprise_params
-          response.should be_success
+          expect(response).to be_success
 
           enterprise = Enterprise.last
-          enterprise.sells.should == 'any'
+          expect(enterprise.sells).to eq('any')
         end
       end
     end
@@ -53,12 +53,12 @@ module Api
         before do
           allow(Enterprise)
             .to receive(:find_by_permalink).with(enterprise.id.to_s) { enterprise }
-          enterprise.stub(:update_attributes).and_return(true)
+          allow(enterprise).to receive(:update_attributes).and_return(true)
         end
 
         it "I can update enterprise image" do
           spree_post :update_image, logo: 'a logo', id: enterprise.id
-          response.should be_success
+          expect(response).to be_success
         end
       end
     end
@@ -73,7 +73,7 @@ module Api
       end
 
       describe "submitting a valid image" do
-        before { enterprise.stub(:update_attributes).and_return(true) }
+        before { allow(enterprise).to receive(:update_attributes).and_return(true) }
 
         it "I can't update enterprise image" do
           spree_post :update_image, logo: 'a logo', id: enterprise.id

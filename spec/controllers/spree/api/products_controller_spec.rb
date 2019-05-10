@@ -39,21 +39,21 @@ module Spree
       it "retrieves a list of managed products" do
         spree_get :managed, { :template => 'bulk_index', :format => :json }
         keys = json_response.first.keys.map{ |key| key.to_sym }
-        attributes.all?{ |attr| keys.include? attr }.should == true
+        expect(attributes.all?{ |attr| keys.include? attr }).to eq(true)
       end
 
       it "soft deletes my products" do
         spree_delete :soft_delete, {product_id: product1.to_param, format: :json}
-        response.status.should == 204
-        lambda { product1.reload }.should_not raise_error
-        product1.deleted_at.should_not be_nil
+        expect(response.status).to eq(204)
+        expect { product1.reload }.not_to raise_error
+        expect(product1.deleted_at).not_to be_nil
       end
 
       it "is denied access to soft deleting another enterprises' product" do
         spree_delete :soft_delete, {product_id: product_other_supplier.to_param, format: :json}
         assert_unauthorized!
-        lambda { product_other_supplier.reload }.should_not raise_error
-        product_other_supplier.deleted_at.should be_nil
+        expect { product_other_supplier.reload }.not_to raise_error
+        expect(product_other_supplier.deleted_at).to be_nil
       end
     end
 
@@ -66,13 +66,13 @@ module Spree
       it "retrieves a list of managed products" do
         spree_get :managed, { :template => 'bulk_index', :format => :json }
         keys = json_response.first.keys.map{ |key| key.to_sym }
-        attributes.all?{ |attr| keys.include? attr }.should == true
+        expect(attributes.all?{ |attr| keys.include? attr }).to eq(true)
       end
 
       it "retrieves a list of products with appropriate attributes" do
         spree_get :index, { :template => 'bulk_index', :format => :json }
         keys = json_response.first.keys.map{ |key| key.to_sym }
-        attributes.all?{ |attr| keys.include? attr }.should == true
+        expect(attributes.all?{ |attr| keys.include? attr }).to eq(true)
       end
 
       it "sorts products in ascending id order" do
@@ -82,37 +82,37 @@ module Spree
         spree_get :index, { :template => 'bulk_index', :format => :json }
 
         ids = json_response.map{ |product| product['id'] }
-        ids[0].should < ids[1]
-        ids[1].should < ids[2]
+        expect(ids[0]).to be < ids[1]
+        expect(ids[1]).to be < ids[2]
       end
 
       it "formats available_on to 'yyyy-mm-dd hh:mm'" do
         spree_get :index, { :template => 'bulk_index', :format => :json }
-        json_response.map{ |product| product['available_on'] }.all?{ |a| a.match("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$") }.should == true
+        expect(json_response.map{ |product| product['available_on'] }.all?{ |a| a.match("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$") }).to eq(true)
       end
 
       it "returns permalink as permalink_live" do
         spree_get :index, { :template => 'bulk_index', :format => :json }
-        json_response.detect{ |product| product['id'] == product1.id }['permalink_live'].should == product1.permalink
+        expect(json_response.detect{ |product| product['id'] == product1.id }['permalink_live']).to eq(product1.permalink)
       end
 
       it "should allow available_on to be nil" do
         spree_get :index, { :template => 'bulk_index', :format => :json }
-        json_response.size.should == 1
+        expect(json_response.size).to eq(1)
 
         product5 = FactoryBot.create(:product)
         product5.available_on = nil
         product5.save!
 
         spree_get :index, { :template => 'bulk_index', :format => :json }
-        json_response.size.should == 2
+        expect(json_response.size).to eq(2)
       end
 
       it "soft deletes a product" do
         spree_delete :soft_delete, {product_id: product1.to_param, format: :json}
-        response.status.should == 204
-        lambda { product1.reload }.should_not raise_error
-        product1.deleted_at.should_not be_nil
+        expect(response.status).to eq(204)
+        expect { product1.reload }.not_to raise_error
+        expect(product1.deleted_at).not_to be_nil
       end
     end
 
