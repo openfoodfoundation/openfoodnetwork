@@ -6,6 +6,7 @@ module PreferenceSections
 
     def preferences
       [
+        :home_page_alert_html,
         :home_hero,
         :home_show_stats
       ]

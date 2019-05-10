@@ -1,5 +1,6 @@
-- if feature? :connect_learn_homepage
-  = render "shared/connect_learn_call"
+- if ContentConfig.home_page_alert_html.present?
+  .alert-cta
+    %h6= raw ContentConfig.home_page_alert_html
 
 - else
   = render "shared/register_call"
