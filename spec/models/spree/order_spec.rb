@@ -14,7 +14,7 @@ describe Spree::Order do
       subject.add_variant(p.master, 1, 3)
 
       li = Spree::LineItem.last
-      li.max_quantity.should == 3
+      expect(li.max_quantity).to eq(3)
     end
 
     it "does nothing when the line item is not found" do
@@ -27,45 +27,45 @@ describe Spree::Order do
     let(:order) { build(:order) }
 
     it "clears all enterprise fee adjustments on the order" do
-      EnterpriseFee.should_receive(:clear_all_adjustments_on_order).with(subject)
+      expect(EnterpriseFee).to receive(:clear_all_adjustments_on_order).with(subject)
       subject.update_distribution_charge!
     end
 
     it "skips order cycle per-order adjustments for orders that don't have an order cycle" do
-      EnterpriseFee.stub(:clear_all_adjustments_on_order)
-      subject.stub(:line_items) { [] }
+      allow(EnterpriseFee).to receive(:clear_all_adjustments_on_order)
+      allow(subject).to receive(:line_items) { [] }
 
-      subject.stub(:order_cycle) { nil }
+      allow(subject).to receive(:order_cycle) { nil }
 
       subject.update_distribution_charge!
     end
 
     it "ensures the correct adjustment(s) are created for order cycles" do
-      EnterpriseFee.stub(:clear_all_adjustments_on_order)
+      allow(EnterpriseFee).to receive(:clear_all_adjustments_on_order)
       line_item = double(:line_item)
-      subject.stub(:line_items) { [line_item] }
-      subject.stub(:provided_by_order_cycle?) { true }
+      allow(subject).to receive(:line_items) { [line_item] }
+      allow(subject).to receive(:provided_by_order_cycle?) { true }
 
       order_cycle = double(:order_cycle)
-      OpenFoodNetwork::EnterpriseFeeCalculator.any_instance.
-        should_receive(:create_line_item_adjustments_for).
+      expect_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator).
+        to receive(:create_line_item_adjustments_for).
         with(line_item)
-      OpenFoodNetwork::EnterpriseFeeCalculator.any_instance.stub(:create_order_adjustments_for)
-      subject.stub(:order_cycle) { order_cycle }
+      allow_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator).to receive(:create_order_adjustments_for)
+      allow(subject).to receive(:order_cycle) { order_cycle }
 
       subject.update_distribution_charge!
     end
 
     it "ensures the correct per-order adjustment(s) are created for order cycles" do
-      EnterpriseFee.stub(:clear_all_adjustments_on_order)
-      subject.stub(:line_items) { [] }
+      allow(EnterpriseFee).to receive(:clear_all_adjustments_on_order)
+      allow(subject).to receive(:line_items) { [] }
 
       order_cycle = double(:order_cycle)
-      OpenFoodNetwork::EnterpriseFeeCalculator.any_instance.
-        should_receive(:create_order_adjustments_for).
+      expect_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator).
+        to receive(:create_order_adjustments_for).
         with(subject)
 
-      subject.stub(:order_cycle) { order_cycle }
+      allow(subject).to receive(:order_cycle) { order_cycle }
 
       subject.update_distribution_charge!
     end
@@ -76,26 +76,26 @@ describe Spree::Order do
       v = double(:variant)
       line_item = double(:line_item, variant: v)
       order_cycle = double(:order_cycle, variants: [v])
-      subject.stub(:order_cycle) { order_cycle }
+      allow(subject).to receive(:order_cycle) { order_cycle }
 
-      subject.send(:provided_by_order_cycle?, line_item).should be true
+      expect(subject.send(:provided_by_order_cycle?, line_item)).to be true
     end
 
     it "returns false otherwise" do
       v = double(:variant)
       line_item = double(:line_item, variant: v)
       order_cycle = double(:order_cycle, variants: [])
-      subject.stub(:order_cycle) { order_cycle }
+      allow(subject).to receive(:order_cycle) { order_cycle }
 
-      subject.send(:provided_by_order_cycle?, line_item).should be false
+      expect(subject.send(:provided_by_order_cycle?, line_item)).to be false
     end
 
     it "returns false when there is no order cycle" do
       v = double(:variant)
       line_item = double(:line_item, variant: v)
-      subject.stub(:order_cycle) { nil }
+      allow(subject).to receive(:order_cycle) { nil }
 
-      subject.send(:provided_by_order_cycle?, line_item).should be false
+      expect(subject.send(:provided_by_order_cycle?, line_item)).to be false
     end
   end
 
@@ -108,7 +108,7 @@ describe Spree::Order do
       ef.calculator.set_preference :amount, 123.45
       a = ef.create_adjustment("adjustment", o, o, true)
 
-      o.admin_and_handling_total.should == 123.45
+      expect(o.admin_and_handling_total).to eq(123.45)
     end
 
     it "does not include ineligible adjustments" do
@@ -118,7 +118,7 @@ describe Spree::Order do
 
       a.update_column :eligible, false
 
-      o.admin_and_handling_total.should == 0
+      expect(o.admin_and_handling_total).to eq(0)
     end
 
     it "does not include adjustments that do not originate from enterprise fees" do
@@ -126,7 +126,7 @@ describe Spree::Order do
       sm.calculator.set_preference :amount, 123.45
       sm.create_adjustment("adjustment", o, o, true)
 
-      o.admin_and_handling_total.should == 0
+      expect(o.admin_and_handling_total).to eq(0)
     end
 
     it "does not include adjustments whose source is a line item" do
@@ -134,7 +134,7 @@ describe Spree::Order do
       ef.calculator.set_preference :amount, 123.45
       ef.create_adjustment("adjustment", li.order, li, true)
 
-      o.admin_and_handling_total.should == 0
+      expect(o.admin_and_handling_total).to eq(0)
     end
   end
 
@@ -142,7 +142,7 @@ describe Spree::Order do
     let(:order)           { create(:order) }
 
     it "cannot be shipped" do
-      order.ready_to_ship?.should == false
+      expect(order.ready_to_ship?).to eq(false)
     end
   end
 
@@ -156,7 +156,7 @@ describe Spree::Order do
     end
 
     it "cannot be shipped" do
-      order.ready_to_ship?.should == false
+      expect(order.ready_to_ship?).to eq(false)
     end
   end
 
@@ -169,7 +169,7 @@ describe Spree::Order do
     end
 
     it "cannot be shipped" do
-      order.ready_to_ship?.should == false
+      expect(order.ready_to_ship?).to eq(false)
     end
   end
 
@@ -183,7 +183,7 @@ describe Spree::Order do
     end
 
     it "can be shipped" do
-      order.ready_to_ship?.should == true
+      expect(order.ready_to_ship?).to eq(true)
     end
   end
 
@@ -200,13 +200,13 @@ describe Spree::Order do
       let!(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method, order: order) }
 
       it "returns the shipping tax" do
-        order.shipping_tax.should == 10
+        expect(order.shipping_tax).to eq(10)
       end
     end
 
     context 'when the order has not been shipped' do
       it "returns zero when the order has not been shipped" do
-        order.shipping_tax.should == 0
+        expect(order.shipping_tax).to eq(0)
       end
     end
   end
@@ -219,7 +219,7 @@ describe Spree::Order do
     let!(:adjustment2) { create(:adjustment, adjustable: order, originator: enterprise_fee2, label: "EF 2", amount: 123, included_tax: 2.00) }
 
     it "returns a sum of the tax included in all enterprise fees" do
-      order.reload.enterprise_fee_tax.should == 12
+      expect(order.reload.enterprise_fee_tax).to eq(12)
     end
   end
 
@@ -322,7 +322,7 @@ describe Spree::Order do
     it "sets the distributor when no order cycle is set" do
       d = create(:distributor_enterprise)
       subject.set_distributor! d
-      subject.distributor.should == d
+      expect(subject.distributor).to eq(d)
     end
 
     it "keeps the order cycle when it is available at the new distributor" do
@@ -333,8 +333,8 @@ describe Spree::Order do
       subject.order_cycle = oc
       subject.set_distributor! d
 
-      subject.distributor.should == d
-      subject.order_cycle.should == oc
+      expect(subject.distributor).to eq(d)
+      expect(subject.order_cycle).to eq(oc)
     end
 
     it "clears the order cycle if it is not available at that distributor" do
@@ -344,8 +344,8 @@ describe Spree::Order do
       subject.order_cycle = oc
       subject.set_distributor! d
 
-      subject.distributor.should == d
-      subject.order_cycle.should be_nil
+      expect(subject.distributor).to eq(d)
+      expect(subject.order_cycle).to be_nil
     end
 
     it "clears the distributor when setting to nil" do
@@ -353,7 +353,7 @@ describe Spree::Order do
       subject.set_distributor! d
       subject.set_distributor! nil
 
-      subject.distributor.should be_nil
+      expect(subject.distributor).to be_nil
     end
   end
 
@@ -370,7 +370,7 @@ describe Spree::Order do
 
     it "removes the variant's line item" do
       order.remove_variant v1
-      order.line_items(:reload).map(&:variant).should == [v2]
+      expect(order.line_items(:reload).map(&:variant)).to eq([v2])
     end
 
     it "does nothing when there is no matching line item" do
@@ -400,18 +400,18 @@ describe Spree::Order do
     let(:oc) { create(:simple_order_cycle) }
 
     it "empties the cart when changing the order cycle" do
-      subject.should_receive(:empty!)
+      expect(subject).to receive(:empty!)
       subject.set_order_cycle! oc
     end
 
     it "doesn't empty the cart if the order cycle is not different" do
-      subject.should_not_receive(:empty!)
+      expect(subject).not_to receive(:empty!)
       subject.set_order_cycle! subject.order_cycle
     end
 
     it "sets the order cycle when no distributor is set" do
       subject.set_order_cycle! oc
-      subject.order_cycle.should == oc
+      expect(subject.order_cycle).to eq(oc)
     end
 
     it "keeps the distributor when it is available in the new order cycle" do
@@ -421,8 +421,8 @@ describe Spree::Order do
       subject.distributor = d
       subject.set_order_cycle! oc
 
-      subject.order_cycle.should == oc
-      subject.distributor.should == d
+      expect(subject.order_cycle).to eq(oc)
+      expect(subject.distributor).to eq(d)
     end
 
     it "clears the distributor if it is not available at that order cycle" do
@@ -431,8 +431,8 @@ describe Spree::Order do
       subject.distributor = d
       subject.set_order_cycle! oc
 
-      subject.order_cycle.should == oc
-      subject.distributor.should be_nil
+      expect(subject.order_cycle).to eq(oc)
+      expect(subject.distributor).to be_nil
     end
 
     it "clears the order cycle when setting to nil" do
@@ -442,8 +442,8 @@ describe Spree::Order do
 
       subject.set_order_cycle! nil
 
-      subject.order_cycle.should be_nil
-      subject.distributor.should == d
+      expect(subject.order_cycle).to be_nil
+      expect(subject.distributor).to eq(d)
     end
   end
 
@@ -467,9 +467,9 @@ describe Spree::Order do
       new_order_cycle = create(:simple_order_cycle, distributors: [new_distributor], variants: [variant1, variant2])
 
       subject.distributor = new_distributor
-      subject.should_not be_valid
+      expect(subject).not_to be_valid
       subject.order_cycle = new_order_cycle
-      subject.should be_valid
+      expect(subject).to be_valid
     end
 
     it "does not allow the change when not all variants in the order are provided by the new distributor" do
@@ -477,8 +477,8 @@ describe Spree::Order do
       create(:simple_order_cycle, distributors: [new_distributor], variants: [variant1])
 
       subject.distributor = new_distributor
-      subject.should_not be_valid
-      subject.errors.messages.should == {:base => ["Distributor or order cycle cannot supply the products in your cart"]}
+      expect(subject).not_to be_valid
+      expect(subject.errors.messages).to eq({:base => ["Distributor or order cycle cannot supply the products in your cart"]})
     end
   end
 
@@ -491,7 +491,7 @@ describe Spree::Order do
       it "finds only orders not in specified state" do
         o = FactoryBot.create(:completed_order_with_totals, distributor: create(:distributor_enterprise))
         o.cancel!
-        Spree::Order.not_state(:canceled).should_not include o
+        expect(Spree::Order.not_state(:canceled)).not_to include o
       end
     end
   end

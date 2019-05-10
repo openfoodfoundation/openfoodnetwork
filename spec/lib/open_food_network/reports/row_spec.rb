@@ -10,7 +10,7 @@ module OpenFoodNetwork::Reports
       row.column(&proc)
       row.column(&proc)
 
-      row.to_a.should == [proc, proc, proc]
+      expect(row.to_a).to eq([proc, proc, proc])
     end
   end
 end

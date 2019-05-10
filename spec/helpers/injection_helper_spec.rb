@@ -11,17 +11,17 @@ describe InjectionHelper, type: :helper do
   let!(:d2o1) { create(:completed_order_with_totals, distributor: distributor2, user_id: user.id)}
 
   it "will inject via AMS" do
-    helper.inject_json_ams("test", [enterprise], Api::IdSerializer).should match /#{enterprise.id}/
+    expect(helper.inject_json_ams("test", [enterprise], Api::IdSerializer)).to match /#{enterprise.id}/
   end
 
   it "injects enterprises" do
-    helper.inject_enterprises.should match enterprise.name
-    helper.inject_enterprises.should match enterprise.facebook
+    expect(helper.inject_enterprises).to match enterprise.name
+    expect(helper.inject_enterprises).to match enterprise.facebook
   end
 
   it "only injects activated enterprises" do
     inactive_enterprise = create(:enterprise, sells: 'unspecified')
-    helper.inject_enterprises.should_not match inactive_enterprise.name
+    expect(helper.inject_enterprises).not_to match inactive_enterprise.name
   end
 
   it "injects shipping_methods" do
@@ -30,8 +30,8 @@ describe InjectionHelper, type: :helper do
     order = create(:order, distributor: current_distributor)
     allow(helper).to receive(:current_order) { order }
     allow(helper).to receive(:spree_current_user) { nil }
-    helper.inject_available_shipping_methods.should match sm.id.to_s
-    helper.inject_available_shipping_methods.should match sm.compute_amount(order).to_s
+    expect(helper.inject_available_shipping_methods).to match sm.id.to_s
+    expect(helper.inject_available_shipping_methods).to match sm.compute_amount(order).to_s
   end
 
   it "injects payment methods" do
@@ -40,18 +40,18 @@ describe InjectionHelper, type: :helper do
     order = create(:order, distributor: current_distributor)
     allow(helper).to receive(:current_order) { order }
     allow(helper).to receive(:spree_current_user) { nil }
-    helper.inject_available_payment_methods.should match pm.id.to_s
-    helper.inject_available_payment_methods.should match pm.name
+    expect(helper.inject_available_payment_methods).to match pm.id.to_s
+    expect(helper.inject_available_payment_methods).to match pm.name
   end
 
   it "injects current order" do
-    helper.stub(:current_order).and_return order = create(:order)
-    helper.inject_current_order.should match order.id.to_s
+    allow(helper).to receive(:current_order).and_return order = create(:order)
+    expect(helper.inject_current_order).to match order.id.to_s
   end
 
   it "injects taxons" do
     taxon = create(:taxon)
-    helper.inject_taxons.should match taxon.name
+    expect(helper.inject_taxons).to match taxon.name
   end
 
   it "only injects credit cards with a payment profile" do

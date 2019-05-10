@@ -14,7 +14,7 @@ module Admin
     describe "#create" do
       context "when given email matches an existing user" do
         before do
-          controller.stub spree_current_user: admin
+          allow(controller).to receive_messages spree_current_user: admin
         end
 
         it "returns an error" do
@@ -30,7 +30,7 @@ module Admin
 
         before do
           setup_email
-          controller.stub spree_current_user: admin
+          allow(controller).to receive_messages spree_current_user: admin
         end
 
         it 'enqueues an invitation email' do
@@ -55,7 +55,7 @@ module Admin
       context "as user with proper enterprise permissions" do
         before do
           setup_email
-          controller.stub spree_current_user: enterprise_owner
+          allow(controller).to receive_messages spree_current_user: enterprise_owner
         end
 
         it "returns success code" do
@@ -71,7 +71,7 @@ module Admin
 
       context "as another enterprise user without permissions for this enterprise" do
         before do
-          controller.stub spree_current_user: other_enterprise_user
+          allow(controller).to receive_messages spree_current_user: other_enterprise_user
         end
 
         it "returns unauthorized response" do

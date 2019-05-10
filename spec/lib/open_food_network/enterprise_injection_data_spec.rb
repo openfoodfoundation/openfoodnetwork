@@ -10,12 +10,12 @@ module OpenFoodNetwork
       let!(:er_pi) { create(:enterprise_relationship, parent: producer_inactive, child: enterprise) }
 
       it "only loads activated relatives" do
-        subject.relatives[enterprise.id][:producers].should_not include producer_inactive.id
+        expect(subject.relatives[enterprise.id][:producers]).not_to include producer_inactive.id
       end
 
       it "loads self where appropiate" do
-        subject.relatives[producer.id][:producers].should include producer.id
-        subject.relatives[enterprise.id][:distributors].should include enterprise.id
+        expect(subject.relatives[producer.id][:producers]).to include producer.id
+        expect(subject.relatives[enterprise.id][:distributors]).to include enterprise.id
       end
     end
   end

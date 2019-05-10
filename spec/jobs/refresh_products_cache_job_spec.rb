@@ -28,7 +28,7 @@ describe RefreshProductsCacheJob do
     it 'does not raise' do
       expect {
         run_job RefreshProductsCacheJob.new(distributor.id, order_cycle.id)
-      }.not_to raise_error(/ActiveRecord::RecordNotFound/)
+      }.not_to raise_error
     end
 
     it 'returns true' do

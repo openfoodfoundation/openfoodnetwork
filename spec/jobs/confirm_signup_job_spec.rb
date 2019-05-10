@@ -5,8 +5,8 @@ describe ConfirmSignupJob do
 
   it "sends a confirmation email to the user" do
     mail = double(:mail)
-    Spree::UserMailer.should_receive(:signup_confirmation).with(user).and_return(mail)
-    mail.should_receive(:deliver)
+    expect(Spree::UserMailer).to receive(:signup_confirmation).with(user).and_return(mail)
+    expect(mail).to receive(:deliver)
 
     run_job ConfirmSignupJob.new user.id
   end

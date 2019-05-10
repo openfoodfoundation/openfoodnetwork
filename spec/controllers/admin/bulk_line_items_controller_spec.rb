@@ -17,7 +17,7 @@ describe Admin::BulkLineItemsController, type: :controller do
     let!(:line_item4) { FactoryBot.create(:line_item_with_shipment, order: order3) }
 
     context "as a normal user" do
-      before { controller.stub spree_current_user: create_enterprise_user }
+      before { allow(controller).to receive_messages spree_current_user: create_enterprise_user }
 
       it "should deny me access to the index action" do
         spree_get :index, :format => :json
@@ -27,7 +27,7 @@ describe Admin::BulkLineItemsController, type: :controller do
 
     context "as an administrator" do
       before do
-        controller.stub spree_current_user: quick_login_as_admin
+        allow(controller).to receive_messages spree_current_user: quick_login_as_admin
       end
 
       context "when no ransack params are passed in" do
@@ -37,7 +37,7 @@ describe Admin::BulkLineItemsController, type: :controller do
 
         it "retrieves a list of line_items with appropriate attributes, including line items with appropriate attributes" do
           keys = json_response.first.keys.map(&:to_sym)
-          line_item_attributes.all?{ |attr| keys.include? attr }.should == true
+          expect(line_item_attributes.all?{ |attr| keys.include? attr }).to eq(true)
         end
 
         it "sorts line_items in ascending id line_item" do
@@ -47,11 +47,11 @@ describe Admin::BulkLineItemsController, type: :controller do
         end
 
         it "formats final_weight_volume as a float" do
-          json_response.map{ |line_item| line_item['final_weight_volume'] }.all?{ |fwv| fwv.is_a?(Float) }.should == true
+          expect(json_response.map{ |line_item| line_item['final_weight_volume'] }.all?{ |fwv| fwv.is_a?(Float) }).to eq(true)
         end
 
         it "returns distributor object with id key" do
-          json_response.map{ |line_item| line_item['supplier'] }.all?{ |d| d.key?('id') }.should == true
+          expect(json_response.map{ |line_item| line_item['supplier'] }.all?{ |d| d.key?('id') }).to eq(true)
         end
       end
 
@@ -90,7 +90,7 @@ describe Admin::BulkLineItemsController, type: :controller do
 
       context "producer enterprise" do
         before do
-          controller.stub spree_current_user: supplier.owner
+          allow(controller).to receive_messages spree_current_user: supplier.owner
           spree_get :index, :format => :json
         end
 
@@ -101,25 +101,25 @@ describe Admin::BulkLineItemsController, type: :controller do
 
       context "coordinator enterprise" do
         before do
-          controller.stub spree_current_user: coordinator.owner
+          allow(controller).to receive_messages spree_current_user: coordinator.owner
           spree_get :index, :format => :json
         end
 
         it "retrieves a list of line_items" do
           keys = json_response.first.keys.map(&:to_sym)
-          line_item_attributes.all?{ |attr| keys.include? attr }.should == true
+          expect(line_item_attributes.all?{ |attr| keys.include? attr }).to eq(true)
         end
       end
 
       context "hub enterprise" do
         before do
-          controller.stub spree_current_user: distributor1.owner
+          allow(controller).to receive_messages spree_current_user: distributor1.owner
           spree_get :index, :format => :json
         end
 
         it "retrieves a list of line_items" do
           keys = json_response.first.keys.map(&:to_sym)
-          line_item_attributes.all?{ |attr| keys.include? attr }.should == true
+          expect(line_item_attributes.all?{ |attr| keys.include? attr }).to eq(true)
         end
       end
     end
@@ -142,7 +142,7 @@ describe Admin::BulkLineItemsController, type: :controller do
     context "as an enterprise user" do
       context "producer enterprise" do
         before do
-          controller.stub spree_current_user: supplier.owner
+          allow(controller).to receive_messages spree_current_user: supplier.owner
           spree_put :update, params
         end
 
@@ -155,7 +155,7 @@ describe Admin::BulkLineItemsController, type: :controller do
         render_views
 
         before do
-          controller.stub spree_current_user: coordinator.owner
+          allow(controller).to receive_messages spree_current_user: coordinator.owner
         end
 
         # Used in admin/orders/bulk_management
@@ -209,7 +209,7 @@ describe Admin::BulkLineItemsController, type: :controller do
 
       context "hub enterprise" do
         before do
-          controller.stub spree_current_user: distributor1.owner
+          allow(controller).to receive_messages spree_current_user: distributor1.owner
           xhr :put, :update, params
         end
 
@@ -235,7 +235,7 @@ describe Admin::BulkLineItemsController, type: :controller do
     let(:params) { { id: line_item1.id, order_id: order1.number } }
 
     before do
-      controller.stub spree_current_user: coordinator.owner
+      allow(controller).to receive_messages spree_current_user: coordinator.owner
     end
 
     # Used in admin/orders/bulk_management

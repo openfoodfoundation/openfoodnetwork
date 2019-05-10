@@ -5,10 +5,10 @@ describe OrderUpdater do
   let(:order_updater) { described_class.new(Spree::OrderUpdater.new(order)) }
 
   it "is failed if no valid payments" do
-    order.stub_chain(:payments, :valid, :empty?).and_return(true)
+    allow(order).to receive_message_chain(:payments, :valid, :empty?).and_return(true)
 
     order_updater.update_payment_state
-    order.payment_state.should == 'failed'
+    expect(order.payment_state).to eq('failed')
   end
 
   context "payment total is greater than order total" do
@@ -63,8 +63,8 @@ describe OrderUpdater do
       it "is credit_owed" do
         order.payment_total = 30
         order.total = 30
-        order.stub_chain(:payments, :valid, :empty?).and_return(false)
-        order.stub_chain(:payments, :completed, :empty?).and_return(false)
+        allow(order).to receive_message_chain(:payments, :valid, :empty?).and_return(false)
+        allow(order).to receive_message_chain(:payments, :completed, :empty?).and_return(false)
         expect {
           order_updater.update_payment_state
         }.to change { order.payment_state }.to 'credit_owed'
@@ -75,8 +75,8 @@ describe OrderUpdater do
       it "is void" do
         order.payment_total = 0
         order.total = 30
-        order.stub_chain(:payments, :valid, :empty?).and_return(false)
-        order.stub_chain(:payments, :completed, :empty?).and_return(false)
+        allow(order).to receive_message_chain(:payments, :valid, :empty?).and_return(false)
+        allow(order).to receive_message_chain(:payments, :completed, :empty?).and_return(false)
         expect {
           order_updater.update_payment_state
         }.to change { order.payment_state }.to 'void'

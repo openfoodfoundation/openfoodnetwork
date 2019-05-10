@@ -10,29 +10,29 @@ module OpenFoodNetwork
 
     describe "grower and method" do
       it "shows just the producer when there is no certification" do
-        report.stub(:producer_name) { "Producer" }
-        report.stub(:certification) { "" }
+        allow(report).to receive(:producer_name) { "Producer" }
+        allow(report).to receive(:certification) { "" }
 
-        report.send(:grower_and_method, variant).should == "Producer"
+        expect(report.send(:grower_and_method, variant)).to eq("Producer")
       end
 
       it "shows producer and certification when a certification is present" do
-        report.stub(:producer_name) { "Producer" }
-        report.stub(:certification) { "Method" }
+        allow(report).to receive(:producer_name) { "Producer" }
+        allow(report).to receive(:certification) { "Method" }
 
-        report.send(:grower_and_method, variant).should == "Producer (Method)"
+        expect(report.send(:grower_and_method, variant)).to eq("Producer (Method)")
       end
     end
 
     describe "gst" do
       it "handles tax category without rates" do
-        report.send(:gst, variant).should == 0
+        expect(report.send(:gst, variant)).to eq(0)
       end
     end
 
     describe "table" do
       it "handles no items" do
-        report.table.should eq []
+        expect(report.table).to eq []
       end
 
       describe "lists" do
@@ -45,14 +45,14 @@ module OpenFoodNetwork
         let(:variant3_override) { create(:variant_override, hub: hub, variant: variant3, count_on_hand: 0) }
 
         it "all items" do
-          report.stub(:child_variants) { Spree::Variant.where(id: [variant, variant2, variant3]) }
-          report.table.count.should eq 3
+          allow(report).to receive(:child_variants) { Spree::Variant.where(id: [variant, variant2, variant3]) }
+          expect(report.table.count).to eq 3
         end
 
         it "only available items" do
           variant.on_hand = 0
-          report.stub(:child_variants) { Spree::Variant.where(id: [variant, variant2, variant3, variant4]) }
-          report.table.count.should eq 3
+          allow(report).to receive(:child_variants) { Spree::Variant.where(id: [variant, variant2, variant3, variant4]) }
+          expect(report.table.count).to eq 3
         end
 
         it "only available items considering overrides" do
@@ -60,11 +60,11 @@ module OpenFoodNetwork
           # create the overrides
           variant2_override
           variant3_override
-          report.stub(:child_variants) { Spree::Variant.where(id: [variant, variant2, variant3]) }
-          report.stub(:params) { {distributor_id: hub.id} }
+          allow(report).to receive(:child_variants) { Spree::Variant.where(id: [variant, variant2, variant3]) }
+          allow(report).to receive(:params) { {distributor_id: hub.id} }
           rows = report.table
-          rows.count.should eq 2
-          rows.map{ |row| row[0] }.should include variant.product.name, variant2.product.name
+          expect(rows.count).to eq 2
+          expect(rows.map{ |row| row[0] }).to include variant.product.name, variant2.product.name
         end
 
       end

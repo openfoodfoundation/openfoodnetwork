@@ -21,7 +21,7 @@ module WebHelper
     selector += "[placeholder='#{opts[:placeholder]}']" if opts.key? :placeholder
 
     element = page.all(selector).first
-    element.value.should == opts[:with] if element && opts.key?(:with)
+    expect(element.value).to eq(opts[:with]) if element && opts.key?(:with)
 
     have_selector selector
   end

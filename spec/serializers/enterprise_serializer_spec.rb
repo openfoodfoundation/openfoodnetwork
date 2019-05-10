@@ -14,20 +14,20 @@ describe Api::EnterpriseSerializer do
   }
 
   it "serializes an enterprise" do
-    serializer.to_json.should match enterprise.name
+    expect(serializer.to_json).to match enterprise.name
   end
 
   it "serializes taxons as ids only" do
-    serializer.serializable_hash[:taxons].should == [{id: 123}]
-    serializer.serializable_hash[:supplied_taxons].should == [{id: 456}]
+    expect(serializer.serializable_hash[:taxons]).to eq([{id: 123}])
+    expect(serializer.serializable_hash[:supplied_taxons]).to eq([{id: 456}])
   end
 
   it "serializes producers and hubs as ids only" do
-    serializer.serializable_hash[:producers].should == [{id: 123}]
-    serializer.serializable_hash[:hubs].should == [{id: 456}]
+    expect(serializer.serializable_hash[:producers]).to eq([{id: 123}])
+    expect(serializer.serializable_hash[:hubs]).to eq([{id: 456}])
   end
 
   it "serializes icons" do
-    serializer.to_json.should match "map_005-hub.svg"
+    expect(serializer.to_json).to match "map_005-hub.svg"
   end
 end

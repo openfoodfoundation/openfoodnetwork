@@ -53,18 +53,18 @@ module OpenFoodNetwork::Reports
     let(:data) { {one: 1, two: 2, three: 3, four: 4} }
 
     it "returns the header" do
-      report.header.should == %w(One Two Three Four)
+      expect(report.header).to eq(%w(One Two Three Four))
     end
 
     it "returns columns as an array of procs" do
-      report.columns[0].call(data).should == 1
-      report.columns[1].call(data).should == 2
-      report.columns[2].call(data).should == 3
-      report.columns[3].call(data).should == 4
+      expect(report.columns[0].call(data)).to eq(1)
+      expect(report.columns[1].call(data)).to eq(2)
+      expect(report.columns[2].call(data)).to eq(3)
+      expect(report.columns[3].call(data)).to eq(4)
     end
 
     it "supports helpers when outputting columns" do
-      helper_report.columns[0].call(data).should == 1
+      expect(helper_report.columns[0].call(data)).to eq(1)
     end
 
     describe "rules" do
@@ -75,25 +75,25 @@ module OpenFoodNetwork::Reports
       let(:next_summary_columns) { rules_head.next.to_h[:summary_columns] }
 
       it "constructs the head of the rules list" do
-        group_by.call(data).should == 1
-        sort_by.call(data).should == 2
+        expect(group_by.call(data)).to eq(1)
+        expect(sort_by.call(data)).to eq(2)
       end
 
       it "constructs nested rules" do
-        next_group_by.call(data).should == 3
-        next_sort_by.call(data).should == 4
+        expect(next_group_by.call(data)).to eq(3)
+        expect(next_sort_by.call(data)).to eq(4)
       end
 
       it "constructs summary columns for rules" do
-        next_summary_columns[0].call(data).should == 1
-        next_summary_columns[1].call(data).should == 4
+        expect(next_summary_columns[0].call(data)).to eq(1)
+        expect(next_summary_columns[1].call(data)).to eq(4)
       end
     end
 
     describe "outputting rules" do
       it "outputs the rules" do
-        report.rules.should == [{group_by: P1, sort_by: P2},
-                                {group_by: P3, sort_by: P4, summary_columns: [P1, P4]}]
+        expect(report.rules).to eq([{group_by: P1, sort_by: P2},
+                                {group_by: P3, sort_by: P4, summary_columns: [P1, P4]}])
       end
     end
   end

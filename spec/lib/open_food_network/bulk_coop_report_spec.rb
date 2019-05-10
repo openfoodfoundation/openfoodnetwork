@@ -19,13 +19,13 @@ module OpenFoodNetwork
         it "fetches completed orders" do
           o2 = create(:order)
           o2.line_items << build(:line_item)
-          subject.table_items.should == [li1]
+          expect(subject.table_items).to eq([li1])
         end
 
         it "does not show cancelled orders" do
           o2 = create(:order, state: "canceled", completed_at: 1.day.ago)
           o2.line_items << build(:line_item_with_shipment)
-          subject.table_items.should == [li1]
+          expect(subject.table_items).to eq([li1])
         end
       end
 
@@ -49,8 +49,8 @@ module OpenFoodNetwork
           end
 
           it "shows line items supplied by my producers, with names hidden" do
-            subject.table_items.should == [li2]
-            subject.table_items.first.order.bill_address.firstname.should == "HIDDEN"
+            expect(subject.table_items).to eq([li2])
+            expect(subject.table_items.first.order.bill_address.firstname).to eq("HIDDEN")
           end
         end
 
@@ -63,7 +63,7 @@ module OpenFoodNetwork
           end
 
           it "shows line items supplied by my producers, with names hidden" do
-            subject.table_items.should == []
+            expect(subject.table_items).to eq([])
           end
         end
       end
@@ -81,15 +81,15 @@ module OpenFoodNetwork
           d2.enterprise_roles.create!(user: create(:user))
           o2 = create(:order, distributor: d2, completed_at: 1.day.ago)
           o2.line_items << build(:line_item_with_shipment)
-          subject.table_items.should == [li1]
+          expect(subject.table_items).to eq([li1])
         end
 
         it "only shows the selected order cycle" do
           oc2 = create(:simple_order_cycle)
           o2 = create(:order, distributor: d1, order_cycle: oc2)
           o2.line_items << build(:line_item)
-          subject.stub(:params).and_return(order_cycle_id_in: oc1.id)
-          subject.table_items.should == [li1]
+          allow(subject).to receive(:params).and_return(order_cycle_id_in: oc1.id)
+          expect(subject.table_items).to eq([li1])
         end
       end
     end

@@ -16,23 +16,23 @@ module Spree
 
         it "filters by distributor" do
           spree_get :search, q: 'Prod', distributor_id: d.id.to_s
-          assigns(:variants).should == [v1]
+          expect(assigns(:variants)).to eq([v1])
         end
 
         it "applies variant overrides" do
           spree_get :search, q: 'Prod', distributor_id: d.id.to_s
-          assigns(:variants).should == [v1]
-          assigns(:variants).first.on_hand.should == 44
+          expect(assigns(:variants)).to eq([v1])
+          expect(assigns(:variants).first.on_hand).to eq(44)
         end
 
         it "filters by order cycle" do
           spree_get :search, q: 'Prod', order_cycle_id: oc.id.to_s
-          assigns(:variants).should == [v1]
+          expect(assigns(:variants)).to eq([v1])
         end
 
         it "does not filter when no distributor or order cycle is specified" do
           spree_get :search, q: 'Prod'
-          assigns(:variants).should match_array [v1, v2]
+          expect(assigns(:variants)).to match_array [v1, v2]
         end
       end
 
