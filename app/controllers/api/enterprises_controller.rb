@@ -77,5 +77,12 @@ module Api
     def override_visible
       params[:enterprise][:visible] = false
     end
+
+    # Allows API access without a logged in user for actions in this controller.
+    # Actions that require authentication should all use #authorize!
+    # @current_api_user will now initialize an empty Spree::User unless one is present.
+    def requires_authentication?
+      false
+    end
   end
 end
