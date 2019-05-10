@@ -49,10 +49,6 @@ describe "Enterprises service", ->
   it "puts the same objects in enterprises and enterprises_by_id", ->
     expect(Enterprises.enterprises[0]).toBe Enterprises.enterprises_by_id["1"]
 
-  it "dereferences references to other enterprises", ->
-    expect(Enterprises.enterprises_by_id["1"].producers[0]).toBe enterprises[4]
-    expect(Enterprises.enterprises_by_id["5"].hubs[0]).toBe enterprises[0]
-
   it "dereferences taxons", ->
     expect(Enterprises.enterprises[0].taxons[0]).toBe taxons[0]
 

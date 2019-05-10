@@ -63,6 +63,12 @@ module AuthenticationWorkflow
     fill_in "password", with: user.password
     click_button "Login"
   end
+
+  def use_api_as_unauthenticated_user
+    allow_any_instance_of(Api::BaseController).to receive(:spree_current_user) {
+      Spree::User.anonymous!
+    }
+  end
 end
 
 RSpec.configure do |config|

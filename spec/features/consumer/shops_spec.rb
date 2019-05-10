@@ -3,6 +3,7 @@ require 'spec_helper'
 feature 'Shops', js: true do
   include AuthenticationWorkflow
   include UIComponentHelper
+  include WebHelper
 
   let!(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
   let!(:invisible_distributor) { create(:distributor_enterprise, visible: false) }
@@ -12,6 +13,10 @@ feature 'Shops', js: true do
   let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise)) }
   let!(:producer) { create(:supplier_enterprise) }
   let!(:er) { create(:enterprise_relationship, parent: distributor, child: producer) }
+
+  before :each do
+    use_api_as_unauthenticated_user
+  end
 
   before do
     producer.set_producer_property 'Organic', 'NASAA 12345'

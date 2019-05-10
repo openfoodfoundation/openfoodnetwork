@@ -5,6 +5,7 @@ feature '
     I want to see a list of producers
     So that I can shop at hubs distributing their products
 ', js: true do
+  include AuthenticationWorkflow
   include WebHelper
   include UIComponentHelper
 
@@ -20,6 +21,10 @@ feature '
 
   let(:shop) { create(:distributor_enterprise) }
   let!(:er) { create(:enterprise_relationship, parent: shop, child: producer1) }
+
+  before :each do
+    use_api_as_unauthenticated_user
+  end
 
   before do
     product1.set_property 'Organic', 'NASAA 12345'
@@ -79,8 +84,8 @@ feature '
       page.should have_content 'Fruit'
 
       # -- Properties
-      page.should have_content 'Organic' # Product property
-      page.should have_content 'Local'   # Producer property
+      expect(page).to have_content 'Organic' # Product property
+      expect(page).to have_content 'Local'   # Producer property
     end
 
     it "doesn't show invisible producers" do
@@ -89,7 +94,7 @@ feature '
 
     it "links to places to buy produce" do
       expand_active_table_node producer1.name
-      page.should have_link shop.name
+      expect(page).to have_link shop.name
     end
   end
 end
