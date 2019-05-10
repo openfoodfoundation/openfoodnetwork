@@ -1,4 +1,4 @@
-Darkswarm.controller "HubNodeCtrl", ($scope, HashNavigation, Navigation, $location, CurrentHub, $http, $timeout) ->
+Darkswarm.controller "HubNodeCtrl", ($scope, HashNavigation, CurrentHub, $http, $timeout) ->
   $scope.shopfront_loading = false
   $scope.enterprise_details = []
 
