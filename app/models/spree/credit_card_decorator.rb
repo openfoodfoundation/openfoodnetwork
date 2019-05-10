@@ -31,13 +31,17 @@ Spree::CreditCard.class_eval do
 
   private
 
+  def reusable?
+    gateway_customer_profile_id.present?
+  end
+
   def default_missing?
     !user.credit_cards.exists?(is_default: true)
   end
 
   def ensure_single_default_card
     return unless user
-    return unless is_default? || default_missing?
+    return unless is_default? || (reusable? && default_missing?)
     user.credit_cards.update_all(['is_default=(id=?)', id])
     self.is_default = true
   end
