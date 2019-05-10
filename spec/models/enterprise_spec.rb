@@ -482,12 +482,24 @@ describe Enterprise do
     let(:supplier) { create(:supplier_enterprise) }
     let(:taxon1) { create(:taxon) }
     let(:taxon2) { create(:taxon) }
+    let(:taxon3) { create(:taxon) }
     let(:product1) { create(:simple_product, primary_taxon: taxon1, taxons: [taxon1]) }
     let(:product2) { create(:simple_product, primary_taxon: taxon1, taxons: [taxon1, taxon2]) }
+    let(:product3) { create(:simple_product, primary_taxon: taxon3) }
+    let(:oc) { create(:order_cycle, distributors: [distributor]) }
+    let(:ex) { create(:exchange, order_cycle: oc, incoming: false, sender: supplier, receiver: distributor) }
 
     it "gets all taxons of all distributed products" do
       allow(Spree::Product).to receive(:in_distributor).and_return [product1, product2]
       expect(distributor.distributed_taxons).to match_array [taxon1, taxon2]
+    end
+
+    it "gets all taxons of all distributed products in open order cycles" do
+      Spree::Product.stub(:in_distributor).and_return [product1, product2, product3]
+      ex.variants << product1.variants.first
+      ex.variants << product3.variants.first
+
+      distributor.current_distributed_taxons.should match_array [taxon1, taxon3]
     end
 
     it "gets all taxons of all supplied products" do

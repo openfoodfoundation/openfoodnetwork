@@ -285,6 +285,14 @@ class Enterprise < ActiveRecord::Base
       select('DISTINCT spree_taxons.*')
   end
 
+  def current_distributed_taxons
+    Spree::Taxon
+      .select("DISTINCT spree_taxons.*")
+      .joins(products: :variants_including_master)
+      .joins("INNER JOIN (#{current_exchange_variants.to_sql}) \
+        AS exchange_variants ON spree_variants.id = exchange_variants.variant_id")
+  end
+
   # Return all taxons for all supplied products
   def supplied_taxons
     Spree::Taxon.
@@ -324,6 +332,14 @@ class Enterprise < ActiveRecord::Base
   end
 
   private
+
+  def current_exchange_variants
+    ExchangeVariant.joins(exchange: :order_cycle)
+      .merge(Exchange.outgoing)
+      .select("DISTINCT exchange_variants.variant_id, exchanges.receiver_id AS enterprise_id")
+      .where("exchanges.receiver_id = ?", id)
+      .merge(OrderCycle.active.with_distributor(id))
+  end
 
   def name_is_unique
     dups = Enterprise.where(name: name)

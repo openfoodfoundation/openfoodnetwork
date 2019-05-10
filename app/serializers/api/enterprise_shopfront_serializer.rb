@@ -62,8 +62,10 @@ module Api
     end
 
     def taxons
+      taxons = active ? enterprise.current_distributed_taxons : enterprise.distributed_taxons
+
       ActiveModel::ArraySerializer.new(
-        enterprise.distributed_taxons, each_serializer: Api::TaxonSerializer
+        taxons, each_serializer: Api::TaxonSerializer
       )
     end
 
