@@ -14,7 +14,7 @@ feature '
     click_link 'Enterprises'
     click_link e.name
 
-    page.should have_content e.name
+    expect(page).to have_content e.name
   end
 
   scenario "creating a new enterprise", js: true do
@@ -33,8 +33,8 @@ feature '
     choose "Any"
     uncheck 'enterprise_is_primary_producer'
 
-    page.should_not have_checked_field "enterprise_payment_method_ids_#{payment_method.id}"
-    page.should_not have_checked_field "enterprise_shipping_method_ids_#{shipping_method.id}"
+    expect(page).not_to have_checked_field "enterprise_payment_method_ids_#{payment_method.id}"
+    expect(page).not_to have_checked_field "enterprise_shipping_method_ids_#{shipping_method.id}"
 
     # Filling in details
     fill_in 'enterprise_name', with: 'Eaterprises'
@@ -53,7 +53,7 @@ feature '
     select2_select 'Victoria', from: 'enterprise_address_attributes_state_id'
 
     click_button 'Create'
-    flash_message.should == 'Enterprise "Eaterprises" has been successfully created!'
+    expect(flash_message).to eq('Enterprise "Eaterprises" has been successfully created!')
   end
 
   scenario "editing an existing enterprise", js: true do
@@ -75,7 +75,7 @@ feature '
 
     fill_in 'enterprise_name', with: 'Eaterprises'
     fill_in 'enterprise_permalink', with: 'eaterprises-permalink'
-    page.should have_selector '.available'
+    expect(page).to have_selector '.available'
     choose 'Own'
 
     # Require login to view shopfront or for checkout
@@ -108,35 +108,35 @@ feature '
     end
     uncheck 'enterprise_is_primary_producer'
     choose 'None'
-    page.should_not have_selector "#enterprise_fees"
-    page.should_not have_selector "#payment_methods"
-    page.should_not have_selector "#shipping_methods"
+    expect(page).not_to have_selector "#enterprise_fees"
+    expect(page).not_to have_selector "#payment_methods"
+    expect(page).not_to have_selector "#shipping_methods"
     check 'enterprise_is_primary_producer'
-    page.should have_selector "#enterprise_fees"
-    page.should_not have_selector "#payment_methods"
-    page.should_not have_selector "#shipping_methods"
+    expect(page).to have_selector "#enterprise_fees"
+    expect(page).not_to have_selector "#payment_methods"
+    expect(page).not_to have_selector "#shipping_methods"
     uncheck 'enterprise_is_primary_producer'
     choose 'Own'
-    page.should have_selector "#enterprise_fees"
-    page.should have_selector "#payment_methods"
-    page.should have_selector "#shipping_methods"
+    expect(page).to have_selector "#enterprise_fees"
+    expect(page).to have_selector "#payment_methods"
+    expect(page).to have_selector "#shipping_methods"
     choose 'Any'
-    page.should have_selector "#enterprise_fees"
-    page.should have_selector "#payment_methods"
-    page.should have_selector "#shipping_methods"
+    expect(page).to have_selector "#enterprise_fees"
+    expect(page).to have_selector "#payment_methods"
+    expect(page).to have_selector "#shipping_methods"
 
     multi_select2_select eg1.name, from: 'enterprise_group_ids'
 
     accept_alert do
       click_link "Payment Methods"
     end
-    page.should_not have_checked_field "enterprise_payment_method_ids_#{payment_method.id}"
+    expect(page).not_to have_checked_field "enterprise_payment_method_ids_#{payment_method.id}"
     check "enterprise_payment_method_ids_#{payment_method.id}"
 
     accept_alert do
       click_link "Shipping Methods"
     end
-    page.should_not have_checked_field "enterprise_shipping_method_ids_#{shipping_method.id}"
+    expect(page).not_to have_checked_field "enterprise_shipping_method_ids_#{shipping_method.id}"
     check "enterprise_shipping_method_ids_#{shipping_method.id}"
 
     accept_alert do
@@ -173,36 +173,36 @@ feature '
     end
     shop_message_input = page.find("text-angular#enterprise_preferred_shopfront_message div[id^='taTextElement']")
     shop_message_input.native.send_keys('This is my shopfront message.')
-    page.should have_checked_field "enterprise_preferred_shopfront_order_cycle_order_orders_close_at"
+    expect(page).to have_checked_field "enterprise_preferred_shopfront_order_cycle_order_orders_close_at"
     choose "enterprise_preferred_shopfront_order_cycle_order_orders_open_at"
     choose "enterprise_enable_subscriptions_true"
 
     click_button 'Update'
 
-    flash_message.should == 'Enterprise "Eaterprises" has been successfully updated!'
-    page.should have_field 'enterprise_name', with: 'Eaterprises'
+    expect(flash_message).to eq('Enterprise "Eaterprises" has been successfully updated!')
+    expect(page).to have_field 'enterprise_name', with: 'Eaterprises'
     @enterprise.reload
     expect(@enterprise.owner).to eq user
     expect(page).to have_checked_field "enterprise_visible_true"
 
     click_link "Business Details"
-    page.should have_checked_field "enterprise_charges_sales_tax_true"
+    expect(page).to have_checked_field "enterprise_charges_sales_tax_true"
 
     click_link "Payment Methods"
-    page.should have_checked_field "enterprise_payment_method_ids_#{payment_method.id}"
+    expect(page).to have_checked_field "enterprise_payment_method_ids_#{payment_method.id}"
 
     click_link "Shipping Methods"
-    page.should have_checked_field "enterprise_shipping_method_ids_#{shipping_method.id}"
+    expect(page).to have_checked_field "enterprise_shipping_method_ids_#{shipping_method.id}"
 
     click_link "Enterprise Fees"
-    page.should have_selector "td", text: enterprise_fee.name
+    expect(page).to have_selector "td", text: enterprise_fee.name
 
     click_link "About"
-    page.should have_content 'This is an interesting long description'
+    expect(page).to have_content 'This is an interesting long description'
 
     click_link "Shop Preferences"
-    page.should have_content 'This is my shopfront message.'
-    page.should have_checked_field "enterprise_preferred_shopfront_order_cycle_order_orders_open_at"
+    expect(page).to have_content 'This is my shopfront message.'
+    expect(page).to have_checked_field "enterprise_preferred_shopfront_order_cycle_order_orders_open_at"
     expect(page).to have_checked_field "enterprise_require_login_true"
     expect(page).to have_checked_field "enterprise_enable_subscriptions_true"
 
@@ -232,9 +232,9 @@ feature '
       expect(current_path).to eq main_app.admin_enterprise_producer_properties_path(s)
 
       # And the producer should have the property
-      s.producer_properties(true).count.should == 1
-      s.producer_properties.first.property.presentation.should == "Certified Organic"
-      s.producer_properties.first.value.should == "NASAA 12345"
+      expect(s.producer_properties(true).count).to eq(1)
+      expect(s.producer_properties.first.property.presentation).to eq("Certified Organic")
+      expect(s.producer_properties.first.value).to eq("NASAA 12345")
     end
 
     it "updates producer properties" do
@@ -255,9 +255,9 @@ feature '
       expect(current_path).to eq main_app.admin_enterprise_producer_properties_path(s)
 
       # And the property should be updated
-      s.producer_properties(true).count.should == 1
-      s.producer_properties.first.property.presentation.should == "Biodynamic"
-      s.producer_properties.first.value.should == "Shininess"
+      expect(s.producer_properties(true).count).to eq(1)
+      expect(s.producer_properties.first.property.presentation).to eq("Biodynamic")
+      expect(s.producer_properties.first.value).to eq("Shininess")
     end
 
     it "removes producer properties", js: true do
@@ -270,14 +270,14 @@ feature '
       visit main_app.admin_enterprise_producer_properties_path(s)
 
       # And I remove the property
-      page.should have_field 'enterprise_producer_properties_attributes_0_property_name', with: 'Certified Organic'
+      expect(page).to have_field 'enterprise_producer_properties_attributes_0_property_name', with: 'Certified Organic'
       within("#spree_producer_property_#{pp.id}") { page.find('a.remove_fields').click }
       click_button 'Update'
 
       # Then the property should have been removed
       expect(current_path).to eq main_app.admin_enterprise_producer_properties_path(s)
-      page.should_not have_field 'enterprise_producer_properties_attributes_0_property_name', with: 'Certified Organic'
-      s.producer_properties(true).should be_empty
+      expect(page).not_to have_field 'enterprise_producer_properties_attributes_0_property_name', with: 'Certified Organic'
+      expect(s.producer_properties(true)).to be_empty
     end
   end
 
@@ -333,8 +333,8 @@ feature '
 
         visit admin_enterprises_path
 
-        page.should have_content supplier1.name
-        page.should have_content distributor1.name
+        expect(page).to have_content supplier1.name
+        expect(page).to have_content distributor1.name
 
         within 'li#new_product_link' do
           expect(page).to have_link 'New Enterprise', href: '#'
@@ -363,12 +363,12 @@ feature '
         click_button 'Create'
 
         # Then it should be created
-        page.should have_content 'Enterprise "zzz" has been successfully created!'
+        expect(page).to have_content 'Enterprise "zzz" has been successfully created!'
         enterprise = Enterprise.last
-        enterprise.name.should == 'zzz'
+        expect(enterprise.name).to eq('zzz')
 
         # And I should be managing it
-        Enterprise.managed_by(enterprise_user).should include enterprise
+        expect(Enterprise.managed_by(enterprise_user)).to include enterprise
         expect(enterprise.contact).to eq enterprise.owner
       end
 
@@ -398,8 +398,8 @@ feature '
       page.evaluate_script("angular.element(enterprise_form).scope().setFormDirty()")
       click_button 'Update'
 
-      flash_message.should == 'Enterprise "Eaterprises" has been successfully updated!'
-      distributor1.reload.name.should == 'Eaterprises'
+      expect(flash_message).to eq('Enterprise "Eaterprises" has been successfully updated!')
+      expect(distributor1.reload.name).to eq('Eaterprises')
     end
 
     describe "enterprises I have edit permission for, but do not manage" do
@@ -414,8 +414,8 @@ feature '
         page.evaluate_script("angular.element(enterprise_form).scope().setFormDirty()")
         click_button 'Update'
 
-        flash_message.should == 'Enterprise "Eaterprises" has been successfully updated!'
-        distributor3.reload.name.should == 'Eaterprises'
+        expect(flash_message).to eq('Enterprise "Eaterprises" has been successfully updated!')
+        expect(distributor3.reload.name).to eq('Eaterprises')
       end
 
       it "does not show links to manage shipping methods, payment methods or enterprise fees on the edit page" do
@@ -423,9 +423,9 @@ feature '
         within("tbody#e_#{distributor3.id}") { click_link 'Settings' }
 
         within(".side_menu") do
-          page.should_not have_link 'Shipping Methods'
-          page.should_not have_link 'Payment Methods'
-          page.should_not have_link 'Enterprise Fees'
+          expect(page).not_to have_link 'Shipping Methods'
+          expect(page).not_to have_link 'Payment Methods'
+          expect(page).not_to have_link 'Enterprise Fees'
         end
       end
     end
@@ -448,7 +448,7 @@ feature '
       page.evaluate_script("angular.element(enterprise_form).scope().setFormDirty()")
       click_button 'Update'
 
-      supplier1.producer_properties(true).count.should == 1
+      expect(supplier1.producer_properties(true).count).to eq(1)
 
       # -- Destroy
       pp = supplier1.producer_properties.first
@@ -466,7 +466,7 @@ feature '
       click_button 'Update'
 
       expect(page).to have_content 'Enterprise "First Supplier" has been successfully updated!'
-      supplier1.producer_properties(true).should be_empty
+      expect(supplier1.producer_properties(true)).to be_empty
     end
   end
 end
