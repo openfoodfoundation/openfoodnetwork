@@ -42,7 +42,9 @@ class EnterprisesController < BaseController
   end
 
   def check_permalink
-    render text: params[:permalink], status: 409 and return if Enterprise.find_by_permalink params[:permalink]
+    if Enterprise.find_by_permalink params[:permalink]
+      render text: params[:permalink], status: 409 and return
+    end
 
     begin
       Rails.application.routes.recognize_path( "/#{ params[:permalink].to_s }" )
@@ -67,7 +69,8 @@ class EnterprisesController < BaseController
   end
 
   def reset_order
-    distributor = Enterprise.is_distributor.find_by_permalink(params[:id]) || Enterprise.is_distributor.find(params[:id])
+    distributor = Enterprise.is_distributor.find_by_permalink(params[:id]) ||
+                  Enterprise.is_distributor.find(params[:id])
     order = current_order(true)
 
     reset_distributor(order, distributor)

@@ -41,10 +41,7 @@ Metrics/LineLength:
   - app/controllers/api/enterprise_attachment_controller.rb
   - app/controllers/api/product_images_controller.rb
   - app/controllers/application_controller.rb
-  - app/controllers/base_controller.rb
-  - app/controllers/cart_controller.rb
   - app/controllers/checkout_controller.rb
-  - app/controllers/shop_controller.rb
   - app/controllers/spree/admin/adjustments_controller_decorator.rb
   - app/controllers/spree/admin/base_controller_decorator.rb
   - app/controllers/spree/admin/line_items_controller_decorator.rb
@@ -58,7 +55,6 @@ Metrics/LineLength:
   - app/controllers/spree/orders_controller_decorator.rb
   - app/controllers/spree/paypal_controller_decorator.rb
   - app/controllers/stripe/callbacks_controller.rb
-  - app/controllers/user_confirmations_controller.rb
   - app/helpers/admin/account_helper.rb
   - app/helpers/admin/injection_helper.rb
   - app/helpers/angular_form_builder.rb

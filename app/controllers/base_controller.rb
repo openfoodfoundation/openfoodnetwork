@@ -32,7 +32,9 @@ class BaseController < ApplicationController
     @order_cycles = OrderCycle.with_distributor(@distributor).active
       .order(@distributor.preferred_shopfront_order_cycle_order)
 
-    applicator = OpenFoodNetwork::TagRuleApplicator.new(@distributor, "FilterOrderCycles", current_customer.andand.tag_list)
+    applicator = OpenFoodNetwork::TagRuleApplicator.new(@distributor,
+                                                        "FilterOrderCycles",
+                                                        current_customer.andand.tag_list)
     applicator.filter!(@order_cycles)
 
     # And default to the only order cycle if there's only the one

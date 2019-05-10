@@ -82,10 +82,14 @@ class CheckoutController < Spree::CheckoutController
       new_bill_address = @order.bill_address.clone.attributes
 
       user_bill_address_id = spree_current_user.bill_address.andand.id
-      spree_current_user.update_attributes(bill_address_attributes: new_bill_address.merge('id' => user_bill_address_id))
+      spree_current_user.update_attributes(
+        bill_address_attributes: new_bill_address.merge('id' => user_bill_address_id)
+      )
 
       customer_bill_address_id = @order.customer.bill_address.andand.id
-      @order.customer.update_attributes(bill_address_attributes: new_bill_address.merge('id' => customer_bill_address_id))
+      @order.customer.update_attributes(
+        bill_address_attributes: new_bill_address.merge('id' => customer_bill_address_id)
+      )
     end
   end
 
@@ -94,16 +98,23 @@ class CheckoutController < Spree::CheckoutController
       new_ship_address = @order.ship_address.clone.attributes
 
       user_ship_address_id = spree_current_user.ship_address.andand.id
-      spree_current_user.update_attributes(ship_address_attributes: new_ship_address.merge('id' => user_ship_address_id))
+      spree_current_user.update_attributes(
+        ship_address_attributes: new_ship_address.merge('id' => user_ship_address_id)
+      )
 
       customer_ship_address_id = @order.customer.ship_address.andand.id
-      @order.customer.update_attributes(ship_address_attributes: new_ship_address.merge('id' => customer_ship_address_id))
+      @order.customer.update_attributes(
+        ship_address_attributes: new_ship_address.merge('id' => customer_ship_address_id)
+      )
     end
   end
 
   def check_order_for_phantom_fees
-    phantom_fees = @order.adjustments.joins('LEFT OUTER JOIN spree_line_items ON spree_line_items.id = spree_adjustments.source_id').
-      where("originator_type = 'EnterpriseFee' AND source_type = 'Spree::LineItem' AND spree_line_items.id IS NULL")
+    phantom_fees = @order.adjustments.
+      joins("LEFT OUTER JOIN spree_line_items"\
+        " ON spree_line_items.id = spree_adjustments.source_id").
+      where("originator_type = 'EnterpriseFee'"\
+        " AND source_type = 'Spree::LineItem' AND spree_line_items.id IS NULL")
 
     if phantom_fees.any?
       Bugsnag.notify(RuntimeError.new("Phantom Fees"), {
@@ -118,7 +129,9 @@ class CheckoutController < Spree::CheckoutController
   # Copied and modified from spree. Remove check for order state, since the state machine is
   # progressed all the way in one go with the one page checkout.
   def object_params
-    # For payment step, filter order parameters to produce the expected nested attributes for a single payment and its source, discarding attributes for payment methods other than the one selected
+    # For payment step, filter order parameters to produce the expected
+    #   nested attributes for a single payment and its source,
+    #   discarding attributes for payment methods other than the one selected
     if params[:payment_source].present? && source_params = params.delete(:payment_source)[params[:order][:payments_attributes].first[:payment_method_id].underscore]
       params[:order][:payments_attributes].first[:source_attributes] = source_params
     end
@@ -154,7 +167,8 @@ class CheckoutController < Spree::CheckoutController
     end
   end
 
-  # When we have a pickup Shipping Method, we clone the distributor address into ship_address before_save
+  # When we have a pickup Shipping Method,
+  #   we clone the distributor address into ship_address before_save
   # We don't want this data in the form, so we clear it out
   def clear_ship_address
     unless current_order.shipping_method.andand.require_ship_address
@@ -185,7 +199,9 @@ class CheckoutController < Spree::CheckoutController
   end
 
   def valid_order_line_items?
-    @order.insufficient_stock_lines.empty? && OrderCycleDistributedVariants.new(@order.order_cycle, @order.distributor).distributes_order_variants?(@order)
+    @order.insufficient_stock_lines.empty? &&
+      OrderCycleDistributedVariants.new(@order.order_cycle, @order.distributor).
+        distributes_order_variants?(@order)
   end
 
   def redirect_to_cart_path
@@ -203,10 +219,12 @@ class CheckoutController < Spree::CheckoutController
   def redirect_to_paypal_express_form_if_needed
     return unless params[:order][:payments_attributes]
 
-    payment_method = Spree::PaymentMethod.find(params[:order][:payments_attributes].first[:payment_method_id])
+    payment_method_id = params[:order][:payments_attributes].first[:payment_method_id]
+    payment_method = Spree::PaymentMethod.find(payment_method_id)
     return unless payment_method.kind_of?(Spree::Gateway::PayPalExpress)
 
-    render json: {path: spree.paypal_express_path(payment_method_id: payment_method.id)}, status: 200
+    render json: {path: spree.paypal_express_path(payment_method_id: payment_method.id)},
+           status: 200
     true
   end
 

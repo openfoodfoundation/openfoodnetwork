@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   prepend_before_filter :restrict_iframes
-  before_filter :set_cache_headers # Issue #1213, prevent cart emptying via cache when using back button
+  before_filter :set_cache_headers # prevent cart emptying via cache when using back button #1213
 
   include EnterprisesHelper
 
@@ -16,7 +16,8 @@ class ApplicationController < ActionController::Base
   def set_checkout_redirect
     referer_path = OpenFoodNetwork::RefererParser::path(request.referer)
     if referer_path
-      session["spree_user_return_to"] = [main_app.checkout_path].include?(referer_path) ? referer_path : root_path
+      is_checkout_path_the_referer = [main_app.checkout_path].include?(referer_path)
+      session["spree_user_return_to"] = is_checkout_path_the_referer ? referer_path : root_path
     end
   end
 

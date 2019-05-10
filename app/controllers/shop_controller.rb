@@ -11,7 +11,8 @@ class ShopController < BaseController
 
   def products
     begin
-      renderer = OpenFoodNetwork::CachedProductsRenderer.new(current_distributor, current_order_cycle)
+      renderer = OpenFoodNetwork::CachedProductsRenderer.new(current_distributor,
+                                                             current_order_cycle)
 
       # If we add any more filtering logic, we should probably
       # move it all to a lib class like 'CachedProductsFilterer'
@@ -59,6 +60,8 @@ class ShopController < BaseController
 
   def applicator
     return @applicator unless @applicator.nil?
-    @applicator = OpenFoodNetwork::TagRuleApplicator.new(current_distributor, "FilterProducts", current_customer.andand.tag_list)
+    @applicator = OpenFoodNetwork::TagRuleApplicator.new(current_distributor,
+                                                         "FilterProducts",
+                                                         current_customer.andand.tag_list)
   end
 end
