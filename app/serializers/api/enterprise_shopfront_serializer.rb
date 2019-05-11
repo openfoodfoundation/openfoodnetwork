@@ -51,7 +51,10 @@ module Api
 
     def producers
       ActiveModel::ArraySerializer.new(
-        enterprise.suppliers, each_serializer: Api::EnterpriseThinSerializer
+        enterprise.plus_relatives_and_oc_producers(
+          OrderCycle.not_closed.with_distributor(enterprise)
+        ),
+        each_serializer: Api::EnterpriseThinSerializer
       )
     end
 

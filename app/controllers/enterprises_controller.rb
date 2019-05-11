@@ -4,6 +4,7 @@ class EnterprisesController < BaseController
   layout "darkswarm"
   helper Spree::ProductsHelper
   include OrderCyclesHelper
+  include SerializerHelper
 
   # These prepended filters are in the reverse order of execution
   prepend_before_filter :set_order_cycles, :require_distributor_chosen, :reset_order, only: :shop
@@ -17,11 +18,7 @@ class EnterprisesController < BaseController
     return redirect_to spree.cart_path unless enough_stock?
     set_noindex_meta_tag
 
-    @enterprises = current_distributor
-      .plus_relatives_and_oc_producers(shop_order_cycles)
-      .activated
-      .includes(address: :state)
-      .all
+    @enterprise = current_distributor
   end
 
   def relatives

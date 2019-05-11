@@ -5,7 +5,7 @@
 - content_for(:image) do
   = current_distributor.logo.url
 
-= inject_enterprises(@enterprises)
+= inject_enterprise_shopfront(@enterprise)
 
 %shop.darkswarm
   - if @shopfront_layout == 'embedded'
