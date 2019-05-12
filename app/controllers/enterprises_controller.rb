@@ -17,15 +17,11 @@ class EnterprisesController < BaseController
     return redirect_to spree.cart_path unless enough_stock?
     set_noindex_meta_tag
 
-    enterprises = current_distributor
+    @enterprises = current_distributor
       .plus_relatives_and_oc_producers(shop_order_cycles)
       .activated
       .includes(address: :state)
       .all
-
-    enterprises = inject_json_ams('enterprises', enterprises)
-
-    render locals: { enterprises: enterprises }
   end
 
   def relatives
@@ -110,15 +106,5 @@ class EnterprisesController < BaseController
 
   def set_noindex_meta_tag
     @noindex_meta_tag = true unless current_distributor.visible?
-  end
-
-  def inject_json_ams(name, object)
-    options = {
-      each_serializer: Api::EnterpriseSerializer,
-      data: OpenFoodNetwork::EnterpriseInjectionData.new
-    }
-    serializer_instance = ActiveModel::ArraySerializer.new(object, options)
-
-    { name: name, json: serializer_instance.to_json }
   end
 end
