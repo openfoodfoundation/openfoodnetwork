@@ -10,7 +10,6 @@ Supported by the Open Food Foundation and a network of global affiliates, we are
 
 We're part of global movement - get involved!
 
-* Fill in this [short survey][survey] to tell us who you are and what you want to do with OFN.
 * Join the conversation [on Slack][slack-invite]. Make sure you introduce yourself in the #general channel
 * Head to [https://openfoodnetwork.org](https://openfoodnetwork.org) for more information about the global OFN project.
 * Check out the [User Guide](https://guide.openfoodnetwork.org/) for a list of features and tutorials.
@@ -27,24 +26,6 @@ Our [GETTING_STARTED](GETTING_STARTED.md) and [CONTRIBUTING](CONTRIBUTING.md) gu
 If you're interested in provisioning a server, see [ofn-install][ofn-install] for the project's Ansible playbooks.
 
 We also have a [Super Admin Guide][super-admin-guide] to help with configuration of new servers.
-
-
-## Credits
-
-* Andrew Spinks (http://github.com/andrewspinks)
-* Rohan Mitchell (http://github.com/rohanm)
-* Rob Harrington (http://github.com/oeoeaio)
-* Alex Serdyuk (http://github.com/alexs333)
-* David Cook (http://github.com/dacook)
-* Will Marshall (http://soundcloud.com/willmarshall)
-* Laura Summers (https://github.com/summerscope)
-* Maikel Linke (https://github.com/mkllnk)
-* Lynne Davis (https://github.com/lin-d-hop)
-* Paul Mackay (https://github.com/pmackay)
-* Steve Pettitt (https://github.com/stveep)
-* Matt Yorkley (https://github.com/Matt-Yorkley)
-* Pau Pérez (https://github.com/sauloperez)
-* Enrico Stano (https://github.com/enricostano)
 
 
 ## Licence
