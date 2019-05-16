@@ -9,9 +9,10 @@ class EnterpriseRelationship < ActiveRecord::Base
   after_save :update_permissions_of_child_variant_overrides
   before_destroy :revoke_all_child_variant_overrides
 
-  scope :with_enterprises,
-        joins('LEFT JOIN enterprises AS parent_enterprises ON parent_enterprises.id = enterprise_relationships.parent_id').
+  scope :with_enterprises, -> {
+    joins('LEFT JOIN enterprises AS parent_enterprises ON parent_enterprises.id = enterprise_relationships.parent_id').
     joins('LEFT JOIN enterprises AS child_enterprises ON child_enterprises.id = enterprise_relationships.child_id')
+  }
 
   scope :involving_enterprises, ->(enterprises) {
     where('parent_id IN (?) OR child_id IN (?)', enterprises, enterprises)
@@ -25,7 +26,7 @@ class EnterpriseRelationship < ActiveRecord::Base
       where('enterprise_relationship_permissions.name = ?', permission)
   }
 
-  scope :by_name, with_enterprises.order('child_enterprises.name, parent_enterprises.name')
+  scope :by_name, -> { with_enterprises.order('child_enterprises.name, parent_enterprises.name') }
 
   # Load an array of the relatives of each enterprise (ie. any enterprise related to it in
   # either direction). This array is split into distributors and producers, and has the format:

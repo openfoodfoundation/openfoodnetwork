@@ -35,9 +35,9 @@ Spree::PaymentMethod.class_eval do
       where('enterprises.id = ?', distributor)
   }
 
-  scope :for_subscriptions, where(type: Subscription::ALLOWED_PAYMENT_METHOD_TYPES)
+  scope :for_subscriptions, -> { where(type: Subscription::ALLOWED_PAYMENT_METHOD_TYPES) }
 
-  scope :by_name, order('spree_payment_methods.name ASC')
+  scope :by_name, -> { order('spree_payment_methods.name ASC') }
 
   # Rewrite Spree's ruby-land class method as a scope
   scope :available, lambda { |display_on = 'both'|

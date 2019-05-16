@@ -33,9 +33,9 @@ Spree::Variant.class_eval do
   after_save :refresh_products_cache
   around_destroy :destruction
 
-  scope :with_order_cycles_inner, joins(exchanges: :order_cycle)
+  scope :with_order_cycles_inner, -> { joins(exchanges: :order_cycle) }
 
-  scope :not_master, where(is_master: false)
+  scope :not_master, -> { where(is_master: false) }
   scope :in_order_cycle, lambda { |order_cycle|
     with_order_cycles_inner.
       merge(Exchange.outgoing).

@@ -84,9 +84,9 @@ class Enterprise < ActiveRecord::Base
 
   after_rollback :restore_permalink
 
-  scope :by_name, order('name')
-  scope :visible, where(visible: true)
-  scope :activated, where("sells != 'unspecified'")
+  scope :by_name, -> { order('name') }
+  scope :visible, -> { where(visible: true) }
+  scope :activated, -> { where("sells != 'unspecified'") }
   scope :ready_for_checkout, lambda {
     joins(:shipping_methods).
       joins(:payment_methods).
@@ -103,9 +103,9 @@ class Enterprise < ActiveRecord::Base
       where("TRUE")
     end
   }
-  scope :is_primary_producer, where(is_primary_producer: true)
-  scope :is_distributor, where('sells != ?', 'none')
-  scope :is_hub, where(sells: 'any')
+  scope :is_primary_producer, -> { where(is_primary_producer: true) }
+  scope :is_distributor, -> { where('sells != ?', 'none') }
+  scope :is_hub, -> { where(sells: 'any') }
   scope :supplying_variant_in, lambda { |variants|
     joins(supplied_products: :variants_including_master).
       where('spree_variants.id IN (?)', variants).
@@ -113,21 +113,21 @@ class Enterprise < ActiveRecord::Base
   }
 
   scope :with_order_cycles_as_supplier_outer,
-        joins("LEFT OUTER JOIN exchanges ON (exchanges.sender_id = enterprises.id AND exchanges.incoming = 't')").
-    joins('LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)')
+    -> { joins("LEFT OUTER JOIN exchanges ON (exchanges.sender_id = enterprises.id AND exchanges.incoming = 't')").
+    joins('LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)') }
 
   scope :with_order_cycles_as_distributor_outer,
-        joins("LEFT OUTER JOIN exchanges ON (exchanges.receiver_id = enterprises.id AND exchanges.incoming = 'f')").
-    joins('LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)')
+    -> { joins("LEFT OUTER JOIN exchanges ON (exchanges.receiver_id = enterprises.id AND exchanges.incoming = 'f')").
+    joins('LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)') }
 
   scope :with_order_cycles_outer,
-        joins("LEFT OUTER JOIN exchanges ON (exchanges.receiver_id = enterprises.id OR exchanges.sender_id = enterprises.id)").
-    joins('LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)')
+    -> { joins("LEFT OUTER JOIN exchanges ON (exchanges.receiver_id = enterprises.id OR exchanges.sender_id = enterprises.id)").
+    joins('LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)') }
 
   scope :with_order_cycles_and_exchange_variants_outer,
-        with_order_cycles_as_distributor_outer.
+    -> { with_order_cycles_as_distributor_outer.
     joins('LEFT OUTER JOIN exchange_variants ON (exchange_variants.exchange_id = exchanges.id)').
-    joins('LEFT OUTER JOIN spree_variants ON (spree_variants.id = exchange_variants.variant_id)')
+    joins('LEFT OUTER JOIN spree_variants ON (spree_variants.id = exchange_variants.variant_id)') }
 
   scope :distributors_with_active_order_cycles, lambda {
     with_order_cycles_as_distributor_outer.
