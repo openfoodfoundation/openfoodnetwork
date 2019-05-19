@@ -38,29 +38,70 @@ module OpenFoodNetwork
     end
 
     def owners_and_enterprises
-      query = "SELECT enterprises.name, enterprises.sells, enterprises.visible, enterprises.is_primary_producer, enterprises.created_at AS created_at,
-      'owns' AS relationship_type, owners.email as user_email FROM enterprises
-      LEFT JOIN spree_users AS owners ON owners.id=enterprises.owner_id
-      WHERE enterprises.id IS NOT NULL
-      #{ params[:enterprise_id_in].present? ? "AND enterprises.id IN (#{ params[:enterprise_id_in] })" : "" }
-      #{ params[:user_id_in].present? ? "AND owners.id IN (#{ params[:user_id_in] })" : "" }
-      ORDER BY enterprises.created_at DESC"
+      query = Enterprise.joins("LEFT JOIN spree_users AS owner ON enterprises.owner_id = owner.id")
+        .where("enterprises.id IS NOT NULL")
 
-      ActiveRecord::Base.connection.execute(query).to_a
+      if params[:enterprise_id_in].present?
+        query = query.where("enterprises.id IN (?)", params[:enterprise_id_in].split(',').map(&:to_i))
+      end
+
+      if params[:user_id_in].present?
+        query = query.where("owner.id IN (?)", params[:user_id_in].split(',').map(&:to_i))
+      end
+
+      query.order("enterprises.created_at DESC")
+        .select([
+          "enterprises.name",
+          "enterprises.sells",
+          "enterprises.visible",
+          "enterprises.is_primary_producer",
+          "enterprises.created_at",
+          "owner.email AS user_email"])
+        .to_a
+        .map {|x| {
+          name: x.name,
+          sells: x.sells,
+          visible: (x.visible ? 't' : 'f'),
+          is_primary_producer: (x.is_primary_producer ? 't' : 'f'),
+          created_at: x.created_at.utc.iso8601,
+          relationship_type: 'owns',
+          user_email: x.user_email
+        }.stringify_keys }
     end
 
     def managers_and_enterprises
-      query = "SELECT enterprises.name, enterprises.sells, enterprises.visible, enterprises.is_primary_producer, enterprises.created_at AS created_at,
-      'manages' AS relationship_type, managers.email as user_email FROM enterprises
-      LEFT JOIN enterprise_roles ON enterprises.id=enterprise_roles.enterprise_id
-      LEFT JOIN spree_users AS managers ON enterprise_roles.user_id=managers.id
-      WHERE enterprise_id IS NOT NULL
-      #{ params[:enterprise_id_in].present? ? "AND enterprise_id IN (#{ params[:enterprise_id_in] })" : "" }
-      AND user_id IS NOT NULL
-      #{ params[:user_id_in].present? ? "AND user_id IN (#{ params[:user_id_in] })" : "" }
-      ORDER BY enterprises.created_at DESC"
+      query = Enterprise.joins("LEFT JOIN enterprise_roles ON enterprises.id = enterprise_roles.enterprise_id")
+        .joins("LEFT JOIN spree_users AS managers ON enterprise_roles.user_id = managers.id")
+        .where("enterprise_id IS NOT NULL")
 
-      ActiveRecord::Base.connection.execute(query).to_a
+      if params[:enterprise_id_in].present?
+        query = query.where("enterprise_id IN (?)", params[:enterprise_id_in].split(',').map(&:to_i))
+      end
+
+      query.where("user_id IS NOT NULL")
+
+      if params[:user_id_in].present?
+        query = query.where("user_id IN (?)", params[:user_id_in].split(',').map(&:to_i))
+      end
+
+      query.order("enterprises.created_at DESC")
+        .select([
+          "enterprises.name",
+          "enterprises.sells",
+          "enterprises.visible",
+          "enterprises.is_primary_producer",
+          "enterprises.created_at",
+          "managers.email AS user_email"])
+        .to_a
+        .map {|x| {
+          name: x.name,
+          sells: x.sells,
+          visible: (x.visible ? 't' : 'f'),
+          is_primary_producer: (x.is_primary_producer ? 't' : 'f'),
+          created_at: x.created_at.utc.iso8601,
+          relationship_type: 'manages',
+          user_email: x.user_email
+        }.stringify_keys }
     end
 
     def users_and_enterprises
