@@ -1,4 +1,3 @@
-# rubocop:disable Metrics/ClassLength
 module OpenFoodNetwork
   class UsersAndEnterprisesReport
     attr_reader :params
@@ -43,7 +42,8 @@ module OpenFoodNetwork
         .where("enterprises.id IS NOT NULL")
 
       if params[:enterprise_id_in].present?
-        query = query.where("enterprises.id IN (?)", params[:enterprise_id_in].split(',').map(&:to_i))
+        query = query.where("enterprises.id IN (?)",
+                            params[:enterprise_id_in].split(',').map(&:to_i))
       end
 
       if params[:user_id_in].present?
@@ -71,12 +71,14 @@ module OpenFoodNetwork
     end
 
     def managers_and_enterprises
-      query = Enterprise.joins("LEFT JOIN enterprise_roles ON enterprises.id = enterprise_roles.enterprise_id")
+      query = Enterprise
+        .joins("LEFT JOIN enterprise_roles ON enterprises.id = enterprise_roles.enterprise_id")
         .joins("LEFT JOIN spree_users AS managers ON enterprise_roles.user_id = managers.id")
         .where("enterprise_id IS NOT NULL")
 
       if params[:enterprise_id_in].present?
-        query = query.where("enterprise_id IN (?)", params[:enterprise_id_in].split(',').map(&:to_i))
+        query = query.where("enterprise_id IN (?)",
+                            params[:enterprise_id_in].split(',').map(&:to_i))
       end
 
       query.where("user_id IS NOT NULL")
@@ -131,4 +133,3 @@ module OpenFoodNetwork
     end
   end
 end
-# rubocop:enable Metrics/ClassLength
