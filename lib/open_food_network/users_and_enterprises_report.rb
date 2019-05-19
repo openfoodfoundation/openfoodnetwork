@@ -75,13 +75,12 @@ module OpenFoodNetwork
         .joins("LEFT JOIN enterprise_roles ON enterprises.id = enterprise_roles.enterprise_id")
         .joins("LEFT JOIN spree_users AS managers ON enterprise_roles.user_id = managers.id")
         .where("enterprise_id IS NOT NULL")
+        .where("user_id IS NOT NULL")
 
       if params[:enterprise_id_in].present?
         query = query.where("enterprise_id IN (?)",
                             params[:enterprise_id_in].split(',').map(&:to_i))
       end
-
-      query.where("user_id IS NOT NULL")
 
       if params[:user_id_in].present?
         query = query.where("user_id IN (?)", params[:user_id_in].split(',').map(&:to_i))
