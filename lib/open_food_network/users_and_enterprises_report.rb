@@ -50,24 +50,7 @@ module OpenFoodNetwork
         query = query.where("owner.id IN (?)", params[:user_id_in].split(',').map(&:to_i))
       end
 
-      query.order("enterprises.created_at DESC")
-        .select(["enterprises.name",
-                 "enterprises.sells",
-                 "enterprises.visible",
-                 "enterprises.is_primary_producer",
-                 "enterprises.created_at",
-                 "owner.email AS user_email"])
-        .to_a
-        .map { |x|
-        {
-          name: x.name,
-          sells: x.sells,
-          visible: (x.visible ? 't' : 'f'),
-          is_primary_producer: (x.is_primary_producer ? 't' : 'f'),
-          created_at: x.created_at.utc.iso8601,
-          relationship_type: 'owns',
-          user_email: x.user_email
-        }.stringify_keys }
+      query_helper(query, :owner, :owns)
     end
 
     def managers_and_enterprises
@@ -86,13 +69,17 @@ module OpenFoodNetwork
         query = query.where("user_id IN (?)", params[:user_id_in].split(',').map(&:to_i))
       end
 
+      query_helper(query, :managers, :manages)
+    end
+
+    def query_helper(query, email_user, relationship_type)
       query.order("enterprises.created_at DESC")
         .select(["enterprises.name",
                  "enterprises.sells",
                  "enterprises.visible",
                  "enterprises.is_primary_producer",
                  "enterprises.created_at",
-                 "managers.email AS user_email"])
+                 "#{email_user}.email AS user_email"])
         .to_a
         .map { |x|
         {
@@ -101,7 +88,7 @@ module OpenFoodNetwork
           visible: (x.visible ? 't' : 'f'),
           is_primary_producer: (x.is_primary_producer ? 't' : 'f'),
           created_at: x.created_at.utc.iso8601,
-          relationship_type: 'manages',
+          relationship_type: relationship_type,
           user_email: x.user_email
         }.stringify_keys }
     end
