@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 module OpenFoodNetwork
   class UsersAndEnterprisesReport
     attr_reader :params
@@ -50,15 +51,15 @@ module OpenFoodNetwork
       end
 
       query.order("enterprises.created_at DESC")
-        .select([
-          "enterprises.name",
-          "enterprises.sells",
-          "enterprises.visible",
-          "enterprises.is_primary_producer",
-          "enterprises.created_at",
-          "owner.email AS user_email"])
+        .select(["enterprises.name",
+                 "enterprises.sells",
+                 "enterprises.visible",
+                 "enterprises.is_primary_producer",
+                 "enterprises.created_at",
+                 "owner.email AS user_email"])
         .to_a
-        .map {|x| {
+        .map { |x|
+        {
           name: x.name,
           sells: x.sells,
           visible: (x.visible ? 't' : 'f'),
@@ -85,15 +86,15 @@ module OpenFoodNetwork
       end
 
       query.order("enterprises.created_at DESC")
-        .select([
-          "enterprises.name",
-          "enterprises.sells",
-          "enterprises.visible",
-          "enterprises.is_primary_producer",
-          "enterprises.created_at",
-          "managers.email AS user_email"])
+        .select(["enterprises.name",
+                 "enterprises.sells",
+                 "enterprises.visible",
+                 "enterprises.is_primary_producer",
+                 "enterprises.created_at",
+                 "managers.email AS user_email"])
         .to_a
-        .map {|x| {
+        .map { |x|
+        {
           name: x.name,
           sells: x.sells,
           visible: (x.visible ? 't' : 'f'),
@@ -130,3 +131,4 @@ module OpenFoodNetwork
     end
   end
 end
+# rubocop:enable Metrics/ClassLength
