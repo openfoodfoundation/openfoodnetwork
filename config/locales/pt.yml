@@ -339,11 +339,7 @@ pt:
         config_instructions_html: "Aqui pode configurar a integração com Matomo. O URL Matomo em baixo deve apontar para o serviror para onde a informação de tracking de utilizadores será enviada; se deixado vazio, o tracking de utilizadores através do Matomo ficará desactivado. O campo Site ID não é obrigatório mas útil se estive a fazer tracking de mais do que um website numa instância única do Matomo; pode ser encontrado na consola da instância Matomo."
     customers:
       index:
-        add_customer: "Adicionar Consumidor/a"
         new_customer: "Novo/a Consumidor/a"
-        customer_placeholder: "consumidora@exemplo.org"
-        valid_email_error: Por favor usar um endereço de email válido
-        add_a_new_customer_for: Adicionar novo/a consumidor/a a %{shop_name}
         code: Código
         duplicate_code: "Este código já está a ser usado."
         bill_address: "Morada de Faturação"
@@ -667,25 +663,27 @@ pt:
           enable_subscriptions_tip: "Activar a funcionalidade das subscrições?"
           enable_subscriptions_false: "Desactivado"
           enable_subscriptions_true: "Activo"
-          shopfront_message: Mensagem da Loja
+          shopfront_message: "Mensagem da Loja"
           shopfront_message_placeholder: >
               Uma explicação breve e opcional para os consumidores a explicar como
               funciona a sua loja, a ser exibida acima da lista de produtos na sua
               loja.
-          shopfront_closed_message: Mensagem de Loja Fechada
+          shopfront_message_link_tooltip: "Inserir / editar link"
+          shopfront_message_link_prompt: "Por favor insira um URL"
+          shopfront_closed_message: "Mensagem de Loja Fechada"
           shopfront_closed_message_placeholder: >
               Uma mensagem que forneça uma explicação mais detalhada sobre o motivo
               da sua loja estar fechada e quando é que os consumidores podem esperar
               que abra novamente. A ser exibida quando não houver nenhum ciclo de
               encomendas activo.
-          shopfront_category_ordering: Ordem das Categorias da Loja
-          open_date: Dia de Abertura
-          close_date: Data de fecho
+          shopfront_category_ordering: "Ordem das Categorias da Loja"
+          open_date: "Dia de Abertura"
+          close_date: "Data de fecho"
         social:
-          twitter_placeholder: 'ex:  @o_prof'
-          instagram_placeholder: ex. o_agricultor
-          facebook_placeholder: ex. www.facebook.com/asuapagina
-          linkedin_placeholder: ex. www.linkedin.com/in/OSeuNomeAqui
+          twitter_placeholder: "ex:  @o_prof"
+          instagram_placeholder: "ex. o_agricultor"
+          facebook_placeholder: "ex. www.facebook.com/asuapagina"
+          linkedin_placeholder: "ex. www.linkedin.com/in/OSeuNomeAqui"
         stripe_connect:
           connect_with_stripe: "Conectar com o Stripe"
           stripe_connect_intro: "Para aceitar pagamentos com cartão de crédito, vai ser necessário ligar a sua conta Stripe à Open Food Network. Use o botão à direita para começar."
@@ -801,6 +799,9 @@ pt:
         user_already_exists: "O/A utilizador/a já existe"
         error: "Algo correu mal"
     order_cycles:
+      loading_flash:
+        loading_order_cycles: A carregar ciclos de encomenda
+        loading: A carregar...
       edit:
         advanced_settings: Configurações Avançadas
         update_and_close: Atualizar e fechar
@@ -840,22 +841,10 @@ pt:
         tags: Etiquetas
         add_a_tag: Acrescentar uma etiqueta
         delivery_details: Detalhes de entrega/levantamento
-        debug_info: Informação de depuração
       index:
         schedule: Horário
         schedules: Horários
-        adding_a_new_schedule: Adicionar um novo Horário
-        updating_a_schedule: Actualizar um Horário
         new_schedule: Novo Horário
-        create_schedule: Criar Horário
-        update_schedule: Actualizar Horário
-        delete_schedule: Apagar Horário
-        created_schedule: Horário criado
-        updated_schedule: Horário actualizado
-        deleted_schedule: Horário apagado
-        schedule_name_placeholder: Nome do Horário
-        name_required_error: Por favor atribua um nome a este horário
-        no_order_cycles_error: Por favor selecione pelo menos um ciclo de encomendas (arrastar e largar)
       name_and_timing_form:
         name: Nome
         orders_open: Encomendas abrem às
@@ -960,6 +949,7 @@ pt:
       subscriptions: Subscrições
       new: Nova Subscrição
       create: Criar Subscrição
+      edit: Editar Subscrição
       index:
         please_select_a_shop: Por favor selecione uma loja
         edit_subscription: Editar Subscrição
@@ -1128,7 +1118,7 @@ pt:
   menu_4_title: "Grupos"
   menu_4_url: "/groups"
   menu_5_title: "Sobre"
-  menu_5_url: "http://www.openfoodnetwork.org/"
+  menu_5_url: "https://openfoodnetwork.org/"
   menu_6_title: "Conectar"
   menu_6_url: "https://openfoodnetwork.org"
   menu_7_title: "Aprender"
@@ -1562,7 +1552,7 @@ pt:
   sell_hubs_detail: "Crie um perfil para a sua organização na OFN. A qualquer momento poderá actualizar o seu perfil para passar a incluir vários outros produtores. "
   sell_groups_detail: "Configure uma lista personalizada de organizações (produtores, cooperativas, lojas, etc.) para a sua região ou organização. "
   sell_user_guide: "Saiba mais através do nosso manual de utilizador. "
-  sell_listing_price: "Criar um perfil na OFN não custa nada. Abrir e gerir um ponto de vendas na OFN também não. Organizar um grupo de consumo na OFN é gratuito."
+  sell_listing_price: "O registo na OFN é gratuito. Criar e gerir uma loja na plataforma é gratuito. A criação de um diretório de grupos é gratuito."
   sell_embed: "Também podemos embutir um mercado da OFN no seu próprio site, ou construir um site específico para a sua região. "
   sell_ask_services: "Pergunte-nos sobre os nossos serviços."
   shops_title: Lojas
@@ -2410,6 +2400,27 @@ pt:
         sending: "Reenviar..."
         done: "Reenvio feito ✓"
         failed: "Reenvio falhou ✗"
+      order_cycles:
+        schedules:
+          adding_a_new_schedule: "Adicionar um novo Horário"
+          updating_a_schedule: "Actualizar um Horário"
+          create_schedule: "Criar Horário"
+          update_schedule: "Actualizar Horário"
+          delete_schedule: "Apagar Horário"
+          schedule_name_placeholder: "Nome do Horário"
+          created_schedule: "Horário criado"
+          updated_schedule: "Horário actualizado"
+          deleted_schedule: "Horário apagado"
+          name_required_error: "Por favor atribua um nome a este horário"
+          no_order_cycles_error: "Por favor selecione pelo menos um ciclo de encomendas (arrastar e largar)"
+          available: "Disponível"
+          selected: "Selecionado"
+      customers:
+        index:
+          add_customer: "Adicionar Consumidor/a"
+          add_a_new_customer_for: "Adicionar novo/a consumidor/a a %{shop_name}"
+          customer_placeholder: "consumidora@exemplo.org"
+          valid_email_error: "Por favor usar um endereço de email válido"
     insufficient_stock: "Stock disponível insuficiente, apenas %{on_hand} disponíveis"
     out_of_stock:
       reduced_stock_available: Stock reduzido disponível
