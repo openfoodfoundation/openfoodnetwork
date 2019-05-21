@@ -42,14 +42,8 @@ module OpenFoodNetwork
       query = Enterprise.joins("LEFT JOIN spree_users AS owner ON enterprises.owner_id = owner.id")
         .where("enterprises.id IS NOT NULL")
 
-      if params[:enterprise_id_in].present?
-        query = query.where("enterprises.id IN (?)",
-                            params[:enterprise_id_in].split(',').map(&:to_i))
-      end
-
-      if params[:user_id_in].present?
-        query = query.where("owner.id IN (?)", params[:user_id_in].split(',').map(&:to_i))
-      end
+      query = filter_by_int_list_if_present(query, "enterprises.id", params[:enterprise_id_in])
+      query = filter_by_int_list_if_present(query, "owner.id", params[:user_id_in])
 
       query_helper(query, :owner, :owns)
     end
@@ -61,14 +55,8 @@ module OpenFoodNetwork
         .where("enterprise_id IS NOT NULL")
         .where("user_id IS NOT NULL")
 
-      if params[:enterprise_id_in].present?
-        query = query.where("enterprise_id IN (?)",
-                            params[:enterprise_id_in].split(',').map(&:to_i))
-      end
-
-      if params[:user_id_in].present?
-        query = query.where("user_id IN (?)", params[:user_id_in].split(',').map(&:to_i))
-      end
+      query = filter_by_int_list_if_present(query, "enterprise_id", params[:enterprise_id_in])
+      query = filter_by_int_list_if_present(query, "user_id", params[:user_id_in])
 
       query_helper(query, :managers, :manages)
     end
@@ -96,6 +84,17 @@ module OpenFoodNetwork
 
     def users_and_enterprises
       sort( owners_and_enterprises.concat managers_and_enterprises )
+    end
+
+    def filter_by_int_list_if_present(query, filtered_field_name, int_list)
+      if int_list.present?
+        query = query.where("#{filtered_field_name} IN (?)", split_int_list(int_list))
+      end
+      query
+    end
+
+    def split_int_list(int_list)
+      int_list.split(',').map(&:to_i)
     end
 
     def sort(results)
