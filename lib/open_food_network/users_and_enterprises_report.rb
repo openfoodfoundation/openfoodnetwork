@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 module OpenFoodNetwork
   class UsersAndEnterprisesReport
     attr_reader :params
@@ -119,3 +120,4 @@ module OpenFoodNetwork
     end
   end
 end
+# rubocop:enable Metrics/ClassLength

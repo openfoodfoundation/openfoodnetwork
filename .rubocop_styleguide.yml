@@ -196,7 +196,6 @@ Metrics/ClassLength:
   Max: 100
   Exclude:
   - engines/order_management/app/services/order_management/reports/enterprise_fee_summary/scope.rb
-  - lib/open_food_network/users_and_enterprises_report.rb
 
 Metrics/ModuleLength:
   Max: 100
