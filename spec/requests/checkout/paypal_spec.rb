@@ -32,7 +32,7 @@ describe "checking out an order with a paypal express payment method", type: :re
     set_order order
 
     stub_request(:post, "https://api-3t.sandbox.paypal.com/2.0/")
-      .to_return(:status => 200, :body => mocked_xml_response )
+      .to_return(status: 200, body: mocked_xml_response )
   end
 
   context "with a flat percent calculator" do
@@ -54,7 +54,7 @@ describe "checking out an order with a paypal express payment method", type: :re
       get spree.confirm_paypal_path, params
 
       # Processing was successful, order is complete
-      expect(response).to redirect_to spree.order_path(order, :token => order.token)
+      expect(response).to redirect_to spree.order_path(order, token: order.token)
       expect(order.reload.complete?).to be true
 
       # We have only one payment, and one transaction fee

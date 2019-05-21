@@ -14,5 +14,5 @@ node :promo_image do |group|
 end
 
 node :state do |group|
-  group.state().andand.abbr
+  group.state.andand.abbr
 end

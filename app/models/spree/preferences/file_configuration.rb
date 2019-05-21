@@ -1,6 +1,5 @@
 module Spree::Preferences
   class FileConfiguration < Configuration
-
     def self.preference(name, type, *args)
       if type == :file
         super "#{name}_file_name",    :string,  *args
@@ -22,7 +21,6 @@ module Spree::Preferences
     end
     alias :[] :get_preference
 
-
     def preference_type(name)
       if has_attachment? name
         :file
@@ -34,14 +32,14 @@ module Spree::Preferences
     # Spree's Configuration responds to preference methods via method_missing, but doesn't
     # override respond_to?, which consequently reports those methods as unavailable. Paperclip
     # errors if respond_to? isn't correct, so we override it here.
-    def respond_to?(method, include_all=false)
-      name = method.to_s.gsub('=', '')
+    def respond_to?(method, include_all = false)
+      name = method.to_s.delete('=')
       super(self.class.preference_getter_method(name), include_all) || super(method, include_all)
     end
 
     def has_attachment?(name)
       self.class.respond_to?(:attachment_definitions) &&
-        self.class.attachment_definitions.keys.include?(name.to_sym)
+        self.class.attachment_definitions.key?(name.to_sym)
     end
   end
 end

@@ -698,7 +698,7 @@ describe ProductImport::ProductImporter do
         csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", tax_category.id, "", shipping_category.name]
         csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1", "kg", "", "", shipping_category.name]
       end
-      settings = {enterprise.id.to_s => {
+      settings = { enterprise.id.to_s => {
         'import_into' => 'product_list',
         'defaults' => {
           'on_hand' => {
@@ -722,7 +722,7 @@ describe ProductImport::ProductImporter do
             'value' => '2020-01-01'
           }
         }
-      }}
+      } }
 
       @importer = import_data csv_data, settings: settings
 
@@ -756,7 +756,7 @@ end
 
 private
 
-def import_data(csv_data, args={})
+def import_data(csv_data, args = {})
   import_user = args[:import_user] || admin
   import_into = args[:import_into] || 'product_list'
   start_row = args[:start] || 1

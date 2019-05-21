@@ -1,19 +1,18 @@
 require "spec_helper"
 
-feature %q{
+feature '
     As an admin
     I want to set a supplier and distributor(s) for a product
-} do
+' do
   include AuthenticationWorkflow
   include WebHelper
-
 
   let!(:taxon) { create(:taxon) }
   let!(:stock_location) { create(:stock_location, backorderable_default: false) }
   let!(:shipping_category) { create(:shipping_category, name: 'Test Shipping Category') }
 
   background do
-    @supplier = create(:supplier_enterprise, :name => 'New supplier')
+    @supplier = create(:supplier_enterprise, name: 'New supplier')
     @distributors = (1..3).map { create(:distributor_enterprise) }
     @enterprise_fees = (0..2).map { |i| create(:enterprise_fee, enterprise: @distributors[i]) }
   end
@@ -98,7 +97,7 @@ feature %q{
       @new_user.enterprise_roles.build(enterprise: @supplier2).save
       @new_user.enterprise_roles.build(enterprise: @distributors[0]).save
       create(:enterprise_relationship, parent: @supplier_permitted, child: @supplier2,
-             permissions_list: [:manage_products])
+                                       permissions_list: [:manage_products])
 
       quick_login_as @new_user
     end
@@ -109,11 +108,11 @@ feature %q{
           visit spree.admin_products_path
           click_link 'New Product'
 
-          fill_in 'product_name', :with => 'A new product !!!'
-          fill_in 'product_price', :with => '19.99'
+          fill_in 'product_name', with: 'A new product !!!'
+          fill_in 'product_price', with: '19.99'
 
           page.should have_selector('#product_supplier_id')
-          select 'Another Supplier', :from => 'product_supplier_id'
+          select 'Another Supplier', from: 'product_supplier_id'
           select 'Weight (g)', from: 'product_variant_unit_with_scale'
           fill_in 'product_unit_value_with_description', with: '500'
           select taxon.name, from: "product_primary_taxon_id"
@@ -154,7 +153,7 @@ feature %q{
       visit spree.edit_admin_product_path product
       within('#sidebar') { click_link 'Group Buy Options' }
       choose('product_group_buy_1')
-      fill_in 'Bulk unit size', :with => '10'
+      fill_in 'Bulk unit size', with: '10'
 
       click_button 'Update'
 
@@ -168,8 +167,8 @@ feature %q{
       product = product = create(:simple_product, supplier: @supplier2)
       visit spree.edit_admin_product_path product
       within('#sidebar') { click_link 'Search' }
-      fill_in 'Product Search Keywords', :with => 'Product Search Keywords'
-      fill_in 'Notes', :with => 'Just testing Notes'
+      fill_in 'Product Search Keywords', with: 'Product Search Keywords'
+      fill_in 'Notes', with: 'Just testing Notes'
       click_button 'Update'
       expect(flash_message).to eq("Product \"#{product.name}\" has been successfully updated!")
       product.reload
@@ -199,11 +198,10 @@ feature %q{
       expect(p.reload.property('fooprop')).to be_nil
     end
 
-
     scenario "deleting product images", js: true do
       product = create(:simple_product, supplier: @supplier2)
-      image = File.open(File.expand_path('../../../../app/assets/images/logo-white.png', __FILE__))
-      Spree::Image.create({:viewable_id => product.master.id, :viewable_type => 'Spree::Variant', :alt => "position 1", :attachment => image, :position => 1})
+      image = File.open(File.expand_path('../../../app/assets/images/logo-white.png', __dir__))
+      Spree::Image.create(viewable_id: product.master.id, viewable_type: 'Spree::Variant', alt: "position 1", attachment: image, position: 1)
 
       visit spree.admin_product_images_path(product)
       page.should have_selector "table[data-hook='images_table'] td img"

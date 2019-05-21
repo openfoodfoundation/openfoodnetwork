@@ -2,16 +2,15 @@ require 'spec_helper'
 
 module OpenFoodNetwork
   describe OrderGrouper do
-
     before(:each) do
-        @items = [1, 2, 3, 4]
+      @items = [1, 2, 3, 4]
     end
 
     context "constructing the table" do
       it "should build a tree then build a table" do
-        rules = [ { group_by: Proc.new { |sentence| sentence.paragraph.chapter }, sort_by: Proc.new { |chapter| chapter.name }, summary_columns: [Proc.new { |is| is.first.paragraph.chapter.name }, Proc.new { |is| "TOTAL" }, Proc.new { |is| "" }, Proc.new { |is| is.sum {|i| i.property1 } } ] }, 
-        { group_by: Proc.new { |sentence| sentence.paragraph }, sort_by: Proc.new { |paragraph| paragraph.name } } ]
-        columns = [Proc.new { |is| is.first.paragraph.chapter.name }, Proc.new { |is| is.first.paragraph.name }, Proc.new { |is| is.first.name }, Proc.new { |is| is.sum {|i| i.property1 } }]
+        rules = [{ group_by: proc { |sentence| sentence.paragraph.chapter }, sort_by: proc { |chapter| chapter.name }, summary_columns: [proc { |is| is.first.paragraph.chapter.name }, proc { |_is| "TOTAL" }, proc { |_is| "" }, proc { |is| is.sum(&:property1) }] },
+                 { group_by: proc { |sentence| sentence.paragraph }, sort_by: proc { |paragraph| paragraph.name } }]
+        columns = [proc { |is| is.first.paragraph.chapter.name }, proc { |is| is.first.paragraph.name }, proc { |is| is.first.name }, proc { |is| is.sum(&:property1) }]
 
         subject = OrderGrouper.new rules, columns
 
@@ -21,7 +20,6 @@ module OpenFoodNetwork
 
         subject.table(@items)
       end
-      
     end
 
     context "grouping items without rules" do
@@ -31,14 +29,13 @@ module OpenFoodNetwork
         column2 = double(:col2)
         columns = [column1, column2]
         subject = OrderGrouper.new rules, columns
-        
+
         expect(rules).to receive(:clone).and_return(rules)
         expect(subject.build_tree(@items, rules)).to eq(@items)
       end
     end
 
     context "grouping items with rules" do
-      
       before(:each) do
         @rule1 = double(:rule1)
         rule2 = double(:rule2)
@@ -48,7 +45,7 @@ module OpenFoodNetwork
         column2 = double(:col2)
         @columns = [column1, column2]
       end
-      
+
       it "builds branches by removing a rule from 'rules' and running group_and_sort" do
         subject = OrderGrouper.new @rules, @columns
 
@@ -79,7 +76,7 @@ module OpenFoodNetwork
         groups = double(:groups)
         expect(@items).to receive(:group_by).and_return(groups)
         sorted_groups = {}
-        1.upto(number_of_categories) { |i| sorted_groups[i] = double(:group, name: "Group "+ i.to_s ) }
+        1.upto(number_of_categories) { |i| sorted_groups[i] = double(:group, name: "Group " + i.to_s ) }
         expect(groups).to receive(:sort_by).and_return(sorted_groups)
         group = { group1: 1, group2: 2, group3: 3 }
         expect(subject).to receive(:build_tree).exactly(number_of_categories).times.and_return(group)
@@ -96,12 +93,12 @@ module OpenFoodNetwork
         rule1 = double(:rule1)
         rule2 = double(:rule2)
         @rules = [rule1, rule2]
-        @column1 = double(:col1, :call => "Column1")
-        @column2 = double(:col2, :call => "Column2")
+        @column1 = double(:col1, call: "Column1")
+        @column2 = double(:col2, call: "Column2")
         @columns = [@column1, @column2]
 
-        sumcol1 = double(:sumcol1, :call => "SumColumn1")
-        sumcol2 = double(:sumcol2, :call => "SumColumn2")
+        sumcol1 = double(:sumcol1, call: "SumColumn1")
+        sumcol2 = double(:sumcol2, call: "SumColumn2")
         @sumcols = [sumcol1, sumcol2]
 
         item1 = double(:item1)
@@ -119,13 +116,13 @@ module OpenFoodNetwork
 
         expect(subject.build_table(@items1)).to eq([["Column1", "Column2"]])
       end
-      
+
       it "should return a row for each key-value pair when given a Hash" do
         groups = { items1: @items1, items2: @items2, items3: @items3 }
 
         subject = OrderGrouper.new @rules, @columns
 
-        #subject.should_receive(:build_table).exactly(2).times
+        # subject.should_receive(:build_table).exactly(2).times
 
         expected_return = []
         groups.length.times { expected_return << ["Column1", "Column2"] }
@@ -138,12 +135,12 @@ module OpenFoodNetwork
         subject = OrderGrouper.new @rules, @columns
 
         expected_return = []
-        groups.each do |key, group| 
-          if key == :summary_row 
-            expected_return << ["SumColumn1", "SumColumn2"]
-          else
-            expected_return << ["Column1", "Column2"]
-          end
+        groups.each do |key, _group|
+          expected_return << if key == :summary_row
+                               ["SumColumn1", "SumColumn2"]
+                             else
+                               ["Column1", "Column2"]
+                             end
         end
         expect(subject.build_table(groups)).to eq(expected_return)
       end

@@ -1,9 +1,9 @@
 require "spec_helper"
 
-feature %q{
+feature '
     As an administrator
     I want to manage adjustments on orders
-}, js: true do
+', js: true do
   include AuthenticationWorkflow
   include WebHelper
 

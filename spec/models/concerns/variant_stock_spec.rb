@@ -64,7 +64,7 @@ describe VariantStock do
           expect { variant.on_hand = 3 }
             .to raise_error(StandardError)
         end
-      end      
+      end
     end
 
     context 'when track_inventory_levels is not set' do
@@ -146,7 +146,7 @@ describe VariantStock do
         expect(variant.can_supply?(0)).to eq(true)
       end
       it "returns true for large quantity" do
-        expect(variant.can_supply?(100000)).to eq(true)
+        expect(variant.can_supply?(100_000)).to eq(true)
       end
     end
 
@@ -161,7 +161,7 @@ describe VariantStock do
 
         it "returns false for number above stock level" do
           expect(variant.can_supply?(variant.total_on_hand + 1)).to eq(false)
-        end        
+        end
       end
 
       context 'when variant out of stock' do

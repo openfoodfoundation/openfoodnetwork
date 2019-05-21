@@ -6,7 +6,7 @@ require 'open_food_network/products_renderer'
 
 module OpenFoodNetwork
   class CachedProductsRenderer
-    class NoProducts < Exception; end
+    class NoProducts < RuntimeError; end
 
     def initialize(distributor, order_cycle)
       @distributor = distributor
@@ -14,15 +14,14 @@ module OpenFoodNetwork
     end
 
     def products_json
-      raise NoProducts.new(I18n.t(:no_products)) if @distributor.nil? || @order_cycle.nil?
+      raise NoProducts, I18n.t(:no_products) if @distributor.nil? || @order_cycle.nil?
 
       products_json = cached_products_json
 
-      raise NoProducts.new(I18n.t(:no_products)) if products_json.nil?
+      raise NoProducts, I18n.t(:no_products) if products_json.nil?
 
       products_json
     end
-
 
     private
 

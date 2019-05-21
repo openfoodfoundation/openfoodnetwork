@@ -34,7 +34,7 @@ module Admin
           tag_rule_mapping = TagRule.mapping_for(Enterprise.where(id: @customer.enterprise))
           render_as_json @customer, tag_rule_mapping: tag_rule_mapping
         else
-          render json: { errors: @customer.errors.full_messages }, status: 400
+          render json: { errors: @customer.errors.full_messages }, status: :bad_request
         end
       else
         redirect_to '/unauthorized'

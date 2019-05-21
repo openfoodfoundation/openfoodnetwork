@@ -1,7 +1,7 @@
 module Admin
   class ResourceController < Spree::Admin::ResourceController
     def model_class
-      "#{controller_name.classify}".constantize
+      controller_name.classify.to_s.constantize
     end
 
     # URL helpers
@@ -22,7 +22,7 @@ module Admin
     end
 
     def object_url(object = nil, options = {})
-      target = object ? object : @object
+      target = object || @object
       if parent_data.present?
         main_app.public_send "admin_#{model_name}_#{object_name}_url", parent, target, options
       else

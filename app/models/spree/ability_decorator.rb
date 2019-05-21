@@ -32,14 +32,14 @@ class AbilityDecorator
   # Users can manage products if they have an enterprise that is not a profile.
   def can_manage_products?(user)
     can_manage_enterprises?(user) &&
-    user.enterprises.any? { |e| e.category != :hub_profile && e.producer_profile_only != true }
+      user.enterprises.any? { |e| e.category != :hub_profile && e.producer_profile_only != true }
   end
 
   # Users can manage order cycles if they manage a sells own/any enterprise
   # OR if they manage a producer which is included in any order cycles
   def can_manage_order_cycles?(user)
     can_manage_orders?(user) ||
-    OrderCycle.accessible_by(user).any?
+      OrderCycle.accessible_by(user).any?
   end
 
   # Users can manage orders if they have a sells own/any enterprise.
@@ -54,7 +54,7 @@ class AbilityDecorator
   def add_shopping_abilities(user)
     can [:destroy], Spree::LineItem do |item|
       user == item.order.user &&
-      item.order.changes_allowed?
+        item.order.changes_allowed?
     end
 
     can [:cancel], Spree::Order do |order|
@@ -71,7 +71,7 @@ class AbilityDecorator
   end
 
   # New users can create an enterprise, and gain other permissions from doing this.
-  def add_base_abilities(user)
+  def add_base_abilities(_user)
     can [:create], Enterprise
   end
 

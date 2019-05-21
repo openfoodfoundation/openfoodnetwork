@@ -239,7 +239,6 @@ feature "Product Import", js: true do
       expect(big_bag.product.id).to eq small_bag.product.id
     end
 
-
     it "can import items into inventory" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "distributor", "producer", "category", "on_hand", "price", "units"]
@@ -437,7 +436,7 @@ feature "Product Import", js: true do
         proceed_to_validation
 
         # Check that all rows are validated.
-        heading = "120 #{I18n.t("admin.product_import.import.products_to_create")}"
+        heading = "120 #{I18n.t('admin.product_import.import.products_to_create')}"
         find(".panel-header", text: heading).click
         expect(page).to have_content "Imported Product 10"
         expect(page).to have_content "Imported Product 60"

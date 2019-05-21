@@ -40,7 +40,7 @@ class Api::Admin::EnterpriseSerializer < ActiveModel::Serializer
     tag_groups.each do |tag_group|
       return tag_group if tag_group[:tags].length == tags.length && (tag_group[:tags] & tags) == tag_group[:tags]
     end
-    return { tags: tags, rules: [] }
+    { tags: tags, rules: [] }
   end
 
   private

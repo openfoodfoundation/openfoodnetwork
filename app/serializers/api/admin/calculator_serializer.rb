@@ -1,11 +1,7 @@
 class Api::Admin::CalculatorSerializer < ActiveModel::Serializer
   attributes :name, :description
 
-  def name
-    object.name
-  end
+  delegate :name, to: :object
 
-  def description
-    object.description
-  end
+  delegate :description, to: :object
 end

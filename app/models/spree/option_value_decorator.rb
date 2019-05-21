@@ -3,7 +3,6 @@ module Spree
     after_save :refresh_products_cache
     around_destroy :refresh_products_cache_from_destroy
 
-
     private
 
     def refresh_products_cache
@@ -15,6 +14,5 @@ module Spree
       yield
       vs.each(&:refresh_products_cache)
     end
-
   end
 end

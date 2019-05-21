@@ -46,12 +46,11 @@ feature 'shipping methods' do
 
     it "at checkout, user can only see shipping methods for their current distributor (checkout spec)"
 
-
     scenario "deleting a shipping method" do
       visit_delete spree.admin_shipping_method_path(@sm)
 
       expect(page).to have_content "Shipping method \"#{@sm.name}\" has been successfully removed!"
-      expect(Spree::ShippingMethod.where(:id => @sm.id)).to be_empty
+      expect(Spree::ShippingMethod.where(id: @sm.id)).to be_empty
     end
 
     scenario "deleting a shipping method referenced by an order" do
@@ -98,7 +97,7 @@ feature 'shipping methods' do
       expect(page).to have_css 'div#shipping_method_zones_field'
       expect(page).to have_field 'shipping_method_require_ship_address_true', checked: true
 
-      fill_in 'shipping_method_name', :with => 'Teleport'
+      fill_in 'shipping_method_name', with: 'Teleport'
 
       check "shipping_method_distributor_ids_#{distributor1.id}"
       check "shipping_method_shipping_categories_"

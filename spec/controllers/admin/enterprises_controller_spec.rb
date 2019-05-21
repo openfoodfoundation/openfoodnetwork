@@ -20,7 +20,7 @@ module Admin
     describe "creating an enterprise" do
       let(:country) { Spree::Country.find_by_name 'Australia' }
       let(:state) { Spree::State.find_by_name 'Victoria' }
-      let(:enterprise_params) { {enterprise: {name: 'zzz', permalink: 'zzz', is_primary_producer: '0', address_attributes: {address1: 'a', city: 'a', zipcode: 'a', country_id: country.id, state_id: state.id}}} }
+      let(:enterprise_params) { { enterprise: { name: 'zzz', permalink: 'zzz', is_primary_producer: '0', address_attributes: { address1: 'a', city: 'a', zipcode: 'a', country_id: country.id, state_id: state.id } } } }
 
       it "grants management permission if the current user is an enterprise user" do
         allow(controller).to receive_messages spree_current_user: distributor_manager
@@ -127,7 +127,7 @@ module Admin
 
         it "does not allow managers to be changed" do
           allow(controller).to receive_messages spree_current_user: distributor_manager
-          update_params = { id: distributor, enterprise: { user_ids: [distributor_owner.id,distributor_manager.id,user.id] } }
+          update_params = { id: distributor, enterprise: { user_ids: [distributor_owner.id, distributor_manager.id, user.id] } }
           spree_post :update, update_params
 
           distributor.reload
@@ -144,14 +144,13 @@ module Admin
 
           context "when a submitted property does not already exist" do
             it "does not create a new property, or product property" do
-              spree_put :update, {
-                id: producer,
-                enterprise: {
-                  producer_properties_attributes: {
-                    '0' => { property_name: 'a different name', value: 'something' }
-                  }
-                }
-              }
+              spree_put :update,
+                        id: producer,
+                        enterprise: {
+                          producer_properties_attributes: {
+                            '0' => { property_name: 'a different name', value: 'something' }
+                          }
+                        }
               expect(Spree::Property.count).to be 1
               expect(ProducerProperty.count).to be 0
               property_names = producer.reload.properties.map(&:name)
@@ -161,14 +160,13 @@ module Admin
 
           context "when a submitted property exists" do
             it "adds a product property" do
-              spree_put :update, {
-                id: producer,
-                enterprise: {
-                  producer_properties_attributes: {
-                    '0' => { property_name: 'A nice name', value: 'something' }
-                  }
-                }
-              }
+              spree_put :update,
+                        id: producer,
+                        enterprise: {
+                          producer_properties_attributes: {
+                            '0' => { property_name: 'A nice name', value: 'something' }
+                          }
+                        }
               expect(Spree::Property.count).to be 1
               expect(ProducerProperty.count).to be 1
               property_names = producer.reload.properties.map(&:name)
@@ -187,40 +185,38 @@ module Admin
 
           context "discount order rules" do
             it "updates the existing rule with new attributes" do
-              spree_put :update, {
-                id: enterprise,
-                enterprise: {
-                  tag_rules_attributes: {
-                    '0' => {
-                      id: tag_rule,
-                      type: "TagRule::DiscountOrder",
-                      preferred_customer_tags: "some,new,tags",
-                      calculator_type: "Spree::Calculator::FlatPercentItemTotal",
-                      calculator_attributes: { id: tag_rule.calculator.id, preferred_flat_percent: "15" }
-                    }
-                  }
-                }
-              }
+              spree_put :update,
+                        id: enterprise,
+                        enterprise: {
+                          tag_rules_attributes: {
+                            '0' => {
+                              id: tag_rule,
+                              type: "TagRule::DiscountOrder",
+                              preferred_customer_tags: "some,new,tags",
+                              calculator_type: "Spree::Calculator::FlatPercentItemTotal",
+                              calculator_attributes: { id: tag_rule.calculator.id, preferred_flat_percent: "15" }
+                            }
+                          }
+                        }
               tag_rule.reload
               expect(tag_rule.preferred_customer_tags).to eq "some,new,tags"
               expect(tag_rule.calculator.preferred_flat_percent).to eq 15
             end
 
             it "creates new rules with new attributes" do
-              spree_put :update, {
-                id: enterprise,
-                enterprise: {
-                  tag_rules_attributes: {
-                    '0' => {
-                      id: "",
-                      type: "TagRule::DiscountOrder",
-                      preferred_customer_tags: "tags,are,awesome",
-                      calculator_type: "Spree::Calculator::FlatPercentItemTotal",
-                      calculator_attributes: { id: "", preferred_flat_percent: "24" }
-                    }
-                  }
-                }
-              }
+              spree_put :update,
+                        id: enterprise,
+                        enterprise: {
+                          tag_rules_attributes: {
+                            '0' => {
+                              id: "",
+                              type: "TagRule::DiscountOrder",
+                              preferred_customer_tags: "tags,are,awesome",
+                              calculator_type: "Spree::Calculator::FlatPercentItemTotal",
+                              calculator_attributes: { id: "", preferred_flat_percent: "24" }
+                            }
+                          }
+                        }
               expect(tag_rule.reload).to be
               new_tag_rule = TagRule::DiscountOrder.last
               expect(new_tag_rule.preferred_customer_tags).to eq "tags,are,awesome"
@@ -251,7 +247,7 @@ module Admin
 
         it "allows managers to be changed" do
           allow(controller).to receive_messages spree_current_user: distributor_owner
-          update_params = { id: distributor, enterprise: { user_ids: [distributor_owner.id,distributor_manager.id,user.id] } }
+          update_params = { id: distributor, enterprise: { user_ids: [distributor_owner.id, distributor_manager.id, user.id] } }
           spree_post :update, update_params
 
           distributor.reload
@@ -269,7 +265,6 @@ module Admin
           expect(profile_enterprise.sells).to eq 'any'
         end
 
-
         it "allows owner to be changed" do
           allow(controller).to receive_messages spree_current_user: admin_user
           update_params = { id: distributor, enterprise: { owner_id: distributor_manager } }
@@ -281,7 +276,7 @@ module Admin
 
         it "allows managers to be changed" do
           allow(controller).to receive_messages spree_current_user: admin_user
-          update_params = { id: distributor, enterprise: { user_ids: [distributor_owner.id,distributor_manager.id,user.id] } }
+          update_params = { id: distributor, enterprise: { user_ids: [distributor_owner.id, distributor_manager.id, user.id] } }
           spree_post :update, update_params
 
           distributor.reload
@@ -299,7 +294,7 @@ module Admin
         end
 
         it "does not allow access" do
-          spree_post :register, { id: enterprise.id, sells: 'none' }
+          spree_post :register, id: enterprise.id, sells: 'none'
           expect(response).to redirect_to spree.unauthorized_path
         end
       end
@@ -311,7 +306,7 @@ module Admin
         end
 
         it "does not allow access" do
-          spree_post :register, { id: enterprise.id, sells: 'none' }
+          spree_post :register, id: enterprise.id, sells: 'none'
           expect(response).to redirect_to spree.unauthorized_path
         end
       end
@@ -323,7 +318,7 @@ module Admin
 
         context "setting 'sells' to 'none'" do
           it "is allowed" do
-            spree_post :register, { id: enterprise, sells: 'none' }
+            spree_post :register, id: enterprise, sells: 'none'
             expect(response).to redirect_to spree.admin_path
             expect(flash[:success]).to eq "Congratulations! Registration for #{enterprise.name} is complete!"
             expect(enterprise.reload.sells).to eq 'none'
@@ -332,7 +327,7 @@ module Admin
 
         context "setting producer_profile_only" do
           it "is ignored" do
-            spree_post :register, { id: enterprise, sells: 'none', producer_profile_only: true }
+            spree_post :register, id: enterprise, sells: 'none', producer_profile_only: true
             expect(response).to redirect_to spree.admin_path
             expect(enterprise.reload.producer_profile_only).to be false
           end
@@ -345,25 +340,25 @@ module Admin
           end
 
           it "is allowed" do
-            spree_post :register, { id: enterprise, sells: 'own' }
+            spree_post :register, id: enterprise, sells: 'own'
             expect(response).to redirect_to spree.admin_path
-            expect(flash[:success]).to eq "Congratulations! Registration for #{enterprise.name} is complete!"            
+            expect(flash[:success]).to eq "Congratulations! Registration for #{enterprise.name} is complete!"
             expect(enterprise.reload.sells).to eq 'own'
           end
         end
 
         context "setting 'sells' to any" do
           it "is allowed" do
-            spree_post :register, { id: enterprise, sells: 'any' }
+            spree_post :register, id: enterprise, sells: 'any'
             expect(response).to redirect_to spree.admin_path
-            expect(flash[:success]).to eq "Congratulations! Registration for #{enterprise.name} is complete!"            
+            expect(flash[:success]).to eq "Congratulations! Registration for #{enterprise.name} is complete!"
             expect(enterprise.reload.sells).to eq 'any'
           end
         end
 
         context "settiing 'sells' to 'unspecified'" do
           it "is not allowed" do
-            spree_post :register, { id: enterprise, sells: 'unspecified' }
+            spree_post :register, id: enterprise, sells: 'unspecified'
             expect(response).to render_template :welcome
             expect(flash[:error]).to eq "Please select a package"
           end
@@ -506,7 +501,7 @@ module Admin
       end
 
       it "uses permissions to determine which enterprises are visible and should be rendered" do
-        expect(controller).to receive(:render_as_json).with([visible_enterprise], {ams_prefix: 'basic', spree_current_user: user}).and_call_original
+        expect(controller).to receive(:render_as_json).with([visible_enterprise], ams_prefix: 'basic', spree_current_user: user).and_call_original
         spree_get :visible, format: :json
       end
     end

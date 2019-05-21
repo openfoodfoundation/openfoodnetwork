@@ -13,7 +13,7 @@ Spree::Admin::Orders::CustomerDetailsController.class_eval do
       flash[:success] = Spree.t('customer_details_updated')
       redirect_to admin_order_customer_path(@order)
     else
-      render :action => :edit
+      render action: :edit
     end
   end
 

@@ -5,7 +5,7 @@ describe Spree::ProductFilters do
     it "provides filtering for all distributors" do
       3.times { create(:distributor_enterprise) }
       Enterprise.is_distributor.sort.map { |d| [d.name, d.name] }.each do |distributor|
-      	expect(Spree::ProductFilters.distributor_filter[:labels]).to include distributor
+        expect(Spree::ProductFilters.distributor_filter[:labels]).to include distributor
       end
     end
   end

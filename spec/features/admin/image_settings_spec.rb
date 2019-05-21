@@ -1,17 +1,17 @@
 require 'spec_helper'
 
-feature %q{
+feature '
     As an admin
     I want to manage image formats
-} do
+' do
   include AuthenticationWorkflow
   include WebHelper
 
   before(:all) do
-    styles = {"mini"    => "48x48>",
-              "small"   => "100x100>",
-              "product" => "240x240>",
-              "large"   => "600x600>"}
+    styles = { "mini" => "48x48>",
+               "small"   => "100x100>",
+               "product" => "240x240>",
+               "large"   => "600x600>" }
 
     Spree::Config[:attachment_styles] = ActiveSupport::JSON.encode(styles)
     Spree::Image.attachment_definitions[:attachment][:styles] = ActiveSupport::JSON.decode(Spree::Config[:attachment_styles])

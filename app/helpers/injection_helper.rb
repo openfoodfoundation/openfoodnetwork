@@ -36,12 +36,12 @@ module InjectionHelper
 
   def inject_available_shipping_methods
     inject_json_ams "shippingMethods", available_shipping_methods,
-      Api::ShippingMethodSerializer, current_order: current_order
+                    Api::ShippingMethodSerializer, current_order: current_order
   end
 
   def inject_available_payment_methods
     inject_json_ams "paymentMethods", available_payment_methods,
-      Api::PaymentMethodSerializer, current_order: current_order
+                    Api::PaymentMethodSerializer, current_order: current_order
   end
 
   def inject_taxons
@@ -57,7 +57,7 @@ module InjectionHelper
   end
 
   def inject_spree_api_key
-    render partial: "json/injection_ams", locals: {name: 'spreeApiKey', json: "'#{@spree_api_key.to_s}'"}
+    render partial: "json/injection_ams", locals: { name: 'spreeApiKey', json: "'#{@spree_api_key}'" }
   end
 
   def inject_available_countries
@@ -65,7 +65,7 @@ module InjectionHelper
   end
 
   def inject_enterprise_attributes
-    render partial: "json/injection_ams", locals: {name: 'enterpriseAttributes', json: "#{@enterprise_attributes.to_json}"}
+    render partial: "json/injection_ams", locals: { name: 'enterpriseAttributes', json: @enterprise_attributes.to_json.to_s }
   end
 
   def inject_orders
@@ -89,7 +89,7 @@ module InjectionHelper
   end
 
   def inject_json(name, partial, opts = {})
-    render partial: "json/injection", locals: {name: name, partial: partial}.merge(opts)
+    render partial: "json/injection", locals: { name: name, partial: partial }.merge(opts)
   end
 
   def inject_json_ams(name, data, serializer, opts = {})
@@ -100,14 +100,13 @@ module InjectionHelper
 
     serializer_instance = serializer.new(data, opts)
     json = serializer_instance.to_json
-    render partial: "json/injection_ams", locals: {name: name, json: json}
+    render partial: "json/injection_ams", locals: { name: name, json: json }
   end
-
 
   private
 
   def enterprise_injection_data
     @enterprise_injection_data ||= OpenFoodNetwork::EnterpriseInjectionData.new
-    {data: @enterprise_injection_data}
+    { data: @enterprise_injection_data }
   end
 end

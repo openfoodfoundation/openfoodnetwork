@@ -17,7 +17,7 @@ describe Exchange do
     e1 = create(:exchange)
 
     e2 = build(:exchange,
-               :order_cycle => e1.order_cycle, :sender => e1.sender, :receiver => e1.receiver, :incoming => e1.incoming)
+               order_cycle: e1.order_cycle, sender: e1.sender, receiver: e1.receiver, incoming: e1.incoming)
     expect(e2).not_to be_valid
 
     e2.incoming = !e2.incoming
@@ -36,7 +36,7 @@ describe Exchange do
     e = create(:exchange)
     p = create(:product)
 
-    e.exchange_variants.create(:variant => p.master)
+    e.exchange_variants.create(variant: p.master)
     expect(e.variants.count).to eq(1)
   end
 
@@ -44,7 +44,7 @@ describe Exchange do
     e = create(:exchange)
     f = create(:enterprise_fee)
 
-    e.exchange_fees.create(:enterprise_fee => f)
+    e.exchange_fees.create(enterprise_fee: f)
     expect(e.enterprise_fees.count).to eq(1)
   end
 
@@ -301,25 +301,25 @@ describe Exchange do
 
     it "converts to a hash" do
       expect(exchange.to_h).to eq(
-        {'id' => exchange.id, 'order_cycle_id' => oc.id,
+        'id' => exchange.id, 'order_cycle_id' => oc.id,
         'sender_id' => exchange.sender_id, 'receiver_id' => exchange.receiver_id,
         'incoming' => exchange.incoming,
         'variant_ids' => exchange.variant_ids.sort,
         'enterprise_fee_ids' => exchange.enterprise_fee_ids.sort,
         'pickup_time' => exchange.pickup_time, 'pickup_instructions' => exchange.pickup_instructions,
         'receival_instructions' => exchange.receival_instructions,
-        'created_at' => exchange.created_at, 'updated_at' => exchange.updated_at}
+        'created_at' => exchange.created_at, 'updated_at' => exchange.updated_at
       )
     end
 
     it "converts to a hash of core attributes only" do
       expect(exchange.to_h(true)).to eq(
-        {'sender_id' => exchange.sender_id, 'receiver_id' => exchange.receiver_id,
-         'incoming' => exchange.incoming,
-         'variant_ids' => exchange.variant_ids.sort,
-         'enterprise_fee_ids' => exchange.enterprise_fee_ids.sort,
-         'pickup_time' => exchange.pickup_time, 'pickup_instructions' => exchange.pickup_instructions,
-         'receival_instructions' => exchange.receival_instructions}
+        'sender_id' => exchange.sender_id, 'receiver_id' => exchange.receiver_id,
+        'incoming' => exchange.incoming,
+        'variant_ids' => exchange.variant_ids.sort,
+        'enterprise_fee_ids' => exchange.enterprise_fee_ids.sort,
+        'pickup_time' => exchange.pickup_time, 'pickup_instructions' => exchange.pickup_instructions,
+        'receival_instructions' => exchange.receival_instructions
       )
     end
   end
@@ -329,8 +329,8 @@ describe Exchange do
       e1 = Exchange.new
       e2 = Exchange.new
 
-      allow(e1).to receive(:to_h) { {'sender_id' => 456} }
-      allow(e2).to receive(:to_h) { {'sender_id' => 456} }
+      allow(e1).to receive(:to_h) { { 'sender_id' => 456 } }
+      allow(e2).to receive(:to_h) { { 'sender_id' => 456 } }
 
       expect(e1.eql?(e2)).to be true
     end

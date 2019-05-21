@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-feature %q{
+feature '
     As a consumer
     I want to see a list of producers
     So that I can shop at hubs distributing their products
-}, js: true do
+', js: true do
   include WebHelper
   include UIComponentHelper
 
@@ -28,7 +28,6 @@ feature %q{
     producer1.set_producer_property 'Local', 'Victoria'
     producer2.set_producer_property 'Fair Trade', 'FT123'
   end
-
 
   it "searches by URL" do
     visit producers_path(anchor: "/?query=xyzzy")

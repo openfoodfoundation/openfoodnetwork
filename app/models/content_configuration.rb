@@ -54,7 +54,7 @@ class ContentConfiguration < Spree::Preferences::FileConfiguration
   preference :footer_logo, :file
   has_attached_file :footer_logo, default_url: "/assets/ofn-logo-footer.png"
 
-  #Other
+  # Other
   preference :footer_facebook_url, :string, default: "https://www.facebook.com/OpenFoodNet"
   preference :footer_twitter_url, :string, default: "https://twitter.com/OpenFoodNet"
   preference :footer_instagram_url, :string, default: ""
@@ -69,10 +69,10 @@ class ContentConfiguration < Spree::Preferences::FileConfiguration
     [News](/)
 
     [Calendar](/)
-EOS
+  EOS
 
   preference :footer_about_url, :string, default: "http://www.openfoodnetwork.org/ofn-local/open-food-network-australia/"
 
-  #User Guide
+  # User Guide
   preference :user_guide_link, :string, default: 'https://guide.openfoodnetwork.org/'
 end

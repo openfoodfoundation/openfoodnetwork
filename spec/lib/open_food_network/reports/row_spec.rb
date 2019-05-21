@@ -3,7 +3,7 @@ require 'open_food_network/reports/row'
 module OpenFoodNetwork::Reports
   describe Row do
     let(:row) { Row.new }
-    let(:proc) { Proc.new {} }
+    let(:proc) { proc {} }
 
     it "can define a number of columns and return them as an array" do
       row.column(&proc)

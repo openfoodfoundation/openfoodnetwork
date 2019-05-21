@@ -1,7 +1,7 @@
 module Spree
   module Admin
     ShippingMethodsController.class_eval do
-      before_filter :do_not_destroy_referenced_shipping_methods, :only => :destroy
+      before_filter :do_not_destroy_referenced_shipping_methods, only: :destroy
       before_filter :load_hubs, only: [:new, :edit, :create, :update]
 
       # Sort shipping methods by distributor name
@@ -20,17 +20,17 @@ module Spree
       # Spree allows soft deletes of shipping_methods but our reports are not adapted to that.
       #   So, this method prevents the deletion (even soft) of shipping_methods that are referenced in orders.
       def do_not_destroy_referenced_shipping_methods
-        order = Order.joins(shipments: :shipping_rates).where( spree_shipping_rates: { :shipping_method_id => @object } ).first
+        order = Order.joins(shipments: :shipping_rates).where( spree_shipping_rates: { shipping_method_id: @object } ).first
         if order
           flash[:error] = I18n.t(:shipping_method_destroy_error, number: order.number)
-          redirect_to collection_url and return
+          redirect_to(collection_url) && (return)
         end
       end
 
       private
 
       def load_hubs
-        @hubs = Enterprise.managed_by(spree_current_user).is_distributor.sort_by!{ |d| [(@shipping_method.has_distributor? d) ? 0 : 1, d.name] }
+        @hubs = Enterprise.managed_by(spree_current_user).is_distributor.sort_by!{ |d| [@shipping_method.has_distributor? d ? 0 : 1, d.name] }
       end
     end
   end

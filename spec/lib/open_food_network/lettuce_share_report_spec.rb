@@ -39,8 +39,8 @@ module OpenFoodNetwork
         let(:variant2) { create(:variant) }
         let(:variant3) { create(:variant) }
         let(:variant4) { create(:variant, on_hand: 0, on_demand: true) }
-        let(:hub_address) { create(:address, :address1 => "distributor address", :city => 'The Shire', :zipcode => "1234") }
-        let(:hub) { create(:distributor_enterprise, :address => hub_address) }
+        let(:hub_address) { create(:address, address1: "distributor address", city: 'The Shire', zipcode: "1234") }
+        let(:hub) { create(:distributor_enterprise, address: hub_address) }
         let(:variant2_override) { create(:variant_override, hub: hub, variant: variant2) }
         let(:variant3_override) { create(:variant_override, hub: hub, variant: variant3, count_on_hand: 0) }
 
@@ -61,12 +61,11 @@ module OpenFoodNetwork
           variant2_override
           variant3_override
           allow(report).to receive(:child_variants) { Spree::Variant.where(id: [variant, variant2, variant3]) }
-          allow(report).to receive(:params) { {distributor_id: hub.id} }
+          allow(report).to receive(:params) { { distributor_id: hub.id } }
           rows = report.table
           expect(rows.count).to eq 2
           expect(rows.map{ |row| row[0] }).to include variant.product.name, variant2.product.name
         end
-
       end
     end
   end

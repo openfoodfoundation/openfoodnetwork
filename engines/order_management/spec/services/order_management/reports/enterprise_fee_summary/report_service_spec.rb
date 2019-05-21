@@ -353,7 +353,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
         expect(totals.length).to eq(11)
 
         entire_orders_text = i18n_translate("fee_calculated_on_transfer_through_entire_orders",
-                                             distributor: "Sample Distributor")
+                                            distributor: "Sample Distributor")
         various_tax_categories_text = i18n_translate("tax_category_various")
 
         expected_result = [

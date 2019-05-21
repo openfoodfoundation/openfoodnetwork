@@ -125,7 +125,7 @@ feature 'Multilingual', js: true do
         expect(page).to have_content 'SHOPS'
 
         find('ul.right li.language-switcher').click
-        within'ul.right li.language-switcher ul.dropdown' do
+        within 'ul.right li.language-switcher ul.dropdown' do
           expect(page).to have_link I18n.t('language_name', locale: :en), href: '?locale=en'
           expect(page).to have_link I18n.t('language_name', locale: :es, default: 'Language Name'), href: '?locale=es'
 

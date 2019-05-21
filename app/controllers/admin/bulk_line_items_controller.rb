@@ -22,9 +22,9 @@ module Admin
       order.with_lock do
         if @line_item.update_attributes(params[:line_item])
           order.update_distribution_charge!
-          render nothing: true, status: 204 # No Content, does not trigger ng resource auto-update
+          render nothing: true, status: :no_content # No Content, does not trigger ng resource auto-update
         else
-          render json: { errors: @line_item.errors }, status: 412
+          render json: { errors: @line_item.errors }, status: :precondition_failed
         end
       end
     end
@@ -36,7 +36,7 @@ module Admin
       authorize! :update, order
 
       @line_item.destroy
-      render nothing: true, status: 204 # No Content, does not trigger ng resource auto-update
+      render nothing: true, status: :no_content # No Content, does not trigger ng resource auto-update
     end
 
     private

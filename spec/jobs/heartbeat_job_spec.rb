@@ -16,7 +16,6 @@ describe HeartbeatJob do
     end
   end
 
-
   private
 
   def run_job

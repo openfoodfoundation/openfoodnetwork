@@ -19,9 +19,9 @@ describe AdvanceOrderService do
   end
 
   describe "transition from delivery" do
-    let!(:shipping_method_a) { create(:shipping_method, distributors: [ distributor ]) }
-    let!(:shipping_method_b) { create(:shipping_method, distributors: [ distributor ]) }
-    let!(:shipping_method_c) { create(:shipping_method, distributors: [ distributor ]) }
+    let!(:shipping_method_a) { create(:shipping_method, distributors: [distributor]) }
+    let!(:shipping_method_b) { create(:shipping_method, distributors: [distributor]) }
+    let!(:shipping_method_c) { create(:shipping_method, distributors: [distributor]) }
 
     before do
       # Create shipping rates for available shipping methods.

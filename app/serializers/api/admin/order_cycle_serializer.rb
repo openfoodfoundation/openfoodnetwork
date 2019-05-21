@@ -26,7 +26,7 @@ class Api::Admin::OrderCycleSerializer < ActiveModel::Serializer
 
   def exchanges
     scoped_exchanges = OpenFoodNetwork::OrderCyclePermissions.new(options[:current_user], object).visible_exchanges.by_enterprise_name
-    ActiveModel::ArraySerializer.new(scoped_exchanges, {each_serializer: Api::Admin::ExchangeSerializer, current_user: options[:current_user] })
+    ActiveModel::ArraySerializer.new(scoped_exchanges, each_serializer: Api::Admin::ExchangeSerializer, current_user: options[:current_user])
   end
 
   def editable_variants_for_incoming_exchanges
@@ -66,9 +66,9 @@ class Api::Admin::OrderCycleSerializer < ActiveModel::Serializer
       # for shops. We need this here to allow hubs to restrict visible variants to only those in
       # their inventory if they so choose
       variants = if enterprise.prefers_product_selection_from_inventory_only?
-        permissions.visible_variants_for_outgoing_exchanges_to(enterprise).visible_for(enterprise)
-      else
-        permissions.visible_variants_for_outgoing_exchanges_to(enterprise).not_hidden_for(enterprise)
+                   permissions.visible_variants_for_outgoing_exchanges_to(enterprise).visible_for(enterprise)
+                 else
+                   permissions.visible_variants_for_outgoing_exchanges_to(enterprise).not_hidden_for(enterprise)
       end.pluck(:id)
       visible[enterprise.id] = variants if variants.any?
     end

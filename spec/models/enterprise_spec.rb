@@ -119,7 +119,7 @@ describe Enterprise do
     it "requires an owner" do
       expect{
         e = create(:enterprise, owner: nil)
-        }.to raise_error ActiveRecord::RecordInvalid, "Validation failed: Owner can't be blank"
+      }.to raise_error ActiveRecord::RecordInvalid, "Validation failed: Owner can't be blank"
     end
 
     describe "name uniqueness" do
@@ -185,7 +185,7 @@ describe Enterprise do
   end
 
   describe "delegations" do
-    #subject { FactoryBot.create(:distributor_enterprise, :address => FactoryBot.create(:address)) }
+    # subject { FactoryBot.create(:distributor_enterprise, :address => FactoryBot.create(:address)) }
 
     it { is_expected.to delegate(:latitude).to(:address) }
     it { is_expected.to delegate(:longitude).to(:address) }
@@ -315,7 +315,7 @@ describe Enterprise do
         s = create(:supplier_enterprise)
         d = create(:distributor_enterprise)
         p = create(:product)
-        create(:simple_order_cycle, :orders_open_at => 10.days.from_now, orders_close_at: 17.days.from_now, suppliers: [s], distributors: [d], variants: [p.master])
+        create(:simple_order_cycle, orders_open_at: 10.days.from_now, orders_close_at: 17.days.from_now, suppliers: [s], distributors: [d], variants: [p.master])
         expect(Enterprise.distributors_with_active_order_cycles).not_to include d
       end
     end
@@ -425,7 +425,6 @@ describe Enterprise do
         end
       end
 
-
       describe "when a new hub is created" do
         it "it creates links to the hub, from all producers owned by the same user, granting add_to_order_cycle and create_variant_overrides permissions" do
           producer1
@@ -435,7 +434,6 @@ describe Enterprise do
           should_have_enterprise_relationship from: producer1, to: hub1, with: [:add_to_order_cycle, :create_variant_overrides]
           should_have_enterprise_relationship from: producer2, to: hub1, with: [:add_to_order_cycle, :create_variant_overrides]
         end
-
 
         it "creates links from the new hub to all hubs owned by the same user, granting add_to_order_cycle permission" do
           hub1
@@ -456,8 +454,7 @@ describe Enterprise do
         end
       end
 
-
-      def should_have_enterprise_relationship(opts={})
+      def should_have_enterprise_relationship(opts = {})
         er = EnterpriseRelationship.where(parent_id: opts[:from], child_id: opts[:to]).last
         expect(er).not_to be_nil
         if opts[:with] == :all_permissions
@@ -529,7 +526,7 @@ describe Enterprise do
   describe "provide enterprise category" do
     let(:producer_sell_all) { build(:enterprise, is_primary_producer: true,  sells: "any") }
     let(:producer_sell_own) { build(:enterprise, is_primary_producer: true,  sells: "own") }
-    let(:producer_sell_none) { build(:enterprise, is_primary_producer: true,  sells: "none") }
+    let(:producer_sell_none) { build(:enterprise, is_primary_producer: true, sells: "none") }
     let(:non_producer_sell_all) { build(:enterprise, is_primary_producer: false,  sells: "any") }
     let(:non_producer_sell_own) { build(:enterprise, is_primary_producer: false,  sells: "own") }
     let(:non_producer_sell_none) { build(:enterprise, is_primary_producer: false, sells: "none") }

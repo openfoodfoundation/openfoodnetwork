@@ -53,7 +53,7 @@ module Admin
         respond_to do |format|
           flash[:notice] = I18n.t(:order_cycles_update_notice) if params[:reloading] == '1'
           format.html { redirect_to main_app.edit_admin_order_cycle_path(@order_cycle) }
-          format.json { render json: { :success => true } }
+          format.json { render json: { success: true } }
         end
       else
         render json: { errors: @order_cycle.errors.full_messages }, status: :unprocessable_entity
@@ -82,20 +82,19 @@ module Admin
       redirect_to main_app.admin_order_cycles_path, notice: I18n.t(:order_cycles_email_to_producers_notice)
     end
 
-
     protected
 
     def collection
       return Enterprise.where("1=0") unless json_request?
       return order_cycles_from_set if params[:order_cycle_set]
       ocs = if params[:as] == "distributor"
-        OrderCycle.preload(:schedules).ransack(params[:q]).result.
-          involving_managed_distributors_of(spree_current_user).order('updated_at DESC')
-      elsif params[:as] == "producer"
-        OrderCycle.preload(:schedules).ransack(params[:q]).result.
-          involving_managed_producers_of(spree_current_user).order('updated_at DESC')
-      else
-        OrderCycle.preload(:schedules).ransack(params[:q]).result.accessible_by(spree_current_user)
+              OrderCycle.preload(:schedules).ransack(params[:q]).result.
+                involving_managed_distributors_of(spree_current_user).order('updated_at DESC')
+            elsif params[:as] == "producer"
+              OrderCycle.preload(:schedules).ransack(params[:q]).result.
+                involving_managed_producers_of(spree_current_user).order('updated_at DESC')
+            else
+              OrderCycle.preload(:schedules).ransack(params[:q]).result.accessible_by(spree_current_user)
       end
 
       ocs.undated |
@@ -115,7 +114,7 @@ module Admin
         # Split ransack params into all those that currently exist and new ones to limit returned ocs to recent or undated
         orders_close_at_gt = params[:q].andand.delete(:orders_close_at_gt) || 31.days.ago
         params[:q] = {
-          g: [ params.delete(:q) || {}, { m: 'or', orders_close_at_gt: orders_close_at_gt, orders_close_at_null: true } ]
+          g: [params.delete(:q) || {}, { m: 'or', orders_close_at_gt: orders_close_at_gt, orders_close_at_null: true }]
         }
         @collection = collection
       end
@@ -158,7 +157,7 @@ module Admin
       params[:order_cycle].delete :coordinator_id
 
       unless Enterprise.managed_by(spree_current_user).include?(@order_cycle.coordinator)
-        params[:order_cycle].delete_if{ |k,v| [:name, :orders_open_at, :orders_close_at].include? k.to_sym }
+        params[:order_cycle].delete_if{ |k, _v| [:name, :orders_open_at, :orders_close_at].include? k.to_sym }
       end
     end
 
@@ -173,7 +172,7 @@ module Admin
 
     def order_cycles_from_set
       remove_unauthorized_bulk_attrs
-      OrderCycle.where(id: params[:order_cycle_set][:collection_attributes].map{ |k,v| v[:id] })
+      OrderCycle.where(id: params[:order_cycle_set][:collection_attributes].map{ |_k, v| v[:id] })
     end
 
     def order_cycle_set

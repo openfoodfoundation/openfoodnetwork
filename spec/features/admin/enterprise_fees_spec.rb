@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-feature %q{
+feature '
     As an administrator
     I want to manage enterprise fees
-}, js: true do
+', js: true do
   include AuthenticationWorkflow
   include WebHelper
 
@@ -167,8 +167,8 @@ feature %q{
       within(".side_menu") { click_link 'Enterprise Fees' }
       click_link "Manage Enterprise Fees"
       expect(page).to have_select('enterprise_fee_set_collection_attributes_0_enterprise_id',
-                              selected: 'Second Distributor',
-                              options: ['', 'First Distributor', 'Second Distributor'])
+                                  selected: 'Second Distributor',
+                                  options: ['', 'First Distributor', 'Second Distributor'])
     end
   end
 end

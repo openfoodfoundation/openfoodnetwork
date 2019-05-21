@@ -1,7 +1,7 @@
 class OrderCycleDistributedVariants
   def initialize(order_cycle, distributor)
     @order_cycle = order_cycle
-    @distributor = distributor    
+    @distributor = distributor
   end
 
   def distributes_order_variants?(order)

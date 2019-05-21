@@ -13,14 +13,14 @@ module Spree
 
     def compute(object)
       sum = 0
-      max = self.preferred_max_items.to_i
+      max = preferred_max_items.to_i
       items_count = line_items_for(object).map(&:quantity).sum
       # check max value to avoid divide by 0 errors
       unless max == 0
         if items_count > max
-          sum += (max - 1) * self.preferred_additional_item.to_f + self.preferred_first_item.to_f
+          sum += (max - 1) * preferred_additional_item.to_f + preferred_first_item.to_f
         elsif items_count <= max
-          sum += (items_count - 1) * self.preferred_additional_item.to_f + self.preferred_first_item.to_f
+          sum += (items_count - 1) * preferred_additional_item.to_f + preferred_first_item.to_f
         end
       end
 

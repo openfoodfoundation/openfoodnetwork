@@ -11,19 +11,19 @@ describe Spree::Calculator::FlexiRate do
   end
 
   context 'when nb of items ordered is above preferred max' do
-   let(:quantity) { 4.0 }
+    let(:quantity) { 4.0 }
 
-   it "returns the first item rate" do
-     expect(calculator.compute(line_item).round(2)).to eq(4.0)
-   end
+    it "returns the first item rate" do
+      expect(calculator.compute(line_item).round(2)).to eq(4.0)
+    end
   end
 
   context 'when nb of items ordered is below preferred max' do
-   let(:quantity) { 2.0 }
+    let(:quantity) { 2.0 }
 
-   it "returns the first item rate" do
-     expect(calculator.compute(line_item).round(2)).to eq(3.0)
-   end
+    it "returns the first item rate" do
+      expect(calculator.compute(line_item).round(2)).to eq(3.0)
+    end
   end
 
   it "allows creation of new object with all the attributes" do

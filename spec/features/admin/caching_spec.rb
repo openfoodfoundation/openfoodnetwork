@@ -38,6 +38,5 @@ feature 'Caching' do
       # Then I should see some status information
       page.should have_content "Error"
     end
-
   end
 end

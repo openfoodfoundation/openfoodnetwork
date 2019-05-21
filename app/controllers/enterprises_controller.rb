@@ -43,14 +43,14 @@ class EnterprisesController < BaseController
 
   def check_permalink
     if Enterprise.find_by_permalink params[:permalink]
-      render text: params[:permalink], status: 409 and return
+      render(text: params[:permalink], status: :conflict) && return
     end
 
     begin
-      Rails.application.routes.recognize_path( "/#{ params[:permalink].to_s }" )
-      render text: params[:permalink], status: 409
+      Rails.application.routes.recognize_path( "/#{params[:permalink]}" )
+      render text: params[:permalink], status: :conflict
     rescue ActionController::RoutingError
-      render text: params[:permalink], status: 200
+      render text: params[:permalink], status: :ok
     end
   end
 

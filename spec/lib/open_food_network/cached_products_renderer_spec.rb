@@ -22,7 +22,7 @@ module OpenFoodNetwork
       before do
         allow(ProductsRenderer)
           .to receive(:new)
-          .with(distributor, order_cycle) { products_renderer }
+            .with(distributor, order_cycle) { products_renderer }
       end
 
       context "products cache toggle" do
@@ -46,7 +46,7 @@ module OpenFoodNetwork
           end
 
           it "returns the cached JSON" do
-              expect(cached_products_renderer.products_json).to eq 'products'
+            expect(cached_products_renderer.products_json).to eq 'products'
           end
         end
       end
@@ -92,7 +92,7 @@ module OpenFoodNetwork
 
             allow(ProductsRenderer)
               .to receive(:new)
-              .with(distributor, order_cycle) { products_renderer }
+                .with(distributor, order_cycle) { products_renderer }
           end
 
           describe "when there are products" do
@@ -114,7 +114,7 @@ module OpenFoodNetwork
 
               allow(ProductsRenderer)
                 .to receive(:new)
-                .with(distributor, order_cycle) { products_renderer }
+                  .with(distributor, order_cycle) { products_renderer }
             end
 
             it "raises an error" do

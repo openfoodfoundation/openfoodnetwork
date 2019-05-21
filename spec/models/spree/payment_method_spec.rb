@@ -11,7 +11,7 @@ module Spree
     end
 
     it "raises errors when required fields are missing" do
-      pm = PaymentMethod.new()
+      pm = PaymentMethod.new
       pm.save
       expect(pm.errors.to_a).to eq(["Name can't be blank", "At least one hub must be selected"])
     end

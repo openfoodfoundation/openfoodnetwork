@@ -12,7 +12,7 @@ module OpenFoodNetwork
     # NOTE: the enterprises a given user can see actually in the OC interface depend on the relationships
     # of their enterprises to the coordinator of the order cycle, rather than on the order cycle itself
     def visible_enterprises
-      return Enterprise.where("1=0") unless @coordinator.present?
+      return Enterprise.where("1=0") if @coordinator.blank?
       if managed_enterprises.include? @coordinator
         coordinator_permitted = [@coordinator]
         all_active = []
@@ -74,8 +74,8 @@ module OpenFoodNetwork
     # Find the exchanges of an order cycle that an admin can manage
     def visible_exchanges
       ids = order_cycle_exchange_ids_involving_my_enterprises |
-        order_cycle_exchange_ids_distributing_my_variants |
-        order_cycle_exchange_ids_with_distributable_variants
+            order_cycle_exchange_ids_distributing_my_variants |
+            order_cycle_exchange_ids_with_distributable_variants
 
       Exchange.where(id: ids, order_cycle_id: @order_cycle)
     end
@@ -191,7 +191,6 @@ module OpenFoodNetwork
         Spree::Variant.where(id: permitted_variants)
       end
     end
-
 
     private
 

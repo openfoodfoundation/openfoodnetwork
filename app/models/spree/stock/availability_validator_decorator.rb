@@ -40,7 +40,7 @@ Spree::Stock::AvailabilityValidator.class_eval do
 
   def add_out_of_stock_error(line_item)
     variant = line_item.variant
-    display_name = %{#{variant.name}}
+    display_name = variant.name.to_s
     display_name += %{(#{variant.options_text})} if variant.options_text.present?
     line_item.errors[:quantity] << Spree.t(:out_of_stock,
                                            scope: :order_populator,

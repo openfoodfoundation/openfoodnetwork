@@ -3,7 +3,7 @@ require 'spec_helper'
 describe OrderCycleDistributedVariants do
   let(:order) { double(:order) }
   let(:distributor) { double(:distributor) }
-  let(:order_cycle) { double(:order_cycle) }  
+  let(:order_cycle) { double(:order_cycle) }
   let(:subject) { OrderCycleDistributedVariants.new(order_cycle, distributor) }
   let(:product) { double(:product) }
 

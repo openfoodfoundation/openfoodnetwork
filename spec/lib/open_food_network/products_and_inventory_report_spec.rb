@@ -14,24 +14,24 @@ module OpenFoodNetwork
 
       it "Should return headers" do
         expect(subject.header).to eq([
-          "Supplier",
-          "Producer Suburb",
-          "Product",
-          "Product Properties",
-          "Taxons",
-          "Variant Value",
-          "Price",
-          "Group Buy Unit Quantity",
-          "Amount",
-          "SKU"
-        ])
+                                       "Supplier",
+                                       "Producer Suburb",
+                                       "Product",
+                                       "Product Properties",
+                                       "Taxons",
+                                       "Variant Value",
+                                       "Price",
+                                       "Group Buy Unit Quantity",
+                                       "Amount",
+                                       "SKU"
+                                     ])
       end
 
       it "should build a table from a list of variants" do
         variant = double(:variant, sku: "sku",
-                        full_name: "Variant Name",
-                        count_on_hand: 10,
-                        price: 100)
+                                   full_name: "Variant Name",
+                                   count_on_hand: 10,
+                                   price: 100)
         allow(variant).to receive_message_chain(:product, :supplier, :name).and_return("Supplier")
         allow(variant).to receive_message_chain(:product, :supplier, :address, :city).and_return("A city")
         allow(variant).to receive_message_chain(:product, :name).and_return("Product Name")
@@ -41,17 +41,17 @@ module OpenFoodNetwork
         allow(subject).to receive(:variants).and_return [variant]
 
         expect(subject.table).to eq([[
-          "Supplier",
-          "A city",
-          "Product Name",
-          "property1, property2",
-          "taxon1, taxon2",
-          "Variant Name",
-          100,
-          21,
-          "",
-          "sku"
-        ]])
+                                      "Supplier",
+                                      "A city",
+                                      "Product Name",
+                                      "property1, property2",
+                                      "taxon1, taxon2",
+                                      "Variant Name",
+                                      100,
+                                      21,
+                                      "",
+                                      "sku"
+                                    ]])
       end
 
       it "fetches variants for some params" do
@@ -180,7 +180,8 @@ module OpenFoodNetwork
             order_cycle_id: order_cycle.id,
             supplier_id: supplier.id,
             distributor_id: distributor.id,
-            report_type: 'inventory')
+            report_type: 'inventory'
+          )
           subject.filter(variants)
         end
       end

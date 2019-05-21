@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-feature %q{
+feature '
   As a backend user
   I want to be given information about the state of my enterprises, products and order cycles
-}, js: true do
+', js: true do
   include AuthenticationWorkflow
   include WebHelper
   include ::Spree::TestingSupport::AuthorizationHelpers

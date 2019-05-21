@@ -99,7 +99,7 @@ module OpenFoodNetwork
 
     def filter_to_payment_method(orders)
       if params[:payment_method_in].present?
-        orders.joins(payments: :payment_method).where(spree_payments: { payment_method_id: params[:payment_method_in]})
+        orders.joins(payments: :payment_method).where(spree_payments: { payment_method_id: params[:payment_method_in] })
       else
         orders
       end

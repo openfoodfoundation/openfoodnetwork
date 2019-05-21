@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-feature %q{
+feature "
   As an Administrator
   With products I can add to my hub's inventory
   I want to override the stock level and price of those products
   Without affecting other hubs that share the same products
-}, js: true do
+", js: true do
   include AdminHelper
   include AuthenticationWorkflow
   include WebHelper
@@ -16,11 +16,13 @@ feature %q{
   let!(:producer_managed) { create(:supplier_enterprise) }
   let!(:producer_related) { create(:supplier_enterprise) }
   let!(:producer_unrelated) { create(:supplier_enterprise) }
-  let!(:er1) { create(:enterprise_relationship, parent: producer, child: hub,
-                      permissions_list: [:create_variant_overrides])
+  let!(:er1) {
+    create(:enterprise_relationship, parent: producer, child: hub,
+                                     permissions_list: [:create_variant_overrides])
   }
-  let!(:er2) { create(:enterprise_relationship, parent: producer_related, child: hub,
-                      permissions_list: [:create_variant_overrides])
+  let!(:er2) {
+    create(:enterprise_relationship, parent: producer_related, child: hub,
+                                     permissions_list: [:create_variant_overrides])
   }
 
   context "as an enterprise user" do
@@ -28,8 +30,9 @@ feature %q{
     before { quick_login_as user }
 
     describe "selecting a hub" do
-      let!(:er1) { create(:enterprise_relationship, parent: hub2, child: producer_managed,
-                          permissions_list: [:add_to_order_cycle])
+      let!(:er1) {
+        create(:enterprise_relationship, parent: hub2, child: producer_managed,
+                                         permissions_list: [:add_to_order_cycle])
       } # This er should not confer ability to create VOs for hub2
 
       it "displays a list of hub choices (ie. only those managed by the user)" do
@@ -55,7 +58,6 @@ feature %q{
       let!(:inventory_item_related) { create(:inventory_item, enterprise: hub, variant: variant_related ) }
 
       let!(:product_unrelated) { create(:simple_product, supplier: producer_unrelated) }
-
 
       before do
         # Remove 'S' option value
@@ -217,7 +219,7 @@ feature %q{
         end
 
         context "with overrides" do
-          let!(:vo) { create(:variant_override, :on_demand, variant: variant, hub: hub, price: 77.77, default_stock: 1000, resettable: true, tag_list: ["tag1","tag2","tag3"]) }
+          let!(:vo) { create(:variant_override, :on_demand, variant: variant, hub: hub, price: 77.77, default_stock: 1000, resettable: true, tag_list: ["tag1", "tag2", "tag3"]) }
           let!(:vo_no_auth) { create(:variant_override, variant: variant, hub: hub2, price: 1, count_on_hand: 2) }
           let!(:product2) { create(:simple_product, supplier: producer, variant_unit: 'weight', variant_unit_scale: 1) }
           let!(:variant2) { create(:variant, product: product2, unit_value: 8, price: 1.00, on_hand: 12) }

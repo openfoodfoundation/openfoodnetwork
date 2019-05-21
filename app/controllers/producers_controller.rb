@@ -3,6 +3,5 @@ class ProducersController < BaseController
 
   before_filter :enable_embedded_shopfront
 
-  def index
-  end
+  def index; end
 end

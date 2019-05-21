@@ -10,7 +10,7 @@ describe Spree::Gateway::StripeConnect, type: :model do
     end
   end
 
-  let(:stripe_account_id) { "acct_123"  }
+  let(:stripe_account_id) { "acct_123" }
 
   before do
     allow(Stripe).to receive(:api_key) { "sk_test_123456" }
@@ -63,7 +63,7 @@ describe Spree::Gateway::StripeConnect, type: :model do
 
     before do
       stub_request(:post, "https://api.stripe.com/v1/tokens")
-        .with(body: { "card" => "card123", "customer" => "customer123"})
+        .with(body: { "card" => "card123", "customer" => "customer123" })
         .to_return(body: JSON.generate(token_mock))
     end
 

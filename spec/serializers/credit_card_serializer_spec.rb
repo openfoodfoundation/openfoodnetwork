@@ -4,7 +4,6 @@ describe Api::CreditCardSerializer do
   let(:card) { create(:credit_card) }
   let(:serializer) { Api::CreditCardSerializer.new card }
 
-
   it "serializes a credit card" do
     expect(serializer.to_json).to match card.last_digits.to_s
   end

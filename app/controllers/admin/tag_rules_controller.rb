@@ -1,10 +1,9 @@
 module Admin
   class TagRulesController < ResourceController
-
     respond_to :json
 
     respond_override destroy: { json: {
-      success: lambda { render nothing: true, :status => 204 }
+      success: lambda { render nothing: true, status: :no_content }
     } }
 
     def map_by_tag
@@ -15,7 +14,6 @@ module Admin
         end
       end
     end
-
 
     private
 

@@ -8,11 +8,11 @@ feature 'Account and Billing Settings' do
     let!(:admin) { create(:admin_user) }
 
     before do
-      Spree::Config.set({
+      Spree::Config.set(
         products_require_tax_category: false,
         shipment_inc_vat: false,
         shipping_tax_rate: 0
-      })
+      )
     end
 
     before do

@@ -1,6 +1,5 @@
 module OpenFoodNetwork
   class OrderAndDistributorReport
-
     def initialize(user, params = {}, render_table = false)
       @params = params
       @user = user

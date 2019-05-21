@@ -11,15 +11,15 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
       let!(:shipment) { create(:shipment) }
       let!(:order) {
         create(
-            :order_with_totals_and_distribution,
-            state: 'cart',
-            shipments: [shipment],
-            payments: [create(:payment)],
-            distributor: distributor,
-            user: nil,
-            email: nil,
-            bill_address: nil,
-            ship_address: nil,
+          :order_with_totals_and_distribution,
+          state: 'cart',
+          shipments: [shipment],
+          payments: [create(:payment)],
+          distributor: distributor,
+          user: nil,
+          email: nil,
+          bill_address: nil,
+          ship_address: nil,
         )
       }
       let(:address_params) {

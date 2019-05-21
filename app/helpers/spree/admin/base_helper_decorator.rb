@@ -10,14 +10,13 @@ module Spree
       end
       alias_method_chain :preference_field_tag, :files
 
-
       # Add support for options[:html], allowing additional HTML attributes
       def link_to_remove_fields(name, f, options = {})
         name = '' if options[:no_text]
         options[:class] = '' unless options[:class]
         options[:class] += 'no-text with-tip' if options[:no_text]
 
-        html_options = {class: "remove_fields #{options[:class]}", data: {action: 'remove'}, title: t(:remove)}
+        html_options = { class: "remove_fields #{options[:class]}", data: { action: 'remove' }, title: t(:remove) }
         html_options.merge!(options[:html]) if options.key? :html
 
         link_to_with_icon('icon-trash', name, '#', html_options) + f.hidden_field(:_destroy)

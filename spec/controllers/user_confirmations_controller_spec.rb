@@ -16,7 +16,6 @@ describe UserConfirmationsController, type: :controller do
 
   context "confirming a user" do
     context "that has already been confirmed" do
-
       before do
         spree_get :show, confirmation_token: confirmed_token
       end
@@ -62,7 +61,7 @@ describe UserConfirmationsController, type: :controller do
     before { setup_email }
 
     it "redirects the user to login" do
-      spree_post :create, { spree_user: { email: unconfirmed_user.email } }
+      spree_post :create, spree_user: { email: unconfirmed_user.email }
       expect(response).to redirect_to login_path
       expect(flash[:success]).to eq I18n.t('devise.user_confirmations.spree_user.confirmation_sent')
     end
@@ -70,7 +69,7 @@ describe UserConfirmationsController, type: :controller do
     it "sends the confirmation email" do
       performing_deliveries do
         expect do
-          spree_post :create, { spree_user: { email: unconfirmed_user.email } }
+          spree_post :create, spree_user: { email: unconfirmed_user.email }
         end.to send_confirmation_instructions
       end
     end

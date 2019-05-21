@@ -179,7 +179,7 @@ describe Admin::SubscriptionsController, type: :controller do
           params.merge!(
             bill_address: address.attributes.except('id'),
             ship_address: address.attributes.except('id'),
-            subscription_line_items: [{ quantity: 2, variant_id: variant.id}]
+            subscription_line_items: [{ quantity: 2, variant_id: variant.id }]
           )
         end
 
@@ -345,7 +345,7 @@ describe Admin::SubscriptionsController, type: :controller do
           let!(:variant2) { create(:variant, product: product2, unit_value: '1000', price: 6.00, option_values: []) }
 
           before do
-            params[:subscription_line_items] = [{id: subscription_line_item1.id, quantity: 1, variant_id: variant1.id}, { quantity: 2, variant_id: variant2.id}]
+            params[:subscription_line_items] = [{ id: subscription_line_item1.id, quantity: 1, variant_id: variant1.id }, { quantity: 2, variant_id: variant2.id }]
           end
 
           context 'where the specified variants are not available from the shop' do

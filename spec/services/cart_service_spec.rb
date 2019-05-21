@@ -242,7 +242,7 @@ describe CartService do
       end
 
       it "delegates to OrderCycleDistributedVariants, returning false and erroring otherwise" do
-        expect(order_cycle_distributed_variants).to receive(:available_variants).and_return([])        
+        expect(order_cycle_distributed_variants).to receive(:available_variants).and_return([])
 
         expect(cart_service.send(:check_variant_available_under_distribution, variant)).to be false
         expect(cart_service.errors.to_a).to eq(["That product is not available from the chosen distributor or order cycle."])

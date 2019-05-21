@@ -66,8 +66,8 @@ describe ProducerProperty do
       let!(:oc) { create(:simple_order_cycle, distributors: [shop], variants: [product.variants.first, product2.variants.first]) }
 
       it "doesn't return duplicates" do
-        expect(ProducerProperty.currently_sold_by(shop).to_a.count).to eq 1
-        expect(ProducerProperty.ever_sold_by(shop).to_a.count).to eq 1
+        expect(ProducerProperty.currently_sold_by(shop).to_a.size).to eq 1
+        expect(ProducerProperty.ever_sold_by(shop).to_a.size).to eq 1
       end
     end
   end

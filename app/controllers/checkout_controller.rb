@@ -40,15 +40,15 @@ class CheckoutController < Spree::CheckoutController
 
       next if advance_order_state(@order)
 
-      if @order.errors.present?
-        flash[:error] = @order.errors.full_messages.to_sentence
-      else
-        flash[:error] = t(:payment_processing_failed)
-      end
+      flash[:error] = if @order.errors.present?
+                        @order.errors.full_messages.to_sentence
+                      else
+                        t(:payment_processing_failed)
+                      end
       update_failed
       return
     end
-    return update_failed unless @order.state == "complete" ||  @order.completed?
+    return update_failed unless @order.state == "complete" || @order.completed?
 
     set_default_bill_address
     set_default_ship_address
@@ -59,10 +59,10 @@ class CheckoutController < Spree::CheckoutController
     flash[:notice] = t(:order_processed_successfully)
     respond_to do |format|
       format.html do
-        respond_with(@order, :location => order_path(@order))
+        respond_with(@order, location: order_path(@order))
       end
       format.json do
-        render json: {path: order_path(@order)}, status: 200
+        render json: { path: order_path(@order) }, status: :ok
       end
     end
   end
@@ -117,12 +117,11 @@ class CheckoutController < Spree::CheckoutController
         " AND source_type = 'Spree::LineItem' AND spree_line_items.id IS NULL")
 
     if phantom_fees.any?
-      Bugsnag.notify(RuntimeError.new("Phantom Fees"), {
-        phantom_fees: {
-          phantom_total: phantom_fees.sum(&:amount).to_s,
-          phantom_fees: phantom_fees.as_json
-        }
-      })
+      Bugsnag.notify(RuntimeError.new("Phantom Fees"),
+                     phantom_fees: {
+                       phantom_total: phantom_fees.sum(&:amount).to_s,
+                       phantom_fees: phantom_fees.as_json
+                     })
     end
   end
 
@@ -135,7 +134,7 @@ class CheckoutController < Spree::CheckoutController
     if params[:payment_source].present? && source_params = params.delete(:payment_source)[params[:order][:payments_attributes].first[:payment_method_id].underscore]
       params[:order][:payments_attributes].first[:source_attributes] = source_params
     end
-    if (params[:order][:payments_attributes])
+    if params[:order][:payments_attributes]
       params[:order][:payments_attributes].first[:amount] = @order.total
     end
     if params[:order][:existing_card_id]
@@ -162,7 +161,7 @@ class CheckoutController < Spree::CheckoutController
         render :edit
       end
       format.json do
-        render json: {errors: @order.errors, flash: flash.to_hash}.to_json, status: 400
+        render json: { errors: @order.errors, flash: flash.to_hash }.to_json, status: :bad_request
       end
     end
   end
@@ -182,9 +181,9 @@ class CheckoutController < Spree::CheckoutController
 
   def load_order
     @order = current_order
-    redirect_to main_app.shop_path and return unless @order and @order.checkout_allowed?
-    redirect_to_cart_path and return unless valid_order_line_items?
-    redirect_to main_app.shop_path and return if @order.completed?
+    redirect_to(main_app.shop_path) && return unless @order && @order.checkout_allowed?
+    redirect_to_cart_path && return unless valid_order_line_items?
+    redirect_to(main_app.shop_path) && return if @order.completed?
     before_address
     setup_for_current_state
   end
@@ -211,7 +210,7 @@ class CheckoutController < Spree::CheckoutController
       end
 
       format.json do
-        render json: {path: cart_path}, status: 400
+        render json: { path: cart_path }, status: :bad_request
       end
     end
   end
@@ -221,10 +220,10 @@ class CheckoutController < Spree::CheckoutController
 
     payment_method_id = params[:order][:payments_attributes].first[:payment_method_id]
     payment_method = Spree::PaymentMethod.find(payment_method_id)
-    return unless payment_method.kind_of?(Spree::Gateway::PayPalExpress)
+    return unless payment_method.is_a?(Spree::Gateway::PayPalExpress)
 
-    render json: {path: spree.paypal_express_path(payment_method_id: payment_method.id)},
-           status: 200
+    render json: { path: spree.paypal_express_path(payment_method_id: payment_method.id) },
+           status: :ok
     true
   end
 
@@ -248,7 +247,7 @@ class CheckoutController < Spree::CheckoutController
     flash[:error] = t(:spree_gateway_error_flash_for_checkout, error: error.message)
     respond_to do |format|
       format.html { render :edit }
-      format.json { render json: { flash: flash.to_hash }, status: 400 }
+      format.json { render json: { flash: flash.to_hash }, status: :bad_request }
     end
   end
 end

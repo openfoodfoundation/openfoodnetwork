@@ -4,7 +4,7 @@
 class MailConfiguration
   # @param entries [Hash] Spree Config entries
   def self.entries=(entries)
-    entries.each do | name, value |
+    entries.each do |name, value|
       Spree::Config[name] = value
     end
     apply_mail_settings

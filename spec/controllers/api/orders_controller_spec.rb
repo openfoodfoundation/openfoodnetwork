@@ -32,19 +32,19 @@ module Api
       let!(:order5) { create(:order, state: 'cart', completed_at: nil) }
       let!(:line_item1) do
         create(:line_item_with_shipment, order: order1,
-                           product: create(:product, supplier: supplier))
+                                         product: create(:product, supplier: supplier))
       end
       let!(:line_item2) do
         create(:line_item_with_shipment, order: order2,
-                           product: create(:product, supplier: supplier))
+                                         product: create(:product, supplier: supplier))
       end
       let!(:line_item3) do
         create(:line_item_with_shipment, order: order2,
-                           product: create(:product, supplier: supplier))
+                                         product: create(:product, supplier: supplier))
       end
       let!(:line_item4) do
         create(:line_item_with_shipment, order: order3,
-                           product: create(:product, supplier: supplier))
+                                         product: create(:product, supplier: supplier))
       end
       let!(:regular_user) { create(:user) }
       let!(:admin_user) { create(:admin_user) }

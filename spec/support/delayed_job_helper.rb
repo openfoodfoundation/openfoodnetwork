@@ -26,7 +26,6 @@ module OpenFoodNetwork
       Delayed::Job.delete_all
     end
 
-
     # expect { foo }.to enqueue_job MyJob, field1: 'foo', field2: 'bar'
     RSpec::Matchers.define :enqueue_job do |klass, options = {}|
       match do |event_proc|
@@ -59,11 +58,11 @@ module OpenFoodNetwork
         end
       end
 
-      failure_message do |event_proc|
+      failure_message do |_event_proc|
         @exception || "expected #{klass} to be enqueued matching #{options.inspect} (#{@jobs_created.count} others enqueued)"
       end
 
-      failure_message_when_negated do |event_proc|
+      failure_message_when_negated do |_event_proc|
         @exception || "expected #{klass} to not be enqueued matching #{options.inspect}"
       end
 

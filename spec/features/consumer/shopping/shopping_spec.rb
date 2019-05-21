@@ -7,7 +7,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
   include UIComponentHelper
 
   describe "Viewing a distributor" do
-
     let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
     let(:supplier) { create(:supplier_enterprise) }
     let(:oc1) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise), orders_close_at: 2.days.from_now) }
@@ -71,9 +70,9 @@ feature "As a consumer I want to shop with a distributor", js: true do
           add_variant_to_order_cycle(exchange1, variant)
           visit shop_path
           page.should_not have_content product.name
-          Spree::Order.last.order_cycle.should == nil
+          Spree::Order.last.order_cycle.should.nil?
 
-          select "frogs", :from => "order_cycle_id"
+          select "frogs", from: "order_cycle_id"
           page.should have_selector "products"
           page.should have_content "Next order closing in 2 days"
           Spree::Order.last.order_cycle.should == oc1
@@ -186,7 +185,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
       it "uses the adjusted price" do
         enterprise_fee1 = create(:enterprise_fee, amount: 20)
-        enterprise_fee2 = create(:enterprise_fee, amount:  3)
+        enterprise_fee2 = create(:enterprise_fee, amount: 3)
         exchange.enterprise_fees = [enterprise_fee1, enterprise_fee2]
         exchange.save
         visit shop_path
@@ -205,7 +204,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
       it "filters search results properly" do
         visit shop_path
-        select "frogs", :from => "order_cycle_id"
+        select "frogs", from: "order_cycle_id"
 
         fill_in "search", with: "74576345634XXXXXX"
         page.should have_content "Sorry, no results found"
@@ -222,7 +221,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
       it "returns search results for products where the search term matches one of the product's variant names" do
         visit shop_path
-        select "frogs", :from => "order_cycle_id"
+        select "frogs", from: "order_cycle_id"
 
         fill_in "search", with: "Badg"           # For variant with display_name "Badgers"
 
@@ -232,9 +231,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           page.should_not have_content product2.name
           page.should_not have_content variant3.display_name
         end
-
       end
-
     end
 
     describe "group buy products" do

@@ -1,5 +1,4 @@
-RSpec::Matchers.define :have_select2 do |id, options={}|
-
+RSpec::Matchers.define :have_select2 do |id, options = {}|
   # TODO: Implement other have_select options
   #       http://www.rubydoc.info/github/jnicklas/capybara/Capybara/Node/Matchers#has_select%3F-instance_method
   # TODO: Instead of passing in id, use a more general locator
@@ -7,7 +6,7 @@ RSpec::Matchers.define :have_select2 do |id, options={}|
   match do |node|
     @id, @options, @node = id, options, node
 
-    #id = find_label_by_text(locator)
+    # id = find_label_by_text(locator)
     from = "#s2id_#{id}"
 
     results = []
@@ -27,7 +26,7 @@ RSpec::Matchers.define :have_select2 do |id, options={}|
     results.all?
   end
 
-  failure_message do |actual|
+  failure_message do |_actual|
     message  = "expected to find select2 ##{@id}"
     message += " with #{@options.inspect}" if @options.any?
     message
@@ -36,7 +35,7 @@ RSpec::Matchers.define :have_select2 do |id, options={}|
   match_when_negated do |node|
     @id, @options, @node = id, options, node
 
-    #id = find_label_by_text(locator)
+    # id = find_label_by_text(locator)
     from = "#s2id_#{id}"
 
     results = []
@@ -49,8 +48,8 @@ RSpec::Matchers.define :have_select2 do |id, options={}|
 
     if results.none?
       results << all_options_absent(from, options[:with_options]) if options.key? :with_options
-      #results << exact_options_present(from, options[:options]) if options.key? :options
-      #results << no_options_present(from, options[:without_options]) if options.key? :without_options
+      # results << exact_options_present(from, options[:options]) if options.key? :options
+      # results << no_options_present(from, options[:without_options]) if options.key? :without_options
     end
 
     if (options.keys & %i(selected options without_options)).any?
@@ -60,7 +59,7 @@ RSpec::Matchers.define :have_select2 do |id, options={}|
     results.any?
   end
 
-  failure_message_when_negated do |actual|
+  failure_message_when_negated do |_actual|
     message  = "expected not to find select2 ##{@id}"
     message += " with #{@options.inspect}" if @options.any?
     message

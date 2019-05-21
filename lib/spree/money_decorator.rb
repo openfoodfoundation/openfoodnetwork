@@ -1,5 +1,4 @@
 Spree::Money.class_eval do
-
   # return the currency symbol (on its own) for the current default currency
   def self.currency_symbol
     Money.new(0, Spree::Config[:currency]).symbol
@@ -10,7 +9,7 @@ Spree::Money.class_eval do
     to_s
   end
 
-  def to_html(options = { :html => true })
+  def to_html(options = { html: true })
     output = @money.format(@options.merge(options))
     if options[:html]
       # 1) prevent blank, breaking spaces
@@ -20,7 +19,7 @@ Spree::Money.class_eval do
     output
   end
 
-  def format(options={})
+  def format(options = {})
     @money.format(@options.merge!(options))
   end
 end

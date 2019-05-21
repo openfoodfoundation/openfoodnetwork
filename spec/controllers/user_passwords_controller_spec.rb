@@ -19,7 +19,7 @@ describe UserPasswordsController, type: :controller do
     end
 
     it "redirects to login when data is valid" do
-      spree_post :create, spree_user: { email: user.email}
+      spree_post :create, spree_user: { email: user.email }
       expect(response).to be_redirect
     end
   end
@@ -54,7 +54,7 @@ describe UserPasswordsController, type: :controller do
     end
 
     it "returns error when user is unconfirmed" do
-      xhr :post, :create, spree_user: {email: unconfirmed_user.email}, use_route: :spree
+      xhr :post, :create, spree_user: { email: unconfirmed_user.email }, use_route: :spree
       expect(response.status).to eq 401
       expect(json_response).to eq 'error' => I18n.t('email_unconfirmed')
     end

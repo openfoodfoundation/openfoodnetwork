@@ -42,7 +42,7 @@ module Spree
     private
 
     def with_tax_included_in_price
-      old_included_in_price = self.included_in_price
+      old_included_in_price = included_in_price
 
       self.included_in_price = true
       calculator.calculable.included_in_price = true

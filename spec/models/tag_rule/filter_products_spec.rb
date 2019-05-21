@@ -5,14 +5,13 @@ describe TagRule::FilterProducts, type: :model do
 
   describe "determining whether tags match for a given variant" do
     context "when the variant is nil" do
-
       it "returns false" do
         expect(tag_rule.send(:tags_match?, nil)).to be false
       end
     end
 
     context "when the variant is not nil" do
-      let(:variant_object) { { "tag_list" => ["member","local","volunteer"] } }
+      let(:variant_object) { { "tag_list" => ["member", "local", "volunteer"] } }
 
       context "when the rule has no preferred variant tags specified" do
         before { allow(tag_rule).to receive(:preferred_variant_tags) { "" } }

@@ -90,7 +90,7 @@ describe OrderCycle do
   end
 
   it "finds the soonest opening order cycles" do
-    oc1 = create(:simple_order_cycle, orders_open_at: 1.weeks.from_now)
+    oc1 = create(:simple_order_cycle, orders_open_at: 1.week.from_now)
     oc2 = create(:simple_order_cycle, orders_open_at: 2.hours.from_now)
     oc3 = create(:simple_order_cycle, orders_open_at: 1.hour.ago)
 
@@ -99,7 +99,7 @@ describe OrderCycle do
 
   it "finds the soonest closing order cycles" do
     oc1 = create(:simple_order_cycle, orders_close_at: 2.hours.ago)
-    oc2 = create(:simple_order_cycle, orders_close_at: 2.hour.from_now)
+    oc2 = create(:simple_order_cycle, orders_close_at: 2.hours.from_now)
     oc3 = create(:simple_order_cycle, orders_close_at: 1.hour.from_now)
 
     expect(OrderCycle.soonest_closing).to eq([oc3, oc2])
@@ -129,9 +129,9 @@ describe OrderCycle do
     oc = create(:simple_order_cycle)
 
     e1 = create(:exchange, incoming: true,
-                order_cycle: oc, receiver: oc.coordinator, sender: create(:enterprise))
+                           order_cycle: oc, receiver: oc.coordinator, sender: create(:enterprise))
     e2 = create(:exchange, incoming: true,
-                order_cycle: oc, receiver: oc.coordinator, sender: create(:enterprise))
+                           order_cycle: oc, receiver: oc.coordinator, sender: create(:enterprise))
 
     expect(oc.suppliers).to match_array [e1.sender, e2.sender]
   end
@@ -140,9 +140,9 @@ describe OrderCycle do
     oc = create(:simple_order_cycle)
 
     e1 = create(:exchange, incoming: false,
-                order_cycle: oc, sender: oc.coordinator, receiver: create(:enterprise))
+                           order_cycle: oc, sender: oc.coordinator, receiver: create(:enterprise))
     e2 = create(:exchange, incoming: false,
-                order_cycle: oc, sender: oc.coordinator, receiver: create(:enterprise))
+                           order_cycle: oc, sender: oc.coordinator, receiver: create(:enterprise))
 
     expect(oc.distributors).to match_array [e1.receiver, e2.receiver]
   end
@@ -170,14 +170,17 @@ describe OrderCycle do
     let(:oc) { create(:simple_order_cycle) }
     let(:d1) { create(:enterprise) }
     let(:d2) { create(:enterprise) }
-    let!(:e0) { create(:exchange, incoming: true,
-                order_cycle: oc, sender: create(:enterprise), receiver: oc.coordinator)
+    let!(:e0) {
+      create(:exchange, incoming: true,
+                        order_cycle: oc, sender: create(:enterprise), receiver: oc.coordinator)
     }
-    let!(:e1) { create(:exchange, incoming: false,
-                order_cycle: oc, sender: oc.coordinator, receiver: d1)
+    let!(:e1) {
+      create(:exchange, incoming: false,
+                        order_cycle: oc, sender: oc.coordinator, receiver: d1)
     }
-    let!(:e2) { create(:exchange, incoming: false,
-                order_cycle: oc, sender: oc.coordinator, receiver: d2)
+    let!(:e2) {
+      create(:exchange, incoming: false,
+                        order_cycle: oc, sender: oc.coordinator, receiver: d2)
     }
     let!(:p0) { create(:simple_product) }
     let!(:p1) { create(:simple_product) }
@@ -408,7 +411,7 @@ describe OrderCycle do
   describe "finding open order cycles" do
     it "should give the soonest closing order cycle for a distributor" do
       distributor = create(:distributor_enterprise)
-      oc = create(:simple_order_cycle, name: 'oc 1', distributors: [distributor], orders_open_at: 1.days.ago, orders_close_at: 11.days.from_now)
+      oc = create(:simple_order_cycle, name: 'oc 1', distributors: [distributor], orders_open_at: 1.day.ago, orders_close_at: 11.days.from_now)
       oc2 = create(:simple_order_cycle, name: 'oc 2', distributors: [distributor], orders_open_at: 2.days.ago, orders_close_at: 12.days.from_now)
       expect(OrderCycle.first_closing_for(distributor)).to eq(oc)
     end
@@ -438,10 +441,10 @@ describe OrderCycle do
     let(:user) { create(:user) }
     let(:oc) { create(:order_cycle) }
     let!(:order) { create(:completed_order_with_totals, distributor: shop, user: user, order_cycle: oc)  }
-    let!(:order_from_other_hub) { create(:completed_order_with_totals, distributor: create(:enterprise), user: user, order_cycle: oc)  }
+    let!(:order_from_other_hub) { create(:completed_order_with_totals, distributor: create(:enterprise), user: user, order_cycle: oc) }
     let!(:order_from_other_user) { create(:completed_order_with_totals, distributor: shop, user: create(:user), order_cycle: oc)  }
-    let!(:order_from_other_oc) { create(:completed_order_with_totals, distributor: shop, user: user, order_cycle: create(:order_cycle))  }
-    let!(:order_cancelled) { create(:completed_order_with_totals, distributor: shop, user: user, order_cycle: oc)  }
+    let!(:order_from_other_oc) { create(:completed_order_with_totals, distributor: shop, user: user, order_cycle: create(:order_cycle)) }
+    let!(:order_cancelled) { create(:completed_order_with_totals, distributor: shop, user: user, order_cycle: oc) }
 
     before do
       setup_email

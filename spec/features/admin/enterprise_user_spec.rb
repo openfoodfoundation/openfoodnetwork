@@ -1,9 +1,9 @@
 require "spec_helper"
 
-feature %q{
+feature '
     As a Super User
     I want to setup users to manage an enterprise
-} do
+' do
   include AuthenticationWorkflow
   include WebHelper
 

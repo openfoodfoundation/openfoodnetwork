@@ -3,7 +3,7 @@ Spree::Admin::PaymentsController.class_eval do
 
   def create
     @payment = @order.payments.build(object_params)
-    if @payment.payment_method.is_a?(Spree::Gateway) && @payment.payment_method.payment_profiles_supported? && params[:card].present? and params[:card] != 'new'
+    if @payment.payment_method.is_a?(Spree::Gateway) && @payment.payment_method.payment_profiles_supported? && params[:card].present? && (params[:card] != 'new')
       @payment.source = CreditCard.find_by_id(params[:card])
     end
 
@@ -17,16 +17,15 @@ Spree::Admin::PaymentsController.class_eval do
         @payment.process!
         flash[:success] = flash_message_for(@payment, :successfully_created)
 
-         redirect_to admin_order_payments_path(@order)
+        redirect_to admin_order_payments_path(@order)
       else
         AdvanceOrderService.new(@order).call!
 
         flash[:success] = Spree.t(:new_order_completed)
         redirect_to edit_admin_order_url(@order)
       end
-
     rescue Spree::Core::GatewayError => e
-      flash[:error] = "#{e.message}"
+      flash[:error] = e.message.to_s
       redirect_to new_admin_order_payment_path(@order)
     end
   end
@@ -50,12 +49,11 @@ Spree::Admin::PaymentsController.class_eval do
     redirect_to request.referer
   end
 
-
   private
 
   # Only show payments for the order's distributor
   def filter_payment_methods
-    @payment_methods = @payment_methods.select{ |pm| pm.has_distributor? @order.distributor}
+    @payment_methods = @payment_methods.select{ |pm| pm.has_distributor? @order.distributor }
     @payment_method ||= @payment_methods.first
   end
 end

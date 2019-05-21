@@ -3,7 +3,7 @@ require 'csv'
 namespace :ofn do
   namespace :dev do
     desc 'export enterprises to CSV'
-    task :export_enterprises => :environment do
+    task export_enterprises: :environment do
       CSV.open('db/enterprises.csv', 'wb') do |csv|
         csv << enterprise_header
         enterprises.each do |enterprise|
@@ -11,7 +11,6 @@ namespace :ofn do
         end
       end
     end
-
 
     private
 

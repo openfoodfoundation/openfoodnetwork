@@ -1,9 +1,9 @@
 require "spec_helper"
 
-feature %q{
+feature '
     As an administrator
     I want to manage enterprises
-} do
+' do
   include AuthenticationWorkflow
   include WebHelper
 
@@ -37,18 +37,18 @@ feature %q{
     page.should_not have_checked_field "enterprise_shipping_method_ids_#{shipping_method.id}"
 
     # Filling in details
-    fill_in 'enterprise_name', :with => 'Eaterprises'
+    fill_in 'enterprise_name', with: 'Eaterprises'
 
     select2_select admin.email, from: 'enterprise_owner_id'
 
-    fill_in 'enterprise_contact_name', :with => 'Kirsten or Ren'
-    fill_in 'enterprise_phone', :with => '0413 897 321'
-    fill_in 'enterprise_email_address', :with => 'info@eaterprises.com.au'
-    fill_in 'enterprise_website', :with => 'http://eaterprises.com.au'
+    fill_in 'enterprise_contact_name', with: 'Kirsten or Ren'
+    fill_in 'enterprise_phone', with: '0413 897 321'
+    fill_in 'enterprise_email_address', with: 'info@eaterprises.com.au'
+    fill_in 'enterprise_website', with: 'http://eaterprises.com.au'
 
-    fill_in 'enterprise_address_attributes_address1', :with => '35 Ballantyne St'
-    fill_in 'enterprise_address_attributes_city', :with => 'Thornbury'
-    fill_in 'enterprise_address_attributes_zipcode', :with => '3072'
+    fill_in 'enterprise_address_attributes_address1', with: '35 Ballantyne St'
+    fill_in 'enterprise_address_attributes_city', with: 'Thornbury'
+    fill_in 'enterprise_address_attributes_zipcode', with: '3072'
     # default country (Australia in this test) should be selected by default
     select2_select 'Victoria', from: 'enterprise_address_attributes_state_id'
 
@@ -73,7 +73,7 @@ feature %q{
       first("a", text: 'Settings').click
     end
 
-    fill_in 'enterprise_name', :with => 'Eaterprises'
+    fill_in 'enterprise_name', with: 'Eaterprises'
     fill_in 'enterprise_permalink', with: 'eaterprises-permalink'
     page.should have_selector '.available'
     choose 'Own'
@@ -97,7 +97,7 @@ feature %q{
     accept_alert do
       click_link "About"
     end
-    fill_in 'enterprise_description', :with => 'Connecting farmers and eaters'
+    fill_in 'enterprise_description', with: 'Connecting farmers and eaters'
 
     description_input = page.find("text-angular#enterprise_long_description div[id^='taTextElement']")
     description_input.native.send_keys('This is an interesting long description')
@@ -142,31 +142,31 @@ feature %q{
     accept_alert do
       click_link "Contact"
     end
-    fill_in 'enterprise_contact_name', :with => 'Kirsten or Ren'
-    fill_in 'enterprise_phone', :with => '0413 897 321'
-    fill_in 'enterprise_email_address', :with => 'info@eaterprises.com.au'
-    fill_in 'enterprise_website', :with => 'http://eaterprises.com.au'
+    fill_in 'enterprise_contact_name', with: 'Kirsten or Ren'
+    fill_in 'enterprise_phone', with: '0413 897 321'
+    fill_in 'enterprise_email_address', with: 'info@eaterprises.com.au'
+    fill_in 'enterprise_website', with: 'http://eaterprises.com.au'
 
     accept_alert do
       click_link "Social"
     end
-    fill_in 'enterprise_twitter', :with => '@eaterprises'
+    fill_in 'enterprise_twitter', with: '@eaterprises'
 
     accept_alert do
       click_link "Business Details"
     end
-    fill_in 'enterprise_abn', :with => '09812309823'
-    fill_in 'enterprise_acn', :with => ''
+    fill_in 'enterprise_abn', with: '09812309823'
+    fill_in 'enterprise_acn', with: ''
     choose 'Yes' # enterprise_charges_sales_tax
 
     accept_alert do
       click_link "Address"
     end
-    fill_in 'enterprise_address_attributes_address1', :with => '35 Ballantyne St'
-    fill_in 'enterprise_address_attributes_city', :with => 'Thornbury'
-    fill_in 'enterprise_address_attributes_zipcode', :with => '3072'
+    fill_in 'enterprise_address_attributes_address1', with: '35 Ballantyne St'
+    fill_in 'enterprise_address_attributes_city', with: 'Thornbury'
+    fill_in 'enterprise_address_attributes_zipcode', with: '3072'
     # default country (Australia in this test) should be selected by default
-    select2_select 'Victoria', :from => 'enterprise_address_attributes_state_id'
+    select2_select 'Victoria', from: 'enterprise_address_attributes_state_id'
 
     accept_alert do
       click_link "Shop Preferences"
@@ -180,7 +180,7 @@ feature %q{
     click_button 'Update'
 
     flash_message.should == 'Enterprise "Eaterprises" has been successfully updated!'
-    page.should have_field 'enterprise_name', :with => 'Eaterprises'
+    page.should have_field 'enterprise_name', with: 'Eaterprises'
     @enterprise.reload
     expect(@enterprise.owner).to eq user
     expect(page).to have_checked_field "enterprise_visible_true"
@@ -280,7 +280,6 @@ feature %q{
       s.producer_properties(true).should be_empty
     end
   end
-
 
   describe "inventory settings", js: true do
     let!(:enterprise) { create(:distributor_enterprise) }
@@ -392,7 +391,7 @@ feature %q{
       visit admin_enterprises_path
       within("tbody#e_#{distributor1.id}") { click_link 'Settings' }
 
-      fill_in 'enterprise_name', :with => 'Eaterprises'
+      fill_in 'enterprise_name', with: 'Eaterprises'
 
       # Because poltergist does not support form onchange event
       # We need trigger the change manually
@@ -408,7 +407,7 @@ feature %q{
         visit admin_enterprises_path
         within("tbody#e_#{distributor3.id}") { click_link 'Settings' }
 
-        fill_in 'enterprise_name', :with => 'Eaterprises'
+        fill_in 'enterprise_name', with: 'Eaterprises'
 
         # Because poltergist does not support form onchange event
         # We need trigger the change manually

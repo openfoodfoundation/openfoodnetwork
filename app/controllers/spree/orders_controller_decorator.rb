@@ -39,14 +39,14 @@ Spree::OrdersController.class_eval do
     @order = order_to_update
     unless @order
       flash[:error] = t(:order_not_found)
-      redirect_to root_path and return
+      redirect_to(root_path) && return
     end
 
     if @order.update_attributes(params[:order])
       discard_empty_line_items
       with_open_adjustments { update_totals_and_taxes }
 
-      render :edit and return unless apply_coupon_code
+      render(:edit) && return unless apply_coupon_code
 
       if @order == current_order
         fire_event('spree.order.contents_changed')
@@ -56,7 +56,7 @@ Spree::OrdersController.class_eval do
 
       respond_with(@order) do |format|
         format.html do
-          if params.has_key?(:checkout)
+          if params.key?(:checkout)
             @order.next_transition.run_callbacks if @order.cart?
             redirect_to checkout_state_path(@order.checkout_steps.first)
           elsif @order.complete?
@@ -95,13 +95,13 @@ Spree::OrdersController.class_eval do
   end
 
   def filter_order_params
-    if params[:order] and params[:order][:line_items_attributes]
+    if params[:order] && params[:order][:line_items_attributes]
       params[:order][:line_items_attributes] = remove_missing_line_items(params[:order][:line_items_attributes])
     end
   end
 
   def remove_missing_line_items(attrs)
-    attrs.select do |i, line_item|
+    attrs.select do |_i, line_item|
       Spree::LineItem.find_by_id(line_item[:id])
     end
   end
@@ -128,7 +128,6 @@ Spree::OrdersController.class_eval do
     end
     redirect_to request.referer || order_path(@order)
   end
-
 
   private
 
@@ -185,7 +184,7 @@ Spree::OrdersController.class_eval do
     return unless order_to_update.andand.complete?
 
     items = params[:order][:line_items_attributes]
-      .andand.select{ |k,attrs| attrs["quantity"].to_i > 0 }
+      .andand.select{ |_k, attrs| attrs["quantity"].to_i > 0 }
 
     if items.empty?
       flash[:error] = I18n.t(:orders_cannot_remove_the_final_item)

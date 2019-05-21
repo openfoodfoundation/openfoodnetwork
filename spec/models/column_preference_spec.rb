@@ -10,18 +10,19 @@ describe ColumnPreference, type: :model do
     let(:user) { create(:user) }
     let!(:col1_pref) { ColumnPreference.create(user_id: user.id, action_name: 'some_action', column_name: 'col1', visible: true) }
     let!(:col2_pref) { ColumnPreference.create(user_id: user.id, action_name: 'some_action', column_name: 'col2', visible: false) }
-    let(:defaults) { {
-      col1:   { name: "col1", visible: false },
-      col2:   { name: "col2", visible: true },
-      col3:   { name: "col3", visible: false },
-    } }
+    let(:defaults) {
+      {
+        col1:   { name: "col1", visible: false },
+        col2:   { name: "col2", visible: true },
+        col3:   { name: "col3", visible: false },
+      } }
 
     context "when the user has preferences stored for the given action" do
       before do
         allow(ColumnPreference).to receive(:some_action_columns) { defaults }
       end
 
-      let(:preferences) { ColumnPreference.for(user, :some_action)}
+      let(:preferences) { ColumnPreference.for(user, :some_action) }
 
       it "builds an entry for each column listed in the defaults" do
         expect(preferences.count).to eq 3
@@ -43,7 +44,7 @@ describe ColumnPreference, type: :model do
         allow(ColumnPreference).to receive(:some_action_columns) { defaults }
       end
 
-      let(:preferences) { ColumnPreference.for(create(:user), :some_action)}
+      let(:preferences) { ColumnPreference.for(create(:user), :some_action) }
 
       it "builds an entry for each column listed in the defaults" do
         expect(preferences.count).to eq 3

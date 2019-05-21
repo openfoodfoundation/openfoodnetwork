@@ -116,7 +116,7 @@ module OpenFoodNetwork
 
         context "when an override exists" do
           before { vo }
-        
+
           context "when variant in stock" do
             it "returns true if VO in stock" do
               scoper.scope v
@@ -127,12 +127,12 @@ module OpenFoodNetwork
               vo.update_attribute :count_on_hand, 0
               scoper.scope v
               expect(v.in_stock?).to eq(false)
-            end            
+            end
           end
 
           context "when variant out of stock" do
             before { v.on_hand = 0 }
-            
+
             it "returns true if VO in stock" do
               scoper.scope v
               expect(v.in_stock?).to eq(true)
@@ -142,7 +142,7 @@ module OpenFoodNetwork
               vo.update_attribute :count_on_hand, 0
               scoper.scope v
               expect(v.in_stock?).to eq(false)
-            end            
+            end
           end
         end
 

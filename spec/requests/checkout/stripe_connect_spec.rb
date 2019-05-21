@@ -20,7 +20,7 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
   let(:params) do
     { format: :json, order: {
       shipping_method_id: shipping_method.id,
-      payments_attributes: [{payment_method_id: payment_method.id, source_attributes: { gateway_payment_profile_id: token, cc_type: "visa", last_digits: "4242", month: 10, year: 2025, first_name: 'Jill', last_name: 'Jeffreys' }}],
+      payments_attributes: [{ payment_method_id: payment_method.id, source_attributes: { gateway_payment_profile_id: token, cc_type: "visa", last_digits: "4242", month: 10, year: 2025, first_name: 'Jill', last_name: 'Jeffreys' } }],
       bill_address_attributes: address.attributes.slice("firstname", "lastname", "address1", "address2", "phone", "city", "zipcode", "state_id", "country_id"),
       ship_address_attributes: address.attributes.slice("firstname", "lastname", "address1", "address2", "phone", "city", "zipcode", "state_id", "country_id")
     } }
@@ -38,7 +38,7 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
   end
 
   context "when a new card is submitted" do
-    let(:store_response_mock) { { status: 200, body: JSON.generate(id: customer_id, default_card: card_id, sources: { data: [{id: "1"}] }) } }
+    let(:store_response_mock) { { status: 200, body: JSON.generate(id: customer_id, default_card: card_id, sources: { data: [{ id: "1" }] }) } }
     let(:token_response_mock) { { status: 200, body: JSON.generate(id: new_token) } }
     let(:charge_response_mock) { { status: 200, body: JSON.generate(id: "ch_1234", object: "charge", amount: 2000) } }
 
@@ -67,7 +67,7 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
       end
 
       context "when the charge request returns an error message" do
-        let(:charge_response_mock) { { status: 402, body: JSON.generate(error: { message: "charge-failure"}) } }
+        let(:charge_response_mock) { { status: 402, body: JSON.generate(error: { message: "charge-failure" }) } }
 
         it "should not process the payment" do
           put update_checkout_path, params
@@ -85,12 +85,12 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
 
         # Saves the card against the user
         stub_request(:post, "https://api.stripe.com/v1/customers")
-          .with(basic_auth: ["sk_test_12345", ""], body: { card: token, email: order.email})
+          .with(basic_auth: ["sk_test_12345", ""], body: { card: token, email: order.email })
           .to_return(store_response_mock)
 
         # Requests a token from the newly saved card
         stub_request(:post, "https://api.stripe.com/v1/tokens")
-          .with(:body => { card: card_id, customer: customer_id})
+          .with(body: { card: card_id, customer: customer_id })
           .to_return(token_response_mock)
 
         # Charges the card
@@ -115,7 +115,7 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
       end
 
       context "when the store request returns an error message" do
-        let(:store_response_mock) { { status: 402, body: JSON.generate(error: { message: "store-failure"}) } }
+        let(:store_response_mock) { { status: 402, body: JSON.generate(error: { message: "store-failure" }) } }
 
         it "should not process the payment" do
           put update_checkout_path, params
@@ -127,7 +127,7 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
       end
 
       context "when the charge request returns an error message" do
-        let(:charge_response_mock) { { status: 402, body: JSON.generate(error: { message: "charge-failure"}) } }
+        let(:charge_response_mock) { { status: 402, body: JSON.generate(error: { message: "charge-failure" }) } }
 
         it "should not process the payment" do
           put update_checkout_path, params
@@ -139,7 +139,7 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
       end
 
       context "when the token request returns an error message" do
-        let(:token_response_mock) { { status: 402, body: JSON.generate(error: { message: "token-failure"}) } }
+        let(:token_response_mock) { { status: 402, body: JSON.generate(error: { message: "token-failure" }) } }
 
         # Note, no requests have been stubbed
         it "should not process the payment" do
@@ -177,7 +177,7 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
 
       # Requests a token
       stub_request(:post, "https://api.stripe.com/v1/tokens")
-        .with(:body => {"card" => card_id, "customer" => customer_id})
+        .with(body: { "card" => card_id, "customer" => customer_id })
         .to_return(token_response_mock)
 
       # Charges the card
@@ -203,7 +203,7 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
     end
 
     context "when the charge request returns an error message" do
-      let(:charge_response_mock) { { status: 402, body: JSON.generate(error: { message: "charge-failure"}) } }
+      let(:charge_response_mock) { { status: 402, body: JSON.generate(error: { message: "charge-failure" }) } }
 
       it "should not process the payment" do
         put update_checkout_path, params
@@ -215,7 +215,7 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
     end
 
     context "when the token request returns an error message" do
-      let(:token_response_mock) { { status: 402, body: JSON.generate(error: { message: "token-error"}) } }
+      let(:token_response_mock) { { status: 402, body: JSON.generate(error: { message: "token-error" }) } }
 
       it "should not process the payment" do
         put update_checkout_path, params

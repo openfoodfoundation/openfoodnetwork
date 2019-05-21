@@ -29,15 +29,15 @@ module Api
     end
 
     def shipment_state
-      object.shipment_state ? object.shipment_state : nil
+      object.shipment_state || nil
     end
 
     def payment_state
-      object.payment_state ? object.payment_state : nil
+      object.payment_state || nil
     end
 
     def state
-      object.state ? object.state : nil
+      object.state || nil
     end
 
     def path

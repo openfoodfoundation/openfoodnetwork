@@ -11,7 +11,7 @@ module EnterprisesHelper
   end
 
   def available_shipping_methods
-    return [] unless current_distributor.present?
+    return [] if current_distributor.blank?
     shipping_methods = current_distributor.shipping_methods
 
     applicator = OpenFoodNetwork::TagRuleApplicator.new(current_distributor, "FilterShippingMethods", current_customer.andand.tag_list)
@@ -21,7 +21,7 @@ module EnterprisesHelper
   end
 
   def available_payment_methods
-    return [] unless current_distributor.present?
+    return [] if current_distributor.blank?
     payment_methods = current_distributor.payment_methods.available(:front_end).all
 
     filter = OpenFoodNetwork::AvailablePaymentMethodFilter.new
@@ -43,7 +43,7 @@ module EnterprisesHelper
       order('is_primary_producer ASC, name')
   end
 
-  def enterprises_options enterprises
+  def enterprises_options(enterprises)
     enterprises.map { |enterprise| [enterprise.name + ": " + enterprise.address.address1 + ", " + enterprise.address.city, enterprise.id.to_i] }
   end
 
@@ -74,7 +74,7 @@ module EnterprisesHelper
     name = t(:delete)
     options = {}
     options[:class] = "delete-resource"
-    options[:data] = { :action => 'remove', :confirm => enterprise_confirm_delete_message(enterprise) }
+    options[:data] = { action: 'remove', confirm: enterprise_confirm_delete_message(enterprise) }
     link_to_with_icon 'icon-trash', name, url, options
   end
 

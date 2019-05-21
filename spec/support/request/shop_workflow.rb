@@ -13,12 +13,12 @@ module ShopWorkflow
   end
 
   def set_order(order)
-    allow_any_instance_of(ApplicationController).to receive(:session).and_return({order_id: order.id, access_token: order.token})
+    allow_any_instance_of(ApplicationController).to receive(:session).and_return(order_id: order.id, access_token: order.token)
   end
 
   def add_product_to_cart(order, product, quantity: 1)
     cart_service = CartService.new(order)
-    cart_service.populate(variants: {product.variants.first.id => quantity})
+    cart_service.populate(variants: { product.variants.first.id => quantity })
 
     # Recalculate fee totals
     order.update_distribution_charge!

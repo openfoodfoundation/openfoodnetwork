@@ -24,10 +24,10 @@ describe UserRegistrationsController, type: :controller do
     end
 
     it "returns validation errors" do
-      xhr :post, :create, spree_user: {}, :use_route => :spree
+      xhr :post, :create, spree_user: {}, use_route: :spree
       expect(response.status).to eq(401)
       json = JSON.parse(response.body)
-      expect(json).to eq({"email" => ["can't be blank"], "password" => ["can't be blank"]})
+      expect(json).to eq("email" => ["can't be blank"], "password" => ["can't be blank"])
     end
 
     it "returns error when emailing fails" do
@@ -38,14 +38,14 @@ describe UserRegistrationsController, type: :controller do
 
       expect(response.status).to eq(401)
       json = JSON.parse(response.body)
-      expect(json).to eq({"message" => I18n.t('devise.user_registrations.spree_user.unknown_error')})
+      expect(json).to eq("message" => I18n.t('devise.user_registrations.spree_user.unknown_error'))
     end
 
     it "returns 200 when registration succeeds" do
       xhr :post, :create, spree_user: user_params, use_route: :spree
       expect(response.status).to eq(200)
       json = JSON.parse(response.body)
-      expect(json).to eq({"email" => "test@test.com"})
+      expect(json).to eq("email" => "test@test.com")
       expect(controller.spree_current_user).to be_nil
     end
 

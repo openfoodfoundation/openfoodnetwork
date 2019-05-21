@@ -16,7 +16,7 @@ describe "checking out an order that initially fails", type: :request do
   let(:params) do
     { format: :json, order: {
       shipping_method_id: shipping_method.id,
-      payments_attributes: [{payment_method_id: payment_method.id}],
+      payments_attributes: [{ payment_method_id: payment_method.id }],
       bill_address_attributes: address.attributes.slice("firstname", "lastname", "address1", "address2", "phone", "city", "zipcode", "state_id", "country_id"),
       ship_address_attributes: address.attributes.slice("firstname", "lastname", "address1", "address2", "phone", "city", "zipcode", "state_id", "country_id")
     } }

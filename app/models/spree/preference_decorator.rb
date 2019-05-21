@@ -12,7 +12,6 @@ module Spree
       end
     end
 
-
     private
 
     def product_selection_from_inventory_only_changed?

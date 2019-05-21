@@ -66,7 +66,6 @@ module Spree
         let(:shipping_method) { create(:shipping_method_with, :flat_rate) }
         let(:shipment)        { create(:shipment_with, :shipping_method, shipping_method: shipping_method, order: order) }
 
-
         describe "the shipping charge" do
           it "is the adjustment amount" do
             order.shipments = [shipment]
@@ -193,7 +192,7 @@ module Spree
             describe "when the tax rate does not include the tax in the price" do
               before do
                 fee_tax_rate.update_attribute :included_in_price, false
-                order.reload.create_tax_charge!  # Updating line_item or order has the same effect
+                order.reload.create_tax_charge! # Updating line_item or order has the same effect
                 order.update_distribution_charge!
               end
 
@@ -262,7 +261,7 @@ module Spree
             describe "when the tax rate does not include the tax in the price" do
               before do
                 product_tax_rate.update_attribute :included_in_price, false
-                order.reload.create_tax_charge!  # Updating line_item or order has the same effect
+                order.reload.create_tax_charge! # Updating line_item or order has the same effect
                 order.update_distribution_charge!
               end
 

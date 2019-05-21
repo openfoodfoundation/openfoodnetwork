@@ -1,5 +1,5 @@
 class Spree::ProductSet < ModelSet
-  def initialize(attributes={})
+  def initialize(attributes = {})
     super(Spree::Product, [], attributes, proc { |attrs| attrs[:product_id].blank? })
   end
 
@@ -85,13 +85,13 @@ class Spree::ProductSet < ModelSet
   end
 
   def create_variant(product, variant_attributes)
-      on_hand = variant_attributes.delete(:on_hand)
-      on_demand = variant_attributes.delete(:on_demand)
+    on_hand = variant_attributes.delete(:on_hand)
+    on_demand = variant_attributes.delete(:on_demand)
 
-      variant = product.variants.create(variant_attributes)
+    variant = product.variants.create(variant_attributes)
 
-      variant.on_demand = on_demand if on_demand.present?
-      variant.on_hand = on_hand.to_i if on_hand.present?
+    variant.on_demand = on_demand if on_demand.present?
+    variant.on_hand = on_hand.to_i if on_hand.present?
   end
 
   def collection_attributes=(attributes)

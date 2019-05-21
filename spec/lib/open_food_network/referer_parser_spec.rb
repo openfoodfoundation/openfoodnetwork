@@ -3,7 +3,6 @@ require 'spec_helper'
 
 module OpenFoodNetwork
   describe RefererParser do
-
     it "handles requests without referer" do
       expect(RefererParser.path(nil)).to be_nil
     end

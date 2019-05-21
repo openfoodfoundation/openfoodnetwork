@@ -20,7 +20,7 @@ module Admin
       if new_user
         render json: { user: new_user.id }, status: :ok
       else
-        render json: { errors: t('admin.enterprises.invite_manager.error') }, status: 500
+        render json: { errors: t('admin.enterprises.invite_manager.error') }, status: :internal_server_error
       end
     end
 
