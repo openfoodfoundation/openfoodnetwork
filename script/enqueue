@@ -26,6 +26,7 @@ def psql
   raise "Missing config for #{env} environment" unless config
 
   "psql".tap do |s|
+    s << " --quiet"
     s << " --host #{config['host']}"     if config['host']
     s << " --user #{config['username']}" if config['username']
     s << " --port #{config['port']}"     if config['port']
