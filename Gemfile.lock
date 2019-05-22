@@ -617,6 +617,7 @@ GEM
     rails-i18n (3.0.1)
       i18n (~> 0.5)
       rails (>= 3.0.0, < 4.0.0)
+    rails_safe_tasks (1.0.0)
     railties (3.2.22.5)
       actionpack (= 3.2.22.5)
       activesupport (= 3.2.22.5)
@@ -853,6 +854,7 @@ DEPENDENCIES
   rack-ssl
   rails (~> 3.2.22)
   rails-i18n (~> 3.0.0)
+  rails_safe_tasks (~> 1.0)
   redcarpet
   roadie-rails (~> 1.1.1)
   roo (~> 2.7.0)
