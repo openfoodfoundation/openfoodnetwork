@@ -339,11 +339,7 @@ nb:
         config_instructions_html: "Her kan du konfigurere OFN-Matomo integrasjonen. URL til Matomo nedenfor skal peke på Matomo-instansen der brukersporingsinformasjonen skal sendes til; Hvis den er tom, blir Matomo-brukersporing deaktivert. Site-ID feltet er ikke obligatorisk, men nyttig hvis du sporer mer enn ett nettsted på en enkelt Matomo-instans; den kan bli funnet på Matomo-konsollen."
     customers:
       index:
-        add_customer: "Legge til kunde"
         new_customer: "Ny kunde"
-        customer_placeholder: "customer@example.org"
-        valid_email_error: Vennligst oppgi en gyldig epostadresse
-        add_a_new_customer_for: Legge til en ny kunde for %{shop_name}
         code: Kode
         duplicate_code: "Denne koden er allerede brukt."
         bill_address: "Fakturaadresse"
@@ -667,24 +663,26 @@ nb:
           enable_subscriptions_tip: "Aktiver abonnementsfunksjonalitet?"
           enable_subscriptions_false: "Deaktivert"
           enable_subscriptions_true: "Aktivert"
-          shopfront_message: Melding Butikk
+          shopfront_message: "Melding Butikk"
           shopfront_message_placeholder: >
               En valgfri forklaring for kunder med detaljer om hvordan din nettbutikk
               fungerer, for å vises over produktlisten på din side.
-          shopfront_closed_message: Melding Butikk Stengt
+          shopfront_message_link_tooltip: "Sett inn / rediger lenke"
+          shopfront_message_link_prompt: "Vennligst skriv inn en URL for å sette inn"
+          shopfront_closed_message: "Melding Butikk Stengt"
           shopfront_closed_message_placeholder: >
               En melding som gir en mer detaljert forklaring om hvorfor din butikk
               er stengt og/eller når kunder kan forvente at den åpner igjen. Dette
               vises på din butikk kun når du ikke har noen aktive bestillingsrunder
               (dvs. butikk er stengt).
-          shopfront_category_ordering: Kategorisortering Butikk
-          open_date: Åpningsdato
-          close_date: Stengedato
+          shopfront_category_ordering: "Kategorisortering Butikk"
+          open_date: "Åpningsdato"
+          close_date: "Stengedato"
         social:
-          twitter_placeholder: f.eks. @the_prof
-          instagram_placeholder: f.eks. the_prof
-          facebook_placeholder: f.eks. www.facebook.com/FirmaNavnHer
-          linkedin_placeholder: f.eks. www.linkedin.com/in/YourNameHere
+          twitter_placeholder: "f.eks. @the_prof"
+          instagram_placeholder: "f.eks. the_prof"
+          facebook_placeholder: "f.eks. www.facebook.com/FirmaNavnHer"
+          linkedin_placeholder: "f.eks. www.linkedin.com/in/YourNameHere"
         stripe_connect:
           connect_with_stripe: "Koble til Stripe"
           stripe_connect_intro: "For å akseptere betaling med kredittkort må du koble din Stripe konto til Open Food Network. Bruk knappen til høyre for å komme i gang."
@@ -800,6 +798,9 @@ nb:
         user_already_exists: "Brukeren eksisterer allerede"
         error: "Noe gikk galt"
     order_cycles:
+      loading_flash:
+        loading_order_cycles: LASTER BESTILLINGSRUNDER
+        loading: LASTER...
       edit:
         advanced_settings: Avanserte Innstillinger
         update_and_close: Oppdater og Lukk
@@ -839,22 +840,10 @@ nb:
         tags: Merkelapper
         add_a_tag: Legg til en merkelapp
         delivery_details: Hente-/Leveringsdetaljer
-        debug_info: Debuginformasjon
       index:
         schedule: Tidsplan
         schedules: Tidsplaner
-        adding_a_new_schedule: Legge til en ny tidsplan
-        updating_a_schedule: Oppdatere en tidsplan
         new_schedule: Ny tidsplan
-        create_schedule: Lag tidsplan
-        update_schedule: Oppdater tidsplan
-        delete_schedule: Slett tidsplan
-        created_schedule: Opprettet tidsplan
-        updated_schedule: Oppdatert tidsplan
-        deleted_schedule: Slettet tidsplan
-        schedule_name_placeholder: Navn tidsplan
-        name_required_error: Vennligst skriv inn et navn for denne tidsplanen
-        no_order_cycles_error: Vennligst velg minst én bestillingssyklus (dra og slipp)
       name_and_timing_form:
         name: Navn
         orders_open: Bestillinger åpner
@@ -959,6 +948,7 @@ nb:
       subscriptions: Abonnement
       new: Nytt abonnement
       create: Opprett abonnement
+      edit: Rediger abonnement
       index:
         please_select_a_shop: Vennligst velg en butikk
         edit_subscription: Rediger abonnement
@@ -1127,7 +1117,7 @@ nb:
   menu_4_title: "Grupper"
   menu_4_url: "/groups"
   menu_5_title: "Om"
-  menu_5_url: "https://openfoodnetwork.org/ofn-local/open-food-network-scandinavia/"
+  menu_5_url: "https://about.openfoodnetwork.org.au/"
   menu_6_title: "Koble til"
   menu_6_url: "https://openfoodnetwork.org/au/connect/"
   menu_7_title: "Lære"
@@ -1561,7 +1551,7 @@ nb:
   sell_hubs_detail: "Sette opp en profil for virksomheten eller organisasjonen din på OFN. Når som helst kan du oppgradere din profil til en multi-produsent butikk."
   sell_groups_detail: "Definere en skreddersydd katalog av bedrifter (produsenter og andre foretak) eller organisasjonen."
   sell_user_guide: "Finn ut mer i brukerhåndboken."
-  sell_listing_price: "En profil på OFN er gratis. Les mer om hvor mye det koster å åpne en butikk på OFN eller å sette opp en gruppenettverk for organisasjonen din eller ditt regionale nettverk."
+  sell_listing_price: "Oppføring på OFN er gratis. Å åpne og drive en butikk på OFN er gratis opp til 5000,- av månedlig salg. Hvis du selger mer, kan du velge fellesskapsbidrag mellom 1% og 3% av salget. For mer detaljer om prising, besøk delen Programvareplattform via Om-koblingen i toppmenyen."
   sell_embed: "Vi kan også bygge inn en OFN butikk i din egen skreddersydde nettside eller bygge en tilpasset lokalmat nettverk nettside for din region."
   sell_ask_services: "Spør oss om OFN tjenester."
   shops_title: Butikker
@@ -2407,6 +2397,27 @@ nb:
         sending: "Send på nytt ..."
         done: "Sending på nytt ferdig ✓"
         failed: "Sending på nytt mislyktes ✗"
+      order_cycles:
+        schedules:
+          adding_a_new_schedule: "Legge til en ny tidsplan"
+          updating_a_schedule: "Oppdatere en tidsplan"
+          create_schedule: "Lag tidsplan"
+          update_schedule: "Oppdater tidsplan"
+          delete_schedule: "Slett tidsplan"
+          schedule_name_placeholder: "Navn tidsplan"
+          created_schedule: "Opprettet tidsplan"
+          updated_schedule: "Oppdatert tidsplan"
+          deleted_schedule: "Slettet tidsplan"
+          name_required_error: "Vennligst skriv inn et navn for denne tidsplanen"
+          no_order_cycles_error: "Vennligst velg minst én bestillingssyklus (dra og slipp)"
+          available: "Tilgjengelig"
+          selected: "Valgt"
+      customers:
+        index:
+          add_customer: "Legge til kunde"
+          add_a_new_customer_for: "Legge til en ny kunde for %{shop_name}"
+          customer_placeholder: "customer@example.org"
+          valid_email_error: "Vennligst oppgi en gyldig epostadresse"
     insufficient_stock: "Utilstrekkelig lager tilgjengelig, kun %{on_hand} gjenværende"
     out_of_stock:
       reduced_stock_available: Redusert lager tilgjengelig
