@@ -1115,6 +1115,8 @@ en:
       cart:
         checkout: "Checkout now"
         already_ordered_products: "Already ordered in this order cycle"
+      signed_in:
+        profile: "Profile"
     register_call:
       selling_on_ofn: "Interested in getting on the Open Food Network?"
       register: "Register here"

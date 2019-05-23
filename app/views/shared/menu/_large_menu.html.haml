@@ -28,9 +28,9 @@
               %li
                 %a{href: "?locale=#{l.to_s}" }= t('language_name', locale: l)
       - if spree_current_user.nil?
-        = render 'shared/signed_out'
+        = render 'shared/menu/signed_out'
       - else
-        = render 'shared/signed_in'
+        = render 'shared/menu/signed_in'
       %li.current_hub{"ng-controller" => "CurrentHubCtrl", "ng-show" => "CurrentHub.hub.id", "ng-cloak" => true}
         %a{href: main_app.shop_path}
           %em

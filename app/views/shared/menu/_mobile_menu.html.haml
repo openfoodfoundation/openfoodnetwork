@@ -39,6 +39,6 @@
                 %a{href: "?locale=#{l.to_s}" }= t('language_name', locale: l)
     %li
     - if spree_current_user.nil?
-      = render 'shared/signed_out'
+      = render 'shared/menu/signed_out'
     - else
-      = render 'shared/signed_in_offcanvas'
+      = render 'shared/menu/signed_in_offcanvas'
