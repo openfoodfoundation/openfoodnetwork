@@ -1,0 +1,20 @@
+default: &default
+  adapter: postgresql
+  encoding: utf8
+  pool: 5
+  timeout: 5000
+  host: db
+  port: 5432
+  #socket: /var/run/mysqld/mysqld.sock
+
+development:
+  <<: *default
+  database: open_food_network_dev
+  username: ofn
+  password: f00d
+
+test:
+  <<: *default
+  database: open_food_network_test
+  username: ofn
+  password: f00d

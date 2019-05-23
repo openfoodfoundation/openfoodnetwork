@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:9.3
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: f00d
+      POSTGRES_USER: ofn
+    volumes:
+      - 'postgres:/var/lib/postgresql/data'
+  web:
+    tty: true
+    stdin_open: true
+    build: .
+    ports:
+      - 3006:3000
+    volumes:
+      - .:/usr/src/app
+      - gems:/bundles
+      - ./config/database.docker.yml:/usr/src/app/config/database.yml
+      - ./config/application.docker.yml:/usr/src/app/config/application.yml
+    depends_on:
+      - db
+    command: >
+      bash -c "(bundle check || bundle install) &&
+               wait-for-it -t 30 db:5432 &&
+               bundle exec rake db:create &&
+               bundle exec rake ofn:dev:setup &&
+               rm -f tmp/pids/server.pid &&
+               bundle exec rails s -p 3000 -b '0.0.0.0'"
+
+volumes:
+  gems:
+  postgres:
