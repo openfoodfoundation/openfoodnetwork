@@ -1,5 +1,18 @@
 namespace :ofn do
   namespace :dev do
+    desc 'Setup dev environment'
+    task setup: :environment do
+      p '== Entering setup'
+
+      unless Spree::User.table_exists? && Spree::User.count
+        p '== Purge & Load sample data'
+        Rake::Task['db:schema:load'].invoke
+      end
+
+      p '== Migrate'
+      Rake::Task['db:migrate'].invoke
+    end
+
     desc 'load sample data'
     task load_sample_data: :environment do
       require_relative '../../spec/factories'
