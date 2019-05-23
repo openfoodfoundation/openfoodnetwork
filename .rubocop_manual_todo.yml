@@ -26,6 +26,7 @@ Metrics/LineLength:
   - app/controllers/admin/bulk_line_items_controller.rb
   - app/controllers/admin/contents_controller.rb
   - app/controllers/admin/customers_controller.rb
+  - app/controllers/admin/enterprises_controller.rb
   - app/controllers/admin/enterprise_fees_controller.rb
   - app/controllers/admin/enterprise_groups_controller.rb
   - app/controllers/admin/enterprise_relationships_controller.rb
@@ -391,6 +392,7 @@ Metrics/AbcSize:
   Exclude:
   - app/controllers/admin/bulk_line_items_controller.rb
   - app/controllers/admin/customers_controller.rb
+  - app/controllers/admin/enterprises_controller.rb
   - app/controllers/admin/enterprise_fees_controller.rb
   - app/controllers/admin/order_cycles_controller.rb
   - app/controllers/admin/product_import_controller.rb
@@ -411,6 +413,7 @@ Metrics/AbcSize:
   - app/controllers/spree/admin/orders_controller_decorator.rb
   - app/controllers/spree/admin/overview_controller_decorator.rb
   - app/controllers/spree/admin/payments_controller_decorator.rb
+  - app/controllers/spree/admin/payment_methods_controller_decorator.rb
   - app/controllers/spree/admin/products_controller_decorator.rb
   - app/controllers/spree/admin/reports_controller_decorator.rb
   - app/controllers/spree/admin/search_controller_decorator.rb
@@ -494,6 +497,7 @@ Metrics/AbcSize:
 Metrics/CyclomaticComplexity:
   Max: 6
   Exclude:
+  - app/controllers/admin/enterprises_controller.rb
   - app/controllers/admin/enterprise_fees_controller.rb
   - app/controllers/checkout_controller.rb
   - app/controllers/spree/admin/payments_controller_decorator.rb
@@ -524,6 +528,7 @@ Metrics/CyclomaticComplexity:
 Metrics/PerceivedComplexity:
   Max: 7
   Exclude:
+  - app/controllers/admin/enterprises_controller.rb
   - app/controllers/checkout_controller.rb
   - app/controllers/spree/admin/payments_controller_decorator.rb
   - app/controllers/spree/orders_controller_decorator.rb
@@ -551,6 +556,7 @@ Metrics/MethodLength:
   Max: 10
   Exclude:
   - app/controllers/admin/customers_controller.rb
+  - app/controllers/admin/enterprises_controller.rb
   - app/controllers/admin/enterprise_fees_controller.rb
   - app/controllers/admin/manager_invitations_controller.rb
   - app/controllers/admin/order_cycles_controller.rb
@@ -562,6 +568,7 @@ Metrics/MethodLength:
   - app/controllers/shop_controller.rb
   - app/controllers/spree/admin/orders/customer_details_controller_decorator.rb
   - app/controllers/spree/admin/payments_controller_decorator.rb
+  - app/controllers/spree/admin/payment_methods_controller_decorator.rb
   - app/controllers/spree/admin/products_controller_decorator.rb
   - app/controllers/spree/admin/reports_controller_decorator.rb
   - app/controllers/spree/admin/search_controller_decorator.rb
@@ -636,6 +643,7 @@ Metrics/MethodLength:
 Metrics/ClassLength:
   Max: 100
   Exclude:
+  - app/controllers/admin/enterprises_controller.rb
   - app/controllers/admin/order_cycles_controller.rb
   - app/controllers/admin/subscriptions_controller.rb
   - app/controllers/checkout_controller.rb

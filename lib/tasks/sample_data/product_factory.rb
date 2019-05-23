@@ -12,7 +12,6 @@ class ProductFactory
 
   private
 
-  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
   def product_data(enterprises)
     vegetables = Spree::Taxon.find_by_name('Vegetables')
     fruit = Spree::Taxon.find_by_name('Fruit')
@@ -64,7 +63,6 @@ class ProductFactory
       }
     ]
   end
-  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
   def create_product(hash)
     log "- #{hash[:name]}"

@@ -319,7 +319,6 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
                                             amount: 25)
       end
       let!(:distributor_fee) do
-        tax_category = create(:tax_category, name: "Distributor Tax A")
         create(:enterprise_fee, :flat_rate, name: "Distributor Fee A", enterprise: distributor,
                                             fee_type: "admin", inherits_tax_category: false,
                                             amount: 30)

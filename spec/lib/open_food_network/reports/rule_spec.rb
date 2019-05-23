@@ -1,9 +1,12 @@
+require 'spec_helper'
 require 'open_food_network/reports/rule'
 
 module OpenFoodNetwork::Reports
   describe Rule do
     let(:rule) { Rule.new }
-    let(:proc) { proc {} }
+    # rubocop:disable Style/Proc
+    let(:proc) { Proc.new {} }
+    # rubocop:enable Style/Proc
 
     it "can define a group proc and return it in a hash" do
       rule.group(&proc)
