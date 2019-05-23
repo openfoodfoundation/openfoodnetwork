@@ -61,7 +61,7 @@ gem 'rabl'
 # Once Rails is updated to 5.x we should bump directly to 0.10.x
 gem "active_model_serializers", "0.8.4"
 gem 'oj'
-gem 'deface', '1.0.0'
+gem 'deface', '1.0.2'
 gem 'paperclip', '~> 3.4.1'
 gem 'dalli'
 gem 'geocoder'
