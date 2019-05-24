@@ -18,24 +18,19 @@
             %a{href: t("#{menu_name}_url") }
               %span.nav-primary
                 = t "#{menu_name}_title"
-    %ul.right
+    %ul.menu.icons.right
       - if OpenFoodNetwork::I18nConfig.selectable_locales.count > 1
-        %li.language-switcher.has-dropdown
-          %a{href: '#'}
-            %i.ofn-i_071-globe
-          %ul.dropdown
-            - OpenFoodNetwork::I18nConfig.selectable_locales.each do |l|
-              %li
-                %a{href: "?locale=#{l.to_s}" }= t('language_name', locale: l)
+        = render 'shared/menu/language_selector'
+
       - if spree_current_user.nil?
         = render 'shared/menu/signed_out'
       - else
         = render 'shared/menu/signed_in'
+
       %li.current_hub{"ng-controller" => "CurrentHubCtrl", "ng-show" => "CurrentHub.hub.id", "ng-cloak" => true}
         %a{href: main_app.shop_path}
-          %em
-            = t 'label_shopping'
-            &#64;
-          %span.nav-primary.nav-branded {{ CurrentHub.hub.name | truncate:25 }}
+          = t 'label_shopping'
+          = '@'
+          %span {{ CurrentHub.hub.name | truncate:25 }}
       %li.cart{"ng-cloak" => true}
         = render partial: "shared/menu/cart"
