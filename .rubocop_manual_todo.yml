@@ -48,6 +48,7 @@ Metrics/LineLength:
   - app/controllers/spree/admin/base_controller_decorator.rb
   - app/controllers/spree/admin/orders_controller_decorator.rb
   - app/controllers/spree/admin/payments_controller_decorator.rb
+  - app/controllers/spree/admin/payment_methods_controller_decorator.rb
   - app/controllers/spree/admin/products_controller_decorator.rb
   - app/controllers/spree/admin/reports_controller_decorator.rb
   - app/controllers/spree/api/products_controller_decorator.rb
