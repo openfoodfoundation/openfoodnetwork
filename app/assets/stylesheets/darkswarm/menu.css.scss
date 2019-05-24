@@ -21,10 +21,10 @@ nav.top-bar {
 
     > span {
       display: inline-block;
-      line-height: $topbar-height;
-      height: $topbar-height;
-      vertical-align: top;
       font-weight: 300;
+      height: $topbar-height;
+      line-height: $topbar-height;
+      vertical-align: top;
     }
   }
 
@@ -55,15 +55,15 @@ nav.top-bar {
       }
 
       span {
-        position: absolute;
-        color: #f4704c;
         background-color: white;
         border-radius: 20px;
-        width: 18px;
+        color: #f4704c;
+        font-size: 12px;
         line-height: 18px;
+        position: absolute;
         right: -8px;
         top: 8px;
-        font-size: 12px;
+        width: 18px;
       }
     }
   }
@@ -84,8 +84,8 @@ nav.top-bar {
 
   ul.right {
     > li {
-      padding: 0 14px;
       border-left: 1px solid #ddd;
+      padding: 0 14px;
 
       @media screen and (max-width: 1450px) {
         padding: 0 6px;
@@ -100,11 +100,11 @@ nav.top-bar {
       }
 
       i {
-        display: inline-block;
         color: #f4704c;
+        display: inline-block;
         margin-right: 2px;
-        vertical-align: middle;
         margin-top: -3px;
+        vertical-align: middle;
       }
 
       img {
@@ -115,8 +115,8 @@ nav.top-bar {
   }
 
   ul li > a {
-    height: $topbar-height;
     font-size: 16px;
+    height: $topbar-height;
   }
 
   ul li.ofn-logo > a {
@@ -153,21 +153,21 @@ nav.top-bar {
       position: relative;
 
       img {
-        width: 26px;
         margin-left: 2px;
+        width: 26px;
       }
 
       span {
-        position: absolute;
-        color: #f4704c;
         background-color: white;
         border-radius: 20px;
-        width: 16px;
-        line-height: 16px;
-        right: -10px;
-        top: -9px;
-        text-align: center;
+        color: #f4704c;
         font-size: 12px;
+        line-height: 16px;
+        position: absolute;
+        right: -10px;
+        text-align: center;
+        top: -9px;
+        width: 16px;
       }
     }
   }
