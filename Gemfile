@@ -109,7 +109,7 @@ end
 gem "foundation-rails"
 gem 'foundation_rails_helper', github: 'willrjmarshall/foundation_rails_helper', branch: "rails3"
 
-gem 'jquery-rails', '3.0.0'
+gem 'jquery-rails', '3.0.4'
 gem 'jquery-migrate-rails'
 
 gem 'ofn-qz', github: 'openfoodfoundation/ofn-qz', ref: '60da2ae4c44cbb4c8d602f59fb5fff8d0f21db3c'
