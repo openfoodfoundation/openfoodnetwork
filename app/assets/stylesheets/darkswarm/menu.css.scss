@@ -4,93 +4,135 @@
 @import "typography";
 @import "variables";
 
-nav {
+nav.top-bar {
   @include textpress;
-
   text-shadow: none;
-
-  // Create center style for nav ul (foundation provides left and right)
   text-align: center;
+  font-size: 16px;
+  margin-bottom: 0;
+  height: $topbar-height;
+}
 
-  .top-bar-section {
-    // Avoid menu items blocking logo
-    li:not(.has-form), li:not(.has-form) a:not(.button), li:not(.has-form) a:not(.button):hover {
-      background-color: transparent;
+.top-bar-section {
+  a.icon {
+    &:hover {
+      text-decoration: none;
     }
 
-    ul.center {
+    > span {
       display: inline-block;
-
-      // By default, we center between the left and right uls, but we want to be centered
-      // relative to the whole page. The difference in width between the other uls is 74px,
-      // so we offset by that amount here.
-      margin-left: -74px;
-    }
-  }
-
-  .joyride-tip-guide .button {
-    text-shadow: none;
-  }
-
-  // Default overrides - big menu
-  .top-bar-section .has-dropdown > a {
-    padding-right: ($topbar-height / 3) !important;
-
-    i.ofn-i_022-cog, .ofn-i_071-globe {
-      font-size: 24px;
       line-height: $topbar-height;
-    }
-
-    i.ofn-i_071-globe {
-      color: #666;
-      font-size: 27px
+      height: $topbar-height;
+      vertical-align: top;
+      font-weight: 300;
     }
   }
 
-  .top-bar-section .has-dropdown > a:after {
-    display: none;
+  // Avoid menu items blocking logo
+  li:not(.has-form), li:not(.has-form) a:not(.button), li:not(.has-form) a:not(.button):hover {
+    background-color: transparent;
   }
 
-  .top-bar-section ul li > a {
-    font-size: 0.75rem;
-    height: $topbar-height;
-    opacity: 0.8;
+  li.cart {
+    background-color: #f4704c;
 
-    &:hover, &:focus, &:active {
-      opacity: 1;
+    a span {
+      color: white;
     }
 
-    @include transition(all 0.3s ease-in-out);
-  }
+    i {
+      color: white;
+    }
 
-  .top-bar-section ul li.ofn-logo > a {
-    display: table-cell;
-    vertical-align: middle;
-    opacity: 1;
-  }
+    .count {
+      position: relative;
 
-  .nav-branded {
-    color: $brand-colour;
+      img {
+        width: 32px;
+        height: 26px;
+        margin-top: 16px;
+        margin-right: 5px;
+      }
 
-    span {
-      font-size: 13px;
+      span {
+        position: absolute;
+        color: #f4704c;
+        background-color: white;
+        border-radius: 20px;
+        width: 18px;
+        line-height: 18px;
+        right: -8px;
+        top: 8px;
+        font-size: 12px;
+      }
     }
   }
 
-  .nav-primary {
-    @include headingFont;
+  ul.center {
+    display: inline-block;
 
-    font-size: 0.875rem;
-    font-weight: 300;
-  }
-
-  ul .nav-primary {
-    text-transform: uppercase;
+    // By default, we center between the left and right uls, but we want to be centered
+    // relative to the whole page. The difference in width between the other uls is 74px,
+    // so we offset by that amount here.
+    margin-left: -74px;
   }
 
   ul.dropdown {
     border: 1px solid $smoke;
     border-top: none;
+  }
+
+  ul.right {
+    > li {
+      padding: 0 14px;
+      border-left: 1px solid #ddd;
+
+      @media screen and (max-width: 1450px) {
+        padding: 0 6px;
+      }
+    }
+
+    li > a {
+      opacity: 0.8;
+
+      &:hover, &:focus, &:active {
+        opacity: 1;
+      }
+
+      i {
+        display: inline-block;
+        color: #f4704c;
+        margin-right: 2px;
+        vertical-align: middle;
+        margin-top: -3px;
+      }
+
+      img {
+        margin-right: 2px;
+        margin-top: -5px;
+      }
+    }
+  }
+
+  ul li > a {
+    height: $topbar-height;
+    font-size: 16px;
+  }
+
+  ul li.ofn-logo > a {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  ul .nav-primary {
+    @include headingFont;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 16px;
+  }
+
+  .joyride-tip-guide .button {
+    text-shadow: none;
   }
 }
 
@@ -98,7 +140,39 @@ nav {
 
 .tab-bar {
   background-color: white;
+
+  .cart-span {
+    background-color: #f4704c;
+    padding: 13px;
+
+    a, span {
+      color: white;
+    }
+
+    .count {
+      position: relative;
+
+      img {
+        width: 26px;
+        margin-left: 2px;
+      }
+
+      span {
+        position: absolute;
+        color: #f4704c;
+        background-color: white;
+        border-radius: 20px;
+        width: 16px;
+        line-height: 16px;
+        right: -10px;
+        top: -9px;
+        text-align: center;
+        font-size: 12px;
+      }
+    }
+  }
 }
+
 
 .off-canvas-list li.language-switcher ul li {
   list-style-type: none;
@@ -114,8 +188,6 @@ nav {
 }
 
 .off-canvas-wrap.move-right .tab-bar .menu-icon span {
-  -moz-box-shadow: 0 0px 0 1px #666, 0 7px 0 1px #666, 0 14px 0 1px #666;
-  -webkit-box-shadow: 0 0px 0 1px #666, 0 7px 0 1px #666, 0 14px 0 1px #666;
   box-shadow: 0 0px 0 1px #666, 0 7px 0 1px #666, 0 14px 0 1px #666;
 }
 
@@ -193,11 +265,5 @@ nav {
   body.off-canvas {
     // padding required to placehold for fixed menu bar
     padding-top: 0;
-  }
-
-  section.right {
-    .nav-branded {
-      padding: 0 1em;
-    }
   }
 }

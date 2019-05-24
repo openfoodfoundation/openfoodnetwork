@@ -131,7 +131,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
                 select "frogs", from: "order_cycle_id"
                 show_cart
                 page.should have_selector "tr.product-cart"
-                page.should have_selector 'li.cart', text: '1 item'
+                page.should have_selector 'li.cart', text: '1'
 
                 # The order cycle choice should not have changed
                 page.should have_select 'order_cycle_id', selected: 'turtles'
