@@ -59,32 +59,4 @@ describe UserRegistrationsController, type: :controller do
       cookies[:locale] = original_locale_cookie
     end
   end
-
-  context "when registration fails" do
-    it "renders new" do
-      spree_post :create, spree_user: {}
-      expect(response.status).to eq(200)
-      expect(response).to render_template "spree/user_registrations/new"
-    end
-  end
-
-  context "when registration succeeds" do
-    context "when referer is not '/checkout'" do
-      it "redirects to root" do
-        spree_post :create, spree_user: {email: "test@test.com", password: "testy123", password_confirmation: "testy123"}, :use_route => :spree
-        expect(response).to redirect_to root_path
-        expect(assigns[:user].email).to eq("test@test.com")
-      end
-    end
-
-    context "when referer is '/checkout'" do
-      before { @request.env['HTTP_REFERER'] = 'http://test.com/checkout' }
-
-      it "redirects to checkout" do
-        spree_post :create, spree_user: {email: "test@test.com", password: "testy123", password_confirmation: "testy123"}, :use_route => :spree
-        expect(response).to redirect_to checkout_path
-        expect(assigns[:user].email).to eq("test@test.com")
-      end
-    end
-  end
 end

@@ -1,0 +1,39 @@
+<% if tracker = Spree::Tracker.current %>
+
+  <%= javascript_tag do %>
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', '<%= tracker.analytics_id %>']);
+    _gaq.push(['_trackPageview']);
+
+    <% if flash[:commerce_tracking] && @order.present? %>
+      <%# more info: https://developers.google.com/analytics/devguides/collection/gajs/methods/gaJSApiEcommerce %>
+      _gaq.push(['_addTrans',
+        "<%= j @order.number %>",
+        "",
+        "<%= @order.total %>",
+        "<%= @order.adjustments.tax.sum(:amount) %>",
+        "<%= @order.adjustments.shipping.sum(:amount) %>",
+        "<%= j @order.bill_address.city %>",
+        "<%= j @order.bill_address.state_text %>",
+        "<%= j @order.bill_address.country.name %>"
+      ]);
+      <% @order.line_items.each do |line_item| %>
+        _gaq.push(['_addItem',
+          "<%= j @order.number %>",
+          "<%= j line_item.variant.sku %>",
+          "<%= j line_item.variant.product.name %>",
+          "",
+          "<%= line_item.price %>",
+          "<%= line_item.quantity %>"
+        ]);
+      <% end %>
+      _gaq.push(['_trackTrans']);
+    <% end %>
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = '//google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  <% end %>
+<% end %>
