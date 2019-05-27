@@ -1,16 +1,14 @@
 # English language file
 # ---------------------
 #
-# This is the source language file maintained by the global OFN team and used
-# by the Australian OFN instance.
-#
+# This is the source language file maintained by the global OFN team.
 # Visit Transifex to translate this file into other languages:
 #
 #   https://www.transifex.com/open-food-foundation/open-food-network/
 #
 # Read more about it at:
 #
-#   https://github.com/openfoodfoundation/openfoodnetwork/wiki/i18n
+#   https://github.com/openfoodfoundation/openfoodnetwork/wiki/Internationalisation-%28i18n%29
 #
 # Changing this file
 # ==================
@@ -18,7 +16,7 @@
 # You are welcome to fix typos, add missing translations and remove unused ones.
 # But read our guidelines first:
 #
-#   https://github.com/openfoodfoundation/openfoodnetwork/wiki/i18n#development
+#   https://github.com/openfoodfoundation/openfoodnetwork/wiki/Internationalisation-%28i18n%29#development
 #
 en:
   # Overridden here due to a bug in spree i18n (Issue #870, and issue #1800)
