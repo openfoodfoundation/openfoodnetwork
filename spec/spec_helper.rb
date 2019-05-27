@@ -22,10 +22,16 @@ require 'database_cleaner'
 require 'rspec/retry'
 require 'paper_trail/frameworks/rspec'
 
+require 'webdrivers'
+
 # Allow connections to phantomjs/selenium whilst raising errors
 # when connecting to external sites
 require 'webmock/rspec'
-WebMock.disable_net_connect!(:allow_localhost => true)
+WebMock.enable!
+WebMock.disable_net_connect!({
+  allow_localhost: true,
+  allow: 'chromedriver.storage.googleapis.com'
+})
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -46,17 +52,9 @@ Capybara.register_driver :chrome do |app|
   options = Selenium::WebDriver::Chrome::Options.new(
     args: %w[headless disable-gpu no-sandbox window-size=1280,768]
   )
-  driver = Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
-
-  ### Allow file downloads in headless chrome
-  ### https://bugs.chromium.org/p/chromium/issues/detail?id=696481#c89
-  bridge = driver.browser.send(:bridge)
-  path = '/session/:session_id/chromium/send_command'
-  path[':session_id'] = bridge.session_id
-  bridge.http.call(:post, path, cmd: 'Page.setDownloadBehavior',
-                                params: { behavior: 'allow', downloadPath: DownloadsHelper.path.to_s })
-
-  driver
+  Capybara::Selenium::Driver
+    .new(app, browser: :chrome, options: options)
+    .tap { |driver| driver.browser.download_path = DownloadsHelper.path.to_s }
 end
 
 Capybara.default_max_wait_time = 30
