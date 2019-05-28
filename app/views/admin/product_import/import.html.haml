@@ -30,7 +30,7 @@
     %p.red
       {{ exception }}
 
-  = form_tag false, {class: 'product-import', name: 'importForm', 'ng-show' => 'step == "results"'} do
+  = form_tag main_app.admin_product_import_path, {class: 'product-import', name: 'importForm', 'ng-show' => 'step == "results"'} do
 
     = render 'import_review' if @importer.table_headings
 
