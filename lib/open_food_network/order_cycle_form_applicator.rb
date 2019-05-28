@@ -66,10 +66,13 @@ module OpenFoodNetwork
 
     def add_exchange(sender_id, receiver_id, incoming, attrs = {})
       attrs = attrs.reverse_merge(sender_id: sender_id, receiver_id: receiver_id, incoming: incoming)
+      variant_ids = attrs.delete :variant_ids
       exchange = @order_cycle.exchanges.build attrs
 
       if manages_coordinator?
         exchange.save!
+        ExchangeVariantBulkUpdater.new(exchange).update!(variant_ids) unless variant_ids.nil?
+
         @touched_exchanges << exchange
       end
     end
@@ -85,7 +88,12 @@ module OpenFoodNetwork
       end
 
       if permission_for exchange
+        variant_ids = attrs.delete :variant_ids
+
         exchange.update_attributes!(attrs)
+
+        ExchangeVariantBulkUpdater.new(exchange).update!(variant_ids) unless variant_ids.nil?
+
         @touched_exchanges << exchange
       end
     end
