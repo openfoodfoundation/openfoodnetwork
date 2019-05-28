@@ -1,11 +1,11 @@
 module Api
   class EnterprisesController < BaseController
-
     before_filter :override_owner, only: [:create, :update]
     before_filter :check_type, only: :update
     before_filter :override_sells, only: [:create, :update]
     before_filter :override_visible, only: [:create, :update]
     respond_to :json
+    skip_authorization_check only: [:shopfront, :managed]
 
     def managed
       @enterprises = Enterprise.ransack(params[:q]).result.managed_by(current_api_user)
@@ -76,13 +76,6 @@ module Api
 
     def override_visible
       params[:enterprise][:visible] = false
-    end
-
-    # Allows API access without a logged in user for actions in this controller.
-    # Actions that require authentication should all use #authorize!
-    # @current_api_user will now initialize an empty Spree::User unless one is present.
-    def requires_authentication?
-      false
     end
   end
 end
