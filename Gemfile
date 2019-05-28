@@ -132,7 +132,7 @@ group :test, :development do
   gem 'shoulda-matchers'
   gem 'timecop'
   gem 'unicorn-rails'
-  gem 'webdrivers', '3.8.1'
+  gem 'webdrivers', '3.9.4'
 end
 
 group :test do
