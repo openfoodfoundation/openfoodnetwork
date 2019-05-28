@@ -289,9 +289,6 @@ class AbilityDecorator
   end
 
   def add_enterprise_fee_summary_abilities(user)
-    feature_enabled = FeatureFlags.new(user).enterprise_fee_summary_enabled?
-    return unless feature_enabled
-
     # Reveal the report link in spree/admin/reports#index
     can [:enterprise_fee_summary], Spree::Admin::ReportsController
     # Allow direct access to the report resource
