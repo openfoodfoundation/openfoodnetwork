@@ -1,11 +1,11 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe ExchangeVariantBulkUpdater do
   let!(:first_variant) { create(:variant) }
   let!(:second_variant) { create(:variant) }
   let!(:third_variant) { create(:variant) }
 
-  it "associates new variants to the exchange" do
+  it 'associates new variants to the exchange' do
     exchange = create(:exchange)
 
     described_class.new(exchange).update!([first_variant.id, second_variant.id])
@@ -19,7 +19,7 @@ describe ExchangeVariantBulkUpdater do
     expect(exchange.variants).to include(second_variant)
   end
 
-  it "disassociates variants from the exchange" do
+  it 'disassociates variants from the exchange' do
     exchange = create(:exchange, variant_ids: [first_variant.id, second_variant.id])
 
     described_class.new(exchange).update!([first_variant.id, third_variant.id])
