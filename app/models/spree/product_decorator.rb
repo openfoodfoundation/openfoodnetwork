@@ -42,10 +42,18 @@ Spree::Product.class_eval do
 
   # -- Joins
   scope :with_order_cycles_outer, -> {
-    joins('LEFT OUTER JOIN spree_variants AS o_spree_variants ON (o_spree_variants.product_id = spree_products.id)').
-    joins('LEFT OUTER JOIN exchange_variants AS o_exchange_variants ON (o_exchange_variants.variant_id = o_spree_variants.id)').
-    joins('LEFT OUTER JOIN exchanges AS o_exchanges ON (o_exchanges.id = o_exchange_variants.exchange_id)').
-    joins('LEFT OUTER JOIN order_cycles AS o_order_cycles ON (o_order_cycles.id = o_exchanges.order_cycle_id)')
+    joins("
+      LEFT OUTER JOIN spree_variants AS o_spree_variants
+        ON (o_spree_variants.product_id = spree_products.id)").
+      joins("
+        LEFT OUTER JOIN exchange_variants AS o_exchange_variants
+          ON (o_exchange_variants.variant_id = o_spree_variants.id)").
+      joins("
+        LEFT OUTER JOIN exchanges AS o_exchanges
+          ON (o_exchanges.id = o_exchange_variants.exchange_id)").
+      joins("
+        LEFT OUTER JOIN order_cycles AS o_order_cycles
+          ON (o_order_cycles.id = o_exchanges.order_cycle_id)")
   }
 
   scope :with_order_cycles_inner, -> {
