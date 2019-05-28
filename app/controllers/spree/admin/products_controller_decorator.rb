@@ -151,4 +151,8 @@ Spree::Admin::ProductsController.class_eval do
     variant.on_demand = on_demand if on_demand.present?
     variant.on_hand = on_hand.to_i if on_hand.present?
   end
+
+  def set_product_master_variant_price_to_zero
+    @product.price = 0 if @product.price.nil?
+  end
 end
