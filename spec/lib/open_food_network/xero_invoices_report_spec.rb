@@ -44,12 +44,12 @@ module OpenFoodNetwork
       end
 
       it "displays fee summary rows when summary report" do
-        allow(report).to receive(:detail?)         { false }
+        allow(report).to receive(:detail?) { false }
         expect(summary_rows).to include 'fee'
       end
 
       it "displays fee summary rows when detail report" do
-        allow(report).to receive(:detail?)         { true }
+        allow(report).to receive(:detail?) { true }
         expect(summary_rows).to include 'fee'
       end
 

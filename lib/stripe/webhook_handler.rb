@@ -18,7 +18,7 @@ module Stripe
     end
 
     def known_event?
-      event_mappings.keys.include? @event.type
+      event_mappings.key?(@event.type)
     end
 
     def deauthorize

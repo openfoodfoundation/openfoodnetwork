@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-feature %q{
+feature '
     As an administrator
     I want to manage order cycles
-}, js: true do
+', js: true do
   include AdminHelper
   include AuthenticationWorkflow
   include WebHelper
@@ -11,19 +11,19 @@ feature %q{
   scenario "listing and filtering order cycles" do
     # Given some order cycles (created in an arbitrary order)
     oc4 = create(:simple_order_cycle, name: 'oc4',
-                 orders_open_at: 2.day.from_now, orders_close_at: 1.month.from_now)
+                                      orders_open_at: 2.days.from_now, orders_close_at: 1.month.from_now)
     oc2 = create(:simple_order_cycle, name: 'oc2', orders_close_at: 1.month.from_now)
     oc6 = create(:simple_order_cycle, name: 'oc6',
-                 orders_open_at: 1.month.ago, orders_close_at: 3.weeks.ago)
+                                      orders_open_at: 1.month.ago, orders_close_at: 3.weeks.ago)
     oc3 = create(:simple_order_cycle, name: 'oc3',
-                 orders_open_at: 1.day.from_now, orders_close_at: 1.month.from_now)
+                                      orders_open_at: 1.day.from_now, orders_close_at: 1.month.from_now)
     oc5 = create(:simple_order_cycle, name: 'oc5',
-                 orders_open_at: 1.month.ago, orders_close_at: 2.weeks.ago)
+                                      orders_open_at: 1.month.ago, orders_close_at: 2.weeks.ago)
     oc1 = create(:order_cycle, name: 'oc1')
     oc0 = create(:simple_order_cycle, name: 'oc0',
-                 orders_open_at: nil, orders_close_at: nil)
+                                      orders_open_at: nil, orders_close_at: nil)
     oc7 = create(:simple_order_cycle, name: 'oc7',
-                orders_open_at: 2.months.ago, orders_close_at: 5.weeks.ago)
+                                      orders_open_at: 2.months.ago, orders_close_at: 5.weeks.ago)
     schedule1 = create(:schedule, name: 'Schedule1', order_cycles: [oc1, oc3])
     create(:proxy_order, subscription: create(:subscription, schedule: schedule1), order_cycle: oc1)
 
@@ -150,8 +150,8 @@ feature %q{
   end
 
   context "with specific time" do
-    let(:order_cycle_opening_time) { Time.zone.local(2040, 11, 06, 06, 00, 00).strftime("%F %T %z") }
-    let(:order_cycle_closing_time) { Time.zone.local(2040, 11, 13, 17, 00, 00).strftime("%F %T %z") }
+    let(:order_cycle_opening_time) { Time.zone.local(2040, 11, 0o6, 0o6, 0o0, 0o0).strftime("%F %T %z") }
+    let(:order_cycle_closing_time) { Time.zone.local(2040, 11, 13, 17, 0o0, 0o0).strftime("%F %T %z") }
 
     scenario "creating an order cycle", js: true do
       # Given coordinating, supplying and distributing enterprises with some products with variants
@@ -324,7 +324,7 @@ feature %q{
       # And I add a supplier and some products
       select 'My supplier', from: 'new_supplier_id'
       click_button 'Add supplier'
-      page.all("table.exchanges tr.supplier td.products").each { |e| e.click }
+      page.all("table.exchanges tr.supplier td.products").each(&:click)
 
       page.should have_selector "#order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}", visible: true
       page.find("#order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}", visible: true).click # uncheck (with visible:true filter)
@@ -357,7 +357,7 @@ feature %q{
         find(:css, "tags-input .tags input").set "wholesale\n"
       end
 
-      page.all("table.exchanges tr.distributor td.products").each { |e| e.click }
+      page.all("table.exchanges tr.distributor td.products").each(&:click)
 
       uncheck "order_cycle_outgoing_exchange_2_variants_#{v1.id}"
       check "order_cycle_outgoing_exchange_2_variants_#{v2.id}"
@@ -434,8 +434,8 @@ feature %q{
     page.should have_content "COORDINATOR #{oc.coordinator.name}"
 
     # And I should see the suppliers
-    page.should have_selector 'td.supplier_name', :text => oc.suppliers.first.name
-    page.should have_selector 'td.supplier_name', :text => oc.suppliers.last.name
+    page.should have_selector 'td.supplier_name', text: oc.suppliers.first.name
+    page.should have_selector 'td.supplier_name', text: oc.suppliers.last.name
 
     page.should have_field 'order_cycle_incoming_exchange_0_receival_instructions', with: 'instructions 0'
     page.should have_field 'order_cycle_incoming_exchange_1_receival_instructions', with: 'instructions 1'
@@ -444,24 +444,24 @@ feature %q{
     page.all('table.exchanges tbody tr.supplier').each_with_index do |row, i|
       row.find('td.products').click
 
-      products_panel = page.all('table.exchanges tr.panel-row .exchange-supplied-products').select { |r| r.visible? }.first
+      products_panel = page.all('table.exchanges tr.panel-row .exchange-supplied-products').select(&:visible?).first
       products_panel.should have_selector "input[name='order_cycle_incoming_exchange_#{i}_select_all_variants']"
 
       row.find('td.products').click
     end
 
     # And the suppliers should have fees
-    supplier = oc.suppliers.sort_by(&:name).first
+    supplier = oc.suppliers.min_by(&:name)
     page.should have_select 'order_cycle_incoming_exchange_0_enterprise_fees_0_enterprise_id', selected: supplier.name
     page.should have_select 'order_cycle_incoming_exchange_0_enterprise_fees_0_enterprise_fee_id', selected: supplier.enterprise_fees.first.name
 
-    supplier = oc.suppliers.sort_by(&:name).last
+    supplier = oc.suppliers.max_by(&:name)
     page.should have_select 'order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_id', selected: supplier.name
     page.should have_select 'order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_fee_id', selected: supplier.enterprise_fees.first.name
 
     # And I should see the distributors
-    page.should have_selector 'td.distributor_name', :text => oc.distributors.first.name
-    page.should have_selector 'td.distributor_name', :text => oc.distributors.last.name
+    page.should have_selector 'td.distributor_name', text: oc.distributors.first.name
+    page.should have_selector 'td.distributor_name', text: oc.distributors.last.name
 
     page.should have_field 'order_cycle_outgoing_exchange_0_pickup_time', with: 'time 0'
     page.should have_field 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'instructions 0'
@@ -472,22 +472,21 @@ feature %q{
     page.all('table.exchanges tbody tr.distributor').each_with_index do |row, i|
       row.find('td.products').click
 
-      products_panel = page.all('table.exchanges tr.panel-row .exchange-distributed-products').select { |r| r.visible? }.first
+      products_panel = page.all('table.exchanges tr.panel-row .exchange-distributed-products').select(&:visible?).first
       products_panel.should have_selector "input[name='order_cycle_outgoing_exchange_#{i}_select_all_variants']"
 
       row.find('td.products').click
     end
 
     # And the distributors should have fees
-    distributor = oc.distributors.sort_by(&:id).first
+    distributor = oc.distributors.min_by(&:id)
     page.should have_select 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_id', selected: distributor.name
     page.should have_select 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_fee_id', selected: distributor.enterprise_fees.first.name
 
-    distributor = oc.distributors.sort_by(&:id).last
+    distributor = oc.distributors.max_by(&:id)
     page.should have_select 'order_cycle_outgoing_exchange_1_enterprise_fees_0_enterprise_id', selected: distributor.name
     page.should have_select 'order_cycle_outgoing_exchange_1_enterprise_fees_0_enterprise_fee_id', selected: distributor.enterprise_fees.first.name
   end
-
 
   scenario "editing an order cycle with an exchange between the same enterprise" do
     c = create(:distributor_enterprise, is_primary_producer: true)
@@ -515,10 +514,8 @@ feature %q{
     oc1 = create(:simple_order_cycle)
     oc2 = create(:simple_order_cycle)
     oc3 = create(:simple_order_cycle,
-      orders_open_at: Time.zone.local(2040, 12, 12, 12, 12, 12),
-      orders_close_at: Time.zone.local(2041, 12, 12, 12, 12, 12)
-    )
-
+                 orders_open_at: Time.zone.local(2040, 12, 12, 12, 12, 12),
+                 orders_close_at: Time.zone.local(2041, 12, 12, 12, 12, 12))
 
     # When I go to the order cycles page
     quick_login_as_admin
@@ -591,7 +588,6 @@ feature %q{
     expect(occ.name).to eq "COPY OF #{oc.name}"
   end
 
-
   scenario "removing a master variant from an order cycle when further variants have been added" do
     # Given a product with a variant, with its master variant included in the order cycle
     # (this usually happens when a product is added to an order cycle, then variants are added
@@ -615,7 +611,6 @@ feature %q{
     page.should have_content "Your order cycle has been updated."
     ExchangeVariant.where(exchange_id: exchange_ids, variant_id: p.master.id).should be_empty
   end
-
 
   describe "ensuring that hubs in order cycles have valid shipping and payment methods" do
     context "when they don't" do
@@ -685,8 +680,8 @@ feature %q{
       end
 
       scenario "viewing a list of order cycles I am coordinating" do
-        oc_user_coordinating = create(:simple_order_cycle, { suppliers: [supplier_managed, supplier_unmanaged], coordinator: distributor_managed, distributors: [distributor_managed, distributor_unmanaged], name: 'Order Cycle 1' } )
-        oc_for_other_user = create(:simple_order_cycle, { coordinator: supplier_unmanaged, name: 'Order Cycle 2' } )
+        oc_user_coordinating = create(:simple_order_cycle, suppliers: [supplier_managed, supplier_unmanaged], coordinator: distributor_managed, distributors: [distributor_managed, distributor_unmanaged], name: 'Order Cycle 1' )
+        oc_for_other_user = create(:simple_order_cycle, coordinator: supplier_unmanaged, name: 'Order Cycle 2' )
 
         visit spree.admin_path
         click_link "Order Cycles"
@@ -767,7 +762,7 @@ feature %q{
         # editable, but at this point we cannot distiguish between visible and editable
         # variants.
 
-        oc = create(:simple_order_cycle, { suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' } )
+        oc = create(:simple_order_cycle, suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' )
 
         visit edit_admin_order_cycle_path(oc)
 
@@ -795,7 +790,7 @@ feature %q{
       end
 
       scenario "editing an order cycle" do
-        oc = create(:simple_order_cycle, { suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' } )
+        oc = create(:simple_order_cycle, suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' )
         distributor_managed.update_attribute(:enable_subscriptions, true)
 
         visit edit_admin_order_cycle_path(oc)
@@ -844,7 +839,7 @@ feature %q{
       end
 
       scenario "editing an order cycle" do
-        oc = create(:simple_order_cycle, { suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' } )
+        oc = create(:simple_order_cycle, suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' )
         v1 = create(:variant, product: create(:product, supplier: supplier_managed) )
         v2 = create(:variant, product: create(:product, supplier: supplier_managed) )
 
@@ -860,7 +855,7 @@ feature %q{
         serializer = Api::Admin::OrderCycleSerializer.new(oc, current_user: new_user)
         allow(Api::Admin::OrderCycleSerializer).to receive(:new) { serializer }
         allow(serializer).to receive(:editable_variants_for_outgoing_exchanges) do
-          { "#{distributor_managed.id}" => [v1.id] }
+          { distributor_managed.id.to_s => [v1.id] }
         end
 
         visit edit_admin_order_cycle_path(oc)
@@ -912,7 +907,7 @@ feature %q{
       end
 
       scenario "editing an order cycle" do
-        oc = create(:simple_order_cycle, { suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [my_distributor, distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' } )
+        oc = create(:simple_order_cycle, suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [my_distributor, distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' )
         v1 = create(:variant, product: create(:product, supplier: supplier_managed) )
         v2 = create(:variant, product: create(:product, supplier: supplier_managed) )
 
@@ -928,7 +923,7 @@ feature %q{
         serializer = Api::Admin::OrderCycleSerializer.new(oc, current_user: new_user)
         allow(Api::Admin::OrderCycleSerializer).to receive(:new) { serializer }
         allow(serializer).to receive(:editable_variants_for_incoming_exchanges) do
-          { "#{supplier_managed.id}" => [v1.id] }
+          { supplier_managed.id.to_s => [v1.id] }
         end
 
         visit edit_admin_order_cycle_path(oc)
@@ -965,7 +960,6 @@ feature %q{
       end
     end
   end
-
 
   describe "simplified interface for enterprise users selling only their own produce" do
     let(:user) { create_enterprise_user }
@@ -1027,8 +1021,8 @@ feature %q{
       oc = OrderCycle.last
 
       expect(page).to have_input "oc#{oc.id}[name]", value: "Plums & Avos"
-      expect(page).to have_input "oc#{oc.id}[orders_open_at]", value: Time.zone.local(2040, 10, 17, 06, 00, 00).strftime("%F %T %z")
-      expect(page).to have_input "oc#{oc.id}[orders_close_at]", value: Time.zone.local(2040, 10, 24, 17, 00, 00).strftime("%F %T %z")
+      expect(page).to have_input "oc#{oc.id}[orders_open_at]", value: Time.zone.local(2040, 10, 17, 0o6, 0o0, 0o0).strftime("%F %T %z")
+      expect(page).to have_input "oc#{oc.id}[orders_close_at]", value: Time.zone.local(2040, 10, 24, 17, 0o0, 0o0).strftime("%F %T %z")
 
       # And it should have some variants selected
       oc.exchanges.incoming.first.variants.count.should == 2
@@ -1120,8 +1114,8 @@ feature %q{
       oc = OrderCycle.last
 
       expect(page).to have_input "oc#{oc.id}[name]", value: "Plums & Avos"
-      expect(page).to have_input "oc#{oc.id}[orders_open_at]", value: Time.zone.local(2040, 10, 17, 06, 00, 00).strftime("%F %T %z")
-      expect(page).to have_input "oc#{oc.id}[orders_close_at]", value: Time.zone.local(2040, 10, 24, 17, 00, 00).strftime("%F %T %z")
+      expect(page).to have_input "oc#{oc.id}[orders_open_at]", value: Time.zone.local(2040, 10, 17, 0o6, 0o0, 0o0).strftime("%F %T %z")
+      expect(page).to have_input "oc#{oc.id}[orders_close_at]", value: Time.zone.local(2040, 10, 24, 17, 0o0, 0o0).strftime("%F %T %z")
 
       # And it should have a variant selected
       oc.exchanges.incoming.first.variants.should == [v2]
@@ -1147,7 +1141,6 @@ feature %q{
     end
     expect(page).to_not have_selector "tr.order-cycle-#{order_cycle.id}"
   end
-
 
   private
 

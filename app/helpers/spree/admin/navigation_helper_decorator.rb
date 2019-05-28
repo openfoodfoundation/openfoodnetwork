@@ -5,9 +5,7 @@ module Spree
       def klass_for(name)
         model_name = name.to_s
 
-        ["Spree::#{model_name.classify}", model_name.classify, model_name.gsub('_', '/').classify].find do |t|
-          t.safe_constantize
-        end.try(:safe_constantize)
+        ["Spree::#{model_name.classify}", model_name.classify, model_name.tr('_', '/').classify].find(&:safe_constantize).try(:safe_constantize)
       end
 
       # Make it so that the Reports admin tab can be enabled/disabled through the cancan
@@ -27,11 +25,11 @@ module Spree
 
       # TEMP: override method until it is fixed in Spree.
       def tab_with_cancan_check(*args)
-        options = {:label => args.first.to_s}
+        options = { label: args.first.to_s }
         if args.last.is_a?(Hash)
           options = options.merge(args.last)
         end
-        return '' if klass = klass_for(options[:label]) and cannot?(:admin, klass)
+        return '' if (klass = klass_for(options[:label])) && cannot?(:admin, klass)
         tab_without_cancan_check(*args)
       end
       alias_method_chain :tab, :cancan_check

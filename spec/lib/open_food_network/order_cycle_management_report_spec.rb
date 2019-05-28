@@ -50,7 +50,6 @@ module OpenFoodNetwork
           expect(subject.orders).to eq([o1])
         end
 
-
         it "does not show orders through a hub that the current user does not manage" do
           # Given a supplier enterprise with an order for one of its products
           supplier.enterprise_roles.create!(user: user)
@@ -109,8 +108,8 @@ module OpenFoodNetwork
 
         it "should do all the filters at once" do
           allow(subject).to receive(:params).and_return(order_cycle_id: oc1.id,
-                                           shipping_method_name: sm1.name,
-                                           payment_method_name: pm1.name)
+                                                        shipping_method_name: sm1.name,
+                                                        payment_method_name: pm1.name)
           expect(subject.filter(orders)).to eq([order1])
         end
       end

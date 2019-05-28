@@ -1,11 +1,11 @@
 ENV["RAILS_ENV"] ||= 'test'
 
-namespace :karma  do
-  task :start => :environment do |_task|
+namespace :karma do
+  task start: :environment do |_task|
     with_tmp_config :start
   end
 
-  task :run => :environment do |_task|
+  task run: :environment do |_task|
     with_tmp_config :start, "--single-run"
   end
 
@@ -23,7 +23,7 @@ namespace :karma  do
   def application_spec_files
     sprockets = Rails.application.assets
     sprockets.append_path Rails.root.join("spec/javascripts")
-    Rails.application.assets.find_asset("application_spec.js").to_a.map {|e| e.pathname.to_s }
+    Rails.application.assets.find_asset("application_spec.js").to_a.map { |e| e.pathname.to_s }
   end
 
   def unit_js(files)

@@ -54,7 +54,7 @@ module OpenFoodNetwork
     end
 
     describe "#order_count" do
-      let(:order_ids) { [1,2,3,4,5,6,7] }
+      let(:order_ids) { [1, 2, 3, 4, 5, 6, 7] }
       it "counts the number of items in the order_ids instance_variable" do
         summary.instance_variable_set(:@order_ids, order_ids)
         expect(summary.order_count).to be 7
@@ -62,7 +62,7 @@ module OpenFoodNetwork
     end
 
     describe "#success_count" do
-      let(:success_ids) { [1,2,3,4,5,6,7] }
+      let(:success_ids) { [1, 2, 3, 4, 5, 6, 7] }
       it "counts the number of items in the success_ids instance_variable" do
         summary.instance_variable_set(:@success_ids, success_ids)
         expect(summary.success_count).to be 7
@@ -70,8 +70,8 @@ module OpenFoodNetwork
     end
 
     describe "#issue_count" do
-      let(:order_ids) { [1,3,5,7,9] }
-      let(:success_ids) { [1,2,3,4,5] }
+      let(:order_ids) { [1, 3, 5, 7, 9] }
+      let(:success_ids) { [1, 2, 3, 4, 5] }
 
       it "counts the number of items in order_ids that are not in success_ids" do
         summary.instance_variable_set(:@order_ids, order_ids)
@@ -112,8 +112,8 @@ module OpenFoodNetwork
       let(:issues) { { type: { 7 => "message", 8 => "message" } } }
 
       before do
-        summary.instance_variable_set(:@order_ids, [1,3,5,7,9])
-        summary.instance_variable_set(:@success_ids, [1,2,3,4,5])
+        summary.instance_variable_set(:@order_ids, [1, 3, 5, 7, 9])
+        summary.instance_variable_set(:@success_ids, [1, 2, 3, 4, 5])
         summary.instance_variable_set(:@issues, issues)
       end
 

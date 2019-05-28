@@ -5,6 +5,6 @@ class Spree::StoreController
   before_filter :set_locale
 
   def unauthorized
-    render 'shared/unauthorized', :status => 401
+    render 'shared/unauthorized', status: :unauthorized
   end
 end

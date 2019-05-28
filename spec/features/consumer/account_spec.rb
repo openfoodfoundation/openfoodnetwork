@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-feature %q{
+feature '
     As a consumer
     I want to view my order history with each hub
     and view any outstanding balance.
-}, js: true do
+', js: true do
   include UIComponentHelper
   include AuthenticationWorkflow
 
-  let(:user) { create(:user)}
+  let(:user) { create(:user) }
   let!(:distributor1) { create(:distributor_enterprise) }
   let!(:distributor2) { create(:distributor_enterprise) }
   let!(:distributor_credit) { create(:distributor_enterprise) }
@@ -21,10 +21,10 @@ feature %q{
 
     context "with completed orders" do
       let(:order_cycle) { create(:simple_order_cycle) }
-      let!(:d1o1) { create(:completed_order_with_totals, distributor: distributor1, user: user, total: 10000, order_cycle: order_cycle)}
-      let!(:d1o2) { create(:order_without_full_payment, distributor: distributor1, user: user, total: 5000, order_cycle: order_cycle)}
-      let!(:d2o1) { create(:completed_order_with_totals, distributor: distributor2, user: user)}
-      let!(:credit_order) { create(:order_with_credit_payment, distributor: distributor_credit, user: user)}
+      let!(:d1o1) { create(:completed_order_with_totals, distributor: distributor1, user: user, total: 10_000, order_cycle: order_cycle) }
+      let!(:d1o2) { create(:order_without_full_payment, distributor: distributor1, user: user, total: 5000, order_cycle: order_cycle) }
+      let!(:d2o1) { create(:completed_order_with_totals, distributor: distributor2, user: user) }
+      let!(:credit_order) { create(:order_with_credit_payment, distributor: distributor_credit, user: user) }
 
       before do
         credit_order.update!
@@ -58,7 +58,7 @@ feature %q{
 
         # It reveals table of orders for distributors when clicked
         expand_active_table_node distributor1.name
-        expect(page).to have_link "Order " + d1o1.number, href:"/orders/#{d1o1.number}"
+        expect(page).to have_link "Order " + d1o1.number, href: "/orders/#{d1o1.number}"
 
         expand_active_table_node distributor2.name
         expect(page).not_to have_content "Order " + d1o1.number.to_s
@@ -84,7 +84,7 @@ feature %q{
     context "without any completed orders" do
       it "displays an appropriate message" do
         visit "/account"
-        expect(page).to have_content {t :you_have_no_orders_yet}
+        expect(page).to have_content { t :you_have_no_orders_yet }
       end
     end
   end

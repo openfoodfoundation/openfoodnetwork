@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-feature %q{
+feature '
   As a site administrator
   I want to configure the site content
-} do
+' do
   include AuthenticationWorkflow
   include WebHelper
 

@@ -1,10 +1,10 @@
 require 'open_food_network/reports/report'
 
 module OpenFoodNetwork::Reports
-  P1 = Proc.new { |o| o[:one] }
-  P2 = Proc.new { |o| o[:two] }
-  P3 = Proc.new { |o| o[:three] }
-  P4 = Proc.new { |o| o[:four] }
+  P1 = proc { |o| o[:one] }
+  P2 = proc { |o| o[:two] }
+  P3 = proc { |o| o[:three] }
+  P4 = proc { |o| o[:four] }
 
   class TestReport < Report
     header 'One', 'Two', 'Three', 'Four'
@@ -37,7 +37,6 @@ module OpenFoodNetwork::Reports
       column { |o| my_helper(o) }
     end
 
-
     private
 
     def self.my_helper(o)
@@ -45,12 +44,11 @@ module OpenFoodNetwork::Reports
     end
   end
 
-
   describe Report do
     let(:report) { TestReport.new }
     let(:helper_report) { HelperReport.new }
     let(:rules_head) { TestReport._rules_head }
-    let(:data) { {one: 1, two: 2, three: 3, four: 4} }
+    let(:data) { { one: 1, two: 2, three: 3, four: 4 } }
 
     it "returns the header" do
       expect(report.header).to eq(%w(One Two Three Four))
@@ -92,8 +90,8 @@ module OpenFoodNetwork::Reports
 
     describe "outputting rules" do
       it "outputs the rules" do
-        expect(report.rules).to eq([{group_by: P1, sort_by: P2},
-                                {group_by: P3, sort_by: P4, summary_columns: [P1, P4]}])
+        expect(report.rules).to eq([{ group_by: P1, sort_by: P2 },
+                                    { group_by: P3, sort_by: P4, summary_columns: [P1, P4] }])
       end
     end
   end

@@ -20,15 +20,15 @@ Spree::Variant.class_eval do
   attr_accessible :unit_value, :unit_description, :images_attributes, :display_as, :display_name, :import_date
   accepts_nested_attributes_for :images
 
-  validates :unit_value, presence: true, if: -> (variant) {
+  validates :unit_value, presence: true, if: ->(variant) {
     %w(weight volume).include?(variant.product.andand.variant_unit)
   }
 
-  validates :unit_description, presence: true, if: -> (variant) {
+  validates :unit_description, presence: true, if: ->(variant) {
     variant.product.andand.variant_unit.present? && variant.unit_value.nil?
   }
 
-  before_validation :update_weight_from_unit_value, if: -> v { v.product.present? }
+  before_validation :update_weight_from_unit_value, if: ->(v) { v.product.present? }
   after_save :update_units
   after_save :refresh_products_cache
   around_destroy :destruction
@@ -59,7 +59,7 @@ Spree::Variant.class_eval do
   }
 
   scope :not_hidden_for, lambda { |enterprise|
-    return where("1=0") unless enterprise.present?
+    return where("1=0") if enterprise.blank?
     joins("LEFT OUTER JOIN (SELECT * from inventory_items WHERE enterprise_id = #{sanitize enterprise.andand.id}) AS o_inventory_items ON o_inventory_items.variant_id = spree_variants.id")
       .where("o_inventory_items.id IS NULL OR o_inventory_items.visible = (?)", true)
   }
@@ -67,7 +67,7 @@ Spree::Variant.class_eval do
   localize_number :price, :cost_price, :weight
 
   scope :stockable_by, lambda { |enterprise|
-    return where("1=0") unless enterprise.present?
+    return where("1=0") if enterprise.blank?
     joins(:product).where(spree_products: { id: Spree::Product.stockable_by(enterprise).pluck(:id) })
   }
 
@@ -76,8 +76,7 @@ Spree::Variant.class_eval do
   def self.in_distributor(distributor)
     where(id: ExchangeVariant.select(:variant_id).
               joins(:exchange).
-              where('exchanges.incoming = ? AND exchanges.receiver_id = ?', false, distributor)
-         )
+              where('exchanges.incoming = ? AND exchanges.receiver_id = ?', false, distributor))
   end
 
   def self.indexed
@@ -115,7 +114,7 @@ Spree::Variant.class_eval do
   private
 
   def update_weight_from_unit_value
-    self.weight = weight_from_unit_value if self.product.variant_unit == 'weight' && unit_value.present?
+    self.weight = weight_from_unit_value if product.variant_unit == 'weight' && unit_value.present?
   end
 
   def destruction

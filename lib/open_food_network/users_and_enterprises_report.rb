@@ -6,8 +6,8 @@ module OpenFoodNetwork
       @compile_table = compile_table
 
       # Convert arrays of ids to comma delimited strings
-      @params[:enterprise_id_in] = @params[:enterprise_id_in].join(',') if @params[:enterprise_id_in].kind_of? Array
-      @params[:user_id_in] = @params[:user_id_in].join(',') if @params[:user_id_in].kind_of? Array
+      @params[:enterprise_id_in] = @params[:enterprise_id_in].join(',') if @params[:enterprise_id_in].is_a? Array
+      @params[:user_id_in] = @params[:user_id_in].join(',') if @params[:user_id_in].is_a? Array
     end
 
     def header
@@ -82,7 +82,7 @@ module OpenFoodNetwork
     end
 
     def users_and_enterprises
-      sort( owners_and_enterprises.concat managers_and_enterprises )
+      sort( owners_and_enterprises.concat(managers_and_enterprises) )
     end
 
     def filter_by_int_list_if_present(query, filtered_field_name, int_list)
@@ -97,13 +97,13 @@ module OpenFoodNetwork
     end
 
     def sort(results)
-      results.sort do |a,b|
+      results.sort do |a, b|
         if a["created_at"].nil? || b["created_at"].nil?
-          [ (a["created_at"].nil? ? 0 : 1), a["name"], b["relationship_type"], a["user_email"] ] <=>
-          [ (b["created_at"].nil? ? 0 : 1), b["name"], a["relationship_type"], b["user_email"] ]
+          [(a["created_at"].nil? ? 0 : 1), a["name"], b["relationship_type"], a["user_email"]] <=>
+            [(b["created_at"].nil? ? 0 : 1), b["name"], a["relationship_type"], b["user_email"]]
         else
-          [ DateTime.parse(b["created_at"]), a["name"], b["relationship_type"], a["user_email"] ] <=>
-          [ DateTime.parse(a["created_at"]), b["name"], a["relationship_type"], b["user_email"] ]
+          [DateTime.parse(b["created_at"]), a["name"], b["relationship_type"], a["user_email"]] <=>
+            [DateTime.parse(a["created_at"]), b["name"], a["relationship_type"], b["user_email"]]
         end
       end
     end

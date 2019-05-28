@@ -83,7 +83,6 @@ describe ShopController, type: :controller do
       end
     end
 
-
     describe "returning products" do
       let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
       let(:exchange) { order_cycle.exchanges.to_enterprises(distributor).outgoing.first }
@@ -125,7 +124,7 @@ describe ShopController, type: :controller do
 
         it "does not attempt to apply any rules" do
           controller.send(:filtered_json, products_json)
-          expect(expect(controller).to_not have_received(:filter))
+          expect(expect(controller).to_not(have_received(:filter)))
         end
 
         it "returns products as JSON" do
@@ -154,20 +153,22 @@ describe ShopController, type: :controller do
 
       context "when FilterProducts tag rules are in effect" do
         let(:customer) { create(:customer, user: user, enterprise: distributor) }
-        let!(:tag_rule) { create(:filter_products_tag_rule,
-          enterprise: distributor,
-          preferred_customer_tags: "member",
-          preferred_variant_tags: "members-only")
+        let!(:tag_rule) {
+          create(:filter_products_tag_rule,
+                 enterprise: distributor,
+                 preferred_customer_tags: "member",
+                 preferred_variant_tags: "members-only")
         }
-        let!(:default_tag_rule) { create(:filter_products_tag_rule,
-          enterprise: distributor,
-          is_default: true,
-          preferred_variant_tags: "members-only")
+        let!(:default_tag_rule) {
+          create(:filter_products_tag_rule,
+                 enterprise: distributor,
+                 is_default: true,
+                 preferred_variant_tags: "members-only")
         }
         let(:product1) { { "id" => 1, "name" => 'product 1', "variants" => [{ "id" => 4, "tag_list" => ["members-only"] }] } }
-        let(:product2) { { "id" => 2, "name" => 'product 2', "variants" => [{ "id" => 5, "tag_list" => ["members-only"] }, {"id" => 9, "tag_list" => ["something"]}] } }
+        let(:product2) { { "id" => 2, "name" => 'product 2', "variants" => [{ "id" => 5, "tag_list" => ["members-only"] }, { "id" => 9, "tag_list" => ["something"] }] } }
         let(:product3) { { "id" => 3, "name" => 'product 3', "variants" => [{ "id" => 6, "tag_list" => ["something-else"] }] } }
-        let(:product2_without_v5) { { "id" => 2, "name" => 'product 2', "variants" => [{"id" => 9, "tag_list" => ["something"]}] } }
+        let(:product2_without_v5) { { "id" => 2, "name" => 'product 2', "variants" => [{ "id" => 9, "tag_list" => ["something"] }] } }
         let!(:products_array) { [product1, product2, product3] }
         let!(:products_json) { JSON.unparse( products_array ) }
 

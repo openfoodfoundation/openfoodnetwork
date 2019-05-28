@@ -3,7 +3,6 @@ require 'spec_helper'
 describe Admin::ColumnPreferencesController, type: :controller do
   include AuthenticationWorkflow
 
-
   describe "bulk_update" do
     let!(:user1) { create(:user) }
     let!(:user2) { create(:user) }
@@ -12,11 +11,12 @@ describe Admin::ColumnPreferencesController, type: :controller do
     context "json" do
       let!(:column_preference) { ColumnPreference.create(user_id: user1.id, action_name: 'enterprises_index', column_name: "name", visible: true) }
 
-      let(:column_preference_params) { [
-        { id: column_preference.id, user_id: user1.id, action_name: "enterprises_index", column_name: 'name', visible: false },
-        { id: nil, user_id: user1.id, action_name: "enterprises_index", column_name: 'producer', visible: true },
-        { id: nil, user_id: user1.id, action_name: "enterprises_index", column_name: 'status', visible: true }
-      ] 
+      let(:column_preference_params) {
+        [
+          { id: column_preference.id, user_id: user1.id, action_name: "enterprises_index", column_name: 'name', visible: false },
+          { id: nil, user_id: user1.id, action_name: "enterprises_index", column_name: 'producer', visible: true },
+          { id: nil, user_id: user1.id, action_name: "enterprises_index", column_name: 'status', visible: true }
+        ]
       }
 
       context "where I don't own the preferences submitted" do

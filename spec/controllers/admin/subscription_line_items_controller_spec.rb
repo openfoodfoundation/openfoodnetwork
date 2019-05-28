@@ -3,7 +3,6 @@ require 'spec_helper'
 describe Admin::SubscriptionLineItemsController, type: :controller do
   include AuthenticationWorkflow
 
-
   describe "build" do
     let(:user) { create(:user) }
     let!(:shop) { create(:enterprise, owner: user) }
@@ -42,7 +41,7 @@ describe Admin::SubscriptionLineItemsController, type: :controller do
           before { params.merge!(shop_id: shop.id) }
 
           context "but the shop doesn't have permission to sell product in question" do
-            let!(:outgoing_exchange) { }
+            let!(:outgoing_exchange) {}
 
             it "returns an error" do
               spree_post :build, params

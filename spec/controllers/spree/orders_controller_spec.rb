@@ -185,9 +185,9 @@ describe Spree::OrdersController, type: :controller do
         order = subject.current_order(true)
         li = order.add_variant(create(:simple_product, on_hand: 110).variants.first)
         spree_get :update, order: { line_items_attributes: {
-          "0" => {quantity: "0", id: "9999"},
-          "1" => {quantity: "99", id: li.id}
-        }}
+          "0" => { quantity: "0", id: "9999" },
+          "1" => { quantity: "99", id: li.id }
+        } }
         expect(response.status).to eq(302)
         expect(li.reload.quantity).to eq(99)
       end
@@ -198,13 +198,13 @@ describe Spree::OrdersController, type: :controller do
       li = order.add_variant(create(:simple_product).master)
 
       attrs = {
-        "0" => {quantity: "0", id: "9999"},
-        "1" => {quantity: "99", id: li.id}
+        "0" => { quantity: "0", id: "9999" },
+        "1" => { quantity: "99", id: li.id }
       }
 
-      expect(controller.remove_missing_line_items(attrs)).to eq({
-        "1" => {quantity: "99", id: li.id}
-      })
+      expect(controller.remove_missing_line_items(attrs)).to eq(
+        "1" => { quantity: "99", id: li.id }
+      )
     end
 
     it "keeps the adjustments' previous state" do
@@ -214,7 +214,7 @@ describe Spree::OrdersController, type: :controller do
 
       spree_get :update, order: { line_items_attributes: {
         "1" => { quantity: "99", id: line_item.id }
-      }}
+      } }
 
       expect(adjustment.state).to eq('open')
     end
@@ -246,12 +246,11 @@ describe Spree::OrdersController, type: :controller do
       end
 
       it "updates the fees" do
-        spree_post :update, {
-          order: { line_items_attributes: {
-            "0" => { id: line_item1.id, quantity: 1 },
-            "1" => { id: line_item2.id, quantity: 0 }
-          } }
-        }
+        spree_post :update,
+                   order: { line_items_attributes: {
+                     "0" => { id: line_item1.id, quantity: 1 },
+                     "1" => { id: line_item2.id, quantity: 0 }
+                   } }
 
         expect(order.line_items.count).to eq 1
         expect(order.adjustment_total).to eq((item_num - 1) * (shipping_fee + payment_fee))
@@ -259,12 +258,11 @@ describe Spree::OrdersController, type: :controller do
       end
 
       it "keeps the adjustments' previous state" do
-        spree_post :update, {
-          order: { line_items_attributes: {
-            "0" => { id: line_item1.id, quantity: 1 },
-            "1" => { id: line_item2.id, quantity: 0 }
-          } }
-        }
+        spree_post :update,
+                   order: { line_items_attributes: {
+                     "0" => { id: line_item1.id, quantity: 1 },
+                     "1" => { id: line_item2.id, quantity: 0 }
+                   } }
 
         # The second adjustment (shipping adjustment) is open before the update
         #   so, restoring its state leaves it open.
@@ -286,9 +284,10 @@ describe Spree::OrdersController, type: :controller do
         order.update_distribution_charge!
         order
       end
-      let(:params) { { order: { line_items_attributes: {
-        "0" => { id: order.line_items.first.id, quantity: 2 }
-      } } } }
+      let(:params) {
+        { order: { line_items_attributes: {
+          "0" => { id: order.line_items.first.id, quantity: 2 }
+        } } } }
 
       before do
         allow(subject).to receive(:spree_current_user) { order.user }
@@ -308,10 +307,11 @@ describe Spree::OrdersController, type: :controller do
 
   describe "request to remove items from a completed order" do
     let(:order) { create(:completed_order_with_totals, line_items_count: 2) }
-    let(:params) { { order: { line_items_attributes: {
+    let(:params) {
+      { order: { line_items_attributes: {
         "0" => { id: order.line_items.first.id, quantity: 1 },
         "1" => { id: order.line_items.second.id, quantity: 0 }
-    } } } }
+      } } } }
 
     before { allow(subject).to receive(:order_to_update) { order } }
 
@@ -338,7 +338,7 @@ describe Spree::OrdersController, type: :controller do
 
   describe "#order_to_update" do
     let!(:current_order) { double(:current_order) }
-    let(:params) { { } }
+    let(:params) { {} }
 
     before do
       allow(controller).to receive(:current_order) { current_order }
@@ -353,7 +353,7 @@ describe Spree::OrdersController, type: :controller do
 
     context "when an order_id is given in params" do
       before do
-        params.merge!({id: order.number})
+        params.merge!(id: order.number)
       end
 
       context "and the order is not complete" do
@@ -379,7 +379,6 @@ describe Spree::OrdersController, type: :controller do
           before { allow(controller).to receive(:can?).with(:update, order) { true } }
 
           context "and the order is not editable" do
-
             it "returns nil" do
               expect(controller.send(:order_to_update)).to eq nil
             end
@@ -446,7 +445,6 @@ describe Spree::OrdersController, type: :controller do
       end
     end
   end
-
 
   private
 

@@ -95,11 +95,11 @@ describe EnterpriseRelationship do
 
     it "finds relationships that grant a particular permission" do
       er1 = create(:enterprise_relationship, parent: e1, child: e2,
-                   permissions_list: ['one', 'two'])
+                                             permissions_list: ['one', 'two'])
       er2 = create(:enterprise_relationship, parent: e2, child: e3,
-                   permissions_list: ['two', 'three'])
+                                             permissions_list: ['two', 'three'])
       er3 = create(:enterprise_relationship, parent: e3, child: e1,
-                   permissions_list: ['three', 'four'])
+                                             permissions_list: ['three', 'four'])
 
       expect(EnterpriseRelationship.with_permission('two')).to match_array [er1, er2]
     end
@@ -119,8 +119,8 @@ describe EnterpriseRelationship do
     it "categorises enterprises into distributors and producers" do
       e2.update_attribute :is_primary_producer, true
       expect(EnterpriseRelationship.relatives).to eq(
-        {e1.id => {distributors: Set.new([e2.id]), producers: Set.new([e1.id, e2.id])},
-         e2.id => {distributors: Set.new([e2.id]), producers: Set.new([e2.id, e1.id])}}
+        e1.id => { distributors: Set.new([e2.id]), producers: Set.new([e1.id, e2.id]) },
+        e2.id => { distributors: Set.new([e2.id]), producers: Set.new([e2.id, e1.id]) }
       )
     end
 
@@ -147,8 +147,8 @@ describe EnterpriseRelationship do
       let(:some_other_producer) { create(:supplier_enterprise) }
 
       context "when variant_override permission is present" do
-        let!(:er) { create(:enterprise_relationship, child: hub, parent: producer, permissions_list: [:add_to_order_cycles, :create_variant_overrides] )}
-        let!(:some_other_er) { create(:enterprise_relationship, child: hub, parent: some_other_producer, permissions_list: [:add_to_order_cycles, :create_variant_overrides] )}
+        let!(:er) { create(:enterprise_relationship, child: hub, parent: producer, permissions_list: [:add_to_order_cycles, :create_variant_overrides] ) }
+        let!(:some_other_er) { create(:enterprise_relationship, child: hub, parent: some_other_producer, permissions_list: [:add_to_order_cycles, :create_variant_overrides] ) }
         let!(:vo1) { create(:variant_override, hub: hub, variant: create(:variant, product: create(:product, supplier: producer))) }
         let!(:vo2) { create(:variant_override, hub: hub, variant: create(:variant, product: create(:product, supplier: producer))) }
         let!(:vo3) { create(:variant_override, hub: hub, variant: create(:variant, product: create(:product, supplier: some_other_producer))) }
@@ -188,8 +188,8 @@ describe EnterpriseRelationship do
       end
 
       context "when variant_override permission is not present" do
-        let!(:er) { create(:enterprise_relationship, child: hub, parent: producer, permissions_list: [:add_to_order_cycles] )}
-        let!(:some_other_er) { create(:enterprise_relationship, child: hub, parent: some_other_producer, permissions_list: [:add_to_order_cycles] )}
+        let!(:er) { create(:enterprise_relationship, child: hub, parent: producer, permissions_list: [:add_to_order_cycles] ) }
+        let!(:some_other_er) { create(:enterprise_relationship, child: hub, parent: some_other_producer, permissions_list: [:add_to_order_cycles] ) }
         let!(:vo1) { create(:variant_override, hub: hub, variant: create(:variant, product: create(:product, supplier: producer)), permission_revoked_at: Time.now) }
         let!(:vo2) { create(:variant_override, hub: hub, variant: create(:variant, product: create(:product, supplier: producer)), permission_revoked_at: Time.now) }
         let!(:vo3) { create(:variant_override, hub: hub, variant: create(:variant, product: create(:product, supplier: some_other_producer)), permission_revoked_at: Time.now) }

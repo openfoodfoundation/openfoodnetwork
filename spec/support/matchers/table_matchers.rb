@@ -1,5 +1,4 @@
 RSpec::Matchers.define :have_table_row do |row|
-
   match do |node|
     @row = row
     rows_under(node).include? row # Robust check of columns
@@ -10,11 +9,11 @@ RSpec::Matchers.define :have_table_row do |row|
     !rows_under(node).include? row # Robust check of columns
   end
 
-  failure_message do |text|
+  failure_message do |_text|
     "expected to find table row #{@row}"
   end
 
-  failure_message_when_negated do |text|
+  failure_message_when_negated do |_text|
     "expected not to find table row #{@row}"
   end
 
@@ -23,11 +22,8 @@ RSpec::Matchers.define :have_table_row do |row|
   end
 end
 
-
-
 # find("#my-table").should match_table [[...]]
 RSpec::Matchers.define :match_table do |expected_table|
-
   match do |node|
     rows = node.
       all("tr").
@@ -58,8 +54,7 @@ RSpec::Matchers.define :match_table do |expected_table|
     @failure_message.nil?
   end
 
-  failure_message do |text|
+  failure_message do |_text|
     @failure_message
   end
-
 end

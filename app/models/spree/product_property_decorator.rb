@@ -5,9 +5,6 @@ module Spree
     after_save :refresh_products_cache
     after_destroy :refresh_products_cache
 
-
-    def refresh_products_cache
-      product.refresh_products_cache
-    end
+    delegate :refresh_products_cache, to: :product
   end
 end

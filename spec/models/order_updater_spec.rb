@@ -120,8 +120,8 @@ describe OrderUpdater do
     let(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
 
     before do
-        order.distributor = distributor
-        order.shipments = [shipment]
+      order.distributor = distributor
+      order.shipments = [shipment]
     end
 
     context 'when shipping method is pickup' do

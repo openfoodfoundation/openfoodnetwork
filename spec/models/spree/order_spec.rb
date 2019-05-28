@@ -19,7 +19,7 @@ describe Spree::Order do
 
     it "does nothing when the line item is not found" do
       p = create(:simple_product)
-      subject.set_variant_attributes(p.master, {'max_quantity' => '3'}.with_indifferent_access)
+      subject.set_variant_attributes(p.master, { 'max_quantity' => '3' }.with_indifferent_access)
     end
   end
 
@@ -139,7 +139,7 @@ describe Spree::Order do
   end
 
   describe "an order without shipping method" do
-    let(:order)           { create(:order) }
+    let(:order) { create(:order) }
 
     it "cannot be shipped" do
       expect(order.ready_to_ship?).to eq(false)
@@ -161,7 +161,7 @@ describe Spree::Order do
   end
 
   describe "a paid order without a shipment" do
-    let(:order)           { create(:order) }
+    let(:order) { create(:order) }
 
     before do
       order.payment_state = 'paid'
@@ -459,7 +459,7 @@ describe Spree::Order do
       line_item1 = create(:line_item, order: subject, variant: variant1)
       line_item2 = create(:line_item, order: subject, variant: variant2)
       subject.reload
-      subject.line_items = [line_item1,line_item2]
+      subject.line_items = [line_item1, line_item2]
     end
 
     it "allows the change when all variants in the order are provided by the new distributor in the new order cycle" do
@@ -478,7 +478,7 @@ describe Spree::Order do
 
       subject.distributor = new_distributor
       expect(subject).not_to be_valid
-      expect(subject.errors.messages).to eq({:base => ["Distributor or order cycle cannot supply the products in your cart"]})
+      expect(subject.errors.messages).to eq(base: ["Distributor or order cycle cannot supply the products in your cart"])
     end
   end
 
@@ -520,7 +520,7 @@ describe Spree::Order do
     let!(:order) { create(:order, distributor: distributor) }
 
     context "when an email address is available for the order" do
-      before { allow(order).to receive(:email_for_customer) { "existing@email.com" }}
+      before { allow(order).to receive(:email_for_customer) { "existing@email.com" } }
 
       context "and a customer for order.distributor and order#email_for_customer already exists" do
         let!(:customer) { create(:customer, enterprise: distributor, email: "existing@email.com" ) }
@@ -545,7 +545,7 @@ describe Spree::Order do
 
     context "when an email address is not available for the order" do
       let!(:customer) { create(:customer, enterprise: distributor) }
-      before { allow(order).to receive(:email_for_customer) { nil }}
+      before { allow(order).to receive(:email_for_customer) { nil } }
 
       it "does not set the customer and returns nil" do
         result = order.send(:associate_customer)
@@ -576,7 +576,7 @@ describe Spree::Order do
 
         it "links the customer customer to the order" do
           expect(order.customer).to be_nil
-          expect{order.send(:ensure_customer)}.to_not change{Customer.count}
+          expect{ order.send(:ensure_customer) }.to_not change{ Customer.count }
           expect(order.customer).to eq customer
         end
       end
@@ -588,7 +588,7 @@ describe Spree::Order do
         }
         it "creates a new customer with defaut name and addresses" do
           expect(order.customer).to be_nil
-          expect{order.send(:ensure_customer)}.to change{Customer.count}.by 1
+          expect{ order.send(:ensure_customer) }.to change{ Customer.count }.by 1
           expect(order.customer).to be_a Customer
 
           expect(order.customer.name).to eq order.bill_address.full_name
@@ -614,8 +614,8 @@ describe Spree::Order do
     end
 
     it "returns a validation error" do
-      expect{order.next}.to change(order.errors, :count).from(0).to(1)
-      expect(order.errors.messages[:base]).to eq [ I18n.t('devise.failure.already_registered') ]
+      expect{ order.next }.to change(order.errors, :count).from(0).to(1)
+      expect(order.errors.messages[:base]).to eq [I18n.t('devise.failure.already_registered')]
       expect(order.state).to eq 'cart'
     end
   end
@@ -659,7 +659,7 @@ describe Spree::Order do
         end
 
         it "does not attempt to update such adjustments" do
-          order.update_attributes(line_items_attributes: [{id: order.line_items.first.id, quantity: 0}])
+          order.update_attributes(line_items_attributes: [{ id: order.line_items.first.id, quantity: 0 }])
 
           # Check if fees got updated
           order.reload

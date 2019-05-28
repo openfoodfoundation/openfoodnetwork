@@ -21,13 +21,13 @@ describe MailConfiguration do
     end
 
     it 'sets config entries in the Spree Config' do
-      described_class.entries= entries
+      described_class.entries = entries
       expect(Spree::Config[:smtp_username]).to eq("smtp_username")
       expect(Spree::Config[:mail_auth_type]).to eq("login")
     end
 
     it 'initializes the mail settings' do
-      described_class.entries= entries
+      described_class.entries = entries
       expect(Spree::Core::MailSettings).to have_received(:init)
     end
   end

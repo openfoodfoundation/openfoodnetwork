@@ -11,9 +11,8 @@ describe Spree::Admin::ProductsController, type: :controller do
 
       before do
         login_as_enterprise_user [s_managed]
-        spree_post :bulk_update, {
-          "products" => [{"id" => product.id, "name" => "Pine nuts"}]
-        }
+        spree_post :bulk_update,
+                   "products" => [{ "id" => product.id, "name" => "Pine nuts" }]
       end
 
       it "denies access" do
@@ -42,29 +41,27 @@ describe Spree::Admin::ProductsController, type: :controller do
       before { login_as_enterprise_user([producer]) }
 
       it 'fails' do
-        spree_post :bulk_update, {
-          "products" => [
-            {
-              "id" => product.id,
-              "variant_unit" => "weight",
-              "variant_unit_scale" => 1
-            }
-          ]
-        }
+        spree_post :bulk_update,
+                   "products" => [
+                     {
+                       "id" => product.id,
+                       "variant_unit" => "weight",
+                       "variant_unit_scale" => 1
+                     }
+                   ]
 
         expect(response).to have_http_status(400)
       end
 
       it 'does not redirect to bulk_products' do
-        spree_post :bulk_update, {
-          "products" => [
-            {
-              "id" => product.id,
-              "variant_unit" => "weight",
-              "variant_unit_scale" => 1
-            }
-          ]
-        }
+        spree_post :bulk_update,
+                   "products" => [
+                     {
+                       "id" => product.id,
+                       "variant_unit" => "weight",
+                       "variant_unit_scale" => 1
+                     }
+                   ]
 
         expect(response).not_to redirect_to(
           '/api/products/bulk_products?page=1;per_page=500;'
@@ -98,26 +95,25 @@ describe Spree::Admin::ProductsController, type: :controller do
       before { login_as_enterprise_user([producer]) }
 
       it 'does not fail' do
-        spree_post :bulk_update, {
-          "products" => [
-            {
-              "id" => another_product.id,
-              "variants_attributes" => [{}]
-            },
-            {
-              "id" => product.id,
-              "variants_attributes" => [
-                {
-                  "on_hand" => 2,
-                  "price" => "5.0",
-                  "unit_value" => 4,
-                  "unit_description" => "",
-                  "display_name" => "name"
-                }
-              ]
-            }
-          ]
-        }
+        spree_post :bulk_update,
+                   "products" => [
+                     {
+                       "id" => another_product.id,
+                       "variants_attributes" => [{}]
+                     },
+                     {
+                       "id" => product.id,
+                       "variants_attributes" => [
+                         {
+                           "on_hand" => 2,
+                           "price" => "5.0",
+                           "unit_value" => 4,
+                           "unit_description" => "",
+                           "display_name" => "name"
+                         }
+                       ]
+                     }
+                   ]
 
         expect(response).to have_http_status(:found)
       end
@@ -143,12 +139,12 @@ describe Spree::Admin::ProductsController, type: :controller do
     end
 
     it "redirects to products when the user hits 'create'" do
-      spree_post :create, { product: product_attrs, button: 'create' }
+      spree_post :create, product: product_attrs, button: 'create'
       expect(response).to redirect_to spree.admin_products_path
     end
 
     it "redirects to new when the user hits 'add_another'" do
-      spree_post :create, { product: product_attrs, button: 'add_another' }
+      spree_post :create, product: product_attrs, button: 'add_another'
       expect(response).to redirect_to spree.new_admin_product_path
     end
   end
@@ -167,14 +163,13 @@ describe Spree::Admin::ProductsController, type: :controller do
 
         context "when a submitted property does not already exist" do
           it "does not create a new property, or product property" do
-            spree_put :update, {
-              id: product,
-              product: {
-                product_properties_attributes: {
-                  '0' => { property_name: 'a different name', value: 'something' }
-                }
-              }
-            }
+            spree_put :update,
+                      id: product,
+                      product: {
+                        product_properties_attributes: {
+                          '0' => { property_name: 'a different name', value: 'something' }
+                        }
+                      }
             expect(Spree::Property.count).to be 1
             expect(Spree::ProductProperty.count).to be 0
             property_names = product.reload.properties.map(&:name)
@@ -184,14 +179,13 @@ describe Spree::Admin::ProductsController, type: :controller do
 
         context "when a submitted property exists" do
           it "adds a product property" do
-            spree_put :update, {
-              id: product,
-              product: {
-                product_properties_attributes: {
-                  '0' => { property_name: 'A nice name', value: 'something' }
-                }
-              }
-            }
+            spree_put :update,
+                      id: product,
+                      product: {
+                        product_properties_attributes: {
+                          '0' => { property_name: 'A nice name', value: 'something' }
+                        }
+                      }
             expect(Spree::Property.count).to be 1
             expect(Spree::ProductProperty.count).to be 1
             property_names = product.reload.properties.map(&:name)

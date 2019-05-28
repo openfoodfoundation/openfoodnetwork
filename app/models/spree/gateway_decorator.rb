@@ -4,6 +4,6 @@ Spree::Gateway.class_eval do
   include Spree::PaymentMethodDistributors
 
   # Default to live
-  preference :server, :string, :default => 'live'
-  preference :test_mode, :boolean, :default => false
+  preference :server, :string, default: 'live'
+  preference :test_mode, :boolean, default: false
 end

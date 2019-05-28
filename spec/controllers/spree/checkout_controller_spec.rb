@@ -2,7 +2,6 @@ require 'spec_helper'
 require 'spree/api/testing_support/helpers'
 require 'support/request/authentication_workflow'
 
-
 describe Spree::CheckoutController, type: :controller do
   context 'rendering edit from within spree for the current checkout state' do
     let(:order) { controller.current_order(true) }

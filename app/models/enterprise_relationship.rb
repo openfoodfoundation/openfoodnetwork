@@ -3,14 +3,14 @@ class EnterpriseRelationship < ActiveRecord::Base
   belongs_to :child, class_name: 'Enterprise', touch: true
   has_many :permissions, class_name: 'EnterpriseRelationshipPermission', dependent: :destroy
 
-  validates_presence_of :parent_id, :child_id
-  validates_uniqueness_of :child_id, scope: :parent_id, message: I18n.t('validation_msg_relationship_already_established')
+  validates :parent_id, :child_id, presence: true
+  validates :child_id, uniqueness: { scope: :parent_id, message: I18n.t('validation_msg_relationship_already_established') }
 
   after_save :update_permissions_of_child_variant_overrides
   before_destroy :revoke_all_child_variant_overrides
 
   scope :with_enterprises,
-    joins('LEFT JOIN enterprises AS parent_enterprises ON parent_enterprises.id = enterprise_relationships.parent_id').
+        joins('LEFT JOIN enterprises AS parent_enterprises ON parent_enterprises.id = enterprise_relationships.parent_id').
     joins('LEFT JOIN enterprises AS child_enterprises ON child_enterprises.id = enterprise_relationships.child_id')
 
   scope :involving_enterprises, ->(enterprises) {
@@ -30,7 +30,7 @@ class EnterpriseRelationship < ActiveRecord::Base
   # Load an array of the relatives of each enterprise (ie. any enterprise related to it in
   # either direction). This array is split into distributors and producers, and has the format:
   # {enterprise_id => {distributors: [id, ...], producers: [id, ...]} }
-  def self.relatives(activated_only=false)
+  def self.relatives(activated_only = false)
     relationships = EnterpriseRelationship.includes(:child, :parent)
     relatives = {}
 
@@ -44,8 +44,8 @@ class EnterpriseRelationship < ActiveRecord::Base
     end
 
     relationships.each do |r|
-      relatives[r.parent_id] ||= {distributors: Set.new, producers: Set.new}
-      relatives[r.child_id]  ||= {distributors: Set.new, producers: Set.new}
+      relatives[r.parent_id] ||= { distributors: Set.new, producers: Set.new }
+      relatives[r.child_id]  ||= { distributors: Set.new, producers: Set.new }
 
       if !activated_only || r.child.activated?
         relatives[r.parent_id][:producers]    << r.child_id if r.child.is_primary_producer

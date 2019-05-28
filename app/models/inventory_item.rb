@@ -16,7 +16,6 @@ class InventoryItem < ActiveRecord::Base
 
   after_save :refresh_products_cache
 
-
   private
 
   def refresh_products_cache

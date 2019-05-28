@@ -12,7 +12,7 @@ module Spree
       def collection
         return parent.public_send(controller_name) if parent_data.present?
         collection = if model_class.respond_to?(:accessible_by) &&
-                         !current_ability.has_block?(params[:action], model_class)
+                        !current_ability.has_block?(params[:action], model_class)
 
                        model_class.accessible_by(current_ability, action)
 
@@ -41,7 +41,7 @@ module Spree
             @payment_method = PaymentMethod.find(params[:pm_id])
           end
         else
-          @payment_method = params[:provider_type].constantize.new()
+          @payment_method = params[:provider_type].constantize.new
         end
         render partial: 'provider_settings'
       end
@@ -53,17 +53,21 @@ module Spree
       end
 
       def load_data
-        if spree_current_user.admin? || Rails.env.test?
-          @providers = Gateway.providers.sort{|p1, p2| p1.name <=> p2.name }
-        else
-          @providers = Gateway.providers.reject{ |p| p.name.include? "Bogus" }.sort{|p1, p2| p1.name <=> p2.name }
-        end
+        @providers = if spree_current_user.admin? || Rails.env.test?
+                       Gateway.providers.sort_by(&:name)
+                     else
+                       Gateway.providers.reject{ |p| p.name.include? "Bogus" }.sort_by(&:name)
+                     end
         @providers.reject!{ |p| p.name.ends_with? "StripeConnect" } unless show_stripe?
         @calculators = PaymentMethod.calculators.sort_by(&:name)
       end
 
       def load_hubs
-        @hubs = Enterprise.managed_by(spree_current_user).is_distributor.sort_by!{ |d| [(@payment_method.has_distributor? d) ? 0 : 1, d.name] }
+        # rubocop:disable Style/TernaryParentheses
+        @hubs = Enterprise.managed_by(spree_current_user).is_distributor.sort_by! do |d|
+          [(@payment_method.has_distributor? d) ? 0 : 1, d.name]
+        end
+        # rubocop:enable Style/TernaryParentheses
       end
 
       # Show Stripe as an option if enabled, or if the

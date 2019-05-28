@@ -118,7 +118,6 @@ module Spree
     end
 
     describe 'Roles' do
-
       # create enterprises
       let(:s1) { create(:supplier_enterprise) }
       let(:s2) { create(:supplier_enterprise) }
@@ -450,7 +449,7 @@ module Spree
           user
         end
 
-        let(:oc1) { create(:simple_order_cycle, {coordinator: d1}) }
+        let(:oc1) { create(:simple_order_cycle, coordinator: d1) }
         let(:oc2) { create(:simple_order_cycle) }
 
         it "should be able to read/write OrderCycles they are the co-ordinator of" do

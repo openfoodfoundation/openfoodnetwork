@@ -10,20 +10,24 @@ module OpenFoodNetwork
     def issues
       issues = []
 
-      issues << {
-        description: I18n.t('admin.enterprise_issues.has_no_shipping_methods', enterprise: @enterprise.name),
-        link: "<a class='button fullwidth' href='#{spree.new_admin_shipping_method_path}'>#{I18n.t('admin.enterprise_issues.create_new')}</a>"
-      } unless shipping_methods_ok?
+      unless shipping_methods_ok?
+        issues << {
+          description: I18n.t('admin.enterprise_issues.has_no_shipping_methods', enterprise: @enterprise.name),
+          link: "<a class='button fullwidth' href='#{spree.new_admin_shipping_method_path}'>#{I18n.t('admin.enterprise_issues.create_new')}</a>"
+        }
+      end
 
-      issues << {
-        description: I18n.t('admin.enterprise_issues.has_no_payment_methods', enterprise: @enterprise.name),
-        link: "<a class='button fullwidth' href='#{spree.new_admin_payment_method_path}'>#{I18n.t('admin.enterprise_issues.create_new')}</a>"
-      } unless payment_methods_ok?
+      unless payment_methods_ok?
+        issues << {
+          description: I18n.t('admin.enterprise_issues.has_no_payment_methods', enterprise: @enterprise.name),
+          link: "<a class='button fullwidth' href='#{spree.new_admin_payment_method_path}'>#{I18n.t('admin.enterprise_issues.create_new')}</a>"
+        }
+      end
 
       issues
     end
 
-    def issues_summary(opts={})
+    def issues_summary(opts = {})
       if    !opts[:confirmation_only] && !shipping_methods_ok? && !payment_methods_ok?
         I18n.t(:no_shipping_or_payment)
       elsif !opts[:confirmation_only] && !shipping_methods_ok?
@@ -36,14 +40,15 @@ module OpenFoodNetwork
     def warnings
       warnings = []
 
-      warnings << {
-        description: I18n.t('admin.enterprise_issues.not_visible', enterprise: @enterprise.name),
-        link: "<a class='button fullwidth' href='#{edit_admin_enterprise_path(@enterprise)}'>#{I18n.t(:edit)}</a>"
-      } unless @enterprise.visible
+      unless @enterprise.visible
+        warnings << {
+          description: I18n.t('admin.enterprise_issues.not_visible', enterprise: @enterprise.name),
+          link: "<a class='button fullwidth' href='#{edit_admin_enterprise_path(@enterprise)}'>#{I18n.t(:edit)}</a>"
+        }
+      end
 
       warnings
     end
-
 
     private
 

@@ -65,14 +65,17 @@ module Spree
         let(:p_external) { create(:simple_product) }
         let(:v_external) { create(:variant, product: p_external) }
 
-        let!(:ex_in) { create(:exchange, order_cycle: oc, sender: s, receiver: oc.coordinator,
-                              incoming: true, variants: [v1, v2]) 
+        let!(:ex_in) {
+          create(:exchange, order_cycle: oc, sender: s, receiver: oc.coordinator,
+                            incoming: true, variants: [v1, v2])
         }
-        let!(:ex_out1) { create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d1,
-                                incoming: false, variants: [v1]) 
+        let!(:ex_out1) {
+          create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d1,
+                            incoming: false, variants: [v1])
         }
-        let!(:ex_out2) { create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d2,
-                                incoming: false, variants: [v2]) 
+        let!(:ex_out2) {
+          create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d2,
+                            incoming: false, variants: [v2])
         }
 
         it "returns variants in the order cycle and distributor" do
@@ -202,7 +205,7 @@ module Spree
 
       it "indexes variants by id" do
         expect(Variant.where(id: [v1, v2, v3]).indexed).to eq(
-          {v1.id => v1, v2.id => v2, v3.id => v3}
+          v1.id => v1, v2.id => v2, v3.id => v3
         )
       end
     end
@@ -240,7 +243,6 @@ module Spree
       end
     end
 
-
     describe "calculating the fees" do
       it "delegates to EnterpriseFeeCalculator" do
         distributor = double(:distributor)
@@ -252,7 +254,6 @@ module Spree
         expect(variant.fees_for(distributor, order_cycle)).to eq(23)
       end
     end
-
 
     describe "calculating fees broken down by fee type" do
       it "delegates to EnterpriseFeeCalculator" do
@@ -266,7 +267,6 @@ module Spree
         expect(variant.fees_by_type_for(distributor, order_cycle)).to eq(fees)
       end
     end
-
 
     context "when the product has variants" do
       let!(:product) { create(:simple_product) }

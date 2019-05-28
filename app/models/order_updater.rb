@@ -9,12 +9,12 @@ class OrderUpdater < SimpleDelegator
   # https://github.com/spree/spree/commit/38b8456183d11fc1e00e395e7c9154c76ef65b85
   # https://github.com/spree/spree/commit/7b264acff7824f5b3dc6651c106631d8f30b147a
   def update_payment_state
-      last_payment_state = order.payment_state
+    last_payment_state = order.payment_state
 
-      order.payment_state = infer_payment_state
-      track_payment_state_change(last_payment_state)
+    order.payment_state = infer_payment_state
+    track_payment_state_change(last_payment_state)
 
-      order.payment_state
+    order.payment_state
     end
 
   def before_save_hook

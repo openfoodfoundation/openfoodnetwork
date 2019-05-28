@@ -99,7 +99,6 @@ module OpenFoodNetwork
       end
     end
 
-
     private
 
     def self.exchanges_featuring_variants(variants, distributor: nil)
@@ -141,7 +140,7 @@ module OpenFoodNetwork
 
     def self.refresh_distributor_fee(enterprise_fee)
       enterprise_fee.exchange_fees.
-        joins(:exchange => :order_cycle).
+        joins(exchange: :order_cycle).
         merge(Exchange.outgoing).
         merge(OrderCycle.dated).
         merge(OrderCycle.not_closed).

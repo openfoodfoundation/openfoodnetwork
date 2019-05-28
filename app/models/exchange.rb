@@ -11,8 +11,8 @@ class Exchange < ActiveRecord::Base
   has_many :exchange_fees, dependent: :destroy
   has_many :enterprise_fees, through: :exchange_fees
 
-  validates_presence_of :order_cycle, :sender, :receiver
-  validates_uniqueness_of :sender_id, scope: [:order_cycle_id, :receiver_id, :incoming]
+  validates :order_cycle, :sender, :receiver, presence: true
+  validates :sender_id, uniqueness: { scope: [:order_cycle_id, :receiver_id, :incoming] }
 
   after_save :refresh_products_cache
   after_destroy :refresh_products_cache_from_destroy
@@ -53,13 +53,12 @@ class Exchange < ActiveRecord::Base
     end
   }
 
-
   def clone!(new_order_cycle)
-    exchange = self.dup
+    exchange = dup
     exchange.order_cycle = new_order_cycle
-    exchange.enterprise_fee_ids = self.enterprise_fee_ids
-    exchange.variant_ids = self.variant_ids
-    exchange.tag_ids = self.tag_ids
+    exchange.enterprise_fee_ids = enterprise_fee_ids
+    exchange.variant_ids = variant_ids
+    exchange.tag_ids = tag_ids
     exchange.save!
     exchange
   end
@@ -72,15 +71,15 @@ class Exchange < ActiveRecord::Base
     incoming? ? sender : receiver
   end
 
-  def to_h(core_only=false)
-    h = attributes.merge({ 'variant_ids' => variant_ids.sort, 'enterprise_fee_ids' => enterprise_fee_ids.sort })
+  def to_h(core_only = false)
+    h = attributes.merge('variant_ids' => variant_ids.sort, 'enterprise_fee_ids' => enterprise_fee_ids.sort)
     h.reject! { |k| %w(id order_cycle_id created_at updated_at).include? k } if core_only
     h
   end
 
   def eql?(e)
     if e.respond_to? :to_h
-      self.to_h(true) == e.to_h(true)
+      to_h(true) == e.to_h(true)
     else
       super e
     end

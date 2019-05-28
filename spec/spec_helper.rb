@@ -10,7 +10,7 @@ require 'pry' unless ENV['CI']
 # use Knapsack, and this provides the option to disable it when running the tests in CI services.
 unless ENV['DISABLE_KNAPSACK']
   require 'knapsack'
-  Knapsack.tracker.config({enable_time_offset_warning: false}) unless ENV['CI']
+  Knapsack.tracker.config(enable_time_offset_warning: false) unless ENV['CI']
   Knapsack::Adapters::RSpecAdapter.bind
 end
 
@@ -35,7 +35,7 @@ WebMock.disable_net_connect!({
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
-Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 require 'spree/testing_support/controller_requests'
 require 'spree/testing_support/capybara_ext'
 require 'spree/api/testing_support/setup'
@@ -87,18 +87,18 @@ RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = false
 
   # Filters
-  config.filter_run_excluding :skip => true, :future => true, :to_figure_out => true
+  config.filter_run_excluding skip: true, future: true, to_figure_out: true
 
   # Retry
   config.verbose_retry = true
 
   # DatabaseCleaner
-  config.before(:suite)          { DatabaseCleaner.clean_with :deletion, {except: ['spree_countries', 'spree_states']} }
+  config.before(:suite)          { DatabaseCleaner.clean_with :deletion, except: ['spree_countries', 'spree_states'] }
   config.before(:each)           { DatabaseCleaner.strategy = :transaction }
-  config.before(:each, js: true) { DatabaseCleaner.strategy = :deletion, {except: ['spree_countries', 'spree_states']} }
+  config.before(:each, js: true) { DatabaseCleaner.strategy = :deletion, { except: ['spree_countries', 'spree_states'] } }
   config.before(:each)           { DatabaseCleaner.start }
   config.after(:each)            { DatabaseCleaner.clean }
-  config.after(:each, js:true) do
+  config.after(:each, js: true) do
     Capybara.reset_sessions!
     RackRequestBlocker.wait_for_requests_complete
   end
@@ -112,10 +112,10 @@ RSpec.configure do |config|
   config.before(:all) { restart_phantomjs }
 
   # Geocoding
-  config.before(:each) { allow_any_instance_of(Spree::Address).to receive(:geocode).and_return([1,1]) }
+  config.before(:each) { allow_any_instance_of(Spree::Address).to receive(:geocode).and_return([1, 1]) }
 
   default_country_id = Spree::Config[:default_country_id]
-  checkout_zone  = Spree::Config[:checkout_zone]
+  checkout_zone = Spree::Config[:checkout_zone]
   currency = Spree::Config[:currency]
   # Ensure we start with consistent config settings
   config.before(:each) do
@@ -137,12 +137,12 @@ RSpec.configure do |config|
   config.include Spree::UrlHelpers
   config.include Spree::CheckoutHelpers
   config.include Spree::MoneyHelper
-  config.include Spree::TestingSupport::ControllerRequests, :type => :controller
+  config.include Spree::TestingSupport::ControllerRequests, type: :controller
   config.include Spree::TestingSupport::Preferences
-  config.include Devise::TestHelpers, :type => :controller
-  config.extend  Spree::Api::TestingSupport::Setup, :type => :controller
-  config.include Spree::Api::TestingSupport::Helpers, :type => :controller
-  config.include OpenFoodNetwork::ControllerHelper, :type => :controller
+  config.include Devise::TestHelpers, type: :controller
+  config.extend  Spree::Api::TestingSupport::Setup, type: :controller
+  config.include Spree::Api::TestingSupport::Helpers, type: :controller
+  config.include OpenFoodNetwork::ControllerHelper, type: :controller
   config.include Features::DatepickerHelper, type: :feature
   config.include OpenFoodNetwork::FeatureToggleHelper
   config.include OpenFoodNetwork::FiltersHelper
@@ -175,12 +175,12 @@ RSpec.configure do |config|
   #   bundle exec pprof.rb --text  /tmp/rspec_profile
   #
 
-  #require 'perftools'
-  #config.before :suite do
+  # require 'perftools'
+  # config.before :suite do
   #  PerfTools::CpuProfiler.start("/tmp/rspec_profile")
-  #end
+  # end
   #
-  #config.after :suite do
+  # config.after :suite do
   # PerfTools::CpuProfiler.stop
-  #end
+  # end
 end

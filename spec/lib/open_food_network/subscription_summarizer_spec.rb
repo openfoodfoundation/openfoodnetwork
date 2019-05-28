@@ -21,7 +21,7 @@ module OpenFoodNetwork
         let(:summary) { double(:summary) }
 
         before do
-          summarizer.instance_variable_set(:@summaries, { 123 => summary })
+          summarizer.instance_variable_set(:@summaries, 123 => summary)
         end
 
         it "returns the existing summary object" do

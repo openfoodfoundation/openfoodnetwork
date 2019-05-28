@@ -12,7 +12,7 @@ class TagRule < ActiveRecord::Base
   scope :prioritised, -> { order('priority ASC') }
 
   def self.mapping_for(enterprises)
-    self.for(enterprises).inject({}) do |mapping, rule|
+    self.for(enterprises).each_with_object({}) do |rule, mapping|
       rule.preferred_customer_tags.split(",").each do |tag|
         if mapping[tag]
           mapping[tag][:rules] += 1
@@ -20,7 +20,6 @@ class TagRule < ActiveRecord::Base
           mapping[tag] = { text: tag, rules: 1 }
         end
       end
-      mapping
     end
   end
 end

@@ -38,11 +38,11 @@ module OpenFoodNetwork
 
     def errors
       obj = Object.new
-      def obj.[](key)         [] end
+      def obj.[](_key) [] end
 
       def obj.full_messages() [] end
 
-      def obj.any?()       false end
+      def obj.any?() false end
       obj
     end
   end

@@ -75,7 +75,6 @@ describe ProducerMailer, type: :mailer do
       .to have_selector("td", text: "$30.00")
   end
 
-
   it "displays tax totals for each product" do
     # Tax for p1 line items
     expect(body_as_html(mail).find("table.order-summary tr", text: p1.name))
@@ -101,7 +100,6 @@ describe ProducerMailer, type: :mailer do
       ProducerMailer.order_cycle_report(s3, order_cycle).deliver
     end.to change(ActionMailer::Base.deliveries, :count).by(0)
   end
-
 
   private
 

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Spree::OrdersHelper, type: :helper do
-
   describe "#changeable_orders" do
     let(:complete_orders) { double(:complete_orders, where: "some_orders") }
 
@@ -22,7 +21,7 @@ describe Spree::OrdersHelper, type: :helper do
           let(:current_order_cycle) { double(:current_order_cycle, id: 1) }
 
           context "when the current_distributor allows order changes" do
-            before { allow(current_distributor).to receive(:allow_order_changes?) { true} }
+            before { allow(current_distributor).to receive(:allow_order_changes?) { true } }
             it { expect(helper.changeable_orders).to eq "some_orders" }
           end
 

@@ -9,9 +9,9 @@ class EnterpriseMailer < Spree::BaseMailer
       subject = t('enterprise_mailer.welcome.subject',
                   enterprise: @enterprise.name,
                   sitename: Spree::Config[:site_name])
-      mail(:to => enterprise.contact.email,
-           :from => from_address,
-           :subject => subject)
+      mail(to: enterprise.contact.email,
+           from: from_address,
+           subject: subject)
     end
   end
 

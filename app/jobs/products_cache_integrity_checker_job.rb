@@ -14,7 +14,6 @@ ProductsCacheIntegrityCheckerJob = Struct.new(:distributor_id, :order_cycle_id) 
     end
   end
 
-
   private
 
   def checker

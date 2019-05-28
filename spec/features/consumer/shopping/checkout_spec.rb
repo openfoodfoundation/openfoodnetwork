@@ -164,18 +164,18 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
 
         let!(:saved_card) do
           create(:credit_card,
-          user_id: user.id,
-          month: "01",
-          year: "2025",
-          cc_type: "visa",
-          number: "1111111111111111",
-          payment_method_id: stripe_pm.id,
-          gateway_customer_profile_id: "i_am_saved")
+                 user_id: user.id,
+                 month: "01",
+                 year: "2025",
+                 cc_type: "visa",
+                 number: "1111111111111111",
+                 payment_method_id: stripe_pm.id,
+                 gateway_customer_profile_id: "i_am_saved")
         end
 
         let!(:stripe_account) { create(:stripe_account, enterprise_id: distributor.id, stripe_user_id: 'some_id') }
 
-        let(:response_mock) { { id: "ch_1234", object: "charge", amount: 2000} }
+        let(:response_mock) { { id: "ch_1234", object: "charge", amount: 2000 } }
 
         before do
           allow(Stripe).to receive(:api_key) { "sk_test_12345" }
@@ -265,15 +265,15 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
           page.should have_content "Local"
 
           create(:filter_shipping_methods_tag_rule,
-            enterprise: distributor,
-            preferred_customer_tags: "local",
-            preferred_shipping_method_tags: "local",
-            preferred_matched_shipping_methods_visibility: 'visible')
-            create(:filter_shipping_methods_tag_rule,
-              enterprise: distributor,
-              is_default: true,
-              preferred_shipping_method_tags: "local",
-              preferred_matched_shipping_methods_visibility: 'hidden')
+                 enterprise: distributor,
+                 preferred_customer_tags: "local",
+                 preferred_shipping_method_tags: "local",
+                 preferred_matched_shipping_methods_visibility: 'visible')
+          create(:filter_shipping_methods_tag_rule,
+                 enterprise: distributor,
+                 is_default: true,
+                 preferred_shipping_method_tags: "local",
+                 preferred_matched_shipping_methods_visibility: 'hidden')
           visit checkout_path
           checkout_as_guest
 
@@ -444,7 +444,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
                 it "takes us to the order confirmation page when submitted with a valid credit card" do
                   fill_in 'Card Number', with: "4111111111111111"
                   select 'February', from: 'secrets.card_month'
-                  select (Date.current.year+1).to_s, from: 'secrets.card_year'
+                  select (Date.current.year + 1).to_s, from: 'secrets.card_year'
                   fill_in 'Security Code', with: '123'
 
                   place_order
@@ -458,7 +458,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
                 it "shows the payment processing failed message when submitted with an invalid credit card" do
                   fill_in 'Card Number', with: "9999999988887777"
                   select 'February', from: 'secrets.card_month'
-                  select (Date.current.year+1).to_s, from: 'secrets.card_year'
+                  select (Date.current.year + 1).to_s, from: 'secrets.card_year'
                   fill_in 'Security Code', with: '123'
 
                   place_order

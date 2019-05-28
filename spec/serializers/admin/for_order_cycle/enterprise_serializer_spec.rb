@@ -39,7 +39,6 @@ describe Api::Admin::ForOrderCycle::EnterpriseSerializer do
     end
   end
 
-
   context "when order cycle shows all available products" do
     before do
       allow(order_cycle).to receive(:prefers_product_selection_from_coordinator_inventory_only?) { false }
@@ -55,5 +54,4 @@ describe Api::Admin::ForOrderCycle::EnterpriseSerializer do
       end
     end
   end
-
 end

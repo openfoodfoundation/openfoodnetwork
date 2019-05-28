@@ -24,7 +24,7 @@ feature 'Customers' do
 
       it "passes the smoke test" do
         # Prompts for a hub for a list of my managed enterprises
-        expect(page).to have_select2 "shop_id", with_options: [managed_distributor1.name,managed_distributor2.name], without_options: [unmanaged_distributor.name]
+        expect(page).to have_select2 "shop_id", with_options: [managed_distributor1.name, managed_distributor2.name], without_options: [unmanaged_distributor.name]
 
         select2_select managed_distributor2.name, from: "shop_id"
 
@@ -81,7 +81,7 @@ feature 'Customers' do
           end
           expect(page).to have_selector "#info-dialog .text", text: I18n.t('admin.customers.destroy.has_associated_orders')
           click_button "OK"
-        }.to_not change{Customer.count}
+        }.to_not change{ Customer.count }
 
         expect{
           within "tr#c_#{customer2.id}" do
@@ -90,7 +90,7 @@ feature 'Customers' do
             end
           end
           expect(page).to have_no_selector "tr#c_#{customer2.id}"
-        }.to change{Customer.count}.by(-1)
+        }.to change{ Customer.count }.by(-1)
       end
 
       it "allows updating of attributes" do
@@ -203,7 +203,7 @@ feature 'Customers' do
           expect(customer4.reload.bill_address.address1).to eq 'New Address1'
 
           first('#bill-address-link').click
-          
+
           expect(page).to have_content 'Edit Billing Address'
           expect(page).to_not have_content 'Please input all of the required fields'
         end
@@ -269,21 +269,21 @@ feature 'Customers' do
               fill_in 'email', with: "not_an_email"
               click_button 'Add Customer'
               expect(page).to have_selector "#new-customer-dialog .error", text: "Please enter a valid email address"
-            }.to_not change{Customer.of(managed_distributor1).count}
+            }.to_not change{ Customer.of(managed_distributor1).count }
 
             # When an existing email is used
             expect{
               fill_in 'email', with: customer1.email
               click_button 'Add Customer'
               expect(page).to have_selector "#new-customer-dialog .error", text: "Email is associated with an existing customer"
-            }.to_not change{Customer.of(managed_distributor1).count}
+            }.to_not change{ Customer.of(managed_distributor1).count }
 
             # When a new valid email is used
             expect{
               fill_in 'email', with: "new@email.com"
               click_button 'Add Customer'
               expect(page).not_to have_selector "#new-customer-dialog"
-            }.to change{Customer.of(managed_distributor1).count}.from(2).to(3)
+            }.to change{ Customer.of(managed_distributor1).count }.from(2).to(3)
           end
         end
       end

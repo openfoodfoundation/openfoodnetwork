@@ -128,7 +128,6 @@ module OpenFoodNetwork
       end
     end
 
-
     describe "when a variant override is destroyed" do
       let(:vo) { double(:variant_override) }
 
@@ -137,7 +136,6 @@ module OpenFoodNetwork
         ProductsCache.variant_override_destroyed vo
       end
     end
-
 
     describe "when a producer property is changed" do
       let(:s) { create(:supplier_enterprise) }
@@ -172,7 +170,6 @@ module OpenFoodNetwork
       end
     end
 
-
     describe "when a producer property is destroyed" do
       let(:producer_property) { double(:producer_property) }
 
@@ -181,7 +178,6 @@ module OpenFoodNetwork
         ProductsCache.producer_property_destroyed producer_property
       end
     end
-
 
     describe "when an order cycle is changed" do
       let(:variant) { create(:variant) }
@@ -227,7 +223,6 @@ module OpenFoodNetwork
         ProductsCache.order_cycle_changed oc_open
       end
     end
-
 
     describe "when an exchange is changed" do
       let(:s) { create(:supplier_enterprise) }
@@ -283,7 +278,6 @@ module OpenFoodNetwork
       end
     end
 
-
     describe "when an exchange is destroyed" do
       let(:exchange) { double(:exchange) }
 
@@ -293,7 +287,6 @@ module OpenFoodNetwork
       end
     end
 
-
     describe "when an enterprise fee is changed" do
       let(:s) { create(:supplier_enterprise) }
       let(:c) { create(:distributor_enterprise) }
@@ -302,7 +295,6 @@ module OpenFoodNetwork
       let(:ef) { create(:enterprise_fee) }
       let(:ef_coord) { create(:enterprise_fee, order_cycles: [oc]) }
       let(:oc) { create(:open_order_cycle, coordinator: c) }
-
 
       describe "updating exchanges when it's a supplier fee" do
         let(:v) { create(:variant) }
@@ -343,13 +335,11 @@ module OpenFoodNetwork
         end
       end
 
-
       it "updates order cycles when it's a coordinator fee" do
         ef_coord
         expect(ProductsCache).to receive(:order_cycle_changed).with(oc).once
         ProductsCache.enterprise_fee_changed ef_coord
       end
-
 
       describe "updating exchanges when it's a distributor fee" do
         let(:ex0) { create(:exchange, order_cycle: oc, sender: s, receiver: c, incoming: true, enterprise_fees: [ef]) }

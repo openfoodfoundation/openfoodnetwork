@@ -32,15 +32,17 @@ describe EnterprisesHelper, type: :helper do
 
     context "when FilterShippingMethods tag rules are in effect" do
       let(:customer) { create(:customer, user: user, enterprise: distributor) }
-      let!(:tag_rule) { create(:filter_shipping_methods_tag_rule,
-        enterprise: distributor,
-        preferred_customer_tags: "local",
-        preferred_shipping_method_tags: "local-delivery") 
+      let!(:tag_rule) {
+        create(:filter_shipping_methods_tag_rule,
+               enterprise: distributor,
+               preferred_customer_tags: "local",
+               preferred_shipping_method_tags: "local-delivery")
       }
-      let!(:default_tag_rule) { create(:filter_shipping_methods_tag_rule,
-        enterprise: distributor,
-        is_default: true,
-        preferred_shipping_method_tags: "local-delivery") 
+      let!(:default_tag_rule) {
+        create(:filter_shipping_methods_tag_rule,
+               enterprise: distributor,
+               is_default: true,
+               preferred_shipping_method_tags: "local-delivery")
       }
       let!(:tagged_sm) { sm1 }
       let!(:untagged_sm) { sm2 }
@@ -117,8 +119,8 @@ describe EnterprisesHelper, type: :helper do
   end
 
   describe "loading available payment methods" do
-    let!(:pm1) { create(:payment_method, distributors: [distributor])}
-    let!(:pm2) { create(:payment_method, distributors: [some_other_distributor])}
+    let!(:pm1) { create(:payment_method, distributors: [distributor]) }
+    let!(:pm2) { create(:payment_method, distributors: [some_other_distributor]) }
 
     context "when the order has no current_distributor" do
       before do
@@ -141,15 +143,17 @@ describe EnterprisesHelper, type: :helper do
 
     context "when FilterPaymentMethods tag rules are in effect" do
       let(:customer) { create(:customer, user: user, enterprise: distributor) }
-      let!(:tag_rule) { create(:filter_payment_methods_tag_rule,
-        enterprise: distributor,
-        preferred_customer_tags: "trusted",
-        preferred_payment_method_tags: "trusted") 
+      let!(:tag_rule) {
+        create(:filter_payment_methods_tag_rule,
+               enterprise: distributor,
+               preferred_customer_tags: "trusted",
+               preferred_payment_method_tags: "trusted")
       }
-      let!(:default_tag_rule) { create(:filter_payment_methods_tag_rule,
-        enterprise: distributor,
-        is_default: true,
-        preferred_payment_method_tags: "trusted") 
+      let!(:default_tag_rule) {
+        create(:filter_payment_methods_tag_rule,
+               enterprise: distributor,
+               is_default: true,
+               preferred_payment_method_tags: "trusted")
       }
       let(:tagged_pm) { pm1 }
       let(:untagged_pm) { pm2 }

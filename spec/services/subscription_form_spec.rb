@@ -37,9 +37,9 @@ describe SubscriptionForm do
         begins_at: 4.days.ago,
         ends_at: 14.days.from_now,
         subscription_line_items_attributes: [
-          {variant_id: variant1.id, quantity: 1, price_estimate: 7.0},
-          {variant_id: variant2.id, quantity: 2, price_estimate: 8.0},
-          {variant_id: variant3.id, quantity: 3, price_estimate: 9.0}
+          { variant_id: variant1.id, quantity: 1, price_estimate: 7.0 },
+          { variant_id: variant2.id, quantity: 2, price_estimate: 8.0 },
+          { variant_id: variant3.id, quantity: 3, price_estimate: 9.0 }
         ]
       } }
 

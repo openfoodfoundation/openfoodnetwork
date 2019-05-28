@@ -1,12 +1,11 @@
 require 'spec_helper'
 
-feature %q{
+feature '
   As an Administrator
   I want to manage relationships between enterprises
-}, js: true do
+', js: true do
   include AuthenticationWorkflow
   include WebHelper
-
 
   context "as a site administrator" do
     before { quick_login_as_admin }
@@ -28,10 +27,9 @@ feature %q{
         page.should have_relationship e1, e2, ['to add to order cycle']
         page.should have_relationship e2, e3, ['to manage products']
         page.should have_relationship e3, e4,
-          ['to add to order cycle', 'to manage products']
+                                      ['to add to order cycle', 'to manage products']
       end
     end
-
 
     scenario "creating a relationship" do
       e1 = create(:enterprise, name: 'One')
@@ -55,7 +53,6 @@ feature %q{
       er.should be_present
       er.permissions.map(&:name).should match_array ['add_to_order_cycle', 'edit_profile', 'create_variant_overrides']
     end
-
 
     scenario "attempting to create a relationship with invalid data" do
       e1 = create(:enterprise, name: 'One')
@@ -91,7 +88,6 @@ feature %q{
     end
   end
 
-
   context "as an enterprise user" do
     let!(:d1) { create(:distributor_enterprise) }
     let!(:d2) { create(:distributor_enterprise) }
@@ -119,10 +115,9 @@ feature %q{
     end
   end
 
-
   private
 
-  def have_relationship(parent, child, perms=[])
+  def have_relationship(parent, child, perms = [])
     perms = perms.join(' ')
 
     have_table_row [parent.name, 'permits', child.name, perms, '']

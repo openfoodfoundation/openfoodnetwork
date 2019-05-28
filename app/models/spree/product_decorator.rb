@@ -9,9 +9,9 @@ Spree::Product.class_eval do
   # We have an after_destroy callback on Spree::ProductOptionType. However, if we
   # don't specify dependent => destroy on this association, it is not called. See:
   # https://github.com/rails/rails/issues/7618
-  has_many :option_types, :through => :product_option_types, :dependent => :destroy
+  has_many :option_types, through: :product_option_types, dependent: :destroy
 
-  belongs_to :supplier, :class_name => 'Enterprise', touch: true
+  belongs_to :supplier, class_name: 'Enterprise', touch: true
   belongs_to :primary_taxon, class_name: 'Spree::Taxon'
 
   delegate_belongs_to :master, :unit_value, :unit_description
@@ -22,17 +22,17 @@ Spree::Product.class_eval do
   attr_accessible :variant_unit, :variant_unit_scale, :variant_unit_name, :unit_value
   attr_accessible :inherits_properties, :sku
 
-  validates_presence_of :supplier
+  validates :supplier, presence: true
   validates :primary_taxon, presence: true
   validates :tax_category_id, presence: true, if: "Spree::Config.products_require_tax_category"
 
-  validates_presence_of :variant_unit
-  validates_presence_of :variant_unit_scale,
-                        if: -> p { %w(weight volume).include? p.variant_unit }
-  validates_presence_of :variant_unit_name,
-                        if: -> p { p.variant_unit == 'items' }
+  validates :variant_unit, presence: true
+  validates :variant_unit_scale,
+            presence: { if: ->(p) { %w(weight volume).include? p.variant_unit } }
+  validates :variant_unit_name,
+            presence: { if: ->(p) { p.variant_unit == 'items' } }
 
-  after_initialize :set_available_on_to_now, :if => :new_record?
+  after_initialize :set_available_on_to_now, if: :new_record?
   before_validation :sanitize_permalink
   before_save :add_primary_taxon_to_taxons
   after_save :remove_previous_primary_taxon_from_taxons
@@ -40,14 +40,13 @@ Spree::Product.class_eval do
   after_save :update_units
   after_save :refresh_products_cache
 
-
   # -- Joins
   scope :with_order_cycles_outer, joins('LEFT OUTER JOIN spree_variants AS o_spree_variants ON (o_spree_variants.product_id = spree_products.id)').
     joins('LEFT OUTER JOIN exchange_variants AS o_exchange_variants ON (o_exchange_variants.variant_id = o_spree_variants.id)').
     joins('LEFT OUTER JOIN exchanges AS o_exchanges ON (o_exchanges.id = o_exchange_variants.exchange_id)').
     joins('LEFT OUTER JOIN order_cycles AS o_order_cycles ON (o_order_cycles.id = o_exchanges.order_cycle_id)')
 
-  scope :with_order_cycles_inner, joins(:variants_including_master => {:exchanges => :order_cycle})
+  scope :with_order_cycles_inner, joins(variants_including_master: { exchanges: :order_cycle })
 
   scope :visible_for, lambda { |enterprise|
     joins('LEFT OUTER JOIN spree_variants AS o_spree_variants ON (o_spree_variants.product_id = spree_products.id)').
@@ -56,9 +55,8 @@ Spree::Product.class_eval do
       select('DISTINCT spree_products.*')
   }
 
-
   # -- Scopes
-  scope :in_supplier, lambda { |supplier| where(:supplier_id => supplier) }
+  scope :in_supplier, lambda { |supplier| where(supplier_id: supplier) }
 
   # Products distributed via the given distributor through an OC
   scope :in_distributor, lambda { |distributor|
@@ -82,15 +80,17 @@ Spree::Product.class_eval do
   }
 
   # Products distributed by the given order cycle
-  scope :in_order_cycle, lambda { |order_cycle| with_order_cycles_inner.
-    merge(Exchange.outgoing).
-    where('order_cycles.id = ?', order_cycle) 
+  scope :in_order_cycle, lambda { |order_cycle|
+    with_order_cycles_inner.
+      merge(Exchange.outgoing).
+      where('order_cycles.id = ?', order_cycle)
   }
 
-  scope :in_an_active_order_cycle, lambda { with_order_cycles_inner.
-    merge(OrderCycle.active).
-    merge(Exchange.outgoing).
-    where('order_cycles.id IS NOT NULL') 
+  scope :in_an_active_order_cycle, lambda {
+    with_order_cycles_inner.
+      merge(OrderCycle.active).
+      merge(Exchange.outgoing).
+      where('order_cycles.id IS NOT NULL')
   }
 
   scope :by_producer, joins(:supplier).order('enterprises.name')
@@ -111,13 +111,12 @@ Spree::Product.class_eval do
     return where('spree_products.supplier_id IN (?)', [enterprise.id] | permitted_producer_ids)
   }
 
-
   # -- Methods
 
   # Called by Spree::Product::duplicate before saving.
-  def duplicate_extra(parent)
+  def duplicate_extra(_parent)
     # Spree sets the SKU to "COPY OF #{parent sku}".
-    self.master.sku = ''
+    master.sku = ''
   end
 
   def properties_including_inherited
@@ -129,8 +128,8 @@ Spree::Product.class_eval do
     end
 
     ps.
-      sort_by { |pp| pp.position }.
-      map { |pp| {id: pp.property.id, name: pp.property.presentation, value: pp.value} }
+      sort_by(&:position).
+      map { |pp| { id: pp.property.id, name: pp.property.presentation, value: pp.value } }
   end
 
   def in_distributor?(distributor)
@@ -178,7 +177,7 @@ Spree::Product.class_eval do
       OpenFoodNetwork::ProductsCache.product_deleted(self) do
         touch_distributors
 
-        ExchangeVariant.where('exchange_variants.variant_id IN (?)', self.variants_including_master.with_deleted).destroy_all
+        ExchangeVariant.where('exchange_variants.variant_id IN (?)', variants_including_master.with_deleted).destroy_all
 
         destroy_without_delete_from_order_cycles
       end
@@ -186,11 +185,9 @@ Spree::Product.class_eval do
   end
   alias_method_chain :destroy, :delete_from_order_cycles
 
-
   def refresh_products_cache
     OpenFoodNetwork::ProductsCache.product_changed self
   end
-
 
   private
 
@@ -225,10 +222,10 @@ Spree::Product.class_eval do
 
   def ensure_standard_variant
     if master.valid? && variants.empty?
-      variant = self.master.dup
+      variant = master.dup
       variant.product = self
       variant.is_master = false
-      self.variants << variant
+      variants << variant
     end
   end
 
@@ -250,7 +247,7 @@ Spree::Product.class_eval do
     # and will be destroyed
   rescue ActiveRecord::RecordInvalid
     master.errors.each do |att, error|
-      self.errors.add(att, error)
+      errors.add(att, error)
     end
     raise
   end

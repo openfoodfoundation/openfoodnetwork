@@ -10,7 +10,7 @@ describe Spree::Admin::ShippingMethodsController, type: :controller do
       login_as_admin
       expect(shipping_method.deleted_at).to be_nil
 
-      spree_delete :destroy, {"id" => shipping_method.id}
+      spree_delete :destroy, "id" => shipping_method.id
 
       expect(shipping_method.reload.deleted_at).not_to be_nil
     end
@@ -23,7 +23,7 @@ describe Spree::Admin::ShippingMethodsController, type: :controller do
       login_as_admin
       expect(order.shipping_method.deleted_at).to be_nil
 
-      spree_delete :destroy, {"id" => order.shipping_method.id}
+      spree_delete :destroy, "id" => order.shipping_method.id
 
       expect(order.shipping_method.reload.deleted_at).to be_nil
     end

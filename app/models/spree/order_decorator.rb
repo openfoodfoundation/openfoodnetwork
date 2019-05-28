@@ -3,7 +3,7 @@ require 'open_food_network/feature_toggle'
 require 'open_food_network/tag_rule_applicator'
 require 'concerns/order_shipment'
 
-ActiveSupport::Notifications.subscribe('spree.order.contents_changed') do |name, start, finish, id, payload|
+ActiveSupport::Notifications.subscribe('spree.order.contents_changed') do |_name, _start, _finish, _id, payload|
   payload[:order].reload.update_distribution_charge!
 end
 
@@ -20,12 +20,12 @@ Spree::Order.class_eval do
   #   This change is done in Spree 2.1 (see https://github.com/spree/spree/commit/3fa44165c7825f79a2fa4eb79b99dc29944c5d55)
   #   When OFN gets to Spree 2.1, this can be removed
   has_many :adjustments,
-    as: :adjustable,
-    dependent: :destroy,
-    order: "#{Spree::Adjustment.table_name}.created_at ASC"
+           as: :adjustable,
+           dependent: :destroy,
+           order: "#{Spree::Adjustment.table_name}.created_at ASC"
 
   validates :customer, presence: true, if: :require_customer?
-  validate :products_available_from_new_distribution, :if => lambda { distributor_id_changed? || order_cycle_id_changed? }
+  validate :products_available_from_new_distribution, if: lambda { distributor_id_changed? || order_cycle_id_changed? }
   validate :disallow_guest_order
   attr_accessible :order_cycle_id, :distributor_id, :customer_id
 
@@ -126,11 +126,10 @@ Spree::Order.class_eval do
 
     # Notify bugsnag if we get line items with a quantity of zero
     if quantity == 0
-      Bugsnag.notify(RuntimeError.new("Zero Quantity Line Item"), {
-        current_item: current_item.as_json,
-        line_items: line_items.map(&:id),
-        variant: variant.as_json
-      })
+      Bugsnag.notify(RuntimeError.new("Zero Quantity Line Item"),
+                     current_item: current_item.as_json,
+                     line_items: line_items.map(&:id),
+                     variant: variant.as_json)
     end
 
     if current_item
@@ -188,7 +187,7 @@ Spree::Order.class_eval do
 
   def set_distributor!(distributor)
     self.distributor = distributor
-    self.order_cycle = nil unless self.order_cycle.andand.has_distributor? distributor
+    self.order_cycle = nil unless order_cycle.andand.has_distributor? distributor
     save!
   end
 
@@ -279,11 +278,11 @@ Spree::Order.class_eval do
 
   def tax_adjustments
     adjustments.with_tax +
-      line_items.includes(:adjustments).map {|li| li.adjustments.with_tax }.flatten
+      line_items.includes(:adjustments).map { |li| li.adjustments.with_tax }.flatten
   end
 
   def tax_adjustment_totals
-    tax_adjustments.each_with_object(Hash.new) do |adjustment, hash|
+    tax_adjustments.each_with_object({}) do |adjustment, hash|
       tax_rates = TaxRateFinder.tax_rates_of(adjustment)
       tax_rates_hash = Hash[tax_rates.collect do |tax_rate|
         tax_amount = tax_rates.one? ? adjustment.included_tax : tax_rate.compute_tax(adjustment.amount)
@@ -301,12 +300,12 @@ Spree::Order.class_eval do
   end
 
   def has_taxes_included
-    not line_items.with_tax.empty?
+    !line_items.with_tax.empty?
   end
 
   # Overrride of Spree method, that allows us to send separate confirmation emails to user and shop owners
   def deliver_order_confirmation_email
-    unless subscription.present?
+    if subscription.blank?
       Delayed::Job.enqueue ConfirmOrderJob.new(id)
     end
   end

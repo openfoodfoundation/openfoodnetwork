@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-feature %q{
+feature '
   As an Administrator
   I want to be able to manage orders in bulk
-} , js: true do
+', js: true do
   include AdminHelper
   include AuthenticationWorkflow
   include WebHelper
@@ -48,9 +48,9 @@ feature %q{
       end
 
       it "displays a column for user's full name" do
-        expect(page).to have_selector "th.full_name", text: "NAME", :visible => true
-        expect(page).to have_selector "td.full_name", text: o1.bill_address.full_name, :visible => true
-        expect(page).to have_selector "td.full_name", text: "", :visible => true
+        expect(page).to have_selector "th.full_name", text: "NAME", visible: true
+        expect(page).to have_selector "td.full_name", text: o1.bill_address.full_name, visible: true
+        expect(page).to have_selector "td.full_name", text: "", visible: true
       end
 
       it "displays a column for order date" do
@@ -60,27 +60,27 @@ feature %q{
       end
 
       it "displays a column for producer" do
-        expect(page).to have_selector "th.producer", text: "PRODUCER", :visible => true
-        expect(page).to have_selector "td.producer", text: li1.product.supplier.name, :visible => true
-        expect(page).to have_selector "td.producer", text: li2.product.supplier.name, :visible => true
+        expect(page).to have_selector "th.producer", text: "PRODUCER", visible: true
+        expect(page).to have_selector "td.producer", text: li1.product.supplier.name, visible: true
+        expect(page).to have_selector "td.producer", text: li2.product.supplier.name, visible: true
       end
 
       it "displays a column for variant description, which shows only product name when options text is blank" do
-        expect(page).to have_selector "th.variant", text: "PRODUCT: UNIT", :visible => true
-        expect(page).to have_selector "td.variant", text: li1.product.name, :visible => true
-        expect(page).to have_selector "td.variant", text: (li2.product.name + ": " + li2.variant.options_text), :visible => true
+        expect(page).to have_selector "th.variant", text: "PRODUCT: UNIT", visible: true
+        expect(page).to have_selector "td.variant", text: li1.product.name, visible: true
+        expect(page).to have_selector "td.variant", text: (li2.product.name + ": " + li2.variant.options_text), visible: true
       end
 
       it "displays a field for quantity" do
-        expect(page).to have_selector "th.quantity", text: "QUANTITY", :visible => true
-        expect(page).to have_field "quantity", with: li1.quantity.to_s, :visible => true
-        expect(page).to have_field "quantity", with: li2.quantity.to_s, :visible => true
+        expect(page).to have_selector "th.quantity", text: "QUANTITY", visible: true
+        expect(page).to have_field "quantity", with: li1.quantity.to_s, visible: true
+        expect(page).to have_field "quantity", with: li2.quantity.to_s, visible: true
       end
 
       it "displays a column for max quantity" do
-        expect(page).to have_selector "th.max", text: "MAX", :visible => true
-        expect(page).to have_selector "td.max", text: li1.max_quantity.to_s, :visible => true
-        expect(page).to have_selector "td.max", text: li2.max_quantity.to_s, :visible => true
+        expect(page).to have_selector "th.max", text: "MAX", visible: true
+        expect(page).to have_selector "td.max", text: li1.max_quantity.to_s, visible: true
+        expect(page).to have_selector "td.max", text: li2.max_quantity.to_s, visible: true
       end
     end
 
@@ -126,7 +126,7 @@ feature %q{
 
     context "tracking changes" do
       let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
-      let!(:li1) { create(:line_item_with_shipment, order: o1, :quantity => 5 ) }
+      let!(:li1) { create(:line_item_with_shipment, order: o1, quantity: 5 ) }
 
       before :each do
         visit_bulk_order_management
@@ -134,7 +134,7 @@ feature %q{
 
       it "adds the class 'ng-dirty' to input elements when value is altered" do
         expect(page).to have_no_css "input[name='quantity'].ng-dirty"
-        fill_in "quantity", :with => 2
+        fill_in "quantity", with: 2
         expect(page).to have_css "input[name='quantity'].ng-dirty"
       end
     end
@@ -150,7 +150,7 @@ feature %q{
       context "when acceptable data is sent to the server" do
         it "displays an update button which submits pending changes" do
           expect(page).to have_no_selector "#save-bar"
-          fill_in "quantity", :with => 2
+          fill_in "quantity", with: 2
           expect(page).to have_selector "input[name='quantity'].ng-dirty"
           expect(page).to have_selector "#save-bar", text: "You have unsaved changes"
           click_button "Save Changes"
@@ -163,7 +163,7 @@ feature %q{
         it "displays an update button which submits pending changes" do
           expect(page).to have_no_selector "#save-bar"
           line_item = order.line_items.first
-          fill_in "quantity", :with => line_item.variant.on_hand + line_item.quantity + 10
+          fill_in "quantity", with: line_item.variant.on_hand + line_item.quantity + 10
           expect(page).to have_selector "input[name='quantity'].ng-dirty"
           expect(page).to have_selector "#save-bar", text: "You have unsaved changes"
           click_button "Save Changes"
@@ -183,9 +183,9 @@ feature %q{
     let!(:p1) { create(:product_with_option_types, group_buy: true, group_buy_unit_size: 5000, variant_unit: "weight", variants: [create(:variant, unit_value: 1000)] ) }
     let!(:v1) { p1.variants.first }
     let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
-    let!(:li1) { create(:line_item_with_shipment, order: o1, variant: v1, :quantity => 5, :final_weight_volume => 1000, price: 10.00 ) }
+    let!(:li1) { create(:line_item_with_shipment, order: o1, variant: v1, quantity: 5, final_weight_volume: 1000, price: 10.00 ) }
 
-    before { v1.update_attribute(:on_hand, 100)}
+    before { v1.update_attribute(:on_hand, 100) }
 
     context "modifying the weight/volume of a line item" do
       it "price is altered" do
@@ -193,7 +193,7 @@ feature %q{
         toggle_columns "Weight/Volume", "Price"
         within "tr#li_#{li1.id}" do
           expect(page).to have_field "price", with: "50.00"
-          fill_in "final_weight_volume", :with => 2000
+          fill_in "final_weight_volume", with: 2000
           expect(page).to have_field "price", with: "100.00"
         end
         click_button "Save Changes"
@@ -209,9 +209,9 @@ feature %q{
         visit_bulk_order_management
         toggle_columns "Price"
         within "tr#li_#{li1.id}" do
-          expect(page).to have_field "price", with: "#{format("%.2f",li1.price * 5)}"
-          fill_in "quantity", :with => 6
-          expect(page).to have_field "price", with: "#{format("%.2f",li1.price * 6)}"
+          expect(page).to have_field "price", with: format('%.2f', li1.price * 5).to_s
+          fill_in "quantity", with: 6
+          expect(page).to have_field "price", with: format('%.2f', li1.price * 6).to_s
         end
       end
     end
@@ -221,9 +221,9 @@ feature %q{
         visit_bulk_order_management
         toggle_columns "Weight/Volume"
         within "tr#li_#{li1.id}" do
-          expect(page).to have_field "final_weight_volume", with: "#{li1.final_weight_volume.round}"
-          fill_in "quantity", :with => 6
-          expect(page).to have_field "final_weight_volume", with: "#{((li1.final_weight_volume*6)/5).round}"
+          expect(page).to have_field "final_weight_volume", with: li1.final_weight_volume.round.to_s
+          fill_in "quantity", with: 6
+          expect(page).to have_field "final_weight_volume", with: ((li1.final_weight_volume * 6) / 5).round.to_s
         end
       end
     end
@@ -232,21 +232,21 @@ feature %q{
       it "shows a column display toggle button, which shows a list of columns when clicked" do
         visit_bulk_order_management
 
-        expect(page).to have_selector "th", :text => "NAME"
+        expect(page).to have_selector "th", text: "NAME"
         expect(page).to have_selector "th", text: I18n.t("admin.orders.bulk_management.order_date").upcase
-        expect(page).to have_selector "th", :text => "PRODUCER"
-        expect(page).to have_selector "th", :text => "PRODUCT: UNIT"
-        expect(page).to have_selector "th", :text => "QUANTITY"
-        expect(page).to have_selector "th", :text => "MAX"
+        expect(page).to have_selector "th", text: "PRODUCER"
+        expect(page).to have_selector "th", text: "PRODUCT: UNIT"
+        expect(page).to have_selector "th", text: "QUANTITY"
+        expect(page).to have_selector "th", text: "MAX"
 
         toggle_columns "Producer"
 
-        expect(page).to have_no_selector "th", :text => "PRODUCER"
-        expect(page).to have_selector "th", :text => "NAME"
+        expect(page).to have_no_selector "th", text: "PRODUCER"
+        expect(page).to have_selector "th", text: "NAME"
         expect(page).to have_selector "th", text: I18n.t("admin.orders.bulk_management.order_date").upcase
-        expect(page).to have_selector "th", :text => "PRODUCT: UNIT"
-        expect(page).to have_selector "th", :text => "QUANTITY"
-        expect(page).to have_selector "th", :text => "MAX"
+        expect(page).to have_selector "th", text: "PRODUCT: UNIT"
+        expect(page).to have_selector "th", text: "QUANTITY"
+        expect(page).to have_selector "th", text: "MAX"
       end
     end
 
@@ -435,7 +435,7 @@ feature %q{
         expect(page).to have_selector "tr#li_#{li1.id}"
         expect(page).to have_selector "tr#li_#{li2.id}"
         expect(page).to have_selector "tr#li_#{li3.id}"
-        fill_in "quick_search", :with => o1.email
+        fill_in "quick_search", with: o1.email
         expect(page).to have_selector "tr#li_#{li1.id}"
         expect(page).to have_no_selector "tr#li_#{li2.id}"
         expect(page).to have_no_selector "tr#li_#{li3.id}"
@@ -447,10 +447,10 @@ feature %q{
       let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.today - 7.days) }
       let!(:o3) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now.end_of_day) }
       let!(:o4) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now.end_of_day + 1.second) }
-      let!(:li1) { create(:line_item_with_shipment, order: o1, :quantity => 1 ) }
-      let!(:li2) { create(:line_item_with_shipment, order: o2, :quantity => 2 ) }
-      let!(:li3) { create(:line_item_with_shipment, order: o3, :quantity => 3 ) }
-      let!(:li4) { create(:line_item_with_shipment, order: o4, :quantity => 4 ) }
+      let!(:li1) { create(:line_item_with_shipment, order: o1, quantity: 1 ) }
+      let!(:li2) { create(:line_item_with_shipment, order: o2, quantity: 2 ) }
+      let!(:li3) { create(:line_item_with_shipment, order: o3, quantity: 3 ) }
+      let!(:li4) { create(:line_item_with_shipment, order: o4, quantity: 4 ) }
 
       before :each do
         visit_bulk_order_management
@@ -492,13 +492,13 @@ feature %q{
       context "when the form is dirty" do
         before do
           within("tr#li_#{li2.id} td.quantity") do
-            page.fill_in "quantity", :with => (li2.quantity + 1).to_s
+            page.fill_in "quantity", with: (li2.quantity + 1).to_s
           end
         end
 
         it "shows a dialog and ignores changes when confirm dialog is accepted" do
           page.driver.accept_modal :confirm, text: "Unsaved changes exist and will be lost if you continue." do
-            fill_in "start_date_filter", :with => (Date.current - 9).strftime("%F %T")
+            fill_in "start_date_filter", with: (Date.current - 9).strftime("%F %T")
           end
           expect(page).to have_no_selector "#save-bar"
           within("tr#li_#{li2.id} td.quantity") do
@@ -508,7 +508,7 @@ feature %q{
 
         it "shows a dialog and keeps changes when confirm dialog is rejected" do
           page.driver.dismiss_modal :confirm, text: "Unsaved changes exist and will be lost if you continue." do
-            fill_in "start_date_filter", :with => (Date.current - 9).strftime("%F %T")
+            fill_in "start_date_filter", with: (Date.current - 9).strftime("%F %T")
           end
           expect(page).to have_selector "#save-bar"
           within("tr#li_#{li2.id} td.quantity") do
@@ -556,7 +556,7 @@ feature %q{
             check "bulk"
           end
           find("div#bulk-actions-dropdown").click
-          find("div#bulk-actions-dropdown div.menu_item", :text => "Delete Selected" ).click
+          find("div#bulk-actions-dropdown div.menu_item", text: "Delete Selected" ).click
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_no_selector "tr#li_#{li2.id}"
         end
@@ -579,7 +579,7 @@ feature %q{
           fill_in "quick_search", with: o1.number
           expect(page).to have_no_selector "tr#li_#{li2.id}"
           find("div#bulk-actions-dropdown").click
-          find("div#bulk-actions-dropdown div.menu_item", :text => "Delete Selected" ).click
+          find("div#bulk-actions-dropdown div.menu_item", text: "Delete Selected" ).click
           expect(page).to have_no_selector "tr#li_#{li1.id}"
           fill_in "quick_search", with: ''
           wait_until { request_monitor_finished 'LineItemsCtrl' }
@@ -602,7 +602,7 @@ feature %q{
         end
 
         it "shows an edit button for line_items, which takes the user to the standard edit page for the order" do
-          expect(page).to have_selector "a.edit-order", :count => 2
+          expect(page).to have_selector "a.edit-order", count: 2
 
           # Shows a confirm dialog when unsaved changes exist
           page.driver.dismiss_modal :confirm, text: "Unsaved changes exist and will be lost if you continue." do
@@ -637,14 +637,14 @@ feature %q{
         end
 
         it "removes a line item when the relevant delete button is clicked" do
-          expect(page).to have_selector "a.delete-line-item", :count => 2
+          expect(page).to have_selector "a.delete-line-item", count: 2
           accept_alert do
             find("tr#li_#{li1.id} a.delete-line-item").click
           end
-          expect(page).to have_no_selector "a.delete-line-item", :count => 2
-          expect(page).to have_selector "a.delete-line-item", :count => 1
+          expect(page).to have_no_selector "a.delete-line-item", count: 2
+          expect(page).to have_selector "a.delete-line-item", count: 1
           visit_bulk_order_management
-          expect(page).to have_selector "a.delete-line-item", :count => 1
+          expect(page).to have_selector "a.delete-line-item", count: 1
         end
       end
     end
@@ -668,7 +668,7 @@ feature %q{
       end
 
       it "displays group buy calc box" do
-        expect(page).to have_selector "div#group_buy_calculation", :visible => true
+        expect(page).to have_selector "div#group_buy_calculation", visible: true
 
         within "div#group_buy_calculation" do
           expect(page).to have_text "Group Buy Unit Size"
@@ -681,19 +681,19 @@ feature %q{
           expect(page).to have_text "0.8"
           expect(page).to have_text "Max Fulfilled Units"
           expect(page).to have_text "1.8"
-          expect(page).to have_selector "div.shared_resource", :visible => true
+          expect(page).to have_selector "div.shared_resource", visible: true
           within "div.shared_resource" do
-            expect(page).to have_selector "span", :text => "Shared Resource?"
+            expect(page).to have_selector "span", text: "Shared Resource?"
             expect(page).to have_selector "input#shared_resource"
           end
         end
       end
 
       it "all line items of the same variant" do
-        expect(page).to have_no_selector "tr#li_#{li1.id}", :visible => true
-        expect(page).to have_no_selector "tr#li_#{li2.id}", :visible => true
-        expect(page).to have_selector "tr#li_#{li3.id}", :visible => true
-        expect(page).to have_selector "tr#li_#{li4.id}", :visible => true
+        expect(page).to have_no_selector "tr#li_#{li1.id}", visible: true
+        expect(page).to have_no_selector "tr#li_#{li2.id}", visible: true
+        expect(page).to have_selector "tr#li_#{li3.id}", visible: true
+        expect(page).to have_selector "tr#li_#{li4.id}", visible: true
       end
 
       context "clicking 'Clear' in group buy box" do
@@ -702,11 +702,11 @@ feature %q{
         end
 
         it "shows all products and clears group buy box" do
-          expect(page).to have_no_selector "div#group_buy_calculation", :visible => true
-          expect(page).to have_selector "tr#li_#{li1.id}", :visible => true
-          expect(page).to have_selector "tr#li_#{li2.id}", :visible => true
-          expect(page).to have_selector "tr#li_#{li3.id}", :visible => true
-          expect(page).to have_selector "tr#li_#{li4.id}", :visible => true
+          expect(page).to have_no_selector "div#group_buy_calculation", visible: true
+          expect(page).to have_selector "tr#li_#{li1.id}", visible: true
+          expect(page).to have_selector "tr#li_#{li2.id}", visible: true
+          expect(page).to have_selector "tr#li_#{li3.id}", visible: true
+          expect(page).to have_selector "tr#li_#{li4.id}", visible: true
         end
       end
     end
@@ -739,8 +739,8 @@ feature %q{
     it "shows only line item from orders that I distribute, and not those that I supply" do
       visit_bulk_order_management
 
-      expect(page).to have_selector "tr#li_#{line_item_distributed.id}", :visible => true
-      expect(page).to have_no_selector "tr#li_#{line_item_not_distributed.id}", :visible => true
+      expect(page).to have_selector "tr#li_#{line_item_distributed.id}", visible: true
+      expect(page).to have_no_selector "tr#li_#{line_item_not_distributed.id}", visible: true
     end
   end
 

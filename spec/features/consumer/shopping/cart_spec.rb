@@ -49,8 +49,10 @@ feature "full-page cart", js: true do
 
     describe "admin and handling flat fees" do
       context "when there are fees" do
-        let(:handling_fee) { create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 1),
-          enterprise: order_cycle.coordinator, fee_type: 'admin') }
+        let(:handling_fee) {
+          create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 1),
+                                  enterprise: order_cycle.coordinator, fee_type: 'admin')
+        }
 
         before do
           add_enterprise_fee handling_fee
@@ -85,8 +87,10 @@ feature "full-page cart", js: true do
 
     describe "admin weight calculated fees" do
       context "order with 2 line items" do
-        let(:admin_fee) { create(:enterprise_fee, calculator: Calculator::Weight.new(preferred_per_kg: 1),
-          enterprise: order_cycle.coordinator, fee_type: 'admin') }
+        let(:admin_fee) {
+          create(:enterprise_fee, calculator: Calculator::Weight.new(preferred_per_kg: 1),
+                                  enterprise: order_cycle.coordinator, fee_type: 'admin')
+        }
 
         before do
           product_with_fee.variants.first.update_attributes(unit_value: '2000.0')
@@ -132,7 +136,7 @@ feature "full-page cart", js: true do
 
       it "prevents me from entering an invalid value" do
         # Given we have 2 on hand, and we've loaded the page after that fact
-        variant.update_attributes!({ on_hand: 2, on_demand: false })
+        variant.update_attributes!(on_hand: 2, on_demand: false)
         visit spree.cart_path
 
         accept_alert 'Insufficient stock available, only 2 remaining' do

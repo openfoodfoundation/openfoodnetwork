@@ -44,7 +44,7 @@ describe CheckoutController, type: :controller do
       allow(order).to receive(:distributor).and_return(distributor)
       order.order_cycle = order_cycle
 
-      allow(OrderCycleDistributedVariants).to receive(:new).with(order_cycle, distributor).and_return(order_cycle_distributed_variants)      
+      allow(OrderCycleDistributedVariants).to receive(:new).with(order_cycle, distributor).and_return(order_cycle_distributed_variants)
     end
 
     it "redirects when some items are out of stock" do
@@ -124,17 +124,17 @@ describe CheckoutController, type: :controller do
 
       it "does not fail to update" do
         expect(controller).to_not receive(:clear_ship_address)
-        spree_post :update, order: {shipping_method_id: test_shipping_method_id}
+        spree_post :update, order: { shipping_method_id: test_shipping_method_id }
       end
 
       it "does not send shipping_method_id to the order model as an attribute" do
         expect(order).to receive(:update_attributes).with({})
-        spree_post :update, order: {shipping_method_id: test_shipping_method_id}
+        spree_post :update, order: { shipping_method_id: test_shipping_method_id }
       end
 
       it "selects the shipping_method in the order" do
         expect(order).to receive(:select_shipping_method).with(test_shipping_method_id)
-        spree_post :update, order: {shipping_method_id: test_shipping_method_id}
+        spree_post :update, order: { shipping_method_id: test_shipping_method_id }
       end
     end
 
@@ -188,14 +188,14 @@ describe CheckoutController, type: :controller do
     it "returns errors" do
       spree_post :update, format: :json, order: {}
       expect(response.status).to eq(400)
-      expect(response.body).to eq({errors: assigns[:order].errors, flash: {}}.to_json)
+      expect(response.body).to eq({ errors: assigns[:order].errors, flash: {} }.to_json)
     end
 
     it "returns flash" do
       allow(order).to receive(:update_attributes).and_return true
       allow(order).to receive(:next).and_return false
       spree_post :update, format: :json, order: {}
-      expect(response.body).to eq({errors: assigns[:order].errors, flash: {error: "Payment could not be processed, please check the details you entered"}}.to_json)
+      expect(response.body).to eq({ errors: assigns[:order].errors, flash: { error: "Payment could not be processed, please check the details you entered" } }.to_json)
     end
 
     it "returns order confirmation url on success" do
@@ -207,7 +207,7 @@ describe CheckoutController, type: :controller do
 
       spree_post :update, format: :json, order: {}
       expect(response.status).to eq(200)
-      expect(response.body).to eq({path: spree.order_path(order)}.to_json)
+      expect(response.body).to eq({ path: spree.order_path(order) }.to_json)
     end
 
     describe "stale object handling" do
@@ -256,7 +256,7 @@ describe CheckoutController, type: :controller do
       expect(Spree::PaymentMethod).to receive(:find).with(payment_method.id.to_s) { payment_method }
       allow(order).to receive(:update_attributes) { true }
       allow(order).to receive(:state) { "payment" }
-      spree_post :update, order: {payments_attributes: [{payment_method_id: payment_method.id}]}
+      spree_post :update, order: { payments_attributes: [{ payment_method_id: payment_method.id }] }
     end
   end
 

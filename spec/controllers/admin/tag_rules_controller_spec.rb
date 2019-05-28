@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Admin::TagRulesController, type: :controller do
-
   describe "destroy" do
     context "json" do
       let(:format) { :json }
@@ -29,7 +28,7 @@ describe Admin::TagRulesController, type: :controller do
           allow(controller).to receive(:spree_current_user) { enterprise.owner }
         end
 
-         it { expect{ spree_delete :destroy, params }.to change{TagRule.count}.by(-1) }
+        it { expect{ spree_delete :destroy, params }.to change{ TagRule.count }.by(-1) }
       end
     end
   end

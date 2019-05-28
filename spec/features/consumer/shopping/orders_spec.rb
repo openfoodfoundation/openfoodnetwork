@@ -15,11 +15,10 @@ feature "Order Management", js: true do
 
     let!(:order) do
       create(:order_with_credit_payment,
-        customer: customer,
-        user: user,
-        distributor: distributor,
-        order_cycle: order_cycle
-      )
+             customer: customer,
+             user: user,
+             distributor: distributor,
+             order_cycle: order_cycle)
     end
 
     before do

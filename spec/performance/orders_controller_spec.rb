@@ -17,12 +17,12 @@ describe Spree::OrdersController, type: :controller, performance: true do
   describe "adding products to cart" do
     it "adds products to cart" do
       puts "Pre-populating first product"
-      spree_post :populate, variants: {products[0].variants.first.id => 1}
+      spree_post :populate, variants: { products[0].variants.first.id => 1 }
 
       result = Benchmark.measure do
         (1..num_products).each do |num_products|
           puts "Populating #{num_products} products"
-          variants = Hash[ products.map { |p| [p.variants.first.id, 1] }.first(num_products) ]
+          variants = Hash[products.map { |p| [p.variants.first.id, 1] }.first(num_products)]
           spree_post :populate, variants: variants
         end
       end

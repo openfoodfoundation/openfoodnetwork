@@ -17,10 +17,10 @@ Spree::OrderMailer.class_eval do
     @order = find_order(order_or_order_id)
     I18n.with_locale valid_locale(@order.user) do
       subject = mail_subject(t('spree.order_mailer.confirm_email.subject'), resend)
-      mail(:to => @order.email,
-           :from => from_address,
-           :subject => subject,
-           :reply_to => @order.distributor.contact.email)
+      mail(to: @order.email,
+           from: from_address,
+           subject: subject,
+           reply_to: @order.distributor.contact.email)
     end
   end
 
@@ -28,9 +28,9 @@ Spree::OrderMailer.class_eval do
     @order = find_order(order_or_order_id)
     I18n.with_locale valid_locale(@order.user) do
       subject = mail_subject(t('spree.order_mailer.confirm_email.subject'), resend)
-      mail(:to => @order.distributor.contact.email,
-           :from => from_address,
-           :subject => subject)
+      mail(to: @order.distributor.contact.email,
+           from: from_address,
+           subject: subject)
     end
   end
 

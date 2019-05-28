@@ -1,12 +1,12 @@
 require 'open_food_network/scope_variant_to_hub'
 
 class OrderCycle < ActiveRecord::Base
-  belongs_to :coordinator, :class_name => 'Enterprise'
+  belongs_to :coordinator, class_name: 'Enterprise'
 
   has_many :coordinator_fee_refs, class_name: 'CoordinatorFee'
   has_many :coordinator_fees, through: :coordinator_fee_refs, source: :enterprise_fee
 
-  has_many :exchanges, :dependent => :destroy
+  has_many :exchanges, dependent: :destroy
 
   # These scope names are prepended with "cached_" because there are existing accessor methods
   # :incoming_exchanges and :outgoing_exchanges.
@@ -20,7 +20,7 @@ class OrderCycle < ActiveRecord::Base
 
   attr_accessor :incoming_exchanges, :outgoing_exchanges
 
-  validates_presence_of :name, :coordinator_id
+  validates :name, :coordinator_id, presence: true
   validate :orders_close_at_after_orders_open_at?
 
   after_save :refresh_products_cache
@@ -119,13 +119,13 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def clone!
-    oc = self.dup
+    oc = dup
     oc.name = I18n.t("models.order_cycle.cloned_order_cycle_name", order_cycle: oc.name)
     oc.orders_open_at = oc.orders_close_at = nil
-    oc.coordinator_fee_ids = self.coordinator_fee_ids
-    oc.preferred_product_selection_from_coordinator_inventory_only = self.preferred_product_selection_from_coordinator_inventory_only
+    oc.coordinator_fee_ids = coordinator_fee_ids
+    oc.preferred_product_selection_from_coordinator_inventory_only = preferred_product_selection_from_coordinator_inventory_only
     oc.save!
-    self.exchanges.each { |e| e.clone!(oc) }
+    exchanges.each { |e| e.clone!(oc) }
     oc.reload
   end
 
@@ -138,15 +138,15 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def supplied_variants
-    self.exchanges.incoming.map(&:variants).flatten.uniq.reject(&:deleted?)
+    exchanges.incoming.map(&:variants).flatten.uniq.reject(&:deleted?)
   end
 
   def distributed_variants
-    self.exchanges.outgoing.map(&:variants).flatten.uniq.reject(&:deleted?)
+    exchanges.outgoing.map(&:variants).flatten.uniq.reject(&:deleted?)
   end
 
   def variants_distributed_by(distributor)
-    return Spree::Variant.where("1=0") unless distributor.present?
+    return Spree::Variant.where("1=0") if distributor.blank?
     Spree::Variant.
       joins(:exchanges).
       merge(distributor.inventory_variants).
@@ -160,15 +160,15 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def products
-    self.variants.map(&:product).uniq
+    variants.map(&:product).uniq
   end
 
   def has_distributor?(distributor)
-    self.distributors.include? distributor
+    distributors.include? distributor
   end
 
   def has_variant?(variant)
-    self.variants.include? variant
+    variants.include? variant
   end
 
   def dated?
@@ -176,20 +176,20 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def undated?
-    self.orders_open_at.nil? || self.orders_close_at.nil?
+    orders_open_at.nil? || orders_close_at.nil?
   end
 
   def upcoming?
-    self.orders_open_at && Time.zone.now < self.orders_open_at
+    orders_open_at && Time.zone.now < orders_open_at
   end
 
   def open?
-    self.orders_open_at && self.orders_close_at &&
-      Time.zone.now > self.orders_open_at && Time.zone.now < self.orders_close_at
+    orders_open_at && orders_close_at &&
+      Time.zone.now > orders_open_at && Time.zone.now < orders_close_at
   end
 
   def closed?
-    self.orders_close_at && Time.zone.now > self.orders_close_at
+    orders_close_at && Time.zone.now > orders_close_at
   end
 
   def exchange_for_distributor(distributor)

@@ -3,7 +3,6 @@ module Spree
     GeneralSettingsController.class_eval do
     end
 
-
     module GeneralSettingsEditPreferences
       def edit
         super

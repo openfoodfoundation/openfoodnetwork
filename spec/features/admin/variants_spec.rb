@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-feature %q{
+feature '
     As an admin
     I want to manage product variants
-} do
+' do
   include AuthenticationWorkflow
   include WebHelper
 
@@ -24,8 +24,7 @@ feature %q{
     page.should have_content "Variant \"#{p.name}\" has been successfully created!"
   end
 
-
-  scenario "editing unit value and description for a variant", js:true do
+  scenario "editing unit value and description for a variant", js: true do
     # Given a product with unit-related option types, with a variant
     p = create(:simple_product, variant_unit: "weight", variant_unit_scale: "1")
     v = p.variants.first
@@ -50,7 +49,7 @@ feature %q{
     fill_in "unit_value_human", with: "123"
     fill_in "variant_unit_description", with: "bar"
     click_button 'Update'
-    page.should have_content %Q(Variant "#{p.name}" has been successfully updated!)
+    page.should have_content %(Variant "#{p.name}" has been successfully updated!)
 
     # Then the unit value and description should have been saved
     v.reload
@@ -58,7 +57,7 @@ feature %q{
     v.unit_description.should == 'bar'
   end
 
-  describe "editing on hand and on demand values", js:true do
+  describe "editing on hand and on demand values", js: true do
     let(:product) { create(:simple_product) }
     let(:variant) { product.variants.first }
 
@@ -74,7 +73,7 @@ feature %q{
 
       fill_in "variant_on_hand", with: "123"
       click_button 'Update'
-      page.should have_content %Q(Variant "#{product.name}" has been successfully updated!)
+      page.should have_content %(Variant "#{product.name}" has been successfully updated!)
     end
 
     it "allows changing the on_demand value" do
@@ -85,7 +84,7 @@ feature %q{
       page.should have_field "variant_on_hand", with: "Infinity", disabled: true
 
       click_button 'Update'
-      page.should have_content %Q(Variant "#{product.name}" has been successfully updated!)
+      page.should have_content %(Variant "#{product.name}" has been successfully updated!)
     end
 
     it "memorizes on_hand value previously entered if enabling and disabling on_demand" do
@@ -114,12 +113,11 @@ feature %q{
 
     page.should_not have_selector "tr#spree_variant_#{v.id}"
 
-
     v.reload
     v.deleted_at.should_not be_nil
   end
 
-  scenario "editing display name for a variant", js:true do
+  scenario "editing display name for a variant", js: true do
     p = create(:simple_product)
     v = p.variants.first
 
@@ -136,7 +134,7 @@ feature %q{
     fill_in "variant_display_name", with: "Display Name"
     fill_in "variant_display_as", with: "Display As This"
     click_button 'Update'
-    page.should have_content %Q(Variant "#{p.name}" has been successfully updated!)
+    page.should have_content %(Variant "#{p.name}" has been successfully updated!)
 
     # Then the displayed values should have been saved
     v.reload

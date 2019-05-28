@@ -20,7 +20,7 @@ describe Admin::BulkLineItemsController, type: :controller do
       before { allow(controller).to receive_messages spree_current_user: create_enterprise_user }
 
       it "should deny me access to the index action" do
-        spree_get :index, :format => :json
+        spree_get :index, format: :json
         expect(response).to redirect_to spree.unauthorized_path
       end
     end
@@ -32,7 +32,7 @@ describe Admin::BulkLineItemsController, type: :controller do
 
       context "when no ransack params are passed in" do
         before do
-          spree_get :index, :format => :json
+          spree_get :index, format: :json
         end
 
         it "retrieves a list of line_items with appropriate attributes, including line items with appropriate attributes" do
@@ -57,7 +57,7 @@ describe Admin::BulkLineItemsController, type: :controller do
 
       context "when ransack params are passed in for line items" do
         before do
-          spree_get :index, :format => :json, q: { order_id_eq: order2.id }
+          spree_get :index, format: :json, q: { order_id_eq: order2.id }
         end
 
         it "retrives a list of line items which match the criteria" do
@@ -67,7 +67,7 @@ describe Admin::BulkLineItemsController, type: :controller do
 
       context "when ransack params are passed in for orders" do
         before do
-          spree_get :index, :format => :json, q: { order: { completed_at_gt: 2.hours.ago } }
+          spree_get :index, format: :json, q: { order: { completed_at_gt: 2.hours.ago } }
         end
 
         it "retrives a list of line items whose orders match the criteria" do
@@ -91,7 +91,7 @@ describe Admin::BulkLineItemsController, type: :controller do
       context "producer enterprise" do
         before do
           allow(controller).to receive_messages spree_current_user: supplier.owner
-          spree_get :index, :format => :json
+          spree_get :index, format: :json
         end
 
         it "does not display line items for which my enterprise is a supplier" do
@@ -102,7 +102,7 @@ describe Admin::BulkLineItemsController, type: :controller do
       context "coordinator enterprise" do
         before do
           allow(controller).to receive_messages spree_current_user: coordinator.owner
-          spree_get :index, :format => :json
+          spree_get :index, format: :json
         end
 
         it "retrieves a list of line_items" do
@@ -114,7 +114,7 @@ describe Admin::BulkLineItemsController, type: :controller do
       context "hub enterprise" do
         before do
           allow(controller).to receive_messages spree_current_user: distributor1.owner
-          spree_get :index, :format => :json
+          spree_get :index, format: :json
         end
 
         it "retrieves a list of line_items" do

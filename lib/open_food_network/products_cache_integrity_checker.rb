@@ -15,7 +15,6 @@ module OpenFoodNetwork
       @diff ||= Diffy::Diff.new pretty(cached_json), pretty(rendered_json)
     end
 
-
     private
 
     def cached_json

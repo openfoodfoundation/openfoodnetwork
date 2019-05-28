@@ -3,9 +3,7 @@ class Api::VariantSerializer < ActiveModel::Serializer
   attributes :options_text, :on_demand, :price, :fees, :price_with_fees, :product_name
   attributes :tag_list
 
-  def price
-    object.price
-  end
+  delegate :price, to: :object
 
   def fees
     options[:enterprise_fee_calculator].andand.indexed_fees_by_type_for(object) ||

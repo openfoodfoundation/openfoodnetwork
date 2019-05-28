@@ -2,7 +2,6 @@ require 'spec_helper'
 
 module Spree
   describe Product do
-
     describe "associations" do
       it { is_expected.to belong_to(:supplier) }
       it { is_expected.to belong_to(:primary_taxon) }
@@ -109,7 +108,7 @@ module Spree
           it "only duplicates master with after_save when no standard variants exist" do
             expect(product).to receive :ensure_standard_variant
             product.name = "Something else"
-            expect{product.save!}.to_not change{product.variants.count}
+            expect{ product.save! }.to_not change{ product.variants.count }
           end
         end
 
@@ -380,7 +379,7 @@ module Spree
         product.set_property 'Organic Certified', 'NASAA 12345'
         property = product.properties.last
 
-        expect(product.properties_including_inherited).to eq([{id: property.id, name: "Organic Certified", value: 'NASAA 12345'}])
+        expect(product.properties_including_inherited).to eq([{ id: property.id, name: "Organic Certified", value: 'NASAA 12345' }])
       end
 
       it "returns producer properties as a hash" do
@@ -390,7 +389,7 @@ module Spree
         supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
         property = supplier.properties.last
 
-        expect(product.properties_including_inherited).to eq([{id: property.id, name: "Organic Certified", value: 'NASAA 54321'}])
+        expect(product.properties_including_inherited).to eq([{ id: property.id, name: "Organic Certified", value: 'NASAA 54321' }])
       end
 
       it "overrides producer properties with product properties" do
@@ -401,7 +400,7 @@ module Spree
         supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
         property = product.properties.last
 
-        expect(product.properties_including_inherited).to eq([{id: property.id, name: "Organic Certified", value: 'NASAA 12345'}])
+        expect(product.properties_including_inherited).to eq([{ id: property.id, name: "Organic Certified", value: 'NASAA 12345' }])
       end
 
       context "when product has an inherit_properties value set to true" do
@@ -412,7 +411,7 @@ module Spree
           supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
           property = supplier.properties.last
 
-          expect(product.properties_including_inherited).to eq([{id: property.id, name: "Organic Certified", value: 'NASAA 54321'}])
+          expect(product.properties_including_inherited).to eq([{ id: property.id, name: "Organic Certified", value: 'NASAA 54321' }])
         end
       end
 
@@ -435,14 +434,14 @@ module Spree
         pb = Spree::Property.create! name: 'B', presentation: 'B'
         pc = Spree::Property.create! name: 'C', presentation: 'C'
 
-        product.product_properties.create!({property_id: pa.id, value: '1', position: 1}, {without_protection: true})
-        product.product_properties.create!({property_id: pc.id, value: '3', position: 3}, {without_protection: true})
-        supplier.producer_properties.create!({property_id: pb.id, value: '2', position: 2}, {without_protection: true})
+        product.product_properties.create!({ property_id: pa.id, value: '1', position: 1 }, without_protection: true)
+        product.product_properties.create!({ property_id: pc.id, value: '3', position: 3 }, without_protection: true)
+        supplier.producer_properties.create!({ property_id: pb.id, value: '2', position: 2 }, without_protection: true)
 
         expect(product.properties_including_inherited).to eq(
-          [{id: pa.id, name: "A", value: '1'},
-           {id: pb.id, name: "B", value: '2'},
-           {id: pc.id, name: "C", value: '3'}]
+          [{ id: pa.id, name: "A", value: '1' },
+           { id: pb.id, name: "B", value: '2' },
+           { id: pc.id, name: "C", value: '3' }]
         )
       end
     end
@@ -453,8 +452,8 @@ module Spree
         d2 = create(:distributor_enterprise)
         p1 = create(:product)
         p2 = create(:product)
-        oc1 = create(:simple_order_cycle, :distributors => [d1], :variants => [p1.master])
-        oc2 = create(:simple_order_cycle, :distributors => [d2], :variants => [p2.master])
+        oc1 = create(:simple_order_cycle, distributors: [d1], variants: [p1.master])
+        oc2 = create(:simple_order_cycle, distributors: [d2], variants: [p2.master])
 
         expect(p1).to be_in_distributor d1
         expect(p1).not_to be_in_distributor d2
@@ -465,8 +464,8 @@ module Spree
         d2 = create(:distributor_enterprise)
         p1 = create(:product)
         p2 = create(:product)
-        oc1 = create(:simple_order_cycle, :distributors => [d1], :variants => [p1.master])
-        oc2 = create(:simple_order_cycle, :distributors => [d2], :variants => [p2.master])
+        oc1 = create(:simple_order_cycle, distributors: [d1], variants: [p1.master])
+        oc2 = create(:simple_order_cycle, distributors: [d2], variants: [p2.master])
 
         expect(p1).to be_in_order_cycle oc1
         expect(p1).not_to be_in_order_cycle oc2
@@ -475,10 +474,11 @@ module Spree
 
     describe "variant units" do
       context "when the product already has a variant unit set (and all required option types exist)" do
-        let!(:p) { create(:simple_product,
-                          variant_unit: 'weight',
-                          variant_unit_scale: 1,
-                          variant_unit_name: nil)
+        let!(:p) {
+          create(:simple_product,
+                 variant_unit: 'weight',
+                 variant_unit_scale: 1,
+                 variant_unit_name: nil)
         }
 
         let!(:ot_volume) { create(:option_type, name: 'unit_volume', presentation: 'Volume') }
@@ -500,7 +500,7 @@ module Spree
 
           expect(v.option_values.map(&:name).include?("1L")).to eq(false)
           expect(v.option_values.map(&:name).include?("1g")).to eq(true)
-                    expect {
+          expect {
             p.update_attributes!(variant_unit: 'volume', variant_unit_scale: 0.001)
           }.to change(p.master.option_values(true), :count).by(0)
           v.reload
@@ -515,7 +515,7 @@ module Spree
 
           expect(p.master.option_values.map(&:name).include?("1L")).to eq(false)
           expect(p.master.option_values.map(&:name).include?("1g")).to eq(true)
-                    expect {
+          expect {
             p.update_attributes!(variant_unit: 'volume', variant_unit_scale: 0.001)
           }.to change(p.master.option_values(true), :count).by(0)
           p.reload
@@ -667,7 +667,7 @@ module Spree
       context "when some variants have import date and some do not" do
         let!(:variant_a) { create(:variant, product: product, import_date: nil) }
         let!(:variant_b) { create(:variant, product: product, import_date: reference_time - 1.hour) }
-        let!(:variant_c) { create(:variant, product: product, import_date: reference_time - 2.hour) }
+        let!(:variant_c) { create(:variant, product: product, import_date: reference_time - 2.hours) }
 
         it "returns the most recent import date" do
           expect(product.import_date).to eq(variant_b.import_date)
@@ -675,9 +675,9 @@ module Spree
       end
 
       context "when all variants have import date" do
-        let!(:variant_a) { create(:variant, product: product, import_date: reference_time - 2.hour) }
+        let!(:variant_a) { create(:variant, product: product, import_date: reference_time - 2.hours) }
         let!(:variant_b) { create(:variant, product: product, import_date: reference_time - 1.hour) }
-        let!(:variant_c) { create(:variant, product: product, import_date: reference_time - 3.hour) }
+        let!(:variant_c) { create(:variant, product: product, import_date: reference_time - 3.hours) }
 
         it "returns the most recent import date" do
           expect(product.import_date).to eq(variant_b.import_date)

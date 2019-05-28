@@ -21,7 +21,6 @@ end
 
 module Spree
   describe "PaymentMethod and descendants" do
-
     let(:shop) { create(:enterprise) }
     let(:valid_subject) do
       # Supply required parameters so that it can be saved to attach taggings.

@@ -11,7 +11,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
   end
 
   context "#create" do
-    let!(:payment_method) { create(:payment_method, distributors: [ shop ]) }
+    let!(:payment_method) { create(:payment_method, distributors: [shop]) }
     let!(:order) do
       create(:order_with_totals_and_distribution, distributor: shop, state: "payment")
     end
@@ -41,7 +41,6 @@ describe Spree::Admin::PaymentsController, type: :controller do
         # let!(:credit_card) { create(:credit_card, gateway_customer_profile_id: "cus_1", gateway_payment_profile_id: 'card_2') }
         let!(:payment) { create(:payment, order: order, state: 'completed', payment_method: payment_method, response_code: 'ch_1a2b3c', amount: order.total) }
 
-
         before do
           allow(Stripe).to receive(:api_key) { "sk_test_12345" }
         end
@@ -50,7 +49,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
           before do
             stub_request(:post, "https://api.stripe.com/v1/charges/ch_1a2b3c/refunds").
               with(basic_auth: ["sk_test_12345", ""]).
-              to_return(:status => 200, :body => JSON.generate(id: 're_123', object: 'refund', status: 'succeeded') )
+              to_return(status: 200, body: JSON.generate(id: 're_123', object: 'refund', status: 'succeeded') )
           end
 
           it "voids the payment" do
@@ -69,7 +68,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
           before do
             stub_request(:post, "https://api.stripe.com/v1/charges/ch_1a2b3c/refunds").
               with(basic_auth: ["sk_test_12345", ""]).
-              to_return(:status => 200, :body => JSON.generate(error: { message: "Bup-bow!"}) )
+              to_return(status: 200, body: JSON.generate(error: { message: "Bup-bow!" }) )
           end
 
           it "does not void the payment" do
@@ -97,7 +96,6 @@ describe Spree::Admin::PaymentsController, type: :controller do
         let!(:payment_method) { create(:stripe_payment_method, distributors: [shop]) }
         let!(:payment) { create(:payment, order: order, state: 'completed', payment_method: payment_method, response_code: 'ch_1a2b3c', amount: order.total + 5) }
 
-
         before do
           allow(Stripe).to receive(:api_key) { "sk_test_12345" }
         end
@@ -106,7 +104,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
           before do
             stub_request(:post, "https://api.stripe.com/v1/charges/ch_1a2b3c/refunds").
               with(basic_auth: ["sk_test_12345", ""]).
-              to_return(:status => 200, :body => JSON.generate(id: 're_123', object: 'refund', status: 'succeeded') )
+              to_return(status: 200, body: JSON.generate(id: 're_123', object: 'refund', status: 'succeeded') )
           end
 
           it "partially refunds the payment" do
@@ -125,7 +123,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
           before do
             stub_request(:post, "https://api.stripe.com/v1/charges/ch_1a2b3c/refunds").
               with(basic_auth: ["sk_test_12345", ""]).
-              to_return(:status => 200, :body => JSON.generate(error: { message: "Bup-bow!"}) )
+              to_return(status: 200, body: JSON.generate(error: { message: "Bup-bow!" }) )
           end
 
           it "does not void the payment" do

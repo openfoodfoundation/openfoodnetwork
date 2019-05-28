@@ -7,8 +7,8 @@ Spree::Admin::ProductsController.class_eval do
   include EnterprisesHelper
 
   before_filter :load_data
-  before_filter :load_form_data, :only => [:index, :new, :create, :edit, :update]
-  before_filter :load_spree_api_key, :only => [:index, :variant_overrides]
+  before_filter :load_form_data, only: [:index, :new, :create, :edit, :update]
+  before_filter :load_spree_api_key, only: [:index, :variant_overrides]
   before_filter :strip_new_properties, only: [:create, :update]
 
   respond_override create: { html: {
@@ -21,7 +21,8 @@ Spree::Admin::ProductsController.class_eval do
     },
     failure: lambda {
       render :new
-    } } }
+    }
+  } }
 
   def index
     @current_user = spree_current_user
@@ -41,8 +42,8 @@ Spree::Admin::ProductsController.class_eval do
   end
 
   def bulk_update
-    collection_hash = Hash[params[:products].each_with_index.map { |p,i| [i,p] }]
-    product_set = Spree::ProductSet.new({:collection_attributes => collection_hash})
+    collection_hash = Hash[params[:products].each_with_index.map { |p, i| [i, p] }]
+    product_set = Spree::ProductSet.new(collection_attributes: collection_hash)
 
     params[:filters] ||= {}
     bulk_index_query = params[:filters].reduce("") do |string, filter|
@@ -56,13 +57,12 @@ Spree::Admin::ProductsController.class_eval do
       redirect_to "/api/products/bulk_products?page=1;per_page=500;#{bulk_index_query}"
     else
       if product_set.errors.present?
-        render json: { errors: product_set.errors }, status: 400
+        render json: { errors: product_set.errors }, status: :bad_request
       else
-        render :nothing => true, :status => 500
+        render nothing: true, status: :internal_server_error
       end
     end
   end
-
 
   protected
 
@@ -100,7 +100,6 @@ Spree::Admin::ProductsController.class_eval do
     [:index, :bulk_update]
   end
 
-
   private
 
   def load_form_data
@@ -115,11 +114,11 @@ Spree::Admin::ProductsController.class_eval do
       joins(:product).
       where('spree_products.supplier_id IN (?)', editable_enterprises.collect(&:id)).
       where('spree_variants.import_date IS NOT NULL').
-      where(spree_variants: {is_master: false}).
-      where(spree_variants: {deleted_at: nil}).
+      where(spree_variants: { is_master: false }).
+      where(spree_variants: { deleted_at: nil }).
       order('spree_variants.import_date DESC')
 
-    options = [{id: '0', name: ''}]
+    options = [{ id: '0', name: '' }]
     import_dates.collect(&:import_date).map { |i| options.push(id: i.to_date, name: i.to_date.to_formatted_s(:long)) }
 
     options

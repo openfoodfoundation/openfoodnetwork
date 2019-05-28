@@ -6,8 +6,8 @@ describe Api::VariantSerializer do
 
   it "includes the expected attributes" do
     expect(subject.attributes.keys).
-    to include(
-      :id,
+      to include(
+        :id,
         :name_to_display,
         :is_master,
         :on_hand,
@@ -21,6 +21,6 @@ describe Api::VariantSerializer do
         :price_with_fees,
         :product_name,
         :tag_list # Used to apply tag rules
-    )
+      )
   end
 end

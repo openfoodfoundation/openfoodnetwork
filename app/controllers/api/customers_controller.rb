@@ -10,7 +10,7 @@ module Api
       authorize! :update, @customer
 
       if @customer.update_attributes(params[:customer])
-        render json: @customer, serializer: CustomerSerializer, status: 200
+        render json: @customer, serializer: CustomerSerializer, status: :ok
       else
         invalid_resource!(@customer)
       end

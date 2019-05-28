@@ -63,7 +63,7 @@ module Spree
       # In this gateway, what we call 'secret_key' is the 'login'
       def options
         options = super
-        options.merge(:login => Stripe.api_key)
+        options.merge(login: Stripe.api_key)
       end
 
       def options_for_purchase_or_auth(money, creditcard, gateway_options)
@@ -97,7 +97,7 @@ module Spree
       end
 
       def tokenize_instance_customer_card(customer, card)
-        token = Stripe::Token.create({card: card, customer: customer}, stripe_account: stripe_account_id)
+        token = Stripe::Token.create({ card: card, customer: customer }, stripe_account: stripe_account_id)
         token.id
       end
 

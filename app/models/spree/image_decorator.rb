@@ -24,7 +24,6 @@ Spree::Image.class_eval do
 
   reformat_styles
 
-
   private
 
   def refresh_products_cache

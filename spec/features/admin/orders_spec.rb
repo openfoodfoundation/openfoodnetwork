@@ -1,10 +1,10 @@
 require "spec_helper"
 include ActionView::Helpers::NumberHelper
 
-feature %q{
+feature '
     As an administrator
     I want to manage orders
-}, js: true do
+', js: true do
   include AuthenticationWorkflow
   include WebHelper
   include CheckoutHelper
@@ -73,7 +73,7 @@ feature %q{
     expect(page).to have_content 'ADD PRODUCT'
     targetted_select2_search @product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
     find('button.add_variant').click
-    page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr"  # Wait for JS
+    page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr" # Wait for JS
     expect(page).to have_selector 'td', text: @product.name
 
     click_button 'Update'
@@ -123,7 +123,6 @@ feature %q{
     expect(page).to have_content "Distributor or order cycle cannot supply the products in your cart"
   end
 
-
   scenario "can't add products to an order outside the order's hub and order cycle" do
     product = create(:simple_product)
 
@@ -164,7 +163,7 @@ feature %q{
     new_order_with_distribution(@distributor, @order_cycle)
     targetted_select2_search @product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
     find('button.add_variant').click
-    page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr"  # Wait for JS
+    page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr" # Wait for JS
     click_button 'Update'
 
     expect(page).to have_selector 'h1.page-title', text: "Customer Details"
@@ -282,7 +281,7 @@ feature %q{
           expect(page).to have_link "Resend Confirmation", href: spree.resend_admin_order_path(@order)
           expect(page).to have_link "Send Invoice", href: spree.invoice_admin_order_path(@order)
           expect(page).to have_link "Print Invoice", href: spree.print_admin_order_path(@order)
-          expect(page).to have_link "Cancel Order", href: spree.fire_admin_order_path(@order, :e => 'cancel')
+          expect(page).to have_link "Cancel Order", href: spree.fire_admin_order_path(@order, e: 'cancel')
         end
       end
 
@@ -372,7 +371,7 @@ feature %q{
       targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
 
       find('button.add_variant').click
-      page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr"  # Wait for JS
+      page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr" # Wait for JS
       expect(page).to have_selector 'td', text: product.name
 
       expect(page).to have_select2 'order_distributor_id', with_options: [distributor1.name]

@@ -9,7 +9,7 @@ class Calculator::FlatPercentPerItem < Spree::Calculator
   # item level first, then multiply by the item quantity.
   extend Spree::LocalizedNumber
 
-  preference :flat_percent, :decimal, :default => 0
+  preference :flat_percent, :decimal, default: 0
 
   attr_accessible :preferred_flat_percent
 
@@ -25,7 +25,7 @@ class Calculator::FlatPercentPerItem < Spree::Calculator
         raise ArgumentError, "object must respond to #price and #quantity"
       end
 
-      value = (li.price * BigDecimal(self.preferred_flat_percent.to_s) / 100.0).round(2)
+      value = (li.price * BigDecimal(preferred_flat_percent.to_s) / 100.0).round(2)
       value * li.quantity
     end
   end

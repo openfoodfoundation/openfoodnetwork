@@ -19,17 +19,17 @@ module OpenFoodNetwork::Reports
     end
 
     organise do
-      group { |li| li.product }
+      group(&:product)
       sort(&:name)
 
       summary_row do
-        column { |lis| I18n.t('admin.reports.total') }
+        column { |_lis| I18n.t('admin.reports.total') }
         column { |lis| product_name(lis) }
         column { |lis| group_buy_unit_size_f(lis) }
-        column { |lis| "" }
-        column { |lis| "" }
-        column { |lis| "" }
-        column { |lis| "" }
+        column { |_lis| "" }
+        column { |_lis| "" }
+        column { |_lis| "" }
+        column { |_lis| "" }
         column { |lis| total_amount(lis) }
         column { |lis| total_available(lis) }
         column { |lis| remainder(lis) }
@@ -37,12 +37,12 @@ module OpenFoodNetwork::Reports
       end
 
       organise do
-        group { |li| li.full_name }
+        group(&:full_name)
         sort { |full_name| full_name }
 
         organise do
-          group { |li| li.order }
-          sort { |order| order.to_s }
+          group(&:order)
+          sort(&:to_s)
         end
       end
     end
@@ -56,9 +56,9 @@ module OpenFoodNetwork::Reports
       column { |lis| OpenFoodNetwork::OptionValueNamer.new(lis.first).unit }
       column { |lis| lis.first.weight_from_unit_value || 0 }
       column { |lis| total_amount(lis) }
-      column { |lis| "" }
-      column { |lis| "" }
-      column { |lis| "" }
+      column { |_lis| "" }
+      column { |_lis| "" }
+      column { |_lis| "" }
     end
   end
 end

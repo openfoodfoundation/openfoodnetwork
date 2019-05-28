@@ -96,7 +96,7 @@ module OpenFoodNetwork
 
       it "compiles the list from variant_override_enterprises_per_hub" do
         allow(permissions).to receive(:variant_override_enterprises_per_hub) do
-          {1 => [e1.id], 2 => [e1.id, e2.id]}
+          { 1 => [e1.id], 2 => [e1.id, e2.id] }
         end
 
         expect(permissions.variant_override_producers).to match_array [e1, e2]
@@ -106,8 +106,9 @@ module OpenFoodNetwork
     describe "finding enterprises for which variant overrides can be created, for each hub" do
       let!(:hub) { create(:distributor_enterprise) }
       let!(:producer) { create(:supplier_enterprise) }
-      let!(:er) { create(:enterprise_relationship, parent: producer, child: hub,
-                         permissions_list: [:create_variant_overrides]) 
+      let!(:er) {
+        create(:enterprise_relationship, parent: producer, child: hub,
+                                         permissions_list: [:create_variant_overrides])
       }
 
       before do
@@ -117,33 +118,34 @@ module OpenFoodNetwork
 
       it "returns enterprises as hub_id => [producer, ...]" do
         expect(permissions.variant_override_enterprises_per_hub).to eq(
-          {hub.id => [producer.id]}
+          hub.id => [producer.id]
         )
       end
 
       it "returns only permissions relating to managed hubs" do
         create(:enterprise_relationship, parent: e1, child: e2,
-                         permissions_list: [:create_variant_overrides])
+                                         permissions_list: [:create_variant_overrides])
 
         expect(permissions.variant_override_enterprises_per_hub).to eq(
-          {hub.id => [producer.id]}
+          hub.id => [producer.id]
         )
       end
 
       it "returns only create_variant_overrides permissions" do
         allow(permissions).to receive(:managed_enterprises) { Enterprise.where(id: [hub, e2]) }
         create(:enterprise_relationship, parent: e1, child: e2,
-                         permissions_list: [:manage_products])
+                                         permissions_list: [:manage_products])
 
         expect(permissions.variant_override_enterprises_per_hub).to eq(
-          {hub.id => [producer.id]}
+          hub.id => [producer.id]
         )
       end
 
       describe "hubs connected to the user by relationships only" do
         let!(:producer_managed) { create(:supplier_enterprise) }
-        let!(:er_oc) { create(:enterprise_relationship, parent: hub, child: producer_managed,
-                              permissions_list: [:add_to_order_cycle, :create_variant_overrides]) 
+        let!(:er_oc) {
+          create(:enterprise_relationship, parent: hub, child: producer_managed,
+                                           permissions_list: [:add_to_order_cycle, :create_variant_overrides])
         }
 
         before do

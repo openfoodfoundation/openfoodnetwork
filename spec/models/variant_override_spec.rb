@@ -37,8 +37,10 @@ describe VariantOverride do
 
   describe "validation" do
     describe "ensuring that on_demand and count_on_hand are compatible" do
-      let(:variant_override) { build(:variant_override, hub: hub, variant: variant,
-                                     on_demand: on_demand, count_on_hand: count_on_hand) }
+      let(:variant_override) {
+        build(:variant_override, hub: hub, variant: variant,
+                                 on_demand: on_demand, count_on_hand: count_on_hand)
+      }
 
       context "when using producer stock settings" do
         let(:on_demand) { nil }

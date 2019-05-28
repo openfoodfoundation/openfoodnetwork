@@ -14,9 +14,7 @@ node(:name) do |v|
   end
 end
 
-node(:full_name) do |v|
-  v.full_name
-end
+node(:full_name, &:full_name)
 
 node(:producer_name) do |v|
   v.product.supplier.name
@@ -30,12 +28,12 @@ node(:stock_location_name) do |v|
   v.stock_items.first.stock_location.name
 end
 
-child(:images => :images) do
+child(images: :images) do
   attributes :mini_url
 end
 
-child(:option_values => :option_values) do
-  child(:option_type => :option_type) do
+child(option_values: :option_values) do
+  child(option_type: :option_type) do
     attributes :name, :presentation
   end
   attributes :name, :presentation

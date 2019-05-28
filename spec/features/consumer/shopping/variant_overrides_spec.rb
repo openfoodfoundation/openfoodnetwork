@@ -103,7 +103,6 @@ feature "shopping with variant overrides defined", js: true, retry: 3 do
     end
   end
 
-
   describe "creating orders" do
     it "creates the order with the correct prices" do
       fill_in "variants[#{product1_variant1.id}]", with: "2"
@@ -158,7 +157,6 @@ feature "shopping with variant overrides defined", js: true, retry: 3 do
     end
   end
 
-
   private
 
   def complete_checkout
@@ -192,8 +190,8 @@ feature "shopping with variant overrides defined", js: true, retry: 3 do
   end
 
   def click_checkout
-      show_cart
-      wait_until_enabled 'li.cart a.button'
-      first(:link, 'Checkout now').click
+    show_cart
+    wait_until_enabled 'li.cart a.button'
+    first(:link, 'Checkout now').click
   end
 end

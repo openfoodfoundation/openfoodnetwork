@@ -65,15 +65,15 @@ module Spree
       let!(:d3_delivery) { create(:shipping_method, require_ship_address: true, distributors: [d3]) }
 
       it "reports when the services are available" do
-        expect(ShippingMethod.services[d1.id]).to eq({pickup: true, delivery: true})
+        expect(ShippingMethod.services[d1.id]).to eq(pickup: true, delivery: true)
       end
 
       it "reports when only pickup is available" do
-        expect(ShippingMethod.services[d2.id]).to eq({pickup: true, delivery: false})
+        expect(ShippingMethod.services[d2.id]).to eq(pickup: true, delivery: false)
       end
 
       it "reports when only delivery is available" do
-        expect(ShippingMethod.services[d3.id]).to eq({pickup: false, delivery: true})
+        expect(ShippingMethod.services[d3.id]).to eq(pickup: false, delivery: true)
       end
 
       it "returns no entry when no service is available" do

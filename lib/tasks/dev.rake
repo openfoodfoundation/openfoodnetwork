@@ -267,11 +267,11 @@ namespace :ofn do
       enterprise2 = Enterprise.find_by_name('Enterprise 2')
       enterprise2.sells = 'any'
       enterprise2.shipping_methods << FactoryBot.create(:shipping_method,
-                             name: 'Pickup',
-                             zone: zone,
-                             require_ship_address: true,
-                             calculator_type: 'Calculator::Weight',
-                             distributors: [enterprise2])
+                                                        name: 'Pickup',
+                                                        zone: zone,
+                                                        require_ship_address: true,
+                                                        calculator_type: 'Calculator::Weight',
+                                                        distributors: [enterprise2])
       enterprise2.payment_methods << Spree::PaymentMethod.last
       enterprise2.save!
 

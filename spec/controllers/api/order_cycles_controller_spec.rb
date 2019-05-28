@@ -21,7 +21,7 @@ module Api
         sign_in_as_user!
 
         it "should deny me access to managed order cycles" do
-          spree_get :managed, { :format => :json }
+          spree_get :managed, format: :json
           assert_unauthorized!
         end
       end
@@ -30,8 +30,8 @@ module Api
         sign_in_as_enterprise_user! [:coordinator]
 
         it "retrieves a list of variants with appropriate attributes" do
-          get :managed, { :format => :json }
-          keys = json_response.first.keys.map{ |key| key.to_sym }
+          get :managed, format: :json
+          keys = json_response.first.keys.map(&:to_sym)
           expect(attributes.all?{ |attr| keys.include? attr }).to eq(true)
         end
       end
@@ -40,8 +40,8 @@ module Api
         sign_in_as_admin!
 
         it "retrieves a list of variants with appropriate attributes" do
-          get :managed, { :format => :json }
-          keys = json_response.first.keys.map{ |key| key.to_sym }
+          get :managed, format: :json
+          keys = json_response.first.keys.map(&:to_sym)
           expect(attributes.all?{ |attr| keys.include? attr }).to eq(true)
         end
       end
@@ -81,7 +81,7 @@ module Api
           end
 
           it "gives me access" do
-            spree_get :accessible, { :template => 'bulk_index', :format => :json }
+            spree_get :accessible, template: 'bulk_index', format: :json
 
             expect(json_response.length).to eq(1)
             expect(json_response[0]['id']).to eq(order_cycle.id)
@@ -94,7 +94,7 @@ module Api
           end
 
           it "does not give me access" do
-            spree_get :accessible, { :template => 'bulk_index', :format => :json }
+            spree_get :accessible, template: 'bulk_index', format: :json
             expect(json_response.length).to eq(0)
           end
         end
@@ -105,7 +105,7 @@ module Api
           end
 
           it "gives me access" do
-            spree_get :accessible, { :template => 'bulk_index', :format => :json }
+            spree_get :accessible, template: 'bulk_index', format: :json
 
             expect(json_response.length).to eq(1)
             expect(json_response[0]['id']).to eq(order_cycle.id)

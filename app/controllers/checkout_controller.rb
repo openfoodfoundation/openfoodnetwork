@@ -40,15 +40,15 @@ class CheckoutController < Spree::CheckoutController
 
       next if advance_order_state(@order)
 
-      if @order.errors.present?
-        flash[:error] = @order.errors.full_messages.to_sentence
-      else
-        flash[:error] = t(:payment_processing_failed)
-      end
+      flash[:error] = if @order.errors.present?
+                        @order.errors.full_messages.to_sentence
+                      else
+                        t(:payment_processing_failed)
+                      end
       update_failed
       return
     end
-    return update_failed unless @order.state == "complete" ||  @order.completed?
+    return update_failed unless @order.state == "complete" || @order.completed?
 
     set_default_bill_address
     set_default_ship_address
@@ -59,10 +59,10 @@ class CheckoutController < Spree::CheckoutController
     flash[:notice] = t(:order_processed_successfully)
     respond_to do |format|
       format.html do
-        respond_with(@order, :location => order_path(@order))
+        respond_with(@order, location: order_path(@order))
       end
       format.json do
-        render json: {path: order_path(@order)}, status: 200
+        render json: { path: order_path(@order) }, status: :ok
       end
     end
   end
@@ -82,10 +82,14 @@ class CheckoutController < Spree::CheckoutController
       new_bill_address = @order.bill_address.clone.attributes
 
       user_bill_address_id = spree_current_user.bill_address.andand.id
-      spree_current_user.update_attributes(bill_address_attributes: new_bill_address.merge('id' => user_bill_address_id))
+      spree_current_user.update_attributes(
+        bill_address_attributes: new_bill_address.merge('id' => user_bill_address_id)
+      )
 
       customer_bill_address_id = @order.customer.bill_address.andand.id
-      @order.customer.update_attributes(bill_address_attributes: new_bill_address.merge('id' => customer_bill_address_id))
+      @order.customer.update_attributes(
+        bill_address_attributes: new_bill_address.merge('id' => customer_bill_address_id)
+      )
     end
   end
 
@@ -94,35 +98,43 @@ class CheckoutController < Spree::CheckoutController
       new_ship_address = @order.ship_address.clone.attributes
 
       user_ship_address_id = spree_current_user.ship_address.andand.id
-      spree_current_user.update_attributes(ship_address_attributes: new_ship_address.merge('id' => user_ship_address_id))
+      spree_current_user.update_attributes(
+        ship_address_attributes: new_ship_address.merge('id' => user_ship_address_id)
+      )
 
       customer_ship_address_id = @order.customer.ship_address.andand.id
-      @order.customer.update_attributes(ship_address_attributes: new_ship_address.merge('id' => customer_ship_address_id))
+      @order.customer.update_attributes(
+        ship_address_attributes: new_ship_address.merge('id' => customer_ship_address_id)
+      )
     end
   end
 
   def check_order_for_phantom_fees
-    phantom_fees = @order.adjustments.joins('LEFT OUTER JOIN spree_line_items ON spree_line_items.id = spree_adjustments.source_id').
-      where("originator_type = 'EnterpriseFee' AND source_type = 'Spree::LineItem' AND spree_line_items.id IS NULL")
+    phantom_fees = @order.adjustments.
+      joins("LEFT OUTER JOIN spree_line_items"\
+        " ON spree_line_items.id = spree_adjustments.source_id").
+      where("originator_type = 'EnterpriseFee'"\
+        " AND source_type = 'Spree::LineItem' AND spree_line_items.id IS NULL")
 
     if phantom_fees.any?
-      Bugsnag.notify(RuntimeError.new("Phantom Fees"), {
-        phantom_fees: {
-          phantom_total: phantom_fees.sum(&:amount).to_s,
-          phantom_fees: phantom_fees.as_json
-        }
-      })
+      Bugsnag.notify(RuntimeError.new("Phantom Fees"),
+                     phantom_fees: {
+                       phantom_total: phantom_fees.sum(&:amount).to_s,
+                       phantom_fees: phantom_fees.as_json
+                     })
     end
   end
 
   # Copied and modified from spree. Remove check for order state, since the state machine is
   # progressed all the way in one go with the one page checkout.
   def object_params
-    # For payment step, filter order parameters to produce the expected nested attributes for a single payment and its source, discarding attributes for payment methods other than the one selected
+    # For payment step, filter order parameters to produce the expected
+    #   nested attributes for a single payment and its source,
+    #   discarding attributes for payment methods other than the one selected
     if params[:payment_source].present? && source_params = params.delete(:payment_source)[params[:order][:payments_attributes].first[:payment_method_id].underscore]
       params[:order][:payments_attributes].first[:source_attributes] = source_params
     end
-    if (params[:order][:payments_attributes])
+    if params[:order][:payments_attributes]
       params[:order][:payments_attributes].first[:amount] = @order.total
     end
     if params[:order][:existing_card_id]
@@ -149,12 +161,13 @@ class CheckoutController < Spree::CheckoutController
         render :edit
       end
       format.json do
-        render json: {errors: @order.errors, flash: flash.to_hash}.to_json, status: 400
+        render json: { errors: @order.errors, flash: flash.to_hash }.to_json, status: :bad_request
       end
     end
   end
 
-  # When we have a pickup Shipping Method, we clone the distributor address into ship_address before_save
+  # When we have a pickup Shipping Method,
+  #   we clone the distributor address into ship_address before_save
   # We don't want this data in the form, so we clear it out
   def clear_ship_address
     unless current_order.shipping_method.andand.require_ship_address
@@ -168,9 +181,9 @@ class CheckoutController < Spree::CheckoutController
 
   def load_order
     @order = current_order
-    redirect_to main_app.shop_path and return unless @order and @order.checkout_allowed?
-    redirect_to_cart_path and return unless valid_order_line_items?
-    redirect_to main_app.shop_path and return if @order.completed?
+    redirect_to(main_app.shop_path) && return unless @order && @order.checkout_allowed?
+    redirect_to_cart_path && return unless valid_order_line_items?
+    redirect_to(main_app.shop_path) && return if @order.completed?
     before_address
     setup_for_current_state
   end
@@ -185,7 +198,9 @@ class CheckoutController < Spree::CheckoutController
   end
 
   def valid_order_line_items?
-    @order.insufficient_stock_lines.empty? && OrderCycleDistributedVariants.new(@order.order_cycle, @order.distributor).distributes_order_variants?(@order)
+    @order.insufficient_stock_lines.empty? &&
+      OrderCycleDistributedVariants.new(@order.order_cycle, @order.distributor).
+        distributes_order_variants?(@order)
   end
 
   def redirect_to_cart_path
@@ -195,7 +210,7 @@ class CheckoutController < Spree::CheckoutController
       end
 
       format.json do
-        render json: {path: cart_path}, status: 400
+        render json: { path: cart_path }, status: :bad_request
       end
     end
   end
@@ -203,10 +218,12 @@ class CheckoutController < Spree::CheckoutController
   def redirect_to_paypal_express_form_if_needed
     return unless params[:order][:payments_attributes]
 
-    payment_method = Spree::PaymentMethod.find(params[:order][:payments_attributes].first[:payment_method_id])
-    return unless payment_method.kind_of?(Spree::Gateway::PayPalExpress)
+    payment_method_id = params[:order][:payments_attributes].first[:payment_method_id]
+    payment_method = Spree::PaymentMethod.find(payment_method_id)
+    return unless payment_method.is_a?(Spree::Gateway::PayPalExpress)
 
-    render json: {path: spree.paypal_express_path(payment_method_id: payment_method.id)}, status: 200
+    render json: { path: spree.paypal_express_path(payment_method_id: payment_method.id) },
+           status: :ok
     true
   end
 
@@ -230,7 +247,7 @@ class CheckoutController < Spree::CheckoutController
     flash[:error] = t(:spree_gateway_error_flash_for_checkout, error: error.message)
     respond_to do |format|
       format.html { render :edit }
-      format.json { render json: { flash: flash.to_hash }, status: 400 }
+      format.json { render json: { flash: flash.to_hash }, status: :bad_request }
     end
   end
 end

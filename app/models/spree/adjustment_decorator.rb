@@ -32,7 +32,7 @@ module Spree
     end
 
     def display_included_tax
-      Spree::Money.new(included_tax, { :currency => currency })
+      Spree::Money.new(included_tax, currency: currency)
     end
 
     def has_tax?

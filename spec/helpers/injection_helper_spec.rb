@@ -5,10 +5,10 @@ describe InjectionHelper, type: :helper do
 
   let!(:distributor1) { create(:distributor_enterprise) }
   let!(:distributor2) { create(:distributor_enterprise) }
-  let!(:user) { create(:user)}
-  let!(:d1o1) { create(:completed_order_with_totals, distributor: distributor1, user_id: user.id, total: 10000)}
-  let!(:d1o2) { create(:completed_order_with_totals, distributor: distributor1, user_id: user.id, total: 5000)}
-  let!(:d2o1) { create(:completed_order_with_totals, distributor: distributor2, user_id: user.id)}
+  let!(:user) { create(:user) }
+  let!(:d1o1) { create(:completed_order_with_totals, distributor: distributor1, user_id: user.id, total: 10_000) }
+  let!(:d1o2) { create(:completed_order_with_totals, distributor: distributor1, user_id: user.id, total: 5000) }
+  let!(:d2o1) { create(:completed_order_with_totals, distributor: distributor2, user_id: user.id) }
 
   it "will inject via AMS" do
     expect(helper.inject_json_ams("test", [enterprise], Api::IdSerializer)).to match /#{enterprise.id}/

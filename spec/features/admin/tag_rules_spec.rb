@@ -239,7 +239,7 @@ feature 'Tag Rules', js: true do
           within "#tr_0" do first("a.delete-tag-rule").click end
         end
         expect(page).to have_no_selector "#tr_0"
-      end.to change{TagRule.count}.by(-2)
+      end.to change{ TagRule.count }.by(-2)
     end
   end
 end

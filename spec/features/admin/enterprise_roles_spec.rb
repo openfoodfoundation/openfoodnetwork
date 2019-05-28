@@ -1,13 +1,12 @@
 require 'spec_helper'
 
-feature %q{
+feature '
   As an Administrator
   I want to manage relationships between users and enterprises
-}, js: true do
+', js: true do
   include AuthenticationWorkflow
   include WebHelper
   include OpenFoodNetwork::EmailHelper
-
 
   context "as a site administrator" do
     before { login_to_admin_section }

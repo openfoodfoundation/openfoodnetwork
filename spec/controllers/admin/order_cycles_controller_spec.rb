@@ -277,7 +277,6 @@ module Admin
       end
     end
 
-
     describe "notifying producers" do
       let(:user) { create_enterprise_user }
       let(:admin_user) do
@@ -293,17 +292,16 @@ module Admin
 
       it "enqueues a job" do
         expect do
-          spree_post :notify_producers, {id: order_cycle.id}
+          spree_post :notify_producers, id: order_cycle.id
         end.to enqueue_job OrderCycleNotificationJob
       end
 
       it "redirects back to the order cycles path with a success message" do
-        spree_post :notify_producers, {id: order_cycle.id}
+        spree_post :notify_producers, id: order_cycle.id
         expect(response).to redirect_to admin_order_cycles_path
         expect(flash[:notice]).to eq('Emails to be sent to producers have been queued for sending.')
       end
     end
-
 
     describe "destroy" do
       let(:distributor) { create(:distributor_enterprise, owner: distributor_owner) }
@@ -336,6 +334,5 @@ module Admin
         end
       end
     end
-
   end
 end

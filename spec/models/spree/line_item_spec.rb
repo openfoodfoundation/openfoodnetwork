@@ -14,12 +14,12 @@ module Spree
       let(:li1) { create(:line_item, order: o, product: p1) }
       let(:li2) { create(:line_item, order: o, product: p2) }
 
-      let(:p3) {create(:product, name: 'Clear Honey') }
-      let(:p4) {create(:product, name: 'Apricots') }
-      let(:v1) {create(:variant, product: p3, unit_value: 500) }
-      let(:v2) {create(:variant, product: p3, unit_value: 250) }
-      let(:v3) {create(:variant, product: p4, unit_value: 500, display_name: "ZZ") }
-      let(:v4) {create(:variant, product: p4, unit_value: 500, display_name: "aa") }
+      let(:p3) { create(:product, name: 'Clear Honey') }
+      let(:p4) { create(:product, name: 'Apricots') }
+      let(:v1) { create(:variant, product: p3, unit_value: 500) }
+      let(:v2) { create(:variant, product: p3, unit_value: 250) }
+      let(:v3) { create(:variant, product: p4, unit_value: 500, display_name: "ZZ") }
+      let(:v4) { create(:variant, product: p4, unit_value: 500, display_name: "aa") }
       let(:li3) { create(:line_item, order: o, product: p3, variant: v1) }
       let(:li4) { create(:line_item, order: o, product: p3, variant: v2) }
       let(:li5) { create(:line_item, order: o, product: p4, variant: v3) }
@@ -55,7 +55,7 @@ module Spree
       end
 
       it "finds line items sorted by name and unit_value" do
-        expect(o.line_items.sorted_by_name_and_unit_value).to eq([li6,li5,li4,li3])
+        expect(o.line_items.sorted_by_name_and_unit_value).to eq([li6, li5, li4, li3])
       end
 
       it "finds line items from a given order cycle" do
@@ -134,7 +134,7 @@ module Spree
 
     describe "tracking stock when quantity is changed" do
       context "when the order is already complete" do
-        let(:shop) { create(:distributor_enterprise)}
+        let(:shop) { create(:distributor_enterprise) }
         let(:order) { create(:completed_order_with_totals, distributor: shop) }
         let!(:line_item) { order.reload.line_items.first }
         let!(:variant) { line_item.variant }
@@ -144,14 +144,14 @@ module Spree
 
           it "draws stock from the variant override" do
             expect(vo.reload.count_on_hand).to eq 3
-            expect{line_item.increment!(:quantity)}.to_not change{Spree::Variant.find(variant.id).on_hand}
+            expect{ line_item.increment!(:quantity) }.to_not change{ Spree::Variant.find(variant.id).on_hand }
             expect(vo.reload.count_on_hand).to eq 2
           end
         end
 
         context "when a variant override does not apply" do
           it "draws stock from the variant" do
-            expect{line_item.increment!(:quantity)}.to change{Spree::Variant.find(variant.id).on_hand}.by(-1)
+            expect{ line_item.increment!(:quantity) }.to change{ Spree::Variant.find(variant.id).on_hand }.by(-1)
           end
         end
       end
@@ -159,7 +159,7 @@ module Spree
 
     describe "tracking stock when a line item is destroyed" do
       context "when the order is already complete" do
-        let(:shop) { create(:distributor_enterprise)}
+        let(:shop) { create(:distributor_enterprise) }
         let(:order) { create(:completed_order_with_totals, distributor: shop) }
         let!(:line_item) { order.reload.line_items.first }
         let!(:variant) { line_item.variant }
@@ -169,14 +169,14 @@ module Spree
 
           it "restores stock to the variant override" do
             expect(vo.reload.count_on_hand).to eq 3
-            expect{line_item.destroy}.to_not change{Spree::Variant.find(variant.id).on_hand}
+            expect{ line_item.destroy }.to_not change{ Spree::Variant.find(variant.id).on_hand }
             expect(vo.reload.count_on_hand).to eq 4
           end
         end
 
         context "when a variant override does not apply" do
           it "restores stock to the variant" do
-            expect{line_item.destroy}.to change{Spree::Variant.find(variant.id).on_hand}.by(1)
+            expect{ line_item.destroy }.to change{ Spree::Variant.find(variant.id).on_hand }.by(1)
           end
         end
       end
@@ -320,7 +320,7 @@ module Spree
 
             context "and quantity is changed" do
               before do
-                attrs.merge!( quantity: 4 )
+                attrs[:quantity] = 4
                 li.update_attributes(attrs)
               end
 
@@ -348,7 +348,7 @@ module Spree
                 context "and a final_weight_volume has been set" do
                   before do
                     expect(li.final_weight_volume).to eq 3000
-                    attrs.merge!( quantity: 4 )
+                    attrs[:quantity] = 4
                     li.update_attributes(attrs)
                   end
 
@@ -360,7 +360,7 @@ module Spree
                 context "and a final_weight_volume has not been set" do
                   before do
                     li.update_attributes(final_weight_volume: nil)
-                    attrs.merge!( quantity: 1 )
+                    attrs[:quantity] = 1
                     li.update_attributes(attrs)
                   end
 
@@ -376,7 +376,7 @@ module Spree
                 context "and a final_weight_volume has been set" do
                   before do
                     expect(li.final_weight_volume).to eq 0
-                    attrs.merge!( quantity: 4 )
+                    attrs[:quantity] = 4
                     li.update_attributes(attrs)
                   end
 
@@ -388,7 +388,7 @@ module Spree
                 context "and a final_weight_volume has not been set" do
                   before do
                     li.update_attributes(final_weight_volume: nil)
-                    attrs.merge!( quantity: 1 )
+                    attrs[:quantity] = 1
                     li.update_attributes(attrs)
                   end
 
@@ -405,7 +405,7 @@ module Spree
       describe "generating the full name" do
         let(:li) { LineItem.new }
 
-	      context "when display_name is blank" do
+        context "when display_name is blank" do
           before do
             allow(li).to receive(:unit_to_display) { 'unit_to_display' }
             allow(li).to receive(:display_name) { '' }

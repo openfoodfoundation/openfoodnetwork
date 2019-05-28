@@ -24,7 +24,7 @@ module Spree
 
       context "for Pin Payments" do
         let(:d) { create(:distributor_enterprise) }
-        let(:pin) { Gateway::Pin.create! name: 'pin', distributor_ids: [d.id]}
+        let(:pin) { Gateway::Pin.create! name: 'pin', distributor_ids: [d.id] }
         let(:payment) { create(:payment, source: create(:credit_card), payment_method: pin) }
 
         it "does not void" do
@@ -47,8 +47,8 @@ module Spree
 
     describe "refunding" do
       let(:payment) { create(:payment) }
-      let(:success) { double(:success? => true, authorization: 'abc123') }
-      let(:failure) { double(:success? => false) }
+      let(:success) { double(success?: true, authorization: 'abc123') }
+      let(:failure) { double(success?: false) }
 
       it "always checks the environment" do
         allow(payment.payment_method).to receive(:refund) { success }
