@@ -26,10 +26,10 @@ feature '
 
       # Then I should see the relationships
       within('table#enterprise-roles') do
-        page.should have_relationship u1, e1
-        page.should have_relationship u1, e2
-        page.should have_relationship u2, e3
-        page.should have_relationship u2, e4
+        expect(page).to have_relationship u1, e1
+        expect(page).to have_relationship u1, e2
+        expect(page).to have_relationship u2, e3
+        expect(page).to have_relationship u2, e4
       end
     end
 
@@ -43,9 +43,9 @@ feature '
       click_button 'Create'
 
       # Wait for row to appear since have_relationship doesn't wait
-      page.should have_selector 'tr', count: 3
-      page.should have_relationship u, e
-      EnterpriseRole.where(user_id: u, enterprise_id: e).should be_present
+      expect(page).to have_selector 'tr', count: 3
+      expect(page).to have_relationship u, e
+      expect(EnterpriseRole.where(user_id: u, enterprise_id: e)).to be_present
     end
 
     scenario "attempting to create a relationship with invalid data" do
@@ -61,7 +61,7 @@ feature '
         click_button 'Create'
 
         # Then I should see an error message
-        page.should have_content "That role is already present."
+        expect(page).to have_content "That role is already present."
       end.to change(EnterpriseRole, :count).by(0)
     end
 
@@ -71,7 +71,7 @@ feature '
       er = create(:enterprise_role, user: u, enterprise: e)
 
       visit admin_enterprise_roles_path
-      page.should have_relationship u, e
+      expect(page).to have_relationship u, e
 
       within("#enterprise_role_#{er.id}") do
         accept_alert do
@@ -80,9 +80,9 @@ feature '
       end
 
       # Wait for row to disappear, otherwise have_relationship waits 30 seconds.
-      page.should_not have_selector "#enterprise_role_#{er.id}"
-      page.should_not have_relationship u, e
-      EnterpriseRole.where(id: er.id).should be_empty
+      expect(page).not_to have_selector "#enterprise_role_#{er.id}"
+      expect(page).not_to have_relationship u, e
+      expect(EnterpriseRole.where(id: er.id)).to be_empty
     end
 
     describe "using the enterprise managers interface" do
