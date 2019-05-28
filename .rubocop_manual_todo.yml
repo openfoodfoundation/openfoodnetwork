@@ -81,7 +81,6 @@ Metrics/LineLength:
   - app/models/enterprise.rb
   - app/models/enterprise_fee.rb
   - app/models/enterprise_group.rb
-  - app/models/enterprise_relationship.rb
   - app/models/enterprise_role.rb
   - app/models/exchange.rb
   - app/models/inventory_item.rb

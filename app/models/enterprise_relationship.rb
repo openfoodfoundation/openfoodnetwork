@@ -4,14 +4,21 @@ class EnterpriseRelationship < ActiveRecord::Base
   has_many :permissions, class_name: 'EnterpriseRelationshipPermission', dependent: :destroy
 
   validates :parent_id, :child_id, presence: true
-  validates :child_id, uniqueness: { scope: :parent_id, message: I18n.t('validation_msg_relationship_already_established') }
+  validates :child_id, uniqueness: {
+    scope: :parent_id,
+    message: I18n.t('validation_msg_relationship_already_established')
+  }
 
   after_save :update_permissions_of_child_variant_overrides
   before_destroy :revoke_all_child_variant_overrides
 
   scope :with_enterprises, -> {
-    joins('LEFT JOIN enterprises AS parent_enterprises ON parent_enterprises.id = enterprise_relationships.parent_id').
-    joins('LEFT JOIN enterprises AS child_enterprises ON child_enterprises.id = enterprise_relationships.child_id')
+    joins("
+      LEFT JOIN enterprises AS parent_enterprises
+        ON parent_enterprises.id = enterprise_relationships.parent_id").
+      joins("
+        LEFT JOIN enterprises AS child_enterprises
+          ON child_enterprises.id = enterprise_relationships.child_id")
   }
 
   scope :involving_enterprises, ->(enterprises) {
@@ -90,7 +97,7 @@ class EnterpriseRelationship < ActiveRecord::Base
   end
 
   def revoke_all_child_variant_overrides
-    child_variant_overrides.update_all(permission_revoked_at: Time.now)
+    child_variant_overrides.update_all(permission_revoked_at: Time.zone.now)
   end
 
   def child_variant_overrides
