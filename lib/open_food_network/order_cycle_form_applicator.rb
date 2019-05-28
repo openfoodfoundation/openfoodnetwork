@@ -79,26 +79,23 @@ module OpenFoodNetwork
 
     def update_exchange(sender_id, receiver_id, incoming, attrs = {})
       exchange = @order_cycle.exchanges.where(sender_id: sender_id, receiver_id: receiver_id, incoming: incoming).first
+      return unless permission_for(exchange)
+
       remove_unauthorized_exchange_attributes(exchange, attrs)
+      variant_ids = attrs.delete :variant_ids
+      exchange.update_attributes!(attrs)
+      ExchangeVariantBulkUpdater.new(exchange).update!(variant_ids) unless variant_ids.nil?
 
-      if permission_for exchange
-        variant_ids = attrs.delete :variant_ids
-
-        exchange.update_attributes!(attrs)
-
-        ExchangeVariantBulkUpdater.new(exchange).update!(variant_ids) unless variant_ids.nil?
-
-        @touched_exchanges << exchange
-      end
+      @touched_exchanges << exchange
     end
 
     def remove_unauthorized_exchange_attributes(exchange, exchange_attrs)
-      unless manages_coordinator? || manager_for(exchange)
-        exchange_attrs.delete :enterprise_fee_ids
-        exchange_attrs.delete :pickup_time
-        exchange_attrs.delete :pickup_instructions
-        exchange_attrs.delete :tag_list
-      end
+      return if manages_coordinator? || manager_for(exchange)
+
+      exchange_attrs.delete :enterprise_fee_ids
+      exchange_attrs.delete :pickup_time
+      exchange_attrs.delete :pickup_instructions
+      exchange_attrs.delete :tag_list
     end
 
     def destroy_untouched_exchanges
