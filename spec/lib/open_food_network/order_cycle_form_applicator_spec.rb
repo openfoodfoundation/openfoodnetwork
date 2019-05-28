@@ -1,3 +1,5 @@
+require "spec_helper"
+
 require 'open_food_network/order_cycle_form_applicator'
 
 module OpenFoodNetwork
