@@ -78,7 +78,6 @@ Metrics/LineLength:
   - app/models/concerns/variant_stock.rb
   - app/models/content_configuration.rb
   - app/models/customer.rb
-  - app/models/enterprise.rb
   - app/models/enterprise_fee.rb
   - app/models/enterprise_group.rb
   - app/models/enterprise_role.rb
