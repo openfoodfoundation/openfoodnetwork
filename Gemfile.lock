@@ -773,7 +773,8 @@ GEM
       hashdiff
     whenever (0.11.0)
       chronic (>= 0.6.3)
-    wicked_pdf (1.1.0)
+    wicked_pdf (1.4.0)
+      activesupport
     wkhtmltopdf-binary (0.12.4)
     xml-simple (1.1.5)
     xpath (2.1.0)
