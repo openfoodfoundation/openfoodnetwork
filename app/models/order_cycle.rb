@@ -27,17 +27,30 @@ class OrderCycle < ActiveRecord::Base
 
   preference :product_selection_from_coordinator_inventory_only, :boolean, default: false
 
-  scope :active, lambda { where('order_cycles.orders_open_at <= ? AND order_cycles.orders_close_at >= ?', Time.zone.now, Time.zone.now) }
+  scope :active, lambda {
+    where('order_cycles.orders_open_at <= ? AND order_cycles.orders_close_at >= ?',
+          Time.zone.now,
+          Time.zone.now)
+  }
   scope :active_or_complete, lambda { where('order_cycles.orders_open_at <= ?', Time.zone.now) }
-  scope :inactive, lambda { where('order_cycles.orders_open_at > ? OR order_cycles.orders_close_at < ?', Time.zone.now, Time.zone.now) }
+  scope :inactive, lambda {
+    where('order_cycles.orders_open_at > ? OR order_cycles.orders_close_at < ?',
+          Time.zone.now,
+          Time.zone.now)
+  }
   scope :upcoming, lambda { where('order_cycles.orders_open_at > ?', Time.zone.now) }
-  scope :not_closed, lambda { where('order_cycles.orders_close_at > ? OR order_cycles.orders_close_at IS NULL', Time.zone.now) }
-  scope :closed, lambda { where('order_cycles.orders_close_at < ?', Time.zone.now).order("order_cycles.orders_close_at DESC") }
+  scope :not_closed, lambda {
+    where('order_cycles.orders_close_at > ? OR order_cycles.orders_close_at IS NULL', Time.zone.now)
+  }
+  scope :closed, lambda {
+    where('order_cycles.orders_close_at < ?',
+          Time.zone.now).order("order_cycles.orders_close_at DESC")
+  }
   scope :undated, -> { where('order_cycles.orders_open_at IS NULL OR orders_close_at IS NULL') }
   scope :dated, -> { where('orders_open_at IS NOT NULL AND orders_close_at IS NOT NULL') }
 
   scope :soonest_closing,      lambda { active.order('order_cycles.orders_close_at ASC') }
-  # TODO This method returns all the closed orders. So maybe we can replace it with :recently_closed.
+  # This scope returns all the closed orders
   scope :most_recently_closed, lambda { closed.order('order_cycles.orders_close_at DESC') }
 
   scope :soonest_opening,      lambda { upcoming.order('order_cycles.orders_open_at ASC') }
@@ -62,14 +75,17 @@ class OrderCycle < ActiveRecord::Base
       scoped
     else
       with_exchanging_enterprises_outer.
-        where('order_cycles.coordinator_id IN (?) OR enterprises.id IN (?)', user.enterprises.map(&:id), user.enterprises.map(&:id)).
+        where('order_cycles.coordinator_id IN (?) OR enterprises.id IN (?)',
+              user.enterprises.map(&:id),
+              user.enterprises.map(&:id)).
         select('DISTINCT order_cycles.*')
     end
   }
 
   scope :with_exchanging_enterprises_outer, lambda {
-    joins('LEFT OUTER JOIN exchanges ON (exchanges.order_cycle_id = order_cycles.id)').
-      joins('LEFT OUTER JOIN enterprises ON (enterprises.id = exchanges.sender_id OR enterprises.id = exchanges.receiver_id)')
+    joins("LEFT OUTER JOIN exchanges ON (exchanges.order_cycle_id = order_cycles.id)").
+      joins("LEFT OUTER JOIN enterprises
+          ON (enterprises.id = exchanges.sender_id OR enterprises.id = exchanges.receiver_id)")
   }
 
   scope :involving_managed_distributors_of, lambda { |user|
@@ -78,7 +94,9 @@ class OrderCycle < ActiveRecord::Base
     # Order cycles where I managed an enterprise at either end of an outgoing exchange
     # ie. coordinator or distributor
     joins(:exchanges).merge(Exchange.outgoing).
-      where('exchanges.receiver_id IN (?) OR exchanges.sender_id IN (?)', enterprises.pluck(:id), enterprises.pluck(:id)).
+      where('exchanges.receiver_id IN (?) OR exchanges.sender_id IN (?)',
+            enterprises.pluck(:id),
+            enterprises.pluck(:id)).
       select('DISTINCT order_cycles.*')
   }
 
@@ -88,7 +106,9 @@ class OrderCycle < ActiveRecord::Base
     # Order cycles where I managed an enterprise at either end of an incoming exchange
     # ie. coordinator or producer
     joins(:exchanges).merge(Exchange.incoming).
-      where('exchanges.receiver_id IN (?) OR exchanges.sender_id IN (?)', enterprises.pluck(:id), enterprises.pluck(:id)).
+      where('exchanges.receiver_id IN (?) OR exchanges.sender_id IN (?)',
+            enterprises.pluck(:id),
+            enterprises.pluck(:id)).
       select('DISTINCT order_cycles.*')
   }
 
@@ -113,7 +133,8 @@ class OrderCycle < ActiveRecord::Base
         joins(:order_cycle).
         merge(OrderCycle.active).
         group('exchanges.receiver_id').
-        select('exchanges.receiver_id AS receiver_id, MIN(order_cycles.orders_close_at) AS earliest_close_at').
+        select("exchanges.receiver_id AS receiver_id,
+                MIN(order_cycles.orders_close_at) AS earliest_close_at").
         map { |ex| [ex.receiver_id, ex.earliest_close_at.to_time] }
     ]
   end
@@ -123,7 +144,9 @@ class OrderCycle < ActiveRecord::Base
     oc.name = I18n.t("models.order_cycle.cloned_order_cycle_name", order_cycle: oc.name)
     oc.orders_open_at = oc.orders_close_at = nil
     oc.coordinator_fee_ids = coordinator_fee_ids
+    # rubocop:disable Metrics/LineLength
     oc.preferred_product_selection_from_coordinator_inventory_only = preferred_product_selection_from_coordinator_inventory_only
+    # rubocop:enable Metrics/LineLength
     oc.save!
     exchanges.each { |e| e.clone!(oc) }
     oc.reload
@@ -229,8 +252,12 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def items_bought_by_user(user, distributor)
-    # The Spree::Order.complete scope only checks for completed_at date, does not ensure state is "complete"
-    orders = Spree::Order.complete.where(state: "complete", user_id: user, distributor_id: distributor, order_cycle_id: self)
+    # The Spree::Order.complete scope only checks for completed_at date
+    #   it does not ensure state is "complete"
+    orders = Spree::Order.complete.where(state: "complete",
+                                         user_id: user,
+                                         distributor_id: distributor,
+                                         order_cycle_id: self)
     scoper = OpenFoodNetwork::ScopeVariantToHub.new(distributor)
     items = Spree::LineItem.joins(:order).merge(orders)
     items.each { |li| scoper.scope(li.variant) }
