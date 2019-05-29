@@ -8,6 +8,6 @@ module EnterpriseFeesHelper
   end
 
   def enterprise_fee_type_options
-    EnterpriseFee::FEE_TYPES.map { |f| [f.capitalize, f] }
+    EnterpriseFee::FEE_TYPES.map { |fee_type| [t("#{fee_type}_fee"), fee_type] }
   end
 end

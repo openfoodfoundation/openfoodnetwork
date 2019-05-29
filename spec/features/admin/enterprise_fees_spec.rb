@@ -18,7 +18,7 @@ feature '
     click_link 'Enterprise Fees'
 
     expect(page).to have_select "enterprise_fee_set_collection_attributes_0_enterprise_id"
-    expect(page).to have_select "enterprise_fee_set_collection_attributes_0_fee_type", selected: 'Packing'
+    expect(page).to have_select "enterprise_fee_set_collection_attributes_0_fee_type", selected: 'Packing fee'
     expect(page).to have_selector "input[value='$0.50 / kg']"
     expect(page).to have_select "enterprise_fee_set_collection_attributes_0_tax_category_id", selected: 'GST'
     expect(page).to have_select "enterprise_fee_set_collection_attributes_0_calculator_type", selected: 'Flat Rate (per item)'
@@ -72,7 +72,7 @@ feature '
 
     # Then I should see the updated fields for my fee
     expect(page).to have_select "enterprise_fee_set_collection_attributes_0_enterprise_id", selected: 'Foo'
-    expect(page).to have_select "enterprise_fee_set_collection_attributes_0_fee_type", selected: 'Admin'
+    expect(page).to have_select "enterprise_fee_set_collection_attributes_0_fee_type", selected: 'Admin fee'
     expect(page).to have_selector "input[value='Greetings!']"
     expect(page).to have_select 'enterprise_fee_set_collection_attributes_0_tax_category_id', selected: 'Inherit From Product'
     expect(page).to have_selector "option[selected]", text: 'Flat Percent (per item)'
