@@ -10,6 +10,16 @@
 #
 module Stock
   class Package < Spree::Stock::Package
+    # Returns all exsiting shipping categories.
+    #   It does not filter by the shipping categories of the products in the order.
+    #   It allows checkout of products with categories that are not the shipping methods categories
+    #   It disables the matching of product shipping category with shipping method's category
+    #
+    # @return [Array<Spree::ShippingCategory>]
+    def shipping_categories
+      Spree::ShippingCategory.all
+    end
+
     # Skips the methods that are not used by the order's distributor
     #
     # @return [Array<Spree::ShippingMethod>]
