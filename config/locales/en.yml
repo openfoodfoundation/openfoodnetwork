@@ -2862,6 +2862,17 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     create: "Create"
     loading: "Loading"
 
+    flat_percent: "Flat Percent"
+    per_kg: "Per Kg"
+    amount: "Amount"
+    currency: "Currency"
+    first_item: "First Item Cost"
+    additional_item: "Additional Item Cost"
+    max_items: "Max Items"
+    minimal_amount: "Minimal Amount"
+    normal_amount: "Normal Amount"
+    discount_amount: "Discount Amount"
+
     # TODO: remove `email` key once we get to Spree 2.0
     email: Email
     # TODO: remove 'account_updated' key once we get to Spree 2.0
