@@ -2745,6 +2745,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     continue: "Continue"
     fill_in_customer_info: "Please fill in customer info"
     new_payment: "New Payment"
+    capture: "Capture"
+    void: "Void"
 
     configurations: "Configurations"
     general_settings: "General Settings"
