@@ -4,8 +4,8 @@ namespace :ofn do
     task setup: :environment do
       p '== Entering setup'
       # NOTE: Could be helpful to drop and create again the db here
-      #Rake::Task['db:drop'].invoke
-      #Rake::Task['db:create'].invoke
+      # Rake::Task['db:drop'].invoke
+      # Rake::Task['db:create'].invoke
 
       unless Spree::User.table_exists? && Spree::User.count
         p '== Load data schema'
@@ -13,8 +13,8 @@ namespace :ofn do
 
         # TODO: Integrate the tasks loading data
         # Issue to reach stdin while creating Admin account
-        #Rake::Task['db:seed'].invoke
-        #Rake::Task['ofn:sample_data'].invoke
+        # Rake::Task['db:seed'].invoke
+        # Rake::Task['ofn:sample_data'].invoke
       end
 
       p '== Migrate'
