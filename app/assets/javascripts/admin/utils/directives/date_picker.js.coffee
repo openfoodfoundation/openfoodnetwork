@@ -1,6 +1,7 @@
 angular.module("admin.utils").directive "datepicker", ->
   require: "ngModel"
   link: (scope, element, attrs, ngModel) ->
+    element.datepicker.regional[""]
     element.datepicker
       dateFormat: "yy-mm-dd"
       onSelect: (dateText, inst) ->
