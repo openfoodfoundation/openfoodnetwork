@@ -150,16 +150,30 @@ describe Spree::Admin::ProductsController, type: :controller do
   end
 
   describe "updating" do
+    let(:producer) { create(:enterprise) }
+    let!(:product) { create(:simple_product, supplier: producer) }
+
+    before do
+      @request.env['HTTP_REFERER'] = 'http://test.com/'
+      login_as_enterprise_user [producer]
+    end
+
+    describe "product variant unit is items" do
+      it "clears unit description of all variants of the product" do
+        product.variants.first.update_attribute :unit_description, "grams"
+        spree_put :update,
+                  id: product,
+                  product: {
+                    variant_unit: "items",
+                    variant_unit_name: "bag"
+                  }
+        expect(product.reload.variants.first.unit_description).to be_empty
+      end
+    end
+
     describe "product properties" do
       context "as an enterprise user" do
-        let(:producer) { create(:enterprise) }
-        let!(:product) { create(:simple_product, supplier: producer) }
         let!(:property) { create(:property, name: "A nice name") }
-
-        before do
-          @request.env['HTTP_REFERER'] = 'http://test.com/'
-          login_as_enterprise_user [producer]
-        end
 
         context "when a submitted property does not already exist" do
           it "does not create a new property, or product property" do
