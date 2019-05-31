@@ -13,7 +13,13 @@ module Calculator
 
     def compute(object)
       line_items = line_items_for object
-      total_weight = line_items.sum { |li| ((li.variant.andand.weight || 0) * li.quantity) }
+      total_weight = line_items.sum do |line_item|
+        if line_item.final_weight_volume.present?
+          line_item.final_weight_volume / 1000
+        else
+          ((line_item.variant.andand.weight || 0) * line_item.quantity)
+        end
+      end
       total_weight * preferred_per_kg
     end
   end

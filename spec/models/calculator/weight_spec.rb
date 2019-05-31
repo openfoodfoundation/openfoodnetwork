@@ -18,13 +18,22 @@ describe Calculator::Weight do
     expect(subject.compute(order)).to eq((10 * 1 + 20 * 3) * 10)
   end
 
-  it "computes shipping cost for a line item" do
-    variant = build(:variant, weight: 10)
+  describe "line item with variant weight" do
+    let(:variant) { build(:variant, weight: 10) }
+    let(:line_item) { build(:line_item, variant: variant, quantity: 2) }
 
-    line_item = build(:line_item, variant: variant, quantity: 2)
+    before { subject.set_preference(:per_kg, 10) }
 
-    subject.set_preference(:per_kg, 10)
-    expect(subject.compute(line_item)).to eq(10 * 2 * 10)
+    it "computes shipping cost for a line item" do
+      expect(subject.compute(line_item)).to eq(10 * 2 * 10)
+    end
+
+    describe "and with final_weight_volume defined" do
+      it "computes fee using final_weight_volume, not the variant weight" do
+        line_item.final_weight_volume = "18000"
+        expect(subject.compute(line_item)).to eq(10 * 18)
+      end
+    end
   end
 
   it "computes shipping cost for an object with an order" do
