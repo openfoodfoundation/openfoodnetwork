@@ -166,7 +166,8 @@ module Spree
       let(:variant) { create(:variant) }
 
       it "refreshes the products cache on save" do
-        expect(OpenFoodNetwork::ProductsCache).to receive(:variant_changed).with(variant)
+        # When creating the variant both the Variant and StockItem callbacks get executed
+        expect(OpenFoodNetwork::ProductsCache).to receive(:variant_changed).with(variant).twice
         variant.sku = 'abc123'
         variant.save
       end
@@ -182,7 +183,8 @@ module Spree
 
         it "refreshes the products cache for the entire product on save" do
           expect(OpenFoodNetwork::ProductsCache).to receive(:product_changed).with(product)
-          expect(OpenFoodNetwork::ProductsCache).to receive(:variant_changed).never
+          # The StockItem callback is still executed
+          expect(OpenFoodNetwork::ProductsCache).to receive(:variant_changed).once
           master.sku = 'abc123'
           master.save
         end
