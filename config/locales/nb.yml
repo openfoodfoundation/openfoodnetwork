@@ -1446,6 +1446,7 @@ nb:
   orders_changeable_orders_alert_html: Denne bestillingen er bekreftet, men du kan gjøre endringer til <strong>%{oc_close}</strong>.
   products_clear_all: Fjern alt
   products_showing: "Viser:"
+  products_or: "ELLER"
   products_with: med
   products_search: "Søk på produkt eller produsent"
   products_loading: "Laster produkter..."

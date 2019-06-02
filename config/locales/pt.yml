@@ -1447,6 +1447,7 @@ pt:
   orders_changeable_orders_alert_html: Esta encomenda está confirmada, mas pode fazer alterações até <strong>%{oc_close}</strong>.
   products_clear_all: Limpar tudo
   products_showing: "Mostrando:"
+  products_or: "OU"
   products_with: com
   products_search: "Procurar por produto ou produtor"
   products_loading: "Carregando produtos..."

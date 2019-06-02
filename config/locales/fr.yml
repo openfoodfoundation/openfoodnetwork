@@ -1447,6 +1447,7 @@ fr:
   orders_changeable_orders_alert_html: Cette commande a été confirmée, mais vous pouvez effectuer des modifications jusqu'à <strong>%{oc_close}</strong>.
   products_clear_all: Vider
   products_showing: "Afficher:"
+  products_or: "OU"
   products_with: avec
   products_search: "Recherche par produit ou producteur"
   products_loading: "Produits en cours de chargement..."

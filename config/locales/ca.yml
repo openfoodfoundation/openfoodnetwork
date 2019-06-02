@@ -100,14 +100,6 @@ ca:
       subject: "%{enterprise} és ara %{sitename}"
     invite_manager:
       subject: "%{enterprise} t'ha convidat a ser administrador"
-  order_mailer:
-    cancel_email:
-      dear_customer: "Benvolguda consumidora:"
-      instructions: "S'ha cancel·lat la vostra comanda. Conserveu aquesta informació com a comprovant de la cancel·lació."
-      order_summary_canceled: "Resum de comanda [CANCEL·LADA]"
-      subject: "Cancel·lació de la comanda"
-      subtotal: "Subtotal: %{subtotal}"
-      total: "Total comanda: %{total}"
   producer_mailer:
     order_cycle:
       subject: "Informe del cicle de comanda per %{producer}"
@@ -175,17 +167,9 @@ ca:
   confirm_resend_order_confirmation: "Segur que vol reenviar el correu de confirmació de la comanda?"
   must_have_valid_business_number: "%{enterprise_name} ha de tenir un NIF vàlid abans de poder enviar les factures."
   invoice: "Factura"
-  percentage_of_sales: "%{percentage} de vendes"
-  capped_at_cap: "llimitat a %{cap}"
-  per_month: "al mes"
-  free: "gratuït"
-  free_trial: "prova gratuïta"
-  plus_tax: "més IVA"
-  min_bill_turnover_desc: "una vegada que el volum de negocis superi %{mbt_amount}"
   more: "Més"
   say_no: "No"
   say_yes: "Sí"
-  then: llavors
   ongoing: En marxa
   bill_address: Adreça de facturació
   ship_address: Adreça d'enviament
@@ -237,7 +221,6 @@ ca:
   notes: Notes
   error: Error
   processing_payment: S'està processant el pagament...
-  show_only_unfulfilled_orders: Mostra només comandes no realitzades
   filter_results: Aplicar filtre
   quantity: Quantitat
   pick_up: Recollida
@@ -251,6 +234,7 @@ ca:
   actions:
     create_and_add_another: "Crea i afegeix-ne una altra"
     create: "Crear"
+    cancel: "Cancel·lar"
   admin:
     begins_at: Comença a
     begins_on: Comença
@@ -309,27 +293,6 @@ ca:
     has_n_rules: "té%{num} regles"
     unsaved_confirm_leave: "Hi ha canvis no desats canviats en aquesta pàgina. Continua sense desar?"
     unsaved_changes: "Teniu canvis sense desar"
-    accounts_and_billing_settings:
-      method_settings:
-        default_accounts_payment_method: "Mètode de pagament de comptes predeterminats"
-        default_accounts_shipping_method: "Mètode d'enviament de comptes predeterminades"
-      edit:
-        accounts_and_billing: "Comptes i facturació"
-        accounts_administration_distributor: "Administració de comptes de distribuïdora"
-        admin_settings: "Configuració"
-        update_invoice: "Actualitza les factures"
-        auto_update_invoices: "Actualitzeu les factures cada dia a la 1:00 a.m."
-        finalise_invoice: "Finalitzar les factures"
-        auto_finalise_invoices: "Finalitzar automàticament les factures mensualment el dia 2 a la 1:30 a.m."
-        manually_run_task: "Executa la tasca manualment"
-        update_user_invoice_explained: "Utilitzeu aquest botó per actualitzar immediatament les factures del mes actual per a cada usuari d'organització del sistema. Aquesta tasca es pot configurar per executar-se automàticament cada nit."
-        finalise_user_invoices: "Finalitza les factures d'usuari"
-        finalise_user_invoice_explained: "Utilitzeu aquest botó per finalitzar totes les factures del sistema per al mes natural anterior. Aquesta tasca es pot configurar per executar-se automàticament un cop al mes."
-        update_user_invoices: "Actualitzeu factures d'usuari"
-      errors:
-        accounts_distributor: s'ha d'establir si voleu crear factures per a usuàries de la organització.
-        default_payment_method: s'ha d'establir si voleu crear factures per a usuàries de la organització.
-        default_shipping_method: s'ha d'establir si voleu crear factures per a usuàries de la organització.
     shopfront_settings:
       embedded_shopfront_settings: "Configuració de botiga incrustada"
       enable_embedded_shopfronts: "Habilita les botigues incrustades"
@@ -337,34 +300,6 @@ ca:
     number_localization:
       number_localization_settings: "Configuració de localització numèrica"
       enable_localized_number: "Utilitzeu l'estàndard internacional per separar milers/decimals"
-    business_model_configuration:
-      edit:
-        business_model_configuration: "Model de sostenibilitat"
-        business_model_configuration_tip: "Configureu la tarifa què es cobrarà a les botigues cada mes per utilitzar Open Food Network."
-        bill_calculation_settings: "Configuració del càlcul de ticket"
-        bill_calculation_settings_tip: "Ajusteu la quantitat que es facturarà a les organitzacions cada mes per utilitzar l'OFN."
-        shop_trial_length: "Durada de la prova de la botiga (dies)"
-        shop_trial_length_tip: "El temps (en dies) que les organitzacions que es configuren com a botigues poden funcionar amb període de prova."
-        fixed_monthly_charge: "Càrrec mensual fixat"
-        fixed_monthly_charge_tip: "Un càrrec mensual fix per a totes les organitzacions que es configuren com a botiga i que hagin superat la facturació mínima (si s'estableix)."
-        percentage_of_turnover: "Percentatge de la facturació"
-        percentage_of_turnover_tip: "Quan sigui superior a zero, aquesta taxa (0,0 - 1,0) s'aplicarà a la facturació total de cada botiga i s'afegeix a qualsevol càrrec fixat (a l'esquerra) per calcular la factura mensual."
-        monthly_cap_excl_tax: "Límit mensual (exclòs GST)"
-        monthly_cap_excl_tax_tip: "Quan sigui superior a zero, aquest valor s'utilitzarà com a límit en la quantitat que es cobrarà a les botigues cada mes."
-        tax_rate: "Impost"
-        tax_rate_tip: "Impost que s'aplica a la factura mensual que es cobra a les organitzacions per utilitzar el sistema."
-        minimum_monthly_billable_turnover: "Mínim volum de vendes facturable al mes"
-        minimum_monthly_billable_turnover_tip: "La facturació mensual mínima abans que a una botiga se li cobri per l'ús d'OFN. Les organitzacions que facturin menys d'aquest import en un mes no es cobraran, ja sigui per percentatge o per tipus fix."
-        example_bill_calculator: "Exemple de calculadora de rebut"
-        example_bill_calculator_legend: "Després de l'exemple de volum de ventes per visualitzar l'efecte de la configuració a l'esquerra."
-        example_monthly_turnover: "Exemple de facturació mensual"
-        example_monthly_turnover_tip: "Un exemple de volum de ventes mensual per a una organització que es farà servir per calcular un exemple de factura mensual més a baix."
-        cap_reached?: "S'ha arribat a la capacitat?"
-        cap_reached?_tip: "Si s'ha arribat al límit (especificat a l'esquerra), tenint en compte la configuració i el volum de ventes proporcionat."
-        included_tax: "Impostos incloses"
-        included_tax_tip: "Els impostos totals inclosos a la factura mensual d'exemple, tenint en compte la configuració i la facturació proporcionada."
-        total_monthly_bill_incl_tax: "Factura mensual total (impostos inclosos)"
-        total_monthly_bill_incl_tax_tip: "L'exemple total de la factura mensual amb impostos inclosos, tenint en compte la configuració i la facturació proporcionada."
     cache_settings:
       edit:
         title: "Emmagatzematge ocult"
@@ -404,11 +339,7 @@ ca:
         config_instructions_html: "Aquí podeu configurar la integració Matomo OFN. L'URL de Matomo que us apareix a continuació ha d'indicar la instància de Matomo en la qual s'enviarà la informació de seguiment de l'usuari; si es deixa buit, el seguiment de l'usuari de Matomo estarà desactivat. El camp d'identificació del lloc no és obligatori, però és útil si fa un seguiment de més d'un lloc web en una sola instància de Matomo; es pot trobar a la consola d'instància de Matomo."
     customers:
       index:
-        add_customer: "Afegeix consumidora"
         new_customer: "Nova consumidora"
-        customer_placeholder: "consumidora@example.org"
-        valid_email_error: siusplau, introduïu una adreça de correu electrònic vàlida
-        add_a_new_customer_for: Afegiu una consumidora nova per %{shop_name}
         code: Codi
         duplicate_code: "Aquest codi ja s'ha utilitzat."
         bill_address: "Adreça de facturació"
@@ -448,6 +379,7 @@ ca:
         tax_category: Categoria d'impostos
         calculator: Calculadora
         calculator_values: Valors de la calculadora
+        search: "Cerca"
     enterprise_groups:
       index:
         new_button: Grup d'organització nou
@@ -731,25 +663,25 @@ ca:
           enable_subscriptions_tip: "Habilitar la funcionalitat de subscripcions?"
           enable_subscriptions_false: "Deshabilitat"
           enable_subscriptions_true: "Habilitat"
-          shopfront_message: Missatge de la botiga
+          shopfront_message: "Missatge de la botiga"
           shopfront_message_placeholder: >
               Una explicació opcional per a les consumidores que detalla com funciona
               la vostra botiga, que es mostrarà a sobre de la llista de productes.
-          shopfront_closed_message: Missatge de tancament de la botiga
+          shopfront_closed_message: "Missatge de tancament de la botiga"
           shopfront_closed_message_placeholder: >
               Un missatge que proporciona una explicació més detallada sobre per què
               la vostra botiga està tancada i / o quan poden esperar les consumidores
               que es tornarà a obrir. Això només es mostrarà a la vostra botiga quan
               no hi hagi cicles de comanda actius (és a dir, quan la botiga estigui
               tancada).
-          shopfront_category_ordering: Ordre de les categories de la botiga
-          open_date: Data d'obertura
-          close_date: Data de tancament
+          shopfront_category_ordering: "Ordre de les categories de la botiga"
+          open_date: "Data d'obertura"
+          close_date: "Data de tancament"
         social:
-          twitter_placeholder: 'p. ex: @horta_josepribes'
-          instagram_placeholder: 'p. ex: horta_josepribes'
-          facebook_placeholder: 'p .ex: www.facebook.com/NomDeLaPàgina'
-          linkedin_placeholder: 'p. ex: www.linkedin.com/in/ElTeuNom'
+          twitter_placeholder: "p. ex: @horta_josepribes"
+          instagram_placeholder: "p. ex: horta_josepribes"
+          facebook_placeholder: "p .ex: www.facebook.com/NomDeLaPàgina"
+          linkedin_placeholder: "p. ex: www.linkedin.com/in/ElTeuNom"
         stripe_connect:
           connect_with_stripe: "Connectar amb Stripe"
           stripe_connect_intro: "Per acceptar pagaments amb targeta de crèdit haureu de connectar el vostre compte de Stripe a Open Food Network. Utilitzeu el botó de la dreta per començar. "
@@ -904,22 +836,10 @@ ca:
         tags: Etiquetes
         add_a_tag: Afegeix una etiqueta
         delivery_details: Detalls de recollida / lliurament
-        debug_info: Informació de depuració
       index:
         schedule: Programació
         schedules: Programacions
-        adding_a_new_schedule: Afegir una nova programació
-        updating_a_schedule: Actualització una programació
         new_schedule: Nova programació
-        create_schedule: Crear una programació
-        update_schedule: Actualitza la programació
-        delete_schedule: Suprimeix la programació
-        created_schedule: Programació creada
-        updated_schedule: Programació actualitzada
-        deleted_schedule: Programació eliminada
-        schedule_name_placeholder: Nom de la programació
-        name_required_error: Si us plau introdueix un nom per a aquesta programació
-        no_order_cycles_error: Si us plau selecciona com a mínim un cicle de comanda (arrossega i deixa anar)
       name_and_timing_form:
         name: Nom
         orders_open: Les comandes s'obren a
@@ -956,9 +876,6 @@ ca:
     shared:
       user_guide_link:
         user_guide: Guia de l'usuari
-    overview:
-      enterprises_header:
-        ofn_with_tip: Les organitzacions són productores i/o grups de consum i són la unitat bàsica d'organització dins d'Open Food Network.
       enterprises_hubs_tabs:
         has_no_payment_methods: "%{enterprise} no té mètodes de pagament"
         has_no_shipping_methods: "%{enterprise} no té mètodes d'enviament"
@@ -1027,6 +944,7 @@ ca:
       subscriptions: Subscripcions
       new: Nova subscripció
       create: Crea una subscripció
+      edit: Edita la subscripció
       index:
         please_select_a_shop: Si us plau, seleccioneu una botiga
         edit_subscription: Edita la subscripció
@@ -1195,7 +1113,6 @@ ca:
   menu_4_title: "Grups"
   menu_4_url: "/groups"
   menu_5_title: "Sobre"
-  menu_5_url: " "
   menu_6_title: "Connecta"
   menu_6_url: " "
   menu_7_title: "Aprèn"
@@ -1524,6 +1441,7 @@ ca:
   orders_changeable_orders_alert_html: S'ha confirmat aquesta comanda però pots fer-hi canvis fins a <strong> %{oc_close} </ strong>.
   products_clear_all: Esborra-ho tot
   products_showing: "S'està mostrant:"
+  products_or: "O"
   products_with: amb
   products_search: "Cerca per producte o productora"
   products_loading: "S'estan carregant els productes..."
@@ -1629,7 +1547,6 @@ ca:
   sell_hubs_detail: "Configura un perfil per a la teva organització alimentària a Katuma. En qualsevol moment, pots modificar i convertir el teu perfil en una botiga de diverses productores."
   sell_groups_detail: "Configura un directori personalitzat d'empreses (productores i altres empreses alimentàries) per a la teva regió o per a la teva xarxa, organització."
   sell_user_guide: "Troba més informació a la nostra Guia d'usuari."
-  sell_listing_price: "Aparèixer a OFN és gratuït. Obrir i executar una botiga a OFN és gratuït. La configuració d'un directori de grup d'OFN per a la vostra organització o xarxa regional és gratuït."
   sell_embed: "També podem incrustar una botiga OFN al vostre web personalitzat o crear un lloc web personalitzat de la xarxa alimentària per a la teva regió."
   sell_ask_services: "Pregunta'ns sobre els serveis d'OFN."
   shops_title: Botigues
@@ -1688,8 +1605,6 @@ ca:
   products_max_quantity: Quantitat màxima
   products_distributor: Distribuïdora
   products_distributor_info: Quan seleccionis una distribuïdora per a la teva comanda, aquí es mostraran la seva d'adreça i hores de recollida.
-  shop_trial_expires_in: "El període de prova de la vostra botiga caduca en"
-  shop_trial_expired_notice: "Bones notícies! Hem decidit ampliar els període de prova de la botiga fins a un altre avís."
   password: Contrasenya
   remember_me: Recorda'm
   are_you_sure: "Estàs segur?"
@@ -1868,8 +1783,6 @@ ca:
   action_or: "O"
   enterprise_limit: Límit d'organitzacions
   shipping_method_destroy_error: "Aquest mètode d'enviament no es pot esborrar perquè s'hi fa referència en una comanda: %{number}."
-  accounts_and_billing_task_already_running_error: "Ja s'està executant una tasca, espera fins que hagi acabat"
-  accounts_and_billing_start_task_notice: "Tasca en cua"
   fees: "Comissions"
   item_cost: "Cost de l'article"
   bulk: "A granel"
@@ -1978,6 +1891,7 @@ ca:
   product: "Producte"
   price: "Preu"
   on_hand: "Disponible"
+  review: "Revisa"
   save_changes: "Desa els canvis"
   order_saved: "Comanda desada"
   no_products: Sense productes
@@ -2020,7 +1934,6 @@ ca:
   live: "online"
   manage: "Gestiona"
   resend: "Reenviar"
-  trial: Prova
   add_and_manage_products: "Afegeix & gestiona productes"
   add_and_manage_order_cycles: "Afegeix & gestiona cicles de comanda"
   manage_order_cycles: "Gestiona els cicles de comanda"
@@ -2051,7 +1964,6 @@ ca:
   hub_sidebar_at_least: "Cal seleccionar almenys un grup "
   hub_sidebar_blue: "blau"
   hub_sidebar_red: "vermell"
-  shop_trial_in_progress: "El període de prova de la vostra botiga caduca en %{days}."
   report_customers_distributor: "Distribuïdora"
   report_customers_supplier: "Proveïdora"
   report_customers_cycle: "Cicle de Comanda"
@@ -2183,7 +2095,7 @@ ca:
   report_header_eft_price: "Transferència (%{currency})"
   report_header_paypal_price: "PayPal (%{currency})"
   report_header_sku: Número de referència (SKU)
-  report_header_amount: Import
+  report_header_amount: Quantitat
   report_header_balance: Balanç
   report_header_total_cost: "Cost total"
   report_header_total_ordered: Total demanat
@@ -2481,6 +2393,26 @@ ca:
         sending: "Reenviar..."
         done: "Reenviament fet ✓"
         failed: "Reenviament fallit ✗"
+      order_cycles:
+        schedules:
+          adding_a_new_schedule: "Afegir una nova programació"
+          updating_a_schedule: "Actualització una programació"
+          create_schedule: "Crear una programació"
+          update_schedule: "Actualitza la programació"
+          delete_schedule: "Suprimeix la programació"
+          schedule_name_placeholder: "Nom de la programació"
+          created_schedule: "Programació creada"
+          updated_schedule: "Programació actualitzada"
+          deleted_schedule: "Programació eliminada"
+          name_required_error: "Si us plau introdueix un nom per a aquesta programació"
+          no_order_cycles_error: "Si us plau selecciona com a mínim un cicle de comanda (arrossega i deixa anar)"
+          available: "Disponible"
+      customers:
+        index:
+          add_customer: "Afegeix consumidora"
+          add_a_new_customer_for: "Afegiu una consumidora nova per %{shop_name}"
+          customer_placeholder: "consumidora@example.org"
+          valid_email_error: "siusplau, introduïu una adreça de correu electrònic vàlida"
     insufficient_stock: "No hi ha prou estoc disponible, només queda %{on_hand}"
     out_of_stock:
       reduced_stock_available: Estoc reduït disponible
@@ -2845,6 +2777,8 @@ ca:
           order_adjustments: "Ajustaments de comandes"
           order_total: "Total comanda"
       overview:
+        enterprises_header:
+          ofn_with_tip: Les organitzacions són productores i/o grups de consum i són la unitat bàsica d'organització dins d'Open Food Network.
         products:
           active_products:
             zero: "No tens cap producte actiu."
@@ -2975,6 +2909,7 @@ ca:
       format: '%d-% m-% Y'
       js_format: 'dd-mm-yy'
     orders:
+      error_flash_for_unavailable_items: "Un article de la teva cistella ha deixat d'estar disponible."
       edit:
         login_to_view_order: "Si us plau inicia sessió per veure la teva comanda."
       bought:
@@ -3000,6 +2935,11 @@ ca:
       void: buit
       invalid: invàlid
     order_mailer:
+      cancel_email:
+        order_summary_canceled: "Resum de comanda [CANCEL·LADA]"
+        subject: "Cancel·lació de la comanda"
+      confirm_email:
+        subject: "Confirmació de la comanda"
       invoice_email:
         hi: "Hola %{name}"
         invoice_attached_text: Trobareu adjunta un comprovant de la compra per a la vostra comanda recent

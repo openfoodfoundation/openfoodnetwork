@@ -100,14 +100,6 @@ es:
       subject: "%{enterprise} está ahora en %{sitename}"
     invite_manager:
       subject: "%{enterprise} te ha invitado a ser administrador"
-  order_mailer:
-    cancel_email:
-      dear_customer: "Estimada consumidora,"
-      instructions: "Tu pedido ha sido CANCELADO. Guarda esta información de cancelación para tus registros."
-      order_summary_canceled: "Resumen del pedido [CANCELADO]"
-      subject: "Cancelación del pedido"
-      subtotal: "Subtotal: %{subtotal}"
-      total: "Total del pedido: %{total}"
   producer_mailer:
     order_cycle:
       subject: "Informe Ciclo de Pedido para %{producer}"
@@ -175,17 +167,9 @@ es:
   confirm_resend_order_confirmation: "¿Estás seguro que quieres reenviar el correo de confirmación del pedido?"
   must_have_valid_business_number: "%{enterprise_name} debe tener un NIF válido antes de que las facturas se puedan enviar."
   invoice: "Factura"
-  percentage_of_sales: "%{percentage} de ventas"
-  capped_at_cap: "Limitado en %{cap}"
-  per_month: "por mes"
-  free: "gratis"
-  free_trial: "Prueba gratuita"
-  plus_tax: "más Impuestos"
-  min_bill_turnover_desc: "Una vez que el volumen de negocio supere %{mbt_amount}"
   more: "Más"
   say_no: "No"
   say_yes: "Si"
-  then: Entonces
   ongoing: En marcha
   bill_address: Dirección de facturación
   ship_address: Dirección de envío
@@ -237,7 +221,6 @@ es:
   notes: Notas
   error: Error
   processing_payment: Procesando el pago...
-  show_only_unfulfilled_orders: Mostrar solo órdenes no finalizadas
   filter_results: Filtrar resultados
   quantity: Cantidad
   pick_up: Recogida
@@ -251,6 +234,7 @@ es:
   actions:
     create_and_add_another: "Crear y agregar otro"
     create: "Crear"
+    cancel: "Cancelar"
   admin:
     begins_at: Empieza en
     begins_on: Comienza en
@@ -309,27 +293,6 @@ es:
     has_n_rules: "Tiene %{num} reglas"
     unsaved_confirm_leave: "Has cambios sin guardar en esta página ¿Continuar sin guardar?"
     unsaved_changes: "Tienes cambios sin guardar"
-    accounts_and_billing_settings:
-      method_settings:
-        default_accounts_payment_method: "Método de Pago por defecto"
-        default_accounts_shipping_method: "Método de Envío por defecto"
-      edit:
-        accounts_and_billing: "Cuentas y Facturación"
-        accounts_administration_distributor: "Cuentas de Administrador Distribuidora"
-        admin_settings: "Configuración"
-        update_invoice: "Actualizar Facturas"
-        auto_update_invoices: "Auto-actualizar facturas siempre a las 1:00am"
-        finalise_invoice: "Finalizar Facturas"
-        auto_finalise_invoices: "Auto-finalizar facturas mensualmente el día 2 de cada mes a las 1:30am"
-        manually_run_task: "Ejecutar Tarea Manualmente"
-        update_user_invoice_explained: "Usa este botón para actualizar ahora facturas de este mes para cada organización del sistema. Esta tarea puede ser programada para ser ejecutada cada noche."
-        finalise_user_invoices: "Finalizar Facturas de los Usuarios"
-        finalise_user_invoice_explained: "Usa este botón para actualizar ahora facturas del sistema del mes pasado. Esta tarea puede ser programada para ser ejecutada una vez al mes."
-        update_user_invoices: "Actualizar Facturas de los Usuarios"
-      errors:
-        accounts_distributor: Debe establecerse si desea crear facturas para usuarios de la organización.
-        default_payment_method: Debe establecerse si desea crear facturas para usuarios de la organización.
-        default_shipping_method: Debe establecerse si desea crear facturas para usuarios de la organización.
     shopfront_settings:
       embedded_shopfront_settings: "Configuración de la tienda integrada"
       enable_embedded_shopfronts: "Habilitar tiendas integradas"
@@ -337,34 +300,6 @@ es:
     number_localization:
       number_localization_settings: "Number Localization Settings"
       enable_localized_number: "Usar la logica internacional separador miles/decimales"
-    business_model_configuration:
-      edit:
-        business_model_configuration: "Modelo de Sostenibilidad"
-        business_model_configuration_tip: "Configurar tarifa para las organizaciones que se cobrarán una vez al mes por usar Open Food Network."
-        bill_calculation_settings: "Configuración de cálculos para las Facturas"
-        bill_calculation_settings_tip: "Ajusta el número de organizaciones a las que se facturará cada mes por usar OFN."
-        shop_trial_length: "Duración de la prueba de la Tienda (Días)"
-        shop_trial_length_tip: "Los días que las organizaciones que se han dado de alta como tiendas pueden estar en periodo de prueba (trial)."
-        fixed_monthly_charge: "Tarifa fija Mensual"
-        fixed_monthly_charge_tip: "Un cargo mensual fijo para todas las organizaciones que se establezcan como una tienda y hayan superado el volumen de negocios facturable mínimo (si se establece)"
-        percentage_of_turnover: "Porcentaje de volumen de ventas"
-        percentage_of_turnover_tip: "Cuando sea mayor que cero (0,0 - 1,0) se aplicará al volumen de ventas total de cada tienda y se agregará a cualquier cargo fijo (a la izquierda) para calcular la factura mensual."
-        monthly_cap_excl_tax: "Límite mensual (excl. IVA)"
-        monthly_cap_excl_tax_tip: "Cuando sea mayor que cero, este valor se usará como un límite en la cantidad que se cobrará cada mes."
-        tax_rate: "Porcentaje del Impuesto"
-        tax_rate_tip: "Porcentaje del impuesto que se aplica a la factura mensual que las organizaciones cobran por usar el sistema."
-        minimum_monthly_billable_turnover: "Mínimo Volumen de Ventas Facturable al Mes"
-        minimum_monthly_billable_turnover_tip: "El mínimo volumen de ventas mensual a partir del cual se cobrará por el uso de OFN. Las organizaciones que facturen menos de esta cantidad en un mes no se le cobrará, ni como porcentaje ni como tasa fija."
-        example_bill_calculator: "Ejemplo de cálculo para las Facturas"
-        example_bill_calculator_legend: "Modifica el volumen de ventas del ejemplo para visualizar el efecto de los cambios a la izquierda."
-        example_monthly_turnover: "Ejemplo de Volumen de Ventas Mensual"
-        example_monthly_turnover_tip: "Un ejemplo de facturación mensual para una organización que se utilizará para generar un ejemplo de factura mensual a continuación."
-        cap_reached?: "¿Límite alcanzado?"
-        cap_reached?_tip: "Si se ha alcanzado el límite (especificado a la izquierda), dada la configuración y la facturación proporcionada."
-        included_tax: "Impuestos Incuidos"
-        included_tax_tip: "El impuesto total incluido en la factura mensual de ejemplo, dada la configuración y la facturación proporcionada."
-        total_monthly_bill_incl_tax: "Factura mensual total (incl. impuesto)"
-        total_monthly_bill_incl_tax_tip: "El ejemplo de factura mensual total con impuestos incluidos, dada la configuración y la facturación proporcionada."
     cache_settings:
       edit:
         title: "Almacenando"
@@ -404,11 +339,7 @@ es:
         config_instructions_html: "Aquí puede configurar la integración de OFN Matomo. La siguiente URL de Matomo debe apuntar a la instancia de Matomo a la que se enviará la información de seguimiento del usuario; si se deja vacío, el seguimiento del usuario Matomo se desactivará. El campo ID del sitio no es obligatorio, pero es útil si está rastreando más de un sitio web en una sola instancia de Matomo; se puede encontrar en la consola de la instancia de Matomo."
     customers:
       index:
-        add_customer: "Añadir Consumidor"
         new_customer: "Nuevo Consumidor"
-        customer_placeholder: "customer@example.org"
-        valid_email_error: Introduce un email válido
-        add_a_new_customer_for: Añadir un nuevo consumidor para %{shop_name}
         code: Código
         duplicate_code: "Este código ya se ha usado."
         bill_address: "Dirección de Facturación"
@@ -448,6 +379,7 @@ es:
         tax_category: Categoría del impuesto
         calculator: Calculadora
         calculator_values: Valores de la Calculadora
+        search: "Buscar"
     enterprise_groups:
       index:
         new_button: Nuevo Grupo de Organizaciones
@@ -731,25 +663,25 @@ es:
           enable_subscriptions_tip: "¿Habilitar la funcionalidad de suscripciones?"
           enable_subscriptions_false: "Deshabilitado"
           enable_subscriptions_true: "Habilitado"
-          shopfront_message: Mensaje de la Tienda
+          shopfront_message: "Mensaje de la Tienda"
           shopfront_message_placeholder: >
               Una explicación opcional para los consumidores que detallan cómo funciona
               su tienda, que se mostrará por encima de la lista de productos en su
               página de tienda.
-          shopfront_closed_message: Mensaje de tienda cerrada
+          shopfront_closed_message: "Mensaje de tienda cerrada"
           shopfront_closed_message_placeholder: >
               Un mensaje que proporciona una explicación más detallada sobre por qué
               tu tienda está cerrada y/o cuándo se abrirá de nuevo. Esto se muestra
               en tu tienda sólo cuando no tienes ciclos de pedidos activos (p.e. la
               tienda está cerrada).
-          shopfront_category_ordering: Orden de las categorías de la tienda
-          open_date: Fecha de Inicio
-          close_date: Fecha de Finalización
+          shopfront_category_ordering: "Orden de las categorías de la tienda"
+          open_date: "Fecha de Inicio"
+          close_date: "Fecha de Finalización"
         social:
-          twitter_placeholder: 'ej: the_prof'
-          instagram_placeholder: p.ej. @mi_huerta
-          facebook_placeholder: eg. www.facebook.com/NombreDePáginaAquí
-          linkedin_placeholder: p.ej. www.linkedin.com/in/YourNameHere
+          twitter_placeholder: "ej: the_prof"
+          instagram_placeholder: "p.ej. @mi_huerta"
+          facebook_placeholder: "eg. www.facebook.com/NombreDePáginaAquí"
+          linkedin_placeholder: "p.ej. www.linkedin.com/in/YourNameHere"
         stripe_connect:
           connect_with_stripe: "Conectar con Stripe"
           stripe_connect_intro: "Para aceptar pagos con tarjeta de crédito, necesitarás conectar tu cuenta Stripe con Open Food Network. Usa el botón a la derecha para comenzar."
@@ -904,22 +836,10 @@ es:
         tags: Etiquetas
         add_a_tag: Add a tag
         delivery_details: Detalles de Recogida / Entrega
-        debug_info: Información de Debug
       index:
         schedule: Programación
         schedules: Programación
-        adding_a_new_schedule: Agregar una nueva programación
-        updating_a_schedule: Actualización de una programación
         new_schedule: Nueva programación
-        create_schedule: Crear programación
-        update_schedule: Actualizar programación
-        delete_schedule: Eliminar programación
-        created_schedule: Programación creada
-        updated_schedule: Programación actualizada
-        deleted_schedule: Programación eliminada
-        schedule_name_placeholder: Nombre de la programación
-        name_required_error: Por favor ingrese un nombre para esta programación
-        no_order_cycles_error: Seleccione al menos un ciclo de pedido (arrastrar y soltar)
       name_and_timing_form:
         name: Nombre
         orders_open: Pedidos abiertos a
@@ -956,9 +876,6 @@ es:
     shared:
       user_guide_link:
         user_guide: Manual de Usuario
-    overview:
-      enterprises_header:
-        ofn_with_tip: Las Organizaciones son Productoras y/o Grupos y son la unidad básica de organización dentro de la Open Food Network.
       enterprises_hubs_tabs:
         has_no_payment_methods: "%{enterprise} no tiene formas de pago"
         has_no_shipping_methods: "%{enterprise} no tiene ningún método de envío"
@@ -1027,6 +944,7 @@ es:
       subscriptions: Suscripciones
       new: Nueva suscripción
       create: Crear suscripción
+      edit: Editar suscripción
       index:
         please_select_a_shop: Por favor seleccione una tienda
         edit_subscription: Editar suscripción
@@ -1195,7 +1113,6 @@ es:
   menu_4_title: "Redes"
   menu_4_url: "/groups"
   menu_5_title: "Acerca de"
-  menu_5_url: "http://katuma.org/"
   menu_6_title: "Conectar"
   menu_6_url: " "
   menu_7_title: "Aprender"
@@ -1524,6 +1441,7 @@ es:
   orders_changeable_orders_alert_html: Este pedido ha sido confirmado, pero puede realizar cambios hasta <strong>%{oc_close}</strong>.
   products_clear_all: Limpiar todo
   products_showing: "Mostrando:"
+  products_or: "Ó"
   products_with: con
   products_search: "Buscar por producto o productora"
   products_loading: "Cargando productos..."
@@ -1629,7 +1547,6 @@ es:
   sell_hubs_detail: "Crea un perfil para tu organización en OFN. En cualquier momento puedes actualizar tu perfil a una tienda de varias productoras."
   sell_groups_detail: "Crea un directorio personalizado de organizaciones (productoras u otras organizaciones) para tu región o para tu organización."
   sell_user_guide: "Descubre mucho más en la guía de usuario."
-  sell_listing_price: "La inscripción en OFN es gratuita. Abrir y dirigir una tienda en OFN es gratis. La creación de un directorio de grupos en OFN para tu organización o red local es gratuita."
   sell_embed: "También podemos incrustar una tienda OFN en tu propia web personalizada o crear un sitio web de la red local a medida para tu región."
   sell_ask_services: "Pregúntanos sobre los servicios de OFN"
   shops_title: Tiendas
@@ -1688,8 +1605,6 @@ es:
   products_max_quantity: Cantidad máxima
   products_distributor: Distribuidor
   products_distributor_info: Cuando selecciones una distribuidora para tu pedido, tu dirección y tiempo de recolección se mostrarán aquí.
-  shop_trial_expires_in: "Tu periodo de prueba para la tienda termina en"
-  shop_trial_expired_notice: "¡Buenas noticias! Hemos decidido extender los periodos de prueba para las tiendas hasta nuevo aviso."
   password: Contraseña
   remember_me: Recordarme
   are_you_sure: "¿Está seguro?"
@@ -1868,8 +1783,6 @@ es:
   action_or: "Ó"
   enterprise_limit: Límite de la Organización
   shipping_method_destroy_error: "Ese método de envío no puede ser eliminado ya que se hace referencia en un pedido: %{number}."
-  accounts_and_billing_task_already_running_error: "Se está ejecutando una tarea, espere hasta que haya finalizado"
-  accounts_and_billing_start_task_notice: "Tarea en cola"
   fees: "Comisiones"
   item_cost: "Costo del artículo"
   bulk: "Agrupar"
@@ -1978,6 +1891,7 @@ es:
   product: "Producto"
   price: "Precio"
   on_hand: "Disponibles"
+  review: "Revisión"
   save_changes: "Guardar Cambios"
   order_saved: "Pedido Guardado"
   no_products: No hay productos
@@ -2020,7 +1934,6 @@ es:
   live: "En directo"
   manage: "Gestionar"
   resend: "Reenviar"
-  trial: Trial
   add_and_manage_products: "Añadir y gestionar productos"
   add_and_manage_order_cycles: "Añadir y gestionar ciclos de pedidos"
   manage_order_cycles: "Gestionar ciclos de pedidos"
@@ -2051,7 +1964,6 @@ es:
   hub_sidebar_at_least: "Al menos un grupo debe ser seleccionado"
   hub_sidebar_blue: "azul"
   hub_sidebar_red: "rojo"
-  shop_trial_in_progress: "Tu periodo de prueba para la tienda termina en %{days}."
   report_customers_distributor: "Distribuidor"
   report_customers_supplier: "Proveedora"
   report_customers_cycle: "Ciclo de Pedido"
@@ -2482,6 +2394,26 @@ es:
         sending: "Reenviar..."
         done: "Reenvio hecho ✓"
         failed: "Reenvio fallido ✗"
+      order_cycles:
+        schedules:
+          adding_a_new_schedule: "Agregar una nueva programación"
+          updating_a_schedule: "Actualización de una programación"
+          create_schedule: "Crear programación"
+          update_schedule: "Actualizar programación"
+          delete_schedule: "Eliminar programación"
+          schedule_name_placeholder: "Nombre de la programación"
+          created_schedule: "Programación creada"
+          updated_schedule: "Programación actualizada"
+          deleted_schedule: "Programación eliminada"
+          name_required_error: "Por favor ingrese un nombre para esta programación"
+          no_order_cycles_error: "Seleccione al menos un ciclo de pedido (arrastrar y soltar)"
+          available: "Disponible"
+      customers:
+        index:
+          add_customer: "Añadir Consumidor"
+          add_a_new_customer_for: "Añadir un nuevo consumidor para %{shop_name}"
+          customer_placeholder: "customer@example.org"
+          valid_email_error: "Introduce un email válido"
     insufficient_stock: "Stock insuficiente disponible, solo quedan %{on_hand}"
     out_of_stock:
       reduced_stock_available: Stock reducido disponible
@@ -2846,6 +2778,8 @@ es:
           order_adjustments: "Ajustes de pedido"
           order_total: "Total del pedido"
       overview:
+        enterprises_header:
+          ofn_with_tip: Las Organizaciones son Productoras y/o Grupos y son la unidad básica de organización dentro de la Open Food Network.
         products:
           active_products:
             zero: "No tienes ningún producto activo"
@@ -2976,6 +2910,7 @@ es:
       format: '%Y-%m-%d'
       js_format: 'yy-mm-dd'
     orders:
+      error_flash_for_unavailable_items: "Un artículo de su carrito ya no está disponible."
       edit:
         login_to_view_order: "Por favor inicie sesión para ver su pedido."
       bought:
@@ -3001,6 +2936,11 @@ es:
       void: vacío
       invalid: inválido
     order_mailer:
+      cancel_email:
+        order_summary_canceled: "Resumen del pedido [CANCELADO]"
+        subject: "Cancelación del pedido"
+      confirm_email:
+        subject: "Confirmación del pedido"
       invoice_email:
         hi: "Hola %{name}"
         invoice_attached_text: Adjunta una factura para su pedido reciente de

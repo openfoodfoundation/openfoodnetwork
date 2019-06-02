@@ -100,14 +100,6 @@ nl_BE:
       subject: "%{enterprise} is nu aan %{sitename}"
     invite_manager:
       subject: "%{enterprise} heeft u uitgenodigd om manager te worden"
-  order_mailer:
-    cancel_email:
-      dear_customer: "Geachte klant,"
-      instructions: "Uw bestelling is geannuleerd. Bewaar deze annuleringsinformatie voor uw administratie."
-      order_summary_canceled: "Overzicht van de bestelling [KANNELD]"
-      subject: "Annulering van de bestelling"
-      subtotal: "Subtotaal: %{subtotal}"
-      total: "Bestelling Totaal: %{total}"
   producer_mailer:
     order_cycle:
       subject: "Ordercyclusrapport voor %{producer}"
@@ -175,17 +167,9 @@ nl_BE:
   confirm_resend_order_confirmation: "Weet u zeker dat u de orderbevestiging opnieuw wilt verzenden?"
   must_have_valid_business_number: "%{enterprise_name}moet een geldige ABN hebben voordat facturen kunnen worden verzonden."
   invoice: "Factuur"
-  percentage_of_sales: "%{percentage} van verkopen"
-  capped_at_cap: "gemaximeerd op %{cap}"
-  per_month: "per maand"
-  free: "onbelemmerd"
-  free_trial: "gratis proefversie"
-  plus_tax: "plus BTW"
-  min_bill_turnover_desc: "zodra de omzet hoger is dan %{mbt_amount}"
   more: "Meer"
   say_no: "Néé"
   say_yes: "Ya"
-  then: Na
   ongoing: Lopend
   bill_address: Factuuradres
   ship_address: Verzendadres
@@ -237,7 +221,6 @@ nl_BE:
   notes: Notities
   error: Fout
   processing_payment: Verwerking van de betaling.....
-  show_only_unfulfilled_orders: Toon alleen onvervulde bestellingen
   filter_results: Filter resultaten
   quantity: Kwantiteit
   pick_up: Afhalen
@@ -251,6 +234,7 @@ nl_BE:
   actions:
     create_and_add_another: "Een ander maken en toevoegen"
     create: "Maak"
+    cancel: "Annuleren"
   admin:
     begins_at: Begint Bij
     begins_on: Begint Op
@@ -309,27 +293,6 @@ nl_BE:
     has_n_rules: "heeft %{num} regels"
     unsaved_confirm_leave: "Op deze pagina zijn de niet opgeslagen gegevens niet gewijzigd. Doorgaan zonder op te slaan?"
     unsaved_changes: "U heeft niet opgeslagen wijzigingen"
-    accounts_and_billing_settings:
-      method_settings:
-        default_accounts_payment_method: "Standaard Rekeningen Betaalmethode"
-        default_accounts_shipping_method: "Standaard Rekeningen Verzendmethode"
-      edit:
-        accounts_and_billing: "Rekeningen & Facturering"
-        accounts_administration_distributor: "Boekhoudkundige administratie Distributeur"
-        admin_settings: "Instellingen"
-        update_invoice: "Facturen bijwerken"
-        auto_update_invoices: "Auto-update facturen 's nachts om 1:00 uur 's ochtends"
-        finalise_invoice: "Facturen afronden"
-        auto_finalise_invoices: "Automatisch de facturen maandelijks om 1:30 uur op de 2e dag om 1:30 uur automatisch afronden"
-        manually_run_task: "Taak handmatig uitvoeren"
-        update_user_invoice_explained: "Gebruik deze knop om de facturen voor de maand tot op heden onmiddellijk bij te werken voor elke zakelijke gebruiker in het systeem. Deze taak kan zo worden ingesteld dat deze elke nacht automatisch wordt uitgevoerd."
-        finalise_user_invoices: "Finaliseren van de facturen van de gebruiker"
-        finalise_user_invoice_explained: "Gebruik deze knop om alle facturen van de vorige kalendermaand in het systeem af te ronden. Deze taak kan zo worden ingesteld dat deze automatisch één keer per maand wordt uitgevoerd."
-        update_user_invoices: "Facturen van de gebruiker bijwerken"
-      errors:
-        accounts_distributor: moet worden ingesteld als u facturen wilt aanmaken voor zakelijke gebruikers.
-        default_payment_method: moet worden ingesteld als u facturen wilt aanmaken voor zakelijke gebruikers.
-        default_shipping_method: moet worden ingesteld als u facturen wilt aanmaken voor zakelijke gebruikers.
     shopfront_settings:
       embedded_shopfront_settings: "Ingebedde Shopfront-instellingen"
       enable_embedded_shopfronts: "Ingebedde winkelfronten inschakelen"
@@ -337,34 +300,6 @@ nl_BE:
     number_localization:
       number_localization_settings: "Aantal Lokalisatie-instellingen"
       enable_localized_number: "Gebruik de internationale duizend/decimale scheidingslogica"
-    business_model_configuration:
-      edit:
-        business_model_configuration: "Bedrijfsmodel"
-        business_model_configuration_tip: "Configureer het tarief waartegen de winkels maandelijks in rekening worden gebracht voor het gebruik van het Open Food Network."
-        bill_calculation_settings: "Rekeningberekeningsinstellingen"
-        bill_calculation_settings_tip: "Aanpassing van het bedrag dat ondernemingen maandelijks in rekening zullen worden gebracht voor het gebruik van het OFN."
-        shop_trial_length: "Winkelproeflengte (Dagen)"
-        shop_trial_length_tip: "De duur van de tijd (in dagen) die ondernemingen die als winkel zijn opgezet, als proefperiode kunnen doorlopen."
-        fixed_monthly_charge: "Vaste maandelijkse kosten"
-        fixed_monthly_charge_tip: "Een vast maandelijks bedrag voor alle ondernemingen die als winkel zijn opgezet en die de minimum factureerbare omzet (indien vastgesteld) hebben overschreden."
-        percentage_of_turnover: "Percentage van de omzet"
-        percentage_of_turnover_tip: "Wanneer dit tarief (0,0 - 1,0) hoger is dan nul, wordt dit tarief (0,0 - 1,0) toegepast op de totale omzet van elke winkel en bij de eventuele vaste kosten (links) opgeteld om de maandelijkse factuur te berekenen."
-        monthly_cap_excl_tax: "maandelijks plafond (excl. GST)"
-        monthly_cap_excl_tax_tip: "Wanneer deze waarde groter is dan nul, wordt deze waarde gebruikt als een limiet op het bedrag dat winkels maandelijks in rekening worden gebracht."
-        tax_rate: "belastingtarief"
-        tax_rate_tip: "Belastingtarief dat van toepassing is op de maandelijkse factuur die ondernemingen in rekening worden gebracht voor het gebruik van het systeem."
-        minimum_monthly_billable_turnover: "Minimale maandelijkse factureerbare omzet"
-        minimum_monthly_billable_turnover_tip: "Voor het gebruik van OFN wordt een minimale maandelijkse omzet voor een winkelpui in rekening gebracht. Ondernemingen die minder dan dit bedrag in een maand omzetten, worden niet in rekening gebracht, noch als percentage, noch als vast tarief."
-        example_bill_calculator: "Voorbeeld Rekeningcalculator"
-        example_bill_calculator_legend: "Wijzig de voorbeeldomzet om het effect van de instellingen naar links te visualiseren."
-        example_monthly_turnover: "Voorbeeld Maandelijkse omzet"
-        example_monthly_turnover_tip: "Een voorbeeld van een maandelijkse omzet voor een onderneming die gebruikt zal worden om hieronder een voorbeeld van een maandelijkse factuur te berekenen."
-        cap_reached?: "Cap bereikt?"
-        cap_reached?_tip: "Of de bovengrens (links aangegeven) is bereikt, gegeven de instellingen en de voorziene omzet."
-        included_tax: "Inbegrepen belastingen"
-        included_tax_tip: "De totale belasting die in de voorbeeldmaandfactuur is opgenomen, gegeven de instellingen en de verstrekte omzet."
-        total_monthly_bill_incl_tax: "Totale maandelijkse factuur (incl. belasting)"
-        total_monthly_bill_incl_tax_tip: "Het voorbeeld van de totale maandelijkse factuur met belasting inbegrepen, gegeven de instellingen en de geleverde omzet."
     cache_settings:
       edit:
         title: "Caching"
@@ -404,11 +339,7 @@ nl_BE:
         config_instructions_html: "Hier kunt u de OFN Matomo integratie configureren. De Matomo URL hieronder zou moeten verwijzen naar de Matomo instantie waar de gebruiker tracking informatie naartoe wordt gestuurd; als deze leeg wordt gelaten, wordt Matomo gebruiker tracking uitgeschakeld. Het veld Site ID is niet verplicht, maar handig als je meer dan één website volgt op één Matomo instance; het is te vinden op de Matomo instance console. Vertaald met www.DeepL.com/Translator"
     customers:
       index:
-        add_customer: "Klant toevoegen"
         new_customer: "Nieuwe klant"
-        customer_placeholder: "customer@example.org"
-        valid_email_error: Vul een geldig e-mailadres in
-        add_a_new_customer_for: Voeg een nieuwe klant toe voor %{shop_name}
         code: Code
         duplicate_code: "Deze code wordt al gebruikt."
         bill_address: "Factuuradres"
@@ -448,6 +379,7 @@ nl_BE:
         tax_category: Belastingcategorie
         calculator: Rekenmachine
         calculator_values: Rekenmachine Waarden
+        search: "Zoeken"
     enterprise_groups:
       index:
         new_button: Nieuwe Ondernemingsgroep
@@ -477,6 +409,7 @@ nl_BE:
         property_name: Naam van het pand
         inherited_property: Onroerend goed uit het verleden
       variants:
+        infinity: "Oneindigheid"
         to_order_tip: "Op bestelling gemaakte artikelen hebben geen vast voorraadniveau, zoals broden die vers op bestelling worden gemaakt."
       group_buy_options: "Group Buy Options"
       back_to_products_list: "Terug naar productenlijst"
@@ -733,24 +666,26 @@ nl_BE:
           enable_subscriptions_tip: "Activeer Abonneermogelijkheid"
           enable_subscriptions_false: "Deactiveer"
           enable_subscriptions_true: "Activeer"
-          shopfront_message: Etalage Boodschap
+          shopfront_message: "Etalage Boodschap"
           shopfront_message_placeholder: >
               Een optionele verklaring voor klanten die uitlegt hoe de etalage werkt,
               zodat deze boven de productlijst kan weergegeven worden op je winkelpagina.
-          shopfront_closed_message: Bericht Gesloten Etalage
+          shopfront_message_link_tooltip: "Link invoegen / bewerken"
+          shopfront_message_link_prompt: "Voer een URL in om in te voegen"
+          shopfront_closed_message: "Bericht Gesloten Etalage"
           shopfront_closed_message_placeholder: >
               Een boodschap die een gedetailleerdere verklaring voorziet over waarom
               je winkel gesloten is en/of wanneer klanten kunnen verwachten dat deze
               terug opent. Dit wordt weergegeven in je winkelpagina alleen wanneer
               er geen actieve bestellingscyclus is. (bv. de winkel is gesloten).
-          shopfront_category_ordering: Etalage Categorie Bestelling
-          open_date: Open Datum
-          close_date: Sluiten Datum
+          shopfront_category_ordering: "Etalage Categorie Bestelling"
+          open_date: "Open Datum"
+          close_date: "Sluiten Datum"
         social:
-          twitter_placeholder: bv. @de_prof
-          instagram_placeholder: bv. de_prof
-          facebook_placeholder: bv. www.facebook.com/WebpaginaNaamHier
-          linkedin_placeholder: bv. www.linkedin.com/in/JouwNaamHier
+          twitter_placeholder: "bv. @de_prof"
+          instagram_placeholder: "bv. de_prof"
+          facebook_placeholder: "bv. www.facebook.com/WebpaginaNaamHier"
+          linkedin_placeholder: "bv. www.linkedin.com/in/JouwNaamHier"
         stripe_connect:
           connect_with_stripe: "Connecteer met Stripe"
           stripe_connect_intro: "Om kredietkaartbetalingen te accepteren, moet je je stripe account koppelen aan het Open Food Network. Gebruik de knop rechts om van start te gaan."
@@ -866,6 +801,9 @@ nl_BE:
         user_already_exists: "Gebruikersnaam al in gebruik"
         error: "Er ging iets mis"
     order_cycles:
+      loading_flash:
+        loading_order_cycles: LOADING ORDER CYCLES
+        loading: BEZIG MET LADEN...
       edit:
         advanced_settings: Geavanceerde Instellingen
         update_and_close: Update en Sluit
@@ -905,22 +843,10 @@ nl_BE:
         tags: Tags
         add_a_tag: Voeg een tag toe
         delivery_details: Ophaal/ Verzendingsdetails
-        debug_info: Debug Informatie
       index:
         schedule: Tijdschema
         schedules: Planningen
-        adding_a_new_schedule: Voeg Een Nieuwe Planning toe
-        updating_a_schedule: De Planning wordt Geüpdatet
         new_schedule: Nieuwe Planning
-        create_schedule: Creëer Planning
-        update_schedule: Update Planning
-        delete_schedule: Verwijder Planning
-        created_schedule: Creëer Planning
-        updated_schedule: Geüpdate Planning
-        deleted_schedule: Verwijderde Planning
-        schedule_name_placeholder: Naam Planning
-        name_required_error: Voeg alsjeblieft een naam voor deze planning toe
-        no_order_cycles_error: Selecteer alsjeblieft op z'n minst één bestellingscyclus (drag and drop)
       name_and_timing_form:
         name: Naam
         orders_open: Bestellingen geopend bij
@@ -957,9 +883,6 @@ nl_BE:
     shared:
       user_guide_link:
         user_guide: Gebruikershandleiding
-    overview:
-      enterprises_header:
-        ofn_with_tip: Ondernemingen zijn producenten en/of hubs en zijn de basiseenheid van de organisatie binnen het Open Food Network.
       enterprises_hubs_tabs:
         has_no_payment_methods: "1%(enterprise) heeft geen betaalmethode"
         has_no_shipping_methods: "%{enterprise} heeft geen verzendmethodes"
@@ -1028,6 +951,7 @@ nl_BE:
       subscriptions: Abonnementen
       new: Nieuw abonnement
       create: Abonnement aanmaken
+      edit: Abonnement bewerken
       index:
         please_select_a_shop: Selecteer een winkel
         edit_subscription: Abonnement bewerken
@@ -1196,7 +1120,6 @@ nl_BE:
   menu_4_title: "Groepen"
   menu_4_url: "/groups"
   menu_5_title: "Over"
-  menu_5_url: "http://www.openfoodnetwork.org/"
   menu_6_title: "Connecteer je "
   menu_6_url: "https://openfoodnetwork.org/au/connect/"
   menu_7_title: "Ontdek"
@@ -1525,6 +1448,7 @@ nl_BE:
   orders_changeable_orders_alert_html: Deze bestelling is bevestigd, maar je kan aanpassingen maken tot <strong>%{oc_close}</strong>.
   products_clear_all: Wis alles
   products_showing: "Toont:"
+  products_or: "OF"
   products_with: met
   products_search: "Zoek op producten of producenten"
   products_loading: "Laad producten..."
@@ -1630,7 +1554,6 @@ nl_BE:
   sell_hubs_detail: "Maak een profiel voor je voedselonderneming of organisatie aan op het OFN. Op om het even welk moment kan je je profiel opwaarderen naar multi-producentenwinkel."
   sell_groups_detail: "Maak een op maat gemaakt pad van ondernemingen (producent en andere voedselondernemingen) voor je regio of voor jouw organisatie."
   sell_user_guide: "Kom kom meer te weten in onze gebruikershandleiding."
-  sell_listing_price: "Intekenen in het OFN is gratis. Je winkel openen en runnen op het OFN is gratis. Een groepsdirectory aanmaken op het OFN voor je organisatie of regionaal netwerk is gratis."
   sell_embed: "We kunnen ook een OFNwinkel in aan je persoonlijke noden aangepaste website of een speciaal aangepast lokaal voedselnetwerkwebsite bouwen voor jouw regio bouwen."
   sell_ask_services: "Vraag ons over de OFN diensten."
   shops_title: Winkels
@@ -1689,8 +1612,6 @@ nl_BE:
   products_max_quantity: Maximale hoeveelheid
   products_distributor: Distributeur
   products_distributor_info: Wanneer je een verdeler selecteert voor je bestelling, zal hun adres en ophaaltijden hier afgebeeld worden.
-  shop_trial_expires_in: "Jouw etalage testperiode vervalt binnen"
-  shop_trial_expired_notice: "Goed nieuws! We hebben beslist om de testperiodes voor de etalages te verlengen tot nader order."
   password: Wachtwoord
   remember_me: Onthoud Me
   are_you_sure: "Ben je zeker?"
@@ -1869,8 +1790,6 @@ nl_BE:
   action_or: "OF"
   enterprise_limit: Max aantal bedrijven
   shipping_method_destroy_error: "Die verzendmethode kan niet verwijderd worden aangezien er naar verwezen wordt door een andere bestelling: %{number}."
-  accounts_and_billing_task_already_running_error: "Een taak loopt al, alsjeblieft wacht tot het beëindigd is."
-  accounts_and_billing_start_task_notice: "Taak in de wachtrij gezet."
   fees: "Vergoedingen"
   item_cost: "Artikel kost"
   bulk: "Bulk (grote hoeveelheid)"
@@ -1979,6 +1898,7 @@ nl_BE:
   product: "Product"
   price: "Prijs"
   on_hand: "Bij de hand"
+  review: "Beoordeling"
   save_changes: "Bewaar Veranderingen"
   order_saved: "Bestelling opgeslagen"
   no_products: Geen produkten
@@ -2021,7 +1941,6 @@ nl_BE:
   live: "live"
   manage: "Beheer"
   resend: "Zend opnieuw"
-  trial: Proefperiode
   add_and_manage_products: "Voeg toe en beheer de producten "
   add_and_manage_order_cycles: "Voeg toe en beheer de bestelcycli"
   manage_order_cycles: "Beheer bestelcycli"
@@ -2052,7 +1971,6 @@ nl_BE:
   hub_sidebar_at_least: "Alleen één hub kan geselecteerd worden"
   hub_sidebar_blue: "blauw"
   hub_sidebar_red: "rood"
-  shop_trial_in_progress: "Jouw etalageproefperiode loopt ten einde binnen %{days}."
   report_customers_distributor: "Distributeur"
   report_customers_supplier: "Leverancier"
   report_customers_cycle: "Bestelcyclus"
@@ -2439,6 +2357,8 @@ nl_BE:
           resolve: Oplossen
       new_tag_rule_dialog:
         select_rule_type: "Selecteer een regel : "
+      enterprise_fees:
+        inherit_from_product: "Overnemen van product"
       orders:
         index:
           per_page: "%{results}per pagina"
@@ -2485,6 +2405,27 @@ nl_BE:
         sending: "Stuur opnieuw..."
         done: "Opnieuw gestuurd"
         failed: "Niet opnieuw kunnen sturen"
+      order_cycles:
+        schedules:
+          adding_a_new_schedule: "Voeg Een Nieuwe Planning toe"
+          updating_a_schedule: "De Planning wordt Geüpdatet"
+          create_schedule: "Creëer Planning"
+          update_schedule: "Update Planning"
+          delete_schedule: "Verwijder Planning"
+          schedule_name_placeholder: "Naam Planning"
+          created_schedule: "Creëer Planning"
+          updated_schedule: "Geüpdate Planning"
+          deleted_schedule: "Verwijderde Planning"
+          name_required_error: "Voeg alsjeblieft een naam voor deze planning toe"
+          no_order_cycles_error: "Selecteer alsjeblieft op z'n minst één bestellingscyclus (drag and drop)"
+          available: "Beschikbaar"
+          selected: "Gekozen"
+      customers:
+        index:
+          add_customer: "Klant toevoegen"
+          add_a_new_customer_for: "Voeg een nieuwe klant toe voor %{shop_name}"
+          customer_placeholder: "customer@example.org"
+          valid_email_error: "Vul een geldig e-mailadres in"
     insufficient_stock: "Onvoldoende voorraad beschikbaar, alleen %{on_hand}resterend"
     out_of_stock:
       reduced_stock_available: Stock beschikbaar
@@ -2849,6 +2790,8 @@ nl_BE:
           order_adjustments: "Orden aanpassingen"
           order_total: "Totaal bestelling"
       overview:
+        enterprises_header:
+          ofn_with_tip: Ondernemingen zijn producenten en/of hubs en zijn de basiseenheid van de organisatie binnen het Open Food Network.
         products:
           active_products:
             zero: "U heeft geen aktieve producten."
@@ -2862,6 +2805,9 @@ nl_BE:
             one: "U heeft een aktieve bestelcyclus."
             other: "U heeft 1%{count} aktieve ordercycli."
           manage_order_cycles: "BESTELCYCLI BEHEREN"
+      shipping_methods:
+        edit:
+          editing_shipping_method: "Verzendmethode bewerken"
       payment_methods:
         new:
           new_payment_method: "Nieuwe betalingswijze"
@@ -2979,6 +2925,7 @@ nl_BE:
       format: '%Y-%m-%d'
       js_format: 'yy-mm-dd'
     orders:
+      error_flash_for_unavailable_items: "Een gegeven op je kaart is onbereikbaar."
       edit:
         login_to_view_order: "Gelieve U te connecteren om uw bestelling te zien."
       bought:
@@ -2986,6 +2933,7 @@ nl_BE:
       line_item:
         insufficient_stock: "Onvoldoende voorraad beschikbaar, alleen %{on_hand}resterend"
         out_of_stock: "Geen voorraad"
+        unavailable_item: "Momenteel niet beschikbaar"
     shipment_states:
       backorder: aanvulling
       partial: gedeeltelijk
@@ -3004,6 +2952,13 @@ nl_BE:
       void: kredietnota opstellen
       invalid: fout
     order_mailer:
+      cancel_email:
+        customer_greeting: "Hello%{name}!"
+        instructions: "Uw bestelling is GEANNULEERD. Bewaar deze annuleringsinformatie voor uw administratie."
+        order_summary_canceled: "Overzicht van de bestelling [KANNELD]"
+        subject: "Annulering van de bestelling"
+      confirm_email:
+        subject: "Bestellingsinformatie"
       invoice_email:
         hi: "Hallo %{name}"
         invoice_attached_text: 'Gelieve hier de factuur te vinden in veband met de laatste bestelling geplaatst bij '

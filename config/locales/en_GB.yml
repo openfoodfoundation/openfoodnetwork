@@ -1446,6 +1446,7 @@ en_GB:
   orders_changeable_orders_alert_html: This order has been confirmed, but you can make changes until <strong>%{oc_close}</strong>.
   products_clear_all: Clear all
   products_showing: "Showing:"
+  products_or: "OR"
   products_with: with
   products_search: "Search by product or producer"
   products_loading: "Loading products..."
@@ -2771,7 +2772,7 @@ en_GB:
           shipment_state: "Shipment State"
           completed_at: "Completed At"
           number: "Number"
-          state: "County"
+          state: "State"
           email: "Customer E-Mail"
         invoice:
           issued_on: "Issued on"

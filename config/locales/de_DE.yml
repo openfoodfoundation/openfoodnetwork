@@ -339,11 +339,7 @@ de_DE:
         config_instructions_html: "Hier können Sie die OFN Matomo Integration konfigurieren. Die unten angegebene Matomo-URL sollte auf die Matomo-Instanz verweisen, an die die Benutzerverfolgungsinformationen gesendet werden. Wenn es leer bleibt, wird das Matomo-Benutzer-Tracking deaktiviert. Das Feld Site-ID ist nicht obligatorisch, aber nützlich, wenn Sie mehr als eine Website in einer einzelnen Matomo-Instanz verfolgen. Es kann auf der Matomo-Instanzkonsole gefunden werden."
     customers:
       index:
-        add_customer: "Kunden hinzufügen"
         new_customer: "Neuer Kunde"
-        customer_placeholder: "Kunde@beispiel.org"
-        valid_email_error: Bitte geben Sie eine gültige E-Mail-Adresse ein
-        add_a_new_customer_for: Neuer Kunde für %{shop_name} hinzufügen
         code: Kode
         duplicate_code: "Dieser Kode wird bereits verwendet."
         bill_address: "Rechnungsadresse"
@@ -843,22 +839,10 @@ de_DE:
         tags: Stichwörter
         add_a_tag: Stichwort hinzufügen
         delivery_details: Abhol- / Lieferinformationen
-        debug_info: Debug-Informationen
       index:
         schedule: Zeitplan
         schedules: Zeitpläne
-        adding_a_new_schedule: Hinzufügen eines neuen Zeitplans
-        updating_a_schedule: Einen Zeitplan aktualisieren
         new_schedule: Neuer Zeitplan
-        create_schedule: Zeitplan erstellen
-        update_schedule: Zeitplan aktualisieren
-        delete_schedule: Zeitplan löschen
-        created_schedule: Zeitplan erstellt
-        updated_schedule: Zeitplan aktualisiert
-        deleted_schedule: Zeitplan gelöscht
-        schedule_name_placeholder: Zeitplanname
-        name_required_error: Bitte geben Sie einen Namen für diesen Zeitplan ein
-        no_order_cycles_error: Bitte wählen Sie mindestens einen Bestellzyklus aus (Drag & Drop)
       name_and_timing_form:
         name: Name
         orders_open: Bestellungen öffnen um
@@ -963,6 +947,7 @@ de_DE:
       subscriptions: Abonnements
       new: Neues Abonnement
       create: Abonnement erstellen
+      edit: Abonnement bearbeiten
       index:
         please_select_a_shop: Bitte wählen Sie einen Laden
         edit_subscription: Abonnement bearbeiten
@@ -1131,7 +1116,6 @@ de_DE:
   menu_4_title: "Gruppen"
   menu_4_url: "/groups"
   menu_5_title: "Über Uns"
-  menu_5_url: "https://wp.openfoodnetwork.de"
   menu_6_title: "Verbinden"
   menu_6_url: "https://openfoodnetwork.org/au/connect/"
   menu_7_title: "Mehr Erfahren"
@@ -1269,7 +1253,7 @@ de_DE:
       cookies_policy_link: "Hinweise zu Cookies"
       cookies_accept_button: "Cookies akzeptieren"
   home_shop: Jetzt einkaufen
-  brandstory_headline: "Essen, ohne eigene Rechtspersönlichkeit."
+  brandstory_headline: "Lebensmittel Direktvermarktung"
   brandstory_intro: "Manchmal ist der beste Weg, das System zu reparieren, ein neues zu starten ..."
   brandstory_part1: "Wir beginnen von Grund auf. Mit Bauern und Züchtern, die bereit sind, ihre Geschichten stolz und wahrhaftig zu erzählen. Mit Händlern, die bereit sind, Menschen mit Produkten fair und ehrlich zu verbinden. Mit Käufern, die glauben, dass bessere wöchentliche Einkaufsentscheidungen die Welt ernsthaft verändern können."
   brandstory_part2: "Dann brauchen wir einen Weg, um es real zu machen. Ein Weg, jeden zu stärken, der Lebensmittel anbaut, verkauft und kauft. Ein Weg, um alle Geschichten zu erzählen, um die gesamte Logistik zu bewältigen. Eine Möglichkeit, Transaktionen jeden Tag in Transformation umzuwandeln."
@@ -1283,7 +1267,7 @@ de_DE:
   connect_cta: "Erkunden"
   system_headline: "Einkaufen - so funktioniert es."
   system_step1: "1. Suche"
-  system_step1_text: "Durchsuchen Sie unsere verschiedenen, unabhängigen Geschäfte nach saisonalem, lokalem Essen. Suche nach Gegend und Lebensmittelkategorie, oder ob Sie Lieferung oder Abholung bevorzugen."
+  system_step1_text: "Durchsuchen Sie unsere vielfältigen, unabhängigen Läden nach saisonal und  regional erzeugten Lebensmitteln. Suchen Sie nach Region und Lebensmittelkategorie, oder ob Sie Lieferung oder Abholung bevorzugen."
   system_step2: "2. Laden"
   system_step2_text: "Transformieren Sie Ihre Transaktionen mit erschwinglichen lokalen Lebensmitteln von verschiedenen Erzeugern und Hubs. Erfahren Sie die Geschichten hinter Ihrem Essen und den Menschen, die es erzeugen."
   system_step3: "3. Abholung / Lieferung"
@@ -1565,7 +1549,6 @@ de_DE:
   sell_hubs_detail: "Richten Sie im OFN ein Profil für Ihr Lebensmittelunternehmen oder Ihre Organisation ein. Sie können Ihr Profil jederzeit auf einen Multi-Producer-Shop upgraden."
   sell_groups_detail: "Richten Sie ein maßgeschneidertes Verzeichnis von Unternehmen (Produzenten und andere Lebensmittelunternehmen) für Ihre Region oder für Ihre Organisation ein."
   sell_user_guide: "Erfahren Sie mehr in unserem Benutzerhandbuch."
-  sell_listing_price: "Die Auflistung im OFN ist kostenlos. Das Öffnen und Betreiben eines Ladens ist kostenlos. Das Einrichten eines Gruppenverzeichnisses im OFN für Ihre Organisation oder Ihr regionales Netzwerk ist kostenlos."
   sell_embed: "Wir können auch einen OFN-Laden in Ihre eigene Website einbetten oder eine maßgeschneiderte Webseite für Ihr Lokalität oder Region erstellen."
   sell_ask_services: "Fragen Sie uns nach OFN-Diensten."
   shops_title: Läden
@@ -2414,6 +2397,26 @@ de_DE:
         sending: "Erneut senden..."
         done: "Erneut senden ✓"
         failed: "Erneut senden fehlgeschlagen ✗"
+      order_cycles:
+        schedules:
+          adding_a_new_schedule: "Hinzufügen eines neuen Zeitplans"
+          updating_a_schedule: "Einen Zeitplan aktualisieren"
+          create_schedule: "Zeitplan erstellen"
+          update_schedule: "Zeitplan aktualisieren"
+          delete_schedule: "Zeitplan löschen"
+          schedule_name_placeholder: "Zeitplanname"
+          created_schedule: "Zeitplan erstellt"
+          updated_schedule: "Zeitplan aktualisiert"
+          deleted_schedule: "Zeitplan gelöscht"
+          name_required_error: "Bitte geben Sie einen Namen für diesen Zeitplan ein"
+          no_order_cycles_error: "Bitte wählen Sie mindestens einen Bestellzyklus aus (Drag & Drop)"
+          available: "Verfügbar"
+      customers:
+        index:
+          add_customer: "Kunden hinzufügen"
+          add_a_new_customer_for: "Neuer Kunde für %{shop_name} hinzufügen"
+          customer_placeholder: "Kunde@beispiel.org"
+          valid_email_error: "Bitte geben Sie eine gültige E-Mail-Adresse ein"
     insufficient_stock: "Nicht genügend Lagerbestand verfügbar, nur noch %{on_hand} verfügbar"
     out_of_stock:
       reduced_stock_available: Reduzierter Bestand verfügbar
