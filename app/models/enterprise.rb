@@ -111,12 +111,12 @@ class Enterprise < ActiveRecord::Base
     joins(:shipping_methods).
       joins(:payment_methods).
       merge(Spree::PaymentMethod.available).
-      select('enterprises.id')
+      select('DISTINCT enterprises.*')
   }
   scope :not_ready_for_checkout, lambda {
     # When ready_for_checkout is empty, return all rows when there are no enterprises ready for
     # checkout.
-    ready_enterprises = Enterprise.ready_for_checkout
+    ready_enterprises = Enterprise.ready_for_checkout.select('enterprises.id')
     if ready_enterprises.present?
       where("enterprises.id NOT IN (?)", ready_enterprises)
     else
