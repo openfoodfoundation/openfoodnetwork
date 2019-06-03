@@ -456,7 +456,7 @@ GEM
     foundation-rails (5.5.2.1)
       railties (>= 3.1.0)
       sass (>= 3.3.0, < 3.5)
-    fuubar (2.3.2)
+    fuubar (2.4.0)
       rspec-core (~> 3.0)
       ruby-progressbar (~> 1.4)
     geocoder (1.1.8)
@@ -686,7 +686,7 @@ GEM
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-ole (1.2.12.1)
-    ruby-progressbar (1.10.0)
+    ruby-progressbar (1.10.1)
     ruby-rc4 (0.1.5)
     rubyzip (1.2.2)
     safe_yaml (1.0.4)
@@ -817,7 +817,7 @@ DEPENDENCIES
   foundation-icons-sass-rails
   foundation-rails
   foundation_rails_helper!
-  fuubar (~> 2.3.2)
+  fuubar (~> 2.4.0)
   geocoder
   gmaps4rails
   guard
