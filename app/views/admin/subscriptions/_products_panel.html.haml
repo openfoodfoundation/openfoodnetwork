@@ -5,11 +5,11 @@
       = render 'products'
       %a.button.update.fullwidth{ ng: { class: "{disabled: saved() && !saving, saving: saving}", click: "save()" } }
         %span{ ng: {hide: "saved() || saving" } }
-          SAVE
+          = t('.save')
           %i.icon-save
         %span{ ng: {show: "saved() && !saving" } }
-          SAVED
+          = t('.saved')
           %i.icon-ok-sign
         %span{ ng: {show: "saving" } }
-          SAVING
+          = t('.saving')
           %i.icon-refresh

@@ -1056,6 +1056,10 @@ en:
         address: Address
         products: Products
         no_open_or_upcoming_order_cycle: "No Upcoming Order Cycle"
+      products_panel:
+        save: "SAVE"
+        saving: "SAVING"
+        saved: "SAVED"
       product_already_in_order: This product has already been added to the order. Please edit the quantity directly.
       orders:
         number: Number
