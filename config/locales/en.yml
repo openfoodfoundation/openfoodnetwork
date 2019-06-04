@@ -1047,6 +1047,8 @@ en:
         charges_not_allowed: Charges are not allowed by this customer
         no_default_card: Customer has no cards available to charge
         card_ok: Customer has a card available to charge
+        begins_at_placeholder: "Select a Date"
+        ends_at_placeholder: "Optional"
       loading_flash:
         loading: LOADING SUBSCRIPTIONS
       review:
