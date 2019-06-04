@@ -1013,6 +1013,8 @@ en:
         pause_subscription: Pause Subscription
         unpause_subscription: Unpause Subscription
         cancel_subscription: Cancel Subscription
+      filters:
+        query_placeholder: "Search by email..."
       setup_explanation:
         just_a_few_more_steps: 'Just a few more steps before you can begin:'
         enable_subscriptions: "Enable subscriptions for at least one of your shops"
