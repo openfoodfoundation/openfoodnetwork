@@ -89,9 +89,6 @@ Spree::Core::Engine.routes.prepend do
 
   resources :products
 
-  resources :states, :only => :index
-  resources :countries, :only => :index
-
   # route globbing for pretty nested taxon and product paths
   get '/t/*id', :to => 'taxons#show', :as => :nested_taxons
 
