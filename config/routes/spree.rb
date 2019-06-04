@@ -89,9 +89,6 @@ Spree::Core::Engine.routes.prepend do
 
   resources :products
 
-  # route globbing for pretty nested taxon and product paths
-  get '/t/*id', :to => 'taxons#show', :as => :nested_taxons
-
   get '/unauthorized', :to => 'home#unauthorized', :as => :unauthorized
   get '/content/cvv', :to => 'content#cvv', :as => :cvv
   get '/content/*path', :to => 'content#show', :as => :content

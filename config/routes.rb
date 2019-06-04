@@ -5,7 +5,6 @@ Openfoodnetwork::Application.routes.draw do
   get "/enterprises", to: redirect("/")
   get "/products", to: redirect("/")
   get "/products/:id", to: redirect("/")
-  get "/t/products/:id", to: redirect("/")
   get "/about_us", to: redirect(ContentConfig.footer_about_url)
 
   get "/login", to: redirect("/#/login")
