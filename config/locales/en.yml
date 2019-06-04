@@ -1239,6 +1239,7 @@ en:
   state: State
   postcode: Postcode
   postcode_placeholder: eg. 3070
+  suburb: Suburb
   state: State
   country: Country
   unauthorized: Unauthorized
