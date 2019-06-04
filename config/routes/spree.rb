@@ -89,8 +89,6 @@ Spree::Core::Engine.routes.prepend do
 
   resources :products
 
-  get '/locale/set', :to => 'locale#set'
-
   resources :states, :only => :index
   resources :countries, :only => :index
 
