@@ -1007,8 +1007,7 @@ en:
       new: New Subscription
       create: Create Subscription
       edit: Edit Subscription
-      index:
-        please_select_a_shop: Please select a shop
+      table:
         edit_subscription: Edit Subscription
         pause_subscription: Pause Subscription
         unpause_subscription: Unpause Subscription
@@ -2563,6 +2562,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           add_a_new_customer_for: "Add a new customer for %{shop_name}"
           customer_placeholder: "customer@example.org"
           valid_email_error: "Please enter a valid email address"
+      subscriptions:
+        new:
+          please_select_a_shop: "Please select a shop"
     insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
     out_of_stock:
       reduced_stock_available: Reduced stock available
