@@ -13,7 +13,7 @@ module ProductImport
     include ActiveModel::Conversion
     include ActiveModel::Validations
 
-    attr_reader :updated_ids, :import_settings
+    attr_reader :entries, :updated_ids, :import_settings
 
     def initialize(file, current_user, import_settings = {})
       unless file.is_a?(File)
@@ -88,10 +88,6 @@ module ProductImport
 
     def total_enterprise_products
       @processor.total_enterprise_products
-    end
-
-    def all_entries
-      @entries
     end
 
     def entries_json

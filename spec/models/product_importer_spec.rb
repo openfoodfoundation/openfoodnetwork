@@ -343,7 +343,7 @@ describe ProductImport::ProductImporter do
       expect(filter('valid', entries)).to eq 0
       expect(filter('invalid', entries)).to eq 2
 
-      @importer.all_entries.each do |entry|
+      @importer.entries.each do |entry|
         expect(entry.errors.messages.values).to include [I18n.t('admin.product_import.model.not_updatable')]
       end
     end
