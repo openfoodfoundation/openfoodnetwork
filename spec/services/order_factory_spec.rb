@@ -31,7 +31,7 @@ describe OrderFactory do
       attrs
     end
 
-    it "builds a new order based the provided attributes" do
+    it "builds a new order based on the provided attributes" do
       expect{ order }.to change{ Spree::Order.count }.by(1)
       expect(order).to be_a Spree::Order
       expect(order.line_items.count).to eq 2
@@ -78,10 +78,20 @@ describe OrderFactory do
         end
 
         context "when skip_stock_check is not requested" do
-          it "initialised the order but limits stock to the available amount" do
+          it "initialises the order but limits stock to the available amount" do
             expect{ order }.to change{ Spree::Order.count }.by(1)
             expect(order).to be_a Spree::Order
             expect(order.line_items.find_by_variant_id(variant1.id).quantity).to eq 2
+          end
+
+          context "when variant is on_demand" do
+            before { variant1.update_attribute(:on_demand, true) }
+
+            it "initialises the order with the requested quantity regardless of stock" do
+              expect{ order }.to change{ Spree::Order.count }.by(1)
+              expect(order).to be_a Spree::Order
+              expect(order.line_items.find_by_variant_id(variant1.id).quantity).to eq 5
+            end
           end
         end
 
