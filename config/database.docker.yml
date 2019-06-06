@@ -5,7 +5,6 @@ default: &default
   timeout: 5000
   host: db
   port: 5432
-  #socket: /var/run/mysqld/mysqld.sock
 
 development:
   <<: *default
