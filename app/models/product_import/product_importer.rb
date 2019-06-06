@@ -238,18 +238,14 @@ module ProductImport
     end
 
     def build_entries_in_range
-      start_line = @import_settings[:start]
-      end_line = @import_settings[:end]
+      # In the JS, start and end are calculated like this:
+      # start = (batchIndex * $scope.batchSize) + 1
+      # end = (batchIndex + 1) * $scope.batchSize
+      start_data_index = @import_settings[:start] - 1
+      end_data_index = @import_settings[:end] - 1
 
-      (start_line..end_line).each do |i|
-        line_number = i + 1
-        row = @sheet.row(line_number)
-        row_data = Hash[[headers, row].transpose]
-        entry = SpreadsheetEntry.new(row_data)
-        entry.line_number = line_number
-        @entries.push entry
-        break if @sheet.last_row == line_number
-      end
+      data_rows = rows[start_data_index..end_data_index]
+      @entries = build_entries_from_rows(data_rows, start_data_index)
     end
 
     def build_entries
@@ -267,11 +263,11 @@ module ProductImport
       File.delete(@file)
     end
 
-    def build_entries_from_rows(rows)
+    def build_entries_from_rows(rows, offset = 0)
       rows.each_with_index.inject([]) do |entries, (row, i)|
         row_data = Hash[[headers, row].transpose]
         entry = SpreadsheetEntry.new(row_data)
-        entry.line_number = i + 2
+        entry.line_number = offset + i + 2
         entries.push entry
       end
     end
