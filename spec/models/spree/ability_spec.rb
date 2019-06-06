@@ -216,7 +216,7 @@ module Spree
           is_expected.to have_ability([:admin, :index, :customers, :bulk_coop, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management], for: Spree::Admin::ReportsController)
         end
 
-        include_examples "allows access to Enterprise Fee Summary only if feature flag enabled"
+        include_examples "allows access to Enterprise Fee Summary"
 
         it "should not be able to read other reports" do
           is_expected.not_to have_ability([:sales_total, :group_buys, :payments, :orders_and_distributors, :users_and_enterprises, :xero_invoices], for: Spree::Admin::ReportsController)
@@ -409,7 +409,7 @@ module Spree
           is_expected.to have_ability([:admin, :index, :customers, :sales_tax, :group_buys, :bulk_coop, :payments, :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :xero_invoices], for: Spree::Admin::ReportsController)
         end
 
-        include_examples "allows access to Enterprise Fee Summary only if feature flag enabled"
+        include_examples "allows access to Enterprise Fee Summary"
 
         it "should not be able to read other reports" do
           is_expected.not_to have_ability([:sales_total, :users_and_enterprises], for: Spree::Admin::ReportsController)

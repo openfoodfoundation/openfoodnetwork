@@ -25,22 +25,4 @@ describe FeatureFlags do
       end
     end
   end
-
-  describe "#enterprise_fee_summary_enabled?" do
-    context "when the user is superadmin" do
-      let!(:user) { create(:admin_user) }
-
-      it "returns true" do
-        expect(feature_flags).to be_enterprise_fee_summary_enabled
-      end
-    end
-
-    context "when the user is not superadmin" do
-      let!(:user) { create(:user) }
-
-      it "returns false" do
-        expect(feature_flags).not_to be_enterprise_fee_summary_enabled
-      end
-    end
-  end
 end
