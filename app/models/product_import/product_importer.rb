@@ -253,13 +253,7 @@ module ProductImport
     end
 
     def build_entries
-      rows.each_with_index do |row, i|
-        row_data = Hash[[headers, row].transpose]
-        entry = SpreadsheetEntry.new(row_data)
-        entry.line_number = i + 2
-        @entries.push entry
-      end
-      @entries
+      @entries = build_entries_from_rows(rows)
     end
 
     def save_all_valid
@@ -271,6 +265,15 @@ module ProductImport
     def delete_uploaded_file
       return unless @file.path == Rails.root.join('tmp', 'product_import').to_s
       File.delete(@file)
+    end
+
+    def build_entries_from_rows(rows)
+      rows.each_with_index.inject([]) do |entries, (row, i)|
+        row_data = Hash[[headers, row].transpose]
+        entry = SpreadsheetEntry.new(row_data)
+        entry.line_number = i + 2
+        entries.push entry
+      end
     end
   end
 end
