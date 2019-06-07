@@ -4,7 +4,8 @@
 
 module ProductImport
   class EntryValidator
-    def initialize(current_user, import_time, spreadsheet_data, editable_enterprises, inventory_permissions, reset_counts, import_settings)
+    def initialize(current_user, import_time, spreadsheet_data, editable_enterprises,
+                   inventory_permissions, reset_counts, import_settings, all_entries)
       @current_user = current_user
       @import_time = import_time
       @spreadsheet_data = spreadsheet_data
@@ -12,6 +13,7 @@ module ProductImport
       @inventory_permissions = inventory_permissions
       @reset_counts = reset_counts
       @import_settings = import_settings
+      @all_entries = all_entries
     end
 
     def self.non_updatable_fields
@@ -30,6 +32,7 @@ module ProductImport
         assign_enterprise_field(entry)
         enterprise_validation(entry)
         unit_fields_validation(entry)
+        variant_of_product_validation(entry)
 
         next if entry.enterprise_id.blank?
 
@@ -156,6 +159,17 @@ module ProductImport
 
       # variant_unit_name must be present if unit_type not present
       mark_as_invalid(entry, attribute: 'variant_unit_name', error: I18n.t('admin.product_import.model.conditional_blank')) unless entry.variant_unit_name && entry.variant_unit_name.present?
+    end
+
+    def variant_of_product_validation(entry)
+      return if entry.producer.blank? || entry.name.blank?
+
+      reference_entry = all_entries_for_product(entry).first
+      if entry.unit_type.present? && entry.unit_type.to_s != reference_entry.unit_type.to_s
+        mark_as_not_updatable(entry, "unit_type")
+      elsif entry.variant_unit_name.present? && entry.variant_unit_name.to_s != reference_entry.variant_unit_name.to_s
+        mark_as_not_updatable(entry, "variant_unit_name")
+      end
     end
 
     def producer_validation(entry)
@@ -332,6 +346,11 @@ module ProductImport
       entry.product_validations = options[:product_validations] if options[:product_validations]
     end
 
+    def mark_as_not_updatable(entry, attribute)
+      mark_as_invalid(entry, attribute: attribute,
+                             error: I18n.t("admin.product_import.model.not_updatable"))
+    end
+
     def import_into_inventory?
       @import_settings[:settings].andand['import_into'] == 'inventories'
     end
@@ -385,6 +404,20 @@ module ProductImport
       object.count_on_hand = entry.on_hand.presence
       object.on_demand = object.count_on_hand.blank? if entry.on_demand.blank?
       entry.on_hand_nil = object.count_on_hand.blank?
+    end
+
+    def all_entries_for_product(entry)
+      all_entries_by_product[entries_by_product_key(entry)]
+    end
+
+    def all_entries_by_product
+      @all_entries_by_product ||= @all_entries.group_by do |entry|
+        entries_by_product_key(entry)
+      end
+    end
+
+    def entries_by_product_key(entry)
+      [entry.producer.to_s, entry.name.to_s]
     end
   end
 end

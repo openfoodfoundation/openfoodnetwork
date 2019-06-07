@@ -254,6 +254,8 @@ describe ProductImport::ProductImporter do
         csv << ["Potatoes", "User Enterprise", "Vegetables", "5", "3.50", "500", "g", "Small Bag", shipping_category.name]
         csv << ["Chives", "User Enterprise", "Vegetables", "6", "4.50", "500", "g", "Small Bag", shipping_category.name]
         csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "5.50", "2", "kg", "Big Bag", shipping_category.name]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "22.00", "10000", "g", "Small Sack", shipping_category.name]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "60.00", "30000", "", "Big Sack", shipping_category.name]
       end
       @importer = import_data csv_data
     end
@@ -263,7 +265,7 @@ describe ProductImport::ProductImporter do
       entries = JSON.parse(@importer.entries_json)
 
       expect(filter('valid', entries)).to eq 3
-      expect(filter('invalid', entries)).to eq 0
+      expect(filter('invalid', entries)).to eq 2
       expect(filter('create_product', entries)).to eq 3
     end
 
@@ -279,12 +281,17 @@ describe ProductImport::ProductImporter do
       expect(small_bag.price).to eq 3.50
       expect(small_bag.on_hand).to eq 5
 
-      big_bag = Spree::Variant.find_by_display_name('Big Bag')
-      expect(big_bag.product.name).to eq 'Potatoes'
-      expect(big_bag.price).to eq 5.50
-      expect(big_bag.on_hand).to eq 6
+      big_bag = Spree::Variant.find_by_display_name("Big Bag")
+      expect(big_bag).to be_blank
 
-      expect(big_bag.product.id).to eq small_bag.product.id
+      small_sack = Spree::Variant.find_by_display_name("Small Sack")
+      expect(small_sack.product.name).to eq "Potatoes"
+      expect(small_sack.price).to eq 22.00
+      expect(small_sack.on_hand).to eq 6
+      expect(small_sack.product.id).to eq small_bag.product.id
+
+      big_sack = Spree::Variant.find_by_display_name("Big Sack")
+      expect(big_sack).to be_blank
     end
   end
 

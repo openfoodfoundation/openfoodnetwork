@@ -79,8 +79,10 @@ feature "Product Import", js: true do
 
     it "displays info about invalid entries but no save button if all items are invalid" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type"]
-        csv << ["Bad Carrots", "Unkown Enterprise", "Mouldy vegetables", "666", "3.20", "", "g"]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "shipping_category_id"]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", shipping_category_id_str]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "5.50", "1", "kg", shipping_category_id_str]
+        csv << ["Bad Carrots", "Unkown Enterprise", "Mouldy vegetables", "666", "3.20", "", "g", shipping_category_id_str]
         csv << ["Bad Potatoes", "", "Vegetables", "6", "6", "6", ""]
       end
       File.write('/tmp/test.csv', csv_data)
@@ -93,9 +95,9 @@ feature "Product Import", js: true do
 
       proceed_to_validation
 
-      expect(page).to have_selector '.item-count', text: "2"
-      expect(page).to have_selector '.invalid-count', text: "2"
-      expect(page).to have_no_selector '.create-count'
+      expect(page).to have_selector '.item-count', text: "4"
+      expect(page).to have_selector '.invalid-count', text: "3"
+      expect(page).to have_selector ".create-count", text: "1"
       expect(page).to have_no_selector '.update-count'
 
       expect(page).to have_no_selector 'input[type=submit][value="Save"]'
@@ -206,7 +208,7 @@ feature "Product Import", js: true do
       csv_data = CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "display_name", "shipping_category_id"]
         csv << ["Potatoes", "User Enterprise", "Vegetables", "5", "3.50", "500", "g", "Small Bag", shipping_category_id_str]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "5.50", "2", "kg", "Big Bag", shipping_category_id_str]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "5.50", "2000", "g", "Big Bag", shipping_category_id_str]
         csv << ["Beans", "User Enterprise", "Vegetables", "7", "2.50", "250", "g", nil, shipping_category_id_str]
       end
       File.write('/tmp/test.csv', csv_data)

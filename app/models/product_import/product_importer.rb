@@ -182,7 +182,7 @@ module ProductImport
       @spreadsheet_data = SpreadsheetData.new(@entries, @import_settings)
       @validator = EntryValidator.new(@current_user, @import_time, @spreadsheet_data,
                                       @editable_enterprises, @inventory_permissions, @reset_counts,
-                                      @import_settings)
+                                      @import_settings, build_all_entries)
       @processor = EntryProcessor.new(self, @validator, @import_settings, @spreadsheet_data,
                                       @editable_enterprises, @import_time, @updated_ids)
 
@@ -249,6 +249,10 @@ module ProductImport
 
     def build_entries
       @entries = build_entries_from_rows(rows)
+    end
+
+    def build_all_entries
+      build_entries_from_rows(rows)
     end
 
     def save_all_valid
