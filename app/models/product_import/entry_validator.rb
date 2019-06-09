@@ -164,12 +164,22 @@ module ProductImport
     def variant_of_product_validation(entry)
       return if entry.producer.blank? || entry.name.blank?
 
+      validate_unit_type_unchanged(entry)
+      validate_variant_unit_name_unchanged(entry)
+    end
+
+    def validate_unit_type_unchanged(entry)
+      return if entry.unit_type.blank?
       reference_entry = all_entries_for_product(entry).first
-      if entry.unit_type.present? && entry.unit_type.to_s != reference_entry.unit_type.to_s
-        mark_as_not_updatable(entry, "unit_type")
-      elsif entry.variant_unit_name.present? && entry.variant_unit_name.to_s != reference_entry.variant_unit_name.to_s
-        mark_as_not_updatable(entry, "variant_unit_name")
-      end
+      return if entry.unit_type.to_s == reference_entry.unit_type.to_s
+      mark_as_not_updatable(entry, "unit_type")
+    end
+
+    def validate_variant_unit_name_unchanged(entry)
+      return if entry.variant_unit_name.blank?
+      reference_entry = all_entries_for_product(entry).first
+      return if entry.variant_unit_name.to_s == reference_entry.variant_unit_name.to_s
+      mark_as_not_updatable(entry, "variant_unit_name")
     end
 
     def producer_validation(entry)
