@@ -5,7 +5,7 @@ angular.module('admin.orderCycles')
     $scope.distributor_enterprises = Enterprise.hub_enterprises
     $scope.supplied_products = Enterprise.supplied_products
     $scope.enterprise_fees = EnterpriseFee.index(coordinator_id: ocInstance.coordinator_id)
-    $scope.schedules = Schedules.index()
+    $scope.schedules = Schedules.index({enterprise_id: ocInstance.coordinator_id})
 
     $scope.OrderCycle = OrderCycle
     $scope.order_cycle = OrderCycle.new({ coordinator_id: ocInstance.coordinator_id})

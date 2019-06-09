@@ -3,6 +3,8 @@ angular.module("admin.resources").factory 'ScheduleResource', ($resource) ->
     'index':
       method: 'GET'
       isArray: true
+      params:
+        enterprise_id: '@enterprise_id'
     'create':
       method: 'POST'
     'update':
