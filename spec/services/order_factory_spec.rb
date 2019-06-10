@@ -78,7 +78,7 @@ describe OrderFactory do
         context "when skip_stock_check is not requested" do
           it "initialises the order but limits stock to the available amount" do
             expect_new_order
-            expect(order.line_items.find_by_variant_id(variant1.id).quantity).to eq 2
+            expect(variant1_line_item.quantity).to eq 2
           end
 
           context "when variant is on_demand" do
@@ -86,7 +86,7 @@ describe OrderFactory do
 
             it "initialises the order with the requested quantity regardless of stock" do
               expect_new_order
-              expect(order.line_items.find_by_variant_id(variant1.id).quantity).to eq 5
+              expect(variant1_line_item.quantity).to eq 5
             end
           end
         end
@@ -96,7 +96,7 @@ describe OrderFactory do
 
           it "initialises the order with the requested quantity regardless" do
             expect_new_order
-            expect(order.line_items.find_by_variant_id(variant1.id).quantity).to eq 5
+            expect(variant1_line_item.quantity).to eq 5
           end
         end
       end
@@ -108,7 +108,7 @@ describe OrderFactory do
         context "when skip_stock_check is not requested" do
           it "initialised the order but limits stock to the available amount" do
             expect_new_order
-            expect(order.line_items.find_by_variant_id(variant1.id).quantity).to eq 3
+            expect(variant1_line_item.quantity).to eq 3
           end
         end
 
@@ -117,7 +117,7 @@ describe OrderFactory do
 
           it "initialises the order with the requested quantity regardless" do
             expect_new_order
-            expect(order.line_items.find_by_variant_id(variant1.id).quantity).to eq 6
+            expect(variant1_line_item.quantity).to eq 6
           end
         end
       end
@@ -127,7 +127,7 @@ describe OrderFactory do
       context "when no override is present" do
         it "uses the price from the variant" do
           expect_new_order
-          expect(order.line_items.find_by_variant_id(variant1.id).price).to eq 5.0
+          expect(variant1_line_item.price).to eq 5.0
           expect(order.total).to eq 38.0
         end
       end
@@ -137,7 +137,7 @@ describe OrderFactory do
 
         it "uses the price from the override" do
           expect_new_order
-          expect(order.line_items.find_by_variant_id(variant1.id).price).to eq 3.0
+          expect(variant1_line_item.price).to eq 3.0
           expect(order.total).to eq 34.0
         end
       end
@@ -146,6 +146,10 @@ describe OrderFactory do
     def expect_new_order
       expect{ order }.to change{ Spree::Order.count }.by(1)
       expect(order).to be_a Spree::Order
+    end
+
+    def variant1_line_item
+      order.line_items.find_by_variant_id(variant1.id)
     end
   end
 end
