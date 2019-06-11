@@ -32,10 +32,15 @@ module Admin
     def collection
       return Schedule.where("1=0") unless json_request?
       if params[:enterprise_id]
-        permissions.visible_schedules.select { |schedule| schedule.coordinators.map(&:id).include? params[:enterprise_id].to_i }
+        filter_schedules_by_enterprise_id(permissions.visible_schedules, params[:enterprise_id])
       else
         permissions.visible_schedules
       end
+    end
+
+    # Filter schedules by OCs with a given coordinator id
+    def filter_schedules_by_enterprise_id(schedules, enterprise_id)
+      schedules.select { |schedule| schedule.coordinators.map(&:id).include? enterprise_id.to_i }
     end
 
     def collection_actions
