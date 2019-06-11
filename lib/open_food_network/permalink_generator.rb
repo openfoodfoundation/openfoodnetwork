@@ -1,3 +1,10 @@
+# Finds a unique permalink for a new or updated record.
+# It considers soft-deleted records which are ignored by Spree.
+# Spree's work:
+# https://github.com/spree/spree/blob/09b55f7/core/lib/spree/core/permalinks.rb
+#
+# This may become obsolete with Spree 2.3.
+# https://github.com/spree/spree/commits/master/core/lib/spree/core/permalinks.rb
 module PermalinkGenerator
   def self.included(base)
     base.extend(ClassMethods)
@@ -16,7 +23,23 @@ module PermalinkGenerator
   end
 
   def create_unique_permalink(requested)
-    existing = self.class.where('id != ?', id).where("permalink LIKE ?", "#{requested}%").pluck(:permalink)
+    existing = others.where("permalink LIKE ?", "#{requested}%").pluck(:permalink)
     self.class.find_available_value(existing, requested)
+  end
+
+  def others
+    if id.nil?
+      scope_with_deleted
+    else
+      scope_with_deleted.where('id != ?', id)
+    end
+  end
+
+  def scope_with_deleted
+    if self.class.respond_to?(:with_deleted)
+      self.class.with_deleted
+    else
+      self.class.scoped
+    end
   end
 end

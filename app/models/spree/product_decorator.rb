@@ -252,6 +252,7 @@ Spree::Product.class_eval do
     raise
   end
 
+  # Spree creates a permalink already but our implementation fixes an edge case.
   def sanitize_permalink
     if permalink.blank? || permalink_changed?
       requested = permalink.presence || permalink_was.presence || name.presence || 'product'
