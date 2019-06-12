@@ -2793,6 +2793,18 @@ es:
             one: "Tienes un ciclo de pedido activo."
             other: "Tienes %{count} ciclos de pedido activos."
           manage_order_cycles: "GESTIONA LOS CICLOS DE PEDIDO"
+      shipping_methods:
+        index:
+          shipping_methods: "Métodos de envío"
+          name: "Nombre"
+          products_distributor: "Distribuidora"
+          zone: "Zona"
+          calculator: "Calculadora"
+          display: "Mostrar"
+        edit:
+          new: "Nuevo"
+        form:
+          zones: "Zonas"
       payment_methods:
         new:
           new_payment_method: "Nuevo método de pago"

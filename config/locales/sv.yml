@@ -1968,6 +1968,12 @@ sv:
             one: "Du har en aktiv beställningsomgång."
             other: "Du har %{count} aktiva beställningsomgångar."
           manage_order_cycles: "HANTERA BESTÄLLNINGSOMGÅNGAR"
+      shipping_methods:
+        index:
+          shipping_methods: "Transportsätt"
+          name: "Namn"
+          products_distributor: "Distributör"
+          calculator: "Beräkning"
       products:
         index:
           header:

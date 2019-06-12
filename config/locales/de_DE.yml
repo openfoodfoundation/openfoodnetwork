@@ -2797,6 +2797,11 @@ de_DE:
             other: "Sie haben %{count} aktive Bestellzyklen."
           manage_order_cycles: "BESTELLRUNDEN VERWALTEN"
       shipping_methods:
+        index:
+          shipping_methods: "Lieferart"
+          name: "Name"
+          products_distributor: "Verteiler"
+          calculator: "Rechner"
         edit:
           editing_shipping_method: "Versandart bearbeiten"
       payment_methods:

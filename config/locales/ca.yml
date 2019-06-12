@@ -2792,6 +2792,18 @@ ca:
             one: "Tens un cicle de comanda actiu."
             other: "Tens %{count} cicles de comanda actius"
           manage_order_cycles: "GESTIONA ELS CICLES DE COMANDA"
+      shipping_methods:
+        index:
+          shipping_methods: "Mètodes d'enviament"
+          name: "Nom"
+          products_distributor: "Distribuïdora"
+          zone: "Zona"
+          calculator: "Calculadora"
+          display: "Mostra"
+        edit:
+          new: "Nou"
+        form:
+          zones: "Zones"
       payment_methods:
         new:
           new_payment_method: "Nou mètode de pagament"

@@ -7,7 +7,7 @@ en_GB:
         shipment_state: Shipment State
         completed_at: Completed At
         number: Number
-        state: County
+        state: State
         email: Customer E-Mail
       spree/payment:
         amount: Amount
@@ -2261,7 +2261,7 @@ en_GB:
         saving: SAVING
         enterprise_package:
           hub_profile: Hub Profile
-          hub_profile_cost: "COST: Plans starting from £1/month"
+          hub_profile_cost: "COST: Visit our Pricing page for more detail"
           hub_profile_text1: >
               People can find and contact you on the Open Food Network. Your enterprise
               will be visible on the map, and will be searchable in listings.
@@ -2322,7 +2322,7 @@ en_GB:
               Open Food Network aims to provide the tools and support for you to run
               your organisation or business in a manner which suits you.
           get_listing: Get a listing
-          always_free: Plans starting from £1/month
+          always_free: Visit our Pricing page for more detail
           sell_produce_others: Sell produce from others
           sell_own_produce: Sell your own produce
           sell_both: Sell products from multiple producers.

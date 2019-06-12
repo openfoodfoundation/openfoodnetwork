@@ -2799,8 +2799,18 @@ en_AU:
             other: "You have %{count} active order cycles."
           manage_order_cycles: "MANAGE ORDER CYCLES"
       shipping_methods:
+        index:
+          shipping_methods: "Shipping Methods"
+          name: "Name"
+          products_distributor: "Distributor"
+          zone: "Zone"
+          calculator: "Calculator"
+          display: "Display"
         edit:
           editing_shipping_method: "Editing Shipping Method"
+          new: "New"
+        form:
+          zones: "Zones"
       payment_methods:
         new:
           new_payment_method: "New Payment Method"

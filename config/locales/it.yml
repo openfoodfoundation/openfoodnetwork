@@ -2792,6 +2792,18 @@ it:
             one: "Hai un ciclo di richieste attivo."
             other: "Hai %{count} cicli di richieste attivi."
           manage_order_cycles: "GESTISCI CICLI DI RICHIESTE"
+      shipping_methods:
+        index:
+          shipping_methods: "Metodi di spedizione"
+          name: "Nome"
+          products_distributor: "Distributore"
+          zone: "Zone"
+          calculator: "Calcolatrice"
+          display: "Visualizza"
+        edit:
+          new: "Nuovo"
+        form:
+          zones: "Zone"
       payment_methods:
         new:
           new_payment_method: "Nuovo metodo di pagamento"

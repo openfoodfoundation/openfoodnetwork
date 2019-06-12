@@ -1869,8 +1869,8 @@ fr_BE:
   calculator: "Calculateur"
   calculator_values: "Valeurs applicables"
   flat_percent_per_item: "Pourcentage net"
-  flat_rate_per_item: "Montant fixe par article (hors articles au poids/volume)"
-  flat_rate_per_order: "Montant fixe par commande"
+  flat_rate_per_item: "Montant fixe (par article)"
+  flat_rate_per_order: "Montant fixe (par commande)"
   flexible_rate: "Montant variable selon nb articles"
   price_sack: "Montant variable selon total commande"
   new_order_cycles: "Nouveau cycle de vente"
@@ -2811,8 +2811,18 @@ fr_BE:
             other: "Vous avez %{count} cycles de vente actifs."
           manage_order_cycles: "GERER LES CYCLES DE VENTE"
       shipping_methods:
+        index:
+          shipping_methods: "Méthodes de livraison"
+          name: "Nom"
+          products_distributor: "Distributeur"
+          zone: "Zone"
+          calculator: "Calculateur"
+          display: "Ecran"
         edit:
           editing_shipping_method: "Éditer une méthode de livraison"
+          new: "Nouveau"
+        form:
+          zones: "Zones"
       payment_methods:
         new:
           new_payment_method: "Nouvelle méthode de paiement"

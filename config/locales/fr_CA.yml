@@ -2797,6 +2797,18 @@ fr_CA:
             one: "Vous avez un cycle de vente actif."
             other: "Vous avez %{count} cycles de vente actifs."
           manage_order_cycles: "GERER LES CYCLES DE VENTE"
+      shipping_methods:
+        index:
+          shipping_methods: "Méthodes de livraison"
+          name: "Nom"
+          products_distributor: "Hub-distributeur"
+          zone: "Zone"
+          calculator: "Calculateur"
+          display: "Afficher"
+        edit:
+          new: "Nouveau"
+        form:
+          zones: "Zones"
       payment_methods:
         new:
           new_payment_method: "Nouvelle méthode de paiement"

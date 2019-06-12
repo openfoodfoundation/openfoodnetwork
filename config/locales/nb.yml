@@ -2798,8 +2798,18 @@ nb:
             other: "Du har %{count} aktive bestillingssykluser."
           manage_order_cycles: "BEHANDLE BESTILLINGSRUNDER"
       shipping_methods:
+        index:
+          shipping_methods: "Leveringsmetoder"
+          name: "Navn"
+          products_distributor: "Distributør"
+          zone: "Sone"
+          calculator: "Kalkulator"
+          display: "Visning"
         edit:
           editing_shipping_method: "Redigerer Leveringsmetode"
+          new: "Ny"
+        form:
+          zones: "Soner"
       payment_methods:
         new:
           new_payment_method: "Ny Betalingsmetode"

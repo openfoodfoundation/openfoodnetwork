@@ -2801,8 +2801,18 @@ pt:
             other: "Tem %{count}ciclos de encomendas activos."
           manage_order_cycles: "GERIR CICLOS DE ENCOMENDAS"
       shipping_methods:
+        index:
+          shipping_methods: "Métodos de Envio"
+          name: "Nome"
+          products_distributor: "Distribuidor"
+          zone: "Zona"
+          calculator: "Calculadora"
+          display: "Mostrar"
         edit:
           editing_shipping_method: "Editar Método de Envio"
+          new: "Novo"
+        form:
+          zones: "Zonas"
       payment_methods:
         new:
           new_payment_method: "Novo Método de Pagamento"

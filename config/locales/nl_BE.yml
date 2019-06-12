@@ -2806,8 +2806,18 @@ nl_BE:
             other: "U heeft 1%{count} aktieve ordercycli."
           manage_order_cycles: "BESTELCYCLI BEHEREN"
       shipping_methods:
+        index:
+          shipping_methods: "Methode Verzending"
+          name: "Naam"
+          products_distributor: "Distributeur"
+          zone: "Zone"
+          calculator: "Rekenmachine"
+          display: "Display"
         edit:
           editing_shipping_method: "Verzendmethode bewerken"
+          new: "Nieuw"
+        form:
+          zones: "Zones "
       payment_methods:
         new:
           new_payment_method: "Nieuwe betalingswijze"
