@@ -314,7 +314,7 @@ module ProductImport
     def product_field_errors(entry, existing_product)
       EntryValidator.non_updatable_fields.each do |display_name, attribute|
         next if attributes_match?(attribute, existing_product, entry) || attributes_blank?(attribute, existing_product, entry)
-        next if attribute == :description
+        next if ignore_when_updating_product?(attribute)
         mark_as_invalid(entry, attribute: display_name, error: I18n.t('admin.product_import.model.not_updatable'))
       end
     end
@@ -323,6 +323,11 @@ module ProductImport
       existing_product_value = existing_product.public_send(attribute)
       entry_value = entry.public_send(attribute)
       existing_product_value == convert_to_trusted_type(entry_value, existing_product_value)
+    end
+
+    def ignore_when_updating_product?(attribute)
+      attributes_to_ignore = [:description]
+      attributes_to_ignore.include? attribute
     end
 
     def convert_to_trusted_type(untrusted_attribute, trusted_attribute)
