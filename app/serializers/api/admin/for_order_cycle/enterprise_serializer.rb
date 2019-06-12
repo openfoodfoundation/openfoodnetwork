@@ -37,7 +37,7 @@ class Api::Admin::ForOrderCycle::EnterpriseSerializer < ActiveModel::Serializer
   end
 
   def products
-    @products ||= products_scope.includes(:supplier, master: [:images])
+    @products ||= products_scope
   end
 
   def order_cycle
