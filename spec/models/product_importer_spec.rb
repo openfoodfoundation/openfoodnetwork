@@ -247,6 +247,25 @@ describe ProductImport::ProductImporter do
     end
   end
 
+  describe "updating an exiting variant" do
+    before do
+      csv_data = CSV.generate do |csv|
+        csv << ["name", "producer", "description" ,"category", "on_hand", "price", "units", "unit_type", "display_name", "shipping_category"]
+        csv << ["Hypothetical Cake", "Another Enterprise", "New Description", "Cake", "5", "5.50", "500", "g", "Preexisting Banana", shipping_category.name]
+      end
+      @importer = import_data csv_data
+    end
+
+    it "ignores (non-updatable) description field if it doesn't match the current description" do
+      @importer.validate_entries
+      entries = JSON.parse(@importer.entries_json)
+
+      expect(filter('valid', entries)).to eq 1
+      expect(filter('invalid', entries)).to eq 0
+      expect(filter('update_product', entries)).to eq 1
+    end
+  end
+
   describe "adding new product and sub-variant at the same time" do
     before do
       csv_data = CSV.generate do |csv|
