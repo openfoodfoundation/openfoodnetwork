@@ -3011,6 +3011,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
             error_saving_payment: Error saving payment
             submitting_payment: Submitting payment...
       products:
+        image_upload_error: "The product image was not recognised. Please upload an image in PNG or JPG format."
+
         new:
           title: 'New Product'
         unit_name_placeholder: 'eg. bunches'

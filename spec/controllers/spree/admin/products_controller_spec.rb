@@ -147,6 +147,25 @@ describe Spree::Admin::ProductsController, type: :controller do
       spree_post :create, product: product_attrs, button: 'add_another'
       expect(response).to redirect_to spree.new_admin_product_path
     end
+
+    describe "when user uploads an image in an unsupported format" do
+      it "does not throw an exception" do
+        product_image = ActionDispatch::Http::UploadedFile.new({
+          :filename => 'unsupported_image_format.exr',
+          :content_type => 'application/octet-stream',
+          :tempfile => Tempfile.new('unsupported_image_format.exr')
+        })
+        product_attrs_with_image = product_attrs.merge(
+          images_attributes: {
+            '0' => { attachment: product_image }
+          })
+
+        expect do
+          spree_put :create, product: product_attrs_with_image
+        end.not_to raise_error Paperclip::Errors::NotIdentifiedByImageMagickError
+        expect(response.status).to eq 200
+      end
+    end
   end
 
   describe "updating" do

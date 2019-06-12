@@ -33,6 +33,10 @@ Spree::Admin::ProductsController.class_eval do
     delete_stock_params_and_set_after do
       super
     end
+  rescue Paperclip::Errors::NotIdentifiedByImageMagickError
+    invoke_callbacks(:create, :fails)
+    @object.errors.add(:base, t('spree.admin.products.image_upload_error'))
+    respond_with(@object)
   end
 
   def update
