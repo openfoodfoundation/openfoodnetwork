@@ -1,5 +1,7 @@
 module Api
   class CustomersController < BaseController
+    skip_authorization_check only: :index
+
     def index
       @customers = current_api_user.customers
       render json: @customers, each_serializer: CustomerSerializer

@@ -82,7 +82,7 @@ module Api
       end
     end
 
-    describe "fetching shopfronts data" do
+    context "as a non-authenticated user" do
       let!(:hub) {
         create(:distributor_enterprise, with_payment_and_shipping: true, name: 'Shopfront Test Hub')
       }
@@ -92,15 +92,17 @@ module Api
       let!(:relationship) { create(:enterprise_relationship, parent: hub, child: producer) }
 
       before do
-        allow(controller).to receive(:spree_current_user) { Spree::User.anonymous! }
+        allow(controller).to receive(:spree_current_user) { nil }
       end
 
-      it "returns data for an enterprise" do
-        spree_get :shopfront, id: producer.id, format: :json
+      describe "fetching shopfronts data" do
+        it "returns data for an enterprise" do
+          spree_get :shopfront, id: producer.id, format: :json
 
-        expect(json_response['name']).to eq 'Shopfront Test Producer'
-        expect(json_response['hubs'][0]['name']).to eq 'Shopfront Test Hub'
-        expect(json_response['supplied_taxons'][0]['name']).to eq 'Fruit'
+          expect(json_response['name']).to eq 'Shopfront Test Producer'
+          expect(json_response['hubs'][0]['name']).to eq 'Shopfront Test Hub'
+          expect(json_response['supplied_taxons'][0]['name']).to eq 'Fruit'
+        end
       end
     end
   end

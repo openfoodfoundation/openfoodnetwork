@@ -5,6 +5,7 @@ module Api
     before_filter :override_sells, only: [:create, :update]
     before_filter :override_visible, only: [:create, :update]
     respond_to :json
+    skip_authorization_check only: [:shopfront, :managed]
 
     def managed
       @enterprises = Enterprise.ransack(params[:q]).result.managed_by(current_api_user)
