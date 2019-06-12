@@ -1,6 +1,6 @@
 class EnsureShippingMethodsHaveDistributors < ActiveRecord::Migration
   class Enterprise < ActiveRecord::Base
-    scope :is_distributor, where(is_distributor: true)
+    scope :is_distributor, -> { where(is_distributor: true) }
   end
 
   def up

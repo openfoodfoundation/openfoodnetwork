@@ -33,8 +33,8 @@ class OrderCycle < ActiveRecord::Base
   scope :upcoming, lambda { where('order_cycles.orders_open_at > ?', Time.zone.now) }
   scope :not_closed, lambda { where('order_cycles.orders_close_at > ? OR order_cycles.orders_close_at IS NULL', Time.zone.now) }
   scope :closed, lambda { where('order_cycles.orders_close_at < ?', Time.zone.now).order("order_cycles.orders_close_at DESC") }
-  scope :undated, where('order_cycles.orders_open_at IS NULL OR orders_close_at IS NULL')
-  scope :dated, where('orders_open_at IS NOT NULL AND orders_close_at IS NOT NULL')
+  scope :undated, -> { where('order_cycles.orders_open_at IS NULL OR orders_close_at IS NULL') }
+  scope :dated, -> { where('orders_open_at IS NOT NULL AND orders_close_at IS NOT NULL') }
 
   scope :soonest_closing,      lambda { active.order('order_cycles.orders_close_at ASC') }
   # TODO This method returns all the closed orders. So maybe we can replace it with :recently_closed.
@@ -42,7 +42,7 @@ class OrderCycle < ActiveRecord::Base
 
   scope :soonest_opening,      lambda { upcoming.order('order_cycles.orders_open_at ASC') }
 
-  scope :by_name, order('name')
+  scope :by_name, -> { order('name') }
 
   scope :with_distributor, lambda { |distributor|
     joins(:exchanges).merge(Exchange.outgoing).merge(Exchange.to_enterprise(distributor))

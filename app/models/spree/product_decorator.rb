@@ -41,12 +41,24 @@ Spree::Product.class_eval do
   after_save :refresh_products_cache
 
   # -- Joins
-  scope :with_order_cycles_outer, joins('LEFT OUTER JOIN spree_variants AS o_spree_variants ON (o_spree_variants.product_id = spree_products.id)').
-    joins('LEFT OUTER JOIN exchange_variants AS o_exchange_variants ON (o_exchange_variants.variant_id = o_spree_variants.id)').
-    joins('LEFT OUTER JOIN exchanges AS o_exchanges ON (o_exchanges.id = o_exchange_variants.exchange_id)').
-    joins('LEFT OUTER JOIN order_cycles AS o_order_cycles ON (o_order_cycles.id = o_exchanges.order_cycle_id)')
+  scope :with_order_cycles_outer, -> {
+    joins("
+      LEFT OUTER JOIN spree_variants AS o_spree_variants
+        ON (o_spree_variants.product_id = spree_products.id)").
+      joins("
+        LEFT OUTER JOIN exchange_variants AS o_exchange_variants
+          ON (o_exchange_variants.variant_id = o_spree_variants.id)").
+      joins("
+        LEFT OUTER JOIN exchanges AS o_exchanges
+          ON (o_exchanges.id = o_exchange_variants.exchange_id)").
+      joins("
+        LEFT OUTER JOIN order_cycles AS o_order_cycles
+          ON (o_order_cycles.id = o_exchanges.order_cycle_id)")
+  }
 
-  scope :with_order_cycles_inner, joins(variants_including_master: { exchanges: :order_cycle })
+  scope :with_order_cycles_inner, -> {
+    joins(variants_including_master: { exchanges: :order_cycle })
+  }
 
   scope :visible_for, lambda { |enterprise|
     joins('LEFT OUTER JOIN spree_variants AS o_spree_variants ON (o_spree_variants.product_id = spree_products.id)').
@@ -93,8 +105,8 @@ Spree::Product.class_eval do
       where('order_cycles.id IS NOT NULL')
   }
 
-  scope :by_producer, joins(:supplier).order('enterprises.name')
-  scope :by_name, order('name')
+  scope :by_producer, -> { joins(:supplier).order('enterprises.name') }
+  scope :by_name, -> { order('name') }
 
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')

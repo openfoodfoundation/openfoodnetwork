@@ -47,8 +47,8 @@ class EnterpriseGroup < ActiveRecord::Base
   supports_s3 :logo
   supports_s3 :promo_image
 
-  scope :by_position, order('position ASC')
-  scope :on_front_page, where(on_front_page: true)
+  scope :by_position, -> { order('position ASC') }
+  scope :on_front_page, -> { where(on_front_page: true) }
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
       scoped

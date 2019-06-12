@@ -29,7 +29,7 @@ Spree::ShippingMethod.class_eval do
       where('enterprises.id = ?', distributor)
   }
 
-  scope :by_name, order('spree_shipping_methods.name ASC')
+  scope :by_name, -> { order('spree_shipping_methods.name ASC') }
 
   # Return the services (pickup, delivery) that different distributors provide, in the format:
   # {distributor_id => {pickup: true, delivery: false}, ...}

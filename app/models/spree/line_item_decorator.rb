@@ -36,8 +36,13 @@ Spree::LineItem.class_eval do
   }
 
   # Find line items that are from order sorted by variant name and unit value
-  scope :sorted_by_name_and_unit_value, joins(variant: :product).
-    reorder('lower(spree_products.name) asc, lower(spree_variants.display_name) asc, spree_variants.unit_value asc')
+  scope :sorted_by_name_and_unit_value, -> {
+    joins(variant: :product).
+      reorder("
+        lower(spree_products.name) asc,
+          lower(spree_variants.display_name) asc,
+          spree_variants.unit_value asc")
+  }
 
   scope :from_order_cycle, lambda { |order_cycle|
     joins(order: :order_cycle).
@@ -53,13 +58,21 @@ Spree::LineItem.class_eval do
       where('spree_products.supplier_id IN (?)', enterprises)
   }
 
-  scope :with_tax, joins(:adjustments).
-    where('spree_adjustments.originator_type = ?', 'Spree::TaxRate').
-    select('DISTINCT spree_line_items.*')
+  scope :with_tax, -> {
+    joins(:adjustments).
+      where('spree_adjustments.originator_type = ?', 'Spree::TaxRate').
+      select('DISTINCT spree_line_items.*')
+  }
 
   # Line items without a Spree::TaxRate-originated adjustment
-  scope :without_tax, joins("LEFT OUTER JOIN spree_adjustments ON (spree_adjustments.adjustable_id=spree_line_items.id AND spree_adjustments.adjustable_type = 'Spree::LineItem' AND spree_adjustments.originator_type='Spree::TaxRate')").
-    where('spree_adjustments.id IS NULL')
+  scope :without_tax, -> {
+    joins("
+      LEFT OUTER JOIN spree_adjustments
+        ON (spree_adjustments.adjustable_id=spree_line_items.id
+          AND spree_adjustments.adjustable_type = 'Spree::LineItem'
+          AND spree_adjustments.originator_type='Spree::TaxRate')").
+      where('spree_adjustments.id IS NULL')
+  }
 
   def cap_quantity_at_stock!
     scoper.scope(variant)
