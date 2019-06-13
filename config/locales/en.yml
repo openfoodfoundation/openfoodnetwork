@@ -1822,7 +1822,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       introduction:
         registration_greeting: "Hi there!"
         registration_intro: "You can now create a profile for your Producer or Hub"
-        registration_checklist: "You'll need"
+        registration_checklist: "What do I need?"
         registration_time: "5-10 minutes"
         registration_enterprise_address: "Enterprise address"
         registration_contact_details: "Primary contact details"
