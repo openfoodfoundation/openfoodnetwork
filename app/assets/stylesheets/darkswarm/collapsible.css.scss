@@ -6,22 +6,22 @@ $collapsible-max-height: 350px;
 }
 
 .collapsible-label > ::before {
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid currentColor;
+  border-top: 5px solid transparent;
+
   content: ' ';
   display: inline-block;
 
-  border-top: 5px solid transparent;
-  border-bottom: 5px solid transparent;
-  border-left: 5px solid currentColor;
-
-  vertical-align: middle;
   margin-right: .7rem;
   transform: translateY(-2px);
-
   transition: transform .2s ease-out;
+
+  vertical-align: middle;
 }
 
 .collapsible-content {
-  max-height: 0px;
+  max-height: 0;
   overflow: hidden;
 
   transition: max-height .25s ease-in-out;
