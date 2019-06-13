@@ -154,7 +154,6 @@ describe Spree::Admin::ProductsController, type: :controller do
     let!(:product) { create(:simple_product, supplier: producer) }
 
     before do
-      @request.env['HTTP_REFERER'] = 'http://test.com/'
       login_as_enterprise_user [producer]
     end
 
