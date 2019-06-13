@@ -187,7 +187,7 @@ Metrics/AbcSize:
   Max: 15
 
 Metrics/BlockLength:
-  ExcludedMethods: ["collection", "context", "describe", "it", "member", "namespace", "resource", "resources"]
+  ExcludedMethods: ["class_eval", "collection", "context", "describe", "it", "member", "namespace", "resource", "resources"]
 
 Metrics/BlockNesting:
   Max: 3
