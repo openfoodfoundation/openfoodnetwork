@@ -1165,12 +1165,11 @@ en:
   shop:
     messages:
       login: "login"
-      register: "register"
+      signup: "signup"
       contact: "contact"
-      require_customer_login: "This shop is for customers only."
-      require_login_html: "Please %{login} if you have an account already. Otherwise, %{register} to become a customer."
-      require_customer_html: "Please %{contact} %{enterprise} to become a customer."
-
+      require_customer_login: "Only approved customers can access this shop."
+      require_login_html: "If you're already an approved customer, %{login} or %{signup} to proceed. Want to start shopping here? Please %{contact} %{enterprise} and ask about joining."
+      require_customer_html: "If you'd like to start shopping here, please %{contact} %{enterprise} to ask about joining."
 
   # Front-end controller translations
   card_could_not_be_updated: Card could not be updated
