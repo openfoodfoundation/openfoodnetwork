@@ -867,6 +867,7 @@ en:
         pickup_time_placeholder: "Ready for (ie. Date / Time)"
         receival_instructions_placeholder: "Receival instructions"
         add_fee: 'Add fee'
+        remove: 'Remove'
         selected: 'selected'
       add_exchange_form:
         add_supplier: 'Add supplier'
