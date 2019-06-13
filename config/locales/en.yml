@@ -33,7 +33,11 @@ en:
       spree/payment:
         amount: Amount
       spree/product:
-        primary_taxon: Product Category
+        primary_taxon: "Product Category"
+        supplier: "Supplier"
+        shipping_category_id: "Shipping Category"
+        variant_unit: "Variant Unit"
+        variant_unit_name: "Variant Unit Name"
       order_cycle:
         orders_close_at: Close date
     errors:
@@ -2069,6 +2073,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   spree_admin_supplier: Supplier
   spree_admin_product_category: Product Category
   spree_admin_variant_unit_name: Variant unit name
+  unit_name: "Unit name"
   change_package: "Change Package"
   spree_admin_single_enterprise_hint: "Hint: To allow people to find you, turn on your visibility under"
   spree_admin_eg_pickup_from_school: "eg. 'Pick-up from Primary School'"
