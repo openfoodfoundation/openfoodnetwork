@@ -10,14 +10,14 @@ angular.module("admin.subscriptions").controller "ProductsPanelController", ($sc
 
   $scope.save = ->
     $scope.saving = true
-    StatusMessage.display 'progress', 'Saving...'
+    StatusMessage.display 'progress', t('js.saving')
     $scope.subscription.update().then (response) ->
       $scope.saving = false
-      StatusMessage.display 'success', 'Saved'
+      StatusMessage.display 'success', t('js.changes_saved')
     , (response) ->
       $scope.saving = false
       if response.data?.errors?
         keys = Object.keys(response.data.errors)
         StatusMessage.display 'failure', response.data.errors[keys[0]][0]
       else
-        StatusMessage.display 'success', 'Saved'
+        StatusMessage.display 'success', t('js.changes_saved')

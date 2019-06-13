@@ -1013,12 +1013,13 @@ en:
       new: New Subscription
       create: Create Subscription
       edit: Edit Subscription
-      index:
-        please_select_a_shop: Please select a shop
+      table:
         edit_subscription: Edit Subscription
         pause_subscription: Pause Subscription
         unpause_subscription: Unpause Subscription
         cancel_subscription: Cancel Subscription
+      filters:
+        query_placeholder: "Search by email..."
       setup_explanation:
         just_a_few_more_steps: 'Just a few more steps before you can begin:'
         enable_subscriptions: "Enable subscriptions for at least one of your shops"
@@ -1051,6 +1052,8 @@ en:
         charges_not_allowed: Charges are not allowed by this customer
         no_default_card: Customer has no cards available to charge
         card_ok: Customer has a card available to charge
+        begins_at_placeholder: "Select a Date"
+        ends_at_placeholder: "Optional"
       loading_flash:
         loading: LOADING SUBSCRIPTIONS
       review:
@@ -1058,6 +1061,10 @@ en:
         address: Address
         products: Products
         no_open_or_upcoming_order_cycle: "No Upcoming Order Cycle"
+      products_panel:
+        save: "SAVE"
+        saving: "SAVING"
+        saved: "SAVED"
       product_already_in_order: This product has already been added to the order. Please edit the quantity directly.
       orders:
         number: Number
@@ -1244,6 +1251,7 @@ en:
   state: State
   postcode: Postcode
   postcode_placeholder: eg. 3070
+  suburb: Suburb
   state: State
   country: Country
   unauthorized: Unauthorized
@@ -2578,6 +2586,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           add_a_new_customer_for: "Add a new customer for %{shop_name}"
           customer_placeholder: "customer@example.org"
           valid_email_error: "Please enter a valid email address"
+      subscriptions:
+        new:
+          please_select_a_shop: "Please select a shop"
     insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
     out_of_stock:
       reduced_stock_available: Reduced stock available
