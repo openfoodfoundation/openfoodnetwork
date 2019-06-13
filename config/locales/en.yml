@@ -2492,8 +2492,18 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           severity: Severity
           description: Description
           resolve: Resolve
+      tag_rules:
+        shipping_method_tagged_top: "Shipping methods tagged"
+        shipping_method_tagged_bottom: "are:"
+        payment_method_tagged_top: "Payment methods tagged"
+        payment_method_tagged_bottom: "are:"
+        order_cycle_tagged_top: "Order Cycles tagged"
+        order_cycle_tagged_bottom: "are:"
+        inventory_tagged_top: "Inventory variants tagged"
+        inventory_tagged_bottom: "are:"
       new_tag_rule_dialog:
         select_rule_type: "Select a rule type:"
+        add_rule: "Add Rule"
       enterprise_fees:
         inherit_from_product: "Inherit From Product"
       orders:
