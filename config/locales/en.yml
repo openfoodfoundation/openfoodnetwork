@@ -421,14 +421,15 @@ en:
 
     enterprise_fees:
       index:
-        title: Enterprise Fees
-        enterprise: Enterprise
-        fee_type: Fee Type
-        name: Name
-        tax_category: Tax Category
-        calculator: Calculator
-        calculator_values: Calculator Values
+        title: "Enterprise Fees"
+        enterprise: "Enterprise"
+        fee_type: "Fee Type"
+        name: "Name"
+        tax_category: "Tax Category"
+        calculator: "Calculator"
+        calculator_values: "Calculator Values"
         search: "Search"
+        name_placeholder: "e.g. packing fee"
 
     enterprise_groups:
       index:
@@ -2866,6 +2867,17 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     no_results: "No results"
     create: "Create"
     loading: "Loading"
+
+    flat_percent: "Flat Percent"
+    per_kg: "Per Kg"
+    amount: "Amount"
+    currency: "Currency"
+    first_item: "First Item Cost"
+    additional_item: "Additional Item Cost"
+    max_items: "Max Items"
+    minimal_amount: "Minimal Amount"
+    normal_amount: "Normal Amount"
+    discount_amount: "Discount Amount"
 
     # TODO: remove `email` key once we get to Spree 2.0
     email: Email
