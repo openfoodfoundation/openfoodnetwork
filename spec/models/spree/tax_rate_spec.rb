@@ -9,7 +9,7 @@ module Spree
         let(:hub) { create(:distributor_enterprise, charges_sales_tax: true) }
 
         it "selects all tax rates" do
-          TaxRate.match(order).should == [tax_rate]
+          expect(TaxRate.match(order)).to eq([tax_rate])
         end
       end
 
@@ -17,7 +17,7 @@ module Spree
         let(:hub) { create(:distributor_enterprise, charges_sales_tax: false) }
 
         it "selects no tax rates" do
-          TaxRate.match(order).should be_empty
+          expect(TaxRate.match(order)).to be_empty
         end
       end
 
@@ -25,7 +25,7 @@ module Spree
         let!(:order) { create(:order, distributor: nil, bill_address: create(:address)) }
 
         it "selects all tax rates" do
-          TaxRate.match(order).should == [tax_rate]
+          expect(TaxRate.match(order)).to eq([tax_rate])
         end
       end
     end
@@ -35,35 +35,35 @@ module Spree
 
       it "sets included_in_price to true" do
         tax_rate.send(:with_tax_included_in_price) do
-          tax_rate.included_in_price.should be true
+          expect(tax_rate.included_in_price).to be true
         end
       end
 
       it "sets the included_in_price value accessible to the calculator to true" do
         tax_rate.send(:with_tax_included_in_price) do
-          tax_rate.calculator.calculable.included_in_price.should be true
+          expect(tax_rate.calculator.calculable.included_in_price).to be true
         end
       end
 
       it "passes through the return value of the block" do
-        tax_rate.send(:with_tax_included_in_price) do
+        expect(tax_rate.send(:with_tax_included_in_price) do
           'asdf'
-        end.should == 'asdf'
+        end).to eq('asdf')
       end
 
       it "restores both values to their original afterwards" do
         tax_rate.send(:with_tax_included_in_price) {}
-        tax_rate.included_in_price.should be false
-        tax_rate.calculator.calculable.included_in_price.should be false
+        expect(tax_rate.included_in_price).to be false
+        expect(tax_rate.calculator.calculable.included_in_price).to be false
       end
 
       it "restores both values when an exception is raised" do
         expect do
-          tax_rate.send(:with_tax_included_in_price) { raise Exception.new 'oops' }
+          tax_rate.send(:with_tax_included_in_price) { raise Exception, 'oops' }
         end.to raise_error 'oops'
 
-        tax_rate.included_in_price.should be false
-        tax_rate.calculator.calculable.included_in_price.should be false
+        expect(tax_rate.included_in_price).to be false
+        expect(tax_rate.calculator.calculable.included_in_price).to be false
       end
     end
   end

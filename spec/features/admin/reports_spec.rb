@@ -1,9 +1,9 @@
 require "spec_helper"
 
-feature %q{
+feature '
     As an administrator
     I want numbers, all the numbers!
-} do
+' do
   include AuthenticationWorkflow
   include WebHelper
 
@@ -11,8 +11,8 @@ feature %q{
     context "As an enterprise user" do
       let(:user) do
         create_enterprise_user(enterprises: [
-          create(:distributor_enterprise)
-        ])
+                                 create(:distributor_enterprise)
+                               ])
       end
       it "does not show super admin only reports" do
         login_to_admin_as user
@@ -98,8 +98,8 @@ feature %q{
 
     let(:bill_address1) { create(:address, lastname: "Aman") }
     let(:bill_address2) { create(:address, lastname: "Bman") }
-    let(:distributor_address) { create(:address, :address1 => "distributor address", :city => 'The Shire', :zipcode => "1234") }
-    let(:distributor) { create(:distributor_enterprise, :address => distributor_address) }
+    let(:distributor_address) { create(:address, address1: "distributor address", city: 'The Shire', zipcode: "1234") }
+    let(:distributor) { create(:distributor_enterprise, address: distributor_address) }
     let(:order1) { create(:order, distributor: distributor, bill_address: bill_address1) }
     let(:order2) { create(:order, distributor: distributor, bill_address: bill_address2) }
     let(:supplier) { create(:supplier_enterprise, name: "Supplier") }
@@ -112,17 +112,16 @@ feature %q{
       Timecop.travel(Time.zone.local(2013, 4, 25, 14, 0, 0)) { order1.finalize! }
       Timecop.travel(Time.zone.local(2013, 4, 25, 15, 0, 0)) { order2.finalize! }
 
-      create(:line_item, variant: variant_1, quantity: 1, order: order1)
-      create(:line_item, variant: variant_2, quantity: 3, order: order1)
-      create(:line_item, variant: product_2.master, quantity: 3, order: order2)
-
+      create(:line_item_with_shipment, variant: variant_1, quantity: 1, order: order1)
+      create(:line_item_with_shipment, variant: variant_2, quantity: 3, order: order1)
+      create(:line_item_with_shipment, variant: product_2.master, quantity: 3, order: order2)
     end
 
     scenario "Pack By Customer" do
       click_link "Pack By Customer"
       fill_in 'q_completed_at_gt', with: '2013-04-25 13:00:00'
       fill_in 'q_completed_at_lt', with: '2013-04-25 16:00:00'
-      #select 'Pack By Customer', from: 'report_type'
+      # select 'Pack By Customer', from: 'report_type'
       click_button 'Search'
 
       rows = find("table#listing_orders").all("thead tr")
@@ -137,7 +136,7 @@ feature %q{
       click_link "Pack By Supplier"
       fill_in 'q_completed_at_gt', with: '2013-04-25 13:00:00'
       fill_in 'q_completed_at_lt', with: '2013-04-25 16:00:00'
-      #select 'Pack By Customer', from: 'report_type'
+      # select 'Pack By Customer', from: 'report_type'
       click_button 'Search'
 
       rows = find("table#listing_orders").all("thead tr")
@@ -148,7 +147,6 @@ feature %q{
       expect(all('table#listing_orders tbody tr').count).to eq(4) # Totals row per supplier
     end
   end
-
 
   scenario "orders and distributors report" do
     quick_login_as_admin
@@ -182,31 +180,31 @@ feature %q{
     let(:distributor2) { create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true) }
     let(:user1) { create_enterprise_user enterprises: [distributor1] }
     let(:user2) { create_enterprise_user enterprises: [distributor2] }
-    let(:shipping_method) { create(:shipping_method, name: "Shipping", description: "Expensive", calculator: Spree::Calculator::FlatRate.new(preferred_amount: 100.55)) }
+    let!(:shipping_method) { create(:shipping_method_with, :expensive_name, distributors: [distributor1]) }
     let(:enterprise_fee) { create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 120.0)) }
     let(:order_cycle) { create(:simple_order_cycle, coordinator: distributor1, coordinator_fees: [enterprise_fee], distributors: [distributor1], variants: [product1.master]) }
 
     let!(:zone) { create(:zone_with_member) }
-    let(:order1) { create(:order, order_cycle: order_cycle, distributor: user1.enterprises.first, shipping_method: shipping_method, bill_address: create(:address)) }
+    let(:address) { create(:address) }
+    let(:order1) { create(:order, order_cycle: order_cycle, distributor: user1.enterprises.first, ship_address: address, bill_address: address) }
     let(:product1) { create(:taxed_product, zone: zone, price: 12.54, tax_rate_amount: 0) }
     let(:product2) { create(:taxed_product, zone: zone, price: 500.15, tax_rate_amount: 0.2) }
 
     let!(:line_item1) { create(:line_item, variant: product1.master, price: 12.54, quantity: 1, order: order1) }
     let!(:line_item2) { create(:line_item, variant: product2.master, price: 500.15, quantity: 3, order: order1) }
 
-    let!(:adj_shipping) { create(:adjustment, adjustable: order1, label: "Shipping", amount: 100.55) }
-
     before do
-      Spree::Config.shipment_inc_vat = true
-      Spree::Config.shipping_tax_rate = 0.2
+      allow(Spree::Config).to receive(:shipment_inc_vat) { true }
+      allow(Spree::Config).to receive(:shipping_tax_rate) { 0.2 }
 
-      3.times { order1.next }
+      2.times { order1.next }
+      order1.select_shipping_method shipping_method.id
       order1.reload.update_distribution_charge!
-
       order1.finalize!
 
-      quick_login_as user1
+      quick_login_as_admin
       visit spree.admin_reports_path
+
       click_link "Sales Tax"
       select("Tax types", from: "report_type")
     end
@@ -221,7 +219,7 @@ feature %q{
       click_button 'Search'
 
       # Then I should see the relevant order
-      expect(page).to have_content "#{order1.number}"
+      expect(page).to have_content order1.number.to_s
 
       # And the totals and sales tax should be correct
       expect(page).to have_content "1512.99" # items total
@@ -249,19 +247,19 @@ feature %q{
 
     context "with two orders on the same day at different times" do
       let(:bill_address) { create(:address) }
-      let(:distributor_address) { create(:address, :address1 => "distributor address", :city => 'The Shire', :zipcode => "1234") }
-      let(:distributor) { create(:distributor_enterprise, :address => distributor_address) }
+      let(:distributor_address) { create(:address, address1: "distributor address", city: 'The Shire', zipcode: "1234") }
+      let(:distributor) { create(:distributor_enterprise, address: distributor_address) }
       let(:product) { create(:product) }
       let(:shipping_instructions) { "pick up on thursday please!" }
-      let(:order1) { create(:order, :distributor => distributor, :bill_address => bill_address, :special_instructions => shipping_instructions) }
-      let(:order2) { create(:order, :distributor => distributor, :bill_address => bill_address, :special_instructions => shipping_instructions) }
+      let(:order1) { create(:order, distributor: distributor, bill_address: bill_address, special_instructions: shipping_instructions) }
+      let(:order2) { create(:order, distributor: distributor, bill_address: bill_address, special_instructions: shipping_instructions) }
 
       before do
         Timecop.travel(Time.zone.local(2013, 4, 25, 14, 0, 0)) { order1.finalize! }
         Timecop.travel(Time.zone.local(2013, 4, 25, 16, 0, 0)) { order2.finalize! }
 
-        create(:line_item, :product => product, :order => order1)
-        create(:line_item, :product => product, :order => order2)
+        create(:line_item_with_shipment, product: product, order: order1)
+        create(:line_item_with_shipment, product: product, order: order2)
       end
 
       it "is precise to time of day, not just date" do
@@ -305,14 +303,14 @@ feature %q{
       product2.set_property 'Organic', 'NASAA 12345'
       product1.taxons = [taxon]
       product2.taxons = [taxon]
-      variant1.update_column(:count_on_hand, 10)
+      variant1.on_hand = 10
       variant1.update_column(:sku, "sku1")
-      variant2.update_column(:count_on_hand, 20)
+      variant2.on_hand = 20
       variant2.update_column(:sku, "sku2")
-      variant3.update_column(:count_on_hand, 9)
+      variant3.on_hand = 9
       variant3.update_column(:sku, "")
-      variant1.option_values = [create(:option_value, :presentation => "Test")]
-      variant2.option_values = [create(:option_value, :presentation => "Something")]
+      variant1.option_values = [create(:option_value, presentation: "Test")]
+      variant2.option_values = [create(:option_value, presentation: "Something")]
     end
 
     it "shows products and inventory report" do
@@ -362,20 +360,20 @@ feature %q{
       table = rows.map { |r| r.all("th,td").map { |c| c.text.strip }[0..2] }
 
       expect(table.sort).to eq([
-        [ "User", "Relationship", "Enterprise" ],
-        [ enterprise1.owner.email, "owns", enterprise1.name ],
-        [ enterprise1.owner.email, "manages", enterprise1.name ],
-        [ enterprise2.owner.email, "owns", enterprise2.name ],
-        [ enterprise2.owner.email, "manages", enterprise2.name ],
-        [ enterprise3.owner.email, "owns", enterprise3.name ],
-        [ enterprise3.owner.email, "manages", enterprise3.name ],
-        [ enterprise1.owner.email, "manages", enterprise3.name ]
+        ["User", "Relationship", "Enterprise"],
+        [enterprise1.owner.email, "owns", enterprise1.name],
+        [enterprise1.owner.email, "manages", enterprise1.name],
+        [enterprise2.owner.email, "owns", enterprise2.name],
+        [enterprise2.owner.email, "manages", enterprise2.name],
+        [enterprise3.owner.email, "owns", enterprise3.name],
+        [enterprise3.owner.email, "manages", enterprise3.name],
+        [enterprise1.owner.email, "manages", enterprise3.name]
       ].sort)
     end
 
     it "filters the list" do
       select enterprise3.name, from:  "enterprise_id_in"
-      select enterprise1.owner.email, from:  "user_id_in"
+      select enterprise1.owner.email, from: "user_id_in"
 
       click_button "Search"
 
@@ -383,8 +381,8 @@ feature %q{
       table = rows.map { |r| r.all("th,td").map { |c| c.text.strip }[0..2] }
 
       expect(table.sort).to eq([
-        [ "User", "Relationship", "Enterprise" ],
-        [ enterprise1.owner.email, "manages", enterprise3.name ]
+        ["User", "Relationship", "Enterprise"],
+        [enterprise1.owner.email, "manages", enterprise3.name]
       ].sort)
     end
   end
@@ -394,7 +392,9 @@ feature %q{
     let(:distributor2) { create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true) }
     let(:user1) { create_enterprise_user enterprises: [distributor1] }
     let(:user2) { create_enterprise_user enterprises: [distributor2] }
-    let(:shipping_method) { create(:shipping_method, name: "Shipping", description: "Expensive", calculator: Spree::Calculator::FlatRate.new(preferred_amount: 100.55)) }
+    let(:shipping_method) { create(:shipping_method_with, :expensive_name) }
+    let(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
+
     let(:enterprise_fee1) { create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 10)) }
     let(:enterprise_fee2) { create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 20)) }
     let(:order_cycle) { create(:simple_order_cycle, coordinator: distributor1, coordinator_fees: [enterprise_fee1, enterprise_fee2], distributors: [distributor1], variants: [product1.master]) }
@@ -402,119 +402,94 @@ feature %q{
     let!(:zone) { create(:zone_with_member) }
     let(:country) { Spree::Country.find Spree::Config.default_country_id }
     let(:bill_address) { create(:address, firstname: 'Customer', lastname: 'Name', address1: 'customer l1', address2: '', city: 'customer city', zipcode: 1234, country: country) }
-    let(:order1) { create(:order, order_cycle: order_cycle, distributor: user1.enterprises.first, shipping_method: shipping_method, bill_address: bill_address) }
+    let(:order1) { create(:order, order_cycle: order_cycle, distributor: user1.enterprises.first, shipments: [shipment], bill_address: bill_address) }
     let(:product1) { create(:taxed_product, zone: zone, price: 12.54, tax_rate_amount: 0, sku: 'sku1') }
     let(:product2) { create(:taxed_product, zone: zone, price: 500.15, tax_rate_amount: 0.2, sku: 'sku2') }
 
-    let!(:line_item1) { create(:line_item, variant: product1.master, price: 12.54, quantity: 1, order: order1) }
-    let!(:line_item2) { create(:line_item, variant: product2.master, price: 500.15, quantity: 3, order: order1) }
-
-    let!(:adj_shipping) { create(:adjustment, adjustable: order1, label: "Shipping", originator: shipping_method, amount: 100.55, included_tax: 10.06) }
-    let!(:adj_fee1) { create(:adjustment, adjustable: order1, originator: enterprise_fee1, label: "Enterprise fee untaxed", amount: 10, included_tax: 0) }
-    let!(:adj_fee2) { create(:adjustment, adjustable: order1, originator: enterprise_fee2, label: "Enterprise fee taxed", amount: 20, included_tax: 2) }
-    let!(:adj_manual1) { create(:adjustment, adjustable: order1, originator: nil, source: nil, label: "Manual adjustment", amount: 30, included_tax: 0) }
-    let!(:adj_manual2) { create(:adjustment, adjustable: order1, originator: nil, source: nil, label: "Manual adjustment", amount: 40, included_tax: 3) }
-
-
     before do
-      order1.update_attribute :email, 'customer@email.com'
-      Timecop.travel(Time.zone.local(2015, 4, 25, 14, 0, 0)) { order1.finalize! }
-
-      quick_login_as_admin
-      visit spree.admin_reports_path
-
-      click_link 'Xero Invoices'
+      allow(Spree::Config).to receive(:shipment_inc_vat) { true }
+      allow(Spree::Config).to receive(:shipping_tax_rate) { 0.1 }
     end
 
-    around do |example|
-      Timecop.travel(Time.zone.local(2015, 4, 26, 14, 0, 0)) do
-        example.run
-      end
-    end
+    describe "with adjustments" do
+      let!(:line_item1) { create(:line_item, variant: product1.master, price: 12.54, quantity: 1, order: order1) }
+      let!(:line_item2) { create(:line_item, variant: product2.master, price: 500.15, quantity: 3, order: order1) }
 
-    it "shows Xero invoices report" do
-      click_button "Search"
-      expect(xero_invoice_table).to match_table [
-        xero_invoice_header,
-        xero_invoice_summary_row('Total untaxable produce (no tax)',       12.54, 'GST Free Income'),
-        xero_invoice_summary_row('Total taxable produce (tax inclusive)',  1500.45, 'GST on Income'),
-        xero_invoice_summary_row('Total untaxable fees (no tax)',          10.0, 'GST Free Income'),
-        xero_invoice_summary_row('Total taxable fees (tax inclusive)',     20.0, 'GST on Income'),
-        xero_invoice_summary_row('Delivery Shipping Cost (tax inclusive)', 100.55, 'GST on Income'),
-        xero_invoice_summary_row('Total untaxable admin adjustments (no tax)',      30.0, 'GST Free Income'),
-        xero_invoice_summary_row('Total taxable admin adjustments (tax inclusive)', 40.0, 'GST on Income')
-      ]
-    end
-
-    it "can customise a number of fields" do
-      fill_in 'initial_invoice_number', with: '5'
-      fill_in 'invoice_date', with: '2015-02-12'
-      fill_in 'due_date', with: '2015-03-12'
-      fill_in 'account_code', with: 'abc123'
-      click_button 'Search'
-
-      opts = {invoice_number: '5', invoice_date: '2015-02-12', due_date: '2015-03-12', account_code: 'abc123'}
-
-      expect(xero_invoice_table).to match_table [
-        xero_invoice_header,
-        xero_invoice_summary_row('Total untaxable produce (no tax)',       12.54,   'GST Free Income', opts),
-        xero_invoice_summary_row('Total taxable produce (tax inclusive)',  1500.45, 'GST on Income',   opts),
-        xero_invoice_summary_row('Total untaxable fees (no tax)',          10.0,    'GST Free Income', opts),
-        xero_invoice_summary_row('Total taxable fees (tax inclusive)',     20.0,    'GST on Income',   opts),
-        xero_invoice_summary_row('Delivery Shipping Cost (tax inclusive)', 100.55,  'GST on Income',   opts),
-        xero_invoice_summary_row('Total untaxable admin adjustments (no tax)',      30.0, 'GST Free Income', opts),
-        xero_invoice_summary_row('Total taxable admin adjustments (tax inclusive)', 40.0, 'GST on Income',   opts)
-      ]
-    end
-
-    it "generates a detailed report" do
-      select 'Detailed', from: 'report_type'
-      click_button 'Search'
-
-      opts = {}
-
-      expect(xero_invoice_table).to match_table [
-        xero_invoice_header,
-        xero_invoice_li_row(line_item1),
-        xero_invoice_li_row(line_item2),
-        xero_invoice_adjustment_row(adj_manual1),
-        xero_invoice_adjustment_row(adj_manual2),
-        xero_invoice_summary_row('Total untaxable fees (no tax)',          10.0,    'GST Free Income', opts),
-        xero_invoice_summary_row('Total taxable fees (tax inclusive)',     20.0,    'GST on Income',   opts),
-        xero_invoice_summary_row('Delivery Shipping Cost (tax inclusive)', 100.55,  'GST on Income',   opts)
-      ]
-    end
-
-    describe "account invoices" do
-      let(:accounts_distributor)  { create(:distributor_enterprise) }
-      let(:billable_period) { create(:billable_period, account_invoice: account_invoice) }
-      let(:account_invoice) { create(:account_invoice, order: account_invoice_order) }
-      let!(:account_invoice_order) { create(:order, order_cycle: order_cycle, distributor: accounts_distributor) }
-      let!(:adjustment) { create(:adjustment, adjustable: account_invoice_order, source: billable_period, label: 'Account invoice item', amount: 12.34) } # Tax?
+      let!(:adj_shipping) { create(:adjustment, adjustable: order1, label: "Shipping", originator: shipping_method, amount: 100.55, included_tax: 10.06) }
+      let!(:adj_fee1) { create(:adjustment, adjustable: order1, originator: enterprise_fee1, label: "Enterprise fee untaxed", amount: 10, included_tax: 0) }
+      let!(:adj_fee2) { create(:adjustment, adjustable: order1, originator: enterprise_fee2, label: "Enterprise fee taxed", amount: 20, included_tax: 2) }
+      let!(:adj_manual1) { create(:adjustment, adjustable: order1, originator: nil, source: nil, label: "Manual adjustment", amount: 30, included_tax: 0) }
+      let!(:adj_manual2) { create(:adjustment, adjustable: order1, originator: nil, source: nil, label: "Manual adjustment", amount: 40, included_tax: 3) }
 
       before do
-        Spree::Config.accounts_distributor_id = accounts_distributor.id
+        order1.update_attribute :email, 'customer@email.com'
+        Timecop.travel(Time.zone.local(2015, 4, 25, 14, 0, 0)) { order1.finalize! }
 
-        account_invoice_order.update_attribute :email, 'customer@email.com'
-        Timecop.travel(Time.zone.local(2015, 4, 25, 14, 0, 0)) { account_invoice_order.finalize! }
+        quick_login_as_admin
+        visit spree.admin_reports_path
 
-        visit current_path
+        click_link 'Xero Invoices'
       end
 
-      it "generates a detailed report for account invoices" do
+      around do |example|
+        Timecop.travel(Time.zone.local(2015, 4, 26, 14, 0, 0)) do
+          example.run
+        end
+      end
+
+      it "shows Xero invoices report" do
+        click_button "Search"
+        expect(xero_invoice_table).to match_table [
+          xero_invoice_header,
+          xero_invoice_summary_row('Total untaxable produce (no tax)',       12.54, 'GST Free Income'),
+          xero_invoice_summary_row('Total taxable produce (tax inclusive)',  1500.45, 'GST on Income'),
+          xero_invoice_summary_row('Total untaxable fees (no tax)',          10.0, 'GST Free Income'),
+          xero_invoice_summary_row('Total taxable fees (tax inclusive)',     20.0, 'GST on Income'),
+          xero_invoice_summary_row('Delivery Shipping Cost (tax inclusive)', 100.55, 'GST on Income'),
+          xero_invoice_summary_row('Total untaxable admin adjustments (no tax)',      30.0, 'GST Free Income'),
+          xero_invoice_summary_row('Total taxable admin adjustments (tax inclusive)', 40.0, 'GST on Income')
+        ]
+      end
+
+      it "can customise a number of fields" do
+        fill_in 'initial_invoice_number', with: '5'
+        fill_in 'invoice_date', with: '2015-02-12'
+        fill_in 'due_date', with: '2015-03-12'
+        fill_in 'account_code', with: 'abc123'
+        click_button 'Search'
+
+        opts = { invoice_number: '5', invoice_date: '2015-02-12', due_date: '2015-03-12', account_code: 'abc123' }
+
+        expect(xero_invoice_table).to match_table [
+          xero_invoice_header,
+          xero_invoice_summary_row('Total untaxable produce (no tax)',       12.54,   'GST Free Income', opts),
+          xero_invoice_summary_row('Total taxable produce (tax inclusive)',  1500.45, 'GST on Income',   opts),
+          xero_invoice_summary_row('Total untaxable fees (no tax)',          10.0,    'GST Free Income', opts),
+          xero_invoice_summary_row('Total taxable fees (tax inclusive)',     20.0,    'GST on Income',   opts),
+          xero_invoice_summary_row('Delivery Shipping Cost (tax inclusive)', 100.55,  'GST on Income',   opts),
+          xero_invoice_summary_row('Total untaxable admin adjustments (no tax)',      30.0, 'GST Free Income', opts),
+          xero_invoice_summary_row('Total taxable admin adjustments (tax inclusive)', 40.0, 'GST on Income',   opts)
+        ]
+      end
+
+      it "generates a detailed report" do
         select 'Detailed', from: 'report_type'
-        select accounts_distributor.name, from: 'q_distributor_id_eq'
         click_button 'Search'
 
         opts = {}
 
         expect(xero_invoice_table).to match_table [
           xero_invoice_header,
-          xero_invoice_account_invoice_row(adjustment)
+          xero_invoice_li_row(line_item1),
+          xero_invoice_li_row(line_item2),
+          xero_invoice_adjustment_row(adj_manual1),
+          xero_invoice_adjustment_row(adj_manual2),
+          xero_invoice_summary_row('Total untaxable fees (no tax)',          10.0,    'GST Free Income', opts),
+          xero_invoice_summary_row('Total taxable fees (tax inclusive)',     20.0,    'GST on Income',   opts),
+          xero_invoice_summary_row('Delivery Shipping Cost (tax inclusive)', 100.55,  'GST on Income',   opts)
         ]
       end
     end
-
 
     private
 
@@ -526,27 +501,22 @@ feature %q{
       %w(*ContactName EmailAddress POAddressLine1 POAddressLine2 POAddressLine3 POAddressLine4 POCity PORegion POPostalCode POCountry *InvoiceNumber Reference *InvoiceDate *DueDate InventoryItemCode *Description *Quantity *UnitAmount Discount *AccountCode *TaxType TrackingName1 TrackingOption1 TrackingName2 TrackingOption2 Currency BrandingTheme Paid?)
     end
 
-    def xero_invoice_summary_row(description, amount, tax_type, opts={})
+    def xero_invoice_summary_row(description, amount, tax_type, opts = {})
       xero_invoice_row '', description, amount, '1', tax_type, opts
     end
 
-    def xero_invoice_li_row(line_item, opts={})
+    def xero_invoice_li_row(line_item, opts = {})
       tax_type = line_item.has_tax? ? 'GST on Income' : 'GST Free Income'
       xero_invoice_row line_item.product.sku, line_item.product_and_full_name, line_item.price.to_s, line_item.quantity.to_s, tax_type, opts
     end
 
-    def xero_invoice_adjustment_row(adjustment, opts={})
+    def xero_invoice_adjustment_row(adjustment, opts = {})
       tax_type = adjustment.has_tax? ? 'GST on Income' : 'GST Free Income'
       xero_invoice_row('', adjustment.label, adjustment.amount, '1', tax_type, opts)
     end
 
-    def xero_invoice_account_invoice_row(adjustment, opts={})
-      opts.reverse_merge!({customer_name: '', address1: '', city: '', state: '', zipcode: '', country: '', invoice_number: account_invoice_order.number, order_number: account_invoice_order.number})
-      xero_invoice_adjustment_row(adjustment, opts)
-    end
-
-    def xero_invoice_row(sku, description, amount, quantity, tax_type, opts={})
-      opts.reverse_merge!({customer_name: 'Customer Name', address1: 'customer l1', city: 'customer city', state: 'Victoria', zipcode: '1234', country: country.name, invoice_number: order1.number, order_number: order1.number, invoice_date: '2015-04-26', due_date: '2015-05-26', account_code: 'food sales'})
+    def xero_invoice_row(sku, description, amount, quantity, tax_type, opts = {})
+      opts.reverse_merge!(customer_name: 'Customer Name', address1: 'customer l1', city: 'customer city', state: 'Victoria', zipcode: '1234', country: country.name, invoice_number: order1.number, order_number: order1.number, invoice_date: '2015-04-26', due_date: '2015-05-26', account_code: 'food sales')
 
       [opts[:customer_name], 'customer@email.com', opts[:address1], '', '', '', opts[:city], opts[:state], opts[:zipcode], opts[:country], opts[:invoice_number], opts[:order_number], opts[:invoice_date], opts[:due_date],
 

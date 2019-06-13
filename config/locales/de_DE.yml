@@ -100,14 +100,6 @@ de_DE:
       subject: "%{enterprise} ist jetzt auf %{sitename}"
     invite_manager:
       subject: "%{enterprise} hat Sie eingeladen, ein Manager zu sein"
-  order_mailer:
-    cancel_email:
-      dear_customer: "Sehr geehrter Kunde,"
-      instructions: "Ihre Bestellung wurde storniert. Bitte bewahren Sie diese Stornierungsinformationen für Ihre Unterlagen auf."
-      order_summary_canceled: "Bestellübersicht [STORNIERT]"
-      subject: "Stornierung der Bestellung"
-      subtotal: "Zwischensumme: %{subtotal}"
-      total: "Bestellsumme: %{total}"
   producer_mailer:
     order_cycle:
       subject: "Bestellungszyklusreport für %{producer}"
@@ -175,17 +167,9 @@ de_DE:
   confirm_resend_order_confirmation: "Sind Sie sicher, dass Sie die Bestätigungs-E-Mail erneut senden wollen?"
   must_have_valid_business_number: "%{enterprise_name} sollte eine gültige Steuer-ID-Nummer haben, bevor die Rechnung gesendet wird."
   invoice: "Rechnung"
-  percentage_of_sales: "%{percentage} des Umsatzes"
-  capped_at_cap: "Maximum {cap}%"
-  per_month: "pro Monat"
-  free: "kostenlos"
-  free_trial: "kostenloser Versuch"
-  plus_tax: "zuzüglich Umsatzsteuer"
-  min_bill_turnover_desc: "sobald der Umsatz %{mbt_amount} übersteigt"
   more: "Mehr"
   say_no: "Nein"
   say_yes: "Ja"
-  then: dann
   ongoing: Laufend
   bill_address: Rechnungsadresse
   ship_address: Lieferanschrift
@@ -237,7 +221,6 @@ de_DE:
   notes: Anmerkungen
   error: Fehler
   processing_payment: Bezahlung wird verarbeitet...
-  show_only_unfulfilled_orders: Nur ausstehende Bestellungen anzeigen
   filter_results: Ergebnisse filtern
   quantity: Menge
   pick_up: Abholen
@@ -251,6 +234,7 @@ de_DE:
   actions:
     create_and_add_another: "Erstellen und weitere hinzufügen"
     create: "Neu"
+    cancel: "Abbrechen"
   admin:
     begins_at: Beginnt um
     begins_on: Beginnt am
@@ -309,27 +293,6 @@ de_DE:
     has_n_rules: "hat %{num} Regel(n)"
     unsaved_confirm_leave: "Es gibt ungespeicherte Änderungen auf dieser Seite. Möchten Sie ohne Speichern fortfahren?"
     unsaved_changes: "Sie haben ungespeicherte Änderungen"
-    accounts_and_billing_settings:
-      method_settings:
-        default_accounts_payment_method: "Zahlungsart für Standardkonten"
-        default_accounts_shipping_method: "Lieferart für Standardkonten"
-      edit:
-        accounts_and_billing: "Konten und Abrechung"
-        accounts_administration_distributor: "Kontenverwaltung-Verteiler"
-        admin_settings: "Einstellungen"
-        update_invoice: "Rechnungen aktualisieren"
-        auto_update_invoices: "Rechnungen automatisch jede Nacht um 1:00 Uhr aktualisieren"
-        finalise_invoice: "Rechnungen fertigstellen"
-        auto_finalise_invoices: "Rechnungen automatisch am 2. jedes Monats um 1.30 Uhr fertigstellen"
-        manually_run_task: "Vorgang manuell ausführen"
-        update_user_invoice_explained: "Verwenden Sie diesen Button, um die Rechnungen für den jetzigen Monat für alle Unternehmensbenutzer sofort zu aktualisieren. Diese Aufgabe kann so eingerichtet werden, dass sie jede Nacht automatisch ausgeführt wird."
-        finalise_user_invoices: "Benutzerrechnungen fertigstellen"
-        finalise_user_invoice_explained: "Verwenden Sie diesen Button, um die Rechnungen für den Vormonat zu aktualisieren. Diese Aufgabe kann so eingerichtet werden, dass sie einmal im Monat automatisch abläuft."
-        update_user_invoices: "Benutzerrechungen aktualisieren"
-      errors:
-        accounts_distributor: Muss gewählt werden, wenn Sie Rechnungen für Unternehmen erstellen möchten.
-        default_payment_method: Muss gewählt werden, wenn Sie Rechnungen für Unternehmen erstellen möchten.
-        default_shipping_method: Muss gewählt werden, wenn Sie Rechnungen für Unternehmen erstellen möchten.
     shopfront_settings:
       embedded_shopfront_settings: "Eingebettete Ladeneinstellungen"
       enable_embedded_shopfronts: "Eingebettete Läden erlauben"
@@ -337,34 +300,6 @@ de_DE:
     number_localization:
       number_localization_settings: "Nummernlokalisierungseinstellungen"
       enable_localized_number: "Verwenden Sie die internationale Tausendertrennungslogik"
-    business_model_configuration:
-      edit:
-        business_model_configuration: "Geschäftsmodel"
-        business_model_configuration_tip: "Konfigurieren Sie den Satz, mit dem Läden jeden Monat für die Nutzung des Open Food Network berechnet werden."
-        bill_calculation_settings: "Berechnungseinstellungen"
-        bill_calculation_settings_tip: "Passen Sie den Betrag an, der Unternehmen jeden Monat für die Nutzung des OFN in Rechnung gestellt wird."
-        shop_trial_length: "Laden Testlänge (Tage)"
-        shop_trial_length_tip: "Die Zeitdauer (in Tagen), die Unternehmen, die als Geschäfte eingerichtet sind, als Testphase ausführen können."
-        fixed_monthly_charge: "feste Monatsgebühr"
-        fixed_monthly_charge_tip: "Die monatliche Gebühr für Unternehmen, die als Laden laufen und ein Minimum an rechnungsfähigem Umsatz erreicht haben (falls verwendet)."
-        percentage_of_turnover: "Prozentsatz des Umsatzes"
-        percentage_of_turnover_tip: "Falls nicht null, wird dieser Prozentsatz (0.0 - 1.0) dem Umsatz eines Ladens angerechnet und zu jeglichen Festgebühren (links) addiert, um daraus die monatliche Rechnung zu erstellen. "
-        monthly_cap_excl_tax: "Monatliche Obergrenze (exkl. Steuer)"
-        monthly_cap_excl_tax_tip: "Falls größer als Null, wird dieser Wert als Obergrenze  für den Betrag, den die Läden jeden Monat zahlen müssen, festgelegt."
-        tax_rate: "Steuersatz"
-        tax_rate_tip: "Steuersatz, der für die monatliche Rechnung gilt, die den Unternehmen für die Nutzung des Systems in Rechnung gestellt wird."
-        minimum_monthly_billable_turnover: "Monatlicher Mindestumsatz"
-        minimum_monthly_billable_turnover_tip: "Der monatliche Mindestumsatz unter dem ein Laden nicht berechnet wird. Geschäften die weniger umsetzen wird weder eine Festgebühr noch ein Prozentsatz in Rechnung gestellt.  "
-        example_bill_calculator: "Beispielrechner"
-        example_bill_calculator_legend: "Ändern Sie den Beispielumsatz, um den Effekt der Einstellungen auf der linken Seite zu visualisieren."
-        example_monthly_turnover: "Beispiel monatlicher Umsatz"
-        example_monthly_turnover_tip: "Ein beispielhafter monatlicher Umsatz eines Unternehmens, mit dem unten eine Beispiel-Monatsrechnung erstellt wird."
-        cap_reached?: "Limit erreicht ?"
-        cap_reached?_tip: "Ob das Limit (links angegeben) erreicht wurde, unter Berücksichtigung der Einstellungen und des Umsatzes."
-        included_tax: "inkl. Steuer"
-        included_tax_tip: "Die Gesamtsteuer, die in der Beispiel-Monatsrechnung enthalten ist, unter Berücksichtigung der Einstellungen und des Umsatzes."
-        total_monthly_bill_incl_tax: "Monatliche Gesamtkosten (inkl. Steuern)"
-        total_monthly_bill_incl_tax_tip: "Die Beispiel-Gesamt-Monatsrechnung mit Steuern inklusive, unter Berücksichtigung der Einstellungen und des Umsatzes."
     cache_settings:
       edit:
         title: "Cachen"
@@ -404,11 +339,7 @@ de_DE:
         config_instructions_html: "Hier können Sie die OFN Matomo Integration konfigurieren. Die unten angegebene Matomo-URL sollte auf die Matomo-Instanz verweisen, an die die Benutzerverfolgungsinformationen gesendet werden. Wenn es leer bleibt, wird das Matomo-Benutzer-Tracking deaktiviert. Das Feld Site-ID ist nicht obligatorisch, aber nützlich, wenn Sie mehr als eine Website in einer einzelnen Matomo-Instanz verfolgen. Es kann auf der Matomo-Instanzkonsole gefunden werden."
     customers:
       index:
-        add_customer: "Kunden hinzufügen"
         new_customer: "Neuer Kunde"
-        customer_placeholder: "Kunde@beispiel.org"
-        valid_email_error: Bitte geben Sie eine gültige E-Mail-Adresse ein
-        add_a_new_customer_for: Neuer Kunde für %{shop_name} hinzufügen
         code: Kode
         duplicate_code: "Dieser Kode wird bereits verwendet."
         bill_address: "Rechnungsadresse"
@@ -448,6 +379,7 @@ de_DE:
         tax_category: Steuerkategorie
         calculator: Rechner
         calculator_values: Werte des Rechners
+        search: "Suche"
     enterprise_groups:
       index:
         new_button: Neue Unternehmensgruppe
@@ -477,6 +409,7 @@ de_DE:
         property_name: Name der Eigenschaft
         inherited_property: Vererbte Eigenschaft
       variants:
+        infinity: "Unendlichkeit"
         to_order_tip: "Artikel, die auf Bestellung hergestellt werden, haben keinen festgelegten Lagerbestand."
       group_buy_options: "Gruppenkaufoptionen"
       back_to_products_list: "Zurück zur Produktliste"
@@ -731,25 +664,27 @@ de_DE:
           enable_subscriptions_tip: "Abo-Funktionalität aktivieren?"
           enable_subscriptions_false: "deaktiviert"
           enable_subscriptions_true: "aktiviert"
-          shopfront_message: Laden-Nachricht
+          shopfront_message: "Laden-Nachricht"
           shopfront_message_placeholder: >
               Eine optionale Erklärung für Kunden, die detailliert beschreibt, wie
               Ihr Laden funktioniert, wird oberhalb der Produktliste auf Ihrer Laden-Seite
               angezeigt.
-          shopfront_closed_message: Laden Geschlossen Nachricht
+          shopfront_message_link_tooltip: "Link einfügen / bearbeiten"
+          shopfront_message_link_prompt: "Bitte geben Sie eine einzufügende URL ein"
+          shopfront_closed_message: "Laden Geschlossen Nachricht"
           shopfront_closed_message_placeholder: >
               Eine Nachricht, die eine detailliertere Erklärung liefert, warum Ihr
               Laden geschlossen ist und / oder wann Kunden erwarten können, dass er
               wieder geöffnet wird. Dies wird in Ihrem Laden nur angezeigt, wenn Sie
               keine aktiven Bestellzyklen haben (d.h. Laden ist geschlossen).
-          shopfront_category_ordering: Ordnung der Produktkategorien im Laden
-          open_date: Öffnungsdatum
-          close_date: Abschlussdatum
+          shopfront_category_ordering: "Ordnung der Produktkategorien im Laden"
+          open_date: "Öffnungsdatum"
+          close_date: "Abschlussdatum"
         social:
-          twitter_placeholder: z.B. @the_prof
-          instagram_placeholder: z.B. the_prof
-          facebook_placeholder: z.B. www.facebook.com/PageNameHere
-          linkedin_placeholder: z.B. www.linkedin.com/in/IhrNameHier
+          twitter_placeholder: "z.B. @the_prof"
+          instagram_placeholder: "z.B. the_prof"
+          facebook_placeholder: "z.B. www.facebook.com/PageNameHere"
+          linkedin_placeholder: "z.B. www.linkedin.com/in/IhrNameHier"
         stripe_connect:
           connect_with_stripe: "Stripe integrieren"
           stripe_connect_intro: "Um Zahlungen mit Kreditkarte zu akzeptieren, müssen Sie Ihr Stripe-Konto mit dem Open Food Network verbinden. Verwenden Sie den Knopf rechts, um loszulegen."
@@ -904,22 +839,10 @@ de_DE:
         tags: Stichwörter
         add_a_tag: Stichwort hinzufügen
         delivery_details: Abhol- / Lieferinformationen
-        debug_info: Debug-Informationen
       index:
         schedule: Zeitplan
         schedules: Zeitpläne
-        adding_a_new_schedule: Hinzufügen eines neuen Zeitplans
-        updating_a_schedule: Einen Zeitplan aktualisieren
         new_schedule: Neuer Zeitplan
-        create_schedule: Zeitplan erstellen
-        update_schedule: Zeitplan aktualisieren
-        delete_schedule: Zeitplan löschen
-        created_schedule: Zeitplan erstellt
-        updated_schedule: Zeitplan aktualisiert
-        deleted_schedule: Zeitplan gelöscht
-        schedule_name_placeholder: Zeitplanname
-        name_required_error: Bitte geben Sie einen Namen für diesen Zeitplan ein
-        no_order_cycles_error: Bitte wählen Sie mindestens einen Bestellzyklus aus (Drag & Drop)
       name_and_timing_form:
         name: Name
         orders_open: Bestellungen öffnen um
@@ -956,9 +879,6 @@ de_DE:
     shared:
       user_guide_link:
         user_guide: Benutzerhandbuch
-    overview:
-      enterprises_header:
-        ofn_with_tip: Unternehmen sind Erzeuger und / oder Hubs und sind die grundlegende Organisationseinheit innerhalb des Open Food Network.
       enterprises_hubs_tabs:
         has_no_payment_methods: "%{enterprise} hat keine Zahlungsarten"
         has_no_shipping_methods: "%{enterprise} hat keine Versandarten"
@@ -1027,6 +947,7 @@ de_DE:
       subscriptions: Abonnements
       new: Neues Abonnement
       create: Abonnement erstellen
+      edit: Abonnement bearbeiten
       index:
         please_select_a_shop: Bitte wählen Sie einen Laden
         edit_subscription: Abonnement bearbeiten
@@ -1195,7 +1116,6 @@ de_DE:
   menu_4_title: "Gruppen"
   menu_4_url: "/groups"
   menu_5_title: "Über Uns"
-  menu_5_url: "https://wp.openfoodnetwork.de"
   menu_6_title: "Verbinden"
   menu_6_url: "https://openfoodnetwork.org/au/connect/"
   menu_7_title: "Mehr Erfahren"
@@ -1333,7 +1253,7 @@ de_DE:
       cookies_policy_link: "Hinweise zu Cookies"
       cookies_accept_button: "Cookies akzeptieren"
   home_shop: Jetzt einkaufen
-  brandstory_headline: "Essen, ohne eigene Rechtspersönlichkeit."
+  brandstory_headline: "Lebensmittel Direktvermarktung"
   brandstory_intro: "Manchmal ist der beste Weg, das System zu reparieren, ein neues zu starten ..."
   brandstory_part1: "Wir beginnen von Grund auf. Mit Bauern und Züchtern, die bereit sind, ihre Geschichten stolz und wahrhaftig zu erzählen. Mit Händlern, die bereit sind, Menschen mit Produkten fair und ehrlich zu verbinden. Mit Käufern, die glauben, dass bessere wöchentliche Einkaufsentscheidungen die Welt ernsthaft verändern können."
   brandstory_part2: "Dann brauchen wir einen Weg, um es real zu machen. Ein Weg, jeden zu stärken, der Lebensmittel anbaut, verkauft und kauft. Ein Weg, um alle Geschichten zu erzählen, um die gesamte Logistik zu bewältigen. Eine Möglichkeit, Transaktionen jeden Tag in Transformation umzuwandeln."
@@ -1347,7 +1267,7 @@ de_DE:
   connect_cta: "Erkunden"
   system_headline: "Einkaufen - so funktioniert es."
   system_step1: "1. Suche"
-  system_step1_text: "Durchsuchen Sie unsere verschiedenen, unabhängigen Geschäfte nach saisonalem, lokalem Essen. Suche nach Gegend und Lebensmittelkategorie, oder ob Sie Lieferung oder Abholung bevorzugen."
+  system_step1_text: "Durchsuchen Sie unsere vielfältigen, unabhängigen Läden nach saisonal und  regional erzeugten Lebensmitteln. Suchen Sie nach Region und Lebensmittelkategorie, oder ob Sie Lieferung oder Abholung bevorzugen."
   system_step2: "2. Laden"
   system_step2_text: "Transformieren Sie Ihre Transaktionen mit erschwinglichen lokalen Lebensmitteln von verschiedenen Erzeugern und Hubs. Erfahren Sie die Geschichten hinter Ihrem Essen und den Menschen, die es erzeugen."
   system_step3: "3. Abholung / Lieferung"
@@ -1629,7 +1549,6 @@ de_DE:
   sell_hubs_detail: "Richten Sie im OFN ein Profil für Ihr Lebensmittelunternehmen oder Ihre Organisation ein. Sie können Ihr Profil jederzeit auf einen Multi-Producer-Shop upgraden."
   sell_groups_detail: "Richten Sie ein maßgeschneidertes Verzeichnis von Unternehmen (Produzenten und andere Lebensmittelunternehmen) für Ihre Region oder für Ihre Organisation ein."
   sell_user_guide: "Erfahren Sie mehr in unserem Benutzerhandbuch."
-  sell_listing_price: "Die Auflistung im OFN ist kostenlos. Das Öffnen und Betreiben eines Ladens ist kostenlos. Das Einrichten eines Gruppenverzeichnisses im OFN für Ihre Organisation oder Ihr regionales Netzwerk ist kostenlos."
   sell_embed: "Wir können auch einen OFN-Laden in Ihre eigene Website einbetten oder eine maßgeschneiderte Webseite für Ihr Lokalität oder Region erstellen."
   sell_ask_services: "Fragen Sie uns nach OFN-Diensten."
   shops_title: Läden
@@ -1688,8 +1607,6 @@ de_DE:
   products_max_quantity: Max Menge
   products_distributor: Verteiler
   products_distributor_info: Wenn Sie einen Händler für Ihre Bestellung auswählen, werden hier ihre Adresse und Abholzeiten angezeigt.
-  shop_trial_expires_in: "Ihr Laden-Versuch läuft ab in"
-  shop_trial_expired_notice: "Gute Nachrichten! Wir haben uns entschieden, Laden-Versuche bis auf weiteres zu verlängern."
   password: Passwort
   remember_me: Erinnere dich an mich
   are_you_sure: "Bist du sicher?"
@@ -1868,8 +1785,6 @@ de_DE:
   action_or: "ODER"
   enterprise_limit: Enterprise Limit
   shipping_method_destroy_error: "Diese Lieferart kann nicht gelöscht werden, da sie in einer Bestellung verwendet wird: %{number}."
-  accounts_and_billing_task_already_running_error: "Eine Aufgabe wird bereits ausgeführt. Bitte warten Sie, bis sie abgeschlossen ist"
-  accounts_and_billing_start_task_notice: "Aufgabe in Warteschlange gestellt"
   fees: "Gebühren"
   item_cost: "Gegenstandskosten"
   bulk: "Bulk"
@@ -1978,6 +1893,7 @@ de_DE:
   product: "Produkt"
   price: "Preis"
   on_hand: "Auf der Hand"
+  review: "Überprüfung"
   save_changes: "Änderungen speichern"
   order_saved: "Bestellung gespeichert"
   no_products: Keine Produkte
@@ -2020,7 +1936,6 @@ de_DE:
   live: "Leben"
   manage: "Verwalten"
   resend: "Erneut senden"
-  trial: Versuch
   add_and_manage_products: "Produkte hinzufügen und verwalten"
   add_and_manage_order_cycles: "Bestellzyklen hinzufügen und verwalten"
   manage_order_cycles: "Auftragszyklen verwalten"
@@ -2051,7 +1966,6 @@ de_DE:
   hub_sidebar_at_least: "Mindestens ein Hub muss ausgewählt sein"
   hub_sidebar_blue: "Blau"
   hub_sidebar_red: "rot"
-  shop_trial_in_progress: "Ihr Laden-Versuch läuft in %{days} ab."
   report_customers_distributor: "Verteiler"
   report_customers_supplier: "Anbieter"
   report_customers_cycle: "Bestellungszyklus"
@@ -2435,6 +2349,8 @@ de_DE:
           resolve: Entschlossenheit
       new_tag_rule_dialog:
         select_rule_type: "Wählen Sie einen Regelart aus:"
+      enterprise_fees:
+        inherit_from_product: "Vom Produkt erben"
       orders:
         index:
           per_page: "%{results} pro Seite"
@@ -2481,6 +2397,26 @@ de_DE:
         sending: "Erneut senden..."
         done: "Erneut senden ✓"
         failed: "Erneut senden fehlgeschlagen ✗"
+      order_cycles:
+        schedules:
+          adding_a_new_schedule: "Hinzufügen eines neuen Zeitplans"
+          updating_a_schedule: "Einen Zeitplan aktualisieren"
+          create_schedule: "Zeitplan erstellen"
+          update_schedule: "Zeitplan aktualisieren"
+          delete_schedule: "Zeitplan löschen"
+          schedule_name_placeholder: "Zeitplanname"
+          created_schedule: "Zeitplan erstellt"
+          updated_schedule: "Zeitplan aktualisiert"
+          deleted_schedule: "Zeitplan gelöscht"
+          name_required_error: "Bitte geben Sie einen Namen für diesen Zeitplan ein"
+          no_order_cycles_error: "Bitte wählen Sie mindestens einen Bestellzyklus aus (Drag & Drop)"
+          available: "Verfügbar"
+      customers:
+        index:
+          add_customer: "Kunden hinzufügen"
+          add_a_new_customer_for: "Neuer Kunde für %{shop_name} hinzufügen"
+          customer_placeholder: "Kunde@beispiel.org"
+          valid_email_error: "Bitte geben Sie eine gültige E-Mail-Adresse ein"
     insufficient_stock: "Nicht genügend Lagerbestand verfügbar, nur noch %{on_hand} verfügbar"
     out_of_stock:
       reduced_stock_available: Reduzierter Bestand verfügbar
@@ -2845,6 +2781,8 @@ de_DE:
           order_adjustments: "Bestellanpassungen"
           order_total: "Auftrag insgesamt"
       overview:
+        enterprises_header:
+          ofn_with_tip: Unternehmen sind Erzeuger und / oder Hubs und sind die grundlegende Organisationseinheit innerhalb des Open Food Network.
         products:
           active_products:
             zero: "Sie haben keine aktiven Produkte."
@@ -2858,6 +2796,14 @@ de_DE:
             one: "Sie haben einen aktiven Bestellzyklus."
             other: "Sie haben %{count} aktive Bestellzyklen."
           manage_order_cycles: "BESTELLRUNDEN VERWALTEN"
+      shipping_methods:
+        index:
+          shipping_methods: "Lieferart"
+          name: "Name"
+          products_distributor: "Verteiler"
+          calculator: "Rechner"
+        edit:
+          editing_shipping_method: "Versandart bearbeiten"
       payment_methods:
         new:
           new_payment_method: "Neue Zahlungsart"
@@ -2975,6 +2921,7 @@ de_DE:
       format: '% Y-% m-%d'
       js_format: 'JJ-MM-TT'
     orders:
+      error_flash_for_unavailable_items: "Ein Artikel in Ihrem Warenkorb ist nicht mehr verfügbar."
       edit:
         login_to_view_order: "Bitte loggen Sie sich ein, um Ihre Bestellung anzuzeigen."
       bought:
@@ -2982,6 +2929,7 @@ de_DE:
       line_item:
         insufficient_stock: "Nicht genügend Lagerbestand verfügbar, nur noch %{on_hand} verfügbar"
         out_of_stock: "Ausverkauft"
+        unavailable_item: "momentan nicht verfügbar"
     shipment_states:
       backorder: Lieferrückstand
       partial: teilweise
@@ -3000,6 +2948,13 @@ de_DE:
       void: Angabe fehlt
       invalid: ungültig
     order_mailer:
+      cancel_email:
+        customer_greeting: "Hallo %{name}!"
+        instructions: "Ihre Bestellung wurde storniert. Bitte bewahren Sie diese Stornierungsinformationen für Ihre Unterlagen auf."
+        order_summary_canceled: "Bestellübersicht [STORNIERT]"
+        subject: "Stornierung der Bestellung"
+      confirm_email:
+        subject: "Bestellbestätigung"
       invoice_email:
         hi: "Hallo %{name}"
         invoice_attached_text: Im Anhang findest Du eine Rechnung für die letzte Bestellung vom

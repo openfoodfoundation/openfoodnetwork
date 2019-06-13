@@ -24,3 +24,8 @@ angular.module("admin.orders").controller "orderCtrl", ($scope, shops, orderCycl
 
   for shop in $scope.shops
     shop.disabled = !$scope.distributorHasOrderCycles(shop)
+
+  # Removes the split button introduced by spree in the order form
+  #   We only have one stock location in OFN so it's meaningless to split the order between stock locations
+  #   We delete it instead of hiding or changing CSS so that, when spree code toggles the element, nothing hapens
+  $('.split-item').remove()

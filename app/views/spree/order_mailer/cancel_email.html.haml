@@ -1,0 +1,11 @@
+%h3
+  = t(".customer_greeting", name: @order.bill_address.firstname)
+%h4
+  = t(".instructions")
+%span.clear
+
+%p &nbsp;
+
+= t(".order_summary_canceled")
+= render 'order_summary'
+= render 'signoff'

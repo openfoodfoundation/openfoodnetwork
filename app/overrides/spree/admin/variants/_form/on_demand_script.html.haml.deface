@@ -6,23 +6,28 @@
         var on_demand = $('input#variant_on_demand');
         var on_hand = $('input#variant_on_hand');
 
-        on_hand.attr('disabled', on_demand.attr('checked'));
+        disableOnHandIfOnDemand = function() {
+            on_demand_checked = on_demand.attr('checked')
+            if ( on_demand_checked == undefined )
+                on_demand_checked = false;
+
+            on_hand.attr('disabled', on_demand_checked);
+            if(on_demand_checked) {
+              on_hand.attr('data-stock', on_hand.val());
+              on_hand.val(t('admin.products.variants.infinity'));
+            }
+        }
+
+        disableOnHandIfOnDemand();
 
         on_demand.change(function(){
-
-            on_hand.attr('disabled', this.checked);
-
-            if(this.checked) {
-                on_hand.attr('data-stock', on_hand.val());
-                on_hand.val("Infinity");
-            } else {
+            disableOnHandIfOnDemand();
+            if(!this.checked) {
                 if(on_hand.attr('data-stock') !== undefined) {
                     on_hand.val(on_hand.attr('data-stock'));
                 } else {
                     on_hand.val("0");
                 }
             }
-
         });
-
     });

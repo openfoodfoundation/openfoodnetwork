@@ -24,7 +24,7 @@ feature 'Customers' do
 
       it "passes the smoke test" do
         # Prompts for a hub for a list of my managed enterprises
-        expect(page).to have_select2 "shop_id", with_options: [managed_distributor1.name,managed_distributor2.name], without_options: [unmanaged_distributor.name]
+        expect(page).to have_select2 "shop_id", with_options: [managed_distributor1.name, managed_distributor2.name], without_options: [unmanaged_distributor.name]
 
         select2_select managed_distributor2.name, from: "shop_id"
 
@@ -81,7 +81,7 @@ feature 'Customers' do
           end
           expect(page).to have_selector "#info-dialog .text", text: I18n.t('admin.customers.destroy.has_associated_orders')
           click_button "OK"
-        }.to_not change{Customer.count}
+        }.to_not change{ Customer.count }
 
         expect{
           within "tr#c_#{customer2.id}" do
@@ -90,14 +90,14 @@ feature 'Customers' do
             end
           end
           expect(page).to have_no_selector "tr#c_#{customer2.id}"
-        }.to change{Customer.count}.by(-1)
+        }.to change{ Customer.count }.by(-1)
       end
 
       it "allows updating of attributes" do
         select2_select managed_distributor1.name, from: "shop_id"
 
         within "tr#c_#{customer1.id}" do
-          find_field('name').value.should eq 'John Doe'
+          expect(find_field('name').value).to eq 'John Doe'
 
           fill_in "code", with: "new-customer-code"
           expect(page).to have_css "input[name=code].update-pending"
@@ -184,6 +184,7 @@ feature 'Customers' do
         it 'updates the existing billing address' do
           expect(page).to have_content 'BILLING ADDRESS'
           first('#bill-address-link').click
+          wait_for_modal_fade_in
 
           expect(page).to have_content 'Edit Billing Address'
           expect(page).to have_select2 'country_id', selected: 'Australia'
@@ -202,7 +203,7 @@ feature 'Customers' do
           expect(customer4.reload.bill_address.address1).to eq 'New Address1'
 
           first('#bill-address-link').click
-          
+
           expect(page).to have_content 'Edit Billing Address'
           expect(page).to_not have_content 'Please input all of the required fields'
         end
@@ -211,6 +212,7 @@ feature 'Customers' do
           expect(page).to have_content 'SHIPPING ADDRESS'
 
           first('#ship-address-link').click
+          wait_for_modal_fade_in
           expect(page).to have_content 'Edit Shipping Address'
 
           fill_in 'firstname', with: "First"
@@ -235,6 +237,15 @@ feature 'Customers' do
           expect(ship_address.phone).to eq '12345678'
           expect(ship_address.city).to eq 'Melbourne'
         end
+
+        # Modal animations are defined in:
+        # app/assets/javascripts/admin/utils/services/dialog_defaults.js.coffee
+        #
+        # Without waiting, `fill_in` can fail randomly:
+        # https://github.com/teamcapybara/capybara/issues/1890
+        def wait_for_modal_fade_in(time = 0.4)
+          sleep time
+        end
       end
 
       describe "creating a new customer" do
@@ -258,21 +269,21 @@ feature 'Customers' do
               fill_in 'email', with: "not_an_email"
               click_button 'Add Customer'
               expect(page).to have_selector "#new-customer-dialog .error", text: "Please enter a valid email address"
-            }.to_not change{Customer.of(managed_distributor1).count}
+            }.to_not change{ Customer.of(managed_distributor1).count }
 
             # When an existing email is used
             expect{
               fill_in 'email', with: customer1.email
               click_button 'Add Customer'
               expect(page).to have_selector "#new-customer-dialog .error", text: "Email is associated with an existing customer"
-            }.to_not change{Customer.of(managed_distributor1).count}
+            }.to_not change{ Customer.of(managed_distributor1).count }
 
             # When a new valid email is used
             expect{
               fill_in 'email', with: "new@email.com"
               click_button 'Add Customer'
               expect(page).not_to have_selector "#new-customer-dialog"
-            }.to change{Customer.of(managed_distributor1).count}.from(2).to(3)
+            }.to change{ Customer.of(managed_distributor1).count }.from(2).to(3)
           end
         end
       end

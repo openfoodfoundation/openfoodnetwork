@@ -20,10 +20,6 @@
           {{ 'js.admin.panels.enterprise_package.hub_shop' | t }}
 
         %p
-          %strong
-            %monthly-pricing-description{ joiner: "comma" }
-
-        %p
           {{ 'js.admin.panels.enterprise_package.hub_shop_text1' | t }}
 
         %p
@@ -67,10 +63,6 @@
           {{ 'js.admin.panels.enterprise_package.producer_shop' | t }}
 
         %p
-          %strong
-            %monthly-pricing-description{ joiner: "comma" }
-
-        %p
           {{ 'js.admin.panels.enterprise_package.producer_shop_text1' | t }}
 
         %p
@@ -79,10 +71,6 @@
       .info{ ng: { switch: { when: "any" } } }
         %h3
           {{ 'js.admin.panels.enterprise_package.producer_hub' | t }}
-
-        %p
-          %strong
-            %monthly-pricing-description{ joiner: "comma" }
 
         %p
           {{ 'js.admin.panels.enterprise_package.producer_hub_text1' | t }}
@@ -121,8 +109,6 @@
             {{ 'js.admin.panels.enterprise_package.hub_shop' | t }}
           %p
             {{ 'js.admin.panels.enterprise_package.sell_produce_others' | t }}
-        .bottom
-          %monthly-pricing-description{ joiner: "newline" }
 
     %div{ ng: { switch: { when: "true" } } }
       %a.button.selector.producer-profile{ ng: { click: "enterprise.owned && (enterprise.sells='none')", class: "{selected: enterprise.sells=='none', disabled: !enterprise.owned}" } }
@@ -139,8 +125,6 @@
             {{ 'js.admin.panels.enterprise_package.producer_shop' | t }}
           %p
             {{ 'js.admin.panels.enterprise_package.sell_own_produce' | t }}
-        .bottom
-          %monthly-pricing-description{ joiner: "newline" }
 
       %a.button.selector.producer-hub{ ng: { click: "enterprise.owned && (enterprise.sells='any')", class: "{selected: enterprise.sells=='any', disabled: !enterprise.owned}" } }
         .top
@@ -148,8 +132,6 @@
             {{ 'js.admin.panels.enterprise_package.producer_hub' | t }}
           %p
             {{ 'js.admin.panels.enterprise_package.sell_both' | t }}
-        .bottom
-          %monthly-pricing-description{ joiner: "newline" }
 
     %a.button.update.fullwidth{ ng: { show: "enterprise.owned", class: "{disabled: saved() && !saving, saving: saving}", click: "save()" } }
       %span{ ng: {hide: "saved() || saving" } }

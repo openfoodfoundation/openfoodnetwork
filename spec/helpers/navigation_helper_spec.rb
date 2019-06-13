@@ -5,27 +5,31 @@ module Spree
     describe NavigationHelper, type: :helper do
       describe "klass_for" do
         it "returns the class when present" do
-          helper.klass_for('products').should == Spree::Product
+          expect(helper.klass_for('products')).to eq(Spree::Product)
         end
 
         it "returns a symbol when there's no available class" do
-          helper.klass_for('reports').should == :report
+          expect(helper.klass_for('lions')).to eq(:lion)
+        end
+
+        it "returns Spree::Admin::ReportsController for reports" do
+          expect(helper.klass_for('reports')).to eq(Spree::Admin::ReportsController)
         end
 
         it "returns :overview for the dashboard" do
-          helper.klass_for('dashboard').should == :overview
+          expect(helper.klass_for('dashboard')).to eq(:overview)
         end
 
         it "returns Spree::Order for bulk_order_management" do
-          helper.klass_for('bulk_order_management').should == Spree::Order
+          expect(helper.klass_for('bulk_order_management')).to eq(Spree::Order)
         end
 
         it "returns EnterpriseGroup for group" do
-          helper.klass_for('group').should == EnterpriseGroup
+          expect(helper.klass_for('group')).to eq(EnterpriseGroup)
         end
 
         it "returns VariantOverride for Inventory" do
-          helper.klass_for('Inventory').should == VariantOverride
+          expect(helper.klass_for('Inventory')).to eq(VariantOverride)
         end
       end
     end

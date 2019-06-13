@@ -23,7 +23,6 @@ class RestartCheckout
   end
 
   def clear_shipments
-    order.update_attributes!(shipping_method_id: nil)
     order.shipments.with_state(:pending).destroy_all
   end
 

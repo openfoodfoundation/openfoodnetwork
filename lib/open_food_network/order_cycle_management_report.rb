@@ -99,7 +99,7 @@ module OpenFoodNetwork
 
     def filter_to_payment_method(orders)
       if params[:payment_method_in].present?
-        orders.joins(payments: :payment_method).where(spree_payments: { payment_method_id: params[:payment_method_in]})
+        orders.joins(payments: :payment_method).where(spree_payments: { payment_method_id: params[:payment_method_in] })
       else
         orders
       end
@@ -107,7 +107,7 @@ module OpenFoodNetwork
 
     def filter_to_shipping_method(orders)
       if params[:shipping_method_in].present?
-        orders.joins(:shipping_method).where(shipping_method_id: params[:shipping_method_in])
+        orders.joins(shipments: :shipping_rates).where(spree_shipping_rates: { shipping_method_id: params[:shipping_method_in] })
       else
         orders
       end

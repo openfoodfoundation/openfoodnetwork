@@ -22,12 +22,11 @@ module OpenFoodNetwork
       before do
         allow(ProductsRenderer)
           .to receive(:new)
-          .with(distributor, order_cycle) { products_renderer }
+            .with(distributor, order_cycle) { products_renderer }
       end
 
       context "products cache toggle" do
         before do
-          allow(Rails.env).to receive(:production?) { true }
           Rails.cache.write "products-json-#{distributor.id}-#{order_cycle.id}", 'products'
         end
 
@@ -47,24 +46,14 @@ module OpenFoodNetwork
           end
 
           it "returns the cached JSON" do
-              expect(cached_products_renderer.products_json).to eq 'products'
+            expect(cached_products_renderer.products_json).to eq 'products'
           end
         end
       end
 
-      context "when in testing / development" do
+      context "products cache enabled" do
         before do
-          allow(Rails.env).to receive(:production?) { false }
-        end
-
-        it "returns uncached products JSON" do
-          expect(cached_products_renderer.products_json).to eq 'uncached products'
-        end
-      end
-
-      context "when in production / staging" do
-        before do
-          allow(Rails.env).to receive(:production?) { true }
+          Spree::Config[:enable_products_cache?] = true
         end
 
         describe "when the distribution is not set" do
@@ -103,7 +92,7 @@ module OpenFoodNetwork
 
             allow(ProductsRenderer)
               .to receive(:new)
-              .with(distributor, order_cycle) { products_renderer }
+                .with(distributor, order_cycle) { products_renderer }
           end
 
           describe "when there are products" do
@@ -125,7 +114,7 @@ module OpenFoodNetwork
 
               allow(ProductsRenderer)
                 .to receive(:new)
-                .with(distributor, order_cycle) { products_renderer }
+                  .with(distributor, order_cycle) { products_renderer }
             end
 
             it "raises an error" do

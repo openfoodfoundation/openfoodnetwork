@@ -1,7 +1,9 @@
 module Api
   class CustomersController < BaseController
+    skip_authorization_check only: :index
+
     def index
-      @customers = current_api_user.customers.of_regular_shops
+      @customers = current_api_user.customers
       render json: @customers, each_serializer: CustomerSerializer
     end
 
@@ -10,7 +12,7 @@ module Api
       authorize! :update, @customer
 
       if @customer.update_attributes(params[:customer])
-        render json: @customer, serializer: CustomerSerializer, status: 200
+        render json: @customer, serializer: CustomerSerializer, status: :ok
       else
         invalid_resource!(@customer)
       end

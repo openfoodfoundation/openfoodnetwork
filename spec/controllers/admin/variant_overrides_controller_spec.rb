@@ -11,7 +11,7 @@ describe Admin::VariantOverridesController, type: :controller do
       let(:variant) { create(:variant) }
       let!(:inventory_item) { create(:inventory_item, enterprise: hub, variant: variant, visible: true) }
       let!(:variant_override) { create(:variant_override, hub: hub, variant: variant) }
-      let(:variant_override_params) { [ { id: variant_override.id, price: 123.45, count_on_hand: 321, sku: "MySKU", on_demand: false } ] }
+      let(:variant_override_params) { [{ id: variant_override.id, price: 123.45, count_on_hand: 321, sku: "MySKU", on_demand: false }] }
 
       context "where I don't manage the variant override hub" do
         before do
@@ -47,7 +47,7 @@ describe Admin::VariantOverridesController, type: :controller do
             spree_put :bulk_update, format: format, variant_overrides: variant_override_params
             expect(assigns[:hubs]).to eq [hub]
             expect(assigns[:producers]).to eq [variant.product.supplier]
-            expect(assigns[:hub_permissions]).to eq Hash[hub.id,[variant.product.supplier.id]]
+            expect(assigns[:hub_permissions]).to eq Hash[hub.id, [variant.product.supplier.id]]
             expect(assigns[:inventory_items]).to eq [inventory_item]
           end
 
@@ -61,11 +61,26 @@ describe Admin::VariantOverridesController, type: :controller do
           end
 
           context "where params for a variant override are blank" do
-            let(:variant_override_params) { [ { id: variant_override.id, price: "", count_on_hand: "", default_stock: nil, resettable: nil, sku: nil, on_demand: nil } ] }
+            let(:variant_override_params) { [{ id: variant_override.id, price: "", count_on_hand: "", default_stock: nil, resettable: nil, sku: nil, on_demand: nil }] }
 
             it "destroys the variant override" do
               spree_put :bulk_update, format: format, variant_overrides: variant_override_params
               expect(VariantOverride.find_by_id(variant_override.id)).to be_nil
+            end
+          end
+
+          context "and there is a variant override for a deleted variant" do
+            let(:deleted_variant) { create(:variant) }
+            let!(:variant_override_of_deleted_variant) { create(:variant_override, hub: hub, variant: deleted_variant) }
+
+            before { deleted_variant.update_attribute :deleted_at, Time.zone.now }
+
+            it "allows to update other variant overrides" do
+              spree_put :bulk_update, format: format, variant_overrides: variant_override_params
+
+              expect(response).to_not redirect_to spree.unauthorized_path
+              variant_override.reload
+              expect(variant_override.price).to eq 123.45
             end
           end
         end
@@ -119,7 +134,7 @@ describe Admin::VariantOverridesController, type: :controller do
             spree_put :bulk_reset, params
             expect(assigns[:hubs]).to eq [hub]
             expect(assigns[:producers]).to eq [producer]
-            expect(assigns[:hub_permissions]).to eq Hash[hub.id,[producer.id]]
+            expect(assigns[:hub_permissions]).to eq Hash[hub.id, [producer.id]]
             expect(assigns[:inventory_items]).to eq []
           end
 
@@ -142,7 +157,7 @@ describe Admin::VariantOverridesController, type: :controller do
             it "does not reset count_on_hand for variant_overrides not in params" do
               expect {
                 spree_put :bulk_reset, params
-              }.to_not change{variant_override3.reload.count_on_hand}
+              }.to_not change{ variant_override3.reload.count_on_hand }
             end
           end
         end

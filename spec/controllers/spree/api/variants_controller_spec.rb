@@ -18,19 +18,19 @@ module Spree
       sign_in_as_user!
 
       it "retrieves a list of variants with appropriate attributes" do
-        spree_get :index, { :template => 'bulk_index', :format => :json }
-        keys = json_response.first.keys.map{ |key| key.to_sym }
-        attributes.all?{ |attr| keys.include? attr }.should == true
+        spree_get :index, template: 'bulk_index', format: :json
+        keys = json_response.first.keys.map(&:to_sym)
+        expect(attributes.all?{ |attr| keys.include? attr }).to eq(true)
       end
 
       it "is denied access when trying to delete a variant" do
         product = create(:product)
         variant = product.master
 
-        spree_delete :soft_delete, {variant_id: variant.to_param, product_id: product.to_param, format: :json}
+        spree_delete :soft_delete, variant_id: variant.to_param, product_id: product.to_param, format: :json
         assert_unauthorized!
-        lambda { variant.reload }.should_not raise_error
-        variant.deleted_at.should be_nil
+        expect { variant.reload }.not_to raise_error
+        expect(variant.deleted_at).to be_nil
       end
     end
 
@@ -43,31 +43,59 @@ module Spree
       let(:variant_other) { product_other.master }
 
       it "soft deletes a variant" do
-        spree_delete :soft_delete, {variant_id: variant.to_param, product_id: product.to_param, format: :json}
-        response.status.should == 204
-        lambda { variant.reload }.should_not raise_error
-        variant.deleted_at.should be_present
+        spree_delete :soft_delete, variant_id: variant.to_param, product_id: product.to_param, format: :json
+        expect(response.status).to eq(204)
+        expect { variant.reload }.not_to raise_error
+        expect(variant.deleted_at).to be_present
       end
 
       it "is denied access to soft deleting another enterprises' variant" do
-        spree_delete :soft_delete, {variant_id: variant_other.to_param, product_id: product_other.to_param, format: :json}
+        spree_delete :soft_delete, variant_id: variant_other.to_param, product_id: product_other.to_param, format: :json
         assert_unauthorized!
-        lambda { variant.reload }.should_not raise_error
-        variant.deleted_at.should be_nil
+        expect { variant.reload }.not_to raise_error
+        expect(variant.deleted_at).to be_nil
+      end
+
+      context 'when the variant is not the master' do
+        before { variant.update_attribute(:is_master, false) }
+
+        it 'refreshes the cache' do
+          expect(OpenFoodNetwork::ProductsCache).to receive(:variant_destroyed).with(variant)
+          spree_delete :soft_delete, variant_id: variant.id, product_id: variant.product.permalink, format: :json
+        end
       end
     end
 
     context "as an administrator" do
       sign_in_as_admin!
 
-      it "soft deletes a variant" do
-        product = create(:product)
-        variant = product.master
+      let(:product) { create(:product) }
+      let(:variant) { product.master }
 
-        spree_delete :soft_delete, {variant_id: variant.to_param, product_id: product.to_param, format: :json}
-        response.status.should == 204
-        lambda { variant.reload }.should_not raise_error
-        variant.deleted_at.should_not be_nil
+      it "soft deletes a variant" do
+        spree_delete :soft_delete, variant_id: variant.to_param, product_id: product.to_param, format: :json
+        expect(response.status).to eq(204)
+        expect { variant.reload }.not_to raise_error
+        expect(variant.deleted_at).not_to be_nil
+      end
+
+      it "doesn't delete the only variant of the product" do
+        product = create(:product)
+        variant = product.variants.first
+
+        spree_delete :soft_delete, variant_id: variant.to_param, product_id: product.to_param, format: :json
+
+        expect(variant.reload).to_not be_deleted
+        expect(assigns(:variant).errors[:product]).to include "must have at least one variant"
+      end
+
+      context 'when the variant is not the master' do
+        before { variant.update_attribute(:is_master, false) }
+
+        it 'refreshes the cache' do
+          expect(OpenFoodNetwork::ProductsCache).to receive(:variant_destroyed).with(variant)
+          spree_delete :soft_delete, variant_id: variant.id, product_id: variant.product.permalink, format: :json
+        end
       end
     end
   end

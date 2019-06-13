@@ -143,7 +143,7 @@ feature 'Subscriptions' do
     context 'creating a new subscription' do
       let(:address) { create(:address) }
       let!(:customer_user) { create(:user) }
-      let!(:credit_card1) { create(:credit_card, user: customer_user, cc_type: 'visa', last_digits: 1111, month: 10, year: 2030) }
+      let!(:credit_card1) { create(:stored_credit_card, user: customer_user, cc_type: 'visa', last_digits: 1111, month: 10, year: 2030) }
       let!(:customer) { create(:customer, enterprise: shop, bill_address: address, user: customer_user, allow_charges: true) }
       let!(:test_product) { create(:product, supplier: shop) }
       let!(:test_variant) { create(:variant, product: test_product, unit_value: "100", price: 12.00, option_values: []) }
@@ -413,7 +413,7 @@ feature 'Subscriptions' do
 
     describe "allowed variants" do
       let!(:customer) { create(:customer, enterprise: shop, allow_charges: true) }
-      let!(:credit_card) { create(:credit_card, user: customer.user) }
+      let!(:credit_card) { create(:stored_credit_card, user: customer.user) }
       let!(:shop_product) { create(:product, supplier: shop) }
       let!(:shop_variant) { create(:variant, product: shop_product, unit_value: "2000") }
       let!(:permitted_supplier) do

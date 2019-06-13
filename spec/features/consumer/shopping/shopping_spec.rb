@@ -7,7 +7,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
   include UIComponentHelper
 
   describe "Viewing a distributor" do
-
     let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
     let(:supplier) { create(:supplier_enterprise) }
     let(:oc1) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise), orders_close_at: 2.days.from_now) }
@@ -71,9 +70,9 @@ feature "As a consumer I want to shop with a distributor", js: true do
           add_variant_to_order_cycle(exchange1, variant)
           visit shop_path
           page.should_not have_content product.name
-          Spree::Order.last.order_cycle.should == nil
+          Spree::Order.last.order_cycle.should.nil?
 
-          select "frogs", :from => "order_cycle_id"
+          select "frogs", from: "order_cycle_id"
           page.should have_selector "products"
           page.should have_content "Next order closing in 2 days"
           Spree::Order.last.order_cycle.should == oc1
@@ -131,7 +130,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
                 select "frogs", from: "order_cycle_id"
                 show_cart
                 page.should have_selector "tr.product-cart"
-                page.should have_selector 'li.cart', text: '1 item'
+                page.should have_selector 'li.cart', text: '1'
 
                 # The order cycle choice should not have changed
                 page.should have_select 'order_cycle_id', selected: 'turtles'
@@ -155,14 +154,14 @@ feature "As a consumer I want to shop with a distributor", js: true do
             expect(page).to have_content "Next order closing in 2 days"
             visit shop_path
             find("#cart").click
-            expect(page).to have_text(I18n.t("shared.menu.cart.already_ordered_products"))
+            expect(page).to have_text(I18n.t("shared.menu.joyride.already_ordered_products"))
           end
 
           it "shows previous orders after selecting an order cycle" do
             select "frogs", from: "order_cycle_id"
             expect(page).to have_content "Next order closing in 2 days"
             find("#cart").click
-            expect(page).to have_text(I18n.t("shared.menu.cart.already_ordered_products"))
+            expect(page).to have_text(I18n.t("shared.menu.joyride.already_ordered_products"))
           end
         end
       end
@@ -186,7 +185,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
       it "uses the adjusted price" do
         enterprise_fee1 = create(:enterprise_fee, amount: 20)
-        enterprise_fee2 = create(:enterprise_fee, amount:  3)
+        enterprise_fee2 = create(:enterprise_fee, amount: 3)
         exchange.enterprise_fees = [enterprise_fee1, enterprise_fee2]
         exchange.save
         visit shop_path
@@ -205,7 +204,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
       it "filters search results properly" do
         visit shop_path
-        select "frogs", :from => "order_cycle_id"
+        select "frogs", from: "order_cycle_id"
 
         fill_in "search", with: "74576345634XXXXXX"
         page.should have_content "Sorry, no results found"
@@ -222,7 +221,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
       it "returns search results for products where the search term matches one of the product's variant names" do
         visit shop_path
-        select "frogs", :from => "order_cycle_id"
+        select "frogs", from: "order_cycle_id"
 
         fill_in "search", with: "Badg"           # For variant with display_name "Badgers"
 
@@ -232,9 +231,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           page.should_not have_content product2.name
           page.should_not have_content variant3.display_name
         end
-
       end
-
     end
 
     describe "group buy products" do
@@ -302,6 +299,15 @@ feature "As a consumer I want to shop with a distributor", js: true do
         Spree::LineItem.where(id: li).should be_empty
       end
 
+      it "lets us add a quantity greater than on_hand value if product is on_demand" do
+        variant.update_attributes on_hand: 5, on_demand: true
+        visit shop_path
+
+        fill_in "variants[#{variant.id}]", with: '10'
+
+        page.should have_field "variants[#{variant.id}]", with: '10'
+      end
+
       it "alerts us when we enter a quantity greater than the stock available" do
         variant.update_attributes on_hand: 5
         visit shop_path
@@ -339,6 +345,18 @@ feature "As a consumer I want to shop with a distributor", js: true do
           page.should have_selector "#variant-#{variant.id}.out-of-stock"
           page.should have_selector "#variants_#{variant.id}[ofn-on-hand='0']"
           page.should have_selector "#variants_#{variant.id}[disabled='disabled']"
+        end
+
+        it 'does not show out of stock modal if product is on_demand' do
+          expect(page).to have_content "Product"
+
+          variant.update_attributes! on_hand: 0, on_demand: true
+
+          expect(page).to have_input "variants[#{variant.id}]"
+          fill_in "variants[#{variant.id}]", with: '1'
+          wait_until { !cart_dirty }
+
+          expect(page).to_not have_selector '.out-of-stock-modal'
         end
 
         context "group buy products" do

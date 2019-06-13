@@ -11,7 +11,7 @@
       .field
         = label_tag nil, t(:status)
         = select_tag("q[state_eq]",
-            options_for_select(Spree::Order.state_machines[:state].states.collect {|s| [t("order_state.#{s.name}"), s.value]}),
+            options_for_select(Spree::Order.state_machines[:state].states.collect {|s| [t("spree.order_state.#{s.name}"), s.value]}),
             {include_blank: true, class: 'select2', 'ng-model' => 'q.state_eq'})
     .four.columns
       .field
@@ -32,10 +32,6 @@
         %label
           = check_box_tag "q[completed_at_not_null]", 1, true, {'ng-model' => 'q.completed_at_not_null'}
           = t(:show_only_complete_orders)
-      .field.checkbox
-        %label
-          = check_box_tag "q[inventory_units_shipment_id_null]", 1, false, {'ng-model' => 'q.inventory_units_shipment_id_null'}
-          = t(:show_only_unfulfilled_orders)
     .field-block.alpha.eight.columns
       = label_tag nil, t(:distributors)
       = select_tag("q[distributor_id_in]",

@@ -53,7 +53,7 @@ class CartService
   def quantities_to_add(variant, quantity, max_quantity)
     # If not enough stock is available, add as much as we can to the cart
     on_hand = variant.on_hand
-    on_hand = [quantity, max_quantity].compact.max if Spree::Config.allow_backorders
+    on_hand = [quantity, max_quantity].compact.max if variant.on_demand
     quantity_to_add = [quantity, on_hand].min
     max_quantity_to_add = max_quantity # max_quantity is not capped
 
@@ -137,7 +137,7 @@ class CartService
   end
 
   def check_variant_available_under_distribution(variant)
-    return true if DistributionChangeValidator.new(@order).variants_available_for_distribution(@distributor, @order_cycle).include? variant
+    return true if OrderCycleDistributedVariants.new(@order_cycle, @distributor).available_variants.include? variant
 
     errors.add(:base, I18n.t(:spree_order_populator_availability_error))
     false

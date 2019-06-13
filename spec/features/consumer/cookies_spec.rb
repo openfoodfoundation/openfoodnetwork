@@ -2,7 +2,6 @@ require 'spec_helper'
 
 feature "Cookies", js: true do
   describe "banner" do
-    
     # keeps banner toggle config unchanged
     around do |example|
       original_banner_toggle = Spree::Config[:cookies_consent_banner_toggle]
@@ -36,7 +35,7 @@ feature "Cookies", js: true do
       scenario "does not show after cookies are accepted, and policy page is opened through the footer, and closed again (bug #2599)" do
         accept_cookies_and_wait
         expect_not_visible_cookies_banner
-        
+
         click_footer_cookies_policy_link_and_wait
         expect_visible_cookies_policy_page
         expect_not_visible_cookies_banner
@@ -67,7 +66,6 @@ feature "Cookies", js: true do
   end
 
   describe "policy page" do
-
     # keeps config unchanged
     around do |example|
       original_matomo_config = Spree::Config[:cookies_policy_matomo_section]
@@ -108,7 +106,7 @@ feature "Cookies", js: true do
           visit_cookies_policy_page
           expect(page).to have_content matomo_opt_out_iframe
           expect(page).to have_selector("iframe")
-        end        
+        end
       end
 
       context "with Matomo integration disabled" do
@@ -128,11 +126,11 @@ feature "Cookies", js: true do
   end
 
   def expect_visible_cookies_banner
-    expect(page).to have_css("button", :text => accept_cookies_button_text, :visible => true)
+    expect(page).to have_css("button", text: accept_cookies_button_text, visible: true)
   end
 
   def expect_not_visible_cookies_banner
-    expect(page).to have_no_css("button", :text => accept_cookies_button_text, :visible => true)
+    expect(page).to have_no_css("button", text: accept_cookies_button_text, visible: true)
   end
 
   def accept_cookies_button_text
@@ -150,12 +148,12 @@ feature "Cookies", js: true do
   end
 
   def click_banner_cookies_policy_link_and_wait
-    find("p.ng-binding > a", :text => "cookies policy").click
+    find("p.ng-binding > a", text: "cookies policy").click
     sleep 2
   end
 
   def click_footer_cookies_policy_link_and_wait
-    find("div > a", :text => "cookies policy").click
+    find("div > a", text: "cookies policy").click
     sleep 2
   end
 

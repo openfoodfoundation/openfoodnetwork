@@ -86,7 +86,7 @@ module OpenFoodNetwork
     describe "last_used_bill_address" do
       let(:distributor) { create(:distributor_enterprise) }
       let(:address) { create(:address) }
-      let(:order) { create(:completed_order_with_totals, user: nil, email: email, distributor: distributor) }
+      let(:order) { create(:completed_order_with_totals, user: nil, email: email, distributor: distributor, bill_address: nil) }
       let(:finder) { AddressFinder.new(email) }
 
       context "when searching by email is not allowed" do
@@ -96,7 +96,7 @@ module OpenFoodNetwork
 
         context "and an order with a bill address exists" do
           before do
-            order.update_attribute(:bill_address_id, address.id)
+            order.update_attribute(:bill_address, address)
           end
 
           it "returns nil" do
@@ -111,7 +111,7 @@ module OpenFoodNetwork
         end
 
         context "and an order with a bill address exists" do
-          before { order.update_attribute(:bill_address_id, address.id) }
+          before { order.update_attribute(:bill_address, address) }
 
           it "returns the bill_address" do
             expect(finder.send(:last_used_bill_address)).to eq address
@@ -137,9 +137,7 @@ module OpenFoodNetwork
     describe "last_used_ship_address" do
       let(:address) { create(:address) }
       let(:distributor) { create(:distributor_enterprise) }
-      let!(:pickup) { create(:shipping_method, require_ship_address: false, distributors: [distributor]) }
-      let!(:delivery) { create(:shipping_method, require_ship_address: true, distributors: [distributor]) }
-      let(:order) { create(:completed_order_with_totals, user: nil, email: email, distributor: distributor) }
+      let(:order) { create(:shipped_order, user: nil, email: email, distributor: distributor, shipments: [], ship_address: nil) }
       let(:finder) { AddressFinder.new(email) }
 
       context "when searching by email is not allowed" do
@@ -149,8 +147,8 @@ module OpenFoodNetwork
 
         context "and an order with a required ship address exists" do
           before do
-            order.update_attribute(:ship_address_id, address.id)
-            order.update_attribute(:shipping_method_id, delivery.id)
+            order.update_attribute(:ship_address, address)
+            order.shipping_method.update_attribute(:require_ship_address, true)
           end
 
           it "returns nil" do
@@ -165,10 +163,10 @@ module OpenFoodNetwork
         end
 
         context "and an order with a ship address exists" do
-          before { order.update_attribute(:ship_address_id, address.id) }
+          before { order.update_attribute(:ship_address, address) }
 
           context "and the shipping method requires an address" do
-            before { order.update_attribute(:shipping_method_id, delivery.id) }
+            before { order.shipping_method.update_attribute(:require_ship_address, true) }
 
             it "returns the ship_address" do
               expect(finder.send(:last_used_ship_address)).to eq address
@@ -176,7 +174,7 @@ module OpenFoodNetwork
           end
 
           context "and the shipping method does not require an address" do
-            before { order.update_attribute(:shipping_method_id, pickup.id) }
+            before { order.shipping_method.update_attribute(:require_ship_address, false) }
 
             it "returns nil" do
               expect(finder.send(:last_used_ship_address)).to eq nil

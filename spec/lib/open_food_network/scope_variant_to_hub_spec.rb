@@ -4,7 +4,7 @@ require 'open_food_network/scope_variant_to_hub'
 module OpenFoodNetwork
   describe ScopeVariantToHub do
     let(:hub) { create(:distributor_enterprise) }
-    let(:v)   { create(:variant, price: 11.11, count_on_hand: 1, on_demand: true, sku: "VARIANTSKU") }
+    let(:v)   { create(:variant, price: 11.11, on_hand: 1, on_demand: true, sku: "VARIANTSKU") }
     let(:vo)  { create(:variant_override, hub: hub, variant: v, price: 22.22, count_on_hand: 2, on_demand: false, sku: "VOSKU") }
     let(:vo_price_only) { create(:variant_override, :use_producer_stock_settings, hub: hub, variant: v, price: 22.22) }
     let(:scoper) { ScopeVariantToHub.new(hub) }
@@ -13,12 +13,12 @@ module OpenFoodNetwork
       it "returns the overridden price when one is present" do
         vo
         scoper.scope v
-        v.price.should == 22.22
+        expect(v.price).to eq(22.22)
       end
 
       it "returns the variant's price otherwise" do
         scoper.scope v
-        v.price.should == 11.11
+        expect(v.price).to eq(11.11)
       end
     end
 
@@ -26,12 +26,12 @@ module OpenFoodNetwork
       it "returns the overridden price when one is present" do
         vo
         scoper.scope v
-        v.price_in('AUD').amount.should == 22.22
+        expect(v.price_in('AUD').amount).to eq(22.22)
       end
 
       it "returns the variant's price otherwise" do
         scoper.scope v
-        v.price_in('AUD').amount.should == 11.11
+        expect(v.price_in('AUD').amount).to eq(11.11)
       end
     end
 
@@ -39,12 +39,12 @@ module OpenFoodNetwork
       it "returns the overridden stock level when one is present" do
         vo
         scoper.scope v
-        v.count_on_hand.should == 2
+        expect(v.on_hand).to eq(2)
       end
 
       it "returns the variant's stock level otherwise" do
         scoper.scope v
-        v.count_on_hand.should == 1
+        expect(v.on_hand).to eq(1)
       end
 
       describe "overriding stock on an on_demand variant" do
@@ -53,18 +53,18 @@ module OpenFoodNetwork
         it "clears on_demand when the stock is overridden" do
           vo
           scoper.scope v
-          v.on_demand.should be false
+          expect(v.on_demand).to be false
         end
 
         it "does not clear on_demand when only the price is overridden" do
           vo_price_only
           scoper.scope v
-          v.on_demand.should be true
+          expect(v.on_demand).to be true
         end
 
         it "does not clear on_demand when there is no override" do
           scoper.scope v
-          v.on_demand.should be true
+          expect(v.on_demand).to be true
         end
       end
 
@@ -104,6 +104,58 @@ module OpenFoodNetwork
           it "returns the variant's on_demand" do
             scoper.scope v
             expect(v.on_demand).to be true
+          end
+        end
+      end
+
+      # in_stock? is indirectly overridden through can_supply?
+      #   can_supply? is indirectly overridden by on_demand and total_on_hand
+      #   these tests validate this chain is working correctly
+      describe "overriding in_stock?" do
+        before { v.on_demand = false }
+
+        context "when an override exists" do
+          before { vo }
+
+          context "when variant in stock" do
+            it "returns true if VO in stock" do
+              scoper.scope v
+              expect(v.in_stock?).to eq(true)
+            end
+
+            it "returns false if VO out of stock" do
+              vo.update_attribute :count_on_hand, 0
+              scoper.scope v
+              expect(v.in_stock?).to eq(false)
+            end
+          end
+
+          context "when variant out of stock" do
+            before { v.on_hand = 0 }
+
+            it "returns true if VO in stock" do
+              scoper.scope v
+              expect(v.in_stock?).to eq(true)
+            end
+
+            it "returns false if VO out of stock" do
+              vo.update_attribute :count_on_hand, 0
+              scoper.scope v
+              expect(v.in_stock?).to eq(false)
+            end
+          end
+        end
+
+        context "when there's no override" do
+          it "returns true if variant in stock" do
+            scoper.scope v
+            expect(v.in_stock?).to eq(true)
+          end
+
+          it "returns false if variant out of stock" do
+            v.on_hand = 0
+            scoper.scope v
+            expect(v.in_stock?).to eq(false)
           end
         end
       end

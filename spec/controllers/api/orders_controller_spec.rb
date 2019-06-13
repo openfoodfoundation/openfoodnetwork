@@ -31,20 +31,20 @@ module Api
       end
       let!(:order5) { create(:order, state: 'cart', completed_at: nil) }
       let!(:line_item1) do
-        create(:line_item, order: order1,
-                           product: create(:product, supplier: supplier))
+        create(:line_item_with_shipment, order: order1,
+                                         product: create(:product, supplier: supplier))
       end
       let!(:line_item2) do
-        create(:line_item, order: order2,
-                           product: create(:product, supplier: supplier))
+        create(:line_item_with_shipment, order: order2,
+                                         product: create(:product, supplier: supplier))
       end
       let!(:line_item3) do
-        create(:line_item, order: order2,
-                           product: create(:product, supplier: supplier))
+        create(:line_item_with_shipment, order: order2,
+                                         product: create(:product, supplier: supplier))
       end
       let!(:line_item4) do
-        create(:line_item, order: order3,
-                           product: create(:product, supplier: supplier))
+        create(:line_item_with_shipment, order: order3,
+                                         product: create(:product, supplier: supplier))
       end
       let!(:regular_user) { create(:user) }
       let!(:admin_user) { create(:admin_user) }
@@ -135,12 +135,6 @@ module Api
 
           expect(json_response['orders']).to eq serialized_orders([order4, order3, order2, order1])
         end
-
-        it 'can show only unfulfilled orders' do
-          get :index, format: :json, q: { inventory_units_shipment_id_null: true, s: 'created_at desc' }
-
-          expect(json_response['orders']).to eq serialized_orders([order3, order2, order1])
-        end
       end
 
       context 'with pagination' do
@@ -183,8 +177,8 @@ module Api
     def order_attributes
       [
         :id, :number, :full_name, :email, :phone, :completed_at, :display_total,
-        :show_path, :edit_path, :state, :payment_state, :shipment_state,
-        :payments_path, :shipments_path, :ship_path, :ready_to_ship, :created_at,
+        :edit_path, :state, :payment_state, :shipment_state,
+        :payments_path, :ship_path, :ready_to_ship, :created_at,
         :distributor_name, :special_instructions, :payment_capture_path
       ]
     end

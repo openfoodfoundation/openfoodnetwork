@@ -6,7 +6,7 @@
   = render "admin/enterprise_fees/data"
   = render :partial => 'spree/shared/error_messages', :locals => { :target => @enterprise_fee_set }
 
-  %input.search{'ng-model' => 'query', 'placeholder' => 'Search'}
+  %input.search{'ng-model' => 'query', 'placeholder' => t('.search')}
 
   %table.index#listing_enterprise_fees
     %thead
@@ -32,7 +32,7 @@
             %ofn-select{ :id => angular_id(:enterprise_id), data: 'enterprises', include_blank: true, ng: { model: 'enterprise_fee.enterprise_id' } }
             %input{ type: "hidden", name: angular_name(:enterprise_id), ng: { value: "enterprise_fee.enterprise_id" } }
           %td= f.ng_select :fee_type, enterprise_fee_type_options, 'enterprise_fee.fee_type'
-          %td= f.ng_text_field :name, { placeholder: 'e.g. packing fee' }
+          %td= f.ng_text_field :name, { placeholder: t('.name_placeholder') }
           %td
             %ofn-select{ :id => angular_id(:tax_category_id), data: 'tax_categories', include_blank: true, ng: { model: 'enterprise_fee.tax_category_id' } }
             %input{ type: "hidden", name: angular_name(:tax_category_id), 'watch-tax-category' => true }

@@ -13,7 +13,7 @@ feature 'Groups', js: true do
   end
 
   it "searches by URL" do
-    visit groups_path(anchor:  "/?query=xyzzy")
+    visit groups_path(anchor: "/?query=xyzzy")
     expect(page).to have_content "No groups found"
   end
 

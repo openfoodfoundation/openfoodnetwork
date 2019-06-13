@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe OrderFactory do
   let(:variant1) { create(:variant, price: 5.0) }
   let(:variant2) { create(:variant, price: 7.0) }
@@ -5,7 +7,9 @@ describe OrderFactory do
   let(:customer) { create(:customer, user: user) }
   let(:shop) { create(:distributor_enterprise) }
   let(:order_cycle) { create(:simple_order_cycle) }
-  let(:shipping_method) { create(:shipping_method, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 5.0)) }
+  let!(:other_shipping_method_a) { create(:shipping_method) }
+  let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
+  let!(:other_shipping_method_b) { create(:shipping_method) }
   let(:payment_method) { create(:payment_method) }
   let(:ship_address) { create(:address) }
   let(:bill_address) { create(:address) }
@@ -35,13 +39,25 @@ describe OrderFactory do
       expect(order.user).to eq user
       expect(order.distributor).to eq shop
       expect(order.order_cycle).to eq order_cycle
-      expect(order.shipping_method).to eq shipping_method
-      expect(order.shipments.reload.first.shipping_method).to eq shipping_method
+      expect(order.shipments.first.shipping_method).to eq shipping_method
       expect(order.payments.first.payment_method).to eq payment_method
       expect(order.bill_address).to eq bill_address
       expect(order.ship_address).to eq ship_address
-      expect(order.total).to eq 43.0
+      expect(order.total).to eq 38.0
       expect(order.complete?).to be false
+    end
+
+    it "retains address, delivery, and payment attributes until completion of the order" do
+      AdvanceOrderService.new(order).call
+
+      order.reload
+
+      expect(order.customer).to eq customer
+      expect(order.shipping_method).to eq shipping_method
+      expect(order.payments.first.payment_method).to eq payment_method
+      expect(order.bill_address).to eq bill_address
+      expect(order.ship_address).to eq ship_address
+      expect(order.total).to eq 38.0
     end
 
     context "when the customer does not have a user associated with it" do
@@ -57,7 +73,7 @@ describe OrderFactory do
     context "when requested quantity is greater than available stock" do
       context "when no override is present" do
         before do
-          variant1.update_attribute(:count_on_hand, 2)
+          variant1.update_attribute(:on_hand, 2)
           attrs[:line_items].first[:quantity] = 5
         end
 
@@ -109,7 +125,7 @@ describe OrderFactory do
         it "uses the price from the variant" do
           expect{ order }.to change{ Spree::Order.count }.by(1)
           expect(order.line_items.find_by_variant_id(variant1.id).price).to eq 5.0
-          expect(order.total).to eq 43.0
+          expect(order.total).to eq 38.0
         end
       end
 
@@ -119,7 +135,7 @@ describe OrderFactory do
         it "uses the price from the override" do
           expect{ order }.to change{ Spree::Order.count }.by(1)
           expect(order.line_items.find_by_variant_id(variant1.id).price).to eq 3.0
-          expect(order.total).to eq 39.0
+          expect(order.total).to eq 34.0
         end
       end
     end

@@ -12,7 +12,7 @@
 
     = f.field_container :description do
       = f.label :description, t(:description)
-      %text-angular{'id' => 'product_description', 'name' => 'product[description]', 'class' => 'text-angular', 'textangular-strip' => true, 'ta-paste' => "stripFormatting($html)", 'ta-toolbar' => "[['bold','italics','clear']]"}
+      %text-angular{'id' => 'product_description', 'name' => 'product[description]', 'class' => 'text-angular', "textangular-links-target-blank" => true, 'ta-toolbar' => "[['bold','italics','underline','clear'],['insertLink']]"}
         = sanitize(@product.description)
       = f.error_message_on :description
 
@@ -45,11 +45,6 @@
       %br
       = f.collection_select(:supplier_id, @producers, :id, :name, {:include_blank => true}, {:class => "select2"})
       = f.error_message_on :supplier
-
-    = f.field_container :price do
-      = f.label :price, raw(t(:price) + content_tag(:span, ' *', :class => 'required'))
-      = f.text_field :price, :value => number_to_currency(@product.price, :unit => '')
-      = f.error_message_on :price
 
     .clear
 

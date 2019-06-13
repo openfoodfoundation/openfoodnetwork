@@ -3,21 +3,20 @@ require 'spec_helper'
 
 module OpenFoodNetwork
   describe RefererParser do
-
     it "handles requests without referer" do
-      RefererParser.path(nil).should be_nil
+      expect(RefererParser.path(nil)).to be_nil
     end
 
     it "handles requests with referer" do
-      RefererParser.path('http://example.org/').should eq('/')
+      expect(RefererParser.path('http://example.org/')).to eq('/')
     end
 
     it "handles requests with invalid referer" do
-      RefererParser.path('this is not a URI').should be_nil
+      expect(RefererParser.path('this is not a URI')).to be_nil
     end
 
     it "handles requests with known issue of referer" do
-      RefererParser.path('http://example.org/##invalid-fragment').should eq('/')
+      expect(RefererParser.path('http://example.org/##invalid-fragment')).to eq('/')
     end
   end
 end

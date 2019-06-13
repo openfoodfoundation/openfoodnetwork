@@ -27,7 +27,7 @@ module Spree
         end
 
         it "doesn't return duplicates" do
-          expect(Spree::Property.applied_by(producer).to_a.count).to eq 1
+          expect(Spree::Property.applied_by(producer).to_a.size).to eq 1
         end
       end
 
@@ -89,8 +89,8 @@ module Spree
           end
 
           it "doesn't return duplicates" do
-            expect(Property.currently_sold_by(shop).to_a.count).to eq 1
-            expect(Property.ever_sold_by(shop).to_a.count).to eq 1
+            expect(Property.currently_sold_by(shop).to_a.size).to eq 1
+            expect(Property.ever_sold_by(shop).to_a.size).to eq 1
           end
         end
       end

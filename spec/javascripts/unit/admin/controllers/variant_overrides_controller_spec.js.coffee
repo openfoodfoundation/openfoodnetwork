@@ -98,7 +98,7 @@ describe "VariantOverridesCtrl", ->
       beforeEach ->
         # Ideally, count_on_hand is blank when the variant is on demand. However, this rule is not
         # enforced.
-        variant = {id: 2, on_demand: true, count_on_hand: 20, on_hand: "On demand"}
+        variant = {id: 2, on_demand: true, on_hand: 20, on_hand: "On demand"}
 
       it "clears count_on_hand when variant override uses producer stock settings", ->
         scope.variantOverrides[123][2] = {on_demand: null, count_on_hand: 1}
@@ -162,7 +162,7 @@ describe "VariantOverridesCtrl", ->
       beforeEach ->
         # Ideally, count_on_hand is blank when the variant is on demand. However, this rule is not
         # enforced.
-        variant = {id: 2, on_demand: true, count_on_hand: 20, on_hand: t("on_demand")}
+        variant = {id: 2, on_demand: true, on_hand: 20, on_hand: t("on_demand")}
 
       it "is 'On demand' when variant override uses producer stock settings", ->
         scope.variantOverrides[123][2] = {on_demand: null, count_on_hand: 1}
@@ -183,7 +183,7 @@ describe "VariantOverridesCtrl", ->
       variant = null
 
       beforeEach ->
-        variant = {id: 2, on_demand: false, count_on_hand: 20, on_hand: 20}
+        variant = {id: 2, on_demand: false, on_hand: 20, on_hand: 20}
 
       it "is variant count on hand when variant override uses producer stock settings", ->
         scope.variantOverrides[123][2] = {on_demand: null, count_on_hand: 1}

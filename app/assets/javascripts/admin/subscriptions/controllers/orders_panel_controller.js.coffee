@@ -19,4 +19,4 @@ angular.module("admin.subscriptions").controller "OrdersPanelController", ($scop
     text = if closes_at > moment() then t('js.subscriptions.closes') else t('js.subscriptions.closed')
     "#{text} #{closes_at.fromNow()}"
 
-  $scope.stateText = (state) -> t("spree.order_state.#{state}")
+  $scope.stateText = (state) -> t("js.admin.orders.order_state.#{state}")

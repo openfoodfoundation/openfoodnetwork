@@ -8,7 +8,7 @@ RSpec::Matchers.define :have_flash_message do |message|
     node.has_selector?(".flash", text: message_substring_regex, visible: false)
   end
 
-  failure_message do |actual|
+  failure_message do |_actual|
     "expected to find flash message ##{@message}"
   end
 
@@ -21,7 +21,7 @@ RSpec::Matchers.define :have_flash_message do |message|
     node.has_no_selector?(".flash", text: message_substring_regex, visible: false)
   end
 
-  failure_message_when_negated do |actual|
+  failure_message_when_negated do |_actual|
     "expected not to find flash message ##{@message}"
   end
 

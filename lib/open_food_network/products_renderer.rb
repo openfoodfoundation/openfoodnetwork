@@ -2,7 +2,7 @@ require 'open_food_network/scope_product_to_hub'
 
 module OpenFoodNetwork
   class ProductsRenderer
-    class NoProducts < Exception; end
+    class NoProducts < RuntimeError; end
 
     def initialize(distributor, order_cycle)
       @distributor = distributor
@@ -21,13 +21,11 @@ module OpenFoodNetwork
                                          current_distributor: @distributor,
                                          variants: variants_for_shop_by_id,
                                          master_variants: master_variants_for_shop_by_id,
-                                         enterprise_fee_calculator: enterprise_fee_calculator,
-                                        ).to_json
+                                         enterprise_fee_calculator: enterprise_fee_calculator,).to_json
       else
-        raise NoProducts.new
+        raise NoProducts
       end
     end
-
 
     private
 
@@ -75,10 +73,9 @@ module OpenFoodNetwork
     end
 
     def index_by_product_id(variants)
-      variants.inject({}) do |vs, v|
+      variants.each_with_object({}) do |v, vs|
         vs[v.product_id] ||= []
         vs[v.product_id] << v
-        vs
       end
     end
   end

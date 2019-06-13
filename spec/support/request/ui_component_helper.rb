@@ -50,7 +50,7 @@ module UIComponentHelper
 
   def modal_should_be_open_for(object)
     within ".reveal-modal" do
-      page.should have_content object.name
+      expect(page).to have_content object.name
     end
   end
 
@@ -58,7 +58,7 @@ module UIComponentHelper
     have_content "An email with instructions on resetting your password has been sent!"
   end
 
-  def have_in_cart name
+  def have_in_cart(name)
     show_cart
     within "li.cart" do
       have_content name
@@ -95,7 +95,7 @@ module UIComponentHelper
   end
 
   def open_active_table_row
-    page.find("hub:first-child .active_table_row:first-child").click()
+    page.find("hub:first-child .active_table_row:first-child").click
   end
 
   def expand_active_table_node(name)
@@ -104,6 +104,6 @@ module UIComponentHelper
 
   def follow_active_table_node(name)
     expand_active_table_node(name)
-    page.find(".active_table_node a", text: "#{name}").click
+    page.find(".active_table_node a", text: name.to_s).click
   end
 end

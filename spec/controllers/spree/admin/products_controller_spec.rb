@@ -11,17 +11,16 @@ describe Spree::Admin::ProductsController, type: :controller do
 
       before do
         login_as_enterprise_user [s_managed]
-        spree_post :bulk_update, {
-          "products" => [{"id" => product.id, "name" => "Pine nuts"}]
-        }
+        spree_post :bulk_update,
+                   "products" => [{ "id" => product.id, "name" => "Pine nuts" }]
       end
 
       it "denies access" do
-        response.should redirect_to spree.unauthorized_url
+        expect(response).to redirect_to spree.unauthorized_url
       end
 
       it "does not update any product" do
-        product.reload.name.should_not == "Pine nuts"
+        expect(product.reload.name).not_to eq("Pine nuts")
       end
     end
 
@@ -42,78 +41,111 @@ describe Spree::Admin::ProductsController, type: :controller do
       before { login_as_enterprise_user([producer]) }
 
       it 'fails' do
-        spree_post :bulk_update, {
-          "products" => [
-            {
-              "id" => product.id,
-              "variant_unit" => "weight",
-              "variant_unit_scale" => 1
-            }
-          ]
-        }
+        spree_post :bulk_update,
+                   "products" => [
+                     {
+                       "id" => product.id,
+                       "variant_unit" => "weight",
+                       "variant_unit_scale" => 1
+                     }
+                   ]
 
         expect(response).to have_http_status(400)
       end
 
       it 'does not redirect to bulk_products' do
-        spree_post :bulk_update, {
-          "products" => [
-            {
-              "id" => product.id,
-              "variant_unit" => "weight",
-              "variant_unit_scale" => 1
-            }
-          ]
-        }
+        spree_post :bulk_update,
+                   "products" => [
+                     {
+                       "id" => product.id,
+                       "variant_unit" => "weight",
+                       "variant_unit_scale" => 1
+                     }
+                   ]
 
         expect(response).not_to redirect_to(
           '/api/products/bulk_products?page=1;per_page=500;'
         )
       end
     end
+
+    context 'when passing empty variants_attributes' do
+      let(:producer) { create(:enterprise) }
+      let!(:product) do
+        create(
+          :simple_product,
+          supplier: producer,
+          variant_unit: 'items',
+          variant_unit_scale: nil,
+          variant_unit_name: 'bunches',
+          unit_value: nil,
+          unit_description: 'bunches'
+        )
+      end
+      let!(:another_product) do
+        create(
+          :simple_product,
+          supplier: producer,
+          variant_unit: 'weight',
+          variant_unit_scale: 1000,
+          variant_unit_name: nil
+        )
+      end
+
+      before { login_as_enterprise_user([producer]) }
+
+      it 'does not fail' do
+        spree_post :bulk_update,
+                   "products" => [
+                     {
+                       "id" => another_product.id,
+                       "variants_attributes" => [{}]
+                     },
+                     {
+                       "id" => product.id,
+                       "variants_attributes" => [
+                         {
+                           "on_hand" => 2,
+                           "price" => "5.0",
+                           "unit_value" => 4,
+                           "unit_description" => "",
+                           "display_name" => "name"
+                         }
+                       ]
+                     }
+                   ]
+
+        expect(response).to have_http_status(:found)
+      end
+    end
   end
 
   context "creating a new product" do
-    before { login_as_admin }
+    let(:supplier) { create(:supplier_enterprise) }
+    let(:taxon) { create(:taxon) }
+    let(:shipping_category) { create(:shipping_category) }
+
+    let(:product_attrs) {
+      attributes_for(:product).merge(
+        shipping_category_id: shipping_category.id,
+        supplier_id: supplier.id,
+        primary_taxon_id: taxon.id
+      )
+    }
+
+    before do
+      login_as_admin
+      create(:stock_location)
+    end
 
     it "redirects to products when the user hits 'create'" do
-      s = create(:supplier_enterprise)
-      t = create(:taxon)
-      spree_post :create, {
-        product: {
-          name: "Product1",
-          supplier_id: s.id,
-          price: 5.0,
-          on_hand: 5,
-          variant_unit: 'weight',
-          variant_unit_scale: 1000,
-          unit_value: 10,
-          unit_description: "",
-          primary_taxon_id: t.id
-        },
-        button: 'create'
-      }
-      response.should redirect_to spree.admin_products_path
+      spree_post :create, product: product_attrs, button: 'create'
+      expect(response).to redirect_to spree.admin_products_path
     end
 
     it "redirects to new when the user hits 'add_another'" do
-      s = create(:supplier_enterprise)
-      t = create(:taxon)
-      spree_post :create, {
-        product: {
-          name: "Product1",
-          supplier_id: s.id,
-          price: 5.0,
-          on_hand: 5,
-          variant_unit: 'weight',
-          variant_unit_scale: 1000,
-          unit_value: 10,
-          unit_description: "",
-          primary_taxon_id: t.id
-        },
-        button: 'add_another'
-      }
-      response.should redirect_to "/admin/products/new"
+      spree_post :create, product: product_attrs, button: 'add_another'
+      expect(response).to redirect_to spree.new_admin_product_path
     end
   end
 
@@ -131,14 +163,13 @@ describe Spree::Admin::ProductsController, type: :controller do
 
         context "when a submitted property does not already exist" do
           it "does not create a new property, or product property" do
-            spree_put :update, {
-              id: product,
-              product: {
-                product_properties_attributes: {
-                  '0' => { property_name: 'a different name', value: 'something' }
-                }
-              }
-            }
+            spree_put :update,
+                      id: product,
+                      product: {
+                        product_properties_attributes: {
+                          '0' => { property_name: 'a different name', value: 'something' }
+                        }
+                      }
             expect(Spree::Property.count).to be 1
             expect(Spree::ProductProperty.count).to be 0
             property_names = product.reload.properties.map(&:name)
@@ -148,14 +179,13 @@ describe Spree::Admin::ProductsController, type: :controller do
 
         context "when a submitted property exists" do
           it "adds a product property" do
-            spree_put :update, {
-              id: product,
-              product: {
-                product_properties_attributes: {
-                  '0' => { property_name: 'A nice name', value: 'something' }
-                }
-              }
-            }
+            spree_put :update,
+                      id: product,
+                      product: {
+                        product_properties_attributes: {
+                          '0' => { property_name: 'A nice name', value: 'something' }
+                        }
+                      }
             expect(Spree::Property.count).to be 1
             expect(Spree::ProductProperty.count).to be 1
             property_names = product.reload.properties.map(&:name)

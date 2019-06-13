@@ -22,7 +22,6 @@ feature 'Shops', js: true do
     expect(page).to have_content "Sorry, no results found for xyzzy"
   end
 
-
   describe "listing shops" do
     before do
       visit shops_path
@@ -141,7 +140,7 @@ feature 'Shops', js: true do
     describe "closed shops" do
       it "shows taxons for any order cycle" do
         visit shops_path
-        click_link_and_ensure('Show closed shops', -> { page.has_selector? '.active_table_node'})
+        click_link_and_ensure('Show closed shops', -> { page.has_selector? '.active_table_node' })
         expand_active_table_node shop.name
         expect(page).to have_selector '.fat-taxons', text: 'Closed'
       end
@@ -202,7 +201,6 @@ feature 'Shops', js: true do
       expect(page).to have_selector 'hub.inactive', text: d2.name
     end
   end
-
 
   private
 

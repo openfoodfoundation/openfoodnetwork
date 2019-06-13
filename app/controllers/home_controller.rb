@@ -12,7 +12,5 @@ class HomeController < BaseController
     end
   end
 
-  def sell
-  end
-
+  def sell; end
 end

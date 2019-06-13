@@ -1,21 +1,26 @@
 require 'open_food_network/scope_variant_to_hub'
 
 class OrderCycle < ActiveRecord::Base
-  belongs_to :coordinator, :class_name => 'Enterprise'
+  belongs_to :coordinator, class_name: 'Enterprise'
 
   has_many :coordinator_fee_refs, class_name: 'CoordinatorFee'
   has_many :coordinator_fees, through: :coordinator_fee_refs, source: :enterprise_fee
 
-  has_many :exchanges, :dependent => :destroy
+  has_many :exchanges, dependent: :destroy
+
+  # These scope names are prepended with "cached_" because there are existing accessor methods
+  # :incoming_exchanges and :outgoing_exchanges.
+  has_many :cached_incoming_exchanges, conditions: { incoming: true }, class_name: "Exchange"
+  has_many :cached_outgoing_exchanges, conditions: { incoming: false }, class_name: "Exchange"
+
+  has_many :suppliers, source: :sender, through: :cached_incoming_exchanges, uniq: true
+  has_many :distributors, source: :receiver, through: :cached_outgoing_exchanges, uniq: true
 
   has_and_belongs_to_many :schedules, join_table: 'order_cycle_schedules'
 
-  # TODO: DRY the incoming/outgoing clause used in several cases below
-  # See Spree::Product definition, scopes variants and variants_including_master
-  # This will require these accessors to be renamed
   attr_accessor :incoming_exchanges, :outgoing_exchanges
 
-  validates_presence_of :name, :coordinator_id
+  validates :name, :coordinator_id, presence: true
   validate :orders_close_at_after_orders_open_at?
 
   after_save :refresh_products_cache
@@ -28,8 +33,8 @@ class OrderCycle < ActiveRecord::Base
   scope :upcoming, lambda { where('order_cycles.orders_open_at > ?', Time.zone.now) }
   scope :not_closed, lambda { where('order_cycles.orders_close_at > ? OR order_cycles.orders_close_at IS NULL', Time.zone.now) }
   scope :closed, lambda { where('order_cycles.orders_close_at < ?', Time.zone.now).order("order_cycles.orders_close_at DESC") }
-  scope :undated, where('order_cycles.orders_open_at IS NULL OR orders_close_at IS NULL')
-  scope :dated, where('orders_open_at IS NOT NULL AND orders_close_at IS NOT NULL')
+  scope :undated, -> { where('order_cycles.orders_open_at IS NULL OR orders_close_at IS NULL') }
+  scope :dated, -> { where('orders_open_at IS NOT NULL AND orders_close_at IS NOT NULL') }
 
   scope :soonest_closing,      lambda { active.order('order_cycles.orders_close_at ASC') }
   # TODO This method returns all the closed orders. So maybe we can replace it with :recently_closed.
@@ -37,7 +42,7 @@ class OrderCycle < ActiveRecord::Base
 
   scope :soonest_opening,      lambda { upcoming.order('order_cycles.orders_open_at ASC') }
 
-  scope :by_name, order('name')
+  scope :by_name, -> { order('name') }
 
   scope :with_distributor, lambda { |distributor|
     joins(:exchanges).merge(Exchange.outgoing).merge(Exchange.to_enterprise(distributor))
@@ -114,49 +119,37 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def clone!
-    oc = self.dup
+    oc = dup
     oc.name = I18n.t("models.order_cycle.cloned_order_cycle_name", order_cycle: oc.name)
     oc.orders_open_at = oc.orders_close_at = nil
-    oc.coordinator_fee_ids = self.coordinator_fee_ids
-    oc.preferred_product_selection_from_coordinator_inventory_only = self.preferred_product_selection_from_coordinator_inventory_only
+    oc.coordinator_fee_ids = coordinator_fee_ids
+    oc.preferred_product_selection_from_coordinator_inventory_only = preferred_product_selection_from_coordinator_inventory_only
     oc.save!
-    self.exchanges.each { |e| e.clone!(oc) }
+    exchanges.each { |e| e.clone!(oc) }
     oc.reload
-  end
-
-  def suppliers
-    enterprise_ids = self.exchanges.incoming.pluck :sender_id
-    Enterprise.where('enterprises.id IN (?)', enterprise_ids)
-  end
-
-  def distributors
-    enterprise_ids = self.exchanges.outgoing.pluck :receiver_id
-    Enterprise.where('enterprises.id IN (?)', enterprise_ids)
   end
 
   def variants
     Spree::Variant.
       joins(:exchanges).
       merge(Exchange.in_order_cycle(self)).
-      not_deleted.
       select('DISTINCT spree_variants.*').
       to_a # http://stackoverflow.com/q/15110166
   end
 
   def supplied_variants
-    self.exchanges.incoming.map(&:variants).flatten.uniq.reject(&:deleted?)
+    exchanges.incoming.map(&:variants).flatten.uniq.reject(&:deleted?)
   end
 
   def distributed_variants
-    self.exchanges.outgoing.map(&:variants).flatten.uniq.reject(&:deleted?)
+    exchanges.outgoing.map(&:variants).flatten.uniq.reject(&:deleted?)
   end
 
   def variants_distributed_by(distributor)
-    return Spree::Variant.where("1=0") unless distributor.present?
+    return Spree::Variant.where("1=0") if distributor.blank?
     Spree::Variant.
-      not_deleted.
-      merge(distributor.inventory_variants).
       joins(:exchanges).
+      merge(distributor.inventory_variants).
       merge(Exchange.in_order_cycle(self)).
       merge(Exchange.outgoing).
       merge(Exchange.to_enterprise(distributor))
@@ -167,15 +160,15 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def products
-    self.variants.map(&:product).uniq
+    variants.map(&:product).uniq
   end
 
   def has_distributor?(distributor)
-    self.distributors.include? distributor
+    distributors.include? distributor
   end
 
   def has_variant?(variant)
-    self.variants.include? variant
+    variants.include? variant
   end
 
   def dated?
@@ -183,20 +176,20 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def undated?
-    self.orders_open_at.nil? || self.orders_close_at.nil?
+    orders_open_at.nil? || orders_close_at.nil?
   end
 
   def upcoming?
-    self.orders_open_at && Time.zone.now < self.orders_open_at
+    orders_open_at && Time.zone.now < orders_open_at
   end
 
   def open?
-    self.orders_open_at && self.orders_close_at &&
-      Time.zone.now > self.orders_open_at && Time.zone.now < self.orders_close_at
+    orders_open_at && orders_close_at &&
+      Time.zone.now > orders_open_at && Time.zone.now < orders_close_at
   end
 
   def closed?
-    self.orders_close_at && Time.zone.now > self.orders_close_at
+    orders_close_at && Time.zone.now > orders_close_at
   end
 
   def exchange_for_distributor(distributor)

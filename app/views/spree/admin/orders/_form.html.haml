@@ -1,68 +1,29 @@
-%div
+%div{"data-hook" => "admin_order_form_fields"}
   - if @line_item.try(:errors).present?
-    = render partial: 'spree/shared/error_messages', locals: { target: @line_item }
+    = render :partial => 'spree/shared/error_messages', :locals => { :target => @line_item }
+
+  = render :partial => "spree/admin/orders/shipment", :collection => @order.shipments, :locals => { :order => order }
+
+  = render :partial => "spree/admin/orders/_form/adjustments", :locals => { :adjustments => @order.price_adjustments, :title => t(".line_item_adjustments")}
+  = render :partial => "spree/admin/orders/_form/adjustments", :locals => { :adjustments => order_adjustments_for_display(@order), :title => t(".order_adjustments")}
+
+  - if order.line_items.exists?
+    %fieldset#order-total.no-border-bottom{"data-hook" => "order_details_total"}
+      %legend= t(".order_total")
+      %span.order-total= order.display_total
+
   = form_for @order, url: admin_order_url(@order), method: :put do |f|
-    %fieldset.no-border-top
-      = f.hidden_field :number
-      %table.index{"ng-show" => "distributionChosen()"}
-        %colgroup
-          %col{style: "width: 49%;"}/
-          %col{style: "width: 14%;"}/
-          %col{style: "width: 10%;"}/
-          %col{style: "width: 14%;"}/
-          %col{style: "width: 8%;"}/
-        %thead#line-items
-          %tr
-            %th
-              = t(:item_description)
-            %th.price
-              = t(:price)
-            %th.qty
-              = t(:qty)
-            %th.total
-              %span
-                = t(:total)
-            %th.orders-actions.actions
-        %tbody
-          = f.fields_for :line_items do |li_form|
-            = render partial: 'spree/admin/orders/line_item', locals: { f: li_form }
-        %tbody#subtotal.no-border-top
-          %tr#subtotal-row
-            %td{colspan: "3"}
-              %b
-                = t(:subtotal)
-                \:
-            %td.total.align-center
-              %span
-                = @order.display_item_total.to_html
-            %td.actions
-        %tbody#order-charges.no-border-top
-          - @order.adjustments.eligible.each do |adjustment|
-            %tr
-              %td{colspan: "3"}
-                %strong
-                  = adjustment.label
-                  \:
-              %td.total.align-center
-                %span= adjustment.display_amount.to_html
-              %td.actions
-        %tbody#order-total.grand-total.no-border-top
-          %tr
-            %td{colspan: "3"}
-              %b
-                = t(:order_total)
-                \:
-            %td.total.align-center
-              %span#order_total
-                = @order.display_total.to_html
-            %td.actions
+    = render partial: 'spree/admin/orders/_form/distribution_fields'
 
-      = render partial: 'spree/admin/orders/_form/distribution_fields'
+    .filter-actions.actions{"ng-show" => "distributionChosen()"}
+      = button t(:update_and_recalculate_fees), 'icon-refresh'
+      %span.or
+        = t(:or)
+      = link_to_with_icon 'button icon-arrow-left', t(:back), admin_orders_url
 
-      .filter-actions.actions{"ng-show" => "distributionChosen()"}
-        = button t(:update_and_recalculate_fees), 'icon-refresh'
-        %span.or
-          = t(:or)
-        = link_to_with_icon 'button icon-arrow-left', t(:back), admin_orders_url
   = javascript_tag do
-    = render partial: 'spree/admin/shared/update_order_state', handlers: [:js]
+    var order_number = '#{@order.number}';
+    var shipments = [];
+    - @order.shipments.each do |shipment|
+      shipments.push(#{shipment.to_json(:root => false, :include => [:inventory_units, :stock_location]).html_safe});
+    = render :partial => 'spree/admin/shared/update_order_state', :handlers => [:js]

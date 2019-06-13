@@ -5,14 +5,13 @@ describe TagRule::FilterShippingMethods, type: :model do
 
   describe "determining whether tags match for a given shipping method" do
     context "when the shipping method is nil" do
-
       it "returns false" do
         expect(tag_rule.send(:tags_match?, nil)).to be false
       end
     end
 
     context "when the shipping method is not nil" do
-      let(:shipping_method) { create(:shipping_method, tag_list: ["member","local","volunteer"]) }
+      let(:shipping_method) { create(:shipping_method, tag_list: ["member", "local", "volunteer"]) }
 
       context "when the rule has no preferred shipping method tags specified" do
         before { allow(tag_rule).to receive(:preferred_shipping_method_tags) { "" } }

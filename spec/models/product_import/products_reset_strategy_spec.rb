@@ -5,54 +5,47 @@ describe ProductImport::ProductsResetStrategy do
 
   describe '#reset' do
     let(:supplier_ids) { enterprise.id }
-    let(:enterprise) { variant.product.supplier }
-    let(:variant) { create(:variant, count_on_hand: 2) }
+    let(:product) { create(:product) }
+    let(:enterprise) { product.supplier }
+    let(:variant) { product.variants.first }
+
+    before { variant.on_hand = 2 }
 
     context 'when there are excluded_items_ids' do
       let(:excluded_items_ids) { [variant.id] }
 
       context 'and supplier_ids is []' do
         let(:supplier_ids) { [] }
-        let(:relation) do
-          instance_double(ActiveRecord::Relation, update_all: true)
-        end
 
-        before { allow(VariantOverride).to receive(:where) { relation } }
-
-        it 'does not update any DB record' do
+        it 'does not reset the variant.on_hand' do
           products_reset.reset(supplier_ids)
-          expect(relation).not_to have_received(:update_all)
+          expect(variant.reload.on_hand).to eq(2)
         end
       end
 
       context 'and supplier_ids is nil' do
         let(:supplier_ids) { nil }
-        let(:relation) do
-          instance_double(ActiveRecord::Relation, update_all: true)
-        end
 
-        before { allow(VariantOverride).to receive(:where) { relation } }
-
-        it 'does not update any DB record' do
+        it 'does not reset the variant.on_hand' do
           products_reset.reset(supplier_ids)
-          expect(relation).not_to have_received(:update_all)
+          expect(variant.reload.on_hand).to eq(2)
         end
       end
 
       context 'and supplier_ids is set' do
-        it 'does not update the count_on_hand of the excluded items' do
+        it 'does not update the on_hand of the excluded items' do
           products_reset.reset(supplier_ids)
-          expect(variant.reload.count_on_hand).to eq(2)
+          expect(variant.reload.on_hand).to eq(2)
         end
 
-        it 'updates the count_on_hand of the non-excluded items' do
+        it 'updates the on_hand of the non-excluded items' do
           non_excluded_variant = create(
             :variant,
-            count_on_hand: 3,
             product: variant.product
           )
+          non_excluded_variant.on_hand = 3
           products_reset.reset(supplier_ids)
-          expect(non_excluded_variant.reload.count_on_hand).to eq(0)
+          expect(non_excluded_variant.reload.on_hand).to eq(0)
         end
       end
     end
@@ -62,36 +55,37 @@ describe ProductImport::ProductsResetStrategy do
 
       context 'and supplier_ids is []' do
         let(:supplier_ids) { [] }
-        let(:relation) do
-          instance_double(ActiveRecord::Relation, update_all: true)
-        end
 
-        before { allow(VariantOverride).to receive(:where) { relation } }
-
-        it 'does not update any DB record' do
+        it 'does not reset the variant.on_hand' do
           products_reset.reset(supplier_ids)
-          expect(relation).not_to have_received(:update_all)
+          expect(variant.reload.on_hand).to eq(2)
         end
       end
 
       context 'and supplier_ids is nil' do
         let(:supplier_ids) { nil }
-        let(:relation) do
-          instance_double(ActiveRecord::Relation, update_all: true)
-        end
 
-        before { allow(VariantOverride).to receive(:where) { relation } }
-
-        it 'does not update any DB record' do
+        it 'does not reset the variant.on_hand' do
           products_reset.reset(supplier_ids)
-          expect(relation).not_to have_received(:update_all)
+          expect(variant.reload.on_hand).to eq(2)
         end
       end
 
-      context 'and supplier_ids is nil' do
-        it 'sets all count_on_hand to 0' do
-          products_reset.reset(supplier_ids)
-          expect(variant.reload.count_on_hand).to eq(0)
+      context 'and supplier_ids is not nil' do
+        it 'sets all on_hand to 0' do
+          updated_records_count = products_reset.reset(supplier_ids)
+          expect(variant.reload.on_hand).to eq(0)
+          expect(updated_records_count).to eq(1)
+        end
+
+        context 'and there is an unresetable variant' do
+          before do
+            variant.stock_items = [] # this makes variant.on_hand raise an error
+          end
+
+          it 'returns correct number of resetted variants' do
+            expect { products_reset.reset(supplier_ids) }.to raise_error RuntimeError
+          end
         end
       end
     end
@@ -101,36 +95,25 @@ describe ProductImport::ProductsResetStrategy do
 
       context 'and supplier_ids is []' do
         let(:supplier_ids) { [] }
-        let(:relation) do
-          instance_double(ActiveRecord::Relation, update_all: true)
-        end
 
-        before { allow(VariantOverride).to receive(:where) { relation } }
-
-        it 'does not update any DB record' do
+        it 'does not reset the variant.on_hand' do
           products_reset.reset(supplier_ids)
-          expect(relation).not_to have_received(:update_all)
+          expect(variant.reload.on_hand).to eq(2)
         end
       end
 
       context 'and supplier_ids is nil' do
         let(:supplier_ids) { nil }
-        let(:relation) do
-          instance_double(ActiveRecord::Relation, update_all: true)
-        end
-
-        before { allow(VariantOverride).to receive(:where) { relation } }
-
-        it 'does not update any DB record' do
+        it 'does not reset the variant.on_hand' do
           products_reset.reset(supplier_ids)
-          expect(relation).not_to have_received(:update_all)
+          expect(variant.reload.on_hand).to eq(2)
         end
       end
 
       context 'and supplier_ids is nil' do
-        it 'sets all count_on_hand to 0' do
+        it 'sets all on_hand to 0' do
           products_reset.reset(supplier_ids)
-          expect(variant.reload.count_on_hand).to eq(0)
+          expect(variant.reload.on_hand).to eq(0)
         end
       end
     end

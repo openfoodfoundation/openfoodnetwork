@@ -50,59 +50,59 @@ module OpenFoodNetwork
       if is_by_customer?
         [
           { group_by: proc { |line_item| line_item.order.distributor },
-          sort_by: proc { |distributor| distributor.name } },
+            sort_by: proc { |distributor| distributor.name } },
           { group_by: proc { |line_item| line_item.order },
-          sort_by: proc { |order| order.bill_address.lastname },
-          summary_columns: [ proc { |line_items| "" },
-            proc { |line_items| "" },
-            proc { |line_items| "" },
-            proc { |line_items| "" },
-            proc { |line_items| "" },
-            proc { |line_items| I18n.t('admin.reports.total_items') },
-            proc { |line_items| "" },
-            proc { |line_items| line_items.sum { |li| li.quantity } },
-            proc { |line_items| "" } ] },
+            sort_by: proc { |order| order.bill_address.lastname },
+            summary_columns: [proc { |_line_items| "" },
+                              proc { |_line_items| "" },
+                              proc { |_line_items| "" },
+                              proc { |_line_items| "" },
+                              proc { |_line_items| "" },
+                              proc { |_line_items| I18n.t('admin.reports.total_items') },
+                              proc { |_line_items| "" },
+                              proc { |line_items| line_items.sum(&:quantity) },
+                              proc { |_line_items| "" }] },
           { group_by: proc { |line_item| line_item.product.supplier },
             sort_by: proc { |supplier| supplier.name } },
           { group_by: proc { |line_item| line_item.product },
-          sort_by: proc { |product| product.name } },
+            sort_by: proc { |product| product.name } },
           { group_by: proc { |line_item| line_item.full_name },
             sort_by: proc { |full_name| full_name } }
         ]
       else
-        [ { group_by: proc { |line_item| line_item.order.distributor },
-          sort_by: proc { |distributor| distributor.name } },
-          { group_by: proc { |line_item| line_item.product.supplier },
-            sort_by: proc { |supplier| supplier.name },
-            summary_columns: [ proc { |line_items| "" },
-              proc { |line_items| "" },
-              proc { |line_items| "" },
-              proc { |line_items| "" },
-              proc { |line_items| "" },
-              proc { |line_items| I18n.t('admin.reports.total_items') },
-              proc { |line_items| "" },
-              proc { |line_items| line_items.sum { |li| li.quantity } },
-              proc { |line_items| "" } ] },
-          { group_by: proc { |line_item| line_item.product },
-          sort_by: proc { |product| product.name } },
-          { group_by: proc { |line_item| line_item.full_name },
-          sort_by: proc { |full_name| full_name } },
-          { group_by: proc { |line_item| line_item.order },
-          sort_by: proc { |order| order.bill_address.lastname } } ]
+        [{ group_by: proc { |line_item| line_item.order.distributor },
+           sort_by: proc { |distributor| distributor.name } },
+         { group_by: proc { |line_item| line_item.product.supplier },
+           sort_by: proc { |supplier| supplier.name },
+           summary_columns: [proc { |_line_items| "" },
+                             proc { |_line_items| "" },
+                             proc { |_line_items| "" },
+                             proc { |_line_items| "" },
+                             proc { |_line_items| "" },
+                             proc { |_line_items| I18n.t('admin.reports.total_items') },
+                             proc { |_line_items| "" },
+                             proc { |line_items| line_items.sum(&:quantity) },
+                             proc { |_line_items| "" }] },
+         { group_by: proc { |line_item| line_item.product },
+           sort_by: proc { |product| product.name } },
+         { group_by: proc { |line_item| line_item.full_name },
+           sort_by: proc { |full_name| full_name } },
+         { group_by: proc { |line_item| line_item.order },
+           sort_by: proc { |order| order.bill_address.lastname } }]
       end
     end
 
     def columns
       if is_by_customer?
-        [ proc { |line_items| line_items.first.order.distributor.name },
-          proc { |line_items| customer_code(line_items.first.order.email) },
-          proc { |line_items| line_items.first.order.bill_address.firstname },
-          proc { |line_items| line_items.first.order.bill_address.lastname },
-          proc { |line_items| line_items.first.product.supplier.name },
-          proc { |line_items| line_items.first.product.name },
-          proc { |line_items| line_items.first.full_name },
-          proc { |line_items| line_items.sum { |li| li.quantity } },
-          proc { |line_items| is_temperature_controlled?(line_items.first) }]
+        [proc { |line_items| line_items.first.order.distributor.name },
+         proc { |line_items| customer_code(line_items.first.order.email) },
+         proc { |line_items| line_items.first.order.bill_address.firstname },
+         proc { |line_items| line_items.first.order.bill_address.lastname },
+         proc { |line_items| line_items.first.product.supplier.name },
+         proc { |line_items| line_items.first.product.name },
+         proc { |line_items| line_items.first.full_name },
+         proc { |line_items| line_items.sum(&:quantity) },
+         proc { |line_items| is_temperature_controlled?(line_items.first) }]
       else
         [
           proc { |line_items| line_items.first.order.distributor.name },
@@ -112,7 +112,7 @@ module OpenFoodNetwork
           proc { |line_items| line_items.first.order.bill_address.lastname },
           proc { |line_items| line_items.first.product.name },
           proc { |line_items| line_items.first.full_name },
-          proc { |line_items| line_items.sum { |li| li.quantity } },
+          proc { |line_items| line_items.sum(&:quantity) },
           proc { |line_items| is_temperature_controlled?(line_items.first) }
         ]
       end

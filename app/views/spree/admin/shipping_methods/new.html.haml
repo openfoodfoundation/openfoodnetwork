@@ -1,0 +1,16 @@
+- content_for :page_title do
+  = t('.new_shipping_method')
+- content_for :page_actions do
+  %li
+    = button_link_to t('.back_to_shipping_methods_list'), spree.admin_shipping_methods_path, icon: 'icon-arrow-left'
+%div
+  = render partial: 'spree/shared/error_messages', locals: { target: @shipping_method }
+%div
+  = form_for [:admin, @shipping_method] do |f|
+    %fieldset.no-border-top
+      = render partial: 'form', locals: { f: f }
+      .one.column &nbsp;
+      = render partial: 'spree/admin/shared/hubs_sidebar', locals: { f: f, klass: :shipping_method }
+      .clear
+      %div
+        = render partial: 'spree/admin/shared/new_resource_links'

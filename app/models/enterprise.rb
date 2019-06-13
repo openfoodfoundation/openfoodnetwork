@@ -1,5 +1,5 @@
 class Enterprise < ActiveRecord::Base
-  SELLS = %w(unspecified none own any)
+  SELLS = %w(unspecified none own any).freeze
   ENTERPRISE_SEARCH_RADIUS = 100
 
   preference :shopfront_message, :text, default: ""
@@ -17,47 +17,66 @@ class Enterprise < ActiveRecord::Base
 
   self.inheritance_column = nil
 
-  acts_as_gmappable :process_geocoding => false
+  acts_as_gmappable process_geocoding: false
 
-  has_many :relationships_as_parent, class_name: 'EnterpriseRelationship', foreign_key: 'parent_id', dependent: :destroy
-  has_many :relationships_as_child, class_name: 'EnterpriseRelationship', foreign_key: 'child_id', dependent: :destroy
+  has_many :relationships_as_parent, class_name: 'EnterpriseRelationship',
+                                     foreign_key: 'parent_id',
+                                     dependent: :destroy
+  has_many :relationships_as_child, class_name: 'EnterpriseRelationship',
+                                    foreign_key: 'child_id',
+                                    dependent: :destroy
   has_and_belongs_to_many :groups, class_name: 'EnterpriseGroup'
   has_many :producer_properties, foreign_key: 'producer_id'
   has_many :properties, through: :producer_properties
-  has_many :supplied_products, :class_name => 'Spree::Product', :foreign_key => 'supplier_id', :dependent => :destroy
-  has_many :distributed_orders, :class_name => 'Spree::Order', :foreign_key => 'distributor_id'
-  belongs_to :address, :class_name => 'Spree::Address'
+  has_many :supplied_products, class_name: 'Spree::Product',
+                               foreign_key: 'supplier_id',
+                               dependent: :destroy
+  has_many :distributed_orders, class_name: 'Spree::Order', foreign_key: 'distributor_id'
+  belongs_to :address, class_name: 'Spree::Address'
   has_many :enterprise_fees
-  has_many :enterprise_roles, :dependent => :destroy
+  has_many :enterprise_roles, dependent: :destroy
   has_many :users, through: :enterprise_roles
-  belongs_to :owner, class_name: 'Spree::User', foreign_key: :owner_id, inverse_of: :owned_enterprises
-  has_and_belongs_to_many :payment_methods, join_table: 'distributors_payment_methods', class_name: 'Spree::PaymentMethod', foreign_key: 'distributor_id'
+  belongs_to :owner, class_name: 'Spree::User',
+                     foreign_key: :owner_id,
+                     inverse_of: :owned_enterprises
+  has_and_belongs_to_many :payment_methods, join_table: 'distributors_payment_methods',
+                                            class_name: 'Spree::PaymentMethod',
+                                            foreign_key: 'distributor_id'
   has_many :distributor_shipping_methods, foreign_key: :distributor_id
   has_many :shipping_methods, through: :distributor_shipping_methods
   has_many :customers
-  has_many :billable_periods
   has_many :inventory_items
   has_many :tag_rules
   has_one :stripe_account, dependent: :destroy
 
-  delegate :latitude, :longitude, :city, :state_name, :to => :address
+  delegate :latitude, :longitude, :city, :state_name, to: :address
 
   accepts_nested_attributes_for :address
-  accepts_nested_attributes_for :producer_properties, allow_destroy: true, reject_if: lambda { |pp| pp[:property_name].blank? }
-  accepts_nested_attributes_for :tag_rules, allow_destroy: true, reject_if: lambda { |tag_rule| tag_rule[:preferred_customer_tags].blank? }
+  accepts_nested_attributes_for :producer_properties, allow_destroy: true,
+                                                      reject_if: lambda { |pp|
+                                                        pp[:property_name].blank?
+                                                      }
+  accepts_nested_attributes_for :tag_rules, allow_destroy: true,
+                                            reject_if: lambda { |tag_rule|
+                                              tag_rule[:preferred_customer_tags].blank?
+                                            }
 
   has_attached_file :logo,
-    styles: { medium: "300x300>", small: "180x180>", thumb: "100x100>" },
-    url:  '/images/enterprises/logos/:id/:style/:basename.:extension',
-    path: 'public/images/enterprises/logos/:id/:style/:basename.:extension'
+                    styles: { medium: "300x300>", small: "180x180>", thumb: "100x100>" },
+                    url:  '/images/enterprises/logos/:id/:style/:basename.:extension',
+                    path: 'public/images/enterprises/logos/:id/:style/:basename.:extension'
 
   has_attached_file :promo_image,
-    styles: { large: ["1200x260#", :jpg], medium: ["720x156#", :jpg],  thumb: ["100x100>", :jpg] },
-    url:  '/images/enterprises/promo_images/:id/:style/:basename.:extension',
-    path: 'public/images/enterprises/promo_images/:id/:style/:basename.:extension'
+                    styles: {
+                      large: ["1200x260#", :jpg],
+                      medium: ["720x156#", :jpg],
+                      thumb: ["100x100>", :jpg]
+                    },
+                    url:  '/images/enterprises/promo_images/:id/:style/:basename.:extension',
+                    path: 'public/images/enterprises/promo_images/:id/:style/:basename.:extension'
 
-  validates_attachment_content_type :logo, :content_type => /\Aimage\/.*\Z/
-  validates_attachment_content_type :promo_image, :content_type => /\Aimage\/.*\Z/
+  validates_attachment_content_type :logo, content_type: /\Aimage\/.*\Z/
+  validates_attachment_content_type :promo_image, content_type: /\Aimage\/.*\Z/
 
   include Spree::Core::S3Support
   supports_s3 :logo
@@ -65,13 +84,13 @@ class Enterprise < ActiveRecord::Base
 
   validates :name, presence: true
   validate :name_is_unique
-  validates :sells, presence: true, inclusion: {in: SELLS}
+  validates :sells, presence: true, inclusion: { in: SELLS }
   validates :address, presence: true, associated: true
-  validates_presence_of :owner
+  validates :owner, presence: true
   validates :permalink, uniqueness: true, presence: true
   validate :shopfront_taxons
   validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
-  validates_length_of :description, :maximum => 255
+  validates :description, length: { maximum: 255 }
 
   before_validation :initialize_permalink, if: lambda { permalink.nil? }
   before_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
@@ -85,9 +104,9 @@ class Enterprise < ActiveRecord::Base
 
   after_rollback :restore_permalink
 
-  scope :by_name, order('name')
-  scope :visible, where(visible: true)
-  scope :activated, where("sells != 'unspecified'")
+  scope :by_name, -> { order('name') }
+  scope :visible, -> { where(visible: true) }
+  scope :activated, -> { where("sells != 'unspecified'") }
   scope :ready_for_checkout, lambda {
     joins(:shipping_methods).
       joins(:payment_methods).
@@ -95,40 +114,50 @@ class Enterprise < ActiveRecord::Base
       select('DISTINCT enterprises.*')
   }
   scope :not_ready_for_checkout, lambda {
-    # When ready_for_checkout is empty, ActiveRecord generates the SQL:
-    # id NOT IN (NULL)
-    # I would have expected this to return all rows, but instead it returns none. To
-    # work around this, we use the "OR ?=0" clause to return all rows when there are
-    # no enterprises ready for checkout.
-    where('id NOT IN (?) OR ?=0',
-          Enterprise.ready_for_checkout,
-          Enterprise.ready_for_checkout.count)
+    # When ready_for_checkout is empty, return all rows when there are no enterprises ready for
+    # checkout.
+    ready_enterprises = Enterprise.ready_for_checkout
+    if ready_enterprises.present?
+      where("id NOT IN (?)", ready_enterprises)
+    else
+      where("TRUE")
+    end
   }
-  scope :is_primary_producer, where(:is_primary_producer => true)
-  scope :is_distributor, where('sells != ?', 'none')
-  scope :is_hub, where(sells: 'any')
+  scope :is_primary_producer, -> { where(is_primary_producer: true) }
+  scope :is_distributor, -> { where('sells != ?', 'none') }
+  scope :is_hub, -> { where(sells: 'any') }
   scope :supplying_variant_in, lambda { |variants|
-    joins(:supplied_products => :variants_including_master).
+    joins(supplied_products: :variants_including_master).
       where('spree_variants.id IN (?)', variants).
       select('DISTINCT enterprises.*')
   }
 
-  scope :with_order_cycles_as_supplier_outer,
-    joins("LEFT OUTER JOIN exchanges ON (exchanges.sender_id = enterprises.id AND exchanges.incoming = 't')").
-    joins('LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)')
+  scope :with_order_cycles_as_supplier_outer, -> {
+    joins("
+      LEFT OUTER JOIN exchanges
+        ON (exchanges.sender_id = enterprises.id AND exchanges.incoming = 't')").
+      joins("LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)")
+  }
 
-  scope :with_order_cycles_as_distributor_outer,
-    joins("LEFT OUTER JOIN exchanges ON (exchanges.receiver_id = enterprises.id AND exchanges.incoming = 'f')").
-    joins('LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)')
+  scope :with_order_cycles_as_distributor_outer, -> {
+    joins("
+      LEFT OUTER JOIN exchanges
+        ON (exchanges.receiver_id = enterprises.id AND exchanges.incoming = 'f')").
+      joins("LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)")
+  }
 
-  scope :with_order_cycles_outer,
-    joins("LEFT OUTER JOIN exchanges ON (exchanges.receiver_id = enterprises.id OR exchanges.sender_id = enterprises.id)").
-    joins('LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)')
+  scope :with_order_cycles_outer, -> {
+    joins("
+      LEFT OUTER JOIN exchanges
+        ON (exchanges.receiver_id = enterprises.id OR exchanges.sender_id = enterprises.id)").
+      joins("LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)")
+  }
 
-  scope :with_order_cycles_and_exchange_variants_outer,
+  scope :with_order_cycles_and_exchange_variants_outer, -> {
     with_order_cycles_as_distributor_outer.
-    joins('LEFT OUTER JOIN exchange_variants ON (exchange_variants.exchange_id = exchanges.id)').
-    joins('LEFT OUTER JOIN spree_variants ON (spree_variants.id = exchange_variants.variant_id)')
+      joins("LEFT OUTER JOIN exchange_variants ON (exchange_variants.exchange_id = exchanges.id)").
+      joins("LEFT OUTER JOIN spree_variants ON (spree_variants.id = exchange_variants.variant_id)")
+  }
 
   scope :distributors_with_active_order_cycles, lambda {
     with_order_cycles_as_distributor_outer.
@@ -172,7 +201,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def contact
-    contact = users.where(enterprise_roles: {receives_notifications: true}).first
+    contact = users.where(enterprise_roles: { receives_notifications: true }).first
     contact || owner
   end
 
@@ -186,8 +215,12 @@ class Enterprise < ActiveRecord::Base
 
   def set_producer_property(property_name, property_value)
     transaction do
-      property = Spree::Property.where(name: property_name).first_or_create!(presentation: property_name)
-      producer_property = ProducerProperty.where(producer_id: id, property_id: property.id).first_or_initialize
+      property = Spree::Property.
+        where(name: property_name).
+        first_or_create!(presentation: property_name)
+      producer_property = ProducerProperty.
+        where(producer_id: id, property_id: property.id).
+        first_or_initialize
       producer_property.value = property_value
       producer_property.save!
     end
@@ -203,7 +236,7 @@ class Enterprise < ActiveRecord::Base
         (SELECT child_id FROM enterprise_relationships WHERE enterprise_relationships.parent_id=?)
       OR enterprises.id IN
         (SELECT parent_id FROM enterprise_relationships WHERE enterprise_relationships.child_id=?)
-    ", self.id, self.id)
+    ", id, id)
   end
 
   def plus_relatives_and_oc_producers(order_cycles)
@@ -216,23 +249,23 @@ class Enterprise < ActiveRecord::Base
   end
 
   def distributors
-    self.relatives_including_self.is_distributor
+    relatives_including_self.is_distributor
   end
 
   def suppliers
-    self.relatives_including_self.is_primary_producer
+    relatives_including_self.is_primary_producer
   end
 
   def website
-    strip_url read_attribute(:website)
+    strip_url self[:website]
   end
 
   def facebook
-    strip_url read_attribute(:facebook)
+    strip_url self[:facebook]
   end
 
   def linkedin
-    strip_url read_attribute(:linkedin)
+    strip_url self[:linkedin]
   end
 
   def inventory_variants
@@ -244,22 +277,25 @@ class Enterprise < ActiveRecord::Base
   end
 
   def distributed_variants
-    Spree::Variant.joins(:product).merge(Spree::Product.in_distributor(self)).select('spree_variants.*')
+    Spree::Variant.
+      joins(:product).
+      merge(Spree::Product.in_distributor(self)).
+      select('spree_variants.*')
   end
 
   def is_distributor
-    self.sells != "none"
+    sells != "none"
   end
 
   def is_hub
-    self.sells == 'any'
+    sells == 'any'
   end
 
   # Simplify enterprise categories for frontend logic and icons, and maybe other things.
   def category
     # Make this crazy logic human readable so we can argue about it sanely.
-    cat = self.is_primary_producer ? "producer_" : "non_producer_"
-    cat << "sells_" + self.sells
+    cat = is_primary_producer ? "producer_" : "non_producer_"
+    cat << "sells_" + sells
 
     # Map backend cases to front end cases.
     case cat
@@ -272,7 +308,7 @@ class Enterprise < ActiveRecord::Base
     when "non_producer_sells_any"
       :hub # Hub selling others products in order cycles.
     when "non_producer_sells_own"
-      :hub # Wholesaler selling through own shopfront? Does this need a separate name? Should it exist?
+      :hub # Wholesaler selling through own shopfront? Does this need a separate name or even exist?
     when "non_producer_sells_none"
       :hub_profile # Hub selling outside the system.
     end
@@ -301,21 +337,22 @@ class Enterprise < ActiveRecord::Base
   def self.find_available_permalink(test_permalink)
     test_permalink = test_permalink.parameterize
     test_permalink = "my-enterprise" if test_permalink.blank?
-    existing = Enterprise.select(:permalink).order(:permalink).where("permalink LIKE ?", "#{test_permalink}%").map(&:permalink)
-    unless existing.include?(test_permalink)
-      test_permalink
-    else
+    existing = Enterprise.
+      select(:permalink).
+      order(:permalink).
+      where("permalink LIKE ?", "#{test_permalink}%").
+      map(&:permalink)
+
+    if existing.include?(test_permalink)
       used_indices = existing.map do |p|
         p.slice!(/^#{test_permalink}/)
         p.match(/^\d+$/).to_s.to_i
       end.select{ |p| p }
       options = (1..existing.length).to_a - used_indices
       test_permalink + options.first.to_s
+    else
+      test_permalink
     end
-  end
-
-  def shop_trial_expiry
-    shop_trial_start_date.andand + Spree::Config[:shop_trial_length_days].days
   end
 
   def can_invoice?
@@ -334,13 +371,11 @@ class Enterprise < ActiveRecord::Base
     dups = Enterprise.where(name: name)
     dups = dups.where('id != ?', id) unless new_record?
 
-    if dups.any?
-      errors.add :name, I18n.t(:enterprise_name_error, email: dups.first.owner.email)
-    end
+    errors.add :name, I18n.t(:enterprise_name_error, email: dups.first.owner.email) if dups.any?
   end
 
   def send_welcome_email
-    Delayed::Job.enqueue WelcomeEnterpriseJob.new(self.id)
+    Delayed::Job.enqueue WelcomeEnterpriseJob.new(id)
   end
 
   def strip_url(url)
@@ -361,12 +396,13 @@ class Enterprise < ActiveRecord::Base
 
   def enforce_ownership_limit
     unless owner.can_own_more_enterprises?
-      errors.add(:owner, I18n.t(:enterprise_owner_error, email: owner.email, enterprise_limit: owner.enterprise_limit ))
+      errors.add(:owner, I18n.t(:enterprise_owner_error, email: owner.email,
+                                                         enterprise_limit: owner.enterprise_limit ))
     end
   end
 
   def set_default_contact
-    update_contact self.owner_id
+    update_contact owner_id
   end
 
   def relate_to_owners_enterprises
@@ -413,8 +449,8 @@ class Enterprise < ActiveRecord::Base
   end
 
   def touch_distributors
-    Enterprise.distributing_products(self.supplied_products).
-      where('enterprises.id != ?', self.id).
-      each(&:touch)
+    Enterprise.distributing_products(supplied_products).
+      where('enterprises.id != ?', id).
+      find_each(&:touch)
   end
 end

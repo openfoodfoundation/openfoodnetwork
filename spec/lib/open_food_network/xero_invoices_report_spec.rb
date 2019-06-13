@@ -31,7 +31,6 @@ module OpenFoodNetwork
         allow(report).to receive(:shipping_summary_rows) { ['shipping'] }
         allow(report).to receive(:payment_summary_rows)  { ['payment'] }
         allow(report).to receive(:admin_adjustment_summary_rows) { ['admin'] }
-        allow(order).to receive(:account_invoice?) { false }
       end
 
       it "displays produce summary rows when summary report" do
@@ -45,21 +44,13 @@ module OpenFoodNetwork
       end
 
       it "displays fee summary rows when summary report" do
-        allow(report).to receive(:detail?)         { false }
-        allow(order).to receive(:account_invoice?) { true }
+        allow(report).to receive(:detail?) { false }
         expect(summary_rows).to include 'fee'
       end
 
-      it "displays fee summary rows when this is not an account invoice" do
-        allow(report).to receive(:detail?)         { true }
-        allow(order).to receive(:account_invoice?) { false }
+      it "displays fee summary rows when detail report" do
+        allow(report).to receive(:detail?) { true }
         expect(summary_rows).to include 'fee'
-      end
-
-      it "does not display fee summary rows when this is a detail report for an account invoice" do
-        allow(report).to receive(:detail?)         { true }
-        allow(order).to receive(:account_invoice?) { true }
-        expect(summary_rows).not_to include 'fee'
       end
 
       it "always displays shipping summary rows" do
@@ -73,24 +64,6 @@ module OpenFoodNetwork
       it "does not display admin adjustment summary rows when detail report" do
         allow(report).to receive(:detail?) { true }
         expect(summary_rows).not_to include 'admin'
-      end
-    end
-
-    describe "finding account invoice adjustments" do
-      let(:report) { XeroInvoicesReport.new user, initial_invoice_number: '', invoice_date: '', due_date: '', account_code: '' }
-      let!(:order) { create(:order) }
-      let(:billable_period) { create(:billable_period) }
-      let(:shipping_method) { create(:shipping_method) }
-      let!(:adj_invoice)  { create(:adjustment, adjustable: order, label: 'Account invoice item', source: billable_period) }
-      let!(:adj_shipping) { create(:adjustment, adjustable: order, label: "Shipping", originator: shipping_method) }
-
-      it "returns BillablePeriod adjustments only" do
-        expect(report.send(:account_invoice_adjustments, order)).to eq([adj_invoice])
-      end
-
-      it "excludes adjustments where the source is missing" do
-        billable_period.destroy
-        expect(report.send(:account_invoice_adjustments, order)).to be_empty
       end
     end
 

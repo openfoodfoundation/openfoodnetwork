@@ -7,7 +7,7 @@ describe TagRule::DiscountOrder, type: :model do
     let(:subject) { double(:subject) }
 
     before do
-      tag_rule.context = {subject: subject}
+      tag_rule.context = { subject: subject }
       allow(tag_rule).to receive(:customer_tags_match?) { true }
       allow(subject).to receive(:class) { Spree::Order }
     end
@@ -31,19 +31,19 @@ describe TagRule::DiscountOrder, type: :model do
 
   pending "determining whether a the rule has already been applied to an order" do
     let!(:order) { create(:order) }
-    let!(:adjustment) { order.adjustments.create({:amount => 12.34, :source => order, :originator => tag_rule, :label => 'discount' }, :without_protection => true) }
+    let!(:adjustment) { order.adjustments.create({ amount: 12.34, source: order, originator: tag_rule, label: 'discount' }, without_protection: true) }
 
     before do
-      tag_rule.context = {subject: order}
+      tag_rule.context = { subject: order }
     end
 
     context "where adjustments originating from the rule already exist" do
-      it { expect(tag_rule.send(:already_applied?)).to be true}
+      it { expect(tag_rule.send(:already_applied?)).to be true }
     end
 
     context "where existing adjustments originate from other rules" do
-      before { adjustment.update_attribute(:originator_id,create(:tag_rule).id) }
-      it { expect(tag_rule.send(:already_applied?)).to be false}
+      before { adjustment.update_attribute(:originator_id, create(:tag_rule).id) }
+      it { expect(tag_rule.send(:already_applied?)).to be false }
     end
   end
 
@@ -56,7 +56,7 @@ describe TagRule::DiscountOrder, type: :model do
     before do
       order.update_distribution_charge!
       tag_rule.calculator.update_attribute(:preferred_flat_percent, -10.00)
-      tag_rule.context = {subject: order}
+      tag_rule.context = { subject: order }
     end
 
     context "in a simple scenario" do

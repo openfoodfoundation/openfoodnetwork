@@ -41,7 +41,7 @@ class DiscourseSsoController < ApplicationController
   end
 
   def require_config
-    raise ActionController::RoutingError.new('Not Found') unless discourse_configured?
+    raise ActionController::RoutingError, 'Not Found' unless discourse_configured?
   end
 
   def require_activation?

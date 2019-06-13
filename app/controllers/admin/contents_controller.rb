@@ -16,9 +16,9 @@ module Admin
       # Save any uploaded images
       ContentConfig.save
 
-      flash[:success] = t(:successfully_updated, :resource => I18n.t('admin.contents.edit.your_content'))
+      flash[:success] = t(:successfully_updated, resource: I18n.t('admin.contents.edit.your_content'))
 
-      redirect_to main_app.edit_admin_content_path
+      redirect_to main_app.edit_admin_contents_path
     end
 
     private

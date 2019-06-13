@@ -45,8 +45,8 @@ module OpenFoodNetwork
            EnterpriseRelationship.
              permitting(hubs).
              with_permission(:create_variant_overrides).
-             group_by { |er| er.child_id }.
-             map { |child_id, ers| [child_id, ers.map { |er| er.parent_id }] }
+             group_by(&:child_id).
+             map { |child_id, ers| [child_id, ers.map(&:parent_id)] }
           ]
 
       # Allow a producer hub to override it's own products without explicit permission
@@ -181,22 +181,22 @@ module OpenFoodNetwork
       @coordinated_order_cycles = OrderCycle.managed_by(@user)
     end
 
-    def related_enterprises_granting(permission, options={})
+    def related_enterprises_granting(permission, options = {})
       parent_ids = EnterpriseRelationship.
         permitting(options[:to] || managed_enterprises).
         with_permission(permission).
         pluck(:parent_id)
 
-        (options[:scope] || Enterprise).where('enterprises.id IN (?)', parent_ids)
+      (options[:scope] || Enterprise).where('enterprises.id IN (?)', parent_ids)
     end
 
-    def related_enterprises_granted(permission, options={})
+    def related_enterprises_granted(permission, options = {})
       child_ids = EnterpriseRelationship.
         permitted_by(options[:by] || managed_enterprises).
         with_permission(permission).
         pluck(:child_id)
 
-        (options[:scope] || Enterprise).where('enterprises.id IN (?)', child_ids)
+      (options[:scope] || Enterprise).where('enterprises.id IN (?)', child_ids)
     end
 
     def managed_enterprise_products

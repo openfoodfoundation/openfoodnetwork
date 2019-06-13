@@ -11,22 +11,22 @@ describe EnterpriseRelationship do
       er2 = create(:enterprise_relationship, parent: e1, child: e2)
       er3 = create(:enterprise_relationship, parent: e2, child: e1)
 
-      EnterpriseRelationship.by_name.should == [er3, er1, er2]
+      expect(EnterpriseRelationship.by_name).to eq([er3, er1, er2])
     end
 
     describe "finding relationships involving some enterprises" do
       let!(:er) { create(:enterprise_relationship, parent: e1, child: e2) }
 
       it "returns relationships where an enterprise is the parent" do
-        EnterpriseRelationship.involving_enterprises([e1]).should == [er]
+        expect(EnterpriseRelationship.involving_enterprises([e1])).to eq([er])
       end
 
       it "returns relationships where an enterprise is the child" do
-        EnterpriseRelationship.involving_enterprises([e2]).should == [er]
+        expect(EnterpriseRelationship.involving_enterprises([e2])).to eq([er])
       end
 
       it "does not return other relationships" do
-        EnterpriseRelationship.involving_enterprises([e3]).should == []
+        expect(EnterpriseRelationship.involving_enterprises([e3])).to eq([])
       end
     end
 
@@ -35,13 +35,13 @@ describe EnterpriseRelationship do
         it "creates a new permission for each item in the list" do
           er = EnterpriseRelationship.create! parent: e1, child: e2, permissions_list: ['one', 'two']
           er.reload
-          er.permissions.map(&:name).should match_array ['one', 'two']
+          expect(er.permissions.map(&:name)).to match_array ['one', 'two']
         end
 
         it "does nothing when the list is nil" do
           er = EnterpriseRelationship.create! parent: e1, child: e2, permissions_list: nil
           er.reload
-          er.permissions.should be_empty
+          expect(er.permissions).to be_empty
         end
       end
 
@@ -51,30 +51,30 @@ describe EnterpriseRelationship do
           er.permissions_list = ['four']
           er.save!
           er.reload
-          er.permissions.map(&:name).should include 'four'
+          expect(er.permissions.map(&:name)).to include 'four'
         end
 
         it "does not duplicate existing permissions" do
           er.permissions_list = ["one", "two", "three"]
           er.save!
           er.reload
-          er.permissions.map(&:name).count.should == 3
-          er.permissions.map(&:name).should match_array ["one", "two", "three"]
+          expect(er.permissions.map(&:name).count).to eq(3)
+          expect(er.permissions.map(&:name)).to match_array ["one", "two", "three"]
         end
 
         it "removes permissions that are not in the list" do
           er.permissions_list = ['one', 'three']
           er.save!
           er.reload
-          er.permissions.map(&:name).should include 'one', 'three'
-          er.permissions.map(&:name).should_not include 'two'
+          expect(er.permissions.map(&:name)).to include 'one', 'three'
+          expect(er.permissions.map(&:name)).not_to include 'two'
         end
 
         it "does removes all permissions when the list provided is nil" do
           er.permissions_list = nil
           er.save!
           er.reload
-          er.permissions.should be_empty
+          expect(er.permissions).to be_empty
         end
       end
     end
@@ -85,23 +85,23 @@ describe EnterpriseRelationship do
       let!(:er3) { create(:enterprise_relationship, parent: e1, child: e3) }
 
       it "finds relationships that grant permissions to some enterprises" do
-        EnterpriseRelationship.permitting([e1, e2]).should match_array [er1, er2]
+        expect(EnterpriseRelationship.permitting([e1, e2])).to match_array [er1, er2]
       end
 
       it "finds relationships that are granted by particular enterprises" do
-        EnterpriseRelationship.permitted_by([e1, e2]).should match_array [er1, er3]
+        expect(EnterpriseRelationship.permitted_by([e1, e2])).to match_array [er1, er3]
       end
     end
 
     it "finds relationships that grant a particular permission" do
       er1 = create(:enterprise_relationship, parent: e1, child: e2,
-                   permissions_list: ['one', 'two'])
+                                             permissions_list: ['one', 'two'])
       er2 = create(:enterprise_relationship, parent: e2, child: e3,
-                   permissions_list: ['two', 'three'])
+                                             permissions_list: ['two', 'three'])
       er3 = create(:enterprise_relationship, parent: e3, child: e1,
-                   permissions_list: ['three', 'four'])
+                                             permissions_list: ['three', 'four'])
 
-      EnterpriseRelationship.with_permission('two').should match_array [er1, er2]
+      expect(EnterpriseRelationship.with_permission('two')).to match_array [er1, er2]
     end
   end
 
@@ -112,30 +112,31 @@ describe EnterpriseRelationship do
     let(:er_reverse) { create(:enterprise_relationship, parent: e2, child: e1) }
 
     it "includes self where appropriate" do
-      EnterpriseRelationship.relatives[e2.id][:distributors].should include e2.id
-      EnterpriseRelationship.relatives[e2.id][:producers].should_not include e2.id
+      expect(EnterpriseRelationship.relatives[e2.id][:distributors]).to include e2.id
+      expect(EnterpriseRelationship.relatives[e2.id][:producers]).not_to include e2.id
     end
 
     it "categorises enterprises into distributors and producers" do
       e2.update_attribute :is_primary_producer, true
-      EnterpriseRelationship.relatives.should ==
-        {e1.id => {distributors: Set.new([e2.id]), producers: Set.new([e1.id, e2.id])},
-         e2.id => {distributors: Set.new([e2.id]), producers: Set.new([e2.id, e1.id])}}
+      expect(EnterpriseRelationship.relatives).to eq(
+        e1.id => { distributors: Set.new([e2.id]), producers: Set.new([e1.id, e2.id]) },
+        e2.id => { distributors: Set.new([e2.id]), producers: Set.new([e2.id, e1.id]) }
+      )
     end
 
     it "finds inactive enterprises by default" do
       e1.update_attribute :sells, 'unspecified'
-      EnterpriseRelationship.relatives[e2.id][:producers].should == Set.new([e1.id])
+      expect(EnterpriseRelationship.relatives[e2.id][:producers]).to eq(Set.new([e1.id]))
     end
 
     it "does not find inactive enterprises when requested" do
       e1.update_attribute :sells, 'unspecified'
-      EnterpriseRelationship.relatives(true)[e2.id][:producers].should be_empty
+      expect(EnterpriseRelationship.relatives(true)[e2.id][:producers]).to be_empty
     end
 
     it "does not show duplicates" do
       er_reverse
-      EnterpriseRelationship.relatives[e2.id][:producers].should == Set.new([e1.id])
+      expect(EnterpriseRelationship.relatives[e2.id][:producers]).to eq(Set.new([e1.id]))
     end
   end
 
@@ -146,8 +147,8 @@ describe EnterpriseRelationship do
       let(:some_other_producer) { create(:supplier_enterprise) }
 
       context "when variant_override permission is present" do
-        let!(:er) { create(:enterprise_relationship, child: hub, parent: producer, permissions_list: [:add_to_order_cycles, :create_variant_overrides] )}
-        let!(:some_other_er) { create(:enterprise_relationship, child: hub, parent: some_other_producer, permissions_list: [:add_to_order_cycles, :create_variant_overrides] )}
+        let!(:er) { create(:enterprise_relationship, child: hub, parent: producer, permissions_list: [:add_to_order_cycles, :create_variant_overrides] ) }
+        let!(:some_other_er) { create(:enterprise_relationship, child: hub, parent: some_other_producer, permissions_list: [:add_to_order_cycles, :create_variant_overrides] ) }
         let!(:vo1) { create(:variant_override, hub: hub, variant: create(:variant, product: create(:product, supplier: producer))) }
         let!(:vo2) { create(:variant_override, hub: hub, variant: create(:variant, product: create(:product, supplier: producer))) }
         let!(:vo3) { create(:variant_override, hub: hub, variant: create(:variant, product: create(:product, supplier: some_other_producer))) }
@@ -187,8 +188,8 @@ describe EnterpriseRelationship do
       end
 
       context "when variant_override permission is not present" do
-        let!(:er) { create(:enterprise_relationship, child: hub, parent: producer, permissions_list: [:add_to_order_cycles] )}
-        let!(:some_other_er) { create(:enterprise_relationship, child: hub, parent: some_other_producer, permissions_list: [:add_to_order_cycles] )}
+        let!(:er) { create(:enterprise_relationship, child: hub, parent: producer, permissions_list: [:add_to_order_cycles] ) }
+        let!(:some_other_er) { create(:enterprise_relationship, child: hub, parent: some_other_producer, permissions_list: [:add_to_order_cycles] ) }
         let!(:vo1) { create(:variant_override, hub: hub, variant: create(:variant, product: create(:product, supplier: producer)), permission_revoked_at: Time.now) }
         let!(:vo2) { create(:variant_override, hub: hub, variant: create(:variant, product: create(:product, supplier: producer)), permission_revoked_at: Time.now) }
         let!(:vo3) { create(:variant_override, hub: hub, variant: create(:variant, product: create(:product, supplier: some_other_producer)), permission_revoked_at: Time.now) }

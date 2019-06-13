@@ -13,14 +13,6 @@ module Spree
     end
 
     describe "scopes" do
-      it "finds non-deleted variants" do
-        v_not_deleted = create(:variant)
-        v_deleted = create(:variant, deleted_at: Time.zone.now)
-
-        Spree::Variant.not_deleted.should     include v_not_deleted
-        Spree::Variant.not_deleted.should_not include v_deleted
-      end
-
       describe "finding variants in a distributor" do
         let!(:d1) { create(:distributor_enterprise) }
         let!(:d2) { create(:distributor_enterprise) }
@@ -30,12 +22,12 @@ module Spree
         let!(:oc2) { create(:simple_order_cycle, distributors: [d2], variants: [p2.master]) }
 
         it "shows variants in an order cycle distribution" do
-          Variant.in_distributor(d1).should == [p1.master]
+          expect(Variant.in_distributor(d1)).to eq([p1.master])
         end
 
         it "doesn't show duplicates" do
           oc_dup = create(:simple_order_cycle, distributors: [d1], variants: [p1.master])
-          Variant.in_distributor(d1).should == [p1.master]
+          expect(Variant.in_distributor(d1)).to eq([p1.master])
         end
       end
 
@@ -48,14 +40,14 @@ module Spree
         let!(:oc2) { create(:simple_order_cycle, distributors: [d2], variants: [p2.master]) }
 
         it "shows variants in an order cycle" do
-          Variant.in_order_cycle(oc1).should == [p1.master]
+          expect(Variant.in_order_cycle(oc1)).to eq([p1.master])
         end
 
         it "doesn't show duplicates" do
           ex = create(:exchange, order_cycle: oc1, sender: oc1.coordinator, receiver: d2)
           ex.variants << p1.master
 
-          Variant.in_order_cycle(oc1).should == [p1.master]
+          expect(Variant.in_order_cycle(oc1)).to eq([p1.master])
         end
       end
 
@@ -73,28 +65,31 @@ module Spree
         let(:p_external) { create(:simple_product) }
         let(:v_external) { create(:variant, product: p_external) }
 
-        let!(:ex_in) { create(:exchange, order_cycle: oc, sender: s, receiver: oc.coordinator,
-                              incoming: true, variants: [v1, v2]) 
+        let!(:ex_in) {
+          create(:exchange, order_cycle: oc, sender: s, receiver: oc.coordinator,
+                            incoming: true, variants: [v1, v2])
         }
-        let!(:ex_out1) { create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d1,
-                                incoming: false, variants: [v1]) 
+        let!(:ex_out1) {
+          create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d1,
+                            incoming: false, variants: [v1])
         }
-        let!(:ex_out2) { create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d2,
-                                incoming: false, variants: [v2]) 
+        let!(:ex_out2) {
+          create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d2,
+                            incoming: false, variants: [v2])
         }
 
         it "returns variants in the order cycle and distributor" do
-          p1.variants.for_distribution(oc, d1).should == [v1]
-          p2.variants.for_distribution(oc, d2).should == [v2]
+          expect(p1.variants.for_distribution(oc, d1)).to eq([v1])
+          expect(p2.variants.for_distribution(oc, d2)).to eq([v2])
         end
 
         it "does not return variants in the order cycle but not the distributor" do
-          p1.variants.for_distribution(oc, d2).should be_empty
-          p2.variants.for_distribution(oc, d1).should be_empty
+          expect(p1.variants.for_distribution(oc, d2)).to be_empty
+          expect(p2.variants.for_distribution(oc, d1)).to be_empty
         end
 
         it "does not return variants not in the order cycle" do
-          p_external.variants.for_distribution(oc, d1).should be_empty
+          expect(p_external.variants.for_distribution(oc, d1)).to be_empty
         end
       end
 
@@ -209,8 +204,9 @@ module Spree
       let!(:v3) { create(:variant) }
 
       it "indexes variants by id" do
-        Variant.where(id: [v1, v2, v3]).indexed.should ==
-          {v1.id => v1, v2.id => v2, v3.id => v3}
+        expect(Variant.where(id: [v1, v2, v3]).indexed).to eq(
+          v1.id => v1, v2.id => v2, v3.id => v3
+        )
       end
     end
 
@@ -223,7 +219,7 @@ module Spree
         before { allow(v).to receive(:full_name) { p.name + " - something" } }
 
         it "does not show the product name twice" do
-          v.product_and_full_name.should == 'product - something'
+          expect(v.product_and_full_name).to eq('product - something')
         end
       end
 
@@ -231,7 +227,7 @@ module Spree
         before { allow(v).to receive(:full_name) { "display_name (unit)" } }
 
         it "prepends the product name to the full name" do
-          v.product_and_full_name.should == 'product - display_name (unit)'
+          expect(v.product_and_full_name).to eq('product - display_name (unit)')
         end
       end
     end
@@ -242,11 +238,10 @@ module Spree
         order_cycle = double(:order_cycle)
 
         variant = Variant.new price: 100
-        variant.should_receive(:fees_for).with(distributor, order_cycle) { 23 }
-        variant.price_with_fees(distributor, order_cycle).should == 123
+        expect(variant).to receive(:fees_for).with(distributor, order_cycle) { 23 }
+        expect(variant.price_with_fees(distributor, order_cycle)).to eq(123)
       end
     end
-
 
     describe "calculating the fees" do
       it "delegates to EnterpriseFeeCalculator" do
@@ -254,12 +249,11 @@ module Spree
         order_cycle = double(:order_cycle)
         variant = Variant.new
 
-        OpenFoodNetwork::EnterpriseFeeCalculator.any_instance.should_receive(:fees_for).with(variant) { 23 }
+        expect_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator).to receive(:fees_for).with(variant) { 23 }
 
-        variant.fees_for(distributor, order_cycle).should == 23
+        expect(variant.fees_for(distributor, order_cycle)).to eq(23)
       end
     end
-
 
     describe "calculating fees broken down by fee type" do
       it "delegates to EnterpriseFeeCalculator" do
@@ -268,12 +262,11 @@ module Spree
         variant = Variant.new
         fees = double(:fees)
 
-        OpenFoodNetwork::EnterpriseFeeCalculator.any_instance.should_receive(:fees_by_type_for).with(variant) { fees }
+        expect_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator).to receive(:fees_by_type_for).with(variant) { fees }
 
-        variant.fees_by_type_for(distributor, order_cycle).should == fees
+        expect(variant.fees_by_type_for(distributor, order_cycle)).to eq(fees)
       end
     end
-
 
     context "when the product has variants" do
       let!(:product) { create(:simple_product) }
@@ -289,16 +282,16 @@ module Spree
           it "is valid when unit value is set and unit description is not" do
             variant.unit_value = 1
             variant.unit_description = nil
-            variant.should be_valid
+            expect(variant).to be_valid
           end
 
           it "is invalid when unit value is not set" do
             variant.unit_value = nil
-            variant.should_not be_valid
+            expect(variant).not_to be_valid
           end
 
           it "has a valid master variant" do
-            product.master.should be_valid
+            expect(product.master).to be_valid
           end
         end
       end
@@ -312,23 +305,23 @@ module Spree
         it "is valid with only unit value set" do
           variant.unit_value = 1
           variant.unit_description = nil
-          variant.should be_valid
+          expect(variant).to be_valid
         end
 
         it "is valid with only unit description set" do
           variant.unit_value = nil
           variant.unit_description = 'Medium'
-          variant.should be_valid
+          expect(variant).to be_valid
         end
 
         it "is invalid when neither unit value nor unit description are set" do
           variant.unit_value = nil
           variant.unit_description = nil
-          variant.should_not be_valid
+          expect(variant).not_to be_valid
         end
 
         it "has a valid master variant" do
-          product.master.should be_valid
+          expect(product.master).to be_valid
         end
       end
     end
@@ -338,67 +331,67 @@ module Spree
         let(:v) { Variant.new }
 
         before do
-          v.stub(:display_name) { 'display_name' }
-          v.stub(:unit_to_display) { 'unit_to_display' }
+          allow(v).to receive(:display_name) { 'display_name' }
+          allow(v).to receive(:unit_to_display) { 'unit_to_display' }
         end
 
         it "returns unit_to_display when display_name is blank" do
-          v.stub(:display_name) { '' }
-          v.full_name.should == 'unit_to_display'
+          allow(v).to receive(:display_name) { '' }
+          expect(v.full_name).to eq('unit_to_display')
         end
 
         it "returns display_name when it contains unit_to_display" do
-          v.stub(:display_name) { 'DiSpLaY_name' }
-          v.stub(:unit_to_display) { 'name' }
-          v.full_name.should == 'DiSpLaY_name'
+          allow(v).to receive(:display_name) { 'DiSpLaY_name' }
+          allow(v).to receive(:unit_to_display) { 'name' }
+          expect(v.full_name).to eq('DiSpLaY_name')
         end
 
         it "returns unit_to_display when it contains display_name" do
-          v.stub(:display_name) { '_to_' }
-          v.stub(:unit_to_display) { 'unit_TO_display' }
-          v.full_name.should == 'unit_TO_display'
+          allow(v).to receive(:display_name) { '_to_' }
+          allow(v).to receive(:unit_to_display) { 'unit_TO_display' }
+          expect(v.full_name).to eq('unit_TO_display')
         end
 
         it "returns a combination otherwise" do
-          v.stub(:display_name) { 'display_name' }
-          v.stub(:unit_to_display) { 'unit_to_display' }
-          v.full_name.should == 'display_name (unit_to_display)'
+          allow(v).to receive(:display_name) { 'display_name' }
+          allow(v).to receive(:unit_to_display) { 'unit_to_display' }
+          expect(v.full_name).to eq('display_name (unit_to_display)')
         end
 
         it "is resilient to regex chars" do
           v = Variant.new display_name: ")))"
-          v.stub(:unit_to_display) { ")))" }
-          v.full_name.should == ")))"
+          allow(v).to receive(:unit_to_display) { ")))" }
+          expect(v.full_name).to eq(")))")
         end
       end
 
       describe "getting name for display" do
         it "returns display_name if present" do
           v = create(:variant, display_name: "foo")
-          v.name_to_display.should == "foo"
+          expect(v.name_to_display).to eq("foo")
         end
 
         it "returns product name if display_name is empty" do
           v = create(:variant, product: create(:product))
-          v.name_to_display.should == v.product.name
+          expect(v.name_to_display).to eq(v.product.name)
           v1 = create(:variant, display_name: "", product: create(:product))
-          v1.name_to_display.should == v1.product.name
+          expect(v1.name_to_display).to eq(v1.product.name)
         end
       end
 
       describe "getting unit for display" do
         it "returns display_as if present" do
           v = create(:variant, display_as: "foo")
-          v.unit_to_display.should == "foo"
+          expect(v.unit_to_display).to eq("foo")
         end
 
         it "returns options_text if display_as is blank" do
           v = create(:variant)
           v1 = create(:variant, display_as: "")
-          v.stub(:options_text).and_return "ponies"
-          v1.stub(:options_text).and_return "ponies"
-          v.unit_to_display.should == "ponies"
-          v1.unit_to_display.should == "ponies"
+          allow(v).to receive(:options_text).and_return "ponies"
+          allow(v1).to receive(:options_text).and_return "ponies"
+          expect(v.unit_to_display).to eq("ponies")
+          expect(v1.unit_to_display).to eq("ponies")
         end
       end
 
@@ -410,7 +403,7 @@ module Spree
           p.update_attributes! variant_unit: 'weight', variant_unit_scale: 1
           v.update_attributes! unit_value: 10, unit_description: 'foo'
 
-          v.reload.weight.should == 0.01
+          expect(v.reload.weight).to eq(0.01)
         end
 
         it "does nothing when unit is not weight" do
@@ -420,7 +413,7 @@ module Spree
           p.update_attributes! variant_unit: 'volume', variant_unit_scale: 1
           v.update_attributes! unit_value: 10, unit_description: 'foo'
 
-          v.reload.weight.should == 123
+          expect(v.reload.weight).to eq(123)
         end
 
         it "does nothing when unit_value is not set" do
@@ -431,9 +424,9 @@ module Spree
 
           # Although invalid, this calls the before_validation callback, which would
           # error if not handling unit_value == nil case
-          v.update_attributes(unit_value: nil, unit_description: 'foo').should be false
+          expect(v.update_attributes(unit_value: nil, unit_description: 'foo')).to be false
 
-          v.reload.weight.should == 123
+          expect(v.reload.weight).to eq(123)
         end
       end
 
@@ -448,7 +441,7 @@ module Spree
             v.update_attributes!(unit_value: 10, unit_description: 'foo')
           }.to change(Spree::OptionValue, :count).by(1)
 
-          v.option_values.should_not include ov_orig
+          expect(v.option_values).not_to include ov_orig
         end
       end
 
@@ -467,8 +460,8 @@ module Spree
             v.update_attributes!(unit_value: 10, unit_description: 'foo')
           }.to change(Spree::OptionValue, :count).by(0)
 
-          v.option_values.should_not include ov_orig
-          v.option_values.should     include ov_new
+          expect(v.option_values).not_to include ov_orig
+          expect(v.option_values).to     include ov_new
         end
       end
 
@@ -477,10 +470,10 @@ module Spree
         let!(:v) { create(:variant, product: p, unit_value: 5, unit_description: 'bar', display_as: '') }
 
         it "requests the name of the new option_value from OptionValueName" do
-          OpenFoodNetwork::OptionValueNamer.any_instance.should_receive(:name).exactly(1).times.and_call_original
+          expect_any_instance_of(OpenFoodNetwork::OptionValueNamer).to receive(:name).exactly(1).times.and_call_original
           v.update_attributes(unit_value: 10, unit_description: 'foo')
           ov = v.option_values.last
-          ov.name.should == "10g foo"
+          expect(ov.name).to eq("10g foo")
         end
       end
 
@@ -489,10 +482,10 @@ module Spree
         let!(:v) { create(:variant, product: p, unit_value: 5, unit_description: 'bar', display_as: 'FOOS!') }
 
         it "does not request the name of the new option_value from OptionValueName" do
-          OpenFoodNetwork::OptionValueNamer.any_instance.should_not_receive(:name)
+          expect_any_instance_of(OpenFoodNetwork::OptionValueNamer).not_to receive(:name)
           v.update_attributes!(unit_value: 10, unit_description: 'foo')
           ov = v.option_values.last
-          ov.name.should == "FOOS!"
+          expect(ov.name).to eq("FOOS!")
         end
       end
     end
@@ -530,46 +523,7 @@ module Spree
       e = create(:exchange, variants: [v])
 
       v.destroy
-      e.reload.variant_ids.should be_empty
-    end
-
-    context "as the last variant of a product" do
-      let!(:extra_variant) { create(:variant) }
-      let!(:product) { extra_variant.product }
-      let!(:first_variant) { product.variants.first }
-
-      before { product.reload }
-
-      it "cannot be deleted" do
-        expect(product.variants.length).to eq 2
-        expect(extra_variant.delete).to eq extra_variant
-        expect(product.variants(:reload).length).to eq 1
-        expect(first_variant.delete).to be false
-        expect(product.variants(:reload).length).to eq 1
-        expect(first_variant.errors[:product]).to include "must have at least one variant"
-      end
-    end
-  end
-
-  describe '#delete_and_refresh_cache' do
-    context 'when it is not the master variant' do
-      let(:variant) { create(:variant) }
-
-      it 'refreshes the products cache on delete' do
-        expect(OpenFoodNetwork::ProductsCache).to receive(:variant_destroyed).with(variant)
-        variant.delete_and_refresh_cache
-      end
-    end
-
-    context "when it is the master variant" do
-      let(:product) { create(:simple_product) }
-      let(:master) { product.master }
-
-      it 'refreshes the products cache for the entire product on delete' do
-        expect(OpenFoodNetwork::ProductsCache).to receive(:product_changed).with(product)
-        expect(OpenFoodNetwork::ProductsCache).to receive(:variant_destroyed).never
-        master.delete_and_refresh_cache
-      end
+      expect(e.reload.variant_ids).to be_empty
     end
   end
 end

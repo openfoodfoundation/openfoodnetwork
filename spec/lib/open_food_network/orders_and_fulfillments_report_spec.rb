@@ -15,7 +15,7 @@ describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
       bill_address: address
     )
   }
-  let(:line_item) { build(:line_item) }
+  let(:line_item) { build(:line_item_with_shipment) }
   let(:user) { create(:user) }
   let(:admin_user) { create(:admin_user) }
 
@@ -33,7 +33,7 @@ describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
 
       it "does not show cancelled orders" do
         o2 = create(:order, state: "canceled", completed_at: 1.day.ago)
-        o2.line_items << build(:line_item)
+        o2.line_items << build(:line_item_with_shipment)
         expect(subject.table_items).to eq([line_item])
       end
     end
@@ -57,7 +57,7 @@ describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
             ship_address: create(:address)
           )
         }
-        let(:li2) { build(:line_item, product: create(:simple_product, supplier: s1)) }
+        let(:li2) { build(:line_item_with_shipment, product: create(:simple_product, supplier: s1)) }
 
         before do
           o2.line_items << li2
@@ -85,7 +85,7 @@ describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
             ship_address: create(:address)
           )
         }
-        let(:li2) { build(:line_item, product: create(:simple_product, supplier: s1)) }
+        let(:li2) { build(:line_item_with_shipment, product: create(:simple_product, supplier: s1)) }
 
         before do
           o2.line_items << li2
@@ -108,7 +108,7 @@ describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
         d2 = create(:distributor_enterprise)
         d2.enterprise_roles.create!(user: create(:user))
         o2 = create(:order, distributor: d2, completed_at: 1.day.ago)
-        o2.line_items << build(:line_item)
+        o2.line_items << build(:line_item_with_shipment)
         expect(subject.table_items).to eq([line_item])
       end
 
@@ -141,8 +141,12 @@ describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
 
   describe "order_cycle_customer_totals" do
     let!(:product) { line_item.product }
-    let!(:fuji) { build(:variant, product: product, display_name: "Fuji", sku: "FUJI", on_hand: 100) }
-    let!(:gala) { build(:variant, product: product, display_name: "Gala", sku: "GALA", on_hand: 100) }
+    let!(:fuji) do
+      create(:variant, product: product, display_name: "Fuji", sku: "FUJI", on_hand: 100)
+    end
+    let!(:gala) do
+      create(:variant, product: product, display_name: "Gala", sku: "GALA", on_hand: 100)
+    end
 
     let(:items) {
       report = described_class.new(admin_user, { report_type: "order_cycle_customer_totals" }, true)
@@ -151,8 +155,8 @@ describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
 
     before do
       # Clear price so it will be computed based on quantity and variant price.
-      order.line_items << build(:line_item, variant: fuji, price: nil, quantity: 1)
-      order.line_items << build(:line_item, variant: gala, price: nil, quantity: 2)
+      order.line_items << build(:line_item_with_shipment, variant: fuji, price: nil, quantity: 1)
+      order.line_items << build(:line_item_with_shipment, variant: gala, price: nil, quantity: 2)
     end
 
     it "has a product row" do
@@ -183,9 +187,9 @@ describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
 
       before do
         # Add a second line item for Fuji variant to the order, to test grouping in this edge case.
-        order.line_items << build(:line_item, variant: fuji, price: nil, quantity: 4)
+        order.line_items << build(:line_item_with_shipment, variant: fuji, price: nil, quantity: 4)
 
-        second_order.line_items << build(:line_item, variant: fuji, price: nil, quantity: 8)
+        second_order.line_items << build(:line_item_with_shipment, variant: fuji, price: nil, quantity: 8)
       end
 
       it "groups line items by variant and order" do

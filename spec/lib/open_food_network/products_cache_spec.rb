@@ -1,4 +1,5 @@
 require 'open_food_network/products_cache'
+require 'spec_helper'
 
 module OpenFoodNetwork
   describe ProductsCache do
@@ -97,7 +98,7 @@ module OpenFoodNetwork
 
       it "refreshes the cache based on exchanges the variant was in before destruction" do
         expect(ProductsCache).to receive(:refresh_cache).with(distributor, oc)
-        product.delete
+        product.destroy
       end
 
       it "performs the cache refresh after the product has been removed from the order cycle" do
@@ -105,7 +106,7 @@ module OpenFoodNetwork
           expect(product.reload.deleted_at).not_to be_nil
         end
 
-        product.delete
+        product.destroy
       end
     end
 
@@ -127,7 +128,6 @@ module OpenFoodNetwork
       end
     end
 
-
     describe "when a variant override is destroyed" do
       let(:vo) { double(:variant_override) }
 
@@ -137,14 +137,13 @@ module OpenFoodNetwork
       end
     end
 
-
     describe "when a producer property is changed" do
       let(:s) { create(:supplier_enterprise) }
       let(:pp) { s.producer_properties.last }
       let(:product) { create(:simple_product, supplier: s) }
       let(:v1) { create(:variant, product: product) }
       let(:v2) { create(:variant, product: product) }
-      let(:v_deleted) { create(:variant, product: product, deleted_at: Time.now) }
+      let(:v_deleted) { create(:variant, product: product) }
       let(:d1) { create(:distributor_enterprise) }
       let(:d2) { create(:distributor_enterprise) }
       let(:d3) { create(:distributor_enterprise) }
@@ -154,6 +153,8 @@ module OpenFoodNetwork
       let!(:ex3) { create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d3, variants: [product.master, v_deleted]) }
 
       before do
+        v_deleted.deleted_at = Time.now
+        v_deleted.save
         s.set_producer_property :organic, 'NASAA 12345'
       end
 
@@ -169,7 +170,6 @@ module OpenFoodNetwork
       end
     end
 
-
     describe "when a producer property is destroyed" do
       let(:producer_property) { double(:producer_property) }
 
@@ -178,7 +178,6 @@ module OpenFoodNetwork
         ProductsCache.producer_property_destroyed producer_property
       end
     end
-
 
     describe "when an order cycle is changed" do
       let(:variant) { create(:variant) }
@@ -224,7 +223,6 @@ module OpenFoodNetwork
         ProductsCache.order_cycle_changed oc_open
       end
     end
-
 
     describe "when an exchange is changed" do
       let(:s) { create(:supplier_enterprise) }
@@ -280,7 +278,6 @@ module OpenFoodNetwork
       end
     end
 
-
     describe "when an exchange is destroyed" do
       let(:exchange) { double(:exchange) }
 
@@ -290,7 +287,6 @@ module OpenFoodNetwork
       end
     end
 
-
     describe "when an enterprise fee is changed" do
       let(:s) { create(:supplier_enterprise) }
       let(:c) { create(:distributor_enterprise) }
@@ -299,7 +295,6 @@ module OpenFoodNetwork
       let(:ef) { create(:enterprise_fee) }
       let(:ef_coord) { create(:enterprise_fee, order_cycles: [oc]) }
       let(:oc) { create(:open_order_cycle, coordinator: c) }
-
 
       describe "updating exchanges when it's a supplier fee" do
         let(:v) { create(:variant) }
@@ -340,13 +335,11 @@ module OpenFoodNetwork
         end
       end
 
-
       it "updates order cycles when it's a coordinator fee" do
         ef_coord
         expect(ProductsCache).to receive(:order_cycle_changed).with(oc).once
         ProductsCache.enterprise_fee_changed ef_coord
       end
-
 
       describe "updating exchanges when it's a distributor fee" do
         let(:ex0) { create(:exchange, order_cycle: oc, sender: s, receiver: c, incoming: true, enterprise_fees: [ef]) }

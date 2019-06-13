@@ -1,0 +1,37 @@
+- content_for :page_title do
+  = t('.shipping_methods')
+- content_for :page_actions do
+  %li
+    = button_link_to t('.new_shipping_method'), new_object_url,  icon: 'icon-plus', id: 'admin_new_shipping_method_link'
+- if @shipping_methods.any?
+  %table#listing_shipping_methods.index
+    %colgroup
+      %col{style: "width: 20%"}/
+      %col{style: "width: 15%"}/
+      %col{style: "width: 40%"}/
+      %col{style: "width: 10%"}/
+      %col{style: "width: 15%"}/
+    %thead
+      %tr
+        %th= t('.name')
+        %th= t('.products_distributor')
+        %th= t('.zone')
+        %th= t('.calculator')
+        %th= t('.display')
+        %th.actions
+    %tbody
+      - @shipping_methods.each do |shipping_method|
+        %tr{class: "#{cycle('odd', 'even')}", id: "#{spree_dom_id shipping_method}"}
+          %td= shipping_method.name
+          %td.align-center
+            - shipping_method.distributors.each do |distributor|
+              = distributor.name
+              %br/
+          %td= shipping_method.zones.collect(&:name).join(", ") if shipping_method.zones
+          %td= shipping_method.calculator.description
+          %td.align-center= shipping_method.display_on.blank? ? t('.both') : t(".#{shipping_method.display_on}")
+          %td.actions
+            = link_to_edit shipping_method, no_text: true
+            = link_to_delete shipping_method, no_text: true
+- else
+  .alpha.twelve.columns.no-objects-found= t('.no_shipping_methods_found')

@@ -1,12 +1,11 @@
 require 'spec_helper'
 require 'yaml'
 
-describe ProducerMailer do
+describe ProducerMailer, type: :mailer do
   include OpenFoodNetwork::EmailHelper
 
-  before do
-    setup_email
-  end
+  before { setup_email }
+
   let!(:zone) { create(:zone_with_member) }
   let!(:tax_rate) { create(:tax_rate, included_in_price: true, calculator: Spree::Calculator::DefaultTax.new, zone: zone, amount: 0.1) }
   let!(:tax_category) { create(:tax_category, tax_rates: [tax_rate]) }
@@ -47,15 +46,11 @@ describe ProducerMailer do
     order.save
     order
   end
-  let(:mail) { ActionMailer::Base.deliveries.last }
 
-  before do
-    ActionMailer::Base.deliveries.clear
-    ProducerMailer.order_cycle_report(s1, order_cycle).deliver
-  end
+  let(:mail) { ProducerMailer.order_cycle_report(s1, order_cycle) }
 
   it "should send an email when an order cycle is closed" do
-    ActionMailer::Base.deliveries.count.should == 1
+    expect(ActionMailer::Base.deliveries.count).to eq(1)
   end
 
   it "sets a reply-to of the oc coordinator's email" do
@@ -63,7 +58,7 @@ describe ProducerMailer do
   end
 
   it "includes receival instructions" do
-    mail.body.encoded.should include 'Outside shed.'
+    expect(mail.body.encoded).to include 'Outside shed.'
   end
 
   it "cc's the oc coordinator" do
@@ -73,32 +68,31 @@ describe ProducerMailer do
   it "contains an aggregated list of produce in alphabetical order" do
     expect(mail.body.encoded).to match(/coffee.+\n.+Zebra/)
     body_lines_including(mail, p1.name).each do |line|
-      line.should include 'QTY: 3'
-      line.should include '@ $10.00 = $30.00'
+      expect(line).to include 'QTY: 3'
+      expect(line).to include '@ $10.00 = $30.00'
     end
-    body_as_html(mail).find("table.order-summary tr", text: p1.name)
-      .should have_selector("td", text: "$30.00")
+    expect(body_as_html(mail).find("table.order-summary tr", text: p1.name))
+      .to have_selector("td", text: "$30.00")
   end
-
 
   it "displays tax totals for each product" do
     # Tax for p1 line items
-    body_as_html(mail).find("table.order-summary tr", text: p1.name)
-      .should have_selector("td.tax", text: "$2.73")
+    expect(body_as_html(mail).find("table.order-summary tr", text: p1.name))
+      .to have_selector("td.tax", text: "$2.73")
   end
 
   it "does not include incomplete orders" do
-    mail.body.encoded.should_not include p3.name
+    expect(mail.body.encoded).not_to include p3.name
   end
 
   it "does not include canceled orders" do
-    mail.body.encoded.should_not include p5.name
+    expect(mail.body.encoded).not_to include p5.name
   end
 
   it "includes the total" do
-    mail.body.encoded.should include 'Total: $50.00'
-    body_as_html(mail).find("tr.total-row")
-      .should have_selector("td", text: "$50.00")
+    expect(mail.body.encoded).to include 'Total: $50.00'
+    expect(body_as_html(mail).find("tr.total-row"))
+      .to have_selector("td", text: "$50.00")
   end
 
   it "sends no mail when the producer has no orders" do
@@ -106,7 +100,6 @@ describe ProducerMailer do
       ProducerMailer.order_cycle_report(s3, order_cycle).deliver
     end.to change(ActionMailer::Base.deliveries, :count).by(0)
   end
-
 
   private
 

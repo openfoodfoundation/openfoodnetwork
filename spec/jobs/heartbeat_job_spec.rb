@@ -12,10 +12,9 @@ describe HeartbeatJob do
 
     it "updates the last_job_queue_heartbeat_at config var" do
       run_job
-      Time.parse(Spree::Config.last_job_queue_heartbeat_at).should == run_time
+      expect(Time.parse(Spree::Config.last_job_queue_heartbeat_at)).to eq(run_time)
     end
   end
-
 
   private
 

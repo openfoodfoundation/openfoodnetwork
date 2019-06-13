@@ -24,15 +24,15 @@ module OpenFoodNetwork
       end
 
       it "sorts products by the distributor's preferred taxon list" do
-        distributor.stub(:preferred_shopfront_taxon_order) {"#{t1.id},#{t2.id}"}
+        allow(distributor).to receive(:preferred_shopfront_taxon_order) { "#{t1.id},#{t2.id}" }
         products = pr.send(:load_products)
-        products.should == [p2, p4, p1, p3]
+        expect(products).to eq([p2, p4, p1, p3])
       end
 
       it "alphabetizes products by name when taxon list is not set" do
-        distributor.stub(:preferred_shopfront_taxon_order) {""}
+        allow(distributor).to receive(:preferred_shopfront_taxon_order) { "" }
         products = pr.send(:load_products)
-        products.should == [p1, p2, p3, p4]
+        expect(products).to eq([p1, p2, p3, p4])
       end
     end
 
@@ -45,33 +45,34 @@ module OpenFoodNetwork
       end
 
       it "only returns products for the current order cycle" do
-        pr.products_json.should include product.name
+        expect(pr.products_json).to include product.name
       end
 
       it "doesn't return products not in stock" do
-        variant.update_attribute(:count_on_hand, 0)
-        pr.products_json.should_not include product.name
+        variant.update_attribute(:on_demand, false)
+        variant.update_attribute(:on_hand, 0)
+        expect(pr.products_json).not_to include product.name
       end
 
       it "strips html from description" do
         product.update_attribute(:description, "<a href='44'>turtles</a> frogs")
         json = pr.products_json
-        json.should include "frogs"
-        json.should_not include "<a href"
+        expect(json).to include "frogs"
+        expect(json).not_to include "<a href"
       end
 
       it "returns price including fees" do
         # Price is 19.99
-        OpenFoodNetwork::EnterpriseFeeCalculator.any_instance.
-          stub(:indexed_fees_for).and_return 978.01
+        allow_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator).
+          to receive(:indexed_fees_for).and_return 978.01
 
-        pr.products_json.should include "998.0"
+        expect(pr.products_json).to include "998.0"
       end
 
       it "includes the primary taxon" do
         taxon = create(:taxon)
-        Spree::Product.any_instance.stub(:primary_taxon).and_return taxon
-        pr.products_json.should include taxon.name
+        allow_any_instance_of(Spree::Product).to receive(:primary_taxon).and_return taxon
+        expect(pr.products_json).to include taxon.name
       end
 
       it "loads tag_list for variants" do

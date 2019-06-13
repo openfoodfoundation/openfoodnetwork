@@ -22,7 +22,7 @@
           %td.order7
         %tr.order-row
           %td.order1
-            %a{"ng-href" => "{{::order.path}}", "ng-bind" => "::('order' | t )+ ' ' + order.number"}
+            %a{"ng-href" => "{{::order.path}}", "ng-bind" => "::('js.spree.users.order' | t )+ ' ' + order.number"}
           %td.order2{"ng-bind" => "::order.completed_at"}
           %td.order3.show-for-large-up{"ng-bind" => "::'spree.payment_states.' + order.payment_state | t | capitalize"}
           %td.order4.show-for-large-up{"ng-bind" => "::'spree.shipment_states.' + order.shipment_state | t | capitalize"}

@@ -25,7 +25,7 @@ class ColumnPreference < ActiveRecord::Base
     default_preferences.each_with_object([]) do |(column_name, default_attributes), preferences|
       stored_preference = stored_preferences.find_by_column_name(column_name)
       if stored_preference
-        stored_preference.assign_attributes(default_attributes.select{ |k,v| stored_preference[k].nil? })
+        stored_preference.assign_attributes(default_attributes.select{ |k, _v| stored_preference[k].nil? })
         preferences << stored_preference
       else
         attributes = default_attributes.merge(user_id: user.id, action_name: action_name, column_name: column_name)
@@ -42,7 +42,7 @@ class ColumnPreference < ActiveRecord::Base
 
   def self.known_actions
     OpenFoodNetwork::ColumnPreferenceDefaults.private_instance_methods
-      .select{|m| m.to_s.end_with?("_columns")}.map{ |m| m.to_s.sub /_columns$/, ''}
+      .select{ |m| m.to_s.end_with?("_columns") }.map{ |m| m.to_s.sub /_columns$/, '' }
   end
 
   # Arbitrary filtering of default_preferences

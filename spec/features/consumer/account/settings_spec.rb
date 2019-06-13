@@ -21,21 +21,23 @@ feature "Account Settings", js: true do
     end
 
     it "allows the user to update their email address" do
-      fill_in 'user_email', with: 'new@email.com'
+      performing_deliveries do
+        fill_in 'user_email', with: 'new@email.com'
 
-      expect do
-        click_button I18n.t(:update)
-      end.to send_confirmation_instructions
+        expect do
+          click_button I18n.t(:update)
+        end.to send_confirmation_instructions
 
-      sent_mail = ActionMailer::Base.deliveries.last
-      expect(sent_mail.to).to eq ['new@email.com']
+        sent_mail = ActionMailer::Base.deliveries.last
+        expect(sent_mail.to).to eq ['new@email.com']
 
-      expect(find(".alert-box.success").text.strip).to eq "#{I18n.t(:account_updated)} ×"
-      user.reload
-      expect(user.email).to eq 'old@email.com'
-      expect(user.unconfirmed_email).to eq 'new@email.com'
-      click_link I18n.t('spree.users.show.tabs.settings')
-      expect(page).to have_content I18n.t('spree.users.show.unconfirmed_email', unconfirmed_email: 'new@email.com')
+        expect(find(".alert-box.success").text.strip).to eq "#{I18n.t('spree.account_updated')} ×"
+        user.reload
+        expect(user.email).to eq 'old@email.com'
+        expect(user.unconfirmed_email).to eq 'new@email.com'
+        click_link I18n.t('spree.users.show.tabs.settings')
+        expect(page).to have_content I18n.t('spree.users.show.unconfirmed_email', unconfirmed_email: 'new@email.com')
+      end
     end
 
     it "allows the user to change their password" do
@@ -45,7 +47,7 @@ feature "Account Settings", js: true do
       fill_in 'user_password_confirmation', with: 'NewPassword'
 
       click_button I18n.t(:update)
-      expect(find(".alert-box.success").text.strip).to eq "#{I18n.t(:account_updated)} ×"
+      expect(find(".alert-box.success").text.strip).to eq "#{I18n.t('spree.account_updated')} ×"
 
       expect(user.reload.encrypted_password).to_not eq initial_password
     end

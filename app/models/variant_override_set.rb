@@ -1,5 +1,5 @@
 class VariantOverrideSet < ModelSet
-  def initialize(collection, attributes={})
+  def initialize(collection, attributes = {})
     super(VariantOverride, collection, attributes, nil, proc { |attrs, tag_list| deletable?(attrs, tag_list) } )
   end
 
@@ -7,12 +7,12 @@ class VariantOverrideSet < ModelSet
 
   def deletable?(attrs, tag_list)
     attrs['price'].blank? &&
-    attrs['count_on_hand'].blank? &&
-    attrs['default_stock'].blank? &&
-    attrs['resettable'].blank? &&
-    attrs['sku'].nil? &&
-    attrs['on_demand'].nil? &&
-    tag_list.empty?
+      attrs['count_on_hand'].blank? &&
+      attrs['default_stock'].blank? &&
+      attrs['resettable'].blank? &&
+      attrs['sku'].nil? &&
+      attrs['on_demand'].nil? &&
+      tag_list.empty?
   end
 
   def collection_to_delete

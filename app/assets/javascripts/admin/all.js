@@ -8,7 +8,7 @@
 //= require jquery
 //= require jquery-migrate-min
 //= require jquery_ujs
-//= require jquery-ui
+//= require jquery.ui.all
 //= require jquery-ui-timepicker-addon
 //= require angular
 //= require angular-resource
@@ -23,8 +23,6 @@
 //= require angular-rails-templates
 //= require_tree ../templates/admin
 //= require ./admin_ofn
-//= require ./accounts_and_billing_settings/accounts_and_billing_settings
-//= require ./business_model_configuration/business_model_configuration
 //= require ./customers/customers
 //= require ./dropdown/dropdown
 //= require ./enterprises/enterprises

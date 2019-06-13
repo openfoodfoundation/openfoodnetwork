@@ -4,7 +4,7 @@ class Api::ProductSerializer < ActiveModel::Serializer
   # TODO
   # Prices can't be cached? How?
   def serializable_hash
-    cached_serializer_hash.merge uncached_serializer_hash
+    cached_serializer_hash.merge(uncached_serializer_hash)
   end
 
   private
@@ -31,12 +31,12 @@ class Api::UncachedProductSerializer < ActiveModel::Serializer
 end
 
 class Api::CachedProductSerializer < ActiveModel::Serializer
-  #cached
-  #delegate :cache_key, to: :object
+  # cached
+  # delegate :cache_key, to: :object
   include ActionView::Helpers::SanitizeHelper
 
   attributes :id, :name, :permalink, :meta_keywords
-  attributes :on_demand, :group_buy, :notes, :description, :description_html
+  attributes :group_buy, :notes, :description, :description_html
   attributes :properties_with_values
 
   has_many :variants, serializer: Api::VariantSerializer
@@ -48,14 +48,14 @@ class Api::CachedProductSerializer < ActiveModel::Serializer
   has_many :images, serializer: Api::ImageSerializer
   has_one :supplier, serializer: Api::IdSerializer
 
-  #return an unformatted descripton
+  # return an unformatted descripton
   def description
     strip_tags object.description
   end
 
-  #return a sanitized html description
+  # return a sanitized html description
   def description_html
-    d = sanitize(object.description, tags: "p, b, strong, em, i")
+    d = sanitize(object.description, tags: "p, b, strong, em, i, a, u", attributes: "href, target")
     d.to_s.html_safe
   end
 
@@ -70,5 +70,4 @@ class Api::CachedProductSerializer < ActiveModel::Serializer
   def master
     options[:master_variants][object.id].andand.first
   end
-
 end

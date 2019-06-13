@@ -2,7 +2,7 @@ require 'open_food_network/enterprise_fee_applicator'
 
 module OpenFoodNetwork
   class EnterpriseFeeCalculator
-    def initialize(distributor=nil, order_cycle=nil)
+    def initialize(distributor = nil, order_cycle = nil)
       @distributor = distributor
       @order_cycle = order_cycle
     end
@@ -18,11 +18,10 @@ module OpenFoodNetwork
     def indexed_fees_by_type_for(variant)
       load_enterprise_fees unless @indexed_enterprise_fees
 
-      indexed_enterprise_fees_for(variant).inject({}) do |fees, enterprise_fee|
+      indexed_enterprise_fees_for(variant).each_with_object({}) do |enterprise_fee, fees|
         fees[enterprise_fee.fee_type.to_sym] ||= 0
         fees[enterprise_fee.fee_type.to_sym] += calculate_fee_for variant, enterprise_fee
-        fees
-      end.select { |fee_type, amount| amount > 0 }
+      end.select { |_fee_type, amount| amount > 0 }
     end
 
     def fees_for(variant)
@@ -32,11 +31,10 @@ module OpenFoodNetwork
     end
 
     def fees_by_type_for(variant)
-      per_item_enterprise_fee_applicators_for(variant).inject({}) do |fees, applicator|
+      per_item_enterprise_fee_applicators_for(variant).each_with_object({}) do |applicator, fees|
         fees[applicator.enterprise_fee.fee_type.to_sym] ||= 0
         fees[applicator.enterprise_fee.fee_type.to_sym] += calculate_fee_for variant, applicator.enterprise_fee
-        fees
-      end.select { |fee_type, amount| amount > 0 }
+      end.select { |_fee_type, amount| amount > 0 }
     end
 
     def create_line_item_adjustments_for(line_item)
@@ -107,7 +105,7 @@ module OpenFoodNetwork
     def per_item_enterprise_fees_with_exchange_details
       EnterpriseFee.
         per_item.
-        joins(:exchanges => :exchange_variants).
+        joins(exchanges: :exchange_variants).
         where('exchanges.order_cycle_id = ?', @order_cycle.id).
         merge(Exchange.supplying_to(@distributor)).
         select('enterprise_fees.*, exchange_variants.variant_id AS variant_id')

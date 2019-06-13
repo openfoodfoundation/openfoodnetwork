@@ -285,13 +285,16 @@ FactoryBot.define do
     after(:create) { |c| c.set_preference(:per_kg, 0.5); c.save! }
   end
 
-  factory :order_with_totals_and_distribution, :parent => :order do #possibly called :order_with_line_items in newer Spree
-    distributor { create(:distributor_enterprise) }
+  factory :order_with_totals_and_distribution, parent: :order_with_distributor do
+    transient do
+      shipping_fee 3
+    end
+
     order_cycle { create(:simple_order_cycle) }
 
-    after(:create) do |order|
+    after(:create) do |order, proxy|
       product = create(:simple_product)
-      FactoryBot.create(:line_item, :order => order, :product => product)
+      create(:line_item_with_shipment, shipping_fee: proxy.shipping_fee, order: order, product: product)
       order.reload
     end
   end
@@ -340,24 +343,110 @@ FactoryBot.define do
     end
   end
 
-  factory :completed_order_with_fees, parent: :order_with_totals_and_distribution do
-    transient do
-      shipping_fee 3
-      payment_fee 5
+  factory :shipping_method_with, parent: :shipping_method do
+    trait :delivery do
+      require_ship_address { true }
     end
 
-    shipping_method do
-      shipping_calculator = build(:calculator_per_item, preferred_amount: shipping_fee)
-      create(:shipping_method, calculator: shipping_calculator, require_ship_address: false, distributors: [distributor])
+    trait :pickup do
+      require_ship_address { false }
     end
+
+    trait :flat_rate do
+      calculator { Spree::Calculator::FlatRate.new(preferred_amount: 50.0) }
+    end
+
+    trait :expensive_name do
+      name { "Shipping" }
+      description { "Expensive" }
+      calculator { Spree::Calculator::FlatRate.new(preferred_amount: 100.55) }
+    end
+
+    trait :distributor do
+      transient do
+        distributor { create :enterprise }
+      end
+      distributors { [distributor] }
+    end
+
+    trait :shipping_fee do
+      transient do
+        shipping_fee 3
+      end
+
+      calculator { build(:calculator_per_item, preferred_amount: shipping_fee) }
+      require_ship_address { false }
+      distributors { [create(:distributor_enterprise_with_tax)] }
+    end
+  end
+
+  factory :shipment_with, class: Spree::Shipment do
+    tracking 'U10000'
+    number '100'
+    cost 100.00
+    state 'pending'
+    order
+    address
+    stock_location
+
+    trait :shipping_method do
+      transient do
+        shipping_method { create(:shipping_method) }
+      end
+
+      shipping_rates { [Spree::ShippingRate.create(shipping_method: shipping_method, selected: true)] }
+
+      after(:create) do |shipment, evaluator|
+        shipment.order.line_items.each do |line_item|
+          line_item.quantity.times { shipment.inventory_units.create(variant_id: line_item.variant_id) }
+        end
+      end
+    end
+  end
+
+  factory :distributor_enterprise_with_tax, parent: :distributor_enterprise do
+    charges_sales_tax { true }
+    allow_order_changes { true }
+  end
+
+  factory :completed_order_with_fees, parent: :order_with_distributor do
+    transient do
+      payment_fee 5
+      shipping_fee 3
+    end
+
+    ship_address { create(:address) }
+    order_cycle { create(:simple_order_cycle) }
 
     after(:create) do |order, evaluator|
       create(:line_item, order: order)
-      order.create_shipment!
+      product = create(:simple_product)
+      create(:line_item, order: order, product: product)
+
       payment_calculator = build(:calculator_per_item, preferred_amount: evaluator.payment_fee)
       payment_method = create(:payment_method, calculator: payment_calculator)
       create(:payment, order: order, amount: order.total, payment_method: payment_method, state: 'checkout')
+
+      create(:shipping_method_with, :shipping_fee, shipping_fee: evaluator.shipping_fee, distributors: [order.distributor])
+
+      order.reload
       while !order.completed? do break unless order.next! end
+    end
+  end
+
+  factory :line_item_with_shipment, parent: :line_item do
+    transient do
+      shipping_fee 3
+    end
+
+    target_shipment do
+      shipment = order.reload.shipments.first
+      if shipment.nil?
+        shipping_method = create(:shipping_method_with, :shipping_fee, shipping_fee: shipping_fee)
+        shipping_method.distributors << order.distributor if order.distributor
+        shipment = create(:shipment_with, :shipping_method, shipping_method: shipping_method, order: order)
+      end
+      shipment
     end
   end
 
@@ -398,26 +487,6 @@ FactoryBot.define do
     bill_address { create(:address) }
   end
 
-  factory :billable_period do
-    begins_at { Time.zone.now.beginning_of_month }
-    ends_at { Time.zone.now.beginning_of_month + 1.month }
-    sells { 'any' }
-    trial { false }
-    enterprise
-    owner { enterprise.owner }
-    turnover { rand(100000).to_f/100 }
-    account_invoice do
-      AccountInvoice.where(user_id: owner_id, year: begins_at.year, month: begins_at.month).first ||
-      FactoryBot.create(:account_invoice, user: owner, year: begins_at.year, month: begins_at.month)
-    end
-  end
-
-  factory :account_invoice do
-    user { FactoryBot.create :user }
-    year { 2000 + rand(100) }
-    month { 1 + rand(12) }
-  end
-
   factory :filter_order_cycles_tag_rule, class: TagRule::FilterOrderCycles do
     enterprise { FactoryBot.create :distributor_enterprise }
   end
@@ -441,6 +510,12 @@ FactoryBot.define do
     end
   end
 
+  # A card that has been added to the user's profile and can be re-used.
+  factory :stored_credit_card, parent: :credit_card do
+    gateway_customer_profile_id "cus_F2T..."
+    gateway_payment_profile_id "card_1EY..."
+  end
+
   factory :stripe_payment_method, :class => Spree::Gateway::StripeConnect do
     name 'Stripe'
     environment 'test'
@@ -460,14 +535,36 @@ FactoryBot.define do
       Spree::Image.create(attachment: image, viewable_id: product.master.id, viewable_type: 'Spree::Variant')
     end
   end
-end
 
+  factory :simple_product, parent: :base_product do
+    transient do
+      on_demand { false }
+      on_hand { 5 }
+    end
+    after(:create) do |product, evaluator|
+      product.master.on_demand = evaluator.on_demand
+      product.master.on_hand = evaluator.on_hand
+      product.variants.first.on_demand = evaluator.on_demand
+      product.variants.first.on_hand = evaluator.on_hand
+    end
+  end
+end
 
 FactoryBot.modify do
   factory :product do
+    transient do
+      on_hand { 5 }
+    end
+
     primary_taxon { Spree::Taxon.first || FactoryBot.create(:taxon) }
+
+    after(:create) do |product, evaluator|
+      product.master.on_hand = evaluator.on_hand
+      product.variants.first.on_hand = evaluator.on_hand
+    end
   end
-  factory :simple_product do
+
+  factory :base_product do
     # Fix product factory name sequence with Kernel.rand so it is not interpreted as a Spree::Product method
     # Pull request: https://github.com/spree/spree/pull/1964
     # When this fix has been merged into a version of Spree that we're using, this line can be removed.
@@ -475,7 +572,6 @@ FactoryBot.modify do
 
     supplier { Enterprise.is_primary_producer.first || FactoryBot.create(:supplier_enterprise) }
     primary_taxon { Spree::Taxon.first || FactoryBot.create(:taxon) }
-    on_hand 3
 
     unit_value 1
     unit_description ''
@@ -486,11 +582,22 @@ FactoryBot.modify do
   end
 
   factory :variant do
+    transient do
+      on_demand { false }
+      on_hand { 5 }
+    end
+
     unit_value 1
     unit_description ''
+
+    after(:create) do |variant, evaluator|
+      variant.on_demand = evaluator.on_demand
+      variant.on_hand = evaluator.on_hand
+      variant.save
+    end
   end
 
-  factory :shipping_method do
+  factory :shipping_method, parent: :base_shipping_method do
     distributors { [Enterprise.is_distributor.first || FactoryBot.create(:distributor_enterprise)] }
     display_on ''
   end
@@ -542,5 +649,23 @@ FactoryBot.modify do
     after(:create) do |user|
       user.spree_roles << Spree::Role.find_or_create_by_name!('admin')
     end
+  end
+end
+
+FactoryBot.modify do
+  factory :stock_location, class: Spree::StockLocation do
+    # keeps the test stock_location unique
+    initialize_with { DefaultStockLocation.find_or_create }
+
+    # Ensures the name attribute is not assigned after instantiating the default location
+    transient { name 'default' }
+
+    # sets the default value for variant.on_demand
+    backorderable_default false
+  end
+
+  factory :shipment, class: Spree::Shipment do
+    # keeps test shipments unique per order
+    initialize_with { Spree::Shipment.find_or_create_by_order_id(order.id)}
   end
 end

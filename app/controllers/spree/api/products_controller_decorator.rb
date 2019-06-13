@@ -33,8 +33,8 @@ Spree::Api::ProductsController.class_eval do
     authorize! :delete, Spree::Product
     @product = find_product(params[:product_id])
     authorize! :delete, @product
-    @product.delete
-    respond_with(@product, :status => 204)
+    @product.destroy
+    respond_with(@product, status: 204)
   end
 
   # POST /api/products/:product_id/clone
@@ -56,8 +56,8 @@ Spree::Api::ProductsController.class_eval do
   def product_scope
     if current_api_user.has_spree_role?("admin") || current_api_user.enterprises.present? # This line modified
       scope = Spree::Product
-      unless params[:show_deleted]
-        scope = scope.not_deleted
+      if params[:show_deleted]
+        scope = scope.with_deleted
       end
     else
       scope = Spree::Product.active

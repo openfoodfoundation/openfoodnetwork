@@ -7,82 +7,135 @@ describe CheckoutController, type: :controller do
   let(:reset_order_service) { double(ResetOrderService) }
 
   before do
-    order.stub(:checkout_allowed?).and_return true
-    controller.stub(:check_authorization).and_return true
+    allow(order).to receive(:checkout_allowed?).and_return true
+    allow(controller).to receive(:check_authorization).and_return true
   end
 
   it "redirects home when no distributor is selected" do
     get :edit
-    response.should redirect_to root_path
+    expect(response).to redirect_to root_path
   end
 
   it "redirects to the shop when no order cycle is selected" do
-    controller.stub(:current_distributor).and_return(distributor)
+    allow(controller).to receive(:current_distributor).and_return(distributor)
     get :edit
-    response.should redirect_to shop_path
+    expect(response).to redirect_to shop_path
   end
 
   it "redirects home with message if hub is not ready for checkout" do
-    distributor.stub(:ready_for_checkout?) { false }
-    order.stub(distributor: distributor, order_cycle: order_cycle)
-    controller.stub(:current_order).and_return(order)
+    allow(distributor).to receive(:ready_for_checkout?) { false }
+    allow(order).to receive_messages(distributor: distributor, order_cycle: order_cycle)
+    allow(controller).to receive(:current_order).and_return(order)
 
-    order.should_receive(:empty!)
-    order.should_receive(:set_distribution!).with(nil, nil)
+    expect(order).to receive(:empty!)
+    expect(order).to receive(:set_distribution!).with(nil, nil)
 
     get :edit
 
-    response.should redirect_to root_url
-    flash[:info].should == "The hub you have selected is temporarily closed for orders. Please try again later."
+    expect(response).to redirect_to root_url
+    expect(flash[:info]).to eq("The hub you have selected is temporarily closed for orders. Please try again later.")
   end
 
-  it "redirects to the cart when some items are out of stock" do
-    controller.stub(:current_distributor).and_return(distributor)
-    controller.stub(:current_order_cycle).and_return(order_cycle)
-    controller.stub(:current_order).and_return(order)
-    order.stub_chain(:insufficient_stock_lines, :present?).and_return true
-    get :edit
-    response.should redirect_to spree.cart_path
-  end
+  describe "redirection to the cart" do
+    let(:order_cycle_distributed_variants) { double(:order_cycle_distributed_variants) }
 
-  it "renders when both distributor and order cycle is selected" do
-    controller.stub(:current_distributor).and_return(distributor)
-    controller.stub(:current_order_cycle).and_return(order_cycle)
-    controller.stub(:current_order).and_return(order)
-    order.stub_chain(:insufficient_stock_lines, :present?).and_return false
-    get :edit
-    response.should be_success
+    before do
+      allow(controller).to receive(:current_order).and_return(order)
+      allow(order).to receive(:distributor).and_return(distributor)
+      order.order_cycle = order_cycle
+
+      allow(OrderCycleDistributedVariants).to receive(:new).with(order_cycle, distributor).and_return(order_cycle_distributed_variants)
+    end
+
+    it "redirects when some items are out of stock" do
+      allow(order).to receive_message_chain(:insufficient_stock_lines, :empty?).and_return false
+
+      get :edit
+      expect(response).to redirect_to spree.cart_path
+    end
+
+    it "redirects when some items are not available" do
+      allow(order).to receive_message_chain(:insufficient_stock_lines, :empty?).and_return true
+      expect(order_cycle_distributed_variants).to receive(:distributes_order_variants?).with(order).and_return(false)
+
+      get :edit
+      expect(response).to redirect_to spree.cart_path
+    end
+
+    it "does not redirect when items are available and in stock" do
+      allow(order).to receive_message_chain(:insufficient_stock_lines, :empty?).and_return true
+      expect(order_cycle_distributed_variants).to receive(:distributes_order_variants?).with(order).and_return(true)
+
+      get :edit
+      expect(response).to be_success
+    end
   end
 
   describe "building the order" do
     before do
-      controller.stub(:current_distributor).and_return(distributor)
-      controller.stub(:current_order_cycle).and_return(order_cycle)
-      controller.stub(:current_order).and_return(order)
+      allow(controller).to receive(:current_distributor).and_return(distributor)
+      allow(controller).to receive(:current_order_cycle).and_return(order_cycle)
+      allow(controller).to receive(:current_order).and_return(order)
     end
 
     it "does not clone the ship address from distributor when shipping method requires address" do
       get :edit
-      assigns[:order].ship_address.address1.should be_nil
+      expect(assigns[:order].ship_address.address1).to be_nil
     end
 
     it "clears the ship address when re-rendering edit" do
-      controller.should_receive(:clear_ship_address).and_return true
-      order.stub(:update_attributes).and_return false
+      expect(controller).to receive(:clear_ship_address).and_return true
+      allow(order).to receive(:update_attributes).and_return false
       spree_post :update, format: :json, order: {}
     end
 
     it "clears the ship address when the order state cannot be advanced" do
-      controller.should_receive(:clear_ship_address).and_return true
-      order.stub(:update_attributes).and_return true
-      order.stub(:next).and_return false
+      expect(controller).to receive(:clear_ship_address).and_return true
+      allow(order).to receive(:update_attributes).and_return true
+      allow(order).to receive(:next).and_return false
       spree_post :update, format: :json, order: {}
     end
 
     it "only clears the ship address with a pickup shipping method" do
-      order.stub_chain(:shipping_method, :andand, :require_ship_address).and_return false
-      order.should_receive(:ship_address=)
+      allow(order).to receive_message_chain(:shipping_method, :andand, :require_ship_address).and_return false
+      expect(order).to receive(:ship_address=)
       controller.send(:clear_ship_address)
+    end
+
+    context "#update with shipping_method_id" do
+      let(:test_shipping_method_id) { "111" }
+
+      before do
+        # stub order and resetorderservice
+        allow(ResetOrderService).to receive(:new).with(controller, order) { reset_order_service }
+        allow(reset_order_service).to receive(:call)
+        allow(order).to receive(:update_attributes).and_return true
+        allow(controller).to receive(:current_order).and_return order
+
+        # make order workflow pass through delivery
+        allow(order).to receive(:next).twice do
+          if order.state == 'cart'
+            order.update_column :state, 'delivery'
+          else
+            order.update_column :state, 'complete'
+          end
+        end
+      end
+
+      it "does not fail to update" do
+        expect(controller).to_not receive(:clear_ship_address)
+        spree_post :update, order: { shipping_method_id: test_shipping_method_id }
+      end
+
+      it "does not send shipping_method_id to the order model as an attribute" do
+        expect(order).to receive(:update_attributes).with({})
+        spree_post :update, order: { shipping_method_id: test_shipping_method_id }
+      end
+
+      it "selects the shipping_method in the order" do
+        expect(order).to receive(:select_shipping_method).with(test_shipping_method_id)
+        spree_post :update, order: { shipping_method_id: test_shipping_method_id }
+      end
     end
 
     context 'when completing the order' do
@@ -126,35 +179,35 @@ describe CheckoutController, type: :controller do
 
   context "via xhr" do
     before do
-      controller.stub(:current_distributor).and_return(distributor)
+      allow(controller).to receive(:current_distributor).and_return(distributor)
 
-      controller.stub(:current_order_cycle).and_return(order_cycle)
-      controller.stub(:current_order).and_return(order)
+      allow(controller).to receive(:current_order_cycle).and_return(order_cycle)
+      allow(controller).to receive(:current_order).and_return(order)
     end
 
     it "returns errors" do
       spree_post :update, format: :json, order: {}
-      response.status.should == 400
-      response.body.should == {errors: assigns[:order].errors, flash: {}}.to_json
+      expect(response.status).to eq(400)
+      expect(response.body).to eq({ errors: assigns[:order].errors, flash: {} }.to_json)
     end
 
     it "returns flash" do
-      order.stub(:update_attributes).and_return true
-      order.stub(:next).and_return false
+      allow(order).to receive(:update_attributes).and_return true
+      allow(order).to receive(:next).and_return false
       spree_post :update, format: :json, order: {}
-      response.body.should == {errors: assigns[:order].errors, flash: {error: "Payment could not be processed, please check the details you entered"}}.to_json
+      expect(response.body).to eq({ errors: assigns[:order].errors, flash: { error: "Payment could not be processed, please check the details you entered" } }.to_json)
     end
 
     it "returns order confirmation url on success" do
       allow(ResetOrderService).to receive(:new).with(controller, order) { reset_order_service }
       expect(reset_order_service).to receive(:call)
 
-      order.stub(:update_attributes).and_return true
-      order.stub(:state).and_return "complete"
+      allow(order).to receive(:update_attributes).and_return true
+      allow(order).to receive(:state).and_return "complete"
 
       spree_post :update, format: :json, order: {}
-      response.status.should == 200
-      response.body.should == {path: spree.order_path(order)}.to_json
+      expect(response.status).to eq(200)
+      expect(response.body).to eq({ path: spree.order_path(order) }.to_json)
     end
 
     describe "stale object handling" do
@@ -162,27 +215,27 @@ describe CheckoutController, type: :controller do
         allow(ResetOrderService).to receive(:new).with(controller, order) { reset_order_service }
         expect(reset_order_service).to receive(:call)
 
-        order.stub(:update_attributes).and_return true
-        controller.stub(:state_callback)
+        allow(order).to receive(:update_attributes).and_return true
+        allow(controller).to receive(:state_callback)
 
         # The first time, raise a StaleObjectError. The second time, succeed.
-        order.stub(:next).once.
+        allow(order).to receive(:next).once.
           and_raise(ActiveRecord::StaleObjectError.new(Spree::Variant.new, 'update'))
-        order.stub(:next).once do
+        allow(order).to receive(:next).once do
           order.update_column :state, 'complete'
           true
         end
 
         spree_post :update, format: :json, order: {}
-        response.status.should == 200
+        expect(response.status).to eq(200)
       end
 
       it "tries a maximum of 3 times before giving up and returning an error" do
-        order.stub(:update_attributes).and_return true
-        order.stub(:next) { raise ActiveRecord::StaleObjectError.new(Spree::Variant.new, 'update') }
+        allow(order).to receive(:update_attributes).and_return true
+        allow(order).to receive(:next) { raise ActiveRecord::StaleObjectError.new(Spree::Variant.new, 'update') }
 
         spree_post :update, format: :json, order: {}
-        response.status.should == 400
+        expect(response.status).to eq(400)
       end
     end
   end
@@ -203,7 +256,7 @@ describe CheckoutController, type: :controller do
       expect(Spree::PaymentMethod).to receive(:find).with(payment_method.id.to_s) { payment_method }
       allow(order).to receive(:update_attributes) { true }
       allow(order).to receive(:state) { "payment" }
-      spree_post :update, order: {payments_attributes: [{payment_method_id: payment_method.id}]}
+      spree_post :update, order: { payments_attributes: [{ payment_method_id: payment_method.id }] }
     end
   end
 

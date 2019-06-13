@@ -40,7 +40,7 @@ module OpenFoodNetwork
     def table_items
       return [] unless @render_table
       orders = search.result
-      payments = orders.map { |o| o.payments.select { |payment| payment.completed? } }.flatten # Only select completed payments
+      payments = orders.map { |o| o.payments.select(&:completed?) }.flatten # Only select completed payments
       case params[:report_type]
       when "payments_by_payment_type"
         payments
@@ -56,60 +56,60 @@ module OpenFoodNetwork
     def rules
       case params[:report_type]
       when "payments_by_payment_type"
-        [ { group_by: proc { |payment| payment.order.payment_state },
-          sort_by: proc { |payment_state| payment_state } },
-          { group_by: proc { |payment| payment.order.distributor },
-          sort_by: proc { |distributor| distributor.name } },
-          { group_by: proc { |payment| Spree::PaymentMethod.unscoped { payment.payment_method } },
-          sort_by: proc { |method| method.name } } ]
+        [{ group_by: proc { |payment| payment.order.payment_state },
+           sort_by: proc { |payment_state| payment_state } },
+         { group_by: proc { |payment| payment.order.distributor },
+           sort_by: proc { |distributor| distributor.name } },
+         { group_by: proc { |payment| Spree::PaymentMethod.unscoped { payment.payment_method } },
+           sort_by: proc { |method| method.name } }]
       when "itemised_payment_totals"
-        [ { group_by: proc { |order| order.payment_state },
-          sort_by: proc { |payment_state| payment_state } },
-          { group_by: proc { |order| order.distributor },
-          sort_by: proc { |distributor| distributor.name } } ]
+        [{ group_by: proc { |order| order.payment_state },
+           sort_by: proc { |payment_state| payment_state } },
+         { group_by: proc { |order| order.distributor },
+           sort_by: proc { |distributor| distributor.name } }]
       when "payment_totals"
-        [ { group_by: proc { |order| order.payment_state },
-          sort_by: proc { |payment_state| payment_state } },
-          { group_by: proc { |order| order.distributor },
-          sort_by: proc { |distributor| distributor.name } } ]
+        [{ group_by: proc { |order| order.payment_state },
+           sort_by: proc { |payment_state| payment_state } },
+         { group_by: proc { |order| order.distributor },
+           sort_by: proc { |distributor| distributor.name } }]
       else
-        [ { group_by: proc { |payment| payment.order.payment_state },
-          sort_by: proc { |payment_state| payment_state } },
-          { group_by: proc { |payment| payment.order.distributor },
-          sort_by: proc { |distributor| distributor.name } },
-          { group_by: proc { |payment| payment.payment_method },
-          sort_by: proc { |method| method.name } } ]
+        [{ group_by: proc { |payment| payment.order.payment_state },
+           sort_by: proc { |payment_state| payment_state } },
+         { group_by: proc { |payment| payment.order.distributor },
+           sort_by: proc { |distributor| distributor.name } },
+         { group_by: proc { |payment| payment.payment_method },
+           sort_by: proc { |method| method.name } }]
       end
     end
 
     def columns
       case params[:report_type]
       when "payments_by_payment_type"
-        [ proc { |payments| payments.first.order.payment_state },
-          proc { |payments| payments.first.order.distributor.name },
-          proc { |payments| payments.first.payment_method.name },
-          proc { |payments| payments.sum { |payment| payment.amount } } ]
+        [proc { |payments| payments.first.order.payment_state },
+         proc { |payments| payments.first.order.distributor.name },
+         proc { |payments| payments.first.payment_method.name },
+         proc { |payments| payments.sum(&:amount) }]
       when "itemised_payment_totals"
-        [ proc { |orders| orders.first.payment_state },
-          proc { |orders| orders.first.distributor.name },
-          proc { |orders| orders.sum { |o| o.item_total } },
-          proc { |orders| orders.sum { |o| o.ship_total } },
-          proc { |orders| orders.sum { |o| o.outstanding_balance } },
-          proc { |orders| orders.sum { |o| o.total } } ]
+        [proc { |orders| orders.first.payment_state },
+         proc { |orders| orders.first.distributor.name },
+         proc { |orders| orders.sum(&:item_total) },
+         proc { |orders| orders.sum(&:ship_total) },
+         proc { |orders| orders.sum(&:outstanding_balance) },
+         proc { |orders| orders.sum(&:total) }]
       when "payment_totals"
-        [ proc { |orders| orders.first.payment_state },
-          proc { |orders| orders.first.distributor.name },
-          proc { |orders| orders.sum { |o| o.item_total } },
-          proc { |orders| orders.sum { |o| o.ship_total } },
-          proc { |orders| orders.sum { |o| o.total } },
-          proc { |orders| orders.sum { |o| o.payments.select { |payment| payment.completed? && (payment.payment_method.name.to_s.include? "EFT") }.sum { |payment| payment.amount } } },
-          proc { |orders| orders.sum { |o| o.payments.select { |payment| payment.completed? && (payment.payment_method.name.to_s.include? "PayPal") }.sum{ |payment| payment.amount } } },
-          proc { |orders| orders.sum { |o| o.outstanding_balance } } ]
+        [proc { |orders| orders.first.payment_state },
+         proc { |orders| orders.first.distributor.name },
+         proc { |orders| orders.sum(&:item_total) },
+         proc { |orders| orders.sum(&:ship_total) },
+         proc { |orders| orders.sum(&:total) },
+         proc { |orders| orders.sum { |o| o.payments.select { |payment| payment.completed? && (payment.payment_method.name.to_s.include? "EFT") }.sum(&:amount) } },
+         proc { |orders| orders.sum { |o| o.payments.select { |payment| payment.completed? && (payment.payment_method.name.to_s.include? "PayPal") }.sum(&:amount) } },
+         proc { |orders| orders.sum(&:outstanding_balance) }]
       else
-        [ proc { |payments| payments.first.order.payment_state },
-          proc { |payments| payments.first.order.distributor.name },
-          proc { |payments| payments.first.payment_method.name },
-          proc { |payments| payments.sum { |payment| payment.amount } } ]
+        [proc { |payments| payments.first.order.payment_state },
+         proc { |payments| payments.first.order.distributor.name },
+         proc { |payments| payments.first.payment_method.name },
+         proc { |payments| payments.sum(&:amount) }]
       end
     end
   end

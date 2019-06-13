@@ -1,6 +1,5 @@
 class MapController < BaseController
   layout 'darkswarm'
 
-  def index
-  end
+  def index; end
 end

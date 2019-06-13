@@ -17,9 +17,9 @@ feature '
   end
 
   context "with sensitive payment fee" do
-    let(:payment_method) { order.distributor.payment_methods.first }
-
     before do
+      payment_method = create(:payment_method, distributors: [order.distributor])
+
       # This calculator doesn't handle a `nil` order well.
       # That has been useful in finding bugs. ;-)
       payment_method.calculator = Spree::Calculator::FlatPercentItemTotal.new

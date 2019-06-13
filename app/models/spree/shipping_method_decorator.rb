@@ -29,8 +29,7 @@ Spree::ShippingMethod.class_eval do
       where('enterprises.id = ?', distributor)
   }
 
-  scope :by_name, order('spree_shipping_methods.name ASC')
-
+  scope :by_name, -> { order('spree_shipping_methods.name ASC') }
 
   # Return the services (pickup, delivery) that different distributors provide, in the format:
   # {distributor_id => {pickup: true, delivery: false}, ...}
@@ -42,26 +41,20 @@ Spree::ShippingMethod.class_eval do
         select("distributor_id").
         select("BOOL_OR(spree_shipping_methods.require_ship_address = 'f') AS pickup").
         select("BOOL_OR(spree_shipping_methods.require_ship_address = 't') AS delivery").
-        map { |sm| [sm.distributor_id.to_i, {pickup: sm.pickup == 't', delivery: sm.delivery == 't'}] }
+        map { |sm| [sm.distributor_id.to_i, { pickup: sm.pickup == 't', delivery: sm.delivery == 't' }] }
     ]
   end
 
-  def available_to_order_with_distributor_check?(order)
-    available_to_order_without_distributor_check?(order) &&
-      self.distributors.include?(order.distributor)
-  end
-  alias_method_chain :available_to_order?, :distributor_check
-
-  def within_zone?(order)
-    if order.ship_address
-      zone && zone.include?(order.ship_address)
-    else
-      true # Shipping methods are available before we've selected an address
-    end
+  # This method is overriden so that we can remove the restriction added in Spree
+  #   Spree restricts shipping method calculators to the ones that inherit from Spree::Shipping::ShippingCalculator
+  #   Spree::Shipping::ShippingCalculator makes sure that calculators are able to handle packages and not orders as input
+  #   This is not necessary in OFN because calculators in OFN are already customized to work with different types of input
+  def self.calculators
+    spree_calculators.send model_name_without_spree_namespace
   end
 
   def has_distributor?(distributor)
-    self.distributors.include?(distributor)
+    distributors.include?(distributor)
   end
 
   def adjustment_label

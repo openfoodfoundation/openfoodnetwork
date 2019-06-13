@@ -59,7 +59,7 @@ module ProductImport
 
     def product_field_errors?
       @entries.each do |entry|
-        return true if entry.errors.messages.values.include? [I18n.t('admin.product_import.model.not_updatable')]
+        return true if entry.errors.messages.value?([I18n.t('admin.product_import.model.not_updatable')])
       end
       false
     end

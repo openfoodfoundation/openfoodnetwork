@@ -2,28 +2,23 @@
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 require 'yaml'
 
-def create_mail_method
-  Spree::MailMethod.destroy_all
-
-  CreateMailMethod.new(
-    environment: Rails.env,
-    preferred_enable_mail_delivery: true,
-    preferred_mail_host: ENV.fetch('MAIL_HOST'),
-    preferred_mail_domain: ENV.fetch('MAIL_DOMAIN'),
-    preferred_mail_port: ENV.fetch('MAIL_PORT'),
-    preferred_mail_auth_type: 'login',
-    preferred_smtp_username: ENV.fetch('SMTP_USERNAME'),
-    preferred_smtp_password: ENV.fetch('SMTP_PASSWORD'),
-    preferred_secure_connection_type: ENV.fetch('MAIL_SECURE_CONNECTION', 'None'),
-    preferred_mails_from: ENV.fetch('MAILS_FROM', "no-reply@#{ENV.fetch('MAIL_DOMAIN')}"),
-    preferred_mail_bcc: ENV.fetch('MAIL_BCC', ''),
-    preferred_intercept_email: ''
-  ).call
+def set_mail_configuration
+  MailConfiguration.entries= {
+    enable_mail_delivery: true,
+    mail_host: ENV.fetch('MAIL_HOST'),
+    mail_domain: ENV.fetch('MAIL_DOMAIN'),
+    mail_port: ENV.fetch('MAIL_PORT'),
+    mail_auth_type: 'login',
+    smtp_username: ENV.fetch('SMTP_USERNAME'),
+    smtp_password: ENV.fetch('SMTP_PASSWORD'),
+    secure_connection_type: ENV.fetch('MAIL_SECURE_CONNECTION', 'None'),
+    mails_from: ENV.fetch('MAILS_FROM', "no-reply@#{ENV.fetch('MAIL_DOMAIN')}"),
+    mail_bcc: ENV.fetch('MAIL_BCC', ''),
+    intercept_email: ''
+  }
 end
-
-# We need a mail method to create a user account, because it sends a
-# confirmation email.
-create_mail_method
+# We need mail_configuration to create a user account, because it sends a confirmation email.
+set_mail_configuration
 
 # -- Spree
 unless Spree::Country.find_by_iso(ENV['DEFAULT_COUNTRY_CODE'])
@@ -55,3 +50,5 @@ end
 
 spree_user = Spree::User.first
 spree_user && spree_user.confirm!
+
+DefaultStockLocation.find_or_create

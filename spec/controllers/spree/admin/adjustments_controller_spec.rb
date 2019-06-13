@@ -12,23 +12,23 @@ module Spree
 
       describe "creating an adjustment" do
         it "sets included tax to zero when no tax rate is specified" do
-          spree_post :create, {order_id: order.number, adjustment: {label: 'Testing included tax', amount: '110'}, tax_rate_id: ''}
-          response.should redirect_to spree.admin_order_adjustments_path(order)
+          spree_post :create, order_id: order.number, adjustment: { label: 'Testing included tax', amount: '110' }, tax_rate_id: ''
+          expect(response).to redirect_to spree.admin_order_adjustments_path(order)
 
           a = Adjustment.last
-          a.label.should == 'Testing included tax'
-          a.amount.should == 110
-          a.included_tax.should == 0
+          expect(a.label).to eq('Testing included tax')
+          expect(a.amount).to eq(110)
+          expect(a.included_tax).to eq(0)
         end
 
         it "calculates included tax when a tax rate is provided" do
-          spree_post :create, {order_id: order.number, adjustment: {label: 'Testing included tax', amount: '110'}, tax_rate_id: tax_rate.id.to_s}
-          response.should redirect_to spree.admin_order_adjustments_path(order)
+          spree_post :create, order_id: order.number, adjustment: { label: 'Testing included tax', amount: '110' }, tax_rate_id: tax_rate.id.to_s
+          expect(response).to redirect_to spree.admin_order_adjustments_path(order)
 
           a = Adjustment.last
-          a.label.should == 'Testing included tax'
-          a.amount.should == 110
-          a.included_tax.should == 10
+          expect(a.label).to eq('Testing included tax')
+          expect(a.amount).to eq(110)
+          expect(a.included_tax).to eq(10)
         end
       end
 
@@ -36,23 +36,23 @@ module Spree
         let(:adjustment) { create(:adjustment, adjustable: order, amount: 1100, included_tax: 100) }
 
         it "sets included tax to zero when no tax rate is specified" do
-          spree_put :update, {order_id: order.number, id: adjustment.id, adjustment: {label: 'Testing included tax', amount: '110'}, tax_rate_id: ''}
-          response.should redirect_to spree.admin_order_adjustments_path(order)
+          spree_put :update, order_id: order.number, id: adjustment.id, adjustment: { label: 'Testing included tax', amount: '110' }, tax_rate_id: ''
+          expect(response).to redirect_to spree.admin_order_adjustments_path(order)
 
           a = Adjustment.last
-          a.label.should == 'Testing included tax'
-          a.amount.should == 110
-          a.included_tax.should == 0
+          expect(a.label).to eq('Testing included tax')
+          expect(a.amount).to eq(110)
+          expect(a.included_tax).to eq(0)
         end
 
         it "calculates included tax when a tax rate is provided" do
-          spree_put :update, {order_id: order.number, id: adjustment.id, adjustment: {label: 'Testing included tax', amount: '110'}, tax_rate_id: tax_rate.id.to_s}
-          response.should redirect_to spree.admin_order_adjustments_path(order)
+          spree_put :update, order_id: order.number, id: adjustment.id, adjustment: { label: 'Testing included tax', amount: '110' }, tax_rate_id: tax_rate.id.to_s
+          expect(response).to redirect_to spree.admin_order_adjustments_path(order)
 
           a = Adjustment.last
-          a.label.should == 'Testing included tax'
-          a.amount.should == 110
-          a.included_tax.should == 10
+          expect(a.label).to eq('Testing included tax')
+          expect(a.amount).to eq(110)
+          expect(a.included_tax).to eq(10)
         end
       end
     end

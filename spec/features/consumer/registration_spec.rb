@@ -56,7 +56,6 @@ feature "Registration", js: true do
       click_button "Continue"
       expect(page).to have_content 'Who is responsible for managing My Awesome Enterprise?'
 
-
       # Filling in Contact Details
       fill_in 'enterprise_contact', with: 'Saskia Munroe'
       page.should have_field 'enterprise_email_address', with: user.email
@@ -184,7 +183,7 @@ feature "Registration", js: true do
     # Link appears to be unresponsive for a while, so keep clicking it until it works
     using_wait_time 0.5 do
       10.times do
-        find("a", text: "Login").click()
+        find("a", text: "Login").click
         break if page.has_selector? "dd.active", text: "Login"
       end
     end

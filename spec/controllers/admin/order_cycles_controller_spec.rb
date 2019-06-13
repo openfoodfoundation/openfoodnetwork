@@ -7,7 +7,7 @@ module Admin
     let!(:distributor_owner) { create_enterprise_user enterprise_limit: 2 }
 
     before do
-      controller.stub spree_current_user: distributor_owner
+      allow(controller).to receive_messages spree_current_user: distributor_owner
     end
 
     describe "#index" do
@@ -151,14 +151,14 @@ module Admin
 
             it "sets flash message" do
               spree_put :update, params
-              flash[:notice].should == 'Your order cycle has been updated.'
+              expect(flash[:notice]).to eq('Your order cycle has been updated.')
             end
           end
 
           context "when the page is not reloading" do
             it "does not set flash message" do
               spree_put :update, params
-              flash[:notice].should be nil
+              expect(flash[:notice]).to be nil
             end
           end
         end
@@ -277,7 +277,6 @@ module Admin
       end
     end
 
-
     describe "notifying producers" do
       let(:user) { create_enterprise_user }
       let(:admin_user) do
@@ -288,22 +287,21 @@ module Admin
       let(:order_cycle) { create(:simple_order_cycle) }
 
       before do
-        controller.stub spree_current_user: admin_user
+        allow(controller).to receive_messages spree_current_user: admin_user
       end
 
       it "enqueues a job" do
         expect do
-          spree_post :notify_producers, {id: order_cycle.id}
+          spree_post :notify_producers, id: order_cycle.id
         end.to enqueue_job OrderCycleNotificationJob
       end
 
       it "redirects back to the order cycles path with a success message" do
-        spree_post :notify_producers, {id: order_cycle.id}
+        spree_post :notify_producers, id: order_cycle.id
         expect(response).to redirect_to admin_order_cycles_path
-        flash[:notice].should == 'Emails to be sent to producers have been queued for sending.'
+        expect(flash[:notice]).to eq('Emails to be sent to producers have been queued for sending.')
       end
     end
-
 
     describe "destroy" do
       let(:distributor) { create(:distributor_enterprise, owner: distributor_owner) }
@@ -336,6 +334,5 @@ module Admin
         end
       end
     end
-
   end
 end

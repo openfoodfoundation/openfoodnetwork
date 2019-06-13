@@ -11,7 +11,7 @@
 
 = csrf_meta_tags
 
-%div{"data-hook" => "admin_order_new_header"}
+%div
   = render 'spree/shared/error_messages', :target => @order
 
 %div{"ng-app" => "admin.orders", "ng-controller" => "orderCtrl"}

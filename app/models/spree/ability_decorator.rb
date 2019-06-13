@@ -32,14 +32,14 @@ class AbilityDecorator
   # Users can manage products if they have an enterprise that is not a profile.
   def can_manage_products?(user)
     can_manage_enterprises?(user) &&
-    user.enterprises.any? { |e| e.category != :hub_profile && e.producer_profile_only != true }
+      user.enterprises.any? { |e| e.category != :hub_profile && e.producer_profile_only != true }
   end
 
   # Users can manage order cycles if they manage a sells own/any enterprise
   # OR if they manage a producer which is included in any order cycles
   def can_manage_order_cycles?(user)
     can_manage_orders?(user) ||
-    OrderCycle.accessible_by(user).any?
+      OrderCycle.accessible_by(user).any?
   end
 
   # Users can manage orders if they have a sells own/any enterprise.
@@ -54,7 +54,7 @@ class AbilityDecorator
   def add_shopping_abilities(user)
     can [:destroy], Spree::LineItem do |item|
       user == item.order.user &&
-      item.order.changes_allowed?
+        item.order.changes_allowed?
     end
 
     can [:cancel], Spree::Order do |order|
@@ -71,13 +71,12 @@ class AbilityDecorator
   end
 
   # New users can create an enterprise, and gain other permissions from doing this.
-  def add_base_abilities(user)
+  def add_base_abilities(_user)
     can [:create], Enterprise
   end
 
   def add_group_management_abilities(user)
     can [:admin, :index], :overview
-    can [:admin, :sync], :analytic
     can [:admin, :index], EnterpriseGroup
     can [:read, :edit, :update], EnterpriseGroup do |group|
       user.owned_groups.include? group
@@ -90,7 +89,6 @@ class AbilityDecorator
     can [:create, :search], nil
 
     can [:admin, :index], :overview
-    can [:admin, :sync], :analytic
 
     can [:admin, :index, :read, :create, :edit, :update_positions, :destroy], ProducerProperty
 
@@ -189,8 +187,8 @@ class AbilityDecorator
     # Reports page
     can [:admin, :index, :customers, :orders_and_distributors, :group_buys, :bulk_coop, :payments,
          :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :packing],
-        :report
-    add_enterprise_fee_summary_abilities(user)
+        Spree::Admin::ReportsController
+    add_enterprise_fee_summary_abilities
   end
 
   def add_order_cycle_management_abilities(user)
@@ -265,8 +263,8 @@ class AbilityDecorator
     # Reports page
     can [:admin, :index, :customers, :group_buys, :bulk_coop, :sales_tax, :payments,
          :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory,
-         :order_cycle_management, :xero_invoices], :report
-    add_enterprise_fee_summary_abilities(user)
+         :order_cycle_management, :xero_invoices], Spree::Admin::ReportsController
+    add_enterprise_fee_summary_abilities
 
     can [:create], Customer
     can [:admin, :index, :update, :destroy, :show], Customer, enterprise_id: Enterprise.managed_by(user).pluck(:id)
@@ -290,12 +288,9 @@ class AbilityDecorator
     end
   end
 
-  def add_enterprise_fee_summary_abilities(user)
-    feature_enabled = FeatureFlags.new(user).enterprise_fee_summary_enabled?
-    return unless feature_enabled
-
+  def add_enterprise_fee_summary_abilities
     # Reveal the report link in spree/admin/reports#index
-    can [:enterprise_fee_summary], :report
+    can [:enterprise_fee_summary], Spree::Admin::ReportsController
     # Allow direct access to the report resource
     can [:admin, :new, :create], :enterprise_fee_summary
   end

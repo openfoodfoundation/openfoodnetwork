@@ -14,7 +14,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
   let(:enterprise_fee) { create(:enterprise_fee, amount: 1.23, tax_category: product.tax_category) }
   let(:product) { create(:taxed_product, supplier: supplier, price: 10, zone: zone, tax_rate_amount: 0.1) }
   let(:variant) { product.variants.first }
-  let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor) }
+  let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor, bill_address_id: nil, ship_address_id: nil) }
 
   before do
     Spree::Config.shipment_inc_vat = true
@@ -47,6 +47,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
 
     describe "when I have an out of stock product in my cart" do
       before do
+        variant.on_demand = false
         variant.on_hand = 0
         variant.save!
       end
@@ -163,18 +164,18 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
 
         let!(:saved_card) do
           create(:credit_card,
-          user_id: user.id,
-          month: "01",
-          year: "2025",
-          cc_type: "visa",
-          number: "1111111111111111",
-          payment_method_id: stripe_pm.id,
-          gateway_customer_profile_id: "i_am_saved")
+                 user_id: user.id,
+                 month: "01",
+                 year: "2025",
+                 cc_type: "visa",
+                 number: "1111111111111111",
+                 payment_method_id: stripe_pm.id,
+                 gateway_customer_profile_id: "i_am_saved")
         end
 
         let!(:stripe_account) { create(:stripe_account, enterprise_id: distributor.id, stripe_user_id: 'some_id') }
 
-        let(:response_mock) { { id: "ch_1234", object: "charge", amount: 2000} }
+        let(:response_mock) { { id: "ch_1234", object: "charge", amount: 2000 } }
 
         before do
           allow(Stripe).to receive(:api_key) { "sk_test_12345" }
@@ -264,15 +265,15 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
           page.should have_content "Local"
 
           create(:filter_shipping_methods_tag_rule,
-            enterprise: distributor,
-            preferred_customer_tags: "local",
-            preferred_shipping_method_tags: "local",
-            preferred_matched_shipping_methods_visibility: 'visible')
-            create(:filter_shipping_methods_tag_rule,
-              enterprise: distributor,
-              is_default: true,
-              preferred_shipping_method_tags: "local",
-              preferred_matched_shipping_methods_visibility: 'hidden')
+                 enterprise: distributor,
+                 preferred_customer_tags: "local",
+                 preferred_shipping_method_tags: "local",
+                 preferred_matched_shipping_methods_visibility: 'visible')
+          create(:filter_shipping_methods_tag_rule,
+                 enterprise: distributor,
+                 is_default: true,
+                 preferred_shipping_method_tags: "local",
+                 preferred_matched_shipping_methods_visibility: 'hidden')
           visit checkout_path
           checkout_as_guest
 
@@ -389,6 +390,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
           end
 
           it "takes us to the cart page with an error when a product becomes out of stock just before we purchase", js: true do
+            variant.on_demand = false
             variant.on_hand = 0
             variant.save!
 
@@ -396,7 +398,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
 
             page.should_not have_content "Your order has been processed successfully"
             page.should have_selector 'closing', text: "Your shopping cart"
-            page.should have_content "Out of Stock"
+            page.should have_content "An item in your cart has become unavailable."
           end
 
           context "when we are charged a shipping fee" do
@@ -442,7 +444,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
                 it "takes us to the order confirmation page when submitted with a valid credit card" do
                   fill_in 'Card Number', with: "4111111111111111"
                   select 'February', from: 'secrets.card_month'
-                  select (Date.current.year+1).to_s, from: 'secrets.card_year'
+                  select (Date.current.year + 1).to_s, from: 'secrets.card_year'
                   fill_in 'Security Code', with: '123'
 
                   place_order
@@ -456,7 +458,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
                 it "shows the payment processing failed message when submitted with an invalid credit card" do
                   fill_in 'Card Number', with: "9999999988887777"
                   select 'February', from: 'secrets.card_month'
-                  select (Date.current.year+1).to_s, from: 'secrets.card_year'
+                  select (Date.current.year + 1).to_s, from: 'secrets.card_year'
                   fill_in 'Security Code', with: '123'
 
                   place_order

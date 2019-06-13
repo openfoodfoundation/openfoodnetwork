@@ -16,10 +16,10 @@ module DiscourseHelper
   end
 
   def discourse_url!
-    discourse_url or raise 'Missing Discourse URL'
+    discourse_url || raise('Missing Discourse URL')
   end
 
   def discourse_sso_secret!
-    ENV['DISCOURSE_SSO_SECRET'] or raise 'Missing SSO secret'
+    ENV['DISCOURSE_SSO_SECRET'] || raise('Missing SSO secret')
   end
 end

@@ -49,7 +49,6 @@ module ProductImport
             VariantOverride.for_hubs([enterprise_id]).count
           else
             Spree::Variant.
-              not_deleted.
               not_master.
               joins(:product).
               where('spree_products.supplier_id IN (?)', enterprise_id).
@@ -163,7 +162,7 @@ module ProductImport
       end
 
       product = Spree::Product.new
-      product.assign_attributes(entry.attributes.except('id'))
+      product.assign_attributes(entry.attributes.except('id', 'on_hand', 'on_demand'))
       product.supplier_id = entry.producer_id
       assign_defaults(product, entry)
 
@@ -219,7 +218,7 @@ module ProductImport
           end
         when 'overwrite_empty'
           if object.public_send(attribute).blank? ||
-             ((attribute == 'on_hand' || attribute == 'count_on_hand') &&
+             ((attribute == 'on_hand') &&
              entry.on_hand_nil)
 
             object.assign_attributes(attribute => setting['value'])
@@ -257,6 +256,7 @@ module ProductImport
       variant = product.variants.first
       variant.display_name = entry.display_name if entry.display_name
       variant.on_demand = entry.on_demand if entry.on_demand
+      variant.on_hand = entry.on_hand if entry.on_hand
       variant.import_date = @import_time
       variant.save
     end

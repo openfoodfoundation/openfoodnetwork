@@ -6,5 +6,6 @@ angular.module("admin.subscriptions").controller "OrderUpdateIssuesController", 
 
   $scope.orderCycleCloses = (id) ->
     closes_at = moment(OrderCycles.byID[id].orders_close_at)
-    text = if closes_at > moment() then t('js.closes') else t('js.closed')
+    key = if closes_at > moment() then "closes" else "closed"
+    text = t("js.subscriptions." + key)
     "#{text} #{closes_at.fromNow()}"

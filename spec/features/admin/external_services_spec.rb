@@ -15,7 +15,7 @@ feature 'External services' do
       fill_in 'bugherd_api_key', with: 'abc123'
       click_button 'Update'
 
-      page.should have_content 'General Settings has been successfully updated!'
+      expect(page).to have_content 'General Settings has been successfully updated!'
       expect(Spree::Config.bugherd_api_key).to eq 'abc123'
     end
   end

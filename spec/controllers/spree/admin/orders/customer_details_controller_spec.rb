@@ -8,17 +8,18 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
       let!(:user) { create(:user) }
       let(:address) { create(:address) }
       let!(:distributor) { create(:distributor_enterprise) }
-      let!(:shipping_method) { create(:shipping_method) }
+      let!(:shipment) { create(:shipment) }
       let!(:order) {
         create(
-            :order_with_totals_and_distribution,
-            state: 'cart',
-            shipping_method: shipping_method,
-            distributor: distributor,
-            user: nil,
-            email: nil,
-            bill_address: nil,
-            ship_address: nil,
+          :order_with_totals_and_distribution,
+          state: 'cart',
+          shipments: [shipment],
+          payments: [create(:payment)],
+          distributor: distributor,
+          user: nil,
+          email: nil,
+          bill_address: nil,
+          ship_address: nil,
         )
       }
       let(:address_params) {
@@ -39,13 +40,21 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
         login_as_enterprise_user [order.distributor]
       end
 
+      it "advances the order state" do
+        expect {
+          spree_post :update, order: { email: user.email, bill_address_attributes: address_params,
+                                       ship_address_attributes: address_params },
+                              order_id: order.number
+        }.to change { order.reload.state }.from("cart").to("complete")
+      end
+
       context "when adding details of a registered user" do
         it "redirects to shipments on success" do
           spree_post :update, order: { email: user.email, bill_address_attributes: address_params, ship_address_attributes: address_params }, order_id: order.number
 
           order.reload
 
-          expect(response).to redirect_to spree.edit_admin_order_shipment_path(order, order.shipment)
+          expect(response).to redirect_to spree.admin_order_customer_path(order)
         end
       end
 
@@ -55,7 +64,7 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
 
           order.reload
 
-          expect(response).to redirect_to spree.edit_admin_order_shipment_path(order, order.shipment)
+          expect(response).to redirect_to spree.admin_order_customer_path(order)
         end
       end
     end

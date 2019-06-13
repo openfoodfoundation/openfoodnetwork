@@ -41,7 +41,7 @@ describe Admin::StripeConnectSettingsController, type: :controller do
         context "and the request to retrieve Stripe account info fails" do
           before do
             stub_request(:get, "https://api.stripe.com/v1/account").
-              to_return(:status => 401, :body => "{\"error\": {\"message\": \"Invalid API Key provided: sk_test_****xxxx\"}}")
+              to_return(status: 401, body: "{\"error\": {\"message\": \"Invalid API Key provided: sk_test_****xxxx\"}}")
           end
 
           it "sets the account status to :auth_fail_error" do
@@ -54,7 +54,7 @@ describe Admin::StripeConnectSettingsController, type: :controller do
         context "and the request to retrieve Stripe account info succeeds" do
           before do
             stub_request(:get, "https://api.stripe.com/v1/account").
-              to_return(:status => 200, :body => "{ \"id\": \"acct_1234\", \"business_name\": \"OFN\" }")
+              to_return(status: 200, body: "{ \"id\": \"acct_1234\", \"business_name\": \"OFN\" }")
           end
 
           it "sets the account status to :ok, loads settings into Struct" do

@@ -2,17 +2,23 @@ require "spec_helper"
 
 describe OrderSyncer do
   describe "updating the shipping method" do
-    let(:subscription) { create(:subscription, with_items: true, with_proxy_orders: true) }
-    let(:order) { subscription.proxy_orders.first.initialise_order! }
-    let(:shipping_method) { subscription.shipping_method }
-    let(:new_shipping_method) { create(:shipping_method, distributors: [subscription.shop]) }
+    let!(:subscription) { create(:subscription, with_items: true, with_proxy_orders: true) }
+    let!(:order) { subscription.proxy_orders.first.initialise_order! }
+    let!(:shipping_method) { subscription.shipping_method }
+    let!(:new_shipping_method) { create(:shipping_method, distributors: [subscription.shop]) }
+
     let(:syncer) { OrderSyncer.new(subscription) }
 
     context "when the shipping method on an order is the same as the subscription" do
       let(:params) { { shipping_method_id: new_shipping_method.id } }
 
+      before do
+        # Create shipping rates for available shipping methods.
+        order.shipments.each(&:refresh_rates)
+      end
+
       it "updates the shipping_method on the order and on shipments" do
-        expect(order.shipments.first.shipping_method_id_was).to eq shipping_method.id
+        expect(order.shipments.first.shipping_method).to eq shipping_method
         subscription.assign_attributes(params)
         expect(syncer.sync!).to be true
         expect(order.reload.shipping_method).to eq new_shipping_method
@@ -25,11 +31,13 @@ describe OrderSyncer do
 
       context "when the shipping method on a shipment is the same as the new shipping method on the subscription" do
         before do
+          # Create shipping rates for available shipping methods.
+          order.shipments.each(&:refresh_rates)
+
           # Updating the shipping method on a shipment updates the shipping method on the order,
           # and vice-versa via logic in Spree's shipments controller. So updating both here mimics that
           # behaviour.
-          order.shipments.first.update_attributes(shipping_method_id: new_shipping_method.id)
-          order.update_attributes(shipping_method_id: new_shipping_method.id)
+          order.select_shipping_method(new_shipping_method.id)
           subscription.assign_attributes(params)
           expect(syncer.sync!).to be true
         end
@@ -42,15 +50,18 @@ describe OrderSyncer do
       end
 
       context "when the shipping method on a shipment is not the same as the new shipping method on the subscription" do
-        let(:changed_shipping_method) { create(:shipping_method) }
+        let!(:changed_shipping_method) { create(:shipping_method) }
 
         before do
+          # Create shipping rates for available shipping methods.
+          order.shipments.each(&:refresh_rates)
+
           # Updating the shipping method on a shipment updates the shipping method on the order,
           # and vice-versa via logic in Spree's shipments controller. So updating both here mimics that
           # behaviour.
-          order.shipments.first.update_attributes(shipping_method_id: changed_shipping_method.id)
-          order.update_attributes(shipping_method_id: changed_shipping_method.id)
+          order.select_shipping_method(changed_shipping_method.id)
           subscription.assign_attributes(params)
+
           expect(syncer.sync!).to be true
         end
 
@@ -162,7 +173,11 @@ describe OrderSyncer do
       end
 
       context "when the bill_address on the order doesn't match that on the subscription" do
-        before { order.bill_address.update_attributes(firstname: "Jane") }
+        before do
+          order.bill_address.update_attributes!(firstname: "Jane")
+          order.update!
+        end
+
         it "does not update bill_address or ship_address on the order" do
           subscription.assign_attributes(params)
           expect(syncer.sync!).to be true
@@ -203,7 +218,10 @@ describe OrderSyncer do
       end
 
       context "when the bill_address on the order doesn't match that on the subscription" do
-        before { order.bill_address.update_attributes(firstname: "Jane") }
+        before do
+          order.bill_address.update_attributes!(firstname: "Jane")
+          order.update!
+        end
 
         it "does not update bill_address or ship_address on the order" do
           subscription.assign_attributes(params)
@@ -254,7 +272,7 @@ describe OrderSyncer do
       end
 
       context "but the shipping method is being changed to one that requires a ship_address" do
-        let(:new_shipping_method) { create(:shipping_method, require_ship_address: true) }
+        let(:new_shipping_method) { create(:shipping_method, distributors: [distributor], require_ship_address: true) }
 
         before { params.merge!(shipping_method_id: new_shipping_method.id) }
 
@@ -273,22 +291,27 @@ describe OrderSyncer do
                                   with_proxy_orders: true)
           end
 
-          before do
-            subscription.assign_attributes(params)
-          end
+          context "when there is no pending shipment using the former shipping method" do
+            before do
+              order.shipment.destroy
+              subscription.assign_attributes(params)
+            end
 
-          it "updates ship_address attrs" do
-            expect(syncer.sync!).to be true
-            expect(syncer.order_update_issues.keys).to include order.id
-            order.reload
-            expect(order.ship_address.firstname).to eq ship_address_attrs["firstname"]
-            expect(order.ship_address.lastname).to eq ship_address_attrs["lastname"]
-            expect(order.ship_address.address1).to eq ship_address_attrs["address1"]
-            expect(order.ship_address.phone).to eq ship_address_attrs["phone"]
+            it "updates ship_address attrs" do
+              expect(syncer.sync!).to be true
+              expect(syncer.order_update_issues.keys).to include order.id
+              order.reload
+              expect(order.ship_address.firstname).to eq ship_address_attrs["firstname"]
+              expect(order.ship_address.lastname).to eq ship_address_attrs["lastname"]
+              expect(order.ship_address.address1).to eq ship_address_attrs["address1"]
+              expect(order.ship_address.phone).to eq ship_address_attrs["phone"]
+            end
           end
 
           context "when the order has a pending shipment using the former shipping method" do
-            let!(:shipment) { create(:shipment, order: order, shipping_method: shipping_method) }
+            before do
+              subscription.assign_attributes(params)
+            end
 
             it "updates ship_address attrs" do
               expect(syncer.sync!).to be true
@@ -323,7 +346,11 @@ describe OrderSyncer do
       end
 
       context "when the ship address on the order doesn't match that on the subscription" do
-        before { order.ship_address.update_attributes(firstname: "Jane") }
+        before do
+          order.ship_address.update_attributes(firstname: "Jane")
+          order.update!
+        end
+
         it "does not update ship_address on the order" do
           subscription.assign_attributes(params)
           expect(syncer.sync!).to be true
@@ -344,10 +371,10 @@ describe OrderSyncer do
     let(:sli) { subscription.subscription_line_items.first }
     let(:variant) { sli.variant }
 
-    before { variant.update_attribute(:count_on_hand, 2) }
+    before { variant.update_attribute(:on_hand, 2) }
 
     context "when quantity is within available stock" do
-      let(:params) { { subscription_line_items_attributes: [{ id: sli.id, quantity: 2}] } }
+      let(:params) { { subscription_line_items_attributes: [{ id: sli.id, quantity: 2 }] } }
       let(:syncer) { OrderSyncer.new(subscription) }
 
       it "updates the line_item quantities and totals on all orders" do
@@ -361,7 +388,7 @@ describe OrderSyncer do
     end
 
     context "when quantity is greater than available stock" do
-      let(:params) { { subscription_line_items_attributes: [{ id: sli.id, quantity: 3}] } }
+      let(:params) { { subscription_line_items_attributes: [{ id: sli.id, quantity: 3 }] } }
       let(:syncer) { OrderSyncer.new(subscription) }
 
       it "updates the line_item quantities and totals on all orders" do
@@ -375,11 +402,11 @@ describe OrderSyncer do
     end
 
     context "where the quantity of the item on an initialised order has already been changed" do
-      let(:params) { { subscription_line_items_attributes: [{ id: sli.id, quantity: 3}] } }
+      let(:params) { { subscription_line_items_attributes: [{ id: sli.id, quantity: 3 }] } }
       let(:syncer) { OrderSyncer.new(subscription) }
       let(:changed_line_item) { order.line_items.find_by_variant_id(sli.variant_id) }
 
-      before { variant.update_attribute(:count_on_hand, 3) }
+      before { variant.update_attribute(:on_hand, 3) }
 
       context "when the changed line_item quantity matches the new quantity on the subscription line item" do
         before { changed_line_item.update_attributes(quantity: 3) }
@@ -413,7 +440,7 @@ describe OrderSyncer do
     let(:subscription) { create(:subscription, with_items: true, with_proxy_orders: true) }
     let(:order) { subscription.proxy_orders.first.initialise_order! }
     let(:variant) { create(:variant) }
-    let(:params) { { subscription_line_items_attributes: [{ id: nil, variant_id: variant.id, quantity: 1}] } }
+    let(:params) { { subscription_line_items_attributes: [{ id: nil, variant_id: variant.id, quantity: 1 }] } }
     let(:syncer) { OrderSyncer.new(subscription) }
 
     it "adds the line item and updates the total on all orders" do

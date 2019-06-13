@@ -53,16 +53,8 @@ sv:
   confirm_resend_order_confirmation: "Är du säker på att du vill skicka beställningsbekräftelsen en gång till? "
   must_have_valid_business_number: "%{enterprise_name} måste ha ett giltigt organisationsnummer innan fakturor kan skickas."
   invoice: "Faktura"
-  percentage_of_sales: "%{percentage} av försäljning"
-  capped_at_cap: "begränsat till %{cap}"
-  per_month: "per månad"
-  free: "gratis"
-  free_trial: "gratis pröva-på period"
-  plus_tax: "plus moms"
-  min_bill_turnover_desc: "när omsättning överskrider %{mbt_amount}"
   say_no: "Nej"
   say_yes: "Ja"
-  then: då
   sort_order_cycles_on_shopfront_by: "Sortera butikens beställningsomgångar efter"
   required_fields: Obligatoriska fält är märkta med en asterisk
   select_continue: Markera och fortsätt
@@ -106,6 +98,7 @@ sv:
   allow_cookies: "Tillåt cookies"
   actions:
     create: "Skapa"
+    cancel: "Avbryt"
   admin:
     date: Datum
     email: epost
@@ -147,59 +140,10 @@ sv:
     has_n_rules: "har %{num} regler"
     unsaved_confirm_leave: "Det finns ändringar på denna sida som ej sparats. Fortsätta utan att spara?"
     unsaved_changes: "Du har ändringar som ej sparats"
-    accounts_and_billing_settings:
-      method_settings:
-        default_accounts_payment_method: "Standardkonto för bealningsmetod"
-        default_accounts_shipping_method: "Standardkonto för leveransmetod"
-      edit:
-        accounts_and_billing: "Konton och fakturering"
-        accounts_administration_distributor: "Kontoadministrations-distributör"
-        admin_settings: "Inställningar"
-        update_invoice: "Uppdatera fakturor"
-        auto_update_invoices: "Automatisk uppdatering av fakturor varje natt kl 01:00"
-        finalise_invoice: "Slutför fakturering"
-        auto_finalise_invoices: "Slutför automatiskt fakturor månadsvis den 2:a dagen kl 01;30"
-        manually_run_task: "Manuellt utförd bearbetning"
-        update_user_invoice_explained: "Använd denna knapp för att omedelbart uppdatera denna månads fakturor för varje företag i systemet. Denna bearbetning kan köras automatiskt varje natt."
-        finalise_user_invoices: "Slutför användarfakturor"
-        finalise_user_invoice_explained: "Använd denna knapp för att slutföra alla fakturor i systemet avseende föregående kalendermånad. Det går att ställa in denna bearbetning så att den utförs automatiskt en gång per månad."
-        update_user_invoices: "Uppdatera användarfakturor"
-      errors:
-        accounts_distributor: måste ställas in om du vill skapa fakturor för företagsanvändare.
-        default_payment_method: måste ställas in om du vill skapa fakturor för företagsanvändare.
-        default_shipping_method: måste ställas in om du vill skapa fakturor för företagsanvändare.
     shopfront_settings:
       embedded_shopfront_settings: "Inställningar för inbäddning av nätbutik"
       enable_embedded_shopfronts: "Aktivera inbäddning av butiker"
       embedded_shopfronts_whitelist: "Lista av tillåtna externa domäner"
-    business_model_configuration:
-      edit:
-        business_model_configuration: "Företagsmodell"
-        business_model_configuration_tip: "Beräkna det belopp som varje affär skall betala varje månad för användningen av OFN. "
-        bill_calculation_settings: "Inställningar för beräkning av fakturor"
-        bill_calculation_settings_tip: "Justera det belopp företag skall faktureras varje månad för användning av OFN."
-        shop_trial_length: "Pröva-på period (dagar)"
-        shop_trial_length_tip: "Antal dagar som företag som definierats som affärer kan ha som försöksperiod."
-        fixed_monthly_charge: "Bestämd månadsavgift"
-        fixed_monthly_charge_tip: "En bestämd månadsavgift för alla företag som är definierade som butiker och som överskridit minsta tillåtna omsättning (om sådan bestämts)."
-        percentage_of_turnover: "Procent av omsättning"
-        percentage_of_turnover_tip: "När den är större än noll, kommer denna taxa (0,0 - 1,0)  att läggas till den totala omsättningen för varje affär och adderas till varje bestämd avgift (till vänster) vid beräkning av månadsavgiften."
-        monthly_cap_excl_tax: "månadstak (exkl. moms)"
-        monthly_cap_excl_tax_tip: "När det är större än noll, kommer detta värde att användas som tak för det belopp som butiker skall faktureras varje månad."
-        tax_rate: "Skattesats"
-        tax_rate_tip: "Skattesats som används på månadsfakturan som företag skall betala för att använda systemet."
-        minimum_monthly_billable_turnover: "Minsta månatliga omsättning"
-        minimum_monthly_billable_turnover_tip: "Minsta månadsomsättning som en butik får betala för att använda OFN. Företag vars omsättning understiger detta belopp under en månad behöver ej betala vare sig procentuellt eller en fast taxa."
-        example_bill_calculator: "Exempel på beräkning av en faktura"
-        example_bill_calculator_legend: "Ändra omsättning i exemplet för att åskådliggöra effekten av ändrade inställningar."
-        example_monthly_turnover: "Exempel på månadsomsättning"
-        example_monthly_turnover_tip: "Ett exempel på månadsomsättning som används för att beräkna en månatlig faktura i exemplet nedan."
-        cap_reached?: "Är taket nått?"
-        cap_reached?_tip: "Visar om taket (specificerat till vänster) har nåtts. med de givna inställningarna och omsättningen."
-        included_tax: "Skatten är inkluderad"
-        included_tax_tip: "All skatt är inkluderad i exemplets månadsfaktura enligt de inställningar och den omsättning som var angiven."
-        total_monthly_bill_incl_tax: "Totalt månadsfaktura (inkl moms)"
-        total_monthly_bill_incl_tax_tip: "Exemplets totala månadsfaktura med skatt inkluderad enligt de inställningar och den omsättning som var angiven."
     cache_settings:
       edit:
         title: "Inkomst"
@@ -215,11 +159,7 @@ sv:
         enable_receipt_printing?: 'Visa alternativ för att skriva ut recept genom att använda termiska skrivare i ordermenyn? '
     customers:
       index:
-        add_customer: "Lägg till kund"
         new_customer: "Ny kund"
-        customer_placeholder: "customer@example.org"
-        valid_email_error: Var vänlig fyll i en giltig epostadress
-        add_a_new_customer_for: Lägg till en ny kund för %{shop_name}
         code: Kod
         duplicate_code: "Denna kod används redan"
         bill_address: "Fakturaadress"
@@ -257,6 +197,7 @@ sv:
         tax_category: Skattekategori
         calculator: Beräkning
         calculator_values: Beräknade summor
+        search: "Sök"
     enterprise_groups:
       index:
         new_button: Ny företagsgrupp
@@ -436,22 +377,22 @@ sv:
           allow_order_changes_tip: "Tillåt kunder att ändra sin beställning så länge beställningscykeln är öppen."
           allow_order_changes_false: "Lagda beställningar kan inte ändras/avbrytas"
           allow_order_changes_true: "Kunder kan ändra/avbryta beställningar medan beställningscykeln är öppen"
-          shopfront_message: Butiksmeddelande
+          shopfront_message: "Butiksmeddelande"
           shopfront_message_placeholder: >
               En frivillig förklaring för kunder som beskriver hur ditt skyltfönster
               skall användas. Den visas ovanför produktlistan i affärsfönstret.
-          shopfront_closed_message: Meddelande för stängd butik
+          shopfront_closed_message: "Meddelande för stängd butik"
           shopfront_closed_message_placeholder: >
               Ett meddelande som ger en mer detaljerad förklaring varför din affär
               är stängd/eller när kunder kan förvänta att den öppnar igen. Detta visas
               i din affär endast när du inte har en aktiv ordercykel (dvs när affären
               är stängd).
-          shopfront_category_ordering: Sorteringsordning av kategorier i butik
-          open_date: Öppningsdatum
-          close_date: Stängningsdatum
+          shopfront_category_ordering: "Sorteringsordning av kategorier i butik"
+          open_date: "Öppningsdatum"
+          close_date: "Stängningsdatum"
         social:
-          twitter_placeholder: t.ex. @the_prof
-          facebook_placeholder: eg. www.facebook.com/PageNameHere
+          twitter_placeholder: "t.ex. @the_prof"
+          facebook_placeholder: "eg. www.facebook.com/PageNameHere"
         tag_rules:
           default_rules:
             by_default: Som standard
@@ -562,7 +503,6 @@ sv:
         products: Produkter
         tags: Etiketter
         delivery_details: Upphämtning/Leveransdetaljer
-        debug_info: Felinformation
       name_and_timing_form:
         name: Namn
         orders_open: Order öppna till
@@ -587,9 +527,6 @@ sv:
     shared:
       user_guide_link:
         user_guide: Användarinstruktion
-    overview:
-      enterprises_header:
-        ofn_with_tip: Företag är Producenter och/eller Hubbar och är den grundläggande organisationsenheten inom Open Food Network.
       enterprises_hubs_tabs:
         has_no_payment_methods: "%{enterprise} har inga betalningsmetoder"
         has_no_shipping_methods: "%{enterprise} har inga fraktmetoder"
@@ -965,6 +902,7 @@ sv:
   orders_changeable_orders_alert_html: Denna beställning har bekräftats, men du kan göra ändringar till och med <strong>%{oc_close}</strong>.
   products_clear_all: Rensa allt
   products_showing: "Visande:"
+  products_or: "Eller"
   products_with: med
   products_search: "Sök per produkt eller producent"
   products_loading: "Laddar produkter"
@@ -1069,7 +1007,6 @@ sv:
   sell_hubs_detail: "Sätt upp en profil för ditt matbolag eller organisation på OFN. När du vill kan du uppgradera din profil till en webbshop för multi-producenter."
   sell_groups_detail: "Sätt upp skräddarsydda kataloger av matföretag (producenter och andra matföretag) för din region eller för din organisation."
   sell_user_guide: "Finn ut mer i våra användarguider."
-  sell_listing_price: "Att lista sig på OFN är graits. Att öppna upp och driva handel på OFN är gratis. Att sätta upp en gruppkatalog på OFN för din organisation eller regionala nätverk är gratis."
   sell_embed: "Vi kan också bädda in en webbshop från OFN på din egna anpassade sida eller bygga ett anpassad hemsida för din regions lokala matnätverk. "
   sell_ask_services: "Fråga oss om tjänster via OFN."
   shops_title: Butiker
@@ -1126,8 +1063,6 @@ sv:
   products_max_quantity: Maxkvantitet
   products_distributor: Distributör
   products_distributor_info: När du väljer distributör för din order kommer leveranstider att visas här
-  shop_trial_expires_in: "Din försökstid för skyltfönster gå ut om"
-  shop_trial_expired_notice: "Goda nyheter! Vi har beslutat utöka butikens pröva-på period tills vidare. "
   password: Lösenord
   remember_me: Kom ihåg mig
   are_you_sure: "Är du säker?"
@@ -1297,8 +1232,6 @@ sv:
   action_or: "Eller"
   enterprise_limit: Företagets gräns
   shipping_method_destroy_error: "Denna leveransmetod kan inte raderas eftersom den hänvisas till av beställning: %{number}."
-  accounts_and_billing_task_already_running_error: "En jobb är redan igång. Vänta tills den är klar"
-  accounts_and_billing_start_task_notice: "Jobbet lades till kön"
   fees: "Avgifter"
   item_cost: "Artikelkostnad"
   bulk: "Grupp"
@@ -1433,7 +1366,6 @@ sv:
   live: "direkt"
   manage: "Hantera"
   resend: "Återsänd"
-  trial: Prövoperiod
   add_and_manage_products: "Lägg till och hantera produkter"
   add_and_manage_order_cycles: "Addera och hantera beställningsrundor"
   manage_order_cycles: "Hantera beställningsrundor"
@@ -1461,7 +1393,6 @@ sv:
   hub_sidebar_at_least: "Åtminstone ett matställe måste väljas"
   hub_sidebar_blue: "blå"
   hub_sidebar_red: "röd"
-  shop_trial_in_progress: "Ditt skyltfönsterförsök avslutas om %{days}."
   report_customers_distributor: "Distributör"
   report_customers_supplier: "Leverantör"
   report_customers_cycle: "Ordercykel"
@@ -1851,6 +1782,15 @@ sv:
           invalid: "felaktig"
       resend_user_email_confirmation:
         resend: "Återsänd"
+      order_cycles:
+        schedules:
+          available: "Tillgängliga"
+      customers:
+        index:
+          add_customer: "Lägg till kund"
+          add_a_new_customer_for: "Lägg till en ny kund för %{shop_name}"
+          customer_placeholder: "customer@example.org"
+          valid_email_error: "Var vänlig fyll i en giltig epostadress"
     out_of_stock:
       reduced_stock_available: Minska tillgängligt lager
       out_of_stock_text: >
@@ -2015,6 +1955,8 @@ sv:
             distributor: "Distributör:"
             order_cycle: "Beställningsomgång:"
       overview:
+        enterprises_header:
+          ofn_with_tip: Företag är Producenter och/eller Hubbar och är den grundläggande organisationsenheten inom Open Food Network.
         products:
           active_products:
             zero: "Du har inga aktiva produkter."
@@ -2026,6 +1968,12 @@ sv:
             one: "Du har en aktiv beställningsomgång."
             other: "Du har %{count} aktiva beställningsomgångar."
           manage_order_cycles: "HANTERA BESTÄLLNINGSOMGÅNGAR"
+      shipping_methods:
+        index:
+          shipping_methods: "Transportsätt"
+          name: "Namn"
+          products_distributor: "Distributör"
+          calculator: "Beräkning"
       products:
         index:
           header:
@@ -2094,6 +2042,8 @@ sv:
       void: annulerad
       invalid: felaktig
     order_mailer:
+      confirm_email:
+        subject: "Orderbekräftelse"
       invoice_email:
         hi: "Hi %{name}"
         invoice_attached_text: Här är en faktura för din senaste order från

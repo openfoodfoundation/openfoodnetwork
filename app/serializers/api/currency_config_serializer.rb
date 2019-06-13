@@ -20,5 +20,4 @@ class Api::CurrencyConfigSerializer < ActiveModel::Serializer
   def hide_cents
     Spree::Config[:hide_cents]
   end
-
 end

@@ -47,17 +47,3 @@
 
 .actions
   %span{'ng-hide' => 'loaded()'}= t(:loading)
-
-- unless Rails.env.production?
-  #order-cycles-debug
-    %h2= t('.debug_info')
-
-    %pre loaded =  {{ loaded() | json }}
-    %hr/
-    %pre order_cycle = {{ order_cycle | json }}
-    %hr/
-    %pre enterprises = {{ enterprises | json }}
-    %hr/
-    %pre enterprise_fees = {{ enterprise_fees | json }}
-    %hr/
-    %pre supplied_products = {{ supplied_products | json }}

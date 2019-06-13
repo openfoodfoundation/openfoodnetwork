@@ -8,12 +8,12 @@ module Spree
       allow(controller).to receive(:spree_current_user) { current_api_user }
     end
 
-    #test that when a line item is updated, an order's fees are updated too
+    # test that when a line item is updated, an order's fees are updated too
     context "as an admin user" do
       sign_in_as_admin!
 
       let(:order) { FactoryBot.create(:order, state: 'complete', completed_at: Time.zone.now) }
-      let(:line_item) { FactoryBot.create(:line_item, order: order, final_weight_volume: 500) }
+      let(:line_item) { FactoryBot.create(:line_item_with_shipment, order: order, final_weight_volume: 500) }
 
       context "as a line item is updated" do
         before { allow(controller).to receive(:order) { order } }

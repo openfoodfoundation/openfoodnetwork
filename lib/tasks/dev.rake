@@ -266,13 +266,12 @@ namespace :ofn do
 
       enterprise2 = Enterprise.find_by_name('Enterprise 2')
       enterprise2.sells = 'any'
-      enterprise2.shipping_methods.build(
-        name: 'Pickup',
-        zone_id: 3,
-        require_ship_address: true,
-        calculator_type: 'Calculator::Weight',
-        distributor_ids: [enterprise2.id]
-      )
+      enterprise2.shipping_methods << FactoryBot.create(:shipping_method,
+                                                        name: 'Pickup',
+                                                        zone: zone,
+                                                        require_ship_address: true,
+                                                        calculator_type: 'Calculator::Weight',
+                                                        distributors: [enterprise2])
       enterprise2.payment_methods << Spree::PaymentMethod.last
       enterprise2.save!
 
@@ -282,7 +281,7 @@ namespace :ofn do
 
       CreateOrderCycle.new(enterprise2, variants).call
 
-      if EnterpriseRole.count < 1
+      unless EnterpriseRole.where( user_id: Spree::User.first, enterprise_id: enterprise2 ).any?
         EnterpriseRole.create!(user: Spree::User.first, enterprise: enterprise2)
       end
       display_deprecation_warning

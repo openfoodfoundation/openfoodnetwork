@@ -14,12 +14,12 @@ GIT
 
 GIT
   remote: https://github.com/openfoodfoundation/better_spree_paypal_express.git
-  revision: 8d95f4544c682634812becaf50999fba0cd04df0
-  branch: spree-upgrade-intermediate
+  revision: 27ad7165ea4c6e8c5f120b42b676cb9c2c272100
+  branch: 2-0-stable
   specs:
     spree_paypal_express (2.0.3)
       paypal-sdk-merchant (= 1.106.1)
-      spree_core (~> 1.3.99)
+      spree_core (~> 2.0.3)
 
 GIT
   remote: https://github.com/openfoodfoundation/ofn-qz.git
@@ -31,87 +31,72 @@ GIT
 
 GIT
   remote: https://github.com/openfoodfoundation/spree.git
-  revision: 41906362d931695e0616194341a68d2c4c85aaaf
-  ref: 41906362d931695e0616194341a68d2c4c85aaaf
-  branch: step-6a
+  revision: 46d6f8f5fd434105b0c69958276d1727a3066a97
+  branch: 2-0-4-stable
   specs:
-    spree (1.3.99)
-      spree_api (= 1.3.99)
-      spree_backend (= 1.3.99)
-      spree_cmd (= 1.3.99)
-      spree_core (= 1.3.99)
-      spree_dash (= 1.3.99)
-      spree_frontend (= 1.3.99)
-      spree_sample (= 1.3.99)
-    spree_api (1.3.99)
-      rabl (= 0.7.2)
-      spree_core (= 1.3.99)
-      versioncake (= 0.4.0)
-    spree_backend (1.3.99)
+    spree (2.0.4)
+      spree_api (= 2.0.4)
+      spree_backend (= 2.0.4)
+      spree_cmd (= 2.0.4)
+      spree_core (= 2.0.4)
+      spree_frontend (= 2.0.4)
+      spree_sample (= 2.0.4)
+    spree_api (2.0.4)
+      rabl (= 0.8.4)
+      spree_core (= 2.0.4)
+      versioncake (= 1.0.0)
+    spree_backend (2.0.4)
       deface (>= 0.9.0)
-      jquery-rails (~> 2.0)
+      jquery-rails (~> 3.0.0)
+      jquery-ui-rails (~> 4.0.0)
       rails (~> 3.2.8)
-      select2-rails (~> 3.2)
-      spree_api (= 1.3.99)
-      spree_core (= 1.3.99)
-      stringex (~> 1.3.2)
-    spree_cmd (1.3.99)
+      select2-rails (~> 3.4.7)
+      spree_api (= 2.0.4)
+      spree_core (= 2.0.4)
+    spree_cmd (2.0.4)
       thor (>= 0.14.6)
-    spree_core (1.3.99)
-      activemerchant (~> 1.50)
-      acts_as_list (= 0.1.9)
+    spree_core (2.0.4)
+      activemerchant (~> 1.34)
+      acts_as_list (= 0.2.0)
       awesome_nested_set (= 2.1.5)
       aws-sdk (~> 1.11.1)
-      cancan (= 1.6.8)
-      deface (>= 0.9.0)
-      ffaker (~> 1.15.0)
-      highline (= 1.6.15)
-      httparty (= 0.9.0)
-      json (>= 1.5.5)
-      kaminari (= 0.13.0)
-      money (= 5.1.0)
+      cancan (~> 1.6.10)
+      deface (>= 0.9.1)
+      ffaker (~> 1.16)
+      highline (= 1.6.18)
+      httparty (~> 0.11)
+      json (>= 1.7.7)
+      kaminari (~> 0.14.1)
+      money (= 5.1.1)
       paperclip (~> 3.0)
-      rails (~> 3.2.13)
+      paranoia (~> 1.3)
+      rails (~> 3.2.14)
       ransack (= 0.7.2)
       state_machine (= 1.2.0)
-      stringex (~> 1.3.2)
+      stringex (~> 1.5.1)
       truncate_html (= 0.9.2)
-    spree_dash (1.3.99)
-      httparty (~> 0.9.0)
-      spree_backend (= 1.3.99)
-      spree_frontend (= 1.3.99)
-    spree_frontend (1.3.99)
+    spree_frontend (2.0.4)
+      canonical-rails
       deface (>= 0.9.0)
-      jquery-rails (~> 2.2.1)
-      rails (~> 3.2.8)
-      select2-rails (~> 3.2)
-      spree_api (= 1.3.99)
-      spree_core (= 1.3.99)
-      stringex (~> 1.3.2)
-    spree_sample (1.3.99)
-      spree_core (= 1.3.99)
+      jquery-rails (~> 3.0.0)
+      rails (~> 3.2.13)
+      spree_api (= 2.0.4)
+      spree_core (= 2.0.4)
+      stringex (~> 1.5.1)
+    spree_sample (2.0.4)
+      spree_core (= 2.0.4)
 
 GIT
-  remote: https://github.com/openfoodfoundation/spree_auth_devise.git
-  revision: da9eecefc6fe13dedf4c6f3febec79caad839ec3
-  branch: spree-upgrade-intermediate
+  remote: https://github.com/spree/spree_auth_devise.git
+  revision: 0181835fb6ac77a05191d26f6f32a0f4a548d851
+  branch: 2-0-stable
   specs:
     spree_auth_devise (2.0.0)
       devise (~> 2.2.5)
       devise-encryptable (= 0.1.2)
-      spree_backend (~> 1.3.6)
-      spree_core (~> 1.3.6)
-      spree_frontend (~> 1.3.6)
-
-GIT
-  remote: https://github.com/spree/deface.git
-  revision: 1110a1336252109bce7f98f9182042e0bc2930ae
-  ref: 1110a13
-  specs:
-    deface (1.0.0.rc3)
-      colorize (>= 0.5.8)
-      nokogiri (~> 1.6.0)
-      rails (>= 3.1)
+      spree_backend (~> 2.0.0)
+      spree_core (~> 2.0.0)
+      spree_frontend (~> 2.0.0)
 
 GIT
   remote: https://github.com/spree/spree_i18n.git
@@ -175,6 +160,8 @@ GEM
       activesupport (= 3.2.22.5)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
+    activerecord-import (1.0.1)
+      activerecord (>= 3.2)
     activeresource (3.2.22.5)
       activemodel (= 3.2.22.5)
       activesupport (= 3.2.22.5)
@@ -183,8 +170,9 @@ GEM
       multi_json (~> 1.0)
     acts-as-taggable-on (3.5.0)
       activerecord (>= 3.2, < 5)
-    acts_as_list (0.1.9)
-    addressable (2.5.2)
+    acts_as_list (0.2.0)
+      activerecord (>= 3.0)
+    addressable (2.6.0)
       public_suffix (>= 2.0.2, < 4.0)
     andand (1.3.3)
     angular-rails-templates (0.3.0)
@@ -193,8 +181,6 @@ GEM
       tilt
     angularjs-file-upload-rails (2.4.1)
     angularjs-rails (1.5.5)
-    archive-zip (0.7.0)
-      io-like (~> 0.3.0)
     arel (3.0.3)
     ast (2.4.0)
     atomic (1.1.101)
@@ -213,7 +199,9 @@ GEM
       concurrent-ruby (~> 1.0)
     builder (3.0.4)
     byebug (9.0.6)
-    cancan (1.6.8)
+    cancan (1.6.10)
+    canonical-rails (0.1.0)
+      rails (>= 3.1, < 5.1)
     capybara (2.18.0)
       addressable
       mini_mime (>= 0.1.3)
@@ -223,9 +211,6 @@ GEM
       xpath (>= 2.0, < 4.0)
     childprocess (0.9.0)
       ffi (~> 1.0, >= 1.0.11)
-    chromedriver-helper (1.1.0)
-      archive-zip (~> 0.7.0)
-      nokogiri (~> 1.6)
     chronic (0.10.2)
     chunky_png (1.3.10)
     climate_control (0.2.0)
@@ -272,6 +257,11 @@ GEM
       fog (~> 1.0)
       rails (>= 3.2.0, < 5.0)
     debugger-linecache (1.2.0)
+    deface (1.0.2)
+      colorize (>= 0.5.8)
+      nokogiri (~> 1.6.0)
+      polyglot
+      rails (>= 3.1)
     delayed_job (4.1.5)
       activesupport (>= 3.0, < 5.3)
     delayed_job_active_record (4.1.3)
@@ -300,14 +290,14 @@ GEM
     eventmachine (1.2.7)
     excon (0.62.0)
     execjs (2.7.0)
-    factory_bot (4.8.2)
+    factory_bot (4.10.0)
       activesupport (>= 3.0.0)
-    factory_bot_rails (4.8.2)
-      factory_bot (~> 4.8.2)
+    factory_bot_rails (4.10.0)
+      factory_bot (~> 4.10.0)
       railties (>= 3.0.0)
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
-    ffaker (1.15.0)
+    ffaker (1.22.1)
     ffi (1.10.0)
     figaro (1.1.1)
       thor (~> 0.14)
@@ -468,7 +458,7 @@ GEM
     foundation-rails (5.5.2.1)
       railties (>= 3.1.0)
       sass (>= 3.3.0, < 3.5)
-    fuubar (2.3.2)
+    fuubar (2.4.0)
       rspec-core (~> 3.0)
       ruby-progressbar (~> 1.4)
     geocoder (1.1.8)
@@ -497,35 +487,34 @@ GEM
       rspec (>= 2.99.0, < 4.0)
     haml (4.0.7)
       tilt
-    hashdiff (0.3.7)
-    highline (1.6.15)
+    hashdiff (0.4.0)
+    highline (1.6.18)
     hike (1.2.3)
     http_parser.rb (0.6.0)
-    httparty (0.9.0)
-      multi_json (~> 1.0)
-      multi_xml
+    httparty (0.16.2)
+      multi_xml (>= 0.5.2)
     i18n (0.6.11)
-    i18n-js (3.2.1)
+    i18n-js (3.3.0)
       i18n (>= 0.6.6)
     immigrant (0.3.6)
       activerecord (>= 3.0)
-    io-like (0.3.0)
     ipaddress (0.8.3)
     jaro_winkler (1.5.1)
     journey (1.0.4)
     jquery-migrate-rails (1.2.1)
-    jquery-rails (2.2.2)
+    jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
+    jquery-ui-rails (4.0.5)
+      railties (>= 3.1.0)
     json (1.8.6)
     json_spec (1.1.5)
       multi_json (~> 1.0)
       rspec (>= 2.0, < 4.0)
-    jwt (2.1.0)
-    kaminari (0.13.0)
+    jwt (2.2.1)
+    kaminari (0.14.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
-      railties (>= 3.0.0)
     kgio (2.11.2)
     knapsack (1.17.1)
       rake
@@ -547,14 +536,15 @@ GEM
     mini_portile2 (2.1.0)
     momentjs-rails (2.20.1)
       railties (>= 3.1)
-    money (5.1.0)
+    money (5.1.1)
       i18n (~> 0.6.0)
     multi_json (1.13.1)
     multi_xml (0.6.0)
-    multipart-post (2.0.0)
+    multipart-post (2.1.1)
     nenv (0.3.0)
-    net-http-persistent (3.0.0)
+    net-http-persistent (3.0.1)
       connection_pool (~> 2.2)
+    newrelic_rpm (3.18.1.330)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
     notiffany (0.1.1)
@@ -571,12 +561,15 @@ GEM
     paper_trail (5.2.3)
       activerecord (>= 3.0, < 6.0)
       request_store (~> 1.1)
-    paperclip (3.5.4)
+    paperclip (3.4.2)
       activemodel (>= 3.0.0)
+      activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
-      cocaine (~> 0.5.3)
+      cocaine (~> 0.5.0)
       mime-types
     parallel (1.11.2)
+    paranoia (1.3.4)
+      activerecord (~> 3.1)
     parser (2.5.1.0)
       ast (~> 2.4.0)
     paypal-sdk-core (0.2.10)
@@ -596,11 +589,10 @@ GEM
       byebug (>= 9.0, < 9.1)
       pry (~> 0.10)
     public_suffix (3.0.3)
-    rabl (0.7.2)
+    rabl (0.8.4)
       activesupport (>= 2.3.14)
-      multi_json (~> 1.0)
     rack (1.4.7)
-    rack-cache (1.8.0)
+    rack-cache (1.9.0)
       rack (>= 0.4)
     rack-mini-profiler (0.10.7)
       rack (>= 1.2.0)
@@ -622,6 +614,7 @@ GEM
     rails-i18n (3.0.1)
       i18n (~> 0.5)
       rails (>= 3.0.0, < 4.0.0)
+    rails_safe_tasks (1.0.0)
     railties (3.2.22.5)
       actionpack (= 3.2.22.5)
       activesupport (= 3.2.22.5)
@@ -695,16 +688,17 @@ GEM
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-ole (1.2.12.1)
-    ruby-progressbar (1.10.0)
+    ruby-progressbar (1.10.1)
     ruby-rc4 (0.1.5)
     rubyzip (1.2.2)
-    safe_yaml (1.0.4)
+    safe_yaml (1.0.5)
     sass (3.3.14)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
-    select2-rails (3.5.10)
+    select2-rails (3.4.9)
+      sass-rails
       thor (~> 0.14)
     selenium-webdriver (3.141.0)
       childprocess (~> 0.5)
@@ -725,7 +719,7 @@ GEM
       activesupport (>= 3.0.0)
     spinjs-rails (1.4)
       rails (>= 3.1)
-    spreadsheet (1.1.4)
+    spreadsheet (1.1.7)
       ruby-ole (>= 1.0)
     spring (1.7.2)
     spring-commands-rspec (1.0.4)
@@ -736,8 +730,8 @@ GEM
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
     state_machine (1.2.0)
-    stringex (1.3.3)
-    stripe (4.11.0)
+    stringex (1.5.1)
+    stripe (4.18.1)
       faraday (~> 0.13)
       net-http-persistent (~> 3.0)
     therubyracer (0.12.0)
@@ -758,23 +752,27 @@ GEM
     uglifier (4.1.20)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (1.3.2)
-    unicorn (5.5.0)
+    unicorn (5.5.1)
       kgio (~> 2.6)
       raindrops (~> 0.7)
     unicorn-rails (2.2.1)
       rack
       unicorn
     uuidtools (2.1.5)
-    versioncake (0.4.0)
+    versioncake (1.0.0)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
     warden (1.2.7)
       rack (>= 1.0)
-    webmock (3.5.1)
+    webdrivers (3.8.1)
+      nokogiri (~> 1.6)
+      rubyzip (~> 1.0)
+      selenium-webdriver (~> 3.0)
+    webmock (3.6.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
-      hashdiff
+      hashdiff (>= 0.4.0, < 2.0.0)
     whenever (0.11.0)
       chronic (>= 0.6.3)
     wicked_pdf (1.1.0)
@@ -789,6 +787,7 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers (= 0.8.4)
   activemerchant (~> 1.78)
+  activerecord-import
   acts-as-taggable-on (~> 3.4)
   andand
   angular-rails-templates (~> 0.3.0)
@@ -801,7 +800,6 @@ DEPENDENCIES
   bugsnag
   byebug (~> 9.0.0)
   capybara (>= 2.15.4)
-  chromedriver-helper
   coffee-rails (~> 3.2.1)
   combine_pdf
   compass-rails
@@ -811,7 +809,7 @@ DEPENDENCIES
   database_cleaner (= 0.7.1)
   db2fog
   debugger-linecache
-  deface!
+  deface (= 1.0.2)
   delayed_job_active_record
   delayed_job_web
   diffy
@@ -822,7 +820,7 @@ DEPENDENCIES
   foundation-icons-sass-rails
   foundation-rails
   foundation_rails_helper!
-  fuubar (~> 2.3.2)
+  fuubar (~> 2.4.0)
   geocoder
   gmaps4rails
   guard
@@ -831,23 +829,24 @@ DEPENDENCIES
   guard-rspec (~> 4.7.3)
   haml
   i18n (~> 0.6.11)
-  i18n-js (~> 3.2.1)
+  i18n-js (~> 3.3.0)
   immigrant
   jquery-migrate-rails
-  jquery-rails
+  jquery-rails (= 3.0.4)
   json_spec (~> 1.1.4)
-  jwt (~> 2.1)
+  jwt (~> 2.2)
   knapsack
   letter_opener (>= 1.4.1)
   listen (= 3.0.8)
   momentjs-rails
+  newrelic_rpm (~> 3.0)
   nokogiri (>= 1.6.7.1)
   oauth2 (~> 1.4.1)
   ofn-qz!
   oj
   order_management!
   paper_trail (~> 5.2.3)
-  paperclip
+  paperclip (~> 3.4.1)
   pg
   pry-byebug (>= 3.4.3)
   rabl
@@ -856,6 +855,7 @@ DEPENDENCIES
   rack-ssl
   rails (~> 3.2.22)
   rails-i18n (~> 3.0.0)
+  rails_safe_tasks (~> 1.0)
   redcarpet
   roadie-rails (~> 1.1.1)
   roo (~> 2.7.0)
@@ -886,6 +886,7 @@ DEPENDENCIES
   unicorn
   unicorn-rails
   web!
+  webdrivers (= 3.8.1)
   webmock
   whenever
   wicked_pdf

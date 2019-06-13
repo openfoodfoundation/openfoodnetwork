@@ -51,8 +51,8 @@ describe CartController, type: :controller do
   context "handling variant overrides correctly" do
     let(:product) { create(:simple_product, supplier: producer) }
     let(:producer) { create(:supplier_enterprise) }
-    let!(:variant_in_the_order) { create(:variant, count_on_hand: 4) }
-    let!(:variant_not_in_the_order) { create(:variant, count_on_hand: 2) }
+    let!(:variant_in_the_order) { create(:variant) }
+    let!(:variant_not_in_the_order) { create(:variant) }
 
     let(:hub) { create(:distributor_enterprise, with_payment_and_shipping: true) }
     let!(:variant_override_in_the_order) { create(:variant_override, hub: hub, variant: variant_in_the_order, price: 55.55, count_on_hand: 20, default_stock: nil, resettable: false) }
@@ -63,6 +63,8 @@ describe CartController, type: :controller do
     let!(:line_item) { create(:line_item, order: order, variant: variant_in_the_order, quantity: 2, max_quantity: 3) }
 
     before do
+      variant_in_the_order.on_hand = 4
+      variant_not_in_the_order.on_hand = 2
       order_cycle.exchanges.outgoing.first.variants = [variant_in_the_order, variant_not_in_the_order]
       order.order_cycle = order_cycle
       order.distributor = hub

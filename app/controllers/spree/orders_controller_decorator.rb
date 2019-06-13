@@ -21,14 +21,15 @@ Spree::OrdersController.class_eval do
   def edit
     @order = current_order(true)
     @insufficient_stock_lines = @order.insufficient_stock_lines
+    @unavailable_order_variants = OrderCycleDistributedVariants.new(current_order_cycle, current_distributor).unavailable_order_variants(@order)
 
     if @order.line_items.empty?
       redirect_to main_app.shop_path
     else
       associate_user
 
-      if @order.insufficient_stock_lines.present?
-        flash[:error] = t(:spree_inventory_error_flash_for_insufficient_quantity)
+      if @order.insufficient_stock_lines.present? || @unavailable_order_variants.present?
+        flash[:error] = t("spree.orders.error_flash_for_unavailable_items")
       end
     end
   end
@@ -38,13 +39,14 @@ Spree::OrdersController.class_eval do
     @order = order_to_update
     unless @order
       flash[:error] = t(:order_not_found)
-      redirect_to root_path and return
+      redirect_to(root_path) && return
     end
 
     if @order.update_attributes(params[:order])
-      @order.line_items = @order.line_items.select {|li| li.quantity > 0 }
+      discard_empty_line_items
+      with_open_adjustments { update_totals_and_taxes }
 
-      render :edit and return unless apply_coupon_code
+      render(:edit) && return unless apply_coupon_code
 
       if @order == current_order
         fire_event('spree.order.contents_changed')
@@ -54,7 +56,7 @@ Spree::OrdersController.class_eval do
 
       respond_with(@order) do |format|
         format.html do
-          if params.has_key?(:checkout)
+          if params.key?(:checkout)
             @order.next_transition.run_callbacks if @order.cart?
             redirect_to checkout_state_path(@order.checkout_steps.first)
           elsif @order.complete?
@@ -93,13 +95,13 @@ Spree::OrdersController.class_eval do
   end
 
   def filter_order_params
-    if params[:order] and params[:order][:line_items_attributes]
+    if params[:order] && params[:order][:line_items_attributes]
       params[:order][:line_items_attributes] = remove_missing_line_items(params[:order][:line_items_attributes])
     end
   end
 
   def remove_missing_line_items(attrs)
-    attrs.select do |i, line_item|
+    attrs.select do |_i, line_item|
       Spree::LineItem.find_by_id(line_item[:id])
     end
   end
@@ -127,8 +129,35 @@ Spree::OrdersController.class_eval do
     redirect_to request.referer || order_path(@order)
   end
 
-
   private
+
+  # Updates the various denormalized total attributes of the order and
+  # recalculates the shipment taxes
+  def update_totals_and_taxes
+    @order.updater.update_totals
+    @order.shipment.ensure_correct_adjustment_with_included_tax if @order.shipment
+  end
+
+  # Sets the adjustments to open to perform the block's action and restores
+  # their state to whatever the they had. Note that it does not change any new
+  # adjustments that might get created in the yielded block.
+  def with_open_adjustments
+    previous_states = @order.adjustments.each_with_object({}) do |adjustment, hash|
+      hash[adjustment.id] = adjustment.state
+    end
+    @order.adjustments.each(&:open)
+
+    yield
+
+    @order.adjustments.each do |adjustment|
+      previous_state = previous_states[adjustment.id]
+      adjustment.update_attribute(:state, previous_state) if previous_state
+    end
+  end
+
+  def discard_empty_line_items
+    @order.line_items = @order.line_items.select { |li| li.quantity > 0 }
+  end
 
   def require_order_authentication
     return if session[:access_token] || params[:token] || spree_current_user
@@ -155,7 +184,7 @@ Spree::OrdersController.class_eval do
     return unless order_to_update.andand.complete?
 
     items = params[:order][:line_items_attributes]
-      .andand.select{ |k,attrs| attrs["quantity"].to_i > 0 }
+      .andand.select{ |_k, attrs| attrs["quantity"].to_i > 0 }
 
     if items.empty?
       flash[:error] = I18n.t(:orders_cannot_remove_the_final_item)

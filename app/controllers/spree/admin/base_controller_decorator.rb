@@ -6,7 +6,7 @@ Spree::Admin::BaseController.class_eval do
   layout 'spree/layouts/admin'
 
   before_filter :set_locale
-  before_filter :warn_invalid_order_cycles
+  before_filter :warn_invalid_order_cycles, if: :html_request?
 
   # Warn the user when they have an active order cycle with hubs that are not ready
   # for checkout (ie. does not have valid shipping and payment methods).
@@ -47,7 +47,6 @@ Spree::Admin::BaseController.class_eval do
     end
   end
 
-
   private
 
   def active_distributors_not_ready_for_checkout
@@ -74,7 +73,7 @@ Spree::Admin::BaseController.class_eval do
     request.format.json?
   end
 
-  def render_as_json(data, options={})
+  def render_as_json(data, options = {})
     ams_prefix = options.delete :ams_prefix
     if [Array, ActiveRecord::Relation].include? data.class
       render options.merge(json: data, each_serializer: serializer(ams_prefix))

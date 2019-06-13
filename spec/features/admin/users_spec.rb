@@ -32,6 +32,10 @@ feature "Managing users" do
     describe "resending confirmation email", js: true do
       let(:user) { create :user, confirmed_at: nil }
 
+      around do |example|
+        performing_deliveries { example.run }
+      end
+
       it "displays success" do
         visit spree.edit_admin_user_path user
 

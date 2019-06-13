@@ -1,24 +1,24 @@
 require "spec_helper"
 
-feature %q{
+feature '
     As an admin
     I want to set a supplier and distributor(s) for a product
-} do
+' do
   include AuthenticationWorkflow
   include WebHelper
 
-
   let!(:taxon) { create(:taxon) }
+  let!(:stock_location) { create(:stock_location, backorderable_default: false) }
+  let!(:shipping_category) { create(:shipping_category, name: 'Test Shipping Category') }
 
   background do
-    @supplier = create(:supplier_enterprise, :name => 'New supplier')
+    @supplier = create(:supplier_enterprise, name: 'New supplier')
     @distributors = (1..3).map { create(:distributor_enterprise) }
     @enterprise_fees = (0..2).map { |i| create(:enterprise_fee, enterprise: @distributors[i]) }
   end
 
   describe "creating a product" do
     let!(:tax_category) { create(:tax_category, name: 'Test Tax Category') }
-    let!(:shipping_category) { create(:shipping_category, name: 'Test Shipping Category') }
 
     scenario "assigning important attributes", js: true do
       login_to_admin_section
@@ -40,23 +40,23 @@ feature %q{
       click_button 'Create'
 
       expect(current_path).to eq spree.admin_products_path
-      flash_message.should == 'Product "A new product !!!" has been successfully created!'
+      expect(flash_message).to eq('Product "A new product !!!" has been successfully created!')
       product = Spree::Product.find_by_name('A new product !!!')
-      product.supplier.should == @supplier
-      product.variant_unit.should == 'weight'
-      product.variant_unit_scale.should == 1000
-      product.unit_value.should == 5000
-      product.unit_description.should == ""
-      product.variant_unit_name.should == ""
-      product.primary_taxon_id.should == taxon.id
-      product.price.to_s.should == '19.99'
-      product.on_hand.should == 5
-      product.tax_category_id.should == tax_category.id
-      product.shipping_category.should == shipping_category
-      product.description.should == "<p>A description...</p>"
-      product.group_buy.should be_falsey
-      product.master.option_values.map(&:name).should == ['5kg']
-      product.master.options_text.should == "5kg"
+      expect(product.supplier).to eq(@supplier)
+      expect(product.variant_unit).to eq('weight')
+      expect(product.variant_unit_scale).to eq(1000)
+      expect(product.unit_value).to eq(5000)
+      expect(product.unit_description).to eq("")
+      expect(product.variant_unit_name).to eq("")
+      expect(product.primary_taxon_id).to eq(taxon.id)
+      expect(product.price.to_s).to eq('19.99')
+      expect(product.on_hand).to eq(5)
+      expect(product.tax_category_id).to eq(tax_category.id)
+      expect(product.shipping_category).to eq(shipping_category)
+      expect(product.description).to eq("<p>A description...</p>")
+      expect(product.group_buy).to be_falsey
+      expect(product.master.option_values.map(&:name)).to eq(['5kg'])
+      expect(product.master.options_text).to eq("5kg")
     end
 
     scenario "creating an on-demand product", js: true do
@@ -81,9 +81,9 @@ feature %q{
 
       expect(current_path).to eq spree.admin_products_path
       product = Spree::Product.find_by_name('Hot Cakes')
-      product.variants.count.should == 1
+      expect(product.variants.count).to eq(1)
       variant = product.variants.first
-      variant.on_demand.should be true
+      expect(variant.on_demand).to be true
     end
   end
 
@@ -97,7 +97,7 @@ feature %q{
       @new_user.enterprise_roles.build(enterprise: @supplier2).save
       @new_user.enterprise_roles.build(enterprise: @distributors[0]).save
       create(:enterprise_relationship, parent: @supplier_permitted, child: @supplier2,
-             permissions_list: [:manage_products])
+                                       permissions_list: [:manage_products])
 
       quick_login_as @new_user
     end
@@ -108,26 +108,27 @@ feature %q{
           visit spree.admin_products_path
           click_link 'New Product'
 
-          fill_in 'product_name', :with => 'A new product !!!'
-          fill_in 'product_price', :with => '19.99'
+          fill_in 'product_name', with: 'A new product !!!'
+          fill_in 'product_price', with: '19.99'
 
-          page.should have_selector('#product_supplier_id')
-          select 'Another Supplier', :from => 'product_supplier_id'
+          expect(page).to have_selector('#product_supplier_id')
+          select 'Another Supplier', from: 'product_supplier_id'
           select 'Weight (g)', from: 'product_variant_unit_with_scale'
           fill_in 'product_unit_value_with_description', with: '500'
           select taxon.name, from: "product_primary_taxon_id"
+          select 'Test Shipping Category', from: 'product_shipping_category_id'
           select 'None', from: "product_tax_category_id"
 
           # Should only have suppliers listed which the user can manage
-          page.should have_select 'product_supplier_id', with_options: [@supplier2.name, @supplier_permitted.name]
-          page.should_not have_select 'product_supplier_id', with_options: [@supplier.name]
+          expect(page).to have_select 'product_supplier_id', with_options: [@supplier2.name, @supplier_permitted.name]
+          expect(page).not_to have_select 'product_supplier_id', with_options: [@supplier.name]
 
           click_button 'Create'
 
-          flash_message.should == 'Product "A new product !!!" has been successfully created!'
+          expect(flash_message).to eq('Product "A new product !!!" has been successfully created!')
           product = Spree::Product.find_by_name('A new product !!!')
-          product.supplier.should == @supplier2
-          product.tax_category.should be_nil
+          expect(product.supplier).to eq(@supplier2)
+          expect(product.tax_category).to be_nil
         end
       end
     end
@@ -140,10 +141,10 @@ feature %q{
       select 'Permitted Supplier', from: 'product_supplier_id'
       select tax_category.name, from: 'product_tax_category_id'
       click_button 'Update'
-      flash_message.should == 'Product "a product" has been successfully updated!'
+      expect(flash_message).to eq('Product "a product" has been successfully updated!')
       product.reload
-      product.supplier.should == @supplier_permitted
-      product.tax_category.should == tax_category
+      expect(product.supplier).to eq(@supplier_permitted)
+      expect(product.tax_category).to eq(tax_category)
     end
 
     scenario "editing product group buy options" do
@@ -152,22 +153,22 @@ feature %q{
       visit spree.edit_admin_product_path product
       within('#sidebar') { click_link 'Group Buy Options' }
       choose('product_group_buy_1')
-      fill_in 'Bulk unit size', :with => '10'
+      fill_in 'Bulk unit size', with: '10'
 
       click_button 'Update'
 
-      flash_message.should == "Product \"#{product.name}\" has been successfully updated!"
+      expect(flash_message).to eq("Product \"#{product.name}\" has been successfully updated!")
       product.reload
-      product.group_buy.should be true
-      product.group_buy_unit_size.should == 10.0
+      expect(product.group_buy).to be true
+      expect(product.group_buy_unit_size).to eq(10.0)
     end
 
     scenario "editing product Search" do
       product = product = create(:simple_product, supplier: @supplier2)
       visit spree.edit_admin_product_path product
       within('#sidebar') { click_link 'Search' }
-      fill_in 'Product Search Keywords', :with => 'Product Search Keywords'
-      fill_in 'Notes', :with => 'Just testing Notes'
+      fill_in 'Product Search Keywords', with: 'Product Search Keywords'
+      fill_in 'Notes', with: 'Just testing Notes'
       click_button 'Update'
       expect(flash_message).to eq("Product \"#{product.name}\" has been successfully updated!")
       product.reload
@@ -182,27 +183,28 @@ feature %q{
 
       # When I navigate to the product properties page
       visit spree.admin_product_product_properties_path(p)
-      page.should have_select2 'product_product_properties_attributes_0_property_name', selected: 'fooprop'
-      page.should have_field 'product_product_properties_attributes_0_value', with: 'fooval'
+      expect(page).to have_select2 'product_product_properties_attributes_0_property_name', selected: 'fooprop'
+      expect(page).to have_field 'product_product_properties_attributes_0_value', with: 'fooval'
 
       # And I delete the property
-      page.all('a.remove_fields').first.click
+      accept_alert do
+        page.all('a.delete-resource').first.click
+      end
       click_button 'Update'
 
       # Then the property should have been deleted
-      page.should_not have_field 'product_product_properties_attributes_0_property_name', with: 'fooprop'
-      page.should_not have_field 'product_product_properties_attributes_0_value', with: 'fooval'
+      expect(page).not_to have_field 'product_product_properties_attributes_0_property_name', with: 'fooprop'
+      expect(page).not_to have_field 'product_product_properties_attributes_0_value', with: 'fooval'
       expect(p.reload.property('fooprop')).to be_nil
     end
 
-
     scenario "deleting product images", js: true do
       product = create(:simple_product, supplier: @supplier2)
-      image = File.open(File.expand_path('../../../../app/assets/images/logo-white.png', __FILE__))
-      Spree::Image.create({:viewable_id => product.master.id, :viewable_type => 'Spree::Variant', :alt => "position 1", :attachment => image, :position => 1})
+      image = File.open(File.expand_path('../../../app/assets/images/logo-white.png', __dir__))
+      Spree::Image.create(viewable_id: product.master.id, viewable_type: 'Spree::Variant', alt: "position 1", attachment: image, position: 1)
 
       visit spree.admin_product_images_path(product)
-      page.should have_selector "table[data-hook='images_table'] td img"
+      expect(page).to have_selector "table[data-hook='images_table'] td img"
       expect(product.reload.images.count).to eq 1
 
       accept_alert do

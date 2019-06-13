@@ -15,7 +15,7 @@ module Stripe
       return false if connection_cancelled_by_user?
 
       raise StripeError, params["error_description"] unless params["code"]
-      raise CanCan::AccessDenied unless state.keys.include? "enterprise_id"
+      raise CanCan::AccessDenied unless state.key?("enterprise_id")
 
       # Local authorisation issue, so request disconnection from Stripe
       deauthorize unless user_has_permission_to_connect?

@@ -28,13 +28,16 @@ class Api::Admin::ForOrderCycle::EnterpriseSerializer < ActiveModel::Serializer
 
   private
 
-  def products
-    return @products unless @products.nil?
-    @products = if order_cycle.prefers_product_selection_from_coordinator_inventory_only?
-      object.supplied_products.not_deleted.visible_for(order_cycle.coordinator)
+  def products_scope
+    if order_cycle.prefers_product_selection_from_coordinator_inventory_only?
+      object.supplied_products.visible_for(order_cycle.coordinator)
     else
-      object.supplied_products.not_deleted
+      object.supplied_products
     end
+  end
+
+  def products
+    @products ||= products_scope
   end
 
   def order_cycle

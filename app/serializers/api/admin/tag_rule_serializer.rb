@@ -1,10 +1,8 @@
 class Api::Admin::TagRuleSerializer < ActiveModel::Serializer
-  def serializable_hash
-    rule_specific_serializer.serializable_hash
-  end
+  delegate :serializable_hash, to: :rule_specific_serializer
 
   def rule_specific_serializer
-    "Api::Admin::#{object.class.to_s}Serializer".constantize.new(object)
+    "Api::Admin::#{object.class}Serializer".constantize.new(object)
   end
 end
 

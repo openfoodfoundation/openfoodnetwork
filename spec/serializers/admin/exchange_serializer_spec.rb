@@ -9,7 +9,6 @@ describe Api::Admin::ExchangeSerializer do
   let(:permitted_variants) { Spree::Variant.where(id: [v1, v2]) }
   let(:serializer) { Api::Admin::ExchangeSerializer.new exchange }
 
-
   context "serializing incoming exchanges" do
     let(:exchange) { create(:exchange, incoming: true, variants: [v1, v2, v3]) }
     let!(:inventory_item) { create(:inventory_item, enterprise: exchange.order_cycle.coordinator, variant: v1, visible: true) }

@@ -36,7 +36,7 @@ module OpenFoodNetwork
     end
 
     def sku_for(variant)
-      return variant.sku unless variant.sku.blank?
+      return variant.sku if variant.sku.present?
       variant.product.sku
     end
   end

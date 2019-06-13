@@ -7,22 +7,26 @@ describe "checking out an order that initially fails", type: :request do
   let!(:order_cycle) { create(:simple_order_cycle) }
   let!(:exchange) { create(:exchange, order_cycle: order_cycle, sender: order_cycle.coordinator, receiver: shop, incoming: false, pickup_time: "Monday") }
   let!(:address) { create(:address) }
-  let!(:order) { create(:order, distributor: shop, order_cycle: order_cycle) }
   let!(:line_item) { create(:line_item, order: order, quantity: 3, price: 5.00) }
   let!(:payment_method) { create(:bogus_payment_method, distributor_ids: [shop.id], environment: Rails.env) }
   let!(:check_payment_method) { create(:payment_method, distributor_ids: [shop.id], environment: Rails.env) }
   let!(:shipping_method) { create(:shipping_method, distributor_ids: [shop.id]) }
-  let!(:shipment) { create(:shipment, order: order, shipping_method: shipping_method) }
+  let!(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
+  let!(:order) { create(:order, shipments: [shipment], distributor: shop, order_cycle: order_cycle) }
   let(:params) do
     { format: :json, order: {
       shipping_method_id: shipping_method.id,
-      payments_attributes: [{payment_method_id: payment_method.id}],
+      payments_attributes: [{ payment_method_id: payment_method.id }],
       bill_address_attributes: address.attributes.slice("firstname", "lastname", "address1", "address2", "phone", "city", "zipcode", "state_id", "country_id"),
       ship_address_attributes: address.attributes.slice("firstname", "lastname", "address1", "address2", "phone", "city", "zipcode", "state_id", "country_id")
     } }
   end
 
   before do
+    order_cycle_distributed_variants = double(:order_cycle_distributed_variants)
+    allow(OrderCycleDistributedVariants).to receive(:new).and_return(order_cycle_distributed_variants)
+    allow(order_cycle_distributed_variants).to receive(:distributes_order_variants?).and_return(true)
+
     order.reload.update_totals
     set_order order
   end
