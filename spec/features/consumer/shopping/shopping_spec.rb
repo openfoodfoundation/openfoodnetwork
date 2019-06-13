@@ -130,7 +130,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
                 select "frogs", from: "order_cycle_id"
                 show_cart
                 page.should have_selector "tr.product-cart"
-                page.should have_selector 'li.cart', text: '1 item'
+                page.should have_selector 'li.cart', text: '1'
 
                 # The order cycle choice should not have changed
                 page.should have_select 'order_cycle_id', selected: 'turtles'
@@ -154,14 +154,14 @@ feature "As a consumer I want to shop with a distributor", js: true do
             expect(page).to have_content "Next order closing in 2 days"
             visit shop_path
             find("#cart").click
-            expect(page).to have_text(I18n.t("shared.menu.cart.already_ordered_products"))
+            expect(page).to have_text(I18n.t("shared.menu.joyride.already_ordered_products"))
           end
 
           it "shows previous orders after selecting an order cycle" do
             select "frogs", from: "order_cycle_id"
             expect(page).to have_content "Next order closing in 2 days"
             find("#cart").click
-            expect(page).to have_text(I18n.t("shared.menu.cart.already_ordered_products"))
+            expect(page).to have_text(I18n.t("shared.menu.joyride.already_ordered_products"))
           end
         end
       end

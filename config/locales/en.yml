@@ -1111,6 +1111,12 @@ en:
   shared:
     menu:
       cart:
+        cart: "Cart"
+      signed_in:
+        profile: "Profile"
+      mobile_menu:
+        cart: "Cart"
+      joyride:
         checkout: "Checkout now"
         already_ordered_products: "Already ordered in this order cycle"
     register_call:
