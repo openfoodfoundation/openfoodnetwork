@@ -372,14 +372,15 @@ en_GB:
         user_guide: User Guide
     enterprise_fees:
       index:
-        title: Enterprise Fees
-        enterprise: Enterprise
-        fee_type: Fee Type
-        name: Name
-        tax_category: Tax Category
-        calculator: Calculator
-        calculator_values: Calculator Values
+        title: "Enterprise Fees"
+        enterprise: "Enterprise"
+        fee_type: "Fee Type"
+        name: "Name"
+        tax_category: "Tax Category"
+        calculator: "Calculator"
+        calculator_values: "Calculator Values"
         search: "Search"
+        name_placeholder: "e.g. packing fee"
     enterprise_groups:
       index:
         new_button: New Enterprise Group
@@ -812,6 +813,7 @@ en_GB:
         pickup_time_placeholder: "Ready for (ie. Date / Time)"
         receival_instructions_placeholder: "Receival instructions"
         add_fee: 'Add fee'
+        remove: 'Remove'
         selected: 'selected'
       add_exchange_form:
         add_supplier: 'Add supplier'
@@ -1041,6 +1043,12 @@ en_GB:
   shared:
     menu:
       cart:
+        cart: "Basket"
+      signed_in:
+        profile: "Profile"
+      mobile_menu:
+        cart: "Basket"
+      joyride:
         checkout: "Checkout now"
         already_ordered_products: "Already ordered in this order cycle"
     register_call:
@@ -2354,8 +2362,18 @@ en_GB:
           severity: Severity
           description: Description
           resolve: Resolve
+      tag_rules:
+        shipping_method_tagged_top: "Shipping methods tagged"
+        shipping_method_tagged_bottom: "are:"
+        payment_method_tagged_top: "Payment methods tagged"
+        payment_method_tagged_bottom: "are:"
+        order_cycle_tagged_top: "Order Cycles tagged"
+        order_cycle_tagged_bottom: "are:"
+        inventory_tagged_top: "Inventory variants tagged"
+        inventory_tagged_bottom: "are:"
       new_tag_rule_dialog:
         select_rule_type: "Select a rule type:"
+        add_rule: "Add Rule"
       enterprise_fees:
         inherit_from_product: "Inherit From Product"
       orders:
@@ -2608,6 +2626,8 @@ en_GB:
     continue: "Continue"
     fill_in_customer_info: "Please fill in customer info"
     new_payment: "New Payment"
+    capture: "Capture"
+    void: "Void"
     configurations: "Configurations"
     general_settings: "General Settings"
     site_name: "Site Name"
@@ -2709,6 +2729,16 @@ en_GB:
     no_results: "No results"
     create: "Create"
     loading: "Loading"
+    flat_percent: "Flat Percent"
+    per_kg: "Per Kg"
+    amount: "Amount"
+    currency: "Currency"
+    first_item: "First Item Cost"
+    additional_item: "Additional Item Cost"
+    max_items: "Max Items"
+    minimal_amount: "Minimal Amount"
+    normal_amount: "Normal Amount"
+    discount_amount: "Discount Amount"
     email: Email
     account_updated: "Account updated!"
     my_account: "My account"

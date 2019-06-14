@@ -372,14 +372,15 @@ nb:
         user_guide: Brukermanual
     enterprise_fees:
       index:
-        title: Bedriftsavgifter
-        enterprise: Bedrift
-        fee_type: Avfgiftstype
-        name: Navn
-        tax_category: Avgiftskategori
-        calculator: Kalkulator
-        calculator_values: Kalkulatorverdier
+        title: "Bedriftsavgifter"
+        enterprise: "Bedrift"
+        fee_type: "Avfgiftstype"
+        name: "Navn"
+        tax_category: "Avgiftskategori"
+        calculator: "Kalkulator"
+        calculator_values: "Kalkulatorverdier"
         search: "Søk"
+        name_placeholder: "f.eks. pakkeavgift"
     enterprise_groups:
       index:
         new_button: Ny Bedriftsgruppe
@@ -812,6 +813,7 @@ nb:
         pickup_time_placeholder: "Klar til (dvs. Dato/Tid)"
         receival_instructions_placeholder: "Mottaksinstruksjoner"
         add_fee: 'Legg til gebyr'
+        remove: 'Fjern'
         selected: 'valgt'
       add_exchange_form:
         add_supplier: 'Legg til leverandør'
@@ -1041,8 +1043,14 @@ nb:
   shared:
     menu:
       cart:
+        cart: "Handlekurv"
+      signed_in:
+        profile: "Profil"
+      mobile_menu:
+        cart: "Handlekurv"
+      joyride:
         checkout: "Sjekk ut nå"
-        already_ordered_products: "Allerede bestilt i denne bestillingsrunden"
+        already_ordered_products: "Allerede bestilt i denne bestillingssyklusen"
     register_call:
       selling_on_ofn: "Interessert i å bli med i Open Food Network?"
       register: "Registrer her"
@@ -2348,8 +2356,18 @@ nb:
           severity: Alvorlighetsgrad
           description: Beskrivelse
           resolve: Løse
+      tag_rules:
+        shipping_method_tagged_top: "Leveringsmetoder merket"
+        shipping_method_tagged_bottom: "er:"
+        payment_method_tagged_top: "Betalingsmetoder merket"
+        payment_method_tagged_bottom: "er:"
+        order_cycle_tagged_top: " Bestillingsrunder merket"
+        order_cycle_tagged_bottom: "er:"
+        inventory_tagged_top: "Varianter i varelager merket"
+        inventory_tagged_bottom: "er:"
       new_tag_rule_dialog:
         select_rule_type: "Velg en regeltype:"
+        add_rule: "Legg til Regel"
       enterprise_fees:
         inherit_from_product: "Arv fra Produkt"
       orders:
@@ -2601,6 +2619,8 @@ nb:
     continue: "Fortsett"
     fill_in_customer_info: "Vennligst fyll inn kundeinformasjon"
     new_payment: "Ny betaling"
+    capture: "Fang"
+    void: "Ugyldig"
     configurations: "Konfigurasjoner"
     general_settings: "Generelle innstillinger"
     site_name: "Sidenavn"
@@ -2702,6 +2722,16 @@ nb:
     no_results: "Ingen resultater"
     create: "Opprett"
     loading: "Laster"
+    flat_percent: "Flat prosent"
+    per_kg: "Per kg"
+    amount: "Antall"
+    currency: "Valuta"
+    first_item: "Kostnad Første Element"
+    additional_item: "Kostnad Ytterligere Elementer"
+    max_items: "Maks. elementer"
+    minimal_amount: "Minimal Mengde"
+    normal_amount: "Normal Mengde"
+    discount_amount: "Rabattmengde"
     email: Epost
     account_updated: "Konto oppdatert!"
     my_account: "Min konto"
@@ -2800,16 +2830,29 @@ nb:
       shipping_methods:
         index:
           shipping_methods: "Leveringsmetoder"
+          new_shipping_method: "Ny Leveringsmetode"
           name: "Navn"
           products_distributor: "Distributør"
           zone: "Sone"
           calculator: "Kalkulator"
           display: "Visning"
+          both: "Begge"
+          front_end: "Frontend"
+          back_end: "Backend"
+          no_shipping_methods_found: "Ingen leveringsmetoder funnet"
+        new:
+          new_shipping_method: "Ny Leveringsmetode"
+          back_to_shipping_methods_list: "Tilbake til liste over leveringsmetoder"
         edit:
           editing_shipping_method: "Redigerer Leveringsmetode"
           new: "Ny"
+          back_to_shipping_methods_list: "Tilbake til liste over leveringsmetoder"
         form:
+          categories: "Kategorier"
           zones: "Soner"
+          both: "Begge"
+          front_end: "Frontend"
+          back_end: "Bakend"
       payment_methods:
         new:
           new_payment_method: "Ny Betalingsmetode"
