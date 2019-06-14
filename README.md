@@ -27,10 +27,13 @@ If you're interested in provisioning a server, see [ofn-install][ofn-install] fo
 
 We also have a [Super Admin Guide][super-admin-guide] to help with configuration of new servers.
 
+## Testing
+
+We use [BrowserStack](https://www.browserstack.com/) as a manual testing tool. BrowserStack provides open source projects with unlimited and free of charge accounts. A big thanks to them!
 
 ## Licence
 
-Copyright (c) 2012 - 2018 Open Food Foundation, released under the AGPL licence.
+Copyright (c) 2012 - 2019 Open Food Foundation, released under the AGPL licence.
 
 [survey]: https://docs.google.com/a/eaterprises.com.au/forms/d/1zxR5vSiU9CigJ9cEaC8-eJLgYid8CR8er7PPH9Mc-30/edit#
 [slack-invite]: https://openfoodnetwork.org/slack-invite
