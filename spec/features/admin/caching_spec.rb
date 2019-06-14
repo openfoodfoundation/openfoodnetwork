@@ -14,7 +14,9 @@ feature 'Caching' do
     it "displays results when things are good" do
       # Given matching data
       Rails.cache.write "products-json-#{distributor.id}-#{order_cycle.id}", "[1, 2, 3]\n"
-      allow(OpenFoodNetwork::ProductsRenderer).to receive(:new) { double(:pr, products_json: "[1, 2, 3]\n") }
+      allow(OpenFoodNetwork::ProductsRenderer).to receive(:new) {
+        double(:pr, products_json: "[1, 2, 3]\n")
+      }
 
       # When I visit the cache status page
       visit spree.admin_path
@@ -28,7 +30,9 @@ feature 'Caching' do
     it "displays results when there are errors" do
       # Given matching data
       Rails.cache.write "products-json-#{distributor.id}-#{order_cycle.id}", "[1, 2, 3]\n"
-      allow(OpenFoodNetwork::ProductsRenderer).to receive(:new) { double(:pr, products_json: "[1, 3]\n") }
+      allow(OpenFoodNetwork::ProductsRenderer).to receive(:new) {
+        double(:pr, products_json: "[1, 3]\n")
+      }
 
       # When I visit the cache status page
       visit spree.admin_path

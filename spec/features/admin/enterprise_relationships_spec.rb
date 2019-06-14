@@ -27,7 +27,7 @@ feature '
         expect(page).to have_relationship e1, e2, ['to add to order cycle']
         expect(page).to have_relationship e2, e3, ['to manage products']
         expect(page).to have_relationship e3, e4,
-          ['to add to order cycle', 'to manage products']
+                                          ['to add to order cycle', 'to manage products']
       end
     end
 
