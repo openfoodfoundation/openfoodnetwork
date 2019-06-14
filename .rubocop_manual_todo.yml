@@ -493,6 +493,72 @@ Metrics/AbcSize:
   - spec/models/product_importer_spec.rb
   - spec/support/performance_helper.rb
 
+Metrics/BlockLength:
+  Max: 25
+  ExcludedMethods: ["class_eval", "collection", "context", "describe", "it", "member", "namespace", "resource", "resources"]
+  Exclude:
+  - lib/tasks/data.rake
+  - lib/tasks/dev.rake
+  - spec/controllers/spree/admin/invoices_controller_spec.rb
+  - spec/factories/variant_factory.rb
+  - spec/features/admin/adjustments_spec.rb
+  - spec/features/admin/bulk_order_management_spec.rb
+  - spec/features/admin/bulk_product_update_spec.rb
+  - spec/features/admin/caching_spec.rb
+  - spec/features/admin/content_spec.rb
+  - spec/features/admin/customers_spec.rb
+  - spec/features/admin/enterprise_fees_spec.rb
+  - spec/features/admin/enterprise_groups_spec.rb
+  - spec/features/admin/enterprise_relationships_spec.rb
+  - spec/features/admin/enterprise_roles_spec.rb
+  - spec/features/admin/enterprises/images_spec.rb
+  - spec/features/admin/enterprises/index_spec.rb
+  - spec/features/admin/enterprises_spec.rb
+  - spec/features/admin/enterprise_user_spec.rb
+  - spec/features/admin/multilingual_spec.rb
+  - spec/features/admin/order_cycles_spec.rb
+  - spec/features/admin/orders_spec.rb
+  - spec/features/admin/overview_spec.rb
+  - spec/features/admin/payment_method_spec.rb
+  - spec/features/admin/product_import_spec.rb
+  - spec/features/admin/products_spec.rb
+  - spec/features/admin/reports/enterprise_fee_summaries_spec.rb
+  - spec/features/admin/reports_spec.rb
+  - spec/features/admin/schedules_spec.rb
+  - spec/features/admin/shipping_methods_spec.rb
+  - spec/features/admin/subscriptions_spec.rb
+  - spec/features/admin/tag_rules_spec.rb
+  - spec/features/admin/tax_settings_spec.rb
+  - spec/features/admin/users_spec.rb
+  - spec/features/admin/variant_overrides_spec.rb
+  - spec/features/admin/variants_spec.rb
+  - spec/features/consumer/account/cards_spec.rb
+  - spec/features/consumer/account/settings_spec.rb
+  - spec/features/consumer/account_spec.rb
+  - spec/features/consumer/authentication_spec.rb
+  - spec/features/consumer/cookies_spec.rb
+  - spec/features/consumer/external_services_spec.rb
+  - spec/features/consumer/groups_spec.rb
+  - spec/features/consumer/multilingual_spec.rb
+  - spec/features/consumer/producers_spec.rb
+  - spec/features/consumer/registration_spec.rb
+  - spec/features/consumer/shopping/cart_spec.rb
+  - spec/features/consumer/shopping/checkout_auth_spec.rb
+  - spec/features/consumer/shopping/checkout_spec.rb
+  - spec/features/consumer/shopping/embedded_groups_spec.rb
+  - spec/features/consumer/shopping/embedded_shopfronts_spec.rb
+  - spec/features/consumer/shopping/orders_spec.rb
+  - spec/features/consumer/shopping/products_spec.rb
+  - spec/features/consumer/shopping/shopping_spec.rb
+  - spec/features/consumer/shopping/variant_overrides_spec.rb
+  - spec/features/consumer/shops_spec.rb
+  - spec/lib/open_food_network/group_buy_report_spec.rb
+  - spec/models/tag_rule/discount_order_spec.rb
+  - spec/spec_helper.rb
+  - spec/support/delayed_job_helper.rb
+  - spec/support/matchers/select2_matchers.rb
+  - spec/support/matchers/table_matchers.rb
+
 Metrics/CyclomaticComplexity:
   Max: 6
   Exclude:
