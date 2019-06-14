@@ -22,7 +22,7 @@ gem 'pg'
 # for details.
 gem 'spree_api', github: 'openfoodfoundation/spree', branch: '2-0-4-stable'
 gem 'spree_backend', github: 'openfoodfoundation/spree', branch: '2-0-4-stable'
-gem 'spree_core', github: 'openfoodfoundation/spree', branch: '2-0-4-stable'
+gem 'spree_core', github: 'coopdevs/spree', branch: 'handle-soft-deleted-variants-in-order-edit'
 
 gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '2-0-stable'
 gem 'spree_i18n', github: 'spree/spree_i18n', branch: '1-3-stable'
