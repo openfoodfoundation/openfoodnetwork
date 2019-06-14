@@ -2,7 +2,9 @@ FactoryBot.define do
   factory :product_with_image, parent: :product do
     after(:create) do |product|
       image = File.open(Rails.root.join('app', 'assets', 'images', 'logo-white.png'))
-      Spree::Image.create(attachment: image, viewable_id: product.master.id, viewable_type: 'Spree::Variant')
+      Spree::Image.create(attachment: image,
+                          viewable_id: product.master.id,
+                          viewable_type: 'Spree::Variant')
     end
   end
 
@@ -18,8 +20,8 @@ FactoryBot.define do
       product.variants.first.on_hand = evaluator.on_hand
     end
   end
-  
-  factory :taxed_product, :parent => :product do
+
+  factory :taxed_product, parent: :product do
     transient do
       tax_rate_amount 0
       tax_rate_name ""
@@ -30,7 +32,12 @@ FactoryBot.define do
 
     after(:create) do |product, proxy|
       raise "taxed_product factory requires a zone" unless proxy.zone
-      create(:tax_rate, amount: proxy.tax_rate_amount, tax_category: product.tax_category, included_in_price: true, calculator: Spree::Calculator::DefaultTax.new, zone: proxy.zone, name: proxy.tax_rate_name)
+      create(:tax_rate, amount: proxy.tax_rate_amount,
+                        tax_category: product.tax_category,
+                        included_in_price: true,
+                        calculator: Spree::Calculator::DefaultTax.new,
+                        zone: proxy.zone,
+                        name: proxy.tax_rate_name)
     end
   end
 end

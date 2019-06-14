@@ -1,5 +1,5 @@
 FactoryBot.define do
-    factory :shipping_method_with, parent: :shipping_method do
+  factory :shipping_method_with, parent: :shipping_method do
     trait :delivery do
       require_ship_address { true }
     end

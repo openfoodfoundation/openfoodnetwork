@@ -8,12 +8,14 @@ FactoryBot.define do
 
     after(:create) do |order, proxy|
       product = create(:simple_product)
-      create(:line_item_with_shipment, shipping_fee: proxy.shipping_fee, order: order, product: product)
+      create(:line_item_with_shipment, shipping_fee: proxy.shipping_fee,
+                                       order: order,
+                                       product: product)
       order.reload
     end
   end
 
-  factory :order_with_distributor, :parent => :order do
+  factory :order_with_distributor, parent: :order do
     distributor { create(:distributor_enterprise) }
   end
 
@@ -31,24 +33,27 @@ FactoryBot.define do
       order.distributor.update_attribute(:charges_sales_tax, true)
       Spree::Zone.global.update_attribute(:default_tax, true)
 
-      p = FactoryBot.create(:taxed_product, zone: Spree::Zone.global, price: proxy.product_price, tax_rate_amount: proxy.tax_rate_amount, tax_rate_name: proxy.tax_rate_name)
+      p = FactoryBot.create(:taxed_product, zone: Spree::Zone.global,
+                                            price: proxy.product_price,
+                                            tax_rate_amount: proxy.tax_rate_amount,
+                                            tax_rate_name: proxy.tax_rate_name)
       FactoryBot.create(:line_item, order: order, product: p, price: p.price)
       order.reload
     end
   end
 
   factory :order_with_credit_payment, parent: :completed_order_with_totals do
-    distributor { create(:distributor_enterprise)}
+    distributor { create(:distributor_enterprise) }
     order_cycle { create(:simple_order_cycle) }
 
     after(:create) do |order|
-      create(:payment, amount: order.total + 10000, order: order, state: "completed")
+      create(:payment, amount: order.total + 10_000, order: order, state: "completed")
       order.reload
     end
   end
 
   factory :order_without_full_payment, parent: :completed_order_with_totals do
-    distributor { create(:distributor_enterprise)}
+    distributor { create(:distributor_enterprise) }
     order_cycle { create(:simple_order_cycle) }
 
     after(:create) do |order|
@@ -73,9 +78,13 @@ FactoryBot.define do
 
       payment_calculator = build(:calculator_per_item, preferred_amount: evaluator.payment_fee)
       payment_method = create(:payment_method, calculator: payment_calculator)
-      create(:payment, order: order, amount: order.total, payment_method: payment_method, state: 'checkout')
+      create(:payment, order: order,
+                       amount: order.total,
+                       payment_method: payment_method,
+                       state: 'checkout')
 
-      create(:shipping_method_with, :shipping_fee, shipping_fee: evaluator.shipping_fee, distributors: [order.distributor])
+      create(:shipping_method_with, :shipping_fee, shipping_fee: evaluator.shipping_fee,
+                                                   distributors: [order.distributor])
 
       order.reload
       while !order.completed? do break unless order.next! end

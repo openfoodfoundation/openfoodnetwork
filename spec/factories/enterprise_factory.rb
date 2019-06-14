@@ -8,12 +8,12 @@ FactoryBot.define do
     address { FactoryBot.create(:address) }
   end
 
-  factory :supplier_enterprise, :parent => :enterprise do
+  factory :supplier_enterprise, parent: :enterprise do
     is_primary_producer true
     sells "none"
   end
 
-  factory :distributor_enterprise, :parent => :enterprise do
+  factory :distributor_enterprise, parent: :enterprise do
     is_primary_producer false
     sells "any"
 

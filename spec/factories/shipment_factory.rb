@@ -13,11 +13,15 @@ FactoryBot.define do
         shipping_method { create(:shipping_method) }
       end
 
-      shipping_rates { [Spree::ShippingRate.create(shipping_method: shipping_method, selected: true)] }
+      shipping_rates {
+        [Spree::ShippingRate.create(shipping_method: shipping_method, selected: true)]
+      }
 
-      after(:create) do |shipment, evaluator|
+      after(:create) do |shipment, _evaluator|
         shipment.order.line_items.each do |line_item|
-          line_item.quantity.times { shipment.inventory_units.create(variant_id: line_item.variant_id) }
+          line_item.quantity.times {
+            shipment.inventory_units.create(variant_id: line_item.variant_id)
+          }
         end
       end
     end
@@ -27,6 +31,6 @@ end
 FactoryBot.modify do
   factory :shipment, class: Spree::Shipment do
     # keeps test shipments unique per order
-    initialize_with { Spree::Shipment.find_or_create_by_order_id(order.id)}
+    initialize_with { Spree::Shipment.find_or_create_by_order_id(order.id) }
   end
 end
