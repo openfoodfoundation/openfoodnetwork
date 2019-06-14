@@ -13,8 +13,6 @@ AllCops:
     - 'script/**/*'
     - 'vendor/**/*'
     - 'node_modules/**/*'
-    # The parser gem fails to parse this file with out current Ruby version.
-    - 'spec/factories.rb'
     # Excluding: inadequate Naming/FileName rule rejects GemFile name with camelcase
     - 'engines/web/Gemfile'
 

@@ -1,5 +1,19 @@
 FactoryBot.modify do
   factory :variant do
+    transient do
+      on_demand { false }
+      on_hand { 5 }
+    end
+
+    unit_value 1
+    unit_description ''
+
+    after(:create) do |variant, evaluator|
+      variant.on_demand = evaluator.on_demand
+      variant.on_hand = evaluator.on_hand
+      variant.save
+    end
+
     trait :with_order_cycle do
       transient do
         order_cycle { create(:order_cycle) }
