@@ -19,7 +19,7 @@ FactoryBot.define do
   factory :classification, class: Spree::Classification do
   end
 
-  factory :exchange, :class => Exchange do
+  factory :exchange, class: Exchange do
     incoming    false
     order_cycle { OrderCycle.first || FactoryBot.create(:simple_order_cycle) }
     sender      { incoming ? FactoryBot.create(:enterprise) : order_cycle.coordinator }
@@ -31,22 +31,22 @@ FactoryBot.define do
     order_cycles { [OrderCycle.first || FactoryBot.create(:simple_order_cycle)] }
   end
 
-  factory :proxy_order, :class => ProxyOrder do
+  factory :proxy_order, class: ProxyOrder do
     subscription
     order_cycle { subscription.order_cycles.first }
-    before(:create) do |proxy_order, proxy|
+    before(:create) do |proxy_order, _proxy|
       if proxy_order.order
         proxy_order.order.update_attribute(:order_cycle_id, proxy_order.order_cycle_id)
       end
     end
   end
 
-  factory :variant_override, :class => VariantOverride do
-    price         77.77
+  factory :variant_override, class: VariantOverride do
+    price 77.77
     on_demand false
-    count_on_hand 11111
+    count_on_hand 11_111
     default_stock 2000
-    resettable  false
+    resettable false
 
     trait :on_demand do
       on_demand true
@@ -59,7 +59,7 @@ FactoryBot.define do
     end
   end
 
-  factory :inventory_item, :class => InventoryItem do
+  factory :inventory_item, class: InventoryItem do
     enterprise
     variant
     visible true
@@ -71,7 +71,7 @@ FactoryBot.define do
   factory :enterprise_role do
   end
 
-  factory :enterprise_group, :class => EnterpriseGroup do
+  factory :enterprise_group, class: EnterpriseGroup do
     name 'Enterprise group'
     sequence(:permalink) { |n| "group#{n}" }
     description 'this is a group'
@@ -79,7 +79,7 @@ FactoryBot.define do
     address { FactoryBot.build(:address) }
   end
 
-  factory :enterprise_fee, :class => EnterpriseFee do
+  factory :enterprise_fee, class: EnterpriseFee do
     transient { amount nil }
 
     sequence(:name) { |n| "Enterprise fee #{n}" }
@@ -91,7 +91,7 @@ FactoryBot.define do
     after(:create) { |ef| ef.calculator.save! }
   end
 
-  factory :adjustment_metadata, :class => AdjustmentMetadata do
+  factory :adjustment_metadata, class: AdjustmentMetadata do
     adjustment { FactoryBot.create(:adjustment) }
     enterprise { FactoryBot.create(:distributor_enterprise) }
     fee_name 'fee'
@@ -109,7 +109,8 @@ FactoryBot.define do
       if shipment.nil?
         shipping_method = create(:shipping_method_with, :shipping_fee, shipping_fee: shipping_fee)
         shipping_method.distributors << order.distributor if order.distributor
-        shipment = create(:shipment_with, :shipping_method, shipping_method: shipping_method, order: order)
+        shipment = create(:shipment_with, :shipping_method, shipping_method: shipping_method,
+                                                            order: order)
       end
       shipment
     end
@@ -129,7 +130,7 @@ FactoryBot.define do
     property
   end
 
-  factory :customer, :class => Customer do
+  factory :customer, class: Customer do
     email { Faker::Internet.email }
     enterprise
     code { SecureRandom.base64(150) }
@@ -143,7 +144,7 @@ FactoryBot.define do
     gateway_payment_profile_id "card_1EY..."
   end
 
-  factory :stripe_payment_method, :class => Spree::Gateway::StripeConnect do
+  factory :stripe_payment_method, class: Spree::Gateway::StripeConnect do
     name 'Stripe'
     environment 'test'
     distributors { [FactoryBot.create(:enterprise)] }
@@ -165,7 +166,11 @@ FactoryBot.modify do
 
   factory :payment do
     transient do
-      distributor { order.distributor || Enterprise.is_distributor.first || FactoryBot.create(:distributor_enterprise) }
+      distributor {
+        order.distributor ||
+          Enterprise.is_distributor.first ||
+          FactoryBot.create(:distributor_enterprise)
+      }
     end
     payment_method { FactoryBot.create(:payment_method, distributors: [distributor]) }
   end
