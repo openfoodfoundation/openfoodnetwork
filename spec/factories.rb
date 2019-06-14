@@ -116,7 +116,7 @@ FactoryBot.define do
     end
   end
 
-  factory :zone_with_member, :parent => :zone do
+  factory :zone_with_member, parent: :zone do
     default_tax true
 
     after(:create) do |zone|

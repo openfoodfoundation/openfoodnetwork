@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :subscription, :class => Subscription do
+  factory :subscription, class: Subscription do
     shop { create :enterprise }
     schedule { create(:schedule, order_cycles: [create(:simple_order_cycle, coordinator: shop)]) }
     customer { create(:customer, enterprise: shop) }
@@ -32,7 +32,7 @@ FactoryBot.define do
     end
   end
 
-  factory :subscription_line_item, :class => SubscriptionLineItem do
+  factory :subscription_line_item, class: SubscriptionLineItem do
     subscription
     variant
     quantity 1

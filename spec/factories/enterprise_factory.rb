@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :enterprise, :class => Enterprise do
+  factory :enterprise, class: Enterprise do
     owner { FactoryBot.create :user }
     sequence(:name) { |n| "Enterprise #{n}" }
     sells 'any'
