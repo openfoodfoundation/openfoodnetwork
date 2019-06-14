@@ -57,11 +57,6 @@ FactoryBot.modify do
   end
 
   factory :base_product do
-    # Fix product factory name sequence with Kernel.rand so it is not interpreted as a Spree::Product method
-    # Pull request: https://github.com/spree/spree/pull/1964
-    # When this fix has been merged into a version of Spree that we're using, this line can be removed.
-    sequence(:name) { |n| "Product ##{n} - #{Kernel.rand(9999)}" }
-
     supplier { Enterprise.is_primary_producer.first || FactoryBot.create(:supplier_enterprise) }
     primary_taxon { Spree::Taxon.first || FactoryBot.create(:taxon) }
 
