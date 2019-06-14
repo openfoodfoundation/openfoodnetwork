@@ -183,9 +183,7 @@ FactoryBot.modify do
     # Prevent inconsistent ordering in specs when all option types have the same (0) position
     sequence(:position)
   end
-end
 
-FactoryBot.modify do
   factory :stock_location, class: Spree::StockLocation do
     # keeps the test stock_location unique
     initialize_with { DefaultStockLocation.find_or_create }
