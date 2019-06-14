@@ -99,30 +99,6 @@ FactoryBot.define do
     enterprise_role 'distributor'
   end
 
-  factory :shipment_with, class: Spree::Shipment do
-    tracking 'U10000'
-    number '100'
-    cost 100.00
-    state 'pending'
-    order
-    address
-    stock_location
-
-    trait :shipping_method do
-      transient do
-        shipping_method { create(:shipping_method) }
-      end
-
-      shipping_rates { [Spree::ShippingRate.create(shipping_method: shipping_method, selected: true)] }
-
-      after(:create) do |shipment, evaluator|
-        shipment.order.line_items.each do |line_item|
-          line_item.quantity.times { shipment.inventory_units.create(variant_id: line_item.variant_id) }
-        end
-      end
-    end
-  end
-
   factory :line_item_with_shipment, parent: :line_item do
     transient do
       shipping_fee 3
@@ -346,10 +322,5 @@ FactoryBot.modify do
 
     # sets the default value for variant.on_demand
     backorderable_default false
-  end
-
-  factory :shipment, class: Spree::Shipment do
-    # keeps test shipments unique per order
-    initialize_with { Spree::Shipment.find_or_create_by_order_id(order.id)}
   end
 end
