@@ -79,11 +79,6 @@ FactoryBot.define do
     address { FactoryBot.build(:address) }
   end
 
-  sequence(:calculator_amount)
-  factory :calculator_per_item, class: Spree::Calculator::PerItem do
-    preferred_amount { generate(:calculator_amount) }
-  end
-
   factory :enterprise_fee, :class => EnterpriseFee do
     transient { amount nil }
 
@@ -102,11 +97,6 @@ FactoryBot.define do
     fee_name 'fee'
     fee_type 'packing'
     enterprise_role 'distributor'
-  end
-
-  factory :weight_calculator, :class => Calculator::Weight do
-    after(:build)  { |c| c.set_preference(:per_kg, 0.5) }
-    after(:create) { |c| c.set_preference(:per_kg, 0.5); c.save! }
   end
 
   factory :shipping_method_with, parent: :shipping_method do
