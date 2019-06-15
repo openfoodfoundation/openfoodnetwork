@@ -10,7 +10,7 @@
 #
 module Stock
   class Package < Spree::Stock::Package
-    # Returns all exsiting shipping categories.
+    # Returns all existing shipping categories.
     #   It does not filter by the shipping categories of the products in the order.
     #   It allows checkout of products with categories that are not the shipping methods categories
     #   It disables the matching of product shipping category with shipping method's category
