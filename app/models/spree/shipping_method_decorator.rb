@@ -57,8 +57,7 @@ Spree::ShippingMethod.class_eval do
   # It allows checkout using shipping methods without zones (see issue #3928 for details)
   #   and it allows checkout with addresses outside of the zones of the selected shipping method
   def include?(address)
-    return false unless address
-    true
+    address.present?
   end
 
   def has_distributor?(distributor)
