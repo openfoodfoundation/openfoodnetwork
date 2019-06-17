@@ -186,6 +186,7 @@ feature 'Shops', js: true do
       within ".reveal-modal" do
         expect(page).to have_content 'Fruit'   # Taxon
         expect(page).to have_content 'Organic' # Producer property
+        expect(page).to have_content "Shop for #{producer.name} products at:".upcase
       end
     end
   end
