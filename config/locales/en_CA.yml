@@ -12,7 +12,9 @@ en_CA:
       spree/payment:
         amount: Amount
       spree/product:
-        primary_taxon: Product Category
+        primary_taxon: "Product Category"
+        supplier: "Supplier"
+        variant_unit: "Variant Unit"
       order_cycle:
         orders_close_at: Close date
     errors:
@@ -372,13 +374,13 @@ en_CA:
         user_guide: User Guide
     enterprise_fees:
       index:
-        title: Enterprise Fees/Mark-Ups
-        enterprise: Enterprise
-        fee_type: Fee Type
-        name: Name
-        tax_category: Tax Category
-        calculator: Calculator
-        calculator_values: Calculator Values
+        title: "Enterprise Fees/Mark-Ups"
+        enterprise: "Enterprise"
+        fee_type: "Fee Type"
+        name: "Name"
+        tax_category: "Tax Category"
+        calculator: "Calculator"
+        calculator_values: "Calculator Values"
         search: "Search"
     enterprise_groups:
       index:
@@ -806,6 +808,7 @@ en_CA:
         pickup_time_placeholder: "Ready for (ie. Date / Time)"
         receival_instructions_placeholder: "Receival instructions"
         add_fee: 'Add fee'
+        remove: 'Remove'
         selected: 'selected'
       add_exchange_form:
         add_supplier: 'Add supplier'
@@ -943,8 +946,7 @@ en_CA:
       new: New Subscription
       create: Create Subscription
       edit: Edit Subscription
-      index:
-        please_select_a_shop: Please select a shop
+      table:
         edit_subscription: Edit Subscription
         pause_subscription: Pause Subscription
         unpause_subscription: Unpause Subscription
@@ -988,6 +990,10 @@ en_CA:
         address: Address
         products: Products
         no_open_or_upcoming_order_cycle: "No Upcoming Order Cycle"
+      products_panel:
+        save: "SAVE"
+        saving: "SAVING"
+        saved: "SAVED"
       product_already_in_order: This product has already been added to the order. Please edit the quantity directly.
       orders:
         number: Number
@@ -1034,7 +1040,9 @@ en_CA:
       show_on_map: "Show all on the map"
   shared:
     menu:
-      cart:
+      signed_in:
+        profile: "Profile"
+      joyride:
         checkout: "Checkout now"
         already_ordered_products: "Already ordered in this order cycle"
     register_call:
@@ -1144,6 +1152,7 @@ en_CA:
   city_placeholder: eg. Northcote
   postcode: Postal Code
   postcode_placeholder: eg. 3070
+  suburb: Suburb
   state: Province
   country: Country
   unauthorized: Unauthorized
@@ -2408,6 +2417,9 @@ en_CA:
           add_a_new_customer_for: "Add a new customer for %{shop_name}"
           customer_placeholder: "customer@example.org"
           valid_email_error: "Please enter a valid email address"
+      subscriptions:
+        new:
+          please_select_a_shop: "Please select a shop"
     insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
     out_of_stock:
       reduced_stock_available: Reduced stock available
@@ -2591,6 +2603,7 @@ en_CA:
     continue: "Continue"
     fill_in_customer_info: "Please fill in customer info"
     new_payment: "New Payment"
+    capture: "Capture"
     configurations: "Configurations"
     general_settings: "General Settings"
     site_name: "Site Name"
@@ -2692,6 +2705,7 @@ en_CA:
     no_results: "No results"
     create: "Create"
     loading: "Loading"
+    amount: "Amount"
     email: Email
     account_updated: "Account updated!"
     my_account: "My account"

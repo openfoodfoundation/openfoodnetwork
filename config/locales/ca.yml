@@ -12,7 +12,9 @@ ca:
       spree/payment:
         amount: Import
       spree/product:
-        primary_taxon: Categoria del producte
+        primary_taxon: "Categoria del producte"
+        supplier: "Proveïdora"
+        variant_unit: "Unitat de la variant"
       order_cycle:
         orders_close_at: Data de tancament
     errors:
@@ -372,14 +374,15 @@ ca:
         user_guide: Guia de l'usuari
     enterprise_fees:
       index:
-        title: Comissions de l'organització
-        enterprise: Organització
-        fee_type: Tipus de comissió
-        name: Nom
-        tax_category: Categoria d'impostos
-        calculator: Calculadora
-        calculator_values: Valors de la calculadora
+        title: "Comissions de l'organització"
+        enterprise: "Organització"
+        fee_type: "Tipus de comissió"
+        name: "Nom"
+        tax_category: "Categoria d'impostos"
+        calculator: "Calculadora"
+        calculator_values: "Valors de la calculadora"
         search: "Cerca"
+        name_placeholder: "per exemple, la tarifa d’embalatge"
     enterprise_groups:
       index:
         new_button: Grup d'organització nou
@@ -409,6 +412,7 @@ ca:
         property_name: Nom de la propietat
         inherited_property: Propietat heretada
       variants:
+        infinity: "Infinit"
         to_order_tip: "Els articles preparats per encàrrec no tenen un nivell fixat d'existències, com ara pa fet sota comanda."
       group_buy_options: "Opcions de compra en grup"
       back_to_products_list: "Torna a la llista de productes"
@@ -667,6 +671,8 @@ ca:
           shopfront_message_placeholder: >
               Una explicació opcional per a les consumidores que detalla com funciona
               la vostra botiga, que es mostrarà a sobre de la llista de productes.
+          shopfront_message_link_tooltip: "Inserir / editar enllaç"
+          shopfront_message_link_prompt: "Introduïu un URL per inserir"
           shopfront_closed_message: "Missatge de tancament de la botiga"
           shopfront_closed_message_placeholder: >
               Un missatge que proporciona una explicació més detallada sobre per què
@@ -797,6 +803,9 @@ ca:
         user_already_exists: "L'usuari ja existeix"
         error: "Alguna cosa ha anat malament"
     order_cycles:
+      loading_flash:
+        loading_order_cycles: CÀRREGUES CICLES DE COMANDA
+        loading: CARREGANT...
       edit:
         advanced_settings: Configuració avançada
         update_and_close: Actualitza i tanca
@@ -808,6 +817,7 @@ ca:
         pickup_time_placeholder: "Preparat per (és a dir, data / hora)"
         receival_instructions_placeholder: "Instruccions de recepció"
         add_fee: 'Afegeix una comissió'
+        remove: 'Eliminar'
         selected: 'seleccionat'
       add_exchange_form:
         add_supplier: 'Afegeix proveïdora'
@@ -945,8 +955,7 @@ ca:
       new: Nova subscripció
       create: Crea una subscripció
       edit: Edita la subscripció
-      index:
-        please_select_a_shop: Si us plau, seleccioneu una botiga
+      table:
         edit_subscription: Edita la subscripció
         pause_subscription: Pausa la subscripció
         unpause_subscription: Reprèn la subscripció
@@ -990,6 +999,10 @@ ca:
         address: Adreça
         products: 'Productes '
         no_open_or_upcoming_order_cycle: "No hi ha cap cicle de comandes proper"
+      products_panel:
+        save: "DESA"
+        saving: "DESANT"
+        saved: "DESAT"
       product_already_in_order: Aquest producte ja s'ha afegit a la comanda. Editeu-ne la quantitat directament.
       orders:
         number: Número
@@ -1037,6 +1050,12 @@ ca:
   shared:
     menu:
       cart:
+        cart: "Cistella"
+      signed_in:
+        profile: "Perfil"
+      mobile_menu:
+        cart: "Cistella"
+      joyride:
         checkout: "Validar ara"
         already_ordered_products: "Ja està demanat en aquest cicle de comanda"
     register_call:
@@ -1146,6 +1165,7 @@ ca:
   city_placeholder: 'p. ex: Sitges'
   postcode: Codi postal
   postcode_placeholder: 'p. ex: 08870'
+  suburb: Barri
   state: Estat
   country: País
   unauthorized: No autoritzat
@@ -2345,8 +2365,20 @@ ca:
           severity: Severitat
           description: Descripció
           resolve: Resoldre
+      tag_rules:
+        shipping_method_tagged_top: "Els mètodes d'enviament etiquetats"
+        shipping_method_tagged_bottom: "son:"
+        payment_method_tagged_top: "Mètodes de pagament etiquetats"
+        payment_method_tagged_bottom: "son:"
+        order_cycle_tagged_top: "Cicles de comandes etiquetats"
+        order_cycle_tagged_bottom: "son:"
+        inventory_tagged_top: "Variants d'inventari etiquetades"
+        inventory_tagged_bottom: "son:"
       new_tag_rule_dialog:
         select_rule_type: "Selecciona un tipus de regla:"
+        add_rule: "Afegeix una regla"
+      enterprise_fees:
+        inherit_from_product: "Heretar del producte"
       orders:
         index:
           per_page: "%{results} per pàgina"
@@ -2407,12 +2439,16 @@ ca:
           name_required_error: "Si us plau introdueix un nom per a aquesta programació"
           no_order_cycles_error: "Si us plau selecciona com a mínim un cicle de comanda (arrossega i deixa anar)"
           available: "Disponible"
+          selected: "Seleccionat"
       customers:
         index:
           add_customer: "Afegeix consumidora"
           add_a_new_customer_for: "Afegiu una consumidora nova per %{shop_name}"
           customer_placeholder: "consumidora@example.org"
           valid_email_error: "siusplau, introduïu una adreça de correu electrònic vàlida"
+      subscriptions:
+        new:
+          please_select_a_shop: "Si us plau, seleccioneu una botiga"
     insufficient_stock: "No hi ha prou estoc disponible, només queda %{on_hand}"
     out_of_stock:
       reduced_stock_available: Estoc reduït disponible
@@ -2596,6 +2632,8 @@ ca:
     continue: "Continua"
     fill_in_customer_info: "Ompliu la informació de la consumidora"
     new_payment: "Nou pagament"
+    capture: "Captura"
+    void: "Buit"
     configurations: "Configuracions"
     general_settings: "Configuració general"
     site_name: "Nom del lloc"
@@ -2697,6 +2735,16 @@ ca:
     no_results: "Sense resultats"
     create: "Crear"
     loading: "S'està carregant"
+    flat_percent: "Percentatge fix"
+    per_kg: "Per kg"
+    amount: "Quantitat"
+    currency: "Moneda"
+    first_item: "Cost del primer article"
+    additional_item: "Cost d'articles addicionals"
+    max_items: "Elements màxims"
+    minimal_amount: "Quantitat mínima"
+    normal_amount: "Quantitat normal"
+    discount_amount: "Import de descompte"
     email: Correu electrònic
     account_updated: "Compte actualitzat!"
     my_account: "El meu compte"
@@ -2795,15 +2843,29 @@ ca:
       shipping_methods:
         index:
           shipping_methods: "Mètodes d'enviament"
+          new_shipping_method: "Nou mètode d'enviament"
           name: "Nom"
           products_distributor: "Distribuïdora"
           zone: "Zona"
           calculator: "Calculadora"
           display: "Mostra"
+          both: "Ambdós"
+          front_end: "Front End"
+          back_end: "Back End"
+          no_shipping_methods_found: "No s’han trobat mètodes d’enviament"
+        new:
+          new_shipping_method: "Nou mètode d'enviament"
+          back_to_shipping_methods_list: "Tornar al llistat de mètodes d'enviament"
         edit:
+          editing_shipping_method: "Editar mètodes d'enviament"
           new: "Nou"
+          back_to_shipping_methods_list: "Tornar al llistat de mètodes d'enviament"
         form:
+          categories: "Categories"
           zones: "Zones"
+          both: "Ambdós"
+          front_end: "Front End"
+          back_end: "Back End"
       payment_methods:
         new:
           new_payment_method: "Nou mètode de pagament"
@@ -2929,6 +2991,7 @@ ca:
       line_item:
         insufficient_stock: "No hi ha prou estoc disponible, només queda %{on_hand}"
         out_of_stock: "Fora d'existència"
+        unavailable_item: "Actualment no disponible"
     shipment_states:
       backorder: per tornar
       partial: parcial
@@ -2948,6 +3011,8 @@ ca:
       invalid: invàlid
     order_mailer:
       cancel_email:
+        customer_greeting: "Hola %{name}!"
+        instructions: "La teva comanda ha estat anul·lada. Conserva aquesta informació de cancel·lació per als teus registres."
         order_summary_canceled: "Resum de comanda [CANCEL·LADA]"
         subject: "Cancel·lació de la comanda"
       confirm_email:

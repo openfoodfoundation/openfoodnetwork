@@ -12,7 +12,9 @@ nb:
       spree/payment:
         amount: Beløp
       spree/product:
-        primary_taxon: Produktkategori
+        primary_taxon: "Produktkategori"
+        supplier: "Leverandør"
+        variant_unit: "Variant Enhet"
       order_cycle:
         orders_close_at: Lukkedato
     errors:
@@ -951,8 +953,7 @@ nb:
       new: Nytt abonnement
       create: Opprett abonnement
       edit: Rediger abonnement
-      index:
-        please_select_a_shop: Vennligst velg en butikk
+      table:
         edit_subscription: Rediger abonnement
         pause_subscription: Pause abonnement
         unpause_subscription: Fortsett abonnement
@@ -996,6 +997,10 @@ nb:
         address: Adresse
         products: Produkter
         no_open_or_upcoming_order_cycle: "Ingen kommende bestillingsrunde"
+      products_panel:
+        save: "LAGRE"
+        saving: "LAGRER"
+        saved: "LAGRET"
       product_already_in_order: Dette produktet er allerede lagt til i bestillingen. Vennligst rediger mengden direkte.
       orders:
         number: Antall
@@ -1159,6 +1164,7 @@ nb:
   city_placeholder: f.eks. Northcote
   postcode: Postnummer
   postcode_placeholder: f.eks. 3070
+  suburb: Område
   state: Fylke
   country: Land
   unauthorized: Uautorisert
@@ -2437,6 +2443,9 @@ nb:
           add_a_new_customer_for: "Legge til en ny kunde for %{shop_name}"
           customer_placeholder: "customer@example.org"
           valid_email_error: "Vennligst oppgi en gyldig epostadresse"
+      subscriptions:
+        new:
+          please_select_a_shop: "Vennligst velg en butikk"
     insufficient_stock: "Utilstrekkelig lager tilgjengelig, kun %{on_hand} gjenværende"
     out_of_stock:
       reduced_stock_available: Redusert lager tilgjengelig
@@ -2852,7 +2861,7 @@ nb:
           zones: "Soner"
           both: "Begge"
           front_end: "Frontend"
-          back_end: "Bakend"
+          back_end: "Backend"
       payment_methods:
         new:
           new_payment_method: "Ny Betalingsmetode"

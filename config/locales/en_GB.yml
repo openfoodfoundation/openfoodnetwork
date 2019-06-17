@@ -12,7 +12,9 @@ en_GB:
       spree/payment:
         amount: Amount
       spree/product:
-        primary_taxon: Product Category
+        primary_taxon: "Product Category"
+        supplier: "Supplier"
+        variant_unit: "Variant Unit"
       order_cycle:
         orders_close_at: Close date
     errors:
@@ -951,8 +953,7 @@ en_GB:
       new: New Subscription
       create: Create Subscription
       edit: Edit Subscription
-      index:
-        please_select_a_shop: Please select a shop
+      table:
         edit_subscription: Edit Subscription
         pause_subscription: Pause Subscription
         unpause_subscription: Unpause Subscription
@@ -996,6 +997,10 @@ en_GB:
         address: Address
         products: Products
         no_open_or_upcoming_order_cycle: "No Upcoming Order Cycle"
+      products_panel:
+        save: "SAVE"
+        saving: "SAVING"
+        saved: "SAVED"
       product_already_in_order: This product has already been added to the order. Please edit the quantity directly.
       orders:
         number: Number
@@ -1159,6 +1164,7 @@ en_GB:
   city_placeholder: eg. Newcastle
   postcode: Postcode
   postcode_placeholder: eg. 3070
+  suburb: Suburb
   state: County
   country: Country
   unauthorized: Unauthorized
@@ -2443,6 +2449,9 @@ en_GB:
           add_a_new_customer_for: "Add a new customer for %{shop_name}"
           customer_placeholder: "customer@example.org"
           valid_email_error: "Please enter a valid email address"
+      subscriptions:
+        new:
+          please_select_a_shop: "Please select a shop"
     insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
     out_of_stock:
       reduced_stock_available: Reduced stock available

@@ -12,7 +12,9 @@ pt:
       spree/payment:
         amount: Quantia
       spree/product:
-        primary_taxon: Categoria de Produto
+        primary_taxon: "Categoria de Produto"
+        supplier: "Fornecedor"
+        variant_unit: "Unidade da Variante"
       order_cycle:
         orders_close_at: Data de fecho
     errors:
@@ -372,13 +374,13 @@ pt:
         user_guide: Manual do Utilizador
     enterprise_fees:
       index:
-        title: Taxas de Organização
-        enterprise: Organização
-        fee_type: Tipo de Taxa
-        name: Nome
-        tax_category: Categoria de Imposto
-        calculator: Calculadora
-        calculator_values: Valores da calculadora
+        title: "Taxas de Organização"
+        enterprise: "Organização"
+        fee_type: "Tipo de Taxa"
+        name: "Nome"
+        tax_category: "Categoria de Imposto"
+        calculator: "Calculadora"
+        calculator_values: "Valores da calculadora"
         search: "Procurar"
     enterprise_groups:
       index:
@@ -813,6 +815,7 @@ pt:
         pickup_time_placeholder: "Pronto para (dia/hora)"
         receival_instructions_placeholder: "Instruções de recebimento"
         add_fee: 'Acrescentar taxa'
+        remove: 'Remover'
         selected: 'selecionado'
       add_exchange_form:
         add_supplier: 'Acrescentar fornecedor'
@@ -950,8 +953,7 @@ pt:
       new: Nova Subscrição
       create: Criar Subscrição
       edit: Editar Subscrição
-      index:
-        please_select_a_shop: Por favor selecione uma loja
+      table:
         edit_subscription: Editar Subscrição
         pause_subscription: Pausar Subscrição
         unpause_subscription: Parar pausa da Subscrição
@@ -995,6 +997,10 @@ pt:
         address: Morada
         products: Produtos
         no_open_or_upcoming_order_cycle: "Nenhum Ciclo de Encomendas aberto ou que abrirá em breve"
+      products_panel:
+        save: "GUARDAR"
+        saving: "A GUARDAR"
+        saved: "GUARDADO"
       product_already_in_order: Este produto já foi adicionado à encomenda. Por favor edite a quantidade directamente.
       orders:
         number: Número
@@ -1041,7 +1047,9 @@ pt:
       show_on_map: "Mostrar todas as lojas no mapa"
   shared:
     menu:
-      cart:
+      signed_in:
+        profile: "Perfil"
+      joyride:
         checkout: "Finalizar compra agora"
         already_ordered_products: "Já encomendado neste ciclo de encomendas"
     register_call:
@@ -1152,6 +1160,7 @@ pt:
   city_placeholder: ex. Famalicão
   postcode: Código postal
   postcode_placeholder: 'ex:  4000-125'
+  suburb: Localidade
   state: Região
   country: País
   unauthorized: Não autorizado
@@ -2422,6 +2431,9 @@ pt:
           add_a_new_customer_for: "Adicionar novo/a consumidor/a a %{shop_name}"
           customer_placeholder: "consumidora@exemplo.org"
           valid_email_error: "Por favor usar um endereço de email válido"
+      subscriptions:
+        new:
+          please_select_a_shop: "Por favor selecione uma loja"
     insufficient_stock: "Stock disponível insuficiente, apenas %{on_hand} disponíveis"
     out_of_stock:
       reduced_stock_available: Stock reduzido disponível
@@ -2604,6 +2616,7 @@ pt:
     continue: "Continuar"
     fill_in_customer_info: "Por favor preencha informação do/a consumidor/a"
     new_payment: "Novo Pagamento"
+    capture: "Capturar"
     configurations: "Configurações"
     general_settings: "Configurações Gerais"
     site_name: "Nome do Site"
@@ -2705,6 +2718,7 @@ pt:
     no_results: "Nenhum resultado"
     create: "Criar"
     loading: "A carregar"
+    amount: "Quantia"
     email: Email
     account_updated: "Conta actualizada!"
     my_account: "A minha conta"

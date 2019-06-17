@@ -12,7 +12,9 @@ es:
       spree/payment:
         amount: Cantidad
       spree/product:
-        primary_taxon: categoría del producto
+        primary_taxon: "categoría del producto"
+        supplier: "Proveedora"
+        variant_unit: "Unidad Variante"
       order_cycle:
         orders_close_at: Fecha de cierre
     errors:
@@ -372,13 +374,13 @@ es:
         user_guide: Manual de Usuario
     enterprise_fees:
       index:
-        title: Comisiones de la Organización
-        enterprise: Organización
-        fee_type: Tipo de Comisión
-        name: Nombre
-        tax_category: Categoría del impuesto
-        calculator: Calculadora
-        calculator_values: Valores de la Calculadora
+        title: "Comisiones de la Organización"
+        enterprise: "Organización"
+        fee_type: "Tipo de Comisión"
+        name: "Nombre"
+        tax_category: "Categoría del impuesto"
+        calculator: "Calculadora"
+        calculator_values: "Valores de la Calculadora"
         search: "Buscar"
     enterprise_groups:
       index:
@@ -808,6 +810,7 @@ es:
         pickup_time_placeholder: "Listo para ( Fecha / Hora)"
         receival_instructions_placeholder: "Instrucciones de recepción"
         add_fee: 'Añadir comisión'
+        remove: 'Eliminar'
         selected: 'seleccionado'
       add_exchange_form:
         add_supplier: 'Añadir proveedora'
@@ -945,8 +948,7 @@ es:
       new: Nueva suscripción
       create: Crear suscripción
       edit: Editar suscripción
-      index:
-        please_select_a_shop: Por favor seleccione una tienda
+      table:
         edit_subscription: Editar suscripción
         pause_subscription: Pausa Suscripción
         unpause_subscription: Reanudar suscripción
@@ -990,6 +992,10 @@ es:
         address: Dirección
         products: Productos
         no_open_or_upcoming_order_cycle: "No hay ciclo de pedido próximo"
+      products_panel:
+        save: "GUARDAR"
+        saving: "GUARDANDO"
+        saved: "GUARDADO"
       product_already_in_order: Este producto ya ha sido agregado a la orden. Por favor edite la cantidad directamente.
       orders:
         number: Número
@@ -1036,9 +1042,11 @@ es:
       show_on_map: "Ver todos en el mapa"
   shared:
     menu:
-      cart:
-        checkout: "Validar ahora"
-        already_ordered_products: "Ya realizó un pedido en este ciclo de pedido"
+      signed_in:
+        profile: "Perfil"
+      joyride:
+        checkout: "Validar el carrito ahora"
+        already_ordered_products: "Pedido en este ciclo de pedido"
     register_call:
       selling_on_ofn: "¿Estás interesada en entrar en Open Food Network?"
       register: "Regístrate aquí"
@@ -1146,6 +1154,7 @@ es:
   city_placeholder: ej. Barcelona
   postcode: Código postal
   postcode_placeholder: ej. 08025
+  suburb: Barrio
   state: Estado
   country: País
   unauthorized: No autorizado
@@ -2414,6 +2423,9 @@ es:
           add_a_new_customer_for: "Añadir un nuevo consumidor para %{shop_name}"
           customer_placeholder: "customer@example.org"
           valid_email_error: "Introduce un email válido"
+      subscriptions:
+        new:
+          please_select_a_shop: "Por favor seleccione una tienda"
     insufficient_stock: "Stock insuficiente disponible, solo quedan %{on_hand}"
     out_of_stock:
       reduced_stock_available: Stock reducido disponible
@@ -2597,6 +2609,7 @@ es:
     continue: "Continuar"
     fill_in_customer_info: "Por favor complete la información de la consumidora"
     new_payment: "Nuevo pago"
+    capture: "Captura"
     configurations: "Configuraciones"
     general_settings: "Configuración general"
     site_name: "Nombre del sitio"
@@ -2698,6 +2711,7 @@ es:
     no_results: "No hay resultados"
     create: "Crear"
     loading: "Cargando"
+    amount: "Cantidad"
     email: Email
     account_updated: "Cuenta actualizada!"
     my_account: "Mi cuenta"

@@ -1,4 +1,4 @@
-en_GB:
+en_ZA:
   language_name: "English"
   activerecord:
     attributes:
@@ -12,7 +12,11 @@ en_GB:
       spree/payment:
         amount: Amount
       spree/product:
-        primary_taxon: Product Category
+        primary_taxon: "Product Category"
+        supplier: "Supplier"
+        shipping_category_id: "Shipping Category"
+        variant_unit: "Variant Unit"
+        variant_unit_name: "Variant Unit Name"
       order_cycle:
         orders_close_at: Close date
     errors:
@@ -951,12 +955,13 @@ en_GB:
       new: New Subscription
       create: Create Subscription
       edit: Edit Subscription
-      index:
-        please_select_a_shop: Please select a shop
+      table:
         edit_subscription: Edit Subscription
         pause_subscription: Pause Subscription
         unpause_subscription: Unpause Subscription
         cancel_subscription: Cancel Subscription
+      filters:
+        query_placeholder: "Search by email..."
       setup_explanation:
         just_a_few_more_steps: 'Just a few more steps before you can begin:'
         enable_subscriptions: "Enable subscriptions for at least one of your shops"
@@ -989,6 +994,8 @@ en_GB:
         charges_not_allowed: Charges are not allowed by this customer
         no_default_card: Customer has no cards available to charge
         card_ok: Customer has a card available to charge
+        begins_at_placeholder: "Select a Date"
+        ends_at_placeholder: "Optional"
       loading_flash:
         loading: LOADING SUBSCRIPTIONS
       review:
@@ -996,6 +1003,10 @@ en_GB:
         address: Address
         products: Products
         no_open_or_upcoming_order_cycle: "No Upcoming Order Cycle"
+      products_panel:
+        save: "SAVE"
+        saving: "SAVING"
+        saved: "SAVED"
       product_already_in_order: This product has already been added to the order. Please edit the quantity directly.
       orders:
         number: Number
@@ -1159,6 +1170,7 @@ en_GB:
   city_placeholder: eg. Newcastle
   postcode: Postcode
   postcode_placeholder: eg. 3070
+  suburb: Suburb
   state: County
   country: Country
   unauthorized: Unauthorized
@@ -1931,6 +1943,7 @@ en_GB:
   spree_admin_supplier: Supplier
   spree_admin_product_category: Product Category
   spree_admin_variant_unit_name: Variant unit name
+  unit_name: "Unit name"
   change_package: "Change Package"
   spree_admin_single_enterprise_hint: "Hint: To allow people to find you, turn on your visibility under"
   spree_admin_eg_pickup_from_school: "eg. 'Pick-up from Primary School'"
@@ -2443,6 +2456,9 @@ en_GB:
           add_a_new_customer_for: "Add a new customer for %{shop_name}"
           customer_placeholder: "customer@example.org"
           valid_email_error: "Please enter a valid email address"
+      subscriptions:
+        new:
+          please_select_a_shop: "Please select a shop"
     insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
     out_of_stock:
       reduced_stock_available: Reduced stock available

@@ -6,6 +6,9 @@ sv:
         payment_state: Betalningstatus
         shipment_state: Leveransstatus
         state: Region
+      spree/product:
+        supplier: "Leverantör"
+        variant_unit: "Enhet för variant"
     errors:
       models:
         spree/user:
@@ -190,13 +193,13 @@ sv:
         user_guide: Användarinstruktion
     enterprise_fees:
       index:
-        title: Företagsavgifter
-        enterprise: Företag
-        fee_type: Avgiftstyp
-        name: Namn
-        tax_category: Skattekategori
-        calculator: Beräkning
-        calculator_values: Beräknade summor
+        title: "Företagsavgifter"
+        enterprise: "Företag"
+        fee_type: "Avgiftstyp"
+        name: "Namn"
+        tax_category: "Skattekategori"
+        calculator: "Beräkning"
+        calculator_values: "Beräknade summor"
         search: "Sök"
     enterprise_groups:
       index:
@@ -485,6 +488,7 @@ sv:
         pickup_instructions_placeholder: "Instruktioner för upphämtning"
         pickup_time_placeholder: "Klar för (dvs. Datum/Tid)"
         receival_instructions_placeholder: "Instruktioner för mottagning"
+        remove: 'Ta bort'
       advanced_settings:
         title: Avancerade inställningar
         choose_product_tip: Du kan välja att begränsa alla tillgängliga produkter (både inkommande och utgående), till enbart dem i %{inventory}'s inventory.
@@ -592,6 +596,10 @@ sv:
       review:
         address: Adress
         products: Produkter
+      products_panel:
+        save: "SPARA"
+        saving: "SPARANDE"
+        saved: "SPARAD"
   checkout:
     already_ordered:
       cart: "vagn"
@@ -603,7 +611,9 @@ sv:
       show_on_map: "Visa allt på kartan"
   shared:
     menu:
-      cart:
+      signed_in:
+        profile: "Profil"
+      joyride:
         checkout: "Slutför beställning"
         already_ordered_products: "Redan beställd i denna beställningsomgång"
     register_call:
@@ -698,6 +708,7 @@ sv:
   city_placeholder: eg. Northcote
   postcode: Postnummer
   postcode_placeholder: eg. 3070
+  suburb: Stadsdel
   state: Region
   country: Land
   unauthorized: Obehörig
@@ -1901,6 +1912,7 @@ sv:
     phone: "Telefonnummer"
     update: "Uppdatera"
     continue: "Fortsätt"
+    capture: "Fånga"
     tax rate: "Skattesatser"
     tax_category: "Skattekategori"
     tax_settings: "Skatteskalor"
@@ -1911,6 +1923,7 @@ sv:
     type: "Typ"
     calculator: "Beräkning"
     create: "Skapa"
+    amount: "Belopp"
     inventory: Lager
     zipcode: Postkod
     weight: Vikt (kg)

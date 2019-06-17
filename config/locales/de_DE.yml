@@ -12,7 +12,9 @@ de_DE:
       spree/payment:
         amount: Betrag
       spree/product:
-        primary_taxon: Produktkategorie
+        primary_taxon: "Produktkategorie"
+        supplier: "Anbieter"
+        variant_unit: "Varianteneinheit"
       order_cycle:
         orders_close_at: Schlussdatum
     errors:
@@ -372,13 +374,13 @@ de_DE:
         user_guide: Benutzerhandbuch
     enterprise_fees:
       index:
-        title: Unternehmensgebühren
-        enterprise: Unternehmen
-        fee_type: Art der Gebühr
-        name: Name
-        tax_category: Steuerkategorie
-        calculator: Rechner
-        calculator_values: Werte des Rechners
+        title: "Unternehmensgebühren"
+        enterprise: "Unternehmen"
+        fee_type: "Art der Gebühr"
+        name: "Name"
+        tax_category: "Steuerkategorie"
+        calculator: "Rechner"
+        calculator_values: "Werte des Rechners"
         search: "Suche"
     enterprise_groups:
       index:
@@ -811,6 +813,7 @@ de_DE:
         pickup_time_placeholder: "Bereit für (dh Datum / Uhrzeit)"
         receival_instructions_placeholder: "Lieferinformation"
         add_fee: 'Gebühr hinzufügen'
+        remove: 'Entfernen'
         selected: 'ausgewählt'
       add_exchange_form:
         add_supplier: 'Anbieter hinzufügen'
@@ -948,8 +951,7 @@ de_DE:
       new: Neues Abonnement
       create: Abonnement erstellen
       edit: Abonnement bearbeiten
-      index:
-        please_select_a_shop: Bitte wählen Sie einen Laden
+      table:
         edit_subscription: Abonnement bearbeiten
         pause_subscription: Abonement pausieren
         unpause_subscription: Abonnement fortsetzen
@@ -993,6 +995,8 @@ de_DE:
         address: Adresse
         products: Produkte
         no_open_or_upcoming_order_cycle: "Kein bevorstehender Bestellzyklus"
+      products_panel:
+        save: "SPEICHERN"
       product_already_in_order: Dieses Produkt wurde bereits zur Bestellung hinzugefügt. Bitte änderns Sie stattdessen die Menge.
       orders:
         number: Nummer
@@ -1039,7 +1043,9 @@ de_DE:
       show_on_map: "Alle auf der Karte zeigen"
   shared:
     menu:
-      cart:
+      signed_in:
+        profile: "Profil"
+      joyride:
         checkout: "Zur Kasse"
         already_ordered_products: "Bereits in diesem Bestellzyklus bestellt"
     register_call:
@@ -1149,6 +1155,7 @@ de_DE:
   city_placeholder: z.B. Nordwestheim
   postcode: Postleitzahl
   postcode_placeholder: z.B. 30701
+  suburb: Vorort
   state: Bundesland
   country: Land
   unauthorized: Nicht autorisiert
@@ -2417,6 +2424,9 @@ de_DE:
           add_a_new_customer_for: "Neuer Kunde für %{shop_name} hinzufügen"
           customer_placeholder: "Kunde@beispiel.org"
           valid_email_error: "Bitte geben Sie eine gültige E-Mail-Adresse ein"
+      subscriptions:
+        new:
+          please_select_a_shop: "Bitte wählen Sie einen Laden"
     insufficient_stock: "Nicht genügend Lagerbestand verfügbar, nur noch %{on_hand} verfügbar"
     out_of_stock:
       reduced_stock_available: Reduzierter Bestand verfügbar
@@ -2600,6 +2610,7 @@ de_DE:
     continue: "Fortsetzen"
     fill_in_customer_info: "Bitte geben Sie Ihre Kundeninformationen ein"
     new_payment: "Neue Zahlung"
+    capture: "Erfassung"
     configurations: "Konfigurationen"
     general_settings: "Allgemeine Einstellungen"
     site_name: "Site-Name"
@@ -2701,6 +2712,7 @@ de_DE:
     no_results: "Keine Ergebnisse"
     create: "Neu"
     loading: "Wird geladen"
+    amount: "Betrag"
     email: Email
     account_updated: "Konto aktualisiert!"
     my_account: "Mein Konto"

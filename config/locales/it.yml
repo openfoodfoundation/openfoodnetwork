@@ -12,7 +12,9 @@ it:
       spree/payment:
         amount: Quantità
       spree/product:
-        primary_taxon: Categoria prodotto
+        primary_taxon: "Categoria prodotto"
+        supplier: "Fornitore"
+        variant_unit: "Unità Variante"
       order_cycle:
         orders_close_at: Data chiusura
     errors:
@@ -372,13 +374,13 @@ it:
         user_guide: Guida per gli utenti
     enterprise_fees:
       index:
-        title: Tariffe azienda
-        enterprise: Azienda
-        fee_type: Tipo di tariffa
-        name: Nome
-        tax_category: Categoria d'imposta
-        calculator: Calcolatrice
-        calculator_values: Valori della Calcolatrice
+        title: "Tariffe azienda"
+        enterprise: "Azienda"
+        fee_type: "Tipo di tariffa"
+        name: "Nome"
+        tax_category: "Categoria d'imposta"
+        calculator: "Calcolatrice"
+        calculator_values: "Valori della Calcolatrice"
         search: "Cerca"
     enterprise_groups:
       index:
@@ -808,6 +810,7 @@ it:
         pickup_time_placeholder: "Pronto per (es. Data / Ora)"
         receival_instructions_placeholder: "Istruzioni per il ritiro"
         add_fee: 'Aggiungi tariffa'
+        remove: 'Rimuovi'
         selected: 'selezionato'
       add_exchange_form:
         add_supplier: 'Aggiungi fornitore'
@@ -945,8 +948,7 @@ it:
       new: Nuovo Abbonamento
       create: Crea Abbonamento
       edit: Modifica Abbonamento
-      index:
-        please_select_a_shop: Seleziona un negozio
+      table:
         edit_subscription: Modifica Abbonamento
         pause_subscription: Metti in pausa l'abbonamento
         unpause_subscription: Riprendi abbonamento
@@ -990,6 +992,10 @@ it:
         address: Indirizzo
         products: Prodotti
         no_open_or_upcoming_order_cycle: "Non sono previsti cicli di richieste."
+      products_panel:
+        save: "SALVA"
+        saving: "SALVATAGGIO"
+        saved: "SALVATO"
       product_already_in_order: Questo prodotto è già stato aggiunto alla gentile richiesta. Per favore modifica direttamente la quantità.
       orders:
         number: Numero
@@ -1036,7 +1042,9 @@ it:
       show_on_map: "Mostra tutto nella mappa"
   shared:
     menu:
-      cart:
+      signed_in:
+        profile: "Profilo"
+      joyride:
         checkout: "Checkout adesso"
         already_ordered_products: "Già richiesto in questo ciclo di richieste"
     register_call:
@@ -1146,6 +1154,7 @@ it:
   city_placeholder: es. Forlimpopoli
   postcode: CAP
   postcode_placeholder: es. 10040
+  suburb: Comune
   state: Stato
   country: Paese
   unauthorized: Non autorizzato
@@ -2413,6 +2422,9 @@ it:
           add_a_new_customer_for: "Aggiungi un nuovo cliente per %{shop_name}"
           customer_placeholder: "cliente@esempio.org"
           valid_email_error: "Per favore inserisci un indirizzo email valido"
+      subscriptions:
+        new:
+          please_select_a_shop: "Seleziona un negozio"
     insufficient_stock: "Scorte disponibili insufficienti, solo %{on_hand} rimanenti"
     out_of_stock:
       reduced_stock_available: Quantità disponibile ridotta
@@ -2596,6 +2608,7 @@ it:
     continue: "Continua"
     fill_in_customer_info: "Si prega di compilare le informazioni del cliente"
     new_payment: "Nuovo pagamento"
+    capture: "Cattura"
     configurations: "Configurazioni"
     general_settings: "Impostazioni generali"
     site_name: "Nome del sito"
@@ -2697,6 +2710,7 @@ it:
     no_results: "Nessun risultato"
     create: "Crea"
     loading: "Caricamento"
+    amount: "Quantità"
     email: Email
     account_updated: "Account aggiornato!"
     my_account: "Il mio account"

@@ -12,7 +12,9 @@ fr_BE:
       spree/payment:
         amount: Montant
       spree/product:
-        primary_taxon: Catégorie Produit
+        primary_taxon: "Catégorie Produit"
+        supplier: "Fournisseur"
+        variant_unit: "Unité"
       order_cycle:
         orders_close_at: Date de fermeture
     errors:
@@ -372,13 +374,13 @@ fr_BE:
         user_guide: Guide utilisateur
     enterprise_fees:
       index:
-        title: Marges et Commissions
-        enterprise: Entreprise
-        fee_type: Type de marge
-        name: Nom
-        tax_category: TVA applicable
-        calculator: Calculateur
-        calculator_values: Montants pour calculs
+        title: "Marges et Commissions"
+        enterprise: "Entreprise"
+        fee_type: "Type de marge"
+        name: "Nom"
+        tax_category: "TVA applicable"
+        calculator: "Calculateur"
+        calculator_values: "Montants pour calculs"
         search: "Rechercher"
     enterprise_groups:
       index:
@@ -813,6 +815,7 @@ fr_BE:
         pickup_time_placeholder: "Prêt pour (ex : jour + créneau horaire)"
         receival_instructions_placeholder: "Modalités de livraison"
         add_fee: 'Ajouter une commission'
+        remove: 'Supprimer'
         selected: 'sélectionné'
       add_exchange_form:
         add_supplier: 'Ajouter un fournisseur'
@@ -950,8 +953,7 @@ fr_BE:
       new: Nouvel abonnement
       create: Créer abonnement
       edit: Mettre à jour Abonnement
-      index:
-        please_select_a_shop: Veuillez choisir un comptoir
+      table:
         edit_subscription: Mettre à jour Abonnement
         pause_subscription: Mettre en pause Abonnement
         unpause_subscription: Reprendre Abonnement
@@ -995,6 +997,10 @@ fr_BE:
         address: Adresse
         products: Produits
         no_open_or_upcoming_order_cycle: "Pas de cycle de vente à venir"
+      products_panel:
+        save: "Enregistrer"
+        saving: "En cours d'enregistrement"
+        saved: "Enregistré"
       product_already_in_order: Ce produit a déjà été ajouté à la commande. Veuillez directement modifier la quantité.
       orders:
         number: Nombre
@@ -1041,8 +1047,10 @@ fr_BE:
       show_on_map: "Tout afficher sur la carte"
   shared:
     menu:
-      cart:
-        checkout: "Poursuivre la commande"
+      signed_in:
+        profile: "Profil"
+      joyride:
+        checkout: "Passer la commande"
         already_ordered_products: "Déjà commandé dans ce cycle de vente"
     register_call:
       selling_on_ofn: "Intéressé à participer à Open Food Network?"
@@ -1151,6 +1159,7 @@ fr_BE:
   city_placeholder: 'ex: Nantes'
   postcode: Code postal
   postcode_placeholder: 'ex: 44000'
+  suburb: Ville
   state: Province
   country: Pays
   unauthorized: Non authorisé
@@ -2430,6 +2439,9 @@ fr_BE:
           add_a_new_customer_for: "Ajouter un nouvel acheteur pour %{shop_name}"
           customer_placeholder: "acheteur@exemple.org"
           valid_email_error: "Veuillez entrer un email valide"
+      subscriptions:
+        new:
+          please_select_a_shop: "Veuillez choisir un comptoir"
     insufficient_stock: "Stock disponible insuffisant , il ne reste que %{on_hand}"
     out_of_stock:
       reduced_stock_available: Stock disponible
@@ -2614,6 +2626,7 @@ fr_BE:
     continue: "Suivant"
     fill_in_customer_info: "Merci de remplir les informations client"
     new_payment: "Nouveau paiement"
+    capture: "Payée"
     configurations: "Configurations"
     general_settings: "Réglages Généraux"
     site_name: "Nom du site"
@@ -2715,6 +2728,7 @@ fr_BE:
     no_results: "Aucun résultat"
     create: "Créer"
     loading: "Chargement en cours"
+    amount: "Quantité"
     email: Email
     account_updated: "Compte mis à jour!"
     my_account: "Mon compte"

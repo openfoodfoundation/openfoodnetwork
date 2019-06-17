@@ -12,7 +12,9 @@ nl_BE:
       spree/payment:
         amount: Bedrag
       spree/product:
-        primary_taxon: Product categorie
+        primary_taxon: "Product categorie"
+        supplier: "Leverancier"
+        variant_unit: "Eénheid"
       order_cycle:
         orders_close_at: Sluitingsdatum
     errors:
@@ -372,13 +374,13 @@ nl_BE:
         user_guide: Gebruikershandleiding
     enterprise_fees:
       index:
-        title: Ondernemingsvergoedingen
-        enterprise: Onderneming
-        fee_type: Sprookjesachtig type
-        name: Naam
-        tax_category: Belastingcategorie
-        calculator: Rekenmachine
-        calculator_values: Rekenmachine Waarden
+        title: "Ondernemingsvergoedingen"
+        enterprise: "Onderneming"
+        fee_type: "Sprookjesachtig type"
+        name: "Naam"
+        tax_category: "Belastingcategorie"
+        calculator: "Rekenmachine"
+        calculator_values: "Rekenmachine Waarden"
         search: "Zoeken"
     enterprise_groups:
       index:
@@ -815,6 +817,7 @@ nl_BE:
         pickup_time_placeholder: "Klaar voor (d.w.z. Datum/ Uur)"
         receival_instructions_placeholder: "Ontvangst instructies"
         add_fee: 'Voeg vergoeding to'
+        remove: 'Verwijderen'
         selected: 'Geselecteerd'
       add_exchange_form:
         add_supplier: 'Voeg leverancier toe'
@@ -952,8 +955,7 @@ nl_BE:
       new: Nieuw abonnement
       create: Abonnement aanmaken
       edit: Abonnement bewerken
-      index:
-        please_select_a_shop: Selecteer een winkel
+      table:
         edit_subscription: Abonnement bewerken
         pause_subscription: Pauze Abonnement
         unpause_subscription: Abonnement Opzeggen
@@ -997,6 +999,10 @@ nl_BE:
         address: Adres
         products: Producten
         no_open_or_upcoming_order_cycle: "Geen Naderende Bestel Cyclus"
+      products_panel:
+        save: "Opslaan"
+        saving: "Aan het opslaan"
+        saved: "Opgeslaan"
       product_already_in_order: Dit product is al eens toegevoegd aan de bestelling. Gelieve rechtstreeks de hoeveelheid aan te passen.
       orders:
         number: Nummer
@@ -1043,7 +1049,9 @@ nl_BE:
       show_on_map: "Toon alles op de kaart"
   shared:
     menu:
-      cart:
+      signed_in:
+        profile: "Profiel"
+      joyride:
         checkout: "Naar de kassa"
         already_ordered_products: "Reeds besteld in de huidige bestelcyclus"
     register_call:
@@ -1153,6 +1161,7 @@ nl_BE:
   city_placeholder: bv. Gent
   postcode: Postcode
   postcode_placeholder: bv. 9000
+  suburb: Gemeente
   state: Staat
   country: Land
   unauthorized: Ongeautoriseerd
@@ -2426,6 +2435,9 @@ nl_BE:
           add_a_new_customer_for: "Voeg een nieuwe klant toe voor %{shop_name}"
           customer_placeholder: "customer@example.org"
           valid_email_error: "Vul een geldig e-mailadres in"
+      subscriptions:
+        new:
+          please_select_a_shop: "Selecteer een winkel"
     insufficient_stock: "Onvoldoende voorraad beschikbaar, alleen %{on_hand}resterend"
     out_of_stock:
       reduced_stock_available: Stock beschikbaar
@@ -2609,6 +2621,7 @@ nl_BE:
     continue: "Ga verder"
     fill_in_customer_info: "Gelieve informatie over klant in te vullen"
     new_payment: "Nieuwe betaling"
+    capture: "Capture"
     configurations: "configuraties "
     general_settings: "Algemene instellingen"
     site_name: "Website Naam"
@@ -2710,6 +2723,7 @@ nl_BE:
     no_results: "Geen resultaten "
     create: "Maak"
     loading: "Aan het opladen"
+    amount: "Bedrag"
     email: Email
     account_updated: "Rekening reset !"
     my_account: "Mijn rekening"
