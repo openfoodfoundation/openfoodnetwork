@@ -12,11 +12,7 @@ en_ZA:
       spree/payment:
         amount: Amount
       spree/product:
-        primary_taxon: "Product Category"
-        supplier: "Supplier"
-        shipping_category_id: "Shipping Category"
-        variant_unit: "Variant Unit"
-        variant_unit_name: "Variant Unit Name"
+        primary_taxon: Product Category
       order_cycle:
         orders_close_at: Close date
     errors:
@@ -154,9 +150,9 @@ en_ZA:
   home: "OFN"
   title: Open Food Network
   welcome_to: 'Welcome to '
-  site_meta_description: "We begin from the ground up. With farmers and growers ready to tell their stories proudly and truly. With distributors ready to connect people with products fairly and honestly. With buyers who believe that better weekly shopping decisions can seriously change the world."
-  search_by_name: Search by name, town, county or postcode...
-  producers_join: UK producers are now welcome to join Open Food Network UK.
+  site_meta_description: "We begin with healthy soil. With organic farmers and growers proudly rising to tell their stories. With distributors ready to connect people with local products, fairly and honestly. With buyers who believe that better shopping decisions can seriously change the world."
+  search_by_name: Search by name, town, province or postcode...
+  producers_join: South African producers are now welcome to join Open Food Network SA.
   charges_sales_tax: Charges VAT?
   print_invoice: "Print Invoice"
   print_ticket: "Print Ticket"
@@ -265,7 +261,7 @@ en_ZA:
     shipping_method: Shipping Method
     shop: Shop
     sku: SKU
-    status_state: County
+    status_state: Province
     tags: Tags
     variant: Variant
     weight: Weight
@@ -354,7 +350,7 @@ en_ZA:
         edit_ship_address: 'Edit Shipping Address'
         required_fileds: 'Required fields are denoted with an asterisk'
         select_country: 'Select Country'
-        select_state: 'Select County'
+        select_state: 'Select Province'
         edit: 'Edit'
         update_address: 'Update Address'
         confirm_delete: 'Sure to delete?'
@@ -556,7 +552,7 @@ en_ZA:
         max_qtt_ordered: "Max Quantity Ordered"
         current_fulfilled_units: "Current Fulfilled Units"
         max_fulfilled_units: "Max Fulfilled Units"
-        order_error: "Some errors must be resolved before you can update orders.\nAny fields with red borders contain errors."
+        order_error: "Some errors must be resolved before you can update orders. Any fields with red borders contain errors."
         variants_without_unit_value: "WARNING: Some variants do not have a unit value"
       select_variant: "Select a variant"
     enterprise:
@@ -577,21 +573,21 @@ en_ZA:
           desc_long_placeholder: Tell customers about yourself. This information appears on your public profile.
         business_details:
           abn: Company Number
-          abn_placeholder: eg. 99 123 456 789
+          abn_placeholder: eg. 2017/123456/77
           acn: Charity Number
-          acn_placeholder: eg. 123 456 789
+          acn_placeholder: eg. 123456789
           display_invoice_logo: Display logo in invoices
           invoice_text: Add customized text at the end of invoices
         contact:
           name: Name
           name_placeholder: eg. Amanda Plum
           email_address: Public Email Address
-          email_address_placeholder: eg. hello@food.co.uk
+          email_address_placeholder: eg. hello@openfoodnetwork.co.za
           email_address_tip: "This email address will be displayed in your public profile"
           phone: Phone
-          phone_placeholder: eg. 98 7654 3210
+          phone_placeholder: eg. 011 123 4567
           website: Website
-          website_placeholder: eg. www.truffles.co.uk
+          website_placeholder: eg. www.truffles.com
         enterprise_fees:
           name: Name
           fee_type: Fee Type
@@ -623,7 +619,7 @@ en_ZA:
           create_one_button: Create One Now
         primary_details:
           name: Name
-          name_placeholder: eg. Professor Plum's Biodynamic Truffles
+          name_placeholder: e.g. Siya's Succulent Strawberries
           groups: Groups
           groups_tip: Select any groups or regions that you are a member of. This will help customers find your enterprise.
           groups_placeholder: Start typing to search available groups...
@@ -684,8 +680,8 @@ en_ZA:
           open_date: "Open Date"
           close_date: "Close Date"
         social:
-          twitter_placeholder: "eg. @the_prof"
-          instagram_placeholder: "eg. the_prof"
+          twitter_placeholder: "eg. @siyastrawberries"
+          instagram_placeholder: "eg. siyastraw"
           facebook_placeholder: "eg. www.facebook.com/PageNameHere"
           linkedin_placeholder: "eg. www.linkedin.com/in/YourNameHere"
         stripe_connect:
@@ -719,7 +715,7 @@ en_ZA:
           owner_tip: The primary user responsible for this enterprise.
           notifications: Notifications
           notifications_tip: Notifications about orders will be send to this email address.
-          notifications_placeholder: eg. gustav@truffles.com
+          notifications_placeholder: eg. siya@truffles.com
           notifications_note: 'Note: A new email address may need to be confirmed prior to use'
           managers: Managers
           managers_tip: The other users with permission to manage this enterprise.
@@ -955,13 +951,12 @@ en_ZA:
       new: New Subscription
       create: Create Subscription
       edit: Edit Subscription
-      table:
+      index:
+        please_select_a_shop: Please select a shop
         edit_subscription: Edit Subscription
         pause_subscription: Pause Subscription
         unpause_subscription: Unpause Subscription
         cancel_subscription: Cancel Subscription
-      filters:
-        query_placeholder: "Search by email..."
       setup_explanation:
         just_a_few_more_steps: 'Just a few more steps before you can begin:'
         enable_subscriptions: "Enable subscriptions for at least one of your shops"
@@ -994,8 +989,6 @@ en_ZA:
         charges_not_allowed: Charges are not allowed by this customer
         no_default_card: Customer has no cards available to charge
         card_ok: Customer has a card available to charge
-        begins_at_placeholder: "Select a Date"
-        ends_at_placeholder: "Optional"
       loading_flash:
         loading: LOADING SUBSCRIPTIONS
       review:
@@ -1003,10 +996,6 @@ en_ZA:
         address: Address
         products: Products
         no_open_or_upcoming_order_cycle: "No Upcoming Order Cycle"
-      products_panel:
-        save: "SAVE"
-        saving: "SAVING"
-        saved: "SAVED"
       product_already_in_order: This product has already been added to the order. Please edit the quantity directly.
       orders:
         number: Number
@@ -1132,15 +1121,15 @@ en_ZA:
   menu_2_title: "Map"
   menu_2_url: "/map"
   menu_3_title: "Pricing"
-  menu_3_url: "https://about.openfoodnetwork.org.uk/pricing-and-plans"
+  menu_3_url: "https://www.openfoodnetwork.co.za/pricing"
   menu_4_title: "Groups"
   menu_4_url: "/groups"
   menu_5_title: "About"
-  menu_5_url: "https://about.openfoodnetwork.org.uk"
+  menu_5_url: "https://www.openfoodnetwork.co.za"
   menu_6_title: "Blog"
-  menu_6_url: "https://about.openfoodnetwork.org.uk/blog"
+  menu_6_url: "https://www.openfoodnetwork.co.za/blog"
   menu_7_title: "Support"
-  menu_7_url: "https://about.openfoodnetwork.org.uk/support"
+  menu_7_url: "https://www.openfoodnetwork.co.za/support"
   logo: "Logo (640x130)"
   logo_mobile: "Mobile logo (75x26)"
   logo_mobile_svg: "Mobile logo (SVG)"
@@ -1164,14 +1153,13 @@ en_ZA:
   phone: Phone
   next: Next
   address: Address
-  address_placeholder: eg. 123 High Street
+  address_placeholder: e.g. 123 High Street
   address2: Address (contd.)
   city: City
-  city_placeholder: eg. Newcastle
+  city_placeholder: e.g. Newcastle
   postcode: Postcode
-  postcode_placeholder: eg. 3070
-  suburb: Suburb
-  state: County
+  postcode_placeholder: e.g. 2940
+  state: Province
   country: Country
   unauthorized: Unauthorized
   terms_of_service: "Terms of service"
@@ -1277,21 +1265,21 @@ en_ZA:
   home_shop: Shop Now
   brandstory_headline: "Re-imagining Local Food"
   brandstory_intro: "A learning community & tools to support local food systems to thrive"
-  brandstory_part1: "We begin from the ground up. With farmers and growers ready to tell their stories proudly and truly. With distributors ready to connect people with products fairly and honestly. With buyers who believe that better weekly shopping decisions can seriously change the world."
-  brandstory_part2: "Then we need a way to make it real. A way to empower everyone who grows, sells and buys food. A way to tell all the stories, to handle all the logistics. A way to turn transaction into transformation every day."
-  brandstory_part3: "So we build an online marketplace that levels the playing field. It’s transparent, so it creates real relationships. It’s open source, so it’s owned by everyone. It scales to regions and nations, so people start versions across the world."
+  brandstory_part1: "We begin with healthy soil. With organic farmers and growers proudly rising to tell their stories. With distributors ready to connect people with local products, fairly and honestly. With buyers who believe that better shopping decisions can seriously change the world."
+  brandstory_part2: "Then we need a way to make it real. A way to empower everyone who grows, sells and buys food. A way to tell all the stories, to handle all the logistics. A way to turn transactions into transformation every day."
+  brandstory_part3: "So we build an online marketplace that levels the playing field. It’s transparent, so it creates real relationships. It’s open source, so it’s owned by everyone. It scales to regions and nations, so people can connect across the world."
   brandstory_part4: "It works everywhere. It changes everything."
   brandstory_part5_strong: "We call it Open Food Network."
   brandstory_part6: "We all love food. Now we can love our food system too."
   learn_body: "Explore models, stories and resources to support you to develop your fair food business or organisation. Find training, events and other opportunities to learn from peers."
   learn_cta: "Get Inspired"
-  connect_body: "Search our full directories of producers, hubs and groups to find fair food traders near you. List your business or organisation on the OFN so buyers can find you. Join the community to get advice and solve problems together."
+  connect_body: "Search our directories of producers, hubs and groups to find fair food traders near you. List your business or organisation on the OFN so buyers can find you. Join the community to get advice and solve problems together."
   connect_cta: "Go Exploring"
   system_headline: "Shopping - here's how it works."
   system_step1: "1. Search"
   system_step1_text: "Search our diverse, independent shops for seasonal local food. Search by neighbourhood and food category, or whether you prefer delivery or pickup."
   system_step2: "2. Shop"
-  system_step2_text: "Transform your transactions with affordable local food from diverse producers and hubs. Know the stories behind your food and the people who make it!"
+  system_step2_text: "Transform your transactions with affordable local food from empowered producers and hubs. Know the stories behind your food and the people who make it!"
   system_step3: "3. Pick-up / Delivery"
   system_step3_text: "Hang on for your delivery, or visit your producer or hub for a more personal connection with your food. Food shopping as diverse as nature intended it."
   cta_headline: "Shopping that makes the world a better place."
@@ -1572,8 +1560,8 @@ en_ZA:
   sell_hubs_detail: "Set up a profile for your food enterprise or organisation on the OFN. At any time you can upgrade your profile to a multi-producer shop."
   sell_groups_detail: "Set up a tailored directory of enterprises (producers and other food enterprises) for your region or for your organisation."
   sell_user_guide: "Find out more in our user guide."
-  sell_listing_price: "Listing a profile on OFN UK is free. Plans for shops and hubs start from as little as £1 per month.  For more detail on pricing visit https://about.openfoodnetwork.org.uk/pricing-and-plans/ ."
-  sell_embed: "We collectively budget for new feature development from the international OFN community. This way the huge cost of good software development can be shared. If you want a new feature, chances are someone in France, South Africa, Australia, India or Brazil might want it too! Use the Community Forum to suggest features you'd like to see."
+  sell_listing_price: "Listing a profile on OFN South Africa is free. Plans for shops and hubs start from as little as R100 per month. For more detail on pricing visit https://www.openfoodnetwork.co.za/pricing ."
+  sell_embed: "We collectively budget for new feature development from the international OFN community. This way the huge cost of good software development can be shared. If you want a new feature, chances are someone in Australia, France, India, the UK or USA might want it too! Use the Community Forum to suggest features you'd like to see."
   sell_ask_services: "Ask us about OFN services."
   shops_title: Shops
   shops_headline: Shopping, transformed.
@@ -1707,20 +1695,20 @@ en_ZA:
         producer: "Great! First we need to know a little bit about your farm:"
         enterprise_name_field: "Enterprise Name:"
         producer_name_field: "Farm Name:"
-        producer_name_field_placeholder: "e.g. Charlie's Chilli Farm"
+        producer_name_field_placeholder: "e.g. Siyas Succulent Strawberries"
         producer_name_field_error: "Sorry, this name has already been taken. Please try another."
         address1_field: "Address line 1:"
         address1_field_placeholder: "e.g. 123 Apple Drive"
         address1_field_error: "Please enter an address"
         address2_field: "Address line 2:"
         suburb_field: "Town:"
-        suburb_field_placeholder: "eg. Taunton"
+        suburb_field_placeholder: "e.g. Newcastle"
         suburb_field_error: "Please enter a postal town"
         postcode_field: "Postcode:"
-        postcode_field_placeholder: "eg. TA1 TAA"
+        postcode_field_placeholder: "e.g. 2094"
         postcode_field_error: "Postcode required"
-        state_field: "County:"
-        state_field_error: "County Required"
+        state_field: "Province:"
+        state_field_error: "Province Required"
         country_field: "Country:"
         country_field_error: "Please select a country"
       contact:
@@ -1730,7 +1718,7 @@ en_ZA:
         contact_field_placeholder: "Contact Name"
         contact_field_required: "Please enter a primary contact."
         phone_field: "Phone number"
-        phone_field_placeholder: "eg. 07123123123"
+        phone_field_placeholder: "e.g. 082 231 2312"
       type:
         title: "Type"
         headline: "Last step to add %{enterprise}!"
@@ -1738,8 +1726,8 @@ en_ZA:
         yes_producer: "Yes, I'm a producer"
         no_producer: "No, I'm not a producer"
         producer_field_error: "Please choose one. Are you are producer?"
-        yes_producer_help: "Producers make tasty things to eat and/or drink. You're a producer if you grow, rear, brew, bake, ferment ... etc."
-        no_producer_help: "If you’re not a producer, you’re probably someone who sells and distributes food. You might be a hub, coop, buying group, retailer, wholesaler or other."
+        yes_producer_help: "Producers make tasty things to eat and/or drink. You're a producer if you grow, rear, brew, bake, ferment... etc."
+        no_producer_help: "If you’re not a producer, you’re probably someone who sells and distributes food. You might be a hub, co-op, buying group, retailer, wholesaler or other."
         create_profile: "Create profile"
       about:
         title: "About"
@@ -1753,9 +1741,9 @@ en_ZA:
         enterprise_long_desc_placeholder: "This is your opportunity to tell the story of your enterprise - what makes you different and wonderful? We'd suggest keeping your description to under 600 characters or 150 words."
         enterprise_long_desc_length: "%{num} characters / up to 600 recommended"
         enterprise_abn: "Company Number"
-        enterprise_abn_placeholder: "eg. 99 123 456 789"
+        enterprise_abn_placeholder: "2001 / 123456 / 07"
         enterprise_acn: "Charity Number"
-        enterprise_acn_placeholder: "eg. 123 456 789"
+        enterprise_acn_placeholder: "e.g. 123-231 NPO"
         enterprise_tax_required: "You need to make a selection."
       images:
         title: "Images"
@@ -1785,15 +1773,15 @@ en_ZA:
         enterprise_final_step: "Final step!"
         enterprise_social_text: "How can people find %{enterprise} online?"
         website: "Website"
-        website_placeholder: "eg. openfoodnetwork.org.au"
+        website_placeholder: "e.g. openfoodnetwork.co.za"
         facebook: "Facebook"
-        facebook_placeholder: "eg. www.facebook.com/PageNameHere"
+        facebook_placeholder: "e.g. www.facebook.com/PageNameHere"
         linkedin: "LinkedIn"
-        linkedin_placeholder: "eg. www.linkedin.com/YourNameHere"
+        linkedin_placeholder: "e.g. www.linkedin.com/YourNameHere"
         twitter: "Twitter"
-        twitter_placeholder: "eg. @twitter_handle"
+        twitter_placeholder: "e.g. @twitter_handle"
         instagram: "Instagram"
-        instagram_placeholder: "eg. @instagram_handle"
+        instagram_placeholder: "e.g. @instagram_handle"
       limit_reached:
         headline: "Oh no!"
         message: "You have reached the limit!"
@@ -1859,17 +1847,17 @@ en_ZA:
   admin_enterprise_groups_data_powertip_logo: "This is the logo for the group"
   admin_enterprise_groups_data_powertip_promo_image: "This image is displayed at the top of the Group profile"
   admin_enterprise_groups_contact: "Contact"
-  admin_enterprise_groups_contact_phone_placeholder: "eg. 98 7654 3210"
+  admin_enterprise_groups_contact_phone_placeholder: "e.g. 082 231 3210"
   admin_enterprise_groups_contact_address1_placeholder: "eg. 123 High Street"
   admin_enterprise_groups_contact_city: "Suburb"
-  admin_enterprise_groups_contact_city_placeholder: "eg. Newcastle"
+  admin_enterprise_groups_contact_city_placeholder: "e.g. Newcastle"
   admin_enterprise_groups_contact_zipcode: "Postcode"
-  admin_enterprise_groups_contact_zipcode_placeholder: "eg. 3070"
-  admin_enterprise_groups_contact_state_id: "County"
+  admin_enterprise_groups_contact_zipcode_placeholder: "e.g. 2940"
+  admin_enterprise_groups_contact_state_id: "Province"
   admin_enterprise_groups_contact_country_id: "Country"
   admin_enterprise_groups_web: "Web Resources"
-  admin_enterprise_groups_web_twitter: "eg. @the_prof"
-  admin_enterprise_groups_web_website_placeholder: "eg. www.truffles.co.uk"
+  admin_enterprise_groups_web_twitter: "e.g. @twitter_handle"
+  admin_enterprise_groups_web_website_placeholder: "e.g. www.truffles.com"
   admin_order_cycles: "Admin Order Cycles"
   open: "Open"
   close: "Close"
@@ -1943,11 +1931,10 @@ en_ZA:
   spree_admin_supplier: Supplier
   spree_admin_product_category: Product Category
   spree_admin_variant_unit_name: Variant unit name
-  unit_name: "Unit name"
   change_package: "Change Package"
   spree_admin_single_enterprise_hint: "Hint: To allow people to find you, turn on your visibility under"
   spree_admin_eg_pickup_from_school: "eg. 'Pick-up from Primary School'"
-  spree_admin_eg_collect_your_order: "eg. 'Please collect your order from 123 Imaginary St, Newcastle, NE1 1AA'"
+  spree_admin_eg_collect_your_order: "eg. 'Please collect your order from 123 Church Street, Newcastle, 2094'"
   spree_classification_primary_taxon_error: "Taxon %{taxon} is the primary taxon of %{product} and cannot be deleted"
   spree_order_availability_error: "Distributor or order cycle cannot supply the products in your cart"
   spree_order_populator_error: "That distributor or order cycle can't supply all the products in your cart. Please choose another."
@@ -1984,7 +1971,7 @@ en_ZA:
   admin_share_city: "City"
   admin_share_zipcode: "Postcode"
   admin_share_country: "Country"
-  admin_share_state: "County"
+  admin_share_state: "Province"
   hub_sidebar_hubs: "Hubs"
   hub_sidebar_none_available: "None Available"
   hub_sidebar_manage: "Manage"
@@ -2291,9 +2278,9 @@ en_ZA:
               the Open Food Network will always be free.
           hub_shop: Hub Shop
           hub_shop_text1: >
-              Hubs can take many forms - CSA, veg box scheme, food co-op, community
-              buying group, farmers’ market, an online shop front for an independent
-              shop and many others…
+              Hubs can take many forms - CSA, veg box scheme, food co-ops, community
+              buying groups and stokvels, farmers’ market, an online shop front for 
+              an independent shop and many others…
           hub_shop_text2: >
               Products aggregated from lots of local food enterprises can be stocked
               and sold via your shop front. Hubs can form the backbone of your local
@@ -2315,7 +2302,7 @@ en_ZA:
           profile_only_cost: "There is no cost for a Producer Profile without a shop front."
           profile_only_text1: >
               A profile makes you visible and contactable to others and is a way to
-              share your story.
+              share your story, especially if you are an emerging B-BBEE supplier.
           profile_only_text2: >
               You can set up your products and invite other people to sell them for
               you.
@@ -2332,9 +2319,9 @@ en_ZA:
               select ‘Hub’.
           producer_hub: Producer Hub
           producer_hub_text1: >
-              Hubs can take many forms - CSA, veg box scheme, food co-op, community
-              buying group, farmers’ market, an online shop front for an independent
-              shop and many others…
+              Hubs can take many forms - CSA, veg box scheme, food co-ops, community
+              buying groups and stokvels, farmers’ market, an online shop front for 
+              an independent shop and many others…
           producer_hub_text2: >
               Products aggregated from lots of local food enterprises (including your
               own, if you are also a food producer) can be stocked and sold via your
@@ -2350,26 +2337,26 @@ en_ZA:
         enterprise_producer:
           producer: Producer
           producer_text1: >
-              Farmers, growers, small holders, crofters, cottage enterprises, market
-              gardens, CSAs, community gardens, city farms that make yummy things
+              Farmers, growers, small-holders, urban & township farms, market
+              gardens, CSAs and community gardens and farms that make yummy things
               to eat or drink. You're a food producer if you grow it, raise it, brew
-              it, bake it, ferment it, milk it or mould it.
+              it, bake it, ferment it, milk it or mould it...
           producer_text2: >
               Food producers can also sell their products (and those of others) through
               Shops or Hubs on the Open Food Network.
           non_producer: Non-producer
           non_producer_text1: >
               A ‘Non-producer’, such as a Farmers’ Market or veg box co-ordinator,
-              specialises in aggregating food from local producers (eg. farmers, growers,
-              cottage enterprises, community/city gardens) to sell to customers. They
-              do not offer food that they produced themselves for sale.
+              specialises in aggregating food from local producers (e.g. farmers, growers,
+              community/city gardens) to sell to customers. They do not offer food that 
+              they produced themselves for sale.
           non_producer_text2: >
               This option is best suited for those wishing to operate Open Food Network
               ‘Hubs’ but not produce their own food.
           producer_desc: Producer
-          producer_example: eg. Farmers, growers, small holders, crofters, cottage enterprises, market gardens, CSAs, community gardens, city farms...
+          producer_example: e.g. Farmers, growers, small-holders, urban & township farms, community gardens...
           non_producer_desc: Non-producer
-          non_producer_example: eg. Farmers’ Market/Veg Box Scheme/Community group co-ordinators, Food Hubs, Retail Shops, Wholesale Distributors, Buying Groups, Food Co-ops…
+          non_producer_example: e.g. Farmers’ Market / Veg Box Scheme / Community Group co-ordinators, Food Hubs, Retailers & Wholesalers, Stokvels, Food Co-ops…
         enterprise_status:
           status_title: "%{name} is set up and ready to go!"
           severity: Severity
@@ -2456,9 +2443,6 @@ en_ZA:
           add_a_new_customer_for: "Add a new customer for %{shop_name}"
           customer_placeholder: "customer@example.org"
           valid_email_error: "Please enter a valid email address"
-      subscriptions:
-        new:
-          please_select_a_shop: "Please select a shop"
     insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
     out_of_stock:
       reduced_stock_available: Reduced stock available
@@ -2634,7 +2618,7 @@ en_ZA:
     city: "City"
     zip: "Postcode"
     country: "Country"
-    state: "County"
+    state: "Province"
     phone: "Phone"
     update: "Update"
     use_billing_address: "Use Billing Address"
@@ -2710,12 +2694,12 @@ en_ZA:
     countries: "Countries"
     listing_countries: "Listing Countries"
     iso_name: "ISO Name"
-    states_required: "Counties Required"
+    states_required: "Provinces Required"
     editing_country: "Editing Country"
     back_to_countries_list: "Back to Countries List"
-    states: "Counties"
+    states: "Provinces"
     abbreviation: "Abbreviation"
-    new_state: "New County"
+    new_state: "New Province"
     payment_methods: "Payment Methods"
     new_payment_method: "New Payment Method"
     provider: "Provider"
@@ -2746,7 +2730,7 @@ en_ZA:
     create: "Create"
     loading: "Loading"
     flat_percent: "Flat Percent"
-    per_kg: "Per Kg"
+    per_kg: "Per kg"
     amount: "Amount"
     currency: "Currency"
     first_item: "First Item Cost"
