@@ -96,6 +96,11 @@ en:
       resend_confirmation_email: "Resend confirmation email."
       confirmed: "Thanks for confirming your email! You can now log in."
       not_confirmed: "Your email address could not be confirmed. Perhaps you have already completed this step?"
+    user_confirmations:
+      spree_user:
+        send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
+        confirmation_sent: "Email confirmation sent"
+        confirmation_not_sent: "Error sending confirmation email"
     user_registrations:
       spree_user:
        signed_up_but_unconfirmed: "A message with a confirmation link has been sent to your email address. Please open the link to activate your account."
