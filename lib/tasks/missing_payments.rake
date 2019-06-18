@@ -12,27 +12,37 @@ namespace :ofn do
   task :missing_payments, [:days] => :environment do |_task_, args|
     days = args[:days].andand.to_i || 7
     payments_sequence = Spree::Payment.where("created_at > ?", days.days.ago).order(:id).pluck(:id)
-    payments_range = (payments_sequence.first..payments_sequence.last).to_a
-    missing_payment_ids = payments_range - payments_sequence
+    missing_payment_ids = payments_range(payments_sequence) - payments_sequence
     puts "Gaps in the payments sequence: #{missing_payment_ids.count}"
     log_entries = Spree::LogEntry.where(
       source_type: "Spree::Payment",
       source_id: missing_payment_ids
     )
-    return if log_entries.empty?
+    print_csv(log_entries) if log_entries.present?
+  end
 
+  def payments_range(payments_sequence)
+    if payments_sequence.empty?
+      []
+    else
+      (payments_sequence.first..payments_sequence.last).to_a
+    end
+  end
+
+  def print_csv(log_entries)
     CSV do |out|
       out << headers
       log_entries.each do |entry|
-        begin
-          details = Psych.load(entry.details)
-        rescue StandardError
-          Logger.new(STDERR).warn(entry)
-          next
-        end
-        out << row(details, details.params)
+        add_row(entry, out)
       end
     end
+  end
+
+  def add_row(entry, out)
+    details = Psych.load(entry.details)
+    out << row(details, details.params)
+  rescue StandardError
+    Logger.new(STDERR).warn(entry)
   end
 
   def headers
