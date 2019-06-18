@@ -29,9 +29,15 @@ describe Calculator::Weight do
     end
 
     describe "and with final_weight_volume defined" do
+      before { line_item.update_attribute :final_weight_volume, '18000' }
+
       it "computes fee using final_weight_volume, not the variant weight" do
-        line_item.final_weight_volume = "18000"
         expect(subject.compute(line_item)).to eq(10 * 18)
+      end
+
+      it "returns zero for variant where unit type is not weight" do
+        line_item.variant.product.update_attribute :variant_unit, 'items'
+        expect(subject.compute(line_item)).to eq(0)
       end
     end
   end

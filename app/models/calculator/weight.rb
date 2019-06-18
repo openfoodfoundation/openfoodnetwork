@@ -16,6 +16,8 @@ module Calculator
       total_weight(line_items) * preferred_per_kg
     end
 
+    private
+
     def total_weight(line_items)
       line_items.sum do |line_item|
         line_item_weight(line_item)
@@ -23,6 +25,7 @@ module Calculator
     end
 
     def line_item_weight(line_item)
+      return 0 if line_item.variant.product.andand.variant_unit != 'weight'
       if line_item.final_weight_volume.present?
         # Divided by 1000 because grams is the base weight unit and the calculator price is per_kg
         line_item.final_weight_volume / 1000
