@@ -59,116 +59,168 @@ module OpenFoodNetwork
     def rules
       case params[:report_type]
       when "order_cycle_supplier_totals"
-        [{ group_by: proc { |line_item| line_item.product.supplier },
-           sort_by: proc { |supplier| supplier.name } },
-         { group_by: proc { |line_item| line_item.product },
-           sort_by: proc { |product| product.name } },
-         { group_by: proc { |line_item| line_item.full_name },
-           sort_by: proc { |full_name| full_name } }]
+        [
+          {
+            group_by: proc { |line_item| Spree::Variant.unscoped.find(line_item.variant_id).product.supplier },
+            sort_by: proc { |supplier| supplier.name }
+          },
+          {
+            group_by: proc { |line_item| Spree::Variant.unscoped.find(line_item.variant_id).product },
+            sort_by: proc { |product| product.name }
+          },
+          {
+            group_by: proc { |line_item| Spree::Variant.unscoped.find(line_item.variant_id).full_name },
+            sort_by: proc { |full_name| full_name }
+          }
+        ]
       when "order_cycle_supplier_totals_by_distributor"
-        [{ group_by: proc { |line_item| line_item.product.supplier },
-           sort_by: proc { |supplier| supplier.name } },
-         { group_by: proc { |line_item| line_item.product },
-           sort_by: proc { |product| product.name } },
-         { group_by: proc { |line_item| line_item.full_name },
-           sort_by: proc { |full_name| full_name },
-           summary_columns: [proc { |_line_items| "" },
-                             proc { |_line_items| "" },
-                             proc { |_line_items| "" },
-                             proc { |_line_items| I18n.t('admin.reports.total') },
-                             proc { |_line_items| "" },
-                             proc { |_line_items| "" },
-                             proc { |line_items| line_items.sum(&:amount) },
-                             proc { |_line_items| "" }] },
-         { group_by: proc { |line_item| line_item.order.distributor },
-           sort_by: proc { |distributor| distributor.name } }]
+        [
+          {
+            group_by: proc { |line_item| Spree::Variant.unscoped.find(line_item.variant_id).product.supplier },
+            sort_by: proc { |supplier| supplier.name }
+          },
+          {
+            group_by: proc { |line_item| Spree::Variant.unscoped.find(line_item.variant_id).product },
+            sort_by: proc { |product| product.name }
+          },
+          {
+            group_by: proc { |line_item| Spree::Variant.unscoped.find(line_item.variant_id).full_name },
+            sort_by: proc { |full_name| full_name },
+            summary_columns: [
+              proc { |_line_items| "" },
+              proc { |_line_items| "" },
+              proc { |_line_items| "" },
+              proc { |_line_items| I18n.t('admin.reports.total') },
+              proc { |_line_items| "" },
+              proc { |_line_items| "" },
+              proc { |line_items| line_items.sum(&:amount) },
+              proc { |_line_items| "" }
+            ]
+          },
+         {
+           group_by: proc { |line_item| line_item.order.distributor },
+           sort_by: proc { |distributor| distributor.name }
+         }
+        ]
       when "order_cycle_distributor_totals_by_supplier"
-        [{ group_by: proc { |line_item| line_item.order.distributor },
-           sort_by: proc { |distributor| distributor.name },
-           summary_columns: [proc { |_line_items| "" },
-                             proc { |_line_items| I18n.t('admin.reports.total') },
-                             proc { |_line_items| "" },
-                             proc { |_line_items| "" },
-                             proc { |_line_items| "" },
-                             proc { |_line_items| "" },
-                             proc { |line_items| line_items.sum(&:amount) },
-                             proc { |line_items| line_items.map(&:order).uniq.sum(&:ship_total) },
-                             proc { |_line_items| "" }] },
-         { group_by: proc { |line_item| line_item.product.supplier },
-           sort_by: proc { |supplier| supplier.name } },
-         { group_by: proc { |line_item| line_item.product },
-           sort_by: proc { |product| product.name } },
-         { group_by: proc { |line_item| line_item.full_name },
-           sort_by: proc { |full_name| full_name } }]
+        [
+          {
+            group_by: proc { |line_item| line_item.order.distributor },
+            sort_by: proc { |distributor| distributor.name },
+            summary_columns: [
+              proc { |_line_items| "" },
+              proc { |_line_items| I18n.t('admin.reports.total') },
+              proc { |_line_items| "" },
+              proc { |_line_items| "" },
+              proc { |_line_items| "" },
+              proc { |_line_items| "" },
+              proc { |line_items| line_items.sum(&:amount) },
+              proc { |line_items| line_items.map(&:order).uniq.sum(&:ship_total) },
+              proc { |_line_items| "" }
+            ]
+          },
+          {
+            group_by: proc { |line_item| Spree::Variant.unscoped.find(line_item.variant_id).product.supplier },
+            sort_by: proc { |supplier| supplier.name }
+          },
+          {
+            group_by: proc { |line_item| Spree::Variant.unscoped.find(line_item.variant_id).product },
+            sort_by: proc { |product| product.name }
+          },
+          {
+            group_by: proc { |line_item| Spree::Variant.unscoped.find(line_item.variant_id).full_name },
+            sort_by: proc { |full_name| full_name }
+          }
+        ]
       when "order_cycle_customer_totals"
-        [{ group_by: proc { |line_item| line_item.order.distributor },
-           sort_by: proc { |distributor| distributor.name } },
-         { group_by: proc { |line_item| line_item.order },
-           sort_by: proc { |order| order.bill_address.full_name_reverse },
-           summary_columns: [
-             proc { |line_items| line_items.first.order.distributor.name },
-             proc { |line_items| line_items.first.order.bill_address.full_name },
-             proc { |_line_items| "" },
-             proc { |_line_items| "" },
-             proc { |_line_items| "" },
-             proc { |_line_items| I18n.t('admin.reports.total') },
-             proc { |_line_items| "" },
+        [
+          {
+            group_by: proc { |line_item| line_item.order.distributor },
+            sort_by: proc { |distributor| distributor.name }
+          },
+          {
+            group_by: proc { |line_item| line_item.order },
+            sort_by: proc { |order| order.bill_address.full_name_reverse },
+            summary_columns: [
+              proc { |line_items| line_items.first.order.distributor.name },
+              proc { |line_items| line_items.first.order.bill_address.full_name },
+              proc { |_line_items| "" },
+              proc { |_line_items| "" },
+              proc { |_line_items| "" },
+              proc { |_line_items| I18n.t('admin.reports.total') },
+              proc { |_line_items| "" },
 
-             proc { |_line_items| "" },
-             proc { |line_items| line_items.sum(&:amount) },
-             proc { |line_items| line_items.sum(&:amount_with_adjustments) },
-             proc { |line_items| line_items.first.order.admin_and_handling_total },
-             proc { |line_items| line_items.first.order.ship_total },
-             proc { |line_items| line_items.first.order.payment_fee },
-             proc { |line_items| line_items.first.order.total },
-             proc { |line_items| line_items.first.order.paid? ? I18n.t(:yes) : I18n.t(:no) },
+              proc { |_line_items| "" },
+              proc { |line_items| line_items.sum(&:amount) },
+              proc { |line_items| line_items.sum(&:amount_with_adjustments) },
+              proc { |line_items| line_items.first.order.admin_and_handling_total },
+              proc { |line_items| line_items.first.order.ship_total },
+              proc { |line_items| line_items.first.order.payment_fee },
+              proc { |line_items| line_items.first.order.total },
+              proc { |line_items| line_items.first.order.paid? ? I18n.t(:yes) : I18n.t(:no) },
 
-             proc { |_line_items| "" },
-             proc { |_line_items| "" },
+              proc { |_line_items| "" },
+              proc { |_line_items| "" },
 
-             proc { |_line_items| "" },
-             proc { |_line_items| "" },
-             proc { |_line_items| "" },
-             proc { |_line_items| "" },
-             proc { |_line_items| "" },
+              proc { |_line_items| "" },
+              proc { |_line_items| "" },
+              proc { |_line_items| "" },
+              proc { |_line_items| "" },
+              proc { |_line_items| "" },
 
-             proc { |line_items| line_items.first.order.special_instructions },
-             proc { |_line_items| "" },
+              proc { |line_items| line_items.first.order.special_instructions },
+              proc { |_line_items| "" },
 
-             proc { |line_items| line_items.first.order.order_cycle.andand.name },
-             proc { |line_items|
-               line_items.first.order.payments.first.andand.payment_method.andand.name
-             },
-             proc { |_line_items| "" },
-             proc { |_line_items| "" },
-             proc { |_line_items| "" },
-             proc { |_line_items| "" },
-             proc { |_line_items| "" },
-             proc { |_line_items| "" },
-             proc { |_line_items| "" }
-           ] },
-         { group_by: proc { |line_item| line_item.product },
-           sort_by: proc { |product| product.name } },
-         { group_by: proc { |line_item| line_item.variant },
-           sort_by: proc { |variant| variant.full_name } },
-         { group_by: proc { |line_item| line_item.full_name },
-           sort_by: proc { |full_name| full_name } }]
+              proc { |line_items| line_items.first.order.order_cycle.andand.name },
+              proc { |line_items|
+                line_items.first.order.payments.first.andand.payment_method.andand.name
+              },
+              proc { |_line_items| "" },
+              proc { |_line_items| "" },
+              proc { |_line_items| "" },
+              proc { |_line_items| "" },
+              proc { |_line_items| "" },
+              proc { |_line_items| "" },
+              proc { |_line_items| "" }
+            ]
+          },
+          {
+            group_by: proc { |line_item| Spree::Variant.unscoped.find(line_item.variant_id).product },
+            sort_by: proc { |product| product.name }
+          },
+          {
+            group_by: proc { |line_item| Spree::Variant.unscoped.find(line_item.variant_id) },
+            sort_by: proc { |variant| variant.full_name }
+          },
+          {
+            group_by: proc { |line_item| Spree::Variant.unscoped.find(line_item.variant_id).full_name },
+            sort_by: proc { |full_name| full_name }
+          }
+        ]
       else
-        [{ group_by: proc { |line_item| line_item.product.supplier },
-           sort_by: proc { |supplier| supplier.name } },
-         { group_by: proc { |line_item| line_item.product },
-           sort_by: proc { |product| product.name } },
-         { group_by: proc { |line_item| line_item.full_name },
-           sort_by: proc { |full_name| full_name } }]
+        [
+          {
+            group_by: proc { |line_item| line_item.product.supplier },
+            sort_by: proc { |supplier| supplier.name }
+          },
+          {
+            group_by: proc { |line_item| line_item.product },
+            sort_by: proc { |product| product.name }
+          },
+          {
+            group_by: proc { |line_item| line_item.full_name },
+            sort_by: proc { |full_name| full_name }
+          }
+        ]
       end
     end
 
     def columns
       case params[:report_type]
       when "order_cycle_supplier_totals"
-        [proc { |line_items| line_items.first.product.supplier.name },
-         proc { |line_items| line_items.first.product.name },
-         proc { |line_items| line_items.first.full_name },
+        [proc { |line_items| Spree::Variant.unscoped.find(line_items.first.variant_id).product.supplier.name },
+         proc { |line_items| Spree::Variant.unscoped.find(line_items.first.variant_id).product.name },
+         proc { |line_items| Spree::Variant.unscoped.find(line_items.first.variant_id).full_name },
          proc { |line_items| line_items.sum(&:quantity) },
          proc { |line_items| total_units(line_items) },
          proc { |line_items| line_items.first.price },
@@ -176,9 +228,9 @@ module OpenFoodNetwork
          proc { |_line_items| "" },
          proc { |_line_items| I18n.t(:report_header_incoming_transport) }]
       when "order_cycle_supplier_totals_by_distributor"
-        [proc { |line_items| line_items.first.product.supplier.name },
-         proc { |line_items| line_items.first.product.name },
-         proc { |line_items| line_items.first.full_name },
+        [proc { |line_items| Spree::Variant.unscoped.find(line_items.first.variant_id).product.supplier.name },
+         proc { |line_items| Spree::Variant.unscoped.find(line_items.first.variant_id).product.name },
+         proc { |line_items| Spree::Variant.unscoped.find(line_items.first.variant_id).full_name },
          proc { |line_items| line_items.first.order.distributor.name },
          proc { |line_items| line_items.sum(&:quantity) },
          proc { |line_items| line_items.first.price },
@@ -186,9 +238,9 @@ module OpenFoodNetwork
          proc { |_line_items| I18n.t(:report_header_shipping_method) }]
       when "order_cycle_distributor_totals_by_supplier"
         [proc { |line_items| line_items.first.order.distributor.name },
-         proc { |line_items| line_items.first.product.supplier.name },
-         proc { |line_items| line_items.first.product.name },
-         proc { |line_items| line_items.first.full_name },
+         proc { |line_items| Spree::Variant.unscoped.find(line_items.first.variant_id).product.supplier.name },
+         proc { |line_items| Spree::Variant.unscoped.find(line_items.first.variant_id).product.name },
+         proc { |line_items| Spree::Variant.unscoped.find(line_items.first.variant_id).full_name },
          proc { |line_items| line_items.sum(&:quantity) },
          proc { |line_items| line_items.first.price },
          proc { |line_items| line_items.sum(&:amount) },
@@ -201,9 +253,9 @@ module OpenFoodNetwork
           proc { |line_items| line_items.first.order.bill_address.firstname + " " + line_items.first.order.bill_address.lastname },
           proc { |line_items| line_items.first.order.email },
           proc { |line_items| line_items.first.order.bill_address.phone },
-          proc { |line_items| line_items.first.product.supplier.name },
-          proc { |line_items| line_items.first.product.name },
-          proc { |line_items| line_items.first.full_name },
+          proc { |line_items| Spree::Variant.unscoped.find(line_items.first.variant_id).product.supplier.name },
+          proc { |line_items| Spree::Variant.unscoped.find(line_items.first.variant_id).product.name },
+          proc { |line_items| Spree::Variant.unscoped.find(line_items.first.variant_id).full_name },
 
           proc { |line_items| line_items.sum(&:quantity) },
           proc { |line_items| line_items.sum(&:amount) },
@@ -224,7 +276,7 @@ module OpenFoodNetwork
           proc { |line_items| line_items.first.order.ship_address.andand.state if rsa.call(line_items) },
 
           proc { |_line_items| "" },
-          proc { |line_items| line_items.first.variant.sku },
+          proc { |line_items| Spree::Variant.unscoped.find(line_items.first.variant_id).sku },
 
           proc { |line_items| line_items.first.order.order_cycle.andand.name },
           proc { |line_items| line_items.first.order.payments.first.andand.payment_method.andand.name },
@@ -258,8 +310,10 @@ module OpenFoodNetwork
 
     def total_units(line_items)
       return " " if line_items.map{ |li| li.unit_value.nil? }.any?
+
       total_units = line_items.sum do |li|
-        scale_factor = ( li.product.variant_unit == 'weight' ? 1000 : 1 )
+        product = Spree::Variant.unscoped.find(li.variant_id).product
+        scale_factor = ( product.variant_unit == 'weight' ? 1000 : 1 )
         li.quantity * li.unit_value / scale_factor
       end
       total_units.round(3)
