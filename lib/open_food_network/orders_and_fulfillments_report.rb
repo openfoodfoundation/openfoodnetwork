@@ -215,6 +215,8 @@ module OpenFoodNetwork
       end
     end
 
+    # Returns a proc for each column displayed in each report type containing
+    # the logic to compute the value for each cell.
     def columns
       case params[:report_type]
       when "order_cycle_supplier_totals"
