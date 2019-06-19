@@ -22,6 +22,7 @@ module Spree
       end
 
       def invoice_links
+        return [] unless Spree::Config[:enable_invoices?]
         invoice_links = []
         invoice_links << if @order.distributor.can_invoice?
                            send_invoice_link_with_url
