@@ -6,6 +6,11 @@
 = form_tag main_app.admin_invoice_settings_path, :method => :put do
 
   .field.align-center
+    = hidden_field_tag 'preferences[enable_invoices?]', '0'
+    = check_box_tag 'preferences[enable_invoices?]', '1',  Spree::Config[:enable_invoices?]
+    = label_tag nil, t('.enable_invoices?')
+
+  .field.align-center
     = hidden_field_tag 'preferences[invoice_style2?]', '0'
     = check_box_tag 'preferences[invoice_style2?]', '1',  Spree::Config[:invoice_style2?]
     = label_tag nil, t('.invoice_style2?')
