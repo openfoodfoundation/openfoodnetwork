@@ -145,6 +145,17 @@ feature '
     expect(page).to have_selector 'p', text: "Order cycle: #{@order.order_cycle.name}"
   end
 
+  scenario "can't print invoices when invocies are disabled" do
+    original_invoices_setting = Spree::Config[:enable_invoices?]
+
+    Spree::Config[:enable_invoices?] = false
+    quick_login_as_admin
+    visit '/admin/orders'
+    expect(page).to have_no_selector 'button.invoices-modal'
+
+    Spree::Config[:enable_invoices?] = original_invoices_setting
+  end
+
   scenario "filling customer details" do
     # Given a customer with an order, which includes their shipping and billing address
 
