@@ -5,27 +5,37 @@ module Spree
         @order ||= order
         links = []
         links << edit_order_link unless action_name == "edit"
-        if @order.complete?
-          links << resend_confirmation_link
-          if @order.distributor.can_invoice?
-            links << send_invoice_link_with_url
-          else
-            links << send_invoice_link_without_url
-          end
-          links << print_invoice_link
-          if Spree::Config.enable_receipt_printing?
-            links << print_ticket_link
-            links << select_ticket_printer_link
-          end
-        end
-        if @order.ready_to_ship?
-          links << ship_order_link
-        end
+        links << complete_order_links if @order.complete?
+        links << ship_order_link if @order.ready_to_ship?
         links << cancel_order_link if @order.can_cancel?
         links
       end
 
       private
+
+      def complete_order_links
+        complete_order_links = []
+        complete_order_links << resend_confirmation_link
+        complete_order_links << invoice_links
+        complete_order_links << ticket_links
+        complete_order_links
+      end
+
+      def invoice_links
+        invoice_links = []
+        invoice_links << if @order.distributor.can_invoice?
+                           send_invoice_link_with_url
+                         else
+                           send_invoice_link_without_url
+                         end
+        invoice_links << print_invoice_link
+        invoice_links
+      end
+
+      def ticket_links
+        return [] unless Spree::Config.enable_receipt_printing?
+        [print_ticket_link, select_ticket_printer_link]
+      end
 
       def edit_order_link
         { name: t(:edit_order),

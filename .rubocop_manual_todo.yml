@@ -68,7 +68,6 @@ Metrics/LineLength:
   - app/helpers/shop_helper.rb
   - app/helpers/spree/admin/base_helper_decorator.rb
   - app/helpers/spree/admin/navigation_helper_decorator.rb
-  - app/helpers/spree/admin/orders_helper_decorator.rb
   - app/helpers/spree/orders_helper.rb
   - app/jobs/subscription_confirm_job.rb
   - app/mailers/subscription_mailer.rb
@@ -429,7 +428,6 @@ Metrics/AbcSize:
   - app/helpers/checkout_helper.rb
   - app/helpers/i18n_helper.rb
   - app/helpers/order_cycles_helper.rb
-  - app/helpers/spree/admin/orders_helper_decorator.rb
   - app/helpers/spree/orders_helper.rb
   - app/jobs/subscription_placement_job.rb
   - app/mailers/producer_mailer.rb
@@ -570,7 +568,6 @@ Metrics/CyclomaticComplexity:
   - app/helpers/checkout_helper.rb
   - app/helpers/i18n_helper.rb
   - app/helpers/order_cycles_helper.rb
-  - app/helpers/spree/admin/orders_helper_decorator.rb
   - app/models/enterprise.rb
   - app/models/enterprise_relationship.rb
   - app/models/product_import/entry_processor.rb
@@ -600,7 +597,6 @@ Metrics/PerceivedComplexity:
   - app/helpers/checkout_helper.rb
   - app/helpers/i18n_helper.rb
   - app/helpers/order_cycles_helper.rb
-  - app/helpers/spree/admin/orders_helper_decorator.rb
   - app/models/enterprise_relationship.rb
   - app/models/product_import/entry_processor.rb
   - app/models/product_import/entry_validator.rb
@@ -646,7 +642,6 @@ Metrics/MethodLength:
   - app/controllers/user_registrations_controller.rb
   - app/helpers/checkout_helper.rb
   - app/helpers/order_cycles_helper.rb
-  - app/helpers/spree/admin/orders_helper_decorator.rb
   - app/jobs/subscription_placement_job.rb
   - app/mailers/producer_mailer.rb
   - app/models/column_preference.rb
