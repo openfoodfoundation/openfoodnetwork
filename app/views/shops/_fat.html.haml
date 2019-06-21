@@ -1,5 +1,9 @@
 .row.active_table_row{"ng-show" => "open()", "ng-click" => "toggle($event)", "ng-class" => "{'open' : open()}"}
-  .columns.small-12.medium-6.large-5.fat
+  .columns.small-12.fat.text-center{"ng-show" => "open() && shopfront_loading"}
+    %p
+      %img.spinner.text-center{ src: "/assets/spinning-circles.svg" }
+
+  .columns.small-12.medium-6.large-5.fat{"ng-show" => "open() && !shopfront_loading"}
     %div{"ng-if" => "::hub.taxons"}
       %label
         = t :hubs_buy
@@ -13,7 +17,7 @@
             %span{"ng-bind" => "property.presentation"}
     %div.show-for-medium-up{"ng-if" => "::hub.taxons.length==0"}
       &nbsp;
-  .columns.small-12.medium-3.large-2.fat
+  .columns.small-12.medium-3.large-2.fat{"ng-show" => "open() && !shopfront_loading"}
     %div{"ng-if" => "::(hub.pickup || hub.delivery)"}
       %label
         = t :hubs_delivery_options
@@ -24,7 +28,7 @@
         %li.delivery{"ng-if" => "::hub.delivery"}
           %i.ofn-i_039-delivery
           = t :hubs_delivery
-  .columns.small-12.medium-3.large-5.fat
+  .columns.small-12.medium-3.large-5.fat{"ng-show" => "open() && !shopfront_loading"}
     %div{"ng-if" => "::hub.producers"}
       %label
         = t :hubs_producers

@@ -1,2 +1,2 @@
-Darkswarm.controller "AboutUsCtrl", ($scope, CurrentHub) ->
-  $scope.CurrentHub = CurrentHub
+Darkswarm.controller "AboutUsCtrl", ($scope, Shopfront) ->
+  $scope.shopfront = Shopfront.shopfront

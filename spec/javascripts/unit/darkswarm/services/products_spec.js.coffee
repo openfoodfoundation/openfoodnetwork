@@ -1,10 +1,10 @@
 describe 'Products service', ->
   $httpBackend = null
   Products = null
-  Enterprises = null
+  Shopfront = null
   Variants = null
   Cart = null
-  CurrentHubMock = {}
+  shopfront = null
   currentOrder = null
   product = null
   productWithImage = null
@@ -34,10 +34,14 @@ describe 'Products service', ->
       { id: 1, name: "some property" }
     taxons =
       { id: 2, name: "some taxon" }
+    shopfront =
+      producers:
+        id: 9,
+        name: "Test"
 
     module 'Darkswarm'
     module ($provide)->
-      $provide.value "CurrentHub", CurrentHubMock
+      $provide.value "shopfront", shopfront
       $provide.value "currentOrder", currentOrder
       $provide.value "taxons", taxons
       $provide.value "properties", properties
@@ -46,7 +50,7 @@ describe 'Products service', ->
 
     inject ($injector, _$httpBackend_)->
       Products = $injector.get("Products")
-      Enterprises = $injector.get("Enterprises")
+      Shopfront = $injector.get("Shopfront")
       Properties = $injector.get("Properties")
       Variants = $injector.get("Variants")
       Cart = $injector.get("Cart")
@@ -58,11 +62,11 @@ describe 'Products service', ->
     expect(Products.products[0].test).toEqual "cats"
 
   it "dereferences suppliers", ->
-    Enterprises.enterprises_by_id =
+    Shopfront.producers_by_id =
       {id: 9, name: "test"}
     $httpBackend.expectGET("/shop/products").respond([{supplier : {id: 9}, master: {}}])
     $httpBackend.flush()
-    expect(Products.products[0].supplier).toBe Enterprises.enterprises_by_id["9"]
+    expect(Products.products[0].supplier).toBe Shopfront.producers_by_id["9"]
 
   it "dereferences taxons", ->
     product.taxons = [2]

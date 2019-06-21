@@ -1,19 +1,41 @@
 require 'open_food_network/enterprise_injection_data'
 
 module InjectionHelper
+  include SerializerHelper
+
   def inject_enterprises(enterprises = Enterprise.activated.includes(address: :state).all)
     inject_json_ams(
-      'enterprises',
+      "enterprises",
       enterprises,
       Api::EnterpriseSerializer,
       enterprise_injection_data
     )
   end
 
-  def inject_enterprise_shopfront_list
+  def inject_groups
+    select_only = required_attributes EnterpriseGroup, Api::GroupListSerializer
+
     inject_json_ams(
-      'enterprises',
-      Enterprise.activated.includes(address: :state).all,
+      "groups",
+      EnterpriseGroup.on_front_page.by_position.select(select_only).includes(address: :state).all,
+      Api::GroupListSerializer
+    )
+  end
+
+  def inject_enterprise_shopfront(enterprise)
+    inject_json_ams(
+      "shopfront",
+      enterprise,
+      Api::EnterpriseShopfrontSerializer
+    )
+  end
+
+  def inject_enterprise_shopfront_list
+    select_only = required_attributes Enterprise, Api::EnterpriseShopfrontListSerializer
+
+    inject_json_ams(
+      "enterprises",
+      Enterprise.activated.visible.select(select_only).includes(address: :state).all,
       Api::EnterpriseShopfrontListSerializer
     )
   end
@@ -23,7 +45,12 @@ module InjectionHelper
   end
 
   def inject_group_enterprises
-    inject_json_ams "group_enterprises", @group.enterprises.activated.all, Api::EnterpriseSerializer, enterprise_injection_data
+    inject_json_ams(
+      "enterprises",
+      @group.enterprises.activated.all,
+      Api::EnterpriseSerializer,
+      enterprise_injection_data
+    )
   end
 
   def inject_current_hub
@@ -79,11 +106,7 @@ module InjectionHelper
   end
 
   def inject_saved_credit_cards
-    data = if spree_current_user
-             spree_current_user.credit_cards.with_payment_profile.all
-           else
-             []
-           end
+    data = spree_current_user ? spree_current_user.credit_cards.with_payment_profile.all : []
 
     inject_json_ams "savedCreditCards", data, Api::CreditCardSerializer
   end

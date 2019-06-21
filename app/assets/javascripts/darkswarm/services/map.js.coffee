@@ -1,4 +1,4 @@
-Darkswarm.factory "OfnMap", (Enterprises, EnterpriseModal, visibleFilter) ->
+Darkswarm.factory "OfnMap", (Enterprises, EnterpriseModal) ->
   new class OfnMap
     constructor: ->
       @enterprises = @enterprise_markers(Enterprises.enterprises)
@@ -6,7 +6,7 @@ Darkswarm.factory "OfnMap", (Enterprises, EnterpriseModal, visibleFilter) ->
         enterprise.latitude != null || enterprise.longitude != null # Remove enterprises w/o lat or long
 
     enterprise_markers: (enterprises) ->
-      @extend(enterprise) for enterprise in visibleFilter(enterprises)
+      @extend(enterprise) for enterprise in enterprises
 
     # Adding methods to each enterprise
     extend: (enterprise) ->

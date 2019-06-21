@@ -20,11 +20,11 @@ describe "Enterprises service", ->
     {id: 1, visible: true, name: 'a', category: "hub", producers: [{id: 5}], taxons: [{id: 1}]},
     {id: 2, visible: true, name: 'b', category: "hub", producers: [{id: 6}]}
     {id: 3, visible: true, name: 'c', category: "hub_profile"}
-    {id: 4, visible: false,name: 'd', category: "hub", producers: [{id: 7}]}
+    {id: 4, visible: true, name: 'd', category: "hub", producers: [{id: 7}]}
     {id: 5, visible: true, name: 'e', category: "producer_hub", hubs: [{id: 1}]},
     {id: 6, visible: true, name: 'f', category: "producer_shop", hubs: [{id: 2}]},
     {id: 7, visible: true, name: 'g', category: "producer", hubs: [{id: 2}]}
-    {id: 8, visible: false,name: 'h', category: "producer", hubs: [{id: 2}]}
+    {id: 8, visible: true, name: 'h', category: "producer", hubs: [{id: 2}]}
   ]
   H1: 0
   beforeEach ->
@@ -49,10 +49,6 @@ describe "Enterprises service", ->
   it "puts the same objects in enterprises and enterprises_by_id", ->
     expect(Enterprises.enterprises[0]).toBe Enterprises.enterprises_by_id["1"]
 
-  it "dereferences references to other enterprises", ->
-    expect(Enterprises.enterprises_by_id["1"].producers[0]).toBe enterprises[4]
-    expect(Enterprises.enterprises_by_id["5"].hubs[0]).toBe enterprises[0]
-
   it "dereferences taxons", ->
     expect(Enterprises.enterprises[0].taxons[0]).toBe taxons[0]
 
@@ -67,14 +63,6 @@ describe "Enterprises service", ->
     expect(Enterprises.producers[0]).toBe Enterprises.enterprises[4]
     Enterprises.enterprises[4].active = false
     expect(Enterprises.producers[0].active).toBe false
-
-  it "only includes visible enterprises in hubs array", ->
-    expect(Enterprises.hubs).toContain Enterprises.enterprises[0]
-    expect(Enterprises.hubs).not.toContain Enterprises.enterprises[3]
-
-  it "only includes visible enterprises in producers array", ->
-    expect(Enterprises.producers).toContain Enterprises.enterprises[4]
-    expect(Enterprises.producers).not.toContain Enterprises.enterprises[7]
 
   it "includes hub, hub_profile, producer_hub and, producer_shop enterprises in hubs array", ->
     expect(Enterprises.hubs).toContain Enterprises.enterprises[0]

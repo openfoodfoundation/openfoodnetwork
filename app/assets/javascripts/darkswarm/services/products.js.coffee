@@ -1,4 +1,4 @@
-Darkswarm.factory 'Products', ($resource, Enterprises, Dereferencer, Taxons, Properties, Cart, Variants) ->
+Darkswarm.factory 'Products', ($resource, Shopfront, Dereferencer, Taxons, Properties, Cart, Variants) ->
   new class Products
     constructor: ->
       @update()
@@ -31,7 +31,7 @@ Darkswarm.factory 'Products', ($resource, Enterprises, Dereferencer, Taxons, Pro
 
     dereference: ->
       for product in @products
-        product.supplier = Enterprises.enterprises_by_id[product.supplier.id]
+        product.supplier = Shopfront.producers_by_id[product.supplier.id]
         Dereferencer.dereference product.taxons, Taxons.taxons_by_id
 
         product.properties = angular.copy(product.properties_with_values)

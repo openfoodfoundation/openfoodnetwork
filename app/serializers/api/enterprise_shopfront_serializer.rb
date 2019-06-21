@@ -51,7 +51,10 @@ module Api
 
     def producers
       ActiveModel::ArraySerializer.new(
-        enterprise.suppliers, each_serializer: Api::EnterpriseThinSerializer
+        enterprise.plus_relatives_and_oc_producers(
+          OrderCycle.not_closed.with_distributor(enterprise)
+        ),
+        each_serializer: Api::EnterpriseThinSerializer
       )
     end
 
@@ -62,8 +65,10 @@ module Api
     end
 
     def taxons
+      taxons = active ? enterprise.current_distributed_taxons : enterprise.distributed_taxons
+
       ActiveModel::ArraySerializer.new(
-        enterprise.distributed_taxons, each_serializer: Api::TaxonSerializer
+        taxons, each_serializer: Api::TaxonSerializer
       )
     end
 

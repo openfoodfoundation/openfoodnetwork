@@ -1,6 +1,9 @@
 .row.active_table_row{"ng-if" => "open()", "ng-click" => "toggle($event)", "ng-class" => "{'open' : open()}"}
+  .columns.small-12.fat.text-center{"ng-show" => "open() && shopfront_loading"}
+    %p
+      %img.spinner.text-center{ src: "/assets/spinning-circles.svg" }
 
-  .columns.small-12.medium-7.large-7.fat
+  .columns.small-12.medium-7.large-7.fat{"ng-show" => "open() && !shopfront_loading"}
     / Will add in long description available once clean up HTML formatting producer.long_description
     %div{"ng-if" => "::producer.description"}
       %label
@@ -11,7 +14,7 @@
       %label &nbsp;
       %img.right.show-for-medium-up{"ng-src" => "{{::producer.logo}}" }
 
-  .columns.small-12.medium-5.large-5.fat
+  .columns.small-12.medium-5.large-5.fat{"ng-show" => "open() && !shopfront_loading"}
 
     %div{"ng-if" => "::producer.supplied_taxons"}
       %label
@@ -64,8 +67,8 @@
           %a{"ng-href" => "http://instagram.com/{{::producer.instagram}}", target: "_blank"}
             %i.ofn-i_043-instagram
 
-.row.active_table_row.pad-top{"ng-if" => "open() && producer.hubs"}
-  .columns.small-12
+.row.active_table_row.pad-top{"ng-if" => "open() && producer.hubs && !shopfront_loading"}
+  .columns.small-12{"ng-if" => "producer.hubs.length > 0"}
     .row
       .columns.small-12.fat
         %div{"ng-if" => "::producer.name"}
@@ -75,8 +78,8 @@
           &nbsp;
     .row.cta-container
       .columns.small-12
-        %a.cta-hub{"ng-repeat" => "hub in producer.hubs | visible | orderBy:'-active'",
-        "ng-href" => "{{::hub.path}}", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined }}", "ofn-change-hub" => "hub",
+        %a.cta-hub{"ng-repeat" => "hub in producer.hubs | orderBy:'-active'",
+        "ng-href" => "{{::hub.path}}", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined }}",
         "ng-class" => "::{primary: hub.active, secondary: !hub.active}"}
           %i.ofn-i_068-shop-reversed{"ng-if" => "::hub.active"}
           %i.ofn-i_068-shop-reversed{"ng-if" => "::!hub.active"}

@@ -12,10 +12,6 @@ module OpenFoodNetwork
       @shipping_method_services ||= Spree::ShippingMethod.services
     end
 
-    def relatives
-      @relatives ||= EnterpriseRelationship.relatives(true)
-    end
-
     def supplied_taxons
       @supplied_taxons ||= Spree::Taxon.supplied_taxons
     end

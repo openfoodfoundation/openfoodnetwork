@@ -14,7 +14,7 @@ module Api
                :long_description, :website, :instagram, :linkedin, :twitter,
                :facebook, :is_primary_producer, :is_distributor, :phone, :visible,
                :email_address, :hash, :logo, :promo_image, :path, :pickup, :delivery,
-               :icon, :icon_font, :producer_icon_font, :category, :producers, :hubs
+               :icon, :icon_font, :producer_icon_font, :category
 
     attributes :taxons, :supplied_taxons
 
@@ -51,16 +51,6 @@ module Api
 
     def path
       enterprise_shop_path(enterprise)
-    end
-
-    def producers
-      relatives = data.relatives[enterprise.id]
-      ids_to_objs(relatives.andand[:producers])
-    end
-
-    def hubs
-      relatives = data.relatives[enterprise.id]
-      ids_to_objs(relatives.andand[:distributors])
     end
 
     def taxons

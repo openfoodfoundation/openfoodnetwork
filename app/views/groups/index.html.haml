@@ -1,10 +1,7 @@
 - content_for(:title) do
   = t :groups_title
 
-= inject_enterprises
-
-:javascript
-  angular.module('Darkswarm').value('groups', #{render partial: "json/groups", object: @groups})
+= inject_groups
 
 #groups.pad-top.footer-pad{"ng-controller" => "GroupsCtrl"}
   .row
