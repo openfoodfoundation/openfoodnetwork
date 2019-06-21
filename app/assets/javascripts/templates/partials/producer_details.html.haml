@@ -2,14 +2,14 @@
 -# Do not show this for producer shops selling only their own produce,
 -# Since a shopping link will already have been displayed in hub_details.html.haml
 .row.active_table_row.pad-top{ "ng-if" => "enterprise.is_primary_producer && enterprise.hubs.length > 0 && !(enterprise.hubs.length == 1 && enterprise.hubs[0] == enterprise)"}
-  .columns.small-12
+  .columns.small-12.cta-container
     .row
       .columns.small-12.fat
         %div{"ng-if" => "::enterprise.name"}
-          %label{"ng-html" => "::'shop_for_products_html' | t:{enterprise: enterprise.name}"}
+          %label{"ng-bind-html" => "::'shop_for_products_html' | t:{enterprise: enterprise.name}"}
         %div.show-for-medium-up{"ng-if" => "::!enterprise.name"}
           &nbsp;
-    .row.cta-container
+    .row
       .columns.small-12
         %a.cta-hub{"ng-repeat" => "hub in enterprise.hubs | filter:{id: '!'+enterprise.id} | orderBy:'-active'",
         "ng-href" => "{{::hub.path}}", "ofn-empties-cart" => "hub",
