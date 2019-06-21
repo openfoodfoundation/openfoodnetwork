@@ -39,6 +39,8 @@ Spree::Admin::ProductsController.class_eval do
     delete_stock_params_and_set_after do
       super
     end
+
+    clear_variants_unit_description if @object.variant_unit == 'items'
   end
 
   def bulk_update
@@ -153,5 +155,11 @@ Spree::Admin::ProductsController.class_eval do
 
   def set_product_master_variant_price_to_zero
     @product.price = 0 if @product.price.nil?
+  end
+
+  def clear_variants_unit_description
+    @object.variants.each do |variant|
+      variant.update_attribute :unit_description, ''
+    end
   end
 end
