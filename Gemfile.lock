@@ -149,7 +149,7 @@ GEM
       activesupport (= 3.2.22.5)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
-    activerecord-import (1.0.1)
+    activerecord-import (1.0.2)
       activerecord (>= 3.2)
     activeresource (3.2.22.5)
       activemodel (= 3.2.22.5)
