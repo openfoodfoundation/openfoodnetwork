@@ -86,4 +86,10 @@ Spree::Core::Engine.routes.prepend do
     get :order_cycle_expired, :on => :collection
     put :cancel, on: :member
   end
+
+  resources :products
+
+  get '/unauthorized', :to => 'home#unauthorized', :as => :unauthorized
+  get '/content/cvv', :to => 'content#cvv', :as => :cvv
+  get '/content/*path', :to => 'content#show', :as => :content
 end

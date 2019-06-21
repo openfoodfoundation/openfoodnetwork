@@ -10,7 +10,6 @@ describe Spree::CheckoutController, type: :controller do
     before do
       create(:line_item, order: order)
 
-      allow(controller).to receive(:skip_state_validation?) { true }
       allow(controller).to receive(:spree_current_user) { user }
     end
 

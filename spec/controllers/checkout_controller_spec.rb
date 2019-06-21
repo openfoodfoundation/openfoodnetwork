@@ -51,7 +51,7 @@ describe CheckoutController, type: :controller do
       allow(order).to receive_message_chain(:insufficient_stock_lines, :empty?).and_return false
 
       get :edit
-      expect(response).to redirect_to spree.cart_path
+      expect(response).to redirect_to cart_path
     end
 
     it "redirects when some items are not available" do
@@ -59,7 +59,7 @@ describe CheckoutController, type: :controller do
       expect(order_cycle_distributed_variants).to receive(:distributes_order_variants?).with(order).and_return(false)
 
       get :edit
-      expect(response).to redirect_to spree.cart_path
+      expect(response).to redirect_to cart_path
     end
 
     it "does not redirect when items are available and in stock" do

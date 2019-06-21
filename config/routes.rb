@@ -5,7 +5,6 @@ Openfoodnetwork::Application.routes.draw do
   get "/enterprises", to: redirect("/")
   get "/products", to: redirect("/")
   get "/products/:id", to: redirect("/")
-  get "/t/products/:id", to: redirect("/")
   get "/about_us", to: redirect(ContentConfig.footer_about_url)
 
   get "/login", to: redirect("/#/login")
@@ -27,6 +26,7 @@ Openfoodnetwork::Application.routes.draw do
   get "/cart", :to => "spree/orders#edit", :as => :cart
   put "/cart", :to => "spree/orders#update", :as => :update_cart
   put "/cart/empty", :to => 'spree/orders#empty', :as => :empty_cart
+  get '/orders/:id/token/:token' => 'spree/orders#show', :as => :token_order
 
   resource :cart, controller: "cart" do
     post :populate
