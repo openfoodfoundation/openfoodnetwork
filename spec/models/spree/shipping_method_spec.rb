@@ -92,5 +92,22 @@ module Spree
         it { expect(shipping_method.delivery?).to be false }
       end
     end
+
+    describe "#include?" do
+      let(:shipping_method) { create(:shipping_method) }
+
+      it "does not include a nil address" do
+        expect(shipping_method.include?(nil)).to be false
+      end
+
+      it "includes an address that is not included in the zones of the shipping method" do
+        address = create(:address)
+        zone_mock = instance_double(Spree::Zone)
+        allow(zone_mock).to receive(:include?).with(address).and_return(false)
+        allow(shipping_method).to receive(:zones) { [zone_mock] }
+
+        expect(shipping_method.include?(address)).to be true
+      end
+    end
   end
 end

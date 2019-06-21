@@ -53,6 +53,13 @@ Spree::ShippingMethod.class_eval do
     spree_calculators.send model_name_without_spree_namespace
   end
 
+  # This is bypassing the validation of shipping method zones on checkout
+  # It allows checkout using shipping methods without zones (see issue #3928 for details)
+  #   and it allows checkout with addresses outside of the zones of the selected shipping method
+  def include?(address)
+    address.present?
+  end
+
   def has_distributor?(distributor)
     distributors.include?(distributor)
   end
