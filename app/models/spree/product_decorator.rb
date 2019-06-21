@@ -112,7 +112,7 @@ Spree::Product.class_eval do
     if user.has_spree_role?('admin')
       scoped
     else
-      where('supplier_id IN (?)', user.enterprises)
+      where('supplier_id IN (?)', user.enterprises.select("enterprises.id"))
     end
   }
 
@@ -189,7 +189,9 @@ Spree::Product.class_eval do
       OpenFoodNetwork::ProductsCache.product_deleted(self) do
         touch_distributors
 
-        ExchangeVariant.where('exchange_variants.variant_id IN (?)', variants_including_master.with_deleted).destroy_all
+        ExchangeVariant.
+          where('exchange_variants.variant_id IN (?)', variants_including_master.with_deleted.
+          select(:id)).destroy_all
 
         destroy_without_delete_from_order_cycles
       end
@@ -216,7 +218,7 @@ Spree::Product.class_eval do
   end
 
   def touch_distributors
-    Enterprise.distributing_products(self).each(&:touch)
+    Enterprise.distributing_products(id).each(&:touch)
   end
 
   def add_primary_taxon_to_taxons

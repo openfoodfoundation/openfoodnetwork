@@ -26,11 +26,25 @@ class Exchange < ActiveRecord::Base
   scope :to_enterprise, lambda { |enterprise| where(receiver_id: enterprise) }
   scope :from_enterprises, lambda { |enterprises| where('exchanges.sender_id IN (?)', enterprises) }
   scope :to_enterprises, lambda { |enterprises| where('exchanges.receiver_id IN (?)', enterprises) }
-  scope :involving, lambda { |enterprises| where('exchanges.receiver_id IN (?) OR exchanges.sender_id IN (?)', enterprises, enterprises).select('DISTINCT exchanges.*') }
-  scope :supplying_to, lambda { |distributor| where('exchanges.incoming OR exchanges.receiver_id = ?', distributor) }
-  scope :with_variant, lambda { |variant| joins(:exchange_variants).where('exchange_variants.variant_id = ?', variant) }
-  scope :with_any_variant, lambda { |variants| joins(:exchange_variants).where('exchange_variants.variant_id IN (?)', variants).select('DISTINCT exchanges.*') }
-  scope :with_product, lambda { |product| joins(:exchange_variants).where('exchange_variants.variant_id IN (?)', product.variants_including_master) }
+  scope :involving, lambda { |enterprises|
+    where('exchanges.receiver_id IN (?) OR exchanges.sender_id IN (?)', enterprises, enterprises).
+      select('DISTINCT exchanges.*')
+  }
+  scope :supplying_to, lambda { |distributor|
+    where('exchanges.incoming OR exchanges.receiver_id = ?', distributor)
+  }
+  scope :with_variant, lambda { |variant|
+    joins(:exchange_variants).where('exchange_variants.variant_id = ?', variant)
+  }
+  scope :with_any_variant, lambda { |variant_ids|
+    joins(:exchange_variants).
+      where('exchange_variants.variant_id IN (?)', variant_ids).
+      select('DISTINCT exchanges.*')
+  }
+  scope :with_product, lambda { |product|
+    joins(:exchange_variants).
+      where('exchange_variants.variant_id IN (?)', product.variants_including_master)
+  }
   scope :by_enterprise_name, -> {
     joins('INNER JOIN enterprises AS sender   ON (sender.id   = exchanges.sender_id)').
       joins('INNER JOIN enterprises AS receiver ON (receiver.id = exchanges.receiver_id)').
@@ -49,11 +63,12 @@ class Exchange < ActiveRecord::Base
     if user.has_spree_role?('admin')
       scoped
     else
-      joins('LEFT JOIN enterprises senders ON senders.id = exchanges.sender_id').
-        joins('LEFT JOIN enterprises receivers ON receivers.id = exchanges.receiver_id').
-        joins('LEFT JOIN enterprise_roles sender_roles ON sender_roles.enterprise_id = senders.id').
-        joins('LEFT JOIN enterprise_roles receiver_roles ON receiver_roles.enterprise_id = receivers.id').
-        where('sender_roles.user_id = ? AND receiver_roles.user_id = ?', user.id, user.id)
+      joins("LEFT JOIN enterprises senders ON senders.id = exchanges.sender_id").
+        joins("LEFT JOIN enterprises receivers ON receivers.id = exchanges.receiver_id").
+        joins("LEFT JOIN enterprise_roles sender_roles ON sender_roles.enterprise_id = senders.id").
+        joins("LEFT JOIN enterprise_roles receiver_roles
+            ON receiver_roles.enterprise_id = receivers.id").
+        where("sender_roles.user_id = ? AND receiver_roles.user_id = ?", user.id, user.id)
     end
   }
 
@@ -76,7 +91,8 @@ class Exchange < ActiveRecord::Base
   end
 
   def to_h(core_only = false)
-    h = attributes.merge('variant_ids' => variant_ids.sort, 'enterprise_fee_ids' => enterprise_fee_ids.sort)
+    h = attributes.merge('variant_ids' => variant_ids.sort,
+                         'enterprise_fee_ids' => enterprise_fee_ids.sort)
     h.reject! { |k| %w(id order_cycle_id created_at updated_at).include? k } if core_only
     h
   end

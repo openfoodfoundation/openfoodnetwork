@@ -81,9 +81,7 @@ Metrics/LineLength:
   - app/models/enterprise_fee.rb
   - app/models/enterprise_group.rb
   - app/models/enterprise_role.rb
-  - app/models/exchange.rb
   - app/models/inventory_item.rb
-  - app/models/order_cycle.rb
   - app/models/product_import/entry_processor.rb
   - app/models/product_import/entry_validator.rb
   - app/models/product_import/product_importer.rb

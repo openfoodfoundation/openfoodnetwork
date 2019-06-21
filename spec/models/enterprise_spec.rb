@@ -360,13 +360,13 @@ describe Enterprise do
 
       it "returns enterprises distributing via an order cycle" do
         order_cycle = create(:simple_order_cycle, distributors: [distributor], variants: [product.master])
-        expect(Enterprise.distributing_products(product)).to eq([distributor])
+        expect(Enterprise.distributing_products(product.id)).to eq([distributor])
       end
 
       it "does not return duplicate enterprises" do
         another_product = create(:product)
         order_cycle = create(:simple_order_cycle, distributors: [distributor], variants: [product.master, another_product.master])
-        expect(Enterprise.distributing_products([product, another_product])).to eq([distributor])
+        expect(Enterprise.distributing_products([product.id, another_product.id])).to eq([distributor])
       end
     end
 
