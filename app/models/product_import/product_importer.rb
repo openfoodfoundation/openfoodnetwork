@@ -13,7 +13,7 @@ module ProductImport
     include ActiveModel::Conversion
     include ActiveModel::Validations
 
-    attr_reader :updated_ids, :import_settings
+    attr_reader :entries, :updated_ids, :import_settings
 
     def initialize(file, current_user, import_settings = {})
       unless file.is_a?(File)
@@ -88,10 +88,6 @@ module ProductImport
 
     def total_enterprise_products
       @processor.total_enterprise_products
-    end
-
-    def all_entries
-      @entries
     end
 
     def entries_json
@@ -184,8 +180,11 @@ module ProductImport
       end
 
       @spreadsheet_data = SpreadsheetData.new(@entries, @import_settings)
-      @validator = EntryValidator.new(@current_user, @import_time, @spreadsheet_data, @editable_enterprises, @inventory_permissions, @reset_counts, @import_settings)
-      @processor = EntryProcessor.new(self, @validator, @import_settings, @spreadsheet_data, @editable_enterprises, @import_time, @updated_ids)
+      @validator = EntryValidator.new(@current_user, @import_time, @spreadsheet_data,
+                                      @editable_enterprises, @inventory_permissions, @reset_counts,
+                                      @import_settings, build_all_entries)
+      @processor = EntryProcessor.new(self, @validator, @import_settings, @spreadsheet_data,
+                                      @editable_enterprises, @import_time, @updated_ids)
 
       @processor.count_existing_items unless staged_import?
     end
@@ -238,28 +237,22 @@ module ProductImport
     end
 
     def build_entries_in_range
-      start_line = @import_settings[:start]
-      end_line = @import_settings[:end]
+      # In the JS, start and end are calculated like this:
+      # start = (batchIndex * $scope.batchSize) + 1
+      # end = (batchIndex + 1) * $scope.batchSize
+      start_data_index = @import_settings[:start] - 1
+      end_data_index = @import_settings[:end] - 1
 
-      (start_line..end_line).each do |i|
-        line_number = i + 1
-        row = @sheet.row(line_number)
-        row_data = Hash[[headers, row].transpose]
-        entry = SpreadsheetEntry.new(row_data)
-        entry.line_number = line_number
-        @entries.push entry
-        break if @sheet.last_row == line_number
-      end
+      data_rows = rows[start_data_index..end_data_index]
+      @entries = build_entries_from_rows(data_rows, start_data_index)
     end
 
     def build_entries
-      rows.each_with_index do |row, i|
-        row_data = Hash[[headers, row].transpose]
-        entry = SpreadsheetEntry.new(row_data)
-        entry.line_number = i + 2
-        @entries.push entry
-      end
-      @entries
+      @entries = build_entries_from_rows(rows)
+    end
+
+    def build_all_entries
+      build_entries_from_rows(rows)
     end
 
     def save_all_valid
@@ -271,6 +264,15 @@ module ProductImport
     def delete_uploaded_file
       return unless @file.path == Rails.root.join('tmp', 'product_import').to_s
       File.delete(@file)
+    end
+
+    def build_entries_from_rows(rows, offset = 0)
+      rows.each_with_index.inject([]) do |entries, (row, i)|
+        row_data = Hash[[headers, row].transpose]
+        entry = SpreadsheetEntry.new(row_data)
+        entry.line_number = offset + i + 2
+        entries.push entry
+      end
     end
   end
 end
