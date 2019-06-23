@@ -18,8 +18,8 @@ services:
     volumes:
       - .:/usr/src/app
       - gems:/bundles
-      - ./config/database.docker.yml:/usr/src/app/config/database.yml
-      - ./config/application.docker.yml:/usr/src/app/config/application.yml
+      - ./config/database.yml:/usr/src/app/config/database.yml
+      - ./config/application.example.yml:/usr/src/app/config/application.yml
     depends_on:
       - db
     environment:
