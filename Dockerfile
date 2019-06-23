@@ -27,6 +27,5 @@ RUN sh -c "echo 'deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main' 
 ENV BUNDLE_PATH /bundles
 
 COPY . /usr/src/app/
-COPY Gemfile* /usr/src/app/
 
 WORKDIR /usr/src/app
