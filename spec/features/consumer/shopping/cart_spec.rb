@@ -126,7 +126,7 @@ feature "full-page cart", js: true do
       end
     end
 
-    describe "updating quantities with insufficient stock available" do
+    describe "updating quantities" do
       let(:li) { order.line_items(true).last }
       let(:variant) { product_with_tax.variants.first }
 
@@ -134,31 +134,43 @@ feature "full-page cart", js: true do
         add_product_to_cart order, product_with_tax
       end
 
-      it "prevents me from entering an invalid value" do
-        # Given we have 2 on hand, and we've loaded the page after that fact
-        variant.update_attributes!(on_hand: 2, on_demand: false)
-        visit main_app.cart_path
+      describe "when on_hand is zero but variant is on demand" do
+        it "allows updating the quantity" do
+          variant.update_attributes!(on_hand: 0, on_demand: true)
+          visit main_app.cart_path
 
-        accept_alert 'Insufficient stock available, only 2 remaining' do
-          fill_in "order_line_items_attributes_0_quantity", with: '4'
+          fill_in "order_line_items_attributes_0_quantity", with: '5'
+          expect(page).to have_field "order_line_items_attributes_0_quantity", with: '5'
         end
-        expect(page).to have_field "order_line_items_attributes_0_quantity", with: '2'
       end
 
-      it "shows the quantities saved, not those submitted" do
-        # Given we load the page with 3 on hand, then the number available drops to 2
-        variant.update_attributes! on_demand: false
-        variant.update_attributes! on_hand: 3
-        visit main_app.cart_path
-        variant.update_attributes! on_hand: 2
+      describe "with insufficient stock available" do
+        it "prevents user from entering an invalid value" do
+          # Given we have 2 on hand, and we've loaded the page after that fact
+          variant.update_attributes!(on_hand: 2, on_demand: false)
+          visit main_app.cart_path
 
-        accept_alert do
-          fill_in "order_line_items_attributes_0_quantity", with: '4'
+          accept_alert 'Insufficient stock available, only 2 remaining' do
+            fill_in "order_line_items_attributes_0_quantity", with: '4'
+          end
+          expect(page).to have_field "order_line_items_attributes_0_quantity", with: '2'
         end
-        click_button 'Update'
 
-        expect(page).to have_content "Insufficient stock available, only 2 remaining"
-        expect(page).to have_field "order_line_items_attributes_0_quantity", with: '1'
+        it "shows the quantities saved, not those submitted" do
+          # Given we load the page with 3 on hand, then the number available drops to 2
+          variant.update_attributes! on_demand: false
+          variant.update_attributes! on_hand: 3
+          visit main_app.cart_path
+          variant.update_attributes! on_hand: 2
+
+          accept_alert do
+            fill_in "order_line_items_attributes_0_quantity", with: '4'
+          end
+          click_button 'Update'
+
+          expect(page).to have_content "Insufficient stock available, only 2 remaining"
+          expect(page).to have_field "order_line_items_attributes_0_quantity", with: '1'
+        end
       end
     end
 
