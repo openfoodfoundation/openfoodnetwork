@@ -96,6 +96,11 @@ en:
       resend_confirmation_email: "Resend confirmation email."
       confirmed: "Thanks for confirming your email! You can now log in."
       not_confirmed: "Your email address could not be confirmed. Perhaps you have already completed this step?"
+    user_confirmations:
+      spree_user:
+        send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
+        confirmation_sent: "Email confirmation sent"
+        confirmation_not_sent: "Error sending confirmation email"
     user_registrations:
       spree_user:
        signed_up_but_unconfirmed: "A message with a confirmation link has been sent to your email address. Please open the link to activate your account."
@@ -106,6 +111,8 @@ en:
         Were you a guest last time?  Perhaps you need to create an account or reset your password.
       unconfirmed: "You have to confirm your account before continuing."
       already_registered: "This email address is already registered. Please log in to continue, or go back and use another email address."
+    success:
+      logged_in_succesfully: "Logged in successfully"
     user_passwords:
       spree_user:
         updated_not_active: "Your password has been reset, but your email has not been confirmed yet."
@@ -2321,6 +2328,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   payment_methods: "Payment Methods"
   payment_method_fee: "Transaction fee"
   payment_processing_failed: "Payment could not be processed, please check the details you entered"
+  payment_method_not_supported: "That payment method is unsupported. Please choose another one."
   payment_updated: "Payment Updated"
   inventory_settings: "Inventory Settings"
   tag_rules: "Tag Rules"

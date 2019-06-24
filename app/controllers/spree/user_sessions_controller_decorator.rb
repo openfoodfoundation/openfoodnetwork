@@ -7,7 +7,7 @@ Spree::UserSessionsController.class_eval do
     if spree_user_signed_in?
       respond_to do |format|
         format.html {
-          flash[:success] = t(:logged_in_succesfully)
+          flash[:success] = t('devise.success.logged_in_succesfully')
           redirect_back_or_default(after_sign_in_path_for(spree_current_user))
         }
         format.js {
