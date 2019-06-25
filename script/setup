@@ -43,7 +43,7 @@ npm install
 
 # Set up configurable environment variables
 if [ ! -f config/application.yml ]; then
-  cp config/application.yml.example config/application.yml
+  cp config/application.example.yml config/application.yml
   printf "${YELLOW}Copied config/application.yml Make sure to fill it with the appropriate configuration values.\n\n${NO_COLOR}"
 fi
 
