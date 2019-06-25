@@ -4,6 +4,8 @@
 
 module ProductImport
   class EntryValidator
+    SKIP_VALIDATE_ON_UPDATE = [:description].freeze
+
     # rubocop:disable Metrics/ParameterLists
     def initialize(current_user, import_time, spreadsheet_data, editable_enterprises,
                    inventory_permissions, reset_counts, import_settings, all_entries)
@@ -326,8 +328,7 @@ module ProductImport
     end
 
     def ignore_when_updating_product?(attribute)
-      attributes_to_ignore = [:description]
-      attributes_to_ignore.include? attribute
+      SKIP_VALIDATE_ON_UPDATE.include? attribute
     end
 
     def convert_to_trusted_type(untrusted_attribute, trusted_attribute)
