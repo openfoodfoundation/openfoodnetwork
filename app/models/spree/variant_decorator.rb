@@ -10,6 +10,7 @@ Spree::Variant.class_eval do
   # removing the Spree method to prevent error.
   remove_method :options_text if instance_methods(false).include? :options_text
   include OpenFoodNetwork::VariantAndLineItemNaming
+  include VariantUniqueSkuValidation
   include VariantStock
 
   has_many :exchange_variants
