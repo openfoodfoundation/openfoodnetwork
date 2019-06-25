@@ -13,11 +13,16 @@ Darkswarm.directive "ofnOnHand", ->
       ngModel.$setDirty = setDirty
 
     ngModel.$parsers.push (viewValue) ->
-      on_hand = parseInt(attr.ofnOnHand)
-      if parseInt(viewValue) > on_hand
-        alert t("js.insufficient_stock", {on_hand: on_hand})
-        viewValue = on_hand
+      available_quantity = scope.available_quantity()
+      if parseInt(viewValue) > available_quantity
+        alert t("js.insufficient_stock", {on_hand: available_quantity})
+        viewValue = available_quantity
         ngModel.$setViewValue viewValue
         ngModel.$render()
 
       viewValue
+
+    scope.available_quantity = ->
+      on_hand = parseInt(attr.ofnOnHand)
+      finalized_quantity = parseInt(attr.finalizedquantity) || 0 # finalizedquantity is optional
+      on_hand + finalized_quantity

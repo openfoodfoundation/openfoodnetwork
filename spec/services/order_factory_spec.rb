@@ -31,9 +31,8 @@ describe OrderFactory do
       attrs
     end
 
-    it "builds a new order based the provided attributes" do
-      expect{ order }.to change{ Spree::Order.count }.by(1)
-      expect(order).to be_a Spree::Order
+    it "builds a new order based on the provided attributes" do
+      expect_new_order
       expect(order.line_items.count).to eq 2
       expect(order.customer).to eq customer
       expect(order.user).to eq user
@@ -64,8 +63,7 @@ describe OrderFactory do
       before { customer.update_attribute(:user_id, nil) }
 
       it "initialises the order without a user_id" do
-        expect{ order }.to change{ Spree::Order.count }.by(1)
-        expect(order).to be_a Spree::Order
+        expect_new_order
         expect(order.user).to be nil
       end
     end
@@ -78,10 +76,18 @@ describe OrderFactory do
         end
 
         context "when skip_stock_check is not requested" do
-          it "initialised the order but limits stock to the available amount" do
-            expect{ order }.to change{ Spree::Order.count }.by(1)
-            expect(order).to be_a Spree::Order
-            expect(order.line_items.find_by_variant_id(variant1.id).quantity).to eq 2
+          it "initialises the order but limits stock to the available amount" do
+            expect_new_order
+            expect(variant1_line_item.quantity).to eq 2
+          end
+
+          context "when variant is on_demand" do
+            before { variant1.update_attribute(:on_demand, true) }
+
+            it "initialises the order with the requested quantity regardless of stock" do
+              expect_new_order
+              expect(variant1_line_item.quantity).to eq 5
+            end
           end
         end
 
@@ -89,9 +95,8 @@ describe OrderFactory do
           let(:opts) { { skip_stock_check: true } }
 
           it "initialises the order with the requested quantity regardless" do
-            expect{ order }.to change{ Spree::Order.count }.by(1)
-            expect(order).to be_a Spree::Order
-            expect(order.line_items.find_by_variant_id(variant1.id).quantity).to eq 5
+            expect_new_order
+            expect(variant1_line_item.quantity).to eq 5
           end
         end
       end
@@ -102,9 +107,8 @@ describe OrderFactory do
 
         context "when skip_stock_check is not requested" do
           it "initialised the order but limits stock to the available amount" do
-            expect{ order }.to change{ Spree::Order.count }.by(1)
-            expect(order).to be_a Spree::Order
-            expect(order.line_items.find_by_variant_id(variant1.id).quantity).to eq 3
+            expect_new_order
+            expect(variant1_line_item.quantity).to eq 3
           end
         end
 
@@ -112,9 +116,8 @@ describe OrderFactory do
           let(:opts) { { skip_stock_check: true } }
 
           it "initialises the order with the requested quantity regardless" do
-            expect{ order }.to change{ Spree::Order.count }.by(1)
-            expect(order).to be_a Spree::Order
-            expect(order.line_items.find_by_variant_id(variant1.id).quantity).to eq 6
+            expect_new_order
+            expect(variant1_line_item.quantity).to eq 6
           end
         end
       end
@@ -123,8 +126,8 @@ describe OrderFactory do
     describe "determining the price for line items" do
       context "when no override is present" do
         it "uses the price from the variant" do
-          expect{ order }.to change{ Spree::Order.count }.by(1)
-          expect(order.line_items.find_by_variant_id(variant1.id).price).to eq 5.0
+          expect_new_order
+          expect(variant1_line_item.price).to eq 5.0
           expect(order.total).to eq 38.0
         end
       end
@@ -133,11 +136,20 @@ describe OrderFactory do
         let!(:override) { create(:variant_override, hub_id: shop.id, variant_id: variant1.id, price: 3.0) }
 
         it "uses the price from the override" do
-          expect{ order }.to change{ Spree::Order.count }.by(1)
-          expect(order.line_items.find_by_variant_id(variant1.id).price).to eq 3.0
+          expect_new_order
+          expect(variant1_line_item.price).to eq 3.0
           expect(order.total).to eq 34.0
         end
       end
+    end
+
+    def expect_new_order
+      expect{ order }.to change{ Spree::Order.count }.by(1)
+      expect(order).to be_a Spree::Order
+    end
+
+    def variant1_line_item
+      order.line_items.find_by_variant_id(variant1.id)
     end
   end
 end

@@ -48,7 +48,7 @@ class OrderFactory
     attrs[:line_items].each do |li|
       next unless variant = Spree::Variant.find_by_id(li[:variant_id])
       scoper.scope(variant)
-      li[:quantity] = stock_limited_quantity(variant.on_hand, li[:quantity])
+      li[:quantity] = stock_limited_quantity(variant.on_demand, variant.on_hand, li[:quantity])
       li[:price] = variant.price
       build_item_from(li)
     end
@@ -81,9 +81,9 @@ class OrderFactory
     @order.payments.create(payment_method_id: attrs[:payment_method_id], amount: @order.reload.total)
   end
 
-  def stock_limited_quantity(stock, requested)
-    return requested if opts[:skip_stock_check]
-    [stock, requested].min
+  def stock_limited_quantity(variant_on_demand, variant_on_hand, requested)
+    return requested if opts[:skip_stock_check] || variant_on_demand
+    [variant_on_hand, requested].min
   end
 
   def scoper
