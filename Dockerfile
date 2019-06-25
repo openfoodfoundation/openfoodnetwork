@@ -1,9 +1,9 @@
 FROM ubuntu:18.04
 
-#Install all the requirements
+# Install all the requirements
 RUN apt-get update && apt-get install -y curl git build-essential software-properties-common wget zlib1g-dev libssl1.0-dev libreadline-dev libyaml-dev libffi-dev libxml2-dev libxslt1-dev wait-for-it
 
-#Setup ENV variables
+# Setup ENV variables
 ENV PATH /usr/local/src/rbenv/shims:/usr/local/src/rbenv/bin:$PATH
 ENV RBENV_ROOT /usr/local/src/rbenv
 ENV RUBY_VERSION 2.1.5
