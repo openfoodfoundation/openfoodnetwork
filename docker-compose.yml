@@ -28,7 +28,8 @@ services:
     command: >
       bash -c "(bundle check || bundle install) &&
                wait-for-it -t 30 db:5432 &&
-               bundle exec rake db:setup db:test:prepare ofn:sample_data || true &&
+               bundle exec rake db:reset db:test:prepare &&
+               bundle exec rake ofn:sample_data || true &&
                rm -f tmp/pids/server.pid &&
                bundle exec rails s -p 3000 -b '0.0.0.0'"
 
