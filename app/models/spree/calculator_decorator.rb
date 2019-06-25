@@ -9,7 +9,7 @@ module Spree
         [object]
       elsif object.respond_to? :line_items
         object.line_items
-      elsif object.order.present?
+      elsif object.respond_to? :order
         object.order.line_items
       else
         [object]
