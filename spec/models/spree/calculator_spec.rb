@@ -5,12 +5,14 @@ module Spree
     let(:calculator) { Spree::Calculator.new }
     let!(:enterprise) { create(:enterprise) }
     let!(:order) { create(:order) }
+    let!(:shipment) { create(:shipment) }
     let!(:line_item) { create(:line_item, order: order) }
     let!(:line_item2) { create(:line_item, order: order) }
 
     before do
       order.line_items << line_item
       order.line_items << line_item2
+      order.shipments = [shipment]
     end
 
     describe "#line_items_for" do
@@ -20,8 +22,14 @@ module Spree
         expect(result).to eq [line_item]
       end
 
-      it "returns line items if given an order" do
+      it "returns line items if given an object with line items" do
         result = calculator.__send__(:line_items_for, order)
+
+        expect(result).to eq [line_item, line_item2]
+      end
+
+      it "returns line items if given an object with an order" do
+        result = calculator.__send__(:line_items_for, shipment)
 
         expect(result).to eq [line_item, line_item2]
       end
