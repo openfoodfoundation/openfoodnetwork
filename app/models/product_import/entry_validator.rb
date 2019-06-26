@@ -234,7 +234,13 @@ module ProductImport
     end
 
     def entry_matches_existing_variant?(entry, existing_variant)
-      existing_variant.display_name == entry.display_name && existing_variant.unit_value == entry.unit_value.to_f
+      existing_variant.display_name == entry.display_name \
+        && existing_variant.unit_value == entry.unit_value.to_f \
+        && entry_matches_variant_sku?(entry, existing_variant)
+    end
+
+    def entry_matches_variant_sku?(entry, variant)
+      entry.sku.nil? || entry.sku == variant.sku
     end
 
     def category_validation(entry)

@@ -314,12 +314,100 @@ describe ProductImport::ProductImporter do
     end
   end
 
+  describe "handling of lookalike variants" do
+    let!(:product) do
+      create(:product, supplier: enterprise, name: "Potatoes", primary_taxon: category,
+                       variant_unit: "weight", variant_unit_scale: 1,
+                       shipping_category: shipping_category)
+    end
+
+    let(:importer) { import_data(csv_data) }
+
+    describe "adding lookalike variants with different SKU" do
+      let(:csv_data) do
+        CSV.generate do |csv|
+          csv << ["name", "producer", "category", "description", "on_hand", "price", "units", "unit_type", "sku", "display_name", "shipping_category", "tax_category"]
+          csv << [product.name, enterprise.name, category.name, product.description, "2", "3.50", "500", "g", "potatoes1", "Small Bag", shipping_category.name, product.tax_category.name]
+          csv << [product.name, enterprise.name, category.name, product.description, "5", "3.50", "500", "g", "potatoes2", "Small Bag", shipping_category.name, product.tax_category.name]
+        end
+      end
+
+      it "validates entries" do
+        importer.validate_entries
+        entries = JSON.parse(importer.entries_json)
+
+        expect(filter("valid", entries)).to eq 2
+        expect(filter("invalid", entries)).to eq 0
+        expect(filter("create_product", entries)).to eq 2
+        expect(filter("update_product", entries)).to eq 0
+      end
+
+      it "saves and updates" do
+        importer.save_entries
+
+        expect(importer.products_created_count).to eq 2
+        expect(importer.updated_ids).to be_a(Array)
+        expect(importer.updated_ids.count).to eq 2
+
+        variant = Spree::Variant.find_by_sku("potatoes1")
+        expect(variant.on_hand).to eq 2
+
+        variant = Spree::Variant.find_by_sku("potatoes2")
+        expect(variant.on_hand).to eq 5
+      end
+    end
+
+    describe "updating lookalike variants with SKU" do
+      let!(:first_variant) do
+        create(:variant, product: product, unit_value: 500, sku: "potatoes1",
+                         display_name: "Small Bag", on_hand: 1)
+      end
+
+      let!(:second_variant) do
+        create(:variant, product: product, unit_value: 500, sku: "potatoes2",
+                         display_name: "Small Bag", on_hand: 2)
+      end
+
+      let(:csv_data) do
+        CSV.generate do |csv|
+          csv << ["name", "producer", "category", "description", "on_hand", "price", "units", "unit_type", "sku", "display_name", "shipping_category", "tax_category"]
+          csv << [product.name, enterprise.name, category.name, product.description, "2", "3.50", "500", "g", "potatoes1", "Small Bag", shipping_category.name, product.tax_category.name]
+          csv << [product.name, enterprise.name, category.name, product.description, "5", "3.50", "500", "g", "potatoes2", "Small Bag", shipping_category.name, product.tax_category.name]
+        end
+      end
+
+      it "validates entries" do
+        importer.validate_entries
+        entries = JSON.parse(importer.entries_json)
+
+        expect(filter("valid", entries)).to eq 2
+        expect(filter("invalid", entries)).to eq 0
+        expect(filter("create_product", entries)).to eq 0
+        expect(filter("update_product", entries)).to eq 2
+      end
+
+      it "saves and updates" do
+        importer.save_entries
+
+        expect(importer.products_created_count).to eq 0
+        expect(importer.updated_ids).to be_a(Array)
+        expect(importer.updated_ids.count).to eq 2
+
+        first_variant.reload
+        second_variant.reload
+
+        expect(first_variant.on_hand).to eq 2
+        expect(second_variant.on_hand).to eq 5
+      end
+    end
+  end
+
   describe "updating various fields" do
     let(:csv_data) {
       CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "on_demand", "sku", "shipping_category"]
         csv << ["Beetroot", "And Another Enterprise", "Vegetables", "5", "3.50", "500", "g", "0", nil, shipping_category.name]
-        csv << ["Tomato", "And Another Enterprise", "Vegetables", "6", "5.50", "500", "g", "1", "TOMS", shipping_category.name]
+        csv << ["Tomato", "And Another Enterprise", "Vegetables", "6", "5.50", "500", "g", "1", nil, shipping_category.name]
       end
     }
     let(:importer) { import_data csv_data }
