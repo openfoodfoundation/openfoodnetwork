@@ -40,7 +40,7 @@ module Admin
 
     # Filter schedules by OCs with a given coordinator id
     def filter_schedules_by_enterprise_id(schedules, enterprise_id)
-      schedules.select { |schedule| schedule.coordinators.map(&:id).include? enterprise_id.to_i }
+      schedules.where("order_cycles.coordinator_id = ?", enterprise_id.to_i)
     end
 
     def collection_actions
