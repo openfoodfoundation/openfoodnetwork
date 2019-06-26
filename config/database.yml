@@ -1,33 +1,19 @@
-development:
+default: &default
   adapter: postgresql
-  encoding: unicode
-  database: open_food_network_dev
+  encoding: utf8
   pool: 5
-  host: localhost
+  timeout: 5000
+  host: db
+  port: 5432
+
+development:
+  <<: *default
+  database: open_food_network_dev
   username: ofn
   password: f00d
 
 test:
-  adapter: postgresql
-  encoding: unicode
+  <<: *default
   database: open_food_network_test
-  pool: 5
-  host: localhost
-  username: ofn
-  password: f00d
-
-production:
-  adapter: postgresql
-  encoding: unicode
-  database: open_food_network_prod
-  pool: 5
-  username: ofn
-  password: f00d
-
-staging:
-  adapter: postgresql
-  encoding: unicode
-  database: open_food_network_prod
-  pool: 5
   username: ofn
   password: f00d
