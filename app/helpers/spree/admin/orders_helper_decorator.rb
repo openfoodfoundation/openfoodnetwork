@@ -5,7 +5,7 @@ module Spree
         @order ||= order
         links = []
         links << edit_order_link unless action_name == "edit"
-        links << complete_order_links if @order.complete?
+        links.concat(complete_order_links) if @order.complete?
         links << ship_order_link if @order.ready_to_ship?
         links << cancel_order_link if @order.can_cancel?
         links
@@ -16,8 +16,8 @@ module Spree
       def complete_order_links
         complete_order_links = []
         complete_order_links << resend_confirmation_link
-        complete_order_links << invoice_links
-        complete_order_links << ticket_links
+        complete_order_links.concat(invoice_links)
+        complete_order_links.concat(ticket_links)
         complete_order_links
       end
 
@@ -34,7 +34,7 @@ module Spree
       end
 
       def ticket_links
-        return [] unless Spree::Config.enable_receipt_printing?
+        return [] unless Spree::Config[:enable_receipt_printing?]
         [print_ticket_link, select_ticket_printer_link]
       end
 
