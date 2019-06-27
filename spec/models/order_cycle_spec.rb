@@ -372,14 +372,11 @@ describe OrderCycle do
     expect(occ.coordinator_fee_ids).to eq(oc.coordinator_fee_ids)
     expect(occ.preferred_product_selection_from_coordinator_inventory_only).to eq(oc.preferred_product_selection_from_coordinator_inventory_only)
 
-    # to_h gives us a unique hash for each exchange
-    # check that the clone has no additional exchanges
-    occ.exchanges.map(&:to_h).all? do |ex|
-      oc.exchanges.map(&:to_h).include? ex
-    end
-    # check that the clone has original exchanges
-    occ.exchanges.map(&:to_h).include? ex1.to_h
-    occ.exchanges.map(&:to_h).include? ex2.to_h
+    # Check that the exchanges have been cloned.
+    original_exchange_attributes = oc.exchanges.map { |ex| core_exchange_attributes(ex) }
+    cloned_exchange_attributes = occ.exchanges.map { |ex| core_exchange_attributes(ex) }
+
+    expect(cloned_exchange_attributes).to match_array original_exchange_attributes
   end
 
   describe "finding recently closed order cycles" do
@@ -466,5 +463,15 @@ describe OrderCycle do
       item_with_overridden_variant = items.find { |item| item.variant_id == overridden_variant.id }
       expect(item_with_overridden_variant.variant.on_hand).to eq(1000)
     end
+  end
+
+  def core_exchange_attributes(exchange)
+    exterior_attribute_keys = %w(id order_cycle_id created_at updated_at)
+    exchange.attributes.
+      reject { |k| exterior_attribute_keys.include? k }.
+      merge(
+        'variant_ids' => exchange.variant_ids.sort,
+        'enterprise_fee_ids' => exchange.enterprise_fee_ids.sort
+      )
   end
 end
