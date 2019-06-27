@@ -1,3 +1,12 @@
+# Representation of an enterprise being part of an order cycle.
+#
+# A producer can be part as supplier. The supplier's products can be selected to
+# be available in the order cycle (incoming products).
+#
+# A selling enterprise can be part as distributor. The order cycle then appears
+# in its shopfront. Any incoming product can be selected to be shown in the
+# shopfront (outgoing products). But the set of shown products can be smaller
+# than all incoming products.
 class Exchange < ActiveRecord::Base
   acts_as_taggable
 

@@ -121,11 +121,6 @@ Naming/AccessorMethodName:
     - 'spec/support/request/web_helper.rb'
 
 # Offense count: 1
-Naming/BinaryOperatorParameterName:
-  Exclude:
-    - 'app/models/exchange.rb'
-
-# Offense count: 1
 # Configuration parameters: Blacklist.
 # Blacklist: (?-mix:(^|\s)(EO[A-Z]{1}|END)(\s|$))
 Naming/HeredocDelimiterNaming:
@@ -173,7 +168,6 @@ Naming/UncommunicativeMethodParamName:
     - 'app/helpers/admin/injection_helper.rb'
     - 'app/helpers/spree/admin/base_helper_decorator.rb'
     - 'app/helpers/spree/base_helper_decorator.rb'
-    - 'app/models/exchange.rb'
     - 'app/services/subscription_validator.rb'
     - 'lib/open_food_network/reports/bulk_coop_report.rb'
     - 'lib/open_food_network/xero_invoices_report.rb'
