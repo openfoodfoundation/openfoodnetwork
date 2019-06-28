@@ -62,10 +62,11 @@ module OpenFoodNetwork
     end
 
     def self.order_cycle_changed(order_cycle)
-      if order_cycle.dated? && !order_cycle.closed?
-        order_cycle.exchanges.outgoing.each do |exchange|
-          refresh_cache exchange.receiver, order_cycle
-        end
+      return if order_cycle.undated?
+      return if order_cycle.closed?
+
+      order_cycle.exchanges.outgoing.each do |exchange|
+        refresh_cache exchange.receiver, order_cycle
       end
     end
 
@@ -100,8 +101,6 @@ module OpenFoodNetwork
       end
     end
 
-    private
-
     def self.exchanges_featuring_variants(variant_ids, distributor: nil)
       exchanges = Exchange.
         outgoing.
@@ -114,30 +113,39 @@ module OpenFoodNetwork
 
       exchanges
     end
+    private_class_method :exchanges_featuring_variants
 
     def self.refresh_incoming_exchanges(exchanges)
-      incoming_exchanges(exchanges).map do |exchange|
-        outgoing_exchanges_with_variants(exchange.order_cycle, exchange.variant_ids)
-      end.flatten.uniq.each do |exchange|
-        refresh_cache exchange.receiver, exchange.order_cycle
+      incoming_exchanges(exchanges).map do |incoming_exchange|
+        outgoing_exchanges_with_variants(
+          incoming_exchange.order_cycle,
+          incoming_exchange.variant_ids
+        )
+      end.flatten.uniq.each do |outgoing_exchange|
+        refresh_cache(outgoing_exchange.receiver, outgoing_exchange.order_cycle)
       end
     end
+    private_class_method :refresh_incoming_exchanges
 
     def self.refresh_outgoing_exchange(exchange)
-      if exchange.order_cycle.dated? && !exchange.order_cycle.closed?
-        refresh_cache exchange.receiver, exchange.order_cycle
-      end
+      return if exchange.order_cycle.undated?
+      return if exchange.order_cycle.closed?
+
+      refresh_cache(exchange.receiver, exchange.order_cycle)
     end
+    private_class_method :refresh_outgoing_exchange
 
     def self.refresh_supplier_fee(enterprise_fee)
       refresh_incoming_exchanges(enterprise_fee.exchanges)
     end
+    private_class_method :refresh_supplier_fee
 
     def self.refresh_coordinator_fee(enterprise_fee)
       enterprise_fee.order_cycles.each do |order_cycle|
         order_cycle_changed order_cycle
       end
     end
+    private_class_method :refresh_coordinator_fee
 
     def self.refresh_distributor_fee(enterprise_fee)
       enterprise_fee.exchange_fees.
@@ -150,6 +158,7 @@ module OpenFoodNetwork
         refresh_cache exf.exchange.receiver, exf.exchange.order_cycle
       end
     end
+    private_class_method :refresh_distributor_fee
 
     def self.incoming_exchanges(exchanges)
       exchanges.
@@ -158,15 +167,18 @@ module OpenFoodNetwork
         merge(OrderCycle.dated).
         merge(OrderCycle.not_closed)
     end
+    private_class_method :incoming_exchanges
 
     def self.outgoing_exchanges_with_variants(order_cycle, variant_ids)
       order_cycle.exchanges.outgoing.
         joins(:exchange_variants).
         where('exchange_variants.variant_id IN (?)', variant_ids)
     end
+    private_class_method :outgoing_exchanges_with_variants
 
     def self.refresh_cache(distributor, order_cycle)
       ProductsCacheRefreshment.refresh distributor, order_cycle
     end
+    private_class_method :refresh_cache
   end
 end
