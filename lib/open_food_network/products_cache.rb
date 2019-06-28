@@ -170,7 +170,8 @@ module OpenFoodNetwork
           incoming_exchange.order_cycle,
           incoming_exchange.variant_ids
         )
-      end.flatten.uniq
+      end.flatten.uniq { |ex| [ex.receiver_id, ex.order_cycle_id]}
+      # Comparing only on these two ids is much faster.
     end
     private_class_method :outgoing_exchanges_affected_by
 
