@@ -720,7 +720,7 @@ GEM
       tilt (~> 1.1, != 1.3.0)
     state_machine (1.2.0)
     stringex (1.5.1)
-    stripe (4.19.0)
+    stripe (4.21.0)
       faraday (~> 0.13)
       net-http-persistent (~> 3.0)
     therubyracer (0.12.0)
