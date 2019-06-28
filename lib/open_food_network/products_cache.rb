@@ -116,12 +116,7 @@ module OpenFoodNetwork
     private_class_method :exchanges_featuring_variants
 
     def self.refresh_incoming_exchanges(exchanges)
-      incoming_exchanges(exchanges).map do |incoming_exchange|
-        outgoing_exchanges_with_variants(
-          incoming_exchange.order_cycle,
-          incoming_exchange.variant_ids
-        )
-      end.flatten.uniq.each do |outgoing_exchange|
+      outgoing_exchanges_affected_by(exchanges).each do |outgoing_exchange|
         refresh_cache(outgoing_exchange.receiver, outgoing_exchange.order_cycle)
       end
     end
@@ -168,6 +163,16 @@ module OpenFoodNetwork
         merge(OrderCycle.not_closed)
     end
     private_class_method :incoming_exchanges
+
+    def self.outgoing_exchanges_affected_by(exchanges)
+      incoming_exchanges(exchanges).map do |incoming_exchange|
+        outgoing_exchanges_with_variants(
+          incoming_exchange.order_cycle,
+          incoming_exchange.variant_ids
+        )
+      end.flatten.uniq
+    end
+    private_class_method :outgoing_exchanges_affected_by
 
     def self.outgoing_exchanges_with_variants(order_cycle, variant_ids)
       order_cycle.exchanges.outgoing.
