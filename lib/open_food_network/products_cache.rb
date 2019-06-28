@@ -165,13 +165,13 @@ module OpenFoodNetwork
     private_class_method :incoming_exchanges
 
     def self.outgoing_exchanges_affected_by(exchanges)
-      incoming_exchanges(exchanges).map do |incoming_exchange|
-        outgoing_exchanges_with_variants(
-          incoming_exchange.order_cycle,
-          incoming_exchange.variant_ids
-        )
-      end.flatten.uniq { |ex| [ex.receiver_id, ex.order_cycle_id]}
-      # Comparing only on these two ids is much faster.
+      incoming = incoming_exchanges(exchanges)
+      order_cycle_ids = incoming.select(:order_cycle_id)
+      variant_ids = ExchangeVariant.where(exchange_id: incoming).select(:variant_id)
+      Exchange.outgoing.
+        in_order_cycle(order_cycle_ids).
+        with_any_variant(variant_ids).
+        except(:select).select("DISTINCT receiver_id, order_cycle_id")
     end
     private_class_method :outgoing_exchanges_affected_by
 

@@ -38,7 +38,7 @@ class Exchange < ActiveRecord::Base
   }
   scope :with_any_variant, lambda { |variant_ids|
     joins(:exchange_variants).
-      where('exchange_variants.variant_id IN (?)', variant_ids).
+      where(exchange_variants: { variant_id: variant_ids }).
       select('DISTINCT exchanges.*')
   }
   scope :with_product, lambda { |product|
