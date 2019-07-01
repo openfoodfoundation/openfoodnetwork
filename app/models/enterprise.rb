@@ -90,7 +90,6 @@ class Enterprise < ActiveRecord::Base
   validates :permalink, uniqueness: true, presence: true
   validate :shopfront_taxons
   validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
-  validates :description, length: { maximum: 255 }
 
   before_validation :initialize_permalink, if: lambda { permalink.nil? }
   before_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }

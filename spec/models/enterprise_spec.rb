@@ -114,7 +114,6 @@ describe Enterprise do
     subject { FactoryBot.create(:distributor_enterprise) }
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_uniqueness_of(:permalink) }
-    it { is_expected.to ensure_length_of(:description).is_at_most(255) }
 
     it "requires an owner" do
       expect{
