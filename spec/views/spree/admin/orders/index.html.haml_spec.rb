@@ -10,6 +10,12 @@ describe "spree/admin/orders/index.html.haml" do
   end
 
   before do
+    controller.singleton_class.class_eval do
+      def current_ability
+        Spree::Ability.new(Spree.user_class.new)
+      end
+    end
+
     allow(view).to receive_messages spree_current_user: create_enterprise_user
   end
 
