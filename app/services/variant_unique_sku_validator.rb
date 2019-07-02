@@ -11,9 +11,7 @@ class VariantUniqueSkuValidator
 
   def validate_no_lookalikes_with_blank_sku
     return if variant.sku.present? || variant.product_id.blank?
-
-    variants_with_blank_sku = lookalike_variants.where(sku: ["", nil])
-    return if (variants_with_blank_sku - [variant]).blank?
+    return if (lookalike_variants_with_blank_sku - [variant]).blank?
 
     variant.errors.add(:sku, error_message_if_has_lookalike_with_same_sku_error)
   end
@@ -22,6 +20,10 @@ class VariantUniqueSkuValidator
 
   def error_message_if_has_lookalike_with_same_sku_error
     I18n.t("activerecord.errors.models.spree/variant.attributes.sku.has_lookalike_with_same_sku")
+  end
+
+  def lookalike_variants_with_blank_sku
+    lookalike_variants.where(sku: ["", nil])
   end
 
   # Find variants that look like the current variant. This does not distinguish between "" and nil
