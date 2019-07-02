@@ -14,17 +14,17 @@ nav.top-bar {
 }
 
 @media #{$large-only} {
-  .top-bar__menu-item-with-icon span {
+  .top-bar--menu-item-with-icon span {
     display: none;
   }
 
-  .top-bar__current-hub-prefix,
-  .top-bar__current-hub-name {
+  .top-bar--current-hub-prefix,
+  .top-bar--current-hub-name {
     display: inline-block;
     vertical-align: middle;
   }
 
-  .top-bar__current-hub-name {
+  .top-bar--current-hub-name {
     max-width: 10em;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -32,12 +32,12 @@ nav.top-bar {
   }
 }
 
-.top-bar-section ul li > a.top-bar__menu-item-with-icon {
+.top-bar-section ul li > a.top-bar--menu-item-with-icon {
   display: inline;
 }
 
-.top-bar__menu-item-with-icon i,
-.top-bar__menu-item-with-icon img {
+.top-bar--menu-item-with-icon i,
+.top-bar--menu-item-with-icon img {
   line-height: $topbar-height;
 }
 
