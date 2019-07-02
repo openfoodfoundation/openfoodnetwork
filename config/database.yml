@@ -3,8 +3,8 @@ defaults: &defaults
   encoding: unicode
   pool: 5
   host: localhost
-  username: <%= ENV.fetch('DB_USERNAME', 'ofn') %>
-  password: <%= ENV.fetch('DB_PASSWORD', 'f00d') %>
+  username: <%= ENV.fetch('OFN_DB_USERNAME', 'ofn') %>
+  password: <%= ENV.fetch('OFN_DB_PASSWORD', 'f00d') %>
 
 development:
   <<: *defaults
