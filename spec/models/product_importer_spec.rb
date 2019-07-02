@@ -879,7 +879,7 @@ def import_data(csv_data, args = {})
   settings = args[:settings] || { 'import_into' => import_into, 'reset_all_absent' => reset_all_absent }
 
   File.write('/tmp/test-m.csv', csv_data)
-  @file ||= File.new('/tmp/test-m.csv')
+  @file = File.new('/tmp/test-m.csv')
   ProductImport::ProductImporter.new(@file,
                                      import_user,
                                      start: start_row,
