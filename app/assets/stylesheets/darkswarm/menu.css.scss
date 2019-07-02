@@ -202,6 +202,15 @@ nav.top-bar {
   padding: 9px 0 0 9px;
 }
 
+// Leave space for tab bar, in screens smaller than large.
+[role="main"] {
+  margin-top: 2.8em;
+
+  @media #{$large-up} {
+    margin-top: 0;
+  }
+}
+
 .top-bar .ofn-logo img {
   height: auto;
   width: auto;
