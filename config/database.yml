@@ -2,7 +2,7 @@ defaults: &defaults
   adapter: postgresql
   encoding: unicode
   pool: 5
-  host: localhost
+  host: <%= ENV.fetch('OFN_DB_HOST', 'localhost') %>
   username: <%= ENV.fetch('OFN_DB_USERNAME', 'ofn') %>
   password: <%= ENV.fetch('OFN_DB_PASSWORD', 'f00d') %>
 
