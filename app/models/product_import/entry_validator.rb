@@ -240,7 +240,7 @@ module ProductImport
     end
 
     def entry_matches_variant_sku?(entry, variant)
-      entry.sku.nil? || entry.sku == variant.sku
+      variant.sku.blank? || entry.sku.nil? || entry.sku == variant.sku
     end
 
     def category_validation(entry)

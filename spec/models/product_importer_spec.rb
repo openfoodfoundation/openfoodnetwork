@@ -438,6 +438,55 @@ describe ProductImport::ProductImporter do
       expect(tomato.price).to eq 5.50
       expect(tomato.on_demand).to eq true
     end
+
+    context "when variant SKU is blank" do
+      let!(:product) { product6 }
+      let!(:variant) do
+        product.variants.where(is_master: false).first.tap do |record|
+          record.update_attributes!(sku: "")
+        end
+      end
+
+      let(:csv_data) do
+        CSV.generate do |csv|
+          csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "on_demand", "sku", "shipping_category"]
+          csv << [product.name, product.supplier.name, product.primary_taxon.name, "5", "3.50", variant.unit_value, "g", "0", "BEETROOT", shipping_category.name]
+        end
+      end
+
+      it "can be updated" do
+        importer.save_entries
+
+        variant.reload
+        expect(variant.sku).to eq("BEETROOT")
+      end
+    end
+
+    context "when variant SKU is not blank" do
+      let!(:product) { product6 }
+      let!(:variant) do
+        product.variants.where(is_master: false).first.tap do |record|
+          record.update_attributes!(sku: "OLD_BEETROOT")
+        end
+      end
+
+      let(:csv_data) do
+        CSV.generate do |csv|
+          csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "on_demand", "sku", "shipping_category"]
+          csv << [product.name, product.supplier.name, product.primary_taxon.name, "5", "3.50", variant.unit_value, "g", "0", "NEW_BEETROOT", shipping_category.name]
+        end
+      end
+
+      it "does not match" do
+        importer.save_entries
+
+        variant.reload
+        expect(variant.sku).to eq("OLD_BEETROOT")
+
+        new_variant = product.variants.order("id DESC").first
+        expect(new_variant.sku).to eq("NEW_BEETROOT")
+      end
+    end
   end
 
   describe "updating non-updatable fields on existing products" do
