@@ -84,7 +84,7 @@ feature '
     expect(o.order_cycle).to eq(@order_cycle)
   end
 
-  scenario "can add a product to an existing order", retry: 3 do
+  scenario "can add a product to an existing order" do
     quick_login_as_admin
     visit '/admin/orders'
 
