@@ -25,6 +25,7 @@ services:
     environment:
       ADMIN_EMAIL: ofn@example.com
       ADMIN_PASSWORD: ofn123
+      OFN_DB_HOST: db
     command: >
       bash -c "(bundle check || bundle install) &&
                wait-for-it -t 30 db:5432 &&

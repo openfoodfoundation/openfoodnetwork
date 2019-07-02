@@ -1,19 +1,23 @@
-default: &default
+defaults: &defaults
   adapter: postgresql
-  encoding: utf8
+  encoding: unicode
   pool: 5
-  timeout: 5000
-  host: db
-  port: 5432
+  host: <%= ENV.fetch('OFN_DB_HOST', 'localhost') %>
+  username: <%= ENV.fetch('OFN_DB_USERNAME', 'ofn') %>
+  password: <%= ENV.fetch('OFN_DB_PASSWORD', 'f00d') %>
 
 development:
-  <<: *default
+  <<: *defaults
   database: open_food_network_dev
-  username: ofn
-  password: f00d
 
 test:
-  <<: *default
+  <<: *defaults
   database: open_food_network_test
-  username: ofn
-  password: f00d
+
+production:
+  <<: *defaults
+  database: open_food_network_prod
+
+staging:
+  <<: *defaults
+  database: open_food_network_prod
