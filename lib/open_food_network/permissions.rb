@@ -196,7 +196,7 @@ module OpenFoodNetwork
         with_permission(permission).
         pluck(:child_id)
 
-      (options[:scope] || Enterprise).where('enterprises.id IN (?)', child_ids).select(:id)
+      (options[:scope] || Enterprise).where('enterprises.id IN (?)', child_ids).select("enterprises.id")
     end
 
     def managed_enterprise_products
