@@ -285,61 +285,15 @@ describe Exchange do
     ex1.update_attribute(:tag_list, "wholesale")
     ex2 = ex1.clone! new_oc
 
-    expect(ex1.eql?(ex2)).to be true
+    expect(ex1.sender_id).to eq ex2.sender_id
+    expect(ex1.receiver_id).to eq ex2.receiver_id
+    expect(ex1.pickup_time).to eq ex2.pickup_time
+    expect(ex1.pickup_instructions).to eq ex2.pickup_instructions
+    expect(ex1.incoming).to eq ex2.incoming
+    expect(ex1.receival_instructions).to eq ex2.receival_instructions
+    expect(ex1.variant_ids).to eq ex2.variant_ids
+    expect(ex1.enterprise_fee_ids).to eq ex2.enterprise_fee_ids
+
     expect(ex2.reload.tag_list).to eq ["wholesale"]
-  end
-
-  describe "converting to hash" do
-    let(:oc) { create(:order_cycle) }
-    let(:exchange) do
-      exchange = oc.exchanges.last
-      exchange.save!
-      allow(exchange).to receive(:variant_ids) { [1835, 1834] } # Test id ordering
-      allow(exchange).to receive(:enterprise_fee_ids) { [1493, 1492] } # Test id ordering
-      exchange
-    end
-
-    it "converts to a hash" do
-      expect(exchange.to_h).to eq(
-        'id' => exchange.id, 'order_cycle_id' => oc.id,
-        'sender_id' => exchange.sender_id, 'receiver_id' => exchange.receiver_id,
-        'incoming' => exchange.incoming,
-        'variant_ids' => exchange.variant_ids.sort,
-        'enterprise_fee_ids' => exchange.enterprise_fee_ids.sort,
-        'pickup_time' => exchange.pickup_time, 'pickup_instructions' => exchange.pickup_instructions,
-        'receival_instructions' => exchange.receival_instructions,
-        'created_at' => exchange.created_at, 'updated_at' => exchange.updated_at
-      )
-    end
-
-    it "converts to a hash of core attributes only" do
-      expect(exchange.to_h(true)).to eq(
-        'sender_id' => exchange.sender_id, 'receiver_id' => exchange.receiver_id,
-        'incoming' => exchange.incoming,
-        'variant_ids' => exchange.variant_ids.sort,
-        'enterprise_fee_ids' => exchange.enterprise_fee_ids.sort,
-        'pickup_time' => exchange.pickup_time, 'pickup_instructions' => exchange.pickup_instructions,
-        'receival_instructions' => exchange.receival_instructions
-      )
-    end
-  end
-
-  describe "comparing equality" do
-    it "compares Exchanges using to_h" do
-      e1 = Exchange.new
-      e2 = Exchange.new
-
-      allow(e1).to receive(:to_h) { { 'sender_id' => 456 } }
-      allow(e2).to receive(:to_h) { { 'sender_id' => 456 } }
-
-      expect(e1.eql?(e2)).to be true
-    end
-
-    it "compares other objects using super" do
-      exchange = Exchange.new
-      exchange_fee = ExchangeFee.new
-
-      expect(exchange.eql?(exchange_fee)).to be false
-    end
   end
 end

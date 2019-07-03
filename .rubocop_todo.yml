@@ -61,7 +61,6 @@ Lint/IneffectiveAccessModifier:
     - 'app/models/column_preference.rb'
     - 'app/services/mail_configuration.rb'
     - 'lib/open_food_network/feature_toggle.rb'
-    - 'lib/open_food_network/products_cache.rb'
     - 'spec/lib/open_food_network/reports/report_spec.rb'
 
 # Offense count: 1
@@ -87,7 +86,6 @@ Lint/UselessAccessModifier:
     - 'app/models/column_preference.rb'
     - 'app/services/mail_configuration.rb'
     - 'lib/open_food_network/feature_toggle.rb'
-    - 'lib/open_food_network/products_cache.rb'
     - 'lib/open_food_network/reports/bulk_coop_report.rb'
     - 'spec/lib/open_food_network/reports/report_spec.rb'
 
@@ -121,11 +119,6 @@ Naming/AccessorMethodName:
     - 'app/models/spree/order_decorator.rb'
     - 'spec/support/request/shop_workflow.rb'
     - 'spec/support/request/web_helper.rb'
-
-# Offense count: 1
-Naming/BinaryOperatorParameterName:
-  Exclude:
-    - 'app/models/exchange.rb'
 
 # Offense count: 1
 # Configuration parameters: Blacklist.
@@ -175,7 +168,6 @@ Naming/UncommunicativeMethodParamName:
     - 'app/helpers/admin/injection_helper.rb'
     - 'app/helpers/spree/admin/base_helper_decorator.rb'
     - 'app/helpers/spree/base_helper_decorator.rb'
-    - 'app/models/exchange.rb'
     - 'app/services/subscription_validator.rb'
     - 'lib/open_food_network/reports/bulk_coop_report.rb'
     - 'lib/open_food_network/xero_invoices_report.rb'
@@ -433,7 +425,6 @@ Style/GuardClause:
     - 'app/services/order_syncer.rb'
     - 'lib/discourse/single_sign_on.rb'
     - 'lib/open_food_network/order_cycle_form_applicator.rb'
-    - 'lib/open_food_network/products_cache.rb'
     - 'lib/open_food_network/products_renderer.rb'
     - 'lib/open_food_network/rack_request_blocker.rb'
     - 'lib/open_food_network/variant_and_line_item_naming.rb'
