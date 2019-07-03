@@ -46,7 +46,7 @@ module OpenFoodNetwork
 
         managed_active_ids = []
         hubs_active_ids = []
-        producers_active = []
+        producers_active_ids = []
         if @order_cycle
           # TODO: Remove this when all P-OC are sorted out
           # Any enterprises that I manage that are already in the order_cycle
@@ -57,16 +57,16 @@ module OpenFoodNetwork
           variants = Spree::Variant.joins(:product).where('spree_products.supplier_id IN (?)', managed_enterprises.is_primary_producer.select("enterprises.id"))
           active_exchanges = @order_cycle.
             exchanges.outgoing.with_any_variant(variants.select("spree_variants.id"))
-          hubs_active = active_exchanges.map(&:receiver_id)
+          hubs_active_ids = active_exchanges.map(&:receiver_id)
 
           # TODO: Remove this when all P-OC are sorted out
           # Any producers of variants that hubs I manage are currently distributing in this OC
           variant_ids = Spree::Variant.joins(:exchanges).where("exchanges.receiver_id IN (?) AND exchanges.order_cycle_id = (?) AND exchanges.incoming = 'f'", managed_participating_hubs.select("enterprises.id"), @order_cycle).pluck(:id).uniq
           product_ids = Spree::Product.joins(:variants_including_master).where("spree_variants.id IN (?)", variant_ids).pluck(:id).uniq
-          active_producer_ids = Enterprise.joins(:supplied_products).where("spree_products.id IN (?)", product_ids).pluck(:id).uniq
+          producers_active_ids = Enterprise.joins(:supplied_products).where("spree_products.id IN (?)", product_ids).pluck(:id).uniq
         end
 
-        ids = managed_permitted_ids | hubs_permitted_ids | hubs_permitting_ids | producers_permitted_ids | producers_permitting_ids | managed_active_ids | hubs_active_ids | active_producer_ids
+        ids = managed_permitted_ids | hubs_permitted_ids | hubs_permitting_ids | producers_permitted_ids | producers_permitting_ids | managed_active_ids | hubs_active_ids | producers_active_ids
 
         Enterprise.where(id: ids)
       end
