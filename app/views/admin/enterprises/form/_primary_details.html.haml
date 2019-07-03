@@ -63,13 +63,13 @@
       %span{ ng: { class: 'availability.toLowerCase()', hide: "checking" } }
         {{ availability }}
         %i{ ng: { class: "{'icon-ok-sign': availability == 'Available', 'icon-remove-sign': availability == 'Unavailable'}" } }
-  .row{ ng: { show: "Enterprise.sells == 'own' || Enterprise.sells == 'any'" } }
+  .row
     .three.columns.alpha
-      = f.label :permalink, t('.ofn_uid')
-      %div{'ofn-with-tip' => t('.ofn_uid_tip', link: spree.root_url)}
+      = f.label :id, t('.ofn_uid')
+      %div{'ofn-with-tip' => t('.ofn_uid_tip')}
         %a= t('admin.whats_this')
     .six.columns
-      = f.text_field :id, { 'ng-model' => "Enterprise.id", 'ng-model-options' => "{ updateOn: 'default blur', debounce: {'default': 300, 'blur': 0} }", 'ng-disabled' => true }
+      = f.text_field :id, value: f.object.id, disabled: true
   .row{ ng: { show: "Enterprise.sells == 'own' || Enterprise.sells == 'any'" } }
     .three.columns.alpha
       %label= t('.link_to_front')
