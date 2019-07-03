@@ -13,6 +13,34 @@ nav.top-bar {
   height: $topbar-height;
 }
 
+@media #{$large-only} {
+  .top-bar--menu-item-with-icon span {
+    display: none;
+  }
+
+  .top-bar--current-hub-prefix,
+  .top-bar--current-hub-name {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .top-bar--current-hub-name {
+    max-width: 10em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.top-bar-section ul li > a.top-bar--menu-item-with-icon {
+  display: inline;
+}
+
+.top-bar--menu-item-with-icon i,
+.top-bar--menu-item-with-icon img {
+  line-height: $topbar-height;
+}
+
 .top-bar-section {
   a.icon {
     &:hover {
