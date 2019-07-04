@@ -185,7 +185,7 @@ module OpenFoodNetwork
             ]
           },
           {
-            group_by: proc { |line_item| find_variant(line_item).product },
+            group_by: proc { |line_item| find_variant(line_item.variant_id).product },
             sort_by: proc { |product| product.name }
           },
           {
@@ -200,11 +200,11 @@ module OpenFoodNetwork
       else
         [
           {
-            group_by: proc { |line_item| line_item.product.supplier },
+            group_by: proc { |line_item| find_variant(line_item.variant_id).product.supplier },
             sort_by: proc { |supplier| supplier.name }
           },
           {
-            group_by: proc { |line_item| line_item.product },
+            group_by: proc { |line_item| find_variant(line_item.variant_id).product },
             sort_by: proc { |product| product.name }
           },
           {
