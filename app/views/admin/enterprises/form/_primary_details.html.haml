@@ -69,7 +69,7 @@
       %div{'ofn-with-tip' => t('.ofn_uid_tip')}
         %a= t('admin.whats_this')
     .six.columns
-      = f.text_field :id, value: f.object.id, disabled: true
+      {{Enterprise.id}}
   .row{ ng: { show: "Enterprise.sells == 'own' || Enterprise.sells == 'any'" } }
     .three.columns.alpha
       %label= t('.link_to_front')
