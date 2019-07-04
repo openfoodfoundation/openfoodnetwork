@@ -97,10 +97,10 @@ module OpenFoodNetwork
               proc { |_line_items| "" }
             ]
           },
-         {
-           group_by: proc { |line_item| line_item.order.distributor },
-           sort_by: proc { |distributor| distributor.name }
-         }
+          {
+            group_by: proc { |line_item| line_item.order.distributor },
+            sort_by: proc { |distributor| distributor.name }
+          }
         ]
       when "order_cycle_distributor_totals_by_supplier"
         [
@@ -311,15 +311,22 @@ module OpenFoodNetwork
     end
 
     def total_units(line_items)
-      return " " if line_items.map{ |li| li.unit_value.nil? }.any?
+      return " " if not_all_have_unit?(line_items)
 
       total_units = line_items.sum do |li|
         product = find_variant(li.variant_id).product
-
-        scale_factor = ( product.variant_unit == 'weight' ? 1000 : 1 )
-        li.quantity * li.unit_value / scale_factor
+        li.quantity * li.unit_value / scale_factor(product)
       end
+
       total_units.round(3)
+    end
+
+    def not_all_have_unit?(line_items)
+      line_items.map { |li| li.unit_value.nil? }.any?
+    end
+
+    def scale_factor(product)
+      product.variant_unit == 'weight' ? 1000 : 1
     end
 
     # Returns the variant with the given id, including soft-deleted ones

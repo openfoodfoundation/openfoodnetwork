@@ -24,9 +24,12 @@ module OpenFoodNetwork
       sorted_groups.each do |property, items_by_property|
         branch[property] = build_tree(items_by_property, remaining_rules)
 
-        unless rule[:summary_columns].nil? || is_leaf_node(branch[property])
-          branch[property][:summary_row] = { items: items_by_property, columns: rule[:summary_columns] }
-        end
+        next if rule[:summary_columns].nil? || is_leaf_node(branch[property])
+
+        branch[property][:summary_row] = {
+          items: items_by_property,
+          columns: rule[:summary_columns]
+        }
       end
 
       branch
