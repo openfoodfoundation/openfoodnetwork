@@ -12,7 +12,11 @@ es:
       spree/payment:
         amount: Cantidad
       spree/product:
-        primary_taxon: categoría del producto
+        primary_taxon: "categoría del producto"
+        supplier: "Proveedora"
+        shipping_category_id: "Categoría de envío"
+        variant_unit: "Unidad Variante"
+        variant_unit_name: "Nombre de la unidad de la variante"
       order_cycle:
         orders_close_at: Fecha de cierre
     errors:
@@ -70,6 +74,11 @@ es:
       resend_confirmation_email: "Reenviar el correo electrónico de confirmación."
       confirmed: "¡Gracias por confirmar tu correo electrónico! Ahora puedes iniciar sesión."
       not_confirmed: "Su dirección de correo electrónico no pudo ser confirmada. Tal vez ya has completado este paso?"
+    user_confirmations:
+      spree_user:
+        send_instructions: "Recibirás un correo electrónico con instrucciones sobre cómo confirmar su cuenta en unos minutos."
+        confirmation_sent: "Se ha enviado un correo electrónico de confirmación"
+        confirmation_not_sent: "Error al enviar el correo electrónico de confirmación."
     user_registrations:
       spree_user:
         signed_up_but_unconfirmed: "Se ha enviado un mensaje con un enlace de confirmación a tu dirección de correo electrónico. Abre el enlace para activar tu cuenta."
@@ -80,6 +89,8 @@ es:
           ¿Has sido invitada? Tal vez necesites crear una cuenta o recuperar tu contraseña.
       unconfirmed: "Debes confirmar tu cuenta antes de continuar."
       already_registered: "Esta dirección de correo electrónico ya está registrada. Inicie sesión para continuar, o vuelva atrás y use otra dirección de correo electrónico."
+    success:
+      logged_in_succesfully: "Sesión iniciada con éxito"
     user_passwords:
       spree_user:
         updated_not_active: "Su contraseña ha sido restablecida, pero su correo electrónico aún no ha sido confirmado."
@@ -372,14 +383,15 @@ es:
         user_guide: Manual de Usuario
     enterprise_fees:
       index:
-        title: Comisiones de la Organización
-        enterprise: Organización
-        fee_type: Tipo de Comisión
-        name: Nombre
-        tax_category: Categoría del impuesto
-        calculator: Calculadora
-        calculator_values: Valores de la Calculadora
+        title: "Comisiones de la Organización"
+        enterprise: "Organización"
+        fee_type: "Tipo de Comisión"
+        name: "Nombre"
+        tax_category: "Categoría del impuesto"
+        calculator: "Calculadora"
+        calculator_values: "Valores de la Calculadora"
         search: "Buscar"
+        name_placeholder: "por ejemplo, comision de embalaje"
     enterprise_groups:
       index:
         new_button: Nuevo Grupo de Organizaciones
@@ -409,6 +421,7 @@ es:
         property_name: Nombre de la Propiedad
         inherited_property: Propiedad Heredada
       variants:
+        infinity: "infinito"
         to_order_tip: "Los artículos hechos según demanda no tienen un nivel de stock, como por ejemplo panes hechos según demanda."
       group_buy_options: "Opciones de compra grupales"
       back_to_products_list: "Volver a la lista de productos"
@@ -668,6 +681,8 @@ es:
               Una explicación opcional para los consumidores que detallan cómo funciona
               su tienda, que se mostrará por encima de la lista de productos en su
               página de tienda.
+          shopfront_message_link_tooltip: "Insertar / editar enlace"
+          shopfront_message_link_prompt: "Por favor introduzca una URL para insertar"
           shopfront_closed_message: "Mensaje de tienda cerrada"
           shopfront_closed_message_placeholder: >
               Un mensaje que proporciona una explicación más detallada sobre por qué
@@ -797,6 +812,9 @@ es:
         user_already_exists: "El usuario ya existe"
         error: "Algo salió mal"
     order_cycles:
+      loading_flash:
+        loading_order_cycles: Cargando ciclos de pedido
+        loading: Cargando...
       edit:
         advanced_settings: Configuración Avanzada
         update_and_close: Actualizar y Cerrar
@@ -808,6 +826,7 @@ es:
         pickup_time_placeholder: "Listo para ( Fecha / Hora)"
         receival_instructions_placeholder: "Instrucciones de recepción"
         add_fee: 'Añadir comisión'
+        remove: 'Eliminar'
         selected: 'seleccionado'
       add_exchange_form:
         add_supplier: 'Añadir proveedora'
@@ -945,12 +964,13 @@ es:
       new: Nueva suscripción
       create: Crear suscripción
       edit: Editar suscripción
-      index:
-        please_select_a_shop: Por favor seleccione una tienda
+      table:
         edit_subscription: Editar suscripción
         pause_subscription: Pausa Suscripción
         unpause_subscription: Reanudar suscripción
         cancel_subscription: Cancelar suscripción
+      filters:
+        query_placeholder: "Buscar por correo electrónico ..."
       setup_explanation:
         just_a_few_more_steps: 'Solo unos pocos pasos más antes de que pueda comenzar:'
         enable_subscriptions: "Habilita suscripciones para al menos una de tus tiendas"
@@ -983,6 +1003,8 @@ es:
         charges_not_allowed: Los cargos no están permitidos para esta consumidora
         no_default_card: La consumidora no tiene tarjetas disponibles para cargar
         card_ok: La consumidora tiene una tarjeta disponible para cargar
+        begins_at_placeholder: "Seleccione una fecha"
+        ends_at_placeholder: "Opcional"
       loading_flash:
         loading: CARGANDO SUSCRIPCIONES
       review:
@@ -990,6 +1012,10 @@ es:
         address: Dirección
         products: Productos
         no_open_or_upcoming_order_cycle: "No hay ciclo de pedido próximo"
+      products_panel:
+        save: "GUARDAR"
+        saving: "GUARDANDO"
+        saved: "GUARDADO"
       product_already_in_order: Este producto ya ha sido agregado a la orden. Por favor edite la cantidad directamente.
       orders:
         number: Número
@@ -1037,8 +1063,14 @@ es:
   shared:
     menu:
       cart:
-        checkout: "Validar ahora"
-        already_ordered_products: "Ya realizó un pedido en este ciclo de pedido"
+        cart: "Carrito"
+      signed_in:
+        profile: "Perfil"
+      mobile_menu:
+        cart: "Carrito"
+      joyride:
+        checkout: "Validar el carrito ahora"
+        already_ordered_products: "Pedido en este ciclo de pedido"
     register_call:
       selling_on_ofn: "¿Estás interesada en entrar en Open Food Network?"
       register: "Regístrate aquí"
@@ -1072,11 +1104,11 @@ es:
   shop:
     messages:
       login: "login"
-      register: "registro"
+      signup: "Regístrate"
       contact: "contactar"
-      require_customer_login: "Esta tienda es solo para consumidores registrados."
-      require_login_html: "Haz %{login} si ya tienes una cuenta. De lo contrario realiza un %{register}y contacta con la organización para que acepten tu solicitud."
-      require_customer_html: "%{contact} %{enterprise} para convertirte en miembro."
+      require_customer_login: "Sólo las consumidoras aprobadas pueden acceder a esta tienda."
+      require_login_html: "Si ya eres una consumidora aprobado, %{login} o %{signup} para continuar. ¿Quieres empezar a comprar aquí? Por favor, %{contact} %{enterprise} y pide tu adhesión."
+      require_customer_html: "Si desea comenzar a comprar aquí, por favor %{contact} %{enterprise} para preguntar acerca de incorporación."
   card_could_not_be_updated: La tarjeta no se pudo actualizar
   card_could_not_be_saved: la tarjeta no se pudo guardar
   spree_gateway_error_flash_for_checkout: "Hubo un problema con tu información de pago: %{error}"
@@ -1113,6 +1145,7 @@ es:
   menu_4_title: "Redes"
   menu_4_url: "/groups"
   menu_5_title: "Acerca de"
+  menu_5_url: "http://katuma.org/"
   menu_6_title: "Conectar"
   menu_6_url: " "
   menu_7_title: "Aprender"
@@ -1146,6 +1179,7 @@ es:
   city_placeholder: ej. Barcelona
   postcode: Código postal
   postcode_placeholder: ej. 08025
+  suburb: Barrio
   state: Estado
   country: País
   unauthorized: No autorizado
@@ -1547,6 +1581,7 @@ es:
   sell_hubs_detail: "Crea un perfil para tu organización en OFN. En cualquier momento puedes actualizar tu perfil a una tienda de varias productoras."
   sell_groups_detail: "Crea un directorio personalizado de organizaciones (productoras u otras organizaciones) para tu región o para tu organización."
   sell_user_guide: "Descubre mucho más en la guía de usuario."
+  sell_listing_price: "Listado en la OFN es gratis. Abrir y administrar una tienda en OFN es gratis hasta $ 500 en ventas mensuales. Si vende más, puede elegir la contribución de su comunidad entre el 1% y el 3% de las ventas. Para obtener más detalles sobre los precios, visite la sección Plataforma de software a través del enlace Acerca de en el menú superior."
   sell_embed: "También podemos incrustar una tienda OFN en tu propia web personalizada o crear un sitio web de la red local a medida para tu región."
   sell_ask_services: "Pregúntanos sobre los servicios de OFN"
   shops_title: Tiendas
@@ -1917,6 +1952,7 @@ es:
   spree_admin_supplier: Proveedora
   spree_admin_product_category: categoría del producto
   spree_admin_variant_unit_name: Nombre de la variante
+  unit_name: "Nombre de la unidad"
   change_package: "Cambiar Perfil"
   spree_admin_single_enterprise_hint: "Sugerencia: Para permitir que la gente te encuentre, activa tu visibilidad"
   spree_admin_eg_pickup_from_school: "p.ej. 'Recogida en la Cooperativa'"
@@ -2152,6 +2188,7 @@ es:
   payment_methods: "Métodos de Pago"
   payment_method_fee: "Comisión de Transacción"
   payment_processing_failed: "No se pudo procesar el pago, por favor verifique los detalles que introdujo"
+  payment_method_not_supported: "Ese método de pago no está soportado. Por favor elije otro."
   payment_updated: "Pago actualizado"
   inventory_settings: "Configuración del Inventario"
   tag_rules: "Reglas de las Etiquetas"
@@ -2346,8 +2383,20 @@ es:
           severity: Gravedad
           description: Descripción
           resolve: Resolver
+      tag_rules:
+        shipping_method_tagged_top: "Métodos de envío etiquetados"
+        shipping_method_tagged_bottom: "son:"
+        payment_method_tagged_top: "Métodos de pago etiquetados"
+        payment_method_tagged_bottom: "son:"
+        order_cycle_tagged_top: "Ciclos de pedido etiquetados"
+        order_cycle_tagged_bottom: "son:"
+        inventory_tagged_top: "Variantes de inventario etiquetadas"
+        inventory_tagged_bottom: "son:"
       new_tag_rule_dialog:
         select_rule_type: "Selecciona un tipo de regla:"
+        add_rule: "Añadir regla"
+      enterprise_fees:
+        inherit_from_product: "Heredar del producto"
       orders:
         index:
           per_page: "%{results} por página"
@@ -2408,12 +2457,16 @@ es:
           name_required_error: "Por favor ingrese un nombre para esta programación"
           no_order_cycles_error: "Seleccione al menos un ciclo de pedido (arrastrar y soltar)"
           available: "Disponible"
+          selected: "Seleccionado"
       customers:
         index:
           add_customer: "Añadir Consumidor"
           add_a_new_customer_for: "Añadir un nuevo consumidor para %{shop_name}"
           customer_placeholder: "customer@example.org"
           valid_email_error: "Introduce un email válido"
+      subscriptions:
+        new:
+          please_select_a_shop: "Por favor seleccione una tienda"
     insufficient_stock: "Stock insuficiente disponible, solo quedan %{on_hand}"
     out_of_stock:
       reduced_stock_available: Stock reducido disponible
@@ -2597,6 +2650,8 @@ es:
     continue: "Continuar"
     fill_in_customer_info: "Por favor complete la información de la consumidora"
     new_payment: "Nuevo pago"
+    capture: "Captura"
+    void: "Vacío"
     configurations: "Configuraciones"
     general_settings: "Configuración general"
     site_name: "Nombre del sitio"
@@ -2698,6 +2753,16 @@ es:
     no_results: "No hay resultados"
     create: "Crear"
     loading: "Cargando"
+    flat_percent: "Porcentaje plano"
+    per_kg: "Por kg"
+    amount: "Cantidad"
+    currency: "Moneda"
+    first_item: "Costo del primer artículo"
+    additional_item: "Costo del artículo adicional"
+    max_items: "Max Artículos"
+    minimal_amount: "Cantidad mínima"
+    normal_amount: "Cantidad normal"
+    discount_amount: "Importe de descuento"
     email: Email
     account_updated: "Cuenta actualizada!"
     my_account: "Mi cuenta"
@@ -2796,15 +2861,29 @@ es:
       shipping_methods:
         index:
           shipping_methods: "Métodos de envío"
+          new_shipping_method: "Nuevo método de envío"
           name: "Nombre"
           products_distributor: "Distribuidora"
           zone: "Zona"
           calculator: "Calculadora"
           display: "Mostrar"
+          both: "Ambos"
+          front_end: "Front End"
+          back_end: "Back End"
+          no_shipping_methods_found: "No se encontraron métodos de envío"
+        new:
+          new_shipping_method: "Nuevo método de envío"
+          back_to_shipping_methods_list: "Volver a la lista de métodos de envío"
         edit:
+          editing_shipping_method: "Edición del método de envío"
           new: "Nuevo"
+          back_to_shipping_methods_list: "Volver a la lista de métodos de envío"
         form:
+          categories: "Categorías"
           zones: "Zonas"
+          both: "Ambos"
+          front_end: "Front End"
+          back_end: "Back End"
       payment_methods:
         new:
           new_payment_method: "Nuevo método de pago"
@@ -2831,6 +2910,7 @@ es:
             error_saving_payment: Error al guardar el pago
             submitting_payment: Enviando pago...
       products:
+        image_upload_error: "La imagen del producto no fue reconocida. Por favor, cargue una imagen en formato PNG o JPG."
         new:
           title: 'Nuevo producto'
         unit_name_placeholder: 'ej. manojos'
@@ -2930,6 +3010,7 @@ es:
       line_item:
         insufficient_stock: "Stock insuficiente disponible, solo quedan %{on_hand}"
         out_of_stock: "Agotado"
+        unavailable_item: "actualmente no disponible"
     shipment_states:
       backorder: orden pendiente
       partial: parcial
@@ -2949,6 +3030,8 @@ es:
       invalid: inválido
     order_mailer:
       cancel_email:
+        customer_greeting: "Hola %{name}!"
+        instructions: "Su pedido ha sido CANCELADO. Por favor, conserve esta información de cancelación para sus registros."
         order_summary_canceled: "Resumen del pedido [CANCELADO]"
         subject: "Cancelación del pedido"
       confirm_email:
