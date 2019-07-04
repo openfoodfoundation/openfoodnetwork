@@ -63,13 +63,6 @@
       %span{ ng: { class: 'availability.toLowerCase()', hide: "checking" } }
         {{ availability }}
         %i{ ng: { class: "{'icon-ok-sign': availability == 'Available', 'icon-remove-sign': availability == 'Unavailable'}" } }
-  .row
-    .three.columns.alpha
-      = f.label :id, t('.ofn_uid')
-      %div{'ofn-with-tip' => t('.ofn_uid_tip')}
-        %a= t('admin.whats_this')
-    .six.columns
-      {{Enterprise.id}}
   .row{ ng: { show: "Enterprise.sells == 'own' || Enterprise.sells == 'any'" } }
     .three.columns.alpha
       %label= t('.link_to_front')
@@ -78,3 +71,10 @@
     .eight.columns.omega
       = surround spree.root_url, "/shop" do
         {{Enterprise.permalink}}
+  .row
+    .three.columns.alpha
+      = f.label :id, t('.ofn_uid')
+      %div{'ofn-with-tip' => t('.ofn_uid_tip')}
+        %a= t('admin.whats_this')
+    .six.columns
+      {{Enterprise.id}}
