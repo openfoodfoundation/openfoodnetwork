@@ -1,7 +1,8 @@
 module OpenFoodNetwork
   class OrdersAndFulfillmentsReport
     class DefaultReport
-      delegate :line_item_name, :find_variant, :supplier_name, :product_name, :line_items_name, to: :context
+      delegate :line_item_name, :find_variant, :supplier_name, :product_name,
+               :line_items_name, to: :context
 
       def initialize(context)
         @context = context
@@ -20,6 +21,7 @@ module OpenFoodNetwork
         ]
       end
 
+      # rubocop:disable Metrics/MethodLength
       def rules
         [
           {
@@ -36,7 +38,9 @@ module OpenFoodNetwork
           }
         ]
       end
+      # rubocop:enable Metrics/MethodLength
 
+      # rubocop:disable Metrics/AbcSize
       def columns
         [
           supplier_name,
@@ -49,6 +53,7 @@ module OpenFoodNetwork
           proc { |_line_items| I18n.t(:report_header_incoming_transport) }
         ]
       end
+      # rubocop:enable Metrics/AbcSize
 
       private
 
