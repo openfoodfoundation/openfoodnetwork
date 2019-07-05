@@ -1,5 +1,5 @@
 class Spree::UserPasswordsController < Devise::PasswordsController
-  helper 'spree/users', 'spree/base', 'spree/store'
+  helper 'spree/base', 'spree/store'
 
   if defined?(Spree::Dash)
     helper 'spree/analytics'

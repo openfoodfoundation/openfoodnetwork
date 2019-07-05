@@ -27,8 +27,6 @@ module Spree
 
     before_filter :check_registration, :except => [:registration, :update_registration]
 
-    helper 'spree/users'
-
     def registration
       @user = Spree::User.new
     end

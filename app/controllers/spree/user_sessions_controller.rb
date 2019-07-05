@@ -1,5 +1,5 @@
 class Spree::UserSessionsController < Devise::SessionsController
-  helper 'spree/users', 'spree/base', 'spree/store'
+  helper 'spree/base', 'spree/store'
   if defined?(Spree::Dash)
     helper 'spree/analytics'
   end
