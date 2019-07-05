@@ -1103,11 +1103,11 @@ fr:
   shop:
     messages:
       login: "Se connecter"
-      register: "s'inscrire"
+      signup: "inscrivez-vous"
       contact: "contacter"
-      require_customer_login: "La boutique est réservée aux membres."
-      require_login_html: "Déjà inscrit? %{login}. Sinon, %{register} pour pouvoir faire vos achats."
-      require_customer_html: "Veuillez %{contact} %{enterprise} pour devenir membre."
+      require_customer_login: "Seul les acheteurs autorisés peuvent accéder à cette boutique."
+      require_login_html: "Si vous êtes déjà autorisé à accéder à la boutique, %{login}ou %{signup} pour continuer. Si vous voulez demander à y accéder, veuillez %{contact} %{enterprise}. "
+      require_customer_html: "Si vous voulez demander à y accéder, veuillez %{contact} %{enterprise}."
   card_could_not_be_updated: La carte bancaire n'a pas pu être mise à jour
   card_could_not_be_saved: la carte n'a pas pu être sauvegardée
   spree_gateway_error_flash_for_checkout: "Il y a eu un problème avec vos informations de paiement : %{error}"
@@ -2916,6 +2916,7 @@ fr:
             error_saving_payment: Erreur à l'enregistrement du paiement
             submitting_payment: Envoi du paiement...
       products:
+        image_upload_error: "L'image du produit n'a pas été reconnue. Veuillez importer une image au format PNG ou JPG."
         new:
           title: 'Nouveau Produit'
         unit_name_placeholder: 'ex: botte'
