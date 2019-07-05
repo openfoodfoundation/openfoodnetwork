@@ -14,11 +14,7 @@ module Spree
       private
 
       def complete_order_links
-        complete_order_links = []
-        complete_order_links << resend_confirmation_link
-        complete_order_links.concat(invoice_links)
-        complete_order_links.concat(ticket_links)
-        complete_order_links
+        [resend_confirmation_link] + invoice_links + ticket_links
       end
 
       def invoice_links
