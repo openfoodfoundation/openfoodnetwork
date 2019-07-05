@@ -19,14 +19,15 @@ module Spree
 
       def invoice_links
         return [] unless Spree::Config[:enable_invoices?]
-        invoice_links = []
-        invoice_links << if @order.distributor.can_invoice?
-                           send_invoice_link_with_url
-                         else
-                           send_invoice_link_without_url
-                         end
-        invoice_links << print_invoice_link
-        invoice_links
+        [send_invoice_link, print_invoice_link]
+      end
+
+      def send_invoice_link
+        if @order.distributor.can_invoice?
+          send_invoice_link_with_url
+        else
+          send_invoice_link_without_url
+        end
       end
 
       def ticket_links
