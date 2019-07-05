@@ -42,11 +42,16 @@ Spree.config do |config|
   config.s3_protocol = ENV.fetch('S3_PROTOCOL', 'https')
 end
 
+# Initialize authentication
+require 'spree/authentication_helpers'
+ApplicationController.send :include, Spree::AuthenticationHelpers
+
 # Spree 2.0 recommends explicitly setting this here when using spree_auth_devise
 Spree.user_class = 'Spree::User'
 
+AuthConfig = Spree::AuthConfiguration.new
 # Don't log users out when setting a new password
-Spree::Auth::Config[:signout_after_password_change] = false
+AuthConfig[:signout_after_password_change] = false
 
 # TODO Work out why this is necessary
 # Seems like classes within OFN module become 'uninitialized' when server reloads
