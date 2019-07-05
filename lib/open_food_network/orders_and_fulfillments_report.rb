@@ -1,4 +1,5 @@
 require "open_food_network/reports/line_items"
+require 'open_food_network/orders_and_fulfillments_report/other_type'
 
 include Spree::ReportsHelper
 
@@ -41,9 +42,7 @@ module OpenFoodNetwork
          I18n.t(:report_header_order_cycle), I18n.t(:report_header_payment_method), I18n.t(:report_header_customer_code), I18n.t(:report_header_tags),
          I18n.t(:report_header_billing_street), I18n.t(:report_header_billing_street_2), I18n.t(:report_header_billing_city), I18n.t(:report_header_billing_postcode), I18n.t(:report_header_billing_state),]
       else
-        [I18n.t(:report_header_producer), I18n.t(:report_header_product), I18n.t(:report_header_variant),
-         I18n.t(:report_header_amount), I18n.t(:report_header_curr_cost_per_unit), I18n.t(:report_header_total_cost),
-         I18n.t(:report_header_status), I18n.t(:report_header_incoming_transport)]
+        OtherType.new(self).header
       end
     end
 
@@ -193,7 +192,7 @@ module OpenFoodNetwork
             sort_by: proc { |variant| variant.full_name }
           },
           {
-            group_by: proc { |line_item| find_variant(line_item.variant_id).full_name },
+            group_by: line_item_name,
             sort_by: proc { |full_name| full_name }
           }
         ]
@@ -220,24 +219,28 @@ module OpenFoodNetwork
     def columns
       case params[:report_type]
       when "order_cycle_supplier_totals"
-        [proc { |line_items| find_variant(line_items.first.variant_id).product.supplier.name },
-         proc { |line_items| find_variant(line_items.first.variant_id).product.name },
-         proc { |line_items| find_variant(line_items.first.variant_id).full_name },
-         proc { |line_items| line_items.sum(&:quantity) },
-         proc { |line_items| total_units(line_items) },
-         proc { |line_items| line_items.first.price },
-         proc { |line_items| line_items.sum(&:amount) },
-         proc { |_line_items| "" },
-         proc { |_line_items| I18n.t(:report_header_incoming_transport) }]
+        [
+          supplier_name,
+          product_name,
+          line_items_name,
+          proc { |line_items| line_items.sum(&:quantity) },
+          proc { |line_items| total_units(line_items) },
+          proc { |line_items| line_items.first.price },
+          proc { |line_items| line_items.sum(&:amount) },
+          proc { |_line_items| "" },
+          proc { |_line_items| I18n.t(:report_header_incoming_transport) }
+        ]
       when "order_cycle_supplier_totals_by_distributor"
-        [proc { |line_items| find_variant(line_items.first.variant_id).product.supplier.name },
-         proc { |line_items| find_variant(line_items.first.variant_id).product.name },
-         proc { |line_items| find_variant(line_items.first.variant_id).full_name },
-         proc { |line_items| line_items.first.order.distributor.name },
-         proc { |line_items| line_items.sum(&:quantity) },
-         proc { |line_items| line_items.first.price },
-         proc { |line_items| line_items.sum(&:amount) },
-         proc { |_line_items| I18n.t(:report_header_shipping_method) }]
+        [
+          supplier_name,
+          proc { |line_items| find_variant(line_items.first.variant_id).product.name },
+          proc { |line_items| find_variant(line_items.first.variant_id).full_name },
+          proc { |line_items| line_items.first.order.distributor.name },
+          proc { |line_items| line_items.sum(&:quantity) },
+          proc { |line_items| line_items.first.price },
+          proc { |line_items| line_items.sum(&:amount) },
+          proc { |_line_items| I18n.t(:report_header_shipping_method) }
+        ]
       when "order_cycle_distributor_totals_by_supplier"
         [proc { |line_items| line_items.first.order.distributor.name },
          proc { |line_items| find_variant(line_items.first.variant_id).product.supplier.name },
@@ -304,6 +307,22 @@ module OpenFoodNetwork
     end
 
     private
+
+    def supplier_name
+      proc { |line_items| find_variant(line_items.first.variant_id).product.supplier.name }
+    end
+
+    def product_name
+      proc { |line_items| find_variant(line_items.first.variant_id).product.name }
+    end
+
+    def line_item_name
+      proc { |line_item| find_variant(line_item.variant_id).full_name }
+    end
+
+    def line_items_name
+      proc { |line_items| find_variant(line_items.first.variant_id).full_name }
+    end
 
     def permissions
       return @permissions unless @permissions.nil?
