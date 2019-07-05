@@ -208,7 +208,11 @@ describe Spree::Admin::ReportsController, type: :controller do
 
           it "only shows product line items that I am supplying" do
             spree_post :orders_and_fulfillment, q: {}
-            expect(resulting_products).to     include product1
+
+            table_items = assigns(:report).table_items
+            variant = Spree::Variant.unscoped.find(table_items.first.variant_id)
+
+            expect(variant.product).to eq(product1)
           end
         end
       end
