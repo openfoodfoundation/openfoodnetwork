@@ -1,5 +1,5 @@
 require "open_food_network/reports/line_items"
-require 'open_food_network/orders_and_fulfillments_report/other_type'
+require 'open_food_network/orders_and_fulfillments_report/default_report'
 
 include Spree::ReportsHelper
 
@@ -42,7 +42,7 @@ module OpenFoodNetwork
          I18n.t(:report_header_order_cycle), I18n.t(:report_header_payment_method), I18n.t(:report_header_customer_code), I18n.t(:report_header_tags),
          I18n.t(:report_header_billing_street), I18n.t(:report_header_billing_street_2), I18n.t(:report_header_billing_city), I18n.t(:report_header_billing_postcode), I18n.t(:report_header_billing_state),]
       else
-        OtherType.new(self).header
+        DefaultReport.new(self).header
       end
     end
 
@@ -197,20 +197,7 @@ module OpenFoodNetwork
           }
         ]
       else
-        [
-          {
-            group_by: proc { |line_item| find_variant(line_item.variant_id).product.supplier },
-            sort_by: proc { |supplier| supplier.name }
-          },
-          {
-            group_by: proc { |line_item| find_variant(line_item.variant_id).product },
-            sort_by: proc { |product| product.name }
-          },
-          {
-            group_by: proc { |line_item| line_item.full_name },
-            sort_by: proc { |full_name| full_name }
-          }
-        ]
+        DefaultReport.new(self).rules
       end
     end
 
@@ -295,14 +282,7 @@ module OpenFoodNetwork
           proc { |line_items| line_items.first.order.bill_address.andand.state }
         ]
       else
-        [proc { |line_items| line_items.first.product.supplier.name },
-         proc { |line_items| line_items.first.product.name },
-         proc { |line_items| line_items.first.full_name },
-         proc { |line_items| line_items.sum(&:quantity) },
-         proc { |line_items| line_items.first.price },
-         proc { |line_items| line_items.sum { |li| li.quantity * li.price } },
-         proc { |_line_items| "" },
-         proc { |_line_items| I18n.t(:report_header_incoming_transport) }]
+        DefaultReport.new(self).columns
       end
     end
 
