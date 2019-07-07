@@ -12,19 +12,19 @@ class Spree::UserSessionsController < Devise::SessionsController
   ssl_required :new, :create, :destroy, :update
   ssl_allowed :login_bar
 
+  before_filter :set_checkout_redirect, only: :create
+
   def create
     authenticate_spree_user!
 
     if spree_user_signed_in?
       respond_to do |format|
         format.html {
-          flash[:success] = Spree.t(:logged_in_succesfully)
+          flash[:success] = t('devise.success.logged_in_succesfully')
           redirect_back_or_default(after_sign_in_path_for(spree_current_user))
         }
         format.js {
-          render :json => {:user => spree_current_user,
-                           :ship_address => spree_current_user.ship_address,
-                           :bill_address => spree_current_user.bill_address}.to_json
+          render json: { email: spree_current_user.login }, status: :ok
         }
       end
     else
@@ -34,7 +34,7 @@ class Spree::UserSessionsController < Devise::SessionsController
           render :new
         }
         format.js {
-          render :json => { error: t('devise.failure.invalid') }, status: :unprocessable_entity
+          render json: { message: t('devise.failure.invalid') }, status: :unauthorized
         }
       end
     end
