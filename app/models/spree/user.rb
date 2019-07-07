@@ -21,10 +21,6 @@ module Spree
     scope :admin, lambda { includes(:spree_roles).where("#{roles_table_name}.name" => "admin") }
     scope :registered, where("#{users_table_name}.email NOT LIKE ?", "%@example.net")
 
-    # handle_asynchronously will define send_reset_password_instructions_with_delay.
-    # If handle_asynchronously is called twice, we get an infinite job loop.
-    handle_asynchronously :send_reset_password_instructions unless method_defined? :send_reset_password_instructions_with_delay
-
     has_many :enterprise_roles, dependent: :destroy
     has_many :enterprises, through: :enterprise_roles
     has_many :owned_enterprises, class_name: 'Enterprise', foreign_key: :owner_id, inverse_of: :owner
@@ -73,6 +69,9 @@ module Spree
       generate_reset_password_token!
       UserMailer.reset_password_instructions(self.id).deliver
     end
+    # handle_asynchronously will define send_reset_password_instructions_with_delay.
+    # If handle_asynchronously is called twice, we get an infinite job loop.
+    handle_asynchronously :send_reset_password_instructions unless method_defined? :send_reset_password_instructions_with_delay
 
     def known_users
       if admin?
