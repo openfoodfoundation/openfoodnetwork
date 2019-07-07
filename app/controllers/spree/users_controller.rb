@@ -1,13 +1,26 @@
 class Spree::UsersController < Spree::StoreController
+  layout 'darkswarm'
   ssl_required
   skip_before_filter :set_current_order, :only => :show
   prepend_before_filter :load_object, :only => [:show, :edit, :update]
   prepend_before_filter :authorize_actions, :only => :new
 
   include Spree::Core::ControllerHelpers
+  include I18nHelper
 
+  before_filter :set_locale
+  before_filter :enable_embedded_shopfront
+
+  # Ignores invoice orders, only order where state: 'complete'
   def show
-    @orders = @user.orders.complete.order('completed_at desc')
+    @orders = @user.orders.where(state: 'complete').order('completed_at desc')
+    @unconfirmed_email = spree_current_user.unconfirmed_email
+  end
+
+  # Endpoint for queries to check if a user is already registered
+  def registered_email
+    user = Spree.user_class.find_by_email params[:email]
+    render json: { registered: user.present? }
   end
 
   def create
