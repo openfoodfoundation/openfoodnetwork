@@ -45,10 +45,6 @@ end
 # Spree 2.0 recommends explicitly setting this here when using spree_auth_devise
 Spree.user_class = 'Spree::User'
 
-AuthConfig = Spree::AuthConfiguration.new
-# Don't log users out when setting a new password
-AuthConfig[:signout_after_password_change] = false
-
 # TODO Work out why this is necessary
 # Seems like classes within OFN module become 'uninitialized' when server reloads
 # unless the empty module is explicity 'registered' here. Something to do with autoloading?
