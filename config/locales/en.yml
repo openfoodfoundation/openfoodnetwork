@@ -2930,6 +2930,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     inventory: Inventory
     zipcode: Postcode
     weight: Weight (per kg)
+    error_user_destroy_with_orders: "Users with completed orders may not be deleted"
 
     actions:
       update: "Update"
