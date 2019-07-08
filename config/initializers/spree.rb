@@ -42,10 +42,6 @@ Spree.config do |config|
   config.s3_protocol = ENV.fetch('S3_PROTOCOL', 'https')
 end
 
-# Initialize authentication
-require 'spree/authentication_helpers'
-ApplicationController.send :include, Spree::AuthenticationHelpers
-
 # Spree 2.0 recommends explicitly setting this here when using spree_auth_devise
 Spree.user_class = 'Spree::User'
 
