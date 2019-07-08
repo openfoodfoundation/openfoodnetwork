@@ -27,13 +27,6 @@ module Spree
 
     private
 
-    # Overrides the equivalent method defined in Spree::Core.  This variation of the method will ensure that users
-    # are redirected to the tokenized order url unless authenticated as a registered user.
-    def completion_route
-      return order_path(@order) if spree_current_user
-      spree.token_order_path(@order, @order.token)
-    end
-
     def load_order
       @order = current_order
       redirect_to main_app.cart_path && return unless @order
