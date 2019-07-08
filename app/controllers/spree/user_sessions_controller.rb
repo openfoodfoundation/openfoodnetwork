@@ -1,9 +1,6 @@
 module Spree
   class UserSessionsController < Devise::SessionsController
     helper 'spree/base', 'spree/store'
-    if defined?(Spree::Dash)
-      helper 'spree/analytics'
-    end
 
     include Spree::Core::ControllerHelpers::Auth
     include Spree::Core::ControllerHelpers::Common
