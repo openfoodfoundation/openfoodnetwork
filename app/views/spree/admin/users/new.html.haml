@@ -1,0 +1,15 @@
+= content_for :page_title do
+  = Spree.t(:new_user)
+
+= content_for :page_actions do
+  %li
+    = button_link_to Spree.t(:back_to_users_list), spree.admin_users_path, icon: 'icon-arrow-left'
+
+%div
+  = render partial: 'spree/shared/error_messages', locals: { target: @user }
+
+%div
+  = form_for [:admin, @user] do |f|
+    = render partial: 'form', locals: { f: f }
+    %div
+      = render partial: 'spree/admin/shared/new_resource_links'
