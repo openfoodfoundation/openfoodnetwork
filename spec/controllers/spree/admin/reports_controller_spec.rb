@@ -202,6 +202,19 @@ describe Spree::Admin::ReportsController, type: :controller do
           expect(resulting_orders_prelim).to     include(orderA1)
           expect(resulting_orders_prelim).not_to include(orderB1)
         end
+
+        context 'when a purchased product is deleted' do
+          before { orderA1.line_items.first.product.destroy }
+
+          it "only shows product line items that I am supplying" do
+            spree_post :orders_and_fulfillment, q: {}
+
+            table_items = assigns(:report).table_items
+            variant = Spree::Variant.unscoped.find(table_items.first.variant_id)
+
+            expect(variant.product).to eq(product1)
+          end
+        end
       end
 
       context "where I have not granted P-OC to the distributor" do
