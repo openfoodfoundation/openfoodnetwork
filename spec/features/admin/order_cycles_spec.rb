@@ -645,6 +645,7 @@ feature '
     let!(:supplier_unmanaged) { create(:supplier_enterprise, name: 'Unmanaged supplier') }
     let!(:supplier_permitted) { create(:supplier_enterprise, name: 'Permitted supplier') }
     let!(:distributor_managed) { create(:distributor_enterprise, name: 'Managed distributor') }
+    let!(:other_distributor_managed) { create(:distributor_enterprise, name: 'Other Managed distributor') }
     let!(:distributor_unmanaged) { create(:distributor_enterprise, name: 'Unmanaged Distributor') }
     let!(:distributor_permitted) { create(:distributor_enterprise, name: 'Permitted distributor') }
     let!(:distributor_managed_fee) { create(:enterprise_fee, enterprise: distributor_managed, name: 'Managed distributor fee') }
@@ -655,6 +656,7 @@ feature '
     let!(:product_permitted) { create(:product, supplier: supplier_permitted) }
     let!(:variant_permitted) { product_permitted.variants.first }
     let!(:schedule) { create(:schedule, name: 'Schedule1', order_cycles: [create(:simple_order_cycle, coordinator: distributor_managed)]) }
+    let!(:schedule_of_other_managed_distributor) { create(:schedule, name: 'Other Schedule', order_cycles: [create(:simple_order_cycle, coordinator: other_distributor_managed)]) }
 
     before do
       # Relationships required for interface to work
@@ -675,6 +677,7 @@ feature '
         @new_user = create_enterprise_user
         @new_user.enterprise_roles.build(enterprise: supplier_managed).save
         @new_user.enterprise_roles.build(enterprise: distributor_managed).save
+        @new_user.enterprise_roles.build(enterprise: other_distributor_managed).save
 
         quick_login_as @new_user
       end
@@ -704,9 +707,13 @@ feature '
         visit admin_order_cycles_path
         click_link 'New Order Cycle'
 
+        select2_select 'Managed distributor', from: 'coordinator_id'
+        click_button "Continue >"
+
         fill_in 'order_cycle_name', with: 'My order cycle'
         fill_in 'order_cycle_orders_open_at', with: '2040-11-06 06:00:00'
         fill_in 'order_cycle_orders_close_at', with: '2040-11-13 17:00:00'
+        expect(page).not_to have_select2 'schedule_ids', with_options: [schedule_of_other_managed_distributor.name]
         multi_select2_select schedule.name, from: 'schedule_ids'
 
         select 'Managed supplier', from: 'new_supplier_id'
@@ -797,6 +804,7 @@ feature '
 
         expect(page).to have_field 'order_cycle_name', with: oc.name
         multi_select2_select schedule.name, from: 'schedule_ids'
+        expect(page).not_to have_select2 'schedule_ids', with_options: [schedule_of_other_managed_distributor.name]
 
         # When I remove all the exchanges and save
         page.find("tr.supplier-#{supplier_managed.id} a.remove-exchange").click
