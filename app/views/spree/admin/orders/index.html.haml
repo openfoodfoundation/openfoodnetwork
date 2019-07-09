@@ -19,8 +19,9 @@
 .row.index-controls{'ng-show' => '!RequestMonitor.loading && orders.length > 0'}
   = render partial: 'per_page_controls'
 
-  %button.invoices-modal{'ng-controller' => 'bulkInvoiceCtrl', 'ng-click' => 'createBulkInvoice()', 'ng-disabled' => 'selected_orders.length == 0'}
-    = t('.print_invoices')
+  - if Spree::Config[:enable_invoices?]
+    %button.invoices-modal{'ng-controller' => 'bulkInvoiceCtrl', 'ng-click' => 'createBulkInvoice()', 'ng-disabled' => 'selected_orders.length == 0'}
+      = t('.print_invoices')
 
 %table#listing_orders.index.responsive{width: "100%", 'ng-init' => 'initialise()', 'ng-show' => "!RequestMonitor.loading && orders.length > 0" }
   %colgroup

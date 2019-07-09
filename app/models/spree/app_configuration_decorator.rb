@@ -29,6 +29,7 @@ Spree::AppConfiguration.class_eval do
   preference :matomo_site_id, :string, default: nil
 
   # Invoices & Receipts
+  preference :enable_invoices?, :boolean, default: true
   preference :invoice_style2?, :boolean, default: false
   preference :enable_receipt_printing?, :boolean, default: false
 
