@@ -12,7 +12,9 @@ fr_BE:
       spree/payment:
         amount: Montant
       spree/product:
-        primary_taxon: Catégorie Produit
+        primary_taxon: "Catégorie Produit"
+        supplier: "Fournisseur"
+        variant_unit: "Unité"
       order_cycle:
         orders_close_at: Date de fermeture
     errors:
@@ -70,6 +72,9 @@ fr_BE:
       resend_confirmation_email: "Renvoyer l'email de confirmation."
       confirmed: "Merci d'avoir confirmé votre adresse email. Vous pouvez maintenant vous connecter."
       not_confirmed: "Votre adresse email n'a pas pu être confirmée. Peut-être avez-vous déjà confirmé cette adresse email?"
+    user_confirmations:
+      spree_user:
+        send_instructions: "Un email a été envoyé avec des instructions pour confirmer votre adresse email. Vérifiez votre boite mail!"
     user_registrations:
       spree_user:
         signed_up_but_unconfirmed: "Un message avec un lien de confirmation a été envoyé à l'adresse email indiquée. Veuillez cliquer sur ce lien pour activer votre compte."
@@ -372,13 +377,13 @@ fr_BE:
         user_guide: Guide utilisateur
     enterprise_fees:
       index:
-        title: Marges et Commissions
-        enterprise: Entreprise
-        fee_type: Type de marge
-        name: Nom
-        tax_category: TVA applicable
-        calculator: Calculateur
-        calculator_values: Montants pour calculs
+        title: "Marges et Commissions"
+        enterprise: "Entreprise"
+        fee_type: "Type de marge"
+        name: "Nom"
+        tax_category: "TVA applicable"
+        calculator: "Calculateur"
+        calculator_values: "Montants pour calculs"
         search: "Rechercher"
     enterprise_groups:
       index:
@@ -813,13 +818,13 @@ fr_BE:
         pickup_time_placeholder: "Prêt pour (ex : jour + créneau horaire)"
         receival_instructions_placeholder: "Modalités de livraison"
         add_fee: 'Ajouter une commission'
+        remove: 'Supprimer'
         selected: 'sélectionné'
       add_exchange_form:
         add_supplier: 'Ajouter un fournisseur'
         add_distributor: 'Ajouter un distributeur'
       advanced_settings:
         title: Paramétrages avancés
-        choose_product_tip: Vous pouvez choisir de limiter le choix des produits pouvant être mis en vente dans votre magasin à ceux figurant dans le catalogue magasin de %{inventory}.
         preferred_product_selection_from_coordinator_inventory_only_here: Uniquement les produits du catalogue magasin
         preferred_product_selection_from_coordinator_inventory_only_all: Tous les produits disponibles dans les catalogues producteurs
         save_reload: Sauvegarder et rafraichir la page
@@ -950,8 +955,7 @@ fr_BE:
       new: Nouvel abonnement
       create: Créer abonnement
       edit: Mettre à jour Abonnement
-      index:
-        please_select_a_shop: Veuillez choisir un comptoir
+      table:
         edit_subscription: Mettre à jour Abonnement
         pause_subscription: Mettre en pause Abonnement
         unpause_subscription: Reprendre Abonnement
@@ -995,6 +999,10 @@ fr_BE:
         address: Adresse
         products: Produits
         no_open_or_upcoming_order_cycle: "Pas de cycle de vente à venir"
+      products_panel:
+        save: "Enregistrer"
+        saving: "En cours d'enregistrement"
+        saved: "Enregistré"
       product_already_in_order: Ce produit a déjà été ajouté à la commande. Veuillez directement modifier la quantité.
       orders:
         number: Nombre
@@ -1041,8 +1049,10 @@ fr_BE:
       show_on_map: "Tout afficher sur la carte"
   shared:
     menu:
-      cart:
-        checkout: "Poursuivre la commande"
+      signed_in:
+        profile: "Profil"
+      joyride:
+        checkout: "Passer la commande"
         already_ordered_products: "Déjà commandé dans ce cycle de vente"
     register_call:
       selling_on_ofn: "Intéressé à participer à Open Food Network?"
@@ -1077,11 +1087,7 @@ fr_BE:
   shop:
     messages:
       login: "Se connecter"
-      register: "s'inscrire"
       contact: "contacter"
-      require_customer_login: "Le comptoir est réservée aux membres."
-      require_login_html: "Déjà inscrit? %{login}. Sinon, %{register} pour pouvoir faire vos achats."
-      require_customer_html: "Veuillez %{contact} %{enterprise} pour devenir membre."
   card_could_not_be_updated: La carte bancaire n'a pas pu être mise à jour
   card_could_not_be_saved: la carte n'a pas pu être sauvegardée
   spree_gateway_error_flash_for_checkout: "Il y a eu un problème avec vos informations de paiement : %{error}"
@@ -1151,6 +1157,7 @@ fr_BE:
   city_placeholder: 'ex: Nantes'
   postcode: Code postal
   postcode_placeholder: 'ex: 44000'
+  suburb: Ville
   state: Province
   country: Pays
   unauthorized: Non authorisé
@@ -1667,7 +1674,6 @@ fr_BE:
       introduction:
         registration_greeting: "Bonjour!"
         registration_intro: "Vous pouvez maintenant créer votre profil \"Producteur\" ou \"Comptoir\""
-        registration_checklist: "Vous aurez besoin de"
         registration_time: "5-10 minutes"
         registration_enterprise_address: "L'adresse de l'entreprise"
         registration_contact_details: "Les détails du contact référent"
@@ -2430,6 +2436,9 @@ fr_BE:
           add_a_new_customer_for: "Ajouter un nouvel acheteur pour %{shop_name}"
           customer_placeholder: "acheteur@exemple.org"
           valid_email_error: "Veuillez entrer un email valide"
+      subscriptions:
+        new:
+          please_select_a_shop: "Veuillez choisir un comptoir"
     insufficient_stock: "Stock disponible insuffisant , il ne reste que %{on_hand}"
     out_of_stock:
       reduced_stock_available: Stock disponible
@@ -2614,6 +2623,7 @@ fr_BE:
     continue: "Suivant"
     fill_in_customer_info: "Merci de remplir les informations client"
     new_payment: "Nouveau paiement"
+    capture: "Payée"
     configurations: "Configurations"
     general_settings: "Réglages Généraux"
     site_name: "Nom du site"
@@ -2715,6 +2725,7 @@ fr_BE:
     no_results: "Aucun résultat"
     create: "Créer"
     loading: "Chargement en cours"
+    amount: "Quantité"
     email: Email
     account_updated: "Compte mis à jour!"
     my_account: "Mon compte"

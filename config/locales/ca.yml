@@ -833,7 +833,6 @@ ca:
         add_distributor: 'Afegeix distribuïdora'
       advanced_settings:
         title: Configuració avançada
-        choose_product_tip: Podeu optar per restringir tots els productes disponibles (tant d'entrada com de sortida), per només als que pertanyen a l'inventari de %{inventory}.
         preferred_product_selection_from_coordinator_inventory_only_here: Només inventari del coordinador
         preferred_product_selection_from_coordinator_inventory_only_all: Tots els productes disponibles
         save_reload: Desa i recarrega la pàgina
@@ -1697,7 +1696,6 @@ ca:
       introduction:
         registration_greeting: "Hola!"
         registration_intro: "Ara pots crear un perfil per productora o grup de consum"
-        registration_checklist: "Necessitaràs"
         registration_time: "5-10 minuts"
         registration_enterprise_address: "Adreça de l'organització"
         registration_contact_details: "Dades de contacte principals"
@@ -2805,7 +2803,7 @@ ca:
           inherits_properties_checkbox_hint: "heredar propietats de %{supplier}? (llevat que es sobreescrigui a dalt)"
       orders:
         index:
-          listing_orders: "Llistant comandes"
+          listing_orders: "Llistat comandes"
           new_order: "Nova comanda"
           capture: "Captura"
           ship: "Enviament"

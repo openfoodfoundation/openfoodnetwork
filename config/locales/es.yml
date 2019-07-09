@@ -833,7 +833,6 @@ es:
         add_distributor: 'Añadir distribuidora'
       advanced_settings:
         title: Configuración Avanzada
-        choose_product_tip: Puedes optar por restringir todos los productos disponibles (entrantes y salientes), solo a los de %{inventory} inventario.
         preferred_product_selection_from_coordinator_inventory_only_here: Solo el Inventario de la Coordinadora
         preferred_product_selection_from_coordinator_inventory_only_all: Todos los productos disponibles
         save_reload: Guardar y recargar la página
@@ -1697,7 +1696,6 @@ es:
       introduction:
         registration_greeting: "¡Hola!"
         registration_intro: "Ahora puedes crear un perfil para tu Productora o Grupo de Consumo"
-        registration_checklist: "Necesitarás"
         registration_time: "5-10 minutos"
         registration_enterprise_address: "Dirección de la organización"
         registration_contact_details: "Detalles de contacto principal"

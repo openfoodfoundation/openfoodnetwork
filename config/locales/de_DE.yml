@@ -12,7 +12,9 @@ de_DE:
       spree/payment:
         amount: Betrag
       spree/product:
-        primary_taxon: Produktkategorie
+        primary_taxon: "Produktkategorie"
+        supplier: "Anbieter"
+        variant_unit: "Varianteneinheit"
       order_cycle:
         orders_close_at: Schlussdatum
     errors:
@@ -70,6 +72,9 @@ de_DE:
       resend_confirmation_email: "Bestätigungsmail erneut senden."
       confirmed: "Danke für die Bestätigung Ihrer E-Mail! Sie können sich jetzt einloggen."
       not_confirmed: "Ihre E-Mail-Adresse konnte nicht bestätigt werden. Vielleicht haben Sie diesen Schritt bereits abgeschlossen?"
+    user_confirmations:
+      spree_user:
+        send_instructions: "Sie erhalten in einigen Minuten eine E-Mail mit Anweisungen zur Bestätigung Ihres Kontos."
     user_registrations:
       spree_user:
         signed_up_but_unconfirmed: "Eine Nachricht mit einem Bestätigungslink wurde an Ihre E-Mail-Adresse gesendet. Bitte öffnen Sie den Link, um Ihr Konto zu aktivieren."
@@ -372,13 +377,13 @@ de_DE:
         user_guide: Benutzerhandbuch
     enterprise_fees:
       index:
-        title: Unternehmensgebühren
-        enterprise: Unternehmen
-        fee_type: Art der Gebühr
-        name: Name
-        tax_category: Steuerkategorie
-        calculator: Rechner
-        calculator_values: Werte des Rechners
+        title: "Unternehmensgebühren"
+        enterprise: "Unternehmen"
+        fee_type: "Art der Gebühr"
+        name: "Name"
+        tax_category: "Steuerkategorie"
+        calculator: "Rechner"
+        calculator_values: "Werte des Rechners"
         search: "Suche"
     enterprise_groups:
       index:
@@ -811,13 +816,13 @@ de_DE:
         pickup_time_placeholder: "Bereit für (dh Datum / Uhrzeit)"
         receival_instructions_placeholder: "Lieferinformation"
         add_fee: 'Gebühr hinzufügen'
+        remove: 'Entfernen'
         selected: 'ausgewählt'
       add_exchange_form:
         add_supplier: 'Anbieter hinzufügen'
         add_distributor: 'Verteiler hinzufügen'
       advanced_settings:
         title: Erweiterte Einstellungen
-        choose_product_tip: Sie können alle verfügbaren Produkte (sowohl eingehende als auch ausgehende) auf nur diejenigen im Katalog von %{inventory} beschränken.
         preferred_product_selection_from_coordinator_inventory_only_here: Nur der Katalog des Koordinators
         preferred_product_selection_from_coordinator_inventory_only_all: Alle verfügbaren Produkte
         save_reload: Speichern und neu laden
@@ -882,7 +887,7 @@ de_DE:
       enterprises_hubs_tabs:
         has_no_payment_methods: "%{enterprise} hat keine Zahlungsarten"
         has_no_shipping_methods: "%{enterprise} hat keine Versandarten"
-        has_no_enterprise_fees: "%{enterprise} hat keine Unternehmensgebühren"
+        has_no_enterprise_fees: "%{enterprise} hat keine Zuschläge"
     enterprise_issues:
       create_new: Erstellen
       resend_email: E-Mail erneut senden
@@ -942,14 +947,13 @@ de_DE:
         name: Packberichte
       enterprise_fee_summary:
         name: "Unternehmensgebühr Zusammenfassung"
-        description: "Zusammenfassung der erhobenen Unternehmensgebühren"
+        description: "Zusammenfassung der erhobenen Zuschläge"
     subscriptions:
       subscriptions: Abonnements
       new: Neues Abonnement
       create: Abonnement erstellen
       edit: Abonnement bearbeiten
-      index:
-        please_select_a_shop: Bitte wählen Sie einen Laden
+      table:
         edit_subscription: Abonnement bearbeiten
         pause_subscription: Abonement pausieren
         unpause_subscription: Abonnement fortsetzen
@@ -993,6 +997,9 @@ de_DE:
         address: Adresse
         products: Produkte
         no_open_or_upcoming_order_cycle: "Kein bevorstehender Bestellzyklus"
+      products_panel:
+        save: "SPEICHERN"
+        saved: "GESPEICHERT"
       product_already_in_order: Dieses Produkt wurde bereits zur Bestellung hinzugefügt. Bitte änderns Sie stattdessen die Menge.
       orders:
         number: Nummer
@@ -1039,7 +1046,9 @@ de_DE:
       show_on_map: "Alle auf der Karte zeigen"
   shared:
     menu:
-      cart:
+      signed_in:
+        profile: "Profil"
+      joyride:
         checkout: "Zur Kasse"
         already_ordered_products: "Bereits in diesem Bestellzyklus bestellt"
     register_call:
@@ -1075,11 +1084,7 @@ de_DE:
   shop:
     messages:
       login: "Anmeldung"
-      register: "registrieren"
       contact: "Kontakt"
-      require_customer_login: "Dieser Laden ist nur für Kunden."
-      require_login_html: "Bitte %{login}, wenn Sie bereits ein Konto haben. Andernfalls, %{register}, um Kunde zu werden."
-      require_customer_html: "Bitte kontaktieren Sie %{enterprise}, um Kunde zu werden."
   card_could_not_be_updated: Die Karte konnte nicht aktualisiert werden
   card_could_not_be_saved: Karte konnte nicht gespeichert werden
   spree_gateway_error_flash_for_checkout: "Bei den Zahlungsinformationen ist ein Problem aufgetreten: %{error}"
@@ -1149,6 +1154,7 @@ de_DE:
   city_placeholder: z.B. Nordwestheim
   postcode: Postleitzahl
   postcode_placeholder: z.B. 30701
+  suburb: Vorort
   state: Bundesland
   country: Land
   unauthorized: Nicht autorisiert
@@ -1663,8 +1669,7 @@ de_DE:
     steps:
       introduction:
         registration_greeting: "Hallo!"
-        registration_intro: "Sie können jetzt ein Profil für Ihren Producer oder Hub erstellen"
-        registration_checklist: "Du brauchst"
+        registration_intro: "Sie können jetzt ein Profil als Produzent oder Verteilstelle erzeugen"
         registration_time: "5-10 Minuten"
         registration_enterprise_address: "Unternehmensadresse"
         registration_contact_details: "Primäre Kontaktangaben"
@@ -1672,8 +1677,8 @@ de_DE:
         registration_promo_image: "Landschaftsbild für Ihr Profil"
         registration_about_us: "\"Über uns\" Text"
         registration_outcome_headline: "Was bekomme ich?"
-        registration_outcome1_html: "Ihr Profil hilft den Menschen <strong>, </strong> zu finden und <strong> </strong> Sie im Open Food Network zu kontaktieren."
-        registration_outcome2: "Nutzen Sie diesen Bereich, um die Geschichte Ihres Unternehmens zu erzählen und um Verbindungen zu Ihrer sozialen und Online-Präsenz herzustellen."
+        registration_outcome1_html: "Ihr Profil hilft den Menschen Sie zu<strong> finden </strong>  und im Open Food Network zu  <strong>kontaktieren</strong>."
+        registration_outcome2: "Nutzen Sie diesen Bereich, um die Geschichte Ihres Unternehmens zu erzählen und um Verbindungen zu Ihrem Social-Media- und Web-Auftritt herzustellen."
         registration_outcome3: "Dies ist auch der erste Schritt, um im Open Food Network zu handeln oder einen Online-Shop zu eröffnen."
         registration_action: "Lass uns anfangen!"
       details:
@@ -1857,7 +1862,7 @@ de_DE:
   units: "Einheitsgröße"
   coordinator: "Koordinator"
   distributor: "Verteiler"
-  enterprise_fees: "Unternehmensgebühren"
+  enterprise_fees: "Zuschläge"
   process_my_order: "Verarbeite meine Bestellung"
   delivery_instructions: Lieferanleitungen
   delivery_method: Lieferart
@@ -1892,7 +1897,7 @@ de_DE:
   producer: "Produzent"
   product: "Produkt"
   price: "Preis"
-  on_hand: "Auf der Hand"
+  on_hand: "Verfügbar"
   review: "Überprüfung"
   save_changes: "Änderungen speichern"
   order_saved: "Bestellung gespeichert"
@@ -1902,7 +1907,7 @@ de_DE:
   spree_admin_enterprises_hubs_name: "Name"
   spree_admin_enterprises_create_new: "neu erstellen"
   spree_admin_enterprises_shipping_methods: "Lieferarten"
-  spree_admin_enterprises_fees: "Unternehmensgebühren"
+  spree_admin_enterprises_fees: "Zuschläge"
   spree_admin_enterprises_none_create_a_new_enterprise: "ERSTELLEN SIE EIN NEUES UNTERNEHMEN"
   spree_admin_enterprises_none_text: "Sie haben noch keine Unternehmen"
   spree_admin_enterprises_tabs_hubs: "HUBS"
@@ -2187,7 +2192,7 @@ de_DE:
       Die Hubs %{distributor_names} sind in einem aktiven Bestellzyklus aufgeführt,
       haben jedoch keine gültigen Versand- und Zahlungsarten. Bis Sie diese einrichten,
       können Kunden nicht an diesen Hubs einkaufen.
-  enterprise_fees_update_notice: Ihre Unternehmensgebühren wurden aktualisiert.
+  enterprise_fees_update_notice: Ihre Zuschläge wurden aktualisiert.
   enterprise_register_package_error: "Bitte wählen Sie ein Paket"
   enterprise_register_error: "Die Registrierung für %{enterprise} konnte nicht abgeschlossen werden"
   enterprise_register_success_notice: "Herzliche Glückwünsche! Registrierung für %{enterprise} ist abgeschlossen!"
@@ -2252,7 +2257,7 @@ de_DE:
               die Standardregeln für bestimmte Kunden überschreiben.
       panels:
         save: SPEICHERN
-        saved: GERETTET
+        saved: GESPEICHERT
         saving: SPAREN
         enterprise_package:
           hub_profile: Hubprofil
@@ -2323,9 +2328,9 @@ de_DE:
         enterprise_producer:
           producer: Produzent
           producer_text1: >
-              Produzenten machen leckere Dinge zu essen oder zu trinken. Du bist ein
-              Produzent, wenn du ihn anbaust, erziehst ihn, braue ihn, backe ihn,
-              gähre ihn, melke ihn oder forme ihn.
+              Produzenten machen leckere Dinge zum essen oder zum trinken. Sie sind
+              ein Produzent, wenn Sie Nutzpflanzen anbauen, Nutztiere aufziehen, brauen,
+              backen, fermentieren, melken oder etwas verarbeiten.
           producer_text2: >
               Hersteller können auch andere Funktionen übernehmen, wie z. B. die Zusammenführung
               von Nahrungsmitteln anderer Unternehmen und den Verkauf über ein Geschäft
@@ -2417,6 +2422,9 @@ de_DE:
           add_a_new_customer_for: "Neuer Kunde für %{shop_name} hinzufügen"
           customer_placeholder: "Kunde@beispiel.org"
           valid_email_error: "Bitte geben Sie eine gültige E-Mail-Adresse ein"
+      subscriptions:
+        new:
+          please_select_a_shop: "Bitte wählen Sie einen Laden"
     insufficient_stock: "Nicht genügend Lagerbestand verfügbar, nur noch %{on_hand} verfügbar"
     out_of_stock:
       reduced_stock_available: Reduzierter Bestand verfügbar
@@ -2600,6 +2608,7 @@ de_DE:
     continue: "Fortsetzen"
     fill_in_customer_info: "Bitte geben Sie Ihre Kundeninformationen ein"
     new_payment: "Neue Zahlung"
+    capture: "Erfassung"
     configurations: "Konfigurationen"
     general_settings: "Allgemeine Einstellungen"
     site_name: "Site-Name"
@@ -2701,6 +2710,7 @@ de_DE:
     no_results: "Keine Ergebnisse"
     create: "Neu"
     loading: "Wird geladen"
+    amount: "Betrag"
     email: Email
     account_updated: "Konto aktualisiert!"
     my_account: "Mein Konto"
@@ -2718,7 +2728,7 @@ de_DE:
     layouts:
       admin:
         header:
-          store: Geschäft
+          store: openfoodnetwork.de
     admin:
       tab:
         dashboard: "Übersicht"

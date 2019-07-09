@@ -12,7 +12,9 @@ en_BE:
       spree/payment:
         amount: Amount
       spree/product:
-        primary_taxon: Product Category
+        primary_taxon: "Product Category"
+        supplier: "Supplier"
+        variant_unit: "Variant Unit"
       order_cycle:
         orders_close_at: Close date
     errors:
@@ -70,6 +72,9 @@ en_BE:
       resend_confirmation_email: "Resend confirmation email."
       confirmed: "Thanks for confirming your email! You can now log in."
       not_confirmed: "Your email address could not be confirmed. Perhaps you have already completed this step?"
+    user_confirmations:
+      spree_user:
+        send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
     user_registrations:
       spree_user:
         signed_up_but_unconfirmed: "A message with a confirmation link has been sent to your email address. Please open the link to activate your account."
@@ -372,13 +377,13 @@ en_BE:
         user_guide: User Guide
     enterprise_fees:
       index:
-        title: Enterprise Fees
-        enterprise: Enterprise
-        fee_type: Fee Type
-        name: Name
-        tax_category: Tax Category
-        calculator: Calculator
-        calculator_values: Calculator Values
+        title: "Enterprise Fees"
+        enterprise: "Enterprise"
+        fee_type: "Fee Type"
+        name: "Name"
+        tax_category: "Tax Category"
+        calculator: "Calculator"
+        calculator_values: "Calculator Values"
         search: "Search"
     enterprise_groups:
       index:
@@ -812,13 +817,13 @@ en_BE:
         pickup_time_placeholder: "Ready for (ie. Date / Time)"
         receival_instructions_placeholder: "Receival instructions"
         add_fee: 'Add fee'
+        remove: 'Remove'
         selected: 'selected'
       add_exchange_form:
         add_supplier: 'Add supplier'
         add_distributor: 'Add distributor'
       advanced_settings:
         title: Advanced Settings
-        choose_product_tip: You can opt to restrict all available products (both incoming and outgoing), to only those in %{inventory}'s inventory.
         preferred_product_selection_from_coordinator_inventory_only_here: Coordinator's Inventory Only
         preferred_product_selection_from_coordinator_inventory_only_all: All Available Products
         save_reload: Save and Reload Page
@@ -949,8 +954,7 @@ en_BE:
       new: New Subscription
       create: Create Subscription
       edit: Edit Subscription
-      index:
-        please_select_a_shop: Please select a shop
+      table:
         edit_subscription: Edit Subscription
         pause_subscription: Pause Subscription
         unpause_subscription: Unpause Subscription
@@ -994,6 +998,10 @@ en_BE:
         address: Address
         products: Products
         no_open_or_upcoming_order_cycle: "No Upcoming Order Cycle"
+      products_panel:
+        save: "SAVE"
+        saving: "SAVING"
+        saved: "SAVED"
       product_already_in_order: This product has already been added to the order. Please edit the quantity directly.
       orders:
         number: Number
@@ -1040,7 +1048,9 @@ en_BE:
       show_on_map: "Show all on the map"
   shared:
     menu:
-      cart:
+      signed_in:
+        profile: "Profile"
+      joyride:
         checkout: "Checkout now"
         already_ordered_products: "Already ordered in this order cycle"
     register_call:
@@ -1076,11 +1086,7 @@ en_BE:
   shop:
     messages:
       login: "login"
-      register: "register"
       contact: "contact"
-      require_customer_login: "This shop is for customers only."
-      require_login_html: "Please %{login} if you have an account already. Otherwise, %{register} to become a customer."
-      require_customer_html: "Please %{contact} %{enterprise} to become a customer."
   card_could_not_be_updated: Card could not be updated
   card_could_not_be_saved: card could not be saved
   spree_gateway_error_flash_for_checkout: "There was a problem with your payment information: %{error}"
@@ -1150,6 +1156,7 @@ en_BE:
   city_placeholder: eg. Northcote
   postcode: Postcode
   postcode_placeholder: eg. 3070
+  suburb: Suburb
   state: State
   country: Country
   unauthorized: Unauthorized
@@ -1666,7 +1673,6 @@ en_BE:
       introduction:
         registration_greeting: "Hi there!"
         registration_intro: "You can now create a profile for your Producer or Hub"
-        registration_checklist: "You'll need"
         registration_time: "5-10 minutes"
         registration_enterprise_address: "Enterprise address"
         registration_contact_details: "Primary contact details"
@@ -2417,6 +2423,9 @@ en_BE:
           add_a_new_customer_for: "Add a new customer for %{shop_name}"
           customer_placeholder: "customer@example.org"
           valid_email_error: "Please enter a valid email address"
+      subscriptions:
+        new:
+          please_select_a_shop: "Please select a shop"
     insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
     out_of_stock:
       reduced_stock_available: Reduced stock available
@@ -2600,6 +2609,7 @@ en_BE:
     continue: "Continue"
     fill_in_customer_info: "Please fill in customer info"
     new_payment: "New Payment"
+    capture: "Capture"
     configurations: "Configurations"
     general_settings: "General Settings"
     site_name: "Site Name"
@@ -2701,6 +2711,7 @@ en_BE:
     no_results: "No results"
     create: "Create"
     loading: "Loading"
+    amount: "Amount"
     email: Email
     account_updated: "Account updated!"
     my_account: "My account"

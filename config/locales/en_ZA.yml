@@ -833,7 +833,6 @@ en_ZA:
         add_distributor: 'Add distributor'
       advanced_settings:
         title: Advanced Settings
-        choose_product_tip: You can opt to restrict all available products (both incoming and outgoing), to only those in %{inventory}'s inventory.
         preferred_product_selection_from_coordinator_inventory_only_here: Coordinator's Inventory Only
         preferred_product_selection_from_coordinator_inventory_only_all: All Available Products
         save_reload: Save and Reload Page
@@ -1697,7 +1696,6 @@ en_ZA:
       introduction:
         registration_greeting: "Hi there!"
         registration_intro: "You can now create a profile for your Producer or Hub"
-        registration_checklist: "You'll need"
         registration_time: "5-10 minutes"
         registration_enterprise_address: "Enterprise address"
         registration_contact_details: "Primary contact details"
@@ -2130,7 +2128,7 @@ en_ZA:
   report_header_outstanding_balance_price: "Outstanding Balance (%{currency})"
   report_header_eft_price: "EFT (%{currency})"
   report_header_paypal_price: "PayPal (%{currency})"
-  report_header_sku: Product Code
+  report_header_sku: SKU
   report_header_amount: Amount
   report_header_balance: Balance
   report_header_total_cost: "Total Cost"
@@ -2301,9 +2299,9 @@ en_ZA:
               the Open Food Network will always be free.
           hub_shop: Hub Shop
           hub_shop_text1: >
-              Hubs can take many forms - CSA, veg box scheme, food co-ops, community
-              buying groups and stokvels, farmers’ market, an online shop front for  an
-              independent shop and many others…
+              Hubs can take many forms... CSA, veg box scheme, community buying groups
+              and stokvels, farmer markets, an online shop front for an independent
+              shop and many others…
           hub_shop_text2: >
               Products aggregated from lots of local food enterprises can be stocked
               and sold via your shop front. Hubs can form the backbone of your local
@@ -2327,12 +2325,13 @@ en_ZA:
               A profile makes you visible and contactable to others and is a way to
               share your story, especially if you are an emerging B-BBEE supplier.
           profile_only_text2: >
-              You can set up your products and invite other people to sell them for
-              you.
+              If you prefer to focus on producing food, and want to leave the work
+              of selling it to someone else, you won't require a shop on the Open
+              Food Network.
           profile_only_text3: >
               You can choose which Open Food Network ‘hubs’ you would like to stock
-              and sell your products.  Leave the hassle of selling your food to someone
-              else and focus on growing, making, brewing, baking...
+              and sell your products. Leave the hassle of selling your food to someone
+              else and focus instead on growing, rearing, brewing, baking...
           producer_shop: Producer Shop
           producer_shop_text1: >
               Sell only your own products directly to customers and buyers with your
@@ -2342,9 +2341,9 @@ en_ZA:
               select ‘Hub’.
           producer_hub: Producer Hub
           producer_hub_text1: >
-              Hubs can take many forms - CSA, veg box scheme, food co-ops, community
-              buying groups and stokvels, farmers’ market, an online shop front for  an
-              independent shop and many others…
+              Hubs can take many forms... CSA, veg box scheme, community buying groups
+              and stokvels, farmer markets, an online shop front for an independent
+              shop and many others…
           producer_hub_text2: >
               Products aggregated from lots of local food enterprises (including your
               own, if you are also a food producer) can be stocked and sold via your

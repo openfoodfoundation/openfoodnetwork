@@ -831,7 +831,6 @@ en_GB:
         add_distributor: 'Add distributor'
       advanced_settings:
         title: Advanced Settings
-        choose_product_tip: You can opt to restrict all available products (both incoming and outgoing), to only those in %{inventory}'s inventory.
         preferred_product_selection_from_coordinator_inventory_only_here: Coordinator's Inventory Only
         preferred_product_selection_from_coordinator_inventory_only_all: All Available Products
         save_reload: Save and Reload Page
@@ -1695,7 +1694,6 @@ en_GB:
       introduction:
         registration_greeting: "Hi there!"
         registration_intro: "You can now create a profile for your Producer or Hub"
-        registration_checklist: "You'll need"
         registration_time: "5-10 minutes"
         registration_enterprise_address: "Enterprise address"
         registration_contact_details: "Primary contact details"
