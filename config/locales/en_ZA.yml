@@ -161,7 +161,7 @@ en_ZA:
   home: "OFN"
   title: Open Food Network
   welcome_to: 'Welcome to '
-  site_meta_description: "We begin with healthy soil. With organic farmers and growers proudly rising to tell their stories. With distributors ready to connect people with local products, fairly and honestly. With buyers who believe that better shopping decisions can seriously change the world."
+  site_meta_description: "We begin with healthy soil. With organic farmers and growers proudly rising to tell their stories. With distributors ready to connect people with green, nutritious, fair and affordable products. With buyers who believe that better, more local shopping decisions can seriously change the world."
   search_by_name: Search by name, town, province or postcode...
   producers_join: South African producers are now welcome to join Open Food Network SA.
   charges_sales_tax: Charges VAT?
@@ -563,7 +563,7 @@ en_ZA:
         max_qtt_ordered: "Max Quantity Ordered"
         current_fulfilled_units: "Current Fulfilled Units"
         max_fulfilled_units: "Max Fulfilled Units"
-        order_error: "Some errors must be resolved before you can update orders. Any fields with red borders contain errors."
+        order_error: "Some errors must be resolved before you can update orders.\nAny fields with red borders contain errors."
         variants_without_unit_value: "WARNING: Some variants do not have a unit value"
       select_variant: "Select a variant"
     enterprise:
@@ -586,19 +586,19 @@ en_ZA:
           abn: Company Number
           abn_placeholder: eg. 2017/123456/77
           acn: Charity Number
-          acn_placeholder: eg. 123456789
+          acn_placeholder: e.g. 123 456 789
           display_invoice_logo: Display logo in invoices
           invoice_text: Add customized text at the end of invoices
         contact:
           name: Name
           name_placeholder: eg. Amanda Plum
           email_address: Public Email Address
-          email_address_placeholder: eg. hello@openfoodnetwork.co.za
+          email_address_placeholder: e.g. info@openfoodnetwork.co.za
           email_address_tip: "This email address will be displayed in your public profile"
           phone: Phone
-          phone_placeholder: eg. 011 123 4567
+          phone_placeholder: e.g. 011 123 4567
           website: Website
-          website_placeholder: eg. www.truffles.com
+          website_placeholder: e.g. www.truffles.com
         enterprise_fees:
           name: Name
           fee_type: Fee Type
@@ -650,6 +650,8 @@ en_ZA:
           permalink_tip: "This permalink is used to create the url to your shop: %{link}your-shop-name/shop"
           link_to_front: Link to shop front
           link_to_front_tip: A direct link to your shopfront on the Open Food Network.
+          ofn_uid: OFN UID
+          ofn_uid_tip: The unique id used to identify the enterprise on Open Food Network.
         shipping_methods:
           name: Name
           applies: Applies?
@@ -691,8 +693,8 @@ en_ZA:
           open_date: "Open Date"
           close_date: "Close Date"
         social:
-          twitter_placeholder: "eg. @siyastrawberries"
-          instagram_placeholder: "eg. siyastraw"
+          twitter_placeholder: "e.g. @siyastrawberries"
+          instagram_placeholder: "e.g. siyastraw"
           facebook_placeholder: "eg. www.facebook.com/PageNameHere"
           linkedin_placeholder: "eg. www.linkedin.com/in/YourNameHere"
         stripe_connect:
@@ -726,7 +728,7 @@ en_ZA:
           owner_tip: The primary user responsible for this enterprise.
           notifications: Notifications
           notifications_tip: Notifications about orders will be send to this email address.
-          notifications_placeholder: eg. siya@truffles.com
+          notifications_placeholder: e.g. siya@truffles.com
           notifications_note: 'Note: A new email address may need to be confirmed prior to use'
           managers: Managers
           managers_tip: The other users with permission to manage this enterprise.
@@ -1284,7 +1286,7 @@ en_ZA:
   home_shop: Shop Now
   brandstory_headline: "Re-imagining Local Food"
   brandstory_intro: "A learning community & tools to support local food systems to thrive"
-  brandstory_part1: "We begin with healthy soil. With organic farmers and growers proudly rising to tell their stories. With distributors ready to connect people with local products, fairly and honestly. With buyers who believe that better shopping decisions can seriously change the world."
+  brandstory_part1: "We begin with healthy soil. With organic farmers and growers proudly rising to tell their stories. With distributors ready to connect people with green, nutritious, fair and affordable products. With buyers who believe that better, more local shopping decisions can seriously change the world."
   brandstory_part2: "Then we need a way to make it real. A way to empower everyone who grows, sells and buys food. A way to tell all the stories, to handle all the logistics. A way to turn transactions into transformation every day."
   brandstory_part3: "So we build an online marketplace that levels the playing field. It’s transparent, so it creates real relationships. It’s open source, so it’s owned by everyone. It scales to regions and nations, so people can connect across the world."
   brandstory_part4: "It works everywhere. It changes everything."
@@ -1406,7 +1408,7 @@ en_ZA:
   email_so_confirmation_explainer_html: "This order was automatically placed for you, and it has now been finalised."
   email_so_confirmation_details_html: "Here's everything you need to know about your order from <strong>%{distributor}</strong>:"
   email_so_empty_intro_html: "We tried to place a new order with <strong>%{distributor}</strong>, but had some problems..."
-  email_so_empty_explainer_html: "Unfortunately, none of products that you ordered were available, so no order has been placed. The original quantities that you requested appear crossed-out below."
+  email_so_empty_explainer_html: "Unfortunately, none of the products that you ordered were available, so no order has been placed. The original quantities that you requested appear crossed-out below."
   email_so_empty_details_html: "Here are the details of the unplaced order for <strong>%{distributor}</strong>:"
   email_so_failed_payment_intro_html: "We tried to process a payment, but had some problems..."
   email_so_failed_payment_explainer_html: "The payment for your subscription with <strong>%{distributor}</strong> failed because of a problem with your credit card. <strong>%{distributor}</strong> has been notified of this failed payment."
@@ -1745,7 +1747,7 @@ en_ZA:
         yes_producer: "Yes, I'm a producer"
         no_producer: "No, I'm not a producer"
         producer_field_error: "Please choose one. Are you are producer?"
-        yes_producer_help: "Producers make tasty things to eat and/or drink. You're a producer if you grow, rear, brew, bake, ferment... etc."
+        yes_producer_help: "Producers (farmers, homesteaders etc.) make tasty things to eat and/or drink. You're a producer if you grow, rear, brew, bake, ferment..."
         no_producer_help: "If you’re not a producer, you’re probably someone who sells and distributes food. You might be a hub, co-op, buying group, retailer, wholesaler or other."
         create_profile: "Create profile"
       about:
@@ -1760,7 +1762,7 @@ en_ZA:
         enterprise_long_desc_placeholder: "This is your opportunity to tell the story of your enterprise - what makes you different and wonderful? We'd suggest keeping your description to under 600 characters or 150 words."
         enterprise_long_desc_length: "%{num} characters / up to 600 recommended"
         enterprise_abn: "Company Number"
-        enterprise_abn_placeholder: "2001 / 123456 / 07"
+        enterprise_abn_placeholder: "e.g. 2001 / 123456 / 07"
         enterprise_acn: "Charity Number"
         enterprise_acn_placeholder: "e.g. 123-231 NPO"
         enterprise_tax_required: "You need to make a selection."
@@ -1867,7 +1869,7 @@ en_ZA:
   admin_enterprise_groups_data_powertip_promo_image: "This image is displayed at the top of the Group profile"
   admin_enterprise_groups_contact: "Contact"
   admin_enterprise_groups_contact_phone_placeholder: "e.g. 082 231 3210"
-  admin_enterprise_groups_contact_address1_placeholder: "eg. 123 High Street"
+  admin_enterprise_groups_contact_address1_placeholder: "e.g. 123 High Street"
   admin_enterprise_groups_contact_city: "Suburb"
   admin_enterprise_groups_contact_city_placeholder: "e.g. Newcastle"
   admin_enterprise_groups_contact_zipcode: "Postcode"
@@ -2043,14 +2045,14 @@ en_ZA:
   report_header_ship_street_2: Ship Street 2
   report_header_ship_city: Ship City
   report_header_ship_postcode: Ship Postcode
-  report_header_ship_state: Ship State
+  report_header_ship_state: Ship Province
   report_header_billing_street: Billing Street
   report_header_billing_street_2: Billing Street 2
   report_header_billing_street_3: Billing Street 3
   report_header_billing_street_4: Billing Street 4
   report_header_billing_city: Billing City
   report_header_billing_postcode: Billing Postcode
-  report_header_billing_state: Billing State
+  report_header_billing_state: Billing Province
   report_header_incoming_transport: Incoming Transport
   report_header_special_instructions: Special Instructions
   report_header_order_number: Order number

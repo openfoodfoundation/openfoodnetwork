@@ -651,6 +651,8 @@ fr:
           permalink_tip: "Ce nom permanent est utilisé pour créer l'url de votre boutique: %{link}ma-boutique/shop"
           link_to_front: Lien URL de la boutique
           link_to_front_tip: C'est le lien qui permet d'accéder en direct à votre boutique sur Open Food France.
+          ofn_uid: ID OFN
+          ofn_uid_tip: L'identifiant unique pour les comptes entreprises sur Open Food Network.
         shipping_methods:
           name: Nom
           applies: Active?
@@ -832,7 +834,7 @@ fr:
         add_distributor: 'Ajouter un distributeur'
       advanced_settings:
         title: Paramétrages avancés
-        choose_product_tip: Vous pouvez choisir de limiter le choix des produits pouvant être mis en vente dans votre boutique à ceux figurant dans le catalogue boutique de %{inventory}.
+        choose_product_tip: Vous pouvez restreindre les produits entrants et sortants uniquement au catalogue boutique de %{inventory}
         preferred_product_selection_from_coordinator_inventory_only_here: Uniquement les produits du catalogue boutique
         preferred_product_selection_from_coordinator_inventory_only_all: Tous les produits disponibles dans les catalogues producteurs
         save_reload: Sauvegarder et rafraichir la page
@@ -1696,7 +1698,7 @@ fr:
       introduction:
         registration_greeting: "Bonjour!"
         registration_intro: "Vous pouvez maintenant créer votre profil \"Producteur\" ou \"Hub\""
-        registration_checklist: "Vous aurez besoin de"
+        registration_checklist: "De quoi ai-je besoin ?"
         registration_time: "5-10 minutes"
         registration_enterprise_address: "L'adresse de l'entreprise"
         registration_contact_details: "Les détails du contact référent"
