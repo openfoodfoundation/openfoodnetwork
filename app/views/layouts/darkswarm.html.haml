@@ -15,7 +15,16 @@
     %link{href: "https://fonts.googleapis.com/css?family=Roboto:400,300italic,400italic,300,700,700italic|Oswald:300,400,700", rel: "stylesheet", type: "text/css"}
     %link{href: "/OFN-v2.woff?eslsji", rel: "preload", as: "font", crossorigin: "anonymous"}
 
+    = yield :scripts
+    %script{:src => "https://js.stripe.com/v3/", :type => "text/javascript"}
+    %script{src: "//maps.googleapis.com/maps/api/js?libraries=places,geometry#{ ENV['GOOGLE_MAPS_API_KEY'] ? '&key=' + ENV['GOOGLE_MAPS_API_KEY'] : ''} "}
     = stylesheet_link_tag "darkswarm/all"
+    = javascript_include_tag "darkswarm/all"
+    = javascript_include_tag "web/all"
+
+    = render "layouts/i18n_script"
+    = render "layouts/bugherd_script"
+    = render "layouts/matomo_tag"
     = csrf_meta_tags
 
   %body{class: body_classes, ng: {app: "Darkswarm"}}
@@ -24,6 +33,14 @@
       = javascript_include_tag "iehack"
 
     = render "layouts/shopfront_script" if @shopfront_layout
+
+    = inject_current_hub
+    = inject_json "user", "current_user"
+    = inject_json "railsFlash", "flash"
+    = inject_taxons
+    = inject_properties
+    = inject_current_order
+    = inject_currency_config
 
     .off-canvas-wrap{offcanvas: true}
       .inner-wrap
@@ -34,23 +51,4 @@
 
           #footer
     %loading
-
-    %script{:src => "https://js.stripe.com/v3/", :type => "text/javascript"}
-    %script{src: "//maps.googleapis.com/maps/api/js?libraries=places,geometry#{ ENV['GOOGLE_MAPS_API_KEY'] ? '&key=' + ENV['GOOGLE_MAPS_API_KEY'] : ''} "}
-    = javascript_include_tag "darkswarm/all"
-    = javascript_include_tag "web/all"
-    = render "layouts/i18n_script"
-    = yield :scripts
-
-    = inject_current_hub
-    = inject_json "user", "current_user"
-    = inject_json "railsFlash", "flash"
-    = inject_taxons
-    = inject_properties
-    = inject_current_order
-    = inject_currency_config
-    = yield :injection_data
-
-    = render "layouts/bugherd_script"
-    = render "layouts/matomo_tag"
     = render 'spree/shared/google_analytics'

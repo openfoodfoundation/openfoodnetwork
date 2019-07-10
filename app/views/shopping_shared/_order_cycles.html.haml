@@ -1,8 +1,6 @@
-- content_for :scripts do
+%ordercycle{"ng-controller" => "OrderCycleCtrl"}
   :javascript
     angular.module('Darkswarm').value('orderCycleData', #{render "json/order_cycle"})
-
-%ordercycle{"ng-controller" => "OrderCycleCtrl"}
 
   - if @order_cycles and @order_cycles.empty?
     %h4
