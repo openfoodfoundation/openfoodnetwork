@@ -1,8 +1,7 @@
 - content_for(:title) do
   = t :label_map
 
-- content_for :injection_data do
-  = inject_enterprise_shopfront_list
+= inject_enterprise_shopfront_list
 
 .map-container{"fill-vertical" => true}
   %map{"ng-controller" => "MapCtrl"}
