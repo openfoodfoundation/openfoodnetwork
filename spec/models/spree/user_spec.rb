@@ -180,4 +180,45 @@ describe Spree.user_class do
       end
     end
   end
+
+  before(:all) { Spree::Role.create name: 'admin' }
+
+  it '#admin?' do
+    expect(create(:admin_user).admin?).to be_truthy
+    expect(create(:user).admin?).to be_falsey
+  end
+
+  context '#create' do
+    let(:user) { build(:user) }
+
+    it 'should not be anonymous' do
+      expect(user).not_to be_anonymous
+    end
+  end
+
+  context '#destroy' do
+    it 'can not delete if it has completed orders' do
+      order = build(:order, completed_at: Time.zone.now)
+      order.save
+      user = order.user
+
+      expect { user.destroy }.to raise_exception(Spree::User::DestroyWithOrdersError)
+    end
+  end
+
+  context 'anonymous!' do
+    let(:user) { Spree::User.anonymous! }
+
+    it 'should create a new user' do
+      expect(user.new_record?).to be_falsey
+    end
+
+    it 'should create a user with an example.net email' do
+      expect(user.email).to match(/@example.net$/)
+    end
+
+    it 'should be anonymous' do
+      expect(user).to be_anonymous
+    end
+  end
 end
