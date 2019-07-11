@@ -164,7 +164,7 @@ ca:
   site_meta_description: "Comencem des de baix. Amb agricultors i productors disposats a explicar les seves històries amb orgull i sinceritat. Amb distribuïdors connectant persones i productes de manera justa i honesta. Amb compradors que creuen que millors decisions de compra setmanal poden ..."
   search_by_name: Cercar per nom o barri ...
   producers_join: Els productors australians son ara benvinguts a unir-se a Open Food Network.
-  charges_sales_tax: Càrrecs GST?
+  charges_sales_tax: Càrrecs d'IVA?
   print_invoice: "Imprimir Factura"
   print_ticket: "Imprimir tiquet"
   select_ticket_printer: "Seleccionar la impressora de tiquets"
@@ -322,9 +322,10 @@ ca:
         enable_products_cache: "Habilitar la memòria cau de productes?"
     invoice_settings:
       edit:
-        title: Configuració de la factura
-        invoice_style2?: Utilitzeu el model de factura alternatiu que inclou el desglossament dels càrregs totals per tarifa i la informació sobre la taxa impositiva per article (encara no està disponible per als països sense recàrregs en concpte d'impostos)
-        enable_receipt_printing?: Mostra les opcions per imprimir rebuts amb impressores tèrmiques en el menú desplegable de la comanda?
+        title: "Configuració de la factura"
+        enable_invoices?: "Activar factures?"
+        invoice_style2?: "Utilitzeu el model de factura alternatiu que inclou el desglossament dels càrregs totals per tarifa i la informació sobre la taxa impositiva per article (encara no està disponible per als països sense recàrregs en concpte d'impostos)"
+        enable_receipt_printing?: "Mostra les opcions per imprimir rebuts amb impressores tèrmiques en el menú desplegable de la comanda?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -651,6 +652,8 @@ ca:
           permalink_tip: "Aquest enllaç permanent s'utilitza per crear l'url a la vostra botiga: %{link}your-shop-name / shop"
           link_to_front: Enllaç a la botiga
           link_to_front_tip: Un enllaç directe a la vostra botiga a l'Open Food Netwok.
+          ofn_uid: UID d'OFN
+          ofn_uid_tip: L'identificador únic que s’utilitza per identificar l'organització a Open Food Network.
         shipping_methods:
           name: Nom
           applies: 'Aplicar? '
@@ -833,6 +836,7 @@ ca:
         add_distributor: 'Afegeix distribuïdora'
       advanced_settings:
         title: Configuració avançada
+        choose_product_tip: Podeu restringir els productes entrants i sortints a només l’inventari d’%{inventory}.
         preferred_product_selection_from_coordinator_inventory_only_here: Només inventari del coordinador
         preferred_product_selection_from_coordinator_inventory_only_all: Tots els productes disponibles
         save_reload: Desa i recarrega la pàgina
@@ -1696,6 +1700,7 @@ ca:
       introduction:
         registration_greeting: "Hola!"
         registration_intro: "Ara pots crear un perfil per productora o grup de consum"
+        registration_checklist: "Què necessito?"
         registration_time: "5-10 minuts"
         registration_enterprise_address: "Adreça de l'organització"
         registration_contact_details: "Dades de contacte principals"

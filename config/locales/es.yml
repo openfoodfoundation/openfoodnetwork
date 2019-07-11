@@ -322,9 +322,10 @@ es:
         enable_products_cache: "¿Habilitar caché de productos?"
     invoice_settings:
       edit:
-        title: Configuración de Factura
-        invoice_style2?: Utiliza el modelo de factura alternativo que incluye el desglose fiscal total por tipo de interés y tasa de impuestos por artículo (todavía no es adecuado para países que muestran los precios sin impuestos)
-        enable_receipt_printing?: ¿Mostrar opciones para imprimir recibos usando impresoras térmicas en el desplegable del pedido?
+        title: "Configuración de Factura"
+        enable_invoices?: "Habilitar facturas?"
+        invoice_style2?: "Utiliza el modelo de factura alternativo que incluye el desglose fiscal total por tipo de interés y tasa de impuestos por artículo (todavía no es adecuado para países que muestran los precios sin impuestos)"
+        enable_receipt_printing?: "¿Mostrar opciones para imprimir recibos usando impresoras térmicas en el desplegable del pedido?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -651,6 +652,8 @@ es:
           permalink_tip: "Se usa para crear la URL de tu tienda: %{link}nombre-de-tu-tienda/shop"
           link_to_front: Link a la tienda
           link_to_front_tip: Enlace directo a tu tienda en Open Food Networks
+          ofn_uid: UID de OFN
+          ofn_uid_tip: La identificación única utilizada para identificar la organización en Open Food Network.
         shipping_methods:
           name: Nombre
           applies: ¿Aplicar?
@@ -833,6 +836,7 @@ es:
         add_distributor: 'Añadir distribuidora'
       advanced_settings:
         title: Configuración Avanzada
+        choose_product_tip: Puede restringir los productos entrantes y salientes a solo el inventario de %{inventory}.
         preferred_product_selection_from_coordinator_inventory_only_here: Solo el Inventario de la Coordinadora
         preferred_product_selection_from_coordinator_inventory_only_all: Todos los productos disponibles
         save_reload: Guardar y recargar la página
@@ -1696,6 +1700,7 @@ es:
       introduction:
         registration_greeting: "¡Hola!"
         registration_intro: "Ahora puedes crear un perfil para tu Productora o Grupo de Consumo"
+        registration_checklist: "¿Qué necesito?"
         registration_time: "5-10 minutos"
         registration_enterprise_address: "Dirección de la organización"
         registration_contact_details: "Detalles de contacto principal"

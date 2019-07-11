@@ -14,7 +14,9 @@ fr_BE:
       spree/product:
         primary_taxon: "Catégorie Produit"
         supplier: "Fournisseur"
+        shipping_category_id: "Catégorie d'expédition"
         variant_unit: "Unité"
+        variant_unit_name: "Nom de la variante"
       order_cycle:
         orders_close_at: Date de fermeture
     errors:
@@ -75,6 +77,8 @@ fr_BE:
     user_confirmations:
       spree_user:
         send_instructions: "Un email a été envoyé avec des instructions pour confirmer votre adresse email. Vérifiez votre boite mail!"
+        confirmation_sent: "Email de confirmation envoyé"
+        confirmation_not_sent: "Erreur d'envoi du courrier électronique de confirmation"
     user_registrations:
       spree_user:
         signed_up_but_unconfirmed: "Un message avec un lien de confirmation a été envoyé à l'adresse email indiquée. Veuillez cliquer sur ce lien pour activer votre compte."
@@ -85,6 +89,8 @@ fr_BE:
           Créez votre compte ou réinitialisez votre mot de passe.
       unconfirmed: "Veuillez valider le lien envoyé par email pour pouvoir continuer."
       already_registered: "Cet email est déjà associé à un utilisateur et a déjà été validé. Veuillez vous connecter pour continuer, ou utiliser un autre email."
+    success:
+      logged_in_succesfully: "Connecté avec succès"
     user_passwords:
       spree_user:
         updated_not_active: "Votre mot de passe a bien été réinitialisé, mais votre email n'a pas encore été confirmé."
@@ -316,9 +322,10 @@ fr_BE:
         enable_products_cache: "Permettre des produits en approvisionnement? "
     invoice_settings:
       edit:
-        title: Paramètres de facturation
-        invoice_style2?: Utiliser le modèle de facture alternatif qui détaille le montant de TVA agrégé par taux et l'information du taux de TVA par produit (pas adapté pour les instances affichant les prix HT)
-        enable_receipt_printing?: Afficher les options d'impression de tickets de caisse dans le menu déroulant des commandes?
+        title: "Paramètres de facturation"
+        enable_invoices?: "Activer les factures?"
+        invoice_style2?: "Utiliser le modèle de facture alternatif qui détaille le montant de TVA agrégé par taux et l'information du taux de TVA par produit (pas adapté pour les instances affichant les prix HT)"
+        enable_receipt_printing?: "Afficher les options d'impression de tickets de caisse dans le menu déroulant des commandes?"
     stripe_connect_settings:
       edit:
         title: "connexion Stripe"
@@ -385,6 +392,7 @@ fr_BE:
         calculator: "Calculateur"
         calculator_values: "Montants pour calculs"
         search: "Rechercher"
+        name_placeholder: "par exemple. frais d'emballage"
     enterprise_groups:
       index:
         new_button: Nouveau groupe d'entreprises
@@ -644,6 +652,8 @@ fr_BE:
           permalink_tip: "Ce nom permanent est utilisé pour créer l'url de votre comptoir: %{link}ma-boutique/shop"
           link_to_front: Lien URL du comptoir
           link_to_front_tip: C'est le lien qui permet d'accéder en direct à votre comptoir sur Open Food Network.
+          ofn_uid: OFN UID
+          ofn_uid_tip: L'identifiant unique utilisé pour identifier l'entreprise sur Open Food Network.
         shipping_methods:
           name: Nom
           applies: Active?
@@ -825,6 +835,7 @@ fr_BE:
         add_distributor: 'Ajouter un distributeur'
       advanced_settings:
         title: Paramétrages avancés
+        choose_product_tip: Vous pouvez limiter les produits entrants et sortants à l'inventaire uniquement%{inventory}.
         preferred_product_selection_from_coordinator_inventory_only_here: Uniquement les produits du catalogue magasin
         preferred_product_selection_from_coordinator_inventory_only_all: Tous les produits disponibles dans les catalogues producteurs
         save_reload: Sauvegarder et rafraichir la page
@@ -960,6 +971,8 @@ fr_BE:
         pause_subscription: Mettre en pause Abonnement
         unpause_subscription: Reprendre Abonnement
         cancel_subscription: Annuler Abonnement
+      filters:
+        query_placeholder: "Recherche par email ..."
       setup_explanation:
         just_a_few_more_steps: 'Encore quelques étapes avant de pouvoir commencer:'
         enable_subscriptions: "Activez la fonction abonnements pour au moins une de vos comptoirs"
@@ -992,6 +1005,8 @@ fr_BE:
         charges_not_allowed: Le débit automatique n'a pas été autorisé par cet acheteur
         no_default_card: L'acheteur n'a pas de carte de paiement disponible pour le débit
         card_ok: L'acheteur a une carte de paiement disponible pour le débit
+        begins_at_placeholder: "Sélectionnez une date"
+        ends_at_placeholder: "Optionnel"
       loading_flash:
         loading: Abonnements en cours de chargement
       review:
@@ -1049,8 +1064,12 @@ fr_BE:
       show_on_map: "Tout afficher sur la carte"
   shared:
     menu:
+      cart:
+        cart: "Cart"
       signed_in:
         profile: "Profil"
+      mobile_menu:
+        cart: "Cart"
       joyride:
         checkout: "Passer la commande"
         already_ordered_products: "Déjà commandé dans ce cycle de vente"
@@ -1087,7 +1106,11 @@ fr_BE:
   shop:
     messages:
       login: "Se connecter"
+      signup: "s'inscrire"
       contact: "contacter"
+      require_customer_login: "Seuls les clients approuvés peuvent accéder à ce comptoir."
+      require_login_html: "Si vous êtes déjà un client approuvé, %{login}ou %{signup}si vous souhaitez continuer. Voulez-vous commencer à faire vos courses ici? S'il vous plaît %{contact}%{enterprise}et demandez à rejoindre."
+      require_customer_html: "Si vous souhaitez commencer à magasiner ici, veuillez %{contact}%{enterprise}demander si vous souhaitez vous inscrire."
   card_could_not_be_updated: La carte bancaire n'a pas pu être mise à jour
   card_could_not_be_saved: la carte n'a pas pu être sauvegardée
   spree_gateway_error_flash_for_checkout: "Il y a eu un problème avec vos informations de paiement : %{error}"
@@ -1124,6 +1147,7 @@ fr_BE:
   menu_4_title: "Groupes"
   menu_4_url: "/groups"
   menu_5_title: "A propos"
+  menu_5_url: "https://about.openfoodnetwork.org.au/"
   menu_6_title: "Blog"
   menu_6_url: "https://apropos.openfoodfrance.org/blog/"
   menu_7_title: "Support"
@@ -1559,6 +1583,7 @@ fr_BE:
   sell_hubs_detail: "Créer un profil pour votre activité sur OFN en quelques minutes. A tout moment vous pourrez créer un comptoir en ligne pour vendre vos produits en direct aux acheteurs."
   sell_groups_detail: "Créer un répertoire sur mesure (regroupant différents producteurs et comptoirs) pour votre région ou votre organisation."
   sell_user_guide: "En savoir plus en explorant le guide utilisateur."
+  sell_listing_price: "L'inscription à l'OFN est libre de contribution. Ouvrir et utiliser un comptoir sur OFN vous permet de gagner jusqu'à 500 $ de ventes mensuelles. Si vous vendez plus, vous pouvez choisir votre contribution communautaire entre 1% et 3% des ventes. Pour plus de détails sur les prix, visitez la section Plateforme logicielle via le lien \"À propos\" de dans le menu supérieur."
   sell_embed: "D’ici là, vous pouvez également participer au projet. Soit en co-créant la communauté belge, en contribuant à l’amélioration des fonctionnalités…  Soit en mettant à disposition : un local pour la démonstration de l’outil ou un point relais pour faciliter les livraisons… Soit en le finançant BE41 0682 2264 2410 – com: Open Food Network"
   sell_ask_services: "Nous consulter sur les services des partenaires OFN."
   shops_title: Comptoirs
@@ -1674,6 +1699,7 @@ fr_BE:
       introduction:
         registration_greeting: "Bonjour!"
         registration_intro: "Vous pouvez maintenant créer votre profil \"Producteur\" ou \"Comptoir\""
+        registration_checklist: "De quoi ai-je besoin?"
         registration_time: "5-10 minutes"
         registration_enterprise_address: "L'adresse de l'entreprise"
         registration_contact_details: "Les détails du contact référent"
@@ -1928,6 +1954,7 @@ fr_BE:
   spree_admin_supplier: Fournisseur
   spree_admin_product_category: Catégorie Produit
   spree_admin_variant_unit_name: Nom de la pièce (si vendu à la pièce)
+  unit_name: "Nom de l'unité"
   change_package: "Changer de type de compte"
   spree_admin_single_enterprise_hint: "Astuce: Pour permettre aux gens de vous trouver, activez votre visibilité "
   spree_admin_eg_pickup_from_school: "ex : \"Retrait des produits à l'Ecole Marimati / Au Café du coin / chez Babette / ...\""
@@ -2163,6 +2190,7 @@ fr_BE:
   payment_methods: "Méthodes de paiement"
   payment_method_fee: "Frais de transaction"
   payment_processing_failed: "Le paiement n' a pu être effectué , merci de vérifier les données rentrées"
+  payment_method_not_supported: "Ce mode de paiement n'est pas possible. Veuillez en choisir un autre."
   payment_updated: "Paiement mis à jour "
   inventory_settings: "Catalogue boutique"
   tag_rules: "Règles de tag"
@@ -2365,8 +2393,18 @@ fr_BE:
           severity: Rigueur
           description: Description
           resolve: Résoudre
+      tag_rules:
+        shipping_method_tagged_top: "Méthodes d'expédition étiquetées"
+        shipping_method_tagged_bottom: "sont:"
+        payment_method_tagged_top: "Modes de paiement marqués"
+        payment_method_tagged_bottom: "sont:"
+        order_cycle_tagged_top: "Cycles de commande marqués"
+        order_cycle_tagged_bottom: "sont:"
+        inventory_tagged_top: "Variantes d'inventaire marquées"
+        inventory_tagged_bottom: "sont:"
       new_tag_rule_dialog:
         select_rule_type: "Choisir le type de règle:"
+        add_rule: "Ajouter une règle"
       enterprise_fees:
         inherit_from_product: "Hériter du produit"
       orders:
@@ -2624,6 +2662,7 @@ fr_BE:
     fill_in_customer_info: "Merci de remplir les informations client"
     new_payment: "Nouveau paiement"
     capture: "Payée"
+    void: "Vide"
     configurations: "Configurations"
     general_settings: "Réglages Généraux"
     site_name: "Nom du site"
@@ -2725,7 +2764,16 @@ fr_BE:
     no_results: "Aucun résultat"
     create: "Créer"
     loading: "Chargement en cours"
+    flat_percent: "Pourcentage plat"
+    per_kg: "Par kg"
     amount: "Quantité"
+    currency: "Devise"
+    first_item: "Coût du premier article "
+    additional_item: "Coût d'objet supplémentaire"
+    max_items: "Articles maximum"
+    minimal_amount: "Montant minimal"
+    normal_amount: "Montant normal"
+    discount_amount: "Montant de la remise"
     email: Email
     account_updated: "Compte mis à jour!"
     my_account: "Mon compte"
@@ -2824,16 +2872,29 @@ fr_BE:
       shipping_methods:
         index:
           shipping_methods: "Méthodes de livraison"
+          new_shipping_method: "Nouvelle méthode de livraison"
           name: "Nom"
           products_distributor: "Distributeur"
           zone: "Zone"
           calculator: "Calculateur"
           display: "Ecran"
+          both: "Tous les deux"
+          front_end: "L'extrémité avant"
+          back_end: "Back End"
+          no_shipping_methods_found: "Aucune méthode de livraison trouvée"
+        new:
+          new_shipping_method: "Nouvelle méthode de livraison"
+          back_to_shipping_methods_list: "Retour à la liste des méthodes de livraison"
         edit:
           editing_shipping_method: "Éditer une méthode de livraison"
           new: "Nouveau"
+          back_to_shipping_methods_list: "Retour à la liste des méthodes de livraison"
         form:
+          categories: "Les catégories"
           zones: "Zones"
+          both: "Tous les deux"
+          front_end: "L'extrémité avant"
+          back_end: "Back End"
       payment_methods:
         new:
           new_payment_method: "Nouvelle méthode de paiement"
@@ -2860,6 +2921,7 @@ fr_BE:
             error_saving_payment: Erreur à l'enregistrement du paiement
             submitting_payment: Envoi du paiement...
       products:
+        image_upload_error: "L'image du produit n'a pas été reconnue. Veuillez télécharger une image au format PNG ou JPG."
         new:
           title: 'Nouveau Produit'
         unit_name_placeholder: 'ex: botte'
