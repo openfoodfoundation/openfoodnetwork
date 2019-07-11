@@ -1,7 +1,10 @@
+# This mailer is configured to be the Devise mailer
+# Some methods here override Devise::Mailer methods
 module Spree
   class UserMailer < BaseMailer
     include I18nHelper
 
+    # Overrides `Devise::Mailer.reset_password_instructions`
     def reset_password_instructions(user)
       recipient = user.respond_to?(:id) ? user : Spree.user_class.find(user)
       @edit_password_reset_url = spree.
@@ -12,6 +15,7 @@ module Spree
              I18n.t(:subject, scope: [:devise, :mailer, :reset_password_instructions]))
     end
 
+    # This is a OFN specific email, not from Devise::Mailer
     def signup_confirmation(user)
       @user = user
       I18n.with_locale valid_locale(@user) do
@@ -20,8 +24,7 @@ module Spree
       end
     end
 
-    # Overriding `Spree::UserMailer.confirmation_instructions` which is
-    # overriding `Devise::Mailer.confirmation_instructions`.
+    # Overrides `Devise::Mailer.confirmation_instructions`
     def confirmation_instructions(user, _opts)
       @user = user
       @instance = Spree::Config[:site_name]
