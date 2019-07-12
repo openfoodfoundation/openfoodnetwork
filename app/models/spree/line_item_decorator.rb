@@ -20,7 +20,7 @@ Spree::LineItem.class_eval do
 
   before_destroy :update_inventory_before_destroy
 
-  delegate :unit_description, to: :variant
+  delegate :product, :unit_description, to: :variant
 
   # -- Scopes
   scope :managed_by, lambda { |user|
@@ -73,6 +73,11 @@ Spree::LineItem.class_eval do
           AND spree_adjustments.originator_type='Spree::TaxRate')").
       where('spree_adjustments.id IS NULL')
   }
+
+  def variant
+    # Overridden so that LineItems always have access to soft-deleted Variant attributes
+    Spree::Variant.unscoped { super }
+  end
 
   def cap_quantity_at_stock!
     scoper.scope(variant)

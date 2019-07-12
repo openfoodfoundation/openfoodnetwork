@@ -585,5 +585,17 @@ module Spree
         }.to change(Spree::OptionValue, :count).by(0)
       end
     end
+
+    describe "when the associated variant is soft-deleted" do
+      let!(:variant) { create(:variant) }
+      let!(:line_item) { create(:line_item, variant: variant) }
+
+      it "returns the associated variant or product" do
+        line_item.variant.delete
+
+        expect(line_item.variant).to eq variant
+        expect(line_item.product).to eq variant.product
+      end
+    end
   end
 end
