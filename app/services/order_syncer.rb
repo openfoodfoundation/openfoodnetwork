@@ -11,7 +11,7 @@ class OrderSyncer
   end
 
   def sync!
-    future_and_undated_orders.all? do |order|
+    orders_in_order_cycles_not_closed.all? do |order|
       order.assign_attributes(customer_id: customer_id, email: customer.andand.email, distributor_id: shop_id)
       update_associations_for(order)
       line_item_syncer.sync!(order)
@@ -36,9 +36,9 @@ class OrderSyncer
     update_payment_for(order) if payment_method_id_changed?
   end
 
-  def future_and_undated_orders
-    return @future_and_undated_orders unless @future_and_undated_orders.nil?
-    @future_and_undated_orders = orders.joins(:order_cycle).merge(OrderCycle.not_closed).readonly(false)
+  def orders_in_order_cycles_not_closed
+    return @orders_in_order_cycles_not_closed unless @orders_in_order_cycles_not_closed.nil?
+    @orders_in_order_cycles_not_closed = orders.joins(:order_cycle).merge(OrderCycle.not_closed).readonly(false)
   end
 
   def update_bill_address_for(order)
