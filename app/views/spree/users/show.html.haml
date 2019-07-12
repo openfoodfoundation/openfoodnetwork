@@ -1,12 +1,12 @@
-.darkswarm
+- content_for :injection_data do
   = inject_orders
   = inject_shops
   = inject_saved_credit_cards
-
   - if Stripe.publishable_key
     :javascript
       angular.module('Darkswarm').value("stripeObject", Stripe("#{Stripe.publishable_key}"))
 
+.darkswarm
   .row.pad-top
     .small-12.columns.pad-top
       %h2
