@@ -398,7 +398,7 @@ describe Spree::Order do
         expect(order.line_items(:reload).map(&:variant)).to eq([v2])
       end
 
-      pending "removes the variant's adjustment" do
+      it "removes the variant's adjustment" do
         line_item = order.line_items.where(variant_id: v1.id).first
         adjustment_scope = Spree::Adjustment.where(source_type: "Spree::LineItem",
                                                    source_id: line_item.id)
