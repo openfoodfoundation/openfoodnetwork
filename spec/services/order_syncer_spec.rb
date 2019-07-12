@@ -391,13 +391,31 @@ describe OrderSyncer do
       let(:params) { { subscription_line_items_attributes: [{ id: sli.id, quantity: 3 }] } }
       let(:syncer) { OrderSyncer.new(subscription) }
 
-      it "updates the line_item quantities and totals on all orders" do
+      before do
         expect(order.reload.total.to_f).to eq 59.97
         subscription.assign_attributes(params)
-        expect(syncer.sync!).to be true
-        line_items = Spree::LineItem.where(order_id: subscription.orders, variant_id: sli.variant_id)
-        expect(line_items.map(&:quantity)).to eq [3]
-        expect(order.reload.total.to_f).to eq 99.95
+      end
+
+      context "when order is not complete" do
+        it "updates the line_item quantities and totals on all orders" do
+          expect(syncer.sync!).to be true
+
+          line_items = Spree::LineItem.where(order_id: subscription.orders, variant_id: sli.variant_id)
+          expect(line_items.map(&:quantity)).to eq [3]
+          expect(order.reload.total.to_f).to eq 99.95
+        end
+      end
+
+      context "when order is complete" do
+        before { AdvanceOrderService.new(order).call }
+
+        it "does not update the line_item quantities and totals on all orders" do
+          expect(syncer.sync!).to be true
+
+          line_items = Spree::LineItem.where(order_id: subscription.orders, variant_id: sli.variant_id)
+          expect(line_items.map(&:quantity)).to eq [1]
+          expect(order.reload.total.to_f).to eq 59.97
+        end
       end
     end
 
