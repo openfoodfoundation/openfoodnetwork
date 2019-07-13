@@ -458,16 +458,49 @@ describe OrderSyncer do
     let(:subscription) { create(:subscription, with_items: true, with_proxy_orders: true) }
     let(:order) { subscription.proxy_orders.first.initialise_order! }
     let(:variant) { create(:variant) }
-    let(:params) { { subscription_line_items_attributes: [{ id: nil, variant_id: variant.id, quantity: 1 }] } }
     let(:syncer) { OrderSyncer.new(subscription) }
 
-    it "adds the line item and updates the total on all orders" do
+    before do
       expect(order.reload.total.to_f).to eq 59.97
       subscription.assign_attributes(params)
-      expect(syncer.sync!).to be true
-      line_items = Spree::LineItem.where(order_id: subscription.orders, variant_id: variant.id)
-      expect(line_items.map(&:quantity)).to eq [1]
-      expect(order.reload.total.to_f).to eq 79.96
+    end
+
+    context "when quantity is within available stock" do
+      let(:params) { { subscription_line_items_attributes: [{ id: nil, variant_id: variant.id, quantity: 1 }] } }
+
+      it "adds the line item and updates the total on all orders" do
+        expect(syncer.sync!).to be true
+
+        line_items = Spree::LineItem.where(order_id: subscription.orders, variant_id: variant.id)
+        expect(line_items.map(&:quantity)).to eq [1]
+        expect(order.reload.total.to_f).to eq 79.96
+      end
+    end
+
+    context "when quantity is greater than available stock" do
+      let(:params) { { subscription_line_items_attributes: [{ id: nil, variant_id: variant.id, quantity: 7 }] } }
+
+      context "when order is not complete" do
+        it "adds the line_item and updates totals on all orders" do
+          expect(syncer.sync!).to be true
+
+          line_items = Spree::LineItem.where(order_id: subscription.orders, variant_id: variant.id)
+          expect(line_items.map(&:quantity)).to eq [7]
+          expect(order.reload.total.to_f).to eq 199.9
+        end
+      end
+
+      context "when order is complete" do
+        before { AdvanceOrderService.new(order).call }
+
+        it "does not add line_item and keeps totals on all orders" do
+          expect(syncer.sync!).to be true
+
+          line_items = Spree::LineItem.where(order_id: subscription.orders, variant_id: variant.id)
+          expect(line_items.map(&:quantity)).to eq []
+          expect(order.reload.total.to_f).to eq 59.97
+        end
+      end
     end
   end
 

@@ -30,7 +30,8 @@ class LineItemSyncer
 
   def create_new_items(order)
     new_subscription_line_items.each do |sli|
-      order.line_items.create(variant_id: sli.variant_id, quantity: sli.quantity, skip_stock_check: skip_stock_check?(order))
+      new_line_item = order.line_items.create(variant_id: sli.variant_id, quantity: sli.quantity, skip_stock_check: skip_stock_check?(order))
+      new_line_item.destroy if !skip_stock_check?(order) && new_line_item.insufficient_stock?
     end
   end
 
