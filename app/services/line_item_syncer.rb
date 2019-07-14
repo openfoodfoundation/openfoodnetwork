@@ -69,14 +69,16 @@ class LineItemSyncer
   end
 
   def add_order_update_issue(order, line_item)
-    issue_description = "#{line_item.product.name} - #{line_item.variant.full_name} - "
-    if line_item.insufficient_stock?
-      if line_item.variant.in_stock?
-        issue_description << I18n.t("spree.orders.line_item.insufficient_stock", on_hand: line_item.variant.on_hand)
-      else
-        issue_description << I18n.t("spree.orders.line_item.out_of_stock")
-      end
-    end
+    issue_description = "#{line_item.product.name} - #{line_item.variant.full_name}"
+    issue_description << " - #{stock_issue_description(line_item)}" if line_item.insufficient_stock?
     order_update_issues.add(order, issue_description)
+  end
+
+  def stock_issue_description(line_item)
+    if line_item.variant.in_stock?
+      I18n.t("spree.orders.line_item.insufficient_stock", on_hand: line_item.variant.on_hand)
+    else
+      I18n.t("spree.orders.line_item.out_of_stock")
+    end
   end
 end
