@@ -76,9 +76,9 @@ class LineItemSyncer
 
   def stock_issue_description(line_item)
     if line_item.variant.in_stock?
-      I18n.t("spree.orders.line_item.insufficient_stock", on_hand: line_item.variant.on_hand)
+      I18n.t("admin.subscriptions.stock.insufficient_stock")
     else
-      I18n.t("spree.orders.line_item.out_of_stock")
+      I18n.t("admin.subscriptions.stock..out_of_stock")
     end
   end
 end

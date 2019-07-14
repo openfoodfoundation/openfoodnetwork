@@ -416,8 +416,7 @@ describe OrderSyncer do
           expect(line_items.map(&:quantity)).to eq [1]
           expect(order.reload.total.to_f).to eq 59.97
           line_item = order.line_items.find_by_variant_id(sli.variant_id)
-          # when we complete the order in this test case, the one item in the original order is taken from stock, this moved the available stock to 1
-          expect(syncer.order_update_issues[order.id]).to include "#{line_item.product.name} - #{line_item.variant.full_name} - Insufficient stock available, only 1 remaining"
+          expect(syncer.order_update_issues[order.id]).to include "#{line_item.product.name} - #{line_item.variant.full_name} - Insufficient stock available"
         end
       end
     end
@@ -502,7 +501,7 @@ describe OrderSyncer do
           line_items = Spree::LineItem.where(order_id: subscription.orders, variant_id: variant.id)
           expect(line_items.map(&:quantity)).to eq [0]
           expect(order.reload.total.to_f).to eq 59.97
-          expect(syncer.order_update_issues[order.id]).to include "#{variant.product.name} - #{variant.full_name} - Insufficient stock available, only 5 remaining"
+          expect(syncer.order_update_issues[order.id]).to include "#{variant.product.name} - #{variant.full_name} - Insufficient stock available"
         end
       end
     end
