@@ -23,6 +23,7 @@ class LineItemSyncer
     changed_subscription_line_items.each do |sli|
       line_item = order.line_items.find_by_variant_id(sli.variant_id)
       next if update_quantity(line_item, sli)
+
       product_name = "#{line_item.product.name} - #{line_item.full_name}"
       order_update_issues.add(order, product_name)
     end
@@ -33,7 +34,17 @@ class LineItemSyncer
       new_line_item = order.line_items.create(variant_id: sli.variant_id,
                                               quantity: sli.quantity,
                                               skip_stock_check: skip_stock_check?(order))
-      new_line_item.destroy if !skip_stock_check?(order) && new_line_item.insufficient_stock?
+      next if skip_stock_check?(order) || new_line_item.sufficient_stock?
+
+      order.line_items.delete(new_line_item)
+
+      issue_description = "#{new_line_item.product.name} - #{new_line_item.full_name}"
+      if new_line_item.variant.in_stock?
+        issue_description << I18n.t("spree.orders.line_item.insufficient_stock", on_hand: new_line_item.variant.on_hand)
+      else
+        issue_description << I18n.t("spree.orders.line_item.out_of_stock")
+      end
+      order_update_issues.add(order, issue_description)
     end
   end
 

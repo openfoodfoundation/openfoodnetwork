@@ -493,12 +493,13 @@ describe OrderSyncer do
       context "when order is complete" do
         before { AdvanceOrderService.new(order).call }
 
-        it "does not add line_item and keeps totals on all orders" do
+        it "does not add line_item and adds the order to order_update_issues" do
           expect(syncer.sync!).to be true
 
           line_items = Spree::LineItem.where(order_id: subscription.orders, variant_id: variant.id)
           expect(line_items.map(&:quantity)).to eq []
           expect(order.reload.total.to_f).to eq 59.97
+          expect(syncer.order_update_issues[order.id]).to include "#{variant.product.name} - Insufficient stock available, only 5 remaining"
         end
       end
     end
