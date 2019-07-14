@@ -46,12 +46,12 @@
 
 // Show-hide animation \\
 .off-canvas-wrap .inner-wrap, .off-canvas-wrap .inner-wrap .fixed, nav.tab-bar {
-  @include transition(all, 1000ms, ease-in-out);
+  @include transition(all 1000ms ease-in-out);
 
   &.move-down {
     margin-top: 55px;
 
-    @include transition(all, 1000ms, ease-in-out);
+    @include transition(all 1000ms ease-in-out);
   }
 }
 
