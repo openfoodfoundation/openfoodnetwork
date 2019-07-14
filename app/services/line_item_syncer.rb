@@ -24,8 +24,7 @@ class LineItemSyncer
       line_item = order.line_items.find_by_variant_id(sli.variant_id)
       next if update_quantity(line_item, sli)
 
-      product_name = "#{line_item.product.name} - #{line_item.full_name}"
-      order_update_issues.add(order, product_name)
+      add_order_update_issue(order, line_item)
     end
   end
 
@@ -70,11 +69,13 @@ class LineItemSyncer
   end
 
   def add_order_update_issue(order, line_item)
-    issue_description = "#{line_item.product.name} - #{line_item.full_name}"
-    if line_item.variant.in_stock?
-      issue_description << I18n.t("spree.orders.line_item.insufficient_stock", on_hand: line_item.variant.on_hand)
-    else
-      issue_description << I18n.t("spree.orders.line_item.out_of_stock")
+    issue_description = "#{line_item.product.name} - #{line_item.variant.full_name} - "
+    if line_item.insufficient_stock?
+      if line_item.variant.in_stock?
+        issue_description << I18n.t("spree.orders.line_item.insufficient_stock", on_hand: line_item.variant.on_hand)
+      else
+        issue_description << I18n.t("spree.orders.line_item.out_of_stock")
+      end
     end
     order_update_issues.add(order, issue_description)
   end
