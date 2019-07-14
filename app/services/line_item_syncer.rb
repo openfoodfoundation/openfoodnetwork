@@ -37,14 +37,7 @@ class LineItemSyncer
       next if skip_stock_check?(order) || new_line_item.sufficient_stock?
 
       order.line_items.delete(new_line_item)
-
-      issue_description = "#{new_line_item.product.name} - #{new_line_item.full_name}"
-      if new_line_item.variant.in_stock?
-        issue_description << I18n.t("spree.orders.line_item.insufficient_stock", on_hand: new_line_item.variant.on_hand)
-      else
-        issue_description << I18n.t("spree.orders.line_item.out_of_stock")
-      end
-      order_update_issues.add(order, issue_description)
+      add_order_update_issue(order, new_line_item)
     end
   end
 
@@ -74,5 +67,15 @@ class LineItemSyncer
 
   def skip_stock_check?(order)
     !order.complete?
+  end
+
+  def add_order_update_issue(order, line_item)
+    issue_description = "#{line_item.product.name} - #{line_item.full_name}"
+    if line_item.variant.in_stock?
+      issue_description << I18n.t("spree.orders.line_item.insufficient_stock", on_hand: line_item.variant.on_hand)
+    else
+      issue_description << I18n.t("spree.orders.line_item.out_of_stock")
+    end
+    order_update_issues.add(order, issue_description)
   end
 end
