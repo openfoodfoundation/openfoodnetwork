@@ -7,7 +7,8 @@ module OpenFoodNetwork
 
     let!(:order_cycles) do
       Array.new(10) do |i|
-        create(:simple_order_cycle, orders_open_at: start + i.days, orders_close_at: start + (i + 1).days )
+        create(:simple_order_cycle, orders_open_at: start + i.days,
+                                    orders_close_at: start + (i + 1).days )
       end
     end
 

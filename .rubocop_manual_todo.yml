@@ -127,10 +127,8 @@ Metrics/LineLength:
   - app/services/cart_service.rb
   - app/services/default_stock_location.rb
   - app/services/embedded_page_service.rb
-  - app/services/line_item_syncer.rb
   - app/services/order_cycle_form.rb
   - app/services/order_factory.rb
-  - app/services/order_syncer.rb
   - app/services/subscriptions_count.rb
   - app/services/variants_stock_levels.rb
   - app/views/json/_groups.rabl
@@ -159,7 +157,6 @@ Metrics/LineLength:
   - lib/open_food_network/permissions.rb
   - lib/open_food_network/products_cache.rb
   - lib/open_food_network/products_renderer.rb
-  - lib/open_food_network/proxy_order_syncer.rb
   - lib/open_food_network/reports/bulk_coop_allocation_report.rb
   - lib/open_food_network/reports/line_items.rb
   - lib/open_food_network/sales_tax_report.rb
@@ -346,7 +343,6 @@ Metrics/LineLength:
   - spec/models/tag_rule/filter_shipping_methods_spec.rb
   - spec/models/variant_override_spec.rb
   - spec/performance/orders_controller_spec.rb
-  - spec/performance/proxy_order_syncer_spec.rb
   - spec/performance/shop_controller_spec.rb
   - spec/requests/checkout/failed_checkout_spec.rb
   - spec/requests/checkout/paypal_spec.rb
