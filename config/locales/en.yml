@@ -278,6 +278,10 @@ en:
     create_and_add_another: "Create and Add Another"
     create: "Create"
     cancel: "Cancel"
+    save: "Save"
+    edit: "Edit"
+    delete: "Delete"
+
   admin:
     # Common properties / models
     begins_at: Begins At
