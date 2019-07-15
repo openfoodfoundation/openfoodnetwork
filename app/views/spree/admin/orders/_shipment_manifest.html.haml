@@ -5,10 +5,7 @@
     %td{ :class => "item-image" }
       = mini_image(item.variant)
     %td{ :class => "item-name" }
-      = item.variant.product.name
-      %br
-      - unless item.variant.option_values.empty?
-        = "(" + variant_options(item.variant) + ")"
+      = item.variant.product_and_full_name
     %td{ :class => "item-price align-center" }
       = line_item.single_money.to_html
     %td{ :class => "item-qty-show align-center" }
