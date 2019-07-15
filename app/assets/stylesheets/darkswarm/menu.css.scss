@@ -222,7 +222,7 @@ nav.top-bar {
   background-color: white;
 }
 
-.off-canvas-wrap.move-right ul.off-canvas-list {
+.off-canvas-wrap ul.off-canvas-list {
   font-size: 0.875rem;
 
   .li-menu {
@@ -242,12 +242,10 @@ nav.top-bar {
       background-color: transparent;
       color: $brand-colour;
     }
-
-    @include transition(all 0.3s ease-in-out);
   }
 }
 
-.off-canvas-wrap.move-right ul.off-canvas-list i {
+.off-canvas-wrap ul.off-canvas-list i {
   font-size: 1.5rem;
   margin-right: 0.25rem;
 }

@@ -42,9 +42,10 @@
     = inject_currency_config
 
     .off-canvas-wrap{offcanvas: true}
-      .inner-wrap
+      .fixed.off-canvas-fixed
         = render "shared/menu/menu" unless @hide_menu
 
+      .inner-wrap
         %section{ role: "main" }
           = yield
 
