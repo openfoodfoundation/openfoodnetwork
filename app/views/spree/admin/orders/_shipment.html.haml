@@ -1,19 +1,19 @@
 %div{ :id => "shipment_#{shipment.id}" }
-  %fieldset{ :class => "no-border-bottom" }
-    %legend{ :align => "center", :class => "stock-location", "data-hook" => "stock-location" }
-      %span{ :class => "shipment-number" }
+  %fieldset.no-border-bottom
+    %legend.stock-location{ :align => "center", "data-hook" => "stock-location" }
+      %span.shipment-number
         = shipment.number
       = "-"
-      %span{ :class => "shipment-state" }
+      %span.shipment-state
         = Spree.t("shipment_states.#{shipment.state}")
       = Spree.t(:package_from)
-      %strong{ :class => "stock-location-name", "data-hook" => "stock-location-name" }
+      %strong.stock-location-name{ "data-hook" => "stock-location-name" }
         = "'#{shipment.stock_location.name}'"
       - if shipment.ready? and can? :update, shipment
         = "-"
         = link_to 'ship', '#', :class => 'ship button icon-arrow-right', :data => { 'shipment-number' => shipment.number }
 
-  %table{ :class => "stock-contents index", "data-hook" => "stock-contents" }
+  %table.stock-contents.index{ "data-hook" => "stock-contents" }
     %colgroup
       %col{ :style => "width: 10%;" }
       %col{ :style => "width: 30%;" }
@@ -31,20 +31,20 @@
         = Spree.t(:quantity)
       %th
         = Spree.t(:total)
-      %th{ :class => "orders-actions actions", "data-hook" => "admin_order_form_line_items_header_actions" }
+      %th.orders-actions.actions{ "data-hook" => "admin_order_form_line_items_header_actions" }
 
     %tbody{ "data-shipment-number" => "#{shipment.number}", "data-order-number" => "#{order.number}" }
       = render 'spree/admin/orders/shipment_manifest', order: order, shipment: shipment
 
       - unless shipment.shipped?
-        %tr{ :class => "edit-method hidden total" }
+        %tr.edit-method.hidden.total
           %td{ :colspan => "5" }
-            %div{ :class => "field alpha five columns" }
+            %div.field.alpha.five.columns
               = label_tag 'selected_shipping_rate_id', Spree.t(:shipping_method)
               = select_tag :selected_shipping_rate_id, options_for_select(shipment.shipping_rates.backend.map { |sr| ["#{sr.name} #{sr.display_price}", sr.id] }, shipment.selected_shipping_rate_id), { :class => 'select2 fullwidth', :data => { 'shipment-number' => shipment.number } }
 
             - if shipment.adjustment && shipment.adjustment.closed?
-              %div{ :class => "field omega four columns" }
+              %div.field.omega.four.columns
                 %label
                   = Spree.t(:associated_adjustment_closed)
                 %ul
@@ -55,12 +55,12 @@
                     = radio_button_tag :open_adjustment, 'no', true, :data => {'shipment-number' => shipment.number }
                     = "No"
 
-          %td{ :class => "actions" }
+          %td.actions
             - if can? :update, shipment
               = link_to '', '#', :class => 'save-method icon_link icon-ok no-text with-tip', :data => { 'shipment-number' => shipment.number, :action => 'save' }, title: Spree.t('actions.save')
               = link_to '', '#', :class => 'cancel-method icon_link icon-cancel no-text with-tip', :data => { :action => 'cancel' }, :title => Spree.t('actions.cancel')
 
-      %tr{ :class => "show-method total" }
+      %tr.show-method.total
         %td{ :colspan => "4" }
           - if shipment.adjustment.present?
             %strong
@@ -68,28 +68,28 @@
           - else
             = Spree.t(:cannot_set_shipping_method_without_address)
 
-        %td{ :class => "total", :align => "center" }
+        %td.total{ :align => "center" }
           - if shipment.adjustment.present?
             %span
               = shipment.adjustment.display_amount
 
         - if shipment.adjustment.present? && !shipment.shipped?
-          %td{ :class => "actions" }
+          %td.actions
             - if can? :update, shipment
               = link_to '', '#', :class => 'edit-method icon_link icon-edit no-text with-tip', :data => { :action => 'edit' }, :title => Spree.t('edit')
 
-      %tr{ :class => "edit-tracking hidden total" }
+      %tr.edit-tracking.hidden.total
         %td{ :colspan => "5" }
           %label
             = "#{Spree.t(:tracking_number)}:"
           = text_field_tag :tracking, shipment.tracking
 
-        %td{ :class => "actions" }
+        %td.actions
           - if can? :update, shipment
             = link_to '', '#', :class => 'save-tracking icon_link icon-ok no-text with-tip', :data => { 'shipment-number' => shipment.number, :action => 'save' }, :title => Spree.t('actions.save')
             = link_to '', '#', :class => 'cancel-tracking icon_link icon-cancel no-text with-tip', :data => { :action => 'cancel' }, :title => Spree.t('actions.cancel')
 
-      %tr{ :class => "show-tracking total" }
+      %tr.show-tracking.total
         %td{ :colspan => "5" }
           - if shipment.tracking.present?
             %strong
@@ -98,6 +98,6 @@
           - else
             = Spree.t(:no_tracking_present)
 
-        %td{ :class => "actions" }
+        %td.actions
           - if can? :update, shipment
             = link_to '', '#', :class => 'edit-tracking icon_link icon-edit no-text with-tip', :data => { :action => 'edit' }, :title => Spree.t('edit')

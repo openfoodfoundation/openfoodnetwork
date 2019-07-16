@@ -1,23 +1,23 @@
 - shipment.manifest.each do |item|
   - line_item = order.find_line_item_by_variant(item.variant)
 
-  %tr{ :class => "stock-item", "data-item-quantity" => "#{item.quantity}" }
-    %td{ :class => "item-image" }
+  %tr.stock-item{ "data-item-quantity" => "#{item.quantity}" }
+    %td.item-image
       = mini_image(item.variant)
-    %td{ :class => "item-name" }
+    %td.item-name
       = item.variant.product_and_full_name
-    %td{ :class => "item-price align-center" }
+    %td.item-price.align-center
       = line_item.single_money.to_html
-    %td{ :class => "item-qty-show align-center" }
+    %td.item-qty-show.align-center
       - item.states.each do |state,count|
         = "#{count} x #{state.humanize.downcase}"
     - unless shipment.shipped?
-      %td{ :class => "item-qty-edit hidden" }
+      %td.item-qty-edit.hidden
         = number_field_tag :quantity, item.quantity, :min => 0, :class => "line_item_quantity", :size => 5
-    %td{ :class => "item-total align-center" }
+    %td.item-total.align-center
       = line_item_shipment_price(line_item, item.quantity)
 
-    %td{ :class => "cart-item-delete actions", "data-hook" => "cart_item_delete" }
+    %td.cart-item-delete.actions{ "data-hook" => "cart_item_delete" }
       - if !shipment.shipped? && can?(:update, shipment)
         = link_to '', '#', :class => 'save-item icon_link icon-ok no-text with-tip', :data => {'shipment-number' => shipment.number, 'variant-id' => item.variant.id, :action => 'save'}, :title => t('actions.save'), :style => 'display: none'
         = link_to '', '#', :class => 'cancel-item icon_link icon-cancel no-text with-tip', :data => {:action => 'cancel'}, :title => t('actions.cancel'), :style => 'display: none'
