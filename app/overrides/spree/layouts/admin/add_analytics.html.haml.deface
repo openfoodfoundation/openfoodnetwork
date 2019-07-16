@@ -1,3 +1,0 @@
-/ insert_bottom "[data-hook='admin_footer_scripts']"
-
-= render 'spree/shared/google_analytics'

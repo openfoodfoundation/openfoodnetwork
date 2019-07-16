@@ -71,5 +71,7 @@
 
     %div{"data-hook" => "admin_footer_scripts"}
 
+    = render 'spree/shared/google_analytics'
+
     :javascript
       Spree.api_key = #{raw(try_spree_current_user.try(:spree_api_key).to_s.inspect)};
