@@ -36,6 +36,10 @@
             .sixteen.columns.main-menu-wrapper
               %ul.inline-menu.fullwidth-menu{"data-hook" => "admin_tabs"}
                 = render :partial => 'spree/admin/shared/tabs'
+                = tab :order_cycles, :url => main_app.admin_order_cycles_path
+                = tab :enterprises, :url => main_app.admin_enterprises_path
+                = tab :customers, :url => main_app.admin_customers_path
+                = tab :enterprise_groups, :url => main_app.admin_enterprise_groups_path, label: 'groups'
 
         - if content_for?(:sub_menu)
           %nav#sub-menu{"data-hook" => ""}
