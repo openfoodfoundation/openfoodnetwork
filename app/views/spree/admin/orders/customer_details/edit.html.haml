@@ -1,0 +1,22 @@
+= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Customer Details' }
+
+= csrf_meta_tags
+
+- content_for :page_title do
+  %i.icon-arrow-right
+  = Spree.t(:customer_details)
+
+- content_for :page_actions do
+  %li= button_link_to Spree.t(:back_to_orders_list), admin_orders_path, :icon => 'icon-arrow-left'
+
+- if @order.cart?
+  #select-customer{"data-hook" => ""}
+    %fieldset.no-border-bottom
+      %legend{:align => "center"}= Spree.t(:customer_search)
+      = hidden_field_tag :customer_search,  nil, :class => 'fullwidth title'
+      = render :partial => "spree/admin/orders/customer_details/autocomplete", :formats => :js
+
+= render :partial => 'spree/shared/error_messages', :locals => { :target => @order }
+
+= form_for @order, :url => admin_order_customer_url(@order) do |f|
+  = render 'form', :f => f
