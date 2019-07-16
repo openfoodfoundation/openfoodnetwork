@@ -2,27 +2,10 @@
   %fieldset.index.no-border-bottom{"data-hook" => "customer_guest"}
     %legend{:align => "center"}= Spree.t(:account)
     .row{"data-hook" => "customer_fields"}
-      .alpha.eight.columns
+      .alpha.eight.columns.fullwidth
         .field
           = f.label :email, Spree.t(:email) + ':'
           = f.email_field :email, :class => 'fullwidth'
-      .omega.four.columns
-        .field
-          = label_tag nil, Spree.t(:guest_checkout)
-          \:
-          %ul
-            - if @order.completed?
-              %li
-                = @order.user.nil? ? Spree.t(:say_yes) : Spree.t(:say_no)
-            - else
-              - guest = @order.user.nil? || @order.user.anonymous?
-              %li
-                = radio_button_tag :guest_checkout, true, guest
-                = Spree.t(:say_yes)
-              %li
-                = radio_button_tag :guest_checkout, false, !guest, :disabled => @order.cart?
-                = Spree.t(:say_no)
-              = hidden_field_tag :user_id, @order.user_id
 
   .alpha.six.columns{"data-hook" => "bill_address_wrapper"}
     %fieldset.no-border-bottom

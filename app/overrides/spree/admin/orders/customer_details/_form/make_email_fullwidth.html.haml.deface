@@ -1,2 +1,0 @@
-/ set_attributes "div[data-hook='customer_fields'] div.alpha"
-/ attributes({class: "fullwidth"})
