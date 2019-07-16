@@ -5,6 +5,9 @@
 
   %body.admin
     %div= yield(:app_wrapper_attrs).strip.html_safe
+
+      = admin_inject_currency_config
+
       #wrapper{"data-hook" => ""}
         - if flash[:error]
           .flash.error= flash[:error]
