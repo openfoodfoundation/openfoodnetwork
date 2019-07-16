@@ -3,3 +3,7 @@
     = label_tag Spree.t(:name)
     %br/
     = f.text_field :name
+
+  .field.align-center{"data-hook" => "name"}
+    = f.label :temperature_controlled, t(:temperature_controlled)
+    = f.check_box :temperature_controlled
