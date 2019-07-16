@@ -1,3 +1,0 @@
-/ insert_before "div#wrapper"
-
-= render "layouts/i18n_script"

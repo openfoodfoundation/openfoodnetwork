@@ -7,6 +7,7 @@
     %div= yield(:app_wrapper_attrs).strip.html_safe
 
       = admin_inject_currency_config
+      = render "layouts/i18n_script"
 
       #wrapper{"data-hook" => ""}
         - if flash[:error]
