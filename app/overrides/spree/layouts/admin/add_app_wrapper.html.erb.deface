@@ -1,0 +1,5 @@
+<!-- surround_contents 'body' -->
+
+<div <%= yield(:app_wrapper_attrs).strip.html_safe %>>
+  <%= render_original %>
+</div>

@@ -6,79 +6,77 @@
     %link{'data-require' => "font-awesome@*", 'data-semver'=>"4.2.0", 'rel' => "stylesheet", 'href' => "//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css"}
 
   %body.admin
-    %div= yield(:app_wrapper_attrs).strip.html_safe
+    = admin_inject_currency_config
+    = render "layouts/i18n_script"
 
-      = admin_inject_currency_config
-      = render "layouts/i18n_script"
+    #wrapper{"data-hook" => ""}
+      - if flash[:error]
+        .flash.error= flash[:error]
+      - if notice
+        .flash.notice= notice
+      - if flash[:success]
+        .flash.success= flash[:success]
 
-      #wrapper{"data-hook" => ""}
-        - if flash[:error]
-          .flash.error= flash[:error]
-        - if notice
-          .flash.notice= notice
-        - if flash[:success]
-          .flash.success= flash[:success]
+    #progress
+      .wrapper
+        #spinner
+        .progress-message
+          = Spree.t(:loading)
+          \...
 
-        #progress
-          .wrapper
-            #spinner
-            .progress-message
-              = Spree.t(:loading)
-              \...
+    = render :partial => 'spree/admin/shared/alert', :collection => session[:alerts]
 
-        = render :partial => 'spree/admin/shared/alert', :collection => session[:alerts]
+    %header#header{"data-hook" => ""}
+      .container
+        %figure.columns.five{"data-hook" => "logo-wrapper"}
+          = link_to image_tag(Spree::Config[:admin_interface_logo], :id => 'logo'), spree.admin_path
+        %nav.columns.eleven{"data-hook" => "admin_login_navigation_bar"}
 
-        %header#header{"data-hook" => ""}
-          .container
-            %figure.columns.five{"data-hook" => "logo-wrapper"}
-              = link_to image_tag(Spree::Config[:admin_interface_logo], :id => 'logo'), spree.admin_path
-            %nav.columns.eleven{"data-hook" => "admin_login_navigation_bar"}
+    %nav#admin-menu{"data-hook" => ""}
+      .container
+        .sixteen.columns.main-menu-wrapper
+          %ul.inline-menu.fullwidth-menu{"data-hook" => "admin_tabs"}
+            = render :partial => 'spree/admin/shared/tabs'
 
-        %nav#admin-menu{"data-hook" => ""}
-          .container
-            .sixteen.columns.main-menu-wrapper
-              %ul.inline-menu.fullwidth-menu{"data-hook" => "admin_tabs"}
-                = render :partial => 'spree/admin/shared/tabs'
-
-        - if content_for?(:sub_menu)
-          %nav#sub-menu{"data-hook" => ""}
-            .container
-              .sixteen.columns
-                = yield :sub_menu
-
-        - if content_for?(:page_title) || content_for?(:page_actions)
-          #content-header{"data-hook" => ""}
-            .container
-              .sixteen.columns
-                .block-table
-                  - if content_for?(:page_title)
-                    .table-cell
-                      %h1{:class => "page-title #{yield :page_title_classes}"}= yield :page_title
-                  - if content_for?(:page_actions)
-                    .page-actions.table-cell.toolbar{"data-hook" => "toolbar"}
-                      %ul.inline-menu
-                        = yield :page_actions
-
+    - if content_for?(:sub_menu)
+      %nav#sub-menu{"data-hook" => ""}
         .container
-          .row
-            #content{:class => "#{'with-sidebar ' if content_for?(:sidebar)}", "data-hook" => ""}
-              - if content_for?(:table_filter)
-                #table-filter{:class => "#{if content_for?(:sidebar) then 'twelve' else 'sixteen' end} columns", "data-hook" => ""}
-                  %fieldset
-                    %legend{:align => "center"}= yield :table_filter_title
-                    = yield :table_filter
-              %div{:class => "#{if content_for?(:sidebar) then 'twelve' else 'sixteen' end} columns"}
-                = yield
-              - if content_for?(:sidebar)
-                %aside#sidebar.four.columns{"data-hook" => ""}
-                  - if content_for?(:sidebar_title)
-                    %h5.sidebar-title
-                      %span= yield :sidebar_title
-                  = yield :sidebar
+          .sixteen.columns
+            = yield :sub_menu
 
-      %div{"data-hook" => "admin_footer_scripts"}
+    - if content_for?(:page_title) || content_for?(:page_actions)
+      #content-header{"data-hook" => ""}
+        .container
+          .sixteen.columns
+            .block-table
+              - if content_for?(:page_title)
+                .table-cell
+                  %h1{:class => "page-title #{yield :page_title_classes}"}= yield :page_title
+              - if content_for?(:page_actions)
+                .page-actions.table-cell.toolbar{"data-hook" => "toolbar"}
+                  %ul.inline-menu
+                    = yield :page_actions
 
-      = render 'spree/shared/google_analytics'
+    .container
+      .row
+        #content{:class => "#{'with-sidebar ' if content_for?(:sidebar)}", "data-hook" => ""}
+          - if content_for?(:table_filter)
+            #table-filter{:class => "#{if content_for?(:sidebar) then 'twelve' else 'sixteen' end} columns", "data-hook" => ""}
+              %fieldset
+                %legend{:align => "center"}= yield :table_filter_title
+                = yield :table_filter
+          %div{:class => "#{if content_for?(:sidebar) then 'twelve' else 'sixteen' end} columns"}
+            = yield
+          - if content_for?(:sidebar)
+            %aside#sidebar.four.columns{"data-hook" => ""}
+              - if content_for?(:sidebar_title)
+                %h5.sidebar-title
+                  %span= yield :sidebar_title
+              = yield :sidebar
 
-      :javascript
-        Spree.api_key = #{raw(try_spree_current_user.try(:spree_api_key).to_s.inspect)};
+  %div{"data-hook" => "admin_footer_scripts"}
+
+  = render 'spree/shared/google_analytics'
+
+  :javascript
+    Spree.api_key = #{raw(try_spree_current_user.try(:spree_api_key).to_s.inspect)};
