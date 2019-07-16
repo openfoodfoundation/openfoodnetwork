@@ -1559,7 +1559,7 @@ fr_BE:
   producers_signup_headline: Des producteurs, autonomes
   producers_signup_motivation: Vendez vos produits. Présentez votre projet pour une alimentation durable. Économisez du temps et de l'argent sur la gestion des opérations courantes. Participez à un système alimentaire transparent et équitable.
   producers_signup_send: Rejoindre le réseau
-  producers_signup_enterprise: Profil Producteur-trice-s
+  producers_signup_enterprise: Profil Producteur∙trice∙s
   producers_signup_studies: Témoignages de nos producteurs.
   producers_signup_cta_headline: Rejoindre le réseau!
   producers_signup_cta_action: Rejoindre le réseau
@@ -2553,7 +2553,7 @@ fr_BE:
       action_login: "Se connecter."
   producers:
     signup:
-      start_free_profile: "Commencez par créer votre profil entreprise, et changez de formule quand vous êtes prêt !"
+      start_free_profile: "Commencez par créer votre profil entreprise, et présentez votre formule quand vous êtes prêt !"
   order_management:
     reports:
       enterprise_fee_summary:

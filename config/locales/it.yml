@@ -316,9 +316,9 @@ it:
         enable_products_cache: "Abilita la cache dei prodotti?"
     invoice_settings:
       edit:
-        title: Impostazioni fatturazione
-        invoice_style2?: Utilizzare il modello di fattura alternativa che include la ripartizione totale delle imposte per tariffa e le informazioni sulla tariffa fiscale per articolo (non ancora adatto per i paesi che visualizzano i prezzi al netto delle imposte)
-        enable_receipt_printing?: Visualizzo le opzioni per stampare la ricevuta usando la stampante termica nel menù a cascata?
+        title: "Impostazioni fatturazione"
+        invoice_style2?: "Utilizzare il modello di fattura alternativa che include la ripartizione totale delle imposte per tariffa e le informazioni sulla tariffa fiscale per articolo (non ancora adatto per i paesi che visualizzano i prezzi al netto delle imposte)"
+        enable_receipt_printing?: "Visualizzo le opzioni per stampare la ricevuta usando la stampante termica nel menù a cascata?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"

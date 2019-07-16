@@ -316,9 +316,9 @@ nb:
         enable_products_cache: "Aktiver Mellomlagring for Produkter?"
     invoice_settings:
       edit:
-        title: Fakturainnstillinger
-        invoice_style2?: Bruk den alternative fakturamodellen som inkluderer total avgiftsoppdeling pr rate og avgiftsrateinfo pr vare (passer ikke for land som viser priser ekskludert avgift)
-        enable_receipt_printing?: 'Vis valg for utskrift av kvitteringer ved bruk av kvitteringsprinter i nedtrekksmeny for bestillinger? '
+        title: "Fakturainnstillinger"
+        invoice_style2?: "Bruk den alternative fakturamodellen som inkluderer total avgiftsoppdeling pr rate og avgiftsrateinfo pr vare (passer ikke for land som viser priser ekskludert avgift)"
+        enable_receipt_printing?: "Vis valg for utskrift av kvitteringer ved bruk av kvitteringsprinter i nedtrekksmeny for bestillinger? "
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"

@@ -157,9 +157,9 @@ sv:
         error: "Fel"
     invoice_settings:
       edit:
-        title: Fakturainställningar
-        invoice_style2?: Använd den alternativa faktureringsmodellen som inkluderar totala skattefördelning per beräkning och skatt per artikel (ännu inte passande för länder som visar priser exklusive skatt)
-        enable_receipt_printing?: 'Visa alternativ för att skriva ut recept genom att använda termiska skrivare i ordermenyn? '
+        title: "Fakturainställningar"
+        invoice_style2?: "Använd den alternativa faktureringsmodellen som inkluderar totala skattefördelning per beräkning och skatt per artikel (ännu inte passande för länder som visar priser exklusive skatt)"
+        enable_receipt_printing?: "Visa alternativ för att skriva ut recept genom att använda termiska skrivare i ordermenyn? "
     customers:
       index:
         new_customer: "Ny kund"

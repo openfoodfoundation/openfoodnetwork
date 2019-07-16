@@ -317,9 +317,9 @@ fr_CA:
         enable_products_cache: "Autoriser Cache Produits ?"
     invoice_settings:
       edit:
-        title: Paramètres de facturation
-        invoice_style2?: Utiliser le modèle de facture alternatif qui détaille le montant de Taxe agrégé par taux et l'information du taux de taxe par produit (pas adapté pour les instances affichant les prix HT)
-        enable_receipt_printing?: Afficher les options d'impression de tickets de caisse dans le menu déroulant des commandes?
+        title: "Paramètres de facturation"
+        invoice_style2?: "Utiliser le modèle de facture alternatif qui détaille le montant de Taxe agrégé par taux et l'information du taux de taxe par produit (pas adapté pour les instances affichant les prix HT)"
+        enable_receipt_printing?: "Afficher les options d'impression de tickets de caisse dans le menu déroulant des commandes?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"

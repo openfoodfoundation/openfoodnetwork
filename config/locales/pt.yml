@@ -316,9 +316,9 @@ pt:
         enable_products_cache: "Activar Cache?"
     invoice_settings:
       edit:
-        title: Configuração de Faturas
-        invoice_style2?: Use o modelo alternativo de fatura que inclui o total de impostos dividido por taxa e taxa de imposto por item (ainda não disponível para países que exibem preços sem taxas)
-        enable_receipt_printing?: Mostrar opções para imprimir recibos usando impressoras térmicas no selector de encomendas?
+        title: "Configuração de Faturas"
+        invoice_style2?: "Use o modelo alternativo de fatura que inclui o total de impostos dividido por taxa e taxa de imposto por item (ainda não disponível para países que exibem preços sem taxas)"
+        enable_receipt_printing?: "Mostrar opções para imprimir recibos usando impressoras térmicas no selector de encomendas?"
     stripe_connect_settings:
       edit:
         title: "Ligar ao Stripe"
