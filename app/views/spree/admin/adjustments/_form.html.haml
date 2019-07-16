@@ -1,12 +1,5 @@
 .row{"data-hook" => "admin_adjustment_form_fields"}
-  .alpha.three.columns
-    = f.field_container :amount do
-      = f.label :amount, raw(Spree.t(:amount) + content_tag(:span, " *", :class => "required"))
-      = text_field :adjustment, :amount, :class => 'fullwidth'
-      = f.error_message_on :amount
-
-  .omega.nine.columns
-    = f.field_container :label do
-      = f.label :label, raw(Spree.t(:description) + content_tag(:span, " *", :class => "required"))
-      = text_field :adjustment, :label, :class => 'fullwidth'
-      = f.error_message_on :label
+  - if @adjustment.new_record?
+    = render 'new_form', f: f
+  - else
+    = render 'edit_form', f: f
