@@ -457,8 +457,10 @@ describe OrderSyncer do
 
         it "does not change the quantity, and adds the order to order_update_issues" do
           expect(order.reload.total.to_f).to eq 79.96
+
           subscription.assign_attributes(params)
           expect(syncer.sync!).to be true
+
           expect(changed_line_item.reload.quantity).to eq 2
           expect(order.reload.total.to_f).to eq 79.96
           expect(syncer.order_update_issues[order.id]).to include "#{changed_line_item.product.name} - #{changed_line_item.variant.full_name}"
@@ -513,6 +515,24 @@ describe OrderSyncer do
           expect(line_items.map(&:quantity)).to eq []
           expect(order.reload.total.to_f).to eq 59.97
           expect(syncer.order_update_issues[order.id]).to include "#{variant.product.name} - #{variant.full_name} - Insufficient stock available"
+        end
+
+        context "and then updating the quantity of that subscription line item that was not added to the completed order" do
+          it "does nothing to the order and adds the order to order_update_issues" do
+            expect(syncer.sync!).to be true
+
+            line_items = Spree::LineItem.where(order_id: subscription.orders, variant_id: variant.id)
+            expect(line_items.map(&:quantity)).to eq []
+
+            subscription.save # this is necessary to get an id on the subscription_line_items
+            params =  { subscription_line_items_attributes: [{ id: subscription.subscription_line_items.last.id, quantity: 2 }] }
+            subscription.assign_attributes(params)
+            expect(syncer.sync!).to be true
+
+            line_items = Spree::LineItem.where(order_id: subscription.orders, variant_id: variant.id)
+            expect(line_items.map(&:quantity)).to eq []
+            expect(syncer.order_update_issues[order.id]).to include "#{variant.product.name} - #{variant.full_name}"
+          end
         end
       end
     end
