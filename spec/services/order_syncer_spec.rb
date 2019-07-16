@@ -407,9 +407,9 @@ describe OrderSyncer do
       end
 
       context "when order is complete" do
-        before { AdvanceOrderService.new(order).call }
+        it "does not update the line_item quantities and adds the order to order_update_issues with insufficient stock" do
+          AdvanceOrderService.new(order).call
 
-        it "does not update the line_item quantities and adds the order to order_update_issues" do
           expect(syncer.sync!).to be true
 
           line_items = Spree::LineItem.where(order_id: subscription.orders, variant_id: sli.variant_id)
@@ -417,6 +417,17 @@ describe OrderSyncer do
           expect(order.reload.total.to_f).to eq 59.97
           line_item = order.line_items.find_by_variant_id(sli.variant_id)
           expect(syncer.order_update_issues[order.id]).to include "#{line_item.product.name} - #{line_item.variant.full_name} - Insufficient stock available"
+        end
+
+        it "does not update the line_item quantities and adds the order to order_update_issues with out of stock" do
+          # this single item available is used when the order is completed below, making the item out of stock
+          variant.update_attribute(:on_hand, 1)
+          AdvanceOrderService.new(order).call
+
+          expect(syncer.sync!).to be true
+
+          line_item = order.line_items.find_by_variant_id(sli.variant_id)
+          expect(syncer.order_update_issues[order.id]).to include "#{line_item.product.name} - #{line_item.variant.full_name} - Out of Stock"
         end
       end
     end

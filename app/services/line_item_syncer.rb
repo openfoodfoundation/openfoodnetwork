@@ -78,7 +78,7 @@ class LineItemSyncer
     if line_item.variant.in_stock?
       I18n.t("admin.subscriptions.stock.insufficient_stock")
     else
-      I18n.t("admin.subscriptions.stock..out_of_stock")
+      I18n.t("admin.subscriptions.stock.out_of_stock")
     end
   end
 end
