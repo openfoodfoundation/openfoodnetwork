@@ -13,7 +13,9 @@
   #select-customer{"data-hook" => ""}
     %fieldset.no-border-bottom
       %legend{:align => "center"}= Spree.t(:customer_search)
-      = hidden_field_tag :customer_search,  nil, :class => 'fullwidth title'
+      - content_for :app_wrapper_attrs do
+        = 'ng-app=admin.orders'
+      = hidden_field_tag :customer_search_override,  nil, distributor_id: @order.distributor_id, :class => 'fullwidth title customer-search-override'
       = render :partial => "spree/admin/orders/customer_details/autocomplete", :formats => :js
 
 = render :partial => 'spree/shared/error_messages', :locals => { :target => @order }
