@@ -35,8 +35,8 @@ class LineItemSyncer
                                               skip_stock_check: skip_stock_check?(order))
       next if skip_stock_check?(order) || new_line_item.sufficient_stock?
 
+      order.line_items.delete(new_line_item)
       add_order_update_issue(order, new_line_item)
-      new_line_item.update_attributes(quantity: 0)
     end
   end
 

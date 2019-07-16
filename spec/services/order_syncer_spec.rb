@@ -510,7 +510,7 @@ describe OrderSyncer do
           expect(syncer.sync!).to be true
 
           line_items = Spree::LineItem.where(order_id: subscription.orders, variant_id: variant.id)
-          expect(line_items.map(&:quantity)).to eq [0]
+          expect(line_items.map(&:quantity)).to eq []
           expect(order.reload.total.to_f).to eq 59.97
           expect(syncer.order_update_issues[order.id]).to include "#{variant.product.name} - #{variant.full_name} - Insufficient stock available"
         end
