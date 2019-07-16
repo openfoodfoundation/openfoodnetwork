@@ -52,6 +52,11 @@
             .field
               = label_tag(:privacy_policy_url, t('.privacy_policy_url')) + tag(:br)
               = preference_field_tag(:privacy_policy_url, Spree::Config[:privacy_policy_url], type: Spree::Config.preference_type(:privacy_policy_url))
+          %fieldset.number_localization.no-border-bottom
+            %legend{:align => "center"}= t('admin.number_localization.number_localization_settings')
+            .field
+              = preference_field_tag(:enable_localized_number?, Spree::Config[:enable_localized_number?], type: Spree::Config.preference_type(:enable_localized_number?))
+              = label_tag(:enable_localized_number?, t('admin.number_localization.enable_localized_number')) + tag(:br)
 
         .omega.six.columns
           %fieldset.currency.no-border-bottom
