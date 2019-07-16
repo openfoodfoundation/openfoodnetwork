@@ -1,8 +1,8 @@
-@import "compass";
-@import "branding";
-@import "mixins";
-@import "typography";
-@import "variables";
+@import 'compass';
+@import 'branding';
+@import 'mixins';
+@import 'typography';
+@import 'variables';
 
 nav.top-bar {
   @include textpress;
@@ -42,6 +42,8 @@ nav.top-bar {
 }
 
 .top-bar-section {
+  border-bottom: 1px solid lightgray;
+
   a.icon {
     &:hover {
       text-decoration: none;
@@ -57,7 +59,9 @@ nav.top-bar {
   }
 
   // Avoid menu items blocking logo
-  li:not(.has-form), li:not(.has-form) a:not(.button), li:not(.has-form) a:not(.button):hover {
+  li:not(.has-form),
+  li:not(.has-form) a:not(.button),
+  li:not(.has-form) a:not(.button):hover {
     background-color: transparent;
   }
 
@@ -123,7 +127,9 @@ nav.top-bar {
     li > a {
       opacity: 0.8;
 
-      &:hover, &:focus, &:active {
+      &:hover,
+      &:focus,
+      &:active {
         opacity: 1;
       }
 
@@ -173,7 +179,8 @@ nav.top-bar {
     background-color: #f4704c;
     padding: 13px;
 
-    a, span {
+    a,
+    span {
       color: white;
       display: inline-block;
     }
@@ -201,7 +208,6 @@ nav.top-bar {
     }
   }
 }
-
 
 .off-canvas-list li.language-switcher ul li {
   list-style-type: none;
@@ -231,7 +237,7 @@ nav.top-bar {
 .top-bar .ofn-logo img {
   height: auto;
   width: auto;
-  max-height: 51px;
+  max-height: 44px;
   max-width: 250px;
 }
 
@@ -273,7 +279,8 @@ nav.top-bar {
 
 @media screen and (max-width: 1450px) {
   nav .top-bar-section {
-    ul li a, .has-dropdown > a {
+    ul li a,
+    .has-dropdown > a {
       padding: 0 ($topbar-height / 8) !important;
     }
 
