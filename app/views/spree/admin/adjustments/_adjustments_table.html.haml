@@ -1,27 +1,22 @@
 %table.index{"data-hook" => "adjustments"}
   %thead{"data-hook" => "adjustmment_head"}
     %tr
-      %th= "#{Spree.t('date')}/#{Spree.t('time')}"
-      %th= Spree.t(:description)
-      %th= Spree.t(:amount)
-      %th= Spree.t(:state)
-      %th.actionss
+      %th= "#{t('spree.date')}/#{t('spree.time')}"
+      %th= t(:description)
+      %th= t(:amount)
+      %th= t(:included_tax)
+      %th.actions
   %tbody
     - @collection.each do |adjustment|
       - @edit_url = edit_admin_order_adjustment_path(@order, adjustment)
       - @delete_url = admin_order_adjustment_path(@order, adjustment)
-        %tr{:class => "#{cycle('odd', 'even')}", "data-hook" => "adjustment_row", :id => "#{spree_dom_id(adjustment)}"}
-          %td.align-center= pretty_time(adjustment.created_at)
-          %td.align-center= adjustment.label
-          %td.align-center= adjustment.display_amount.to_html
-          %td.align-center= adjustment_state(adjustment)
-          %td.actions
-            = link_to_edit adjustment, :no_text => true
-            = link_to_delete adjustment, :no_text => true
-            = link_to_toggle_adjustment_state @order, adjustment, :no_text => true
-    %tr
-      %td.align-center{:colspan => "4"}
-        = button_to Spree.t(:open_all_adjustments), open_adjustments_admin_order_path(@order), :method => :get
-         
-        \#{button_to Spree.t(:close_all_adjustments), close_adjustments_admin_order_path(@order), :method => :get}
-      %td.actions  
+      - tr_class = cycle('odd', 'even')
+      - tr_id = spree_dom_id(adjustment)
+      %tr{:class => tr_class, "data-hook" => "adjustment_row", :id => tr_id}
+        %td.align-center.created_at= pretty_time(adjustment.created_at)
+        %td.align-center.label= adjustment.label
+        %td.align-center.amount= adjustment.display_amount.to_html
+        %td.align-center.included-tax= adjustment.display_included_tax.to_html
+        %td.actions
+          = link_to_edit adjustment, no_text: true
+          = link_to_delete adjustment, no_text: true
