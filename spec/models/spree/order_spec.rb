@@ -366,6 +366,8 @@ describe Spree::Order do
     before do
       order.add_variant v1
       order.add_variant v2
+
+      order.update_distribution_charge!
     end
 
     it "removes the variant's line item" do
@@ -377,6 +379,34 @@ describe Spree::Order do
       expect do
         order.remove_variant v3
       end.to change(order.line_items(:reload), :count).by(0)
+    end
+
+    context "when the item has an associated adjustment" do
+      let(:distributor) { create(:distributor_enterprise) }
+
+      let(:order_cycle) do
+        create(:order_cycle).tap do |record|
+          create(:exchange, variants: [v1], incoming: true)
+          create(:exchange, variants: [v1], incoming: false, receiver: distributor)
+        end
+      end
+
+      let(:order) { create(:order, distributor: distributor, order_cycle: order_cycle) }
+
+      it "removes the variant's line item" do
+        order.remove_variant v1
+        expect(order.line_items(:reload).map(&:variant)).to eq([v2])
+      end
+
+      it "removes the variant's adjustment" do
+        line_item = order.line_items.where(variant_id: v1.id).first
+        adjustment_scope = Spree::Adjustment.where(source_type: "Spree::LineItem",
+                                                   source_id: line_item.id)
+        expect(adjustment_scope.count).to eq(1)
+        adjustment = adjustment_scope.first
+        order.remove_variant v1
+        expect { adjustment.reload }.to raise_error
+      end
     end
   end
 
