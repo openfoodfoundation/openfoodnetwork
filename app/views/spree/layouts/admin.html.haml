@@ -59,13 +59,16 @@
 
     .container
       .row
-        #content{:class => "#{'with-sidebar ' if content_for?(:sidebar)}", "data-hook" => ""}
+        - content_class = content_for?(:sidebar) ? "with-sidebar" : ""
+        #content{:class => content_class, "data-hook" => ""}
           - if content_for?(:table_filter)
-            #table-filter{:class => "#{if content_for?(:sidebar) then 'twelve' else 'sixteen' end} columns", "data-hook" => ""}
+            - table_filter_class = content_for?(:sidebar) ? 'twelve columns' : 'sixteen columns'
+            #table-filter{:class => table_filter_class, "data-hook" => ""}
               %fieldset
                 %legend{:align => "center"}= yield :table_filter_title
                 = yield :table_filter
-          %div{:class => "#{if content_for?(:sidebar) then 'twelve' else 'sixteen' end} columns"}
+          - div_class = content_for?(:sidebar) ? 'twelve columns' : 'sixteen columns'
+          %div{:class => div_class}
             = yield
           - if content_for?(:sidebar)
             %aside#sidebar.four.columns{"data-hook" => ""}
