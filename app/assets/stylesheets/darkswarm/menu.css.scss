@@ -42,7 +42,7 @@ nav.top-bar {
 }
 
 .top-bar-section {
-  // border-bottom: 1px solid $ofn-grey;
+  border-bottom: 1px solid $ofn-grey;
 
   a.icon {
     &:hover {
@@ -59,9 +59,7 @@ nav.top-bar {
   }
 
   // Avoid menu items blocking logo
-  li:not(.has-form),
-  li:not(.has-form) a:not(.button),
-  li:not(.has-form) a:not(.button):hover {
+  li:not(.has-form), li:not(.has-form) a:not(.button), li:not(.has-form) a:not(.button):hover {
     background-color: transparent;
   }
 
@@ -127,9 +125,7 @@ nav.top-bar {
     li > a {
       opacity: 0.8;
 
-      &:hover,
-      &:focus,
-      &:active {
+      &:hover, &:focus, &:active {
         opacity: 1;
       }
 
