@@ -1079,12 +1079,12 @@ en:
       orders:
         number: Number
         confirm_edit: Are you sure you want to edit this order? Doing so may make it more difficult to automatically sync changes to the subscription in the future.
-      confirm_cancel_msg: Are you sure you want to cancel this subscription? This action cannot be undone.
-      cancel_failure_msg: 'Sorry, cancellation failed!' 
-      confirm_pause_msg: Are you sure you want to pause this subscription?
-      pause_failure_msg: 'Sorry, pausing failed!'
-      confirm_unpause_msg: Are you sure you want to unpause this subscription?
-      unpause_failure_msg: 'Sorry, unpausing failed!'
+      confirm_cancel_msg: "Are you sure you want to cancel this subscription? This action cannot be undone."
+      cancel_failure_msg: "Sorry, cancellation failed!"
+      confirm_pause_msg: "Are you sure you want to pause this subscription?"
+      pause_failure_msg: "Sorry, pausing failed!"
+      confirm_unpause_msg: "If you have an open Order Cycle in this subscription's schedule, an order will be created for this customer. Are you sure you want to unpause this subscription?"
+      unpause_failure_msg: "Sorry, unpausing failed!"
       confirm_cancel_open_orders_msg: "Some orders for this subscription are currently open. The customer has already been notified that the order will be placed. Would you like to cancel these order(s) or keep them?"
       resume_canceled_orders_msg: "Some orders for this subscription can be resumed right now. You can resume them from the orders dropdown."
       yes_cancel_them: Cancel them
