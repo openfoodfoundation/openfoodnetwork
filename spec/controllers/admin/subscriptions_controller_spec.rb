@@ -583,7 +583,7 @@ describe Admin::SubscriptionsController, type: :controller do
     end
 
     context 'json' do
-      let(:params) { { format: :json, id: subscription.id } }
+      let(:params) { { format: :json, id: subscription.id, subscription: {} } }
 
       context 'as a regular user' do
         it 'redirects to unauthorized' do
