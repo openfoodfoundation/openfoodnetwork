@@ -39,6 +39,14 @@ module Spree
         end
       end
 
+      def soft_delete
+        @variant = scope.find(params[:variant_id])
+        authorize! :delete, @variant
+
+        VariantDeleter.new.delete(@variant)
+        respond_with @variant, status: 204
+      end
+
       def destroy
         authorize! :delete, Variant
         @variant = scope.find(params[:id])
