@@ -6,7 +6,7 @@ module Spree
       respond_to :json
 
       before_filter :find_order
-      before_filter :find_and_update_shipment, :only => [:ship, :ready, :add, :remove]
+      before_filter :find_and_update_shipment, only: [:ship, :ready, :add, :remove]
 
       def create
         variant = scoped_variant(params[:variant_id])
@@ -38,7 +38,7 @@ module Spree
         end
 
         @shipment.reload
-        respond_with(@shipment, :default_template => :show)
+        respond_with(@shipment, default_template: :show)
       end
 
       def ready
@@ -47,10 +47,11 @@ module Spree
           if @shipment.can_ready?
             @shipment.ready!
           else
-            render "spree/api/shipments/cannot_ready_shipment", :status => 422 and return
+            render "spree/api/shipments/cannot_ready_shipment", status: :unprocessable_entity
+            return
           end
         end
-        respond_with(@shipment, :default_template => :show)
+        respond_with(@shipment, default_template: :show)
       end
 
       def ship
@@ -58,7 +59,7 @@ module Spree
         unless @shipment.shipped?
           @shipment.ship!
         end
-        respond_with(@shipment, :default_template => :show)
+        respond_with(@shipment, default_template: :show)
       end
 
       def add
