@@ -60,7 +60,7 @@ module Spree
                                            !Spree::Api::Config[:requires_authentication]
 
         return if api_key.present?
-        render "spree/api/errors/must_specify_api_key", status: :unauthorized && return
+        render("spree/api/errors/must_specify_api_key", status: :unauthorized) && return
       end
 
       def authenticate_user
@@ -68,7 +68,7 @@ module Spree
 
         if requires_authentication? || api_key.present?
           unless @current_api_user = Spree.user_class.find_by_spree_api_key(api_key.to_s)
-            render "spree/api/errors/invalid_api_key", status: :unauthorized && return
+            render("spree/api/errors/invalid_api_key", status: :unauthorized) && return
           end
         else
           # An anonymous user
@@ -77,12 +77,12 @@ module Spree
       end
 
       def unauthorized
-        render "spree/api/errors/unauthorized", status: :unauthorized && return
+        render("spree/api/errors/unauthorized", status: :unauthorized) && return
       end
 
       def error_during_processing(exception)
-        render text: { exception: exception.message }.to_json,
-               status: :unprocessable_entity && return
+        render(text: { exception: exception.message }.to_json,
+               status: :unprocessable_entity) && return
       end
 
       def requires_authentication?
@@ -90,7 +90,7 @@ module Spree
       end
 
       def not_found
-        render "spree/api/errors/not_found", status: :not_foun && return
+        render("spree/api/errors/not_found", status: :not_found) && return
       end
 
       def current_ability
