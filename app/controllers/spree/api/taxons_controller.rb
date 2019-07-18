@@ -8,7 +8,7 @@ module Spree
           @taxons = taxonomy.root.children
         else
           if params[:ids]
-            @taxons = Taxon.where(:id => params[:ids].split(","))
+            @taxons = Taxon.where(id: params[:ids].split(","))
           else
             @taxons = Taxon.ransack(params[:q]).result
           end
@@ -32,14 +32,14 @@ module Spree
         taxonomy = Taxonomy.find_by_id(params[:taxonomy_id])
 
         if taxonomy.nil?
-          @taxon.errors[:taxonomy_id] = I18n.t(:invalid_taxonomy_id, :scope => 'spree.api')
-          invalid_resource!(@taxon) and return
+          @taxon.errors[:taxonomy_id] = I18n.t(:invalid_taxonomy_id, scope: 'spree.api')
+          invalid_resource!(@taxon) && return
         end
 
         @taxon.parent_id = taxonomy.root.id unless params[:taxon][:parent_id]
 
         if @taxon.save
-          respond_with(@taxon, :status => 201, :default_template => :show)
+          respond_with(@taxon, status: 201, default_template: :show)
         else
           invalid_resource!(@taxon)
         end
@@ -48,7 +48,7 @@ module Spree
       def update
         authorize! :update, Taxon
         if taxon.update_attributes(params[:taxon])
-          respond_with(taxon, :status => 200, :default_template => :show)
+          respond_with(taxon, status: 200, default_template: :show)
         else
           invalid_resource!(taxon)
         end
@@ -57,21 +57,19 @@ module Spree
       def destroy
         authorize! :delete, Taxon
         taxon.destroy
-        respond_with(taxon, :status => 204)
+        respond_with(taxon, status: 204)
       end
 
       private
 
       def taxonomy
-        if params[:taxonomy_id].present?
-          @taxonomy ||= Taxonomy.find(params[:taxonomy_id])
-        end
+        return if params[:taxonomy_id].blank?
+        @taxonomy ||= Taxonomy.find(params[:taxonomy_id])
       end
 
       def taxon
         @taxon ||= taxonomy.taxons.find(params[:id])
       end
-
     end
   end
 end
