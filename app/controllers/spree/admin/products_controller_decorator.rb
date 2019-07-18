@@ -1,5 +1,6 @@
 require 'open_food_network/spree_api_key_loader'
 require 'open_food_network/referer_parser'
+require 'open_food_network/permissions'
 
 Spree::Admin::ProductsController.class_eval do
   include OpenFoodNetwork::SpreeApiKeyLoader

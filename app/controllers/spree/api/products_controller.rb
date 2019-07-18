@@ -137,7 +137,7 @@ module Spree
       def render_paged_products(products)
         serializer = ActiveModel::ArraySerializer.new(
           products,
-          each_serializer: Api::Admin::ProductSerializer
+          each_serializer: ::Api::Admin::ProductSerializer
         )
 
         render text: { products: serializer, pages: products.num_pages }.to_json
