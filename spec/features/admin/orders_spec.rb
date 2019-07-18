@@ -116,6 +116,7 @@ feature '
     page.find('a.icon-search').click
 
     click_icon :edit
+    expect(page).to have_select2 "order_distributor_id", with_options: [d.name]
     select2_select d.name, from: 'order_distributor_id'
     select2_select oc.name, from: 'order_order_cycle_id'
 
