@@ -5,12 +5,27 @@ describe Spree::Api::ShipmentsController, type: :controller do
 
   let!(:shipment) { create(:shipment) }
   let!(:attributes) { [:id, :tracking, :number, :cost, :shipped_at, :stock_location_name, :order_id, :shipping_rates, :shipping_method, :inventory_units] }
+  let!(:resource_scoping) { { :order_id => shipment.order.to_param, :id => shipment.to_param } }
+  let(:current_api_user) { build(:user) }
 
   before do
     allow(controller).to receive(:spree_current_user) { current_api_user }
   end
 
+  context "as a non-admin" do
+    it "cannot make a shipment ready" do
+      api_put :ready
+      assert_unauthorized!
+    end
+
+    it "cannot make a shipment shipped" do
+      api_put :ship
+      assert_unauthorized!
+    end
+  end
+
   context "as an admin" do
+    let(:current_api_user) { build(:admin_user) }
     let!(:order) { shipment.order }
     let(:order_ship_address) { create(:address) }
     let!(:stock_location) { create(:stock_location_with_items) }
@@ -29,8 +44,6 @@ describe Spree::Api::ShipmentsController, type: :controller do
       order.update_attribute :distributor, variant.product.supplier
       shipment.shipping_method.distributors << variant.product.supplier
     end
-
-    sign_in_as_admin!
 
     context '#create' do
       it 'creates a shipment if order does not have a shipment' do
@@ -74,6 +87,62 @@ describe Spree::Api::ShipmentsController, type: :controller do
         spree_post :create, params
 
         expect_error_response
+      end
+    end
+
+    it "can make a shipment ready" do
+      Spree::Order.any_instance.stub(:paid? => true, :complete? => true)
+      api_put :ready
+
+      expect(attributes.all?{ |attr| json_response.key? attr.to_s }).to be_truthy
+      json_response["state"].should == "ready"
+      shipment.reload.state.should == "ready"
+    end
+
+    it "cannot make a shipment ready if the order is unpaid" do
+      Spree::Order.any_instance.stub(:paid? => false)
+      api_put :ready
+
+      json_response["error"].should == "Cannot ready shipment."
+      response.status.should == 422
+    end
+
+    context 'for completed shipments' do
+      let(:order) { create :completed_order_with_totals }
+      let!(:resource_scoping) { { :order_id => order.to_param, :id => order.shipments.first.to_param } }
+
+      it 'adds a variant to a shipment' do
+        api_put :add, { variant_id: variant.to_param, quantity: 2 }
+        response.status.should == 200
+        json_response['inventory_units'].select { |h| h['variant_id'] == variant.id }.size.should == 2
+      end
+
+      it 'removes a variant from a shipment' do
+        order.contents.add(variant, 2)
+
+        api_put :remove, { variant_id: variant.to_param, quantity: 1 }
+        response.status.should == 200
+        json_response['inventory_units'].select { |h| h['variant_id'] == variant.id }.size.should == 1
+      end
+    end
+
+    context "can transition a shipment from ready to ship" do
+      before do
+        Spree::Order.any_instance.stub(:paid? => true, :complete? => true)
+        # For the shipment notification email
+        Spree::Config[:mails_from] = "spree@example.com"
+
+        shipment.update!(shipment.order)
+        shipment.state.should == "ready"
+        Spree::ShippingRate.any_instance.stub(:cost => 5)
+      end
+
+      it "can transition a shipment from ready to ship" do
+        pending "[Spree build] Failing spec (with postgres)"
+        shipment.reload
+        api_put :ship, :order_id => shipment.order.to_param, :id => shipment.to_param, :shipment => { :tracking => "123123" }
+        json_response.should have_attributes(attributes)
+        json_response["state"].should == "shipped"
       end
     end
 
