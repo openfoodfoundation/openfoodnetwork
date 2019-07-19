@@ -76,9 +76,22 @@ Spree::Core::Engine.routes.prepend do
       end
     end
 
+    resources :variants, :only => [:index]
+
     resources :orders do
       get :managed, on: :collection
+
+      resources :shipments, :only => [:create, :update] do
+        member do
+          put :ready
+          put :ship
+          put :add
+          put :remove
+        end
+      end
     end
+
+    resources :taxons, :only => [:index]
   end
 
   namespace :admin do
