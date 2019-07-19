@@ -113,6 +113,7 @@ module Openfoodnetwork
     )
 
     config.paths["config/routes"] = %w(
+      config/routes/api.rb
       config/routes.rb
       config/routes/admin.rb
       config/routes/spree.rb
