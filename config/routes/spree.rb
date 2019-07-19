@@ -118,6 +118,13 @@ Spree::Core::Engine.routes.prepend do
         end
       end
     end
+
+    resources :users do
+      member do
+        put :generate_api_key
+        put :clear_api_key
+      end
+    end
   end
 
   resources :orders do

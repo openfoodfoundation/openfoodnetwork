@@ -136,6 +136,16 @@ module Spree
       has_spree_role?('admin')
     end
 
+    def generate_spree_api_key!
+      self.spree_api_key = SecureRandom.hex(24)
+      save!
+    end
+
+    def clear_spree_api_key!
+      self.spree_api_key = nil
+      save!
+    end
+
     protected
 
     def password_required?
