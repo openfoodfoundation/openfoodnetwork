@@ -21,10 +21,6 @@ module Spree
         respond_with(@taxon)
       end
 
-      def jstree
-        show
-      end
-
       def create
         authorize! :create, Taxon
         @taxon = Taxon.new(params[:taxon])
