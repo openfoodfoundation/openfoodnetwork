@@ -9,6 +9,8 @@ module Spree
     let!(:variant2) { FactoryBot.create(:variant) }
     let!(:variant3) { FactoryBot.create(:variant) }
     let(:attributes) { [:id, :options_text, :price, :on_hand, :unit_value, :unit_description, :on_demand, :display_as, :display_name] }
+    let!(:standard_attributes) { [:id, :name, :sku, :price, :weight, :height,
+                         :width, :depth, :is_master, :cost_price, :permalink] }
 
     before do
       allow(controller).to receive(:spree_current_user) { current_api_user }
@@ -17,8 +19,16 @@ module Spree
     context "as a normal user" do
       sign_in_as_user!
 
+      let!(:product) { create(:product) }
+      let!(:variant) do
+        variant = product.master
+        variant.option_values << create(:option_value)
+        variant
+      end
+
       it "retrieves a list of variants with appropriate attributes" do
         spree_get :index, template: 'bulk_index', format: :json
+
         keys = json_response.first.keys.map(&:to_sym)
         expect(attributes.all?{ |attr| keys.include? attr }).to eq(true)
       end
@@ -26,27 +36,19 @@ module Spree
       it "is denied access when trying to delete a variant" do
         product = create(:product)
         variant = product.master
-
         spree_delete :soft_delete, variant_id: variant.to_param, product_id: product.to_param, format: :json
+
         assert_unauthorized!
         expect { variant.reload }.not_to raise_error
         expect(variant.deleted_at).to be_nil
       end
 
-      let!(:product) { create(:product) }
-      let!(:variant) do
-        variant = product.master
-        variant.option_values << create(:option_value)
-        variant
-      end
-      let!(:attributes) { [:id, :name, :sku, :price, :weight, :height,
-                           :width, :depth, :is_master, :cost_price,
-                           :permalink] }
-
       it "can see a paginated list of variants" do
         api_get :index
-        json_response["variants"].first.should have_attributes(attributes)
-        json_response["count"].should == 1
+
+        keys = json_response["variants"].first.keys.map(&:to_sym)
+        expect(standard_attributes.all?{ |attr| keys.include? attr }).to eq(true)
+        json_response["count"].should == 11
         json_response["current_page"].should == 1
         json_response["pages"].should == 1
       end
@@ -54,25 +56,29 @@ module Spree
       it 'can control the page size through a parameter' do
         create(:variant)
         api_get :index, :per_page => 1
+
         json_response['count'].should == 1
         json_response['current_page'].should == 1
-        json_response['pages'].should == 3
+        json_response['pages'].should == 14
       end
 
       it 'can query the results through a paramter' do
         expected_result = create(:variant, :sku => 'FOOBAR')
         api_get :index, :q => { :sku_cont => 'FOO' }
+
         json_response['count'].should == 1
         json_response['variants'].first['sku'].should eq expected_result.sku
       end
 
       it "variants returned contain option values data" do
         api_get :index
+
         option_values = json_response["variants"].last["option_values"]
-        option_values.first.should have_attributes([:name,
-                                                   :presentation,
-                                                   :option_type_name,
-                                                   :option_type_id])
+        option_values.first.should have_attributes(keys: ["id",
+                                                          "name",
+                                                          "presentation",
+                                                          "option_type_name",
+                                                          "option_type_id"])
       end
 
       it "variants returned contain images data" do
@@ -80,10 +86,10 @@ module Spree
 
         api_get :index
 
-        json_response["variants"].last.should have_attributes([:images])
+        json_response["variants"].last["images"].should_not be_nil
       end
 
-      # Regression test for #2141
+      # Regression test for spree#2141
       context "a deleted variant" do
         before do
           variant.update_column(:deleted_at, Time.now)
@@ -91,12 +97,12 @@ module Spree
 
         it "is not returned in the results" do
           api_get :index
-          json_response["variants"].count.should == 0
+          json_response["variants"].count.should == 10 # there are 11 variants
         end
 
         it "is not returned even when show_deleted is passed" do
           api_get :index, :show_deleted => true
-          json_response["variants"].count.should == 0
+          json_response["variants"].count.should == 10 # there are 11 variants
         end
       end
 
@@ -104,54 +110,57 @@ module Spree
         it "can select the next page of variants" do
           second_variant = create(:variant)
           api_get :index, :page => 2, :per_page => 1
-          json_response["variants"].first.should have_attributes(attributes)
-          json_response["total_count"].should == 3
+
+          keys = json_response["variants"].first.keys.map(&:to_sym)
+          expect(standard_attributes.all?{ |attr| keys.include? attr }).to eq(true)
+          json_response["total_count"].should == 14
           json_response["current_page"].should == 2
-          json_response["pages"].should == 3
+          json_response["pages"].should == 14
         end
       end
 
       it "can see a single variant" do
         api_get :show, :id => variant.to_param
-        json_response.should have_attributes(attributes)
+
+        keys = json_response.keys.map(&:to_sym)
+        expect((standard_attributes + [:options_text, :option_values, :images]).all?{ |attr| keys.include? attr }).to eq(true)
         option_values = json_response["option_values"]
-        option_values.first.should have_attributes([:name,
-                                                   :presentation,
-                                                   :option_type_name,
-                                                   :option_type_id])
+        option_values.first.should have_attributes(keys: ["id", "name", "presentation",
+                                                   "option_type_name", "option_type_id"])
       end
 
       it "can see a single variant with images" do
         variant.images.create!(:attachment => image("thinking-cat.jpg"))
-
         api_get :show, :id => variant.to_param
 
-        json_response.should have_attributes(attributes + [:images])
-        option_values = json_response["option_values"]
-        option_values.first.should have_attributes([:name,
-                                                   :presentation,
-                                                   :option_type_name,
-                                                   :option_type_id])
+        keys = json_response.keys.map(&:to_sym)
+        expect((standard_attributes + [:images]).all?{ |attr| keys.include? attr }).to eq(true)
+        option_values_keys = json_response["option_values"].first.keys.map(&:to_sym)
+        expect([:name,:presentation,:option_type_name,:option_type_id].all?{ |attr| option_values_keys.include? attr }).to eq(true)
       end
 
       it "can learn how to create a new variant" do
         api_get :new
-        json_response["attributes"].should == attributes.map(&:to_s)
+
+        json_response["attributes"].should == standard_attributes.map(&:to_s)
         json_response["required_attributes"].should be_empty
       end
 
       it "cannot create a new variant if not an admin" do
         api_post :create, :variant => { :sku => "12345" }
+
         assert_unauthorized!
       end
 
       it "cannot update a variant" do
         api_put :update, :id => variant.to_param, :variant => { :sku => "12345" }
+
         assert_unauthorized!
       end
 
       it "cannot delete a variant" do
         api_delete :destroy, :id => variant.to_param
+
         assert_unauthorized!
         lambda { variant.reload }.should_not raise_error
       end
@@ -167,6 +176,7 @@ module Spree
 
       it "soft deletes a variant" do
         spree_delete :soft_delete, variant_id: variant.to_param, product_id: product.to_param, format: :json
+
         expect(response.status).to eq(204)
         expect { variant.reload }.not_to raise_error
         expect(variant.deleted_at).to be_present
@@ -174,6 +184,7 @@ module Spree
 
       it "is denied access to soft deleting another enterprises' variant" do
         spree_delete :soft_delete, variant_id: variant_other.to_param, product_id: product_other.to_param, format: :json
+
         assert_unauthorized!
         expect { variant.reload }.not_to raise_error
         expect(variant.deleted_at).to be_nil
@@ -198,6 +209,7 @@ module Spree
 
       it "soft deletes a variant" do
         spree_delete :soft_delete, variant_id: variant.to_param, product_id: product.to_param, format: :json
+
         expect(response.status).to eq(204)
         expect { variant.reload }.not_to raise_error
         expect(variant.deleted_at).not_to be_nil
@@ -206,7 +218,6 @@ module Spree
       it "doesn't delete the only variant of the product" do
         product = create(:product)
         variant = product.variants.first
-
         spree_delete :soft_delete, variant_id: variant.to_param, product_id: product.to_param, format: :json
 
         expect(variant.reload).to_not be_deleted
@@ -222,7 +233,6 @@ module Spree
         end
       end
 
-      # Test for #2141
       context "deleted variants" do
         before do
           variant.update_column(:deleted_at, Time.now)
@@ -230,26 +240,30 @@ module Spree
 
         it "are visible by admin" do
           api_get :index, :show_deleted => 1
-          json_response["variants"].count.should == 1
+
+          json_response["variants"].count.should == 2
         end
       end
 
       it "can create a new variant" do
-        api_post :create, :variant => { :sku => "12345" }
-        json_response.should have_attributes(attributes)
+        original_number_of_variants = variant.product.variants.count
+        api_post :create, :variant => { :sku => "12345", :unit_value => "weight", :unit_description => "L" }
+
+        expect(standard_attributes.all?{ |attr| json_response.include? attr.to_s }).to eq(true)
         response.status.should == 201
         json_response["sku"].should == "12345"
-
-        variant.product.variants.count.should == 1
+        variant.product.variants.count.should == original_number_of_variants + 1
       end
 
       it "can update a variant" do
         api_put :update, :id => variant.to_param, :variant => { :sku => "12345" }
+
         response.status.should == 200
       end
 
       it "can delete a variant" do
         api_delete :destroy, :id => variant.to_param
+
         response.status.should == 204
         lambda { Spree::Variant.find(variant.id) }.should raise_error(ActiveRecord::RecordNotFound)
       end      
