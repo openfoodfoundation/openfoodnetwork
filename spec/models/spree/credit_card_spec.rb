@@ -83,11 +83,26 @@ module Spree
           end
         end
 
-        context "and the checkout creates a one-time-use card" do
+        context "and the checkout creates a card" do
           let!(:card1) { create(:credit_card, onetime_card_attrs) }
+          let(:store_card_profile_attrs) {
+            {
+              cc_type: "visa",
+              gateway_customer_profile_id: "cus_FH9HflKAJw6Kxy",
+              gateway_payment_profile_id: "card_1EmayNBZvgSKc1B2wctIzzoh"
+            }
+          }
 
-          it "sets it as the default anyway" do
+          it "doesn't set a one-time card as the default" do
             expect(card1.reload.is_default).to be false
+          end
+
+          it "sets a re-usable card as the default" do
+            # The checkout first creates a one-time card and then converts it
+            # to a re-usable card.
+            # This imitates Stripe::ProfileStorer.
+            card1.update_attributes!(store_card_profile_attrs)
+            expect(card1.reload.is_default).to be true
           end
         end
       end
