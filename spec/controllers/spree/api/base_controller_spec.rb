@@ -14,7 +14,6 @@ describe Spree::Api::BaseController do
     before do
       allow(controller).to receive_messages try_spree_current_user:
                                               double(email: "spree@example.com")
-      Spree::Api::Config[:requires_authentication] = true
     end
 
     it "can make a request" do

@@ -127,8 +127,6 @@ RSpec.configure do |config|
       spree_config.shipping_instructions = true
       spree_config.auto_capture = true
     end
-
-    Spree::Api::Config[:requires_authentication] = true
   end
 
   # Helpers

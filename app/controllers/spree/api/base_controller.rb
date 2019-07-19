@@ -57,7 +57,7 @@ module Spree
       def check_for_user_or_api_key
         # User is already authenticated with Spree, make request this way instead.
         return true if @current_api_user = try_spree_current_user ||
-                                           !Spree::Api::Config[:requires_authentication]
+                                           !requires_authentication?
 
         return if api_key.present?
         render("spree/api/errors/must_specify_api_key", status: :unauthorized) && return
@@ -86,7 +86,7 @@ module Spree
       end
 
       def requires_authentication?
-        Spree::Api::Config[:requires_authentication]
+        true
       end
 
       def not_found
