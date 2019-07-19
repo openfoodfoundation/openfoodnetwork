@@ -11,5 +11,14 @@ module OpenFoodNetwork
         json_response
       end
     end
+
+    def current_api_user
+      @current_api_user ||= Spree::LegacyUser.new(email: "spree@example.com", enterprises: [])
+    end
+
+    def assert_unauthorized!
+      json_response.should == { "error" => "You are not authorized to perform that action." }
+      response.status.should == 401
+    end
   end
 end
