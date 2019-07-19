@@ -12,17 +12,15 @@ module Spree
     }
 
     before do
+      allow(controller).to receive(:spree_current_user) { current_api_user }
+
       taxon2.children << create(:taxon, name: "3.2.2", taxonomy: taxonomy)
       taxon.children << taxon2
       taxonomy.root.children << taxon
     end
 
     context "as a normal user" do
-      controller(Spree::Api::TaxonsController) do
-        def spree_current_user
-          FactoryBot.create(:user)
-        end
-      end
+      let(:current_api_user) { build(:user) }
 
       it "gets all taxons for a taxonomy" do
         api_get :index, taxonomy_id: taxonomy.id
@@ -84,11 +82,7 @@ module Spree
     end
 
     context "as an admin" do
-      controller(Spree::Api::TaxonsController) do
-        def spree_current_user
-          FactoryBot.create(:admin_user)
-        end
-      end
+      let(:current_api_user) { build(:admin_user) }
 
       it "can create" do
         api_post :create, taxonomy_id: taxonomy.id, taxon: { name: "Colors" }
