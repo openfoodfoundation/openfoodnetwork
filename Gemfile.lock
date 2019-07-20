@@ -806,7 +806,6 @@ DEPENDENCIES
   simple_form!
   simplecov
   spinjs-rails
-  spree_api!
   spree_backend!
   spree_core!
   spree_i18n!
