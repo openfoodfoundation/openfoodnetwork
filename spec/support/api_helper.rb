@@ -20,5 +20,9 @@ module OpenFoodNetwork
       json_response.should == { "error" => "You are not authorized to perform that action." }
       response.status.should == 401
     end
+
+    def image(filename)
+      File.open(Rails.root + "spec/support/fixtures" + filename)
+    end
   end
 end
