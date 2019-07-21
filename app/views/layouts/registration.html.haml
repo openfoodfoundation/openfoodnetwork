@@ -31,7 +31,7 @@
     = javascript_include_tag "darkswarm/all"
     = yield :scripts
 
-    = inject_json "user", "current_user"
+    = inject_current_user
     = yield :injection_data
 
     = render "layouts/i18n_script"

@@ -111,6 +111,10 @@ module InjectionHelper
     inject_json_ams "savedCreditCards", data, Api::CreditCardSerializer
   end
 
+  def inject_current_user
+    inject_json_ams "user", spree_current_user, Api::UserSerializer
+  end
+
   def inject_json(name, partial, opts = {})
     render partial: "json/injection", locals: { name: name, partial: partial }.merge(opts)
   end
