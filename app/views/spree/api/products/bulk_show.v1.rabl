@@ -19,9 +19,3 @@ node( :category_id, &:primary_taxon_id )
 node( :supplier ) do |p|
   partial 'api/enterprises/bulk_show', object: p.supplier
 end
-node( :variants ) do |p|
-  partial 'spree/api/variants/bulk_index', object: p.variants.reorder('spree_variants.id ASC')
-end
-node( :master ) do |p|
-  partial 'spree/api/variants/bulk_show', object: p.master
-end

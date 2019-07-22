@@ -1,19 +1,20 @@
 module Spree
   module Api
-    class VariantsController < Spree::Api::BaseController
+    class VariantsController < ::Api::BaseController
       respond_to :json
 
+      skip_authorization_check only: :index
       before_filter :product
 
       def index
         @variants = scope.includes(:option_values).ransack(params[:q]).result.
           page(params[:page]).per(params[:per_page])
-        respond_with(@variants)
+        render json: @variants, each_serializer: ::Api::VariantSerializer
       end
 
       def show
         @variant = scope.includes(:option_values).find(params[:id])
-        respond_with(@variant)
+        render json: @variant, serializer: ::Api::VariantSerializer
       end
 
       def new; end
@@ -22,7 +23,7 @@ module Spree
         authorize! :create, Variant
         @variant = scope.new(params[:variant])
         if @variant.save
-          respond_with(@variant, status: 201, default_template: :show)
+          render json: @variant, serializer: ::Api::VariantSerializer, status: 201
         else
           invalid_resource!(@variant)
         end
@@ -32,7 +33,7 @@ module Spree
         authorize! :update, Variant
         @variant = scope.find(params[:id])
         if @variant.update_attributes(params[:variant])
-          respond_with(@variant, status: 200, default_template: :show)
+          render json: @variant, serializer: ::Api::VariantSerializer, status: 200
         else
           invalid_resource!(@product)
         end
@@ -43,14 +44,14 @@ module Spree
         authorize! :delete, @variant
 
         VariantDeleter.new.delete(@variant)
-        respond_with @variant, status: 204
+        render json: @variant, serializer: ::Api::VariantSerializer, status: 204
       end
 
       def destroy
         authorize! :delete, Variant
         @variant = scope.find(params[:id])
         @variant.destroy
-        respond_with(@variant, status: 204)
+        render json: @variant, serializer: ::Api::VariantSerializer, status: 204
       end
 
       private

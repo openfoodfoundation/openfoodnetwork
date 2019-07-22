@@ -29,7 +29,7 @@ module Spree
       end
 
       it "retrieves a list of variants with appropriate attributes" do
-        spree_get :index, template: 'bulk_index', format: :json
+        spree_get :index, format: :json
 
         keys = json_response.first.keys.map(&:to_sym)
         expect(attributes.all?{ |attr| keys.include? attr }).to eq(true)
@@ -105,19 +105,6 @@ module Spree
         it "is not returned even when show_deleted is passed" do
           api_get :index, show_deleted: true
           expect(json_response["variants"].count).to eq(10) # there are 11 variants
-        end
-      end
-
-      context "pagination" do
-        it "can select the next page of variants" do
-          second_variant = create(:variant)
-          api_get :index, page: 2, per_page: 1
-
-          keys = json_response["variants"].first.keys.map(&:to_sym)
-          expect(standard_attributes.all?{ |attr| keys.include? attr }).to eq(true)
-          expect(json_response["total_count"]).to eq(14)
-          expect(json_response["current_page"]).to eq(2)
-          expect(json_response["pages"]).to eq(14)
         end
       end
 
