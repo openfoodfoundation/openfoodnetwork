@@ -17,15 +17,8 @@
       <ul class='variant-data'>
         <li class='variant-sku'><strong><%= t('admin.sku') %>:</strong> {{variant.sku}}</li>
         <li class='variant-on_hand'><strong><%= t('on_hand') %>:</strong> {{variant.on_hand}}</li>
+        <li class='variant-options_text'><strong><%= t('.unit') %>:</strong> {{variant.options_text}}</li>
       </ul>
-
-      {{#if variant.option_values}}
-        <ul class='variant-options'>
-          {{#each variant.option_values}}
-            <li><strong>{{this.option_type.presentation}}:</strong> {{this.presentation}}</li>
-          {{/each}}
-        </ul>
-      {{/if}}
     </div>
   </div>
 </script>
