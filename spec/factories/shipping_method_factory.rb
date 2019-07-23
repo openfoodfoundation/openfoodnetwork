@@ -41,6 +41,6 @@ FactoryBot.modify do
   factory :shipping_method, parent: :base_shipping_method do
     distributors { [Enterprise.is_distributor.first || FactoryBot.create(:distributor_enterprise)] }
     display_on ''
-    zones { |a| [] }
+    zones { [] }
   end
 end
