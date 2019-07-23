@@ -1,0 +1,9 @@
+= tab :dashboard, :route => :admin, :icon => 'icon-dashboard'
+= tab :products , :option_types, :properties, :prototypes, :variants, :product_properties, :taxons, :url => admin_products_path, :icon => 'icon-th-large'
+= tab :order_cycles, :url => main_app.admin_order_cycles_path
+= tab :orders, :payments, :creditcard_payments, :shipments, :credit_cards, :return_authorizations, :url => admin_orders_path('q[s]' => 'completed_at desc'), :icon => 'icon-shopping-cart'
+= tab :reports, :icon => 'icon-file'
+= tab :configurations, :general_settings, :mail_methods, :tax_categories, :zones, :states, :payment_methods, :inventory_settings, :taxonomies, :shipping_methods, :trackers, :label => 'configuration', :icon => 'icon-wrench', :url => edit_admin_general_settings_path
+= tab :enterprises, :url => main_app.admin_enterprises_path
+= tab :customers, :url => main_app.admin_customers_path
+= tab :enterprise_groups, :url => main_app.admin_enterprise_groups_path, label: 'groups'

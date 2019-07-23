@@ -1,5 +1,0 @@
-/
-  insert_before '[data-hook="inside_head"]'
-
-%div#test
-= render "layouts/bugherd_script"

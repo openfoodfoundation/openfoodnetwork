@@ -1,3 +1,0 @@
-/ insert_before "div#wrapper"
-
-= admin_inject_currency_config
