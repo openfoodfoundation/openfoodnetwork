@@ -13,7 +13,7 @@ module Calculator
 
     def compute(object)
       line_items = line_items_for object
-      total_weight(line_items) * preferred_per_kg
+      (total_weight(line_items) * preferred_per_kg).round(2)
     end
 
     private
