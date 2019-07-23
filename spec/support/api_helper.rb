@@ -17,8 +17,8 @@ module OpenFoodNetwork
     end
 
     def assert_unauthorized!
-      json_response.should == { "error" => "You are not authorized to perform that action." }
-      response.status.should == 401
+      expect(json_response).to eq("error" => "You are not authorized to perform that action.")
+      expect(response.status).to eq 401
     end
 
     def image(filename)
