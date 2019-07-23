@@ -27,7 +27,7 @@ feature "Packing Reports", js: true do
         select oc.name, from: "q_order_cycle_id_in"
 
         find('#q_completed_at_gt').click
-        select_date(Time.zone.today - 1.days)
+        select_date(Time.zone.today - 1.day)
 
         find('#q_completed_at_lt').click
         select_date(Time.zone.today)

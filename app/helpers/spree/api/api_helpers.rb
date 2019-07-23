@@ -12,7 +12,8 @@ module Spree
       end
 
       def product_attributes
-        [:id, :name, :description, :price, :available_on, :permalink, :meta_description, :meta_keywords, :shipping_category_id, :taxon_ids]
+        [:id, :name, :description, :price, :available_on, :permalink, :meta_description,
+         :meta_keywords, :shipping_category_id, :taxon_ids]
       end
 
       def product_property_attributes
@@ -20,11 +21,13 @@ module Spree
       end
 
       def variant_attributes
-        [:id, :name, :sku, :price, :weight, :height, :width, :depth, :is_master, :cost_price, :permalink]
+        [:id, :name, :sku, :price, :weight, :height, :width, :depth,
+         :is_master, :cost_price, :permalink]
       end
 
       def image_attributes
-        [:id, :position, :attachment_content_type, :attachment_file_name, :type, :attachment_updated_at, :attachment_width, :attachment_height, :alt]
+        [:id, :position, :attachment_content_type, :attachment_file_name,
+         :type, :attachment_updated_at, :attachment_width, :attachment_height, :alt]
       end
 
       def option_value_attributes
@@ -32,7 +35,9 @@ module Spree
       end
 
       def order_attributes
-        [:id, :number, :item_total, :total, :state, :adjustment_total, :user_id, :created_at, :updated_at, :completed_at, :payment_total, :shipment_state, :payment_state, :email, :special_instructions, :token]
+        [:id, :number, :item_total, :total, :state, :adjustment_total, :user_id,
+         :created_at, :updated_at, :completed_at, :payment_total,
+         :shipment_state, :payment_state, :email, :special_instructions, :token]
       end
 
       def line_item_attributes
@@ -44,7 +49,8 @@ module Spree
       end
 
       def payment_attributes
-        [:id, :source_type, :source_id, :amount, :payment_method_id, :response_code, :state, :avs_response, :created_at, :updated_at]
+        [:id, :source_type, :source_id, :amount, :payment_method_id,
+         :response_code, :state, :avs_response, :created_at, :updated_at]
       end
 
       def payment_method_attributes
@@ -80,11 +86,13 @@ module Spree
       end
 
       def adjustment_attributes
-        [:id, :source_type, :source_id, :adjustable_type, :adjustable_id, :originator_type, :originator_id, :amount, :label, :mandatory, :locked, :eligible,  :created_at, :updated_at]
+        [:id, :source_type, :source_id, :adjustable_type, :adjustable_id, :originator_type,
+         :originator_id, :amount, :label, :mandatory, :locked, :eligible,  :created_at, :updated_at]
       end
 
       def creditcard_attributes
-        [:id, :month, :year, :cc_type, :last_digits, :first_name, :last_name, :gateway_customer_profile_id, :gateway_payment_profile_id]
+        [:id, :month, :year, :cc_type, :last_digits, :first_name, :last_name,
+         :gateway_customer_profile_id, :gateway_payment_profile_id]
       end
 
       def user_attributes
@@ -96,7 +104,8 @@ module Spree
       end
 
       def stock_location_attributes
-        [:id, :name, :address1, :address2, :city, :state_id, :state_name, :country_id, :zipcode, :phone, :active]
+        [:id, :name, :address1, :address2, :city,
+         :state_id, :state_name, :country_id, :zipcode, :phone, :active]
       end
 
       def stock_movement_attributes
