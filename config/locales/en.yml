@@ -1054,6 +1054,10 @@ en:
           The displayed prices are only an estimate and calculated at the time the subscription is changed.
           If you change prices or fees, orders will be updated, but the subscription will still display the old values.
         not_in_open_and_upcoming_order_cycles_warning: "There are no open or upcoming order cycles for this product."
+      autocomplete:
+        name_or_sku: "NAME OR SKU"
+        quantity: "Quantity"
+        add: "Add"
       details:
         details: Details
         invalid_error: Oops! Please fill in all of the required fields...
