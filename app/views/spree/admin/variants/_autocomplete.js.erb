@@ -16,7 +16,11 @@
       </ul>
       <ul class='variant-data'>
         <li class='variant-sku'><strong><%= t('admin.sku') %>:</strong> {{variant.sku}}</li>
-        <li class='variant-on_hand'><strong><%= t('on_hand') %>:</strong> {{variant.on_hand}}</li>
+        {{#if variant.on_demand }}
+          <li class='variant-on_demand'><strong><%= t('on_demand') %></strong></li>
+        {{ else }}
+          <li class='variant-on_hand'><strong><%= t('on_hand') %>:</strong> {{variant.on_hand}}</li>
+        {{/if}}
         <li class='variant-options_text'><strong><%= t('.unit') %>:</strong> {{variant.options_text}}</li>
       </ul>
     </div>
@@ -38,7 +42,7 @@
         </thead>
         <tbody>
           <tr>
-            {{#if variant.[in_stock?]}}
+            {{#if variant.in_stock}}
               {{#if variant.on_demand}}
                 <td><%= Spree.t(:on_demand) %></td>
               {{else}}
