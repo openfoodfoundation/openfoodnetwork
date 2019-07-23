@@ -1,19 +1,7 @@
-class Api::RailsFlashSerializer < ActiveModel::Serializer
-  attributes :info, :success, :error, :notice
+module Api
+  class RailsFlashSerializer < ActiveModel::Serializer
+    attributes :info, :success, :error, :notice
 
-  def info
-    object.info
-  end
-
-  def success
-    object.success
-  end
-
-  def error
-    object.error
-  end
-
-  def notice
-    object.notice
+    delegate :info, :success, :error, :notice, to: :object
   end
 end
