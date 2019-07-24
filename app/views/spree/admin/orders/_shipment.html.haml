@@ -6,9 +6,6 @@
       = "-"
       %span.shipment-state
         = Spree.t("shipment_states.#{shipment.state}")
-      = Spree.t(:package_from)
-      %strong.stock-location-name{ "data-hook" => "stock-location-name" }
-        = "'#{shipment.stock_location.name}'"
       - if shipment.ready? and can? :update, shipment
         = "-"
         = link_to 'ship', '#', :class => 'ship button icon-arrow-right', :data => { 'shipment-number' => shipment.number }
