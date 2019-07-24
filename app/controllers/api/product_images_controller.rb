@@ -8,11 +8,11 @@ module Api
 
       if @product.images.first.nil?
         @image = Spree::Image.create(attachment: params[:file], viewable_id: @product.master.id, viewable_type: 'Spree::Variant')
-        respond_with(@image, status: 201)
+        render json: @image, serializer: ImageSerializer, status: :created
       else
         @image = @product.images.first
         @image.update_attributes(attachment: params[:file])
-        respond_with(@image, status: 200)
+        render json: @image, serializer: ImageSerializer, status: :ok
       end
     end
   end
