@@ -61,6 +61,10 @@ module InjectionHelper
     inject_json_ams "currentOrder", current_order, Api::CurrentOrderSerializer, current_distributor: current_distributor, current_order_cycle: current_order_cycle
   end
 
+  def inject_current_order_cycle
+    inject_json_ams "orderCycleData", current_order_cycle, Api::OrderCycleSerializer
+  end
+
   def inject_available_shipping_methods
     inject_json_ams "shippingMethods", available_shipping_methods,
                     Api::ShippingMethodSerializer, current_order: current_order
