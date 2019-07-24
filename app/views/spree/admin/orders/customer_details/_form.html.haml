@@ -1,0 +1,28 @@
+%fieldset.no-border-top{"data-hook" => "admin_customer_detail_form_fields"}
+  %fieldset.index.no-border-bottom{"data-hook" => "customer_guest"}
+    %legend{:align => "center"}= Spree.t(:account)
+    .row{"data-hook" => "customer_fields"}
+      .alpha.eight.columns.fullwidth
+        .field
+          = f.label :email, Spree.t(:email) + ':'
+          = f.email_field :email, :class => 'fullwidth'
+
+  .alpha.six.columns{"data-hook" => "bill_address_wrapper"}
+    %fieldset.no-border-bottom
+      %legend{:align => "center"}= Spree.t(:billing_address)
+      = f.fields_for :bill_address do |ba_form|
+        = render :partial => 'spree/admin/shared/address_form', :locals => { :f => ba_form, :name => Spree.t(:billing_address), :use_billing => false }
+
+  .omega.six.columns{"data-hook" => "ship_address_wrapper"}
+    %fieldset.no-border-bottom
+      %legend{:align => "center"}= Spree.t(:shipping_address)
+      = f.fields_for :ship_address do |sa_form|
+        = render :partial => 'spree/admin/shared/address_form', :locals => { :f => sa_form, :name => Spree.t(:shipping_address), :use_billing => true }
+
+  .clear
+
+  .form-buttons.filter-actions.actions{"data-hook" => "buttons"}
+    = button Spree.t('actions.update'), 'icon-refresh'
+
+  - content_for :head do
+    = javascript_include_tag 'admin/address_states.js'

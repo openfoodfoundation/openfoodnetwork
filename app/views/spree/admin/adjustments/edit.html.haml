@@ -1,0 +1,19 @@
+= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Adjustments' }
+
+- content_for :page_title do
+  %i.icon-arrow-right
+  = Spree.t(:edit)
+  = Spree.t(:adjustment)
+
+- content_for :page_actions do
+  %li= button_link_to Spree.t(:back_to_adjustments_list), spree.admin_order_adjustments_url(@order), :icon => 'icon-arrow-left'
+
+= render :partial => 'spree/shared/error_messages', :locals => { :target => @adjustment }
+
+= form_for @adjustment, :url => admin_order_adjustment_path(@order, @adjustment), :method => :put do |f|
+  %fieldset.no-border-top
+    = render :partial => 'form', :locals => { :f => f }
+    .filter-actions.actions{"data-hook" => "buttons"}
+      = button Spree.t(:continue), 'icon-arrow-right'
+      %span.or= Spree.t(:or)
+      = link_to_with_icon 'icon-remove', Spree.t('actions.cancel'), admin_order_adjustments_url(@order), :class => 'button'
