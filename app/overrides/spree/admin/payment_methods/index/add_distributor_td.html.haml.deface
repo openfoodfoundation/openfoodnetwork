@@ -1,6 +1,0 @@
-/ insert_after "[data-hook='admin_payment_methods_index_rows'] td:first-child"
-
-%td.align-center
-  - method.distributors.each do |distributor|
-    = distributor.name
-    %br/

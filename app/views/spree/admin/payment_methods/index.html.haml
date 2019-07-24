@@ -1,5 +1,3 @@
-= render partial: 'spree/admin/shared/configuration_menu'
-
 - content_for :page_title do
   = Spree.t(:payment_methods)
 
@@ -10,15 +8,17 @@
 - if @payment_methods.any?
   %table#listing_payment_methods.index
     %colgroup
-      %col{style: "width: 15%"}/
-      %col{style: "width: 35%"}/
-      %col{style: "width: 15%"}/
-      %col{style: "width: 10%"}/
-      %col{style: "width: 10%"}/
-      %col{style: "width: 15%"}/
+      %col{style: "width: 13%"}
+      %col{style: "width: 14%"}
+      %col{style: "width: 32%"}
+      %col{style: "width: 14%"}
+      %col{style: "width:  8%"}
+      %col{style: "width:  8%"}
+      %col{style: "width: 11%"}
     %thead
       %tr{"data-hook" => "admin_payment_methods_index_headers"}
         %th= Spree.t(:name)
+        %th= t(:products_distributor)
         %th= Spree.t(:provider)
         %th= Spree.t(:environment)
         %th= Spree.t(:display)
@@ -28,6 +28,10 @@
       - @payment_methods.each do |method|
         %tr{class: "#{cycle('odd', 'even')}", "data-hook" => "admin_payment_methods_index_rows", id: "#{spree_dom_id method}"}
           %td.align-center= method.name
+          %td.align-center
+            - method.distributors.each do |distributor|
+              = distributor.name
+              %br/
           %td= method.type
           %td.align-center= method.environment.to_s.titleize
           %td.align-center= method.display_on.blank? ? Spree.t(:both) : Spree.t(method.display_on)
