@@ -1,0 +1,25 @@
+- shipment.manifest.each do |item|
+  - line_item = order.find_line_item_by_variant(item.variant)
+
+  %tr.stock-item{ "data-item-quantity" => "#{item.quantity}" }
+    %td.item-image
+      = mini_image(item.variant)
+    %td.item-name
+      = item.variant.product_and_full_name
+    %td.item-price.align-center
+      = line_item.single_money.to_html
+    %td.item-qty-show.align-center
+      - item.states.each do |state,count|
+        = "#{count} x #{state.humanize.downcase}"
+    - unless shipment.shipped?
+      %td.item-qty-edit.hidden
+        = number_field_tag :quantity, item.quantity, :min => 0, :class => "line_item_quantity", :size => 5
+    %td.item-total.align-center
+      = line_item_shipment_price(line_item, item.quantity)
+
+    %td.cart-item-delete.actions{ "data-hook" => "cart_item_delete" }
+      - if !shipment.shipped? && can?(:update, shipment)
+        = link_to '', '#', :class => 'save-item icon_link icon-ok no-text with-tip', :data => {'shipment-number' => shipment.number, 'variant-id' => item.variant.id, :action => 'save'}, :title => t('actions.save'), :style => 'display: none'
+        = link_to '', '#', :class => 'cancel-item icon_link icon-cancel no-text with-tip', :data => {:action => 'cancel'}, :title => t('actions.cancel'), :style => 'display: none'
+        = link_to '', '#', :class => 'edit-item icon_link icon-edit no-text with-tip', :data => {:action => 'edit'}, :title => t('actions.edit')
+        = link_to '', '#', :class => 'delete-item icon-trash no-text with-tip', :data => {'shipment-number' => shipment.number, 'variant-id' => item.variant.id, :action => 'remove', :confirm => t(:are_you_sure)}, :title => t('actions.delete')
