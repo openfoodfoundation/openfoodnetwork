@@ -2,8 +2,10 @@
   #tagline:before { background-image: url("#{ContentConfig.home_hero.url}") }
 
 
-%div{"ng-controller" => "HomeCtrl"}
+- content_for :page_alert do
   = render "shared/menu/alert"
+
+%div{"ng-controller" => "HomeCtrl"}
   = render "home/tagline"
 
   #panes
