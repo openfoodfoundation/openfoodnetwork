@@ -47,9 +47,14 @@ module Api
 
     # TODO: This should be named 'managed'. Is the action above used? Maybe we should remove it.
     def bulk_products
-      @products = OpenFoodNetwork::Permissions.new(current_api_user).editable_products.
-        merge(product_scope).
-        order('created_at DESC').
+      product_query = OpenFoodNetwork::Permissions.new(current_api_user).
+        editable_products.merge(product_scope)
+
+      if params[:import_date].present?
+        product_query = product_query.joins(:variants).merge(import_date_scope).group_by_products_id
+      end
+
+      @products = product_query.order('created_at DESC').
         ransack(params[:q]).result.
         page(params[:page]).per(params[:per_page])
 
@@ -104,8 +109,8 @@ module Api
     end
 
     def import_date_scope
-      return if params[:import_date].blank?
-      Spree::Variant.where(import_date: params[:import_date])
+      import_date = params[:import_date].to_datetime
+      Spree::Variant.where(import_date: import_date..import_date + 24.hours)
     end
 
     def paged_products_for_producers(producers)
