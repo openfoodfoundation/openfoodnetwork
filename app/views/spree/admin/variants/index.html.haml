@@ -21,14 +21,14 @@
     %tbody
       - @variants.each do |variant|
         %tr{id: spree_dom_id(variant), "data-hook" => "variants_row", class: cycle('odd', 'even'), style: "#{"color:red;" if variant.deleted? }" }
-        %td.no-border
-          %span.handle
-        %td= variant.full_name
-        %td.align-center= variant.display_price.to_html
-        %td.align-center= variant.sku
-        %td.actions
-          = link_to_edit(variant, no_text: true) unless variant.deleted?
-          = link_to_delete(variant, no_text: true) unless variant.deleted?
+          %td.no-border
+            %span.handle
+          %td= variant.full_name
+          %td.align-center= variant.display_price.to_html
+          %td.align-center= variant.sku
+          %td.actions
+            = link_to_edit(variant, no_text: true) unless variant.deleted?
+            = link_to_delete(variant, no_text: true) unless variant.deleted?
     - unless @product.has_variants?
       %tr
         %td{colspan: "5"}= Spree.t(:none)
