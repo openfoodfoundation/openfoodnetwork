@@ -1,3 +1,0 @@
-/ insert_before "fieldset.no-border-top"
-
-%save-bar{ persist: "true" }

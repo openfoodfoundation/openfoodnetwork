@@ -10,11 +10,12 @@
 - if @payment_methods.any?
   = render partial: 'spree/shared/error_messages', locals: { target: @payment }
 
-  = form_for @payment, url: admin_order_payments_path(@order) do |f|
+  = form_for @payment, url: admin_order_payments_path(@order), html: {"ng-app" => "admin.payments", "ng-controller" => "PaymentCtrl"} do |f|
+    %save-bar{ persist: "true" }
     %fieldset.no-border-top
       = render partial: 'form', locals: { f: f }
       .filter-actions.actions{"data-hook" => "buttons"}
-        = button @order.cart? ? Spree.t('actions.continue') : Spree.t('actions.update'), @order.cart? ? 'icon-arrow-right' : 'icon-refresh'
+        = button_tag t(:update), type: 'button', "ng-click" => "submitPayment()"
 
 - else
   = Spree.t(:cannot_create_payment_without_payment_methods)

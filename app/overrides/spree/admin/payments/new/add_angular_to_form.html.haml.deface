@@ -1,2 +1,0 @@
-/replace 'code[erb-loud]:contains("form_for @payment")'
-= form_for @payment, :url => admin_order_payments_path(@order), :html => {"ng-app" => "admin.payments", "ng-controller" => "PaymentCtrl"} do |f|
