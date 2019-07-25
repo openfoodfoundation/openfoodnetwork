@@ -125,13 +125,17 @@ module Api
 
       render text: {
         products: serializer,
-        pagination: {
-          results: products.total_count,
-          pages: products.num_pages,
-          page: params[:page].to_i,
-          per_page: params[:per_page].to_i
-        }
+        pagination: pagination_data(products)
       }.to_json
+    end
+
+    def pagination_data(results)
+      {
+        results: results.total_count,
+        pages: results.num_pages,
+        page: params[:page].to_i,
+        per_page: params[:per_page].to_i
+      }
     end
   end
 end
