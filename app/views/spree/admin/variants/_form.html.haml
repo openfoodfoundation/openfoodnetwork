@@ -21,7 +21,7 @@
   %div
     - @product.option_types.each do |option_type|
       - unless variant_unit_option_type?(option_type)
-        .field{"data-hook" => "presentation"}
+        .field
           = label :new_variant, option_type.presentation
           - if @variant.new_record?
             = select(:new_variant, option_type.presentation, option_type.option_values.collect {|ov| [ ov.presentation, ov.id ] }, {}, {class: 'select2 fullwidth'})
@@ -52,7 +52,7 @@
 
 .right.six.columns.omega.label-block
   - if @product.variant_unit != 'weight'
-    .field{"data-hook" => 'weight'}
+    .field
       = f.label 'weight', t('weight')+' (kg)'
       - value = number_with_precision(@variant.weight, precision: 2)
       = f.text_field 'weight', value: value, class: 'fullwidth'

@@ -12,7 +12,7 @@
       %col{style: "width: 20%"}/
       %col{style: "width: 15%"}/
       %col{style: "width: 15%"}/
-    %thead{"data-hook" => "variants_header"}
+    %thead
       %tr
         %th{colspan: "2"}= Spree.t(:options)
         %th= Spree.t(:price)
@@ -20,7 +20,7 @@
         %th.actions
     %tbody
       - @variants.each do |variant|
-        %tr{id: spree_dom_id(variant), "data-hook" => "variants_row", class: cycle('odd', 'even'), style: "#{"color:red;" if variant.deleted? }" }
+        %tr{id: spree_dom_id(variant), class: cycle('odd', 'even'), style: "#{"color:red;" if variant.deleted? }" }
           %td.no-border
             %span.handle
           %td= variant.full_name
@@ -39,7 +39,7 @@
     \.
 
 - if @product.empty_option_values?
-  %p.first_add_option_types.no-objects-found{"data-hook" => "first_add_option_types"}
+  %p.first_add_option_types.no-objects-found
     = Spree.t(:to_add_variants_you_must_first_define)
     = link_to Spree.t(:option_types), admin_product_url(@product)
     = Spree.t(:and)
@@ -47,8 +47,8 @@
 
 - else
   - content_for :page_actions do
-    %ul.inline-menu{"data-hook" => "toolbar"}
-      %li#new_var_link{"data-hook" => ""}
+    %ul.inline-menu
+      %li#new_var_link
         = link_to_with_icon('icon-plus', Spree.t(:new_variant), new_admin_product_variant_url(@product), remote: true, 'data-update' => 'new_variant', class: 'button')
 
       %li= link_to_with_icon('icon-filter', @deleted.blank? ? Spree.t(:show_deleted) : Spree.t(:show_active), admin_product_variants_url(@product, deleted: @deleted.blank? ? "on" : "off"), class: 'button')
