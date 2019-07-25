@@ -103,6 +103,11 @@ module Api
       scope.includes(:master)
     end
 
+    def import_date_scope
+      return if params[:import_date].blank?
+      Spree::Variant.where(import_date: params[:import_date])
+    end
+
     def paged_products_for_producers(producers)
       Spree::Product.scoped.
         merge(product_scope).
