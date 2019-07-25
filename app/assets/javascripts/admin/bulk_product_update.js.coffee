@@ -54,6 +54,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     $scope.fetchProducts()
 
   $scope.fetchProducts = ->
+    removeClearedValues()
     params = {
       'q[name_cont]': $scope.query,
       'q[supplier_id_eq]': $scope.producerFilter,
@@ -64,6 +65,11 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     }
     RequestMonitor.load(BulkProducts.fetch(params).$promise).then ->
       $scope.resetProducts()
+
+  removeClearedValues = ->
+    delete $scope.producerFilter if $scope.producerFilter == "0"
+    delete $scope.categoryFilter if $scope.categoryFilter == "0"
+    delete $scope.importDateFilter if $scope.importDateFilter == "0"
 
   $timeout ->
     if $scope.showLatestImport
