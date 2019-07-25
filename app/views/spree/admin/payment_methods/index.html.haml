@@ -16,17 +16,17 @@
       %col{style: "width:  8%"}
       %col{style: "width: 11%"}
     %thead
-      %tr{"data-hook" => "admin_payment_methods_index_headers"}
+      %tr
         %th= Spree.t(:name)
         %th= t(:products_distributor)
         %th= Spree.t(:provider)
         %th= Spree.t(:environment)
         %th= Spree.t(:display)
         %th= Spree.t(:active)
-        %th.actions{"data-hook" => "admin_payment_methods_index_header_actions"}
+        %th.actions
     %tbody
       - @payment_methods.each do |method|
-        %tr{class: "#{cycle('odd', 'even')}", "data-hook" => "admin_payment_methods_index_rows", id: "#{spree_dom_id method}"}
+        %tr{class: "#{cycle('odd', 'even')}", id: "#{spree_dom_id method}"}
           %td.align-center= method.name
           %td.align-center
             - method.distributors.each do |distributor|
@@ -36,7 +36,7 @@
           %td.align-center= method.environment.to_s.titleize
           %td.align-center= method.display_on.blank? ? Spree.t(:both) : Spree.t(method.display_on)
           %td.align-center= method.active ? Spree.t(:say_yes) : Spree.t(:say_no)
-          %td.actions{"data-hook" => "admin_payment_methods_index_row_actions"}
+          %td.actions
             = link_to_edit method, no_text: true
             = link_to_delete method, no_text: true
 - else
