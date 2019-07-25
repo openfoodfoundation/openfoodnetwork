@@ -46,7 +46,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     .catch (message) ->
       $scope.api_error_msg = message
 
-  $scope.$watchCollection '[query, producerFilter, categoryFilter, importDateFilter]', ->
+  $scope.$watchCollection '[query, producerFilter, categoryFilter, importDateFilter, per_page]', ->
     $scope.page = 1 # Reset page when changing filters for new search
 
   $scope.changePage = (newPage) ->
