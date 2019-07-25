@@ -1,14 +1,14 @@
 %div{ 'ng-show' => '!spree_api_key_ok' }
   {{ api_error_msg }}
 
-%div.sixteen.columns.alpha#loading{ 'ng-if' => 'loading' }
+%div.sixteen.columns.alpha#loading{ 'ng-if' => 'RequestMonitor.loading' }
   %img.spinner{ src: "/assets/spinning-circles.svg" }
   %h1= t('.title')
 
-%div.sixteen.columns.alpha{ 'ng-show' => '!loadingAllPages && filteredProducts.length == 0 && query.length==0' }
+%div.sixteen.columns.alpha{ 'ng-show' => '!RequestMonitor.loading && products.length == 0 && query.length==0' }
   %h1#no_results= t('.no_products')
 
-%div.sixteen.columns.alpha{ 'ng-show' => '!loadingAllPages && filteredProducts.length == 0 && query.length!=0' }
+%div.sixteen.columns.alpha{ 'ng-show' => '!RequestMonitor.loading && products.length == 0 && query.length!=0' }
   %h1#no_results
     = t('.no_results')
     '
