@@ -8,3 +8,6 @@
   = render 'spree/admin/products/index/actions'
   = render 'spree/admin/products/index/indicators'
   = render 'spree/admin/products/index/products'
+
+  %div{'ng-show' => "!RequestMonitor.loading && products.length > 0" }
+    = render partial: 'admin/shared/angular_pagination'

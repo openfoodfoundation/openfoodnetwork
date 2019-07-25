@@ -1,12 +1,17 @@
-angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $http, $window, BulkProducts, DisplayProperties, dataFetcher, DirtyProducts, VariantUnitManager, StatusMessage, producers, Taxons, SpreeApiAuth, Columns, tax_categories) ->
-  $scope.loading = true
-  $scope.loadingAllPages = true
-
+angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $filter, $http, $window, BulkProducts, DisplayProperties, DirtyProducts, VariantUnitManager, StatusMessage, producers, Taxons, SpreeApiAuth, Columns, tax_categories, RequestMonitor) ->
   $scope.StatusMessage = StatusMessage
 
   $scope.columns = Columns.columns
 
   $scope.variant_unit_options = VariantUnitManager.variantUnitOptions()
+
+  $scope.RequestMonitor = RequestMonitor
+  $scope.pagination = BulkProducts.pagination
+  $scope.per_page_options = [
+    {id: 15, name: t('js.admin.orders.index.per_page', results: 15)},
+    {id: 50, name: t('js.admin.orders.index.per_page', results: 50)},
+    {id: 100, name: t('js.admin.orders.index.per_page', results: 100)}
+  ]
 
   $scope.filterableColumns = [
     { name: t("label_producers"),       db_column: "producer_name" },
@@ -31,9 +36,6 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
   $scope.categoryFilter = "0"
   $scope.importDateFilter = "0"
   $scope.products = BulkProducts.products
-  $scope.filteredProducts = []
-  $scope.currentFilters = []
-  $scope.limit = 15
   $scope.query = ""
   $scope.DisplayProperties = DisplayProperties
 
@@ -46,16 +48,23 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
       $scope.api_error_msg = message
 
   $scope.$watchCollection '[query, producerFilter, categoryFilter, importDateFilter]', ->
-    $scope.limit = 15 # Reset limit whenever searching
+    $scope.page = 1 # Reset page when changing filters for new search
+
+  $scope.changePage = (newPage) ->
+    $scope.page = newPage
+    $scope.fetchProducts()
 
   $scope.fetchProducts = ->
-    $scope.loading = true
-    $scope.loadingAllPages = true
-    BulkProducts.fetch($scope.currentFilters, ->
-      $scope.loadingAllPages = false
-    ).then ->
+    params = {
+      'q[name_cont]': $scope.query,
+      'q[supplier_id_eq]': $scope.producerFilter,
+      'q[primary_taxon_id_eq]': $scope.categoryFilter,
+      import_date: $scope.importDateFilter,
+      page: $scope.page,
+      per_page: $scope.per_page
+    }
+    RequestMonitor.load(BulkProducts.fetch(params).$promise).then ->
       $scope.resetProducts()
-      $scope.loading = false
 
   $timeout ->
     if $scope.showLatestImport
@@ -101,7 +110,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
 
   $scope.toggleShowAllVariants = ->
     showVariants = !DisplayProperties.showVariants 0
-    $scope.filteredProducts.forEach (product) ->
+    $scope.products.forEach (product) ->
       DisplayProperties.setShowVariants product.id, showVariants
     DisplayProperties.setShowVariants 0, showVariants
 
