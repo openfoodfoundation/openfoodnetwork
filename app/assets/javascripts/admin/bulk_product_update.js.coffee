@@ -26,15 +26,14 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
   $scope.optionTabs =
     filters:        { title: t("filter_products"),   visible: false }
 
-
   $scope.producers = producers
   $scope.taxons = Taxons.all
   $scope.tax_categories = tax_categories
-  $scope.filterProducers = [{id: "0", name: ""}].concat $scope.producers
-  $scope.filterTaxons = [{id: "0", name: ""}].concat $scope.taxons
-  $scope.producerFilter = "0"
-  $scope.categoryFilter = "0"
-  $scope.importDateFilter = "0"
+  $scope.producerFilter = ""
+  $scope.categoryFilter = ""
+  $scope.importDateFilter = ""
+  $scope.page = 1
+  $scope.per_page = 15
   $scope.products = BulkProducts.products
   $scope.query = ""
   $scope.DisplayProperties = DisplayProperties
