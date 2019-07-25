@@ -207,7 +207,13 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
       url: "/admin/products/bulk_update"
       data:
         products: productsToSubmit
-        filters: $scope.currentFilters
+        filters:
+          'q[name_cont]': $scope.query
+          'q[supplier_id_eq]': $scope.producerFilter
+          'q[primary_taxon_id_eq]': $scope.categoryFilter
+          import_date: $scope.importDateFilter
+        page: $scope.page
+        per_page: $scope.per_page
     ).success((data) ->
       DirtyProducts.clear()
       BulkProducts.updateVariantLists(data.products || [])
