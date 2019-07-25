@@ -14,7 +14,7 @@
     %save-bar{ persist: "true" }
     %fieldset.no-border-top
       = render partial: 'form', locals: { f: f }
-      .filter-actions.actions{"data-hook" => "buttons"}
+      .filter-actions.actions
         = button_tag t(:update), type: 'button', "ng-click" => "submitPayment()"
 
 - else
