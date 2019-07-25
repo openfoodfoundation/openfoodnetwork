@@ -299,13 +299,6 @@ describe "AdminProductEditCtrl", ->
       $scope.$digest()
       expect($scope.resetProducts).toHaveBeenCalled()
 
-    it "sets the loading property to true before fetching products and unsets it when loading is complete", ->
-      $scope.fetchProducts()
-      expect($scope.loading).toEqual true
-      $scope.$digest()
-      expect($scope.loading).toEqual false
-
-
   describe "resetting products", ->
     beforeEach ->
       spyOn DirtyProducts, "clear"

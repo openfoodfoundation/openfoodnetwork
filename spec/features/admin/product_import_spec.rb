@@ -170,6 +170,7 @@ feature "Product Import", js: true do
       expect(page).to have_selector 'div#s2id_import_date_filter'
       import_time = carrots.import_date.to_date.to_formatted_s(:long)
       select2_select import_time, from: "import_date_filter"
+      page.find('.button.icon-search').click
 
       expect(page).to have_field "product_name", with: carrots.name
       expect(page).to have_field "product_name", with: potatoes.name
