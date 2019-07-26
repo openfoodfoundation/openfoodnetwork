@@ -170,6 +170,10 @@ nav.top-bar {
 
 .tab-bar {
   background-color: white;
+  position: fixed;
+  width: 100%;
+  height: 2.8em;
+  z-index: 1;
 
   .cart-span {
     background-color: #f4704c;
@@ -230,6 +234,15 @@ nav.top-bar {
   padding: 9px 0 0 9px;
 }
 
+// Leave space for tab bar, in screens smaller than large.
+[role="main"] {
+  margin-top: 2.8em;
+
+  @media #{$large-up} {
+    margin-top: 0;
+  }
+}
+
 .top-bar .ofn-logo img {
   height: auto;
   width: auto;
@@ -241,7 +254,7 @@ nav.top-bar {
   background-color: white;
 }
 
-.off-canvas-wrap.move-right ul.off-canvas-list {
+.off-canvas-wrap ul.off-canvas-list {
   font-size: 0.875rem;
 
   .li-menu {
@@ -261,12 +274,10 @@ nav.top-bar {
       background-color: transparent;
       color: $brand-colour;
     }
-
-    @include transition(all 0.3s ease-in-out);
   }
 }
 
-.off-canvas-wrap.move-right ul.off-canvas-list i {
+.off-canvas-wrap ul.off-canvas-list i {
   font-size: 1.5rem;
   margin-right: 0.25rem;
 }

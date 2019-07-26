@@ -26,9 +26,11 @@
     = render "layouts/shopfront_script" if @shopfront_layout
 
     .off-canvas-wrap{offcanvas: true}
-      .inner-wrap
+      .fixed.off-canvas-fixed
         = render "shared/menu/menu" unless @hide_menu
+        = yield :page_alert
 
+      .inner-wrap
         %section{ role: "main" }
           = yield
 
