@@ -54,4 +54,19 @@ describe Spree::UsersController, type: :controller do
       expect(json_response['registered']).to eq false
     end
   end
+
+  context '#load_object' do
+    it 'should redirect to signup path if user is not found' do
+      allow(controller).to receive_messages(spree_current_user: nil)
+      spree_put :update, user: { email: 'foobar@example.com' }
+      expect(response).to redirect_to('/login')
+    end
+  end
+
+  context '#create' do
+    it 'should create a new user' do
+      spree_post :create, user: { email: 'foobar@example.com', password: 'foobar123', password_confirmation: 'foobar123' }
+      expect(assigns[:user].new_record?).to be_falsey
+    end
+  end
 end

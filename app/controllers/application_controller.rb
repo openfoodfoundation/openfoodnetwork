@@ -1,4 +1,5 @@
 require 'open_food_network/referer_parser'
+require 'spree/authentication_helpers'
 
 class ApplicationController < ActionController::Base
   protect_from_forgery
@@ -7,6 +8,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_cache_headers # prevent cart emptying via cache when using back button #1213
 
   include EnterprisesHelper
+  include Spree::AuthenticationHelpers
 
   def redirect_to(options = {}, response_status = {})
     ::Rails.logger.error("Redirected by #{begin

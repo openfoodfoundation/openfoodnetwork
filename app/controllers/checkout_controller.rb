@@ -8,7 +8,6 @@ class CheckoutController < Spree::CheckoutController
   prepend_before_filter :require_order_cycle
   prepend_before_filter :require_distributor_chosen
 
-  skip_before_filter :check_registration
   before_filter :enable_embedded_shopfront
 
   include OrderCyclesHelper
