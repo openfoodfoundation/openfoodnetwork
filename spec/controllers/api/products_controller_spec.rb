@@ -72,11 +72,7 @@ describe Api::ProductsController, type: :controller do
   end
 
   context "as an enterprise user" do
-    let(:current_api_user) do
-      user = create(:user)
-      user.enterprise_roles.create(enterprise: supplier)
-      user
-    end
+    let(:current_api_user) { supplier_enterprise_user(supplier) }
 
     it "soft deletes my products" do
       spree_delete :soft_delete, product_id: product.to_param, format: :json
@@ -170,11 +166,7 @@ describe Api::ProductsController, type: :controller do
     end
 
     context 'as an enterprise user' do
-      let(:current_api_user) do
-        user = create(:user)
-        user.enterprise_roles.create(enterprise: supplier)
-        user
-      end
+      let(:current_api_user) { supplier_enterprise_user(supplier) }
 
       it 'responds with a successful response' do
         spree_post :clone, product_id: product.id, format: :json
@@ -221,5 +213,66 @@ describe Api::ProductsController, type: :controller do
         expect(json_response['name']).to eq("COPY OF #{product_with_image.name}")
       end
     end
+
+    describe '#bulk_products' do
+      context "as an enterprise user" do
+        let!(:taxon) { create(:taxon) }
+        let!(:product2) { create(:product, supplier: supplier, primary_taxon: taxon) }
+        let!(:product3) { create(:product, supplier: supplier2, primary_taxon: taxon) }
+        let(:current_api_user) { supplier_enterprise_user(supplier) }
+
+        before { current_api_user.enterprise_roles.create(enterprise: supplier2) }
+
+        it "returns a list of products" do
+          spree_get :bulk_products, { page: 1, per_page: 15 }, format: :json
+
+          expect(returned_product_ids).to eq [product3.id, product2.id, product1.id]
+        end
+
+        it "returns pagination data" do
+          spree_get :bulk_products, { page: 1, per_page: 15 }, format: :json
+
+          expect(json_response['pagination']).to eq "results" => 3, "pages" => 1, "page" => 1, "per_page" => 15
+        end
+
+        it "filters results by supplier" do
+          spree_get :bulk_products, { page: 1, per_page: 15, q: {supplier_id_eq: supplier.id} }, format: :json
+
+          expect(returned_product_ids).to eq [product2.id, product1.id]
+        end
+
+        it "filters results by product category" do
+          spree_get :bulk_products, { page: 1, per_page: 15, q: {primary_taxon_id_eq: taxon.id} }, format: :json
+
+          expect(returned_product_ids).to eq [product3.id, product2.id]
+        end
+
+        it "filters results by import_date" do
+          product1.variants.first.import_date = 1.day.ago
+          product2.variants.first.import_date = 2.days.ago
+          product3.variants.first.import_date = 1.day.ago
+
+          product1.save
+          product2.save
+          product3.save
+
+          spree_get :bulk_products, { page: 1, per_page: 15, import_date: 1.day.ago.to_date.to_s }, format: :json
+
+          expect(returned_product_ids).to eq [product3.id, product1.id]
+        end
+      end
+    end
+  end
+
+  private
+
+  def supplier_enterprise_user(enterprise)
+    user = create(:user)
+    user.enterprise_roles.create(enterprise: enterprise)
+    user
+  end
+
+  def returned_product_ids
+    json_response['products'].map{ |obj| obj['id'] }
   end
 end
