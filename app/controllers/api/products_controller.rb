@@ -56,7 +56,7 @@ module Api
 
       @products = product_query.order('created_at DESC').
         ransack(params[:q]).result.
-        page(params[:page]).per(params[:per_page])
+        page(params[:page] || 1).per(params[:per_page] || 50)
 
       render_paged_products @products
     end
