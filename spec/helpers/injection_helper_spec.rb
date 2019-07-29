@@ -49,6 +49,18 @@ describe InjectionHelper, type: :helper do
     expect(helper.inject_current_order).to match order.id.to_s
   end
 
+  describe "injects current order cycle" do
+    it "injects empty json object (not nil) when current OC is null" do
+      allow(helper).to receive(:current_order_cycle).and_return nil
+      expect(helper.inject_current_order_cycle).to match "{}"
+    end
+
+    it "injects current OC when OC not null" do
+      allow(helper).to receive(:current_order_cycle).and_return order_cycle = create(:simple_order_cycle)
+      expect(helper.inject_current_order_cycle).to match order_cycle.id.to_s
+    end
+  end
+
   it "injects taxons" do
     taxon = create(:taxon)
     expect(helper.inject_taxons).to match taxon.name
