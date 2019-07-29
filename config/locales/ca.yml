@@ -94,6 +94,8 @@ ca:
     user_passwords:
       spree_user:
         updated_not_active: "La vostra contrasenya s'ha restablert, però el vostre correu electrònic encara no s'ha confirmat."
+        updated: "La vostra contrasenya s'ha canviat correctament. Ja teniu la sessió iniciada."
+        send_instructions: "Rebreu un correu electrònic amb instruccions sobre com confirmar el vostre compte en pocs minuts."
   models:
     order_cycle:
       cloned_order_cycle_name: "CÒPIA DE %{order_cycle}"
@@ -246,6 +248,9 @@ ca:
     create_and_add_another: "Crea i afegeix-ne una altra"
     create: "Crear"
     cancel: "Cancel·lar"
+    save: "Desa"
+    edit: "Editar"
+    delete: "Suprimir"
   admin:
     begins_at: Comença a
     begins_on: Comença
@@ -1755,7 +1760,7 @@ ca:
         create_profile: "Crea un perfil"
       about:
         title: "Sobre"
-        headline: "Bona!"
+        headline: "Enhorabona!"
         message: "Ara expliqueu-ne els detalls"
         success: "Enhorabona! %{enterprise} s'ha afegit a Open Food Network"
         registration_exit_message: "Si surts de l'assistent en qualsevol moment, podràs continuar creant el teu perfil anant a la interfície d'administració."
@@ -2774,6 +2779,7 @@ ca:
     inventory: Inventari
     zipcode: Codi postal
     weight: Pes (per kg)
+    error_user_destroy_with_orders: "No es poden esborrar usuaris amb comandes completades"
     actions:
       update: "Actualitzar"
     errors:
