@@ -18,7 +18,7 @@ describe Api::GroupListSerializer do
     expect(serializer.serializable_hash[:state]).to eq group.address.state.abbr
   end
 
-  it "serialises an array of enterprises" do
+  it "serializes an array of enterprises" do
     expect(serializer.serializable_hash[:enterprises]).to be_a ActiveModel::ArraySerializer
     expect(serializer.serializable_hash[:enterprises].to_json).to match producer.name
   end

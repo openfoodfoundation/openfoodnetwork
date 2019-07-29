@@ -4,7 +4,7 @@ describe Api::OrderCycleSerializer do
   let(:order_cycle) { create(:simple_order_cycle) }
   let(:serializer) { Api::OrderCycleSerializer.new(order_cycle).to_json }
 
-  it "serializers the OC id as order_cycle_id" do
+  it "serializes the OC id as order_cycle_id" do
     expect(serializer).to match "order_cycle_id"
     expect(serializer).to match order_cycle.id.to_s
   end
