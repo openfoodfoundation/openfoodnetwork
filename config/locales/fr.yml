@@ -14,7 +14,7 @@ fr:
       spree/product:
         primary_taxon: "Catégorie Produit"
         supplier: "Fournisseur"
-        shipping_category_id: "Catégorie de livraison"
+        shipping_category_id: "Condition de transport"
         variant_unit: "Unité"
         variant_unit_name: "Unité de la variante"
       order_cycle:
@@ -94,6 +94,8 @@ fr:
     user_passwords:
       spree_user:
         updated_not_active: "Votre mot de passe a bien été réinitialisé, mais votre email n'a pas encore été confirmé."
+        updated: "Votre mot de passer a été changé avec succès. Vous êtes maintenant connecté(e)."
+        send_instructions: "Un email a été envoyé avec des instructions pour confirmer votre adresse email. Vérifiez votre boite mail!"
   models:
     order_cycle:
       cloned_order_cycle_name: "Copie de %{order_cycle}"
@@ -246,6 +248,9 @@ fr:
     create_and_add_another: "Créer et ajouter nouveau"
     create: "Créer"
     cancel: "Annuler"
+    save: "Sauvegarder"
+    edit: "Modifier"
+    delete: "Supprimer"
   admin:
     begins_at: Commence
     begins_on: Commence le
@@ -461,7 +466,7 @@ fr:
         category_values: Valeurs disponibles pour les catégories
         product_categories: Catégorie Produit
         tax_categories: TVA applicable
-        shipping_categories: Condition de transport
+        shipping_categories: Conditions de transport
       import:
         review: Vérifier
         import: Importer
@@ -2538,7 +2543,7 @@ fr:
       select_shop: 'Veuillez d''abord choisir une boutique'
       could_not_create: Oups ! Création impossible...
     subscriptions:
-      closes: fermer
+      closes: fermé
       closed: fermé
       close_date_not_set: Date de fin non renseignée
     spree:
@@ -2740,9 +2745,9 @@ fr:
     new_taxonomy: "Nouvelle taxonomie"
     back_to_taxonomies_list: "Retour à la liste des taxonomies"
     shipping_methods: "Méthodes de livraison"
-    shipping_categories: "Condition de transport"
-    new_shipping_category: "Nouvelle catégorie d'expédition"
-    back_to_shipping_categories: "Retour aux catégories d'expédition"
+    shipping_categories: "Conditions de transport"
+    new_shipping_category: "Nouvelle condition de transport"
+    back_to_shipping_categories: "Retour aux conditions de transport"
     analytics_trackers: "Traqueurs analyse navigation"
     no_trackers_found: "Pas de traqueur trouvé"
     new_tracker: "Nouveau traqueur"
@@ -2781,6 +2786,7 @@ fr:
     inventory: Catalogue boutique
     zipcode: Code postal
     weight: Poids (au kg)
+    error_user_destroy_with_orders: "Les utilisateurs avec des commandes finalisées pourraient ne pas être supprimés"
     actions:
       update: "Mettre à jour"
     errors:
