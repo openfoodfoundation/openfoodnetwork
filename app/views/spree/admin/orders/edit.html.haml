@@ -29,8 +29,5 @@
     %div{"data-hook" => "admin_order_edit_form"}
       = render :partial => 'form', :locals => { :order => @order }
 
-- content_for :head do
-  = javascript_tag 'var expand_variants = true;'
-
 :coffee
   angular.bootstrap(document.getElementById("links-dropdown"),['admin.dropdown'])
