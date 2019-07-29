@@ -94,6 +94,8 @@ es:
     user_passwords:
       spree_user:
         updated_not_active: "Su contraseña ha sido restablecida, pero su correo electrónico aún no ha sido confirmado."
+        updated: "Su contraseña ha sido cambiada con éxito. Ya tienes la sesión iniciada."
+        send_instructions: "Recibirás un correo electrónico con instrucciones sobre cómo confirmar su cuenta en unos minutos."
   models:
     order_cycle:
       cloned_order_cycle_name: "COPIA DE %{order_cycle}"
@@ -246,6 +248,9 @@ es:
     create_and_add_another: "Crear y agregar otro"
     create: "Crear"
     cancel: "Cancelar"
+    save: "Guardar"
+    edit: "Editar"
+    delete: "Borrar"
   admin:
     begins_at: Empieza en
     begins_on: Comienza en
@@ -2775,6 +2780,7 @@ es:
     inventory: Inventario
     zipcode: Código Postal
     weight: Peso (en kg)
+    error_user_destroy_with_orders: "Los usuarios con pedidos completados no pueden ser eliminados"
     actions:
       update: "Actualizar"
     errors:
