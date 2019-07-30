@@ -111,8 +111,12 @@ module InjectionHelper
     inject_json_ams "savedCreditCards", data, Api::CreditCardSerializer
   end
 
-  def inject_json(name, partial, opts = {})
-    render partial: "json/injection", locals: { name: name, partial: partial }.merge(opts)
+  def inject_current_user
+    inject_json_ams "user", spree_current_user, Api::UserSerializer
+  end
+
+  def inject_rails_flash
+    inject_json_ams "railsFlash", OpenStruct.new(flash.to_hash), Api::RailsFlashSerializer
   end
 
   def inject_json_ams(name, data, serializer, opts = {})
