@@ -742,7 +742,7 @@ feature '
     end
   end
 
-  describe "Updating product image with new upload interface" do
+  describe "Updating product image" do
     let!(:product) { create(:simple_product, name: "Carrots") }
 
     it "displays product images and image upload modal" do
@@ -755,6 +755,7 @@ feature '
 
         # Shows default image when no image set
         expect(page).to have_css "img[src='/assets/noimage/mini.png']"
+        @old_thumb_src = page.find("a.image-modal img")['src']
 
         # Click image
         page.find("a.image-modal").click
@@ -780,7 +781,7 @@ feature '
       within "table#listing_products tr#p_#{product.id}" do
         # New thumbnail is shown in image column
         @new_thumb_src = page.find("a.image-modal img")['src']
-        expect(@old_thumb_src) != @new_thumb_src
+        expect(@old_thumb_src).not_to eq @new_thumb_src
 
         page.find("a.image-modal").click
       end
