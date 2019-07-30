@@ -3,6 +3,8 @@ require 'open_food_network/permissions'
 module Api
   class ProductsController < Api::BaseController
     respond_to :json
+    DEFAULT_PAGE = 1
+    DEFAULT_PER_PAGE = 15
 
     skip_authorization_check only: [:show, :bulk_products, :overridable]
 
@@ -56,7 +58,7 @@ module Api
 
       @products = product_query.order('created_at DESC').
         ransack(params[:q]).result.
-        page(params[:page] || 1).per(params[:per_page] || 50)
+        page(params[:page] || DEFAULT_PAGE).per(params[:per_page] || DEFAULT_PER_PAGE)
 
       render_paged_products @products
     end
@@ -138,8 +140,8 @@ module Api
       {
         results: results.total_count,
         pages: results.num_pages,
-        page: params[:page].to_i,
-        per_page: params[:per_page].to_i
+        page: (params[:page].to_i || DEFAULT_PAGE).to_i,
+        per_page: (params[:per_page].to_i || DEFAULT_PER_PAGE).to_i
       }
     end
   end
