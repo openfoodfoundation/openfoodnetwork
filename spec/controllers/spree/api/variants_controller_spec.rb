@@ -9,10 +9,6 @@ module Spree
     let!(:variant2) { FactoryBot.create(:variant) }
     let!(:variant3) { FactoryBot.create(:variant) }
     let(:attributes) { [:id, :options_text, :price, :on_hand, :unit_value, :unit_description, :on_demand, :display_as, :display_name] }
-    let!(:standard_attributes) {
-      [:id, :name, :sku, :price, :weight, :height,
-       :width, :depth, :is_master, :cost_price, :permalink]
-    }
 
     before do
       allow(controller).to receive(:spree_current_user) { current_api_user }
@@ -45,50 +41,12 @@ module Spree
         expect(variant.deleted_at).to be_nil
       end
 
-      it "can see a paginated list of variants" do
-        api_get :index
-
-        keys = json_response["variants"].first.keys.map(&:to_sym)
-        expect(standard_attributes.all?{ |attr| keys.include? attr }).to eq(true)
-        expect(json_response["count"]).to eq(11)
-        expect(json_response["current_page"]).to eq(1)
-        expect(json_response["pages"]).to eq(1)
-      end
-
-      it 'can control the page size through a parameter' do
-        create(:variant)
-        api_get :index, per_page: 1
-
-        expect(json_response['count']).to eq(1)
-        expect(json_response['current_page']).to eq(1)
-        expect(json_response['pages']).to eq(14)
-      end
-
-      it 'can query the results through a paramter' do
+      it 'can query the results through a parameter' do
         expected_result = create(:variant, sku: 'FOOBAR')
         api_get :index, q: { sku_cont: 'FOO' }
 
-        expect(json_response['count']).to eq(1)
-        expect(json_response['variants'].first['sku']).to eq expected_result.sku
-      end
-
-      it "variants returned contain option values data" do
-        api_get :index
-
-        option_values = json_response["variants"].last["option_values"]
-        expect(option_values.first).to have_attributes(keys: ["id",
-                                                              "name",
-                                                              "presentation",
-                                                              "option_type_name",
-                                                              "option_type_id"])
-      end
-
-      it "variants returned contain images data" do
-        variant.images.create!(attachment: image("thinking-cat.jpg"))
-
-        api_get :index
-
-        expect(json_response["variants"].last["images"]).not_to be_nil
+        expect(json_response.size).to eq(1)
+        expect(json_response.first['sku']).to eq expected_result.sku
       end
 
       # Regression test for spree#2141
@@ -99,12 +57,12 @@ module Spree
 
         it "is not returned in the results" do
           api_get :index
-          expect(json_response["variants"].count).to eq(10) # there are 11 variants
+          expect(json_response.count).to eq(10) # there are 11 variants
         end
 
         it "is not returned even when show_deleted is passed" do
           api_get :index, show_deleted: true
-          expect(json_response["variants"].count).to eq(10) # there are 11 variants
+          expect(json_response.count).to eq(10) # there are 11 variants
         end
       end
 
@@ -112,26 +70,7 @@ module Spree
         api_get :show, id: variant.to_param
 
         keys = json_response.keys.map(&:to_sym)
-        expect((standard_attributes + [:options_text, :option_values, :images]).all?{ |attr| keys.include? attr }).to eq(true)
-        option_values = json_response["option_values"]
-        expect(option_values.first).to have_attributes(keys: ["id", "name", "presentation", "option_type_name", "option_type_id"])
-      end
-
-      it "can see a single variant with images" do
-        variant.images.create!(attachment: image("thinking-cat.jpg"))
-        api_get :show, id: variant.to_param
-
-        keys = json_response.keys.map(&:to_sym)
-        expect((standard_attributes + [:images]).all?{ |attr| keys.include? attr }).to eq(true)
-        option_values_keys = json_response["option_values"].first.keys.map(&:to_sym)
-        expect([:name, :presentation, :option_type_id].all?{ |attr| option_values_keys.include? attr }).to eq(true)
-      end
-
-      it "can learn how to create a new variant" do
-        api_get :new
-
-        expect(json_response["attributes"]).to eq(standard_attributes.map(&:to_s))
-        expect(json_response["required_attributes"]).to be_empty
+        expect((attributes).all?{ |attr| keys.include? attr }).to eq(true)
       end
 
       it "cannot create a new variant if not an admin" do
@@ -229,7 +168,7 @@ module Spree
         it "are visible by admin" do
           api_get :index, show_deleted: 1
 
-          expect(json_response["variants"].count).to eq(2)
+          expect(json_response.count).to eq(2)
         end
       end
 
@@ -237,7 +176,7 @@ module Spree
         original_number_of_variants = variant.product.variants.count
         api_post :create, variant: { sku: "12345", unit_value: "weight", unit_description: "L" }
 
-        expect(standard_attributes.all?{ |attr| json_response.include? attr.to_s }).to eq(true)
+        expect(attributes.all?{ |attr| json_response.include? attr.to_s }).to eq(true)
         expect(response.status).to eq(201)
         expect(json_response["sku"]).to eq("12345")
         expect(variant.product.variants.count).to eq(original_number_of_variants + 1)

@@ -1,5 +1,5 @@
 class Api::VariantSerializer < ActiveModel::Serializer
-  attributes :id, :is_master, :product_name
+  attributes :id, :is_master, :product_name, :sku
   attributes :options_text, :unit_value, :unit_description, :unit_to_display
   attributes :display_as, :display_name, :name_to_display
   attributes :price, :on_demand, :on_hand, :fees, :price_with_fees

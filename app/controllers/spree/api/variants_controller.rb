@@ -3,12 +3,11 @@ module Spree
     class VariantsController < ::Api::BaseController
       respond_to :json
 
-      skip_authorization_check only: :index
+      skip_authorization_check only: [:index, :show]
       before_filter :product
 
       def index
-        @variants = scope.includes(:option_values).ransack(params[:q]).result.
-          page(params[:page]).per(params[:per_page])
+        @variants = scope.includes(:option_values).ransack(params[:q]).result
         render json: @variants, each_serializer: ::Api::VariantSerializer
       end
 
@@ -16,8 +15,6 @@ module Spree
         @variant = scope.includes(:option_values).find(params[:id])
         render json: @variant, serializer: ::Api::VariantSerializer
       end
-
-      def new; end
 
       def create
         authorize! :create, Variant
