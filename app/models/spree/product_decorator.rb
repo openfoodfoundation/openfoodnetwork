@@ -56,6 +56,11 @@ Spree::Product.class_eval do
           ON (o_order_cycles.id = o_exchanges.order_cycle_id)")
   }
 
+  scope :imported_on, lambda { |date|
+    import_date = date.to_datetime
+    joins(:variants).merge(Spree::Variant.where(import_date: import_date..import_date + 24.hours))
+  }
+
   scope :with_order_cycles_inner, -> {
     joins(variants_including_master: { exchanges: :order_cycle })
   }
