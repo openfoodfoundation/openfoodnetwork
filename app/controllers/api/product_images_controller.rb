@@ -1,5 +1,5 @@
 module Api
-  class ProductImagesController < Spree::Api::BaseController
+  class ProductImagesController < BaseController
     respond_to :json
 
     def update_product_image
