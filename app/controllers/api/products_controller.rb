@@ -140,8 +140,8 @@ module Api
       {
         results: results.total_count,
         pages: results.num_pages,
-        page: (params[:page].to_i || DEFAULT_PAGE).to_i,
-        per_page: (params[:per_page].to_i || DEFAULT_PER_PAGE).to_i
+        page: (params[:page] || DEFAULT_PAGE).to_i,
+        per_page: (params[:per_page] || DEFAULT_PER_PAGE).to_i
       }
     end
   end

@@ -219,31 +219,41 @@ describe Api::ProductsController, type: :controller do
         let!(:taxon) { create(:taxon) }
         let!(:product2) { create(:product, supplier: supplier, primary_taxon: taxon) }
         let!(:product3) { create(:product, supplier: supplier2, primary_taxon: taxon) }
+        let!(:product4) { create(:product, supplier: supplier2) }
         let(:current_api_user) { supplier_enterprise_user(supplier) }
 
         before { current_api_user.enterprise_roles.create(enterprise: supplier2) }
 
         it "returns a list of products" do
           spree_get :bulk_products, { page: 1, per_page: 15 }, format: :json
-
-          expect(returned_product_ids).to eq [product3.id, product2.id, product1.id]
+          expect(returned_product_ids).to eq [product4.id, product3.id, product2.id, product1.id]
         end
 
         it "returns pagination data" do
           spree_get :bulk_products, { page: 1, per_page: 15 }, format: :json
+          expect(json_response['pagination']).to eq "results" => 4, "pages" => 1, "page" => 1, "per_page" => 15
+        end
 
-          expect(json_response['pagination']).to eq "results" => 3, "pages" => 1, "page" => 1, "per_page" => 15
+        it "uses defaults when page and per_page are not supplied" do
+          spree_get :bulk_products, format: :json
+          expect(json_response['pagination']).to eq "results" => 4, "pages" => 1, "page" => 1, "per_page" => 15
+        end
+
+        it "returns paginated products by page" do
+          spree_get :bulk_products, { page: 1, per_page: 2 }, format: :json
+          expect(returned_product_ids).to eq [product4.id, product3.id]
+
+          spree_get :bulk_products, { page: 2, per_page: 2 }, format: :json
+          expect(returned_product_ids).to eq [product2.id, product1.id]
         end
 
         it "filters results by supplier" do
           spree_get :bulk_products, { page: 1, per_page: 15, q: {supplier_id_eq: supplier.id} }, format: :json
-
           expect(returned_product_ids).to eq [product2.id, product1.id]
         end
 
         it "filters results by product category" do
           spree_get :bulk_products, { page: 1, per_page: 15, q: {primary_taxon_id_eq: taxon.id} }, format: :json
-
           expect(returned_product_ids).to eq [product3.id, product2.id]
         end
 
@@ -257,7 +267,6 @@ describe Api::ProductsController, type: :controller do
           product3.save
 
           spree_get :bulk_products, { page: 1, per_page: 15, import_date: 1.day.ago.to_date.to_s }, format: :json
-
           expect(returned_product_ids).to eq [product3.id, product1.id]
         end
       end
