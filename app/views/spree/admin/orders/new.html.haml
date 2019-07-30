@@ -21,6 +21,3 @@
   - unless @order.line_items.any?
     %div
       = render 'form'
-
-- content_for :head do
-  = javascript_tag 'var expand_variants = true;'
