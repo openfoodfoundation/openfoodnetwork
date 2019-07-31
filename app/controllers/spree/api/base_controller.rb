@@ -7,8 +7,6 @@ module Spree
       include Spree::Core::ControllerHelpers::SSL
       include ::ActionController::Head
 
-      self.responder = Spree::Api::Responders::AppResponder
-
       respond_to :json
 
       attr_accessor :current_api_user
