@@ -5,7 +5,7 @@ module Spree
     class ProductsController < ::Api::BaseController
       respond_to :json
 
-      skip_authorization_check only: [:show]
+      skip_authorization_check only: [:show, :bulk_products, :overridable]
 
       def show
         @product = find_product(params[:id])
