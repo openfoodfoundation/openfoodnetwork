@@ -11,15 +11,14 @@ module Spree
         else
           @products = product_scope.ransack(params[:q]).result
         end
-
         @products = @products.page(params[:page]).per(params[:per_page])
 
-        respond_with(@products)
+        render json: @products, each_serializer: ::Api::Admin::ProductSerializer
       end
 
       def show
         @product = find_product(params[:id])
-        respond_with(@product)
+        render json: @product, serializer: ::Api::Admin::ProductSerializer
       end
 
       def new; end
@@ -30,7 +29,7 @@ module Spree
         @product = Product.new(params[:product])
         begin
           if @product.save
-            respond_with(@product, status: 201, default_template: :show)
+            render json: @product, serializer: ::Api::Admin::ProductSerializer, status: 201
           else
             invalid_resource!(@product)
           end
@@ -44,7 +43,7 @@ module Spree
         authorize! :update, Product
         @product = find_product(params[:id])
         if @product.update_attributes(params[:product])
-          respond_with(@product, status: 200, default_template: :show)
+          render json: @product, serializer: ::Api::Admin::ProductSerializer, status: 200
         else
           invalid_resource!(@product)
         end
@@ -55,7 +54,7 @@ module Spree
         @product = find_product(params[:id])
         @product.update_attribute(:deleted_at, Time.zone.now)
         @product.variants_including_master.update_all(deleted_at: Time.zone.now)
-        respond_with(@product, status: 204)
+        render json: @product, serializer: ::Api::Admin::ProductSerializer, status: 204
       end
 
       # TODO: This should be named 'managed'. Is the action above used? Maybe we should remove it.
@@ -83,7 +82,7 @@ module Spree
         @product = find_product(params[:product_id])
         authorize! :delete, @product
         @product.destroy
-        respond_with(@product, status: 204)
+        render json: @product, serializer: ::Api::Admin::ProductSerializer, status: 204
       end
 
       # POST /api/products/:product_id/clone
@@ -95,7 +94,7 @@ module Spree
 
         @product = original_product.duplicate
 
-        respond_with(@product, status: 201, default_template: :show)
+        render json: @product, serializer: ::Api::Admin::ProductSerializer, status: 201
       end
 
       private
