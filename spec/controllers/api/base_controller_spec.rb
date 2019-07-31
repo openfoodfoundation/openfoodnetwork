@@ -1,8 +1,10 @@
 require 'spec_helper'
 
-describe Spree::Api::BaseController do
+describe Api::BaseController do
   render_views
-  controller(Spree::Api::BaseController) do
+  controller(Api::BaseController) do
+    skip_authorization_check only: :index
+
     def index
       render text: { "products" => [] }.to_json
     end
@@ -23,13 +25,15 @@ describe Spree::Api::BaseController do
     end
   end
 
-  context "cannot make a request to the API" do
+  context "can make an anonymous request to the API" do
     it "without an API key" do
       api_get :index
-      expect(json_response).to eq( "error" => "You must specify an API key." )
-      expect(response.status).to eq(401)
+      expect(json_response["products"]).to eq []
+      expect(response.status).to eq(200)
     end
+  end
 
+  context "cannot make a request to the API" do
     it "with an invalid API key" do
       request.env["X-Spree-Token"] = "fake_key"
       get :index, {}
