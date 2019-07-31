@@ -25,11 +25,6 @@ module Spree
           .to receive(:has_spree_role?).with("admin").and_return(false)
       end
 
-      it "should deny me access to managed products" do
-        spree_get :managed, template: 'bulk_index', format: :json
-        assert_unauthorized!
-      end
-
       it "retrieves a list of products" do
         api_get :index
         expect(json_response["products"].first).to have_attributes(keys: all_attributes)
@@ -152,12 +147,6 @@ module Spree
         user
       end
 
-      it "retrieves a list of managed products" do
-        spree_get :managed, template: 'bulk_index', format: :json
-        response_keys = json_response.first.keys
-        expect(attributes.all?{ |attr| response_keys.include? attr }).to eq(true)
-      end
-
       it "soft deletes my products" do
         spree_delete :soft_delete, product_id: product.to_param, format: :json
         expect(response.status).to eq(204)
@@ -177,12 +166,6 @@ module Spree
       before do
         allow(current_api_user)
           .to receive(:has_spree_role?).with("admin").and_return(true)
-      end
-
-      it "retrieves a list of managed products" do
-        spree_get :managed, template: 'bulk_index', format: :json
-        response_keys = json_response.first.keys
-        expect(attributes.all?{ |attr| response_keys.include? attr }).to eq(true)
       end
 
       it "retrieves a list of products with appropriate attributes" do

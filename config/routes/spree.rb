@@ -64,7 +64,6 @@ Spree::Core::Engine.routes.prepend do
 
     resources :products do
       collection do
-        get :managed
         get :bulk_products
         get :overridable
       end

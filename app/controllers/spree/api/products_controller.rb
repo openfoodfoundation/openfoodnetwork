@@ -58,17 +58,6 @@ module Spree
         respond_with(@product, status: 204)
       end
 
-      def managed
-        authorize! :admin, Spree::Product
-        authorize! :read, Spree::Product
-
-        @products = product_scope.
-          ransack(params[:q]).result.
-          managed_by(current_api_user).
-          page(params[:page]).per(params[:per_page])
-        respond_with(@products, default_template: :index)
-      end
-
       # TODO: This should be named 'managed'. Is the action above used? Maybe we should remove it.
       def bulk_products
         @products = OpenFoodNetwork::Permissions.new(current_api_user).editable_products.
