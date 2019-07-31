@@ -2,7 +2,7 @@ require 'open_food_network/scope_variant_to_hub'
 
 module Spree
   module Api
-    class ShipmentsController < Spree::Api::BaseController
+    class ShipmentsController < ::Api::BaseController
       respond_to :json
 
       before_filter :find_order
@@ -18,7 +18,7 @@ module Spree
         @shipment.refresh_rates
         @shipment.save!
 
-        respond_with(@shipment.reload, default_template: :show)
+        render json: @shipment.reload, serializer: ::Api::ShipmentSerializer, status: :ok
       end
 
       def update
@@ -37,8 +37,7 @@ module Spree
           @shipment.adjustment.close
         end
 
-        @shipment.reload
-        respond_with(@shipment, default_template: :show)
+        render json: @shipment.reload, serializer: ::Api::ShipmentSerializer, status: :ok
       end
 
       def ready
@@ -47,11 +46,11 @@ module Spree
           if @shipment.can_ready?
             @shipment.ready!
           else
-            render "spree/api/shipments/cannot_ready_shipment", status: :unprocessable_entity
-            return
+            render(json: { error: I18n.t(:cannot_ready, scope: "spree.api.shipment") },
+                   status: :unprocessable_entity) && return
           end
         end
-        respond_with(@shipment, default_template: :show)
+        render json: @shipment, serializer: ::Api::ShipmentSerializer, status: :ok
       end
 
       def ship
@@ -59,7 +58,7 @@ module Spree
         unless @shipment.shipped?
           @shipment.ship!
         end
-        respond_with(@shipment, default_template: :show)
+        render json: @shipment, serializer: ::Api::ShipmentSerializer, status: :ok
       end
 
       def add
@@ -68,7 +67,7 @@ module Spree
 
         @order.contents.add(variant, quantity, nil, @shipment)
 
-        respond_with(@shipment, default_template: :show)
+        render json: @shipment, serializer: ::Api::ShipmentSerializer, status: :ok
       end
 
       def remove
@@ -78,7 +77,7 @@ module Spree
         @order.contents.remove(variant, quantity, @shipment)
         @shipment.reload if @shipment.persisted?
 
-        respond_with(@shipment, default_template: :show)
+        render json: @shipment, serializer: ::Api::ShipmentSerializer, status: :ok
       end
 
       private
