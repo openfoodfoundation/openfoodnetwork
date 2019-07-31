@@ -25,68 +25,6 @@ module Spree
           .to receive(:has_spree_role?).with("admin").and_return(false)
       end
 
-      it "retrieves a list of products" do
-        api_get :index
-        expect(json_response["products"].first).to have_attributes(keys: all_attributes)
-
-        expect(json_response["count"]).to eq(1)
-        expect(json_response["current_page"]).to eq(1)
-        expect(json_response["pages"]).to eq(1)
-      end
-
-      it "retrieves a list of products by id" do
-        api_get :index, ids: [product.id]
-        expect(json_response["products"].first).to have_attributes(keys: all_attributes)
-        expect(json_response["count"]).to eq(1)
-        expect(json_response["current_page"]).to eq(1)
-        expect(json_response["pages"]).to eq(1)
-      end
-
-      it "does not return inactive products when queried by ids" do
-        api_get :index, ids: [inactive_product.id]
-        expect(json_response["count"]).to eq(0)
-      end
-
-      it "does not list unavailable products" do
-        api_get :index
-        expect(json_response["products"].first["name"]).not_to eq("inactive")
-      end
-
-      context "pagination" do
-        it "can select the next page of products" do
-          second_product = create(:product)
-          api_get :index, page: 2, per_page: 1
-          expect(json_response["products"].first).to have_attributes(keys: all_attributes)
-          expect(json_response["total_count"]).to eq(2)
-          expect(json_response["current_page"]).to eq(2)
-          expect(json_response["pages"]).to eq(2)
-        end
-
-        it 'can control the page size through a parameter' do
-          create(:product)
-          api_get :index, per_page: 1
-          expect(json_response['count']).to eq(1)
-          expect(json_response['total_count']).to eq(2)
-          expect(json_response['current_page']).to eq(1)
-          expect(json_response['pages']).to eq(2)
-        end
-      end
-
-      context "jsonp" do
-        it "retrieves a list of products of jsonp" do
-          api_get :index, callback: 'callback'
-          expect(response.body).to match(/^callback\(.*\)$/)
-          expect(response.header['Content-Type']).to include('application/javascript')
-        end
-      end
-
-      it "can search for products" do
-        create(:product, name: "The best product in the world")
-        api_get :index, q: { name_cont: "best" }
-        expect(json_response["products"].first).to have_attributes(keys: all_attributes)
-        expect(json_response["count"]).to eq(1)
-      end
-
       it "gets a single product" do
         product.master.images.create!(attachment: image("thinking-cat.jpg"))
         product.variants.create!(unit_value: "1", unit_description: "thing")
@@ -128,15 +66,6 @@ module Spree
         expect(response.status).to eq(404)
       end
 
-      it "can learn how to create a new product" do
-        api_get :new
-        expect(json_response["attributes"]).to eq(["id", "name", "description", "price", "available_on", "permalink", "meta_description", "meta_keywords", "shipping_category_id", "taxon_ids"])
-        required_attributes = json_response["required_attributes"]
-        expect(required_attributes).to include("name")
-        expect(required_attributes).to include("price")
-        expect(required_attributes).to include("shipping_category_id")
-      end
-
       include_examples "modifying product actions are restricted"
     end
 
@@ -168,75 +97,11 @@ module Spree
           .to receive(:has_spree_role?).with("admin").and_return(true)
       end
 
-      it "retrieves a list of products with appropriate attributes" do
-        spree_get :index, template: 'bulk_index', format: :json
-        response_keys = json_response.first.keys
-        expect(attributes.all?{ |attr| response_keys.include? attr }).to eq(true)
-      end
-
-      it "sorts products in ascending id order" do
-        FactoryBot.create(:product, supplier: supplier)
-        FactoryBot.create(:product, supplier: supplier)
-
-        spree_get :index, template: 'bulk_index', format: :json
-
-        ids = json_response.map{ |product| product['id'] }
-        expect(ids[0]).to be < ids[1]
-        expect(ids[1]).to be < ids[2]
-      end
-
-      it "formats available_on to 'yyyy-mm-dd hh:mm'" do
-        spree_get :index, template: 'bulk_index', format: :json
-        expect(json_response.map{ |product| product['available_on'] }.all?{ |a| a.match("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$") }).to eq(true)
-      end
-
-      it "returns permalink as permalink_live" do
-        spree_get :index, template: 'bulk_index', format: :json
-        expect(json_response.detect{ |product_in_response| product_in_response['id'] == product.id }['permalink_live']).to eq(product.permalink)
-      end
-
-      it "should allow available_on to be nil" do
-        spree_get :index, template: 'bulk_index', format: :json
-        expect(json_response.size).to eq(2)
-
-        another_product = FactoryBot.create(:product)
-        another_product.available_on = nil
-        another_product.save!
-
-        spree_get :index, template: 'bulk_index', format: :json
-        expect(json_response.size).to eq(3)
-      end
-
       it "soft deletes a product" do
         spree_delete :soft_delete, product_id: product.to_param, format: :json
         expect(response.status).to eq(204)
         expect { product.reload }.not_to raise_error
         expect(product.deleted_at).not_to be_nil
-      end
-
-      it "can see all products" do
-        api_get :index
-        expect(json_response["products"].count).to eq(2)
-        expect(json_response["count"]).to eq(2)
-        expect(json_response["current_page"]).to eq(1)
-        expect(json_response["pages"]).to eq(1)
-      end
-
-      # Regression test for #1626
-      context "deleted products" do
-        before do
-          create(:product, deleted_at: 1.day.ago)
-        end
-
-        it "does not include deleted products" do
-          api_get :index
-          expect(json_response["products"].count).to eq(2)
-        end
-
-        it "can include deleted products" do
-          api_get :index, show_deleted: 1
-          expect(json_response["products"].count).to eq(3)
-        end
       end
 
       it "can create a new product" do

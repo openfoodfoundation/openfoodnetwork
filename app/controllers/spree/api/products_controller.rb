@@ -5,23 +5,10 @@ module Spree
     class ProductsController < Spree::Api::BaseController
       respond_to :json
 
-      def index
-        if params[:ids]
-          @products = product_scope.where(id: params[:ids])
-        else
-          @products = product_scope.ransack(params[:q]).result
-        end
-        @products = @products.page(params[:page]).per(params[:per_page])
-
-        render json: @products, each_serializer: ::Api::Admin::ProductSerializer
-      end
-
       def show
         @product = find_product(params[:id])
         render json: @product, serializer: ::Api::Admin::ProductSerializer
       end
-
-      def new; end
 
       def create
         authorize! :create, Product
