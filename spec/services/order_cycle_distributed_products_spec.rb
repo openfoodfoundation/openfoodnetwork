@@ -2,7 +2,16 @@ require 'spec_helper'
 
 describe OrderCycleDistributedProducts do
   let(:order_cycle) { OrderCycle.new }
-  let(:distributor) { instance_double(Enterprise) }
+  let(:distributor) { create(:enterprise) }
+  let(:exchange) do
+    create(
+      :exchange,
+      order_cycle: order_cycle,
+      incoming: false,
+      receiver: distributor,
+      sender: product.supplier
+    )
+  end
 
   it 'returns valid products but not invalid products' do
     valid_product = create(:product)
@@ -28,8 +37,8 @@ describe OrderCycleDistributedProducts do
     let(:distributed_variants) { [product.master, unassociated_variant] }
 
     before do
-      allow(order_cycle)
-        .to receive(:variants_distributed_by).with(distributor) { distributed_variants }
+      product.master.exchanges << exchange
+      unassociated_variant.exchanges << exchange
     end
 
     it 'does not return the obsolete product' do
@@ -39,14 +48,11 @@ describe OrderCycleDistributedProducts do
   end
 
   context "when the product doesn't have variants" do
-    let(:master) { build(:variant) }
-    let(:product) { create(:product, master: master) }
-    let(:distributed_variants) { [master] }
+    let(:product) { create(:product) }
 
     before do
-      allow(product).to receive(:has_variants?) { false }
-      allow(order_cycle)
-        .to receive(:variants_distributed_by).with(distributor) { distributed_variants }
+      product.variants.destroy_all
+      product.master.exchanges << exchange
     end
 
     it 'returns the product' do
@@ -59,13 +65,8 @@ describe OrderCycleDistributedProducts do
     let(:master) { build(:variant) }
     let(:variant) { build(:variant) }
     let(:product) { create(:product, master: master, variants: [variant]) }
-    let(:distributed_variants) { [variant] }
 
-    before do
-      allow(product).to receive(:has_variants?) { true }
-      allow(order_cycle)
-        .to receive(:variants_distributed_by).with(distributor) { distributed_variants }
-    end
+    before { variant.exchanges << exchange }
 
     it 'returns the product' do
       distributed_valid_products = described_class.new(order_cycle, distributor)
@@ -77,12 +78,10 @@ describe OrderCycleDistributedProducts do
     let(:master) { build(:variant) }
     let(:variant) { build(:variant) }
     let(:product) { create(:product, master: master, variants: [variant]) }
-    let(:distributed_variants) { [master, variant] }
 
     before do
-      allow(product).to receive(:has_variants?) { true }
-      allow(order_cycle)
-        .to receive(:variants_distributed_by).with(distributor) { distributed_variants }
+      master.exchanges << exchange
+      variant.exchanges << exchange
     end
 
     it 'returns the product' do

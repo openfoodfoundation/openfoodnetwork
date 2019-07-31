@@ -170,6 +170,7 @@ class OrderCycle < ActiveRecord::Base
 
   def variants_distributed_by(distributor)
     return Spree::Variant.where("1=0") if distributor.blank?
+
     Spree::Variant.
       joins(:exchanges).
       merge(distributor.inventory_variants).
