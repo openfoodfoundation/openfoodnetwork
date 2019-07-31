@@ -2,8 +2,10 @@ require 'open_food_network/permissions'
 
 module Spree
   module Api
-    class ProductsController < Spree::Api::BaseController
+    class ProductsController < ::Api::BaseController
       respond_to :json
+
+      skip_authorization_check only: [:show]
 
       def show
         @product = find_product(params[:id])
