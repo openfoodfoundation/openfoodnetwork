@@ -15,8 +15,11 @@ class OrderCycleDistributedProducts
   #
   # @return [ActiveRecord::Relation<Spree::Product>]
   def relation
+    products = Spree::Product
+      .joins(:variants_including_master)
+      .merge(order_cycle.variants_distributed_by(distributor))
+
     variants = order_cycle.variants_distributed_by(distributor)
-    products = variants.map(&:product).uniq
 
     valid_products = products.reject do |product|
       product_has_only_obsolete_master_in_distribution?(product, variants)
