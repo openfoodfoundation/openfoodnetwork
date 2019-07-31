@@ -1,7 +1,9 @@
 module Spree
   module Api
-    class TaxonsController < Spree::Api::BaseController
+    class TaxonsController < ::Api::BaseController
       respond_to :json
+
+      skip_authorization_check only: :index
 
       def index
         if taxonomy
@@ -13,7 +15,7 @@ module Spree
             @taxons = Taxon.ransack(params[:q]).result
           end
         end
-        respond_with(@taxons)
+        render json: @taxons, each_serializer: ::Api::TaxonSerializer
       end
 
       def show
