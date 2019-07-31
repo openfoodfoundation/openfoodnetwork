@@ -50,8 +50,16 @@ describe Api::BaseController do
   it 'handles exceptions' do
     expect(subject).to receive(:authenticate_user).and_return(true)
     expect(subject).to receive(:index).and_raise(Exception.new("no joy"))
-    get :index, token: "fake_key"
+    get :index
     expect(json_response).to eq( "exception" => "no joy" )
+  end
+
+  it 'handles record not found' do
+    expect(subject).to receive(:authenticate_user).and_return(true)
+    expect(subject).to receive(:index).and_raise(ActiveRecord::RecordNotFound.new)
+    get :index
+    expect(json_response).to eq( "error" => "The resource you were looking for could not be found." )
+    expect(response.status).to eq(404)
   end
 
   it "maps symantec keys to nested_attributes keys" do

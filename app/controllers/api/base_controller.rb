@@ -30,5 +30,27 @@ module Api
     def requires_authentication?
       false
     end
+
+    def invalid_resource!(resource)
+      @resource = resource
+      render(json: { error: I18n.t(:invalid_resource, scope: "spree.api"),
+                     errors: @resource.errors },
+             status: :unprocessable_entity)
+    end
+
+    def invalid_api_key
+      render(json: { error: I18n.t(:invalid_api_key, key: api_key, scope: "spree.api") },
+             status: :unauthorized) && return
+    end
+
+    def unauthorized
+      render(json: { error: I18n.t(:unauthorized, scope: "spree.api") },
+             status: :unauthorized) && return
+    end
+
+    def not_found
+      render(json: { error: I18n.t(:resource_not_found, scope: "spree.api") },
+             status: :not_found) && return
+    end
   end
 end
