@@ -1,4 +1,4 @@
-angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $http, $window, BulkProducts, DisplayProperties, dataFetcher, DirtyProducts, VariantUnitManager, StatusMessage, producers, Taxons, SpreeApiAuth, Columns, tax_categories) ->
+angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $http, $window, BulkProducts, DisplayProperties, dataFetcher, DirtyProducts, VariantUnitManager, StatusMessage, producers, Taxons, Columns, tax_categories) ->
     $scope.loading = true
     $scope.loadingAllPages = true
 
@@ -38,12 +38,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     $scope.DisplayProperties = DisplayProperties
 
     $scope.initialise = ->
-      SpreeApiAuth.authorise()
-      .then ->
-        $scope.spree_api_key_ok = true
-        $scope.fetchProducts()
-      .catch (message) ->
-        $scope.api_error_msg = message
+      $scope.fetchProducts()
 
     $scope.$watchCollection '[query, producerFilter, categoryFilter, importDateFilter]', ->
       $scope.limit = 15 # Reset limit whenever searching
