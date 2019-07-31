@@ -4,6 +4,12 @@ module Spree
 
     private
 
+    def check_price
+      if currency.nil?
+        self.currency = Spree::Config[:currency]
+      end
+    end
+
     def refresh_products_cache
       variant.andand.refresh_products_cache
     end
