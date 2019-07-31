@@ -1,4 +1,4 @@
-angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl", ($scope, $http, $timeout, Indexer, Columns, Views, SpreeApiAuth, PagedFetcher, StatusMessage, RequestMonitor, hubs, producers, hubPermissions, InventoryItems, VariantOverrides, DirtyVariantOverrides) ->
+angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl", ($scope, $http, $timeout, Indexer, Columns, Views, PagedFetcher, StatusMessage, RequestMonitor, hubs, producers, hubPermissions, InventoryItems, VariantOverrides, DirtyVariantOverrides) ->
   $scope.hubs = Indexer.index hubs
   $scope.hub_id = if hubs.length == 1 then hubs[0].id else null
   $scope.products = []
@@ -39,13 +39,7 @@ angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl",
     $scope.producerFilter != 0 || $scope.query != ''
 
   $scope.initialise = ->
-    SpreeApiAuth.authorise()
-    .then ->
-      $scope.spree_api_key_ok = true
-      $scope.fetchProducts()
-    .catch (message) ->
-      $scope.api_error_msg = message
-
+    $scope.fetchProducts()
 
   $scope.fetchProducts = ->
     url = "/api/products/overridable?page=::page::;per_page=100"
