@@ -23,14 +23,6 @@ module Api
       super
     end
 
-    # Allows API access without authentication, but only for OFN controllers which inherit
-    # from Api::BaseController. @current_api_user will now initialize an empty Spree::User
-    # unless one is present. We now also apply devise's `check_authorization`. See here for
-    # details: https://github.com/CanCanCommunity/cancancan/wiki/Ensure-Authorization
-    def requires_authentication?
-      false
-    end
-
     def invalid_resource!(resource)
       @resource = resource
       render(json: { error: I18n.t(:invalid_resource, scope: "spree.api"),

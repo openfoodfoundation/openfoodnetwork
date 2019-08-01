@@ -12,7 +12,6 @@ module Spree
       attr_accessor :current_api_user
 
       before_filter :set_content_type
-      before_filter :check_for_user_or_api_key, :if => :requires_authentication?
       before_filter :authenticate_user
       after_filter  :set_jsonp_format
 
@@ -52,30 +51,18 @@ module Spree
         headers["Content-Type"] = content_type
       end
 
-      def check_for_user_or_api_key
-        # User is already authenticated with Spree, make request this way instead.
-        return true if @current_api_user = try_spree_current_user ||
-                                           !requires_authentication?
-
-        return if api_key.present?
-        render("spree/api/errors/must_specify_api_key", status: :unauthorized) && return
-      end
-
       def authenticate_user
         return if @current_api_user
 
-        if requires_authentication? || api_key.present?
-          unless @current_api_user = Spree.user_class.find_by_spree_api_key(api_key.to_s)
-            render("spree/api/errors/invalid_api_key", status: :unauthorized) && return
-          end
-        else
+        if api_key.blank?
           # An anonymous user
           @current_api_user = Spree.user_class.new
+          return
         end
-      end
 
-      def unauthorized
-        render("spree/api/errors/unauthorized", status: :unauthorized) && return
+        unless @current_api_user = Spree.user_class.find_by_spree_api_key(api_key.to_s)
+          invalid_api_key
+        end
       end
 
       def error_during_processing(exception)
@@ -83,21 +70,8 @@ module Spree
                status: :unprocessable_entity) && return
       end
 
-      def requires_authentication?
-        true
-      end
-
-      def not_found
-        render("spree/api/errors/not_found", status: :not_found) && return
-      end
-
       def current_ability
         Spree::Ability.new(current_api_user)
-      end
-
-      def invalid_resource!(resource)
-        @resource = resource
-        render "spree/api/errors/invalid_resource", status: :unprocessable_entity
       end
 
       def api_key
