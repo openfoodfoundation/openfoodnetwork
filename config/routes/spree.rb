@@ -62,21 +62,6 @@ Spree::Core::Engine.routes.prepend do
       get :authorise_api, on: :collection
     end
 
-    resources :products do
-      collection do
-        get :bulk_products
-        get :overridable
-      end
-      delete :soft_delete
-      post :clone
-
-      resources :variants do
-        delete :soft_delete
-      end
-    end
-
-    resources :variants, :only => [:index]
-
     resources :orders do
       get :managed, on: :collection
 
