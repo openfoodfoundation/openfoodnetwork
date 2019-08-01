@@ -94,10 +94,13 @@ module Api
 
     private
 
-    # Copied and modified from SpreeApi::BaseController to allow
-    # enterprise users to access inactive products
+    def find_product(id)
+      product_scope.find_by_permalink!(id.to_s)
+    rescue ActiveRecord::RecordNotFound
+      product_scope.find(id)
+    end
+
     def product_scope
-      # This line modified
       if current_api_user.has_spree_role?("admin") || current_api_user.enterprises.present?
         scope = Spree::Product
         if params[:show_deleted]

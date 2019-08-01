@@ -69,25 +69,6 @@ module Spree
         request.headers["X-Spree-Token"] || params[:token]
       end
       helper_method :api_key
-
-      def find_product(id)
-        product_scope.find_by_permalink!(id.to_s)
-      rescue ActiveRecord::RecordNotFound
-        product_scope.find(id)
-      end
-
-      def product_scope
-        if current_api_user.has_spree_role?("admin")
-          scope = Product
-          if params[:show_deleted]
-            scope = scope.with_deleted
-          end
-        else
-          scope = Product.active
-        end
-
-        scope.includes(:master)
-      end
     end
   end
 end
