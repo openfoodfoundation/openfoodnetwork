@@ -365,16 +365,15 @@ feature '
       end
 
       context "when an included variant has been deleted" do
-        before do
-          @deleted_variant = order.line_items.first.variant
-          @deleted_variant.delete
-
-          visit spree.edit_admin_order_path(order)
+        let!(:deleted_variant) do
+          order.line_items.first.variant.tap do |record|
+            record.delete
+          end
         end
 
         it "still lists the variant in the order page" do
           within ".stock-contents" do
-            expect(page).to have_content @deleted_variant.product_and_full_name
+            expect(page).to have_content deleted_variant.product_and_full_name
           end
         end
       end
