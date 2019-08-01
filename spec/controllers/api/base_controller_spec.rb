@@ -61,16 +61,4 @@ describe Api::BaseController do
     expect(json_response).to eq( "error" => "The resource you were looking for could not be found." )
     expect(response.status).to eq(404)
   end
-
-  it "maps symantec keys to nested_attributes keys" do
-    klass = double(nested_attributes_options: { line_items: {},
-                                                bill_address: {} })
-    attributes = { 'line_items' => { id: 1 },
-                   'bill_address' => { id: 2 },
-                   'name' => 'test order' }
-
-    mapped = subject.map_nested_attributes_keys(klass, attributes)
-    expect(mapped.key?('line_items_attributes')).to be_truthy
-    expect(mapped.key?('name')).to be_truthy
-  end
 end
