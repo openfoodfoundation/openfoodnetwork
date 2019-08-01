@@ -88,6 +88,7 @@ it:
     user_passwords:
       spree_user:
         updated_not_active: "La tua password è stata resettata, ma la tua email non è ancora stata confermata."
+        send_instructions: "A breve riceverai un'email con le istruzioni utili a confermare il tuo account."
   models:
     order_cycle:
       cloned_order_cycle_name: "COPIA DI %{order_cycle}"
@@ -240,6 +241,9 @@ it:
     create_and_add_another: "Crea e aggiungi un altro"
     create: "Crea"
     cancel: "Annulla"
+    save: "Salva"
+    edit: "Modifica"
+    delete: "Annulla"
   admin:
     begins_at: Inizia a
     begins_on: Inizia da

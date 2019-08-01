@@ -94,6 +94,7 @@ en_BE:
     user_passwords:
       spree_user:
         updated_not_active: "Your password has been reset, but your email has not been confirmed yet."
+        send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
   models:
     order_cycle:
       cloned_order_cycle_name: "COPY OF %{order_cycle}"
@@ -246,6 +247,9 @@ en_BE:
     create_and_add_another: "Create and Add Another"
     create: "Create"
     cancel: "Cancel"
+    save: "Save"
+    edit: "Edit"
+    delete: "Delete"
   admin:
     begins_at: Begins At
     begins_on: Begins On

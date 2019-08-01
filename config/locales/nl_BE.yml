@@ -94,6 +94,7 @@ nl_BE:
     user_passwords:
       spree_user:
         updated_not_active: "Uw wachtwoord is gereset, maar uw e-mail is nog niet bevestigd."
+        send_instructions: "U ontvangt een e-mail met instructies over hoe u uw account binnen enkele minuten kunt bevestigen."
   models:
     order_cycle:
       cloned_order_cycle_name: "KOPIE VAN %{order_cycle}"
@@ -246,6 +247,9 @@ nl_BE:
     create_and_add_another: "Een ander maken en toevoegen"
     create: "Maak"
     cancel: "Annuleren"
+    save: "Save"
+    edit: "bewerking"
+    delete: "Uitwissen "
   admin:
     begins_at: Begint Bij
     begins_on: Begint Op

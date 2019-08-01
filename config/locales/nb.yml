@@ -88,6 +88,7 @@ nb:
     user_passwords:
       spree_user:
         updated_not_active: "Ditt passord har blitt tilbakestilt, men epostadressen din er ikke bekreftet enda."
+        send_instructions: "Du vil motta en epost med instruksjoner om hvordan du bekrefter kontoen din om noen få minutter."
   models:
     order_cycle:
       cloned_order_cycle_name: "KOPI AV %{order_cycle}"
@@ -240,6 +241,9 @@ nb:
     create_and_add_another: "Opprett og legg til en annen"
     create: "Opprett"
     cancel: "Avbryt"
+    save: "Lagre"
+    edit: "Rediger"
+    delete: "Slett"
   admin:
     begins_at: Begynner på
     begins_on: Begynner på

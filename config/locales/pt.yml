@@ -88,6 +88,7 @@ pt:
     user_passwords:
       spree_user:
         updated_not_active: "A sua palavra-passe foi redefinida, mas o seu email ainda não foi confirmado."
+        send_instructions: "Daqui a uns minutos irá receber um email com instruções sobre como confirmar a sua conta."
   models:
     order_cycle:
       cloned_order_cycle_name: "CÓPIA DE%{order_cycle}"
@@ -240,6 +241,9 @@ pt:
     create_and_add_another: "Criar e acrescentar outro"
     create: "Criar"
     cancel: "Cancelar"
+    save: "Guardar"
+    edit: "Editar"
+    delete: "Apagar"
   admin:
     begins_at: Começa às
     begins_on: Começa em

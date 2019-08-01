@@ -94,6 +94,7 @@ de_DE:
     user_passwords:
       spree_user:
         updated_not_active: "Ihr Passwort wurde zurückgesetzt, aber ihre E-Mail muss noch bestätigt werden."
+        send_instructions: "Sie erhalten in einigen Minuten eine E-Mail mit Anweisungen zur Bestätigung Ihres Kontos."
   models:
     order_cycle:
       cloned_order_cycle_name: "Kopie von %{order_cycle}"
@@ -246,6 +247,8 @@ de_DE:
     create_and_add_another: "Erstellen und weitere hinzufügen"
     create: "Neu"
     cancel: "Abbrechen"
+    save: "Speichern"
+    edit: "Bearbeiten"
   admin:
     begins_at: Beginnt um
     begins_on: Beginnt am

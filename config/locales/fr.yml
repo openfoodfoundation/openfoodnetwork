@@ -459,7 +459,7 @@ fr:
         product_list: Catalogues produits des producteurs
         inventories: Catalogues boutiques des hubs distributeurs
         import: Importer
-        upload: Télécharger
+        upload: Téléverser
         csv_templates: Modèles de fichiers csv
         product_list_template: Télécharger le modèle pour import dans catalogue producteur
         inventory_template: Télécharger le modèle pour import dans catalogue boutique
@@ -1888,10 +1888,10 @@ fr:
   admin_enterprise_groups_web_website_placeholder: "ex: www.maferme.fr"
   admin_order_cycles: "Gérer les cycles de vente"
   open: "Ouvre"
-  close: "Ferme"
+  close: "Fermer"
   create: "Créer"
   search: "Rechercher"
-  supplier: "Fournisseurs"
+  supplier: "Fournisseur"
   product_name: "Nom du Produit"
   product_description: "Description du Produit"
   units: "Unité de mesure"
@@ -2008,7 +2008,7 @@ fr:
   hub_sidebar_blue: "bleu"
   hub_sidebar_red: "rouge"
   report_customers_distributor: "Distributeur"
-  report_customers_supplier: "Fournisseurs"
+  report_customers_supplier: "Fournisseur"
   report_customers_cycle: "Cycle de vente"
   report_customers_type: "Type de rapport"
   report_customers_csv: "Télécharger en csv"
@@ -2424,7 +2424,7 @@ fr:
           awaiting_return: "attente du retour"
           canceled: "annulé"
           cart: "panier"
-          complete: "terminer"
+          complete: "finalisée"
           confirm: "confirmer"
           delivery: "livraison"
           paused: "mis en pause"
@@ -2894,7 +2894,7 @@ fr:
           new: "Nouveau"
           back_to_shipping_methods_list: "Retour à la liste des méthodes de livraison"
         form:
-          categories: "Catégories"
+          categories: "Conditions de transport"
           zones: "Zones"
           both: "Les deux"
           front_end: "Front End"
@@ -3060,7 +3060,7 @@ fr:
       awaiting_return: attente du retour
       canceled: annulé
       cart: panier
-      complete: terminer
+      complete: finalisée
       confirm: confirmer
       delivery: livraison
       paused: mis en pause

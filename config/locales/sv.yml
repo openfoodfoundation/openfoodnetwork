@@ -102,6 +102,7 @@ sv:
   actions:
     create: "Skapa"
     cancel: "Avbryt"
+    edit: "Redigera"
   admin:
     date: Datum
     email: epost
