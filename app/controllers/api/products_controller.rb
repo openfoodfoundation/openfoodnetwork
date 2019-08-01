@@ -1,23 +1,23 @@
 require 'open_food_network/permissions'
 
 module Api
-  class ProductsController < ::Api::BaseController
+  class ProductsController < Api::BaseController
     respond_to :json
 
     skip_authorization_check only: [:show, :bulk_products, :overridable]
 
     def show
       @product = find_product(params[:id])
-      render json: @product, serializer: ::Api::Admin::ProductSerializer
+      render json: @product, serializer: Api::Admin::ProductSerializer
     end
 
     def create
-      authorize! :create, Product
+      authorize! :create, Spree::Product
       params[:product][:available_on] ||= Time.zone.now
-      @product = Product.new(params[:product])
+      @product = Spree::Product.new(params[:product])
       begin
         if @product.save
-          render json: @product, serializer: ::Api::Admin::ProductSerializer, status: 201
+          render json: @product, serializer: Api::Admin::ProductSerializer, status: 201
         else
           invalid_resource!(@product)
         end
@@ -28,21 +28,21 @@ module Api
     end
 
     def update
-      authorize! :update, Product
+      authorize! :update, Spree::Product
       @product = find_product(params[:id])
       if @product.update_attributes(params[:product])
-        render json: @product, serializer: ::Api::Admin::ProductSerializer, status: 200
+        render json: @product, serializer: Api::Admin::ProductSerializer, status: 200
       else
         invalid_resource!(@product)
       end
     end
 
     def destroy
-      authorize! :delete, Product
+      authorize! :delete, Spree::Product
       @product = find_product(params[:id])
       @product.update_attribute(:deleted_at, Time.zone.now)
       @product.variants_including_master.update_all(deleted_at: Time.zone.now)
-      render json: @product, serializer: ::Api::Admin::ProductSerializer, status: 204
+      render json: @product, serializer: Api::Admin::ProductSerializer, status: 204
     end
 
     # TODO: This should be named 'managed'. Is the action above used? Maybe we should remove it.
@@ -70,7 +70,7 @@ module Api
       @product = find_product(params[:product_id])
       authorize! :delete, @product
       @product.destroy
-      render json: @product, serializer: ::Api::Admin::ProductSerializer, status: 204
+      render json: @product, serializer: Api::Admin::ProductSerializer, status: 204
     end
 
     # POST /api/products/:product_id/clone
@@ -82,12 +82,12 @@ module Api
 
       @product = original_product.duplicate
 
-      render json: @product, serializer: ::Api::Admin::ProductSerializer, status: 201
+      render json: @product, serializer: Api::Admin::ProductSerializer, status: 201
     end
 
     private
 
-    # Copied and modified from Spree::Api::BaseController to allow
+    # Copied and modified from SpreeApi::BaseController to allow
     # enterprise users to access inactive products
     def product_scope
       # This line modified
@@ -115,7 +115,7 @@ module Api
     def render_paged_products(products)
       serializer = ActiveModel::ArraySerializer.new(
         products,
-        each_serializer: ::Api::Admin::ProductSerializer
+        each_serializer: Api::Admin::ProductSerializer
       )
 
       render text: { products: serializer, pages: products.num_pages }.to_json
