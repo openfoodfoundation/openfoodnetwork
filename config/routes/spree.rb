@@ -61,19 +61,6 @@ Spree::Core::Engine.routes.prepend do
     resources :users do
       get :authorise_api, on: :collection
     end
-
-    resources :orders do
-      get :managed, on: :collection
-
-      resources :shipments, :only => [:create, :update] do
-        member do
-          put :ready
-          put :ship
-          put :add
-          put :remove
-        end
-      end
-    end
   end
 
   namespace :admin do
