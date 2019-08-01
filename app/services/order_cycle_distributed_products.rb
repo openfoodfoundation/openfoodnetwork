@@ -39,6 +39,16 @@ class OrderCycleDistributedProducts
   def product_has_only_obsolete_master_in_distribution?(product, distributed_variants)
     product.has_variants? &&
       distributed_variants.include?(product.master) &&
-      (product.variants & distributed_variants).empty?
+      distributed_current_variants(product).empty?
+  end
+
+  # Returns the product variants that are currently under distribution, aka.
+  # are present in a exchange
+  #
+  # ActiveRecord::Relation<Spree::Variant>
+  def distributed_current_variants(product)
+    order_cycle
+      .variants_distributed_by(distributor)
+      .merge(product.variants)
   end
 end
