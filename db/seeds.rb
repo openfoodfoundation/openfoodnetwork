@@ -21,11 +21,11 @@ end
 set_mail_configuration
 
 # -- Spree
-unless Spree::Country.find_by_iso(ENV['DEFAULT_COUNTRY_CODE'])
+# unless Spree::Country.find_by_iso(ENV['DEFAULT_COUNTRY_CODE'])
   puts "[db:seed] Seeding Spree"
   Spree::Core::Engine.load_seed if defined?(Spree::Core)
   Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
-end
+# end
 
 country = Spree::Country.find_by_iso(ENV['DEFAULT_COUNTRY_CODE'])
 puts "Country is #{country.to_s}"
