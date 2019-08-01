@@ -61,7 +61,7 @@ Spree::Admin::BaseController.class_eval do
 
   def active_distributors_not_ready_for_checkout
     ocs = OrderCycle.managed_by(spree_current_user).active
-    distributors = ocs.map(&:distributors).flatten.uniq
+    distributors = ocs.includes(:distributors).map(&:distributors).flatten.uniq
     Enterprise.where('enterprises.id IN (?)', distributors).not_ready_for_checkout
   end
 
