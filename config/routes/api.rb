@@ -29,5 +29,7 @@ Openfoodnetwork::Application.routes.draw do
     resources :enterprise_fees, only: [:destroy]
 
     post '/product_images/:product_id', to: 'product_images#update_product_image'
+
+    resources :taxons, :only => [:index]
   end
 end
