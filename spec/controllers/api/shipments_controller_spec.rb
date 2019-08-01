@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Api::ShipmentsController, type: :controller do
+describe Api::ShipmentsController, type: :controller do
   render_views
 
   let!(:shipment) { create(:shipment) }
