@@ -35,9 +35,11 @@ describe Calculator::Weight do
         expect(subject.compute(line_item)).to eq(10 * 18)
       end
 
-      it "returns zero for variant where unit type is not weight" do
-        line_item.variant.product.update_attribute :variant_unit, 'items'
-        expect(subject.compute(line_item)).to eq(0)
+      context "where variant unit is not weight" do
+        it "uses both final_weight_volume and weight to calculate fee" do
+          line_item.variant.product.update_attribute :variant_unit, 'items'
+          expect(subject.compute(line_item)).to eq(180)
+        end
       end
     end
   end
