@@ -45,6 +45,9 @@ module Calculator
       end
     end
 
+    #  Example: 2 (line_item.quantity) wine glasses of 125mL (line_item.variant.unit_value)
+    #    Customer ends up getting 350mL (line_item.final_weight_volume) of wine
+    #      that represent 2.8 (quantity_implied_in_final_weight_volume) glasses of wine
     def quantity_implied_in_final_weight_volume(line_item)
       (1.0 * line_item.final_weight_volume / line_item.variant.unit_value).round(3)
     end
