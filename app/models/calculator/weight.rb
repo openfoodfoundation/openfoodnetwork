@@ -26,13 +26,7 @@ module Calculator
 
     def line_item_weight(line_item)
       if line_item.final_weight_volume.present?
-        if line_item.variant.product.andand.variant_unit == 'weight'
-          # Divided by 1000 because grams is the base weight unit and the calculator price is per_kg
-          line_item.final_weight_volume / 1000.0
-        else
-          final_units = (1.0 * line_item.final_weight_volume / line_item.variant.unit_value).round(3)
-          weight_per_variant(line_item) * final_units
-        end
+        weight_per_final_weight_volume(line_item)
       else
         weight_per_variant(line_item) * line_item.quantity
       end
@@ -40,6 +34,19 @@ module Calculator
 
     def weight_per_variant(line_item)
       line_item.variant.andand.weight || 0
+    end
+
+    def weight_per_final_weight_volume(line_item)
+      if line_item.variant.product.andand.variant_unit == 'weight'
+        # Divided by 1000 because grams is the base weight unit and the calculator price is per_kg
+        line_item.final_weight_volume / 1000.0
+      else
+        weight_per_variant(line_item) * quantity_implied_in_final_weight_volume(line_item)
+      end
+    end
+
+    def quantity_implied_in_final_weight_volume(line_item)
+      (1.0 * line_item.final_weight_volume / line_item.variant.unit_value).round(3)
     end
   end
 end
