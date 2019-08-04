@@ -4,7 +4,10 @@
       %th{:align => "left"}
         %h4
           = t :email_order_summary_item
-      %th{:align => "right", :width => "25%"}
+      %th{:align => "left"}
+        %h4
+          = t :email_order_summary_sku
+      %th{:align => "right"}
         %h4
           = t :email_order_summary_quantity
       %th{:align => "right", :width => "25%"}
@@ -18,6 +21,11 @@
           %br
           %small
             %em= raw(item.variant.product.supplier.name)
+        %td
+          - if item.variant.sku.blank?
+            \-
+          - else
+            = item.variant.sku
         %td{:align => "right"}
           - if @changes && @changes[item.id].present?
             %del.quantity_was= @changes[item.id]
