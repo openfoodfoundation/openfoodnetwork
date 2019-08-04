@@ -42,7 +42,7 @@ nav.top-bar {
 }
 
 .top-bar-section {
-  border-bottom: 1px solid $light-grey;
+  border-bottom: 1px solid $light-grey-transparency;
 
   a.icon {
     &:hover {
@@ -169,11 +169,11 @@ nav.top-bar {
 // Mobile Menu
 
 .tab-bar {
-  border-bottom: 1px solid $light-grey;
   background-color: white;
+  border-bottom: 1px solid $light-grey-transparency;
+  height: 2.8em;
   position: fixed;
   width: 100%;
-  height: 2.8em;
   z-index: 1;
 
   .cart-span {
