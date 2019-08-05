@@ -49,6 +49,10 @@ gem 'delayed_job_web'
 # When merged, revert to upstream gem
 gem 'simple_form', github: 'RohanM/simple_form'
 
+# Spree's default pagination gem (locked to the current version used by Spree)
+# We use it's methods in OFN code as well, so this is a direct dependency
+gem 'kaminari', '~> 0.14.1'
+
 gem 'andand'
 gem 'angularjs-rails', '1.5.5'
 gem 'aws-sdk'
