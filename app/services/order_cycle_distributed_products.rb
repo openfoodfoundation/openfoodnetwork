@@ -29,23 +29,26 @@ class OrderCycleDistributedProducts
     Spree::Product.where(id: product_ids)
   end
 
-  private
-
-  attr_reader :order_cycle, :distributor
-
   # If a product without variants is added to an order cycle, and then some variants are added
   # to that product, but not the order cycle, then the master variant should not available for
   # customers to purchase.
   def product_has_only_obsolete_master_in_distribution?(product, distributed_variants)
-    product.has_variants? &&
-      distributed_variants_include_master?(product) &&
-      distributed_current_variants(product).empty?
+    if product.has_variants?
+      !order_cycle.variants_distributed_by(distributor).where(id: product.master.id).empty? &&
+      order_cycle.variants_distributed_by(distributor).where(id: product.variants).empty?
+    else
+      false
+    end
   end
+
+  private
+
+  attr_reader :order_cycle, :distributor
 
   def distributed_variants_include_master?(product)
     order_cycle
       .variants_distributed_by(distributor)
-      .exists?(product.master.id)
+      .where(id: product.master.id)
   end
 
   # Returns the product variants that are currently under distribution, aka.
