@@ -18,6 +18,7 @@ Spree::Admin::VariantsController.class_eval do
   def search
     scoper = OpenFoodNetwork::ScopeVariantsForSearch.new(params)
     @variants = scoper.search
+    render json: @variants, each_serializer: Api::Admin::VariantSerializer
   end
 
   def destroy

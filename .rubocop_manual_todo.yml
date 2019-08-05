@@ -123,7 +123,6 @@ Metrics/LineLength:
   - app/serializers/api/admin/subscription_serializer.rb
   - app/serializers/api/admin/tag_rule_serializer.rb
   - app/serializers/api/admin/variant_override_serializer.rb
-  - app/serializers/api/admin/variant_serializer.rb
   - app/services/cart_service.rb
   - app/services/default_stock_location.rb
   - app/services/embedded_page_service.rb
