@@ -55,6 +55,6 @@ class OrderCycleDistributedProducts
   def distributed_current_variants(product)
     order_cycle
       .variants_distributed_by(distributor)
-      .merge(product.variants)
+      .where(id: product.variants)
   end
 end
