@@ -94,6 +94,7 @@ en_GB:
     user_passwords:
       spree_user:
         updated_not_active: "Your password has been reset, but your email has not been confirmed yet."
+        updated: "Your password was changed successfully. You are now signed in."
         send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
   models:
     order_cycle:
@@ -2779,6 +2780,7 @@ en_GB:
     inventory: Inventory
     zipcode: Postcode
     weight: Weight (per kg)
+    error_user_destroy_with_orders: "Users with completed orders may not be deleted"
     actions:
       update: "Update"
     errors:
