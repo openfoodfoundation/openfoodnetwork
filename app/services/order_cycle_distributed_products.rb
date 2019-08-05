@@ -38,8 +38,14 @@ class OrderCycleDistributedProducts
   # customers to purchase.
   def product_has_only_obsolete_master_in_distribution?(product, distributed_variants)
     product.has_variants? &&
-      distributed_variants.include?(product.master) &&
+      distributed_variants_include_master?(product) &&
       distributed_current_variants(product).empty?
+  end
+
+  def distributed_variants_include_master?(product)
+    order_cycle
+      .variants_distributed_by(distributor)
+      .exists?(product.master.id)
   end
 
   # Returns the product variants that are currently under distribution, aka.
