@@ -15,25 +15,17 @@ class OrderCycleDistributedProducts
   #
   # @return [ActiveRecord::Relation<Spree::Product>]
   def relation
-    Rails.logger.debug "====== relation ======="
     products = Spree::Product
       .joins(:variants_including_master)
       .merge(order_cycle.variants_distributed_by(distributor))
 
-    Rails.logger.debug "====== variants ======="
     variants = order_cycle.variants_distributed_by(distributor)
 
-    Rails.logger.debug "====== reject ======="
     valid_products = products.reject do |product|
       product_has_only_obsolete_master_in_distribution?(product, variants)
     end
-    Rails.logger.debug "====== end reject ======="
-
     product_ids = valid_products.map(&:id)
 
-    Rails.logger.debug "====== end variants ======="
-
-    Rails.logger.debug "====== end relation ======="
     Spree::Product.where(id: product_ids)
   end
 
