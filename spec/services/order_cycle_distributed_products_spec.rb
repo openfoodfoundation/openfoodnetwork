@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe OrderCycleDistributedProducts do
-  let(:order_cycle) { OrderCycle.new }
+  let(:order_cycle) { build(:order_cycle) }
   let(:distributor) { create(:enterprise) }
   let(:exchange) do
     create(
@@ -57,7 +57,7 @@ describe OrderCycleDistributedProducts do
 
     it 'returns the product' do
       distributed_valid_products = described_class.new(order_cycle, distributor)
-      expect(distributed_valid_products.relation).to eq([product])
+      expect(distributed_valid_products.relation_with_sql).to eq([product])
     end
   end
 
