@@ -18,6 +18,7 @@ module Spree
         klass = Spree::Order if klass == :bulk_order_management
         klass = EnterpriseGroup if klass == :group
         klass = VariantOverride if klass == :Inventory
+        klass = ProductImport::ProductImporter if klass == :import
         klass = Spree::Admin::ReportsController if klass == :report
         klass
       end
