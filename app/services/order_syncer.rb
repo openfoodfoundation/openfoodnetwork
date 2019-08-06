@@ -1,6 +1,5 @@
 # Responsible for ensuring that any updates to a Subscription are propagated to any
 # orders belonging to that Subscription which have been instantiated
-
 class OrderSyncer
   attr_reader :order_update_issues
 
@@ -11,8 +10,9 @@ class OrderSyncer
   end
 
   def sync!
-    future_and_undated_orders.all? do |order|
-      order.assign_attributes(customer_id: customer_id, email: customer.andand.email, distributor_id: shop_id)
+    orders_in_order_cycles_not_closed.all? do |order|
+      order.assign_attributes(customer_id: customer_id, email: customer.andand.email,
+                              distributor_id: shop_id)
       update_associations_for(order)
       line_item_syncer.sync!(order)
       order.save
@@ -25,7 +25,8 @@ class OrderSyncer
 
   delegate :orders, :bill_address, :ship_address, :subscription_line_items, to: :subscription
   delegate :shop_id, :customer, :customer_id, to: :subscription
-  delegate :shipping_method, :shipping_method_id, :payment_method, :payment_method_id, to: :subscription
+  delegate :shipping_method, :shipping_method_id,
+           :payment_method, :payment_method_id, to: :subscription
   delegate :shipping_method_id_changed?, :shipping_method_id_was, to: :subscription
   delegate :payment_method_id_changed?, :payment_method_id_was, to: :subscription
 
@@ -36,9 +37,10 @@ class OrderSyncer
     update_payment_for(order) if payment_method_id_changed?
   end
 
-  def future_and_undated_orders
-    return @future_and_undated_orders unless @future_and_undated_orders.nil?
-    @future_and_undated_orders = orders.joins(:order_cycle).merge(OrderCycle.not_closed).readonly(false)
+  def orders_in_order_cycles_not_closed
+    return @orders_in_order_cycles_not_closed unless @orders_in_order_cycles_not_closed.nil?
+    @orders_in_order_cycles_not_closed = orders.joins(:order_cycle).
+      merge(OrderCycle.not_closed).readonly(false)
   end
 
   def update_bill_address_for(order)
@@ -49,7 +51,8 @@ class OrderSyncer
   end
 
   def update_payment_for(order)
-    payment = order.payments.with_state('checkout').where(payment_method_id: payment_method_id_was).last
+    payment = order.payments.
+      with_state('checkout').where(payment_method_id: payment_method_id_was).last
     if payment
       payment.andand.void_transaction!
       order.payments.create(payment_method_id: payment_method_id, amount: order.reload.total)

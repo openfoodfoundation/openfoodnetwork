@@ -391,13 +391,44 @@ describe OrderSyncer do
       let(:params) { { subscription_line_items_attributes: [{ id: sli.id, quantity: 3 }] } }
       let(:syncer) { OrderSyncer.new(subscription) }
 
-      it "updates the line_item quantities and totals on all orders" do
+      before do
         expect(order.reload.total.to_f).to eq 59.97
         subscription.assign_attributes(params)
-        expect(syncer.sync!).to be true
-        line_items = Spree::LineItem.where(order_id: subscription.orders, variant_id: sli.variant_id)
-        expect(line_items.map(&:quantity)).to eq [3]
-        expect(order.reload.total.to_f).to eq 99.95
+      end
+
+      context "when order is not complete" do
+        it "updates the line_item quantities and totals on all orders" do
+          expect(syncer.sync!).to be true
+
+          line_items = Spree::LineItem.where(order_id: subscription.orders, variant_id: sli.variant_id)
+          expect(line_items.map(&:quantity)).to eq [3]
+          expect(order.reload.total.to_f).to eq 99.95
+        end
+      end
+
+      context "when order is complete" do
+        it "does not update the line_item quantities and adds the order to order_update_issues with insufficient stock" do
+          AdvanceOrderService.new(order).call
+
+          expect(syncer.sync!).to be true
+
+          line_items = Spree::LineItem.where(order_id: subscription.orders, variant_id: sli.variant_id)
+          expect(line_items.map(&:quantity)).to eq [1]
+          expect(order.reload.total.to_f).to eq 59.97
+          line_item = order.line_items.find_by_variant_id(sli.variant_id)
+          expect(syncer.order_update_issues[order.id]).to include "#{line_item.product.name} - #{line_item.variant.full_name} - Insufficient stock available"
+        end
+
+        it "does not update the line_item quantities and adds the order to order_update_issues with out of stock" do
+          # this single item available is used when the order is completed below, making the item out of stock
+          variant.update_attribute(:on_hand, 1)
+          AdvanceOrderService.new(order).call
+
+          expect(syncer.sync!).to be true
+
+          line_item = order.line_items.find_by_variant_id(sli.variant_id)
+          expect(syncer.order_update_issues[order.id]).to include "#{line_item.product.name} - #{line_item.variant.full_name} - Out of Stock"
+        end
       end
     end
 
@@ -426,11 +457,13 @@ describe OrderSyncer do
 
         it "does not change the quantity, and adds the order to order_update_issues" do
           expect(order.reload.total.to_f).to eq 79.96
+
           subscription.assign_attributes(params)
           expect(syncer.sync!).to be true
+
           expect(changed_line_item.reload.quantity).to eq 2
           expect(order.reload.total.to_f).to eq 79.96
-          expect(syncer.order_update_issues[order.id]).to include "#{changed_line_item.product.name} - #{changed_line_item.full_name}"
+          expect(syncer.order_update_issues[order.id]).to include "#{changed_line_item.product.name} - #{changed_line_item.variant.full_name}"
         end
       end
     end
@@ -440,16 +473,68 @@ describe OrderSyncer do
     let(:subscription) { create(:subscription, with_items: true, with_proxy_orders: true) }
     let(:order) { subscription.proxy_orders.first.initialise_order! }
     let(:variant) { create(:variant) }
-    let(:params) { { subscription_line_items_attributes: [{ id: nil, variant_id: variant.id, quantity: 1 }] } }
     let(:syncer) { OrderSyncer.new(subscription) }
 
-    it "adds the line item and updates the total on all orders" do
+    before do
       expect(order.reload.total.to_f).to eq 59.97
       subscription.assign_attributes(params)
-      expect(syncer.sync!).to be true
-      line_items = Spree::LineItem.where(order_id: subscription.orders, variant_id: variant.id)
-      expect(line_items.map(&:quantity)).to eq [1]
-      expect(order.reload.total.to_f).to eq 79.96
+    end
+
+    context "when quantity is within available stock" do
+      let(:params) { { subscription_line_items_attributes: [{ id: nil, variant_id: variant.id, quantity: 1 }] } }
+
+      it "adds the line item and updates the total on all orders" do
+        expect(syncer.sync!).to be true
+
+        line_items = Spree::LineItem.where(order_id: subscription.orders, variant_id: variant.id)
+        expect(line_items.map(&:quantity)).to eq [1]
+        expect(order.reload.total.to_f).to eq 79.96
+      end
+    end
+
+    context "when quantity is greater than available stock" do
+      let(:params) { { subscription_line_items_attributes: [{ id: nil, variant_id: variant.id, quantity: 7 }] } }
+
+      context "when order is not complete" do
+        it "adds the line_item and updates totals on all orders" do
+          expect(syncer.sync!).to be true
+
+          line_items = Spree::LineItem.where(order_id: subscription.orders, variant_id: variant.id)
+          expect(line_items.map(&:quantity)).to eq [7]
+          expect(order.reload.total.to_f).to eq 199.9
+        end
+      end
+
+      context "when order is complete" do
+        before { AdvanceOrderService.new(order).call }
+
+        it "does not add line_item and adds the order to order_update_issues" do
+          expect(syncer.sync!).to be true
+
+          line_items = Spree::LineItem.where(order_id: subscription.orders, variant_id: variant.id)
+          expect(line_items.map(&:quantity)).to eq []
+          expect(order.reload.total.to_f).to eq 59.97
+          expect(syncer.order_update_issues[order.id]).to include "#{variant.product.name} - #{variant.full_name} - Insufficient stock available"
+        end
+
+        context "and then updating the quantity of that subscription line item that was not added to the completed order" do
+          it "does nothing to the order and adds the order to order_update_issues" do
+            expect(syncer.sync!).to be true
+
+            line_items = Spree::LineItem.where(order_id: subscription.orders, variant_id: variant.id)
+            expect(line_items.map(&:quantity)).to eq []
+
+            subscription.save # this is necessary to get an id on the subscription_line_items
+            params =  { subscription_line_items_attributes: [{ id: subscription.subscription_line_items.last.id, quantity: 2 }] }
+            subscription.assign_attributes(params)
+            expect(syncer.sync!).to be true
+
+            line_items = Spree::LineItem.where(order_id: subscription.orders, variant_id: variant.id)
+            expect(line_items.map(&:quantity)).to eq []
+            expect(syncer.order_update_issues[order.id]).to include "#{variant.product.name} - #{variant.full_name}"
+          end
+        end
+      end
     end
   end
 
