@@ -16,12 +16,14 @@ feature "shopping with variant overrides defined", js: true do
   let(:product1) { create(:simple_product, supplier: producer) }
   let(:product2) { create(:simple_product, supplier: producer) }
   let(:product3) { create(:simple_product, supplier: producer, on_demand: true) }
+  let(:product4) { create(:simple_product, supplier: producer) }
   let(:product1_variant1) { create(:variant, product: product1, price: 11.11, unit_value: 1) }
   let(:product1_variant2) { create(:variant, product: product1, price: 22.22, unit_value: 2) }
   let(:product2_variant1) { create(:variant, product: product2, price: 33.33, unit_value: 3) }
   let(:product1_variant3) { create(:variant, product: product1, price: 44.44, unit_value: 4) }
   let(:product3_variant1) { create(:variant, product: product3, price: 55.55, unit_value: 5, on_demand: true) }
   let(:product3_variant2) { create(:variant, product: product3, price: 66.66, unit_value: 6, on_demand: true) }
+  let(:product4_variant1) { create(:variant, product: product4, price: 77.77, unit_value: 7) }
   let!(:product1_variant1_override) { create(:variant_override, :use_producer_stock_settings, hub: hub, variant: product1_variant1, price: 55.55, count_on_hand: nil, default_stock: nil, resettable: false) }
   let!(:product1_variant2_override) { create(:variant_override, hub: hub, variant: product1_variant2, count_on_hand: 0, default_stock: nil, resettable: false) }
   let!(:product2_variant1_override) { create(:variant_override, hub: hub, variant: product2_variant1, count_on_hand: 0, default_stock: nil, resettable: false) }
@@ -29,9 +31,10 @@ feature "shopping with variant overrides defined", js: true do
   let!(:product3_variant1_override) { create(:variant_override, hub: hub, variant: product3_variant1, count_on_hand: 0, default_stock: nil, resettable: false) }
   let!(:product3_variant2_override) { create(:variant_override, hub: hub, variant: product3_variant2, count_on_hand: 6, default_stock: nil, resettable: false) }
   let(:enterprise_fee) { create(:enterprise_fee, enterprise: hub, fee_type: 'packing', calculator: Calculator::FlatPercentPerItem.new(preferred_flat_percent: 10)) }
+  let!(:product4_variant1_override) { create(:variant_override, hub: hub, variant: product4_variant1, count_on_hand: nil, on_demand: true, default_stock: nil, resettable: false) }
 
   before do
-    outgoing_exchange.variants = [product1_variant1, product1_variant2, product2_variant1, product1_variant3, product3_variant1, product3_variant2]
+    outgoing_exchange.variants = [product1_variant1, product1_variant2, product2_variant1, product1_variant3, product3_variant1, product3_variant2, product4_variant1]
     outgoing_exchange.enterprise_fees << enterprise_fee
     sm.calculator.preferred_amount = 0
     visit shops_path
@@ -144,6 +147,15 @@ feature "shopping with variant overrides defined", js: true do
         complete_checkout
       end.to change { product1_variant1.reload.on_hand }.by(-2)
       product1_variant1_override.reload.count_on_hand.should be_nil
+    end
+
+    it "does not subtract stock from variants where the override has on_demand: true" do
+      fill_in "variants[#{product4_variant1.id}]", with: "2"
+      click_checkout
+      expect do
+        complete_checkout
+      end.to change { product4_variant1.reload.on_hand }.by(0)
+      expect(product4_variant1_override.reload.count_on_hand).to be_nil
     end
 
     it "does not show out of stock flags on order confirmation page" do
