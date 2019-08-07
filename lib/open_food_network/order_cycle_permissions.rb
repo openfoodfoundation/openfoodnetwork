@@ -76,10 +76,9 @@ module OpenFoodNetwork
 
           # TODO: Remove this when all P-OC are sorted out
           # Hubs that currently have outgoing exchanges distributing variants of producers I manage
-          variants = Spree::Variant.
-            joins(:product).
-            where("spree_products.supplier_id IN (?)",
-                  managed_enterprises.is_primary_producer.select("enterprises.id"))
+          variants = variants_from_suppliers(
+            managed_enterprises.is_primary_producer.select("enterprises.id")
+          )
 
           active_exchanges = @order_cycle.
             exchanges.outgoing.with_any_variant(variants.select("spree_variants.id"))
@@ -169,8 +168,7 @@ module OpenFoodNetwork
         producer_ids = related_enterprises_granting(:add_to_order_cycle,
                                                     to: [hub.id],
                                                     scope: managed_participating_producers)
-        permitted_variants = Spree::Variant.joins(:product).
-          where('spree_products.supplier_id IN (?)', producer_ids)
+        permitted_variants = variants_from_suppliers(producer_ids)
 
         # PLUS my incoming producers' variants that are already in an outgoing exchange of this hub,
         #   so things don't break. TODO: Remove this when all P-OC are sorted out
@@ -202,8 +200,7 @@ module OpenFoodNetwork
         granting_producer_ids = related_enterprises_granting(:add_to_order_cycle,
                                                              to: [hub.id],
                                                              scope: granted_producers)
-        permitted_variants = Spree::Variant.joins(:product).
-          where('spree_products.supplier_id IN (?)', granting_producer_ids)
+        permitted_variants = variants_from_suppliers(granting_producer_ids)
 
         Spree::Variant.where(id: permitted_variants)
       end
@@ -227,8 +224,7 @@ module OpenFoodNetwork
     end
 
     def variants_from_suppliers(supplier_ids)
-      Spree::Variant.joins(:product).
-        where('spree_products.supplier_id IN (?)', supplier_ids)
+      Spree::Variant.joins(:product).where('spree_products.supplier_id IN (?)', supplier_ids)
     end
 
     def active_outgoing_variants(hub)
@@ -314,8 +310,7 @@ module OpenFoodNetwork
       # active_exchanges is for backward compatability, before we restricted variants in each
       # outgoing exchange to those where the producer had granted P-OC to the distributor
       # For any of my managed producers, any outgoing exchanges with their variants
-      variants = Spree::Variant.
-        joins(:product).where('spree_products.supplier_id IN (?)', producer_ids)
+      variants = variants_from_suppliers(producer_ids)
       active_exchange_ids = @order_cycle.
         exchanges.outgoing.with_any_variant(variants.select("spree_variants.id")).pluck :id
 
