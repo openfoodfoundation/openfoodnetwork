@@ -236,8 +236,12 @@ module OpenFoodNetwork
     end
 
     def user_manages_coordinator_or(enterprise)
-      managed_enterprises.pluck(:id).include?(@coordinator.id) ||
-        managed_enterprises.pluck(:id).include?(enterprise.id)
+      managed_enterprise_ids.include?(@coordinator.id) ||
+        managed_enterprise_ids.include?(enterprise.id)
+    end
+
+    def managed_enterprise_ids
+      @managed_enterprise_ids ||= managed_enterprises.pluck(:id)
     end
 
     def managed_participating_enterprises
