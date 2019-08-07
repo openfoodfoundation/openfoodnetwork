@@ -182,11 +182,7 @@ module OpenFoodNetwork
         hub_variants = Spree::Variant.joins(:product).where('spree_products.supplier_id = (?)', hub)
 
         # PLUS variants that are already in an outgoing exchange of this hub, so things don't break
-        # TODO: Remove this when all P-OC are sorted out
-        active_variants = []
-        @order_cycle.exchanges.outgoing.where(receiver_id: hub).limit(1).each do |exchange|
-          active_variants = exchange.variants
-        end
+        active_variants = active_outgoing_variants(hub)
 
         Spree::Variant.
           where(id: coordinator_variants | hub_variants | permitted_variants | active_variants)
@@ -234,11 +230,7 @@ module OpenFoodNetwork
         hub_variants = Spree::Variant.joins(:product).where('spree_products.supplier_id = (?)', hub)
 
         # PLUS variants that are already in an outgoing exchange of this hub, so things don't break
-        # TODO: Remove this when all P-OC are sorted out
-        active_variants = []
-        @order_cycle.exchanges.outgoing.where(receiver_id: hub).limit(1).each do |exchange|
-          active_variants = exchange.variants
-        end
+        active_variants = active_outgoing_variants(hub)
 
         Spree::Variant.
           where(id: coordinator_variants | hub_variants | permitted_variants | active_variants)
@@ -261,6 +253,14 @@ module OpenFoodNetwork
     end
 
     private
+
+    def active_outgoing_variants(hub)
+      active_variants = []
+      @order_cycle.exchanges.outgoing.where(receiver_id: hub).limit(1).each do |exchange|
+        active_variants = exchange.variants
+      end
+      active_variants
+    end
 
     def user_manages_coordinator_or(enterprise)
       managed_enterprises.pluck(:id).include?(@coordinator.id) ||
