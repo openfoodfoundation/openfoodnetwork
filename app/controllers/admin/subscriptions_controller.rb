@@ -1,4 +1,5 @@
 require 'open_food_network/permissions'
+require 'open_food_network/proxy_order_syncer'
 
 module Admin
   class SubscriptionsController < ResourceController
@@ -32,21 +33,11 @@ module Admin
     end
 
     def create
-      form = SubscriptionForm.new(@subscription, params[:subscription])
-      if form.save
-        render_as_json @subscription
-      else
-        render json: { errors: form.json_errors }, status: :unprocessable_entity
-      end
+      save_form_and_render(false)
     end
 
     def update
-      form = SubscriptionForm.new(@subscription, params[:subscription])
-      if form.save
-        render_as_json @subscription, order_update_issues: form.order_update_issues
-      else
-        render json: { errors: form.json_errors }, status: :unprocessable_entity
-      end
+      save_form_and_render
     end
 
     def cancel
@@ -67,11 +58,25 @@ module Admin
     end
 
     def unpause
-      @subscription.update_attributes(paused_at: nil)
-      render_as_json @subscription
+      params[:subscription][:paused_at] = nil
+      save_form_and_render
     end
 
     private
+
+    def save_form_and_render(render_issues = true)
+      form = SubscriptionForm.new(@subscription, params[:subscription])
+      unless form.save
+        render json: { errors: form.json_errors }, status: :unprocessable_entity
+        return
+      end
+
+      if render_issues
+        render_as_json @subscription, order_update_issues: form.order_update_issues
+      else
+        render_as_json @subscription
+      end
+    end
 
     def permissions
       return @permissions unless @permissions.nil?
