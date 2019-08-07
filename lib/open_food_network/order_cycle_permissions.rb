@@ -164,14 +164,6 @@ module OpenFoodNetwork
       if user_manages_coordinator_or(hub)
         # TODO: Use variants_stockable_by(hub) for this?
 
-        # Any variants produced by the coordinator, for outgoing exchanges with itself
-        # TODO: isn't this completely redundant given the assignment of hub_variants below?
-        coordinator_variants = []
-        if hub == @coordinator
-          coordinator_variants = Spree::Variant.joins(:product).
-            where('spree_products.supplier_id = (?)', @coordinator)
-        end
-
         # Any variants of any producers that have granted the hub P-OC
         producer_ids = related_enterprises_granting(:add_to_order_cycle,
                                                     to: [hub.id],
@@ -185,7 +177,7 @@ module OpenFoodNetwork
         active_variants = active_outgoing_variants(hub)
 
         Spree::Variant.
-          where(id: coordinator_variants | hub_variants | permitted_variants | active_variants)
+          where(id: hub_variants | permitted_variants | active_variants)
       else
         # Variants produced by MY PRODUCERS that are in this OC,
         #   where my producer has granted P-OC to the hub
@@ -213,13 +205,6 @@ module OpenFoodNetwork
       return Spree::Variant.where("1=0") unless @order_cycle
 
       if user_manages_coordinator_or(hub)
-        # Any variants produced by the coordinator, for outgoing exchanges with itself
-        coordinator_variants = []
-        if hub == @coordinator
-          coordinator_variants = Spree::Variant.joins(:product).
-            where('spree_products.supplier_id = (?)', @coordinator)
-        end
-
         # Any variants of any producers that have granted the hub P-OC
         producer_ids = related_enterprises_granting(:add_to_order_cycle,
                                                     to: [hub.id],
@@ -233,7 +218,7 @@ module OpenFoodNetwork
         active_variants = active_outgoing_variants(hub)
 
         Spree::Variant.
-          where(id: coordinator_variants | hub_variants | permitted_variants | active_variants)
+          where(id: hub_variants | permitted_variants | active_variants)
       else
         # Any of my managed producers in this order cycle granted P-OC by the hub
         granted_producers = related_enterprises_granted(:add_to_order_cycle,
