@@ -14,7 +14,9 @@ nb:
       spree/product:
         primary_taxon: "Produktkategori"
         supplier: "Leverandør"
+        shipping_category_id: "Leveringskategori"
         variant_unit: "Variant Enhet"
+        variant_unit_name: "Enhetsnavn Variant"
       order_cycle:
         orders_close_at: Lukkedato
     errors:
@@ -75,6 +77,8 @@ nb:
     user_confirmations:
       spree_user:
         send_instructions: "Du vil motta en epost med instruksjoner om hvordan du bekrefter kontoen din om noen få minutter."
+        confirmation_sent: "Epostbekreftelse sendt"
+        confirmation_not_sent: "Feil ved sending av bekreftelses-epost"
     user_registrations:
       spree_user:
         signed_up_but_unconfirmed: "En melding med en bekreftelseslink er sendt til epostadressen din. Vennligst åpne lenken for å aktivere kontoen din."
@@ -85,9 +89,12 @@ nb:
           Var du gjest forrige gang? Kanskje du må opprette en konto eller nullstille passordet.
       unconfirmed: "Du må bekrefte kontoen din før du fortsetter."
       already_registered: "Denne epostadressen er allerede registrert. Vennligst logg inn for å fortsette, eller gå tilbake og bruk en annen epostadresse."
+    success:
+      logged_in_succesfully: "Innlogging vellykket"
     user_passwords:
       spree_user:
         updated_not_active: "Ditt passord har blitt tilbakestilt, men epostadressen din er ikke bekreftet enda."
+        updated: "Passordendringen var vellykket. Du er nå pålogget."
         send_instructions: "Du vil motta en epost med instruksjoner om hvordan du bekrefter kontoen din om noen få minutter."
   models:
     order_cycle:
@@ -321,6 +328,7 @@ nb:
     invoice_settings:
       edit:
         title: "Fakturainnstillinger"
+        enable_invoices?: "Aktivér Fakturaer?"
         invoice_style2?: "Bruk den alternative fakturamodellen som inkluderer total avgiftsoppdeling pr rate og avgiftsrateinfo pr vare (passer ikke for land som viser priser ekskludert avgift)"
         enable_receipt_printing?: "Vis valg for utskrift av kvitteringer ved bruk av kvitteringsprinter i nedtrekksmeny for bestillinger? "
     stripe_connect_settings:
@@ -648,6 +656,8 @@ nb:
           permalink_tip: "Denne permalinken brukes til å opprette url-en til din butikk: %{link}din-butikks-navn/shop"
           link_to_front: Lenke til butikkvindu
           link_to_front_tip: En direktelenke til ditt butikkvindu på Open Food Network.
+          ofn_uid: OFN UID
+          ofn_uid_tip: Den unike ID-en som brukes til å identifisere bedriften på Open Food Network.
         shipping_methods:
           name: Navn
           applies: Gjelder?
@@ -829,6 +839,7 @@ nb:
         add_distributor: 'Legg til distributør'
       advanced_settings:
         title: Avanserte Innstillinger
+        choose_product_tip: Du kan begrense innkommende og utgående produkter til kun %{inventory}s lagerbeholdning.
         preferred_product_selection_from_coordinator_inventory_only_here: Kun Koordinators varelager
         preferred_product_selection_from_coordinator_inventory_only_all: Alle tilgjengelige produkter
         save_reload: Lagre og last siden på nytt
@@ -964,6 +975,8 @@ nb:
         pause_subscription: Pause abonnement
         unpause_subscription: Fortsett abonnement
         cancel_subscription: Avbryt abonnement
+      filters:
+        query_placeholder: "Søk på epost..."
       setup_explanation:
         just_a_few_more_steps: 'Bare noen få skritt før du kan begynne:'
         enable_subscriptions: "Aktiver abonnementer for minst en av butikkene dine"
@@ -988,6 +1001,10 @@ nb:
             De viste prisene er bare et estimat og beregnet på det tidspunktet abonnementet endres.
             Hvis du endrer priser eller avgifter, vil ordrer bli oppdatert, men abonnementet vil fortsatt vise de gamle verdiene.
         not_in_open_and_upcoming_order_cycles_warning: "Det er ingen åpne eller kommende bestillingsrunder for dette produktet."
+      autocomplete:
+        name_or_sku: "NAME eller SKU"
+        quantity: "Mengde"
+        add: "Legg til"
       details:
         details: Detaljer
         invalid_error: Oops! Vennligst fyll inn alle obligatoriske felter...
@@ -996,6 +1013,8 @@ nb:
         charges_not_allowed: Korttrekk er ikke tillatt av denne kunden
         no_default_card: Kunden har ingen kort tilgjengelig for å trekke
         card_ok: Kunden har et kort tilgjengelig for å trekke
+        begins_at_placeholder: "Velg en dato"
+        ends_at_placeholder: "Valgfri"
       loading_flash:
         loading: LASTER ABONNEMENT
       review:
@@ -1008,15 +1027,18 @@ nb:
         saving: "LAGRER"
         saved: "LAGRET"
       product_already_in_order: Dette produktet er allerede lagt til i bestillingen. Vennligst rediger mengden direkte.
+      stock:
+        insufficient_stock: "Utilstrekkelig lager tilgjengelig"
+        out_of_stock: "Ikke på Lager"
       orders:
         number: Antall
         confirm_edit: Er du sikker på at du vil redigere denne bestillingen? Å gjøre det kan gjøre det vanskeligere å automatisk synkronisere endringer i abonnementet i fremtiden.
-      confirm_cancel_msg: Er du sikker på at du vil avbryte dette abonnementet? Denne handlingen kan ikke angres.
-      cancel_failure_msg: 'Beklager, avbryting mislyktes!'
-      confirm_pause_msg: Er du sikker på at du vil pause dette abonnementet?
-      pause_failure_msg: 'Beklager, pause mislyktes!'
-      confirm_unpause_msg: Er du sikker på at du vil fortsette dette abonnementet?
-      unpause_failure_msg: 'Beklager, fortsettelse mislyktes!'
+      confirm_cancel_msg: "Er du sikker på at du vil avbryte dette abonnementet? Denne handlingen kan ikke angres."
+      cancel_failure_msg: "Beklager, avbryting mislyktes!"
+      confirm_pause_msg: "Er du sikker på at du vil pause dette abonnementet?"
+      pause_failure_msg: "Beklager, pause mislyktes!"
+      confirm_unpause_msg: "Hvis du har en åpen bestillingsrundei for dette abonnementets tidsplan opprettes en bestilling for denne kunden. Er du sikker på at du vil sette i gang abonnementet?"
+      unpause_failure_msg: "Beklager, fortsettelse mislyktes!"
       confirm_cancel_open_orders_msg: "Noen bestillinger for dette abonnementet er for øyeblikket åpne. Kunden har allerede blitt varslet om at bestillingen vil bli lagt inn. Vil du avbryte disse bestillingene eller beholde dem?"
       resume_canceled_orders_msg: "Noen bestillinger for dette abonnementet kan gjenopptas akkurat nå. Du kan gjenoppta dem fra nedtrekksmenyen for bestillinger."
       yes_cancel_them: Avbryt dem
@@ -1095,7 +1117,11 @@ nb:
   shop:
     messages:
       login: "innlogging"
+      signup: "melde deg på"
       contact: "kontakt"
+      require_customer_login: "Kun godkjente kunder kan få tilgang til denne butikken."
+      require_login_html: "Hvis du allerede er en godkjent kunde, kan du fortsette %{login} eller %{signup}. Vil du begynne å handle her? Vennligst %{contact} %{enterprise} og spør om å bli med."
+      require_customer_html: "Hvis du vil begynne å handle her, vennligst %{contact} %{enterprise} for å spørre om å bli med."
   card_could_not_be_updated: Kortet kunne ikke oppdateres
   card_could_not_be_saved: kort kunne ikke lagres
   spree_gateway_error_flash_for_checkout: "Det oppstod et problem med betalingsinformasjonen din: %{error}"
@@ -1684,6 +1710,7 @@ nb:
       introduction:
         registration_greeting: "Hei der!"
         registration_intro: "Du kan nå opprette en profil for din Produsent eller Hub"
+        registration_checklist: "Hva trenger jeg?"
         registration_time: "5-10 minutter"
         registration_enterprise_address: "Bedriftsadresse"
         registration_contact_details: "Kontaktdetaljer"
@@ -1938,6 +1965,7 @@ nb:
   spree_admin_supplier: Leverandør
   spree_admin_product_category: Produktkategori
   spree_admin_variant_unit_name: Variant enhetsnavn
+  unit_name: "Enhetsnavn"
   change_package: "Endre Pakke"
   spree_admin_single_enterprise_hint: "Hint: For å hjelpe folk til å finne deg, skru på din synlighet under"
   spree_admin_eg_pickup_from_school: "f.eks. 'Henting ved Sammfunnshuset'"
@@ -2173,6 +2201,7 @@ nb:
   payment_methods: "Betalingsmetoder"
   payment_method_fee: "Transaksjongebyr"
   payment_processing_failed: "Betalingen kunne ikke behandles, vennligst sjekk detaljene du skrev inn"
+  payment_method_not_supported: "Den betalingsmåten støttes ikke. Velg en annen."
   payment_updated: "Betaling Oppdatert"
   inventory_settings: "Beholdningsinnstillinger"
   tag_rules: "Regler merkelapper"
@@ -2751,6 +2780,7 @@ nb:
     inventory: Varelager
     zipcode: Postnummer
     weight: Vekt (per kg)
+    error_user_destroy_with_orders: "Brukere med fullførte ordrer kan ikke slettes"
     actions:
       update: "Oppdater"
     errors:
@@ -2889,6 +2919,7 @@ nb:
             error_saving_payment: Feil ved lagring av betaling
             submitting_payment: Sender inn betaling...
       products:
+        image_upload_error: "Produktbildet ble ikke gjenkjent. Last opp et bilde i PNG- eller JPG-format."
         new:
           title: 'Nytt produkt'
         unit_name_placeholder: 'f.eks. bunter'
@@ -2958,7 +2989,8 @@ nb:
           confirmation_pending: "Epostbekreftelse venter. Vi har sendt en bekreftelses-epost til %{address}."
       variants:
         autocomplete:
-          producer_name: Produsent
+          producer_name: "Produsent"
+          unit: "Enhet"
       general_settings:
         edit:
           legal_settings: "Juridiske innstillinger"
