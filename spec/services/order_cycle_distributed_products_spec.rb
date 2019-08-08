@@ -13,6 +13,64 @@ describe OrderCycleDistributedProducts do
     )
   end
 
+  it 'allows me to test the variants' do
+    valid_product = create(:product)
+    invalid_product = create(:product)
+    valid_variant = valid_product.variants.first
+
+    distributor = create(:distributor_enterprise)
+    order_cycle = create(
+      :simple_order_cycle,
+      distributors: [distributor],
+      variants: [valid_variant, invalid_product.master]
+    )
+
+    query = <<-SQL
+SELECT "spree_variants".product_id
+  FROM "spree_variants"
+ LEFT
+  JOIN "exchange_variants"
+    ON "exchange_variants"."variant_id" = "spree_variants"."id"
+ LEFT
+  JOIN "exchanges"
+    ON "exchanges"."id"                 = "exchange_variants"."exchange_id"
+   AND ("spree_variants".deleted_at IS NULL)
+   GROUP BY product_id
+    SQL
+
+    subquery = <<-SQL
+SELECT "spree_variants".product_id
+  FROM "spree_variants"
+  LEFT 
+  JOIN "exchange_variants"
+    ON "exchange_variants"."variant_id" = "spree_variants"."id"
+  LEFT 
+  JOIN "exchanges"
+    ON "exchanges"."id"                 = "exchange_variants"."exchange_id"
+   AND ("spree_variants".deleted_at IS NULL)
+ INNER 
+  JOIN spree_products
+    ON spree_products.id                = spree_variants.product_id
+ WHERE spree_products.supplier_id IN (
+   #{valid_product.supplier_id}, #{invalid_product.supplier_id}
+ )
+ GROUP BY product_id
+HAVING COUNT(*)                         > 1
+   AND bool_or(is_master                = true
+   AND exchanges.id IS NOT NULL)
+ ORDER BY product_id
+    SQL
+
+    subquery_result = ActiveRecord::Base.connection.execute(subquery)
+    subquery_result = subquery_result.map { |r| r['product_id'].to_i }
+
+    result = ActiveRecord::Base.connection.execute(query)
+    result = result.map { |r| r['product_id'].to_i }
+
+    expect(subquery_result).to eq([invalid_product.id])
+    expect(result - subquery_result).to eq([valid_product.id])
+  end
+
   it 'returns valid products but not invalid products' do
     valid_product = create(:product)
     invalid_product = create(:product)
