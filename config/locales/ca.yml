@@ -1003,6 +1003,10 @@ ca:
             Els preus que es mostren són només una estimació i es calculen en el moment en què es canvia la subscripció.
             Si canvieu els preus o les comissions, les comandes s'actualitzaran, però la subscripció continuarà mostrant els valors anteriors.
         not_in_open_and_upcoming_order_cycles_warning: "No hi ha cicles de comandes oberts o futurs per a aquest producte."
+      autocomplete:
+        name_or_sku: "NOM O CODI"
+        quantity: "Quantitat"
+        add: "Afegeix"
       details:
         details: Detalls
         invalid_error: Oops! Si us plau ompliu tots els camps obligatoris ...
@@ -1025,15 +1029,18 @@ ca:
         saving: "DESANT"
         saved: "DESAT"
       product_already_in_order: Aquest producte ja s'ha afegit a la comanda. Editeu-ne la quantitat directament.
+      stock:
+        insufficient_stock: "Estoc disponible insuficient"
+        out_of_stock: "Fora d'existència"
       orders:
         number: Número
         confirm_edit: Estàs segur que voleu editar aquesta comanda? Si ho fas és més difícil que es sincronitzin automàticament els canvis a la subscripció en el futur.
-      confirm_cancel_msg: Estàs segur que vols cancel·lar aquesta subscripció? Aquesta acció no es pot desfer.
-      cancel_failure_msg: 'Ho sentim, la cancel·lació ha fallat!'
-      confirm_pause_msg: Estàs segur que vols pausar aquesta subscripció?
-      pause_failure_msg: 'Ho sentim, la pausa ha fallat!'
-      confirm_unpause_msg: Estàs segur que vols reprendre aquesta subscripció?
-      unpause_failure_msg: 'Ho sentim, la represa ha fallat!'
+      confirm_cancel_msg: "Estàs segur que vols cancel·lar aquesta subscripció? Aquesta acció no es pot desfer."
+      cancel_failure_msg: "Ho sentim, la cancel·lació ha fallat!"
+      confirm_pause_msg: "Estàs segur que vols pausar aquesta subscripció?"
+      pause_failure_msg: "Ho sentim, la pausa ha fallat!"
+      confirm_unpause_msg: "Si teniu un cicle de comanda obert a la programació d'aquesta subscripció, es crearà una comanda per a aquesta consumidora. Esteu segur que voleu anul·lar aquesta subscripció?"
+      unpause_failure_msg: "Ho sentim, la represa ha fallat!"
       confirm_cancel_open_orders_msg: "Actualment hi ha algunes comandes obertes per a aquesta subscripció. Ja s'ha notificat a les consumidores que les comandes serà atesa. Voleu cancel·lar aquestes comandes o conservar-les?"
       resume_canceled_orders_msg: "Algunes comandes d'aquesta subscripció es poden reprendre ara mateix. Podeu reprendre-les des del menú desplegable de comandes."
       yes_cancel_them: Cancel·lar-les
@@ -2988,7 +2995,8 @@ ca:
           confirmation_pending: "La confirmació de correu electrònic està pendent. Hem enviat un correu electrònic de confirmació a %{address}."
       variants:
         autocomplete:
-          producer_name: Productor
+          producer_name: "Productor"
+          unit: "Unitat"
       general_settings:
         edit:
           legal_settings: "Paràmetres legals"
