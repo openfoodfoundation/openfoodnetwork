@@ -1003,6 +1003,10 @@ es:
             Los precios mostrados son solo una estimación y se calculan en el momento en que se cambia la suscripción.
             Si cambias precios o comisiones, los pedidos se actualizarán pero la suscripción seguirá mostrando los valores anteriores.
         not_in_open_and_upcoming_order_cycles_warning: "No hay ciclos de pedidos abiertos o próximos para este producto."
+      autocomplete:
+        name_or_sku: "NOMBRE O CÓDIGO SKU"
+        quantity: "Cantidad"
+        add: "Añadir"
       details:
         details: Detalles
         invalid_error: Ups! Por favor complete todos los campos requeridos ...
@@ -1025,15 +1029,18 @@ es:
         saving: "GUARDANDO"
         saved: "GUARDADO"
       product_already_in_order: Este producto ya ha sido agregado a la orden. Por favor edite la cantidad directamente.
+      stock:
+        insufficient_stock: "Stock disponible insuficiente"
+        out_of_stock: "Agotado"
       orders:
         number: Número
         confirm_edit: ¿Seguro que quieres editar esta orden? Si lo hace, puede ser más difícil sincronizar automáticamente los cambios a la suscripción en el futuro.
-      confirm_cancel_msg: ¿Seguro que quieres cancelar esta suscripción? Esta acción no se puede deshacer.
-      cancel_failure_msg: 'Lo sentimos, ¡la cancelación falló!'
-      confirm_pause_msg: ¿Seguro que quieres pausar esta suscripción?
-      pause_failure_msg: 'Lo sentimos, pausar falló!'
-      confirm_unpause_msg: ¿Seguro que quieres reanudar esta suscripción?
-      unpause_failure_msg: 'Lo sentimos, ¡no se pudo reanudar!'
+      confirm_cancel_msg: "¿Seguro que quieres cancelar esta suscripción? Esta acción no se puede deshacer."
+      cancel_failure_msg: "Lo sentimos, ¡la cancelación falló!"
+      confirm_pause_msg: "¿Seguro que quieres pausar esta suscripción?"
+      pause_failure_msg: "Lo sentimos, pausar falló!"
+      confirm_unpause_msg: "Si tiene un ciclo de pedido abierto en la programación de esta suscripción, se creará un pedido para esta consumidora. ¿Estás seguro de que deseas anular la pausa de esta suscripción?"
+      unpause_failure_msg: "Lo sentimos, ¡no se pudo reanudar!"
       confirm_cancel_open_orders_msg: "Algunas órdenes para esta suscripción están actualmente abiertas. El cliente ya ha sido notificado de que se realizará el pedido. ¿Desea cancelar estos pedidos o conservarlos?"
       resume_canceled_orders_msg: "Algunos pedidos de esta suscripción se pueden reanudar en este momento. Puede reanudarlos desde el menú desplegable de pedidos."
       yes_cancel_them: Cancelarlos
@@ -2989,7 +2996,8 @@ es:
           confirmation_pending: "La confirmación por correo electrónico está pendiente. Hemos enviado un correo electrónico de confirmación a %{address}."
       variants:
         autocomplete:
-          producer_name: Productora
+          producer_name: "Productora"
+          unit: "Unidad"
       general_settings:
         edit:
           legal_settings: "Configuraciones legales"
