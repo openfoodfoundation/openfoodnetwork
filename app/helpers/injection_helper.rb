@@ -61,6 +61,12 @@ module InjectionHelper
     inject_json_ams "currentOrder", current_order, Api::CurrentOrderSerializer, current_distributor: current_distributor, current_order_cycle: current_order_cycle
   end
 
+  def inject_current_order_cycle
+    serializer = Api::OrderCycleSerializer.new(current_order_cycle)
+    json = serializer.object.present? ? serializer.to_json : "{}"
+    render partial: "json/injection_ams", locals: { name: "orderCycleData", json: json }
+  end
+
   def inject_available_shipping_methods
     inject_json_ams "shippingMethods", available_shipping_methods,
                     Api::ShippingMethodSerializer, current_order: current_order
