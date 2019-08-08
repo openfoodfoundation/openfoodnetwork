@@ -560,6 +560,7 @@ Metrics/CyclomaticComplexity:
   - app/helpers/checkout_helper.rb
   - app/helpers/i18n_helper.rb
   - app/helpers/order_cycles_helper.rb
+  - app/helpers/spree/admin/navigation_helper_decorator.rb
   - app/models/enterprise.rb
   - app/models/enterprise_relationship.rb
   - app/models/product_import/entry_processor.rb
