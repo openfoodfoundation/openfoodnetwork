@@ -89,6 +89,11 @@ describe OrderCycleDistributedProducts do
     end
   end
 
+  def output(name, result)
+    puts "\n#{name}"
+    result.each { |r| puts r }
+  end
+
   def with_execution_tags(method)
     Rails.logger.debug "\n==== BEGIN #{method}"
     yield
