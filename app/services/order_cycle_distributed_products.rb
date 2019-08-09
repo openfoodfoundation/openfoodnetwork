@@ -34,6 +34,7 @@ class OrderCycleDistributedProducts
       .group(:product_id)
   end
 
+  # TODO: filter by products supplied by the OC suppliers so we don't go through the whole products table.
   def products_with_obsolete_master
     query = <<-SQL
 SELECT "spree_products".*
