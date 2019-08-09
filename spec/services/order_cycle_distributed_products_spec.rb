@@ -83,52 +83,6 @@ describe OrderCycleDistributedProducts do
       variant.exchanges << exchange
     end
 
-    xit 'lets me test the variants' do
-      query = <<-SQL
-      SELECT "spree_variants".product_id,
-              spree_variants.id AS variant_id,
-              spree_variants.is_master,
-              exchanges.id AS exchange_id
-        FROM "spree_variants"
-       LEFT
-        JOIN "exchange_variants"
-          ON "exchange_variants"."variant_id" = "spree_variants"."id"
-       LEFT
-        JOIN "exchanges"
-          ON "exchanges"."id"                 = "exchange_variants"."exchange_id"
-         AND ("spree_variants".deleted_at IS NULL)
-      SQL
-
-      subquery = <<-SQL
-      SELECT "spree_variants".product_id
-        FROM "spree_variants"
-        LEFT
-        JOIN "exchange_variants"
-          ON "exchange_variants"."variant_id" = "spree_variants"."id"
-        LEFT
-        JOIN "exchanges"
-          ON "exchanges"."id"                 = "exchange_variants"."exchange_id"
-         AND ("spree_variants".deleted_at IS NULL)
-       GROUP BY product_id
-       HAVING COUNT(*)                         > 1
-          AND bool_or(is_master                = true
-          AND exchanges.id IS NOT NULL)
-          AND COUNT(exchanges.id) = 1
-        ORDER BY product_id
-      SQL
-
-      subquery_result = ActiveRecord::Base.connection.execute(subquery)
-      output('SUBQUERY', subquery_result)
-      subquery_result = subquery_result.map { |r| r['product_id'].to_i }
-
-      result = ActiveRecord::Base.connection.execute(query)
-      output('QUERY', result)
-      result = result.map { |r| r['product_id'].to_i }
-
-      distributed_valid_products = described_class.new(order_cycle, distributor)
-      expect(distributed_valid_products.relation.map(&:id) - subquery_result).to eq([product.id])
-    end
-
     it 'returns the product' do
       distributed_valid_products = described_class.new(order_cycle, distributor)
       expect(distributed_valid_products.relation).to eq([product])
