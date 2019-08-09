@@ -33,14 +33,7 @@ class Api::Admin::OrderCycleSerializer < ActiveModel::Serializer
   end
 
   def editable_variants_for_incoming_exchanges
-    # For each enterprise that the current user is able to see in this order cycle,
-    # work out which variants should be editable within incoming exchanges from that enterprise
-    editable = {}
-    visible_enterprises.each do |enterprise|
-      variants = permissions.editable_variants_for_incoming_exchanges_from(enterprise).pluck(:id)
-      editable[enterprise.id] = variants if variants.any?
-    end
-    editable
+    sort_by_supplier_id(permissions.all_incoming_editable_variants.all)
   end
 
   def editable_variants_for_outgoing_exchanges
@@ -84,5 +77,19 @@ class Api::Admin::OrderCycleSerializer < ActiveModel::Serializer
 
   def visible_enterprises
     @visible_enterprises ||= permissions.visible_enterprises
+  end
+
+  def sort_by_supplier_id(variants)
+    collection = {}
+    variants.map do |variant|
+      supplier_id = variant.product.supplier_id
+
+      if collection.key? supplier_id
+        collection[supplier_id] << variant.id
+      else
+        collection[supplier_id] = [variant.id]
+      end
+    end
+    collection
   end
 end

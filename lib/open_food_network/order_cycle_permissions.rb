@@ -154,6 +154,15 @@ module OpenFoodNetwork
       end
     end
 
+    def all_incoming_editable_variants
+      valid_suppliers = visible_enterprises.map do |enterprise|
+        enterprise.id if user_manages_coordinator_or(enterprise)
+      end
+
+      Spree::Variant.includes(product: :supplier).
+        joins(:product).where('spree_products.supplier_id IN (?)', valid_suppliers)
+    end
+
     # Find the variants that a user is permitted see within outgoing exchanges
     # Note that this does not determine whether they actually appear in outgoing exchanges
     # as this requires first that the variant is included in an incoming exchange
