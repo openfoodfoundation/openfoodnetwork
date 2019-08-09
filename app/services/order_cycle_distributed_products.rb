@@ -15,22 +15,18 @@ class OrderCycleDistributedProducts
   #
   # @return [ActiveRecord::Relation<Spree::Product>]
   def relation
-    product_ids = (valid_products_sql).map(&:id)
+    variants = order_cycle.variants_distributed_by(distributor)
+    products = variants.map(&:product).uniq
+
+    valid_products = products - products_with_obsolete_master
+    product_ids = valid_products.map(&:id)
+
     Spree::Product.where(id: product_ids)
   end
 
   private
 
   attr_reader :order_cycle, :distributor
-
-  def valid_products_relation
-    Spree::Product
-      .joins(variants: { exchange_variants: :exchange })
-      .merge(distributor.inventory_variants)
-      .merge(Exchange.in_order_cycle(order_cycle))
-      .merge(Exchange.outgoing)
-      .merge(Exchange.to_enterprise(distributor))
-  end
 
   def products_with_obsolete_master
     query = <<-SQL
@@ -59,10 +55,11 @@ SELECT "spree_products".*
  GROUP BY "spree_products"."id"
 HAVING COUNT(*) > 1
    AND bool_or(is_master = true AND exchanges.id IS NOT NULL)
+   AND COUNT(exchanges.id) = 1
     SQL
 
     Spree::Product.find_by_sql(
-      [query, distributor.id, distributor.id]
+      [query, distributor.id]
     )
   end
 end
