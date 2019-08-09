@@ -89,4 +89,10 @@ describe OrderCycleDistributedProducts do
       expect(distributed_valid_products.relation).to eq([product])
     end
   end
+
+  def with_execution_tags(method)
+    Rails.logger.debug "\n==== BEGIN #{method}"
+    yield
+    Rails.logger.debug "==== END #{method}\n"
+  end
 end
