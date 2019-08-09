@@ -26,8 +26,7 @@ describe OrderCycleDistributedProducts do
     )
 
     distributed_valid_products = described_class.new(order_cycle, distributor)
-
-    expect(distributed_valid_products.relation).to eq([valid_product])
+    expect(distributed_valid_products.relation.map(&:id)).to eq([valid_product.id])
   end
 
   context 'when the product has only an obsolete master variant in a distribution' do
