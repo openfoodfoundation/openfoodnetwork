@@ -15,10 +15,8 @@ class OrderCycleDistributedProducts
   #
   # @return [ActiveRecord::Relation<Spree::Product>]
   def relation
-    all_distributed_product_ids = all_distributed_products.map(&:product_id)
-    product_ids_with_obsolete_master = products_with_obsolete_master.map(&:id)
-
-    valid_product_ids = all_distributed_product_ids - product_ids_with_obsolete_master
+    valid_product_ids = all_distributed_products
+      .where("product_id NOT IN (#{products_with_obsolete_master_query})")
 
     Spree::Product.where(id: valid_product_ids)
   end
@@ -32,6 +30,12 @@ class OrderCycleDistributedProducts
       .variants_distributed_by(distributor)
       .select(:product_id)
       .group(:product_id)
+  end
+
+  def products_with_obsolete_master_query
+    products_with_obsolete_master
+      .select('spree_products.id')
+      .to_sql
   end
 
   # TODO: filter by products supplied by the OC suppliers so we don't go through the whole products table.
