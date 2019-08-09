@@ -34,7 +34,7 @@ def prompt_for_admin_email
 end
 
 def create_admin_user
-  if ENV['AUTO_ACCEPT']
+  if ENV.fetch("AUTO_ACCEPT", true)
     password = 'spree123'
     email = 'spree@example.com'
   else
