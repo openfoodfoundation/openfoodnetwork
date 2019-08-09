@@ -15,12 +15,8 @@ class OrderCycleDistributedProducts
   #
   # @return [ActiveRecord::Relation<Spree::Product>]
   def relation
-    all_distributed_product_ids = all_distributed_products
-      .select(:product_id)
-      .map(&:product_id)
-
-    product_ids_with_obsolete_master = products_with_obsolete_master
-        .map(&:id)
+    all_distributed_product_ids = all_distributed_products.map(&:product_id)
+    product_ids_with_obsolete_master = products_with_obsolete_master.map(&:id)
 
     valid_product_ids = all_distributed_product_ids - product_ids_with_obsolete_master
 
@@ -32,12 +28,15 @@ class OrderCycleDistributedProducts
   attr_reader :order_cycle, :distributor
 
   def all_distributed_products
-    order_cycle.variants_distributed_by(distributor)
+    order_cycle
+      .variants_distributed_by(distributor)
+      .select(:product_id)
+      .group(:product_id)
   end
 
   def products_with_obsolete_master
     query = <<-SQL
-SELECT "spree_products".id
+SELECT "spree_products".*
   FROM "spree_products"
   LEFT
   JOIN "spree_variants"
