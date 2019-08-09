@@ -14,7 +14,7 @@ module OpenFoodNetwork
     def visible_enterprises
       return Enterprise.where("1=0") if @coordinator.blank?
 
-      if managed_enterprises.include? @coordinator
+      if managed_enterprise_ids.include? @coordinator.id
         coordinator_permitted_ids = [@coordinator]
         all_active_ids = []
 
@@ -76,9 +76,7 @@ module OpenFoodNetwork
 
           # TODO: Remove this when all P-OC are sorted out
           # Hubs that currently have outgoing exchanges distributing variants of producers I manage
-          variants = variants_from_suppliers(
-            managed_enterprises.is_primary_producer.select("enterprises.id")
-          )
+          variants = variants_from_suppliers(managed_producer_ids)
 
           active_exchanges = @order_cycle.
             exchanges.outgoing.with_any_variant(variants.select("spree_variants.id"))
@@ -186,7 +184,7 @@ module OpenFoodNetwork
                   AND spree_products.supplier_id IN (?)
                   AND incoming = 'f'",
                 hub.id,
-                managed_enterprises.is_primary_producer.select("enterprises.id"))
+                managed_producer_ids)
 
         Spree::Variant.where(id: permitted_variants | active_variants)
       end
@@ -253,6 +251,10 @@ module OpenFoodNetwork
       @managed_enterprise_ids ||= managed_enterprises.pluck(:id)
     end
 
+    def managed_producer_ids
+      @managed_producer_ids ||= managed_enterprises.is_primary_producer.pluck(:id)
+    end
+
     def managed_participating_enterprises
       return @managed_participating_enterprises unless @managed_participating_enterprises.nil?
 
@@ -274,7 +276,7 @@ module OpenFoodNetwork
 
     def order_cycle_exchange_ids_involving_my_enterprises
       # Any exchanges that my managed enterprises are involved in directly
-      @order_cycle.exchanges.involving(managed_enterprises.select("enterprises.id")).pluck :id
+      @order_cycle.exchanges.involving(managed_enterprise_ids).pluck :id
     end
 
     def order_cycle_exchange_ids_with_distributable_variants
