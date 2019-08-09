@@ -51,7 +51,4 @@ end
 # Create users:
 require File.join(File.dirname(__FILE__), 'default', 'users')
 
-spree_user = Spree::User.first
-spree_user && spree_user.confirm!
-
 DefaultStockLocation.find_or_create
