@@ -34,19 +34,6 @@ class OrderCycleDistributedProducts
 
   attr_reader :order_cycle, :distributor
 
-  def all_distributed_products
-    order_cycle
-      .variants_distributed_by(distributor)
-      .select(:product_id)
-      .group(:product_id)
-  end
-
-  def products_with_obsolete_master_query
-    products_with_obsolete_master
-      .select('spree_products.id')
-      .to_sql
-  end
-
   # TODO: filter by products supplied by the OC suppliers so we don't go through the whole products table.
   def products_with_obsolete_master
     Spree::Product
