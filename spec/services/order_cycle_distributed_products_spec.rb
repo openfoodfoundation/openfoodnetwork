@@ -21,6 +21,7 @@ describe OrderCycleDistributedProducts do
     distributor = create(:distributor_enterprise)
     order_cycle = create(
       :simple_order_cycle,
+      suppliers: [valid_product.supplier],
       distributors: [distributor],
       variants: [valid_variant, invalid_product.master]
     )
