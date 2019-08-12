@@ -45,7 +45,7 @@ class OrderCycleDistributedProducts
       .joins('LEFT JOIN "exchange_variants" ON "exchange_variants"."variant_id" = "spree_variants"."id"')
       .merge(distributor.inventory_variants)
       .group('"spree_products"."id"')
-      .having(<<-SQL)
+      .having(<<-SQL.strip_heredoc)
         COUNT(*) > 1
         AND bool_or(is_master = true
         AND exchange_variants.id IS NOT NULL)
