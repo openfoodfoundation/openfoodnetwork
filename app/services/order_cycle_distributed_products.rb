@@ -15,19 +15,29 @@ class OrderCycleDistributedProducts
   #
   # @return [ActiveRecord::Relation<Spree::Product>]
   def relation
-    valid_product_ids = order_cycle
-      .variants_distributed_by(distributor)
+    Spree::Product
+      .unscoped
+      .select('DISTINCT(spree_products.*)')
+      .joins(variants_including_master: :exchanges)
+      .joins(<<-SQL)
+        LEFT OUTER JOIN (
+          SELECT * FROM inventory_items WHERE enterprise_id = #{distributor.id}
+        ) AS o_inventory_items
+        ON o_inventory_items.variant_id = variants_including_masters_spree_products.id
+      SQL
+      .where("o_inventory_items.id IS NULL OR o_inventory_items.visible = true")
+      .merge(Exchange.in_order_cycle(order_cycle.id))
+      .merge(Exchange.outgoing)
+      .merge(Exchange.to_enterprise(distributor))
       .joins(<<-SQL.strip_heredoc)
         LEFT JOIN (
-          #{products_with_obsolete_master.select('spree_products.id').to_sql}
+          #{products_with_obsolete_master.to_sql}
         ) AS products_with_obsolete_master
-        ON spree_variants.product_id = products_with_obsolete_master.id
+        ON variants_including_masters_spree_products.product_id = products_with_obsolete_master.id
       SQL
       .where('products_with_obsolete_master.id IS NULL')
-      .select(:product_id)
-      .group(:product_id)
-
-    Spree::Product.where(id: valid_product_ids)
+      .where('spree_products.deleted_at IS NULL')
+      .where('variants_including_masters_spree_products.deleted_at IS NULL')
   end
 
   private
