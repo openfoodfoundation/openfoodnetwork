@@ -43,14 +43,13 @@ class OrderCycleDistributedProducts
     Spree::Product
       .joins('LEFT JOIN "spree_variants" ON "spree_variants"."product_id" = "spree_products"."id" AND "spree_variants"."deleted_at" IS NULL')
       .joins('LEFT JOIN "exchange_variants" ON "exchange_variants"."variant_id" = "spree_variants"."id"')
-      .joins('LEFT JOIN "exchanges" ON "exchanges"."id" = "exchange_variants"."exchange_id"')
       .merge(distributor.inventory_variants)
       .group('"spree_products"."id"')
       .having(<<-SQL)
         COUNT(*) > 1
         AND bool_or(is_master = true
-        AND exchanges.id IS NOT NULL)
-        AND COUNT(exchanges.id) = 1
+        AND exchange_variants.id IS NOT NULL)
+        AND COUNT(exchange_variants.id) = 1
       SQL
   end
 end
