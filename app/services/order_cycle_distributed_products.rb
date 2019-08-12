@@ -15,8 +15,8 @@ class OrderCycleDistributedProducts
   #
   # @return [ActiveRecord::Relation<Spree::Product>]
   def relation
-    valid_product_ids = Spree::Variant
-      .joins(:exchanges)
+    valid_product_ids = order_cycle
+      .variants_distributed_by(distributor)
       .joins(<<-SQL.strip_heredoc)
         LEFT JOIN (
           #{products_with_obsolete_master.select('spree_products.id').to_sql}
@@ -24,10 +24,6 @@ class OrderCycleDistributedProducts
         ON spree_variants.product_id = products_with_obsolete_master.id
       SQL
       .where('products_with_obsolete_master.id IS NULL')
-      .merge(distributor.inventory_variants)
-      .merge(Exchange.in_order_cycle(order_cycle))
-      .merge(Exchange.outgoing)
-      .merge(Exchange.to_enterprise(distributor))
       .select(:product_id)
       .group(:product_id)
 
