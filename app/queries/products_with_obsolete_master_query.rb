@@ -53,7 +53,7 @@ class ProductsWithObsoleteMasterQuery
   end
 
   # Selects the groups that have more than a row, aka. product with variants
-  # whose master is not distributed through the PostgreSQL bool_or function.
+  # whose master is not distributed using the PostgreSQL `bool_or` function.
   # Lastly, it checks that the only the master is being distributed through an
   # exchange.
   def master_distributed_but_not_variants
