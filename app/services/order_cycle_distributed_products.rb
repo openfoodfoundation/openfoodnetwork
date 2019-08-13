@@ -59,19 +59,6 @@ class OrderCycleDistributedProducts
 
   # TODO: filter by products supplied by the OC suppliers so we don't go through the whole products table.
   def products_with_obsolete_master
-    Spree::Product
-      .joins('INNER JOIN exchanges AS exchanges_suppliers ON exchanges_suppliers.sender_id = spree_products.supplier_id')
-      .joins('LEFT JOIN "spree_variants" ON "spree_variants"."product_id" = "spree_products"."id" AND "spree_variants"."deleted_at" IS NULL')
-      .joins('LEFT JOIN "exchange_variants" ON "exchange_variants"."variant_id" = "spree_variants"."id"')
-      .joins('LEFT JOIN "exchanges" AS obsolete_exchanges ON "obsolete_exchanges"."id" = "exchange_variants"."exchange_id"')
-      .where('exchanges_suppliers.order_cycle_id = ?', order_cycle.id)
-      .where('obsolete_exchanges.incoming = false OR obsolete_exchanges.incoming IS NULL')
-      .group('"spree_products"."id"')
-      .having(<<-SQL.strip_heredoc)
-        COUNT(*) > 1
-        AND bool_or(is_master = true
-        AND exchange_variants.id IS NOT NULL)
-        AND COUNT(exchange_variants.id) = 1
-      SQL
+    ProductsWithObsoleteMasterQuery.new(order_cycle.id).all
   end
 end
