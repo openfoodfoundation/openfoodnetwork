@@ -50,15 +50,10 @@ class OrderCycleDistributedProducts
 
   def left_join_products_with_obsolete_master
     <<-SQL.strip_heredoc
-        LEFT JOIN (#{products_with_obsolete_master.to_sql})
+        LEFT JOIN (#{ProductsWithObsoleteMasterQuery.new(order_cycle.id).to_sql})
         AS products_with_obsolete_master
         ON variants_including_masters_spree_products.product_id
           = products_with_obsolete_master.id
     SQL
-  end
-
-  # TODO: filter by products supplied by the OC suppliers so we don't go through the whole products table.
-  def products_with_obsolete_master
-    ProductsWithObsoleteMasterQuery.new(order_cycle.id).all
   end
 end

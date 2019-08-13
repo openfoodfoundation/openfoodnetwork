@@ -2,6 +2,8 @@
 # * their master is in distribution in an order cycle
 # * their variants are not in distribution
 class ProductsWithObsoleteMasterQuery
+  delegate :to_sql, to: :all
+
   def initialize(relation = Spree::Product, order_cycle_id)
     @relation = relation
     @order_cycle_id = order_cycle_id
