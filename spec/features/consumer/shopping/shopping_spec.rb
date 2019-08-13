@@ -112,6 +112,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
             # that we are not filling in the quantity on the outgoing row
             page.should_not have_selector "tr.product-cart"
             within('product:not(.ng-leave)') { fill_in "variants[#{variant.id}]", with: 1 }
+            show_cart
             within("li.cart") { page.should have_content with_currency(19.99) }
           end
 
