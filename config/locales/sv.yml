@@ -593,6 +593,9 @@ sv:
       packing:
         name: Förpackningsrapporter
     subscriptions:
+      autocomplete:
+        quantity: "Antal"
+        add: "Tillägga"
       review:
         address: Adress
         products: Produkter
@@ -848,6 +851,7 @@ sv:
   email_confirm_shop_number_html: "Orderbekräftelse  <strong>#%{number}</strong>"
   email_order_summary_item: "Artikel"
   email_order_summary_quantity: "Antal"
+  email_order_summary_sku: "SKU"
   email_order_summary_price: "Pris"
   email_order_summary_subtotal: "Delsumma:"
   email_order_summary_total: "Total:"
@@ -2021,7 +2025,8 @@ sv:
           password: "Lösenord"
       variants:
         autocomplete:
-          producer_name: Producent
+          producer_name: "Producent"
+          unit: "Enhet"
       general_settings:
         edit:
           enterprises_require_tos: "Företag måste acceptera servicevillkoren"

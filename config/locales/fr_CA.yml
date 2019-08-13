@@ -982,6 +982,10 @@ fr_CA:
         this_is_an_estimate: |
             Les prix affichés ne sont qu'une estimation calculée au moment de la dernière modification de l'abonnement.Si vous modifiez les prix ou marges et commissions appliquées, les commandes seront mises à jour, mais l'abonnement affichera toujours les anciennes valeurs.
         not_in_open_and_upcoming_order_cycles_warning: "Il n'y a pas de cycle de vente ouvert ou à venir pour ce produit."
+      autocomplete:
+        name_or_sku: "NOM OU REF PRODUIT"
+        quantity: "Quantité"
+        add: "Ajouter"
       details:
         details: Informations
         invalid_error: Oups! Veuillez remplir tous les champs obligatoires...
@@ -1002,15 +1006,16 @@ fr_CA:
         saving: "En cours d'enregistrement"
         saved: "Enregistré"
       product_already_in_order: Ce produit a déjà été ajouté à la commande. Veuillez directement modifier la quantité.
+      stock:
+        out_of_stock: "En rupture de stock"
       orders:
         number: Nombre
         confirm_edit: Voulez-vous vraiment modifier cette commande? Si vous poursuivez, la synchronisation automatique des modifications de l'abonnement pourrait être plus difficile à l'avenir.
-      confirm_cancel_msg: Voulez-vous vraiment annuler cet abonnement? Cette action sera irréversible.
-      cancel_failure_msg: 'Désolé, l''annulation a échoué!'
-      confirm_pause_msg: Voulez-vous vraiment mettre en pause cet abonnement?
-      pause_failure_msg: 'Désolé, la mise en pause a échoué!'
-      confirm_unpause_msg: Voulez-vous vraiment annuler la mise en pause de cet abonnement?
-      unpause_failure_msg: 'Désolé, l''annulation de la mise en pause a échoué!'
+      confirm_cancel_msg: "Voulez-vous vraiment annuler cet abonnement? Cette action sera irréversible."
+      cancel_failure_msg: "Désolé, l'annulation a échoué!"
+      confirm_pause_msg: "Voulez-vous vraiment mettre en pause cet abonnement?"
+      pause_failure_msg: "Désolé, la mise en pause a échoué!"
+      unpause_failure_msg: "Désolé, l'annulation de la mise en pause a échoué!"
       confirm_cancel_open_orders_msg: "Cet abonnement a des commandes ouvertes. Les acheteurs ont été notifiés que leur commande allait être passée. Voulez-vous annulez ces commandes ou les conserver?"
       resume_canceled_orders_msg: "Certaines commandes pour cet abonnement peuvent être réouvertes dès maintenant. Vous pouvez les réouvrir depuis la liste des commandes."
       yes_cancel_them: Les annuler
@@ -1363,6 +1368,7 @@ fr_CA:
   email_confirm_shop_number_html: "Confirmation de commande <strong>#%{number}</strong>"
   email_order_summary_item: "Produit"
   email_order_summary_quantity: "Qté"
+  email_order_summary_sku: "Référence Produit"
   email_order_summary_price: "Prix"
   email_order_summary_subtotal: "Sous-total:"
   email_order_summary_total: "Total:"
@@ -2919,7 +2925,8 @@ fr_CA:
           confirmation_pending: "L'email de confirmation n'a pas encore été validé. Il a été envoyé à %{address}."
       variants:
         autocomplete:
-          producer_name: Producteur
+          producer_name: "Producteur"
+          unit: "Unité"
       general_settings:
         edit:
           legal_settings: "Configuration légales"

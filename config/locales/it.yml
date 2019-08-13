@@ -983,6 +983,10 @@ it:
             I prezzi visualizzati sono solo una stima e saranno calcolati nel momento in cui l'abbonamento verrà cambiato.
             Se cambi i prezzi o le tariffe, le gentili richieste saranno aggiornate, ma l'abbonamento visualizzerà ancora i valori precedenti
         not_in_open_and_upcoming_order_cycles_warning: "Non ci sono cicli di richieste aperte o in apertura per questo prodotto."
+      autocomplete:
+        name_or_sku: "NOME O SKU"
+        quantity: "Quantità"
+        add: "Aggiungi"
       details:
         details: Dettagli
         invalid_error: Oops! Per favore compila i campi obbligatori...
@@ -1003,15 +1007,16 @@ it:
         saving: "SALVATAGGIO"
         saved: "SALVATO"
       product_already_in_order: Questo prodotto è già stato aggiunto alla gentile richiesta. Per favore modifica direttamente la quantità.
+      stock:
+        out_of_stock: "Esaurito"
       orders:
         number: Numero
         confirm_edit: Sei sicura/o di voler modificare questa gentile richiesta? Facendolo potrebbe essere più difficile in futuro sincronizzare le modifiche all'abbonamento
-      confirm_cancel_msg: Sei sicura/o di voler eliminare questo abbonamento? Quest'azione non potrà essere annullata.
-      cancel_failure_msg: 'Ci dispiace, eliminazione non riuscita!'
-      confirm_pause_msg: Sei sicura/o di voler mettere in pausa questo abbonamento?
-      pause_failure_msg: 'Spiacente, pausa fallita!'
-      confirm_unpause_msg: Sei sicura/o di voler riprendere questo abbonamento?
-      unpause_failure_msg: 'Ci dispiace, ripresa non riuscita!'
+      confirm_cancel_msg: "Sei sicura/o di voler eliminare questo abbonamento? Quest'azione non potrà essere annullata."
+      cancel_failure_msg: "Ci dispiace, eliminazione non riuscita!"
+      confirm_pause_msg: "Sei sicura/o di voler mettere in pausa questo abbonamento?"
+      pause_failure_msg: "Spiacente, pausa fallita!"
+      unpause_failure_msg: "Ci dispiace, ripresa non riuscita!"
       confirm_cancel_open_orders_msg: "Alcune di queste richieste sono attualmente attive. I consumatori sono già stati avvisati che le richieste verranno soddisfatte. Vuoi eliminare questa/e richiesta/e o mantenerla?"
       resume_canceled_orders_msg: "Alcuni ordini per questo abbonamento possono essere ripresi in questo momento. Puoi riprenderli dal menu a discesa degli ordini."
       yes_cancel_them: Cancella l'articolo
@@ -1364,6 +1369,7 @@ it:
   email_confirm_shop_number_html: "Conferma dell'Ordine <strong>#%{number}</strong>"
   email_order_summary_item: "Articolo"
   email_order_summary_quantity: "Qtà."
+  email_order_summary_sku: "SKU"
   email_order_summary_price: "Prezzo"
   email_order_summary_subtotal: "Subtotale:"
   email_order_summary_total: "Totale:"
@@ -2914,7 +2920,8 @@ it:
           confirmation_pending: "Email di conferma in sospeso. Abbiamo inviato una mail di conferma a %{address}."
       variants:
         autocomplete:
-          producer_name: Produttore
+          producer_name: "Produttore"
+          unit: "Unità"
       general_settings:
         edit:
           legal_settings: "Impostazioni Legali"
