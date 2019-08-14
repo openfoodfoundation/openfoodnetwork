@@ -31,5 +31,16 @@ Openfoodnetwork::Application.routes.draw do
     post '/product_images/:product_id', to: 'product_images#update_product_image'
 
     resources :taxons, :only => [:index]
+
+    resources :taxonomies do
+      member do
+        get :jstree
+      end
+      resources :taxons do
+        member do
+          get :jstree
+        end
+      end
+    end
   end
 end
