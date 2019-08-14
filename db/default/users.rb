@@ -35,8 +35,8 @@ end
 
 def create_admin_user
   if ENV.fetch("AUTO_ACCEPT", true)
-    password = ENV.fetch("ADMIN_PASSWORD", "spree123")
-    email = ENV.fetch("ADMIN_EMAIL", "spree@example.com")
+    password = ENV.fetch("ADMIN_PASSWORD", "spree123").dup
+    email = ENV.fetch("ADMIN_EMAIL", "spree@example.com").dup
   else
     puts 'Create the admin user (press enter for defaults).'
     #name = prompt_for_admin_name unless name
@@ -56,7 +56,8 @@ def create_admin_user
     say "\nWARNING: There is already a user with the email: #{email}, so no account changes were made.  If you wish to create an additional admin user, please run rake spree_auth:admin:create again with a different email.\n\n"
   else
     admin = Spree::User.new(attributes)
-    admin.skip_confirmation!.skip_confirmation_notification!
+    admin.skip_confirmation!
+    admin.skip_confirmation_notification!
     if admin.save
       role = Spree::Role.find_or_create_by_name 'admin'
       admin.spree_roles << role
