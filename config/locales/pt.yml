@@ -988,6 +988,10 @@ pt:
             Os preços mostrados são apenas estimativas e são calculados no momento em que a subscrição é mudada.
             Se mudar preços ou taxas, as encomendas serão atualizadas, mas a subscrição ainda mostrará os preços anteriores.
         not_in_open_and_upcoming_order_cycles_warning: "Não há ciclos de encomenda abertos ou que estejam para abrir para este produto."
+      autocomplete:
+        name_or_sku: "NOME OU CÓDIGO"
+        quantity: "Quantidade"
+        add: "Adicionar"
       details:
         details: Detalhes
         invalid_error: Ooops! Por favor preencha todos os campos obrigatórios...
@@ -1008,15 +1012,16 @@ pt:
         saving: "A GUARDAR"
         saved: "GUARDADO"
       product_already_in_order: Este produto já foi adicionado à encomenda. Por favor edite a quantidade directamente.
+      stock:
+        out_of_stock: "Sem Stock"
       orders:
         number: Número
         confirm_edit: Tem a certeza que quer editar esta encomenda? Ao fazê-lo pode tornar-se mais difícil sincronizar alterações automaticamente com a subscrição no futuro.
-      confirm_cancel_msg: Tem a certeza que pretende cancelar esta subscrição? Esta acção não pode ser desfeita.
-      cancel_failure_msg: 'Desculpe, o cancelamento falhou!'
-      confirm_pause_msg: Tem a certeza que deseja pausar esta subscrição?
-      pause_failure_msg: 'Desculpe, a pausa falhou!'
-      confirm_unpause_msg: Tem a certeza que pretende parar a pausa desta subscrição?
-      unpause_failure_msg: 'Desculpe, não foi possível parar a pausa!'
+      confirm_cancel_msg: "Tem a certeza que pretende cancelar esta subscrição? Esta acção não pode ser desfeita."
+      cancel_failure_msg: "Desculpe, o cancelamento falhou!"
+      confirm_pause_msg: "Tem a certeza que deseja pausar esta subscrição?"
+      pause_failure_msg: "Desculpe, a pausa falhou!"
+      unpause_failure_msg: "Desculpe, não foi possível parar a pausa!"
       confirm_cancel_open_orders_msg: "Algumas encomendas para esta subscrição estão actualmente abertas. O/a consumidor/a foi notificado que a encomenda será processada. Quer cancelar esta(s) encomenda(s) ou mantê-las?"
       resume_canceled_orders_msg: "Algumas encomendas desta subscrição podem ser retomadas neste momento. Para retomá-las, selecione no menu dropdown de encomendas."
       yes_cancel_them: Cancelá-las
@@ -1370,6 +1375,7 @@ pt:
   email_confirm_shop_number_html: "Confirmação de encomenda <strong>#%{number}</strong>"
   email_order_summary_item: "Item"
   email_order_summary_quantity: "Qtd"
+  email_order_summary_sku: "SKU"
   email_order_summary_price: "Preço"
   email_order_summary_subtotal: "Subtotal:"
   email_order_summary_total: "Total:"
@@ -2923,7 +2929,8 @@ pt:
           confirmation_pending: "A confirmação de email está pendente. Enviamos um email de confirmação para %{address}"
       variants:
         autocomplete:
-          producer_name: Produtor
+          producer_name: "Produtor"
+          unit: "Unidade"
       general_settings:
         edit:
           legal_settings: "Configurações Legais"

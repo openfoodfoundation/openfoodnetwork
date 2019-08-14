@@ -1001,6 +1001,9 @@ de_DE:
             Die angezeigten Preise sind nur Schätzungen und werden zum Zeitpunkt der Änderung des Abonnements berechnet.
             Wenn Sie die Preise oder Gebühren ändern, werden die Bestellungen aktualisiert, aber das Abonnement zeigt weiterhin die alten Werte an.
         not_in_open_and_upcoming_order_cycles_warning: "Für dieses Produkt gibt es keine offenen oder bevorstehenden Bestellzyklen."
+      autocomplete:
+        quantity: "Menge"
+        add: "Hinzufügen"
       details:
         details: Einzelheiten
         invalid_error: Hoppla! Bitte füllen Sie alle erforderlichen Felder aus ...
@@ -1026,12 +1029,11 @@ de_DE:
       orders:
         number: Nummer
         confirm_edit: Sind Sie sicher, dass Sie diese Bestellung bearbeiten möchten? Dies kann die automatische Synchronisierung von Änderungen am Abonnement in Zukunft erschweren.
-      confirm_cancel_msg: Sind Sie sicher, dass Sie dieses Abonnement kündigen möchten? Dieser Vorgang kann nicht rückgängig gemacht werden.
-      cancel_failure_msg: 'Entschuldigung, Stornierung fehlgeschlagen!'
-      confirm_pause_msg: Möchten Sie dieses Abonnement wirklich pausieren?
-      pause_failure_msg: 'Entschuldigung, Pausieren fehlgeschlagen!'
-      confirm_unpause_msg: Möchten Sie dieses Abonnement wirklich fortsetzen?
-      unpause_failure_msg: 'Entschuldigung, Fortsetzung fehlgeschlagen!'
+      confirm_cancel_msg: "Sind Sie sicher, dass Sie dieses Abonnement kündigen möchten? Dieser Vorgang kann nicht rückgängig gemacht werden."
+      cancel_failure_msg: "Entschuldigung, Stornierung fehlgeschlagen!"
+      confirm_pause_msg: "Möchten Sie dieses Abonnement wirklich pausieren?"
+      pause_failure_msg: "Entschuldigung, Pausieren fehlgeschlagen!"
+      unpause_failure_msg: "Entschuldigung, Fortsetzung fehlgeschlagen!"
       confirm_cancel_open_orders_msg: "Einige Bestellungen für dieses Abonnement sind derzeit offen. Der Kunde wurde bereits informiert, dass die Bestellung aufgegeben wird. Möchten Sie diese Bestellung(en) stornieren oder erhalten?"
       resume_canceled_orders_msg: "Manche Bestellungen für dieses Abonnement können jetzt fortgesetzt werden. Sie können sie aus dem Bestellungen-Dropdown-Menü wiederherstellen."
       yes_cancel_them: Stornieren
@@ -1393,6 +1395,7 @@ de_DE:
   email_confirm_shop_number_html: "Bestellbestätigung <strong> # %{number} </ strong>"
   email_order_summary_item: "Artikel"
   email_order_summary_quantity: "Menge"
+  email_order_summary_sku: "Artikelnummer"
   email_order_summary_price: "Preis"
   email_order_summary_subtotal: "Zwischensumme:"
   email_order_summary_total: "Gesamt:"
@@ -2985,7 +2988,8 @@ de_DE:
           confirmation_pending: "E-Mail-Bestätigung steht aus. Wir haben eine Bestätigungs-E-Mail an %{address} gesendet."
       variants:
         autocomplete:
-          producer_name: Produzent
+          producer_name: "Produzent"
+          unit: "Einheit"
       general_settings:
         edit:
           legal_settings: "Rechtliche Einstellungen"

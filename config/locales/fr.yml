@@ -1401,6 +1401,7 @@ fr:
   email_confirm_shop_number_html: "Confirmation de commande <strong>#%{number}</strong>"
   email_order_summary_item: "Produit"
   email_order_summary_quantity: "Qté"
+  email_order_summary_sku: "Référence Produit"
   email_order_summary_price: "Prix"
   email_order_summary_subtotal: "Sous-total:"
   email_order_summary_total: "Total:"

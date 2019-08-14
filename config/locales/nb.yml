@@ -1400,6 +1400,7 @@ nb:
   email_confirm_shop_number_html: "Ordrebekreftelse <strong>#%{number}</strong>"
   email_order_summary_item: "Vare"
   email_order_summary_quantity: "Stk"
+  email_order_summary_sku: "SKU"
   email_order_summary_price: "Pris"
   email_order_summary_subtotal: "Delsum:"
   email_order_summary_total: "Sum:"

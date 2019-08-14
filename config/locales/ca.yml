@@ -1402,6 +1402,7 @@ ca:
   email_confirm_shop_number_html: "Confirmació de la comanda <strong> # %{number}</strong>"
   email_order_summary_item: "Article"
   email_order_summary_quantity: "quant."
+  email_order_summary_sku: "Número de referència (SKU)"
   email_order_summary_price: "Preu"
   email_order_summary_subtotal: "Subtotal:"
   email_order_summary_total: "Total:"

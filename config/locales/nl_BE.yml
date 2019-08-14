@@ -1003,6 +1003,10 @@ nl_BE:
             De afgebeelde prijzen zijn slechts een schatting en worden berekend op het moment dat het abonnement is veranderd.
             Als je de prijzen of kosten verandert, zullen de bestellingen worden geüpdatet, maar het abonnement zal nog steeds de oude waarden weergeven.
         not_in_open_and_upcoming_order_cycles_warning: "Er zijn geen openstaande of naderende bestellingscycli voor dit product."
+      autocomplete:
+        name_or_sku: "BESCHRIJVING OF ARTKELNUMMER"
+        quantity: "Kwantiteit"
+        add: "Voeg toe"
       details:
         details: Details
         invalid_error: Oops! Gelieve al de gevraagde velden in te vullen...
@@ -1025,15 +1029,16 @@ nl_BE:
         saving: "Aan het opslaan"
         saved: "Opgeslaan"
       product_already_in_order: Dit product is al eens toegevoegd aan de bestelling. Gelieve rechtstreeks de hoeveelheid aan te passen.
+      stock:
+        out_of_stock: "Geen voorraad"
       orders:
         number: Nummer
         confirm_edit: Ben je zeker dat je deze bestelling wil aanpassen? Indien je hiermee wenst verder te gaan is het mogelijk dat in de toekomst het moeilijker wordt om automatisch de veranderingen in het abonnement te synchroniseren.
-      confirm_cancel_msg: Ben je zeker dat je dit abonnement wil annuleren? Deze actie kan niet ongedaan worden gemaakt.
-      cancel_failure_msg: 'Sorry, de annulatie is mislukt!'
-      confirm_pause_msg: Ben je zeker dat je dit abonnement wil pauseren?
-      pause_failure_msg: 'Sorry, pauseren mislukt!'
-      confirm_unpause_msg: Ben je zeker dat je dit abonnement wil hervatten?
-      unpause_failure_msg: 'Sorry, hervatten mislukt!'
+      confirm_cancel_msg: "Ben je zeker dat je dit abonnement wil annuleren? Deze actie kan niet ongedaan worden gemaakt."
+      cancel_failure_msg: "Sorry, de annulatie is mislukt!"
+      confirm_pause_msg: "Ben je zeker dat je dit abonnement wil pauseren?"
+      pause_failure_msg: "Sorry, pauseren mislukt!"
+      unpause_failure_msg: "Sorry, hervatten mislukt!"
       confirm_cancel_open_orders_msg: "Sommige bestellingen voor deze abonnementen zijn nog niet afgerond. De klant werd al op de hoogte gebracht dat deze bestelling geplaatst zullen worden. Wil je graag dat deze bestelling(en) geannuleerd worden of wil je ze behouden?"
       resume_canceled_orders_msg: "Sommige bestellingen voor de abonnementen kunnen nu hervat worden. Je kan verdergaan vanuit het dropdownmenu bij bestellingen."
       yes_cancel_them: 'Annuleer ze '
@@ -1395,6 +1400,7 @@ nl_BE:
   email_confirm_shop_number_html: "Bestellingsbevestiging <strong>#%{number}</strong>"
   email_order_summary_item: "Artikel"
   email_order_summary_quantity: "Aantal"
+  email_order_summary_sku: "SKU"
   email_order_summary_price: "Prijs"
   email_order_summary_subtotal: "Tussentotaal:"
   email_order_summary_total: "Totaal:"
@@ -2990,7 +2996,8 @@ nl_BE:
           confirmation_pending: "De validatie van de  bevestigins e-mail  naar %{address} toegestuurd is nog niet toegekomen."
       variants:
         autocomplete:
-          producer_name: Producent
+          producer_name: "Producent"
+          unit: "Unit"
       general_settings:
         edit:
           legal_settings: "De legale instelling"
