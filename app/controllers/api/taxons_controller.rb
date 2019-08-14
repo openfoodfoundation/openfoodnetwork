@@ -17,13 +17,44 @@ module Api
       render json: @taxons, each_serializer: Api::TaxonSerializer
     end
 
-    def show
+    def jstree
       @taxon = taxon
-      render json: @taxon, serializer: Api::TaxonSerializer
+      render json: @taxon.children, each_serializer: Api::TaxonJstreeSerializer
     end
 
-    def jstree
-      show
+    def create
+      authorize! :create, Spree::Taxon
+      @taxon = Spree::Taxon.new(params[:taxon])
+      @taxon.taxonomy_id = params[:taxonomy_id]
+      taxonomy = Spree::Taxonomy.find_by_id(params[:taxonomy_id])
+
+      if taxonomy.nil?
+        @taxon.errors[:taxonomy_id] = I18n.t(:invalid_taxonomy_id, scope: 'spree.api')
+        invalid_resource!(@taxon) && return
+      end
+
+      @taxon.parent_id = taxonomy.root.id unless params[:taxon][:parent_id]
+
+      if @taxon.save
+        render json: @taxon, serializer: Api::TaxonSerializer, status: :created
+      else
+        invalid_resource!(@taxon)
+      end
+    end
+
+    def update
+      authorize! :update, Spree::Taxon
+      if taxon.update_attributes(params[:taxon])
+        render json: taxon, serializer: Api::TaxonSerializer, status: :ok
+      else
+        invalid_resource!(taxon)
+      end
+    end
+
+    def destroy
+      authorize! :delete, Spree::Taxon
+      taxon.destroy
+      render json: taxon, serializer: Api::TaxonSerializer, status: :no_content
     end
 
     private
