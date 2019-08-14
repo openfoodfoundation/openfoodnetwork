@@ -1,0 +1,22 @@
+= render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Payments' }
+
+- content_for :page_title do
+  %i.icon-arrow-right
+  = Spree.t(:new_payment)
+
+- content_for :page_actions do
+  %li= button_link_to Spree.t(:back_to_payments_list), spree.admin_order_payments_url(@order), icon: 'icon-arrow-left'
+
+- if @payment_methods.any?
+  = render partial: 'spree/shared/error_messages', locals: { target: @payment }
+
+  = form_for @payment, url: admin_order_payments_path(@order), html: {"ng-app" => "admin.payments", "ng-controller" => "PaymentCtrl"} do |f|
+    %save-bar{ persist: "true" }
+    %fieldset.no-border-top
+      = render partial: 'form', locals: { f: f }
+      .filter-actions.actions
+        = button_tag t(:update), type: 'button', "ng-click" => "submitPayment()"
+
+- else
+  = Spree.t(:cannot_create_payment_without_payment_methods)
+  = link_to Spree.t(:please_define_payment_methods), admin_payment_methods_url

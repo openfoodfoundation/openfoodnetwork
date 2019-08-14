@@ -1,2 +1,0 @@
-/replace 'code[erb-loud]:contains("button @order.cart?")'
-= button_tag t(:update), type: 'button', "ng-click" => "submitPayment()"
