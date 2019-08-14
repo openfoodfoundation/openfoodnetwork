@@ -42,6 +42,6 @@ $ docker-compose up
 ```
 
 This command will setup the database and seed it with sample data. The default admin user is 'ofn@example.com' with 'ofn123' password.
-Check the app in the browser at `http:://localhost:3000`.
+Check the app in the browser at `http://localhost:3000`.
 
 You will then get the trace of the containers in the terminal. You can stop the containers using Ctrl-C in the terminal.
