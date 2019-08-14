@@ -110,10 +110,14 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
       context "and the charge request is successful" do
         it "should process the payment without storing card details" do
           put update_checkout_path, params
+
           json_response = JSON.parse(response.body)
+
           expect(json_response["path"]).to eq spree.order_path(order)
           expect(order.payments.completed.count).to be 1
+
           card = order.payments.completed.first.source
+
           expect(card.gateway_customer_profile_id).to eq nil
           expect(card.gateway_payment_profile_id).to eq token
           expect(card.cc_type).to eq "visa"
@@ -130,8 +134,11 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
 
         it "should not process the payment" do
           put update_checkout_path, params
+
           expect(response.status).to be 400
+
           json_response = JSON.parse(response.body)
+
           expect(json_response["flash"]["error"]).to eq "charge-failure"
           expect(order.payments.completed.count).to be 0
         end
@@ -164,10 +171,14 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
       context "and the store, token and charge requests are successful" do
         it "should process the payment, and stores the card/customer details" do
           put update_checkout_path, params
+
           json_response = JSON.parse(response.body)
+
           expect(json_response["path"]).to eq spree.order_path(order)
           expect(order.payments.completed.count).to be 1
+
           card = order.payments.completed.first.source
+
           expect(card.gateway_customer_profile_id).to eq customer_id
           expect(card.gateway_payment_profile_id).to eq card_id
           expect(card.cc_type).to eq "visa"
@@ -184,8 +195,11 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
 
         it "should not process the payment" do
           put update_checkout_path, params
+
           expect(response.status).to be 400
+
           json_response = JSON.parse(response.body)
+
           expect(json_response["flash"]["error"])
             .to eq(I18n.t(:spree_gateway_error_flash_for_checkout, error: 'store-failure'))
           expect(order.payments.completed.count).to be 0
@@ -199,8 +213,11 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
 
         it "should not process the payment" do
           put update_checkout_path, params
+
           expect(response.status).to be 400
+
           json_response = JSON.parse(response.body)
+
           expect(json_response["flash"]["error"]).to eq "charge-failure"
           expect(order.payments.completed.count).to be 0
         end
@@ -214,8 +231,11 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
         # Note, no requests have been stubbed
         it "should not process the payment" do
           put update_checkout_path, params
+
           expect(response.status).to be 400
+
           json_response = JSON.parse(response.body)
+
           expect(json_response["flash"]["error"]).to eq "token-failure"
           expect(order.payments.completed.count).to be 0
         end
@@ -261,10 +281,14 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
     context "and the charge and token requests are accepted" do
       it "should process the payment, and keep the profile ids and other card details" do
         put update_checkout_path, params
+
         json_response = JSON.parse(response.body)
+
         expect(json_response["path"]).to eq spree.order_path(order)
         expect(order.payments.completed.count).to be 1
+
         card = order.payments.completed.first.source
+
         expect(card.gateway_customer_profile_id).to eq customer_id
         expect(card.gateway_payment_profile_id).to eq card_id
         expect(card.cc_type).to eq "master"
@@ -281,8 +305,11 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
 
       it "should not process the payment" do
         put update_checkout_path, params
+
         expect(response.status).to be 400
+
         json_response = JSON.parse(response.body)
+
         expect(json_response["flash"]["error"]).to eq "charge-failure"
         expect(order.payments.completed.count).to be 0
       end
@@ -295,8 +322,11 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
 
       it "should not process the payment" do
         put update_checkout_path, params
+
         expect(response.status).to be 400
+
         json_response = JSON.parse(response.body)
+
         expect(json_response["flash"]["error"]).to eq "token-error"
         expect(order.payments.completed.count).to be 0
       end
