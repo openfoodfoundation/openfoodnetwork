@@ -119,6 +119,10 @@ gem 'jquery-rails', '3.0.4'
 
 gem 'ofn-qz', github: 'openfoodfoundation/ofn-qz', ref: '60da2ae4c44cbb4c8d602f59fb5fff8d0f21db3c'
 
+group :production, :staging do
+  gem 'ddtrace'
+end
+
 group :test, :development do
   # Pretty printed test output
   gem 'atomic'
