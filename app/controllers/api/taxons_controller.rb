@@ -2,7 +2,7 @@ module Api
   class TaxonsController < Api::BaseController
     respond_to :json
 
-    skip_authorization_check only: :index
+    skip_authorization_check only: [:index, :show, :jstree]
 
     def index
       if taxonomy
@@ -19,7 +19,7 @@ module Api
 
     def show
       @taxon = taxon
-      respond_with(@taxon)
+      render json: @taxon, serializer: Api::TaxonSerializer
     end
 
     def jstree
@@ -31,6 +31,10 @@ module Api
     def taxonomy
       return if params[:taxonomy_id].blank?
       @taxonomy ||= Spree::Taxonomy.find(params[:taxonomy_id])
+    end
+
+    def taxon
+      @taxon ||= taxonomy.taxons.find(params[:id])
     end
   end
 end
