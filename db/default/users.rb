@@ -35,8 +35,8 @@ end
 
 def create_admin_user
   if ENV.fetch("AUTO_ACCEPT", true)
-    password = ENV.fetch("ADMIN_PASSWORD", "spree123")
-    email = ENV.fetch("ADMIN_EMAIL", "spree@example.com")
+    password = ENV.fetch("ADMIN_PASSWORD", "spree123").dup
+    email = ENV.fetch("ADMIN_EMAIL", "spree@example.com").dup
   else
     puts 'Create the admin user (press enter for defaults).'
     #name = prompt_for_admin_name unless name
