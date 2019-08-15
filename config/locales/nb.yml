@@ -244,6 +244,7 @@ nb:
   reset_password_token: Tilbakestill passordtoken
   expired: er utløpt, vennligst be om en ny
   back_to_payments_list: "Tilbake til betalingsliste"
+  maestro_or_solo_cards: "Maestro/Solo kort"
   actions:
     create_and_add_another: "Opprett og legg til en annen"
     create: "Opprett"
