@@ -533,7 +533,7 @@ module Spree
         )
       end
 
-      pending "saves without infinite loop" do
+      it "saves without infinite loop" do
         expect(variant1.update_attributes(cost_price: 1)).to be_truthy
       end
     end

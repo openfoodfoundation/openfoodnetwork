@@ -464,9 +464,11 @@ class Enterprise < ActiveRecord::Base
     self.permalink = Enterprise.find_available_permalink(name)
   end
 
+  # Touch distributors without them touching their distributors.
+  # We avoid an infinite loop and don't need to touch the whole distributor tree.
   def touch_distributors
     Enterprise.distributing_products(supplied_products.select(:id)).
       where('enterprises.id != ?', id).
-      find_each(&:touch)
+      update_all(updated_at: Time.zone.now)
   end
 end
