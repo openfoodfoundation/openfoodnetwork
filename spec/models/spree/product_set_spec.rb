@@ -96,13 +96,32 @@ describe Spree::ProductSet do
           end
 
           context 'and the variant does not exist' do
-            let(:master_attributes) do
-              attributes_for(:variant).merge(sku: '123')
+            context 'and attributes provided are valid' do
+              let(:master_attributes) do
+                attributes_for(:variant).merge(sku: '123')
+              end
+
+              it 'creates it with the specified attributes' do
+                number_of_variants = Spree::Variant.all.size
+                product_set.save
+                expect(Spree::Variant.last.sku).to eq('123')
+                expect(Spree::Variant.all.size).to eq number_of_variants + 1
+              end
             end
 
-            it 'creates it with the specified attributes' do
-              product_set.save
-              expect(Spree::Variant.last.sku).to eq('123')
+            context 'and attributes provided are not valid' do
+              let(:master_attributes) do
+                # unit_value nil makes the variant invalid
+                # on_hand with a value would make on_hand be updated and fail with exception (no stock item)
+                attributes_for(:variant).merge(unit_value: nil, on_hand: 1)
+              end
+
+              it 'does not create variant and does not raise exception' do
+                number_of_variants = Spree::Variant.all.size
+                expect { product_set.save }
+                  .not_to raise_error(StandardError)
+                expect(Spree::Variant.all.size).to eq number_of_variants
+              end
             end
           end
         end

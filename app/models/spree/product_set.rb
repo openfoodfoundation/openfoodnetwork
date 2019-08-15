@@ -89,6 +89,7 @@ class Spree::ProductSet < ModelSet
     on_demand = variant_attributes.delete(:on_demand)
 
     variant = product.variants.create(variant_attributes)
+    return unless variant.valid?
 
     variant.on_demand = on_demand if on_demand.present?
     variant.on_hand = on_hand.to_i if on_hand.present?
