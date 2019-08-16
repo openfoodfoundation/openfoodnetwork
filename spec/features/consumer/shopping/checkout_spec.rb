@@ -64,31 +64,6 @@ feature "As a consumer I want to check out my cart", js: true do
     context 'login in as user' do
       let(:user) { create(:user) }
 
-      def fill_out_form
-        choose sm1.name
-        choose pm1.name
-
-        within "#details" do
-          fill_in "First Name", with: "Will"
-          fill_in "Last Name", with: "Marshall"
-          fill_in "Email", with: "test@test.com"
-          fill_in "Phone", with: "0468363090"
-        end
-
-        check "Save as default billing address"
-
-        within "#billing" do
-          fill_in "City", with: "Melbourne"
-          fill_in "Postcode", with: "3066"
-          fill_in "Address", with: "123 Your Head"
-          select "Australia", from: "Country"
-          select "Victoria", from: "State"
-        end
-
-        check "Shipping address same as billing address?"
-        check "Save as default shipping address"
-      end
-
       before do
         quick_login_as(user)
       end
@@ -216,7 +191,7 @@ feature "As a consumer I want to check out my cart", js: true do
         page.should have_content distributor.name
       end
 
-      it 'does not show the save as defalut address checkbox' do
+      it 'does not show the save as default address checkbox' do
         page.should_not have_content "Save as default billing address"
         page.should_not have_content "Save as default shipping address"
       end
@@ -315,20 +290,8 @@ feature "As a consumer I want to check out my cart", js: true do
 
       describe "purchasing" do
         it "takes us to the order confirmation page when we submit a complete form" do
-          within "#details" do
-            fill_in "First Name", with: "Will"
-            fill_in "Last Name", with: "Marshall"
-            fill_in "Email", with: "test@test.com"
-            fill_in "Phone", with: "0468363090"
-          end
-
-          within "#billing" do
-            fill_in "Address", with: "123 Your Face"
-            select "Australia", from: "Country"
-            select "Victoria", from: "State"
-            fill_in "City", with: "Melbourne"
-            fill_in "Postcode", with: "3066"
-          end
+          fill_out_details
+          fill_out_billing_address
 
           within "#shipping" do
             choose sm2.name
@@ -365,22 +328,8 @@ feature "As a consumer I want to check out my cart", js: true do
           before do
             choose sm1.name
             choose pm1.name
-
-            within "#details" do
-              fill_in "First Name", with: "Will"
-              fill_in "Last Name", with: "Marshall"
-              fill_in "Email", with: "test@test.com"
-              fill_in "Phone", with: "0468363090"
-            end
-
-            within "#billing" do
-              fill_in "City", with: "Melbourne"
-              fill_in "Postcode", with: "3066"
-              fill_in "Address", with: "123 Your Face"
-              select "Australia", from: "Country"
-              select "Victoria", from: "State"
-            end
-
+            fill_out_details
+            fill_out_billing_address
             check "Shipping address same as billing address?"
           end
 
@@ -474,5 +423,37 @@ feature "As a consumer I want to check out my cart", js: true do
         end
       end
     end
+  end
+
+  def fill_out_details
+    within "#details" do
+      fill_in "First Name", with: "Will"
+      fill_in "Last Name", with: "Marshall"
+      fill_in "Email", with: "test@test.com"
+      fill_in "Phone", with: "0468363090"
+    end
+  end
+
+  def fill_out_billing_address
+    within "#billing" do
+      fill_in "City", with: "Melbourne"
+      fill_in "Postcode", with: "3066"
+      fill_in "Address", with: "123 Your Head"
+      select "Australia", from: "Country"
+      select "Victoria", from: "State"
+    end
+  end
+
+  def fill_out_form
+    choose sm1.name
+    choose pm1.name
+
+    fill_out_details
+    check "Save as default billing address"
+
+    fill_out_billing_address
+
+    check "Shipping address same as billing address?"
+    check "Save as default shipping address"
   end
 end
