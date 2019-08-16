@@ -112,15 +112,17 @@ describe Spree::ProductSet do
             context 'and attributes provided are not valid' do
               let(:master_attributes) do
                 # unit_value nil makes the variant invalid
-                # on_hand with a value would make on_hand be updated and fail with exception (no stock item)
-                attributes_for(:variant).merge(unit_value: nil, on_hand: 1)
+                # on_hand with a value would make on_hand be updated and fail with exception
+                attributes_for(:variant).merge(unit_value: nil, on_hand: 1, sku: '321')
               end
 
-              it 'does not create variant and does not raise exception' do
+              it 'does not create variant and notifies bugsnag without raising exception' do
+                expect(Bugsnag).to receive(:notify)
                 number_of_variants = Spree::Variant.all.size
                 expect { product_set.save }
                   .not_to raise_error(StandardError)
                 expect(Spree::Variant.all.size).to eq number_of_variants
+                expect(Spree::Variant.last.sku).not_to eq('321')
               end
             end
           end

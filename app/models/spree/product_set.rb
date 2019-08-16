@@ -89,10 +89,19 @@ class Spree::ProductSet < ModelSet
     on_demand = variant_attributes.delete(:on_demand)
 
     variant = product.variants.create(variant_attributes)
-    return unless variant.valid?
 
-    variant.on_demand = on_demand if on_demand.present?
-    variant.on_hand = on_hand.to_i if on_hand.present?
+    begin
+      variant.on_demand = on_demand if on_demand.present?
+      variant.on_hand = on_hand.to_i if on_hand.present?
+    rescue StandardError => error
+      Bugsnag.notify(error) do |report|
+        report.add_tab(:product, product.attributes)
+        report.add_tab(:product_error, product.errors.first) unless product.valid?
+        report.add_tab(:variant_attributes, variant_attributes)
+        report.add_tab(:variant, variant.attributes)
+        report.add_tab(:variant_error, variant.errors.first) unless variant.valid?
+      end
+    end
   end
 
   def collection_attributes=(attributes)
