@@ -180,6 +180,30 @@ feature "As a consumer I want to check out my cart", js: true do
       end
     end
 
+    context "in the shopfront" do
+      it "does not show item after all stock of an item is checked out (tesging cache update on checkout)" do
+        variant.update_attributes on_hand: 5
+        visit shop_path
+
+        fill_in "variants[#{variant.id}]", with: '5'
+        wait_until { !cart_dirty }
+
+        visit checkout_path
+        checkout_as_guest
+
+        fill_out_details
+        fill_out_billing_address
+        choose sm1.name
+        choose pm1.name
+
+        place_order
+        expect(page).to have_content "Your order has been processed successfully"
+
+        visit shop_path
+        page.should_not have_content variant.product.name
+      end
+    end
+
     context "on the checkout page" do
       before do
         visit checkout_path
