@@ -149,12 +149,29 @@ Spree::Admin::ProductsController.class_eval do
   end
 
   def set_stock_levels(product, on_hand, on_demand)
-    variant = product.master
-    if product.variants.any?
-      variant = product.variants.first
+    variant = product_variant(product)
+
+    begin
+      variant.on_demand = on_demand if on_demand.present?
+      variant.on_hand = on_hand.to_i if on_hand.present?
+    rescue StandardError => error
+      Bugsnag.notify(error) do |report|
+        report.add_tab(:product, product.attributes)
+        report.add_tab(:product_error, product.errors.first) unless product.valid?
+        report.add_tab(:variant_attributes, variant_attributes)
+        report.add_tab(:variant, variant.attributes)
+        report.add_tab(:variant_error, variant.errors.first) unless variant.valid?
+      end
+      raise error
     end
-    variant.on_demand = on_demand if on_demand.present?
-    variant.on_hand = on_hand.to_i if on_hand.present?
+  end
+
+  def product_variant(product)
+    if product.variants.any?
+      product.variants.first
+    else
+      product.master
+    end
   end
 
   def set_product_master_variant_price_to_zero

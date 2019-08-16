@@ -168,12 +168,29 @@ describe Spree::Admin::ProductsController, type: :controller do
     end
   end
 
-  describe "updating" do
+  describe "updating a product" do
     let(:producer) { create(:enterprise) }
     let!(:product) { create(:simple_product, supplier: producer) }
 
     before do
       login_as_enterprise_user [producer]
+    end
+
+    describe "product stock setting with errors" do
+      it "notifies bugsnag and still raise error" do
+        # forces an error in the variant
+        product.variants.first.stock_items = []
+
+        expect(Bugsnag).to receive(:notify)
+
+        expect do
+          spree_put :update,
+                    id: product,
+                    product: {
+                      on_hand: 1
+                    }
+        end.to raise_error(StandardError)
+      end
     end
 
     describe "product variant unit is items" do
