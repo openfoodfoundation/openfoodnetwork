@@ -101,6 +101,7 @@ class Spree::ProductSet < ModelSet
       variant.on_hand = on_hand.to_i if on_hand.present?
     rescue StandardError => error
       notify_bugsnag(error, product, variant, variant_attributes)
+      raise error
     end
   end
 
