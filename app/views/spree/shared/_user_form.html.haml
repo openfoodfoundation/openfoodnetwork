@@ -3,6 +3,10 @@
   %br
   = f.email_field :email, class: 'title'
 
+- if @unconfirmed_email
+  %p.alert-box
+    = t('spree.users.show.unconfirmed_email', unconfirmed_email: @unconfirmed_email)
+
 %div{"id" => "password-credentials"}
   %p
     = f.label :password, Spree.t(:password)
