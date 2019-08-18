@@ -194,6 +194,7 @@ feature "As a consumer I want to check out my cart", js: true do
       it "does not show item after all stock of an item is checked out (tesging cache update on checkout)" do
         Spree::Config[:enable_products_cache?] = true
         variant.update_attributes on_hand: 5
+        flush_jobs
         visit shop_path
 
         fill_in "variants[#{variant.id}]", with: '5'
@@ -210,6 +211,7 @@ feature "As a consumer I want to check out my cart", js: true do
         place_order
         expect(page).to have_content "Your order has been processed successfully"
 
+        flush_jobs
         visit shop_path
         # The presence of the control product ensures the list of products is fully loaded
         #   before we verify the sold product is not present
