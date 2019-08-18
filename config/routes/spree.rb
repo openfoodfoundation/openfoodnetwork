@@ -24,12 +24,6 @@ Spree::Core::Engine.routes.draw do
     put '/password/change' => 'user_passwords#update', :as => :update_password
   end
 
-  resource :session do
-    member do
-      get :nav_bar
-    end
-  end
-
   resource :account, :controller => 'users'
 
   namespace :admin do
