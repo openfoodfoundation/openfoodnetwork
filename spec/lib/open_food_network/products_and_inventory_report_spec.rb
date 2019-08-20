@@ -171,7 +171,6 @@ module OpenFoodNetwork
         end
 
         it "should do all the filters at once" do
-          pending "the order cycle filter is overriden by the distributor filter"
           # The following data ensures that this spec fails if any of the
           # filters fail. It's testing the filters are not impacting each other.
           distributor = create(:distributor_enterprise)

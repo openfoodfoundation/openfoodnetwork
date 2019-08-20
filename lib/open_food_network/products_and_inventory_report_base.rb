@@ -65,7 +65,15 @@ module OpenFoodNetwork
     def filter_to_order_cycle(variants)
       if params[:order_cycle_id].to_i > 0
         order_cycle = OrderCycle.find params[:order_cycle_id]
-        variants.where(id: order_cycle.variants)
+        # There are two quirks here:
+        #
+        # 1. Rails 3 uses only the last `where` clause of a column. So we can't
+        #    use `variants.where(id: order_cycle.variants)` until we upgrade to
+        #    Rails 4.
+        #
+        # 2. `order_cycle.variants` returns an array. So we need to use map
+        #    instead of pluck.
+        variants.where("spree_variants.id in (?)", order_cycle.variants.map(&:id))
       else
         variants
       end
