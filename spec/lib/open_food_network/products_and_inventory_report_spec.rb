@@ -171,10 +171,49 @@ module OpenFoodNetwork
         end
 
         it "should do all the filters at once" do
+          pending "the order cycle filter is overriden by the distributor filter"
+          # The following data ensures that this spec fails if any of the
+          # filters fail. It's testing the filters are not impacting each other.
           distributor = create(:distributor_enterprise)
-          product1 = create(:simple_product, supplier: supplier)
-          product2 = create(:simple_product, supplier: supplier)
-          order_cycle = create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], variants: [product1.variants.first])
+          other_distributor = create(:distributor_enterprise)
+          other_supplier = create(:supplier_enterprise)
+          not_filtered_variant = create(:simple_product, supplier: supplier).variants.first
+          variant_filtered_by_order_cycle = create(:simple_product, supplier: supplier).variants.first
+          variant_filtered_by_distributor = create(:simple_product, supplier: supplier).variants.first
+          variant_filtered_by_supplier = create(:simple_product, supplier: other_supplier).variants.first
+          variant_filtered_by_stock = create(:simple_product, supplier: supplier, on_hand: 0).variants.first
+
+          # This OC contains all products except the one that should be filtered
+          # by order cycle. We create a separate OC further down to proof that
+          # the product is passing all other filters.
+          order_cycle = create(
+            :simple_order_cycle,
+            suppliers: [supplier, other_supplier],
+            distributors: [distributor, other_distributor],
+            variants: [
+              not_filtered_variant,
+              variant_filtered_by_distributor,
+              variant_filtered_by_supplier,
+              variant_filtered_by_stock
+            ]
+          )
+
+          # Remove the distribution of one product for one distributor but still
+          # sell it through the other distributor.
+          order_cycle.exchanges.outgoing.find_by_receiver_id(distributor.id).
+            exchange_variants.
+            find_by_variant_id(variant_filtered_by_distributor).
+            destroy
+
+          # Make product available to be filtered later. See OC comment above.
+          create(
+            :simple_order_cycle,
+            suppliers: [supplier],
+            distributors: [distributor, other_distributor],
+            variants: [
+              variant_filtered_by_order_cycle
+            ]
+          )
 
           allow(subject).to receive(:params).and_return(
             order_cycle_id: order_cycle.id,
@@ -182,7 +221,8 @@ module OpenFoodNetwork
             distributor_id: distributor.id,
             report_type: 'inventory'
           )
-          subject.filter(variants)
+
+          expect(subject.filter(variants)).to match_array [not_filtered_variant]
         end
       end
 
