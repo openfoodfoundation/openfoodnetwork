@@ -155,7 +155,7 @@ describe SubscriptionPlacementJob do
           create(:subscription, shop: shop, shipping_method: shipping_method, with_items: true)
         end
 
-        pending "uses the same shipping method after advancing the order" do
+        it "uses the same shipping method after advancing the order" do
           job.send(:process, order)
           expect(order.state).to eq "complete"
           order.reload
