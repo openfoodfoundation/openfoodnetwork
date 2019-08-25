@@ -1,0 +1,11 @@
+= render partial: 'spree/admin/shared/product_sub_menu'
+
+= render partial: 'spree/admin/shared/product_tabs', locals: { current: 'Variants' }
+
+= render partial: 'spree/shared/error_messages', locals: { target: @variant }
+
+= form_for [:admin, @product, @variant] do |f|
+  %fieldset.no-border-top
+    %div
+      = render partial: 'form', locals: { f: f }
+    = render partial: 'spree/admin/shared/edit_resource_links'
