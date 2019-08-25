@@ -118,8 +118,12 @@ describe SubscriptionPlacementJob do
   end
 
   describe "processing a subscription order" do
-    let(:subscription) { create(:subscription, with_items: true) }
-    let(:shop) { subscription.shop }
+    let!(:shipping_method_created_earlier) { create(:shipping_method, distributors: [shop]) }
+    let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
+    let!(:shipping_method_created_later) { create(:shipping_method, distributors: [shop]) }
+
+    let(:shop) { create(:enterprise) }
+    let(:subscription) { create(:subscription, shop: shop, with_items: true) }
     let(:proxy_order) { create(:proxy_order, subscription: subscription) }
     let(:oc) { proxy_order.order_cycle }
     let(:ex) { oc.exchanges.outgoing.find_by_sender_id_and_receiver_id(shop.id, shop.id) }
@@ -146,6 +150,19 @@ describe SubscriptionPlacementJob do
     end
 
     context "when the order is not already complete" do
+      describe "selection of shipping method" do
+        let!(:subscription) do
+          create(:subscription, shop: shop, shipping_method: shipping_method, with_items: true)
+        end
+
+        it "uses the same shipping method after advancing the order" do
+          job.send(:process, order)
+          expect(order.state).to eq "complete"
+          order.reload
+          expect(order.shipping_method).to eq(shipping_method)
+        end
+      end
+
       context "when no stock items are available after capping stock" do
         before do
           allow(job).to receive(:unavailable_stock_lines_for) { order.line_items }
