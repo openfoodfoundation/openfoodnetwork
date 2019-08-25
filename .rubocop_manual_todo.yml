@@ -49,7 +49,6 @@ Metrics/LineLength:
   - app/controllers/spree/admin/orders_controller_decorator.rb
   - app/controllers/spree/admin/payments_controller_decorator.rb
   - app/controllers/spree/admin/payment_methods_controller_decorator.rb
-  - app/controllers/spree/admin/products_controller_decorator.rb
   - app/controllers/spree/admin/reports_controller_decorator.rb
   - app/controllers/spree/api/products_controller_decorator.rb
   - app/controllers/spree/credit_cards_controller.rb
@@ -437,7 +436,6 @@ Metrics/AbcSize:
   - app/models/spree/order_decorator.rb
   - app/models/spree/payment_decorator.rb
   - app/models/spree/product_decorator.rb
-  - app/models/spree/product_set.rb
   - app/models/spree/taxon_decorator.rb
   - app/serializers/api/admin/enterprise_serializer.rb
   - app/serializers/api/product_serializer.rb
@@ -567,7 +565,6 @@ Metrics/CyclomaticComplexity:
   - app/models/spree/ability_decorator.rb
   - app/models/spree/payment_decorator.rb
   - app/models/spree/product_decorator.rb
-  - app/models/spree/product_set.rb
   - app/models/variant_override_set.rb
   - app/services/cart_service.rb
   - lib/discourse/single_sign_on.rb
@@ -595,7 +592,6 @@ Metrics/PerceivedComplexity:
   - app/models/spree/ability_decorator.rb
   - app/models/spree/order_decorator.rb
   - app/models/spree/product_decorator.rb
-  - app/models/spree/product_set.rb
   - lib/discourse/single_sign_on.rb
   - lib/open_food_network/bulk_coop_report.rb
   - lib/open_food_network/enterprise_issue_validator.rb
@@ -651,7 +647,6 @@ Metrics/MethodLength:
   - app/models/spree/payment_decorator.rb
   - app/models/spree/payment_method_decorator.rb
   - app/models/spree/product_decorator.rb
-  - app/models/spree/product_set.rb
   - app/serializers/api/admin/order_cycle_serializer.rb
   - app/serializers/api/cached_enterprise_serializer.rb
   - app/services/order_cycle_form.rb
