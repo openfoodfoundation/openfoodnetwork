@@ -94,6 +94,7 @@ en_CA:
     user_passwords:
       spree_user:
         updated_not_active: "Your password has been reset, but your email has not been confirmed yet."
+        updated: "Your password was changed successfully. You are now signed in."
         send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
   models:
     order_cycle:
@@ -1027,6 +1028,7 @@ en_CA:
         saved: "SAVED"
       product_already_in_order: This product has already been added to the order. Please edit the quantity directly.
       stock:
+        insufficient_stock: "Insufficient stock available"
         out_of_stock: "Out of Stock"
       orders:
         number: Number
@@ -1035,6 +1037,7 @@ en_CA:
       cancel_failure_msg: "Sorry, cancellation failed!"
       confirm_pause_msg: "Are you sure you want to pause this subscription?"
       pause_failure_msg: "Sorry, pausing failed!"
+      confirm_unpause_msg: "If you have an open Order Cycle in this subscription's schedule, an order will be created for this customer. Are you sure you want to unpause this subscription?"
       unpause_failure_msg: "Sorry, unpausing failed!"
       confirm_cancel_open_orders_msg: "Some orders for this subscription are currently open. The customer has already been notified that the order will be placed. Would you like to cancel these order(s) or keep them?"
       resume_canceled_orders_msg: "Some orders for this subscription can be resumed right now. You can resume them from the orders dropdown."
@@ -2779,6 +2782,7 @@ en_CA:
     inventory: Inventory
     zipcode: Postal Code
     weight: Weight (per kg)
+    error_user_destroy_with_orders: "Users with completed orders may not be deleted"
     actions:
       update: "Update"
     errors:
@@ -2882,9 +2886,11 @@ en_CA:
           new_shipping_method: "New Shipping Method"
           back_to_shipping_methods_list: "Back to Shipping Methods List"
         edit:
+          editing_shipping_method: "Editing Shipping Method"
           new: "New"
           back_to_shipping_methods_list: "Back to Shipping Methods List"
         form:
+          categories: "Categories"
           zones: "Zones"
           both: "Both"
           front_end: "Front End"
@@ -2915,6 +2921,7 @@ en_CA:
             error_saving_payment: Error saving payment
             submitting_payment: Submitting payment...
       products:
+        image_upload_error: "The product image was not recognised. Please upload an image in PNG or JPG format."
         new:
           title: 'New Product'
         unit_name_placeholder: 'eg. bunches'
@@ -3015,6 +3022,7 @@ en_CA:
       line_item:
         insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
         out_of_stock: "Out of Stock"
+        unavailable_item: "Currently unavailable"
     shipment_states:
       backorder: backorder
       partial: partial
@@ -3034,6 +3042,8 @@ en_CA:
       invalid: invalid
     order_mailer:
       cancel_email:
+        customer_greeting: "Hi %{name}!"
+        instructions: "Your order has been CANCELED. Please retain this cancellation information for your records."
         order_summary_canceled: "Order Summary [CANCELED]"
         subject: "Cancellation of Order"
       confirm_email:

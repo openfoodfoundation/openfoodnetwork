@@ -244,6 +244,7 @@ fr:
   reset_password_token: La demande de réinitialisation du mot de passe
   expired: a expiré, veuillez faire une nouvelle demande.
   back_to_payments_list: "Retour à la liste des paiements"
+  maestro_or_solo_cards: "Cartes Maestro/Solo"
   actions:
     create_and_add_another: "Créer et ajouter nouveau"
     create: "Créer"
@@ -452,6 +453,8 @@ fr:
         encoding_error: "Veuillez vérifier le paramètre de langue de votre code source et vous assurer qu'il est encodé en UTF-8"
         unexpected_error: "L'import de fichier produits à rencontré une erreur inconnue à l'ouverture du fichier : %{error_message}"
       index:
+        notice: "Notice"
+        beta_notice: "Cette fonctionnalité est en mode bêta : il est possible que vous rencontriez des erreurs en l'utilisant. N'hésitez pas à contacter le support utilisateurs."
         select_file: Sélectionner le fichier (tableur sous format csv) à importer
         spreadsheet: Tableur csv
         choose_import_type: Choisir le type d'import
