@@ -515,6 +515,28 @@ module Spree
 
       it_behaves_like "a model using the LocalizedNumber module", [:price, :cost_price, :weight]
     end
+
+    context "in a circular order cycle setup" do
+      let(:enterprise1) { create(:distributor_enterprise, is_primary_producer: true) }
+      let(:enterprise2) { create(:distributor_enterprise, is_primary_producer: true) }
+      let(:variant1) { create(:variant) }
+      let(:variant2) { create(:variant) }
+      let!(:order_cycle) do
+        enterprise1.supplied_products << variant1.product
+        enterprise2.supplied_products << variant2.product
+        create(
+          :simple_order_cycle,
+          coordinator: enterprise1,
+          suppliers: [enterprise1, enterprise2],
+          distributors: [enterprise1, enterprise2],
+          variants: [variant1, variant2]
+        )
+      end
+
+      it "saves without infinite loop" do
+        expect(variant1.update_attributes(cost_price: 1)).to be_truthy
+      end
+    end
   end
 
   describe "destruction" do
