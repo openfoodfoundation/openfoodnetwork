@@ -453,6 +453,8 @@ en_GB:
         encoding_error: "Please check the language setting of your source file and ensure it is saved with UTF-8 encoding"
         unexpected_error: "Product Import encountered an unexpected error whilst opening the file: %{error_message}"
       index:
+        notice: "Notice"
+        beta_notice: "This feature is still in beta: you may experience some errors while using it. Please don't hesitate to contact support."
         select_file: Select a spreadsheet to upload
         spreadsheet: Spreadsheet
         choose_import_type: Select import type
@@ -1377,7 +1379,7 @@ en_GB:
   email_confirmed: "Thank you for confirming your email address."
   email_registered: "is now part of"
   email_userguide_html: "The User Guide with detailed support for setting up your Producer or Hub is here: %{link}"
-  email_admin_html: "You can manage your account by logging into the %{link} or by clicking on the cog in the top right hand side of the homepage, and selecting Administration."
+  email_admin_html: "You can manage your account by logging into the %{link} or by clicking on 'Profile' in the top right hand side of the homepage, and selecting Administration."
   email_community_html: "We also have an online forum for community discussion related to OFN software and the unique challenges of running a food enterprise. You are encouraged to join in. We are constantly evolving and your input into this forum will shape what happens next. %{link}"
   join_community: "Join the community"
   email_confirmation_activate_account: "Before we can activate your new account, we need to confirm your email address."

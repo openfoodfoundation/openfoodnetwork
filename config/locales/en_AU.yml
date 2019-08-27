@@ -94,6 +94,7 @@ en_AU:
     user_passwords:
       spree_user:
         updated_not_active: "Your password has been reset, but your email has not been confirmed yet."
+        updated: "Your password was changed successfully. You are now signed in."
         send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
   models:
     order_cycle:
@@ -243,6 +244,7 @@ en_AU:
   reset_password_token: Reset password token
   expired: has expired, please request a new one
   back_to_payments_list: "Back to Payments List"
+  maestro_or_solo_cards: "Maestro/Solo cards"
   actions:
     create_and_add_another: "Create and Add Another"
     create: "Create"
@@ -451,6 +453,8 @@ en_AU:
         encoding_error: "Please check the language setting of your source file and ensure it is saved with UTF-8 encoding"
         unexpected_error: "Product Import encountered an unexpected error whilst opening the file: %{error_message}"
       index:
+        notice: "Notice"
+        beta_notice: "This feature is still in beta: you may experience some errors while using it. Please don't hesitate to contact support."
         select_file: Select a spreadsheet to upload
         spreadsheet: Spreadsheet
         choose_import_type: Select import type
@@ -1027,6 +1031,7 @@ en_AU:
         saved: "SAVED"
       product_already_in_order: This product has already been added to the order. Please edit the quantity directly.
       stock:
+        insufficient_stock: "Insufficient stock available"
         out_of_stock: "Out of Stock"
       orders:
         number: Number
@@ -1035,6 +1040,7 @@ en_AU:
       cancel_failure_msg: "Sorry, cancellation failed!"
       confirm_pause_msg: "Are you sure you want to pause this subscription?"
       pause_failure_msg: "Sorry, pausing failed!"
+      confirm_unpause_msg: "If you have an open Order Cycle in this subscription's schedule, an order will be created for this customer. Are you sure you want to unpause this subscription?"
       unpause_failure_msg: "Sorry, unpausing failed!"
       confirm_cancel_open_orders_msg: "Some orders for this subscription are currently open. The customer has already been notified that the order will be placed. Would you like to cancel these order(s) or keep them?"
       resume_canceled_orders_msg: "Some orders for this subscription can be resumed right now. You can resume them from the orders dropdown."
@@ -2779,6 +2785,7 @@ en_AU:
     inventory: Inventory
     zipcode: Postcode
     weight: Weight (per kg)
+    error_user_destroy_with_orders: "Users with completed orders may not be deleted"
     actions:
       update: "Update"
     errors:
