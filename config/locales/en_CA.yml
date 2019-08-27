@@ -244,6 +244,7 @@ en_CA:
   reset_password_token: Reset password token
   expired: has expired, please request a new one
   back_to_payments_list: "Back to Payments List"
+  maestro_or_solo_cards: "Maestro/Solo cards"
   actions:
     create_and_add_another: "Create and Add Another"
     create: "Create"
@@ -452,6 +453,8 @@ en_CA:
         encoding_error: "Please check the language setting of your source file and ensure it is saved with UTF-8 encoding"
         unexpected_error: "Product Import encountered an unexpected error whilst opening the file: %{error_message}"
       index:
+        notice: "Notice"
+        beta_notice: "This feature is still in beta: you may experience some errors while using it. Please don't hesitate to contact support."
         select_file: Select a spreadsheet to upload
         spreadsheet: Spreadsheet
         choose_import_type: Select import type
