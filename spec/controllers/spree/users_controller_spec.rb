@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'spree/api/testing_support/helpers'
 
 describe Spree::UsersController, type: :controller do
   include AuthenticationWorkflow

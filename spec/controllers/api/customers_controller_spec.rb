@@ -3,7 +3,6 @@ require 'spec_helper'
 module Api
   describe CustomersController, type: :controller do
     include AuthenticationWorkflow
-    include OpenFoodNetwork::ApiHelper
     render_views
 
     let(:user) { create(:user) }

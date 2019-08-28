@@ -385,7 +385,7 @@ describe Spree::Order do
       let(:distributor) { create(:distributor_enterprise) }
 
       let(:order_cycle) do
-        create(:order_cycle).tap do |record|
+        create(:order_cycle).tap do
           create(:exchange, variants: [v1], incoming: true)
           create(:exchange, variants: [v1], incoming: false, receiver: distributor)
         end

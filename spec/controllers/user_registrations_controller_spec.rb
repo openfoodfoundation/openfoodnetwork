@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'spree/api/testing_support/helpers'
 
 describe UserRegistrationsController, type: :controller do
   include OpenFoodNetwork::EmailHelper

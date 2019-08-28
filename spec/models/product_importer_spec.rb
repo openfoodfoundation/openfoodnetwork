@@ -250,7 +250,7 @@ describe ProductImport::ProductImporter do
   describe "updating an exiting variant" do
     let(:csv_data) {
       CSV.generate do |csv|
-        csv << ["name", "producer", "description" ,"category", "on_hand", "price", "units", "unit_type", "display_name", "shipping_category"]
+        csv << ["name", "producer", "description", "category", "on_hand", "price", "units", "unit_type", "display_name", "shipping_category"]
         csv << ["Hypothetical Cake", "Another Enterprise", "New Description", "Cake", "5", "5.50", "500", "g", "Preexisting Banana", shipping_category.name]
       end
     }
@@ -530,7 +530,6 @@ describe ProductImport::ProductImporter do
       }
       let(:importer) { import_data csv_data, import_into: 'inventories' }
 
-
       it "updates inventory item correctly" do
         importer.save_entries
 
@@ -548,8 +547,8 @@ describe ProductImport::ProductImporter do
       let!(:inventory) { InventoryItem.create(variant_id: product4.variants.first.id, enterprise_id: enterprise2.id, visible: false) }
       let(:csv_data) {
         CSV.generate do |csv|
-        csv << ["name", "distributor", "producer", "on_hand", "price", "units", "variant_unit_name"]
-        csv << ["Cabbage", "Another Enterprise", "User Enterprise", "900", "", "1", "Whole"]
+          csv << ["name", "distributor", "producer", "on_hand", "price", "units", "variant_unit_name"]
+          csv << ["Cabbage", "Another Enterprise", "User Enterprise", "900", "", "1", "Whole"]
         end
       }
       let(:importer) { import_data csv_data, import_into: 'inventories' }

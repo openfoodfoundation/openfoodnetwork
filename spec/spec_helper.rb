@@ -39,10 +39,9 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 require 'spree/testing_support/controller_requests'
 require 'spree/testing_support/capybara_ext'
 require 'spree/api/testing_support/setup'
-require 'spree/api/testing_support/helpers'
-require 'spree/api/testing_support/helpers_decorator'
 require 'spree/testing_support/authorization_helpers'
 require 'spree/testing_support/preferences'
+require 'support/api_helper'
 
 # Capybara config
 require 'selenium-webdriver'
@@ -127,8 +126,6 @@ RSpec.configure do |config|
       spree_config.shipping_instructions = true
       spree_config.auto_capture = true
     end
-
-    Spree::Api::Config[:requires_authentication] = true
   end
 
   # Helpers
@@ -140,7 +137,7 @@ RSpec.configure do |config|
   config.include Spree::TestingSupport::Preferences
   config.include Devise::TestHelpers, type: :controller
   config.extend  Spree::Api::TestingSupport::Setup, type: :controller
-  config.include Spree::Api::TestingSupport::Helpers, type: :controller
+  config.include OpenFoodNetwork::ApiHelper, type: :controller
   config.include OpenFoodNetwork::ControllerHelper, type: :controller
   config.include Features::DatepickerHelper, type: :feature
   config.include OpenFoodNetwork::FeatureToggleHelper

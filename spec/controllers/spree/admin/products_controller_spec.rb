@@ -150,15 +150,16 @@ describe Spree::Admin::ProductsController, type: :controller do
 
     describe "when user uploads an image in an unsupported format" do
       it "does not throw an exception" do
-        product_image = ActionDispatch::Http::UploadedFile.new({
-          :filename => 'unsupported_image_format.exr',
-          :content_type => 'application/octet-stream',
-          :tempfile => Tempfile.new('unsupported_image_format.exr')
-        })
+        product_image = ActionDispatch::Http::UploadedFile.new(
+          filename: 'unsupported_image_format.exr',
+          content_type: 'application/octet-stream',
+          tempfile: Tempfile.new('unsupported_image_format.exr')
+        )
         product_attrs_with_image = product_attrs.merge(
           images_attributes: {
             '0' => { attachment: product_image }
-          })
+          }
+        )
 
         expect do
           spree_put :create, product: product_attrs_with_image

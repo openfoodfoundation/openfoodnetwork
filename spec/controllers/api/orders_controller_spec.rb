@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'spree/api/testing_support/helpers'
 
 module Api
   describe OrdersController, type: :controller do

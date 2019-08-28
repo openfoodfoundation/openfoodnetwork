@@ -76,8 +76,29 @@ Spree::Core::Engine.routes.prepend do
       end
     end
 
+    resources :variants, :only => [:index]
+
     resources :orders do
       get :managed, on: :collection
+
+      resources :shipments, :only => [:create, :update] do
+        member do
+          put :ready
+          put :ship
+          put :add
+          put :remove
+        end
+      end
+    end
+
+    resources :taxons, :only => [:index]
+
+    resources :taxonomies do
+      resources :taxons do
+        member do
+          get :jstree
+        end
+      end
     end
   end
 
@@ -103,6 +124,13 @@ Spree::Core::Engine.routes.prepend do
         resources :invoices, only: [:create, :show] do
           get :poll
         end
+      end
+    end
+
+    resources :users do
+      member do
+        put :generate_api_key
+        put :clear_api_key
       end
     end
   end
