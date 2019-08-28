@@ -86,6 +86,10 @@ describe ProxyOrder, type: :model do
     let(:proxy_order) { create(:proxy_order, order: order, canceled_at: Time.zone.now) }
     let(:order_cycle) { proxy_order.order_cycle }
 
+    around do |example|
+      Timecop.freeze(Time.zone.now) { example.run }
+    end
+
     context "when the order cycle is not yet closed" do
       before { order_cycle.update_attributes(orders_open_at: 1.day.ago, orders_close_at: 3.days.from_now) }
 
