@@ -3,7 +3,7 @@
 .select2-container {
   .select2-choice {
     .select2-search-choice-close {
-      display: none;
+      display: none !important;
     }
     .select2-arrow {
       width: 22px;

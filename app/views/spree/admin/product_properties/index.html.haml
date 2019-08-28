@@ -1,0 +1,71 @@
+= render partial: 'spree/admin/shared/product_sub_menu'
+
+= render partial: 'spree/admin/shared/product_tabs', locals: { current: 'Product Properties' }
+
+= render partial: 'spree/shared/error_messages', locals: { target: @product }
+
+- content_for :page_actions do
+  %ul.tollbar.inline-menu
+    %li
+      = link_to_add_fields Spree.t(:add_product_properties), 'tbody#product_properties', class: 'icon-plus button'
+    %li
+      %span#new_ptype_link
+        = link_to Spree.t(:select_from_prototype), available_admin_prototypes_url, remote: true, 'data-update' => 'prototypes', class: 'button icon-copy'
+
+= form_for @product, url: admin_product_url(@product), method: :put do |f|
+  %fieldset.no-border-top
+    .add_product_properties
+    #prototypes
+    = image_tag 'select2-spinner.gif', plugin: 'spree', style: 'display:none;', id: 'busy_indicator'
+
+    %table.index.sortable{"data-sortable-link" => update_positions_admin_product_product_properties_url}
+      %thead
+        %tr
+          %th.no-border
+          %th= t('admin.products.properties.property_name')
+          %th= t('admin.description')
+          %th.actions
+
+      %tbody#product_properties
+        = f.fields_for :product_properties do |pp_form|
+          = render partial: 'product_property_fields', locals: { f: pp_form }
+
+    = f.check_box :inherits_properties
+    = f.label :inherits_properties, t(".inherits_properties_checkbox_hint", supplier: @product.supplier.name)
+    %br
+    %br
+
+    #inherited_properties
+      %table.index
+        %thead
+          %tr
+            %th= t('admin.products.properties.inherited_property')
+            %th= t('admin.description')
+            %th.actions
+        %tbody#producer_properties
+          - @product.supplier.producer_properties.each do |producer_property|
+            %tr
+              %td= producer_property.property.presentation
+              %td= producer_property.value
+              %td.actions
+
+
+    = render partial: 'spree/admin/shared/edit_resource_links'
+
+    = hidden_field_tag 'clear_product_properties', 'true'
+
+:coffee
+  $(document).ready ->
+    $("#inherited_properties").toggle $("input#product_inherits_properties").is(':checked')
+  $("input#product_inherits_properties").change ->
+    $("#inherited_properties").toggle $(this).is(':checked')
+
+:javascript
+  var properties = #{raw(@properties.to_json)};
+  $("#product_properties input.autocomplete").live("keydown", function(){
+    already_auto_completed = $(this).is('ac_input');
+    if (!already_auto_completed) {
+      $(this).autocomplete({source: properties});
+      $(this).focus();
+    }
+  });
