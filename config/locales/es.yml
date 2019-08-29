@@ -244,6 +244,7 @@ es:
   reset_password_token: token de restablecimiento de contraseña
   expired: ha expirado, por favor solicite una nueva
   back_to_payments_list: "Volver a la lista de pagos"
+  maestro_or_solo_cards: "Tarjetas Maestro/Solo"
   actions:
     create_and_add_another: "Crear y agregar otro"
     create: "Crear"
@@ -452,6 +453,8 @@ es:
         encoding_error: "Verifique la configuración de idioma de su archivo fuente y asegúrese de que esté guardado con la codificación UTF-8"
         unexpected_error: "La importación de productos encontró un error inesperado al abrir el archivo: %{error_message}"
       index:
+        notice: "aviso"
+        beta_notice: "Esta funcionalidad aún está en versión beta: puede experimentar algunos errores mientras la usa. Por favor no dude en ponerse en contacto con nosotros."
         select_file: Selecciona una hoja de cálculo para subir
         spreadsheet: Hoja de cálculo
         choose_import_type: Seleccionar tipo de importación
