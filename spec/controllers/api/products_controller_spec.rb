@@ -225,49 +225,49 @@ describe Api::ProductsController, type: :controller do
         before { current_api_user.enterprise_roles.create(enterprise: supplier2) }
 
         it "returns a list of products" do
-          spree_get :bulk_products, { page: 1, per_page: 15 }, format: :json
-          expect(returned_product_ids).to eq [product4.id, product3.id, product2.id, product1.id]
+          api_get :bulk_products, { page: 1, per_page: 15 }, format: :json
+          expect(returned_product_ids).to eq [product4.id, product3.id, product2.id, inactive_product.id, product.id]
         end
 
         it "returns pagination data" do
-          spree_get :bulk_products, { page: 1, per_page: 15 }, format: :json
-          expect(json_response['pagination']).to eq "results" => 4, "pages" => 1, "page" => 1, "per_page" => 15
+          api_get :bulk_products, { page: 1, per_page: 15 }, format: :json
+          expect(json_response['pagination']).to eq "results" => 5, "pages" => 1, "page" => 1, "per_page" => 15
         end
 
         it "uses defaults when page and per_page are not supplied" do
-          spree_get :bulk_products, format: :json
-          expect(json_response['pagination']).to eq "results" => 4, "pages" => 1, "page" => 1, "per_page" => 15
+          api_get :bulk_products, format: :json
+          expect(json_response['pagination']).to eq "results" => 5, "pages" => 1, "page" => 1, "per_page" => 15
         end
 
         it "returns paginated products by page" do
-          spree_get :bulk_products, { page: 1, per_page: 2 }, format: :json
+          api_get :bulk_products, { page: 1, per_page: 2 }, format: :json
           expect(returned_product_ids).to eq [product4.id, product3.id]
 
-          spree_get :bulk_products, { page: 2, per_page: 2 }, format: :json
-          expect(returned_product_ids).to eq [product2.id, product1.id]
+          api_get :bulk_products, { page: 2, per_page: 2 }, format: :json
+          expect(returned_product_ids).to eq [product2.id, inactive_product.id]
         end
 
         it "filters results by supplier" do
-          spree_get :bulk_products, { page: 1, per_page: 15, q: {supplier_id_eq: supplier.id} }, format: :json
-          expect(returned_product_ids).to eq [product2.id, product1.id]
+          api_get :bulk_products, { page: 1, per_page: 15, q: {supplier_id_eq: supplier.id} }, format: :json
+          expect(returned_product_ids).to eq [product2.id, inactive_product.id, product.id]
         end
 
         it "filters results by product category" do
-          spree_get :bulk_products, { page: 1, per_page: 15, q: {primary_taxon_id_eq: taxon.id} }, format: :json
+          api_get :bulk_products, { page: 1, per_page: 15, q: {primary_taxon_id_eq: taxon.id} }, format: :json
           expect(returned_product_ids).to eq [product3.id, product2.id]
         end
 
         it "filters results by import_date" do
-          product1.variants.first.import_date = 1.day.ago
+          product.variants.first.import_date = 1.day.ago
           product2.variants.first.import_date = 2.days.ago
           product3.variants.first.import_date = 1.day.ago
 
-          product1.save
+          product.save
           product2.save
           product3.save
 
-          spree_get :bulk_products, { page: 1, per_page: 15, import_date: 1.day.ago.to_date.to_s }, format: :json
-          expect(returned_product_ids).to eq [product3.id, product1.id]
+          api_get :bulk_products, { page: 1, per_page: 15, import_date: 1.day.ago.to_date.to_s }, format: :json
+          expect(returned_product_ids).to eq [product3.id, product.id]
         end
       end
     end

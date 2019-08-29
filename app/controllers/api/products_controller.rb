@@ -122,7 +122,7 @@ module Api
     def render_paged_products(products)
       serializer = ActiveModel::ArraySerializer.new(
         products,
-        each_serializer: Api::Admin::ProductSerializer
+        each_serializer: ::Api::Admin::ProductSerializer
       )
 
       render text: {
