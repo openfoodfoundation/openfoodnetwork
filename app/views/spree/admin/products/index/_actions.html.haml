@@ -1,7 +1,7 @@
 .controls.sixteen.columns.alpha{ 'ng-hide' => 'RequestMonitor.loading || products.length == 0' }
   .ten.columns.alpha.index-controls
     .per-page{'ng-show' => '!RequestMonitor.loading && products.length > 0'}
-      %input.per-page-select.ofn-select2{type: 'number', data: 'per_page_options', 'min-search' => 999, 'ng-model' => 'per_page', 'ng-change' => 'fetchResults()'}
+      %input.per-page-select.ofn-select2{type: 'number', data: 'per_page_options', 'min-search' => 999, 'ng-model' => 'per_page', 'ng-change' => 'fetchProducts()'}
 
       %span.per-page-feedback
         {{ 'spree.admin.orders.index.results_found' | t:{number: pagination.results} }}
