@@ -42,7 +42,7 @@ describe Spree::Shipment do
         pending_order.update!
       end
 
-      xit "can still be shipped" do
+      it "can still be shipped" do
         expect(pending_order.can_ship?).to be true
         expect(pending_order.ready_to_ship?).to be true
       end

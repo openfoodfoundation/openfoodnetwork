@@ -15,6 +15,14 @@ module Spree
       end
     end
 
+    # Override of Spree method to allow `on_demand` items to be shipped
+    def determine_state(order)
+      return 'canceled' if order.canceled?
+      return 'pending' unless order.can_ship?
+      return 'shipped' if state == 'shipped'
+      order.paid? ? 'ready' : 'pending'
+    end
+
     # The shipment manifest is built by loading inventory units and variants from the DB
     # These variants come unscoped
     # So, we need to scope the variants just after the manifest is built
