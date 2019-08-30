@@ -29,7 +29,7 @@ feature "full-page cart", js: true do
     end
 
     describe "when a product is soft-deleted" do
-      xit "shows the cart without errors" do
+      it "shows the cart without errors" do
         add_product_to_cart order, product_with_tax, quantity: 1
         add_product_to_cart order, product_with_fee, quantity: 2
         product_with_fee.destroy
