@@ -28,6 +28,17 @@ feature "full-page cart", js: true do
       end
     end
 
+    describe "when a product is soft-deleted" do
+      xit "shows the cart without errors" do
+        add_product_to_cart order, product_with_tax, quantity: 1
+        add_product_to_cart order, product_with_fee, quantity: 2
+        product_with_fee.destroy
+
+        visit main_app.cart_path
+        expect(page).to have_selector '.cart-item-price'
+      end
+    end
+
     describe "percentage fees" do
       let(:percentage_fee) { create(:enterprise_fee, calculator: Calculator::FlatPercentPerItem.new(preferred_flat_percent: 20)) }
 
