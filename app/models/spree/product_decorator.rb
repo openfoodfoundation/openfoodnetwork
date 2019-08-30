@@ -56,9 +56,10 @@ Spree::Product.class_eval do
           ON (o_order_cycles.id = o_exchanges.order_cycle_id)")
   }
 
-  scope :imported_on, lambda { |date|
-    import_date = date.to_datetime
-    joins(:variants).merge(Spree::Variant.where(import_date: import_date..import_date + 24.hours))
+  scope :imported_on, lambda { |import_date|
+    import_date = Time.zone.parse import_date if import_date.is_a? String
+    import_date = import_date.to_date
+    joins(:variants).merge(Spree::Variant.where(import_date: import_date.beginning_of_day..import_date.end_of_day))
   }
 
   scope :with_order_cycles_inner, -> {
