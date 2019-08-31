@@ -128,6 +128,26 @@ describe VariantOverride do
     end
   end
 
+  describe "delegated price" do
+    let!(:variant_with_price) { create(:variant, price: 123.45) }
+    let(:price_object) { variant_with_price.default_price }
+
+    context "when variant is soft-deleted" do
+      before do
+        variant_with_price.destroy
+      end
+
+      it "soft-deletes the price" do
+        expect(price_object.deleted_at).to_not be_nil
+      end
+
+      it "can access the soft-deleted price" do
+        expect(variant_with_price.default_price).to eq price_object
+        expect(variant_with_price.price).to eq 123.45
+      end
+    end
+  end
+
   describe "with price" do
     let(:variant_override) { create(:variant_override, variant: variant, hub: hub, price: 12.34) }
 
