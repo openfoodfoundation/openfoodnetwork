@@ -402,5 +402,25 @@ feature '
       expect(o.distributor).to eq distributor1
       expect(o.order_cycle).to eq order_cycle1
     end
+
+    context "when a line item is removed from an order with a shipment" do
+      let(:bill_address) { create(:address) }
+      let(:shipping_method) { create(:shipping_method) }
+      let(:distributor) { create(:distributor_enterprise) }
+      let!(:completed_order) { create(:order_with_line_items, state: 'complete', completed_at: Time.zone.now, distributor: distributor, bill_address: bill_address) }
+
+      before do
+        completed_order.line_items.first.delete
+        quick_login_as_admin
+      end
+
+      xit "allows editing the order without error" do
+        # ERROR
+        pp completed_order.line_items.count # 4
+        pp completed_order.shipment.manifest.count # 5
+
+        visit spree.edit_admin_order_path(completed_order)
+      end
+    end
   end
 end
