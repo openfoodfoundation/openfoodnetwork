@@ -244,6 +244,7 @@ ca:
   reset_password_token: Reinicia el token de contrasenya
   expired: ha caducat, si us plau, sol·liciteu-ne un de nou
   back_to_payments_list: "Torna a la llista de pagaments"
+  maestro_or_solo_cards: "Targetes Maestro/Solo"
   actions:
     create_and_add_another: "Crea i afegeix-ne una altra"
     create: "Crear"
@@ -452,6 +453,8 @@ ca:
         encoding_error: "Comproveu la configuració de l'idioma del vostre fitxer d'origen i assegureu-vos que es desa amb la codificació UTF-8"
         unexpected_error: "La importació de productes ha detectat un error inesperat mentre obria el fitxer: %{error_message}"
       index:
+        notice: "Avís"
+        beta_notice: "Aquesta funcionalitat continua en fase beta: podeu experimentar alguns errors mentre l'utilitzeu. No dubteu en contactar amb nosaltres."
         select_file: Selecciona un full de càlcul per pujar-lo
         spreadsheet: Full de càlcul
         choose_import_type: Selecciona el tipus d'importació
