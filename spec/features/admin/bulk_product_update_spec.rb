@@ -437,6 +437,7 @@ feature '
     visit spree.admin_products_path
 
     select2_select s1.name, from: "producer_filter"
+    apply_filters
 
     expect(page).to have_no_field "product_name", with: p2.name
     fill_in "product_name", with: "new product1"
@@ -609,6 +610,7 @@ feature '
 
         # Set a filter
         select2_select s1.name, from: "producer_filter"
+        apply_filters
 
         # Products are hidden when filtered out
         expect(page).to have_field "product_name", with: p1.name
@@ -616,6 +618,7 @@ feature '
 
         # Clearing filters
         click_button "Clear Filters"
+        apply_filters
 
         # All products are shown again
         expect(page).to have_field "product_name", with: p1.name
@@ -788,5 +791,9 @@ feature '
 
       expect(page).to have_selector "div.reveal-modal"
     end
+  end
+
+  def apply_filters
+    page.find('.button.icon-search').click
   end
 end

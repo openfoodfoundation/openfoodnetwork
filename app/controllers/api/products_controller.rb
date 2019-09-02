@@ -3,6 +3,8 @@ require 'open_food_network/permissions'
 module Api
   class ProductsController < Api::BaseController
     respond_to :json
+    DEFAULT_PAGE = 1
+    DEFAULT_PER_PAGE = 15
 
     skip_authorization_check only: [:show, :bulk_products, :overridable]
 
@@ -47,11 +49,16 @@ module Api
 
     # TODO: This should be named 'managed'. Is the action above used? Maybe we should remove it.
     def bulk_products
-      @products = OpenFoodNetwork::Permissions.new(current_api_user).editable_products.
-        merge(product_scope).
-        order('created_at DESC').
+      product_query = OpenFoodNetwork::Permissions.new(current_api_user).
+        editable_products.merge(product_scope)
+
+      if params[:import_date].present?
+        product_query = product_query.imported_on(params[:import_date]).group_by_products_id
+      end
+
+      @products = product_query.order('created_at DESC').
         ransack(params[:q]).result.
-        page(params[:page]).per(params[:per_page])
+        page(params[:page] || DEFAULT_PAGE).per(params[:per_page] || DEFAULT_PER_PAGE)
 
       render_paged_products @products
     end
@@ -115,10 +122,22 @@ module Api
     def render_paged_products(products)
       serializer = ActiveModel::ArraySerializer.new(
         products,
-        each_serializer: Api::Admin::ProductSerializer
+        each_serializer: ::Api::Admin::ProductSerializer
       )
 
-      render text: { products: serializer, pages: products.num_pages }.to_json
+      render text: {
+        products: serializer,
+        pagination: pagination_data(products)
+      }.to_json
+    end
+
+    def pagination_data(results)
+      {
+        results: results.total_count,
+        pages: results.num_pages,
+        page: (params[:page] || DEFAULT_PAGE).to_i,
+        per_page: (params[:per_page] || DEFAULT_PER_PAGE).to_i
+      }
     end
   end
 end

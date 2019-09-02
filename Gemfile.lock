@@ -808,6 +808,7 @@ DEPENDENCIES
   jquery-rails (= 3.0.4)
   json_spec (~> 1.1.4)
   jwt (~> 2.2)
+  kaminari (~> 0.14.1)
   knapsack
   letter_opener (>= 1.4.1)
   listen (= 3.0.8)

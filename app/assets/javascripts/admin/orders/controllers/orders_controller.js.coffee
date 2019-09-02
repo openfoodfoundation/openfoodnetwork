@@ -23,7 +23,7 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
 
   $scope.fetchResults = (page=1) ->
     $scope.resetSelected()
-    Orders.index({
+    params = {
       'q[completed_at_lt]': $scope['q']['completed_at_lt'],
       'q[completed_at_gt]': $scope['q']['completed_at_gt'],
       'q[state_eq]': $scope['q']['state_eq'],
@@ -39,7 +39,8 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
       'q[s]': $scope.sorting || 'completed_at desc',
       per_page: $scope.per_page,
       page: page
-    })
+    }
+    RequestMonitor.load(Orders.index(params).$promise)
 
   $scope.resetSelected = ->
     $scope.selected_orders.length = 0
