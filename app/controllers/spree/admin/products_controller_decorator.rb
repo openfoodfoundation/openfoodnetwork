@@ -55,7 +55,7 @@ Spree::Admin::ProductsController.class_eval do
     product_set.collection.each { |p| authorize! :update, p }
 
     if product_set.save
-      redirect_to bulk_products_api_products_path( bulk_index_query(params) )
+      redirect_to main_app.bulk_products_api_products_path( bulk_index_query(params) )
     else
       if product_set.errors.present?
         render json: { errors: product_set.errors }, status: :bad_request
