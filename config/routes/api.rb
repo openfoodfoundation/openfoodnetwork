@@ -1,5 +1,20 @@
 Openfoodnetwork::Application.routes.draw do
   namespace :api do
+    resources :products do
+      collection do
+        get :bulk_products
+        get :overridable
+      end
+      delete :soft_delete
+      post :clone
+
+      resources :variants do
+        delete :soft_delete
+      end
+    end
+
+    resources :variants, :only => [:index]
+
     resources :enterprises do
       post :update_image, on: :member
       get :managed, on: :collection
