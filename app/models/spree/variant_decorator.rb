@@ -91,6 +91,11 @@ Spree::Variant.class_eval do
     can_supply?(quantity)
   end
 
+  # Allow variant to access associated soft-deleted prices.
+  def default_price
+    Spree::Price.unscoped { super }
+  end
+
   def price_with_fees(distributor, order_cycle)
     price + fees_for(distributor, order_cycle)
   end
