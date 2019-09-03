@@ -341,7 +341,6 @@ Metrics/LineLength:
   - spec/performance/orders_controller_spec.rb
   - spec/performance/shop_controller_spec.rb
   - spec/requests/checkout/failed_checkout_spec.rb
-  - spec/requests/checkout/stripe_connect_spec.rb
   - spec/requests/embedded_shopfronts_headers_spec.rb
   - spec/requests/shop_spec.rb
   - spec/serializers/admin/customer_serializer_spec.rb
