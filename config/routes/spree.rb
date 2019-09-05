@@ -74,16 +74,6 @@ Spree::Core::Engine.routes.prepend do
         end
       end
     end
-
-    resources :taxons, :only => [:index]
-
-    resources :taxonomies do
-      resources :taxons do
-        member do
-          get :jstree
-        end
-      end
-    end
   end
 
   namespace :admin do
