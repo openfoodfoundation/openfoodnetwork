@@ -3,20 +3,20 @@
 - content_for :page_actions do
   - if @order.outstanding_balance?
     %li#new_payment_section
-      = button_link_to Spree.t(:new_payment), new_admin_order_payment_url(@order), icon: 'icon-plus'
-  %li= button_link_to Spree.t(:back_to_orders_list), admin_orders_path, icon: 'icon-arrow-left'
+      = button_link_to t(:new_payment), new_admin_order_payment_url(@order), icon: 'icon-plus'
+  %li= button_link_to t(:back_to_orders_list), admin_orders_path, icon: 'icon-arrow-left'
 
 - content_for :page_title do
   %i.icon-arrow-right
-  = Spree.t(:payments)
+  = t(:payments)
 
 - if @order.outstanding_balance?
   %h5.outstanding-balance
-    = @order.outstanding_balance < 0 ? Spree.t(:credit_owed) : Spree.t(:balance_due)
+    = @order.outstanding_balance < 0 ? t(:credit_owed) : t(:balance_due)
     \:
     %strong= @order.display_outstanding_balance
 
 - if @payments.any?
   = render partial: 'list', locals: { payments: @payments }
 - else
-  .alpha.twelve.columns.no-objects-found= Spree.t(:order_has_no_payments)
+  .alpha.twelve.columns.no-objects-found= t(:order_has_no_payments)
