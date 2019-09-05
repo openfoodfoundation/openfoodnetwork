@@ -222,6 +222,9 @@ module OpenFoodNetwork
           )
 
           expect(subject.filter(variants)).to match_array [not_filtered_variant]
+
+          # And it integrates with the ordering of the `variants` method.
+          expect(subject.variants).to match_array [not_filtered_variant]
         end
       end
 

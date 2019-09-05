@@ -65,15 +65,11 @@ module OpenFoodNetwork
     def filter_to_order_cycle(variants)
       if params[:order_cycle_id].to_i > 0
         order_cycle = OrderCycle.find params[:order_cycle_id]
-        # There are two quirks here:
-        #
-        # 1. Rails 3 uses only the last `where` clause of a column. So we can't
-        #    use `variants.where(id: order_cycle.variants)` until we upgrade to
-        #    Rails 4.
-        #
-        # 2. `order_cycle.variants` returns an array. So we need to use map
-        #    instead of pluck.
-        variants.where("spree_variants.id in (?)", order_cycle.variants.map(&:id))
+        variant_ids = Exchange.in_order_cycle(order_cycle).
+          joins("INNER JOIN exchange_variants ON exchanges.id = exchange_variants.exchange_id").
+          select("DISTINCT exchange_variants.variant_id")
+
+        variants.where("spree_variants.id IN (#{variant_ids.to_sql})")
       else
         variants
       end
