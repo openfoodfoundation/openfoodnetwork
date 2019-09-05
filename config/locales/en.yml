@@ -478,7 +478,7 @@ en:
       product_search_tip: Type words to help search your products in the shops. Use space to separate each keyword.
       SEO_keywords: SEO Keywords
       seo_tip: Type words to help search your products in the web. Use space to separate each keyword.
-      Search: Search
+      search: Search
       properties:
         property_name: Property Name
         inherited_property: Inherited Property
@@ -487,6 +487,11 @@ en:
         to_order_tip: "Items made to order do not have a set stock level, such as loaves of bread made fresh to order."
       group_buy_options: "Group Buy Options"
       back_to_products_list: "Back to products list"
+      editing_product: "Editing Product"
+      product_details: "Product Details"
+      images: "Images"
+      variants: "Variants"
+      product_properties: "Product Properties"
 
     product_import:
       title: Product Import
@@ -2944,6 +2949,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     zipcode: Postcode
     weight: Weight (per kg)
     error_user_destroy_with_orders: "Users with completed orders may not be deleted"
+    no_images_found: "No Images Found"
+    new_image: "New Image"
+    options: "Options"
 
     actions:
       update: "Update"
