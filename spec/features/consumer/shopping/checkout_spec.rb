@@ -26,12 +26,12 @@ feature "As a consumer I want to check out my cart", js: true do
   end
 
   describe "with shipping and payment methods" do
-    let(:sm1) { create(:shipping_method, require_ship_address: true, name: "Frogs", description: "yellow", calculator: Spree::Calculator::FlatRate.new(preferred_amount: 0.00)) }
-    let(:sm2) { create(:shipping_method, require_ship_address: false, name: "Donkeys", description: "blue", calculator: Spree::Calculator::FlatRate.new(preferred_amount: 4.56)) }
-    let(:sm3) { create(:shipping_method, require_ship_address: false, name: "Local", tag_list: "local") }
-    let!(:pm1) { create(:payment_method, distributors: [distributor], name: "Roger rabbit", type: "Spree::PaymentMethod::Check") }
-    let!(:pm2) { create(:payment_method, distributors: [distributor], calculator: Spree::Calculator::FlatRate.new(preferred_amount: 5.67)) }
-    let!(:pm3) do
+    let(:free_shipping) { create(:shipping_method, require_ship_address: true, name: "Frogs", description: "yellow", calculator: Spree::Calculator::FlatRate.new(preferred_amount: 0.00)) }
+    let(:shipping_with_fee) { create(:shipping_method, require_ship_address: false, name: "Donkeys", description: "blue", calculator: Spree::Calculator::FlatRate.new(preferred_amount: 4.56)) }
+    let(:tagged_shipping) { create(:shipping_method, require_ship_address: false, name: "Local", tag_list: "local") }
+    let!(:check_without_fee) { create(:payment_method, distributors: [distributor], name: "Roger rabbit", type: "Spree::PaymentMethod::Check") }
+    let!(:check_with_fee) { create(:payment_method, distributors: [distributor], calculator: Spree::Calculator::FlatRate.new(preferred_amount: 5.67)) }
+    let!(:paypal) do
       Spree::Gateway::PayPalExpress.create!(name: "Paypal", environment: 'test', distributor_ids: [distributor.id]).tap do |pm|
         pm.preferred_login = 'devnull-facilitator_api1.rohanmitchell.com'
         pm.preferred_password = '1406163716'
@@ -40,9 +40,9 @@ feature "As a consumer I want to check out my cart", js: true do
     end
 
     before do
-      distributor.shipping_methods << sm1
-      distributor.shipping_methods << sm2
-      distributor.shipping_methods << sm3
+      distributor.shipping_methods << free_shipping
+      distributor.shipping_methods << shipping_with_fee
+      distributor.shipping_methods << tagged_shipping
     end
 
     describe "when I have an out of stock product in my cart" do
@@ -122,8 +122,8 @@ feature "As a consumer I want to check out my cart", js: true do
 
         it "checks out successfully" do
           visit checkout_path
-          choose sm2.name
-          choose pm1.name
+          choose shipping_with_fee.name
+          choose check_without_fee.name
 
           expect do
             place_order
@@ -205,8 +205,8 @@ feature "As a consumer I want to check out my cart", js: true do
 
         fill_out_details
         fill_out_billing_address
-        choose sm1.name
-        choose pm1.name
+        choose free_shipping.name
+        choose check_without_fee.name
 
         place_order
         expect(page).to have_content "Your order has been processed successfully"
@@ -237,7 +237,7 @@ feature "As a consumer I want to check out my cart", js: true do
       end
 
       it "shows a breakdown of the order price" do
-        choose sm2.name
+        choose shipping_with_fee.name
 
         expect(page).to have_selector 'orderdetails .cart-total', text: with_currency(11.23)
         expect(page).to have_selector 'orderdetails .shipping', text: with_currency(4.56)
@@ -253,15 +253,15 @@ feature "As a consumer I want to check out my cart", js: true do
         within '#shipping' do
           expect(page).to have_selector "label", count: 4 # Three shipping methods + instructions label
           labels = page.all('label').map(&:text)
-          expect(labels[0]).to start_with("Donkeys") # sm2
-          expect(labels[1]).to start_with("Frogs") # sm1
-          expect(labels[2]).to start_with("Local") # sm3
+          expect(labels[0]).to start_with("Donkeys") # shipping_with_fee
+          expect(labels[1]).to start_with("Frogs") # free_shipping
+          expect(labels[2]).to start_with("Local") # tagged_shipping
         end
       end
 
       context "when shipping method requires an address" do
         before do
-          choose sm1.name
+          choose free_shipping.name
         end
         it "shows ship address forms when 'same as billing address' is unchecked" do
           uncheck "Shipping address same as billing address?"
@@ -323,9 +323,9 @@ feature "As a consumer I want to check out my cart", js: true do
       end
 
       it "shows all available payment methods" do
-        expect(page).to have_content pm1.name
-        expect(page).to have_content pm2.name
-        expect(page).to have_content pm3.name
+        expect(page).to have_content check_without_fee.name
+        expect(page).to have_content check_with_fee.name
+        expect(page).to have_content paypal.name
       end
 
       describe "purchasing" do
@@ -334,12 +334,12 @@ feature "As a consumer I want to check out my cart", js: true do
           fill_out_billing_address
 
           within "#shipping" do
-            choose sm2.name
+            choose shipping_with_fee.name
             fill_in 'Any comments or special instructions?', with: "SpEcIaL NoTeS"
           end
 
           within "#payment" do
-            choose pm1.name
+            choose check_without_fee.name
           end
 
           expect do
@@ -366,8 +366,8 @@ feature "As a consumer I want to check out my cart", js: true do
 
         context "with basic details filled" do
           before do
-            choose sm1.name
-            choose pm1.name
+            choose free_shipping.name
+            choose check_without_fee.name
             fill_out_details
             fill_out_billing_address
             check "Shipping address same as billing address?"
@@ -391,7 +391,7 @@ feature "As a consumer I want to check out my cart", js: true do
           end
 
           context "when we are charged a shipping fee" do
-            before { choose sm2.name }
+            before { choose shipping_with_fee.name }
 
             it "creates a payment for the full amount inclusive of shipping" do
               place_order
@@ -410,7 +410,7 @@ feature "As a consumer I want to check out my cart", js: true do
               expect(page).to have_selector ".transaction-fee td", text: with_currency(0.00)
               expect(page).to have_selector ".total", text: with_currency(11.23)
 
-              choose "#{pm2.name} (#{with_currency(5.67)})"
+              choose "#{check_with_fee.name} (#{with_currency(5.67)})"
 
               expect(page).to have_selector ".transaction-fee td", text: with_currency(5.67)
               expect(page).to have_selector ".total", text: with_currency(16.90)
@@ -428,7 +428,7 @@ feature "As a consumer I want to check out my cart", js: true do
           describe "credit card payments" do
             ["Spree::Gateway::Bogus", "Spree::Gateway::BogusSimple"].each do |gateway_type|
               context "with a credit card payment method using #{gateway_type}" do
-                let!(:pm1) { create(:payment_method, distributors: [distributor], name: "Roger rabbit", type: gateway_type) }
+                let!(:check_without_fee) { create(:payment_method, distributors: [distributor], name: "Roger rabbit", type: gateway_type) }
 
                 it "takes us to the order confirmation page when submitted with a valid credit card" do
                   fill_in 'Card Number', with: "4111111111111111"
@@ -485,8 +485,8 @@ feature "As a consumer I want to check out my cart", js: true do
   end
 
   def fill_out_form
-    choose sm1.name
-    choose pm1.name
+    choose free_shipping.name
+    choose check_without_fee.name
 
     fill_out_details
     check "Save as default billing address"
