@@ -5,7 +5,11 @@
 
   %body.admin
     - if content_for?(:main_ng_app_name)
-      %div{ "ng-app" => yield(:main_ng_app_name).strip.html_safe, "ng-controller" => yield(:main_ng_ctrl_name).strip.html_safe }
-        = render :partial => 'spree/layouts/admin_body'
+      - if content_for?(:main_ng_ctrl_name)
+        %div{ "ng-app" => yield(:main_ng_app_name).strip.html_safe, "ng-controller" => yield(:main_ng_ctrl_name).strip.html_safe }
+          = render :partial => 'spree/layouts/admin_body'
+      - else
+        %div{ "ng-app" => yield(:main_ng_app_name).strip.html_safe }
+          = render :partial => 'spree/layouts/admin_body'
     - else
       = render :partial => 'spree/layouts/admin_body'
