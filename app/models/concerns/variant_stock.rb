@@ -117,6 +117,9 @@ module VariantStock
   def move(quantity, originator = nil)
     raise_error_if_no_stock_item_available
 
+    # Don't change variant stock if variant is on_demand
+    return if on_demand
+
     # Creates a stock movement: it updates stock_item.count_on_hand and fills backorders
     #
     # This is the original Spree::StockLocation#move,
