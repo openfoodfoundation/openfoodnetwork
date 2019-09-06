@@ -16,10 +16,6 @@ every 1.day, at: '01:00am' do
   rake 'ofn:cache:check_products_integrity'
 end
 
-every 1.day, at: '12:05am' do
-  run_file "lib/open_food_network/integrity_checker.rb"
-end
-
 every 1.day, at: '2:45am' do
   rake 'db2fog:clean' if ENV['S3_BACKUPS_BUCKET']
 end
