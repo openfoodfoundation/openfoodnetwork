@@ -132,6 +132,54 @@ module Spree
       end
     end
 
+    describe "reducing stock levels on order completion" do
+      context "when the item is on_demand" do
+        let!(:hub) { create(:distributor_enterprise) }
+        let(:bill_address) { create(:address) }
+        let!(:variant_on_demand) { create(:variant, on_demand: true, on_hand: 1) }
+        let!(:order) {
+          create(:order_with_totals_and_distribution,
+                 distributor: hub,
+                 bill_address: bill_address,
+                 ship_address: bill_address)
+        }
+        let!(:shipping_method) { create(:shipping_method, distributors: [hub]) }
+        let!(:line_item) { create(:line_item, variant: variant_on_demand, quantity: 10, order: order) }
+
+        before do
+          order.update_totals
+          order.payments << create(:payment, amount: order.total)
+          until order.completed? do break unless order.next! end
+          order.payment_state = 'paid'
+          order.select_shipping_method(shipping_method.id)
+          order.shipment.update!(order)
+        end
+
+        it "creates a shipment with backordered items" do
+          expect(order.shipment.manifest.first.quantity).to eq 10
+          expect(order.shipment.manifest.first.states).to eq 'on_hand' => 1, 'backordered' => 9
+          expect(order.shipment.manifest.first.variant).to eq line_item.variant
+        end
+
+        it "reduces the variant's stock level" do
+          expect(variant_on_demand.reload.on_hand).to eq(-9)
+        end
+
+        it "marks the inventory units as backorderd" do
+          backordered_units = order.shipments.first.inventory_units.any?(&:backordered?)
+          expect(backordered_units).to be true
+        end
+
+        it "marks the shipment as backorderd" do
+          expect(order.shipments.first.backordered?).to be true
+        end
+
+        it "does not allow the order to be shipped" do
+          expect(order.ready_to_ship?).to be false
+        end
+      end
+    end
+
     describe "tracking stock when quantity is changed" do
       context "when the order is already complete" do
         let(:shop) { create(:distributor_enterprise) }
@@ -186,12 +234,18 @@ module Spree
       let!(:hub) { create(:distributor_enterprise) }
       let!(:o) { create(:order, distributor: hub) }
       let!(:v) { create(:variant, on_demand: false, on_hand: 10) }
+      let!(:v_on_demand) { create(:variant, on_demand: true, on_hand: 1) }
       let!(:li) { create(:line_item, variant: v, order: o, quantity: 5, max_quantity: 5) }
+      let!(:li_on_demand) { create(:line_item, variant: v_on_demand, order: o, quantity: 99, max_quantity: 99) }
 
       before do
         # li#scoper is memoised, and this makes it difficult to update test conditions
         # so we reset it after the line_item is created for each spec
         li.remove_instance_variable(:@scoper)
+      end
+
+      context "when the variant is on_demand" do
+        it { expect(li_on_demand.sufficient_stock?).to be true }
       end
 
       context "when stock on the variant is sufficient" do
