@@ -43,8 +43,6 @@ feature "Checking out with Paypal", js: true do
 
   describe "as a guest" do
     it "fails with an error message" do
-      pending "The checkout_state_path is missing."
-
       visit checkout_path
       complete_the_form
 
