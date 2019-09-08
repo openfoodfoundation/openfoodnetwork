@@ -29,26 +29,6 @@ GIT
       state_machine (= 1.2.0)
       stringex (~> 1.5.1)
       truncate_html (= 0.9.2)
-    spree_frontend (2.1.0)
-      canonical-rails
-      jquery-rails (~> 3.0.0)
-      spree_api (= 2.1.0)
-      spree_core (= 2.1.0)
-      stringex (~> 1.5.1)
-
-GIT
-  remote: https://github.com/spree/spree_auth_devise.git
-  revision: 1c436c738d0f086b2ca0f75a977ac16bc6cb98b9
-  ref: 1c436c738d0f086b2ca0f75a977ac16bc6cb98b9
-  branch: 2-1-stable
-  specs:
-    spree_auth_devise (2.1.0)
-      cancan (~> 1.6.7)
-      devise (~> 3.0.1)
-      devise-encryptable (= 0.1.2)
-      spree_backend (~> 2.1.0.beta)
-      spree_core (~> 2.1.0.beta)
-      spree_frontend (~> 2.1.0.beta)
 
 GIT
   remote: https://github.com/spree/spree_i18n.git
@@ -157,8 +137,6 @@ GEM
     builder (3.1.4)
     byebug (9.0.6)
     cancan (1.6.10)
-    canonical-rails (0.1.0)
-      rails (>= 3.1, < 5.1)
     capybara (2.18.0)
       addressable
       mini_mime (>= 0.1.3)
