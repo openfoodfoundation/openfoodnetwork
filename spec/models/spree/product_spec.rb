@@ -390,6 +390,17 @@ module Spree
           expect(stockable_products).to_not include p3
         end
       end
+
+      describe "imported_on" do
+        let!(:v1) { create(:variant, import_date: 1.day.ago) }
+        let!(:v2) { create(:variant, import_date: 2.days.ago) }
+        let!(:v3) { create(:variant, import_date: 1.day.ago) }
+
+        it "returns products imported on given day" do
+          imported_products = Spree::Product.imported_on(1.day.ago.to_date)
+          expect(imported_products).to include v1.product, v3.product
+        end
+      end
     end
 
     describe "properties" do

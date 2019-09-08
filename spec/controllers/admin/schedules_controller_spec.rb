@@ -40,9 +40,21 @@ describe Admin::SchedulesController, type: :controller do
           expect(ActiveModel::ArraySerializer).to receive(:new)
           spree_get :index, params
         end
+
+        context "and there is a schedule of an OC coordinated by _another_ enterprise I manage and the first enterprise is given" do
+          let!(:other_managed_coordinator) { create(:distributor_enterprise, owner: managed_coordinator.owner) }
+          let!(:other_coordinated_order_cycle) { create(:simple_order_cycle, coordinator: other_managed_coordinator) }
+          let!(:other_coordinated_schedule) { create(:schedule, order_cycles: [other_coordinated_order_cycle] ) }
+          let(:params) { { format: :json, enterprise_id: managed_coordinator.id } }
+
+          it "scopes @collection to schedules containing order_cycles coordinated by the first enterprise" do
+            spree_get :index, params
+            expect(assigns(:collection)).to eq [coordinated_schedule]
+          end
+        end
       end
 
-      context "where I manage an order cycle coordinator" do
+      context "where I dont manage an order cycle coordinator" do
         it "returns an empty collection" do
           spree_get :index, format: :json
           expect(assigns(:collection)).to be_nil

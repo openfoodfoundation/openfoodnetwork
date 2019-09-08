@@ -15,7 +15,7 @@ Spree::CreditCard.class_eval do
   belongs_to :user
 
   after_create :ensure_single_default_card
-  after_save :ensure_single_default_card, if: :is_default_changed?
+  after_save :ensure_single_default_card, if: :default_card_needs_updating?
 
   # Allows us to use a gateway_payment_profile_id to store Stripe Tokens
   # Should be able to remove once we reach Spree v2.2.0
@@ -37,6 +37,10 @@ Spree::CreditCard.class_eval do
 
   def default_missing?
     !user.credit_cards.exists?(is_default: true)
+  end
+
+  def default_card_needs_updating?
+    is_default_changed? || gateway_customer_profile_id_changed?
   end
 
   def ensure_single_default_card

@@ -1,5 +1,5 @@
 %span.cart-span{"ng-controller" => "CartCtrl", "ng-class" => "{ dirty: Cart.dirty || Cart.empty(), 'pure-dirty': Cart.dirty }"}
-  %a#cart.icon{cart: true}
+  %a#cart.icon{"cart-toggle" => true}
     %span
       = t '.cart'
     %span.count

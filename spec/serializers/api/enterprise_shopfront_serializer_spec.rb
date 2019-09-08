@@ -32,17 +32,17 @@ describe Api::EnterpriseShopfrontSerializer do
     expect(serializer.serializable_hash[:delivery]).to eq true
   end
 
-  it "serialises an array of hubs" do
+  it "serializes an array of hubs" do
     expect(serializer.serializable_hash[:hubs]).to be_a ActiveModel::ArraySerializer
     expect(serializer.serializable_hash[:hubs].to_json).to match hub.name
   end
 
-  it "serialises an array of producers" do
+  it "serializes an array of producers" do
     expect(serializer.serializable_hash[:producers]).to be_a ActiveModel::ArraySerializer
     expect(serializer.serializable_hash[:producers].to_json).to match producer.name
   end
 
-  it "serialises taxons" do
+  it "serializes taxons" do
     expect(serializer.serializable_hash[:taxons]).to be_a ActiveModel::ArraySerializer
     expect(serializer.serializable_hash[:taxons].to_json).to match 'Meat'
     expect(serializer.serializable_hash[:taxons].to_json).to match 'Veg'

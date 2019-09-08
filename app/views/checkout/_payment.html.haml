@@ -1,8 +1,9 @@
-%fieldset#payment
+- content_for :injection_data do
   - if Stripe.publishable_key
     :javascript
       angular.module('Darkswarm').value("stripeObject", Stripe("#{Stripe.publishable_key}"))
 
+%fieldset#payment
   %ng-form{"ng-controller" => "PaymentCtrl", name: "payment"}
 
     %h5{"ng-class" => "{valid: payment.$valid, dirty: payment.$dirty || submitted}"}

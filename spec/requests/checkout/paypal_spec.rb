@@ -7,9 +7,23 @@ describe "checking out an order with a paypal express payment method", type: :re
   let!(:shop) { create(:enterprise) }
   let!(:shipping_method) { create(:shipping_method_with, :distributor, distributor: shop) }
   let!(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
-  let!(:order) { create(:order, distributor: shop, shipments: [shipment], ship_address: address.dup, bill_address: address.dup) }
+  let!(:order) do
+    create(
+      :order,
+      distributor: shop,
+      shipments: [shipment],
+      ship_address: address.dup,
+      bill_address: address.dup
+    )
+  end
   let!(:line_item) { create(:line_item, order: order, quantity: 3, price: 5.00) }
-  let!(:payment_method) { Spree::Gateway::PayPalExpress.create!(name: "PayPalExpress", distributor_ids: [create(:distributor_enterprise).id], environment: Rails.env) }
+  let!(:payment_method) do
+    Spree::Gateway::PayPalExpress.create!(
+      name: "PayPalExpress",
+      distributor_ids: [create(:distributor_enterprise).id],
+      environment: Rails.env
+    )
+  end
   let(:params) { { token: 'lalalala', PayerID: 'payer1', payment_method_id: payment_method.id } }
   let(:mocked_xml_response) {
     "<?xml version=\"1.0\" encoding=\"UTF-8\"?>

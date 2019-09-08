@@ -1,3 +1,0 @@
-/ replace_contents 'tr[data-hook="order_details_line_item_row"] td.price'
-
-= item.single_display_amount

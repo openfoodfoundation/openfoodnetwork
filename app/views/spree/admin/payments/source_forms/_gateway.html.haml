@@ -1,0 +1,45 @@
+%fieldset.no-border-bottom
+  .field
+    - @previous_cards.each do |card|
+      %label
+        = radio_button_tag :card, card.id, card == @previous_cards.first
+        = card.display_number
+        %br/
+    %label
+      = radio_button_tag :card, 'new', @previous_cards.none?, { class: "card_new" }
+      = t(:use_new_cc)
+  .card_form
+    - param_prefix = "payment_source[#{payment_method.id}]"
+    .clear
+    .alpha.four.columns
+      %div
+        .field
+          = hidden_field_tag "#{param_prefix}[cc_type]", '', {class: 'ccType'}
+          = label_tag "card_number#{payment_method.id}", raw(t(:card_number) + content_tag(:span, ' *', class: 'required'))
+          = text_field_tag "#{param_prefix}[number]", '', class: 'required fullwidth cardNumber', id: "card_number#{payment_method.id}", maxlength: 19
+          %span#card_type{style: "display:none;"}
+            (
+            %span#looks_like
+              = t(:card_type_is)
+              %span#type
+            %span#unrecognized= t(:unrecognized_card_type)
+            )
+    .alpha.four.columns
+      %div
+        .field
+          = label_tag "card_name#{payment_method.id}", raw(t(:name) + content_tag(:span, ' *', class: 'required'))
+          = text_field_tag "#{param_prefix}[name]", '', id: "card_name#{payment_method.id}", class: 'required fullwidth', maxlength: 19
+    .three.columns
+      .field
+        = label_tag "card_expiry#{payment_method.id}", raw(t(:expiration) + content_tag(:span, ' *', class: 'required'))
+        %br/
+        = text_field_tag "#{param_prefix}[expiry]", '', id: "card_expiry#{payment_method.id}", class: "required cardExpiry", placeholder: "MM / YY"
+    .omega.two.columns
+      .field
+        = label_tag "card_code#{payment_method.id}", raw(t(:card_code) + content_tag(:span, ' *', class: "required"))
+        = text_field_tag "#{param_prefix}[verification_value]", '', id: "card_code#{payment_method.id}", class: 'required fullwidth cardCode', size: 5
+        %a.info.cvvLink{href: "/content/cvv", target: "_blank"}
+          (#{t(:what_is_this)})
+    .nine.columns
+      = image_tag 'credit_cards/credit_card.gif', class: 'credit-card-image'
+    .clear

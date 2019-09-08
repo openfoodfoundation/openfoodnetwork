@@ -583,7 +583,7 @@ describe Admin::SubscriptionsController, type: :controller do
     end
 
     context 'json' do
-      let(:params) { { format: :json, id: subscription.id } }
+      let(:params) { { format: :json, id: subscription.id, subscription: {} } }
 
       context 'as a regular user' do
         it 'redirects to unauthorized' do
@@ -663,6 +663,15 @@ describe Admin::SubscriptionsController, type: :controller do
               expect(json_response['paused_at']).to be nil
               expect(json_response['id']).to eq subscription.id
               expect(subscription.reload.paused_at).to be nil
+            end
+
+            context "when there is an open OC and no associated orders exist yet for it (OC was opened when the subscription was paused)" do
+              it "creates an associated order" do
+                spree_put :unpause, params
+
+                expect(subscription.reload.paused_at).to be nil
+                expect(subscription.proxy_orders.size).to be 1
+              end
             end
           end
         end

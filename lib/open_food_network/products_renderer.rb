@@ -54,14 +54,16 @@ module OpenFoodNetwork
     end
 
     def all_variants_for_shop
-      # We use the in_stock? method here instead of the in_stock scope because we need to
-      # look up the stock as overridden by VariantOverrides, and the scope method is not affected
-      # by them.
-      scoper = OpenFoodNetwork::ScopeVariantToHub.new(@distributor)
-      Spree::Variant.
-        for_distribution(@order_cycle, @distributor).
-        each { |v| scoper.scope(v) }.
-        select(&:in_stock?)
+      @all_variants_for_shop ||= begin
+                                   # We use the in_stock? method here instead of the in_stock scope
+                                   # because we need to look up the stock as overridden by
+                                   # VariantOverrides, and the scope method is not affected by them.
+                                   scoper = OpenFoodNetwork::ScopeVariantToHub.new(@distributor)
+                                   Spree::Variant.
+                                     for_distribution(@order_cycle, @distributor).
+                                     each { |v| scoper.scope(v) }.
+                                     select(&:in_stock?)
+                                 end
     end
 
     def variants_for_shop_by_id

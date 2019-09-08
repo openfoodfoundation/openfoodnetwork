@@ -1,4 +1,0 @@
-/ insert_after "[data-hook='categories_header'] th:first-child"
-
-%th
-  = t(:temperature_controlled)

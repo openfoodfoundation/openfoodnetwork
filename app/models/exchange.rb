@@ -1,3 +1,12 @@
+# Representation of an enterprise being part of an order cycle.
+#
+# A producer can be part as supplier. The supplier's products can be selected to
+# be available in the order cycle (incoming products).
+#
+# A selling enterprise can be part as distributor. The order cycle then appears
+# in its shopfront. Any incoming product can be selected to be shown in the
+# shopfront (outgoing products). But the set of shown products can be smaller
+# than all incoming products.
 class Exchange < ActiveRecord::Base
   acts_as_taggable
 
@@ -38,7 +47,7 @@ class Exchange < ActiveRecord::Base
   }
   scope :with_any_variant, lambda { |variant_ids|
     joins(:exchange_variants).
-      where('exchange_variants.variant_id IN (?)', variant_ids).
+      where(exchange_variants: { variant_id: variant_ids }).
       select('DISTINCT exchanges.*')
   }
   scope :with_product, lambda { |product|
@@ -88,21 +97,6 @@ class Exchange < ActiveRecord::Base
 
   def participant
     incoming? ? sender : receiver
-  end
-
-  def to_h(core_only = false)
-    h = attributes.merge('variant_ids' => variant_ids.sort,
-                         'enterprise_fee_ids' => enterprise_fee_ids.sort)
-    h.reject! { |k| %w(id order_cycle_id created_at updated_at).include? k } if core_only
-    h
-  end
-
-  def eql?(e)
-    if e.respond_to? :to_h
-      to_h(true) == e.to_h(true)
-    else
-      super e
-    end
   end
 
   def refresh_products_cache

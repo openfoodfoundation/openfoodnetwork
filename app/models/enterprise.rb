@@ -90,7 +90,6 @@ class Enterprise < ActiveRecord::Base
   validates :permalink, uniqueness: true, presence: true
   validate :shopfront_taxons
   validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
-  validates :description, length: { maximum: 255 }
 
   before_validation :initialize_permalink, if: lambda { permalink.nil? }
   before_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
@@ -464,9 +463,11 @@ class Enterprise < ActiveRecord::Base
     self.permalink = Enterprise.find_available_permalink(name)
   end
 
+  # Touch distributors without them touching their distributors.
+  # We avoid an infinite loop and don't need to touch the whole distributor tree.
   def touch_distributors
     Enterprise.distributing_products(supplied_products.select(:id)).
       where('enterprises.id != ?', id).
-      find_each(&:touch)
+      update_all(updated_at: Time.zone.now)
   end
 end

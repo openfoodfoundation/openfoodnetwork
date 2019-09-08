@@ -5,7 +5,8 @@
 - content_for(:image) do
   = @group.logo.url
 
-= inject_group_enterprises
+- content_for :injection_data do
+  = inject_group_enterprises
 
 #group-page.row.pad-top.footer-pad{"ng-controller" => "GroupPageCtrl"}
   .small-12.columns.pad-top

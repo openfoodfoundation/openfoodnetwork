@@ -103,8 +103,8 @@ en:
         confirmation_not_sent: "Error sending confirmation email"
     user_registrations:
       spree_user:
-       signed_up_but_unconfirmed: "A message with a confirmation link has been sent to your email address. Please open the link to activate your account."
-       unknown_error: "Something went wrong while creating your account. Check your email address and try again."
+        signed_up_but_unconfirmed: "A message with a confirmation link has been sent to your email address. Please open the link to activate your account."
+        unknown_error: "Something went wrong while creating your account. Check your email address and try again."
     failure:
       invalid: |
         Invalid email or password.
@@ -116,6 +116,8 @@ en:
     user_passwords:
       spree_user:
         updated_not_active: "Your password has been reset, but your email has not been confirmed yet."
+        updated: "Your password was changed successfully. You are now signed in."
+        send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
 
   models:
     order_cycle:
@@ -273,11 +275,16 @@ en:
   reset_password_token: Reset password token
   expired: has expired, please request a new one
   back_to_payments_list: "Back to Payments List"
+  maestro_or_solo_cards: "Maestro/Solo cards"
 
   actions:
     create_and_add_another: "Create and Add Another"
     create: "Create"
     cancel: "Cancel"
+    save: "Save"
+    edit: "Edit"
+    delete: "Delete"
+
   admin:
     # Common properties / models
     begins_at: Begins At
@@ -366,9 +373,10 @@ en:
 
     invoice_settings:
       edit:
-        title: Invoice Settings
-        invoice_style2?: Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)
-        enable_receipt_printing?: Show options for printing receipts using thermal printers in order dropdown?
+        title: "Invoice Settings"
+        enable_invoices?: "Enable Invoices?"
+        invoice_style2?: "Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)"
+        enable_receipt_printing?: "Show options for printing receipts using thermal printers in order dropdown?"
 
     stripe_connect_settings:
       edit:
@@ -499,6 +507,8 @@ en:
         encoding_error: "Please check the language setting of your source file and ensure it is saved with UTF-8 encoding"
         unexpected_error: "Product Import encountered an unexpected error whilst opening the file: %{error_message}"
       index:
+        notice: "Notice"
+        beta_notice: "This feature is still in beta: you may experience some errors while using it. Please don't hesitate to contact support."
         select_file: Select a spreadsheet to upload
         spreadsheet: Spreadsheet
         choose_import_type: Select import type
@@ -705,6 +715,8 @@ en:
           permalink_tip: "This permalink is used to create the url to your shop: %{link}your-shop-name/shop"
           link_to_front: Link to shop front
           link_to_front_tip: A direct link to your shopfront on the Open Food Network.
+          ofn_uid: OFN UID
+          ofn_uid_tip: The unique id used to identify the enterprise on Open Food Network.
         shipping_methods:
           name: Name
           applies: Applies?
@@ -885,7 +897,7 @@ en:
         add_distributor: 'Add distributor'
       advanced_settings:
         title: Advanced Settings
-        choose_product_tip: You can opt to restrict all available products (both incoming and outgoing), to only those in %{inventory}'s inventory.
+        choose_product_tip: You can restrict products incoming and outgoing to only %{inventory}'s inventory.
         preferred_product_selection_from_coordinator_inventory_only_here: Coordinator's Inventory Only
         preferred_product_selection_from_coordinator_inventory_only_all: All Available Products
         save_reload: Save and Reload Page
@@ -1051,6 +1063,10 @@ en:
           The displayed prices are only an estimate and calculated at the time the subscription is changed.
           If you change prices or fees, orders will be updated, but the subscription will still display the old values.
         not_in_open_and_upcoming_order_cycles_warning: "There are no open or upcoming order cycles for this product."
+      autocomplete:
+        name_or_sku: "NAME OR SKU"
+        quantity: "Quantity"
+        add: "Add"
       details:
         details: Details
         invalid_error: Oops! Please fill in all of the required fields...
@@ -1073,15 +1089,18 @@ en:
         saving: "SAVING"
         saved: "SAVED"
       product_already_in_order: This product has already been added to the order. Please edit the quantity directly.
+      stock:
+        insufficient_stock: "Insufficient stock available"
+        out_of_stock: "Out of Stock"
       orders:
         number: Number
         confirm_edit: Are you sure you want to edit this order? Doing so may make it more difficult to automatically sync changes to the subscription in the future.
-      confirm_cancel_msg: Are you sure you want to cancel this subscription? This action cannot be undone.
-      cancel_failure_msg: 'Sorry, cancellation failed!' 
-      confirm_pause_msg: Are you sure you want to pause this subscription?
-      pause_failure_msg: 'Sorry, pausing failed!'
-      confirm_unpause_msg: Are you sure you want to unpause this subscription?
-      unpause_failure_msg: 'Sorry, unpausing failed!'
+      confirm_cancel_msg: "Are you sure you want to cancel this subscription? This action cannot be undone."
+      cancel_failure_msg: "Sorry, cancellation failed!"
+      confirm_pause_msg: "Are you sure you want to pause this subscription?"
+      pause_failure_msg: "Sorry, pausing failed!"
+      confirm_unpause_msg: "If you have an open Order Cycle in this subscription's schedule, an order will be created for this customer. Are you sure you want to unpause this subscription?"
+      unpause_failure_msg: "Sorry, unpausing failed!"
       confirm_cancel_open_orders_msg: "Some orders for this subscription are currently open. The customer has already been notified that the order will be placed. Would you like to cancel these order(s) or keep them?"
       resume_canceled_orders_msg: "Some orders for this subscription can be resumed right now. You can resume them from the orders dropdown."
       yes_cancel_them: Cancel them
@@ -1168,7 +1187,6 @@ en:
       footer_data_text_without_privacy_policy_html: "We take good care of your data. See our %{cookies_policy}"
       footer_data_privacy_policy: "privacy policy"
       footer_data_cookies_policy: "cookies policy"
-      footer_skylight_dashboard_html: Performance data is available on %{dashboard}.
   shop:
     messages:
       login: "login"
@@ -1487,6 +1505,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   email_confirm_shop_number_html: "Order confirmation <strong>#%{number}</strong>"
   email_order_summary_item: "Item"
   email_order_summary_quantity: "Qty"
+  email_order_summary_sku: "SKU"
   email_order_summary_price: "Price"
   email_order_summary_subtotal: "Subtotal:"
   email_order_summary_total: "Total:"
@@ -1828,7 +1847,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       introduction:
         registration_greeting: "Hi there!"
         registration_intro: "You can now create a profile for your Producer or Hub"
-        registration_checklist: "You'll need"
+        registration_checklist: "What do I need?"
         registration_time: "5-10 minutes"
         registration_enterprise_address: "Enterprise address"
         registration_contact_details: "Primary contact details"
@@ -2926,6 +2945,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     inventory: Inventory
     zipcode: Postcode
     weight: Weight (per kg)
+    error_user_destroy_with_orders: "Users with completed orders may not be deleted"
 
     actions:
       update: "Update"
@@ -3136,7 +3156,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           confirmation_pending: "Email confirmation is pending. We've sent a confirmation email to %{address}."
       variants:
         autocomplete:
-          producer_name: Producer
+          producer_name: "Producer"
+          unit: "Unit"
       general_settings:
         edit:
           legal_settings: "Legal Settings"

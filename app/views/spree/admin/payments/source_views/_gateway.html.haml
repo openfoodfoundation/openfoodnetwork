@@ -1,0 +1,33 @@
+%fieldset
+  %legend{:align => "center"}= Spree.t(:credit_card)
+  .row
+    .alpha.six.columns
+      %dl
+        %dt
+          = Spree.t(:card_number)
+          \:
+        %dd= payment.source.display_number
+        %dt
+          = Spree.t(:expiration)
+          \:
+        %dd
+          = payment.source.month
+          \/
+          = payment.source.year
+        %dt
+          = Spree.t(:card_code)
+          \:
+        %dd= payment.source.verification_value
+    .omega.six.columns
+      %dl
+        %dt
+          = t(:maestro_or_solo_cards)
+          \:
+        %dd= payment.source.issue_number
+        %dt
+          = Spree.t(:start_date)
+          \:
+        %dd
+          = payment.source.start_month
+          \/
+          = payment.source.start_year

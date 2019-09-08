@@ -59,7 +59,7 @@ class SubscriptionPlacementJob
   end
 
   def move_to_completion(order)
-    until order.completed? do order.next! end
+    AdvanceOrderService.new(order).call!
   end
 
   def unavailable_stock_lines_for(order)

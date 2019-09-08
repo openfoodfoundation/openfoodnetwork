@@ -1,7 +1,8 @@
 - content_for(:title) do
   = t :orders_show_title
 
-= inject_enterprise_and_relatives if current_distributor.present?
+- content_for :injection_data do
+  = inject_enterprise_and_relatives if current_distributor.present?
 
 .darkswarm
   = render "shopping_shared/details" if current_distributor.present?

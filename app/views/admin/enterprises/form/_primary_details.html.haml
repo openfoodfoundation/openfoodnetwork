@@ -71,3 +71,10 @@
     .eight.columns.omega
       = surround spree.root_url, "/shop" do
         {{Enterprise.permalink}}
+  .row
+    .three.columns.alpha
+      = f.label :id, t('.ofn_uid')
+      %div{'ofn-with-tip' => t('.ofn_uid_tip')}
+        %a= t('admin.whats_this')
+    .six.columns
+      {{Enterprise.id}}

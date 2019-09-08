@@ -17,9 +17,7 @@ class Spree::ProductSet < ModelSet
   #   variant.update_attributes( { price: xx.x } )
   #
   def update_attributes(attributes)
-    if attributes[:taxon_ids].present?
-      attributes[:taxon_ids] = attributes[:taxon_ids].split(',')
-    end
+    split_taxon_ids!(attributes)
 
     found_model = @collection.find do |model|
       model.id.to_s == attributes[:id].to_s && model.persisted?
@@ -28,10 +26,18 @@ class Spree::ProductSet < ModelSet
     if found_model.nil?
       @klass.new(attributes).save unless @reject_if.andand.call(attributes)
     else
-      update_product_only_attributes(found_model, attributes) &&
-        update_product_variants(found_model, attributes) &&
-        update_product_master(found_model, attributes)
+      update_product(found_model, attributes)
     end
+  end
+
+  def split_taxon_ids!(attributes)
+    attributes[:taxon_ids] = attributes[:taxon_ids].split(',') if attributes[:taxon_ids].present?
+  end
+
+  def update_product(found_model, attributes)
+    update_product_only_attributes(found_model, attributes) &&
+      update_product_variants(found_model, attributes) &&
+      update_product_master(found_model, attributes)
   end
 
   def update_product_only_attributes(product, attributes)
@@ -90,8 +96,23 @@ class Spree::ProductSet < ModelSet
 
     variant = product.variants.create(variant_attributes)
 
-    variant.on_demand = on_demand if on_demand.present?
-    variant.on_hand = on_hand.to_i if on_hand.present?
+    begin
+      variant.on_demand = on_demand if on_demand.present?
+      variant.on_hand = on_hand.to_i if on_hand.present?
+    rescue StandardError => error
+      notify_bugsnag(error, product, variant, variant_attributes)
+      raise error
+    end
+  end
+
+  def notify_bugsnag(error, product, variant, variant_attributes)
+    Bugsnag.notify(error) do |report|
+      report.add_tab(:product, product.attributes)
+      report.add_tab(:product_error, product.errors.first) unless product.valid?
+      report.add_tab(:variant_attributes, variant_attributes)
+      report.add_tab(:variant, variant.attributes)
+      report.add_tab(:variant_error, variant.errors.first) unless variant.valid?
+    end
   end
 
   def collection_attributes=(attributes)

@@ -1,12 +1,12 @@
 angular.module('admin.orderCycles')
-  .controller 'AdminEditOrderCycleCtrl', ($scope, $filter, $location, $window, OrderCycle, Enterprise, EnterpriseFee, StatusMessage, Schedules, RequestMonitor) ->
+  .controller 'AdminEditOrderCycleCtrl', ($scope, $filter, $location, $window, OrderCycle, Enterprise, EnterpriseFee, StatusMessage, Schedules, RequestMonitor, ocInstance) ->
     order_cycle_id = $location.absUrl().match(/\/admin\/order_cycles\/(\d+)/)[1]
     $scope.enterprises = Enterprise.index(order_cycle_id: order_cycle_id)
     $scope.supplier_enterprises = Enterprise.producer_enterprises
     $scope.distributor_enterprises = Enterprise.hub_enterprises
     $scope.supplied_products = Enterprise.supplied_products
     $scope.enterprise_fees = EnterpriseFee.index(order_cycle_id: order_cycle_id)
-    $scope.schedules = Schedules.index()
+    $scope.schedules = Schedules.index({enterprise_id: ocInstance.coordinator_id})
 
     $scope.OrderCycle = OrderCycle
     $scope.order_cycle = OrderCycle.load(order_cycle_id)

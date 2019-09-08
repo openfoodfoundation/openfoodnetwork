@@ -150,15 +150,16 @@ describe Spree::Admin::ProductsController, type: :controller do
 
     describe "when user uploads an image in an unsupported format" do
       it "does not throw an exception" do
-        product_image = ActionDispatch::Http::UploadedFile.new({
-          :filename => 'unsupported_image_format.exr',
-          :content_type => 'application/octet-stream',
-          :tempfile => Tempfile.new('unsupported_image_format.exr')
-        })
+        product_image = ActionDispatch::Http::UploadedFile.new(
+          filename: 'unsupported_image_format.exr',
+          content_type: 'application/octet-stream',
+          tempfile: Tempfile.new('unsupported_image_format.exr')
+        )
         product_attrs_with_image = product_attrs.merge(
           images_attributes: {
             '0' => { attachment: product_image }
-          })
+          }
+        )
 
         expect do
           spree_put :create, product: product_attrs_with_image
@@ -168,12 +169,29 @@ describe Spree::Admin::ProductsController, type: :controller do
     end
   end
 
-  describe "updating" do
+  describe "updating a product" do
     let(:producer) { create(:enterprise) }
     let!(:product) { create(:simple_product, supplier: producer) }
 
     before do
       login_as_enterprise_user [producer]
+    end
+
+    describe "product stock setting with errors" do
+      it "notifies bugsnag and still raise error" do
+        # forces an error in the variant
+        product.variants.first.stock_items = []
+
+        expect(Bugsnag).to receive(:notify)
+
+        expect do
+          spree_put :update,
+                    id: product,
+                    product: {
+                      on_hand: 1
+                    }
+        end.to raise_error(StandardError)
+      end
     end
 
     describe "product variant unit is items" do

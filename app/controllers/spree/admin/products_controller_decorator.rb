@@ -1,5 +1,6 @@
 require 'open_food_network/spree_api_key_loader'
 require 'open_food_network/referer_parser'
+require 'open_food_network/permissions'
 
 Spree::Admin::ProductsController.class_eval do
   include OpenFoodNetwork::SpreeApiKeyLoader
@@ -48,19 +49,13 @@ Spree::Admin::ProductsController.class_eval do
   end
 
   def bulk_update
-    collection_hash = Hash[params[:products].each_with_index.map { |p, i| [i, p] }]
-    product_set = Spree::ProductSet.new(collection_attributes: collection_hash)
-
-    params[:filters] ||= {}
-    bulk_index_query = params[:filters].reduce("") do |string, filter|
-      "#{string}q[#{filter[:property][:db_column]}_#{filter[:predicate][:predicate]}]=#{filter[:value]};"
-    end
+    product_set = product_set_from_params(params)
 
     # Ensure we're authorised to update all products
     product_set.collection.each { |p| authorize! :update, p }
 
     if product_set.save
-      redirect_to "/api/products/bulk_products?page=1;per_page=500;#{bulk_index_query}"
+      redirect_to main_app.bulk_products_api_products_path( bulk_index_query(params) )
     else
       if product_set.errors.present?
         render json: { errors: product_set.errors }, status: :bad_request
@@ -73,7 +68,8 @@ Spree::Admin::ProductsController.class_eval do
   protected
 
   def collection
-    # This method is copied directly from the spree product controller, except where we narrow the search below with the managed_by search to support
+    # This method is copied directly from the spree product controller
+    #   except where we narrow the search below with the managed_by search to support
     # enterprise users.
     # TODO: There has to be a better way!!!
     return @collection if @collection.present?
@@ -108,14 +104,32 @@ Spree::Admin::ProductsController.class_eval do
 
   private
 
+  def product_set_from_params(params)
+    collection_hash = Hash[params[:products].each_with_index.map { |p, i| [i, p] }]
+    Spree::ProductSet.new(collection_attributes: collection_hash)
+  end
+
+  def bulk_index_query(params)
+    params[:filters].to_h.merge(page: params[:page], per_page: params[:per_page])
+  end
+
   def load_form_data
-    @producers = OpenFoodNetwork::Permissions.new(spree_current_user).managed_product_enterprises.is_primary_producer.by_name
+    @producers = OpenFoodNetwork::Permissions.new(spree_current_user).
+      managed_product_enterprises.is_primary_producer.by_name
     @taxons = Spree::Taxon.order(:name)
     @import_dates = product_import_dates.uniq.to_json
   end
 
   def product_import_dates
-    import_dates = Spree::Variant.
+    options = [{ id: '0', name: '' }]
+    product_import_dates_query.collect(&:import_date).
+      map { |i| options.push(id: i.to_date, name: i.to_date.to_formatted_s(:long)) }
+
+    options
+  end
+
+  def product_import_dates_query
+    Spree::Variant.
       select('DISTINCT spree_variants.import_date').
       joins(:product).
       where('spree_products.supplier_id IN (?)', editable_enterprises.collect(&:id)).
@@ -123,18 +137,14 @@ Spree::Admin::ProductsController.class_eval do
       where(spree_variants: { is_master: false }).
       where(spree_variants: { deleted_at: nil }).
       order('spree_variants.import_date DESC')
-
-    options = [{ id: '0', name: '' }]
-    import_dates.collect(&:import_date).map { |i| options.push(id: i.to_date, name: i.to_date.to_formatted_s(:long)) }
-
-    options
   end
 
   def strip_new_properties
-    unless spree_current_user.admin? || params[:product][:product_properties_attributes].nil?
-      names = Spree::Property.pluck(:name)
-      params[:product][:product_properties_attributes].each do |key, property|
-        params[:product][:product_properties_attributes].delete key unless names.include? property[:property_name]
+    return if spree_current_user.admin? || params[:product][:product_properties_attributes].nil?
+    names = Spree::Property.pluck(:name)
+    params[:product][:product_properties_attributes].each do |key, property|
+      unless names.include? property[:property_name]
+        params[:product][:product_properties_attributes].delete key
       end
     end
   end
@@ -149,12 +159,32 @@ Spree::Admin::ProductsController.class_eval do
   end
 
   def set_stock_levels(product, on_hand, on_demand)
-    variant = product.master
-    if product.variants.any?
-      variant = product.variants.first
+    variant = product_variant(product)
+
+    begin
+      variant.on_demand = on_demand if on_demand.present?
+      variant.on_hand = on_hand.to_i if on_hand.present?
+    rescue StandardError => error
+      notify_bugsnag(error, product, variant)
+      raise error
     end
-    variant.on_demand = on_demand if on_demand.present?
-    variant.on_hand = on_hand.to_i if on_hand.present?
+  end
+
+  def notify_bugsnag(error, product, variant)
+    Bugsnag.notify(error) do |report|
+      report.add_tab(:product, product.attributes)
+      report.add_tab(:product_error, product.errors.first) unless product.valid?
+      report.add_tab(:variant, variant.attributes)
+      report.add_tab(:variant_error, variant.errors.first) unless variant.valid?
+    end
+  end
+
+  def product_variant(product)
+    if product.variants.any?
+      product.variants.first
+    else
+      product.master
+    end
   end
 
   def set_product_master_variant_price_to_zero

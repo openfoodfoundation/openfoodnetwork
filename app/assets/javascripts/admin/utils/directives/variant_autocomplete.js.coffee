@@ -27,8 +27,6 @@ angular.module("admin.utils").directive "variantAutocomplete", ($timeout) ->
               window.variants = data # this is how spree auto complete JS code picks up variants
               results: data
           formatResult: (variant) ->
-            if variant["images"][0] != undefined && variant["images"][0].image != undefined
-              variant.image = variant.images[0].image.mini_url
             variantTemplate variant: variant
           formatSelection: (variant) ->
             element.parent().children(".options_placeholder").html variant.options_text

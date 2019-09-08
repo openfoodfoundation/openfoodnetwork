@@ -29,7 +29,7 @@ module Spree
 
     def load_order
       @order = current_order
-      redirect_to main_app.cart_path && return unless @order
+      redirect_to(main_app.cart_path) && return unless @order
 
       if params[:state]
         redirect_to checkout_state_path(@order.state) if @order.can_go_to_state?(params[:state])

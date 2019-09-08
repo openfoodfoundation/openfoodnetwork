@@ -1,6 +1,0 @@
-/ replace "erb[loud]:contains('hidden_field_tag :customer_search')"
-
-- content_for :app_wrapper_attrs do
-  = 'ng-app=admin.orders'
-
-= hidden_field_tag :customer_search_override,  nil, distributor_id: @order.distributor_id, :class => 'fullwidth title customer-search-override'

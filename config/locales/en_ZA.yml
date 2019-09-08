@@ -94,6 +94,8 @@ en_ZA:
     user_passwords:
       spree_user:
         updated_not_active: "Your password has been reset, but your email has not been confirmed yet."
+        updated: "Your password was changed successfully. You are now signed in."
+        send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
   models:
     order_cycle:
       cloned_order_cycle_name: "COPY OF %{order_cycle}"
@@ -161,7 +163,7 @@ en_ZA:
   home: "OFN"
   title: Open Food Network
   welcome_to: 'Welcome to '
-  site_meta_description: "We begin with healthy soil. With organic farmers and growers proudly rising to tell their stories. With distributors ready to connect people with local products, fairly and honestly. With buyers who believe that better shopping decisions can seriously change the world."
+  site_meta_description: "We begin with healthy soil. With organic farmers and growers proudly rising to tell their stories. With distributors ready to connect people with green, nutritious, fair and affordable products. With buyers who believe that better, more local shopping decisions can seriously change the world."
   search_by_name: Search by name, town, province or postcode...
   producers_join: South African producers are now welcome to join Open Food Network SA.
   charges_sales_tax: Charges VAT?
@@ -242,10 +244,14 @@ en_ZA:
   reset_password_token: Reset password
   expired: has expired, please request a new one
   back_to_payments_list: "Back to Payments List"
+  maestro_or_solo_cards: "Maestro/Solo cards"
   actions:
     create_and_add_another: "Create and Add Another"
     create: "Create"
     cancel: "Cancel"
+    save: "Save"
+    edit: "Edit"
+    delete: "Delete"
   admin:
     begins_at: Begins At
     begins_on: Begins On
@@ -322,9 +328,10 @@ en_ZA:
         enable_products_cache: "Enable Products Cache?"
     invoice_settings:
       edit:
-        title: Invoice Settings
-        invoice_style2?: Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)
-        enable_receipt_printing?: Show options for printing receipts using thermal printers in order dropdown?
+        title: "Invoice Settings"
+        enable_invoices?: "Enable Invoices?"
+        invoice_style2?: "Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)"
+        enable_receipt_printing?: "Show options for printing receipts using thermal printers in order dropdown?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -446,6 +453,8 @@ en_ZA:
         encoding_error: "Please check the language setting of your source file and ensure it is saved with UTF-8 encoding"
         unexpected_error: "Product Import encountered an unexpected error whilst opening the file: %{error_message}"
       index:
+        notice: "Notice"
+        beta_notice: "This feature is still in beta: you may experience some errors while using it. Please don't hesitate to contact support."
         select_file: Select a spreadsheet to upload
         spreadsheet: Spreadsheet
         choose_import_type: Select import type
@@ -563,7 +572,7 @@ en_ZA:
         max_qtt_ordered: "Max Quantity Ordered"
         current_fulfilled_units: "Current Fulfilled Units"
         max_fulfilled_units: "Max Fulfilled Units"
-        order_error: "Some errors must be resolved before you can update orders. Any fields with red borders contain errors."
+        order_error: "Some errors must be resolved before you can update orders.\nAny fields with red borders contain errors."
         variants_without_unit_value: "WARNING: Some variants do not have a unit value"
       select_variant: "Select a variant"
     enterprise:
@@ -586,19 +595,19 @@ en_ZA:
           abn: Company Number
           abn_placeholder: eg. 2017/123456/77
           acn: Charity Number
-          acn_placeholder: eg. 123456789
+          acn_placeholder: e.g. 123 456 789
           display_invoice_logo: Display logo in invoices
           invoice_text: Add customized text at the end of invoices
         contact:
           name: Name
           name_placeholder: eg. Amanda Plum
           email_address: Public Email Address
-          email_address_placeholder: eg. hello@openfoodnetwork.co.za
+          email_address_placeholder: e.g. info@openfoodnetwork.co.za
           email_address_tip: "This email address will be displayed in your public profile"
           phone: Phone
-          phone_placeholder: eg. 011 123 4567
+          phone_placeholder: e.g. 011 123 4567
           website: Website
-          website_placeholder: eg. www.truffles.com
+          website_placeholder: e.g. www.truffles.com
         enterprise_fees:
           name: Name
           fee_type: Fee Type
@@ -650,6 +659,8 @@ en_ZA:
           permalink_tip: "This permalink is used to create the url to your shop: %{link}your-shop-name/shop"
           link_to_front: Link to shop front
           link_to_front_tip: A direct link to your shopfront on the Open Food Network.
+          ofn_uid: OFN UID
+          ofn_uid_tip: The unique id used to identify the enterprise on Open Food Network.
         shipping_methods:
           name: Name
           applies: Applies?
@@ -691,8 +702,8 @@ en_ZA:
           open_date: "Open Date"
           close_date: "Close Date"
         social:
-          twitter_placeholder: "eg. @siyastrawberries"
-          instagram_placeholder: "eg. siyastraw"
+          twitter_placeholder: "e.g. @siyastrawberries"
+          instagram_placeholder: "e.g. siyastraw"
           facebook_placeholder: "eg. www.facebook.com/PageNameHere"
           linkedin_placeholder: "eg. www.linkedin.com/in/YourNameHere"
         stripe_connect:
@@ -726,7 +737,7 @@ en_ZA:
           owner_tip: The primary user responsible for this enterprise.
           notifications: Notifications
           notifications_tip: Notifications about orders will be send to this email address.
-          notifications_placeholder: eg. siya@truffles.com
+          notifications_placeholder: e.g. siya@truffles.com
           notifications_note: 'Note: A new email address may need to be confirmed prior to use'
           managers: Managers
           managers_tip: The other users with permission to manage this enterprise.
@@ -831,7 +842,7 @@ en_ZA:
         add_distributor: 'Add distributor'
       advanced_settings:
         title: Advanced Settings
-        choose_product_tip: You can opt to restrict all available products (both incoming and outgoing), to only those in %{inventory}'s inventory.
+        choose_product_tip: You can restrict products incoming and outgoing to only %{inventory}'s inventory.
         preferred_product_selection_from_coordinator_inventory_only_here: Coordinator's Inventory Only
         preferred_product_selection_from_coordinator_inventory_only_all: All Available Products
         save_reload: Save and Reload Page
@@ -993,6 +1004,10 @@ en_ZA:
             The displayed prices are only an estimate and calculated at the time the subscription is changed.
             If you change prices or fees, orders will be updated, but the subscription will still display the old values.
         not_in_open_and_upcoming_order_cycles_warning: "There are no open or upcoming order cycles for this product."
+      autocomplete:
+        name_or_sku: "NAME OR SKU"
+        quantity: "Quantity"
+        add: "Add"
       details:
         details: Details
         invalid_error: Oops! Please fill in all of the required fields...
@@ -1015,15 +1030,18 @@ en_ZA:
         saving: "SAVING"
         saved: "SAVED"
       product_already_in_order: This product has already been added to the order. Please edit the quantity directly.
+      stock:
+        insufficient_stock: "Insufficient stock available"
+        out_of_stock: "Out of Stock"
       orders:
         number: Number
         confirm_edit: Are you sure you want to edit this order? Doing so may make it more difficult to automatically sync changes to the subscription in the future.
-      confirm_cancel_msg: Are you sure you want to cancel this subscription? This action cannot be undone.
-      cancel_failure_msg: 'Sorry, cancellation failed!'
-      confirm_pause_msg: Are you sure you want to pause this subscription?
-      pause_failure_msg: 'Sorry, pausing failed!'
-      confirm_unpause_msg: Are you sure you want to unpause this subscription?
-      unpause_failure_msg: 'Sorry, unpausing failed!'
+      confirm_cancel_msg: "Are you sure you want to cancel this subscription? This action cannot be undone."
+      cancel_failure_msg: "Sorry, cancellation failed!"
+      confirm_pause_msg: "Are you sure you want to pause this subscription?"
+      pause_failure_msg: "Sorry, pausing failed!"
+      confirm_unpause_msg: "If you have an open Order Cycle in this subscription's schedule, an order will be created for this customer. Are you sure you want to unpause this subscription?"
+      unpause_failure_msg: "Sorry, unpausing failed!"
       confirm_cancel_open_orders_msg: "Some orders for this subscription are currently open. The customer has already been notified that the order will be placed. Would you like to cancel these order(s) or keep them?"
       resume_canceled_orders_msg: "Some orders for this subscription can be resumed right now. You can resume them from the orders dropdown."
       yes_cancel_them: Cancel them
@@ -1284,7 +1302,7 @@ en_ZA:
   home_shop: Shop Now
   brandstory_headline: "Re-imagining Local Food"
   brandstory_intro: "A learning community & tools to support local food systems to thrive"
-  brandstory_part1: "We begin with healthy soil. With organic farmers and growers proudly rising to tell their stories. With distributors ready to connect people with local products, fairly and honestly. With buyers who believe that better shopping decisions can seriously change the world."
+  brandstory_part1: "We begin with healthy soil. With organic farmers and growers proudly rising to tell their stories. With distributors ready to connect people with green, nutritious, fair and affordable products. With buyers who believe that better, more local shopping decisions can seriously change the world."
   brandstory_part2: "Then we need a way to make it real. A way to empower everyone who grows, sells and buys food. A way to tell all the stories, to handle all the logistics. A way to turn transactions into transformation every day."
   brandstory_part3: "So we build an online marketplace that levels the playing field. It’s transparent, so it creates real relationships. It’s open source, so it’s owned by everyone. It scales to regions and nations, so people can connect across the world."
   brandstory_part4: "It works everywhere. It changes everything."
@@ -1385,6 +1403,7 @@ en_ZA:
   email_confirm_shop_number_html: "Order confirmation <strong>#%{number}</strong>"
   email_order_summary_item: "Item"
   email_order_summary_quantity: "Qty"
+  email_order_summary_sku: "SKU"
   email_order_summary_price: "Price"
   email_order_summary_subtotal: "Subtotal:"
   email_order_summary_total: "Total:"
@@ -1406,7 +1425,7 @@ en_ZA:
   email_so_confirmation_explainer_html: "This order was automatically placed for you, and it has now been finalised."
   email_so_confirmation_details_html: "Here's everything you need to know about your order from <strong>%{distributor}</strong>:"
   email_so_empty_intro_html: "We tried to place a new order with <strong>%{distributor}</strong>, but had some problems..."
-  email_so_empty_explainer_html: "Unfortunately, none of products that you ordered were available, so no order has been placed. The original quantities that you requested appear crossed-out below."
+  email_so_empty_explainer_html: "Unfortunately, none of the products that you ordered were available, so no order has been placed. The original quantities that you requested appear crossed-out below."
   email_so_empty_details_html: "Here are the details of the unplaced order for <strong>%{distributor}</strong>:"
   email_so_failed_payment_intro_html: "We tried to process a payment, but had some problems..."
   email_so_failed_payment_explainer_html: "The payment for your subscription with <strong>%{distributor}</strong> failed because of a problem with your credit card. <strong>%{distributor}</strong> has been notified of this failed payment."
@@ -1493,7 +1512,7 @@ en_ZA:
   components_filters_clearfilters: "Clear all filters"
   groups_title: Groups
   groups_headline: Groups / regions
-  groups_text: "Every producer is unique. Every business has something different to offer. Our groups are collectives of producers, hubs and distributors who share something in common like location, farmers market or philosophy. This makes your shopping experience easier. So explore our groups and have the curating done for you."
+  groups_text: "OFN groups are collectives of producers, hubs and distributors who share something in common such as location or philosophy. Groups also enable consumers to browse producers that are registered with various industry bodies e.g. organic / biodynamic certification. Specifically in South Africa, groups also enable non-profit organisations to highlight emerging farmers or enterprises that they may be assisting. In this way we can help these producers to enjoy the benefits of the wider OFN network."
   groups_search: "Search name or keyword"
   groups_no_groups: "No groups found"
   groups_about: "About Us"
@@ -1695,7 +1714,7 @@ en_ZA:
       introduction:
         registration_greeting: "Hi there!"
         registration_intro: "You can now create a profile for your Producer or Hub"
-        registration_checklist: "You'll need"
+        registration_checklist: "What do I need?"
         registration_time: "5-10 minutes"
         registration_enterprise_address: "Enterprise address"
         registration_contact_details: "Primary contact details"
@@ -1745,7 +1764,7 @@ en_ZA:
         yes_producer: "Yes, I'm a producer"
         no_producer: "No, I'm not a producer"
         producer_field_error: "Please choose one. Are you are producer?"
-        yes_producer_help: "Producers make tasty things to eat and/or drink. You're a producer if you grow, rear, brew, bake, ferment... etc."
+        yes_producer_help: "Producers (farmers, homesteaders etc.) make tasty things to eat and/or drink. You're a producer if you grow, rear, brew, bake, ferment..."
         no_producer_help: "If you’re not a producer, you’re probably someone who sells and distributes food. You might be a hub, co-op, buying group, retailer, wholesaler or other."
         create_profile: "Create profile"
       about:
@@ -1760,7 +1779,7 @@ en_ZA:
         enterprise_long_desc_placeholder: "This is your opportunity to tell the story of your enterprise - what makes you different and wonderful? We'd suggest keeping your description to under 600 characters or 150 words."
         enterprise_long_desc_length: "%{num} characters / up to 600 recommended"
         enterprise_abn: "Company Number"
-        enterprise_abn_placeholder: "2001 / 123456 / 07"
+        enterprise_abn_placeholder: "e.g. 2001 / 123456 / 07"
         enterprise_acn: "Charity Number"
         enterprise_acn_placeholder: "e.g. 123-231 NPO"
         enterprise_tax_required: "You need to make a selection."
@@ -1867,7 +1886,7 @@ en_ZA:
   admin_enterprise_groups_data_powertip_promo_image: "This image is displayed at the top of the Group profile"
   admin_enterprise_groups_contact: "Contact"
   admin_enterprise_groups_contact_phone_placeholder: "e.g. 082 231 3210"
-  admin_enterprise_groups_contact_address1_placeholder: "eg. 123 High Street"
+  admin_enterprise_groups_contact_address1_placeholder: "e.g. 123 High Street"
   admin_enterprise_groups_contact_city: "Suburb"
   admin_enterprise_groups_contact_city_placeholder: "e.g. Newcastle"
   admin_enterprise_groups_contact_zipcode: "Postcode"
@@ -2043,14 +2062,14 @@ en_ZA:
   report_header_ship_street_2: Ship Street 2
   report_header_ship_city: Ship City
   report_header_ship_postcode: Ship Postcode
-  report_header_ship_state: Ship State
+  report_header_ship_state: Ship Province
   report_header_billing_street: Billing Street
   report_header_billing_street_2: Billing Street 2
   report_header_billing_street_3: Billing Street 3
   report_header_billing_street_4: Billing Street 4
   report_header_billing_city: Billing City
   report_header_billing_postcode: Billing Postcode
-  report_header_billing_state: Billing State
+  report_header_billing_state: Billing Province
   report_header_incoming_transport: Incoming Transport
   report_header_special_instructions: Special Instructions
   report_header_order_number: Order number
@@ -2128,7 +2147,7 @@ en_ZA:
   report_header_outstanding_balance_price: "Outstanding Balance (%{currency})"
   report_header_eft_price: "EFT (%{currency})"
   report_header_paypal_price: "PayPal (%{currency})"
-  report_header_sku: Product Code
+  report_header_sku: SKU
   report_header_amount: Amount
   report_header_balance: Balance
   report_header_total_cost: "Total Cost"
@@ -2299,9 +2318,9 @@ en_ZA:
               the Open Food Network will always be free.
           hub_shop: Hub Shop
           hub_shop_text1: >
-              Hubs can take many forms - CSA, veg box scheme, food co-ops, community
-              buying groups and stokvels, farmers’ market, an online shop front for  an
-              independent shop and many others…
+              Hubs can take many forms... CSA, veg box scheme, community buying groups
+              and stokvels, farmer markets, an online shop front for an independent
+              shop and many others…
           hub_shop_text2: >
               Products aggregated from lots of local food enterprises can be stocked
               and sold via your shop front. Hubs can form the backbone of your local
@@ -2325,12 +2344,13 @@ en_ZA:
               A profile makes you visible and contactable to others and is a way to
               share your story, especially if you are an emerging B-BBEE supplier.
           profile_only_text2: >
-              You can set up your products and invite other people to sell them for
-              you.
+              If you prefer to focus on producing food, and want to leave the work
+              of selling it to someone else, you won't require a shop on the Open
+              Food Network.
           profile_only_text3: >
               You can choose which Open Food Network ‘hubs’ you would like to stock
-              and sell your products.  Leave the hassle of selling your food to someone
-              else and focus on growing, making, brewing, baking...
+              and sell your products. Leave the hassle of selling your food to someone
+              else and focus instead on growing, rearing, brewing, baking...
           producer_shop: Producer Shop
           producer_shop_text1: >
               Sell only your own products directly to customers and buyers with your
@@ -2340,9 +2360,9 @@ en_ZA:
               select ‘Hub’.
           producer_hub: Producer Hub
           producer_hub_text1: >
-              Hubs can take many forms - CSA, veg box scheme, food co-ops, community
-              buying groups and stokvels, farmers’ market, an online shop front for  an
-              independent shop and many others…
+              Hubs can take many forms... CSA, veg box scheme, community buying groups
+              and stokvels, farmer markets, an online shop front for an independent
+              shop and many others…
           producer_hub_text2: >
               Products aggregated from lots of local food enterprises (including your
               own, if you are also a food producer) can be stocked and sold via your
@@ -2666,9 +2686,9 @@ en_ZA:
     check_for_spree_alerts: "Check for Spree alerts"
     currency_decimal_mark: "Currency decimal mark"
     currency_settings: "Currency Settings"
-    currency_symbol_position: Put "currency symbol before or after pound amount?"
+    currency_symbol_position: Put "currency symbol before or after Rand amount?"
     currency_thousands_separator: "Currency thousands separator"
-    hide_cents: "Hide pence"
+    hide_cents: "Hide cents"
     display_currency: "Display currency"
     choose_currency: "Choose Currency"
     mail_method_settings: "Mail Method Settings"
@@ -2714,7 +2734,7 @@ en_ZA:
     default_tax: "Default Tax"
     default_tax_zone: "Default Tax Zone"
     country_based: "Country Based"
-    state_based: "County Based"
+    state_based: "Province Based"
     countries: "Countries"
     listing_countries: "Listing Countries"
     iso_name: "ISO Name"
@@ -2772,6 +2792,7 @@ en_ZA:
     inventory: Inventory
     zipcode: Postcode
     weight: Weight (per kg)
+    error_user_destroy_with_orders: "Users with completed orders may not be deleted"
     actions:
       update: "Update"
     errors:
@@ -2980,7 +3001,8 @@ en_ZA:
           confirmation_pending: "Email confirmation is pending. We've sent a confirmation email to %{address}."
       variants:
         autocomplete:
-          producer_name: Producer
+          producer_name: "Producer"
+          unit: "Unit"
       general_settings:
         edit:
           legal_settings: "Legal Settings"

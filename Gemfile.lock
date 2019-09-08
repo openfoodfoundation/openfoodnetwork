@@ -40,26 +40,6 @@ GIT
       state_machine (= 1.2.0)
       stringex (~> 1.5.1)
       truncate_html (= 0.9.2)
-    spree_frontend (2.1.0)
-      canonical-rails
-      jquery-rails (~> 3.0.0)
-      spree_api (= 2.1.0)
-      spree_core (= 2.1.0)
-      stringex (~> 1.5.1)
-
-GIT
-  remote: https://github.com/spree/spree_auth_devise.git
-  revision: 1c436c738d0f086b2ca0f75a977ac16bc6cb98b9
-  ref: 1c436c738d0f086b2ca0f75a977ac16bc6cb98b9
-  branch: 2-1-stable
-  specs:
-    spree_auth_devise (2.1.0)
-      cancan (~> 1.6.7)
-      devise (~> 3.0.1)
-      devise-encryptable (= 0.1.2)
-      spree_backend (~> 2.1.0.beta)
-      spree_core (~> 2.1.0.beta)
-      spree_frontend (~> 2.1.0.beta)
 
 GIT
   remote: https://github.com/spree/spree_i18n.git
@@ -138,8 +118,8 @@ GEM
       activerecord (>= 3.2, < 5)
     acts_as_list (0.2.0)
       activerecord (>= 3.0)
-    addressable (2.6.0)
-      public_suffix (>= 2.0.2, < 4.0)
+    addressable (2.7.0)
+      public_suffix (>= 2.0.2, < 5.0)
     andand (1.3.3)
     angular-rails-templates (0.3.0)
       railties (>= 3.1)
@@ -157,17 +137,15 @@ GEM
       json (~> 1.4)
       nokogiri (>= 1.4.4)
       uuidtools (~> 2.1)
-    bcrypt (3.1.12)
+    bcrypt (3.1.13)
     bcrypt-ruby (3.1.5)
       bcrypt (>= 3.1.3)
     blockenspiel (0.5.0)
-    bugsnag (6.11.1)
+    bugsnag (6.12.1)
       concurrent-ruby (~> 1.0)
     builder (3.1.4)
     byebug (9.0.6)
     cancan (1.6.10)
-    canonical-rails (0.1.0)
-      rails (>= 3.1, < 5.1)
     capybara (2.18.0)
       addressable
       mini_mime (>= 0.1.3)
@@ -222,16 +200,18 @@ GEM
       activerecord (>= 3.2.0, < 5.0)
       fog (~> 1.0)
       rails (>= 3.2.0, < 5.0)
+    ddtrace (0.26.0)
+      msgpack
     debugger-linecache (1.2.0)
     deface (1.0.2)
       colorize (>= 0.5.8)
       nokogiri (~> 1.6.0)
       polyglot
       rails (>= 3.1)
-    delayed_job (4.1.5)
-      activesupport (>= 3.0, < 5.3)
-    delayed_job_active_record (4.1.3)
-      activerecord (>= 3.0, < 5.3)
+    delayed_job (4.1.8)
+      activesupport (>= 3.0, < 6.1)
+    delayed_job_active_record (4.1.4)
+      activerecord (>= 3.0, < 6.1)
       delayed_job (>= 3.0, < 5)
     delayed_job_web (1.4.3)
       activerecord (> 3.0.0)
@@ -241,13 +221,13 @@ GEM
     devise (3.0.4)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
-      railties (>= 3.2.6, < 5)
-      warden (~> 1.2.3)
-    devise-encryptable (0.1.2)
+      railties (~> 3.1)
+      warden (~> 1.2.1)
+    devise-encryptable (0.2.0)
       devise (>= 2.1.0)
     diff-lcs (1.3)
     diffy (3.3.0)
-    docile (1.3.1)
+    docile (1.3.2)
     dry-inflector (0.1.2)
     em-websocket (0.5.1)
       eventmachine (>= 0.12.9)
@@ -424,7 +404,7 @@ GEM
     foundation-rails (5.5.2.1)
       railties (>= 3.1.0)
       sass (>= 3.3.0, < 3.5)
-    fuubar (2.4.0)
+    fuubar (2.4.1)
       rspec-core (~> 3.0)
       ruby-progressbar (~> 1.4)
     geocoder (1.5.1)
@@ -454,7 +434,7 @@ GEM
     haml (5.0.4)
       temple (>= 0.8.0)
       tilt
-    hashdiff (0.4.0)
+    hashdiff (1.0.0)
     highline (1.6.18)
     hike (1.2.3)
     http_parser.rb (0.6.0)
@@ -483,7 +463,7 @@ GEM
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     kgio (2.11.2)
-    knapsack (1.17.1)
+    knapsack (1.18.0)
       rake
     launchy (2.4.3)
       addressable (~> 2.3)
@@ -507,11 +487,12 @@ GEM
       railties (>= 3.1)
     money (5.1.1)
       i18n (~> 0.6.0)
+    msgpack (1.3.1)
     multi_json (1.13.1)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
     nenv (0.3.0)
-    net-http-persistent (3.0.1)
+    net-http-persistent (3.1.0)
       connection_pool (~> 2.2)
     newrelic_rpm (3.18.1.330)
     nokogiri (1.6.8.1)
@@ -555,7 +536,7 @@ GEM
     pry-byebug (3.4.3)
       byebug (>= 9.0, < 9.1)
       pry (~> 0.10)
-    public_suffix (3.0.3)
+    public_suffix (3.1.1)
     rabl (0.8.4)
       activesupport (>= 2.3.14)
     rack (1.5.5)
@@ -587,7 +568,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rainbow (3.0.0)
     raindrops (0.19.0)
-    rake (12.3.2)
+    rake (12.3.3)
     ransack (1.0.0)
       actionpack (>= 3.0)
       activerecord (>= 3.0)
@@ -600,7 +581,9 @@ GEM
       json (>= 1.8)
       nokogiri (~> 1.5)
       optimist (~> 3.0)
-    redcarpet (3.4.0)
+    rdoc (3.12.2)
+      json (~> 1.4)
+    redcarpet (3.5.0)
     ref (2.0.0)
     request_store (1.4.1)
       rack (>= 1.4)
@@ -669,7 +652,7 @@ GEM
     shellany (0.0.1)
     shoulda-matchers (3.1.3)
       activesupport (>= 4.0.0)
-    simplecov (0.16.1)
+    simplecov (0.17.0)
       docile (~> 1.1)
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
@@ -678,8 +661,6 @@ GEM
       rack (~> 1.4)
       rack-protection (~> 1.4)
       tilt (>= 1.3, < 3)
-    skylight (1.7.2)
-      activesupport (>= 3.0.0)
     spinjs-rails (1.4)
       rails (>= 3.1)
     spreadsheet (1.2.3)
@@ -695,7 +676,7 @@ GEM
       sprockets (>= 2.8, < 4.0)
     state_machine (1.2.0)
     stringex (1.5.1)
-    stripe (4.19.0)
+    stripe (4.24.0)
       faraday (~> 0.13)
       net-http-persistent (~> 3.0)
     temple (0.8.1)
@@ -729,7 +710,7 @@ GEM
       nokogiri (~> 1.6)
       rubyzip (~> 1.0)
       selenium-webdriver (~> 3.0)
-    webmock (3.6.0)
+    webmock (3.7.2)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
@@ -770,10 +751,13 @@ DEPENDENCIES
   dalli
   database_cleaner (= 0.7.1)
   db2fog
+  ddtrace
   debugger-linecache
   deface
   delayed_job_active_record
   delayed_job_web
+  devise (~> 2.2.5)
+  devise-encryptable (= 0.2.0)
   diffy
   eventmachine (>= 1.2.3)
   factory_bot_rails (= 4.8.2)
@@ -782,7 +766,7 @@ DEPENDENCIES
   foundation-icons-sass-rails
   foundation-rails (= 5.5.2.1)
   foundation_rails_helper!
-  fuubar (~> 2.4.0)
+  fuubar (~> 2.4.1)
   geocoder
   gmaps4rails
   guard
@@ -797,6 +781,7 @@ DEPENDENCIES
   jquery-rails (= 3.0.4)
   json_spec (~> 1.1.4)
   jwt (~> 2.2)
+  kaminari (~> 0.14.1)
   knapsack
   letter_opener (>= 1.4.1)
   listen (= 3.0.8)
@@ -828,10 +813,8 @@ DEPENDENCIES
   selenium-webdriver
   shoulda-matchers
   simplecov
-  skylight (< 2.0)
   spinjs-rails
   spree_api!
-  spree_auth_devise!
   spree_backend!
   spree_core!
   spree_i18n!

@@ -1,6 +1,9 @@
 # This migration is an OFN specific migration that enforces an order to have a single shipment at all times
 class AddUniquenessOfOrderIdToSpreeShipments < ActiveRecord::Migration
   def change
+    Spree::InventoryUnit.connection.schema_cache.clear!
+    Spree::InventoryUnit.reset_column_information
+
     destroy_all_but_latest_shipments
 
     remove_index :spree_shipments, :order_id

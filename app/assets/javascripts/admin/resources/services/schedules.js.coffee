@@ -40,7 +40,7 @@ angular.module("admin.resources").factory "Schedules", ($q, $injector, RequestMo
         delete @byID[schedule.id]
         StatusMessage.display 'success', "#{t('js.admin.order_cycles.schedules.deleted_schedule')}: '#{schedule.name}'"
 
-    index: ->
-      request = ScheduleResource.index (data) => @load(data)
+    index: (params) ->
+      request = ScheduleResource.index params, (data) => @load(data)
       RequestMonitor.load(request.$promise)
       request

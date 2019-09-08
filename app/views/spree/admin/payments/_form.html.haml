@@ -1,0 +1,23 @@
+= admin_inject_json "admin.payments", "currentOrderNumber", @order.number
+= admin_inject_json_ams_array "admin.payments", "paymentMethods", @payment_methods, Api::PaymentMethodSerializer, current_order: @order
+
+.row
+  .alpha.three.columns
+    .field
+      = f.label :amount, t(:amount)
+      = f.text_field :amount, value: @order.outstanding_balance, class: 'fullwidth', "watch-value-as" => 'form_data.amount'
+  .omega.nine.columns
+    .field
+      %label= t(:payment_method)
+      %ul
+        - @payment_methods.each do |method|
+          %li
+            %label
+              = radio_button_tag 'payment[payment_method_id]', method.id, method == @payment_method, { class: "payment_methods_radios", "ng-model" => 'form_data.payment_method' }
+              = t(method.name, scope: :payment_methods, default: method.name)
+      .payment-method-settings
+        - @payment_methods.each do |method|
+          .payment-methods{id: "payment_method_#{method.id}"}
+            - if method.source_required?
+              %br/
+              = render partial: "spree/admin/payments/source_forms/#{method.method_type}", locals: { payment_method: method }

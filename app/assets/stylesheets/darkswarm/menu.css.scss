@@ -1,8 +1,8 @@
-@import "compass";
-@import "branding";
-@import "mixins";
-@import "typography";
-@import "variables";
+@import 'compass';
+@import 'branding';
+@import 'mixins';
+@import 'typography';
+@import 'variables';
 
 nav.top-bar {
   @include textpress;
@@ -13,7 +13,37 @@ nav.top-bar {
   height: $topbar-height;
 }
 
+@media #{$large-only} {
+  .top-bar--menu-item-with-icon span {
+    display: none;
+  }
+
+  .top-bar--current-hub-prefix,
+  .top-bar--current-hub-name {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .top-bar--current-hub-name {
+    max-width: 10em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.top-bar-section ul li > a.top-bar--menu-item-with-icon {
+  display: inline;
+}
+
+.top-bar--menu-item-with-icon i,
+.top-bar--menu-item-with-icon img {
+  line-height: $topbar-height;
+}
+
 .top-bar-section {
+  border-bottom: 1px solid $light-grey-transparency;
+
   a.icon {
     &:hover {
       text-decoration: none;
@@ -140,13 +170,20 @@ nav.top-bar {
 
 .tab-bar {
   background-color: white;
+  border-bottom: 1px solid $light-grey-transparency;
+  height: 2.8em;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
 
   .cart-span {
     background-color: #f4704c;
     padding: 13px;
 
-    a, span {
+    a,
+    span {
       color: white;
+      display: inline-block;
     }
 
     .count {
@@ -173,7 +210,6 @@ nav.top-bar {
   }
 }
 
-
 .off-canvas-list li.language-switcher ul li {
   list-style-type: none;
   padding-left: 0.5em;
@@ -199,10 +235,19 @@ nav.top-bar {
   padding: 9px 0 0 9px;
 }
 
+// Leave space for tab bar, in screens smaller than large.
+[role="main"] {
+  margin-top: 2.8em;
+
+  @media #{$large-up} {
+    margin-top: 0;
+  }
+}
+
 .top-bar .ofn-logo img {
   height: auto;
   width: auto;
-  max-height: 51px;
+  max-height: 44px;
   max-width: 250px;
 }
 
@@ -210,7 +255,7 @@ nav.top-bar {
   background-color: white;
 }
 
-.off-canvas-wrap.move-right ul.off-canvas-list {
+.off-canvas-wrap ul.off-canvas-list {
   font-size: 0.875rem;
 
   .li-menu {
@@ -230,12 +275,10 @@ nav.top-bar {
       background-color: transparent;
       color: $brand-colour;
     }
-
-    @include transition(all 0.3s ease-in-out);
   }
 }
 
-.off-canvas-wrap.move-right ul.off-canvas-list i {
+.off-canvas-wrap ul.off-canvas-list i {
   font-size: 1.5rem;
   margin-right: 0.25rem;
 }
@@ -244,7 +287,8 @@ nav.top-bar {
 
 @media screen and (max-width: 1450px) {
   nav .top-bar-section {
-    ul li a, .has-dropdown > a {
+    ul li a,
+    .has-dropdown > a {
       padding: 0 ($topbar-height / 8) !important;
     }
 

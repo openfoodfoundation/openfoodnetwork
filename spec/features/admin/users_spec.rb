@@ -10,6 +10,63 @@ feature "Managing users" do
       quick_login_as_admin
     end
 
+    context "from the index page" do
+      before do
+        create(:user, :email => "a@example.com")
+        create(:user, :email => "b@example.com")
+
+        visit spree.admin_path
+        click_link "Users"
+      end
+
+      context "users index page with sorting" do
+        before(:each) do
+          click_link "users_email_title"
+        end
+
+        it "should be able to list users with order email asc" do
+          expect(page).to have_css('table#listing_users')
+          within("table#listing_users") do
+            expect(page).to have_content("a@example.com")
+            expect(page).to have_content("b@example.com")
+          end
+        end
+
+        it "should be able to list users with order email desc" do
+          click_link "users_email_title"
+          within("table#listing_users") do
+            expect(page).to have_content("a@example.com")
+            expect(page).to have_content("b@example.com")
+          end
+        end
+      end
+
+      context "searching users" do
+        it "should display the correct results for a user search" do
+          fill_in "q_email_cont", :with => "a@example"
+          click_button "Search"
+          within("table#listing_users") do
+            expect(page).to have_content("a@example")
+            expect(page).not_to have_content("b@example")
+          end
+        end
+      end
+
+      context "editing users" do
+        before(:each) do
+          click_link("a@example.com")
+        end
+
+        it "should let me edit the user password" do
+          fill_in "user_password", :with => "welcome"
+          fill_in "user_password_confirmation", :with => "welcome"
+          click_button "Update"
+
+          expect(page).to have_content("Account updated")
+        end
+      end
+    end
+
     describe "creating a user" do
       it "shows no confirmation message to start with" do
         visit spree.new_admin_user_path

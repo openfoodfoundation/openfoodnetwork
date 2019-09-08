@@ -36,6 +36,8 @@ gem 'stripe'
 # which is needed for Pin Payments (and possibly others).
 gem 'activemerchant', '~> 1.78.0'
 
+gem 'devise', '~> 2.2.5'
+gem 'devise-encryptable', '0.2.0'
 gem 'jwt', '~> 2.2'
 gem 'oauth2', '~> 1.4.1' # Used for Stripe Connect
 
@@ -46,6 +48,10 @@ gem 'delayed_job_web'
 # Fix bug in simple_form preventing collection_check_boxes usage within form_for block
 # When merged, revert to upstream gem
 # gem 'simple_form', github: 'RohanM/simple_form'
+
+# Spree's default pagination gem (locked to the current version used by Spree)
+# We use it's methods in OFN code as well, so this is a direct dependency
+gem 'kaminari', '~> 0.14.1'
 
 gem 'andand'
 gem 'angularjs-rails', '1.5.5'
@@ -81,7 +87,6 @@ gem 'protected_attributes'
 gem 'rack-rewrite'
 gem 'rack-ssl', require: 'rack/ssl'
 gem 'roadie-rails', '~> 1.1.1'
-gem 'skylight', '< 2.0'
 gem 'spinjs-rails'
 
 gem 'combine_pdf'
@@ -115,14 +120,23 @@ gem 'jquery-rails', '3.0.4'
 
 # gem 'ofn-qz', github: 'openfoodfoundation/ofn-qz', ref: '60da2ae4c44cbb4c8d602f59fb5fff8d0f21db3c'
 
+group :production, :staging do
+  gem 'ddtrace'
+end
+
 group :test, :development do
   # Pretty printed test output
   gem 'atomic'
   gem 'awesome_print'
   gem 'capybara', '>= 2.15.4'
   gem 'database_cleaner', '0.7.1', require: false
+<<<<<<< HEAD
   gem "factory_bot_rails", '4.8.2', require: false
   gem 'fuubar', '~> 2.4.0'
+=======
+  gem "factory_bot_rails", require: false
+  gem 'fuubar', '~> 2.4.1'
+>>>>>>> master
   gem 'json_spec', '~> 1.1.4'
   gem 'knapsack'
   gem 'letter_opener', '>= 1.4.1'

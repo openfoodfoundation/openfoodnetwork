@@ -12,7 +12,11 @@ nl_BE:
       spree/payment:
         amount: Bedrag
       spree/product:
-        primary_taxon: Product categorie
+        primary_taxon: "Product categorie"
+        supplier: "Leverancier"
+        shipping_category_id: "Verzendcategorie"
+        variant_unit: "Eénheid"
+        variant_unit_name: "Variant Unit Name"
       order_cycle:
         orders_close_at: Sluitingsdatum
     errors:
@@ -70,6 +74,11 @@ nl_BE:
       resend_confirmation_email: "Verstuur de bevestigingsmail opnieuw."
       confirmed: "Bedankt voor het bevestigen van uw e-mail! U kunt nu inloggen."
       not_confirmed: "Uw e-mailadres kon niet worden bevestigd. Misschien heeft u deze stap al afgerond?"
+    user_confirmations:
+      spree_user:
+        send_instructions: "U ontvangt een e-mail met instructies over hoe u uw account binnen enkele minuten kunt bevestigen."
+        confirmation_sent: "E-mailbevestiging verzonden"
+        confirmation_not_sent: "Fout bij verzenden bevestigingsmail"
     user_registrations:
       spree_user:
         signed_up_but_unconfirmed: "Er is een bericht met een bevestigingslink naar uw e-mailadres gestuurd. Open de link om uw account te activeren."
@@ -80,9 +89,12 @@ nl_BE:
           Bent u de laatste keer gast geweest? Misschien moet u een account aanmaken of uw wachtwoord opnieuw instellen.
       unconfirmed: "U moet uw account bevestigen voordat u verdergaat."
       already_registered: "Dit e-mailadres is al geregistreerd. Log in om verder te gaan, of ga terug en gebruik een ander e-mailadres."
+    success:
+      logged_in_succesfully: "succesvol ingelogd"
     user_passwords:
       spree_user:
         updated_not_active: "Uw wachtwoord is gereset, maar uw e-mail is nog niet bevestigd."
+        send_instructions: "U ontvangt een e-mail met instructies over hoe u uw account binnen enkele minuten kunt bevestigen."
   models:
     order_cycle:
       cloned_order_cycle_name: "KOPIE VAN %{order_cycle}"
@@ -235,6 +247,9 @@ nl_BE:
     create_and_add_another: "Een ander maken en toevoegen"
     create: "Maak"
     cancel: "Annuleren"
+    save: "Save"
+    edit: "bewerking"
+    delete: "Uitwissen "
   admin:
     begins_at: Begint Bij
     begins_on: Begint Op
@@ -311,9 +326,10 @@ nl_BE:
         enable_products_cache: "Produkten in voorraad toelaten? "
     invoice_settings:
       edit:
-        title: Factuur instellingen
-        invoice_style2?: Gebruik het alternatieve factuurmodel dat de totale belastingsuitsplitsing per tarief en belastingtariefinformatie per artikel bevat (nog niet geschikt voor landen met prijzen exclusief belastingen).
-        enable_receipt_printing?: Toon opties voor het afdrukken van kassabonnen met behulp van thermische printers in de volgorde dropdown?
+        title: "Factuur instellingen"
+        enable_invoices?: "Facturen inschakelen?"
+        invoice_style2?: "Gebruik het alternatieve factuurmodel dat de totale belastingsuitsplitsing per tarief en belastingtariefinformatie per artikel bevat (nog niet geschikt voor landen met prijzen exclusief belastingen)."
+        enable_receipt_printing?: "Toon opties voor het afdrukken van kassabonnen met behulp van thermische printers in de volgorde dropdown?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -372,14 +388,15 @@ nl_BE:
         user_guide: Gebruikershandleiding
     enterprise_fees:
       index:
-        title: Ondernemingsvergoedingen
-        enterprise: Onderneming
-        fee_type: Sprookjesachtig type
-        name: Naam
-        tax_category: Belastingcategorie
-        calculator: Rekenmachine
-        calculator_values: Rekenmachine Waarden
+        title: "Ondernemingsvergoedingen"
+        enterprise: "Onderneming"
+        fee_type: "Sprookjesachtig type"
+        name: "Naam"
+        tax_category: "Belastingcategorie"
+        calculator: "Rekenmachine"
+        calculator_values: "Rekenmachine Waarden"
         search: "Zoeken"
+        name_placeholder: "bijv. verpakkingskosten"
     enterprise_groups:
       index:
         new_button: Nieuwe Ondernemingsgroep
@@ -641,6 +658,8 @@ nl_BE:
           permalink_tip: "Deze permalink wordt gebruikt om de url te gebruiken in jouw winkel: %{link} jouw-winkel-naam/winkel"
           link_to_front: Link naar je etalage
           link_to_front_tip: Een directe link naar je etalage op het Open Food Network.
+          ofn_uid: OFN UID
+          ofn_uid_tip: Het unieke ID dat wordt gebruikt om de onderneming in Open Food Network te identificeren.
         shipping_methods:
           name: Naam
           applies: Van toepassing?
@@ -815,13 +834,14 @@ nl_BE:
         pickup_time_placeholder: "Klaar voor (d.w.z. Datum/ Uur)"
         receival_instructions_placeholder: "Ontvangst instructies"
         add_fee: 'Voeg vergoeding to'
+        remove: 'Verwijderen'
         selected: 'Geselecteerd'
       add_exchange_form:
         add_supplier: 'Voeg leverancier toe'
         add_distributor: 'Voeg verdeler toe'
       advanced_settings:
         title: Geavanceerde Instellingen
-        choose_product_tip: Je kan er voor kiezen om alle beschikbare producten (zowel voor de binnenkomende als de uitgaande), te beperken tot enkel deze in de %{inventory} inventaris.
+        choose_product_tip: U kunt inkomende en uitgaande producten beperken tot alleen de%{inventory} voorraad.
         preferred_product_selection_from_coordinator_inventory_only_here: 'Enkel Coördinator Inventaris '
         preferred_product_selection_from_coordinator_inventory_only_all: Alle Beschikbare Producten
         save_reload: Bewaar en Herlaad Webpagina
@@ -952,12 +972,13 @@ nl_BE:
       new: Nieuw abonnement
       create: Abonnement aanmaken
       edit: Abonnement bewerken
-      index:
-        please_select_a_shop: Selecteer een winkel
+      table:
         edit_subscription: Abonnement bewerken
         pause_subscription: Pauze Abonnement
         unpause_subscription: Abonnement Opzeggen
         cancel_subscription: Abonnement Opzeggen
+      filters:
+        query_placeholder: "Zoeken per e-mail ..."
       setup_explanation:
         just_a_few_more_steps: 'Nog een paar stappen voordat u kunt beginnen:'
         enable_subscriptions: "Inschrijven voor minstens één van uw winkels mogelijk maken"
@@ -982,6 +1003,10 @@ nl_BE:
             De afgebeelde prijzen zijn slechts een schatting en worden berekend op het moment dat het abonnement is veranderd.
             Als je de prijzen of kosten verandert, zullen de bestellingen worden geüpdatet, maar het abonnement zal nog steeds de oude waarden weergeven.
         not_in_open_and_upcoming_order_cycles_warning: "Er zijn geen openstaande of naderende bestellingscycli voor dit product."
+      autocomplete:
+        name_or_sku: "BESCHRIJVING OF ARTKELNUMMER"
+        quantity: "Kwantiteit"
+        add: "Voeg toe"
       details:
         details: Details
         invalid_error: Oops! Gelieve al de gevraagde velden in te vullen...
@@ -990,6 +1015,8 @@ nl_BE:
         charges_not_allowed: Kredietkaartskosten zijn niet toegestaan door deze klant
         no_default_card: De klant heeft geen kredietkaart beschikbaar om te verrekenen
         card_ok: De klant heeft een kredietkaart beschikbaar om te verrekenen
+        begins_at_placeholder: "Selecteer een datum"
+        ends_at_placeholder: "Facultatief"
       loading_flash:
         loading: ABONNEMENTEN WORDEN GELADEN
       review:
@@ -997,16 +1024,21 @@ nl_BE:
         address: Adres
         products: Producten
         no_open_or_upcoming_order_cycle: "Geen Naderende Bestel Cyclus"
+      products_panel:
+        save: "Opslaan"
+        saving: "Aan het opslaan"
+        saved: "Opgeslaan"
       product_already_in_order: Dit product is al eens toegevoegd aan de bestelling. Gelieve rechtstreeks de hoeveelheid aan te passen.
+      stock:
+        out_of_stock: "Geen voorraad"
       orders:
         number: Nummer
         confirm_edit: Ben je zeker dat je deze bestelling wil aanpassen? Indien je hiermee wenst verder te gaan is het mogelijk dat in de toekomst het moeilijker wordt om automatisch de veranderingen in het abonnement te synchroniseren.
-      confirm_cancel_msg: Ben je zeker dat je dit abonnement wil annuleren? Deze actie kan niet ongedaan worden gemaakt.
-      cancel_failure_msg: 'Sorry, de annulatie is mislukt!'
-      confirm_pause_msg: Ben je zeker dat je dit abonnement wil pauseren?
-      pause_failure_msg: 'Sorry, pauseren mislukt!'
-      confirm_unpause_msg: Ben je zeker dat je dit abonnement wil hervatten?
-      unpause_failure_msg: 'Sorry, hervatten mislukt!'
+      confirm_cancel_msg: "Ben je zeker dat je dit abonnement wil annuleren? Deze actie kan niet ongedaan worden gemaakt."
+      cancel_failure_msg: "Sorry, de annulatie is mislukt!"
+      confirm_pause_msg: "Ben je zeker dat je dit abonnement wil pauseren?"
+      pause_failure_msg: "Sorry, pauseren mislukt!"
+      unpause_failure_msg: "Sorry, hervatten mislukt!"
       confirm_cancel_open_orders_msg: "Sommige bestellingen voor deze abonnementen zijn nog niet afgerond. De klant werd al op de hoogte gebracht dat deze bestelling geplaatst zullen worden. Wil je graag dat deze bestelling(en) geannuleerd worden of wil je ze behouden?"
       resume_canceled_orders_msg: "Sommige bestellingen voor de abonnementen kunnen nu hervat worden. Je kan verdergaan vanuit het dropdownmenu bij bestellingen."
       yes_cancel_them: 'Annuleer ze '
@@ -1044,6 +1076,12 @@ nl_BE:
   shared:
     menu:
       cart:
+        cart: "kar"
+      signed_in:
+        profile: "Profiel"
+      mobile_menu:
+        cart: "kar"
+      joyride:
         checkout: "Naar de kassa"
         already_ordered_products: "Reeds besteld in de huidige bestelcyclus"
     register_call:
@@ -1079,11 +1117,11 @@ nl_BE:
   shop:
     messages:
       login: "login"
-      register: "registreer"
+      signup: "inschrijven"
       contact: "contact"
-      require_customer_login: "Deze winkel is enkel voor klanten."
-      require_login_html: "%{login} alsjeblieft in als je al een account hebt. Anders, %{register}om een klant te worden."
-      require_customer_html: "Alsjeblieft %{contact} een %{enterprise} om een klant te worden."
+      require_customer_login: "Alleen goedgekeurde klanten hebben toegang tot deze winkel. "
+      require_login_html: "Als u al een goedgekeurde klant bent %{login} of %{signup} wilt doorgaan. Wil je hier beginnen met winkelen? Alstublieft %{contact}en%{enterprise} vragen over meedoen."
+      require_customer_html: "Als u hier wilt beginnen met winkelen, kunt u vragen of %{contact}%{enterprise}u lid wilt worden."
   card_could_not_be_updated: De bankkaart kon niet worden geüpdatet.
   card_could_not_be_saved: De bankkaart kon niet worden bewaard.
   spree_gateway_error_flash_for_checkout: "Er was een probleem met betaalinformatie: %{error}"
@@ -1120,6 +1158,7 @@ nl_BE:
   menu_4_title: "Groepen"
   menu_4_url: "/groups"
   menu_5_title: "Over"
+  menu_5_url: "https://about.openfoodnetwork.org.au/"
   menu_6_title: "Connecteer je "
   menu_6_url: "https://openfoodnetwork.org/au/connect/"
   menu_7_title: "Ontdek"
@@ -1153,6 +1192,7 @@ nl_BE:
   city_placeholder: bv. Gent
   postcode: Postcode
   postcode_placeholder: bv. 9000
+  suburb: Gemeente
   state: Staat
   country: Land
   unauthorized: Ongeautoriseerd
@@ -1360,6 +1400,7 @@ nl_BE:
   email_confirm_shop_number_html: "Bestellingsbevestiging <strong>#%{number}</strong>"
   email_order_summary_item: "Artikel"
   email_order_summary_quantity: "Aantal"
+  email_order_summary_sku: "SKU"
   email_order_summary_price: "Prijs"
   email_order_summary_subtotal: "Tussentotaal:"
   email_order_summary_total: "Totaal:"
@@ -1554,6 +1595,7 @@ nl_BE:
   sell_hubs_detail: "Maak een profiel voor je voedselonderneming of organisatie aan op het OFN. Op om het even welk moment kan je je profiel opwaarderen naar multi-producentenwinkel."
   sell_groups_detail: "Maak een op maat gemaakt pad van ondernemingen (producent en andere voedselondernemingen) voor je regio of voor jouw organisatie."
   sell_user_guide: "Kom kom meer te weten in onze gebruikershandleiding."
+  sell_listing_price: "Vermelding op de OFN is gratis. Het openen en runnen van een winkel op OFN is gratis tot €500 maandelijkse verkoop. Als u meer verkoopt, kunt u uw communitybijdrage kiezen tussen 1% en 3% van de omzet. Ga voor meer informatie over prijzen naar het gedeelte Softwareplatform via de koppeling Over in het hoofdmenu."
   sell_embed: "We kunnen ook een OFNwinkel in aan je persoonlijke noden aangepaste website of een speciaal aangepast lokaal voedselnetwerkwebsite bouwen voor jouw regio bouwen."
   sell_ask_services: "Vraag ons over de OFN diensten."
   shops_title: Winkels
@@ -1669,7 +1711,7 @@ nl_BE:
       introduction:
         registration_greeting: "Hallo daar!"
         registration_intro: "Je kan nu een nieuw profiel creëren voor jouw Producent of Hub"
-        registration_checklist: "Je hebt nodig"
+        registration_checklist: "Wat heb ik nodig?"
         registration_time: "5-10 minuten "
         registration_enterprise_address: "Adres bedrijf"
         registration_contact_details: "Hoofdcontactpersoon gegevens"
@@ -1924,6 +1966,7 @@ nl_BE:
   spree_admin_supplier: Leverancier
   spree_admin_product_category: Product categorie
   spree_admin_variant_unit_name: Naam van het stuk (indien per stuk verkocht)
+  unit_name: "Unit naam"
   change_package: "Wijzig je Packet"
   spree_admin_single_enterprise_hint: "Hint: Om het voor mensen mogelijk te maken je te vinden, zet je zichtbaarheid aan"
   spree_admin_eg_pickup_from_school: "bv. 'Ophaling op een basisschool'"
@@ -2159,6 +2202,7 @@ nl_BE:
   payment_methods: "Betaalmethodes"
   payment_method_fee: "Transactiekosten (excl.BTW)"
   payment_processing_failed: "De betaling is niet succesvol, gelieve de  ingevoerde gegevens na te kijken"
+  payment_method_not_supported: "Die betaalmethode wordt niet ondersteund. Kies alstublieft een andere."
   payment_updated: "Betaling is bijgewerkt"
   inventory_settings: "Catalogus winkel"
   tag_rules: "Tagregels"
@@ -2355,8 +2399,18 @@ nl_BE:
           severity: Strengheid
           description: Beschrijving
           resolve: Oplossen
+      tag_rules:
+        shipping_method_tagged_top: "Verzendmethoden getagd"
+        shipping_method_tagged_bottom: "zijn:"
+        payment_method_tagged_top: "Betaalmethoden getagged"
+        payment_method_tagged_bottom: "zijn:"
+        order_cycle_tagged_top: "Bestel Cycles getagd"
+        order_cycle_tagged_bottom: "zijn:"
+        inventory_tagged_top: "Inventarisatievarianten getagd"
+        inventory_tagged_bottom: "zijn:"
       new_tag_rule_dialog:
         select_rule_type: "Selecteer een regel : "
+        add_rule: "Regel toevoegen"
       enterprise_fees:
         inherit_from_product: "Overnemen van product"
       orders:
@@ -2426,6 +2480,9 @@ nl_BE:
           add_a_new_customer_for: "Voeg een nieuwe klant toe voor %{shop_name}"
           customer_placeholder: "customer@example.org"
           valid_email_error: "Vul een geldig e-mailadres in"
+      subscriptions:
+        new:
+          please_select_a_shop: "Selecteer een winkel"
     insufficient_stock: "Onvoldoende voorraad beschikbaar, alleen %{on_hand}resterend"
     out_of_stock:
       reduced_stock_available: Stock beschikbaar
@@ -2609,6 +2666,8 @@ nl_BE:
     continue: "Ga verder"
     fill_in_customer_info: "Gelieve informatie over klant in te vullen"
     new_payment: "Nieuwe betaling"
+    capture: "Capture"
+    void: "leegte"
     configurations: "configuraties "
     general_settings: "Algemene instellingen"
     site_name: "Website Naam"
@@ -2710,6 +2769,16 @@ nl_BE:
     no_results: "Geen resultaten "
     create: "Maak"
     loading: "Aan het opladen"
+    flat_percent: "Flat Percent"
+    per_kg: "Per Kg"
+    amount: "Bedrag"
+    currency: "Valuta"
+    first_item: "Kosten eerste item"
+    additional_item: "Bijkomende artikelkosten"
+    max_items: "Max"
+    minimal_amount: "Minimaal bedrag"
+    normal_amount: "Normaal bedrag"
+    discount_amount: "Korting hoeveelheid"
     email: Email
     account_updated: "Rekening reset !"
     my_account: "Mijn rekening"
@@ -2808,16 +2877,29 @@ nl_BE:
       shipping_methods:
         index:
           shipping_methods: "Methode Verzending"
+          new_shipping_method: "New Shipping Method"
           name: "Naam"
           products_distributor: "Distributeur"
           zone: "Zone"
           calculator: "Rekenmachine"
           display: "Display"
+          both: "Beide"
+          front_end: "Voorkant"
+          back_end: "Back End"
+          no_shipping_methods_found: "Geen verzendmethoden gevonden"
+        new:
+          new_shipping_method: "New Shipping Method"
+          back_to_shipping_methods_list: "Terug naar Verzendmethodenlijst"
         edit:
           editing_shipping_method: "Verzendmethode bewerken"
           new: "Nieuw"
+          back_to_shipping_methods_list: "Terug naar Verzendmethodenlijst"
         form:
+          categories: "Categorieën"
           zones: "Zones "
+          both: "Beide"
+          front_end: "Voorkant"
+          back_end: "Back End"
       payment_methods:
         new:
           new_payment_method: "Nieuwe betalingswijze"
@@ -2844,6 +2926,7 @@ nl_BE:
             error_saving_payment: Fout bij het opladen van de betaling
             submitting_payment: 'Het doorsturen van de betaling '
       products:
+        image_upload_error: "Het productbeeld werd niet herkend. Upload een afbeelding in PNG- of JPG-indeling."
         new:
           title: 'Nieuw product'
         unit_name_placeholder: 'b.v. trossen'
@@ -2913,7 +2996,8 @@ nl_BE:
           confirmation_pending: "De validatie van de  bevestigins e-mail  naar %{address} toegestuurd is nog niet toegekomen."
       variants:
         autocomplete:
-          producer_name: Producent
+          producer_name: "Producent"
+          unit: "Unit"
       general_settings:
         edit:
           legal_settings: "De legale instelling"

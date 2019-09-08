@@ -1,12 +1,13 @@
+- content_for :injection_data do
+  = inject_available_shipping_methods
+  = inject_available_payment_methods
+  = inject_saved_credit_cards
+
 = f_form_for current_order,
   html: {name: "checkout",
     id: "checkout_form",
     novalidate: true,
     "ng-submit" => "purchase($event, checkout)"} do |f|
-
-  = inject_available_shipping_methods
-  = inject_available_payment_methods
-  = inject_saved_credit_cards
 
   = render "checkout/details", f: f
   = render "checkout/billing", f: f

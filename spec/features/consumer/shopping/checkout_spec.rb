@@ -64,31 +64,6 @@ feature "As a consumer I want to check out my cart", js: true do
     context 'login in as user' do
       let(:user) { create(:user) }
 
-      def fill_out_form
-        choose sm1.name
-        choose pm1.name
-
-        within "#details" do
-          fill_in "First Name", with: "Will"
-          fill_in "Last Name", with: "Marshall"
-          fill_in "Email", with: "test@test.com"
-          fill_in "Phone", with: "0468363090"
-        end
-
-        check "Save as default billing address"
-
-        within "#billing" do
-          fill_in "City", with: "Melbourne"
-          fill_in "Postcode", with: "3066"
-          fill_in "Address", with: "123 Your Head"
-          select "Australia", from: "Country"
-          select "Victoria", from: "State"
-        end
-
-        check "Shipping address same as billing address?"
-        check "Save as default shipping address"
-      end
-
       before do
         quick_login_as(user)
       end
@@ -205,6 +180,46 @@ feature "As a consumer I want to check out my cart", js: true do
       end
     end
 
+    context "in the shopfront with cache enabled" do
+      around do |example|
+        original_config = Spree::Config[:enable_products_cache?]
+        example.run
+        Spree::Config[:enable_products_cache?] = original_config
+      end
+
+      let(:control_product) { create(:taxed_product, supplier: supplier, price: 110, zone: zone, tax_rate_amount: 0.1) }
+      let(:control_variant) { control_product.variants.first }
+      let!(:order_cycle) { create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], coordinator: create(:distributor_enterprise), variants: [variant, control_variant]) }
+
+      it "does not show item after all stock of an item is checked out (tesging cache update on checkout)" do
+        Spree::Config[:enable_products_cache?] = true
+        variant.update_attributes on_hand: 5
+        flush_jobs
+        visit shop_path
+
+        fill_in "variants[#{variant.id}]", with: '5'
+        wait_until { !cart_dirty }
+
+        visit checkout_path
+        checkout_as_guest
+
+        fill_out_details
+        fill_out_billing_address
+        choose sm1.name
+        choose pm1.name
+
+        place_order
+        expect(page).to have_content "Your order has been processed successfully"
+
+        flush_jobs
+        visit shop_path
+        # The presence of the control product ensures the list of products is fully loaded
+        #   before we verify the sold product is not present
+        page.should have_content control_product.name
+        page.should_not have_content product.name
+      end
+    end
+
     context "on the checkout page" do
       before do
         visit checkout_path
@@ -216,7 +231,7 @@ feature "As a consumer I want to check out my cart", js: true do
         page.should have_content distributor.name
       end
 
-      it 'does not show the save as defalut address checkbox' do
+      it 'does not show the save as default address checkbox' do
         page.should_not have_content "Save as default billing address"
         page.should_not have_content "Save as default shipping address"
       end
@@ -315,20 +330,8 @@ feature "As a consumer I want to check out my cart", js: true do
 
       describe "purchasing" do
         it "takes us to the order confirmation page when we submit a complete form" do
-          within "#details" do
-            fill_in "First Name", with: "Will"
-            fill_in "Last Name", with: "Marshall"
-            fill_in "Email", with: "test@test.com"
-            fill_in "Phone", with: "0468363090"
-          end
-
-          within "#billing" do
-            fill_in "Address", with: "123 Your Face"
-            select "Australia", from: "Country"
-            select "Victoria", from: "State"
-            fill_in "City", with: "Melbourne"
-            fill_in "Postcode", with: "3066"
-          end
+          fill_out_details
+          fill_out_billing_address
 
           within "#shipping" do
             choose sm2.name
@@ -365,22 +368,8 @@ feature "As a consumer I want to check out my cart", js: true do
           before do
             choose sm1.name
             choose pm1.name
-
-            within "#details" do
-              fill_in "First Name", with: "Will"
-              fill_in "Last Name", with: "Marshall"
-              fill_in "Email", with: "test@test.com"
-              fill_in "Phone", with: "0468363090"
-            end
-
-            within "#billing" do
-              fill_in "City", with: "Melbourne"
-              fill_in "Postcode", with: "3066"
-              fill_in "Address", with: "123 Your Face"
-              select "Australia", from: "Country"
-              select "Victoria", from: "State"
-            end
-
+            fill_out_details
+            fill_out_billing_address
             check "Shipping address same as billing address?"
           end
 
@@ -474,5 +463,37 @@ feature "As a consumer I want to check out my cart", js: true do
         end
       end
     end
+  end
+
+  def fill_out_details
+    within "#details" do
+      fill_in "First Name", with: "Will"
+      fill_in "Last Name", with: "Marshall"
+      fill_in "Email", with: "test@test.com"
+      fill_in "Phone", with: "0468363090"
+    end
+  end
+
+  def fill_out_billing_address
+    within "#billing" do
+      fill_in "City", with: "Melbourne"
+      fill_in "Postcode", with: "3066"
+      fill_in "Address", with: "123 Your Head"
+      select "Australia", from: "Country"
+      select "Victoria", from: "State"
+    end
+  end
+
+  def fill_out_form
+    choose sm1.name
+    choose pm1.name
+
+    fill_out_details
+    check "Save as default billing address"
+
+    fill_out_billing_address
+
+    check "Shipping address same as billing address?"
+    check "Save as default shipping address"
   end
 end

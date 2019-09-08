@@ -1,4 +1,5 @@
 Spree::Admin::Orders::CustomerDetailsController.class_eval do
+  before_filter :check_authorization
   before_filter :set_guest_checkout_status, only: :update
 
   def update
@@ -24,6 +25,17 @@ Spree::Admin::Orders::CustomerDetailsController.class_eval do
   end
 
   private
+
+  def check_authorization
+    load_order
+    session[:access_token] ||= params[:token]
+
+    resource = @order
+    action = params[:action].to_sym
+    action = :edit if action == :show # show route renders :edit for this controller
+
+    authorize! action, resource, session[:access_token]
+  end
 
   def set_guest_checkout_status
     registered_user = Spree::User.find_by_email(params[:order][:email])

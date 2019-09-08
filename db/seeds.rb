@@ -48,7 +48,7 @@ states.each do |state|
   end
 end
 
-spree_user = Spree::User.first
-spree_user && spree_user.confirm!
+# Create users:
+require File.join(File.dirname(__FILE__), 'default', 'users')
 
 DefaultStockLocation.find_or_create

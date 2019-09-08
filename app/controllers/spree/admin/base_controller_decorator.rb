@@ -47,11 +47,21 @@ Spree::Admin::BaseController.class_eval do
     end
   end
 
+  protected
+
+  def model_class
+    const_name = controller_name.classify
+    if Spree.const_defined?(const_name)
+      return "Spree::#{const_name}".constantize
+    end
+    nil
+  end
+
   private
 
   def active_distributors_not_ready_for_checkout
     ocs = OrderCycle.managed_by(spree_current_user).active
-    distributors = ocs.map(&:distributors).flatten.uniq
+    distributors = ocs.includes(:distributors).map(&:distributors).flatten.uniq
     Enterprise.where('enterprises.id IN (?)', distributors).not_ready_for_checkout
   end
 

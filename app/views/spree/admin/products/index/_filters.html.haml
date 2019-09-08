@@ -1,26 +1,35 @@
-.filters.sixteen.columns.alpha.omega
-  .quick_search.three.columns.alpha
-    %label{ for: 'quick_filter' }
-    %br
-    %input.quick-search.fullwidth{ ng: {model: 'query'}, name: "quick_filter", type: 'text', placeholder: t('admin.quick_search') }
-  .one.columns &nbsp;
-  .filter_select.three.columns
-    %label{ for: 'producer_filter' }= t 'producer'
-    %br
-    %select.fullwidth{ id: 'producer_filter', 'ofn-select2-min-search' => 5, ng: {model: 'producerFilter', options: 'producer.id as producer.name for producer in filterProducers'} }
-  .filter_select.three.columns
-    %label{ for: 'category_filter' }= t 'category'
-    %br
-    %select.fullwidth{ id: 'category_filter', 'ofn-select2-min-search' => 5, ng: {model: 'categoryFilter', options: 'taxon.id as taxon.name for taxon in filterTaxons'} }
-  - if FeatureFlags.new(@current_user).product_import_enabled?
+%fieldset
+  %legend{align: 'center'}= t(:search)
+
+  .filters.sixteen.columns.alpha.omega
+    .quick_search.three.columns.alpha
+      %label{ for: 'quick_filter' }
+      %br
+      %input.quick-search.fullwidth{ ng: {model: 'query'}, name: "quick_filter", type: 'text', placeholder: t('admin.quick_search') }
+    .one.columns &nbsp;
+    .filter_select.three.columns
+      %label{ for: 'producer_filter' }= t 'producer'
+      %br
+      %select.fullwidth{ id: 'producer_filter', 'ofn-select2-min-search' => 5, ng: {model: 'producerFilter', options: 'producer.id as producer.name for producer in producers'} }
+    .filter_select.three.columns
+      %label{ for: 'category_filter' }= t 'category'
+      %br
+      %select.fullwidth{ id: 'category_filter', 'ofn-select2-min-search' => 5, ng: {model: 'categoryFilter', options: 'taxon.id as taxon.name for taxon in taxons'} }
     .filter_select.three.columns
       %label{ for: 'import_filter' } Import Date
       %br
       %select.fullwidth{ id: 'import_date_filter', 'ofn-select2-min-search' => 5, ng: {model: 'importDateFilter', init: "importDates = #{@import_dates}; showLatestImport = #{@show_latest_import}"}}
-        %option{value: "{{date.id}}", ng: {repeat: "date in importDates track by date.id" }}
+        %option{value: "{{date.id}}", ng: {repeat: "date in importDates" }}
           {{date.name}}
 
-  .filter_clear.three.columns.omega
-    %label{ for: 'clear_all_filters' }
-    %br
-    %input.fullwidth.red{ :type => 'button', :id => 'clear_all_filters', :value => t('admin.clear_filters'), 'ng-click' => "resetSelectFilters()" }
+    .filter_clear.three.columns.omega
+      %label{ for: 'clear_all_filters' }
+      %br
+      %input.fullwidth.red{ :type => 'button', :id => 'clear_all_filters', :value => t('admin.clear_filters'), 'ng-click' => "resetSelectFilters()" }
+
+  .clearfix
+
+  .actions.filter-actions
+    %div
+      %a.button.icon-search{'ng-click' => 'fetchProducts()'}
+        = t(:filter_results)

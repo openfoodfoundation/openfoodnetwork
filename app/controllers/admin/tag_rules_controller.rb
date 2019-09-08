@@ -9,8 +9,8 @@ module Admin
     def map_by_tag
       respond_to do |format|
         format.json do
-          serialiser = ActiveModel::ArraySerializer.new(collection)
-          render json: serialiser.to_json
+          serializer = ActiveModel::ArraySerializer.new(collection)
+          render json: serializer.to_json
         end
       end
     end

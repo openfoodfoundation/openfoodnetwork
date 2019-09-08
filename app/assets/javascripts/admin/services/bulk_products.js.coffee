@@ -1,15 +1,13 @@
-angular.module("ofn.admin").factory "BulkProducts", (PagedFetcher, dataFetcher, $http) ->
+angular.module("ofn.admin").factory "BulkProducts", (ProductResource, dataFetcher, $http) ->
   new class BulkProducts
     products: []
+    pagination: {}
 
-    fetch: (filters, onComplete) ->
-      queryString = filters.reduce (qs,f) ->
-        return qs + "q[#{f.property.db_column}_#{f.predicate.predicate}]=#{f.value};"
-      , ""
-
-      url = "/api/products/bulk_products?page=::page::;per_page=20;#{queryString}"
-      processData = (data) => @addProducts data.products
-      PagedFetcher.fetch url, processData, onComplete
+    fetch: (params) ->
+      ProductResource.index params, (data) =>
+        @products.length = 0
+        @addProducts data.products
+        angular.extend(@pagination, data.pagination)
 
     cloneProduct: (product) ->
       $http.post("/api/products/" + product.id + "/clone").success (data) =>

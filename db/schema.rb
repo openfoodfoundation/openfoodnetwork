@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190506194625) do
+ActiveRecord::Schema.define(:version => 20190701002454) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -178,7 +178,7 @@ ActiveRecord::Schema.define(version: 20190506194625) do
 
   create_table "enterprises", force: true do |t|
     t.string   "name"
-    t.string   "description"
+    t.text     "description"
     t.text     "long_description"
     t.boolean  "is_primary_producer"
     t.string   "contact_name"
@@ -188,7 +188,7 @@ ActiveRecord::Schema.define(version: 20190506194625) do
     t.string   "abn"
     t.string   "acn"
     t.integer  "address_id"
-    t.string   "pickup_times"
+    t.text     "pickup_times"
     t.string   "next_collection_at"
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
@@ -250,12 +250,12 @@ ActiveRecord::Schema.define(version: 20190506194625) do
     t.integer  "order_cycle_id"
     t.integer  "sender_id"
     t.integer  "receiver_id"
-    t.string   "pickup_time"
-    t.string   "pickup_instructions"
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
-    t.boolean  "incoming",              default: false, null: false
-    t.string   "receival_instructions"
+    t.text     "pickup_time"
+    t.text     "pickup_instructions"
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
+    t.boolean  "incoming",              :default => false, :null => false
+    t.text     "receival_instructions"
   end
 
   add_index "exchanges", ["order_cycle_id"], name: "index_exchanges_on_order_cycle_id", using: :btree

@@ -12,7 +12,9 @@ it:
       spree/payment:
         amount: Quantità
       spree/product:
-        primary_taxon: Categoria prodotto
+        primary_taxon: "Categoria prodotto"
+        supplier: "Fornitore"
+        variant_unit: "Unità Variante"
       order_cycle:
         orders_close_at: Data chiusura
     errors:
@@ -70,6 +72,9 @@ it:
       resend_confirmation_email: "Re-invia la mail di conferma"
       confirmed: "Grazie per aver confermato la tua mail! Ora puoi effettuare il log in."
       not_confirmed: "Il tuo indirizzo email non può essere confermato. Forse avevi già completato questo passaggio?"
+    user_confirmations:
+      spree_user:
+        send_instructions: "A breve riceverai un'email con le istruzioni utili a confermare il tuo account."
     user_registrations:
       spree_user:
         signed_up_but_unconfirmed: "Abbiamo inviato un link di conferma al tuo indirizzo email. Per favore apri il link per attivare il tuo account."
@@ -83,6 +88,7 @@ it:
     user_passwords:
       spree_user:
         updated_not_active: "La tua password è stata resettata, ma la tua email non è ancora stata confermata."
+        send_instructions: "A breve riceverai un'email con le istruzioni utili a confermare il tuo account."
   models:
     order_cycle:
       cloned_order_cycle_name: "COPIA DI %{order_cycle}"
@@ -235,6 +241,9 @@ it:
     create_and_add_another: "Crea e aggiungi un altro"
     create: "Crea"
     cancel: "Annulla"
+    save: "Salva"
+    edit: "Modifica"
+    delete: "Annulla"
   admin:
     begins_at: Inizia a
     begins_on: Inizia da
@@ -311,9 +320,9 @@ it:
         enable_products_cache: "Abilita la cache dei prodotti?"
     invoice_settings:
       edit:
-        title: Impostazioni fatturazione
-        invoice_style2?: Utilizzare il modello di fattura alternativa che include la ripartizione totale delle imposte per tariffa e le informazioni sulla tariffa fiscale per articolo (non ancora adatto per i paesi che visualizzano i prezzi al netto delle imposte)
-        enable_receipt_printing?: Visualizzo le opzioni per stampare la ricevuta usando la stampante termica nel menù a cascata?
+        title: "Impostazioni fatturazione"
+        invoice_style2?: "Utilizzare il modello di fattura alternativa che include la ripartizione totale delle imposte per tariffa e le informazioni sulla tariffa fiscale per articolo (non ancora adatto per i paesi che visualizzano i prezzi al netto delle imposte)"
+        enable_receipt_printing?: "Visualizzo le opzioni per stampare la ricevuta usando la stampante termica nel menù a cascata?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -372,13 +381,13 @@ it:
         user_guide: Guida per gli utenti
     enterprise_fees:
       index:
-        title: Tariffe azienda
-        enterprise: Azienda
-        fee_type: Tipo di tariffa
-        name: Nome
-        tax_category: Categoria d'imposta
-        calculator: Calcolatrice
-        calculator_values: Valori della Calcolatrice
+        title: "Tariffe azienda"
+        enterprise: "Azienda"
+        fee_type: "Tipo di tariffa"
+        name: "Nome"
+        tax_category: "Categoria d'imposta"
+        calculator: "Calcolatrice"
+        calculator_values: "Valori della Calcolatrice"
         search: "Cerca"
     enterprise_groups:
       index:
@@ -808,13 +817,13 @@ it:
         pickup_time_placeholder: "Pronto per (es. Data / Ora)"
         receival_instructions_placeholder: "Istruzioni per il ritiro"
         add_fee: 'Aggiungi tariffa'
+        remove: 'Rimuovi'
         selected: 'selezionato'
       add_exchange_form:
         add_supplier: 'Aggiungi fornitore'
         add_distributor: 'Aggiungi distributore'
       advanced_settings:
         title: Impostazioni avanzate
-        choose_product_tip: Puoi decidere di restringere tutti i prodotti disponibili (sia in entrata che in uscita) ai soli prodotti nell'inventario di  %{inventory}.
         preferred_product_selection_from_coordinator_inventory_only_here: Solo inventario del coordinatore
         preferred_product_selection_from_coordinator_inventory_only_all: Tutti i prodotti disponibili
         save_reload: Salva e ricarica la pagina
@@ -945,8 +954,7 @@ it:
       new: Nuovo Abbonamento
       create: Crea Abbonamento
       edit: Modifica Abbonamento
-      index:
-        please_select_a_shop: Seleziona un negozio
+      table:
         edit_subscription: Modifica Abbonamento
         pause_subscription: Metti in pausa l'abbonamento
         unpause_subscription: Riprendi abbonamento
@@ -975,6 +983,10 @@ it:
             I prezzi visualizzati sono solo una stima e saranno calcolati nel momento in cui l'abbonamento verrà cambiato.
             Se cambi i prezzi o le tariffe, le gentili richieste saranno aggiornate, ma l'abbonamento visualizzerà ancora i valori precedenti
         not_in_open_and_upcoming_order_cycles_warning: "Non ci sono cicli di richieste aperte o in apertura per questo prodotto."
+      autocomplete:
+        name_or_sku: "NOME O SKU"
+        quantity: "Quantità"
+        add: "Aggiungi"
       details:
         details: Dettagli
         invalid_error: Oops! Per favore compila i campi obbligatori...
@@ -990,16 +1002,21 @@ it:
         address: Indirizzo
         products: Prodotti
         no_open_or_upcoming_order_cycle: "Non sono previsti cicli di richieste."
+      products_panel:
+        save: "SALVA"
+        saving: "SALVATAGGIO"
+        saved: "SALVATO"
       product_already_in_order: Questo prodotto è già stato aggiunto alla gentile richiesta. Per favore modifica direttamente la quantità.
+      stock:
+        out_of_stock: "Esaurito"
       orders:
         number: Numero
         confirm_edit: Sei sicura/o di voler modificare questa gentile richiesta? Facendolo potrebbe essere più difficile in futuro sincronizzare le modifiche all'abbonamento
-      confirm_cancel_msg: Sei sicura/o di voler eliminare questo abbonamento? Quest'azione non potrà essere annullata.
-      cancel_failure_msg: 'Ci dispiace, eliminazione non riuscita!'
-      confirm_pause_msg: Sei sicura/o di voler mettere in pausa questo abbonamento?
-      pause_failure_msg: 'Spiacente, pausa fallita!'
-      confirm_unpause_msg: Sei sicura/o di voler riprendere questo abbonamento?
-      unpause_failure_msg: 'Ci dispiace, ripresa non riuscita!'
+      confirm_cancel_msg: "Sei sicura/o di voler eliminare questo abbonamento? Quest'azione non potrà essere annullata."
+      cancel_failure_msg: "Ci dispiace, eliminazione non riuscita!"
+      confirm_pause_msg: "Sei sicura/o di voler mettere in pausa questo abbonamento?"
+      pause_failure_msg: "Spiacente, pausa fallita!"
+      unpause_failure_msg: "Ci dispiace, ripresa non riuscita!"
       confirm_cancel_open_orders_msg: "Alcune di queste richieste sono attualmente attive. I consumatori sono già stati avvisati che le richieste verranno soddisfatte. Vuoi eliminare questa/e richiesta/e o mantenerla?"
       resume_canceled_orders_msg: "Alcuni ordini per questo abbonamento possono essere ripresi in questo momento. Puoi riprenderli dal menu a discesa degli ordini."
       yes_cancel_them: Cancella l'articolo
@@ -1036,7 +1053,9 @@ it:
       show_on_map: "Mostra tutto nella mappa"
   shared:
     menu:
-      cart:
+      signed_in:
+        profile: "Profilo"
+      joyride:
         checkout: "Checkout adesso"
         already_ordered_products: "Già richiesto in questo ciclo di richieste"
     register_call:
@@ -1072,11 +1091,7 @@ it:
   shop:
     messages:
       login: "fai il login"
-      register: "registrati"
       contact: "contatto"
-      require_customer_login: "Questo negozio è solo per clienti."
-      require_login_html: "Per favore, %{login} se hai già un account. Altrimenti %{register} per diventare un cliente."
-      require_customer_html: "Per favore %{contact} %{enterprise} per diventare un cliente."
   card_could_not_be_updated: La Carta non ha potuto essere rinnovata
   card_could_not_be_saved: La Carta non ha potuto essere salvata
   spree_gateway_error_flash_for_checkout: "C'è stato un problema con le informazioni sul pagamento: %{error}"
@@ -1146,6 +1161,7 @@ it:
   city_placeholder: es. Forlimpopoli
   postcode: CAP
   postcode_placeholder: es. 10040
+  suburb: Comune
   state: Stato
   country: Paese
   unauthorized: Non autorizzato
@@ -1353,6 +1369,7 @@ it:
   email_confirm_shop_number_html: "Conferma dell'Ordine <strong>#%{number}</strong>"
   email_order_summary_item: "Articolo"
   email_order_summary_quantity: "Qtà."
+  email_order_summary_sku: "SKU"
   email_order_summary_price: "Prezzo"
   email_order_summary_subtotal: "Subtotale:"
   email_order_summary_total: "Totale:"
@@ -1662,7 +1679,6 @@ it:
       introduction:
         registration_greeting: "Ciao!"
         registration_intro: "Adesso puoi creare un profilo come Produttore o Hub"
-        registration_checklist: "Ti servirà"
         registration_time: "5-10 minuti"
         registration_enterprise_address: "Indirizzo dell'azienda"
         registration_contact_details: "Dettagli del contatto principale"
@@ -2413,6 +2429,9 @@ it:
           add_a_new_customer_for: "Aggiungi un nuovo cliente per %{shop_name}"
           customer_placeholder: "cliente@esempio.org"
           valid_email_error: "Per favore inserisci un indirizzo email valido"
+      subscriptions:
+        new:
+          please_select_a_shop: "Seleziona un negozio"
     insufficient_stock: "Scorte disponibili insufficienti, solo %{on_hand} rimanenti"
     out_of_stock:
       reduced_stock_available: Quantità disponibile ridotta
@@ -2596,6 +2615,7 @@ it:
     continue: "Continua"
     fill_in_customer_info: "Si prega di compilare le informazioni del cliente"
     new_payment: "Nuovo pagamento"
+    capture: "Cattura"
     configurations: "Configurazioni"
     general_settings: "Impostazioni generali"
     site_name: "Nome del sito"
@@ -2697,6 +2717,7 @@ it:
     no_results: "Nessun risultato"
     create: "Crea"
     loading: "Caricamento"
+    amount: "Quantità"
     email: Email
     account_updated: "Account aggiornato!"
     my_account: "Il mio account"
@@ -2899,7 +2920,8 @@ it:
           confirmation_pending: "Email di conferma in sospeso. Abbiamo inviato una mail di conferma a %{address}."
       variants:
         autocomplete:
-          producer_name: Produttore
+          producer_name: "Produttore"
+          unit: "Unità"
       general_settings:
         edit:
           legal_settings: "Impostazioni Legali"
