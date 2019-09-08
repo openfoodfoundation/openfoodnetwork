@@ -24,7 +24,6 @@ gem 'spree_backend', github: 'openfoodfoundation/spree', branch: '2-1-0-stable'
 gem 'spree_core', github: 'openfoodfoundation/spree', branch: '2-1-0-stable'
 
 gem 'spree_i18n', github: 'spree/spree_i18n', branch: '1-3-stable'
-gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '2-1-stable', ref: '1c436c738d0f086b2ca0f75a977ac16bc6cb98b9'
 
 # Our branch contains two changes
 # - Pass customer email and phone number to PayPal (merged to upstream master)
