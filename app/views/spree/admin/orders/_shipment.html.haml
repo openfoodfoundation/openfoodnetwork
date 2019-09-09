@@ -8,7 +8,7 @@
         = Spree.t("shipment_states.#{shipment.state}")
       - if shipment.ready? and can? :update, shipment
         = "-"
-        = link_to 'ship', '#', :class => 'ship button icon-arrow-right', :data => { 'shipment-number' => shipment.number }
+        = link_to t(:ship), '#', :class => 'ship button icon-arrow-right', :data => { 'shipment-number' => shipment.number }
 
   %table.stock-contents.index{ "data-hook" => "stock-contents" }
     %colgroup
