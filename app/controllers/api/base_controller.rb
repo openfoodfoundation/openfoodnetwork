@@ -15,9 +15,9 @@ module Api
     before_filter :authenticate_user
     after_filter  :set_jsonp_format
 
-    rescue_from Exception, :with => :error_during_processing
-    rescue_from CanCan::AccessDenied, :with => :unauthorized
-    rescue_from ActiveRecord::RecordNotFound, :with => :not_found
+    rescue_from Exception, with: :error_during_processing
+    rescue_from CanCan::AccessDenied, with: :unauthorized
+    rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
     helper Spree::Api::ApiHelpers
 
@@ -33,10 +33,10 @@ module Api
     check_authorization
 
     def set_jsonp_format
-      if params[:callback] && request.get?
-        self.response_body = "#{params[:callback]}(#{response_body})"
-        headers["Content-Type"] = 'application/javascript'
-      end
+      return unless params[:callback] && request.get?
+
+      self.response_body = "#{params[:callback]}(#{response_body})"
+      headers["Content-Type"] = 'application/javascript'
     end
 
     def respond_with_conflict(json_hash)
@@ -54,9 +54,9 @@ module Api
         return
       end
 
-      unless @current_api_user = Spree.user_class.find_by_spree_api_key(api_key.to_s)
-        invalid_api_key
-      end
+      return if @current_api_user = Spree.user_class.find_by_spree_api_key(api_key.to_s)
+
+      invalid_api_key
     end
 
     def set_content_type
@@ -82,7 +82,6 @@ module Api
       request.headers["X-Spree-Token"] || params[:token]
     end
     helper_method :api_key
-
 
     def invalid_resource!(resource)
       @resource = resource
