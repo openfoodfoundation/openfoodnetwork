@@ -15,6 +15,19 @@ Openfoodnetwork::Application.routes.draw do
 
     resources :variants, :only => [:index]
 
+    resources :orders, only: [:index] do
+      get :managed, on: :collection
+
+      resources :shipments, :only => [:create, :update] do
+        member do
+          put :ready
+          put :ship
+          put :add
+          put :remove
+        end
+      end
+    end
+
     resources :enterprises do
       post :update_image, on: :member
       get :managed, on: :collection
@@ -32,8 +45,6 @@ Openfoodnetwork::Application.routes.draw do
       get :managed, on: :collection
       get :accessible, on: :collection
     end
-
-    resources :orders, only: [:index]
 
     resource :status do
       get :job_queue
