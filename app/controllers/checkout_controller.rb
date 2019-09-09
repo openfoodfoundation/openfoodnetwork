@@ -152,6 +152,7 @@ class CheckoutController < Spree::CheckoutController
   end
 
   def update_failed
+    current_order.updater.shipping_address_from_distributor
     RestartCheckout.new(@order).call
 
     respond_to do |format|
