@@ -18,9 +18,9 @@ tags:
     description: Cookies_Consent endpoints
   - name: orders
     description: Order endpoints
-  
+
 paths:
-  /products:
+  /products/bulk_products:
     get:
       description: Gets all Products.
       tags:
@@ -33,18 +33,36 @@ paths:
               schema:
                 type: object
                 properties:
-                  count:
-                    type: integer
-                  total_count:
-                    type: integer
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
                   pages:
                     type: integer
                   products:
                     type: array
                     items:
                       $ref: '#/components/schemas/Product'
-                  current_page:
+  /products/overridable:
+    get:
+      description: Gets all Products.
+      tags:
+        - products
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+                  pages:
                     type: integer
+                  products:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+  /products:
     post:
       description: Posts a new Product.
       tags:
@@ -58,7 +76,7 @@ paths:
               product:
                 $ref: '#/components/schemas/Product'
           required: true
-          description: JSON object representing the Product to be posted. Only attributes listed in the Product required_attributes object are required (obtainable via GET /products/new).
+          description: JSON object representing the Product to be posted.
       responses:
         '201':
           description: successful post
@@ -66,20 +84,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Product'
-                  
-  /products/new:
-    get:
-      description: Gets an object consisting of an array of all Product attributes and an array of required attributes to create a new Product object.
-      tags:
-        - products
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/New'
-      
+
   /products/{product_id}:
     get:
       description: Gets a Product by ID.
@@ -140,7 +145,43 @@ paths:
       responses:
         '204':
           description: successful deletion
-                  
+
+  /products/{product_id}/clone:
+    post:
+      description: Clones a Product by ID.
+      tags:
+        - products
+      parameters:
+        - in: path
+          name: product_id
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the Product to clone.
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+
+  /products/{product_id}/soft_delete:
+    delete:
+      description: Soft deletes the Product with the given ID.
+      tags:
+        - products
+      parameters:
+          - in: path
+            name: product_id
+            schema:
+              type: integer
+            required: true
+            description: Numeric ID of the Product.
+      responses:
+        '204':
+          description: successful deletion
+
   /products/{product_id}/variants:
     get:
       description: Gets all Variants of the given Product.
@@ -299,7 +340,7 @@ paths:
       responses:
         '204':
           description: successful deletion
-  
+
   /taxonomies:
     get:
       description: Gets all Taxonomies.
@@ -667,6 +708,17 @@ components:
       name: api_key
       in: header
   schemas:
+    Pagination:
+      type: object
+      properties:
+        results:
+          type: integer
+        pages:
+          type: integer
+        page:
+          type: integer
+        per_page:
+          type: integer
     Product:
       type: object
       properties:
