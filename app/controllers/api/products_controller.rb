@@ -47,7 +47,6 @@ module Api
       render json: @product, serializer: Api::Admin::ProductSerializer, status: 204
     end
 
-    # TODO: This should be named 'managed'. Is the action above used? Maybe we should remove it.
     def bulk_products
       product_query = OpenFoodNetwork::Permissions.new(current_api_user).
         editable_products.merge(product_scope)
