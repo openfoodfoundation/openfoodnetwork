@@ -127,6 +127,9 @@ module Api
 
       render text: {
         products: serializer,
+        # This line is used by the PagedFetcher JS service (inventory).
+        pages: products.num_pages,
+        # This hash is used by the BulkProducts JS service.
         pagination: pagination_data(products)
       }.to_json
     end
