@@ -10,16 +10,10 @@ tags:
     description: Product endpoints
   - name: product variants
     description: Product variant endpoints
-  - name: zones
-    description: Zone endpoints
-  - name: states
-    description: State endpoints
   - name: taxonomies
     description: Taxonomy endpoints
   - name: taxons
     description: Taxon endpoints
-  - name: countries
-    description: Country endpoints
   - name: cookies_consent
     description: Cookies_Consent endpoints
   - name: orders
@@ -305,151 +299,7 @@ paths:
       responses:
         '204':
           description: successful deletion
-          
-  /zones:
-    get:
-      description: Gets all Zones.
-      tags:
-        - zones
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  count:
-                    type: integer
-                  current_page:
-                    type: integer
-                  pages:
-                    type: integer
-                  zones:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Zone'
-    post:
-      description: Posts a new Zone.
-      tags:
-        - zones
-      parameters:
-        - in: path
-          name: zone_object
-          schema:
-            type: object
-            properties:
-              zone:
-                $ref: '#/components/schemas/Zone'
-          required: true
-          description: JSON object representing the Zone to be posted. Only attributes listed in the Zone required_attributes object are required (obtainable via GET /zones/new).
-      responses:
-        '201':
-          description: successful post
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Zone'
-                
-  /zones/{zone_id}:
-    get:
-      description: Gets a Zone by ID.
-      tags:
-        - zones
-      parameters:
-        - in: path
-          name: zone_id
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Zone.
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Zone'
-    put:
-      description: Updates the Zone with the given ID.
-      tags:
-        - zones
-      parameters:
-        - in: path
-          name: zone_id
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Zone.
-        - in: path
-          name: zone_object
-          schema:
-            type: object
-            properties:
-              zone:
-                $ref: '#/components/schemas/Zone'
-          required: true
-          description: JSON object representing the Zone attributes to be overwritten.
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Zone'
-    delete:
-      description: Deletes the Zone with the given ID.
-      tags:
-        - zones
-      parameters:
-          - in: path
-            name: zone_id
-            schema:
-              type: integer
-            required: true
-            description: Numeric ID of the Zone.
-      responses:
-        '204':
-          description: successful deletion
-                  
-  /states:
-    get:
-      description: Gets all States.
-      tags:
-        - states
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  states:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/State'
-                  
-  /states/{state_id}:
-    get:
-      description: Get a State with the given ID.
-      tags:
-        - states
-      parameters:
-        - in: path
-          name: state_id
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the State.
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/State'
-                
+  
   /taxonomies:
     get:
       description: Gets all Taxonomies.
@@ -733,51 +583,7 @@ paths:
       responses:
         '204':
           description: successful deletion
-                
-  /countries:
-    get:
-      description: Gets all Countries.
-      tags:
-        - countries
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  count:
-                    type: string
-                  current_page:
-                    type: integer
-                  countries:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Country'
-                  pages:
-                    type: integer
-                    
-  /countries/{country_id}:
-    get:
-      description: Gets the country with the given ID.
-      tags:
-        - countries
-      parameters:
-        - in: path
-          name: country_id
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Country.
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Country'
-                
+
   /cookies/consent:
     get:
       description: Gets the client's Cookies_Consent status.
@@ -937,18 +743,6 @@ components:
           type: object
         images: 
           type: object
-    Zone:
-      type: object
-      properties:
-        id: 
-          type: integer
-        description: 
-          type: string
-        zone_members:
-          type: array
-          items: {}
-        name: 
-          type: string
     Taxonomy:
       type: object
       properties:
