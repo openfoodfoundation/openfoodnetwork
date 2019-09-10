@@ -104,6 +104,9 @@ Spree::Core::Engine.routes.prepend do
 
   resources :products
 
+  # Used by spree_paypal_express
+  get '/checkout/:state', :to => 'checkout#edit', :as => :checkout_state
+
   get '/unauthorized', :to => 'home#unauthorized', :as => :unauthorized
   get '/content/cvv', :to => 'content#cvv', :as => :cvv
   get '/content/*path', :to => 'content#show', :as => :content
