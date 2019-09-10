@@ -1,32 +1,31 @@
 require 'spec_helper'
 
 feature "
-  As an Administrator
-  With products I can add to my hub's inventory
-  I want to override the stock level and price of those products
+  Managing a hub's inventory
+  I want to override the stock level and price of products
   Without affecting other hubs that share the same products
 ", js: true do
   include AdminHelper
   include AuthenticationWorkflow
   include WebHelper
 
-  let!(:hub) { create(:distributor_enterprise) }
-  let!(:hub2) { create(:distributor_enterprise) }
-  let!(:producer) { create(:supplier_enterprise) }
-  let!(:producer_managed) { create(:supplier_enterprise) }
-  let!(:producer_related) { create(:supplier_enterprise) }
-  let!(:producer_unrelated) { create(:supplier_enterprise) }
-  let!(:er1) {
-    create(:enterprise_relationship, parent: producer, child: hub,
-                                     permissions_list: [:create_variant_overrides])
-  }
-  let!(:er2) {
-    create(:enterprise_relationship, parent: producer_related, child: hub,
-                                     permissions_list: [:create_variant_overrides])
-  }
-
-  context "as an enterprise user" do
+  context "as the manager of a hub" do
+    let!(:hub) { create(:distributor_enterprise) }
+    let!(:hub2) { create(:distributor_enterprise) }
+    let!(:producer) { create(:supplier_enterprise) }
+    let!(:producer_managed) { create(:supplier_enterprise) }
+    let!(:producer_related) { create(:supplier_enterprise) }
+    let!(:producer_unrelated) { create(:supplier_enterprise) }
+    let!(:er1) {
+      create(:enterprise_relationship, parent: producer, child: hub,
+                                       permissions_list: [:create_variant_overrides])
+    }
+    let!(:er2) {
+      create(:enterprise_relationship, parent: producer_related, child: hub,
+                                       permissions_list: [:create_variant_overrides])
+    }
     let(:user) { create_enterprise_user enterprises: [hub, producer_managed] }
+
     before { quick_login_as user }
 
     describe "selecting a hub" do
@@ -452,6 +451,35 @@ feature "
           expect(page).to have_selector "table#hidden-products tr#v_#{variant2.id}"
         end
       end
+    end
+  end
+
+  context "as the manager of a farm shop" do
+    it "shows more than 100 products in my inventory" do
+      supplier = create(:supplier_enterprise, sells: "own")
+      inventory_items = (1..101).map do
+        product = create(:simple_product, supplier: supplier)
+        InventoryItem.create!(
+          enterprise: supplier,
+          variant: product.variants.first,
+          visible: true
+        )
+      end
+      first_variant = inventory_items.first.variant
+      last_variant = inventory_items.last.variant
+      first_variant.product.update_attributes!(name: "A First Product")
+      last_variant.product.update_attributes!(name: "Z Last Product")
+      quick_login_as supplier.users.first
+      visit admin_inventory_path
+
+      expect(page).to have_text first_variant.name
+      expect(page).to have_selector "tr.product", count: 10
+      expect(page).to have_button "Show more"
+      expect(page).to have_button "Show all (91  More)"
+
+      click_button "Show all (91  More)"
+      expect(page).to have_selector "tr.product", count: 101
+      expect(page).to have_text last_variant.name
     end
   end
 
