@@ -138,11 +138,11 @@ describe VariantOverride do
       end
 
       it "soft-deletes the price" do
-        expect(price_object.deleted_at).to_not be_nil
+        expect(price_object.reload.deleted_at).to_not be_nil
       end
 
       it "can access the soft-deleted price" do
-        expect(variant_with_price.default_price).to eq price_object
+        expect(variant_with_price.reload.default_price).to eq price_object
         expect(variant_with_price.price).to eq 123.45
       end
     end

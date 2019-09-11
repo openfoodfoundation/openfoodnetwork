@@ -28,7 +28,7 @@ module Spree
       end
 
       it "can access the variant" do
-        expect(price.variant).to eq variant
+        expect(price.reload.variant).to eq variant
       end
     end
   end
