@@ -10,14 +10,14 @@ tags:
     description: Product endpoints
   - name: product variants
     description: Product variant endpoints
+  - name: orders
+    description: Order endpoints
   - name: taxonomies
     description: Taxonomy endpoints
   - name: taxons
     description: Taxon endpoints
   - name: cookies_consent
     description: Cookies_Consent endpoints
-  - name: orders
-    description: Order endpoints
 
 paths:
   /products/bulk_products:
@@ -343,6 +343,46 @@ paths:
         '204':
           description: successful deletion
 
+  /orders:
+    get:
+      description: Gets all Orders.
+      tags:
+        - orders
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  orders:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Order_Concise'
+                  pagination:
+                    type: string
+
+  /orders/{order_number}:
+    get:
+      description: Gets the Order with the given number.
+      tags:
+        - orders
+      parameters:
+        - in: path
+          name: order_number
+          schema:
+            type: string
+          required: true
+          description: Alphanumeric string identifier for the Order.
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order_Verbose'
+
   /taxonomies:
     get:
       description: Gets all Taxonomies.
@@ -661,48 +701,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Cookies_Consent'
-                
-  /orders:
-    get:
-      description: Gets all Orders.
-      tags:
-        - orders
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  orders:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Order_Concise'
-                  pagination:
-                    type: string
-                    
-  /orders/{order_number}:
-    get:
-      description: Gets the Order with the given number.
-      tags:
-        - orders
-      parameters:
-        - in: path
-          name: order_number
-          schema:
-            type: string
-          required: true
-          description: Alphanumeric string identifier for the Order.
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Order_Verbose'
-                  
-    
+
 components:
   securitySchemes:
     api_key:
