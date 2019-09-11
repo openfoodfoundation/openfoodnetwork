@@ -7,3 +7,5 @@
 = tab :enterprises, :url => main_app.admin_enterprises_path
 = tab :customers, :url => main_app.admin_customers_path
 = tab :enterprise_groups, :url => main_app.admin_enterprise_groups_path, label: 'groups'
+- if can? :admin, Spree::User
+  = tab(:users, url: spree.admin_users_path, icon: 'icon-user')
