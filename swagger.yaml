@@ -241,27 +241,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Variant'
-                  
-  /products/{product_id}/variants/new:
-    get:
-      description: Gets an object consisting of an array of all Variant attributes and an array of required attributes to create a new Variant object.
-      tags:
-        - product variants
-      parameters:
-        - in: path
-          name: product_id
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Product.
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/New'
-                  
+
   /products/{product_id}/variants/{variant_id}:
     get:
       description: Gets a Variant by ID.
@@ -322,6 +302,28 @@ paths:
                 $ref: '#/components/schemas/Variant'
     delete:
       description: Deletes the Variant with the given ID.
+      tags:
+        - product variants
+      parameters:
+          - in: path
+            name: product_id
+            schema:
+              type: integer
+            required: true
+            description: Numeric ID of the Product.
+          - in: path
+            name: variant_id
+            schema:
+              type: integer
+            required: true
+            description: Numeric ID of the Variant.
+      responses:
+        '204':
+          description: successful deletion
+
+  /products/{product_id}/variants/{variant_id}/soft_delete:
+    delete:
+      description: Soft-deletes the Variant with the given ID.
       tags:
         - product variants
       parameters:
