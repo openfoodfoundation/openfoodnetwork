@@ -245,6 +245,8 @@ nb:
   expired: er utløpt, vennligst be om en ny
   back_to_payments_list: "Tilbake til betalingsliste"
   maestro_or_solo_cards: "Maestro/Solo kort"
+  backordered: "Restbestilte"
+  ship: "Levere"
   actions:
     create_and_add_another: "Opprett og legg til en annen"
     create: "Opprett"
@@ -919,7 +921,7 @@ nb:
       hidden: SKJULTE
       unitsize: ENHETSSTØRRELSE
       total: SUM
-      total_items: ANTALL
+      total_items: TOTALT ANTALL
       supplier_totals: Bestillingsrunde Leverandør Sum
       supplier_totals_by_distributor: Bestillingsrunde Leverandør Totaler etter Distributør
       totals_by_supplier: Bestillingsrunde Distributør Totaler etter Leverandør
@@ -1116,7 +1118,6 @@ nb:
       footer_data_text_without_privacy_policy_html: "Vi tar godt vare på dine data. Se vår %{cookies_policy}"
       footer_data_privacy_policy: "personvernpolicy"
       footer_data_cookies_policy: "policy informasjonskapsler"
-      footer_skylight_dashboard_html: Ytelsesdata er tilgjengelig på %{dashboard}.
   shop:
     messages:
       login: "innlogging"
@@ -2627,6 +2628,8 @@ nb:
     name_or_sku: "Navn eller SKU (skriv inn minst 4 tegn av produktnavn)"
     resend: Send på nytt
     back_to_orders_list: Tilbake til Bestillingsliste
+    return_authorizations: Returneringsautorisasjoner
+    cannot_create_returns: Kan ikke opprette retur da denne bestillingen ikke har noen sendte elementer.
     select_stock: "Velg lager"
     location: "Plassering"
     count_on_hand: "Antall På Lager"
