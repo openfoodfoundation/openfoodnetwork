@@ -35,7 +35,7 @@ We use [BrowserStack](https://www.browserstack.com/) as a manual testing tool. B
 Copyright (c) 2012 - 2019 Open Food Foundation, released under the AGPL licence.
 
 [survey]: https://docs.google.com/a/eaterprises.com.au/forms/d/1zxR5vSiU9CigJ9cEaC8-eJLgYid8CR8er7PPH9Mc-30/edit#
-[slack-invite]: https://openfoodnetwork.org/slack-invite
+[slack-invite]: https://join.slack.com/t/openfoodnetwork/shared_invite/enQtMzU2Mjk5MDc2MjA5LTM4ZTAzZjIwNzIxMmU5ODFiNWY1MTU2ZWUyNzQwNjdjNTY0N2VhY2UwOGU4ZmVjNzYyZDU2NjY3NzZkZmQwYjk
 [contributor-guide]: https://ofn-user-guide.gitbook.io/ofn-contributor-guide/who-are-we
 [ofn-install]: https://github.com/openfoodfoundation/ofn-install
 [super-admin-guide]: https://ofn-user-guide.gitbook.io/ofn-super-admin-guide
