@@ -237,7 +237,7 @@ paths:
               variant:
                 $ref: '#/components/schemas/Variant'
           required: true
-          description: JSON object representing the Variant to be posted. Only attributes listed in the Variant required_attributes object are required (obtainable via GET /products/{product_id}/variants/new).
+          description: JSON object representing the Variant to be posted.
       responses:
         '201':
           description: successful post
@@ -580,7 +580,7 @@ paths:
               taxonomy:
                 $ref: '#/components/schemas/Taxonomy'
           required: true
-          description: JSON object representing the Taxonomy to be posted. Only attributes listed in the Taxonomy required_attributes object are required (obtainable via GET /taxonomies/new).
+          description: JSON object representing the Taxonomy to be posted.
       responses:
         '201':
           description: successful post
@@ -588,20 +588,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Taxonomy'
-                
-  /taxonomies/new:
-    get:
-      description: Gets an object consisting of an array of all Taxonomy attributes and an array of required attributes to create a new Taxonomy object.
-      tags:
-        - taxonomies
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/New'
-        
+
   /taxonomies/{taxonomy_id}:
     get:
       description: Gets a Taxonomy by ID.
@@ -718,7 +705,7 @@ paths:
               taxon:
                 $ref: '#/components/schemas/Taxon'
           required: true
-          description: JSON object representing the Taxon to be posted. Only attributes listed in the Taxon required_attributes object are required (obtainable via GET /taxonomies/{taxonomy_id}/taxons/new).
+          description: JSON object representing the Taxon to be posted.
       responses:
         '201':
           description: successful post
@@ -728,27 +715,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Taxon'
-                  
-  /taxonomies/{taxonomy_id}/taxons/new:
-    get:
-      description: Gets an object consisting of an array of all Taxon attributes and an array of required attributes to create a new Taxon object in a given Taxonomy.
-      tags:
-        - taxons
-      parameters:
-        - in: path
-          name: taxonomy_id
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Taxonomy.
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/New'
-        
+
   /taxonomies/{taxonomy_id}/taxons/{taxon_id}:
     get:
       description: Gets a Taxon by ID from the Taxonomy at the given Taxonomy ID.
@@ -915,18 +882,6 @@ components:
         product_properties: 
           type: object
 
-    New:
-      type: object
-      properties:
-        required_attributes:
-          type: array
-          items:
-            type: string
-        attributes:
-          type: array
-          items:
-            type: string
-      
     Variant:
       type: object
       properties:
