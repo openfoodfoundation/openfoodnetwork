@@ -43,6 +43,7 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Product'
+
   /products/overridable:
     get:
       description: Gets all Products.
@@ -64,6 +65,7 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Product'
+
   /products:
     post:
       description: Posts a new Product.
@@ -398,6 +400,7 @@ paths:
       responses:
         '201':
           description: Shipment successfully created
+
   /orders/{order_number}/shipments/{shipment_number}.json:
     put:
       description: Updates shipment.
@@ -428,6 +431,7 @@ paths:
       responses:
         '200':
           description: Successful operation.
+
   /orders/{order_number}/shipments/{shipment_number}/add.json:
     put:
       description: Adds a variant quantity to the given shipment.
@@ -461,6 +465,7 @@ paths:
       responses:
         '200':
           description: Variant quantity successfully added.
+
   /orders/{order_number}/shipments/{shipment_number}/remove.json:
     delete:
       description: Removes a variant from the given shipment.
@@ -494,6 +499,7 @@ paths:
       responses:
         '200':
           description: Variant quantity successfully rmeoved.
+
   /orders/{order_number}/shipments/{shipment_number}/ready.json:
     delete:
       description: Moves the shipment to the ready state.
@@ -515,6 +521,7 @@ paths:
       responses:
         '200':
           description: Successful workflow change.
+
   /orders/{order_number}/shipments/{shipment_number}/ship.json:
     delete:
       description: Moves the shipment to the shipped state.
@@ -907,6 +914,7 @@ components:
           type: object
         product_properties: 
           type: object
+
     New:
       type: object
       properties:
@@ -951,49 +959,6 @@ components:
         images: 
           type: object
 
-    Shipment:
-      type: object
-      properties:
-        selected_shipping_rate_id: 
-          type: integer
-          
-    Taxonomy:
-      type: object
-      properties:
-        root: 
-          type: object
-        id: 
-          type: integer
-        name: 
-          type: string
-    Taxon:
-      type: object
-      properties:
-        name: 
-          type: string
-        taxonomy_id:
-          type: integer
-        position:
-          type: integer
-        permalink:
-          type: string
-        taxons:
-          type: array
-          items:
-            $ref: '#/components/schemas/Taxon'
-        pretty_name: 
-          type: string
-        id: 
-          type: integer  
-        parent_id:
-          type: integer
-    Cookies_Consent:
-      type: object
-      properties:
-        cookies_consent:
-          type: boolean
-      example:
-        cookies_consent: false
     Order_Concise:
       type: object
       properties:
@@ -1047,3 +1012,48 @@ components:
           properties:
             id:
               type: integer
+
+    Shipment:
+      type: object
+      properties:
+        selected_shipping_rate_id:
+          type: integer
+
+    Taxonomy:
+      type: object
+      properties:
+        root:
+          type: object
+        id:
+          type: integer
+        name:
+          type: string
+    Taxon:
+      type: object
+      properties:
+        name:
+          type: string
+        taxonomy_id:
+          type: integer
+        position:
+          type: integer
+        permalink:
+          type: string
+        taxons:
+          type: array
+          items:
+            $ref: '#/components/schemas/Taxon'
+        pretty_name:
+          type: string
+        id:
+          type: integer
+        parent_id:
+          type: integer
+
+    Cookies_Consent:
+      type: object
+      properties:
+        cookies_consent:
+          type: boolean
+      example:
+        cookies_consent: false
