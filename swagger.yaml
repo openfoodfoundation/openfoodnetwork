@@ -14,6 +14,8 @@ tags:
     description: Order endpoints
   - name: shipments
     description: Order shipments endpoints
+  - name: enterprises
+    description: Enterprises endpoints
   - name: taxonomies
     description: Taxonomy endpoints
   - name: taxons
@@ -400,6 +402,10 @@ paths:
       responses:
         '201':
           description: Shipment successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shipment'
 
   /orders/{order_number}/shipments/{shipment_number}.json:
     put:
@@ -431,6 +437,10 @@ paths:
       responses:
         '200':
           description: Successful operation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shipment'
 
   /orders/{order_number}/shipments/{shipment_number}/add.json:
     put:
@@ -467,7 +477,7 @@ paths:
           description: Variant quantity successfully added.
 
   /orders/{order_number}/shipments/{shipment_number}/remove.json:
-    delete:
+    put:
       description: Removes a variant from the given shipment.
       tags:
         - shipments
@@ -501,7 +511,7 @@ paths:
           description: Variant quantity successfully rmeoved.
 
   /orders/{order_number}/shipments/{shipment_number}/ready.json:
-    delete:
+    put:
       description: Moves the shipment to the ready state.
       tags:
         - shipments
@@ -523,7 +533,7 @@ paths:
           description: Successful workflow change.
 
   /orders/{order_number}/shipments/{shipment_number}/ship.json:
-    delete:
+    put:
       description: Moves the shipment to the shipped state.
       tags:
         - shipments
@@ -543,6 +553,50 @@ paths:
       responses:
         '200':
           description: Successful workflow change.
+
+  /enterprises:
+    post:
+      description: Creates a new Enterprise.
+      tags:
+        - enterprises
+      parameters:
+          - in: path
+            name: enterprise_object
+            schema:
+              type: object
+              properties:
+                variant:
+                  $ref: '#/components/schemas/Enterprise'
+            required: true
+            description: JSON object representing the Enterprise attributes to be created.
+      responses:
+        '201':
+          description: Enterprise successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Enterprise'
+    put:
+      description: Updates an Enterprise.
+      tags:
+        - enterprises
+      parameters:
+          - in: path
+            name: enterprise_object
+            schema:
+              type: object
+              properties:
+                variant:
+                  $ref: '#/components/schemas/Enterprise'
+            required: true
+            description: JSON object representing the Enterprise to be overwritten.
+      responses:
+        '200':
+          description: Enterprise successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Enterprise'
 
   /taxonomies:
     get:
@@ -972,6 +1026,16 @@ components:
       type: object
       properties:
         selected_shipping_rate_id:
+          type: integer
+
+    Enterprise:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        owner_id:
           type: integer
 
     Taxonomy:
