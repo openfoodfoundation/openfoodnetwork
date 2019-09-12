@@ -12,6 +12,8 @@ tags:
     description: Product variant endpoints
   - name: orders
     description: Order endpoints
+  - name: shipments
+    description: Order shipments endpoints
   - name: taxonomies
     description: Taxonomy endpoints
   - name: taxons
@@ -362,6 +364,178 @@ paths:
                       $ref: '#/components/schemas/Order_Concise'
                   pagination:
                     type: string
+
+  /orders/{order_number}/shipments.json:
+    post:
+      description: Creates a new Shipment and adds given variant.
+      tags:
+        - shipments
+      parameters:
+          - in: path
+            name: order_number
+            schema:
+              type: integer
+            required: true
+            description: Number (not id) of the Order being changed.
+          - in: path
+            name: variant_id
+            schema:
+              type: integer
+            required: true
+            description: Numeric ID of the Variant to be added to the shipment.
+          - in: path
+            name: quantity
+            schema:
+              type: integer
+            required: true
+            description: Quantity of the variant to be added to the shipment.
+          - in: path
+            name: stock_location_id
+            schema:
+              type: integer
+            required: true
+            description: Stock location ID to be used to source the variant (for each OFN there's only one valid ID to be used here).
+      responses:
+        '201':
+          description: Shipment successfully created
+  /orders/{order_number}/shipments/{shipment_number}.json:
+    put:
+      description: Updates shipment.
+      tags:
+        - shipments
+      parameters:
+          - in: path
+            name: order_number
+            schema:
+              type: integer
+            required: true
+            description: Number (not id) of the Order being changed.
+          - in: path
+            name: shipment_number
+            schema:
+              type: integer
+            required: true
+            description: Number (not id) of the Shipment being changed.
+          - in: path
+            name: shipment_object
+            schema:
+              type: object
+              properties:
+                product:
+                  $ref: '#/components/schemas/Shipment'
+            required: true
+            description: JSON object representing the Shipmeent attributes to be overwritten.
+      responses:
+        '200':
+          description: Successful operation.
+  /orders/{order_number}/shipments/{shipment_number}/add.json:
+    put:
+      description: Adds a variant quantity to the given shipment.
+      tags:
+        - shipments
+      parameters:
+          - in: path
+            name: order_number
+            schema:
+              type: integer
+            required: true
+            description: Number (not id) of the Order being changed.
+          - in: path
+            name: shipment_number
+            schema:
+              type: integer
+            required: true
+            description: Number (not id) of the Shipment being changed.
+          - in: path
+            name: variant_id
+            schema:
+              type: integer
+            required: true
+            description: Numeric ID of the Variant to be added to the shipment.
+          - in: path
+            name: quantity
+            schema:
+              type: integer
+            required: true
+            description: Quantity of the variant to be added to the shipment.
+      responses:
+        '200':
+          description: Variant quantity successfully added.
+  /orders/{order_number}/shipments/{shipment_number}/remove.json:
+    delete:
+      description: Removes a variant from the given shipment.
+      tags:
+        - shipments
+      parameters:
+          - in: path
+            name: order_number
+            schema:
+              type: integer
+            required: true
+            description: Number (not id) of the Order being changed.
+          - in: path
+            name: shipment_number
+            schema:
+              type: integer
+            required: true
+            description: Number (not id) of the Shipment being changed.
+          - in: path
+            name: variant_id
+            schema:
+              type: integer
+            required: true
+            description: Numeric ID of the Variant to be removed from the shipment.
+          - in: path
+            name: quantity
+            schema:
+              type: integer
+            required: true
+            description: Quantity of the variant to be removed from the shipment.
+      responses:
+        '200':
+          description: Variant quantity successfully rmeoved.
+  /orders/{order_number}/shipments/{shipment_number}/ready.json:
+    delete:
+      description: Moves the shipment to the ready state.
+      tags:
+        - shipments
+      parameters:
+          - in: path
+            name: order_number
+            schema:
+              type: integer
+            required: true
+            description: Number (not id) of the Order being changed.
+          - in: path
+            name: shipment_number
+            schema:
+              type: integer
+            required: true
+            description: Number (not id) of the Shipment being changed.
+      responses:
+        '200':
+          description: Successful workflow change.
+  /orders/{order_number}/shipments/{shipment_number}/ship.json:
+    delete:
+      description: Moves the shipment to the shipped state.
+      tags:
+        - shipments
+      parameters:
+          - in: path
+            name: order_number
+            schema:
+              type: integer
+            required: true
+            description: Number (not id) of the Order being changed.
+          - in: path
+            name: shipment_number
+            schema:
+              type: integer
+            required: true
+            description: Number (not id) of the Shipment being changed.
+      responses:
+        '200':
+          description: Successful workflow change.
 
   /taxonomies:
     get:
@@ -776,6 +950,13 @@ components:
           type: object
         images: 
           type: object
+
+    Shipment:
+      type: object
+      properties:
+        selected_shipping_rate_id: 
+          type: integer
+          
     Taxonomy:
       type: object
       properties:
