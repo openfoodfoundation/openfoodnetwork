@@ -19,9 +19,7 @@ tags:
   - name: enterprises
     description: Enterprises endpoints
   - name: taxonomies
-    description: Taxonomy endpoints
-  - name: taxons
-    description: Taxon endpoints
+    description: Taxonomies endpoints
   - name: cookies_consent
     description: Cookies_Consent endpoints
 
@@ -776,133 +774,12 @@ paths:
       responses:
         '204':
           description: Enterprise fee successfully deleted.
-  
-  /taxonomies:
-    get:
-      description: Gets all Taxonomies.
-      tags:
-        - taxonomies
-      responses:
-        '200':
-          description: Successful operation.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  count:
-                    type: integer
-                  current_page:
-                    type: integer
-                  taxonomies:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Taxonomy'
-                  pages:
-                    type: integer
-    post:
-      description: Posts a new Taxonomy.
-      tags:
-        - taxonomies
-      parameters:
-        - in: path
-          name: taxonomy_object
-          schema:
-            type: object
-            properties:
-              taxonomy:
-                $ref: '#/components/schemas/Taxonomy'
-          required: true
-          description: JSON object representing the Taxonomy to be posted.
-      responses:
-        '201':
-          description: successful post
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Taxonomy'
 
-  /taxonomies/{taxonomy_id}:
-    get:
-      description: Gets a Taxonomy by ID.
-      tags:
-        - taxonomies
-      parameters:
-        - in: path
-          name: taxonomy_id
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Taxonomy.
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Taxonomy'
-    put:
-      description: Updates the Taxonomy with the given ID.
-      tags:
-        - taxonomies
-      parameters:
-        - in: path
-          name: taxonomy_id
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Taxonomy.
-        - in: path
-          name: taxonomy_object
-          schema:
-            type: object
-            properties:
-              taxonomy:
-                $ref: '#/components/schemas/Taxonomy'
-          required: true
-          description: JSON object representing the Taxonomy attributes to be overwritten.
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Taxonomy'
-    delete:
-      description: Deletes the Taxonomy with the given ID.
-      tags:
-        - taxonomies
-      parameters:
-          - in: path
-            name: taxonomy_id
-            schema:
-              type: integer
-            required: true
-            description: Numeric ID of the Taxonomy.
-      responses:
-        '204':
-          description: successful deletion
-                
-  /taxons:
-    get:
-      description: Gets all Taxons.
-      tags:
-        - taxons
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Taxon'
-                  
   /taxonomies/{taxonomy_id}/taxons/:
     get:
       description: Gets all Taxons belonging to a given Taxonomy.
       tags:
-        - taxons
+        - taxonomies
       parameters:
         - in: path
           name: taxonomy_id
@@ -922,7 +799,7 @@ paths:
     post:
       description: Posts a new Taxon to a given Taxonomy.
       tags:
-        - taxons
+        - taxonomies
       parameters:
         - in: path
           name: taxonomy_id
@@ -950,34 +827,10 @@ paths:
                   $ref: '#/components/schemas/Taxon'
 
   /taxonomies/{taxonomy_id}/taxons/{taxon_id}:
-    get:
-      description: Gets a Taxon by ID from the Taxonomy at the given Taxonomy ID.
-      tags:
-        - taxons
-      parameters:
-        - in: path
-          name: taxonomy_id
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Taxonomy.
-        - in: path
-          name: taxon_id
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Taxon.
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Taxon'
     put:
       description: Updates the Taxon with the given Taxon ID in the Taxonomy with the given Taxonomy ID.
       tags:
-        - taxons
+        - taxonomies
       parameters:
         - in: path
           name: taxonomy_id
@@ -1010,7 +863,7 @@ paths:
     delete:
       description: Deletes the Taxon with the given Taxon ID from the Taxonomy with the given Taxonomy ID.
       tags:
-        - taxons
+        - taxonomies
       parameters:
         - in: path
           name: taxonomy_id
@@ -1027,6 +880,52 @@ paths:
       responses:
         '204':
           description: successful deletion
+
+  /taxonomies/{taxonomy_id}/jstree:
+    get:
+      description: Gets a Taxonomy by ID with a jstree representation.
+      tags:
+        - taxonomies
+      parameters:
+        - in: path
+          name: taxonomy_id
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the Taxonomy.
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaxonJstree'
+
+  /taxonomies/{taxonomy_id}/taxons/{taxon_id}/jstree:
+    get:
+      description: Gest a given Taxon from given Taxonomy ID in the jstree representation.
+      tags:
+        - taxonomies
+      parameters:
+        - in: path
+          name: taxonomy_id
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the Taxonomy.
+        - in: path
+          name: taxon_id
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the Taxon.
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaxonJstree'
 
   /cookies/consent:
     get:
@@ -1259,16 +1158,6 @@ components:
         allow_charges:
           type: boolean
 
-    Taxonomy:
-      type: object
-      properties:
-        root:
-          type: object
-        id:
-          type: integer
-        name:
-          type: string
-
     Taxon:
       type: object
       properties:
@@ -1290,6 +1179,23 @@ components:
           type: integer
         parent_id:
           type: integer
+        icon:
+          type: string
+
+    TaxonJstree:
+      type: object
+      properties:
+        data:
+          type: string
+        state:
+          type: string
+        attr:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
 
     Cookies_Consent:
       type: object
