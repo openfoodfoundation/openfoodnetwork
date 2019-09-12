@@ -698,10 +698,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  variant:
-                    $ref: '#/components/schemas/Enterprise'
+                $ref: '#/components/schemas/Enterprise'
 
   /enterprises/{enterprise_permalink}/promo_image.json:
     delete:
@@ -721,10 +718,48 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  variant:
-                    $ref: '#/components/schemas/Enterprise'
+                $ref: '#/components/schemas/Enterprise'
+
+  /customers.json:
+    get:
+      description: List of customer objects for the current user (a customer connects a user with an enterprise)
+      tags:
+        - users
+      responses:
+        '200':
+          description: List of Customer objects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+
+  /customers/{customer_id}.json:
+    put:
+      description: Updates customer object of current user (a customer connects a user with an enterprise)
+      tags:
+        - users
+      parameters:
+          - in: path
+            name: customer_id
+            schema:
+              type: integer
+            required: true
+            description: ID of the customer object to update.
+          - in: path
+            name: customer_object
+            schema:
+              $ref: '#/components/schemas/Customer'
+            required: true
+            description: Customer object to be saved.
+      responses:
+        '200':
+          description: Customer object saved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
 
   /enterprise_fees/{enterprise_fee_id}:
     delete:
@@ -741,7 +776,7 @@ paths:
       responses:
         '204':
           description: Enterprise fee successfully deleted.
-
+  
   /taxonomies:
     get:
       description: Gets all Taxonomies.
@@ -1208,6 +1243,22 @@ components:
         owner_id:
           type: integer
 
+    Customer:
+      type: object
+      properties:
+        id:
+          type: integer
+        enterprise_id:
+          type: integer
+        name:
+          type: string
+        code:
+          type: string
+        email:
+          type: string
+        allow_charges:
+          type: boolean
+
     Taxonomy:
       type: object
       properties:
@@ -1217,6 +1268,7 @@ components:
           type: integer
         name:
           type: string
+
     Taxon:
       type: object
       properties:
