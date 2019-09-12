@@ -598,6 +598,106 @@ paths:
               schema:
                 $ref: '#/components/schemas/Enterprise'
 
+  /enterprises/{enterprise_id}/shopfront:
+    get:
+      description: Fetch Enterprise shopfront details (products not included).
+      tags:
+        - enterprises
+      parameters:
+          - in: path
+            name: enterprise_id
+            schema:
+              type: integer
+            required: true
+            description: ID of the enterprise.
+      responses:
+        '200':
+          description: Enterprise shopfront details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnterpriseShopfront'
+
+  /enterprises/{enterprise_id}/update_image:
+    post:
+      description: Update enterprise images, promo and logo.
+      tags:
+        - enterprises
+      parameters:
+          - in: path
+            name: enterprise_id
+            schema:
+              type: integer
+            required: true
+            description: ID of the enterprise.
+          - in: path
+            name: logo
+            schema:
+              type: string
+              format: binary
+            required: true
+            description: Binary of the logo image.
+          - in: path
+            name: promo
+            schema:
+              type: string
+              format: binary
+            required: true
+            description: Binary of the promo image.
+      responses:
+        '200':
+          description: Image successfully uploaded. URL to the uploaded image
+          content:
+            application/json:
+              schema:
+                type: string
+
+  /enterprises/{enterprise_permalink}/logo.json:
+    delete:
+      description: Delete enterprise logo image.
+      tags:
+        - enterprises
+      parameters:
+          - in: path
+            name: enterprise_permalink
+            schema:
+              type: string
+            required: true
+            description: Permalink of the enterprise.
+      responses:
+        '200':
+          description: Image successfully deleted. Json object representing the enterprise
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  variant:
+                    $ref: '#/components/schemas/Enterprise'
+
+  /enterprises/{enterprise_permalink}/promo_image.json:
+    delete:
+      description: Delete enterprise promo image.
+      tags:
+        - enterprises
+      parameters:
+          - in: path
+            name: enterprise_permalink
+            schema:
+              type: string
+            required: true
+            description: Permalink of the enterprise.
+      responses:
+        '200':
+          description: Image successfully deleted. Json object representing the enterprise
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  variant:
+                    $ref: '#/components/schemas/Enterprise'
+
   /taxonomies:
     get:
       description: Gets all Taxonomies.
@@ -605,7 +705,7 @@ paths:
         - taxonomies
       responses:
         '200':
-          description: successful operation
+          description: Successful operation.
           content:
             application/json:
               schema:
@@ -1029,6 +1129,16 @@ components:
           type: integer
 
     Enterprise:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        owner_id:
+          type: integer
+
+    EnterpriseShopfront:
       type: object
       properties:
         id:
