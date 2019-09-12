@@ -10,6 +10,8 @@ tags:
     description: Product endpoints
   - name: product variants
     description: Product variant endpoints
+  - name: product images
+    description: Product images endpoints
   - name: orders
     description: Order endpoints
   - name: shipments
@@ -348,6 +350,32 @@ paths:
       responses:
         '204':
           description: successful deletion
+
+  /product_images/{product_id}:
+    post:
+      description: Creates or updates product image.
+      tags:
+        - product images
+      parameters:
+          - in: path
+            name: product_id
+            schema:
+              type: integer
+            required: true
+            description: Numeric ID of the Product.
+      responses:
+        '201':
+          description: Product image added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductImage'
+        '200':
+          description: Product image updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductImage'
 
   /orders:
     get:
@@ -697,6 +725,22 @@ paths:
                 properties:
                   variant:
                     $ref: '#/components/schemas/Enterprise'
+
+  /enterprise_fees/{enterprise_fee_id}:
+    delete:
+      description: Deletes enterprise fee.
+      tags:
+        - enterprises
+      parameters:
+          - in: path
+            name: enterprise_fee_id
+            schema:
+              type: integer
+            required: true
+            description: ID of the enterprise fee to delete.
+      responses:
+        '204':
+          description: Enterprise fee successfully deleted.
 
   /taxonomies:
     get:
@@ -1067,6 +1111,22 @@ components:
           type: object
         images: 
           type: object
+
+    ProductImage:
+      type: object
+      properties:
+        id:
+          type: integer
+        alt:
+          type: string
+        thumb_url:
+          type: string
+        small_url:
+          type: string
+        image_url:
+          type: string
+        large_url:
+          type: string
 
     Order_Concise:
       type: object
