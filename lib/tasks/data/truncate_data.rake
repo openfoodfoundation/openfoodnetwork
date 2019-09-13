@@ -15,8 +15,6 @@ namespace :ofn do
       sql_delete_from "spree_line_items #{where_order_id_in_orders_to_delete}"
       sql_delete_from "spree_payments #{where_order_id_in_orders_to_delete}"
       sql_delete_from "spree_shipments #{where_order_id_in_orders_to_delete}"
-      sql_delete_from "billable_periods"
-      sql_delete_from "account_invoices"
       Spree::ReturnAuthorization.delete_all
 
       truncate_order_cycle_data
