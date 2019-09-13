@@ -156,10 +156,6 @@ end
 group :development do
   gem 'byebug', '~> 9.0.0' # 9.1 requires ruby 2.2
   gem 'debugger-linecache'
-  gem 'guard'
-  gem 'guard-livereload'
-  gem 'guard-rails'
-  gem 'guard-rspec', '~> 4.7.3'
   gem 'listen', '3.0.8' # 3.1.0 requires ruby 2.2
   gem "newrelic_rpm", "~> 3.0"
   gem 'pry-byebug', '>= 3.4.3'
