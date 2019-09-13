@@ -1019,13 +1019,13 @@ components:
         category_id:
           type: integer
         master:
-          $ref: '#/components/schemas/Variant'
+          $ref: '#/components/schemas/AdminVariant'
         variants:
           type: array
           items:
-            $ref: '#/components/schemas/Variant'
+            $ref: '#/components/schemas/AdminVariant'
 
-    Variant:
+    AdminVariant:
       type: object
       properties:
         id:
@@ -1065,9 +1065,9 @@ components:
         variant_overrides:
           type: array
           items:
-            $ref: '#/components/schemas/VariantOverride'
+            $ref: '#/components/schemas/AdminVariantOverride'
 
-    VariantOverride:
+    AdminVariantOverride:
       type: object
       properties:
         id:
@@ -1092,6 +1092,46 @@ components:
           type: string
         variant_id:
           type: integer
+
+    Variant:
+      type: object
+      properties:
+        id:
+          type: integer
+        on_hand:
+          type: integer
+        sku:
+          type: string
+        price:
+          type: string
+        product_name:
+          type: string
+        is_master:
+          type: boolean
+        options_text:
+          type: string
+        unit_value:
+          type: integer
+        unit_description:
+          type: string
+        unit_to_display:
+          type: string
+        display_as:
+          type: string
+        display_name:
+          type: string
+        name_to_display:
+          type: string
+        on_demand:
+          type: boolean
+        fees:
+          type: object
+        price_with_fees:
+          type: string
+        tag_list:
+          type: array
+          items:
+            type: string
 
     ProductImage:
       type: object
@@ -1186,7 +1226,111 @@ components:
           type: integer
         name:
           type: string
-        owner_id:
+        description:
+          type: string
+        latitude:
+          type: integer
+        longitude:
+          type: integer
+        long_description:
+          type: string
+        website:
+          type: string
+        instagram:
+          type: string
+        linkedin:
+          type: string
+        twitter:
+          type: string
+        facebook:
+          type: string
+        is_primary_producer:
+          type: boolean
+        is_distributor:
+          type: boolean
+        phone:
+          type: string
+        visible:
+          type: boolean
+        email_address:
+          type: string
+        hash:
+          type: string
+        logo:
+          type: string
+        promo_image:
+          type: string
+        path:
+          type: string
+        category:
+          type: string
+        active:
+          type: boolean
+        producers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnterpriseThin'
+        orders_close_at:
+          type: string
+        hubs:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnterpriseThin'
+        taxons:
+          type: array
+          items:
+            type: string
+        supplied_taxons:
+          type: array
+          items:
+            type: string
+        pickup:
+          type: boolean
+        delivery:
+          type: boolean
+        address:
+          type: array
+          items:
+            $ref: '#/components/schemas/Address'
+
+    EnterpriseThin:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        active:
+          type: boolean
+        path:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+
+    Address:
+      type: object
+      properties:
+        id:
+          type: integer
+        zipcode:
+          type: string
+        city:
+          type: string
+        state_name:
+          type: string
+        state_id:
+          type: integer
+        phone:
+          type: string
+        firstname:
+          type: string
+        lastname:
+          type: string
+        address1:
+          type: string
+        address2:
+          type: string
+        country_id:
           type: integer
 
     Customer:
