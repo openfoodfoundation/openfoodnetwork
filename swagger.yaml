@@ -23,6 +23,9 @@ tags:
   - name: cookies_consent
     description: Cookies_Consent endpoints
 
+security:
+  - api_key: []
+
 paths:
   /products/bulk_products:
     get:
@@ -966,7 +969,7 @@ components:
   securitySchemes:
     api_key:
       type: apiKey
-      name: api_key
+      name: X-Spree-Token
       in: header
   schemas:
     Pagination:
