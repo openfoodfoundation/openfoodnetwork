@@ -105,7 +105,7 @@ module OpenFoodNetwork
       end
     end
 
-    describe "#send_placement_summary_emails" do
+    describe "#send_confirmation_summary_emails" do
       let(:summary1) { double(:summary) }
       let(:summary2) { double(:summary) }
       let(:summaries) { { 1 => summary1, 2 => summary2 } }
