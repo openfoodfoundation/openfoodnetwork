@@ -990,64 +990,108 @@ components:
           type: integer
         name: 
           type: string
-        description: 
+        sku:
           type: string
         price: 
           type: string
         available_on: 
           type: string
-        permalink: 
+        permalink_live:
           type: string
-        count_on_hand: 
+        on_hand:
           type: integer
-        meta_description: 
+        variant_unit:
           type: string
-        meta_keywords: 
+        variant_unit_scale:
           type: string
-        taxon_ids: 
-          type: object
+        variant_unit_name:
+          type: string
+        tax_category_id:
+          type: integer
+        import_date:
+          type: string
+        image_url:
+          type: string
+        thumb_url:
+          type: string
+        producer_id:
+          type: integer
+        category_id:
+          type: integer
+        master:
+          $ref: '#/components/schemas/Variant'
         variants:
-          oneOf:
-            - type: array
-              items:
-                $ref: '#/components/schemas/Variant'
-            - $ref: '#/components/schemas/Variant'
-        option_types: 
-          type: object
-        product_properties: 
-          type: object
+          type: array
+          items:
+            $ref: '#/components/schemas/Variant'
 
     Variant:
       type: object
       properties:
-        id: 
+        id:
           type: integer
-        name: 
+        name:
           type: string
-        count_on_hand: 
+        on_hand:
           type: integer
-        sku: 
+        sku:
           type: string
         price: 
           type: string
-        weight: 
+        producer_name:
           type: string
-        height: 
+        import_date:
           type: string
-        width: 
+        options_text:
           type: string
-        depth: 
+        unit_value:
+          type: integer
+        unit_description:
           type: string
-        is_master: 
+        unit_to_display:
           type: string
-        cost_price: 
+        display_as:
           type: string
-        permalink: 
+        display_name:
           type: string
-        option_values: 
-          type: object
-        images: 
-          type: object
+        name_to_display:
+          type: string
+        on_demand:
+          type: boolean
+        in_stock:
+          type: boolean
+        image:
+          type: string
+        variant_overrides:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariantOverride'
+
+    VariantOverride:
+      type: object
+      properties:
+        id:
+          type: integer
+        count_on_hand:
+          type: integer
+        default_stock:
+          type: integer
+        hub_id:
+          type: integer
+        import_date:
+          type: string
+        on_demand:
+          type: boolean
+        permission_revoked_at:
+          type: string
+        price:
+          type: string
+        resettable:
+          type: boolean
+        sku:
+          type: string
+        variant_id:
+          type: integer
 
     ProductImage:
       type: object
