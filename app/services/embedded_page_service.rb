@@ -73,7 +73,9 @@ class EmbeddedPageService
 
   def current_referer
     return if @request.referer.blank?
-    URI(@request.referer).host.downcase
+    uri = URI(@request.referer)
+    return if uri.host.blank?
+    uri.host.downcase
   end
 
   def current_referer_without_www
