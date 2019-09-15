@@ -32,6 +32,8 @@ feature '
       click_link 'Products'
       click_link 'New Product'
 
+      expect(find_field('product_shipping_category_id').text).to eq(shipping_category.name)
+
       select 'New supplier', from: 'product_supplier_id'
       fill_in 'product_name', with: 'A new product !!!'
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
@@ -40,7 +42,6 @@ feature '
       fill_in 'product_price', with: '19.99'
       fill_in 'product_on_hand', with: 5
       select 'Test Tax Category', from: 'product_tax_category_id'
-      select 'Test Shipping Category', from: 'product_shipping_category_id'
       page.find("div[id^='taTextElement']").native.send_keys('A description...')
 
       click_button 'Create'
