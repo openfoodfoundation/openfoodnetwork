@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20190701002454) do
+ActiveRecord::Schema.define(:version => 20190830134723) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -649,9 +649,10 @@ ActiveRecord::Schema.define(:version => 20190701002454) do
   add_index "spree_preferences", ["key"], :name => "index_spree_preferences_on_key", :unique => true
 
   create_table "spree_prices", :force => true do |t|
-    t.integer "variant_id",                               :null => false
-    t.decimal "amount",     :precision => 8, :scale => 2
-    t.string  "currency"
+    t.integer  "variant_id",                               :null => false
+    t.decimal  "amount",     :precision => 8, :scale => 2
+    t.string   "currency"
+    t.datetime "deleted_at"
   end
 
   add_index "spree_prices", ["variant_id"], :name => "index_spree_prices_on_variant_id"
