@@ -1,9 +1,10 @@
 require 'spec_helper'
 
 describe "Taxonomies" do
-  stub_authorization!
+  include AuthenticationWorkflow
 
   before(:each) do
+    quick_login_as_admin
     visit spree.admin_path
     click_link "Configuration"
   end
