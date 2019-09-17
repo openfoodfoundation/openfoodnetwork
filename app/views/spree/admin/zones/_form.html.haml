@@ -1,0 +1,23 @@
+.alpha.six.columns
+  %fieldset.no-border-bottom
+    %legend{align: "center"}= t("spree.general_settings")
+    = zone_form.field_container :name do
+      = zone_form.label :name, t("spree.name")
+      %br/
+      = zone_form.text_field :name, class: 'fullwidth'
+    = zone_form.field_container :description do
+      = zone_form.label :description, t("spree.description")
+      %br/
+      = zone_form.text_field :description, class: 'fullwidth'
+    .field
+      = zone_form.check_box :default_tax
+      = label_tag t("spree.default_tax_zone")
+    .field
+      = label_tag t("spree.type")
+      %ul
+        %li
+          = zone_form.radio_button('kind', 'country', { id: 'country_based' })
+          = label_tag :country_based, t("spree.country_based")
+        %li
+          = zone_form.radio_button('kind', 'state', { id: 'state_based' })
+          = label_tag :state_based, t("spree.state_based")

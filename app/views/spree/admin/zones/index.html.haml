@@ -1,0 +1,41 @@
+= render partial: 'spree/admin/shared/configuration_menu'
+
+- content_for :page_title do
+  = t("spree.zones")
+
+- content_for :page_actions do
+  %li
+    = button_link_to t("spree.new_zone"), new_object_url, icon: 'icon-plus', id: 'admin_new_zone_link'
+
+= paginate @zones
+
+- if @zones.empty?
+  .no-objects-found
+    = t("spree.none")
+
+- else
+  %table#listing_zones.index
+    %colgroup
+      %col{style: "width: 30%"}/
+      %col{style: "width: 40%"}/
+      %col{style: "width: 15%"}/
+      %col{style: "width: 15%"}/
+    %thead
+      %tr
+        %th= sort_link @search,:name, t("spree.name"), title: 'zones_order_by_name_title'
+        %th
+          = sort_link @search,:description, t("spree.description"), {}, {title: 'zones_order_by_description_title'}
+        %th= t("spree.default_tax")
+        %th.actions
+    %tbody
+      - @zones.each do |zone|
+        - tr_class = cycle('odd', 'even')
+        - tr_id = spree_dom_id(zone)
+        %tr{class: tr_class, id: tr_id}
+          %td= zone.name
+          %td= zone.description
+          %td.align-center= zone.default_tax
+          %td.actions
+            = link_to_edit zone, no_text: true
+            = link_to_delete zone, no_text: true
+= paginate @zones
