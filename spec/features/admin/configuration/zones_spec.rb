@@ -1,9 +1,10 @@
 require 'spec_helper'
 
 describe "Zones" do
-  stub_authorization!
+  include AuthenticationWorkflow
 
   before(:each) do
+    quick_login_as_admin
     Spree::Zone.delete_all
     visit spree.admin_path
     click_link "Configuration"

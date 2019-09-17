@@ -1,11 +1,12 @@
 require 'spec_helper'
 
 describe "States" do
-  stub_authorization!
+  include AuthenticationWorkflow
 
   let!(:country) { create(:country) }
 
   before(:each) do
+    quick_login_as_admin
     @hungary = Spree::Country.create!(:name => "Hungary", :iso_name => "Hungary")
     Spree::Config[:default_country_id] = country.id
   end
@@ -60,7 +61,7 @@ describe "States" do
       click_button "Create"
       page.should have_content("successfully created!")
       page.should have_content("Pest megye")
-      find("#s2id_country span").text.should == "Hungary"
+      find("#s2id_country span.select2-chosen").text.should == "Hungary"
     end
 
     it "should show validation errors", :js => true do
