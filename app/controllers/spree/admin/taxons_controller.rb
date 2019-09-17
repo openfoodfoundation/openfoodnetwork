@@ -1,14 +1,13 @@
 module Spree
   module Admin
     class TaxonsController < Spree::Admin::BaseController
-
       respond_to :html, :json, :js
 
       def search
         if params[:ids]
-          @taxons = Spree::Taxon.where(:id => params[:ids].split(','))
+          @taxons = Spree::Taxon.where(id: params[:ids].split(','))
         else
-          @taxons = Spree::Taxon.limit(20).search(:name_cont => params[:q]).result
+          @taxons = Spree::Taxon.limit(20).search(name_cont: params[:q]).result
         end
       end
 
@@ -17,12 +16,18 @@ module Spree
         @taxon = @taxonomy.taxons.build(params[:taxon])
         if @taxon.save
           respond_with(@taxon) do |format|
-            format.json {render :json => @taxon.to_json }
+            format.json { render json: @taxon.to_json }
           end
         else
           flash[:error] = Spree.t('errors.messages.could_not_create_taxon')
           respond_with(@taxon) do |format|
-            format.html { redirect_to @taxonomy ? edit_admin_taxonomy_url(@taxonomy) : admin_taxonomies_url }
+            format.html do
+              if redirect_to @taxonomy
+                edit_admin_taxonomy_url(@taxonomy)
+              else
+                admin_taxonomies_url
+              end
+            end
           end
         end
       end
@@ -39,7 +44,7 @@ module Spree
         parent_id = params[:taxon][:parent_id]
         new_position = params[:taxon][:position]
 
-        if parent_id || new_position #taxon is being moved
+        if parent_id || new_position # taxon is being moved
           new_parent = parent_id.nil? ? @taxon.parent : Taxon.find(parent_id.to_i)
           new_position = new_position.nil? ? -1 : new_position.to_i
 
@@ -53,18 +58,18 @@ module Spree
           if new_position <= 0 && new_siblings.empty?
             @taxon.move_to_child_of(new_parent)
           elsif new_parent.id != @taxon.parent_id
-            if new_position == 0
+            if new_position.zero?
               @taxon.move_to_left_of(new_siblings.first)
             else
-              @taxon.move_to_right_of(new_siblings[new_position-1])
+              @taxon.move_to_right_of(new_siblings[new_position - 1])
             end
           elsif new_position < new_siblings.index(@taxon)
             @taxon.move_to_left_of(new_siblings[new_position]) # we move up
           else
-            @taxon.move_to_right_of(new_siblings[new_position-1]) # we move down
+            @taxon.move_to_right_of(new_siblings[new_position - 1]) # we move down
           end
           # Reset legacy position, if any extensions still rely on it
-          new_parent.children.reload.each{|t| t.update_column(:position, t.position)}
+          new_parent.children.reload.each{ |t| t.update_column(:position, t.position) }
 
           if parent_id
             @taxon.reload
@@ -76,17 +81,19 @@ module Spree
 
         if params.key? "permalink_part"
           parent_permalink = @taxon.permalink.split("/")[0...-1].join("/")
-          parent_permalink += "/" unless parent_permalink.blank?
+          parent_permalink += "/" if parent_permalink.present?
           params[:taxon][:permalink] = parent_permalink + params[:permalink_part]
         end
-        #check if we need to rename child taxons if parent name or permalink changes
-        @update_children = true if params[:taxon][:name] != @taxon.name || params[:taxon][:permalink] != @taxon.permalink
+        # check if we need to rename child taxons if parent name or permalink changes
+        if params[:taxon][:name] != @taxon.name || params[:taxon][:permalink] != @taxon.permalink
+          @update_children = true
+        end
 
         if @taxon.update_attributes(params[:taxon])
           flash[:success] = flash_message_for(@taxon, :successfully_updated)
         end
 
-        #rename child taxons
+        # rename child taxons
         if @update_children
           @taxon.descendants.each do |taxon|
             taxon.reload
@@ -96,17 +103,16 @@ module Spree
         end
 
         respond_with(@taxon) do |format|
-          format.html {redirect_to edit_admin_taxonomy_url(@taxonomy) }
-          format.json {render :json => @taxon.to_json }
+          format.html { redirect_to edit_admin_taxonomy_url(@taxonomy) }
+          format.json { render json: @taxon.to_json }
         end
       end
 
       def destroy
         @taxon = Taxon.find(params[:id])
         @taxon.destroy
-        respond_with(@taxon) { |format| format.json { render :json => '' } }
+        respond_with(@taxon) { |format| format.json { render json: '' } }
       end
-
     end
   end
 end
