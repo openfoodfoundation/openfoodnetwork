@@ -88,6 +88,23 @@ Spree::Core::Engine.routes.prepend do
         put :clear_api_key
       end
     end
+
+    # Configuration section
+    resources :taxonomies do
+      collection do
+        post :update_positions
+      end
+      member do
+        get :get_children
+      end
+      resources :taxons
+    end
+
+    resources :taxons, :only => [] do
+      collection do
+        get :search
+      end
+    end
   end
 
   resources :orders do
