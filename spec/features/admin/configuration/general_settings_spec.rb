@@ -20,7 +20,7 @@ describe "General Settings" do
 
   context "editing general settings (admin)" do
     it "should be able to update the site name" do
-      fill_in "site_name", :with => "Spree Demo Site99"
+      fill_in "site_name", with: "Spree Demo Site99"
       click_button "Update"
 
       assert_successful_update_message(:general_settings)

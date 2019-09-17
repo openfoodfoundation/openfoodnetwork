@@ -12,9 +12,9 @@ describe "image settings" do
 
   # Regression test for #2344
   it "can update attachment_url" do
-    fill_in "Attachments URL", :with => "foobar"
-    fill_in "Attachments Default URL", :with => "barfoo"
-    fill_in "Attachments Path", :with => "spec/dummy/tmp/bfaoro"
+    fill_in "Attachments URL", with: "foobar"
+    fill_in "Attachments Default URL", with: "barfoo"
+    fill_in "Attachments Path", with: "spec/dummy/tmp/bfaoro"
     click_button "Update"
 
     expect(Spree::Config[:attachment_url]).to eq("foobar")
