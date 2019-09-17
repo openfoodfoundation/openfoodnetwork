@@ -1,0 +1,19 @@
+%table#listing_taxonomies.index.sortable{"data-sortable-link" => update_positions_admin_taxonomies_url}
+  %colgroup
+    %col{style: "width: 85%"}/
+    %col{style: "width: 15%"}/
+  %thead
+    %tr
+      %th= t("spree.name")
+      %th.actions
+  %tbody
+    - @taxonomies.each do |taxonomy|
+      - tr_class = cycle('odd', 'even')
+      - tr_id = spree_dom_id(taxonomy)
+      %tr{class: tr_class, id: tr_id}
+        %td
+          %span.handle
+          = taxonomy.name
+        %td.actions
+          = link_to_edit taxonomy.id, no_text: true
+          = link_to_delete taxonomy, no_text: true

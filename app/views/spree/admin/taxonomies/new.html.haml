@@ -1,0 +1,15 @@
+= render partial: 'spree/admin/shared/configuration_menu'
+
+- content_for :page_title do
+  = t("spree.new_taxonomy")
+
+- content_for :page_actions do
+  %li
+    = button_link_to t("spree.back_to_taxonomies_list"), spree.admin_taxonomies_path, icon: 'icon-arrow-left'
+
+= form_for [:admin, @taxonomy] do |f|
+  = render partial: 'form', locals: { f: f }
+  %fieldset.no-border-top
+    %br/
+    .filter-actions.actions
+      = button t("spree.create"), 'icon-ok'
