@@ -1,0 +1,9 @@
+.row
+  .alpha.six.columns
+    = f.field_container :name do
+      = f.label :name, t("spree.name")
+      = f.text_field :name, class: 'fullwidth'
+  .omega.six.columns
+    = f.field_container :abbr do
+      = f.label :abbr, t("spree.abbreviation")
+      = f.text_field :abbr, class: 'fullwidth'

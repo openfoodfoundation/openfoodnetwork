@@ -1,0 +1,12 @@
+= render partial: 'spree/admin/shared/configuration_menu'
+
+= render partial: 'spree/shared/error_messages', locals: { target: @state }
+
+- content_for :page_title do
+  = t("spree.new_state")
+
+= form_for [:admin, @country, @state] do |f|
+  %fieldset
+    %legend= t("spree.new_state")
+    = render partial: 'form', locals: { f: f }
+    = render partial: 'spree/admin/shared/new_resource_links'
