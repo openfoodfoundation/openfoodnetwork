@@ -207,12 +207,15 @@ class AbilityDecorator
   end
 
   def add_order_management_abilities(user)
-    # Enterprise User can only access orders that they are a distributor for
     can [:index, :create], Spree::Order
     can [:read, :update, :fire, :resend, :invoice, :print, :print_ticket], Spree::Order do |order|
       # We allow editing orders with a nil distributor as this state occurs
       # during the order creation process from the admin backend
-      order.distributor.nil? || user.enterprises.include?(order.distributor) || order.order_cycle.andand.coordinated_by?(user)
+      order.distributor.nil? ||
+        # Enterprise User can access orders that they are a distributor for
+        user.enterprises.include?(order.distributor) ||
+        # Enterprise User can access orders that are placed inside a OC they coordinate
+        order.order_cycle.andand.coordinated_by?(user)
     end
     can [:admin, :bulk_management, :managed], Spree::Order do
       user.admin? || user.enterprises.any?(&:is_distributor)
