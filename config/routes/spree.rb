@@ -88,6 +88,10 @@ Spree::Core::Engine.routes.prepend do
         put :clear_api_key
       end
     end
+
+    resources :tax_rates
+    resource  :tax_settings
+    resources :tax_categories
   end
 
   resources :orders do
