@@ -78,28 +78,17 @@ describe CheckoutController, type: :controller do
       allow(controller).to receive(:current_order).and_return(order)
     end
 
-    it "does not clone the ship address from distributor when shipping method requires address" do
-      get :edit
-      expect(assigns[:order].ship_address.address1).to be_nil
-    end
-
-    it "clears the ship address when re-rendering edit" do
-      expect(controller).to receive(:clear_ship_address).and_return true
+    it "set shipping_address_from_distributor when re-rendering edit" do
+      expect(order.updater).to receive(:shipping_address_from_distributor)
       allow(order).to receive(:update_attributes).and_return false
       spree_post :update, format: :json, order: {}
     end
 
-    it "clears the ship address when the order state cannot be advanced" do
-      expect(controller).to receive(:clear_ship_address).and_return true
+    it "set shipping_address_from_distributor when the order state cannot be advanced" do
+      expect(order.updater).to receive(:shipping_address_from_distributor)
       allow(order).to receive(:update_attributes).and_return true
       allow(order).to receive(:next).and_return false
       spree_post :update, format: :json, order: {}
-    end
-
-    it "only clears the ship address with a pickup shipping method" do
-      allow(order).to receive_message_chain(:shipping_method, :andand, :require_ship_address).and_return false
-      expect(order).to receive(:ship_address=)
-      controller.send(:clear_ship_address)
     end
 
     context "#update with shipping_method_id" do
@@ -266,10 +255,11 @@ describe CheckoutController, type: :controller do
     before do
       controller.instance_variable_set(:@order, order)
       allow(RestartCheckout).to receive(:new) { restart_checkout }
+      allow(controller).to receive(:current_order) { order }
     end
 
-    it "clears the shipping address and restarts the checkout" do
-      expect(controller).to receive(:clear_ship_address)
+    it "set shipping_address_from_distributor and restarts the checkout" do
+      expect(order.updater).to receive(:shipping_address_from_distributor)
       expect(restart_checkout).to receive(:call)
       expect(controller).to receive(:respond_to)
 
