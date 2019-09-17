@@ -17,9 +17,9 @@ describe "image settings" do
     fill_in "Attachments Path", :with => "spec/dummy/tmp/bfaoro"
     click_button "Update"
 
-    Spree::Config[:attachment_url].should == "foobar"
-    Spree::Config[:attachment_default_url].should == "barfoo"
-    Spree::Config[:attachment_path].should == "spec/dummy/tmp/bfaoro"
+    expect(Spree::Config[:attachment_url]).to eq("foobar")
+    expect(Spree::Config[:attachment_default_url]).to eq("barfoo")
+    expect(Spree::Config[:attachment_path]).to eq("spec/dummy/tmp/bfaoro")
   end
 
   # Regression test for #3069
