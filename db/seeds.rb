@@ -52,3 +52,4 @@ end
 require File.join(File.dirname(__FILE__), 'default', 'users')
 
 DefaultStockLocation.find_or_create
+DefaultShippingCategory.find_or_create
