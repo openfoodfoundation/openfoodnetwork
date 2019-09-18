@@ -75,6 +75,7 @@ feature 'shipping methods' do
     let(:sm1) { create(:shipping_method, name: 'One', distributors: [distributor1]) }
     let(:sm2) { create(:shipping_method, name: 'Two', distributors: [distributor1, distributor2]) }
     let(:sm3) { create(:shipping_method, name: 'Three', distributors: [distributor3]) }
+    let(:shipping_category) { DefaultShippingCategory.find_or_create }
 
     before(:each) do
       enterprise_user.enterprise_roles.build(enterprise: distributor1).save
@@ -88,6 +89,7 @@ feature 'shipping methods' do
       within(".side_menu") do
         click_link "Shipping Methods"
       end
+      DefaultShippingCategory.find_or_create
       click_link 'Create One Now'
 
       # Show the correct fields
@@ -97,10 +99,12 @@ feature 'shipping methods' do
       expect(page).to have_css 'div#shipping_method_zones_field'
       expect(page).to have_field 'shipping_method_require_ship_address_true', checked: true
 
+      # Auto-check default shipping category
+      expect(page).to have_field shipping_category.name, checked: true
+
       fill_in 'shipping_method_name', with: 'Teleport'
 
       check "shipping_method_distributor_ids_#{distributor1.id}"
-      check "shipping_method_shipping_categories_"
       find(:css, "tags-input .tags input").set "local\n"
       within(".tags .tag-list") do
         expect(page).to have_css '.tag-item', text: "local"
