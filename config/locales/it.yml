@@ -237,6 +237,7 @@ it:
   reset_password_token: Token per il reset della password
   expired: è scaduto, si prega di richiederne uno nuovo
   back_to_payments_list: "Torna alla lista dei pagamenti"
+  ship: "Spedizione"
   actions:
     create_and_add_another: "Crea e aggiungi un altro"
     create: "Crea"
@@ -622,7 +623,7 @@ it:
           name: Nome
           applies: Applica?
           manage: Gestisci metodi di pagamento
-          not_method_yet: Non hai ancora nessun metodo di pagamento.
+          no_method_yet: Non hai ancora nessun metodo di pagamento.
           create_button: Crea un nuovo metodo di pagamento
           create_one_button: Crea uno ora
         primary_details:
@@ -1087,7 +1088,6 @@ it:
       footer_data_text_without_privacy_policy_html: "Ci prendiamo cura dei vostri dati. Vedi la nostra %{cookies_policy}"
       footer_data_privacy_policy: "privacy policy"
       footer_data_cookies_policy: "cookies policy"
-      footer_skylight_dashboard_html: I dati di rendimento sono disponibili in  %{dashboard}.
   shop:
     messages:
       login: "fai il login"

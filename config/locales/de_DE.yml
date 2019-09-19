@@ -243,6 +243,7 @@ de_DE:
   reset_password_token: Passwort-Token zurücksetzen
   expired: abgelaufen ist, fordern Sie bitte ein neues an
   back_to_payments_list: "Zurück zur Zahlungsliste"
+  ship: "Liefern"
   actions:
     create_and_add_another: "Erstellen und weitere hinzufügen"
     create: "Neu"
@@ -630,7 +631,7 @@ de_DE:
           name: Name
           applies: Gilt?
           manage: Zahlungsarten verwalten
-          not_method_yet: Sie haben noch keine Zahlungsarten
+          no_method_yet: Sie haben noch keine Zahlungsarten
           create_button: Neue Zahlungsart
           create_one_button: Erstelle jetzt eine
         primary_details:
@@ -1108,7 +1109,6 @@ de_DE:
       footer_data_text_without_privacy_policy_html: "Wir passen auf Ihre Daten auf. Siehe unsere %{cookies_policy}"
       footer_data_privacy_policy: "Datenschutz-Bestimmungen"
       footer_data_cookies_policy: "Cookie-Richtlinien"
-      footer_skylight_dashboard_html: Leistungsdaten sind in der %{dashboard} verfügbar.
   shop:
     messages:
       login: "Anmeldung"

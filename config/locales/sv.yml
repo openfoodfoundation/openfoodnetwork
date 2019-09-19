@@ -99,6 +99,7 @@ sv:
   powered_by: Drivs av
   blocked_cookies_alert: "Din webbläsare kan blockera cookies som behövs för att använda den här butiken. Klicka nedan för att tillåta cookies och ladda om sidan."
   allow_cookies: "Tillåt cookies"
+  ship: "Frakta"
   actions:
     create: "Skapa"
     cancel: "Avbryt"
@@ -335,7 +336,7 @@ sv:
           name: Namn
           applies: Gäller?
           manage: Bestäm betalningssätt
-          not_method_yet: Du har ännu inte bestämt betalningssätt
+          no_method_yet: Du har ännu inte bestämt betalningssätt
           create_button: Skapa ett nytt betalningssätt
           create_one_button: Skapa en nu
         primary_details:

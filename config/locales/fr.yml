@@ -584,7 +584,7 @@ fr:
         title: Entreprises
         new_enterprise: Nouvelle entreprise
         producer?: "Producteur?"
-        package: Pack
+        package: Type de profil
         status: Statut
         manage: Gérer
       form:
@@ -768,7 +768,7 @@ fr:
       change_type_form:
         producer_profile: Profil simple
         connect_ofn: Pour apparaître sur la carte et la liste des producteurs
-        always_free: GRATUIT
+        always_free: ' '
         producer_description_text: 'Votre profil sera visible sur la carte, et depuis le menu “producteurs”.
 
           Nous vous invitons à renseigner votre profil de la façon la plus complète possible. Un profil complet et avec des images attire plus ! Vous pourrez mettre des liens pour rediriger les visiteurs vers votre site internet ou espace de vente en ligne le cas échéant.
@@ -798,7 +798,7 @@ fr:
         manage: Gérer
         manage_link: Paramètres
         producer?: "Producteur ?"
-        package: "Pack"
+        package: "Type de profil"
         status: "Statut"
       new_form:
         owner: Gestionnaire principal
@@ -1978,7 +1978,7 @@ fr:
   spree_admin_product_category: Catégorie Produit
   spree_admin_variant_unit_name: Nom de la pièce (si vendu à la pièce)
   unit_name: "Unité"
-  change_package: "Changer de type de compte"
+  change_package: "Changer de type de profil"
   spree_admin_single_enterprise_hint: "Astuce: Pour permettre aux gens de vous trouver, activez votre visibilité "
   spree_admin_eg_pickup_from_school: "ex : \"Retrait des produits à l'Ecole Marimati / Au Café du coin / chez Babette / ...\""
   spree_admin_eg_collect_your_order: "ex : \"Veuillez récupérer votre commande au 34 rue Victor Hugo, 75018 Paris\""
@@ -2319,7 +2319,7 @@ fr:
         saving: En cours d'enregistrement
         enterprise_package:
           hub_profile: Profil Hub
-          hub_profile_cost: "COÛT: CONTRIBUTION LIBRE"
+          hub_profile_cost: " "
           hub_profile_text1: >
               Votre profil sera visible sur la carte.
           hub_profile_text2: >
@@ -2339,15 +2339,15 @@ fr:
               ou épicerie en circuit court en ligne, etc.
           hub_shop_text3: >2+
 
-          choose_package: Choisir le type de compte souhaité
+          choose_package: Choisir le type de profil souhaité
           choose_package_text1: >
               Votre entreprise ne sera activée et visible que lorsque vous aurez choisi
-              le type de compte souhaité parmi les options à gauche.
+              le type de profil souhaité parmi les options à gauche.
           choose_package_text2: >
               Cliquez sur une option pour voir le détail du compte proposé, puis une
               fois votre choix fait, cliquez sur le bouton rouge ENREGISTRER !
           profile_only: Profil simple
-          profile_only_cost: "COÛT: CONTRIBUTION LIBRE"
+          profile_only_cost: " "
           profile_only_text1: >
               Votre profil sera visible sur la carte, et depuis le menu “producteurs”.
           profile_only_text2: >
@@ -2400,7 +2400,7 @@ fr:
               vendre, mais ne vendez pas vous-même en direct sur Open Food France,
               choisissez le type de profil “profil simple”.
           get_listing: Pour apparaître sur la carte
-          always_free: CONTRIBUTION LIBRE
+          always_free: ' '
           sell_produce_others: Pour vendre des produits de différents fournisseurs via Open Food France
           sell_own_produce: Pour vendre vos produits via Open Food France
           sell_both: Pour vendre vos produits ainsi que ceux d’autres producteurs via Open Food France

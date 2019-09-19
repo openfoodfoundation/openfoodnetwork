@@ -243,6 +243,7 @@ fr_BE:
   reset_password_token: réinitialisation du mot de passe
   expired: a expiré, veuillez en demander un nouveau
   back_to_payments_list: "Retour à la liste des paiements"
+  ship: "Expédier"
   actions:
     create_and_add_another: "Créer et ajouter un nouveau"
     create: "Créer"
@@ -631,7 +632,7 @@ fr_BE:
           name: Nom
           applies: Active?
           manage: Gérer les méthodes de paiement
-          not_method_yet: Vous n'avez pas encore de méthode de paiement.
+          no_method_yet: Vous n'avez pas encore de méthode de paiement.
           create_button: Créer une nouvelle méthode de paiement
           create_one_button: En créer une maintenant
         primary_details:
@@ -1111,7 +1112,6 @@ fr_BE:
       footer_data_text_without_privacy_policy_html: "Nous prenons soin de vos données. Voir notre %{cookies_policy}."
       footer_data_privacy_policy: "politique de confidentialité"
       footer_data_cookies_policy: "politique de cookies"
-      footer_skylight_dashboard_html: Les informations de performance sont disponibles sur %{dashboard}.
   shop:
     messages:
       login: "Se connecter"
@@ -1594,7 +1594,7 @@ fr_BE:
   sell_groups_detail: "Créer un répertoire sur mesure (regroupant différents producteurs et comptoirs) pour votre région ou votre organisation."
   sell_user_guide: "En savoir plus en explorant le guide utilisateur."
   sell_listing_price: "L'inscription à l'OFN est libre de contribution. Ouvrir et utiliser un comptoir sur OFN vous permet de gagner jusqu'à 500 $ de ventes mensuelles. Si vous vendez plus, vous pouvez choisir votre contribution communautaire entre 1% et 3% des ventes. Pour plus de détails sur les prix, visitez la section Plateforme logicielle via le lien \"À propos\" de dans le menu supérieur."
-  sell_embed: "D’ici là, vous pouvez également participer au projet. Soit en co-créant la communauté belge, en contribuant à l’amélioration des fonctionnalités…  Soit en mettant à disposition : un local pour la démonstration de l’outil ou un point relais pour faciliter les livraisons… Soit en le finançant BE41 0682 2264 2410 – com: Open Food Network"
+  sell_embed: "D’ici là, vous pouvez également participer au projet. Soit en co-créant la communauté belge, en contribuant à l’amélioration des fonctionnalités…  Soit en mettant à disposition : un local pour la démonstration de l’outil ou un point relais pour faciliter les livraisons… Soit en le finançant par un don (déductible fiscalement à partir de 40€) versé à Oxfam-Magasins du monde qui coordonne le projet :  BE41 0682 2264 2410 – com: Open Food Network Nous consulter sur les services des partenaires OFN."
   sell_ask_services: "Nous consulter sur les services des partenaires OFN."
   shops_title: Comptoirs
   shops_headline: Des achats qui transforment.

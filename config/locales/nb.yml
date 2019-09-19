@@ -636,7 +636,7 @@ nb:
           name: Navn
           applies: Gjelder?
           manage: Administrer Betalingsmetoder
-          not_method_yet: Du har ingen betalingsmetoder ennå.
+          no_method_yet: Du har ingen betalingsmetoder ennå.
           create_button: Opprett Ny Betalingsmetode
           create_one_button: Opprett en nå
         primary_details:
@@ -2628,7 +2628,7 @@ nb:
     name_or_sku: "Navn eller SKU (skriv inn minst 4 tegn av produktnavn)"
     resend: Send på nytt
     back_to_orders_list: Tilbake til Bestillingsliste
-    return_authorizations: Returneringsautorisasjoner
+    return_authorizations: Returautorisasjoner
     cannot_create_returns: Kan ikke opprette retur da denne bestillingen ikke har noen sendte elementer.
     select_stock: "Velg lager"
     location: "Plassering"

@@ -243,6 +243,7 @@ en_BE:
   reset_password_token: Reset password token
   expired: has expired, please request a new one
   back_to_payments_list: "Back to Payments List"
+  ship: "Ship"
   actions:
     create_and_add_another: "Create and Add Another"
     create: "Create"
@@ -630,7 +631,7 @@ en_BE:
           name: Name
           applies: Applies?
           manage: Manage Payment Methods
-          not_method_yet: You don't have any payment methods yet.
+          no_method_yet: You don't have any payment methods yet.
           create_button: Create New Payment Method
           create_one_button: Create One Now
         primary_details:
@@ -1110,7 +1111,6 @@ en_BE:
       footer_data_text_without_privacy_policy_html: "We take good care of your data. See our %{cookies_policy}"
       footer_data_privacy_policy: "privacy policy"
       footer_data_cookies_policy: "cookies policy"
-      footer_skylight_dashboard_html: Performance data is available on %{dashboard}.
   shop:
     messages:
       login: "login"

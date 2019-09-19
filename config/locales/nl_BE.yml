@@ -243,6 +243,7 @@ nl_BE:
   reset_password_token: Reset wachtwoord token
   expired: is verlopen, gelieve een nieuwe aan te vragen
   back_to_payments_list: "Terug naar Betalingslijst"
+  ship: "Verzenden"
   actions:
     create_and_add_another: "Een ander maken en toevoegen"
     create: "Maak"
@@ -633,7 +634,7 @@ nl_BE:
           name: Naam
           applies: Van toepassing?
           manage: Beheer betaalmogelijkheden
-          not_method_yet: Je hebt nog geen betaalmethodes.
+          no_method_yet: Je hebt nog geen betaalmethodes.
           create_button: Creëer een nieuwe betaalmethode
           create_one_button: Creëer er nu één
         primary_details:
@@ -1113,7 +1114,6 @@ nl_BE:
       footer_data_text_without_privacy_policy_html: "We dragen goed zorg voor je gegevens. Neem een kijk naar onze %{cookies_policy}."
       footer_data_privacy_policy: "privacy beleid"
       footer_data_cookies_policy: "cookie policy"
-      footer_skylight_dashboard_html: Prestatiegegevens zijn beschikbaar op %{dashboard}.
   shop:
     messages:
       login: "login"

@@ -636,7 +636,7 @@ en_GB:
           name: Name
           applies: Applies?
           manage: Manage Payment Methods
-          not_method_yet: You don't have any payment methods yet.
+          no_method_yet: You don't have any payment methods yet.
           create_button: Create New Payment Method
           create_one_button: Create One Now
         primary_details:

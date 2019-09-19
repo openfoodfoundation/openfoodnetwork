@@ -237,6 +237,7 @@ pt:
   reset_password_token: Redefinir palavra-passe
   expired: expirou, por favor peça uma nova
   back_to_payments_list: "Voltar à lista de pagamentos"
+  ship: "Enviar"
   actions:
     create_and_add_another: "Criar e acrescentar outro"
     create: "Criar"
@@ -622,7 +623,7 @@ pt:
           name: Nome
           applies: Aplicável?
           manage: Gerir métodos de pagamento
-          not_method_yet: Não tem nenhum método de pagamento.
+          no_method_yet: Não tem nenhum método de pagamento.
           create_button: Criar Novo Método de Pagamento
           create_one_button: 'Criar um agora '
         primary_details:
@@ -1092,7 +1093,6 @@ pt:
       footer_data_text_without_privacy_policy_html: "Nós tratamos com cuidado dos nosso dados. Veja a nossa %{cookies_policy}"
       footer_data_privacy_policy: "politíca de privacidade"
       footer_data_cookies_policy: "política de cookies"
-      footer_skylight_dashboard_html: Dados de performance disponível em %{dashboard}.
   shop:
     messages:
       login: "Entrar"

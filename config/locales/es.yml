@@ -637,7 +637,7 @@ es:
           name: Nombre
           applies: ¿Aplicar?
           manage: Gestionar los métodos de pago
-          not_method_yet: Todavía no tienes ningún método de pago.
+          no_method_yet: Todavía no tienes ningún método de pago.
           create_button: Crear un nuevo método de pago
           create_one_button: Crear una ahora
         primary_details:

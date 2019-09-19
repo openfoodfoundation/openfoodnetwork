@@ -637,7 +637,7 @@ ca:
           name: Nom
           applies: Aplicar?
           manage: Gestiona els mètodes de pagament
-          not_method_yet: Encara no tens cap mètode de pagament.
+          no_method_yet: Encara no tens cap mètode de pagament.
           create_button: Crea un nou mètode de pagament
           create_one_button: Crea'n un ara
         primary_details:
