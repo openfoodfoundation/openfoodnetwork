@@ -1,10 +1,10 @@
 require 'open_food_network/order_cycle_permissions'
 
 class Api::Admin::OrderCycleSerializer < ActiveModel::Serializer
-  attributes :id, :name, :orders_open_at, :orders_close_at, :coordinator_id, :exchanges
-  attributes :editable_variants_for_incoming_exchanges, :editable_variants_for_outgoing_exchanges
-  attributes :visible_variants_for_outgoing_exchanges
-  attributes :viewing_as_coordinator, :schedule_ids, :subscriptions_count
+  attributes :id, :name, :orders_open_at, :orders_close_at, :coordinator_id, :exchanges,
+             :editable_variants_for_incoming_exchanges, :editable_variants_for_outgoing_exchanges,
+             :visible_variants_for_outgoing_exchanges,
+             :viewing_as_coordinator, :schedule_ids, :subscriptions_count
 
   has_many :coordinator_fees, serializer: Api::IdSerializer
 

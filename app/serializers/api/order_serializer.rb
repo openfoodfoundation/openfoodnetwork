@@ -1,9 +1,9 @@
 module Api
   class OrderSerializer < ActiveModel::Serializer
-    attributes :number, :completed_at, :total, :state, :shipment_state, :payment_state
-    attributes :outstanding_balance, :payments, :path, :cancel_path
-    attributes :changes_allowed, :changes_allowed_until, :item_count
-    attributes :shop_id
+    attributes :number, :completed_at, :total, :state, :shipment_state, :payment_state,
+               :outstanding_balance, :payments, :path, :cancel_path,
+               :changes_allowed, :changes_allowed_until, :item_count,
+               :shop_id
 
     has_many :payments, serializer: Api::PaymentSerializer
 

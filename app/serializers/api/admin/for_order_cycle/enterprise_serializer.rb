@@ -1,9 +1,9 @@
 require 'open_food_network/enterprise_issue_validator'
 
 class Api::Admin::ForOrderCycle::EnterpriseSerializer < ActiveModel::Serializer
-  attributes :id, :name, :managed, :supplied_products
-  attributes :issues_summary_supplier, :issues_summary_distributor
-  attributes :is_primary_producer, :is_distributor, :sells
+  attributes :id, :name, :managed, :supplied_products,
+             :issues_summary_supplier, :issues_summary_distributor,
+             :is_primary_producer, :is_distributor, :sells
 
   def issues_summary_supplier
     issues = OpenFoodNetwork::EnterpriseIssueValidator.new(object).issues_summary confirmation_only: true

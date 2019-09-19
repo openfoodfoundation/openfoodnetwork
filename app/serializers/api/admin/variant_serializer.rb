@@ -1,8 +1,8 @@
 class Api::Admin::VariantSerializer < ActiveModel::Serializer
-  attributes :id, :name, :producer_name, :image, :sku, :import_date
-  attributes :options_text, :unit_value, :unit_description, :unit_to_display
-  attributes :display_as, :display_name, :name_to_display
-  attributes :price, :on_demand, :on_hand, :in_stock, :stock_location_id, :stock_location_name
+  attributes :id, :name, :producer_name, :image, :sku, :import_date,
+             :options_text, :unit_value, :unit_description, :unit_to_display,
+             :display_as, :display_name, :name_to_display,
+             :price, :on_demand, :on_hand, :in_stock, :stock_location_id, :stock_location_name
 
   has_many :variant_overrides
 
