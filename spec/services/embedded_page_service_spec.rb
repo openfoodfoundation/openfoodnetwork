@@ -59,5 +59,16 @@ describe EmbeddedPageService do
         expect(response.headers['X-Frame-Options']).to eq 'DENY'
       end
     end
+
+    context "when the request's referer is malformed" do
+      let(:request) { ActionController::TestRequest.new('HTTP_HOST' => 'ofn-instance.com', 'HTTP_REFERER' => 'hello')}
+      before do
+        service.embed!
+      end
+
+      it "returns a 200 status" do
+        expect(response.status).to eq 200
+      end
+    end
   end
 end
