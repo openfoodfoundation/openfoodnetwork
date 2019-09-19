@@ -1116,7 +1116,6 @@ en_AU:
       footer_data_text_without_privacy_policy_html: "We take good care of your data. See our %{cookies_policy}"
       footer_data_privacy_policy: "privacy policy"
       footer_data_cookies_policy: "cookies policy"
-      footer_skylight_dashboard_html: Performance data is available on %{dashboard}.
   shop:
     messages:
       login: "login"

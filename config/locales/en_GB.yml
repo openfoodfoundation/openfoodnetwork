@@ -245,6 +245,8 @@ en_GB:
   expired: has expired, please request a new one
   back_to_payments_list: "Back to Payments List"
   maestro_or_solo_cards: "Maestro/Solo cards"
+  backordered: "Backordered"
+  ship: "Ship"
   actions:
     create_and_add_another: "Create and Add Another"
     create: "Create"
@@ -1116,7 +1118,6 @@ en_GB:
       footer_data_text_without_privacy_policy_html: "We take good care of your data. See our %{cookies_policy}"
       footer_data_privacy_policy: "privacy policy"
       footer_data_cookies_policy: "cookies policy"
-      footer_skylight_dashboard_html: Performance data is available on %{dashboard}.
   shop:
     messages:
       login: "login"
@@ -2634,6 +2635,8 @@ en_GB:
     name_or_sku: "Name or SKU (enter at least first 4 characters of product name)"
     resend: Resend
     back_to_orders_list: Back To Orders List
+    return_authorizations: Return Authorisations
+    cannot_create_returns: Cannot create returns as this order has no shipped units.
     select_stock: "Select stock"
     location: "Location"
     count_on_hand: "Count On Hand"

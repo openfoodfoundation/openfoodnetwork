@@ -245,6 +245,8 @@ ca:
   expired: ha caducat, si us plau, sol·liciteu-ne un de nou
   back_to_payments_list: "Torna a la llista de pagaments"
   maestro_or_solo_cards: "Targetes Maestro/Solo"
+  backordered: "Reabastit"
+  ship: "Enviament"
   actions:
     create_and_add_another: "Crea i afegeix-ne una altra"
     create: "Crear"
@@ -1118,7 +1120,6 @@ ca:
       footer_data_text_without_privacy_policy_html: "Tenim cura de les vostres dades. Vegeu la nostra %{cookies_policy}"
       footer_data_privacy_policy: "política de privacitat"
       footer_data_cookies_policy: "política de cookies"
-      footer_skylight_dashboard_html: Les dades de rendiment estan disponibles a %{dashboard}.
   shop:
     messages:
       login: "Inicia sessió"
@@ -2633,6 +2634,8 @@ ca:
     name_or_sku: "Nom o codi (introduïu com a mínim els primers 4 caràcters del nom del producte)"
     resend: Reenviar
     back_to_orders_list: Tornar a la llista de comandes
+    return_authorizations: Autoritzacions de devolució
+    cannot_create_returns: No es poden crear devolucions ja que aquesta comanda no té cap unitat enviada.
     select_stock: "Seleccioneu existències"
     location: "Ubicació"
     count_on_hand: "Compte disponible"

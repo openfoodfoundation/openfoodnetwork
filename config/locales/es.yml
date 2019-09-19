@@ -245,6 +245,8 @@ es:
   expired: ha expirado, por favor solicite una nueva
   back_to_payments_list: "Volver a la lista de pagos"
   maestro_or_solo_cards: "Tarjetas Maestro/Solo"
+  backordered: "Reabastecido"
+  ship: "Envío"
   actions:
     create_and_add_another: "Crear y agregar otro"
     create: "Crear"
@@ -1118,7 +1120,6 @@ es:
       footer_data_text_without_privacy_policy_html: "Cuidamos bien tus datos. Consulta nuestra %{cookies_policy}"
       footer_data_privacy_policy: "política de privacidad"
       footer_data_cookies_policy: "política de cookies"
-      footer_skylight_dashboard_html: Los datos de rendimiento están disponibles en %{dashboard}.
   shop:
     messages:
       login: "login"
@@ -2634,6 +2635,8 @@ es:
     name_or_sku: "Nombre o código SKU (ingrese al menos los primeros 4 caracteres del nombre del producto)"
     resend: Reenviar
     back_to_orders_list: Volver a la lista de pedidos
+    return_authorizations: Autorizaciones de devolución
+    cannot_create_returns: No se pueden crear devoluciones ya que este pedido no tiene unidades enviadas.
     select_stock: "Seleccionar stock"
     location: "Ubicación"
     count_on_hand: "Cuenta de disponibilidad"
