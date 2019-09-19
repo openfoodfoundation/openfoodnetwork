@@ -228,21 +228,20 @@ module Api
           expect_order
           expect_detailed_attributes_to_be_present(json_response)
 
-          expect(json_response[:bill_address][:address1]).to eq(order.bill_address.address1)
-          expect(json_response[:bill_address][:lastname]).to eq(order.bill_address.lastname)
-          expect(json_response[:ship_address][:address1]).to eq(order.ship_address.address1)
-          expect(json_response[:ship_address][:lastname]).to eq(order.ship_address.lastname)
-          expect(json_response[:shipping_method][:name]).to eq(order.shipping_method.name)
-          json_response[:adjustments].each do |adjustment|
-            if adjustment[:label] == "Transaction fee"
-              expect(adjustment[:amount]).to eq(order.adjustments.payment_fee.first.amount.to_s)
-            elsif json_response[:adjustments].first[:label] == "Shipping"
-              expect(adjustment[:amount]).to eq(order.adjustments.shipping.first.amount.to_s)
-            end
-          end
-          expect(json_response[:payments].first[:amount]).to eq(order.payments.first.amount.to_s)
-          expect(json_response[:line_items].size).to eq(order.line_items.size)
-          expect(json_response[:line_items].first[:variant][:product_name]). to eq(order.line_items.first.variant.product.name)
+          expect(json_response[:bill_address][:address1]).to eq order.bill_address.address1
+          expect(json_response[:bill_address][:lastname]).to eq order.bill_address.lastname
+          expect(json_response[:ship_address][:address1]).to eq order.ship_address.address1
+          expect(json_response[:ship_address][:lastname]).to eq order.ship_address.lastname
+          expect(json_response[:shipping_method][:name]).to eq order.shipping_method.name
+
+          expect(json_response[:adjustments].first[:label]).to eq "Transaction fee"
+          expect(json_response[:adjustments].first[:amount]).to eq order.adjustments.payment_fee.first.amount.to_s
+          expect(json_response[:adjustments].second[:label]).to eq "Shipping"
+          expect(json_response[:adjustments].second[:amount]).to eq order.adjustments.shipping.first.amount.to_s
+
+          expect(json_response[:payments].first[:amount]).to eq order.payments.first.amount.to_s
+          expect(json_response[:line_items].size).to eq order.line_items.size
+          expect(json_response[:line_items].first[:variant][:product_name]). to eq order.line_items.first.variant.product.name
         end
       end
 
@@ -252,12 +251,11 @@ module Api
       end
 
       def expect_correct_order(json_response, order)
-        expect(json_response[:number]).to eq(order.number)
-        expect(json_response[:email]).to eq(order.email)
+        expect(json_response[:number]).to eq order.number
       end
 
       def expect_detailed_attributes_to_be_present(json_response)
-        expect(order_detailed_attributes.all?{ |attr| json_response.key? attr.to_s }).to eq(true)
+        expect(order_detailed_attributes.all?{ |attr| json_response.key? attr.to_s }).to eq true
       end
     end
 
