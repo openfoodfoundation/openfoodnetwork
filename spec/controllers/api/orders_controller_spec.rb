@@ -166,17 +166,12 @@ module Api
 
         it "when no order number is given" do
           get :show, id: nil
-          expect_resource_not_found
+          expect(response).to have_http_status(:not_found)
         end
 
         it "when order number given is not in the systen" do
           get :show, id: "X1321313232"
-          expect_resource_not_found
-        end
-
-        def expect_resource_not_found
-          expect(json_response).to eq( "error" => "The resource you were looking for could not be found." )
-          expect(response.status).to eq(404)
+          expect(response).to have_http_status(:not_found)
         end
       end
 
