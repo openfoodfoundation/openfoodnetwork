@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20190913023137) do
+ActiveRecord::Schema.define(:version => 20190916110029) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -576,7 +576,7 @@ ActiveRecord::Schema.define(:version => 20190913023137) do
     t.integer  "created_by_id"
   end
 
-  add_index "spree_orders", ["completed_at"], :name => "index_spree_orders_on_completed_at"
+  add_index "spree_orders", ["completed_at", "user_id", "created_by_id", "created_at"], :name => "spree_orders_completed_at_user_id_created_by_id_created_at_idx"
   add_index "spree_orders", ["customer_id"], :name => "index_spree_orders_on_customer_id"
   add_index "spree_orders", ["number"], :name => "index_orders_on_number"
 
