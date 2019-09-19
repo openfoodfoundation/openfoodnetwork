@@ -6,7 +6,11 @@ class Api::Admin::ForOrderCycle::EnterpriseSerializer < ActiveModel::Serializer
              :is_primary_producer, :is_distributor, :sells
 
   def issues_summary_supplier
-    issues = OpenFoodNetwork::EnterpriseIssueValidator.new(object).issues_summary confirmation_only: true
+    issues =
+      OpenFoodNetwork::EnterpriseIssueValidator.
+        new(object).
+        issues_summary(confirmation_only: true)
+
     if issues.nil? && products.empty?
       issues = "no products in inventory"
     end
@@ -23,7 +27,8 @@ class Api::Admin::ForOrderCycle::EnterpriseSerializer < ActiveModel::Serializer
 
   def supplied_products
     serializer = Api::Admin::ForOrderCycle::SuppliedProductSerializer
-    ActiveModel::ArraySerializer.new(products, each_serializer: serializer, order_cycle: order_cycle)
+    ActiveModel::ArraySerializer.new(products, each_serializer: serializer,
+                                               order_cycle: order_cycle)
   end
 
   private
