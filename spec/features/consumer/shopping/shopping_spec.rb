@@ -70,7 +70,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           add_variant_to_order_cycle(exchange1, variant)
           visit shop_path
           expect(page).not_to have_content product.name
-          expect(Spree::Order.last.order_cycle).to.nil?
+          expect(Spree::Order.last.order_cycle).to be_nil
 
           select "frogs", from: "order_cycle_id"
           expect(page).to have_selector "products"
