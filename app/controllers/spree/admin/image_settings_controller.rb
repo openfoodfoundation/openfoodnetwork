@@ -68,6 +68,11 @@ module Spree
           Spree::Config[:attachment_default_url]
         Spree::Image.attachment_definitions[:attachment][:default_style] =
           Spree::Config[:attachment_default_style]
+
+        # Spree stores attachent definitions in JSON. This converts the style name and format to
+        # strings. However, when paperclip encounters these, it doesn't recognise the format.
+        # Here we solve that problem by converting format and style name to symbols.
+        Spree::Image.reformat_styles
       end
     end
   end

@@ -3,7 +3,7 @@ module Spree
     class GeneralSettingsController < Spree::Admin::BaseController
       def edit
         @preferences_general = [:site_name, :default_seo_title, :default_meta_keywords,
-                                :default_meta_description, :site_url]
+                                :default_meta_description, :site_url, :bugherd_api_key]
         @preferences_security = [:allow_ssl_in_production,
                                  :allow_ssl_in_staging, :allow_ssl_in_development_and_test,
                                  :check_for_spree_alerts]
