@@ -4,7 +4,6 @@ module Spree
       before_filter :load_data, except: [:index]
       before_filter :set_shipping_category, only: [:create, :update]
       before_filter :set_zones, only: [:create, :update]
-      before_filter :do_not_destroy_referenced_shipping_methods, only: :destroy
       before_filter :load_hubs, only: [:new, :edit, :create, :update]
 
       # Sort shipping methods by distributor name
@@ -20,29 +19,29 @@ module Spree
         collection
       end
 
-      # Spree allows soft deletes of shipping_methods but our reports are not adapted to that
-      #   Here we prevent the deletion (even soft) of shipping_methods that are referenced in orders
-      def do_not_destroy_referenced_shipping_methods
-        order = Order.joins(shipments: :shipping_rates)
-          .where( spree_shipping_rates: { shipping_method_id: @object } )
-          .first
-        return unless order
-        flash[:error] = I18n.t(:shipping_method_destroy_error, number: order.number)
-        redirect_to(collection_url) && return
-      end
-
       def destroy
-        @object.touch :deleted_at
+        # Our reports are not adapted to soft deleted shipping_methods so here we prevent
+        #   the deletion (even soft) of shipping_methods that are referenced in orders
+        if order = order_referenced_by_shipping_method
+          flash[:error] = I18n.t(:shipping_method_destroy_error, number: order.number)
+          redirect_to(collection_url) && return
+        end
 
+        @object.touch :deleted_at
         flash[:success] = flash_message_for(@object, :successfully_removed)
 
         respond_with(@object) do |format|
           format.html { redirect_to collection_url }
-          format.js { render_js_for_destroy }
         end
       end
 
       private
+
+      def order_referenced_by_shipping_method
+        Order.joins(shipments: :shipping_rates)
+          .where( spree_shipping_rates: { shipping_method_id: @object } )
+          .first
+      end
 
       def load_hubs
         # rubocop:disable Style/TernaryParentheses
