@@ -7,7 +7,7 @@ describe "States" do
 
   before(:each) do
     quick_login_as_admin
-    @hungary = Spree::Country.create!(:name => "Hungary", :iso_name => "Hungary")
+    @hungary = Spree::Country.create!(name: "Hungary", iso_name: "Hungary")
     Spree::Config[:default_country_id] = country.id
   end
 
@@ -17,17 +17,15 @@ describe "States" do
     visit spree.admin_country_states_path(country)
     counter = 0
     until page.has_css?("#new_state_link")
-      if counter < 10
-        sleep(2)
-        counter += 1
-      else
-        raise "Could not see new state link!"
-      end
+      raise "Could not see new state link!" if counter >= 10
+
+      sleep(2)
+      counter += 1
     end
   end
 
   context "admin visiting states listing" do
-    let!(:state) { create(:state, :country => country) }
+    let!(:state) { create(:state, country: country) }
 
     it "should correctly display the states" do
       visit spree.admin_country_states_path(country)
@@ -36,19 +34,19 @@ describe "States" do
   end
 
   context "creating and editing states" do
-    it "should allow an admin to edit existing states", :js => true do
+    it "should allow an admin to edit existing states", js: true do
       go_to_states_page
       set_select2_field("country", country.id)
 
       click_link "new_state_link"
-      fill_in "state_name", :with => "Calgary"
-      fill_in "Abbreviation", :with => "CL"
+      fill_in "state_name", with: "Calgary"
+      fill_in "Abbreviation", with: "CL"
       click_button "Create"
       expect(page).to have_content("successfully created!")
       expect(page).to have_content("Calgary")
     end
 
-    it "should allow an admin to create states for non default countries", :js => true do
+    it "should allow an admin to create states for non default countries", js: true do
       go_to_states_page
       set_select2_field "#country", @hungary.id
       # Just so the change event actually gets triggered in this spec
@@ -56,22 +54,22 @@ describe "States" do
       page.execute_script("$('#country').trigger('change');")
 
       click_link "new_state_link"
-      fill_in "state_name", :with => "Pest megye"
-      fill_in "Abbreviation", :with => "PE"
+      fill_in "state_name", with: "Pest megye"
+      fill_in "Abbreviation", with: "PE"
       click_button "Create"
       expect(page).to have_content("successfully created!")
       expect(page).to have_content("Pest megye")
       expect(find("#s2id_country span.select2-chosen").text).to eq("Hungary")
     end
 
-    it "should show validation errors", :js => true do
+    it "should show validation errors", js: true do
       go_to_states_page
       set_select2_field("country", country.id)
 
       click_link "new_state_link"
 
-      fill_in "state_name", :with => ""
-      fill_in "Abbreviation", :with => ""
+      fill_in "state_name", with: ""
+      fill_in "Abbreviation", with: ""
       click_button "Create"
       expect(page).to have_content("Name can't be blank")
     end
