@@ -46,11 +46,12 @@ module Spree
             @user.spree_roles = roles.reject(&:blank?).collect{ |r| Spree::Role.find(r) }
           end
 
-          if params[:user][:email] != @user.email
-            flash.now[:success] = Spree.t(:email_updated)
-          else
-            flash.now[:success] = Spree.t(:account_updated)
-          end
+          message = if params[:user][:email] != @user.email
+                      Spree.t(:email_updated)
+                    else
+                      Spree.t(:account_updated)
+                    end
+          flash.now[:success] = message
         end
         render :edit
       end
