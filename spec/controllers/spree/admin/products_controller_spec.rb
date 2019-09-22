@@ -194,19 +194,6 @@ describe Spree::Admin::ProductsController, type: :controller do
       end
     end
 
-    describe "product variant unit is items" do
-      it "clears unit description of all variants of the product" do
-        product.variants.first.update_attribute :unit_description, "grams"
-        spree_put :update,
-                  id: product,
-                  product: {
-                    variant_unit: "items",
-                    variant_unit_name: "bag"
-                  }
-        expect(product.reload.variants.first.unit_description).to be_empty
-      end
-    end
-
     describe "product properties" do
       context "as an enterprise user" do
         let!(:property) { create(:property, name: "A nice name") }
