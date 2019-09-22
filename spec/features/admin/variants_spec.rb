@@ -9,11 +9,11 @@ feature '
 
   scenario "creating a new variant" do
     # Given a product with a unit-related option type
-    p = create(:simple_product, variant_unit: "weight", variant_unit_scale: "1")
+    product = create(:simple_product, variant_unit: "weight", variant_unit_scale: "1")
 
     # When I create a variant on the product
     login_to_admin_section
-    visit spree.admin_product_variants_path p
+    visit spree.admin_product_variants_path product
     click_link 'New Variant'
 
     fill_in 'unit_value_human', with: '1'
@@ -21,22 +21,22 @@ feature '
     click_button 'Create'
 
     # Then the variant should have been created
-    expect(page).to have_content "Variant \"#{p.name}\" has been successfully created!"
+    expect(page).to have_content "Variant \"#{product.name}\" has been successfully created!"
   end
 
   describe "editing unit value and description for a variant", js: true do
     scenario "when variant_unit is weight" do
       # Given a product with unit-related option types, with a variant
-      p = create(:simple_product, variant_unit: "weight", variant_unit_scale: "1")
-      v = p.variants.first
-      v.update_attributes( unit_value: 1, unit_description: 'foo' )
+      product = create(:simple_product, variant_unit: "weight", variant_unit_scale: "1")
+      variant = product.variants.first
+      variant.update_attributes( unit_value: 1, unit_description: 'foo' )
 
       # And the product has option types for the unit-related and non-unit-related option values
-      p.option_types << v.option_values.first.option_type
+      product.option_types << variant.option_values.first.option_type
 
       # When I view the variant
       login_to_admin_section
-      visit spree.admin_product_variants_path p
+      visit spree.admin_product_variants_path product
       page.find('table.index .icon-edit').click
 
       # Then I should not see a traditional option value field for the unit-related option value
@@ -50,12 +50,11 @@ feature '
       fill_in "unit_value_human", with: "123"
       fill_in "variant_unit_description", with: "bar"
       click_button 'Update'
-      expect(page).to have_content %(Variant "#{p.name}" has been successfully updated!)
+      expect(page).to have_content %(Variant "#{product.name}" has been successfully updated!)
 
       # Then the unit value and description should have been saved
-      v.reload
-      expect(v.unit_value).to eq(123)
-      expect(v.unit_description).to eq('bar')
+      expect(variant.reload.unit_value).to eq(123)
+      expect(variant.unit_description).to eq('bar')
     end
 
     scenario "can update unit_description when variant_unit is items" do
@@ -118,31 +117,29 @@ feature '
   end
 
   it "soft-deletes variants", js: true do
-    p = create(:simple_product)
-    v = create(:variant, product: p)
+    product = create(:simple_product)
+    variant = create(:variant, product: product)
 
     login_to_admin_section
-    visit spree.admin_product_variants_path p
+    visit spree.admin_product_variants_path product
 
-    within "tr#spree_variant_#{v.id}" do
+    within "tr#spree_variant_#{variant.id}" do
       accept_alert do
         page.find('a.delete-resource').click
       end
     end
 
-    expect(page).not_to have_selector "tr#spree_variant_#{v.id}"
-
-    v.reload
-    expect(v.deleted_at).not_to be_nil
+    expect(page).not_to have_selector "tr#spree_variant_#{variant.id}"
+    expect(variant.reload.deleted_at).not_to be_nil
   end
 
   scenario "editing display name for a variant", js: true do
-    p = create(:simple_product)
-    v = p.variants.first
+    product = create(:simple_product)
+    variant = product.variants.first
 
     # When I view the variant
     login_to_admin_section
-    visit spree.admin_product_variants_path p
+    visit spree.admin_product_variants_path product
     page.find('table.index .icon-edit').click
 
     # It should allow the display name to be changed
@@ -153,11 +150,10 @@ feature '
     fill_in "variant_display_name", with: "Display Name"
     fill_in "variant_display_as", with: "Display As This"
     click_button 'Update'
-    expect(page).to have_content %(Variant "#{p.name}" has been successfully updated!)
+    expect(page).to have_content %(Variant "#{product.name}" has been successfully updated!)
 
     # Then the displayed values should have been saved
-    v.reload
-    expect(v.display_name).to eq("Display Name")
-    expect(v.display_as).to eq("Display As This")
+    expect(variant.reload.display_name).to eq("Display Name")
+    expect(variant.display_as).to eq("Display As This")
   end
 end
