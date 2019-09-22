@@ -24,37 +24,56 @@ feature '
     expect(page).to have_content "Variant \"#{p.name}\" has been successfully created!"
   end
 
-  scenario "editing unit value and description for a variant", js: true do
-    # Given a product with unit-related option types, with a variant
-    p = create(:simple_product, variant_unit: "weight", variant_unit_scale: "1")
-    v = p.variants.first
-    v.update_attributes( unit_value: 1, unit_description: 'foo' )
+  describe "editing unit value and description for a variant", js: true do
+    scenario "when variant_unit is weight" do
+      # Given a product with unit-related option types, with a variant
+      p = create(:simple_product, variant_unit: "weight", variant_unit_scale: "1")
+      v = p.variants.first
+      v.update_attributes( unit_value: 1, unit_description: 'foo' )
 
-    # And the product has option types for the unit-related and non-unit-related option values
-    p.option_types << v.option_values.first.option_type
+      # And the product has option types for the unit-related and non-unit-related option values
+      p.option_types << v.option_values.first.option_type
 
-    # When I view the variant
-    login_to_admin_section
-    visit spree.admin_product_variants_path p
-    page.find('table.index .icon-edit').click
+      # When I view the variant
+      login_to_admin_section
+      visit spree.admin_product_variants_path p
+      page.find('table.index .icon-edit').click
 
-    # Then I should not see a traditional option value field for the unit-related option value
-    expect(page).to have_no_selector "div[data-hook='presentation'] input"
+      # Then I should not see a traditional option value field for the unit-related option value
+      expect(page).to have_no_selector "div[data-hook='presentation'] input"
 
-    # And I should see unit value and description fields for the unit-related option value
-    expect(page).to have_field "unit_value_human", with: "1"
-    expect(page).to have_field "variant_unit_description", with: "foo"
+      # And I should see unit value and description fields for the unit-related option value
+      expect(page).to have_field "unit_value_human", with: "1"
+      expect(page).to have_field "variant_unit_description", with: "foo"
 
-    # When I update the fields and save the variant
-    fill_in "unit_value_human", with: "123"
-    fill_in "variant_unit_description", with: "bar"
-    click_button 'Update'
-    expect(page).to have_content %(Variant "#{p.name}" has been successfully updated!)
+      # When I update the fields and save the variant
+      fill_in "unit_value_human", with: "123"
+      fill_in "variant_unit_description", with: "bar"
+      click_button 'Update'
+      expect(page).to have_content %(Variant "#{p.name}" has been successfully updated!)
 
-    # Then the unit value and description should have been saved
-    v.reload
-    expect(v.unit_value).to eq(123)
-    expect(v.unit_description).to eq('bar')
+      # Then the unit value and description should have been saved
+      v.reload
+      expect(v.unit_value).to eq(123)
+      expect(v.unit_description).to eq('bar')
+    end
+
+    scenario "can update unit_description when variant_unit is items" do
+      product = create(:simple_product, variant_unit: "items", variant_unit_name: "bunches")
+      variant = product.variants.first
+      variant.update_attributes(unit_description: 'foo')
+
+      login_to_admin_section
+      visit spree.edit_admin_product_variant_path(product, variant)
+
+      expect(page).to_not have_field "unit_value_human"
+      expect(page).to have_field "variant_unit_description", with: "foo"
+
+      fill_in "variant_unit_description", with: "bar"
+      click_button 'Update'
+      expect(page).to have_content %(Variant "#{product.name}" has been successfully updated!)
+      expect(variant.reload.unit_description).to eq('bar')
+    end
   end
 
   describe "editing on hand and on demand values", js: true do
