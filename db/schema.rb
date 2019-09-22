@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20190918105234) do
+ActiveRecord::Schema.define(:version => 20190922201034) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -563,7 +563,6 @@ ActiveRecord::Schema.define(:version => 20190918105234) do
     t.integer  "bill_address_id"
     t.integer  "ship_address_id"
     t.decimal  "payment_total",                      :precision => 10, :scale => 2, :default => 0.0
-    t.integer  "shipping_method_id"
     t.string   "shipment_state"
     t.string   "payment_state"
     t.string   "email"
