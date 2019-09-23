@@ -245,6 +245,7 @@ en_CA:
   expired: has expired, please request a new one
   back_to_payments_list: "Back to Payments List"
   maestro_or_solo_cards: "Maestro/Solo cards"
+  backordered: "Backordered"
   ship: "Ship"
   actions:
     create_and_add_another: "Create and Add Another"
@@ -2628,6 +2629,8 @@ en_CA:
     name_or_sku: "Name or SKU (enter at least first 4 characters of product name)"
     resend: Resend
     back_to_orders_list: Back to Orders List
+    return_authorizations: Return Authoriations
+    cannot_create_returns: Cannot create returns as this order has no shipped units
     select_stock: "Select stock"
     location: "Location"
     count_on_hand: "Count On Hand"
