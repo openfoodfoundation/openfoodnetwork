@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby "2.1.9"
+ruby "2.2.10"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
 gem 'i18n', '~> 0.6.11'
@@ -15,7 +15,8 @@ gem 'nokogiri', '>= 1.6.7.1'
 gem "order_management", path: "./engines/order_management"
 gem 'web', path: './engines/web'
 
-gem 'pg'
+gem 'activerecord-postgresql-adapter'
+gem 'pg', '~> 0.21.0'
 
 # OFN-maintained and patched version of Spree v2.0.4. See
 # https://github.com/openfoodfoundation/openfoodnetwork/wiki/Spree-2.0-upgrade
@@ -97,6 +98,8 @@ gem 'roo', '~> 2.7.0'
 gem 'roo-xls', '~> 1.1.0'
 
 gem 'whenever', require: false
+
+gem 'test-unit', '~> 3.0'
 
 # Gems used only for assets and not required
 # in production environments by default.
