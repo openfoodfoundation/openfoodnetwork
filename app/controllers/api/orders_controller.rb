@@ -26,7 +26,10 @@ module Api
     end
 
     def order
-      @order ||= Spree::Order.find_by_number!(params[:id])
+      @order ||= Spree::Order.
+        where(number: params[:id]).
+        includes(line_items: { variant: [:product, :stock_items, :default_price] }).
+        first!
     end
   end
 end
