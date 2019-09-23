@@ -221,18 +221,26 @@ module Api
         it "returns an order with all required fields" do
           get :show, id: order.number
           expect_order
-          expect_detailed_attributes_to_be_present(json_response)
+          expect(json_response.symbolize_keys.keys).to include(*order_detailed_attributes)
 
-          expect(json_response[:bill_address][:address1]).to eq order.bill_address.address1
-          expect(json_response[:bill_address][:lastname]).to eq order.bill_address.lastname
-          expect(json_response[:ship_address][:address1]).to eq order.ship_address.address1
-          expect(json_response[:ship_address][:lastname]).to eq order.ship_address.lastname
+          expect(json_response[:bill_address]).to include(
+            'address1' => order.bill_address.address1,
+            'lastname' => order.bill_address.lastname
+          )
+          expect(json_response[:ship_address]).to include(
+            'address1' => order.ship_address.address1,
+            'lastname' => order.ship_address.lastname
+          )
           expect(json_response[:shipping_method][:name]).to eq order.shipping_method.name
 
-          expect(json_response[:adjustments].first[:label]).to eq "Transaction fee"
-          expect(json_response[:adjustments].first[:amount]).to eq order.adjustments.payment_fee.first.amount.to_s
-          expect(json_response[:adjustments].second[:label]).to eq "Shipping"
-          expect(json_response[:adjustments].second[:amount]).to eq order.adjustments.shipping.first.amount.to_s
+          expect(json_response[:adjustments].first).to include(
+            'label' => "Transaction fee",
+            'amount' => order.adjustments.payment_fee.first.amount.to_s
+          )
+          expect(json_response[:adjustments].second).to include(
+            'label' => "Shipping",
+            'amount' => order.adjustments.shipping.first.amount.to_s
+          )
 
           expect(json_response[:payments].first[:amount]).to eq order.payments.first.amount.to_s
           expect(json_response[:line_items].size).to eq order.line_items.size
@@ -242,15 +250,7 @@ module Api
 
       def expect_order
         expect(response.status).to eq 200
-        expect_correct_order(json_response, order)
-      end
-
-      def expect_correct_order(json_response, order)
         expect(json_response[:number]).to eq order.number
-      end
-
-      def expect_detailed_attributes_to_be_present(json_response)
-        expect(order_detailed_attributes.all?{ |attr| json_response.key? attr.to_s }).to eq true
       end
     end
 
