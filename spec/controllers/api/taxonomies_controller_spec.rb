@@ -23,9 +23,9 @@ module Api
       it "gets the jstree-friendly version of a taxonomy" do
         api_get :jstree, id: taxonomy.id
 
-        json_response["data"].should eq(taxonomy.root.name)
-        json_response["attr"].should eq("id" => taxonomy.root.id, "name" => taxonomy.root.name)
-        json_response["state"].should eq("closed")
+        expect(json_response["data"]).to eq(taxonomy.root.name)
+        expect(json_response["attr"]).to eq("id" => taxonomy.root.id, "name" => taxonomy.root.name)
+        expect(json_response["state"]).to eq("closed")
       end
     end
   end
