@@ -218,8 +218,16 @@ module Api
           expect_order
         end
 
+        it "can view an order with weight calculator (this validates case where options[current_order] is nil on the shipping method serializer)" do
+          order.shipping_method.update_attribute(:calculator, create(:weight_calculator, calculable: order))
+          allow(controller).to receive(:current_order).and_return order
+          get :show, id: order.number
+          expect_order
+        end
+
         it "returns an order with all required fields" do
           get :show, id: order.number
+
           expect_order
           expect(json_response.symbolize_keys.keys).to include(*order_detailed_attributes)
 
