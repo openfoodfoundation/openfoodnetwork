@@ -75,7 +75,7 @@ feature 'shipping methods' do
     let(:sm1) { create(:shipping_method, name: 'One', distributors: [distributor1]) }
     let(:sm2) { create(:shipping_method, name: 'Two', distributors: [distributor1, distributor2]) }
     let(:sm3) { create(:shipping_method, name: 'Three', distributors: [distributor3]) }
-    let(:shipping_category) { DefaultShippingCategory.find_or_create }
+    let(:shipping_category) { create(:shipping_category) }
 
     before(:each) do
       enterprise_user.enterprise_roles.build(enterprise: distributor1).save
@@ -89,7 +89,6 @@ feature 'shipping methods' do
       within(".side_menu") do
         click_link "Shipping Methods"
       end
-      DefaultShippingCategory.find_or_create
       click_link 'Create One Now'
 
       # Show the correct fields

@@ -72,7 +72,7 @@ class ProductFactory
       variant_unit: "weight",
       variant_unit_scale: 1,
       unit_value: 1,
-      shipping_category: Spree::ShippingCategory.find_or_create_by_name('Default')
+      shipping_category: DefaultShippingCategory.find_or_create
     )
     product = Spree::Product.create_with(params).find_or_create_by_name!(params[:name])
     product.variants.first.update_attribute :on_demand, true
