@@ -60,30 +60,30 @@ module OpenFoodNetwork
       when "order_cycle_supplier_totals"
         [
           {
-            group_by: proc { |line_item| find_variant(line_item.variant_id).product.supplier },
+            group_by: proc { |line_item| line_item.variant.product.supplier },
             sort_by: proc { |supplier| supplier.name }
           },
           {
-            group_by: proc { |line_item| find_variant(line_item.variant_id).product },
+            group_by: proc { |line_item| line_item.variant.product },
             sort_by: proc { |product| product.name }
           },
           {
-            group_by: proc { |line_item| find_variant(line_item.variant_id).full_name },
+            group_by: proc { |line_item| line_item.variant.full_name },
             sort_by: proc { |full_name| full_name }
           }
         ]
       when "order_cycle_supplier_totals_by_distributor"
         [
           {
-            group_by: proc { |line_item| find_variant(line_item.variant_id).product.supplier },
+            group_by: proc { |line_item| line_item.variant.product.supplier },
             sort_by: proc { |supplier| supplier.name }
           },
           {
-            group_by: proc { |line_item| find_variant(line_item.variant_id).product },
+            group_by: proc { |line_item| line_item.variant.product },
             sort_by: proc { |product| product.name }
           },
           {
-            group_by: proc { |line_item| find_variant(line_item.variant_id).full_name },
+            group_by: proc { |line_item| line_item.variant.full_name },
             sort_by: proc { |full_name| full_name },
             summary_columns: [
               proc { |_line_items| "" },
@@ -119,15 +119,15 @@ module OpenFoodNetwork
             ]
           },
           {
-            group_by: proc { |line_item| find_variant(line_item.variant_id).product.supplier },
+            group_by: proc { |line_item| line_item.variant.product.supplier },
             sort_by: proc { |supplier| supplier.name }
           },
           {
-            group_by: proc { |line_item| find_variant(line_item.variant_id).product },
+            group_by: proc { |line_item| line_item.variant.product },
             sort_by: proc { |product| product.name }
           },
           {
-            group_by: proc { |line_item| find_variant(line_item.variant_id).full_name },
+            group_by: proc { |line_item| line_item.variant.full_name },
             sort_by: proc { |full_name| full_name }
           }
         ]
@@ -184,11 +184,11 @@ module OpenFoodNetwork
             ]
           },
           {
-            group_by: proc { |line_item| find_variant(line_item.variant_id).product },
+            group_by: proc { |line_item| line_item.variant.product },
             sort_by: proc { |product| product.name }
           },
           {
-            group_by: proc { |line_item| find_variant(line_item.variant_id) },
+            group_by: proc { |line_item| line_item.variant },
             sort_by: proc { |variant| variant.full_name }
           },
           {
@@ -220,8 +220,8 @@ module OpenFoodNetwork
       when "order_cycle_supplier_totals_by_distributor"
         [
           supplier_name,
-          proc { |line_items| find_variant(line_items.first.variant_id).product.name },
-          proc { |line_items| find_variant(line_items.first.variant_id).full_name },
+          proc { |line_items| line_items.first.variant.product.name },
+          proc { |line_items| line_items.first.variant.full_name },
           proc { |line_items| line_items.first.order.distributor.name },
           proc { |line_items| line_items.sum(&:quantity) },
           proc { |line_items| line_items.first.price },
@@ -230,9 +230,9 @@ module OpenFoodNetwork
         ]
       when "order_cycle_distributor_totals_by_supplier"
         [proc { |line_items| line_items.first.order.distributor.name },
-         proc { |line_items| find_variant(line_items.first.variant_id).product.supplier.name },
-         proc { |line_items| find_variant(line_items.first.variant_id).product.name },
-         proc { |line_items| find_variant(line_items.first.variant_id).full_name },
+         proc { |line_items| line_items.first.variant.product.supplier.name },
+         proc { |line_items| line_items.first.variant.product.name },
+         proc { |line_items| line_items.first.variant.full_name },
          proc { |line_items| line_items.sum(&:quantity) },
          proc { |line_items| line_items.first.price },
          proc { |line_items| line_items.sum(&:amount) },
@@ -245,9 +245,9 @@ module OpenFoodNetwork
           proc { |line_items| line_items.first.order.bill_address.firstname + " " + line_items.first.order.bill_address.lastname },
           proc { |line_items| line_items.first.order.email },
           proc { |line_items| line_items.first.order.bill_address.phone },
-          proc { |line_items| find_variant(line_items.first.variant_id).product.supplier.name },
-          proc { |line_items| find_variant(line_items.first.variant_id).product.name },
-          proc { |line_items| find_variant(line_items.first.variant_id).full_name },
+          proc { |line_items| line_items.first.variant.product.supplier.name },
+          proc { |line_items| line_items.first.variant.product.name },
+          proc { |line_items| line_items.first.variant.full_name },
 
           proc { |line_items| line_items.sum(&:quantity) },
           proc { |line_items| line_items.sum(&:amount) },
@@ -268,7 +268,7 @@ module OpenFoodNetwork
           proc { |line_items| line_items.first.order.ship_address.andand.state if rsa.call(line_items) },
 
           proc { |_line_items| "" },
-          proc { |line_items| find_variant(line_items.first.variant_id).sku },
+          proc { |line_items| line_items.first.variant.sku },
 
           proc { |line_items| line_items.first.order.order_cycle.andand.name },
           proc { |line_items| line_items.first.order.payments.first.andand.payment_method.andand.name },
@@ -289,19 +289,19 @@ module OpenFoodNetwork
     private
 
     def supplier_name
-      proc { |line_items| find_variant(line_items.first.variant_id).product.supplier.name }
+      proc { |line_items| line_items.first.variant.product.supplier.name }
     end
 
     def product_name
-      proc { |line_items| find_variant(line_items.first.variant_id).product.name }
+      proc { |line_items| line_items.first.variant.product.name }
     end
 
     def line_item_name
-      proc { |line_item| find_variant(line_item.variant_id).full_name }
+      proc { |line_item| line_item.variant.full_name }
     end
 
     def line_items_name
-      proc { |line_items| find_variant(line_items.first.variant_id).full_name }
+      proc { |line_items| line_items.first.variant.full_name }
     end
 
     def permissions
@@ -313,7 +313,7 @@ module OpenFoodNetwork
       return " " if not_all_have_unit?(line_items)
 
       total_units = line_items.sum do |li|
-        product = find_variant(li.variant_id).product
+        product = li.variant.product
         li.quantity * li.unit_value / scale_factor(product)
       end
 
@@ -326,11 +326,6 @@ module OpenFoodNetwork
 
     def scale_factor(product)
       product.variant_unit == 'weight' ? 1000 : 1
-    end
-
-    # Returns the variant with the given id, including soft-deleted ones
-    def find_variant(id)
-      Spree::Variant.unscoped.find(id)
     end
   end
 end
