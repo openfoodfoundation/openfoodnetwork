@@ -291,8 +291,7 @@ module Api
     def order_detailed_attributes
       [
         :number, :item_total, :total, :state, :adjustment_total, :payment_total,
-        :completed_at, :shipment_state, :payment_state, :email, :special_instructions,
-        :adjustments, :payments, :bill_address, :ship_address, :line_items, :shipping_method
+        :completed_at, :shipment_state, :payment_state, :email, :special_instructions
       ]
     end
   end
