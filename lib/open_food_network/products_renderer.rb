@@ -27,6 +27,10 @@ module OpenFoodNetwork
       end
     end
 
+    def products
+      load_products
+    end
+
     private
 
     def load_products

@@ -8,6 +8,18 @@ module Api
 
     skip_authorization_check only: [:show, :bulk_products, :overridable]
 
+    def shop
+      renderer = ProductsRenderer.new(current_distributor, current_order_cycle)
+      products = ProductsFilterer.new(renderer.products).call
+
+      # filter query, taxons and properties
+      # paginate
+
+      render json: products
+    rescue OpenFoodNetwork::CachedProductsRenderer::NoProducts
+      render status: :not_found, json: ''
+    end
+
     def bulk_products
       product_query = OpenFoodNetwork::Permissions.new(current_api_user).
         editable_products.merge(product_scope)

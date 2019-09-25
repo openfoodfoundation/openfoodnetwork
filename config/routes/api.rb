@@ -2,6 +2,7 @@ Openfoodnetwork::Application.routes.draw do
   namespace :api do
     resources :products do
       collection do
+        get :shop
         get :bulk_products
         get :overridable
       end
