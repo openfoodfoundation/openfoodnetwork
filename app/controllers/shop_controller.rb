@@ -15,7 +15,7 @@ class ShopController < BaseController
 
     # If we add any more filtering logic, we should probably
     # move it all to a lib class like 'CachedProductsFilterer'
-    products_json = filter(renderer.products_json)
+    products_json = filtered_json(renderer.products_json)
 
     render json: products_json
   rescue OpenFoodNetwork::CachedProductsRenderer::NoProducts
