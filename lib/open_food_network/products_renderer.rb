@@ -10,25 +10,13 @@ module OpenFoodNetwork
     end
 
     def products_json
-      products = load_products
+      raise NoProducts unless products
 
-      if products
-        enterprise_fee_calculator = EnterpriseFeeCalculator.new @distributor, @order_cycle
-
-        ActiveModel::ArraySerializer.new(products,
-                                         each_serializer: Api::ProductSerializer,
-                                         current_order_cycle: @order_cycle,
-                                         current_distributor: @distributor,
-                                         variants: variants_for_shop_by_id,
-                                         master_variants: master_variants_for_shop_by_id,
-                                         enterprise_fee_calculator: enterprise_fee_calculator,).to_json
-      else
-        raise NoProducts
-      end
+      products_serializer.to_json
     end
 
     def products
-      load_products
+      @products ||= load_products
     end
 
     private
@@ -55,6 +43,20 @@ module OpenFoodNetwork
       else
         "name ASC"
       end
+    end
+
+    def products_serializer
+      ActiveModel::ArraySerializer.new(products,
+                                       each_serializer: Api::ProductSerializer,
+                                       current_order_cycle: @order_cycle,
+                                       current_distributor: @distributor,
+                                       variants: variants_for_shop_by_id,
+                                       master_variants: master_variants_for_shop_by_id,
+                                       enterprise_fee_calculator: enterprise_fee_calculator)
+    end
+
+    def enterprise_fee_calculator
+      EnterpriseFeeCalculator.new @distributor, @order_cycle
     end
 
     def all_variants_for_shop
