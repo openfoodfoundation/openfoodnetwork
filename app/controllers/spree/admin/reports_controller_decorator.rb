@@ -109,7 +109,7 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def orders_and_fulfillment
-    params[:q] ||= {}
+    params[:q] ||= orders_and_fulfillment_default_filters
 
     # -- Prepare Form Options
     permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
@@ -276,5 +276,11 @@ Spree::Admin::ReportsController.class_eval do
 
   def timestamp
     Time.zone.now.strftime("%Y%m%d")
+  end
+
+  def orders_and_fulfillment_default_filters
+    now = Time.zone.now
+    { completed_at_gt: (now - 1.month).beginning_of_day,
+      completed_at_lt: (now + 1.day).beginning_of_day }
   end
 end
