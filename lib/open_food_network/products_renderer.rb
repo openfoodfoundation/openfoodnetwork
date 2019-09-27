@@ -38,7 +38,7 @@ module OpenFoodNetwork
         order(taxon_order).
         each { |product| scoper.scope(product) }.
         select do |product|
-          !product.deleted? && product.has_stock_for_distribution?(@order_cycle, @distributor)
+          product.has_stock_for_distribution?(@order_cycle, @distributor)
         end
     end
 
