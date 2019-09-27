@@ -25,8 +25,6 @@ module VariantStock
   #
   # @return [Float|Integer]
   def on_hand
-    warn_deprecation(__method__, '#total_on_hand')
-
     total_on_hand
   end
 
@@ -37,8 +35,6 @@ module VariantStock
   # @raise [StandardError] when the track_inventory_levels config key is not set
   #   and when the variant has no stock item
   def on_hand=(new_level)
-    warn_deprecation(__method__, '#total_on_hand')
-
     error = 'Cannot set on_hand value when Spree::Config[:track_inventory_levels] is false'
     raise error unless Spree::Config.track_inventory_levels
 
@@ -53,8 +49,6 @@ module VariantStock
   # track_inventory_levels only. It was initially introduced in
   # https://github.com/openfoodfoundation/spree/commit/20b5ad9835dca7f41a40ad16c7b45f987eea6dcc
   def on_demand
-    warn_deprecation(__method__, 'StockItem#backorderable?')
-
     # A variant that has not been saved yet, doesn't have a stock item
     #   This provides a default value for variant.on_demand using Spree::StockLocation.backorderable_default
     return Spree::StockLocation.first.backorderable_default if stock_items.empty?
@@ -69,8 +63,6 @@ module VariantStock
   #
   # @raise [StandardError] when the variant has no stock item yet
   def on_demand=(new_value)
-    warn_deprecation(__method__, 'StockItem#backorderable=')
-
     raise_error_if_no_stock_item_available
 
     # There should be only one at the default stock location.
@@ -157,12 +149,5 @@ module VariantStock
   # have only one stock location.
   def stock_item
     stock_items.first
-  end
-
-  def warn_deprecation(method_name, new_method_name)
-    ActiveSupport::Deprecation.warn(
-      "`##{method_name}` is deprecated and will be removed. " \
-      "Please use `#{new_method_name}` instead."
-    )
   end
 end
