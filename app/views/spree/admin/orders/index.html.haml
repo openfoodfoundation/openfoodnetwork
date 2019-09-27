@@ -7,8 +7,11 @@
 
 = render partial: 'spree/admin/shared/order_sub_menu'
 
-- content_for :app_wrapper_attrs do
-  = "ng-app='admin.orders' ng-controller='ordersCtrl'"
+- content_for :main_ng_app_name do
+  = "admin.orders"
+
+- content_for :main_ng_ctrl_name do
+  = "ordersCtrl"
 
 - content_for :table_filter_title do
   = t(:search)
