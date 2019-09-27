@@ -31,7 +31,6 @@ module OpenFoodNetwork
 
     def load_products
       return unless @order_cycle
-      scoper = ScopeProductToHub.new(@distributor)
 
       OrderCycleDistributedProducts.new(@order_cycle, @distributor).
         relation.
@@ -40,6 +39,10 @@ module OpenFoodNetwork
         select do |product|
           product.has_stock_for_distribution?(@order_cycle, @distributor)
         end
+    end
+
+    def scoper
+      ScopeProductToHub.new(@distributor)
     end
 
     def taxon_order
