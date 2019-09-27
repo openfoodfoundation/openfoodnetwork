@@ -32,62 +32,9 @@ module OpenFoodNetwork
     def load_products
       return unless @order_cycle
 
-      Spree::Product.where(id: distributed_products).
+      ShopProductsService.new(@distributor, @order_cycle).relation.
         order(taxon_order).
         each { |product| scoper.scope(product) }
-    end
-
-    def distributed_products
-      @order_cycle.
-        variants_distributed_by(@distributor).
-        merge(stocked_variants_with_overrides).
-        select("DISTINCT spree_variants.product_id")
-    end
-
-    def stocked_variants_with_overrides
-      Spree::Variant.
-        joins("LEFT OUTER JOIN variant_overrides ON variant_overrides.variant_id = spree_variants.id AND variant_overrides.hub_id = #{@distributor.id}").
-        joins(:stock_items).
-        where(query_stock_with_overrides)
-    end
-
-    def query_stock_with_overrides
-      "( #{variant_not_overriden} AND ( #{variant_in_stock} OR #{variant_on_demand} ) )
-        OR ( #{variant_overriden} AND ( #{override_on_demand} OR #{override_in_stock} ) )
-        OR ( #{variant_overriden} AND ( #{override_on_demand_null} AND #{variant_on_demand} ) )
-        OR ( #{variant_overriden} AND ( #{override_on_demand_null} AND #{variant_not_on_demand} AND #{variant_in_stock} ) )"
-    end
-
-    def variant_not_overriden
-      "variant_overrides.id IS NULL"
-    end
-
-    def variant_overriden
-      "variant_overrides.id IS NOT NULL"
-    end
-
-    def variant_in_stock
-      "spree_stock_items.count_on_hand > 0"
-    end
-
-    def variant_on_demand
-      "spree_stock_items.backorderable IS TRUE"
-    end
-
-    def variant_not_on_demand
-      "spree_stock_items.backorderable IS FALSE"
-    end
-
-    def override_on_demand
-      "variant_overrides.on_demand IS TRUE"
-    end
-
-    def override_in_stock
-      "variant_overrides.count_on_hand > 0"
-    end
-
-    def override_on_demand_null
-      "variant_overrides.on_demand IS NULL"
     end
 
     def scoper
