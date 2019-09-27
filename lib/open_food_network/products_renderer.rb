@@ -32,13 +32,19 @@ module OpenFoodNetwork
     def load_products
       return unless @order_cycle
 
-      OrderCycleDistributedProducts.new(@order_cycle, @distributor).
-        relation.
+      Spree::Product.where(id: distributed_products).
         order(taxon_order).
         each { |product| scoper.scope(product) }.
         select do |product|
           product.has_stock_for_distribution?(@order_cycle, @distributor)
         end
+    end
+
+    def distributed_products
+      @order_cycle.
+        variants_distributed_by(@distributor).
+        includes(:product).
+        select(:product_id)
     end
 
     def scoper
