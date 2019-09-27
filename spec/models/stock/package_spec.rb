@@ -48,7 +48,7 @@ module Stock
     describe '#shipping_categories' do
       it "returns shipping categories that are not shipping categories of the order's products" do
         package
-        other_shipping_category = create(:shipping_category)
+        other_shipping_category = Spree::ShippingCategory.create(name: "Custom")
 
         expect(package.shipping_categories).to eq [shipping_method1.shipping_categories.first,
                                                    other_shipping_category]

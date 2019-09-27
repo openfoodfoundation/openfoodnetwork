@@ -10,7 +10,7 @@ describe DefaultShippingCategory do
 
   describe 'find_or_create' do
     context 'when a Default category already exists' do
-      let! :category do
+      let!(:category) do
         Spree::ShippingCategory.create!(name: 'Default')
       end
 
