@@ -30,13 +30,17 @@ module OpenFoodNetwork
     def shop_products
       return unless @order_cycle
 
-      @shop_products ||= ShopProductsService.new(@distributor, @order_cycle).relation.
-        order(taxon_order).
-        each { |product| scoper.scope(product) }
+      @shop_products ||= begin
+        scoper = ScopeProductToHub.new(@distributor)
+
+        shop_products_service.products_relation.
+          order(taxon_order).
+          each { |product| scoper.scope(product) }
+      end
     end
 
-    def scoper
-      ScopeProductToHub.new(@distributor)
+    def shop_products_service
+      ShopProductsService.new(@distributor, @order_cycle)
     end
 
     def taxon_order
@@ -50,25 +54,22 @@ module OpenFoodNetwork
       end
     end
 
-    def all_variants_for_shop
-      @all_variants_for_shop ||= begin
-                                   # We use the in_stock? method here instead of the in_stock scope
-                                   # because we need to look up the stock as overridden by
-                                   # VariantOverrides, and the scope method is not affected by them.
-                                   scoper = OpenFoodNetwork::ScopeVariantToHub.new(@distributor)
-                                   Spree::Variant.
-                                     for_distribution(@order_cycle, @distributor).
-                                     each { |v| scoper.scope(v) }.
-                                     select(&:in_stock?)
-                                 end
+    def variants_for_shop
+      @variants_for_shop ||= begin
+        scoper = OpenFoodNetwork::ScopeVariantToHub.new(@distributor)
+
+        shop_products_service.variants_relation.
+          where(product_id: shop_products).
+          each { |v| scoper.scope(v) }
+      end
     end
 
     def variants_for_shop_by_id
-      index_by_product_id all_variants_for_shop.reject(&:is_master)
+      index_by_product_id variants_for_shop.reject(&:is_master)
     end
 
     def master_variants_for_shop_by_id
-      index_by_product_id all_variants_for_shop.select(&:is_master)
+      index_by_product_id variants_for_shop.select(&:is_master)
     end
 
     def index_by_product_id(variants)

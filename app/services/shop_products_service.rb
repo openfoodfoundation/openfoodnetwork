@@ -1,4 +1,4 @@
-# Returns a (paginatable) AR object for the products in stock for a given distributor and OC.
+# Returns a (paginatable) AR object for the products or variants in stock for a given shop and OC.
 # The stock-checking includes on_demand and stock level overrides from variant_overrides.
 
 class ShopProductsService
@@ -7,13 +7,19 @@ class ShopProductsService
     @order_cycle = order_cycle
   end
 
-  def relation
-    Spree::Product.where(id: distributed_products)
+  def products_relation
+    Spree::Product.where(id: stocked_products)
+  end
+
+  def variants_relation
+    @order_cycle.
+      variants_distributed_by(@distributor).
+      merge(stocked_variants_and_overrides)
   end
 
   private
 
-  def distributed_products
+  def stocked_products
     @order_cycle.
       variants_distributed_by(@distributor).
       merge(stocked_variants_and_overrides).
