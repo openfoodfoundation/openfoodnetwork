@@ -59,6 +59,7 @@ module OpenFoodNetwork
         scoper = OpenFoodNetwork::ScopeVariantToHub.new(@distributor)
 
         shop_products_service.variants_relation.
+          includes(:default_price, :stock_locations, :product).
           where(product_id: shop_products).
           each { |v| scoper.scope(v) }
       end
