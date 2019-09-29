@@ -25,13 +25,13 @@ module OpenFoodNetwork
 
       it "sorts products by the distributor's preferred taxon list" do
         allow(distributor).to receive(:preferred_shopfront_taxon_order) { "#{t1.id},#{t2.id}" }
-        products = pr.send(:load_products)
+        products = pr.send(:shop_products)
         expect(products).to eq([p2, p4, p1, p3])
       end
 
       it "alphabetizes products by name when taxon list is not set" do
         allow(distributor).to receive(:preferred_shopfront_taxon_order) { "" }
-        products = pr.send(:load_products)
+        products = pr.send(:shop_products)
         expect(products).to eq([p1, p2, p3, p4])
       end
     end

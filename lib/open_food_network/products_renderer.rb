@@ -10,12 +10,10 @@ module OpenFoodNetwork
     end
 
     def products_json
-      products = load_products
-
-      if products
+      if shop_products
         enterprise_fee_calculator = EnterpriseFeeCalculator.new @distributor, @order_cycle
 
-        ActiveModel::ArraySerializer.new(products,
+        ActiveModel::ArraySerializer.new(shop_products,
                                          each_serializer: Api::ProductSerializer,
                                          current_order_cycle: @order_cycle,
                                          current_distributor: @distributor,
@@ -29,10 +27,10 @@ module OpenFoodNetwork
 
     private
 
-    def load_products
+    def shop_products
       return unless @order_cycle
 
-      ShopProductsService.new(@distributor, @order_cycle).relation.
+      @shop_products ||= ShopProductsService.new(@distributor, @order_cycle).relation.
         order(taxon_order).
         each { |product| scoper.scope(product) }
     end
