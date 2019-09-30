@@ -14,5 +14,12 @@ assignees: ''
 **- I want to be able to do:** (specify the desired behavior)
 (Link to others issues or resources to provide context > only if really necessary). -->
 
-## Acceptance Criteria
-<!-- Document the outcomes that need to be achieved before this component can be considered complete. -->
+## Acceptance Criteria & Tests
+<!-- Document the outcomes that need to be achieved before this component can be considered complete.
+ -->
+<!-- Provide an unambiguous set of steps a tester should do to validate the PR that will solve this issue -->
+
+1.
+2. 
+3. 
+4.
