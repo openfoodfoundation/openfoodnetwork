@@ -35,6 +35,9 @@ assignees: ''
 <!-- Provide a screenshot or brief video reproducing the bug.  -->
 <!-- Please try to have the dev tools opened on the network tab (press F12 to open the devtools of your browser -->
 
+## Workaround
+<!-- Include a workaround for this bug (if relevant) -->
+
 ## Severity
 <!-- Assign a label and explain the impact.
 
