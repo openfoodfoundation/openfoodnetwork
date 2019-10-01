@@ -110,7 +110,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
 
   $scope.editWarn = (product, variant) ->
     if (DirtyProducts.count() > 0 and confirm(t("unsaved_changes_confirmation"))) or (DirtyProducts.count() == 0)
-      window.location = "/admin/products/" + product.permalink_live + ((if variant then "/variants/" + variant.id else "")) + "/edit"
+      window.open("/admin/products/" + product.permalink_live + ((if variant then "/variants/" + variant.id else "")) + "/edit", "_blank")
 
 
   $scope.toggleShowAllVariants = ->
