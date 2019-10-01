@@ -1,7 +1,7 @@
 # Returns a (paginatable) AR object for the products or variants in stock for a given shop and OC.
 # The stock-checking includes on_demand and stock level overrides from variant_overrides.
 
-class ShopProductsService
+class OrderCycleDistributedProducts
   def initialize(distributor, order_cycle)
     @distributor = distributor
     @order_cycle = order_cycle

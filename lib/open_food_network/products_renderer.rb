@@ -10,10 +10,10 @@ module OpenFoodNetwork
     end
 
     def products_json
-      if shop_products
+      if products
         enterprise_fee_calculator = EnterpriseFeeCalculator.new @distributor, @order_cycle
 
-        ActiveModel::ArraySerializer.new(shop_products,
+        ActiveModel::ArraySerializer.new(products,
                                          each_serializer: Api::ProductSerializer,
                                          current_order_cycle: @order_cycle,
                                          current_distributor: @distributor,
@@ -27,20 +27,20 @@ module OpenFoodNetwork
 
     private
 
-    def shop_products
+    def products
       return unless @order_cycle
 
-      @shop_products ||= begin
+      @products ||= begin
         scoper = ScopeProductToHub.new(@distributor)
 
-        shop_products_service.products_relation.
+        distributed_products.products_relation.
           order(taxon_order).
           each { |product| scoper.scope(product) }
       end
     end
 
-    def shop_products_service
-      ShopProductsService.new(@distributor, @order_cycle)
+    def distributed_products
+      OrderCycleDistributedProducts.new(@distributor, @order_cycle)
     end
 
     def taxon_order
@@ -58,9 +58,9 @@ module OpenFoodNetwork
       @variants_for_shop ||= begin
         scoper = OpenFoodNetwork::ScopeVariantToHub.new(@distributor)
 
-        shop_products_service.variants_relation.
+        distributed_products.variants_relation.
           includes(:default_price, :stock_locations, :product).
-          where(product_id: shop_products).
+          where(product_id: products).
           each { |v| scoper.scope(v) }
       end
     end
