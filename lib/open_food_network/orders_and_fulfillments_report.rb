@@ -6,9 +6,8 @@ include Spree::ReportsHelper
 module OpenFoodNetwork
   class OrdersAndFulfillmentsReport
     attr_reader :params
-    def initialize(user, permissions, params = {}, render_table = false)
+    def initialize(permissions, params = {}, render_table = false)
       @params = params
-      @user = user
       @permissions = permissions
       @render_table = render_table
     end
