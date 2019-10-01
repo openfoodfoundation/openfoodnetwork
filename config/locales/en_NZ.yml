@@ -1,26 +1,5 @@
-# English language file
-# ---------------------
-#
-# This is the source language file maintained by the global OFN team.
-# Visit Transifex to translate this file into other languages:
-#
-#   https://www.transifex.com/open-food-foundation/open-food-network/
-#
-# Read more about it at:
-#
-#   https://github.com/openfoodfoundation/openfoodnetwork/wiki/Internationalisation-%28i18n%29
-#
-# Changing this file
-# ==================
-#
-# You are welcome to fix typos, add missing translations and remove unused ones.
-# But read our guidelines first:
-#
-#   https://github.com/openfoodfoundation/openfoodnetwork/wiki/Internationalisation-%28i18n%29#development
-#
-en:
-  # Overridden here due to a bug in spree i18n (Issue #870, and issue #1800)
-  language_name: "English" # Localised name of this language
+en_NZ:
+  language_name: "English"
   activerecord:
     attributes:
       spree/order:
@@ -88,7 +67,6 @@ en:
               no_default_card: "^No default card available for this customer"
             shipping_method:
               not_available_to_shop: "is not available to %{shop}"
-
   devise:
     confirmations:
       send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
@@ -107,8 +85,8 @@ en:
         unknown_error: "Something went wrong while creating your account. Check your email address and try again."
     failure:
       invalid: |
-        Invalid email or password.
-        Were you a guest last time?  Perhaps you need to create an account or reset your password.
+          Invalid email or password.
+          Were you a guest last time?  Perhaps you need to create an account or reset your password.
       unconfirmed: "You have to confirm your account before continuing."
       already_registered: "This email address is already registered. Please log in to continue, or go back and use another email address."
     success:
@@ -118,11 +96,9 @@ en:
         updated_not_active: "Your password has been reset, but your email has not been confirmed yet."
         updated: "Your password was changed successfully. You are now signed in."
         send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
-
   models:
     order_cycle:
       cloned_order_cycle_name: "COPY OF %{order_cycle}"
-
   validators:
     date_time_string_validator:
       not_string_error: "must be a string"
@@ -130,7 +106,6 @@ en:
     integer_array_validator:
       not_array_error: "must be an array"
       invalid_element_error: "must contain only valid integers"
-
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
@@ -185,14 +160,12 @@ en:
       other:
         title: Other Failure (%{count} orders)
         explainer: Automatic processing of these orders failed for an unknown reason. This should not occur, please contact us if you are seeing this.
-
   home: "OFN"
   title: Open Food Network
   welcome_to: 'Welcome to '
-  site_meta_description: "We begin from the ground up. With farmers and growers ready to tell their stories proudly and truly. With distributors ready to connect people with products fairly and honestly. With buyers who believe that better weekly shopping decisions can…"
+  site_meta_description: "We begin from the ground up. With farmers, growers, and producers ready to tell their stories proudly and truly. With distributors ready to connect people with products fairly and honestly. With buyers who believe that better weekly shopping decisions can…"
   search_by_name: Search by name or suburb...
-  producers: 'Australian Producers'
-  producers_join: Australian producers are now welcome to join the Open Food Network. #FIXME
+  producers_join: New Zealand producers are now welcome to join the Open Food Network.
   charges_sales_tax: Charges GST?
   print_invoice: "Print Invoice"
   print_ticket: "Print Ticket"
@@ -205,7 +178,7 @@ en:
   cancel_order: "Cancel Order"
   confirm_send_invoice: "An invoice for this order will be sent to the customer. Are you sure you want to continue?"
   confirm_resend_order_confirmation: "Are you sure you want to resend the order confirmation email?"
-  must_have_valid_business_number: "%{enterprise_name} must have a valid ABN before invoices can be sent."
+  must_have_valid_business_number: "%{enterprise_name} must have a valid IRD number before invoices can be sent."
   invoice: "Invoice"
   more: "More"
   say_no: "No"
@@ -218,7 +191,7 @@ en:
   select_continue: Select and Continue
   remove: Remove
   or: or
-  collapse_all:  Collapse all
+  collapse_all: Collapse all
   expand_all: Expand all
   loading: Loading...
   show_more: Show more
@@ -228,8 +201,6 @@ en:
   edit: Edit
   clone: Clone
   distributors: Distributors
-  distribution: Distribution
-  order_cycles: Order Cycles
   bulk_order_management: Bulk Order Management
   enterprises: Enterprises
   enterprise_groups: Groups
@@ -255,19 +226,17 @@ en:
   updated: Updated
   'yes': "Yes"
   'no': "No"
-  'y': 'Y'
-  'n': 'N'
+  y: 'Y'
+  n: 'N'
   powered_by: Powered by
   blocked_cookies_alert: "Your browser may be blocking cookies needed to use this shopfront. Click below to allow cookies and reload the page."
   allow_cookies: "Allow Cookies"
-  none: None
   notes: Notes
   error: Error
   processing_payment: Processing payment...
   filter_results: Filter Results
   quantity: Quantity
   pick_up: Pick up
-  ok: Ok
   copy: Copy
   change_my_password: "Change my password"
   update_password: "Update password"
@@ -277,9 +246,7 @@ en:
   back_to_payments_list: "Back to Payments List"
   maestro_or_solo_cards: "Maestro/Solo cards"
   backordered: "Backordered"
-  on_hand: "On Hand"
   ship: "Ship"
-
   actions:
     create_and_add_another: "Create and Add Another"
     create: "Create"
@@ -287,9 +254,7 @@ en:
     save: "Save"
     edit: "Edit"
     delete: "Delete"
-
   admin:
-    # Common properties / models
     begins_at: Begins At
     begins_on: Begins On
     customer: Customer
@@ -323,13 +288,10 @@ en:
     items: Items
     select_all: Select all
     obsolete_master: Obsolete master
-
-    # General form elements
     quick_search: Quick Search
     clear_all: Clear All
     start_date: "Start Date"
     end_date: "End Date"
-    unsaved_changes: "You have unsaved changes"
     form_invalid: "Form contains missing or invalid fields"
     clear_filters: Clear Filters
     clear: Clear
@@ -340,30 +302,23 @@ en:
     show_n_more: Show %{num} more
     choose: "Choose..."
     please_select: Please select...
-
     columns: Columns
     actions: Actions
     viewing: "Viewing: %{current_view_name}"
     description: Description
-
     whats_this: What's this?
-
     tag_has_rules: "Existing rules for this tag: %{num}"
     has_one_rule: "has one rule"
     has_n_rules: "has %{num} rules"
-
     unsaved_confirm_leave: "There are unsaved changed on this page. Continue without saving?"
     unsaved_changes: "You have unsaved changes"
-
     shopfront_settings:
       embedded_shopfront_settings: "Embedded Shopfront Settings"
       enable_embedded_shopfronts: "Enable Embedded Shopfronts"
       embedded_shopfronts_whitelist: "External Domains Whitelist"
-
     number_localization:
       number_localization_settings: "Number Localization Settings"
       enable_localized_number: "Use the international thousand/decimal separator logic"
-
     cache_settings:
       edit:
         title: "Caching"
@@ -373,14 +328,12 @@ en:
         diff: "Diff"
         error: "Error"
         enable_products_cache: "Enable Products Cache?"
-
     invoice_settings:
       edit:
         title: "Invoice Settings"
         enable_invoices?: "Enable Invoices?"
         invoice_style2?: "Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)"
         enable_receipt_printing?: "Show options for printing receipts using thermal printers in order dropdown?"
-
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -397,7 +350,6 @@ en:
         charges_enabled_warning: "Warning: Charges are not enabled for your account"
         auth_fail_error: The API key you provided is invalid
         empty_api_key_error_html: No Stripe API key has been provided. To set your API key, please follow <a href="https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance" target="_blank">these instructions</a>
-
     matomo_settings:
       edit:
         title: "Matomo Settings"
@@ -405,7 +357,6 @@ en:
         matomo_site_id: "Matomo Site ID"
         info_html: "Matomo is a Web and Mobile Analytics. You can either host Matomo on-premises or use a cloud-hosted service. See <a href='http://matomo.org' target='_blank'>matomo.org</a> for more information."
         config_instructions_html: "Here you can configure the OFN Matomo integration. The Matomo URL below should point to the Matomo instance where the user tracking information will be sent to; if it is left empty, Matomo user tracking will be disabled. The Site ID field is not mandatory but useful if you are tracking more than one website on a single Matomo instance; it can be found on the Matomo instance console."
-
     customers:
       index:
         new_customer: "New Customer"
@@ -427,7 +378,6 @@ en:
         guest_label: 'Guest checkout'
       destroy:
         has_associated_orders: 'Delete failed: customer has associated orders with his shop'
-
     contents:
       edit:
         title: Content
@@ -440,7 +390,6 @@ en:
         footer_and_external_links: Footer and External Links
         your_content: Your content
         user_guide: User Guide
-
     enterprise_fees:
       index:
         title: "Enterprise Fees"
@@ -452,17 +401,14 @@ en:
         calculator_values: "Calculator Values"
         search: "Search"
         name_placeholder: "e.g. packing fee"
-
     enterprise_groups:
       index:
         new_button: New Enterprise Group
-
     enterprise_roles:
       form:
         manages: manages
       enterprise_role:
         manages: manages
-
     products:
       unit_name_placeholder: 'eg. bunches'
       index:
@@ -488,7 +434,6 @@ en:
         to_order_tip: "Items made to order do not have a set stock level, such as loaves of bread made fresh to order."
       group_buy_options: "Group Buy Options"
       back_to_products_list: "Back to products list"
-
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -583,7 +528,6 @@ en:
         import_again: Upload Another File
         view_products: Go To Products Page
         view_inventory: Go To Inventory Page
-
     variant_overrides:
       loading_flash:
         loading_inventory: LOADING INVENTORY
@@ -635,7 +579,6 @@ en:
       select_variant: "Select a variant"
     enterprise:
       select_outgoing_oc_products_from: Select outgoing OC products from
-
     enterprises:
       index:
         title: Enterprises
@@ -651,9 +594,9 @@ en:
           desc_long: About Us
           desc_long_placeholder: Tell customers about yourself. This information appears on your public profile.
         business_details:
-          abn: ABN
-          abn_placeholder: eg. 99 123 456 789
-          acn: ACN
+          abn: 'IRD number '
+          abn_placeholder: eg. 99 -99-99
+          acn: NZBN
           acn_placeholder: eg. 123 456 789
           display_invoice_logo: Display logo in invoices
           invoice_text: Add customized text at the end of invoices
@@ -661,12 +604,12 @@ en:
           name: Name
           name_placeholder: eg. Gustav Plum
           email_address: Public Email Address
-          email_address_placeholder: eg. inquiries@fresh-food.com
+          email_address_placeholder: eg. person@gmail.com
           email_address_tip: "This email address will be displayed in your public profile"
           phone: Phone
           phone_placeholder: eg. 98 7654 3210
           website: Website
-          website_placeholder: eg. www.truffles.com
+          website_placeholder: eg. www.some-website.co.nz
         enterprise_fees:
           name: Name
           fee_type: Fee Type
@@ -683,10 +626,10 @@ en:
           text1: You may opt to manage stock levels and prices in via your
           inventory: inventory
           text2: >
-            If you are using the inventory tool, you can select whether new products
-            added by your suppliers need to be added to your inventory before they can be
-            stocked. If you are not using your inventory to manage your products you should
-            select the 'recommended' option below:
+              If you are using the inventory tool, you can select whether new products
+              added by your suppliers need to be added to your inventory before they
+              can be stocked. If you are not using your inventory to manage your products
+              you should select the 'recommended' option below:
           preferred_product_selection_from_inventory_only_yes: New products can be put into my shopfront (recommended)
           preferred_product_selection_from_inventory_only_no: New products must be added to my inventory before they can be put into my shopfront
         payment_methods:
@@ -747,15 +690,16 @@ en:
           enable_subscriptions_true: "Enabled"
           shopfront_message: "Shopfront Message"
           shopfront_message_placeholder: >
-            An optional explanation for customers detailing how your shopfront works,
-            to be displayed above the product list on your shop page.
+              An optional explanation for customers detailing how your shopfront works,
+              to be displayed above the product list on your shop page.
           shopfront_message_link_tooltip: "Insert / edit link"
           shopfront_message_link_prompt: "Please enter a URL to insert"
           shopfront_closed_message: "Shopfront Closed Message"
           shopfront_closed_message_placeholder: >
-            A message which provides a more detailed explanation about why your shop is
-            closed and/or when customers can expect it to open again. This is displayed
-            on your shop only when you have no active order cycles (ie. shop is closed).
+              A message which provides a more detailed explanation about why your
+              shop is closed and/or when customers can expect it to open again. This
+              is displayed on your shop only when you have no active order cycles
+              (ie. shop is closed).
           shopfront_category_ordering: "Shopfront Category Ordering"
           open_date: "Open Date"
           close_date: "Close Date"
@@ -914,7 +858,6 @@ en:
       form:
         incoming: Incoming
         supplier: Supplier
-        products: Products
         receival_details: Receival details
         fees: Fees
         outgoing: Outgoing
@@ -955,13 +898,11 @@ en:
     producer_properties:
       index:
         title: Producer Properties
-
     proxy_orders:
       cancel:
         could_not_cancel_the_order: Could not cancel the order
       resume:
         could_not_resume_the_order: Could not resume the order
-
     shared:
       user_guide_link:
         user_guide: User Guide
@@ -1011,7 +952,6 @@ en:
         name: Customers
       products_and_inventory:
         name: Products & Inventory
-        description:
       sales_total:
         name: Sales Total
         description: Sales Total For All Orders
@@ -1063,8 +1003,8 @@ en:
         review: 4. Review & Save
       subscription_line_items:
         this_is_an_estimate: |
-          The displayed prices are only an estimate and calculated at the time the subscription is changed.
-          If you change prices or fees, orders will be updated, but the subscription will still display the old values.
+            The displayed prices are only an estimate and calculated at the time the subscription is changed.
+            If you change prices or fees, orders will be updated, but the subscription will still display the old values.
         not_in_open_and_upcoming_order_cycles_warning: "There are no open or upcoming order cycles for this product."
       autocomplete:
         name_or_sku: "NAME OR SKU"
@@ -1114,12 +1054,9 @@ en:
         no_subscriptions: No subscriptions yet...
         why_dont_you_add_one: Why don't you add one? :)
         no_matching_subscriptions: No matching subscriptions found
-
     schedules:
       destroy:
         associated_subscriptions_error: This schedule cannot be deleted because it has associated subscriptions
-
-    # Admin controllers
     controllers:
       enterprises:
         stripe_connect_cancelled: "Connection to Stripe has been cancelled"
@@ -1127,20 +1064,11 @@ en:
         stripe_connect_fail: Sorry, the connection of your Stripe account failed
       stripe_connect_settings:
         resource: Stripe Connect configuration
-
-# API
-#
   api:
     enterprise_logo:
       destroy_attachment_does_not_exist: "Logo does not exist"
     enterprise_promo_image:
       destroy_attachment_does_not_exist: "Promo image does not exist"
-
-# Frontend views
-#
-# These keys are referenced relatively like `t('.message')` in
-# app/views/checkout/_already_ordered.html.haml.
-#
   checkout:
     already_ordered:
       cart: "cart"
@@ -1198,13 +1126,9 @@ en:
       require_customer_login: "Only approved customers can access this shop."
       require_login_html: "If you're already an approved customer, %{login} or %{signup} to proceed. Want to start shopping here? Please %{contact} %{enterprise} and ask about joining."
       require_customer_html: "If you'd like to start shopping here, please %{contact} %{enterprise} to ask about joining."
-
-  # Front-end controller translations
   card_could_not_be_updated: Card could not be updated
   card_could_not_be_saved: card could not be saved
   spree_gateway_error_flash_for_checkout: "There was a problem with your payment information: %{error}"
-
-  # Printable Invoice Columns
   invoice_billing_address: "Billing address:"
   invoice_column_tax: "GST"
   invoice_column_price: "Price"
@@ -1220,17 +1144,15 @@ en:
   tax_total: "Total tax (%{rate}):"
   total_excl_tax: "Total (Excl. tax):"
   total_incl_tax: "Total (Incl. tax):"
-  abn: "ABN:"
-  acn: "ACN:"
+  abn: "IRD Number:"
+  acn: "NZBN:"
   invoice_issued_on: "Invoice issued on:"
   order_number: "Invoice number:"
   date_of_transaction: "Date of transaction:"
-
   ticket_column_qty: "Qty"
   ticket_column_item: "Item"
   ticket_column_unit_price: "Unit Price"
   ticket_column_total_price: "Total Price"
-
   menu_1_title: "Shops"
   menu_1_url: "/shops"
   menu_2_title: "Map"
@@ -1240,18 +1162,17 @@ en:
   menu_4_title: "Groups"
   menu_4_url: "/groups"
   menu_5_title: "About"
-  menu_5_url: "https://about.openfoodnetwork.org.au/"
+  menu_5_url: "https://openfoodnetwork.nz/"
   menu_6_title: "Connect"
-  menu_6_url: "https://openfoodnetwork.org/au/connect/"
+  menu_6_url: "https://openfoodnetwork.org/nz/connect/"
   menu_7_title: "Learn"
   menu_7_url: "https://openfoodnetwork.org/au/learn/"
-
-  logo: "Logo (640x130)" #FIXME
-  logo_mobile: "Mobile logo (75x26)" #FIXME
-  logo_mobile_svg: "Mobile logo (SVG)" #FIXME
+  logo: "Logo (640x130)"
+  logo_mobile: "Mobile logo (75x26)"
+  logo_mobile_svg: "Mobile logo (SVG)"
   home_hero: "Hero image"
   home_show_stats: "Show statistics"
-  footer_logo: "Logo (220x76)" #FIXME
+  footer_logo: "Logo (220x76)"
   footer_facebook_url: "Facebook URL"
   footer_twitter_url: "Twitter URL"
   footer_instagram_url: "Instagram URL"
@@ -1261,9 +1182,7 @@ en:
   footer_email: "Email"
   footer_links_md: "Links"
   footer_about_url: "About URL"
-
   user_guide_link: "User Guide Link"
-
   name: Name
   first_name: First Name
   last_name: Last Name
@@ -1275,7 +1194,6 @@ en:
   address2: Address (contd.)
   city: City
   city_placeholder: eg. Northcote
-  state: State
   postcode: Postcode
   postcode_placeholder: eg. 3070
   suburb: Suburb
@@ -1292,7 +1210,6 @@ en:
   unconfirmed: unconfirmed
   days: days
   authorization_failure: "Authorization Failure"
-
   label_shop: "Shop"
   label_shops: "Shops"
   label_map: "Map"
@@ -1314,14 +1231,12 @@ en:
   label_more: "Show more"
   label_less: "Show less"
   label_notices: "Notices"
-
   cart_items: "items"
   cart_headline: "Your shopping cart"
   total: "Total"
   cart_updating: "Updating cart..."
   cart_empty: "Cart empty"
   cart_edit: "Edit your cart"
-
   card_number: Card Number
   card_securitycode: "Security Code"
   card_expiry_date: Expiry Date
@@ -1337,7 +1252,6 @@ en:
   saving_credit_card: Saving credit card...
   card_has_been_removed: "Your card has been removed (number: %{number})"
   card_could_not_be_removed: Sorry, the card could not be removed
-
   ie_warning_headline: "Your browser is out of date :-("
   ie_warning_text: "For the best Open Food Network experience, we strongly recommend upgrading your browser:"
   ie_warning_chrome: Download Chrome
@@ -1378,7 +1292,7 @@ en:
       disabling_cookies_chrome_link: "https://support.google.com/chrome/answer/95647"
       disabling_cookies_ie_link: "https://support.microsoft.com/en-us/help/17442/windows-internet-explorer-delete-manage-cookies"
       disabling_cookies_safari_link: "https://www.apple.com/legal/privacy/en-ww/cookies/"
-      disabling_cookies_note: "But be aware that if you delete or modify the essential cookies used by Open Food Network, the website won’t work, you will not be able to add anything to your cart neither to checkout for instance."
+      disabling_cookies_note: "But be aware that if you delete or modify the essential cookies used by Open Food Network, the website won’t work, you will not be able to add anything to your cart, and you will not be able to  checkout for example."
     cookies_banner:
       cookies_usage: "This site uses cookies in order to make your navigation frictionless and secure, and to help us understand how you use it in order to improve the features we offer."
       cookies_definition: "Cookies are very small text files that are stored on your computer when you visit some websites."
@@ -1386,9 +1300,7 @@ en:
       cookies_policy_link_desc: "If you want to learn more, check our"
       cookies_policy_link: "cookies policy"
       cookies_accept_button: "Accept Cookies"
-
   home_shop: Shop Now
-
   brandstory_headline: "Food, unincorporated."
   brandstory_intro: "Sometimes the best way to fix the system is to start a new one…"
   brandstory_part1: "We begin from the ground up. With farmers and growers ready to tell their stories proudly and truly. With distributors ready to connect people with products fairly and honestly. With buyers who believe that better weekly shopping decisions can seriously change the world."
@@ -1397,13 +1309,10 @@ en:
   brandstory_part4: "It works everywhere. It changes everything."
   brandstory_part5_strong: "We call it Open Food Network."
   brandstory_part6: "We all love food. Now we can love our food system too."
-
   learn_body: "Explore models, stories and resources to support you to develop your fair food business or organisation.  Find training, events and other opportunities to learn from peers."
   learn_cta: "Get Inspired"
-
   connect_body: "Search our full directories of producers, hubs and groups to find fair food traders near you.  List your business or organisation on the OFN so buyers can find you.  Join the community to get advice and solve problems together."
   connect_cta: "Go Exploring"
-
   system_headline: "Shopping - here's how it works."
   system_step1: "1. Search"
   system_step1_text: "Search our diverse, independent shops for seasonal local food. Search by neighbourhood and food category, or whether you prefer delivery or pickup."
@@ -1411,16 +1320,13 @@ en:
   system_step2_text: "Transform your transactions with affordable local food from diverse producers and hubs. Know the stories behind your food and the people who make it!"
   system_step3: "3. Pick-up / Delivery"
   system_step3_text: "Hang on for your delivery, or visit your producer or hub for a more personal connection with your food. Food shopping as diverse as nature intended it."
-
   cta_headline: "Shopping that makes the world a better place."
   cta_label: "I'm Ready"
-
   stats_headline: "We're creating a new food system."
   stats_producers: "food producers"
   stats_shops: "food shops"
   stats_shoppers: "food shoppers"
   stats_orders: "food orders"
-
   checkout_title: Checkout
   checkout_now: Checkout now
   checkout_order_ready: Order ready for
@@ -1445,7 +1351,6 @@ en:
   checkout_total_price: Total
   checkout_back_to_cart: "Back to Cart"
   cost_currency: "Cost Currency"
-
   order_paid: PAID
   order_not_paid: NOT PAID
   order_total: Total order
@@ -1464,40 +1369,31 @@ en:
   order_hub_info: Hub Info
   order_back_to_store: Back To Store
   order_back_to_cart: Back To Cart
-
   bom_tip: "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required."
-
   unsaved_changes_warning: "Unsaved changes exist and will be lost if you continue."
   unsaved_changes_error: "Fields with red borders contain errors."
-
   products: "Products"
   products_in: "in %{oc}"
   products_at: "at %{distributor}"
   products_elsewhere: "Products found elsewhere"
-
   email_welcome: "Welcome"
   email_confirmed: "Thank you for confirming your email address."
   email_registered: "is now part of"
-  email_userguide_html: "The User Guide with detailed support for setting up your Producer or Hub is here:
-%{link}"
+  email_userguide_html: "The User Guide with detailed support for setting up your Producer or Hub is here: %{link}"
   email_admin_html: "You can manage your account by logging into the %{link} or by clicking on the cog in the top right hand side of the homepage, and selecting Administration."
-  email_community_html: "We also have an online forum for community discussion related to OFN software and the unique challenges of running a food enterprise. You are encouraged to join in. We are constantly evolving and your input into this forum will shape what happens next.
-%{link}"
+  email_community_html: "We also have an online forum for community discussion related to OFN software and the unique challenges of running a food enterprise. You are encouraged to join in. We are constantly evolving and your input into this forum will shape what happens next. %{link}"
   join_community: "Join the community"
   email_confirmation_activate_account: "Before we can activate your new account, we need to confirm your email address."
   email_confirmation_greeting: "Hi, %{contact}!"
-  email_confirmation_profile_created: "A profile for %{name} has been successfully created!
-To activate your Profile we need to confirm this email address."
+  email_confirmation_profile_created: "A profile for %{name} has been successfully created! To activate your Profile we need to confirm this email address."
   email_confirmation_click_link: "Please click the link below to confirm your email and to continue setting up your profile."
   email_confirmation_link_label: "Confirm this email address »"
-  email_confirmation_help_html: "After confirming your email you can access your administration account for this enterprise.
-See the %{link} to find out more about %{sitename}'s features and to start using your profile or online store."
+  email_confirmation_help_html: "After confirming your email you can access your administration account for this enterprise. See the %{link} to find out more about %{sitename}'s features and to start using your profile or online store."
   email_confirmation_notice_unexpected: "You received this message because you signed up on %{sitename}, or were invited to sign up by someone you probably know. If you don't understand why you are receiving this email, please write to %{contact}."
   email_social: "Connect with Us:"
   email_contact: "Email us:"
   email_signoff: "Cheers,"
   email_signature: "%{sitename} Team"
-
   email_confirm_customer_greeting: "Hi %{name},"
   email_confirm_customer_intro_html: "Thanks for shopping at <strong>%{distributor}</strong>!"
   email_confirm_customer_number_html: "Order confirmation <strong>#%{number}</strong>"
@@ -1542,30 +1438,23 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   email_shipping_collection_time: "Ready for collection:"
   email_shipping_collection_instructions: "Collection instructions:"
   email_special_instructions: "Your notes:"
-
   email_signup_greeting: Hello!
   email_signup_welcome: "Welcome to %{sitename}!"
   email_signup_confirmed_email: "Thanks for confirming your email."
   email_signup_shop_html: "You can now log in at %{link}."
-  email_signup_text: "Thanks for joining the network.
-  If you are a customer, we look forward to introducing you to many fantastic farmers, wonderful food hubs and delicious food!
-  If you are a producer or food enterprise, we are excited to have you as a part of the network."
+  email_signup_text: "Thanks for joining the network. If you are a customer, we look forward to introducing you to many fantastic farmers, wonderful food hubs and delicious food! If you are a producer or food enterprise, we are excited to have you as a part of the network."
   email_signup_help_html: "We welcome all your questions and feedback; you can use the <em>Send Feedback</em> button on the site or email us at %{email}"
-
   invite_email:
     greeting: "Hello!"
     invited_to_manage: "You have been invited to manage %{enterprise} on %{instance}."
     confirm_your_email: "You should have received or will soon receive an email with a confirmation link. You won’t be able to access %{enterprise}'s profile until you have confirmed your email."
     set_a_password: "You will then be prompted to set a password before you are able to administer the enterprise."
     mistakenly_sent: "Not sure why you have received this email? Please contact %{owner_email} for more information."
-
   producer_mail_greeting: "Dear"
   producer_mail_text_before: "We now have all the consumer orders for the next food drop."
   producer_mail_order_text: "Here is a summary of the orders for your products:"
   producer_mail_delivery_instructions: "Stock pickup/delivery instructions:"
-  producer_mail_text_after: ""
   producer_mail_signoff: "Thanks and best wishes"
-
   shopping_oc_closed: Orders are closed
   shopping_oc_closed_description: "Please wait until the next cycle opens (or contact us directly to see if we can accept any late orders)"
   shopping_oc_last_closed: "The last cycle closed %{distance_of_time} ago"
@@ -1577,14 +1466,11 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   shopping_contact_social: "Follow"
   shopping_groups_part_of: "is part of:"
   shopping_producers_of_hub: "%{hub}'s producers:"
-
   enterprises_next_closing: "Next order closing"
   enterprises_ready_for: "Ready for"
   enterprises_choose: "Choose when you want your order:"
-
   maps_open: "Open"
   maps_closed: "Closed"
-
   hubs_buy: "Shop for:"
   hubs_shopping_here: "Shopping here"
   hubs_orders_closed: "Orders closed"
@@ -1601,12 +1487,10 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   hubs_intro: Shop in your local area
   hubs_distance: Closest to
   hubs_distance_filter: "Show me shops near %{location}"
-
   shop_changeable_orders_alert_html:
     one: Your order with <a href='%{path}' target='_blank'>%{shop} / %{order}</a> is open for review. You can make changes until %{oc_close}.
     other: You have <a href='%{path}' target='_blank'>%{count} orders with %{shop}</a> currently open for review. You can make changes until %{oc_close}.
   orders_changeable_orders_alert_html: This order has been confirmed, but you can make changes until <strong>%{oc_close}</strong>.
-
   products_clear_all: Clear all
   products_showing: "Showing:"
   products_or: "OR"
@@ -1622,21 +1506,17 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   products_update_error_msg: "Saving failed."
   products_update_error_data: "Save failed due to invalid data:"
   products_changes_saved: "Changes saved."
-
   search_no_results_html: "Sorry, no results found for %{query}. Try another search?"
-
   components_profiles_popover: "Profiles do not have a shopfront on the Open Food Network, but may have their own physical or online shop elsewhere"
   components_profiles_show: "Show profiles"
   components_filters_nofilters: "No filters"
   components_filters_clearfilters: "Clear all filters"
-
   groups_title: Groups
   groups_headline: Groups / regions
   groups_text: "Every producer is unique. Every business has something different to offer. Our groups are collectives of producers, hubs and distributors who share something in common like location, farmers market or philosophy. This makes your shopping experience easier. So explore our groups and have the curating done for you."
   groups_search: "Search name or keyword"
   groups_no_groups: "No groups found"
   groups_about: "About Us"
-
   groups_producers: "Our producers"
   groups_hubs: "Our hubs"
   groups_contact_web: Contact
@@ -1650,11 +1530,11 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   groups_signup_intro: "We're an amazing platform for collaborative marketing, the easiest way for your members and stakeholders to reach new markets. We're non-profit, affordable, and simple."
   groups_signup_email: Email us
   groups_signup_motivation1: We transform food systems fairly.
-  groups_signup_motivation2: It's why we get out of bed every day. We're a global non-profit, based on open source code. We play fair. You can always trust us.
-  groups_signup_motivation3: We know you have big ideas, and we want to help. We'll share our knowledge, networks and resources. We know that isolation doesn't create change, so we'll partner with you.
+  groups_signup_motivation2: <p>It's why we get out of bed every day. We're a global non-profit, based on open source code. We play fair. You can always trust us.</p>
+  groups_signup_motivation3: <p>We know you have big ideas, and we want to help. We'll share our knowledge, networks and resources. We know that isolation doesn't create change, so we'll partner with you.</p>
   groups_signup_motivation4: We meet you where you are.
-  groups_signup_motivation5: You might be an alliance of food hubs, producers, or distributors, and an industry body, or a local government.
-  groups_signup_motivation6: Whatever your role in your local food movement, we're ready to help. However you come to wonder what Open Food Network would look like or is doing in your part of the world, let's start the conversation.
+  groups_signup_motivation5: <p>You might be an alliance of food hubs, producers, or distributors, and an industry body, or a local government.<p>
+  groups_signup_motivation6: <p>Whatever your role in your local food movement, we're ready to help. However you come to wonder what Open Food Network would look like or is doing in your part of the world, let's start the conversation.</p>
   groups_signup_motivation7: We make food movements make more sense.
   groups_signup_motivation8: You need to activate and enable your networks, we offer a platform for conversation and action. You need real engagement. We’ll help reach all the players, all the stakeholders, all the sectors.
   groups_signup_motivation9: You need resourcing. We’ll bring all our experience to bear. You need cooperation. We’ll better connect you to a global network of peers.
@@ -1663,18 +1543,14 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   groups_signup_contact: Ready to discuss?
   groups_signup_contact_text: "Get in touch to discover what OFN can do for you:"
   groups_signup_detail: "Here's the detail."
-
   login_invalid: "Invalid email or password"
-
   modal_hubs: "Food Hubs"
   modal_hubs_abstract: Our food hubs are the point of contact between you and the people who make your food!
   modal_hubs_content1: You can search for a convenient hub by location or name. Some hubs have multiple points where you can pick-up your purchases, and some will also provide delivery options. Each food hub is a sales point with independent business operations and logistics - so variations between hubs are to be expected.
   modal_hubs_content2: You can only shop at one food hub at a time.
-
   modal_groups: "Groups / Regions"
   modal_groups_content1: These are the organisations and relationships between hubs which make up the Open Food Network.
   modal_groups_content2: Some groups are clustered by location or council, others by non-geographic similarities.
-
   modal_how: "How it works"
   modal_how_shop: Shop the Open Food Network
   modal_how_shop_explained: Search for a food hub near you to start shopping! You can expand each food hub to see what kinds of goodies are available, and click through to start shopping. (You can only shop one food hub at a time.)
@@ -1682,10 +1558,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   modal_how_pickup_explained: Some food hubs deliver to your door, while others require you to pick-up your purchases. You can see which options are available on the homepage, and select which you'd like at the shopping and check-out pages. Delivery will cost more, and pricing differs from hub-to-hub. Each food hub is a sales point with independent business operations and logisitics - so variations between hubs are to be expected.
   modal_how_more: Learn more
   modal_how_more_explained: "If you want to learn more about the Open Food Network, how it works, and get involved, check out:"
-
   modal_producers: "Producers"
   modal_producers_explained: "Our producers make all the delicious food you can shop for on the Open Food Network."
-
   producers_about: About us
   producers_buy: Shop for
   producers_contact: Contact
@@ -1706,8 +1580,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   producers_signup_cta_headline: Join now!
   producers_signup_cta_action: Join now
   producers_signup_detail: Here's the detail.
-  producer: Producer
-
   products_item: Item
   products_description: Description
   products_variant: Variant
@@ -1716,9 +1588,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   products_producer: "Producer"
   products_price: "Price"
   name_or_sku: "NAME OR SKU"
-
   register_title: Register
-
   sell_title: "Register"
   sell_headline: "Get on the Open Food Network!"
   sell_motivation: "Showcase your beautiful food."
@@ -1729,10 +1599,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   sell_hubs_detail: "Set up a profile for your food enterprise or organisation on the OFN. At any time you can upgrade your profile to a multi-producer shop."
   sell_groups_detail: "Set up a tailored directory of enterprises (producers and other food enterprises) for your region or for your organisation."
   sell_user_guide: "Find out more in our user guide."
-  sell_listing_price: "Listing on the OFN is free. Opening and running a shop on OFN is free up to $500 of monthly sales. If you sell more you can choose your community contribution between 1% and 3% of sales. For more detail on pricing visit the Software Platform section via the About link in the top menu."
+  sell_listing_price: "Listing on OFN incurs a nominal monthly charge and if you sell products we ask for a small percentage of your sales. For details see the About tab in the menu\nYour money pays for the server and admin costs and the contribution NZ pays to the global OFN organisation.\n\nYou can always chose to support the development of OFN by increasing the amount you pay."
   sell_embed: "We can also embed an OFN shop in your own customised website or build a customised local food network website for your region."
   sell_ask_services: "Ask us about OFN services."
-
   shops_title: Shops
   shops_headline: Shopping, transformed.
   shops_text: Food grows in cycles, farmers harvest in cycles, and we order food in cycles. If you find an order cycle closed, check back soon.
@@ -1745,7 +1614,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   shops_signup_help: We're ready to help.
   shops_signup_help_text: You need a better return. You need new buyers and logistics partners. You need your story told across wholesale, retail, and the kitchen table.
   shops_signup_detail: Here's the detail.
-
   orders: Orders
   orders_fees: Fees...
   orders_edit_title: Shopping Cart
@@ -1772,13 +1640,12 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   orders_could_not_cancel: "Sorry, the order could not be cancelled"
   orders_cannot_remove_the_final_item: "Cannot remove the final item from an order, please cancel the order instead."
   orders_bought_items_notice:
-    one: An additional item is already confirmed for this order cycle
+    one: "An additional item is already confirmed for this order cycle"
     other: "%{count} additional items already confirmed for this order cycle"
   orders_bought_edit_button: Edit confirmed items
   orders_bought_already_confirmed: "* already confirmed"
   orders_confirm_cancel: Are you sure you want to cancel this order?
   order_processed_successfully: "Your order has been processed successfully"
-
   products_cart_distributor_choice: "Distributor for your order:"
   products_cart_distributor_change: "Your distributor for this order will be changed to %{name} if you add this product to your cart."
   products_cart_distributor_is: "Your distributor for this order is %{name}."
@@ -1791,8 +1658,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   products_max_quantity: Max quantity
   products_distributor: Distributor
   products_distributor_info: When you select a distributor for your order, their address and pickup times will be displayed here.
-
-  # keys used in javascript
   password: Password
   remember_me: Remember Me
   are_you_sure: "Are you sure?"
@@ -1892,7 +1757,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         contact_field_placeholder: "Contact Name"
         contact_field_required: "You need to enter a primary contact."
         phone_field: "Phone number"
-        phone_field_placeholder: "eg. (03) 1234 5678"
+        phone_field_placeholder: "eg. (03) 123 4567"
       type:
         title: "Type"
         headline: "Last step to add %{enterprise}!"
@@ -1914,9 +1779,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         enterprise_long_desc: "Long Description"
         enterprise_long_desc_placeholder: "This is your opportunity to tell the story of your enterprise - what makes you different and wonderful? We'd suggest keeping your description to under 600 characters or 150 words."
         enterprise_long_desc_length: "%{num} characters / up to 600 recommended"
-        enterprise_abn: "ABN"
-        enterprise_abn_placeholder: "eg. 99 123 456 789"
-        enterprise_acn: "ACN"
+        enterprise_abn: "IRD Number"
+        enterprise_abn_placeholder: "eg. 99-99-99"
+        enterprise_acn: "NZBN"
         enterprise_acn_placeholder: "eg. 123 456 789"
         enterprise_tax_required: "You need to make a selection."
       images:
@@ -1947,7 +1812,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         enterprise_final_step: "Final step!"
         enterprise_social_text: "How can people find %{enterprise} online?"
         website: "Website"
-        website_placeholder: "eg. openfoodnetwork.org.au"
+        website_placeholder: "eg. openfoodnetwork.org.nz"
         facebook: "Facebook"
         facebook_placeholder: "eg. www.facebook.com/PageNameHere"
         linkedin: "LinkedIn"
@@ -1966,19 +1831,16 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         thanks: "Thanks for filling out the details for %{enterprise}."
         login: "You can change or update your enterprise at any stage by logging into Open Food Network and going to Admin."
         action: "Open Food Network home"
-
   back: "Back"
   continue: "Continue"
   action_or: "OR"
   enterprise_limit: Enterprise Limit
-
   shipping_method_destroy_error: "That shipping method cannot be deleted as it is referenced by an order: %{number}."
   fees: "Fees"
   item_cost: "Item cost"
   bulk: "Bulk"
   shop_variant_quantity_min: "min"
   shop_variant_quantity_max: "max"
-  contact: "Contact"
   follow: "Follow"
   shop_for_products_html: "Shop for <span class=\"turquoise\">%{enterprise}</span> products at:"
   change_shop: "Change shop to:"
@@ -1991,10 +1853,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   fundraising_fee: "Fundraising fee"
   price_graph: "Price graph"
   included_tax: "Included tax"
-  remove_tax: "Remove tax"
   balance: "Balance"
   transaction: "Transaction"
-  transaction_date: "Date" #Transaction is only in key to avoid conflict with :date
+  transaction_date: "Date"
   payment_state: "Payment status"
   shipping_state: "Shipping status"
   value: "Value"
@@ -2006,9 +1867,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   not_visible: not visible
   you_have_no_orders_yet: "You have no orders yet"
   show_only_complete_orders: "Only show complete orders"
-  successfully_created: ! '%{resource} has been successfully created!'
-  successfully_removed: ! '%{resource} has been successfully removed!'
-  successfully_updated: ! '%{resource} has been successfully updated!'
+  successfully_created: '%{resource} has been successfully created!'
+  successfully_removed: '%{resource} has been successfully removed!'
+  successfully_updated: '%{resource} has been successfully updated!'
   running_balance: "Running balance"
   outstanding_balance: "Outstanding balance"
   admin_enterprise_relationships: "Enterprise Permissions"
@@ -2025,7 +1886,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   admin_enterprise_groups_data_powertip_logo: "This is the logo for the group"
   admin_enterprise_groups_data_powertip_promo_image: "This image is displayed at the top of the Group profile"
   admin_enterprise_groups_contact: "Contact"
-  admin_enterprise_groups_contact_phone_placeholder: "eg. 98 7654 3210"
+  admin_enterprise_groups_contact_phone_placeholder: "eg. 98 654 3210"
   admin_enterprise_groups_contact_address1_placeholder: "eg. 123 High Street"
   admin_enterprise_groups_contact_city: "Suburb"
   admin_enterprise_groups_contact_city_placeholder: "eg. Northcote"
@@ -2035,7 +1896,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   admin_enterprise_groups_contact_country_id: "Country"
   admin_enterprise_groups_web: "Web Resources"
   admin_enterprise_groups_web_twitter: "eg. @the_prof"
-  admin_enterprise_groups_web_website_placeholder: "eg. www.truffles.com"
+  admin_enterprise_groups_web_website_placeholder: "eg. www.some-website.co.nz"
   admin_order_cycles: "Admin Order Cycles"
   open: "Open"
   close: "Close"
@@ -2139,12 +2000,10 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   remove_tax: "Remove tax"
   first_name_begins_with: "First name begins with"
   last_name_begins_with: "Last name begins with"
-
   enterprise_tos_link: "Enterprise Terms of Service link"
   enterprise_tos_message: "We want to work with people that share our aims and values. As such we ask new enterprises to agree to our "
   enterprise_tos_link_text: "Terms of Service."
   enterprise_tos_agree: "I agree to the above Terms of Service"
-
   tax_settings: "Tax Settings"
   products_require_tax_category: "products require tax category"
   admin_shared_address_1: "Address"
@@ -2185,7 +2044,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   report_header_comments: Comments
   report_header_first_name: First Name
   report_header_last_name: Last Name
-  report_header_suburb: Suburb
   report_header_phone: Phone
   report_header_suburb: Suburb
   report_header_address: Address
@@ -2288,7 +2146,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   report_header_product_total_price: "Product Total (%{currency})"
   report_header_shipping_total_price: "Shipping Total (%{currency})"
   report_header_outstanding_balance_price: "Outstanding Balance (%{currency})"
-  report_header_eft_price: "EFT (%{currency})"
+  report_header_eft_price: "EFTPOS (%{currency})"
   report_header_paypal_price: "PayPal (%{currency})"
   report_header_sku: SKU
   report_header_amount: Amount
@@ -2333,11 +2191,10 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   no_change_to_save: " No change to save"
   user_invited: "%{email} has been invited to manage this enterprise"
   add_manager: "Add an existing user"
-  users:  "Users"
+  users: "Users"
   about: "About"
   images: "Images"
-  contact: "Contact"
-  web: "Web"
+  web: "WWW"
   primary_details: "Primary Details"
   adrdress: "Address"
   contact: "Contact"
@@ -2376,13 +2233,13 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   order_cycle_selecting_notice: Your order cycle has been selected.
   adjustments_tax_rate_error: "^Please check that the tax rate for this adjustment is correct."
   active_distributors_not_ready_for_checkout_message_singular: >-
-    The hub %{distributor_names} is listed in an active order cycle,
-    but does not have valid shipping and payment methods.
-    Until you set these up, customers will not be able to shop at this hub.
+      The hub %{distributor_names} is listed in an active order cycle, but does not
+      have valid shipping and payment methods. Until you set these up, customers will
+      not be able to shop at this hub.
   active_distributors_not_ready_for_checkout_message_plural: >-
-    The hubs %{distributor_names} are listed in an active order cycle,
-    but do not have valid shipping and payment methods.
-    Until you set these up, customers will not be able to shop at these hubs.
+      The hubs %{distributor_names} are listed in an active order cycle, but do not
+      have valid shipping and payment methods. Until you set these up, customers will
+      not be able to shop at these hubs.
   enterprise_fees_update_notice: Your enterprise fees have been updated.
   enterprise_register_package_error: "Please select a package"
   enterprise_register_error: "Could not complete registration for %{enterprise}"
@@ -2434,97 +2291,103 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           title: Tag Rules
           overview: Overview
           overview_text: >
-            Tag rules provide a way to describe which items are visible or otherwise
-            to which customers. Items can be Shipping Methods, Payment Methods,
-            Products and Order Cycles.
+              Tag rules provide a way to describe which items are visible or otherwise
+              to which customers. Items can be Shipping Methods, Payment Methods,
+              Products and Order Cycles.
           by_default_rules: "'By Default...' Rules"
           by_default_rules_text: >
-            Default rules allow you to hide items so that they are not visible by default.
-            This behaviour can then be overriden by non-default rules for customers with
-            particular tags.
+              Default rules allow you to hide items so that they are not visible by
+              default. This behaviour can then be overriden by non-default rules for
+              customers with particular tags.
           customer_tagged_rules: "'Customers Tagged...' Rules"
           customer_tagged_rules_text: >
-            By creating rules related to a specific customer tag, you can override the default
-            behaviour (whether it be to show or to hide items) for customers with the specified tag.
+              By creating rules related to a specific customer tag, you can override
+              the default behaviour (whether it be to show or to hide items) for customers
+              with the specified tag.
       panels:
         save: SAVE
         saved: SAVED
         saving: SAVING
         enterprise_package:
           hub_profile: Hub Profile
-          hub_profile_cost: "COST: ALWAYS FREE"
+          hub_profile_cost: "COST: See About in the menu"
           hub_profile_text1: >
-            People can find and contact you on the Open Food Network. Your enterprise will be
-            visible on the map, and will be searchable in listings.
+              People can find and contact you on the Open Food Network. Your enterprise
+              will be visible on the map, and will be searchable in listings.
           hub_profile_text2: >
-            Having a profile, and making connections within your local food system through
-            the Open Food Network will always be free.
+              Having a profile, and making connections within your local food system
+              through the Open Food Network will always be simple.
           hub_shop: Hub Shop
           hub_shop_text1: >
-            Your enterprise is the backbone of your local food system. You aggregate produce
-            from other enterprises and can sell it through your shop on the Open Food Network.
+              Your enterprise is the backbone of your local food system. You aggregate
+              produce from other enterprises and can sell it through your shop on
+              the Open Food Network.
           hub_shop_text2: >
-            Hubs can take many forms, whether they be a food co-op, a buying group, a veggie-box
-            program, or a local grocery store.
+              Hubs can take many forms, whether they be a food co-op, a buying group,
+              a veggie-box program, or a local grocery store.
           hub_shop_text3: >
-            If you also want to sell your own products, you will need to switch this enterprise
-            to be a producer.
+              If you also want to sell your own products, you will need to switch
+              this enterprise to be a producer.
           choose_package: Please Choose a Package
           choose_package_text1: >
-            Your enterprise will not be fully activated until a package is selected from the
-            options on the left.
+              Your enterprise will not be fully activated until a package is selected
+              from the options on the left.
           choose_package_text2: >
-            Click on an option to see more detailed information about each package, and hit
-            the red SAVE button when you are done!
+              Click on an option to see more detailed information about each package,
+              and hit the red SAVE button when you are done!
           profile_only: Profile Only
-          profile_only_cost: "COST: ALWAYS FREE"
+          profile_only_cost: "COST: See About in the menu"
           profile_only_text1: >
-            A profile makes you visible and contactable to others and is a way to share your story.
+              A profile makes you visible and contactable to others and is a way to
+              share your story.
           profile_only_text2: >
-            If you prefer to focus on producing food, and want to leave the work of selling it
-            to someone else, you won't require a shop on the Open Food Network.
+              If you prefer to focus on producing food, and want to leave the work
+              of selling it to someone else, you won't require a shop on the Open
+              Food Network.
           profile_only_text3: >
-            Add your products to Open Food Network, allowing hubs to stock your products in
-            their stores.
+              Add your products to Open Food Network, allowing hubs to stock your
+              products in their stores.
           producer_shop: Producer Shop
           producer_shop_text1: >
-            Sell your products directly to customers through your very own Open Food Network
-            shopfront.
+              Sell your products directly to customers through your very own Open
+              Food Network shopfront.
           producer_shop_text2: >
-            A Producer Shop is for your produce only, if you want to sell produce grown/produced
-            off site, please select 'Producer Hub'.
+              A Producer Shop is for your produce only, if you want to sell produce
+              grown/produced off site, please select 'Producer Hub'.
           producer_hub: Producer Hub
           producer_hub_text1: >
-            Your enterprise is the backbone of your local food system. You can sell your own
-            produce as well as produce aggregated from other enterprises through your shopfront
-            on the Open Food Network.
+              Your enterprise is the backbone of your local food system. You can sell
+              your own produce as well as produce aggregated from other enterprises
+              through your shopfront on the Open Food Network.
           producer_hub_text2: >
-            Producer Hubs can take many forms, whether they be a CSA, a veggie-box program,
-            or a food co-op with a rooftop garden.
+              Producer Hubs can take many forms, whether they be a CSA, a veggie-box
+              program, or a food co-op with a rooftop garden.
           producer_hub_text3: >
-            The Open Food Network aims to support as many hub models as possible, so no matter
-            your situation, we want to provide the tools you need to run your organisation or
-            local food business.
+              The Open Food Network aims to support as many hub models as possible,
+              so no matter your situation, we want to provide the tools you need to
+              run your organisation or local food business.
           get_listing: Get a listing
-          always_free: ALWAYS FREE
+          always_free: See About in the menu
           sell_produce_others: Sell produce from others
           sell_own_produce: Sell your own produce
           sell_both: Sell produce from self and others
         enterprise_producer:
           producer: Producer
           producer_text1: >
-            Producers make yummy things to eat or drink. You're a producer if you grow it,
-            raise it, brew it, bake it, ferment it, milk it or mould it.
+              Producers make yummy things to eat or drink. You're a producer if you
+              grow it, raise it, brew it, bake it, ferment it, milk it or mould it.
           producer_text2: >
-            Producers can also perform other functions, such as aggregating food from other
-            enterprises and selling it through a shop on the Open Food Network.
+              Producers can also perform other functions, such as aggregating food
+              from other enterprises and selling it through a shop on the Open Food
+              Network.
           non_producer: Non-producer
           non_producer_text1: >
-            Non-producers do not produce any food themselves, meaning that they cannot create
-            their own products for sale through the Open Food Network.
+              Non-producers do not produce any food themselves, meaning that they
+              cannot create their own products for sale through the Open Food Network.
           non_producer_text2: >
-            Instead, non-producers specialise in linking producers to the end eater, whether it
-            be by aggregating, grading, packing, selling or delivering food.
+              Instead, non-producers specialise in linking producers to the end eater,
+              whether it be by aggregating, grading, packing, selling or delivering
+              food.
           producer_desc: Producers of food
           producer_example: eg. GROWERS, BAKERS, BREWERS, MAKERS
           non_producer_desc: All other food enterprises
@@ -2622,18 +2485,18 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     out_of_stock:
       reduced_stock_available: Reduced stock available
       out_of_stock_text: >
-        While you've been shopping, the stock levels for one or more of the products
-        in your cart have reduced. Here's what's changed:
+          While you've been shopping, the stock levels for one or more of the products
+          in your cart have reduced. Here's what's changed:
       now_out_of_stock: is now out of stock.
       only_n_remainging: "now only has %{num} remaining."
     variants:
       on_demand:
-        "yes": "On demand"
+        'yes': "On demand"
     variant_overrides:
       on_demand:
         use_producer_settings: "Use producer stock settings"
-        "yes": "Yes"
-        "no": "No"
+        'yes': "Yes"
+        'no': "No"
       inventory_products: "Inventory Products"
       hidden_products: "Hidden Products"
       new_products: "New Products"
@@ -2666,8 +2529,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       could_not_delete_customer: 'Could not delete customer'
     product_import:
       confirmation: |
-        This will set stock level to zero on all products for this
-        enterprise that are not present in the uploaded file.
+          This will set stock level to zero on all products for this
+          enterprise that are not present in the uploaded file.
     order_cycles:
       create_failure: "Failed to create order cycle"
       update_success: 'Your order cycle has been updated.'
@@ -2691,11 +2554,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       signup_or_login: "Start By Signing Up (or logging in)"
       have_an_account: "Already have an account?"
       action_login: "Log in now."
-
   producers:
     signup:
-      start_free_profile: "Start with a free profile, and expand when you're ready!"
-
+      start_free_profile: "Start with a basic profile, and expand when you're ready!"
   order_management:
     reports:
       enterprise_fee_summary:
@@ -2735,29 +2596,25 @@ See the %{link} to find out more about %{sitename}'s features and to start using
               tax_category_name: "Tax Category"
               total_amount: "$$ SUM"
         invalid_filter_parameters: "The filters you selected for this report are invalid."
-
   order: "Order"
   distribution: "Distribution"
   order_details: "Order Details"
   customer_details: "Customer Details"
   adjustments: "Adjustments"
   payments: "Payments"
-
   payment: "Payment"
   payment_method: "Payment Method"
   shipment: "Shipment"
-  shipment_inc_vat: "Shipment including VAT"
+  shipment_inc_vat: "Shipment including GST"
   shipping_tax_rate: "Shipping Tax Rate"
   category: "Category"
   delivery: "Delivery"
   temperature_controlled: "Temperature Controlled"
   new_product: "New Product"
-
   administration: "Administration"
   logged_in_as: "Logged in as"
   account: "Account"
   logout: "Logout"
-
   date_range: "Date Range"
   status: "status"
   new: "New"
@@ -2766,7 +2623,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   first: "First"
   previous: "Previous"
   last: "Last"
-
   spree:
     your_order_is_empty_add_product: "Your order is empty, please search for and add a product above"
     add_product: "Add Product"
@@ -2812,7 +2668,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     new_payment: "New Payment"
     capture: "Capture"
     void: "Void"
-
     configurations: "Configurations"
     general_settings: "General Settings"
     site_name: "Site Name"
@@ -2832,7 +2687,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     hide_cents: "Hide cents"
     display_currency: "Display currency"
     choose_currency: "Choose Currency"
-
     mail_method_settings: "Mail Method Settings"
     general: "General"
     enable_mail_delivery: "Enable Mail Delivery"
@@ -2850,7 +2704,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     smtp_authentication_type: "SMTP Authentication Type"
     smtp_username: "SMTP Username"
     smtp_password: "SMTP Password"
-
     image_settings: "Image Settings"
     image_settings_warning: "You will need to regenerate thumbnails if you update the paperclip styles. Use rake paperclip:refresh:thumbnails CLASS=Spree::Image to do this."
     attachment_default_style: Attachments Style
@@ -2860,11 +2713,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     attachment_url: "Attachments URL"
     add_new_style: "Add New Style"
     image_settings_updated: "Image Settings successfully updated."
-
     tax_categories: "Tax Categories"
     listing_tax_categories: "Listing Tax Categories"
     back_to_tax_categories_list: "Back To Tax Categories List"
-
     tax rate: "Tax Rates"
     new_tax_rate: "New Tax Rate"
     tax_category: "Tax Category"
@@ -2873,7 +2724,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     included_in_price: "Included in Price"
     show_rate_in_label: "Show rate in label"
     back_to_tax_rates_list: "Back to Tax Rates List"
-
     tax_settings: "Tax Settings"
     zones: "Zones"
     new_zone: "New Zone"
@@ -2881,39 +2731,31 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     default_tax_zone: "Default Tax Zone"
     country_based: "Country Based"
     state_based: "State Based"
-
     countries: "Countries"
     listing_countries: "Listing Countries"
     iso_name: "ISO Name"
     states_required: "States Required"
     editing_country: "Editing Country"
     back_to_countries_list: "Back to Countries List"
-
     states: "States"
     abbreviation: "Abbreviation"
     new_state: "New State"
-
     payment_methods: "Payment Methods"
     new_payment_method: "New Payment Method"
     provider: "Provider"
-
     taxonomies: "Taxonomies"
     new_taxonomy: "New Taxonomy"
     back_to_taxonomies_list: "Back to Taxonomies List"
-
     shipping_methods: "Shipping Methods"
-
     shipping_categories: "Shipping Categories"
     new_shipping_category: "New Shipping Category"
     back_to_shipping_categories: "Back To Shipping Categories"
-
     analytics_trackers: "Analytics Trackers"
     no_trackers_found: "No Trackers Found"
     new_tracker: "New Tracker"
     add_one: "Add One"
     google_analytics_id: "Analytics ID"
     back_to_trackers_list: "Back to Trackers List"
-
     name: "Name"
     description: "Description"
     type: "Type"
@@ -2927,7 +2769,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     no_results: "No results"
     create: "Create"
     loading: "Loading"
-
     flat_percent: "Flat Percent"
     per_kg: "Per Kg"
     amount: "Amount"
@@ -2938,12 +2779,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     minimal_amount: "Minimal Amount"
     normal_amount: "Normal Amount"
     discount_amount: "Discount Amount"
-
-    # TODO: remove `email` key once we get to Spree 2.0
     email: Email
-    # TODO: remove 'account_updated' key once we get to Spree 2.0
     account_updated: "Account updated!"
-    email_updated: "The account will be updated once the new email is confirmed."
     my_account: "My account"
     date: "Date"
     time: "Time"
@@ -2952,7 +2789,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     zipcode: Postcode
     weight: Weight (per kg)
     error_user_destroy_with_orders: "Users with completed orders may not be deleted"
-
     actions:
       update: "Update"
     errors:
@@ -3092,7 +2928,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
             submitting_payment: Submitting payment...
       products:
         image_upload_error: "The product image was not recognised. Please upload an image in PNG or JPG format."
-
         new:
           title: 'New Product'
         unit_name_placeholder: 'eg. bunches'
@@ -3182,7 +3017,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           or_enter_new_card: "Or, enter details for a new card:"
           remember_this_card: Remember this card?
     date_picker:
-      format: ! '%Y-%m-%d'
+      format: '%Y-%m-%d'
       js_format: 'yy-mm-dd'
     orders:
       error_flash_for_unavailable_items: "An item in your cart has become unavailable."
@@ -3246,13 +3081,13 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     user_mailer:
       reset_password_instructions:
         request_sent_text: |
-          A request to reset your password has been made.
-          If you did not make this request, simply ignore this email.
+            A request to reset your password has been made.
+            If you did not make this request, simply ignore this email.
         link_text: >
-          If you did make this request just click the link below:
+            If you did make this request just click the link below:
         issue_text: |
-          If the above URL does not work try copying and pasting it into your browser.
-          If you continue to have problems please feel free to contact us.
+            If the above URL does not work try copying and pasting it into your browser.
+            If you continue to have problems please contact us.
       confirmation_instructions:
         subject: Please confirm your OFN account
     users:

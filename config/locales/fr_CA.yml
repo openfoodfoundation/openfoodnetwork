@@ -246,6 +246,7 @@ fr_CA:
   expired: a expiré, veuillez faire une nouvelle demande.
   back_to_payments_list: "Retour à la liste des paiements"
   maestro_or_solo_cards: "Cartes Maestro/Solo"
+  backordered: "à volonté"
   ship: "Expédier"
   actions:
     create_and_add_another: "Créer et ajouter nouveau"
@@ -2640,6 +2641,8 @@ fr_CA:
     name_or_sku: "Nom ou Ref Produit (entrer au moins les 4 premiers caractères du nom du produit)"
     resend: Renvoyer
     back_to_orders_list: Retour à la liste des commandes
+    return_authorizations: Autorisations de retours
+    cannot_create_returns: Impossible de créer une autorisation de retour car aucun produit n'a été livré pour cette commande.
     select_stock: "Sélectionner le stock"
     location: "Localisation"
     count_on_hand: "Quantité en stock"

@@ -91,6 +91,11 @@ RSpec.configure do |config|
   # Retry
   config.verbose_retry = true
 
+  # Force use of expect (over should)
+  config.expect_with :rspec do |expectations|
+    expectations.syntax = :expect
+  end
+
   # DatabaseCleaner
   config.before(:suite)          { DatabaseCleaner.clean_with :deletion, except: ['spree_countries', 'spree_states'] }
   config.before(:each)           { DatabaseCleaner.strategy = :transaction }
