@@ -19,7 +19,7 @@ module OrderShipment
   #
   # @return [ShippingMethod]
   def shipping_method
-    return if shipments.empty?
+    return if shipments.blank?
     shipments.first.shipping_method
   end
 
