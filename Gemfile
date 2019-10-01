@@ -39,7 +39,7 @@ gem 'activemerchant', '~> 1.78'
 gem 'devise', '~> 2.2.5'
 gem 'devise-encryptable', '0.2.0'
 gem 'jwt', '~> 2.2'
-gem 'oauth2', '~> 1.4.1' # Used for Stripe Connect
+gem 'oauth2', '~> 1.4.2' # Used for Stripe Connect
 
 gem 'daemons'
 gem 'delayed_job_active_record'

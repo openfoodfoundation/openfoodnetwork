@@ -491,8 +491,8 @@ GEM
     newrelic_rpm (3.18.1.330)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
-    oauth2 (1.4.1)
-      faraday (>= 0.8, < 0.16.0)
+    oauth2 (1.4.2)
+      faraday (>= 0.8, < 2.0)
       jwt (>= 1.0, < 3.0)
       multi_json (~> 1.3)
       multi_xml (~> 0.5)
@@ -777,7 +777,7 @@ DEPENDENCIES
   momentjs-rails
   newrelic_rpm (~> 3.0)
   nokogiri (>= 1.6.7.1)
-  oauth2 (~> 1.4.1)
+  oauth2 (~> 1.4.2)
   ofn-qz!
   oj
   order_management!
