@@ -25,8 +25,6 @@ module VariantStock
   #
   # @return [Float|Integer]
   def on_hand
-    warn_deprecation(__method__, '#total_on_hand')
-
     total_on_hand
   end
 
@@ -35,8 +33,6 @@ module VariantStock
   #
   # @raise [StandardError] when the variant has no stock item
   def on_hand=(new_level)
-    warn_deprecation(__method__, '#total_on_hand')
-
     raise_error_if_no_stock_item_available
 
     overwrite_stock_levels(new_level)
@@ -44,8 +40,6 @@ module VariantStock
 
   # Checks whether this variant is produced on demand.
   def on_demand
-    warn_deprecation(__method__, 'StockItem#backorderable?')
-
     # A variant that has not been saved yet, doesn't have a stock item
     #   This provides a default value for variant.on_demand using Spree::StockLocation.backorderable_default
     return Spree::StockLocation.first.backorderable_default if stock_items.empty?
@@ -60,8 +54,6 @@ module VariantStock
   #
   # @raise [StandardError] when the variant has no stock item yet
   def on_demand=(new_value)
-    warn_deprecation(__method__, 'StockItem#backorderable=')
-
     raise_error_if_no_stock_item_available
 
     # There should be only one at the default stock location.
@@ -146,12 +138,5 @@ module VariantStock
   # have only one stock location.
   def stock_item
     stock_items.first
-  end
-
-  def warn_deprecation(method_name, new_method_name)
-    ActiveSupport::Deprecation.warn(
-      "`##{method_name}` is deprecated and will be removed. " \
-      "Please use `#{new_method_name}` instead."
-    )
   end
 end
