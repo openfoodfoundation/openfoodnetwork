@@ -2810,6 +2810,7 @@ fr:
     discount_amount: "Réduction"
     email: Email
     account_updated: "Compte mis à jour!"
+    email_updated: "Le compte sera mis à jour une fois la nouvelle adresse email confirmée."
     my_account: "Mon compte"
     date: "Date"
     time: "Heure"
