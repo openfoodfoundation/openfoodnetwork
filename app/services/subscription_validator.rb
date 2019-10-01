@@ -9,8 +9,8 @@ class SubscriptionValidator
 
   attr_reader :subscription
 
-  validates_presence_of :shop, :customer, :schedule, :shipping_method, :payment_method
-  validates_presence_of :bill_address, :ship_address, :begins_at
+  validates :shop, :customer, :schedule, :shipping_method, :payment_method, presence: true
+  validates :bill_address, :ship_address, :begins_at, presence: true
   validate :shipping_method_allowed?
   validate :payment_method_allowed?
   validate :payment_method_type_allowed?

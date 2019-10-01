@@ -769,26 +769,20 @@ fr:
         producer_profile: Profil simple
         connect_ofn: Pour apparaître sur la carte et la liste des producteurs
         always_free: ' '
-        producer_description_text: 'Votre profil sera visible sur la carte, et depuis le menu “producteurs”.
-
-          Nous vous invitons à renseigner votre profil de la façon la plus complète possible. Un profil complet et avec des images attire plus ! Vous pourrez mettre des liens pour rediriger les visiteurs vers votre site internet ou espace de vente en ligne le cas échéant.
-
-          Vous pourrez renseigner votre catalogue produits et le partager avec les circuits courts qui souhaitent vendre vos produits dans leur boutique sur Open Food France.'
+        producer_description_text: Nous vous invitons à renseigner votre profil de la façon la plus complète possible. Un profil complet et avec des images attire plus ! Vous pourrez mettre des liens pour rediriger les visiteurs vers votre site internet ou espace de vente en ligne le cas échéant. Vous pourrez renseigner votre catalogue produits et le partager avec les circuits courts qui souhaitent vendre vos produits dans leur boutique sur Open Food France.
         producer_shop: Boutique Producteur
-        sell_your_produce: Pour vendre vos produits via Open Food France
-        producer_shop_description_text: 'Vous pourrez paramétrer votre boutique en ligne pour l’adapter à vos besoins : méthodes de paiement et livraison proposées à vos acheteurs, produits à mettre en vente parmi ceux de votre catalogue, rythmes de commande et livraison, etc. '
-        producer_shop_description_text2: "Vous pourrez renseigner votre catalogue produits et le partager avec d’autres circuits courts qui souhaitent vendre vos produits dans leur boutique sur Open Food France.\nATTENTION : \n- Si vous vendez via un autre outil en ligne, et n’envisagez pas d’utiliser Open Food France pour organiser vos ventes / commandes, choisissiez le type de profil “profil simple”.\n- Si vous fournissez un circuit court utilisant Open Food France pour vendre, mais ne vendez pas vous-même en direct sur Open Food France, choisissez le type de profil “profil simple”."
+        sell_your_produce: Pour vendre vos produits
+        producer_shop_description_text: Vous pourrez paramétrer votre boutique en ligne selon votre fonctionnement, et partager votre catalogue produits avec d’autres circuits courts souhaitant les distribuer dans leur boutique.
+        producer_shop_description_text2: 'ATTENTION : Si vous vendez via un autre outil en ligne, et n’envisagez pas d’utiliser Open Food France pour cet usage, choisissiez “profil simple”. De même, si vous fournissez un circuit court utilisant Open Food France pour vendre, mais ne vendez pas vous-même en direct sur Open Food France, choisissez “profil simple”.'
         producer_hub: Boutique multi-producteurs
-        producer_hub_text: Pour vendre vos produits ainsi que ceux d’autres producteurs via Open Food France
-        producer_hub_description_text: "Vous pourrez paramétrer votre boutique en ligne pour l’adapter à vos besoins : méthodes de paiement et livraison proposées à vos acheteurs,produits à mettre en vente parmi ceux votre catalogue et ceux des autres producteurs, rythmes de commande et livraison, etc. \nVous pourrez renseigner votre catalogue produits et le partager avec d’autres circuits courts qui souhaitent vendre vos produits dans leur boutique sur Open Food France.\nATTENTION : \n- Si vous vendez via un autre outil en ligne, et n’envisagez pas d’utiliser Open Food France pour organiser vos ventes / commandes, choisissiez le type de profil “profil simple”.\n- Si vous fournissez un circuit court utilisant Open Food France pour vendre, mais ne vendez pas vous-même en direct sur Open Food France, choisissez le type de profil “profil simple”."
+        producer_hub_text: Pour vendre vos produits ainsi que ceux d’autres producteurs
+        producer_hub_description_text: 'Vous pourrez paramétrer votre boutique en ligne selon votre fonctionnement, vendre les produits d''autres producteurs, et partager votre catalogue produits avec d’autres circuits courts souhaitant les distribuer dans leur boutique. ATTENTION : Si vous vendez via un autre outil en ligne, et n’envisagez pas d’utiliser Open Food France pour cet usage, choisissiez “profil simple”. De même, si vous fournissez un circuit court utilisant Open Food France pour vendre, mais ne vendez pas vous-même en direct sur Open Food France, choisissez “profil simple”.'
         profile: Profil simple
         get_listing: Pour apparaître sur la carte
-        profile_description_text: 'Votre profil sera visible sur la carte.
-
-          Nous vous invitons à renseigner votre profil de la façon la plus complète possible. Un profil complet et avec des images attire plus ! Vous pourrez mettre des liens pour rediriger les visiteurs vers votre site internet ou espace de vente en ligne le cas échéant.'
+        profile_description_text: Nous vous invitons à renseigner votre profil de la façon la plus complète possible. Un profil complet et avec des images attire plus ! Vous pourrez mettre des liens pour rediriger les visiteurs vers votre site internet ou espace de vente en ligne le cas échéant.
         hub_shop: Boutique multi-producteurs
-        hub_shop_text: Pour vendre des produits de différents fournisseurs via Open Food France
-        hub_shop_description_text: "Vous pourrez paramétrer votre boutique en ligne pour l’adapter à vos besoins : méthodes de paiement et livraison proposées à vos acheteurs, produits à mettre en vente parmi les catalogues de vos fournisseurs, rythmes de commande et livraison, etc. \nATTENTION : Si vous vendez via un autre outil en ligne, et n’envisagez pas d’utiliser Open Food France pour organiser vos ventes / commandes, choisissiez le type de profil “profil simple”."
+        hub_shop_text: Pour vendre des produits de différents fournisseurs
+        hub_shop_description_text: 'Vous pourrez paramétrer votre boutique en ligne selon votre fonctionnement, et y proposer les produits de multiples producteurs. ATTENTION : Si vous vendez via un autre outil en ligne, et n’envisagez pas d’utiliser Open Food France pour cet usage, choisissiez “profil simple”.'
         choose_option: Veuilliez choisir l'une des options ci-dessus.
         change_now: Changer
       enterprise_user_index:
@@ -1449,14 +1443,14 @@ fr:
   email_signup_welcome: "Bienvenue sur %{sitename} !"
   email_signup_confirmed_email: "Merci d'avoir confirmé votre email."
   email_signup_shop_html: "Vous pouvez maintenant vous connecter sur %{link}."
-  email_signup_text: "> Si vous organisez un circuit court de distribution, ou fournissez des produits à un circuit court, n’hésitez pas à nous contacter à info@openfoodfrance.org. Nous sommes là pour vous accompagner dans la création de votre profil et espace de vente / commande en ligne.\n> Si vous achetez via un circuit court utilisant Open Food France, connectez-vous avant de passer commande pour que vos informations personnelles et de facturation soient gardées en mémoire. Cela vous évitera de les ressaisir à chaque commande ! Pour toute question, contactez en direct votre circuit court."
+  email_signup_text: "Si vous organisez / fournissez un circuit court, n’hésitez pas à nous contacter à info@openfoodfrance.org, nous sommes là pour vous accompagner dans la création de votre espace de vente / commande en ligne. Si vous achetez via un circuit court utilisant Open Food France, connectez-vous avant de passer commande pour que vos informations personnelles soient gardées en mémoire, cela vous évitera de les ressaisir à chaque commande ! "
   email_signup_help_html: "Des retours à nous faire quant à votre utilisation de la plateforme ? Écrivez-nous à info@openfoodfrance.org."
   invite_email:
     greeting: "Bonjour !"
     invited_to_manage: "Vous avez été invité(e) à gérer %{enterprise} sur %{instance}."
     confirm_your_email: "Vous avez reçu ou allez recevoir prochainement un email avec un lien de validation. Vous n'aurez pas accès au profil de l'entreprise %{enterprise} avant d'avoir cliqué sur ce lien."
     set_a_password: "Vous serez ensuite invité(e) à choisir un mot de passe avant de pouvoir accéder et gérer le profil de l'entreprise."
-    mistakenly_sent: "Vous ne savez pas pourquoi vous recevez cet email? Veuillez contacter %{owner_email} pour plus d'informations."
+    mistakenly_sent: "Vous ne savez pas pourquoi vous recevez cet email ? Veuillez contacter %{owner_email} pour plus d'informations."
   producer_mail_greeting: "Cher(ère)"
   producer_mail_text_before: "Nous avons reçu toutes les commandes pour la prochaine livraison."
   producer_mail_order_text: "Voilà la liste et les quantités des produits commandés vous concernant:"
@@ -1759,7 +1753,7 @@ fr:
         country_field_error: "Veuillez saisir une Pays"
       contact:
         title: "Contact"
-        who_is_managing_enterprise: "Qui gère %{enterprise}?"
+        who_is_managing_enterprise: "Qui gère %{enterprise} ?"
         contact_field: "Personne référente"
         contact_field_placeholder: "Nom du contact principal"
         contact_field_required: "Vous devez saisir une personne référente"
@@ -1767,7 +1761,7 @@ fr:
         phone_field_placeholder: "ex : 06 24 53 26 53"
       type:
         title: "Catégorie"
-        headline: "Dernière étape pour ajouter %{enterprise} !"
+        headline: "Dites-nous en un peu plus sur %{enterprise}"
         question: "Etes-vous un producteur ?"
         yes_producer: "Oui, je suis un producteur"
         no_producer: "Non, je ne suis pas un producteur"
@@ -2401,9 +2395,9 @@ fr:
               choisissez le type de profil “profil simple”.
           get_listing: Pour apparaître sur la carte
           always_free: ' '
-          sell_produce_others: Pour vendre des produits de différents fournisseurs via Open Food France
-          sell_own_produce: Pour vendre vos produits via Open Food France
-          sell_both: Pour vendre vos produits ainsi que ceux d’autres producteurs via Open Food France
+          sell_produce_others: Pour vendre des produits de différents fournisseurs
+          sell_own_produce: Pour vendre vos produits
+          sell_both: Pour vendre vos produits ainsi que ceux d’autres producteurs
         enterprise_producer:
           producer: Producteur
           producer_text1: >

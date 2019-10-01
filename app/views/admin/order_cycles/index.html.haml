@@ -1,8 +1,8 @@
 = content_for :page_title do
   = t :admin_order_cycles
 
-- content_for :app_wrapper_attrs do
-  = "ng-app='admin.orderCycles'"
+- content_for :main_ng_app_name do
+  = "admin.orderCycles"
 
 = content_for :page_actions do
   - if subscriptions_enabled?

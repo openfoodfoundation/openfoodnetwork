@@ -29,25 +29,16 @@ module VariantStock
   end
 
   # Sets the stock level of the variant.
-  # This will only work if `track_inventory_levels` config is set
-  #   and if there is a stock item for the variant.
+  # This will only work if there is a stock item for the variant.
   #
-  # @raise [StandardError] when the track_inventory_levels config key is not set
-  #   and when the variant has no stock item
+  # @raise [StandardError] when the variant has no stock item
   def on_hand=(new_level)
-    error = 'Cannot set on_hand value when Spree::Config[:track_inventory_levels] is false'
-    raise error unless Spree::Config.track_inventory_levels
-
     raise_error_if_no_stock_item_available
 
     overwrite_stock_levels(new_level)
   end
 
   # Checks whether this variant is produced on demand.
-  #
-  # In Spree 2.0 this attribute is removed in favour of
-  # track_inventory_levels only. It was initially introduced in
-  # https://github.com/openfoodfoundation/spree/commit/20b5ad9835dca7f41a40ad16c7b45f987eea6dcc
   def on_demand
     # A variant that has not been saved yet, doesn't have a stock item
     #   This provides a default value for variant.on_demand using Spree::StockLocation.backorderable_default
@@ -81,8 +72,6 @@ module VariantStock
   # Here we depend only on variant.total_on_hand and variant.on_demand.
   #   This way, variant_overrides only need to override variant.total_on_hand and variant.on_demand.
   def can_supply?(quantity)
-    return true unless Spree::Config[:track_inventory_levels]
-
     on_demand || total_on_hand >= quantity
   end
 

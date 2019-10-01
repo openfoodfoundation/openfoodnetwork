@@ -45,33 +45,14 @@ describe VariantStock do
   end
 
   describe '#on_hand=' do
-    context 'when track_inventory_levels is set' do
-      before do
-        allow(Spree::Config)
-          .to receive(:track_inventory_levels) { true }
-      end
-
-      it 'sets the new level as the stock item\'s count_on_hand' do
-        variant.on_hand = 3
-        unique_stock_item = variant.stock_items.first
-        expect(unique_stock_item.count_on_hand).to eq(3)
-      end
-
-      context 'when the variant has no stock item' do
-        let(:variant) { build(:variant) }
-
-        it 'raises' do
-          expect { variant.on_hand = 3 }
-            .to raise_error(StandardError)
-        end
-      end
+    it 'sets the new level as the stock item\'s count_on_hand' do
+      variant.on_hand = 3
+      unique_stock_item = variant.stock_items.first
+      expect(unique_stock_item.count_on_hand).to eq(3)
     end
 
-    context 'when track_inventory_levels is not set' do
-      before do
-        allow(Spree::Config)
-          .to receive(:track_inventory_levels) { false }
-      end
+    context 'when the variant has no stock item' do
+      let(:variant) { build(:variant) }
 
       it 'raises' do
         expect { variant.on_hand = 3 }
