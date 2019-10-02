@@ -3187,6 +3187,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           new_variant: "New Variant"
           show_active: "Show Active"
           show_deleted: "Show Deleted"
+        new:
+          new_variant: "New Variant"
         form:
           cost_price: "Cost Price"
           sku: "SKU"
