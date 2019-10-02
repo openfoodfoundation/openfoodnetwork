@@ -486,13 +486,14 @@ en:
       variants:
         infinity: "Infinity"
         to_order_tip: "Items made to order do not have a set stock level, such as loaves of bread made fresh to order."
-      group_buy_options: "Group Buy Options"
       back_to_products_list: "Back to products list"
       editing_product: "Editing Product"
-      product_details: "Product Details"
-      images: "Images"
-      variants: "Variants"
-      product_properties: "Product Properties"
+      tabs:
+        product_details: "Product Details"
+        group_buy_options: "Group Buy Options"
+        images: "Images"
+        variants: "Variants"
+        product_properties: "Product Properties"
 
     product_import:
       title: Product Import
