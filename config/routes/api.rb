@@ -46,6 +46,8 @@ Openfoodnetwork::Application.routes.draw do
       get :accessible, on: :collection
 
       get :products, on: :member
+      get :taxons, on: :member
+      get :properties, on: :member
     end
 
     resource :status do

@@ -1,4 +1,4 @@
-Darkswarm.controller "ProductsCtrl", ($scope, $filter, $rootScope, Products, OrderCycle, FilterSelectorsService, Cart, Dereferencer, Taxons, Properties, currentHub, $timeout) ->
+Darkswarm.controller "ProductsCtrl", ($scope, $filter, $rootScope, Products, OrderCycle, OrderCycleResource, FilterSelectorsService, Cart, Dereferencer, Taxons, Properties, currentHub, $timeout) ->
   $scope.Products = Products
   $scope.Cart = Cart
   $scope.query = ""
@@ -12,17 +12,31 @@ Darkswarm.controller "ProductsCtrl", ($scope, $filter, $rootScope, Products, Ord
   $scope.supplied_taxons = ->
     return $scope.memoized_taxons if $scope.memoized_taxons != undefined
     $scope.memoized_taxons = {}
-    currentHub.supplied_taxons.map( (taxon) ->
-      $scope.memoized_taxons[taxon.id] = Taxons.taxons_by_id[taxon.id]
-    )
+
+    params = {
+      id: OrderCycle.order_cycle.order_cycle_id,
+      distributor: currentHub.id
+    }
+    OrderCycleResource.taxons params, (data)=>
+      data.map( (taxon) ->
+        $scope.memoized_taxons[taxon.id] = Taxons.taxons_by_id[taxon.id]
+      )
+
     $scope.memoized_taxons
 
   $scope.supplied_properties = ->
     return $scope.memoized_properties if $scope.memoized_properties != undefined
     $scope.memoized_properties = {}
-    currentHub.supplied_properties.map( (property) ->
-      $scope.memoized_properties[property.id] = Properties.properties_by_id[property.id]
-    )
+
+    params = {
+      id: OrderCycle.order_cycle.order_cycle_id,
+      distributor: currentHub.id
+    }
+    OrderCycleResource.properties params, (data)=>
+      data.map( (property) ->
+        $scope.memoized_properties[property.id] = Properties.properties_by_id[property.id]
+      )
+
     $scope.memoized_properties
 
   $scope.loadMore = ->

@@ -32,3 +32,4 @@ Darkswarm.controller "OrderCycleChangeCtrl", ($scope, $timeout, OrderCycle, Prod
     Products.update()
     Cart.reloadFinalisedLineItems()
     ChangeableOrdersAlert.reload()
+    # Reload Filters from new endpoint after changing OC here
