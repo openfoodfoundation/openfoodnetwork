@@ -278,6 +278,7 @@ en:
   maestro_or_solo_cards: "Maestro/Solo cards"
   backordered: "Backordered"
   on_hand: "On Hand"
+  "on hand": "On Hand"
   ship: "Ship"
 
   actions:
