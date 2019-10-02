@@ -1,0 +1,20 @@
+%table.index
+  %thead
+    %tr
+      %th= t("spree.name")
+      %th= t("spree.path")
+      %th
+  %tbody
+    - taxons.each do |taxon|
+      - tr_class = cycle('odd', 'even')
+      - tr_id = spree_dom_id(taxon)
+      %tr{class: tr_class, id: tr_id}    
+        %td= taxon.name
+        %td= taxon_path taxon
+        %td.actions
+          = link_to_delete taxon, url: remove_admin_product_taxon_url(@product, taxon), name: icon('delete') + ' ' + t("spree.remove")
+    - if taxons.empty?
+      %tr
+        %td{colspan: "3"}
+          = t("spree.none")
+          \.

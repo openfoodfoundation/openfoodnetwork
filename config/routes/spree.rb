@@ -89,6 +89,23 @@ Spree::Core::Engine.routes.prepend do
       end
     end
 
+    # Configuration section
+    resources :taxonomies do
+      collection do
+        post :update_positions
+      end
+      member do
+        get :get_children
+      end
+      resources :taxons
+    end
+
+    resources :taxons, :only => [] do
+      collection do
+        get :search
+      end
+    end
+
     resources :tax_rates
     resource  :tax_settings
     resources :tax_categories

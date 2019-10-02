@@ -1,0 +1,32 @@
+= render partial: 'spree/admin/shared/configuration_menu'
+
+= render partial: 'js_head'
+
+- content_for :page_title do
+  = t("spree.taxonomy_edit")
+
+- content_for :page_actions do
+  %li
+    = button_link_to t("spree.back_to_taxonomies_list"), spree.admin_taxonomies_path, icon: 'icon-arrow-left'
+
+#ajax_error.errorExplanation{style: "display:none;"}
+= form_for [:admin, @taxonomy] do |f|
+  %fieldset.no-border-top
+    = render partial: 'form', locals: { f: f }
+    %div
+      = label_tag nil, t("spree.tree")
+      %br/
+      :javascript
+        Spree.routes.taxonomy_taxons_path = "#{spree.api_taxonomy_taxons_path(@taxonomy)}";
+        Spree.routes.admin_taxonomy_taxons_path = "#{spree.admin_taxonomy_taxons_path(@taxonomy)}";
+      #taxonomy_tree.tree
+    #progress{style: "display:none;"}
+      = image_tag 'select2-spinner.gif', title: 'Spinner', style: "vertical-align:bottom;"
+      = t("spree.updating")
+      \..
+    .info= t("spree.taxonomy_tree_instruction")
+    %br/
+    .filter-actions.actions
+      = button t('spree.actions.update'), 'icon-refresh'
+      %span.or= t("spree.or")
+      = button_link_to t('spree.actions.cancel'), admin_taxonomies_path, icon: 'icon-remove'
