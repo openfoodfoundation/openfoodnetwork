@@ -88,6 +88,12 @@ Spree::Core::Engine.routes.prepend do
         put :clear_api_key
       end
     end
+
+    resources :zones
+    resources :countries do
+      resources :states
+    end
+    resources :states
   end
 
   resources :orders do

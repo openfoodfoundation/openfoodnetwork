@@ -1,0 +1,16 @@
+= render partial: 'spree/admin/shared/configuration_menu'
+
+- content_for :page_title do
+  = t("spree.states")
+
+- content_for :page_actions do
+  %li#new_state_link
+    = button_link_to t("spree.new_state"), new_admin_country_state_url(@country), { remote: true, icon: 'icon-plus', id: 'new_state_link' }
+.field.row
+  = label_tag :country, t("spree.country")
+  - databaseurl = "#{admin_states_path(format: :js)}?country_id="
+  %select#country.observe_field.select2.fullwidth{"data-base-url" => databaseurl, "data-update" => "#state-list"}
+    = options_from_collection_for_select(@countries, :id, :name, @country.id)
+= image_tag 'select2-spinner.gif', plugin: 'spree', style: 'display:none;', id: 'busy_indicator'
+#state-list
+  = render partial: 'state_list'
