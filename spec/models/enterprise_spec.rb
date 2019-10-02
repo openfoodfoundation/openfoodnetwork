@@ -494,11 +494,11 @@ describe Enterprise do
     end
 
     it "gets all taxons of all distributed products in open order cycles" do
-      Spree::Product.stub(:in_distributor).and_return [product1, product2, product3]
+      allow(Spree::Product).to receive(:in_distributor).and_return [product1, product2, product3]
       ex.variants << product1.variants.first
       ex.variants << product3.variants.first
 
-      distributor.current_distributed_taxons.should match_array [taxon1, taxon3]
+      expect(distributor.current_distributed_taxons).to match_array [taxon1, taxon3]
     end
 
     it "gets all taxons of all supplied products" do

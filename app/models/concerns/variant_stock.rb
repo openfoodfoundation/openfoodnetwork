@@ -25,36 +25,21 @@ module VariantStock
   #
   # @return [Float|Integer]
   def on_hand
-    warn_deprecation(__method__, '#total_on_hand')
-
     total_on_hand
   end
 
   # Sets the stock level of the variant.
-  # This will only work if `track_inventory_levels` config is set
-  #   and if there is a stock item for the variant.
+  # This will only work if there is a stock item for the variant.
   #
-  # @raise [StandardError] when the track_inventory_levels config key is not set
-  #   and when the variant has no stock item
+  # @raise [StandardError] when the variant has no stock item
   def on_hand=(new_level)
-    warn_deprecation(__method__, '#total_on_hand')
-
-    error = 'Cannot set on_hand value when Spree::Config[:track_inventory_levels] is false'
-    raise error unless Spree::Config.track_inventory_levels
-
     raise_error_if_no_stock_item_available
 
     overwrite_stock_levels(new_level)
   end
 
   # Checks whether this variant is produced on demand.
-  #
-  # In Spree 2.0 this attribute is removed in favour of
-  # track_inventory_levels only. It was initially introduced in
-  # https://github.com/openfoodfoundation/spree/commit/20b5ad9835dca7f41a40ad16c7b45f987eea6dcc
   def on_demand
-    warn_deprecation(__method__, 'StockItem#backorderable?')
-
     # A variant that has not been saved yet, doesn't have a stock item
     #   This provides a default value for variant.on_demand using Spree::StockLocation.backorderable_default
     return Spree::StockLocation.first.backorderable_default if stock_items.empty?
@@ -69,8 +54,6 @@ module VariantStock
   #
   # @raise [StandardError] when the variant has no stock item yet
   def on_demand=(new_value)
-    warn_deprecation(__method__, 'StockItem#backorderable=')
-
     raise_error_if_no_stock_item_available
 
     # There should be only one at the default stock location.
@@ -89,8 +72,6 @@ module VariantStock
   # Here we depend only on variant.total_on_hand and variant.on_demand.
   #   This way, variant_overrides only need to override variant.total_on_hand and variant.on_demand.
   def can_supply?(quantity)
-    return true unless Spree::Config[:track_inventory_levels]
-
     on_demand || total_on_hand >= quantity
   end
 
@@ -100,13 +81,13 @@ module VariantStock
   # Here we depend only on variant.total_on_hand and variant.on_demand.
   #   This way, variant_overrides only need to override variant.total_on_hand and variant.on_demand.
   def fill_status(quantity)
-    if on_hand >= quantity
-      on_hand = quantity
-      backordered = 0
-    else
-      on_hand = [0, total_on_hand].max
-      backordered = on_demand ? (quantity - on_hand) : 0
-    end
+    on_hand = if total_on_hand >= quantity || on_demand
+                quantity
+              else
+                [0, total_on_hand].max
+              end
+
+    backordered = 0
 
     [on_hand, backordered]
   end
@@ -116,6 +97,9 @@ module VariantStock
   # This enables us to override this behaviour for variant overrides
   def move(quantity, originator = nil)
     raise_error_if_no_stock_item_available
+
+    # Don't change variant stock if variant is on_demand
+    return if on_demand
 
     # Creates a stock movement: it updates stock_item.count_on_hand and fills backorders
     #
@@ -154,12 +138,5 @@ module VariantStock
   # have only one stock location.
   def stock_item
     stock_items.first
-  end
-
-  def warn_deprecation(method_name, new_method_name)
-    ActiveSupport::Deprecation.warn(
-      "`##{method_name}` is deprecated and will be removed. " \
-      "Please use `#{new_method_name}` instead."
-    )
   end
 end

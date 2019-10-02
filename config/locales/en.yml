@@ -278,6 +278,7 @@ en:
   maestro_or_solo_cards: "Maestro/Solo cards"
   backordered: "Backordered"
   on_hand: "On Hand"
+  "on hand": "On Hand"
   ship: "Ship"
 
   actions:
@@ -2943,6 +2944,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     email: Email
     # TODO: remove 'account_updated' key once we get to Spree 2.0
     account_updated: "Account updated!"
+    email_updated: "The account will be updated once the new email is confirmed."
     my_account: "My account"
     date: "Date"
     time: "Time"
@@ -3091,9 +3093,20 @@ See the %{link} to find out more about %{sitename}'s features and to start using
             submitting_payment: Submitting payment...
       products:
         image_upload_error: "The product image was not recognised. Please upload an image in PNG or JPG format."
-
         new:
-          title: 'New Product'
+          title: "New Product"
+          new_product: "New Product"
+          supplier: "Supplier"
+          product_name: "Product Name"
+          units: "Unit Size"
+          value: "Value"
+          unit_name: "Unit name"
+          price: "Price"
+          on_hand: "On Hand"
+          on_demand: "On Demand"
+          product_description: "Product Description"
+          image: "Image"
+          or: "or"
         unit_name_placeholder: 'eg. bunches'
         index:
           header:

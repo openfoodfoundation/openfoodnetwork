@@ -49,14 +49,14 @@ feature '
 
       toggle_filter 'Vegetables'
 
-      page.should_not have_content producer1.name
-      page.should     have_content producer2.name
+      expect(page).not_to have_content producer1.name
+      expect(page).to     have_content producer2.name
 
       toggle_filter 'Vegetables'
       toggle_filter 'Fruit'
 
-      page.should     have_content producer1.name
-      page.should_not have_content producer2.name
+      expect(page).to     have_content producer1.name
+      expect(page).not_to have_content producer2.name
     end
 
     describe "filtering by product property" do
@@ -65,23 +65,23 @@ feature '
 
         toggle_filter 'Organic'
 
-        page.should     have_content producer1.name
-        page.should_not have_content producer2.name
+        expect(page).to     have_content producer1.name
+        expect(page).not_to have_content producer2.name
 
         toggle_filter 'Organic'
         toggle_filter 'Biodynamic'
 
-        page.should_not have_content producer1.name
-        page.should     have_content producer2.name
+        expect(page).not_to have_content producer1.name
+        expect(page).to     have_content producer2.name
       end
     end
 
     it "shows all producers with expandable details" do
-      page.should have_content producer1.name
+      expect(page).to have_content producer1.name
       expand_active_table_node producer1.name
 
       # -- Taxons
-      page.should have_content 'Fruit'
+      expect(page).to have_content 'Fruit'
 
       # -- Properties
       expect(page).to have_content 'Organic' # Product property
@@ -89,7 +89,7 @@ feature '
     end
 
     it "doesn't show invisible producers" do
-      page.should_not have_content invisible_producer.name
+      expect(page).not_to have_content invisible_producer.name
     end
 
     it "links to places to buy produce" do

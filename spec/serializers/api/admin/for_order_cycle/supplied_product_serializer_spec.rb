@@ -1,4 +1,6 @@
-describe Api::Admin::ForOrderCycle::EnterpriseSerializer do
+require "spec_helper"
+
+describe Api::Admin::ForOrderCycle::SuppliedProductSerializer do
   let(:coordinator)         { create(:distributor_enterprise) }
   let(:order_cycle)         { double(:order_cycle, coordinator: coordinator) }
   let!(:product) { create(:simple_product) }

@@ -10,23 +10,24 @@ tags:
     description: Product endpoints
   - name: product variants
     description: Product variant endpoints
-  - name: zones
-    description: Zone endpoints
-  - name: states
-    description: State endpoints
-  - name: taxonomies
-    description: Taxonomy endpoints
-  - name: taxons
-    description: Taxon endpoints
-  - name: countries
-    description: Country endpoints
-  - name: cookies_consent
-    description: Cookies_Consent endpoints
+  - name: product images
+    description: Product images endpoints
   - name: orders
     description: Order endpoints
-  
+  - name: shipments
+    description: Order shipments endpoints
+  - name: enterprises
+    description: Enterprises endpoints
+  - name: taxonomies
+    description: Taxonomies endpoints
+  - name: cookies_consent
+    description: Cookies_Consent endpoints
+
+security:
+  - api_key: []
+
 paths:
-  /products:
+  /products/bulk_products:
     get:
       description: Gets all Products.
       tags:
@@ -39,18 +40,38 @@ paths:
               schema:
                 type: object
                 properties:
-                  count:
-                    type: integer
-                  total_count:
-                    type: integer
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
                   pages:
                     type: integer
                   products:
                     type: array
                     items:
                       $ref: '#/components/schemas/Product'
-                  current_page:
+
+  /products/overridable:
+    get:
+      description: Gets all Products.
+      tags:
+        - products
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+                  pages:
                     type: integer
+                  products:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+
+  /products:
     post:
       description: Posts a new Product.
       tags:
@@ -64,7 +85,7 @@ paths:
               product:
                 $ref: '#/components/schemas/Product'
           required: true
-          description: JSON object representing the Product to be posted. Only attributes listed in the Product required_attributes object are required (obtainable via GET /products/new).
+          description: JSON object representing the Product to be posted.
       responses:
         '201':
           description: successful post
@@ -72,20 +93,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Product'
-                  
-  /products/new:
-    get:
-      description: Gets an object consisting of an array of all Product attributes and an array of required attributes to create a new Product object.
-      tags:
-        - products
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/New'
-      
+
   /products/{product_id}:
     get:
       description: Gets a Product by ID.
@@ -146,7 +154,43 @@ paths:
       responses:
         '204':
           description: successful deletion
-                  
+
+  /products/{product_id}/clone:
+    post:
+      description: Clones a Product by ID.
+      tags:
+        - products
+      parameters:
+        - in: path
+          name: product_id
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the Product to clone.
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+
+  /products/{product_id}/soft_delete:
+    delete:
+      description: Soft deletes the Product with the given ID.
+      tags:
+        - products
+      parameters:
+          - in: path
+            name: product_id
+            schema:
+              type: integer
+            required: true
+            description: Numeric ID of the Product.
+      responses:
+        '204':
+          description: successful deletion
+
   /products/{product_id}/variants:
     get:
       description: Gets all Variants of the given Product.
@@ -198,7 +242,7 @@ paths:
               variant:
                 $ref: '#/components/schemas/Variant'
           required: true
-          description: JSON object representing the Variant to be posted. Only attributes listed in the Variant required_attributes object are required (obtainable via GET /products/{product_id}/variants/new).
+          description: JSON object representing the Variant to be posted.
       responses:
         '201':
           description: successful post
@@ -206,27 +250,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Variant'
-                  
-  /products/{product_id}/variants/new:
-    get:
-      description: Gets an object consisting of an array of all Variant attributes and an array of required attributes to create a new Variant object.
-      tags:
-        - product variants
-      parameters:
-        - in: path
-          name: product_id
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Product.
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/New'
-                  
+
   /products/{product_id}/variants/{variant_id}:
     get:
       description: Gets a Variant by ID.
@@ -305,290 +329,460 @@ paths:
       responses:
         '204':
           description: successful deletion
-          
-  /zones:
-    get:
-      description: Gets all Zones.
-      tags:
-        - zones
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  count:
-                    type: integer
-                  current_page:
-                    type: integer
-                  pages:
-                    type: integer
-                  zones:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Zone'
-    post:
-      description: Posts a new Zone.
-      tags:
-        - zones
-      parameters:
-        - in: path
-          name: zone_object
-          schema:
-            type: object
-            properties:
-              zone:
-                $ref: '#/components/schemas/Zone'
-          required: true
-          description: JSON object representing the Zone to be posted. Only attributes listed in the Zone required_attributes object are required (obtainable via GET /zones/new).
-      responses:
-        '201':
-          description: successful post
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Zone'
-                
-  /zones/{zone_id}:
-    get:
-      description: Gets a Zone by ID.
-      tags:
-        - zones
-      parameters:
-        - in: path
-          name: zone_id
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Zone.
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Zone'
-    put:
-      description: Updates the Zone with the given ID.
-      tags:
-        - zones
-      parameters:
-        - in: path
-          name: zone_id
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Zone.
-        - in: path
-          name: zone_object
-          schema:
-            type: object
-            properties:
-              zone:
-                $ref: '#/components/schemas/Zone'
-          required: true
-          description: JSON object representing the Zone attributes to be overwritten.
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Zone'
+
+  /products/{product_id}/variants/{variant_id}/soft_delete:
     delete:
-      description: Deletes the Zone with the given ID.
+      description: Soft-deletes the Variant with the given ID.
       tags:
-        - zones
+        - product variants
       parameters:
           - in: path
-            name: zone_id
+            name: product_id
             schema:
               type: integer
             required: true
-            description: Numeric ID of the Zone.
-      responses:
-        '204':
-          description: successful deletion
-                  
-  /states:
-    get:
-      description: Gets all States.
-      tags:
-        - states
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  states:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/State'
-                  
-  /states/{state_id}:
-    get:
-      description: Get a State with the given ID.
-      tags:
-        - states
-      parameters:
-        - in: path
-          name: state_id
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the State.
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/State'
-                
-  /taxonomies:
-    get:
-      description: Gets all Taxonomies.
-      tags:
-        - taxonomies
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  count:
-                    type: integer
-                  current_page:
-                    type: integer
-                  taxonomies:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Taxonomy'
-                  pages:
-                    type: integer
-    post:
-      description: Posts a new Taxonomy.
-      tags:
-        - taxonomies
-      parameters:
-        - in: path
-          name: taxonomy_object
-          schema:
-            type: object
-            properties:
-              taxonomy:
-                $ref: '#/components/schemas/Taxonomy'
-          required: true
-          description: JSON object representing the Taxonomy to be posted. Only attributes listed in the Taxonomy required_attributes object are required (obtainable via GET /taxonomies/new).
-      responses:
-        '201':
-          description: successful post
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Taxonomy'
-                
-  /taxonomies/new:
-    get:
-      description: Gets an object consisting of an array of all Taxonomy attributes and an array of required attributes to create a new Taxonomy object.
-      tags:
-        - taxonomies
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/New'
-        
-  /taxonomies/{taxonomy_id}:
-    get:
-      description: Gets a Taxonomy by ID.
-      tags:
-        - taxonomies
-      parameters:
-        - in: path
-          name: taxonomy_id
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Taxonomy.
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Taxonomy'
-    put:
-      description: Updates the Taxonomy with the given ID.
-      tags:
-        - taxonomies
-      parameters:
-        - in: path
-          name: taxonomy_id
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Taxonomy.
-        - in: path
-          name: taxonomy_object
-          schema:
-            type: object
-            properties:
-              taxonomy:
-                $ref: '#/components/schemas/Taxonomy'
-          required: true
-          description: JSON object representing the Taxonomy attributes to be overwritten.
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Taxonomy'
-    delete:
-      description: Deletes the Taxonomy with the given ID.
-      tags:
-        - taxonomies
-      parameters:
+            description: Numeric ID of the Product.
           - in: path
-            name: taxonomy_id
+            name: variant_id
             schema:
               type: integer
             required: true
-            description: Numeric ID of the Taxonomy.
+            description: Numeric ID of the Variant.
       responses:
         '204':
           description: successful deletion
-                
-  /taxons:
-    get:
-      description: Gets all Taxons.
+
+  /product_images/{product_id}:
+    post:
+      description: Creates or updates product image.
       tags:
-        - taxons
+        - product images
+      parameters:
+          - in: path
+            name: product_id
+            schema:
+              type: integer
+            required: true
+            description: Numeric ID of the Product.
+      responses:
+        '201':
+          description: Product image added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductImage'
+        '200':
+          description: Product image updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductImage'
+
+  /orders:
+    get:
+      description: Gets all Orders.
+      tags:
+        - orders
       responses:
         '200':
           description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  orders:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Order_Concise'
+                  pagination:
+                    type: string
+
+  /orders/{order_number}/shipments.json:
+    post:
+      description: Creates a new Shipment and adds given variant.
+      tags:
+        - shipments
+      parameters:
+          - in: path
+            name: order_number
+            schema:
+              type: integer
+            required: true
+            description: Number (not id) of the Order being changed.
+          - in: path
+            name: variant_id
+            schema:
+              type: integer
+            required: true
+            description: Numeric ID of the Variant to be added to the shipment.
+          - in: path
+            name: quantity
+            schema:
+              type: integer
+            required: true
+            description: Quantity of the variant to be added to the shipment.
+          - in: path
+            name: stock_location_id
+            schema:
+              type: integer
+            required: true
+            description: Stock location ID to be used to source the variant (for each OFN there's only one valid ID to be used here).
+      responses:
+        '201':
+          description: Shipment successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shipment'
+
+  /orders/{order_number}/shipments/{shipment_number}.json:
+    put:
+      description: Updates shipment.
+      tags:
+        - shipments
+      parameters:
+          - in: path
+            name: order_number
+            schema:
+              type: integer
+            required: true
+            description: Number (not id) of the Order being changed.
+          - in: path
+            name: shipment_number
+            schema:
+              type: integer
+            required: true
+            description: Number (not id) of the Shipment being changed.
+          - in: path
+            name: shipment_object
+            schema:
+              type: object
+              properties:
+                product:
+                  $ref: '#/components/schemas/Shipment'
+            required: true
+            description: JSON object representing the Shipmeent attributes to be overwritten.
+      responses:
+        '200':
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shipment'
+
+  /orders/{order_number}/shipments/{shipment_number}/add.json:
+    put:
+      description: Adds a variant quantity to the given shipment.
+      tags:
+        - shipments
+      parameters:
+          - in: path
+            name: order_number
+            schema:
+              type: integer
+            required: true
+            description: Number (not id) of the Order being changed.
+          - in: path
+            name: shipment_number
+            schema:
+              type: integer
+            required: true
+            description: Number (not id) of the Shipment being changed.
+          - in: path
+            name: variant_id
+            schema:
+              type: integer
+            required: true
+            description: Numeric ID of the Variant to be added to the shipment.
+          - in: path
+            name: quantity
+            schema:
+              type: integer
+            required: true
+            description: Quantity of the variant to be added to the shipment.
+      responses:
+        '200':
+          description: Variant quantity successfully added.
+
+  /orders/{order_number}/shipments/{shipment_number}/remove.json:
+    put:
+      description: Removes a variant from the given shipment.
+      tags:
+        - shipments
+      parameters:
+          - in: path
+            name: order_number
+            schema:
+              type: integer
+            required: true
+            description: Number (not id) of the Order being changed.
+          - in: path
+            name: shipment_number
+            schema:
+              type: integer
+            required: true
+            description: Number (not id) of the Shipment being changed.
+          - in: path
+            name: variant_id
+            schema:
+              type: integer
+            required: true
+            description: Numeric ID of the Variant to be removed from the shipment.
+          - in: path
+            name: quantity
+            schema:
+              type: integer
+            required: true
+            description: Quantity of the variant to be removed from the shipment.
+      responses:
+        '200':
+          description: Variant quantity successfully rmeoved.
+
+  /orders/{order_number}/shipments/{shipment_number}/ready.json:
+    put:
+      description: Moves the shipment to the ready state.
+      tags:
+        - shipments
+      parameters:
+          - in: path
+            name: order_number
+            schema:
+              type: integer
+            required: true
+            description: Number (not id) of the Order being changed.
+          - in: path
+            name: shipment_number
+            schema:
+              type: integer
+            required: true
+            description: Number (not id) of the Shipment being changed.
+      responses:
+        '200':
+          description: Successful workflow change.
+
+  /orders/{order_number}/shipments/{shipment_number}/ship.json:
+    put:
+      description: Moves the shipment to the shipped state.
+      tags:
+        - shipments
+      parameters:
+          - in: path
+            name: order_number
+            schema:
+              type: integer
+            required: true
+            description: Number (not id) of the Order being changed.
+          - in: path
+            name: shipment_number
+            schema:
+              type: integer
+            required: true
+            description: Number (not id) of the Shipment being changed.
+      responses:
+        '200':
+          description: Successful workflow change.
+
+  /enterprises:
+    post:
+      description: Creates a new Enterprise.
+      tags:
+        - enterprises
+      parameters:
+          - in: path
+            name: enterprise_object
+            schema:
+              type: object
+              properties:
+                variant:
+                  $ref: '#/components/schemas/Enterprise'
+            required: true
+            description: JSON object representing the Enterprise attributes to be created.
+      responses:
+        '201':
+          description: Enterprise successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Enterprise'
+    put:
+      description: Updates an Enterprise.
+      tags:
+        - enterprises
+      parameters:
+          - in: path
+            name: enterprise_object
+            schema:
+              type: object
+              properties:
+                variant:
+                  $ref: '#/components/schemas/Enterprise'
+            required: true
+            description: JSON object representing the Enterprise to be overwritten.
+      responses:
+        '200':
+          description: Enterprise successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Enterprise'
+
+  /enterprises/{enterprise_id}/shopfront:
+    get:
+      description: Fetch Enterprise shopfront details (products not included).
+      tags:
+        - enterprises
+      parameters:
+          - in: path
+            name: enterprise_id
+            schema:
+              type: integer
+            required: true
+            description: ID of the enterprise.
+      responses:
+        '200':
+          description: Enterprise shopfront details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnterpriseShopfront'
+
+  /enterprises/{enterprise_id}/update_image:
+    post:
+      description: Update enterprise images, promo and logo.
+      tags:
+        - enterprises
+      parameters:
+          - in: path
+            name: enterprise_id
+            schema:
+              type: integer
+            required: true
+            description: ID of the enterprise.
+          - in: path
+            name: logo
+            schema:
+              type: string
+              format: binary
+            required: true
+            description: Binary of the logo image.
+          - in: path
+            name: promo
+            schema:
+              type: string
+              format: binary
+            required: true
+            description: Binary of the promo image.
+      responses:
+        '200':
+          description: Image successfully uploaded. URL to the uploaded image
+          content:
+            application/json:
+              schema:
+                type: string
+
+  /enterprises/{enterprise_permalink}/logo.json:
+    delete:
+      description: Delete enterprise logo image.
+      tags:
+        - enterprises
+      parameters:
+          - in: path
+            name: enterprise_permalink
+            schema:
+              type: string
+            required: true
+            description: Permalink of the enterprise.
+      responses:
+        '200':
+          description: Image successfully deleted. Json object representing the enterprise
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Enterprise'
+
+  /enterprises/{enterprise_permalink}/promo_image.json:
+    delete:
+      description: Delete enterprise promo image.
+      tags:
+        - enterprises
+      parameters:
+          - in: path
+            name: enterprise_permalink
+            schema:
+              type: string
+            required: true
+            description: Permalink of the enterprise.
+      responses:
+        '200':
+          description: Image successfully deleted. Json object representing the enterprise
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Enterprise'
+
+  /customers.json:
+    get:
+      description: List of customer objects for the current user (a customer connects a user with an enterprise)
+      tags:
+        - users
+      responses:
+        '200':
+          description: List of Customer objects
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Taxon'
-                  
+                  $ref: '#/components/schemas/Customer'
+
+  /customers/{customer_id}.json:
+    put:
+      description: Updates customer object of current user (a customer connects a user with an enterprise)
+      tags:
+        - users
+      parameters:
+          - in: path
+            name: customer_id
+            schema:
+              type: integer
+            required: true
+            description: ID of the customer object to update.
+          - in: path
+            name: customer_object
+            schema:
+              $ref: '#/components/schemas/Customer'
+            required: true
+            description: Customer object to be saved.
+      responses:
+        '200':
+          description: Customer object saved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+
+  /enterprise_fees/{enterprise_fee_id}:
+    delete:
+      description: Deletes enterprise fee.
+      tags:
+        - enterprises
+      parameters:
+          - in: path
+            name: enterprise_fee_id
+            schema:
+              type: integer
+            required: true
+            description: ID of the enterprise fee to delete.
+      responses:
+        '204':
+          description: Enterprise fee successfully deleted.
+
   /taxonomies/{taxonomy_id}/taxons/:
     get:
       description: Gets all Taxons belonging to a given Taxonomy.
       tags:
-        - taxons
+        - taxonomies
       parameters:
         - in: path
           name: taxonomy_id
@@ -608,7 +802,7 @@ paths:
     post:
       description: Posts a new Taxon to a given Taxonomy.
       tags:
-        - taxons
+        - taxonomies
       parameters:
         - in: path
           name: taxonomy_id
@@ -624,7 +818,7 @@ paths:
               taxon:
                 $ref: '#/components/schemas/Taxon'
           required: true
-          description: JSON object representing the Taxon to be posted. Only attributes listed in the Taxon required_attributes object are required (obtainable via GET /taxonomies/{taxonomy_id}/taxons/new).
+          description: JSON object representing the Taxon to be posted.
       responses:
         '201':
           description: successful post
@@ -634,56 +828,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Taxon'
-                  
-  /taxonomies/{taxonomy_id}/taxons/new:
-    get:
-      description: Gets an object consisting of an array of all Taxon attributes and an array of required attributes to create a new Taxon object in a given Taxonomy.
-      tags:
-        - taxons
-      parameters:
-        - in: path
-          name: taxonomy_id
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Taxonomy.
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/New'
-        
+
   /taxonomies/{taxonomy_id}/taxons/{taxon_id}:
-    get:
-      description: Gets a Taxon by ID from the Taxonomy at the given Taxonomy ID.
-      tags:
-        - taxons
-      parameters:
-        - in: path
-          name: taxonomy_id
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Taxonomy.
-        - in: path
-          name: taxon_id
-          schema:
-            type: integer
-          required: true
-          description: Numeric ID of the Taxon.
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Taxon'
     put:
       description: Updates the Taxon with the given Taxon ID in the Taxonomy with the given Taxonomy ID.
       tags:
-        - taxons
+        - taxonomies
       parameters:
         - in: path
           name: taxonomy_id
@@ -716,7 +866,7 @@ paths:
     delete:
       description: Deletes the Taxon with the given Taxon ID from the Taxonomy with the given Taxonomy ID.
       tags:
-        - taxons
+        - taxonomies
       parameters:
         - in: path
           name: taxonomy_id
@@ -733,51 +883,53 @@ paths:
       responses:
         '204':
           description: successful deletion
-                
-  /countries:
+
+  /taxonomies/{taxonomy_id}/jstree:
     get:
-      description: Gets all Countries.
+      description: Gets a Taxonomy by ID with a jstree representation.
       tags:
-        - countries
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  count:
-                    type: string
-                  current_page:
-                    type: integer
-                  countries:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Country'
-                  pages:
-                    type: integer
-                    
-  /countries/{country_id}:
-    get:
-      description: Gets the country with the given ID.
-      tags:
-        - countries
+        - taxonomies
       parameters:
         - in: path
-          name: country_id
+          name: taxonomy_id
           schema:
             type: integer
           required: true
-          description: Numeric ID of the Country.
+          description: Numeric ID of the Taxonomy.
       responses:
         '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Country'
-                
+                $ref: '#/components/schemas/TaxonJstree'
+
+  /taxonomies/{taxonomy_id}/taxons/{taxon_id}/jstree:
+    get:
+      description: Gest a given Taxon from given Taxonomy ID in the jstree representation.
+      tags:
+        - taxonomies
+      parameters:
+        - in: path
+          name: taxonomy_id
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the Taxonomy.
+        - in: path
+          name: taxon_id
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the Taxon.
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaxonJstree'
+
   /cookies/consent:
     get:
       description: Gets the client's Cookies_Consent status.
@@ -812,55 +964,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Cookies_Consent'
-                
-  /orders:
-    get:
-      description: Gets all Orders.
-      tags:
-        - orders
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  orders:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Order_Concise'
-                  pagination:
-                    type: string
-                    
-  /orders/{order_number}:
-    get:
-      description: Gets the Order with the given number.
-      tags:
-        - orders
-      parameters:
-        - in: path
-          name: order_number
-          schema:
-            type: string
-          required: true
-          description: Alphanumeric string identifier for the Order.
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Order_Verbose'
-                  
-    
+
 components:
   securitySchemes:
     api_key:
       type: apiKey
-      name: api_key
+      name: X-Spree-Token
       in: header
   schemas:
+    Pagination:
+      type: object
+      properties:
+        results:
+          type: integer
+        pages:
+          type: integer
+        page:
+          type: integer
+        per_page:
+          type: integer
     Product:
       type: object
       properties:
@@ -868,148 +990,165 @@ components:
           type: integer
         name: 
           type: string
-        description: 
+        sku:
           type: string
         price: 
           type: string
         available_on: 
           type: string
-        permalink: 
+        permalink_live:
           type: string
-        count_on_hand: 
+        on_hand:
           type: integer
-        meta_description: 
+        variant_unit:
           type: string
-        meta_keywords: 
+        variant_unit_scale:
           type: string
-        taxon_ids: 
-          type: object
+        variant_unit_name:
+          type: string
+        tax_category_id:
+          type: integer
+        import_date:
+          type: string
+        image_url:
+          type: string
+        thumb_url:
+          type: string
+        producer_id:
+          type: integer
+        category_id:
+          type: integer
+        master:
+          $ref: '#/components/schemas/AdminVariant'
         variants:
-          oneOf:
-            - type: array
-              items:
-                $ref: '#/components/schemas/Variant'
-            - $ref: '#/components/schemas/Variant'
-        option_types: 
-          type: object
-        product_properties: 
-          type: object
-    New:
-      type: object
-      properties:
-        required_attributes:
           type: array
           items:
-            type: string
-        attributes:
-          type: array
-          items:
-            type: string
-      
-    Variant:
+            $ref: '#/components/schemas/AdminVariant'
+
+    AdminVariant:
       type: object
       properties:
-        id: 
+        id:
           type: integer
-        name: 
+        name:
           type: string
-        count_on_hand: 
+        on_hand:
           type: integer
-        sku: 
+        sku:
           type: string
         price: 
           type: string
-        weight: 
+        producer_name:
           type: string
-        height: 
+        import_date:
           type: string
-        width: 
+        options_text:
           type: string
-        depth: 
-          type: string
-        is_master: 
-          type: string
-        cost_price: 
-          type: string
-        permalink: 
-          type: string
-        option_values: 
-          type: object
-        images: 
-          type: object
-    Zone:
-      type: object
-      properties:
-        id: 
+        unit_value:
           type: integer
-        description: 
+        unit_description:
           type: string
-        zone_members:
-          type: array
-          items: {}
-        name: 
+        unit_to_display:
           type: string
-    Taxonomy:
-      type: object
-      properties:
-        root: 
-          type: object
-        id: 
-          type: integer
-        name: 
+        display_as:
           type: string
-    Taxon:
-      type: object
-      properties:
-        name: 
+        display_name:
           type: string
-        taxonomy_id:
-          type: integer
-        position:
-          type: integer
-        permalink:
+        name_to_display:
           type: string
-        taxons:
+        on_demand:
+          type: boolean
+        in_stock:
+          type: boolean
+        image:
+          type: string
+        variant_overrides:
           type: array
           items:
-            $ref: '#/components/schemas/Taxon'
-        pretty_name: 
-          type: string
-        id: 
-          type: integer  
-        parent_id:
-          type: integer
-    State:
+            $ref: '#/components/schemas/AdminVariantOverride'
+
+    AdminVariantOverride:
       type: object
       properties:
-        name:
-          type: string
-        abbr:
-          type: string
         id:
           type: integer
-        country_id:
+        count_on_hand:
           type: integer
-    Country:
+        default_stock:
+          type: integer
+        hub_id:
+          type: integer
+        import_date:
+          type: string
+        on_demand:
+          type: boolean
+        permission_revoked_at:
+          type: string
+        price:
+          type: string
+        resettable:
+          type: boolean
+        sku:
+          type: string
+        variant_id:
+          type: integer
+
+    Variant:
       type: object
       properties:
-        count:
+        id:
           type: integer
-        current_page:
+        on_hand:
           type: integer
-        pages:
+        sku:
           type: string
-        countries:
+        price:
+          type: string
+        product_name:
+          type: string
+        is_master:
+          type: boolean
+        options_text:
+          type: string
+        unit_value:
+          type: integer
+        unit_description:
+          type: string
+        unit_to_display:
+          type: string
+        display_as:
+          type: string
+        display_name:
+          type: string
+        name_to_display:
+          type: string
+        on_demand:
+          type: boolean
+        fees:
+          type: object
+        price_with_fees:
+          type: string
+        tag_list:
           type: array
           items:
             type: string
-    Cookies_Consent:
+
+    ProductImage:
       type: object
       properties:
-        cookies_consent:
-          type: boolean
-      example:
-        cookies_consent: false
+        id:
+          type: integer
+        alt:
+          type: string
+        thumb_url:
+          type: string
+        small_url:
+          type: string
+        image_url:
+          type: string
+        large_url:
+          type: string
+
     Order_Concise:
       type: object
       properties:
@@ -1063,68 +1202,126 @@ components:
           properties:
             id:
               type: integer
-    Order_Verbose:
+
+    Shipment:
+      type: object
+      properties:
+        selected_shipping_rate_id:
+          type: integer
+
+    Enterprise:
       type: object
       properties:
         id:
           type: integer
-        number:
+        name:
           type: string
-        item_total:
-          type: string
-        total:
-          type: string
-        state:
-          type: string
-        adjustment_total:
-          type: string
-        user_id:
+        owner_id:
           type: integer
-        created_at:
+
+    EnterpriseShopfront:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
           type: string
-        updated_at:
+        description:
           type: string
-        completed_at:
+        latitude:
+          type: integer
+        longitude:
+          type: integer
+        long_description:
           type: string
-        payment_total:
+        website:
           type: string
-        shipment_state:
+        instagram:
           type: string
-        payment_state:
+        linkedin:
           type: string
-        email:
+        twitter:
           type: string
-        special_instructions:
+        facebook:
           type: string
-        bill_address:
+        is_primary_producer:
+          type: boolean
+        is_distributor:
+          type: boolean
+        phone:
+          type: string
+        visible:
+          type: boolean
+        email_address:
+          type: string
+        hash:
+          type: string
+        logo:
+          type: string
+        promo_image:
+          type: string
+        path:
+          type: string
+        category:
+          type: string
+        active:
+          type: boolean
+        producers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnterpriseThin'
+        orders_close_at:
+          type: string
+        hubs:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnterpriseThin'
+        taxons:
+          type: array
+          items:
+            type: string
+        supplied_taxons:
+          type: array
+          items:
+            type: string
+        pickup:
+          type: boolean
+        delivery:
+          type: boolean
+        address:
+          type: array
+          items:
+            $ref: '#/components/schemas/Address'
+
+    EnterpriseThin:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        active:
+          type: boolean
+        path:
+          type: string
+        address:
           $ref: '#/components/schemas/Address'
-        ship_address:
-          $ref: '#/components/schemas/Address'
-        line_items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Product'
-        payments:
-          type: array
-          items:
-            $ref: '#/components/schemas/Payment'
-        shipments:
-          type: array
-          items:
-            $ref: '#/components/schemas/Shipment'
-        adjustments:
-          type: array
-          items:
-            $ref: '#/components/schemas/Adjustment'
-        credit_cards:
-          type: array
-          items: {}
-        
+
     Address:
       type: object
       properties:
         id:
           type: integer
+        zipcode:
+          type: string
+        city:
+          type: string
+        state_name:
+          type: string
+        state_id:
+          type: integer
+        phone:
+          type: string
         firstname:
           type: string
         lastname:
@@ -1133,102 +1330,68 @@ components:
           type: string
         address2:
           type: string
-        city:
-          type: string
-        zipcode:
-          type: string
-        phone:
-          type: string
-        company:
-          type: string
-        alternative_phone:
-          type: string
         country_id:
           type: integer
-        state_id:
-          type: integer
-        state_name:
-          type: string
-        country:
-          $ref: '#/components/schemas/Country'
-        state:
-          $ref: '#/components/schemas/State'
-    Payment:
+
+    Customer:
       type: object
       properties:
         id:
           type: integer
-        amount:
-          type: string
-        state:
-          type: string
-        payment_method_id:
-          type: integer
-        payment_method:
-          $ref: '#/components/schemas/Payment_Method'
-    Payment_Method:
-      type: object
-      properties:
-        id:
+        enterprise_id:
           type: integer
         name:
           type: string
-        environment:
+        code:
           type: string
-    Shipment:
-      type: object
-      properties:
-        id:
-          type: integer
-        tracking:
+        email:
           type: string
-        number:
-          type: string
-        cost:
-          type: string
-        shipped_at:
-          type: string
-        state:
-          type: string
-        order_id:
-          type: string
-        shipping_method:
-          $ref: '#/components/schemas/Shipping_Method'
-    Shipping_Method:
+        allow_charges:
+          type: boolean
+
+    Taxon:
       type: object
       properties:
         name:
           type: string
-        zone_id:
+        taxonomy_id:
           type: integer
-        shipping_category_id:
+        position:
+          type: integer
+        permalink:
           type: string
-    Adjustment:
-      type: object
-      properties:
+        taxons:
+          type: array
+          items:
+            $ref: '#/components/schemas/Taxon'
+        pretty_name:
+          type: string
         id:
           type: integer
-        source_type:
-          type: string
-        source_id:
+        parent_id:
           type: integer
-        adjustable_type:
+        icon:
           type: string
-        adjustable_id:
-          type: integer
-        originator_type:
+
+    TaxonJstree:
+      type: object
+      properties:
+        data:
           type: string
-        originator_id:
-          type: integer
-        amount:
+        state:
           type: string
-        label:
-          type: string
-        mandatory:
+        attr:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+
+    Cookies_Consent:
+      type: object
+      properties:
+        cookies_consent:
           type: boolean
-        eligible:
-          type: boolean
-        created_at:
-          type: string
-        updated_at:
-          type: string
+      example:
+        cookies_consent: false

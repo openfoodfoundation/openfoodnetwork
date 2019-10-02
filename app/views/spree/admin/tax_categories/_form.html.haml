@@ -1,0 +1,15 @@
+.row
+  .alpha.four.columns
+    = f.field_container :name do
+      = f.label :name, t("spree.name")
+      = f.text_field :name, class: 'fullwidth'
+  .five.columns
+    = f.field_container :description do
+      = f.label :description, t("spree.description")
+      %br/
+      = f.text_field :description, class: 'fullwidth'
+  .three.columns.omega
+    = f.field_container :is_default, class: ['checkbox'] do
+      %label
+        = f.check_box :is_default
+        = t("spree.default")

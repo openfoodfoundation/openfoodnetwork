@@ -1,0 +1,24 @@
+#new_state
+%table#listing_states.index
+  %colgroup
+    %col{style: "width: 70%"}/
+    %col{style: "width: 15%"}/
+    %col{style: "width: 15%"}/
+  %thead
+    %tr
+      %th= t("spree.name")
+      %th= t("spree.abbreviation")
+      %th.actions
+  %tbody
+    - @states.each do |state|
+      - tr_class = cycle('odd', 'even')
+      - tr_id = spree_dom_id(state)
+      %tr{class: tr_class, id: tr_id}
+        %td= state.name
+        %td.align-center= state.abbr
+        %td.actions
+          = link_to_with_icon 'icon-edit', t("spree.edit"), edit_admin_country_state_url(@country, state), no_text: true
+          = link_to_delete state, no_text: true
+    - if @states.empty?
+      %tr
+        %td{colspan: "3"}= t("spree.none")

@@ -46,7 +46,12 @@ module Spree
             @user.spree_roles = roles.reject(&:blank?).collect{ |r| Spree::Role.find(r) }
           end
 
-          flash.now[:success] = Spree.t(:account_updated)
+          message = if new_email_unconfirmed?
+                      Spree.t(:email_updated)
+                    else
+                      Spree.t(:account_updated)
+                    end
+          flash.now[:success] = message
         end
         render :edit
       end
@@ -125,6 +130,10 @@ module Spree
 
       def load_roles
         @roles = Spree::Role.scoped
+      end
+
+      def new_email_unconfirmed?
+        params[:user][:email] != @user.email
       end
     end
   end

@@ -38,18 +38,17 @@
       = f.label :cost_price, Spree.t(:cost_price)
       = f.text_field :cost_price, value: number_to_currency(@variant.cost_price, unit: ''), class: 'fullwidth'
 
-    - if Spree::Config[:track_inventory_levels]
-      %div{ 'set-on-demand' => '' }
-        .field.checkbox
-          %label
-            = f.check_box :on_demand
-            = t(:on_demand)
-          %div{'ofn-with-tip' => t('admin.products.variants.to_order_tip')}
-            %a= t('admin.whats_this')
-        .field
-          = f.label :on_hand, t(:on_hand)
-          .fullwidth
-            = f.text_field :on_hand
+    %div{ 'set-on-demand' => '' }
+      .field.checkbox
+        %label
+          = f.check_box :on_demand
+          = t(:on_demand)
+        %div{'ofn-with-tip' => t('admin.products.variants.to_order_tip')}
+          %a= t('admin.whats_this')
+      .field
+        = f.label :on_hand, t(:on_hand)
+        .fullwidth
+          = f.text_field :on_hand
 
 .right.six.columns.omega.label-block
   - if @product.variant_unit != 'weight'
