@@ -1,0 +1,18 @@
+= render partial: 'spree/admin/shared/configuration_menu'
+
+- content_for :page_title do
+  = t("spree.editing_zone")
+
+- content_for :page_actions do
+  %li
+    = button_link_to t("spree.back_to_zones_list"), admin_zones_path, icon: 'icon-arrow-left'
+
+= render partial: 'spree/shared/error_messages', locals: { target: @zone }
+
+= form_for [:admin, @zone] do |zone_form|
+  %fieldset.no-border-top
+    = render partial: 'form', locals: { zone_form: zone_form }
+    = render partial: 'member_type', locals: { type: 'country', zone_form: zone_form }
+    = render partial: 'member_type', locals: { type: 'state', zone_form: zone_form }
+    .clear
+    = render partial: 'spree/admin/shared/edit_resource_links'

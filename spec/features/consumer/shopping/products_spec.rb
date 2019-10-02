@@ -37,7 +37,7 @@ feature "As a consumer I want to view products", js: true do
         modal_should_be_open_for product
 
         within(".reveal-modal") do
-          html.should include("<p><b>Formatted</b> product description.</p>")
+          expect(html).to include("<p><b>Formatted</b> product description.</p>")
         end
       end
 
@@ -53,8 +53,8 @@ feature "As a consumer I want to view products", js: true do
         modal_should_be_open_for product
 
         within(".reveal-modal") do
-          html.should include("<p>Safe</p>")
-          html.should_not include("<script>alert('Dangerous!');</script>")
+          expect(html).to include("<p>Safe</p>")
+          expect(html).not_to include("<script>alert('Dangerous!');</script>")
         end
       end
     end

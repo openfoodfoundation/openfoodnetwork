@@ -10,6 +10,11 @@ class SubscriptionLineItem < ActiveRecord::Base
     (price_estimate || 0) * (quantity || 0)
   end
 
+  # Ensure SubscriptionLineItem always has access to soft-deleted Variant attribute
+  def variant
+    Spree::Variant.unscoped { super }
+  end
+
   # Used to calculators to estimate fees
   alias_method :amount, :total_estimate
 

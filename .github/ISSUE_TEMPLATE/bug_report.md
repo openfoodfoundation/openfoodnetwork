@@ -9,6 +9,7 @@ assignees: ''
 
 ## Description
 <!-- Provide a more detailed introduction to the issue itself, and why you consider it to be a bug -->
+<!-- How has this bug affected you? What were you trying to accomplish? -->
 
 
 ## Expected Behavior
@@ -22,6 +23,8 @@ assignees: ''
 ## Steps to Reproduce
 <!-- Provide an unambiguous set of steps to reproduce this bug -->
 <!-- Include code to reproduce if relevant -->
+<!-- Include links -->
+<!-- Include user ID -->
 
 1.
 2.
@@ -29,13 +32,11 @@ assignees: ''
 4.
 
 ## Animated Gif/Screenshot
-<!-- Provide a screenshot or brief animated gif reproducing the bug. Linux users can use
-[Peek](https://github.com/phw/peek#ubuntu) while Mac users can use [Recordit](http://recordit.co/) -->
+<!-- Provide a screenshot or brief video reproducing the bug.  -->
+<!-- Please try to have the dev tools opened on the network tab (press F12 to open the devtools of your browser -->
 
-
-## Context
-<!-- How has this bug affected you? What were you trying to accomplish? -->
-
+## Workaround
+<!-- Include a workaround for this bug (if relevant) -->
 
 ## Severity
 <!-- Assign a label and explain the impact.
@@ -55,7 +56,6 @@ https://github.com/openfoodfoundation/openfoodnetwork/wiki/Bug-severity
 * Version used:
 * Browser name and version:
 * Operating System and version (desktop or mobile):
-* OFN Platform instance where you discovered the bug, and which version of the software they are using. 
 
 ## Possible Fix
 <!-- Not obligatory, but suggest a fix or reason for the bug -->

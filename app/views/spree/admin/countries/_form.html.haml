@@ -1,0 +1,14 @@
+.row
+  .alpha.four.columns
+    .field
+      = f.label :name, t("spree.name")
+      = f.text_field :name, class: 'fullwidth'
+  .four.columns
+    .field
+      = f.label :iso_name, t("spree.iso_name")
+      = f.text_field :iso_name, class: 'fullwidth'
+  .omega.four.columns
+    .field.checkbox
+      %label
+        = f.check_box :states_required
+        = t("spree.states_required")

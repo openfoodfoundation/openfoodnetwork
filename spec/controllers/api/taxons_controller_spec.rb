@@ -44,9 +44,9 @@ describe Api::TaxonsController do
       api_get :jstree, taxonomy_id: taxonomy.id, id: taxon.id
 
       response = json_response.first
-      response["data"].should eq(taxon2.name)
-      response["attr"].should eq("name" => taxon2.name, "id" => taxon2.id)
-      response["state"].should eq("closed")
+      expect(response["data"]).to eq(taxon2.name)
+      expect(response["attr"]).to eq("name" => taxon2.name, "id" => taxon2.id)
+      expect(response["state"]).to eq("closed")
     end
 
     it "cannot create a new taxon if not an admin" do

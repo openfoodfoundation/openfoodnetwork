@@ -1,0 +1,27 @@
+= render partial: 'spree/admin/shared/configuration_menu'
+
+- content_for :page_title do
+  = t("spree.listing_countries")
+
+%table#listing_countries.index
+  %colgroup
+    %col{style: "width: 35%"}/
+    %col{style: "width: 35%"}/
+    %col{style: "width: 20%"}/
+    %col{style: "width: 10%"}/
+  %thead
+    %tr
+      %th= t("spree.country_name")
+      %th= t("spree.iso_name")
+      %th= t("spree.states_required")
+      %th.actions
+  %tbody
+    - @countries.each do |country|
+      - tr_class = cycle('odd', 'even')
+      - tr_id = spree_dom_id(country)
+      %tr{class: tr_class, id: tr_id}
+        %td= country.name
+        %td= country.iso_name
+        %td.align-center= country.states_required.to_s.titleize
+        %td.actions
+          = link_to_edit country, no_text: true
