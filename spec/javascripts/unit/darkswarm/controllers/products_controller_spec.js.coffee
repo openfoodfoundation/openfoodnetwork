@@ -27,13 +27,6 @@ describe 'ProductsCtrl', ->
   it 'fetches products from Products', ->
     expect(scope.Products.products).toEqual ['testy mctest']
 
-  it "increments the limit up to the number of products", ->
-    scope.limit = 0
-    scope.incrementLimit()
-    expect(scope.limit).toEqual 10
-    scope.incrementLimit()
-    expect(scope.limit).toEqual 10
-
   it "blocks keypresses on code 13", ->
     event =
       keyCode: 13
