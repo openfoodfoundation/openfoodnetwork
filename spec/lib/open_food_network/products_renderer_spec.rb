@@ -6,7 +6,8 @@ module OpenFoodNetwork
     let(:distributor) { create(:distributor_enterprise) }
     let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
     let(:exchange) { order_cycle.exchanges.to_enterprises(distributor).outgoing.first }
-    let(:pr) { ProductsRenderer.new(distributor, order_cycle) }
+    let(:customer) { create(:customer) }
+    let(:pr) { ProductsRenderer.new(distributor, order_cycle, customer) }
 
     describe "sorting" do
       let(:t1) { create(:taxon) }
@@ -89,7 +90,7 @@ module OpenFoodNetwork
       let!(:v2) { create(:variant, product: p, unit_value: 5) } # Not in exchange
       let!(:v3) { create(:variant, product: p, unit_value: 7, inventory_items: [create(:inventory_item, enterprise: hub, visible: true)]) }
       let!(:v4) { create(:variant, product: p, unit_value: 9, inventory_items: [create(:inventory_item, enterprise: hub, visible: false)]) }
-      let(:pr) { ProductsRenderer.new(hub, oc) }
+      let(:pr) { ProductsRenderer.new(hub, oc, customer) }
       let(:variants) { pr.send(:variants_for_shop_by_id) }
 
       it "scopes variants to distribution" do

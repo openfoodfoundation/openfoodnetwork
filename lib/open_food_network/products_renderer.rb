@@ -4,9 +4,10 @@ module OpenFoodNetwork
   class ProductsRenderer
     class NoProducts < RuntimeError; end
 
-    def initialize(distributor, order_cycle, params = {})
+    def initialize(distributor, order_cycle, customer, params = {})
       @distributor = distributor
       @order_cycle = order_cycle
+      @customer = customer
       @params = params
     end
 
@@ -28,7 +29,7 @@ module OpenFoodNetwork
 
     private
 
-    attr_reader :order_cycle, :distributor, :params
+    attr_reader :order_cycle, :distributor, :customer, :params
 
     def products
       return unless order_cycle
@@ -44,7 +45,7 @@ module OpenFoodNetwork
     end
 
     def distributed_products
-      OrderCycleDistributedProducts.new(distributor, order_cycle)
+      OrderCycleDistributedProducts.new(distributor, order_cycle, customer)
     end
 
     def taxon_order
