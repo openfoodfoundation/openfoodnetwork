@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y curl git build-essential software-prope
 # Setup ENV variables
 ENV PATH /usr/local/src/rbenv/shims:/usr/local/src/rbenv/bin:$PATH
 ENV RBENV_ROOT /usr/local/src/rbenv
-ENV RUBY_VERSION 2.1.5
+ENV RUBY_VERSION 2.1.9
 ENV CONFIGURE_OPTS --disable-install-doc
 
 # Rbenv & Ruby part
