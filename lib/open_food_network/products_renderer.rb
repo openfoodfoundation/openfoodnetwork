@@ -4,19 +4,20 @@ module OpenFoodNetwork
   class ProductsRenderer
     class NoProducts < RuntimeError; end
 
-    def initialize(distributor, order_cycle)
+    def initialize(distributor, order_cycle, params = {})
       @distributor = distributor
       @order_cycle = order_cycle
+      @params = params
     end
 
     def products_json
       if products
-        enterprise_fee_calculator = EnterpriseFeeCalculator.new @distributor, @order_cycle
+        enterprise_fee_calculator = EnterpriseFeeCalculator.new distributor, order_cycle
 
         ActiveModel::ArraySerializer.new(products,
                                          each_serializer: Api::ProductSerializer,
-                                         current_order_cycle: @order_cycle,
-                                         current_distributor: @distributor,
+                                         current_order_cycle: order_cycle,
+                                         current_distributor: distributor,
                                          variants: variants_for_shop_by_id,
                                          master_variants: master_variants_for_shop_by_id,
                                          enterprise_fee_calculator: enterprise_fee_calculator,).to_json
@@ -27,25 +28,28 @@ module OpenFoodNetwork
 
     private
 
+    attr_reader :order_cycle, :distributor, :params
+
     def products
-      return unless @order_cycle
+      return unless order_cycle
 
       @products ||= begin
-        scoper = ScopeProductToHub.new(@distributor)
+        scoper = ScopeProductToHub.new(distributor)
 
         distributed_products.products_relation.
           order(taxon_order).
+          ransack(params[:q]).result.page(params[:page] || 1).per(params[:per_page] || 10).
           each { |product| scoper.scope(product) }
       end
     end
 
     def distributed_products
-      OrderCycleDistributedProducts.new(@distributor, @order_cycle)
+      OrderCycleDistributedProducts.new(distributor, order_cycle)
     end
 
     def taxon_order
-      if @distributor.preferred_shopfront_taxon_order.present?
-        @distributor
+      if distributor.preferred_shopfront_taxon_order.present?
+        distributor
           .preferred_shopfront_taxon_order
           .split(",").map { |id| "primary_taxon_id=#{id} DESC" }
           .join(",") + ", name ASC"
@@ -56,7 +60,7 @@ module OpenFoodNetwork
 
     def variants_for_shop
       @variants_for_shop ||= begin
-        scoper = OpenFoodNetwork::ScopeVariantToHub.new(@distributor)
+        scoper = OpenFoodNetwork::ScopeVariantToHub.new(distributor)
 
         distributed_products.variants_relation.
           includes(:default_price, :stock_locations, :product).
