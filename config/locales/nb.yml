@@ -2780,6 +2780,7 @@ nb:
     discount_amount: "Rabattmengde"
     email: Epost
     account_updated: "Konto oppdatert!"
+    email_updated: "Kontoen vil bli oppdatert når den nye epostadressen er bekreftet."
     my_account: "Min konto"
     date: "Dato"
     time: "Tid"
@@ -2928,7 +2929,19 @@ nb:
       products:
         image_upload_error: "Produktbildet ble ikke gjenkjent. Last opp et bilde i PNG- eller JPG-format."
         new:
-          title: 'Nytt produkt'
+          title: "Nytt produkt"
+          new_product: "Nytt produkt"
+          supplier: "Leverandør"
+          product_name: "Produktnavn"
+          units: "Enhetsstørrelse"
+          value: "Verdi"
+          unit_name: "Enhetsnavn"
+          price: "Pris"
+          on_hand: "Tilgjengelig"
+          on_demand: "Ved forespørsel"
+          product_description: "Produktbeskrivelse"
+          image: "Bilde"
+          or: "eller"
         unit_name_placeholder: 'f.eks. bunter'
         index:
           header:
