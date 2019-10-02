@@ -3175,6 +3175,18 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         email_confirmation:
           confirmation_pending: "Email confirmation is pending. We've sent a confirmation email to %{address}."
       variants:
+        index:
+          sku: "SKU"
+          price: "Price"
+          options: "Options"
+          no_results: "No results"
+          to_add_variants_you_must_first_define: "To add variants, you must first define"
+          option_types: "Option Types"
+          option_values: "Option Values"
+          and: "and"
+          new_variant: "New Variant"
+          show_active: "Show Active"
+          show_deleted: "Show Deleted"
         form:
           cost_price: "Cost Price"
           sku: "SKU"
