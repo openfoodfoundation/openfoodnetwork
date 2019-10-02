@@ -44,6 +44,8 @@ Openfoodnetwork::Application.routes.draw do
     resources :order_cycles do
       get :managed, on: :collection
       get :accessible, on: :collection
+
+      get :products, on: :member
     end
 
     resource :status do
