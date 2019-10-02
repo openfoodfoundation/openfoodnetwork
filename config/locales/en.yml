@@ -475,14 +475,14 @@ en:
         import_date: Imported
         upload_an_image: Upload an image
       seo:
-        product_search_keywords: Product Search Keywords
-        product_search_tip: Type words to help search your products in the shops. Use space to separate each keyword.
-        SEO_keywords: SEO Keywords
-        seo_tip: Type words to help search your products in the web. Use space to separate each keyword.
-      search: Search
+        product_search_keywords: "Product Search Keywords"
+        product_search_tip: "Type words to help search your products in the shops. Use space to separate each keyword."
+        SEO_keywords: "SEO Keywords"
+        seo_tip: "Type words to help search your products in the web. Use space to separate each keyword."
+      search: "Search"
       properties:
-        property_name: Property Name
-        inherited_property: Inherited Property
+        property_name: "Property Name"
+        inherited_property: "Inherited Property"
       variants:
         infinity: "Infinity"
         to_order_tip: "Items made to order do not have a set stock level, such as loaves of bread made fresh to order."
@@ -2938,6 +2938,13 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     normal_amount: "Normal Amount"
     discount_amount: "Discount Amount"
 
+    no_images_found: "No Images Found"
+    new_image: "New Image"
+    filename: "Filename"
+    alt_text: "Alternative Text"
+    thumbnail: "Thumbnail"
+    back_to_images_list: "Back To Images List"
+
     # TODO: remove `email` key once we get to Spree 2.0
     email: Email
     # TODO: remove 'account_updated' key once we get to Spree 2.0
@@ -2951,8 +2958,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     zipcode: Postcode
     weight: Weight (per kg)
     error_user_destroy_with_orders: "Users with completed orders may not be deleted"
-    no_images_found: "No Images Found"
-    new_image: "New Image"
     options: "Options"
 
     actions:
@@ -3193,6 +3198,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           cost_price: "Cost Price"
           sku: "SKU"
           price: "Price"
+          display_as: "Display As"
+          display_name: "Display Name"
         autocomplete:
           producer_name: "Producer"
           unit: "Unit"
