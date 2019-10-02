@@ -89,6 +89,10 @@ Spree::Core::Engine.routes.prepend do
       end
     end
 
+    resources :tax_rates
+    resource  :tax_settings
+    resources :tax_categories
+
     resources :zones
     resources :countries do
       resources :states

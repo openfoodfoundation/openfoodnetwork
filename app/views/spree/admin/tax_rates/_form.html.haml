@@ -1,0 +1,28 @@
+%div
+  .alpha.twelve.columns
+    %fieldset.no-border-bottom
+      %legend{align: "center"}= t("spree.general_settings")
+      .alpha.six.columns
+        .field
+          = f.label :name, t("spree.name")
+          = f.text_field :name, class: 'fullwidth'
+        .field
+          = f.label :amount, t("spree.rate")
+          = f.text_field :amount, class: 'fullwidth'
+          %p
+            %em= t("spree.tax_rate_amount_explanation")
+        .field
+          = f.check_box :included_in_price
+          = f.label :included_in_price, t("spree.included_in_price")
+      .omega.six.columns
+        .field
+          = f.label :zone, t("spree.zone")
+          = f.collection_select(:zone_id, @available_zones, :id, :name, {}, {class: 'select2 fullwidth'})
+        .field
+          = f.label :tax_category_id, t("spree.tax_category")
+          = f.collection_select(:tax_category_id, @available_categories,:id, :name, {}, {class: 'select2 fullwidth'})
+        .field
+          = f.check_box :show_rate_in_label
+          = f.label :show_rate_in_label, t("spree.show_rate_in_label")
+  .clear
+  = render partial: 'spree/admin/shared/calculator_fields', locals: { f: f }

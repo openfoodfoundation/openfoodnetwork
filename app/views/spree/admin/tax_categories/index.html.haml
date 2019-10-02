@@ -1,0 +1,38 @@
+= render :partial => 'spree/admin/shared/configuration_menu'
+
+- content_for :page_title do
+  = t("spree.listing_tax_categories")
+
+- content_for :page_actions do
+  %ul.actions.inline-menu
+    %li
+      = button_link_to t("spree.new_tax_category"), new_object_url, :icon => 'icon-plus', :id => 'admin_new_tax_categories_link'
+
+%table#listing_tax_categories.index
+  %colgroup
+    %col{style: "width: 30%"}/
+    %col{style: "width: 40%"}/
+    %col{style: "width: 15%"}/
+    %col{style: "width: 15%"}/
+  %thead
+    %tr{"data-hook" => "tax_header"}
+      %th= t("spree.name")
+      %th= t("spree.description")
+      %th= t("spree.default")
+      %th.actions
+  %tbody
+    - @tax_categories.each do |tax_category|
+      - @edit_url = edit_admin_tax_category_path(tax_category)
+      - @delete_url = admin_tax_category_path(tax_category)
+      - tr_class = cycle('odd', 'even')
+      - tr_id = spree_dom_id(tax_category)
+      %tr{class: tr_class, id: tr_id}
+        %td= tax_category.name
+        %td= tax_category.description
+        %td.align-center= tax_category.is_default.to_s.titleize
+        %td.actions
+          = link_to_edit tax_category, no_text: true
+          = link_to_delete tax_category, no_text: true
+    - if @tax_categories.empty?
+      %tr
+        %td{colspan: "4"}= t("spree.none")
