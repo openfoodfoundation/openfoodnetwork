@@ -246,6 +246,7 @@ de_DE:
   back_to_payments_list: "Zurück zur Zahlungsliste"
   maestro_or_solo_cards: "Maestro / Solo-Karten"
   backordered: "Nachbestellt"
+  on hand: "Verfügbar"
   ship: "Liefern"
   actions:
     create_and_add_another: "Erstellen und weitere hinzufügen"
@@ -1164,7 +1165,7 @@ de_DE:
   menu_4_title: "Gruppen"
   menu_4_url: "/groups"
   menu_5_title: "Über Uns"
-  menu_5_url: "https://about.openfoodnetwork.org.au/"
+  menu_5_url: "https://wp.openfoodnetwork.de/"
   menu_6_title: "Verbinden"
   menu_6_url: "https://openfoodnetwork.org/au/connect/"
   menu_7_title: "Mehr Erfahren"
@@ -2935,7 +2936,19 @@ de_DE:
       products:
         image_upload_error: "Das Produktbild wurde nicht erkannt. Bitte laden Sie ein Bild im PNG- oder JPG-Format hoch."
         new:
-          title: 'Neues Produkt'
+          title: "Neues Produkt"
+          new_product: "Neues Produkt"
+          supplier: "Anbieter"
+          product_name: "Produktname"
+          units: "Einheitsgröße"
+          value: "Wert"
+          unit_name: "Einheitenname"
+          price: "Preis"
+          on_hand: "Verfügbar"
+          on_demand: "Unbegrenzt"
+          product_description: "Produktbeschreibung"
+          image: "Bild"
+          or: "oder"
         unit_name_placeholder: 'z.B. Trauben'
         index:
           header:
