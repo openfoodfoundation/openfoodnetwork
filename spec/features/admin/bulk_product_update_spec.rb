@@ -516,11 +516,16 @@ feature '
       it "shows an edit button for products, which takes the user to the standard edit page for that product" do
         expect(page).to have_selector "a.edit-product", count: 2
 
-        within "tr#p_#{p1.id}" do
-          find("a.edit-product").click
+        new_window = window_opened_by do 
+          within "tr#p_#{p1.id}" do
+            find("a.edit-product").click
+          end
         end
 
-        expect(URI.parse(current_url).path).to eq "/admin/products/#{p1.permalink}/edit"
+        within_window new_window do
+          expect(URI.parse(current_url).path).to eq "/admin/products/#{p1.permalink}/edit"
+          page.execute_script('window.close()')
+        end
       end
 
       it "shows an edit button for variants, which takes the user to the standard edit page for that variant" do
@@ -529,11 +534,16 @@ feature '
 
         expect(page).to have_selector "a.edit-variant", count: 2
 
-        within "tr#v_#{v1.id}" do
-          find("a.edit-variant").click
+        new_window = window_opened_by do 
+          within "tr#v_#{v1.id}" do
+            find("a.edit-variant").click
+          end
         end
 
-        expect(URI.parse(current_url).path).to eq "/admin/products/#{v1.product.permalink}/variants/#{v1.id}/edit"
+        within_window new_window do
+          expect(URI.parse(current_url).path).to eq "/admin/products/#{v1.product.permalink}/variants/#{v1.id}/edit"
+          page.execute_script('window.close()')
+        end
       end
     end
 
