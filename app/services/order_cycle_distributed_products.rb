@@ -1,41 +1,76 @@
-# Finds valid products distributed by a particular distributor in an order cycle
-#
-# If a product without variants is added to an order cycle, and then some
-# variants are added to that product, but not the order cycle, then the master
-# variant should not available for customers to purchase. This class filters
-# out such products so that the customer cannot purchase them.
+# Returns a (paginatable) AR object for the products or variants in stock for a given shop and OC.
+# The stock-checking includes on_demand and stock level overrides from variant_overrides.
+
 class OrderCycleDistributedProducts
-  def initialize(order_cycle, distributor)
-    @order_cycle = order_cycle
+  def initialize(distributor, order_cycle)
     @distributor = distributor
+    @order_cycle = order_cycle
   end
 
-  # Returns an ActiveRecord relation without invalid products. Check
-  # #valid_products_distributed_by for details
-  #
-  # @return [ActiveRecord::Relation<Spree::Product>]
-  def relation
-    variants = order_cycle.variants_distributed_by(distributor)
-    products = variants.map(&:product).uniq
+  def products_relation
+    Spree::Product.where(id: stocked_products)
+  end
 
-    valid_products = products.reject do |product|
-      product_has_only_obsolete_master_in_distribution?(product, variants)
-    end
-    product_ids = valid_products.map(&:id)
-
-    Spree::Product.where(id: product_ids)
+  def variants_relation
+    @order_cycle.
+      variants_distributed_by(@distributor).
+      merge(stocked_variants_and_overrides)
   end
 
   private
 
-  attr_reader :order_cycle, :distributor
+  def stocked_products
+    @order_cycle.
+      variants_distributed_by(@distributor).
+      merge(stocked_variants_and_overrides).
+      select("DISTINCT spree_variants.product_id")
+  end
 
-  # If a product without variants is added to an order cycle, and then some variants are added
-  # to that product, but not the order cycle, then the master variant should not available for
-  # customers to purchase.
-  def product_has_only_obsolete_master_in_distribution?(product, distributed_variants)
-    product.has_variants? &&
-      distributed_variants.include?(product.master) &&
-      (product.variants & distributed_variants).empty?
+  def stocked_variants_and_overrides
+    Spree::Variant.
+      joins("LEFT OUTER JOIN variant_overrides ON variant_overrides.variant_id = spree_variants.id
+            AND variant_overrides.hub_id = #{@distributor.id}").
+      joins(:stock_items).
+      where(query_stock_with_overrides)
+  end
+
+  def query_stock_with_overrides
+    "( #{variant_not_overriden} AND ( #{variant_on_demand} OR #{variant_in_stock} ) )
+      OR ( #{variant_overriden} AND ( #{override_on_demand} OR #{override_in_stock} ) )
+      OR ( #{variant_overriden} AND ( #{override_on_demand_null} AND #{variant_on_demand} ) )
+      OR ( #{variant_overriden} AND ( #{override_on_demand_null}
+                                      AND #{variant_not_on_demand} AND #{variant_in_stock} ) )"
+  end
+
+  def variant_not_overriden
+    "variant_overrides.id IS NULL"
+  end
+
+  def variant_overriden
+    "variant_overrides.id IS NOT NULL"
+  end
+
+  def variant_in_stock
+    "spree_stock_items.count_on_hand > 0"
+  end
+
+  def variant_on_demand
+    "spree_stock_items.backorderable IS TRUE"
+  end
+
+  def variant_not_on_demand
+    "spree_stock_items.backorderable IS FALSE"
+  end
+
+  def override_on_demand
+    "variant_overrides.on_demand IS TRUE"
+  end
+
+  def override_in_stock
+    "variant_overrides.count_on_hand > 0"
+  end
+
+  def override_on_demand_null
+    "variant_overrides.on_demand IS NULL"
   end
 end

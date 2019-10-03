@@ -1,93 +1,90 @@
 require 'spec_helper'
 
 describe OrderCycleDistributedProducts do
-  let(:order_cycle) { OrderCycle.new }
-  let(:distributor) { instance_double(Enterprise) }
-
-  it 'returns valid products but not invalid products' do
-    valid_product = create(:product)
-    invalid_product = create(:product)
-    valid_variant = valid_product.variants.first
-
-    distributor = create(:distributor_enterprise)
-    order_cycle = create(
-      :simple_order_cycle,
-      distributors: [distributor],
-      variants: [valid_variant, invalid_product.master]
-    )
-
-    distributed_valid_products = described_class.new(order_cycle, distributor)
-
-    expect(distributed_valid_products.relation).to eq([valid_product])
-  end
-
-  context 'when the product has only an obsolete master variant in a distribution' do
-    let(:master) { create(:variant, product: product) }
-    let(:product) { create(:product, variants: [build(:variant)]) }
-    let(:unassociated_variant) { create(:variant) }
-    let(:distributed_variants) { [product.master, unassociated_variant] }
-
-    before do
-      allow(order_cycle)
-        .to receive(:variants_distributed_by).with(distributor) { distributed_variants }
+  describe "#products_relation" do
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:product) { create(:product) }
+    let(:variant) { product.variants.first }
+    let(:order_cycle) do
+      create(:simple_order_cycle, distributors: [distributor], variants: [variant])
     end
 
-    it 'does not return the obsolete product' do
-      distributed_valid_products = described_class.new(order_cycle, distributor)
-      expect(distributed_valid_products.relation).to eq([unassociated_variant.product])
-    end
-  end
-
-  context "when the product doesn't have variants" do
-    let(:master) { build(:variant) }
-    let(:product) { create(:product, master: master) }
-    let(:distributed_variants) { [master] }
-
-    before do
-      allow(product).to receive(:has_variants?) { false }
-      allow(order_cycle)
-        .to receive(:variants_distributed_by).with(distributor) { distributed_variants }
+    describe "product distributed by distributor in the OC" do
+      it "returns products" do
+        expect(described_class.new(distributor, order_cycle).products_relation).to eq([product])
+      end
     end
 
-    it 'returns the product' do
-      distributed_valid_products = described_class.new(order_cycle, distributor)
-      expect(distributed_valid_products.relation).to eq([product])
-    end
-  end
+    describe "product distributed by distributor in another OC" do
+      let(:reference_variant) { create(:product).variants.first }
+      let(:order_cycle) do
+        create(:simple_order_cycle, distributors: [distributor], variants: [reference_variant])
+      end
+      let(:another_order_cycle) do
+        create(:simple_order_cycle, distributors: [distributor], variants: [variant])
+      end
 
-  context "when the master isn't distributed" do
-    let(:master) { build(:variant) }
-    let(:variant) { build(:variant) }
-    let(:product) { create(:product, master: master, variants: [variant]) }
-    let(:distributed_variants) { [variant] }
-
-    before do
-      allow(product).to receive(:has_variants?) { true }
-      allow(order_cycle)
-        .to receive(:variants_distributed_by).with(distributor) { distributed_variants }
+      it "does not return product" do
+        expect(described_class.new(distributor, order_cycle).products_relation).to_not include product
+      end
     end
 
-    it 'returns the product' do
-      distributed_valid_products = described_class.new(order_cycle, distributor)
-      expect(distributed_valid_products.relation).to eq([product])
+    describe "product distributed by another distributor in the OC" do
+      let(:another_distributor) { create(:distributor_enterprise) }
+      let(:order_cycle) do
+        create(:simple_order_cycle, distributors: [another_distributor], variants: [variant])
+      end
+
+      it "does not return product" do
+        expect(described_class.new(distributor, order_cycle).products_relation).to_not include product
+      end
+    end
+
+    describe "filtering products that are out of stock" do
+      context "with regular variants" do
+        it "returns product when variant is in stock" do
+          expect(described_class.new(distributor, order_cycle).products_relation).to include product
+        end
+
+        it "does not return product when variant is out of stock" do
+          variant.update_attribute(:on_hand, 0)
+          expect(described_class.new(distributor, order_cycle).products_relation).to_not include product
+        end
+      end
+
+      context "with variant overrides" do
+        let!(:override) { create(:variant_override, hub: distributor, variant: variant, count_on_hand: 0) }
+
+        it "does not return product when an override is out of stock" do
+          expect(described_class.new(distributor, order_cycle).products_relation).to_not include product
+        end
+
+        it "returns product when an override is in stock" do
+          variant.update_attribute(:on_hand, 0)
+          override.update_attribute(:count_on_hand, 10)
+          expect(described_class.new(distributor, order_cycle).products_relation).to include product
+        end
+      end
     end
   end
 
-  context 'when the product has the master and other variants distributed' do
-    let(:master) { build(:variant) }
-    let(:variant) { build(:variant) }
-    let(:product) { create(:product, master: master, variants: [variant]) }
-    let(:distributed_variants) { [master, variant] }
+  describe "#variants_relation" do
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:oc) { create(:simple_order_cycle, distributors: [distributor], variants: [v1, v3]) }
+    let(:product) { create(:simple_product) }
+    let!(:v1) { create(:variant, product: product) }
+    let!(:v2) { create(:variant, product: product) }
+    let!(:v3) { create(:variant, product: product) }
+    let!(:vo) { create(:variant_override, hub: distributor, variant_id: v3.id, count_on_hand: 0) }
+    let(:variants) { described_class.new(distributor, oc).variants_relation }
 
-    before do
-      allow(product).to receive(:has_variants?) { true }
-      allow(order_cycle)
-        .to receive(:variants_distributed_by).with(distributor) { distributed_variants }
+    it "returns variants in the oc" do
+      expect(variants).to include v1
+      expect(variants).to_not include v2
     end
 
-    it 'returns the product' do
-      distributed_valid_products = described_class.new(order_cycle, distributor)
-      expect(distributed_valid_products.relation).to eq([product])
+    it "does not return variants where override is out of stock" do
+      expect(variants).to_not include v3
     end
   end
 end
