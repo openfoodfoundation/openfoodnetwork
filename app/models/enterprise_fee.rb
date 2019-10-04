@@ -10,10 +10,6 @@ class EnterpriseFee < ActiveRecord::Base
   has_many :exchange_fees, dependent: :destroy
   has_many :exchanges, through: :exchange_fees
 
-  after_save :refresh_products_cache
-  # After destroy, the products cache is refreshed via the after_destroy hook for
-  # coordinator_fees and exchange_fees
-
   attr_accessible :enterprise_id, :fee_type, :name, :tax_category_id, :calculator_type, :inherits_tax_category
 
   FEE_TYPES = %w(packing transport admin sales fundraising).freeze
@@ -58,9 +54,5 @@ class EnterpriseFee < ActiveRecord::Base
       self.tax_category_id = nil if inherits_tax_category?
     end
     true
-  end
-
-  def refresh_products_cache
-    OpenFoodNetwork::ProductsCache.enterprise_fee_changed self
   end
 end

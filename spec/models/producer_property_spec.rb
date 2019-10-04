@@ -71,17 +71,4 @@ describe ProducerProperty do
       end
     end
   end
-
-  describe "products caching" do
-    it "refreshes the products cache on change" do
-      expect(OpenFoodNetwork::ProductsCache).to receive(:producer_property_changed).with(pp)
-      pp.value = 123
-      pp.save
-    end
-
-    it "refreshes the products cache on destruction" do
-      expect(OpenFoodNetwork::ProductsCache).to receive(:producer_property_destroyed).with(pp)
-      pp.destroy
-    end
-  end
 end

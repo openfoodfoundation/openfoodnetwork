@@ -172,20 +172,6 @@ module Spree
     describe "callbacks" do
       let(:product) { create(:simple_product) }
 
-      it "refreshes the products cache on save" do
-        expect(OpenFoodNetwork::ProductsCache).to receive(:product_changed).with(product)
-        product.name = 'asdf'
-        product.save
-      end
-
-      it "refreshes the products cache on delete" do
-        expect(OpenFoodNetwork::ProductsCache).to receive(:product_deleted).with(product)
-        product.destroy
-      end
-
-      # On destroy, all distributed variants are refreshed by a Variant around_destroy
-      # callback, so we don't need to do anything on the product model.
-
       describe "touching affected enterprises when the product is deleted" do
         let(:product) { create(:simple_product) }
         let(:supplier) { product.supplier }

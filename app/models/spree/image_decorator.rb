@@ -1,7 +1,4 @@
 Spree::Image.class_eval do
-  after_save :refresh_products_cache
-  after_destroy :refresh_products_cache
-
   # Spree stores attachent definitions in JSON. This converts the style name and format to
   # strings. However, when paperclip encounters these, it doesn't recognise the format.
   # Here we solve that problem by converting format and style name to symbols.
@@ -23,10 +20,4 @@ Spree::Image.class_eval do
   end
 
   reformat_styles
-
-  private
-
-  def refresh_products_cache
-    viewable.try :refresh_products_cache
-  end
 end

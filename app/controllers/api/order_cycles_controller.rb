@@ -1,3 +1,5 @@
+require 'open_food_network/products_renderer'
+
 module Api
   class OrderCyclesController < BaseController
     include EnterprisesHelper

@@ -1,5 +1,3 @@
-require 'open_food_network/products_cache'
-
 class InventoryItem < ActiveRecord::Base
   attr_accessible :enterprise, :enterprise_id, :variant, :variant_id, :visible
 
@@ -13,12 +11,4 @@ class InventoryItem < ActiveRecord::Base
 
   scope :visible, -> { where(visible: true) }
   scope :hidden, -> { where(visible: false) }
-
-  after_save :refresh_products_cache
-
-  private
-
-  def refresh_products_cache
-    OpenFoodNetwork::ProductsCache.inventory_item_changed self
-  end
 end
