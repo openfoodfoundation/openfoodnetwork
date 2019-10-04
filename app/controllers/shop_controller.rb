@@ -9,19 +9,6 @@ class ShopController < BaseController
     redirect_to main_app.enterprise_shop_path(current_distributor)
   end
 
-  def products
-    renderer = OpenFoodNetwork::CachedProductsRenderer.new(current_distributor,
-                                                           current_order_cycle)
-
-    # If we add any more filtering logic, we should probably
-    # move it all to a lib class like 'CachedProductsFilterer'
-    products_json = filter(renderer.products_json)
-
-    render json: products_json
-  rescue OpenFoodNetwork::CachedProductsRenderer::NoProducts
-    render status: :not_found, json: ''
-  end
-
   def order_cycle
     if request.post?
       if oc = OrderCycle.with_distributor(@distributor).active.find_by_id(params[:order_cycle_id])
@@ -38,28 +25,5 @@ class ShopController < BaseController
 
   def changeable_orders_alert
     render layout: false
-  end
-
-  private
-
-  def filtered_json(products_json)
-    if applicator.rules.any?
-      filter(products_json)
-    else
-      products_json
-    end
-  end
-
-  def filter(products_json)
-    products_hash = JSON.parse(products_json)
-    applicator.filter!(products_hash)
-    JSON.unparse(products_hash)
-  end
-
-  def applicator
-    return @applicator unless @applicator.nil?
-    @applicator = OpenFoodNetwork::TagRuleApplicator.new(current_distributor,
-                                                         "FilterProducts",
-                                                         current_customer.andand.tag_list)
   end
 end
