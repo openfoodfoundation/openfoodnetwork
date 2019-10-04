@@ -1,4 +1,4 @@
-Darkswarm.factory 'Products', (OrderCycleResource, OrderCycle, Shopfront, Dereferencer, Taxons, Properties, Cart, Variants) ->
+Darkswarm.factory 'Products', (OrderCycleResource, OrderCycle, Shopfront, currentHub, Dereferencer, Taxons, Properties, Cart, Variants) ->
   new class Products
     constructor: ->
       @update()
@@ -15,7 +15,8 @@ Darkswarm.factory 'Products', (OrderCycleResource, OrderCycle, Shopfront, Derefe
         @loading = false
         return
 
-      params['id'] = OrderCycle.order_cycle.order_cycle_id if params['id'] == undefined
+      params['id'] = order_cycle_id
+      params['distributor'] = currentHub.id
 
       OrderCycleResource.products params, (data)=>
         @products = [] unless load_more

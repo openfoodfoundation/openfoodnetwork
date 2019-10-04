@@ -8,8 +8,12 @@ module Api
     skip_authorization_check
 
     def products
-      products = OpenFoodNetwork::ProductsRenderer.new(current_distributor, current_order_cycle, params).products_json
-      # products = ::ProductsFilterer.new(current_distributor, current_customer, products_json).call # TBD
+      products = OpenFoodNetwork::ProductsRenderer.new(
+        distributor,
+        order_cycle,
+        customer,
+        params
+      ).products_json
 
       render json: products
     rescue OpenFoodNetwork::ProductsRenderer::NoProducts

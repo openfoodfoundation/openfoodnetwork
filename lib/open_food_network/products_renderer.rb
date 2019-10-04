@@ -12,7 +12,7 @@ module OpenFoodNetwork
     end
 
     def products_json
-      if products
+      if order_cycle && distributor && products
         enterprise_fee_calculator = EnterpriseFeeCalculator.new distributor, order_cycle
 
         ActiveModel::ArraySerializer.new(products,
