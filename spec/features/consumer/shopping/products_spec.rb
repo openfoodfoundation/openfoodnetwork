@@ -32,7 +32,9 @@ feature "As a consumer I want to view products", js: true do
         visit shop_path
         select "monday", from: "order_cycle_id"
 
+        expect(page).to have_content product.name
         click_link product.name
+
         expect(page).to have_selector '.reveal-modal'
         modal_should_be_open_for product
 
@@ -48,7 +50,9 @@ feature "As a consumer I want to view products", js: true do
         visit shop_path
         select "monday", from: "order_cycle_id"
 
+        expect(page).to have_content product.name
         click_link product.name
+
         expect(page).to have_selector '.reveal-modal'
         modal_should_be_open_for product
 
