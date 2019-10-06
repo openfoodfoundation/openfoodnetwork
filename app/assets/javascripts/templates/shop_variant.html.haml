@@ -17,7 +17,7 @@
   .small-4.medium-2.large-2.columns.variant-price
     .table-cell.price
       %i.ofn-i_009-close
-      {{  ::variant.price_with_fees | localizeCurrency }}
+      {{ variant.price_with_fees | localizeCurrency }}
 
       -# Now in a template in app/assets/javascripts/templates !
       %price-breakdown{"price-breakdown" => "_", variant: "variant",
