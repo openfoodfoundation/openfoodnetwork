@@ -214,10 +214,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
         fill_in "search", with: "Meer"           # For product named "Meercats"
         expect(page).to have_content product2.name
         expect(page).not_to have_content product.name
-
-        fill_in "search", with: "Dome"           # For product with meta_keywords "Domestic"
-        expect(page).to have_content product.name
-        expect(page).not_to have_content product2.name
       end
 
       it "returns search results for products where the search term matches one of the product's variant names" do

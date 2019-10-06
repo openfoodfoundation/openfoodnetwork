@@ -53,7 +53,7 @@ Darkswarm.controller "ProductsCtrl", ($scope, $filter, $rootScope, Products, Ord
       id: $scope.order_cycle.order_cycle_id,
       page: $scope.page,
       per_page: $scope.per_page,
-      'q[name_or_supplier_name_cont]': $scope.query,
+      'q[name_or_meta_keywords_or_supplier_name_cont]': $scope.query,
       'q[properites_in_any][]': $scope.activeProperties,
       'q[primary_taxon_id_in_any][]': $scope.activeTaxons
     }
@@ -64,7 +64,7 @@ Darkswarm.controller "ProductsCtrl", ($scope, $filter, $rootScope, Products, Ord
       id: $scope.order_cycle.order_cycle_id,
       page: $scope.page + 1,
       per_page: $scope.per_page,
-      'q[name_or_supplier_name_cont]': $scope.query,
+      'q[name_or_meta_keywords_or_supplier_name_cont]': $scope.query,
       'q[properites_in_any][]': $scope.activeProperties,
       'q[primary_taxon_id_in_any][]': $scope.activeTaxons
     }
