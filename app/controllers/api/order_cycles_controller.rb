@@ -1,5 +1,3 @@
-require 'open_food_network/products_renderer'
-
 module Api
   class OrderCyclesController < BaseController
     include EnterprisesHelper
@@ -8,7 +6,7 @@ module Api
     skip_authorization_check
 
     def products
-      products = OpenFoodNetwork::ProductsRenderer.new(
+      products = ProductsRenderer.new(
         distributor,
         order_cycle,
         customer,
@@ -16,7 +14,7 @@ module Api
       ).products_json
 
       render json: products
-    rescue OpenFoodNetwork::ProductsRenderer::NoProducts
+    rescue ProductsRenderer::NoProducts
       render status: :not_found, json: ''
     end
 
