@@ -6,9 +6,9 @@ include Spree::ReportsHelper
 module OpenFoodNetwork
   class OrdersAndFulfillmentsReport
     attr_reader :params
-    def initialize(user, params = {}, render_table = false)
+    def initialize(permissions, params = {}, render_table = false)
       @params = params
-      @user = user
+      @permissions = permissions
       @render_table = render_table
     end
 
@@ -288,6 +288,8 @@ module OpenFoodNetwork
 
     private
 
+    attr_reader :permissions
+
     def supplier_name
       proc { |line_items| line_items.first.variant.product.supplier.name }
     end
@@ -302,11 +304,6 @@ module OpenFoodNetwork
 
     def line_items_name
       proc { |line_items| line_items.first.variant.full_name }
-    end
-
-    def permissions
-      return @permissions unless @permissions.nil?
-      @permissions = OpenFoodNetwork::Permissions.new(@user)
     end
 
     def total_units(line_items)
