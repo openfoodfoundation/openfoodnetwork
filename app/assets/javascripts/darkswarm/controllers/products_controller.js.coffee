@@ -8,8 +8,8 @@ Darkswarm.controller "ProductsCtrl", ($scope, $filter, $rootScope, Products, Ord
   $scope.page = 1
   $scope.per_page = 10
   $scope.order_cycle = OrderCycle.order_cycle
-  $scope.supplied_taxons = {}
-  $scope.supplied_properties = {}
+  $scope.supplied_taxons = null
+  $scope.supplied_properties = null
 
   $rootScope.$on "orderCycleSelected", ->
     $scope.update_filters()
@@ -20,18 +20,17 @@ Darkswarm.controller "ProductsCtrl", ($scope, $filter, $rootScope, Products, Ord
 
     return unless order_cycle_id
 
-    $scope.supplied_taxons = {}
-    $scope.supplied_properties = {}
-
     params = {
       id: order_cycle_id,
       distributor: currentHub.id
     }
     OrderCycleResource.taxons params, (data)=>
+      $scope.supplied_taxons = {}
       data.map( (taxon) ->
         $scope.supplied_taxons[taxon.id] = Taxons.taxons_by_id[taxon.id]
       )
     OrderCycleResource.properties params, (data)=>
+      $scope.supplied_properties = {}
       data.map( (property) ->
         $scope.supplied_properties[property.id] = Properties.properties_by_id[property.id]
       )
