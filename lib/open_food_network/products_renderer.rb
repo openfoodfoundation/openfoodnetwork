@@ -35,13 +35,18 @@ module OpenFoodNetwork
       return unless order_cycle
 
       @products ||= begin
-        scoper = ScopeProductToHub.new(distributor)
+        results = distributed_products.products_relation.order(taxon_order)
 
-        distributed_products.products_relation.
-          order(taxon_order).
-          ransack(params[:q]).result.page(params[:page] || 1).per(params[:per_page] || 10).
-          each { |product| scoper.scope(product) }
+        filter_and_paginate(results).each { |product| product_scoper.scope(product) }
       end
+    end
+
+    def product_scoper
+      ScopeProductToHub.new(distributor)
+    end
+
+    def filter_and_paginate(query)
+      query.ransack(params[:q]).result.page(params[:page] || 1).per(params[:per_page] || 10)
     end
 
     def distributed_products
