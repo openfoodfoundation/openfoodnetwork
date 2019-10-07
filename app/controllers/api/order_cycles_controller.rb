@@ -10,7 +10,7 @@ module Api
         distributor,
         order_cycle,
         customer,
-        params
+        params.slice(:q, :page, :per_page)
       ).products_json
 
       render json: products

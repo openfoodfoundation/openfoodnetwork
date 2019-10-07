@@ -5,11 +5,11 @@ class ProductsRenderer
   DEFAULT_PAGE = 1
   DEFAULT_PER_PAGE = 10
 
-  def initialize(distributor, order_cycle, customer, params = {})
+  def initialize(distributor, order_cycle, customer, args = {})
     @distributor = distributor
     @order_cycle = order_cycle
     @customer = customer
-    @params = params
+    @args = args
   end
 
   def products_json
@@ -26,7 +26,7 @@ class ProductsRenderer
 
   private
 
-  attr_reader :order_cycle, :distributor, :customer, :params
+  attr_reader :order_cycle, :distributor, :customer, :args
 
   def products
     return unless order_cycle
@@ -49,10 +49,10 @@ class ProductsRenderer
 
   def filter_and_paginate(query)
     query.
-      ransack(params[:q]).
+      ransack(args[:q]).
       result.
-      page(params[:page] || DEFAULT_PAGE).
-      per(params[:per_page] || DEFAULT_PER_PAGE)
+      page(args[:page] || DEFAULT_PAGE).
+      per(args[:per_page] || DEFAULT_PER_PAGE)
   end
 
   def distributed_products
