@@ -1,8 +1,7 @@
 module OpenFoodNetwork
   class OrdersAndFulfillmentsReport
     class DefaultReport
-      delegate :line_item_name, :find_variant, :supplier_name, :product_name,
-               :line_items_name, to: :context
+      delegate :line_item_name, :supplier_name, :product_name, :line_items_name, to: :context
 
       def initialize(context)
         @context = context
@@ -25,11 +24,11 @@ module OpenFoodNetwork
       def rules
         [
           {
-            group_by: proc { |line_item| find_variant(line_item.variant_id).product.supplier },
+            group_by: proc { |line_item| line_item.variant.product.supplier },
             sort_by: proc { |supplier| supplier.name }
           },
           {
-            group_by: proc { |line_item| find_variant(line_item.variant_id).product },
+            group_by: proc { |line_item| line_item.variant.product },
             sort_by: proc { |product| product.name }
           },
           {
