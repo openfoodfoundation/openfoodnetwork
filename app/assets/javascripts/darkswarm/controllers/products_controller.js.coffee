@@ -46,27 +46,21 @@ Darkswarm.controller "ProductsCtrl", ($scope, $filter, $rootScope, Products, Ord
 
   $scope.loadProducts = ->
     $scope.page = 1
-    params = {
-      id: $scope.order_cycle.order_cycle_id,
-      page: $scope.page,
-      per_page: $scope.per_page,
-      'q[name_or_meta_keywords_or_supplier_name_cont]': $scope.query,
-      'q[properites_in_any][]': $scope.activeProperties,
-      'q[primary_taxon_id_in_any][]': $scope.activeTaxons
-    }
-    Products.update(params)
+    Products.update($scope.queryParams())
 
   $scope.loadMoreProducts = ->
-    params = {
+    Products.update($scope.queryParams($scope.page + 1), true)
+    $scope.page += 1
+
+  $scope.queryParams = (page = null) ->
+    {
       id: $scope.order_cycle.order_cycle_id,
-      page: $scope.page + 1,
+      page: page || $scope.page,
       per_page: $scope.per_page,
       'q[name_or_meta_keywords_or_supplier_name_cont]': $scope.query,
       'q[properites_in_any][]': $scope.activeProperties,
       'q[primary_taxon_id_in_any][]': $scope.activeTaxons
     }
-    Products.update(params, true)
-    $scope.page += 1
 
   $scope.searchKeypress = (e)->
     code = e.keyCode || e.which
