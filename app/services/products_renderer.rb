@@ -34,7 +34,8 @@ class ProductsRenderer
     @products ||= begin
       results = distributed_products.products_relation.order(taxon_order)
 
-      filter_and_paginate(results).each { |product| product_scoper.scope(product) }
+      filter_and_paginate(results).
+        each { |product| product_scoper.scope(product) } # Scope results with variant_overrides
     end
   end
 
@@ -76,7 +77,7 @@ class ProductsRenderer
       distributed_products.variants_relation.
         includes(:default_price, :stock_locations, :product).
         where(product_id: products).
-        each { |v| scoper.scope(v) }
+        each { |v| scoper.scope(v) } # Scope results with variant_overrides
     end
   end
 
