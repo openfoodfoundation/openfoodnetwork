@@ -1309,7 +1309,7 @@ nb:
   brandstory_part4: "Det fungerer overalt. Det forandrer alt."
   brandstory_part5_strong: "Vi kaller det Open Food Network."
   brandstory_part6: "Alle er vi glad i mat. Nå kan vi elske vårt matsystem også."
-  learn_body: "See på modeller, historier og ressurser for å støtte deg å utvikle en god mat bedrift eller organisasjon. Finne opplæring, arrangement og andre muligheter til å lære fra andre."
+  learn_body: "Se på modeller, historier og ressurser for å støtte deg å utvikle en god mat bedrift eller organisasjon. Finne opplæring, arrangement og andre muligheter til å lære fra andre."
   learn_cta: "Bli Inspirert"
   connect_body: "Søk i vår katalog av produsenter, hubs og grupper for å finne god mat nær deg. Vise din bedrift eller organisasjon på OFN slik at kjøpere kan finne deg. Bli med i fellesskapet for å få råd og løse problemer sammen."
   connect_cta: "Utforske"
@@ -2780,6 +2780,7 @@ nb:
     discount_amount: "Rabattmengde"
     email: Epost
     account_updated: "Konto oppdatert!"
+    email_updated: "Kontoen vil bli oppdatert når den nye epostadressen er bekreftet."
     my_account: "Min konto"
     date: "Dato"
     time: "Tid"
@@ -2928,7 +2929,19 @@ nb:
       products:
         image_upload_error: "Produktbildet ble ikke gjenkjent. Last opp et bilde i PNG- eller JPG-format."
         new:
-          title: 'Nytt produkt'
+          title: "Nytt produkt"
+          new_product: "Nytt produkt"
+          supplier: "Leverandør"
+          product_name: "Produktnavn"
+          units: "Enhetsstørrelse"
+          value: "Verdi"
+          unit_name: "Enhetsnavn"
+          price: "Pris"
+          on_hand: "Tilgjengelig"
+          on_demand: "Ved forespørsel"
+          product_description: "Produktbeskrivelse"
+          image: "Bilde"
+          or: "eller"
         unit_name_placeholder: 'f.eks. bunter'
         index:
           header:

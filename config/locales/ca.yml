@@ -246,6 +246,7 @@ ca:
   back_to_payments_list: "Torna a la llista de pagaments"
   maestro_or_solo_cards: "Targetes Maestro/Solo"
   backordered: "Reabastit"
+  on hand: "Disponibles"
   ship: "Enviament"
   actions:
     create_and_add_another: "Crea i afegeix-ne una altra"
@@ -2786,6 +2787,7 @@ ca:
     discount_amount: "Import de descompte"
     email: Correu electrònic
     account_updated: "Compte actualitzat!"
+    email_updated: "El compte s’actualitzarà un cop es confirmi el nou correu electrònic."
     my_account: "El meu compte"
     date: "Data"
     time: "Hora"
@@ -2934,7 +2936,19 @@ ca:
       products:
         image_upload_error: "No s'ha reconegut la imatge del producte. Carregueu una imatge en format PNG o JPG."
         new:
-          title: 'Nou producte'
+          title: "Nou producte"
+          new_product: "Nou producte"
+          supplier: "Proveïdora"
+          product_name: "Nom del producte"
+          units: "Mida d'unitat"
+          value: "Valor"
+          unit_name: "Nom de la unitat"
+          price: "Preu"
+          on_hand: "Disponibles"
+          on_demand: "Sota demanda"
+          product_description: "Descripció del producte"
+          image: "Imatge"
+          or: "o"
         unit_name_placeholder: 'per exemple: manat'
         index:
           header:

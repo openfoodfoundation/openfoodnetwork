@@ -246,6 +246,7 @@ es:
   back_to_payments_list: "Volver a la lista de pagos"
   maestro_or_solo_cards: "Tarjetas Maestro/Solo"
   backordered: "Reabastecido"
+  on hand: "Disponibles"
   ship: "Envío"
   actions:
     create_and_add_another: "Crear y agregar otro"
@@ -2787,6 +2788,7 @@ es:
     discount_amount: "Importe de descuento"
     email: Email
     account_updated: "Cuenta actualizada!"
+    email_updated: "La cuenta se actualizará una vez que se confirme el nuevo correo electrónico."
     my_account: "Mi cuenta"
     date: "Fecha"
     time: "Hora"
@@ -2935,7 +2937,19 @@ es:
       products:
         image_upload_error: "La imagen del producto no fue reconocida. Por favor, cargue una imagen en formato PNG o JPG."
         new:
-          title: 'Nuevo producto'
+          title: "Nuevo producto"
+          new_product: "Nuevo producto"
+          supplier: "Proveedora"
+          product_name: "nombre del producto"
+          units: "Unidad de medida"
+          value: "Valor"
+          unit_name: "Nombre de la unidad"
+          price: "Precio"
+          on_hand: "Disponibles"
+          on_demand: "Bajo demanda"
+          product_description: "Descripción del producto"
+          image: "Imagen"
+          or: "o"
         unit_name_placeholder: 'ej. manojos'
         index:
           header:

@@ -2781,6 +2781,7 @@ en_NZ:
     discount_amount: "Discount Amount"
     email: Email
     account_updated: "Account updated!"
+    email_updated: "The account will be updated once the new email is confirmed."
     my_account: "My account"
     date: "Date"
     time: "Time"
@@ -2929,7 +2930,19 @@ en_NZ:
       products:
         image_upload_error: "The product image was not recognised. Please upload an image in PNG or JPG format."
         new:
-          title: 'New Product'
+          title: "New Product"
+          new_product: "New Product"
+          supplier: "Supplier"
+          product_name: "Product Name"
+          units: "Unit Size"
+          value: "Value"
+          unit_name: "Unit name"
+          price: "Price"
+          on_hand: "On Hand"
+          on_demand: "On Demand"
+          product_description: "Product Description"
+          image: "Image"
+          or: "or"
         unit_name_placeholder: 'eg. bunches'
         index:
           header:
