@@ -1,18 +1,17 @@
 %h3
-  = "#{t(:email_welcome)}!"
+  = "#{t(".email_welcome")}!"
 %p.lead
   %strong
     = @enterprise.name
-  = "#{t(:email_registered)} #{ Spree::Config.site_name }!"
+  = "#{t(".email_registered")} #{ Spree::Config.site_name }!"
 
 %p
-  = t :email_userguide_html, link: link_to(t(:userguide), ContentConfig.user_guide_link)
+  = t(".email_userguide_html", link: link_to(t(".userguide"), ContentConfig.user_guide_link))
+%p
+  = t(".email_admin_html", link: link_to(t(".admin_panel"), spree.admin_url))
 
 %p
-  = t :email_admin_html, link: link_to(t(:admin_panel), spree.admin_url)
-
-%p
-  = t :email_community_html, link: link_to(t(:join_community), ContentConfig.community_forum_url)
+  = t(".email_community_html", link: link_to(t(".join_community"), ContentConfig.community_forum_url))
 
 = render 'shared/mailers/signoff'
 
