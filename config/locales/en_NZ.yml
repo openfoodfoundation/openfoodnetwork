@@ -246,6 +246,7 @@ en_NZ:
   back_to_payments_list: "Back to Payments List"
   maestro_or_solo_cards: "Maestro/Solo cards"
   backordered: "Backordered"
+  on hand: "On Hand"
   ship: "Ship"
   actions:
     create_and_add_another: "Create and Add Another"
@@ -1600,8 +1601,8 @@ en_NZ:
   sell_groups_detail: "Set up a tailored directory of enterprises (producers and other food enterprises) for your region or for your organisation."
   sell_user_guide: "Find out more in our user guide."
   sell_listing_price: "Listing on OFN incurs a nominal monthly charge and if you sell products we ask for a small percentage of your sales. For details see the About tab in the menu\nYour money pays for the server and admin costs and the contribution NZ pays to the global OFN organisation.\n\nYou can always chose to support the development of OFN by increasing the amount you pay."
-  sell_embed: "We can also embed an OFN shop in your own customised website or build a customised local food network website for your region."
-  sell_ask_services: "Ask us about OFN services."
+  sell_embed: "The software that runs OFN is supported by a team of software specialists. Check out the community forum at https://community.openfoodnetwork.org/ to learn of new features in the pipeline."
+  sell_ask_services: "Please contact us if you have any questions."
   shops_title: Shops
   shops_headline: Shopping, transformed.
   shops_text: Food grows in cycles, farmers harvest in cycles, and we order food in cycles. If you find an order cycle closed, check back soon.

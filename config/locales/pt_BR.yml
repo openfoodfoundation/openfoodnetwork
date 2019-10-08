@@ -246,6 +246,7 @@ pt_BR:
   back_to_payments_list: "voltar para lista de pagamento"
   maestro_or_solo_cards: "Cartões Maestro / Solo"
   backordered: "Pedidos em atraso"
+  on hand: "Disponível"
   ship: "Envio"
   actions:
     create_and_add_another: "Criar e adicionar outro"
@@ -2931,7 +2932,17 @@ pt_BR:
       products:
         image_upload_error: "A imagem do produto não foi reconhecida. Faça o upload de uma imagem no formato PNG ou JPG."
         new:
-          title: 'Novo produto'
+          title: "Novo produto"
+          new_product: "Novo produto"
+          supplier: "Fornecedor"
+          product_name: "Nome do Produto"
+          units: "Tamanho da Unidade"
+          value: "Valor"
+          price: "Preço"
+          on_hand: "Disponível"
+          on_demand: "Sob Encomenda"
+          image: "Imagem"
+          or: "ou"
         unit_name_placeholder: 'por exemplo. cachos'
         index:
           header:

@@ -246,6 +246,7 @@ nb:
   back_to_payments_list: "Tilbake til betalingsliste"
   maestro_or_solo_cards: "Maestro/Solo kort"
   backordered: "Restbestilte"
+  on hand: "Tilgjengelig"
   ship: "Levere"
   actions:
     create_and_add_another: "Opprett og legg til en annen"

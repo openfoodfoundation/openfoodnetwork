@@ -237,6 +237,7 @@ pt:
   reset_password_token: Redefinir palavra-passe
   expired: expirou, por favor peça uma nova
   back_to_payments_list: "Voltar à lista de pagamentos"
+  on hand: "Disponível"
   ship: "Enviar"
   actions:
     create_and_add_another: "Criar e acrescentar outro"
@@ -2861,7 +2862,18 @@ pt:
             submitting_payment: A submeter pagamento...
       products:
         new:
-          title: 'Novo Produto'
+          title: "Novo Produto"
+          new_product: "Novo Produto"
+          supplier: "Fornecedor"
+          product_name: "Nome do Produto"
+          units: "Tamanho unitário"
+          value: "Valor"
+          price: "Preço"
+          on_hand: "Disponível"
+          on_demand: "Sob Encomenda"
+          product_description: "Descrição do Produto"
+          image: "Imagem"
+          or: "ou"
         unit_name_placeholder: 'ex: ramos'
         index:
           header:

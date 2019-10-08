@@ -778,7 +778,7 @@ ca:
         producer_shop_description_text2: Una productora amb botiga només és per als teus productes; si vols vendre productes produïts / cultivats fora del lloc, selecciona "Grup de productores".
         producer_hub: Grup de productores
         producer_hub_text: Ven productes propis i d'altres productores
-        producer_hub_description_text: La vostra organització és la columna vertebral del sistema alimentari local. Podeu vendre els vostres propis productes i o afegir els productes d'altres organitzacions a través de la vostra botiga a la Katuma.
+        producer_hub_description_text: La vostra organització és la columna vertebral del sistema alimentari local. Podeu vendre els vostres propis productes i o afegir els productes d'altres organitzacions a través de la vostra botiga a Katuma.
         profile: Només perfil
         get_listing: Apareix en els directoris
         profile_description_text: La gent pot trobar-vos i contactar-vos a Katuma. La vostra organització serà visible al mapa i es podrà cercar als directoris.
@@ -816,7 +816,7 @@ ca:
         removed_successfully: "Imatge promocional eliminada correctament"
         immediate_removal_warning: "La imatge promocional s'eliminarà immediatament després de confirmar."
       welcome:
-        welcome_title: Benvingut a la Katuma - Open Food Network!
+        welcome_title: Benvingut a Katuma - Open Food Network!
         welcome_text: Heu creat correctament un
         next_step: Següent pas
         choose_starting_point: 'Escull el teu perfil:'
@@ -2327,7 +2327,7 @@ ca:
           hub_shop_text1: >
               La teva organització és la columna vertebral del vostre sistema alimentari
               local. Afegeix productes d'altres organitzacions productores i ven-los
-              a través de la vostra botiga a la Katuma.
+              a través de la vostra botiga a Katuma.
           hub_shop_text2: >
               Els grups poden prendre moltes formes, ja siguin una cooperativa d'aliments,
               un grup de compra, o una botiga de queviures local, un supermercat cooperatiu.
@@ -2556,7 +2556,7 @@ ca:
       users:
         order: "Comanda"
     registration:
-      welcome_to_ofn: "Benvingut a la Katuma - Open Food Network!"
+      welcome_to_ofn: "Benvingut a Katuma - Open Food Network!"
       signup_or_login: "Comenceu registrant-vos (o iniciant sessió)"
       have_an_account: "Ja tens un compte?"
       action_login: "Inicia la sessió ara."

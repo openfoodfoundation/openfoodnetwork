@@ -246,6 +246,7 @@ fr:
   back_to_payments_list: "Retour à la liste des paiements"
   maestro_or_solo_cards: "Cartes Maestro/Solo"
   backordered: "(à volonté)"
+  on hand: "En stock"
   ship: "Expédier"
   actions:
     create_and_add_another: "Créer et ajouter nouveau"
@@ -2959,7 +2960,19 @@ fr:
       products:
         image_upload_error: "L'image du produit n'a pas été reconnue. Veuillez importer une image au format PNG ou JPG."
         new:
-          title: 'Nouveau Produit'
+          title: "Nouveau Produit"
+          new_product: "Nouveau Produit"
+          supplier: "Fournisseur"
+          product_name: "Nom du Produit"
+          units: "Unité de mesure"
+          value: "Montant"
+          unit_name: "Unité"
+          price: "Prix"
+          on_hand: "En stock"
+          on_demand: "A volonté"
+          product_description: "Description du Produit"
+          image: "Image"
+          or: "ou"
         unit_name_placeholder: 'ex: botte'
         index:
           header:

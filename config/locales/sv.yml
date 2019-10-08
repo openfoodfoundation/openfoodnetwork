@@ -99,6 +99,7 @@ sv:
   powered_by: Drivs av
   blocked_cookies_alert: "Din webbläsare kan blockera cookies som behövs för att använda den här butiken. Klicka nedan för att tillåta cookies och ladda om sidan."
   allow_cookies: "Tillåt cookies"
+  on hand: "På lager"
   ship: "Frakta"
   actions:
     create: "Skapa"
@@ -1988,6 +1989,14 @@ sv:
           products_distributor: "Distributör"
           calculator: "Beräkning"
       products:
+        new:
+          supplier: "Leverantör"
+          units: "Enhetsstorlek"
+          value: "Värde"
+          price: "Pris"
+          on_hand: "På lager"
+          on_demand: "På begäran"
+          or: "eller"
         index:
           header:
             title: 'Redigera Omfång av Produkter '

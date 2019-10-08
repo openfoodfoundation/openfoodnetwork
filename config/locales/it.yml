@@ -237,6 +237,7 @@ it:
   reset_password_token: Token per il reset della password
   expired: è scaduto, si prega di richiederne uno nuovo
   back_to_payments_list: "Torna alla lista dei pagamenti"
+  on hand: "Disponibile"
   ship: "Spedizione"
   actions:
     create_and_add_another: "Crea e aggiungi un altro"
@@ -2852,7 +2853,18 @@ it:
             submitting_payment: Eseguendo il pagamento
       products:
         new:
-          title: 'Nuovo prodotto'
+          title: "Nuovo prodotto"
+          new_product: "Nuovo prodotto"
+          supplier: "Fornitore"
+          product_name: "Nome Prodotto"
+          units: "Unità di misura"
+          value: "Valore"
+          price: "Prezzo"
+          on_hand: "Disponibile"
+          on_demand: "A richiesta"
+          product_description: "Descrizione prodotto"
+          image: "Immagine"
+          or: "o"
         unit_name_placeholder: 'es. grappoli'
         index:
           header:
