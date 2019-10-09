@@ -928,7 +928,7 @@ en:
         new_schedule: New Schedule
       name_and_timing_form:
         name: Name
-        orders_open: Orders open at
+        orders_open: Orders open
         coordinator: Coordinator
         orders_close: Orders close
       row:
