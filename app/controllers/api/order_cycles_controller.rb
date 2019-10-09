@@ -10,7 +10,7 @@ module Api
         distributor,
         order_cycle,
         customer,
-        params.slice(:q, :page, :per_page)
+        search_params
       ).products_json
 
       render json: products
@@ -39,6 +39,20 @@ module Api
     end
 
     private
+
+    def search_params
+      permitted_search_params = params.slice :q, :page, :per_page
+
+      if permitted_search_params.key? :q
+        permitted_search_params[:q].slice!(*permitted_ransack_params)
+      end
+
+      permitted_search_params
+    end
+
+    def permitted_ransack_params
+      [:name_or_meta_keywords_or_supplier_name_cont, :properites_in_any, :primary_taxon_id_in_any]
+    end
 
     def distributor
       Enterprise.find_by_id(params[:distributor])
