@@ -5,15 +5,16 @@ include Spree::ReportsHelper
 
 module OpenFoodNetwork
   class OrdersAndFulfillmentsReport
-    attr_reader :params
-    def initialize(permissions, params = {}, render_table = false)
-      @params = params
+    attr_reader :options
+
+    def initialize(permissions, options = {}, render_table = false)
+      @options = options
       @permissions = permissions
       @render_table = render_table
     end
 
     def header
-      case params[:report_type]
+      case options[:report_type]
 
       when "order_cycle_supplier_totals"
         [I18n.t(:report_header_producer), I18n.t(:report_header_product), I18n.t(:report_header_variant), I18n.t(:report_header_amount),
@@ -47,16 +48,16 @@ module OpenFoodNetwork
     end
 
     def search
-      Reports::LineItems.search_orders(permissions, params)
+      Reports::LineItems.search_orders(permissions, options)
     end
 
     def table_items
       return [] unless @render_table
-      Reports::LineItems.list(permissions, params)
+      Reports::LineItems.list(permissions, options)
     end
 
     def rules
-      case params[:report_type]
+      case options[:report_type]
       when "order_cycle_supplier_totals"
         [
           {
@@ -204,7 +205,7 @@ module OpenFoodNetwork
     # Returns a proc for each column displayed in each report type containing
     # the logic to compute the value for each cell.
     def columns
-      case params[:report_type]
+      case options[:report_type]
       when "order_cycle_supplier_totals"
         [
           supplier_name,
