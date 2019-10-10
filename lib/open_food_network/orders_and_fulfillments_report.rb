@@ -1,6 +1,7 @@
 require "open_food_network/reports/line_items"
 require "open_food_network/orders_and_fulfillments_report/supplier_totals_report"
 require "open_food_network/orders_and_fulfillments_report/supplier_totals_by_distributor_report"
+require "open_food_network/orders_and_fulfillments_report/distributor_totals_by_supplier_report"
 require 'open_food_network/orders_and_fulfillments_report/default_report'
 
 include Spree::ReportsHelper
@@ -22,10 +23,8 @@ module OpenFoodNetwork
         SupplierTotalsReport.new(self).header
       when SupplierTotalsByDistributorReport::REPORT_TYPE
         SupplierTotalsByDistributorReport.new(self).header
-      when "order_cycle_distributor_totals_by_supplier"
-        [I18n.t(:report_header_hub), I18n.t(:report_header_producer), I18n.t(:report_header_product), I18n.t(:report_header_variant),
-         I18n.t(:report_header_amount), I18n.t(:report_header_curr_cost_per_unit), I18n.t(:report_header_total_cost),
-         I18n.t(:report_header_total_shipping_cost), I18n.t(:report_header_shipping_method)]
+      when DistributorTotalsBySupplierReport::REPORT_TYPE
+        DistributorTotalsBySupplierReport.new(self).header
       when "order_cycle_customer_totals"
         [I18n.t(:report_header_hub), I18n.t(:report_header_customer), I18n.t(:report_header_email), I18n.t(:report_header_phone),
          I18n.t(:report_header_producer), I18n.t(:report_header_product), I18n.t(:report_header_variant), I18n.t(:report_header_amount),
@@ -60,36 +59,8 @@ module OpenFoodNetwork
         SupplierTotalsReport.new(self).rules
       when SupplierTotalsByDistributorReport::REPORT_TYPE
         SupplierTotalsByDistributorReport.new(self).rules
-      when "order_cycle_distributor_totals_by_supplier"
-        [
-          {
-            group_by: proc { |line_item| line_item.order.distributor },
-            sort_by: proc { |distributor| distributor.name },
-            summary_columns: [
-              proc { |_line_items| "" },
-              proc { |_line_items| I18n.t('admin.reports.total') },
-              proc { |_line_items| "" },
-              proc { |_line_items| "" },
-              proc { |_line_items| "" },
-              proc { |_line_items| "" },
-              proc { |line_items| line_items.sum(&:amount) },
-              proc { |line_items| line_items.map(&:order).uniq.sum(&:ship_total) },
-              proc { |_line_items| "" }
-            ]
-          },
-          {
-            group_by: proc { |line_item| line_item.variant.product.supplier },
-            sort_by: proc { |supplier| supplier.name }
-          },
-          {
-            group_by: proc { |line_item| line_item.variant.product },
-            sort_by: proc { |product| product.name }
-          },
-          {
-            group_by: proc { |line_item| line_item.variant.full_name },
-            sort_by: proc { |full_name| full_name }
-          }
-        ]
+      when DistributorTotalsBySupplierReport::REPORT_TYPE
+        DistributorTotalsBySupplierReport.new(self).rules
       when "order_cycle_customer_totals"
         [
           {
@@ -168,16 +139,8 @@ module OpenFoodNetwork
         SupplierTotalsReport.new(self).columns
       when SupplierTotalsByDistributorReport::REPORT_TYPE
         SupplierTotalsByDistributorReport.new(self).columns
-      when "order_cycle_distributor_totals_by_supplier"
-        [proc { |line_items| line_items.first.order.distributor.name },
-         proc { |line_items| line_items.first.variant.product.supplier.name },
-         proc { |line_items| line_items.first.variant.product.name },
-         proc { |line_items| line_items.first.variant.full_name },
-         proc { |line_items| line_items.sum(&:quantity) },
-         proc { |line_items| line_items.first.price },
-         proc { |line_items| line_items.sum(&:amount) },
-         proc { |_line_items| "" },
-         proc { |_line_items| I18n.t(:report_header_shipping_method) }]
+      when DistributorTotalsBySupplierReport::REPORT_TYPE
+        DistributorTotalsBySupplierReport.new(self).columns
       when "order_cycle_customer_totals"
         rsa = proc { |line_items| line_items.first.order.shipping_method.andand.delivery? }
         [
