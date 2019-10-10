@@ -12,9 +12,11 @@ module OpenFoodNetwork
       end
 
       def header
-        [I18n.t(:report_header_producer), I18n.t(:report_header_product), I18n.t(:report_header_variant), I18n.t(:report_header_amount),
-         I18n.t(:report_header_total_units), I18n.t(:report_header_curr_cost_per_unit), I18n.t(:report_header_total_cost),
-         I18n.t(:report_header_status), I18n.t(:report_header_incoming_transport)]
+        [I18n.t(:report_header_producer), I18n.t(:report_header_product),
+         I18n.t(:report_header_variant), I18n.t(:report_header_amount),
+         I18n.t(:report_header_total_units), I18n.t(:report_header_curr_cost_per_unit),
+         I18n.t(:report_header_total_cost), I18n.t(:report_header_status),
+         I18n.t(:report_header_incoming_transport)]
       end
 
       def rules

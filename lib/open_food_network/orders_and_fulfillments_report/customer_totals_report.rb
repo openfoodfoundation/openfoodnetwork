@@ -12,19 +12,26 @@ module OpenFoodNetwork
       end
 
       def header
-        [I18n.t(:report_header_hub), I18n.t(:report_header_customer), I18n.t(:report_header_email), I18n.t(:report_header_phone),
-         I18n.t(:report_header_producer), I18n.t(:report_header_product), I18n.t(:report_header_variant), I18n.t(:report_header_amount),
+        [I18n.t(:report_header_hub), I18n.t(:report_header_customer), I18n.t(:report_header_email),
+         I18n.t(:report_header_phone), I18n.t(:report_header_producer),
+         I18n.t(:report_header_product), I18n.t(:report_header_variant),
+         I18n.t(:report_header_amount),
          I18n.t(:report_header_item_price, currency: currency_symbol),
          I18n.t(:report_header_item_fees_price, currency: currency_symbol),
          I18n.t(:report_header_admin_handling_fees, currency: currency_symbol),
          I18n.t(:report_header_ship_price, currency: currency_symbol),
          I18n.t(:report_header_pay_fee_price, currency: currency_symbol),
          I18n.t(:report_header_total_price, currency: currency_symbol),
-         I18n.t(:report_header_paid), I18n.t(:report_header_shipping), I18n.t(:report_header_delivery),
-         I18n.t(:report_header_ship_street), I18n.t(:report_header_ship_street_2), I18n.t(:report_header_ship_city), I18n.t(:report_header_ship_postcode), I18n.t(:report_header_ship_state),
+         I18n.t(:report_header_paid), I18n.t(:report_header_shipping),
+         I18n.t(:report_header_delivery), I18n.t(:report_header_ship_street),
+         I18n.t(:report_header_ship_street_2), I18n.t(:report_header_ship_city),
+         I18n.t(:report_header_ship_postcode), I18n.t(:report_header_ship_state),
          I18n.t(:report_header_comments), I18n.t(:report_header_sku),
-         I18n.t(:report_header_order_cycle), I18n.t(:report_header_payment_method), I18n.t(:report_header_customer_code), I18n.t(:report_header_tags),
-         I18n.t(:report_header_billing_street), I18n.t(:report_header_billing_street_2), I18n.t(:report_header_billing_city), I18n.t(:report_header_billing_postcode), I18n.t(:report_header_billing_state),]
+         I18n.t(:report_header_order_cycle), I18n.t(:report_header_payment_method),
+         I18n.t(:report_header_customer_code), I18n.t(:report_header_tags),
+         I18n.t(:report_header_billing_street), I18n.t(:report_header_billing_street_2),
+         I18n.t(:report_header_billing_city), I18n.t(:report_header_billing_postcode),
+         I18n.t(:report_header_billing_state)]
       end
 
       def rules
@@ -98,7 +105,10 @@ module OpenFoodNetwork
         rsa = proc { |line_items| line_items.first.order.shipping_method.andand.delivery? }
         [
           proc { |line_items| line_items.first.order.distributor.name },
-          proc { |line_items| line_items.first.order.bill_address.firstname + " " + line_items.first.order.bill_address.lastname },
+          proc { |line_items|
+            bill_address = line_items.first.order.bill_address
+            bill_address.firstname + " " + bill_address.lastname
+          },
           proc { |line_items| line_items.first.order.email },
           proc { |line_items| line_items.first.order.bill_address.phone },
           proc { |line_items| line_items.first.variant.product.supplier.name },
@@ -112,24 +122,47 @@ module OpenFoodNetwork
           proc { |_line_items| "" },
           proc { |_line_items| "" },
           proc { |_line_items| "" },
-          proc { |line_items| line_items.all? { |li| li.order.paid? } ? I18n.t(:yes) : I18n.t(:no) },
+          proc { |line_items|
+            line_items.all? { |li| li.order.paid? } ? I18n.t(:yes) : I18n.t(:no)
+          },
 
           proc { |line_items| line_items.first.order.shipping_method.andand.name },
           proc { |line_items| rsa.call(line_items) ? I18n.t(:yes) : I18n.t(:no) },
 
-          proc { |line_items| line_items.first.order.ship_address.andand.address1 if rsa.call(line_items) },
-          proc { |line_items| line_items.first.order.ship_address.andand.address2 if rsa.call(line_items) },
-          proc { |line_items| line_items.first.order.ship_address.andand.city if rsa.call(line_items) },
-          proc { |line_items| line_items.first.order.ship_address.andand.zipcode if rsa.call(line_items) },
-          proc { |line_items| line_items.first.order.ship_address.andand.state if rsa.call(line_items) },
+          proc { |line_items|
+            line_items.first.order.ship_address.andand.address1 if rsa.call(line_items)
+          },
+          proc { |line_items|
+            line_items.first.order.ship_address.andand.address2 if rsa.call(line_items)
+          },
+          proc { |line_items|
+            line_items.first.order.ship_address.andand.city if rsa.call(line_items)
+          },
+          proc { |line_items|
+            line_items.first.order.ship_address.andand.zipcode if rsa.call(line_items)
+          },
+          proc { |line_items|
+            line_items.first.order.ship_address.andand.state if rsa.call(line_items)
+          },
 
           proc { |_line_items| "" },
           proc { |line_items| line_items.first.variant.sku },
 
           proc { |line_items| line_items.first.order.order_cycle.andand.name },
-          proc { |line_items| line_items.first.order.payments.first.andand.payment_method.andand.name },
-          proc { |line_items| line_items.first.order.user.andand.customer_of(line_items.first.order.distributor).andand.code },
-          proc { |line_items| line_items.first.order.user.andand.customer_of(line_items.first.order.distributor).andand.tags.andand.join(', ') },
+          proc { |line_items|
+            payment = line_items.first.order.payments.first
+            payment.andand.payment_method.andand.name
+          },
+          proc { |line_items|
+            distributor = line_items.first.order.distributor
+            user = line_items.first.order.user
+            user.andand.customer_of(distributor).andand.code
+          },
+          proc { |line_items|
+            distributor = line_items.first.order.distributor
+            user = line_items.first.order.user
+            user.andand.customer_of(distributor).andand.tags.andand.join(', ')
+          },
 
           proc { |line_items| line_items.first.order.bill_address.andand.address1 },
           proc { |line_items| line_items.first.order.bill_address.andand.address2 },
