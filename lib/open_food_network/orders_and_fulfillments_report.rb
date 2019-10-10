@@ -19,7 +19,7 @@ module OpenFoodNetwork
     end
 
     def header
-      report_klass.new(self).header
+      report.header
     end
 
     def search
@@ -32,18 +32,22 @@ module OpenFoodNetwork
     end
 
     def rules
-      report_klass.new(self).rules
+      report.rules
     end
 
     # Returns a proc for each column displayed in each report type containing
     # the logic to compute the value for each cell.
     def columns
-      report_klass.new(self).columns
+      report.columns
     end
 
     private
 
     attr_reader :permissions
+
+    def report
+      @report ||= report_klass.new(self)
+    end
 
     def report_klass
       case report_type
