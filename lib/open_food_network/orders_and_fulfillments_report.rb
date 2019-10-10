@@ -39,14 +39,10 @@ module OpenFoodNetwork
 
     def report_klass
       case report_type
-      when SupplierTotalsReport::REPORT_TYPE
-        SupplierTotalsReport
-      when SupplierTotalsByDistributorReport::REPORT_TYPE
-        SupplierTotalsByDistributorReport
-      when DistributorTotalsBySupplierReport::REPORT_TYPE
-        DistributorTotalsBySupplierReport
-      when CustomerTotalsReport::REPORT_TYPE
-        CustomerTotalsReport
+      when SupplierTotalsReport::REPORT_TYPE then SupplierTotalsReport
+      when SupplierTotalsByDistributorReport::REPORT_TYPE then SupplierTotalsByDistributorReport
+      when DistributorTotalsBySupplierReport::REPORT_TYPE then DistributorTotalsBySupplierReport
+      when CustomerTotalsReport::REPORT_TYPE then CustomerTotalsReport
       else
         DefaultReport
       end
