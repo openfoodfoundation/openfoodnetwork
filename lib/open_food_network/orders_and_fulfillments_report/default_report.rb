@@ -54,6 +54,10 @@ module OpenFoodNetwork
       end
       # rubocop:enable Metrics/AbcSize
 
+      def line_item_includes
+        []
+      end
+
       private
 
       attr_reader :context

@@ -26,7 +26,9 @@ module OpenFoodNetwork
 
     def table_items
       return [] unless @render_table
-      Reports::LineItems.list(permissions, options)
+
+      list_options = options.merge(line_item_includes: report.line_item_includes)
+      Reports::LineItems.list(permissions, list_options)
     end
 
     private

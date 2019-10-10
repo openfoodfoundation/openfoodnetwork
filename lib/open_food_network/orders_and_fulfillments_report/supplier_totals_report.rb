@@ -53,6 +53,10 @@ module OpenFoodNetwork
         ]
       end
       # rubocop:enable Metrics/MethodLength
+
+      def line_item_includes
+        [{ variant: { product: :supplier } }]
+      end
     end
   end
 end

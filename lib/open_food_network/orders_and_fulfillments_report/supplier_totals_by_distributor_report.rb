@@ -67,6 +67,10 @@ module OpenFoodNetwork
         ]
       end
       # rubocop:enable Metrics/AbcSize
+
+      def line_item_includes
+        [:order, { variant: :product }]
+      end
     end
   end
 end

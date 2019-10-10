@@ -188,6 +188,10 @@ module OpenFoodNetwork
       # rubocop:enable Metrics/CyclomaticComplexity
       # rubocop:enable Metrics/MethodLength
       # rubocop:enable Metrics/PerceivedComplexity
+
+      def line_item_includes
+        [{ variant: :product, order: [:bill_address, :shipments] }]
+      end
     end
   end
 end
