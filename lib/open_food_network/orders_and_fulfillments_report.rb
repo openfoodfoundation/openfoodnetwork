@@ -11,15 +11,13 @@ module OpenFoodNetwork
   class OrdersAndFulfillmentsReport
     attr_reader :options, :report_type
 
+    delegate :header, :rules, :columns, to: :report
+
     def initialize(permissions, options = {}, render_table = false)
       @options = options
       @report_type = options[:report_type]
       @permissions = permissions
       @render_table = render_table
-    end
-
-    def header
-      report.header
     end
 
     def search
@@ -29,16 +27,6 @@ module OpenFoodNetwork
     def table_items
       return [] unless @render_table
       Reports::LineItems.list(permissions, options)
-    end
-
-    def rules
-      report.rules
-    end
-
-    # Returns a proc for each column displayed in each report type containing
-    # the logic to compute the value for each cell.
-    def columns
-      report.columns
     end
 
     private
