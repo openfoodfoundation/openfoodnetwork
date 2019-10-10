@@ -17,7 +17,7 @@ module OpenFoodNetwork
     def header
       case options[:report_type]
 
-      when "order_cycle_supplier_totals"
+      when SupplierTotalsReport::REPORT_TYPE
         SupplierTotalsReport.new(self).header
       when "order_cycle_supplier_totals_by_distributor"
         [I18n.t(:report_header_producer), I18n.t(:report_header_product), I18n.t(:report_header_variant), I18n.t(:report_header_to_hub),
@@ -57,7 +57,7 @@ module OpenFoodNetwork
 
     def rules
       case options[:report_type]
-      when "order_cycle_supplier_totals"
+      when SupplierTotalsReport::REPORT_TYPE
         SupplierTotalsReport.new(self).rules
       when "order_cycle_supplier_totals_by_distributor"
         [
@@ -192,7 +192,7 @@ module OpenFoodNetwork
     # the logic to compute the value for each cell.
     def columns
       case options[:report_type]
-      when "order_cycle_supplier_totals"
+      when SupplierTotalsReport::REPORT_TYPE
         SupplierTotalsReport.new(self).columns
       when "order_cycle_supplier_totals_by_distributor"
         [

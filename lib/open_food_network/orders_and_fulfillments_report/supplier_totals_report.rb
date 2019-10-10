@@ -1,6 +1,8 @@
 module OpenFoodNetwork
   class OrdersAndFulfillmentsReport
     class SupplierTotalsReport
+      REPORT_TYPE = "order_cycle_supplier_totals"
+
       attr_reader :context
 
       delegate :supplier_name, :product_name, :line_items_name, :total_units, to: :context
