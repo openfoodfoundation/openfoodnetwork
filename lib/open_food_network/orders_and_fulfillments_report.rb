@@ -19,18 +19,7 @@ module OpenFoodNetwork
     end
 
     def header
-      case report_type
-      when SupplierTotalsReport::REPORT_TYPE
-        SupplierTotalsReport.new(self).header
-      when SupplierTotalsByDistributorReport::REPORT_TYPE
-        SupplierTotalsByDistributorReport.new(self).header
-      when DistributorTotalsBySupplierReport::REPORT_TYPE
-        DistributorTotalsBySupplierReport.new(self).header
-      when CustomerTotalsReport::REPORT_TYPE
-        CustomerTotalsReport.new(self).header
-      else
-        DefaultReport.new(self).header
-      end
+      report_klass.new(self).header
     end
 
     def search
@@ -43,40 +32,33 @@ module OpenFoodNetwork
     end
 
     def rules
-      case report_type
-      when SupplierTotalsReport::REPORT_TYPE
-        SupplierTotalsReport.new(self).rules
-      when SupplierTotalsByDistributorReport::REPORT_TYPE
-        SupplierTotalsByDistributorReport.new(self).rules
-      when DistributorTotalsBySupplierReport::REPORT_TYPE
-        DistributorTotalsBySupplierReport.new(self).rules
-      when CustomerTotalsReport::REPORT_TYPE
-        CustomerTotalsReport.new(self).rules
-      else
-        DefaultReport.new(self).rules
-      end
+      report_klass.new(self).rules
     end
 
     # Returns a proc for each column displayed in each report type containing
     # the logic to compute the value for each cell.
     def columns
-      case report_type
-      when SupplierTotalsReport::REPORT_TYPE
-        SupplierTotalsReport.new(self).columns
-      when SupplierTotalsByDistributorReport::REPORT_TYPE
-        SupplierTotalsByDistributorReport.new(self).columns
-      when DistributorTotalsBySupplierReport::REPORT_TYPE
-        DistributorTotalsBySupplierReport.new(self).columns
-      when CustomerTotalsReport::REPORT_TYPE
-        CustomerTotalsReport.new(self).columns
-      else
-        DefaultReport.new(self).columns
-      end
+      report_klass.new(self).columns
     end
 
     private
 
     attr_reader :permissions
+
+    def report_klass
+      case report_type
+      when SupplierTotalsReport::REPORT_TYPE
+        SupplierTotalsReport
+      when SupplierTotalsByDistributorReport::REPORT_TYPE
+        SupplierTotalsByDistributorReport
+      when DistributorTotalsBySupplierReport::REPORT_TYPE
+        DistributorTotalsBySupplierReport
+      when CustomerTotalsReport::REPORT_TYPE
+        CustomerTotalsReport
+      else
+        DefaultReport
+      end
+    end
 
     def supplier_name
       proc { |line_items| line_items.first.variant.product.supplier.name }
