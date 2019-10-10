@@ -1,5 +1,6 @@
 require "open_food_network/reports/line_items"
 require "open_food_network/orders_and_fulfillments_report/supplier_totals_report"
+require "open_food_network/orders_and_fulfillments_report/supplier_totals_by_distributor_report"
 require 'open_food_network/orders_and_fulfillments_report/default_report'
 
 include Spree::ReportsHelper
@@ -19,10 +20,8 @@ module OpenFoodNetwork
 
       when SupplierTotalsReport::REPORT_TYPE
         SupplierTotalsReport.new(self).header
-      when "order_cycle_supplier_totals_by_distributor"
-        [I18n.t(:report_header_producer), I18n.t(:report_header_product), I18n.t(:report_header_variant), I18n.t(:report_header_to_hub),
-         I18n.t(:report_header_amount), I18n.t(:report_header_curr_cost_per_unit), I18n.t(:report_header_total_cost),
-         I18n.t(:report_header_shipping_method)]
+      when SupplierTotalsByDistributorReport::REPORT_TYPE
+        SupplierTotalsByDistributorReport.new(self).header
       when "order_cycle_distributor_totals_by_supplier"
         [I18n.t(:report_header_hub), I18n.t(:report_header_producer), I18n.t(:report_header_product), I18n.t(:report_header_variant),
          I18n.t(:report_header_amount), I18n.t(:report_header_curr_cost_per_unit), I18n.t(:report_header_total_cost),
@@ -59,35 +58,8 @@ module OpenFoodNetwork
       case options[:report_type]
       when SupplierTotalsReport::REPORT_TYPE
         SupplierTotalsReport.new(self).rules
-      when "order_cycle_supplier_totals_by_distributor"
-        [
-          {
-            group_by: proc { |line_item| line_item.variant.product.supplier },
-            sort_by: proc { |supplier| supplier.name }
-          },
-          {
-            group_by: proc { |line_item| line_item.variant.product },
-            sort_by: proc { |product| product.name }
-          },
-          {
-            group_by: proc { |line_item| line_item.variant.full_name },
-            sort_by: proc { |full_name| full_name },
-            summary_columns: [
-              proc { |_line_items| "" },
-              proc { |_line_items| "" },
-              proc { |_line_items| "" },
-              proc { |_line_items| I18n.t('admin.reports.total') },
-              proc { |_line_items| "" },
-              proc { |_line_items| "" },
-              proc { |line_items| line_items.sum(&:amount) },
-              proc { |_line_items| "" }
-            ]
-          },
-          {
-            group_by: proc { |line_item| line_item.order.distributor },
-            sort_by: proc { |distributor| distributor.name }
-          }
-        ]
+      when SupplierTotalsByDistributorReport::REPORT_TYPE
+        SupplierTotalsByDistributorReport.new(self).rules
       when "order_cycle_distributor_totals_by_supplier"
         [
           {
@@ -194,17 +166,8 @@ module OpenFoodNetwork
       case options[:report_type]
       when SupplierTotalsReport::REPORT_TYPE
         SupplierTotalsReport.new(self).columns
-      when "order_cycle_supplier_totals_by_distributor"
-        [
-          supplier_name,
-          proc { |line_items| line_items.first.variant.product.name },
-          proc { |line_items| line_items.first.variant.full_name },
-          proc { |line_items| line_items.first.order.distributor.name },
-          proc { |line_items| line_items.sum(&:quantity) },
-          proc { |line_items| line_items.first.price },
-          proc { |line_items| line_items.sum(&:amount) },
-          proc { |_line_items| I18n.t(:report_header_shipping_method) }
-        ]
+      when SupplierTotalsByDistributorReport::REPORT_TYPE
+        SupplierTotalsByDistributorReport.new(self).columns
       when "order_cycle_distributor_totals_by_supplier"
         [proc { |line_items| line_items.first.order.distributor.name },
          proc { |line_items| line_items.first.variant.product.supplier.name },
