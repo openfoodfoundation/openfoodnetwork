@@ -18,6 +18,8 @@ module OpenFoodNetwork
          I18n.t(:report_header_total_cost), I18n.t(:report_header_shipping_method)]
       end
 
+      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable Metrics/MethodLength
       def rules
         [
           {
@@ -48,7 +50,10 @@ module OpenFoodNetwork
           }
         ]
       end
+      # rubocop:enable Metrics/AbcSize
+      # rubocop:enable Metrics/MethodLength
 
+      # rubocop:disable Metrics/AbcSize
       def columns
         [
           supplier_name,
@@ -61,6 +66,7 @@ module OpenFoodNetwork
           proc { |_line_items| I18n.t(:report_header_shipping_method) }
         ]
       end
+      # rubocop:enable Metrics/AbcSize
     end
   end
 end
