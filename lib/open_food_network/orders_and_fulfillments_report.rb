@@ -9,17 +9,17 @@ include Spree::ReportsHelper
 
 module OpenFoodNetwork
   class OrdersAndFulfillmentsReport
-    attr_reader :options
+    attr_reader :options, :report_type
 
     def initialize(permissions, options = {}, render_table = false)
       @options = options
+      @report_type = options[:report_type]
       @permissions = permissions
       @render_table = render_table
     end
 
     def header
-      case options[:report_type]
-
+      case report_type
       when SupplierTotalsReport::REPORT_TYPE
         SupplierTotalsReport.new(self).header
       when SupplierTotalsByDistributorReport::REPORT_TYPE
@@ -43,7 +43,7 @@ module OpenFoodNetwork
     end
 
     def rules
-      case options[:report_type]
+      case report_type
       when SupplierTotalsReport::REPORT_TYPE
         SupplierTotalsReport.new(self).rules
       when SupplierTotalsByDistributorReport::REPORT_TYPE
@@ -60,7 +60,7 @@ module OpenFoodNetwork
     # Returns a proc for each column displayed in each report type containing
     # the logic to compute the value for each cell.
     def columns
-      case options[:report_type]
+      case report_type
       when SupplierTotalsReport::REPORT_TYPE
         SupplierTotalsReport.new(self).columns
       when SupplierTotalsByDistributorReport::REPORT_TYPE
