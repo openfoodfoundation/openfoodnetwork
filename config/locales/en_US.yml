@@ -245,6 +245,7 @@ en_US:
   expired: has expired, please request a new one
   back_to_payments_list: "Back to Payments List"
   maestro_or_solo_cards: "Debit cards"
+  backordered: "Backordered"
   on hand: "On Hand"
   ship: "Ship"
   actions:
@@ -2629,6 +2630,8 @@ en_US:
     name_or_sku: "Name or SKU (enter at least first 4 characters of product name)"
     resend: Resend
     back_to_orders_list: Back To Orders List
+    return_authorizations: Return Authorizations
+    cannot_create_returns: Cannot create returns as this order has no shipped units.
     select_stock: "Select stock"
     location: "Location"
     count_on_hand: "Count On Hand"
@@ -2779,6 +2782,7 @@ en_US:
     discount_amount: "Discount Amount"
     email: Email
     account_updated: "Account updated!"
+    email_updated: "The account will be updated once the new email is confirmed."
     my_account: "My account"
     date: "Date"
     time: "Time"
