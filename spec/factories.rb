@@ -194,4 +194,9 @@ FactoryBot.modify do
     # sets the default value for variant.on_demand
     backorderable_default false
   end
+
+  factory :shipping_category, class: Spree::ShippingCategory do
+    initialize_with { DefaultShippingCategory.find_or_create }
+    transient { name 'Default' }
+  end
 end

@@ -9,7 +9,7 @@ feature '
 
   let!(:taxon) { create(:taxon) }
   let!(:stock_location) { create(:stock_location, backorderable_default: false) }
-  let!(:shipping_category) { create(:shipping_category, name: 'Test Shipping Category') }
+  let!(:shipping_category) { DefaultShippingCategory.find_or_create }
 
   background do
     @supplier = create(:supplier_enterprise, name: 'New supplier')
@@ -32,6 +32,8 @@ feature '
       click_link 'Products'
       click_link 'New Product'
 
+      expect(find_field('product_shipping_category_id').text).to eq(shipping_category.name)
+
       select 'New supplier', from: 'product_supplier_id'
       fill_in 'product_name', with: 'A new product !!!'
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
@@ -40,7 +42,6 @@ feature '
       fill_in 'product_price', with: '19.99'
       fill_in 'product_on_hand', with: 5
       select 'Test Tax Category', from: 'product_tax_category_id'
-      select 'Test Shipping Category', from: 'product_shipping_category_id'
       page.find("div[id^='taTextElement']").native.send_keys('A description...')
 
       click_button 'Create'
@@ -80,7 +81,6 @@ feature '
       fill_in 'product_on_hand', with: 0
       check 'product_on_demand'
       select 'Test Tax Category', from: 'product_tax_category_id'
-      select 'Test Shipping Category', from: 'product_shipping_category_id'
       page.find("div[id^='taTextElement']").native.send_keys('In demand, and on_demand! The hottest cakes in town.')
 
       click_button 'Create'
@@ -122,7 +122,6 @@ feature '
           select 'Weight (g)', from: 'product_variant_unit_with_scale'
           fill_in 'product_unit_value_with_description', with: '500'
           select taxon.name, from: "product_primary_taxon_id"
-          select 'Test Shipping Category', from: 'product_shipping_category_id'
           select 'None', from: "product_tax_category_id"
 
           # Should only have suppliers listed which the user can manage

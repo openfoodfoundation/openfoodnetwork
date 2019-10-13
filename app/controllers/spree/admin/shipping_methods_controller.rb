@@ -19,6 +19,11 @@ module Spree
         collection
       end
 
+      def new
+        @object.shipping_categories = [DefaultShippingCategory.find_or_create]
+        super
+      end
+
       def destroy
         # Our reports are not adapted to soft deleted shipping_methods so here we prevent
         #   the deletion (even soft) of shipping_methods that are referenced in orders

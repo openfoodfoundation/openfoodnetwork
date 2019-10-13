@@ -30,6 +30,11 @@ Spree::Admin::ProductsController.class_eval do
     @show_latest_import = params[:latest_import] || false
   end
 
+  def new
+    @object.shipping_category = DefaultShippingCategory.find_or_create
+    super
+  end
+
   def create
     delete_stock_params_and_set_after do
       super
