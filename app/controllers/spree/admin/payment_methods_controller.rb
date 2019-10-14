@@ -1,18 +1,17 @@
 module Spree
   module Admin
     class PaymentMethodsController < ResourceController
-      skip_before_filter :load_resource, :only => [:create]
+      skip_before_filter :load_resource, only: [:create, :show_provider_preferences]
       before_filter :load_data
-      before_filter :validate_payment_method_provider, :only => :create
-      before_filter :restrict_stripe_account_change, only: [:update]
-      before_filter :force_environment, only: [:create, :update]
-      skip_before_filter :load_resource, only: [:show_provider_preferences]
+      before_filter :validate_payment_method_provider, only: [:create]
       before_filter :load_hubs, only: [:new, :edit, :update]
       create.before :load_hubs
 
       respond_to :html
 
       def create
+        force_environment
+
         @payment_method = params[:payment_method].delete(:type).constantize.new(params[:payment_method])
         @object = @payment_method
         invoke_callbacks(:create, :before)
@@ -27,6 +26,9 @@ module Spree
       end
 
       def update
+        restrict_stripe_account_change
+        force_environment
+
         invoke_callbacks(:update, :before)
         payment_method_type = params[:payment_method].delete(:type)
         if @payment_method['type'].to_s != payment_method_type
