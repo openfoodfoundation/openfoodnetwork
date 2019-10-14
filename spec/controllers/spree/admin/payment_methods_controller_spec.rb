@@ -1,7 +1,55 @@
 require 'spec_helper'
 
 module Spree
+  class GatewayWithPassword < PaymentMethod
+    attr_accessible :preferred_password
+    preference :password, :string, default: "password"
+  end
+
   describe Admin::PaymentMethodsController, type: :controller do
+    describe "#create and #update" do
+      let!(:enterprise) { create(:distributor_enterprise, owner: user) }
+      let(:payment_method) { GatewayWithPassword.create!(name: "Bogus", preferred_password: "haxme", distributor_ids: [enterprise.id], preferred_enterprise_id: enterprise.id) }
+      let!(:user) { create(:user) }
+
+      before { allow(controller).to receive(:spree_current_user) { user } }
+
+      it "does not clear password on update" do
+        expect(payment_method.preferred_password).to eq "haxme"
+        spree_put :update, id: payment_method.id, payment_method: { type: payment_method.class.to_s, preferred_password: "" }
+        expect(response).to redirect_to spree.edit_admin_payment_method_path(payment_method)
+
+        payment_method.reload
+        expect(payment_method.preferred_password).to eq "haxme"
+      end
+
+      context "tries to save invalid payment" do
+        it "doesn't break, responds nicely" do
+          expect {
+            spree_post :create, payment_method: { name: "", type: "Spree::Gateway::Bogus" }
+          }.not_to raise_error
+        end
+      end
+
+      it "can create a payment method of a valid type" do
+        expect {
+          spree_post :create, payment_method: { name: "Test Method", type: "Spree::Gateway::Bogus", distributor_ids: [enterprise.id], preferred_enterprise_id: enterprise.id }
+        }.to change(Spree::PaymentMethod, :count).by(1)
+
+        expect(response).to be_redirect
+        expect(response).to redirect_to spree.edit_admin_payment_method_path(assigns(:payment_method))
+      end
+
+      it "can not create a payment method of an invalid type" do
+        expect {
+          spree_post :create, payment_method: { name: "Invalid Payment Method", type: "Spree::InvalidType", distributor_ids: [enterprise.id], preferred_enterprise_id: enterprise.id }
+        }.to change(Spree::PaymentMethod, :count).by(0)
+
+        expect(response).to be_redirect
+        expect(response).to redirect_to spree.new_admin_payment_method_path
+      end
+    end
+
     describe "#update" do
       context "on a StripeConnect payment method" do
         let!(:user) { create(:user, enterprise_limit: 2) }
