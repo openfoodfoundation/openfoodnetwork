@@ -48,7 +48,6 @@ Metrics/LineLength:
   - app/controllers/spree/admin/base_controller_decorator.rb
   - app/controllers/spree/admin/orders_controller_decorator.rb
   - app/controllers/spree/admin/payments_controller_decorator.rb
-  - app/controllers/spree/admin/payment_methods_controller_decorator.rb
   - app/controllers/spree/admin/reports_controller_decorator.rb
   - app/controllers/spree/api/products_controller_decorator.rb
   - app/controllers/spree/credit_cards_controller.rb
@@ -399,7 +398,6 @@ Metrics/AbcSize:
   - app/controllers/spree/admin/orders_controller_decorator.rb
   - app/controllers/spree/admin/overview_controller_decorator.rb
   - app/controllers/spree/admin/payments_controller_decorator.rb
-  - app/controllers/spree/admin/payment_methods_controller_decorator.rb
   - app/controllers/spree/admin/products_controller_decorator.rb
   - app/controllers/spree/admin/reports_controller_decorator.rb
   - app/controllers/spree/admin/search_controller_decorator.rb
@@ -579,7 +577,6 @@ Metrics/MethodLength:
   - app/controllers/shop_controller.rb
   - app/controllers/spree/admin/orders/customer_details_controller_decorator.rb
   - app/controllers/spree/admin/payments_controller_decorator.rb
-  - app/controllers/spree/admin/payment_methods_controller_decorator.rb
   - app/controllers/spree/admin/products_controller_decorator.rb
   - app/controllers/spree/admin/reports_controller_decorator.rb
   - app/controllers/spree/admin/search_controller_decorator.rb
