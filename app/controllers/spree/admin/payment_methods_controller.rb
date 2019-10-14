@@ -12,12 +12,16 @@ module Spree
       def create
         force_environment
 
-        @payment_method = params[:payment_method].delete(:type).constantize.new(params[:payment_method])
+        @payment_method = params[:payment_method].
+          delete(:type).
+          constantize.
+          new(params[:payment_method])
         @object = @payment_method
+
         invoke_callbacks(:create, :before)
         if @payment_method.save
           invoke_callbacks(:create, :after)
-          flash[:success] = Spree.t(:successfully_created, :resource => Spree.t(:payment_method))
+          flash[:success] = Spree.t(:successfully_created, resource: Spree.t(:payment_method))
           redirect_to edit_admin_payment_method_path(@payment_method)
         else
           invoke_callbacks(:create, :fails)
@@ -38,7 +42,7 @@ module Spree
 
         payment_method_params = params[ActiveModel::Naming.param_key(@payment_method)] || {}
         attributes = params[:payment_method].merge(payment_method_params)
-        attributes.each do |k,v|
+        attributes.each do |k, _v|
           if k.include?("password") && attributes[k].blank?
             attributes.delete(k)
           end
@@ -46,7 +50,7 @@ module Spree
 
         if @payment_method.update_attributes(attributes)
           invoke_callbacks(:update, :after)
-          flash[:success] = Spree.t(:successfully_updated, :resource => Spree.t(:payment_method))
+          flash[:success] = Spree.t(:successfully_updated, resource: Spree.t(:payment_method))
           redirect_to edit_admin_payment_method_path(@payment_method)
         else
           invoke_callbacks(:update, :fails)
@@ -111,10 +115,9 @@ module Spree
 
       def validate_payment_method_provider
         valid_payment_methods = Rails.application.config.spree.payment_methods.map(&:to_s)
-        if !valid_payment_methods.include?(params[:payment_method][:type])
-          flash[:error] = Spree.t(:invalid_payment_provider)
-          redirect_to new_admin_payment_method_path
-        end
+        return if valid_payment_methods.include?(params[:payment_method][:type])
+        flash[:error] = Spree.t(:invalid_payment_provider)
+        redirect_to new_admin_payment_method_path
       end
 
       def load_hubs
@@ -128,7 +131,8 @@ module Spree
       # Show Stripe as an option if enabled, or if the
       # current payment_method is already a Stripe method
       def show_stripe?
-        Spree::Config.stripe_connect_enabled || @payment_method.try(:type) == "Spree::Gateway::StripeConnect"
+        Spree::Config.stripe_connect_enabled ||
+          @payment_method.try(:type) == "Spree::Gateway::StripeConnect"
       end
 
       def restrict_stripe_account_change
