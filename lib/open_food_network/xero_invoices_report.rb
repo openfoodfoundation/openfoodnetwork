@@ -4,6 +4,7 @@ module OpenFoodNetwork
       @user = user
 
       @opts = opts.
+        symbolize_keys.
         reject { |_k, v| v.blank? }.
         reverse_merge( report_type: 'summary',
                        invoice_date: Time.zone.today,
