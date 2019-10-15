@@ -51,7 +51,9 @@ module Api
     end
 
     def permitted_ransack_params
-      [:name_or_meta_keywords_or_supplier_name_cont, :properites_in_any, :primary_taxon_id_in_any]
+      [:name_or_meta_keywords_or_supplier_name_cont,
+       :properties_id_in_any,
+       :primary_taxon_id_in_any]
     end
 
     def distributor

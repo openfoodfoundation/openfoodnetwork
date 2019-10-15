@@ -29,7 +29,6 @@ module Api
       it "loads products for distributed products in the order cycle" do
         api_get :products, id: order_cycle.id, distributor: distributor.id
 
-        product_ids = json_response.map{ |product| product['id'] }
         expect(product_ids).to include product1.id, product2.id, product3.id
       end
 
@@ -57,8 +56,27 @@ module Api
         it "does not return products where the variant overrides are out of stock" do
           api_get :products, id: order_cycle.id, distributor: distributor.id
 
-          product_ids = json_response.map{ |product| product['id'] }
           expect(product_ids).to_not include product2.id
+        end
+      end
+
+      context "with property filters" do
+        it "filters by product property" do
+          api_get :products, id: order_cycle.id, distributor: distributor.id,
+                             q: { properties_id_in_any: [property1.id, property2.id] }
+
+          expect(product_ids).to include product1.id, product2.id
+          expect(product_ids).to_not include product3.id
+        end
+      end
+
+      context "with taxon filters" do
+        it "filters by taxon" do
+          api_get :products, id: order_cycle.id, distributor: distributor.id,
+                             q: { primary_taxon_id_in_any: [taxon2.id] }
+
+          expect(product_ids).to include product2.id, product3.id
+          expect(product_ids).to_not include product1.id, product4.id
         end
       end
 
@@ -105,7 +123,6 @@ module Api
 
           api_get :products, id: order_cycle.id, distributor: distributor.id
 
-          product_ids = json_response.map{ |product| product['id'] }
           expect(product_ids).to_not include product1.id
         end
 
@@ -115,7 +132,6 @@ module Api
 
           api_get :products, id: order_cycle.id, distributor: distributor.id
 
-          product_ids = json_response.map{ |product| product['id'] }
           expect(product_ids).to_not include product2.id
         end
 
@@ -126,7 +142,6 @@ module Api
 
           api_get :products, id: order_cycle.id, distributor: distributor.id
 
-          product_ids = json_response.map{ |product| product['id'] }
           expect(product_ids).to_not include product1.id
           expect(product_ids).to include product3.id
         end
@@ -153,6 +168,12 @@ module Api
         expect(json_response.length).to be 2
         expect(properties).to include property1.presentation, property2.presentation
       end
+    end
+
+    private
+
+    def product_ids
+      json_response.map{ |product| product['id'] }
     end
   end
 end
