@@ -21,24 +21,37 @@ module Api
     def taxons
       taxons = Spree::Taxon.
         joins(:products).
-        where(spree_products: { id: distributed_products(distributor, order_cycle, customer) }).
+        where(spree_products: { id: distributed_products }).
         select('DISTINCT spree_taxons.*')
 
       render json: ActiveModel::ArraySerializer.new(taxons, each_serializer: Api::TaxonSerializer)
     end
 
     def properties
-      properties = Spree::Property.
-        joins(:products).
-        where(spree_products: { id: distributed_products(distributor, order_cycle, customer) }).
-        select('DISTINCT spree_properties.*')
-
       render json: ActiveModel::ArraySerializer.new(
-        properties, each_serializer: Api::PropertySerializer
+        product_properties | producer_properties, each_serializer: Api::PropertySerializer
       )
     end
 
     private
+
+    def product_properties
+      Spree::Property.
+        joins(:products).
+        where(spree_products: { id: distributed_products }).
+        select('DISTINCT spree_properties.*')
+    end
+
+    def producer_properties
+      producers = Enterprise.
+        joins(:supplied_products).
+        where(spree_products: { id: distributed_products })
+
+      Spree::Property.
+        joins(:producer_properties).
+        where(producer_properties: { producer_id: producers }).
+        select('DISTINCT spree_properties.*')
+    end
 
     def search_params
       permitted_search_params = params.slice :q, :page, :per_page
@@ -52,7 +65,7 @@ module Api
 
     def permitted_ransack_params
       [:name_or_meta_keywords_or_supplier_name_cont,
-       :properties_id_in_any,
+       :properties_id_or_supplier_properties_id_in_any,
        :primary_taxon_id_in_any]
     end
 
@@ -68,7 +81,7 @@ module Api
       @current_api_user.andand.customer_of(distributor) || nil
     end
 
-    def distributed_products(distributor, order_cycle, customer)
+    def distributed_products
       OrderCycleDistributedProducts.new(distributor, order_cycle, customer).products_relation
     end
   end

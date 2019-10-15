@@ -63,7 +63,7 @@ module Api
       context "with property filters" do
         it "filters by product property" do
           api_get :products, id: order_cycle.id, distributor: distributor.id,
-                             q: { properties_id_in_any: [property1.id, property2.id] }
+                             q: { properties_id_or_supplier_properties_id_in_any: [property1.id, property2.id] }
 
           expect(product_ids).to include product1.id, product2.id
           expect(product_ids).to_not include product3.id
@@ -167,6 +167,23 @@ module Api
 
         expect(json_response.length).to be 2
         expect(properties).to include property1.presentation, property2.presentation
+      end
+
+      context "with producer properties" do
+        let!(:property4) { create(:property) }
+        let!(:producer_property) {
+          create(:producer_property, producer_id: product1.supplier.id, property: property4)
+        }
+
+        it "loads producer properties for distributed products in the order cycle" do
+          api_get :properties, id: order_cycle.id, distributor: distributor.id
+
+          properties = json_response.map{ |property| property['name'] }
+
+          expect(json_response.length).to be 3
+          expect(properties).to include property1.presentation, property2.presentation,
+                                        producer_property.property.presentation
+        end
       end
     end
 
