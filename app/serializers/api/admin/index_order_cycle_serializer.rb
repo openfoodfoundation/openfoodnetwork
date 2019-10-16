@@ -5,9 +5,9 @@ module Api
     class IndexOrderCycleSerializer < ActiveModel::Serializer
       include OrderCyclesHelper
 
-      attributes :id, :name, :orders_open_at, :orders_close_at, :status, :variant_count, :deletable
-      attributes :coordinator, :producers, :shops, :viewing_as_coordinator
-      attributes :edit_path, :clone_path, :delete_path, :subscriptions_count
+      attributes :id, :name, :orders_open_at, :orders_close_at, :status, :variant_count, :deletable,
+                 :coordinator, :producers, :shops, :viewing_as_coordinator,
+                 :edit_path, :clone_path, :delete_path, :subscriptions_count
 
       has_many :schedules, serializer: Api::Admin::IdNameSerializer
 
@@ -68,7 +68,10 @@ module Api
       private
 
       def visible_enterprises
-        @visible_enterprises ||= OpenFoodNetwork::OrderCyclePermissions.new(options[:current_user], object).visible_enterprises
+        @visible_enterprises ||=
+          OpenFoodNetwork::OrderCyclePermissions.
+            new(options[:current_user], object).
+            visible_enterprises
       end
     end
   end

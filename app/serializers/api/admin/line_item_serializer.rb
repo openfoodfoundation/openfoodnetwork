@@ -1,5 +1,6 @@
 class Api::Admin::LineItemSerializer < ActiveModel::Serializer
-  attributes :id, :quantity, :max_quantity, :price, :supplier, :final_weight_volume, :units_product, :units_variant
+  attributes :id, :quantity, :max_quantity, :price, :supplier, :final_weight_volume,
+             :units_product, :units_variant
 
   has_one :order, serializer: Api::Admin::IdSerializer
 
@@ -20,7 +21,8 @@ class Api::Admin::LineItemSerializer < ActiveModel::Serializer
   end
 
   def max_quantity
-    return object.quantity unless object.max_quantity.present? && object.max_quantity > object.quantity
+    return object.quantity unless object.max_quantity.present? &&
+                                  object.max_quantity > object.quantity
     object.max_quantity
   end
 end

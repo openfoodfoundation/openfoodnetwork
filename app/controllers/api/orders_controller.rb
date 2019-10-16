@@ -1,5 +1,10 @@
 module Api
   class OrdersController < BaseController
+    def show
+      authorize! :read, order
+      render json: order, serializer: Api::OrderDetailedSerializer, current_order: order
+    end
+
     def index
       authorize! :admin, Spree::Order
 
@@ -18,6 +23,13 @@ module Api
         orders,
         each_serializer: Api::Admin::OrderSerializer
       )
+    end
+
+    def order
+      @order ||= Spree::Order.
+        where(number: params[:id]).
+        includes(line_items: { variant: [:product, :stock_items, :default_price] }).
+        first!
     end
   end
 end

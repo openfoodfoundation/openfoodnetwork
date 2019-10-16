@@ -1,8 +1,9 @@
 class Api::Admin::OrderSerializer < ActiveModel::Serializer
-  attributes :id, :number, :full_name, :email, :phone, :completed_at, :display_total
-  attributes :edit_path, :state, :payment_state, :shipment_state
-  attributes :payments_path, :ship_path, :ready_to_ship, :created_at
-  attributes :distributor_name, :special_instructions, :payment_capture_path
+  attributes :id, :number, :user_id, :full_name, :email, :phone, :completed_at, :display_total,
+             :edit_path, :state, :payment_state, :shipment_state,
+             :payments_path, :ship_path, :ready_to_ship, :created_at,
+             :distributor_name, :special_instructions, :payment_capture_path,
+             :item_total, :adjustment_total, :payment_total, :total
 
   has_one :distributor, serializer: Api::Admin::IdSerializer
   has_one :order_cycle, serializer: Api::Admin::IdSerializer
