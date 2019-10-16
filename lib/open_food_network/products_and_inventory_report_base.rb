@@ -65,7 +65,11 @@ module OpenFoodNetwork
     def filter_to_order_cycle(variants)
       if params[:order_cycle_id].to_i > 0
         order_cycle = OrderCycle.find params[:order_cycle_id]
-        variants.where(id: order_cycle.variants)
+        variant_ids = Exchange.in_order_cycle(order_cycle).
+          joins("INNER JOIN exchange_variants ON exchanges.id = exchange_variants.exchange_id").
+          select("DISTINCT exchange_variants.variant_id")
+
+        variants.where("spree_variants.id IN (#{variant_ids.to_sql})")
       else
         variants
       end
