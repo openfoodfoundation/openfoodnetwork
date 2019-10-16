@@ -513,7 +513,7 @@ feature '
         visit spree.admin_products_path
       end
 
-      it "shows an edit button for products, which takes the user to the standard edit page for that product" do
+      it "shows an edit button for products, which takes the user to the standard edit page for that product in a new window" do
         expect(page).to have_selector "a.edit-product", count: 2
 
         new_window = window_opened_by do 
@@ -528,7 +528,7 @@ feature '
         end
       end
 
-      it "shows an edit button for variants, which takes the user to the standard edit page for that variant" do
+      it "shows an edit button for variants, which takes the user to the standard edit page for that variant in a new window" do
         expect(page).to have_selector "a.view-variants"
         all("a.view-variants").each(&:click)
 

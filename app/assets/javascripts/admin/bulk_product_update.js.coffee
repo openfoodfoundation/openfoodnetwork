@@ -108,9 +108,13 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     $scope.categoryFilter = "0"
     $scope.importDateFilter = "0"
 
+  confirm_unsaved_changes = () -> (DirtyProducts.count() > 0 and confirm(t("unsaved_changes_confirmation"))) or (DirtyProducts.count() == 0)
+  
+  editProductUrl = (product, variant) -> "/admin/products/" + product.permalink_live + ((if variant then "/variants/" + variant.id else "")) + "/edit"
+
   $scope.editWarn = (product, variant) ->
-    if (DirtyProducts.count() > 0 and confirm(t("unsaved_changes_confirmation"))) or (DirtyProducts.count() == 0)
-      window.open("/admin/products/" + product.permalink_live + ((if variant then "/variants/" + variant.id else "")) + "/edit", "_blank")
+    if confirm_unsaved_changes()
+      window.open(editProductUrl(product, variant), "_blank")
 
 
   $scope.toggleShowAllVariants = ->
