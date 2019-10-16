@@ -46,8 +46,11 @@ Spree::Admin::ProductsController.class_eval do
   end
 
   def update
+    original_supplier = @product.supplier_id
+
     delete_stock_params_and_set_after do
       super
+      remove_product_from_order_cycles if original_supplier != @product.supplier_id
     end
   end
 
@@ -188,6 +191,13 @@ Spree::Admin::ProductsController.class_eval do
     else
       product.master
     end
+  end
+
+  def remove_product_from_order_cycles
+    variant_ids = @product.variants.map(&:id)
+    ExchangeVariant.
+      where(variant_id: variant_ids).
+      delete_all
   end
 
   def set_product_master_variant_price_to_zero
