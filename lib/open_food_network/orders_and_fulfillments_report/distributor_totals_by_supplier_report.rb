@@ -66,6 +66,10 @@ module OpenFoodNetwork
          proc { |_line_items| I18n.t(:report_header_shipping_method) }]
       end
       # rubocop:enable Metrics/AbcSize
+
+      def line_item_includes
+        [:order, { variant: :product }]
+      end
     end
   end
 end

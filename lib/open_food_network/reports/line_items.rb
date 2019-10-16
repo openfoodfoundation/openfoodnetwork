@@ -12,6 +12,10 @@ module OpenFoodNetwork
         line_items = permissions.visible_line_items.merge(Spree::LineItem.where(order_id: orders))
         line_items = line_items.supplied_by_any(params[:supplier_id_in]) if params[:supplier_id_in].present?
 
+        if params[:line_item_includes].present?
+          line_items = line_items.includes(*params[:line_item_includes])
+        end
+
         hidden_line_items = line_items_with_hidden_details(permissions, line_items)
 
         line_items.select{ |li|
