@@ -90,6 +90,23 @@ Spree::Core::Engine.routes.prepend do
     end
 
     # Configuration section
+    resource :general_settings do
+      collection do
+        post :dismiss_alert
+      end
+    end
+    resource :mail_method, :only => [:edit, :update] do
+      post :testmail, :on => :collection
+    end
+
+    resource :image_settings
+
+    resources :zones
+    resources :countries do
+      resources :states
+    end
+    resources :states
+
     resources :taxonomies do
       collection do
         post :update_positions
@@ -109,12 +126,6 @@ Spree::Core::Engine.routes.prepend do
     resources :tax_rates
     resource  :tax_settings
     resources :tax_categories
-
-    resources :zones
-    resources :countries do
-      resources :states
-    end
-    resources :states
   end
 
   resources :orders do
