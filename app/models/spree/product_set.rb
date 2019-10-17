@@ -46,13 +46,15 @@ class Spree::ProductSet < ModelSet
 
     return true if product_related_attrs.blank?
 
+    original_supplier = product.supplier_id
     product.assign_attributes(product_related_attrs)
 
     product.variants.each do |variant|
       validate_presence_of_unit_value(product, variant)
     end
-
     product.save if errors.empty?
+
+    remove_product_from_order_cycles(product) if original_supplier != product.supplier_id
   end
 
   def validate_presence_of_unit_value(product, variant)
@@ -60,6 +62,13 @@ class Spree::ProductSet < ModelSet
     return if variant.unit_value.present?
 
     product.errors.add(:unit_value, "can't be blank")
+  end
+
+  def remove_product_from_order_cycles(product)
+    variant_ids = product.variants.map(&:id)
+    ExchangeVariant.
+      where(variant_id: variant_ids).
+      delete_all
   end
 
   def update_product_variants(product, attributes)

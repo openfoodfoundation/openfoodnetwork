@@ -75,6 +75,31 @@ describe Spree::ProductSet do
           end
         end
 
+        context 'when a different supplier is passed' do
+          let!(:producer) { create(:enterprise) }
+          let!(:product) { create(:simple_product) }
+          let(:collection_hash) do
+            {
+              0 => {
+                id: product.id,
+                supplier_id: producer.id
+              }
+            }
+          end
+
+          let(:distributor) { create(:distributor_enterprise) }
+          let!(:order_cycle) { create(:simple_order_cycle, variants: [product.variants.first], coordinator: distributor, distributors: [distributor]) }
+
+          it 'updates the product and removes the product from order cycles' do
+            product_set.save
+
+            expect(product.reload.attributes).to include(
+              'supplier_id' => producer.id
+            )
+            expect(order_cycle.reload.distributed_variants).to_not include product.variants.first
+          end
+        end
+
         context 'when :master_attributes is passed' do
           let!(:product) { create(:simple_product) }
           let(:collection_hash) { { 0 => { id: product.id } } }
