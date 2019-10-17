@@ -54,7 +54,7 @@ class Spree::ProductSet < ModelSet
     end
     product.save if errors.empty?
 
-    remove_product_from_order_cycles(product) if original_supplier != product.supplier_id
+    ExchangeVariantDeleter.new.delete(product) if original_supplier != product.supplier_id
   end
 
   def validate_presence_of_unit_value(product, variant)
@@ -62,13 +62,6 @@ class Spree::ProductSet < ModelSet
     return if variant.unit_value.present?
 
     product.errors.add(:unit_value, "can't be blank")
-  end
-
-  def remove_product_from_order_cycles(product)
-    variant_ids = product.variants.map(&:id)
-    ExchangeVariant.
-      where(variant_id: variant_ids).
-      delete_all
   end
 
   def update_product_variants(product, attributes)
