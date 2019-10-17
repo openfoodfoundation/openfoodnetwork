@@ -2782,6 +2782,7 @@ en_CA:
     discount_amount: "Discount Amount"
     email: Email
     account_updated: "Account updated!"
+    email_updated: "The account will be updated once the new email is confirmed."
     my_account: "My account"
     date: "Date"
     time: "Time"
