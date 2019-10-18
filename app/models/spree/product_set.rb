@@ -3,6 +3,20 @@ class Spree::ProductSet < ModelSet
     super(Spree::Product, [], attributes, proc { |attrs| attrs[:product_id].blank? })
   end
 
+  def save
+    @collection_hash.each_value.all? do |product_attributes|
+      update_attributes(product_attributes)
+    end
+  end
+
+  def collection_attributes=(attributes)
+    @collection = Spree::Product
+      .where(id: attributes.each_value.map { |product| product[:id] })
+    @collection_hash = attributes
+  end
+
+  private
+
   # A separate method of updating products was required due to an issue with
   # the way Rails' assign_attributes and updates_attributes behave when
   # delegated attributes of a nested object are updated via the parent object
@@ -114,18 +128,6 @@ class Spree::ProductSet < ModelSet
       report.add_tab(:variant_attributes, variant_attributes)
       report.add_tab(:variant, variant.attributes)
       report.add_tab(:variant_error, variant.errors.first) unless variant.valid?
-    end
-  end
-
-  def collection_attributes=(attributes)
-    @collection = Spree::Product
-      .where(id: attributes.each_value.map { |product| product[:id] })
-    @collection_hash = attributes
-  end
-
-  def save
-    @collection_hash.each_value.all? do |product_attributes|
-      update_attributes(product_attributes)
     end
   end
 end
