@@ -10,7 +10,7 @@
       = line_item.single_money.to_html
     %td.item-qty-show.align-center
       - item.states.each do |state,count|
-        = "#{count} x #{t(state.humanize.downcase)}"
+        = "#{count} x #{t(state.humanize.downcase, scope: [:spree, :shipment_states], default: [:missing, "none"])}"
     - unless shipment.shipped?
       %td.item-qty-edit.hidden
         = number_field_tag :quantity, item.quantity, :min => 0, :class => "line_item_quantity", :size => 5
