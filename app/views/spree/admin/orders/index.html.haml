@@ -73,6 +73,8 @@
           {{'js.admin.orders.shipment_states.' + order.shipment_state | t}}
       %td
         = mail_to "{{order.email}}"
+        %br
+        {{order.full_name}}
       %td.align-center
         %span{'ng-bind-html' => 'order.display_total'}
       %td.actions
