@@ -89,6 +89,15 @@ Spree::Core::Engine.routes.prepend do
       end
     end
 
+    resources :option_types do
+      collection do
+        post :update_positions
+        post :update_values_positions
+      end
+    end
+
+    delete '/option_values/:id', :to => "option_values#destroy", :as => :option_value
+
     # Configuration section
     resource :general_settings do
       collection do
