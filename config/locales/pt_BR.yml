@@ -2784,6 +2784,7 @@ pt_BR:
     discount_amount: "Valor do desconto"
     email: E-mail
     account_updated: "Conta atualizada!"
+    email_updated: "A conta vai ser atualizada assim que o email for confirmado."
     my_account: "Minha conta"
     date: "Data"
     time: "Tempo"
@@ -2938,9 +2939,11 @@ pt_BR:
           product_name: "Nome do Produto"
           units: "Tamanho da Unidade"
           value: "Valor"
+          unit_name: "Nome da Unidade"
           price: "Preço"
           on_hand: "Disponível"
           on_demand: "Sob Encomenda"
+          product_description: "Descrição do Produto"
           image: "Imagem"
           or: "ou"
         unit_name_placeholder: 'por exemplo. cachos'
