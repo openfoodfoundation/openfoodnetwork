@@ -3185,6 +3185,24 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           cookies_policy_matomo_section: "Display Matomo section on cookies policy page"
           cookies_policy_ga_section: "Display Google Analytics section on cookies policy page"
           footer_tos_url: "Terms of Service URL"
+      option_types:
+        form:
+          name: "Name"
+          presentation: "Presentation"
+        edit:
+          editing_option_type: "Editing Option Type"
+          add_option_value: "Add Option Value"
+          back_to_option_types_list: "Back To Option Types List"
+          option_values: "Option Values"
+          name: "Name"
+          display: "Display"
+        index:
+          option_types: "Option Types"
+          new_option_type: "New Option Type"
+          name: "Name"
+          presentation: "Presentation"
+        new:
+          new_option_type: "New Option Type"
     checkout:
       payment:
         stripe:

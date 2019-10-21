@@ -1,0 +1,32 @@
+- content_for :page_title do
+  = t('.option_types')
+
+- content_for :page_actions do
+  %li#new_ot_link
+    = button_link_to t('.new_option_type'), new_admin_option_type_url, { remote: true, icon: 'icon-plus', id: 'new_option_type_link' }
+
+= render partial: 'spree/admin/shared/product_sub_menu'
+
+#new_option_type
+%table#listing_option_types.index.sortable{"data-sortable-link" => update_positions_admin_option_types_url}
+  %colgroup
+    %col{style: "width: 44%"}/
+    %col{style: "width: 44%"}/
+    %col{style: "width: 12%"}/
+  %thead
+    %tr
+      %th= t('.name')
+      %th= t('.presentation')
+      %th.actions
+  %tbody
+    - @option_types.each do |option_type|
+      - tr_class = cycle('odd', 'even')
+      - tr_id = spree_dom_id(option_type)
+      %tr{class: "spree_option_type #{tr_class}", id: tr_id}
+        %td
+          %span.handle
+          = option_type.name
+        %td.presentation= option_type.presentation
+        %td.actions
+          = link_to_edit(option_type, class: 'admin_edit_option_type', no_text: true)
+          = link_to_delete(option_type, no_text: true)

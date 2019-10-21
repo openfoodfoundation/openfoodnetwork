@@ -1,0 +1,8 @@
+- tr_id = spree_dom_id(f.object)
+%tr.option_value.fields{ id: tr_id }
+  %td.no-border
+    %span.handle
+    = f.hidden_field :id
+  %td.name= f.text_field :name
+  %td.presentation= f.text_field :presentation
+  %td.actions= link_to_remove_fields t('remove'), f, no_text: true
