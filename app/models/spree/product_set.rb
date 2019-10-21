@@ -62,16 +62,21 @@ class Spree::ProductSet < ModelSet
     original_supplier = product.supplier_id
     product.assign_attributes(product_related_attrs)
 
-    product.variants.each do |variant|
-      validate_presence_of_unit_value(product, variant)
-    end
+    validate_presence_of_unit_value_in_product(product)
+
     return false unless product.errors.empty? && product.save
 
     ExchangeVariantDeleter.new.delete(product) if original_supplier != product.supplier_id
     true
   end
 
-  def validate_presence_of_unit_value(product, variant)
+  def validate_presence_of_unit_value_in_product(product)
+    product.variants.each do |variant|
+      validate_presence_of_unit_value_in_variant(product, variant)
+    end
+  end
+
+  def validate_presence_of_unit_value_in_variant(product, variant)
     return unless %w(weight volume).include?(product.variant_unit)
     return if variant.unit_value.present?
 
