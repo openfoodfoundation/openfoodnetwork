@@ -115,15 +115,6 @@ describe Api::VariantsController, type: :controller do
       expect { variant.reload }.not_to raise_error
       expect(variant.deleted_at).to be_nil
     end
-
-    context 'when the variant is not the master' do
-      before { variant.update_attribute(:is_master, false) }
-
-      it 'refreshes the cache' do
-        expect(OpenFoodNetwork::ProductsCache).to receive(:variant_destroyed).with(variant)
-        spree_delete :soft_delete, variant_id: variant.id, product_id: variant.product.permalink, format: :json
-      end
-    end
   end
 
   context "as an administrator" do
@@ -148,15 +139,6 @@ describe Api::VariantsController, type: :controller do
 
       expect(variant.reload).to_not be_deleted
       expect(assigns(:variant).errors[:product]).to include "must have at least one variant"
-    end
-
-    context 'when the variant is not the master' do
-      before { variant.update_attribute(:is_master, false) }
-
-      it 'refreshes the cache' do
-        expect(OpenFoodNetwork::ProductsCache).to receive(:variant_destroyed).with(variant)
-        spree_delete :soft_delete, variant_id: variant.id, product_id: variant.product.permalink, format: :json
-      end
     end
 
     context "deleted variants" do

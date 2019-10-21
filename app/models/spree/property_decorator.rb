@@ -20,19 +20,8 @@ module Spree
         merge(OrderCycle.active)
     }
 
-    after_save :refresh_products_cache
-
-    # When a Property is destroyed, dependent-destroy will destroy all ProductProperties,
-    # which will take care of refreshing the products cache
-
     def property
       self
-    end
-
-    private
-
-    def refresh_products_cache
-      product_properties(:reload).each(&:refresh_products_cache)
     end
   end
 end

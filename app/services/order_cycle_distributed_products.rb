@@ -1,9 +1,10 @@
 # Returns a (paginatable) AR object for the products or variants in stock for a given shop and OC.
 # The stock-checking includes on_demand and stock level overrides from variant_overrides.
 class OrderCycleDistributedProducts
-  def initialize(distributor, order_cycle)
+  def initialize(distributor, order_cycle, customer)
     @distributor = distributor
     @order_cycle = order_cycle
+    @customer = customer
   end
 
   def products_relation
@@ -11,26 +12,30 @@ class OrderCycleDistributedProducts
   end
 
   def variants_relation
-    @order_cycle.
-      variants_distributed_by(@distributor).
+    order_cycle.
+      variants_distributed_by(distributor).
       merge(stocked_variants_and_overrides)
   end
 
   private
 
+  attr_reader :distributor, :order_cycle, :customer
+
   def stocked_products
-    @order_cycle.
-      variants_distributed_by(@distributor).
+    order_cycle.
+      variants_distributed_by(distributor).
       merge(stocked_variants_and_overrides).
       select("DISTINCT spree_variants.product_id")
   end
 
   def stocked_variants_and_overrides
-    Spree::Variant.
+    stocked_variants = Spree::Variant.
       joins("LEFT OUTER JOIN variant_overrides ON variant_overrides.variant_id = spree_variants.id
-            AND variant_overrides.hub_id = #{@distributor.id}").
+            AND variant_overrides.hub_id = #{distributor.id}").
       joins(:stock_items).
       where(query_stock_with_overrides)
+
+    ProductTagRulesFilterer.new(distributor, customer, stocked_variants).call
   end
 
   def query_stock_with_overrides

@@ -12,12 +12,6 @@ describe EnterpriseFee do
   describe "callbacks" do
     let(:ef) { create(:enterprise_fee) }
 
-    it "refreshes the products cache when saved" do
-      expect(OpenFoodNetwork::ProductsCache).to receive(:enterprise_fee_changed).with(ef)
-      ef.name = 'foo'
-      ef.save
-    end
-
     it "removes itself from order cycle coordinator fees when destroyed" do
       oc = create(:simple_order_cycle, coordinator_fees: [ef])
 

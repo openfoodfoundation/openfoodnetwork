@@ -1,5 +1,5 @@
-.filter-shopfront.taxon-selectors.text-right
-  %single-line-selectors{ selectors: "taxonSelectors", objects: "Products.products | products:query | properties:activeProperties | taxonsOf", "active-selectors" => "activeTaxons"}
+.filter-shopfront.taxon-selectors.text-right{ng: {show: 'supplied_taxons != null'}}
+  %single-line-selectors{ selectors: "taxonSelectors", objects: "supplied_taxons", "active-selectors" => "activeTaxons"}
 
-.filter-shopfront.property-selectors.text-right
-  %single-line-selectors{ selectors: "propertySelectors", objects: "Products.products | products:query | taxons:activeTaxons | propertiesOf", "active-selectors" => "activeProperties"}
+.filter-shopfront.property-selectors.text-right{ng: {show: 'supplied_properties != null'}}
+  %single-line-selectors{ selectors: "propertySelectors", objects: "supplied_properties", "active-selectors" => "activeProperties"}

@@ -1,26 +1,34 @@
-Darkswarm.factory 'Products', ($resource, Shopfront, Dereferencer, Taxons, Properties, Cart, Variants) ->
+Darkswarm.factory 'Products', (OrderCycleResource, OrderCycle, Shopfront, currentHub, Dereferencer, Taxons, Properties, Cart, Variants) ->
   new class Products
     constructor: ->
       @update()
 
-    # TODO: don't need to scope this into object
-    # Already on object as far as controller scope is concerned
-    products: null
+    products: []
+    fetched_products: []
     loading: true
 
-    update: =>
+    update: (params = {}, load_more = false) =>
       @loading = true
-      @products = []
-      $resource("/shop/products").query (products)=>
-        @products = products
+      order_cycle_id = OrderCycle.order_cycle.order_cycle_id
 
+      if order_cycle_id == undefined
+        @loading = false
+        return
+
+      params['id'] = order_cycle_id
+      params['distributor'] = currentHub.id
+
+      OrderCycleResource.products params, (data)=>
+        @products = [] unless load_more
+        @fetched_products = data
         @extend()
         @dereference()
         @registerVariants()
+        @products = @products.concat(@fetched_products)
         @loading = false
 
     extend: ->
-      for product in @products
+      for product in @fetched_products
         if product.variants?.length > 0
           prices = (v.price for v in product.variants)
           product.price = Math.min.apply(null, prices)
@@ -30,7 +38,7 @@ Darkswarm.factory 'Products', ($resource, Shopfront, Dereferencer, Taxons, Prope
         product.largeImage = product.images[0]?.large_url if product.images
 
     dereference: ->
-      for product in @products
+      for product in @fetched_products
         product.supplier = Shopfront.producers_by_id[product.supplier.id]
         Dereferencer.dereference product.taxons, Taxons.taxons_by_id
 
@@ -40,7 +48,7 @@ Darkswarm.factory 'Products', ($resource, Shopfront, Dereferencer, Taxons, Prope
     # May return different objects! If the variant has already been registered
     # by another service, we fetch those
     registerVariants: ->
-      for product in @products
+      for product in @fetched_products
         if product.variants
           product.variant_names = ""
           product.variants = for variant in product.variants

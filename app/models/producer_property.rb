@@ -4,9 +4,6 @@ class ProducerProperty < ActiveRecord::Base
 
   default_scope order("#{table_name}.position")
 
-  after_save :refresh_products_cache
-  after_destroy :refresh_products_cache_from_destroy
-
   scope :ever_sold_by, ->(shop) {
     joins(producer: { supplied_products: { variants: { exchanges: :order_cycle } } }).
       merge(Exchange.outgoing).
@@ -28,15 +25,5 @@ class ProducerProperty < ActiveRecord::Base
       self.property = Spree::Property.find_by_name(name) ||
                       Spree::Property.create(name: name, presentation: name)
     end
-  end
-
-  private
-
-  def refresh_products_cache
-    OpenFoodNetwork::ProductsCache.producer_property_changed self
-  end
-
-  def refresh_products_cache_from_destroy
-    OpenFoodNetwork::ProductsCache.producer_property_destroyed self
   end
 end

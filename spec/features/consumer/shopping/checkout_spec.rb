@@ -180,46 +180,6 @@ feature "As a consumer I want to check out my cart", js: true do
       end
     end
 
-    context "in the shopfront with cache enabled" do
-      around do |example|
-        original_config = Spree::Config[:enable_products_cache?]
-        example.run
-        Spree::Config[:enable_products_cache?] = original_config
-      end
-
-      let(:control_product) { create(:taxed_product, supplier: supplier, price: 110, zone: zone, tax_rate_amount: 0.1) }
-      let(:control_variant) { control_product.variants.first }
-      let!(:order_cycle) { create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], coordinator: create(:distributor_enterprise), variants: [variant, control_variant]) }
-
-      it "does not show item after all stock of an item is checked out (tesging cache update on checkout)" do
-        Spree::Config[:enable_products_cache?] = true
-        variant.update_attributes on_hand: 5
-        flush_jobs
-        visit shop_path
-
-        fill_in "variants[#{variant.id}]", with: '5'
-        wait_until { !cart_dirty }
-
-        visit checkout_path
-        checkout_as_guest
-
-        fill_out_details
-        fill_out_billing_address
-        choose free_shipping.name
-        choose check_without_fee.name
-
-        place_order
-        expect(page).to have_content "Your order has been processed successfully"
-
-        flush_jobs
-        visit shop_path
-        # The presence of the control product ensures the list of products is fully loaded
-        #   before we verify the sold product is not present
-        expect(page).to have_content control_product.name
-        expect(page).not_to have_content product.name
-      end
-    end
-
     context "on the checkout page" do
       before do
         visit checkout_path

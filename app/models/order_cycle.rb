@@ -23,8 +23,6 @@ class OrderCycle < ActiveRecord::Base
   validates :name, :coordinator_id, presence: true
   validate :orders_close_at_after_orders_open_at?
 
-  after_save :refresh_products_cache
-
   preference :product_selection_from_coordinator_inventory_only, :boolean, default: false
 
   scope :active, lambda {
@@ -245,10 +243,6 @@ class OrderCycle < ActiveRecord::Base
 
   def coordinated_by?(user)
     coordinator.users.include? user
-  end
-
-  def refresh_products_cache
-    OpenFoodNetwork::ProductsCache.order_cycle_changed self
   end
 
   def items_bought_by_user(user, distributor)

@@ -1,6 +1,5 @@
 require 'spec_helper'
 require 'open_food_network/option_value_namer'
-require 'open_food_network/products_cache'
 
 module Spree
   describe Variant do
@@ -161,39 +160,6 @@ module Spree
           stockable_variants = Spree::Variant.stockable_by(shop)
           expect(stockable_variants).to include v1, v2
           expect(stockable_variants).to_not include v3
-        end
-      end
-    end
-
-    describe "callbacks" do
-      let(:variant) { create(:variant) }
-
-      it "refreshes the products cache on save" do
-        expect(OpenFoodNetwork::ProductsCache).to receive(:variant_changed).with(variant)
-        variant.sku = 'abc123'
-        variant.save
-      end
-
-      it "refreshes the products cache on destroy" do
-        expect(OpenFoodNetwork::ProductsCache).to receive(:variant_destroyed).with(variant)
-        variant.destroy
-      end
-
-      context "when it is the master variant" do
-        let(:product) { create(:simple_product) }
-        let(:master) { product.master }
-
-        it "refreshes the products cache for the entire product on save" do
-          expect(OpenFoodNetwork::ProductsCache).to receive(:product_changed).with(product)
-          expect(OpenFoodNetwork::ProductsCache).to receive(:variant_changed).never
-          master.sku = 'abc123'
-          master.save
-        end
-
-        it "refreshes the products cache for the entire product on destroy" do
-          expect(OpenFoodNetwork::ProductsCache).to receive(:product_changed).with(product)
-          expect(OpenFoodNetwork::ProductsCache).to receive(:variant_destroyed).never
-          master.destroy
         end
       end
     end

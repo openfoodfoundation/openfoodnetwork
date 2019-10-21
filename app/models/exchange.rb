@@ -23,9 +23,6 @@ class Exchange < ActiveRecord::Base
   validates :order_cycle, :sender, :receiver, presence: true
   validates :sender_id, uniqueness: { scope: [:order_cycle_id, :receiver_id, :incoming] }
 
-  after_save :refresh_products_cache
-  after_destroy :refresh_products_cache_from_destroy
-
   accepts_nested_attributes_for :variants
 
   scope :in_order_cycle, lambda { |order_cycle| where(order_cycle_id: order_cycle) }
@@ -97,13 +94,5 @@ class Exchange < ActiveRecord::Base
 
   def participant
     incoming? ? sender : receiver
-  end
-
-  def refresh_products_cache
-    OpenFoodNetwork::ProductsCache.exchange_changed self
-  end
-
-  def refresh_products_cache_from_destroy
-    OpenFoodNetwork::ProductsCache.exchange_destroyed self
   end
 end

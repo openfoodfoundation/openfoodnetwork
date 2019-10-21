@@ -22,14 +22,14 @@
       .small-12.medium-6.large-5.columns
         %input#search.text{"ng-model" => "query",
         placeholder: t(:products_search),
-        "ng-debounce" => "100",
+        "ng-debounce" => "200",
         "ofn-disable-enter" => true}
 
       .small-12.medium-6.large-6.large-offset-1.columns
         = render partial: "shop/products/filters"
 
-    %div.pad-top{ "infinite-scroll" => "incrementLimit()", "infinite-scroll-distance" => "1", "infinite-scroll-disabled" => 'filteredProducts.length <= limit' }
-      %product.animate-repeat{"ng-controller" => "ProductNodeCtrl", "ng-repeat" => "product in visibleProducts track by product.id", "id" => "product-{{ product.id }}"}
+    %div.pad-top{ "infinite-scroll" => "loadMore()", "infinite-scroll-distance" => "1", "infinite-scroll-disabled" => 'Products.loading' }
+      %product.animate-repeat{"ng-controller" => "ProductNodeCtrl", "ng-repeat" => "product in Products.products track by product.id", "id" => "product-{{ product.id }}"}
         = render "shop/products/summary"
         %shop-variant{variant: 'variant', "ng-repeat" => "variant in product.variants | orderBy: ['name_to_display','unit_value'] track by variant.id", "id" => "variant-{{ variant.id }}", "ng-class" => "{'out-of-stock': !variant.on_demand && variant.on_hand == 0}"}
 
@@ -41,7 +41,7 @@
           .small-12.columns.text-center
             %img.spinner{ src: "/assets/spinning-circles.svg" }
 
-      %div{"ng-show" => "filteredProducts.length == 0 && !Products.loading"}
+      %div{"ng-show" => "Products.products.length == 0 && !Products.loading"}
         .row.summary
           .small-12.columns
             %p.no-results

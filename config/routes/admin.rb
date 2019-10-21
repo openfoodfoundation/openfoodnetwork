@@ -75,8 +75,6 @@ Openfoodnetwork::Application.routes.draw do
 
     resource :contents
 
-    resource :cache_settings
-
     resources :column_preferences, only: [], format: :json do
       put :bulk_update, on: :collection
     end

@@ -27,18 +27,6 @@ describe OrderCycle do
     oc.save!
   end
 
-  describe "products cache" do
-    let(:oc) { create(:open_order_cycle) }
-
-    it "refreshes the products cache on save" do
-      expect(OpenFoodNetwork::ProductsCache).to receive(:order_cycle_changed).with(oc)
-      oc.name = 'asdf'
-      oc.save
-    end
-
-    # On destroy, we're removing distributions, so no updates to the products cache are required
-  end
-
   it "has exchanges" do
     oc = create(:simple_order_cycle)
 

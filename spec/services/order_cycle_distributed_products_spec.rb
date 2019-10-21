@@ -5,13 +5,14 @@ describe OrderCycleDistributedProducts do
     let(:distributor) { create(:distributor_enterprise) }
     let(:product) { create(:product) }
     let(:variant) { product.variants.first }
+    let(:customer) { create(:customer) }
     let(:order_cycle) do
       create(:simple_order_cycle, distributors: [distributor], variants: [variant])
     end
 
     describe "product distributed by distributor in the OC" do
       it "returns products" do
-        expect(described_class.new(distributor, order_cycle).products_relation).to eq([product])
+        expect(described_class.new(distributor, order_cycle, customer).products_relation).to eq([product])
       end
     end
 
@@ -25,7 +26,7 @@ describe OrderCycleDistributedProducts do
       end
 
       it "does not return product" do
-        expect(described_class.new(distributor, order_cycle).products_relation).to_not include product
+        expect(described_class.new(distributor, order_cycle, customer).products_relation).to_not include product
       end
     end
 
@@ -36,19 +37,19 @@ describe OrderCycleDistributedProducts do
       end
 
       it "does not return product" do
-        expect(described_class.new(distributor, order_cycle).products_relation).to_not include product
+        expect(described_class.new(distributor, order_cycle, customer).products_relation).to_not include product
       end
     end
 
     describe "filtering products that are out of stock" do
       context "with regular variants" do
         it "returns product when variant is in stock" do
-          expect(described_class.new(distributor, order_cycle).products_relation).to include product
+          expect(described_class.new(distributor, order_cycle, customer).products_relation).to include product
         end
 
         it "does not return product when variant is out of stock" do
           variant.update_attribute(:on_hand, 0)
-          expect(described_class.new(distributor, order_cycle).products_relation).to_not include product
+          expect(described_class.new(distributor, order_cycle, customer).products_relation).to_not include product
         end
       end
 
@@ -56,13 +57,13 @@ describe OrderCycleDistributedProducts do
         let!(:override) { create(:variant_override, hub: distributor, variant: variant, count_on_hand: 0) }
 
         it "does not return product when an override is out of stock" do
-          expect(described_class.new(distributor, order_cycle).products_relation).to_not include product
+          expect(described_class.new(distributor, order_cycle, customer).products_relation).to_not include product
         end
 
         it "returns product when an override is in stock" do
           variant.update_attribute(:on_hand, 0)
           override.update_attribute(:count_on_hand, 10)
-          expect(described_class.new(distributor, order_cycle).products_relation).to include product
+          expect(described_class.new(distributor, order_cycle, customer).products_relation).to include product
         end
       end
     end
@@ -71,12 +72,13 @@ describe OrderCycleDistributedProducts do
   describe "#variants_relation" do
     let(:distributor) { create(:distributor_enterprise) }
     let(:oc) { create(:simple_order_cycle, distributors: [distributor], variants: [v1, v3]) }
+    let(:customer) { create(:customer) }
     let(:product) { create(:simple_product) }
     let!(:v1) { create(:variant, product: product) }
     let!(:v2) { create(:variant, product: product) }
     let!(:v3) { create(:variant, product: product) }
     let!(:vo) { create(:variant_override, hub: distributor, variant_id: v3.id, count_on_hand: 0) }
-    let(:variants) { described_class.new(distributor, oc).variants_relation }
+    let(:variants) { described_class.new(distributor, oc, customer).variants_relation }
 
     it "returns variants in the oc" do
       expect(variants).to include v1

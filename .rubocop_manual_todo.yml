@@ -139,7 +139,6 @@ Metrics/LineLength:
   - lib/open_food_network/payments_report.rb
   - lib/open_food_network/permalink_generator.rb
   - lib/open_food_network/products_cache.rb
-  - lib/open_food_network/products_renderer.rb
   - lib/open_food_network/reports/bulk_coop_allocation_report.rb
   - lib/open_food_network/reports/line_items.rb
   - lib/open_food_network/sales_tax_report.rb
@@ -249,13 +248,10 @@ Metrics/LineLength:
   - spec/helpers/order_cycles_helper_spec.rb
   - spec/helpers/spree/admin/base_helper_spec.rb
   - spec/jobs/confirm_order_job_spec.rb
-  - spec/jobs/products_cache_integrity_checker_job_spec.rb
-  - spec/jobs/refresh_products_cache_job_spec.rb
   - spec/jobs/subscription_confirm_job_spec.rb
   - spec/jobs/subscription_placement_job_spec.rb
   - spec/lib/open_food_network/address_finder_spec.rb
   - spec/lib/open_food_network/bulk_coop_report_spec.rb
-  - spec/lib/open_food_network/cached_products_renderer_spec.rb
   - spec/lib/open_food_network/customers_report_spec.rb
   - spec/lib/open_food_network/enterprise_fee_applicator_spec.rb
   - spec/lib/open_food_network/enterprise_fee_calculator_spec.rb
@@ -272,7 +268,6 @@ Metrics/LineLength:
   - spec/lib/open_food_network/permissions_spec.rb
   - spec/lib/open_food_network/products_and_inventory_report_spec.rb
   - spec/lib/open_food_network/products_cache_spec.rb
-  - spec/lib/open_food_network/products_renderer_spec.rb
   - spec/lib/open_food_network/proxy_order_syncer_spec.rb
   - spec/lib/open_food_network/scope_variant_to_hub_spec.rb
   - spec/lib/open_food_network/subscription_payment_updater_spec.rb
@@ -615,7 +610,6 @@ Metrics/MethodLength:
   - lib/open_food_network/payments_report.rb
   - lib/open_food_network/permissions.rb
   - lib/open_food_network/products_and_inventory_report.rb
-  - lib/open_food_network/products_renderer.rb
   - lib/open_food_network/rack_request_blocker.rb
   - lib/open_food_network/reports/bulk_coop_allocation_report.rb
   - lib/open_food_network/reports/bulk_coop_supplier_report.rb
@@ -670,7 +664,6 @@ Metrics/ModuleLength:
   - spec/controllers/api/orders_controller_spec.rb
   - spec/controllers/spree/api/products_controller_spec.rb
   - spec/lib/open_food_network/address_finder_spec.rb
-  - spec/lib/open_food_network/cached_products_renderer_spec.rb
   - spec/lib/open_food_network/customers_report_spec.rb
   - spec/lib/open_food_network/enterprise_fee_calculator_spec.rb
   - spec/lib/open_food_network/option_value_namer_spec.rb

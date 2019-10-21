@@ -60,11 +60,6 @@ module Spree
             expect(response).to render_template('spree/admin/shared/_destroy')
           end
 
-          it 'refreshes the cache' do
-            expect(OpenFoodNetwork::ProductsCache).to receive(:variant_destroyed).with(variant)
-            spree_delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'js'
-          end
-
           it 'destroys all its exchanges' do
             exchange = create(:exchange)
             variant.exchanges << exchange
@@ -97,11 +92,6 @@ module Spree
               action: :index,
               product_id: variant.product.permalink
             )
-          end
-
-          it 'refreshes the cache' do
-            expect(OpenFoodNetwork::ProductsCache).to receive(:variant_destroyed).with(variant)
-            spree_delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'js'
           end
 
           it 'destroys all its exchanges' do

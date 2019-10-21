@@ -33,7 +33,6 @@ Openfoodnetwork::Application.routes.draw do
   end
 
   resource :shop, controller: "shop" do
-    get :products
     post :order_cycle
     get :order_cycle
     get :changeable_orders_alert

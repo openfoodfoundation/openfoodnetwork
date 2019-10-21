@@ -373,16 +373,6 @@ en:
       number_localization_settings: "Number Localization Settings"
       enable_localized_number: "Use the international thousand/decimal separator logic"
 
-    cache_settings:
-      edit:
-        title: "Caching"
-        distributor: "Distributor"
-        order_cycle: "Order Cycle"
-        status: "Status"
-        diff: "Diff"
-        error: "Error"
-        enable_products_cache: "Enable Products Cache?"
-
     invoice_settings:
       edit:
         title: "Invoice Settings"
