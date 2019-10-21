@@ -57,7 +57,6 @@ class Spree::ProductSet < ModelSet
   def update_product_only_attributes(product, attributes)
     variant_related_attrs = [:id, :variants_attributes, :master_attributes]
     product_related_attrs = attributes.except(*variant_related_attrs)
-
     return true if product_related_attrs.blank?
 
     original_supplier = product.supplier_id
@@ -66,9 +65,10 @@ class Spree::ProductSet < ModelSet
     product.variants.each do |variant|
       validate_presence_of_unit_value(product, variant)
     end
-    product.save if errors.empty?
+    return false unless product.errors.empty? && product.save
 
     ExchangeVariantDeleter.new.delete(product) if original_supplier != product.supplier_id
+    true
   end
 
   def validate_presence_of_unit_value(product, variant)

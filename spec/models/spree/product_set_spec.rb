@@ -96,7 +96,7 @@ describe Spree::ProductSet do
             expect(product.reload.attributes).to include(
               'supplier_id' => producer.id
             )
-            expect(order_cycle.reload.distributed_variants).to_not include product.variants.first
+            expect(order_cycle.distributed_variants).to_not include product.variants.first
           end
         end
 
@@ -107,11 +107,25 @@ describe Spree::ProductSet do
           context 'when :variants_attributes are passed' do
             let(:variants_attributes) { [{ sku: '123', id: product.variants.first.id.to_s }] }
 
+            before { collection_hash[0][:variants_attributes] = variants_attributes }
+
             it 'updates the attributes of the variant' do
-              collection_hash[0][:variants_attributes] = variants_attributes
               product_set.save
 
               expect(product.reload.variants.first[:sku]).to eq variants_attributes.first[:sku]
+            end
+
+            context 'and when product attributes are also passed' do
+              it 'updates product and variant attributes' do
+                collection_hash[0][:permalink] = "test_permalink"
+
+                product_set.save
+
+                expect(product.reload.variants.first[:sku]).to eq variants_attributes.first[:sku]
+                expect(product.reload.attributes).to include(
+                  'permalink' => "test_permalink"
+                )
+              end
             end
           end
 
