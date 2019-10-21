@@ -19,6 +19,10 @@ If you want to run the whole test suite, we recommend using a free CI service to
 
     bundle exec rspec spec
 
+## Which issue to pick first?
+
+We have curated all issues interesting for new members of the community within the [Welcome New Developers project board][welcome-dev]. Have a look and pick the one you would prefer working on!
+
 ## Internationalisation (i18n)
 
 The locale `en` is maintained in the source code, but other locales are managed at [Transifex][ofn-transifex]. Read more about [internationalisation][i18n] in the developer wiki.
@@ -62,3 +66,4 @@ From here, your pull request will progress through the [Review, Test, Merge & De
 [slack-dev]: https://openfoodnetwork.slack.com/messages/C2GQ45KNU
 [ofn-transifex]: https://www.transifex.com/open-food-foundation/open-food-network/
 [i18n]: https://github.com/openfoodfoundation/openfoodnetwork/wiki/i18n
+[welcome-dev]: https://github.com/openfoodfoundation/openfoodnetwork/projects/27
