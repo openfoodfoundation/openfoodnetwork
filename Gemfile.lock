@@ -143,6 +143,8 @@ GEM
       activerecord (>= 3.0)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    airbrussh (1.3.4)
+      sshkit (>= 1.6.1, != 1.7.0)
     andand (1.3.3)
     angular-rails-templates (0.3.0)
       railties (>= 3.1)
@@ -169,6 +171,21 @@ GEM
     builder (3.0.4)
     byebug (9.0.6)
     cancan (1.6.10)
+    capistrano (3.11.2)
+      airbrussh (>= 1.0.0)
+      i18n
+      rake (>= 10.0.0)
+      sshkit (>= 1.9.0)
+    capistrano-bundler (1.6.0)
+      capistrano (~> 3.1)
+    capistrano-rails (1.4.0)
+      capistrano (~> 3.1)
+      capistrano-bundler (~> 1.1)
+    capistrano-rvm (0.1.2)
+      capistrano (~> 3.0)
+      sshkit (~> 1.2)
+    capistrano3-unicorn (0.2.1)
+      capistrano (~> 3.1, >= 3.1.0)
     capybara (2.18.0)
       addressable
       mini_mime (>= 0.1.3)
@@ -476,8 +493,6 @@ GEM
     mime-types (1.25.1)
     mini_mime (1.0.1)
     mini_portile2 (2.1.0)
-    mini_racer (0.1.15)
-      libv8 (~> 6.3)
     momentjs-rails (2.20.1)
       railties (>= 3.1)
     money (5.1.1)
@@ -488,6 +503,9 @@ GEM
     multipart-post (2.1.1)
     net-http-persistent (3.1.0)
       connection_pool (~> 2.2)
+    net-scp (2.0.0)
+      net-ssh (>= 2.6.5, < 6.0.0)
+    net-ssh (4.2.0)
     newrelic_rpm (3.18.1.330)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
@@ -666,6 +684,9 @@ GEM
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
+    sshkit (1.20.0)
+      net-scp (>= 1.1.2)
+      net-ssh (>= 2.8.0)
     state_machine (1.2.0)
     stringex (1.5.1)
     stripe (4.24.0)
@@ -733,6 +754,10 @@ DEPENDENCIES
   blockenspiel
   bugsnag
   byebug (~> 9.0.0)
+  capistrano (~> 3.11)
+  capistrano-rails
+  capistrano-rvm
+  capistrano3-unicorn
   capybara (>= 2.15.4)
   coffee-rails (~> 3.2.1)
   combine_pdf
@@ -773,7 +798,6 @@ DEPENDENCIES
   letter_opener (>= 1.4.1)
   libv8 (= 6.3.292.48.1)
   listen (= 3.0.8)
-  mini_racer (= 0.1.15)
   momentjs-rails
   newrelic_rpm (~> 3.0)
   nokogiri (>= 1.6.7.1)
@@ -831,4 +855,4 @@ RUBY VERSION
    ruby 2.1.9p490
 
 BUNDLED WITH
-   1.17.2
+   1.17.3

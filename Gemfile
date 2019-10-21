@@ -98,24 +98,22 @@ gem 'roo-xls', '~> 1.1.0'
 
 gem 'whenever', require: false
 
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'compass-rails'
+gem 'angular-rails-templates', '~> 0.3.0'
+gem 'momentjs-rails'
+gem 'coffee-rails', '~> 3.2.1'
+gem 'compass-rails'
 
-  gem 'mini_racer', '0.1.15'
-  # Previously we found that libv8 6.7.288.46.1 breakis the compilation of mini_racer.
-  # Now we see that we need to set the version explicitly. Nothing else depends on libv8.
-  gem 'libv8', '6.3.292.48.1'
+# gem 'libv8', '~> 3.11.8'
+# gem 'mini_racer', '0.1.15'
 
-  gem 'uglifier', '>= 1.0.3'
+# Previously we found that libv8 6.7.288.46.1 breakis the compilation of mini_racer.
+# Now we see that we need to set the version explicitly. Nothing else depends on libv8.
+gem 'libv8', '6.3.292.48.1'
 
-  gem 'angular-rails-templates', '~> 0.3.0'
-  gem 'foundation-icons-sass-rails'
-  gem 'momentjs-rails'
-  gem 'turbo-sprockets-rails3'
-end
+gem 'uglifier', '>= 1.0.3'
+
+gem 'foundation-icons-sass-rails'
+gem 'turbo-sprockets-rails3'
 
 gem "foundation-rails"
 gem 'foundation_rails_helper', github: 'willrjmarshall/foundation_rails_helper', branch: "rails3"
@@ -146,6 +144,9 @@ group :test, :development do
   gem 'shoulda-matchers'
   gem 'timecop'
   gem 'unicorn-rails'
+  gem 'capistrano-rails'
+  gem 'capistrano3-unicorn'
+  gem 'capistrano-rvm'
   gem 'webdrivers', '3.8.1'
 end
 
@@ -172,4 +173,6 @@ group :development do
   gem 'eventmachine', '>= 1.2.3'
 
   gem 'rack-mini-profiler', '< 1.0.0'
+
+  gem "capistrano", "~> 3.11", require: false
 end
