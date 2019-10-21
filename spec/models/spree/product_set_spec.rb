@@ -104,6 +104,17 @@ describe Spree::ProductSet do
           let!(:product) { create(:simple_product) }
           let(:collection_hash) { { 0 => { id: product.id } } }
 
+          context 'when :variants_attributes are passed' do
+            let(:variants_attributes) { [{ sku: '123', id: product.variants.first.id.to_s }] }
+
+            it 'updates the attributes of the variant' do
+              collection_hash[0][:variants_attributes] = variants_attributes
+              product_set.save
+
+              expect(product.reload.variants.first[:sku]).to eq variants_attributes.first[:sku]
+            end
+          end
+
           context 'when :master_attributes is passed' do
             let(:master_attributes) { { sku: '123' } }
 
