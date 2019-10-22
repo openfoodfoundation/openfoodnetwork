@@ -153,7 +153,7 @@ feature '
     let(:order_cycle_opening_time) { Time.zone.local(2040, 11, 0o6, 0o6, 0o0, 0o0).strftime("%F %T %z") }
     let(:order_cycle_closing_time) { Time.zone.local(2040, 11, 13, 17, 0o0, 0o0).strftime("%F %T %z") }
 
-    scenario "creating an order cycle", js: true do
+    scenario "creating an order cycle with full interface", js: true do
       # Given coordinating, supplying and distributing enterprises with some products with variants
       coordinator = create(:distributor_enterprise, name: 'My coordinator')
       supplier = create(:supplier_enterprise, name: 'My supplier')
@@ -184,13 +184,13 @@ feature '
       # I cannot save before filling in the required fields
       expect(page).to have_button("Create", disabled: true)
 
-      # After I fill in the basic fields
+      # The Create button is enabled once Name is entered
       fill_in 'order_cycle_name', with: 'Plums & Avos'
+      expect(page).to have_button("Create", disabled: false)
+
+      # If I fill in the basic fields
       fill_in 'order_cycle_orders_open_at', with: order_cycle_opening_time
       fill_in 'order_cycle_orders_close_at', with: order_cycle_closing_time
-
-      # I can save the form
-      expect(page).to have_button("Create", disabled: false)
 
       # And I add a coordinator fee
       click_button 'Add coordinator fee'
@@ -1007,15 +1007,15 @@ feature '
       # I cannot save without the required fields
       expect(page).to have_button('Create', disabled: true)
 
-      # After I fill in the basic fields
+      # The Create button is enabled once the mandatory fields are entered
       fill_in 'order_cycle_name', with: 'Plums & Avos'
+      fill_in 'order_cycle_outgoing_exchange_0_pickup_time', with: 'pickup time'
+      expect(page).to have_button('Create', disabled: false)
+
+      # If I fill in the basic fields
       fill_in 'order_cycle_orders_open_at', with: '2040-10-17 06:00:00'
       fill_in 'order_cycle_orders_close_at', with: '2040-10-24 17:00:00'
-      fill_in 'order_cycle_outgoing_exchange_0_pickup_time', with: 'pickup time'
       fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'pickup instructions'
-
-      # I can save the form
-      expect(page).to have_button('Create', disabled: false)
 
       # Then my products / variants should already be selected
       expect(page).to have_checked_field "order_cycle_incoming_exchange_0_variants_#{v1.id}"
