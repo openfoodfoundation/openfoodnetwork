@@ -158,7 +158,7 @@ module OpenFoodNetwork
       end
 
       Spree::Variant.includes(product: :supplier).
-        joins(:product).where('spree_products.supplier_id IN (?)', valid_suppliers)
+        joins(:product).where(spree_products: { supplier_id: valid_suppliers })
     end
 
     # Find the variants that a user is permitted see within outgoing exchanges
@@ -231,7 +231,7 @@ module OpenFoodNetwork
     end
 
     def variants_from_suppliers(supplier_ids)
-      Spree::Variant.joins(:product).where('spree_products.supplier_id IN (?)', supplier_ids)
+      Spree::Variant.joins(:product).where(spree_products: { supplier_id: supplier_ids })
     end
 
     def active_outgoing_variants(hub)
@@ -304,10 +304,10 @@ module OpenFoodNetwork
               @order_cycle).pluck(:id).uniq
 
       product_ids = Spree::Product.joins(:variants_including_master).
-        where("spree_variants.id IN (?)", variant_ids).pluck(:id).uniq
+        where(spree_variants: { id: variant_ids }).pluck(:id).uniq
 
       producer_ids = Enterprise.joins(:supplied_products).
-        where("spree_products.id IN (?)", product_ids).pluck(:id).uniq
+        where(spree_products: { id: product_ids }).pluck(:id).uniq
 
       active_exchange_ids = @order_cycle.exchanges.incoming.where(sender_id: producer_ids).pluck :id
 
