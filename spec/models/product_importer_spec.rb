@@ -271,7 +271,7 @@ describe ProductImport::ProductImporter do
       CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "display_name", "shipping_category"]
         csv << ["Potatoes", "User Enterprise", "Vegetables", "5", "3.50", "500", "g", "Small Bag", shipping_category.name]
-        csv << ["Chives", "User Enterprise", "Vegetables", "6", "4.50", "500", "g", "Small Bag", shipping_category.name]
+        csv << ["Chives", "User Enterprise", "Vegetables", "6", "4.50", "500", "g", "Bunch", shipping_category.name]
         csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "5.50", "2", "kg", "Big Bag", shipping_category.name]
         csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "22.00", "10000", "g", "Small Sack", shipping_category.name]
         csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "60.00", "30000", "", "Big Sack", shipping_category.name]
