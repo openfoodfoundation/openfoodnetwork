@@ -236,11 +236,7 @@ module OpenFoodNetwork
 
     def active_outgoing_variants(hub)
       @active_outgoing_variants ||= begin
-        active_variants = []
-        @order_cycle.exchanges.outgoing.where(receiver_id: hub).limit(1).each do |exchange|
-          active_variants = exchange.variants
-        end
-        active_variants
+        @order_cycle.exchanges.outgoing.where(receiver_id: hub).first.andand.variants || []
       end
     end
 
