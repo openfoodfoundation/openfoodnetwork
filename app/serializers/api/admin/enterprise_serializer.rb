@@ -62,7 +62,7 @@ class Api::Admin::EnterpriseSerializer < ActiveModel::Serializer
   #   #   medium: LOGO_MEDIUM_URL
   #   # }
   def attachment_urls(attachment, versions)
-    return unless attachment.exists?
+    return unless attachment.file?
 
     versions.each_with_object({}) do |version, urls|
       urls[version] = attachment.url(version)
