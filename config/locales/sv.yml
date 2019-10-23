@@ -33,6 +33,12 @@ sv:
       subject: "Vänligen bekräfta e-postadressen för %{enterprise}"
     welcome:
       subject: "%{enterprise} är nu på %{sitename}"
+      email_welcome: "Välkommen"
+      email_registered: "är nu del av"
+      email_userguide_html: "Användarhandboken med detaljerade uppgifter hur du skall skapa din Producer eller Hub finns här: %{link}"
+      email_admin_html: "Du kan sköta ditt konto genom att logga in %{link} eller att klicka på kuggen i det övre högra hörnet på hemsidan och välja Administration."
+      email_community_html: "Vi har också ett internetforum för gemensamma diskussioner som är relaterade till OFN programvara och den unika utmaningen att använda ett matföretag. Vi utvecklas ständigt och dina inlägg till detta forum påverkar vad som händer i fortsättningen. %{link}"
+      join_community: "Gå med i gemenskapen"
   producer_mailer:
     order_cycle:
       subject: "Sammanställning över beställningsperiod för %{producer}"
@@ -150,14 +156,6 @@ sv:
       embedded_shopfront_settings: "Inställningar för inbäddning av nätbutik"
       enable_embedded_shopfronts: "Aktivera inbäddning av butiker"
       embedded_shopfronts_whitelist: "Lista av tillåtna externa domäner"
-    cache_settings:
-      edit:
-        title: "Inkomst"
-        distributor: "Distributör"
-        order_cycle: "Beställningsomgång"
-        status: "Status"
-        diff: "Differens"
-        error: "Fel"
     invoice_settings:
       edit:
         title: "Fakturainställningar"
@@ -827,13 +825,7 @@ sv:
   products_in: "i %{oc}"
   products_at: "hos %{distributor}"
   products_elsewhere: "Produkter funna annorstädes"
-  email_welcome: "Välkommen"
   email_confirmed: "Tack för att du bekräftat din e-postadress."
-  email_registered: "är nu del av"
-  email_userguide_html: "Användarhandboken med detaljerade uppgifter hur du skall skapa din Producer eller Hub finns här: %{link}"
-  email_admin_html: "Du kan sköta ditt konto genom att logga in %{link} eller att klicka på kuggen i det övre högra hörnet på hemsidan och välja Administration."
-  email_community_html: "Vi har också ett internetforum för gemensamma diskussioner som är relaterade till OFN programvara och den unika utmaningen att använda ett matföretag. Vi utvecklas ständigt och dina inlägg till detta forum påverkar vad som händer i fortsättningen. %{link}"
-  join_community: "Gå med i gemenskapen"
   email_confirmation_greeting: "Hej, %{contact}!"
   email_confirmation_profile_created: "En profil för %{name} har skapats! För att aktivera din profil behöver vi få en bekräftelse på din e-postadress."
   email_confirmation_click_link: "Var vänlig att klicka på länken nedan för att bekräfta din e-postadress och fortsätt att skapa din profil."

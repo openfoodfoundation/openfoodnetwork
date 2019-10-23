@@ -110,6 +110,12 @@ nl_BE:
       subject: "Bevestig a.u.b. het e-mailadres voor %{enterprise}"
     welcome:
       subject: "%{enterprise} is nu aan %{sitename}"
+      email_welcome: "Welkom"
+      email_registered: "maakt nu deel uit van"
+      email_userguide_html: "De gebruikershandleiding met gedetailleerde ondersteuning om de Producenten of z'n groep klaar te zetten is hier: %{link}"
+      email_admin_html: "Je kan je account beheren door in te logen in de %{link} of door het tabblad te klikken in de rechter bovenhoek van de startpagina, en Administratie te selecteren."
+      email_community_html: "We hebben ook een online forum voor discussies betreffende het OFN software en de unieke uitdagingen om een etenswaaronderneming te leiden. We moedigen je aan om er deel van uit te maken. We evolueren constant en je opmerkingen in dit forum zullen bepalen wat er straks gebeurt. %{link}"
+      join_community: "Maak deel uit van de community"
     invite_manager:
       subject: "%{enterprise} heeft u uitgenodigd om manager te worden"
   producer_mailer:
@@ -317,15 +323,6 @@ nl_BE:
     number_localization:
       number_localization_settings: "Aantal Lokalisatie-instellingen"
       enable_localized_number: "Gebruik de internationale duizend/decimale scheidingslogica"
-    cache_settings:
-      edit:
-        title: "Caching"
-        distributor: "Distributeur"
-        order_cycle: "Bestelcyclus"
-        status: "Status"
-        diff: "Diffuus"
-        error: "Fout"
-        enable_products_cache: "Produkten in voorraad toelaten? "
     invoice_settings:
       edit:
         title: "Factuur instellingen"
@@ -1373,13 +1370,7 @@ nl_BE:
   products_in: "in %{oc}"
   products_at: "bij %{distributor}"
   products_elsewhere: "Producten die ergens anders gevonden zijn"
-  email_welcome: "Welkom"
   email_confirmed: "Bedankt om je E-mailadres te bevestigen."
-  email_registered: "maakt nu deel uit van"
-  email_userguide_html: "De gebruikershandleiding met gedetailleerde ondersteuning om de Producenten of z'n groep klaar te zetten is hier: %{link}"
-  email_admin_html: "Je kan je account beheren door in te logen in de %{link} of door het tabblad te klikken in de rechter bovenhoek van de startpagina, en Administratie te selecteren."
-  email_community_html: "We hebben ook een online forum voor discussies betreffende het OFN software en de unieke uitdagingen om een etenswaaronderneming te leiden. We moedigen je aan om er deel van uit te maken. We evolueren constant en je opmerkingen in dit forum zullen bepalen wat er straks gebeurt. %{link}"
-  join_community: "Maak deel uit van de community"
   email_confirmation_activate_account: "Voor we je nieuwe account kunnen activeren, moet je je E-mailadres bevestigen."
   email_confirmation_greeting: "Hallo, %{contact}!"
   email_confirmation_profile_created: "Het profiel aanmaken voor %{name} is goed gelukt! Om je Profiel te activeren moet je nu nog slechts je E-mailadres bevestigen."

@@ -111,6 +111,12 @@ pt_BR:
       subject: "Por favor confirme o endereço de e-mail para %{enterprise}"
     welcome:
       subject: "%{enterprise} está agora em %{sitename}"
+      email_welcome: "Bem-vindo"
+      email_registered: "é agora parte de"
+      email_userguide_html: "O Guia do Usuário com suporte detalhado para gerenciar sua loja está aqui: %{link}"
+      email_admin_html: "Você pode gerenciar sua conta entrando no %{link} ou clicando na engrenagem no canto superior direito da página, e selecionando Administração."
+      email_community_html: "Nós também temos um fórum online para discussão da comunidade sobre a plataforma e os desafios únicos de gerir organizações de alimentos. Você está convidado a participar. Estamos evoluindo constantemente e suas contribuições irão moldar o que acontece a seguir.  %{link}"
+      join_community: "Faça parte da comunidade"
     invite_manager:
       subject: "%{enterprise}convidou você para ser um gerente"
   producer_mailer:
@@ -320,15 +326,6 @@ pt_BR:
     number_localization:
       number_localization_settings: "Configurações de localização de número"
       enable_localized_number: "Usar a lógica internacional de separação de casas decimais e milhares"
-    cache_settings:
-      edit:
-        title: "Cache"
-        distributor: "Distribuidor"
-        order_cycle: "Ciclo de pedidos"
-        status: "Status"
-        diff: "Comparar"
-        error: "Erro"
-        enable_products_cache: "Ativar cache de produtos?"
     invoice_settings:
       edit:
         title: "Configuração da fatura"
@@ -1377,13 +1374,7 @@ pt_BR:
   products_in: "em  %{oc}"
   products_at: "em %{distributor}"
   products_elsewhere: "Produtos encontrados em outros lugares"
-  email_welcome: "Bem-vindo"
   email_confirmed: "Obrigado por confirmar seu e-mail"
-  email_registered: "é agora parte de"
-  email_userguide_html: "O Guia do Usuário com suporte detalhado para gerenciar sua loja está aqui: %{link}"
-  email_admin_html: "Você pode gerenciar sua conta entrando no %{link} ou clicando na engrenagem no canto superior direito da página, e selecionando Administração."
-  email_community_html: "Nós também temos um fórum online para discussão da comunidade sobre a plataforma e os desafios únicos de gerir organizações de alimentos. Você está convidado a participar. Estamos evoluindo constantemente e suas contribuições irão moldar o que acontece a seguir.  %{link}"
-  join_community: "Faça parte da comunidade"
   email_confirmation_activate_account: "Antes de podermos ativar sua nova conta, precisamos confirmar seu endereço de e-mail."
   email_confirmation_greeting: "Olá, %{contact}!"
   email_confirmation_profile_created: "Um perfil para %{name} foi criado com sucesso!\nPara ativar seu Perfil precisamos que você confirme seu endereço de e-mail."

@@ -104,6 +104,12 @@ pt:
       subject: "Por favor confirme o endereço de email de %{enterprise}"
     welcome:
       subject: "%{enterprise} está agora em %{sitename}"
+      email_welcome: "Bem-vindo"
+      email_registered: "é agora parte de"
+      email_userguide_html: "O Manual do Utilizador com suporte detalhado para gerir a sua loja está aqui: %{link}"
+      email_admin_html: "Pode gerir a sua conta entrando no %{link} ou clicando na roda dentada no canto superior direito da página, e selecionando Administração."
+      email_community_html: "Também temos um fórum online para discussão sobre a plataforma e os desafios de se manter uma iniciativa de produção e consumo local. Está convidado/a a participar! Estamos constantemente a evoluir e as suas ideias vão ajudar-nos a melhorar.\n%{link}"
+      join_community: "Junte-se à comunidade"
     invite_manager:
       subject: "%{enterprise} convidou-o/a para gestor/a"
   producer_mailer:
@@ -311,15 +317,6 @@ pt:
     number_localization:
       number_localization_settings: "Definições de Localização de Números"
       enable_localized_number: "Utilizar a lógica do separador de milhares/décimas internacional"
-    cache_settings:
-      edit:
-        title: "Cache"
-        distributor: "Distribuidor"
-        order_cycle: "Ciclo de Encomendas"
-        status: "Estado"
-        diff: "Diff"
-        error: "Erro"
-        enable_products_cache: "Activar Cache?"
     invoice_settings:
       edit:
         title: "Configuração de Faturas"
@@ -1348,13 +1345,7 @@ pt:
   products_in: "em  %{oc}"
   products_at: "em %{distributor}"
   products_elsewhere: "Produtos encontrados em outros lugares"
-  email_welcome: "Bem-vindo"
   email_confirmed: "Obrigado por confirmar o seu endereço de email."
-  email_registered: "é agora parte de"
-  email_userguide_html: "O Manual do Utilizador com suporte detalhado para gerir a sua loja está aqui: %{link}"
-  email_admin_html: "Pode gerir a sua conta entrando no %{link} ou clicando na roda dentada no canto superior direito da página, e selecionando Administração."
-  email_community_html: "Também temos um fórum online para discussão sobre a plataforma e os desafios de se manter uma iniciativa de produção e consumo local. Está convidado/a a participar! Estamos constantemente a evoluir e as suas ideias vão ajudar-nos a melhorar.\n%{link}"
-  join_community: "Junte-se à comunidade"
   email_confirmation_activate_account: "Antes de podermos activar a sua conta, precisamos de confirmar o seu endereço de email."
   email_confirmation_greeting: "Olá, %{contact}!"
   email_confirmation_profile_created: "Um perfil para %{name} foi criado com sucesso!\nPara ativar o seu Perfil precisamos que confirme este endereço de email."

@@ -104,6 +104,12 @@ it:
       subject: "Per favore conferma l'indirizzo email per %{enterprise}"
     welcome:
       subject: "%{enterprise} è ora su %{sitename}"
+      email_welcome: "Benvenuto"
+      email_registered: "è ora parte di"
+      email_userguide_html: "La Guida Utente con supporto dettagliato per l'impostazione del tuo Produttore o Hub è qui: %{link}"
+      email_admin_html: "Puoi gestire il tuo profilo facendo il log in al link %{link} o cliccando sull'ingranaggio in alto a destra della homepage, e selezionando Amministrazione"
+      email_community_html: "Abbiamo anche un forum on-line per le discussioni della comunità sul software OFN e le sfide uniche legate all'avere un'impresa del cibo. Sei invitato ad unirti. Ci evolviamo in continuo e il tuo contributo in questo forum plasmerà ciò che sarà. %{link}"
+      join_community: "Unisciti alla community"
     invite_manager:
       subject: "%{enterprise} ti a invitato ad essere un referente"
   producer_mailer:
@@ -311,15 +317,6 @@ it:
     number_localization:
       number_localization_settings: "Settaggi del Numero di Localizzazione"
       enable_localized_number: "Usa la logica internazionale di separazione migliaia/decimali"
-    cache_settings:
-      edit:
-        title: "Immagazzinando"
-        distributor: "Distributore"
-        order_cycle: "Ciclo di richieste"
-        status: "Stato"
-        diff: "Diff"
-        error: "Errore"
-        enable_products_cache: "Abilita la cache dei prodotti?"
     invoice_settings:
       edit:
         title: "Impostazioni fatturazione"
@@ -1342,13 +1339,7 @@ it:
   products_in: "in %{oc}"
   products_at: "presso %{distributor}"
   products_elsewhere: "Prodotti trovati altrove"
-  email_welcome: "Benvenuto"
   email_confirmed: "Grazie per aver confermato il tuo indirizzo email"
-  email_registered: "è ora parte di"
-  email_userguide_html: "La Guida Utente con supporto dettagliato per l'impostazione del tuo Produttore o Hub è qui: %{link}"
-  email_admin_html: "Puoi gestire il tuo profilo facendo il log in al link %{link} o cliccando sull'ingranaggio in alto a destra della homepage, e selezionando Amministrazione"
-  email_community_html: "Abbiamo anche un forum on-line per le discussioni della comunità sul software OFN e le sfide uniche legate all'avere un'impresa del cibo. Sei invitato ad unirti. Ci evolviamo in continuo e il tuo contributo in questo forum plasmerà ciò che sarà. %{link}"
-  join_community: "Unisciti alla community"
   email_confirmation_activate_account: "Prima di attivare il tuo nuovo account, dobbiamo verificare il tuo indirizzo email"
   email_confirmation_greeting: "Ciao, %{contact}!"
   email_confirmation_profile_created: "Un profilo per %{name} è stato creato con successo! Per attivare il tuo Profilo abbiamo bisogno di confermare questo indirizzo email."

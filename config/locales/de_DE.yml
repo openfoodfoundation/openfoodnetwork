@@ -111,6 +111,10 @@ de_DE:
       subject: "Bitte bestätigen Sie die E-Mail-Adresse für %{enterprise}"
     welcome:
       subject: "%{enterprise} ist jetzt auf %{sitename}"
+      email_welcome: "Willkommen"
+      email_registered: "ist jetzt Teil von"
+      email_community_html: "Wir haben auch ein Online-Forum für Community-Diskussionen in Bezug auf OFN-Software und die einzigartigen Herausforderungen eines Lebensmittelunternehmens. Reden Sie doch mit. Wir entwickeln uns ständig weiter und Ihr Beitrag in diesem Forum prägt, was als nächstes passiert. %{link}"
+      join_community: "Treten Sie der Community bei"
     invite_manager:
       subject: "%{enterprise} hat Sie eingeladen, ein Manager zu sein"
   producer_mailer:
@@ -320,15 +324,6 @@ de_DE:
     number_localization:
       number_localization_settings: "Nummernlokalisierungseinstellungen"
       enable_localized_number: "Verwenden Sie die internationale Tausendertrennungslogik"
-    cache_settings:
-      edit:
-        title: "Cachen"
-        distributor: "Verteiler"
-        order_cycle: "Bestellrunde"
-        status: "Status"
-        diff: "Diff"
-        error: "Fehler"
-        enable_products_cache: "Produktcache aktivieren?"
     invoice_settings:
       edit:
         title: "Rechnungseinstellungen"
@@ -1379,13 +1374,7 @@ de_DE:
   products_in: "in %{oc}"
   products_at: "bei %{distributor}"
   products_elsewhere: "Produkte an anderer Stelle"
-  email_welcome: "Willkommen"
   email_confirmed: "Vielen Dank für die Bestätigung Ihrer E-Mail-Adresse."
-  email_registered: "ist jetzt Teil von"
-  email_userguide_html: "Das Benutzerhandbuch mit ausführlicher Unterstützung für die Einrichtung Ihres Producer oder Hub finden Sie hier: %{link}"
-  email_admin_html: "Sie können Ihr Konto verwalten, indem Sie sich bei %{link} anmelden oder indem Sie oben rechts auf der Startseite auf das Zahnrad klicken und Administration auswählen."
-  email_community_html: "Wir haben auch ein Online-Forum für Community-Diskussionen in Bezug auf OFN-Software und die einzigartigen Herausforderungen eines Lebensmittelunternehmens. Reden Sie doch mit. Wir entwickeln uns ständig weiter und Ihr Beitrag in diesem Forum prägt, was als nächstes passiert. %{link}"
-  join_community: "Treten Sie der Community bei"
   email_confirmation_activate_account: "Bevor wir Ihr neues Konto aktivieren können, müssen wir Ihre E-Mail-Adresse bestätigen."
   email_confirmation_greeting: "Hallo, %{contact}!"
   email_confirmation_profile_created: "Ein Profil für %{name} wurde erfolgreich erstellt! Um Ihr Profil zu aktivieren, müssen wir diese E-Mail-Adresse bestätigen."

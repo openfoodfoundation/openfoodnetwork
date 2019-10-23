@@ -111,6 +111,12 @@ es:
       subject: "Confirma la dirección de correo electrónico de %{enterprise}"
     welcome:
       subject: "%{enterprise} está ahora en %{sitename}"
+      email_welcome: "Bienvenido"
+      email_registered: "ahora es parte de"
+      email_userguide_html: "La Guía de Usuario con soporte detallado para configurar su Productora o Grupo de Consumo está aquí: %{link}"
+      email_admin_html: "Puede administrar su cuenta iniciando sesión en %{link} o haciendo clic en el engrane arriba a la derecha de la página de inicio, y seleccionando Administración."
+      email_community_html: "También tenemos un foro en líea para la discusión comunal relacionada con el programa OFN y los retos únicos del funcionamiento de una organización de alimentación. Lo invitamos a unirse. Estamos evolucionando de forma constante y su aporte en este formo le dará forma a lo que pase luego. %{link}"
+      join_community: "Unirse a la comunidad"
     invite_manager:
       subject: "%{enterprise} te ha invitado a ser administrador"
   producer_mailer:
@@ -320,15 +326,6 @@ es:
     number_localization:
       number_localization_settings: "Number Localization Settings"
       enable_localized_number: "Usar la logica internacional separador miles/decimales"
-    cache_settings:
-      edit:
-        title: "Almacenando"
-        distributor: "Distribuidora"
-        order_cycle: "Ciclo de Pedido"
-        status: "Estado"
-        diff: "Diff"
-        error: "Error"
-        enable_products_cache: "¿Habilitar caché de productos?"
     invoice_settings:
       edit:
         title: "Configuración de Factura"
@@ -1379,13 +1376,7 @@ es:
   products_in: "en %{oc}"
   products_at: "en %{distributor}"
   products_elsewhere: "Productos encontrados en otros lugares"
-  email_welcome: "Bienvenido"
   email_confirmed: "Gracias por confirmar la dirección de correo electrónico."
-  email_registered: "ahora es parte de"
-  email_userguide_html: "La Guía de Usuario con soporte detallado para configurar su Productora o Grupo de Consumo está aquí: %{link}"
-  email_admin_html: "Puede administrar su cuenta iniciando sesión en %{link} o haciendo clic en el engrane arriba a la derecha de la página de inicio, y seleccionando Administración."
-  email_community_html: "También tenemos un foro en líea para la discusión comunal relacionada con el programa OFN y los retos únicos del funcionamiento de una organización de alimentación. Lo invitamos a unirse. Estamos evolucionando de forma constante y su aporte en este formo le dará forma a lo que pase luego. %{link}"
-  join_community: "Unirse a la comunidad"
   email_confirmation_activate_account: "Antes de que podamos activar su nueva cuenta, necesitamos confirmar su dirección de correo electrónico."
   email_confirmation_greeting: "Hola, %{contact}!"
   email_confirmation_profile_created: "¡Se creó un un perfil para %{name} con éxito! Para activar su Perfil necesitamos que confirme esta dirección de correos."
