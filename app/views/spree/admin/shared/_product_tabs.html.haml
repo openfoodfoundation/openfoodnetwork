@@ -1,12 +1,12 @@
-= content_for :page_title do
+- content_for :page_title do
   = Spree.t(:editing_product)
   = "\"#{@product.name}\""
 
-= content_for :sidebar_title do
+- content_for :sidebar_title do
   %span.sku
     = @product.sku
 
-= content_for :sidebar do
+- content_for :sidebar do
   %nav.menu
     %ul
       - if can?(:admin, Spree::Product)
