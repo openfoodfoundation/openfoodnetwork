@@ -590,6 +590,7 @@ en:
         title: Inventory
         description: Use this page to manage inventories for your enterprises. Any product details set here will override those set on the 'Products' page
         enable_reset?: Enable Stock Reset?
+        default_stock: "Default stock"
         inherit?: Inherit?
         add: Add
         hide: Hide
