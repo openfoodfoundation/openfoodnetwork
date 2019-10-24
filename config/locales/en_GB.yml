@@ -111,6 +111,14 @@ en_GB:
       subject: "Please confirm the email address for %{enterprise}"
     welcome:
       subject: "%{enterprise} is now on %{sitename}"
+      email_welcome: "Welcome"
+      email_registered: "is now part of"
+      email_userguide_html: "The User Guide with detailed support for setting up your Producer or Hub is here: %{link}"
+      userguide: "Open Food Network User Guide"
+      email_admin_html: "You can manage your account by logging into the %{link} or by clicking on 'Profile' in the top right hand side of the homepage, and selecting Administration."
+      admin_panel: "Admin Panel"
+      email_community_html: "We also have an online forum for community discussion related to OFN software and the unique challenges of running a food enterprise. You are encouraged to join in. We are constantly evolving and your input into this forum will shape what happens next. %{link}"
+      join_community: "Join the community"
     invite_manager:
       subject: "%{enterprise} has invited you to be a manager"
   producer_mailer:
@@ -320,15 +328,6 @@ en_GB:
     number_localization:
       number_localization_settings: "Number Localisation Settings"
       enable_localized_number: "Use the international thousand/decimal separator logic"
-    cache_settings:
-      edit:
-        title: "Caching"
-        distributor: "Distributor"
-        order_cycle: "Order Cycle"
-        status: "Status"
-        diff: "Diff"
-        error: "Error"
-        enable_products_cache: "Enable Products Cache?"
     invoice_settings:
       edit:
         title: "Invoice Settings"
@@ -1377,13 +1376,7 @@ en_GB:
   products_in: "in %{oc}"
   products_at: "at %{distributor}"
   products_elsewhere: "Products found elsewhere"
-  email_welcome: "Welcome"
   email_confirmed: "Thank you for confirming your email address."
-  email_registered: "is now part of"
-  email_userguide_html: "The User Guide with detailed support for setting up your Producer or Hub is here: %{link}"
-  email_admin_html: "You can manage your account by logging into the %{link} or by clicking on 'Profile' in the top right hand side of the homepage, and selecting Administration."
-  email_community_html: "We also have an online forum for community discussion related to OFN software and the unique challenges of running a food enterprise. You are encouraged to join in. We are constantly evolving and your input into this forum will shape what happens next. %{link}"
-  join_community: "Join the community"
   email_confirmation_activate_account: "Before we can activate your new account, we need to confirm your email address."
   email_confirmation_greeting: "Hi, %{contact}!"
   email_confirmation_profile_created: "A profile for %{name} has been successfully created! To activate your Profile we need to confirm this email address."
