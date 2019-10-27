@@ -33,14 +33,11 @@ class Spree::ProductSet < ModelSet
   def update_attributes(attributes)
     split_taxon_ids!(attributes)
 
-    found_model = @collection.find do |model|
-      model.id.to_s == attributes[:id].to_s && model.persisted?
-    end
-
-    if found_model.nil?
+    product = find_product(attributes[:id])
+    if product.nil?
       @klass.new(attributes).save unless @reject_if.andand.call(attributes)
     else
-      update_product(found_model, attributes)
+      update_product(product, attributes)
     end
   end
 
@@ -48,10 +45,19 @@ class Spree::ProductSet < ModelSet
     attributes[:taxon_ids] = attributes[:taxon_ids].split(',') if attributes[:taxon_ids].present?
   end
 
-  def update_product(found_model, attributes)
-    update_product_only_attributes(found_model, attributes) &&
-      update_product_variants(found_model, attributes) &&
-      update_product_master(found_model, attributes)
+  def find_product(product_id)
+    @collection.find do |model|
+      model.id.to_s == product_id.to_s && model.persisted?
+    end
+  end
+
+  def update_product(product, attributes)
+    original_supplier = product.supplier_id
+    return false unless update_product_only_attributes(product, attributes)
+    ExchangeVariantDeleter.new.delete(product) if original_supplier != product.supplier_id
+
+    update_product_variants(product, attributes) &&
+      update_product_master(product, attributes)
   end
 
   def update_product_only_attributes(product, attributes)
@@ -59,15 +65,11 @@ class Spree::ProductSet < ModelSet
     product_related_attrs = attributes.except(*variant_related_attrs)
     return true if product_related_attrs.blank?
 
-    original_supplier = product.supplier_id
     product.assign_attributes(product_related_attrs)
 
     validate_presence_of_unit_value_in_product(product)
 
-    return false unless product.errors.empty? && product.save
-
-    ExchangeVariantDeleter.new.delete(product) if original_supplier != product.supplier_id
-    true
+    product.errors.empty? && product.save
   end
 
   def validate_presence_of_unit_value_in_product(product)
@@ -100,14 +102,17 @@ class Spree::ProductSet < ModelSet
   end
 
   def create_or_update_variant(product, variant_attributes)
-    found_variant = product.variants_including_master.find do |variant|
-      variant.id.to_s == variant_attributes[:id].to_s && variant.persisted?
-    end
-
-    if found_variant.present?
-      found_variant.update_attributes(variant_attributes.except(:id))
+    variant = find_variant(product, variant_attributes[:id])
+    if variant.present?
+      variant.update_attributes(variant_attributes.except(:id))
     else
       create_variant(product, variant_attributes)
+    end
+  end
+
+  def find_variant(product, variant_id)
+    product.variants_including_master.find do |variant|
+      variant.id.to_s == variant_id.to_s && variant.persisted?
     end
   end
 
