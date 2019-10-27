@@ -33,7 +33,7 @@ class Spree::ProductSet < ModelSet
   def update_attributes(attributes)
     split_taxon_ids!(attributes)
 
-    product = find_product(attributes[:id])
+    product = find_model(@collection, attributes[:id])
     if product.nil?
       @klass.new(attributes).save unless @reject_if.andand.call(attributes)
     else
@@ -43,12 +43,6 @@ class Spree::ProductSet < ModelSet
 
   def split_taxon_ids!(attributes)
     attributes[:taxon_ids] = attributes[:taxon_ids].split(',') if attributes[:taxon_ids].present?
-  end
-
-  def find_product(product_id)
-    @collection.find do |model|
-      model.id.to_s == product_id.to_s && model.persisted?
-    end
   end
 
   def update_product(product, attributes)
@@ -102,17 +96,11 @@ class Spree::ProductSet < ModelSet
   end
 
   def create_or_update_variant(product, variant_attributes)
-    variant = find_variant(product, variant_attributes[:id])
+    variant = find_model(product.variants_including_master, variant_attributes[:id])
     if variant.present?
       variant.update_attributes(variant_attributes.except(:id))
     else
       create_variant(product, variant_attributes)
-    end
-  end
-
-  def find_variant(product, variant_id)
-    product.variants_including_master.find do |variant|
-      variant.id.to_s == variant_id.to_s && variant.persisted?
     end
   end
 
@@ -138,6 +126,12 @@ class Spree::ProductSet < ModelSet
       report.add_tab(:variant_attributes, variant_attributes)
       report.add_tab(:variant, variant.attributes)
       report.add_tab(:variant_error, variant.errors.first) unless variant.valid?
+    end
+  end
+
+  def find_model(collection, model_id)
+    collection.find do |model|
+      model.id.to_s == model_id.to_s && model.persisted?
     end
   end
 end
