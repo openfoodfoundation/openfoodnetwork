@@ -331,7 +331,6 @@ en:
     volume: Volume
     items: Items
     select_all: Select all
-    obsolete_master: Obsolete master
 
     # General form elements
     quick_search: Quick Search

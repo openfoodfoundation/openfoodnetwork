@@ -594,30 +594,6 @@ feature '
     expect(occ.name).to eq "COPY OF #{oc.name}"
   end
 
-  scenario "removing a master variant from an order cycle when further variants have been added" do
-    # Given a product with a variant, with its master variant included in the order cycle
-    # (this usually happens when a product is added to an order cycle, then variants are added
-    #  to the product after the fact)
-    s = create(:supplier_enterprise)
-    p = create(:simple_product, supplier: s)
-    v = create(:variant, product: p)
-    d = create(:distributor_enterprise)
-    oc = create(:simple_order_cycle, suppliers: [s], distributors: [d], variants: [p.master])
-    exchange_ids = oc.exchanges.pluck :id
-    expect(ExchangeVariant.where(exchange_id: exchange_ids, variant_id: p.master.id)).not_to be_empty
-
-    # When I go to the order cycle page and remove the obsolete master
-    quick_login_as_admin
-    visit edit_admin_order_cycle_path(oc)
-    within("table.exchanges tbody tr.supplier") { page.find('td.products').click }
-    page.find("#order_cycle_incoming_exchange_0_variants_#{p.master.id}").click # uncheck
-    click_button "Update"
-
-    # Then the master variant should have been removed from all exchanges
-    expect(page).to have_content "Your order cycle has been updated."
-    expect(ExchangeVariant.where(exchange_id: exchange_ids, variant_id: p.master.id)).to be_empty
-  end
-
   describe "ensuring that hubs in order cycles have valid shipping and payment methods" do
     context "when they don't" do
       let(:hub) { create(:distributor_enterprise) }
