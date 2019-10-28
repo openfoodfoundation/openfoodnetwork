@@ -1,6 +1,17 @@
 require 'csv'
 
 namespace :ofn do
+  desc 'deletes all orders and associated entities of an enterprise'
+  task :truncate_distributor, [:distributor_id] => :environment do |_task, args|
+    orders = Spree::Order.where(distributor_id: args.distributor_id)
+
+    inventory_units = Spree::InventoryUnit.where(order_id: orders.pluck(:id))
+    inventory_units.delete_all
+
+    ProxyOrder.where(order_id: orders.pluck(:id)).destroy_all
+    orders.destroy_all
+  end
+
   namespace :dev do
     desc 'export enterprises to CSV'
     task export_enterprises: :environment do
