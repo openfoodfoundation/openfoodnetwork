@@ -46,8 +46,11 @@ Spree::Admin::ProductsController.class_eval do
   end
 
   def update
+    original_supplier_id = @product.supplier_id
+
     delete_stock_params_and_set_after do
       super
+      ExchangeVariantDeleter.new.delete(@product) if original_supplier_id != @product.supplier_id
     end
   end
 

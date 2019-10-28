@@ -177,6 +177,19 @@ describe Spree::Admin::ProductsController, type: :controller do
       login_as_enterprise_user [producer]
     end
 
+    describe "change product supplier" do
+      let(:distributor) { create(:distributor_enterprise) }
+      let!(:order_cycle) { create(:simple_order_cycle, variants: [product.variants.first], coordinator: distributor, distributors: [distributor]) }
+
+      it "should remove product from existing Order Cycles" do
+        new_producer = create(:enterprise)
+        spree_put :update, id: product, product: { supplier_id: new_producer.id }
+
+        expect(product.reload.supplier.id).to eq new_producer.id
+        expect(order_cycle.reload.distributed_variants).to_not include product.variants.first
+      end
+    end
+
     describe "product stock setting with errors" do
       it "notifies bugsnag and still raise error" do
         # forces an error in the variant
