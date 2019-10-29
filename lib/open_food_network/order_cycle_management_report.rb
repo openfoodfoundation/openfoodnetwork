@@ -138,7 +138,7 @@ module OpenFoodNetwork
     def sanitize_params(params)
       params[:q] ||= {}
       params[:q][:completed_at_gt] ||= Time.zone.today - DEFAULT_DATE_INTERVAL
-      params[:q][:completed_at_lt] ||= Time.zone.today
+      params[:q][:completed_at_lt] ||= Time.zone.today + 1.day
       params
     end
   end
