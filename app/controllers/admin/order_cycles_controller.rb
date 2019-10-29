@@ -2,6 +2,7 @@ module Admin
   class OrderCyclesController < ResourceController
     include OrderCyclesHelper
 
+    prepend_before_filter :set_order_cycle_id, only: [:incoming, :outgoing]
     before_filter :load_data_for_index, only: :index
     before_filter :require_coordinator, only: :new
     before_filter :remove_protected_attrs, only: [:update]
@@ -46,6 +47,10 @@ module Admin
       else
         render json: { errors: @order_cycle.errors.full_messages }, status: :unprocessable_entity
       end
+    end
+
+    def set_order_cycle_id
+      params[:id] = params[:order_cycle_id]
     end
 
     def update
