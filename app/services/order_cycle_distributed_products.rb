@@ -9,7 +9,7 @@ class OrderCycleDistributedProducts
   end
 
   def products_relation
-    Spree::Product.where(id: stocked_products)
+    Spree::Product.where(id: stocked_products).group("spree_products.id")
   end
 
   def variants_relation
