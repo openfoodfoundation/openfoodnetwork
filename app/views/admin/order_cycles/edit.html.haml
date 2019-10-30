@@ -21,7 +21,7 @@
 #advanced_settings{ hidden: true }
   = render partial: "/admin/order_cycles/advanced_settings"
 
-%h1
+- content_for :page_title do
   = t :edit_order_cycle
 
 - ng_controller = order_cycles_simple_form ? 'AdminSimpleEditOrderCycleCtrl' : 'AdminEditOrderCycleCtrl'

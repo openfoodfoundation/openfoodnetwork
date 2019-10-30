@@ -889,9 +889,13 @@ en:
         loading_order_cycles: LOADING ORDER CYCLES
         loading: LOADING...
       edit:
-        advanced_settings: Advanced Settings
-        update_and_close: Update and Close
-        choose_products_from: 'Choose Products From:'
+        advanced_settings: "Advanced Settings"
+        update_and_close: "Update and Close"
+        choose_products_from: "Choose Products From:"
+      incoming:
+        update_and_close: "Update and Close"
+      outgoing:
+        update_and_close: "Update and Close"
       exchange_form:
         pickup_time_tip: When orders from this OC will be ready for the customer
         pickup_instructions_placeholder: "Pick-up instructions"

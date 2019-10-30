@@ -1,4 +1,4 @@
-%h1
+- content_for :page_title do
   = t :edit_order_cycle
 
 = admin_inject_order_cycle_instance
@@ -9,7 +9,9 @@
     %input.red{ type: "button", value: t('.update_and_close'), ng: { click: "submit($event, '#{main_app.admin_order_cycles_path}')", disabled: "!order_cycle_form.$dirty || order_cycle_form.$invalid" } }
     %input{ type: "button", ng: { value: "order_cycle_form.$dirty ? '#{t(:cancel)}' : '#{t(:close)}'", click: "cancel('#{main_app.admin_order_cycles_path}')" } }
 
-  %h2= t('.incoming')
+  %fieldset.no-border-bottom
+    %legend{ align: 'center'}= t('.incoming')
+
   %table.exchanges
     %thead
       %tr
