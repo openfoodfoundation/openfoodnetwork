@@ -111,6 +111,14 @@ ca:
       subject: "Sisplau, confirma l'adreça electrònica d'%{enterprise}"
     welcome:
       subject: "%{enterprise} és ara %{sitename}"
+      email_welcome: "Benvinguda"
+      email_registered: "ara forma part de"
+      email_userguide_html: "La Guia d'usuari amb suport detallat per configurar una productora o grup de consum és aquí: %{link}"
+      userguide: "Guia d'usuari d'Open Food Network"
+      email_admin_html: "Pots gestionar el teu compte iniciant sessió a l'%{link} o fent clic a la pestanya a la part superior dreta de la pàgina d'inici i seleccionant Administració."
+      admin_panel: "Tauler d’administració"
+      email_community_html: "També tenim un fòrum en línia per debats de la comunitat relacionada amb el programari OFN i els desafiaments únics de triar endavant una organització alimentària. T'animem a unir-t'hi. Estem en constant evolució i les teves contribucions en aquest fòrum donaran forma al que passi a en el futur. %{link}"
+      join_community: "Uneix-te a la comunitat"
     invite_manager:
       subject: "%{enterprise} t'ha convidat a ser administrador"
   producer_mailer:
@@ -320,15 +328,6 @@ ca:
     number_localization:
       number_localization_settings: "Configuració de localització numèrica"
       enable_localized_number: "Utilitzeu l'estàndard internacional per separar milers/decimals"
-    cache_settings:
-      edit:
-        title: "Emmagatzematge ocult"
-        distributor: "Distribuïdora"
-        order_cycle: "Cicle de comanda"
-        status: "Estat"
-        diff: "Diferència"
-        error: "Error"
-        enable_products_cache: "Habilitar la memòria cau de productes?"
     invoice_settings:
       edit:
         title: "Configuració de la factura"
@@ -536,6 +535,7 @@ ca:
         title: Inventari
         description: Utilitzeu aquesta pàgina per administrar els inventaris de la vostres organitzacions. Tots els detalls del producte aquí establerts substituiran els establerts a la pàgina "Productes"
         enable_reset?: Habilitar la restauració de valors de stock?
+        default_stock: "Estoc per defecte"
         inherit?: Heredar?
         add: Afegeix
         hide: Amaga
@@ -1379,13 +1379,7 @@ ca:
   products_in: "en %{oc}"
   products_at: "a %{distributor}"
   products_elsewhere: "Productes trobats en altres llocs"
-  email_welcome: "Benvinguda"
   email_confirmed: "Gràcies per confirmar la teva adreça de correu electrònic."
-  email_registered: "ara forma part de"
-  email_userguide_html: "La Guia d'usuari amb suport detallat per configurar una productora o grup de consum és aquí: %{link}"
-  email_admin_html: "Pots gestionar el teu compte iniciant sessió a l'%{link} o fent clic a la pestanya a la part superior dreta de la pàgina d'inici i seleccionant Administració."
-  email_community_html: "També tenim un fòrum en línia per debats de la comunitat relacionada amb el programari OFN i els desafiaments únics de triar endavant una organització alimentària. T'animem a unir-t'hi. Estem en constant evolució i les teves contribucions en aquest fòrum donaran forma al que passi a en el futur. %{link}"
-  join_community: "Uneix-te a la comunitat"
   email_confirmation_activate_account: "Abans de poder activar el compte nou hem de confirmar la teva adreça de correu electrònic."
   email_confirmation_greeting: "Hola, %{contact}!"
   email_confirmation_profile_created: "S'ha creat exitosament un perfil per %{name}. Per activar el teu perfil hem de confirmar aquesta adreça de correu electrònic."
