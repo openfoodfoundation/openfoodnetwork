@@ -79,7 +79,7 @@ describe ProductTagRulesFilterer do
           variant_hidden_for_another_customer.update_attribute(:tag_list, non_applicable_rule.preferred_variant_tags)
 
           overrides_to_hide = filterer.__send__(:overrides_to_hide)
-          expect(overrides_to_hide).to eq [variant_hidden_by_default.id, variant_hidden_by_rule.id]
+          expect(overrides_to_hide).to include variant_hidden_by_default.id, variant_hidden_by_rule.id
         end
       end
 
