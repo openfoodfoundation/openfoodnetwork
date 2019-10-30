@@ -535,6 +535,7 @@ nb:
         title: Varelager
         description: Bruk denne siden til å administrere varelager for dine bedrifter. Eventuelle produktdetaljer satt her vil overstyre de som er satt på 'Produkter'-siden
         enable_reset?: Aktiver Nullstilling av Varebeholdning
+        default_stock: "Standard lagerbeholdning"
         inherit?: Arve?
         add: Legg til
         hide: Skjul
