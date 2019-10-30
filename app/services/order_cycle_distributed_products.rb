@@ -15,7 +15,8 @@ class OrderCycleDistributedProducts
   def variants_relation
     order_cycle.
       variants_distributed_by(distributor).
-      merge(stocked_variants_and_overrides)
+      merge(stocked_variants_and_overrides).
+      select("DISTINCT spree_variants.*")
   end
 
   private
