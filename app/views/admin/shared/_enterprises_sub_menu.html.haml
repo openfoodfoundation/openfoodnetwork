@@ -1,4 +1,4 @@
-= content_for :sub_menu do
+- content_for :sub_menu do
   %ul#sub_nav.inline-menu{"data-hook" => "admin_enterprise_sub_tabs"}
     = tab :enterprises, url: main_app.admin_enterprises_path
     = tab :enterprise_relationships, url: main_app.admin_enterprise_relationships_path
