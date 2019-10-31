@@ -896,6 +896,10 @@ en:
         update_and_close: "Update and Close"
       outgoing:
         update_and_close: "Update and Close"
+      wizard_progress:
+        general_settings: "1. General Settings"
+        incoming: "2. Incoming Products"
+        outgoing: "3. Outgoing Products"
       exchange_form:
         pickup_time_tip: When orders from this OC will be ready for the customer
         pickup_instructions_placeholder: "Pick-up instructions"
