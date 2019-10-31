@@ -2562,6 +2562,7 @@ it:
   status: "stato"
   new: "Nuovo"
   start: "Inizio"
+  end: "Fine"
   stop: "Stop"
   first: "Primo"
   previous: "Precedente"
