@@ -2617,6 +2617,7 @@ es:
   status: "estado"
   new: "Nuevo"
   start: "Inicio"
+  end: "Fin"
   stop: "Detener"
   first: "primero"
   previous: "Anterior"
