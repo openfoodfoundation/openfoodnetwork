@@ -27,8 +27,8 @@ module OpenFoodNetwork
 
         context "default date range" do
           it "fetches orders completed in the past month" do
-            o1 = create(:order, completed_at: Time.zone.today - OrderCycleManagementReport::DEFAULT_DATE_INTERVAL - 1.day)
-            o2 = create(:order, completed_at: Time.zone.today - OrderCycleManagementReport::DEFAULT_DATE_INTERVAL + 1.day)
+            o1 = create(:order, completed_at: 1.month.ago - 1.day)
+            o2 = create(:order, completed_at: 1.month.ago + 1.day)
             expect(subject.orders).to eq([o2])
           end
         end
