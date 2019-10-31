@@ -1,6 +1,7 @@
 .row
   .alpha.two.columns
     = f.label :name, t('.name')
+    %span.required *
   .six.columns.omega
     - if viewing_as_coordinator_of?(@order_cycle)
       = f.text_field :name, 'ng-model' => 'order_cycle.name', 'required' => true, 'ng-disabled' => '!loaded()'
