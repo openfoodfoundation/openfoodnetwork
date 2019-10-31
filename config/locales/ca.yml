@@ -2616,6 +2616,7 @@ ca:
   status: "estat"
   new: "Nou"
   start: "Començar"
+  end: "Término"
   stop: "Aturar"
   first: "Primer"
   previous: "Anterior"
