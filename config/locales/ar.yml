@@ -2613,6 +2613,7 @@ ar:
   status: "الحالة"
   new: "جديد"
   start: "البداية "
+  end: "النهاية"
   stop: "توقف"
   first: "أول"
   previous: "السابق"
