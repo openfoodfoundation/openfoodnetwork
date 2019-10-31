@@ -2640,6 +2640,7 @@ fr:
   status: "statut"
   new: "Nouveau"
   start: "Début"
+  end: "Fin"
   stop: "Arrêter"
   first: "Début"
   previous: "Précédent"
