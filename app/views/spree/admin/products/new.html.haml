@@ -101,19 +101,3 @@
   angular.element(document.getElementById("new_product")).ready(function() {
     angular.bootstrap(document.getElementById("new_product"), ['admin.products']);
   });
-:javascript
-    (function($){
-      var base_url = "#{admin_prototypes_url}";
-      var prototype_select = $('#product_prototype_id');
-      prototype_select.change(function() {
-        var id = prototype_select.val();
-        if (id.length) {
-          $('#product-from-prototype').load([ base_url, id ].join("/"));
-        } else {
-          $('#product-from-prototype').empty();
-        }
-      })
-      if (prototype_select.html() == "") {
-        prototype_select.change();
-      }
-    })(jQuery);

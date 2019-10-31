@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20191023172424) do
+ActiveRecord::Schema.define(:version => 20191023105006) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -521,11 +521,6 @@ ActiveRecord::Schema.define(:version => 20191023172424) do
     t.integer  "position",                    :default => 0, :null => false
   end
 
-  create_table "spree_option_types_prototypes", :id => false, :force => true do |t|
-    t.integer "prototype_id"
-    t.integer "option_type_id"
-  end
-
   create_table "spree_option_values", :force => true do |t|
     t.integer  "position"
     t.string   "name"
@@ -783,17 +778,6 @@ ActiveRecord::Schema.define(:version => 20191023172424) do
     t.string   "presentation", :null => false
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
-  end
-
-  create_table "spree_properties_prototypes", :id => false, :force => true do |t|
-    t.integer "prototype_id"
-    t.integer "property_id"
-  end
-
-  create_table "spree_prototypes", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
   end
 
   create_table "spree_return_authorizations", :force => true do |t|
@@ -1292,9 +1276,6 @@ ActiveRecord::Schema.define(:version => 20191023172424) do
   add_foreign_key "spree_line_items", "spree_orders", name: "spree_line_items_order_id_fk", column: "order_id"
   add_foreign_key "spree_line_items", "spree_variants", name: "spree_line_items_variant_id_fk", column: "variant_id"
 
-  add_foreign_key "spree_option_types_prototypes", "spree_option_types", name: "spree_option_types_prototypes_option_type_id_fk", column: "option_type_id"
-  add_foreign_key "spree_option_types_prototypes", "spree_prototypes", name: "spree_option_types_prototypes_prototype_id_fk", column: "prototype_id"
-
   add_foreign_key "spree_option_values", "spree_option_types", name: "spree_option_values_option_type_id_fk", column: "option_type_id"
 
   add_foreign_key "spree_option_values_variants", "spree_option_values", name: "spree_option_values_variants_option_value_id_fk", column: "option_value_id"
@@ -1335,9 +1316,6 @@ ActiveRecord::Schema.define(:version => 20191023172424) do
   add_foreign_key "spree_promotion_actions", "spree_activators", name: "spree_promotion_actions_activator_id_fk", column: "activator_id"
 
   add_foreign_key "spree_promotion_rules", "spree_activators", name: "spree_promotion_rules_activator_id_fk", column: "activator_id"
-
-  add_foreign_key "spree_properties_prototypes", "spree_properties", name: "spree_properties_prototypes_property_id_fk", column: "property_id"
-  add_foreign_key "spree_properties_prototypes", "spree_prototypes", name: "spree_properties_prototypes_prototype_id_fk", column: "prototype_id"
 
   add_foreign_key "spree_return_authorizations", "spree_orders", name: "spree_return_authorizations_order_id_fk", column: "order_id"
 
