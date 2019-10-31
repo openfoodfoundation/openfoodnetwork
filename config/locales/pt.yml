@@ -2570,6 +2570,7 @@ pt:
   status: "estado"
   new: "Novo"
   start: "Começar"
+  end: "Término"
   stop: "Parar"
   first: "Primeiro"
   previous: "Anterior"
