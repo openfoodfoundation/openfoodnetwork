@@ -890,12 +890,25 @@ en:
         loading: LOADING...
       edit:
         advanced_settings: "Advanced Settings"
-        update_and_close: "Update and Close"
+        save: "Save"
+        save_and_next: "Save and Next"
+        next: "Next"
+        cancel: "Cancel"
+        back_to_list: "Back To List"
         choose_products_from: "Choose Products From:"
       incoming:
-        update_and_close: "Update and Close"
+        previous: "Previous"
+        save: "Save"
+        save_and_next: "Save and Next"
+        next: "Next"
+        cancel: "Cancel"
+        back_to_list: "Back To List"
       outgoing:
-        update_and_close: "Update and Close"
+        previous: "Previous"
+        save: "Save"
+        save_and_back_to_list: "Save and Back to List"
+        cancel: "Cancel"
+        back_to_list: "Back To List"
       wizard_progress:
         general_settings: "1. General Settings"
         incoming: "2. Incoming Products"
