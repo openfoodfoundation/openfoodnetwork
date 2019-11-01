@@ -888,6 +888,10 @@ en:
       loading_flash:
         loading_order_cycles: LOADING ORDER CYCLES
         loading: LOADING...
+      new:
+        create: "Create"
+        cancel: "Cancel"
+        back_to_list: "Back To List"
       edit:
         advanced_settings: "Advanced Settings"
         save: "Save"
@@ -895,6 +899,7 @@ en:
         next: "Next"
         cancel: "Cancel"
         back_to_list: "Back To List"
+        save_and_back_to_list: "Save and Back to List"
         choose_products_from: "Choose Products From:"
       incoming:
         previous: "Previous"

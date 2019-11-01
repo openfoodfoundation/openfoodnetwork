@@ -12,6 +12,8 @@ angular.module('admin.orderCycles')
 
     $scope.StatusMessage = StatusMessage
 
+    $scope.view = 'general_settings'
+
     $scope.$watch 'order_cycle_form.$dirty', (newValue) ->
       StatusMessage.display 'notice', t("admin.unsaved_changes") if newValue
 
