@@ -187,6 +187,38 @@ module Api
       end
     end
 
+    context "with custom taxon ordering applied and duplicate product names in the order cycle" do
+      let!(:supplier) { create(:supplier_enterprise) }
+      let!(:product5) { create(:product, name: "Duplicate name", primary_taxon: taxon3, supplier: supplier) }
+      let!(:product6) { create(:product, name: "Duplicate name", primary_taxon: taxon3, supplier: supplier) }
+      let!(:product7) { create(:product, name: "Duplicate name", primary_taxon: taxon2, supplier: supplier) }
+      let!(:product8) { create(:product, name: "Duplicate name", primary_taxon: taxon2, supplier: supplier) }
+
+      before do
+        distributor.preferred_shopfront_taxon_order = "#{taxon2.id},#{taxon3.id},#{taxon1.id}"
+        exchange.variants << product5.variants.first
+        exchange.variants << product6.variants.first
+        exchange.variants << product7.variants.first
+        exchange.variants << product8.variants.first
+      end
+
+      it "displays products in new order" do
+        api_get :products, id: order_cycle.id, distributor: distributor.id
+        expect(product_ids).to eq [product7.id, product8.id, product2.id, product3.id, product5.id, product6.id, product1.id]
+      end
+
+      it "displays products in correct order across multiple pages" do
+        api_get :products, id: order_cycle.id, distributor: distributor.id, per_page: 3
+        expect(product_ids).to eq [product7.id, product8.id, product2.id]
+
+        api_get :products, id: order_cycle.id, distributor: distributor.id, per_page: 3, page: 2
+        expect(product_ids).to eq [product3.id, product5.id, product6.id]
+
+        api_get :products, id: order_cycle.id, distributor: distributor.id, per_page: 3, page: 3
+        expect(product_ids).to eq [product1.id]
+      end
+    end
+
     private
 
     def product_ids

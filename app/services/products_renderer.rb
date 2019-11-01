@@ -63,10 +63,10 @@ class ProductsRenderer
     if distributor.preferred_shopfront_taxon_order.present?
       distributor
         .preferred_shopfront_taxon_order
-        .split(",").map { |id| "primary_taxon_id=#{id} DESC" }
-        .join(",") + ", name ASC"
+        .split(",").map { |id| "spree_products.primary_taxon_id=#{id} DESC" }
+        .join(", ") + ", spree_products.name ASC, spree_products.id ASC"
     else
-      "name ASC"
+      "spree_products.name ASC"
     end
   end
 

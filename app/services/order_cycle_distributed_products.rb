@@ -8,13 +8,14 @@ class OrderCycleDistributedProducts
   end
 
   def products_relation
-    Spree::Product.where(id: stocked_products)
+    Spree::Product.where(id: stocked_products).group("spree_products.id")
   end
 
   def variants_relation
     order_cycle.
       variants_distributed_by(distributor).
-      merge(stocked_variants_and_overrides)
+      merge(stocked_variants_and_overrides).
+      select("DISTINCT spree_variants.*")
   end
 
   private
