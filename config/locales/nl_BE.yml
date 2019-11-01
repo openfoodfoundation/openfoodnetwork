@@ -168,7 +168,7 @@ nl_BE:
   home: "OFN"
   title: Open Food Network
   welcome_to: 'Welkom op '
-  site_meta_description: "We beginnen vanaf de grond af aan. Met boeren en telers klaar om hun verhaal trots en waarachtig te vertellen. Met distributeurs die klaar staan om mensen op een eerlijke en eerlijke manier in contact te brengen met producten. Met kopers die geloven dat betere wekelijkse boodschappenbeslissingen....."
+  site_meta_description: "Dit is wat we doen door een platform te creëren dat verbinding wil maken:\n● gepassioneerde boeren, die zich inzetten voor duurzame en regeneratieve landbouw,\n● handelaren van lokale producten, aanhangers van kortsluitingen, die in volledige transparantie handelen en een eerlijke vergoeding van de producenten garanderen,\n● kopers die de wereld willen veranderen door beter te eten,"
   search_by_name: Zoeken op naam of voorstad....
   producers_join: Belgische producenten zijn nu welkom om zich aan te sluiten bij het Open Food Network.
   charges_sales_tax: Kosten GST?
@@ -1256,7 +1256,7 @@ nl_BE:
     cookies_policy:
       header: "Hoe We Cookies Gebruiken"
       desc_part_1: "Cookies zijn héél kleine tekstbestandjes die opgeslagen worden op je computer wanneer je bepaalde websites bezoekt."
-      desc_part_2: "In het OFN respecteren we je privacy volledig. We gebruiken ook enkel de cookies die noodzakelijk zijn om je de diensten te leveren om het voedsel online te verkopen/ kopen. We verkopen geen enkele data van je. Het is mogelijk dat we in de toekomst zullen voorstellen om bepaalde gegevens van je te delen om nieuwe commons diensten te bouwen die zouden kunnen worden gebruikt voor het ecosysteem (zoals logistiek diensten voor korte keten voedselsystemen) maar op dat punt zijn we nog niet beland, en we doen het niet zonder jouw toestemming :-)"
+      desc_part_2: "Het wordt in verschillende landen ingezet. In België is het ontwikkeld door Oxfam-World Stores om mensen die voedsel verbouwen, verkopen en kopen in staat te stellen om hun eigen kracht te ontwikkelen."
       desc_part_3: "We gebruiken cookies hoofdzakelijk om te onthouden wie je bent wanneer  op het portaal inlogt, of om in staat te zijn de artikels te onthouden die je aan je winkelwagentje hebt toegevoegd zelfs wanneer je niet ingelogd bent. Als je op de website blijft navigeren zonder geklikt te hebben op 'Accepteer cookies', dan veronderstellen we dat je ons de toestemming geeft om cookies te bewaren die essentieel zijn voor het functioneren van de website. Hier is een lijst van cookies die we gebruiken!"
       essential_cookies: "Essentiële Cookies"
       essential_cookies_desc: "De volgende  cookies zijn absoluut nodig voor de werking van onze website"
@@ -1298,11 +1298,11 @@ nl_BE:
   brandstory_headline: "Zinvol voedsel"
   brandstory_intro: "De beste manier om een systeem te herstellen is om een nieuwe te starten..."
   brandstory_part1: "We beginnen vanuit de aarde. Met landbouwers en produkteurs, bereid om hun verhaal, werkelijk en met trots, te doen. Met verdelers, bereid om de mensen  naar eerlijke en rechtvaardige produkten te richten. Met kopers die geloven dat betere wekelijks aankoopbeslissingen, de wereld echt kunnen veranderen.  "
-  brandstory_part2: "Dan moeten we een manier vinden om de daad bij het woord voegen. Een manier te vinden om iedereen die voedsel groeit, verkoopt of koopt terug controle te geven . Een manier om een verhaal te vertellen, om de logistieke kant te regelen. Een manier om een kleine koop om te zetten in een transitie."
-  brandstory_part3: "Dus bouwen we een online markt die de regels voor iedereen gelijk stelt. Het is transparant, dus het creëert echte banden. Het is opensource, dus het is van iedereen. Het is opschaalbaar op het niveau van regio's en naties, dus over de hele wereld passen mensen en gemeenschappen het toe."
-  brandstory_part4: "Het werkt overal, het verandert alles."
+  brandstory_part2: "Dit platform wordt het Open Food Network genoemd."
+  brandstory_part3: "Het is transparant en open source en bevordert eerlijke relaties tussen boeren en consumenten. Het doel is om een netwerk van kwaliteitsvoedingsmiddelen te creëren dankzij een efficiënte en voortdurend evoluerende IT-tool."
+  brandstory_part4: "U bent\n● Een producent: registreer en presenteer uw producten om ze in uw regio te promoten. U geeft het platform energie en maakt contact met nieuwe klanten.\n● Een distributeur: registreer en presenteer uw project om het bekend te maken en nieuwe klanten te overtuigen.\n● Een consument: vind producten bij u in de buurt en ontdek hun verhalen."
   brandstory_part5_strong: "Wij noemen het Open Food Network."
-  brandstory_part6: "Wij houden allen van eten, nu kunnen we ook van ons eetsysteem houden. "
+  brandstory_part6: "We kunnen allemaal meewerken aan de opbouw van een eerlijker voedselsysteem dat de mensheid respecteert en de planeet in stand houdt."
   learn_body: "Verken rolmodellen, verhalen en bronnen om je te ondersteunen in de ontwikkeling van een eerlijke voedselzaak of organisatie. Vind opleidingen, evenementen, en andere mogelijkheden om te leren van mensen zoals jij."
   learn_cta: "Vind Inspiratie"
   connect_body: "Zoek in onze volledige lijst van producenten, hubs en groepen om een eerlijke voedselhandelaar te vinden bij jou in de buurt. Maak je zaak or organisatie deel van het OFN zodat klanten je kunnen vinden. Maak deel van de gemeenschap om advies te krijgen en samen moeilijkheden te overkomen."
@@ -2798,7 +2798,6 @@ nl_BE:
         products: "Producten"
         option_types: "Optietypen"
         properties: "Eigenschappen"
-        prototypes: "Prototypes "
         variant_overrides: "Inventarisatie"
         reports: "Rapporten"
         configuration: "Instelling"

@@ -114,7 +114,9 @@ en_GB:
       email_welcome: "Welcome"
       email_registered: "is now part of"
       email_userguide_html: "The User Guide with detailed support for setting up your Producer or Hub is here: %{link}"
+      userguide: "Open Food Network User Guide"
       email_admin_html: "You can manage your account by logging into the %{link} or by clicking on 'Profile' in the top right hand side of the homepage, and selecting Administration."
+      admin_panel: "Admin Panel"
       email_community_html: "We also have an online forum for community discussion related to OFN software and the unique challenges of running a food enterprise. You are encouraged to join in. We are constantly evolving and your input into this forum will shape what happens next. %{link}"
       join_community: "Join the community"
     invite_manager:
@@ -2806,7 +2808,6 @@ en_GB:
         products: "Products"
         option_types: "Option Types"
         properties: "Properties"
-        prototypes: "Prototypes"
         variant_overrides: "Inventory"
         reports: "Reports"
         configuration: "Configuration"

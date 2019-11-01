@@ -2803,7 +2803,6 @@ en_ZA:
         products: "Products"
         option_types: "Option Types"
         properties: "Properties"
-        prototypes: "Prototypes"
         variant_overrides: "Inventory"
         reports: "Reports"
         configuration: "Configuration"

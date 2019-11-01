@@ -114,7 +114,9 @@ es:
       email_welcome: "Bienvenido"
       email_registered: "ahora es parte de"
       email_userguide_html: "La Guía de Usuario con soporte detallado para configurar su Productora o Grupo de Consumo está aquí: %{link}"
+      userguide: "Guía de usuario de Open Food Network"
       email_admin_html: "Puede administrar su cuenta iniciando sesión en %{link} o haciendo clic en el engrane arriba a la derecha de la página de inicio, y seleccionando Administración."
+      admin_panel: "Panel de administración"
       email_community_html: "También tenemos un foro en líea para la discusión comunal relacionada con el programa OFN y los retos únicos del funcionamiento de una organización de alimentación. Lo invitamos a unirse. Estamos evolucionando de forma constante y su aporte en este formo le dará forma a lo que pase luego. %{link}"
       join_community: "Unirse a la comunidad"
     invite_manager:
@@ -533,6 +535,7 @@ es:
         title: Inventario
         description: Utilice esta página para administrar inventarios para sus organizaciones. Todos los detalles del producto establecidos aquí anularán los establecidos en la página de 'Productos'
         enable_reset?: ¿Activar Reset del Stock?
+        default_stock: "Stock predeterminado"
         inherit?: ¿Heredado?
         add: Añadir
         hide: Ocultar
@@ -2806,7 +2809,6 @@ es:
         products: "Productos"
         option_types: "Tipos de opciones"
         properties: "Propiedades"
-        prototypes: "Prototipos"
         variant_overrides: "Inventario"
         reports: "Informes"
         configuration: "Configuración"

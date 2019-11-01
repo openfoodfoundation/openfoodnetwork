@@ -114,7 +114,9 @@ fr:
       email_welcome: "Vous y êtes presque..."
       email_registered: "va, dès que vous aurez choisi un type de profil, être créé sur"
       email_userguide_html: "Le Guide Utilisateur est là pour vous accompagner dans la prise en main de la plateforme. Vous y trouverez les informations détaillées de paramétrage de votre profil entreprise, de vos produits si vous êtes producteurs, et de votre boutique si vous avez choisi un type de profil comprenant une boutique. Pour accéder au guide en français, cliquez ici : %{link}"
+      userguide: "Guide utilisateur"
       email_admin_html: "Pour choisir le type de profil, rendez-vous sur l’%{link}. Vous pouvez aussi y accéder depuis la page d’accueil du site, en haut à droite, Profil > Administration. Il vous est alors proposé de choisir le type de profil désiré. Le type de profil peut aussi être choisi via le menu “Entreprises” depuis l’interface d’administration, colonne “Type de profil”. L’interface d’administration est l’endroit où vous gérez vos entreprises, produits, commandes, etc."
+      admin_panel: "interface d'administration"
       email_community_html: "Nous avons aussi un forum de discussion en ligne pour échanger avec la communauté sur des questions liées à la plateforme ou aux défis de la gestion d'un circuit court. Nous vous invitons à y participer ! %{link}"
       join_community: "Accéder au forum"
     invite_manager:
@@ -533,6 +535,7 @@ fr:
         title: Catalogue boutique
         description: Utilisez cette page pour gérer le catalogue de votre entreprise. Les détails produits saisis ici remplaceront ceux de la page "Produit" pour votre entreprise uniquement.
         enable_reset?: Autoriser réinitialisation du stock (retour configurations par défaut)?
+        default_stock: "Stock par défaut"
         inherit?: Hériter?
         add: Ajouter
         hide: Masquer
@@ -2829,7 +2832,6 @@ fr:
         products: "Produits"
         option_types: "Types d'options"
         properties: "Propriétés / labels"
-        prototypes: "Prototypes"
         variant_overrides: "Catalogue boutique"
         reports: "Rapports"
         configuration: "Configuration"

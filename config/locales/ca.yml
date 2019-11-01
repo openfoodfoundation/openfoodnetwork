@@ -114,7 +114,9 @@ ca:
       email_welcome: "Benvinguda"
       email_registered: "ara forma part de"
       email_userguide_html: "La Guia d'usuari amb suport detallat per configurar una productora o grup de consum és aquí: %{link}"
+      userguide: "Guia d'usuaris d'Open Food Network"
       email_admin_html: "Pots gestionar el teu compte iniciant sessió a l'%{link} o fent clic a la pestanya a la part superior dreta de la pàgina d'inici i seleccionant Administració."
+      admin_panel: "Tauler d’administració"
       email_community_html: "També tenim un fòrum en línia per debats de la comunitat relacionada amb el programari OFN i els desafiaments únics de triar endavant una organització alimentària. T'animem a unir-t'hi. Estem en constant evolució i les teves contribucions en aquest fòrum donaran forma al que passi a en el futur. %{link}"
       join_community: "Uneix-te a la comunitat"
     invite_manager:
@@ -533,6 +535,7 @@ ca:
         title: Inventari
         description: Utilitzeu aquesta pàgina per administrar els inventaris de la vostres organitzacions. Tots els detalls del producte aquí establerts substituiran els establerts a la pàgina "Productes"
         enable_reset?: Habilitar la restauració de valors de stock?
+        default_stock: "Estoc per defecte"
         inherit?: Heredar?
         add: Afegeix
         hide: Amaga
@@ -2805,7 +2808,6 @@ ca:
         products: "Productes "
         option_types: "Tipus d'opcions"
         properties: "Propietats"
-        prototypes: "Prototips"
         variant_overrides: "Inventari"
         reports: "Informes"
         configuration: "Configuració"

@@ -168,7 +168,7 @@ fr_BE:
   home: "OFN"
   title: Open Food Network
   welcome_to: 'Bienvenue sur '
-  site_meta_description: "Tout commence dans le sol. Avec ces paysans, agriculteurs, producteurs, engagés pour une agriculture durable et régénératrice, et désireux de partager leur histoire et leur passion avec fierté. Avec ces distributeurs souhaitant reconnecter les individus à leurs aliments et aux gens qui les produisent, soutenir les prises de conscience, dans une démarche de transparence, d'honnêteté, en assurant une juste rémunération des producteurs.  Avec ces acheteurs qui croient que de meilleures décisions d'achats peuvent ..."
+  site_meta_description: "C’est ce que nous faisons en créant une plateforme qui veut mettre en contact :\n● des paysans passionnés, engagés pour une agriculture durable et régénératrice,\n● des distributeurs de produits locaux, adeptes de circuits courts, qui agissent en toute transparence et assurent une juste rémunération des producteurs,\n● des acheteurs qui veulent changer le monde en mangeant mieux,"
   search_by_name: Recherche par nom ou province...
   producers_join: Les producteurs et autres magasins basés en Belgique sont invités à rejoindre Open Food Network.
   charges_sales_tax: Soumis à la TVA?
@@ -1293,14 +1293,14 @@ fr_BE:
       cookies_policy_link: "politique de cookies"
       cookies_accept_button: "Accepter les cookies"
   home_shop: Faire mes courses
-  brandstory_headline: "Des aliments porteurs de sens."
+  brandstory_headline: "Votre assiette peut faire la différence."
   brandstory_intro: "Parfois, le meilleur moyen de réparer le système, c'est d'en inventer un autre..."
   brandstory_part1: "Tout commence dans le sol. Avec ces paysans, agriculteurs, producteurs, engagés pour une agriculture durable et régénératrice, et désireux de partager leur histoire et leur passion avec fierté. Avec ces distributeurs souhaitant reconnecter les individus à leurs aliments et aux gens qui les produisent, soutenir les prises de conscience, dans une démarche de transparence, d'honnêteté, en assurant une juste rémunération des producteurs.  Avec ces acheteurs qui croient que de meilleures décisions d'achats peuvent véritablement changer le monde."
-  brandstory_part2: "Nous avons besoin d'un outil pour rendre tout ça réel. Un moyen de redonner le pouvoir à ceux qui cultivent, vendent et achètent la nourriture. Un moyen de raconter les histoires, de gérer la logistique. Un moyen de transformer chaque jour les transactions en actions porteuses de changement."
-  brandstory_part3: "C'est pour cela que nous construisons cette plateforme, ce \"marché en ligne\", afin de rééquilibrer les échanges et redistribuer le pouvoir. Elle est transparente, pour assurer des relations équitables et favoriser les prises de conscience. Elle est «open source» et donc libre d’accès. Elle est déployée dans plusieurs régions ou pays. "
-  brandstory_part4: "Elle fonctionne partout. Elle change tout."
+  brandstory_part2: "Cette plateforme s’appelle Open Food Network."
+  brandstory_part3: "Transparente et “open source” elle promeut des relations équitables entre agriculteurs et consommateurs. Son objectif est de créer un réseau alimentaire de qualité grâce à un outil informatique performant en constante évolution."
+  brandstory_part4: "Vous êtes\n● Un producteur : inscrivez-vous et présentez vos produits pour les faire connaître dans votre région. Vous dynamisez la plateforme et entrez en contact avec de nouveaux clients.\n● Un distributeur : inscrivez-vous et présentez votre projet pour le faire connaître et convaincre de nouveaux clients.\n● Un consommateur : trouvez des produits près de chez vous et allez à la découverte de leurs histoires."
   brandstory_part5_strong: "Cette plateforme s'appelle Open Food Network."
-  brandstory_part6: "Nous aimons notre nourriture. Maintenant nous pouvons aussi aimer notre système alimentaire."
+  brandstory_part6: "Nous pouvons toutes et tous participer à la construction d’un système alimentaire plus juste, respectueux de l’Homme qui préserve la planète."
   learn_body: "Explorer les modèles, les histoires et les ressources disponibles pour vous aider à développer votre propre initiative de commerce/organisation oeuvrant pour un système alimentaire équitable et juste. Trouver des outils pour vous former, des événements et autres opportunités d'apprendre de vos pairs."
   learn_cta: "Découvrir "
   connect_body: "Rechercher dans le répertoire des producteurs, des comptoirs et des groupes pour trouver des commerçants éthiques à côté de chez vous. Inscrivez votre commerce ou organisation sur OFFrance pour que les acheteurs puissent vous trouver. Rejoignez la communauté pour recevoir du soutien et résoudre ensemble les problèmes."
@@ -2803,7 +2803,6 @@ fr_BE:
         products: "Produits"
         option_types: "Option Types "
         properties: "Labels / propriétés"
-        prototypes: "Prototypes"
         variant_overrides: "Catalogue du magasin"
         reports: "Rapports"
         configuration: "Configuration"
