@@ -1,5 +1,7 @@
 angular.module('admin.orderCycles')
-  .controller 'AdminCreateOrderCycleCtrl', ($scope, $filter, $window, OrderCycle, Enterprise, EnterpriseFee, Schedules, RequestMonitor, ocInstance, StatusMessage) ->
+  .controller 'AdminCreateOrderCycleCtrl', ($scope, $controller, $filter, $window, OrderCycle, Enterprise, EnterpriseFee, Schedules, RequestMonitor, ocInstance, StatusMessage) ->
+    $controller('AdminOrderCycleBasicCtrl', {$scope: $scope})
+
     $scope.enterprises = Enterprise.index(coordinator_id: ocInstance.coordinator_id)
     $scope.supplier_enterprises = Enterprise.producer_enterprises
     $scope.distributor_enterprises = Enterprise.hub_enterprises
@@ -14,23 +16,8 @@ angular.module('admin.orderCycles')
 
     $scope.view = 'general_settings'
 
-    $scope.$watch 'order_cycle_form.$dirty', (newValue) ->
-      StatusMessage.display 'notice', t("admin.unsaved_changes") if newValue
-
-    $scope.$watch 'order_cycle_form.$valid', (isValid) ->
-      StatusMessage.setValidation(isValid)
-
-    $scope.loaded = ->
-      Enterprise.loaded && EnterpriseFee.loaded && OrderCycle.loaded && !RequestMonitor.loading
-
-    $scope.suppliedVariants = (enterprise_id) ->
-      Enterprise.suppliedVariants(enterprise_id)
-
     $scope.exchangeSelectedVariants = (exchange) ->
       OrderCycle.exchangeSelectedVariants(exchange)
-
-    $scope.setExchangeVariants = (exchange, variants, selected) ->
-      OrderCycle.setExchangeVariants(exchange, variants, selected)
 
     $scope.enterpriseTotalVariants = (enterprise) ->
       Enterprise.totalVariants(enterprise)
@@ -50,9 +37,6 @@ angular.module('admin.orderCycles')
     $scope.enterprisesWithFees = ->
       $scope.enterprises[id] for id in OrderCycle.participatingEnterpriseIds() when $scope.enterpriseFeesForEnterprise(id).length > 0
 
-    $scope.enterpriseFeesForEnterprise = (enterprise_id) ->
-      EnterpriseFee.forEnterprise(parseInt(enterprise_id))
-
     $scope.addSupplier = ($event) ->
       $event.preventDefault()
       OrderCycle.addSupplier($scope.new_supplier_id)
@@ -65,14 +49,6 @@ angular.module('admin.orderCycles')
       $event.preventDefault()
       OrderCycle.removeExchange(exchange)
       $scope.order_cycle_form.$dirty = true
-
-    $scope.addCoordinatorFee = ($event) ->
-      $event.preventDefault()
-      OrderCycle.addCoordinatorFee()
-
-    $scope.removeCoordinatorFee = ($event, index) ->
-      $event.preventDefault()
-      OrderCycle.removeCoordinatorFee(index)
 
     $scope.addExchangeFee = ($event, exchange) ->
       $event.preventDefault()
@@ -89,6 +65,3 @@ angular.module('admin.orderCycles')
       $event.preventDefault()
       StatusMessage.display 'progress', t('js.saving')
       OrderCycle.create(destination)
-
-    $scope.cancel = (destination) ->
-      $window.location = destination
