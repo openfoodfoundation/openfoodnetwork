@@ -1,5 +1,9 @@
 angular.module('admin.orderCycles')
   .controller 'AdminOrderCycleBasicCtrl', ($scope, $filter, $window, OrderCycle, Enterprise, EnterpriseFee, Schedules, RequestMonitor, ocInstance, StatusMessage) ->
+    $scope.StatusMessage = StatusMessage
+    $scope.OrderCycle = OrderCycle
+    $scope.schedules = Schedules.index({enterprise_id: ocInstance.coordinator_id})
+
     $scope.$watch 'order_cycle_form.$dirty', (newValue) ->
       StatusMessage.display 'notice', t("admin.unsaved_changes") if newValue
 

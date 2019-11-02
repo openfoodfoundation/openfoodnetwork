@@ -8,12 +8,8 @@ angular.module('admin.orderCycles')
     $scope.distributor_enterprises = Enterprise.hub_enterprises
     $scope.supplied_products = Enterprise.supplied_products
     $scope.enterprise_fees = EnterpriseFee.index(order_cycle_id: order_cycle_id)
-    $scope.schedules = Schedules.index({enterprise_id: ocInstance.coordinator_id})
 
-    $scope.OrderCycle = OrderCycle
     $scope.order_cycle = OrderCycle.load(order_cycle_id)
-
-    $scope.StatusMessage = StatusMessage
 
     $scope.view = 'general_settings'
 
