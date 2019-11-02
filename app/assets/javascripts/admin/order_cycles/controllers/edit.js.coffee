@@ -1,6 +1,8 @@
 angular.module('admin.orderCycles')
   .controller 'AdminEditOrderCycleCtrl', ($scope, $controller, $filter, $location, $window, OrderCycle, Enterprise, EnterpriseFee, StatusMessage, Schedules, RequestMonitor, ocInstance) ->
-    $controller('AdminOrderCycleCtrl', {$scope: $scope})
+    $controller('AdminOrderCycleBasicCtrl', {$scope: $scope})
+
+    $scope.view = 'general_settings'
 
     order_cycle_id = $location.absUrl().match(/\/admin\/order_cycles\/(\d+)/)[1]
     $scope.order_cycle = OrderCycle.load(order_cycle_id)
@@ -11,11 +13,6 @@ angular.module('admin.orderCycles')
     $scope.removeCoordinatorFee = ($event, index) ->
       $event.preventDefault()
       OrderCycle.removeCoordinatorFee(index)
-      $scope.order_cycle_form.$dirty = true
-
-    $scope.removeExchangeFee = ($event, exchange, index) ->
-      $event.preventDefault()
-      OrderCycle.removeExchangeFee(exchange, index)
       $scope.order_cycle_form.$dirty = true
 
     $scope.submit = (destination) ->

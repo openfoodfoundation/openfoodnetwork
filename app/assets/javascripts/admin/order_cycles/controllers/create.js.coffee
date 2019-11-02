@@ -1,6 +1,8 @@
 angular.module('admin.orderCycles')
   .controller 'AdminCreateOrderCycleCtrl', ($scope, $controller, $filter, $window, OrderCycle, Enterprise, EnterpriseFee, Schedules, RequestMonitor, ocInstance, StatusMessage) ->
-    $controller('AdminOrderCycleCtrl', {$scope: $scope})
+    $controller('AdminOrderCycleBasicCtrl', {$scope: $scope})
+
+    $scope.view = 'general_settings'
 
     $scope.order_cycle = OrderCycle.new({ coordinator_id: ocInstance.coordinator_id})
     $scope.enterprises = Enterprise.index(coordinator_id: ocInstance.coordinator_id)
