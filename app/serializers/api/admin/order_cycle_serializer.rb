@@ -33,7 +33,7 @@ class Api::Admin::OrderCycleSerializer < ActiveModel::Serializer
   end
 
   def editable_variants_for_incoming_exchanges
-    sort_by_supplier_id(permissions.all_incoming_editable_variants.all)
+    variant_ids_by_supplier_id(permissions.all_incoming_editable_variants.all)
   end
 
   def editable_variants_for_outgoing_exchanges
@@ -79,17 +79,10 @@ class Api::Admin::OrderCycleSerializer < ActiveModel::Serializer
     @visible_enterprises ||= permissions.visible_enterprises
   end
 
-  def sort_by_supplier_id(variants)
-    collection = {}
-    variants.map do |variant|
-      supplier_id = variant.product.supplier_id
-
-      if collection.key? supplier_id
-        collection[supplier_id] << variant.id
-      else
-        collection[supplier_id] = [variant.id]
-      end
+  def variant_ids_by_supplier_id(variants)
+    grouped_by_supplier = variants.group_by(&:supplier_id)
+    grouped_by_supplier.each do |supplier_id, grouped_variants|
+      grouped_by_supplier[supplier_id] = grouped_variants.map(&:id)
     end
-    collection
   end
 end
