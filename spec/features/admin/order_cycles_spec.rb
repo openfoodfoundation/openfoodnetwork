@@ -196,6 +196,9 @@ feature '
       click_button 'Add coordinator fee'
       select 'Coord fee', from: 'order_cycle_coordinator_fee_0_id'
 
+      click_button 'Create'
+      expect(page).to have_content 'Your order cycle has been created.'
+
       # I should not be able to add a blank supplier
       expect(page).to have_select 'new_supplier_id', selected: ''
       expect(page).to have_button 'Add supplier', disabled: true
@@ -218,6 +221,8 @@ feature '
       select 'My supplier',  from: 'order_cycle_incoming_exchange_0_enterprise_fees_0_enterprise_id'
       select 'Supplier fee', from: 'order_cycle_incoming_exchange_0_enterprise_fees_0_enterprise_fee_id'
 
+      click_button 'Save and Next'
+
       # And I add a distributor with the same products
       select 'My distributor', from: 'new_distributor_id'
       click_button 'Add distributor'
@@ -239,14 +244,9 @@ feature '
       select 'My distributor',  from: 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_id'
       select 'Distributor fee', from: 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_fee_id'
 
-      # And I click Create
-      click_button 'Create'
-
-      # Then my order cycle should have been created
-      expect(page).to have_content 'Your order cycle has been created.'
+      click_button 'Save and Back to List'
 
       oc = OrderCycle.last
-
       toggle_columns "Producers", "Shops"
 
       expect(page).to have_input "oc#{oc.id}[name]", value: "Plums & Avos"
@@ -316,9 +316,6 @@ feature '
       fill_in 'order_cycle_orders_open_at', with: order_cycle_opening_time
       fill_in 'order_cycle_orders_close_at', with: order_cycle_closing_time
 
-      # CAN'T CHANGE COORDINATOR ANYMORE
-      # select 'My coordinator', from: 'order_cycle_coordinator_id'
-
       # And I configure some coordinator fees
       click_button 'Add coordinator fee'
       select 'Coord fee 1', from: 'order_cycle_coordinator_fee_0_id'
@@ -326,6 +323,9 @@ feature '
       click_button 'Add coordinator fee'
       click_link 'order_cycle_coordinator_fee_2_remove'
       select 'Coord fee 2', from: 'order_cycle_coordinator_fee_1_id'
+
+      click_button 'Save and Next'
+      expect(page).to have_content 'Your order cycle has been updated.'
 
       # And I add a supplier and some products
       select 'My supplier', from: 'new_supplier_id'
@@ -346,6 +346,8 @@ feature '
       click_link 'order_cycle_incoming_exchange_2_enterprise_fees_0_remove'
       select 'My supplier', from: 'order_cycle_incoming_exchange_2_enterprise_fees_0_enterprise_id'
       select 'Supplier fee 2', from: 'order_cycle_incoming_exchange_2_enterprise_fees_0_enterprise_fee_id'
+
+      click_button 'Save and Next'
 
       # And I add a distributor and some products
       select 'My distributor', from: 'new_distributor_id'
@@ -378,15 +380,10 @@ feature '
       select 'My distributor', from: 'order_cycle_outgoing_exchange_2_enterprise_fees_0_enterprise_id'
       select 'Distributor fee 2', from: 'order_cycle_outgoing_exchange_2_enterprise_fees_0_enterprise_fee_id'
 
-      # And I click Update
       expect(page).to have_selector "#save-bar"
-      click_button 'Update and Close'
-
-      # Then my order cycle should have been updated
-      expect(page).to have_content 'Your order cycle has been updated.'
+      click_button 'Save and Back to List'
 
       oc = OrderCycle.last
-
       toggle_columns "Producers", "Shops"
 
       expect(page).to have_input "oc#{oc.id}[name]", value: "Plums & Avos"
@@ -439,6 +436,8 @@ feature '
     expect(page.find('#order_cycle_orders_close_at').value).to eq(oc.orders_close_at.to_s)
     expect(page).to have_content "COORDINATOR #{oc.coordinator.name}"
 
+    click_button 'Next'
+
     # And I should see the suppliers
     expect(page).to have_selector 'td.supplier_name', text: oc.suppliers.first.name
     expect(page).to have_selector 'td.supplier_name', text: oc.suppliers.last.name
@@ -464,6 +463,8 @@ feature '
     supplier = oc.suppliers.max_by(&:name)
     expect(page).to have_select 'order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_id', selected: supplier.name
     expect(page).to have_select 'order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_fee_id', selected: supplier.enterprise_fees.first.name
+
+    click_button 'Next'
 
     # And I should see the distributors
     expect(page).to have_selector 'td.distributor_name', text: oc.distributors.first.name
@@ -505,13 +506,15 @@ feature '
 
     # When I edit the first order cycle, the exchange should appear as incoming
     quick_login_as_admin
-    visit edit_admin_order_cycle_path(oc_incoming)
-    expect(page).to     have_selector 'table.exchanges tr.supplier'
+    visit admin_order_cycle_incoming_path(oc_incoming)
+    expect(page).to have_selector 'table.exchanges tr.supplier'
+    visit admin_order_cycle_outgoing_path(oc_incoming)
     expect(page).not_to have_selector 'table.exchanges tr.distributor'
 
     # And when I edit the second order cycle, the exchange should appear as outgoing
-    visit edit_admin_order_cycle_path(oc_outgoing)
-    expect(page).to     have_selector 'table.exchanges tr.distributor'
+    visit admin_order_cycle_outgoing_path(oc_outgoing)
+    expect(page).to have_selector 'table.exchanges tr.distributor'
+    visit admin_order_cycle_incoming_path(oc_outgoing)
     expect(page).not_to have_selector 'table.exchanges tr.supplier'
   end
 
