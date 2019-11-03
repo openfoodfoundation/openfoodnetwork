@@ -109,7 +109,14 @@ module Api
         scope = Spree::Product.active
       end
 
-      scope.includes(:master)
+      scope.includes(product_query_includes)
+    end
+
+    def product_query_includes
+      [
+        master: [:images],
+        variants: [:default_price, :stock_locations, :stock_items, :variant_overrides]
+      ]
     end
 
     def paged_products_for_producers(producers)
