@@ -62,9 +62,9 @@ module OpenFoodNetwork
               proc { |_line_items| "" },
               proc { |line_items| line_items.sum(&:amount) },
               proc { |line_items| line_items.sum(&:amount_with_adjustments) },
-              proc { |line_items| line_items.first.order.admin_and_handling_total },
-              proc { |line_items| line_items.first.order.ship_total },
-              proc { |line_items| line_items.first.order.payment_fee },
+              proc { |line_items| admin_and_handling_total(line_items.first.order) },
+              proc { |line_items| ship_total(line_items.first.order) },
+              proc { |line_items| payment_fee(line_items.first.order) },
               proc { |line_items| line_items.first.order.total },
               proc { |line_items| line_items.first.order.paid? ? I18n.t(:yes) : I18n.t(:no) },
 
@@ -190,7 +190,25 @@ module OpenFoodNetwork
       # rubocop:enable Metrics/PerceivedComplexity
 
       def line_item_includes
-        [{ variant: :product, order: [:bill_address, :shipments] }]
+        [{ variant: :product, order: [:bill_address, :shipments, :order_cycle, :adjustments] }]
+      end
+
+      private
+
+      def admin_and_handling_total(order)
+        order.adjustments.select do |a|
+          a.eligible && a.originator_type == 'EnterpriseFee' && a.source_type != 'Spree::LineItem'
+        end.map(&:amount).sum.to_f
+      end
+
+      def ship_total(order)
+        order.adjustments.select{ |a| a.originator_type == 'Spree::ShippingMethod' }.
+          map(&:amount).sum.to_f
+      end
+
+      def payment_fee(order)
+        order.adjustments.select{ |a| a.originator_type == 'Spree::PaymentMethod' }.
+          map(&:amount).sum.to_f
       end
     end
   end
