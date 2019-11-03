@@ -749,39 +749,6 @@ feature '
         expect(exchange.tag_list).to eq(["wholesale"])
       end
 
-      scenario "editing an order cycle we can see (and for now, edit) all exchanges in the order cycle" do
-        # TODO: when we add the editable scope to variant permissions, we should test that
-        # exchanges with enterprises who have not granted P-OC to the coordinator are not
-        # editable, but at this point we cannot distiguish between visible and editable
-        # variants.
-
-        oc = create(:simple_order_cycle, suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' )
-
-        visit edit_admin_order_cycle_path(oc)
-
-        fill_in 'order_cycle_name', with: 'Coordinated'
-
-        # I should be able to see but not edit exchanges for supplier_unmanaged or distributor_unmanaged
-        expect(page).to have_selector "tr.supplier-#{supplier_managed.id}"
-        expect(page).to have_selector "tr.supplier-#{supplier_permitted.id}"
-        expect(page).to have_selector "tr.supplier-#{supplier_unmanaged.id}"
-        expect(page).to have_selector 'tr.supplier', count: 3
-
-        expect(page).to have_selector "tr.distributor-#{distributor_managed.id}"
-        expect(page).to have_selector "tr.distributor-#{distributor_permitted.id}"
-        expect(page).to have_selector "tr.distributor-#{distributor_unmanaged.id}"
-        expect(page).to have_selector 'tr.distributor', count: 3
-
-        # When I save, then those exchanges should remain
-        click_button 'Update'
-        expect(page).to have_content "Your order cycle has been updated."
-
-        oc.reload
-        expect(oc.suppliers).to match_array [supplier_managed, supplier_permitted, supplier_unmanaged]
-        expect(oc.coordinator).to eq(distributor_managed)
-        expect(oc.distributors).to match_array [distributor_managed, distributor_permitted, distributor_unmanaged]
-      end
-
       scenario "editing an order cycle" do
         oc = create(:simple_order_cycle, suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' )
         distributor_managed.update_attribute(:enable_subscriptions, true)
