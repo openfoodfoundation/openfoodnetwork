@@ -150,7 +150,10 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, S
     create: (destination) ->
       oc = new OrderCycleResource({order_cycle: this.dataForSubmit()})
       oc.$create (data) ->
-        $window.location = destination
+        if destination? && destination.length != 0
+          $window.location = destination
+        else if data.edit_path?
+          $window.location = data.edit_path
       , (response) ->
         if response.data.errors?
           StatusMessage.display('failure', response.data.errors[0])

@@ -348,16 +348,27 @@ describe 'OrderCycle service', ->
     beforeEach ->
       spyOn(OrderCycle, 'confirmNoDistributors').and.returnValue true
 
-    it 'redirects to the destination page on success', ->
+    it 'redirects to the given destination on success', ->
       OrderCycle.order_cycle = 'this is the order cycle'
       spyOn(OrderCycle, 'dataForSubmit').and.returnValue('this is the submit data')
       $httpBackend.expectPOST('/admin/order_cycles.json', {
         order_cycle: 'this is the submit data'
-        }).respond {success: true}
+        }).respond {success: true, edit_path: "/edit/path"}
 
       OrderCycle.create('/destination/page')
       $httpBackend.flush()
       expect($window.location).toEqual('/destination/page')
+
+    it 'redirects to the edit_path on success if no destination is given', ->
+      OrderCycle.order_cycle = 'this is the order cycle'
+      spyOn(OrderCycle, 'dataForSubmit').and.returnValue('this is the submit data')
+      $httpBackend.expectPOST('/admin/order_cycles.json', {
+        order_cycle: 'this is the submit data'
+        }).respond {success: true, edit_path: "/edit/path"}
+
+      OrderCycle.create()
+      $httpBackend.flush()
+      expect($window.location).toEqual('/edit/path')
 
     it 'does not redirect on error', ->
       OrderCycle.order_cycle = 'this is the order cycle'

@@ -43,7 +43,7 @@ module Admin
 
       if @order_cycle_form.save
         flash[:notice] = I18n.t(:order_cycles_create_notice)
-        render json: { success: true }
+        render json: { success: true, edit_path: main_app.admin_order_cycle_incoming_path(@order_cycle) }
       else
         render json: { errors: @order_cycle.errors.full_messages }, status: :unprocessable_entity
       end
