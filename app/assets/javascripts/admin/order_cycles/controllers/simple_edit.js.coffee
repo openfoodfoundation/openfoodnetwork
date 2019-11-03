@@ -18,4 +18,4 @@ angular.module('admin.orderCycles').controller "AdminSimpleEditOrderCycleCtrl", 
     $event.preventDefault()
     StatusMessage.display 'progress', t('js.saving')
     OrderCycle.mirrorIncomingToOutgoingProducts()
-    OrderCycle.update(destination, $scope.order_cycle_form)
+    OrderCycle.update(destination, $scope.order_cycle_form) if OrderCycle.confirmNoDistributors()

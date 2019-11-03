@@ -148,7 +148,6 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, S
       this.order_cycle
 
     create: (destination) ->
-      return unless @confirmNoDistributors()
       oc = new OrderCycleResource({order_cycle: this.dataForSubmit()})
       oc.$create (data) ->
         $window.location = destination
@@ -159,7 +158,6 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, S
           StatusMessage.display('failure', t('js.order_cycles.create_failure'))
 
     update: (destination, form) ->
-      return unless @confirmNoDistributors()
       oc = new OrderCycleResource({order_cycle: this.dataForSubmit()})
       oc.$update {order_cycle_id: this.order_cycle.id, reloading: (if destination? then 1 else 0)}, (data) =>
         form.$setPristine() if form
@@ -172,7 +170,6 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, S
           StatusMessage.display('failure', response.data.errors[0])
         else
           StatusMessage.display('failure', t('js.order_cycles.update_failure'))
-
 
     confirmNoDistributors: ->
       if @order_cycle.outgoing_exchanges.length == 0
