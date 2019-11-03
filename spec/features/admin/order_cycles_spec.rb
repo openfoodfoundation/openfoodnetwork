@@ -692,6 +692,9 @@ feature '
         visit admin_order_cycles_path
         click_link 'New Order Cycle'
 
+        [distributor_unmanaged.name, supplier_managed.name, supplier_unmanaged.name].each do |enterprise_name|
+          expect(page).not_to have_select 'coordinator_id', with_options: [enterprise_name]
+        end
         select2_select 'Managed distributor', from: 'coordinator_id'
         click_button "Continue >"
 
@@ -701,6 +704,13 @@ feature '
         expect(page).not_to have_select2 'schedule_ids', with_options: [schedule_of_other_managed_distributor.name]
         multi_select2_select schedule.name, from: 'schedule_ids'
 
+        click_button 'Add coordinator fee'
+        select 'Managed distributor fee', from: 'order_cycle_coordinator_fee_0_id'
+
+        click_button 'Create'
+
+        expect(page).to have_select 'new_supplier_id'
+        expect(page).not_to have_select 'new_supplier_id', with_options: [supplier_unmanaged.name]
         select 'Managed supplier', from: 'new_supplier_id'
         click_button 'Add supplier'
         select 'Permitted supplier', from: 'new_supplier_id'
@@ -709,9 +719,10 @@ feature '
         select_incoming_variant supplier_managed, 0, variant_managed
         select_incoming_variant supplier_permitted, 1, variant_permitted
 
-        click_button 'Add coordinator fee'
-        select 'Managed distributor fee', from: 'order_cycle_coordinator_fee_0_id'
+        click_button 'Save and Next'
 
+        expect(page).to have_select 'new_distributor_id'
+        expect(page).not_to have_select 'new_distributor_id', with_options: [distributor_unmanaged.name]
         select 'Managed distributor', from: 'new_distributor_id'
         click_button 'Add distributor'
         select 'Permitted distributor', from: 'new_distributor_id'
@@ -722,23 +733,13 @@ feature '
         fill_in 'order_cycle_outgoing_exchange_1_pickup_time', with: 'pickup time 2'
         fill_in 'order_cycle_outgoing_exchange_1_pickup_instructions', with: 'pickup instructions'
 
-        # Should only have suppliers / distributors listed which the user is managing or
-        # has E2E permission to add products to order cycles
-        expect(page).not_to have_select 'new_supplier_id', with_options: [supplier_unmanaged.name]
-        expect(page).not_to have_select 'new_distributor_id', with_options: [distributor_unmanaged.name]
-
-        [distributor_unmanaged.name, supplier_managed.name, supplier_unmanaged.name].each do |enterprise_name|
-          expect(page).not_to have_select 'order_cycle_coordinator_id', with_options: [enterprise_name]
-        end
-
         page.find("table.exchanges tr.distributor-#{distributor_managed.id} td.tags").click
         within ".exchange-tags" do
           find(:css, "tags-input .tags input").set "wholesale\n"
         end
 
-        click_button 'Create'
+        click_button 'Save and Back to List'
 
-        expect(flash_message).to eq("Your order cycle has been created.")
         order_cycle = OrderCycle.find_by_name('My order cycle')
         expect(order_cycle.suppliers).to match_array [supplier_managed, supplier_permitted]
         expect(order_cycle.coordinator).to eq(distributor_managed)
@@ -851,14 +852,14 @@ feature '
           { distributor_managed.id.to_s => [v1.id] }
         end
 
-        visit edit_admin_order_cycle_path(oc)
-
         # I should only see exchanges for supplier_managed AND
         # distributor_managed and distributor_permitted (who I have given permission to) AND
         # and distributor_unmanaged (who distributes my products)
+        visit admin_order_cycle_incoming_path(oc)
         expect(page).to have_selector "tr.supplier-#{supplier_managed.id}"
         expect(page).to have_selector 'tr.supplier', count: 1
 
+        visit admin_order_cycle_outgoing_path(oc)
         expect(page).to have_selector "tr.distributor-#{distributor_managed.id}"
         expect(page).to have_selector "tr.distributor-#{distributor_permitted.id}"
         expect(page).to have_selector 'tr.distributor', count: 2
@@ -878,7 +879,7 @@ feature '
         expect(page).not_to have_selector "table.exchanges tr.distributor-#{distributor_managed.id} td.tags"
 
         # When I save, any exchanges that I can't manage remain
-        click_button 'Update'
+        click_button 'Save'
         expect(page).to have_content "Your order cycle has been updated."
 
         oc.reload
@@ -919,14 +920,14 @@ feature '
           { supplier_managed.id.to_s => [v1.id] }
         end
 
-        visit edit_admin_order_cycle_path(oc)
-
         # I should see exchanges for my_distributor, and the incoming exchanges supplying the variants in it
-        expect(page).to have_selector "tr.supplier-#{supplier_managed.id}"
-        expect(page).to have_selector 'tr.supplier', count: 1
-
+        visit admin_order_cycle_outgoing_path(oc)
         expect(page).to have_selector "tr.distributor-#{my_distributor.id}"
         expect(page).to have_selector 'tr.distributor', count: 1
+
+        visit admin_order_cycle_incoming_path(oc)
+        expect(page).to have_selector "tr.supplier-#{supplier_managed.id}"
+        expect(page).to have_selector 'tr.supplier', count: 1
 
         # Open the products list for managed_supplier's incoming exchange
         within "tr.supplier-#{supplier_managed.id}" do
@@ -940,11 +941,11 @@ feature '
         # I should be able to see but not toggle v2, because I don't have permission
         expect(page).to have_checked_field "order_cycle_incoming_exchange_0_variants_#{v2.id}", disabled: true
 
-        expect(page).to have_selector "table.exchanges tr.distributor-#{my_distributor.id} td.tags"
-
         # When I save, any exchange that I can't manage remains
-        click_button 'Update'
+        click_button 'Save and Next'
         expect(page).to have_content "Your order cycle has been updated."
+
+        expect(page).to have_selector "table.exchanges tr.distributor-#{my_distributor.id} td.tags"
 
         oc.reload
         expect(oc.suppliers).to match_array [supplier_managed, supplier_permitted, supplier_unmanaged]
