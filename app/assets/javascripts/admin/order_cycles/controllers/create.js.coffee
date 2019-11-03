@@ -1,6 +1,6 @@
 angular.module('admin.orderCycles')
   .controller 'AdminCreateOrderCycleCtrl', ($scope, $controller, $filter, $window, OrderCycle, Enterprise, EnterpriseFee, Schedules, RequestMonitor, ocInstance, StatusMessage) ->
-    $controller('AdminOrderCycleBasicCtrl', {$scope: $scope})
+    $controller('AdminOrderCycleBasicCtrl', {$scope: $scope, ocInstance: ocInstance})
 
     $scope.view = 'general_settings'
 

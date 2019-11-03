@@ -1,6 +1,6 @@
 angular.module('admin.orderCycles')
-  .controller 'AdminOrderCycleExchangesCtrl', ($scope, $controller, $filter, $window, OrderCycle, Enterprise, EnterpriseFee, Schedules, RequestMonitor, ocInstance, StatusMessage) ->
-    $controller('AdminEditOrderCycleCtrl', {$scope: $scope})
+  .controller 'AdminOrderCycleExchangesCtrl', ($scope, $controller, $filter, $window, $location, OrderCycle, Enterprise, EnterpriseFee, Schedules, RequestMonitor, ocInstance, StatusMessage) ->
+    $controller('AdminEditOrderCycleCtrl', {$scope: $scope, ocInstance: ocInstance, $location: $location})
 
     $scope.supplier_enterprises = Enterprise.producer_enterprises
     $scope.distributor_enterprises = Enterprise.hub_enterprises

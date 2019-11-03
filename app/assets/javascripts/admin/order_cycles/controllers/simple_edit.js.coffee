@@ -1,5 +1,5 @@
 angular.module('admin.orderCycles').controller "AdminSimpleEditOrderCycleCtrl", ($scope, $controller, $location, $window, OrderCycle, Enterprise, EnterpriseFee, Schedules, RequestMonitor, StatusMessage, ocInstance) ->
-  $controller('AdminOrderCycleBasicCtrl', {$scope: $scope})
+  $controller('AdminOrderCycleBasicCtrl', {$scope: $scope, ocInstance: ocInstance})
 
   $scope.orderCycleId = ->
     $location.absUrl().match(/\/admin\/order_cycles\/(\d+)/)[1]

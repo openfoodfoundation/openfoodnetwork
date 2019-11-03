@@ -1,5 +1,5 @@
-angular.module('admin.orderCycles').controller 'AdminOrderCycleOutgoingCtrl', ($scope, $controller, $filter, OrderCycle) ->
-  $controller('AdminOrderCycleExchangesCtrl', {$scope: $scope})
+angular.module('admin.orderCycles').controller 'AdminOrderCycleOutgoingCtrl', ($scope, $controller, $filter, $location, OrderCycle, ocInstance) ->
+  $controller('AdminOrderCycleExchangesCtrl', {$scope: $scope, ocInstance: ocInstance, $location: $location})
 
   $scope.view = 'outgoing'
 

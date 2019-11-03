@@ -1,5 +1,5 @@
 angular.module('admin.orderCycles').controller "AdminSimpleCreateOrderCycleCtrl", ($scope, $controller, $window, OrderCycle, Enterprise, EnterpriseFee, StatusMessage, Schedules, RequestMonitor, ocInstance) ->
-  $controller('AdminOrderCycleBasicCtrl', {$scope: $scope})
+  $controller('AdminOrderCycleBasicCtrl', {$scope: $scope, ocInstance: ocInstance})
 
   $scope.order_cycle = OrderCycle.new {coordinator_id: ocInstance.coordinator_id}, =>
     # TODO: make this a get method, which only fetches one enterprise
