@@ -153,11 +153,12 @@ module OpenFoodNetwork
     end
 
     def all_incoming_editable_variants
-      valid_suppliers = visible_enterprises.map do |enterprise|
-        enterprise.id if user_manages_coordinator_or(enterprise)
-      end
+      valid_suppliers = visible_enterprises.select do |enterprise|
+        user_manages_coordinator_or(enterprise)
+      end.map(&:id)
 
       Spree::Variant.includes(product: :supplier).
+        select("spree_variants.id, spree_products.supplier_id").
         joins(:product).where(spree_products: { supplier_id: valid_suppliers })
     end
 
