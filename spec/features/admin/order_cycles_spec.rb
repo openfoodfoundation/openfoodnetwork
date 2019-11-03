@@ -739,8 +739,9 @@ feature '
         end
 
         click_button 'Save and Back to List'
-
         order_cycle = OrderCycle.find_by_name('My order cycle')
+        expect(page).to have_input "oc#{order_cycle.id}[name]", value: order_cycle.name
+
         expect(order_cycle.suppliers).to match_array [supplier_managed, supplier_permitted]
         expect(order_cycle.coordinator).to eq(distributor_managed)
         expect(order_cycle.distributors).to match_array [distributor_managed, distributor_permitted]
@@ -759,15 +760,18 @@ feature '
         multi_select2_select schedule.name, from: 'schedule_ids'
         expect(page).not_to have_select2 'schedule_ids', with_options: [schedule_of_other_managed_distributor.name]
 
-        # When I remove all the exchanges and save
+        click_button 'Save and Next'
+
+        # When I remove all incoming exchanges
         page.find("tr.supplier-#{supplier_managed.id} a.remove-exchange").click
         page.find("tr.supplier-#{supplier_permitted.id} a.remove-exchange").click
+        click_button 'Save and Next'
+
+        # And I remove all outgoing exchanges
         page.find("tr.distributor-#{distributor_managed.id} a.remove-exchange").click
         page.find("tr.distributor-#{distributor_permitted.id} a.remove-exchange").click
-        click_button 'Update'
-
-        # Then the exchanges should be removed
-        expect(page).to have_content "Your order cycle has been updated."
+        click_button 'Save and Back to List'
+        expect(page).to have_input "oc#{oc.id}[name]", value: oc.name
 
         oc.reload
         expect(oc.suppliers).to eq([supplier_unmanaged])
@@ -1070,11 +1074,11 @@ feature '
       select 'that fee', from: 'order_cycle_coordinator_fee_0_id'
 
       # When I update, or update and close, both work
-      click_button 'Update'
+      click_button 'Save'
       expect(page).to have_content 'Your order cycle has been updated.'
 
       fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'yyz'
-      click_button 'Update and Close'
+      click_button 'Save and Back to List'
 
       # Then my order cycle should have been updated
       expect(page).to have_content 'Your order cycle has been updated.'
