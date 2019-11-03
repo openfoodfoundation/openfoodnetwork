@@ -192,7 +192,7 @@ class AbilityDecorator
   end
 
   def add_order_cycle_management_abilities(user)
-    can [:admin, :index, :read, :edit, :update], OrderCycle do |order_cycle|
+    can [:admin, :index, :read, :edit, :update, :incoming, :outgoing], OrderCycle do |order_cycle|
       OrderCycle.accessible_by(user).include? order_cycle
     end
     can [:admin, :index, :create], Schedule
