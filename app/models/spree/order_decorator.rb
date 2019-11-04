@@ -10,6 +10,8 @@ end
 Spree::Order.class_eval do
   prepend OrderShipment
 
+  delegate :admin_and_handling_total, :payment_fee, :ship_total, to: :adjustments_fetcher
+
   belongs_to :order_cycle
   belongs_to :distributor, class_name: 'Enterprise'
   belongs_to :customer
@@ -263,14 +265,6 @@ Spree::Order.class_eval do
     order_cycle.items_bought_by_user(user, distributor)
   end
 
-  def admin_and_handling_total
-    adjustments.eligible.where("originator_type = ? AND source_type != ?", 'EnterpriseFee', 'Spree::LineItem').sum(&:amount)
-  end
-
-  def payment_fee
-    adjustments.payment_fee.map(&:amount).sum
-  end
-
   # Does this order have shipments that can be shipped?
   def ready_to_ship?
     shipments.any?(&:can_ship?)
@@ -354,6 +348,10 @@ Spree::Order.class_eval do
   end
 
   private
+
+  def adjustments_fetcher
+    @adjustments_fetcher ||= OrderAdjustmentsFetcher.new(self)
+  end
 
   def skip_payment_for_subscription?
     subscription.present? && order_cycle.orders_close_at.andand > Time.zone.now

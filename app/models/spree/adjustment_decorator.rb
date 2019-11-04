@@ -1,4 +1,5 @@
 require 'spree/localized_number'
+require 'concerns/adjustment_scopes'
 
 module Spree
   Adjustment.class_eval do
@@ -19,7 +20,9 @@ module Spree
 
     scope :with_tax,       -> { where('spree_adjustments.included_tax > 0') }
     scope :without_tax,    -> { where('spree_adjustments.included_tax = 0') }
-    scope :payment_fee,    -> { where(originator_type: 'Spree::PaymentMethod') }
+    scope :payment_fee,    -> { where(AdjustmentScopes::PAYMENT_FEE_SCOPE) }
+    scope :shipping,       -> { where(AdjustmentScopes::SHIPPING_SCOPE) }
+    scope :eligible,       -> { where(AdjustmentScopes::ELIGIBLE_SCOPE) }
 
     attr_accessible :included_tax
 

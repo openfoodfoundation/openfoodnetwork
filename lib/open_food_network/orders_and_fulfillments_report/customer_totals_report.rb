@@ -2,8 +2,6 @@
 module OpenFoodNetwork
   class OrdersAndFulfillmentsReport
     class CustomerTotalsReport
-      include OpenFoodNetwork::Reports::Helper
-
       REPORT_TYPE = "order_cycle_customer_totals".freeze
 
       attr_reader :context
@@ -63,10 +61,10 @@ module OpenFoodNetwork
 
               proc { |_line_items| "" },
               proc { |line_items| line_items.sum(&:amount) },
-              proc { |line_items| amount_with_adjustments(line_items) },
-              proc { |line_items| admin_and_handling_total(line_items.first.order) },
-              proc { |line_items| ship_total(line_items.first.order) },
-              proc { |line_items| payment_fee(line_items.first.order) },
+              proc { |line_items| line_items.sum(&:amount_with_adjustments) },
+              proc { |line_items| line_items.first.order.admin_and_handling_total },
+              proc { |line_items| line_items.first.order.ship_total },
+              proc { |line_items| line_items.first.order.payment_fee },
               proc { |line_items| line_items.first.order.total },
               proc { |line_items| line_items.first.order.paid? ? I18n.t(:yes) : I18n.t(:no) },
 
@@ -132,7 +130,7 @@ module OpenFoodNetwork
 
           proc { |line_items| line_items.sum(&:quantity) },
           proc { |line_items| line_items.sum(&:amount) },
-          proc { |line_items| amount_with_adjustments(line_items) },
+          proc { |line_items| line_items.sum(&:amount_with_adjustments) },
           proc { |_line_items| "" },
           proc { |_line_items| "" },
           proc { |_line_items| "" },
@@ -195,6 +193,13 @@ module OpenFoodNetwork
         [{ variant: { product: :supplier },
            order: [:bill_address, :ship_address, :order_cycle, :adjustments, :payments,
                    :user, :distributor, shipments: { shipping_rates: :shipping_method }] }]
+      end
+
+      private
+
+      def shipping_method(line_items)
+        line_items.first.order.shipments.first.
+          andand.shipping_rates.andand.first.andand.shipping_method
       end
     end
   end

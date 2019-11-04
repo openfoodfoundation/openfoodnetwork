@@ -102,9 +102,11 @@ Spree::LineItem.class_eval do
   def price_with_adjustments
     # EnterpriseFee#create_adjustment applies adjustments on line items to their parent order,
     # so line_item.adjustments returns an empty array
-    return 0 if quantity == 0
+    return 0 if quantity.zero?
 
-    (price + order.adjustments.where(source_id: id).sum(&:amount) / quantity).round(2)
+    line_item_adjustments = OrderAdjustmentsFetcher.new(order).line_item_adjustments(self)
+
+    (price + line_item_adjustments.sum(&:amount) / quantity).round(2)
   end
 
   def single_display_amount_with_adjustments

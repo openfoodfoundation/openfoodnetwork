@@ -1,8 +1,6 @@
 module OpenFoodNetwork
   class OrdersAndFulfillmentsReport
     class DistributorTotalsBySupplierReport
-      include OpenFoodNetwork::Reports::Helper
-
       REPORT_TYPE = "order_cycle_distributor_totals_by_supplier".freeze
 
       attr_reader :context
@@ -34,7 +32,7 @@ module OpenFoodNetwork
               proc { |_line_items| "" },
               proc { |_line_items| "" },
               proc { |line_items| line_items.sum(&:amount) },
-              proc { |line_items| ship_total(line_items.first.order) },
+              proc { |line_items| line_items.map(&:order).uniq.sum(&:ship_total) },
               proc { |_line_items| "" }
             ]
           },
