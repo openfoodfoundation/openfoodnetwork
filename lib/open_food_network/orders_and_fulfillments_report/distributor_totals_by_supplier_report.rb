@@ -1,6 +1,8 @@
 module OpenFoodNetwork
   class OrdersAndFulfillmentsReport
     class DistributorTotalsBySupplierReport
+      include OpenFoodNetwork::Reports::Helper
+
       REPORT_TYPE = "order_cycle_distributor_totals_by_supplier".freeze
 
       attr_reader :context
@@ -32,7 +34,7 @@ module OpenFoodNetwork
               proc { |_line_items| "" },
               proc { |_line_items| "" },
               proc { |line_items| line_items.sum(&:amount) },
-              proc { |line_items| line_items.map(&:order).uniq.sum(&:ship_total) },
+              proc { |line_items| ship_total(line_items.first.order) },
               proc { |_line_items| "" }
             ]
           },
@@ -68,7 +70,8 @@ module OpenFoodNetwork
       # rubocop:enable Metrics/AbcSize
 
       def line_item_includes
-        [:order, { variant: :product }]
+        [{ order: [:distributor, :adjustments, shipments: { shipping_rates: :shipping_method }],
+           variant: { product: :supplier } }]
       end
     end
   end
