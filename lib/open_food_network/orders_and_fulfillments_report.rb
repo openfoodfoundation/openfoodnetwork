@@ -1,4 +1,5 @@
 require "open_food_network/reports/line_items"
+require "open_food_network/reports/helper"
 require "open_food_network/orders_and_fulfillments_report/supplier_totals_report"
 require "open_food_network/orders_and_fulfillments_report/supplier_totals_by_distributor_report"
 require "open_food_network/orders_and_fulfillments_report/distributor_totals_by_supplier_report"
