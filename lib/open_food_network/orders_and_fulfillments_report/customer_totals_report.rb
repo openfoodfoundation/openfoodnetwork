@@ -61,7 +61,7 @@ module OpenFoodNetwork
 
               proc { |_line_items| "" },
               proc { |line_items| line_items.sum(&:amount) },
-              proc { |line_items| line_items.sum(&:amount_with_adjustments) },
+              proc { |line_items| amount_with_adjustments(line_items) },
               proc { |line_items| admin_and_handling_total(line_items.first.order) },
               proc { |line_items| ship_total(line_items.first.order) },
               proc { |line_items| payment_fee(line_items.first.order) },
@@ -115,7 +115,7 @@ module OpenFoodNetwork
       # rubocop:disable Metrics/MethodLength
       # rubocop:disable Metrics/PerceivedComplexity
       def columns
-        rsa = proc { |line_items| line_items.first.order.shipping_method.andand.delivery? }
+        rsa = proc { |line_items| shipping_method(line_items).andand.delivery? }
         [
           proc { |line_items| line_items.first.order.distributor.name },
           proc { |line_items|
@@ -130,7 +130,7 @@ module OpenFoodNetwork
 
           proc { |line_items| line_items.sum(&:quantity) },
           proc { |line_items| line_items.sum(&:amount) },
-          proc { |line_items| line_items.sum(&:amount_with_adjustments) },
+          proc { |line_items| amount_with_adjustments(line_items) },
           proc { |_line_items| "" },
           proc { |_line_items| "" },
           proc { |_line_items| "" },
@@ -139,7 +139,7 @@ module OpenFoodNetwork
             line_items.all? { |li| li.order.paid? } ? I18n.t(:yes) : I18n.t(:no)
           },
 
-          proc { |line_items| line_items.first.order.shipping_method.andand.name },
+          proc { |line_items| shipping_method(line_items).andand.name },
           proc { |line_items| rsa.call(line_items) ? I18n.t(:yes) : I18n.t(:no) },
 
           proc { |line_items|
@@ -190,7 +190,9 @@ module OpenFoodNetwork
       # rubocop:enable Metrics/PerceivedComplexity
 
       def line_item_includes
-        [{ variant: :product, order: [:bill_address, :shipments, :order_cycle, :adjustments] }]
+        [{ variant: { product: :supplier },
+           order: [:bill_address, :ship_address, :order_cycle, :adjustments, :payments,
+                   :user, :distributor, shipments: { shipping_rates: :shipping_method }] }]
       end
 
       private
@@ -209,6 +211,27 @@ module OpenFoodNetwork
       def payment_fee(order)
         order.adjustments.select{ |a| a.originator_type == 'Spree::PaymentMethod' }.
           map(&:amount).sum.to_f
+      end
+
+      def amount_with_adjustments(line_items)
+        line_items.map do |line_item|
+          price_with_adjustments(line_item) * line_item.quantity
+        end.sum
+      end
+
+      def price_with_adjustments(line_item)
+        return 0 if line_item.quantity == 0
+        (line_item.price + line_item_adjustments(line_item).map(&:amount).sum / line_item.quantity).
+          round(2)
+      end
+
+      def line_item_adjustments(line_item)
+        line_item.order.adjustments.select{ |a| a.source_id == line_item.id }
+      end
+
+      def shipping_method(line_items)
+        line_items.first.order.shipments.first.
+          andand.shipping_rates.andand.first.andand.shipping_method
       end
     end
   end
