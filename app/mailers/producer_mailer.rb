@@ -35,6 +35,7 @@ class ProducerMailer < Spree::BaseMailer
 
   def line_items_from(order_cycle, producer)
     Spree::LineItem.
+      includes(variant: { option_values: :option_type }).
       from_order_cycle(order_cycle).
       sorted_by_name_and_unit_value.
       merge(Spree::Product.in_supplier(producer)).
