@@ -1,13 +1,13 @@
 .row{"data-hook" => "admin_product_meta_form"}
   .alpha.eleven.columns
     = f.field_container :meta_keywords do
-      = f.label :meta_keywords, t(:product_search_keywords)
-      %span.icon-question-sign{ 'ofn-with-tip' => t('admin.products.product_search_tip') }
+      = f.label :meta_keywords, t('admin.products.seo.product_search_keywords')
+      %span.icon-question-sign{ 'ofn-with-tip' => t('admin.products.seo.product_search_tip') }
       %br/
       = f.text_field :meta_keywords, :class => 'fullwidth', :rows => 6
     = f.field_container :meta_description do
-      = f.label :meta_description, t(:SEO_keywords)
-      %span.icon-question-sign{ 'ofn-with-tip' => t('admin.products.seo_tip') }
+      = f.label :meta_description, t('admin.products.seo.SEO_keywords')
+      %span.icon-question-sign{ 'ofn-with-tip' => t('admin.products.seo.seo_tip') }
       %br/
       = f.text_field :meta_description, :class => 'fullwidth', :rows => 6
   .alpha.eleven.columns

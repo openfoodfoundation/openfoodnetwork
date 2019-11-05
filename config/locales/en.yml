@@ -474,19 +474,26 @@ en:
         av_on: "Av. On"
         import_date: Imported
         upload_an_image: Upload an image
-      product_search_keywords: Product Search Keywords
-      product_search_tip: Type words to help search your products in the shops. Use space to separate each keyword.
-      SEO_keywords: SEO Keywords
-      seo_tip: Type words to help search your products in the web. Use space to separate each keyword.
-      Search: Search
+      seo:
+        product_search_keywords: "Product Search Keywords"
+        product_search_tip: "Type words to help search your products in the shops. Use space to separate each keyword."
+        SEO_keywords: "SEO Keywords"
+        seo_tip: "Type words to help search your products in the web. Use space to separate each keyword."
+      search: "Search"
       properties:
-        property_name: Property Name
-        inherited_property: Inherited Property
+        property_name: "Property Name"
+        inherited_property: "Inherited Property"
       variants:
         infinity: "Infinity"
         to_order_tip: "Items made to order do not have a set stock level, such as loaves of bread made fresh to order."
-      group_buy_options: "Group Buy Options"
       back_to_products_list: "Back to products list"
+      editing_product: "Editing Product"
+      tabs:
+        product_details: "Product Details"
+        group_buy_options: "Group Buy Options"
+        images: "Images"
+        variants: "Variants"
+        product_properties: "Product Properties"
 
     product_import:
       title: Product Import
@@ -2931,6 +2938,13 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     normal_amount: "Normal Amount"
     discount_amount: "Discount Amount"
 
+    no_images_found: "No Images Found"
+    new_image: "New Image"
+    filename: "Filename"
+    alt_text: "Alternative Text"
+    thumbnail: "Thumbnail"
+    back_to_images_list: "Back To Images List"
+
     # TODO: remove `email` key once we get to Spree 2.0
     email: Email
     # TODO: remove 'account_updated' key once we get to Spree 2.0
@@ -2944,6 +2958,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     zipcode: Postcode
     weight: Weight (per kg)
     error_user_destroy_with_orders: "Users with completed orders may not be deleted"
+    options: "Options"
 
     actions:
       update: "Update"
@@ -2976,6 +2991,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Inherit properties from %{supplier}? (unless overridden above)"
+          add_product_properties: "Add Product Properties"
+          select_from_prototype: "Select From Prototype"
       orders:
         index:
           listing_orders: "Listing Orders"
@@ -3163,6 +3180,26 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         email_confirmation:
           confirmation_pending: "Email confirmation is pending. We've sent a confirmation email to %{address}."
       variants:
+        index:
+          sku: "SKU"
+          price: "Price"
+          options: "Options"
+          no_results: "No results"
+          to_add_variants_you_must_first_define: "To add variants, you must first define"
+          option_types: "Option Types"
+          option_values: "Option Values"
+          and: "and"
+          new_variant: "New Variant"
+          show_active: "Show Active"
+          show_deleted: "Show Deleted"
+        new:
+          new_variant: "New Variant"
+        form:
+          cost_price: "Cost Price"
+          sku: "SKU"
+          price: "Price"
+          display_as: "Display As"
+          display_name: "Display Name"
         autocomplete:
           producer_name: "Producer"
           unit: "Unit"
