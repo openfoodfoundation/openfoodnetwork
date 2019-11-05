@@ -115,7 +115,8 @@ module Api
     def product_query_includes
       [
         master: [:images],
-        variants: [:default_price, :stock_locations, :stock_items, :variant_overrides]
+        variants: [:default_price, :stock_locations, :stock_items, :variant_overrides,
+                   { option_values: :option_type }]
       ]
     end
 
