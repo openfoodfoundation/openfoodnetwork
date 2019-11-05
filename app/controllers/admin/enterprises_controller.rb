@@ -148,7 +148,8 @@ module Admin
 
         unless enterprises.empty?
           enterprises.includes(
-            supplied_products: [:supplier, :variants, master: [:images]]
+            supplied_products:
+              [:supplier, master: [:images], variants: { option_values: :option_type }]
           )
         end
       when :index
