@@ -8,11 +8,17 @@ module OpenFoodNetwork
   module VariantAndLineItemNaming
     # Copied and modified from Spree::Variant
     def options_text
-      values = option_values.joins(:option_type).order("#{Spree::OptionType.table_name}.position asc")
+      values = if option_values_eager_loaded?
+                 # Don't trigger N+1 queries if option_values are already eager-loaded.
+                 # For best results, use: `Spree::Variant.includes(option_values: :option_type)`
+                 # or: `Spree::Product.includes(variant: {option_values: :option_type})`
+                 option_values.sort_by{ |o| o.option_type.position }
+               else
+                 option_values.joins(:option_type).
+                   order("#{Spree::OptionType.table_name}.position asc")
+               end
 
-      values.map!(&:presentation) # This line changed
-
-      values.to_sentence(words_connector: ", ", two_words_connector: ", ")
+      values.map(&:presentation).to_sentence(words_connector: ", ", two_words_connector: ", ")
     end
 
     def product_and_full_name
@@ -68,6 +74,10 @@ module OpenFoodNetwork
     end
 
     private
+
+    def option_values_eager_loaded?
+      option_values.loaded?
+    end
 
     def option_value_name
       if has_attribute?(:display_as) && display_as.present?
