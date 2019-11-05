@@ -55,7 +55,7 @@ module OpenFoodNetwork
       # rubocop:enable Metrics/MethodLength
 
       def line_item_includes
-        [{ variant: { product: :supplier } }]
+        [{ variant: [{ option_values: :option_type }, { product: :supplier }] }]
       end
     end
   end
