@@ -24,7 +24,7 @@ feature "Managing users" do
           click_link "users_email_title"
         end
 
-        it "should be able to list users with order email asc" do
+        it "should list users with order email asc" do
           expect(page).to have_css('table#listing_users')
           within("table#listing_users") do
             expect(page).to have_content("a@example.com")
@@ -32,7 +32,7 @@ feature "Managing users" do
           end
         end
 
-        it "should be able to list users with order email desc" do
+        it "should list users with order email desc" do
           click_link "users_email_title"
           within("table#listing_users") do
             expect(page).to have_content("a@example.com")
@@ -57,7 +57,7 @@ feature "Managing users" do
           click_link("a@example.com")
         end
 
-        it "should let me edit the user password" do
+        it "should allow editing the user password" do
           fill_in "user_password", :with => "welcome"
           fill_in "user_password_confirmation", :with => "welcome"
           click_button "Update"
@@ -70,6 +70,23 @@ feature "Managing users" do
           click_button "Update"
 
           expect(page).to have_content("The account will be updated once the new email is confirmed.")
+        end
+
+        it "should allow to generate, regenarate and clear the user api key", js: true do
+          user = Spree::User.find_by_email("a@example.com")
+          expect(page).to have_content "NO KEY"
+
+          click_button "Generate API key"
+          first_user_api_key = user.reload.spree_api_key
+          expect(page).to have_content first_user_api_key
+
+          click_button "Regenerate Key"
+          second_user_api_key = user.reload.spree_api_key
+          expect(page).to have_content second_user_api_key
+          expect(second_user_api_key).not_to eq first_user_api_key
+
+          click_button "Clear key"
+          expect(page).to have_content "NO KEY"
         end
       end
     end

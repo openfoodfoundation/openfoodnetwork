@@ -16,8 +16,6 @@ Openfoodnetwork::Application.routes.draw do
     resources :variants, :only => [:index]
 
     resources :orders, only: [:index, :show] do
-      get :managed, on: :collection
-
       resources :shipments, :only => [:create, :update] do
         member do
           put :ready
@@ -30,8 +28,6 @@ Openfoodnetwork::Application.routes.draw do
 
     resources :enterprises do
       post :update_image, on: :member
-      get :managed, on: :collection
-      get :accessible, on: :collection
 
       resource :logo, only: [:destroy]
       resource :promo_image, only: [:destroy]
@@ -42,9 +38,6 @@ Openfoodnetwork::Application.routes.draw do
     end
 
     resources :order_cycles do
-      get :managed, on: :collection
-      get :accessible, on: :collection
-
       get :products, on: :member
       get :taxons, on: :member
       get :properties, on: :member

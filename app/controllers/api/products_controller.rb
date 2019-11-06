@@ -47,7 +47,6 @@ module Api
       render json: @product, serializer: Api::Admin::ProductSerializer, status: 204
     end
 
-    # TODO: This should be named 'managed'. Is the action above used? Maybe we should remove it.
     def bulk_products
       product_query = OpenFoodNetwork::Permissions.new(current_api_user).
         editable_products.merge(product_scope)
@@ -94,10 +93,13 @@ module Api
 
     private
 
-    # Copied and modified from SpreeApi::BaseController to allow
-    # enterprise users to access inactive products
+    def find_product(id)
+      product_scope.find_by_permalink!(id.to_s)
+    rescue ActiveRecord::RecordNotFound
+      product_scope.find(id)
+    end
+
     def product_scope
-      # This line modified
       if current_api_user.has_spree_role?("admin") || current_api_user.enterprises.present?
         scope = Spree::Product
         if params[:show_deleted]

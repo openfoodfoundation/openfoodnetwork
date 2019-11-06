@@ -3339,3 +3339,19 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         allow_charges?: "Allow Charges?"
     localized_number:
       invalid_format: has an invalid format. Please enter a number.
+    api:
+      invalid_api_key: "Invalid API key (%{key}) specified."
+      unauthorized: "You are not authorized to perform that action."
+      invalid_resource: "Invalid resource. Please fix errors and try again."
+      resource_not_found: "The resource you were looking for could not be found."
+      access: "API Access"
+      key: "Key"
+      clear_key: "Clear key"
+      regenerate_key: "Regenerate Key"
+      no_key: "No key"
+      generate_key: "Generate API key"
+      key_generated: "Key generated"
+      key_cleared: "Key cleared"
+      shipment:
+        cannot_ready: "Cannot ready shipment."
+      invalid_taxonomy_id: "Invalid taxonomy id."

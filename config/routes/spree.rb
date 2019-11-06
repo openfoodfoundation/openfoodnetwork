@@ -51,12 +51,6 @@ Spree::Core::Engine.routes.prepend do
 
   resources :credit_cards
 
-  namespace :api, :defaults => { :format => 'json' } do
-    resources :users do
-      get :authorise_api, on: :collection
-    end
-  end
-
   namespace :admin do
     get '/search/known_users' => "search#known_users", :as => :search_known_users
     get '/search/customers' => 'search#customers', :as => :search_customers

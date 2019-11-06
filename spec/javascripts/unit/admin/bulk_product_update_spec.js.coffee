@@ -272,13 +272,9 @@ describe "AdminProductEditCtrl", ->
 
   describe "loading data upon initialisation", ->
     it "gets a list of producers and then resets products with a list of data", ->
-      $httpBackend.expectGET("/api/users/authorise_api?token=API_KEY").respond success: "Use of API Authorised"
       spyOn($scope, "fetchProducts").and.returnValue "nothing"
       $scope.initialise()
-      $httpBackend.flush()
       expect($scope.fetchProducts.calls.count()).toBe 1
-      expect($scope.spree_api_key_ok).toEqual true
-
 
   describe "fetching products", ->
     $q = null

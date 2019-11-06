@@ -3,6 +3,6 @@
     :variants_search       => spree.admin_search_variants_path(:format => 'json'),
     :taxons_search         => main_app.api_taxons_path(:format => 'json'),
     :user_search           => spree.admin_search_users_path(:format => 'json'),
-    :orders_api            => spree.api_orders_path(:format => 'json')
+    :orders_api            => main_app.api_orders_path
   }.to_json %>;
 </script>

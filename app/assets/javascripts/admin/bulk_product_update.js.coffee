@@ -1,4 +1,4 @@
-angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $filter, $http, $window, BulkProducts, DisplayProperties, DirtyProducts, VariantUnitManager, StatusMessage, producers, Taxons, SpreeApiAuth, Columns, tax_categories, RequestMonitor) ->
+angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $filter, $http, $window, BulkProducts, DisplayProperties, DirtyProducts, VariantUnitManager, StatusMessage, producers, Taxons, Columns, tax_categories, RequestMonitor) ->
   $scope.StatusMessage = StatusMessage
 
   $scope.columns = Columns.columns
@@ -39,12 +39,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
   $scope.DisplayProperties = DisplayProperties
 
   $scope.initialise = ->
-    SpreeApiAuth.authorise()
-    .then ->
-      $scope.spree_api_key_ok = true
-      $scope.fetchProducts()
-    .catch (message) ->
-      $scope.api_error_msg = message
+    $scope.fetchProducts()
 
   $scope.$watchCollection '[query, producerFilter, categoryFilter, importDateFilter, per_page]', ->
     $scope.page = 1 # Reset page when changing filters for new search
