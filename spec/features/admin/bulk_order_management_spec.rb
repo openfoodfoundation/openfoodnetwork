@@ -427,10 +427,6 @@ feature '
         visit_bulk_order_management
       end
 
-      it "displays a quick search input" do
-        expect(page).to have_field "quick_search"
-      end
-
       it "filters line items based on their attributes and the contents of the quick search input" do
         expect(page).to have_selector "tr#li_#{li1.id}"
         expect(page).to have_selector "tr#li_#{li2.id}"
