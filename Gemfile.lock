@@ -131,6 +131,8 @@ GEM
       tzinfo (~> 0.3.29)
     activerecord-import (1.0.3)
       activerecord (>= 3.2)
+    activerecord-postgresql-adapter (0.0.1)
+      pg
     activeresource (3.2.22.5)
       activemodel (= 3.2.22.5)
       activesupport (= 3.2.22.5)
@@ -522,6 +524,7 @@ GEM
     polyamorous (0.5.0)
       activerecord (~> 3.0)
     polyglot (0.3.5)
+    power_assert (1.1.5)
     powerpack (0.1.1)
     pry (0.12.2)
       coderay (~> 1.1.0)
@@ -671,6 +674,8 @@ GEM
     stripe (4.24.0)
       faraday (~> 0.13)
       net-http-persistent (~> 3.0)
+    test-unit (3.3.3)
+      power_assert
     thor (0.20.3)
     tilt (1.4.1)
     timecop (0.9.1)
@@ -722,6 +727,7 @@ DEPENDENCIES
   active_model_serializers (= 0.8.4)
   activemerchant (~> 1.78)
   activerecord-import
+  activerecord-postgresql-adapter
   acts-as-taggable-on (~> 3.4)
   andand
   angular-rails-templates (~> 0.3.0)
@@ -783,7 +789,7 @@ DEPENDENCIES
   order_management!
   paper_trail (~> 5.2.3)
   paperclip (~> 3.4.1)
-  pg
+  pg (~> 0.21.0)
   pry-byebug (>= 3.4.3)
   rabl
   rack-mini-profiler (< 1.0.0)
@@ -813,6 +819,7 @@ DEPENDENCIES
   spring (= 1.7.2)
   spring-commands-rspec
   stripe
+  test-unit (~> 3.0)
   timecop
   truncate_html
   turbo-sprockets-rails3
@@ -827,7 +834,7 @@ DEPENDENCIES
   wkhtmltopdf-binary
 
 RUBY VERSION
-   ruby 2.1.9p490
+   ruby 2.2.10p489
 
 BUNDLED WITH
    1.17.2
