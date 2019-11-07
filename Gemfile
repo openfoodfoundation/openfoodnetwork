@@ -84,7 +84,7 @@ gem 'paper_trail', '~> 5.2.3'
 gem 'paperclip', '~> 3.4.1'
 gem 'rack-rewrite'
 gem 'rack-ssl', require: 'rack/ssl'
-gem 'roadie-rails', '~> 1.1.1'
+gem 'roadie-rails', '~> 1.3.0'
 gem 'spinjs-rails'
 
 gem 'combine_pdf'
