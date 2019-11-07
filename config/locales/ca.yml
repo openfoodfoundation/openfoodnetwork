@@ -421,19 +421,23 @@ ca:
         av_on: "Disp. via"
         import_date: S'ha importat
         upload_an_image: Penja una imatge
-      product_search_keywords: Paraules clau de cerca de producte
-      product_search_tip: Escriviu paraules per ajudar-vos a cercar els vostres productes a les botigues. Utilitzeu espai per separar cada paraula clau.
-      SEO_keywords: Paraules clau de SEO
-      seo_tip: Escriviu paraules per ajudar-vos a cercar els vostres productes a la web. Utilitzeu espai per separar cada paraula clau.
-      Search: Cerca
+      seo:
+        product_search_keywords: "Paraules clau de cerca de producte"
+        product_search_tip: "Escriviu paraules per ajudar-vos a cercar els vostres productes a les botigues. Utilitzeu espai per separar cada paraula clau."
+        SEO_keywords: "Paraules clau de SEO"
+        seo_tip: "Escriviu paraules per ajudar-vos a cercar els vostres productes a la web. Utilitzeu espai per separar cada paraula clau."
+      search: "Cerca"
       properties:
-        property_name: Nom de la propietat
-        inherited_property: Propietat heretada
+        property_name: "Nom de la propietat"
+        inherited_property: "Propietat heretada"
       variants:
         infinity: "Infinit"
         to_order_tip: "Els articles preparats per encàrrec no tenen un nivell fixat d'existències, com ara pa fet sota comanda."
-      group_buy_options: "Opcions de compra en grup"
       back_to_products_list: "Torna a la llista de productes"
+      tabs:
+        group_buy_options: "Opcions de compra en grup"
+        images: "Imatges"
+        product_properties: "Propietats del producte"
     product_import:
       title: Importació de productes
       file_not_found: No s'ha trobat el fitxer o no s'ha pogut obrir
@@ -3008,6 +3012,15 @@ ca:
         email_confirmation:
           confirmation_pending: "La confirmació de correu electrònic està pendent. Hem enviat un correu electrònic de confirmació a %{address}."
       variants:
+        index:
+          sku: "Número de referència (SKU)"
+          price: "Preu"
+          no_results: "Sense resultats"
+          option_types: "Tipus d'opcions"
+        form:
+          sku: "Número de referència (SKU)"
+          price: "Preu"
+          display_as: "Mostra com"
         autocomplete:
           producer_name: "Productor"
           unit: "Unitat"

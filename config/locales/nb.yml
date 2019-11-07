@@ -421,19 +421,23 @@ nb:
         av_on: "Tilgj. På"
         import_date: Importert
         upload_an_image: Last opp et bilde
-      product_search_keywords: Nøkkelord for produktsøk
-      product_search_tip: Skriv ord for å søke etter dine produkter i butikkene. Bruk mellomrom for å skille mellom hvert nøkkelord.
-      SEO_keywords: SEO Nøkkelord
-      seo_tip: Skriv ord for å søke etter produktene dine på nettet. Bruk mellomrom for å skille mellom hvert søkeord.
-      Search: Søk
+      seo:
+        product_search_keywords: "Nøkkelord for produktsøk"
+        product_search_tip: "Skriv ord for å søke etter dine produkter i butikkene. Bruk mellomrom for å skille mellom hvert nøkkelord."
+        SEO_keywords: "SEO Nøkkelord"
+        seo_tip: "Skriv ord for å søke etter produktene dine på nettet. Bruk mellomrom for å skille mellom hvert søkeord."
+      search: "Søk"
       properties:
-        property_name: Navn på egenskap
-        inherited_property: Arvet egenskap
+        property_name: "Navn på egenskap"
+        inherited_property: "Arvet egenskap"
       variants:
         infinity: "Uendelig"
         to_order_tip: "Varer laget for bestilling har ikke et lagernivå, slik som ferske skiver brød laget for bestilling."
-      group_buy_options: "Gruppekjøpsalternativer"
       back_to_products_list: "Tilbake til produktlisten"
+      tabs:
+        group_buy_options: "Gruppekjøpsalternativer"
+        images: "Bilder"
+        product_properties: "Produktegenskaper"
     product_import:
       title: Produktimport
       file_not_found: Filen ble ikke funnet eller kunne ikke åpnes
@@ -3002,6 +3006,15 @@ nb:
         email_confirmation:
           confirmation_pending: "Epostbekreftelse venter. Vi har sendt en bekreftelses-epost til %{address}."
       variants:
+        index:
+          sku: "SKU"
+          price: "Pris"
+          no_results: "Ingen resultater"
+          option_types: "Valgtyper"
+        form:
+          sku: "SKU"
+          price: "Pris"
+          display_as: "Vis som"
         autocomplete:
           producer_name: "Produsent"
           unit: "Enhet"

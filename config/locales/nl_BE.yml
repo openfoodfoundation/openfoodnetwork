@@ -416,19 +416,23 @@ nl_BE:
         av_on: "Av. Op"
         import_date: Geïmporteerd
         upload_an_image: Een afbeelding uploaden
-      product_search_keywords: Product Zoeken op Trefwoorden
-      product_search_tip: ' Typ woorden om te helpen bij het zoeken naar uw producten in de winkels. Gebruik ruimte om elk trefwoord te scheiden.'
-      SEO_keywords: SEO Trefwoorden
-      seo_tip: Typ woorden om te helpen bij het zoeken naar uw producten op het web. Gebruik ruimte om elk trefwoord te scheiden.
-      Search: Zoeken
+      seo:
+        product_search_keywords: "Product Zoeken op Trefwoorden"
+        product_search_tip: " Typ woorden om te helpen bij het zoeken naar uw producten in de winkels. Gebruik ruimte om elk trefwoord te scheiden."
+        SEO_keywords: "SEO Trefwoorden"
+        seo_tip: "Typ woorden om te helpen bij het zoeken naar uw producten op het web. Gebruik ruimte om elk trefwoord te scheiden."
+      search: "Zoeken"
       properties:
-        property_name: Naam van het pand
-        inherited_property: Onroerend goed uit het verleden
+        property_name: "Naam van het pand"
+        inherited_property: "Onroerend goed uit het verleden"
       variants:
         infinity: "Oneindigheid"
         to_order_tip: "Op bestelling gemaakte artikelen hebben geen vast voorraadniveau, zoals broden die vers op bestelling worden gemaakt."
-      group_buy_options: "Group Buy Options"
       back_to_products_list: "Terug naar productenlijst"
+      tabs:
+        group_buy_options: "Group Buy Options"
+        images: "Afbeeldingen"
+        product_properties: "Producteigenschappen"
     product_import:
       title: Importeren van producten
       file_not_found: Bestand niet gevonden of kon niet worden geopend
@@ -2998,6 +3002,15 @@ nl_BE:
         email_confirmation:
           confirmation_pending: "De validatie van de  bevestigins e-mail  naar %{address} toegestuurd is nog niet toegekomen."
       variants:
+        index:
+          sku: "SKU"
+          price: "Prijs"
+          no_results: "Geen resultaten "
+          option_types: "Optietypen"
+        form:
+          sku: "SKU"
+          price: "Prijs"
+          display_as: "Weergeven als"
         autocomplete:
           producer_name: "Producent"
           unit: "Unit"

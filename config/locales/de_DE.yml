@@ -417,19 +417,23 @@ de_DE:
         av_on: "Verfüg. am"
         import_date: Importiert
         upload_an_image: Bild hochladen
-      product_search_keywords: Stichwörter für die Produktsuche
-      product_search_tip: Geben Sie Wörter ein, um Ihre Produkte in den Geschäften zu suchen. Verwenden Sie Leerzeichen, um jedes Keyword zu trennen.
-      SEO_keywords: SEO Schlüsselwörter
-      seo_tip: Geben Sie Wörter ein, um Ihre Produkte im Internet zu durchsuchen. Verwenden Sie Leerzeichen, um jedes Keyword zu trennen.
-      Search: Suche
+      seo:
+        product_search_keywords: "Stichwörter für die Produktsuche"
+        product_search_tip: "Geben Sie Wörter ein, um Ihre Produkte in den Geschäften zu suchen. Verwenden Sie Leerzeichen, um jedes Keyword zu trennen."
+        SEO_keywords: "SEO Schlüsselwörter"
+        seo_tip: "Geben Sie Wörter ein, um Ihre Produkte im Internet zu durchsuchen. Verwenden Sie Leerzeichen, um jedes Keyword zu trennen."
+      search: "Suche"
       properties:
-        property_name: Name der Eigenschaft
-        inherited_property: Vererbte Eigenschaft
+        property_name: "Name der Eigenschaft"
+        inherited_property: "Vererbte Eigenschaft"
       variants:
         infinity: "Unendlichkeit"
         to_order_tip: "Artikel, die auf Bestellung hergestellt werden, haben keinen festgelegten Lagerbestand."
-      group_buy_options: "Gruppenkaufoptionen"
       back_to_products_list: "Zurück zur Produktliste"
+      tabs:
+        group_buy_options: "Gruppenkaufoptionen"
+        images: "Bilder"
+        product_properties: "Produkteigenschaften"
     product_import:
       title: Produkte importieren
       file_not_found: Datei nicht gefunden oder konnte nicht geöffnet werden
@@ -3003,6 +3007,13 @@ de_DE:
         email_confirmation:
           confirmation_pending: "E-Mail-Bestätigung steht aus. Wir haben eine Bestätigungs-E-Mail an %{address} gesendet."
       variants:
+        index:
+          sku: "Artikelnummer"
+          price: "Preis"
+        form:
+          sku: "Artikelnummer"
+          price: "Preis"
+          display_as: "Angezeigt als"
         autocomplete:
           producer_name: "Produzent"
           unit: "Einheit"

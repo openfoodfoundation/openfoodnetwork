@@ -421,19 +421,23 @@ ar:
         av_on: "المتوسط. على"
         import_date: مستورد
         upload_an_image: تحميل صورة
-      product_search_keywords: كلمات البحث المنتج
-      product_search_tip: اكتب كلمات للمساعدة في البحث عن منتجاتك في المتاجر. استخدام المسافة لفصل كل كلمة رئيسية.
-      SEO_keywords: SEO الكلمات الرئيسية
-      seo_tip: اكتب كلمات للمساعدة في البحث عن منتجاتك على الويب. استخدام المسافة لفصل كل كلمة رئيسية.
-      Search: بحث
+      seo:
+        product_search_keywords: "كلمات البحث المنتج"
+        product_search_tip: "اكتب كلمات للمساعدة في البحث عن منتجاتك في المتاجر. استخدام المسافة لفصل كل كلمة رئيسية."
+        SEO_keywords: "SEO الكلمات الرئيسية"
+        seo_tip: "اكتب كلمات للمساعدة في البحث عن منتجاتك على الويب. استخدام المسافة لفصل كل كلمة رئيسية."
+      search: "بحث"
       properties:
-        property_name: اسم الخاصية
-        inherited_property: الخصائص الموروثة
+        property_name: "اسم الخاصية"
+        inherited_property: "الخصائص الموروثة"
       variants:
         infinity: "ما لا نهاية"
         to_order_tip: "لا تحتوي المواد التي تريد طلبها  على مستوى مخزون محدد ، مثل أرغفة الخبز المصنوعة طازجة حسب الطلب."
-      group_buy_options: "مجموعة خيارات الشراء"
       back_to_products_list: "العودة إلى قائمة المنتجات"
+      tabs:
+        group_buy_options: "مجموعة خيارات الشراء"
+        images: "صور"
+        product_properties: "خصائص المنتج"
     product_import:
       title: استيراد المنتج
       file_not_found: لم يتم العثور على الملف أو تعذر فتحه
@@ -3003,6 +3007,15 @@ ar:
         email_confirmation:
           confirmation_pending: "تأكيد البريد الإلكتروني معلق. لقد أرسلنا رسالة تأكيد بالبريد الإلكتروني إلى %{address}."
       variants:
+        index:
+          sku: "SKU"
+          price: "السعر"
+          no_results: "لا يوجد نتائج"
+          option_types: "أنواع الخيارات"
+        form:
+          sku: "SKU"
+          price: "السعر"
+          display_as: "عرض ب"
         autocomplete:
           producer_name: "المنتج"
           unit: "وحدة"

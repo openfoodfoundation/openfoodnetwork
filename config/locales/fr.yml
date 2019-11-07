@@ -421,19 +421,23 @@ fr:
         av_on: "Disp. via"
         import_date: Importé
         upload_an_image: Importer une image
-      product_search_keywords: Mots-clés de recherche produits
-      product_search_tip: Saisissez des mots qui peuvent simplifier la recherche de vo produits dans les boutiques. Laissez un espace entre chaque mot-clé.
-      SEO_keywords: Mot-clés de référencement web
-      seo_tip: Saisissez des mots qui peuvent simplifier la recherche de vos produits sur le web. Laissez un espace entre chaque mot-clé.
-      Search: Rechercher
+      seo:
+        product_search_keywords: "Mots-clés de recherche produits"
+        product_search_tip: "Saisissez des mots qui peuvent simplifier la recherche de vo produits dans les boutiques. Laissez un espace entre chaque mot-clé."
+        SEO_keywords: "Mot-clés de référencement web"
+        seo_tip: "Saisissez des mots qui peuvent simplifier la recherche de vos produits sur le web. Laissez un espace entre chaque mot-clé."
+      search: "Rechercher"
       properties:
-        property_name: Nom du label
-        inherited_property: Label producteur appliqué par défaut
+        property_name: "Nom du label"
+        inherited_property: "Label producteur appliqué par défaut"
       variants:
         infinity: "Infini"
         to_order_tip: "Les articles fabriqués sur commande n'ont pas un niveau de stock défini, comme des pains faits à la main."
-      group_buy_options: "Options d'achat par lot"
       back_to_products_list: "Retour à la liste produits"
+      tabs:
+        group_buy_options: "Options d'achat par lot"
+        images: "Images"
+        product_properties: "Propriétés / labels Produits"
     product_import:
       title: Import liste produits
       file_not_found: Fichier non trouvé ou impossible à ouvrir
@@ -3032,6 +3036,15 @@ fr:
         email_confirmation:
           confirmation_pending: "L'email de confirmation n'a pas encore été validé. Il a été envoyé à %{address}."
       variants:
+        index:
+          sku: "Référence Produit"
+          price: "Prix"
+          no_results: "Pas de résultats"
+          option_types: "Types d'options"
+        form:
+          sku: "Référence Produit"
+          price: "Prix"
+          display_as: "Unité affichéé"
         autocomplete:
           producer_name: "Producteur"
           unit: "Unité"

@@ -419,19 +419,22 @@ pt_BR:
         av_on: "Disp. Em"
         import_date: Importado
         upload_an_image: Carregar uma imagem
-      product_search_keywords: Palavras-chave da pesquisa de produto
-      product_search_tip: Digite palavras para ajudar a pesquisar seus produtos nas lojas. Use espaço para separar cada palavra-chave.
-      SEO_keywords: SEO Palavras-chave
-      seo_tip: Digite palavras para ajudar a pesquisar seus produtos na web. Use espaço para separar cada palavra-chave.
-      Search: Buscar
+      seo:
+        product_search_keywords: "Palavras-chave da pesquisa de produto"
+        product_search_tip: "Digite palavras para ajudar a pesquisar seus produtos nas lojas. Use espaço para separar cada palavra-chave."
+        SEO_keywords: "SEO Palavras-chave"
+        seo_tip: "Digite palavras para ajudar a pesquisar seus produtos na web. Use espaço para separar cada palavra-chave."
+      search: "Buscar"
       properties:
-        property_name: Nome da propriedade
-        inherited_property: Propriedade herdada
+        property_name: "Nome da propriedade"
+        inherited_property: "Propriedade herdada"
       variants:
         infinity: "Infinidade"
         to_order_tip: "Os itens feitos por encomenda não têm um nível de estoque definido, como pão fresco, por exemplo."
-      group_buy_options: "Opções de compra em grupo"
       back_to_products_list: "Voltar à lista de produtos"
+      tabs:
+        images: "Imagens"
+        product_properties: "Propriedades do produto"
     product_import:
       title: Importação de produtos
       file_not_found: O arquivo não foi encontrado ou não pôde ser aberto
@@ -3002,6 +3005,13 @@ pt_BR:
         email_confirmation:
           confirmation_pending: "A confirmação do email está pendente. Enviámos um email de confirmação para %{address}."
       variants:
+        index:
+          sku: "SKU"
+          price: "Preço"
+        form:
+          sku: "SKU"
+          price: "Preço"
+          display_as: "Mostrar Como"
         autocomplete:
           producer_name: "Produtor"
           unit: "Unidade"

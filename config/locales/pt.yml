@@ -408,19 +408,23 @@ pt:
         av_on: "Disp. em"
         import_date: Importado
         upload_an_image: Carregar uma imagem
-      product_search_keywords: Palavras-chave para Pesquisa de Produto
-      product_search_tip: Insira palavras que ajudem a encontrar os seus produtos nas lojas. Use um espaço para separar cada palavra-chave
-      SEO_keywords: Palavras-chave para fins de SEO
-      seo_tip: Insira palavras que ajudem a encontrar os seus produtos na web. Use um espaço para separar cada palavra-chave
-      Search: Procurar
+      seo:
+        product_search_keywords: "Palavras-chave para Pesquisa de Produto"
+        product_search_tip: "Insira palavras que ajudem a encontrar os seus produtos nas lojas. Use um espaço para separar cada palavra-chave"
+        SEO_keywords: "Palavras-chave para fins de SEO"
+        seo_tip: "Insira palavras que ajudem a encontrar os seus produtos na web. Use um espaço para separar cada palavra-chave"
+      search: "Procurar"
       properties:
-        property_name: Nome da propriedade
-        inherited_property: Propriedade herdada
+        property_name: "Nome da propriedade"
+        inherited_property: "Propriedade herdada"
       variants:
         infinity: "Infinito"
         to_order_tip: "Os itens feitos por encomenda não têm um nível de stock definido, como pão fresco, por exemplo."
-      group_buy_options: "Opções de Compra Colectiva"
       back_to_products_list: "Voltar à lista de produtos"
+      tabs:
+        group_buy_options: "Opções de Compra Colectiva"
+        images: "Imagens"
+        product_properties: "Propriedades do Produto"
     product_import:
       title: Importação de Produtos
       file_not_found: O ficheiro não foi encontrado ou não pôde ser aberto
@@ -2930,6 +2934,15 @@ pt:
         email_confirmation:
           confirmation_pending: "A confirmação de email está pendente. Enviamos um email de confirmação para %{address}"
       variants:
+        index:
+          sku: "SKU"
+          price: "Preço"
+          no_results: "Nenhum resultado"
+          option_types: "Tipos de Opções"
+        form:
+          sku: "SKU"
+          price: "Preço"
+          display_as: "Mostrar como"
         autocomplete:
           producer_name: "Produtor"
           unit: "Unidade"

@@ -408,18 +408,22 @@ it:
         av_on: "Disp. il"
         import_date: Importato
         upload_an_image: Carica un'immagine
-      product_search_keywords: Cerca prodotto per parole chiave
-      product_search_tip: Digita le parole che possono aiutare a trovare i tuoi prodotti nei negozi. Usa lo spazio per separare ciascuna parola chiave.
-      SEO_keywords: SEO Keywords
-      seo_tip: Digita le parole che possono aiutare a trovare i tuoi prodotti nel web. Usa lo spazio per separare ciascuna parola chiave.
-      Search: Cerca
+      seo:
+        product_search_keywords: "Cerca prodotto per parole chiave"
+        product_search_tip: "Digita le parole che possono aiutare a trovare i tuoi prodotti nei negozi. Usa lo spazio per separare ciascuna parola chiave."
+        SEO_keywords: "SEO Keywords"
+        seo_tip: "Digita le parole che possono aiutare a trovare i tuoi prodotti nel web. Usa lo spazio per separare ciascuna parola chiave."
+      search: "Cerca"
       properties:
-        property_name: Nome della Proprietà
-        inherited_property: Proprietà Ereditata
+        property_name: "Nome della Proprietà"
+        inherited_property: "Proprietà Ereditata"
       variants:
         to_order_tip: "Gli articoli messi in ordine non hanno un livello di stock impostato, come ad esempio il Pane fresco su ordinazione."
-      group_buy_options: "Opzioni Acquisti di gruppo"
       back_to_products_list: "Indietro alla lista dei prodotti"
+      tabs:
+        group_buy_options: "Opzioni Acquisti di gruppo"
+        images: "Immagini"
+        product_properties: "Proprietà prodotto"
     product_import:
       title: Importa prodotto
       file_not_found: Documento non trovato o non disponibile
@@ -2921,6 +2925,15 @@ it:
         email_confirmation:
           confirmation_pending: "Email di conferma in sospeso. Abbiamo inviato una mail di conferma a %{address}."
       variants:
+        index:
+          sku: "SKU"
+          price: "Prezzo"
+          no_results: "Nessun risultato"
+          option_types: "Tipi di opzioni"
+        form:
+          sku: "SKU"
+          price: "Prezzo"
+          display_as: "Visualizza come"
         autocomplete:
           producer_name: "Produttore"
           unit: "Unità"

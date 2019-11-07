@@ -220,12 +220,15 @@ sv:
         inherits_properties?: Ärva egenskaper?
         available_on: 'Tillgänglig '
         av_on: "Md. På"
-      Search: Sök
+      search: "Sök"
       properties:
-        property_name: Egendomens Namn
-        inherited_property: Ärvd Egendom
+        property_name: "Egendomens Namn"
+        inherited_property: "Ärvd Egendom"
       variants:
         to_order_tip: "Varor som framställs för en order har inget eget varunummer, ex formbröd som värms vid en order."
+      tabs:
+        images: "Bilder"
+        product_properties: "Produktegenskaper"
     product_import:
       file_not_found: Filen hittades inte eller kunde inte öppnas
       no_data: Ingen data hittades i kalkylbladet
@@ -2026,6 +2029,13 @@ sv:
           enterprise_limit: "Företagets gräns"
           password: "Lösenord"
       variants:
+        index:
+          sku: "SKU"
+          price: "Pris"
+        form:
+          sku: "SKU"
+          price: "Pris"
+          display_as: "Visa som"
         autocomplete:
           producer_name: "Producent"
           unit: "Enhet"
