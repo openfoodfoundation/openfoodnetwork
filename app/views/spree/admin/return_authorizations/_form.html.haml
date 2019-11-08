@@ -1,0 +1,48 @@
+%div
+  %table.index
+    %thead
+      %tr
+        %th= t('.product')
+        %th= t('.quantity_shipped')
+        %th= t('.quantity_returned')
+        %th= t('.return_quantity')
+    %tbody
+      - @return_authorization.order.shipments.shipped.collect{|s| s.inventory_units.all}.flatten.group_by(&:variant).each do | variant, units|
+        - tr_class = cycle('odd', 'even')
+        - tr_id = dom_id(variant)
+        %tr{class: tr_class, id: tr_id}
+          %td
+            .variant-name= variant.name
+            .variant-options= variant.options_text
+          %td.align-center= units.select(&:shipped?).size
+          %td.align-center= units.select(&:returned?).size
+          %td.return_quantity.align-center
+            - if @return_authorization.received?
+              = @return_authorization.inventory_units.group_by(&:variant)[variant].try(:size) || 0
+            - elsif units.select(&:shipped?).empty?
+              0
+            - else
+              = number_field_tag "return_quantity[#{variant.id}]", @return_authorization.inventory_units.group_by(&:variant)[variant].try(:size) || 0, { style: 'width:100px;', min: 0 }
+
+  = f.field_container :amount do
+    = f.label :amount, t('.amount')
+    %span.required *
+    %br/
+    - if @return_authorization.received?
+      = @return_authorization.display_amount
+    - else
+      = f.text_field :amount, { style: 'width:80px;' }
+      = t('.rma_value')
+      \:
+      %span#rma_value 0.00
+      = f.error_message_on :amount
+
+  = f.field_container :reason do
+    = f.label :reason, t('.reason')
+    = f.text_area :reason, { style: 'height:100px;', class: 'fullwidth' }
+    = f.error_message_on :reason
+
+  = f.field_container :stock_location do
+    = f.label :stock_location, t('.stock_location')
+    = f.select :stock_location_id, Spree::StockLocation.active.all.collect{ |l| [l.name, l.id] }, { style: 'height:100px;', class: 'fullwidth' }
+    = f.error_message_on :reason

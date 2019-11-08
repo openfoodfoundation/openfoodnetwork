@@ -1,0 +1,25 @@
+- content_for :page_actions do
+  %li
+    - if @return_authorization.can_receive?
+      = button_link_to t('.receive'), fire_admin_order_return_authorization_url(@order, @return_authorization, e: 'receive'), method: :put, data: { confirm: t('.are_you_sure') }, icon: 'icon-download-alt'
+  %li
+    - if @return_authorization.can_cancel?
+      = button_link_to t('actions.cancel'), fire_admin_order_return_authorization_url(@order, @return_authorization, e: 'cancel'), method: :put, data: { confirm: t('.are_you_sure') }, icon: 'icon-remove'
+
+= render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Return Authorizations' }
+
+- content_for :page_title do
+  %i.icon-arrow-right
+  = t('.return_authorization')
+  = @return_authorization.number
+  (#{t("spree.admin.return_authorizations.states." + @return_authorization.state.downcase)})
+
+= render partial: 'spree/shared/error_messages', locals: { target: @return_authorization }
+
+= form_for [:admin, @order, @return_authorization] do |f|
+  %fieldset.no-border-top
+    = render partial: 'form', locals: { f: f }
+    .form-buttons.filter-actions.actions
+      = button t('actions.update'), 'icon-repeat'
+      %span.or= t(:or)
+      = button_link_to t('actions.cancel'), admin_order_return_authorizations_url(@order), icon: 'icon-remove'
