@@ -8,7 +8,7 @@ describe 'users.rake' do
         Rake.application.rake_require 'tasks/users'
         Rake::Task.define_task(:environment)
 
-        max_integer = 2147483647
+        max_integer = 2_147_483_647
         user = create(:user)
 
         Rake.application.invoke_task "ofn:remove_enterprise_limit[#{user.id}]"

@@ -8,6 +8,7 @@ AllCops:
   TargetRubyVersion: 2.1
   TargetRailsVersion: 3.2
   Exclude:
+    - 'bin/**/*'
     - 'db/**/*'
     - 'config/**/*'
     - 'script/**/*'

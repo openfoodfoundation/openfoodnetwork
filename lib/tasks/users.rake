@@ -7,9 +7,7 @@ namespace :ofn do
   end
 
   class RemoveEnterpriseLimit
-    # rubocop:disable Style/NumericLiterals
-    MAX_INTEGER = 2147483647
-    # rubocop:enable Style/NumericLiterals
+    MAX_INTEGER = 2_147_483_647
 
     def initialize(user_id)
       @user_id = user_id
