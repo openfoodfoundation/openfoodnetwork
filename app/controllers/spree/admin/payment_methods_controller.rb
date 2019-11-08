@@ -1,11 +1,62 @@
 module Spree
   module Admin
-    PaymentMethodsController.class_eval do
-      before_filter :restrict_stripe_account_change, only: [:update]
-      before_filter :force_environment, only: [:create, :update]
-      skip_before_filter :load_resource, only: [:show_provider_preferences]
+    class PaymentMethodsController < ResourceController
+      skip_before_filter :load_resource, only: [:create, :show_provider_preferences]
+      before_filter :load_data
+      before_filter :validate_payment_method_provider, only: [:create]
       before_filter :load_hubs, only: [:new, :edit, :update]
       create.before :load_hubs
+
+      respond_to :html
+
+      def create
+        force_environment
+
+        @payment_method = params[:payment_method].
+          delete(:type).
+          constantize.
+          new(params[:payment_method])
+        @object = @payment_method
+
+        invoke_callbacks(:create, :before)
+        if @payment_method.save
+          invoke_callbacks(:create, :after)
+          flash[:success] = Spree.t(:successfully_created, resource: Spree.t(:payment_method))
+          redirect_to edit_admin_payment_method_path(@payment_method)
+        else
+          invoke_callbacks(:create, :fails)
+          respond_with(@payment_method)
+        end
+      end
+
+      def update
+        restrict_stripe_account_change
+        force_environment
+
+        invoke_callbacks(:update, :before)
+        payment_method_type = params[:payment_method].delete(:type)
+        if @payment_method['type'].to_s != payment_method_type
+          @payment_method.update_column(:type, payment_method_type)
+          @payment_method = PaymentMethod.find(params[:id])
+        end
+
+        payment_method_params = params[ActiveModel::Naming.param_key(@payment_method)] || {}
+        attributes = params[:payment_method].merge(payment_method_params)
+        attributes.each do |k, _v|
+          if k.include?("password") && attributes[k].blank?
+            attributes.delete(k)
+          end
+        end
+
+        if @payment_method.update_attributes(attributes)
+          invoke_callbacks(:update, :after)
+          flash[:success] = Spree.t(:successfully_updated, resource: Spree.t(:payment_method))
+          redirect_to edit_admin_payment_method_path(@payment_method)
+        else
+          invoke_callbacks(:update, :fails)
+          respond_with(@payment_method)
+        end
+      end
 
       # Only show payment methods that user has access to and sort by distributor name
       # ! Redundant code copied from Spree::Admin::ResourceController with modifications marked
@@ -62,6 +113,13 @@ module Spree
         @calculators = PaymentMethod.calculators.sort_by(&:name)
       end
 
+      def validate_payment_method_provider
+        valid_payment_methods = Rails.application.config.spree.payment_methods.map(&:to_s)
+        return if valid_payment_methods.include?(params[:payment_method][:type])
+        flash[:error] = Spree.t(:invalid_payment_provider)
+        redirect_to new_admin_payment_method_path
+      end
+
       def load_hubs
         # rubocop:disable Style/TernaryParentheses
         @hubs = Enterprise.managed_by(spree_current_user).is_distributor.sort_by! do |d|
@@ -73,7 +131,8 @@ module Spree
       # Show Stripe as an option if enabled, or if the
       # current payment_method is already a Stripe method
       def show_stripe?
-        Spree::Config.stripe_connect_enabled || @payment_method.try(:type) == "Spree::Gateway::StripeConnect"
+        Spree::Config.stripe_connect_enabled ||
+          @payment_method.try(:type) == "Spree::Gateway::StripeConnect"
       end
 
       def restrict_stripe_account_change

@@ -47,7 +47,6 @@ Metrics/LineLength:
   - app/controllers/spree/admin/base_controller_decorator.rb
   - app/controllers/spree/admin/orders_controller_decorator.rb
   - app/controllers/spree/admin/payments_controller_decorator.rb
-  - app/controllers/spree/admin/payment_methods_controller_decorator.rb
   - app/controllers/spree/admin/reports_controller_decorator.rb
   - app/controllers/spree/api/products_controller_decorator.rb
   - app/controllers/spree/credit_cards_controller.rb
@@ -400,8 +399,8 @@ Metrics/AbcSize:
   - app/controllers/spree/admin/orders/customer_details_controller_decorator.rb
   - app/controllers/spree/admin/orders_controller_decorator.rb
   - app/controllers/spree/admin/overview_controller_decorator.rb
+  - app/controllers/spree/admin/payment_methods_controller.rb
   - app/controllers/spree/admin/payments_controller_decorator.rb
-  - app/controllers/spree/admin/payment_methods_controller_decorator.rb
   - app/controllers/spree/admin/products_controller_decorator.rb
   - app/controllers/spree/admin/reports_controller_decorator.rb
   - app/controllers/spree/admin/search_controller_decorator.rb
@@ -607,8 +606,8 @@ Metrics/MethodLength:
   - app/controllers/checkout_controller.rb
   - app/controllers/shop_controller.rb
   - app/controllers/spree/admin/orders/customer_details_controller_decorator.rb
+  - app/controllers/spree/admin/payment_methods_controller.rb
   - app/controllers/spree/admin/payments_controller_decorator.rb
-  - app/controllers/spree/admin/payment_methods_controller_decorator.rb
   - app/controllers/spree/admin/products_controller_decorator.rb
   - app/controllers/spree/admin/reports_controller_decorator.rb
   - app/controllers/spree/admin/search_controller_decorator.rb
@@ -696,6 +695,7 @@ Metrics/ClassLength:
   - app/controllers/admin/order_cycles_controller.rb
   - app/controllers/admin/subscriptions_controller.rb
   - app/controllers/checkout_controller.rb
+  - app/controllers/spree/admin/payment_methods_controller.rb
   - app/models/enterprise.rb
   - app/models/order_cycle.rb
   - app/models/product_import/entry_processor.rb
