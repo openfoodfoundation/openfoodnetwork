@@ -173,5 +173,5 @@ group :development do
   # greater than 1.0.9, so we just required the latest available version here.
   gem 'eventmachine', '>= 1.2.3'
 
-  gem 'rack-mini-profiler', '< 1.0.0'
+  gem 'rack-mini-profiler', '< 2.0.0'
 end
