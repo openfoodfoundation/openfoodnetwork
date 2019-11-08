@@ -915,7 +915,7 @@ en:
         cancel: "Cancel"
         back_to_list: "Back To List"
       wizard_progress:
-        general_settings: "1. General Settings"
+        edit: "1. General Settings"
         incoming: "2. Incoming Products"
         outgoing: "3. Outgoing Products"
       exchange_form:
@@ -944,6 +944,7 @@ en:
         any_enterprise: "Any Enterprise"
         any_schedule: "Any Schedule"
       form:
+        general_settings: "General Settings"
         incoming: Incoming
         supplier: Supplier
         products: Products

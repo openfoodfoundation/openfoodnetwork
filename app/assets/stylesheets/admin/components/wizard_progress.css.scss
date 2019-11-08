@@ -19,6 +19,9 @@ ul.wizard-progress {
 		line-height: 30px;
 		padding: 0 25px 0 40px;
 		position: relative;
+		a {
+		  color: #494949;
+		}
 		&:first-child {
 			padding-left: 25px;
 			border-top-left-radius: 3px;
@@ -62,6 +65,9 @@ ul.wizard-progress {
 		&.current {
 			background-color: $color_selected;
 			color: #fff;
+			a {
+			  color: #fff;
+			}
 			&:after {
 				background-color: $color_selected;
 			}
