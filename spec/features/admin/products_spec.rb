@@ -209,14 +209,14 @@ feature '
       Spree::Image.create(viewable_id: product.master.id, viewable_type: 'Spree::Variant', alt: "position 1", attachment: image, position: 1)
 
       visit spree.admin_product_images_path(product)
-      expect(page).to have_selector "table[data-hook='images_table'] td img"
+      expect(page).to have_selector "table.index td img"
       expect(product.reload.images.count).to eq 1
 
       accept_alert do
         page.find('a.delete-resource').click
       end
 
-      expect(page).to_not have_selector "table[data-hook='images_table'] td img"
+      expect(page).to_not have_selector "table.index td img"
       expect(product.reload.images.count).to eq 0
     end
   end
