@@ -672,7 +672,7 @@ GEM
     stripe (4.24.0)
       faraday (~> 0.13)
       net-http-persistent (~> 3.0)
-    test-unit (3.3.3)
+    test-unit (3.3.4)
       power_assert
     thor (0.20.3)
     tilt (1.4.1)
@@ -817,7 +817,7 @@ DEPENDENCIES
   spring (= 1.7.2)
   spring-commands-rspec
   stripe
-  test-unit (~> 3.0)
+  test-unit (~> 3.3)
   timecop
   truncate_html
   turbo-sprockets-rails3

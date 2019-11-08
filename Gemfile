@@ -98,7 +98,7 @@ gem 'roo-xls', '~> 1.1.0'
 
 gem 'whenever', require: false
 
-gem 'test-unit', '~> 3.0'
+gem 'test-unit', '~> 3.3'
 
 # Gems used only for assets and not required
 # in production environments by default.
