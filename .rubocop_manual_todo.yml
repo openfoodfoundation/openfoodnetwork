@@ -729,6 +729,7 @@ Metrics/ModuleLength:
   - spec/controllers/admin/order_cycles_controller_spec.rb
   - spec/controllers/api/order_cycles_controller_spec.rb
   - spec/controllers/api/orders_controller_spec.rb
+  - spec/controllers/spree/admin/payment_methods_controller_spec.rb
   - spec/controllers/spree/api/products_controller_spec.rb
   - spec/lib/open_food_network/address_finder_spec.rb
   - spec/lib/open_food_network/customers_report_spec.rb
