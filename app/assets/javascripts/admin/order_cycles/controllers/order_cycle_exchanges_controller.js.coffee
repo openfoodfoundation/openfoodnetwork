@@ -37,5 +37,12 @@ angular.module('admin.orderCycles')
       $event.preventDefault()
       OrderCycle.addDistributor($scope.new_distributor_id)
 
+    $scope.setPickupTimeFieldDirty = (index) ->
+      setTimeout ->
+        last_outgoing_exchange_pickup_time_field_name = "order_cycle_outgoing_exchange_" + index + "_pickup_time"
+        $scope.order_cycle_form[last_outgoing_exchange_pickup_time_field_name].$setDirty()
+        $scope.$apply()
+      , 1
+
     $scope.removeDistributionOfVariant = (variant_id) ->
       OrderCycle.removeDistributionOfVariant(variant_id)
