@@ -14,8 +14,7 @@
 #     rubocop > rubo.log
 #     # inspect log file to see which cops are failing
 #     # copy cop configurations and add Exclude parameter
-#     grep ExampleCop rubo.log | cut -d ":" -f 1 | sort -u >> .rubocop.yml
-#     # use vim to add `- ` before each line
+#     grep ExampleCop rubo.log | cut -d ":" -f 1 | sort -u | while read f; do echo "  - $f"; done >> .rubocop.yml
 #
 # This process probably doesn't need repeating. Otherwise there is plenty
 # of room for improvements and automation.
@@ -354,6 +353,27 @@ Metrics/LineLength:
   - spec/support/request/shop_workflow.rb
   - spec/support/request/web_helper.rb
   - spec/support/seeds.rb
+  - app/models/spree/user.rb
+  - spec/controllers/api/base_controller_spec.rb
+  - spec/controllers/api/products_controller_spec.rb
+  - spec/controllers/api/shipments_controller_spec.rb
+  - spec/controllers/api/variants_controller_spec.rb
+  - spec/controllers/spree/admin/products_controller_spec.rb
+  - spec/features/admin/users_spec.rb
+  - spec/lib/open_food_network/order_cycle_management_report_spec.rb
+  - spec/models/calculator/weight_spec.rb
+  - spec/models/spree/product_set_spec.rb
+  - spec/serializers/api/admin/customer_serializer_spec.rb
+  - spec/serializers/api/admin/exchange_serializer_spec.rb
+  - spec/serializers/api/admin/for_order_cycle/enterprise_serializer_spec.rb
+  - spec/serializers/api/admin/for_order_cycle/supplied_product_serializer_spec.rb
+  - spec/serializers/api/admin/subscription_customer_serializer_spec.rb
+  - spec/serializers/api/admin/variant_override_serializer_spec.rb
+  - spec/serializers/api/current_order_serializer_spec.rb
+  - spec/serializers/api/order_serializer_spec.rb
+  - spec/services/order_cycle_distributed_products_spec.rb
+  - spec/services/products_renderer_spec.rb
+  - spec/services/product_tag_rules_filterer_spec.rb
 
 Metrics/AbcSize:
   Max: 15
@@ -459,6 +479,24 @@ Metrics/AbcSize:
   - spec/models/enterprise_spec.rb
   - spec/models/product_importer_spec.rb
   - spec/support/performance_helper.rb
+  - app/controllers/api/products_controller.rb
+  - app/controllers/api/shipments_controller.rb
+  - app/controllers/api/taxons_controller.rb
+  - app/controllers/api/variants_controller.rb
+  - app/controllers/spree/admin/image_settings_controller.rb
+  - app/controllers/spree/admin/taxons_controller.rb
+  - app/controllers/spree/admin/users_controller.rb
+  - app/controllers/spree/checkout_controller.rb
+  - app/controllers/spree/orders_controller.rb
+  - app/controllers/spree/user_passwords_controller.rb
+  - app/controllers/spree/user_registrations_controller.rb
+  - app/controllers/spree/users_controller.rb
+  - app/controllers/spree/user_sessions_controller.rb
+  - lib/spree/api/controller_setup.rb
+  - spec/features/consumer/shopping/checkout_paypal_spec.rb
+  - spec/services/restart_checkout_spec.rb
+  - app/helpers/spree/admin/navigation_helper_decorator.rb
+  - app/serializers/api/admin/order_cycle_serializer.rb
 
 Metrics/BlockLength:
   Max: 25
@@ -479,7 +517,14 @@ Metrics/BlockLength:
   - lib/tasks/data.rake
   - lib/tasks/dev.rake
   - spec/controllers/spree/admin/invoices_controller_spec.rb
+  - spec/factories.rb
+  - spec/factories/enterprise_factory.rb
+  - spec/factories/order_cycle_factory.rb
+  - spec/factories/shipping_method_factory.rb
+  - spec/factories/order_factory.rb
+  - spec/factories/subscription_factory.rb
   - spec/factories/variant_factory.rb
+  - spec/factories/product_factory.rb
   - spec/features/admin/orders_spec.rb
   - spec/features/consumer/shopping/embedded_shopfronts_spec.rb
   - spec/lib/open_food_network/group_buy_report_spec.rb
@@ -517,6 +562,8 @@ Metrics/CyclomaticComplexity:
   - lib/spree/core/controller_helpers/respond_with_decorator.rb
   - lib/spree/localized_number.rb
   - spec/models/product_importer_spec.rb
+  - app/controllers/spree/admin/taxons_controller.rb
+  - app/controllers/spree/orders_controller.rb
 
 Metrics/PerceivedComplexity:
   Max: 7
@@ -541,6 +588,9 @@ Metrics/PerceivedComplexity:
   - lib/spree/core/controller_helpers/respond_with_decorator.rb
   - lib/spree/localized_number.rb
   - spec/models/product_importer_spec.rb
+  - app/controllers/api/variants_controller.rb
+  - app/controllers/spree/admin/taxons_controller.rb
+  - app/controllers/spree/orders_controller.rb
 
 Metrics/MethodLength:
   Max: 10
@@ -625,6 +675,19 @@ Metrics/MethodLength:
   - spec/features/consumer/shopping/variant_overrides_spec.rb
   - spec/models/product_importer_spec.rb
   - spec/support/request/authentication_workflow.rb
+  - app/controllers/api/products_controller.rb
+  - app/controllers/api/shipments_controller.rb
+  - app/controllers/api/taxons_controller.rb
+  - app/controllers/api/variants_controller.rb
+  - app/controllers/spree/admin/image_settings_controller.rb
+  - app/controllers/spree/admin/tax_categories_controller.rb
+  - app/controllers/spree/admin/taxons_controller.rb
+  - app/controllers/spree/admin/users_controller.rb
+  - app/controllers/spree/orders_controller.rb
+  - app/controllers/spree/user_registrations_controller.rb
+  - app/controllers/spree/user_sessions_controller.rb
+  - lib/spree/api/controller_setup.rb
+  - spec/features/consumer/shopping/checkout_paypal_spec.rb
 
 Metrics/ClassLength:
   Max: 100
@@ -653,6 +716,10 @@ Metrics/ClassLength:
   - lib/open_food_network/permissions.rb
   - lib/open_food_network/products_cache.rb
   - lib/open_food_network/xero_invoices_report.rb
+  - app/controllers/api/products_controller.rb
+  - app/controllers/spree/admin/users_controller.rb
+  - app/controllers/spree/orders_controller.rb
+  - app/models/spree/user.rb
 
 Metrics/ModuleLength:
   Max: 100
@@ -685,6 +752,7 @@ Metrics/ModuleLength:
   - spec/models/spree/product_spec.rb
   - spec/models/spree/variant_spec.rb
   - spec/support/request/web_helper.rb
+  - app/helpers/injection_helper.rb
 
 Metrics/ParameterLists:
   Max: 5
