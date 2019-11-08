@@ -495,6 +495,8 @@ Metrics/AbcSize:
   - lib/spree/api/controller_setup.rb
   - spec/features/consumer/shopping/checkout_paypal_spec.rb
   - spec/services/restart_checkout_spec.rb
+  - app/helpers/spree/admin/navigation_helper_decorator.rb
+  - app/serializers/api/admin/order_cycle_serializer.rb
 
 Metrics/BlockLength:
   Max: 25
