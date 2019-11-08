@@ -54,7 +54,7 @@ Layout/ExtraSpacing:
 # Cop supports --auto-correct.
 # Configuration parameters: IndentationWidth.
 # SupportedStyles: special_inside_parentheses, consistent, align_braces
-Layout/IndentHash:
+Layout/IndentFirstHashElement:
   EnforcedStyle: consistent
 
 # Offense count: 1
@@ -234,17 +234,6 @@ Naming/VariableName:
 Naming/VariableNumber:
   Exclude:
     - 'spec/lib/open_food_network/products_and_inventory_report_spec.rb'
-
-# Offense count: 1
-Performance/Caller:
-  Exclude:
-    - 'app/controllers/application_controller.rb'
-
-# Offense count: 3
-# Cop supports --auto-correct.
-Performance/InefficientHashSearch:
-  Exclude:
-    - 'spec/controllers/api/products_controller_spec.rb'
 
 # Offense count: 1
 # Configuration parameters: EnforcedStyle.
