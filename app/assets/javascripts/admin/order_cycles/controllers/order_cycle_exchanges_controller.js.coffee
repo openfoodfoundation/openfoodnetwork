@@ -1,5 +1,5 @@
 angular.module('admin.orderCycles')
-  .controller 'AdminOrderCycleExchangesCtrl', ($scope, $controller, $filter, $window, $location, OrderCycle, Enterprise, EnterpriseFee, Schedules, RequestMonitor, ocInstance, StatusMessage) ->
+  .controller 'AdminOrderCycleExchangesCtrl', ($scope, $controller, $filter, $window, $location, $timeout, OrderCycle, Enterprise, EnterpriseFee, Schedules, RequestMonitor, ocInstance, StatusMessage) ->
     $controller('AdminEditOrderCycleCtrl', {$scope: $scope, ocInstance: ocInstance, $location: $location})
 
     $scope.supplier_enterprises = Enterprise.producer_enterprises
@@ -38,11 +38,9 @@ angular.module('admin.orderCycles')
       OrderCycle.addDistributor($scope.new_distributor_id)
 
     $scope.setPickupTimeFieldDirty = (index) ->
-      setTimeout ->
-        last_outgoing_exchange_pickup_time_field_name = "order_cycle_outgoing_exchange_" + index + "_pickup_time"
-        $scope.order_cycle_form[last_outgoing_exchange_pickup_time_field_name].$setDirty()
-        $scope.$apply()
-      , 1
+      $timeout ->
+        pickup_time_field_name = "order_cycle_outgoing_exchange_" + index + "_pickup_time"
+        $scope.order_cycle_form[pickup_time_field_name].$setDirty()
 
     $scope.removeDistributionOfVariant = (variant_id) ->
       OrderCycle.removeDistributionOfVariant(variant_id)
