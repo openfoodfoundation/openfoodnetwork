@@ -8,11 +8,11 @@
       = t("admin.order_cycles.wizard_progress.outgoing")
   - else
     %li{ class: "#{'current' if action_name == 'edit'}" }
-      %a{href: "#{main_app.edit_admin_order_cycle_path(@order_cycle)}"}
+      %a{ href: main_app.edit_admin_order_cycle_path(@order_cycle) }
         = t("admin.order_cycles.wizard_progress.edit")
     %li{ class: "#{'current' if action_name == 'incoming'}" }
-      %a{href: "#{main_app.admin_order_cycle_incoming_path(@order_cycle)}"}
+      %a{ href: main_app.admin_order_cycle_incoming_path(@order_cycle) }
         = t("admin.order_cycles.wizard_progress.incoming")
     %li{ class: "#{'current' if action_name == 'outgoing'}" }
-      %a{href: "#{main_app.admin_order_cycle_outgoing_path(@order_cycle)}"}
+      %a{ href: main_app.admin_order_cycle_outgoing_path(@order_cycle) }
         = t("admin.order_cycles.wizard_progress.outgoing")
