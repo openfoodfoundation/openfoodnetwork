@@ -6,6 +6,6 @@ module FooterLinksHelper
   end
 
   def privacy_policy_link
-    link_to( t( '.footer_data_privacy_policy' ), Spree::Config.privacy_policy_url, target: '_blank' )
+    link_to( t( '.footer_data_privacy_policy' ), Spree::Config.privacy_policy_url, target: '_blank', rel: 'noopener' )
   end
 end

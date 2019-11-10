@@ -31,6 +31,7 @@ module Admin
 
     def collection
       return Schedule.where("1=0") unless json_request?
+
       if params[:enterprise_id]
         filter_schedules_by_enterprise_id(permissions.visible_schedules, params[:enterprise_id])
       else
@@ -49,6 +50,7 @@ module Admin
 
     def check_editable_order_cycle_ids
       return unless params[:schedule][:order_cycle_ids]
+
       requested = params[:schedule][:order_cycle_ids]
       @existing_order_cycle_ids = @schedule.persisted? ? @schedule.order_cycle_ids : []
       permitted = OrderCycle.where(id: params[:schedule][:order_cycle_ids] | @existing_order_cycle_ids).merge(OrderCycle.managed_by(spree_current_user)).pluck(:id)
@@ -61,19 +63,23 @@ module Admin
 
     def check_dependent_subscriptions
       return if Subscription.where(schedule_id: @schedule).empty?
+
       render json: { errors: [t('admin.schedules.destroy.associated_subscriptions_error')] }, status: :conflict
     end
 
     def permissions
       return @permissions unless @permission.nil?
+
       @permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
     end
 
     def sync_subscriptions
       return unless params[:schedule][:order_cycle_ids]
+
       removed_ids = @existing_order_cycle_ids - @schedule.order_cycle_ids
       new_ids = @schedule.order_cycle_ids - @existing_order_cycle_ids
       return unless removed_ids.any? || new_ids.any?
+
       subscriptions = Subscription.where(schedule_id: @schedule)
       syncer = OpenFoodNetwork::ProxyOrderSyncer.new(subscriptions)
       syncer.sync!

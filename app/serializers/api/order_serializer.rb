@@ -25,6 +25,7 @@ module Api
 
     def changes_allowed_until
       return I18n.t(:not_allowed) unless object.changes_allowed?
+
       I18n.l(object.order_cycle.andand.orders_close_at, format: "%b %d, %Y %H:%M")
     end
 
@@ -46,6 +47,7 @@ module Api
 
     def cancel_path
       return nil unless object.changes_allowed?
+
       Spree::Core::Engine.routes_url_helpers.cancel_order_path(object)
     end
 

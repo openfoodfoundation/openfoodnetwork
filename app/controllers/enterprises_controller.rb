@@ -16,6 +16,7 @@ class EnterprisesController < BaseController
 
   def shop
     return redirect_to main_app.cart_path unless enough_stock?
+
     set_noindex_meta_tag
 
     @enterprise = current_distributor

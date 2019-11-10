@@ -14,6 +14,7 @@ class OrderCycleForm
     build_schedule_ids
     order_cycle.assign_attributes(params[:order_cycle])
     return false unless order_cycle.valid?
+
     order_cycle.transaction do
       order_cycle.save!
       apply_exchange_changes
@@ -30,6 +31,7 @@ class OrderCycleForm
 
   def apply_exchange_changes
     return if exchanges_unchanged?
+
     OpenFoodNetwork::OrderCycleFormApplicator.new(order_cycle, user).go!
   end
 
@@ -45,6 +47,7 @@ class OrderCycleForm
 
   def build_schedule_ids
     return unless schedule_ids?
+
     result = existing_schedule_ids
     result |= (requested_schedule_ids & permitted_schedule_ids) # Add permitted and requested
     result -= ((result & permitted_schedule_ids) - requested_schedule_ids) # Remove permitted but not requested
@@ -54,6 +57,7 @@ class OrderCycleForm
   def sync_subscriptions
     return unless schedule_ids?
     return unless schedule_sync_required?
+
     OpenFoodNetwork::ProxyOrderSyncer.new(subscriptions_to_sync).sync!
   end
 

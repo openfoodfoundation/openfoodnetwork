@@ -17,6 +17,7 @@ class ShippingMethodFactory
 
   def create_shipping_methods(enterprise)
     return if enterprise.shipping_methods.present?
+
     log "- #{enterprise.name}"
     create_pickup(enterprise)
     create_delivery(enterprise)

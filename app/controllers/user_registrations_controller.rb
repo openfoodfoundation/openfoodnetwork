@@ -25,8 +25,8 @@ class UserRegistrationsController < Spree::UserRegistrationsController
         render json: { email: @user.email }
       end
     end
-  rescue StandardError => error
-    OpenFoodNetwork::ErrorLogger.notify(error)
+  rescue StandardError => e
+    OpenFoodNetwork::ErrorLogger.notify(e)
     render_error(message: I18n.t('unknown_error', scope: I18N_SCOPE))
   end
 

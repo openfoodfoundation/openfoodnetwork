@@ -63,7 +63,7 @@ class Enterprise < ActiveRecord::Base
 
   has_attached_file :logo,
                     styles: { medium: "300x300>", small: "180x180>", thumb: "100x100>" },
-                    url:  '/images/enterprises/logos/:id/:style/:basename.:extension',
+                    url: '/images/enterprises/logos/:id/:style/:basename.:extension',
                     path: 'public/images/enterprises/logos/:id/:style/:basename.:extension'
 
   has_attached_file :promo_image,
@@ -72,11 +72,11 @@ class Enterprise < ActiveRecord::Base
                       medium: ["720x156#", :jpg],
                       thumb: ["100x100>", :jpg]
                     },
-                    url:  '/images/enterprises/promo_images/:id/:style/:basename.:extension',
+                    url: '/images/enterprises/promo_images/:id/:style/:basename.:extension',
                     path: 'public/images/enterprises/promo_images/:id/:style/:basename.:extension'
 
-  validates_attachment_content_type :logo, content_type: /\Aimage\/.*\Z/
-  validates_attachment_content_type :promo_image, content_type: /\Aimage\/.*\Z/
+  validates_attachment_content_type :logo, content_type: %r{\Aimage/.*\Z}
+  validates_attachment_content_type :promo_image, content_type: %r{\Aimage/.*\Z}
 
   include Spree::Core::S3Support
   supports_s3 :logo
@@ -394,7 +394,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def strip_url(url)
-    url.andand.sub(/(https?:\/\/)?/, '')
+    url.andand.sub(%r{(https?://)?}, '')
   end
 
   def set_unused_address_fields

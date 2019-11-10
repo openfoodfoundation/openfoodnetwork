@@ -12,8 +12,8 @@ feature "Managing users" do
 
     context "from the index page" do
       before do
-        create(:user, :email => "a@example.com")
-        create(:user, :email => "b@example.com")
+        create(:user, email: "a@example.com")
+        create(:user, email: "b@example.com")
 
         visit spree.admin_path
         click_link "Users"
@@ -43,7 +43,7 @@ feature "Managing users" do
 
       context "searching users" do
         it "should display the correct results for a user search" do
-          fill_in "q_email_cont", :with => "a@example"
+          fill_in "q_email_cont", with: "a@example"
           click_button "Search"
           within("table#listing_users") do
             expect(page).to have_content("a@example")
@@ -58,8 +58,8 @@ feature "Managing users" do
         end
 
         it "should allow editing the user password" do
-          fill_in "user_password", :with => "welcome"
-          fill_in "user_password_confirmation", :with => "welcome"
+          fill_in "user_password", with: "welcome"
+          fill_in "user_password_confirmation", with: "welcome"
           click_button "Update"
 
           expect(page).to have_content("Account updated")

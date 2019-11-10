@@ -31,6 +31,7 @@ module Spree
           options = options.merge(args.last)
         end
         return '' if (klass = klass_for(options[:label])) && cannot?(:admin, klass)
+
         tab_without_cancan_check(*args)
       end
       alias_method_chain :tab, :cancan_check

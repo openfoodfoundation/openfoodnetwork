@@ -36,17 +36,20 @@ module Admin
 
     def ensure_shop
       return if @shop
+
       render json: { errors: ['Unauthorised'] }, status: :unauthorized
     end
 
     def ensure_variant
       return if @variant
+
       error = "#{@shop.name} is not permitted to sell the selected product"
       render json: { errors: [error] }, status: :unprocessable_entity
     end
 
     def price_estimate
       return unless @order_cycle
+
       fee_calculator = OpenFoodNetwork::EnterpriseFeeCalculator.new(@shop, @order_cycle)
       OpenFoodNetwork::ScopeVariantToHub.new(@shop).scope(@variant)
       @variant.price + fee_calculator.indexed_fees_for(@variant)

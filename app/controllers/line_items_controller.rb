@@ -23,6 +23,7 @@ class LineItemsController < BaseController
   # List all items the user already ordered in the current order cycle
   def bought_items
     return [] unless current_order_cycle && spree_current_user && current_distributor
+
     current_order_cycle.items_bought_by_user(spree_current_user, current_distributor)
   end
 

@@ -43,6 +43,7 @@ module OpenFoodNetwork
 
     def table_items
       return [] unless @render_table
+
       Reports::LineItems.list(permissions, params)
     end
 
@@ -122,6 +123,7 @@ module OpenFoodNetwork
 
     def permissions
       return @permissions unless @permissions.nil?
+
       @permissions = OpenFoodNetwork::Permissions.new(@user)
     end
 

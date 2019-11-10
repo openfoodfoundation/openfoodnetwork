@@ -38,6 +38,7 @@ module Api
 
       def edit_path
         return '' unless object.id
+
         edit_admin_subscription_path(object)
       end
 

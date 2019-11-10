@@ -55,11 +55,13 @@ module OpenFoodNetwork
     def shipping_methods_ok?
       # Refactor into boolean
       return true unless @enterprise.is_distributor
+
       @enterprise.shipping_methods.any?
     end
 
     def payment_methods_ok?
       return true unless @enterprise.is_distributor
+
       @enterprise.payment_methods.available.any?
     end
   end

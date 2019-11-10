@@ -79,6 +79,7 @@ Spree::Admin::ProductsController.class_eval do
     # enterprise users.
     # TODO: There has to be a better way!!!
     return @collection if @collection.present?
+
     params[:q] ||= {}
     params[:q][:deleted_at_null] ||= "1"
 
@@ -147,6 +148,7 @@ Spree::Admin::ProductsController.class_eval do
 
   def strip_new_properties
     return if spree_current_user.admin? || params[:product][:product_properties_attributes].nil?
+
     names = Spree::Property.pluck(:name)
     params[:product][:product_properties_attributes].each do |key, property|
       unless names.include? property[:property_name]
@@ -170,9 +172,9 @@ Spree::Admin::ProductsController.class_eval do
     begin
       variant.on_demand = on_demand if on_demand.present?
       variant.on_hand = on_hand.to_i if on_hand.present?
-    rescue StandardError => error
-      notify_bugsnag(error, product, variant)
-      raise error
+    rescue StandardError => e
+      notify_bugsnag(e, product, variant)
+      raise e
     end
   end
 

@@ -24,6 +24,7 @@ module OpenFoodNetwork
 
     def table
       return [] unless @compile_table
+
       users_and_enterprises.map do |uae|
         [
           uae["user_email"],
@@ -78,7 +79,8 @@ module OpenFoodNetwork
           created_at: x.created_at.utc.iso8601,
           relationship_type: relationship_type,
           user_email: x.user_email
-        }.stringify_keys }
+        }.stringify_keys
+      }
     end
 
     def users_and_enterprises
@@ -102,8 +104,8 @@ module OpenFoodNetwork
           [(a["created_at"].nil? ? 0 : 1), a["name"], b["relationship_type"], a["user_email"]] <=>
             [(b["created_at"].nil? ? 0 : 1), b["name"], a["relationship_type"], b["user_email"]]
         else
-          [DateTime.parse(b["created_at"]), a["name"], b["relationship_type"], a["user_email"]] <=>
-            [DateTime.parse(a["created_at"]), b["name"], a["relationship_type"], b["user_email"]]
+          [DateTime.parse(b["created_at"]).in_time_zone, a["name"], b["relationship_type"], a["user_email"]] <=>
+            [DateTime.parse(a["created_at"]).in_time_zone, b["name"], a["relationship_type"], b["user_email"]]
         end
       end
     end
@@ -114,6 +116,7 @@ module OpenFoodNetwork
 
     def to_local_datetime(date)
       return "" if date.nil?
+
       date.to_datetime.in_time_zone.strftime "%Y-%m-%d %H:%M"
     end
   end

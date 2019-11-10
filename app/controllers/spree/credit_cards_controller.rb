@@ -19,6 +19,7 @@ module Spree
     def update
       @credit_card = Spree::CreditCard.find_by_id(params[:id])
       return update_failed unless @credit_card
+
       authorize! :update, @credit_card
 
       if @credit_card.update_attributes(params[:credit_card])
@@ -63,6 +64,7 @@ module Spree
 
     def stored_card_attributes
       return {} unless @customer.try(:default_source)
+
       {
         month: params[:exp_month],
         year: params[:exp_year],

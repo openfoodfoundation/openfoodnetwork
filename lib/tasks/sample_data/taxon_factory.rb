@@ -16,6 +16,7 @@ class TaxonFactory
 
   def create_taxon(taxonomy, taxon_name)
     return if Spree::Taxon.where(name: taxon_name).exists?
+
     log "- #{taxon_name}"
     Spree::Taxon.create!(
       name: taxon_name,

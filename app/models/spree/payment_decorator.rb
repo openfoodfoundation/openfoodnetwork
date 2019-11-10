@@ -93,6 +93,7 @@ module Spree
       return unless source.try(:save_requested_by_customer?)
       return unless source.number || source.gateway_payment_profile_id
       return unless source.gateway_customer_profile_id.nil?
+
       payment_method.create_profile(self)
     rescue ActiveMerchant::ConnectionError => e
       gateway_error e
@@ -105,6 +106,7 @@ module Spree
     def revoke_adjustment_eligibility
       return unless adjustment.try(:reload)
       return if adjustment.finalized?
+
       adjustment.update_attribute(:eligible, false)
       adjustment.finalize!
     end

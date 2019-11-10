@@ -7,11 +7,13 @@ module EnterprisesHelper
 
   def current_customer
     return nil unless spree_current_user && current_distributor
+
     @current_customer ||= spree_current_user.customer_of(current_distributor)
   end
 
   def available_shipping_methods
     return [] if current_distributor.blank?
+
     shipping_methods = current_distributor.shipping_methods
 
     applicator = OpenFoodNetwork::TagRuleApplicator.new(current_distributor, "FilterShippingMethods", current_customer.andand.tag_list)
@@ -22,6 +24,7 @@ module EnterprisesHelper
 
   def available_payment_methods
     return [] if current_distributor.blank?
+
     payment_methods = current_distributor.payment_methods.available(:front_end).all
 
     filter = OpenFoodNetwork::AvailablePaymentMethodFilter.new

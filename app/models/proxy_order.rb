@@ -30,6 +30,7 @@ class ProxyOrder < ActiveRecord::Base
 
   def cancel
     return false unless order_cycle.orders_close_at.andand > Time.zone.now
+
     transaction do
       update_column(:canceled_at, Time.zone.now)
       order.cancel if order
@@ -39,6 +40,7 @@ class ProxyOrder < ActiveRecord::Base
 
   def resume
     return false unless order_cycle.orders_close_at.andand > Time.zone.now
+
     transaction do
       update_column(:canceled_at, nil)
       order.resume if order
@@ -48,6 +50,7 @@ class ProxyOrder < ActiveRecord::Base
 
   def initialise_order!
     return order if order.present?
+
     factory = OrderFactory.new(order_attrs, skip_stock_check: true)
     self.order = factory.create
     save!

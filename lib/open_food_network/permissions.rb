@@ -189,11 +189,13 @@ module OpenFoodNetwork
 
     def managed_enterprises
       return @managed_enterprises unless @managed_enterprises.nil?
+
       @managed_enterprises = Enterprise.managed_by(@user)
     end
 
     def coordinated_order_cycles
       return @coordinated_order_cycles unless @coordinated_order_cycles.nil?
+
       @coordinated_order_cycles = OrderCycle.managed_by(@user)
     end
 

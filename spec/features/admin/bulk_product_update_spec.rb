@@ -516,7 +516,7 @@ feature '
       it "shows an edit button for products, which takes the user to the standard edit page for that product in a new window" do
         expect(page).to have_selector "a.edit-product", count: 2
 
-        new_window = window_opened_by do 
+        new_window = window_opened_by do
           within "tr#p_#{p1.id}" do
             find("a.edit-product").click
           end
@@ -534,7 +534,7 @@ feature '
 
         expect(page).to have_selector "a.edit-variant", count: 2
 
-        new_window = window_opened_by do 
+        new_window = window_opened_by do
           within "tr#v_#{v1.id}" do
             find("a.edit-variant").click
           end

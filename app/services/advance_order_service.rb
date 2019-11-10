@@ -23,6 +23,7 @@ class AdvanceOrderService
   def advance_order(options)
     until order.state == "complete"
       break unless order.next
+
       after_transition_hook(options)
     end
   end

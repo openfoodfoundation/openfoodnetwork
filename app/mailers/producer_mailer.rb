@@ -16,6 +16,7 @@ class ProducerMailer < Spree::BaseMailer
       subject = "[#{Spree::Config.site_name}] #{order_cycle_subject}"
 
       return unless has_orders?(order_cycle, producer)
+
       mail(
         to: @producer.contact.email,
         from: from_address,

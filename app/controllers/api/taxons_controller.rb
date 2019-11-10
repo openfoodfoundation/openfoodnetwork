@@ -61,6 +61,7 @@ module Api
 
     def taxonomy
       return if params[:taxonomy_id].blank?
+
       @taxonomy ||= Spree::Taxonomy.find(params[:taxonomy_id])
     end
 

@@ -82,7 +82,6 @@ describe ProductTagRulesFilterer do
           expect(overrides_to_hide).to include variant_hidden_by_default.id, variant_hidden_by_rule.id
         end
       end
-
     end
 
     describe "#overrides_to_show" do

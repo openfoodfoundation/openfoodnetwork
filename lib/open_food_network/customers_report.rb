@@ -27,6 +27,7 @@ module OpenFoodNetwork
 
     def table
       return [] unless @compile_table
+
       orders.map do |order|
         if is_mailing_list?
           [order.email,

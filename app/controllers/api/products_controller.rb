@@ -19,7 +19,7 @@ module Api
       @product = Spree::Product.new(params[:product])
       begin
         if @product.save
-          render json: @product, serializer: Api::Admin::ProductSerializer, status: 201
+          render json: @product, serializer: Api::Admin::ProductSerializer, status: :created
         else
           invalid_resource!(@product)
         end
@@ -33,7 +33,7 @@ module Api
       authorize! :update, Spree::Product
       @product = find_product(params[:id])
       if @product.update_attributes(params[:product])
-        render json: @product, serializer: Api::Admin::ProductSerializer, status: 200
+        render json: @product, serializer: Api::Admin::ProductSerializer, status: :ok
       else
         invalid_resource!(@product)
       end
@@ -44,7 +44,7 @@ module Api
       @product = find_product(params[:id])
       @product.update_attribute(:deleted_at, Time.zone.now)
       @product.variants_including_master.update_all(deleted_at: Time.zone.now)
-      render json: @product, serializer: Api::Admin::ProductSerializer, status: 204
+      render json: @product, serializer: Api::Admin::ProductSerializer, status: :no_content
     end
 
     def bulk_products
@@ -76,7 +76,7 @@ module Api
       @product = find_product(params[:product_id])
       authorize! :delete, @product
       @product.destroy
-      render json: @product, serializer: Api::Admin::ProductSerializer, status: 204
+      render json: @product, serializer: Api::Admin::ProductSerializer, status: :no_content
     end
 
     # POST /api/products/:product_id/clone
@@ -88,7 +88,7 @@ module Api
 
       @product = original_product.duplicate
 
-      render json: @product, serializer: Api::Admin::ProductSerializer, status: 201
+      render json: @product, serializer: Api::Admin::ProductSerializer, status: :created
     end
 
     private

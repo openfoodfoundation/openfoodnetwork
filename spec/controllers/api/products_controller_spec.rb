@@ -248,12 +248,12 @@ describe Api::ProductsController, type: :controller do
         end
 
         it "filters results by supplier" do
-          api_get :bulk_products, { page: 1, per_page: 15, q: {supplier_id_eq: supplier.id} }, format: :json
+          api_get :bulk_products, { page: 1, per_page: 15, q: { supplier_id_eq: supplier.id } }, format: :json
           expect(returned_product_ids).to eq [product2.id, inactive_product.id, product.id]
         end
 
         it "filters results by product category" do
-          api_get :bulk_products, { page: 1, per_page: 15, q: {primary_taxon_id_eq: taxon.id} }, format: :json
+          api_get :bulk_products, { page: 1, per_page: 15, q: { primary_taxon_id_eq: taxon.id } }, format: :json
           expect(returned_product_ids).to eq [product3.id, product2.id]
         end
 

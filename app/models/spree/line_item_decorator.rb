@@ -83,6 +83,7 @@ Spree::LineItem.class_eval do
   def cap_quantity_at_stock!
     scoper.scope(variant)
     return if variant.on_demand
+
     update_attributes!(quantity: variant.on_hand) if quantity > variant.on_hand
   end
 
@@ -102,6 +103,7 @@ Spree::LineItem.class_eval do
     # EnterpriseFee#create_adjustment applies adjustments on line items to their parent order,
     # so line_item.adjustments returns an empty array
     return 0 if quantity == 0
+
     (price + order.adjustments.where(source_id: id).sum(&:amount) / quantity).round(2)
   end
 
@@ -127,6 +129,7 @@ Spree::LineItem.class_eval do
 
   def unit_value
     return variant.unit_value if quantity == 0 || !final_weight_volume
+
     final_weight_volume / quantity
   end
 
@@ -137,6 +140,7 @@ Spree::LineItem.class_eval do
   def sufficient_stock?
     return true if skip_stock_check
     return true if quantity <= 0
+
     scoper.scope(variant)
     variant.can_supply?(quantity)
   end

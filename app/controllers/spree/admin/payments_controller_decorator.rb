@@ -43,8 +43,8 @@ Spree::Admin::PaymentsController.class_eval do
     else
       flash[:error] = t(:cannot_perform_operation)
     end
-  rescue Spree::Core::GatewayError => ge
-    flash[:error] = ge.message
+  rescue Spree::Core::GatewayError => e
+    flash[:error] = e.message
   ensure
     redirect_to request.referer
   end

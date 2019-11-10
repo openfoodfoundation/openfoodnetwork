@@ -190,9 +190,9 @@ describe EnterpriseRelationship do
       context "when variant_override permission is not present" do
         let!(:er) { create(:enterprise_relationship, child: hub, parent: producer, permissions_list: [:add_to_order_cycles] ) }
         let!(:some_other_er) { create(:enterprise_relationship, child: hub, parent: some_other_producer, permissions_list: [:add_to_order_cycles] ) }
-        let!(:vo1) { create(:variant_override, hub: hub, variant: create(:variant, product: create(:product, supplier: producer)), permission_revoked_at: Time.now) }
-        let!(:vo2) { create(:variant_override, hub: hub, variant: create(:variant, product: create(:product, supplier: producer)), permission_revoked_at: Time.now) }
-        let!(:vo3) { create(:variant_override, hub: hub, variant: create(:variant, product: create(:product, supplier: some_other_producer)), permission_revoked_at: Time.now) }
+        let!(:vo1) { create(:variant_override, hub: hub, variant: create(:variant, product: create(:product, supplier: producer)), permission_revoked_at: Time.now.in_time_zone) }
+        let!(:vo2) { create(:variant_override, hub: hub, variant: create(:variant, product: create(:product, supplier: producer)), permission_revoked_at: Time.now.in_time_zone) }
+        let!(:vo3) { create(:variant_override, hub: hub, variant: create(:variant, product: create(:product, supplier: some_other_producer)), permission_revoked_at: Time.now.in_time_zone) }
 
         context "and is then added" do
           before { er.permissions_list = [:add_to_order_cycles, :create_variant_overrides]; er.save! }

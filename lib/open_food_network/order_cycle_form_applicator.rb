@@ -119,12 +119,14 @@ module OpenFoodNetwork
 
     def permitted_enterprises
       return @permitted_enterprises unless @permitted_enterprises.nil?
+
       @permitted_enterprises = OpenFoodNetwork::OrderCyclePermissions.
         new(@spree_current_user, @order_cycle).visible_enterprises
     end
 
     def manages_coordinator?
       return @manages_coordinator unless @manages_coordinator.nil?
+
       @manages_coordinator = Enterprise.managed_by(@spree_current_user).include? @order_cycle.coordinator
     end
 

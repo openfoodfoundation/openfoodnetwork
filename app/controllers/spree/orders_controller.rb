@@ -9,7 +9,7 @@ module Spree
     ssl_required :show
 
     before_filter :check_authorization
-    rescue_from ActiveRecord::RecordNotFound, :with => :render_404
+    rescue_from ActiveRecord::RecordNotFound, with: :render_404
     helper 'spree/products', 'spree/orders'
 
     respond_to :html
@@ -200,6 +200,7 @@ module Spree
     def order_to_update
       return @order_to_update if defined? @order_to_update
       return @order_to_update = current_order unless params[:id]
+
       @order_to_update = changeable_order_from_number
     end
 
@@ -208,6 +209,7 @@ module Spree
     def changeable_order_from_number
       order = Spree::Order.complete.find_by_number(params[:id])
       return nil unless order.andand.changes_allowed? && can?(:update, order)
+
       order
     end
 

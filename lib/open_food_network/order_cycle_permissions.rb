@@ -13,6 +13,7 @@ module OpenFoodNetwork
     # relationships of their enterprises to the coordinator of the OC, rather than on the OC itself
     def visible_enterprises
       return Enterprise.where("1=0") if @coordinator.blank?
+
       if managed_enterprises.include? @coordinator
         coordinator_permitted_ids = [@coordinator]
         all_active_ids = []
@@ -268,17 +269,20 @@ module OpenFoodNetwork
 
     def managed_participating_enterprises
       return @managed_participating_enterprises unless @managed_participating_enterprises.nil?
+
       @managed_participating_enterprises = managed_enterprises.
         where(id: @order_cycle.suppliers | @order_cycle.distributors)
     end
 
     def managed_participating_hubs
       return @managed_participating_hubs unless @managed_participating_hubs.nil?
+
       @managed_participating_hubs = managed_participating_enterprises.is_hub
     end
 
     def managed_participating_producers
       return @managed_participating_producers unless @managed_participating_producers.nil?
+
       @managed_participating_producers = managed_participating_enterprises.is_primary_producer
     end
 

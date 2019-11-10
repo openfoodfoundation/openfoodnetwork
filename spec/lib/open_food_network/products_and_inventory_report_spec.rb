@@ -78,19 +78,19 @@ module OpenFoodNetwork
       describe "fetching child variants" do
         it "returns some variants" do
           product1 = create(:simple_product, supplier: supplier)
-          variant_1 = product1.variants.first
-          variant_2 = create(:variant, product: product1)
+          variant1 = product1.variants.first
+          variant2 = create(:variant, product: product1)
 
-          expect(subject.child_variants).to match_array [variant_1, variant_2]
+          expect(subject.child_variants).to match_array [variant1, variant2]
         end
 
         it "should only return variants managed by the user" do
           product1 = create(:simple_product, supplier: create(:supplier_enterprise))
           product2 = create(:simple_product, supplier: supplier)
-          variant_1 = product1.variants.first
-          variant_2 = product2.variants.first
+          variant1 = product1.variants.first
+          variant2 = product2.variants.first
 
-          expect(subject.child_variants).to eq([variant_2])
+          expect(subject.child_variants).to eq([variant2])
         end
       end
 

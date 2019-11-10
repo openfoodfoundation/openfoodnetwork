@@ -9,6 +9,7 @@ namespace :ofn do
         # Cycle through the incoming exchanges
         order_cycle.exchanges.incoming.each do |exchange|
           next if exchange.sender == exchange.receiver
+
           # Ensure that an enterprise relationship from the producer to the coordinator exists
           relationship = EnterpriseRelationship.where(parent_id: exchange.sender_id, child_id: exchange.receiver_id).first
           if relationship.blank?
@@ -43,6 +44,7 @@ namespace :ofn do
           producers = Enterprise.joins(:supplied_products).where("spree_products.id IN (?)", products).uniq
           producers.each do |producer|
             next if producer == exchange.receiver
+
             # Ensure that an enterprise relationship from the producer to the hub exists
             relationship = EnterpriseRelationship.where(parent_id: producer.id, child_id: exchange.receiver_id).first
             if relationship.blank?

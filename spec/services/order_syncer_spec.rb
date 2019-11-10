@@ -525,7 +525,7 @@ describe OrderSyncer do
             expect(line_items.map(&:quantity)).to eq []
 
             subscription.save # this is necessary to get an id on the subscription_line_items
-            params =  { subscription_line_items_attributes: [{ id: subscription.subscription_line_items.last.id, quantity: 2 }] }
+            params = { subscription_line_items_attributes: [{ id: subscription.subscription_line_items.last.id, quantity: 2 }] }
             subscription.assign_attributes(params)
             expect(syncer.sync!).to be true
 

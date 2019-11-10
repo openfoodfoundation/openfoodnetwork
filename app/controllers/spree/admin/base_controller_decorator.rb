@@ -54,6 +54,7 @@ Spree::Admin::BaseController.class_eval do
     if Spree.const_defined?(const_name)
       return "Spree::#{const_name}".constantize
     end
+
     nil
   end
 

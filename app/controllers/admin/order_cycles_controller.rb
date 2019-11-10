@@ -12,7 +12,9 @@ module Admin
       respond_to do |format|
         format.html
         format.json do
-          render_as_json @collection, ams_prefix: params[:ams_prefix], current_user: spree_current_user, subscriptions_count: SubscriptionsCount.new(@collection)
+          render_as_json @collection, ams_prefix: params[:ams_prefix],
+                                      current_user: spree_current_user,
+                                      subscriptions_count: SubscriptionsCount.new(@collection)
         end
       end
     end
@@ -62,7 +64,9 @@ module Admin
 
     def bulk_update
       if order_cycle_set.andand.save
-        render_as_json @order_cycles, ams_prefix: 'index', current_user: spree_current_user, subscriptions_count: SubscriptionsCount.new(@collection)
+        render_as_json @order_cycles, ams_prefix: 'index',
+                                      current_user: spree_current_user,
+                                      subscriptions_count: SubscriptionsCount.new(@collection)
       else
         order_cycle = order_cycle_set.collection.find{ |oc| oc.errors.present? }
         render json: { errors: order_cycle.errors.full_messages }, status: :unprocessable_entity
@@ -72,14 +76,16 @@ module Admin
     def clone
       @order_cycle = OrderCycle.find params[:id]
       @order_cycle.clone!
-      redirect_to main_app.admin_order_cycles_path, notice: I18n.t(:order_cycles_clone_notice, name: @order_cycle.name)
+      redirect_to main_app.admin_order_cycles_path,
+                  notice: I18n.t(:order_cycles_clone_notice, name: @order_cycle.name)
     end
 
     # Send notifications to all producers who are part of the order cycle
     def notify_producers
       Delayed::Job.enqueue OrderCycleNotificationJob.new(params[:id].to_i)
 
-      redirect_to main_app.admin_order_cycles_path, notice: I18n.t(:order_cycles_email_to_producers_notice)
+      redirect_to main_app.admin_order_cycles_path,
+                  notice: I18n.t(:order_cycles_email_to_producers_notice)
     end
 
     protected
@@ -87,6 +93,7 @@ module Admin
     def collection
       return Enterprise.where("1=0") unless json_request?
       return order_cycles_from_set if params[:order_cycle_set]
+
       ocs = if params[:as] == "distributor"
               OrderCycle.preload(:schedules).ransack(params[:q]).result.
                 involving_managed_distributors_of(spree_current_user).order('updated_at DESC')
@@ -95,7 +102,7 @@ module Admin
                 involving_managed_producers_of(spree_current_user).order('updated_at DESC')
             else
               OrderCycle.preload(:schedules).ransack(params[:q]).result.accessible_by(spree_current_user)
-      end
+            end
 
       ocs.undated |
         ocs.soonest_closing |
@@ -181,6 +188,7 @@ module Admin
 
     def require_order_cycle_set_params
       return if params[:order_cycle_set]
+
       render json: { errors: t('admin.order_cycles.bulk_update.no_data') }, status: :unprocessable_entity
     end
 

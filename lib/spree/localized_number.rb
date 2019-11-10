@@ -31,6 +31,7 @@ module Spree
 
       define_method(:validate_localizable_number) do
         return unless Spree::Config.enable_localized_number?
+
         @invalid_localized_number.andand.each do |error_attribute|
           errors.set(error_attribute, [I18n.t('spree.localized_number.invalid_format')])
         end
@@ -40,6 +41,7 @@ module Spree
     def self.valid_localizable_number?(number)
       return true unless number.is_a?(String) || number.respond_to?(:to_d)
       return false if number =~ /[\.,]\d{2}[\.,]/
+
       true
     end
 

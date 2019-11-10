@@ -287,7 +287,8 @@ describe Spree::OrdersController, type: :controller do
       let(:params) {
         { order: { line_items_attributes: {
           "0" => { id: order.line_items.first.id, quantity: 2 }
-        } } } }
+        } } }
+      }
 
       before do
         allow(subject).to receive(:spree_current_user) { order.user }
@@ -311,7 +312,8 @@ describe Spree::OrdersController, type: :controller do
       { order: { line_items_attributes: {
         "0" => { id: order.line_items.first.id, quantity: 1 },
         "1" => { id: order.line_items.second.id, quantity: 0 }
-      } } } }
+      } } }
+    }
 
     before { allow(subject).to receive(:order_to_update) { order } }
 

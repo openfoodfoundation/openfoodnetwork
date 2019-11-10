@@ -19,6 +19,7 @@ module OpenFoodNetwork
 
     def table
       return [] unless @render_table
+
       variants.map do |variant|
         [
           variant.product.supplier.name,
@@ -37,6 +38,7 @@ module OpenFoodNetwork
 
     def sku_for(variant)
       return variant.sku if variant.sku.present?
+
       variant.product.sku
     end
   end

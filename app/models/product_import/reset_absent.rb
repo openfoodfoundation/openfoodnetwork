@@ -24,6 +24,7 @@ module ProductImport
     def authorized_enterprises
       settings.enterprises_to_reset.map do |enterprise_id|
         next unless entry_processor.permission_by_id?(enterprise_id)
+
         enterprise_id.to_i
       end
     end

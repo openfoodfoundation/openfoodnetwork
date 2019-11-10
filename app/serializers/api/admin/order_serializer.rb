@@ -18,11 +18,13 @@ class Api::Admin::OrderSerializer < ActiveModel::Serializer
 
   def edit_path
     return '' unless object.id
+
     spree_routes_helper.edit_admin_order_path(object)
   end
 
   def payments_path
     return '' unless object.payment_state
+
     spree_routes_helper.admin_order_payments_path(object)
   end
 
@@ -33,6 +35,7 @@ class Api::Admin::OrderSerializer < ActiveModel::Serializer
   def payment_capture_path
     pending_payment = object.pending_payments.first
     return '' unless object.payment_required? && pending_payment
+
     spree_routes_helper.fire_admin_order_payment_path(object, pending_payment.id, e: 'capture')
   end
 

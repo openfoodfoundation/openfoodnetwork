@@ -22,6 +22,7 @@ class Api::Admin::CustomerSerializer < ActiveModel::Serializer
 
   def default_card_present?
     return unless object.user
+
     object.user.default_card.present?
   end
 end

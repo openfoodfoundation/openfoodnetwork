@@ -107,6 +107,7 @@ module Spree
 
       def ensure_enterprise_selected
         return if preferred_enterprise_id.andand > 0
+
         errors.add(:stripe_account_owner, I18n.t(:error_required))
       end
     end

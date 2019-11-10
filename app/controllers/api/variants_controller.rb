@@ -19,7 +19,7 @@ module Api
       authorize! :create, Spree::Variant
       @variant = scope.new(params[:variant])
       if @variant.save
-        render json: @variant, serializer: Api::VariantSerializer, status: 201
+        render json: @variant, serializer: Api::VariantSerializer, status: :created
       else
         invalid_resource!(@variant)
       end
@@ -29,7 +29,7 @@ module Api
       authorize! :update, Spree::Variant
       @variant = scope.find(params[:id])
       if @variant.update_attributes(params[:variant])
-        render json: @variant, serializer: Api::VariantSerializer, status: 200
+        render json: @variant, serializer: Api::VariantSerializer, status: :ok
       else
         invalid_resource!(@product)
       end
@@ -40,14 +40,14 @@ module Api
       authorize! :delete, @variant
 
       VariantDeleter.new.delete(@variant)
-      render json: @variant, serializer: Api::VariantSerializer, status: 204
+      render json: @variant, serializer: Api::VariantSerializer, status: :no_content
     end
 
     def destroy
       authorize! :delete, Spree::Variant
       @variant = scope.find(params[:id])
       @variant.destroy
-      render json: @variant, serializer: Api::VariantSerializer, status: 204
+      render json: @variant, serializer: Api::VariantSerializer, status: :no_content
     end
 
     private
@@ -58,11 +58,11 @@ module Api
 
     def scope
       if @product
-        unless current_api_user.has_spree_role?("admin") || params[:show_deleted]
-          variants = @product.variants_including_master
-        else
-          variants = @product.variants_including_master.with_deleted
-        end
+        variants = if current_api_user.has_spree_role?("admin") || params[:show_deleted]
+                     @product.variants_including_master.with_deleted
+                   else
+                     @product.variants_including_master
+                   end
       else
         variants = Spree::Variant.scoped
         if current_api_user.has_spree_role?("admin")

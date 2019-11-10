@@ -97,6 +97,7 @@ module Api
         .select('DISTINCT spree_properties.*')
 
       return properties.merge(OrderCycle.active) if active
+
       properties
     end
 
@@ -110,6 +111,7 @@ module Api
         .select('DISTINCT spree_properties.*')
 
       return properties.merge(OrderCycle.active) if active
+
       properties
     end
 

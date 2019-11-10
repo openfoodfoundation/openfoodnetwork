@@ -168,6 +168,7 @@ class OrderCycle < ActiveRecord::Base
 
   def variants_distributed_by(distributor)
     return Spree::Variant.where("1=0") if distributor.blank?
+
     Spree::Variant.
       joins(:exchanges).
       merge(distributor.inventory_variants).
@@ -262,6 +263,7 @@ class OrderCycle < ActiveRecord::Base
   def orders_close_at_after_orders_open_at?
     return if orders_open_at.blank? || orders_close_at.blank?
     return if orders_close_at > orders_open_at
+
     errors.add(:orders_close_at, :after_orders_open_at)
   end
 end

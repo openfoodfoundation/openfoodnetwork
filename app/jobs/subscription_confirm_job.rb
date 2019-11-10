@@ -36,8 +36,10 @@ class SubscriptionConfirmJob
     record_order(@order)
     update_payment! if @order.payment_required?
     return send_failed_payment_email if @order.errors.present?
+
     @order.process_payments! if @order.payment_required?
     return send_failed_payment_email if @order.errors.present?
+
     send_confirm_email
   end
 
