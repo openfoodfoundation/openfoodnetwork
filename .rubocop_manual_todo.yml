@@ -124,7 +124,6 @@ Metrics/LineLength:
   - lib/open_food_network/reports/bulk_coop_allocation_report.rb
   - lib/open_food_network/reports/line_items.rb
   - lib/open_food_network/sales_tax_report.rb
-  - lib/open_food_network/users_and_enterprises_report.rb
   - lib/open_food_network/variant_and_line_item_naming.rb
   - lib/open_food_network/xero_invoices_report.rb
   - lib/spree/core/controller_helpers/respond_with_decorator.rb

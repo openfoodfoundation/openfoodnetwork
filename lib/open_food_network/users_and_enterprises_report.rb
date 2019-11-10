@@ -6,7 +6,9 @@ module OpenFoodNetwork
       @compile_table = compile_table
 
       # Convert arrays of ids to comma delimited strings
-      @params[:enterprise_id_in] = @params[:enterprise_id_in].join(',') if @params[:enterprise_id_in].is_a? Array
+      if @params[:enterprise_id_in].is_a? Array
+        @params[:enterprise_id_in] = @params[:enterprise_id_in].join(',')
+      end
       @params[:user_id_in] = @params[:user_id_in].join(',') if @params[:user_id_in].is_a? Array
     end
 
@@ -104,8 +106,17 @@ module OpenFoodNetwork
           [(a["created_at"].nil? ? 0 : 1), a["name"], b["relationship_type"], a["user_email"]] <=>
             [(b["created_at"].nil? ? 0 : 1), b["name"], a["relationship_type"], b["user_email"]]
         else
-          [DateTime.parse(b["created_at"]).in_time_zone, a["name"], b["relationship_type"], a["user_email"]] <=>
-            [DateTime.parse(a["created_at"]).in_time_zone, b["name"], a["relationship_type"], b["user_email"]]
+          [
+            DateTime.parse(b["created_at"]).in_time_zone,
+            a["name"],
+            b["relationship_type"],
+            a["user_email"]
+          ] <=> [
+            DateTime.parse(a["created_at"]).in_time_zone,
+            b["name"],
+            a["relationship_type"],
+            b["user_email"]
+          ]
         end
       end
     end
