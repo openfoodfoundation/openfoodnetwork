@@ -138,8 +138,7 @@ module ProductImport
 
     def primary_producer_error(entry)
       return if import_into_inventory?
-      return if @spreadsheet_data.
-        enterprises_index[entry.enterprise][:is_primary_producer]
+      return if @spreadsheet_data.enterprises_index[entry.enterprise][:is_primary_producer]
 
       mark_as_invalid(entry,
                       attribute: enterprise_field,
