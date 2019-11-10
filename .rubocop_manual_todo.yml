@@ -432,6 +432,7 @@ Metrics/AbcSize:
   - lib/open_food_network/payments_report.rb
   - lib/open_food_network/permissions.rb
   - lib/open_food_network/products_and_inventory_report.rb
+  - lib/open_food_network/rack_request_blocker.rb
   - lib/open_food_network/reports/line_items.rb
   - lib/open_food_network/sales_tax_report.rb
   - lib/open_food_network/users_and_enterprises_report.rb
@@ -668,11 +669,13 @@ Metrics/ClassLength:
   - lib/open_food_network/packing_report.rb
   - lib/open_food_network/payments_report.rb
   - lib/open_food_network/permissions.rb
+  - lib/open_food_network/users_and_enterprises_report.rb
   - lib/open_food_network/xero_invoices_report.rb
 
 Metrics/ModuleLength:
   Max: 100
   Exclude:
+  - app/helpers/admin/injection_helper.rb
   - app/helpers/injection_helper.rb
   - lib/open_food_network/column_preference_defaults.rb
   - spec/controllers/admin/enterprises_controller_spec.rb
