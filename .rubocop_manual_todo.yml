@@ -50,7 +50,6 @@ Metrics/LineLength:
   - app/controllers/spree/credit_cards_controller.rb
   - app/controllers/spree/paypal_controller_decorator.rb
   - app/controllers/stripe/callbacks_controller.rb
-  - app/helpers/admin/injection_helper.rb
   - app/helpers/angular_form_builder.rb
   - app/helpers/angular_form_helper.rb
   - app/helpers/checkout_helper.rb
