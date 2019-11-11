@@ -10,7 +10,7 @@ module Spree
       include OrderCyclesHelper
       include EnterprisesHelper
 
-      before_filter :load_data, :except => :index
+      before_filter :load_data, except: :index
       create.before :create_before
       update.before :update_before
 
@@ -30,7 +30,7 @@ module Spree
         failure: lambda {
           render :new
         }
-      } }      
+      } }
 
       def new
         @object.shipping_category = DefaultShippingCategory.find_or_create
@@ -49,7 +49,7 @@ module Spree
 
       def show
         session[:return_to] ||= request.referer
-        redirect_to( :action => :edit )
+        redirect_to( action: :edit )
       end
 
       def index
@@ -62,7 +62,9 @@ module Spree
 
         delete_stock_params_and_set_after do
           super
-          ExchangeVariantDeleter.new.delete(@product) if original_supplier_id != @product.supplier_id
+          if original_supplier_id != @product.supplier_id
+            ExchangeVariantDeleter.new.delete(@product)
+          end
         end
       end
 
@@ -74,12 +76,10 @@ module Spree
 
         if product_set.save
           redirect_to main_app.bulk_products_api_products_path( bulk_index_query(params) )
+        elsif product_set.errors.present?
+          render json: { errors: product_set.errors }, status: :bad_request
         else
-          if product_set.errors.present?
-            render json: { errors: product_set.errors }, status: :bad_request
-          else
-            render nothing: true, status: :internal_server_error
-          end
+          render nothing: true, status: :internal_server_error
         end
       end
 
@@ -91,18 +91,18 @@ module Spree
 
         respond_with(@product) do |format|
           format.html { redirect_to collection_url }
-          format.js  { render_js_for_destroy }
+          format.js { render_js_for_destroy }
         end
       end
 
       def clone
         @new = @product.duplicate
 
-        if @new.save
-          flash[:success] = Spree.t('notice_messages.product_cloned')
-        else
-          flash[:success] = Spree.t('notice_messages.product_not_cloned')
-        end
+        flash[:success] = if @new.save
+                            Spree.t('notice_messages.product_cloned')
+                          else
+                            Spree.t('notice_messages.product_not_cloned')
+                          end
 
         redirect_to edit_admin_product_url(@new)
       end
@@ -111,10 +111,10 @@ module Spree
         @variants = @product.variants
         @variants = [@product.master] if @variants.empty?
         @stock_locations = StockLocation.accessible_by(current_ability, :read)
-        if @stock_locations.empty?
-          flash[:error] = Spree.t(:stock_management_requires_a_stock_location)
-          redirect_to admin_stock_locations_path
-        end
+        return unless @stock_locations.empty?
+
+        flash[:error] = Spree.t(:stock_management_requires_a_stock_location)
+        redirect_to admin_stock_locations_path
       end
 
       protected
@@ -140,6 +140,7 @@ module Spree
         # enterprise users.
         # TODO: There has to be a better way!!!
         return @collection if @collection.present?
+
         params[:q] ||= {}
         params[:q][:deleted_at_null] ||= "1"
 
@@ -167,17 +168,20 @@ module Spree
 
       def create_before
         return if params[:product][:prototype_id].blank?
+
         @prototype = Spree::Prototype.find(params[:product][:prototype_id])
       end
 
       def update_before
-        # note: we only reset the product properties if we're receiving a post from the form on that tab
+        # We only reset the product properties if we're receiving a post from the form on that tab
         return unless params[:clear_product_properties]
+
         params[:product] ||= {}
       end
 
       def product_includes
-       [{:variants => [:images, {:option_values => :option_type}]}, {:master => [:images, :default_price]}]
+        [{ variants: [:images, { option_values: :option_type }] },
+         { master: [:images, :default_price] }]
       end
 
       def collection_actions
@@ -223,6 +227,7 @@ module Spree
 
       def strip_new_properties
         return if spree_current_user.admin? || params[:product][:product_properties_attributes].nil?
+
         names = Spree::Property.pluck(:name)
         params[:product][:product_properties_attributes].each do |key, property|
           unless names.include? property[:property_name]
@@ -246,9 +251,9 @@ module Spree
         begin
           variant.on_demand = on_demand if on_demand.present?
           variant.on_hand = on_hand.to_i if on_hand.present?
-        rescue StandardError => error
-          notify_bugsnag(error, product, variant)
-          raise error
+        rescue StandardError => e
+          notify_bugsnag(e, product, variant)
+          raise e
         end
       end
 
