@@ -56,16 +56,3 @@ describe 'Enterprise service', ->
         master_id: 1
         variants: [{id: 2}, {id: 3}]
       expect(Enterprise.variantsOf(p)).toEqual [2, 3]
-
-  it 'counts total variants supplied by an enterprise', ->
-    enterprise =
-      supplied_products: [
-        {variants: []},
-        {variants: []},
-        {variants: [{}, {}, {}]}
-        ]
-
-    expect(Enterprise.totalVariants(enterprise)).toEqual(5)
-
-  it 'returns zero when enterprise is null', ->
-    expect(Enterprise.totalVariants(null)).toEqual(0)

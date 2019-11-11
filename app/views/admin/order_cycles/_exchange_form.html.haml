@@ -3,7 +3,7 @@
   %td.products.panel-toggle.text-center{ name: "products" }
     {{ exchangeSelectedVariants(exchange) }} /
     - if type == 'supplier'
-      {{ enterpriseTotalVariants(enterprises[exchange.enterprise_id]) }}
+      {{ exchangeTotalVariants(exchange) }}
     - else
       {{ (incomingExchangeVariantsFor(exchange.enterprise_id)).length }}
     = t('.selected')

@@ -35,13 +35,4 @@ angular.module('admin.orderCycles').factory('Enterprise', ($resource) ->
         variant.id for variant in product.variants
       else
         [product.master_id]
-
-    totalVariants: (enterprise) ->
-      numVariants = 0
-
-      if enterprise
-        counts = for product in enterprise.supplied_products
-          numVariants += if product.variants.length == 0 then 1 else product.variants.length
-
-      numVariants
   })

@@ -44,10 +44,16 @@ angular.module('admin.orderCycles')
     $scope.removeDistributionOfVariant = (variant_id) ->
       OrderCycle.removeDistributionOfVariant(variant_id)
 
-    # Load exchange data
-    initPanel = (scope) ->
-      Product.index {exchange_id: scope.exchange.id, enterprise_id: scope.exchange.enterprise_id}, (products) ->
-        scope.enterprises[scope.exchange.enterprise_id].supplied_products = products
+    # Load exchange products
+    $scope.loadExchangeProducts = (scope, exchange) ->
+      return if scope.enterprises[exchange.enterprise_id].supplied_products_fetched?
+      scope.enterprises[exchange.enterprise_id].supplied_products_fetched = true
+
+      Product.index {exchange_id: exchange.id, enterprise_id: exchange.enterprise_id}, (products) ->
+        scope.enterprises[exchange.enterprise_id].supplied_products = products
+
+    initPanel = (scope, exchange) ->
+      scope.loadExchangeProducts(scope, scope.exchange)
 
     # Register listener to capture first toggle open of the products panel
     exchangeProdutsInitialized = []
