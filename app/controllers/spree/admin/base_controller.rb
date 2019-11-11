@@ -19,9 +19,9 @@ module Spree
       def warn_invalid_order_cycles
         distributors = active_distributors_not_ready_for_checkout
 
-        if distributors.any? && flash[:notice].nil?
-          flash[:notice] = active_distributors_not_ready_for_checkout_message(distributors)
-        end
+        return unless distributors.any? && flash[:notice].nil?
+
+        flash[:notice] = active_distributors_not_ready_for_checkout_message(distributors)
       end
 
       # This is in Spree::Core::ControllerHelpers::Auth
@@ -40,9 +40,8 @@ module Spree
 
       def model_class
         const_name = controller_name.classify
-        if Spree.const_defined?(const_name)
-          return "Spree::#{const_name}".constantize
-        end
+        return "Spree::#{const_name}".constantize if Spree.const_defined?(const_name)
+
         nil
       end
 
@@ -56,7 +55,9 @@ module Spree
         else
           # This allows specificity for each non-resource controller
           #   (to be consistent with "authorize_resource :class => false", see https://github.com/ryanb/cancan/blob/60cf6a67ef59c0c9b63bc27ea0101125c4193ea6/lib/cancan/controller_resource.rb#L146)
-          record = self.class.to_s.sub("Controller", "").underscore.split('/').last.singularize.to_sym
+          record = self.class.to_s.
+            sub("Controller", "").
+            underscore.split('/').last.singularize.to_sym
         end
         authorize! :admin, record
         authorize! resource_authorize_action, record
@@ -69,24 +70,24 @@ module Spree
       # Need to generate an API key for a user due to some backend actions
       # requiring authentication to the Spree API
       def generate_admin_api_key
-        if user = try_spree_current_user
-          if user.spree_api_key.blank?
-            user.generate_spree_api_key!
-          end
-        end
+        return unless user = try_spree_current_user
+
+        return if user.spree_api_key.present?
+
+        user.generate_spree_api_key!
       end
 
       def check_alerts
         return unless should_check_alerts?
 
-        unless session.has_key? :alerts
-          begin
-            session[:alerts] = Spree::Alert.current(request.host)
-            filter_dismissed_alerts
-            Spree::Config.set :last_check_for_spree_alerts => DateTime.now.to_s
-          rescue
-            session[:alerts] = nil
-          end
+        return if session.key? :alerts
+
+        begin
+          session[:alerts] = Spree::Alert.current(request.host)
+          filter_dismissed_alerts
+          Spree::Config.set last_check_for_spree_alerts: DateTime.now.in_time_zone.to_s
+        rescue
+          session[:alerts] = nil
         end
       end
 
@@ -96,31 +97,34 @@ module Spree
         last_check = Spree::Config[:last_check_for_spree_alerts]
         return true if last_check.blank?
 
-        DateTime.parse(last_check) < 12.hours.ago
+        DateTime.parse(last_check).in_time_zone < 12.hours.ago
       end
 
       def flash_message_for(object, event_sym)
         resource_desc  = object.class.model_name.human
         resource_desc += " \"#{object.name}\"" if object.respond_to?(:name) && object.name.present?
-        Spree.t(event_sym, :resource => resource_desc)
+        Spree.t(event_sym, resource: resource_desc)
       end
 
       def render_js_for_destroy
-        render :partial => '/spree/admin/shared/destroy'
+        render partial: '/spree/admin/shared/destroy'
       end
 
       # Index request for JSON needs to pass a CSRF token in order to prevent JSON Hijacking
       def check_json_authenticity
-        return unless request.format.js? or request.format.json?
+        return unless request.format.js? || request.format.json?
+
         return unless protect_against_forgery?
+
         auth_token = params[request_forgery_protection_token]
-        unless (auth_token and form_authenticity_token == URI.unescape(auth_token))
-          raise(ActionController::InvalidAuthenticityToken)
-        end
+        return if auth_token && form_authenticity_token == URI.unescape(auth_token)
+
+        raise(ActionController::InvalidAuthenticityToken)
       end
 
       def filter_dismissed_alerts
         return unless session[:alerts]
+
         dismissed = (Spree::Config[:dismissed_spree_alerts] || '').split(',')
         session[:alerts].reject! { |a| dismissed.include? a["id"].to_s }
       end
@@ -141,9 +145,11 @@ module Spree
         distributor_names = distributors.map(&:name).join ', '
 
         if distributors.count > 1
-          I18n.t(:active_distributors_not_ready_for_checkout_message_plural, distributor_names: distributor_names)
+          I18n.t(:active_distributors_not_ready_for_checkout_message_plural,
+                 distributor_names: distributor_names)
         else
-          I18n.t(:active_distributors_not_ready_for_checkout_message_singular, distributor_names: distributor_names)
+          I18n.t(:active_distributors_not_ready_for_checkout_message_singular,
+                 distributor_names: distributor_names)
         end
       end
 
@@ -165,13 +171,13 @@ module Spree
       end
 
       def serializer(ams_prefix)
-        if ams_prefix.nil? || ams_prefix_whitelist.include?(ams_prefix.to_sym)
-          prefix = ams_prefix.andand.classify || ""
-          name = controller_name.classify
-          "Api::Admin::#{prefix}#{name}Serializer".constantize
-        else
+        unless ams_prefix.nil? || ams_prefix_whitelist.include?(ams_prefix.to_sym)
           raise "Suffix '#{ams_prefix}' not found in ams_prefix_whitelist for #{self.class.name}."
         end
+
+        prefix = ams_prefix.andand.classify || ""
+        name = controller_name.classify
+        "::Api::Admin::#{prefix}#{name}Serializer".constantize
       end
     end
   end
