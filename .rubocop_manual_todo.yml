@@ -360,8 +360,8 @@ Metrics/AbcSize:
   - app/controllers/enterprises_controller.rb
   - app/controllers/spree/admin/adjustments_controller_decorator.rb
   - app/controllers/spree/admin/image_settings_controller.rb
-  - app/controllers/spree/admin/orders/customer_details_controller_decorator.rb
-  - app/controllers/spree/admin/orders_controller_decorator.rb
+  - app/controllers/spree/admin/orders/customer_details_controller.rb
+  - app/controllers/spree/admin/orders_controller.rb
   - app/controllers/spree/admin/overview_controller.rb
   - app/controllers/spree/admin/payment_methods_controller.rb
   - app/controllers/spree/admin/payments_controller.rb
@@ -565,7 +565,8 @@ Metrics/MethodLength:
   - app/controllers/checkout_controller.rb
   - app/controllers/shop_controller.rb
   - app/controllers/spree/admin/image_settings_controller.rb
-  - app/controllers/spree/admin/orders/customer_details_controller_decorator.rb
+  - app/controllers/spree/admin/orders/customer_details_controller.rb
+  - app/controllers/spree/admin/orders_controller.rb
   - app/controllers/spree/admin/payment_methods_controller.rb
   - app/controllers/spree/admin/payments_controller.rb
   - app/controllers/spree/admin/reports_controller.rb
@@ -652,6 +653,7 @@ Metrics/ClassLength:
   - app/controllers/api/products_controller.rb
   - app/controllers/checkout_controller.rb
   - app/controllers/spree/admin/base_controller.rb
+  - app/controllers/spree/admin/orders_controller.rb
   - app/controllers/spree/admin/payment_methods_controller.rb
   - app/controllers/spree/admin/reports_controller.rb
   - app/controllers/spree/admin/resource_controller.rb
