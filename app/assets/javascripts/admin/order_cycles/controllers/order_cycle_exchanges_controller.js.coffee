@@ -4,7 +4,6 @@ angular.module('admin.orderCycles')
 
     $scope.supplier_enterprises = Enterprise.producer_enterprises
     $scope.distributor_enterprises = Enterprise.hub_enterprises
-    $scope.supplied_products = Enterprise.supplied_products
 
     $scope.exchangeSelectedVariants = (exchange) ->
       OrderCycle.exchangeSelectedVariants(exchange)

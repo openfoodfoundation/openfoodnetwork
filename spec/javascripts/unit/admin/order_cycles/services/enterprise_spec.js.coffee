@@ -8,18 +8,18 @@ describe 'Enterprise service', ->
       Enterprise = $injector.get('Enterprise')
       $httpBackend = _$httpBackend_
       $httpBackend.whenGET('/admin/enterprises/for_order_cycle.json').respond [
-        {id: 1, name: 'One', supplied_products: [1, 2], is_primary_producer: true}
-        {id: 2, name: 'Two', supplied_products: [3, 4]}
-        {id: 3, name: 'Three', supplied_products: [5, 6], sells: 'any'}
+        {id: 1, name: 'One', is_primary_producer: true}
+        {id: 2, name: 'Two'}
+        {id: 3, name: 'Three', sells: 'any'}
         ]
 
   it 'loads enterprises as a hash', ->
     enterprises = Enterprise.index()
     $httpBackend.flush()
     expect(enterprises).toEqual
-      1: new Enterprise.Enterprise({id: 1, name: 'One', supplied_products: [1, 2], is_primary_producer: true})
-      2: new Enterprise.Enterprise({id: 2, name: 'Two', supplied_products: [3, 4]})
-      3: new Enterprise.Enterprise({id: 3, name: 'Three', supplied_products: [5, 6], sells: 'any'})
+      1: new Enterprise.Enterprise({id: 1, name: 'One', is_primary_producer: true})
+      2: new Enterprise.Enterprise({id: 2, name: 'Two'})
+      3: new Enterprise.Enterprise({id: 3, name: 'Three', sells: 'any'})
 
   it 'reports its loadedness', ->
     expect(Enterprise.loaded).toBe(false)
@@ -30,22 +30,18 @@ describe 'Enterprise service', ->
   it 'loads producers as an array', ->
     Enterprise.index()
     $httpBackend.flush()
-    expect(Enterprise.producer_enterprises).toEqual [new Enterprise.Enterprise({id: 1, name: 'One', supplied_products: [1, 2], is_primary_producer: true})]
+    expect(Enterprise.producer_enterprises).toEqual [new Enterprise.Enterprise({id: 1, name: 'One', is_primary_producer: true})]
 
   it 'loads hubs as an array', ->
     Enterprise.index()
     $httpBackend.flush()
-    expect(Enterprise.hub_enterprises).toEqual [new Enterprise.Enterprise({id: 3, name: 'Three', supplied_products: [5, 6], sells: 'any'})]
-
-  it 'collates all supplied products', ->
-    enterprises = Enterprise.index()
-    $httpBackend.flush()
-    expect(Enterprise.supplied_products).toEqual [1, 2, 3, 4, 5, 6]
+    expect(Enterprise.hub_enterprises).toEqual [new Enterprise.Enterprise({id: 3, name: 'Three', sells: 'any'})]
 
   it "finds supplied variants for an enterprise", ->
     spyOn(Enterprise, 'variantsOf').and.returnValue(10)
-    Enterprise.index()
+    enterprises = Enterprise.index()
     $httpBackend.flush()
+    Enterprise.enterprises[1].supplied_products = [1, 2]
     expect(Enterprise.suppliedVariants(1)).toEqual [10, 10]
 
   describe "finding the variants of a product", ->

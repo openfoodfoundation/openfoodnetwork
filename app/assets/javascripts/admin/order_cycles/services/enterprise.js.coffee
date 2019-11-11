@@ -12,7 +12,6 @@ angular.module('admin.orderCycles').factory('Enterprise', ($resource) ->
     enterprises: {}
     producer_enterprises: []
     hub_enterprises: []
-    supplied_products: []
     loaded: false
 
     index: (params={}, callback=null) ->
@@ -21,9 +20,6 @@ angular.module('admin.orderCycles').factory('Enterprise', ($resource) ->
           @enterprises[enterprise.id] = enterprise
           @producer_enterprises.push(enterprise) if enterprise.is_primary_producer
           @hub_enterprises.push(enterprise) if enterprise.sells == 'any'
-
-          for product in enterprise.supplied_products
-            @supplied_products.push(product)
 
         @loaded = true
         (callback || angular.noop)(@enterprises)

@@ -25,8 +25,7 @@ describe 'AdminOrderCycleExchangesCtrl', ->
       addExchangeFee: jasmine.createSpy('addExchangeFee')
       removeExchangeFee: jasmine.createSpy('removeExchangeFee')
       removeDistributionOfVariant: jasmine.createSpy('removeDistributionOfVariant')
-    Enterprise =
-      supplied_products: 'supplied products'
+    Enterprise = {}
     EnterpriseFee =
       forEnterprise: jasmine.createSpy('forEnterprise').and.returnValue('enterprise fees for enterprise')
     ocInstance = {}
@@ -34,9 +33,6 @@ describe 'AdminOrderCycleExchangesCtrl', ->
     module('admin.orderCycles')
     inject ($controller) ->
       ctrl = $controller 'AdminOrderCycleExchangesCtrl', {$scope: scope, $location: location, OrderCycle: OrderCycle, Enterprise: Enterprise, EnterpriseFee: EnterpriseFee, ocInstance: ocInstance}
-
-  it 'Loads supplied products', ->
-    expect(scope.supplied_products).toEqual('supplied products')
 
   it 'Delegates exchangeSelectedVariants to OrderCycle', ->
     expect(scope.exchangeSelectedVariants('exchange')).toEqual('variants selected')
