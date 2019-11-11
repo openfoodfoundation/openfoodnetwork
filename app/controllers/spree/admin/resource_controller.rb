@@ -4,6 +4,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
   helper_method :new_object_url, :edit_object_url, :object_url, :collection_url
   before_filter :load_resource, :except => [:update_positions]
   rescue_from ActiveRecord::RecordNotFound, :with => :resource_not_found
+  rescue_from CanCan::AccessDenied, :with => :unauthorized
 
   respond_to :html
   respond_to :js, :except => [:show, :index]
@@ -142,6 +143,13 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
         authorize! action, @object
 
         instance_variable_set("@#{object_name}", @object)
+
+        # If we don't have access, clear the object
+        unless can? action, @object
+          instance_variable_set("@#{object_name}", nil)
+        end
+
+        authorize! action, @object
       else
         @collection ||= collection
 
