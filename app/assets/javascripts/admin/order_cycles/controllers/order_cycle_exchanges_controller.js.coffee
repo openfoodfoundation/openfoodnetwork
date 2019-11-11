@@ -44,3 +44,26 @@ angular.module('admin.orderCycles')
 
     $scope.removeDistributionOfVariant = (variant_id) ->
       OrderCycle.removeDistributionOfVariant(variant_id)
+
+    # Load exchange data
+    initPanel = (scope)  ->
+      # TEMP Insert some dummy data into enterprise.supplied_products so that the UI keeps on working
+      scope.enterprises[scope.exchange.enterprise_id].supplied_products = [{id: 2, name: "asdasd" + scope.exchange.id }]
+
+    # Register listener to capture first toggle open of the products panel
+    exchangeProdutsInitialized = []
+    registerToggleListener = ->
+      panelRows = angular.element(".panel-row")
+      if panelRows.length == 0
+        $timeout(registerToggleListener, 500)
+        return
+
+      for panelRow in panelRows
+        panelCtrl = angular.element(panelRow).controller('panelCtrl')
+        panelCtrl.registerSelectionListener (selection, $element) ->
+          scope = $element.scope()
+          return if exchangeProdutsInitialized[scope.exchange.id]
+          initPanel(scope)
+          exchangeProdutsInitialized[scope.exchange.id] = true
+
+    $timeout(registerToggleListener, 500)
