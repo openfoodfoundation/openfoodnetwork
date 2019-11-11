@@ -45,18 +45,23 @@ module Spree
         if params[:q][:created_at_gt].blank?
           params[:q][:created_at_gt] = Time.zone.now.beginning_of_month
         else
-          params[:q][:created_at_gt] = Time.zone.parse(params[:q][:created_at_gt]).beginning_of_day rescue Time.zone.now.beginning_of_month
+          params[:q][:created_at_gt] = begin
+                                         Time.zone.
+                                           parse(params[:q][:created_at_gt]).beginning_of_day
+                                       rescue
+                                         Time.zone.now.beginning_of_month
+                                       end
         end
 
-        if params[:q] && !params[:q][:created_at_lt].blank?
-          params[:q][:created_at_lt] = Time.zone.parse(params[:q][:created_at_lt]).end_of_day rescue ""
+        if params[:q] && params[:q][:created_at_lt].present?
+          params[:q][:created_at_lt] = begin
+                                         Time.zone.parse(params[:q][:created_at_lt]).end_of_day
+                                       rescue
+                                         ""
+                                       end
         end
 
-        if params[:q].delete(:completed_at_not_null) == "1"
-          params[:q][:completed_at_not_null] = true
-        else
-          params[:q][:completed_at_not_null] = false
-        end
+        params[:q][:completed_at_not_null] = (params[:q].delete(:completed_at_not_null) == "1")
 
         params[:q][:s] ||= "created_at desc"
 
@@ -65,7 +70,11 @@ module Spree
 
         @totals = {}
         @orders.each do |order|
-          @totals[order.currency] = { :item_total => ::Money.new(0, order.currency), :adjustment_total => ::Money.new(0, order.currency), :sales_total => ::Money.new(0, order.currency) } unless @totals[order.currency]
+          unless @totals[order.currency]
+            @totals[order.currency] = { item_total: ::Money.new(0, order.currency),
+                                        adjustment_total: ::Money.new(0, order.currency),
+                                        sales_total: ::Money.new(0, order.currency) }
+          end
           @totals[order.currency][:item_total] += order.display_item_total.money
           @totals[order.currency][:adjustment_total] += order.display_adjustment_total.money
           @totals[order.currency][:sales_total] += order.display_total.money
@@ -91,7 +100,8 @@ module Spree
                                                                   render_content?
         @table = @report.table_items
 
-        render_report(@report.header, @table, params[:csv], "order_cycle_management_#{timestamp}.csv")
+        render_report(@report.header, @table, params[:csv],
+                      "order_cycle_management_#{timestamp}.csv")
       end
 
       def packing
@@ -183,17 +193,21 @@ module Spree
                                                                     params,
                                                                     render_content?
                   else
-                    OpenFoodNetwork::LettuceShareReport.new spree_current_user, params, render_content?
+                    OpenFoodNetwork::LettuceShareReport.new spree_current_user,
+                                                            params,
+                                                            render_content?
                   end
-        render_report(@report.header,
+
+        render_report @report.header,
                       @report.table,
                       params[:csv],
-                      "products_and_inventory_#{timestamp}.csv")
+                      "products_and_inventory_#{timestamp}.csv"
       end
 
       def users_and_enterprises
         @report = OpenFoodNetwork::UsersAndEnterprisesReport.new params, render_content?
-        render_report(@report.header, @report.table, params[:csv], "users_and_enterprises_#{timestamp}.csv")
+        render_report(@report.header, @report.table, params[:csv],
+                      "users_and_enterprises_#{timestamp}.csv")
       end
 
       def xero_invoices
@@ -202,7 +216,9 @@ module Spree
         @distributors = my_distributors
         @order_cycles = my_order_cycles
 
-        @report = OpenFoodNetwork::XeroInvoicesReport.new spree_current_user, params, render_content?
+        @report = OpenFoodNetwork::XeroInvoicesReport.new(spree_current_user,
+                                                          params,
+                                                          render_content?)
         render_report(@report.header, @report.table, params[:csv], "xero_invoices_#{timestamp}.csv")
       end
 
@@ -279,7 +295,10 @@ module Spree
 
       # Load order cycles the current user has access to
       def my_order_cycles
-        OrderCycle.active_or_complete.accessible_by(spree_current_user).order('orders_close_at DESC')
+        OrderCycle.
+          active_or_complete.
+          accessible_by(spree_current_user).
+          order('orders_close_at DESC')
       end
 
       def order_grouper_table
