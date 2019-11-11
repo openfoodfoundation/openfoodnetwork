@@ -4,7 +4,7 @@ module Spree
   module Admin
     class VariantsController < ResourceController
       helper 'spree/products'
-      belongs_to 'spree/product', :find_by => :permalink
+      belongs_to 'spree/product', find_by: :permalink
       new_action.before :new_before
 
       def create
@@ -13,10 +13,10 @@ module Spree
 
         super
 
-        if @object.present? && @object.valid?
-          @object.on_demand = on_demand if on_demand.present?
-          @object.on_hand = on_hand.to_i if on_hand.present?
-        end
+        return unless @object.present? && @object.valid?
+
+        @object.on_demand = on_demand if on_demand.present?
+        @object.on_hand = on_hand.to_i if on_hand.present?
       end
 
       def search
@@ -27,7 +27,7 @@ module Spree
 
       def destroy
         @variant = Spree::Variant.find(params[:id])
-        flash[:success] = if VariantDeleter.new.delete(@variant) # This line changed
+        flash[:success] = if VariantDeleter.new.delete(@variant)
                             Spree.t('notice_messages.variant_deleted')
                           else
                             Spree.t('notice_messages.variant_not_deleted')
@@ -41,29 +41,29 @@ module Spree
 
       protected
 
-        def create_before
-          option_values = params[:new_variant]
-          option_values.andand.each_value { |id| @object.option_values << OptionValue.find(id) }
-          @object.save
-        end
+      def create_before
+        option_values = params[:new_variant]
+        option_values.andand.each_value { |id| @object.option_values << OptionValue.find(id) }
+        @object.save
+      end
 
-        def new_before
-          @object.attributes = @object.product.master.attributes.except('id', 'created_at', 'deleted_at',
-                                                                        'sku', 'is_master')
-          # Shallow Clone of the default price to populate the price field.
-          @object.default_price = @object.product.master.default_price.clone
-        end
+      def new_before
+        @object.attributes = @object.product.master.
+          attributes.except('id', 'created_at', 'deleted_at', 'sku', 'is_master')
+        # Shallow Clone of the default price to populate the price field.
+        @object.default_price = @object.product.master.default_price.clone
+      end
 
-        def collection
-          @deleted = (params.key?(:deleted) && params[:deleted] == "on") ? "checked" : ""
+      def collection
+        @deleted = params.key?(:deleted) && params[:deleted] == "on" ? "checked" : ""
 
-          if @deleted.blank?
-            @collection ||= super
-          else
-            @collection ||= Variant.where(:product_id => parent.id).deleted
-          end
-          @collection
-        end
+        @collection ||= if @deleted.blank?
+                          super
+                        else
+                          Variant.where(product_id: parent.id).deleted
+                        end
+        @collection
+      end
     end
   end
 end
