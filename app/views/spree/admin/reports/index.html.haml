@@ -1,0 +1,13 @@
+- content_for :page_title do
+  = t(:listing_reports)
+
+%table.index
+  %thead
+    %tr
+      %th= t(:name)
+      %th= t(:description)
+  %tbody
+    - @reports.each do |key, value|
+      %tr
+        %td= link_to value[:name], value[:url]
+        %td= value[:description]
