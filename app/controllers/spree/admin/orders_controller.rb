@@ -1,47 +1,37 @@
+require 'open_food_network/spree_api_key_loader'
+
 module Spree
   module Admin
     class OrdersController < Spree::Admin::BaseController
       require 'spree/core/gateway_error'
-      before_filter :initialize_order_events
-      before_filter :load_order, :only => [:edit, :update, :fire, :resend, :open_adjustments, :close_adjustments]
+      include OpenFoodNetwork::SpreeApiKeyLoader
+      helper CheckoutHelper
 
-      respond_to :html
+      before_filter :initialize_order_events
+      before_filter :load_order, only: [:edit, :update, :fire, :resend,
+                                        :open_adjustments, :close_adjustments]
+
+      before_filter :load_order, only: %i[show edit update fire resend invoice print print_ticket]
+
+      before_filter :load_distribution_choices, only: [:new, :edit, :update]
+
+      # Ensure that the distributor is set for an order when
+      before_filter :ensure_distribution, only: :new
+
+      # After updating an order, the fees should be updated as well
+      # Currently, adding or deleting line items does not trigger updating the
+      # fees! This is a quick fix for that.
+      # TODO: update fees when adding/removing line items
+      # instead of the update_distribution_charge method.
+      after_filter :update_distribution_charge, only: :update
+
+      before_filter :require_distributor_abn, only: :invoice
+
+      respond_to :html, :json
 
       def index
-        params[:q] ||= {}
-        params[:q][:completed_at_not_null] ||= '1' if Spree::Config[:show_only_complete_orders_by_default]
-        @show_only_completed = params[:q][:completed_at_not_null].present?
-        params[:q][:s] ||= @show_only_completed ? 'completed_at desc' : 'created_at desc'
-
-        # As date params are deleted if @show_only_completed, store
-        # the original date so we can restore them into the params
-        # after the search
-        created_at_gt = params[:q][:created_at_gt]
-        created_at_lt = params[:q][:created_at_lt]
-
-        params[:q].delete(:inventory_units_shipment_id_null) if params[:q][:inventory_units_shipment_id_null] == "0"
-
-        if !params[:q][:created_at_gt].blank?
-          params[:q][:created_at_gt] = Time.zone.parse(params[:q][:created_at_gt]).beginning_of_day rescue ""
-        end
-
-        if !params[:q][:created_at_lt].blank?
-          params[:q][:created_at_lt] = Time.zone.parse(params[:q][:created_at_lt]).end_of_day rescue ""
-        end
-
-        if @show_only_completed
-          params[:q][:completed_at_gt] = params[:q].delete(:created_at_gt)
-          params[:q][:completed_at_lt] = params[:q].delete(:created_at_lt)
-        end
-
-        @search = Order.accessible_by(current_ability, :index).ransack(params[:q])
-        @orders = @search.result.includes([:user, :shipments, :payments]).
-          page(params[:page]).
-          per(params[:per_page] || Spree::Config[:orders_per_page])
-
-        # Restore dates
-        params[:q][:created_at_gt] = created_at_gt
-        params[:q][:created_at_lt] = created_at_lt
+        # Overriding the action so we only render the page template. An angular request
+        # within the page then fetches the data it needs from Api::OrdersController
       end
 
       def new
@@ -52,9 +42,10 @@ module Spree
       end
 
       def edit
-        @order.shipments.map &:refresh_rates
-        # Transition as far as we can go
-        while @order.next; end
+        @order.shipments.map(&:refresh_rates)
+
+        AdvanceOrderService.new(@order).call
+
         # The payment step shows an error of 'No pending payments'
         # Clearing the errors from the order object will stop this error
         # appearing on the edit page where we don't want it to.
@@ -62,60 +53,82 @@ module Spree
       end
 
       def update
-        return_path = nil
-        if @order.update_attributes(params[:order]) && @order.line_items.present?
-          @order.update!
-          unless @order.complete?
-            # Jump to next step if order is not complete.
-            return_path = admin_order_customer_path(@order)
-          else
-            # Otherwise, go back to first page since all necessary information has been filled out.
-            return_path = admin_order_path(@order)
+        unless @order.update_attributes(params[:order]) && @order.line_items.present?
+          if @order.line_items.empty?
+            @order.errors.add(:line_items, Spree.t('errors.messages.blank'))
           end
-        else
-          @order.errors.add(:line_items, Spree.t('errors.messages.blank')) if @order.line_items.empty?
+          return redirect_to(edit_admin_order_path(@order),
+                             flash: { error: @order.errors.full_messages.join(', ') })
         end
 
-        if return_path
-          redirect_to return_path
+        @order.update!
+        if @order.complete?
+          redirect_to edit_admin_order_path(@order)
         else
-          render :action => :edit
+          # Jump to next step if order is not complete
+          redirect_to admin_order_customer_path(@order)
         end
       end
 
+      def bulk_management
+        load_spree_api_key
+      end
+
       def fire
-        # TODO - possible security check here but right now any admin can before any transition (and the state machine
-        # itself will make sure transitions are not applied in the wrong state)
+        # TODO - Possible security check here
+        #   Right now any admin can before any transition (and the state machine
+        #   itself will make sure transitions are not applied in the wrong state)
         event = params[:e]
-        if @order.send("#{event}")
+        if @order.public_send(event.to_s)
           flash[:success] = Spree.t(:order_updated)
         else
           flash[:error] = Spree.t(:cannot_perform_operation)
         end
-      rescue Spree::Core::GatewayError => ge
-        flash[:error] = "#{ge.message}"
+      rescue Spree::Core::GatewayError => e
+        flash[:error] = e.message.to_s
       ensure
         redirect_to :back
       end
 
       def resend
-        OrderMailer.confirm_email(@order.id, true).deliver
-        flash[:success] = Spree.t(:order_email_resent)
+        Spree::OrderMailer.confirm_email_for_customer(@order.id, true).deliver
+        flash[:success] = t(:order_email_resent)
 
-        redirect_to :back
+        respond_with(@order) { |format| format.html { redirect_to :back } }
+      end
+
+      def invoice
+        pdf = InvoiceRenderer.new.render_to_string(@order)
+
+        Spree::OrderMailer.invoice_email(@order.id, pdf).deliver
+        flash[:success] = t('admin.orders.invoice_email_sent')
+
+        respond_with(@order) { |format| format.html { redirect_to edit_admin_order_path(@order) } }
+      end
+
+      def print
+        render InvoiceRenderer.new.args(@order)
+      end
+
+      def print_ticket
+        render template: "spree/admin/orders/ticket", layout: false
+      end
+
+      def update_distribution_charge
+        @order.update_distribution_charge!
       end
 
       def open_adjustments
-        adjustments = @order.adjustments.where(:state => 'closed')
-        adjustments.update_all(:state => 'open')
+        adjustments = @order.adjustments.where(state: 'closed')
+        adjustments.update_all(state: 'open')
         flash[:success] = Spree.t(:all_adjustments_opened)
 
         respond_with(@order) { |format| format.html { redirect_to :back } }
       end
 
       def close_adjustments
-        adjustments = @order.adjustments.where(:state => 'open')
-        adjustments.update_all(:state => 'closed')
+        adjustments = @order.adjustments.where(state: 'open')
+        adjustments.update_all(state: 'closed')
         flash[:success] = Spree.t(:all_adjustments_closed)
 
         respond_with(@order) { |format| format.html { redirect_to :back } }
@@ -123,19 +136,47 @@ module Spree
 
       private
 
-        def load_order
-          @order = Order.find_by_number!(params[:id], :include => :adjustments) if params[:id]
-          authorize! action, @order
-        end
+      def load_order
+        @order = Order.find_by_number!(params[:id], include: :adjustments) if params[:id]
+        authorize! action, @order
+      end
 
-        # Used for extensions which need to provide their own custom event links on the order details view.
-        def initialize_order_events
-          @order_events = %w{cancel resume}
-        end
+      def initialize_order_events
+        @order_events = %w{cancel resume}
+      end
 
-        def model_class
-          Spree::Order
+      def model_class
+        Spree::Order
+      end
+
+      def require_distributor_abn
+        return if @order.distributor.abn.present?
+
+        flash[:error] = t(:must_have_valid_business_number,
+                          enterprise_name: @order.distributor.name)
+        respond_with(@order) { |format| format.html { redirect_to edit_admin_order_path(@order) } }
+      end
+
+      def load_distribution_choices
+        @shops = Enterprise.is_distributor.managed_by(spree_current_user).by_name
+
+        ocs = OrderCycle.managed_by(spree_current_user)
+        @order_cycles = ocs.soonest_closing +
+                        ocs.soonest_opening +
+                        ocs.closed +
+                        ocs.undated
+      end
+
+      def ensure_distribution
+        unless @order
+          @order = Spree::Order.new
+          @order.generate_order_number
+          @order.save!
         end
+        return if @order.distribution_set?
+
+        render 'set_distribution', locals: { order: @order }
+      end
     end
   end
 end
