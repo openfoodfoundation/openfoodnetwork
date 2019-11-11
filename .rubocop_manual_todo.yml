@@ -368,6 +368,7 @@ Metrics/AbcSize:
   - app/controllers/spree/admin/resource_controller.rb
   - app/controllers/spree/admin/reports_controller.rb
   - app/controllers/spree/admin/search_controller_decorator.rb
+  - app/controllers/spree/admin/search_controller.rb
   - app/controllers/spree/admin/taxons_controller.rb
   - app/controllers/spree/admin/users_controller.rb
   - app/controllers/spree/admin/variants_controller_decorator.rb
@@ -567,7 +568,6 @@ Metrics/MethodLength:
   - app/controllers/spree/admin/products_controller_decorator.rb
   - app/controllers/spree/admin/resource_controller.rb
   - app/controllers/spree/admin/reports_controller.rb
-  - app/controllers/spree/admin/search_controller_decorator.rb
   - app/controllers/spree/admin/tax_categories_controller.rb
   - app/controllers/spree/admin/taxons_controller.rb
   - app/controllers/spree/admin/users_controller.rb
