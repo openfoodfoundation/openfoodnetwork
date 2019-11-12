@@ -155,10 +155,12 @@ module Spree
           order.shipment.update!(order)
         end
 
-        xit "creates a shipment without backordered items" do
-          expect(order.shipment.manifest.first.quantity).to eq 10
-          expect(order.shipment.manifest.first.states).to eq 'on_hand' => 10
-          expect(order.shipment.manifest.first.variant).to eq line_item.variant
+        it "creates a shipment without backordered items" do
+          manifest = order.reload.shipment.manifest.first
+
+          expect(manifest.quantity).to eq 10
+          expect(manifest.states).to eq 'on_hand' => 10
+          expect(manifest.variant).to eq line_item.variant
         end
 
         it "does not reduce the variant's stock level" do
