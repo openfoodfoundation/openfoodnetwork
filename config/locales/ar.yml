@@ -296,7 +296,6 @@ ar:
     volume: الصوت
     items: العناصر
     select_all: اختر الكل
-    obsolete_master: القيمة المطلقة
     quick_search: بحث سريع
     clear_all: امسح الكل
     start_date: "تاريخ البدء"
@@ -434,9 +433,12 @@ ar:
         infinity: "ما لا نهاية"
         to_order_tip: "لا تحتوي المواد التي تريد طلبها  على مستوى مخزون محدد ، مثل أرغفة الخبز المصنوعة طازجة حسب الطلب."
       back_to_products_list: "العودة إلى قائمة المنتجات"
+      editing_product: "تحرير المنتج"
       tabs:
+        product_details: "تفاصيل المنتج"
         group_buy_options: "مجموعة خيارات الشراء"
         images: "صور"
+        variants: "الانواع"
         product_properties: "خصائص المنتج"
     product_import:
       title: استيراد المنتج
@@ -2778,6 +2780,12 @@ ar:
     minimal_amount: "الحد الأدنى للمبلغ"
     normal_amount: "المبلغ الطبيعي"
     discount_amount: "مقدار الخصم"
+    no_images_found: "لم يتم العثور على صور"
+    new_image: "صورة جديدة"
+    filename: "اسم الملف"
+    alt_text: "نص بديل"
+    thumbnail: "الباقة"
+    back_to_images_list: "العودة إلى قائمة الصور"
     email: البريد الإلكتروني
     account_updated: "تم تحديث الحساب!"
     email_updated: "سيتم تحديث الحساب بمجرد تأكيد البريد الإلكتروني الجديد."
@@ -2789,6 +2797,7 @@ ar:
     zipcode: الرمز البريدي
     weight: الوزن (لكل كجم)
     error_user_destroy_with_orders: "لا يمكن حذف المستخدمين الذين لديهم طلبات مكتملة"
+    options: "خيارات"
     actions:
       update: "تحديث"
     errors:
@@ -2820,6 +2829,8 @@ ar:
       product_properties:
         index:
           inherits_properties_checkbox_hint: "وراثة الخصائص من %{supplier}؟ (ما لم يتم تجاوزه أعلاه)"
+          add_product_properties: "إضافة خصائص المنتج"
+          select_from_prototype: "حدد من النموذج الأولي"
       orders:
         index:
           listing_orders: "لائحة الطلبات"
@@ -3010,12 +3021,23 @@ ar:
         index:
           sku: "SKU"
           price: "السعر"
+          options: "خيارات"
           no_results: "لا يوجد نتائج"
+          to_add_variants_you_must_first_define: "لإضافة المتغيرات ، يجب عليك أولاً تعريفها"
           option_types: "أنواع الخيارات"
+          option_values: "قيم الخيارات"
+          and: "و"
+          new_variant: "نوع جديد"
+          show_active: "اظهار النشط"
+          show_deleted: "عرض المحذوف"
+        new:
+          new_variant: "نوع جديد"
         form:
+          cost_price: "سعر الكلفة"
           sku: "SKU"
           price: "السعر"
           display_as: "عرض ب"
+          display_name: "اسم العرض"
         autocomplete:
           producer_name: "المنتج"
           unit: "وحدة"
@@ -3155,3 +3177,19 @@ ar:
         allow_charges?: "السماح للرسوم؟"
     localized_number:
       invalid_format: لديه تنسيق غير صالح. الرجاء إدخال رقم.
+    api:
+      invalid_api_key: "مفتاح API المحدد غير صالح (%{key})."
+      unauthorized: "غير مصرح لك بتنفيذ هذا الإجراء."
+      invalid_resource: "مورد غير صالح. يرجى إصلاح الأخطاء والمحاولة مرة أخرى."
+      resource_not_found: "لا يمكن العثور على الموارد الذي تبحث عنه."
+      access: "اتصال API"
+      key: "مفتاح"
+      clear_key: "مسح المفتاح"
+      regenerate_key: "انشاء مفتاح"
+      no_key: "لا يوجد مفتاح"
+      generate_key: "توليد مفتاح API"
+      key_generated: "تم انشاء مفتاح "
+      key_cleared: "تم مسح المفتاح"
+      shipment:
+        cannot_ready: "لا يمكن تجهيز الشحنة"
+      invalid_taxonomy_id: "معرف التصنيف غير صالح."
