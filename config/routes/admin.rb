@@ -18,6 +18,10 @@ Openfoodnetwork::Application.routes.draw do
       end
     end
 
+    resources :exchanges do
+      resources :products, controller: 'exchanges_products'
+    end
+
     resources :enterprises do
       collection do
         get :for_order_cycle

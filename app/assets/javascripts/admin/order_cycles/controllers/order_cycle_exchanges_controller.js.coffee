@@ -1,5 +1,5 @@
 angular.module('admin.orderCycles')
-  .controller 'AdminOrderCycleExchangesCtrl', ($scope, $controller, $filter, $window, $location, $timeout, OrderCycle, Enterprise, EnterpriseFee, Schedules, RequestMonitor, ocInstance, StatusMessage) ->
+  .controller 'AdminOrderCycleExchangesCtrl', ($scope, $controller, $filter, $window, $location, $timeout, OrderCycle, Product, Enterprise, EnterpriseFee, Schedules, RequestMonitor, ocInstance, StatusMessage) ->
     $controller('AdminEditOrderCycleCtrl', {$scope: $scope, ocInstance: ocInstance, $location: $location})
 
     $scope.supplier_enterprises = Enterprise.producer_enterprises
@@ -46,9 +46,9 @@ angular.module('admin.orderCycles')
       OrderCycle.removeDistributionOfVariant(variant_id)
 
     # Load exchange data
-    initPanel = (scope)  ->
-      # TEMP Insert some dummy data into enterprise.supplied_products so that the UI keeps on working
-      scope.enterprises[scope.exchange.enterprise_id].supplied_products = [{id: 2, name: "asdasd" + scope.exchange.id }]
+    initPanel = (scope) ->
+      Product.index {exchange_id: scope.exchange.id, enterprise_id: scope.exchange.enterprise_id}, (products) ->
+        scope.enterprises[scope.exchange.enterprise_id].supplied_products = products
 
     # Register listener to capture first toggle open of the products panel
     exchangeProdutsInitialized = []
