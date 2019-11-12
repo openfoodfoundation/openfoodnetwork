@@ -439,7 +439,7 @@ GEM
     httparty (0.16.2)
       multi_xml (>= 0.5.2)
     i18n (0.6.11)
-    i18n-js (3.4.2)
+    i18n-js (3.5.0)
       i18n (>= 0.6.6)
     immigrant (0.3.6)
       activerecord (>= 3.0)
@@ -763,7 +763,7 @@ DEPENDENCIES
   gmaps4rails
   haml
   i18n (~> 0.6.11)
-  i18n-js (~> 3.4.2)
+  i18n-js (~> 3.5.0)
   immigrant
   jquery-migrate-rails
   jquery-rails (= 3.0.4)
