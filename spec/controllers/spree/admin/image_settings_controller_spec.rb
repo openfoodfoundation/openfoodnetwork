@@ -38,10 +38,10 @@ describe Spree::Admin::ImageSettingsController do
       it "should be able to update s3 settings" do
         spree_put :update, preferences:
         {
-          "use_s3"        => "1",
+          "use_s3" => "1",
           "s3_access_key" => "a_valid_key",
-          "s3_secret"     => "a_secret",
-          "s3_bucket"     => "some_bucket"
+          "s3_secret" => "a_secret",
+          "s3_bucket" => "some_bucket"
         }
         expect(Spree::Config[:use_s3]).to be_truthy
         expect(Spree::Config[:s3_access_key]).to eq("a_valid_key")

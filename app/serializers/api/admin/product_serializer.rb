@@ -26,6 +26,7 @@ class Api::Admin::ProductSerializer < ActiveModel::Serializer
 
   def on_hand
     return 0 if object.on_hand.nil?
+
     object.on_hand
   end
 

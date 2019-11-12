@@ -366,9 +366,7 @@ feature '
 
       context "when an included variant has been deleted" do
         let!(:deleted_variant) do
-          order.line_items.first.variant.tap do |record|
-            record.delete
-          end
+          order.line_items.first.variant.tap(&:delete)
         end
 
         it "still lists the variant in the order page" do

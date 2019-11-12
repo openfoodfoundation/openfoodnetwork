@@ -33,7 +33,7 @@ describe Api::ProductSerializer do
   end
 
   it "serializes product properties" do
-    product_property = {id: property.id, name: property.presentation, value: nil}
+    product_property = { id: property.id, name: property.presentation, value: nil }
 
     expect(serializer.serializable_hash[:properties_with_values]).to include product_property
   end

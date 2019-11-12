@@ -19,6 +19,7 @@ module Spree
 
       def invoice_links
         return [] unless Spree::Config[:enable_invoices?]
+
         [send_invoice_link, print_invoice_link]
       end
 
@@ -32,6 +33,7 @@ module Spree
 
       def ticket_links
         return [] unless Spree::Config[:enable_receipt_printing?]
+
         [print_ticket_link, select_ticket_printer_link]
       end
 

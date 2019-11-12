@@ -69,7 +69,7 @@ describe Api::VariantsController, type: :controller do
       api_get :show, id: variant.to_param
 
       keys = json_response.keys.map(&:to_sym)
-      expect((attributes).all?{ |attr| keys.include? attr }).to eq(true)
+      expect(attributes.all?{ |attr| keys.include? attr }).to eq(true)
     end
 
     it "cannot create a new variant if not an admin" do

@@ -109,6 +109,7 @@ module ProductImport
 
     def name_presence_error(entry)
       return if entry.enterprise.present?
+
       mark_as_invalid(entry,
                       attribute: enterprise_field,
                       error: I18n.t(:error_required))
@@ -117,6 +118,7 @@ module ProductImport
 
     def enterprise_not_found_error(entry)
       return if @spreadsheet_data.enterprises_index[entry.enterprise][:id]
+
       mark_as_invalid(entry,
                       attribute: enterprise_field,
                       error: I18n.t(:error_not_found_in_database,
@@ -126,6 +128,7 @@ module ProductImport
 
     def permissions_error(entry)
       return if permission_by_name?(entry.enterprise)
+
       mark_as_invalid(entry,
                       attribute: enterprise_field,
                       error: I18n.t(:error_no_permission_for_enterprise,
@@ -135,8 +138,7 @@ module ProductImport
 
     def primary_producer_error(entry)
       return if import_into_inventory?
-      return if @spreadsheet_data.
-          enterprises_index[entry.enterprise][:is_primary_producer]
+      return if @spreadsheet_data.enterprises_index[entry.enterprise][:is_primary_producer]
 
       mark_as_invalid(entry,
                       attribute: enterprise_field,
@@ -174,15 +176,19 @@ module ProductImport
 
     def validate_unit_type_unchanged(entry)
       return if entry.unit_type.blank?
+
       reference_entry = all_entries_for_product(entry).first
       return if entry.unit_type.to_s == reference_entry.unit_type.to_s
+
       mark_as_not_updatable(entry, "unit_type")
     end
 
     def validate_variant_unit_name_unchanged(entry)
       return if entry.variant_unit_name.blank?
+
       reference_entry = all_entries_for_product(entry).first
       return if entry.variant_unit_name.to_s == reference_entry.variant_unit_name.to_s
+
       mark_as_not_updatable(entry, "variant_unit_name")
     end
 
@@ -317,6 +323,7 @@ module ProductImport
       EntryValidator.non_updatable_fields.each do |display_name, attribute|
         next if attributes_match?(attribute, existing_product, entry) || attributes_blank?(attribute, existing_product, entry)
         next if ignore_when_updating_product?(attribute)
+
         mark_as_invalid(entry, attribute: display_name, error: I18n.t('admin.product_import.model.not_updatable'))
       end
     end

@@ -13,6 +13,7 @@ module Spree
       def update
         params.each do |name, value|
           next unless Spree::Config.has_preference? name
+
           Spree::Config[name] = value
         end
         flash[:success] = Spree.t(:successfully_updated, resource: Spree.t(:general_settings))
@@ -22,6 +23,7 @@ module Spree
 
       def dismiss_alert
         return unless request.xhr? && params[:alert_id]
+
         dismissed = Spree::Config[:dismissed_spree_alerts] || ''
         Spree::Config.set(dismissed_spree_alerts: dismissed.
                                                     split(',').

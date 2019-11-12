@@ -27,8 +27,10 @@ module Admin
 
     def status
       return render json: { status: :stripe_disabled } unless Spree::Config.stripe_connect_enabled
+
       stripe_account = StripeAccount.find_by_enterprise_id(params[:enterprise_id])
       return render json: { status: :account_missing } unless stripe_account
+
       authorize! :status, stripe_account
 
       begin

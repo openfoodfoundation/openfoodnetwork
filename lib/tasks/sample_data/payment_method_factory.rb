@@ -17,6 +17,7 @@ class PaymentMethodFactory
 
   def create_payment_methods(enterprise)
     return if enterprise.payment_methods.present?
+
     log "- #{enterprise.name}"
     create_cash_method(enterprise)
     create_card_method(enterprise)

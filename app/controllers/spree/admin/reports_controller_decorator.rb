@@ -258,14 +258,14 @@ Spree::Admin::ReportsController.class_eval do
   def describe_report(report)
     name = I18n.t(:name, scope: [:admin, :reports, report])
     description = begin
-      I18n.t!(:description, scope: [:admin, :reports, report])
-    rescue I18n::MissingTranslationData
-      render_to_string(
-        partial: "#{report}_description",
-        layout: false,
-        locals: { report_types: report_types[report] }
-      ).html_safe
-    end
+                    I18n.t!(:description, scope: [:admin, :reports, report])
+                  rescue I18n::MissingTranslationData
+                    render_to_string(
+                      partial: "#{report}_description",
+                      layout: false,
+                      locals: { report_types: report_types[report] }
+                    ).html_safe
+                  end
     { name: name, url: url_for_report(report), description: description }
   end
 

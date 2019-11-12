@@ -6,6 +6,7 @@ class Api::Admin::IndexEnterpriseSerializer < ActiveModel::Serializer
 
   def owned
     return true if options[:spree_current_user].admin?
+
     object.owner == options[:spree_current_user]
   end
 

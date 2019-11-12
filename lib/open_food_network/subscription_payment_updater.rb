@@ -22,6 +22,7 @@ module OpenFoodNetwork
 
     def create_payment
       return if payment.present?
+
       @payment = order.payments.create(
         payment_method_id: order.subscription.payment_method_id,
         amount: order.outstanding_balance
@@ -38,11 +39,13 @@ module OpenFoodNetwork
 
     def ensure_payment_source
       return unless card_required? && !card_set?
+
       ensure_credit_card || order.errors.add(:base, :no_card)
     end
 
     def ensure_credit_card
       return false if saved_credit_card.blank? || !allow_charges?
+
       payment.update_attributes(source: saved_credit_card)
     end
 

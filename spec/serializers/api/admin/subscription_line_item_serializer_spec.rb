@@ -4,7 +4,7 @@ module Api
   module Admin
     describe SubscriptionLineItemSerializer do
       let(:subscription_line_item) { create(:subscription_line_item) }
-      
+
       it "serializes a subscription line item with the product name" do
         serializer = described_class.new(subscription_line_item)
 

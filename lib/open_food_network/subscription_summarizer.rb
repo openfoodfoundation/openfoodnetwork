@@ -22,6 +22,7 @@ module OpenFoodNetwork
 
     def record_and_log_error(type, order)
       return record_issue(type, order) unless order.errors.any?
+
       error = "Subscription#{type.to_s.camelize}Error"
       line1 = "#{error}: Cannot process order #{order.number} due to errors"
       line2 = "Errors: #{order.errors.full_messages.join(', ')}"

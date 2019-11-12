@@ -8,6 +8,7 @@ module Admin
 
     def edit
       return @stripe_account = { status: :empty_api_key_error_html } if Stripe.api_key.blank?
+
       attrs = %i[id business_name charges_enabled]
       @obfuscated_secret_key = obfuscated_secret_key
       @stripe_account = Stripe::Account.retrieve.to_hash.slice(*attrs).merge(status: :ok)

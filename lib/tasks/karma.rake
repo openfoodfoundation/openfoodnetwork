@@ -34,6 +34,7 @@ namespace :karma do
 
   def i18n_file
     raise "I18n::JS module is missing" unless defined?(I18n::JS)
+
     I18n::JS::DEFAULT_EXPORT_DIR_PATH.replace('tmp/javascripts')
     I18n::JS.export
     "#{Rails.root.join(I18n::JS::DEFAULT_EXPORT_DIR_PATH)}/translations.js"

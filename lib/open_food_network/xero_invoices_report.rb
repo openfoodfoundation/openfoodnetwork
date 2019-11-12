@@ -29,6 +29,7 @@ module OpenFoodNetwork
 
     def table
       return [] unless @compile_table
+
       rows = []
 
       orders.each_with_index do |order, i|

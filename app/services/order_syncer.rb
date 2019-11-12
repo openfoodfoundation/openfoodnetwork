@@ -39,6 +39,7 @@ class OrderSyncer
 
   def orders_in_order_cycles_not_closed
     return @orders_in_order_cycles_not_closed unless @orders_in_order_cycles_not_closed.nil?
+
     @orders_in_order_cycles_not_closed = orders.joins(:order_cycle).
       merge(OrderCycle.not_closed).readonly(false)
   end
@@ -47,6 +48,7 @@ class OrderSyncer
     unless addresses_match?(order.bill_address, bill_address)
       return order_update_issues.add(order, I18n.t('bill_address'))
     end
+
     order.bill_address.update_attributes(bill_address.attributes.slice(*relevant_address_attrs))
   end
 
@@ -101,6 +103,7 @@ class OrderSyncer
     return true if force_ship_address_required?(order)
     return false unless order.shipping_method.require_ship_address?
     return true if addresses_match?(order.ship_address, ship_address)
+
     order_update_issues.add(order, I18n.t('ship_address'))
     false
   end
@@ -110,6 +113,7 @@ class OrderSyncer
   # address on the order matches the shop's address
   def force_ship_address_required?(order)
     return false unless shipping_method.require_ship_address?
+
     distributor_address = order.address_from_distributor
     relevant_address_attrs.all? do |attr|
       order.ship_address[attr] == distributor_address[attr]
@@ -118,11 +122,13 @@ class OrderSyncer
 
   def save_ship_address_in_order(order)
     return unless ship_address_updatable?(order)
+
     order.ship_address.update_attributes(ship_address.attributes.slice(*relevant_address_attrs))
   end
 
   def pending_shipment_with?(order, shipping_method_id)
     return false unless order.shipment.present? && order.shipment.state == "pending"
+
     order.shipping_method.id == shipping_method_id
   end
 end

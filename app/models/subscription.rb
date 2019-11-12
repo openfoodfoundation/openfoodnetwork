@@ -65,11 +65,13 @@ class Subscription < ActiveRecord::Base
 
   def pending?
     return true unless begins_at
+
     begins_at > Time.zone.now
   end
 
   def ended?
     return false unless ends_at
+
     ends_at < Time.zone.now
   end
 end

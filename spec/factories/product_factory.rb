@@ -32,6 +32,7 @@ FactoryBot.define do
 
     after(:create) do |product, proxy|
       raise "taxed_product factory requires a zone" unless proxy.zone
+
       create(:tax_rate, amount: proxy.tax_rate_amount,
                         tax_category: product.tax_category,
                         included_in_price: true,

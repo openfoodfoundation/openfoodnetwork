@@ -11,16 +11,10 @@ module Spree
       current_spree_user
     end
 
-    def spree_login_path
-      spree.login_path
-    end
+    delegate :login_path, to: :spree, prefix: true
 
-    def spree_signup_path
-      spree.signup_path
-    end
+    delegate :signup_path, to: :spree, prefix: true
 
-    def spree_logout_path
-      spree.logout_path
-    end
+    delegate :logout_path, to: :spree, prefix: true
   end
 end

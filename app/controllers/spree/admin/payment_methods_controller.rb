@@ -62,6 +62,7 @@ module Spree
       # ! Redundant code copied from Spree::Admin::ResourceController with modifications marked
       def collection
         return parent.public_send(controller_name) if parent_data.present?
+
         collection = if model_class.respond_to?(:accessible_by) &&
                         !current_ability.has_block?(params[:action], model_class)
 
@@ -116,6 +117,7 @@ module Spree
       def validate_payment_method_provider
         valid_payment_methods = Rails.application.config.spree.payment_methods.map(&:to_s)
         return if valid_payment_methods.include?(params[:payment_method][:type])
+
         flash[:error] = Spree.t(:invalid_payment_provider)
         redirect_to new_admin_payment_method_path
       end

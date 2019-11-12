@@ -17,6 +17,7 @@ class ExchangeVariantBulkUpdater
 
   def disassociate_variants!(variant_ids)
     return if variant_ids.blank?
+
     @exchange.exchange_variants.where(variant_id: variant_ids).delete_all
   end
 

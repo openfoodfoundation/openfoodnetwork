@@ -45,11 +45,13 @@ class ProductTagRulesFilterer
 
   def override_not_hidden_by_rule
     return "FALSE" unless overrides_to_hide.any?
+
     "variant_overrides.id NOT IN (#{overrides_to_hide.join(',')})"
   end
 
   def override_shown_by_rule
     return "FALSE" unless overrides_to_show.any?
+
     "variant_overrides.id IN (#{overrides_to_show.join(',')})"
   end
 

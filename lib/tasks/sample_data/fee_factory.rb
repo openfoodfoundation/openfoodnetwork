@@ -7,6 +7,7 @@ class FeeFactory
     log "Creating fees:"
     enterprises.each do |enterprise|
       next if enterprise.enterprise_fees.present?
+
       log "- #{enterprise.name} charges markup"
       calculator = Calculator::FlatPercentPerItem.new(preferred_flat_percent: 10)
       create_fee(enterprise, calculator)

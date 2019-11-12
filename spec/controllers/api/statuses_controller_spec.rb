@@ -6,7 +6,7 @@ module Api
 
     describe "job queue status" do
       it "returns alive when up to date" do
-        Spree::Config.last_job_queue_heartbeat_at = Time.now
+        Spree::Config.last_job_queue_heartbeat_at = Time.now.in_time_zone
         spree_get :job_queue
         expect(response).to be_success
         expect(response.body).to eq({ alive: true }.to_json)

@@ -18,7 +18,7 @@ class Api::Admin::ForOrderCycle::SuppliedProductSerializer < ActiveModel::Serial
                  object.variants.visible_for(order_cycle.coordinator)
                else
                  object.variants
-    end
+               end
     variants.map { |variant| { id: variant.id, label: variant.full_name } }
   end
 

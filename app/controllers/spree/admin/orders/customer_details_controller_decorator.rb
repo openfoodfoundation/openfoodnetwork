@@ -43,6 +43,7 @@ Spree::Admin::Orders::CustomerDetailsController.class_eval do
     params[:order][:guest_checkout] = registered_user.nil?
 
     return unless registered_user
+
     @order.user_id = registered_user.id
   end
 end

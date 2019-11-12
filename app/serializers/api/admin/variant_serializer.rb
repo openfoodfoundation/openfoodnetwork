@@ -16,6 +16,7 @@ class Api::Admin::VariantSerializer < ActiveModel::Serializer
 
   def on_hand
     return 0 if object.on_hand.nil?
+
     object.on_hand
   end
 
@@ -30,6 +31,7 @@ class Api::Admin::VariantSerializer < ActiveModel::Serializer
 
   def image
     return if object.product.images.empty?
+
     object.product.images.first.mini_url
   end
 
@@ -39,11 +41,13 @@ class Api::Admin::VariantSerializer < ActiveModel::Serializer
 
   def stock_location_id
     return if object.stock_items.empty?
+
     object.stock_items.first.stock_location.id
   end
 
   def stock_location_name
     return if object.stock_items.empty?
+
     object.stock_items.first.stock_location.name
   end
 end

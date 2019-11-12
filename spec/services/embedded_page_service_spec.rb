@@ -61,7 +61,7 @@ describe EmbeddedPageService do
     end
 
     context "when the request's referer is malformed" do
-      let(:request) { ActionController::TestRequest.new('HTTP_HOST' => 'ofn-instance.com', 'HTTP_REFERER' => 'hello')}
+      let(:request) { ActionController::TestRequest.new('HTTP_HOST' => 'ofn-instance.com', 'HTTP_REFERER' => 'hello') }
       before do
         service.embed!
       end

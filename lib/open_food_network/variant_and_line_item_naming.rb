@@ -17,6 +17,7 @@ module OpenFoodNetwork
 
     def product_and_full_name
       return "#{product.name} - #{full_name}" unless full_name.start_with? product.name
+
       full_name
     end
 
@@ -30,16 +31,19 @@ module OpenFoodNetwork
       return unit_to_display if display_name.blank?
       return display_name    if display_name.downcase.include? unit_to_display.downcase
       return unit_to_display if unit_to_display.downcase.include? display_name.downcase
+
       "#{display_name} (#{unit_to_display})"
     end
 
     def name_to_display
       return product.name if display_name.blank?
+
       display_name
     end
 
     def unit_to_display
       return options_text if !has_attribute?(:display_as) || display_as.blank?
+
       display_as
     end
 

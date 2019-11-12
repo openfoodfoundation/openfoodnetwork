@@ -23,11 +23,13 @@ module Admin
 
     def validate_data
       return unless process_data('validate')
+
       render json: @importer.import_results, response: 200
     end
 
     def save_data
       return unless process_data('save')
+
       render json: @importer.save_results, response: 200
     end
 

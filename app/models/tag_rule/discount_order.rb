@@ -14,6 +14,7 @@ class TagRule::DiscountOrder < TagRule
 
   def additional_requirements_met?
     return false if already_applied?
+
     true
   end
 

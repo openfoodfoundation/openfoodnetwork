@@ -39,6 +39,7 @@ module OpenFoodNetwork
 
     def table_items
       return [] unless @render_table
+
       orders = search.result
       payments = orders.map { |o| o.payments.select(&:completed?) }.flatten # Only select completed payments
       case params[:report_type]

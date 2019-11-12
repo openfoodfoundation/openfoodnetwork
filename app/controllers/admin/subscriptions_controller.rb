@@ -80,6 +80,7 @@ module Admin
 
     def permissions
       return @permissions unless @permissions.nil?
+
       @permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
     end
 
@@ -126,14 +127,17 @@ module Admin
 
     def check_for_open_orders
       return if params[:open_orders] == 'cancel'
+
       @open_orders_to_keep = @subscription.proxy_orders.placed_and_open.pluck(:id)
       return if @open_orders_to_keep.empty? || params[:open_orders] == 'keep'
+
       render json: { errors: { open_orders: t('admin.subscriptions.confirm_cancel_open_orders_msg') } }, status: :conflict
     end
 
     def check_for_canceled_orders
       return if params[:canceled_orders] == 'notified'
       return if @subscription.proxy_orders.active.canceled.empty?
+
       render json: { errors: { canceled_orders: t('admin.subscriptions.resume_canceled_orders_msg') } }, status: :conflict
     end
 

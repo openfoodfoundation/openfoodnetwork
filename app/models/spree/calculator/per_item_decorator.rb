@@ -12,6 +12,7 @@ module Spree
 
     def compute(object = nil)
       return 0 if object.nil?
+
       preferred_amount * line_items_for(object).reduce(0) do |sum, value|
         value_to_add = if matching_products.blank? || matching_products.include?(value.product)
                          value.quantity

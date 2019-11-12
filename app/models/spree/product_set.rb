@@ -48,6 +48,7 @@ class Spree::ProductSet < ModelSet
   def update_product(product, attributes)
     original_supplier = product.supplier_id
     return false unless update_product_only_attributes(product, attributes)
+
     ExchangeVariantDeleter.new.delete(product) if original_supplier != product.supplier_id
 
     update_product_variants(product, attributes) &&
@@ -81,11 +82,13 @@ class Spree::ProductSet < ModelSet
 
   def update_product_variants(product, attributes)
     return true unless attributes[:variants_attributes]
+
     update_variants_attributes(product, attributes[:variants_attributes])
   end
 
   def update_product_master(product, attributes)
     return true unless attributes[:master_attributes]
+
     create_or_update_variant(product, attributes[:master_attributes])
   end
 
@@ -113,9 +116,9 @@ class Spree::ProductSet < ModelSet
     begin
       variant.on_demand = on_demand if on_demand.present?
       variant.on_hand = on_hand.to_i if on_hand.present?
-    rescue StandardError => error
-      notify_bugsnag(error, product, variant, variant_attributes)
-      raise error
+    rescue StandardError => e
+      notify_bugsnag(e, product, variant, variant_attributes)
+      raise e
     end
   end
 

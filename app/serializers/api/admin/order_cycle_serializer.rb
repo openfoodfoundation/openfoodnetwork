@@ -79,7 +79,7 @@ class Api::Admin::OrderCycleSerializer < ActiveModel::Serializer
                    permissions.
                      visible_variants_for_outgoing_exchanges_to(enterprise).
                      not_hidden_for(enterprise)
-      end.pluck(:id)
+                 end.pluck(:id)
       visible[enterprise.id] = variants if variants.any?
     end
     visible

@@ -143,6 +143,7 @@ module WebHelper
   def select_select2_result_async(value)
     while page.has_selector? "div.select2-searching"
       return if page.has_selector? "div.select2-no-results"
+
       sleep 0.2
     end
     page.execute_script(%{$("div.select2-result-label:contains('#{value}')").mouseup()})

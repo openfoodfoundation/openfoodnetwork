@@ -46,6 +46,7 @@ Spree::CreditCard.class_eval do
   def ensure_single_default_card
     return unless user
     return unless is_default? || (reusable? && default_missing?)
+
     user.credit_cards.update_all(['is_default=(id=?)', id])
     self.is_default = true
   end

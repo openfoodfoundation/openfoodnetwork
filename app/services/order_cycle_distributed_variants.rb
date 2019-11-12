@@ -14,6 +14,7 @@ class OrderCycleDistributedVariants
 
   def available_variants
     return [] unless @order_cycle
+
     @order_cycle.variants_distributed_by(@distributor)
   end
 end

@@ -32,16 +32,16 @@ class EnterpriseGroup < ActiveRecord::Base
 
   has_attached_file :logo,
                     styles: { medium: "100x100" },
-                    url:  '/images/enterprise_groups/logos/:id/:style/:basename.:extension',
+                    url: '/images/enterprise_groups/logos/:id/:style/:basename.:extension',
                     path: 'public/images/enterprise_groups/logos/:id/:style/:basename.:extension'
 
   has_attached_file :promo_image,
                     styles: { large: ["1200x260#", :jpg] },
-                    url:  '/images/enterprise_groups/promo_images/:id/:style/:basename.:extension',
+                    url: '/images/enterprise_groups/promo_images/:id/:style/:basename.:extension',
                     path: 'public/images/enterprise_groups/promo_images/:id/:style/:basename.:extension'
 
-  validates_attachment_content_type :logo, content_type: /\Aimage\/.*\Z/
-  validates_attachment_content_type :promo_image, content_type: /\Aimage\/.*\Z/
+  validates_attachment_content_type :logo, content_type: %r{\Aimage/.*\Z}
+  validates_attachment_content_type :promo_image, content_type: %r{\Aimage/.*\Z}
 
   include Spree::Core::S3Support
   supports_s3 :logo
@@ -71,6 +71,7 @@ class EnterpriseGroup < ActiveRecord::Base
 
   def unset_undefined_address_fields
     return if address.blank?
+
     address.phone.sub!(/^#{I18n.t(:undefined)}$/, '')
     address.address1.sub!(/^#{I18n.t(:undefined)}$/, '')
     address.city.sub!(/^#{I18n.t(:undefined)}$/, '')

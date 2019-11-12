@@ -74,6 +74,7 @@ module Spree
 
       def collection
         return @collection if @collection.present?
+
         if request.xhr? && params[:q].present?
           # Disabling proper nested include here due to rails 3.1 bug
           @collection = Spree::User.
@@ -125,6 +126,7 @@ module Spree
 
       def sign_in_if_change_own_password
         return unless spree_current_user == @user && @user.password.present?
+
         sign_in(@user, event: :authentication, bypass: true)
       end
 

@@ -223,6 +223,7 @@ module ProductImport
 
     def rows
       return [] unless @sheet && @sheet.last_row
+
       (2..@sheet.last_row).map do |i|
         @sheet.row(i)
       end
@@ -263,6 +264,7 @@ module ProductImport
 
     def delete_uploaded_file
       return unless @file.path == Rails.root.join('tmp', 'product_import').to_s
+
       File.delete(@file)
     end
 

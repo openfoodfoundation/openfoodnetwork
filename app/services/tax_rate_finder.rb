@@ -76,6 +76,7 @@ class TaxRateFinder
   def find_closest_tax_rates_from_included_tax(amount, included_tax)
     approximation = (included_tax / (amount - included_tax))
     return [] if approximation.infinite? || approximation.zero?
+
     [Spree::TaxRate.order("ABS(amount - #{approximation})").first]
   end
 end

@@ -58,6 +58,7 @@ module ProductImport
       @producers_index = {}
       @entries.each do |entry|
         next unless entry.producer
+
         producer_name = entry.producer
         producer_id = @producers_index[producer_name] || Enterprise.find_by_name(producer_name, select: 'id, name').try(:id)
         @producers_index[producer_name] = producer_id

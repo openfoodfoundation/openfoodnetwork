@@ -63,28 +63,34 @@ class EmbeddedPageService
 
   def set_logout_redirect
     return unless enterprise_slug
+
     @session[:shopfront_redirect] = '/' + enterprise_slug + '/shop?embedded_shopfront=true'
   end
 
   def enterprise_slug
     return false unless @params[:controller] == 'enterprises' && @params[:action] == 'shop' && @params[:id]
+
     @params[:id]
   end
 
   def current_referer
     return if @request.referer.blank?
+
     uri = URI(@request.referer)
     return if uri.host.blank?
+
     uri.host.downcase
   end
 
   def current_referer_without_www
     return unless current_referer
+
     current_referer.start_with?('www.') ? current_referer[4..-1] : current_referer
   end
 
   def set_embedded_layout
     return unless @session[:embedded_shopfront]
+
     @use_embedded_layout = true
   end
 

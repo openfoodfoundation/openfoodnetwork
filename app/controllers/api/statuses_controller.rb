@@ -10,7 +10,7 @@ module Api
 
     def job_queue_alive?
       Spree::Config.last_job_queue_heartbeat_at.present? &&
-        Time.parse(Spree::Config.last_job_queue_heartbeat_at) > 6.minutes.ago
+        Time.parse(Spree::Config.last_job_queue_heartbeat_at).in_time_zone > 6.minutes.ago
     end
   end
 end

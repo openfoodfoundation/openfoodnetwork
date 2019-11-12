@@ -14,6 +14,7 @@ module OrderManagement
 
           def tax_category_name
             return data["tax_category_name"] if data["tax_category_name"].present?
+
             i18n_translate("tax_category_various") if inherits_tax_category?
           end
 

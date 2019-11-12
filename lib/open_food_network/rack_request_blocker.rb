@@ -43,10 +43,10 @@ class RackRequestBlocker
     block_requests!
     max_wait_time = 30
     polling_interval = 0.01
-    wait_until = Time.now + max_wait_time.seconds
+    wait_until = Time.now.in_time_zone + max_wait_time.seconds
     loop do
       return if num_active_requests == 0
-      if Time.now > wait_until
+      if Time.now.in_time_zone > wait_until
         raise "Failed waiting for completing requests, #{num_active_requests} running."
       else
         sleep(polling_interval)

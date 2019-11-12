@@ -19,6 +19,7 @@ module OpenFoodNetwork
     def sync!
       return sync_all! if @subscriptions
       return initialise_proxy_orders! unless @subscription.id
+
       create_proxy_orders!
       remove_orphaned_proxy_orders!
     end
@@ -41,6 +42,7 @@ module OpenFoodNetwork
 
     def create_proxy_orders!
       return unless not_closed_in_range_order_cycles.any?
+
       query = "INSERT INTO proxy_orders (subscription_id, order_cycle_id, updated_at, created_at)"
       query << " VALUES #{insert_values}"
       query << " ON CONFLICT DO NOTHING"
@@ -60,6 +62,7 @@ module OpenFoodNetwork
       orphaned = proxy_orders.where(placed_at: nil)
       order_cycle_ids = in_range_order_cycles.pluck(:id)
       return orphaned unless order_cycle_ids.any?
+
       orphaned.where('order_cycle_id NOT IN (?)', order_cycle_ids)
     end
 

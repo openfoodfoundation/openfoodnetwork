@@ -44,6 +44,7 @@ module OpenFoodNetwork
 
     def table
       return [] unless @render_table
+
       case params[:report_type]
       when "tax_rates"
         orders.map do |order|
@@ -67,6 +68,7 @@ module OpenFoodNetwork
 
     def relevant_rates
       return @relevant_rates unless @relevant_rates.nil?
+
       @relevant_rates = Spree::TaxRate.uniq
     end
 

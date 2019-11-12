@@ -61,16 +61,16 @@ describe SubscriptionMailer, type: :mailer do
         let(:customer) { create(:customer, enterprise: shop) }
 
         it "provides link to make changes" do
-          expect(body).to match /<a #{order_link_href} #{order_link_style}>make changes<\/a>/
-          expect(body).to_not match /<a #{order_link_href} #{order_link_style}>view details of this order<\/a>/
+          expect(body).to match %r{<a #{order_link_href} #{order_link_style}>make changes</a>}
+          expect(body).to_not match %r{<a #{order_link_href} #{order_link_style}>view details of this order</a>}
         end
 
         context "when the distributor does not allow changes to the order" do
           let(:shop) { create(:enterprise, allow_order_changes: false) }
 
           it "provides link to view details" do
-            expect(body).to_not match /<a #{order_link_href} #{order_link_style}>make changes<\/a>/
-            expect(body).to match /<a #{order_link_href} #{order_link_style}>view details of this order<\/a>/
+            expect(body).to_not match %r{<a #{order_link_href} #{order_link_style}>make changes</a>}
+            expect(body).to match %r{<a #{order_link_href} #{order_link_style}>view details of this order</a>}
           end
         end
       end

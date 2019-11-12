@@ -40,18 +40,21 @@ class SubscriptionValidator
   def shipping_method_allowed?
     return unless shipping_method
     return if shipping_method.distributors.include?(shop)
+
     errors.add(:shipping_method, :not_available_to_shop, shop: shop.name)
   end
 
   def payment_method_allowed?
     return unless payment_method
     return if payment_method.distributors.include?(shop)
+
     errors.add(:payment_method, :not_available_to_shop, shop: shop.name)
   end
 
   def payment_method_type_allowed?
     return unless payment_method
     return if Subscription::ALLOWED_PAYMENT_METHOD_TYPES.include? payment_method.type
+
     errors.add(:payment_method, :invalid_type)
   end
 
@@ -59,18 +62,21 @@ class SubscriptionValidator
     # Only validates ends_at if it is present
     return if begins_at.blank? || ends_at.blank?
     return if ends_at > begins_at
+
     errors.add(:ends_at, :after_begins_at)
   end
 
   def customer_allowed?
     return unless customer
     return if customer.enterprise == shop
+
     errors.add(:customer, :does_not_belong_to_shop, shop: shop.name)
   end
 
   def schedule_allowed?
     return unless schedule
     return if schedule.coordinators.include?(shop)
+
     errors.add(:schedule, :not_coordinated_by_shop, shop: shop.name)
   end
 
@@ -79,11 +85,13 @@ class SubscriptionValidator
     return unless payment_method.type == "Spree::Gateway::StripeConnect"
     return errors.add(:payment_method, :charges_not_allowed) unless customer.allow_charges
     return if customer.user.andand.default_card.present?
+
     errors.add(:payment_method, :no_default_card)
   end
 
   def subscription_line_items_present?
     return if subscription_line_items.reject(&:marked_for_destruction?).any?
+
     errors.add(:subscription_line_items, :at_least_one_product)
   end
 
@@ -93,6 +101,7 @@ class SubscriptionValidator
 
   def verify_availability_of(variant)
     return if available_variant_ids.include? variant.id
+
     name = "#{variant.product.name} - #{variant.full_name}"
     errors.add(:subscription_line_items, :not_available, name: name)
   end
@@ -107,6 +116,7 @@ class SubscriptionValidator
 
   def build_msg_from(k, msg)
     return msg[1..-1] if msg.starts_with?("^")
+
     errors.full_message(k, msg)
   end
 end

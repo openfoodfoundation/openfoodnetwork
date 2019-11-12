@@ -58,6 +58,7 @@ Spree::Variant.class_eval do
 
   scope :not_hidden_for, lambda { |enterprise|
     return where("1=0") if enterprise.blank?
+
     joins("LEFT OUTER JOIN (SELECT * from inventory_items WHERE enterprise_id = #{sanitize enterprise.andand.id}) AS o_inventory_items ON o_inventory_items.variant_id = spree_variants.id")
       .where("o_inventory_items.id IS NULL OR o_inventory_items.visible = (?)", true)
   }
@@ -66,6 +67,7 @@ Spree::Variant.class_eval do
 
   scope :stockable_by, lambda { |enterprise|
     return where("1=0") if enterprise.blank?
+
     joins(:product).where(spree_products: { id: Spree::Product.stockable_by(enterprise).pluck(:id) })
   }
 

@@ -23,6 +23,7 @@ class Api::Admin::LineItemSerializer < ActiveModel::Serializer
   def max_quantity
     return object.quantity unless object.max_quantity.present? &&
                                   object.max_quantity > object.quantity
+
     object.max_quantity
   end
 end

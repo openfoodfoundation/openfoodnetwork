@@ -165,6 +165,7 @@ Spree::Order.class_eval do
   def update_shipping_fees!
     shipments.each do |shipment|
       next if shipment.shipped?
+
       update_adjustment! shipment.adjustment if shipment.adjustment
       save_or_rescue_shipment(shipment)
     end
@@ -172,14 +173,14 @@ Spree::Order.class_eval do
 
   def save_or_rescue_shipment(shipment)
     shipment.save # updates included tax
-  rescue ActiveRecord::RecordNotUnique => error
+  rescue ActiveRecord::RecordNotUnique => e
     # This error was seen in production on `shipment.save` above.
     # It caused lost payments and duplicate payments due to database rollbacks.
     # While we don't understand the cause of this error yet, we rescue here
     # because an outdated shipping fee is not as bad as a lost payment.
     # And the shipping fee is already up-to-date when this error occurs.
     # https://github.com/openfoodfoundation/openfoodnetwork/issues/3924
-    Bugsnag.notify(error) do |report|
+    Bugsnag.notify(e) do |report|
       report.add_tab(:order, attributes)
       report.add_tab(:shipment, shipment.attributes)
       report.add_tab(:shipment_in_db, Spree::Shipment.find_by_id(shipment.id).attributes)
@@ -192,6 +193,7 @@ Spree::Order.class_eval do
   def update_payment_fees!
     payments.each do |payment|
       next if payment.completed?
+
       update_adjustment! payment.adjustment if payment.adjustment
       payment.save
     end
@@ -257,6 +259,7 @@ Spree::Order.class_eval do
   # Show already bought line items of this order cycle
   def finalised_line_items
     return [] unless order_cycle && user && distributor
+
     order_cycle.items_bought_by_user(user, distributor)
   end
 
@@ -367,6 +370,7 @@ Spree::Order.class_eval do
 
   def customer_is_valid?
     return true unless require_customer?
+
     customer.present? && customer.enterprise_id == distributor_id && customer.email == email_for_customer
   end
 
@@ -376,6 +380,7 @@ Spree::Order.class_eval do
 
   def associate_customer
     return customer if customer.present?
+
     self.customer = Customer.of(distributor).find_by_email(email_for_customer)
   end
 
@@ -403,6 +408,7 @@ Spree::Order.class_eval do
   def charge_shipping_and_payment_fees!
     update_totals
     return unless payments.any?
+
     payments.first.update_attribute :amount, total
   end
 end

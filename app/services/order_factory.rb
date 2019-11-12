@@ -47,6 +47,7 @@ class OrderFactory
   def build_line_items
     attrs[:line_items].each do |li|
       next unless variant = Spree::Variant.find_by_id(li[:variant_id])
+
       scoper.scope(variant)
       li[:quantity] = stock_limited_quantity(variant.on_demand, variant.on_hand, li[:quantity])
       li[:price] = variant.price
@@ -83,6 +84,7 @@ class OrderFactory
 
   def stock_limited_quantity(variant_on_demand, variant_on_hand, requested)
     return requested if opts[:skip_stock_check] || variant_on_demand
+
     [variant_on_hand, requested].min
   end
 

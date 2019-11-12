@@ -6,6 +6,7 @@ module Api
 
       def total
         return if object.total.blank?
+
         object.total.to_money.to_s
       end
 

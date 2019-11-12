@@ -15,7 +15,7 @@ class OrderUpdater < SimpleDelegator
     track_payment_state_change(last_payment_state)
 
     order.payment_state
-    end
+  end
 
   def before_save_hook
     shipping_address_from_distributor
@@ -68,6 +68,7 @@ class OrderUpdater < SimpleDelegator
   # @param last_payment_state [String]
   def track_payment_state_change(last_payment_state)
     return if last_payment_state == order.payment_state
+
     order.state_changed('payment')
   end
 

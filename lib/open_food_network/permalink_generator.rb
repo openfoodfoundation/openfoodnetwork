@@ -13,6 +13,7 @@ module PermalinkGenerator
   module ClassMethods
     def find_available_value(existing, requested)
       return requested unless existing.include?(requested)
+
       used_indices = existing.map do |p|
         p.slice!(/^#{requested}/)
         p.match(/^\d+$/).to_s.to_i

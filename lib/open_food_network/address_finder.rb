@@ -12,6 +12,7 @@ module OpenFoodNetwork
       args.each do |arg|
         type = types[arg.class]
         next unless type
+
         public_send("#{type}=", arg)
       end
     end
@@ -40,8 +41,8 @@ module OpenFoodNetwork
 
     def types
       {
-        String      => "email",
-        Customer    => "customer",
+        String => "email",
+        Customer => "customer",
         Spree::User => "user"
       }
     end
@@ -72,6 +73,7 @@ module OpenFoodNetwork
 
     def last_used_bill_address
       return nil unless allow_search_by_email?
+
       Spree::Order.joins(:bill_address).order('id DESC')
         .complete.where(email: email)
         .first.andand.bill_address
@@ -79,6 +81,7 @@ module OpenFoodNetwork
 
     def last_used_ship_address
       return nil unless allow_search_by_email?
+
       Spree::Order.complete.joins(:ship_address, shipments: :shipping_methods).order('id DESC')
         .where(email: email, spree_shipping_methods: { require_ship_address: true })
         .first.andand.ship_address

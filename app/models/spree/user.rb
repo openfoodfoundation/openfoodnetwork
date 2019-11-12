@@ -102,6 +102,7 @@ module Spree
 
     def customer_of(enterprise)
       return nil unless enterprise
+
       customers.find_by_enterprise_id(enterprise)
     end
 
@@ -109,6 +110,7 @@ module Spree
       # Send welcome email if we are confirming an user's email
       # Note: this callback only runs on email confirmation
       return unless confirmed? && unconfirmed_email.nil? && !unconfirmed_email_changed?
+
       send_signup_confirmation
     end
 
@@ -178,6 +180,7 @@ module Spree
 
     def limit_owned_enterprises
       return unless owned_enterprises.size > enterprise_limit
+
       errors.add(:owned_enterprises, I18n.t(:spree_user_enterprise_limit_error,
                                             email: email,
                                             enterprise_limit: enterprise_limit))

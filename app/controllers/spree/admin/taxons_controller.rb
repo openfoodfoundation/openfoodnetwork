@@ -4,11 +4,11 @@ module Spree
       respond_to :html, :json, :js
 
       def search
-        if params[:ids]
-          @taxons = Spree::Taxon.where(id: params[:ids].split(','))
-        else
-          @taxons = Spree::Taxon.limit(20).search(name_cont: params[:q]).result
-        end
+        @taxons = if params[:ids]
+                    Spree::Taxon.where(id: params[:ids].split(','))
+                  else
+                    Spree::Taxon.limit(20).search(name_cont: params[:q]).result
+                  end
       end
 
       def create

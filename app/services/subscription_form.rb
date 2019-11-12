@@ -17,6 +17,7 @@ class SubscriptionForm
   def save
     subscription.assign_attributes(params)
     return false unless valid?
+
     subscription.transaction do
       estimator.estimate!
       proxy_order_syncer.sync!

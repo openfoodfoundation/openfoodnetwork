@@ -41,7 +41,8 @@ describe SubscriptionForm do
           { variant_id: variant2.id, quantity: 2, price_estimate: 8.0 },
           { variant_id: variant3.id, quantity: 3, price_estimate: 9.0 }
         ]
-      } }
+      }
+    }
 
     let(:form) { SubscriptionForm.new(subscription, params) }
 

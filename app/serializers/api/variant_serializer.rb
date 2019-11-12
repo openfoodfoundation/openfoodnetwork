@@ -27,6 +27,7 @@ class Api::VariantSerializer < ActiveModel::Serializer
   # Used for showing/hiding variants in shopfront based on tag rules
   def tag_list
     return [] unless object.respond_to?(:tag_list)
+
     object.tag_list
   end
 end
