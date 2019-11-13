@@ -1,5 +1,5 @@
 angular.module('admin.orderCycles').factory('Product', ($resource) ->
-  Product = $resource('/admin/exchanges/:exchange_id/products.json', {}, {
+  Product = $resource('/api/exchanges/:exchange_id/products.json', {}, {
     'index':
       method: 'GET'
       isArray: true

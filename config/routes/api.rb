@@ -43,6 +43,10 @@ Openfoodnetwork::Application.routes.draw do
       get :properties, on: :member
     end
 
+    resources :exchanges do
+      resources :products, controller: 'exchanges_products'
+    end
+
     resource :status do
       get :job_queue
     end
