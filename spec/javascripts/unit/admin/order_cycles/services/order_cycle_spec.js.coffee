@@ -232,42 +232,6 @@ describe 'OrderCycle service', ->
       ]
       expect(OrderCycle.incomingExchangesVariants()).toEqual [1, 4, 5]
 
-  describe 'checking whether a product is supplied to the order cycle', ->
-    product_master_present = product_variant_present = product_master_absent = product_variant_absent = null
-
-    beforeEach ->
-      product_master_present =
-        name: "Linseed (500g)"
-        master_id: 1
-        variants: []
-      product_variant_present =
-        name: "Linseed (500g)"
-        master_id: 2
-        variants: [{id: 3}, {id: 4}]
-      product_master_absent =
-        name: "Linseed (500g)"
-        master_id: 5
-        variants: []
-      product_variant_absent =
-        name: "Linseed (500g)"
-        master_id: 6
-        variants: [{id: 7}, {id: 8}]
-
-      spyOn(OrderCycle, 'incomingExchangesVariants').and.returnValue([1, 3])
-
-    it 'returns true for products whose master is supplied', ->
-      expect(OrderCycle.productSuppliedToOrderCycle(product_master_present)).toBeTruthy()
-
-    it 'returns true for products for whom a variant is supplied', ->
-      expect(OrderCycle.productSuppliedToOrderCycle(product_variant_present)).toBeTruthy()
-
-    it 'returns false for products whose master is not supplied', ->
-      expect(OrderCycle.productSuppliedToOrderCycle(product_master_absent)).toBeFalsy()
-
-    it 'returns false for products whose variants are not supplied', ->
-      expect(OrderCycle.productSuppliedToOrderCycle(product_variant_absent)).toBeFalsy()
-
-
   describe 'checking whether a variant is supplied to the order cycle', ->
     beforeEach ->
       spyOn(OrderCycle, 'incomingExchangesVariants').and.returnValue([1, 3])

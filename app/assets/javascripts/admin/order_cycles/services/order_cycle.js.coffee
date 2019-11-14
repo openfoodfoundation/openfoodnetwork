@@ -71,18 +71,6 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, S
     removeExchangeFee: (exchange, index) ->
       exchange.enterprise_fees.splice(index, 1)
 
-    productSuppliedToOrderCycle: (product) ->
-      product_variant_ids = (variant.id for variant in product.variants)
-      variant_ids = [product.master_id].concat(product_variant_ids)
-      incomingExchangesVariants = this.incomingExchangesVariants()
-
-      # TODO: This is an O(n^2) implementation of set intersection and thus is slooow.
-      # Use a better algorithm if needed.
-      # Also, incomingExchangesVariants is called every time, when it only needs to be
-      # called once per change to incoming variants. Some sort of caching?
-      ids = (variant_id for variant_id in variant_ids when incomingExchangesVariants.indexOf(variant_id) != -1)
-      ids.length > 0
-
     variantSuppliedToOrderCycle: (variant) ->
       this.incomingExchangesVariants().indexOf(variant.id) != -1
 

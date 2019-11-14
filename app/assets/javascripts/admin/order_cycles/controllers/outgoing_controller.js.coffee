@@ -1,8 +1,7 @@
 angular.module('admin.orderCycles').controller 'AdminOrderCycleOutgoingCtrl', ($scope, $controller, $filter, $location, OrderCycle, ocInstance, StatusMessage) ->
   $controller('AdminOrderCycleExchangesCtrl', {$scope: $scope, ocInstance: ocInstance, $location: $location})
 
-  $scope.productSuppliedToOrderCycle = (product) ->
-    OrderCycle.productSuppliedToOrderCycle(product)
+  $scope.view = 'outgoing'
 
   $scope.variantSuppliedToOrderCycle = (variant) ->
     OrderCycle.variantSuppliedToOrderCycle(variant)
