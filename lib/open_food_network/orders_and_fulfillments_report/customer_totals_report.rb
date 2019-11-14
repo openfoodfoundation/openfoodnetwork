@@ -115,7 +115,7 @@ module OpenFoodNetwork
       # rubocop:disable Metrics/MethodLength
       # rubocop:disable Metrics/PerceivedComplexity
       def columns
-        rsa = proc { |line_items| line_items.first.order.shipping_method.andand.delivery? }
+        rsa = proc { |line_items| shipping_method(line_items).andand.delivery? }
         [
           proc { |line_items| line_items.first.order.distributor.name },
           proc { |line_items|
@@ -139,7 +139,7 @@ module OpenFoodNetwork
             line_items.all? { |li| li.order.paid? } ? I18n.t(:yes) : I18n.t(:no)
           },
 
-          proc { |line_items| line_items.first.order.shipping_method.andand.name },
+          proc { |line_items| shipping_method(line_items).andand.name },
           proc { |line_items| rsa.call(line_items) ? I18n.t(:yes) : I18n.t(:no) },
 
           proc { |line_items|
@@ -190,7 +190,16 @@ module OpenFoodNetwork
       # rubocop:enable Metrics/PerceivedComplexity
 
       def line_item_includes
-        [{ variant: :product, order: [:bill_address, :shipments] }]
+        [{ variant: { product: :supplier },
+           order: [:bill_address, :ship_address, :order_cycle, :adjustments, :payments,
+                   :user, :distributor, shipments: { shipping_rates: :shipping_method }] }]
+      end
+
+      private
+
+      def shipping_method(line_items)
+        line_items.first.order.shipments.first.
+          andand.shipping_rates.andand.first.andand.shipping_method
       end
     end
   end
