@@ -294,7 +294,6 @@ en_CA:
     volume: Volume
     items: Items
     select_all: Select all
-    obsolete_master: Obsolete master
     quick_search: Quick Search
     clear_all: Clear All
     start_date: "Start Date"

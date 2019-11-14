@@ -132,7 +132,6 @@ sv:
     volume: Volym
     items: Artiklar
     select_all: Markera alla
-    obsolete_master: Föråldrad mästare
     quick_search: Snabbsökning
     clear_all: Rensa allt
     start_date: "Startdatum"

@@ -291,7 +291,6 @@ nl_BE:
     volume: Volume
     items: Artikelen
     select_all: Selecteer alle
-    obsolete_master: Verouderde meester
     quick_search: Snel zoeken
     clear_all: Alles wissen
     start_date: "Startdatum"

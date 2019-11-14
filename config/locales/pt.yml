@@ -285,7 +285,6 @@ pt:
     volume: Volume
     items: Itens
     select_all: Seleccionar tudo
-    obsolete_master: Mestre obsoleto
     quick_search: Pesquisa Rápida
     clear_all: Limpar Tudo
     start_date: "Data de Início"

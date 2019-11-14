@@ -173,7 +173,7 @@ en_FR:
   welcome_to: 'Welcome to '
   site_meta_description: "We begin from the ground up. With farmers and growers ready to tell their stories proudly and truly. With distributors ready to connect people with products fairly and honestly. With buyers who believe that better weekly shopping decisions can…"
   search_by_name: Search by name or suburb...
-  producers_join: Australian producers are now welcome to join the Open Food Network.
+  producers_join: Producers are now welcome to join the Open Food Network.
   charges_sales_tax: Charges GST?
   print_invoice: "Print Invoice"
   print_ticket: "Print Ticket"
@@ -296,7 +296,6 @@ en_FR:
     volume: Volume
     items: Items
     select_all: Select all
-    obsolete_master: Obsolete master
     quick_search: Quick Search
     clear_all: Clear All
     start_date: "Start Date"
@@ -775,7 +774,7 @@ en_FR:
       change_type_form:
         producer_profile: Producer Profile
         connect_ofn: Connect through OFN
-        always_free: ALWAYS FREE
+        always_free: See about section
         producer_description_text: Add your products to Open Food Network, allowing hubs to stock your products in their stores.
         producer_shop: Producer Shop
         sell_your_produce: Sell your own produce
@@ -1121,7 +1120,7 @@ en_FR:
       footer_legal_call: "Read our"
       footer_legal_tos: "Terms and conditions"
       footer_legal_visit: "Find us on"
-      footer_legal_text_html: "Open Food Network is a free and open source software platform. Our content is licensed with %{content_license} and our code with %{code_license}."
+      footer_legal_text_html: "Open Food Network is an open source software platform. Our content is licensed with %{content_license} and our code with %{code_license}."
       footer_data_text_with_privacy_policy_html: "We take good care of your data. See our %{privacy_policy} and %{cookies_policy}"
       footer_data_text_without_privacy_policy_html: "We take good care of your data. See our %{cookies_policy}"
       footer_data_privacy_policy: "privacy policy"
@@ -1170,11 +1169,11 @@ en_FR:
   menu_4_title: "Groups"
   menu_4_url: "/groups"
   menu_5_title: "About"
-  menu_5_url: "https://about.openfoodnetwork.org.au/"
+  menu_5_url: "https://apropos.openfoodfrance.org/"
   menu_6_title: "Connect"
-  menu_6_url: "https://openfoodnetwork.org/au/connect/"
+  menu_6_url: "https://apropos.openfoodfrance.org/blog/"
   menu_7_title: "Learn"
-  menu_7_url: "https://openfoodnetwork.org/au/learn/"
+  menu_7_url: "https://apropos.openfoodfrance.org/support/"
   logo: "Logo (640x130)"
   logo_mobile: "Mobile logo (75x26)"
   logo_mobile_svg: "Mobile logo (SVG)"
@@ -1347,7 +1346,7 @@ en_FR:
   checkout_default_bill_address: "Save as default billing address"
   checkout_shipping: Shipping info
   checkout_default_ship_address: "Save as default shipping address"
-  checkout_method_free: Free
+  checkout_method_free: Voluntary contribution
   checkout_address_same: Shipping address same as billing address?
   checkout_ready_for: "Ready for:"
   checkout_instructions: "Any comments or special instructions?"
@@ -1601,7 +1600,7 @@ en_FR:
   sell_hubs_detail: "Set up a profile for your food enterprise or organisation on the OFN. At any time you can upgrade your profile to a multi-producer shop."
   sell_groups_detail: "Set up a tailored directory of enterprises (producers and other food enterprises) for your region or for your organisation."
   sell_user_guide: "Find out more in our user guide."
-  sell_listing_price: "Listing on the OFN is free. Opening and running a shop on OFN is free up to $500 of monthly sales. If you sell more you can choose your community contribution between 1% and 3% of sales. For more detail on pricing visit the Software Platform section via the About link in the top menu."
+  sell_listing_price: "Listing on the OFN is free. Opening and running a shop on OFN is based on a voluntary contribution. You pay as much as you can or want. If you sell large volume you can choose your community contribution between 1% and 2% of sales. For more detail on pricing visit the Software Platform section via the About link in the top menu."
   sell_embed: "We can also embed an OFN shop in your own customised website or build a customised local food network website for your region."
   sell_ask_services: "Ask us about OFN services."
   shops_title: Shops
@@ -2312,7 +2311,7 @@ en_FR:
         saving: SAVING
         enterprise_package:
           hub_profile: Hub Profile
-          hub_profile_cost: "COST: ALWAYS FREE"
+          hub_profile_cost: "COST: See about section"
           hub_profile_text1: >
               People can find and contact you on the Open Food Network. Your enterprise
               will be visible on the map, and will be searchable in listings.
@@ -2369,7 +2368,7 @@ en_FR:
               so no matter your situation, we want to provide the tools you need to
               run your organisation or local food business.
           get_listing: Get a listing
-          always_free: ALWAYS FREE
+          always_free: See about section
           sell_produce_others: Sell produce from others
           sell_own_produce: Sell your own produce
           sell_both: Sell produce from self and others

@@ -291,7 +291,6 @@ fr_BE:
     volume: Volume
     items: Pièce
     select_all: Tout sélectionner
-    obsolete_master: Master obsolète
     quick_search: Recherche rapide
     clear_all: Vider
     start_date: "Date de début"

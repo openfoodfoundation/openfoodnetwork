@@ -296,7 +296,6 @@ fr:
     volume: Volume
     items: Pièce
     select_all: Tout sélectionner
-    obsolete_master: Master obsolète
     quick_search: Recherche rapide
     clear_all: Vider
     start_date: "Date de début"
@@ -413,7 +412,7 @@ fr:
       unit_name_placeholder: 'ex: botte'
       index:
         unit: Unité
-        display_as: Unité affichéé
+        display_as: Unité affichée
         category: Catégorie
         tax_category: TVA applicable
         inherits_properties?: Hériter des propriétés?
@@ -781,16 +780,16 @@ fr:
         producer_shop: Boutique Producteur
         sell_your_produce: Pour vendre vos produits
         producer_shop_description_text: Vous pourrez paramétrer votre boutique en ligne selon votre fonctionnement, et partager votre catalogue produits avec d’autres circuits courts souhaitant les distribuer dans leur boutique.
-        producer_shop_description_text2: 'ATTENTION : Si vous vendez via un autre outil en ligne, et n’envisagez pas d’utiliser Open Food France pour cet usage, choisissiez “profil simple”. De même, si vous fournissez un circuit court utilisant Open Food France pour vendre, mais ne vendez pas vous-même en direct sur Open Food France, choisissez “profil simple”.'
+        producer_shop_description_text2: 'ATTENTION : Si vous vendez via un autre outil en ligne, et n’envisagez pas d’utiliser Open Food France pour cet usage, choisissez “profil simple”. De même, si vous fournissez un circuit court utilisant Open Food France pour vendre, mais ne vendez pas vous-même en direct sur Open Food France, choisissez “profil simple”.'
         producer_hub: Boutique multi-producteurs
         producer_hub_text: Pour vendre vos produits ainsi que ceux d’autres producteurs
-        producer_hub_description_text: 'Vous pourrez paramétrer votre boutique en ligne selon votre fonctionnement, vendre les produits d''autres producteurs, et partager votre catalogue produits avec d’autres circuits courts souhaitant les distribuer dans leur boutique. ATTENTION : Si vous vendez via un autre outil en ligne, et n’envisagez pas d’utiliser Open Food France pour cet usage, choisissiez “profil simple”. De même, si vous fournissez un circuit court utilisant Open Food France pour vendre, mais ne vendez pas vous-même en direct sur Open Food France, choisissez “profil simple”.'
+        producer_hub_description_text: 'Vous pourrez paramétrer votre boutique en ligne selon votre fonctionnement, vendre les produits d''autres producteurs, et partager votre catalogue produits avec d’autres circuits courts souhaitant les distribuer dans leur boutique. ATTENTION : Si vous vendez via un autre outil en ligne, et n’envisagez pas d’utiliser Open Food France pour cet usage, choisissez “profil simple”. De même, si vous fournissez un circuit court utilisant Open Food France pour vendre, mais ne vendez pas vous-même en direct sur Open Food France, choisissez “profil simple”.'
         profile: Profil simple
         get_listing: Pour apparaître sur la carte
         profile_description_text: Nous vous invitons à renseigner votre profil de la façon la plus complète possible. Un profil complet et avec des images attire plus ! Vous pourrez mettre des liens pour rediriger les visiteurs vers votre site internet ou espace de vente en ligne le cas échéant.
         hub_shop: Boutique multi-producteurs
         hub_shop_text: Pour vendre des produits de différents fournisseurs
-        hub_shop_description_text: 'Vous pourrez paramétrer votre boutique en ligne selon votre fonctionnement, et y proposer les produits de multiples producteurs. ATTENTION : Si vous vendez via un autre outil en ligne, et n’envisagez pas d’utiliser Open Food France pour cet usage, choisissiez “profil simple”.'
+        hub_shop_description_text: 'Vous pourrez paramétrer votre boutique en ligne selon votre fonctionnement, et y proposer les produits de multiples producteurs. ATTENTION : Si vous vendez via un autre outil en ligne, et n’envisagez pas d’utiliser Open Food France pour cet usage, choisissez “profil simple”.'
         choose_option: Veuilliez choisir l'une des options ci-dessus.
         change_now: Changer
       enterprise_user_index:
@@ -1861,7 +1860,7 @@ fr:
   transaction_date: "Date"
   payment_state: "Statut du paiement"
   shipping_state: "Statut de la livraison"
-  value: "Montant"
+  value: "Quantité"
   balance_due: "Montant dû"
   credit: "Créditer"
   Paid: "Payé"
@@ -2369,8 +2368,8 @@ fr:
               ATTENTION :
 
               - Si vous vendez via un autre outil en ligne, et n’envisagez pas d’utiliser
-              Open Food France pour organiser vos ventes / commandes, choisissiez
-              le type de profil “profil simple”.
+              Open Food France pour organiser vos ventes / commandes, choisissez le
+              type de profil “profil simple”.
 
               - Si vous fournissez un circuit court utilisant Open Food France pour
               vendre, mais ne vendez pas vous-même en direct sur Open Food France,
@@ -2389,8 +2388,8 @@ fr:
               ATTENTION :
 
               - Si vous vendez via un autre outil en ligne, et n’envisagez pas d’utiliser
-              Open Food France pour organiser vos ventes / commandes, choisissiez
-              le type de profil “profil simple”.
+              Open Food France pour organiser vos ventes / commandes, choisissez le
+              type de profil “profil simple”.
 
               - Si vous fournissez un circuit court utilisant Open Food France pour
               vendre, mais ne vendez pas vous-même en direct sur Open Food France,
@@ -2974,7 +2973,7 @@ fr:
           supplier: "Fournisseur"
           product_name: "Nom du Produit"
           units: "Unité de mesure"
-          value: "Montant"
+          value: "Quantité"
           unit_name: "Unité"
           price: "Prix"
           on_hand: "En stock"
@@ -2993,7 +2992,7 @@ fr:
           products_head:
             name: Produit/Variante
             unit: Unité
-            display_as: Unité affichéé
+            display_as: Unité affichée
             category: Catégorie
             tax_category: TVA applicable
             inherits_properties?: Hériter des propriétés?
@@ -3010,7 +3009,7 @@ fr:
           group_buy: "Achat groupé de lots fixes ?"
           bulk_unit_size: Quantité totale du lot
         display_as:
-          display_as: Unité affichéé
+          display_as: Unité affichée
       reports:
         table:
           select_and_search: "Sélectionner les filtres et cliquer sur %{option} pour accéder aux données."
@@ -3066,7 +3065,7 @@ fr:
           cost_price: "Prix coutant"
           sku: "Référence Produit"
           price: "Prix"
-          display_as: "Unité affichéé"
+          display_as: "Unité affichée"
           display_name: "Nom affiché"
         autocomplete:
           producer_name: "Producteur"

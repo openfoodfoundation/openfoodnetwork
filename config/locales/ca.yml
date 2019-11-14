@@ -296,7 +296,6 @@ ca:
     volume: Volum
     items: Articles
     select_all: Seleccionar tot
-    obsolete_master: Mestra obsoleta
     quick_search: Cerca Ràpida
     clear_all: Esborrar tot
     start_date: "Data d'inici"

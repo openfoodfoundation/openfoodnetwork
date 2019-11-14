@@ -285,7 +285,6 @@ it:
     volume: Volume
     items: Prodotti
     select_all: Seleziona tutto
-    obsolete_master: Master obsoleto
     quick_search: Ricerca veloce
     clear_all: Cancella tutto
     start_date: "Data di inizio"

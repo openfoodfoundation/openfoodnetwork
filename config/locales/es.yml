@@ -296,7 +296,6 @@ es:
     volume: Volumen
     items: Artículos
     select_all: Seleccionar todo
-    obsolete_master: Master obsoleto
     quick_search: Búsqueda rápida
     clear_all: Limpiar todo
     start_date: "Fecha de inicio"
