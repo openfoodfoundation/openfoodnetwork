@@ -296,7 +296,6 @@ nb:
     volume: Volum
     items: Varer
     select_all: Velg alle
-    obsolete_master: Foreldet master
     quick_search: Hurtigsøk
     clear_all: Fjern Alt
     start_date: "Startdato"
@@ -434,9 +433,12 @@ nb:
         infinity: "Uendelig"
         to_order_tip: "Varer laget for bestilling har ikke et lagernivå, slik som ferske skiver brød laget for bestilling."
       back_to_products_list: "Tilbake til produktlisten"
+      editing_product: "Redigerer produkt"
       tabs:
+        product_details: "Produktdetaljer"
         group_buy_options: "Gruppekjøpsalternativer"
         images: "Bilder"
+        variants: "Varianter"
         product_properties: "Produktegenskaper"
     product_import:
       title: Produktimport
@@ -2777,6 +2779,12 @@ nb:
     minimal_amount: "Minimal Mengde"
     normal_amount: "Normal Mengde"
     discount_amount: "Rabattmengde"
+    no_images_found: "Ingen Bilder Funnet"
+    new_image: "Nytt Bilde"
+    filename: "Filnavn"
+    alt_text: "Alternativ Tekst"
+    thumbnail: "Miniatyrbilde"
+    back_to_images_list: "Tilbake til bildelisten"
     email: Epost
     account_updated: "Konto oppdatert!"
     email_updated: "Kontoen vil bli oppdatert når den nye epostadressen er bekreftet."
@@ -2788,6 +2796,7 @@ nb:
     zipcode: Postnummer
     weight: Vekt (per kg)
     error_user_destroy_with_orders: "Brukere med fullførte ordrer kan ikke slettes"
+    options: "Valg"
     actions:
       update: "Oppdater"
     errors:
@@ -2819,6 +2828,8 @@ nb:
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Arve egenskaper fra %{supplier}? (med mindre overstyrt over)"
+          add_product_properties: "Legg til Produktegenskaper"
+          select_from_prototype: "Velg Fra Prototyp"
       orders:
         index:
           listing_orders: "Lister opp bestillinger"
@@ -3009,12 +3020,23 @@ nb:
         index:
           sku: "SKU"
           price: "Pris"
+          options: "Valg"
           no_results: "Ingen resultater"
+          to_add_variants_you_must_first_define: "For å legge til varianter, må du først definere"
           option_types: "Valgtyper"
+          option_values: "Valgverdier"
+          and: "og"
+          new_variant: "Ny Variant"
+          show_active: "Vis Aktive"
+          show_deleted: "Vis Slettet"
+        new:
+          new_variant: "Ny Variant"
         form:
+          cost_price: "Innkjøpspris"
           sku: "SKU"
           price: "Pris"
           display_as: "Vis som"
+          display_name: "Visningsnavn"
         autocomplete:
           producer_name: "Produsent"
           unit: "Enhet"
@@ -3154,3 +3176,19 @@ nb:
         allow_charges?: "Tillat å belaste?"
     localized_number:
       invalid_format: har et ugyldig format. Vennligst skriv inn et nummer.
+    api:
+      invalid_api_key: "Ugyldig API-nøkkel (%{key}) spesifisert."
+      unauthorized: "Du er ikke autorisert til å utføre handlingen."
+      invalid_resource: "Ugyldig ressurs. Vennligst rett feil og prøv igjen."
+      resource_not_found: "Ressursen du lette etter, ble ikke funnet."
+      access: "API-tilgang"
+      key: "Nøkkel"
+      clear_key: "Fjern nøkkel"
+      regenerate_key: "Regenerer Nøkkel"
+      no_key: "Ingen nøkkel"
+      generate_key: "Generer API-nøkkel"
+      key_generated: "Nøkkel generert"
+      key_cleared: "Nøkkelen ble fjernet"
+      shipment:
+        cannot_ready: "Kan ikke gjøre klar forsendelse."
+      invalid_taxonomy_id: "Ugyldig kategori-id."
