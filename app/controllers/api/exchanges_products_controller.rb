@@ -3,26 +3,27 @@ module Api
     skip_authorization_check only: [:index]
 
     def index
-      @exchange = Exchange.find_by_id(params[:exchange_id])
+      exchange = Exchange.find_by_id(params[:exchange_id])
+      @order_cycle = exchange.order_cycle
 
-      render json: exchange_products,
+      render json: exchange_products(exchange.incoming, exchange.sender),
              each_serializer: Api::Admin::ForOrderCycle::SuppliedProductSerializer,
-             order_cycle: @exchange.order_cycle,
+             order_cycle: @order_cycle,
              status: :ok
     end
 
     private
 
-    def exchange_products
-      if @exchange.incoming
-        products_for_incoming_exchange
+    def exchange_products(incoming, enterprise)
+      if incoming
+        products_for_incoming_exchange(enterprise)
       else
         products_for_outgoing_exchange
       end
     end
 
-    def products_for_incoming_exchange
-      supplied_products(@exchange.order_cycle, @exchange.sender)
+    def products_for_incoming_exchange(enterprise)
+      supplied_products(@order_cycle, enterprise)
     end
 
     def supplied_products(order_cycle, enterprise)
@@ -36,7 +37,7 @@ module Api
     def products_for_outgoing_exchange
       products = []
       enterprises_for_outgoing_exchange.each do |enterprise|
-        products.push( *supplied_products(@exchange.order_cycle, enterprise).to_a )
+        products.push( *supplied_products(@order_cycle, enterprise).to_a )
 
         products.each do |product|
           unless product_supplied_to_order_cycle?(product)
@@ -56,7 +57,7 @@ module Api
 
       scoped_exchanges =
         OpenFoodNetwork::OrderCyclePermissions.
-          new(spree_current_user, @exchange.order_cycle).
+          new(spree_current_user, @order_cycle).
           visible_exchanges.
           by_enterprise_name.
           incoming
@@ -85,7 +86,7 @@ module Api
 
     def enterprises_for_outgoing_exchange
       enterprises = OpenFoodNetwork::OrderCyclePermissions.
-        new(spree_current_user, @exchange.order_cycle)
+        new(spree_current_user, @order_cycle)
         .visible_enterprises
       return enterprises if enterprises.empty?
 
