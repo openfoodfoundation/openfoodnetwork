@@ -1,0 +1,30 @@
+- content_for :page_title do
+  = t('.properties')
+
+- content_for :page_actions do
+  %li#new_property_link
+    = button_link_to t('.new_property'), new_admin_property_url, { remote: true, icon: 'icon-plus', 'data-update' => 'new_property', id: 'new_property_link' }
+
+= render partial: 'spree/admin/shared/product_sub_menu'
+
+#new_property
+%table#listing_properties.index
+  %colgroup
+    %col{style: "width: 45%"}/
+    %col{style: "width: 45%"}/
+    %col{style: "width: 10%"}/
+  %thead
+    %tr
+      %th= t('.name')
+      %th= t('.presentation')
+      %th.actions
+  %tbody
+    - @properties.each do |property|
+      - tr_class = cycle('odd', 'even')
+      - tr_id = spree_dom_id(property)
+      %tr{class: tr_class, id: tr_id}
+        %td= property.name
+        %td= property.presentation
+        %td.actions
+          = link_to_edit(property, no_text: true)
+          = link_to_delete(property, no_text: true)
