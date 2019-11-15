@@ -1,6 +1,16 @@
 module Api
   class ExchangesProductsController < Api::BaseController
-    skip_authorization_check only: [:index]
+    skip_authorization_check only: [:index, :show]
+
+    def show
+      enterprise = Enterprise.find_by_id(params[:enterprise_id])
+      @order_cycle = OrderCycle.find_by_id(params[:order_cycle_id])
+
+      render json: exchange_products(params[:incoming], enterprise),
+             each_serializer: Api::Admin::ForOrderCycle::SuppliedProductSerializer,
+             order_cycle: @order_cycle,
+             status: :ok
+    end
 
     def index
       exchange = Exchange.find_by_id(params[:exchange_id])

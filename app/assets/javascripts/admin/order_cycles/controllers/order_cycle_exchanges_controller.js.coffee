@@ -49,7 +49,9 @@ angular.module('admin.orderCycles')
       return if scope.enterprises[exchange.enterprise_id].supplied_products_fetched?
       scope.enterprises[exchange.enterprise_id].supplied_products_fetched = true
 
-      Product.index {exchange_id: exchange.id, enterprise_id: exchange.enterprise_id}, (products) ->
+      incoming = true if $scope.view == 'incoming'
+      params = { exchange_id: exchange.id, enterprise_id: exchange.enterprise_id, order_cycle_id: $scope.order_cycle.id, incoming: incoming}
+      Product.index params, (products) ->
         scope.enterprises[exchange.enterprise_id].supplied_products = products
 
     initPanel = (scope, exchange) ->
