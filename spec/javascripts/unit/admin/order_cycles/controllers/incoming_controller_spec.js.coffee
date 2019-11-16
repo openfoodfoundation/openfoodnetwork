@@ -10,9 +10,14 @@ describe 'AdminOrderCycleIncomingCtrl', ->
   beforeEach ->
     scope =
       $watch: jasmine.createSpy('$watch')
+      exchangeListChanged: jasmine.createSpy('exchangeListChanged')
     location =
       absUrl: ->
         'example.com/admin/order_cycles/27/edit'
+    event =
+      preventDefault: jasmine.createSpy('preventDefault')
+    OrderCycle =
+      addSupplier: jasmine.createSpy('addSupplier')
     ocInstance = {}
 
     module('admin.orderCycles')
@@ -33,3 +38,11 @@ describe 'AdminOrderCycleIncomingCtrl', ->
 
   it 'returns zero when products list is empty', ->
     expect(scope.countVariants([])).toEqual(0)
+
+  it 'adds order cycle suppliers', ->
+    scope.new_supplier_id = 'new supplier id'
+
+    scope.addSupplier(event)
+
+    expect(event.preventDefault).toHaveBeenCalled()
+    expect(OrderCycle.addSupplier).toHaveBeenCalledWith('new supplier id', scope.exchangeListChanged)

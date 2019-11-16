@@ -11,6 +11,7 @@ describe 'AdminEditOrderCycleCtrl', ->
     scope =
       order_cycle_form: jasmine.createSpyObj('order_cycle_form', ['$dirty', '$setPristine'])
       $watch: jasmine.createSpy('$watch')
+      exchangeListChanged: jasmine.createSpy('exchangeListChanged')
     event =
       preventDefault: jasmine.createSpy('preventDefault')
     location =
@@ -37,9 +38,6 @@ describe 'AdminEditOrderCycleCtrl', ->
   it 'Loads enterprise fees', ->
     expect(EnterpriseFee.index).toHaveBeenCalled()
     expect(scope.enterprise_fees).toEqual('enterprise fees list')
-
-  it 'Loads order cycles', ->
-    expect(OrderCycle.load).toHaveBeenCalledWith('27')
 
   it 'Removes coordinator fees', ->
     scope.removeCoordinatorFee(event, 0)

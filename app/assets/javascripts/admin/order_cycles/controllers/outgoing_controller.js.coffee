@@ -9,6 +9,10 @@ angular.module('admin.orderCycles').controller 'AdminOrderCycleOutgoingCtrl', ($
   $scope.incomingExchangeVariantsFor = (enterprise_id) ->
     $filter('filterExchangeVariants')(OrderCycle.incomingExchangesVariants(), $scope.order_cycle.visible_variants_for_outgoing_exchanges[enterprise_id])
 
+  $scope.addDistributor = ($event) ->
+    $event.preventDefault()
+    OrderCycle.addDistributor $scope.new_distributor_id, $scope.exchangeListChanged
+
   $scope.submit = ($event, destination) ->
     $event.preventDefault()
     StatusMessage.display 'progress', t('js.saving')

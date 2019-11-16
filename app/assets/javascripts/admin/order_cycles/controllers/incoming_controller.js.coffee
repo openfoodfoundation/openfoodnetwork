@@ -1,4 +1,4 @@
-angular.module('admin.orderCycles').controller 'AdminOrderCycleIncomingCtrl', ($scope, $controller, $location, Enterprise, ocInstance) ->
+angular.module('admin.orderCycles').controller 'AdminOrderCycleIncomingCtrl', ($scope, $controller, $location, Enterprise, OrderCycle, ocInstance) ->
   $controller('AdminOrderCycleExchangesCtrl', {$scope: $scope, ocInstance: ocInstance, $location: $location})
 
   $scope.view = 'incoming'
@@ -21,3 +21,7 @@ angular.module('admin.orderCycles').controller 'AdminOrderCycleIncomingCtrl', ($
     for product in products
       numVariants += product.variants.length
     numVariants
+
+  $scope.addSupplier = ($event) ->
+    $event.preventDefault()
+    OrderCycle.addSupplier $scope.new_supplier_id, $scope.exchangeListChanged

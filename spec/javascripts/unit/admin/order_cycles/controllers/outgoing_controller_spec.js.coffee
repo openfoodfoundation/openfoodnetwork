@@ -10,11 +10,15 @@ describe 'AdminOrderCycleOutgoingCtrl', ->
   beforeEach ->
     scope =
       $watch: jasmine.createSpy('$watch')
+      exchangeListChanged: jasmine.createSpy('exchangeListChanged')
     location =
       absUrl: ->
         'example.com/admin/order_cycles/27/edit'
+    event =
+      preventDefault: jasmine.createSpy('preventDefault')
     OrderCycle =
       variantSuppliedToOrderCycle: jasmine.createSpy('variantSuppliedToOrderCycle').and.returnValue('variant supplied')
+      addDistributor: jasmine.createSpy('addDistributor')
     ocInstance = {}
 
     module('admin.orderCycles')
@@ -24,3 +28,11 @@ describe 'AdminOrderCycleOutgoingCtrl', ->
   it 'Delegates variantSuppliedToOrderCycle to OrderCycle', ->
     expect(scope.variantSuppliedToOrderCycle('variant')).toEqual('variant supplied')
     expect(OrderCycle.variantSuppliedToOrderCycle).toHaveBeenCalledWith('variant')
+
+  it 'Adds order cycle distributors', ->
+    scope.new_distributor_id = 'new distributor id'
+
+    scope.addDistributor(event)
+
+    expect(event.preventDefault).toHaveBeenCalled()
+    expect(OrderCycle.addDistributor).toHaveBeenCalledWith('new distributor id', scope.exchangeListChanged)
