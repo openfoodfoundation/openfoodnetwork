@@ -47,12 +47,12 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, $
     addSupplier: (new_supplier_id, callback) ->
       this.order_cycle.incoming_exchanges.push({enterprise_id: new_supplier_id, incoming: true, active: true, variants: {}, enterprise_fees: []})
       $timeout ->
-        callback()
+        (callback || angular.noop)()
 
     addDistributor: (new_distributor_id, callback) ->
       this.order_cycle.outgoing_exchanges.push({ enterprise_id: new_distributor_id, incoming: false, active: true, variants: {}, enterprise_fees: [] })
       $timeout ->
-        callback()
+        (callback || angular.noop)()
 
     removeExchange: (exchange) ->
       if exchange.incoming

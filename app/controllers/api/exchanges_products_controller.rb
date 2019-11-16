@@ -4,7 +4,12 @@ module Api
 
     def show
       enterprise = Enterprise.find_by_id(params[:enterprise_id])
-      @order_cycle = OrderCycle.find_by_id(params[:order_cycle_id])
+
+      if params[:order_cycle_id]
+        @order_cycle = OrderCycle.find_by_id(params[:order_cycle_id])
+      elsif !params[:incoming]
+        raise "order_cycle_id is required to list products for new outgoing exchange"
+      end
 
       render json: exchange_products(params[:incoming], enterprise),
              each_serializer: Api::Admin::ForOrderCycle::SuppliedProductSerializer,
@@ -33,12 +38,12 @@ module Api
     end
 
     def products_for_incoming_exchange(enterprise)
-      supplied_products(@order_cycle, enterprise)
+      supplied_products(enterprise)
     end
 
-    def supplied_products(order_cycle, enterprise)
-      if order_cycle.prefers_product_selection_from_coordinator_inventory_only?
-        enterprise.supplied_products.visible_for(order_cycle.coordinator)
+    def supplied_products(enterprise)
+      if @order_cycle.present? && @order_cycle.prefers_product_selection_from_coordinator_inventory_only?
+        enterprise.supplied_products.visible_for(@order_cycle.coordinator)
       else
         enterprise.supplied_products
       end
@@ -47,7 +52,7 @@ module Api
     def products_for_outgoing_exchange
       products = []
       enterprises_for_outgoing_exchange.each do |enterprise|
-        products.push( *supplied_products(@order_cycle, enterprise).to_a )
+        products.push( *supplied_products(enterprise).to_a )
 
         products.each do |product|
           unless product_supplied_to_order_cycle?(product)

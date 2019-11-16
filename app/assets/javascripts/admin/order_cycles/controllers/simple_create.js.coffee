@@ -1,23 +1,33 @@
-angular.module('admin.orderCycles').controller "AdminSimpleCreateOrderCycleCtrl", ($scope, $controller, $window, OrderCycle, Enterprise, EnterpriseFee, StatusMessage, Schedules, RequestMonitor, ocInstance) ->
+angular.module('admin.orderCycles').controller "AdminSimpleCreateOrderCycleCtrl", ($scope, $controller, $window, OrderCycle, Enterprise, EnterpriseFee, Product, StatusMessage, Schedules, RequestMonitor, ocInstance) ->
   $controller('AdminOrderCycleBasicCtrl', {$scope: $scope, ocInstance: ocInstance})
 
   $scope.order_cycle = OrderCycle.new {coordinator_id: ocInstance.coordinator_id}, =>
-    # TODO: make this a get method, which only fetches one enterprise
     $scope.enterprises = Enterprise.index {coordinator_id: ocInstance.coordinator_id}, (enterprises) =>
       $scope.init(enterprises)
     $scope.enterprise_fees = EnterpriseFee.index(coordinator_id: ocInstance.coordinator_id)
 
   $scope.init = (enterprises) ->
     enterprise = enterprises[Object.keys(enterprises)[0]]
-    OrderCycle.addSupplier enterprise.id
-    OrderCycle.addDistributor enterprise.id
+    OrderCycle.order_cycle.coordinator_id = enterprise.id
+
+    OrderCycle.addDistributor enterprise.id, $scope.setOutgoingExchange
+    OrderCycle.addSupplier enterprise.id, $scope.loadExchangeProducts
+
+  $scope.setOutgoingExchange = ->
     $scope.outgoing_exchange = OrderCycle.order_cycle.outgoing_exchanges[0]
 
-    # All variants start as checked
-    OrderCycle.setExchangeVariants(OrderCycle.order_cycle.incoming_exchanges[0],
-      Enterprise.suppliedVariants(enterprise.id), true)
+  $scope.loadExchangeProducts = ->
+    $scope.incoming_exchange = OrderCycle.order_cycle.incoming_exchanges[0]
 
-    OrderCycle.order_cycle.coordinator_id = enterprise.id
+    params = { enterprise_id: $scope.incoming_exchange.enterprise_id, incoming: true }
+    Product.index params, $scope.storeProductsAndSelectAllVariants
+
+  $scope.storeProductsAndSelectAllVariants = (products) ->
+    $scope.enterprises[$scope.incoming_exchange.enterprise_id].supplied_products = products
+
+    # All variants start as checked
+    OrderCycle.setExchangeVariants($scope.incoming_exchange,
+      Enterprise.suppliedVariants($scope.incoming_exchange.enterprise_id), true)
 
   $scope.removeDistributionOfVariant = angular.noop
 
