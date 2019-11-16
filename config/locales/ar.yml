@@ -2831,6 +2831,20 @@ ar:
           inherits_properties_checkbox_hint: "وراثة الخصائص من %{supplier}؟ (ما لم يتم تجاوزه أعلاه)"
           add_product_properties: "إضافة خصائص المنتج"
           select_from_prototype: "حدد من النموذج الأولي"
+      properties:
+        index:
+          properties: "الخصائص"
+          new_property: "خصائص جديدة"
+          name: "الاسم"
+          presentation: "عرض"
+        new:
+          new_property: "خصائص جديدة"
+        edit:
+          editing_property: "تحرير الخصائص"
+          back_to_properties_list: "العودة إلى قائمة الخصائص"
+        form:
+          name: "الاسم"
+          presentation: "عرض"
       orders:
         index:
           listing_orders: "لائحة الطلبات"
