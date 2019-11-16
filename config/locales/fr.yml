@@ -2860,6 +2860,20 @@ fr:
           inherits_properties_checkbox_hint: "Hériter des propriétés de %{supplier} ? (non applicable si information de remplacement déjà saisie)"
           add_product_properties: "Ajouter des propriétés/labels"
           select_from_prototype: "Sélectionnez depuis le prototype"
+      properties:
+        index:
+          properties: "Propriétés / labels"
+          new_property: "Nouvelle propriété"
+          name: "Produit/Variante"
+          presentation: "Présentation"
+        new:
+          new_property: "Nouvelle propriété"
+        edit:
+          editing_property: "Modifier la propriété"
+          back_to_properties_list: "Retour à la liste de propriétés"
+        form:
+          name: "Produit/Variante"
+          presentation: "Présentation"
       orders:
         index:
           listing_orders: "Liste des commandes"
