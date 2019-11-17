@@ -2,32 +2,51 @@ module Api
   class ExchangesProductsController < Api::BaseController
     skip_authorization_check only: [:index, :show]
 
+    # Lists products for an Enterprise in an Order Cycle
+    #   This is the same as index below but when the Exchange doesn't exist yet
+    #
+    #   Parameters are: enterprise_id, order_cycle_id and incoming
+    #     order_cycle_id is optional if for incoming
     def show
-      enterprise = Enterprise.find_by_id(params[:enterprise_id])
+      load_data_from_params
+
+      render_products
+    end
+
+    # Lists products in an Exchange
+    def index
+      load_data_from_exchange
+
+      render_products
+    end
+
+    private
+
+    def render_products
+      render json: exchange_products(@incoming, @enterprise),
+             each_serializer: Api::Admin::ForOrderCycle::SuppliedProductSerializer,
+             order_cycle: @order_cycle,
+             status: :ok
+    end
+
+    def load_data_from_exchange
+      exchange = Exchange.find_by_id(params[:exchange_id])
+
+      @order_cycle = exchange.order_cycle
+      @incoming = exchange.incoming
+      @enterprise = exchange.sender
+    end
+
+    def load_data_from_params
+      @enterprise = Enterprise.find_by_id(params[:enterprise_id])
 
       if params[:order_cycle_id]
         @order_cycle = OrderCycle.find_by_id(params[:order_cycle_id])
       elsif !params[:incoming]
         raise "order_cycle_id is required to list products for new outgoing exchange"
       end
-
-      render json: exchange_products(params[:incoming], enterprise),
-             each_serializer: Api::Admin::ForOrderCycle::SuppliedProductSerializer,
-             order_cycle: @order_cycle,
-             status: :ok
+      @incoming = params[:incoming]
     end
-
-    def index
-      exchange = Exchange.find_by_id(params[:exchange_id])
-      @order_cycle = exchange.order_cycle
-
-      render json: exchange_products(exchange.incoming, exchange.sender),
-             each_serializer: Api::Admin::ForOrderCycle::SuppliedProductSerializer,
-             order_cycle: @order_cycle,
-             status: :ok
-    end
-
-    private
 
     def exchange_products(incoming, enterprise)
       if incoming
@@ -42,7 +61,8 @@ module Api
     end
 
     def supplied_products(enterprise)
-      if @order_cycle.present? && @order_cycle.prefers_product_selection_from_coordinator_inventory_only?
+      if @order_cycle.present? &&
+         @order_cycle.prefers_product_selection_from_coordinator_inventory_only?
         enterprise.supplied_products.visible_for(@order_cycle.coordinator)
       else
         enterprise.supplied_products
@@ -70,20 +90,21 @@ module Api
     def incoming_exchanges_variants
       return @incoming_exchanges_variants if @incoming_exchanges_variants.present?
 
-      scoped_exchanges =
-        OpenFoodNetwork::OrderCyclePermissions.
-          new(spree_current_user, @order_cycle).
-          visible_exchanges.
-          by_enterprise_name.
-          incoming
-
       @incoming_exchanges_variants = []
-      scoped_exchanges.each do |exchange|
+      visible_incoming_exchanges.each do |exchange|
         @incoming_exchanges_variants.push(
           *exchange.variants.merge(visible_incoming_variants(exchange)).map(&:id).to_a
         )
       end
       @incoming_exchanges_variants
+    end
+
+    def visible_incoming_exchanges
+      OpenFoodNetwork::OrderCyclePermissions.
+        new(spree_current_user, @order_cycle).
+        visible_exchanges.
+        by_enterprise_name.
+        incoming
     end
 
     def visible_incoming_variants(exchange)
