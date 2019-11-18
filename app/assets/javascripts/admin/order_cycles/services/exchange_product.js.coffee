@@ -11,5 +11,5 @@ angular.module('admin.orderCycles').factory('ExchangeProduct', ($resource) ->
     index: (params={}, callback=null) ->
       ExchangeProductResource.index params, (data) =>
         @loaded = true
-        (callback || angular.noop)(data)
+        (callback || angular.noop)(data.products)
   })

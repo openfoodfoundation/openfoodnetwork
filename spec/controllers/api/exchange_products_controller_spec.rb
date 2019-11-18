@@ -17,7 +17,7 @@ module Api
           exchange = order_cycle.exchanges.incoming.first
           spree_get :index, exchange_id: exchange.id
 
-          expect(json_response.first["supplier_name"]).to eq exchange.variants.first.product.supplier.name
+          expect(json_response["products"].first["supplier_name"]).to eq exchange.variants.first.product.supplier.name
         end
       end
 
@@ -27,8 +27,8 @@ module Api
           spree_get :index, exchange_id: exchange.id
 
           suppliers = [exchange.variants[0].product.supplier.name, exchange.variants[1].product.supplier.name]
-          expect(suppliers).to include json_response.first["supplier_name"]
-          expect(suppliers).to include json_response.second["supplier_name"]
+          expect(suppliers).to include json_response["products"].first["supplier_name"]
+          expect(suppliers).to include json_response["products"].second["supplier_name"]
         end
       end
     end

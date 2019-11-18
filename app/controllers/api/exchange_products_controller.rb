@@ -1,6 +1,9 @@
 # This controller lists products that can be added to an exchange
 module Api
   class ExchangeProductsController < Api::BaseController
+    DEFAULT_PAGE = 1
+    DEFAULT_PER_PAGE = 100
+
     skip_authorization_check only: [:index]
 
     # If exchange_id is present in the URL:
@@ -17,20 +20,17 @@ module Api
         load_data_from_other_params
       end
 
-      render_products
+      render_paginated_products products
     end
 
     private
 
-    def render_products
-      products = ExchangeProductsRenderer.
+    def products
+      ExchangeProductsRenderer.
         new(@order_cycle, spree_current_user).
-        exchange_products(@incoming, @enterprise)
-
-      render json: products,
-             each_serializer: Api::Admin::ForOrderCycle::SuppliedProductSerializer,
-             order_cycle: @order_cycle,
-             status: :ok
+        exchange_products(@incoming, @enterprise).
+        page(params[:page] || DEFAULT_PAGE).
+        per(params[:per_page] || DEFAULT_PER_PAGE)
     end
 
     def load_data_from_exchange
@@ -50,6 +50,28 @@ module Api
         raise "order_cycle_id is required to list products for new outgoing exchange"
       end
       @incoming = params[:incoming]
+    end
+
+    def render_paginated_products(products)
+      serializer = ActiveModel::ArraySerializer.new(
+        products,
+        each_serializer: Api::Admin::ForOrderCycle::SuppliedProductSerializer,
+        order_cycle: @order_cycle
+      )
+
+      render text: {
+        products: serializer,
+        pagination: pagination_data(products)
+      }.to_json
+    end
+
+    def pagination_data(results)
+      {
+        results: results.total_count,
+        pages: results.num_pages,
+        page: (params[:page] || DEFAULT_PAGE).to_i,
+        per_page: (params[:per_page] || DEFAULT_PER_PAGE).to_i
+      }
     end
   end
 end
