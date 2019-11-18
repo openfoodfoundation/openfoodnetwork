@@ -57,7 +57,7 @@ RSpec.describe OpenFoodNetwork::OrdersAndFulfillmentsReport::CustomerTotalsRepor
       order.select_shipping_method(shipping_method2.id)
     end
 
-    xit "displays the correct shipping_method" do
+    it "displays the correct shipping_method" do
       shipping_method_name_field = report_table.first[15]
       expect(shipping_method_name_field).to eq shipping_method2.name
     end
