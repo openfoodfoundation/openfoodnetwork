@@ -14,7 +14,8 @@ class Api::Admin::ForOrderCycle::SuppliedProductSerializer < ActiveModel::Serial
   end
 
   def variants
-    variants = if order_cycle.present? && order_cycle.prefers_product_selection_from_coordinator_inventory_only?
+    variants = if order_cycle.present? &&
+                  order_cycle.prefers_product_selection_from_coordinator_inventory_only?
                  object.variants.visible_for(order_cycle.coordinator)
                else
                  object.variants

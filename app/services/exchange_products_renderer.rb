@@ -41,7 +41,9 @@ class ExchangeProductsRenderer
     @incoming_exchanges_variants = []
     visible_incoming_exchanges.each do |incoming_exchange|
       @incoming_exchanges_variants.push(
-        *incoming_exchange.variants.merge(visible_incoming_variants(incoming_exchange.sender)).map(&:id).to_a
+        *incoming_exchange.variants.merge(
+          visible_incoming_variants(incoming_exchange.sender)
+        ).map(&:id).to_a
       )
     end
     @incoming_exchanges_variants
