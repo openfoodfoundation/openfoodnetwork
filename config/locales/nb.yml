@@ -2830,6 +2830,20 @@ nb:
           inherits_properties_checkbox_hint: "Arve egenskaper fra %{supplier}? (med mindre overstyrt over)"
           add_product_properties: "Legg til Produktegenskaper"
           select_from_prototype: "Velg Fra Prototyp"
+      properties:
+        index:
+          properties: "Egenskaper"
+          new_property: "Ny Egenskap"
+          name: "Navn"
+          presentation: "Presentasjon"
+        new:
+          new_property: "Ny Egenskap"
+        edit:
+          editing_property: "Redigerer Egenskap"
+          back_to_properties_list: "Tilbake til listen over egenskaper"
+        form:
+          name: "Navn"
+          presentation: "Presentasjon"
       orders:
         index:
           listing_orders: "Lister opp bestillinger"
