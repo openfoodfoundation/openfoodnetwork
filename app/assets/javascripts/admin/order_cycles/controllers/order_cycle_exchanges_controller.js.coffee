@@ -36,14 +36,20 @@ angular.module('admin.orderCycles')
     $scope.removeDistributionOfVariant = (variant_id) ->
       OrderCycle.removeDistributionOfVariant(variant_id)
 
-    $scope.loadExchangeProducts = (exchange) ->
-      return if $scope.enterprises[exchange.enterprise_id].supplied_products_fetched?
-      $scope.enterprises[exchange.enterprise_id].supplied_products_fetched = true
+    $scope.loadExchangeProducts = (exchange, page = 1) ->
+      enterprise = $scope.enterprises[exchange.enterprise_id]
+
+      return if enterprise.last_page_loaded? && enterprise.last_page_loaded >= page
+      enterprise.last_page_loaded = page
 
       incoming = true if $scope.view == 'incoming'
-      params = { exchange_id: exchange.id, enterprise_id: exchange.enterprise_id, order_cycle_id: $scope.order_cycle.id, incoming: incoming}
+      params = { exchange_id: exchange.id, enterprise_id: exchange.enterprise_id, order_cycle_id: $scope.order_cycle.id, incoming: incoming, page: page}
       ExchangeProduct.index params, (products) ->
-        $scope.enterprises[exchange.enterprise_id].supplied_products = products
+        enterprise.supplied_products = [] unless enterprise.supplied_products?
+        enterprise.supplied_products.push products...
+
+    $scope.loadMoreExchangeProducts = ->
+      $scope.loadExchangeProducts(this.exchange, this.enterprises[this.exchange.enterprise_id].last_page_loaded + 1)
 
     # initialize exchange products panel if not yet done
     $scope.exchangeProdutsPanelInitialized = []

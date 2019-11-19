@@ -26,3 +26,6 @@
               'id' => 'order_cycle_outgoing_exchange_{{ $parent.$parent.$index }}_variants_{{ variant.id }}',
               'ng-disabled' => '!order_cycle.editable_variants_for_outgoing_exchanges.hasOwnProperty(exchange.enterprise_id) || order_cycle.editable_variants_for_outgoing_exchanges[exchange.enterprise_id].indexOf(variant.id) < 0' }
             {{ variant.label }}
+    .pagination
+      .button{ 'ng-click' => 'loadMoreExchangeProducts()' }
+        {{ 'js.admin.panels.exchange_products.load_more_products' | t }}
