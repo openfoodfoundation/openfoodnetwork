@@ -20,15 +20,30 @@ module Api
         load_data_from_other_params
       end
 
-      render_paginated_products products
+      render_variant_count && return if params[:action_name] == "variant_count"
+
+      render_paginated_products paginated_products
     end
 
     private
 
+    def render_variant_count
+      render text: {
+        count: Spree::Variant.
+          not_master.
+          where(product_id: products).
+          count
+      }.to_json
+    end
+
     def products
       ExchangeProductsRenderer.
         new(@order_cycle, spree_current_user).
-        exchange_products(@incoming, @enterprise).
+        exchange_products(@incoming, @enterprise)
+    end
+
+    def paginated_products
+      products.
         page(params[:page] || DEFAULT_PAGE).
         per(params[:per_page] || DEFAULT_PER_PAGE)
     end
@@ -52,23 +67,23 @@ module Api
       @incoming = params[:incoming]
     end
 
-    def render_paginated_products(products)
+    def render_paginated_products(paginated_products)
       serializer = ActiveModel::ArraySerializer.new(
-        products,
+        paginated_products,
         each_serializer: Api::Admin::ForOrderCycle::SuppliedProductSerializer,
         order_cycle: @order_cycle
       )
 
       render text: {
         products: serializer,
-        pagination: pagination_data(products)
+        pagination: pagination_data(paginated_products)
       }.to_json
     end
 
-    def pagination_data(results)
+    def pagination_data(paginated_products)
       {
-        results: results.total_count,
-        pages: results.num_pages,
+        results: paginated_products.total_count,
+        pages: paginated_products.num_pages,
         page: (params[:page] || DEFAULT_PAGE).to_i,
         per_page: (params[:per_page] || DEFAULT_PER_PAGE).to_i
       }

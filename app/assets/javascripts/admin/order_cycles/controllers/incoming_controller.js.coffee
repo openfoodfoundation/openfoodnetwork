@@ -1,4 +1,4 @@
-angular.module('admin.orderCycles').controller 'AdminOrderCycleIncomingCtrl', ($scope, $controller, $location, Enterprise, OrderCycle, ocInstance) ->
+angular.module('admin.orderCycles').controller 'AdminOrderCycleIncomingCtrl', ($scope, $controller, $location, Enterprise, OrderCycle, ExchangeProduct, ocInstance) ->
   $controller('AdminOrderCycleExchangesCtrl', {$scope: $scope, ocInstance: ocInstance, $location: $location})
 
   $scope.view = 'incoming'
@@ -9,18 +9,11 @@ angular.module('admin.orderCycles').controller 'AdminOrderCycleIncomingCtrl', ($
     enterprise = $scope.enterprises[exchange.enterprise_id]
     return enterprise.numVariants if enterprise.numVariants?
 
-    $scope.loadExchangeProducts(exchange)
-    return unless enterprise.supplied_products?
-
-    enterprise.numVariants = $scope.countVariants(enterprise.supplied_products)
-
-  $scope.countVariants = (products) ->
-    return 0 unless products
-
-    numVariants = 0
-    for product in products
-      numVariants += product.variants.length
-    numVariants
+    enterprise.numVariants = 0
+    params = { exchange_id: exchange.id, enterprise_id: exchange.enterprise_id, order_cycle_id: $scope.order_cycle.id, incoming: true}
+    ExchangeProduct.countVariants params, (variants_count) ->
+      enterprise.numVariants = variants_count
+    return enterprise.numVariants
 
   $scope.addSupplier = ($event) ->
     $event.preventDefault()
