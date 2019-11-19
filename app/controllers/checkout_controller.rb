@@ -3,7 +3,9 @@ require 'open_food_network/address_finder'
 class CheckoutController < Spree::CheckoutController
   layout 'darkswarm'
 
-  prepend_around_filter :lock_variants, only: :update
+  # We need pessimistic locking to avoid race conditions.
+  # Otherwise we fail on duplicate indexes or end up with negative stock.
+  prepend_around_filter CurrentOrderLocker, only: :update
 
   prepend_before_filter :check_hub_ready_for_checkout
   prepend_before_filter :check_order_cycle_expiry
@@ -77,33 +79,6 @@ class CheckoutController < Spree::CheckoutController
   end
 
   private
-
-  # We need locks to avoid a race condition on stock checking. Otherwise we end
-  # up with negative stock when many people check out at the same time. This
-  # implementation makes a checkout wait for all other checkouts containing one
-  # of the order`s variants.
-  #
-  # There are many places in which stock is stored in the database. Row locking
-  # on variant level ensures that there are no conflicts even when an item is
-  # sold through different shops.
-  #
-  # Ordering the variants by id prevents deadlocks. Plucking the id sends the
-  # locking query without building Spree::Variant objects.
-  def lock_variants
-    # The before action `load_order` handles this error state:
-    return yield if current_order.nil?
-
-    ActiveRecord::Base.transaction do
-      # Prevent another checkout from completing the order at the same time:
-      current_order.lock!
-
-      # Prevent any other checkouts of the same line items at the same time:
-      variant_ids = current_order.line_items.select(:variant_id)
-      Spree::Variant.where(id: variant_ids).order(:id).lock.pluck(:id)
-
-      yield
-    end
-  end
 
   def set_default_bill_address
     if params[:order][:default_bill_address]
