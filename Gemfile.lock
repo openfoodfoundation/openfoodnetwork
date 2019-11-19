@@ -169,6 +169,9 @@ GEM
     bugsnag (6.12.2)
       concurrent-ruby (~> 1.0)
     builder (3.0.4)
+    bullet (5.4.3)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.10.0)
     byebug (9.0.6)
     cancan (1.6.10)
     capybara (2.18.0)
@@ -689,6 +692,7 @@ GEM
     unicorn-rails (2.2.1)
       rack
       unicorn
+    uniform_notifier (1.10.0)
     uuidtools (2.1.5)
     versioncake (1.0.0)
       actionpack (>= 3.0)
@@ -730,6 +734,7 @@ DEPENDENCIES
   aws-sdk
   blockenspiel
   bugsnag
+  bullet (< 5.5.0)
   byebug (~> 9.0.0)
   capybara (>= 2.18.0)
   coffee-rails (~> 3.2.1)

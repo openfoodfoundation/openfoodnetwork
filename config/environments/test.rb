@@ -53,6 +53,13 @@ Openfoodnetwork::Application.configure do
   require 'open_food_network/rack_request_blocker'
   # Make sure the middleware is inserted first in middleware chain
   config.middleware.insert_before('ActionDispatch::Static', 'RackRequestBlocker')
+
+  # Log Bullet reports to automatically find N+1 queries
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.bullet_logger = true
+    Bullet.raise = false # Raise an error in CI if an N+1 query is found
+  end
 end
 
 # Allows us to use _url helpers in Rspec

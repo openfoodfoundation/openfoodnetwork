@@ -152,6 +152,7 @@ group :test, :development do
 end
 
 group :test do
+  gem 'bullet', '< 5.5.0' # For active-record 3.x
   gem 'simplecov', require: false
   gem 'webmock'
   # See spec/spec_helper.rb for instructions

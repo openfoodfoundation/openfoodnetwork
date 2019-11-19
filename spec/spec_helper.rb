@@ -185,4 +185,10 @@ RSpec.configure do |config|
   # config.after :suite do
   # PerfTools::CpuProfiler.stop
   # end
+
+  # Enable Bullet gem in tests
+  if Bullet.enable?
+    config.before(:each) { Bullet.start_request }
+    config.after(:each)  { Bullet.end_request }
+  end
 end
