@@ -198,8 +198,13 @@ module OpenFoodNetwork
       private
 
       def shipping_method(line_items)
-        line_items.first.order.shipments.first.
-          andand.shipping_rates.andand.first.andand.shipping_method
+        shipping_rates = line_items.first.order.shipments.first.
+          andand.shipping_rates
+
+        return unless shipping_rates
+
+        shipping_rate = shipping_rates.find(&:selected) || shipping_rates.first
+        shipping_rate.try(:shipping_method)
       end
     end
   end
