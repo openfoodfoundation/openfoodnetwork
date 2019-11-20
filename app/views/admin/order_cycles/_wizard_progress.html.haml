@@ -1,0 +1,3 @@
+%ul.wizard-progress
+  %li{ ng: { repeat: "step in ['general_settings','incoming','outgoing']", class: '{current: view==step}' } }
+    {{ "admin.order_cycles.wizard_progress."+ step | t }}

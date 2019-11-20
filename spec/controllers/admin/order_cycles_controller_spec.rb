@@ -111,10 +111,20 @@ module Admin
         context "when creation is successful" do
           before { allow(form_mock).to receive(:save) { true } }
 
-          it "returns success: true" do
+          # mock build_resource so that we can control the edit_path
+          OrderCyclesController.class_eval do
+            def build_resource
+              order_cycle = OrderCycle.new
+              order_cycle.id = 1
+              order_cycle
+            end
+          end
+
+          it "returns success: true and a valid edit path" do
             spree_post :create, params
             json_response = JSON.parse(response.body)
             expect(json_response['success']).to be true
+            expect(json_response['edit_path']).to eq "/admin/order_cycles/1/incoming"
           end
         end
 

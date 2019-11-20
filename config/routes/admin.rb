@@ -9,6 +9,8 @@ Openfoodnetwork::Application.routes.draw do
 
     resources :order_cycles do
       post :bulk_update, on: :collection, as: :bulk_update
+      get :incoming
+      get :outgoing
 
       member do
         get :clone

@@ -888,10 +888,36 @@ en:
       loading_flash:
         loading_order_cycles: LOADING ORDER CYCLES
         loading: LOADING...
+      new:
+        create: "Create"
+        cancel: "Cancel"
+        back_to_list: "Back To List"
       edit:
-        advanced_settings: Advanced Settings
-        update_and_close: Update and Close
-        choose_products_from: 'Choose Products From:'
+        advanced_settings: "Advanced Settings"
+        save: "Save"
+        save_and_next: "Save and Next"
+        next: "Next"
+        cancel: "Cancel"
+        back_to_list: "Back To List"
+        save_and_back_to_list: "Save and Back to List"
+        choose_products_from: "Choose Products From:"
+      incoming:
+        previous: "Previous"
+        save: "Save"
+        save_and_next: "Save and Next"
+        next: "Next"
+        cancel: "Cancel"
+        back_to_list: "Back To List"
+      outgoing:
+        previous: "Previous"
+        save: "Save"
+        save_and_back_to_list: "Save and Back to List"
+        cancel: "Cancel"
+        back_to_list: "Back To List"
+      wizard_progress:
+        general_settings: "1. General Settings"
+        incoming: "2. Incoming Products"
+        outgoing: "3. Outgoing Products"
       exchange_form:
         pickup_time_tip: When orders from this OC will be ready for the customer
         pickup_instructions_placeholder: "Pick-up instructions"

@@ -1,0 +1,39 @@
+- content_for :page_title do
+  = t :edit_order_cycle
+
+= admin_inject_order_cycle_instance
+= form_for [main_app, :admin, @order_cycle], :url => '', :html => {:class => 'ng order_cycle', 'ng-app' => 'admin.orderCycles', 'ng-controller' => 'AdminOrderCycleIncomingCtrl', name: 'order_cycle_form'} do |f|
+
+  = render 'wizard_progress'
+
+  %save-bar{ dirty: "order_cycle_form.$dirty", persist: "true" }
+    %input{ type: "button", value: t('.previous'), ng: { click: "cancel('#{main_app.edit_admin_order_cycle_path(@order_cycle)}')", disabled: "order_cycle_form.$dirty" } }
+    %input.red{ type: "button", value: t('.save'), ng: { click: "submit($event, null)", disabled: "!order_cycle_form.$dirty || order_cycle_form.$invalid" } }
+    %input.red{ type: "button", value: t('.save_and_next'), ng: { click: "submit($event, '#{main_app.admin_order_cycle_outgoing_path(@order_cycle)}')", disabled: "!order_cycle_form.$dirty || order_cycle_form.$invalid" } }
+    %input{ type: "button", value: t('.next'), ng: { click: "cancel('#{main_app.admin_order_cycle_outgoing_path(@order_cycle)}')", disabled: "order_cycle_form.$dirty" } }
+    %input{ type: "button", ng: { value: "order_cycle_form.$dirty ? '#{t('.cancel')}' : '#{t('.back_to_list')}'", click: "cancel('#{main_app.admin_order_cycles_path}')" } }
+
+  %fieldset.no-border-bottom
+    %legend{ align: 'center'}= t('.incoming')
+
+  %table.exchanges
+    %thead
+      %tr
+        %th= t('.supplier')
+        %th
+          = t('.products')
+          = surround '(', ')' do
+            %a{href: '#', 'ng-click' => "OrderCycle.toggleAllProducts('incoming')"}
+              %span{'ng-show' => "OrderCycle.showProducts['incoming']"}= t(:collapse_all)
+              %span{'ng-hide' => "OrderCycle.showProducts['incoming']"}= t(:expand_all)
+        %th= t('.receival_details')
+        %th= t('.fees')
+        %th.actions
+    %tbody.panel-ctrl{ object: 'exchange', 'ng-repeat' => 'exchange in order_cycle.incoming_exchanges'}
+      = render 'exchange_form', f: f, type: 'supplier'
+
+  - if Enterprise.managed_by(spree_current_user).include? @order_cycle.coordinator
+    = render 'add_exchange_form', f: f, type: 'supplier'
+
+  .actions
+    %span{'ng-hide' => 'loaded()'}= t(:loading)
