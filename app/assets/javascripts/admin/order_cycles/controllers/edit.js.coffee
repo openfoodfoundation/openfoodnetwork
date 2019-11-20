@@ -2,8 +2,6 @@ angular.module('admin.orderCycles')
   .controller 'AdminEditOrderCycleCtrl', ($scope, $controller, $filter, $location, $window, OrderCycle, Enterprise, EnterpriseFee, StatusMessage, Schedules, RequestMonitor, ocInstance) ->
     $controller('AdminOrderCycleBasicCtrl', {$scope: $scope, ocInstance: ocInstance})
 
-    $scope.view = 'general_settings'
-
     order_cycle_id = $location.absUrl().match(/\/admin\/order_cycles\/(\d+)/)[1]
     $scope.order_cycle = OrderCycle.load(order_cycle_id)
     $scope.enterprises = Enterprise.index(order_cycle_id: order_cycle_id)
