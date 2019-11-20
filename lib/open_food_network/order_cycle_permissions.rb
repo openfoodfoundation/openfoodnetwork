@@ -120,36 +120,38 @@ module OpenFoodNetwork
 
     # Find the variants that a user can POTENTIALLY see within incoming exchanges
     def visible_variants_for_incoming_exchanges_from(producer)
-      return Spree::Variant.where("1=0") unless @order_cycle
-
-      if user_manages_coordinator_or(producer)
-        # All variants belonging to the producer
-        Spree::Variant.joins(:product).where('spree_products.supplier_id = (?)', producer)
+      if @order_cycle &&
+         (user_manages_coordinator_or(producer) || user_is_permitted_add_to_oc_by(producer))
+        all_variants_supplied_by(producer)
       else
-        # Producer variants if it has granted P-OC to any of my managed hubs that are in this OC
-        permitted = EnterpriseRelationship.
-          permitting(managed_participating_hubs.select("enterprises.id")).
-          permitted_by(producer.id).
-          with_permission(:add_to_order_cycle).
-          present?
-        if permitted
-          Spree::Variant.joins(:product).where('spree_products.supplier_id = (?)', producer)
-        else
-          Spree::Variant.where("1=0")
-        end
+        no_variants
       end
+    end
+
+    # Producer has granted P-OC to any of my managed hubs that are in this OC
+    def user_is_permitted_add_to_oc_by(producer)
+      EnterpriseRelationship.
+        permitting(managed_participating_hubs.select("enterprises.id")).
+        permitted_by(producer.id).
+        with_permission(:add_to_order_cycle).
+        present?
     end
 
     # Find the variants that a user can edit within incoming exchanges
     def editable_variants_for_incoming_exchanges_from(producer)
-      return Spree::Variant.where("1=0") unless @order_cycle
-
-      if user_manages_coordinator_or(producer)
-        # All variants belonging to the producer
-        Spree::Variant.joins(:product).where('spree_products.supplier_id = (?)', producer)
+      if @order_cycle && user_manages_coordinator_or(producer)
+        all_variants_supplied_by(producer)
       else
-        Spree::Variant.where("1=0")
+        no_variants
       end
+    end
+
+    def all_variants_supplied_by(producer)
+      Spree::Variant.joins(:product).where('spree_products.supplier_id = (?)', producer)
+    end
+
+    def no_variants
+      Spree::Variant.where("1=0")
     end
 
     def all_incoming_editable_variants
