@@ -18,3 +18,12 @@ angular.module('admin.orderCycles').controller 'AdminOrderCycleIncomingCtrl', ($
   $scope.addSupplier = ($event) ->
     $event.preventDefault()
     OrderCycle.addSupplier $scope.new_supplier_id
+
+  # To select all variants we first need to load them all from the server
+  #
+  # This is only needed in Incoming exchanges as here we use supplied_products,
+  #   in Outgoing Exchanges the variants are loaded as part of the Exchange payload
+  $scope.selectAllVariants = (exchange, selected) ->
+    Promise.all($scope.loadAllExchangeProducts(exchange)).then ->
+      $scope.setExchangeVariants(exchange, $scope.suppliedVariants(exchange.enterprise_id), selected)
+      $scope.$apply()
