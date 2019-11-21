@@ -2562,6 +2562,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           resolve: Resolve
         exchange_products:
           load_more_products: "Load More Products"
+          load_all_products: "Load All Products"
       tag_rules:
         shipping_method_tagged_top: "Shipping methods tagged"
         shipping_method_tagged_bottom: "are:"
