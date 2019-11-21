@@ -38,15 +38,16 @@ angular.module('admin.orderCycles')
 
     $scope.loadExchangeProducts = (exchange, page = 1) ->
       enterprise = $scope.enterprises[exchange.enterprise_id]
+      enterprise.supplied_products ?= []
 
       return if enterprise.last_page_loaded? && enterprise.last_page_loaded >= page
       enterprise.last_page_loaded = page
 
       incoming = true if $scope.view == 'incoming'
       params = { exchange_id: exchange.id, enterprise_id: exchange.enterprise_id, order_cycle_id: $scope.order_cycle.id, incoming: incoming, page: page}
-      ExchangeProduct.index params, (products, last_page) ->
-        enterprise.last_page = last_page
-        enterprise.supplied_products = [] unless enterprise.supplied_products?
+      ExchangeProduct.index params, (products, num_of_pages, num_of_products) ->
+        enterprise.num_of_pages = num_of_pages
+        enterprise.num_of_products = num_of_products
         enterprise.supplied_products.push products...
 
     $scope.loadMoreExchangeProducts = ->
@@ -54,7 +55,7 @@ angular.module('admin.orderCycles')
 
     $scope.loadAllExchangeProducts = ->
       enterprise = $scope.enterprises[this.exchange.enterprise_id]
-      for page_to_load in [(enterprise.last_page_loaded + 1)..enterprise.last_page]
+      for page_to_load in [(enterprise.last_page_loaded + 1)..enterprise.num_of_pages]
         $scope.loadExchangeProducts(this.exchange, page_to_load)
 
     # initialize exchange products panel if not yet done

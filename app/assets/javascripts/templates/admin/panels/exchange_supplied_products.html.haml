@@ -1,5 +1,11 @@
 .row.exchange-supplied-products{'ng-init' => 'initializeExchangeProductsPanel(exchange)'}
   .sixteen.columns.alpha.omega
+    .exchange-load-all-variants
+      %div
+        {{ 'js.admin.panels.exchange_products.products_loaded' | t:{ num_of_products_loaded: enterprises[exchange.enterprise_id].supplied_products.length, total_number_of_products: enterprises[exchange.enterprise_id].num_of_products } }}
+        %a{ 'ng-click' => 'loadAllExchangeProducts()' }
+          {{ 'js.admin.panels.exchange_products.load_all_products' | t }}
+
     .exchange-select-all-variants
       %label
         %input{ type: 'checkbox', name: 'order_cycle_incoming_exchange_{{ $index }}_select_all_variants',
@@ -7,7 +13,7 @@
           'ng-model' => 'exchange.select_all_variants',
           'ng-change' => 'setExchangeVariants(exchange, suppliedVariants(exchange.enterprise_id), exchange.select_all_variants)',
           'id' => 'order_cycle_incoming_exchange_{{ $index }}_select_all_variants' }
-        {{ 'admin.select_all' | t }}
+        {{ 'js.admin.panels.exchange_products.select_all_products' | t:{ total_number_of_products: enterprises[exchange.enterprise_id].num_of_products } }}
 
     .exchange-products
       -# No need to scope product list based on permissions, because if an incoming exchange is visible,
