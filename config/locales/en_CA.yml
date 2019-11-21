@@ -391,7 +391,7 @@ en_CA:
         user_guide: User Guide
     enterprise_fees:
       index:
-        title: "Enterprise Fees/Mark-Ups"
+        title: "Enterprise Fees"
         enterprise: "Enterprise"
         fee_type: "Fee Type"
         name: "Name"
@@ -833,10 +833,36 @@ en_CA:
       loading_flash:
         loading_order_cycles: LOADING ORDER CYCLES
         loading: LOADING....
+      new:
+        create: "Create"
+        cancel: "Cancel"
+        back_to_list: "Back to List"
       edit:
-        advanced_settings: Advanced Settings
-        update_and_close: Update and Close
-        choose_products_from: 'Choose Products From:'
+        advanced_settings: "Advanced Settings"
+        save: "Save"
+        save_and_next: "Save and Next"
+        next: "Next"
+        cancel: "Cancel"
+        back_to_list: "Back to List"
+        save_and_back_to_list: "Save and Back to List"
+        choose_products_from: "Choose Products From:"
+      incoming:
+        previous: "Previous"
+        save: "Save"
+        save_and_next: "Save and Next"
+        next: "Next"
+        cancel: "Cancel"
+        back_to_list: "Back to List"
+      outgoing:
+        previous: "Previous"
+        save: "Save"
+        save_and_back_to_list: "Save and Back to List"
+        cancel: "Cancel"
+        back_to_list: "Back to List"
+      wizard_progress:
+        edit: "1. General Settings"
+        incoming: "2. Incoming Products"
+        outgoing: "3. Outgoing Products"
       exchange_form:
         pickup_time_tip: When orders from this OC will be ready for the customer
         pickup_instructions_placeholder: "Pick-up instructions"
@@ -863,6 +889,7 @@ en_CA:
         any_enterprise: "Any Enterprise"
         any_schedule: "Any Schedule"
       form:
+        general_settings: "General Settings"
         incoming: Incoming
         supplier: Supplier
         receival_details: Receival details
@@ -1169,7 +1196,7 @@ en_CA:
   menu_4_title: "Groups"
   menu_4_url: "/groups"
   menu_5_title: "About"
-  menu_5_url: "https://about.openfoodnetwork.org.au/"
+  menu_5_url: "https://about.openfoodnetwork.ca"
   menu_6_title: "Connect"
   menu_6_url: "https://openfoodnetwork.org/au/connect/"
   menu_7_title: "Learn"
@@ -1813,7 +1840,7 @@ en_CA:
         enterprise_final_step: "Final step!"
         enterprise_social_text: "How can people find %{enterprise} online?"
         website: "Website"
-        website_placeholder: "eg. openfoodnetwork.org.au"
+        website_placeholder: "eg. openfoodnetwork.ca"
         facebook: "Facebook"
         facebook_placeholder: "eg. www.facebook.com/PageNameHere"
         linkedin: "LinkedIn"
