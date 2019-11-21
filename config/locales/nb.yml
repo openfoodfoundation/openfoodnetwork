@@ -833,10 +833,36 @@ nb:
       loading_flash:
         loading_order_cycles: LASTER BESTILLINGSRUNDER
         loading: LASTER...
+      new:
+        create: "Opprett"
+        cancel: "Avbryt"
+        back_to_list: "Tilbake til Listen"
       edit:
-        advanced_settings: Avanserte Innstillinger
-        update_and_close: Oppdater og Lukk
-        choose_products_from: 'Velg Produkter Fra:'
+        advanced_settings: "Avanserte Innstillinger"
+        save: "Lagre"
+        save_and_next: "Lagre og Neste"
+        next: "Neste"
+        cancel: "Avbryt"
+        back_to_list: "Tilbake til Listen"
+        save_and_back_to_list: "Lagre og Tilbake til Listen"
+        choose_products_from: "Velg Produkter Fra:"
+      incoming:
+        previous: "Tidligere"
+        save: "Lagre"
+        save_and_next: "Lagre og Neste"
+        next: "Neste"
+        cancel: "Avbryt"
+        back_to_list: "Tilbake til Listen"
+      outgoing:
+        previous: "Tidligere"
+        save: "Lagre"
+        save_and_back_to_list: "Lagre og Tilbake til Listen"
+        cancel: "Avbryt"
+        back_to_list: "Tilbake til Listen"
+      wizard_progress:
+        edit: "1. Generelle Innstillinger"
+        incoming: "2. Innkommende Produkter"
+        outgoing: "3. Utgående Produkter"
       exchange_form:
         pickup_time_tip: Når bestillinger fra denne runden vil være klar for kunden
         pickup_instructions_placeholder: "Henteinstruksjoner"
@@ -863,6 +889,7 @@ nb:
         any_enterprise: "Enhver Bedrift"
         any_schedule: "Enhver Tidsplan"
       form:
+        general_settings: "Generelle innstillinger"
         incoming: Innkommende
         supplier: Leverandør
         receival_details: Mottaksdetaljer
