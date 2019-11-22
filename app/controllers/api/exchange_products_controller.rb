@@ -1,5 +1,6 @@
+# This controller lists products that can be added to an exchange
 module Api
-  class ExchangesProductsController < Api::BaseController
+  class ExchangeProductsController < Api::BaseController
     skip_authorization_check only: [:index, :show]
 
     # Lists products for an Enterprise in an Order Cycle
