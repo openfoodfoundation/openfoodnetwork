@@ -43,8 +43,8 @@ Openfoodnetwork::Application.routes.draw do
       get :properties, on: :member
     end
 
-    resources :exchanges, only: [:show], controller: 'exchange_products' do
-      resources :products, controller: 'exchange_products', only: [:index]
+    resources :exchanges, only: [:show], to: 'exchange_products#index' do
+      get :products, to: 'exchange_products#index'
     end
 
     resource :status do

@@ -1,22 +1,21 @@
 # This controller lists products that can be added to an exchange
 module Api
   class ExchangeProductsController < Api::BaseController
-    skip_authorization_check only: [:index, :show]
+    skip_authorization_check only: [:index]
 
-    # Lists products for an Enterprise in an Order Cycle
-    #   This is the same as index below but when the Exchange doesn't exist yet
+    # If exchange_id is present in the URL:
+    #   Lists Products that can be added to that Exchange
     #
-    #   Parameters are: enterprise_id, order_cycle_id and incoming
-    #     order_cycle_id is optional if for incoming
-    def show
-      load_data_from_params
-
-      render_products
-    end
-
-    # Lists products in an Exchange
+    # If exchange_id is not present in the URL:
+    #   Lists Products of the Enterprise given that can be added to the given Order Cycle
+    #   In this case parameters are: enterprise_id, order_cycle_id and incoming
+    #     (order_cycle_id is not necessary for incoming exchanges)
     def index
-      load_data_from_exchange
+      if params[:exchange_id].present?
+        load_data_from_exchange
+      else
+        load_data_from_other_params
+      end
 
       render_products
     end
@@ -42,7 +41,7 @@ module Api
       @enterprise = exchange.sender
     end
 
-    def load_data_from_params
+    def load_data_from_other_params
       @enterprise = Enterprise.find_by_id(params[:enterprise_id])
 
       if params[:order_cycle_id]
