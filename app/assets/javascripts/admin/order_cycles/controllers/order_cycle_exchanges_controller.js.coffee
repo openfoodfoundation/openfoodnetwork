@@ -36,14 +36,14 @@ angular.module('admin.orderCycles')
     $scope.removeDistributionOfVariant = (variant_id) ->
       OrderCycle.removeDistributionOfVariant(variant_id)
 
-    $scope.loadExchangeProducts = (scope, exchange) ->
-      return if scope.enterprises[exchange.enterprise_id].supplied_products_fetched?
-      scope.enterprises[exchange.enterprise_id].supplied_products_fetched = true
+    $scope.loadExchangeProducts = (exchange) ->
+      return if $scope.enterprises[exchange.enterprise_id].supplied_products_fetched?
+      $scope.enterprises[exchange.enterprise_id].supplied_products_fetched = true
 
       incoming = true if $scope.view == 'incoming'
       params = { exchange_id: exchange.id, enterprise_id: exchange.enterprise_id, order_cycle_id: $scope.order_cycle.id, incoming: incoming}
       Product.index params, (products) ->
-        scope.enterprises[exchange.enterprise_id].supplied_products = products
+        $scope.enterprises[exchange.enterprise_id].supplied_products = products
 
     # Register listeners to capture first toggle open of the products panel of the exchange
     $scope.exchangeListChanged = ->
@@ -57,5 +57,5 @@ angular.module('admin.orderCycles')
     $scope.initializeExchangeProductsPanel = (selection, $element) ->
       scope = $element.scope()
       return if $scope.exchangeProdutsPanelInitialized[scope.exchange.enterprise_id]
-      $scope.loadExchangeProducts(scope, scope.exchange)
+      $scope.loadExchangeProducts(scope.exchange)
       $scope.exchangeProdutsPanelInitialized[scope.exchange.enterprise_id] = true

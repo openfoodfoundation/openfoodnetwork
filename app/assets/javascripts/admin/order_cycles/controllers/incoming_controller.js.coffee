@@ -9,7 +9,7 @@ angular.module('admin.orderCycles').controller 'AdminOrderCycleIncomingCtrl', ($
     enterprise = $scope.enterprises[exchange.enterprise_id]
     return enterprise.numVariants if enterprise.numVariants?
 
-    $scope.loadExchangeProducts($scope, exchange)
+    $scope.loadExchangeProducts(exchange)
     return unless enterprise.supplied_products?
 
     enterprise.numVariants = $scope.countVariants(enterprise.supplied_products)
