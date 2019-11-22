@@ -262,6 +262,7 @@ fr:
     cancel: "Annuler"
     save: "Sauvegarder"
     edit: "Modifier"
+    update: "Mettre à jour"
     delete: "Supprimer"
   admin:
     begins_at: Commence
@@ -2901,6 +2902,37 @@ fr:
         form:
           name: "Produit/Variante"
           presentation: "Présentation"
+      return_authorizations:
+        index:
+          new_return_authorization: "Nouvelle autorisation de retour"
+          return_authorizations: "Autorisations de retours"
+          back_to_orders_list: "Retour à la liste des commandes"
+          rma_number: "Numéro RMA"
+          status: "Statut"
+          amount: "Montant"
+          cannot_create_returns: "Impossible de créer une autorisation de retour car aucun produit n'a été livré pour cette commande."
+          continue: "Suivant"
+        new:
+          new_return_authorization: "Nouvelle autorisation de retour"
+          back_to_return_authorizations_list: "Revenir à la liste des autorisations"
+          continue: "Suivant"
+        edit:
+          receive: "reçoit"
+          are_you_sure: "Confirmer?"
+          return_authorization: "Autorisation de retour"
+        form:
+          product: "Produit"
+          quantity_shipped: "Quantité envoyée"
+          quantity_returned: "Quantité retournée"
+          return_quantity: "Quantité à retourner"
+          amount: "Montant"
+          rma_value: "Valeur RMA"
+          reason: "Raison"
+          stock_location: "Localisation"
+        states:
+          authorized: "Autorisé"
+          received: "Reçu"
+          canceled: "Annulé"
       orders:
         index:
           listing_orders: "Liste des commandes"
