@@ -295,6 +295,7 @@ en:
     cancel: "Cancel"
     save: "Save"
     edit: "Edit"
+    update: "Update"
     delete: "Delete"
 
   admin:
@@ -3033,6 +3034,37 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         form:
           name: "Name"
           presentation: "Presentation"
+      return_authorizations:
+        index:
+          new_return_authorization: "New Return Authorization"
+          return_authorizations: "Return Authorizations"
+          back_to_orders_list: "Back To Orders List"
+          rma_number: "RMA Number"
+          status: "Status"
+          amount: "Amount"
+          cannot_create_returns: "Cannot create returns as this order has no shipped units."
+          continue: "Continue"
+        new:
+          new_return_authorization: "New Return Authorization"
+          back_to_return_authorizations_list: "Back To Return Authorization List"
+          continue: "Continue"
+        edit:
+          receive: "receive"
+          are_you_sure: "Are you sure?"
+          return_authorization: "Return Authorization"
+        form:
+          product: "Product"
+          quantity_shipped: "Quantity Shipped"
+          quantity_returned: "Quantity Returned"
+          return_quantity: "Return Quantity"
+          amount: "Amount"
+          rma_value: "RMA Value"
+          reason: "Reason"
+          stock_location: "Stock Location"
+        states:
+          authorized: "Authorized"
+          received: "Received"
+          canceled: "Canceled"
       orders:
         index:
           listing_orders: "Listing Orders"

@@ -1,0 +1,18 @@
+= render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Return Authorizations' }
+
+- content_for :page_title do
+  %i.icon-arrow-right
+  = t('.new_return_authorization')
+
+- content_for :page_actions do
+  %li= button_link_to t('.back_to_return_authorizations_list'), spree.admin_order_return_authorizations_url, icon: 'icon-arrow-left'
+
+= render partial: 'spree/shared/error_messages', locals: { target: @return_authorization }
+
+= form_for [:admin, @order, @return_authorization] do |f|
+  %fieldset.no-border-top
+    = render partial: 'form', locals: { f: f }
+    .form-buttons.filter-actions.actions
+      = button t('.continue'), 'icon-arrow-right'
+      %span.or= t(:or)
+      = button_link_to t('actions.cancel'), admin_order_return_authorizations_url(@order), icon: 'icon-remove'
