@@ -24,4 +24,4 @@ angular.module('admin.orderCycles').controller 'AdminOrderCycleIncomingCtrl', ($
 
   $scope.addSupplier = ($event) ->
     $event.preventDefault()
-    OrderCycle.addSupplier $scope.new_supplier_id, $scope.exchangeListChanged
+    OrderCycle.addSupplier $scope.new_supplier_id

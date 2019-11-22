@@ -13,7 +13,7 @@ angular.module("admin.indexUtils").directive "panelCtrl", (Panels) ->
 
     this.registerSelectionListener = (callback) ->
       $scope.$on "selection:changed", (event, selection) ->
-        callback(selection, $element)
+        callback(selection)
 
     this
 

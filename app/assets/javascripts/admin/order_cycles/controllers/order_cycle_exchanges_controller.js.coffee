@@ -1,5 +1,5 @@
 angular.module('admin.orderCycles')
-  .controller 'AdminOrderCycleExchangesCtrl', ($scope, $controller, $filter, $window, $location, OrderCycle, ExchangeProduct, Enterprise, EnterpriseFee, Schedules, RequestMonitor, ocInstance, StatusMessage) ->
+  .controller 'AdminOrderCycleExchangesCtrl', ($scope, $controller, $filter, $window, $location, $timeout, OrderCycle, ExchangeProduct, Enterprise, EnterpriseFee, Schedules, RequestMonitor, ocInstance, StatusMessage) ->
     $controller('AdminEditOrderCycleCtrl', {$scope: $scope, ocInstance: ocInstance, $location: $location})
 
     $scope.supplier_enterprises = Enterprise.producer_enterprises
@@ -45,17 +45,9 @@ angular.module('admin.orderCycles')
       ExchangeProduct.index params, (products) ->
         $scope.enterprises[exchange.enterprise_id].supplied_products = products
 
-    # Register listeners to capture first toggle open of the products panel of the exchange
-    $scope.exchangeListChanged = ->
-      panelRows = angular.element(".panel-row")
-      for panelRow in panelRows
-        panelCtrl = angular.element(panelRow).controller('panelCtrl')
-        panelCtrl.registerSelectionListener($scope.initializeExchangeProductsPanel)
-
     # initialize exchange products panel if not yet done
     $scope.exchangeProdutsPanelInitialized = []
-    $scope.initializeExchangeProductsPanel = (selection, $element) ->
-      scope = $element.scope()
-      return if $scope.exchangeProdutsPanelInitialized[scope.exchange.enterprise_id]
-      $scope.loadExchangeProducts(scope.exchange)
-      $scope.exchangeProdutsPanelInitialized[scope.exchange.enterprise_id] = true
+    $scope.initializeExchangeProductsPanel = (exchange) ->
+      return if $scope.exchangeProdutsPanelInitialized[exchange.enterprise_id]
+      $scope.loadExchangeProducts(exchange)
+      $scope.exchangeProdutsPanelInitialized[exchange.enterprise_id] = true

@@ -11,7 +11,7 @@ angular.module('admin.orderCycles').controller 'AdminOrderCycleOutgoingCtrl', ($
 
   $scope.addDistributor = ($event) ->
     $event.preventDefault()
-    OrderCycle.addDistributor $scope.new_distributor_id, $scope.exchangeListChanged
+    OrderCycle.addDistributor $scope.new_distributor_id
 
   $scope.submit = ($event, destination) ->
     $event.preventDefault()

@@ -10,7 +10,6 @@ describe 'AdminOrderCycleIncomingCtrl', ->
   beforeEach ->
     scope =
       $watch: jasmine.createSpy('$watch')
-      exchangeListChanged: jasmine.createSpy('exchangeListChanged')
     location =
       absUrl: ->
         'example.com/admin/order_cycles/27/edit'
@@ -45,4 +44,4 @@ describe 'AdminOrderCycleIncomingCtrl', ->
     scope.addSupplier(event)
 
     expect(event.preventDefault).toHaveBeenCalled()
-    expect(OrderCycle.addSupplier).toHaveBeenCalledWith('new supplier id', scope.exchangeListChanged)
+    expect(OrderCycle.addSupplier).toHaveBeenCalledWith('new supplier id')
