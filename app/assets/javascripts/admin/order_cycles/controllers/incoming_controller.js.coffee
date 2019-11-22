@@ -4,12 +4,12 @@ angular.module('admin.orderCycles').controller 'AdminOrderCycleIncomingCtrl', ($
   $scope.view = 'incoming'
 
   $scope.exchangeTotalVariants = (exchange) ->
-    return unless this.enterprises? && this.enterprises[exchange.enterprise_id]?
+    return unless $scope.enterprises? && $scope.enterprises[exchange.enterprise_id]?
 
-    enterprise = this.enterprises[exchange.enterprise_id]
+    enterprise = $scope.enterprises[exchange.enterprise_id]
     return enterprise.numVariants if enterprise.numVariants?
 
-    $scope.loadExchangeProducts(this, exchange)
+    $scope.loadExchangeProducts($scope, exchange)
     return unless enterprise.supplied_products?
 
     enterprise.numVariants = $scope.countVariants(enterprise.supplied_products)
