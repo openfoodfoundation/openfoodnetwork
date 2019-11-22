@@ -3,7 +3,7 @@ describe "AdminSimpleCreateOrderCycleCtrl", ->
   scope = null
   OrderCycle = {}
   Enterprise = {}
-  Product = {}
+  ExchangeProduct = {}
   EnterpriseFee = {}
   incoming_exchange = {}
   outgoing_exchange = {}
@@ -28,7 +28,7 @@ describe "AdminSimpleCreateOrderCycleCtrl", ->
       get: jasmine.createSpy().and.returnValue {id: 123}
       index: jasmine.createSpy()
       suppliedVariants: jasmine.createSpy().and.returnValue('supplied variants')
-    Product =
+    ExchangeProduct =
       index: jasmine.createSpy()
     EnterpriseFee =
       index: jasmine.createSpy()
@@ -36,7 +36,7 @@ describe "AdminSimpleCreateOrderCycleCtrl", ->
 
     module('admin.orderCycles')
     inject ($controller) ->
-      ctrl = $controller 'AdminSimpleCreateOrderCycleCtrl', {$scope: scope, OrderCycle: OrderCycle, Enterprise: Enterprise, EnterpriseFee: EnterpriseFee, Product: Product, ocInstance: ocInstance}
+      ctrl = $controller 'AdminSimpleCreateOrderCycleCtrl', {$scope: scope, OrderCycle: OrderCycle, Enterprise: Enterprise, EnterpriseFee: EnterpriseFee, ExchangeProduct: ExchangeProduct, ocInstance: ocInstance}
 
   describe "initialisation", ->
     enterprise = {id: 123}
@@ -54,7 +54,7 @@ describe "AdminSimpleCreateOrderCycleCtrl", ->
 
       scope.loadExchangeProducts()
 
-      expect(Product.index).toHaveBeenCalledWith({ enterprise_id: enterprise.id, incoming: true }, scope.storeProductsAndSelectAllVariants)
+      expect(ExchangeProduct.index).toHaveBeenCalledWith({ enterprise_id: enterprise.id, incoming: true }, scope.storeProductsAndSelectAllVariants)
 
     it "stores products and selects all variants", ->
       scope.incoming_exchange = incoming_exchange

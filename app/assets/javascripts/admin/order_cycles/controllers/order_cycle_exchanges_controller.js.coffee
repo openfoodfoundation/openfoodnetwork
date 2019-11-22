@@ -1,5 +1,5 @@
 angular.module('admin.orderCycles')
-  .controller 'AdminOrderCycleExchangesCtrl', ($scope, $controller, $filter, $window, $location, OrderCycle, Product, Enterprise, EnterpriseFee, Schedules, RequestMonitor, ocInstance, StatusMessage) ->
+  .controller 'AdminOrderCycleExchangesCtrl', ($scope, $controller, $filter, $window, $location, OrderCycle, ExchangeProduct, Enterprise, EnterpriseFee, Schedules, RequestMonitor, ocInstance, StatusMessage) ->
     $controller('AdminEditOrderCycleCtrl', {$scope: $scope, ocInstance: ocInstance, $location: $location})
 
     $scope.supplier_enterprises = Enterprise.producer_enterprises
@@ -42,7 +42,7 @@ angular.module('admin.orderCycles')
 
       incoming = true if $scope.view == 'incoming'
       params = { exchange_id: exchange.id, enterprise_id: exchange.enterprise_id, order_cycle_id: $scope.order_cycle.id, incoming: incoming}
-      Product.index params, (products) ->
+      ExchangeProduct.index params, (products) ->
         $scope.enterprises[exchange.enterprise_id].supplied_products = products
 
     # Register listeners to capture first toggle open of the products panel of the exchange

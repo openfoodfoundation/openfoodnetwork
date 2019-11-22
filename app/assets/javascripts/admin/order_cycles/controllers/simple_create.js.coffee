@@ -1,4 +1,4 @@
-angular.module('admin.orderCycles').controller "AdminSimpleCreateOrderCycleCtrl", ($scope, $controller, $window, OrderCycle, Enterprise, EnterpriseFee, Product, StatusMessage, Schedules, RequestMonitor, ocInstance) ->
+angular.module('admin.orderCycles').controller "AdminSimpleCreateOrderCycleCtrl", ($scope, $controller, $window, OrderCycle, Enterprise, EnterpriseFee, ExchangeProduct, StatusMessage, Schedules, RequestMonitor, ocInstance) ->
   $controller('AdminOrderCycleBasicCtrl', {$scope: $scope, ocInstance: ocInstance})
 
   $scope.order_cycle = OrderCycle.new {coordinator_id: ocInstance.coordinator_id}, =>
@@ -20,7 +20,7 @@ angular.module('admin.orderCycles').controller "AdminSimpleCreateOrderCycleCtrl"
     $scope.incoming_exchange = OrderCycle.order_cycle.incoming_exchanges[0]
 
     params = { enterprise_id: $scope.incoming_exchange.enterprise_id, incoming: true }
-    Product.index params, $scope.storeProductsAndSelectAllVariants
+    ExchangeProduct.index params, $scope.storeProductsAndSelectAllVariants
 
   $scope.storeProductsAndSelectAllVariants = (products) ->
     $scope.enterprises[$scope.incoming_exchange.enterprise_id].supplied_products = products
