@@ -260,6 +260,7 @@ pt_BR:
     cancel: "Cancelar"
     save: "Salvar"
     edit: "Editar"
+    update: "Atualizar"
     delete: "Deletar"
   admin:
     begins_at: Começa em
@@ -827,10 +828,24 @@ pt_BR:
       loading_flash:
         loading_order_cycles: CARREGANDO CICLOS DE PEDIDOS
         loading: CARREGANDO...
+      new:
+        create: "Criar"
+        cancel: "Cancelar"
       edit:
-        advanced_settings: Configurações avançadas
-        update_and_close: Atualizar e fechar
-        choose_products_from: 'Escolha produtos de:'
+        advanced_settings: "Configurações avançadas"
+        save: "Salvar"
+        next: "Próximo"
+        cancel: "Cancelar"
+        choose_products_from: "Escolha produtos de:"
+      incoming:
+        previous: "Anterior"
+        save: "Salvar"
+        next: "Próximo"
+        cancel: "Cancelar"
+      outgoing:
+        previous: "Anterior"
+        save: "Salvar"
+        cancel: "Cancelar"
       exchange_form:
         pickup_time_tip: Quando os pedidos desse ciclo de pedidos estarão prontos para os consumidores
         pickup_instructions_placeholder: "Instruções para retirada"
@@ -857,6 +872,7 @@ pt_BR:
         any_enterprise: "Qualquer empresa"
         any_schedule: "Qualquer cronograma"
       form:
+        general_settings: "Configurações Gerais"
         incoming: Entrada
         supplier: Fornecedor
         receival_details: Detalhes de recebimento
@@ -2817,6 +2833,24 @@ pt_BR:
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Herdar propriedades de %{supplier}? (a menos que substituído acima)"
+      properties:
+        index:
+          properties: "Propriedades"
+          name: "Nome"
+        form:
+          name: "Nome"
+      return_authorizations:
+        index:
+          status: "Status"
+          amount: "Montante"
+          continue: "Continuar"
+        new:
+          continue: "Continuar"
+        edit:
+          are_you_sure: "Tem certeza?"
+        form:
+          product: "Produto"
+          amount: "Montante"
       orders:
         index:
           listing_orders: "Listagem de Pedidos"

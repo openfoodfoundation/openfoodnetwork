@@ -262,6 +262,7 @@ es:
     cancel: "Cancelar"
     save: "Guardar"
     edit: "Editar"
+    update: "Actualizar"
     delete: "Borrar"
   admin:
     begins_at: Empieza en
@@ -832,10 +833,24 @@ es:
       loading_flash:
         loading_order_cycles: Cargando ciclos de pedido
         loading: Cargando...
+      new:
+        create: "Crear"
+        cancel: "Cancelar"
       edit:
-        advanced_settings: Configuración Avanzada
-        update_and_close: Actualizar y Cerrar
-        choose_products_from: 'Escoger Productos desde:'
+        advanced_settings: "Configuración Avanzada"
+        save: "Guardar"
+        next: "Siguiente"
+        cancel: "Cancelar"
+        choose_products_from: "Escoger Productos desde:"
+      incoming:
+        previous: "Anterior"
+        save: "Guardar"
+        next: "Siguiente"
+        cancel: "Cancelar"
+      outgoing:
+        previous: "Anterior"
+        save: "Guardar"
+        cancel: "Cancelar"
       exchange_form:
         pickup_time_tip: Cuando los pedidos de este ciclo de pedido estarán listos para la consumidora
         pickup_instructions_placeholder: "Instrucciones de recogida"
@@ -862,6 +877,7 @@ es:
         any_enterprise: "Cualquier organización"
         any_schedule: "Cualquier programación"
       form:
+        general_settings: "Configuración general"
         incoming: Entrante
         supplier: Proveedora
         receival_details: Detalles de la recepción
@@ -2825,6 +2841,27 @@ es:
       product_properties:
         index:
           inherits_properties_checkbox_hint: "¿Heredar propiedades desde %{supplier}? (a menos que sea anulado arriba)"
+      properties:
+        index:
+          properties: "Propiedades"
+          name: "Nombre"
+        form:
+          name: "Nombre"
+      return_authorizations:
+        index:
+          return_authorizations: "Autorizaciones de devolución"
+          back_to_orders_list: "Volver a la lista de pedidos"
+          status: "Estado"
+          amount: "Cantidad"
+          cannot_create_returns: "No se pueden crear devoluciones ya que este pedido no tiene unidades enviadas."
+          continue: "Continuar"
+        new:
+          continue: "Continuar"
+        edit:
+          are_you_sure: "¿Está seguro?"
+        form:
+          product: "Producto"
+          amount: "Cantidad"
       orders:
         index:
           listing_orders: "Pedidos de listado"

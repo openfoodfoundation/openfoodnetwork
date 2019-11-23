@@ -262,6 +262,7 @@ ar:
     cancel: "إلغاء"
     save: "حفظ"
     edit: "تعديل"
+    update: "تحديث"
     delete: "حذف"
   admin:
     begins_at: يبدأ عند
@@ -2872,6 +2873,21 @@ ar:
         form:
           name: "الاسم"
           presentation: "عرض"
+      return_authorizations:
+        index:
+          return_authorizations: "عودة التراخيص"
+          back_to_orders_list: "العودة إلى قائمة الطلبات"
+          status: "الحالة"
+          amount: "القيمة"
+          cannot_create_returns: "لا يمكن إنشاء عوائد لأن هذا الطلب لا يحتوي على وحدات مشحونة."
+          continue: "تابع"
+        new:
+          continue: "تابع"
+        edit:
+          are_you_sure: "هل أنت واثق؟"
+        form:
+          product: "المنتج"
+          amount: "القيمة"
       orders:
         index:
           listing_orders: "لائحة الطلبات"

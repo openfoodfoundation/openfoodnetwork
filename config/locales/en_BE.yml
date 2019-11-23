@@ -257,6 +257,7 @@ en_BE:
     cancel: "Cancel"
     save: "Save"
     edit: "Edit"
+    update: "Update"
     delete: "Delete"
   admin:
     begins_at: Begins At
@@ -822,10 +823,24 @@ en_BE:
       loading_flash:
         loading_order_cycles: LOADING ORDER CYCLES
         loading: LOADING...
+      new:
+        create: "Create"
+        cancel: "Cancel"
       edit:
-        advanced_settings: Advanced Settings
-        update_and_close: Update and Close
-        choose_products_from: 'Choose Products From:'
+        advanced_settings: "Advanced Settings"
+        save: "Save"
+        next: "Next"
+        cancel: "Cancel"
+        choose_products_from: "Choose Products From:"
+      incoming:
+        previous: "Previous"
+        save: "Save"
+        next: "Next"
+        cancel: "Cancel"
+      outgoing:
+        previous: "Previous"
+        save: "Save"
+        cancel: "Cancel"
       exchange_form:
         pickup_time_tip: When orders from this OC will be ready for the customer
         pickup_instructions_placeholder: "Pick-up instructions"
@@ -852,6 +867,7 @@ en_BE:
         any_enterprise: "Any Enterprise"
         any_schedule: "Any Schedule"
       form:
+        general_settings: "General Settings"
         incoming: Incoming
         supplier: Supplier
         receival_details: Receival details
@@ -2805,6 +2821,25 @@ en_BE:
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Inherit properties from %{supplier}? (unless overridden above)"
+      properties:
+        index:
+          properties: "Properties"
+          name: "Name"
+        form:
+          name: "Name"
+      return_authorizations:
+        index:
+          back_to_orders_list: "Back To Orders List"
+          status: "Status"
+          amount: "Amount"
+          continue: "Continue"
+        new:
+          continue: "Continue"
+        edit:
+          are_you_sure: "Are you sure?"
+        form:
+          product: "Product"
+          amount: "Amount"
       orders:
         index:
           listing_orders: "Listing Orders"

@@ -251,6 +251,7 @@ pt:
     cancel: "Cancelar"
     save: "Guardar"
     edit: "Editar"
+    update: "Atualizar"
     delete: "Apagar"
   admin:
     begins_at: Começa às
@@ -813,10 +814,24 @@ pt:
       loading_flash:
         loading_order_cycles: A carregar ciclos de encomenda
         loading: A carregar...
+      new:
+        create: "Criar"
+        cancel: "Cancelar"
       edit:
-        advanced_settings: Configurações Avançadas
-        update_and_close: Atualizar e fechar
-        choose_products_from: 'Escolha produtos de:'
+        advanced_settings: "Configurações Avançadas"
+        save: "Guardar"
+        next: "Seguinte"
+        cancel: "Cancelar"
+        choose_products_from: "Escolha produtos de:"
+      incoming:
+        previous: "Anterior"
+        save: "Guardar"
+        next: "Seguinte"
+        cancel: "Cancelar"
+      outgoing:
+        previous: "Anterior"
+        save: "Guardar"
+        cancel: "Cancelar"
       exchange_form:
         pickup_time_tip: Quando as encomendas deste ciclo ficam prontas para o consumidor
         pickup_instructions_placeholder: "Instruções para levantamento"
@@ -842,6 +857,7 @@ pt:
         any_enterprise: "Qualquer Organização"
         any_schedule: "Qualquer Horário"
       form:
+        general_settings: "Configurações Gerais"
         incoming: Entrada
         supplier: Fornecedor
         receival_details: Detalhes de recebimento
@@ -2761,6 +2777,25 @@ pt:
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Herdar propriedades de %{supplier}? (excepto se já alterado em cima)"
+      properties:
+        index:
+          properties: "Propriedades"
+          name: "Nome"
+        form:
+          name: "Nome"
+      return_authorizations:
+        index:
+          back_to_orders_list: "Voltar à Lista de Encomendas"
+          status: "Estado"
+          amount: "Quantia"
+          continue: "Continuar"
+        new:
+          continue: "Continuar"
+        edit:
+          are_you_sure: "Tem a certeza?"
+        form:
+          product: "Produto"
+          amount: "Quantia"
       orders:
         index:
           listing_orders: "Lista de Encomendas"

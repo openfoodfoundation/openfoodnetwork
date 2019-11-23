@@ -262,6 +262,7 @@ ca:
     cancel: "Cancel·lar"
     save: "Desa"
     edit: "Editar"
+    update: "Actualitzar"
     delete: "Suprimir"
   admin:
     begins_at: Comença a
@@ -832,10 +833,24 @@ ca:
       loading_flash:
         loading_order_cycles: CÀRREGUES CICLES DE COMANDA
         loading: CARREGANT...
+      new:
+        create: "Crear"
+        cancel: "Cancel·lar"
       edit:
-        advanced_settings: Configuració avançada
-        update_and_close: Actualitza i tanca
-        choose_products_from: 'Trieu Productes des de:'
+        advanced_settings: "Configuració avançada"
+        save: "Desa"
+        next: "Següent"
+        cancel: "Cancel·lar"
+        choose_products_from: "Trieu Productes des de:"
+      incoming:
+        previous: "Anterior"
+        save: "Desa"
+        next: "Següent"
+        cancel: "Cancel·lar"
+      outgoing:
+        previous: "Anterior"
+        save: "Desa"
+        cancel: "Cancel·lar"
       exchange_form:
         pickup_time_tip: Quan les comandes d'aquest cicle de comandes estiguin preparades per a les consumidores
         pickup_instructions_placeholder: "Instruccions de recollida"
@@ -862,6 +877,7 @@ ca:
         any_enterprise: "Qualsevol organització"
         any_schedule: "Qualsevol programació"
       form:
+        general_settings: "Configuració general"
         incoming: Entrant
         supplier: Proveïdora
         receival_details: Detalls de recepció
@@ -2824,6 +2840,27 @@ ca:
       product_properties:
         index:
           inherits_properties_checkbox_hint: "heredar propietats de %{supplier}? (llevat que es sobreescrigui a dalt)"
+      properties:
+        index:
+          properties: "Propietats"
+          name: "Nom"
+        form:
+          name: "Nom"
+      return_authorizations:
+        index:
+          return_authorizations: "Autoritzacions de devolució"
+          back_to_orders_list: "Tornar a la llista de comandes"
+          status: "Estat"
+          amount: "Quantitat"
+          cannot_create_returns: "No es poden crear devolucions ja que aquesta comanda no té cap unitat enviada."
+          continue: "Continua"
+        new:
+          continue: "Continua"
+        edit:
+          are_you_sure: "Estàs segur?"
+        form:
+          product: "Producte"
+          amount: "Quantitat"
       orders:
         index:
           listing_orders: "Llistat comandes"

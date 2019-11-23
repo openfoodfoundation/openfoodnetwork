@@ -257,6 +257,7 @@ nl_BE:
     cancel: "Annuleren"
     save: "Save"
     edit: "bewerking"
+    update: "Update"
     delete: "Uitwissen "
   admin:
     begins_at: Begint Bij
@@ -825,10 +826,24 @@ nl_BE:
       loading_flash:
         loading_order_cycles: LOADING ORDER CYCLES
         loading: BEZIG MET LADEN...
+      new:
+        create: "Maak"
+        cancel: "Annuleren"
       edit:
-        advanced_settings: Geavanceerde Instellingen
-        update_and_close: Update en Sluit
-        choose_products_from: 'Kies Producten Uit:'
+        advanced_settings: "Geavanceerde Instellingen"
+        save: "Save"
+        next: "Volgende"
+        cancel: "Annuleren"
+        choose_products_from: "Kies Producten Uit:"
+      incoming:
+        previous: "Voorgaande"
+        save: "Save"
+        next: "Volgende"
+        cancel: "Annuleren"
+      outgoing:
+        previous: "Voorgaande"
+        save: "Save"
+        cancel: "Annuleren"
       exchange_form:
         pickup_time_tip: Wanneer bestellingen van deze OC klaar staan voor de klant
         pickup_instructions_placeholder: "Aanwijzingen voor ophaling"
@@ -855,6 +870,7 @@ nl_BE:
         any_enterprise: "Een Onderneming"
         any_schedule: "Een Planning"
       form:
+        general_settings: "Algemene instellingen"
         incoming: Binnenkomend
         supplier: Leverancier
         receival_details: Ontvangstspecificaties
@@ -2814,6 +2830,25 @@ nl_BE:
       product_properties:
         index:
           inherits_properties_checkbox_hint: "De kenmerken van 1%{supplier} krijgen ? (niet ter toepassing in geval van invoer van de vervanging)"
+      properties:
+        index:
+          properties: "Eigenschappen"
+          name: "Naam"
+        form:
+          name: "Naam"
+      return_authorizations:
+        index:
+          back_to_orders_list: "Terug naar de bestellingslijst"
+          status: "Status"
+          amount: "Bedrag"
+          continue: "Ga verder"
+        new:
+          continue: "Ga verder"
+        edit:
+          are_you_sure: "Ben je zeker?"
+        form:
+          product: "Product"
+          amount: "Bedrag"
       orders:
         index:
           listing_orders: "Lijst van de bestellingen"

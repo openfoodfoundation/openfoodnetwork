@@ -251,6 +251,7 @@ it:
     cancel: "Annulla"
     save: "Salva"
     edit: "Modifica"
+    update: "Aggiorna"
     delete: "Annulla"
   admin:
     begins_at: Inizia a
@@ -808,10 +809,24 @@ it:
         user_already_exists: "L'Utente esiste già"
         error: "Qualcosa è andato storto"
     order_cycles:
+      new:
+        create: "Crea"
+        cancel: "Annulla"
       edit:
-        advanced_settings: Impostazioni avanzate
-        update_and_close: Aggiorna e chiudi
-        choose_products_from: 'Scegli i prodotti da:'
+        advanced_settings: "Impostazioni avanzate"
+        save: "Salva"
+        next: "Prossimo"
+        cancel: "Annulla"
+        choose_products_from: "Scegli i prodotti da:"
+      incoming:
+        previous: "Precedente"
+        save: "Salva"
+        next: "Prossimo"
+        cancel: "Annulla"
+      outgoing:
+        previous: "Precedente"
+        save: "Salva"
+        cancel: "Annulla"
       exchange_form:
         pickup_time_tip: Quando gli ordini di questa Lista d'ordine saranno pronti per il cliente
         pickup_instructions_placeholder: "Istruzioni per la consegna"
@@ -837,6 +852,7 @@ it:
         any_enterprise: "Qualsiasi Impresa"
         any_schedule: "Qualunque Orario"
       form:
+        general_settings: "Impostazioni generali"
         incoming: In arrivo
         supplier: Fornitore
         receival_details: Dettagli ritiro
@@ -2753,6 +2769,25 @@ it:
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Eredita le proprietà da %{supplier}? (se non sovrascritto)"
+      properties:
+        index:
+          properties: "Proprietà"
+          name: "Nome"
+        form:
+          name: "Nome"
+      return_authorizations:
+        index:
+          back_to_orders_list: "Torna alla lista delle richieste"
+          status: "Stato"
+          amount: "Quantità"
+          continue: "Continua"
+        new:
+          continue: "Continua"
+        edit:
+          are_you_sure: "Sei sicuro?"
+        form:
+          product: "Prodotto"
+          amount: "Quantità"
       orders:
         index:
           listing_orders: "Listino Ordini"

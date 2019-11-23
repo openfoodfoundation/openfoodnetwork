@@ -262,6 +262,7 @@ nb:
     cancel: "Avbryt"
     save: "Lagre"
     edit: "Rediger"
+    update: "Oppdater"
     delete: "Slett"
   admin:
     begins_at: Begynner på
@@ -2871,6 +2872,21 @@ nb:
         form:
           name: "Navn"
           presentation: "Presentasjon"
+      return_authorizations:
+        index:
+          return_authorizations: "Returautorisasjoner"
+          back_to_orders_list: "Tilbake til Bestillingsliste"
+          status: "Status"
+          amount: "Antall"
+          cannot_create_returns: "Kan ikke opprette retur da denne bestillingen ikke har noen sendte elementer."
+          continue: "Fortsett"
+        new:
+          continue: "Fortsett"
+        edit:
+          are_you_sure: "Er du sikker?"
+        form:
+          product: "Produkt"
+          amount: "Antall"
       orders:
         index:
           listing_orders: "Lister opp bestillinger"

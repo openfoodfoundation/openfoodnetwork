@@ -258,6 +258,7 @@ de_DE:
     cancel: "Abbrechen"
     save: "Speichern"
     edit: "Bearbeiten"
+    update: "Aktualisieren"
     delete: "Löschen"
   admin:
     begins_at: Beginnt um
@@ -827,10 +828,22 @@ de_DE:
       loading_flash:
         loading_order_cycles: LADEN VON AUFTRAGSZYKLEN
         loading: WIRD GELADEN...
+      new:
+        create: "Neu"
+        cancel: "Abbrechen"
       edit:
-        advanced_settings: Erweiterte Einstellungen
-        update_and_close: Aktualisieren und schließen
-        choose_products_from: 'Wählen Sie Produkte von:'
+        advanced_settings: "Erweiterte Einstellungen"
+        save: "Speichern"
+        next: "Weiter"
+        cancel: "Abbrechen"
+        choose_products_from: "Wählen Sie Produkte von:"
+      incoming:
+        save: "Speichern"
+        next: "Weiter"
+        cancel: "Abbrechen"
+      outgoing:
+        save: "Speichern"
+        cancel: "Abbrechen"
       exchange_form:
         pickup_time_tip: Wenn Bestellungen von diesem OC für den Kunden bereit sind
         pickup_instructions_placeholder: "Abholungsinformationen"
@@ -857,6 +870,7 @@ de_DE:
         any_enterprise: "Alle Unternehmen"
         any_schedule: "Alle Zeitpläne"
       form:
+        general_settings: "Allgemeine Einstellungen"
         incoming: Eingehend
         supplier: Anbieter
         receival_details: Lieferinformation
@@ -2819,6 +2833,21 @@ de_DE:
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Vererben Eigenschaften von %{supplier}? (außer oben aufgehoben)"
+      properties:
+        index:
+          properties: "Eigenschaften"
+          name: "Name"
+        form:
+          name: "Name"
+      return_authorizations:
+        index:
+          status: "Status"
+          amount: "Betrag"
+        edit:
+          are_you_sure: "Bist du sicher?"
+        form:
+          product: "Produkt"
+          amount: "Betrag"
       orders:
         index:
           listing_orders: "Bestellungen auflisten"

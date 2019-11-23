@@ -111,6 +111,7 @@ sv:
     create: "Skapa"
     cancel: "Avbryt"
     edit: "Redigera"
+    update: "Uppdatera"
   admin:
     date: Datum
     email: epost
@@ -483,10 +484,19 @@ sv:
         profile: 'Profil'
         producer_profile: 'Producentprofil'
     order_cycles:
+      new:
+        create: "Skapa"
+        cancel: "Avbryt"
       edit:
-        advanced_settings: Avancerade inställningar
-        update_and_close: Uppdatera och Stäng
-        choose_products_from: 'Välj produkter från:'
+        advanced_settings: "Avancerade inställningar"
+        next: "Näst"
+        cancel: "Avbryt"
+        choose_products_from: "Välj produkter från:"
+      incoming:
+        next: "Näst"
+        cancel: "Avbryt"
+      outgoing:
+        cancel: "Avbryt"
       exchange_form:
         pickup_instructions_placeholder: "Instruktioner för upphämtning"
         pickup_time_placeholder: "Klar för (dvs. Datum/Tid)"
@@ -1941,6 +1951,24 @@ sv:
         enterprises: "Företag"
         customers: "Kunder"
         groups: "Grupper"
+      properties:
+        index:
+          properties: "Egenskaper"
+          name: "Namn"
+        form:
+          name: "Namn"
+      return_authorizations:
+        index:
+          status: "Status"
+          amount: "Belopp"
+          continue: "Fortsätt"
+        new:
+          continue: "Fortsätt"
+        edit:
+          are_you_sure: "Är du säker?"
+        form:
+          product: "Produkt"
+          amount: "Belopp"
       orders:
         index:
           capture: "Fånga"
