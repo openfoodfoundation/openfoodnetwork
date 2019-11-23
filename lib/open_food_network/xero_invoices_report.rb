@@ -43,6 +43,15 @@ module OpenFoodNetwork
 
     private
 
+    def report_options
+      @opts.merge(line_item_includes: line_item_includes)
+    end
+
+    def line_item_includes
+      [:bill_address, :adjustments,
+       line_items: { variant: [{ option_values: :option_type }, { product: :supplier }] }]
+    end
+
     def detail_rows_for_order(order, invoice_number, opts)
       rows = []
 

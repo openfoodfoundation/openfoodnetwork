@@ -51,8 +51,7 @@ module OpenFoodNetwork
 
     def table_items
       return [] unless @render_table
-
-      Reports::LineItems.list(permissions, params)
+      Reports::LineItems.list(permissions, report_options)
     end
 
     def rules
@@ -122,9 +121,17 @@ module OpenFoodNetwork
 
     private
 
+    def report_options
+      @params.merge(line_item_includes: line_item_includes)
+    end
+
+    def line_item_includes
+      [{ order: [:bill_address],
+         variant: [{ option_values: :option_type }, { product: :supplier }] }]
+    end
+
     def permissions
       return @permissions unless @permissions.nil?
-
       @permissions = OpenFoodNetwork::Permissions.new(@user)
     end
   end

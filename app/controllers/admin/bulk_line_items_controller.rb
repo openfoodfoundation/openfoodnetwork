@@ -4,9 +4,17 @@ module Admin
     #
     def index
       order_params = params[:q].andand.delete :order
-      orders = OpenFoodNetwork::Permissions.new(spree_current_user).editable_orders.ransack(order_params).result
-      line_items = OpenFoodNetwork::Permissions.new(spree_current_user).editable_line_items.where(order_id: orders).ransack(params[:q])
-      render_as_json line_items.result.reorder('order_id ASC, id ASC')
+
+      orders = OpenFoodNetwork::Permissions.new(spree_current_user).
+        editable_orders.ransack(order_params).result
+
+      line_items = OpenFoodNetwork::Permissions.new(spree_current_user).
+        editable_line_items.where(order_id: orders).
+        includes(variant: { option_values: :option_type }).
+        ransack(params[:q]).result.
+        reorder('spree_line_items.order_id ASC, spree_line_items.id ASC')
+
+      render_as_json line_items
     end
 
     # PUT /admin/bulk_line_items/:id.json

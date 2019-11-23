@@ -69,7 +69,7 @@ module OpenFoodNetwork
 
       def line_item_includes
         [{ order: [:distributor, :adjustments, shipments: { shipping_rates: :shipping_method }],
-           variant: { product: :supplier } }]
+           variant: [{ option_values: :option_type }, { product: :supplier }] }]
       end
     end
   end
