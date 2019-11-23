@@ -832,10 +832,36 @@ ar:
       loading_flash:
         loading_order_cycles: تحميل دورات الطلب
         loading: جار التحميل...
+      new:
+        create: "انشاء"
+        cancel: "إلغاء"
+        back_to_list: "العودة للقائمة"
       edit:
-        advanced_settings: إعدادات متقدمة
-        update_and_close: تحديث وإغلاق
-        choose_products_from: 'اختر المنتجات من:'
+        advanced_settings: "إعدادات متقدمة"
+        save: "حفظ"
+        save_and_next: "حفظ والتالي"
+        next: "التالى"
+        cancel: "إلغاء"
+        back_to_list: "العودة للقائمة"
+        save_and_back_to_list: "حفظ والعودة إلى القائمة"
+        choose_products_from: "اختر المنتجات من:"
+      incoming:
+        previous: "السابق"
+        save: "حفظ"
+        save_and_next: "حفظ والتالي"
+        next: "التالى"
+        cancel: "إلغاء"
+        back_to_list: "العودة للقائمة"
+      outgoing:
+        previous: "السابق"
+        save: "حفظ"
+        save_and_back_to_list: "حفظ والعودة إلى القائمة"
+        cancel: "إلغاء"
+        back_to_list: "العودة للقائمة"
+      wizard_progress:
+        edit: "1. الإعدادات العامة"
+        incoming: "2. المنتجات الواردة"
+        outgoing: "3. المنتجات الصادرة"
       exchange_form:
         pickup_time_tip: عندما تكون الطلبات من OC جاهزة للعميل
         pickup_instructions_placeholder: "تعليمات التحميل"
@@ -862,6 +888,7 @@ ar:
         any_enterprise: "أي شركة"
         any_schedule: "أي جدول"
       form:
+        general_settings: "الاعدادات العامة"
         incoming: الوارد
         supplier: المورد
         receival_details: تفاصيل الاستلام
