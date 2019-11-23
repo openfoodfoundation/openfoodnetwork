@@ -2875,19 +2875,35 @@ ar:
           presentation: "عرض"
       return_authorizations:
         index:
+          new_return_authorization: "عودة الترخيص جديد"
           return_authorizations: "عودة التراخيص"
           back_to_orders_list: "العودة إلى قائمة الطلبات"
+          rma_number: "رقم RMA"
           status: "الحالة"
           amount: "القيمة"
           cannot_create_returns: "لا يمكن إنشاء عوائد لأن هذا الطلب لا يحتوي على وحدات مشحونة."
           continue: "تابع"
         new:
+          new_return_authorization: "عودة الترخيص جديد"
+          back_to_return_authorizations_list: "العودة إلى قائمة عودة الترخيص"
           continue: "تابع"
         edit:
+          receive: "استلام"
           are_you_sure: "هل أنت واثق؟"
+          return_authorization: "عودة التراخيص"
         form:
           product: "المنتج"
+          quantity_shipped: "الكمية التي تم شحنها"
+          quantity_returned: "الكمية المرتجعة"
+          return_quantity: "عودة الكمية"
           amount: "القيمة"
+          rma_value: "قيمة RMA"
+          reason: "السبب"
+          stock_location: "موقع المخزن"
+        states:
+          authorized: "مخول"
+          received: "تم الاستلام"
+          canceled: "ألغيت"
       orders:
         index:
           listing_orders: "لائحة الطلبات"
