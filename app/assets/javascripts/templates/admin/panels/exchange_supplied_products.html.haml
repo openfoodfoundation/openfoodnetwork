@@ -1,5 +1,5 @@
 .row.exchange-supplied-products{'ng-init' => 'initializeExchangeProductsPanel(exchange)'}
-  .sixteen.columns.alpha.omega
+  .sixteen.columns.alpha.omega{ 'ng-show' => 'enterprises[exchange.enterprise_id].supplied_products.length != 0' }
     .exchange-load-all-variants
       %div
         {{ 'js.admin.panels.exchange_products.products_loaded' | t:{ num_of_products_loaded: enterprises[exchange.enterprise_id].supplied_products.length, total_number_of_products: enterprises[exchange.enterprise_id].num_of_products } }}
