@@ -1,11 +1,7 @@
 %tr{ ng: { class: "'#{type} #{type}-{{ exchange.enterprise_id }}'" } }
   %td{:class => "#{type}_name"} {{ enterprises[exchange.enterprise_id].name }}
   %td.products.panel-toggle.text-center{ name: "products" }
-    {{ exchangeSelectedVariants(exchange) }} /
-    - if type == 'supplier'
-      {{ exchangeTotalVariants(exchange) }}
-    - else
-      {{ (incomingExchangeVariantsFor(exchange.enterprise_id)).length }}
+    {{ exchangeSelectedVariants(exchange) }} / {{ exchangeTotalVariants(exchange) }}
     = t('.selected')
   - if type == 'supplier'
     %td.receival-details

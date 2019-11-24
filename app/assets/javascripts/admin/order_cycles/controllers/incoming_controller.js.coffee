@@ -13,6 +13,8 @@ angular.module('admin.orderCycles').controller 'AdminOrderCycleIncomingCtrl', ($
     params = { exchange_id: exchange.id, enterprise_id: exchange.enterprise_id, order_cycle_id: $scope.order_cycle.id, incoming: true}
     ExchangeProduct.countVariants params, (variants_count) ->
       enterprise.numVariants = variants_count
+      $scope.setSelectAllVariantsCheckboxValue(exchange, enterprise.numVariants)
+
     return enterprise.numVariants
 
   $scope.addSupplier = ($event) ->

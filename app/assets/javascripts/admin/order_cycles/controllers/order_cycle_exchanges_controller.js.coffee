@@ -5,6 +5,9 @@ angular.module('admin.orderCycles')
     $scope.supplier_enterprises = Enterprise.producer_enterprises
     $scope.distributor_enterprises = Enterprise.hub_enterprises
 
+    $scope.setSelectAllVariantsCheckboxValue = (exchange, totalNumberOfVariants) ->
+      exchange.select_all_variants = $scope.exchangeSelectedVariants(exchange) >= totalNumberOfVariants
+
     $scope.exchangeSelectedVariants = (exchange) ->
       OrderCycle.exchangeSelectedVariants(exchange)
 

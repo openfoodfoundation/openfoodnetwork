@@ -9,6 +9,11 @@ angular.module('admin.orderCycles').controller 'AdminOrderCycleOutgoingCtrl', ($
   $scope.incomingExchangeVariantsFor = (enterprise_id) ->
     $filter('filterExchangeVariants')(OrderCycle.incomingExchangesVariants(), $scope.order_cycle.visible_variants_for_outgoing_exchanges[enterprise_id])
 
+  $scope.exchangeTotalVariants = (exchange) ->
+    totalNumberOfVariants = $scope.incomingExchangeVariantsFor(exchange.enterprise_id).length
+    $scope.setSelectAllVariantsCheckboxValue(exchange, totalNumberOfVariants)
+    totalNumberOfVariants
+
   $scope.addDistributor = ($event) ->
     $event.preventDefault()
     OrderCycle.addDistributor $scope.new_distributor_id
