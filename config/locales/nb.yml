@@ -2874,19 +2874,35 @@ nb:
           presentation: "Presentasjon"
       return_authorizations:
         index:
+          new_return_authorization: "Ny Returautorisasjon"
           return_authorizations: "Returautorisasjoner"
           back_to_orders_list: "Tilbake til Bestillingsliste"
+          rma_number: "RMA-nummer"
           status: "Status"
           amount: "Antall"
           cannot_create_returns: "Kan ikke opprette retur da denne bestillingen ikke har noen sendte elementer."
           continue: "Fortsett"
         new:
+          new_return_authorization: "Ny Returautorisasjon"
+          back_to_return_authorizations_list: "Tilbake til liste over Returautorisasjoner"
           continue: "Fortsett"
         edit:
+          receive: "motta"
           are_you_sure: "Er du sikker?"
+          return_authorization: "Returautorisasjon"
         form:
           product: "Produkt"
+          quantity_shipped: "Mengde Sendt"
+          quantity_returned: "Mengde Returnert"
+          return_quantity: "Returneringsmengde"
           amount: "Antall"
+          rma_value: "RMA-verdi"
+          reason: "Grunn"
+          stock_location: "Lagerplassering"
+        states:
+          authorized: "Autorisert"
+          received: "Mottatt"
+          canceled: "Avbrutt"
       orders:
         index:
           listing_orders: "Lister opp bestillinger"
