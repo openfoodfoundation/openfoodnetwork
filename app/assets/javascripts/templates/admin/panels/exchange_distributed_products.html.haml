@@ -15,7 +15,7 @@
           'id' => 'order_cycle_outgoing_exchange_{{ $parent.$index }}_select_all_variants' }
         {{ 'js.admin.panels.exchange_products.select_all_products' | t:{ total_number_of_products: enterprises[exchange.enterprise_id].num_of_products } }}
 
-    .exchange-products
+    .exchange-products{ 'ng-hide' => 'productsLoading()' }
       -# Scope product list based on permissions the current user has to view variants in this exchange
       .exchange-product{'ng-repeat' => 'product in enterprises[exchange.enterprise_id].supplied_products | filter:visibleProducts:exchange:order_cycle.visible_variants_for_outgoing_exchanges' }
         .exchange-product-details
@@ -32,8 +32,15 @@
               'id' => 'order_cycle_outgoing_exchange_{{ $parent.$parent.$index }}_variants_{{ variant.id }}',
               'ng-disabled' => '!order_cycle.editable_variants_for_outgoing_exchanges.hasOwnProperty(exchange.enterprise_id) || order_cycle.editable_variants_for_outgoing_exchanges[exchange.enterprise_id].indexOf(variant.id) < 0' }
             {{ variant.label }}
-    .pagination{ 'ng-show' => 'enterprises[exchange.enterprise_id].last_page_loaded < enterprises[exchange.enterprise_id].num_of_pages'}
+
+    .pagination{ 'ng-show' => 'enterprises[exchange.enterprise_id].last_page_loaded < enterprises[exchange.enterprise_id].num_of_pages && !productsLoading()'}
       .button{ 'ng-click' => 'loadMoreExchangeProducts(exchange)' }
         {{ 'js.admin.panels.exchange_products.load_more_products' | t }}
       .button{ 'ng-click' => 'loadAllExchangeProducts(exchange)' }
         {{ 'js.admin.panels.exchange_products.load_all_products' | t }}
+
+    .sixteen.columns.alpha#loading{ 'ng-show' => 'productsLoading()' }
+      %br
+      %img.spinner{ src: "/assets/spinning-circles.svg" }
+      %h1
+        {{ 'js.admin.panels.exchange_products.loading_products' | t }}

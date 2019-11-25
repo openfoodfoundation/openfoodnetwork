@@ -5,6 +5,9 @@ angular.module('admin.orderCycles')
     $scope.supplier_enterprises = Enterprise.producer_enterprises
     $scope.distributor_enterprises = Enterprise.hub_enterprises
 
+    $scope.productsLoading = ->
+      RequestMonitor.loading
+
     $scope.setSelectAllVariantsCheckboxValue = (exchange, totalNumberOfVariants) ->
       exchange.select_all_variants = $scope.exchangeSelectedVariants(exchange) >= totalNumberOfVariants
 
@@ -58,15 +61,16 @@ angular.module('admin.orderCycles')
 
     $scope.loadAllExchangeProducts = (exchange) ->
       enterprise = $scope.enterprises[exchange.enterprise_id]
-      return [] if enterprise.last_page_loaded >= enterprise.num_of_pages
-      all_promises = []
-      for page_to_load in [(enterprise.last_page_loaded + 1)..enterprise.num_of_pages]
-        all_promises.push $scope.loadExchangeProducts(exchange, page_to_load).$promise
-      all_promises
+
+      if enterprise.last_page_loaded < enterprise.num_of_pages
+        for page_to_load in [(enterprise.last_page_loaded + 1)..enterprise.num_of_pages]
+          RequestMonitor.load $scope.loadExchangeProducts(exchange, page_to_load).$promise
+
+      RequestMonitor.loadQueue
 
     # initialize exchange products panel if not yet done
     $scope.exchangeProdutsPanelInitialized = []
     $scope.initializeExchangeProductsPanel = (exchange) ->
       return if $scope.exchangeProdutsPanelInitialized[exchange.enterprise_id]
-      $scope.loadExchangeProducts(exchange)
+      RequestMonitor.load $scope.loadExchangeProducts(exchange).$promise
       $scope.exchangeProdutsPanelInitialized[exchange.enterprise_id] = true

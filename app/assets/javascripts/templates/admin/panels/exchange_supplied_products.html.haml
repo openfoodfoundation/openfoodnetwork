@@ -3,7 +3,7 @@
     .exchange-load-all-variants
       %div
         {{ 'js.admin.panels.exchange_products.products_loaded' | t:{ num_of_products_loaded: enterprises[exchange.enterprise_id].supplied_products.length, total_number_of_products: enterprises[exchange.enterprise_id].num_of_products } }}
-        %a{ 'ng-click' => 'loadAllExchangeProducts(exchange)', 'ng-show' => 'enterprises[exchange.enterprise_id].last_page_loaded < enterprises[exchange.enterprise_id].num_of_pages'  }
+        %a{ 'ng-click' => 'loadAllExchangeProducts(exchange)', 'ng-show' => 'enterprises[exchange.enterprise_id].last_page_loaded < enterprises[exchange.enterprise_id].num_of_pages' }
           {{ 'js.admin.panels.exchange_products.load_all_products' | t }}
 
     .exchange-select-all-variants
@@ -15,7 +15,7 @@
           'id' => 'order_cycle_incoming_exchange_{{ $index }}_select_all_variants' }
         {{ 'js.admin.panels.exchange_products.select_all_products' | t:{ total_number_of_products: enterprises[exchange.enterprise_id].num_of_products } }}
 
-    .exchange-products
+    .exchange-products{ 'ng-hide' => 'productsLoading()' }
       -# No need to scope product list based on permissions, because if an incoming exchange is visible,
       -# then all of the variants within it should be visible. May change in the future?
       .exchange-product{'ng-repeat' => 'product in enterprises[exchange.enterprise_id].supplied_products'}
@@ -33,8 +33,15 @@
               'id' => 'order_cycle_incoming_exchange_{{ $parent.$parent.$index }}_variants_{{ variant.id }}',
               'ng-disabled' => '!order_cycle.editable_variants_for_incoming_exchanges.hasOwnProperty(exchange.enterprise_id) || order_cycle.editable_variants_for_incoming_exchanges[exchange.enterprise_id].indexOf(variant.id) < 0' }
             {{ variant.label }}
-    .pagination{ 'ng-show' => 'enterprises[exchange.enterprise_id].last_page_loaded < enterprises[exchange.enterprise_id].num_of_pages'}
+
+    .pagination{ 'ng-show' => 'enterprises[exchange.enterprise_id].last_page_loaded < enterprises[exchange.enterprise_id].num_of_pages && !productsLoading()'}
       .button{ 'ng-click' => 'loadMoreExchangeProducts(exchange)' }
         {{ 'js.admin.panels.exchange_products.load_more_products' | t }}
       .button{ 'ng-click' => 'loadAllExchangeProducts(exchange)' }
         {{ 'js.admin.panels.exchange_products.load_all_products' | t }}
+
+    .sixteen.columns.alpha#loading{ 'ng-show' => 'productsLoading()' }
+      %br
+      %img.spinner{ src: "/assets/spinning-circles.svg" }
+      %h1
+        {{ 'js.admin.panels.exchange_products.loading_products' | t }}
