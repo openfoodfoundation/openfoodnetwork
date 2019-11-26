@@ -155,7 +155,7 @@ module Spree
           order.shipment.update!(order)
         end
 
-        xit "creates a shipment without backordered items" do
+        it "creates a shipment without backordered items" do
           expect(order.shipment.manifest.first.quantity).to eq 10
           expect(order.shipment.manifest.first.states).to eq 'on_hand' => 10
           expect(order.shipment.manifest.first.variant).to eq line_item.variant
