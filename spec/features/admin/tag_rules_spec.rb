@@ -13,7 +13,7 @@ feature 'Tag Rules', js: true do
     end
 
     it "allows creation of rules of each type" do
-      click_link "Tag Rules"
+      open_tag_rules_tab
 
       # Creating a new tag
       expect(page).to have_no_selector '.customer_tag'
@@ -120,7 +120,7 @@ feature 'Tag Rules', js: true do
     end
 
     it "saves changes to rules of each type" do
-      click_link "Tag Rules"
+      open_tag_rules_tab
 
       # Tag groups exist
       expect(page).to have_selector '.customer_tag .header', text: "For customers tagged:", count: 4
@@ -228,7 +228,7 @@ feature 'Tag Rules', js: true do
     end
 
     it "deletes both default and customer rules from the database" do
-      click_link "Tag Rules"
+      open_tag_rules_tab
 
       expect do
         accept_alert do
@@ -241,5 +241,12 @@ feature 'Tag Rules', js: true do
         expect(page).to have_no_selector "#tr_0"
       end.to change{ TagRule.count }.by(-2)
     end
+  end
+
+  private
+
+  def open_tag_rules_tab
+    click_link "Tag Rules"
+    expect(page).to have_selector ".default_rules"
   end
 end
