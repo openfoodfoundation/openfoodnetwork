@@ -1,0 +1,11 @@
+.pagination{ 'ng-show' => 'enterprises[exchange.enterprise_id].last_page_loaded < enterprises[exchange.enterprise_id].num_of_pages && !productsLoading()'}
+  .button{ 'ng-click' => 'loadMoreExchangeProducts(exchange)' }
+    {{ 'js.admin.panels.exchange_products.load_more_products' | t }}
+  .button{ 'ng-click' => 'loadAllExchangeProducts(exchange)' }
+    {{ 'js.admin.panels.exchange_products.load_all_products' | t }}
+
+.sixteen.columns.alpha#loading{ 'ng-show' => 'productsLoading()' }
+  %br
+  %img.spinner{ src: "/assets/spinning-circles.svg" }
+  %h1
+    {{ 'js.admin.panels.exchange_products.loading_products' | t }}

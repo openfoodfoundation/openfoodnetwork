@@ -1,0 +1,5 @@
+.exchange-load-all-variants
+  %div
+    {{ 'js.admin.panels.exchange_products.products_loaded' | t:{ num_of_products_loaded: enterprises[exchange.enterprise_id].supplied_products.length, total_number_of_products: enterprises[exchange.enterprise_id].num_of_products } }}
+    %a{ 'ng-click' => 'loadAllExchangeProducts(exchange)', 'ng-show' => 'enterprises[exchange.enterprise_id].last_page_loaded < enterprises[exchange.enterprise_id].num_of_pages' }
+      {{ 'js.admin.panels.exchange_products.load_all_products' | t }}

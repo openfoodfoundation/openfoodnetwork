@@ -1,10 +1,6 @@
 .row.exchange-distributed-products{'ng-init' => 'initializeExchangeProductsPanel(exchange)'}
   .sixteen.columns.alpha.omega{ 'ng-show' => 'enterprises[exchange.enterprise_id].supplied_products.length != 0' }
-    .exchange-load-all-variants
-      %div
-        {{ 'js.admin.panels.exchange_products.products_loaded' | t:{ num_of_products_loaded: enterprises[exchange.enterprise_id].supplied_products.length, total_number_of_products: enterprises[exchange.enterprise_id].num_of_products } }}
-        %a{ 'ng-click' => 'loadAllExchangeProducts(exchange)', 'ng-show' => 'enterprises[exchange.enterprise_id].last_page_loaded < enterprises[exchange.enterprise_id].num_of_pages' }
-          {{ 'js.admin.panels.exchange_products.load_all_products' | t }}
+    %div{ 'ng-include' => "'admin/panels/exchange_products_panel_header.html'" }
 
     .exchange-select-all-variants
       %label
@@ -16,7 +12,6 @@
         {{ 'js.admin.panels.exchange_products.select_all_products' | t:{ total_number_of_products: enterprises[exchange.enterprise_id].num_of_products } }}
 
     .exchange-products{ 'ng-hide' => 'productsLoading()' }
-      -# Scope product list based on permissions the current user has to view variants in this exchange
       .exchange-product{'ng-repeat' => 'product in enterprises[exchange.enterprise_id].supplied_products | filter:visibleProducts:exchange:order_cycle.visible_variants_for_outgoing_exchanges' }
         .exchange-product-details
           %label
@@ -33,14 +28,4 @@
               'ng-disabled' => '!order_cycle.editable_variants_for_outgoing_exchanges.hasOwnProperty(exchange.enterprise_id) || order_cycle.editable_variants_for_outgoing_exchanges[exchange.enterprise_id].indexOf(variant.id) < 0' }
             {{ variant.label }}
 
-    .pagination{ 'ng-show' => 'enterprises[exchange.enterprise_id].last_page_loaded < enterprises[exchange.enterprise_id].num_of_pages && !productsLoading()'}
-      .button{ 'ng-click' => 'loadMoreExchangeProducts(exchange)' }
-        {{ 'js.admin.panels.exchange_products.load_more_products' | t }}
-      .button{ 'ng-click' => 'loadAllExchangeProducts(exchange)' }
-        {{ 'js.admin.panels.exchange_products.load_all_products' | t }}
-
-    .sixteen.columns.alpha#loading{ 'ng-show' => 'productsLoading()' }
-      %br
-      %img.spinner{ src: "/assets/spinning-circles.svg" }
-      %h1
-        {{ 'js.admin.panels.exchange_products.loading_products' | t }}
+    %div{ 'ng-include' => "'admin/panels/exchange_products_panel_footer.html'" }
