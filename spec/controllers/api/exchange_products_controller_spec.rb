@@ -46,6 +46,19 @@ module Api
           end
         end
       end
+
+      describe "pagination" do
+        let(:exchange) { order_cycle.exchanges.outgoing.first }
+        let(:products_relation) { Spree::Product.includes(:variants).where("spree_variants.id": exchange.variants.map(&:id)) }
+
+        it "paginates results" do
+          spree_get :index, exchange_id: exchange.id, page: 1, per_page: 1
+
+          expect(json_response["products"].size).to eq 1
+          expect(json_response["pagination"]["results"]).to eq 2
+          expect(json_response["pagination"]["pages"]).to eq 2
+        end
+      end
     end
   end
 end
