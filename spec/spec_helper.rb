@@ -100,6 +100,7 @@ RSpec.configure do |config|
   config.before(:suite)          { DatabaseCleaner.clean_with :deletion, except: ['spree_countries', 'spree_states'] }
   config.before(:each)           { DatabaseCleaner.strategy = :transaction }
   config.before(:each, js: true) { DatabaseCleaner.strategy = :deletion, { except: ['spree_countries', 'spree_states'] } }
+  config.before(:each, concurrency: true) { DatabaseCleaner.strategy = :deletion, { except: ['spree_countries', 'spree_states'] } }
   config.before(:each)           { DatabaseCleaner.start }
   config.after(:each)            { DatabaseCleaner.clean }
   config.after(:each, js: true) do

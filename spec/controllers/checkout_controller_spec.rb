@@ -130,6 +130,7 @@ describe CheckoutController, type: :controller do
     context 'when completing the order' do
       before do
         order.state = 'complete'
+        order.save!
         allow(order).to receive(:update_attributes).and_return(true)
         allow(order).to receive(:next).and_return(true)
         allow(order).to receive(:set_distributor!).and_return(true)

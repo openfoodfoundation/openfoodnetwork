@@ -3,6 +3,10 @@ require 'open_food_network/address_finder'
 class CheckoutController < Spree::CheckoutController
   layout 'darkswarm'
 
+  # We need pessimistic locking to avoid race conditions.
+  # Otherwise we fail on duplicate indexes or end up with negative stock.
+  prepend_around_filter CurrentOrderLocker, only: :update
+
   prepend_before_filter :check_hub_ready_for_checkout
   prepend_before_filter :check_order_cycle_expiry
   prepend_before_filter :require_order_cycle
