@@ -74,6 +74,8 @@ Spree::Core::Engine.routes.prepend do
           get :poll
         end
       end
+
+      resources :adjustments
     end
 
     resources :users do
