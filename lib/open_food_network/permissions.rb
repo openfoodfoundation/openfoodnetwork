@@ -58,47 +58,55 @@ module OpenFoodNetwork
       permissions
     end
 
-    # Find enterprises that an admin is allowed to add to an order cycle
+    # Find orders that a user can see
     def visible_orders
-      # Any orders that I can edit
-      editable = editable_orders.pluck(:id)
+      Spree::Order.where(id:
+        managed_orders.select(:id) |
+        coordinated_orders.select(:id) |
+        produced_orders.select(:id))
+    end
 
-      produced = Spree::Order.with_line_items_variants_and_products_outer.
+    # Any orders that the user can edit
+    def editable_orders
+      Spree::Order.where(id:
+        managed_orders.select(:id) |
+        coordinated_orders.select(:id) )
+    end
+
+    # Any orders placed through any hub that I manage
+    def managed_orders
+      Spree::Order.where(distributor_id: managed_enterprises.select(:id))
+    end
+
+    # Any order that is placed through an order cycle one of my managed enterprises coordinates
+    def coordinated_orders
+      Spree::Order.where(order_cycle_id: coordinated_order_cycles.select(:id))
+    end
+
+    def produced_orders
+      Spree::Order.with_line_items_variants_and_products_outer.
         where(
           distributor_id: granted_distributor_ids,
           spree_products: { supplier_id: enterprises_with_associated_orders }
-        ).pluck(:id)
-
-      Spree::Order.where(id: editable | produced)
-    end
-
-    # Find enterprises that an admin is allowed to add to an order cycle
-    def editable_orders
-      # Any orders placed through any hub that I manage
-      managed = Spree::Order.where(distributor_id: managed_enterprises.pluck(:id)).pluck(:id)
-
-      # Any order that is placed through an order cycle one of my managed enterprises coordinates
-      coordinated = Spree::Order.
-        where(order_cycle_id: coordinated_order_cycles.pluck(:id)).
-        pluck(:id)
-
-      Spree::Order.where(id: managed | coordinated )
+        )
     end
 
     def visible_line_items
-      # Any line items that I can edit
-      editable = editable_line_items.pluck(:id)
-
-      # Any from visible orders, where the product is produced by one of my managed producers
-      produced = Spree::LineItem.where(order_id: visible_orders.pluck(:id)).
-        joins(:product).
-        where(spree_products: { supplier_id: managed_enterprises.is_primary_producer.pluck(:id) })
-
-      Spree::LineItem.where(id: editable | produced)
+      Spree::LineItem.where(id:
+        editable_line_items.select(:id) |
+        produced_line_items.select(:id))
     end
 
+    # Any line items that I can edit
     def editable_line_items
       Spree::LineItem.where(order_id: editable_orders)
+    end
+
+    # Any from visible orders, where the product is produced by one of my managed producers
+    def produced_line_items
+      Spree::LineItem.where(order_id: visible_orders.select(:id)).
+        joins(:product).
+        where(spree_products: { supplier_id: managed_enterprises.is_primary_producer.select(:id) })
     end
 
     def editable_products
@@ -106,7 +114,7 @@ module OpenFoodNetwork
         related_enterprises_granting(:manage_products)
       )
       Spree::Product.where(
-        id: managed_enterprise_products.pluck(:id) | permitted_enterprise_products_ids
+        id: managed_enterprise_products.select(:id) | permitted_enterprise_products_ids
       )
     end
 
@@ -116,8 +124,12 @@ module OpenFoodNetwork
           related_enterprises_granting(:add_to_order_cycle)
       )
       Spree::Product.where(
-        id: managed_enterprise_products.pluck(:id) | permitted_enterprise_products_ids
+        id: managed_enterprise_products.select(:id) | permitted_enterprise_products_ids
       )
+    end
+
+    def product_ids_supplied_by(supplier_ids)
+      Spree::Product.where(supplier_id: supplier_ids).select(:id)
     end
 
     def managed_product_enterprises
@@ -130,13 +142,13 @@ module OpenFoodNetwork
 
     def editable_schedules
       Schedule.joins(:order_cycles).
-        where(order_cycles: { id: OrderCycle.managed_by(@user).pluck(:id) }).
+        where(order_cycles: { id: OrderCycle.managed_by(@user).select(:id) }).
         select("DISTINCT schedules.*")
     end
 
     def visible_schedules
       Schedule.joins(:order_cycles).
-        where(order_cycles: { id: OrderCycle.accessible_by(@user).pluck(:id) }).
+        where(order_cycles: { id: OrderCycle.accessible_by(@user).select(:id) }).
         select("DISTINCT schedules.*")
     end
 
@@ -157,8 +169,8 @@ module OpenFoodNetwork
     def granted_distributor_ids
       @granted_distributor_ids ||= related_enterprises_granted(
         :add_to_order_cycle,
-        by: managed_enterprises.is_primary_producer.pluck(:id)
-      ).pluck(:id)
+        by: managed_enterprises.is_primary_producer.select(:id)
+      ).select(:id)
     end
 
     def enterprises_with_associated_orders
@@ -176,7 +188,7 @@ module OpenFoodNetwork
         Enterprise.scoped
       else
         Enterprise.where(
-          id: managed_enterprises.pluck(:id) | related_enterprises_granting(permission)
+          id: managed_enterprises.select(:id) | related_enterprises_granting(permission)
         )
       end
     end
@@ -185,7 +197,7 @@ module OpenFoodNetwork
       if admin?
         Enterprise.scoped
       else
-        managed_enterprise_ids = managed_enterprises.pluck(:id)
+        managed_enterprise_ids = managed_enterprises.select(:id)
         granting_enterprise_ids = related_enterprises_granting(permission)
         granted_enterprise_ids = related_enterprises_granted(permission)
 
@@ -209,7 +221,7 @@ module OpenFoodNetwork
       parent_ids = EnterpriseRelationship.
         permitting(options[:to] || managed_enterprises.select("enterprises.id")).
         with_permission(permission).
-        pluck(:parent_id)
+        select(:parent_id)
 
       (options[:scope] || Enterprise).where(id: parent_ids).select("enterprises.id")
     end
@@ -218,17 +230,13 @@ module OpenFoodNetwork
       child_ids = EnterpriseRelationship.
         permitted_by(options[:by] || managed_enterprises.select("enterprises.id")).
         with_permission(permission).
-        pluck(:child_id)
+        select(:child_id)
 
       (options[:scope] || Enterprise).where(id: child_ids).select("enterprises.id")
     end
 
     def managed_enterprise_products
       Spree::Product.managed_by(@user)
-    end
-
-    def product_ids_supplied_by(supplier_ids)
-      Spree::Product.where(supplier_id: supplier_ids).pluck(:id)
     end
   end
 end
