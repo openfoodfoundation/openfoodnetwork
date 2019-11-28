@@ -114,7 +114,9 @@ en_AU:
       email_welcome: "Welcome"
       email_registered: "is now part of"
       email_userguide_html: "The User Guide with detailed support for setting up your Producer or Hub is here: %{link}"
+      userguide: "Open Food Network User Guide"
       email_admin_html: "You can manage your account by logging into the %{link} or by clicking on the cog in the top right hand side of the homepage, and selecting Administration."
+      admin_panel: "Admin Panel"
       email_community_html: "We also have an online forum for community discussion related to OFN software and the unique challenges of running a food enterprise. You are encouraged to join in. We are constantly evolving and your input into this forum will shape what happens next. %{link}"
       join_community: "Join the community"
     invite_manager:
@@ -251,6 +253,7 @@ en_AU:
   expired: has expired, please request a new one
   back_to_payments_list: "Back to Payments List"
   maestro_or_solo_cards: "Maestro/Solo cards"
+  backordered: "Backordered"
   on hand: "On Hand"
   ship: "Ship"
   actions:
@@ -431,9 +434,12 @@ en_AU:
         infinity: "Infinity"
         to_order_tip: "Items made to order do not have a set stock level, such as loaves of bread made fresh to order."
       back_to_products_list: "Back to products list"
+      editing_product: "Editing Product"
       tabs:
+        product_details: "Product Details"
         group_buy_options: "Group Buy Options"
         images: "Images"
+        variants: "Variants"
         product_properties: "Product Properties"
     product_import:
       title: Product Import
@@ -536,6 +542,7 @@ en_AU:
         title: Inventory
         description: Use this page to manage inventories for your enterprises. Any product details set here will override those set on the 'Products' page
         enable_reset?: Enable Stock Reset?
+        default_stock: "Default stock"
         inherit?: Inherit?
         add: Add
         hide: Hide
@@ -830,21 +837,33 @@ en_AU:
       new:
         create: "Create"
         cancel: "Cancel"
+        back_to_list: "Back To List"
       edit:
         advanced_settings: "Advanced Settings"
         save: "Save"
+        save_and_next: "Save and Next"
         next: "Next"
         cancel: "Cancel"
+        back_to_list: "Back To List"
+        save_and_back_to_list: "Save and Back to List"
         choose_products_from: "Choose Products From:"
       incoming:
         previous: "Previous"
         save: "Save"
+        save_and_next: "Save and Next"
         next: "Next"
         cancel: "Cancel"
+        back_to_list: "Back To List"
       outgoing:
         previous: "Previous"
         save: "Save"
+        save_and_back_to_list: "Save and Back to List"
         cancel: "Cancel"
+        back_to_list: "Back To List"
+      wizard_progress:
+        edit: "1. General Settings"
+        incoming: "2. Incoming Products"
+        outgoing: "3. Outgoing Products"
       exchange_form:
         pickup_time_tip: When orders from this OC will be ready for the customer
         pickup_instructions_placeholder: "Pick-up instructions"
@@ -2639,6 +2658,8 @@ en_AU:
     name_or_sku: "Name or SKU (enter at least first 4 characters of product name)"
     resend: Resend
     back_to_orders_list: Back To Orders List
+    return_authorizations: Return Authorizations
+    cannot_create_returns: Cannot create returns as this order has no shipped units.
     select_stock: "Select stock"
     location: "Location"
     count_on_hand: "Count On Hand"
@@ -2787,8 +2808,15 @@ en_AU:
     minimal_amount: "Minimal Amount"
     normal_amount: "Normal Amount"
     discount_amount: "Discount Amount"
+    no_images_found: "No Images Found"
+    new_image: "New Image"
+    filename: "Filename"
+    alt_text: "Alternative Text"
+    thumbnail: "Thumbnail"
+    back_to_images_list: "Back To Images List"
     email: Email
     account_updated: "Account updated!"
+    email_updated: "The account will be updated once the new email is confirmed."
     my_account: "My account"
     date: "Date"
     time: "Time"
@@ -2797,6 +2825,7 @@ en_AU:
     zipcode: Postcode
     weight: Weight (per kg)
     error_user_destroy_with_orders: "Users with completed orders may not be deleted"
+    options: "Options"
     actions:
       update: "Update"
     errors:
@@ -2828,25 +2857,53 @@ en_AU:
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Inherit properties from %{supplier}? (unless overridden above)"
+          add_product_properties: "Add Product Properties"
+          select_from_prototype: "Select From Prototype"
       properties:
         index:
           properties: "Properties"
+          new_property: "New Property"
           name: "Name"
+          presentation: "Presentation"
+        new:
+          new_property: "New Property"
+        edit:
+          editing_property: "Editing Property"
+          back_to_properties_list: "Back To Properties List"
         form:
           name: "Name"
+          presentation: "Presentation"
       return_authorizations:
         index:
+          new_return_authorization: "New Return Authorization"
+          return_authorizations: "Return Authorizations"
           back_to_orders_list: "Back To Orders List"
+          rma_number: "RMA Number"
           status: "Status"
           amount: "Amount"
+          cannot_create_returns: "Cannot create returns as this order has no shipped units."
           continue: "Continue"
         new:
+          new_return_authorization: "New Return Authorization"
+          back_to_return_authorizations_list: "Back To Return Authorization List"
           continue: "Continue"
         edit:
+          receive: "receive"
           are_you_sure: "Are you sure?"
+          return_authorization: "Return Authorization"
         form:
           product: "Product"
+          quantity_shipped: "Quantity Shipped"
+          quantity_returned: "Quantity Returned"
+          return_quantity: "Return Quantity"
           amount: "Amount"
+          rma_value: "RMA Value"
+          reason: "Reason"
+          stock_location: "Stock Location"
+        states:
+          authorized: "Authorized"
+          received: "Received"
+          canceled: "Canceled"
       orders:
         index:
           listing_orders: "Listing Orders"
@@ -3037,12 +3094,23 @@ en_AU:
         index:
           sku: "SKU"
           price: "Price"
+          options: "Options"
           no_results: "No results"
+          to_add_variants_you_must_first_define: "To add variants, you must first define"
           option_types: "Option Types"
+          option_values: "Option Values"
+          and: "and"
+          new_variant: "New Variant"
+          show_active: "Show Active"
+          show_deleted: "Show Deleted"
+        new:
+          new_variant: "New Variant"
         form:
+          cost_price: "Cost Price"
           sku: "SKU"
           price: "Price"
           display_as: "Display As"
+          display_name: "Display Name"
         autocomplete:
           producer_name: "Producer"
           unit: "Unit"
@@ -3182,3 +3250,19 @@ en_AU:
         allow_charges?: "Allow Charges?"
     localized_number:
       invalid_format: has an invalid format. Please enter a number.
+    api:
+      invalid_api_key: "Invalid API key (%{key}) specified."
+      unauthorized: "You are not authorized to perform that action."
+      invalid_resource: "Invalid resource. Please fix errors and try again."
+      resource_not_found: "The resource you were looking for could not be found."
+      access: "API Access"
+      key: "Key"
+      clear_key: "Clear key"
+      regenerate_key: "Regenerate Key"
+      no_key: "No key"
+      generate_key: "Generate API key"
+      key_generated: "Key generated"
+      key_cleared: "Key cleared"
+      shipment:
+        cannot_ready: "Cannot ready shipment."
+      invalid_taxonomy_id: "Invalid taxonomy id."
