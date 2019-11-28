@@ -1,3 +1,12 @@
+---
+name: Release task
+about: Track the process of a new release
+title: ''
+labels: ''
+assignees: ''
+
+---
+
 Steps: 
 
 - [ ] Include translations
