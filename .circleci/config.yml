@@ -5,6 +5,7 @@ jobs:
     docker:
       - image: circleci/ruby:2.2.10-node-browsers
         environment:
+          NODE_VERSION: 5.12.0
           BUNDLE_JOBS: 4
           BUNDLE_RETRY: 3
           BUNDLE_PATH: vendor/bundle
@@ -23,8 +24,8 @@ jobs:
       - checkout
 
       - run:
-          name: Which bundler?
-          command: bundle -v
+          name: Install bundler
+          command: gem install bundler -v 1.17.2
 
       # Restore bundle cache
       # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
@@ -48,20 +49,20 @@ jobs:
           command: cp config/application.yml.example config/application.yml
 
       - run:
-          name: NPM setup
-          command: if [[ "$CIRCLE_NODE_INDEX" == "0" ]] ; then npm install -g npm@'3.8.8' ; fi
+          name: Setup npm
+          command: if [[ "$CIRCLE_NODE_INDEX" == "0" ]] ; then sudo npm install -g npm@'3.8.8' ; fi
 
       - run:
-          name: NPM install
+          name: Install npm packages
           command: if [[ "$CIRCLE_NODE_INDEX" == "0" ]] ; then npm install ; fi
 
       - run:
           name: Install karma
-          command: if [[ "$CIRCLE_NODE_INDEX" == "0" ]] ; then npm install -g karma-cli@0.1.2 ; fi
+          command: if [[ "$CIRCLE_NODE_INDEX" == "0" ]] ; then sudo npm install -g karma-cli@0.1.2 ; fi
 
       - run:
           name: Run karma
-          command: if [[ "$CIRCLE_NODE_INDEX" == "0" ]] ; then RAILS_ENV=test bundle exec rake karma:run ; fi
+          command: if [[ "$CIRCLE_NODE_INDEX" == "0" ]] ; then bundle exec rake karma:run ; fi
 
       - run:
           name: Wait for DB
@@ -69,14 +70,12 @@ jobs:
 
       - run:
           name: Database setup
-          command: bin/rails db:schema:load --trace
+          command: bundle exec rake db:create db:schema:load
 
       - run:
           name: Run rspec in parallel
           command: |
-            bundle exec rspec --profile 10 \
-                              --format RspecJunitFormatter \
-                              --out test_results/rspec.xml \
+            bundle exec rspec --out test_results/rspec.xml \
                               --format progress \
                               $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
 
