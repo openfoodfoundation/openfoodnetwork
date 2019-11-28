@@ -8,19 +8,6 @@ module Spree
       before_filter :set_default_tax_rate, only: :edit
       before_filter :enable_updates, only: :update
 
-      def toggle_state
-        redirect_to admin_order_adjustments_path(@order) if @adjustment.finalized?
-
-        if @adjustment.immutable?
-          @adjustment.fire_state_event(:open)
-          flash[:success] = Spree.t(:adjustment_successfully_opened)
-        else
-          @adjustment.fire_state_event(:close)
-          flash[:success] = Spree.t(:adjustment_successfully_closed)
-        end
-        redirect_to admin_order_adjustments_path(@order)
-      end
-
       private
 
       def reload_order
