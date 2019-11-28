@@ -1,0 +1,85 @@
+version: 2
+jobs:
+  build:
+    parallelism: 4
+    docker:
+      - image: circleci/ruby:2.2.10-node-browsers
+        environment:
+          BUNDLE_JOBS: 4
+          BUNDLE_RETRY: 3
+          BUNDLE_PATH: vendor/bundle
+          PGHOST: 127.0.0.1
+          PGUSER: ofn
+          RAILS_ENV: test
+      - image: circleci/postgres:9.5-alpine
+        environment:
+          POSTGRES_DB: open_food_network_test
+          POSTGRES_USER: ofn
+          POSTGRES_PASSWORD: 'f00d'
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - run:
+          name: Which bundler?
+          command: bundle -v
+
+      # Restore bundle cache
+      # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
+      - restore_cache:
+          keys:
+            - bundler-cache-{{ checksum "Gemfile.lock" }}
+            - bundler-cache-
+
+      - run:
+          name: Bundle Install
+          command: bundle check --path vendor/bundle || bundle install --deployment
+
+      # Store bundle cache for Ruby dependencies
+      - save_cache:
+          key: bundler-cache-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
+      - run:
+          name: Copy application.yml
+          command: cp config/application.yml.example config/application.yml
+
+      - run:
+          name: NPM setup
+          command: if [[ "$CIRCLE_NODE_INDEX" == "0" ]] ; then npm install -g npm@'3.8.8' ; fi
+
+      - run:
+          name: NPM install
+          command: if [[ "$CIRCLE_NODE_INDEX" == "0" ]] ; then npm install ; fi
+
+      - run:
+          name: Install karma
+          command: if [[ "$CIRCLE_NODE_INDEX" == "0" ]] ; then npm install -g karma-cli@0.1.2 ; fi
+
+      - run:
+          name: Run karma
+          command: if [[ "$CIRCLE_NODE_INDEX" == "0" ]] ; then RAILS_ENV=test bundle exec rake karma:run ; fi
+
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+      - run:
+          name: Database setup
+          command: bin/rails db:schema:load --trace
+
+      - run:
+          name: Run rspec in parallel
+          command: |
+            bundle exec rspec --profile 10 \
+                              --format RspecJunitFormatter \
+                              --out test_results/rspec.xml \
+                              --format progress \
+                              $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+
+      # Save test results for timing analysis
+      - store_test_results: # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
+          path: test_results
