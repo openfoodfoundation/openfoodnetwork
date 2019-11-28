@@ -30,7 +30,8 @@ describe Api::TaxonsController do
     it "gets all taxons" do
       api_get :index
 
-      expect(json_response.first['name']).to eq taxonomy.root.name
+      json_names = json_response.map { |taxon_data| taxon_data["name"] }
+      expect(json_names).to include(taxon.name, taxon2.name)
     end
 
     it "can search for a single taxon" do
