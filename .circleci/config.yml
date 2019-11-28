@@ -83,7 +83,8 @@ jobs:
       - run:
           name: Run rspec in parallel
           command: |
-            bundle exec rspec --out test_results/rspec.xml \
+            bundle exec rspec --tag ~performance \
+                              --out test_results/rspec.xml \
                               --format progress \
                               $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
 
