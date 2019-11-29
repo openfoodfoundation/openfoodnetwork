@@ -10,7 +10,7 @@ module Permissions
       Spree::Order.where(id:
         managed_orders.select(:id) |
         coordinated_orders.select(:id) |
-        produced_orders.select(:id))
+        produced_orders.select("spree_orders.id"))
     end
 
     # Any orders that the user can edit
@@ -23,7 +23,7 @@ module Permissions
     def visible_line_items
       Spree::LineItem.where(id:
         editable_line_items.select(:id) |
-        produced_line_items.select(:id))
+        produced_line_items.select("spree_line_items.id"))
     end
 
     # Any line items that I can edit
@@ -35,7 +35,7 @@ module Permissions
 
     # Any orders placed through any hub that I manage
     def managed_orders
-      Spree::Order.where(distributor_id: @permissions.managed_enterprises.select(:id))
+      Spree::Order.where(distributor_id: @permissions.managed_enterprises.select("enterprises.id"))
     end
 
     # Any order that is placed through an order cycle one of my managed enterprises coordinates
@@ -63,15 +63,15 @@ module Permissions
     def granted_distributor_ids
       @granted_distributor_ids ||= @permissions.related_enterprises_granted(
         :add_to_order_cycle,
-        by: @permissions.managed_enterprises.is_primary_producer.select(:id)
-      ).select(:id)
+        by: @permissions.managed_enterprises.is_primary_producer.select("enterprises.id")
+      ).select("enterprises.id")
     end
 
     # Any from visible orders, where the product is produced by one of my managed producers
     def produced_line_items
       Spree::LineItem.where(order_id: visible_orders.select(:id)).
         joins(:product).
-        where(spree_products: { supplier_id: @permissions.managed_enterprises.is_primary_producer.select(:id) })
+        where(spree_products: { supplier_id: @permissions.managed_enterprises.is_primary_producer.select("enterprises.id") })
     end
   end
 end
