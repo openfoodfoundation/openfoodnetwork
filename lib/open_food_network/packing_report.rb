@@ -95,7 +95,7 @@ module OpenFoodNetwork
     def columns
       if is_by_customer?
         [proc { |line_items| line_items.first.order.distributor.name },
-         proc { |line_items| customer_code(line_items.first.order.email) },
+         proc { |line_items| customer_code(line_items.first.order) },
          proc { |line_items| line_items.first.order.bill_address.firstname },
          proc { |line_items| line_items.first.order.bill_address.lastname },
          proc { |line_items| line_items.first.product.supplier.name },
@@ -107,7 +107,7 @@ module OpenFoodNetwork
         [
           proc { |line_items| line_items.first.order.distributor.name },
           proc { |line_items| line_items.first.product.supplier.name },
-          proc { |line_items| customer_code(line_items.first.order.email) },
+          proc { |line_items| customer_code(line_items.first.order) },
           proc { |line_items| line_items.first.order.bill_address.firstname },
           proc { |line_items| line_items.first.order.bill_address.lastname },
           proc { |line_items| line_items.first.product.name },
@@ -125,7 +125,7 @@ module OpenFoodNetwork
     end
 
     def line_item_includes
-      [{ order: [:bill_address, :distributor],
+      [{ order: [:bill_address, :distributor, :customer],
          variant: [{ option_values: :option_type }, { product: :supplier }] }]
     end
 
@@ -146,8 +146,8 @@ module OpenFoodNetwork
       params[:report_type] == "pack_by_customer"
     end
 
-    def customer_code(email)
-      customer = Customer.where(email: email).first
+    def customer_code(order)
+      customer = order.customer
       customer.nil? ? "" : customer.code
     end
   end
