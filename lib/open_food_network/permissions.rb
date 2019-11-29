@@ -90,14 +90,16 @@ module OpenFoodNetwork
     end
 
     def editable_schedules
-      Schedule.joins(:order_cycles).
-        where(order_cycles: { id: OrderCycle.managed_by(@user).select(:id) }).
+      Schedule.
+        joins(:order_cycles).
+        where(order_cycles: { id: OrderCycle.managed_by(@user).select("order_cycles.id") }).
         select("DISTINCT schedules.*")
     end
 
     def visible_schedules
-      Schedule.joins(:order_cycles).
-        where(order_cycles: { id: OrderCycle.accessible_by(@user).select(:id) }).
+      Schedule.
+        joins(:order_cycles).
+        where(order_cycles: { id: OrderCycle.managed_by(@user).select("order_cycles.id") }).
         select("DISTINCT schedules.*")
     end
 
