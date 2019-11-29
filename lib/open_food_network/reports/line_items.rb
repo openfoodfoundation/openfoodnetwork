@@ -24,10 +24,10 @@ module OpenFoodNetwork
           line_items = line_items.includes(*line_item_includes)
         end
 
-        hidden_line_items = line_items_with_hidden_details(line_items)
+        editable_line_items = editable_line_items(line_items)
 
         line_items.select{ |li|
-          hidden_line_items.include? li
+          !editable_line_items.include? li
         }.each do |line_item|
           # TODO We should really be hiding customer code here too, but until we
           # have an actual association between order and customer, it's a bit tricky
@@ -51,14 +51,16 @@ module OpenFoodNetwork
         @order_permissions.visible_orders.complete.not_state(:canceled).search(@params[:q])
       end
 
-      def line_items_with_hidden_details(line_items)
-        editable_line_items = @order_permissions.editable_line_items.pluck(:id)
+      # From the line_items given, returns the ones that are editable by the user
+      def editable_line_items(line_items)
+        editable_line_items_ids = @order_permissions.editable_line_items.select(:id)
 
-        if editable_line_items.empty?
-          line_items
-        else
-          line_items.where('"spree_line_items"."id" NOT IN (?)', editable_line_items)
-        end
+        # Although merge could take a relation, here we convert line_items to array
+        #   because, if we pass a relation, merge will overwrite the conditions on the same field
+        #   In this case: the IN clause on spree_line_items.order_id from line_items
+        #     overwrites the IN clause on spree_line_items.order_id on editable_line_items_ids
+        # We convert to array the relation with less elements: line_items
+        editable_line_items_ids.merge(line_items.to_a)
       end
     end
   end
