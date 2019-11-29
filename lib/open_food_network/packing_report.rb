@@ -38,12 +38,12 @@ module OpenFoodNetwork
     end
 
     def search
-      Reports::LineItems.search_orders(order_permissions, params)
+      report_line_items.orders
     end
 
     def table_items
       return [] unless @render_table
-      Reports::LineItems.list(order_permissions, report_options)
+      report_line_items.list(line_item_includes)
     end
 
     def rules
@@ -120,10 +120,6 @@ module OpenFoodNetwork
 
     private
 
-    def report_options
-      @params.merge(line_item_includes: line_item_includes)
-    end
-
     def line_item_includes
       [{ order: [:bill_address, :distributor],
          variant: [{ option_values: :option_type }, { product: :supplier }] }]
@@ -149,6 +145,10 @@ module OpenFoodNetwork
     def customer_code(email)
       customer = Customer.where(email: email).first
       customer.nil? ? "" : customer.code
+    end
+
+    def report_line_items
+      @report_line_items ||= Reports::LineItems.new(order_permissions, @params)
     end
   end
 end

@@ -1,27 +1,30 @@
 module OpenFoodNetwork
   module Reports
     # shared code to search and list line items
-    module LineItems
-      def self.search_orders(order_permissions, params)
-        order_permissions.visible_orders.complete.not_state(:canceled).search(params[:q])
+    class LineItems
+      def initialize(order_permissions, params)
+        @order_permissions = order_permissions
+        @params = params
       end
 
-      def self.list(order_permissions, params)
-        orders = search_orders(order_permissions, params).result
+      def orders
+        @orders ||= search_orders
+      end
 
-        line_items = order_permissions.
+      def list(line_item_includes = nil)
+        line_items = @order_permissions.
           visible_line_items.
-          merge(Spree::LineItem.where(order_id: orders))
+          merge(Spree::LineItem.where(order_id: orders.result))
 
-        if params[:supplier_id_in].present?
-          line_items = line_items.supplied_by_any(params[:supplier_id_in])
+        if @params[:supplier_id_in].present?
+          line_items = line_items.supplied_by_any(@params[:supplier_id_in])
         end
 
-        if params[:line_item_includes].present?
-          line_items = line_items.includes(*params[:line_item_includes])
+        if line_item_includes.present?
+          line_items = line_items.includes(*line_item_includes)
         end
 
-        hidden_line_items = line_items_with_hidden_details(order_permissions, line_items)
+        hidden_line_items = line_items_with_hidden_details(line_items)
 
         line_items.select{ |li|
           hidden_line_items.include? li
@@ -38,11 +41,18 @@ module OpenFoodNetwork
                               city: "", zipcode: "", state: nil)
           line_item.order.assign_attributes(email: I18n.t('admin.reports.hidden'))
         end
+
         line_items
       end
 
-      def self.line_items_with_hidden_details(order_permissions, line_items)
-        editable_line_items = order_permissions.editable_line_items.pluck(:id)
+      private
+
+      def search_orders
+        @order_permissions.visible_orders.complete.not_state(:canceled).search(@params[:q])
+      end
+
+      def line_items_with_hidden_details(line_items)
+        editable_line_items = @order_permissions.editable_line_items.pluck(:id)
 
         if editable_line_items.empty?
           line_items
