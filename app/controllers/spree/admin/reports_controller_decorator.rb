@@ -23,7 +23,8 @@ Spree::Admin::ReportsController.class_eval do
 
   before_filter :cache_search_state
   # Fetches user's distributors, suppliers and order_cycles
-  before_filter :load_data, only: [:customers, :products_and_inventory, :order_cycle_management, :packing]
+  before_filter :load_data,
+                only: [:customers, :products_and_inventory, :order_cycle_management, :packing]
 
   def report_types
     OpenFoodNetwork::Reports::List.all
@@ -49,7 +50,9 @@ Spree::Admin::ReportsController.class_eval do
     @report_type = params[:report_type]
 
     # -- Build Report with Order Grouper
-    @report = OpenFoodNetwork::OrderCycleManagementReport.new spree_current_user, params, render_content?
+    @report = OpenFoodNetwork::OrderCycleManagementReport.new spree_current_user,
+                                                              params,
+                                                              render_content?
     @table = @report.table_items
 
     render_report(@report.header, @table, params[:csv], "order_cycle_management_#{timestamp}.csv")
@@ -69,7 +72,9 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def orders_and_distributors
-    @report = OpenFoodNetwork::OrderAndDistributorReport.new spree_current_user, params, render_content?
+    @report = OpenFoodNetwork::OrderAndDistributorReport.new spree_current_user,
+                                                             params,
+                                                             render_content?
     @search = @report.search
     csv_file_name = "orders_and_distributors_#{timestamp}.csv"
     render_report(@report.header, @report.table, params[:csv], csv_file_name)
@@ -126,7 +131,9 @@ Spree::Admin::ReportsController.class_eval do
     @include_blank = I18n.t(:all)
 
     # -- Build Report with Order Grouper
-    @report = OpenFoodNetwork::OrdersAndFulfillmentsReport.new(spree_current_user, params, render_content?)
+    @report = OpenFoodNetwork::OrdersAndFulfillmentsReport.new spree_current_user,
+                                                               params,
+                                                               render_content?
     @table = order_grouper_table
     csv_file_name = "#{params[:report_type]}_#{timestamp}.csv"
 
@@ -136,16 +143,24 @@ Spree::Admin::ReportsController.class_eval do
   def products_and_inventory
     @report_types = report_types[:products_and_inventory]
     @report = if params[:report_type] != 'lettuce_share'
-                OpenFoodNetwork::ProductsAndInventoryReport.new spree_current_user, params, render_content?
+                OpenFoodNetwork::ProductsAndInventoryReport.new spree_current_user,
+                                                                params,
+                                                                render_content?
               else
                 OpenFoodNetwork::LettuceShareReport.new spree_current_user, params, render_content?
               end
-    render_report(@report.header, @report.table, params[:csv], "products_and_inventory_#{timestamp}.csv")
+    render_report(@report.header,
+                  @report.table,
+                  params[:csv],
+                  "products_and_inventory_#{timestamp}.csv")
   end
 
   def users_and_enterprises
     @report = OpenFoodNetwork::UsersAndEnterprisesReport.new params, render_content?
-    render_report(@report.header, @report.table, params[:csv], "users_and_enterprises_#{timestamp}.csv")
+    render_report(@report.header,
+                  @report.table,
+                  params[:csv],
+                  "users_and_enterprises_#{timestamp}.csv")
   end
 
   def xero_invoices

@@ -9,8 +9,13 @@ module OpenFoodNetwork
       def self.list(order_permissions, params)
         orders = search_orders(order_permissions, params).result
 
-        line_items = order_permissions.visible_line_items.merge(Spree::LineItem.where(order_id: orders))
-        line_items = line_items.supplied_by_any(params[:supplier_id_in]) if params[:supplier_id_in].present?
+        line_items = order_permissions.
+          visible_line_items.
+          merge(Spree::LineItem.where(order_id: orders))
+
+        if params[:supplier_id_in].present?
+          line_items = line_items.supplied_by_any(params[:supplier_id_in])
+        end
 
         if params[:line_item_includes].present?
           line_items = line_items.includes(*params[:line_item_includes])
@@ -23,8 +28,14 @@ module OpenFoodNetwork
         }.each do |line_item|
           # TODO We should really be hiding customer code here too, but until we
           # have an actual association between order and customer, it's a bit tricky
-          line_item.order.bill_address.andand.assign_attributes(firstname: I18n.t('admin.reports.hidden'), lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
-          line_item.order.ship_address.andand.assign_attributes(firstname: I18n.t('admin.reports.hidden'), lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
+          line_item.order.bill_address.andand.
+            assign_attributes(firstname: I18n.t('admin.reports.hidden'),
+                              lastname: "", phone: "", address1: "", address2: "",
+                              city: "", zipcode: "", state: nil)
+          line_item.order.ship_address.andand.
+            assign_attributes(firstname: I18n.t('admin.reports.hidden'),
+                              lastname: "", phone: "", address1: "", address2: "",
+                              city: "", zipcode: "", state: nil)
           line_item.order.assign_attributes(email: I18n.t('admin.reports.hidden'))
         end
         line_items
