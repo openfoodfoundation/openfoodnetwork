@@ -415,14 +415,17 @@ feature '
 
     expect(page).to have_selector "a.clone-product", count: 1
     find("a.clone-product").click
+    expect(page).to have_field "product_name", with: "COPY OF #{p.name}"
 
-    fill_in "product_name", with: "new product name"
+    within "#p_#{p.id}" do
+      fill_in "product_name", with: "new product name"
+    end
 
     within "#save-bar" do
       click_button 'Save Changes'
     end
-
     expect(page.find("#status-message")).to have_content "Changes saved."
+
     p.reload
     expect(p.name).to eq "new product name"
   end
