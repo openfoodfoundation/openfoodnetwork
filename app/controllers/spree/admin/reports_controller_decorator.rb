@@ -222,7 +222,8 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def suppliers_of_products_distributed_by(distributors)
-    distributors.map { |d| Spree::Product.in_distributor(d) }.flatten.map(&:supplier).uniq
+    distributors.map { |d| Spree::Product.in_distributor(d).includes(:supplier).all }.
+      flatten.map(&:supplier).uniq
   end
 
   # Load order cycles the current user has access to
