@@ -109,36 +109,6 @@ module OpenFoodNetwork
       editable_subscriptions
     end
 
-    private
-
-    def admin?
-      @user.admin?
-    end
-
-    def managed_and_related_enterprises_granting(permission)
-      if admin?
-        Enterprise.scoped
-      else
-        Enterprise.where(
-          id: managed_enterprises.select(:id) | related_enterprises_granting(permission)
-        )
-      end
-    end
-
-    def managed_and_related_enterprises_with(permission)
-      if admin?
-        Enterprise.scoped
-      else
-        managed_enterprise_ids = managed_enterprises.select(:id)
-        granting_enterprise_ids = related_enterprises_granting(permission)
-        granted_enterprise_ids = related_enterprises_granted(permission)
-
-        Enterprise.where(
-          id: managed_enterprise_ids | granting_enterprise_ids | granted_enterprise_ids
-        )
-      end
-    end
-
     def managed_enterprises
       @managed_enterprises ||= Enterprise.managed_by(@user)
     end
@@ -165,6 +135,36 @@ module OpenFoodNetwork
         select(:child_id)
 
       (options[:scope] || Enterprise).where(id: child_ids).select("enterprises.id")
+    end
+
+    private
+
+    def admin?
+      @user.admin?
+    end
+
+    def managed_and_related_enterprises_granting(permission)
+      if admin?
+        Enterprise.scoped
+      else
+        Enterprise.where(
+          id: managed_enterprises.select("enterprises.id") | related_enterprises_granting(permission)
+        )
+      end
+    end
+
+    def managed_and_related_enterprises_with(permission)
+      if admin?
+        Enterprise.scoped
+      else
+        managed_enterprise_ids = managed_enterprises.select("enterprises.id")
+        granting_enterprise_ids = related_enterprises_granting(permission)
+        granted_enterprise_ids = related_enterprises_granted(permission)
+
+        Enterprise.where(
+          id: managed_enterprise_ids | granting_enterprise_ids | granted_enterprise_ids
+        )
+      end
     end
 
     def managed_enterprise_products
