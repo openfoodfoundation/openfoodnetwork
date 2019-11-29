@@ -71,7 +71,10 @@ module Permissions
     def produced_line_items
       Spree::LineItem.where(order_id: visible_orders.select(:id)).
         joins(:product).
-        where(spree_products: { supplier_id: @permissions.managed_enterprises.is_primary_producer.select("enterprises.id") })
+        where(spree_products:
+        {
+          supplier_id: @permissions.managed_enterprises.is_primary_producer.select("enterprises.id")
+        })
     end
   end
 end

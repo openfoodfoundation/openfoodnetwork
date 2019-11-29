@@ -148,7 +148,8 @@ module OpenFoodNetwork
         Enterprise.scoped
       else
         Enterprise.where(
-          id: managed_enterprises.select("enterprises.id") | related_enterprises_granting(permission)
+          id: managed_enterprises.select("enterprises.id") |
+                related_enterprises_granting(permission)
         )
       end
     end
