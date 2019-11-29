@@ -131,7 +131,7 @@ module OpenFoodNetwork
 
     def permissions
       return @permissions unless @permissions.nil?
-      @permissions = OpenFoodNetwork::Permissions.new(@user)
+      @permissions = Permissions::Order.new(@user)
     end
 
     def is_temperature_controlled?(line_item)

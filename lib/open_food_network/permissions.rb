@@ -58,57 +58,6 @@ module OpenFoodNetwork
       permissions
     end
 
-    # Find orders that a user can see
-    def visible_orders
-      Spree::Order.where(id:
-        managed_orders.select(:id) |
-        coordinated_orders.select(:id) |
-        produced_orders.select(:id))
-    end
-
-    # Any orders that the user can edit
-    def editable_orders
-      Spree::Order.where(id:
-        managed_orders.select(:id) |
-        coordinated_orders.select(:id) )
-    end
-
-    # Any orders placed through any hub that I manage
-    def managed_orders
-      Spree::Order.where(distributor_id: managed_enterprises.select(:id))
-    end
-
-    # Any order that is placed through an order cycle one of my managed enterprises coordinates
-    def coordinated_orders
-      Spree::Order.where(order_cycle_id: coordinated_order_cycles.select(:id))
-    end
-
-    def produced_orders
-      Spree::Order.with_line_items_variants_and_products_outer.
-        where(
-          distributor_id: granted_distributor_ids,
-          spree_products: { supplier_id: enterprises_with_associated_orders }
-        )
-    end
-
-    def visible_line_items
-      Spree::LineItem.where(id:
-        editable_line_items.select(:id) |
-        produced_line_items.select(:id))
-    end
-
-    # Any line items that I can edit
-    def editable_line_items
-      Spree::LineItem.where(order_id: editable_orders)
-    end
-
-    # Any from visible orders, where the product is produced by one of my managed producers
-    def produced_line_items
-      Spree::LineItem.where(order_id: visible_orders.select(:id)).
-        joins(:product).
-        where(spree_products: { supplier_id: managed_enterprises.is_primary_producer.select(:id) })
-    end
-
     def editable_products
       permitted_enterprise_products_ids = product_ids_supplied_by(
         related_enterprises_granting(:manage_products)
@@ -164,23 +113,6 @@ module OpenFoodNetwork
 
     def admin?
       @user.admin?
-    end
-
-    def granted_distributor_ids
-      @granted_distributor_ids ||= related_enterprises_granted(
-        :add_to_order_cycle,
-        by: managed_enterprises.is_primary_producer.select(:id)
-      ).select(:id)
-    end
-
-    def enterprises_with_associated_orders
-      # Any orders placed through hubs that my producers have granted P-OC,
-      #   and which contain their products. This is pretty complicated but it's looking for order
-      #   where at least one of my producers has granted P-OC to the distributor
-      #   AND the order contains products of at least one of THE SAME producers
-
-      related_enterprises_granting(:add_to_order_cycle, to: granted_distributor_ids).
-        merge(managed_enterprises.is_primary_producer)
     end
 
     def managed_and_related_enterprises_granting(permission)
