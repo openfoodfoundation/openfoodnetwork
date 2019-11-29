@@ -126,7 +126,8 @@ module OpenFoodNetwork
 
     def line_item_includes
       [{ order: [:bill_address, :distributor, :customer],
-         variant: [{ option_values: :option_type }, { product: :supplier }] }]
+         variant: [{ option_values: [:option_type] },
+                   { product: [:supplier, :shipping_category] }] }]
     end
 
     def permissions
