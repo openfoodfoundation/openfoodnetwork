@@ -24,7 +24,7 @@ class SearchOrders
   attr_reader :params, :current_user
 
   def fetch_orders
-    @search = OpenFoodNetwork::Permissions.new(current_user).editable_orders.ransack(params[:q])
+    @search = ::Permissions::Order.new(current_user).editable_orders.ransack(params[:q])
 
     return paginated_results if using_pagination?
 

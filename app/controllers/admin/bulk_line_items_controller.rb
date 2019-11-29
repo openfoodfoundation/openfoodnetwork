@@ -5,10 +5,11 @@ module Admin
     def index
       order_params = params[:q].andand.delete :order
 
-      orders = OpenFoodNetwork::Permissions.new(spree_current_user).
+      order_permissions = ::Permissions::Order.new(spree_current_user)
+      orders = order_permissions.
         editable_orders.ransack(order_params).result
 
-      line_items = OpenFoodNetwork::Permissions.new(spree_current_user).
+      line_items = order_permissions.
         editable_line_items.where(order_id: orders).
         includes(variant: { option_values: :option_type }).
         ransack(params[:q]).result.
