@@ -13,27 +13,25 @@ module OpenFoodNetwork
 
     delegate :header, :rules, :columns, to: :report
 
-    def initialize(permissions, options = {}, render_table = false)
+    def initialize(user, options = {}, render_table = false)
+      @user = user
       @options = options
       @report_type = options[:report_type]
-      @permissions = permissions
       @render_table = render_table
     end
 
     def search
-      Reports::LineItems.search_orders(permissions, options)
+      Reports::LineItems.search_orders(order_permissions, options)
     end
 
     def table_items
       return [] unless @render_table
 
       list_options = options.merge(line_item_includes: report.line_item_includes)
-      Reports::LineItems.list(permissions, list_options)
+      Reports::LineItems.list(order_permissions, list_options)
     end
 
     private
-
-    attr_reader :permissions
 
     def report
       @report ||= report_klass.new(self)
@@ -83,6 +81,11 @@ module OpenFoodNetwork
 
     def scale_factor(product)
       product.variant_unit == 'weight' ? 1000 : 1
+    end
+
+    def order_permissions
+      return @order_permissions unless @order_permissions.nil?
+      @order_permissions = ::Permissions::Order.new(@user)
     end
   end
 end

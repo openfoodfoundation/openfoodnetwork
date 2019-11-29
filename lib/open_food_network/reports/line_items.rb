@@ -2,21 +2,21 @@ module OpenFoodNetwork
   module Reports
     # shared code to search and list line items
     module LineItems
-      def self.search_orders(permissions, params)
-        permissions.visible_orders.complete.not_state(:canceled).search(params[:q])
+      def self.search_orders(order_permissions, params)
+        order_permissions.visible_orders.complete.not_state(:canceled).search(params[:q])
       end
 
-      def self.list(permissions, params)
-        orders = search_orders(permissions, params).result
+      def self.list(order_permissions, params)
+        orders = search_orders(order_permissions, params).result
 
-        line_items = permissions.visible_line_items.merge(Spree::LineItem.where(order_id: orders))
+        line_items = order_permissions.visible_line_items.merge(Spree::LineItem.where(order_id: orders))
         line_items = line_items.supplied_by_any(params[:supplier_id_in]) if params[:supplier_id_in].present?
 
         if params[:line_item_includes].present?
           line_items = line_items.includes(*params[:line_item_includes])
         end
 
-        hidden_line_items = line_items_with_hidden_details(permissions, line_items)
+        hidden_line_items = line_items_with_hidden_details(order_permissions, line_items)
 
         line_items.select{ |li|
           hidden_line_items.include? li
@@ -30,8 +30,8 @@ module OpenFoodNetwork
         line_items
       end
 
-      def self.line_items_with_hidden_details(permissions, line_items)
-        editable_line_items = permissions.editable_line_items.pluck(:id)
+      def self.line_items_with_hidden_details(order_permissions, line_items)
+        editable_line_items = order_permissions.editable_line_items.pluck(:id)
 
         if editable_line_items.empty?
           line_items

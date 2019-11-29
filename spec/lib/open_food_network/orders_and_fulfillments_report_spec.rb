@@ -23,7 +23,7 @@ describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
     before { order.line_items << line_item }
 
     context "as a site admin" do
-      subject { described_class.new OpenFoodNetwork::Permissions.new(admin_user), {}, true }
+      subject { described_class.new(admin_user, {}, true) }
 
       it "fetches completed orders" do
         o2 = create(:order)
@@ -39,7 +39,7 @@ describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
     end
 
     context "as a manager of a supplier" do
-      subject { described_class.new OpenFoodNetwork::Permissions.new(user), {}, true }
+      subject { described_class.new(user, {}, true) }
 
       let(:s1) { create(:supplier_enterprise) }
 
@@ -98,7 +98,7 @@ describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
     end
 
     context "as a manager of a distributor" do
-      subject { described_class.new OpenFoodNetwork::Permissions.new(user), {}, true }
+      subject { described_class.new(user, {}, true) }
 
       before do
         distributor.enterprise_roles.create!(user: user)
@@ -133,8 +133,7 @@ describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
       ]
 
       report_types.each do |report_type|
-        report = described_class.new OpenFoodNetwork::Permissions.new(admin_user),
-                                     report_type: report_type
+        report = described_class.new(admin_user, report_type: report_type)
         expect(report.header.size).to eq(report.columns.size)
       end
     end
@@ -150,9 +149,7 @@ describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
     end
 
     let(:items) {
-      report = described_class.new(OpenFoodNetwork::Permissions.new(admin_user),
-                                   { report_type: "order_cycle_customer_totals" },
-                                   true)
+      report = described_class.new(admin_user, { report_type: "order_cycle_customer_totals" }, true)
       OpenFoodNetwork::OrderGrouper.new(report.rules, report.columns).table(report.table_items)
     }
 

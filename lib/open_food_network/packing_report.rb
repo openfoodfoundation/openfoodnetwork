@@ -38,12 +38,12 @@ module OpenFoodNetwork
     end
 
     def search
-      Reports::LineItems.search_orders(permissions, params)
+      Reports::LineItems.search_orders(order_permissions, params)
     end
 
     def table_items
       return [] unless @render_table
-      Reports::LineItems.list(permissions, report_options)
+      Reports::LineItems.list(order_permissions, report_options)
     end
 
     def rules
@@ -129,9 +129,9 @@ module OpenFoodNetwork
          variant: [{ option_values: :option_type }, { product: :supplier }] }]
     end
 
-    def permissions
-      return @permissions unless @permissions.nil?
-      @permissions = Permissions::Order.new(@user)
+    def order_permissions
+      return @order_permissions unless @order_permissions.nil?
+      @order_permissions = ::Permissions::Order.new(@user)
     end
 
     def is_temperature_controlled?(line_item)
