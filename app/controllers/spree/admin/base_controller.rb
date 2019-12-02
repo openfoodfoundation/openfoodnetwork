@@ -9,7 +9,6 @@ module Spree
 
       include I18nHelper
 
-      before_filter :check_alerts
       before_filter :authorize_admin
       before_filter :set_locale
       before_filter :warn_invalid_order_cycles, if: :html_request?
@@ -77,29 +76,6 @@ module Spree
         user.generate_spree_api_key!
       end
 
-      def check_alerts
-        return unless should_check_alerts?
-
-        return if session.key? :alerts
-
-        begin
-          session[:alerts] = Spree::Alert.current(request.host)
-          filter_dismissed_alerts
-          Spree::Config.set last_check_for_spree_alerts: DateTime.now.in_time_zone.to_s
-        rescue
-          session[:alerts] = nil
-        end
-      end
-
-      def should_check_alerts?
-        return false if !Rails.env.production? || !Spree::Config[:check_for_spree_alerts]
-
-        last_check = Spree::Config[:last_check_for_spree_alerts]
-        return true if last_check.blank?
-
-        DateTime.parse(last_check).in_time_zone < 12.hours.ago
-      end
-
       def flash_message_for(object, event_sym)
         resource_desc  = object.class.model_name.human
         resource_desc += " \"#{object.name}\"" if object.respond_to?(:name) && object.name.present?
@@ -120,13 +96,6 @@ module Spree
         return if auth_token && form_authenticity_token == URI.unescape(auth_token)
 
         raise(ActionController::InvalidAuthenticityToken)
-      end
-
-      def filter_dismissed_alerts
-        return unless session[:alerts]
-
-        dismissed = (Spree::Config[:dismissed_spree_alerts] || '').split(',')
-        session[:alerts].reject! { |a| dismissed.include? a["id"].to_s }
       end
 
       def config_locale
