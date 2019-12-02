@@ -86,11 +86,7 @@ Spree::Core::Engine.routes.prepend do
     end
 
     # Configuration section
-    resource :general_settings do
-      collection do
-        post :dismiss_alert
-      end
-    end
+    resource :general_settings
     resource :mail_method, :only => [:edit, :update] do
       post :testmail, :on => :collection
     end
