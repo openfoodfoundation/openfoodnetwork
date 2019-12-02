@@ -4,11 +4,10 @@ RSpec.describe OpenFoodNetwork::OrdersAndFulfillmentsReport::CustomerTotalsRepor
   let!(:distributor) { create(:distributor_enterprise) }
   let!(:customer) { create(:customer, enterprise: distributor) }
   let(:current_user) { distributor.owner }
-  let(:permissions) { OpenFoodNetwork::Permissions.new(current_user) }
 
   let(:report) do
     report_options = { report_type: described_class::REPORT_TYPE }
-    OpenFoodNetwork::OrdersAndFulfillmentsReport.new(permissions, report_options, true)
+    OpenFoodNetwork::OrdersAndFulfillmentsReport.new(current_user, report_options, true)
   end
 
   let(:report_table) do

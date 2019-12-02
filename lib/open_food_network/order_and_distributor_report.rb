@@ -5,7 +5,7 @@ module OpenFoodNetwork
       @user = user
       @render_table = render_table
 
-      @permissions = OpenFoodNetwork::Permissions.new(user)
+      @permissions = ::Permissions::Order.new(user)
     end
 
     def header

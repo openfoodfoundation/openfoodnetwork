@@ -62,7 +62,7 @@ module OpenFoodNetwork
             o2.line_items << li2
           end
 
-          it "shows line items supplied by my producers, with names hidden" do
+          it "does not show line items supplied by my producers" do
             expect(subject.table_items).to eq([])
           end
         end
