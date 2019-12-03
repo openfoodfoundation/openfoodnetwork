@@ -328,9 +328,12 @@ feature '
       expect(page).to have_content 'Your order cycle has been updated.'
 
       # And I add a supplier and some products
+      expect(page).to have_selector("table.exchanges tr.supplier")
       select 'My supplier', from: 'new_supplier_id'
       click_button 'Add supplier'
+      expect(page).to have_selector("table.exchanges tr.supplier", text: "My supplier")
       page.all("table.exchanges tr.supplier td.products").each(&:click)
+
 
       expect(page).to have_selector "#order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}", visible: true
       page.find("#order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}", visible: true).click # uncheck (with visible:true filter)
@@ -352,6 +355,7 @@ feature '
       # And I add a distributor and some products
       select 'My distributor', from: 'new_distributor_id'
       click_button 'Add distributor'
+      expect(page).to have_field("order_cycle_outgoing_exchange_2_pickup_time")
 
       fill_in 'order_cycle_outgoing_exchange_0_pickup_time', with: 'New time 0'
       fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'New instructions 0'
