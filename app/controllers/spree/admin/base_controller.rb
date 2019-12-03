@@ -66,16 +66,6 @@ module Spree
         action
       end
 
-      # Need to generate an API key for a user due to some backend actions
-      # requiring authentication to the Spree API
-      def generate_admin_api_key
-        return unless user = try_spree_current_user
-
-        return if user.spree_api_key.present?
-
-        user.generate_spree_api_key!
-      end
-
       def flash_message_for(object, event_sym)
         resource_desc  = object.class.model_name.human
         resource_desc += " \"#{object.name}\"" if object.respond_to?(:name) && object.name.present?
