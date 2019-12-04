@@ -47,7 +47,7 @@
 
       %th.actions
   %tbody
-    %tr{ng: {repeat: 'order in orders track by $index', class: {even: "'even'", odd: "'odd'"}}, 'ng-class' => "'state-{{order.state}}'"}
+    %tr{ng: {repeat: 'order in orders track by order.id', class: {even: "'even'", odd: "'odd'"}}, 'ng-class' => "'state-{{order.state}}'"}
       %td.align-center
         %input{type: 'checkbox', 'ng-model' => 'checkboxes[order.id]', 'ng-change' => 'toggleSelection(order.id)'}
       %td.align-center
