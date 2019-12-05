@@ -434,9 +434,12 @@ ca:
         infinity: "Infinit"
         to_order_tip: "Els articles preparats per encàrrec no tenen un nivell fixat d'existències, com ara pa fet sota comanda."
       back_to_products_list: "Torna a la llista de productes"
+      editing_product: "Editant el producte"
       tabs:
+        product_details: "Detalls del producte"
         group_buy_options: "Opcions de compra en grup"
         images: "Imatges"
+        variants: "Variants"
         product_properties: "Propietats del producte"
     product_import:
       title: Importació de productes
@@ -836,21 +839,33 @@ ca:
       new:
         create: "Crear"
         cancel: "Cancel·lar"
+        back_to_list: "Tornar a la llista"
       edit:
         advanced_settings: "Configuració avançada"
         save: "Desa"
+        save_and_next: "Desa i següent"
         next: "Següent"
         cancel: "Cancel·lar"
+        back_to_list: "Tornar a la llista"
+        save_and_back_to_list: "Desa i torna a la llista"
         choose_products_from: "Trieu Productes des de:"
       incoming:
         previous: "Anterior"
         save: "Desa"
+        save_and_next: "Desa i següent"
         next: "Següent"
         cancel: "Cancel·lar"
+        back_to_list: "Tornar a la llista"
       outgoing:
         previous: "Anterior"
         save: "Desa"
+        save_and_back_to_list: "Desa i torna a la llista"
         cancel: "Cancel·lar"
+        back_to_list: "Tornar a la llista"
+      wizard_progress:
+        edit: "1. Configuració general"
+        incoming: "2. Productes entrants"
+        outgoing: "3. Productes sortints"
       exchange_form:
         pickup_time_tip: Quan les comandes d'aquest cicle de comandes estiguin preparades per a les consumidores
         pickup_instructions_placeholder: "Instruccions de recollida"
@@ -2798,6 +2813,12 @@ ca:
     minimal_amount: "Quantitat mínima"
     normal_amount: "Quantitat normal"
     discount_amount: "Import de descompte"
+    no_images_found: "No s'han trobat imatges"
+    new_image: "Nova imatge"
+    filename: "Nom de l'arxiu"
+    alt_text: "Text alternatiu"
+    thumbnail: "Miniatura"
+    back_to_images_list: "Torna a la llista d’imatges"
     email: Correu electrònic
     account_updated: "Compte actualitzat!"
     email_updated: "El compte s’actualitzarà un cop es confirmi el nou correu electrònic."
@@ -2809,6 +2830,7 @@ ca:
     zipcode: Codi postal
     weight: Pes (per kg)
     error_user_destroy_with_orders: "No es poden esborrar usuaris amb comandes completades"
+    options: "Opcions"
     actions:
       update: "Actualitzar"
     errors:
@@ -2840,27 +2862,53 @@ ca:
       product_properties:
         index:
           inherits_properties_checkbox_hint: "heredar propietats de %{supplier}? (llevat que es sobreescrigui a dalt)"
+          add_product_properties: "Afegeix propietats del producte"
+          select_from_prototype: "Seleccioneu d'un prototip"
       properties:
         index:
           properties: "Propietats"
+          new_property: "Nova propietat"
           name: "Nom"
+          presentation: "Presentació"
+        new:
+          new_property: "Nova propietat"
+        edit:
+          editing_property: "Edició de propietats"
+          back_to_properties_list: "Torna a la llista de propietats"
         form:
           name: "Nom"
+          presentation: "Presentació"
       return_authorizations:
         index:
+          new_return_authorization: "Nova autorització de devolució"
           return_authorizations: "Autoritzacions de devolució"
           back_to_orders_list: "Tornar a la llista de comandes"
+          rma_number: "Número RMA"
           status: "Estat"
           amount: "Quantitat"
           cannot_create_returns: "No es poden crear devolucions ja que aquesta comanda no té cap unitat enviada."
           continue: "Continua"
         new:
+          new_return_authorization: "Nova autorització de devolució"
+          back_to_return_authorizations_list: "Tornar a la llista d'autorització"
           continue: "Continua"
         edit:
+          receive: "rebre"
           are_you_sure: "Estàs segur?"
+          return_authorization: "Autorització de devolució"
         form:
           product: "Producte"
+          quantity_shipped: "Quantitat enviada"
+          quantity_returned: "Quantitat retornada"
+          return_quantity: "Devolució de la quantitat"
           amount: "Quantitat"
+          rma_value: "Valor RMA"
+          reason: "Raó"
+          stock_location: "Ubicació d'estoc"
+        states:
+          authorized: "Autoritzat"
+          received: "Rebut"
+          canceled: "Cancel·lat"
       orders:
         index:
           listing_orders: "Llistat comandes"
@@ -3051,12 +3099,23 @@ ca:
         index:
           sku: "Número de referència (SKU)"
           price: "Preu"
+          options: "Opcions"
           no_results: "Sense resultats"
+          to_add_variants_you_must_first_define: "Per afegir variants, primer heu de definir"
           option_types: "Tipus d'opcions"
+          option_values: "Valors d’opció"
+          and: "i"
+          new_variant: "Nova variant"
+          show_active: "Mostra actiu"
+          show_deleted: "Mostra esborrats"
+        new:
+          new_variant: "Nova variant"
         form:
+          cost_price: "Preu de cost"
           sku: "Número de referència (SKU)"
           price: "Preu"
           display_as: "Mostra com"
+          display_name: "Nom de visualització"
         autocomplete:
           producer_name: "Productor"
           unit: "Unitat"
@@ -3196,3 +3255,19 @@ ca:
         allow_charges?: "Permetre càrrecs?"
     localized_number:
       invalid_format: té un format no vàlid. Si us plau introdueix un número.
+    api:
+      invalid_api_key: "No s’ha especificat una clau d’API vàlida (%{key})."
+      unauthorized: "No teniu autorització per realitzar aquesta acció."
+      invalid_resource: "Recurs invàlid. Corregiu els errors i torneu-ho a provar."
+      resource_not_found: "No s'ha trobat el recurs que buscaves."
+      access: "Accés a l'API"
+      key: "Clau"
+      clear_key: "Esborra la clau"
+      regenerate_key: "Regenerar la clau"
+      no_key: "Sense clau"
+      generate_key: "Generar clau d’API"
+      key_generated: "Clau generada"
+      key_cleared: "La clau esborrada"
+      shipment:
+        cannot_ready: "No es pot fer l'enviament."
+      invalid_taxonomy_id: "Identificador de taxonomia no vàlid."
