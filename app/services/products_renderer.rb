@@ -66,7 +66,7 @@ class ProductsRenderer
         .split(",").map { |id| "spree_products.primary_taxon_id=#{id} DESC" }
         .join(", ") + ", spree_products.name ASC, spree_products.id ASC"
     else
-      "spree_products.name ASC"
+      "spree_products.name ASC, spree_products.id"
     end
   end
 
