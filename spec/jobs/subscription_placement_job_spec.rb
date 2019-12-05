@@ -45,7 +45,7 @@ describe SubscriptionPlacementJob do
 
       before do
         allow(job).to receive(:proxy_orders) { ProxyOrder.where(id: proxy_order.id) }
-        allow(job).to receive(:process)
+        allow(job).to receive(:place_order)
       end
 
       it "marks placeable proxy_orders as processed by setting placed_at" do
@@ -55,7 +55,7 @@ describe SubscriptionPlacementJob do
 
       it "processes placeable proxy_orders" do
         job.perform
-        expect(job).to have_received(:process).with(proxy_order.reload.order)
+        expect(job).to have_received(:place_order).with(proxy_order.reload.order)
       end
     end
   end
@@ -143,7 +143,7 @@ describe SubscriptionPlacementJob do
       it "records an issue and ignores it" do
         ActionMailer::Base.deliveries.clear
         expect(job).to receive(:record_issue).with(:complete, order).once
-        expect{ job.send(:process, order) }.to_not change{ order.reload.state }
+        expect{ job.send(:place_order, order) }.to_not change{ order.reload.state }
         expect(order.payments.first.state).to eq "checkout"
         expect(ActionMailer::Base.deliveries.count).to be 0
       end
@@ -156,7 +156,7 @@ describe SubscriptionPlacementJob do
         end
 
         it "uses the same shipping method after advancing the order" do
-          job.send(:process, order)
+          job.send(:place_order, order)
           expect(order.state).to eq "complete"
           order.reload
           expect(order.shipping_method).to eq(shipping_method)
@@ -169,7 +169,7 @@ describe SubscriptionPlacementJob do
         end
 
         it "does not place the order, clears, all adjustments, and sends an empty_order email" do
-          expect{ job.send(:process, order) }.to_not change{ order.reload.completed_at }.from(nil)
+          expect{ job.send(:place_order, order) }.to_not change{ order.reload.completed_at }.from(nil)
           expect(order.adjustments).to be_empty
           expect(order.total).to eq 0
           expect(order.adjustment_total).to eq 0
@@ -182,13 +182,13 @@ describe SubscriptionPlacementJob do
         it "processes the order to completion, but does not process the payment" do
           # If this spec starts complaining about no shipping methods being available
           # on CI, there is probably another spec resetting the currency though Rails.cache.clear
-          expect{ job.send(:process, order) }.to change{ order.reload.completed_at }.from(nil)
+          expect{ job.send(:place_order, order) }.to change{ order.reload.completed_at }.from(nil)
           expect(order.completed_at).to be_within(5.seconds).of Time.zone.now
           expect(order.payments.first.state).to eq "checkout"
         end
 
         it "does not enqueue confirmation emails" do
-          expect{ job.send(:process, order) }.to_not enqueue_job ConfirmOrderJob
+          expect{ job.send(:place_order, order) }.to_not enqueue_job ConfirmOrderJob
           expect(job).to have_received(:send_placement_email).with(order, anything).once
         end
 
@@ -198,7 +198,7 @@ describe SubscriptionPlacementJob do
           it "records an error and does not attempt to send an email" do
             expect(job).to_not receive(:send_placement_email)
             expect(job).to receive(:record_and_log_error).once
-            job.send(:process, order)
+            job.send(:place_order, order)
           end
         end
       end
