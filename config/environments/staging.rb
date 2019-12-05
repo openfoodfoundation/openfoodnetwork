@@ -36,8 +36,11 @@ Openfoodnetwork::Application.configure do
   # See everything in the log (default is :info)
   # config.log_level = :debug
 
-  # Use a different logger for distributed setups
-  # config.logger = SyslogLogger.new
+  # Configure logging
+  Rails.logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
+  Rails.logger.formatter = Logger::Formatter.new
+  Rails.logger.datetime_format = "%Y-%m-%d %H:%M:%S"
+  config.logger = Rails.logger
 
   # Use a different cache store in production
   memcached_value_max_megabytes = ENV.fetch("MEMCACHED_VALUE_MAX_MEGABYTES", 1).to_i
