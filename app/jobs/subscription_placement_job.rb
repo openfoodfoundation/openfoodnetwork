@@ -5,6 +5,7 @@ class SubscriptionPlacementJob
     ids = proxy_orders.pluck(:id)
     proxy_orders.update_all(placed_at: Time.zone.now)
     ProxyOrder.where(id: ids).each do |proxy_order|
+      Rails.logger.info "Placing Order for Proxy Order #{proxy_order.id}"
       proxy_order.initialise_order!
       process(proxy_order.order)
     end
