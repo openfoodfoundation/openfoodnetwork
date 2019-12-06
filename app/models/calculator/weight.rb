@@ -25,7 +25,7 @@ module Calculator
     end
 
     def line_item_weight(line_item)
-      if line_item.final_weight_volume.present?
+      if final_weight_volume_present?(line_item)
         weight_per_final_weight_volume(line_item)
       else
         weight_per_variant(line_item) * line_item.quantity
@@ -33,13 +33,18 @@ module Calculator
     end
 
     def weight_per_variant(line_item)
-      line_item.variant.andand.weight || 0
+      if variant_unit(line_item) == 'weight'
+        # The calculator price is per_kg so we need to convert unit_value to kg
+        convert_g_to_kg(line_item.variant.andand.unit_value)
+      else
+        line_item.variant.andand.weight || 0
+      end
     end
 
     def weight_per_final_weight_volume(line_item)
-      if line_item.variant.product.andand.variant_unit == 'weight'
-        # Divided by 1000 because grams is the base weight unit and the calculator price is per_kg
-        line_item.final_weight_volume / 1000.0
+      if variant_unit(line_item) == 'weight'
+        # The calculator price is per_kg so we need to convert final_weight_volume to kg
+        convert_g_to_kg(line_item.final_weight_volume)
       else
         weight_per_variant(line_item) * quantity_implied_in_final_weight_volume(line_item)
       end
@@ -50,6 +55,20 @@ module Calculator
     #      that represent 2.8 (quantity_implied_in_final_weight_volume) glasses of wine
     def quantity_implied_in_final_weight_volume(line_item)
       (1.0 * line_item.final_weight_volume / line_item.variant.unit_value).round(3)
+    end
+
+    def final_weight_volume_present?(line_item)
+      line_item.respond_to?(:final_weight_volume) && line_item.final_weight_volume.present?
+    end
+
+    def variant_unit(line_item)
+      line_item.variant.product.andand.variant_unit
+    end
+
+    def convert_g_to_kg(value)
+      return 0 unless value
+
+      value / 1000
     end
   end
 end
