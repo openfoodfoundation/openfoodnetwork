@@ -12,7 +12,7 @@ jobs:
           PGHOST: 127.0.0.1
           PGUSER: ofn
           RAILS_ENV: test
-      - image: circleci/postgres:9.5-alpine
+      - image: circleci/postgres:9.5
         environment:
           POSTGRES_DB: open_food_network_test
           POSTGRES_USER: ofn
