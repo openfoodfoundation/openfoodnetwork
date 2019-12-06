@@ -83,7 +83,7 @@ module Spree
         return unless protect_against_forgery?
 
         auth_token = params[request_forgery_protection_token]
-        return if auth_token && form_authenticity_token == URI.unescape(auth_token)
+        return if auth_token && form_authenticity_token == CGI.unescape(auth_token)
 
         raise(ActionController::InvalidAuthenticityToken)
       end
