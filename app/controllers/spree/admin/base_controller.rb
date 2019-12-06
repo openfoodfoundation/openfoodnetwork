@@ -18,7 +18,7 @@ module Spree
       def warn_invalid_order_cycles
         distributors = active_distributors_not_ready_for_checkout
 
-        return unless distributors.any? && flash[:notice].nil?
+        return if distributors.empty? || flash[:notice].present?
 
         flash[:notice] = active_distributors_not_ready_for_checkout_message(distributors)
       end
