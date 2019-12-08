@@ -68,10 +68,7 @@ feature 'Subscriptions' do
         expect(page).to have_no_content subscription.customer.email
 
         # Viewing Products
-        within "tr#so_#{subscription.id}" do
-          expect(page).to have_selector "td.items.panel-toggle", text: 3
-          page.find("td.items.panel-toggle").click
-        end
+        open_subscription_products_panel
 
         within "#subscription-line-items" do
           expect(page).to have_selector "span#order_subtotal", text: "$15.00" # 3 x $5 items
@@ -136,6 +133,28 @@ feature 'Subscriptions' do
         within "tr#so_#{subscription.id}" do
           expect(page).to have_selector ".state.canceled", text: "CANCELLED"
           expect(subscription.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
+        end
+      end
+
+      context "editing subscription products quantity" do
+        it "updates quantity" do
+          visit admin_subscriptions_path
+          select2_select shop.name, from: "shop_id"
+          open_subscription_products_panel
+
+          within "#sli_0" do
+            fill_in 'quantity', with: "5"
+          end
+
+          page.find("a.button.update").click
+          expect(page).to have_content 'SAVED'
+        end
+      end
+
+      def open_subscription_products_panel
+        within "tr#so_#{subscription.id}" do
+          expect(page).to have_selector "td.items.panel-toggle", text: 3
+          page.find("td.items.panel-toggle").click
         end
       end
     end
