@@ -13,11 +13,11 @@ job_type :enqueue_job,  "cd :path; :environment_variable=:environment bundle exe
 
 
 every 1.day, at: '2:45am' do
-  rake 'db2fog:clean' if ENV['S3_BACKUPS_BUCKET']
+  rake 'db2fog:clean' if app_config['S3_BACKUPS_BUCKET']
 end
 
 every 4.hours do
-  rake 'db2fog:backup' if ENV['S3_BACKUPS_BUCKET']
+  rake 'db2fog:backup' if app_config['S3_BACKUPS_BUCKET']
 end
 
 every 5.minutes do
