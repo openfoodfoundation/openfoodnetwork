@@ -14,7 +14,9 @@ it:
       spree/product:
         primary_taxon: "Categoria prodotto"
         supplier: "Fornitore"
+        shipping_category_id: "Categoria di spedizione"
         variant_unit: "Unità Variante"
+        variant_unit_name: "Nome Unità Variante"
       order_cycle:
         orders_close_at: Data chiusura
     errors:
@@ -41,7 +43,7 @@ it:
         end_at: "Fine"
         distributor_ids: "Distributori"
         producer_ids: "Produttori"
-        order_cycle_ids: "Cicli di richiesteCicli di richieste"
+        order_cycle_ids: "Cicli di richieste"
         enterprise_fee_ids: "Nome commissione"
         shipping_method_ids: "Metodi di spedizione"
         payment_method_ids: "Metodi di pagamento"
@@ -75,6 +77,8 @@ it:
     user_confirmations:
       spree_user:
         send_instructions: "A breve riceverai un'email con le istruzioni utili a confermare il tuo account."
+        confirmation_sent: "Email di conferma inviata"
+        confirmation_not_sent: "Errore invio emai di conferma"
     user_registrations:
       spree_user:
         signed_up_but_unconfirmed: "Abbiamo inviato un link di conferma al tuo indirizzo email. Per favore apri il link per attivare il tuo account."
@@ -85,9 +89,12 @@ it:
           La volta scorsa eri ospite? Forse devi creare un account o resettare la tua password.
       unconfirmed: "Devi confermare il tuo account prima di continuare."
       already_registered: "Questo indirizzo email è già registrato. Per favore effettua il log in per continuare, o torna indietro e utilizza un altro indirizzo email."
+    success:
+      logged_in_succesfully: "Collegato con successo"
     user_passwords:
       spree_user:
         updated_not_active: "La tua password è stata resettata, ma la tua email non è ancora stata confermata."
+        updated: "La tua password è stata modificata con successo.\nOra sei collegato."
         send_instructions: "A breve riceverai un'email con le istruzioni utili a confermare il tuo account."
   models:
     order_cycle:
@@ -107,7 +114,9 @@ it:
       email_welcome: "Benvenuto"
       email_registered: "è ora parte di"
       email_userguide_html: "La Guida Utente con supporto dettagliato per l'impostazione del tuo Produttore o Hub è qui: %{link}"
+      userguide: "Guida di Open Food Network"
       email_admin_html: "Puoi gestire il tuo profilo facendo il log in al link %{link} o cliccando sull'ingranaggio in alto a destra della homepage, e selezionando Amministrazione"
+      admin_panel: "Pannello di controllo"
       email_community_html: "Abbiamo anche un forum on-line per le discussioni della comunità sul software OFN e le sfide uniche legate all'avere un'impresa del cibo. Sei invitato ad unirti. Ci evolviamo in continuo e il tuo contributo in questo forum plasmerà ciò che sarà. %{link}"
       join_community: "Unisciti alla community"
     invite_manager:
@@ -243,6 +252,8 @@ it:
   reset_password_token: Token per il reset della password
   expired: è scaduto, si prega di richiederne uno nuovo
   back_to_payments_list: "Torna alla lista dei pagamenti"
+  maestro_or_solo_cards: "carte Maestro/Solo"
+  backordered: "ordini arretrati"
   on hand: "Disponibile"
   ship: "Spedizione"
   actions:
@@ -320,6 +331,7 @@ it:
     invoice_settings:
       edit:
         title: "Impostazioni fatturazione"
+        enable_invoices?: "Abilita fatture?"
         invoice_style2?: "Utilizzare il modello di fattura alternativa che include la ripartizione totale delle imposte per tariffa e le informazioni sulla tariffa fiscale per articolo (non ancora adatto per i paesi che visualizzano i prezzi al netto delle imposte)"
         enable_receipt_printing?: "Visualizzo le opzioni per stampare la ricevuta usando la stampante termica nel menù a cascata?"
     stripe_connect_settings:
@@ -388,6 +400,7 @@ it:
         calculator: "Calcolatrice"
         calculator_values: "Valori della Calcolatrice"
         search: "Cerca"
+        name_placeholder: "Tariffa imballaggio"
     enterprise_groups:
       index:
         new_button: Nuovo gruppo di aziende
@@ -418,11 +431,15 @@ it:
         property_name: "Nome della Proprietà"
         inherited_property: "Proprietà Ereditata"
       variants:
+        infinity: "Infinito..."
         to_order_tip: "Gli articoli messi in ordine non hanno un livello di stock impostato, come ad esempio il Pane fresco su ordinazione."
       back_to_products_list: "Indietro alla lista dei prodotti"
+      editing_product: "Modifica prodotto"
       tabs:
+        product_details: "Dettagli Prodotto"
         group_buy_options: "Opzioni Acquisti di gruppo"
         images: "Immagini"
+        variants: "Varianti"
         product_properties: "Proprietà prodotto"
     product_import:
       title: Importa prodotto
@@ -445,6 +462,8 @@ it:
         encoding_error: "Controlla l'impostazione della lingua del file sorgente e assicurati che sia salvato con la codifica UTF-8."
         unexpected_error: "L'importazione del prodotto ha incontrato un errore imprevisto durante l'apertura del file:%{error_message}"
       index:
+        notice: "Avviso"
+        beta_notice: "Questa opzione è ancora in fase beta: potresti incontrare errori mentre la usi. Per favore non esitare a contattare il servizio di supporto."
         select_file: Seleziona un foglio di calcolo da caricare
         spreadsheet: Foglio di calcolo
         choose_import_type: Seleziona modalità di importazione
@@ -523,6 +542,7 @@ it:
         title: Inventario
         description: Usa questa paginaper gestire gli inventari delle tue aziende. I dettagli dei prodotti impostati qui sovrascriveranno quelli impostati sulla pagina 'Prodotti'
         enable_reset?: Abilitare il reset del magazzino?
+        default_stock: "Magazzino predefinito"
         inherit?: Eredita?
         add: Aggiungi
         hide: Nascondi
@@ -650,6 +670,8 @@ it:
           permalink_tip: "Questo permalink serve a creare l'url al tuo negozio: %{link}nome-del-tuo-negozio/negozio"
           link_to_front: Link alla tua vetrina
           link_to_front_tip: Un link diretto alla tua vetrina su Open Food Network
+          ofn_uid: OFN UID
+          ofn_uid_tip: Il codice univoco utilizzato per identificare l'azienda su OFN
         shipping_methods:
           name: Nome
           applies: Applica?
@@ -680,6 +702,8 @@ it:
               Una spiegazione opzionale che dettaglia il funzionamento del tuo negozio,
               che sarà visualizzata sopra al listino dei prodotti nella pagina del
               tuo negozio.
+          shopfront_message_link_tooltip: "Inserisci / modifica link"
+          shopfront_message_link_prompt: "Per favore inserisci un URL"
           shopfront_closed_message: "Messaggio Chiusura Vetrina"
           shopfront_closed_message_placeholder: >
               Un messaggio che fornisce una spiegazione più dettagliata sul perché
@@ -809,24 +833,39 @@ it:
         user_already_exists: "L'Utente esiste già"
         error: "Qualcosa è andato storto"
     order_cycles:
+      loading_flash:
+        loading_order_cycles: CARICAMENTO CICLI DI RICHIESTE
+        loading: CARICAMENTO...
       new:
         create: "Crea"
         cancel: "Annulla"
+        back_to_list: "Indietro alla lista"
       edit:
         advanced_settings: "Impostazioni avanzate"
         save: "Salva"
+        save_and_next: "Salva e continua"
         next: "Prossimo"
         cancel: "Annulla"
+        back_to_list: "Indietro alla lista"
+        save_and_back_to_list: "Salva e torna alla lista"
         choose_products_from: "Scegli i prodotti da:"
       incoming:
         previous: "Precedente"
         save: "Salva"
+        save_and_next: "Salva e continua"
         next: "Prossimo"
         cancel: "Annulla"
+        back_to_list: "Indietro alla lista"
       outgoing:
         previous: "Precedente"
         save: "Salva"
+        save_and_back_to_list: "Salva e torna alla lista"
         cancel: "Annulla"
+        back_to_list: "Indietro alla lista"
+      wizard_progress:
+        edit: "1. Impostazioni generali"
+        incoming: "2. Prodotti in entrata"
+        outgoing: "3. Prodotti in uscita"
       exchange_form:
         pickup_time_tip: Quando gli ordini di questa Lista d'ordine saranno pronti per il cliente
         pickup_instructions_placeholder: "Istruzioni per la consegna"
@@ -841,6 +880,7 @@ it:
         add_distributor: 'Aggiungi distributore'
       advanced_settings:
         title: Impostazioni avanzate
+        choose_product_tip: Puoi limitare i prodotti in entrata e in uscita al%{inventory}dell'Inventario
         preferred_product_selection_from_coordinator_inventory_only_here: Solo inventario del coordinatore
         preferred_product_selection_from_coordinator_inventory_only_all: Tutti i prodotti disponibili
         save_reload: Salva e ricarica la pagina
@@ -977,6 +1017,8 @@ it:
         pause_subscription: Metti in pausa l'abbonamento
         unpause_subscription: Riprendi abbonamento
         cancel_subscription: Annulla abbonamento
+      filters:
+        query_placeholder: "Cerca per email..."
       setup_explanation:
         just_a_few_more_steps: 'Ancora pochi passi prima di cominciare:'
         enable_subscriptions: "Ativa abbonamento ad almeno uno dei tuoi negozi"
@@ -1013,6 +1055,8 @@ it:
         charges_not_allowed: Non sono consentiti Oneri per questo cliente
         no_default_card: Il cliente non ha carte disponibili da caricare
         card_ok: il cliente ha una carta disponibile da caricare
+        begins_at_placeholder: "Seleziona una data"
+        ends_at_placeholder: "Facoltativo"
       loading_flash:
         loading: CARICAMENTO ABBONAMENTI
       review:
@@ -1026,6 +1070,7 @@ it:
         saved: "SALVATO"
       product_already_in_order: Questo prodotto è già stato aggiunto alla gentile richiesta. Per favore modifica direttamente la quantità.
       stock:
+        insufficient_stock: "Quantità disponibile insufficiente"
         out_of_stock: "Esaurito"
       orders:
         number: Numero
@@ -1034,6 +1079,7 @@ it:
       cancel_failure_msg: "Ci dispiace, eliminazione non riuscita!"
       confirm_pause_msg: "Sei sicura/o di voler mettere in pausa questo abbonamento?"
       pause_failure_msg: "Spiacente, pausa fallita!"
+      confirm_unpause_msg: "If you have an open Order Cycle in this subscription's schedule, an order will be created for this customer. Are you sure you want to unpause this subscription?"
       unpause_failure_msg: "Ci dispiace, ripresa non riuscita!"
       confirm_cancel_open_orders_msg: "Alcune di queste richieste sono attualmente attive. I consumatori sono già stati avvisati che le richieste verranno soddisfatte. Vuoi eliminare questa/e richiesta/e o mantenerla?"
       resume_canceled_orders_msg: "Alcuni ordini per questo abbonamento possono essere ripresi in questo momento. Puoi riprenderli dal menu a discesa degli ordini."
@@ -1071,8 +1117,12 @@ it:
       show_on_map: "Mostra tutto nella mappa"
   shared:
     menu:
+      cart:
+        cart: "Carrello"
       signed_in:
         profile: "Profilo"
+      mobile_menu:
+        cart: "Carrello"
       joyride:
         checkout: "Checkout adesso"
         already_ordered_products: "Già richiesto in questo ciclo di richieste"
@@ -1108,7 +1158,11 @@ it:
   shop:
     messages:
       login: "fai il login"
+      signup: "Registrati"
       contact: "contatto"
+      require_customer_login: "Solo utenti approvati hanno accesso a questo negozio"
+      require_login_html: "Se sei già un utente approvato, %{login} o %{signup}per procedere. Vuoi iniziare a frequentare questo negozio? Per favore %{contact} %{enterprise} e chiedi come raggiungerlo."
+      require_customer_html: "Se vuoi iniziare a comprare, per favore %{contact} %{enterprise} per chiedere di raggiungerci."
   card_could_not_be_updated: La Carta non ha potuto essere rinnovata
   card_could_not_be_saved: La Carta non ha potuto essere salvata
   spree_gateway_error_flash_for_checkout: "C'è stato un problema con le informazioni sul pagamento: %{error}"
@@ -1145,6 +1199,7 @@ it:
   menu_4_title: "Gruppi"
   menu_4_url: "/groups"
   menu_5_title: "About"
+  menu_5_url: "https://about.openfoodnetwork.org.au/"
   menu_6_title: "Blog"
   menu_6_url: "https://apropos.openfoodfrance.org/blog/"
   menu_7_title: "Support"
@@ -1575,6 +1630,7 @@ it:
   sell_hubs_detail: "Imposta un profilo per la tua azienda o organizzazione su OFN. In qualsiasi momento potrai far diventare il tuo profilo un negozio online multi-produttore."
   sell_groups_detail: "Imposta un'area per le aziende (produttori o altro) della tua regione o per la tua organizzazione."
   sell_user_guide: "Scopri di più nella nostra guida utente."
+  sell_listing_price: "Politica dei prezzi in fase di definizione..."
   sell_embed: "Possiamo anche inserire un negozio OFN nel tuo proprio sito o creare un sito per la tua rete locale."
   sell_ask_services: "Chiedici dei servizi OFN."
   shops_title: Negozi
@@ -1690,6 +1746,7 @@ it:
       introduction:
         registration_greeting: "Ciao!"
         registration_intro: "Adesso puoi creare un profilo come Produttore o Hub"
+        registration_checklist: "Di che cosa ho bisogno?"
         registration_time: "5-10 minuti"
         registration_enterprise_address: "Indirizzo dell'azienda"
         registration_contact_details: "Dettagli del contatto principale"
@@ -1944,6 +2001,7 @@ it:
   spree_admin_supplier: Fornitore
   spree_admin_product_category: Categoria prodotto
   spree_admin_variant_unit_name: Nome della variante
+  unit_name: "Nome Unità"
   change_package: "Cambia pacchetto"
   spree_admin_single_enterprise_hint: "Suggerimento: Per permettere alle persone di trovarti, abilita la tua visibilità sotto"
   spree_admin_eg_pickup_from_school: "es. \"Ritiro presso la Cooperativa\""
@@ -2179,6 +2237,7 @@ it:
   payment_methods: "Metodi di pagamento"
   payment_method_fee: "Imposta di transizione"
   payment_processing_failed: "Non è stato possibile elaborare il pagamento, per favore controlla i dettagli che hai inserito"
+  payment_method_not_supported: "Questo metodo di pagamento non è supportato. Per favore scegline un altro."
   payment_updated: "Pagamento aggiornato"
   inventory_settings: "Impostazioni dell'inventario"
   tag_rules: "Regole dei tag"
@@ -2372,8 +2431,20 @@ it:
           severity: Gravità
           description: Descrizione
           resolve: Risolvi
+      tag_rules:
+        shipping_method_tagged_top: "Metodi di consegna taggati"
+        shipping_method_tagged_bottom: "sono:"
+        payment_method_tagged_top: "Metodi di Pagamento taggati"
+        payment_method_tagged_bottom: "sono:"
+        order_cycle_tagged_top: "Cicli di richieste taggati"
+        order_cycle_tagged_bottom: "sono:"
+        inventory_tagged_top: "Varianti inventario taggate"
+        inventory_tagged_bottom: "sono:"
       new_tag_rule_dialog:
         select_rule_type: "Seleziona un tipo di regola:"
+        add_rule: "Aggiungi regola"
+      enterprise_fees:
+        inherit_from_product: "Eredita dal prodotto"
       orders:
         index:
           per_page: "%{results} per pagina"
@@ -2434,6 +2505,7 @@ it:
           name_required_error: "Inserisci un nome per questo programma"
           no_order_cycles_error: "Per favore seleziona almeno un ciclo di richieste (drag and drop)"
           available: "Disponibile"
+          selected: "Selezionato"
       customers:
         index:
           add_customer: "Aggiungi cliente"
@@ -2591,6 +2663,8 @@ it:
     name_or_sku: "Nome o SKU (inserisci almeno i primi 4 caratteri del nome del prodotto)"
     resend: Invia di nuovo
     back_to_orders_list: Torna alla lista delle richieste
+    return_authorizations: Authorizationi reso
+    cannot_create_returns: Impossibile creare resi poiché questo ordine non ha unità spedite.
     select_stock: "Seleziona magazzino"
     location: "Posizione"
     count_on_hand: "Conta a mente"
@@ -2627,6 +2701,7 @@ it:
     fill_in_customer_info: "Si prega di compilare le informazioni del cliente"
     new_payment: "Nuovo pagamento"
     capture: "Cattura"
+    void: "vuoto"
     configurations: "Configurazioni"
     general_settings: "Impostazioni generali"
     site_name: "Nome del sito"
@@ -2728,9 +2803,25 @@ it:
     no_results: "Nessun risultato"
     create: "Crea"
     loading: "Caricamento"
+    flat_percent: "Percentuale fissa"
+    per_kg: "Per Kg"
     amount: "Quantità"
+    currency: "Moneta"
+    first_item: "Costo articolo"
+    additional_item: "Costo aggiuntivo articolo"
+    max_items: "Numero massimo di articoli"
+    minimal_amount: "Importo minimo"
+    normal_amount: "Importo normale"
+    discount_amount: "Totale sconto"
+    no_images_found: "Nessuna immagine trovata"
+    new_image: "Nuova immagine"
+    filename: "Nome file"
+    alt_text: "Testo alternativo"
+    thumbnail: "Thumbnail"
+    back_to_images_list: "Torna alla lista Immagini"
     email: Email
     account_updated: "Account aggiornato!"
+    email_updated: "L'account sarà aggiornato una volta confermata la nuova email"
     my_account: "Il mio account"
     date: "Data"
     time: "Ora"
@@ -2738,6 +2829,8 @@ it:
     inventory: Inventario
     zipcode: CAP
     weight: Peso (kg)
+    error_user_destroy_with_orders: "Gli utenti con ordini completi non dovrebbero essere cancellati"
+    options: "Opzioni"
     actions:
       update: "Aggiorna"
     errors:
@@ -2761,7 +2854,7 @@ it:
         configuration: "Configurazione"
         users: "Utenti"
         roles: "Ruoli"
-        order_cycles: "Cicli di richiesteCicli di richieste"
+        order_cycles: "Cicli di richieste"
         enterprises: "Aziende"
         enterprise_relationships: "permessi"
         customers: "Consumatori"
@@ -2769,25 +2862,53 @@ it:
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Eredita le proprietà da %{supplier}? (se non sovrascritto)"
+          add_product_properties: "Aggiungi proprietà prodotto"
+          select_from_prototype: "Seleziona da un prototipo"
       properties:
         index:
           properties: "Proprietà"
+          new_property: "Nuova proprietà"
           name: "Nome"
+          presentation: "Presentazione"
+        new:
+          new_property: "Nuova proprietà"
+        edit:
+          editing_property: "Modifica Proprietà"
+          back_to_properties_list: "Torna alla lista delle proprietà"
         form:
           name: "Nome"
+          presentation: "Presentazione"
       return_authorizations:
         index:
+          new_return_authorization: "New Return Authorization"
+          return_authorizations: "Return Authorizations"
           back_to_orders_list: "Torna alla lista delle richieste"
+          rma_number: "Numero RMA"
           status: "Stato"
           amount: "Quantità"
+          cannot_create_returns: "Impossibile creare resi poiché questo ordine non ha unità spedite."
           continue: "Continua"
         new:
+          new_return_authorization: "Nuova autorizzazione resi"
+          back_to_return_authorizations_list: "Torna alla lista di autorizzazioni resi"
           continue: "Continua"
         edit:
+          receive: "ricevi"
           are_you_sure: "Sei sicuro?"
+          return_authorization: "Autorizzazione al reso"
         form:
           product: "Prodotto"
+          quantity_shipped: "Quantità spedita"
+          quantity_returned: "Quantità restituita"
+          return_quantity: "Quantità restituita"
           amount: "Quantità"
+          rma_value: "Valore RMA"
+          reason: "Motivo"
+          stock_location: "Posizione stock"
+        states:
+          authorized: "autorizzato"
+          received: "ricevuto"
+          canceled: "Annullato"
       orders:
         index:
           listing_orders: "Listino Ordini"
@@ -2835,7 +2956,7 @@ it:
             one: "Hai un prodotto attivo"
             other: "Hai il %{count} di prodotti disponibili"
         order_cycles:
-          order_cycles: "Cicli di richiesteCicli di richieste"
+          order_cycles: "Cicli di richieste"
           order_cycles_tip: "I cicli di richieste determinano dove e quando i tuoi prodotti sono disponibili per i consumatori."
           you_have_active:
             zero: "Non hai nessun ciclo di richieste attivo."
@@ -2845,15 +2966,29 @@ it:
       shipping_methods:
         index:
           shipping_methods: "Metodi di spedizione"
+          new_shipping_method: "Nuovo metodo di spedizione"
           name: "Nome"
           products_distributor: "Distributore"
           zone: "Zone"
           calculator: "Calcolatrice"
           display: "Visualizza"
+          both: "Entrambi"
+          front_end: "Front End"
+          back_end: "Back End"
+          no_shipping_methods_found: "Nessun metodo di spedizione trovato"
+        new:
+          new_shipping_method: "Nuovo metodo di spedizione"
+          back_to_shipping_methods_list: "Torna alla lista dei metodi di spedizione"
         edit:
+          editing_shipping_method: "Modifica metodo di spedizione"
           new: "Nuovo"
+          back_to_shipping_methods_list: "Torna alla lista dei metodi di spedizione"
         form:
+          categories: "categorie"
           zones: "Zone"
+          both: "Entrambi"
+          front_end: "Front End"
+          back_end: "Back End"
       payment_methods:
         new:
           new_payment_method: "Nuovo metodo di pagamento"
@@ -2880,6 +3015,7 @@ it:
             error_saving_payment: Errore memorizzando il pagamento
             submitting_payment: Eseguendo il pagamento
       products:
+        image_upload_error: "L'immagine del prodotto non è stata riconosciuta. Carica un'immagine in formato PNG o JPG."
         new:
           title: "Nuovo prodotto"
           new_product: "Nuovo prodotto"
@@ -2887,6 +3023,7 @@ it:
           product_name: "Nome Prodotto"
           units: "Unità di misura"
           value: "Valore"
+          unit_name: "Nome Unità"
           price: "Prezzo"
           on_hand: "Disponibile"
           on_demand: "A richiesta"
@@ -2962,12 +3099,23 @@ it:
         index:
           sku: "SKU"
           price: "Prezzo"
+          options: "Opzioni"
           no_results: "Nessun risultato"
+          to_add_variants_you_must_first_define: "Per aggiungere varianti, devi prima definire"
           option_types: "Tipi di opzioni"
+          option_values: "Valori opzione"
+          and: "e"
+          new_variant: "Nuova variante"
+          show_active: "Mostra attivi"
+          show_deleted: "Mostra cancellati"
+        new:
+          new_variant: "Nuova variante"
         form:
+          cost_price: "Prezzo di costo"
           sku: "SKU"
           price: "Prezzo"
           display_as: "Visualizza come"
+          display_name: "Nome da visualizzare"
         autocomplete:
           producer_name: "Produttore"
           unit: "Unità"
@@ -3000,6 +3148,7 @@ it:
       line_item:
         insufficient_stock: "Scorte disponibili insufficienti, solo %{on_hand} rimanenti"
         out_of_stock: "Esaurito"
+        unavailable_item: "attualmente non disponibile"
     shipment_states:
       backorder: ordine arretrato
       partial: parziale
@@ -3019,6 +3168,8 @@ it:
       invalid: invalido
     order_mailer:
       cancel_email:
+        customer_greeting: "Ciao %{name}!"
+        instructions: "Il tuo ordine è stato ANNULLATO. Per favore conserva queste informazioni di cancellazione per i tuoi record."
         order_summary_canceled: "Riepilogo dell'ordine [CANCELLATO]"
         subject: "Cancellazione dell'ordine"
       confirm_email:
@@ -3104,3 +3255,19 @@ it:
         allow_charges?: "Consentire ricarichi"
     localized_number:
       invalid_format: 'Formato non valido: inserire un numero.'
+    api:
+      invalid_api_key: "Chiave API (%{key}) specificata non valida."
+      unauthorized: "Non sei autorizzato a eseguire questa azione."
+      invalid_resource: "Risorsa non valida. Per favore correggi gli errori e riprova."
+      resource_not_found: "La risorsa che stavi cercando non è stata trovata."
+      access: "Accesso API"
+      key: "Chiave"
+      clear_key: "Cancella chiave"
+      regenerate_key: "Rigenera chiave"
+      no_key: "Nessuna chiave"
+      generate_key: "Genera chiave API"
+      key_generated: "Chiave generata"
+      key_cleared: "Chiave cancellata"
+      shipment:
+        cannot_ready: "Impossibile spedizione immediata."
+      invalid_taxonomy_id: "ID tassonomia non valido."
