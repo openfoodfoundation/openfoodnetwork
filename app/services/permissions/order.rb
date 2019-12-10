@@ -7,17 +7,25 @@ module Permissions
 
     # Find orders that the user can see
     def visible_orders
-      Spree::Order.where(id:
-        managed_orders.select(:id) |
-        coordinated_orders.select(:id) |
-        produced_orders.select("spree_orders.id"))
+      Spree::Order.
+        with_line_items_variants_and_products_outer.
+        where(
+          Spree::Order.arel_table.
+            # Grouping keeps the 2 where clauses from produced_orders_where_values inside parentheses
+            #   This way it makes the OR work between the 3 types of orders:
+            #     produced, managed and coordinated
+            grouping(produced_orders_where_values).
+            or(managed_orders_where_values).
+            or(coordinated_orders_where_values)
+        )
     end
 
     # Any orders that the user can edit
     def editable_orders
-      Spree::Order.where(id:
-        managed_orders.select(:id) |
-        coordinated_orders.select(:id) )
+      Spree::Order.where(
+        managed_orders_where_values.
+          or(coordinated_orders_where_values)
+      )
     end
 
     def visible_line_items
@@ -28,27 +36,35 @@ module Permissions
 
     # Any line items that I can edit
     def editable_line_items
-      Spree::LineItem.where(order_id: editable_orders)
+      Spree::LineItem.where(order_id: editable_orders.select(:id))
     end
 
     private
 
     # Any orders placed through any hub that I manage
-    def managed_orders
-      Spree::Order.where(distributor_id: @permissions.managed_enterprises.select("enterprises.id"))
+    def managed_orders_where_values
+      Spree::Order.
+        where(distributor_id: @permissions.managed_enterprises.select("enterprises.id")).
+        where_values.
+        reduce(:and)
     end
 
     # Any order that is placed through an order cycle one of my managed enterprises coordinates
-    def coordinated_orders
-      Spree::Order.where(order_cycle_id: @permissions.coordinated_order_cycles.select(:id))
+    def coordinated_orders_where_values
+      Spree::Order.
+        where(order_cycle_id: @permissions.coordinated_order_cycles.select(:id)).
+        where_values.
+        reduce(:and)
     end
 
-    def produced_orders
+    def produced_orders_where_values
       Spree::Order.with_line_items_variants_and_products_outer.
         where(
           distributor_id: granted_distributor_ids,
           spree_products: { supplier_id: enterprises_with_associated_orders }
-        )
+        ).
+        where_values.
+        reduce(:and)
     end
 
     def enterprises_with_associated_orders
@@ -69,7 +85,7 @@ module Permissions
 
     # Any from visible orders, where the product is produced by one of my managed producers
     def produced_line_items
-      Spree::LineItem.where(order_id: visible_orders.select(:id)).
+      Spree::LineItem.where(order_id: visible_orders.select("DISTINCT spree_orders.id")).
         joins(:product).
         where(spree_products:
         {
