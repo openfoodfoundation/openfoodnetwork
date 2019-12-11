@@ -115,7 +115,9 @@ fr_CA:
       email_welcome: "Bienvenue"
       email_registered: "fait maintenant partie de"
       email_userguide_html: "Le Guide Utilisateur expliquant comment mettre en place son profil producteur ou son hub est accessible ici: %{link}"
+      userguide: "Guide utilisateur"
       email_admin_html: "Vous pouvez gérer votre compte en vous connectant ici %{link} ou en cliquant sur la roue en haut à droite de la page d'accueil et en sélectionnant Administration."
+      admin_panel: "interface d'administration"
       email_community_html: "Nous avons aussi un forum de discussion en ligne (en anglais) pour échanger avec la communauté sur des questions liées au logiciel OFN et aux défis de la gestion d'un food hub.  Nous vous invitons à y participer. Nous sommes en constante évolution et vos contributions à ce forum vont façonner les prochaines étapes. %{link}"
       join_community: "Rejoindre la communauté"
     invite_manager:
@@ -433,9 +435,12 @@ fr_CA:
         infinity: "Infini"
         to_order_tip: "Les articles fabriqués sur commande n'ont pas un niveau de stock défini, comme des pains faits à la main."
       back_to_products_list: "Retour à la liste produits"
+      editing_product: "Modifier le produit"
       tabs:
+        product_details: " Détails"
         group_buy_options: "Options d'achat par lot"
         images: "Images"
+        variants: "Variantes"
         product_properties: "Propriétés / labels Produits"
     product_import:
       title: import produit
@@ -538,6 +543,7 @@ fr_CA:
         title: Catalogue Boutique
         description: Utilisez cette page pour gérer le catalogue de votre entreprise. Les détails produits saisis ici remplaceront ceux de la page "Produit" pour votre entreprise uniquement.
         enable_reset?: Autoriser réinitialisation du stock (retour configurations par défaut)?
+        default_stock: "Stock par défaut"
         inherit?: Hériter?
         add: Ajouter
         hide: Masquer
@@ -833,21 +839,33 @@ fr_CA:
       new:
         create: "Créer"
         cancel: "Annuler"
+        back_to_list: "Retour à la liste"
       edit:
         advanced_settings: "Paramétrages avancés"
         save: "Enregistrer"
+        save_and_next: "Sauvegarder et suivant"
         next: "Suivant"
         cancel: "Annuler"
+        back_to_list: "Retour à la liste"
+        save_and_back_to_list: "Sauvegarder et suivant"
         choose_products_from: "Choisir produits depuis :"
       incoming:
         previous: "Précédent"
         save: "Enregistrer"
+        save_and_next: "Sauvegarder et suivant"
         next: "Suivant"
         cancel: "Annuler"
+        back_to_list: "Retour à la liste"
       outgoing:
         previous: "Précédent"
         save: "Enregistrer"
+        save_and_back_to_list: "Sauvegarder et suivant"
         cancel: "Annuler"
+        back_to_list: "Retour à la liste"
+      wizard_progress:
+        edit: "1. Informations générales"
+        incoming: "2. Produits entrants"
+        outgoing: "3. Produits vendus (sortants)"
       exchange_form:
         pickup_time_tip: Quand des commandes liées à ce cycle de vente seront prêtes à être soumises à l'acheteur
         pickup_instructions_placeholder: "Modalités de retrait/livraison"
@@ -2501,6 +2519,7 @@ fr_CA:
           customer_placeholder: "acheteur@exemple.org"
           valid_email_error: "Veuillez entrer un email valide"
       subscriptions:
+        error_saving: "Une erreur est survenue à la sauvegarde"
         new:
           please_select_a_shop: "Veuillez choisir une boutique"
     insufficient_stock: "Stock disponible insuffisant, il n'en reste que %{on_hand}"
@@ -2802,8 +2821,15 @@ fr_CA:
     minimal_amount: "Montant minimal"
     normal_amount: "Montant classique"
     discount_amount: "Réduction"
+    no_images_found: "Aucune image pour l'instant"
+    new_image: "Nouvelle image"
+    filename: "Nom du fichier"
+    alt_text: "Texte alternatif"
+    thumbnail: "Miniature"
+    back_to_images_list: "Retour à la liste des images"
     email: Email
     account_updated: "Compte mis à jour!"
+    email_updated: "Le compte sera mis à jour une fois la nouvelle adresse email confirmée."
     my_account: "Mon compte"
     date: "Date"
     time: "Heure"
@@ -2812,6 +2838,7 @@ fr_CA:
     zipcode: Code postal
     weight: Poids (au kg)
     error_user_destroy_with_orders: "Les utilisateurs avec des commandes finalisées pourraient ne pas être supprimés"
+    options: "Options"
     actions:
       update: "Mettre à jour"
     errors:
@@ -2843,27 +2870,53 @@ fr_CA:
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Hériter des propriétés de %{supplier}? (non applicable si information de remplacement déjà saisie)"
+          add_product_properties: "Ajouter des propriétés/labels"
+          select_from_prototype: "Sélectionnez depuis le prototype"
       properties:
         index:
           properties: "Labels / propriétés"
+          new_property: "Nouvelle propriété"
           name: "Nom"
+          presentation: "Présentation"
+        new:
+          new_property: "Nouvelle propriété"
+        edit:
+          editing_property: "Modifier la propriété"
+          back_to_properties_list: "Retour à la liste de propriétés"
         form:
           name: "Nom"
+          presentation: "Présentation"
       return_authorizations:
         index:
+          new_return_authorization: "Nouvelle autorisation de retour"
           return_authorizations: "Autorisations de retours"
           back_to_orders_list: "Retour à la liste des commandes"
+          rma_number: "Numéro RMA"
           status: "Statut"
           amount: "Montant"
           cannot_create_returns: "Impossible de créer une autorisation de retour car aucun produit n'a été livré pour cette commande."
           continue: "Suivant"
         new:
+          new_return_authorization: "Nouvelle autorisation de retour"
+          back_to_return_authorizations_list: "Revenir à la liste des autorisations"
           continue: "Suivant"
         edit:
+          receive: " reçoit"
           are_you_sure: "Confirmer?"
+          return_authorization: "Autorisations de retours"
         form:
           product: "Produit"
+          quantity_shipped: "Quantité envoyée"
+          quantity_returned: "Quantité retournée"
+          return_quantity: "Quantité à retourner"
           amount: "Montant"
+          rma_value: "Valeur RMA"
+          reason: "Raison"
+          stock_location: "Localisation"
+        states:
+          authorized: "Autorisé"
+          received: "Reçu"
+          canceled: "Annulée"
       orders:
         index:
           listing_orders: "Liste des commandes"
@@ -3054,12 +3107,23 @@ fr_CA:
         index:
           sku: "Référence Produit"
           price: "Prix"
+          options: "Options"
           no_results: "Pas de résultats"
+          to_add_variants_you_must_first_define: "Pour ajouter une variante, vous devez d'abord définir"
           option_types: "Types d'options"
+          option_values: "Valeurs"
+          and: "et"
+          new_variant: "Nouvelle variante"
+          show_active: "Montrer les actifs"
+          show_deleted: "Montrer les supprimés"
+        new:
+          new_variant: "Nouvelle variante"
         form:
+          cost_price: "Prix coutant"
           sku: "Référence Produit"
           price: "Prix"
           display_as: "Afficher comme"
+          display_name: "Nom affiché"
         autocomplete:
           producer_name: "Producteur"
           unit: "Unité"
@@ -3200,3 +3264,19 @@ fr_CA:
         allow_charges?: "Autoriser les prélèvements ?"
     localized_number:
       invalid_format: n'est pas un format valide. Veuillez entrer un nombre.
+    api:
+      invalid_api_key: " La clé API (%{key}) n'est pas valide."
+      unauthorized: "Vous n'êtes pas autorisé à réaliser cette action."
+      invalid_resource: "La resource est invalide. Veuillez corriger les erreurs et recommencer."
+      resource_not_found: "La ressource recherchée n'a pas été trouvée."
+      access: "Accès API"
+      key: "Clé"
+      clear_key: "Supprimer la clé"
+      regenerate_key: "Regénérer la clé"
+      no_key: "Aucune clé"
+      generate_key: "Générer la clé API"
+      key_generated: "Clé générée"
+      key_cleared: "Clé supprimée"
+      shipment:
+        cannot_ready: "La livraison ne peut pas être préparée."
+      invalid_taxonomy_id: "L'identifiant de la catégorie n'est pas valide."
