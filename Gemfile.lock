@@ -475,8 +475,8 @@ GEM
     mime-types (1.25.1)
     mini_mime (1.0.1)
     mini_portile2 (2.1.0)
-    mini_racer (0.1.15)
-      libv8 (~> 6.3)
+    mini_racer (0.2.4)
+      libv8 (>= 6.3)
     momentjs-rails (2.20.1)
       railties (>= 3.1)
     money (5.1.1)
@@ -773,7 +773,7 @@ DEPENDENCIES
   knapsack
   letter_opener (>= 1.4.1)
   libv8 (= 6.3.292.48.1)
-  mini_racer (= 0.1.15)
+  mini_racer (= 0.2.4)
   momentjs-rails
   newrelic_rpm (~> 3.0)
   nokogiri (>= 1.6.7.1)

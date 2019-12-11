@@ -106,7 +106,7 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
   gem 'compass-rails'
 
-  gem 'mini_racer', '0.1.15'
+  gem 'mini_racer', '0.2.4'
   # Previously we found that libv8 6.7.288.46.1 breakis the compilation of mini_racer.
   # Now we see that we need to set the version explicitly. Nothing else depends on libv8.
   gem 'libv8', '6.3.292.48.1'
