@@ -2536,6 +2536,7 @@ fr:
           customer_placeholder: "acheteur@exemple.org"
           valid_email_error: "Veuillez entrer un email valide"
       subscriptions:
+        error_saving: "Une erreur est survenue à la sauvegarde"
         new:
           please_select_a_shop: "Veuillez choisir une boutique"
     insufficient_stock: "Stock disponible insuffisant, il n'en reste que %{on_hand}"
