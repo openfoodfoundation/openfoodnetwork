@@ -10,7 +10,7 @@
 
   %section.right{"ng-cloak" => true}
     %span.cart-span{"ng-controller" => "CartCtrl", "ng-class" => "{ dirty: Cart.dirty || Cart.empty(), 'pure-dirty': Cart.dirty }"}
-      %a.icon{href: main_app.checkout_path}
+      %a.icon{href: main_app.cart_path}
         %span
           = t '.cart'
         %span.count
