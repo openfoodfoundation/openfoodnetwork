@@ -44,7 +44,7 @@ module OpenFoodNetwork
 
       # If empty array is passed in, the where clause will return all line_items, which is bad
       orders_with_hidden_details =
-        @permissions.editable_orders.empty? ? orders : orders.where('id NOT IN (?)', @permissions.editable_orders)
+        @permissions.editable_orders.empty? ? orders : orders.where('spree_orders.id NOT IN (?)', @permissions.editable_orders)
 
       orders.select{ |order| orders_with_hidden_details.include? order }.each do |order|
         # TODO We should really be hiding customer code here too, but until we
