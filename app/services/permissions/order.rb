@@ -9,15 +9,7 @@ module Permissions
     def visible_orders
       Spree::Order.
         with_line_items_variants_and_products_outer.
-        where(
-          Spree::Order.arel_table.
-            # Grouping keeps the 2 where clauses from produced_orders_where_values inside parentheses
-            #   This way it makes the OR work between the 3 types of orders:
-            #     produced, managed and coordinated
-            grouping(produced_orders_where_values).
-            or(managed_orders_where_values).
-            or(coordinated_orders_where_values)
-        )
+        where(visible_orders_where_values)
     end
 
     # Any orders that the user can edit
@@ -40,6 +32,16 @@ module Permissions
     end
 
     private
+
+    def visible_orders_where_values
+      # Grouping keeps the 2 where clauses from produced_orders_where_values inside parentheses
+      #   This way it makes the OR work between the 3 types of orders:
+      #     produced, managed and coordinated
+      Spree::Order.arel_table.
+        grouping(produced_orders_where_values).
+        or(managed_orders_where_values).
+        or(coordinated_orders_where_values)
+    end
 
     # Any orders placed through any hub that I manage
     def managed_orders_where_values
