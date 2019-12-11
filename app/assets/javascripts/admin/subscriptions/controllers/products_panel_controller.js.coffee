@@ -20,4 +20,4 @@ angular.module("admin.subscriptions").controller "ProductsPanelController", ($sc
         keys = Object.keys(response.data.errors)
         StatusMessage.display 'failure', response.data.errors[keys[0]][0]
       else
-        StatusMessage.display 'success', t('js.changes_saved')
+        StatusMessage.display 'failure', t('js.admin.subscriptions.error_saving')
