@@ -2508,6 +2508,7 @@ ar:
           customer_placeholder: "customer@example.org"
           valid_email_error: "من فضلك أدخل بريد أليكترونى صحيح"
       subscriptions:
+        error_saving: "خطأ في حفظ الاشتراك"
         new:
           please_select_a_shop: "يرجى اختيار متجر"
     insufficient_stock: "مخزون غير متوفر ، تبقى %{on_hand}"
