@@ -21,9 +21,10 @@ module Permissions
     end
 
     def visible_line_items
-      Spree::LineItem.where(id:
-        editable_line_items.select(:id) |
-        produced_line_items.select("spree_line_items.id"))
+      Spree::LineItem.
+        joins(:product).
+        joins(:order).
+        where(visible_line_items_where_values)
     end
 
     # Any line items that I can edit
@@ -39,6 +40,13 @@ module Permissions
       #     produced, managed and coordinated
       Spree::Order.arel_table.
         grouping(produced_orders_where_values).
+        or(managed_orders_where_values).
+        or(coordinated_orders_where_values)
+    end
+
+    def visible_line_items_where_values
+      Spree::LineItem.arel_table.
+        grouping(produced_line_items_where_values).
         or(managed_orders_where_values).
         or(coordinated_orders_where_values)
     end
@@ -86,13 +94,16 @@ module Permissions
     end
 
     # Any from visible orders, where the product is produced by one of my managed producers
-    def produced_line_items
-      Spree::LineItem.where(order_id: visible_orders.select("DISTINCT spree_orders.id")).
+    def produced_line_items_where_values
+      Spree::LineItem.
+        where(order_id: visible_orders.select("DISTINCT spree_orders.id")).
         joins(:product).
         where(spree_products:
         {
           supplier_id: @permissions.managed_enterprises.is_primary_producer.select("enterprises.id")
-        })
+        }).
+        where_values.
+        reduce(:and)
     end
   end
 end
