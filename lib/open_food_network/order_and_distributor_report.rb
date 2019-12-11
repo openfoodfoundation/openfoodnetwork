@@ -42,15 +42,17 @@ module OpenFoodNetwork
 
       orders = search.result
 
-      # If empty array is passed in, the where clause will return all line_items, which is bad
-      orders_with_hidden_details =
-        @permissions.editable_orders.empty? ? orders : orders.where('spree_orders.id NOT IN (?)', @permissions.editable_orders)
-
-      orders.select{ |order| orders_with_hidden_details.include? order }.each do |order|
+      orders.select{ |order| orders_with_hidden_details(orders).include? order }.each do |order|
         # TODO We should really be hiding customer code here too, but until we
         # have an actual association between order and customer, it's a bit tricky
-        order.bill_address.andand.assign_attributes(firstname: I18n.t('admin.reports.hidden'), lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
-        order.ship_address.andand.assign_attributes(firstname: I18n.t('admin.reports.hidden'), lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
+        order.bill_address.andand.
+          assign_attributes(firstname: I18n.t('admin.reports.hidden'),
+                            lastname: "", phone: "", address1: "", address2: "",
+                            city: "", zipcode: "", state: nil)
+        order.ship_address.andand.
+          assign_attributes(firstname: I18n.t('admin.reports.hidden'),
+                            lastname: "", phone: "", address1: "", address2: "",
+                            city: "", zipcode: "", state: nil)
         order.assign_attributes(email: I18n.t('admin.reports.hidden'))
       end
 
@@ -58,6 +60,17 @@ module OpenFoodNetwork
     end
 
     private
+
+    def orders_with_hidden_details(orders)
+      # If empty array is passed in, the where clause will return all line_items, which is bad
+      if @permissions.editable_orders.empty?
+        orders
+      else
+        orders.
+          where('spree_orders.id NOT IN (?)',
+                @permissions.editable_orders)
+      end
+    end
 
     def line_item_details(orders)
       order_and_distributor_details = []
