@@ -6,7 +6,9 @@ describe "General Settings" do
   before(:each) do
     quick_login_as_admin
     visit spree.admin_path
+    page.save_screenshot("#{__FILE__}:#{__LINE__}")
     click_link "Configuration"
+    page.save_screenshot("#{__FILE__}:#{__LINE__}")
     click_link "General Settings"
   end
 
