@@ -50,7 +50,6 @@ Spree::Core::Engine.routes.draw do
   namespace :admin do
     get '/search/known_users' => "search#known_users", :as => :search_known_users
     get '/search/customers' => 'search#customers', :as => :search_customers
-    get '/search/customer_addresses' => 'search#customer_addresses', :as => :search_customer_addresses
 
     resources :users
 
