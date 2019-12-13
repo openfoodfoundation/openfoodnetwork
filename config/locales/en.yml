@@ -1046,9 +1046,6 @@ en:
       products_and_inventory:
         name: Products & Inventory
         description:
-      sales_total:
-        name: Sales Total
-        description: Sales Total For All Orders
       users_and_enterprises:
         name: Users & Enterprises
         description: Enterprise Ownership & Status

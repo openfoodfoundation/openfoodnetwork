@@ -14,18 +14,16 @@ feature '
                                  create(:distributor_enterprise)
                                ])
       end
-      it "does not show super admin only reports" do
+      it "does not show super admin only report" do
         login_to_admin_as user
         click_link "Reports"
-        expect(page).not_to have_content "Sales Total"
         expect(page).not_to have_content "Users & Enterprises"
       end
     end
     context "As an admin user" do
-      it "shows the super admin only reports" do
+      it "shows the super admin only report" do
         login_to_admin_section
         click_link "Reports"
-        expect(page).to have_content "Sales Total"
         expect(page).to have_content "Users & Enterprises"
       end
     end

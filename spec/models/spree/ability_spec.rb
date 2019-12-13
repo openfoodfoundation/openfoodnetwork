@@ -219,7 +219,7 @@ module Spree
         include_examples "allows access to Enterprise Fee Summary"
 
         it "should not be able to read other reports" do
-          is_expected.not_to have_ability([:sales_total, :group_buys, :payments, :orders_and_distributors, :users_and_enterprises, :xero_invoices], for: Spree::Admin::ReportsController)
+          is_expected.not_to have_ability([:group_buys, :payments, :orders_and_distributors, :users_and_enterprises, :xero_invoices], for: Spree::Admin::ReportsController)
         end
 
         it "should not be able to access customer actions" do
@@ -412,7 +412,7 @@ module Spree
         include_examples "allows access to Enterprise Fee Summary"
 
         it "should not be able to read other reports" do
-          is_expected.not_to have_ability([:sales_total, :users_and_enterprises], for: Spree::Admin::ReportsController)
+          is_expected.not_to have_ability([:users_and_enterprises], for: Spree::Admin::ReportsController)
         end
 
         it "should be able to access customer actions" do
