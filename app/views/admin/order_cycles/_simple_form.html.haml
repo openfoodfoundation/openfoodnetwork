@@ -17,7 +17,7 @@
 %table.exchanges
   %tbody{ng: {repeat: "exchange in order_cycle.incoming_exchanges"}}
     %tr.products
-      %td{ ng: { include: "'admin/panels/exchange_supplied_products.html'" } }
+      %td{ ng: { include: "'admin/panels/exchange_products_simple.html'" } }
 
 %br/
 = label_tag t('.fees')
