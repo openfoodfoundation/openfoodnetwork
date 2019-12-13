@@ -35,18 +35,12 @@ module Api
       end
     end
 
-    def soft_delete
-      @variant = scope.find(params[:variant_id])
-      authorize! :delete, @variant
-
-      VariantDeleter.new.delete(@variant)
-      render json: @variant, serializer: Api::VariantSerializer, status: :no_content
-    end
-
     def destroy
       authorize! :delete, Spree::Variant
       @variant = scope.find(params[:id])
-      @variant.destroy
+      authorize! :delete, @variant
+
+      VariantDeleter.new.delete(@variant)
       render json: @variant, serializer: Api::VariantSerializer, status: :no_content
     end
 

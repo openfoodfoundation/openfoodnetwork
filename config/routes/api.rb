@@ -5,12 +5,9 @@ Openfoodnetwork::Application.routes.draw do
         get :bulk_products
         get :overridable
       end
-      delete :soft_delete
       post :clone
 
-      resources :variants do
-        delete :soft_delete
-      end
+      resources :variants
     end
 
     resources :variants, :only => [:index]

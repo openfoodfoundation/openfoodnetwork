@@ -42,8 +42,8 @@ module Api
     def destroy
       authorize! :delete, Spree::Product
       @product = find_product(params[:id])
-      @product.update_attribute(:deleted_at, Time.zone.now)
-      @product.variants_including_master.update_all(deleted_at: Time.zone.now)
+      authorize! :delete, @product
+      @product.destroy
       render json: @product, serializer: Api::Admin::ProductSerializer, status: :no_content
     end
 
@@ -69,14 +69,6 @@ module Api
       @products = paged_products_for_producers producers
 
       render_paged_products @products
-    end
-
-    def soft_delete
-      authorize! :delete, Spree::Product
-      @product = find_product(params[:product_id])
-      authorize! :delete, @product
-      @product.destroy
-      render json: @product, serializer: Api::Admin::ProductSerializer, status: :no_content
     end
 
     # POST /api/products/:product_id/clone
