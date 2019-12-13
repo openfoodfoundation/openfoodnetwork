@@ -2514,6 +2514,7 @@ en_GB:
           customer_placeholder: "customer@example.org"
           valid_email_error: "Please enter a valid email address"
       subscriptions:
+        error_saving: "Error saving subscription"
         new:
           please_select_a_shop: "Please select a shop"
     insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
