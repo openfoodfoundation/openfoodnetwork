@@ -9,10 +9,7 @@ module Spree
 
       before_filter :initialize_order_events
       before_filter :load_order, only: [:edit, :update, :fire, :resend,
-                                        :open_adjustments, :close_adjustments]
-
-      before_filter :load_order, only: %i[show edit update fire resend invoice print print_ticket]
-
+                                        :invoice, :print, :print_ticket]
       before_filter :load_distribution_choices, only: [:new, :edit, :update]
 
       # Ensure that the distributor is set for an order when
@@ -108,22 +105,6 @@ module Spree
 
       def update_distribution_charge
         @order.update_distribution_charge!
-      end
-
-      def open_adjustments
-        adjustments = @order.adjustments.where(state: 'closed')
-        adjustments.update_all(state: 'open')
-        flash[:success] = Spree.t(:all_adjustments_opened)
-
-        respond_with(@order) { |format| format.html { redirect_to :back } }
-      end
-
-      def close_adjustments
-        adjustments = @order.adjustments.where(state: 'open')
-        adjustments.update_all(state: 'closed')
-        flash[:success] = Spree.t(:all_adjustments_closed)
-
-        respond_with(@order) { |format| format.html { redirect_to :back } }
       end
 
       private
