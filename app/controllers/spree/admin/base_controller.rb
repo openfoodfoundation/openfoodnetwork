@@ -4,7 +4,6 @@ module Spree
       ssl_required
 
       helper 'spree/admin/navigation'
-      helper 'spree/admin/tables'
       layout '/spree/layouts/admin'
 
       include I18nHelper
