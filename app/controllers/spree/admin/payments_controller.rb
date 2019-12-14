@@ -5,8 +5,6 @@ module Spree
       before_filter :load_data
       before_filter :can_transition_to_payment
 
-      append_before_filter :filter_payment_methods
-
       respond_to :html
 
       def index
@@ -73,12 +71,6 @@ module Spree
 
       private
 
-      # Only show payments for the order's distributor
-      def filter_payment_methods
-        @payment_methods = @payment_methods.select{ |pm| pm.has_distributor? @order.distributor }
-        @payment_method ||= @payment_methods.first
-      end
-
       def object_params
         if params[:payment] &&
            params[:payment_source] &&
@@ -90,12 +82,18 @@ module Spree
 
       def load_data
         @amount = params[:amount] || load_order.total
-        @payment_methods = PaymentMethod.available(:back_end)
+
+        # Only show payments for the order's distributor
+        @payment_methods = PaymentMethod.
+          available(:back_end).
+          select{ |pm| pm.has_distributor? @order.distributor }
+
         @payment_method = if @payment && @payment.payment_method
                             @payment.payment_method
                           else
                             @payment_methods.first
                           end
+
         @previous_cards = @order.credit_cards.with_payment_profile
       end
 
