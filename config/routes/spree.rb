@@ -63,17 +63,24 @@ Spree::Core::Engine.routes.prepend do
     end
 
     resources :orders do
-      get :invoice, on: :member
-      get :print, on: :member
-      get :print_ticket, on: :member
-      get :managed, on: :collection
+      member do
+        put :fire
+        get :fire
+        post :resend
+        get :invoice
+        get :print
+        get :print_ticket
+      end
 
       collection do
+        get :managed
+
         resources :invoices, only: [:create, :show] do
           get :poll
         end
       end
 
+<<<<<<< HEAD
       resources :adjustments
 
       resources :payments do
@@ -81,6 +88,9 @@ Spree::Core::Engine.routes.prepend do
           put :fire
         end
       end
+=======
+      resource :customer, :controller => "orders/customer_details"
+>>>>>>> 88d5e100d... Bring admin orders routes from spree_backend
     end
 
     resources :users do
