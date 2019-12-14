@@ -71,6 +71,8 @@ module Spree
           password_field_tag(name, value, preference_field_options(options))
         when :text
           text_area_tag(name, value, preference_field_options(options))
+        when :file
+          file_field_tag name, preference_field_options(options)
         else
           text_field_tag(name, value, preference_field_options(options))
         end
@@ -137,12 +139,16 @@ module Spree
       end
 
       # renders hidden field and link to remove record using nested_attributes
+      # add support for options[:html], allowing additional HTML attributes
       def link_to_remove_fields(name, f, options = {})
         name = '' if options[:no_text]
         options[:class] = '' unless options[:class]
         options[:class] += 'no-text with-tip' if options[:no_text]
-        url = f.object.persisted? ? [:admin, f.object] : '#'
-        link_to_with_icon('icon-trash', name, url, :class => "spree_remove_fields #{options[:class]}", :data => {:action => 'remove'}, :title => Spree.t(:remove)) + f.hidden_field(:_destroy)
+
+        html_options = { class: "remove_fields #{options[:class]}", data: { action: 'remove' }, title: t(:remove) }
+        html_options.merge!(options[:html]) if options.key? :html
+
+        link_to_with_icon('icon-trash', name, '#', html_options) + f.hidden_field(:_destroy)
       end
 
       def spree_dom_id(record)
