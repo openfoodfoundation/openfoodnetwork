@@ -5,16 +5,6 @@ module Spree
       before_filter :check_json_authenticity, only: :index
       respond_to :json
 
-      def users
-        @users = if params[:ids]
-                   Spree.user_class.where(id: params[:ids].split(','))
-                 else
-                   Spree.user_class.ransack(ransack_hash).result.limit(10)
-                 end
-
-        render json: @users, each_serializer: ::Api::Admin::UserSerializer
-      end
-
       def known_users
         @users = if exact_match = Spree.user_class.find_by_email(params[:q])
                    [exact_match]
