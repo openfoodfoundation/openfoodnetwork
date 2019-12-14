@@ -70,7 +70,6 @@ module Spree
       def bulk_update
         product_set = product_set_from_params(params)
 
-        # Ensure we're authorised to update all products
         product_set.collection.each { |p| authorize! :update, p }
 
         if product_set.save
@@ -112,25 +111,18 @@ module Spree
       end
 
       def collection
-        # This method is copied directly from the spree product controller
-        #   except where we narrow the search below with the managed_by search to support
-        # enterprise users.
-        # TODO: There has to be a better way!!!
         return @collection if @collection.present?
 
         params[:q] ||= {}
         params[:q][:deleted_at_null] ||= "1"
 
         params[:q][:s] ||= "name asc"
-        # The next line is modified.
-        # Hit Spree::Product instead of super, avoiding cancan error for fetching
-        # records with block permissions via accessible_by.
         @collection = Spree::Product
         @collection = @collection.with_deleted if params[:q].delete(:deleted_at_null).blank?
         # @search needs to be defined as this is passed to search_form_for
         @search = @collection.ransack(params[:q])
         @collection = @search.result.
-          managed_by(spree_current_user). # this line is added to the original spree code!!!!!
+          managed_by(spree_current_user).
           group_by_products_id.
           includes(product_includes).
           page(params[:page]).
