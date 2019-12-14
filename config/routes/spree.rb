@@ -100,6 +100,12 @@ Spree::Core::Engine.routes.prepend do
       end
 
       resources :adjustments
+
+      resources :payments do
+        member do
+          put :fire
+        end
+      end
     end
 
     resources :users do
