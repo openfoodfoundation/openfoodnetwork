@@ -29,11 +29,6 @@ module Spree
 
       respond_to :html, :json
 
-      def index
-        # Overriding the action so we only render the page template. An angular request
-        # within the page then fetches the data it needs from Api::OrdersController
-      end
-
       def new
         @order = Order.create
         @order.created_by = try_spree_current_user
@@ -75,9 +70,6 @@ module Spree
       end
 
       def fire
-        # TODO - Possible security check here
-        #   Right now any admin can before any transition (and the state machine
-        #   itself will make sure transitions are not applied in the wrong state)
         event = params[:e]
         if @order.public_send(event.to_s)
           flash[:success] = Spree.t(:order_updated)
