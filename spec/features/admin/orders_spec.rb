@@ -187,9 +187,9 @@ feature '
     expect(page).to have_current_path spree.admin_orders_path
 
     # click the 'capture' link for the order
-    page.find("[data-action=capture][href*=#{@order.number}]").click
+    page.find("[data-powertip=Capture]").click
 
-    expect(page).to have_content "Payment Updated"
+    expect(page).to have_css "i.success"
 
     # check the order was captured
     expect(@order.reload.payment_state).to eq "paid"

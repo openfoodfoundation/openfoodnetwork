@@ -1,4 +1,4 @@
-angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor, Orders, SortOptions, $window, $filter) ->
+angular.module("admin.orders").controller "ordersCtrl", ($scope, $timeout, RequestMonitor, Orders, SortOptions, $window, $filter) ->
   $scope.RequestMonitor = RequestMonitor
   $scope.pagination = Orders.pagination
   $scope.orders = Orders.all
@@ -13,6 +13,7 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
   $scope.selected = false
   $scope.select_all = false
   $scope.poll = 0
+  $scope.rowStatus = {}
 
   $scope.initialise = ->
     $scope.per_page = 15
@@ -68,6 +69,23 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
       $scope.sorting = sort.predicate + ' asc' if !sort.reverse
       $scope.fetchResults()
   , true
+
+  $scope.capturePayment = (order) ->
+    $scope.rowAction('capture', order)
+
+  $scope.shipOrder = (order) ->
+    $scope.rowAction('ship', order)
+
+  $scope.rowAction = (action, order) ->
+    $scope.rowStatus[order.id] = "loading"
+
+    Orders[action](order).$promise.then (data) ->
+      $scope.rowStatus[order.id] = "success"
+      $timeout(->
+        $scope.rowStatus[order.id] = null
+      , 1500)
+    , (error) ->
+      $scope.rowStatus[order.id] = "error"
 
   $scope.changePage = (newPage) ->
     $scope.page = newPage
