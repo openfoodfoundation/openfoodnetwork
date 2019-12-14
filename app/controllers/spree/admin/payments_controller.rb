@@ -1,8 +1,7 @@
 module Spree
   module Admin
     class PaymentsController < Spree::Admin::BaseController
-      before_filter :load_order, only: [:create, :new, :index, :fire]
-      before_filter :load_payment, except: [:create, :new, :index]
+      before_filter :load_order
       before_filter :load_data
       before_filter :can_transition_to_payment
 
@@ -54,6 +53,8 @@ module Spree
       # When a user fires an event, take them back to where they came from
       # (we can't use respond_override because Spree no longer uses respond_with)
       def fire
+        load_payment
+
         event = params[:e]
         return unless event && @payment.payment_source
 
