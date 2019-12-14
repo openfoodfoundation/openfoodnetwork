@@ -18,12 +18,7 @@ module Spree
 
       def create
         @payment = @order.payments.build(object_params)
-        if @payment.payment_method.is_a?(Spree::Gateway) &&
-           @payment.payment_method.payment_profiles_supported? &&
-           params[:card].present? &&
-           (params[:card] != 'new')
-          @payment.source = CreditCard.find_by_id(params[:card])
-        end
+        load_payment_source
 
         begin
           unless @payment.save
@@ -70,6 +65,15 @@ module Spree
       end
 
       private
+
+      def load_payment_source
+        if @payment.payment_method.is_a?(Spree::Gateway) &&
+           @payment.payment_method.payment_profiles_supported? &&
+           params[:card].present? &&
+           (params[:card] != 'new')
+          @payment.source = CreditCard.find_by_id(params[:card])
+        end
+      end
 
       def object_params
         if params[:payment] &&
