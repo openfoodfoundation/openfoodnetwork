@@ -80,7 +80,6 @@ Spree::Core::Engine.routes.prepend do
         end
       end
 
-<<<<<<< HEAD
       resources :adjustments
 
       resources :payments do
@@ -88,9 +87,8 @@ Spree::Core::Engine.routes.prepend do
           put :fire
         end
       end
-=======
+
       resource :customer, :controller => "orders/customer_details"
->>>>>>> 88d5e100d... Bring admin orders routes from spree_backend
     end
 
     resources :users do
