@@ -10,7 +10,6 @@ module Spree
       include OrderCyclesHelper
       include EnterprisesHelper
 
-      before_filter :load_data, except: :index
       create.before :create_before
       update.before :update_before
 
@@ -83,18 +82,6 @@ module Spree
         end
       end
 
-      def destroy
-        @product = Product.find_by_permalink!(params[:id])
-        @product.destroy
-
-        flash[:success] = Spree.t('notice_messages.product_deleted')
-
-        respond_with(@product) do |format|
-          format.html { redirect_to collection_url }
-          format.js { render_js_for_destroy }
-        end
-      end
-
       def clone
         @new = @product.duplicate
 
@@ -105,16 +92,6 @@ module Spree
                           end
 
         redirect_to edit_admin_product_url(@new)
-      end
-
-      def stock
-        @variants = @product.variants
-        @variants = [@product.master] if @variants.empty?
-        @stock_locations = StockLocation.accessible_by(current_ability, :read)
-        return unless @stock_locations.empty?
-
-        flash[:error] = Spree.t(:stock_management_requires_a_stock_location)
-        redirect_to admin_stock_locations_path
       end
 
       protected
