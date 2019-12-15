@@ -7,7 +7,6 @@ module Spree
       include OpenFoodNetwork::SpreeApiKeyLoader
       helper CheckoutHelper
 
-      before_filter :initialize_order_events
       before_filter :load_order, only: [:edit, :update, :fire, :resend,
                                         :invoice, :print, :print_ticket]
       before_filter :load_distribution_choices, only: [:new, :edit, :update]
@@ -112,10 +111,6 @@ module Spree
       def load_order
         @order = Order.find_by_number!(params[:id], include: :adjustments) if params[:id]
         authorize! action, @order
-      end
-
-      def initialize_order_events
-        @order_events = %w{cancel resume}
       end
 
       def model_class

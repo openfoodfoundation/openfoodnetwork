@@ -335,6 +335,7 @@ Rails/OutputSafety:
     - 'app/helpers/spree/admin/zones_helper.rb'
     - 'app/helpers/spree/reports_helper.rb'
     - 'app/helpers/spree/admin/navigation_helper.rb'
+    - 'app/helpers/spree/admin/orders_helper.rb'
     - 'app/serializers/api/product_serializer.rb'
     - 'lib/spree/money_decorator.rb'
     - 'spec/features/admin/orders_spec.rb'
