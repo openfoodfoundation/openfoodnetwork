@@ -190,6 +190,7 @@ Rails/OutputSafety:
     - 'app/controllers/spree/admin/reports_controller.rb'
     - 'app/helpers/angular_form_helper.rb'
     - 'app/helpers/spree/reports_helper.rb'
+    - 'app/helpers/spree/admin/orders_helper.rb'
     - 'app/serializers/api/product_serializer.rb'
     - 'lib/spree/money_decorator.rb'
     - 'spec/features/admin/orders_spec.rb'
