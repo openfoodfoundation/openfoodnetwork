@@ -61,8 +61,8 @@ GIT
 
 GIT
   remote: https://github.com/openfoodfoundation/spree.git
-  revision: 60621109f317e13beb92e319896de384469ab814
-  branch: be_without_v_c
+  revision: c096eff12a5de27f9ff16d420de3077b40ffa8dd
+  branch: be_without_v_c_h
   specs:
     spree_backend (2.0.4)
       deface (>= 0.9.0)

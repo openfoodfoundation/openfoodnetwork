@@ -21,7 +21,7 @@ gem 'pg', '~> 0.21.0'
 # OFN-maintained and patched version of Spree v2.0.4. See
 # https://github.com/openfoodfoundation/openfoodnetwork/wiki/Spree-2.0-upgrade
 # for details.
-gem 'spree_backend', github: 'openfoodfoundation/spree', branch: 'be_without_v_c'
+gem 'spree_backend', github: 'openfoodfoundation/spree', branch: 'be_without_v_c_h'
 gem 'spree_core', github: 'openfoodfoundation/spree', branch: '2-0-4-stable'
 
 gem 'spree_i18n', github: 'spree/spree_i18n', branch: '1-3-stable'
