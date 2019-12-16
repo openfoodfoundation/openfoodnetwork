@@ -733,7 +733,7 @@ DEPENDENCIES
   blockenspiel
   bugsnag
   byebug (~> 9.0.0)
-  capybara (>= 2.15.4)
+  capybara (>= 2.18.0)
   coffee-rails (~> 3.2.1)
   combine_pdf
   compass-rails
