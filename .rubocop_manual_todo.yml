@@ -54,7 +54,6 @@ Metrics/LineLength:
   - app/helpers/order_cycles_helper.rb
   - app/helpers/shop_helper.rb
   - app/helpers/spree/admin/base_helper_decorator.rb
-  - app/helpers/spree/admin/navigation_helper_decorator.rb
   - app/helpers/spree/orders_helper.rb
   - app/jobs/subscription_confirm_job.rb
   - app/mailers/subscription_mailer.rb
@@ -386,6 +385,7 @@ Metrics/AbcSize:
   - app/helpers/order_cycles_helper.rb
   - app/helpers/spree/admin/base_helper.rb
   - app/helpers/spree/admin/navigation_helper_decorator.rb
+  - app/helpers/spree/admin/navigation_helper.rb
   - app/helpers/spree/orders_helper.rb
   - app/jobs/subscription_placement_job.rb
   - app/mailers/producer_mailer.rb
@@ -498,7 +498,7 @@ Metrics/CyclomaticComplexity:
   - app/helpers/i18n_helper.rb
   - app/helpers/order_cycles_helper.rb
   - app/helpers/spree/admin/base_helper.rb
-  - app/helpers/spree/admin/navigation_helper_decorator.rb
+  - app/helpers/spree/admin/navigation_helper.rb
   - app/models/enterprise.rb
   - app/models/enterprise_relationship.rb
   - app/models/product_import/entry_processor.rb
@@ -527,6 +527,7 @@ Metrics/PerceivedComplexity:
   - app/helpers/checkout_helper.rb
   - app/helpers/i18n_helper.rb
   - app/helpers/order_cycles_helper.rb
+  - app/helpers/spree/admin/navigation_helper.rb
   - app/models/enterprise_relationship.rb
   - app/models/product_import/entry_processor.rb
   - app/models/product_import/entry_validator.rb
@@ -581,6 +582,7 @@ Metrics/MethodLength:
   - app/helpers/checkout_helper.rb
   - app/helpers/order_cycles_helper.rb
   - app/helpers/spree/admin/base_helper.rb
+  - app/helpers/spree/admin/navigation_helper.rb
   - app/jobs/subscription_placement_job.rb
   - app/mailers/producer_mailer.rb
   - app/models/column_preference.rb
@@ -681,6 +683,7 @@ Metrics/ModuleLength:
   - app/helpers/admin/injection_helper.rb
   - app/helpers/injection_helper.rb
   - app/helpers/spree/admin/base_helper.rb
+  - app/helpers/spree/admin/navigation_helper.rb
   - lib/open_food_network/column_preference_defaults.rb
   - spec/controllers/admin/enterprises_controller_spec.rb
   - spec/controllers/admin/order_cycles_controller_spec.rb
