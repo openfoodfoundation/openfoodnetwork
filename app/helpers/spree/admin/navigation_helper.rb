@@ -52,22 +52,20 @@ module Spree
       # :products returns Spree::Product
       # :my_products returns MyProduct if MyProduct is defined
       # :my_products returns My::Product if My::Product is defined
-      # if cannot constantize it returns nil
-      # This will allow us to use cancan abilities on tab
+      #
+      # If it cannot constantize, it tries a collection of custom translations
+      #
+      # This allows us to use cancan abilities on tab
       def klass_for(name)
         model_name = name.to_s
-
-        ["Spree::#{model_name.classify}", model_name.classify, model_name.tr('_', '/').classify].
+        klass = ["Spree::#{model_name.classify}",
+                 model_name.classify,
+                 model_name.tr('_', '/').classify].
           find(&:safe_constantize).
           try(:safe_constantize)
-      end
 
-      # Make it so that the Reports admin tab can be enabled/disabled through the cancan
-      # :report resource, since it does not have a corresponding resource class (unlike
-      # eg. Spree::Product).
-      def klass_for_with_sym_fallback(name)
-        klass = klass_for_without_sym_fallback(name)
         klass ||= name.singularize.to_sym
+
         klass = :overview if klass == :dashboard
         klass = Spree::Order if klass == :bulk_order_management
         klass = EnterpriseGroup if klass == :group
@@ -76,7 +74,6 @@ module Spree
         klass = Spree::Admin::ReportsController if klass == :report
         klass
       end
-      alias_method_chain :klass_for, :sym_fallback
 
       def link_to_clone(resource, options = {})
         options[:data] = { action: 'clone' }
