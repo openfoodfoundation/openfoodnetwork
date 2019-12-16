@@ -189,6 +189,7 @@ Rails/OutputSafety:
   Exclude:
     - 'app/controllers/spree/admin/reports_controller.rb'
     - 'app/helpers/angular_form_helper.rb'
+    - 'app/helpers/spree/admin/base_helper.rb'
     - 'app/helpers/spree/reports_helper.rb'
     - 'app/helpers/spree/admin/orders_helper.rb'
     - 'app/serializers/api/product_serializer.rb'
