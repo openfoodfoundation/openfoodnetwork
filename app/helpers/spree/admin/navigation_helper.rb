@@ -75,24 +75,9 @@ module Spree
         klass
       end
 
-      def link_to_clone(resource, options = {})
-        options[:data] = { action: 'clone' }
-        link_to_with_icon('icon-copy', Spree.t(:clone), clone_admin_product_url(resource), options)
-      end
-
-      def link_to_new(resource)
-        options[:data] = { action: 'new' }
-        link_to_with_icon('icon-plus', Spree.t(:new), edit_object_url(resource))
-      end
-
       def link_to_edit(resource, options = {})
         options[:data] = { action: 'edit' }
         link_to_with_icon('icon-edit', Spree.t(:edit), edit_object_url(resource), options)
-      end
-
-      def link_to_edit_url(url, options = {})
-        options[:data] = { action: 'edit' }
-        link_to_with_icon('icon-edit', Spree.t(:edit), url, options)
       end
 
       def link_to_delete(resource, options = {})
@@ -148,14 +133,6 @@ module Spree
         s = ''
         s << text
         raw(s)
-      end
-
-      def configurations_menu_item(link_text, url, description = '')
-        %(<tr>
-          <td>#{link_to(link_text, url)}</td>
-          <td>#{description}</td>
-        </tr>
-        ).html_safe
       end
 
       def configurations_sidebar_menu_item(link_text, url, options = {})
