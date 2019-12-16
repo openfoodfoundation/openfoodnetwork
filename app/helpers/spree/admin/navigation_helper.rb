@@ -9,13 +9,14 @@ module Spree
       #       /products would match /admin/products, /admin/products/5/variants etc.
       def tab(*args)
         options = { label: args.first.to_s }
+        if args.last.is_a?(Hash)
+          options = options.merge(args.last)
+        end
 
         # Return if resource is found and user is not allowed to :admin
-        return '' if klass = klass_for(options[:label]) && cannot?(:admin, klass)
+        klass = klass_for(options[:label])
+        return '' if klass && cannot?(:admin, klass)
 
-        if args.last.is_a?(Hash)
-          options = options.merge(args.pop)
-        end
         options[:route] ||= "admin_#{args.first}"
 
         destination_url = options[:url] || spree.public_send("#{options[:route]}_path")
@@ -44,17 +45,6 @@ module Spree
         end
         content_tag('li', link, class: css_classes.join(' '))
       end
-
-      def tab_with_cancan_check(*args)
-        options = { label: args.first.to_s }
-        if args.last.is_a?(Hash)
-          options = options.merge(args.last)
-        end
-        return '' if (klass = klass_for(options[:label])) && cannot?(:admin, klass)
-
-        tab_without_cancan_check(*args)
-      end
-      alias_method_chain :tab, :cancan_check
 
       # finds class for a given symbol / string
       #
