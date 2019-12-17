@@ -12,7 +12,6 @@ angular.module('admin.orderCycles').factory('Enterprise', ($resource) ->
     enterprises: {}
     producer_enterprises: []
     hub_enterprises: []
-    supplied_products: []
     loaded: false
 
     index: (params={}, callback=null) ->
@@ -21,9 +20,6 @@ angular.module('admin.orderCycles').factory('Enterprise', ($resource) ->
           @enterprises[enterprise.id] = enterprise
           @producer_enterprises.push(enterprise) if enterprise.is_primary_producer
           @hub_enterprises.push(enterprise) if enterprise.sells == 'any'
-
-          for product in enterprise.supplied_products
-            @supplied_products.push(product)
 
         @loaded = true
         (callback || angular.noop)(@enterprises)
@@ -39,13 +35,4 @@ angular.module('admin.orderCycles').factory('Enterprise', ($resource) ->
         variant.id for variant in product.variants
       else
         [product.master_id]
-
-    totalVariants: (enterprise) ->
-      numVariants = 0
-
-      if enterprise
-        counts = for product in enterprise.supplied_products
-          numVariants += if product.variants.length == 0 then 1 else product.variants.length
-
-      numVariants
   })

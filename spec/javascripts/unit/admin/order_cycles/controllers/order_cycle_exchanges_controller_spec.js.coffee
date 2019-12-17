@@ -19,14 +19,11 @@ describe 'AdminOrderCycleExchangesCtrl', ->
     OrderCycle =
       exchangeSelectedVariants: jasmine.createSpy('exchangeSelectedVariants').and.returnValue('variants selected')
       exchangeDirection: jasmine.createSpy('exchangeDirection').and.returnValue('exchange direction')
-      addSupplier: jasmine.createSpy('addSupplier')
-      addDistributor: jasmine.createSpy('addDistributor')
       removeExchange: jasmine.createSpy('removeExchange')
       addExchangeFee: jasmine.createSpy('addExchangeFee')
       removeExchangeFee: jasmine.createSpy('removeExchangeFee')
       removeDistributionOfVariant: jasmine.createSpy('removeDistributionOfVariant')
-    Enterprise =
-      supplied_products: 'supplied products'
+    Enterprise = {}
     EnterpriseFee =
       forEnterprise: jasmine.createSpy('forEnterprise').and.returnValue('enterprise fees for enterprise')
     ocInstance = {}
@@ -34,9 +31,6 @@ describe 'AdminOrderCycleExchangesCtrl', ->
     module('admin.orderCycles')
     inject ($controller) ->
       ctrl = $controller 'AdminOrderCycleExchangesCtrl', {$scope: scope, $location: location, OrderCycle: OrderCycle, Enterprise: Enterprise, EnterpriseFee: EnterpriseFee, ocInstance: ocInstance}
-
-  it 'Loads supplied products', ->
-    expect(scope.supplied_products).toEqual('supplied products')
 
   it 'Delegates exchangeSelectedVariants to OrderCycle', ->
     expect(scope.exchangeSelectedVariants('exchange')).toEqual('variants selected')
@@ -76,18 +70,6 @@ describe 'AdminOrderCycleExchangesCtrl', ->
     expect(event.preventDefault).toHaveBeenCalled()
     expect(OrderCycle.removeExchangeFee).toHaveBeenCalledWith('exchange', 0)
     expect(scope.order_cycle_form.$dirty).toEqual true
-
-  it 'Adds order cycle suppliers', ->
-    scope.new_supplier_id = 'new supplier id'
-    scope.addSupplier(event)
-    expect(event.preventDefault).toHaveBeenCalled()
-    expect(OrderCycle.addSupplier).toHaveBeenCalledWith('new supplier id')
-
-  it 'Adds order cycle distributors', ->
-    scope.new_distributor_id = 'new distributor id'
-    scope.addDistributor(event)
-    expect(event.preventDefault).toHaveBeenCalled()
-    expect(OrderCycle.addDistributor).toHaveBeenCalledWith('new distributor id')
 
   it 'Removes distribution of a variant', ->
     scope.removeDistributionOfVariant('variant')

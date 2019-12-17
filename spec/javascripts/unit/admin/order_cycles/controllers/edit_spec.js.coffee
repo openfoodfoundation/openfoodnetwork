@@ -38,9 +38,6 @@ describe 'AdminEditOrderCycleCtrl', ->
     expect(EnterpriseFee.index).toHaveBeenCalled()
     expect(scope.enterprise_fees).toEqual('enterprise fees list')
 
-  it 'Loads order cycles', ->
-    expect(OrderCycle.load).toHaveBeenCalledWith('27')
-
   it 'Removes coordinator fees', ->
     scope.removeCoordinatorFee(event, 0)
     expect(event.preventDefault).toHaveBeenCalled()

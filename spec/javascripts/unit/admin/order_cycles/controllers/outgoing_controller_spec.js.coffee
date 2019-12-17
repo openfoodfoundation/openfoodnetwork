@@ -13,19 +13,25 @@ describe 'AdminOrderCycleOutgoingCtrl', ->
     location =
       absUrl: ->
         'example.com/admin/order_cycles/27/edit'
+    event =
+      preventDefault: jasmine.createSpy('preventDefault')
     OrderCycle =
-      productSuppliedToOrderCycle: jasmine.createSpy('productSuppliedToOrderCycle').and.returnValue('product supplied')
       variantSuppliedToOrderCycle: jasmine.createSpy('variantSuppliedToOrderCycle').and.returnValue('variant supplied')
+      addDistributor: jasmine.createSpy('addDistributor')
     ocInstance = {}
 
     module('admin.orderCycles')
     inject ($controller) ->
       ctrl = $controller 'AdminOrderCycleOutgoingCtrl', {$scope: scope, $location: location, OrderCycle: OrderCycle, Enterprise: Enterprise, EnterpriseFee: EnterpriseFee, ocInstance: ocInstance}
 
-  it 'Delegates productSuppliedToOrderCycle to OrderCycle', ->
-    expect(scope.productSuppliedToOrderCycle('product')).toEqual('product supplied')
-    expect(OrderCycle.productSuppliedToOrderCycle).toHaveBeenCalledWith('product')
-
   it 'Delegates variantSuppliedToOrderCycle to OrderCycle', ->
     expect(scope.variantSuppliedToOrderCycle('variant')).toEqual('variant supplied')
     expect(OrderCycle.variantSuppliedToOrderCycle).toHaveBeenCalledWith('variant')
+
+  it 'Adds order cycle distributors', ->
+    scope.new_distributor_id = 'new distributor id'
+
+    scope.addDistributor(event)
+
+    expect(event.preventDefault).toHaveBeenCalled()
+    expect(OrderCycle.addDistributor).toHaveBeenCalledWith('new distributor id')

@@ -1,7 +1,7 @@
 require 'open_food_network/enterprise_issue_validator'
 
 class Api::Admin::ForOrderCycle::EnterpriseSerializer < ActiveModel::Serializer
-  attributes :id, :name, :managed, :supplied_products,
+  attributes :id, :name, :managed,
              :issues_summary_supplier, :issues_summary_distributor,
              :is_primary_producer, :is_distributor, :sells
 
@@ -23,12 +23,6 @@ class Api::Admin::ForOrderCycle::EnterpriseSerializer < ActiveModel::Serializer
 
   def managed
     Enterprise.managed_by(options[:spree_current_user]).include? object
-  end
-
-  def supplied_products
-    serializer = Api::Admin::ForOrderCycle::SuppliedProductSerializer
-    ActiveModel::ArraySerializer.new(products, each_serializer: serializer,
-                                               order_cycle: order_cycle)
   end
 
   private
