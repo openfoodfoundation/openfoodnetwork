@@ -18,11 +18,11 @@ angular.module('admin.orderCycles')
     $scope.cancel = (destination) ->
       $window.location = destination
 
-    # Used in panels/exchange_supplied_products.html
+    # Used in panels/exchange_products_supplied.html
     $scope.suppliedVariants = (enterprise_id) ->
       Enterprise.suppliedVariants(enterprise_id)
 
-    # Used in panels/exchange_supplied_products.html and panels/exchange_distributed_products.html
+    # Used in panels/exchange_products_supplied.html and panels/exchange_products_distributed.html
     $scope.setExchangeVariants = (exchange, variants, selected) ->
       OrderCycle.setExchangeVariants(exchange, variants, selected)
 

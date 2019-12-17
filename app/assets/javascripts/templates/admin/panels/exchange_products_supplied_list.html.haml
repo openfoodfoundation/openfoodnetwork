@@ -1,0 +1,16 @@
+.exchange-products{ 'ng-hide' => 'productsLoading()' }
+  .exchange-product{'ng-repeat' => 'product in enterprises[exchange.enterprise_id].supplied_products'}
+    .exchange-product-details
+      %label
+        %img{'ng-src' => '{{ product.image_url }}'}
+        {{ product.name }}
+
+    .exchange-product-variant{'ng-repeat' => 'variant in product.variants'}
+      %label
+        %input{ type: 'checkbox', name: 'order_cycle_incoming_exchange_{{ $parent.$parent.$index }}_variants_{{ variant.id }}',
+          value: 1,
+          'ng-model' => 'exchange.variants[variant.id]',
+          'ofn-sync-distributions' => '{{ variant.id }}',
+          'id' => 'order_cycle_incoming_exchange_{{ $parent.$parent.$index }}_variants_{{ variant.id }}',
+          'ng-disabled' => '!order_cycle.editable_variants_for_incoming_exchanges.hasOwnProperty(exchange.enterprise_id) || order_cycle.editable_variants_for_incoming_exchanges[exchange.enterprise_id].indexOf(variant.id) < 0' }
+        {{ variant.label }}

@@ -1,0 +1,12 @@
+.row.exchange-supplied-products
+  .sixteen.columns.alpha.omega
+    .exchange-select-all-variants
+      %label
+        %input{ type: 'checkbox', name: 'order_cycle_incoming_exchange_{{ $index }}_select_all_variants',
+          value: 1,
+          'ng-model' => 'exchange.select_all_variants',
+          'ng-change' => 'setExchangeVariants(exchange, suppliedVariants(exchange.enterprise_id), exchange.select_all_variants)',
+          'id' => 'order_cycle_incoming_exchange_{{ $index }}_select_all_variants' }
+        {{ 'admin.select_all' | t }}
+
+    %div{ 'ng-include' => "'admin/panels/exchange_products_supplied_list.html'" }

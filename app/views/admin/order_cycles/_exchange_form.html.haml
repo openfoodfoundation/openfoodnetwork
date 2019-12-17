@@ -1,11 +1,7 @@
 %tr{ ng: { class: "'#{type} #{type}-{{ exchange.enterprise_id }}'" } }
   %td{:class => "#{type}_name"} {{ enterprises[exchange.enterprise_id].name }}
   %td.products.panel-toggle.text-center{ name: "products" }
-    {{ exchangeSelectedVariants(exchange) }} /
-    - if type == 'supplier'
-      {{ exchangeTotalVariants(exchange) }}
-    - else
-      {{ (incomingExchangeVariantsFor(exchange.enterprise_id)).length }}
+    {{ exchangeSelectedVariants(exchange) }} / {{ exchangeTotalVariants(exchange) }}
     = t('.selected')
   - if type == 'supplier'
     %td.receival-details
@@ -34,11 +30,11 @@
 
 - if type == 'supplier'
   %tr.panel-row{ object: "exchange",
-    panels: "{products: 'exchange_supplied_products'}",
-    locals: "$index,order_cycle,exchange,enterprises,setExchangeVariants,suppliedVariants,removeDistributionOfVariant,initializeExchangeProductsPanel",
+    panels: "{products: 'exchange_products_supplied'}",
+    locals: "$index,order_cycle,exchange,enterprises,setExchangeVariants,selectAllVariants,suppliedVariants,removeDistributionOfVariant,initializeExchangeProductsPanel,loadMoreExchangeProducts,loadAllExchangeProducts,productsLoading",
     colspan: 4 }
 - if type == 'distributor'
   %tr.panel-row{ object: "exchange",
-    panels: "{products: 'exchange_distributed_products', tags: 'exchange_tags'}",
-    locals: "$index,order_cycle,exchange,enterprises,setExchangeVariants,incomingExchangeVariantsFor,variantSuppliedToOrderCycle,initializeExchangeProductsPanel",
+    panels: "{products: 'exchange_products_distributed', tags: 'exchange_tags'}",
+    locals: "$index,order_cycle,exchange,enterprises,setExchangeVariants,incomingExchangeVariantsFor,variantSuppliedToOrderCycle,initializeExchangeProductsPanel,loadMoreExchangeProducts,loadAllExchangeProducts,productsLoading",
     colspan: 5 }

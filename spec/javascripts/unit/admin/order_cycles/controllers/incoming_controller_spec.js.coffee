@@ -23,21 +23,6 @@ describe 'AdminOrderCycleIncomingCtrl', ->
     inject ($controller) ->
       ctrl = $controller 'AdminOrderCycleIncomingCtrl', {$scope: scope, $location: location, OrderCycle: OrderCycle, Enterprise: Enterprise, EnterpriseFee: EnterpriseFee, ocInstance: ocInstance}
 
-  it 'counts total variants in a list of products', ->
-    products = [
-                 {variants: [{}]},
-                 {variants: [{}]},
-                 {variants: [{}, {}, {}]}
-               ]
-
-    expect(scope.countVariants(products)).toEqual(5)
-
-  it 'returns zero when products list is null', ->
-    expect(scope.countVariants(null)).toEqual(0)
-
-  it 'returns zero when products list is empty', ->
-    expect(scope.countVariants([])).toEqual(0)
-
   it 'adds order cycle suppliers', ->
     scope.new_supplier_id = 'new supplier id'
 

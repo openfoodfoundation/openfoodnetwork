@@ -1,0 +1,16 @@
+.row.exchange-supplied-products{'ng-init' => 'initializeExchangeProductsPanel(exchange)'}
+  .sixteen.columns.alpha.omega{ 'ng-show' => 'enterprises[exchange.enterprise_id].supplied_products.length != 0' }
+    %div{ 'ng-include' => "'admin/panels/exchange_products_panel_header.html'" }
+
+    .exchange-select-all-variants
+      %label
+        %input{ type: 'checkbox', name: 'order_cycle_incoming_exchange_{{ $index }}_select_all_variants',
+          value: 1,
+          'ng-model' => 'exchange.select_all_variants',
+          'ng-change' => 'selectAllVariants(exchange, exchange.select_all_variants)',
+          'id' => 'order_cycle_incoming_exchange_{{ $index }}_select_all_variants' }
+        {{ 'js.admin.panels.exchange_products.select_all_products' | t:{ total_number_of_products: enterprises[exchange.enterprise_id].num_of_products } }}
+
+    %div{ 'ng-include' => "'admin/panels/exchange_products_supplied_list.html'" }
+
+    %div{ 'ng-include' => "'admin/panels/exchange_products_panel_footer.html'" }

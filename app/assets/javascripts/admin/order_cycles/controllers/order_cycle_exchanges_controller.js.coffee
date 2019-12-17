@@ -5,6 +5,12 @@ angular.module('admin.orderCycles')
     $scope.supplier_enterprises = Enterprise.producer_enterprises
     $scope.distributor_enterprises = Enterprise.hub_enterprises
 
+    $scope.productsLoading = ->
+      RequestMonitor.loading
+
+    $scope.setSelectAllVariantsCheckboxValue = (exchange, totalNumberOfVariants) ->
+      exchange.select_all_variants = $scope.exchangeSelectedVariants(exchange) >= totalNumberOfVariants
+
     $scope.exchangeSelectedVariants = (exchange) ->
       OrderCycle.exchangeSelectedVariants(exchange)
 
@@ -36,18 +42,35 @@ angular.module('admin.orderCycles')
     $scope.removeDistributionOfVariant = (variant_id) ->
       OrderCycle.removeDistributionOfVariant(variant_id)
 
-    $scope.loadExchangeProducts = (exchange) ->
-      return if $scope.enterprises[exchange.enterprise_id].supplied_products_fetched?
-      $scope.enterprises[exchange.enterprise_id].supplied_products_fetched = true
+    $scope.loadExchangeProducts = (exchange, page = 1) ->
+      enterprise = $scope.enterprises[exchange.enterprise_id]
+      enterprise.supplied_products ?= []
+
+      return if enterprise.last_page_loaded? && enterprise.last_page_loaded >= page
+      enterprise.last_page_loaded = page
 
       incoming = true if $scope.view == 'incoming'
-      params = { exchange_id: exchange.id, enterprise_id: exchange.enterprise_id, order_cycle_id: $scope.order_cycle.id, incoming: incoming}
-      ExchangeProduct.index params, (products) ->
-        $scope.enterprises[exchange.enterprise_id].supplied_products = products
+      params = { exchange_id: exchange.id, enterprise_id: exchange.enterprise_id, order_cycle_id: $scope.order_cycle.id, incoming: incoming, page: page}
+      ExchangeProduct.index params, (products, num_of_pages, num_of_products) ->
+        enterprise.num_of_pages = num_of_pages
+        enterprise.num_of_products = num_of_products
+        enterprise.supplied_products.push products...
+
+    $scope.loadMoreExchangeProducts = (exchange) ->
+      $scope.loadExchangeProducts(exchange, $scope.enterprises[exchange.enterprise_id].last_page_loaded + 1)
+
+    $scope.loadAllExchangeProducts = (exchange) ->
+      enterprise = $scope.enterprises[exchange.enterprise_id]
+
+      if enterprise.last_page_loaded < enterprise.num_of_pages
+        for page_to_load in [(enterprise.last_page_loaded + 1)..enterprise.num_of_pages]
+          RequestMonitor.load $scope.loadExchangeProducts(exchange, page_to_load).$promise
+
+      RequestMonitor.loadQueue
 
     # initialize exchange products panel if not yet done
     $scope.exchangeProdutsPanelInitialized = []
     $scope.initializeExchangeProductsPanel = (exchange) ->
       return if $scope.exchangeProdutsPanelInitialized[exchange.enterprise_id]
-      $scope.loadExchangeProducts(exchange)
+      RequestMonitor.load $scope.loadExchangeProducts(exchange).$promise
       $scope.exchangeProdutsPanelInitialized[exchange.enterprise_id] = true
