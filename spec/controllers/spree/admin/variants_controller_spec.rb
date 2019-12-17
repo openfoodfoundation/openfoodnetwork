@@ -39,36 +39,6 @@ module Spree
       describe '#destroy' do
         let(:variant) { create(:variant) }
 
-        context 'when requesting with js' do
-          before do
-            allow(Spree::Variant).to receive(:find).with(variant.id.to_s) { variant }
-            allow(variant).to receive(:destroy).and_call_original
-          end
-
-          it 'destroys the variant' do
-            spree_delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'js'
-            expect(variant).to have_received(:destroy)
-          end
-
-          it 'shows a success flash message' do
-            spree_delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'js'
-            expect(flash[:success]).to be
-          end
-
-          it 'renders spree/admin/shared/destroy' do
-            spree_delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'js'
-            expect(response).to render_template('spree/admin/shared/_destroy')
-          end
-
-          it 'destroys all its exchanges' do
-            exchange = create(:exchange)
-            variant.exchanges << exchange
-
-            spree_delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'js'
-            expect(variant.exchanges).to be_empty
-          end
-        end
-
         context 'when requesting with html' do
           before do
             allow(Spree::Variant).to receive(:find).with(variant.id.to_s) { variant }
@@ -98,7 +68,7 @@ module Spree
             exchange = create(:exchange)
             variant.exchanges << exchange
 
-            spree_delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'js'
+            spree_delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'html'
             expect(variant.exchanges).to be_empty
           end
         end
