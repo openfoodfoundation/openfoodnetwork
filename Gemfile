@@ -135,7 +135,7 @@ group :test, :development do
   # Pretty printed test output
   gem 'atomic'
   gem 'awesome_print'
-  gem 'capybara', '>= 2.15.4'
+  gem 'capybara', '>= 2.18.0' # 3.0 requires nokogiri 1.8
   gem 'database_cleaner', '0.7.1', require: false
   gem "factory_bot_rails", require: false
   gem 'fuubar', '~> 2.5.0'
@@ -148,7 +148,7 @@ group :test, :development do
   gem 'shoulda-matchers'
   gem 'timecop'
   gem 'unicorn-rails'
-  gem 'webdrivers', '3.8.1'
+  gem 'webdrivers'
 end
 
 group :test do
