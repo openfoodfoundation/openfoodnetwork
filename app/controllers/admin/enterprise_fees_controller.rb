@@ -28,15 +28,12 @@ module Admin
 
     def bulk_update
       @enterprise_fee_set = EnterpriseFeeSet.new(params[:enterprise_fee_set])
-      if @enterprise_fee_set.save
-        redirect_path = main_app.admin_enterprise_fees_path
-        if params.key? :enterprise_id
-          redirect_path = main_app.admin_enterprise_fees_path(enterprise_id: params[:enterprise_id])
-        end
-        redirect_to redirect_path, notice: I18n.t(:enterprise_fees_update_notice)
 
+      if @enterprise_fee_set.save
+        redirect_to redirect_path, notice: I18n.t(:enterprise_fees_update_notice)
       else
-        render :index
+        redirect_to redirect_path,
+                    flash: { error: @enterprise_fee_set.errors.full_messages.to_sentence }
       end
     end
 
@@ -72,6 +69,14 @@ module Admin
 
     def current_enterprise
       Enterprise.find params[:enterprise_id] if params.key? :enterprise_id
+    end
+
+    def redirect_path
+      if params.key? :enterprise_id
+        return main_app.admin_enterprise_fees_path(enterprise_id: params[:enterprise_id])
+      end
+
+      main_app.admin_enterprise_fees_path
     end
   end
 end
