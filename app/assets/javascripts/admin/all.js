@@ -12,6 +12,7 @@
 //= require jquery.ui.all
 //= require jquery-ui-timepicker-addon
 //= require jquery.powertip
+//= require jquery.cookie
 //= require angular
 //= require angular-resource
 //= require angular-animate
