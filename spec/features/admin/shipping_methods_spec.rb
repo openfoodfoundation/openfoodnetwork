@@ -65,6 +65,20 @@ feature 'shipping methods' do
       expect(page).to have_content "That shipping method cannot be deleted as it is referenced by an order: #{o.number}."
       expect(Spree::ShippingMethod.find(@sm.id)).not_to be_nil
     end
+
+    scenario "checking a single distributor is checked by default" do
+      d1 = Enterprise.first
+      visit spree.new_admin_shipping_method_path
+      expect(page).to have_field "shipping_method_distributor_ids_#{d1.id}", checked: true
+    end
+
+    scenario "checking more than a distributor displays no default choice" do
+      d1 = create(:distributor_enterprise, name: 'Aeronautical Adventures')
+      d2 = create(:distributor_enterprise, name: 'Nautical Travels')
+      visit spree.new_admin_shipping_method_path
+      expect(page).to have_field "shipping_method_distributor_ids_#{d1.id}", checked: false
+      expect(page).to have_field "shipping_method_distributor_ids_#{d2.id}", checked: false
+    end
   end
 
   context "as an enterprise user", js: true do

@@ -21,6 +21,14 @@ module Spree
 
         link_to_with_icon('icon-trash', name, '#', html_options) + f.hidden_field(:_destroy)
       end
+
+      def add_check_if_single(mode, count)
+        if mode == :new && count == 1
+          { checked: true }
+        else
+          {}
+        end
+      end
     end
   end
 end

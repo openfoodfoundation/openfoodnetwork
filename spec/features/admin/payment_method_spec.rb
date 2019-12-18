@@ -67,6 +67,21 @@ feature '
         expect(page).to have_selector "#stripe-account-status .charges_enabled", text: "Charges Enabled: Yes"
       end
     end
+
+    scenario "checking a single distributor is checked by default" do
+      2.times.each { Enterprise.last.destroy }
+      quick_login_as_admin
+      visit spree.new_admin_payment_method_path
+      expect(page).to have_field "payment_method_distributor_ids_#{@distributors[0].id}", checked: true
+    end
+
+    scenario "checking more than a distributor displays no default choice" do
+      quick_login_as_admin
+      visit spree.new_admin_payment_method_path
+      expect(page).to have_field "payment_method_distributor_ids_#{@distributors[0].id}", checked: false
+      expect(page).to have_field "payment_method_distributor_ids_#{@distributors[1].id}", checked: false
+      expect(page).to have_field "payment_method_distributor_ids_#{@distributors[2].id}", checked: false
+    end
   end
 
   scenario "updating a payment method", js: true do
