@@ -2,6 +2,8 @@ nb:
   language_name: "Norsk"
   activerecord:
     attributes:
+      enterprise_fee:
+        fee_type: Avfgiftstype
       spree/order:
         payment_state: Betalingsstatus
         shipment_state: Leveringsstatus
@@ -48,6 +50,8 @@ nb:
         shipping_method_ids: "Leveringsmetoder"
         payment_method_ids: "Betalingsmetoder"
     errors:
+      messages:
+        inclusion: "er ikke inkludert i listen"
       models:
         subscription_validator:
           attributes:
@@ -2426,6 +2430,12 @@ nb:
           severity: Alvorlighetsgrad
           description: Beskrivelse
           resolve: Løse
+        exchange_products:
+          load_more_products: "Last inn flere produkter"
+          load_all_products: "Last inn alle produkter"
+          select_all_products: "Velg alle %{total_number_of_products} produkter"
+          products_loaded: "%{num_of_products_loaded} av %{total_number_of_products} produkter lastet"
+          loading_products: "Laster inn produkter"
       tag_rules:
         shipping_method_tagged_top: "Leveringsmetoder merket"
         shipping_method_tagged_bottom: "er:"
