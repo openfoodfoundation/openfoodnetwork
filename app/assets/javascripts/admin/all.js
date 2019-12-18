@@ -23,6 +23,7 @@
 // spree
 //= require admin/spree_backend
 //= require modernizr
+//= require css_browser_selector_dev
 //= require admin/spree_paypal_express
 
 // OFN specific
