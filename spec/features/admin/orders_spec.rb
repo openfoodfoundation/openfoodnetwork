@@ -190,12 +190,24 @@ feature '
     page.find("[data-powertip=Capture]").click
 
     expect(page).to have_css "i.success"
+    expect(page).to have_css "button.icon-road"
 
     # check the order was captured
     expect(@order.reload.payment_state).to eq "paid"
 
     # we should still be on the same page
     expect(page).to have_current_path spree.admin_orders_path
+  end
+
+  scenario "ship order from the orders index page" do
+    @order.payments.first.capture!
+    quick_login_as_admin
+    visit spree.admin_orders_path
+
+    page.find("[data-powertip=Ship]").click
+
+    expect(page).to have_css "i.success"
+    expect(@order.reload.shipments.any?(&:shipped?)).to be true
   end
 
   context "as an enterprise manager" do
