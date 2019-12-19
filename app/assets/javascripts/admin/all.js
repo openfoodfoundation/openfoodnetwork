@@ -29,6 +29,7 @@
 //= require spree
 //= require admin/spree_backend
 //= require modernizr
+//= require spin
 //= require css_browser_selector_dev
 //= require responsive-tables
 //= require admin/spree_paypal_express
