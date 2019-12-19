@@ -15,6 +15,7 @@
 //= require jquery.cookie
 //= require jquery.jstree/jquery.jstree
 //= require jquery.vAlign
+//= require jquery.horizontalNav
 //= require angular
 //= require angular-resource
 //= require angular-animate
