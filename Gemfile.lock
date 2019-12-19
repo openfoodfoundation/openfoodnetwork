@@ -768,6 +768,7 @@ DEPENDENCIES
   rspec-rails (>= 3.5.2)
   rspec-retry
   rubocop (>= 0.49.1)
+  sass
   sass-rails
   selenium-webdriver
   shoulda-matchers
