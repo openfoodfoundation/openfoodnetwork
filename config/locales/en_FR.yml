@@ -2,6 +2,8 @@ en_FR:
   language_name: "English"
   activerecord:
     attributes:
+      enterprise_fee:
+        fee_type: Fee Type
       spree/order:
         payment_state: Payment State
         shipment_state: Shipment State
@@ -48,6 +50,8 @@ en_FR:
         shipping_method_ids: "Shipping Methods"
         payment_method_ids: "Payment Methods"
     errors:
+      messages:
+        inclusion: "is not included in the list"
       models:
         subscription_validator:
           attributes:
