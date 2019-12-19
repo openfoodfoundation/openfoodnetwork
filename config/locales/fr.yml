@@ -2,6 +2,8 @@ fr:
   language_name: "Français"
   activerecord:
     attributes:
+      enterprise_fee:
+        fee_type: Type de marge
       spree/order:
         payment_state: Statut du paiement
         shipment_state: Statut livraison
@@ -48,6 +50,8 @@ fr:
         shipping_method_ids: "Méthodes de livraison"
         payment_method_ids: "Méthodes de paiement"
     errors:
+      messages:
+        inclusion: "n'est pas inclus dans la liste"
       models:
         subscription_validator:
           attributes:
