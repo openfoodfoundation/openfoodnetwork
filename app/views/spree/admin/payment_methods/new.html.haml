@@ -8,7 +8,7 @@
   %fieldset.no-border-top
     = render partial: 'form', locals: { f: f }
     .one.column &nbsp;
-    = render partial: 'spree/admin/shared/hubs_sidebar', locals: { f: f, klass: :payment_method, mode: :new }
+    = render partial: 'spree/admin/shared/hubs_sidebar', locals: { f: f, klass: :payment_method }
     .clear
     .filter-actions.actions
       = button t(:create), 'icon-ok'
