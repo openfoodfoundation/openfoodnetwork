@@ -59,7 +59,7 @@ gem 'db2fog'
 gem 'haml'
 gem 'rabl'
 gem 'redcarpet'
-#gem 'sass', "~> 3.3"
+gem 'sass'
 gem 'sass-rails', groups: [:default]
 gem 'truncate_html'
 gem 'unicorn'

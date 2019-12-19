@@ -750,6 +750,7 @@ DEPENDENCIES
   rspec-retry
   rubocop
   rubocop-rails
+  sass
   sass-rails
   select2-rails (~> 3.4.7)
   selenium-webdriver
