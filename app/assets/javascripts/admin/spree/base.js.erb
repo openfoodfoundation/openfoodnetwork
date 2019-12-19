@@ -174,66 +174,6 @@ $(document).ready(function() {
     $(target).prepend(new_table_row);
   })
 
-  $('body').on('click', '.delete-resource', function() {
-    var el = $(this);
-    if (confirm(el.data("confirm"))) {
-      $.ajax({
-        type: 'POST',
-        url: $(this).attr("href"),
-        data: {
-          _method: 'delete',
-          authenticity_token: AUTH_TOKEN
-        },
-        dataType: 'html',
-        success: function(response) {
-          el.parents("tr").fadeOut('hide');
-        },
-        error: function(response, textStatus, errorThrown) {
-          show_flash_error(response.responseText);
-        }
-      });
-    }
-    return false;
-  });
-
-  $('body').on('click', 'a.spree_remove_fields', function() {
-    el = $(this);
-    el.prev("input[type=hidden]").val("1");
-    el.closest(".fields").hide();
-    if (el.attr("href") == '#') {
-      el.parents("tr").fadeOut('hide');
-    }else if (el.attr("href")) {
-      $.ajax({
-        type: 'POST',
-        url: el.attr("href"),
-        data: {
-          _method: 'delete',
-          authenticity_token: AUTH_TOKEN
-        },
-        success: function(response) {
-          el.parents("tr").fadeOut('hide');
-        },
-        error: function(response, textStatus, errorThrown) {
-          show_flash_error(response.responseText);
-        }
-
-      })
-    }
-    return false;
-  });
-
-  $('body').on('click', '.select_properties_from_prototype', function(){
-    $("#busy_indicator").show();
-    var clicked_link = $(this);
-    $.ajax({ dataType: 'script', url: clicked_link.attr("href"), type: 'get',
-        success: function(data){
-          clicked_link.parent("td").parent("tr").hide();
-          $("#busy_indicator").hide();
-        }
-    });
-    return false;
-  });
-
   // Fix sortable helper
   var fixHelper = function(e, ui) {
       ui.children().each(function() {
@@ -284,9 +224,5 @@ $(document).ready(function() {
         }
 
       });
-  });
-
-  $('a.dismiss').click(function() {
-    $(this).parent().fadeOut();
   });
 });
