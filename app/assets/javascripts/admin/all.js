@@ -28,6 +28,7 @@
 
 // spree
 //= require spree
+//= require admin/spree-select2
 //= require admin/spree_backend
 //= require modernizr
 //= require spin
