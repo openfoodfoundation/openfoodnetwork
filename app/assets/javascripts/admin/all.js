@@ -14,6 +14,7 @@
 //= require jquery.powertip
 //= require jquery.cookie
 //= require jquery.jstree/jquery.jstree
+//= require jquery.vAlign
 //= require angular
 //= require angular-resource
 //= require angular-animate
