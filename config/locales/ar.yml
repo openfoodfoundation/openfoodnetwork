@@ -2,6 +2,8 @@ ar:
   language_name: "الانجيلزي"
   activerecord:
     attributes:
+      enterprise_fee:
+        fee_type: نوع الرسوم
       spree/order:
         payment_state: حالة الدفعة
         shipment_state: حالة الشحن
@@ -48,6 +50,8 @@ ar:
         shipping_method_ids: "طرق الشحن"
         payment_method_ids: "طريقة الدفع"
     errors:
+      messages:
+        inclusion: "غير مدرجة في القائمة"
       models:
         subscription_validator:
           attributes:
@@ -2426,6 +2430,12 @@ ar:
           severity: خطورة
           description: وصف
           resolve: حل
+        exchange_products:
+          load_more_products: "تحميل المزيد من المنتجات"
+          load_all_products: "تحميل جميع المنتجات"
+          select_all_products: "حدد جميع المنتجات %{total_number_of_products}"
+          products_loaded: "%{num_of_products_loaded} من %{total_number_of_products} المنتجات المحملة"
+          loading_products: "تحميل المنتجات"
       tag_rules:
         shipping_method_tagged_top: "طرق الشحن الموسومة"
         shipping_method_tagged_bottom: "هي:"
