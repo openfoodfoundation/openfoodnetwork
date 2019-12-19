@@ -25,6 +25,7 @@
 //= require modernizr
 //= require css_browser_selector_dev
 //= require admin/spree_paypal_express
+//= require admin/handlebar_extensions
 
 // OFN specific
 //= require_tree ../templates/admin
