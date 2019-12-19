@@ -10,36 +10,43 @@ Hopefully, this will evolve into a propper class.
 
 jQuery(function($) {
   // Make main menu use full width
-  $('.fullwidth-menu').horizontalNav({
-    tableDisplay: false,
-    responsiveDelay: 0
-  });
+  mainMenu = $('.fullwidth-menu')
+  if (typeof mainMenu.horizontalNav === 'function' )
+    mainMenu.horizontalNav({
+      tableDisplay: false,
+      responsiveDelay: 0
+    });
 
   // Vertical align of checkbox fields
-  $('.field.checkbox label').vAlign()
+  if (typeof $('.field.checkbox label').vAlign === 'function' )
+    $('.field.checkbox label').vAlign()
 
-  $('.main-menu-wrapper ul').AdaptiveMenu({
-    text: "<a href='#'><i class='icon-chevron-down'></i> " + Spree.translations.more + "</a>",
-    klass: "dropdown"
-  });
+  if (typeof Spree !== 'undefined') {
+    $('.main-menu-wrapper ul').AdaptiveMenu({
+      text: "<a href='#'><i class='icon-chevron-down'></i> " + Spree.translations.more + "</a>",
+      klass: "dropdown"
+    });
+  }
 
   // Add some tips
-  $('.with-tip').powerTip({
-    smartPlacement: true,
-    fadeInTime: 50,
-    fadeOutTime: 50,
-    intentPollInterval: 300
-  });
+  if (typeof $('.with-tip').powerTip === 'function' ) {
+    $('.with-tip').powerTip({
+       smartPlacement: true,
+       fadeInTime: 50,
+       fadeOutTime: 50,
+       intentPollInterval: 300
+     });
 
-  $('.with-tip').on({
-    powerTipPreRender: function(){
-      $('#powerTip').addClass($(this).attr("data-action"));
-      $('#powerTip').addClass($(this).attr("data-tip-color"));
-    },
-    powerTipClose: function(){
-      $('#powerTip').removeClass($(this).attr("data-action"))
-    }
-  });
+    $('.with-tip').on({
+      powerTipPreRender: function(){
+        $('#powerTip').addClass($(this).attr("data-action"));
+        $('#powerTip').addClass($(this).attr("data-tip-color"));
+      },
+      powerTipClose: function(){
+        $('#powerTip').removeClass($(this).attr("data-action"))
+      }
+    });
+  }
 
   // Make flash messages dissapear
   setTimeout('$(".flash").fadeOut()', 5000);
@@ -70,8 +77,8 @@ jQuery(function($) {
   });
 
   // Make height of dt/dd elements the same
-  $("dl").equalize('outerHeight');
-
+  if (typeof $("dl").equalize === 'function' )
+    $("dl").equalize('outerHeight');
 });
 
 
@@ -106,28 +113,31 @@ $.fn.radioControlsVisibilityOfElement = function(dependentElementSelector){
   });
 }
 
-handle_date_picker_fields = function(){
-  $('.datepicker').datepicker({
-    dateFormat: Spree.translations.date_picker,
-    dayNames: Spree.translations.abbr_day_names,
-    dayNamesMin: Spree.translations.abbr_day_names,
-    monthNames: Spree.translations.month_names,
-    prevText: Spree.translations.previous,
-    nextText: Spree.translations.next,
-    showOn: "focus"
-  });
+$(document).ready(function() {
+  if (typeof Spree !== 'undefined') {
+    handle_date_picker_fields = function(){
+      $('.datepicker').datepicker({
+        dateFormat: Spree.translations.date_picker,
+        dayNames: Spree.translations.abbr_day_names,
+        dayNamesMin: Spree.translations.abbr_day_names,
+        monthNames: Spree.translations.month_names,
+        prevText: Spree.translations.previous,
+        nextText: Spree.translations.next,
+        showOn: "focus"
+      });
 
-  // Correctly display range dates
-  $('.date-range-filter .datepicker-from').datepicker('option', 'onSelect', function(selectedDate) {
-    $(".date-range-filter .datepicker-to" ).datepicker( "option", "minDate", selectedDate );
-  });
-  $('.date-range-filter .datepicker-to').datepicker('option', 'onSelect', function(selectedDate) {
-    $(".date-range-filter .datepicker-from" ).datepicker( "option", "maxDate", selectedDate );
-  });
-}
+      // Correctly display range dates
+      $('.date-range-filter .datepicker-from').datepicker('option', 'onSelect', function(selectedDate) {
+        $(".date-range-filter .datepicker-to" ).datepicker( "option", "minDate", selectedDate );
+      });
+      $('.date-range-filter .datepicker-to').datepicker('option', 'onSelect', function(selectedDate) {
+        $(".date-range-filter .datepicker-from" ).datepicker( "option", "maxDate", selectedDate );
+      });
+    }
 
-$(document).ready(function(){
-  handle_date_picker_fields();
+    handle_date_picker_fields();
+  }
+
   $(".observe_field").on('change', function() {
     target = $(this).attr("data-update");
     ajax_indicator = $(this).attr("data-ajax-indicator") || '#busy_indicator';
@@ -234,6 +244,10 @@ $(document).ready(function(){
 
   $('table.sortable').ready(function(){
     var td_count = $(this).find('tbody tr:first-child td').length
+
+    if (typeof $('table.sortable tbody').sortable !== 'function' )
+      return
+
     $('table.sortable tbody').sortable(
       {
         handle: '.handle',
