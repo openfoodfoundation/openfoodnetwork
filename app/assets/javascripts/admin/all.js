@@ -25,6 +25,7 @@
 //= require lodash.underscore.js
 
 // spree
+//= require spree
 //= require admin/spree_backend
 //= require modernizr
 //= require css_browser_selector_dev
