@@ -32,6 +32,7 @@ public/stylesheets
 public/images
 public/spree
 config/abr.yml
+config/db2fog.yml
 config/initializers/feature_toggle.rb
 NERD_tree*
 coverage

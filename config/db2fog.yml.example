@@ -1,0 +1,6 @@
+---
+:aws_access_key_id: "AYAYAYAYAAAAAAAAA"
+:aws_secret_access_key: "ThisIsAnExampleKeyWhichIsAtLeastFourtyCharsLong"
+:directory: "ofn-global-production-backup"
+:provider: "AWS"
+:region: "ap-southeast-2"
