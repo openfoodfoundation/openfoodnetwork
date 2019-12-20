@@ -25,7 +25,7 @@ module Api
     end
 
     def load_enterprise
-      @enterprise = Enterprise.find_by_permalink(params[:enterprise_id].to_s)
+      @enterprise = Enterprise.find_by(permalink: params[:enterprise_id].to_s)
       raise UnknownEnterpriseAuthorizationActionError if enterprise_authorize_action.blank?
 
       authorize!(enterprise_authorize_action, @enterprise)

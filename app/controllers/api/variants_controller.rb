@@ -53,7 +53,7 @@ module Api
     private
 
     def product
-      @product ||= Spree::Product.find_by_permalink(params[:product_id]) if params[:product_id]
+      @product ||= Spree::Product.find_by(permalink: params[:product_id]) if params[:product_id]
     end
 
     def scope

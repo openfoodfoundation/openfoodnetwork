@@ -633,7 +633,7 @@ module Spree
 
     describe "deleting unit option values" do
       let!(:p) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
-      let!(:ot) { Spree::OptionType.find_by_name 'unit_weight' }
+      let!(:ot) { Spree::OptionType.find_by name: 'unit_weight' }
       let!(:li) { create(:line_item, product: p) }
 
       it "removes option value associations for unit option types" do

@@ -115,7 +115,7 @@ module Admin
     def build_resource_with_address
       enterprise = build_resource_without_address
       enterprise.address ||= Spree::Address.new
-      enterprise.address.country ||= Spree::Country.find_by_id(Spree::Config[:default_country_id])
+      enterprise.address.country ||= Spree::Country.find_by(id: Spree::Config[:default_country_id])
       enterprise
     end
     alias_method_chain :build_resource, :address
@@ -123,7 +123,7 @@ module Admin
     # Overriding method on Spree's resource controller,
     # so that resources are found using permalink
     def find_resource
-      Enterprise.find_by_permalink(params[:id])
+      Enterprise.find_by(permalink: params[:id])
     end
 
     private
@@ -139,8 +139,8 @@ module Admin
     def collection
       case action
       when :for_order_cycle
-        @order_cycle = OrderCycle.find_by_id(params[:order_cycle_id]) if params[:order_cycle_id]
-        coordinator = Enterprise.find_by_id(params[:coordinator_id]) if params[:coordinator_id]
+        @order_cycle = OrderCycle.find_by(id: params[:order_cycle_id]) if params[:order_cycle_id]
+        coordinator = Enterprise.find_by(id: params[:coordinator_id]) if params[:coordinator_id]
         @order_cycle = OrderCycle.new(coordinator: coordinator) if @order_cycle.nil? && coordinator.present?
 
         enterprises = OpenFoodNetwork::OrderCyclePermissions.new(spree_current_user, @order_cycle)
@@ -209,7 +209,7 @@ module Admin
       # record is persisted. This problem is compounded by the use of calculators.
       @object.transaction do
         tag_rules_attributes.select{ |_i, attrs| attrs[:type].present? }.each do |_i, attrs|
-          rule = @object.tag_rules.find_by_id(attrs.delete(:id)) || attrs[:type].constantize.new(enterprise: @object)
+          rule = @object.tag_rules.find_by(id: attrs.delete(:id)) || attrs[:type].constantize.new(enterprise: @object)
           create_calculator_for(rule, attrs) if rule.type == "TagRule::DiscountOrder" && rule.calculator.nil?
           rule.update_attributes(attrs)
         end
@@ -232,7 +232,7 @@ module Admin
     def check_can_change_bulk_sells
       unless spree_current_user.admin?
         params[:enterprise_set][:collection_attributes].each do |_i, enterprise_params|
-          enterprise_params.delete :sells unless spree_current_user == Enterprise.find_by_id(enterprise_params[:id]).owner
+          enterprise_params.delete :sells unless spree_current_user == Enterprise.find_by(id: enterprise_params[:id]).owner
         end
       end
     end

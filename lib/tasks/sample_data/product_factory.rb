@@ -13,9 +13,9 @@ class ProductFactory
   private
 
   def product_data(enterprises)
-    vegetables = Spree::Taxon.find_by_name('Vegetables')
-    fruit = Spree::Taxon.find_by_name('Fruit')
-    meat = Spree::Taxon.find_by_name('Meat and Fish')
+    vegetables = Spree::Taxon.find_by(name: 'Vegetables')
+    fruit = Spree::Taxon.find_by(name: 'Fruit')
+    meat = Spree::Taxon.find_by(name: 'Meat and Fish')
     producers = enterprises.select(&:is_primary_producer)
     distributors = enterprises.select(&:is_distributor)
     [
@@ -82,7 +82,7 @@ class ProductFactory
 
   def find_or_create_tax_category
     tax_category_name = "Tax Category"
-    tax_category = Spree::TaxCategory.find_by_name(tax_category_name)
+    tax_category = Spree::TaxCategory.find_by(name: tax_category_name)
     tax_category ||= Spree::TaxCategory.create!(name: tax_category_name)
     tax_category
   end

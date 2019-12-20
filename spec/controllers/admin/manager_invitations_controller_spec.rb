@@ -45,7 +45,7 @@ module Admin
         it "returns the user id" do
           spree_post :create, email: 'un.registered@email.com', enterprise_id: enterprise.id
 
-          new_user = Spree::User.find_by_email('un.registered@email.com')
+          new_user = Spree::User.find_by(email: 'un.registered@email.com')
           expect(json_response['user']).to eq new_user.id
         end
       end
@@ -61,7 +61,7 @@ module Admin
         it "returns success code" do
           spree_post :create, email: 'an@email.com', enterprise_id: enterprise.id
 
-          new_user = Spree::User.find_by_email('an@email.com')
+          new_user = Spree::User.find_by(email: 'an@email.com')
 
           expect(new_user.reset_password_token).to_not be_nil
           expect(json_response['user']).to eq new_user.id
@@ -77,7 +77,7 @@ module Admin
         it "returns unauthorized response" do
           spree_post :create, email: 'another@email.com', enterprise_id: enterprise.id
 
-          new_user = Spree::User.find_by_email('another@email.com')
+          new_user = Spree::User.find_by(email: 'another@email.com')
 
           expect(new_user).to be_nil
           expect(response.status).to eq 302

@@ -164,7 +164,7 @@ module Admin
 
     def require_coordinator
       @order_cycle.coordinator =
-        permitted_coordinating_enterprises_for(@order_cycle).find_by_id(params[:coordinator_id])
+        permitted_coordinating_enterprises_for(@order_cycle).find_by(id: params[:coordinator_id])
       return if params[:coordinator_id] && @order_cycle.coordinator
 
       available_coordinators = permitted_coordinating_enterprises_for(@order_cycle)

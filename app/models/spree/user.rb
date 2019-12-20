@@ -94,7 +94,7 @@ module Spree
 
     def build_enterprise_roles
       Enterprise.all.find_each do |enterprise|
-        unless enterprise_roles.find_by_enterprise_id enterprise.id
+        unless enterprise_roles.find_by enterprise_id: enterprise.id
           enterprise_roles.build(enterprise: enterprise)
         end
       end
@@ -103,7 +103,7 @@ module Spree
     def customer_of(enterprise)
       return nil unless enterprise
 
-      customers.find_by_enterprise_id(enterprise)
+      customers.find_by(enterprise_id: enterprise)
     end
 
     def welcome_after_confirm

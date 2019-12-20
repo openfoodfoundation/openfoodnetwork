@@ -185,7 +185,7 @@ Spree::Order.class_eval do
     Bugsnag.notify(e) do |report|
       report.add_tab(:order, attributes)
       report.add_tab(:shipment, shipment.attributes)
-      report.add_tab(:shipment_in_db, Spree::Shipment.find_by_id(shipment.id).attributes)
+      report.add_tab(:shipment_in_db, Spree::Shipment.find_by(id: shipment.id).attributes)
     end
   end
 
@@ -379,7 +379,7 @@ Spree::Order.class_eval do
   def associate_customer
     return customer if customer.present?
 
-    self.customer = Customer.of(distributor).find_by_email(email_for_customer)
+    self.customer = Customer.of(distributor).find_by(email: email_for_customer)
   end
 
   def ensure_customer

@@ -510,7 +510,7 @@ module Spree
         end
 
         it "removes the related option values from all its variants and replaces them" do
-          ot = Spree::OptionType.find_by_name 'unit_weight'
+          ot = Spree::OptionType.find_by name: 'unit_weight'
           v = create(:variant, unit_value: 1, product: p)
           p.reload
 
@@ -525,7 +525,7 @@ module Spree
         end
 
         it "removes the related option values from its master variant and replaces them" do
-          ot = Spree::OptionType.find_by_name 'unit_weight'
+          ot = Spree::OptionType.find_by name: 'unit_weight'
           p.master.update_attributes!(unit_value: 1)
           p.reload
 

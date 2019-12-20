@@ -72,7 +72,7 @@ feature "Registration", js: true do
       expect(page).to have_content 'Nice one!'
 
       # Enterprise should be created
-      e = Enterprise.find_by_name('My Awesome Enterprise')
+      e = Enterprise.find_by(name: 'My Awesome Enterprise')
       expect(e.address.address1).to eq "123 Abc Street"
       expect(e.sells).to eq "unspecified"
       expect(e.is_primary_producer).to eq true

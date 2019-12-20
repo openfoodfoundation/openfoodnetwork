@@ -32,7 +32,7 @@ class UpdateLineItemCaching < ActiveRecord::Migration
     add_column :spree_line_items, :shipping_method_id, :integer
 
     SpreeLineItem.all.each do |line_item|
-      shipping_method = Spree::ShippingMethod.find_by_name(line_item.shipping_method_name)
+      shipping_method = Spree::ShippingMethod.find_by(name: line_item.shipping_method_name)
       unless shipping_method
         say "Shipping method #{line_item.shipping_method_name} not found, using the first available shipping method for LineItem #{line_item.id}"
         shipping_method = Spree::ShippingMethod.where("name != 'Delivery'").first

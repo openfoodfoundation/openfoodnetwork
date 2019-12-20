@@ -28,7 +28,7 @@ module Spree
       end
 
       def stripe_account_id
-        StripeAccount.find_by_enterprise_id(preferred_enterprise_id).andand.stripe_user_id
+        StripeAccount.find_by(enterprise_id: preferred_enterprise_id).andand.stripe_user_id
       end
 
       # NOTE: the name of this method is determined by Spree::Payment::Processing

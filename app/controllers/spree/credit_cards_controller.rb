@@ -17,7 +17,7 @@ module Spree
     end
 
     def update
-      @credit_card = Spree::CreditCard.find_by_id(params[:id])
+      @credit_card = Spree::CreditCard.find_by(id: params[:id])
       return update_failed unless @credit_card
 
       authorize! :update, @credit_card
@@ -32,7 +32,7 @@ module Spree
     end
 
     def destroy
-      @credit_card = Spree::CreditCard.find_by_id(params[:id])
+      @credit_card = Spree::CreditCard.find_by(id: params[:id])
       if @credit_card
         authorize! :destroy, @credit_card
         destroy_at_stripe

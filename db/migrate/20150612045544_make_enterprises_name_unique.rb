@@ -4,7 +4,7 @@ class MakeEnterprisesNameUnique < ActiveRecord::Migration
 
     dup_names.each do |data|
       (data.num_enterprises.to_i - 1).times do |i|
-        e = Enterprise.find_by_name data.name
+        e = Enterprise.find_by name: data.name
         new_name = "#{data.name}-#{i+1}"
         e.update_column :name, new_name
         say "Renamed enterprise #{data.name} to #{new_name}"

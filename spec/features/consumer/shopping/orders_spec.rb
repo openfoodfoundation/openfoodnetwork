@@ -170,7 +170,7 @@ feature "Order Management", js: true do
         end
 
         expect(find(".order-total.grand-total")).to have_content "105.00"
-        expect(Spree::LineItem.find_by_id(item2.id)).to be nil
+        expect(Spree::LineItem.find_by(id: item2.id)).to be nil
 
         # Cancelling the order
         accept_alert do

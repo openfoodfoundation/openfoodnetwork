@@ -19,7 +19,7 @@ module Api
     end
 
     def update
-      @enterprise = Enterprise.find_by_permalink(params[:id]) || Enterprise.find(params[:id])
+      @enterprise = Enterprise.find_by(permalink: params[:id]) || Enterprise.find(params[:id])
       authorize! :update, @enterprise
 
       if @enterprise.update_attributes(params[:enterprise])
@@ -30,7 +30,7 @@ module Api
     end
 
     def update_image
-      @enterprise = Enterprise.find_by_permalink(params[:id]) || Enterprise.find(params[:id])
+      @enterprise = Enterprise.find_by(permalink: params[:id]) || Enterprise.find(params[:id])
       authorize! :update, @enterprise
 
       if params[:logo] && @enterprise.update_attributes( logo: params[:logo] )
@@ -43,7 +43,7 @@ module Api
     end
 
     def shopfront
-      enterprise = Enterprise.find_by_id(params[:id])
+      enterprise = Enterprise.find_by(id: params[:id])
 
       render text: Api::EnterpriseShopfrontSerializer.new(enterprise).to_json, status: :ok
     end

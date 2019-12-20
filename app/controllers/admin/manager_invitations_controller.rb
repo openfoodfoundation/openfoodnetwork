@@ -8,7 +8,7 @@ module Admin
 
       authorize! :edit, @enterprise
 
-      existing_user = Spree::User.find_by_email(@email)
+      existing_user = Spree::User.find_by(email: @email)
 
       if existing_user
         render json: { errors: t('admin.enterprises.invite_manager.user_already_exists') }, status: :unprocessable_entity

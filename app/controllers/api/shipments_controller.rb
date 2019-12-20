@@ -22,7 +22,7 @@ module Api
 
     def update
       authorize! :read, Spree::Shipment
-      @shipment = @order.shipments.find_by_number!(params[:id])
+      @shipment = @order.shipments.find_by!(number: params[:id])
       params[:shipment] ||= []
       unlock = params[:shipment].delete(:unlock)
 
@@ -82,12 +82,12 @@ module Api
     private
 
     def find_order
-      @order = Spree::Order.find_by_number!(params[:order_id])
+      @order = Spree::Order.find_by!(number: params[:order_id])
       authorize! :read, @order
     end
 
     def find_and_update_shipment
-      @shipment = @order.shipments.find_by_number!(params[:id])
+      @shipment = @order.shipments.find_by!(number: params[:id])
       @shipment.update_attributes(params[:shipment])
       @shipment.reload
     end

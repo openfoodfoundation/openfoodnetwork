@@ -26,7 +26,7 @@ module Spree
     before_filter :check_at_least_one_line_item, only: :update
 
     def show
-      @order = Spree::Order.find_by_number!(params[:id])
+      @order = Spree::Order.find_by!(number: params[:id])
     end
 
     def empty
@@ -39,7 +39,7 @@ module Spree
 
     def check_authorization
       session[:access_token] ||= params[:token]
-      order = Spree::Order.find_by_number(params[:id]) || current_order
+      order = Spree::Order.find_by(number: params[:id]) || current_order
 
       if order
         authorize! :edit, order, session[:access_token]
@@ -133,7 +133,7 @@ module Spree
 
     def remove_missing_line_items(attrs)
       attrs.select do |_i, line_item|
-        Spree::LineItem.find_by_id(line_item[:id])
+        Spree::LineItem.find_by(id: line_item[:id])
       end
     end
 
@@ -149,7 +149,7 @@ module Spree
     end
 
     def cancel
-      @order = Spree::Order.find_by_number!(params[:id])
+      @order = Spree::Order.find_by!(number: params[:id])
       authorize! :cancel, @order
 
       if @order.cancel
@@ -207,7 +207,7 @@ module Spree
     # If a specific order is requested, return it if it is COMPLETE and
     # changes are allowed and the user has access. Return nil if not.
     def changeable_order_from_number
-      order = Spree::Order.complete.find_by_number(params[:id])
+      order = Spree::Order.complete.find_by(number: params[:id])
       return nil unless order.andand.changes_allowed? && can?(:update, order)
 
       order

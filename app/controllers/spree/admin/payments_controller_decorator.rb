@@ -4,7 +4,7 @@ Spree::Admin::PaymentsController.class_eval do
   def create
     @payment = @order.payments.build(object_params)
     if @payment.payment_method.is_a?(Spree::Gateway) && @payment.payment_method.payment_profiles_supported? && params[:card].present? && (params[:card] != 'new')
-      @payment.source = CreditCard.find_by_id(params[:card])
+      @payment.source = CreditCard.find_by(id: params[:card])
     end
 
     begin

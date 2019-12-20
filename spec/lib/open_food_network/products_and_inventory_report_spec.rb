@@ -199,9 +199,9 @@ module OpenFoodNetwork
 
           # Remove the distribution of one product for one distributor but still
           # sell it through the other distributor.
-          order_cycle.exchanges.outgoing.find_by_receiver_id(distributor.id).
+          order_cycle.exchanges.outgoing.find_by(receiver_id: distributor.id).
             exchange_variants.
-            find_by_variant_id(variant_filtered_by_distributor).
+            find_by(variant_id: variant_filtered_by_distributor).
             destroy
 
           # Make product available to be filtered later. See OC comment above.

@@ -20,6 +20,6 @@ module Addressing
   end
 
   def country
-    Spree::Country.find_by_iso(ENV.fetch('DEFAULT_COUNTRY_CODE'))
+    Spree::Country.find_by(iso: ENV.fetch('DEFAULT_COUNTRY_CODE'))
   end
 end

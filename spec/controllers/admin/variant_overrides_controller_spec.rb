@@ -65,7 +65,7 @@ describe Admin::VariantOverridesController, type: :controller do
 
             it "destroys the variant override" do
               spree_put :bulk_update, format: format, variant_overrides: variant_override_params
-              expect(VariantOverride.find_by_id(variant_override.id)).to be_nil
+              expect(VariantOverride.find_by(id: variant_override.id)).to be_nil
             end
           end
 

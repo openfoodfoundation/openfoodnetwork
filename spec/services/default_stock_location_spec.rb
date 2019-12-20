@@ -8,13 +8,13 @@ describe DefaultStockLocation do
     end
 
     it 'sets the location in the default country' do
-      default_country = Spree::Country.find_by_iso(ENV['DEFAULT_COUNTRY_CODE'])
+      default_country = Spree::Country.find_by(iso: ENV['DEFAULT_COUNTRY_CODE'])
       stock_location = described_class.create!
       expect(stock_location.country).to eq(default_country)
     end
 
     it 'sets the first state in the country' do
-      default_country = Spree::Country.find_by_iso(ENV['DEFAULT_COUNTRY_CODE'])
+      default_country = Spree::Country.find_by(iso: ENV['DEFAULT_COUNTRY_CODE'])
       stock_location = described_class.create!
       expect(stock_location.state).to eq(default_country.states.first)
     end

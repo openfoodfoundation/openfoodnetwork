@@ -21,7 +21,7 @@ class LineItemSyncer
 
   def update_item_quantities(order)
     changed_subscription_line_items.each do |sli|
-      line_item = order.line_items.find_by_variant_id(sli.variant_id)
+      line_item = order.line_items.find_by(variant_id: sli.variant_id)
 
       if line_item.blank?
         order_update_issues.add(order, sli.variant.product_and_full_name)

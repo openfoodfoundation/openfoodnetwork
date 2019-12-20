@@ -48,7 +48,7 @@ class OrderCycleFactory
   private
 
   def create_order_cycle(name, coordinator_name, supplier_names, distributor_names, data)
-    coordinator = Enterprise.find_by_name(coordinator_name)
+    coordinator = Enterprise.find_by(name: coordinator_name)
     return if OrderCycle.active.where(name: name).exists?
 
     log "- #{name}"
