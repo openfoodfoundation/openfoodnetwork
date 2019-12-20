@@ -38,7 +38,7 @@ class RemoveEmailFromEnterprises < ActiveRecord::Migration
   def update_enterprise_contact(enterprise)
     contact_user = contact_or_owner(enterprise)
 
-    role = EnterpriseRole.find_or_initialize_by_user_id_and_enterprise_id(contact_user.id, enterprise.id)
+    role = EnterpriseRole.find_or_initialize_by(user_id: contact_user.id, enterprise_id: enterprise.id)
     role.update_attribute :receives_notifications, true
   end
 

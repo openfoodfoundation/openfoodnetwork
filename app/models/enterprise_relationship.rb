@@ -74,7 +74,7 @@ class EnterpriseRelationship < ActiveRecord::Base
       permissions.destroy_all
     else
       permissions.where('name NOT IN (?)', perms).destroy_all
-      perms.map { |name| permissions.find_or_initialize_by_name name }
+      perms.map { |name| permissions.find_or_initialize_by name: name }
     end
   end
 
