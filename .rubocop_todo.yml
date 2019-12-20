@@ -21,7 +21,7 @@ Lint/DuplicateMethods:
     - 'lib/open_food_network/subscription_summary.rb'
 
 # Offense count: 1
-Lint/DuplicatedKey:
+Lint/DuplicateHashKey:
   Exclude:
     - 'spec/models/calculator/weight_spec.rb'
 
@@ -126,7 +126,7 @@ Naming/PredicateName:
 # Offense count: 8
 # Configuration parameters: MinNameLength, AllowNamesEndingInNumbers, AllowedNames, ForbiddenNames.
 # AllowedNames: io, id, to, by, on, in, at, ip, db
-Naming/UncommunicativeMethodParamName:
+Naming/MethodParameterName:
   Exclude:
     - 'app/helpers/spree/admin/base_helper_decorator.rb'
     - 'app/helpers/spree/base_helper_decorator.rb'
