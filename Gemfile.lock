@@ -464,7 +464,6 @@ GEM
     multi_json (1.14.1)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
-    newrelic_rpm (3.18.1.330)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
     oauth2 (1.4.2)
@@ -744,7 +743,6 @@ DEPENDENCIES
   libv8 (= 6.3.292.48.1)
   mini_racer (= 0.1.15)
   momentjs-rails
-  newrelic_rpm (~> 3.0)
   nokogiri (~> 1.6.8.1)
   oauth2 (~> 1.4.2)
   oj
