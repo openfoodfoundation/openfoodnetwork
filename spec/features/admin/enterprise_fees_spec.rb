@@ -137,7 +137,7 @@ feature '
       # After saving, we should be redirected to the fees for our chosen enterprise
       expect(page).not_to have_select 'enterprise_fee_set_collection_attributes_1_enterprise_id', selected: 'Second Distributor'
 
-      enterprise_fee = EnterpriseFee.find_by_name 'foo'
+      enterprise_fee = EnterpriseFee.find_by name: 'foo'
       expect(enterprise_fee.enterprise).to eq(distributor1)
     end
 

@@ -7,7 +7,7 @@ class AddPrimaryTaxonToProducts < ActiveRecord::Migration
 
     Spree::Product.all.each do |p|
       primary_taxon = p.taxons.where('spree_taxons.name != ?', 'specials').first
-      first_taxon = Spree::Taxonomy.find_by_name('Products').andand.root || Spree::Taxon.first
+      first_taxon = Spree::Taxonomy.find_by(name: 'Products').andand.root || Spree::Taxon.first
       p.update_column :primary_taxon_id, (primary_taxon || first_taxon)
     end
 

@@ -72,7 +72,7 @@ module Spree
            @payment.payment_method.payment_profiles_supported? &&
            params[:card].present? &&
            (params[:card] != 'new')
-          @payment.source = CreditCard.find_by_id(params[:card])
+          @payment.source = CreditCard.find_by(id: params[:card])
         end
       end
 

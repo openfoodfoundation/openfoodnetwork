@@ -120,7 +120,7 @@ FactoryBot.define do
     default_tax true
 
     after(:create) do |zone|
-      Spree::ZoneMember.create!(zone: zone, zoneable: Spree::Country.find_by_name('Australia'))
+      Spree::ZoneMember.create!(zone: zone, zoneable: Spree::Country.find_by(name: 'Australia'))
     end
   end
 
@@ -160,8 +160,8 @@ end
 
 FactoryBot.modify do
   factory :address do
-    state { Spree::State.find_by_name 'Victoria' }
-    country { Spree::Country.find_by_name 'Australia' || Spree::Country.first }
+    state { Spree::State.find_by name: 'Victoria' }
+    country { Spree::Country.find_by name: 'Australia' || Spree::Country.first }
   end
 
   factory :payment do

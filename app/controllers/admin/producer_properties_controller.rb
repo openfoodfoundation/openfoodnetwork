@@ -11,7 +11,7 @@ module Admin
     end
 
     def load_enterprise
-      @enterprise = Enterprise.find_by_permalink! params[:enterprise_id]
+      @enterprise = Enterprise.find_by! permalink: params[:enterprise_id]
     end
 
     def load_properties

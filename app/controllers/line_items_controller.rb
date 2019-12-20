@@ -16,7 +16,7 @@ class LineItemsController < BaseController
   private
 
   def load_line_item
-    @line_item = Spree::LineItem.find_by_id(params[:id])
+    @line_item = Spree::LineItem.find_by(id: params[:id])
     not_found unless @line_item
   end
 

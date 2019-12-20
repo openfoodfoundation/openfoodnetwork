@@ -80,7 +80,7 @@ describe ProductImport::ProductImporter do
       expect(importer.updated_ids).to be_a(Array)
       expect(importer.updated_ids.count).to eq 5
 
-      carrots = Spree::Product.find_by_name('Carrots')
+      carrots = Spree::Product.find_by(name: 'Carrots')
       expect(carrots.supplier).to eq enterprise
       expect(carrots.on_hand).to eq 5
       expect(carrots.price).to eq 3.20
@@ -90,7 +90,7 @@ describe ProductImport::ProductImporter do
       expect(carrots.on_demand).to_not eq true
       expect(carrots.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
-      potatoes = Spree::Product.find_by_name('Potatoes')
+      potatoes = Spree::Product.find_by(name: 'Potatoes')
       expect(potatoes.supplier).to eq enterprise
       expect(potatoes.on_hand).to eq 6
       expect(potatoes.price).to eq 6.50
@@ -100,7 +100,7 @@ describe ProductImport::ProductImporter do
       expect(potatoes.on_demand).to_not eq true
       expect(potatoes.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
-      pea_soup = Spree::Product.find_by_name('Pea Soup')
+      pea_soup = Spree::Product.find_by(name: 'Pea Soup')
       expect(pea_soup.supplier).to eq enterprise
       expect(pea_soup.on_hand).to eq 8
       expect(pea_soup.price).to eq 5.50
@@ -110,7 +110,7 @@ describe ProductImport::ProductImporter do
       expect(pea_soup.on_demand).to_not eq true
       expect(pea_soup.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
-      salad = Spree::Product.find_by_name('Salad')
+      salad = Spree::Product.find_by(name: 'Salad')
       expect(salad.supplier).to eq enterprise
       expect(salad.on_hand).to eq 7
       expect(salad.price).to eq 4.50
@@ -120,7 +120,7 @@ describe ProductImport::ProductImporter do
       expect(salad.on_demand).to_not eq true
       expect(salad.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
-      buns = Spree::Product.find_by_name('Hot Cross Buns')
+      buns = Spree::Product.find_by(name: 'Hot Cross Buns')
       expect(buns.supplier).to eq enterprise
       expect(buns.on_hand).to eq 7
       expect(buns.price).to eq 3.50
@@ -159,13 +159,13 @@ describe ProductImport::ProductImporter do
       expect(importer.updated_ids).to be_a(Array)
       expect(importer.updated_ids.count).to eq 1
 
-      carrots = Spree::Product.find_by_name('Good Carrots')
+      carrots = Spree::Product.find_by(name: 'Good Carrots')
       expect(carrots.supplier).to eq enterprise
       expect(carrots.on_hand).to eq 5
       expect(carrots.price).to eq 3.20
       expect(carrots.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
-      expect(Spree::Product.find_by_name('Bad Potatoes')).to eq nil
+      expect(Spree::Product.find_by(name: 'Bad Potatoes')).to eq nil
     end
   end
 
@@ -233,13 +233,13 @@ describe ProductImport::ProductImporter do
       expect(importer.updated_ids).to be_a(Array)
       expect(importer.updated_ids.count).to eq 2
 
-      added_coffee = Spree::Variant.find_by_display_name('Emergent Coffee')
+      added_coffee = Spree::Variant.find_by(display_name: 'Emergent Coffee')
       expect(added_coffee.product.name).to eq 'Hypothetical Cake'
       expect(added_coffee.price).to eq 3.50
       expect(added_coffee.on_hand).to eq 6
       expect(added_coffee.import_date).to be_within(1.minute).of Time.zone.now
 
-      updated_banana = Spree::Variant.find_by_display_name('Preexisting Banana')
+      updated_banana = Spree::Variant.find_by(display_name: 'Preexisting Banana')
       expect(updated_banana.product.name).to eq 'Hypothetical Cake'
       expect(updated_banana.price).to eq 5.50
       expect(updated_banana.on_hand).to eq 5
@@ -295,21 +295,21 @@ describe ProductImport::ProductImporter do
       expect(importer.updated_ids).to be_a(Array)
       expect(importer.updated_ids.count).to eq 3
 
-      small_bag = Spree::Variant.find_by_display_name('Small Bag')
+      small_bag = Spree::Variant.find_by(display_name: 'Small Bag')
       expect(small_bag.product.name).to eq 'Potatoes'
       expect(small_bag.price).to eq 3.50
       expect(small_bag.on_hand).to eq 5
 
-      big_bag = Spree::Variant.find_by_display_name("Big Bag")
+      big_bag = Spree::Variant.find_by(display_name: "Big Bag")
       expect(big_bag).to be_blank
 
-      small_sack = Spree::Variant.find_by_display_name("Small Sack")
+      small_sack = Spree::Variant.find_by(display_name: "Small Sack")
       expect(small_sack.product.name).to eq "Potatoes"
       expect(small_sack.price).to eq 22.00
       expect(small_sack.on_hand).to eq 6
       expect(small_sack.product.id).to eq small_bag.product.id
 
-      big_sack = Spree::Variant.find_by_display_name("Big Sack")
+      big_sack = Spree::Variant.find_by(display_name: "Big Sack")
       expect(big_sack).to be_blank
     end
   end
@@ -342,11 +342,11 @@ describe ProductImport::ProductImporter do
       expect(importer.updated_ids).to be_a(Array)
       expect(importer.updated_ids.count).to eq 2
 
-      beetroot = Spree::Product.find_by_name('Beetroot').variants.first
+      beetroot = Spree::Product.find_by(name: 'Beetroot').variants.first
       expect(beetroot.price).to eq 3.50
       expect(beetroot.on_demand).to_not eq true
 
-      tomato = Spree::Product.find_by_name('Tomato').variants.first
+      tomato = Spree::Product.find_by(name: 'Tomato').variants.first
       expect(tomato.price).to eq 5.50
       expect(tomato.on_demand).to eq true
     end
@@ -589,8 +589,8 @@ describe ProductImport::ProductImporter do
       expect(importer.updated_ids).to be_a(Array)
       expect(importer.updated_ids.count).to eq 1
 
-      expect(Spree::Product.find_by_name('My Carrots')).to be_a Spree::Product
-      expect(Spree::Product.find_by_name('Your Potatoes')).to eq nil
+      expect(Spree::Product.find_by(name: 'My Carrots')).to be_a Spree::Product
+      expect(Spree::Product.find_by(name: 'Your Potatoes')).to eq nil
     end
 
     it "allows creating inventories for producers that a user's hub has permission for" do
@@ -671,11 +671,11 @@ describe ProductImport::ProductImporter do
 
       expect(importer.products_reset_count).to eq 7
 
-      expect(Spree::Product.find_by_name('Carrots').on_hand).to eq 5    # Present in file, added
-      expect(Spree::Product.find_by_name('Beans').on_hand).to eq 6      # Present in file, updated
-      expect(Spree::Product.find_by_name('Sprouts').on_hand).to eq 0    # In enterprise, not in file
-      expect(Spree::Product.find_by_name('Cabbage').on_hand).to eq 0    # In enterprise, not in file
-      expect(Spree::Product.find_by_name('Lettuce').on_hand).to eq 100  # In different enterprise; unchanged
+      expect(Spree::Product.find_by(name: 'Carrots').on_hand).to eq 5    # Present in file, added
+      expect(Spree::Product.find_by(name: 'Beans').on_hand).to eq 6      # Present in file, updated
+      expect(Spree::Product.find_by(name: 'Sprouts').on_hand).to eq 0    # In enterprise, not in file
+      expect(Spree::Product.find_by(name: 'Cabbage').on_hand).to eq 0    # In enterprise, not in file
+      expect(Spree::Product.find_by(name: 'Lettuce').on_hand).to eq 100  # In different enterprise; unchanged
     end
 
     it "can reset all inventory items for an enterprise that are not present in the uploaded file to zero stock" do
@@ -762,13 +762,13 @@ describe ProductImport::ProductImporter do
       expect(importer.updated_ids).to be_a(Array)
       expect(importer.updated_ids.count).to eq 2
 
-      carrots = Spree::Product.find_by_name('Carrots')
+      carrots = Spree::Product.find_by(name: 'Carrots')
       expect(carrots.on_hand).to eq 9000
       expect(carrots.tax_category_id).to eq tax_category.id
       expect(carrots.shipping_category_id).to eq shipping_category.id
       expect(carrots.available_on).to be_within(1.day).of(Time.zone.local(2020, 1, 1))
 
-      potatoes = Spree::Product.find_by_name('Potatoes')
+      potatoes = Spree::Product.find_by(name: 'Potatoes')
       expect(potatoes.on_hand).to eq 9000
       expect(potatoes.tax_category_id).to eq tax_category2.id
       expect(potatoes.shipping_category_id).to eq shipping_category.id

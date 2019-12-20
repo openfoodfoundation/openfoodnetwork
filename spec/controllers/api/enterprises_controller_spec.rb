@@ -16,7 +16,7 @@ module Api
       end
 
       describe "creating an enterprise" do
-        let(:australia) { Spree::Country.find_by_name('Australia') }
+        let(:australia) { Spree::Country.find_by(name: 'Australia') }
         let(:new_enterprise_params) do
           {
             enterprise: {

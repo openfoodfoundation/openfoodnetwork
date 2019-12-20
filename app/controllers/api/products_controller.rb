@@ -92,7 +92,7 @@ module Api
     private
 
     def find_product(id)
-      product_scope.find_by_permalink!(id.to_s)
+      product_scope.find_by!(permalink: id.to_s)
     rescue ActiveRecord::RecordNotFound
       product_scope.find(id)
     end

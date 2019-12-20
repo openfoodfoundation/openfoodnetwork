@@ -6,7 +6,7 @@ class AddShippingMethodToLineItems < ActiveRecord::Migration
       begin
         shipping_method = li.product.shipping_method_for_distributor(li.order.distributor)
       rescue ArgumentError
-        shipping_method = Spree::ShippingMethod.find_by_name 'Producer Delivery'
+        shipping_method = Spree::ShippingMethod.find_by name: 'Producer Delivery'
         say "Line item #{li.id} does not have a valid shipping method, setting to '#{shipping_method.name}'"
       end
 

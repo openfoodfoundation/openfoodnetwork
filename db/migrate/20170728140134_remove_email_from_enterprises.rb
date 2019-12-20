@@ -29,7 +29,7 @@ class RemoveEmailFromEnterprises < ActiveRecord::Migration
     rename_column :enterprises, :contact_name, :contact
 
     Enterprise.select(:id).each do |e|
-      manager = EnterpriseRole.find_by_enterprise_id_and_receives_notifications(e.id, true)
+      manager = EnterpriseRole.find_by(enterprise_id: e.id, receives_notifications: true)
       user = Spree::User.find(manager.user_id)
       e.update_attribute :email, user.email
     end
@@ -43,6 +43,6 @@ class RemoveEmailFromEnterprises < ActiveRecord::Migration
   end
 
   def contact_or_owner(enterprise)
-    Spree::User.find_by_email(enterprise.email) || Spree::User.find(enterprise.owner_id)
+    Spree::User.find_by(email: enterprise.email) || Spree::User.find(enterprise.owner_id)
   end
 end

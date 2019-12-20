@@ -23,7 +23,7 @@ class ColumnPreference < ActiveRecord::Base
     default_preferences = __send__("#{action_name}_columns")
     filter(default_preferences, user, action_name)
     default_preferences.each_with_object([]) do |(column_name, default_attributes), preferences|
-      stored_preference = stored_preferences.find_by_column_name(column_name)
+      stored_preference = stored_preferences.find_by(column_name: column_name)
       if stored_preference
         stored_preference.assign_attributes(default_attributes.select{ |k, _v| stored_preference[k].nil? })
         preferences << stored_preference

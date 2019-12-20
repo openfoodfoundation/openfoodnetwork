@@ -149,7 +149,7 @@ describe OrderFactory do
     end
 
     def variant1_line_item
-      order.line_items.find_by_variant_id(variant1.id)
+      order.line_items.find_by(variant_id: variant1.id)
     end
   end
 end

@@ -39,7 +39,7 @@ module Openfoodnetwork
       Spree::Config['checkout_zone'] = ENV['CHECKOUT_ZONE']
       Spree::Config['currency'] = ENV['CURRENCY']
       if Spree::Country.table_exists?
-        country = Spree::Country.find_by_iso(ENV['DEFAULT_COUNTRY_CODE'])
+        country = Spree::Country.find_by(iso: ENV['DEFAULT_COUNTRY_CODE'])
         Spree::Config['default_country_id'] = country.id if country.present?
       else
         Spree::Config['default_country_id'] = 12  # Australia

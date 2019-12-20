@@ -130,7 +130,7 @@ feature 'shipping methods' do
 
       expect(first('tags-input .tag-list ti-tag-item')).to have_content "local"
 
-      shipping_method = Spree::ShippingMethod.find_by_name('Teleport')
+      shipping_method = Spree::ShippingMethod.find_by(name: 'Teleport')
       expect(shipping_method.distributors).to eq([distributor1])
       expect(shipping_method.tag_list).to eq(["local"])
     end

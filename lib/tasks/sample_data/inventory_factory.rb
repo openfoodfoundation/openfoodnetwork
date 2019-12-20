@@ -5,7 +5,7 @@ class InventoryFactory
 
   def create_samples(products)
     log "Creating inventories"
-    marys_shop = Enterprise.find_by_name("Mary's Online Shop")
+    marys_shop = Enterprise.find_by(name: "Mary's Online Shop")
     products.each do |product|
       create_item(marys_shop, product)
     end

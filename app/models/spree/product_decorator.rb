@@ -184,7 +184,7 @@ Spree::Product.class_eval do
       option_type_name = "unit_#{variant_unit}"
       option_type_presentation = variant_unit.capitalize
 
-      Spree::OptionType.find_by_name(option_type_name) ||
+      Spree::OptionType.find_by(name: option_type_name) ||
         Spree::OptionType.create!(name: option_type_name,
                                   presentation: option_type_presentation)
     end

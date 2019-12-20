@@ -320,7 +320,7 @@ module Admin
       describe "when an order cycle is deleteable" do
         it "allows the order_cycle to be destroyed" do
           spree_get :destroy, id: oc.id
-          expect(OrderCycle.find_by_id(oc.id)).to be nil
+          expect(OrderCycle.find_by(id: oc.id)).to be nil
         end
       end
 

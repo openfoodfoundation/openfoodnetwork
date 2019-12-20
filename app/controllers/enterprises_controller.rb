@@ -36,7 +36,7 @@ class EnterprisesController < BaseController
   end
 
   def check_permalink
-    if Enterprise.find_by_permalink params[:permalink]
+    if Enterprise.find_by permalink: params[:permalink]
       render(text: params[:permalink], status: :conflict) && return
     end
 
@@ -51,7 +51,7 @@ class EnterprisesController < BaseController
   private
 
   def set_enterprise
-    @enterprise = Enterprise.find_by_id(params[:id])
+    @enterprise = Enterprise.find_by(id: params[:id])
   end
 
   def clean_permalink
@@ -63,7 +63,7 @@ class EnterprisesController < BaseController
   end
 
   def reset_order
-    distributor = Enterprise.is_distributor.find_by_permalink(params[:id]) ||
+    distributor = Enterprise.is_distributor.find_by(permalink: params[:id]) ||
                   Enterprise.is_distributor.find(params[:id])
     order = current_order(true)
 

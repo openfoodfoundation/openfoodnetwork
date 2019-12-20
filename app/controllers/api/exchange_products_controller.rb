@@ -58,7 +58,7 @@ module Api
     end
 
     def load_data_from_exchange
-      exchange = Exchange.find_by_id(params[:exchange_id])
+      exchange = Exchange.find_by(id: params[:exchange_id])
 
       @order_cycle = exchange.order_cycle
       @incoming = exchange.incoming
@@ -66,10 +66,10 @@ module Api
     end
 
     def load_data_from_other_params
-      @enterprise = Enterprise.find_by_id(params[:enterprise_id])
+      @enterprise = Enterprise.find_by(id: params[:enterprise_id])
 
       if params[:order_cycle_id]
-        @order_cycle = OrderCycle.find_by_id(params[:order_cycle_id])
+        @order_cycle = OrderCycle.find_by(id: params[:order_cycle_id])
       elsif !params[:incoming]
         raise "order_cycle_id is required to list products for new outgoing exchange"
       end

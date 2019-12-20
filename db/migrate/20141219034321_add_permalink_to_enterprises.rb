@@ -8,7 +8,7 @@ class AddPermalinkToEnterprises < ActiveRecord::Migration
       counter = 1
       permalink = enterprise.name.parameterize
       permalink = "my-enterprise-name" if permalink == ""
-      while Enterprise.find_by_permalink(permalink) do
+      while Enterprise.find_by(permalink: permalink) do
         permalink = enterprise.name.parameterize + counter.to_s
         counter += 1
       end

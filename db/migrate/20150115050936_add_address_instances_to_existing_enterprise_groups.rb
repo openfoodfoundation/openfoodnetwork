@@ -1,6 +1,6 @@
 class AddAddressInstancesToExistingEnterpriseGroups < ActiveRecord::Migration
   def change
-    country = Spree::Country.find_by_iso(ENV['DEFAULT_COUNTRY_CODE'])
+    country = Spree::Country.find_by(iso: ENV['DEFAULT_COUNTRY_CODE'])
     state = country.states.first
     EnterpriseGroup.all.each do |g|
       next if g.address.present?

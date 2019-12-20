@@ -128,7 +128,7 @@ feature 'Schedules', js: true do
           expect(page).to have_no_selector "a", text: "Weekly"
         end
 
-        expect(Schedule.find_by_id(weekly_schedule.id)).to be_nil
+        expect(Schedule.find_by(id: weekly_schedule.id)).to be_nil
         expect(oc1.schedules).to eq []
         expect(oc2.schedules).to eq []
         expect(oc3.schedules).to eq []

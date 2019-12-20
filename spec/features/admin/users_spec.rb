@@ -73,7 +73,7 @@ feature "Managing users" do
         end
 
         it "should allow to generate, regenarate and clear the user api key", js: true do
-          user = Spree::User.find_by_email("a@example.com")
+          user = Spree::User.find_by(email: "a@example.com")
           expect(page).to have_content "NO KEY"
 
           click_button "Generate API key"
