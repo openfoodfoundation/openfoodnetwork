@@ -34,18 +34,6 @@ GIT
   revision: 8a8585a43cd04d1a50dc65227f337a91b18d66d5
   branch: 2-0-4-stable
   specs:
-    spree_api (2.0.4)
-      rabl (= 0.8.4)
-      spree_core (= 2.0.4)
-      versioncake (= 1.0.0)
-    spree_backend (2.0.4)
-      deface (>= 0.9.0)
-      jquery-rails (~> 3.0.0)
-      jquery-ui-rails (~> 4.0.0)
-      rails (~> 3.2.8)
-      select2-rails (~> 3.4.7)
-      spree_api (= 2.0.4)
-      spree_core (= 2.0.4)
     spree_core (2.0.4)
       activemerchant (~> 1.34)
       acts_as_list (= 0.2.0)
@@ -683,10 +671,6 @@ GEM
       rack
       unicorn
     uuidtools (2.1.5)
-    versioncake (1.0.0)
-      actionpack (>= 3.0)
-      activesupport (>= 3.0)
-      railties (>= 3.0)
     warden (1.2.7)
       rack (>= 1.0)
     webdrivers (4.2.0)
@@ -757,6 +741,7 @@ DEPENDENCIES
   immigrant
   jquery-migrate-rails
   jquery-rails (= 3.0.4)
+  jquery-ui-rails (~> 4.0.0)
   json_spec (~> 1.1.4)
   jwt (~> 2.2)
   kaminari (~> 0.14.1)
@@ -790,12 +775,12 @@ DEPENDENCIES
   rubocop-rails
   sass (~> 3.3)
   sass-rails (~> 3.2.3)
+  select2-rails (~> 3.4.7)
   selenium-webdriver
   shoulda-matchers
   simple_form!
   simplecov
   spinjs-rails
-  spree_backend!
   spree_core!
   spree_i18n!
   spree_paypal_express!
