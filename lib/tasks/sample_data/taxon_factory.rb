@@ -5,7 +5,7 @@ class TaxonFactory
 
   def create_samples
     log "Creating taxonomies:"
-    taxonomy = Spree::Taxonomy.find_or_create_by_name!('Products')
+    taxonomy = Spree::Taxonomy.find_or_create_by!(name: 'Products')
     taxons = ['Vegetables', 'Fruit', 'Oils', 'Preserves and Sauces', 'Dairy', 'Meat and Fish']
     taxons.each do |taxon_name|
       create_taxon(taxonomy, taxon_name)

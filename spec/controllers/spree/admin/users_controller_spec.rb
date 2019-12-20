@@ -13,13 +13,13 @@ describe Spree::Admin::UsersController do
     end
 
     it 'should grant access to users with an admin role' do
-      user.spree_roles << Spree::Role.find_or_create_by_name('admin')
+      user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
       spree_post :index
       expect(response).to render_template :index
     end
 
     it "allows admins to update a user's API key" do
-      user.spree_roles << Spree::Role.find_or_create_by_name('admin')
+      user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
       expect(test_user).to receive(:generate_spree_api_key!).and_return(true)
       puts user.id
       puts test_user.id
@@ -28,21 +28,21 @@ describe Spree::Admin::UsersController do
     end
 
     it "allows admins to clear a user's API key" do
-      user.spree_roles << Spree::Role.find_or_create_by_name('admin')
+      user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
       expect(test_user).to receive(:clear_spree_api_key!).and_return(true)
       spree_put :clear_api_key, id: test_user.id
       expect(response).to redirect_to(spree.edit_admin_user_path(test_user))
     end
 
     it 'should deny access to users with an bar role' do
-      user.spree_roles << Spree::Role.find_or_create_by_name('bar')
+      user.spree_roles << Spree::Role.find_or_create_by(name: 'bar')
       Spree::Ability.register_ability(BarAbility)
       spree_post :index
       expect(response).to redirect_to('/unauthorized')
     end
 
     it 'should deny access to users with an bar role' do
-      user.spree_roles << Spree::Role.find_or_create_by_name('bar')
+      user.spree_roles << Spree::Role.find_or_create_by(name: 'bar')
       Spree::Ability.register_ability(BarAbility)
       spree_post :update, id: '9'
       expect(response).to redirect_to('/unauthorized')

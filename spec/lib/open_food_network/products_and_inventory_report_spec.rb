@@ -5,7 +5,7 @@ module OpenFoodNetwork
     context "As a site admin" do
       let(:user) do
         user = create(:user)
-        user.spree_roles << Spree::Role.find_or_create_by_name!("admin")
+        user.spree_roles << Spree::Role.find_or_create_by!(name: 'admin')
         user
       end
       subject do

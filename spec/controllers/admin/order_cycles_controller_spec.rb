@@ -291,7 +291,7 @@ module Admin
       let(:user) { create_enterprise_user }
       let(:admin_user) do
         user = create(:user)
-        user.spree_roles << Spree::Role.find_or_create_by_name!('admin')
+        user.spree_roles << Spree::Role.find_or_create_by!(name: 'admin')
         user
       end
       let(:order_cycle) { create(:simple_order_cycle) }

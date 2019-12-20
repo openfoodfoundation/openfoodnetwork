@@ -75,7 +75,7 @@ class ProductFactory
       shipping_category: DefaultShippingCategory.find_or_create,
       tax_category_id: find_or_create_tax_category.id
     )
-    product = Spree::Product.create_with(params).find_or_create_by_name!(params[:name])
+    product = Spree::Product.create_with(params).find_or_create_by!(name: params[:name])
     product.variants.first.update_attribute :on_demand, true
     product
   end

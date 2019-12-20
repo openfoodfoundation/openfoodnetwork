@@ -6,7 +6,7 @@ module AuthenticationWorkflow
   end
 
   def quick_login_as_admin
-    admin_role = Spree::Role.find_or_create_by_name!('admin')
+    admin_role = Spree::Role.find_or_create_by!(name: 'admin')
     admin_user = create(:user,
                         password: 'passw0rd',
                         password_confirmation: 'passw0rd',
@@ -42,7 +42,7 @@ module AuthenticationWorkflow
   end
 
   def login_to_consumer_section
-    user_role = Spree::Role.find_or_create_by_name!('user')
+    user_role = Spree::Role.find_or_create_by!(name: 'user')
     user = create_enterprise_user(
       email: 'someone@ofn.org',
       password: 'passw0rd',
