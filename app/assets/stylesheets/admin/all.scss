@@ -7,6 +7,8 @@
  *= require admin/spree_backend
  *= require jquery.powertip
  *= require responsive-tables
+ *= require normalize
+ *= require skeleton
  *= require jquery-ui-timepicker-addon
  *= require shared/textAngular
  *= require shared/ng-tags-input.min
@@ -17,18 +19,18 @@
 //************************************************************************//
 //************************************************************************//
 @import 'globals/variables';
+@import 'variables';
 @import 'globals/mixins';
 
 @import 'plugins/powertip';
 @import 'plugins/jstree';
+@import 'plugins/font-awesome';
 
 @import 'hacks/mozilla';
 @import 'hacks/opera';
 @import 'hacks/ie';
 
-@import 'variables';
-@import 'components/*';
-@import 'plugins/font-awesome';
-@import 'pages/*';
 
+@import 'components/*';
+@import 'pages/*';
 @import '*';
