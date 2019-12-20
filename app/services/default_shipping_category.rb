@@ -8,6 +8,6 @@ class DefaultShippingCategory
   end
 
   def self.find_or_create
-    Spree::ShippingCategory.find_or_create_by_name(NAME)
+    Spree::ShippingCategory.find_or_create_by(name: NAME)
   end
 end

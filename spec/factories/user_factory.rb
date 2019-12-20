@@ -23,7 +23,7 @@ FactoryBot.modify do
     confirmed_at '1970-01-01 00:00:01'
 
     after(:create) do |user|
-      user.spree_roles << Spree::Role.find_or_create_by_name!('admin')
+      user.spree_roles << Spree::Role.find_or_create_by!(name: 'admin')
     end
   end
 end

@@ -14,6 +14,6 @@ class DefaultStockLocation
   end
 
   def self.find_or_create
-    Spree::StockLocation.find_or_create_by_name(NAME)
+    Spree::StockLocation.find_or_create_by(name: NAME)
   end
 end
