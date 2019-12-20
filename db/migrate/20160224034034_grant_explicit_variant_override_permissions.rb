@@ -15,8 +15,8 @@ class GrantExplicitVariantOverridePermissions < ActiveRecord::Migration
 
         # create explicit VO permissions for producers currently granting implicit permission
         Enterprise.where(id: implicitly_granting_producer_ids).each do |producer|
-          relationship = producer.relationships_as_parent.find_or_initialize_by_child_id(hub.id)
-          permission = relationship.permissions.find_or_initialize_by_name(:create_variant_overrides)
+          relationship = producer.relationships_as_parent.find_or_initialize_by(child_id: hub.id)
+          permission = relationship.permissions.find_or_initialize_by(name: :create_variant_overrides)
           relationship.save! unless permission.persisted?
         end
       end
