@@ -29,16 +29,15 @@ $(document).ready(function() {
     });
 
     //handle edit click
-    $('a.edit-item').click(toggleItemEdit);
+    // $('a.edit-item').click(toggleItemEdit);
 
     //handle cancel click
-    $('a.cancel-item').click(toggleItemEdit);
+    // $('a.cancel-item').click(toggleItemEdit);
 
     //handle split click
-    $('a.split-item').click(startItemSplit);
+    // $('a.split-item').click(startItemSplit);
 
-    //handle save click
-    $('a.save-item').click(function(){
+    handle_save_click = function(){
       var save = $(this);
       var shipment_number = save.data('shipment-number');
       var variant_id = save.data('variant-id');
@@ -49,10 +48,10 @@ $(document).ready(function() {
 
       adjustItems(shipment_number, variant_id, quantity);
       return false;
-    });
+    }
+    // $('a.save-item').click(handle_save_click);
 
-    //handle delete click
-    $('a.delete-item').click(function(){
+    handle_delete_click = function(){
       var del = $(this);
       var shipment_number = del.data('shipment-number');
       var variant_id = del.data('variant-id');
@@ -60,8 +59,8 @@ $(document).ready(function() {
       toggleItemEdit();
 
       adjustItems(shipment_number, variant_id, 0);
-
-    });
+    }
+    // $('a.delete-item').click(handle_delete_click);
   }
 });
 
@@ -144,8 +143,8 @@ startItemSplit = function(event){
   var max_quantity = link.closest('tr').data('item-quantity');
   var split_item_template = Handlebars.compile($('#variant_split_template').text());
   link.closest('tr').after(split_item_template({ variant: variant, shipments: shipments, max_quantity: max_quantity }));
-  $('a.cancel-split').click(cancelItemSplit);
-  $('a.save-split').click(completeItemSplit);
+  // $('a.cancel-split').click(cancelItemSplit);
+  // $('a.save-split').click(completeItemSplit);
 
   // Add some tips
   $('.with-tip').powerTip({
