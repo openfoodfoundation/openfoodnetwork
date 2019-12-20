@@ -45,7 +45,7 @@ Spree::Core::Engine.routes.draw do
 
   match '/admin', to: 'admin/overview#index', as: :admin_dashboard, via: :get
 
-  resources :credit_cards
+  #resources :credit_cards
 
   namespace :admin do
     get '/search/known_users' => "search#known_users", :as => :search_known_users
