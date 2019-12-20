@@ -1,2 +1,2 @@
 :javascript
-  angular.module('Darkswarm').value("#{name.to_s}", #{json})
+  angular.module('Darkswarm').value("#{name.to_s.html_safe}", #{json.html_safe})
