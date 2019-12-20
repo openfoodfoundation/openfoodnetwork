@@ -73,6 +73,11 @@ Lint/DuplicateMethods:
     - 'lib/discourse/single_sign_on.rb'
     - 'lib/open_food_network/subscription_summary.rb'
 
+# Offense count: 1
+Lint/DuplicateHashKey:
+  Exclude:
+    - 'spec/models/calculator/weight_spec.rb'
+
 # Offense count: 10
 Lint/IneffectiveAccessModifier:
   Exclude:
@@ -192,12 +197,10 @@ Naming/PredicateName:
     - 'lib/open_food_network/packing_report.rb'
     - 'lib/tasks/data.rake'
 
-# Offense count: 152
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, Include.
-# SupportedStyles: action, filter
-# Include: app/controllers/**/*.rb
-Rails/ActionFilter:
+# Offense count: 8
+# Configuration parameters: MinNameLength, AllowNamesEndingInNumbers, AllowedNames, ForbiddenNames.
+# AllowedNames: io, id, to, by, on, in, at, ip, db
+Naming/MethodParameterName:
   Exclude:
     - 'app/controllers/admin/column_preferences_controller.rb'
     - 'app/controllers/admin/customers_controller.rb'
