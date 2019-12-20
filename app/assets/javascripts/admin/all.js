@@ -32,6 +32,7 @@
 //= require admin/spree_backend
 //= require modernizr
 //= require spin
+//= require jquery.adaptivemenu
 //= require equalize
 //= require css_browser_selector_dev
 //= require responsive-tables
