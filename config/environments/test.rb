@@ -14,10 +14,6 @@ Openfoodnetwork::Application.configure do
   # Separate cache stores when running in parallel
   config.cache_store = :file_store, Rails.root.join("tmp", "cache", "paralleltests#{ENV['TEST_ENV_NUMBER']}")
 
-
-  # Log error messages when you accidentally call methods on nil
-  config.whiny_nils = true
-
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
