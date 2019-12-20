@@ -63,7 +63,7 @@ describe EnterpriseGroup do
       eg2 = create(:enterprise_group, position: 3)
       eg3 = create(:enterprise_group, position: 2)
 
-      expect(EnterpriseGroup.by_position).to eq([eg1, eg3, eg2])
+      expect(EnterpriseGroup.by_position.to_a).to eq([eg1, eg3, eg2])
     end
 
     it "finds enterprise groups on the front page" do
