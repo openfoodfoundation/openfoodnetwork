@@ -450,9 +450,9 @@ module Spree
         pb = Spree::Property.create! name: 'B', presentation: 'B'
         pc = Spree::Property.create! name: 'C', presentation: 'C'
 
-        product.product_properties.create!({ property_id: pa.id, value: '1', position: 1 }, without_protection: true)
-        product.product_properties.create!({ property_id: pc.id, value: '3', position: 3 }, without_protection: true)
-        supplier.producer_properties.create!({ property_id: pb.id, value: '2', position: 2 }, without_protection: true)
+        product.product_properties.create!({ property_id: pa.id, value: '1', position: 1 })
+        product.product_properties.create!({ property_id: pc.id, value: '3', position: 3 })
+        supplier.producer_properties.create!({ property_id: pb.id, value: '2', position: 2 })
 
         expect(product.properties_including_inherited).to eq(
           [{ id: pa.id, name: "A", value: '1' },
