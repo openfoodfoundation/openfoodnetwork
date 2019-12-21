@@ -25,7 +25,8 @@ class Enterprise < ActiveRecord::Base
   has_many :relationships_as_child, class_name: 'EnterpriseRelationship',
                                     foreign_key: 'child_id',
                                     dependent: :destroy
-  has_and_belongs_to_many :groups, class_name: 'EnterpriseGroup'
+  has_and_belongs_to_many :groups, join_table: 'enterprise_groups_enterprises',
+                          class_name: 'EnterpriseGroup'
   has_many :producer_properties, foreign_key: 'producer_id'
   has_many :properties, through: :producer_properties
   has_many :supplied_products, class_name: 'Spree::Product',
