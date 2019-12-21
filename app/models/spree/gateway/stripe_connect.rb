@@ -7,7 +7,7 @@ module Spree
 
       validate :ensure_enterprise_selected
 
-      attr_accessible :preferred_enterprise_id
+      # attr_accessible :preferred_enterprise_id
 
       CARD_TYPE_MAPPING = {
         'American Express' => 'american_express',

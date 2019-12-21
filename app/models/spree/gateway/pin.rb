@@ -2,7 +2,7 @@ module Spree
   class Gateway::Pin < Gateway
     preference :api_key, :string
 
-    attr_accessible :preferred_api_key
+    # attr_accessible :preferred_api_key
 
     def provider_class
       ActiveMerchant::Billing::PinGateway

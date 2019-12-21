@@ -10,7 +10,7 @@ class EnterpriseFee < ActiveRecord::Base
   has_many :exchange_fees, dependent: :destroy
   has_many :exchanges, through: :exchange_fees
 
-  attr_accessible :enterprise_id, :fee_type, :name, :tax_category_id, :calculator_type, :inherits_tax_category
+  # attr_accessible :enterprise_id, :fee_type, :name, :tax_category_id, :calculator_type, :inherits_tax_category
 
   FEE_TYPES = %w(packing transport admin sales fundraising).freeze
   PER_ORDER_CALCULATORS = ['Spree::Calculator::FlatRate', 'Spree::Calculator::FlexiRate', 'Spree::Calculator::PriceSack'].freeze

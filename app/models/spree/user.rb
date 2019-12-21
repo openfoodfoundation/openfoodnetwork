@@ -13,8 +13,8 @@ module Spree
     before_destroy :check_completed_orders
 
     # Setup accessible (or protected) attributes for your model
-    attr_accessible :email, :password, :password_confirmation,
-                    :remember_me, :persistence_token, :login
+    # attr_accessible :email, :password, :password_confirmation,
+    # attr_accessible :remember_me, :persistence_token, :login
 
     users_table_name = User.table_name
     roles_table_name = Role.table_name
@@ -36,8 +36,9 @@ module Spree
     accepts_nested_attributes_for :bill_address
     accepts_nested_attributes_for :ship_address
 
-    attr_accessible :enterprise_ids, :enterprise_roles_attributes, :enterprise_limit,
-                    :locale, :bill_address_attributes, :ship_address_attributes
+    # attr_accessible :enterprise_ids, :enterprise_roles_attributes, :enterprise_limit,
+    # attr_accessible :locale, :bill_address_attributes, :ship_address_attributes
+
     after_create :associate_customers
 
     validate :limit_owned_enterprises

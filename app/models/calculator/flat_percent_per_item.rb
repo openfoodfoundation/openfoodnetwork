@@ -11,7 +11,7 @@ class Calculator::FlatPercentPerItem < Spree::Calculator
 
   preference :flat_percent, :decimal, default: 0
 
-  attr_accessible :preferred_flat_percent
+  # attr_accessible :preferred_flat_percent
 
   localize_number :preferred_flat_percent
 

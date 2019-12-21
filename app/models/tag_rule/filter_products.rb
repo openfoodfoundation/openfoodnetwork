@@ -3,7 +3,7 @@ class TagRule
     preference :matched_variants_visibility, :string, default: "visible"
     preference :variant_tags, :string, default: ""
 
-    attr_accessible :preferred_matched_variants_visibility, :preferred_variant_tags
+    # attr_accessible :preferred_matched_variants_visibility, :preferred_variant_tags
 
     def self.tagged_children_for(product)
       product["variants"]
