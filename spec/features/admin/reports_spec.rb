@@ -265,7 +265,7 @@ feature '
       it "is precise to time of day, not just date" do
         # When I generate a customer report with a timeframe that includes one order but not the other
         quick_login_as_admin
-        visit spree.orders_and_fulfillment_admin_reports_path
+        visit spree.admin_reports_orders_and_fulfillment_path
 
         fill_in 'q_completed_at_gt', with: '2013-04-25 13:00:00'
         fill_in 'q_completed_at_lt', with: '2013-04-25 15:00:00'
@@ -283,7 +283,7 @@ feature '
       o = create(:order, order_cycle: oc, distributor: distributor)
 
       quick_login_as_admin
-      visit spree.orders_and_fulfillment_admin_reports_path
+      visit spree.admin_reports_orders_and_fulfillment_path
 
       expect(page).to have_content "My Order Cycle"
     end
