@@ -151,8 +151,8 @@ describe Spree::Admin::ReportsController, type: :controller do
         spree_get :index
 
         report_types = assigns(:reports).keys
-        expect(report_types).to include "orders_and_fulfillment", "products_and_inventory", "packing" # and others
-        expect(report_types).to_not include "sales_tax"
+        expect(report_types).to include :orders_and_fulfillment, :products_and_inventory, :packing # and others
+        expect(report_types).to_not include :sales_tax
       end
     end
 
