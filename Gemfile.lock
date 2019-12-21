@@ -494,8 +494,6 @@ GEM
       activerecord (>= 3.0)
     polyglot (0.3.5)
     power_assert (1.1.5)
-    protected_attributes (1.1.4)
-      activemodel (>= 4.0.1, < 5.0)
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
@@ -750,7 +748,6 @@ DEPENDENCIES
   paper_trail (~> 5.2.3)
   paperclip (~> 3.4.1)
   pg (~> 0.21.0)
-  protected_attributes
   pry-byebug (>= 3.4.3)
   rabl
   rack-mini-profiler (< 2.0.0)
