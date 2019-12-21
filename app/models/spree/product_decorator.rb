@@ -17,11 +17,6 @@ Spree::Product.class_eval do
   delegate_belongs_to :master, :unit_value, :unit_description
   delegate :images_attributes=, :display_as=, to: :master
 
-  attr_accessible :supplier_id, :primary_taxon_id, :distributor_ids
-  attr_accessible :group_buy, :group_buy_unit_size, :unit_description, :notes, :images_attributes, :display_as
-  attr_accessible :variant_unit, :variant_unit_scale, :variant_unit_name, :unit_value
-  attr_accessible :inherits_properties, :sku
-
   validates :supplier, presence: true
   validates :primary_taxon, presence: true
   validates :tax_category_id, presence: true, if: "Spree::Config.products_require_tax_category"

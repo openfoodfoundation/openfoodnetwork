@@ -2,8 +2,6 @@ class TagRule::FilterShippingMethods < TagRule
   preference :matched_shipping_methods_visibility, :string, default: "visible"
   preference :shipping_method_tags, :string, default: ""
 
-  attr_accessible :preferred_matched_shipping_methods_visibility, :preferred_shipping_method_tags
-
   def reject_matched?
     preferred_matched_shipping_methods_visibility != "visible"
   end

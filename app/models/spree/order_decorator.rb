@@ -28,7 +28,6 @@ Spree::Order.class_eval do
   validates :customer, presence: true, if: :require_customer?
   validate :products_available_from_new_distribution, if: lambda { distributor_id_changed? || order_cycle_id_changed? }
   validate :disallow_guest_order
-  attr_accessible :order_cycle_id, :distributor_id, :customer_id
 
   # Removes Spree 2.1 additional email validation (currently failing every time)
   # See: spree/core/validators/email.rb
