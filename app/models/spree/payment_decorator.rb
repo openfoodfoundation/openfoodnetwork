@@ -64,7 +64,7 @@ module Spree
                               payment_method: payment_method,
                               amount: refund_amount.abs * -1,
                               response_code: response.authorization,
-                              state: 'completed' }, without_protection: true)
+                              state: 'completed' })
         else
           gateway_error(response)
         end
