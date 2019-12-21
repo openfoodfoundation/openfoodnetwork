@@ -285,7 +285,7 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def url_for_report(report)
-    public_send("#{report}_admin_reports_url".to_sym)
+    public_send("admin_reports_#{report}_url".to_sym)
   rescue NoMethodError
     url_for([:new, :admin, :reports, report.to_s.singularize])
   end
