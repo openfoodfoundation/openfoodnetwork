@@ -32,35 +32,35 @@ Spree::Core::Engine.routes.draw do
 end
 
 Spree::Core::Engine.routes.prepend do
-  match '/admin/reports/orders_and_distributors' => 'admin/reports#orders_and_distributors', :as => "orders_and_distributors_admin_reports",  :via  => [:get, :post]
-  match '/admin/reports/order_cycle_management' => 'admin/reports#order_cycle_management', :as => "order_cycle_management_admin_reports",  :via  => [:get, :post]
-  match '/admin/reports/packing' => 'admin/reports#packing', :as => "packing_admin_reports",  :via  => [:get, :post]
-  match '/admin/reports/group_buys' => 'admin/reports#group_buys', :as => "group_buys_admin_reports",  :via  => [:get, :post]
-  match '/admin/reports/bulk_coop' => 'admin/reports#bulk_coop', :as => "bulk_coop_admin_reports",  :via  => [:get, :post]
-  match '/admin/reports/payments' => 'admin/reports#payments', :as => "payments_admin_reports",  :via  => [:get, :post]
-  match '/admin/reports/orders_and_fulfillment' => 'admin/reports#orders_and_fulfillment', :as => "orders_and_fulfillment_admin_reports",  :via  => [:get, :post]
-  match '/admin/reports/users_and_enterprises' => 'admin/reports#users_and_enterprises', :as => "users_and_enterprises_admin_reports",  :via => [:get, :post]
-  match '/admin/reports/sales_tax' => 'admin/reports#sales_tax', :as => "sales_tax_admin_reports",  :via  => [:get, :post]
-  match '/admin/orders/bulk_management' => 'admin/orders#bulk_management', :as => "admin_bulk_order_management", via: :get
-  match '/admin/reports/products_and_inventory' => 'admin/reports#products_and_inventory', :as => "products_and_inventory_admin_reports",  :via  => [:get, :post]
-  match '/admin/reports/customers' => 'admin/reports#customers', :as => "customers_admin_reports",  :via  => [:get, :post]
-  match '/admin/reports/xero_invoices' => 'admin/reports#xero_invoices', :as => "xero_invoices_admin_reports",  :via  => [:get, :post]
-  match '/admin', :to => 'admin/overview#index', :as => :admin, via: :get
+  #match '/admin/reports/orders_and_distributors' => 'admin/reports#orders_and_distributors', :as => "orders_and_distributors_admin_reports",  :via  => [:get, :post]
+  #match '/admin/reports/order_cycle_management' => 'admin/reports#order_cycle_management', :as => "order_cycle_management_admin_reports",  :via  => [:get, :post]
+  #match '/admin/reports/packing' => 'admin/reports#packing', :as => "packing_admin_reports",  :via  => [:get, :post]
+  #match '/admin/reports/group_buys' => 'admin/reports#group_buys', :as => "group_buys_admin_reports",  :via  => [:get, :post]
+  #match '/admin/reports/bulk_coop' => 'admin/reports#bulk_coop', :as => "bulk_coop_admin_reports",  :via  => [:get, :post]
+  #match '/admin/reports/payments' => 'admin/reports#payments', :as => "payments_admin_reports",  :via  => [:get, :post]
+  #match '/admin/reports/orders_and_fulfillment' => 'admin/reports#orders_and_fulfillment', :as => "orders_and_fulfillment_admin_reports",  :via  => [:get, :post]
+  #match '/admin/reports/users_and_enterprises' => 'admin/reports#users_and_enterprises', :as => "users_and_enterprises_admin_reports",  :via => [:get, :post]
+  #match '/admin/reports/sales_tax' => 'admin/reports#sales_tax', :as => "sales_tax_admin_reports",  :via  => [:get, :post]
+  #match '/admin/orders/bulk_management' => 'admin/orders#bulk_management', :as => "admin_bulk_order_management", via: :get
+  #match '/admin/reports/products_and_inventory' => 'admin/reports#products_and_inventory', :as => "products_and_inventory_admin_reports",  :via  => [:get, :post]
+  #match '/admin/reports/customers' => 'admin/reports#customers', :as => "customers_admin_reports",  :via  => [:get, :post]
+  #match '/admin/reports/xero_invoices' => 'admin/reports#xero_invoices', :as => "xero_invoices_admin_reports",  :via  => [:get, :post]
+  #match '/admin', :to => 'admin/overview#index', :as => :admin, via: :get
   match '/admin/payment_methods/show_provider_preferences' => 'admin/payment_methods#show_provider_preferences', :via => :get
   put 'credit_cards/new_from_token', to: 'credit_cards#new_from_token'
 
   #resources :credit_cards
 
   namespace :admin do
-    get '/search/known_users' => "search#known_users", :as => :search_known_users
-    get '/search/customers' => 'search#customers', :as => :search_customers
-    get '/search/customer_addresses' => 'search#customer_addresses', :as => :search_customer_addresses
+    #get '/search/known_users' => "search#known_users", :as => :search_known_users
+    #get '/search/customers' => 'search#customers', :as => :search_customers
+    #get '/search/customer_addresses' => 'search#customer_addresses', :as => :search_customer_addresses
 
     resources :products do
       get :group_buy_options, on: :member
       get :seo, on: :member
 
-      post :bulk_update, :on => :collection, :as => :bulk_update
+      #post :bulk_update, :on => :collection, :as => :bulk_update
     end
 
     resources :orders do
@@ -131,9 +131,9 @@ Spree::Core::Engine.routes.prepend do
   resources :products
 
   # Used by spree_paypal_express
-  get '/checkout/:state', :to => 'checkout#edit', :as => :checkout_state
+  #get '/checkout/:state', :to => 'checkout#edit', :as => :checkout_state
 
-  get '/unauthorized', :to => 'home#unauthorized', :as => :unauthorized
-  get '/content/cvv', :to => 'content#cvv', :as => :cvv
-  get '/content/*path', :to => 'content#show', :as => :content
+  #get '/unauthorized', :to => 'home#unauthorized', :as => :unauthorized
+  #get '/content/cvv', :to => 'content#cvv', :as => :cvv
+  #get '/content/*path', :to => 'content#show', :as => :content
 end
