@@ -105,7 +105,7 @@ module Openfoodnetwork
       #{config.root}/app/jobs
     )
 
-    config.paths["config/routes"] = %w(
+    config.paths["config/routes.rb"] = %w(
       config/routes/api.rb
       config/routes.rb
       config/routes/admin.rb
