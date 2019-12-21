@@ -118,7 +118,7 @@ Spree::Core::Engine.routes.draw do
   end
 
   #match '/admin', :to => 'admin/overview#index', :as => :admin, via: :get
-  match '/admin/orders/bulk_management', to: 'admin/orders#bulk_management', via: :get
+  get '/admin/orders/bulk_management', to: 'admin/orders#bulk_management', as: :admin_bulk_order_management
   match '/admin/payment_methods/show_provider_preferences', to: 'admin/payment_methods#show_provider_preferences', via: :get
   put 'credit_cards/new_from_token', to: 'credit_cards#new_from_token'
 
