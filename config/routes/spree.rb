@@ -30,11 +30,7 @@ Spree::Core::Engine.routes.draw do
 
   namespace :admin do
     resources :users
-  end
-end
 
-Spree::Core::Engine.routes.prepend do
-  namespace :admin do
     namespace :reports do
       match 'orders_and_distributors', to: 'admin/reports#orders_and_distributors', via: [:get, :post]
       match 'order_cycle_management', to: 'admin/reports#order_cycle_management', via: [:get, :post]
@@ -49,25 +45,16 @@ Spree::Core::Engine.routes.prepend do
       match 'customers', to: 'admin/reports#customers', via: [:get, :post]
       match 'xero_invoices', to: 'admin/reports#xero_invoices', via: [:get, :post]
     end
-  end
 
-  #match '/admin', :to => 'admin/overview#index', :as => :admin, via: :get
-  match '/admin/orders/bulk_management', to: 'admin/orders#bulk_management', via: :get
-  match '/admin/payment_methods/show_provider_preferences', to: 'admin/payment_methods#show_provider_preferences', via: :get
-  put 'credit_cards/new_from_token', to: 'credit_cards#new_from_token'
-
-  #resources :credit_cards
-
-  namespace :admin do
-    #get '/search/known_users' => "search#known_users", :as => :search_known_users
-    #get '/search/customers' => 'search#customers', :as => :search_customers
-    #get '/search/customer_addresses' => 'search#customer_addresses', :as => :search_customer_addresses
+    get '/search/known_users' => "search#known_users", :as => :search_known_users
+    get '/search/customers' => 'search#customers', :as => :search_customers
+    get '/search/customer_addresses' => 'search#customer_addresses', :as => :search_customer_addresses
 
     resources :products do
       get :group_buy_options, on: :member
       get :seo, on: :member
 
-      #post :bulk_update, :on => :collection, :as => :bulk_update
+      post :bulk_update, on: :collection, as: :bulk_update
     end
 
     resources :orders do
@@ -96,6 +83,7 @@ Spree::Core::Engine.routes.prepend do
         post :dismiss_alert
       end
     end
+
     resource :mail_method, :only => [:edit, :update] do
       post :testmail, :on => :collection
     end
@@ -118,7 +106,7 @@ Spree::Core::Engine.routes.prepend do
       resources :taxons
     end
 
-    resources :taxons, :only => [] do
+    resources :taxons, only: [] do
       collection do
         get :search
       end
@@ -128,6 +116,13 @@ Spree::Core::Engine.routes.prepend do
     resource  :tax_settings
     resources :tax_categories
   end
+
+  #match '/admin', :to => 'admin/overview#index', :as => :admin, via: :get
+  match '/admin/orders/bulk_management', to: 'admin/orders#bulk_management', via: :get
+  match '/admin/payment_methods/show_provider_preferences', to: 'admin/payment_methods#show_provider_preferences', via: :get
+  put 'credit_cards/new_from_token', to: 'credit_cards#new_from_token'
+
+  resources :credit_cards
 
   resources :orders do
     get :clear, :on => :collection
@@ -140,7 +135,7 @@ Spree::Core::Engine.routes.prepend do
   # Used by spree_paypal_express
   #get '/checkout/:state', :to => 'checkout#edit', :as => :checkout_state
 
-  #get '/unauthorized', :to => 'home#unauthorized', :as => :unauthorized
-  #get '/content/cvv', :to => 'content#cvv', :as => :cvv
-  #get '/content/*path', :to => 'content#show', :as => :content
+  get '/unauthorized', :to => 'home#unauthorized', :as => :unauthorized
+  get '/content/cvv', :to => 'content#cvv', :as => :cvv
+  get '/content/*path', :to => 'content#show', :as => :content
 end
