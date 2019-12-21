@@ -3,12 +3,6 @@ require 'open_food_network/column_preference_defaults'
 class ColumnPreference < ActiveRecord::Base
   extend OpenFoodNetwork::ColumnPreferenceDefaults
 
-  # These are the attributes used to identify a preference
-  attr_accessible :user_id, :action_name, :column_name
-
-  # These are attributes that need to be mass assignable
-  attr_accessible :name, :visible
-
   # Non-persisted attributes that only have one
   # setting (ie. the default) for a given column
   attr_accessor :name

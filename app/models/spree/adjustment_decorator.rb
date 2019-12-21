@@ -25,8 +25,6 @@ module Spree
     scope :shipping,       -> { where(AdjustmentScopes::SHIPPING_SCOPE) }
     scope :eligible,       -> { where(AdjustmentScopes::ELIGIBLE_SCOPE) }
 
-    attr_accessible :included_tax
-
     localize_number :amount
 
     def set_included_tax!(rate)

@@ -12,10 +12,6 @@ Spree::LineItem.class_eval do
   # Allows manual skipping of Stock::AvailabilityValidator
   attr_accessor :skip_stock_check
 
-  attr_accessible :max_quantity, :final_weight_volume, :price
-  attr_accessible :final_weight_volume, :price, as: :api
-  attr_accessible :skip_stock_check
-
   before_save :calculate_final_weight_volume, if: :quantity_changed?, unless: :final_weight_volume_changed?
   after_save :update_units
 

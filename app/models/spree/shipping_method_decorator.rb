@@ -5,8 +5,6 @@ Spree::ShippingMethod.class_eval do
   has_many :distributors, through: :distributor_shipping_methods, class_name: 'Enterprise', foreign_key: 'distributor_id'
 
   after_save :touch_distributors
-  attr_accessible :distributor_ids, :description
-  attr_accessible :require_ship_address, :tag_list
 
   validates_with DistributorsValidator
 

@@ -10,8 +10,6 @@ module Spree
 
     after_save :ensure_correct_adjustment, :update_order
 
-    attr_accessible :source
-
     localize_number :amount
 
     def ensure_correct_adjustment

@@ -8,8 +8,6 @@ Spree::PaymentMethod.class_eval do
 
   has_many :credit_cards, class_name: "Spree::CreditCard" # from Spree v.2.3.0 d470b31798f37
 
-  attr_accessible :tag_list
-
   after_initialize :init
 
   validates_with DistributorsValidator
