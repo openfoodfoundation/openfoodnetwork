@@ -10,9 +10,9 @@ feature "Registration", js: true do
     before do
       Spree::Config.enterprises_require_tos = false
 
-      albania = Spree::Country.create!({ name: "Albania", iso3: "ALB", iso: "AL", iso_name: "ALBANIA", numcode: "8" }, without_protection: true)
-      Spree::State.create!({ name: "Berat", abbr: "BRA", country: albania }, without_protection: true)
-      Spree::Country.create!({ name: "Chad", iso3: "TCD", iso: "TD", iso_name: "CHAD", numcode: "148" }, without_protection: true)
+      albania = Spree::Country.create!({ name: "Albania", iso3: "ALB", iso: "AL", iso_name: "ALBANIA", numcode: "8" })
+      Spree::State.create!({ name: "Berat", abbr: "BRA", country: albania })
+      Spree::Country.create!({ name: "Chad", iso3: "TCD", iso: "TD", iso_name: "CHAD", numcode: "148" })
     end
 
     after do

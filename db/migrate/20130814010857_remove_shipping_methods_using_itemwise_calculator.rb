@@ -10,6 +10,6 @@ class RemoveShippingMethodsUsingItemwiseCalculator < ActiveRecord::Migration
   end
 
   def down
-    Spree::ShippingMethod.create!({name: 'Delivery', zone: Spree::Zone.last, calculator: OpenFoodNetwork::Calculator::Itemwise.new}, without_protection: true)
+    Spree::ShippingMethod.create!({name: 'Delivery', zone: Spree::Zone.last, calculator: OpenFoodNetwork::Calculator::Itemwise.new})
   end
 end

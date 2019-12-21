@@ -130,7 +130,7 @@ describe EnterpriseFee do
                                  source: order,
                                  originator: tax_rate,
                                  state: 'closed',
-                                 label: 'hello' }, without_protection: true)
+                                 label: 'hello' })
 
       expect do
         EnterpriseFee.clear_all_adjustments_on_order order
