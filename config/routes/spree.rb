@@ -31,21 +31,19 @@ Spree::Core::Engine.routes.draw do
   namespace :admin do
     resources :users
 
-    namespace :reports do
-      match 'orders_and_distributors', to: 'admin/reports#orders_and_distributors', via: [:get, :post]
-      match 'order_cycle_management', to: 'admin/reports#order_cycle_management', via: [:get, :post]
-      match 'packing', to: 'admin/reports#packing',via: [:get, :post]
-      match 'group_buys', to: 'admin/reports#group_buys', via: [:get, :post]
-      match 'bulk_coop', to: 'admin/reports#bulk_coop', via: [:get, :post]
-      match 'payments', to: 'admin/reports#payments', via: [:get, :post]
-      match 'orders_and_fulfillment', to: 'admin/reports#orders_and_fulfillment', via: [:get, :post]
-      match 'users_and_enterprises', to: 'admin/reports#users_and_enterprises', via: [:get, :post]
-      match 'sales_tax', to: 'admin/reports#sales_tax', via: [:get, :post]
-      match 'sales_total', to: 'admin/reports#sales_tax', via: [:get, :post]
-      match 'products_and_inventory', to: 'admin/reports#products_and_inventory', via: [:get, :post]
-      match 'customers', to: 'admin/reports#customers', via: [:get, :post]
-      match 'xero_invoices', to: 'admin/reports#xero_invoices', via: [:get, :post]
-    end
+    match 'reports/orders_and_distributors', to: 'reports#orders_and_distributors', via: [:get, :post]
+    match 'reports/order_cycle_management', to: 'reports#order_cycle_management', via: [:get, :post]
+    match 'reports/packing', to: 'reports#packing', via: [:get, :post]
+    match 'reports/group_buys', to: 'reports#group_buys', via: [:get, :post]
+    match 'reports/bulk_coop', to: 'reports#bulk_coop', via: [:get, :post]
+    match 'reports/payments', to: 'reports#payments', via: [:get, :post]
+    match 'reports/orders_and_fulfillment', to: 'reports#orders_and_fulfillment', via: [:get, :post]
+    match 'reports/users_and_enterprises', to: 'reports#users_and_enterprises', via: [:get, :post]
+    match 'reports/sales_tax', to: 'reports#sales_tax', via: [:get, :post]
+    match 'reports/sales_total', to: 'reports#sales_total', via: [:get, :post]
+    match 'reports/products_and_inventory', to: 'reports#products_and_inventory', via: [:get, :post]
+    match 'reports/customers', to: 'reports#customers', via: [:get, :post]
+    match 'reports/xero_invoices', to: 'reports#xero_invoices', via: [:get, :post]
 
     get '/search/known_users' => "search#known_users", :as => :search_known_users
     get '/search/customers' => 'search#customers', :as => :search_customers
