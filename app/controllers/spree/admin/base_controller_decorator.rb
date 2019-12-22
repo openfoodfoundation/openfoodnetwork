@@ -86,11 +86,15 @@ Spree::Admin::BaseController.class_eval do
 
   def render_as_json(data, options = {})
     ams_prefix = options.delete :ams_prefix
-    if [Array, ActiveRecord::Relation].include? data.class
+    if each_serializer_required?(data)
       render options.merge(json: data, each_serializer: serializer(ams_prefix))
     else
       render options.merge(json: data, serializer: serializer(ams_prefix))
     end
+  end
+
+  def each_serializer_required?(data)
+    ['Array', 'ActiveRecord::Relation'].include?(data.class.name)
   end
 
   def serializer(ams_prefix)
