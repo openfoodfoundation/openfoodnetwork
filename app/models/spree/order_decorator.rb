@@ -50,7 +50,7 @@ Spree::Order.class_eval do
   # -- Scopes
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
-      scoped
+      where(nil)
     else
       # Find orders that are distributed by the user or have products supplied by the user
       # WARNING: This only filters orders, you'll need to filter line items separately using LineItem.managed_by
@@ -62,7 +62,7 @@ Spree::Order.class_eval do
 
   scope :distributed_by_user, lambda { |user|
     if user.has_spree_role?('admin')
-      scoped
+      where(nil)
     else
       where('spree_orders.distributor_id IN (?)', user.enterprises)
     end
@@ -302,6 +302,14 @@ Spree::Order.class_eval do
       end]
       hash.update(tax_rates_hash) { |_tax_rate, amount1, amount2| amount1 + amount2 }
     end
+  end
+
+  def price_adjustments
+    adjustments = []
+
+    line_items.each { |line_item| adjustments.concat line_item.adjustments }
+
+    adjustments
   end
 
   def price_adjustment_totals

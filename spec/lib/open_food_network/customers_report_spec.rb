@@ -113,7 +113,7 @@ module OpenFoodNetwork
       end
 
       describe "filtering orders" do
-        let(:orders) { Spree::Order.scoped }
+        let(:orders) { Spree::Order.where(nil) }
         let(:supplier) { create(:supplier_enterprise) }
 
         it "returns all orders sans-params" do

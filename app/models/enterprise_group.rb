@@ -51,7 +51,7 @@ class EnterpriseGroup < ActiveRecord::Base
   scope :on_front_page, -> { where(on_front_page: true) }
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
-      scoped
+      where(nil)
     else
       where('owner_id = ?', user.id)
     end

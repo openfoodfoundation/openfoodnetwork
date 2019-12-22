@@ -12,7 +12,7 @@ Spree::ShippingMethod.class_eval do
 
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
-      scoped
+      where(nil)
     else
       joins(:distributors).
         where('distributors_shipping_methods.distributor_id IN (?)', user.enterprises).

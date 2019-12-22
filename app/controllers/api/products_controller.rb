@@ -121,7 +121,7 @@ module Api
     end
 
     def paged_products_for_producers(producers)
-      Spree::Product.scoped.
+      Spree::Product.where(nil).
         merge(product_scope).
         where(supplier_id: producers).
         by_producer.by_name.

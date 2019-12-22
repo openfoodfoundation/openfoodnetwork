@@ -25,7 +25,7 @@ class EnterpriseFee < ActiveRecord::Base
 
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
-      scoped
+      where(nil)
     else
       where('enterprise_id IN (?)', user.enterprises)
     end

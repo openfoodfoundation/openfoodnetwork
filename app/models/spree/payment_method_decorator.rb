@@ -17,7 +17,7 @@ Spree::PaymentMethod.class_eval do
   # -- Scopes
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
-      scoped
+      where(nil)
     else
       joins(:distributors).
         where('distributors_payment_methods.distributor_id IN (?)', user.enterprises).

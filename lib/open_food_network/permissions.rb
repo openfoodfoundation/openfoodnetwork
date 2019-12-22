@@ -147,7 +147,7 @@ module OpenFoodNetwork
 
     def managed_and_related_enterprises_granting(permission)
       if admin?
-        Enterprise.scoped
+        Enterprise.where(nil)
       else
         Enterprise.where(
           id: managed_enterprises.select("enterprises.id") |
@@ -158,7 +158,7 @@ module OpenFoodNetwork
 
     def managed_and_related_enterprises_with(permission)
       if admin?
-        Enterprise.scoped
+        Enterprise.where(nil)
       else
         managed_enterprise_ids = managed_enterprises.select("enterprises.id")
         granting_enterprise_ids = related_enterprises_granting(permission)
