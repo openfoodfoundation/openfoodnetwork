@@ -30,6 +30,14 @@ Spree::Order.class_eval do
   validate :disallow_guest_order
   attr_accessible :order_cycle_id, :distributor_id, :customer_id
 
+  # Removes Spree 2.1 additional email validation (currently failing every time)
+  # See: spree/core/validators/email.rb
+  _validate_callbacks.each do |callback|
+    if callback.raw_filter.respond_to? :attributes
+      callback.raw_filter.attributes.delete :email
+    end
+  end
+
   before_validation :associate_customer, unless: :customer_id?
   before_validation :ensure_customer, unless: :customer_is_valid?
 
