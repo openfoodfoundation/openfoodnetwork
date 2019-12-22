@@ -21,7 +21,7 @@ feature 'Account and Billing Settings' do
 
     context "as an admin user" do
       it "loads the page" do
-        visit spree.admin_path
+        visit spree.admin_dashboard_path
         click_link "Configuration"
         click_link "Tax Settings"
 

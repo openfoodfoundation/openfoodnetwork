@@ -113,7 +113,7 @@ feature '
 
     it "lets me access enterprise groups" do
       quick_login_as user
-      visit spree.admin_path
+      visit spree.admin_dashboard_path
       click_link 'Groups'
       expect(page).to have_content 'My Group'
     end

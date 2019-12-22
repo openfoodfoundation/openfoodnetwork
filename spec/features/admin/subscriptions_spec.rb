@@ -26,7 +26,7 @@ feature 'Subscriptions' do
       end
 
       it "passes the smoke test" do
-        visit spree.admin_path
+        visit spree.admin_dashboard_path
         click_link 'Orders'
         click_link 'Subscriptions'
 
