@@ -5,7 +5,7 @@
 # rubocop locally, the default configuration file `.rubocop.yml` loads
 # our "todo lists" to ignore all current violations.
 AllCops:
-  TargetRailsVersion: 3.2
+  TargetRailsVersion: 4.0
   Exclude:
     - 'bin/**/*'
     - 'db/**/*'
@@ -19,9 +19,6 @@ AllCops:
 ## OFN SETTINGS
 #
 # Cop settings that have been agreed upon by the OFN community
-
-Rails:
-  Enabled: true
 
 Style/Documentation:
   Enabled: false
@@ -60,24 +57,6 @@ Lint/AmbiguousBlockAssociation:
 Lint/UselessAssignment:
   Exclude:
   - spec/**/*
-
-# AFAIK, there is no good alternative to dynamic matchers until we upgrade
-# to Rails 4 and can use #find_by. If there is a better approach, let's do it.
-Rails/DynamicFindBy:
-  Enabled: false
-
-# Same as above, #find_by is not available until Rails 4
-Rails/FindBy:
-  Enabled: false
-
-# Same as above, #update! is not available until Rails 4
-Rails/ActiveRecordAliases:
-  Enabled: false
-
-# This should be the programmer's discretion, perhaps we should review all of
-# the uses of it an make specific exceptions though.
-Rails/SkipsModelValidations:
-  Enabled: false
 
 ## Relaxed.Ruby.Style SETTINGS
 #
