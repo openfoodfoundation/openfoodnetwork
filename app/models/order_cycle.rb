@@ -10,11 +10,11 @@ class OrderCycle < ActiveRecord::Base
 
   # These scope names are prepended with "cached_" because there are existing accessor methods
   # :incoming_exchanges and :outgoing_exchanges.
-  has_many :cached_incoming_exchanges, conditions: { incoming: true }, class_name: "Exchange"
-  has_many :cached_outgoing_exchanges, conditions: { incoming: false }, class_name: "Exchange"
+  has_many :cached_incoming_exchanges, -> { where incoming: true }, class_name: "Exchange"
+  has_many :cached_outgoing_exchanges, -> { where incoming: false }, class_name: "Exchange"
 
-  has_many :suppliers, source: :sender, through: :cached_incoming_exchanges, uniq: true
-  has_many :distributors, source: :receiver, through: :cached_outgoing_exchanges, uniq: true
+  has_many :suppliers, -> { uniq }, source: :sender, through: :cached_incoming_exchanges
+  has_many :distributors, -> { uniq }, source: :receiver, through: :cached_outgoing_exchanges
 
   has_and_belongs_to_many :schedules, join_table: 'order_cycle_schedules'
 
