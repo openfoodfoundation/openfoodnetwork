@@ -26,8 +26,8 @@ module AuthenticationWorkflow
 
   # TODO: Should probably just rename this to create_user
   def create_enterprise_user( attrs = {} )
-    new_user = create(:user, attrs)
-    new_user.spree_roles = [] # for some reason unbeknown to me, this new user gets admin permissions by default.
+    new_user = build(:user, attrs)
+    new_user.spree_roles = [Spree::Role.find_or_create_by!(name: 'user')]
     new_user.save
     new_user
   end
