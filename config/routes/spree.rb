@@ -41,6 +41,7 @@ Spree::Core::Engine.routes.draw do
       match 'orders_and_fulfillment', to: 'admin/reports#orders_and_fulfillment', via: [:get, :post]
       match 'users_and_enterprises', to: 'admin/reports#users_and_enterprises', via: [:get, :post]
       match 'sales_tax', to: 'admin/reports#sales_tax', via: [:get, :post]
+      match 'sales_total', to: 'admin/reports#sales_tax', via: [:get, :post]
       match 'products_and_inventory', to: 'admin/reports#products_and_inventory', via: [:get, :post]
       match 'customers', to: 'admin/reports#customers', via: [:get, :post]
       match 'xero_invoices', to: 'admin/reports#xero_invoices', via: [:get, :post]
