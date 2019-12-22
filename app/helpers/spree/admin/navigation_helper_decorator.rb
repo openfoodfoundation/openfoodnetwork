@@ -1,3 +1,5 @@
+require 'spree/admin/navigation_helper'
+
 module Spree
   module Admin
     module NavigationHelper
