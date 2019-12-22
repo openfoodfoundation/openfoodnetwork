@@ -61,7 +61,7 @@ class OrderCycle < ActiveRecord::Base
 
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
-      scoped
+      where(nil)
     else
       where('coordinator_id IN (?)', user.enterprises.map(&:id))
     end
@@ -70,7 +70,7 @@ class OrderCycle < ActiveRecord::Base
   # Return order cycles that user coordinates, sends to or receives from
   scope :accessible_by, lambda { |user|
     if user.has_spree_role?('admin')
-      scoped
+      where(nil)
     else
       with_exchanging_enterprises_outer.
         where('order_cycles.coordinator_id IN (?) OR enterprises.id IN (?)',

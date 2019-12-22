@@ -119,7 +119,7 @@ class Enterprise < ActiveRecord::Base
     if ready_enterprises.present?
       where("enterprises.id NOT IN (?)", ready_enterprises)
     else
-      where("TRUE")
+      where(nil)
     end
   }
   scope :is_primary_producer, -> { where(is_primary_producer: true) }
@@ -178,7 +178,7 @@ class Enterprise < ActiveRecord::Base
 
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
-      scoped
+      where(nil)
     else
       joins(:enterprise_roles).where('enterprise_roles.user_id = ?', user.id)
     end

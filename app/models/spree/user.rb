@@ -83,7 +83,7 @@ module Spree
 
     def known_users
       if admin?
-        Spree::User.scoped
+        Spree::User.where(nil)
       else
         Spree::User
           .includes(:enterprises)

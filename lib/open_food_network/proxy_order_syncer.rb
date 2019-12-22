@@ -55,7 +55,7 @@ module OpenFoodNetwork
     end
 
     def remove_orphaned_proxy_orders!
-      orphaned_proxy_orders.scoped.delete_all
+      orphaned_proxy_orders.where(nil).delete_all
     end
 
     def orphaned_proxy_orders

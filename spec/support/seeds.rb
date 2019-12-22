@@ -5,7 +5,7 @@
 # leaves them there when deleting the rest (see spec/spec_helper.rb).
 # You can add more entries here if you need them for your tests.
 
-if Spree::Country.scoped.empty?
+if Spree::Country.where(nil).empty?
   Spree::Country.create!({ "name" => "Australia", "iso3" => "AUS", "iso" => "AU", "iso_name" => "AUSTRALIA", "numcode" => "36" }, without_protection: true)
   country = Spree::Country.find_by(name: 'Australia')
   Spree::State.create!({ "name" => "Victoria", "abbr" => "Vic", :country => country }, without_protection: true)

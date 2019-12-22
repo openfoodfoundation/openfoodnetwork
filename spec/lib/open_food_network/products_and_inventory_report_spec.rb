@@ -95,18 +95,18 @@ module OpenFoodNetwork
       end
 
       describe "Filtering variants" do
-        let(:variants) { Spree::Variant.scoped.joins(:product).where(is_master: false) }
+        let(:variants) { Spree::Variant.where(nil).joins(:product).where(is_master: false) }
         it "should return unfiltered variants sans-params" do
           product1 = create(:simple_product, supplier: supplier)
           product2 = create(:simple_product, supplier: supplier)
 
-          expect(subject.filter(Spree::Variant.scoped)).to match_array [product1.master, product1.variants.first, product2.master, product2.variants.first]
+          expect(subject.filter(Spree::Variant.where(nil))).to match_array [product1.master, product1.variants.first, product2.master, product2.variants.first]
         end
         it "should filter deleted products" do
           product1 = create(:simple_product, supplier: supplier)
           product2 = create(:simple_product, supplier: supplier)
           product2.destroy
-          expect(subject.filter(Spree::Variant.scoped)).to match_array [product1.master, product1.variants.first]
+          expect(subject.filter(Spree::Variant.where(nil))).to match_array [product1.master, product1.variants.first]
         end
         describe "based on report type" do
           it "returns only variants on hand" do

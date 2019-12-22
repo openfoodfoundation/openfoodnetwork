@@ -70,7 +70,7 @@ module OpenFoodNetwork
       end
 
       describe "filtering orders" do
-        let!(:orders) { Spree::Order.scoped }
+        let!(:orders) { Spree::Order.where(nil) }
         let!(:supplier) { create(:supplier_enterprise) }
 
         let!(:oc1) { create(:simple_order_cycle) }

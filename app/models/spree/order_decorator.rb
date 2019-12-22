@@ -50,7 +50,7 @@ Spree::Order.class_eval do
   # -- Scopes
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
-      scoped
+      where(nil)
     else
       # Find orders that are distributed by the user or have products supplied by the user
       # WARNING: This only filters orders, you'll need to filter line items separately using LineItem.managed_by
@@ -62,7 +62,7 @@ Spree::Order.class_eval do
 
   scope :distributed_by_user, lambda { |user|
     if user.has_spree_role?('admin')
-      scoped
+      where(nil)
     else
       where('spree_orders.distributor_id IN (?)', user.enterprises)
     end
