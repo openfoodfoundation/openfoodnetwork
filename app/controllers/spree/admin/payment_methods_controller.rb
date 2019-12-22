@@ -69,7 +69,7 @@ module Spree
                        model_class.accessible_by(current_ability, action)
 
                      else
-                       model_class.scoped
+                       model_class.where(nil)
                      end
 
         collection = collection.managed_by(spree_current_user).by_name # This line added

@@ -131,7 +131,7 @@ module Spree
       end
 
       def load_roles
-        @roles = Spree::Role.scoped
+        @roles = Spree::Role.where(nil)
       end
 
       def new_email_unconfirmed?

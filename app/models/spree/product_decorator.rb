@@ -115,7 +115,7 @@ Spree::Product.class_eval do
 
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
-      scoped
+      where(nil)
     else
       where('supplier_id IN (?)', user.enterprises.select("enterprises.id"))
     end

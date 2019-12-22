@@ -26,7 +26,7 @@ Spree::LineItem.class_eval do
   # -- Scopes
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
-      scoped
+      where(nil)
     else
       # Find line items that are from orders distributed by the user or supplied by the user
       joins(variant: :product).
