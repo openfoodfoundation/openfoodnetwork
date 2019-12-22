@@ -6,7 +6,7 @@ describe "Zones" do
   before(:each) do
     quick_login_as_admin
     Spree::Zone.delete_all
-    visit spree.admin_path
+    visit spree.admin_dashboard_path
     click_link "Configuration"
   end
 

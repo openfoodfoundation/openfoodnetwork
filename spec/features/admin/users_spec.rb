@@ -15,7 +15,7 @@ feature "Managing users" do
         create(:user, email: "a@example.com")
         create(:user, email: "b@example.com")
 
-        visit spree.admin_path
+        visit spree.admin_dashboard_path
         click_link "Users"
       end
 

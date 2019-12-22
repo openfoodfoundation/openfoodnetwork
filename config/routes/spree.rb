@@ -117,7 +117,7 @@ Spree::Core::Engine.routes.draw do
     resources :tax_categories
   end
 
-  #match '/admin', :to => 'admin/overview#index', :as => :admin, via: :get
+  get '/admin', to: 'admin/overview#index', as: :admin_dashboard
   get '/admin/orders/bulk_management', to: 'admin/orders#bulk_management', as: :admin_bulk_order_management
   match '/admin/payment_methods/show_provider_preferences', to: 'admin/payment_methods#show_provider_preferences', via: :get
   put 'credit_cards/new_from_token', to: 'credit_cards#new_from_token'
