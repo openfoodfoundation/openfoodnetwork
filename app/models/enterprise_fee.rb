@@ -27,7 +27,7 @@ class EnterpriseFee < ActiveRecord::Base
     if user.has_spree_role?('admin')
       where(nil)
     else
-      where('enterprise_id IN (?)', user.enterprises)
+      where('enterprise_id IN (?)', user.enterprises.select('enterprises.id').map(&:id))
     end
   }
 
