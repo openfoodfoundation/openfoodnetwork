@@ -44,7 +44,7 @@ Spree::Admin::OrdersController.class_eval do
   # Re-implement spree method so that it redirects to edit instead of rendering edit
   #   This allows page reloads while adding variants to the order (/edit), without being redirected to customer details page (/update)
   def update
-    unless @order.update_attributes(params[:order]) && @order.line_items.present?
+    unless @order.update_attributes(order_params) && @order.line_items.present?
       @order.errors.add(:line_items, Spree.t('errors.messages.blank')) if @order.line_items.empty?
       return redirect_to edit_admin_order_path(@order), flash: { error: @order.errors.full_messages.join(', ') }
     end
@@ -89,6 +89,10 @@ Spree::Admin::OrdersController.class_eval do
   end
 
   private
+
+  def order_params
+    params.require(:order).permit(:distributor_id, :order_cycle_id)
+  end
 
   def require_distributor_abn
     if @order.distributor.abn.blank?
