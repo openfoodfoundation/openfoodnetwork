@@ -45,7 +45,7 @@ module ProductImport
 
         next if @enterprises_index.key? enterprise_name
 
-        enterprise = Enterprise.find_by(name: enterprise_name, select: 'id, is_primary_producer')
+        enterprise = Enterprise.where(name: enterprise_name).select(:id, :is_primary_producer)
 
         @enterprises_index[enterprise_name] =
           { id: enterprise.try(:id),
@@ -60,7 +60,8 @@ module ProductImport
         next unless entry.producer
 
         producer_name = entry.producer
-        producer_id = @producers_index[producer_name] || Enterprise.find_by(name: producer_name, select: 'id, name').try(:id)
+        producer_id = @producers_index[producer_name] ||
+                      Enterprise.where(name: producer_name).select(:id, :name).try(:id)
         @producers_index[producer_name] = producer_id
       end
       @producers_index
