@@ -63,7 +63,7 @@ Spree::Admin::BaseController.class_eval do
   def active_distributors_not_ready_for_checkout
     ocs = OrderCycle.managed_by(spree_current_user).active
     distributors = ocs.includes(:distributors).map(&:distributors).flatten.uniq
-    Enterprise.where('enterprises.id IN (?)', distributors).not_ready_for_checkout
+    Enterprise.where(id: distributors.map(&:id)).not_ready_for_checkout
   end
 
   def active_distributors_not_ready_for_checkout_message(distributors)
