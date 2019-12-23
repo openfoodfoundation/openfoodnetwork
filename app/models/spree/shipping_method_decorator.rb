@@ -14,8 +14,9 @@ Spree::ShippingMethod.class_eval do
     if user.has_spree_role?('admin')
       where(nil)
     else
+      user_enterprise_ids = user.enterprises.select('enterprises.id').map(&:id)
       joins(:distributors).
-        where('distributors_shipping_methods.distributor_id IN (?)', user.enterprises).
+        where('distributors_shipping_methods.distributor_id IN (?)', user_enterprise_ids).
         select('DISTINCT spree_shipping_methods.*')
     end
   }
