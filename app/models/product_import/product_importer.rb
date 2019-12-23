@@ -214,7 +214,9 @@ module ProductImport
     end
 
     def accepted_mimetype
-      File.extname(@file.path).in?('.csv', '.xls', '.xlsx', '.ods') ? @file.path.split('.').last.to_sym : false
+      return false unless ['.csv', '.xls', '.xlsx', '.ods'].include? File.extname(@file.path)
+
+      @file.path.split('.').last.to_sym
     end
 
     def headers
