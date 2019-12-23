@@ -5,7 +5,7 @@ module Admin
     include OpenFoodNetwork::SpreeApiKeyLoader
     include EnterprisesHelper
 
-    prepend_before_filter :load_data
+    before_filter :load_data
     before_filter :load_collection, only: [:bulk_update]
     before_filter :load_spree_api_key, only: :index
 
