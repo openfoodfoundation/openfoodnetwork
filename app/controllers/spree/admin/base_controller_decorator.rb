@@ -8,6 +8,12 @@ Spree::Admin::BaseController.class_eval do
   before_filter :set_locale
   before_filter :warn_invalid_order_cycles, if: :html_request?
 
+  # Temporary measure to help debugging strong_parameters
+  rescue_from ActiveModel::ForbiddenAttributesError, with: :print_params
+  def print_params
+    raise ActiveModel::ForbiddenAttributesError, params.to_s
+  end
+
   # Warn the user when they have an active order cycle with hubs that are not ready
   # for checkout (ie. does not have valid shipping and payment methods).
   def warn_invalid_order_cycles
