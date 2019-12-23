@@ -6,7 +6,7 @@ Spree::Admin::BaseController.class_eval do
   layout 'spree/layouts/admin'
 
   before_filter :set_locale
-  # before_filter :warn_invalid_order_cycles, if: :html_request? # Re-enable when queries are fixed
+  before_filter :warn_invalid_order_cycles, if: :html_request?
 
   # Warn the user when they have an active order cycle with hubs that are not ready
   # for checkout (ie. does not have valid shipping and payment methods).
@@ -63,7 +63,7 @@ Spree::Admin::BaseController.class_eval do
   def active_distributors_not_ready_for_checkout
     ocs = OrderCycle.managed_by(spree_current_user).active
     distributors = ocs.includes(:distributors).map(&:distributors).flatten.uniq
-    Enterprise.where('enterprises.id IN (?)', distributors).not_ready_for_checkout
+    Enterprise.where(id: distributors.map(&:id)).not_ready_for_checkout
   end
 
   def active_distributors_not_ready_for_checkout_message(distributors)

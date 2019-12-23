@@ -118,7 +118,7 @@ class Enterprise < ActiveRecord::Base
     # checkout.
     ready_enterprises = Enterprise.ready_for_checkout.select('enterprises.id')
     if ready_enterprises.present?
-      where("enterprises.id NOT IN (?)", ready_enterprises)
+      where.not(id: ready_enterprises.map(&:id))
     else
       where(nil)
     end

@@ -63,7 +63,7 @@ class OrderCycle < ActiveRecord::Base
     if user.has_spree_role?('admin')
       where(nil)
     else
-      where('coordinator_id IN (?)', user.enterprises.map(&:id))
+      where(coordinator_id: user.enterprises.select('enterprises.id').map(&:id))
     end
   }
 
