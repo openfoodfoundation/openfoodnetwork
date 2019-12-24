@@ -2858,7 +2858,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     allow_ssl_in_development_and_test: "Allow SSL to be used when in development and test modes"
     allow_ssl_in_production: "Allow SSL to be used in production mode"
     allow_ssl_in_staging: "Allow SSL to be used in staging mode"
-    check_for_spree_alerts: "Check for Spree alerts"
     currency_decimal_mark: "Currency decimal mark"
     currency_settings: "Currency Settings"
     currency_symbol_position: Put "currency symbol before or after dollar amount?"
