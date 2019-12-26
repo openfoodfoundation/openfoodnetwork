@@ -95,7 +95,7 @@ class ApplicationController < ActionController::Base
       current_order.empty!
       current_order.set_distribution! nil, nil
       flash[:info] = "The hub you have selected is temporarily closed for orders. Please try again later."
-      redirect_to root_url
+      redirect_to main_app.root_url
     end
   end
 
@@ -105,7 +105,7 @@ class ApplicationController < ActionController::Base
       current_order.empty!
       current_order.set_order_cycle! nil
       flash[:info] = "The order cycle you've selected has just closed. Please try again!"
-      redirect_to root_url
+      redirect_to main_app.root_url
     end
   end
 

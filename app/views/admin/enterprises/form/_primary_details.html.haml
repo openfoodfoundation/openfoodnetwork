@@ -54,7 +54,7 @@
   .row{ ng: { show: "Enterprise.sells == 'own' || Enterprise.sells == 'any'" } }
     .three.columns.alpha
       = f.label :permalink, t('.permalink')
-      %div{'ofn-with-tip' => t('.permalink_tip', link: spree.root_url)}
+      %div{'ofn-with-tip' => t('.permalink_tip', link: main_app.root_url)}
         %a= t('admin.whats_this')
     .six.columns
       = f.text_field :permalink, { 'ng-model' => "Enterprise.permalink", placeholder: "eg. your-shop-name", 'ng-model-options' => "{ updateOn: 'default blur', debounce: {'default': 300, 'blur': 0} }" }
@@ -69,7 +69,7 @@
       %div{'ofn-with-tip' => t('.link_to_front_tip')}
         %a= t('admin.whats_this')
     .eight.columns.omega
-      = surround spree.root_url, "/shop" do
+      = surround main_app.root_url, "/shop" do
         {{Enterprise.permalink}}
   .row
     .three.columns.alpha
