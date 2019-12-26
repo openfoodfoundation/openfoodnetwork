@@ -112,6 +112,12 @@ Spree::Core::Engine.routes.draw do
       end
 
       resource :customer, :controller => "orders/customer_details"
+
+      resources :return_authorizations do
+        member do
+          put :fire
+        end
+      end
     end
 
     resources :users do
