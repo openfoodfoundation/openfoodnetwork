@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource_or_scope)
     return session[:shopfront_redirect] if session[:shopfront_redirect]
 
-    stored_location_for(resource_or_scope) || signed_in_root_path(resource_or_scope)
+    stored_location_for(resource_or_scope) || main_app.root_path
   end
 
   def after_sign_out_path_for(_resource_or_scope)
