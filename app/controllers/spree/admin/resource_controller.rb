@@ -104,22 +104,22 @@ module Spree
 
         def new_action
           @callbacks ||= {}
-          @callbacks[:new_action] ||= Spree::ActionCallbacks.new
+          @callbacks[:new_action] ||= ActionCallbacks.new
         end
 
         def create
           @callbacks ||= {}
-          @callbacks[:create] ||= Spree::ActionCallbacks.new
+          @callbacks[:create] ||= ActionCallbacks.new
         end
 
         def update
           @callbacks ||= {}
-          @callbacks[:update] ||= Spree::ActionCallbacks.new
+          @callbacks[:update] ||= ActionCallbacks.new
         end
 
         def destroy
           @callbacks ||= {}
-          @callbacks[:destroy] ||= Spree::ActionCallbacks.new
+          @callbacks[:destroy] ||= ActionCallbacks.new
         end
       end
 
