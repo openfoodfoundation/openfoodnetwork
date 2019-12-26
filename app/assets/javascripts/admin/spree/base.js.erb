@@ -21,12 +21,12 @@ jQuery(function($) {
   if (typeof $('.field.checkbox label').vAlign === 'function' )
     $('.field.checkbox label').vAlign()
 
-  // if (typeof Spree !== 'undefined') {
-  // $('.main-menu-wrapper ul').AdaptiveMenu({
-  //     text: "<a href='#'><i class='icon-chevron-down'></i> " + Spree.translations.more + "</a>",
-  //     klass: "dropdown"
-  //   });
-  // }
+  if (typeof Spree !== 'undefined') {
+    $('.main-menu-wrapper ul').AdaptiveMenu({
+      text: "<a href='#'><i class='icon-chevron-down'></i> " + Spree.translations.more + "</a>",
+      klass: "dropdown"
+    });
+  }
 
   // Add some tips
   if (typeof $('.with-tip').powerTip === 'function' ) {
@@ -173,6 +173,28 @@ $(document).ready(function() {
     })
     $(target).prepend(new_table_row);
   })
+
+  $('body').on('click', '.delete-resource', function() {
+    var el = $(this);
+    if (confirm(el.data("confirm"))) {
+      $.ajax({
+        type: 'POST',
+        url: $(this).attr("href"),
+        data: {
+          _method: 'delete',
+          authenticity_token: AUTH_TOKEN
+        },
+        dataType: 'html',
+        success: function(response) {
+          el.parents("tr").fadeOut('hide');
+        },
+        error: function(response, textStatus, errorThrown) {
+          show_flash_error(response.responseText);
+        }
+      });
+    }
+    return false;
+  });
 
   // Fix sortable helper
   var fixHelper = function(e, ui) {
