@@ -86,10 +86,6 @@ module Spree
         raise(ActionController::InvalidAuthenticityToken)
       end
 
-      def config_locale
-        Spree::Backend::Config[:locale]
-      end
-
       private
 
       def html_request?
