@@ -1,4 +1,4 @@
-require 'spree/backend/action_callbacks'
+require 'action_callbacks'
 
 module Spree
   module Admin
