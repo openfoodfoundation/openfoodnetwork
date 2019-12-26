@@ -71,7 +71,7 @@ module Spree
       @order = order_to_update
       unless @order
         flash[:error] = t(:order_not_found)
-        redirect_to(root_path) && return
+        redirect_to(main_app.root_path) && return
       end
 
       if @order.update_attributes(params[:order])

@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
     referer_path = OpenFoodNetwork::RefererParser.path(request.referer)
     if referer_path
       is_checkout_path_the_referer = [main_app.checkout_path].include?(referer_path)
-      session["spree_user_return_to"] = is_checkout_path_the_referer ? referer_path : root_path
+      session["spree_user_return_to"] = is_checkout_path_the_referer ? referer_path : main_app.root_path
     end
   end
 
@@ -52,7 +52,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_out_path_for(_resource_or_scope)
-    session[:shopfront_redirect] || root_path
+    session[:shopfront_redirect] || main_app.root_path
   end
 
   private
@@ -74,7 +74,7 @@ class ApplicationController < ActionController::Base
 
   def require_distributor_chosen
     unless @distributor = current_distributor
-      redirect_to spree.root_path
+      redirect_to main_app.root_path
       false
     end
   end

@@ -1,7 +1,7 @@
 %aside.left-off-canvas-menu.show-for-medium-down{ ng: { controller: "OffcanvasCtrl" } }
   %ul.off-canvas-list
     %li.ofn-logo
-      %a{href: root_path}
+      %a{href: main_app.root_path}
         %img{src: ContentConfig.logo_mobile.url, srcset: ContentConfig.logo_mobile_svg.url, width: "75", height: "26"}
     - [*1..7].each do |menu_number|
       - menu_name = "menu_#{menu_number}"
