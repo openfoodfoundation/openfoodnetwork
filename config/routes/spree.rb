@@ -120,6 +120,8 @@ Spree::Core::Engine.routes.draw do
       end
     end
 
+    resources :reports
+
     resources :users do
       member do
         put :generate_api_key
@@ -134,6 +136,7 @@ Spree::Core::Engine.routes.draw do
     end
 
     resource :image_settings
+    resources :trackers
 
     resources :zones
     resources :countries do
@@ -160,6 +163,10 @@ Spree::Core::Engine.routes.draw do
     resources :tax_rates
     resource  :tax_settings
     resources :tax_categories
+
+    resources :shipping_methods
+    resources :shipping_categories
+    resources :payment_methods
   end
 
   resources :orders do
