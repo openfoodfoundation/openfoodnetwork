@@ -83,6 +83,8 @@ Spree::Core::Engine.routes.draw do
 
     get '/variants/search', :to => "variants#search", :as => :search_variants
 
+    resources :properties
+
     resources :orders do
       member do
         put :fire
