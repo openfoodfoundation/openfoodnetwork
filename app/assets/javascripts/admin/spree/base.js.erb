@@ -21,7 +21,9 @@ jQuery(function($) {
   if (typeof $('.field.checkbox label').vAlign === 'function' )
     $('.field.checkbox label').vAlign()
 
-  if (typeof Spree !== 'undefined') {
+  // We activate AdaptiveMenu only if not on webdriver
+  // Re-adjusting the admin menu during tests causes tests to fail.
+  if (!navigator.webdriver && typeof Spree !== 'undefined') {
     $('.main-menu-wrapper ul').AdaptiveMenu({
       text: "<a href='#'><i class='icon-chevron-down'></i> " + Spree.translations.more + "</a>",
       klass: "dropdown"
