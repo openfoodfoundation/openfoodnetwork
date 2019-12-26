@@ -17,9 +17,9 @@
 
           %div.item-thumb-image{"data-hook" => "order_item_image"}
             - if item.variant.images.length == 0
-              = link_to mini_image(item.variant.product), item.variant.product
+              = mini_image(item.variant.product)
             - else
-              = link_to image_tag(item.variant.images.first.attachment.url(:mini)), item.variant.product
+              = image_tag(item.variant.images.first.attachment.url(:mini))
 
 
           = render 'spree/shared/line_item_name', line_item: item
