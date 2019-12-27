@@ -8,6 +8,13 @@ angular.module('admin.orderCycles')
     $scope.productsLoading = ->
       RequestMonitor.loading
 
+    $scope.exchangeLoadedVariants = (exchange) ->
+      loaded_variants = 0
+      angular.forEach $scope.enterprises[exchange.enterprise_id].supplied_products, (product) ->
+        loaded_variants += product.variants.length
+
+      loaded_variants
+
     $scope.setSelectAllVariantsCheckboxValue = (exchange, totalNumberOfVariants) ->
       exchange.select_all_variants = $scope.exchangeSelectedVariants(exchange) >= totalNumberOfVariants
 
