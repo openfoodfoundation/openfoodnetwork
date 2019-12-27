@@ -318,7 +318,7 @@ class Enterprise < ActiveRecord::Base
   def distributed_taxons
     Spree::Taxon.
       joins(:products).
-      where(spree_products: { id: Spree::Product.in_distributor(self).select(:id) }).
+      where(spree_products: { id: Spree::Product.select(:id).in_distributor(self) }).
       select('DISTINCT spree_taxons.*')
   end
 
@@ -334,7 +334,7 @@ class Enterprise < ActiveRecord::Base
   def supplied_taxons
     Spree::Taxon.
       joins(:products).
-      where(spree_products: { id: Spree::Product.in_supplier(self).select(:id) }).
+      where(spree_products: { id: Spree::Product.select(:id).in_supplier(self) }).
       select('DISTINCT spree_taxons.*')
   end
 
