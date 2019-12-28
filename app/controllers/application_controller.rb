@@ -23,7 +23,11 @@ class ApplicationController < ActionController::Base
     referer_path = OpenFoodNetwork::RefererParser.path(request.referer)
     if referer_path
       is_checkout_path_the_referer = [main_app.checkout_path].include?(referer_path)
-      session["spree_user_return_to"] = is_checkout_path_the_referer ? referer_path : main_app.root_path
+      session["spree_user_return_to"] = if is_checkout_path_the_referer
+                                          referer_path
+                                        else
+                                          main_app.root_path
+                                        end
     end
   end
 
@@ -86,17 +90,19 @@ class ApplicationController < ActionController::Base
   end
 
   def check_hub_ready_for_checkout
-    # This condition is more rigourous than required by development to avoid coupling this
-    # condition to every controller spec
-    if current_distributor && current_order &&
-       current_distributor.respond_to?(:ready_for_checkout?) &&
-       !current_distributor.ready_for_checkout?
-
+    if current_distributor_closed?
       current_order.empty!
       current_order.set_distribution! nil, nil
       flash[:info] = "The hub you have selected is temporarily closed for orders. Please try again later."
       redirect_to main_app.root_url
     end
+  end
+
+  def current_distributor_closed?
+    current_distributor &&
+      current_order &&
+      current_distributor.respond_to?(:ready_for_checkout?) &&
+      !current_distributor.ready_for_checkout?
   end
 
   def check_order_cycle_expiry
