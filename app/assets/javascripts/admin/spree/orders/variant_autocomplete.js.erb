@@ -29,10 +29,10 @@ $(document).ready(function() {
     });
 
     //handle edit click
-    // $('a.edit-item').click(toggleItemEdit);
+    $('a.edit-item').click(toggleItemEdit);
 
     //handle cancel click
-    // $('a.cancel-item').click(toggleItemEdit);
+    $('a.cancel-item').click(toggleItemEdit);
 
     handle_save_click = function(){
       var save = $(this);
@@ -46,7 +46,7 @@ $(document).ready(function() {
       adjustItems(shipment_number, variant_id, quantity);
       return false;
     }
-    // $('a.save-item').click(handle_save_click);
+    $('a.save-item').click(handle_save_click);
 
     handle_delete_click = function(){
       var del = $(this);
@@ -57,7 +57,7 @@ $(document).ready(function() {
 
       adjustItems(shipment_number, variant_id, 0);
     }
-    // $('a.delete-item').click(handle_delete_click);
+    $('a.delete-item').click(handle_delete_click);
   }
 });
 
@@ -138,40 +138,4 @@ addVariantFromStockLocation = function() {
     adjustItems(shipment.number, variant_id, quantity);
   }
   return 1
-}
-
-formatVariantResult = function(variant) {
-  if (variant["images"][0] != undefined && variant["images"][0].urls != undefined) {
-    variant.image = variant.images[0].urls.mini
-  }
-  return variantTemplate({ variant: variant })
-}
-
-$.fn.variantAutocomplete = function() {
-  this.parent().children(".options_placeholder").attr('id', this.parent().data('index'))
-  this.select2({
-    placeholder: Spree.translations.variant_placeholder,
-    minimumInputLength: 3,
-    ajax: {
-      url: Spree.url(Spree.routes.variants_search),
-      datatype: 'json',
-      data: function(term, page) {
-        return {
-          q: {
-            "product_name_or_sku_cont": term
-          }
-        }
-      },
-      results: function (data, page) {
-        window.variants = data['variants'];
-
-        return { results: data['variants'] }
-      }
-    },
-    formatResult: formatVariantResult,
-    formatSelection: function (variant) {
-      $(this.element).parent().children('.options_placeholder').html(variant.options_text)
-      return variant.name;
-    }
-  })
 }
