@@ -3,6 +3,9 @@ angular.module("admin.orders").directive 'customerSearchOverride', ->
   scope:
     distributorId: '@'
   link: (scope, element, attr) ->
+    if $('#customer_autocomplete_template').length > 0
+      customerTemplate = Handlebars.compile($('#customer_autocomplete_template').text())
+
     formatCustomerResult = (customer) ->
       customerTemplate
         customer: customer
