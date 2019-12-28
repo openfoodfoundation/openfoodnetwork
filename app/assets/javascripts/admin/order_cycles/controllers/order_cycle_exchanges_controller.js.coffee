@@ -58,9 +58,8 @@ angular.module('admin.orderCycles')
 
       incoming = true if $scope.view == 'incoming'
       params = { exchange_id: exchange.id, enterprise_id: exchange.enterprise_id, order_cycle_id: $scope.order_cycle.id, incoming: incoming, page: page}
-      ExchangeProduct.index params, (products, num_of_pages, num_of_products) ->
+      ExchangeProduct.index params, (products, num_of_pages) ->
         enterprise.num_of_pages = num_of_pages
-        enterprise.num_of_products = num_of_products
         enterprise.supplied_products.push products...
 
     $scope.loadMoreExchangeProducts = (exchange) ->
