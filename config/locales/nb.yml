@@ -991,9 +991,6 @@ nb:
         name: Kunder
       products_and_inventory:
         name: Produkter & Varelager
-      sales_total:
-        name: Salg Totalt
-        description: Salg totalt for Alle bestillinger
       users_and_enterprises:
         name: Brukere og Bedrifter
         description: Bedriftseierskap & Status
@@ -2718,7 +2715,6 @@ nb:
     allow_ssl_in_development_and_test: "Tillat at SSL brukes i utviklings- og testmodus"
     allow_ssl_in_production: "Tillat at SSL brukes i produksjonsmodus"
     allow_ssl_in_staging: "Tillat at SSL brukes i staging-modus"
-    check_for_spree_alerts: "Se etter Spree-varsler"
     currency_decimal_mark: "Valuta desimaltegn"
     currency_settings: "Valutainnstillinger"
     currency_symbol_position: Sett "valutasymbol før eller etter dollarbeløp?"

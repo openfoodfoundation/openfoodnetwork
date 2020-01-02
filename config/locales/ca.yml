@@ -2,6 +2,8 @@ ca:
   language_name: "Català"
   activerecord:
     attributes:
+      enterprise_fee:
+        fee_type: Tipus de comissió
       spree/order:
         payment_state: Estat del Pagament
         shipment_state: Estat de la Tramesa
@@ -989,9 +991,6 @@ ca:
         name: Consumidores
       products_and_inventory:
         name: Productes & Inventari
-      sales_total:
-        name: Total de vendes
-        description: Total de vendes per a totes les comandes
       users_and_enterprises:
         name: Usuaris & Organitzacions
         description: Propietat i estatus de l'organització
@@ -2713,7 +2712,6 @@ ca:
     allow_ssl_in_development_and_test: "Permet que s'utilitzi SSL quan s'utilitzi el desenvolupament i els modes de prova"
     allow_ssl_in_production: "Permet que SSL s'utilitzi en mode de producció"
     allow_ssl_in_staging: "Permet que SSL s'utilitzi en mode de staging"
-    check_for_spree_alerts: "Comproveu si hi ha alertes Spree"
     currency_decimal_mark: "Separador decimal de moneda"
     currency_settings: "Configuració de moneda"
     currency_symbol_position: Posa "símbol de moneda abans o després d'una quantitat"?

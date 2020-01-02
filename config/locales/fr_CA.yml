@@ -2,6 +2,8 @@ fr_CA:
   language_name: "Français"
   activerecord:
     attributes:
+      enterprise_fee:
+        fee_type: Type de commissions
       spree/order:
         payment_state: Statut du paiement
         shipment_state: Statut de la livraison
@@ -989,9 +991,6 @@ fr_CA:
         name: Acheteurs
       products_and_inventory:
         name: Produits et Catalogues
-      sales_total:
-        name: Total des Ventes
-        description: Total des Ventes pour toutes les Commandes
       users_and_enterprises:
         name: Utilisateurs & Entreprises
         description: Gérance de l'Entreprise & Droits
@@ -1198,7 +1197,7 @@ fr_CA:
   menu_4_title: "Groupes"
   menu_4_url: "/groups"
   menu_5_title: "A propos"
-  menu_5_url: "https://about.openfoodnetwork.org.au/"
+  menu_5_url: "https://about.openfoodnetwork.ca"
   menu_6_title: "Se connecter"
   menu_6_url: "https://openfoodnetwork.org/au/connect/"
   menu_7_title: "Apprendre"
@@ -2721,7 +2720,6 @@ fr_CA:
     allow_ssl_in_development_and_test: "Autoriser l'utilisation SSL dans les environnements de développement et de test"
     allow_ssl_in_production: "Autoriser l'utilisation SSL dans l'environnement de production"
     allow_ssl_in_staging: "Autoriser l'utilisation SSL dans l'environnement de staging"
-    check_for_spree_alerts: "Vérifier les alertes Spree"
     currency_decimal_mark: "Symbole du séparateur de décimales"
     currency_settings: "Paramètres devise"
     currency_symbol_position: Mettre le symbole de la devise avant ou après le montant ?

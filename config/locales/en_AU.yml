@@ -2,6 +2,8 @@ en_AU:
   language_name: "English"
   activerecord:
     attributes:
+      enterprise_fee:
+        fee_type: Fee Type
       spree/order:
         payment_state: Payment State
         shipment_state: Shipment State
@@ -987,9 +989,6 @@ en_AU:
         name: Customers
       products_and_inventory:
         name: Products & Inventory
-      sales_total:
-        name: Sales Total
-        description: Sales Total For All Orders
       users_and_enterprises:
         name: Users & Enterprises
         description: Enterprise Ownership & Status
@@ -1603,11 +1602,11 @@ en_AU:
   producers_signup_title: Sign up as a producer
   producers_signup_headline: Food producers, empowered.
   producers_signup_motivation: Sell your food and tell your stories to diverse new markets. Save time and money on every overhead. We support innovation without the risk. We've levelled the playing field.
-  producers_signup_send: Join now
+  producers_signup_send: Register
   producers_signup_enterprise: Enterprise Accounts
   producers_signup_studies: Stories from our producers.
   producers_signup_cta_headline: Join now!
-  producers_signup_cta_action: Join now
+  producers_signup_cta_action: Register
   producers_signup_detail: Here's the detail.
   products_item: Item
   products_description: Description
@@ -1637,7 +1636,7 @@ en_AU:
   shops_signup_title: Sign up as a hub
   shops_signup_headline: Food hubs, unlimited.
   shops_signup_motivation: Whatever your model, we support you. However you change, we're with you. We're non-profit, independent, and open-sourced. We're the software partners you've dreamed of.
-  shops_signup_action: Join now
+  shops_signup_action: Register
   shops_signup_pricing: Enterprise Accounts
   shops_signup_stories: Stories from our hubs.
   shops_signup_help: We're ready to help.
@@ -1858,7 +1857,7 @@ en_AU:
       finished:
         headline: "Finished!"
         thanks: "Thanks for filling out the details for %{enterprise}."
-        login: "You can change or update your enterprise at any stage by logging into Open Food Network and going to Admin."
+        login: "To manage your new Enterprise, go to openfoodnetwork.org.au/admin"
         action: "Open Food Network home"
   back: "Back"
   continue: "Continue"
@@ -2708,7 +2707,6 @@ en_AU:
     allow_ssl_in_development_and_test: "Allow SSL to be used when in development and test modes"
     allow_ssl_in_production: "Allow SSL to be used in production mode"
     allow_ssl_in_staging: "Allow SSL to be used in staging mode"
-    check_for_spree_alerts: "Check for Spree alerts"
     currency_decimal_mark: "Currency decimal mark"
     currency_settings: "Currency Settings"
     currency_symbol_position: Put "currency symbol before or after dollar amount?"

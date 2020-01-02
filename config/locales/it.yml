@@ -2,6 +2,8 @@ it:
   language_name: "Italiano"
   activerecord:
     attributes:
+      enterprise_fee:
+        fee_type: Tipo di tariffa
       spree/order:
         payment_state: Stato del pagamento
         shipment_state: Stato della spedizione
@@ -989,9 +991,6 @@ it:
         name: Consumatori
       products_and_inventory:
         name: Prodotti e inventario
-      sales_total:
-        name: Totale vendite
-        description: Totale vendite per tutti gli ordini
       users_and_enterprises:
         name: Utenti e aziende
         description: Proprietà e status aziende
@@ -2713,7 +2712,6 @@ it:
     allow_ssl_in_development_and_test: "Consentire l'utilizzo di SSL nelle modalità di sviluppo e test"
     allow_ssl_in_production: "Consentire l'utilizzo di SSL in modalità produzione"
     allow_ssl_in_staging: "Consentire l'utilizzo di SSL nella modalità di gestione temporanea"
-    check_for_spree_alerts: "Controlla gli avvisi Spree"
     currency_decimal_mark: "Valuta decimale"
     currency_settings: "Impostazioni valuta"
     currency_symbol_position: Metti "simbolo di valuta prima o dopo l'importo?"

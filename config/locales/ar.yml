@@ -990,9 +990,6 @@ ar:
         name: العملاء
       products_and_inventory:
         name: المنتجات والمخزون
-      sales_total:
-        name: إجمالي المبيعات
-        description: إجمالي المبيعات لجميع الطلبات
       users_and_enterprises:
         name: المستخدمين والمؤسسات
         description: ملكية الشركات وحالتها
@@ -2719,7 +2716,6 @@ ar:
     allow_ssl_in_development_and_test: "السماح باستخدام طبقة المقابس الآمنة SSL عندما تكون في أوضاع التطوير والاختبار"
     allow_ssl_in_production: "السماح باستخدام طبقة المقابس الآمنة في وضع الإنتاج"
     allow_ssl_in_staging: "اسمح باستخدام طبقة المقابس الآمنة في وضع التدريج"
-    check_for_spree_alerts: "تحقق من وجود تنبيهات Spree"
     currency_decimal_mark: "العملة العشرية"
     currency_settings: "إعدادات العملة"
     currency_symbol_position: ضع &quot;رمز العملة قبل أو بعد مبلغ الدولار؟&quot;

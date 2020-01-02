@@ -2,6 +2,8 @@ de_DE:
   language_name: "Deutsch"
   activerecord:
     attributes:
+      enterprise_fee:
+        fee_type: Art der Gebühr
       spree/order:
         payment_state: Zahlungsstatus
         shipment_state: Lieferstatus
@@ -989,9 +991,6 @@ de_DE:
         name: Kunden
       products_and_inventory:
         name: Produkte und Katalog
-      sales_total:
-        name: Gesamtumsatz
-        description: Gesamtumsatz für alle Bestellungen
       users_and_enterprises:
         name: Benutzer und Unternehmen
         description: Unternehmenseigentum & Status
@@ -2713,7 +2712,6 @@ de_DE:
     allow_ssl_in_development_and_test: "Erlauben Sie SSL in Entwicklungs- und Testmodi"
     allow_ssl_in_production: "Zulassen, dass SSL im Produktionsmodus verwendet wird"
     allow_ssl_in_staging: "Zulassen, dass SSL im Staging-Modus verwendet wird"
-    check_for_spree_alerts: "Suchen Sie nach Spree-Benachrichtigungen"
     currency_decimal_mark: "Dezimalzeichen der Währung"
     currency_settings: "Währungseinstellungen"
     currency_symbol_position: Setzen Sie "Währungssymbol vor oder nach dem Dollarbetrag?"

@@ -2,6 +2,8 @@ pt:
   language_name: "Português"
   activerecord:
     attributes:
+      enterprise_fee:
+        fee_type: Tipo de Taxa
       spree/order:
         payment_state: Estado do Pagamento
         shipment_state: Estado do envio
@@ -954,9 +956,6 @@ pt:
         name: Consumidores/as
       products_and_inventory:
         name: Produtos & Inventário
-      sales_total:
-        name: Total de Vendas
-        description: Total de Vendas para Todas as Encomendas
       users_and_enterprises:
         name: Utilizadores & Organizações
         description: Estado & Propriedade da Organização
@@ -2646,7 +2645,6 @@ pt:
     allow_ssl_in_development_and_test: "Permitir que SSL seja utilizado quando em desenvolvimento e testes"
     allow_ssl_in_production: "Permitir que SSL seja usado em produção"
     allow_ssl_in_staging: "Permitir que SSL seja usado em pre-produção"
-    check_for_spree_alerts: "Veja Alertas do Spree"
     currency_decimal_mark: "Separador Decimal da Moeda"
     currency_settings: "Configurações de Moeda"
     currency_symbol_position: Colocar o símbolo de moeda antes ou depois do valor?

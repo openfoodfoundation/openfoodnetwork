@@ -992,9 +992,6 @@ fr:
         name: Acheteurs
       products_and_inventory:
         name: Listings produits
-      sales_total:
-        name: Total des Ventes
-        description: Total des Ventes pour toutes les Commandes
       users_and_enterprises:
         name: Gestionnaires & Entreprises
         description: Gestionnaires de l'Entreprise & Droits
@@ -2748,7 +2745,6 @@ fr:
     allow_ssl_in_development_and_test: "Autoriser l'utilisation SSL dans les environnements de développement et de test"
     allow_ssl_in_production: "Autoriser l'utilisation SSL dans l'environnement de production"
     allow_ssl_in_staging: "Autoriser l'utilisation SSL dans l'environnement de staging"
-    check_for_spree_alerts: "Vérifier les alertes Spree"
     currency_decimal_mark: "Symbole du séparateur de décimales"
     currency_settings: "Paramètres devise"
     currency_symbol_position: Mettre le symbole de la devise avant ou après le montant ?

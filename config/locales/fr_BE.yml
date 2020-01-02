@@ -2,6 +2,8 @@ fr_BE:
   language_name: "Français"
   activerecord:
     attributes:
+      enterprise_fee:
+        fee_type: Type de marge
       spree/order:
         payment_state: Statut du paiement
         shipment_state: Statut livraison
@@ -12,9 +14,9 @@ fr_BE:
       spree/payment:
         amount: Montant
       spree/product:
-        primary_taxon: "Catégorie Produit"
+        primary_taxon: "Catégorie de Produit"
         supplier: "Fournisseur"
-        shipping_category_id: "Catégorie d'expédition"
+        shipping_category_id: "Catégorie de livraison"
         variant_unit: "Unité"
         variant_unit_name: "Nom de la variante"
       order_cycle:
@@ -90,10 +92,11 @@ fr_BE:
       unconfirmed: "Veuillez valider le lien envoyé par email pour pouvoir continuer."
       already_registered: "Cet email est déjà associé à un utilisateur et a déjà été validé. Veuillez vous connecter pour continuer, ou utiliser un autre email."
     success:
-      logged_in_succesfully: "Connecté avec succès"
+      logged_in_succesfully: "Connecté(e) avec succès"
     user_passwords:
       spree_user:
         updated_not_active: "Votre mot de passe a bien été réinitialisé, mais votre email n'a pas encore été confirmé."
+        updated: "Votre mot de passe a été changé avec succès. Vous êtes à présent connecté."
         send_instructions: "Un email a été envoyé avec des instructions pour confirmer votre adresse email. Vérifiez votre boite mail!"
   models:
     order_cycle:
@@ -113,7 +116,9 @@ fr_BE:
       email_welcome: "Bienvenue"
       email_registered: "fait maintenant partie de"
       email_userguide_html: "Le Guide Utilisateur expliquant comment mettre en place son profil producteur ou son comptoir est accessible ici: %{link}"
+      userguide: "Guide de l'utilisateur Open Food Network"
       email_admin_html: "Vous pouvez gérer votre compte en vous connectant ici %{link} ou en cliquant sur la roue en haut à droite de la page d'accueil et en sélectionnant Administration."
+      admin_panel: "Panneau de l'administrateur"
       email_community_html: "Nous avons aussi un forum de discussion en ligne (en anglais) pour échanger avec la communauté sur des questions liées au logiciel OFN et aux défis de la gestion d'un food hub.  Nous vous invitons à y participer. Nous sommes en constante évolution et vos contributions à ce forum vont façonner les prochaines étapes. %{link}"
       join_community: "Rejoindre la communauté"
     invite_manager:
@@ -246,9 +251,10 @@ fr_BE:
   change_my_password: "Changer mon mot de passe"
   update_password: "Mise à jour du mot de passe"
   password_confirmation: confirmation du mot de passe
-  reset_password_token: réinitialisation du mot de passe
+  reset_password_token: Réinitialisation du mot de passe
   expired: a expiré, veuillez en demander un nouveau
   back_to_payments_list: "Retour à la liste des paiements"
+  maestro_or_solo_cards: "Cartes Maestro / Solo"
   on hand: "En stock"
   ship: "Expédier"
   actions:
@@ -270,7 +276,7 @@ fr_BE:
     name: Nom
     on_hand: En stock
     on_demand: A volonté
-    on_demand?: A volonté?
+    on_demand?: A volonté ?
     order_cycle: Cycle de vente
     payment: Paiement
     payment_method: Méthode de paiement
@@ -313,7 +319,7 @@ fr_BE:
     whats_this: Qu'est-ce que c'est?
     tag_has_rules: "Règles existantes pour ce tag: %{num}"
     has_one_rule: "a une règle"
-    has_n_rules: "a %{num} règles"
+    has_n_rules: "a %{num} règle(s)"
     unsaved_confirm_leave: "Des modifications n'ont pas été sauvegardées et seront perdues si vous quittez la page. Souhaitez-vous quitter la page?"
     unsaved_changes: "Des modifications n'ont pas été sauvegardées."
     shopfront_settings:
@@ -326,7 +332,7 @@ fr_BE:
     invoice_settings:
       edit:
         title: "Paramètres de facturation"
-        enable_invoices?: "Activer les factures?"
+        enable_invoices?: "Permettre les factures ?"
         invoice_style2?: "Utiliser le modèle de facture alternatif qui détaille le montant de TVA agrégé par taux et l'information du taux de TVA par produit (pas adapté pour les instances affichant les prix HT)"
         enable_receipt_printing?: "Afficher les options d'impression de tickets de caisse dans le menu déroulant des commandes?"
     stripe_connect_settings:
@@ -430,8 +436,10 @@ fr_BE:
         to_order_tip: "Les articles fabriqués sur commande n'ont pas un niveau de stock défini, comme des pains faits à la main."
       back_to_products_list: "Retour à la liste produits"
       tabs:
+        product_details: "Détails du produit"
         group_buy_options: "Options d'achat par lot"
         images: "Images"
+        variants: "Variantes"
         product_properties: "Propriétés / labels Produits"
     product_import:
       title: Import liste produits
@@ -454,6 +462,8 @@ fr_BE:
         encoding_error: "Veuillez vérifier la langage de votre fichier source et l'enregistrer avec un encodage UTF-8"
         unexpected_error: "L'import du produit à provoqué une erreur à l'ouverture du fichier: %{error_message}"
       index:
+        notice: "Remarque"
+        beta_notice: "Cette fonction est encore en phase Beta: vous pouvez rencontrer quelques erreurs pendant que vous l'utilisez. N'hésitez donc pas à contacter notre support."
         select_file: Sélectionner le fichier (tableur sous format csv) à importer
         spreadsheet: Tableur csv
         choose_import_type: Choisir le type d'import
@@ -532,6 +542,7 @@ fr_BE:
         title: Catalogue du magasin
         description: Utilisez cette page pour gérer le catalogue de votre entreprise. Les détails produits saisis ici remplaceront ceux de la page "Produit" pour votre entreprise uniquement.
         enable_reset?: Autoriser réinitialisation du stock (retour configurations par défaut)?
+        default_stock: "Stock par défaut"
         inherit?: Hériter?
         add: Ajouter
         hide: Masquer
@@ -827,21 +838,33 @@ fr_BE:
       new:
         create: "Créer"
         cancel: "Annuler"
+        back_to_list: "Retour à la liste"
       edit:
         advanced_settings: "Paramétrages avancés"
         save: "Sauvergarder"
+        save_and_next: "Sauver et suivant"
         next: "Suivant"
         cancel: "Annuler"
+        back_to_list: "Retour à la liste"
+        save_and_back_to_list: "Sauver et retour à la liste"
         choose_products_from: "Choisir produits depuis :"
       incoming:
         previous: "Précédent"
         save: "Sauvergarder"
+        save_and_next: "Sauver et suivant"
         next: "Suivant"
         cancel: "Annuler"
+        back_to_list: "Retour à la liste."
       outgoing:
         previous: "Précédent"
         save: "Sauvergarder"
+        save_and_back_to_list: "Sauver et retour à la liste"
         cancel: "Annuler"
+        back_to_list: "Retour à la liste."
+      wizard_progress:
+        edit: "1. Paramètres généraux"
+        incoming: "2. Produits entrants"
+        outgoing: "3. Produits sortants"
       exchange_form:
         pickup_time_tip: Quand des commandes liées à ce cycle de vente seront prêtes à être soumises à l'acheteur
         pickup_instructions_placeholder: "Modalités de retrait/livraison"
@@ -965,9 +988,6 @@ fr_BE:
         name: Acheteurs
       products_and_inventory:
         name: Produits et Catalogues
-      sales_total:
-        name: Total des Ventes
-        description: Total des Ventes pour toutes les Commandes
       users_and_enterprises:
         name: Managers & Entreprises
         description: Managers de l'Entreprise & Droits
@@ -1046,6 +1066,7 @@ fr_BE:
         saved: "Enregistré"
       product_already_in_order: Ce produit a déjà été ajouté à la commande. Veuillez directement modifier la quantité.
       stock:
+        insufficient_stock: "Stock insuffisant"
         out_of_stock: "Pas en stock"
       orders:
         number: Nombre
@@ -2496,6 +2517,7 @@ fr_BE:
           customer_placeholder: "acheteur@exemple.org"
           valid_email_error: "Veuillez entrer un email valide"
       subscriptions:
+        error_saving: "Erreur pendant la sauvegarde de l'abonnement"
         new:
           please_select_a_shop: "Veuillez choisir un comptoir"
     insufficient_stock: "Stock disponible insuffisant , il ne reste que %{on_hand}"
@@ -2695,7 +2717,6 @@ fr_BE:
     allow_ssl_in_development_and_test: "Autoriser l’utilisation de SSL pendant le développement et les modes test"
     allow_ssl_in_production: "Autoriser SSL en mode production "
     allow_ssl_in_staging: "Autoriser SSL quand est employé en mode visible "
-    check_for_spree_alerts: "Attention aux alertes en série "
     currency_decimal_mark: "Devise à la décimale "
     currency_settings: "Devise "
     currency_symbol_position: Mettez "symbole monétaire avant ou après le montant en euros?"
@@ -2795,8 +2816,15 @@ fr_BE:
     minimal_amount: "Montant minimal"
     normal_amount: "Montant normal"
     discount_amount: "Montant de la remise"
+    no_images_found: "Pas d'image trouvée"
+    new_image: "Nouvelle image"
+    filename: "Nom de fichier"
+    alt_text: "Texte alternatif"
+    thumbnail: "Miniature"
+    back_to_images_list: "Retour à la liste d'images"
     email: Email
     account_updated: "Compte mis à jour!"
+    email_updated: "Le compte sera mis à jour une fois la nouvelle adresse-mail confirmée"
     my_account: "Mon compte"
     date: "Date"
     time: "Heure"
@@ -2804,6 +2832,8 @@ fr_BE:
     inventory: Catalogue boutique
     zipcode: Code postal
     weight: Poids (au kg)
+    error_user_destroy_with_orders: "Les utilisateurs avec une commande finalisée ne peuvent pas être supprimés"
+    options: "Options"
     actions:
       update: "Mettre à jour"
     errors:
@@ -2835,24 +2865,37 @@ fr_BE:
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Hériter des propriétés de %{supplier} ? (non applicable si information de remplacement déjà saisie)"
+          add_product_properties: "Ajouter des caractéristiques au produit"
       properties:
         index:
           properties: "Labels / propriétés"
+          new_property: "Nouvelle caractéristique"
           name: "Nom"
+        new:
+          new_property: "Nouvelle caractéristique"
+        edit:
+          editing_property: "Editer la caractéristique"
+          back_to_properties_list: "Retour à la liste des caractéristiques"
         form:
           name: "Nom"
       return_authorizations:
         index:
+          new_return_authorization: "Nouvelle autorisation de retour"
           back_to_orders_list: "Retour vers la liste des commandes "
+          rma_number: "Numéro d' Autorisation de Retour de Marchandise"
           status: "Statut"
           amount: "Quantité"
           continue: "Suivant"
         new:
+          new_return_authorization: "Nouvelle autorisation de retour"
+          back_to_return_authorizations_list: "Retour vers la liste d'autorisation de retour"
           continue: "Suivant"
         edit:
           are_you_sure: "Confirmer?"
+          return_authorization: "Autorisation de retour"
         form:
           product: "Produit"
+          quantity_shipped: "Quantité livrée"
           amount: "Quantité"
       orders:
         index:
@@ -3044,8 +3087,10 @@ fr_BE:
         index:
           sku: "Référence produit"
           price: "Prix"
+          options: "Options"
           no_results: "Aucun résultat"
           option_types: "Option Types "
+          and: "et"
         form:
           sku: "Référence produit"
           price: "Prix"

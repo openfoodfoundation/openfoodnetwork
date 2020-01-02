@@ -2,6 +2,8 @@ nl_BE:
   language_name: "Nederlands"
   activerecord:
     attributes:
+      enterprise_fee:
+        fee_type: Sprookjesachtig type
       spree/order:
         payment_state: Status Betaling
         shipment_state: Status Verzending
@@ -967,9 +969,6 @@ nl_BE:
         name: Klanten
       products_and_inventory:
         name: Producten & Inventaris
-      sales_total:
-        name: Verkoop Totaal
-        description: Verkoop totaal voor alle bestellingen
       users_and_enterprises:
         name: Gebruikers & Bedrijven
         description: Eigendom en Status van de Onderneming
@@ -2690,7 +2689,6 @@ nl_BE:
     allow_ssl_in_development_and_test: "SSL toelaten bij ontwikkeling en testmode"
     allow_ssl_in_production: "SSl toelaten wanneer  in productiemode wordt gebruikt "
     allow_ssl_in_staging: "SSL toelaten wanneer in mode zichtbaar wordt gebruikt"
-    check_for_spree_alerts: "Let op voor spree alerten "
     currency_decimal_mark: "Valuta 1 decimaal bij"
     currency_settings: "Gebruikte munt"
     currency_symbol_position: Zet "muntsymbool voor of na het bedrag?"

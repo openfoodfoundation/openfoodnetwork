@@ -2,6 +2,8 @@ sv:
   language_name: "Svenska"
   activerecord:
     attributes:
+      enterprise_fee:
+        fee_type: Avgiftstyp
       spree/order:
         payment_state: Betalningstatus
         shipment_state: Leveransstatus
@@ -589,9 +591,6 @@ sv:
         name: Kunder
       products_and_inventory:
         name: Produkter och lagersaldo
-      sales_total:
-        name: Summa försäljning
-        description: Summa försäljning för alla beställningar
       users_and_enterprises:
         name: Användare och företag
         description: Ägarstruktur och status för företag
