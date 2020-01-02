@@ -176,7 +176,7 @@ module Spree
       previous_states = @order.adjustments.each_with_object({}) do |adjustment, hash|
         hash[adjustment.id] = adjustment.state
       end
-      @order.adjustments.each(&:open)
+      @order.adjustments.each { |adjustment| adjustment.fire_events(:open) }
 
       yield
 
