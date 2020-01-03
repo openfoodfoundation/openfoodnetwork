@@ -67,7 +67,8 @@ Spree::Order.class_eval do
     if user.has_spree_role?('admin')
       scoped
     else
-      where('spree_orders.distributor_id IN (?)', user.enterprises)
+      distributor_ids = user.enterprises.select('enterprises.id').map(&:id)
+      where(spree_orders: { distributor_id: distributor_ids })
     end
   }
 
