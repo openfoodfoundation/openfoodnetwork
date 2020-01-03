@@ -2459,7 +2459,7 @@ fr:
           load_more_products: "Voir plus de produits"
           load_all_products: "Voir tous les produits"
           select_all_products: "Sélectionner tous les %{total_number_of_products}produits"
-          products_loaded: "1%{num_of_products_loaded}sur %{total_number_of_products}produits affichés"
+          products_loaded: "%{num_of_products_loaded}sur %{total_number_of_products}produits affichés"
           loading_products: "Produits en cours de chargement"
       tag_rules:
         shipping_method_tagged_top: "Les méthodes de livraison taguées"
