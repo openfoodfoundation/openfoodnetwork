@@ -48,8 +48,9 @@ class Exchange < ActiveRecord::Base
       select('DISTINCT exchanges.*')
   }
   scope :with_product, lambda { |product|
+    exchange_variant_ids = product.variants_including_master.select('spree_variants.id').map(&:id)
     joins(:exchange_variants).
-      where('exchange_variants.variant_id IN (?)', product.variants_including_master)
+      where('exchange_variants.variant_id IN (?)', exchange_variant_ids)
   }
   scope :by_enterprise_name, -> {
     joins('INNER JOIN enterprises AS sender   ON (sender.id   = exchanges.sender_id)').
