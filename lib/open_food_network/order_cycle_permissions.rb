@@ -160,7 +160,7 @@ module OpenFoodNetwork
       end.map(&:id)
 
       Spree::Variant.includes(product: :supplier).
-        select("spree_variants.id, spree_products.supplier_id").
+        select("spree_variants.id, spree_variants.product_id, spree_products.supplier_id").
         joins(:product).where(spree_products: { supplier_id: valid_suppliers })
     end
 
