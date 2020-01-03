@@ -49,7 +49,9 @@ Spree::Variant.class_eval do
   }
 
   scope :for_distribution, lambda { |order_cycle, distributor|
-    where('spree_variants.id IN (?)', order_cycle.variants_distributed_by(distributor))
+    distributed_variant_ids = order_cycle.variants_distributed_by(distributor).
+      select('spree_variants.id').map(&:id)
+    where('spree_variants.id IN (?)', distributed_variant_ids)
   }
 
   scope :visible_for, lambda { |enterprise|
