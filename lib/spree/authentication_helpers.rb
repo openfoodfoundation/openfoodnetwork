@@ -8,7 +8,7 @@ module Spree
     end
 
     def spree_current_user
-      @current_spree_user ||= request.env['warden'].authenticate
+      current_spree_user
     end
 
     delegate :login_path, to: :spree, prefix: true
