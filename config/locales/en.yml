@@ -907,7 +907,6 @@ en:
         save_and_back_to_list: "Save and Back to List"
         choose_products_from: "Choose Products From:"
       incoming:
-        previous: "Previous"
         save: "Save"
         save_and_next: "Save and Next"
         next: "Next"
