@@ -27,4 +27,15 @@ RUN sh -c "echo 'deb https://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main'
     apt-get update && \
     apt-get install -yqq --no-install-recommends postgresql-client-9.5 libpq-dev
 
+# Install Chrome
+RUN wget --quiet -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+    sh -c "echo 'deb [arch=amd64]  http://dl.google.com/linux/chrome/deb/ stable main' >> /etc/apt/sources.list.d/google-chrome.list" && \
+    apt-get update && \
+    apt-get install -fy google-chrome-stable
+
+# Install Chromedriver
+RUN wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip && \
+    unzip chromedriver_linux64.zip -d /usr/bin && \
+    chmod u+x /usr/bin/chromedriver
+
 COPY . /usr/src/app/
