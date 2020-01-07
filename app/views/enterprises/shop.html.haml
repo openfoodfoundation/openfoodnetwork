@@ -38,9 +38,4 @@
 
   = render partial: "shopping_shared/details"
 
-  = render partial: 'shop/messages'
-
-  - unless require_customer?
-    .row= render partial: "shop/products/form"
-
 = render partial: "shared/footer"
