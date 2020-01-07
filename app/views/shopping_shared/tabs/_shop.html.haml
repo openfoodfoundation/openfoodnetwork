@@ -1,4 +1,3 @@
 %script{ type: "text/ng-template", id: "shop/shop.html" }
   - unless require_customer?
-    .row
-      = render partial: "shop/products/form"
+    = render partial: "shop/products/form"
