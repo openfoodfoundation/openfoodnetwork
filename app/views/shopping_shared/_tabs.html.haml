@@ -2,7 +2,7 @@
   - if tab[:show]
     = render "shopping_shared/tabs/#{tab[:name]}"
 
-.tabset-ctrl#shop-tabs{ navigate: 'true', selected: first_visible_tab, prefix: 'shop', ng: { cloak: true } }
+.tabset-ctrl#shop-tabs{ navigate: 'true', alwaysopen: 'true', selected: first_visible_tab, prefix: 'shop', ng: { cloak: true } }
   .tab-buttons
     .row
       - shop_tabs.each do |tab|
