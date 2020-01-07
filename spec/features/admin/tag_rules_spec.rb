@@ -16,8 +16,8 @@ feature 'Tag Rules', js: true do
       click_link "Tag Rules"
 
       # Creating a new tag
-      expect(page).to have_no_selector '.customer_tag'
       expect(page).to have_content 'No tags apply to this enterprise yet'
+      expect(page).to have_no_selector '.customer_tag'
       click_button '+ Add A New Tag'
       find(:css, "tags-input .tags input").set "volunteer\n"
 

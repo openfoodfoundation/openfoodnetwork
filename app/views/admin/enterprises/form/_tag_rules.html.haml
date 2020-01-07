@@ -4,7 +4,6 @@
       .no_tags{ ng: { show: "tagGroups.length == 0" } }
         = t('.no_tags_yet')
       = render 'admin/enterprises/form/tag_rules/default_rules'
-      -# = render 'customer_tags'
       .customer_tag{ id: "tg_{{tagGroup.position}}", ng: { repeat: "tagGroup in tagGroups" } }
         .header
           %table
