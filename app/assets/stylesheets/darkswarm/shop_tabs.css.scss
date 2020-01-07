@@ -24,10 +24,6 @@
     display: inline-block;
     width: 100%;
 
-    @media all and (max-width: 640px) {
-      text-align: left;
-    }
-
     >a {
       outline: none;
       display: block;
@@ -121,6 +117,10 @@
         margin-bottom: 0.75rem;
         padding-bottom: 0.25rem;
         font-size: 0.875rem;
+      }
+
+      @media all and (max-width: 640px) {
+        padding: 1em;
       }
     }
   }
