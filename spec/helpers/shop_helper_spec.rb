@@ -14,10 +14,12 @@ describe ShopHelper, type: :helper do
       let(:distributor) { create(:distributor_enterprise, groups: [group]) }
       let(:expectation) {
         [
-          { name: 'about', title: t(:shopping_tabs_about, distributor: distributor.name), cols: 6 },
-          { name: 'producers', title: t(:label_producers), cols: 2 },
-          { name: 'contact', title: t(:shopping_tabs_contact), cols: 2 },
-          { name: 'groups', title: t(:label_groups), cols: 2 }
+          {name: "home", show: false, title: "Home"},
+          {name: "shop", show: true, title: "Shop"},
+          {name: "about", show: true, title: "About"},
+          {name: "producers", show: true, title: "Producers"},
+          {name: "contact", show: true, title: "Contact"},
+          {name: "groups", show: true, title: "Groups"}
         ]
       }
 
@@ -26,7 +28,7 @@ describe ShopHelper, type: :helper do
       end
 
       it "should return the groups tab" do
-        expect(helper.shop_tabs).to eq(expectation)
+        expect(helper.shop_tabs).to eq(expectation) #
       end
     end
 
@@ -34,9 +36,12 @@ describe ShopHelper, type: :helper do
       let(:distributor) { create(:distributor_enterprise) }
       let(:expectation) {
         [
-          { name: 'about', title: t(:shopping_tabs_about, distributor: distributor.name), cols: 4 },
-          { name: 'producers', title: t(:label_producers), cols: 4 },
-          { name: 'contact', title: t(:shopping_tabs_contact), cols: 4 }
+          {name: "home", show: false, title: "Home"},
+          {name: "shop", show: true, title: "Shop"},
+          {name: "about", show: true, title: "About"},
+          {name: "producers", show: true, title: "Producers"},
+          {name: "contact", show: true, title: "Contact"},
+          {name: "groups", show: false, title: "Groups"}
         ]
       }
 
