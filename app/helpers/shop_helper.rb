@@ -31,13 +31,19 @@ module ShopHelper
     ]
   end
 
+  def first_visible_tab
+    shop_tabs.find{ |tab| tab[:show] }[:name]
+  end
+
   private
 
   def show_home_tab?
-    require_customer? || shopfront_closed_message? || current_distributor.preferred_shopfront_message.present?
+    require_customer? || shopfront_closed_message? ||
+      current_distributor.preferred_shopfront_message.present?
   end
 
   def shopfront_closed_message?
-    @order_cycles && @order_cycles.empty? && current_distributor.preferred_shopfront_closed_message.present?
+    @order_cycles && @order_cycles.empty? &&
+      current_distributor.preferred_shopfront_closed_message.present?
   end
 end
