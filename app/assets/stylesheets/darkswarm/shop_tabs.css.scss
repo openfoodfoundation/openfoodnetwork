@@ -4,16 +4,25 @@
 
 // Tabs styling
 .tabset-ctrl#shop-tabs {
-  background: url("/assets/gray_jean.png") top left repeat;
 
-  @include box-shadow(inset 0 2px 3px 0 rgba(0, 0, 0, 0.15));
+  .tab-buttons {
+    background: url("/assets/gray_jean.png") top left repeat;
 
-  display: block;
-  color: $dark-grey;
+    @include box-shadow(inset 0 2px 3px 0 rgba(0, 0, 0, 0.15));
+
+    color: $dark-grey;
+
+    .row:first-child {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
 
   .tab {
     text-align: center;
     border-top: 4px solid transparent;
+    display: inline-block;
+    width: 100%;
 
     @media all and (max-width: 640px) {
       text-align: left;
@@ -35,7 +44,7 @@
       line-height: 1;
       font-size: 0.875em;
       text-shadow: 0 -1px 1px #ffffff;
-      padding: 1em;
+      padding: 1em 2em;
       border: none;
 
       &:hover, &:focus, &:active {
@@ -50,28 +59,10 @@
         padding: 0.35em 0 0.65em 0;
         text-shadow: none;
       }
-
-      &:after {
-        padding-left: 8px;
-        content: "";
-        visibility: hidden;
-
-        @include icon-font;
-
-        @media all and (max-width: 640px) {
-          content: "";
-        }
-      }
-    }
-
-    &:hover {
-      a:after {
-        visibility: visible;
-      }
     }
 
     &.selected {
-      border-top: 4px solid $clr-brick;
+      border-bottom: 4px solid $clr-brick;
 
       @media all and (max-width: 640px) {
         border-top: 4px solid transparent;
@@ -85,60 +76,52 @@
           color: white;
         }
       }
-
-      a:after {
-        content: "";
-        visibility: visible;
-
-        @include icon-font;
-
-        @media all and (max-width: 640px) {
-          content: "";
-        }
-      }
     }
   }
 
   // content revealed in accordion
 
   .tab-view {
-    margin-bottom: 0;
+    margin-bottom: 5em;
     padding: 0;
     background: none;
     border: none;
 
-    img {
-      margin: 0px 0px 0px 40px;
-    }
+    .content {
+      padding: 1.25em 0;
+      background-color: $white;
 
-    p {
-      max-width: 100%;
-
-      @media all and (max-width: 768px) {
-        height: auto !important;
+      img {
+        margin: 0px 0px 0px 40px;
       }
-    }
 
-    ul {
-      list-style-type: none;
-      padding-left: none;
-    }
+      h5 {
+        margin-bottom: 1em;
+      }
 
-    .header {
-      text-align: center;
-      text-transform: uppercase;
-      color: $dark-grey;
-      border-bottom: 1px solid $disabled-dark;
-      margin-top: 0.75rem;
-      margin-bottom: 0.75rem;
-      padding-bottom: 0.25rem;
-      font-size: 0.875rem;
-    }
+      p {
+        max-width: 100%;
 
-    .panel {
-      padding-bottom: 1.25em;
-      border-color: $clr-brick-bright;
-      background-color: rgba(255, 255, 255, 0);
+        @media all and (max-width: 768px) {
+          height: auto !important;
+        }
+      }
+
+      ul {
+        list-style-type: none;
+        padding-left: none;
+      }
+
+      .header {
+        text-align: center;
+        text-transform: uppercase;
+        color: $dark-grey;
+        border-bottom: 1px solid $disabled-dark;
+        margin-top: 0.75rem;
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.25rem;
+        font-size: 0.875rem;
+      }
     }
   }
 }
