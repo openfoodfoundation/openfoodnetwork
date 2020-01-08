@@ -38,8 +38,7 @@ module ShopHelper
   private
 
   def show_home_tab?
-    require_customer? || shopfront_closed_message? ||
-      current_distributor.preferred_shopfront_message.present?
+    require_customer? || current_distributor.preferred_shopfront_message.present?
   end
 
   def shopfront_closed_message?
