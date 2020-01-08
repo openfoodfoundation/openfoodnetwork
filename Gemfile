@@ -94,7 +94,6 @@ gem 'wkhtmltopdf-binary'
 gem 'foreigner'
 gem 'immigrant'
 gem 'roo', '~> 2.8.2'
-gem 'roo-xls', '~> 1.1.0'
 
 gem 'whenever', require: false
 
