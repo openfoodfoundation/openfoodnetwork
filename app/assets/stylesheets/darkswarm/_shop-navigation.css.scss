@@ -50,14 +50,14 @@ ordercycle {
     margin-right: 0.3rem;
   }
 
-  @media all and (max-width: 640px) {
-    float: left;
-    clear: left;
+  @media all and (max-width: 1024px) {
     text-align: left;
+    float: none;
     padding: 12px 10px;
     width: 100%;
-    margin-top: 10px;
+    margin-top: 0;
     background: #e5e5e5;
+    display: inline-block;
 
     p {
       max-width: 100%;
@@ -88,6 +88,10 @@ ordercycle {
       @media screen and (-webkit-min-device-pixel-ratio: 0) {
         font-size: 16px;
       }
+    }
+
+    @media all and (max-width: 1024px) {
+      text-align: left;
     }
   }
 
