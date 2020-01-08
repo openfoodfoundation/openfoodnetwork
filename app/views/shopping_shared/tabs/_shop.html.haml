@@ -1,4 +1,7 @@
 %script{ type: "text/ng-template", id: "shop/shop.html" }
+  .order-cycle-bar.hide-for-large-up.small-12.columns
+    = render partial: "shopping_shared/order_cycles"
+
   .row
     .small-12.columns
       - if no_open_order_cycles?
