@@ -79,7 +79,7 @@
 
   .tab-view {
     margin-bottom: 5em;
-    padding: 0;
+    padding: 0.9375rem;
     background: none;
     border: none;
 
@@ -117,10 +117,6 @@
         margin-bottom: 0.75rem;
         padding-bottom: 0.25rem;
         font-size: 0.875rem;
-      }
-
-      @media all and (max-width: 640px) {
-        padding: 1em;
       }
     }
   }
