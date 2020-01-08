@@ -31,6 +31,8 @@
 
     #distributor_title h3 {
       margin-top: 0;
+      padding-top: 0.45em;
+
       @media all and (max-width: 768px) {
           margin-bottom: 8px;
       }
