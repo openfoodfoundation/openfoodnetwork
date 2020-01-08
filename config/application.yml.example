@@ -28,7 +28,7 @@ CURRENCY: AUD
 # Mail settings
 MAIL_HOST: 'example.com'
 MAIL_DOMAIN: 'example.com'
-MAIL_PORT: 25
+MAIL_PORT: '25'
 SMTP_USERNAME: 'ofn'
 SMTP_PASSWORD: 'f00d'
 
@@ -57,4 +57,4 @@ SMTP_PASSWORD: 'f00d'
 # STRIPE_CLIENT_ID: "ca_xxxx" # This can be a development ID or a production ID
 # STRIPE_ENDPOINT_SECRET: "whsec_xxxx"
 
-MEMCACHED_VALUE_MAX_MEGABYTES: 4
+MEMCACHED_VALUE_MAX_MEGABYTES: '4'
