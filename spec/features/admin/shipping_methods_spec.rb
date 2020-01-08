@@ -5,7 +5,7 @@ feature 'shipping methods' do
   include WebHelper
 
   before :each do
-    @sm = create(:shipping_method)
+    @shipping_method = create(:shipping_method)
   end
 
   context "as a site admin" do
@@ -15,8 +15,8 @@ feature 'shipping methods' do
 
     scenario "creating a shipping method owned by some distributors" do
       # Given some distributors
-      d1 = create(:distributor_enterprise, name: 'Aeronautical Adventures')
-      d2 = create(:distributor_enterprise, name: 'Nautical Travels')
+      distributor1 = create(:distributor_enterprise, name: 'Alice Farm Hub')
+      distributor2 = create(:distributor_enterprise, name: 'Bob Farm Shop')
 
       # Shows appropriate fields when logged in as admin
       visit spree.new_admin_shipping_method_path
@@ -28,8 +28,8 @@ feature 'shipping methods' do
 
       # When I create a shipping method and set the distributors
       fill_in 'shipping_method_name', with: 'Carrier Pidgeon'
-      check "shipping_method_distributor_ids_#{d1.id}"
-      check "shipping_method_distributor_ids_#{d2.id}"
+      check "shipping_method_distributor_ids_#{distributor1.id}"
+      check "shipping_method_distributor_ids_#{distributor2.id}"
       check "shipping_method_shipping_categories_"
       click_button I18n.t("actions.create")
 
@@ -41,29 +41,43 @@ feature 'shipping methods' do
 
       sm = Spree::ShippingMethod.last
       expect(sm.name).to eq('Carrier Pidgeon')
-      expect(sm.distributors).to match_array [d1, d2]
+      expect(sm.distributors).to match_array [distributor1, distributor2]
     end
 
     it "at checkout, user can only see shipping methods for their current distributor (checkout spec)"
 
     scenario "deleting a shipping method" do
-      visit_delete spree.admin_shipping_method_path(@sm)
+      visit_delete spree.admin_shipping_method_path(@shipping_method)
 
-      expect(page).to have_content "Shipping method \"#{@sm.name}\" has been successfully removed!"
-      expect(Spree::ShippingMethod.where(id: @sm.id)).to be_empty
+      expect(page).to have_content "Shipping method \"#{@shipping_method.name}\" has been successfully removed!"
+      expect(Spree::ShippingMethod.where(id: @shipping_method.id)).to be_empty
     end
 
     scenario "deleting a shipping method referenced by an order" do
-      o = create(:order)
+      order = create(:order)
       shipment = create(:shipment)
-      shipment.add_shipping_method(@sm, true)
-      o.shipments << shipment
-      o.save!
+      shipment.add_shipping_method(@shipping_method, true)
+      order.shipments << shipment
+      order.save!
 
-      visit_delete spree.admin_shipping_method_path(@sm)
+      visit_delete spree.admin_shipping_method_path(@shipping_method)
 
-      expect(page).to have_content "That shipping method cannot be deleted as it is referenced by an order: #{o.number}."
-      expect(Spree::ShippingMethod.find(@sm.id)).not_to be_nil
+      expect(page).to have_content "That shipping method cannot be deleted as it is referenced by an order: #{order.number}."
+      expect(Spree::ShippingMethod.find(@shipping_method.id)).not_to be_nil
+    end
+
+    scenario "checking a single distributor is checked by default" do
+      first_distributor = Enterprise.first
+      visit spree.new_admin_shipping_method_path
+      expect(page).to have_field "shipping_method_distributor_ids_#{first_distributor.id}", checked: true
+    end
+
+    scenario "checking more than a distributor displays no default choice" do
+      distributor1 = create(:distributor_enterprise, name: 'Alice Farm Shop')
+      distributor2 = create(:distributor_enterprise, name: 'Bob Farm Hub')
+      visit spree.new_admin_shipping_method_path
+      expect(page).to have_field "shipping_method_distributor_ids_#{distributor1.id}", checked: false
+      expect(page).to have_field "shipping_method_distributor_ids_#{distributor2.id}", checked: false
     end
   end
 
@@ -72,8 +86,8 @@ feature 'shipping methods' do
     let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
     let(:distributor2) { create(:distributor_enterprise, name: 'Second Distributor') }
     let(:distributor3) { create(:distributor_enterprise, name: 'Third Distributor') }
-    let(:sm1) { create(:shipping_method, name: 'One', distributors: [distributor1]) }
-    let(:sm2) { create(:shipping_method, name: 'Two', distributors: [distributor1, distributor2]) }
+    let(:shipping_method1) { create(:shipping_method, name: 'One', distributors: [distributor1]) }
+    let(:shipping_method2) { create(:shipping_method, name: 'Two', distributors: [distributor1, distributor2]) }
     let(:sm3) { create(:shipping_method, name: 'Three', distributors: [distributor3]) }
     let(:shipping_category) { create(:shipping_category) }
 
@@ -122,20 +136,20 @@ feature 'shipping methods' do
     end
 
     it "shows me only shipping methods I have access to" do
-      sm1
-      sm2
+      shipping_method1
+      shipping_method2
       sm3
 
       visit spree.admin_shipping_methods_path
 
-      expect(page).to     have_content sm1.name
-      expect(page).to     have_content sm2.name
+      expect(page).to     have_content shipping_method1.name
+      expect(page).to     have_content shipping_method2.name
       expect(page).not_to have_content sm3.name
     end
 
     it "does not show duplicates of shipping methods" do
-      sm1
-      sm2
+      shipping_method1
+      shipping_method2
 
       visit spree.admin_shipping_methods_path
 
@@ -143,16 +157,16 @@ feature 'shipping methods' do
     end
 
     pending "shows me only shipping methods for the enterprise I select" do
-      sm1
-      sm2
+      shipping_method1
+      shipping_method2
 
       visit admin_enterprises_path
       within("#e_#{distributor1.id}") { click_link 'Settings' }
       within(".side_menu") do
         click_link "Shipping Methods"
       end
-      expect(page).to     have_content sm1.name
-      expect(page).to     have_content sm2.name
+      expect(page).to     have_content shipping_method1.name
+      expect(page).to     have_content shipping_method2.name
 
       click_link 'Enterprises'
       within("#e_#{distributor2.id}") { click_link 'Settings' }
@@ -160,8 +174,8 @@ feature 'shipping methods' do
         click_link "Shipping Methods"
       end
 
-      expect(page).not_to have_content sm1.name
-      expect(page).to     have_content sm2.name
+      expect(page).not_to have_content shipping_method1.name
+      expect(page).to     have_content shipping_method2.name
     end
   end
 end

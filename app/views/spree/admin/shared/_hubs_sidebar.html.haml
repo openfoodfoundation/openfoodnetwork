@@ -12,7 +12,7 @@
           %span.four.columns
             %span.three.columns.alpha
               %label
-                = check_box klass, :distributor_ids, { multiple: true }, hub.id, nil
+                = check_box klass, :distributor_ids, { multiple: true }.merge(add_check_if_single(@hubs.count)), hub.id, nil
                 = hub.name
             %a.one.column.omega{ href: "#{main_app.edit_admin_enterprise_path(hub)}" }
               %span.icon-arrow-right
