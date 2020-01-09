@@ -4,6 +4,7 @@
 #
 # The configuration is split into three files. Look into those files for more details.
 #
+require: rubocop-rails
 inherit_from:
 
   # The automatically generated todo list to ignore all current violations.

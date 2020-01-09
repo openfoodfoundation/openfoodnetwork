@@ -163,7 +163,8 @@ group :development do
   gem 'debugger-linecache'
   gem "newrelic_rpm", "~> 3.0"
   gem 'pry-byebug', '>= 3.4.3'
-  gem 'rubocop', '>= 0.49.1'
+  gem 'rubocop'
+  gem 'rubocop-rails'
   gem 'spring', '1.7.2'
   gem 'spring-commands-rspec'
 
