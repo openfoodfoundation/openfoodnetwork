@@ -93,7 +93,8 @@ class ApplicationController < ActionController::Base
     if current_distributor_closed?
       current_order.empty!
       current_order.set_distribution! nil, nil
-      flash[:info] = "The hub you have selected is temporarily closed for orders. Please try again later."
+      flash[:info] = "The hub you have selected is temporarily closed for orders. "\
+        "Please try again later."
       redirect_to main_app.root_url
     end
   end
