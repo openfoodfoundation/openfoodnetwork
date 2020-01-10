@@ -6,10 +6,6 @@
 .tabset-ctrl#shop-tabs {
 
   .tab-buttons {
-    background: url("/assets/gray_jean.png") top left repeat;
-
-    @include box-shadow(inset 0 2px 3px 0 rgba(0, 0, 0, 0.15));
-
     color: $dark-grey;
 
     .row:first-child {
@@ -27,8 +23,7 @@
     >a {
       outline: none;
       display: block;
-      background-color: #efefef;
-      color: #222;
+      color: $primary-grey;
       font-family: "Oswald", sans-serif;
     }
 
@@ -44,7 +39,7 @@
       border: none;
 
       &:hover, &:focus, &:active {
-        color: $clr-brick-bright;
+        color: $primary-blue;
       }
 
       &, &:hover {
@@ -58,10 +53,10 @@
     }
 
     &.selected {
-      border-bottom: 4px solid $clr-brick;
+      border-bottom: 4px solid $primary-blue;
 
       a {
-        color: $clr-brick;
+        color: $primary-blue;
       }
     }
   }
