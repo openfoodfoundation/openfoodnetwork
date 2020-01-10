@@ -1,13 +1,11 @@
 - shop_tabs.each do |tab|
-  - if tab[:show]
-    = render "shopping_shared/tabs/#{tab[:name]}"
+  = render "shopping_shared/tabs/#{tab[:name]}"
 
-.tabset-ctrl#shop-tabs{ navigate: 'true', alwaysopen: 'true', selected: first_visible_tab, prefix: 'shop', ng: { cloak: true } }
+.tabset-ctrl#shop-tabs{ navigate: 'true', alwaysopen: 'true', selected: shop_tabs.first[:name], prefix: 'shop', ng: { cloak: true } }
   .tab-buttons
     .row
       - shop_tabs.each do |tab|
-        - if tab[:show]
-          .tab{ id: "tab_#{tab[:name]}", name: tab[:name] }
-            %a{ href: 'javascript:void(0)' }=tab[:title]
+        .tab{ id: "tab_#{tab[:name]}", name: tab[:name] }
+          %a{ href: 'javascript:void(0)' }=tab[:title]
 
   .tab-view

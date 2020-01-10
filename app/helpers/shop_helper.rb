@@ -28,14 +28,8 @@ module ShopHelper
       { name: 'producers', title: t(:label_producers), show: true },
       { name: 'contact', title: t(:shopping_tabs_contact), show: true },
       { name: 'groups', title: t(:label_groups), show: current_distributor.groups.any? },
-    ]
+    ].select{ |tab| tab[:show] }
   end
-
-  def first_visible_tab
-    shop_tabs.find{ |tab| tab[:show] }[:name]
-  end
-
-  private
 
   def show_home_tab?
     require_customer? || current_distributor.preferred_shopfront_message.present?
