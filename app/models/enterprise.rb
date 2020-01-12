@@ -115,7 +115,7 @@ class Enterprise < ActiveRecord::Base
   scope :not_ready_for_checkout, lambda {
     # When ready_for_checkout is empty, return all rows when there are no enterprises ready for
     # checkout.
-    ready_enterprises = Enterprise.ready_for_checkout.select('enterprises.id')
+    ready_enterprises = Enterprise.ready_for_checkout.pluck(:id)
     if ready_enterprises.present?
       where("enterprises.id NOT IN (?)", ready_enterprises)
     else
