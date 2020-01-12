@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 module Spree
   module Admin
     class BaseController < Spree::BaseController
@@ -121,11 +122,15 @@ module Spree
 
       def render_as_json(data, options = {})
         ams_prefix = options.delete :ams_prefix
-        if [Array, ActiveRecord::Relation].include? data.class
+        if each_serializer_required?(data)
           render options.merge(json: data, each_serializer: serializer(ams_prefix))
         else
           render options.merge(json: data, serializer: serializer(ams_prefix))
         end
+      end
+
+      def each_serializer_required?(data)
+        ['Array', 'ActiveRecord::Relation'].include?(data.class.name)
       end
 
       def serializer(ams_prefix)
@@ -140,3 +145,4 @@ module Spree
     end
   end
 end
+# rubocop:enable Metrics/ClassLength
