@@ -50,6 +50,8 @@ en_NZ:
         shipping_method_ids: "Shipping Methods"
         payment_method_ids: "Payment Methods"
     errors:
+      messages:
+        inclusion: "is not included in the list"
       models:
         subscription_validator:
           attributes:
@@ -850,7 +852,6 @@ en_NZ:
         save_and_back_to_list: "Save and Back to List"
         choose_products_from: "Choose Products From:"
       incoming:
-        previous: "Previous"
         save: "Save"
         save_and_next: "Save and Next"
         next: "Next"
@@ -1127,15 +1128,6 @@ en_NZ:
       selling_on_ofn: "Interested in getting on the Open Food Network?"
       register: "Register here"
     footer:
-      footer_global_headline: "OFN Global"
-      footer_global_home: "Home"
-      footer_global_news: "News"
-      footer_global_about: "About"
-      footer_global_contact: "Contact"
-      footer_sites_headline: "OFN Sites"
-      footer_sites_developer: "Developer"
-      footer_sites_community: "Community"
-      footer_sites_userguide: "User Guide"
       footer_secure: "Secure and trusted."
       footer_secure_text: "Open Food Network uses SSL encryption (2048 bit RSA) everywhere to keep your shopping and payment information private. Our servers do not store your credit card details and payments are processed by PCI-compliant services."
       footer_contact_headline: "Keep in touch"
@@ -2425,6 +2417,12 @@ en_NZ:
           severity: Severity
           description: Description
           resolve: Resolve
+        exchange_products:
+          load_more_products: "Load More Products"
+          load_all_products: "Load All Products"
+          select_all_products: "Select All %{total_number_of_products} Products"
+          products_loaded: "%{num_of_products_loaded} of %{total_number_of_products} Products Loaded"
+          loading_products: "Loading Products"
       tag_rules:
         shipping_method_tagged_top: "Shipping methods tagged"
         shipping_method_tagged_bottom: "are:"
@@ -2507,6 +2505,7 @@ en_NZ:
           customer_placeholder: "customer@example.org"
           valid_email_error: "Please enter a valid email address"
       subscriptions:
+        error_saving: "Error saving subscription"
         new:
           please_select_a_shop: "Please select a shop"
     insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
