@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'stripe/profile_storer'
 require 'active_merchant/billing/gateways/stripe_payment_intents'
 require 'active_merchant/billing/gateways/stripe_decorator'
@@ -79,7 +81,7 @@ module Spree
       end
 
       def ensure_enterprise_selected
-        return if preferred_enterprise_id.andand > 0
+        return if preferred_enterprise_id.andand.positive?
 
         errors.add(:stripe_account_owner, I18n.t(:error_required))
       end
