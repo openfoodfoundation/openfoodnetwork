@@ -23,14 +23,14 @@
             .header
               = t :shopping_contact_web
             %p
-              - unless current_distributor.phone.blank?
+              - if current_distributor.phone.present?
                 = current_distributor.phone
                 %br
-              - unless current_distributor.website.blank?
+              - if current_distributor.website.present?
                 %a{href: "http://#{current_distributor.website}", target: "_blank" }
                   = current_distributor.website
                   %br
-              - unless current_distributor.email_address.blank?
+              - if current_distributor.email_address.present?
                 %a{href: current_distributor.email_address.reverse, mailto: true}
                   %span.email
                     = current_distributor.email_address.reverse
@@ -41,24 +41,24 @@
             .header
               = t :shopping_contact_social
             %div.follow-icons
-              - unless current_distributor.twitter.blank?
+              - if current_distributor.twitter.present?
                 %span
                   %a{href: "http://twitter.com/#{current_distributor.twitter}", target: "_blank" }
                     %i.ofn-i_041-twitter
 
-              - unless current_distributor.facebook.blank?
+              - if current_distributor.facebook.present?
                 %span
                   %a{href: "http://#{current_distributor.facebook}", target: "_blank" }
                     %i.ofn-i_044-facebook
                     / = current_distributor.facebook
 
-              - unless current_distributor.linkedin.blank?
+              - if current_distributor.linkedin.present?
                 %span
                   %a{href: "http://#{current_distributor.linkedin}", target: "_blank" }
                     %i.ofn-i_042-linkedin
                     / = current_distributor.linkedin
 
-              - unless current_distributor.instagram.blank?
+              - if current_distributor.instagram.present?
                 %span
                   %a{href: "http://instagram.com/#{current_distributor.instagram}", target: "_blank" }
                     %i.ofn-i_043-instagram
