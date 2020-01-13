@@ -1,12 +1,10 @@
 Darkswarm.factory 'StripeElements', ($rootScope, Loading, RailsFlashLoader) ->
   new class StripeElements
-    # TODO: add locale here for translations of error messages etc. from Stripe
-
     # These are both set from the StripeElements directive
     stripe: null
     card: null
 
-    # New Stripe Elements method
+    # Create Token to be used with the Stripe Charges API
     requestToken: (secrets, submit, loading_message = t("processing_payment")) ->
       return unless @stripe? && @card?
 
@@ -21,6 +19,24 @@ Darkswarm.factory 'StripeElements', ($rootScope, Loading, RailsFlashLoader) ->
           secrets.token = response.token.id
           secrets.cc_type = @mapCC(response.token.card.brand)
           secrets.card = response.token.card
+          submit()
+
+    # Create Payment Method to be used with the Stripe Payment Intents API
+    createPaymentMethod: (secrets, submit, loading_message = t("processing_payment")) ->
+      return unless @stripe? && @card?
+
+      Loading.message = loading_message
+      cardData = @makeCardData(secrets)
+
+      @stripe.createPaymentMethod({ type: 'card', card: @card }
+        @card, cardData).then (response) =>
+        if(response.error)
+          Loading.clear()
+          RailsFlashLoader.loadFlash({error: t("error") + ": #{response.error.message}"})
+        else
+          secrets.token = response.paymentMethod.id
+          secrets.cc_type = response.paymentMethod.card.brand
+          secrets.card = response.paymentMethod.card
           submit()
 
     # Maps the brand returned by Stripe to that required by activemerchant

@@ -110,7 +110,7 @@ module Spree
                      else
                        Gateway.providers.reject{ |p| p.name.include? "Bogus" }.sort_by(&:name)
                      end
-        @providers.reject!{ |p| p.name.ends_with? "StripeConnect" } unless show_stripe?
+        @providers.reject!{ |provider| stripe_provider?(provider) } unless show_stripe?
         @calculators = PaymentMethod.calculators.sort_by(&:name)
       end
 
@@ -134,18 +134,28 @@ module Spree
       # current payment_method is already a Stripe method
       def show_stripe?
         Spree::Config.stripe_connect_enabled ||
-          @payment_method.try(:type) == "Spree::Gateway::StripeConnect"
+          stripe_payment_method?
       end
 
       def restrict_stripe_account_change
         return unless @payment_method
-        return unless @payment_method.type == "Spree::Gateway::StripeConnect"
+        return unless stripe_payment_method?
         return unless @payment_method.preferred_enterprise_id.andand > 0
 
         @stripe_account_holder = Enterprise.find(@payment_method.preferred_enterprise_id)
         return if spree_current_user.enterprises.include? @stripe_account_holder
 
         params[:payment_method][:preferred_enterprise_id] = @stripe_account_holder.id
+      end
+
+      def stripe_payment_method?
+        @payment_method.try(:type) == "Spree::Gateway::StripeConnect" ||
+          @payment_method.try(:type) == "Spree::Gateway::StripeSCA"
+      end
+
+      def stripe_provider?(provider)
+        provider.name.ends_with?("StripeConnect") ||
+          provider.name.ends_with?("StripeSCA")
       end
     end
   end
