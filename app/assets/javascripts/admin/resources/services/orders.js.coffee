@@ -44,5 +44,19 @@ angular.module("admin.resources").factory 'Orders', ($q, OrderResource, RequestM
         changed.push attr unless attr is "$$hashKey"
       changed
 
+    capture: (order) ->
+      @processAction('capture', order)
+
+    ship: (order) ->
+      @processAction('ship', order)
+
+    processAction: (action, order) ->
+      OrderResource[action] {id: order.number}, (data) =>
+        if data.id
+          angular.merge(order, data)
+          data
+      , (response) =>
+        response.data
+
     resetAttribute: (order, attribute) ->
       order[attribute] = @pristineByID[order.id][attribute]

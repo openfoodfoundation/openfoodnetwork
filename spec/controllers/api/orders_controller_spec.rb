@@ -255,14 +255,57 @@ module Api
           expect(json_response[:line_items].first[:variant][:product_name]). to eq order.line_items.first.variant.product.name
         end
       end
+    end
 
-      def expect_order
-        expect(response.status).to eq 200
-        expect(json_response[:number]).to eq order.number
+    describe "#capture and #ship actions" do
+      let(:user) { create(:user) }
+      let(:product) { create(:simple_product) }
+      let(:distributor) { create(:distributor_enterprise, owner: user) }
+      let(:order_cycle) {
+        create(:simple_order_cycle,
+               distributors: [distributor], variants: [product.variants.first])
+      }
+      let!(:order) {
+        create(:order_with_totals_and_distribution,
+               user: user, distributor: distributor, order_cycle: order_cycle,
+               state: 'complete', payment_state: 'balance_due')
+      }
+
+      before do
+        order.finalize!
+        create(:check_payment, order: order, amount: order.total)
+        allow(controller).to receive(:spree_current_user) { order.distributor.owner }
+      end
+
+      describe "#capture" do
+        it "captures payments and returns an updated order object" do
+          put :capture, id: order.number
+
+          expect(order.reload.pending_payments.empty?).to be true
+          expect_order
+        end
+      end
+
+      describe "#ship" do
+        before do
+          order.payments.first.capture!
+        end
+
+        it "marks orders as shipped and returns an updated order object" do
+          put :ship, id: order.number
+
+          expect(order.reload.shipments.any?(&:shipped?)).to be true
+          expect_order
+        end
       end
     end
 
     private
+
+    def expect_order
+      expect(response.status).to eq 200
+      expect(json_response[:number]).to eq order.number
+    end
 
     def serialized_orders(orders)
       serialized_orders = ActiveModel::ArraySerializer.new(
@@ -283,8 +326,8 @@ module Api
       [
         :id, :number, :full_name, :email, :phone, :completed_at, :display_total,
         :edit_path, :state, :payment_state, :shipment_state,
-        :payments_path, :ship_path, :ready_to_ship, :created_at,
-        :distributor_name, :special_instructions, :payment_capture_path
+        :payments_path, :ready_to_ship, :ready_to_capture, :created_at,
+        :distributor_name, :special_instructions
       ]
     end
 
