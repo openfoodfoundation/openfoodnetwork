@@ -9,12 +9,6 @@ module Spree
 
       attr_accessible :preferred_enterprise_id
 
-      CARD_TYPE_MAPPING = {
-        'American Express' => 'american_express',
-        'Diners Club' => 'diners_club',
-        'Visa' => 'visa'
-      }.freeze
-
       def method_type
         'stripe'
       end
@@ -75,11 +69,6 @@ module Spree
         creditcard = token_from_card_profile_ids(creditcard)
 
         [money, creditcard, options]
-      end
-
-      def update_source!(source)
-        source.cc_type = CARD_TYPE_MAPPING[source.cc_type] if CARD_TYPE_MAPPING.include?(source.cc_type)
-        source
       end
 
       def token_from_card_profile_ids(creditcard)
