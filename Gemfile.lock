@@ -637,7 +637,7 @@ GEM
     select2-rails (3.4.9)
       sass-rails
       thor (~> 0.14)
-    selenium-webdriver (3.142.6)
+    selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
     shoulda-matchers (2.8.0)
