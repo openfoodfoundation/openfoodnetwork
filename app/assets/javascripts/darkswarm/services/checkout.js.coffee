@@ -7,6 +7,8 @@ Darkswarm.factory 'Checkout', ($injector, CurrentOrder, ShippingMethods, StripeE
     purchase: ->
       if @paymentMethod()?.method_type == 'stripe' && !@secrets.selected_card
         StripeElements.requestToken(@secrets, @submit)
+      else if @paymentMethod()?.method_type == 'stripe_sca' && !@secrets.selected_card
+        StripeElements.createPaymentMethod(@secrets, @submit)
       else
         @submit()
 
@@ -59,7 +61,7 @@ Darkswarm.factory 'Checkout', ($injector, CurrentOrder, ShippingMethods, StripeE
             last_name: @order.bill_address.lastname
         }
 
-      if @paymentMethod()?.method_type == 'stripe'
+      if @paymentMethod()?.method_type == 'stripe' || @paymentMethod()?.method_type == 'stripe_sca'
         if @secrets.selected_card
           angular.extend munged_order, {
             existing_card_id: @secrets.selected_card

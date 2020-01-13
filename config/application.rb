@@ -92,6 +92,7 @@ module Openfoodnetwork
       app.config.spree.payment_methods << Spree::Gateway::Migs
       app.config.spree.payment_methods << Spree::Gateway::Pin
       app.config.spree.payment_methods << Spree::Gateway::StripeConnect
+      app.config.spree.payment_methods << Spree::Gateway::StripeSCA
     end
 
     # Settings in config/environments/* take precedence over those specified here.
