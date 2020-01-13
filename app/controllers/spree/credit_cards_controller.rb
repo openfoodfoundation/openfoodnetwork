@@ -54,9 +54,16 @@ module Spree
 
     # Currently can only destroy the whole customer object
     def destroy_at_stripe
-      stripe_customer = Stripe::Customer.retrieve(@credit_card.gateway_customer_profile_id)
+      options = { stripe_account: stripe_account_id } if @credit_card.payment_method.type == "Spree::Gateway::StripeSCA"
+
+      stripe_customer = Stripe::Customer.retrieve(@credit_card.gateway_customer_profile_id, options || {})
       stripe_customer.delete if stripe_customer
     end
+
+    def stripe_account_id
+      StripeAccount.find_by_enterprise_id(@credit_card.payment_method.preferred_enterprise_id).andand.stripe_user_id
+    end
+
 
     def create_customer(token)
       Stripe::Customer.create(email: spree_current_user.email, source: token)
