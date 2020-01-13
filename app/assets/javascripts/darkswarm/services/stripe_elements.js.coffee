@@ -28,8 +28,7 @@ Darkswarm.factory 'StripeElements', ($rootScope, Loading, RailsFlashLoader) ->
       Loading.message = loading_message
       cardData = @makeCardData(secrets)
 
-      @stripe.createPaymentMethod({ type: 'card', card: @card }
-        @card, cardData).then (response) =>
+      @stripe.createPaymentMethod({ type: 'card', card: @card }, @card, cardData).then (response) =>
         if(response.error)
           Loading.clear()
           RailsFlashLoader.loadFlash({error: t("error") + ": #{response.error.message}"})
