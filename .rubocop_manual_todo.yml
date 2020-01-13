@@ -44,7 +44,6 @@ Layout/LineLength:
   - app/controllers/spree/admin/adjustments_controller_decorator.rb
   - app/controllers/spree/admin/orders_controller_decorator.rb
   - app/controllers/spree/admin/payments_controller_decorator.rb
-  - app/controllers/spree/credit_cards_controller.rb
   - app/controllers/spree/paypal_controller_decorator.rb
   - app/controllers/stripe/callbacks_controller.rb
   - app/helpers/angular_form_builder.rb
