@@ -4,9 +4,10 @@
 
 module Stripe
   class ProfileStorer
-    def initialize(payment, provider)
+    def initialize(payment, provider, stripe_account_id = nil)
       @payment = payment
       @provider = provider
+      @stripe_account_id = stripe_account_id
     end
 
     def create_customer_from_token
@@ -14,7 +15,11 @@ module Stripe
       response = @provider.store(token, options)
 
       if response.success?
-        attrs = source_attrs_from(response)
+        if response.params['customer'] # Payment Intents API
+          attrs = stripe_sca_attrs_from(response)
+        else
+          attrs = stripe_connect_attrs_from(response)
+        end
         @payment.source.update_attributes!(attrs)
       else
         @payment.__send__(:gateway_error, response.message)
@@ -24,11 +29,13 @@ module Stripe
     private
 
     def options
-      {
-        email: @payment.order.email,
-        login: Stripe.api_key,
-        address: address_for(@payment)
-      }
+      options = {
+                  email: @payment.order.email,
+                  login: Stripe.api_key,
+                  address: address_for(@payment)
+                }
+      options = options.merge({ stripe_account: @stripe_account_id }) if @stripe_account_id.present?
+      options
     end
 
     def address_for(payment)
@@ -52,9 +59,17 @@ module Stripe
       end
     end
 
-    def source_attrs_from(response)
+    def stripe_sca_attrs_from(response)
       {
-        cc_type: @payment.source.cc_type, # side-effect of update_source!
+        cc_type: @payment.source.cc_type,
+        gateway_customer_profile_id: response.params['customer'],
+        gateway_payment_profile_id: response.params['id']
+      }
+    end
+
+    def stripe_connect_attrs_from(response)
+      {
+        cc_type: @payment.source.cc_type,
         gateway_customer_profile_id: response.params['id'],
         gateway_payment_profile_id: response.params['default_source'] || response.params['default_card']
       }
