@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Here we bring commit 823faaeab0d6d3bd75ee037ec894ab7c9d95d3a9 from ActiveMerchant v1.98.0
 # This class integrates with the new StripePaymentIntents API
 # This can be removed once we upgrade to ActiveMerchant v1.98.0
@@ -5,14 +7,18 @@ require 'active_support/core_ext/hash/slice'
 
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
-    # This gateway uses the current Stripe {Payment Intents API}[https://stripe.com/docs/api/payment_intents].
+    # This gateway uses the current Stripe
+    #   {Payment Intents API}[https://stripe.com/docs/api/payment_intents].
     # For the legacy API, see the Stripe gateway
     class StripePaymentIntentsGateway < StripeGateway
       ALLOWED_METHOD_STATES = %w[automatic manual].freeze
       ALLOWED_CANCELLATION_REASONS = %w[duplicate fraudulent requested_by_customer abandoned].freeze
-      CREATE_INTENT_ATTRIBUTES = %i[description statement_descriptor receipt_email save_payment_method]
-      CONFIRM_INTENT_ATTRIBUTES = %i[receipt_email return_url save_payment_method setup_future_usage off_session]
-      UPDATE_INTENT_ATTRIBUTES = %i[description statement_descriptor receipt_email setup_future_usage]
+      CREATE_INTENT_ATTRIBUTES =
+        %i[description statement_descriptor receipt_email save_payment_method].freeze
+      CONFIRM_INTENT_ATTRIBUTES =
+        %i[receipt_email return_url save_payment_method setup_future_usage off_session].freeze
+      UPDATE_INTENT_ATTRIBUTES =
+        %i[description statement_descriptor receipt_email setup_future_usage].freeze
       DEFAULT_API_VERSION = '2019-05-16'
 
       def create_intent(money, payment_method, options = {})
@@ -80,11 +86,15 @@ module ActiveMerchant #:nodoc:
       end
 
       def authorize(money, payment_method, options = {})
-        create_intent(money, payment_method, options.merge!(confirm: true, capture_method: 'manual'))
+        create_intent(money,
+                      payment_method,
+                      options.merge!(confirm: true, capture_method: 'manual'))
       end
 
       def purchase(money, payment_method, options = {})
-        create_intent(money, payment_method, options.merge!(confirm: true, capture_method: 'automatic'))
+        create_intent(money,
+                      payment_method,
+                      options.merge!(confirm: true, capture_method: 'automatic'))
       end
 
       def capture(money, intent_id, options = {})
@@ -96,7 +106,9 @@ module ActiveMerchant #:nodoc:
 
       def void(intent_id, options = {})
         post = {}
-        post[:cancellation_reason] = options[:cancellation_reason] if ALLOWED_CANCELLATION_REASONS.include?(options[:cancellation_reason])
+        if ALLOWED_CANCELLATION_REASONS.include?(options[:cancellation_reason])
+          post[:cancellation_reason] = options[:cancellation_reason]
+        end
         commit(:post, "payment_intents/#{intent_id}/cancel", post, options)
       end
 
@@ -106,8 +118,10 @@ module ActiveMerchant #:nodoc:
         super(money, charge_id, options)
       end
 
-      # Note: Not all payment methods are currently supported by the {Payment Methods API}[https://stripe.com/docs/payments/payment-methods]
-      # Current implementation will create a PaymentMethod object if the method is a token or credit card
+      # Note: Not all payment methods are currently supported by the
+      #   {Payment Methods API}[https://stripe.com/docs/payments/payment-methods]
+      # Current implementation will create
+      #   a PaymentMethod object if the method is a token or credit card
       # All other types will default to legacy Stripe store
       def store(payment_method, options = {})
         params = {}
@@ -115,21 +129,24 @@ module ActiveMerchant #:nodoc:
 
         # If customer option is provided, create a payment method and attach to customer id
         # Otherwise, create a customer, then attach
-        #if payment_method.is_a?(StripePaymentToken) || payment_method.is_a?(ActiveMerchant::Billing::CreditCard)
-          add_payment_method_token(params, payment_method, options)
-          if options[:customer]
-            customer_id = options[:customer]
-          else
-            post[:validate] = options[:validate] unless options[:validate].nil?
-            post[:description] = options[:description] if options[:description]
-            post[:email] = options[:email] if options[:email]
-            customer = commit(:post, 'customers', post, options)
-            customer_id = customer.params['id']
-          end
-          commit(:post, "payment_methods/#{params[:payment_method]}/attach", { customer: customer_id }, options)
-        #else
-        #  super(payment, options)
-        #end
+        # if payment_method.is_a?(StripePaymentToken) ||
+        #   payment_method.is_a?(ActiveMerchant::Billing::CreditCard)
+        add_payment_method_token(params, payment_method, options)
+        if options[:customer]
+          customer_id = options[:customer]
+        else
+          post[:validate] = options[:validate] unless options[:validate].nil?
+          post[:description] = options[:description] if options[:description]
+          post[:email] = options[:email] if options[:email]
+          customer = commit(:post, 'customers', post, options)
+          customer_id = customer.params['id']
+        end
+        commit(:post,
+               "payment_methods/#{params[:payment_method]}/attach",
+               { customer: customer_id }, options)
+        # else
+        #   super(payment, options)
+        # end
       end
 
       def unstore(identification, options = {}, deprecated_options = {})
@@ -156,7 +173,9 @@ module ActiveMerchant #:nodoc:
 
       def add_confirmation_method(post, options)
         confirmation_method = options[:confirmation_method].to_s
-        post[:confirmation_method] = confirmation_method if ALLOWED_METHOD_STATES.include?(confirmation_method)
+        if ALLOWED_METHOD_STATES.include?(confirmation_method)
+          post[:confirmation_method] = confirmation_method
+        end
         post
       end
 
@@ -168,6 +187,7 @@ module ActiveMerchant #:nodoc:
 
       def add_return_url(post, options)
         return unless options[:confirm]
+
         post[:confirm] = options[:confirm]
         post[:return_url] = options[:return_url] if options[:return_url]
         post
@@ -204,15 +224,22 @@ module ActiveMerchant #:nodoc:
       end
 
       def setup_future_usage(post, options = {})
-        post[:setup_future_usage] = options[:setup_future_usage] if %w( on_session off_session ).include?(options[:setup_future_usage])
-        post[:off_session] = options[:off_session] if options[:off_session] && options[:confirm] == true
+        if %w(on_session off_session).include?(options[:setup_future_usage])
+          post[:setup_future_usage] = options[:setup_future_usage]
+        end
+        if options[:off_session] && options[:confirm] == true
+          post[:off_session] = options[:off_session]
+        end
         post
       end
 
       def add_connected_account(post, options = {})
         return unless transfer_data = options[:transfer_data]
+
         post[:transfer_data] = {}
-        post[:transfer_data][:destination] = transfer_data[:destination] if transfer_data[:destination]
+        if transfer_data[:destination]
+          post[:transfer_data][:destination] = transfer_data[:destination]
+        end
         post[:transfer_data][:amount] = transfer_data[:amount] if transfer_data[:amount]
         post[:on_behalf_of] = options[:on_behalf_of] if options[:on_behalf_of]
         post[:transfer_group] = options[:transfer_group] if options[:transfer_group]
@@ -222,13 +249,18 @@ module ActiveMerchant #:nodoc:
 
       def add_shipping_address(post, options = {})
         return unless shipping = options[:shipping]
+
         post[:shipping] = {}
         post[:shipping][:address] = {}
         post[:shipping][:address][:line1] = shipping[:address][:line1]
         post[:shipping][:address][:city] = shipping[:address][:city] if shipping[:address][:city]
-        post[:shipping][:address][:country] = shipping[:address][:country] if shipping[:address][:country]
+        if shipping[:address][:country]
+          post[:shipping][:address][:country] = shipping[:address][:country]
+        end
         post[:shipping][:address][:line2] = shipping[:address][:line2] if shipping[:address][:line2]
-        post[:shipping][:address][:postal_code] = shipping[:address][:postal_code] if shipping[:address][:postal_code]
+        if shipping[:address][:postal_code]
+          post[:shipping][:address][:postal_code] = shipping[:address][:postal_code]
+        end
         post[:shipping][:address][:state] = shipping[:address][:state] if shipping[:address][:state]
 
         post[:shipping][:name] = shipping[:name]
