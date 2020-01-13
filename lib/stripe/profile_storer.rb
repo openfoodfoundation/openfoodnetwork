@@ -15,11 +15,7 @@ module Stripe
       response = @provider.store(token, options)
 
       if response.success?
-        if response.params['customer'] # Payment Intents API
-          attrs = stripe_sca_attrs_from(response)
-        else
-          attrs = stripe_connect_attrs_from(response)
-        end
+        attrs = source_attrs_from(response)
         @payment.source.update_attributes!(attrs)
       else
         @payment.__send__(:gateway_error, response.message)
@@ -30,11 +26,11 @@ module Stripe
 
     def options
       options = {
-                  email: @payment.order.email,
-                  login: Stripe.api_key,
-                  address: address_for(@payment)
-                }
-      options = options.merge({ stripe_account: @stripe_account_id }) if @stripe_account_id.present?
+        email: @payment.order.email,
+        login: Stripe.api_key,
+        address: address_for(@payment)
+      }
+      options = options.merge(stripe_account: @stripe_account_id) if @stripe_account_id.present?
       options
     end
 
@@ -59,20 +55,28 @@ module Stripe
       end
     end
 
-    def stripe_sca_attrs_from(response)
+    def source_attrs_from(response)
       {
         cc_type: @payment.source.cc_type,
-        gateway_customer_profile_id: response.params['customer'],
-        gateway_payment_profile_id: response.params['id']
+        gateway_customer_profile_id: customer_profile_id(response),
+        gateway_payment_profile_id: payment_profile_id(response)
       }
     end
 
-    def stripe_connect_attrs_from(response)
-      {
-        cc_type: @payment.source.cc_type,
-        gateway_customer_profile_id: response.params['id'],
-        gateway_payment_profile_id: response.params['default_source'] || response.params['default_card']
-      }
+    def customer_profile_id(response)
+      if response.params['customer'] # Payment Intents API
+        response.params['customer']
+      else
+        response.params['id']
+      end
+    end
+
+    def payment_profile_id(response)
+      if response.params['customer'] # Payment Intents API
+        response.params['id']
+      else
+        response.params['default_source'] || response.params['default_card']
+      end
     end
   end
 end
