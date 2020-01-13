@@ -3,6 +3,6 @@
 
 %ordercycle{"ng-controller" => "OrderCycleCtrl"}
 
-  - unless @order_cycles and @order_cycles.empty?
+  - unless no_open_order_cycles?
     %form.custom
       = yield :order_cycle_form

@@ -36,7 +36,10 @@ module ShopHelper
   end
 
   def shopfront_closed_message?
-    @order_cycles && @order_cycles.empty? &&
-      current_distributor.preferred_shopfront_closed_message.present?
+    no_open_order_cycles? && current_distributor.preferred_shopfront_closed_message.present?
+  end
+
+  def no_open_order_cycles?
+    @order_cycles && @order_cycles.empty?
   end
 end

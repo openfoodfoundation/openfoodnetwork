@@ -1,7 +1,7 @@
 %script{ type: "text/ng-template", id: "shop/shop.html" }
   .row
     .small-12.columns
-      - if @order_cycles and @order_cycles.empty?
+      - if no_open_order_cycles?
         .content
           %h4
             %i.ofn-i_012-warning
