@@ -18,7 +18,7 @@
 #
 # This process probably doesn't need repeating. Otherwise there is plenty
 # of room for improvements and automation.
-Metrics/LineLength:
+Layout/LineLength:
   Max: 100
   Exclude:
   - Gemfile
@@ -143,6 +143,7 @@ Metrics/LineLength:
   - spec/controllers/admin/subscriptions_controller_spec.rb
   - spec/controllers/admin/variant_overrides_controller_spec.rb
   - spec/controllers/api/base_controller_spec.rb
+  - spec/controllers/api/exchange_products_controller_spec.rb
   - spec/controllers/api/logos_controller_spec.rb
   - spec/controllers/api/order_cycles_controller_spec.rb
   - spec/controllers/api/orders_controller_spec.rb
@@ -304,6 +305,7 @@ Metrics/LineLength:
   - spec/serializers/api/admin/exchange_serializer_spec.rb
   - spec/serializers/api/admin/for_order_cycle/enterprise_serializer_spec.rb
   - spec/serializers/api/admin/for_order_cycle/supplied_product_serializer_spec.rb
+  - spec/serializers/api/admin/order_cycle_serializer_spec.rb
   - spec/serializers/api/admin/subscription_customer_serializer_spec.rb
   - spec/serializers/api/admin/variant_override_serializer_spec.rb
   - spec/serializers/api/current_order_serializer_spec.rb
@@ -311,11 +313,13 @@ Metrics/LineLength:
   - spec/serializers/api/order_serializer_spec.rb
   - spec/services/cart_service_spec.rb
   - spec/services/embedded_page_service_spec.rb
+  - spec/services/exchange_products_renderer_spec.rb
   - spec/services/order_cycle_distributed_products_spec.rb
   - spec/services/order_cycle_distributed_variants_spec.rb
   - spec/services/order_cycle_form_spec.rb
   - spec/services/order_factory_spec.rb
   - spec/services/order_syncer_spec.rb
+  - spec/services/permissions/order_spec.rb
   - spec/services/product_tag_rules_filterer_spec.rb
   - spec/services/products_renderer_spec.rb
   - spec/services/subscription_estimator_spec.rb
@@ -701,6 +705,7 @@ Metrics/ModuleLength:
   - spec/models/spree/payment_spec.rb
   - spec/models/spree/product_spec.rb
   - spec/models/spree/variant_spec.rb
+  - spec/services/permissions/order_spec.rb
   - spec/support/request/web_helper.rb
 
 Metrics/ParameterLists:

@@ -142,9 +142,9 @@ class OrderCycle < ActiveRecord::Base
     oc.name = I18n.t("models.order_cycle.cloned_order_cycle_name", order_cycle: oc.name)
     oc.orders_open_at = oc.orders_close_at = nil
     oc.coordinator_fee_ids = coordinator_fee_ids
-    # rubocop:disable Metrics/LineLength
+    # rubocop:disable Layout/LineLength
     oc.preferred_product_selection_from_coordinator_inventory_only = preferred_product_selection_from_coordinator_inventory_only
-    # rubocop:enable Metrics/LineLength
+    # rubocop:enable Layout/LineLength
     oc.save!
     exchanges.each { |e| e.clone!(oc) }
     oc.reload
