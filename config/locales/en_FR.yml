@@ -852,7 +852,6 @@ en_FR:
         save_and_back_to_list: "Save and Back to List"
         choose_products_from: "Choose Products From:"
       incoming:
-        previous: "Previous"
         save: "Save"
         save_and_next: "Save and Next"
         next: "Next"
@@ -1105,6 +1104,8 @@ en_FR:
       destroy_attachment_does_not_exist: "Logo does not exist"
     enterprise_promo_image:
       destroy_attachment_does_not_exist: "Promo image does not exist"
+    orders:
+      failed_to_update: "Failed to update order"
   checkout:
     already_ordered:
       cart: "cart"
@@ -1129,15 +1130,6 @@ en_FR:
       selling_on_ofn: "Interested in getting on the Open Food Network?"
       register: "Register here"
     footer:
-      footer_global_headline: "OFN Global"
-      footer_global_home: "Home"
-      footer_global_news: "News"
-      footer_global_about: "About"
-      footer_global_contact: "Contact"
-      footer_sites_headline: "OFN Sites"
-      footer_sites_developer: "Developer"
-      footer_sites_community: "Community"
-      footer_sites_userguide: "User Guide"
       footer_secure: "Secure and trusted."
       footer_secure_text: "Open Food Network uses SSL encryption (2048 bit RSA) everywhere to keep your shopping and payment information private. Our servers do not store your credit card details and payments are processed by PCI-compliant services."
       footer_contact_headline: "Keep in touch"
@@ -2918,6 +2910,7 @@ en_FR:
           capture: "Capture"
           ship: "Ship"
           edit: "Edit"
+          order_not_updated: "The order could not be updated"
           note: "Note"
           first: "First"
           last: "Last"
