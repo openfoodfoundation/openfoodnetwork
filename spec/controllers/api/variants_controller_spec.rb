@@ -30,16 +30,6 @@ describe Api::VariantsController, type: :controller do
       expect(attributes.all?{ |attr| keys.include? attr }).to eq(true)
     end
 
-    it "is denied access when trying to delete a variant" do
-      product = create(:product)
-      variant = product.master
-      spree_delete :soft_delete, variant_id: variant.to_param, product_id: product.to_param, format: :json
-
-      assert_unauthorized!
-      expect { variant.reload }.not_to raise_error
-      expect(variant.deleted_at).to be_nil
-    end
-
     it 'can query the results through a parameter' do
       expected_result = create(:variant, sku: 'FOOBAR')
       api_get :index, q: { sku_cont: 'FOO' }
@@ -89,6 +79,7 @@ describe Api::VariantsController, type: :controller do
 
       assert_unauthorized!
       expect { variant.reload }.not_to raise_error
+      expect(variant.deleted_at).to be_nil
     end
   end
 
@@ -100,8 +91,8 @@ describe Api::VariantsController, type: :controller do
     let(:product_other) { create(:product, supplier: supplier_other) }
     let(:variant_other) { product_other.master }
 
-    it "soft deletes a variant" do
-      spree_delete :soft_delete, variant_id: variant.to_param, product_id: product.to_param, format: :json
+    it "deletes a variant" do
+      api_delete :destroy, id: variant.to_param
 
       expect(response.status).to eq(204)
       expect { variant.reload }.not_to raise_error
@@ -109,11 +100,11 @@ describe Api::VariantsController, type: :controller do
     end
 
     it "is denied access to soft deleting another enterprises' variant" do
-      spree_delete :soft_delete, variant_id: variant_other.to_param, product_id: product_other.to_param, format: :json
+      api_delete :destroy, id: variant_other.to_param
 
       assert_unauthorized!
-      expect { variant.reload }.not_to raise_error
-      expect(variant.deleted_at).to be_nil
+      expect { variant_other.reload }.not_to raise_error
+      expect(variant_other.deleted_at).to be_nil
     end
   end
 
@@ -123,23 +114,6 @@ describe Api::VariantsController, type: :controller do
     let(:product) { create(:product) }
     let(:variant) { product.master }
     let(:resource_scoping) { { product_id: variant.product.to_param } }
-
-    it "soft deletes a variant" do
-      spree_delete :soft_delete, variant_id: variant.to_param, product_id: product.to_param, format: :json
-
-      expect(response.status).to eq(204)
-      expect { variant.reload }.not_to raise_error
-      expect(variant.deleted_at).not_to be_nil
-    end
-
-    it "doesn't delete the only variant of the product" do
-      product = create(:product)
-      variant = product.variants.first
-      spree_delete :soft_delete, variant_id: variant.to_param, product_id: product.to_param, format: :json
-
-      expect(variant.reload).to_not be_deleted
-      expect(assigns(:variant).errors[:product]).to include "must have at least one variant"
-    end
 
     context "deleted variants" do
       before do
@@ -173,7 +147,17 @@ describe Api::VariantsController, type: :controller do
       api_delete :destroy, id: variant.to_param
 
       expect(response.status).to eq(204)
-      expect { Spree::Variant.find(variant.id) }.to raise_error(ActiveRecord::RecordNotFound)
+      expect { variant.reload }.not_to raise_error
+      expect(variant.deleted_at).not_to be_nil
+    end
+
+    it "doesn't delete the only variant of the product" do
+      product = create(:product)
+      variant = product.variants.first
+      spree_delete :destroy, id: variant.to_param
+
+      expect(variant.reload).to_not be_deleted
+      expect(assigns(:variant).errors[:product]).to include "must have at least one variant"
     end
   end
 end

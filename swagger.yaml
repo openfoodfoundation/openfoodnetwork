@@ -175,22 +175,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Product'
 
-  /products/{product_id}/soft_delete:
-    delete:
-      description: Soft deletes the Product with the given ID.
-      tags:
-        - products
-      parameters:
-          - in: path
-            name: product_id
-            schema:
-              type: integer
-            required: true
-            description: Numeric ID of the Product.
-      responses:
-        '204':
-          description: successful deletion
-
   /products/{product_id}/variants:
     get:
       description: Gets all Variants of the given Product.
@@ -311,28 +295,6 @@ paths:
                 $ref: '#/components/schemas/Variant'
     delete:
       description: Deletes the Variant with the given ID.
-      tags:
-        - product variants
-      parameters:
-          - in: path
-            name: product_id
-            schema:
-              type: integer
-            required: true
-            description: Numeric ID of the Product.
-          - in: path
-            name: variant_id
-            schema:
-              type: integer
-            required: true
-            description: Numeric ID of the Variant.
-      responses:
-        '204':
-          description: successful deletion
-
-  /products/{product_id}/variants/{variant_id}/soft_delete:
-    delete:
-      description: Soft-deletes the Variant with the given ID.
       tags:
         - product variants
       parameters:

@@ -74,16 +74,18 @@ describe Api::ProductsController, type: :controller do
   context "as an enterprise user" do
     let(:current_api_user) { supplier_enterprise_user(supplier) }
 
-    it "soft deletes my products" do
-      spree_delete :soft_delete, product_id: product.to_param, format: :json
+    it "can delete my product" do
+      expect(product.deleted_at).to be_nil
+      api_delete :destroy, id: product.to_param
 
       expect(response.status).to eq(204)
       expect { product.reload }.not_to raise_error
       expect(product.deleted_at).not_to be_nil
     end
 
-    it "is denied access to soft deleting another enterprises' product" do
-      spree_delete :soft_delete, product_id: product_other_supplier.to_param, format: :json
+    it "is denied access to deleting another enterprises' product" do
+      expect(product_other_supplier.deleted_at).to be_nil
+      api_delete :destroy, id: product_other_supplier.to_param
 
       assert_unauthorized!
       expect { product_other_supplier.reload }.not_to raise_error
@@ -95,14 +97,6 @@ describe Api::ProductsController, type: :controller do
     before do
       allow(current_api_user)
         .to receive(:has_spree_role?).with("admin").and_return(true)
-    end
-
-    it "soft deletes a product" do
-      spree_delete :soft_delete, product_id: product.to_param, format: :json
-
-      expect(response.status).to eq(204)
-      expect { product.reload }.not_to raise_error
-      expect(product.deleted_at).not_to be_nil
     end
 
     it "can create a new product" do
