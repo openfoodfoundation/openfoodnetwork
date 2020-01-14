@@ -58,7 +58,7 @@ module Spree
 
     # Currently can only destroy the whole customer object
     def destroy_at_stripe
-      if @credit_card.payment_method.type == "Spree::Gateway::StripeSCA"
+      if @credit_card.payment_method && @credit_card.payment_method.type == "Spree::Gateway::StripeSCA"
         options = { stripe_account: stripe_account_id }
       end
 
