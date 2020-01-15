@@ -8,13 +8,10 @@ feature 'Tag Rules', js: true do
 
   context "creating" do
     before do
-      login_to_admin_section
-      visit main_app.edit_admin_enterprise_path(enterprise)
+      visit_tag_rules
     end
 
     it "allows creation of rules of each type" do
-      click_link "Tag Rules"
-
       # Creating a new tag
       expect(page).to have_no_selector '.customer_tag'
       expect(page).to have_content 'No tags apply to this enterprise yet'
@@ -115,13 +112,10 @@ feature 'Tag Rules', js: true do
     # let!(:do_tag_rule) { create(:tag_rule, enterprise: enterprise, preferred_customer_tags: "member" ) }
 
     before do
-      login_to_admin_section
-      visit main_app.edit_admin_enterprise_path(enterprise)
+      visit_tag_rules
     end
 
     it "saves changes to rules of each type" do
-      click_link "Tag Rules"
-
       # Tag groups exist
       expect(page).to have_selector '.customer_tag .header', text: "For customers tagged:", count: 4
       expect(page).to have_selector '.customer_tag .header tags-input .tag-list ti-tag-item', text: "member", count: 1
@@ -223,13 +217,10 @@ feature 'Tag Rules', js: true do
     let!(:default_rule) { create(:filter_products_tag_rule, is_default: true, enterprise: enterprise ) }
 
     before do
-      login_to_admin_section
-      visit main_app.edit_admin_enterprise_path(enterprise)
+      visit_tag_rules
     end
 
     it "deletes both default and customer rules from the database" do
-      click_link "Tag Rules"
-
       expect do
         accept_alert do
           within "#tr_1" do first("a.delete-tag-rule").click end
@@ -241,5 +232,11 @@ feature 'Tag Rules', js: true do
         expect(page).to have_no_selector "#tr_0"
       end.to change{ TagRule.count }.by(-2)
     end
+  end
+
+  def visit_tag_rules
+    login_to_admin_section
+    visit main_app.edit_admin_enterprise_path(enterprise)
+    click_link "Tag Rules"
   end
 end
