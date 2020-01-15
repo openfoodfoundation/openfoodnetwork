@@ -542,7 +542,7 @@ feature '
       page.find("tr.supplier-#{supplier_enterprise.id} td.products").click
       expect(page).to have_selector ".exchange-product-details"
 
-      expect(page).to have_content "1 of 2 Products Loaded"
+      expect(page).to have_content "1 of 2 Variants Loaded"
       expect(page).to_not have_content new_product.name
     end
 
@@ -562,7 +562,7 @@ feature '
 
     def expect_all_products_loaded
       expect(page).to have_content new_product.name.upcase
-      expect(page).to have_content "2 of 2 Products Loaded"
+      expect(page).to have_content "2 of 2 Variants Loaded"
     end
   end
 
