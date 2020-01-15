@@ -1418,7 +1418,6 @@ Style/GuardClause:
     - 'app/controllers/checkout_controller.rb'
     - 'app/controllers/home_controller.rb'
     - 'app/controllers/spree/admin/orders_controller_decorator.rb'
-    - 'app/controllers/spree/admin/resource_controller_decorator.rb'
     - 'app/controllers/spree/admin/variants_controller_decorator.rb'
     - 'app/controllers/spree/checkout_controller.rb'
     - 'app/controllers/spree/orders_controller.rb'
