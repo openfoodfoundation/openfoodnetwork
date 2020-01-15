@@ -7,16 +7,6 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
 
   let!(:order_cycle) { create(:simple_order_cycle) }
   let!(:enterprise) { create(:distributor_enterprise) }
-  let!(:exchange) do
-    create(
-      :exchange,
-      order_cycle: order_cycle,
-      sender: order_cycle.coordinator,
-      receiver: enterprise,
-      incoming: false,
-      pickup_time: "Monday"
-    )
-  end
   let!(:shipping_method) do
     create(
       :shipping_method,
