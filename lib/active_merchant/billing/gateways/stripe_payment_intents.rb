@@ -140,6 +140,9 @@ module ActiveMerchant #:nodoc:
           post[:email] = options[:email] if options[:email]
           customer = commit(:post, 'customers', post, options)
           customer_id = customer.params['id']
+
+          # return the stripe response if expected customer id is not present
+          return customer if customer_id.nil?
         end
         commit(:post,
                "payment_methods/#{params[:payment_method]}/attach",
