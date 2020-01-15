@@ -852,7 +852,6 @@ nb:
         save_and_back_to_list: "Lagre og Tilbake til Listen"
         choose_products_from: "Velg Produkter Fra:"
       incoming:
-        previous: "Tidligere"
         save: "Lagre"
         save_and_next: "Lagre og Neste"
         next: "Neste"
@@ -1105,6 +1104,8 @@ nb:
       destroy_attachment_does_not_exist: "Logo eksisterer ikke"
     enterprise_promo_image:
       destroy_attachment_does_not_exist: "Promo-bilde eksisterer ikke"
+    orders:
+      failed_to_update: "Kunne ikke oppdatere bestillingen"
   checkout:
     already_ordered:
       cart: "handlekurv"
@@ -1129,15 +1130,6 @@ nb:
       selling_on_ofn: "Interessert i å bli med i Open Food Network?"
       register: "Registrer her"
     footer:
-      footer_global_headline: "OFN Globalt"
-      footer_global_home: "Hjem"
-      footer_global_news: "Nyheter"
-      footer_global_about: "Om"
-      footer_global_contact: "Kontakt"
-      footer_sites_headline: "OFN nettsteder"
-      footer_sites_developer: "Utvikler"
-      footer_sites_community: "Forum"
-      footer_sites_userguide: "Brukermanual"
       footer_secure: "Sikker og klarert."
       footer_secure_text: "Open Food Network bruker SSL-kryptering (2048 bit RSA) overalt for å holde handlingen og betalingen din privat. Våre servere lagrer ikke kortopplysninger og betalinger behandles av PCI-kompatible tjenester."
       footer_contact_headline: "Hold kontakten"
@@ -2917,6 +2909,7 @@ nb:
           capture: "Fang"
           ship: "Levere"
           edit: "Rediger"
+          order_not_updated: "Bestillingen kunne ikke oppdateres"
           note: "Merk"
           first: "Først"
           last: "Siste"
