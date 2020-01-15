@@ -31,10 +31,10 @@
 - if type == 'supplier'
   %tr.panel-row{ object: "exchange",
     panels: "{products: 'exchange_products_supplied'}",
-    locals: "$index,exchangeLoadedVariants,exchangeTotalVariants,order_cycle,exchange,enterprises,setExchangeVariants,selectAllVariants,suppliedVariants,removeDistributionOfVariant,initializeExchangeProductsPanel,loadMoreExchangeProducts,loadAllExchangeProducts,productsLoading",
+    locals: "$index,exchangeTotalVariants,order_cycle,exchange,enterprises,setExchangeVariants,selectAllVariants,suppliedVariants,removeDistributionOfVariant,initializeExchangeProductsPanel,loadMoreExchangeProducts,loadAllExchangeProducts,productsLoading",
     colspan: 4 }
 - if type == 'distributor'
   %tr.panel-row{ object: "exchange",
     panels: "{products: 'exchange_products_distributed', tags: 'exchange_tags'}",
-    locals: "$index,exchangeLoadedVariants,exchangeTotalVariants,order_cycle,exchange,enterprises,setExchangeVariants,incomingExchangeVariantsFor,variantSuppliedToOrderCycle,initializeExchangeProductsPanel,loadMoreExchangeProducts,loadAllExchangeProducts,productsLoading",
+    locals: "$index,exchangeTotalVariants,order_cycle,exchange,enterprises,setExchangeVariants,incomingExchangeVariantsFor,variantSuppliedToOrderCycle,initializeExchangeProductsPanel,loadMoreExchangeProducts,loadAllExchangeProducts,productsLoading",
     colspan: 5 }
