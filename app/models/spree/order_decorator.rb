@@ -312,6 +312,14 @@ Spree::Order.class_eval do
     end
   end
 
+  def price_adjustments
+    adjustments = []
+
+    line_items.each { |line_item| adjustments.concat line_item.adjustments }
+
+    adjustments
+  end
+
   def price_adjustment_totals
     Hash[tax_adjustment_totals.map do |tax_rate, tax_amount|
       [tax_rate.name,
