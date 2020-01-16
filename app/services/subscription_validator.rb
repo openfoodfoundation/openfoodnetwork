@@ -82,11 +82,16 @@ class SubscriptionValidator
 
   def credit_card_ok?
     return unless customer && payment_method
-    return unless payment_method.type == "Spree::Gateway::StripeConnect" || payment_method.type == "Spree::Gateway::StripeSCA"
+    return unless stripe_payment_method?(payment_method)
     return errors.add(:payment_method, :charges_not_allowed) unless customer.allow_charges
     return if customer.user.andand.default_card.present?
 
     errors.add(:payment_method, :no_default_card)
+  end
+
+  def stripe_payment_method?(payment_method)
+    payment_method.type == "Spree::Gateway::StripeConnect" ||
+      payment_method.type == "Spree::Gateway::StripeSCA"
   end
 
   def subscription_line_items_present?
