@@ -68,6 +68,8 @@ Spree::PaymentMethod.class_eval do
       "Pin Payments"
     when "Spree::Gateway::StripeConnect"
       "Stripe"
+    when "Spree::Gateway::StripeSCA"
+      "Stripe SCA"
     when "Spree::Gateway::PayPalExpress"
       "PayPal Express"
     else
