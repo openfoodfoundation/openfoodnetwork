@@ -6,6 +6,8 @@ class SubscriptionLineItem < ActiveRecord::Base
   validates :variant, presence: true
   validates :quantity, presence: true, numericality: { only_integer: true }
 
+  default_scope { order('id ASC') }
+
   def total_estimate
     (price_estimate || 0) * (quantity || 0)
   end
@@ -22,6 +24,4 @@ class SubscriptionLineItem < ActiveRecord::Base
   def price
     price_estimate
   end
-
-  default_scope order('id ASC')
 end

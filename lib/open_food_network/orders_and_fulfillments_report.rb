@@ -29,6 +29,22 @@ module OpenFoodNetwork
       report_line_items.list(report.line_item_includes)
     end
 
+    def line_item_name
+      proc { |line_item| line_item.variant.full_name }
+    end
+
+    def line_items_name
+      proc { |line_items| line_items.first.variant.full_name }
+    end
+
+    def supplier_name
+      proc { |line_items| line_items.first.variant.product.supplier.name }
+    end
+
+    def product_name
+      proc { |line_items| line_items.first.variant.product.name }
+    end
+
     private
 
     def report
@@ -44,22 +60,6 @@ module OpenFoodNetwork
       else
         DefaultReport
       end
-    end
-
-    def supplier_name
-      proc { |line_items| line_items.first.variant.product.supplier.name }
-    end
-
-    def product_name
-      proc { |line_items| line_items.first.variant.product.name }
-    end
-
-    def line_item_name
-      proc { |line_item| line_item.variant.full_name }
-    end
-
-    def line_items_name
-      proc { |line_items| line_items.first.variant.full_name }
     end
 
     def total_units(line_items)

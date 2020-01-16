@@ -1,3 +1,5 @@
+require 'spree/admin/base_helper'
+
 module Spree
   module Admin
     module BaseHelper
