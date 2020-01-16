@@ -826,7 +826,6 @@ pt:
         cancel: "Cancelar"
         choose_products_from: "Escolha produtos de:"
       incoming:
-        previous: "Anterior"
         save: "Guardar"
         next: "Seguinte"
         cancel: "Cancelar"
@@ -1084,15 +1083,6 @@ pt:
       selling_on_ofn: "Tem interesse em participar na Open Food Network?"
       register: "Registe-se aqui"
     footer:
-      footer_global_headline: "OFN Global"
-      footer_global_home: "Início"
-      footer_global_news: "Notícias"
-      footer_global_about: "Sobre"
-      footer_global_contact: "Contacto"
-      footer_sites_headline: "Páginas OFN"
-      footer_sites_developer: "Desenvolvimento"
-      footer_sites_community: "Comunidade"
-      footer_sites_userguide: "Manual do Utilizador"
       footer_secure: "Seguro e de confiança."
       footer_secure_text: "A Open Food Network utiliza a criptografia SSL (2048 bit RSA) para manter as suas informações em segurança. Os nossos servidores não guardam os detalhes do seu cartão de crédito e os pagamentos são processados por serviços compatíveis com PCI."
       footer_contact_headline: "Ficamos em contacto"

@@ -1,5 +1,5 @@
 pt_BR:
-  language_name: "Português"
+  language_name: "Português do Brasil"
   activerecord:
     attributes:
       enterprise_fee:
@@ -116,6 +116,7 @@ pt_BR:
       email_welcome: "Bem-vindo"
       email_registered: "é agora parte de"
       email_userguide_html: "O Guia do Usuário com suporte detalhado para gerenciar sua loja está aqui: %{link}"
+      userguide: "Guia do Usuario do Open Food Brasil"
       email_admin_html: "Você pode gerenciar sua conta entrando no %{link} ou clicando na engrenagem no canto superior direito da página, e selecionando Administração."
       email_community_html: "Nós também temos um fórum online para discussão da comunidade sobre a plataforma e os desafios únicos de gerir organizações de alimentos. Você está convidado a participar. Estamos evoluindo constantemente e suas contribuições irão moldar o que acontece a seguir.  %{link}"
       join_community: "Faça parte da comunidade"
@@ -168,12 +169,12 @@ pt_BR:
       other:
         title: Outras Falhas(%{count} pedidos)
         explainer: O processamento automático desses pedidos falhou por um motivo desconhecido. Isso não deve ocorrer, entre em contato conosco se você está vendo isso.
-  home: "Rizoma"
-  title: Rizoma
+  home: "OFB"
+  title: Open Food Brasil
   welcome_to: 'Bem-vindo a'
   site_meta_description: "A gente começa pela base. Com agricultores e produtores preparados para contar suas histórias com orgulho e verdade. Com distribuidores prontos para conectar pessoas com produtos de forma justa e honesta. Com os compradores que acreditam que melhores decisões de compras semanais podem..."
   search_by_name: Procurar por nome ou localidade
-  producers_join: Produtores nacionais estão convidados a se unirem à Rizoma.
+  producers_join: Produtores nacionais estão convidados a se unirem à Open Food Brasil.
   charges_sales_tax: Cobra imposto sobre bens e serviços?
   print_invoice: "Imprimir fatura"
   print_ticket: "Imprimir bilhetes"
@@ -664,9 +665,9 @@ pt_BR:
           permalink: Permalink (sem espaços)
           permalink_tip: "Esse link é usado para criar a URL para a sua loja: %{link}nome-loja/loja"
           link_to_front: Link para a loja
-          link_to_front_tip: Um link direto para a sua loja na Rizoma.
+          link_to_front_tip: Um link direto para a sua loja na Open Food Brasil.
           ofn_uid: OFN UID
-          ofn_uid_tip: O ID exclusivo usado para identificar a empresa na Open Food Network.
+          ofn_uid_tip: O ID exclusivo usado para identificar a empresa na Open Food Brasil.
         shipping_methods:
           name: Nome
           applies: Aplica?
@@ -714,14 +715,14 @@ pt_BR:
           linkedin_placeholder: "ex. www.linkedin.com/in/YourNameHere"
         stripe_connect:
           connect_with_stripe: "Conectar com Stripe"
-          stripe_connect_intro: "Para aceitar pagamentos usando cartão de crédito, você precisará conectar sua conta Stripe à Rizoma. Use o botão à direita para começar."
+          stripe_connect_intro: "Para aceitar pagamentos usando cartão de crédito, você precisará conectar sua conta Stripe à Open Food Brasil. Use o botão à direita para começar."
           stripe_account_connected: "Conta Stripe conectada"
           disconnect: "Desconectar conta"
           confirm_modal:
             title: Conectar com Stripe
-            part1: Stripe é um serviço de processamento de pagamento que permite às lojas da Rizoma aceitarem pagamentos com cartão de crédito dos consumidores.
-            part2: Para usar esse recurso, você deve conectar sua conta Stripe à Rizoma. Ao clicar em "Concordo" abaixo, você será redirecionado para o site Stripe onde você pode conectar uma conta já existente ou criar uma nova, caso você ainda não tenha uma.
-            part3: Isso irá permitir que a Rizoma aceite pagamentos com cartão de crédito em seu nome. Por favor, note que você deverá manter a sua própria conta Stripe, pagar as taxas e lidar com todos os estornos e serviço ao cliente.
+            part1: Stripe é um serviço de processamento de pagamento que permite às lojas da OFB aceitarem pagamentos com cartão de crédito dos consumidores.
+            part2: Para usar esse recurso, você deve conectar sua conta Stripe à OFB. Ao clicar em "Concordo" abaixo, você será redirecionado para o site Stripe onde você pode conectar uma conta já existente ou criar uma nova, caso você ainda não tenha uma.
+            part3: Isso irá permitir que a Open Food Brasil aceite pagamentos com cartão de crédito em seu nome. Por favor, note que você deverá manter a sua própria conta Stripe, pagar as taxas e lidar com todos os estornos e serviço ao cliente.
             i_agree: Eu concordo
             cancel: Cancelar
         tag_rules:
@@ -770,22 +771,22 @@ pt_BR:
         producer: Produtor
       change_type_form:
         producer_profile: Perfil do produtor
-        connect_ofn: Conecte-se através da Rizoma
+        connect_ofn: Conecte-se através da OFB
         always_free: SEMPRE GRATUITO
-        producer_description_text: Adicione os seus produtos à Rizoma, permitindo que os hubs os comercialize em suas lojas.
+        producer_description_text: Adicione os seus produtos à Open Food Brasil, permitindo que os hubs os comercialize em suas lojas.
         producer_shop: Loja do produtor
         sell_your_produce: 'Venda seus próprios produtos '
-        producer_shop_description_text: Venda seus produtos diretamente aos consumidores através da sua própria loja na Rizoma.
+        producer_shop_description_text: Venda seus produtos diretamente aos consumidores através da sua própria loja na Open Food Brasil.
         producer_shop_description_text2: Uma loja de produtor é apenas para o seu produto, se você quiser vender produtos produzidos por outras pessoas ou locais, selecione 'Hub de produtor'.
         producer_hub: Hub de produtor
         producer_hub_text: Comercialize seus próprios produtos e de outros produtores
-        producer_hub_description_text: Sua iniciativa é a espinha dorsal do seu sistema de produção e consumo local. Você pode comercializar seus próprios bens, assim como produtos agregados de outras iniciativas e produtores, através da sua loja na Rizoma.
+        producer_hub_description_text: Sua iniciativa é a espinha dorsal do seu sistema de produção e consumo local. Você pode comercializar seus próprios bens, assim como produtos agregados de outras iniciativas e produtores, através da sua loja na Open Food Brasil.
         profile: Somente perfil
         get_listing: Obter uma listagem
-        profile_description_text: As pessoas podem te encontrar e te contactar na Rizoma. Sua iniciativa estará visível no mapa e poderá ser encontrada em buscas.
+        profile_description_text: As pessoas podem te encontrar e te contactar na Open Food Brasil. Sua iniciativa estará visível no mapa e poderá ser encontrada em buscas.
         hub_shop: Loja do hub
         hub_shop_text: Comercialize produtos de outros produtores
-        hub_shop_description_text: Sua iniciativa é a espinha dorsal do seu sistema de produção e consumo local. Você agrega produtos de outras iniciativas e produtores, e comercializa através da sua loja na Rizoma.
+        hub_shop_description_text: Sua iniciativa é a espinha dorsal do seu sistema de produção e consumo local. Você agrega produtos de outras iniciativas e produtores, e comercializa através da sua loja na Open Food Brasil.
         choose_option: Por favor escolha uma das opções acima.
         change_now: Mudar agora
       enterprise_user_index:
@@ -817,7 +818,7 @@ pt_BR:
         removed_successfully: "Imagem promocional removida com sucesso"
         immediate_removal_warning: "A imagem promocional será removida imediatamente após a confirmação."
       welcome:
-        welcome_title: Bem-vindo à Rizoma!
+        welcome_title: Bem-vindo à Open Food Brasil!
         welcome_text: Você criou com sucesso uma
         next_step: Próximo passo
         choose_starting_point: 'Escolha o seu pacote:'
@@ -840,7 +841,6 @@ pt_BR:
         cancel: "Cancelar"
         choose_products_from: "Escolha produtos de:"
       incoming:
-        previous: "Anterior"
         save: "Salvar"
         next: "Próximo"
         cancel: "Cancelar"
@@ -1105,30 +1105,21 @@ pt_BR:
         checkout: "Fechar pedido agora"
         already_ordered_products: "Já pediu neste ciclo de pedido"
     register_call:
-      selling_on_ofn: "Interessado em participar da Rizoma?"
+      selling_on_ofn: "Interessado em participar da Open Food Brasil?"
       register: "Registre-se aqui"
     footer:
-      footer_global_headline: "Movimento global"
-      footer_global_home: "Início"
-      footer_global_news: "Novidades"
-      footer_global_about: "Sobre"
-      footer_global_contact: "Contato"
-      footer_sites_headline: "Páginas do movimento global"
-      footer_sites_developer: "Desenvolvedores"
-      footer_sites_community: "Comunidade"
-      footer_sites_userguide: "Guia do Usuário"
       footer_secure: "Seguro e confiável."
-      footer_secure_text: "A Rizoma utiliza a criptografia SSL (2048 bit RSA) para manter suas informações em segurança. Nossos servidores não guardam os detalhes do seu cartão de crédito e os pagamentos são processados por serviços compatíveis com PCI."
+      footer_secure_text: "A Open Food Brasil utiliza a criptografia SSL (2048 bit RSA) para manter suas informações em segurança. Nossos servidores não guardam os detalhes do seu cartão de crédito e os pagamentos são processados por serviços compatíveis com PCI."
       footer_contact_headline: "Mantenha contato"
       footer_contact_email: "Envie-nos um e-mail"
       footer_nav_headline: "Navegar"
       footer_join_headline: "Junte-se a nós"
-      footer_join_body: "Crie uma lista de ofertas, loja ou cooperativa na Rizoma."
+      footer_join_body: "Crie uma lista de ofertas, loja ou cooperativa na Open Food Brasil."
       footer_join_cta: "Quero saber mais!"
       footer_legal_call: "Leia nosso"
       footer_legal_tos: "Termos e condições"
       footer_legal_visit: "Nos encontre em "
-      footer_legal_text_html: "A Rizoma é uma plataforma grátis e open-source. Nosso conteúdo está sob licença de %{content_license} e nosso código de %{code_license}."
+      footer_legal_text_html: "A Open Food Brasil é uma plataforma grátis e open-source. Nosso conteúdo está sob licença de %{content_license} e nosso código de %{code_license}."
       footer_data_text_with_privacy_policy_html: "Nós cuidamos bem dos seus dados. Veja nossos %{privacy_policy} e %{cookies_policy}"
       footer_data_text_without_privacy_policy_html: "Nós cuidamos bem dos seus dados. Veja nosso %{cookies_policy}"
       footer_data_privacy_policy: "política de Privacidade"
@@ -1177,11 +1168,11 @@ pt_BR:
   menu_4_title: "Grupos"
   menu_4_url: "/groups"
   menu_5_title: "Sobre"
-  menu_5_url: "https://sobre.openfoodnetwork.org.br/"
+  menu_5_url: "https://about.openfoodnetwork.org.au/"
   menu_6_title: "Conectar"
-  menu_6_url: "https://openfoodnetwork.org/br/conectar/"
+  menu_6_url: "https://openfoodnetwork.org/au/connect/"
   menu_7_title: "Aprender"
-  menu_7_url: "https://openfoodnetwork.org/br/informe-se/"
+  menu_7_url: "https://openfoodnetwork.org/au/learn/"
   logo: "Logo (640x130)"
   logo_mobile: "logo mobile (75x26)"
   logo_mobile_svg: "Logo mobile (svg)"
@@ -1268,11 +1259,11 @@ pt_BR:
   card_has_been_removed: "O seu cartão foi removido (número: %{number})"
   card_could_not_be_removed: Desculpe, o cartão não pode ser removido
   ie_warning_headline: "Seu navegador está desatualizado :("
-  ie_warning_text: "Para a melhor experiência na Rizoma, recomendamos que você atualize seu navegador:"
+  ie_warning_text: "Para a melhor experiência na Open Food Brasil, recomendamos que você atualize seu navegador:"
   ie_warning_chrome: Baixar Chrome
   ie_warning_firefox: Baixar Firefox
   ie_warning_ie: Atualizar Internet Explorer
-  ie_warning_other: "Não consegue atualizar o navegador? Tente acessar a Rizoma pelo smartphone :)"
+  ie_warning_other: "Não consegue atualizar o navegador? Tente acessar a Open Food Brasil pelo smartphone :)"
   legal:
     cookies_policy:
       header: "Como usamos cookies"
@@ -1302,12 +1293,12 @@ pt_BR:
       cookie_matomo_heatmap_desc: "Cookie Matomo Heatmap e gravação de sessão."
       cookie_matomo_ignore_desc: "Cookie usado para excluir o usuário de ser rastreado."
       disabling_cookies_header: "Aviso ao desativar cookies"
-      disabling_cookies_desc: "Como usuário, você sempre pode permitir, bloquear ou excluir os cookies da Open Food Network ou de qualquer outro site sempre que desejar através do controle de configuração do navegador. Cada navegador tem um agente diferente. Aqui estão os links:"
+      disabling_cookies_desc: "Como usuário, você sempre pode permitir, bloquear ou excluir os cookies da Open Food Brasil ou de qualquer outro site sempre que desejar através do controle de configuração do navegador. Cada navegador tem um agente diferente. Aqui estão os links:"
       disabling_cookies_firefox_link: "https://support.mozilla.org/en-US/kb/enable-and-disable-cookies-website-preferences"
       disabling_cookies_chrome_link: "https://support.google.com/chrome/answer/95647"
       disabling_cookies_ie_link: "https://support.microsoft.com/en-us/help/17442/windows-internet-explorer-delete-manage-cookies"
       disabling_cookies_safari_link: "https://www.apple.com/legal/privacy/en-ww/cookies/"
-      disabling_cookies_note: "Mas lembre-se de que, se você excluir ou modificar os cookies essenciais usados pelo Open Food Network, o site não funcionará, você não poderá adicionar nada ao carrinho nem fazer checkout, por exemplo."
+      disabling_cookies_note: "Mas lembre-se de que, se você excluir ou modificar os cookies essenciais usados pelo Open Food Brasil, o site não funcionará, você não poderá adicionar nada ao carrinho nem fazer checkout, por exemplo."
     cookies_banner:
       cookies_usage: "Este site usa cookies para tornar sua navegação segura e sem atritos, e para nos ajudar a entender como você a utiliza para melhorar os recursos que oferecemos."
       cookies_definition: "Cookies são arquivos de texto muito pequenos que são armazenados no seu computador quando você visita alguns sites."
@@ -1322,11 +1313,11 @@ pt_BR:
   brandstory_part2: "Então precisamos de uma forma para tornar isto real. Uma maneira para empoderar todos os que produzem, vendem e compram alimentos. Uma maneira de contar todas as histórias, para lidar com toda a logística. Uma maneira de transformar a transação em transformação todos os dias."
   brandstory_part3: "Assim construímos um mercado online que nivela o campo de jogo. É transparente, por isso cria relacionamentos reais. É de código aberto, por isso é de propriedade de todos. Ele escala para regiões e nações, então as pessoas começam versões em todo o mundo."
   brandstory_part4: "Funciona em todos os lugares. Isso muda tudo."
-  brandstory_part5_strong: "Nós o chamamos de Rizoma."
+  brandstory_part5_strong: "Nós o chamamos de Open Food Brasil."
   brandstory_part6: "Todos amamos comida. Agora a gente também pode amar nosso sistema alimentar. "
   learn_body: "Explore modelos, histórias e recursos para te dar suporte para desenvolver seu próprio negócio ou organização justa de alimentos. Encontre treinamento, eventos e outras oportunidades para aprender com quem faz parte do seu setor. "
   learn_cta: "Inspire-se"
-  connect_body: "Procure em nossa lista de produtores, distribuidores e cooperativas para encontrar um comércio justo perto de você. Registre seu negócio ou organização na Rizoma para que os consumidores possam te encontrar. Junte-se à comunidade para trocar experiências e resolver problemas."
+  connect_body: "Procure em nossa lista de produtores, distribuidores e cooperativas para encontrar um comércio justo perto de você. Registre seu negócio ou organização na Open Food Brasil para que os consumidores possam te encontrar. Junte-se à comunidade para trocar experiências e resolver problemas."
   connect_cta: "Explore"
   system_headline: "Compras - é assim que funciona."
   system_step1: "1. Busca"
@@ -1516,7 +1507,7 @@ pt_BR:
   products_update_error_data: "Falha no salvamento devido a dados inválidos:"
   products_changes_saved: "Modificações salvas."
   search_no_results_html: "Sinto muito, nenhum resultado encontrado para %{query}. Que tal tentar outra busca?"
-  components_profiles_popover: "Perfis não possuem uma loja na Rizoma, mas podem ter suas próprias lojas físicas ou online em outro endereço"
+  components_profiles_popover: "Perfis não possuem uma loja na Open Food Brasil, mas podem ter suas próprias lojas físicas ou online em outro endereço"
   components_profiles_show: "Mostrar perfis"
   components_filters_nofilters: "Nenhum filtro"
   components_filters_clearfilters: "Limpar filtros"
@@ -1543,14 +1534,14 @@ pt_BR:
   groups_signup_motivation3: Nós sabemos que você tem grandes idéias e queremos ajudar. Compartilharemos nossos conhecimentos, redes e recursos. Sabemos que o isolamento não cria mudanças, então fazemos uma parceria com você.
   groups_signup_motivation4: Vamos até onde você está.
   groups_signup_motivation5: Você pode ser um coletivo de produtores, distribuidores, indústria ou governo local, organizados através de um hub.
-  groups_signup_motivation6: Seja qual for o seu papel no seu sistema de produção e consumo local, estamos prontos para ajudar. Se você se pergunta como a Rizoma é ou como está fazendo sua parte no mundo, venha ter uma conversa.
+  groups_signup_motivation6: Seja qual for o seu papel no seu sistema de produção e consumo local, estamos prontos para ajudar. Se você se pergunta como a Open Food Brasil é ou como está fazendo sua parte no mundo, venha ter uma conversa.
   groups_signup_motivation7: Fazemos movimentos de alimentos com mais sentido.
   groups_signup_motivation8: 'Se você precisa ativar suas redes de contatos, oferecemos uma plataforma para conversas e ações. Você precisa de engajamento real. Vamos ajudar a alcançar todos os jogadores, todas as partes interessadas, em todos os setores. '
   groups_signup_motivation9: 'Se você precisa de recursos, nós te conectamos a uma rede global de parceiros. '
   groups_signup_pricing: Conta de Grupos
   groups_signup_studies: Estudos de Caso
   groups_signup_contact: Pronto para discutir?
-  groups_signup_contact_text: "Entre em contato para descobrir o que a Rizoma pode fazer por você"
+  groups_signup_contact_text: "Entre em contato para descobrir o que a OFB pode fazer por você"
   groups_signup_detail: "Aqui está o detalhe. "
   login_invalid: "E-mail ou senha inválidos"
   modal_hubs: "Hub de alimentos"
@@ -1558,17 +1549,17 @@ pt_BR:
   modal_hubs_content1: 'Você pode procurar por um hub conveniente à você por localização ou nome. Alguns possuem múltiplos pontos de entrega, onde você pode retirar suas compras, e outros ainda entregam na sua casa. Cada um é um ponto de venda independente, e por isso as ofertas e maneira de operar podem variar de um para outro. '
   modal_hubs_content2: Você só pode comprar de um hub por vez.
   modal_groups: "Grupos / Regiões"
-  modal_groups_content1: Estas são as organizações e as relações entre os hubs que compõem a Rizoma.
+  modal_groups_content1: Estas são as organizações e as relações entre os hubs que compõem a Open Food Brasil.
   modal_groups_content2: Alguns grupos estão organizados por localização, outros por similaridades não geográficas.
   modal_how: "Como funciona"
-  modal_how_shop: Compre na Rizoma
+  modal_how_shop: Compre na Open Food Brasil
   modal_how_shop_explained: Procure por um produtor ou hub próximo e comece suas compras! Em cada mercado você pode ver, em detalhe, quais produtos são oferecidos (você só pode comprar em um mercado de cada vez).
   modal_how_pickup: 'Custos de retirada e entrega '
   modal_how_pickup_explained: Alguns hubs entregam na sua casa, enquanto outros exigem que você mesmo retire suas compras. É possível ver quais opções estão disponíveis no perfil individual de cada um, e fazer sua escolha no momento do check-out. A entrega custará mais e o preço difere de hub para hub. Cada um é um ponto de venda com operação comercial e logística independente - então as variações são esperadas.
   modal_how_more: Saiba mais
-  modal_how_more_explained: "Se você quiser saber mais sobre como a Rizoma funciona e se envolver, confira:"
+  modal_how_more_explained: "Se você quiser saber mais sobre como a Open Food Brasil funciona e se envolver, confira:"
   modal_producers: "Produtores"
-  modal_producers_explained: "Nossos produtores fazem todos os alimentos deliciosos que você pode comprar no Open Food Network."
+  modal_producers_explained: "Nossos produtores fazem todos os alimentos deliciosos que você pode comprar no Open Food Brasil."
   producers_about: Sobre nós
   producers_buy: Compre por
   producers_contact: Contato
@@ -1599,17 +1590,17 @@ pt_BR:
   name_or_sku: "NOME OU SKU"
   register_title: Registro
   sell_title: "Registrar"
-  sell_headline: "Fazer parte do Open Food Network!"
+  sell_headline: "Fazer parte do Open Food Brasil!"
   sell_motivation: "Mostre seus belos produtos."
   sell_producers: "Produtores"
   sell_hubs: "Hubs"
   sell_groups: "Grupos"
   sell_producers_detail: "Crie um perfil para seu negócio em apenas alguns minutos. A qualquer momento você pode atualizar seu perfil para uma loja online e vender seus produtos diretamente aos consumidores."
-  sell_hubs_detail: "Crie um perfil para a sua iniciativa ou organização na Rizoma. A qualquer momento você poderá fazer um upgrade para um mercado de multi-produtores. "
+  sell_hubs_detail: "Crie um perfil para a sua iniciativa ou organização na Open Food Brasil. A qualquer momento você poderá fazer um upgrade para um mercado de multi-produtores. "
   sell_groups_detail: "Organize um lista personalizada de negócios (cultivos, cooperativas, comércios, etc.) para sua região ou organização. "
   sell_user_guide: "Saiba mais acessando nosso guia. "
   sell_listing_price: "A listagem no OFN é gratuita. A abertura e administração de uma loja no OFN custa US $ 500 em vendas mensais. Se você vender mais, poderá escolher sua contribuição da comunidade entre 1% e 3% das vendas. Para mais detalhes sobre preços, visite a seção Plataforma do Software através do link Sobre no menu superior."
-  sell_embed: "Também podemos incorporar uma loja da Rizoma em seu próprio site personalizado ou criar um site específico para a sua região. "
+  sell_embed: "Também podemos incorporar uma loja da Open Food Brasil em seu próprio site personalizado ou criar um site específico para a sua região. "
   sell_ask_services: "Pergunte-nos sobre nossos serviços."
   shops_title: Lojas
   shops_headline: 'Compras, transformadas. '
@@ -1732,9 +1723,9 @@ pt_BR:
         registration_promo_image: "Imagem horizontal para seu perfil"
         registration_about_us: "'Sobre Nós'"
         registration_outcome_headline: "O que eu ganho?"
-        registration_outcome1_html: "Seu perfil ajuda as pessoas a te <strong>encontrarem</strong> e entrarem em <strong>contato</strong> com você na Rizoma."
+        registration_outcome1_html: "Seu perfil ajuda as pessoas a te <strong>encontrarem</strong> e entrarem em <strong>contato</strong> com você na Open Food Brasil."
         registration_outcome2: "Use esse espaço para contar a história da sua empresa e ajudar a impulsionar as conexões com sua presença social e online."
-        registration_outcome3: "Esse é também o primeiro passo para começar a comercializar na Rizoma, ou abrir uma loja online."
+        registration_outcome3: "Esse é também o primeiro passo para começar a comercializar na Open Food Brasil, ou abrir uma loja online."
         registration_action: "Vamos começar!"
       details:
         title: "Detalhes"
@@ -1781,7 +1772,7 @@ pt_BR:
         title: "Sobre"
         headline: "Boa!"
         message: "Vamos inserir mais detalhes sobre"
-        success: "Sucesso! %{enterprise} adicionado à Open Food Network"
+        success: "Sucesso! %{enterprise} adicionado à Open Food Brasil"
         registration_exit_message: "Se você sair deste assistente em qualquer estágio, poderá continuar a criar seu perfil acessando a interface do administrador."
         enterprise_description: "Descrição Curta"
         enterprise_description_placeholder: "Uma pequena frase descrevendo a sua iniciativa"
@@ -1821,7 +1812,7 @@ pt_BR:
         enterprise_final_step: "Último passo!"
         enterprise_social_text: "Como as pessoas podem encontrar o/a %{enterprise} online?"
         website: "Website"
-        website_placeholder: "ex: rizoma.com.br"
+        website_placeholder: "ex: openfoodbrasil.com.br"
         facebook: "Facebook"
         facebook_placeholder: "ex: www.facebook.com/suapagina"
         linkedin: "LinkedIn"
@@ -1838,7 +1829,7 @@ pt_BR:
       finished:
         headline: "Pronto!"
         thanks: "Obrigado por preencher os detalhes para %{enterprise}."
-        login: "Você pode alterar ou atualizar suas informações a qualquer momento fazendo o login na Rizoma e entrando na seção 'Admin'."
+        login: "Você pode alterar ou atualizar suas informações a qualquer momento fazendo o login na Open Food Brasil e entrando na seção 'Admin'."
         action: "Página inicial"
   back: "Voltar"
   continue: "Continuar"
@@ -1992,7 +1983,7 @@ pt_BR:
   spree_user_enterprise_limit_error: "^ %{email} não é permitido possuir mais iniciativas (o limite é %{enterprise_limit})."
   spree_variant_product_error: deve ter pelo menos uma variante
   your_profil_live: "Seu perfil online"
-  on_ofn_map: "O mapa da Rizoma"
+  on_ofn_map: "O mapa da Open Food Brasil"
   see: "Ver"
   live: "vivo"
   manage: "Gerenciar"
@@ -2321,16 +2312,16 @@ pt_BR:
           hub_profile: Perfil do hub
           hub_profile_cost: "CUSTO: SEMPRE GRATUITO"
           hub_profile_text1: >
-              As pessoas podem encontrá-lo e contatá-lo na Rizoma. Sua iniciativa
+              As pessoas podem encontrá-lo e contatá-lo na Open Food Brasil. Sua iniciativa
               estará visível no mapa e poderá ser encontrada em listas.
           hub_profile_text2: >
               Ter um perfil e fazer conexões dentro do seu sistema alimentar local
-              através da Rizoma será sempre gratuito.
+              através da Open Food Brasil será sempre gratuito.
           hub_shop: Loja do hub
           hub_shop_text1: >
               Sua iniciativa é a espinha dorsal do seu sistema alimentar local. Você
               agrega produtos de outras iniciativas e pode vendê-lo através de sua
-              loja na Rizoma.
+              loja na Open Food Brasil.
           hub_shop_text2: >
               Hubs podem assumir várias formas, sejam eles uma cooperativa de alimentos,
               um grupo de consumo, varejista, atacadista ou uma mercearia local.
@@ -2352,14 +2343,14 @@ pt_BR:
           profile_only_text2: >
               Se você preferir se concentrar na produção de alimentos e quer deixar
               o trabalho de vendê-lo para outra pessoa, você não precisa de uma loja
-              na Rizoma.
+              na Open Food Brasil.
           profile_only_text3: >
-              Adicione seus produtos à Rizoma, permitindo que os hubs armazenem seus
-              produtos em suas lojas.
+              Adicione seus produtos à Open Food Brasil, permitindo que os hubs armazenem
+              seus produtos em suas lojas.
           producer_shop: Loja do produtor
           producer_shop_text1: >
               Venda os seus produtos diretamente aos consumidores através da sua própria
-              loja na Rizoma.
+              loja na Open Food Brasil.
           producer_shop_text2: >
               Uma loja de produtor é individual, somente para comercialização de produtos
               feitos por você. Se quiser vender bens produzidos em outros lugares
@@ -2368,15 +2359,15 @@ pt_BR:
           producer_hub: Hub de produtor
           producer_hub_text1: >
               A sua iniciativa é a espinha dorsal do seu sistema de produção e consumo
-              local. Através da sua loja na Rizoma você pode vender os seus próprios
-              produtos, assim como produtos agregados de outras iniciativas.
+              local. Através da sua loja na Open Food Brasil você pode vender os seus
+              próprios produtos, assim como produtos agregados de outras iniciativas.
           producer_hub_text2: >
               Hub de produtor pode assumir várias formas, seja uma horta local comunitária,
               um CSA, cooperativa ou associação, formalizada ou não.
           producer_hub_text3: >
-              A Rizoma pretende apoiar tantos modelos de hub quanto possível, por
-              isso, não importa a sua situação, queremos fornecer as ferramentas que
-              você precisa para administrar sua organização ou iniciativas locais
+              A Open Food Brasil pretende apoiar tantos modelos de hub quanto possível,
+              por isso, não importa a sua situação, queremos fornecer as ferramentas
+              que você precisa para administrar sua organização ou iniciativas locais
               de alimentos.
           get_listing: Obter uma listagem
           always_free: SEMPRE GRATUITO
@@ -2390,11 +2381,13 @@ pt_BR:
               produtor se você cultiva, cria, prepara, cozinha, fermenta, ou ordenha.
           producer_text2: >
               Os produtores também podem desempenhar outras funções, como agregar
-              alimentos de outras iniciativas e vendê-lo através de uma loja da Rizoma.
+              alimentos de outras iniciativas e vendê-lo através de uma loja da Open
+              Food Brasil.
           non_producer: Não produtor
           non_producer_text1: >
               Os não produtores não produzem alimentos próprios, o que significa que
-              eles não podem criar seus próprios produtos para venda através da Rizoma.
+              eles não podem criar seus próprios produtos para venda através da Open
+              Food Brasil.
           non_producer_text2: >
               Em vez disso, os não produtores se especializam em ligar os produtores
               ao comedor final, quer seja agregando, classificando, embalando, vendendo
@@ -2561,7 +2554,7 @@ pt_BR:
       users:
         order: "Pedido"
     registration:
-      welcome_to_ofn: "Bem-vindo à Rizoma!"
+      welcome_to_ofn: "Bem-vindo à Open Food Brasil!"
       signup_or_login: "Faça seu cadastro ou login para começar"
       have_an_account: "Já possui um conta?"
       action_login: "Entrar agora"
@@ -2889,7 +2882,7 @@ pt_BR:
           order_total: "total de pedidos"
       overview:
         enterprises_header:
-          ofn_with_tip: Iniciativas são produtores e/ou hubs e são a unidade básica de organização da Rizoma
+          ofn_with_tip: Iniciativas são produtores e/ou hubs e são a unidade básica de organização da Open Food Brasil
         products:
           active_products:
             zero: "Você ainda não tem nenhum produto ativo."

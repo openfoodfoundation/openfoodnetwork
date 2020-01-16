@@ -121,7 +121,7 @@ en_CA:
       userguide: "Open Food Network User Guide"
       email_admin_html: "You can manage your account by logging into the %{link} or by clicking on the cog in the top right hand side of the homepage, and selecting Administration."
       admin_panel: "Admin Panel"
-      email_community_html: "We also have an online forum for community discussion related to OFN software and the unique challenges of running a food enterprise. You are encouraged to join in. We are constantly evolving and your input into this forum will shape what happens next. %{link}"
+      email_community_html: "We also have an online forum for community discussion related to OFN software and the unique challenges of tech-enabling local enterprises. You are encouraged to join in. We are constantly evolving and your input into this forum will shape what happens next. %{link}"
       join_community: "Join the community"
     invite_manager:
       subject: "%{enterprise} has invited you to be a manager"
@@ -616,7 +616,7 @@ en_CA:
           name: Name
           name_placeholder: eg. Gustav Plum
           email_address: Public Email Address
-          email_address_placeholder: eg. inquiries@fresh-food.com
+          email_address_placeholder: eg. inquiries@localproducts.com
           email_address_tip: "This email address will be displayed in your public profile"
           phone: Phone
           phone_placeholder: eg. 519 885 8888
@@ -658,7 +658,7 @@ en_CA:
           groups_tip: Select any groups or regions that you are a member of. This will help customers find your enterprise.
           groups_placeholder: Start typing to search available groups...
           primary_producer: Primary Producer?
-          primary_producer_tip: Select 'Producer' if you are a primary producer of food.
+          primary_producer_tip: Select 'Producer' if you are a primary producer, grower, maker or designer
           producer: Producer
           any: Any
           none: None
@@ -782,18 +782,18 @@ en_CA:
         always_free: ALWAYS FREE
         producer_description_text: Add your products to Open Food Network, allowing hubs to stock your products in their stores.
         producer_shop: Producer Shop
-        sell_your_produce: Sell your own produce
+        sell_your_produce: Sell your own products
         producer_shop_description_text: Sell your products directly to customers through your very own Open Food Network shopfront.
-        producer_shop_description_text2: A Producer Shop is for your produce only, if you want to sell produce grown/produced off site, select 'Producer Hub'.
+        producer_shop_description_text2: A Producer Shop is for your products only, if you want to sell producyd grown/produced off site, select 'Producer Hub'.
         producer_hub: Producer Hub
-        producer_hub_text: Sell produce from self and others
-        producer_hub_description_text: Your enterprise is the backbone of your local food system. You can sell your own produce as well as produce aggregated from other enterprises through your shopfront on the Open Food Network.
+        producer_hub_text: Sell products from self and others
+        producer_hub_description_text: Your enterprise is the backbone of your local food system. You can sell your own products as well as products aggregated from other enterprises through your shopfront on the Open Food Network.
         profile: Profile Only
         get_listing: Get a listing
         profile_description_text: People can find and contact you on the Open Food Network. Your enterprise will be visible on the map, and will be searchable in listings.
         hub_shop: Hub Shop
-        hub_shop_text: Sell produce from others
-        hub_shop_description_text: Your enterprise is the backbone of your local food system. You aggregate produce from other enterprises and can sell it through your shop on the Open Food Network.
+        hub_shop_text: Sell products from others
+        hub_shop_description_text: Your enterprise is the backbone of your local community. You aggregate products from other enterprises and can sell them through your shop on the Open Food Network.
         choose_option: Please choose one of the options above.
         change_now: Change now
       enterprise_user_index:
@@ -1290,7 +1290,7 @@ en_CA:
     cookies_policy:
       header: "How We Use Cookies"
       desc_part_1: "Cookies are very small text files that are stored on your computer when you visit some websites."
-      desc_part_2: "In OFN we are fully respectful of your privacy. We use only the cookies that are necessary for delivering you the service of selling/buying food online. We don’t sell any of your data. We might in the future propose you to share some of your data to build new commons services that could be useful for the ecosystem (like logistics services for short food systems) but we are not yet there, and we won’t do it without your authorization :-)"
+      desc_part_2: "In OFN we are fully respectful of your privacy. We use only the cookies that are necessary for delivering you the service of selling/buying products online. We don’t sell any of your data. We might in the future propose you to share some of your data to build new commons services that could be useful for the ecosystem (like logistics or local delivery services) but we are not yet there, and we won’t do it without your authorization :-)"
       desc_part_3: "We use cookies mainly to remember who you are if you 'log in' to the service, or to be able to remember the items you put in your cart even if you are not logged in. If you keep navigating on the website without clicking on “Accept cookies”, we assume you are giving us consent to store the cookies that are essential for the functioning of the website. Here is the list of cookies we use!"
       essential_cookies: "Essential Cookies"
       essential_cookies_desc: "The following cookies are strictly necessary for the operation of our website."
@@ -1324,7 +1324,7 @@ en_CA:
     cookies_banner:
       cookies_usage: "This site uses cookies in order to make your navigation frictionless and secure, and to help us understand how you use it in order to improve the features we offer."
       cookies_definition: "Cookies are very small text files that are stored on your computer when you visit some websites."
-      cookies_desc: "We use only the cookies that are necessary for delivering you the service of selling/buying food online. We don’t sell any of your data. We use cookies mainly to remember who you are if you ‘log in’ to the service, or to be able to remember the items you put in your cart even if you are not logged in. If you keep navigating on the website without clicking on “Accept cookies”, we assume you are giving us consent to store the cookies that are essential for the functioning of the website."
+      cookies_desc: "We use only the cookies that are necessary for delivering you the service of selling/buying products online. We don’t sell any of your data. We use cookies mainly to remember who you are if you ‘log in’ to the service, or to be able to remember the items you put in your cart even if you are not logged in. If you keep navigating on the website without clicking on “Accept cookies”, we assume you are giving us consent to store the cookies that are essential for the functioning of the website."
       cookies_policy_link_desc: "If you want to learn more, check our"
       cookies_policy_link: "cookies policy"
       cookies_accept_button: "Accept Cookies"
@@ -1332,29 +1332,29 @@ en_CA:
   brandstory_headline: "Food, unincorporated."
   brandstory_intro: "Sometimes the best way to fix the system is to start a new one…"
   brandstory_part1: "We begin from the ground up. With farmers and growers ready to tell their stories proudly and truly. With distributors ready to connect people with products fairly and honestly. With buyers who believe that better weekly shopping decisions can seriously change the world."
-  brandstory_part2: "Then we need a way to make it real. A way to empower everyone who grows, sells and buys food. A way to tell all the stories, to handle all the logistics. A way to turn transaction into transformation every day."
+  brandstory_part2: "Then we need a way to make it real. A way to empower everyone who makes, grows, sells and buys local sustainable products. A way to tell all the stories, to handle all the logistics. A way to turn transaction into transformation every day."
   brandstory_part3: "So we build an online marketplace that levels the playing field. It’s transparent, so it creates real relationships. It’s open source, so it’s owned by everyone. It scales to regions and nations, so people start versions across the world."
   brandstory_part4: "It works everywhere. It changes everything."
   brandstory_part5_strong: "We call it Open Food Network."
   brandstory_part6: "We all love food. Now we can love our food system too."
-  learn_body: "Explore models, stories and resources to support you to develop your fair food business or organisation.  Find training, events and other opportunities to learn from peers."
+  learn_body: "Explore models, stories and resources to support you to develop your local business or organisation.  Find training, events and other opportunities to learn from peers."
   learn_cta: "Get Inspired"
-  connect_body: "Search our full directories of producers, hubs and groups to find fair food traders near you.  List your business or organisation on the OFN so buyers can find you.  Join the community to get advice and solve problems together."
+  connect_body: "Search our full directories of producers, hubs and groups to find fair and sustainably produced products near you.  List your business or organisation on the OFN so buyers can find you.  Join the community to get advice and solve problems together."
   connect_cta: "Go Exploring"
   system_headline: "Shopping - here's how it works."
   system_step1: "1. Search"
-  system_step1_text: "Search our diverse, independent shops for seasonal local food. Search by neighbourhood and food category, or whether you prefer delivery or pickup."
+  system_step1_text: "Search our diverse, independent shops for seasonal, sustainably produced products locally. Search by neighbourhood and food category, or whether you prefer delivery or pickup."
   system_step2: "2. Shop"
-  system_step2_text: "Transform your transactions with affordable local food from diverse producers and hubs. Know the stories behind your food and the people who make it!"
+  system_step2_text: "Transform your transactions with affordable local products from diverse producers, makers and hubs. Know the stories behind their products and the people who make them!"
   system_step3: "3. Pick-up / Delivery"
-  system_step3_text: "Hang on for your delivery, or visit your producer or hub for a more personal connection with your food. Food shopping as diverse as nature intended it."
+  system_step3_text: "Hang on for your delivery, or connect with the producer, maker or artisan directly.  Shopping as diverse as nature intended it."
   cta_headline: "Shopping that makes the world a better place."
   cta_label: "I'm Ready"
   stats_headline: "We're creating a new food system."
-  stats_producers: "food producers"
-  stats_shops: "food shops"
-  stats_shoppers: "food shoppers"
-  stats_orders: "food orders"
+  stats_producers: "producers"
+  stats_shops: "shops"
+  stats_shoppers: "shoppers"
+  stats_orders: "orders"
   checkout_title: Checkout
   checkout_now: Checkout now
   checkout_order_ready: Order ready for
@@ -1390,7 +1390,7 @@ en_CA:
   order_special_instructions: "Your notes:"
   order_pickup_time: Ready for collection
   order_pickup_instructions: Collection Instructions
-  order_produce: Produce
+  order_produce: Subtotal
   order_total_price: Total
   order_includes_tax: (includes tax)
   order_payment_paypal_successful: Your payment via PayPal has been processed successfully.
@@ -1464,7 +1464,7 @@ en_CA:
   email_signup_welcome: "Welcome to %{sitename}!"
   email_signup_confirmed_email: "Thanks for confirming your email."
   email_signup_shop_html: "You can now log in at %{link}."
-  email_signup_text: "Thanks for joining the network. If you are a customer, we look forward to introducing you to many fantastic farmers, wonderful food hubs and delicious food! If you are a producer or food enterprise, we are excited to have you as a part of the network."
+  email_signup_text: "Thanks for joining the network. If you are a customer, we look forward to introducing you to many fantastic growers, artisans and makers,  and wonderful  hubs and marketplaces. If you are a grower, artisan or maker we are excited to have you as a part of the network."
   email_signup_help_html: "We welcome all your questions and feedback; you can use the <em>Send Feedback</em> button on the site or email us at %{email}"
   invite_email:
     greeting: "Hello!"
@@ -1555,9 +1555,9 @@ en_CA:
   groups_signup_motivation2: It's why we get out of bed every day. We're a global non-profit, based on open source code. We play fair. You can always trust us.
   groups_signup_motivation3: We know you have big ideas, and we want to help. We'll share our knowledge, networks and resources. We know that isolation doesn't create change, so we'll partner with you.
   groups_signup_motivation4: We meet you where you are.
-  groups_signup_motivation5: You might be an alliance of food hubs, producers, or distributors, and an industry body, or a local government.
-  groups_signup_motivation6: Whatever your role in your local food movement, we're ready to help. However you come to wonder what Open Food Network would look like or is doing in your part of the world, let's start the conversation.
-  groups_signup_motivation7: We make food movements make more sense.
+  groups_signup_motivation5: You might be an alliance of food hubs or initiatives,  a local flower marketplace, a network of makers or crafters,  a food re-distribution network, an industry body, or a local government.
+  groups_signup_motivation6: Whatever your role in supporting sustainable production and fair distribution we're ready to help. However you come to wonder what Open Food Network would look like or is doing in your part of the world, let's start the conversation.
+  groups_signup_motivation7: We make local food and artisanal food movements make more sense.
   groups_signup_motivation8: You need to activate and enable your networks, we offer a platform for conversation and action. You need real engagement. We’ll help reach all the players, all the stakeholders, all the sectors.
   groups_signup_motivation9: You need resourcing. We’ll bring all our experience to bear. You need cooperation. We’ll better connect you to a global network of peers.
   groups_signup_pricing: Group Account
@@ -1566,22 +1566,22 @@ en_CA:
   groups_signup_contact_text: "Get in touch to discover what OFN can do for you:"
   groups_signup_detail: "Here's the detail."
   login_invalid: "Invalid email or password"
-  modal_hubs: "Food Hubs"
-  modal_hubs_abstract: Our food hubs are the point of contact between you and the people who make your food!
-  modal_hubs_content1: You can search for a convenient hub by location or name. Some hubs have multiple points where you can pick-up your purchases, and some will also provide delivery options. Each food hub is a sales point with independent business operations and logistics - so variations between hubs are to be expected.
-  modal_hubs_content2: You can only shop at one food hub at a time.
+  modal_hubs: "Hubs"
+  modal_hubs_abstract: Our  hubs are the point of contact between you and the people who grow & make local sustainable things!
+  modal_hubs_content1: You can search for a convenient hub by location or name. Some hubs have multiple points where you can pick-up your purchases, and some will also provide delivery options. Each fhub is a sales/distribution point with independent operations and logistics - so variations between hubs are to be expected.
+  modal_hubs_content2: You can only shop at one hub at a time.
   modal_groups: "Groups / Regions"
   modal_groups_content1: These are the organisations and relationships between hubs which make up the Open Food Network.
   modal_groups_content2: Some groups are clustered by location or council, others by non-geographic similarities.
   modal_how: "How it works"
   modal_how_shop: Shop the Open Food Network
-  modal_how_shop_explained: Search for a food hub near you to start shopping! You can expand each food hub to see what kinds of goodies are available, and click through to start shopping. (You can only shop one food hub at a time.)
+  modal_how_shop_explained: Search for a  hub near you to start shopping! You can expand each hub to see what kinds of products are available, and click through to start. (You can only shop one hub at a time.)
   modal_how_pickup: Pick-ups, delivery and shipping costs
-  modal_how_pickup_explained: Some food hubs deliver to your door, while others require you to pick-up your purchases. You can see which options are available on the homepage, and select which you'd like at the shopping and check-out pages. Delivery will cost more, and pricing differs from hub-to-hub. Each food hub is a sales point with independent business operations and logisitics - so variations between hubs are to be expected.
+  modal_how_pickup_explained: Some  hubs deliver to your door, while others require you to pick-up your purchases. You can see which options are available on the homepage, and select which you'd like at the shopping and check-out pages. Delivery will cost more, and pricing differs from hub-to-hub. Each hub is a sales point with independent  operations and logisitics - so variations between hubs are to be expected.
   modal_how_more: Learn more
   modal_how_more_explained: "If you want to learn more about the Open Food Network, how it works, and get involved, check out:"
   modal_producers: "Producers"
-  modal_producers_explained: "Our producers make all the delicious food you can shop for on the Open Food Network."
+  modal_producers_explained: "Our producers make things you can shop for on the Open Food Network."
   producers_about: About us
   producers_buy: Shop for
   producers_contact: Contact
@@ -1594,8 +1594,8 @@ en_CA:
   producers_title: Producers
   producers_headline: Find local producers
   producers_signup_title: Sign up as a producer
-  producers_signup_headline: Food producers, empowered.
-  producers_signup_motivation: Sell your food and tell your stories to diverse new markets. Save time and money on every overhead. We support innovation without the risk. We've levelled the playing field.
+  producers_signup_headline: Producers & makers, empowered.
+  producers_signup_motivation: Sell your products and tell your stories to diverse new markets. Save time and money on every overhead. We support innovation without the risk. We've levelled the playing field.
   producers_signup_send: Join now
   producers_signup_enterprise: Enterprise Accounts
   producers_signup_studies: Stories from our producers.
@@ -1613,22 +1613,22 @@ en_CA:
   register_title: Register
   sell_title: "Register"
   sell_headline: "Get on the Open Food Network!"
-  sell_motivation: "Showcase your beautiful food."
+  sell_motivation: "Showcase your beautiful products."
   sell_producers: "Producers"
   sell_hubs: "Hubs"
   sell_groups: "Groups"
   sell_producers_detail: "Set up a profile for your business on the OFN in just minutes.  At any time you can upgrade your profile to an online store and sell your products direct to customers."
-  sell_hubs_detail: "Set up a profile for your food enterprise or organisation on the OFN. At any time you can upgrade your profile to a multi-producer shop."
-  sell_groups_detail: "Set up a tailored directory of enterprises (producers and other food enterprises) for your region or for your organisation."
+  sell_hubs_detail: "Set up a profile for your  enterprise or organisation on the OFN. At any time you can upgrade your profile to a multi-producer shop."
+  sell_groups_detail: "Set up a tailored directory of enterprises (producers and other local enterprises) for your region or for your organisation."
   sell_user_guide: "Find out more in our user guide."
   sell_listing_price: "Listing on the OFN is free. Opening and running a shop on OFN is free up to $500 of monthly sales. If you sell more we will invoice you for 2% of sales to a maximum of $150/month. For more detail on pricing visit the Software Platform section via the About link in the top menu."
   sell_embed: "We can also embed an OFN shop in your own customised website or build a customised local food network website for your region."
   sell_ask_services: "Ask us about OFN services."
   shops_title: Shops
   shops_headline: Shopping, transformed.
-  shops_text: Food grows in cycles, farmers harvest in cycles, and we order food in cycles. If you find an order cycle closed, check back soon.
+  shops_text: Products grow and are made in cycles so we order these products in cycles. If you find an order cycle closed, check back soon.
   shops_signup_title: Sign up as a hub
-  shops_signup_headline: Food hubs, unlimited.
+  shops_signup_headline: Hubs & Markeplaces, unlimited.
   shops_signup_motivation: Whatever your model, we support you. However you change, we're with you. We're non-profit, independent, and open-sourced. We're the software partners you've dreamed of.
   shops_signup_action: Join now
   shops_signup_pricing: Enterprise Accounts
@@ -1644,7 +1644,7 @@ en_CA:
   orders_edit_continue: Continue shopping
   orders_edit_checkout: Checkout
   orders_form_empty_cart: "Empty cart"
-  orders_form_subtotal: Produce subtotal
+  orders_form_subtotal: Subtotal
   orders_form_admin: Admin & Handling
   orders_form_total: Total
   orders_oc_expired_headline: Orders have closed for this order cycle
@@ -1787,8 +1787,8 @@ en_CA:
         yes_producer: "Yes, I'm a producer"
         no_producer: "No, I'm not a producer"
         producer_field_error: "Please choose one. Are you are producer?"
-        yes_producer_help: "Producers make yummy things to eat and/or drink. You're a producer if you grow it, raise it, brew it, bake it, ferment it, milk it or mould it."
-        no_producer_help: "If you’re not a producer, you’re probably someone who sells and distributes food. You might be a hub, coop, buying group, retailer, wholesaler or other."
+        yes_producer_help: "Producers make things. You're a producer if you make it, grow it, raise it, brew it, bake it, ferment it, milk it, mould it or design it."
+        no_producer_help: "If you’re not a producer, you’re probably someone who sells and distributes the things they produce or make. You might be a hub, coop, buying group, retailer, wholesaler or other."
         create_profile: "Create Profile"
       about:
         title: "About"
@@ -2085,14 +2085,14 @@ en_CA:
   report_header_ship_street_2: Ship Street 2
   report_header_ship_city: Ship City
   report_header_ship_postcode: Ship Postal Code
-  report_header_ship_state: Ship State
+  report_header_ship_state: Ship Province
   report_header_billing_street: Billing Street
   report_header_billing_street_2: Billing Street 2
   report_header_billing_street_3: Billing Street 3
   report_header_billing_street_4: Billing Street 4
   report_header_billing_city: Billing City
   report_header_billing_postcode: Billing Postal Code
-  report_header_billing_state: Billing State
+  report_header_billing_state: Billing Province
   report_header_incoming_transport: Incoming Transport
   report_header_special_instructions: Special Instructions
   report_header_order_number: Order number
@@ -2185,7 +2185,7 @@ en_CA:
   report_header_not_confirmed: Not Confirmed
   report_header_gst_on_income: Sales Tax on Income
   report_header_gst_free_income: Tax Free Income
-  report_header_total_untaxable_produce: Total untaxable produce (no tax)
+  report_header_total_untaxable_produce: Total untaxable products (no tax)
   report_header_total_taxable_produce: Total taxable produce (tax inclusive)
   report_header_total_untaxable_fees: Total untaxable fees (no tax)
   report_header_total_taxable_fees: Total taxable fees (tax inclusive)
@@ -2337,16 +2337,16 @@ en_CA:
               People can find and contact you on the Open Food Network. Your enterprise
               will be visible on the map, and will be searchable in listings.
           hub_profile_text2: >
-              Having a profile, and making connections within your local food system
-              through the Open Food Network will always be free.
+              Having a profile, and making connections within your local networks
+              and communities through the Open Food Network will always be free.
           hub_shop: Hub Shop
           hub_shop_text1: >
-              Your enterprise is the backbone of your local food system. You aggregate
-              produce from other enterprises and can sell it through your shop on
+              Your enterprise is the backbone of your local community. You aggregate
+              products from other enterprises and  sell them through your shop on
               the Open Food Network.
           hub_shop_text2: >
-              Hubs can take many forms, whether they be a food co-op, a buying group,
-              a veggie-box program, or a local grocery store.
+              Hubs can take many forms -  a local co-op, a buying group, a food-box
+              program, or an on-line markeplace for crafts or flowers....
           hub_shop_text3: >
               If you also want to sell your own products, you will need to switch
               this enterprise to be a producer.
@@ -2363,9 +2363,9 @@ en_CA:
               A profile makes you visible and contactable to others and is a way to
               share your story.
           profile_only_text2: >
-              If you prefer to focus on producing food, and want to leave the work
-              of selling it to someone else, you won't require a shop on the Open
-              Food Network.
+              If you prefer to focus on producing, designing and making, and want
+              to leave the work of selling it to someone else, you won't require a
+              shop on the Open Food Network.
           profile_only_text3: >
               Add your products to Open Food Network, allowing hubs to stock your
               products in their stores.
@@ -2374,46 +2374,45 @@ en_CA:
               Sell your products directly to customers through your very own Open
               Food Network shopfront.
           producer_shop_text2: >
-              A Producer Shop is for your produce only, if you want to sell produce
-              grown/produced off site, please select 'Producer Hub'.
+              A Producer Shop is for your products only, if you want to sell products
+              grown/made/created off site, please select 'Producer Hub'.
           producer_hub: Producer Hub
           producer_hub_text1: >
-              Your enterprise is the backbone of your local food system. You can sell
-              your own produce as well as produce aggregated from other enterprises
+              Your enterprise is the backbone of your local community. You can sell
+              your own products as well as products aggregated from other enterprises
               through your shopfront on the Open Food Network.
           producer_hub_text2: >
-              Producer Hubs can take many forms, whether they be a CSA, a veggie-box
-              program, or a food co-op with a rooftop garden.
+              Producer Hubs can take many forms, whether they be a CSA, a food box
+              program, a co-op, cut flower marketplace.....
           producer_hub_text3: >
               The Open Food Network aims to support as many hub models as possible,
               so no matter your situation, we want to provide the tools you need to
               run your organisation or local food business.
           get_listing: Get a listing
           always_free: ALWAYS FREE
-          sell_produce_others: Sell produce from others
-          sell_own_produce: Sell your own produce
-          sell_both: Sell produce from self and others
+          sell_produce_others: Sell products from others
+          sell_own_produce: Sell your own products
+          sell_both: Sell products from self and others
         enterprise_producer:
           producer: Producer
           producer_text1: >
-              Producers make yummy things to eat or drink. You're a producer if you
-              grow it, raise it, brew it, bake it, ferment it, milk it or mould it.
+              Producers make things. You're a producer if you make it, grow it, raise
+              it, brew it, bake it, ferment it, milk it,  mould it, design it.....
           producer_text2: >
-              Producers can also perform other functions, such as aggregating food
-              from other enterprises and selling it through a shop on the Open Food
+              Producers can also perform other functions, such as aggregating products
+              from other enterprises and selling them through a shop on the Open Food
               Network.
           non_producer: Non-producer
           non_producer_text1: >
-              Non-producers do not produce any food themselves, meaning that they
+              Non-producers do not produce any products themselves, meaning that they
               cannot create their own products for sale through the Open Food Network.
           non_producer_text2: >
-              Instead, non-producers specialise in linking producers to the end eater,
-              whether it be by aggregating, grading, packing, selling or delivering
-              food.
-          producer_desc: Producers of food
+              Instead, non-producers specialise in linking producers and their products
+              to the end  buyer/user,  by  aggregating, packing, selling or distributing.
+          producer_desc: 'Producers '
           producer_example: eg. GROWERS, BAKERS, BREWERS, MAKERS
-          non_producer_desc: All other food enterprises
-          non_producer_example: eg. Grocery stores, Food co-ops, Buying groups
+          non_producer_desc: All other  enterprises
+          non_producer_example: eg. Grocery stores, Co-ops, Buying groups, Markets
         enterprise_status:
           status_title: "%{name} is set up and ready to go!"
           severity: Severity
@@ -2687,7 +2686,7 @@ en_CA:
     city: "City"
     zip: "Postal Code"
     country: "Country"
-    state: "State"
+    state: "Province"
     phone: "Phone"
     update: "Update"
     use_billing_address: "Use Billing Address"
