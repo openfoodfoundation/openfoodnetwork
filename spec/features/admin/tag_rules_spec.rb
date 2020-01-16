@@ -13,8 +13,8 @@ feature 'Tag Rules', js: true do
 
     it "allows creation of rules of each type" do
       # Creating a new tag
-      expect(page).to have_no_selector '.customer_tag'
       expect(page).to have_content 'No tags apply to this enterprise yet'
+      expect(page).to have_no_selector '.customer_tag'
       click_button '+ Add A New Tag'
       find(:css, "tags-input .tags input").set "volunteer\n"
 
