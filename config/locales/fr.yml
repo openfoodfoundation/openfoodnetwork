@@ -853,7 +853,6 @@ fr:
         save_and_back_to_list: "Sauvegarder et revenir à la liste"
         choose_products_from: "Choisir produits depuis :"
       incoming:
-        previous: "Précédent"
         save: "Sauvegarder"
         save_and_next: "Sauvegarder et suivant"
         next: "Suivant"
@@ -1106,6 +1105,8 @@ fr:
       destroy_attachment_does_not_exist: "Aucun logo trouvé :-("
     enterprise_promo_image:
       destroy_attachment_does_not_exist: "Aucune bannière trouvée :-("
+    orders:
+      failed_to_update: "La mise à jour de la commande échoué"
   checkout:
     already_ordered:
       cart: "panier"
@@ -1130,15 +1131,6 @@ fr:
       selling_on_ofn: "Vous souhaitez proposer vos produits sur Open Food France?"
       register: "Démarrez ici"
     footer:
-      footer_global_headline: "OFN Global"
-      footer_global_home: "Accueil"
-      footer_global_news: "News"
-      footer_global_about: "A propos"
-      footer_global_contact: "Contact"
-      footer_sites_headline: "Sites OFN"
-      footer_sites_developer: "Developpeur"
-      footer_sites_community: "Communauté"
-      footer_sites_userguide: "Guide utilisateur"
       footer_secure: "Fiable et sécurisé."
       footer_secure_text: "Open Food France utilise un certificat type SSL (2048 bit RSA) pour garantir la confidentialité de votre commandes et données bancaires. Nos serveurs ne conservent pas vos données bancaires et les paiements sont effectués conformément aux normes de sécurité PCI."
       footer_contact_headline: "Restez en contact"
@@ -2947,6 +2939,7 @@ fr:
           capture: "Payée"
           ship: "Expédier"
           edit: "Modifier"
+          order_not_updated: "La commande n'a pas pu être mise à jour"
           note: "Note"
           first: "Début"
           last: "Fin"
