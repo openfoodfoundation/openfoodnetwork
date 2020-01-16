@@ -666,7 +666,7 @@ GEM
     state_machine (1.2.0)
     stringex (1.5.1)
     stripe (5.11.0)
-    test-unit (3.3.4)
+    test-unit (3.3.5)
       power_assert
     thor (0.20.3)
     tilt (1.4.1)
