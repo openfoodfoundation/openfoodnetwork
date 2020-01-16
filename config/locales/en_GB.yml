@@ -1104,6 +1104,8 @@ en_GB:
       destroy_attachment_does_not_exist: "Logo does not exist"
     enterprise_promo_image:
       destroy_attachment_does_not_exist: "Promo image does not exist"
+    orders:
+      failed_to_update: "Failed to update order"
   checkout:
     already_ordered:
       cart: "cart"
@@ -2914,6 +2916,7 @@ en_GB:
           capture: "Capture"
           ship: "Ship"
           edit: "Edit"
+          order_not_updated: "The order could not be updated"
           note: "Note"
           first: "First"
           last: "Last"
