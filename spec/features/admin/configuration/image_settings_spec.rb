@@ -5,7 +5,7 @@ describe "image settings" do
 
   before do
     quick_login_as_admin
-    visit spree.admin_path
+    visit spree.admin_dashboard_path
     click_link "Configuration"
     click_link "Image Settings"
   end

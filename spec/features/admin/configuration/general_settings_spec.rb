@@ -5,7 +5,7 @@ describe "General Settings" do
 
   before(:each) do
     quick_login_as_admin
-    visit spree.admin_path
+    visit spree.admin_dashboard_path
     click_link "Configuration"
     click_link "General Settings"
   end

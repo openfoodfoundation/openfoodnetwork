@@ -1,4 +1,4 @@
-= tab :dashboard, :route => :admin, :icon => 'icon-dashboard'
+= tab :overview, label: 'dashboard', url: spree.admin_dashboard_path, icon: 'icon-dashboard'
 = tab :products, :option_types, :properties, :variants, :product_properties, :taxons, :url => admin_products_path, :icon => 'icon-th-large'
 = tab :order_cycles, :url => main_app.admin_order_cycles_path, :icon => 'icon-refresh'
 = tab :orders, :payments, :creditcard_payments, :shipments, :credit_cards, :return_authorizations, :url => admin_orders_path('q[s]' => 'completed_at desc'), :icon => 'icon-shopping-cart'

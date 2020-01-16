@@ -11,13 +11,13 @@ feature "Authentication", js: true do
   scenario "logging into admin redirects home, then back to admin" do
     # This is the first admin spec, so give a little extra load time for slow systems
     Capybara.using_wait_time(120) do
-      visit spree.admin_path
+      visit spree.admin_dashboard_path
 
       fill_in "Email", with: user.email
       fill_in "Password", with: user.password
       click_login_button
       expect(page).to have_content "DASHBOARD"
-      expect(page).to have_current_path spree.admin_path
+      expect(page).to have_current_path spree.admin_dashboard_path
       expect(page).to have_no_content "CONFIGURATION"
     end
   end
