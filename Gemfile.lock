@@ -129,7 +129,7 @@ GEM
       activesupport (= 3.2.22.5)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
-    activerecord-import (1.0.3)
+    activerecord-import (1.0.4)
       activerecord (>= 3.2)
     activerecord-postgresql-adapter (0.0.1)
       pg
@@ -679,7 +679,7 @@ GEM
     turbo-sprockets-rails3 (0.3.14)
       railties (> 3.2.8, < 4.0.0)
       sprockets (>= 2.2.0)
-    tzinfo (0.3.55)
+    tzinfo (0.3.56)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (1.6.0)
