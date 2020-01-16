@@ -25,13 +25,17 @@ module Stripe
     private
 
     def options
-      options = {
+      {
         email: @payment.order.email,
         login: Stripe.api_key,
         address: address_for(@payment)
-      }
-      options = options.merge(stripe_account: @stripe_account_id) if @stripe_account_id.present?
-      options
+      }.merge(stripe_account_option)
+    end
+
+    def stripe_account_option
+      return {} if @stripe_account_id.blank?
+
+      { stripe_account: @stripe_account_id }
     end
 
     def address_for(payment)
