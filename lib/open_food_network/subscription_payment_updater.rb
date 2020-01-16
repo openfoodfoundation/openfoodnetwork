@@ -30,7 +30,8 @@ module OpenFoodNetwork
     end
 
     def card_required?
-      payment.payment_method.is_a? Spree::Gateway::StripeConnect
+      payment.payment_method.is_a?(Spree::Gateway::StripeConnect) ||
+        payment.payment_method.is_a?(Spree::Gateway::StripeSCA)
     end
 
     def card_set?
