@@ -1103,6 +1103,8 @@ ar:
       destroy_attachment_does_not_exist: "الشعار غير موجود"
     enterprise_promo_image:
       destroy_attachment_does_not_exist: "الصورة الترويجية غير موجودة"
+    orders:
+      failed_to_update: "فشل في تحديث الطلب"
   checkout:
     already_ordered:
       cart: "سلة التسوق"
@@ -2908,6 +2910,7 @@ ar:
           capture: "إلتقاط"
           ship: "الشحن"
           edit: "تعديل"
+          order_not_updated: "لا يمكن تحديث الطلب"
           note: "ملحوظة"
           first: "أول"
           last: "الاخير"
