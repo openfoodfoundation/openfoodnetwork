@@ -7,6 +7,7 @@
 
   .tab-buttons {
     color: $dark-grey;
+    box-shadow: 0 1px 0 $light-grey-transparency;
 
     .row:first-child {
       display: flex;
@@ -70,7 +71,7 @@
 
     .content {
       padding: 1.25em 0;
-      background-color: $white;
+      background-color: transparent;
 
       img {
         margin: 0px 0px 0px 40px;
