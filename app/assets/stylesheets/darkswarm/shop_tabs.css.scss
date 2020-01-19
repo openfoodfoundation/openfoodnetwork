@@ -60,17 +60,8 @@
     &.selected {
       border-bottom: 4px solid $clr-brick;
 
-      @media all and (max-width: 640px) {
-        border-top: 4px solid transparent;
-        background-color: $clr-brick;
-      }
-
       a {
         color: $clr-brick;
-
-        @media all and (max-width: 640px) {
-          color: white;
-        }
       }
     }
   }
