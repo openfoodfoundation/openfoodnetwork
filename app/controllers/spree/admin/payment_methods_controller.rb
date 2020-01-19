@@ -149,13 +149,12 @@ module Spree
       end
 
       def stripe_payment_method?
-        @payment_method.try(:type) == "Spree::Gateway::StripeConnect" ||
-          @payment_method.try(:type) == "Spree::Gateway::StripeSCA"
+        ["Spree::Gateway::StripeConnect",
+         "Spree::Gateway::StripeSCA"].include? @payment_method.try(:type)
       end
 
       def stripe_provider?(provider)
-        provider.name.ends_with?("StripeConnect") ||
-          provider.name.ends_with?("StripeSCA")
+        provider.name.ends_with?("StripeConnect", "StripeSCA")
       end
     end
   end
