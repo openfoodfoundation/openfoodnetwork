@@ -1,8 +1,7 @@
 - content_for :injection_data do
   = inject_current_order_cycle
 
-%ordercycle{"ng-controller" => "OrderCycleCtrl"}
-
-  - unless no_open_order_cycles?
+- unless no_open_order_cycles?
+  %ordercycle{"ng-controller" => "OrderCycleCtrl"}
     %form.custom
       = yield :order_cycle_form
