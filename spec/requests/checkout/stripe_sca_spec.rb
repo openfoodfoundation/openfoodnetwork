@@ -203,7 +203,7 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
         end
       end
 
-      context "when the payment_metho request returns an error message" do
+      context "when the payment_method request returns an error message" do
         let(:payment_method_response_mock) do
           { status: 402, body: JSON.generate(error: { message: "payment-method-failure" }) }
         end
