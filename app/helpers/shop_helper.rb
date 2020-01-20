@@ -20,27 +20,26 @@ module ShopHelper
     )
   end
 
-  def base_shop_tabs(column_sizes)
-    [
-      { name: 'about', cols: column_sizes[0],
-        title: t(:shopping_tabs_about, distributor: current_distributor.name) },
-      { name: 'producers', cols: column_sizes[1],
-        title: t(:label_producers) },
-      { name: 'contact', cols: column_sizes[2],
-        title: t(:shopping_tabs_contact) }
-    ]
-  end
-
-  def tabs_with_groups
-    tabs = base_shop_tabs([6, 2, 2])
-    tabs << { name: 'groups', title: t(:label_groups), cols: 2 }
-  end
-
-  def tabs_without_groups
-    base_shop_tabs([4, 4, 4])
-  end
-
   def shop_tabs
-    current_distributor.groups.present? ? tabs_with_groups : tabs_without_groups
+    [
+      { name: 'home', title: t(:shopping_tabs_home), show: show_home_tab? },
+      { name: 'shop', title: t(:shopping_tabs_shop), show: !require_customer? },
+      { name: 'about', title: t(:shopping_tabs_about), show: true },
+      { name: 'producers', title: t(:label_producers), show: true },
+      { name: 'contact', title: t(:shopping_tabs_contact), show: true },
+      { name: 'groups', title: t(:label_groups), show: current_distributor.groups.any? },
+    ].select{ |tab| tab[:show] }
+  end
+
+  def show_home_tab?
+    require_customer? || current_distributor.preferred_shopfront_message.present?
+  end
+
+  def shopfront_closed_message?
+    no_open_order_cycles? && current_distributor.preferred_shopfront_closed_message.present?
+  end
+
+  def no_open_order_cycles?
+    @order_cycles && @order_cycles.empty?
   end
 end

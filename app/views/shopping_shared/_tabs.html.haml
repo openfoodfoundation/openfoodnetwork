@@ -1,9 +1,11 @@
 - shop_tabs.each do |tab|
-  = render "shopping_shared/#{tab[:name]}"
+  = render "shopping_shared/tabs/#{tab[:name]}"
 
-.tabset-ctrl#shop-tabs{ navigate: 'true', prefix: 'shop', ng: { cloak: true } }
-  .row
-    - shop_tabs.each do |tab|
-      .small-12.columns.tab{ id: "tab_#{tab[:name]}", name: tab[:name], class: "medium-#{tab[:cols]}" }
-        %a{ href: 'javascript:void(0)' }=tab[:title]
-    .small-12.columns.tab-view
+.tabset-ctrl#shop-tabs{ navigate: 'true', alwaysopen: 'true', selected: shop_tabs.first[:name], prefix: 'shop', ng: { cloak: true } }
+  .tab-buttons
+    .row
+      - shop_tabs.each do |tab|
+        .tab{ id: "tab_#{tab[:name]}", name: tab[:name] }
+          %a{ href: 'javascript:void(0)' }=tab[:title]
+
+  .tab-view

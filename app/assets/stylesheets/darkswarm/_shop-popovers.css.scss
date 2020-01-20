@@ -19,6 +19,10 @@ ordercycle {
       margin: 0;
       font-weight: 700;
     }
+
+    @media all and (max-width: 768px) {
+      z-index: 10;
+    }
   }
 }
 

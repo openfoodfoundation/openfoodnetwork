@@ -3,18 +3,6 @@
 
 %ordercycle{"ng-controller" => "OrderCycleCtrl"}
 
-  - if @order_cycles and @order_cycles.empty?
-    %h4
-      %i.ofn-i_012-warning
-      = t :shopping_oc_closed
-    %p
-      = t :shopping_oc_closed_description
-    .text-right
-      %small
-        %em
-          = render partial: "shopping_shared/next_order_cycle"
-          = render partial: "shopping_shared/last_order_cycle"
-
-  - else
+  - unless no_open_order_cycles?
     %form.custom
       = yield :order_cycle_form

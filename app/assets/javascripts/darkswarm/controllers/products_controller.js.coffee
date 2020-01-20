@@ -80,3 +80,11 @@ Darkswarm.controller "ProductsCtrl", ($scope, $filter, $rootScope, Products, Ord
     $scope.query = ""
     $scope.taxonSelectors.clearAll()
     $scope.propertySelectors.clearAll()
+
+  $scope.refreshStaleData = ->
+    # If the products template has already been loaded but the controller is being initialized
+    # again after the template has switched, refresh loaded data to avoid conflicts
+    if $scope.Products.products.length > 0
+      $scope.Products.products = []
+      $scope.update_filters()
+      $scope.loadProducts()
