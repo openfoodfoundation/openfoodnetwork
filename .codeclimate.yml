@@ -12,6 +12,10 @@ plugins:
         enabled: false
       VendorPrefix:
         enabled: false
+      LeadingZero:
+        enabled: false
+      PropertySortOrder:
+        enabled: false
   duplication:
     enabled: true
     exclude_patterns:
