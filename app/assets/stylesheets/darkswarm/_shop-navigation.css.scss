@@ -43,10 +43,15 @@
 }
 
 ordercycle {
-  text-align: right;
   float: right;
   background: $secondary-blue;
   color: $white;
+  width: 100%;
+  border-radius: 0.75em 0.75em 0 0;
+  position: absolute;
+  right: 1em;
+  padding: 1.65em 0 2.5em;
+  margin-top: 1em;
 
   p {
     max-width: 400px;
@@ -57,24 +62,26 @@ ordercycle {
   }
 
   @media all and (max-width: 1024px) {
-    text-align: left;
     float: none;
-    padding: 12px 10px;
+    padding: 0.5em 1em;
     width: 100%;
     margin-top: 0;
     display: inline-block;
+    border-radius: 0;
+    position: relative;
+    right: 0;
 
     p {
       max-width: 100%;
     }
   }
 
-  form.custom {
-    text-align: right;
+  @media all and (max-width: 768px) {
+    padding: 0.5em 1em 0.75em;
+  }
 
-    @media all and (max-width: 1024px) {
-      text-align: center;
-    }
+  form.custom {
+    text-align: center;
   }
 
   .order-cycle-select {
@@ -107,6 +114,14 @@ ordercycle {
       height: 2.35em;
       background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgaWQ9InN2ZzQiCiAgIHhtbDpzcGFjZT0icHJlc2VydmUiCiAgIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDYgMyIKICAgdmlld0JveD0iMCAwIDYgMyIKICAgaGVpZ2h0PSIzcHgiCiAgIHdpZHRoPSIyNHB4IgogICB5PSIwcHgiCiAgIHg9IjEycHgiCiAgIHZlcnNpb249IjEuMSI+PG1ldGFkYXRhCiAgICAgaWQ9Im1ldGFkYXRhMTAiPjxyZGY6UkRGPjxjYzpXb3JrCiAgICAgICAgIHJkZjphYm91dD0iIj48ZGM6Zm9ybWF0PmltYWdlL3N2Zyt4bWw8L2RjOmZvcm1hdD48ZGM6dHlwZQogICAgICAgICAgIHJkZjpyZXNvdXJjZT0iaHR0cDovL3B1cmwub3JnL2RjL2RjbWl0eXBlL1N0aWxsSW1hZ2UiIC8+PGRjOnRpdGxlPjwvZGM6dGl0bGU+PC9jYzpXb3JrPjwvcmRmOlJERj48L21ldGFkYXRhPjxkZWZzCiAgICAgaWQ9ImRlZnM4IiAvPjxwb2x5Z29uCiAgICAgc3R5bGU9ImZpbGw6I2ZmZmZmZjtmaWxsLW9wYWNpdHk6MSIKICAgICBpZD0icG9seWdvbjIiCiAgICAgcG9pbnRzPSI1Ljk5MiwwIDIuOTkyLDMgLTAuMDA4LDAgIiAvPjwvc3ZnPg==');
     }
+
+    @media all and (max-width: 1024px) {
+      float: right;
+    }
+
+    @media all and (max-width: 768px) {
+      float: none;
+    }
   }
 
   closing {
@@ -114,11 +129,17 @@ ordercycle {
     color: $white;
     font-size: 1.5em;
     display: block;
-    padding-bottom: 12px;
+    padding: 0 0 12px;
+
+    @media all and (max-width: 1024px) {
+      float: left;
+      padding: 0.2em 0 0;
+      font-size: 1.2em;
+    }
 
     @media all and (max-width: 768px) {
-      font-size: 1.2em;
-      padding-bottom: 10px;
+      float: none;
+      padding: 0 0 10px;
     }
 
     span {

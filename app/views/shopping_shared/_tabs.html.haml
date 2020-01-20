@@ -6,8 +6,9 @@
   .tabset-ctrl#shop-tabs{ navigate: 'true', alwaysopen: 'true', selected: shop_tabs.first[:name], prefix: 'shop', ng: { cloak: true } }
     .tab-buttons
       .row
-        - shop_tabs.each do |tab|
-          .tab{ id: "tab_#{tab[:name]}", name: tab[:name] }
-            %a{ href: 'javascript:void(0)' }=tab[:title]
+        .columns.small-12.large-8
+          - shop_tabs.each do |tab|
+            .tab{ id: "tab_#{tab[:name]}", name: tab[:name] }
+              %a{ href: 'javascript:void(0)' }=tab[:title]
 
     .tab-view
