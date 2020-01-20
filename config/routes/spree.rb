@@ -26,12 +26,6 @@ Spree::Core::Engine.routes.draw do
 
   resource :account, :controller => 'users'
 
-  namespace :admin do
-    resources :users
-  end
-end
-
-Spree::Core::Engine.routes.prepend do
   match '/admin/reports/orders_and_distributors' => 'admin/reports#orders_and_distributors', :as => "orders_and_distributors_admin_reports",  :via  => [:get, :post]
   match '/admin/reports/order_cycle_management' => 'admin/reports#order_cycle_management', :as => "order_cycle_management_admin_reports",  :via  => [:get, :post]
   match '/admin/reports/packing' => 'admin/reports#packing', :as => "packing_admin_reports",  :via  => [:get, :post]
@@ -56,6 +50,8 @@ Spree::Core::Engine.routes.prepend do
     get '/search/known_users' => "search#known_users", :as => :search_known_users
     get '/search/customers' => 'search#customers', :as => :search_customers
     get '/search/customer_addresses' => 'search#customer_addresses', :as => :search_customer_addresses
+
+    resources :users
 
     resources :products do
       post :bulk_update, :on => :collection, :as => :bulk_update
