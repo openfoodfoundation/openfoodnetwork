@@ -6,7 +6,7 @@
           %div.center
             .header
               = t :shopping_contact_address
-            %strong=current_distributor.name
+            %span= current_distributor.name
             %p
               = current_distributor.address.address1
               - unless current_distributor.address.address2.blank?
