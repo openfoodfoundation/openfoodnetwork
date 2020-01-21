@@ -117,7 +117,7 @@ pt_BR:
       subject: "%{enterprise} está agora em %{sitename}"
       email_welcome: "Bem-vindo"
       email_registered: "é agora parte de"
-      email_userguide_html: "O Guia do Usuário com suporte detalhado para gerenciar sua loja está aqui: %{link}"
+      email_userguide_html: "O Guia do Usuário com suporte detalhado para gerenciar sua conta está aqui: %{link}"
       userguide: "Guia do Usuario do Open Food Brasil"
       email_admin_html: "Você pode gerenciar sua conta entrando no %{link} ou clicando na engrenagem no canto superior direito da página, e selecionando Administração."
       admin_panel: "Painel do Administrador"
