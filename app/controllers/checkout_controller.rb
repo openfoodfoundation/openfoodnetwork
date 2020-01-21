@@ -68,6 +68,10 @@ class CheckoutController < Spree::CheckoutController
         render json: { path: order_path(@order) }, status: :ok
       end
     end
+  rescue StandardError => error
+    Bugsnag.notify(error)
+    flash[:error] = I18n.t("checkout.failed")
+    update_failed
   end
 
   # Clears the cached order. Required for #current_order to return a new order
