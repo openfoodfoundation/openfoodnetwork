@@ -50,8 +50,9 @@ ordercycle {
   border-radius: 0.75em 0.75em 0 0;
   position: absolute;
   right: 1em;
-  padding: 1.65em 0 2.5em;
+  padding: 1.65em 0;
   margin-top: 1em;
+  height: 9.6em;
 
   p {
     max-width: 400px;
@@ -70,6 +71,7 @@ ordercycle {
     border-radius: 0;
     position: relative;
     right: 0;
+    height: auto;
 
     p {
       max-width: 100%;
