@@ -16,7 +16,7 @@
         - else
           = @order.distributor.next_collection_at
 
-  = render partial: "shopping_shared/details"
+  = render partial: "shopping_shared/header"
 
   %fieldset.footer-pad
     - if @order.line_items.empty?

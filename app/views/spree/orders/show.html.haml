@@ -5,7 +5,7 @@
   = inject_enterprise_and_relatives if current_distributor.present?
 
 .darkswarm
-  = render "shopping_shared/details" if current_distributor.present?
+  = render "shopping_shared/header" if current_distributor.present?
 
   %fieldset#order_summary.footer-pad{"data-hook" => ""}
     .row
