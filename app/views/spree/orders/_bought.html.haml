@@ -17,9 +17,9 @@
 
         %div.item-thumb-image
           - if variant.images.length == 0
-            = link_to mini_image(variant.product), variant.product
+            = mini_image(variant.product)
           - else
-            = link_to image_tag(variant.images.first.attachment.url(:mini)), variant.product
+            = image_tag(variant.images.first.attachment.url(:mini))
 
         = render 'spree/shared/line_item_name', line_item: line_item
         %span.already-confirmed= t(:orders_bought_already_confirmed)
