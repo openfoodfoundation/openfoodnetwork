@@ -138,8 +138,9 @@ module Spree
         let(:bill_address) { create(:address) }
         let!(:variant_on_demand) { create(:variant, on_demand: true, on_hand: 1) }
         let!(:order) {
-          create(:order_with_totals_and_distribution,
+          create(:order,
                  distributor: hub,
+                 order_cycle: create(:simple_order_cycle),
                  bill_address: bill_address,
                  ship_address: bill_address)
         }
@@ -147,6 +148,7 @@ module Spree
         let!(:line_item) { create(:line_item, variant: variant_on_demand, quantity: 10, order: order) }
 
         before do
+          order.reload
           order.update_totals
           order.payments << create(:payment, amount: order.total)
           until order.completed? do break unless order.next! end
@@ -155,7 +157,8 @@ module Spree
           order.shipment.update!(order)
         end
 
-        xit "creates a shipment without backordered items" do
+        it "creates a shipment without backordered items" do
+          expect(order.shipment.manifest.count).to eq 1
           expect(order.shipment.manifest.first.quantity).to eq 10
           expect(order.shipment.manifest.first.states).to eq 'on_hand' => 10
           expect(order.shipment.manifest.first.variant).to eq line_item.variant
