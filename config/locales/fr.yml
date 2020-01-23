@@ -703,8 +703,9 @@ fr:
           enable_subscriptions_true: "Activé"
           shopfront_message: "Message d'accueil boutique ouverte"
           shopfront_message_placeholder: >
-              Vous pouvez ici expliquer à vos acheteurs comment votre boutique fonctionne.
-              Ce texte s'affiche dans votre boutique, au-dessus de la liste de produits.
+              Vous pouvez indiquer ici un message de bienvenue ou un message expliquant
+              les particularités de votre boutique (facultatif). Ce message s'affiche
+              dans l'onglet Accueil de votre boutique.
           shopfront_message_link_tooltip: "Insérer / modifier un lien"
           shopfront_message_link_prompt: "Veuillez entrer l'URL à insérer"
           shopfront_closed_message: "Message d'accueil boutique fermée"
