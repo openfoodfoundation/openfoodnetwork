@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+require 'open_food_network/permissions'
+
 module OrderCyclesHelper
   def current_order_cycle
     @current_order_cycle ||= current_order(false).andand.order_cycle
