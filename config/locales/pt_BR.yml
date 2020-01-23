@@ -43,13 +43,15 @@ pt_BR:
       order_management/reports/enterprise_fee_summary/parameters:
         start_at: "Início"
         end_at: "Fim"
-        distributor_ids: "Hubs"
+        distributor_ids: "Centrais"
         producer_ids: "Produtores"
         order_cycle_ids: "Ciclos de pedidos"
         enterprise_fee_ids: "Nomes das taxas"
         shipping_method_ids: "Métodos de envio"
         payment_method_ids: "Métodos de pagamento"
     errors:
+      messages:
+        inclusion: "não está incluso na lista"
       models:
         subscription_validator:
           attributes:
@@ -115,9 +117,10 @@ pt_BR:
       subject: "%{enterprise} está agora em %{sitename}"
       email_welcome: "Bem-vindo"
       email_registered: "é agora parte de"
-      email_userguide_html: "O Guia do Usuário com suporte detalhado para gerenciar sua loja está aqui: %{link}"
+      email_userguide_html: "O Guia do Usuário com suporte detalhado para gerenciar sua conta está aqui: %{link}"
       userguide: "Guia do Usuario do Open Food Brasil"
       email_admin_html: "Você pode gerenciar sua conta entrando no %{link} ou clicando na engrenagem no canto superior direito da página, e selecionando Administração."
+      admin_panel: "Painel do Administrador"
       email_community_html: "Nós também temos um fórum online para discussão da comunidade sobre a plataforma e os desafios únicos de gerir organizações de alimentos. Você está convidado a participar. Estamos evoluindo constantemente e suas contribuições irão moldar o que acontece a seguir.  %{link}"
       join_community: "Faça parte da comunidade"
     invite_manager:
@@ -385,7 +388,7 @@ pt_BR:
         header: Cabeçalho
         home_page: Pagina inicial
         producer_signup_page: Página de cadastro do produtor
-        hub_signup_page: Página de cadastro do hub
+        hub_signup_page: Página de cadastro da central
         group_signup_page: Página de cadastro do grupo
         main_links: Links do Menu Principal
         footer_and_external_links: Rodapé e links externos
@@ -435,8 +438,12 @@ pt_BR:
         infinity: "Infinidade"
         to_order_tip: "Os itens feitos por encomenda não têm um nível de estoque definido, como pão fresco, por exemplo."
       back_to_products_list: "Voltar à lista de produtos"
+      editing_product: "Editando Produto"
       tabs:
+        product_details: "Detalhes do Produto"
+        group_buy_options: "Opções de Grupo de Compras"
         images: "Imagens"
+        variants: "Variantes"
         product_properties: "Propriedades do produto"
     product_import:
       title: Importação de produtos
@@ -539,6 +546,7 @@ pt_BR:
         title: Inventário
         description: Utilize essa página para gerenciar inventários para suas iniciativas. Qualquer detalhe de produtos especificado aqui irá substituir o que foi especificado na página de 'Produtos'
         enable_reset?: Ativar restauração de estoque?
+        default_stock: "Estoque padrão"
         inherit?: Herdar?
         add: Adicionar
         hide: Esconder
@@ -773,18 +781,18 @@ pt_BR:
         producer_profile: Perfil do produtor
         connect_ofn: Conecte-se através da OFB
         always_free: SEMPRE GRATUITO
-        producer_description_text: Adicione os seus produtos à Open Food Brasil, permitindo que os hubs os comercialize em suas lojas.
+        producer_description_text: Adicione os seus produtos à Open Food Brasil, permitindo que as centrais os comercialize em suas lojas.
         producer_shop: Loja do produtor
         sell_your_produce: 'Venda seus próprios produtos '
         producer_shop_description_text: Venda seus produtos diretamente aos consumidores através da sua própria loja na Open Food Brasil.
-        producer_shop_description_text2: Uma loja de produtor é apenas para o seu produto, se você quiser vender produtos produzidos por outras pessoas ou locais, selecione 'Hub de produtor'.
-        producer_hub: Hub de produtor
+        producer_shop_description_text2: Uma loja de produtor é apenas para o seu produto, se você quiser vender produtos produzidos por outras pessoas ou locais, selecione 'Central de produtor'.
+        producer_hub: Central de produtor
         producer_hub_text: Comercialize seus próprios produtos e de outros produtores
         producer_hub_description_text: Sua iniciativa é a espinha dorsal do seu sistema de produção e consumo local. Você pode comercializar seus próprios bens, assim como produtos agregados de outras iniciativas e produtores, através da sua loja na Open Food Brasil.
         profile: Somente perfil
         get_listing: Obter uma listagem
         profile_description_text: As pessoas podem te encontrar e te contactar na Open Food Brasil. Sua iniciativa estará visível no mapa e poderá ser encontrada em buscas.
-        hub_shop: Loja do hub
+        hub_shop: Loja da central
         hub_shop_text: Comercialize produtos de outros produtores
         hub_shop_description_text: Sua iniciativa é a espinha dorsal do seu sistema de produção e consumo local. Você agrega produtos de outras iniciativas e produtores, e comercializa através da sua loja na Open Food Brasil.
         choose_option: Por favor escolha uma das opções acima.
@@ -834,20 +842,32 @@ pt_BR:
       new:
         create: "Criar"
         cancel: "Cancelar"
+        back_to_list: "Voltar Para a Lista"
       edit:
         advanced_settings: "Configurações avançadas"
         save: "Salvar"
+        save_and_next: "Salvar e Seguir"
         next: "Próximo"
         cancel: "Cancelar"
+        back_to_list: "Voltar Para a Lista"
+        save_and_back_to_list: "Salvar e Voltar para a Lista"
         choose_products_from: "Escolha produtos de:"
       incoming:
         save: "Salvar"
+        save_and_next: "Salvar e Seguir"
         next: "Próximo"
         cancel: "Cancelar"
+        back_to_list: "Voltar Para a Lista"
       outgoing:
         previous: "Anterior"
         save: "Salvar"
+        save_and_back_to_list: "Salvar e Voltar para a Lista"
         cancel: "Cancelar"
+        back_to_list: "Voltar Para a Lista"
+      wizard_progress:
+        edit: "1. Configurações Gerais"
+        incoming: "2. Entrada de Produtos"
+        outgoing: "3. Saída de Produtos"
       exchange_form:
         pickup_time_tip: Quando os pedidos desse ciclo de pedidos estarão prontos para os consumidores
         pickup_instructions_placeholder: "Instruções para retirada"
@@ -1084,6 +1104,8 @@ pt_BR:
       destroy_attachment_does_not_exist: "Logo não existe"
     enterprise_promo_image:
       destroy_attachment_does_not_exist: "Imagem promocional não existe"
+    orders:
+      failed_to_update: "Falha ao atualizar o pedido"
   checkout:
     already_ordered:
       cart: "Carrinho"
@@ -1319,13 +1341,13 @@ pt_BR:
   learn_cta: "Inspire-se"
   connect_body: "Procure em nossa lista de produtores, distribuidores e cooperativas para encontrar um comércio justo perto de você. Registre seu negócio ou organização na Open Food Brasil para que os consumidores possam te encontrar. Junte-se à comunidade para trocar experiências e resolver problemas."
   connect_cta: "Explore"
-  system_headline: "Compras - é assim que funciona."
+  system_headline: "Compras - é assim que funciona:"
   system_step1: "1. Busca"
   system_step1_text: "Escolha entre diversos mercados independentes por alimentos locais e sazonais. Procure por região, tipo de alimentos, ou se você prefere retirar ou receber em casa. "
   system_step2: "2. Compra"
-  system_step2_text: "Transforme suas transações com alimentos locais acessíveis de diversos produtores e hubs. Conheça as histórias por trás da sua comida e as pessoas que o fazem! "
+  system_step2_text: "Transforme suas transações com alimentos locais acessíveis de diversos produtores e centrais. Conheça as histórias por trás da sua comida e as pessoas que o fazem! "
   system_step3: "3. Retirada / Entrega"
-  system_step3_text: "Aguarde pela sua entrega, ou visite seu produtor ou hub para uma conexão mais pessoal com seus alimentos. Compras tão diversificadas quanto a natureza intencionou."
+  system_step3_text: "Aguarde pela sua entrega, ou visite seu produtor ou central para uma conexão mais pessoal com seus alimentos. Compras tão diversificadas quanto a natureza intencionou."
   cta_headline: "Compras que fazem do mundo um lugar melhor."
   cta_label: "Estou pronto"
   stats_headline: "Estamos criando um novo sistema alimentar"
@@ -1372,7 +1394,7 @@ pt_BR:
   order_total_price: Total
   order_includes_tax: (inclui taxas)
   order_payment_paypal_successful: Seu pagamento via Paypal foi processado com sucesso.
-  order_hub_info: Informações do hub
+  order_hub_info: Informações da central
   order_back_to_store: Voltar à loja
   order_back_to_cart: Voltar ao carrinho
   bom_tip: "Use esta página para alterar as quantidades de produtos em vários pedidos. Os produtos também podem ser inteiramente removidos dos pedidos, se necessário."
@@ -1459,7 +1481,9 @@ pt_BR:
   shopping_oc_closed_description: "Por favor aguarde até que o próximo ciclo seja aberto (ou entre em contato diretamente para saber se podemos aceitar pedidos atrasados)"
   shopping_oc_last_closed: "A último ciclo fechou a %{distance_of_time} atrás"
   shopping_oc_next_open: "A próximo ciclo abre em %{distance_of_time}"
-  shopping_tabs_about: "Sobre %{distributor}"
+  shopping_tabs_home: "Início"
+  shopping_tabs_shop: "Comprar"
+  shopping_tabs_about: "Sobre"
   shopping_tabs_contact: "Contato"
   shopping_contact_address: "Endereço"
   shopping_contact_web: "Contato"
@@ -1513,12 +1537,12 @@ pt_BR:
   components_filters_clearfilters: "Limpar filtros"
   groups_title: Grupos
   groups_headline: Grupos / Regiões
-  groups_text: "Todo produtor é único. Todo negócio tem algo de diferente para oferecer. Nos referimos aos nossos grupos como hubs, coletivos de produtores e distribuidores que compartilham algo em comum, como localização, mercado ou filosofia. Isso faz com que sua experiência de compra fique mais fácil. Explore a curadoria feita por cada um de nosso grupos. "
+  groups_text: "Todo produtor é único. Todo negócio tem algo de diferente para oferecer. Nos referimos aos nossos grupos como centrais, coletivos de produtores e distribuidores que compartilham algo em comum, como localização, mercado ou filosofia. Isso faz com que sua experiência de compra fique mais fácil. Explore a curadoria feita por cada um de nosso grupos. "
   groups_search: "Pesquisar nome ou palavra-chave"
   groups_no_groups: "Nenhum grupo encontrado"
   groups_about: "Sobre nós"
   groups_producers: "Nosso produtores"
-  groups_hubs: "Nossos hubs"
+  groups_hubs: "Nossas centrais"
   groups_contact_web: Contato
   groups_contact_social: Seguir
   groups_contact_address: Endereço
@@ -1533,7 +1557,7 @@ pt_BR:
   groups_signup_motivation2: É por isso que nos levantamos todos os dias da cama. Somos uma organização global sem fins lucrativos, baseada em código livre. Jogamos limpo. Você sempre pode confiar em nós.
   groups_signup_motivation3: Nós sabemos que você tem grandes idéias e queremos ajudar. Compartilharemos nossos conhecimentos, redes e recursos. Sabemos que o isolamento não cria mudanças, então fazemos uma parceria com você.
   groups_signup_motivation4: Vamos até onde você está.
-  groups_signup_motivation5: Você pode ser um coletivo de produtores, distribuidores, indústria ou governo local, organizados através de um hub.
+  groups_signup_motivation5: Você pode ser um coletivo de produtores, distribuidores, indústria ou governo local, organizados através de uma central.
   groups_signup_motivation6: Seja qual for o seu papel no seu sistema de produção e consumo local, estamos prontos para ajudar. Se você se pergunta como a Open Food Brasil é ou como está fazendo sua parte no mundo, venha ter uma conversa.
   groups_signup_motivation7: Fazemos movimentos de alimentos com mais sentido.
   groups_signup_motivation8: 'Se você precisa ativar suas redes de contatos, oferecemos uma plataforma para conversas e ações. Você precisa de engajamento real. Vamos ajudar a alcançar todos os jogadores, todas as partes interessadas, em todos os setores. '
@@ -1544,18 +1568,18 @@ pt_BR:
   groups_signup_contact_text: "Entre em contato para descobrir o que a OFB pode fazer por você"
   groups_signup_detail: "Aqui está o detalhe. "
   login_invalid: "E-mail ou senha inválidos"
-  modal_hubs: "Hub de alimentos"
-  modal_hubs_abstract: Nossos hubs são o ponto de contato entre você e as pessoas que produzem sua comida!
-  modal_hubs_content1: 'Você pode procurar por um hub conveniente à você por localização ou nome. Alguns possuem múltiplos pontos de entrega, onde você pode retirar suas compras, e outros ainda entregam na sua casa. Cada um é um ponto de venda independente, e por isso as ofertas e maneira de operar podem variar de um para outro. '
-  modal_hubs_content2: Você só pode comprar de um hub por vez.
+  modal_hubs: "Central de alimentos"
+  modal_hubs_abstract: Nossas centrais são o ponto de contato entre você e as pessoas que produzem sua comida!
+  modal_hubs_content1: 'Você pode procurar por uma central conveniente à você por localização ou nome. Alguns possuem múltiplos pontos de entrega, onde você pode retirar suas compras, e outros ainda entregam na sua casa. Cada um é um ponto de venda independente, e por isso as ofertas e maneira de operar podem variar de um para outro. '
+  modal_hubs_content2: Você só pode comprar de uma central por vez.
   modal_groups: "Grupos / Regiões"
-  modal_groups_content1: Estas são as organizações e as relações entre os hubs que compõem a Open Food Brasil.
+  modal_groups_content1: Estas são as organizações e as relações entre as centrais que compõem a Open Food Brasil.
   modal_groups_content2: Alguns grupos estão organizados por localização, outros por similaridades não geográficas.
   modal_how: "Como funciona"
   modal_how_shop: Compre na Open Food Brasil
-  modal_how_shop_explained: Procure por um produtor ou hub próximo e comece suas compras! Em cada mercado você pode ver, em detalhe, quais produtos são oferecidos (você só pode comprar em um mercado de cada vez).
+  modal_how_shop_explained: Procure por um produtor ou central próximo e comece suas compras! Em cada mercado você pode ver, em detalhe, quais produtos são oferecidos (você só pode comprar em um mercado de cada vez).
   modal_how_pickup: 'Custos de retirada e entrega '
-  modal_how_pickup_explained: Alguns hubs entregam na sua casa, enquanto outros exigem que você mesmo retire suas compras. É possível ver quais opções estão disponíveis no perfil individual de cada um, e fazer sua escolha no momento do check-out. A entrega custará mais e o preço difere de hub para hub. Cada um é um ponto de venda com operação comercial e logística independente - então as variações são esperadas.
+  modal_how_pickup_explained: Algumas centrais entregam na sua casa, enquanto outros exigem que você mesmo retire suas compras. É possível ver quais opções estão disponíveis no perfil individual de cada um, e fazer sua escolha no momento do check-out. A entrega custará mais e o preço difere de central para central. Cada um é um ponto de venda com operação comercial e logística independente - então as variações são esperadas.
   modal_how_more: Saiba mais
   modal_how_more_explained: "Se você quiser saber mais sobre como a Open Food Brasil funciona e se envolver, confira:"
   modal_producers: "Produtores"
@@ -1593,7 +1617,7 @@ pt_BR:
   sell_headline: "Fazer parte do Open Food Brasil!"
   sell_motivation: "Mostre seus belos produtos."
   sell_producers: "Produtores"
-  sell_hubs: "Hubs"
+  sell_hubs: "Centrais"
   sell_groups: "Grupos"
   sell_producers_detail: "Crie um perfil para seu negócio em apenas alguns minutos. A qualquer momento você pode atualizar seu perfil para uma loja online e vender seus produtos diretamente aos consumidores."
   sell_hubs_detail: "Crie um perfil para a sua iniciativa ou organização na Open Food Brasil. A qualquer momento você poderá fazer um upgrade para um mercado de multi-produtores. "
@@ -1605,12 +1629,12 @@ pt_BR:
   shops_title: Lojas
   shops_headline: 'Compras, transformadas. '
   shops_text: 'A colheita é feita em ciclos, a comida é produzida em ciclos, e nós fazemos nossos pedidos em ciclos. Se você encontrar um ciclo de pedidos fechado, volte em breve para tentar novamente. '
-  shops_signup_title: Registre-se como um hub
+  shops_signup_title: Registre-se como uma central
   shops_signup_headline: A força do coletivo, ilimitada.
   shops_signup_motivation: 'Seja qual for seu perfil, nos oferecemos suporte. Somos sem fins lucrativos, independentes, e open source. '
   shops_signup_action: Cadastre-se agora
   shops_signup_pricing: Contas de iniciativas
-  shops_signup_stories: Histórias dos nossos hubs.
+  shops_signup_stories: Histórias das nossas centrais.
   shops_signup_help: Estamos prontos para ajudar
   shops_signup_help_text: Você precisa de mais retorno, novos compradores e parceiros de logística. Você precisa contar a sua história.
   shops_signup_detail: Aqui está o detalhe.
@@ -1626,9 +1650,9 @@ pt_BR:
   orders_form_admin: Administração e manejo
   orders_form_total: Total
   orders_oc_expired_headline: Este ciclo de pedidos está fechado para pedidos
-  orders_oc_expired_text: "Desculpe, este ciclo de pedidos fechou há %{time} atrás. Por favor entre em contato diretamente com seu hub para saber se podem aceitar pedidos atrasados."
-  orders_oc_expired_text_others_html: "Desculpe, este ciclo de pedidos fechou há %{time} atrás. Por favor entre em contato diretamente com seu hub para saber se podem aceitar pedidos atrasados <strong>%{link}</strong>."
-  orders_oc_expired_text_link: "ou veja os outros ciclos de pedidos disponíveis nesse hub"
+  orders_oc_expired_text: "Desculpe, este ciclo de pedidos fechou há %{time} atrás. Por favor entre em contato diretamente com sua central para saber se podem aceitar pedidos atrasados."
+  orders_oc_expired_text_others_html: "Desculpe, este ciclo de pedidos fechou há %{time} atrás. Por favor entre em contato diretamente com sua central para saber se podem aceitar pedidos atrasados <strong>%{link}</strong>."
+  orders_oc_expired_text_link: "ou veja os outros ciclos de pedidos disponíveis nessa central"
   orders_oc_expired_email: "E-mail:"
   orders_oc_expired_phone: "Telefone:"
   orders_show_title: Confimação de Pedido
@@ -1676,7 +1700,7 @@ pt_BR:
   one_filter_applied: "1 filtro aplicado"
   x_filters_applied: "filtros aplicados"
   submitting_order: "Processando seu pedido: por favor aguarde"
-  confirm_hub_change: "Tem certeza? Isso irá mudar o hub selecionado e remover todos os ítens do carrinho de compras."
+  confirm_hub_change: "Tem certeza? Isso irá mudar a central selecionado e remover todos os ítens do carrinho de compras."
   confirm_oc_change: "Tem certeza? Isso irá mudar o ciclo de pedidos selecionado e remover todos os ítens do carrinho de compras."
   location_placeholder: "Digite uma localidade..."
   error_required: "Não pode ser vazio"
@@ -1714,7 +1738,7 @@ pt_BR:
     steps:
       introduction:
         registration_greeting: "Olá!"
-        registration_intro: "Você pode criar um perfil de produtor ou hub"
+        registration_intro: "Você pode criar um perfil de produtor ou central"
         registration_checklist: "O que eu preciso?"
         registration_time: "5-10 minutos"
         registration_enterprise_address: "Endereço da iniciativa"
@@ -1766,7 +1790,7 @@ pt_BR:
         no_producer: "Não, não sou um produtor"
         producer_field_error: "Por favor escolha um. Você é um produtor?"
         yes_producer_help: "Produtores fazem coisas deliciosas de comer e beber. "
-        no_producer_help: "Se você não é um produtor, você provavelmente é alguém que vende e distribui alimentos. Você pode ser uma cooperativa, grupo de consumo, varejista, atacadista ou outro. Nos referimos a você como hub, já que centraliza pessoas e produtos, independente do modelo organizacional. "
+        no_producer_help: "Se você não é um produtor, você provavelmente é alguém que vende e distribui alimentos. Você pode ser uma cooperativa, grupo de consumo, varejista, atacadista ou outro. Nos referimos a você como central, já que centraliza pessoas e produtos, independente do modelo organizacional. "
         create_profile: "Crir perfil"
       about:
         title: "Sobre"
@@ -1935,11 +1959,11 @@ pt_BR:
   queued: "Aguardando"
   scheduled_for: "Agendado para"
   customers: "Consumidores"
-  please_select_hub: "Por favor selecione um hub"
+  please_select_hub: "Por favor selecione uma central"
   loading_customers: "Carregando consumidores"
   no_customers_found: "Nenhum consumidor encontrado"
   go: "Ir"
-  hub: "Hub"
+  hub: "Central"
   producer: "Produtor"
   product: "Produto"
   price: "Preço"
@@ -1956,7 +1980,7 @@ pt_BR:
   spree_admin_enterprises_fees: "Taxas da iniciativa"
   spree_admin_enterprises_none_create_a_new_enterprise: "CRIAR NOVA INICIATIVA"
   spree_admin_enterprises_none_text: "Você ainda não possui nenhuma iniciativa"
-  spree_admin_enterprises_tabs_hubs: "HUBS"
+  spree_admin_enterprises_tabs_hubs: "CENTRAIS"
   spree_admin_enterprises_producers_manage_products: "GERENCIAR PRODUTOS"
   spree_admin_enterprises_create_new_product: "CRIAR UM NOVO PRODUTO"
   spree_admin_single_enterprise_alert_mail_confirmation: "Por favor confirme o endereço de e-mail para"
@@ -1979,7 +2003,7 @@ pt_BR:
   spree_order_availability_error: "O ciclo do distribuidor ou do pedido não pode fornecer os produtos no seu carrinho"
   spree_order_populator_error: "Distribuidor ou ciclo de pedidos não pode fornecer os produtos no seu carrinho. Por favor, escolha outro."
   spree_order_populator_availability_error: "Esse produto não está disponível no distribuidor escolhido ou no ciclo de pedidos."
-  spree_distributors_error: "Pelo menos um hub deve ser selecionado"
+  spree_distributors_error: "Pelo menos uma central deve ser selecionado"
   spree_user_enterprise_limit_error: "^ %{email} não é permitido possuir mais iniciativas (o limite é %{enterprise_limit})."
   spree_variant_product_error: deve ter pelo menos uma variante
   your_profil_live: "Seu perfil online"
@@ -2012,10 +2036,10 @@ pt_BR:
   admin_share_zipcode: "CEP"
   admin_share_country: "País"
   admin_share_state: "Estado"
-  hub_sidebar_hubs: "Hubs"
+  hub_sidebar_hubs: "Centrais"
   hub_sidebar_none_available: "Nada disponível"
   hub_sidebar_manage: "Gerenciar"
-  hub_sidebar_at_least: "Pelo menos um hub deve ser selecionado"
+  hub_sidebar_at_least: "Pelo menos uma central deve ser selecionado"
   hub_sidebar_blue: "azul"
   hub_sidebar_red: "vermelho"
   report_customers_distributor: "Distribuidor"
@@ -2025,7 +2049,7 @@ pt_BR:
   report_customers_csv: "Fazer download como csv"
   report_producers: "Produtores:"
   report_type: "Relatar tipo:"
-  report_hubs: "Hubs:"
+  report_hubs: "Centrais:"
   report_payment: "Métodos de pagamento"
   report_distributor: "Distribuidor:"
   report_payment_by: 'Pagamentos por tipo'
@@ -2049,10 +2073,10 @@ pt_BR:
   report_header_address: Endereço
   report_header_billing_address: Endereço de cobrança
   report_header_relationship: Relação
-  report_header_hub: Hub
-  report_header_hub_address: Endereço do hub
-  report_header_to_hub: Para hub
-  report_header_hub_code: Código do hub
+  report_header_hub: Central
+  report_header_hub_address: Endereço da central
+  report_header_to_hub: Para central
+  report_header_hub_code: Código da central
   report_header_code: Código
   report_header_paid: Pago?
   report_header_delivery: Entrega?
@@ -2214,7 +2238,7 @@ pt_BR:
   enterprise_fee_whole_order: Pedido inteiro
   enterprise_fee_by: "%{type} taxa por %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Esse relacionamento já foi estabelecido."
-  validation_msg_at_least_one_hub: "^Pelo menos um hub deve ser selecionado"
+  validation_msg_at_least_one_hub: "^Pelo menos uma central deve ser selecionado"
   validation_msg_tax_category_cant_be_blank: "^ Categoria de imposto não pode estar em branco"
   validation_msg_is_associated_with_an_exising_customer: "está associado a um consumidor existente"
   content_configuration_pricing_table: "(TODO: tabela de preços)"
@@ -2229,17 +2253,17 @@ pt_BR:
   product_importer_products_save_error: não salvou nenhum produto com sucesso
   product_import_file_not_found_notice: 'O arquivo não foi encontrado ou não pôde ser aberto'
   product_import_no_data_in_spreadsheet_notice: 'Nenhum dado encontrado na planilha'
-  order_choosing_hub_notice: Seu hub foi selecionado.
+  order_choosing_hub_notice: Sua central foi selecionado.
   order_cycle_selecting_notice: O seu ciclo de pedidos foi selecionado.
   adjustments_tax_rate_error: "^ Por favor verifique se a taxa de imposto para este ajuste está correta."
   active_distributors_not_ready_for_checkout_message_singular: >-
-      O hub %{distributor_names} está listado em um ciclo de pedidos ativo, mas não
-      possui métodos de envio e pagamento válidos. Até que você configure eles, os
-      consumidores não poderão fazer compras neste hub.
+      A central %{distributor_names} está listado em um ciclo de pedidos ativo, mas
+      não possui métodos de envio e pagamento válidos. Até que você configure eles,
+      os consumidores não poderão fazer compras nesta central.
   active_distributors_not_ready_for_checkout_message_plural: >-
-      Os hubs %{distributor_names} estão listados em um ciclo de pedido ativo, mas
-      não possuem métodos de envio e pagamento válidos. Até que você configure eles,
-      os consumidores não poderão fazer compras nesses hubs.
+      As centrais %{distributor_names} estão listados em um ciclo de pedido ativo,
+      mas não possuem métodos de envio e pagamento válidos. Até que você configure
+      eles, os consumidores não poderão fazer compras nessas centrais.
   enterprise_fees_update_notice: As tarifas da sua iniciativa foram atualizadas.
   enterprise_register_package_error: "Por favor selecione um pacote"
   enterprise_register_error: "Não foi possível completar o registro para %{enterprise}"
@@ -2274,7 +2298,7 @@ pt_BR:
     error: Erro
     unavailable: Indisponível
     profile: Perfil
-    hub: Hub
+    hub: Central
     shop: Comprar
     choose: Escolher
     resolve_errors: Por favor resolva os seguintes erros
@@ -2309,7 +2333,7 @@ pt_BR:
         saved: SALVO
         saving: SALVANDO
         enterprise_package:
-          hub_profile: Perfil do hub
+          hub_profile: Perfil da central
           hub_profile_cost: "CUSTO: SEMPRE GRATUITO"
           hub_profile_text1: >
               As pessoas podem encontrá-lo e contatá-lo na Open Food Brasil. Sua iniciativa
@@ -2317,14 +2341,15 @@ pt_BR:
           hub_profile_text2: >
               Ter um perfil e fazer conexões dentro do seu sistema alimentar local
               através da Open Food Brasil será sempre gratuito.
-          hub_shop: Loja do hub
+          hub_shop: Loja da central
           hub_shop_text1: >
               Sua iniciativa é a espinha dorsal do seu sistema alimentar local. Você
               agrega produtos de outras iniciativas e pode vendê-lo através de sua
               loja na Open Food Brasil.
           hub_shop_text2: >
-              Hubs podem assumir várias formas, sejam eles uma cooperativa de alimentos,
-              um grupo de consumo, varejista, atacadista ou uma mercearia local.
+              Centrais podem assumir várias formas, sejam eles uma cooperativa de
+              alimentos, um grupo de consumo, varejista, atacadista ou uma mercearia
+              local.
           hub_shop_text3: >
               Se você também quer vender seus próprios produtos, você precisará mudar
               essa iniciativa para ser um produtor.
@@ -2345,8 +2370,8 @@ pt_BR:
               o trabalho de vendê-lo para outra pessoa, você não precisa de uma loja
               na Open Food Brasil.
           profile_only_text3: >
-              Adicione seus produtos à Open Food Brasil, permitindo que os hubs armazenem
-              seus produtos em suas lojas.
+              Adicione seus produtos à Open Food Brasil, permitindo que as centrais
+              armazenem seus produtos em suas lojas.
           producer_shop: Loja do produtor
           producer_shop_text1: >
               Venda os seus produtos diretamente aos consumidores através da sua própria
@@ -2354,21 +2379,21 @@ pt_BR:
           producer_shop_text2: >
               Uma loja de produtor é individual, somente para comercialização de produtos
               feitos por você. Se quiser vender bens produzidos em outros lugares
-              e/ou pessoas, para além dos seus próprios, por favor selecione hub de
-              produtor.
-          producer_hub: Hub de produtor
+              e/ou pessoas, para além dos seus próprios, por favor selecione 'Central
+              de Produtor'.
+          producer_hub: Central de produtor
           producer_hub_text1: >
               A sua iniciativa é a espinha dorsal do seu sistema de produção e consumo
               local. Através da sua loja na Open Food Brasil você pode vender os seus
               próprios produtos, assim como produtos agregados de outras iniciativas.
           producer_hub_text2: >
-              Hub de produtor pode assumir várias formas, seja uma horta local comunitária,
-              um CSA, cooperativa ou associação, formalizada ou não.
+              Central de produtor pode assumir várias formas, seja uma horta local
+              comunitária, um CSA, cooperativa ou associação, formalizada ou não.
           producer_hub_text3: >
-              A Open Food Brasil pretende apoiar tantos modelos de hub quanto possível,
-              por isso, não importa a sua situação, queremos fornecer as ferramentas
-              que você precisa para administrar sua organização ou iniciativas locais
-              de alimentos.
+              A Open Food Brasil pretende apoiar tantos modelos de centrais quanto
+              possível, por isso, não importa a sua situação, queremos fornecer as
+              ferramentas que você precisa para administrar sua organização ou iniciativas
+              locais de alimentos.
           get_listing: Obter uma listagem
           always_free: SEMPRE GRATUITO
           sell_produce_others: Comercialize produtos de outros
@@ -2401,6 +2426,12 @@ pt_BR:
           severity: Gravidade
           description: Descrição
           resolve: Resolver
+        exchange_products:
+          load_more_products: "Carregar Mais Produtos"
+          load_all_products: "Carregar Todos os Produtos"
+          select_all_products: "Selecionar %{total_number_of_products}Produto(s)"
+          products_loaded: "%{num_of_products_loaded} de %{total_number_of_products}Produtos Carregados"
+          loading_products: "Carregando Produtos"
       tag_rules:
         shipping_method_tagged_top: "Métodos de envio selecionados"
         shipping_method_tagged_bottom: "são:"
@@ -2483,6 +2514,7 @@ pt_BR:
           customer_placeholder: "cliente@exemplo.org"
           valid_email_error: "Por favor use um endereço de e-mail válido"
       subscriptions:
+        error_saving: "Erro ao salvar inscrição"
         new:
           please_select_a_shop: "Por favor selecione uma loja"
     insufficient_stock: "Estoque insuficiente disponível, apenas %{on_hand} restante"
@@ -2782,6 +2814,12 @@ pt_BR:
     minimal_amount: "Montante mínimo"
     normal_amount: "Montante normal"
     discount_amount: "Valor do desconto"
+    no_images_found: "Nenhuma Imagem Encontrada"
+    new_image: "Nova Imagem"
+    filename: "Nome do arquivo"
+    alt_text: "Texto Alternativo"
+    thumbnail: "Miniatura"
+    back_to_images_list: "Voltar Para Lista de Imagens"
     email: E-mail
     account_updated: "Conta atualizada!"
     email_updated: "A conta vai ser atualizada assim que o email for confirmado."
@@ -2793,6 +2831,7 @@ pt_BR:
     zipcode: CEP
     weight: Peso (por kg)
     error_user_destroy_with_orders: "Usuários com pedidos concluídos não podem ser excluídos"
+    options: "Opções"
     actions:
       update: "Atualizar"
     errors:
@@ -2824,24 +2863,53 @@ pt_BR:
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Herdar propriedades de %{supplier}? (a menos que substituído acima)"
+          add_product_properties: "Adicionar Propriedades do Produtos"
+          select_from_prototype: "Selecionar do Protótipo"
       properties:
         index:
           properties: "Propriedades"
+          new_property: "Nova Propriedade"
           name: "Nome"
+          presentation: "Apresentação"
+        new:
+          new_property: "Nova Propriedade"
+        edit:
+          editing_property: "Editar Propriedade"
+          back_to_properties_list: "Voltar Para Lista de Propriedades"
         form:
           name: "Nome"
+          presentation: "Apresentação"
       return_authorizations:
         index:
+          new_return_authorization: "Nova Autorização de Retorno"
+          return_authorizations: "Autorizações de Retorno"
+          back_to_orders_list: "Voltar Para Lista de Pedidos"
+          rma_number: "Número RMA"
           status: "Status"
           amount: "Montante"
+          cannot_create_returns: "Não é possível criar retornos, esse pedido não possui itens enviados."
           continue: "Continuar"
         new:
+          new_return_authorization: "Nova Autorização de Retorno"
+          back_to_return_authorizations_list: "Voltar Para Lista de Autorização de Retorno"
           continue: "Continuar"
         edit:
+          receive: "receber"
           are_you_sure: "Tem certeza?"
+          return_authorization: "Autorização de Retorno"
         form:
           product: "Produto"
+          quantity_shipped: "Quantidade Enviada"
+          quantity_returned: "Quantidade Devolvida"
+          return_quantity: "Devolver Quantidade"
           amount: "Montante"
+          rma_value: "Valor RMA"
+          reason: "Razão"
+          stock_location: "Localização de Estoque"
+        states:
+          authorized: "Autorizado"
+          received: "Recebido"
+          canceled: "Cancelado"
       orders:
         index:
           listing_orders: "Listagem de Pedidos"
@@ -2849,6 +2917,7 @@ pt_BR:
           capture: "Capturar"
           ship: "Envio"
           edit: "Editar"
+          order_not_updated: "Esse pedido não pôde ser atualizado"
           note: "Nota"
           first: "Primeiro"
           last: "Último"
@@ -2882,7 +2951,7 @@ pt_BR:
           order_total: "total de pedidos"
       overview:
         enterprises_header:
-          ofn_with_tip: Iniciativas são produtores e/ou hubs e são a unidade básica de organização da Open Food Brasil
+          ofn_with_tip: Iniciativas são produtores e/ou centrais e são a unidade básica de organização da Open Food Brasil
         products:
           active_products:
             zero: "Você ainda não tem nenhum produto ativo."
@@ -3032,10 +3101,23 @@ pt_BR:
         index:
           sku: "SKU"
           price: "Preço"
+          options: "Opções"
+          no_results: "Nenhum Resultado"
+          to_add_variants_you_must_first_define: "Para adicionar variantes, primeiro você precisa definir"
+          option_types: "Tipos de Opções"
+          option_values: "Valores de Opções"
+          and: "e"
+          new_variant: "Nova Variante"
+          show_active: "Mostra Ativos"
+          show_deleted: "Mostra Excluídos"
+        new:
+          new_variant: "Nova Variante"
         form:
+          cost_price: "Preço de Custo"
           sku: "SKU"
           price: "Preço"
           display_as: "Mostrar Como"
+          display_name: "Mostrar Nome"
         autocomplete:
           producer_name: "Produtor"
           unit: "Unidade"
@@ -3175,3 +3257,19 @@ pt_BR:
         allow_charges?: "Permitir cobranças?"
     localized_number:
       invalid_format: tem um formato inválido. Por favor, coloque um numero.
+    api:
+      invalid_api_key: "Chave de API (%{key}) especificada."
+      unauthorized: "Você não está autorizado a executar essa ação."
+      invalid_resource: "Recurso inválido. Corrija os erros e tente novamente."
+      resource_not_found: "Não foi possível encontrar o recurso que você estava procurando."
+      access: "Acesso API"
+      key: "Chave"
+      clear_key: "Limpar chave"
+      regenerate_key: "Regenerar chave"
+      no_key: "Sem chave"
+      generate_key: "Gerar chave API"
+      key_generated: "Chave gerada"
+      key_cleared: "Chave apagada"
+      shipment:
+        cannot_ready: "Não é possível completar a entrega."
+      invalid_taxonomy_id: "Id invalido de taxonomia"
