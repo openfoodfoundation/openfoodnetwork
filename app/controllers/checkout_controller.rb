@@ -68,6 +68,9 @@ class CheckoutController < Spree::CheckoutController
         render json: { path: order_path(@order) }, status: :ok
       end
     end
+  rescue Spree::Core::GatewayError => error
+    # This is done for all actions in the Spree::CheckoutController.
+    rescue_from_spree_gateway_error(error)
   rescue StandardError => error
     Bugsnag.notify(error)
     flash[:error] = I18n.t("checkout.failed")
