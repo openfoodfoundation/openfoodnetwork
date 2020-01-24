@@ -1940,6 +1940,7 @@ en_GB:
   tax_category: "Tax Category"
   calculator: "Calculator"
   calculator_values: "Calculator values"
+  calculator_settings_warning: "If you are changing the calculator type, you must save first before you can edit the calculator settings"
   flat_percent_per_item: "Flat Percent (per item)"
   flat_rate_per_item: "Flat Rate (per item)"
   flat_rate_per_order: "Flat Rate (per order)"
