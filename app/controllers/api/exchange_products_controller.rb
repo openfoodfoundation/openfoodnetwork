@@ -28,24 +28,22 @@ module Api
     private
 
     def render_variant_count
-      variants_relation = Spree::Variant.
-          not_master.
-          where(product_id: products.select(&:id))
-
-      if @order_cycle.present? &&
-         @order_cycle.prefers_product_selection_from_coordinator_inventory_only?
-        variants_relation = variants_relation.visible_for(@order_cycle.coordinator)
-      end
-
       render text: {
-        count: variants_relation.count
+        count: variants.count
       }.to_json
     end
 
+    def variants
+      renderer.exchange_variants(@incoming, @enterprise)
+    end
+
     def products
-      ExchangeProductsRenderer.
-        new(@order_cycle, spree_current_user).
-        exchange_products(@incoming, @enterprise)
+      renderer.exchange_products(@incoming, @enterprise)
+    end
+
+    def renderer
+      @renderer ||= ExchangeProductsRenderer.
+        new(@order_cycle, spree_current_user)
     end
 
     def paginated_products
