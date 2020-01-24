@@ -200,6 +200,14 @@ describe CheckoutController, type: :controller do
       expect(response.body).to eq({ path: spree.order_path(order) }.to_json)
     end
 
+    it "returns an error on unexpected failure" do
+      allow(order).to receive(:update_attributes).and_raise
+
+      spree_post :update, format: :json, order: {}
+      expect(response.status).to eq(400)
+      expect(response.body).to eq({ errors: {}, flash: {error: I18n.t("checkout.failed")} }.to_json)
+    end
+
     describe "stale object handling" do
       it "retries when a stale object error is encountered" do
         allow(ResetOrderService).to receive(:new).with(controller, order) { reset_order_service }
