@@ -28,11 +28,17 @@ module Api
     private
 
     def render_variant_count
-      render text: {
-        count: Spree::Variant.
+      variants_relation = Spree::Variant.
           not_master.
-          where(product_id: products).
-          count
+          where(product_id: products.select(&:id))
+
+      if @order_cycle.present? &&
+         @order_cycle.prefers_product_selection_from_coordinator_inventory_only?
+        variants_relation = variants_relation.visible_for(@order_cycle.coordinator)
+      end
+
+      render text: {
+        count: variants_relation.count
       }.to_json
     end
 
