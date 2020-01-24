@@ -1,3 +1,5 @@
+require 'open_food_network/order_cycle_permissions'
+
 class ExchangeProductsRenderer
   def initialize(order_cycle, user)
     @order_cycle = order_cycle
