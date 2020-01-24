@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This controller lists products that can be added to an exchange
 module Api
   class ExchangeProductsController < Api::BaseController
