@@ -70,7 +70,7 @@ module Spree
         options[:currency] = gateway_options[:currency]
         options[:stripe_account] = stripe_account_id
 
-        Stripe::CardCloner.new.clone!(creditcard, stripe_account_id)
+        Stripe::CreditCardCloner.new.clone!(creditcard, stripe_account_id)
         options[:customer] = creditcard.gateway_customer_profile_id
         payment_method = creditcard.gateway_payment_profile_id
 
