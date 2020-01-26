@@ -11,7 +11,7 @@
 # This process can be deleted once all hubs are running on the new stripe_sca method and all cards in the system have been migrated to the new payment_methods
 #   Basically, when all DBs have no card_* values in credit_card.gateway_payment_profile_id
 module Stripe
-  class CardCloner
+  class CreditCardCloner
     def clone!(credit_card, stripe_account_id)
       return unless credit_card.gateway_payment_profile_id.starts_with?('card_')
 
