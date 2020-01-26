@@ -70,24 +70,11 @@ module Spree
         options[:currency] = gateway_options[:currency]
         options[:stripe_account] = stripe_account_id
 
-        convert_to_payment_method!(creditcard) if creditcard.gateway_payment_profile_id.starts_with?('card_')
-
+        Stripe::CardCloner.new.clone!(creditcard, stripe_account_id)
         options[:customer] = creditcard.gateway_customer_profile_id
         payment_method = creditcard.gateway_payment_profile_id
 
         [money, payment_method, options]
-      end
-
-      def convert_to_payment_method!(creditcard)
-        card_id = creditcard.gateway_payment_profile_id
-        customer_id = creditcard.gateway_customer_profile_id
-        new_payment_method = Stripe::PaymentMethod.create({ customer: customer_id, payment_method: card_id }, { stripe_account: stripe_account_id })
-
-        new_customer = Stripe::Customer.create({ email: creditcard.user.email }, { stripe_account: stripe_account_id })
-        Stripe::PaymentMethod.attach(new_payment_method.id, { customer: new_customer.id }, { stripe_account: stripe_account_id })
-
-        creditcard.update_attributes gateway_customer_profile_id: new_customer.id, gateway_payment_profile_id: new_payment_method.id
-        creditcard
       end
 
       def failed_activemerchant_billing_response(error_message)
