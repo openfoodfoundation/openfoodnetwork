@@ -71,9 +71,10 @@ module Spree
         options[:currency] = gateway_options[:currency]
         options[:stripe_account] = stripe_account_id
 
-        connected_acct_customer_id, connected_acct_payment_method_id = Stripe::CreditCardCloner.new.clone(creditcard, stripe_account_id)
-        options[:customer] = connected_acct_customer_id
-        [money, connected_acct_payment_method_id, options]
+        customer_id, payment_method_id = Stripe::CreditCardCloner.new.clone(creditcard,
+                                                                            stripe_account_id)
+        options[:customer] = customer_id
+        [money, payment_method_id, options]
       end
 
       def failed_activemerchant_billing_response(error_message)
