@@ -260,7 +260,7 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
 
         # Charges the card
         stub_request(:post, "https://api.stripe.com/v1/payment_intents")
-          .with(basic_auth: ["sk_test_12345", ""], body: %r{#{customer_id}.*#{stripe_payment_method}})
+          .with(basic_auth: ["sk_test_12345", ""], body: %r{#{customer_id}.*#{hubs_stripe_payment_method}})
           .to_return(payment_intent_response_mock)
       end
 
