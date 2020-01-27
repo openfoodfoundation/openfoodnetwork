@@ -4,10 +4,9 @@
 
 module Stripe
   class ProfileStorer
-    def initialize(payment, provider, stripe_account_id = nil)
+    def initialize(payment, provider)
       @payment = payment
       @provider = provider
-      @stripe_account_id = stripe_account_id
     end
 
     def create_customer_from_token
@@ -29,13 +28,7 @@ module Stripe
         email: @payment.order.email,
         login: Stripe.api_key,
         address: address_for(@payment)
-      }.merge(stripe_account_option)
-    end
-
-    def stripe_account_option
-      return {} if @stripe_account_id.blank?
-
-      { stripe_account: @stripe_account_id }
+      }
     end
 
     def address_for(payment)

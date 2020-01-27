@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'stripe/profile_storer'
+require 'stripe/credit_card_cloner'
 require 'active_merchant/billing/gateways/stripe_payment_intents'
 require 'active_merchant/billing/gateways/stripe_decorator'
 
@@ -52,7 +53,7 @@ module Spree
       def create_profile(payment)
         return unless payment.source.gateway_customer_profile_id.nil?
 
-        profile_storer = Stripe::ProfileStorer.new(payment, provider, stripe_account_id)
+        profile_storer = Stripe::ProfileStorer.new(payment, provider)
         profile_storer.create_customer_from_token
       end
 

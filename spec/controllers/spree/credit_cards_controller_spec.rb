@@ -172,22 +172,6 @@ describe Spree::CreditCardsController, type: :controller do
             expect(response).to redirect_to spree.account_path(anchor: 'cards')
           end
         end
-
-        context "where the payment method is StripeSCA" do
-          let(:stripe_payment_method) { create(:stripe_sca_payment_method) }
-          let!(:card) { create(:credit_card, gateway_customer_profile_id: 'cus_AZNMJ', payment_method: stripe_payment_method) }
-
-          before do
-            stub_request(:delete, "https://api.stripe.com/v1/customers/cus_AZNMJ").
-              to_return(status: 200, body: JSON.generate(deleted: true, id: "cus_AZNMJ"))
-          end
-
-          it "the request to destroy the Stripe customer includes the stripe_account_id" do
-            expect(Stripe::Customer).to receive(:retrieve).with(card.gateway_customer_profile_id, { stripe_account: "abc123" })
-
-            expect{ delete :destroy, params }.to change(Spree::CreditCard, :count).by(-1)
-          end
-        end
       end
     end
   end

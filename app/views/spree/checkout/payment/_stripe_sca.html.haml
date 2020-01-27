@@ -1,7 +1,7 @@
 - content_for :injection_data do
   - if Stripe.publishable_key
     :javascript
-      angular.module('Darkswarm').value("stripeObject", Stripe("#{Stripe.publishable_key}", { stripeAccount: "#{StripeAccount.find_by_enterprise_id(payment_method.preferred_enterprise_id).andand.stripe_user_id}" }))
+      angular.module('Darkswarm').value("stripeObject", Stripe("#{Stripe.publishable_key}"))
 
 .row{ "ng-show" => "savedCreditCards.length > 0" }
   .small-12.columns
