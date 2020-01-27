@@ -75,50 +75,83 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
     set_order order
   end
 
-  context "when a new card is submitted" do
-    context "and the user doesn't request that the card is saved for later" do
-      before do
-        # Charges the card
-        stub_request(:post, "https://api.stripe.com/v1/payment_intents")
-          .with(basic_auth: ["sk_test_12345", ""], body: /#{stripe_payment_method}.*#{order.number}/)
-          .to_return(payment_intent_response_mock)
-      end
+  context "when the user submits a new card and doesn't request that the card is saved for later" do
+    before do
+      # Charges the card
+      stub_request(:post, "https://api.stripe.com/v1/payment_intents")
+        .with(basic_auth: ["sk_test_12345", ""], body: /#{stripe_payment_method}.*#{order.number}/)
+        .to_return(payment_intent_response_mock)
+    end
 
-      context "and the paymeent intent request is successful" do
-        it "should process the payment without storing card details" do
-          put update_checkout_path, params
+    context "and the paymeent intent request is successful" do
+      it "should process the payment without storing card details" do
+        put update_checkout_path, params
 
-          expect(json_response["path"]).to eq spree.order_path(order)
-          expect(order.payments.completed.count).to be 1
+        expect(json_response["path"]).to eq spree.order_path(order)
+        expect(order.payments.completed.count).to be 1
 
-          card = order.payments.completed.first.source
+        card = order.payments.completed.first.source
 
-          expect(card.gateway_customer_profile_id).to eq nil
-          expect(card.gateway_payment_profile_id).to eq stripe_payment_method
-          expect(card.cc_type).to eq "visa"
-          expect(card.last_digits).to eq "4242"
-          expect(card.first_name).to eq "Jill"
-          expect(card.last_name).to eq "Jeffreys"
-        end
-      end
-
-      context "when the payment intent request returns an error message" do
-        let(:payment_intent_response_mock) do
-          { status: 402, body: JSON.generate(error: { message: "payment-intent-failure" }) }
-        end
-
-        it "should not process the payment" do
-          put update_checkout_path, params
-
-          expect(response.status).to be 400
-
-          expect(json_response["flash"]["error"]).to eq "payment-intent-failure"
-          expect(order.payments.completed.count).to be 0
-        end
+        expect(card.gateway_customer_profile_id).to eq nil
+        expect(card.gateway_payment_profile_id).to eq stripe_payment_method
+        expect(card.cc_type).to eq "visa"
+        expect(card.last_digits).to eq "4242"
+        expect(card.first_name).to eq "Jill"
+        expect(card.last_name).to eq "Jeffreys"
       end
     end
 
-    context "and the customer requests that the card is saved for later" do
+    context "when the payment intent request returns an error message" do
+      let(:payment_intent_response_mock) do
+        { status: 402, body: JSON.generate(error: { message: "payment-intent-failure" }) }
+      end
+
+      it "should not process the payment" do
+        put update_checkout_path, params
+
+        expect(response.status).to be 400
+
+        expect(json_response["flash"]["error"]).to eq "payment-intent-failure"
+        expect(order.payments.completed.count).to be 0
+      end
+    end
+  end
+
+  context "when saving a card or using a stored card is involved" do
+    let(:hubs_customer_response_mock) do
+      {
+        status: 200,
+        body: JSON.generate(id: hubs_customer_id, sources: { data: [{ id: "1" }] })
+      }
+    end
+    let(:hubs_payment_method_response_mock) do
+      {
+        status: 200,
+        body: JSON.generate(id: hubs_stripe_payment_method, customer: hubs_customer_id)
+      }
+    end
+
+     before do
+       # Clones the payment method to the hub's stripe account
+       stub_request(:post, "https://api.stripe.com/v1/payment_methods")
+         .with(body: { customer: customer_id, payment_method: stripe_payment_method },
+               headers: { 'Stripe-Account' => 'abc123' })
+         .to_return(hubs_payment_method_response_mock)
+
+       # Creates a customer on the hub's stripe account to hold the payment meethod
+       stub_request(:post, "https://api.stripe.com/v1/customers")
+         .with(body: { email: order.email },
+               headers: { 'Stripe-Account' => 'abc123' })
+         .to_return(hubs_customer_response_mock)
+
+       # Attaches the payment method to the customer in the hub's stripe account
+       stub_request(:post, "https://api.stripe.com/v1/payment_methods/#{hubs_stripe_payment_method}/attach")
+         .with(body: { customer: hubs_customer_id },
+               headers: { 'Stripe-Account' => 'abc123' })
+         .to_return(hubs_payment_method_response_mock)
+    end
+
+    context "when the user submits a new card and requests that the card is saved for later" do
       let(:payment_method_attach_response_mock) do
         {
           status: 200,
@@ -132,49 +165,20 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
         }
       end
 
-      let(:hubs_customer_response_mock) do
-        {
-          status: 200,
-          body: JSON.generate(id: hubs_customer_id, sources: { data: [{ id: "1" }] })
-        }
-      end
-      let(:hubs_payment_method_response_mock) do
-        {
-          status: 200,
-          body: JSON.generate(id: hubs_stripe_payment_method, customer: hubs_customer_id)
-        }
-      end
-
       before do
         source_attributes = params[:order][:payments_attributes][0][:source_attributes]
         source_attributes[:save_requested_by_customer] = '1'
 
         # Creates a customer
         stub_request(:post, "https://api.stripe.com/v1/customers")
-          .with(body: { email: order.email })
+          .with(body: { email: order.email },
+                headers: hash_excluding('Stripe-Account'))
           .to_return(customer_response_mock)
 
         # Attaches the payment method to the customer
         stub_request(:post, "https://api.stripe.com/v1/payment_methods/#{stripe_payment_method}/attach")
           .with(body: { customer: customer_id })
           .to_return(payment_method_attach_response_mock)
-
-        # Clones the payment method to the hub's stripe account
-        stub_request(:post, "https://api.stripe.com/v1/payment_methods")
-          .with(body: { customer: customer_id, payment_method: stripe_payment_method },
-                headers: { 'Stripe-Account' => 'abc123' })
-          .to_return(hubs_payment_method_response_mock)
-
-        # Creates a customer on the hub's stripe account to hold the payment meethod
-        stub_request(:post, "https://api.stripe.com/v1/customers")
-          .with(body: { email: order.email },
-                headers: { 'Stripe-Account' => 'abc123' })
-          .to_return(hubs_customer_response_mock)
-
-        # Attaches the payment method to the customer in the hub's stripe account
-        stub_request(:post, "https://api.stripe.com/v1/payment_methods/#{hubs_stripe_payment_method}/attach")
-          .with(body: { customer: hubs_customer_id })
-          .to_return(hubs_payment_method_response_mock)
 
         # Charges the card
         stub_request(:post, "https://api.stripe.com/v1/payment_intents")
@@ -248,63 +252,63 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
         end
       end
     end
-  end
 
-  context "when an existing card is submitted" do
-    let(:credit_card) do
-      create(
-        :credit_card,
-        user_id: order.user_id,
-        gateway_payment_profile_id: stripe_payment_method,
-        gateway_customer_profile_id: customer_id,
-        last_digits: "4321",
-        cc_type: "master",
-        first_name: "Sammy",
-        last_name: "Signpost",
-        month: 11, year: 2026
-      )
-    end
-
-    before do
-      params[:order][:existing_card_id] = credit_card.id
-      quick_login_as(order.user)
-
-      # Charges the card
-      stub_request(:post, "https://api.stripe.com/v1/payment_intents")
-        .with(basic_auth: ["sk_test_12345", ""], body: %r{#{customer_id}.*#{stripe_payment_method}})
-        .to_return(payment_intent_response_mock)
-    end
-
-    context "and the payment intent and payment method requests are accepted" do
-      it "should process the payment, and keep the profile ids and other card details" do
-        put update_checkout_path, params
-
-        expect(json_response["path"]).to eq spree.order_path(order)
-        expect(order.payments.completed.count).to be 1
-
-        card = order.payments.completed.first.source
-
-        expect(card.gateway_customer_profile_id).to eq customer_id
-        expect(card.gateway_payment_profile_id).to eq stripe_payment_method
-        expect(card.cc_type).to eq "master"
-        expect(card.last_digits).to eq "4321"
-        expect(card.first_name).to eq "Sammy"
-        expect(card.last_name).to eq "Signpost"
-      end
-    end
-
-    context "when the payment intent request returns an error message" do
-      let(:payment_intent_response_mock) do
-        { status: 402, body: JSON.generate(error: { message: "payment-intent-failure" }) }
+    context "when the user selects an existing card" do
+      let(:credit_card) do
+        create(
+          :credit_card,
+          user_id: order.user_id,
+          gateway_payment_profile_id: stripe_payment_method,
+          gateway_customer_profile_id: customer_id,
+          last_digits: "4321",
+          cc_type: "master",
+          first_name: "Sammy",
+          last_name: "Signpost",
+          month: 11, year: 2026
+        )
       end
 
-      it "should not process the payment" do
-        put update_checkout_path, params
+      before do
+        params[:order][:existing_card_id] = credit_card.id
+        quick_login_as(order.user)
 
-        expect(response.status).to be 400
+        # Charges the card
+        stub_request(:post, "https://api.stripe.com/v1/payment_intents")
+          .with(basic_auth: ["sk_test_12345", ""], body: %r{#{customer_id}.*#{stripe_payment_method}})
+          .to_return(payment_intent_response_mock)
+      end
 
-        expect(json_response["flash"]["error"]).to eq "payment-intent-failure"
-        expect(order.payments.completed.count).to be 0
+      context "and the payment intent and payment method requests are accepted" do
+        it "should process the payment, and keep the profile ids and other card details" do
+          put update_checkout_path, params
+
+          expect(json_response["path"]).to eq spree.order_path(order)
+          expect(order.payments.completed.count).to be 1
+
+          card = order.payments.completed.first.source
+
+          expect(card.gateway_customer_profile_id).to eq customer_id
+          expect(card.gateway_payment_profile_id).to eq stripe_payment_method
+          expect(card.cc_type).to eq "master"
+          expect(card.last_digits).to eq "4321"
+          expect(card.first_name).to eq "Sammy"
+          expect(card.last_name).to eq "Signpost"
+        end
+      end
+
+      context "when the payment intent request returns an error message" do
+        let(:payment_intent_response_mock) do
+          { status: 402, body: JSON.generate(error: { message: "payment-intent-failure" }) }
+        end
+
+        it "should not process the payment" do
+          put update_checkout_path, params
+
+          expect(response.status).to be 400
+
+          expect(json_response["flash"]["error"]).to eq "payment-intent-failure"
+          expect(order.payments.completed.count).to be 0
+        end
       end
     end
   end
