@@ -1112,6 +1112,7 @@ fr:
     already_ordered:
       cart: "panier"
       message_html: "Vous avez déjà passé une commande pour ce cycle de vente. Vérifiez votre %{cart} pour voir les produits commandés. Vous pouvez annuler ou modifier votre commande jusqu'à la fermeture du cycle de vente."
+    failed: "La validation du paiement a échoué. Contactez-nous afin que nous puissions confirmer votre commande."
   shops:
     hubs:
       show_closed_shops: "Afficher les boutiques fermées"
@@ -2681,6 +2682,7 @@ fr:
   status: "statut"
   new: "Nouveau"
   start: "Début"
+  end: "Fin"
   stop: "Arrêter"
   first: "Début"
   previous: "Précédent"
