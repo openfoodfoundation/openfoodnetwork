@@ -18,6 +18,13 @@ module Stripe
 
       let(:credit_card) { create(:credit_card, user: create(:user)) }
 
+      let(:payment_method_response_body) {
+        JSON.generate(id: new_payment_method_id)
+      }
+      let(:customer_response_body) {
+        JSON.generate(id: new_customer_id)
+      }
+
       before do
         allow(Stripe).to receive(:api_key) { "sk_test_12345" }
 
@@ -35,19 +42,22 @@ module Stripe
           .with(body: { customer: new_customer_id },
                 headers: { 'Stripe-Account' => stripe_account_id })
           .to_return(payment_method_response_mock)
+
+        credit_card.update_attribute :gateway_payment_profile_id, payment_method_id
       end
 
-      context "when called with a credit_card with valid id (card_*)" do
-        let(:payment_method_response_body) {
-          JSON.generate(id: new_payment_method_id)
-        }
-        let(:customer_response_body) {
-          JSON.generate(id: new_customer_id)
-        }
+      context "when called with a card without a customer (one time usage card)" do
+        it "returns a nil customer and the given payment id" do
+          customer_id, payment_method_id = cloner.clone(credit_card, stripe_account_id)
 
+          expect(customer_id).to eq nil
+          expect(payment_method_id).to eq payment_method_id
+        end
+      end
+
+      context "when called with a valid customer and payment_method" do
         before do
-          credit_card.update_attributes gateway_customer_profile_id: customer_id,
-                                        gateway_payment_profile_id: payment_method_id
+          credit_card.update_attribute :gateway_customer_profile_id, customer_id
         end
 
         it "clones the card successefully" do
