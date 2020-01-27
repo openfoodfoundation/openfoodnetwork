@@ -22,7 +22,6 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
   let(:stripe_payment_method) { "pm_123" }
   let(:customer_id) { "cus_A123" }
   let(:hubs_stripe_payment_method) { "pm_456" }
-  let(:hubs_customer_id) { "cus_A456" }
   let(:payments_attributes) do
     {
       payment_method_id: payment_method.id,
@@ -121,7 +120,7 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
     let(:hubs_payment_method_response_mock) do
     {
       status: 200,
-      body: JSON.generate(id: hubs_stripe_payment_method, customer: hubs_customer_id)
+      body: JSON.generate(id: hubs_stripe_payment_method, customer: customer_id)
     }
     end
     let(:customer_response_mock) do
@@ -138,10 +137,9 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
               headers: { 'Stripe-Account' => 'abc123' })
         .to_return(hubs_payment_method_response_mock)
 
-      # Creates a customer on the hub's stripe account to hold the payment meethod
+      # Creates a customer (this stubs the customers call to the main stripe account and also the call to the connected account)
       stub_request(:post, "https://api.stripe.com/v1/customers")
-        .with(body: { email: order.email },
-              headers: { 'Stripe-Account' => 'abc123' })
+        .with(body: { email: order.email })
         .to_return(customer_response_mock)
 
       # Attaches the payment method to the customer in the hub's stripe account
@@ -162,11 +160,6 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
       before do
         source_attributes = params[:order][:payments_attributes][0][:source_attributes]
         source_attributes[:save_requested_by_customer] = '1'
-
-        # Creates a customer
-        stub_request(:post, "https://api.stripe.com/v1/customers")
-          .with(body: { email: order.email })
-          .to_return(customer_response_mock)
 
         # Attaches the payment method to the customer
         stub_request(:post, "https://api.stripe.com/v1/payment_methods/#{stripe_payment_method}/attach")
