@@ -2,7 +2,7 @@
   %script{:src => "https://js.stripe.com/v3/", :type => "text/javascript"}
   - if Stripe.publishable_key
     :javascript
-      angular.module('admin.payments').value("stripeObject", Stripe("#{Stripe.publishable_key}", { stripeAccount: "#{StripeAccount.find_by_enterprise_id(payment_method.preferred_enterprise_id).andand.stripe_user_id}" }))
+      angular.module('admin.payments').value("stripeObject", Stripe("#{Stripe.publishable_key}"))
 
   .row
     .three.columns

@@ -7,7 +7,6 @@ module Stripe
     describe "create_customer_from_token" do
       let(:payment) { create(:payment) }
       let(:stripe_payment_method) { create(:stripe_payment_method) }
-      let(:stripe_account_id) { "12312" }
       let(:profile_storer) { Stripe::ProfileStorer.new(payment, stripe_payment_method.provider) }
 
       let(:customer_id) { "cus_A123" }

@@ -56,15 +56,9 @@ module Spree
 
     private
 
-    # Currently can only destroy the whole customer object
+    # It destroys the whole customer object
     def destroy_at_stripe
-      if @credit_card.payment_method &&
-         @credit_card.payment_method.type == "Spree::Gateway::StripeSCA"
-        options = { stripe_account: stripe_account_id }
-      end
-
-      stripe_customer = Stripe::Customer.retrieve(@credit_card.gateway_customer_profile_id,
-                                                  options || {})
+      stripe_customer = Stripe::Customer.retrieve(@credit_card.gateway_customer_profile_id, {})
       stripe_customer.delete if stripe_customer
     end
 
