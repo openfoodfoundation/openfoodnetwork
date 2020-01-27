@@ -118,37 +118,37 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
   end
 
   context "when saving a card or using a stored card is involved" do
-    let(:hubs_customer_response_mock) do
-      {
-        status: 200,
-        body: JSON.generate(id: hubs_customer_id, sources: { data: [{ id: "1" }] })
-      }
-    end
     let(:hubs_payment_method_response_mock) do
+    {
+      status: 200,
+      body: JSON.generate(id: hubs_stripe_payment_method, customer: hubs_customer_id)
+    }
+    end
+    let(:customer_response_mock) do
       {
         status: 200,
-        body: JSON.generate(id: hubs_stripe_payment_method, customer: hubs_customer_id)
+        body: JSON.generate(id: customer_id, sources: { data: [{ id: "1" }] })
       }
     end
 
-     before do
-       # Clones the payment method to the hub's stripe account
-       stub_request(:post, "https://api.stripe.com/v1/payment_methods")
-         .with(body: { customer: customer_id, payment_method: stripe_payment_method },
-               headers: { 'Stripe-Account' => 'abc123' })
-         .to_return(hubs_payment_method_response_mock)
+    before do
+      # Clones the payment method to the hub's stripe account
+      stub_request(:post, "https://api.stripe.com/v1/payment_methods")
+        .with(body: { customer: customer_id, payment_method: stripe_payment_method },
+              headers: { 'Stripe-Account' => 'abc123' })
+        .to_return(hubs_payment_method_response_mock)
 
-       # Creates a customer on the hub's stripe account to hold the payment meethod
-       stub_request(:post, "https://api.stripe.com/v1/customers")
-         .with(body: { email: order.email },
-               headers: { 'Stripe-Account' => 'abc123' })
-         .to_return(hubs_customer_response_mock)
+      # Creates a customer on the hub's stripe account to hold the payment meethod
+      stub_request(:post, "https://api.stripe.com/v1/customers")
+        .with(body: { email: order.email },
+              headers: { 'Stripe-Account' => 'abc123' })
+        .to_return(customer_response_mock)
 
-       # Attaches the payment method to the customer in the hub's stripe account
-       stub_request(:post, "https://api.stripe.com/v1/payment_methods/#{hubs_stripe_payment_method}/attach")
-         .with(body: { customer: hubs_customer_id },
-               headers: { 'Stripe-Account' => 'abc123' })
-         .to_return(hubs_payment_method_response_mock)
+      # Attaches the payment method to the customer in the hub's stripe account
+      stub_request(:post, "https://api.stripe.com/v1/payment_methods/#{hubs_stripe_payment_method}/attach")
+        .with(body: { customer: customer_id },
+              headers: { 'Stripe-Account' => 'abc123' })
+        .to_return(hubs_payment_method_response_mock)
     end
 
     context "when the user submits a new card and requests that the card is saved for later" do
@@ -158,12 +158,6 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
           body: JSON.generate(id: stripe_payment_method, customer: customer_id)
         }
       end
-      let(:customer_response_mock) do
-        {
-          status: 200,
-          body: JSON.generate(id: customer_id, sources: { data: [{ id: "1" }] })
-        }
-      end
 
       before do
         source_attributes = params[:order][:payments_attributes][0][:source_attributes]
@@ -171,8 +165,7 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
 
         # Creates a customer
         stub_request(:post, "https://api.stripe.com/v1/customers")
-          .with(body: { email: order.email },
-                headers: hash_excluding('Stripe-Account'))
+          .with(body: { email: order.email })
           .to_return(customer_response_mock)
 
         # Attaches the payment method to the customer
