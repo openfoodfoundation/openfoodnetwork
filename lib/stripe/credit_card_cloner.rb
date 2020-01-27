@@ -18,6 +18,11 @@
 module Stripe
   class CreditCardCloner
     def clone(credit_card, connected_account_id)
+      # No need to clone the card if there's no customer, i.e., it's a card for one time usage
+      if credit_card.gateway_customer_profile_id.blank?
+        return nil, credit_card.gateway_payment_profile_id
+      end
+
       new_payment_method = clone_payment_method(credit_card, connected_account_id)
 
       new_customer = Stripe::Customer.create({ email: credit_card.user.email },

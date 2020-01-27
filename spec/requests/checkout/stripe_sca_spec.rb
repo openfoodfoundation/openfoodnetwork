@@ -20,8 +20,9 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
   let!(:order) { line_item.order }
   let(:address) { create(:address) }
   let(:stripe_payment_method) { "pm_123" }
-  let(:new_stripe_payment_method) { "new_pm_123" }
   let(:customer_id) { "cus_A123" }
+  let(:hubs_stripe_payment_method) { "pm_456" }
+  let(:hubs_customer_id) { "cus_A456" }
   let(:payments_attributes) do
     {
       payment_method_id: payment_method.id,
@@ -118,13 +119,12 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
     end
 
     context "and the customer requests that the card is saved for later" do
-      let(:payment_method_response_mock) do
+      let(:payment_method_attach_response_mock) do
         {
           status: 200,
-          body: JSON.generate(id: new_stripe_payment_method, customer: customer_id)
+          body: JSON.generate(id: stripe_payment_method, customer: customer_id)
         }
       end
-
       let(:customer_response_mock) do
         {
           status: 200,
@@ -132,19 +132,49 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
         }
       end
 
+      let(:hubs_customer_response_mock) do
+        {
+          status: 200,
+          body: JSON.generate(id: hubs_customer_id, sources: { data: [{ id: "1" }] })
+        }
+      end
+      let(:hubs_payment_method_response_mock) do
+        {
+          status: 200,
+          body: JSON.generate(id: hubs_stripe_payment_method, customer: hubs_customer_id)
+        }
+      end
+
       before do
         source_attributes = params[:order][:payments_attributes][0][:source_attributes]
         source_attributes[:save_requested_by_customer] = '1'
 
-        # Saves the card against the user
+        # Creates a customer
         stub_request(:post, "https://api.stripe.com/v1/customers")
-          .with(basic_auth: ["sk_test_12345", ""], body: { email: order.email })
+          .with(body: { email: order.email })
           .to_return(customer_response_mock)
 
-        # Requests a payment method from the newly saved card
+        # Attaches the payment method to the customer
         stub_request(:post, "https://api.stripe.com/v1/payment_methods/#{stripe_payment_method}/attach")
           .with(body: { customer: customer_id })
-          .to_return(payment_method_response_mock)
+          .to_return(payment_method_attach_response_mock)
+
+        # Clones the payment method to the hub's stripe account
+        stub_request(:post, "https://api.stripe.com/v1/payment_methods")
+          .with(body: { customer: customer_id, payment_method: stripe_payment_method },
+                headers: { 'Stripe-Account' => 'abc123' })
+          .to_return(hubs_payment_method_response_mock)
+
+        # Creates a customer on the hub's stripe account to hold the payment meethod
+        stub_request(:post, "https://api.stripe.com/v1/customers")
+          .with(body: { email: order.email },
+                headers: { 'Stripe-Account' => 'abc123' })
+          .to_return(hubs_customer_response_mock)
+
+        # Attaches the payment method to the customer in the hub's stripe account
+        stub_request(:post, "https://api.stripe.com/v1/payment_methods/#{hubs_stripe_payment_method}/attach")
+          .with(body: { customer: hubs_customer_id })
+          .to_return(hubs_payment_method_response_mock)
 
         # Charges the card
         stub_request(:post, "https://api.stripe.com/v1/payment_intents")
@@ -155,7 +185,7 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
       end
 
       context "and the customer, payment_method and payment_intent requests are successful" do
-        it "should process the payment, and stores the card/customer details" do
+        it "should process the payment, and store the card/customer details" do
           put update_checkout_path, params
 
           expect(json_response["path"]).to eq spree.order_path(order)
@@ -164,7 +194,7 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
           card = order.payments.completed.first.source
 
           expect(card.gateway_customer_profile_id).to eq customer_id
-          expect(card.gateway_payment_profile_id).to eq new_stripe_payment_method
+          expect(card.gateway_payment_profile_id).to eq stripe_payment_method
           expect(card.cc_type).to eq "visa"
           expect(card.last_digits).to eq "4242"
           expect(card.first_name).to eq "Jill"
@@ -204,7 +234,7 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
       end
 
       context "when the payment_method request returns an error message" do
-        let(:payment_method_response_mock) do
+        let(:hubs_payment_method_response_mock) do
           { status: 402, body: JSON.generate(error: { message: "payment-method-failure" }) }
         end
 
