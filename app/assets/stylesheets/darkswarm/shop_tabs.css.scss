@@ -9,11 +9,6 @@
     color: $dark-grey;
     box-shadow: 0 1px 0 $light-grey-transparency;
 
-    .row:first-child {
-      display: flex;
-      justify-content: space-between;
-    }
-
     .columns {
       display: flex;
     }
