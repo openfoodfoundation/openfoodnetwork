@@ -28,17 +28,13 @@ module Stripe
       before do
         allow(Stripe).to receive(:api_key) { "sk_test_12345" }
 
-        stub_request(:post, "https://api.stripe.com/v1/payment_methods")
-          .with(body: { customer: customer_id, payment_method: payment_method_id},
-                headers: { 'Stripe-Account' => stripe_account_id })
-          .to_return(payment_method_response_mock)
-
         stub_request(:post, "https://api.stripe.com/v1/customers")
           .with(body: { email: credit_card.user.email },
                 headers: { 'Stripe-Account' => stripe_account_id })
           .to_return(customer_response_mock)
 
-        stub_request(:post, "https://api.stripe.com/v1/payment_methods/#{new_payment_method_id}/attach")
+        stub_request(:post,
+                     "https://api.stripe.com/v1/payment_methods/#{new_payment_method_id}/attach")
           .with(body: { customer: new_customer_id },
                 headers: { 'Stripe-Account' => stripe_account_id })
           .to_return(payment_method_response_mock)
@@ -47,24 +43,36 @@ module Stripe
       end
 
       context "when called with a card without a customer (one time usage card)" do
-        it "returns a nil customer and the given payment id" do
+        before do
+          stub_request(:post, "https://api.stripe.com/v1/payment_methods")
+            .with(body: { payment_method: payment_method_id },
+                  headers: { 'Stripe-Account' => stripe_account_id })
+            .to_return(payment_method_response_mock)
+        end
+
+        it "clones the payment method only" do
           customer_id, payment_method_id = cloner.clone(credit_card, stripe_account_id)
 
+          expect(payment_method_id).to eq new_payment_method_id
           expect(customer_id).to eq nil
-          expect(payment_method_id).to eq payment_method_id
         end
       end
 
       context "when called with a valid customer and payment_method" do
         before do
+          stub_request(:post, "https://api.stripe.com/v1/payment_methods")
+            .with(body: { customer: customer_id, payment_method: payment_method_id },
+                  headers: { 'Stripe-Account' => stripe_account_id })
+            .to_return(payment_method_response_mock)
+
           credit_card.update_attribute :gateway_customer_profile_id, customer_id
         end
 
-        it "clones the card successefully" do
+        it "clones both the payment method and the customer" do
           customer_id, payment_method_id = cloner.clone(credit_card, stripe_account_id)
 
-          expect(customer_id).to eq new_customer_id
           expect(payment_method_id).to eq new_payment_method_id
+          expect(customer_id).to eq new_customer_id
         end
       end
     end

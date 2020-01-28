@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 # Here we clone
-#   - a card (card_*) or payment_method (pm_*) stored in a customer in a platform account
+#   - a card (card_*) or payment_method (pm_*) stored (in a customer) in a platform account
 # into
-#   - a payment method (pm_*) in a new customer in a connected account
+#   - a payment method (pm_*) (in a new customer) in a connected account
 #
 # This is required when using the Stripe Payment Intents API:
 #   - the customer and payment methods are stored in the platform account
@@ -18,12 +18,10 @@
 module Stripe
   class CreditCardCloner
     def clone(credit_card, connected_account_id)
-      # No need to clone the card if there's no customer, i.e., it's a card for one time usage
-      if credit_card.gateway_customer_profile_id.blank?
-        return nil, credit_card.gateway_payment_profile_id
-      end
-
       new_payment_method = clone_payment_method(credit_card, connected_account_id)
+
+      # If no customer is given, it will clone the payment method only
+      return nil, new_payment_method.id if credit_card.gateway_customer_profile_id.blank?
 
       new_customer = Stripe::Customer.create({ email: credit_card.user.email },
                                              stripe_account: connected_account_id)
