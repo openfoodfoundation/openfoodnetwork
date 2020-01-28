@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+require "open_food_network/i18n_inflections"
+
 module OpenFoodNetwork
   class OptionValueNamer
     def initialize(variant = nil)
@@ -73,37 +77,7 @@ module OpenFoodNetwork
     end
 
     def pluralize(unit_name, count)
-      I18nUnitNames.instance.pluralize(unit_name, count)
-    end
-
-    # Provides efficient access to unit name inflections.
-    # The singleton property ensures that the init code is run once only.
-    # The OptionValueNamer is instantiated in loops.
-    class I18nUnitNames
-      include Singleton
-
-      def pluralize(unit_name, count)
-        return unit_name if count.nil?
-
-        @unit_keys ||= unit_key_lookup
-        key = @unit_keys[unit_name.downcase]
-
-        return unit_name unless key
-
-        I18n.t(key, scope: "unit_names", count: count, default: unit_name)
-      end
-
-      private
-
-      def unit_key_lookup
-        lookup = {}
-        I18n.t("unit_names").each do |key, translations|
-          translations.values.each do |translation|
-            lookup[translation.downcase] = key
-          end
-        end
-        lookup
-      end
+      I18nInflections.pluralize(unit_name, count)
     end
   end
 end

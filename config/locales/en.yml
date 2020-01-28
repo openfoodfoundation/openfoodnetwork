@@ -2721,7 +2721,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       have_an_account: "Already have an account?"
       action_login: "Log in now."
 
-  # Most popular names used in variant_unit_name.
+  # Singular and plural forms of commonly used words.
   # We use these entries to pluralize unit names in every language.
   #
   # Extracted with the following query:
@@ -2731,7 +2731,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   #   puts "      one: \"#{name}\""
   #   puts "      other: \"#{name}s\"";
   # }
-  unit_names:
+  inflections:
     each:
       one: "each"
       other: "each"

@@ -34,12 +34,12 @@ angular.module("admin.products").factory "OptionValueNamer", (VariantUnitManager
       return unit_name if count == undefined
       unit_key = @unit_key(unit_name)
       return unit_name unless unit_key
-      I18n.t(["unit_names", unit_key], {count: count, defaultValue: unit_name})
+      I18n.t(["inflections", unit_key], {count: count, defaultValue: unit_name})
 
     unit_key: (unit_name) ->
       unless I18n.unit_keys
         I18n.unit_keys = {}
-        for key, translations of I18n.t("unit_names")
+        for key, translations of I18n.t("inflections")
           for quantifier, translation of translations
             I18n.unit_keys[translation.toLowerCase()] = key
 
