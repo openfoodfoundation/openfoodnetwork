@@ -2732,86 +2732,57 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   #   puts "      other: \"#{name}s\"";
   # }
   unit_names:
-    # Used 379 times.
-    # Used 138 times.
     each:
       one: "each"
       other: "each"
-    # Used 332 times.
-    # Used 145 times.
-    # Used 93 times.
     bunch:
       one: "bunch"
       other: "bunches"
-    # Used 118 times.
-    # Used 63 times.
     pack:
       one: "pack"
       other: "packs"
-    # Used 90 times.
-    # Used 72 times.
     box:
       one: "box"
       other: "boxes"
-    # Used 81 times.
-    # Used 49 times.
     bottle:
       one: "bottle"
       other: "bottles"
-    # Used 71 times.
-    # Used 56 times.
     jar:
       one: "jar"
       other: "jars"
-    # Used 65 times.
     head:
       one: "head"
       other: "heads"
-    # Used 56 times.
-    # Used 41 times.
     bag:
       one: "bag"
       other: "bags"
-    # Used 53 times.
-    # Used 30 times.
     loaf:
       one: "loaf"
       other: "loaves"
-    # Used 43 times.
     single:
       one: "single"
       other: "singles"
-    # Used 41 times.
     tub:
       one: "tub"
       other: "tubs"
-    # Used 36 times.
     punnet:
       one: "punnet"
       other: "punnets"
-    # Used 32 times.
     packet:
       one: "packet"
       other: "packets"
-    # Used 30 times.
-    # Used 22 times.
     item:
       one: "item"
       other: "items"
-    # Used 29 times.
-    # Used 24 times.
     dozen:
       one: "dozen"
       other: "dozens"
-    # Used 26 times.
     unit:
       one: "unit"
       other: "units"
-    # Used 24 times.
     serve:
       one: "serve"
       other: "serves"
-    # Used 20 times.
     tray:
       one: "tray"
       other: "trays"
