@@ -2786,6 +2786,24 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     tray:
       one: "tray"
       other: "trays"
+    piece:
+      one: "piece"
+      other: "pieces"
+    pot:
+      one: "pot"
+      other: "pots"
+    bundle:
+      one: "bundle"
+      other: "bundles"
+    flask:
+      one: "flask"
+      other: "flasks"
+    basket:
+      one: "basket"
+      other: "baskets"
+    sack:
+      one: "sack"
+      other: "sacks"
 
   producers:
     signup:
