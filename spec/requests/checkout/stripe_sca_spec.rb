@@ -75,10 +75,20 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
   end
 
   context "when the user submits a new card and doesn't request that the card is saved for later" do
+    let(:hubs_payment_method_response_mock) do
+      { status: 200, body: JSON.generate(id: hubs_stripe_payment_method) }
+    end
+
     before do
+      # Clones the payment method to the hub's stripe account
+      stub_request(:post, "https://api.stripe.com/v1/payment_methods")
+        .with(body: { payment_method: stripe_payment_method },
+              headers: { 'Stripe-Account' => 'abc123' })
+        .to_return(hubs_payment_method_response_mock)
+
       # Charges the card
       stub_request(:post, "https://api.stripe.com/v1/payment_intents")
-        .with(basic_auth: ["sk_test_12345", ""], body: /#{stripe_payment_method}.*#{order.number}/)
+        .with(basic_auth: ["sk_test_12345", ""], body: /#{hubs_stripe_payment_method}.*#{order.number}/)
         .to_return(payment_intent_response_mock)
     end
 
