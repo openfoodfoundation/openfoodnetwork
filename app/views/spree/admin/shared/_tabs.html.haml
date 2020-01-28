@@ -1,11 +1,11 @@
 = tab :overview, label: 'dashboard', url: spree.admin_dashboard_path, icon: 'icon-dashboard'
-= tab :products, :option_types, :properties, :variants, :product_properties, :taxons, :url => admin_products_path, :icon => 'icon-th-large'
-= tab :order_cycles, :url => main_app.admin_order_cycles_path, :icon => 'icon-refresh'
-= tab :orders, :payments, :creditcard_payments, :shipments, :credit_cards, :return_authorizations, :url => admin_orders_path('q[s]' => 'completed_at desc'), :icon => 'icon-shopping-cart'
-= tab :reports, :icon => 'icon-file'
-= tab :configurations, :general_settings, :mail_methods, :tax_categories, :zones, :states, :payment_methods, :inventory_settings, :taxonomies, :shipping_methods, :trackers, :label => 'configuration', :icon => 'icon-wrench', :url => edit_admin_general_settings_path
-= tab :enterprises, :url => main_app.admin_enterprises_path
-= tab :customers, :url => main_app.admin_customers_path
-= tab :enterprise_groups, :url => main_app.admin_enterprise_groups_path, label: 'groups'
+= tab :products, :properties, :inventory, :product_import, :images, :variants, :product_properties, :group_buy_options, :seo, url: admin_products_path, icon: 'icon-th-large'
+= tab :order_cycles, url: main_app.admin_order_cycles_path, icon: 'icon-refresh'
+= tab :orders, :subscriptions, :customer_details, :adjustments, :payments, :return_authorizations, url: admin_orders_path('q[s]' => 'completed_at desc'), icon: 'icon-shopping-cart'
+= tab :reports, icon: 'icon-file'
+= tab :general_settings, :mail_method, :image_settings, :tax_categories, :tax_rates, :tax_settings, :zones, :countries, :states, :payment_methods, :taxonomies, :shipping_methods, :shipping_categories, :enterprise_fees, :trackers, :contents, :invoice_settings, :matomo_settings, :stripe_connect_settings, label: 'configuration', icon: 'icon-wrench', url: edit_admin_general_settings_path
+= tab :enterprises, :enterprise_relationships, url: main_app.admin_enterprises_path
+= tab :customers, url: main_app.admin_customers_path
+= tab :enterprise_groups, url: main_app.admin_enterprise_groups_path, label: 'groups'
 - if can? :admin, Spree::User
   = tab(:users, url: spree.admin_users_path, icon: 'icon-user')
