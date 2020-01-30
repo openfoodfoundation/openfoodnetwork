@@ -678,10 +678,6 @@ pt:
           enable_subscriptions_false: "Desactivado"
           enable_subscriptions_true: "Activo"
           shopfront_message: "Mensagem da Loja"
-          shopfront_message_placeholder: >
-              Uma explicação breve e opcional para os consumidores a explicar como
-              funciona a sua loja, a ser exibida acima da lista de produtos na sua
-              loja.
           shopfront_message_link_tooltip: "Inserir / editar link"
           shopfront_message_link_prompt: "Por favor insira um URL"
           shopfront_closed_message: "Mensagem de Loja Fechada"
@@ -2580,6 +2576,7 @@ pt:
   status: "estado"
   new: "Novo"
   start: "Começar"
+  end: "Terminar"
   stop: "Parar"
   first: "Primeiro"
   previous: "Anterior"

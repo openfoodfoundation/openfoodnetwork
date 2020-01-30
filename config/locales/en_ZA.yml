@@ -692,9 +692,6 @@ en_ZA:
           enable_subscriptions_false: "Disabled"
           enable_subscriptions_true: "Enabled"
           shopfront_message: "Shopfront Message"
-          shopfront_message_placeholder: >
-              An optional explanation for customers detailing how your shopfront works,
-              to be displayed above the product list on your shop page.
           shopfront_message_link_tooltip: "Insert / edit link"
           shopfront_message_link_prompt: "Please enter a URL to insert"
           shopfront_closed_message: "Shopfront Closed Message"
@@ -2627,6 +2624,7 @@ en_ZA:
   status: "status"
   new: "New"
   start: "Start"
+  end: "End"
   stop: "Stop"
   first: "First"
   previous: "Previous"

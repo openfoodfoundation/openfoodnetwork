@@ -703,9 +703,6 @@ fr_CA:
           enable_subscriptions_false: "Désactivée"
           enable_subscriptions_true: "Activée"
           shopfront_message: "Message d'accueil de la boutique ouverte"
-          shopfront_message_placeholder: >
-              Vous pouvez ici expliquer à vos acheteurs comment votre boutique fonctionne.
-              Ce texte s'affiche dans votre boutique, au-dessus de la liste de produits.
           shopfront_message_link_tooltip: "Insérer / modifier un lien"
           shopfront_message_link_prompt: "Veuillez entrer l'URL à insérer"
           shopfront_closed_message: "Message d'accueil de la boutique fermée"
@@ -2660,6 +2657,7 @@ fr_CA:
   status: "Statut"
   new: "Nouveau"
   start: "Début"
+  end: "Fin"
   stop: "Arrêter"
   first: "Début"
   previous: "Précédent"

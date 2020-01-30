@@ -697,10 +697,6 @@ es:
           enable_subscriptions_false: "Deshabilitado"
           enable_subscriptions_true: "Habilitado"
           shopfront_message: "Mensaje de la Tienda"
-          shopfront_message_placeholder: >
-              Una explicación opcional para los consumidores que detallan cómo funciona
-              su tienda, que se mostrará por encima de la lista de productos en su
-              página de tienda.
           shopfront_message_link_tooltip: "Insertar / editar enlace"
           shopfront_message_link_prompt: "Por favor introduzca una URL para insertar"
           shopfront_closed_message: "Mensaje de tienda cerrada"
@@ -2630,6 +2626,7 @@ es:
   status: "estado"
   new: "Nuevo"
   start: "Inicio"
+  end: "Final"
   stop: "Detener"
   first: "primero"
   previous: "Anterior"

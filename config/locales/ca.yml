@@ -700,9 +700,6 @@ ca:
           enable_subscriptions_false: "Deshabilitat"
           enable_subscriptions_true: "Habilitat"
           shopfront_message: "Missatge de la botiga"
-          shopfront_message_placeholder: >
-              Una explicació opcional per a les consumidores que detalla com funciona
-              la vostra botiga, que es mostrarà a sobre de la llista de productes.
           shopfront_message_link_tooltip: "Inserir / editar enllaç"
           shopfront_message_link_prompt: "Introduïu un URL per inserir"
           shopfront_closed_message: "Missatge de tancament de la botiga"
@@ -2644,6 +2641,7 @@ ca:
   status: "estat"
   new: "Nou"
   start: "Començar"
+  end: "Acabar"
   stop: "Aturar"
   first: "Primer"
   previous: "Anterior"

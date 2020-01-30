@@ -702,10 +702,6 @@ pt_BR:
           enable_subscriptions_false: "Desativado"
           enable_subscriptions_true: "ativado"
           shopfront_message: "Mensagem da vitrine da loja"
-          shopfront_message_placeholder: >
-              Uma breve e opcional explicação para os consumidores detalhando como
-              funciona a sua loja, a ser exibida acima da lista de produtos na sua
-              vitrine.
           shopfront_message_link_tooltip: "Inserir / editar link"
           shopfront_message_link_prompt: "Digite um URL para inserir"
           shopfront_closed_message: "Mensagem de loja fechada"
@@ -2655,6 +2651,7 @@ pt_BR:
   status: "status"
   new: "Novo"
   start: "Início"
+  end: "Fim"
   stop: "Parar"
   first: "Primeiro"
   previous: "Anterior"

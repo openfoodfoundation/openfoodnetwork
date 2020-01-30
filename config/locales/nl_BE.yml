@@ -691,9 +691,6 @@ nl_BE:
           enable_subscriptions_false: "Deactiveer"
           enable_subscriptions_true: "Activeer"
           shopfront_message: "Etalage Boodschap"
-          shopfront_message_placeholder: >
-              Een optionele verklaring voor klanten die uitlegt hoe de etalage werkt,
-              zodat deze boven de productlijst kan weergegeven worden op je winkelpagina.
           shopfront_message_link_tooltip: "Link invoegen / bewerken"
           shopfront_message_link_prompt: "Voer een URL in om in te voegen"
           shopfront_closed_message: "Bericht Gesloten Etalage"
@@ -2623,6 +2620,7 @@ nl_BE:
   status: "status"
   new: "Nieuw"
   start: "Start"
+  end: "Eind"
   stop: "Stop"
   first: "Eerst"
   previous: "Voorgaande"

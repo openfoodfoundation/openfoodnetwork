@@ -701,9 +701,6 @@ nb:
           enable_subscriptions_false: "Deaktivert"
           enable_subscriptions_true: "Aktivert"
           shopfront_message: "Melding Butikk"
-          shopfront_message_placeholder: >
-              En valgfri forklaring for kunder med detaljer om hvordan din nettbutikk
-              fungerer, for å vises over produktlisten på din side.
           shopfront_message_link_tooltip: "Sett inn / rediger lenke"
           shopfront_message_link_prompt: "Vennligst skriv inn en URL for å sette inn"
           shopfront_closed_message: "Melding Butikk Stengt"
@@ -2650,6 +2647,7 @@ nb:
   status: "Status"
   new: "Ny"
   start: "Start"
+  end: "Slutt"
   stop: "Stopp"
   first: "Først"
   previous: "Tidligere"

@@ -387,9 +387,6 @@ sv:
           allow_order_changes_false: "Lagda beställningar kan inte ändras/avbrytas"
           allow_order_changes_true: "Kunder kan ändra/avbryta beställningar medan beställningscykeln är öppen"
           shopfront_message: "Butiksmeddelande"
-          shopfront_message_placeholder: >
-              En frivillig förklaring för kunder som beskriver hur ditt skyltfönster
-              skall användas. Den visas ovanför produktlistan i affärsfönstret.
           shopfront_closed_message: "Meddelande för stängd butik"
           shopfront_closed_message_placeholder: >
               Ett meddelande som ger en mer detaljerad förklaring varför din affär

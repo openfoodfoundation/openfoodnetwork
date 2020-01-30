@@ -700,10 +700,6 @@ it:
           enable_subscriptions_false: "Disabilitata"
           enable_subscriptions_true: "Abilitata"
           shopfront_message: "Messaggio vetrina"
-          shopfront_message_placeholder: >
-              Una spiegazione opzionale che dettaglia il funzionamento del tuo negozio,
-              che sarà visualizzata sopra al listino dei prodotti nella pagina del
-              tuo negozio.
           shopfront_message_link_tooltip: "Inserisci / modifica link"
           shopfront_message_link_prompt: "Per favore inserisci un URL"
           shopfront_closed_message: "Messaggio Chiusura Vetrina"
@@ -2644,6 +2640,7 @@ it:
   status: "stato"
   new: "Nuovo"
   start: "Inizio"
+  end: "Fine"
   stop: "Stop"
   first: "Primo"
   previous: "Precedente"

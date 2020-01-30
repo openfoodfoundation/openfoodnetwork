@@ -700,10 +700,6 @@ de_DE:
           enable_subscriptions_false: "deaktiviert"
           enable_subscriptions_true: "aktiviert"
           shopfront_message: "Laden-Nachricht"
-          shopfront_message_placeholder: >
-              Eine optionale Erklärung für Kunden, die detailliert beschreibt, wie
-              Ihr Laden funktioniert, wird oberhalb der Produktliste auf Ihrer Laden-Seite
-              angezeigt.
           shopfront_message_link_tooltip: "Link einfügen / bearbeiten"
           shopfront_message_link_prompt: "Bitte geben Sie eine einzufügende URL ein"
           shopfront_closed_message: "Laden Geschlossen Nachricht"
