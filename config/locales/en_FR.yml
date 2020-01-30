@@ -1111,6 +1111,7 @@ en_FR:
     already_ordered:
       cart: "cart"
       message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
+    failed: "The checkout failed. Please let us know so that we can process your order."
   shops:
     hubs:
       show_closed_shops: "Show closed shops"
@@ -2652,6 +2653,7 @@ en_FR:
   status: "status"
   new: "New"
   start: "Start"
+  end: "End"
   stop: "Stop"
   first: "First"
   previous: "Previous"
