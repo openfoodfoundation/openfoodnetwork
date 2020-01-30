@@ -701,6 +701,10 @@ en_GB:
           enable_subscriptions_false: "Disabled"
           enable_subscriptions_true: "Enabled"
           shopfront_message: "Shopfront Message"
+          shopfront_message_placeholder: >
+              An optional message to welcome customers and explain how to shop with
+              you. If text is entered here it will be displayed in a home tab when
+              customers first arrive at your shopfront.
           shopfront_message_link_tooltip: "Insert / edit link"
           shopfront_message_link_prompt: "Please enter a URL to insert"
           shopfront_closed_message: "Shopfront Closed Message"
@@ -1107,6 +1111,7 @@ en_GB:
     already_ordered:
       cart: "cart"
       message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
+    failed: "The checkout failed. Please let us know so that we can process your order."
   shops:
     hubs:
       show_closed_shops: "Show closed shops"
