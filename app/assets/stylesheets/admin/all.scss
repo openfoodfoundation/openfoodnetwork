@@ -5,6 +5,7 @@
  *
 
  *= require admin/spree_backend
+ *= require jquery.powertip
 
  *= require jquery-ui-timepicker-addon
  *= require shared/textAngular
@@ -13,6 +14,8 @@
  *= require_self
 */
 
+@import 'plugins/powertip';
+
 @import 'hacks/mozilla';
 @import 'hacks/opera';
 @import 'hacks/ie';
@@ -20,4 +23,5 @@
 @import 'variables';
 @import 'components/*';
 @import 'pages/*';
+
 @import '*';
