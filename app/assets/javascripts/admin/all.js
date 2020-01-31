@@ -20,6 +20,7 @@
 //= require ../shared/ng-infinite-scroll.min.js
 //= require ../shared/ng-tags-input.min.js
 //= require angular-rails-templates
+//= require lodash.underscore.js
 
 // spree
 //= require admin/spree_backend
@@ -27,6 +28,7 @@
 //= require css_browser_selector_dev
 //= require responsive-tables
 //= require admin/spree_paypal_express
+//= require admin/handlebar_extensions
 
 // OFN specific
 //= require_tree ../templates/admin
