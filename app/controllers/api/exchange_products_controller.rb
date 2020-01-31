@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This controller lists products that can be added to an exchange
 module Api
   class ExchangeProductsController < Api::BaseController
@@ -29,17 +31,21 @@ module Api
 
     def render_variant_count
       render text: {
-        count: Spree::Variant.
-          not_master.
-          where(product_id: products).
-          count
+        count: variants.count
       }.to_json
     end
 
+    def variants
+      renderer.exchange_variants(@incoming, @enterprise)
+    end
+
     def products
-      ExchangeProductsRenderer.
-        new(@order_cycle, spree_current_user).
-        exchange_products(@incoming, @enterprise)
+      renderer.exchange_products(@incoming, @enterprise)
+    end
+
+    def renderer
+      @renderer ||= ExchangeProductsRenderer.
+        new(@order_cycle, spree_current_user)
     end
 
     def paginated_products

@@ -26,4 +26,38 @@ describe ExchangeProductsRenderer do
       end
     end
   end
+
+  describe "#exchange_variants" do
+    describe "for an incoming exchange" do
+      it "loads variants" do
+        exchange = order_cycle.exchanges.incoming.first
+        variants = renderer.exchange_variants(true, exchange.sender)
+
+        expect(variants.first.product.supplier.name).to eq exchange.variants.first.product.supplier.name
+      end
+
+      describe "when OC is showing only the coordinators inventory" do
+        let(:exchange_with_visible_variant) { order_cycle.exchanges.incoming.second }
+        let(:exchange_with_hidden_variant) { order_cycle.exchanges.incoming.first }
+        let!(:visible_inventory_item) { create(:inventory_item, enterprise: order_cycle.coordinator, variant: exchange_with_visible_variant.variants.first, visible: true) }
+        let!(:hidden_inventory_item) { create(:inventory_item, enterprise: order_cycle.coordinator, variant: exchange_with_hidden_variant.variants.first, visible: false) }
+
+        before do
+          order_cycle.prefers_product_selection_from_coordinator_inventory_only = true
+        end
+
+        it "renders visible inventory variants" do
+          variants = renderer.exchange_variants(true, exchange_with_visible_variant.sender)
+
+          expect(variants.size).to eq 1
+        end
+
+        it "does not render hidden inventory variants" do
+          variants = renderer.exchange_variants(true, exchange_with_hidden_variant.sender)
+
+          expect(variants.size).to eq 0
+        end
+      end
+    end
+  end
 end

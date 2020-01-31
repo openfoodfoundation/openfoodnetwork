@@ -1,5 +1,6 @@
 require 'open_food_network/referer_parser'
 require 'open_food_network/permissions'
+require 'open_food_network/order_cycle_permissions'
 
 module Admin
   class EnterprisesController < ResourceController

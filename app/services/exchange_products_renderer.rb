@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+require 'open_food_network/order_cycle_permissions'
+
 class ExchangeProductsRenderer
   def initialize(order_cycle, user)
     @order_cycle = order_cycle
@@ -12,6 +16,14 @@ class ExchangeProductsRenderer
     end
   end
 
+  def exchange_variants(incoming, enterprise)
+    variants_relation = Spree::Variant.
+      not_master.
+      where(product_id: exchange_products(incoming, enterprise).select(&:id))
+
+    filter_visible(variants_relation)
+  end
+
   private
 
   def products_for_incoming_exchange(enterprise)
@@ -21,12 +33,16 @@ class ExchangeProductsRenderer
   def supplied_products(enterprises_query_matcher)
     products_relation = Spree::Product.where(supplier_id: enterprises_query_matcher)
 
+    filter_visible(products_relation)
+  end
+
+  def filter_visible(relation)
     if @order_cycle.present? &&
        @order_cycle.prefers_product_selection_from_coordinator_inventory_only?
-      products_relation = products_relation.visible_for(@order_cycle.coordinator)
+      relation = relation.visible_for(@order_cycle.coordinator)
     end
 
-    products_relation
+    relation
   end
 
   def products_for_outgoing_exchange
