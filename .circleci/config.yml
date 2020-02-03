@@ -3,7 +3,7 @@ jobs:
   build:
     parallelism: 4
     docker:
-      - image: circleci/ruby:2.2.10-node-browsers
+      - image: circleci/ruby:2.3.7-node-browsers
         environment:
           NODE_VERSION: 5.12.0
           BUNDLE_JOBS: 4
