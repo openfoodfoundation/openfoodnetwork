@@ -8,7 +8,7 @@ angular.module('admin.orderCycles').factory('ExchangeProduct', ($resource) ->
 
     index: (params={}, callback=null) ->
       ExchangeProductResource.index params, (data) =>
-        (callback || angular.noop)(data.products, data.pagination.pages, data.pagination.results)
+        (callback || angular.noop)(data.products, data.pagination?.pages, data.pagination?.results)
 
     countVariants: (params={}, callback=null) ->
       ExchangeProductResource.variant_count params, (data) =>
