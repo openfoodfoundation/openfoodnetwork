@@ -53,7 +53,7 @@ module Api
       return products unless pagination_required?
 
       products.
-        page(params[:page] || DEFAULT_PAGE).
+        page(params[:page]).
         per(params[:per_page] || DEFAULT_PER_PAGE)
     end
 
