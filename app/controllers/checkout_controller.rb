@@ -61,20 +61,18 @@ class CheckoutController < Spree::StoreController
         return if redirect_to_paypal_express_form_if_needed
       end
 
-      if @order.state == "delivery"
-        @order.select_shipping_method(shipping_method_id)
-      end
+      @order.select_shipping_method(shipping_method_id) if @order.state == "delivery"
 
       next if advance_order_state(@order)
 
-      flash[:error] = if @order.errors.present?
-                        @order.errors.full_messages.to_sentence
-                      else
-                        t(:payment_processing_failed)
-                      end
+      flash[:error] = order_workflow_error
       return update_failed
     end
 
+    update_result
+  end
+
+  def update_result
     if @order.completed?
       update_succeeded
     else
@@ -101,6 +99,14 @@ class CheckoutController < Spree::StoreController
       format.json do
         render json: { path: order_path(@order) }, status: :ok
       end
+    end
+  end
+
+  def order_workflow_error
+    if @order.errors.present?
+      @order.errors.full_messages.to_sentence
+    else
+      t(:payment_processing_failed)
     end
   end
 
