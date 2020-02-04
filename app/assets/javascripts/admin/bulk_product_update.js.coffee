@@ -107,10 +107,10 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     $scope.importDateFilter = "0"
 
   $scope.$watch 'sortOptions', (sort) ->
-    if sort && sort.predicate != ""
-      $scope.sorting = sort.predicate + ' desc' if sort.reverse
-      $scope.sorting = sort.predicate + ' asc' if !sort.reverse
-      $scope.fetchProducts()
+    return unless sort && sort.predicate != ""
+
+    $scope.sorting = sort.getSortingExpr()
+    $scope.fetchProducts()
   , true
 
   confirm_unsaved_changes = () ->
