@@ -55,61 +55,6 @@ class CheckoutController < Spree::StoreController
     update_failed
   end
 
-  def checkout_workflow(shipping_method_id)
-    while @order.state != "complete"
-      if @order.state == "payment"
-        return if redirect_to_paypal_express_form_if_needed
-      end
-
-      @order.select_shipping_method(shipping_method_id) if @order.state == "delivery"
-
-      next if advance_order_state(@order)
-
-      flash[:error] = order_workflow_error
-      return update_failed
-    end
-
-    update_result
-  end
-
-  def update_result
-    if @order.completed?
-      update_succeeded
-    else
-      update_failed
-    end
-  end
-
-  def update_succeeded
-    set_default_bill_address
-    set_default_ship_address
-
-    ResetOrderService.new(self, current_order).call
-    session[:access_token] = current_order.token
-
-    respond_to_update_succeeded
-  end
-
-  def respond_to_update_succeeded
-    flash[:notice] = t(:order_processed_successfully)
-    respond_to do |format|
-      format.html do
-        respond_with(@order, location: order_path(@order))
-      end
-      format.json do
-        render json: { path: order_path(@order) }, status: :ok
-      end
-    end
-  end
-
-  def order_workflow_error
-    if @order.errors.present?
-      @order.errors.full_messages.to_sentence
-    else
-      t(:payment_processing_failed)
-    end
-  end
-
   # Clears the cached order. Required for #current_order to return a new order
   # to serve as cart. See https://github.com/spree/spree/blob/1-3-stable/core/lib/spree/core/controller_helpers/order.rb#L14
   # for details.
@@ -139,32 +84,70 @@ class CheckoutController < Spree::StoreController
     end
   end
 
-  def set_default_bill_address
-    return unless params[:order][:default_bill_address]
+  def load_order
+    @order = current_order
 
-    new_bill_address = @order.bill_address.clone.attributes
-    set_bill_address_attributes(spree_current_user, new_bill_address)
-    set_bill_address_attributes(@order.customer, new_bill_address)
+    redirect_to(main_app.shop_path) && return if redirect_to_shop?
+    redirect_to_cart_path && return unless valid_order_line_items?
+    before_address
+    setup_for_current_state
   end
 
-  def set_bill_address_attributes(object, new_address)
-    object.update_attributes(
-      bill_address_attributes: new_address.merge('id' => object.bill_address.andand.id)
-    )
+  def redirect_to_shop?
+    !@order ||
+      !@order.checkout_allowed? ||
+      @order.completed?
   end
 
-  def set_default_ship_address
-    return unless params[:order][:default_ship_address]
-
-    new_ship_address = @order.ship_address.clone.attributes
-    set_ship_address_attributes(spree_current_user, new_ship_address)
-    set_ship_address_attributes(@order.customer, new_ship_address)
+  def valid_order_line_items?
+    @order.insufficient_stock_lines.empty? &&
+      OrderCycleDistributedVariants.new(@order.order_cycle, @order.distributor).
+        distributes_order_variants?(@order)
   end
 
-  def set_ship_address_attributes(object, new_address)
-    object.update_attributes(
-      ship_address_attributes: new_address.merge('id' => object.ship_address.andand.id)
-    )
+  def redirect_to_cart_path
+    respond_to do |format|
+      format.html do
+        redirect_to main_app.cart_path
+      end
+
+      format.json do
+        render json: { path: main_app.cart_path }, status: :bad_request
+      end
+    end
+  end
+
+  def setup_for_current_state
+    method_name = :"before_#{@order.state}"
+    __send__(method_name) if respond_to?(method_name, true)
+  end
+
+  def before_address
+    associate_user
+
+    finder = OpenFoodNetwork::AddressFinder.new(@order.email, @order.customer, spree_current_user)
+
+    @order.bill_address = finder.bill_address
+    @order.ship_address = finder.ship_address
+  end
+
+  def before_delivery
+    return if params[:order].present?
+
+    packages = @order.shipments.map(&:to_package)
+    @differentiator = Spree::Stock::Differentiator.new(@order, packages)
+  end
+
+  def before_payment
+    current_order.payments.destroy_all if request.put?
+  end
+
+  def rescue_from_spree_gateway_error(error)
+    flash[:error] = t(:spree_gateway_error_flash_for_checkout, error: error.message)
+    respond_to do |format|
+      format.html { render :edit }
+      format.json { render json: { flash: flash.to_hash }, status: :bad_request }
+    end
   end
 
   def object_params
@@ -199,99 +182,6 @@ class CheckoutController < Spree::StoreController
     end
   end
 
-  # Perform order.next, guarding against StaleObjectErrors
-  def advance_order_state(order)
-    tries ||= 3
-    order.next
-  rescue ActiveRecord::StaleObjectError
-    retry unless (tries -= 1).zero?
-    false
-  end
-
-  def update_failed
-    current_order.updater.shipping_address_from_distributor
-    RestartCheckout.new(@order).call
-
-    respond_to do |format|
-      format.html do
-        render :edit
-      end
-      format.json do
-        render json: { errors: @order.errors, flash: flash.to_hash }.to_json, status: :bad_request
-      end
-    end
-  end
-
-  def load_order
-    @order = current_order
-
-    redirect_to(main_app.shop_path) && return if redirect_to_shop?
-    redirect_to_cart_path && return unless valid_order_line_items?
-    before_address
-    setup_for_current_state
-  end
-
-  def redirect_to_shop?
-    !@order ||
-      !@order.checkout_allowed? ||
-      @order.completed?
-  end
-
-  def setup_for_current_state
-    method_name = :"before_#{@order.state}"
-    __send__(method_name) if respond_to?(method_name, true)
-  end
-
-  def before_address
-    associate_user
-
-    finder = OpenFoodNetwork::AddressFinder.new(@order.email, @order.customer, spree_current_user)
-
-    @order.bill_address = finder.bill_address
-    @order.ship_address = finder.ship_address
-  end
-
-  def before_delivery
-    return if params[:order].present?
-
-    packages = @order.shipments.map(&:to_package)
-    @differentiator = Spree::Stock::Differentiator.new(@order, packages)
-  end
-
-  def before_payment
-    current_order.payments.destroy_all if request.put?
-  end
-
-  def valid_order_line_items?
-    @order.insufficient_stock_lines.empty? &&
-      OrderCycleDistributedVariants.new(@order.order_cycle, @order.distributor).
-        distributes_order_variants?(@order)
-  end
-
-  def redirect_to_cart_path
-    respond_to do |format|
-      format.html do
-        redirect_to main_app.cart_path
-      end
-
-      format.json do
-        render json: { path: main_app.cart_path }, status: :bad_request
-      end
-    end
-  end
-
-  def redirect_to_paypal_express_form_if_needed
-    return unless params[:order][:payments_attributes]
-
-    payment_method_id = params[:order][:payments_attributes].first[:payment_method_id]
-    payment_method = Spree::PaymentMethod.find(payment_method_id)
-    return unless payment_method.is_a?(Spree::Gateway::PayPalExpress)
-
-    render json: { path: spree.paypal_express_path(payment_method_id: payment_method.id) },
-           status: :ok
-    true
-  end
-
   def construct_saved_card_attributes
     existing_card_id = params[:order].delete(:existing_card_id)
     return if existing_card_id.blank?
@@ -310,11 +200,121 @@ class CheckoutController < Spree::StoreController
     params[:order][:payments_attributes].first[:source] = credit_card
   end
 
-  def rescue_from_spree_gateway_error(error)
-    flash[:error] = t(:spree_gateway_error_flash_for_checkout, error: error.message)
+  def checkout_workflow(shipping_method_id)
+    while @order.state != "complete"
+      if @order.state == "payment"
+        return if redirect_to_paypal_express_form_if_needed
+      end
+
+      @order.select_shipping_method(shipping_method_id) if @order.state == "delivery"
+
+      next if advance_order_state(@order)
+
+      flash[:error] = order_workflow_error
+      return update_failed
+    end
+
+    update_result
+  end
+
+  def redirect_to_paypal_express_form_if_needed
+    return unless params[:order][:payments_attributes]
+
+    payment_method_id = params[:order][:payments_attributes].first[:payment_method_id]
+    payment_method = Spree::PaymentMethod.find(payment_method_id)
+    return unless payment_method.is_a?(Spree::Gateway::PayPalExpress)
+
+    render json: { path: spree.paypal_express_path(payment_method_id: payment_method.id) },
+           status: :ok
+    true
+  end
+
+  # Perform order.next, guarding against StaleObjectErrors
+  def advance_order_state(order)
+    tries ||= 3
+    order.next
+  rescue ActiveRecord::StaleObjectError
+    retry unless (tries -= 1).zero?
+    false
+  end
+
+  def order_workflow_error
+    if @order.errors.present?
+      @order.errors.full_messages.to_sentence
+    else
+      t(:payment_processing_failed)
+    end
+  end
+
+  def update_result
+    if @order.completed?
+      update_succeeded
+    else
+      update_failed
+    end
+  end
+
+  def update_succeeded
+    set_default_bill_address
+    set_default_ship_address
+
+    ResetOrderService.new(self, current_order).call
+    session[:access_token] = current_order.token
+
+    respond_to_update_succeeded
+  end
+
+  def update_failed
+    current_order.updater.shipping_address_from_distributor
+    RestartCheckout.new(@order).call
+
     respond_to do |format|
-      format.html { render :edit }
-      format.json { render json: { flash: flash.to_hash }, status: :bad_request }
+      format.html do
+        render :edit
+      end
+      format.json do
+        render json: { errors: @order.errors, flash: flash.to_hash }.to_json, status: :bad_request
+      end
+    end
+  end
+
+  def set_default_bill_address
+    return unless params[:order][:default_bill_address]
+
+    new_bill_address = @order.bill_address.clone.attributes
+    set_bill_address_attributes(spree_current_user, new_bill_address)
+    set_bill_address_attributes(@order.customer, new_bill_address)
+  end
+
+  def set_bill_address_attributes(object, new_address)
+    object.update_attributes(
+      bill_address_attributes: new_address.merge('id' => object.bill_address.andand.id)
+    )
+  end
+
+  def set_default_ship_address
+    return unless params[:order][:default_ship_address]
+
+    new_ship_address = @order.ship_address.clone.attributes
+    set_ship_address_attributes(spree_current_user, new_ship_address)
+    set_ship_address_attributes(@order.customer, new_ship_address)
+  end
+
+  def set_ship_address_attributes(object, new_address)
+    object.update_attributes(
+      ship_address_attributes: new_address.merge('id' => object.ship_address.andand.id)
+    )
+  end
+
+  def respond_to_update_succeeded
+    flash[:notice] = t(:order_processed_successfully)
+    respond_to do |format|
+      format.html do
+        respond_with(@order, location: order_path(@order))
+      end
+      format.json do
+        render json: { path: order_path(@order) }, status: :ok
+      end
     end
   end
 end
