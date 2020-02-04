@@ -82,11 +82,11 @@ class CheckoutController < Spree::StoreController
         render json: { path: order_path(@order) }, status: :ok
       end
     end
-  rescue Spree::Core::GatewayError => error
+  rescue Spree::Core::GatewayError => e
     # This is done for all actions in the Spree::CheckoutController.
-    rescue_from_spree_gateway_error(error)
-  rescue StandardError => error
-    Bugsnag.notify(error)
+    rescue_from_spree_gateway_error(e)
+  rescue StandardError => e
+    Bugsnag.notify(e)
     flash[:error] = I18n.t("checkout.failed")
     update_failed
   end
@@ -204,7 +204,7 @@ class CheckoutController < Spree::StoreController
 
   def setup_for_current_state
     method_name = :"before_#{@order.state}"
-    send(method_name) if respond_to?(method_name, true)
+    __send__(method_name) if respond_to?(method_name, true)
   end
 
   def before_address
