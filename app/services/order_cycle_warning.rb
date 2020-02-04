@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class OrderCycleWarning
   def initialize(current_user)
     @current_user = current_user
