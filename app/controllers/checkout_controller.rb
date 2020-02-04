@@ -46,8 +46,43 @@ class CheckoutController < Spree::StoreController
 
     fire_event('spree.checkout.update')
 
-    return unless checkout_workflow(shipping_method_id)
+    checkout_workflow(shipping_method_id)
+  rescue Spree::Core::GatewayError => e
+    rescue_from_spree_gateway_error(e)
+  rescue StandardError => e
+    Bugsnag.notify(e)
+    flash[:error] = I18n.t("checkout.failed")
+    update_failed
+  end
 
+  def checkout_workflow(shipping_method_id)
+    while @order.state != "complete"
+      if @order.state == "payment"
+        return if redirect_to_paypal_express_form_if_needed
+      end
+
+      if @order.state == "delivery"
+        @order.select_shipping_method(shipping_method_id)
+      end
+
+      next if advance_order_state(@order)
+
+      flash[:error] = if @order.errors.present?
+                        @order.errors.full_messages.to_sentence
+                      else
+                        t(:payment_processing_failed)
+                      end
+      return update_failed
+    end
+
+    if @order.completed?
+      update_succeeded
+    else
+      update_failed
+    end
+  end
+
+  def update_succeeded
     set_default_bill_address
     set_default_ship_address
 
@@ -62,42 +97,6 @@ class CheckoutController < Spree::StoreController
       format.json do
         render json: { path: order_path(@order) }, status: :ok
       end
-    end
-  rescue Spree::Core::GatewayError => e
-    # This is done for all actions in the Spree::CheckoutController.
-    rescue_from_spree_gateway_error(e)
-  rescue StandardError => e
-    Bugsnag.notify(e)
-    flash[:error] = I18n.t("checkout.failed")
-    update_failed
-  end
-
-  def checkout_workflow(shipping_method_id)
-    while @order.state != "complete"
-      if @order.state == "payment"
-        return false if redirect_to_paypal_express_form_if_needed
-      end
-
-      if @order.state == "delivery"
-        @order.select_shipping_method(shipping_method_id)
-      end
-
-      next if advance_order_state(@order)
-
-      flash[:error] = if @order.errors.present?
-                        @order.errors.full_messages.to_sentence
-                      else
-                        t(:payment_processing_failed)
-                      end
-      update_failed
-      return false
-    end
-
-    if @order.completed?
-      true
-    else
-      update_failed
-      false
     end
   end
 
