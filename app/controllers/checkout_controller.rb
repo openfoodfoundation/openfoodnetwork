@@ -140,35 +140,31 @@ class CheckoutController < Spree::StoreController
   end
 
   def set_default_bill_address
-    if params[:order][:default_bill_address]
-      new_bill_address = @order.bill_address.clone.attributes
+    return unless params[:order][:default_bill_address]
 
-      user_bill_address_id = spree_current_user.bill_address.andand.id
-      spree_current_user.update_attributes(
-        bill_address_attributes: new_bill_address.merge('id' => user_bill_address_id)
-      )
+    new_bill_address = @order.bill_address.clone.attributes
+    set_bill_address_attributes(spree_current_user, new_bill_address)
+    set_bill_address_attributes(@order.customer, new_bill_address)
+  end
 
-      customer_bill_address_id = @order.customer.bill_address.andand.id
-      @order.customer.update_attributes(
-        bill_address_attributes: new_bill_address.merge('id' => customer_bill_address_id)
-      )
-    end
+  def set_bill_address_attributes(object, new_address)
+    object.update_attributes(
+      bill_address_attributes: new_address.merge('id' => object.bill_address.andand.id)
+    )
   end
 
   def set_default_ship_address
-    if params[:order][:default_ship_address]
-      new_ship_address = @order.ship_address.clone.attributes
+    return unless params[:order][:default_ship_address]
 
-      user_ship_address_id = spree_current_user.ship_address.andand.id
-      spree_current_user.update_attributes(
-        ship_address_attributes: new_ship_address.merge('id' => user_ship_address_id)
-      )
+    new_ship_address = @order.ship_address.clone.attributes
+    set_ship_address_attributes(spree_current_user, new_ship_address)
+    set_ship_address_attributes(@order.customer, new_ship_address)
+  end
 
-      customer_ship_address_id = @order.customer.ship_address.andand.id
-      @order.customer.update_attributes(
-        ship_address_attributes: new_ship_address.merge('id' => customer_ship_address_id)
-      )
-    end
+  def set_ship_address_attributes(object, new_address)
+    object.update_attributes(
+      ship_address_attributes: new_address.merge('id' => object.ship_address.andand.id)
+    )
   end
 
   # Copied and modified from spree. Remove check for order state, since the state machine is
