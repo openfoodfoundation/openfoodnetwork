@@ -46,26 +46,7 @@ class CheckoutController < Spree::StoreController
 
     fire_event('spree.checkout.update')
 
-    while @order.state != "complete"
-      if @order.state == "payment"
-        return if redirect_to_paypal_express_form_if_needed
-      end
-
-      if @order.state == "delivery"
-        @order.select_shipping_method(shipping_method_id)
-      end
-
-      next if advance_order_state(@order)
-
-      flash[:error] = if @order.errors.present?
-                        @order.errors.full_messages.to_sentence
-                      else
-                        t(:payment_processing_failed)
-                      end
-      update_failed
-      return
-    end
-    return update_failed unless @order.state == "complete" || @order.completed?
+    return unless checkout_workflow(shipping_method_id)
 
     set_default_bill_address
     set_default_ship_address
@@ -89,6 +70,35 @@ class CheckoutController < Spree::StoreController
     Bugsnag.notify(e)
     flash[:error] = I18n.t("checkout.failed")
     update_failed
+  end
+
+  def checkout_workflow(shipping_method_id)
+    while @order.state != "complete"
+      if @order.state == "payment"
+        return false if redirect_to_paypal_express_form_if_needed
+      end
+
+      if @order.state == "delivery"
+        @order.select_shipping_method(shipping_method_id)
+      end
+
+      next if advance_order_state(@order)
+
+      flash[:error] = if @order.errors.present?
+                        @order.errors.full_messages.to_sentence
+                      else
+                        t(:payment_processing_failed)
+                      end
+      update_failed
+      return false
+    end
+
+    if @order.completed?
+      true
+    else
+      update_failed
+      false
+    end
   end
 
   # Clears the cached order. Required for #current_order to return a new order
