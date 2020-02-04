@@ -207,62 +207,62 @@ describe Api::ProductsController, type: :controller do
         expect(json_response['name']).to eq("COPY OF #{product_with_image.name}")
       end
     end
+  end
 
-    describe '#bulk_products' do
-      context "as an enterprise user" do
-        let!(:taxon) { create(:taxon) }
-        let!(:product2) { create(:product, supplier: supplier, primary_taxon: taxon) }
-        let!(:product3) { create(:product, supplier: supplier2, primary_taxon: taxon) }
-        let!(:product4) { create(:product, supplier: supplier2) }
-        let(:current_api_user) { supplier_enterprise_user(supplier) }
+  describe '#bulk_products' do
+    context "as an enterprise user" do
+      let!(:taxon) { create(:taxon) }
+      let!(:product2) { create(:product, supplier: supplier, primary_taxon: taxon) }
+      let!(:product3) { create(:product, supplier: supplier2, primary_taxon: taxon) }
+      let!(:product4) { create(:product, supplier: supplier2) }
+      let(:current_api_user) { supplier_enterprise_user(supplier) }
 
-        before { current_api_user.enterprise_roles.create(enterprise: supplier2) }
+      before { current_api_user.enterprise_roles.create(enterprise: supplier2) }
 
-        it "returns a list of products" do
-          api_get :bulk_products, { page: 1, per_page: 15 }, format: :json
-          expect(returned_product_ids).to eq [product4.id, product3.id, product2.id, inactive_product.id, product.id]
-        end
+      it "returns a list of products" do
+        api_get :bulk_products, { page: 1, per_page: 15 }, format: :json
+        expect(returned_product_ids).to eq [product4.id, product3.id, product2.id, inactive_product.id, product.id]
+      end
 
-        it "returns pagination data" do
-          api_get :bulk_products, { page: 1, per_page: 15 }, format: :json
-          expect(json_response['pagination']).to eq "results" => 5, "pages" => 1, "page" => 1, "per_page" => 15
-        end
+      it "returns pagination data" do
+        api_get :bulk_products, { page: 1, per_page: 15 }, format: :json
+        expect(json_response['pagination']).to eq "results" => 5, "pages" => 1, "page" => 1, "per_page" => 15
+      end
 
-        it "uses defaults when page and per_page are not supplied" do
-          api_get :bulk_products, format: :json
-          expect(json_response['pagination']).to eq "results" => 5, "pages" => 1, "page" => 1, "per_page" => 15
-        end
+      it "uses defaults when page and per_page are not supplied" do
+        api_get :bulk_products, format: :json
+        expect(json_response['pagination']).to eq "results" => 5, "pages" => 1, "page" => 1, "per_page" => 15
+      end
 
-        it "returns paginated products by page" do
-          api_get :bulk_products, { page: 1, per_page: 2 }, format: :json
-          expect(returned_product_ids).to eq [product4.id, product3.id]
+      it "returns paginated products by page" do
+        api_get :bulk_products, { page: 1, per_page: 2 }, format: :json
+        expect(returned_product_ids).to eq [product4.id, product3.id]
 
-          api_get :bulk_products, { page: 2, per_page: 2 }, format: :json
-          expect(returned_product_ids).to eq [product2.id, inactive_product.id]
-        end
+        api_get :bulk_products, { page: 2, per_page: 2 }, format: :json
+        expect(returned_product_ids).to eq [product2.id, inactive_product.id]
+      end
 
-        it "filters results by supplier" do
-          api_get :bulk_products, { page: 1, per_page: 15, q: { supplier_id_eq: supplier.id } }, format: :json
-          expect(returned_product_ids).to eq [product2.id, inactive_product.id, product.id]
-        end
+      it "filters results by supplier" do
+        api_get :bulk_products, { page: 1, per_page: 15, q: { supplier_id_eq: supplier.id } }, format: :json
+        expect(returned_product_ids).to eq [product2.id, inactive_product.id, product.id]
+      end
 
-        it "filters results by product category" do
-          api_get :bulk_products, { page: 1, per_page: 15, q: { primary_taxon_id_eq: taxon.id } }, format: :json
-          expect(returned_product_ids).to eq [product3.id, product2.id]
-        end
+      it "filters results by product category" do
+        api_get :bulk_products, { page: 1, per_page: 15, q: { primary_taxon_id_eq: taxon.id } }, format: :json
+        expect(returned_product_ids).to eq [product3.id, product2.id]
+      end
 
-        it "filters results by import_date" do
-          product.variants.first.import_date = 1.day.ago
-          product2.variants.first.import_date = 2.days.ago
-          product3.variants.first.import_date = 1.day.ago
+      it "filters results by import_date" do
+        product.variants.first.import_date = 1.day.ago
+        product2.variants.first.import_date = 2.days.ago
+        product3.variants.first.import_date = 1.day.ago
 
-          product.save
-          product2.save
-          product3.save
+        product.save
+        product2.save
+        product3.save
 
-          api_get :bulk_products, { page: 1, per_page: 15, import_date: 1.day.ago.to_date.to_s }, format: :json
-          expect(returned_product_ids).to eq [product3.id, product.id]
-        end
+        api_get :bulk_products, { page: 1, per_page: 15, import_date: 1.day.ago.to_date.to_s }, format: :json
+        expect(returned_product_ids).to eq [product3.id, product.id]
       end
     end
   end
