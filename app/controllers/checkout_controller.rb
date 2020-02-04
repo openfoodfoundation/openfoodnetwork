@@ -44,7 +44,6 @@ class CheckoutController < Spree::StoreController
 
     return update_failed unless @order.update_attributes(object_params)
 
-    check_order_for_phantom_fees
     fire_event('spree.checkout.update')
 
     while @order.state != "complete"
@@ -150,22 +149,6 @@ class CheckoutController < Spree::StoreController
       @order.customer.update_attributes(
         ship_address_attributes: new_ship_address.merge('id' => customer_ship_address_id)
       )
-    end
-  end
-
-  def check_order_for_phantom_fees
-    phantom_fees = @order.adjustments.
-      joins("LEFT OUTER JOIN spree_line_items"\
-        " ON spree_line_items.id = spree_adjustments.source_id").
-      where("originator_type = 'EnterpriseFee'"\
-        " AND source_type = 'Spree::LineItem' AND spree_line_items.id IS NULL")
-
-    if phantom_fees.any?
-      Bugsnag.notify(RuntimeError.new("Phantom Fees"),
-                     phantom_fees: {
-                       phantom_total: phantom_fees.sum(&:amount).to_s,
-                       phantom_fees: phantom_fees.as_json
-                     })
     end
   end
 
