@@ -301,9 +301,6 @@ class CheckoutController < Spree::StoreController
       raise Spree::Core::GatewayError, I18n.t(:invalid_credit_card)
     end
 
-    # Not currently supported but maybe we should add it...?
-    credit_card.verification_value = params[:cvc_confirm] if params[:cvc_confirm].present?
-
     params[:order][:payments_attributes].first[:source] = credit_card
     params[:order][:payments_attributes].first.delete :source_attributes
   end
