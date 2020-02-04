@@ -167,22 +167,36 @@ class CheckoutController < Spree::StoreController
     )
   end
 
-  # Copied and modified from spree. Remove check for order state, since the state machine is
-  # progressed all the way in one go with the one page checkout.
   def object_params
-    # For payment step, filter order parameters to produce the expected
-    #   nested attributes for a single payment and its source,
-    #   discarding attributes for payment methods other than the one selected
-    if params[:payment_source].present? && source_params = params.delete(:payment_source)[params[:order][:payments_attributes].first[:payment_method_id].underscore]
-      params[:order][:payments_attributes].first[:source_attributes] = source_params
-    end
+    move_payment_source_to_payment_attributes!
+
+    set_amount_in_payments_attributes
+
+    construct_saved_card_attributes if params[:order][:existing_card_id]
+
+    params[:order]
+  end
+
+  # For payment step, filter order parameters to produce the expected
+  #   nested attributes for a single payment and its source,
+  #   discarding attributes for payment methods other than the one selected
+  def move_payment_source_to_payment_attributes!
+    return unless params[:payment_source].present? &&
+                  payment_source_params = delete_payment_source_params!
+
+    params[:order][:payments_attributes].first[:source_attributes] = payment_source_params
+  end
+
+  def delete_payment_source_params!
+    params.delete(:payment_source)[
+      params[:order][:payments_attributes].first[:payment_method_id].underscore
+    ]
+  end
+
+  def set_amount_in_payments_attributes
     if params[:order][:payments_attributes]
       params[:order][:payments_attributes].first[:amount] = @order.total
     end
-    if params[:order][:existing_card_id]
-      construct_saved_card_attributes
-    end
-    params[:order]
   end
 
   # Perform order.next, guarding against StaleObjectErrors
