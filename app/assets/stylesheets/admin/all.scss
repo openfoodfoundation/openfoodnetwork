@@ -14,7 +14,14 @@
  *= require_self
 */
 
+
+//************************************************************************//
+//************************************************************************//
+@import 'globals/variables';
+@import 'globals/mixins';
+
 @import 'plugins/powertip';
+@import 'plugins/jstree';
 
 @import 'hacks/mozilla';
 @import 'hacks/opera';
