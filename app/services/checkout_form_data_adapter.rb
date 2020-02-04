@@ -4,8 +4,10 @@
 class CheckoutFormDataAdapter
   attr_reader :shipping_method_id
 
-  def initialize(params)
+  def initialize(params, order, current_user)
     @params = params
+    @order = order
+    @current_user = current_user
 
     move_payment_source_to_payment_attributes!
 
@@ -55,7 +57,7 @@ class CheckoutFormDataAdapter
 
   def move_to_payment_attributes(existing_card_id)
     credit_card = Spree::CreditCard.find(existing_card_id)
-    if credit_card.try(:user_id).blank? || credit_card.user_id != spree_current_user.try(:id)
+    if credit_card.try(:user_id).blank? || credit_card.user_id != @current_user.try(:id)
       raise Spree::Core::GatewayError, I18n.t(:invalid_credit_card)
     end
 
