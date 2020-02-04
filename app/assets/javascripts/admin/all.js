@@ -14,6 +14,8 @@
 //= require jquery.powertip
 //= require jquery.cookie
 //= require jquery.jstree/jquery.jstree
+//= require jquery.vAlign
+//= require jquery.horizontalNav
 //= require angular
 //= require angular-resource
 //= require angular-animate
@@ -25,8 +27,13 @@
 //= require lodash.underscore.js
 
 // spree
+//= require spree
+//= require admin/spree-select2
 //= require admin/spree_backend
 //= require modernizr
+//= require spin
+//= require jquery.adaptivemenu
+//= require equalize
 //= require css_browser_selector_dev
 //= require responsive-tables
 //= require admin/spree_paypal_express
