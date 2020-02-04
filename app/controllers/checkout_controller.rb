@@ -89,6 +89,10 @@ class CheckoutController < Spree::StoreController
     ResetOrderService.new(self, current_order).call
     session[:access_token] = current_order.token
 
+    respond_to_update_succeeded
+  end
+
+  def respond_to_update_succeeded
     flash[:notice] = t(:order_processed_successfully)
     respond_to do |format|
       format.html do
