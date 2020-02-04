@@ -93,7 +93,7 @@ gem 'wkhtmltopdf-binary'
 
 gem 'foreigner'
 gem 'immigrant'
-gem 'roo', '~> 2.8.2'
+gem 'roo', '~> 2.8.3'
 
 gem 'whenever', require: false
 
