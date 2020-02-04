@@ -296,13 +296,18 @@ class CheckoutController < Spree::StoreController
     existing_card_id = params[:order].delete(:existing_card_id)
     return if existing_card_id.blank?
 
+    move_to_payment_attributes(existing_card_id)
+
+    params[:order][:payments_attributes].first.delete :source_attributes
+  end
+
+  def move_to_payment_attributes(existing_card_id)
     credit_card = Spree::CreditCard.find(existing_card_id)
     if credit_card.try(:user_id).blank? || credit_card.user_id != spree_current_user.try(:id)
       raise Spree::Core::GatewayError, I18n.t(:invalid_credit_card)
     end
 
     params[:order][:payments_attributes].first[:source] = credit_card
-    params[:order][:payments_attributes].first.delete :source_attributes
   end
 
   def rescue_from_spree_gateway_error(error)
