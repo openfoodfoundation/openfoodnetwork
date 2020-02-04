@@ -372,7 +372,6 @@ Metrics/AbcSize:
   - app/controllers/spree/admin/taxons_controller.rb
   - app/controllers/spree/admin/users_controller.rb
   - app/controllers/spree/admin/variants_controller.rb
-  - app/controllers/spree/checkout_controller.rb
   - app/controllers/spree/credit_cards_controller.rb
   - app/controllers/spree/orders_controller.rb
   - app/controllers/spree/user_passwords_controller.rb
