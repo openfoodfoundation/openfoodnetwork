@@ -224,11 +224,17 @@ class CheckoutController < Spree::StoreController
 
   def load_order
     @order = current_order
-    redirect_to(main_app.shop_path) && return unless @order && @order.checkout_allowed?
+
+    redirect_to(main_app.shop_path) && return if redirect_to_shop?
     redirect_to_cart_path && return unless valid_order_line_items?
-    redirect_to(main_app.shop_path) && return if @order.completed?
     before_address
     setup_for_current_state
+  end
+
+  def redirect_to_shop?
+    !@order ||
+      !@order.checkout_allowed? ||
+      @order.completed?
   end
 
   def setup_for_current_state
