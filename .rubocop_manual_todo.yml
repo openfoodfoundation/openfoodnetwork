@@ -43,7 +43,6 @@ Layout/LineLength:
   - app/controllers/checkout_controller.rb
   - app/controllers/spree/admin/adjustments_controller_decorator.rb
   - app/controllers/spree/admin/orders_controller_decorator.rb
-  - app/controllers/spree/admin/payments_controller_decorator.rb
   - app/controllers/spree/credit_cards_controller.rb
   - app/controllers/spree/paypal_controller_decorator.rb
   - app/controllers/stripe/callbacks_controller.rb
@@ -365,7 +364,8 @@ Metrics/AbcSize:
   - app/controllers/spree/admin/orders_controller_decorator.rb
   - app/controllers/spree/admin/overview_controller.rb
   - app/controllers/spree/admin/payment_methods_controller.rb
-  - app/controllers/spree/admin/payments_controller_decorator.rb
+  - app/controllers/spree/admin/payments_controller.rb
+  - app/controllers/spree/admin/products_controller_decorator.rb
   - app/controllers/spree/admin/reports_controller.rb
   - app/controllers/spree/admin/resource_controller.rb
   - app/controllers/spree/admin/products_controller.rb
@@ -496,7 +496,6 @@ Metrics/CyclomaticComplexity:
   - app/controllers/admin/enterprise_fees_controller.rb
   - app/controllers/admin/enterprises_controller.rb
   - app/controllers/checkout_controller.rb
-  - app/controllers/spree/admin/payments_controller_decorator.rb
   - app/controllers/spree/admin/taxons_controller.rb
   - app/controllers/spree/orders_controller.rb
   - app/helpers/checkout_helper.rb
@@ -527,7 +526,6 @@ Metrics/PerceivedComplexity:
   - app/controllers/admin/enterprises_controller.rb
   - app/controllers/api/variants_controller.rb
   - app/controllers/checkout_controller.rb
-  - app/controllers/spree/admin/payments_controller_decorator.rb
   - app/controllers/spree/admin/taxons_controller.rb
   - app/controllers/spree/orders_controller.rb
   - app/helpers/checkout_helper.rb
@@ -569,7 +567,7 @@ Metrics/MethodLength:
   - app/controllers/spree/admin/image_settings_controller.rb
   - app/controllers/spree/admin/orders/customer_details_controller_decorator.rb
   - app/controllers/spree/admin/payment_methods_controller.rb
-  - app/controllers/spree/admin/payments_controller_decorator.rb
+  - app/controllers/spree/admin/payments_controller.rb
   - app/controllers/spree/admin/reports_controller.rb
   - app/controllers/spree/admin/resource_controller.rb
   - app/controllers/spree/admin/products_controller.rb
