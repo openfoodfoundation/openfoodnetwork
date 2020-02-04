@@ -9,7 +9,7 @@
   = t :email_signup_confirmed_email
 %p
   -# Remove http:// and trailing slashes from root url if they exist
-  = t :email_signup_shop_html, link: link_to(spree.root_url.sub(/http:\/\//,"").sub(/\/$/,""), spree.root_url, target: '_blank')
+  = t :email_signup_shop_html, link: link_to(main_app.root_url.sub(/http:\/\//,"").sub(/\/$/,""), main_app.root_url, target: '_blank')
 %p &nbsp;
 %hr/
 %p &nbsp;

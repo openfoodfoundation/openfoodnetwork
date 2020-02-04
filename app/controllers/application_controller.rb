@@ -23,7 +23,11 @@ class ApplicationController < ActionController::Base
     referer_path = OpenFoodNetwork::RefererParser.path(request.referer)
     if referer_path
       is_checkout_path_the_referer = [main_app.checkout_path].include?(referer_path)
-      session["spree_user_return_to"] = is_checkout_path_the_referer ? referer_path : root_path
+      session["spree_user_return_to"] = if is_checkout_path_the_referer
+                                          referer_path
+                                        else
+                                          main_app.root_path
+                                        end
     end
   end
 
@@ -48,11 +52,11 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource_or_scope)
     return session[:shopfront_redirect] if session[:shopfront_redirect]
 
-    stored_location_for(resource_or_scope) || signed_in_root_path(resource_or_scope)
+    stored_location_for(resource_or_scope) || main_app.root_path
   end
 
   def after_sign_out_path_for(_resource_or_scope)
-    session[:shopfront_redirect] || root_path
+    session[:shopfront_redirect] || main_app.root_path
   end
 
   private
@@ -74,7 +78,7 @@ class ApplicationController < ActionController::Base
 
   def require_distributor_chosen
     unless @distributor = current_distributor
-      redirect_to spree.root_path
+      redirect_to main_app.root_path
       false
     end
   end
@@ -86,17 +90,20 @@ class ApplicationController < ActionController::Base
   end
 
   def check_hub_ready_for_checkout
-    # This condition is more rigourous than required by development to avoid coupling this
-    # condition to every controller spec
-    if current_distributor && current_order &&
-       current_distributor.respond_to?(:ready_for_checkout?) &&
-       !current_distributor.ready_for_checkout?
-
+    if current_distributor_closed?
       current_order.empty!
       current_order.set_distribution! nil, nil
-      flash[:info] = "The hub you have selected is temporarily closed for orders. Please try again later."
-      redirect_to root_url
+      flash[:info] = "The hub you have selected is temporarily closed for orders. "\
+        "Please try again later."
+      redirect_to main_app.root_url
     end
+  end
+
+  def current_distributor_closed?
+    current_distributor &&
+      current_order &&
+      current_distributor.respond_to?(:ready_for_checkout?) &&
+      !current_distributor.ready_for_checkout?
   end
 
   def check_order_cycle_expiry
@@ -105,7 +112,7 @@ class ApplicationController < ActionController::Base
       current_order.empty!
       current_order.set_order_cycle! nil
       flash[:info] = "The order cycle you've selected has just closed. Please try again!"
-      redirect_to root_url
+      redirect_to main_app.root_url
     end
   end
 
