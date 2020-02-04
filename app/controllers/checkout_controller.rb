@@ -40,13 +40,12 @@ class CheckoutController < Spree::StoreController
   end
 
   def update
-    shipping_method_id = object_params.delete(:shipping_method_id)
-
-    return update_failed unless @order.update_attributes(object_params)
+    params_adapter = CheckoutFormDataAdapter.new(params)
+    return update_failed unless @order.update_attributes(params_adapter.order_params)
 
     fire_event('spree.checkout.update')
 
-    checkout_workflow(shipping_method_id)
+    checkout_workflow(params_adapter.shipping_method_id)
   rescue Spree::Core::GatewayError => e
     rescue_from_spree_gateway_error(e)
   rescue StandardError => e
@@ -148,56 +147,6 @@ class CheckoutController < Spree::StoreController
       format.html { render :edit }
       format.json { render json: { flash: flash.to_hash }, status: :bad_request }
     end
-  end
-
-  def object_params
-    move_payment_source_to_payment_attributes!
-
-    set_amount_in_payments_attributes
-
-    construct_saved_card_attributes if params[:order][:existing_card_id]
-
-    params[:order]
-  end
-
-  # For payment step, filter order parameters to produce the expected
-  #   nested attributes for a single payment and its source,
-  #   discarding attributes for payment methods other than the one selected
-  def move_payment_source_to_payment_attributes!
-    return unless params[:payment_source].present? &&
-                  payment_source_params = delete_payment_source_params!
-
-    params[:order][:payments_attributes].first[:source_attributes] = payment_source_params
-  end
-
-  def delete_payment_source_params!
-    params.delete(:payment_source)[
-      params[:order][:payments_attributes].first[:payment_method_id].underscore
-    ]
-  end
-
-  def set_amount_in_payments_attributes
-    if params[:order][:payments_attributes]
-      params[:order][:payments_attributes].first[:amount] = @order.total
-    end
-  end
-
-  def construct_saved_card_attributes
-    existing_card_id = params[:order].delete(:existing_card_id)
-    return if existing_card_id.blank?
-
-    move_to_payment_attributes(existing_card_id)
-
-    params[:order][:payments_attributes].first.delete :source_attributes
-  end
-
-  def move_to_payment_attributes(existing_card_id)
-    credit_card = Spree::CreditCard.find(existing_card_id)
-    if credit_card.try(:user_id).blank? || credit_card.user_id != spree_current_user.try(:id)
-      raise Spree::Core::GatewayError, I18n.t(:invalid_credit_card)
-    end
-
-    params[:order][:payments_attributes].first[:source] = credit_card
   end
 
   def checkout_workflow(shipping_method_id)
