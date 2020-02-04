@@ -152,7 +152,7 @@ class CheckoutController < Spree::StoreController
   def checkout_workflow(shipping_method_id)
     while @order.state != "complete"
       if @order.state == "payment"
-        return if redirect_to_paypal_express_form_if_needed
+        return if redirect_to_payment_gateway
       end
 
       @order.select_shipping_method(shipping_method_id) if @order.state == "delivery"
@@ -166,15 +166,11 @@ class CheckoutController < Spree::StoreController
     update_result
   end
 
-  def redirect_to_paypal_express_form_if_needed
-    return unless params[:order][:payments_attributes]
+  def redirect_to_payment_gateway
+    redirect_path = CheckoutPaymentRedirect.new(params).path
+    return if redirect_path.blank?
 
-    payment_method_id = params[:order][:payments_attributes].first[:payment_method_id]
-    payment_method = Spree::PaymentMethod.find(payment_method_id)
-    return unless payment_method.is_a?(Spree::Gateway::PayPalExpress)
-
-    render json: { path: spree.paypal_express_path(payment_method_id: payment_method.id) },
-           status: :ok
+    render json: { path: redirect_path }, status: :ok
     true
   end
 
