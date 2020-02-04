@@ -25,7 +25,8 @@ class Enterprise < ActiveRecord::Base
   has_many :relationships_as_child, class_name: 'EnterpriseRelationship',
                                     foreign_key: 'child_id',
                                     dependent: :destroy
-  has_and_belongs_to_many :groups, class_name: 'EnterpriseGroup'
+  has_and_belongs_to_many :groups, join_table: 'enterprise_groups_enterprises',
+                                   class_name: 'EnterpriseGroup'
   has_many :producer_properties, foreign_key: 'producer_id'
   has_many :properties, through: :producer_properties
   has_many :supplied_products, class_name: 'Spree::Product',
@@ -115,7 +116,10 @@ class Enterprise < ActiveRecord::Base
   scope :not_ready_for_checkout, lambda {
     # When ready_for_checkout is empty, return all rows when there are no enterprises ready for
     # checkout.
-    ready_enterprises = Enterprise.ready_for_checkout.select('enterprises.id')
+    ready_enterprises = Enterprise.ready_for_checkout.
+      except(:select).
+      select('DISTINCT enterprises.id')
+
     if ready_enterprises.present?
       where("enterprises.id NOT IN (?)", ready_enterprises)
     else

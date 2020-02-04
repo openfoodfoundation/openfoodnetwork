@@ -15,11 +15,10 @@ module Spree
       # Warn the user when they have an active order cycle with hubs that are not ready
       # for checkout (ie. does not have valid shipping and payment methods).
       def warn_invalid_order_cycles
-        distributors = active_distributors_not_ready_for_checkout
+        return if flash[:notice].present?
 
-        return if distributors.empty? || flash[:notice].present?
-
-        flash[:notice] = active_distributors_not_ready_for_checkout_message(distributors)
+        warning = OrderCycleWarning.new(spree_current_user).call
+        flash[:notice] = warning if warning.present?
       end
 
       # This is in Spree::Core::ControllerHelpers::Auth
@@ -93,24 +92,6 @@ module Spree
 
       private
 
-      def active_distributors_not_ready_for_checkout
-        ocs = OrderCycle.managed_by(spree_current_user).active
-        distributors = ocs.includes(:distributors).map(&:distributors).flatten.uniq
-        Enterprise.where('enterprises.id IN (?)', distributors).not_ready_for_checkout
-      end
-
-      def active_distributors_not_ready_for_checkout_message(distributors)
-        distributor_names = distributors.map(&:name).join ', '
-
-        if distributors.count > 1
-          I18n.t(:active_distributors_not_ready_for_checkout_message_plural,
-                 distributor_names: distributor_names)
-        else
-          I18n.t(:active_distributors_not_ready_for_checkout_message_singular,
-                 distributor_names: distributor_names)
-        end
-      end
-
       def html_request?
         request.format.html?
       end
@@ -121,11 +102,15 @@ module Spree
 
       def render_as_json(data, options = {})
         ams_prefix = options.delete :ams_prefix
-        if [Array, ActiveRecord::Relation].include? data.class
+        if each_serializer_required?(data)
           render options.merge(json: data, each_serializer: serializer(ams_prefix))
         else
           render options.merge(json: data, serializer: serializer(ams_prefix))
         end
+      end
+
+      def each_serializer_required?(data)
+        ['Array', 'ActiveRecord::Relation'].include?(data.class.name)
       end
 
       def serializer(ams_prefix)
