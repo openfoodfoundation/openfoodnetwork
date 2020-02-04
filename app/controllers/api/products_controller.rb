@@ -48,16 +48,22 @@ module Api
     end
 
     def bulk_products
-      product_query = OpenFoodNetwork::Permissions.new(current_api_user).
-        editable_products.merge(product_scope)
+      product_query = OpenFoodNetwork::Permissions.
+                      new(current_api_user).
+                      editable_products.
+                      merge(product_scope)
 
       if params[:import_date].present?
-        product_query = product_query.imported_on(params[:import_date]).group_by_products_id
+        product_query = product_query.
+                        imported_on(params[:import_date]).
+                        group_by_products_id
       end
 
-      @products = product_query.order('created_at DESC').
-        ransack(params[:q]).result.
-        page(params[:page] || DEFAULT_PAGE).per(params[:per_page] || DEFAULT_PER_PAGE)
+      @products = product_query.
+                  ransack(params[:q]).
+                  result.
+                  page(params[:page] || DEFAULT_PAGE).
+                  per(params[:per_page] || DEFAULT_PER_PAGE)
 
       render_paged_products @products
     end
