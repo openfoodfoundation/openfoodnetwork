@@ -56,7 +56,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
       'q[name_cont]': $scope.query,
       'q[supplier_id_eq]': $scope.producerFilter,
       'q[primary_taxon_id_eq]': $scope.categoryFilter,
-      'q[s]': $scope.sorting || 'created_at desc',
+      'q[s]': $scope.sorting || 'created_at asc',
       import_date: $scope.importDateFilter,
       page: $scope.page,
       per_page: $scope.per_page
