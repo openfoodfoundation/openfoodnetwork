@@ -27,7 +27,7 @@
     %th.producer{ 'ng-show' => 'columns.producer.visible' }=t('admin.producer')
     %th.sku{ 'ng-show' => 'columns.sku.visible' }=t('admin.sku')
     %th.name{ 'ng-show' => 'columns.name.visible' }
-      = render partial: 'spree/admin/orders/sortable_header', locals: {column_name: 'name'}
+      = render partial: 'spree/admin/shared/sortable_header', locals: {column_name: 'name'}
     %th.unit{ 'ng-show' => 'columns.unit.visible' }=t('.unit')
     %th.display_as{ 'ng-show' => 'columns.unit.visible' }=t('.display_as')
     %th.price{ 'ng-show' => 'columns.price.visible' }=t('admin.price')
