@@ -1,4 +1,4 @@
-angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $filter, $http, $window, BulkProducts, DisplayProperties, DirtyProducts, VariantUnitManager, StatusMessage, producers, Taxons, Columns, tax_categories, RequestMonitor) ->
+angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $filter, $http, $window, BulkProducts, DisplayProperties, DirtyProducts, VariantUnitManager, StatusMessage, producers, Taxons, Columns, tax_categories, RequestMonitor, SortOptions) ->
   $scope.StatusMessage = StatusMessage
 
   $scope.columns = Columns.columns
@@ -38,6 +38,8 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
   $scope.query = ""
   $scope.DisplayProperties = DisplayProperties
 
+  $scope.sortOptions = SortOptions
+
   $scope.initialise = ->
     $scope.fetchProducts()
 
@@ -54,7 +56,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
       'q[name_cont]': $scope.query,
       'q[supplier_id_eq]': $scope.producerFilter,
       'q[primary_taxon_id_eq]': $scope.categoryFilter,
-      'q[s]': 'name ASC',
+      'q[s]': $scope.sorting || 'created_at desc',
       import_date: $scope.importDateFilter,
       page: $scope.page,
       per_page: $scope.per_page
@@ -104,9 +106,16 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     $scope.categoryFilter = "0"
     $scope.importDateFilter = "0"
 
+  $scope.$watch 'sortOptions', (sort) ->
+    if sort && sort.predicate != ""
+      $scope.sorting = sort.predicate + ' desc' if sort.reverse
+      $scope.sorting = sort.predicate + ' asc' if !sort.reverse
+      $scope.fetchProducts()
+  , true
+
   confirm_unsaved_changes = () ->
     (DirtyProducts.count() > 0 and confirm(t("unsaved_changes_confirmation"))) or (DirtyProducts.count() == 0)
-  
+
   editProductUrl = (product, variant) ->
     "/admin/products/" + product.permalink_live + ((if variant then "/variants/" + variant.id else "")) + "/edit"
 
