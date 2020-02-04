@@ -197,20 +197,33 @@ class CheckoutController < Spree::StoreController
 
   def update_result
     if @order.state == "complete" || @order.completed?
+      save_order_addresses_as_user_default
+      ResetOrderService.new(self, current_order).call
+
       update_succeeded
     else
       update_failed
     end
   end
 
+  def save_order_addresses_as_user_default
+    user_default_address_setter = UserDefaultAddressSetter.new(@order, spree_current_user)
+    user_default_address_setter.set_default_bill_address if params[:order][:default_bill_address]
+    user_default_address_setter.set_default_ship_address if params[:order][:default_ship_address]
+  end
+
   def update_succeeded
-    set_default_bill_address
-    set_default_ship_address
-
-    ResetOrderService.new(self, current_order).call
     session[:access_token] = current_order.token
+    flash[:notice] = t(:order_processed_successfully)
 
-    respond_to_update_succeeded
+    respond_to do |format|
+      format.html do
+        respond_with(@order, location: order_path(@order))
+      end
+      format.json do
+        render json: { path: order_path(@order) }, status: :ok
+      end
+    end
   end
 
   def update_failed
@@ -223,46 +236,6 @@ class CheckoutController < Spree::StoreController
       end
       format.json do
         render json: { errors: @order.errors, flash: flash.to_hash }.to_json, status: :bad_request
-      end
-    end
-  end
-
-  def set_default_bill_address
-    return unless params[:order][:default_bill_address]
-
-    new_bill_address = @order.bill_address.clone.attributes
-    set_bill_address_attributes(spree_current_user, new_bill_address)
-    set_bill_address_attributes(@order.customer, new_bill_address)
-  end
-
-  def set_bill_address_attributes(object, new_address)
-    object.update_attributes(
-      bill_address_attributes: new_address.merge('id' => object.bill_address.andand.id)
-    )
-  end
-
-  def set_default_ship_address
-    return unless params[:order][:default_ship_address]
-
-    new_ship_address = @order.ship_address.clone.attributes
-    set_ship_address_attributes(spree_current_user, new_ship_address)
-    set_ship_address_attributes(@order.customer, new_ship_address)
-  end
-
-  def set_ship_address_attributes(object, new_address)
-    object.update_attributes(
-      ship_address_attributes: new_address.merge('id' => object.ship_address.andand.id)
-    )
-  end
-
-  def respond_to_update_succeeded
-    flash[:notice] = t(:order_processed_successfully)
-    respond_to do |format|
-      format.html do
-        respond_with(@order, location: order_path(@order))
-      end
-      format.json do
-        render json: { path: order_path(@order) }, status: :ok
       end
     end
   end
