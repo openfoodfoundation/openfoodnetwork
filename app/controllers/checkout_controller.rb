@@ -40,7 +40,7 @@ class CheckoutController < Spree::StoreController
   end
 
   def update
-    params_adapter = CheckoutFormDataAdapter.new(params)
+    params_adapter = CheckoutFormDataAdapter.new(params, @order, spree_current_user)
     return update_failed unless @order.update_attributes(params_adapter.order_params)
 
     fire_event('spree.checkout.update')
@@ -196,7 +196,7 @@ class CheckoutController < Spree::StoreController
   end
 
   def update_result
-    if @order.completed?
+    if @order.state == "complete" || @order.completed?
       update_succeeded
     else
       update_failed
