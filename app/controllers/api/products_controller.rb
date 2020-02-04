@@ -60,7 +60,7 @@ module Api
       end
 
       @products = product_query.
-        ransack(params[:q]).
+        ransack(query_params_with_defaults).
         result.
         page(params[:page] || DEFAULT_PAGE).
         per(params[:per_page] || DEFAULT_PER_PAGE)
@@ -140,6 +140,10 @@ module Api
         # This hash is used by the BulkProducts JS service.
         pagination: pagination_data(products)
       }.to_json
+    end
+
+    def query_params_with_defaults
+      params[:q].to_h.reverse_merge!({ 's' => 'created_at DESC' })
     end
 
     def pagination_data(results)
