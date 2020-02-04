@@ -85,12 +85,18 @@ Spree::Core::Engine.routes.draw do
     get '/variants/search', :to => "variants#search", :as => :search_variants
 
     resources :orders do
-      get :invoice, on: :member
-      get :print, on: :member
-      get :print_ticket, on: :member
-      get :managed, on: :collection
+      member do
+        put :fire
+        get :fire
+        post :resend
+        get :invoice
+        get :print
+        get :print_ticket
+      end
 
       collection do
+        get :managed
+
         resources :invoices, only: [:create, :show] do
           get :poll
         end
@@ -103,6 +109,8 @@ Spree::Core::Engine.routes.draw do
           put :fire
         end
       end
+
+      resource :customer, :controller => "orders/customer_details"
     end
 
     resources :users do
