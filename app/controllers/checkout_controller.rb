@@ -42,7 +42,7 @@ class CheckoutController < Spree::StoreController
   end
 
   def update
-    params_adapter = CheckoutFormDataAdapter.new(params, @order, spree_current_user)
+    params_adapter = Checkout::FormDataAdapter.new(params, @order, spree_current_user)
     return update_failed unless @order.update_attributes(params_adapter.order_params)
 
     fire_event('spree.checkout.update')
@@ -169,7 +169,7 @@ class CheckoutController < Spree::StoreController
   end
 
   def redirect_to_payment_gateway
-    redirect_path = CheckoutPaymentRedirect.new(params).path
+    redirect_path = Checkout::PaymentRedirect.new(params).path
     return if redirect_path.blank?
 
     render json: { path: redirect_path }, status: :ok
