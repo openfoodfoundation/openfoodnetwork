@@ -72,6 +72,14 @@
       padding: 1.25em 0;
       background-color: transparent;
 
+      a {
+        color: $orange-500;
+
+        &:hover {
+          color: $orange-600;
+        }
+      }
+
       img {
         margin: 0px 0px 0px 40px;
       }
