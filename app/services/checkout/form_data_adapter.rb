@@ -36,7 +36,7 @@ module Checkout
     end
 
     def delete_payment_source_params!
-      params.delete(:payment_source)[
+      @params.delete(:payment_source)[
         @params[:order][:payments_attributes].first[:payment_method_id].underscore
       ]
     end
@@ -51,12 +51,12 @@ module Checkout
       existing_card_id = @params[:order].delete(:existing_card_id)
       return if existing_card_id.blank?
 
-      move_to_payment_attributes(existing_card_id)
+      add_to_payment_attributes(existing_card_id)
 
       @params[:order][:payments_attributes].first.delete :source_attributes
     end
 
-    def move_to_payment_attributes(existing_card_id)
+    def add_to_payment_attributes(existing_card_id)
       credit_card = Spree::CreditCard.find(existing_card_id)
       if credit_card.try(:user_id).blank? || credit_card.user_id != @current_user.try(:id)
         raise Spree::Core::GatewayError, I18n.t(:invalid_credit_card)
