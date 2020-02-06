@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe Checkout::PaypalRedirect do
-  describe '#order_params' do
+  describe '#path' do
     let(:params) { { order: { order_id: "123" } } }
 
     let(:redirect) { Checkout::PaypalRedirect.new(params) }
