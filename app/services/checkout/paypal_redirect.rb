@@ -2,7 +2,7 @@
 
 # Provides the redirect path if a redirect to the payment gateway is needed
 module Checkout
-  class PaymentRedirect
+  class PaypalRedirect
     def initialize(params)
       @params = params
     end
