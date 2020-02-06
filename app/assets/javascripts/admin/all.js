@@ -29,7 +29,7 @@
 
 // spree
 //= require spree
-//= require admin/spree-select2
+//= require admin/spree/spree-select2
 //= require modernizr
 //= require spin
 //= require equalize
