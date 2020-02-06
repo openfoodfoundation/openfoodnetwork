@@ -165,7 +165,7 @@ class CheckoutController < Spree::StoreController
       return update_failed
     end
 
-    update_result
+    update_response
   end
 
   def redirect_to_payment_gateway
@@ -193,27 +193,37 @@ class CheckoutController < Spree::StoreController
     end
   end
 
-  def update_result
-    if @order.state == "complete" || @order.completed?
-      save_order_addresses_as_user_default
-      ResetOrderService.new(self, current_order).call
-
-      update_succeeded
+  def update_response
+    if order_complete?
+      checkout_succeeded
+      update_succeeded_response
     else
-      update_failed
+      checkout_failed
+      update_failed_response
     end
   end
 
+  def order_complete?
+    @order.state == "complete" || @order.completed?
+  end
+
+  def checkout_succeeded
+    save_order_addresses_as_user_default
+    ResetOrderService.new(self, current_order).call
+
+    session[:access_token] = current_order.token
+    flash[:notice] = t(:order_processed_successfully)
+  end
+
   def save_order_addresses_as_user_default
+    return unless params[:order]
+
     user_default_address_setter = UserDefaultAddressSetter.new(@order, spree_current_user)
     user_default_address_setter.set_default_bill_address if params[:order][:default_bill_address]
     user_default_address_setter.set_default_ship_address if params[:order][:default_ship_address]
   end
 
-  def update_succeeded
-    session[:access_token] = current_order.token
-    flash[:notice] = t(:order_processed_successfully)
-
+  def update_succeeded_response
     respond_to do |format|
       format.html do
         respond_with(@order, location: order_path(@order))
@@ -225,9 +235,16 @@ class CheckoutController < Spree::StoreController
   end
 
   def update_failed
+    checkout_failed
+    update_failed_response
+  end
+
+  def checkout_failed
     current_order.updater.shipping_address_from_distributor
     RestartCheckout.new(@order).call
+  end
 
+  def update_failed_response
     respond_to do |format|
       format.html do
         render :edit
