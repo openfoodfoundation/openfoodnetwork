@@ -251,7 +251,7 @@ describe CheckoutController, type: :controller do
     end
 
     it "should check the payment method for Paypalness if we've selected one" do
-      expect(Spree::PaymentMethod).to receive(:find).with(payment_method.id.to_s) { payment_method }
+      expect(Spree::PaymentMethod).to receive(:find).twice.with(payment_method.id.to_s) { payment_method }
       allow(order).to receive(:update_attributes) { true }
       allow(order).to receive(:state) { "payment" }
       spree_post :update, order: { payments_attributes: [{ payment_method_id: payment_method.id }] }

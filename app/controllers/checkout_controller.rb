@@ -170,6 +170,7 @@ class CheckoutController < Spree::StoreController
 
   def redirect_to_payment_gateway
     redirect_path = Checkout::PaypalRedirect.new(params).path
+    redirect_path = Checkout::StripeRedirect.new(params, @order).path if redirect_path.blank?
     return if redirect_path.blank?
 
     render json: { path: redirect_path }, status: :ok
