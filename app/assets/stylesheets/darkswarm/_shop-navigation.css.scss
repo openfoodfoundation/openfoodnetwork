@@ -44,7 +44,7 @@
 
 ordercycle {
   float: right;
-  background: $secondary-blue;
+  background: $teal-400;
   color: $white;
   width: 100%;
   border-radius: 0.75em 0.75em 0 0;
@@ -87,13 +87,13 @@ ordercycle {
   }
 
   .order-cycle-select {
-    border: 1px solid $light-blue;
+    border: 1px solid $teal-300;
     display: inline-block;
     font-size: 1em;
     border-radius: 0.5em;
 
     .select-label {
-      background-color: $light-blue;
+      background-color: $teal-300;
       display: inline-block;
       border-radius: 0.5em 0 0 0.5em;
       float: left;

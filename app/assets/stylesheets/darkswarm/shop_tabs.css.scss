@@ -23,7 +23,7 @@
     >a {
       outline: none;
       display: block;
-      color: $primary-grey;
+      color: $grey-500;
       font-family: "Oswald", sans-serif;
     }
 
@@ -39,7 +39,7 @@
       border: none;
 
       &:hover, &:focus, &:active {
-        color: $primary-blue;
+        color: $teal-500;
       }
 
       &, &:hover {
@@ -53,10 +53,10 @@
     }
 
     &.selected {
-      border-bottom: 4px solid $primary-blue;
+      border-bottom: 4px solid $teal-500;
 
       a {
-        color: $primary-blue;
+        color: $teal-500;
       }
     }
   }
