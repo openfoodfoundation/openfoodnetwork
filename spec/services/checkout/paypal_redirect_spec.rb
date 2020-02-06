@@ -2,11 +2,11 @@
 
 require 'spec_helper'
 
-describe Checkout::PaymentRedirect do
+describe Checkout::PaypalRedirect do
   describe '#order_params' do
     let(:params) { { order: { order_id: "123" } } }
 
-    let(:redirect) { Checkout::PaymentRedirect.new(params) }
+    let(:redirect) { Checkout::PaypalRedirect.new(params) }
 
     it "returns nil if payment_attributes are not provided" do
       expect(redirect.path).to be nil
