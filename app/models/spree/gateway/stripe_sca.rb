@@ -32,20 +32,10 @@ module Spree
 
       # NOTE: the name of this method is determined by Spree::Payment::Processing
       def purchase(money, creditcard, gateway_options)
-        payment_intent_id = payment_intent(creditcard, gateway_options)
-        unless payment_intent_id
-          return failed_activemerchant_billing_response(I18n.t(:no_pending_payments))
-        end
-
-        payment_intent_response = Stripe::PaymentIntent.retrieve(payment_intent_id,
-                                                                 stripe_account: stripe_account_id)
-        if payment_intent_response.last_payment_error.present?
-          return failed_activemerchant_billing_response(payment_intent_response.
-                                                          last_payment_error.
-                                                          message)
-        end
-        if payment_intent_response.status != 'requires_capture'
-          return failed_activemerchant_billing_response(I18n.t(:invalid_payment_state))
+        begin
+          payment_intent_id = payment_intent(creditcard, gateway_options)
+        rescue Stripe::StripeError => e
+          return failed_activemerchant_billing_response(e.message)
         end
 
         options = basic_options(gateway_options)
@@ -127,9 +117,23 @@ module Spree
       def payment_intent(creditcard, gateway_options)
         order_number = gateway_options[:order_id].split('-').first
         payment = Spree::Order.find_by_number(order_number).payments.merge(creditcard.payments).last
-        return unless payment
+        raise Stripe::StripeError, I18n.t(:no_pending_payments) unless payment&.response_code
 
-        payment.response_code
+        validate_payment_intent(payment.response_code)
+      end
+
+      def validate_payment_intent(payment_intent_id)
+        payment_intent_response = Stripe::PaymentIntent.retrieve(payment_intent_id,
+                                                                 stripe_account: stripe_account_id)
+        if payment_intent_response.last_payment_error.present?
+          raise Stripe::StripeError, payment_intent_response.last_payment_error.message
+        end
+
+        if payment_intent_response.status != 'requires_capture'
+          raise Stripe::StripeError, I18n.t(:invalid_payment_state)
+        end
+
+        payment_intent_id
       end
 
       def failed_activemerchant_billing_response(error_message)
