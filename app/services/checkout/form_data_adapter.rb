@@ -6,7 +6,7 @@ module Checkout
     attr_reader :shipping_method_id
 
     def initialize(params, order, current_user)
-      @params = params
+      @params = params.dup
       @order = order
       @current_user = current_user
 
