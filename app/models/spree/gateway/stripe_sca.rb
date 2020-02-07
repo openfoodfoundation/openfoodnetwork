@@ -34,7 +34,7 @@ module Spree
       def purchase(money, creditcard, gateway_options)
         payment_intent_id = payment_intent(creditcard, gateway_options)
         unless payment_intent_id
-          return failed_activemerchant_billing_response("No Pending Payment Found")
+          return failed_activemerchant_billing_response(I18n.t(:no_pending_payments))
         end
 
         payment_intent_response = Stripe::PaymentIntent.retrieve(payment_intent_id,
@@ -45,7 +45,7 @@ module Spree
                                                           message)
         end
         if payment_intent_response.status != 'requires_capture'
-          return failed_activemerchant_billing_response("Invalid PaymentIntent status.")
+          return failed_activemerchant_billing_response(I18n.t(:invalid_payment_state))
         end
 
         options = basic_options(gateway_options)
