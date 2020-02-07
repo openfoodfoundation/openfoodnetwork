@@ -2,6 +2,8 @@
 
 require 'stripe/profile_storer'
 require 'stripe/credit_card_cloner'
+require 'stripe/authorize_response_patcher'
+require 'stripe/payment_intent_validator'
 require 'active_merchant/billing/gateways/stripe_payment_intents'
 require 'active_merchant/billing/gateways/stripe_decorator'
 
@@ -33,7 +35,7 @@ module Spree
       # NOTE: the name of this method is determined by Spree::Payment::Processing
       def purchase(money, creditcard, gateway_options)
         begin
-          payment_intent_id = payment_intent(creditcard, gateway_options)
+          payment_intent_id = fetch_payment_intent(creditcard, gateway_options)
         rescue Stripe::StripeError => e
           return failed_activemerchant_billing_response(e.message)
         end
@@ -50,12 +52,7 @@ module Spree
         authorize_response = provider.authorize(*options_for_authorize(money,
                                                                        creditcard,
                                                                        gateway_options))
-
-        if url = url_for_authorization(authorize_response)
-          authorize_response.cvv_result['message'] = url if authorize_response.cvv_result.present?
-        end
-
-        authorize_response
+        Stripe::AuthorizeResponsePatcher.new(authorize_response).call!
       rescue Stripe::StripeError => e
         failed_activemerchant_billing_response(e.message)
       end
@@ -105,21 +102,17 @@ module Spree
         [money, payment_method_id, options]
       end
 
-      def url_for_authorization(response)
-        next_action = response.params["next_source_action"]
-        return unless response.params["status"] == "requires_source_action" &&
-                      next_action.present? &&
-                      next_action["type"] == "authorize_with_url"
-
-        next_action["authorize_with_url"]["url"]
-      end
-
-      def payment_intent(creditcard, gateway_options)
-        order_number = gateway_options[:order_id].split('-').first
-        payment = Spree::Order.find_by_number(order_number).payments.merge(creditcard.payments).last
+      def fetch_payment_intent(creditcard, gateway_options)
+        payment = fetch_payment(creditcard, gateway_options)
         raise Stripe::StripeError, I18n.t(:no_pending_payments) unless payment&.response_code
 
         Stripe::PaymentIntentValidator.new.call(payment.response_code, stripe_account_id)
+      end
+
+      def fetch_payment(creditcard, gateway_options)
+        order_number = gateway_options[:order_id].split('-').first
+
+        Spree::Order.find_by_number(order_number).payments.merge(creditcard.payments).last
       end
 
       def failed_activemerchant_billing_response(error_message)

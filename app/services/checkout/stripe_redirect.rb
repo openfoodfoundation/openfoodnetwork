@@ -18,7 +18,7 @@ module Checkout
       authorize_response = payment.authorize!
       raise unless authorize_response && payment.pending?
 
-      payment.cvv_response_message if url?(payment.cvv_response_message)
+      field_with_url(payment) if url?(field_with_url(payment))
     end
 
     private
@@ -35,6 +35,12 @@ module Checkout
       return false if string.blank?
 
       string.starts_with?("http")
+    end
+
+    # Stripe::AuthorizeResponsePatcher patches the Stripe authorization response
+    #   so that this field stores the redirect URL
+    def field_with_url(payment)
+      payment.cvv_response_message
     end
   end
 end
