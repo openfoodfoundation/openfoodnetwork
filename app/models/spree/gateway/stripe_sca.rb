@@ -119,21 +119,7 @@ module Spree
         payment = Spree::Order.find_by_number(order_number).payments.merge(creditcard.payments).last
         raise Stripe::StripeError, I18n.t(:no_pending_payments) unless payment&.response_code
 
-        validate_payment_intent(payment.response_code)
-      end
-
-      def validate_payment_intent(payment_intent_id)
-        payment_intent_response = Stripe::PaymentIntent.retrieve(payment_intent_id,
-                                                                 stripe_account: stripe_account_id)
-        if payment_intent_response.last_payment_error.present?
-          raise Stripe::StripeError, payment_intent_response.last_payment_error.message
-        end
-
-        if payment_intent_response.status != 'requires_capture'
-          raise Stripe::StripeError, I18n.t(:invalid_payment_state)
-        end
-
-        payment_intent_id
+        Stripe::PaymentIntentValidator.new.call(payment.response_code, stripe_account_id)
       end
 
       def failed_activemerchant_billing_response(error_message)
