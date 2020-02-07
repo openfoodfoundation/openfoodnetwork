@@ -35,15 +35,7 @@ class CheckoutController < Spree::StoreController
   rescue_from Spree::Core::GatewayError, with: :rescue_from_spree_gateway_error
 
   def edit
-    if valid_payment_intent_provided?
-      if advance_order_state(@order) && order_complete?
-        checkout_succeeded
-        redirect_to(order_path(@order)) && return
-      else
-        flash[:error] = order_workflow_error
-        current_order.updater.shipping_address_from_distributor
-      end
-    end
+    return handle_redirect_from_stripe if valid_payment_intent_provided?
 
     # This is only required because of spree_paypal_express. If we implement
     # a version of paypal that uses this controller, and more specifically
@@ -168,6 +160,16 @@ class CheckoutController < Spree::StoreController
       @order.payments.last.response_code == params["payment_intent"]
   end
 
+  def handle_redirect_from_stripe
+    if advance_order_state(@order) && order_complete?
+      checkout_succeeded
+      redirect_to(order_path(@order)) && return
+    else
+      flash[:error] = order_workflow_error
+      checkout_failed
+    end
+  end
+
   def checkout_workflow(shipping_method_id)
     while @order.state != "complete"
       if @order.state == "payment"
@@ -216,8 +218,7 @@ class CheckoutController < Spree::StoreController
       checkout_succeeded
       update_succeeded_response
     else
-      checkout_failed
-      update_failed_response
+      update_failed
     end
   end
 
@@ -226,19 +227,10 @@ class CheckoutController < Spree::StoreController
   end
 
   def checkout_succeeded
-    save_order_addresses_as_user_default
-    ResetOrderService.new(self, current_order).call
+    Checkout::PostCheckoutActions.new(@order).success(self, params, spree_current_user)
 
     session[:access_token] = current_order.token
     flash[:notice] = t(:order_processed_successfully)
-  end
-
-  def save_order_addresses_as_user_default
-    return unless params[:order]
-
-    user_default_address_setter = UserDefaultAddressSetter.new(@order, spree_current_user)
-    user_default_address_setter.set_default_bill_address if params[:order][:default_bill_address]
-    user_default_address_setter.set_default_ship_address if params[:order][:default_ship_address]
   end
 
   def update_succeeded_response
@@ -258,8 +250,7 @@ class CheckoutController < Spree::StoreController
   end
 
   def checkout_failed
-    current_order.updater.shipping_address_from_distributor
-    RestartCheckout.new(@order).call
+    Checkout::PostCheckoutActions.new(@order).failure
   end
 
   def update_failed_response
