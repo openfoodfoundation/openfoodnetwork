@@ -35,6 +35,16 @@ class CheckoutController < Spree::StoreController
   rescue_from Spree::Core::GatewayError, with: :rescue_from_spree_gateway_error
 
   def edit
+    if valid_payment_intent_provided?
+      if advance_order_state(@order) && order_complete?
+        checkout_succeeded
+        redirect_to(order_path(@order)) && return
+      else
+        flash[:error] = order_workflow_error
+        current_order.updater.shipping_address_from_distributor
+      end
+    end
+
     # This is only required because of spree_paypal_express. If we implement
     # a version of paypal that uses this controller, and more specifically
     # the #update_failed method, then we can remove this call
@@ -149,6 +159,13 @@ class CheckoutController < Spree::StoreController
       format.html { render :edit }
       format.json { render json: { flash: flash.to_hash }, status: :bad_request }
     end
+  end
+
+  def valid_payment_intent_provided?
+    params["payment_intent"]&.starts_with?("pi_") &&
+      @order.state == "payment" &&
+      @order.payments.last.state == "pending" &&
+      @order.payments.last.response_code == params["payment_intent"]
   end
 
   def checkout_workflow(shipping_method_id)
