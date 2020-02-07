@@ -34,10 +34,14 @@ Openfoodnetwork::Application.configure do
   config.action_mailer.default_url_options = { protocol: 'https' }
 
   # See everything in the log (default is :info)
-  config.log_level = :info
+  # config.log_level = :debug
 
-  # Use a different logger for distributed setups
-  # config.logger = SyslogLogger.new
+  # Configure logging for Rails 3.2:
+  config.logger = ActiveSupport::TaggedLogging.new(Logger.new(Rails.root.join("log", "#{Rails.env}.log")))
+  config.logger.formatter = Logger::Formatter.new
+  config.logger.datetime_format = "%Y-%m-%d %H:%M:%S"
+  # Once we get to Rails 4.0, we can replace the above with:
+  #config.log_formatter = Logger::Formatter.new.tap { |f| f.datetime_format = "%Y-%m-%d %H:%M:%S" }
 
   # Use a different cache store in production
   memcached_value_max_megabytes = ENV.fetch("MEMCACHED_VALUE_MAX_MEGABYTES", 1).to_i
