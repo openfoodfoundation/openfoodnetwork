@@ -24,8 +24,7 @@ feature "full-page cart", js: true do
       it "shows a button leading back to the shop" do
         # Set up a shopfront message to test that we are not going to the
         # home tab.
-        # PENDING: this passes only without home tab!
-        #distributor.preferred_shopfront_message = "Test driven farming"
+        distributor.preferred_shopfront_message = "Test driven farming"
 
         add_product_to_cart order, product_with_fee, quantity: 2
         visit main_app.cart_path
@@ -36,7 +35,7 @@ feature "full-page cart", js: true do
 
         expect(page).to have_no_link "Continue shopping"
         expect(page).to have_button "Edit your cart"
-        #expect(page).to have_no_content distributor.preferred_shopfront_message
+        expect(page).to have_no_content distributor.preferred_shopfront_message
       end
     end
 
