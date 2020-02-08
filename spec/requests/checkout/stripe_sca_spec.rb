@@ -22,6 +22,8 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
   let(:stripe_payment_method) { "pm_123" }
   let(:customer_id) { "cus_A123" }
   let(:hubs_stripe_payment_method) { "pm_456" }
+  let(:payment_intent_id) { "pi_123" }
+  let(:stripe_redirect_url) { "http://stripe.com/redirect" }
   let(:payments_attributes) do
     {
       payment_method_id: payment_method.id,
@@ -62,6 +64,11 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
   let(:payment_intent_response_mock) do
     { status: 200, body: JSON.generate(object: "payment_intent", amount: 2000, charges: { data: [{ id: "ch_1234", amount: 2000 }]}) }
   end
+  let(:payment_intent_authorize_response_mock) do
+    { status: 200, body: JSON.generate(id: payment_intent_id, object: "payment_intent", amount: 2000,
+                                       status: "requires_capture", last_payment_error: nil,
+                                       charges: { data: [{ id: "ch_1234", amount: 2000 }]}) }
+  end
 
   before do
     order_cycle_distributed_variants = double(:order_cycle_distributed_variants)
@@ -86,13 +93,23 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
               headers: { 'Stripe-Account' => 'abc123' })
         .to_return(hubs_payment_method_response_mock)
 
-      # Charges the card
+      # Authorizes the payment
       stub_request(:post, "https://api.stripe.com/v1/payment_intents")
         .with(basic_auth: ["sk_test_12345", ""], body: /#{hubs_stripe_payment_method}.*#{order.number}/)
+        .to_return(payment_intent_authorize_response_mock)
+
+      # Retrieves paymeent intent info
+      stub_request(:get, "https://api.stripe.com/v1/payment_intents/#{payment_intent_id}")
+        .with(headers: { 'Stripe-Account' => 'abc123' })
+        .to_return(payment_intent_authorize_response_mock)
+
+      # Captures the payment
+      stub_request(:post, "https://api.stripe.com/v1/payment_intents/#{payment_intent_id}/capture")
+        .with(basic_auth: ["sk_test_12345", ""], body: { amount_to_capture: "1234" })
         .to_return(payment_intent_response_mock)
     end
 
-    context "and the paymeent intent request is successful" do
+    context "and the payment intent request is successful" do
       it "should process the payment without storing card details" do
         put update_checkout_path, params
 
@@ -176,12 +193,22 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
           .with(body: { customer: customer_id })
           .to_return(payment_method_attach_response_mock)
 
-        # Charges the card
+        # Authorizes the payment
         stub_request(:post, "https://api.stripe.com/v1/payment_intents")
           .with(
             basic_auth: ["sk_test_12345", ""],
             body: /.*#{order.number}/
-          ).to_return(payment_intent_response_mock)
+          ).to_return(payment_intent_authorize_response_mock)
+
+        # Retrieves paymeent intent info
+        stub_request(:get, "https://api.stripe.com/v1/payment_intents/#{payment_intent_id}")
+          .with(headers: { 'Stripe-Account' => 'abc123' })
+          .to_return(payment_intent_authorize_response_mock)
+
+        # Captures the payment
+        stub_request(:post, "https://api.stripe.com/v1/payment_intents/#{payment_intent_id}/capture")
+          .with(basic_auth: ["sk_test_12345", ""], body: { amount_to_capture: "1234" })
+          .to_return(payment_intent_response_mock)
       end
 
       context "and the customer, payment_method and payment_intent requests are successful" do
@@ -268,9 +295,21 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
         params[:order][:existing_card_id] = credit_card.id
         quick_login_as(order.user)
 
-        # Charges the card
+        # Authorizes the payment
         stub_request(:post, "https://api.stripe.com/v1/payment_intents")
-          .with(basic_auth: ["sk_test_12345", ""], body: %r{#{customer_id}.*#{hubs_stripe_payment_method}})
+          .with(
+            basic_auth: ["sk_test_12345", ""],
+            body: /.*#{order.number}/
+          ).to_return(payment_intent_authorize_response_mock)
+
+        # Retrieves paymeent intent info
+        stub_request(:get, "https://api.stripe.com/v1/payment_intents/#{payment_intent_id}")
+          .with(headers: { 'Stripe-Account' => 'abc123' })
+          .to_return(payment_intent_authorize_response_mock)
+
+        # Captures the payment
+        stub_request(:post, "https://api.stripe.com/v1/payment_intents/#{payment_intent_id}/capture")
+          .with(basic_auth: ["sk_test_12345", ""], body: { amount_to_capture: "1234" })
           .to_return(payment_intent_response_mock)
       end
 
