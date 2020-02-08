@@ -238,23 +238,41 @@ describe CheckoutController, type: :controller do
     end
   end
 
-  describe "Paypal routing" do
-    let(:payment_method) { create(:payment_method, type: "Spree::Gateway::PayPalExpress") }
-    let(:restart_checkout) { instance_double(RestartCheckout, call: true) }
-
+  describe "Payment redirects" do
     before do
       allow(controller).to receive(:current_distributor) { distributor }
       allow(controller).to receive(:current_order_cycle) { order_cycle }
       allow(controller).to receive(:current_order) { order }
-
-      allow(RestartCheckout).to receive(:new) { restart_checkout }
-    end
-
-    it "should check the payment method for Paypalness if we've selected one" do
-      expect(Spree::PaymentMethod).to receive(:find).twice.with(payment_method.id.to_s) { payment_method }
       allow(order).to receive(:update_attributes) { true }
       allow(order).to receive(:state) { "payment" }
-      spree_post :update, order: { payments_attributes: [{ payment_method_id: payment_method.id }] }
+    end
+
+    describe "paypal redirect" do
+      let(:payment_method) { create(:payment_method, type: "Spree::Gateway::PayPalExpress") }
+      let(:paypal_redirect) { instance_double(Checkout::PaypalRedirect) }
+
+      it "should call Paypal redirect and redirect if a path is provided" do
+        expect(Checkout::PaypalRedirect).to receive(:new).and_return(paypal_redirect)
+        expect(paypal_redirect).to receive(:path).and_return("test_path")
+
+        spree_post :update, order: { payments_attributes: [{ payment_method_id: payment_method.id }] }
+
+        expect(response.body).to eq({ path: "test_path" }.to_json)
+      end
+    end
+
+    describe "stripe redirect" do
+      let(:payment_method) { create(:payment_method, type: "Spree::Gateway::StripeSCA") }
+      let(:stripe_redirect) { instance_double(Checkout::StripeRedirect) }
+
+      it "should call Stripe redirect and redirect if a path is provided" do
+        expect(Checkout::StripeRedirect).to receive(:new).and_return(stripe_redirect)
+        expect(stripe_redirect).to receive(:path).and_return("test_path")
+
+        spree_post :update, order: { payments_attributes: [{ payment_method_id: payment_method.id }] }
+
+        expect(response.body).to eq({ path: "test_path" }.to_json)
+      end
     end
   end
 
