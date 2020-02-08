@@ -118,7 +118,7 @@ Spree::Order.class_eval do
   # "Checkout" is the initial state and, for card payments, "pending" is the state after authorization
   # These are both valid states to process the payment
   def pending_payments
-    (payments.select(&:pending?) + payments.select(&:checkout?)).uniq
+    (payments.select(&:pending?) + payments.select(&:processing?) + payments.select(&:checkout?)).uniq
   end
 
   def remove_variant(variant)
