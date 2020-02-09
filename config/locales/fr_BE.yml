@@ -50,6 +50,8 @@ fr_BE:
         shipping_method_ids: "Méthodes de livraison"
         payment_method_ids: "Méthodes de paiement"
     errors:
+      messages:
+        inclusion: "N'est pas inclus dans la liste"
       models:
         subscription_validator:
           attributes:
@@ -255,6 +257,7 @@ fr_BE:
   expired: a expiré, veuillez en demander un nouveau
   back_to_payments_list: "Retour à la liste des paiements"
   maestro_or_solo_cards: "Cartes Maestro / Solo"
+  backordered: "En rupture de stock"
   on hand: "En stock"
   ship: "Expédier"
   actions:
@@ -435,6 +438,7 @@ fr_BE:
         infinity: "Infinité"
         to_order_tip: "Les articles fabriqués sur commande n'ont pas un niveau de stock défini, comme des pains faits à la main."
       back_to_products_list: "Retour à la liste produits"
+      editing_product: "Edition de produits"
       tabs:
         product_details: "Détails du produit"
         group_buy_options: "Options d'achat par lot"
@@ -698,6 +702,11 @@ fr_BE:
           enable_subscriptions_false: "Désactivé"
           enable_subscriptions_true: "Activé"
           shopfront_message: "Message d'accueil comptoir ouvert"
+          shopfront_message_placeholder: >
+              Un message facultatif pour souhaiter la bienvenue aux clients et leur
+              expliquer comment faire leurs achats avec vous. Si le texte est saisi
+              ici, il sera affiché dans un onglet d'accueil lorsque les clients arriveront
+              pour la première fois à votre vitrine.
           shopfront_message_link_tooltip: "Insérer / éditer le lien"
           shopfront_message_link_prompt: "Entrer l'URL pour insérer"
           shopfront_closed_message: "Message d'accueil comptoir fermé"
@@ -1071,6 +1080,7 @@ fr_BE:
       cancel_failure_msg: "Désolé, l'annulation a échoué!"
       confirm_pause_msg: "Voulez-vous vraiment mettre en pause cet abonnement?"
       pause_failure_msg: "Désolé, la mise en pause a échoué!"
+      confirm_unpause_msg: "Si vous avez un cycle de vente ouvert dans le calendrier de cet abonnement, une commande sera créée pour ce client. Êtes-vous sûr de vouloir mettre cet abonnement en pause ?"
       unpause_failure_msg: "Désolé, l'annulation de la mise en pause a échoué!"
       confirm_cancel_open_orders_msg: "Cet abonnement a des commandes ouvertes. Les acheteurs ont été notifiés que leur commande allait être passée. Voulez-vous annulez ces commandes ou les conserver?"
       resume_canceled_orders_msg: "Certaines commandes pour cet abonnement peuvent être réouvertes dès maintenant. Vous pouvez les réouvrir depuis la liste des commandes."
@@ -1097,10 +1107,13 @@ fr_BE:
       destroy_attachment_does_not_exist: "Aucun logo trouvé :-("
     enterprise_promo_image:
       destroy_attachment_does_not_exist: "Aucune bannière trouvée :-("
+    orders:
+      failed_to_update: "Annulation de la mise à jour la commande"
   checkout:
     already_ordered:
       cart: "panier"
       message_html: "Vous avez déjà passé une commande pour ce cycle de vente. Vérifiez votre %{cart} pour voir les produits commandés. Vous pouvez annuler ou modifier votre commande jusqu'à la fermeture du cycle de vente."
+    failed: "La vente a échouée. Veuillez nous le faire savoir afin que nous puissions traiter votre commande."
   shops:
     hubs:
       show_closed_shops: "Afficher les comptoirs fermés"
@@ -1931,6 +1944,7 @@ fr_BE:
   tax_category: "TVA applicable"
   calculator: "Calculateur"
   calculator_values: "Valeurs applicables"
+  calculator_settings_warning: "Si vous changez le type de calculatrice, vous devez d'abord enregistrer avant de pouvoir modifier les paramètres de la calculatrice"
   flat_percent_per_item: "Pourcentage net"
   flat_rate_per_item: "Montant fixe (par article)"
   flat_rate_per_order: "Montant fixe (par commande)"
@@ -2424,6 +2438,12 @@ fr_BE:
           severity: Rigueur
           description: Description
           resolve: Résoudre
+        exchange_products:
+          load_more_products: "Charger plus de produits"
+          load_all_products: "Charger tous les produits"
+          select_all_products: "Sélectionner tout les produits %{total_number_of_products}"
+          products_loaded: "Chargés produits %{num_of_products_loaded}ou%{total_number_of_products}"
+          loading_products: "Chargement des produits"
       tag_rules:
         shipping_method_tagged_top: "Méthodes d'expédition étiquetées"
         shipping_method_tagged_bottom: "sont:"
@@ -2659,6 +2679,8 @@ fr_BE:
     name_or_sku: "Nom ou N° d'article (entrer au moins 4 lettres du nom du produit) "
     resend: Renvoyer
     back_to_orders_list: 'Retour vers la liste des commandes '
+    return_authorizations: Autorisations de retour
+    cannot_create_returns: Impossible de créer des retours car cette commande n'a pas d'unités expédiées.
     select_stock: "Selectionner stock"
     location: "Site"
     count_on_hand: "Compté à la main"
@@ -2823,6 +2845,8 @@ fr_BE:
     zipcode: Code postal
     weight: Poids (au kg)
     error_user_destroy_with_orders: "Les utilisateurs avec une commande finalisée ne peuvent pas être supprimés"
+    cannot_create_payment_without_payment_methods: "Vous ne pouvez pas créer un paiement pour une commande sans qu'aucun mode de paiement ne soit défini."
+    please_define_payment_methods: "Veuillez d'abord définir certains modes de paiement."
     options: "Options"
     actions:
       update: "Mettre à jour"
@@ -2856,11 +2880,13 @@ fr_BE:
         index:
           inherits_properties_checkbox_hint: "Hériter des propriétés de %{supplier} ? (non applicable si information de remplacement déjà saisie)"
           add_product_properties: "Ajouter des caractéristiques au produit"
+          select_from_prototype: "Sélectionner à partir d'un prototype"
       properties:
         index:
           properties: "Labels / propriétés"
           new_property: "Nouvelle caractéristique"
           name: "Nom"
+          presentation: "Présentation"
         new:
           new_property: "Nouvelle caractéristique"
         edit:
@@ -2868,25 +2894,38 @@ fr_BE:
           back_to_properties_list: "Retour à la liste des caractéristiques"
         form:
           name: "Nom"
+          presentation: "Présentation"
       return_authorizations:
         index:
           new_return_authorization: "Nouvelle autorisation de retour"
+          return_authorizations: "Autorisations de retour"
           back_to_orders_list: "Retour vers la liste des commandes "
           rma_number: "Numéro d' Autorisation de Retour de Marchandise"
           status: "Statut"
           amount: "Quantité"
+          cannot_create_returns: "Impossible de créer des retours car cette commande n'a pas d'unités expédiées."
           continue: "Suivant"
         new:
           new_return_authorization: "Nouvelle autorisation de retour"
           back_to_return_authorizations_list: "Retour vers la liste d'autorisation de retour"
           continue: "Suivant"
         edit:
+          receive: "recevoir"
           are_you_sure: "Confirmer?"
           return_authorization: "Autorisation de retour"
         form:
           product: "Produit"
           quantity_shipped: "Quantité livrée"
+          quantity_returned: "Quantité retourné"
+          return_quantity: "Quantité retourné"
           amount: "Quantité"
+          rma_value: "Valeur RMA"
+          reason: "Motif"
+          stock_location: "Localisation des stocks"
+        states:
+          authorized: "Autorisé"
+          received: "Reçu"
+          canceled: "Annulé"
       orders:
         index:
           listing_orders: "Liste des commandes"
@@ -2894,6 +2933,7 @@ fr_BE:
           capture: "Payée"
           ship: "Expédier"
           edit: "Modifier"
+          order_not_updated: "La commande ne peut pas être mis à jour. "
           note: "Note"
           first: "Début"
           last: "Fin"
@@ -3079,12 +3119,21 @@ fr_BE:
           price: "Prix"
           options: "Options"
           no_results: "Aucun résultat"
+          to_add_variants_you_must_first_define: "Pour ajouter des variantes, vous devez d'abord définir"
           option_types: "Option Types "
+          option_values: "Valeurs optionnelles"
           and: "et"
+          new_variant: "Nouvelle variante"
+          show_active: "Afficher Actifs"
+          show_deleted: "Afficher Supprimé"
+        new:
+          new_variant: "Nouvelle variante"
         form:
+          cost_price: "Prix de revient"
           sku: "Référence produit"
           price: "Prix"
           display_as: "Unité affichéé"
+          display_name: "Nom d'affichage"
         autocomplete:
           producer_name: "Producteur"
           unit: "Unité"
@@ -3225,3 +3274,19 @@ fr_BE:
         allow_charges?: "Autoriser les prélèvements ?"
     localized_number:
       invalid_format: n'est pas un format valide. Veuillez entrer un nombre.
+    api:
+      invalid_api_key: "Clé API invalide (%{key}) spécifiée."
+      unauthorized: "Vous n'êtes pas autorisé à effectuer cette action."
+      invalid_resource: "Ressource non valable. Veuillez corriger les erreurs et réessayer."
+      resource_not_found: "La ressource que vous cherchiez n'a pas pu être trouvée."
+      access: "Accès API"
+      key: "Clé"
+      clear_key: "Clé d'effacement "
+      regenerate_key: "Regénération de clé"
+      no_key: "Pas de clé"
+      generate_key: "Générer une clé API"
+      key_generated: "Clé généré"
+      key_cleared: "clé effacée"
+      shipment:
+        cannot_ready: "Impossible de préparer l'expédition."
+      invalid_taxonomy_id: "Id taxonomique invalide."
