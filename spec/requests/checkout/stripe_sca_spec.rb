@@ -311,6 +311,21 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
           expect(order.payments.completed.count).to be 0
         end
       end
+
+      context "when the stripe API sends a url for the authorization of the transaction" do
+        let(:payment_intent_authorize_response_mock) do
+          { status: 200, body: JSON.generate(id: payment_intent_id, object: "payment_intent",
+                                             next_source_action: { type: "authorize_with_url", authorize_with_url: { url: stripe_redirect_url }},
+                                             status: "requires_source_action" )}
+        end
+
+        it "redirects the user to the authorization stripe url" do
+          put update_checkout_path, params
+
+          expect(response.status).to be 200
+          expect(response.body).to include stripe_redirect_url
+        end
+      end
     end
   end
 end
