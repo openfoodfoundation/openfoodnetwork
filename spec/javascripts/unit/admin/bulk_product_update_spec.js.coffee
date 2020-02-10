@@ -725,7 +725,7 @@ describe "AdminProductEditCtrl", ->
           $httpBackend.expectPOST("/admin/products/bulk_update").respond 400, { "errors": { "base": ["a basic error"] } }
           $scope.updateProducts "updated list of products"
           $httpBackend.flush()
-          expect($scope.displayFailure).toHaveBeenCalledWith("Saving failed with the following error(s):\na basic error")
+          expect($scope.displayFailure).toHaveBeenCalledWith("Saving failed with the following error(s):\na basic error\n")
 
 
   describe "adding variants", ->
