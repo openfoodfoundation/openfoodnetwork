@@ -70,7 +70,6 @@ Lint/DuplicateHashKey:
 # Offense count: 4
 Lint/DuplicateMethods:
   Exclude:
-    - 'engines/order_management/app/services/order_management/subscriptions/subscription_summary.rb'
     - 'lib/discourse/single_sign_on.rb'
 
 # Offense count: 10
@@ -881,9 +880,6 @@ Style/FrozenStringLiteralComment:
     - 'engines/order_management/app/services/order_management/reports/enterprise_fee_summary/report_service.rb'
     - 'engines/order_management/app/services/order_management/reports/enterprise_fee_summary/scope.rb'
     - 'engines/order_management/app/services/order_management/reports/enterprise_fee_summary/summarizer.rb'
-    - 'engines/order_management/app/services/order_management/subscriptions/proxy_order_syncer.rb'
-    - 'engines/order_management/app/services/order_management/subscriptions/subscription_summarizer.rb'
-    - 'engines/order_management/app/services/order_management/subscriptions/subscription_summary.rb'
     - 'engines/order_management/app/services/reports.rb'
     - 'engines/order_management/app/services/reports/authorizer.rb'
     - 'engines/order_management/app/services/reports/parameters/base.rb'
@@ -903,9 +899,6 @@ Style/FrozenStringLiteralComment:
     - 'engines/order_management/spec/services/order_management/reports/enterprise_fee_summary/renderers/html_renderer_spec.rb'
     - 'engines/order_management/spec/services/order_management/reports/enterprise_fee_summary/report_data/enterprise_fee_type_total_spec.rb'
     - 'engines/order_management/spec/services/order_management/reports/enterprise_fee_summary/report_service_spec.rb'
-    - 'engines/order_management/spec/services/order_management/subscriptions/proxy_order_syncer_spec.rb'
-    - 'engines/order_management/spec/services/order_management/subscriptions/subscription_summizer_spec.rb'
-    - 'engines/order_management/spec/services/order_management/subscriptions/subscription_summary_spec.rb'
     - 'engines/order_management/spec/spec_helper.rb'
     - 'engines/web/app/controllers/web/angular_templates_controller.rb'
     - 'engines/web/app/controllers/web/api/cookies_consent_controller.rb'
@@ -1541,7 +1534,6 @@ Style/Send:
   Exclude:
     - 'app/controllers/spree/checkout_controller.rb'
     - 'app/models/spree/shipping_method_decorator.rb'
-    - 'engines/order_management/spec/services/order_management/subscriptions/subscription_summarizer_spec.rb'
     - 'spec/controllers/admin/subscriptions_controller_spec.rb'
     - 'spec/controllers/checkout_controller_spec.rb'
     - 'spec/controllers/spree/admin/base_controller_spec.rb'

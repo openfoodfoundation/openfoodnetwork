@@ -6,7 +6,8 @@ module OrderManagement
       describe "initialization" do
         let!(:subscription) { create(:subscription) }
 
-        it "raises an error when initialized with an object that is not a Subscription or an ActiveRecord::Relation" do
+        it "raises an error when initialized with an object
+            that is not a Subscription or an ActiveRecord::Relation" do
           expect{ ProxyOrderSyncer.new(subscription) }.to_not raise_error
           expect{ ProxyOrderSyncer.new(Subscription.where(id: subscription.id)) }.to_not raise_error
           expect{ ProxyOrderSyncer.new("something") }.to raise_error RuntimeError
@@ -16,14 +17,46 @@ module OrderManagement
       describe "#sync!" do
         let(:now) { Time.zone.now }
         let(:schedule) { create(:schedule) }
-        let(:closed_oc) { create(:simple_order_cycle, schedules: [schedule], orders_open_at: now - 1.minute, orders_close_at: now) } # Closed
-        let(:open_oc_closes_before_begins_at_oc) { create(:simple_order_cycle, schedules: [schedule], orders_open_at: now - 1.minute, orders_close_at: now + 59.seconds) } # Open, but closes before begins at
-        let(:open_oc) { create(:simple_order_cycle, schedules: [schedule], orders_open_at: now - 1.minute, orders_close_at: now + 90.seconds) } # Open & closes between begins at and ends at
-        let(:upcoming_closes_before_begins_at_oc) { create(:simple_order_cycle, schedules: [schedule], orders_open_at: now + 30.seconds, orders_close_at: now + 59.seconds) } # Upcoming, but closes before begins at
-        let(:upcoming_closes_on_begins_at_oc) { create(:simple_order_cycle, schedules: [schedule], orders_open_at: now + 30.seconds, orders_close_at: now + 1.minute) } # Upcoming & closes on begins at
-        let(:upcoming_closes_on_ends_at_oc) { create(:simple_order_cycle, schedules: [schedule], orders_open_at: now + 30.seconds, orders_close_at: now + 2.minutes) } # Upcoming & closes on ends at
-        let(:upcoming_closes_after_ends_at_oc) { create(:simple_order_cycle, schedules: [schedule], orders_open_at: now + 30.seconds, orders_close_at: now + 121.seconds) } # Upcoming & closes after ends at
-        let(:subscription) { build(:subscription, schedule: schedule, begins_at: now + 1.minute, ends_at: now + 2.minutes) }
+        let(:closed_oc) { # Closed
+          create(:simple_order_cycle, schedules: [schedule],
+                                      orders_open_at: now - 1.minute,
+                                      orders_close_at: now)
+        }
+        let(:open_oc_closes_before_begins_at_oc) { # Open, but closes before begins at
+          create(:simple_order_cycle, schedules: [schedule],
+                                      orders_open_at: now - 1.minute,
+                                      orders_close_at: now + 59.seconds)
+        }
+        let(:open_oc) { # Open & closes between begins at and ends at
+          create(:simple_order_cycle, schedules: [schedule],
+                                      orders_open_at: now - 1.minute,
+                                      orders_close_at: now + 90.seconds)
+        }
+        let(:upcoming_closes_before_begins_at_oc) { # Upcoming, but closes before begins at
+          create(:simple_order_cycle, schedules: [schedule],
+                                      orders_open_at: now + 30.seconds,
+                                      orders_close_at: now + 59.seconds)
+        }
+        let(:upcoming_closes_on_begins_at_oc) { # Upcoming & closes on begins at
+          create(:simple_order_cycle, schedules: [schedule],
+                                      orders_open_at: now + 30.seconds,
+                                      orders_close_at: now + 1.minute)
+        }
+        let(:upcoming_closes_on_ends_at_oc) { # Upcoming & closes on ends at
+          create(:simple_order_cycle, schedules: [schedule],
+                                      orders_open_at: now + 30.seconds,
+                                      orders_close_at: now + 2.minutes)
+        }
+        let(:upcoming_closes_after_ends_at_oc) { # Upcoming & closes after ends at
+          create(:simple_order_cycle, schedules: [schedule],
+                                      orders_open_at: now + 30.seconds,
+                                      orders_close_at: now + 121.seconds)
+        }
+        let(:subscription) {
+          build(:subscription, schedule: schedule,
+                               begins_at: now + 1.minute,
+                               ends_at: now + 2.minutes)
+        }
         let(:proxy_orders) { subscription.reload.proxy_orders }
         let(:order_cycles) { proxy_orders.map(&:order_cycle) }
         let(:syncer) { ProxyOrderSyncer.new(subscription) }
@@ -50,7 +83,7 @@ module OrderManagement
             end
           end
 
-          context "and the schedule includes an open oc that closes between begins_at and ends_at" do
+          context "and the schedule has an open OC that closes between begins_at and ends_at" do
             let(:oc) { open_oc }
             it "creates a new proxy order for that oc" do
               expect{ subscription.save! }.to change(ProxyOrder, :count).from(0).to(1)
@@ -218,7 +251,9 @@ module OrderManagement
             end
 
             context "for an oc not included in the relevant schedule" do
-              let!(:proxy_order) { create(:proxy_order, subscription: subscription, order_cycle: open_oc) }
+              let!(:proxy_order) {
+                create(:proxy_order, subscription: subscription, order_cycle: open_oc)
+              }
               before do
                 open_oc.schedule_ids = []
                 expect(open_oc.save!).to be true
@@ -355,7 +390,7 @@ module OrderManagement
               end
             end
 
-            context "and the schedule includes an open oc that closes between begins_at and ends_at" do
+            context "and the schedule has an open oc that closes between begins_at and ends_at" do
               let!(:oc) { open_oc }
               it "creates a new proxy order for that oc" do
                 expect{ syncer.sync! }.to change(ProxyOrder, :count).from(0).to(1)

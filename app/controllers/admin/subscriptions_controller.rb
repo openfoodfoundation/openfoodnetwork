@@ -1,5 +1,4 @@
 require 'open_food_network/permissions'
-require 'open_food_network/proxy_order_syncer'
 
 module Admin
   class SubscriptionsController < ResourceController
