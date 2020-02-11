@@ -241,7 +241,6 @@ Layout/LineLength:
   - spec/lib/open_food_network/products_and_inventory_report_spec.rb
   - spec/lib/open_food_network/proxy_order_syncer_spec.rb
   - spec/lib/open_food_network/scope_variant_to_hub_spec.rb
-  - spec/lib/open_food_network/subscription_payment_updater_spec.rb
   - spec/lib/open_food_network/subscription_summarizer_spec.rb
   - spec/lib/open_food_network/tag_rule_applicator_spec.rb
   - spec/lib/open_food_network/users_and_enterprises_report_spec.rb
@@ -703,7 +702,6 @@ Metrics/ModuleLength:
   - spec/lib/open_food_network/products_and_inventory_report_spec.rb
   - spec/lib/open_food_network/proxy_order_syncer_spec.rb
   - spec/lib/open_food_network/scope_variant_to_hub_spec.rb
-  - spec/lib/open_food_network/subscription_payment_updater_spec.rb
   - spec/lib/open_food_network/tag_rule_applicator_spec.rb
   - spec/lib/open_food_network/users_and_enterprises_report_spec.rb
   - spec/models/spree/ability_spec.rb
@@ -713,6 +711,7 @@ Metrics/ModuleLength:
   - spec/models/spree/product_spec.rb
   - spec/models/spree/variant_spec.rb
   - spec/services/permissions/order_spec.rb
+  - spec/services/subscriptions/payment_setup_spec.rb
   - spec/support/request/web_helper.rb
 
 Metrics/ParameterLists:
