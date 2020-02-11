@@ -1,4 +1,3 @@
-require 'open_food_network/subscription_payment_updater'
 require 'open_food_network/subscription_summarizer'
 
 class SubscriptionConfirmJob
@@ -34,7 +33,7 @@ class SubscriptionConfirmJob
 
   def process!
     record_order(@order)
-    update_payment! if @order.payment_required?
+    setup_payment! if @order.payment_required?
     return send_failed_payment_email if @order.errors.present?
 
     @order.process_payments! if @order.payment_required?
@@ -43,8 +42,8 @@ class SubscriptionConfirmJob
     send_confirm_email
   end
 
-  def update_payment!
-    OpenFoodNetwork::SubscriptionPaymentUpdater.new(@order).update!
+  def setup_payment!
+    Subscriptions::PaymentSetup.new(@order).call!
   end
 
   def send_confirm_email
