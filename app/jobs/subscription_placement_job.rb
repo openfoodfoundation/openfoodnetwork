@@ -1,4 +1,4 @@
-require 'open_food_network/subscription_summarizer'
+require 'order_management/subscriptions/subscription_summarizer'
 
 class SubscriptionPlacementJob
   def perform
@@ -17,7 +17,7 @@ class SubscriptionPlacementJob
   delegate :record_and_log_error, :send_placement_summary_emails, to: :summarizer
 
   def summarizer
-    @summarizer ||= OpenFoodNetwork::SubscriptionSummarizer.new
+    @summarizer ||= OrderManagement::Subscriptions::SubscriptionSummarizer.new
   end
 
   def proxy_orders
