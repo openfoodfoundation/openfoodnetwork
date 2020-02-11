@@ -99,7 +99,6 @@ Layout/LineLength:
   - app/services/embedded_page_service.rb
   - app/services/order_cycle_form.rb
   - app/services/order_factory.rb
-  - app/services/subscriptions_count.rb
   - app/services/variants_stock_levels.rb
   - engines/web/app/helpers/web/cookies_policy_helper.rb
   - lib/discourse/single_sign_on.rb
@@ -315,10 +314,6 @@ Layout/LineLength:
   - spec/services/permissions/order_spec.rb
   - spec/services/product_tag_rules_filterer_spec.rb
   - spec/services/products_renderer_spec.rb
-  - spec/services/subscription_estimator_spec.rb
-  - spec/services/subscription_form_spec.rb
-  - spec/services/subscription_validator_spec.rb
-  - spec/services/subscription_variants_service_spec.rb
   - spec/spec_helper.rb
   - spec/support/cancan_helper.rb
   - spec/support/delayed_job_helper.rb
@@ -410,7 +405,7 @@ Metrics/AbcSize:
   - app/services/cart_service.rb
   - app/services/create_order_cycle.rb
   - app/services/order_syncer.rb
-  - app/services/subscription_validator.rb
+  - engines/order_management/app/services/order_management/subscriptions/validator.rb
   - lib/active_merchant/billing/gateways/stripe_decorator.rb
   - lib/active_merchant/billing/gateways/stripe_payment_intents.rb
   - lib/discourse/single_sign_on.rb

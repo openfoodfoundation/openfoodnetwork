@@ -64,7 +64,7 @@ module Admin
     private
 
     def save_form_and_render(render_issues = true)
-      form = SubscriptionForm.new(@subscription, params[:subscription])
+      form = OrderManagement::Subscriptions::Form.new(@subscription, params[:subscription])
       unless form.save
         render json: { errors: form.json_errors }, status: :unprocessable_entity
         return
