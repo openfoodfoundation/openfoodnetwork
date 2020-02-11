@@ -1,10 +1,10 @@
-module OpenFoodNetwork
-  class SubscriptionPaymentUpdater
+module Subscriptions
+  class PaymentSetup
     def initialize(order)
       @order = order
     end
 
-    def update!
+    def call!
       create_payment
       ensure_payment_source
       return if order.errors.any?
