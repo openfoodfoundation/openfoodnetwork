@@ -44,13 +44,24 @@ class SubscriptionConfirmJob
   def confirm_order!(order)
     record_order(order)
 
-    setup_payment!(order) if order.payment_required?
-    return send_failed_payment_email(order) if order.errors.present?
+    if process_payment!(order)
+      send_confirmation_email(order)
+    else
+      send_failed_payment_email(order)
+    end
+  end
 
-    order.process_payments! if order.payment_required?
-    return send_failed_payment_email(order) if order.errors.present?
+  def process_payment!(order)
+    return false if order.errors.present?
+    return true unless order.payment_required?
 
-    send_confirmation_email(order)
+    setup_payment!(order)
+    return false if order.errors.present?
+
+    order.process_payments!
+    return false if order.errors.present?
+
+    true
   end
 
   def setup_payment!(order)
