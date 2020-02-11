@@ -1,3 +1,5 @@
+require 'order_management/subscriptions/proxy_order_syncer'
+
 describe OrderCycleForm do
   describe "save" do
     describe "creating a new order cycle from params" do
@@ -66,10 +68,10 @@ describe OrderCycleForm do
 
     context "where I manage the order_cycle's coordinator" do
       let(:form) { OrderCycleForm.new(coordinated_order_cycle, params, user) }
-      let(:syncer_mock) { instance_double(OpenFoodNetwork::ProxyOrderSyncer, sync!: true) }
+      let(:syncer_mock) { instance_double(OrderManagement::Subscriptions::ProxyOrderSyncer, sync!: true) }
 
       before do
-        allow(OpenFoodNetwork::ProxyOrderSyncer).to receive(:new) { syncer_mock }
+        allow(OrderManagement::Subscriptions::ProxyOrderSyncer).to receive(:new) { syncer_mock }
       end
 
       context "and I add an schedule that I own, and remove another that I own" do

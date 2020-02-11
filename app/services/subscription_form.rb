@@ -1,4 +1,4 @@
-require 'open_food_network/proxy_order_syncer'
+require 'order_management/subscriptions/proxy_order_syncer'
 
 class SubscriptionForm
   attr_accessor :subscription, :params, :order_update_issues, :validator, :order_syncer, :estimator
@@ -29,6 +29,6 @@ class SubscriptionForm
   private
 
   def proxy_order_syncer
-    OpenFoodNetwork::ProxyOrderSyncer.new(subscription)
+    OrderManagement::Subscriptions::ProxyOrderSyncer.new(subscription)
   end
 end

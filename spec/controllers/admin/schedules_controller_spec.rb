@@ -103,7 +103,7 @@ describe Admin::SchedulesController, type: :controller do
 
         it "syncs proxy orders when order_cycle_ids change" do
           syncer_mock = double(:syncer)
-          allow(OpenFoodNetwork::ProxyOrderSyncer).to receive(:new) { syncer_mock }
+          allow(OrderManagement::Subscriptions::ProxyOrderSyncer).to receive(:new) { syncer_mock }
           expect(syncer_mock).to receive(:sync!).exactly(2).times
 
           spree_put :update, format: :json, id: coordinated_schedule.id, schedule: { order_cycle_ids: [coordinated_order_cycle.id, coordinated_order_cycle2.id] }
@@ -163,7 +163,7 @@ describe Admin::SchedulesController, type: :controller do
 
           it "sync proxy orders" do
             syncer_mock = double(:syncer)
-            allow(OpenFoodNetwork::ProxyOrderSyncer).to receive(:new) { syncer_mock }
+            allow(OrderManagement::Subscriptions::ProxyOrderSyncer).to receive(:new) { syncer_mock }
             expect(syncer_mock).to receive(:sync!).once
 
             create_schedule params
