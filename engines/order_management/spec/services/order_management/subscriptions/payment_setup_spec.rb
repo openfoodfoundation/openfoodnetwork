@@ -2,10 +2,10 @@
 
 require 'spec_helper'
 
-module Subscriptions
+module OrderManagement::Subscriptions
   describe PaymentSetup do
     let(:order) { create(:order) }
-    let(:payment_setup) { Subscriptions::PaymentSetup.new(order) }
+    let(:payment_setup) { OrderManagement::Subscriptions::PaymentSetup.new(order) }
 
     describe "#payment" do
       context "when only one payment exists on the order" do

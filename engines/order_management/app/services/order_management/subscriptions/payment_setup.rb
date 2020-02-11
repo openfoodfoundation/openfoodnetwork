@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Subscriptions
+module OrderManagement::Subscriptions
   class PaymentSetup
     def initialize(order)
       @order = order
