@@ -1,4 +1,4 @@
-require 'open_food_network/subscription_summarizer'
+require 'order_management/subscriptions/subscription_summarizer'
 
 # Confirms orders of unconfirmed proxy orders in recently closed Order Cycles
 class SubscriptionConfirmJob
@@ -12,7 +12,7 @@ class SubscriptionConfirmJob
   delegate :record_and_log_error, :send_confirmation_summary_emails, to: :summarizer
 
   def summarizer
-    @summarizer ||= OpenFoodNetwork::SubscriptionSummarizer.new
+    @summarizer ||= OrderManagement::Subscriptions::SubscriptionSummarizer.new
   end
 
   def confirm_proxy_orders!

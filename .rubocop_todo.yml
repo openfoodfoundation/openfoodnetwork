@@ -70,8 +70,8 @@ Lint/DuplicateHashKey:
 # Offense count: 4
 Lint/DuplicateMethods:
   Exclude:
+    - 'engines/order_management/app/services/order_management/subscriptions/subscription_summary.rb'
     - 'lib/discourse/single_sign_on.rb'
-    - 'lib/open_food_network/subscription_summary.rb'
 
 # Offense count: 10
 Lint/IneffectiveAccessModifier:
@@ -881,6 +881,8 @@ Style/FrozenStringLiteralComment:
     - 'engines/order_management/app/services/order_management/reports/enterprise_fee_summary/report_service.rb'
     - 'engines/order_management/app/services/order_management/reports/enterprise_fee_summary/scope.rb'
     - 'engines/order_management/app/services/order_management/reports/enterprise_fee_summary/summarizer.rb'
+    - 'engines/order_management/app/services/order_management/subscriptions/subscription_summarizer.rb'
+    - 'engines/order_management/app/services/order_management/subscriptions/subscription_summary.rb'
     - 'engines/order_management/app/services/reports.rb'
     - 'engines/order_management/app/services/reports/authorizer.rb'
     - 'engines/order_management/app/services/reports/parameters/base.rb'
@@ -899,6 +901,8 @@ Style/FrozenStringLiteralComment:
     - 'engines/order_management/spec/services/order_management/reports/enterprise_fee_summary/renderers/html_renderer_spec.rb'
     - 'engines/order_management/spec/services/order_management/reports/enterprise_fee_summary/report_data/enterprise_fee_type_total_spec.rb'
     - 'engines/order_management/spec/services/order_management/reports/enterprise_fee_summary/report_service_spec.rb'
+    - 'engines/order_management/spec/services/order_management/subscriptions/subscription_summizer_spec.rb'
+    - 'engines/order_management/spec/services/order_management/subscriptions/subscription_summary_spec.rb'
     - 'engines/order_management/spec/spec_helper.rb'
     - 'engines/web/app/controllers/web/angular_templates_controller.rb'
     - 'engines/web/app/controllers/web/api/cookies_consent_controller.rb'
@@ -966,8 +970,6 @@ Style/FrozenStringLiteralComment:
     - 'lib/open_food_network/scope_variants_for_search.rb'
     - 'lib/open_food_network/spree_api_key_loader.rb'
     - 'lib/open_food_network/subscription_payment_updater.rb'
-    - 'lib/open_food_network/subscription_summarizer.rb'
-    - 'lib/open_food_network/subscription_summary.rb'
     - 'lib/open_food_network/tag_rule_applicator.rb'
     - 'lib/open_food_network/user_balance_calculator.rb'
     - 'lib/open_food_network/users_and_enterprises_report.rb'
@@ -1218,8 +1220,6 @@ Style/FrozenStringLiteralComment:
     - 'spec/lib/open_food_network/scope_variant_to_hub_spec.rb'
     - 'spec/lib/open_food_network/scope_variants_to_search_spec.rb'
     - 'spec/lib/open_food_network/subscription_payment_updater_spec.rb'
-    - 'spec/lib/open_food_network/subscription_summarizer_spec.rb'
-    - 'spec/lib/open_food_network/subscription_summary_spec.rb'
     - 'spec/lib/open_food_network/tag_rule_applicator_spec.rb'
     - 'spec/lib/open_food_network/user_balance_calculator_spec.rb'
     - 'spec/lib/open_food_network/users_and_enterprises_report_spec.rb'
@@ -1541,6 +1541,7 @@ Style/Send:
   Exclude:
     - 'app/controllers/spree/checkout_controller.rb'
     - 'app/models/spree/shipping_method_decorator.rb'
+    - 'engines/order_management/spec/services/order_management/subscriptions/subscription_summarizer_spec.rb'
     - 'spec/controllers/admin/subscriptions_controller_spec.rb'
     - 'spec/controllers/checkout_controller_spec.rb'
     - 'spec/controllers/spree/admin/base_controller_spec.rb'
@@ -1558,7 +1559,6 @@ Style/Send:
     - 'spec/lib/open_food_network/products_and_inventory_report_spec.rb'
     - 'spec/lib/open_food_network/sales_tax_report_spec.rb'
     - 'spec/lib/open_food_network/subscription_payment_updater_spec.rb'
-    - 'spec/lib/open_food_network/subscription_summarizer_spec.rb'
     - 'spec/lib/open_food_network/tag_rule_applicator_spec.rb'
     - 'spec/lib/open_food_network/xero_invoices_report_spec.rb'
     - 'spec/lib/stripe/webhook_handler_spec.rb'
