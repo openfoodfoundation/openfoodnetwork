@@ -685,6 +685,7 @@ Metrics/ModuleLength:
   - app/helpers/injection_helper.rb
   - app/helpers/spree/admin/navigation_helper.rb
   - app/helpers/spree/admin/base_helper.rb
+  - engines/order_management/spec/services/order_management/subscriptions/payment_setup_spec.rb
   - lib/open_food_network/column_preference_defaults.rb
   - spec/controllers/admin/enterprises_controller_spec.rb
   - spec/controllers/admin/order_cycles_controller_spec.rb
@@ -711,7 +712,6 @@ Metrics/ModuleLength:
   - spec/models/spree/product_spec.rb
   - spec/models/spree/variant_spec.rb
   - spec/services/permissions/order_spec.rb
-  - spec/services/subscriptions/payment_setup_spec.rb
   - spec/support/request/web_helper.rb
 
 Metrics/ParameterLists:
