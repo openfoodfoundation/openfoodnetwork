@@ -16,7 +16,7 @@ module OrderManagement
         context "when a summary for the order's distributor doesn't already exist" do
           it "initializes a new summary object, and returns it" do
             expect(summarizer.instance_variable_get(:@summaries).count).to be 0
-            summary = summarizer.send(:summary_for, order)
+            summary = summarizer.__send__(:summary_for, order)
             expect(summary.shop_id).to be 123
             expect(summarizer.instance_variable_get(:@summaries).count).to be 1
           end
@@ -31,7 +31,7 @@ module OrderManagement
 
           it "returns the existing summary object" do
             expect(summarizer.instance_variable_get(:@summaries).count).to be 1
-            expect(summarizer.send(:summary_for, order)).to eq summary
+            expect(summarizer.__send__(:summary_for, order)).to eq summary
             expect(summarizer.instance_variable_get(:@summaries).count).to be 1
           end
         end

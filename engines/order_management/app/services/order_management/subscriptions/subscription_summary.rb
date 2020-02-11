@@ -3,7 +3,7 @@
 module OrderManagement
   module Subscriptions
     class SubscriptionSummary
-      attr_reader :shop_id, :order_count, :success_count, :issues
+      attr_reader :shop_id, :issues
 
       def initialize(shop_id)
         @shop_id = shop_id
