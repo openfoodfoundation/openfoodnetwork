@@ -1,21 +1,23 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 module Subscriptions
   describe PaymentSetup do
     let(:order) { create(:order) }
-    let(:updater) { Subscriptions::PaymentSetup.new(order) }
+    let(:payment_setup) { Subscriptions::PaymentSetup.new(order) }
 
     describe "#payment" do
       context "when only one payment exists on the order" do
         let!(:payment) { create(:payment, order: order) }
 
         context "where the payment is pending" do
-          it { expect(updater.send(:payment)).to eq payment }
+          it { expect(payment_setup.__send__(:payment)).to eq payment }
         end
 
         context "where the payment is failed" do
           before { payment.update_attribute(:state, 'failed') }
-          it { expect(updater.send(:payment)).to be nil }
+          it { expect(payment_setup.__send__(:payment)).to be nil }
         end
       end
 
@@ -24,12 +26,12 @@ module Subscriptions
         let!(:payment2) { create(:payment, order: order) }
 
         context "where more than one payment is pending" do
-          it { expect([payment1, payment2]).to include updater.send(:payment) }
+          it { expect([payment1, payment2]).to include payment_setup.__send__(:payment) }
         end
 
         context "where only one payment is pending" do
           before { payment1.update_attribute(:state, 'failed') }
-          it { expect(updater.send(:payment)).to eq payment2 }
+          it { expect(payment_setup.__send__(:payment)).to eq payment2 }
         end
 
         context "where no payments are pending" do
@@ -38,7 +40,7 @@ module Subscriptions
             payment2.update_attribute(:state, 'failed')
           end
 
-          it { expect(updater.send(:payment)).to be nil }
+          it { expect(payment_setup.__send__(:payment)).to be nil }
         end
       end
     end
@@ -57,7 +59,7 @@ module Subscriptions
         end
 
         it "creates a new payment on the order" do
-          expect{ updater.call! }.to change(Spree::Payment, :count).by(1)
+          expect{ payment_setup.call! }.to change(Spree::Payment, :count).by(1)
           expect(order.payments.first.amount).to eq 5
         end
       end
@@ -67,15 +69,15 @@ module Subscriptions
 
         context "when a credit card is not required" do
           before do
-            allow(updater).to receive(:card_required?) { false }
-            expect(updater).to_not receive(:card_available?)
-            expect(updater).to_not receive(:ensure_credit_card)
+            allow(payment_setup).to receive(:card_required?) { false }
+            expect(payment_setup).to_not receive(:card_available?)
+            expect(payment_setup).to_not receive(:ensure_credit_card)
           end
 
           context "when the payment total doesn't match the outstanding balance on the order" do
             before { allow(order).to receive(:outstanding_balance) { 5 } }
             it "updates the payment total to reflect the outstanding balance" do
-              expect{ updater.call! }.to change(payment, :amount).from(10).to(5)
+              expect{ payment_setup.call! }.to change(payment, :amount).from(10).to(5)
             end
           end
 
@@ -83,18 +85,18 @@ module Subscriptions
             before { allow(order).to receive(:outstanding_balance) { 10 } }
 
             it "does nothing" do
-              expect{ updater.call! }.to_not change(payment, :amount).from(10)
+              expect{ payment_setup.call! }.to_not change(payment, :amount).from(10)
             end
           end
         end
 
         context "when a credit card is required" do
           before do
-            expect(updater).to receive(:card_required?) { true }
+            expect(payment_setup).to receive(:card_required?) { true }
           end
 
           context "and the payment source is not a credit card" do
-            before { expect(updater).to receive(:card_set?) { false } }
+            before { expect(payment_setup).to receive(:card_set?) { false } }
 
             context "and no default credit card has been set by the customer" do
               before do
@@ -103,32 +105,40 @@ module Subscriptions
 
               it "adds an error to the order and does not update the payment" do
                 expect(payment).to_not receive(:update_attributes)
-                expect{ updater.call! }.to change(order.errors[:base], :count).from(0).to(1)
+                expect{ payment_setup.call! }.to change(order.errors[:base], :count).from(0).to(1)
               end
             end
 
             context "and the customer has not authorised the shop to charge to credit cards" do
               before do
-                allow(order).to receive(:user) { instance_double(Spree::User, default_card: create(:credit_card)) }
-                allow(order).to receive(:customer) { instance_double(Customer, allow_charges?: false) }
+                allow(order).to receive(:user) {
+                  instance_double(Spree::User, default_card: create(:credit_card))
+                }
+                allow(order).to receive(:customer) {
+                  instance_double(Customer, allow_charges?: false)
+                }
               end
 
               it "adds an error to the order and does not update the payment" do
                 expect(payment).to_not receive(:update_attributes)
-                expect{ updater.call! }.to change(order.errors[:base], :count).from(0).to(1)
+                expect{ payment_setup.call! }.to change(order.errors[:base], :count).from(0).to(1)
               end
             end
 
             context "and an authorised default credit card is available to charge" do
               before do
-                allow(order).to receive(:user) { instance_double(Spree::User, default_card: create(:credit_card)) }
-                allow(order).to receive(:customer) { instance_double(Customer, allow_charges?: true) }
+                allow(order).to receive(:user) {
+                  instance_double(Spree::User, default_card: create(:credit_card))
+                }
+                allow(order).to receive(:customer) {
+                  instance_double(Customer, allow_charges?: true)
+                }
               end
 
               context "when the payment total doesn't match the outstanding balance on the order" do
                 before { allow(order).to receive(:outstanding_balance) { 5 } }
                 it "updates the payment total to reflect the outstanding balance" do
-                  expect{ updater.call! }.to change(payment, :amount).from(10).to(5)
+                  expect{ payment_setup.call! }.to change(payment, :amount).from(10).to(5)
                 end
               end
 
@@ -136,19 +146,19 @@ module Subscriptions
                 before { allow(order).to receive(:outstanding_balance) { 10 } }
 
                 it "does nothing" do
-                  expect{ updater.call! }.to_not change(payment, :amount).from(10)
+                  expect{ payment_setup.call! }.to_not change(payment, :amount).from(10)
                 end
               end
             end
           end
 
           context "and the payment source is already a credit card" do
-            before { expect(updater).to receive(:card_set?) { true } }
+            before { expect(payment_setup).to receive(:card_set?) { true } }
 
             context "when the payment total doesn't match the outstanding balance on the order" do
               before { allow(order).to receive(:outstanding_balance) { 5 } }
               it "updates the payment total to reflect the outstanding balance" do
-                expect{ updater.call! }.to change(payment, :amount).from(10).to(5)
+                expect{ payment_setup.call! }.to change(payment, :amount).from(10).to(5)
               end
             end
 
@@ -156,7 +166,7 @@ module Subscriptions
               before { allow(order).to receive(:outstanding_balance) { 10 } }
 
               it "does nothing" do
-                expect{ updater.call! }.to_not change(payment, :amount).from(10)
+                expect{ payment_setup.call! }.to_not change(payment, :amount).from(10)
               end
             end
           end
@@ -166,7 +176,7 @@ module Subscriptions
 
     describe "#ensure_credit_card" do
       let!(:payment) { create(:payment, source: nil) }
-      before { allow(updater).to receive(:payment) { payment } }
+      before { allow(payment_setup).to receive(:payment) { payment } }
 
       context "when no default credit card is found" do
         before do
@@ -175,7 +185,7 @@ module Subscriptions
 
         it "returns false and down not update the payment source" do
           expect do
-            expect(updater.send(:ensure_credit_card)).to be false
+            expect(payment_setup.__send__(:ensure_credit_card)).to be false
           end.to_not change(payment, :source).from(nil)
         end
       end
@@ -193,7 +203,7 @@ module Subscriptions
 
           it "returns false and does not update the payment source" do
             expect do
-              expect(updater.send(:ensure_credit_card)).to be false
+              expect(payment_setup.__send__(:ensure_credit_card)).to be false
             end.to_not change(payment, :source).from(nil)
           end
         end
@@ -205,7 +215,7 @@ module Subscriptions
 
           it "returns true and stores the credit card as the payment source" do
             expect do
-              expect(updater.send(:ensure_credit_card)).to be true
+              expect(payment_setup.__send__(:ensure_credit_card)).to be true
             end.to change(payment, :source_id).from(nil).to(credit_card.id)
           end
         end
