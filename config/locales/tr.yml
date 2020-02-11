@@ -639,7 +639,7 @@ tr:
           inventory: Stoklar
           text2: >
               Stok sistemini kullanıyorsanız, tedarikçileriniz yeni bir ürün eklediğinde,
-              ürünün satış listenize eklenmeden önce Stoklara eklenip eklenmemesi
+              ürünün satış listenize eklenmeden önce Stok'larınıza eklenip eklenmemesi
               gerektiğini seçebilirsiniz.  Eğer ürünlerinizi yönetmek için Stok sistemini
               kullanmıyorsanız 'tavsiye edilen' seçenek ile devam etmeniz gerekir.
           preferred_product_selection_from_inventory_only_yes: Tezgahınıza yeni ürünler eklenebilir (önerilir)
