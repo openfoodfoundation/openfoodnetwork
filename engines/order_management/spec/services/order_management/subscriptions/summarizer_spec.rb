@@ -2,9 +2,9 @@
 
 module OrderManagement
   module Subscriptions
-    describe SubscriptionSummarizer do
+    describe Summarizer do
       let(:order) { create(:order) }
-      let(:summarizer) { OrderManagement::Subscriptions::SubscriptionSummarizer.new }
+      let(:summarizer) { OrderManagement::Subscriptions::Summarizer.new }
 
       describe "#summary_for" do
         let(:order) { double(:order, distributor_id: 123) }

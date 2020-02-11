@@ -4,7 +4,7 @@
 # result of automatic processing of subscriptions for the relevant shop owners.
 module OrderManagement
   module Subscriptions
-    class SubscriptionSummarizer
+    class Summarizer
       def initialize
         @summaries = {}
       end
@@ -47,7 +47,7 @@ module OrderManagement
 
       def summary_for(order)
         shop_id = order.distributor_id
-        @summaries[shop_id] ||= SubscriptionSummary.new(shop_id)
+        @summaries[shop_id] ||= Summary.new(shop_id)
       end
     end
   end

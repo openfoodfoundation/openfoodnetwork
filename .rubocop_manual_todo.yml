@@ -685,7 +685,7 @@ Metrics/ModuleLength:
   - app/helpers/spree/admin/base_helper.rb
   - engines/order_management/spec/services/order_management/subscriptions/proxy_order_syncer_spec.rb
   - engines/order_management/spec/services/order_management/subscriptions/payment_setup_spec.rb
-  - engines/order_management/spec/services/order_management/subscriptions/subscription_summarizer_spec.rb
+  - engines/order_management/spec/services/order_management/subscriptions/summarizer_spec.rb
   - lib/open_food_network/column_preference_defaults.rb
   - spec/controllers/admin/enterprises_controller_spec.rb
   - spec/controllers/admin/order_cycles_controller_spec.rb
