@@ -2,8 +2,8 @@
 
 module OrderManagement
   module Subscriptions
-    describe SubscriptionSummary do
-      let(:summary) { OrderManagement::Subscriptions::SubscriptionSummary.new(123) }
+    describe Summary do
+      let(:summary) { OrderManagement::Subscriptions::Summary.new(123) }
 
       describe "#initialize" do
         it "initializes instance variables: shop_id, order_count, success_count and issues" do

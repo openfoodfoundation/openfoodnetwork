@@ -4,9 +4,9 @@ require 'spec_helper'
 
 module OrderManagement
   module Subscriptions
-    describe SubscriptionSummarizer do
+    describe Summarizer do
       let(:order) { create(:order) }
-      let(:summarizer) { OrderManagement::Subscriptions::SubscriptionSummarizer.new }
+      let(:summarizer) { OrderManagement::Subscriptions::Summarizer.new }
 
       before { allow(Rails.logger).to receive(:info) }
 
