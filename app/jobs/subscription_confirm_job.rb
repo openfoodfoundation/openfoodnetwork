@@ -66,6 +66,9 @@ class SubscriptionConfirmJob
 
   def setup_payment!(order)
     OrderManagement::Subscriptions::PaymentSetup.new(order).call!
+    return if order.errors.any?
+
+    OrderManagement::Subscriptions::StripePaymentSetup.new(order).call!
   end
 
   def send_confirmation_email(order)
