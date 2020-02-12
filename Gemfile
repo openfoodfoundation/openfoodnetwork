@@ -12,6 +12,7 @@ gem "activerecord-import"
 # Patched version. See http://rubysec.com/advisories/CVE-2015-5312/.
 gem 'nokogiri', '>= 1.6.7.1'
 
+gem "catalog", path: "./engines/catalog"
 gem "order_management", path: "./engines/order_management"
 gem 'web', path: './engines/web'
 

@@ -88,6 +88,11 @@ GIT
       railties (>= 3.0)
 
 PATH
+  remote: engines/catalog
+  specs:
+    catalog (0.0.1)
+
+PATH
   remote: engines/order_management
   specs:
     order_management (0.0.1)
@@ -725,6 +730,7 @@ DEPENDENCIES
   bugsnag
   byebug (~> 9.0.0)
   capybara (>= 2.18.0)
+  catalog!
   coffee-rails (~> 3.2.1)
   combine_pdf
   compass-rails
