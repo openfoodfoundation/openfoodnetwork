@@ -2558,11 +2558,11 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           description: Description
           resolve: Resolve
         exchange_products:
-          load_more_products: "Load More Products"
-          load_all_products: "Load All Products"
-          select_all_products: "Select All %{total_number_of_products} Products"
-          products_loaded: "%{num_of_products_loaded} of %{total_number_of_products} Products Loaded"
-          loading_products: "Loading Products"
+          load_more_variants: "Load More Variants"
+          load_all_variants: "Load All Variants"
+          select_all_variants: "Select All %{total_number_of_variants} Variants"
+          variants_loaded: "%{num_of_variants_loaded} of %{total_number_of_variants} Variants Loaded"
+          loading_variants: "Loading Variants"
       tag_rules:
         shipping_method_tagged_top: "Shipping methods tagged"
         shipping_method_tagged_bottom: "are:"
