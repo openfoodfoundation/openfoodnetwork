@@ -681,7 +681,6 @@ Metrics/ModuleLength:
   - engines/order_management/spec/services/order_management/subscriptions/estimator_spec.rb
   - engines/order_management/spec/services/order_management/subscriptions/form_spec.rb
   - engines/order_management/spec/services/order_management/subscriptions/proxy_order_syncer_spec.rb
-  - engines/order_management/spec/services/order_management/subscriptions/payment_setup_spec.rb
   - engines/order_management/spec/services/order_management/subscriptions/summarizer_spec.rb
   - engines/order_management/spec/services/order_management/subscriptions/validator_spec.rb
   - engines/order_management/spec/services/order_management/subscriptions/variants_list_spec.rb
