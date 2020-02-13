@@ -782,7 +782,14 @@ en_AU:
         producer_shop_description_text2: A Producer Shop is for your produce only, if you want to sell produce grown/produced off site, select 'Producer Hub'.
         producer_hub: Producer Hub
         producer_hub_text: Sell produce from self and others
-        producer_hub_description_text: Your enterprise is the backbone of your local food system. You can sell your own produce as well as produce aggregated from other enterprises through your shopfront on the Open Food Network.
+        producer_hub_description_text: 'You can sell your own produce as well as produce aggregated from other enterprises through your shopfront on the Open Food Network.
+
+
+          Free to use for shopfronts with turnover of less than $500 a month. 
+
+          1% of turnover for shopfronts with turnover of more than $500 a month.
+
+          2-3% of turnover for solidarity partners who choose to collaborate on growing a new food system.'
         profile: Profile Only
         get_listing: Get a listing
         profile_description_text: People can find and contact you on the Open Food Network. Your enterprise will be visible on the map, and will be searchable in listings.
@@ -1617,7 +1624,7 @@ en_AU:
   sell_groups_detail: "Set up a tailored directory of enterprises (producers and other food enterprises) for your region or for your organisation."
   sell_user_guide: "Find out more in our user guide."
   sell_listing_price: "Listing on the OFN is free. Opening and running a shop on OFN is free up to $500 of monthly sales. If you sell more you can choose your community contribution between 1% and 3% of sales. For more detail on pricing visit the Software Platform section via the About link in the top menu."
-  sell_embed: "We can also embed an OFN shop in your own customised website or build a customised local food network website for your region."
+  sell_embed: "In addition to the Open Food Network platform, our social enterprise consultancy offers a range of services that help power a better, fairer food system. We can help with customised business and online solutions for your farm or food enterprise, lean enterprise support, regional food system development as well as food systems research and consulting."
   sell_ask_services: "Ask us about OFN services."
   shops_title: Shops
   shops_headline: Shopping, transformed.

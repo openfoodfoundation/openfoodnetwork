@@ -2188,8 +2188,8 @@ en_GB:
   report_header_temp_controlled: TempControlled?
   report_header_is_producer: Producer?
   report_header_not_confirmed: Not Confirmed
-  report_header_gst_on_income: VAT on Income
-  report_header_gst_free_income: VAT Free Income
+  report_header_gst_on_income: 20%(VAT on Income)
+  report_header_gst_free_income: Zero Rated Income
   report_header_total_untaxable_produce: Total untaxable produce (no tax)
   report_header_total_taxable_produce: Total taxable produce (tax inclusive)
   report_header_total_untaxable_fees: Total untaxable fees (no tax)
