@@ -43,7 +43,7 @@
 
       - ['number', 'state', 'payment_state', 'shipment_state', 'email', 'total'].each do |column_name|
         %th
-          = render partial: 'sortable_header', locals: {column_name: column_name}
+          = render partial: 'spree/admin/shared/sortable_header', locals: {column_name: column_name}
 
       %th.actions
   %tbody
