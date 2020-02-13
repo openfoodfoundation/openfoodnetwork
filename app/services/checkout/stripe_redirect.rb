@@ -12,11 +12,8 @@ module Checkout
     def path
       return unless stripe_payment_method?
 
-      payment = @order.pending_payments.last
-      return unless payment&.checkout?
-
-      authorize_response = payment.authorize!
-      raise unless authorize_response && payment.pending?
+      payment = OrderManagement::Subscriptions::StripeScaPaymentAuthorize.new(@order).call!
+      raise if @order.errors.any?
 
       field_with_url(payment) if url?(field_with_url(payment))
     end
