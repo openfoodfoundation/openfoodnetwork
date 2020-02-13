@@ -21,4 +21,12 @@ describe "spree/shared/_order_details.html.haml" do
 
     expect(rendered).to have_content("Paying via: Bartering")
   end
+
+  it "displays payment methods safely" do
+    order.payments.first.payment_method.name = "Bar<script>evil</script>ter&rarr;ing"
+
+    render
+
+    expect(rendered).to have_content("Paying via: Bar<script>evil</script>ter&rarr;ing")
+  end
 end
