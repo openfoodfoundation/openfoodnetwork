@@ -13,9 +13,9 @@
     .pad
       .text-big
         = t :order_payment
-        %strong=  order.payments.first.andand.payment_method.andand.name
+        %strong=  order_paid_via(order).andand.name
       %p.text-small.text-skinny.pre-line
-        %em= order.payments.first.andand.payment_method.andand.description
+        %em= order_paid_via(order).andand.description
 
     .order-summary.text-small
       %strong

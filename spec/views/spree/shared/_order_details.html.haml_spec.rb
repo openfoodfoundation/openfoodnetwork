@@ -29,4 +29,26 @@ describe "spree/shared/_order_details.html.haml" do
 
     expect(rendered).to have_content("Paying via: Bar<script>evil</script>ter&rarr;ing")
   end
+
+  it "shows the last used payment method" do
+    first_payment = order.payments.first
+    second_payment = create(
+      :payment,
+      order: order,
+      payment_method: create(:payment_method, name: "Cash")
+    )
+    third_payment = create(
+      :payment,
+      order: order,
+      payment_method: create(:payment_method, name: "Credit")
+    )
+    first_payment.update_column(:updated_at, 3.days.ago)
+    second_payment.update_column(:updated_at, 2.days.ago)
+    third_payment.update_column(:updated_at, 1.day.ago)
+    order.payments.reload
+
+    render
+
+    expect(rendered).to have_content("Paying via: Credit")
+  end
 end
