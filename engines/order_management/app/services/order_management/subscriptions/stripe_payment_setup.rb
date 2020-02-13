@@ -18,7 +18,7 @@ module OrderManagement
       private
 
       def ensure_payment_source
-        return if !card_required? || card_set?
+        return unless stripe_payment_method? && !card_set?
 
         if saved_credit_card.present? && allow_charges?
           use_saved_credit_card
@@ -27,17 +27,13 @@ module OrderManagement
         end
       end
 
-      def card_required?
+      def stripe_payment_method?
         [Spree::Gateway::StripeConnect,
          Spree::Gateway::StripeSCA].include? @payment.payment_method.class
       end
 
       def card_set?
-        @payment.source is_a? Spree::CreditCard
-      end
-
-      def use_saved_credit_card
-        @payment.update_attributes(source: saved_credit_card)
+        @payment.source.is_a? Spree::CreditCard
       end
 
       def saved_credit_card
@@ -46,6 +42,10 @@ module OrderManagement
 
       def allow_charges?
         @order.customer.allow_charges?
+      end
+
+      def use_saved_credit_card
+        @payment.update_attributes(source: saved_credit_card)
       end
     end
   end
