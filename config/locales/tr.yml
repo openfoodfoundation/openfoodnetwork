@@ -3231,7 +3231,7 @@ tr:
         open_orders: Açık siparişler
         past_orders: Geçmiş Siparişler
       transactions:
-        transaction_history: işlem geçmişi
+        transaction_history: İşlem Geçmişi
       open_orders:
         order: Sipariş
         shop: Dükkan
