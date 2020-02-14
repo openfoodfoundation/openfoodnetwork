@@ -75,6 +75,12 @@ Spree::Order.class_eval do
       joins('LEFT OUTER JOIN spree_products ON (spree_products.id = spree_variants.product_id)')
   }
 
+  scope :with_line_items_variants_and_products, lambda {
+    joins('INNER JOIN spree_line_items ON (spree_line_items.order_id = spree_orders.id)').
+      joins('INNER JOIN spree_variants ON (spree_variants.id = spree_line_items.variant_id)').
+      joins('INNER JOIN spree_products ON (spree_products.id = spree_variants.product_id)')
+  }
+
   scope :not_state, lambda { |state|
     where("state != ?", state)
   }

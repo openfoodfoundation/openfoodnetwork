@@ -10,7 +10,7 @@ module Permissions
     # Find orders that the user can see
     def visible_orders
       Spree::Order.
-        with_line_items_variants_and_products_outer.
+        with_line_items_variants_and_products.
         where(visible_orders_where_values)
     end
 
