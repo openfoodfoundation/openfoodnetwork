@@ -1281,6 +1281,7 @@ ar:
   saving_credit_card: جارٍ حفظ بطاقة الائتمان ...
   card_has_been_removed: "تمت إزالة بطاقتك (الرقم: %{number})"
   card_could_not_be_removed: عذرًا ، تعذرت إزالة البطاقة
+  invalid_credit_card: "بطاقة الائتمان غير صالحة"
   ie_warning_headline: "متصفحك غير محدث :-("
   ie_warning_text: "للحصول على أفضل تجربة لشبكة الغذاء المفتوح ، نوصي بشدة بترقية متصفحك:"
   ie_warning_chrome: تحميل متصفح كروم
@@ -2425,11 +2426,11 @@ ar:
           description: وصف
           resolve: حل
         exchange_products:
-          load_more_products: "تحميل المزيد من المنتجات"
-          load_all_products: "تحميل جميع المنتجات"
-          select_all_products: "حدد جميع المنتجات %{total_number_of_products}"
-          products_loaded: "%{num_of_products_loaded} من %{total_number_of_products} المنتجات المحملة"
-          loading_products: "تحميل المنتجات"
+          load_more_variants: "تحميل المزيد من المتغيرات"
+          load_all_variants: "تحميل جميع المتغيرات"
+          select_all_variants: "حدد كل %{total_number_of_variants} المتغيرات"
+          variants_loaded: "%{num_of_variants_loaded} من %{total_number_of_variants} تم تحميل المتغيرات"
+          loading_variants: "تحميل المتغيرات"
       tag_rules:
         shipping_method_tagged_top: "طرق الشحن الموسومة"
         shipping_method_tagged_bottom: "هي:"
@@ -2830,6 +2831,8 @@ ar:
     zipcode: الرمز البريدي
     weight: الوزن (لكل كجم)
     error_user_destroy_with_orders: "لا يمكن حذف المستخدمين الذين لديهم طلبات مكتملة"
+    cannot_create_payment_without_payment_methods: "لا يمكنك إنشاء دفعة لطلب بدون تحديد طرقة الدفع."
+    please_define_payment_methods: "يرجى تحديد بعض طرق الدفع أولاً."
     options: "خيارات"
     actions:
       update: "تحديث"
