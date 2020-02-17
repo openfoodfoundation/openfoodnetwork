@@ -28,6 +28,7 @@ class SubscriptionPlacementJob
       .joins(:subscription).merge(Subscription.not_canceled.not_paused)
   end
 
+
   def process(order)
     record_order(order)
     return record_issue(:complete, order) if order.completed?
