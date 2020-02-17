@@ -7,6 +7,6 @@ module OrderPaymentFinder
     # any overhead compared to `order(:updated_at)`.
     #
     # Using `last` without sort is not deterministic.
-    order.payments.sort_by(&:updated_at).last&.payment_method
+    order.payments.max_by(&:updated_at)&.payment_method
   end
 end
