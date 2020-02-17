@@ -101,6 +101,11 @@ ordercycle {
       line-height: 1.5em;
       padding: 0.5em 1em;
       height: 2.35em;
+
+      span {
+        width: max-content;
+        display: block;
+      }
     }
 
     select {
@@ -123,6 +128,10 @@ ordercycle {
 
     @media all and (max-width: 768px) {
       float: none;
+    }
+
+    @media all and (max-width: 480px) {
+      display: flex;
     }
   }
 

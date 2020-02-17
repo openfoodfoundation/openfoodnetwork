@@ -25,7 +25,7 @@
 
       .order-cycle-select{"popover-placement" => "left", "popover" => t(:enterprises_choose), "popover-trigger" => "openTrigger"}
         .select-label
-          = t :enterprises_ready_for
+          %span= t :enterprises_ready_for
 
         %select.select2.avenir#order_cycle_id{"ng-model" => "order_cycle.order_cycle_id",
                 "ofn-change-order-cycle" => true,
