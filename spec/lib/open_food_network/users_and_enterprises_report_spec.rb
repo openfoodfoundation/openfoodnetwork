@@ -1,7 +1,8 @@
 require 'spec_helper'
+require 'open_food_network/users_and_enterprises_report'
 
 module OpenFoodNetwork
-  describe OrderAndDistributorReport do
+  describe UsersAndEnterprisesReport do
     include AuthenticationWorkflow
 
     describe "users_and_enterprises" do

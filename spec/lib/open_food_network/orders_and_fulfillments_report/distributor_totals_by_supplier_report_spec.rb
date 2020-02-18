@@ -1,4 +1,5 @@
-require "spec_helper"
+require 'spec_helper'
+require 'open_food_network/orders_and_fulfillments_report/distributor_totals_by_supplier_report'
 
 RSpec.describe OpenFoodNetwork::OrdersAndFulfillmentsReport::DistributorTotalsBySupplierReport do
   let!(:distributor) { create(:distributor_enterprise) }
