@@ -217,7 +217,11 @@ module Spree
       end
 
       def render_report(header, table, create_csv, csv_file_name)
-        send_data csv_report(header, table), filename: csv_file_name if create_csv
+        if create_csv
+          @csv_report = csv_report(header, table)
+          send_data @csv_report, filename: csv_file_name
+        end
+
         @header = header
         @table = table
         # Rendering HTML is the default.
