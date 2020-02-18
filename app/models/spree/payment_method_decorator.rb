@@ -20,7 +20,7 @@ Spree::PaymentMethod.class_eval do
       scoped
     else
       joins(:distributors).
-        where('distributors_payment_methods.distributor_id IN (?)', user.enterprises).
+        where('distributors_payment_methods.distributor_id IN (?)', user.enterprises.select(&:id)).
         select('DISTINCT spree_payment_methods.*')
     end
   }
