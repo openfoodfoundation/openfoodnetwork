@@ -7,19 +7,14 @@ angular.module("admin.utils").factory "ErrorsParser", ->
       errorsString = ""
       if errors.length > 0
         # it is an array of errors
-        errorsString = this.arrayToString(errors)
+        errorsString = errors.join("\n")
       else
         # it is a hash of errors
         keys = Object.keys(errors)
         for key in keys
-          errorsString += this.arrayToString(errors[key])
+          errorsString += errors[key].join("\n") + "\n"
 
       this.defaultIfEmpty(errorsString, defaultContent)
-
-    arrayToString: (array) =>
-      string = ""
-      string += entry + "\n" for entry in array
-      string
 
     defaultIfEmpty: (content, defaultContent) =>
       return defaultContent if content == ""
