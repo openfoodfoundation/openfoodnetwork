@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'open_food_network/order_grouper'
 
 module OpenFoodNetwork
   describe OrderGrouper do

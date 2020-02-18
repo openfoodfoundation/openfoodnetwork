@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'open_food_network/order_cycle_management_report'
 
 include AuthenticationWorkflow
 
