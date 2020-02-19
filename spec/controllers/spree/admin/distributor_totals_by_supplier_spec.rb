@@ -2,6 +2,8 @@ require 'spec_helper'
 require "tasks/sample_data/user_factory"
 require "tasks/sample_data/fee_factory"
 require "tasks/sample_data/order_cycle_factory"
+require "tasks/sample_data/product_factory"
+require "tasks/sample_data/taxon_factory"
 
 describe Spree::Admin::ReportsController, type: :controller do
   let!(:producer) {
@@ -60,16 +62,55 @@ describe Spree::Admin::ReportsController, type: :controller do
     ).find_or_create_by_name!("Mary's Online Shop")
   end
 
-  before do
-    freddy = UserFactory.new.send(:create_user, 'Freddy Shop Farmer') 
-
-    freddys_farm_shop = Enterprise.create_with(
+  let(:freddy) { UserFactory.new.send(:create_user, 'Freddy Shop Farmer') }
+  let(:freddys_farm_shop) do
+    Enterprise.create_with(
       name: "Freddy's Farm Shop",
       owner: freddy,
       is_primary_producer: true,
       sells: "own",
       address: address("72 Lake Road, Blackburn, 3130")
     ).find_or_create_by_name!("Freddy's Farm Shop")
+  end
+
+  before { TaxonFactory.new.create_samples }
+  let(:meat) { Spree::Taxon.find_by_name('Meat and Fish') }
+
+  before do
+    DefaultStockLocation.create!
+  end
+
+  let!(:beef) do
+    params = {
+      name: 'Beef - 5kg Trays',
+      price: 50.00,
+      supplier_id: freddys_farm_shop.id,
+      primary_taxon_id: meat.id,
+      variant_unit: "weight",
+      variant_unit_scale: 1,
+      unit_value: 1,
+      shipping_category: DefaultShippingCategory.find_or_create
+    }
+    product = Spree::Product.create_with(params).find_or_create_by_name!(params[:name])
+    product.variants.first.update_attribute :on_demand, true
+
+    InventoryItem.create!(
+      enterprise: marys_online_shop,
+      variant: product.variants.first,
+      visible: true
+    )
+    VariantOverride.create!(
+      variant: product.variants.first,
+      hub: marys_online_shop,
+      price: 12,
+      on_demand: false,
+      count_on_hand: 5
+    )
+
+    product
+  end
+
+  before do
     FeeFactory.new.create_samples([marys_online_shop, freddys_farm_shop])
 
     OrderCycleFactory.new.send(
@@ -87,7 +128,7 @@ describe Spree::Admin::ReportsController, type: :controller do
       distributor: marys_online_shop,
       order_cycle: OrderCycle.find_by_name("Mary's Online Shop OC")
     )
-    order.line_items << create(:line_item, variant: apple_5, quantity: 5)
+    order.line_items << create(:line_item, variant: beef.variants.first, quantity: 1)
     order.finalize!
     order.completed_at = Time.zone.parse("2020-02-05 00:00:00 +1100")
     order.save
@@ -109,6 +150,11 @@ describe Spree::Admin::ReportsController, type: :controller do
       csv: true
     }
 
-    expect(assigns(:csv_report)).to eq(csv)
+    csv_report = assigns(:csv_report)
+    report_lines = csv_report.split("\n")
+    csv_fixture_lines = csv.split("\n")
+
+    expect(report_lines[0]).to eq(csv_fixture_lines[0])
+    expect(report_lines[1]).to eq(csv_fixture_lines[1])
   end
 end
