@@ -1282,6 +1282,7 @@ nb:
   saving_credit_card: Lagrer kredittkort ...
   card_has_been_removed: "Ditt kort er fjernet (nummer: %{number})"
   card_could_not_be_removed: Beklager, kortet kunne ikke fjernes
+  invalid_credit_card: "Ugyldig kort"
   ie_warning_headline: "Din nettleser er for gammel :-("
   ie_warning_text: "For den beste opplevelsen med Open Food Network anbefaler vi på det sterkeste å oppgradere nettleseren din:"
   ie_warning_chrome: Last ned Chrome
@@ -2425,11 +2426,11 @@ nb:
           description: Beskrivelse
           resolve: Løse
         exchange_products:
-          load_more_products: "Last inn flere produkter"
-          load_all_products: "Last inn alle produkter"
-          select_all_products: "Velg alle %{total_number_of_products} produkter"
-          products_loaded: "%{num_of_products_loaded} av %{total_number_of_products} produkter lastet"
-          loading_products: "Laster inn produkter"
+          load_more_variants: "Last inn flere varianter"
+          load_all_variants: "Last inn alle varianter"
+          select_all_variants: "Velg alle %{total_number_of_variants} varianter"
+          variants_loaded: "%{num_of_variants_loaded} av %{total_number_of_variants} Varianter lastet"
+          loading_variants: "Laster varianter"
       tag_rules:
         shipping_method_tagged_top: "Leveringsmetoder merket"
         shipping_method_tagged_bottom: "er:"
