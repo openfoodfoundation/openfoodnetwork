@@ -2595,6 +2595,79 @@ en_GB:
       signup_or_login: "Start By signing up (or logging in)"
       have_an_account: "Already have an account?"
       action_login: "Log in now."
+  inflections:
+    each:
+      one: "each"
+      other: "each"
+    bunch:
+      one: "bunch"
+      other: "bunches"
+    pack:
+      one: "pack"
+      other: "packs"
+    box:
+      one: "box"
+      other: "boxes"
+    bottle:
+      one: "bottle"
+      other: "bottles"
+    jar:
+      one: "jar"
+      other: "jars"
+    head:
+      one: "head"
+      other: "heads"
+    bag:
+      one: "bag"
+      other: "bags"
+    loaf:
+      one: "loaf"
+      other: "loaves"
+    single:
+      one: "single"
+      other: "singles"
+    tub:
+      one: "tub"
+      other: "tubs"
+    punnet:
+      one: "punnet"
+      other: "punnets"
+    packet:
+      one: "packet"
+      other: "packets"
+    item:
+      one: "item"
+      other: "items"
+    dozen:
+      one: "dozen"
+      other: "dozens"
+    unit:
+      one: "unit"
+      other: "units"
+    serve:
+      one: "serve"
+      other: "serves"
+    tray:
+      one: "tray"
+      other: "trays"
+    piece:
+      one: "piece"
+      other: "pieces"
+    pot:
+      one: "pot"
+      other: "pots"
+    bundle:
+      one: "bundle"
+      other: "bundles"
+    flask:
+      one: "flask"
+      other: "flasks"
+    basket:
+      one: "basket"
+      other: "baskets"
+    sack:
+      one: "sack"
+      other: "sacks"
   producers:
     signup:
       start_free_profile: "Start with a free profile, and expand when you're ready!"
