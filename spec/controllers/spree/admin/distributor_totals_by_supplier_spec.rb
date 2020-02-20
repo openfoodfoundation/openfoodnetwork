@@ -94,6 +94,37 @@ describe Spree::Admin::ReportsController, type: :controller do
     product
   end
 
+  let!(:apple) do
+    product = Spree::Product.new(
+      name: 'Fuji Apple',
+      price: 5.00,
+      supplier_id: freddys_farm_shop.id,
+      primary_taxon_id: fruit.id,
+      variant_unit: "weight",
+      variant_unit_scale: 1,
+      unit_value: 1,
+      shipping_category: DefaultShippingCategory.find_or_create
+    )
+    product.shipping_category = DefaultShippingCategory.find_or_create
+    product.save!
+    product.variants.first.update_attribute :on_demand, true
+
+    VariantOverride.create!(
+      variant: product.variants.first,
+      hub: marys_online_shop,
+      price: 12,
+      on_demand: false,
+      count_on_hand: 5
+    )
+
+    variant = product.variants.create!(weight: 0.0, unit_value: 2.0, price: 4.0)
+    VariantOverride.create!(
+      variant: variant, hub: marys_online_shop, on_demand: false, count_on_hand: 4
+    )
+
+    product
+  end
+
   before do
     FeeFactory.new.create_samples([marys_online_shop, freddys_farm_shop])
 
@@ -116,7 +147,11 @@ describe Spree::Admin::ReportsController, type: :controller do
     beef_variant = beef.variants.first
     OpenFoodNetwork::ScopeVariantToHub.new(marys_online_shop).scope(beef_variant)
 
+    apple_variant = apple.variants.second
+    OpenFoodNetwork::ScopeVariantToHub.new(marys_online_shop).scope(apple_variant)
+
     order.add_variant(beef_variant, 1, nil, order.currency)
+    order.add_variant(apple_variant, 1, nil, order.currency)
     order.finalize!
     order.completed_at = Time.zone.parse("2020-02-05 00:00:00 +1100")
     order.save
@@ -142,5 +177,6 @@ describe Spree::Admin::ReportsController, type: :controller do
 
     expect(report_lines[0]).to eq(csv_fixture_lines[0])
     expect(report_lines[1]).to eq(csv_fixture_lines[1])
+    expect(report_lines[2]).to eq(csv_fixture_lines[2])
   end
 end
