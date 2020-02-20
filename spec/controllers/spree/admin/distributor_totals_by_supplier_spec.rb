@@ -6,23 +6,11 @@ require "tasks/sample_data/product_factory"
 require "tasks/sample_data/taxon_factory"
 
 describe Spree::Admin::ReportsController, type: :controller do
-  let!(:producer) {
-    create(
-      :enterprise,
-      name: "Freddy's Farm Shop",
-      is_primary_producer: true,
-      sells: 'own'
-    )
-  }
-  let!(:distributor) {
-    create(
-      :distributor_enterprise,
-      name: "Mary's Online Shop",
-    )
-  }
-
-  let(:apple) { create(:product, supplier: producer, name: 'Fuji Apple') }
-  let(:apple_5) { create(:variant, product: apple, unit_value: 5.0, price: 12.0, weight: 0.01) }
+  before do
+    DefaultShippingCategory.find_or_create
+    DefaultStockLocation.create!
+    TaxonFactory.new.create_samples
+  end
 
   let(:csv) do
     <<-CSV.strip_heredoc
@@ -51,37 +39,33 @@ describe Spree::Admin::ReportsController, type: :controller do
     )
   end
 
-  let(:mary) { UserFactory.new.send(:create_user, 'Mary Retailer') }
+  let(:meat) { Spree::Taxon.find_by_name('Meat and Fish') }
+  let(:fruit) { Spree::Taxon.find_by_name('Fruit') }
+
+  let(:mary) { UserFactory.new.send(:create_user, 'Mary Retailer').second }
   let(:marys_online_shop) do
-    Enterprise.create_with(
+    Enterprise.create!(
       name: "Mary's Online Shop",
       owner: mary,
       is_primary_producer: false,
       sells: "any",
       address: address("20 Galvin Street, Altona, 3018")
-    ).find_or_create_by_name!("Mary's Online Shop")
+    )
   end
 
-  let(:freddy) { UserFactory.new.send(:create_user, 'Freddy Shop Farmer') }
+  let(:freddy) { UserFactory.new.send(:create_user, 'Freddy Shop Farmer').second }
   let(:freddys_farm_shop) do
-    Enterprise.create_with(
+    Enterprise.create!(
       name: "Freddy's Farm Shop",
       owner: freddy,
       is_primary_producer: true,
       sells: "own",
       address: address("72 Lake Road, Blackburn, 3130")
-    ).find_or_create_by_name!("Freddy's Farm Shop")
-  end
-
-  before { TaxonFactory.new.create_samples }
-  let(:meat) { Spree::Taxon.find_by_name('Meat and Fish') }
-
-  before do
-    DefaultStockLocation.create!
+    )
   end
 
   let!(:beef) do
-    params = {
+    product = Spree::Product.new(
       name: 'Beef - 5kg Trays',
       price: 50.00,
       supplier_id: freddys_farm_shop.id,
@@ -89,9 +73,9 @@ describe Spree::Admin::ReportsController, type: :controller do
       variant_unit: "weight",
       variant_unit_scale: 1,
       unit_value: 1,
-      shipping_category: DefaultShippingCategory.find_or_create
-    }
-    product = Spree::Product.create_with(params).find_or_create_by_name!(params[:name])
+    )
+    product.shipping_category = DefaultShippingCategory.find_or_create
+    product.save!
     product.variants.first.update_attribute :on_demand, true
 
     InventoryItem.create!(
@@ -117,7 +101,7 @@ describe Spree::Admin::ReportsController, type: :controller do
       :create_order_cycle,
       "Mary's Online Shop OC",
       "Mary's Online Shop",
-      ["Fred's Farm", "Freddy's Farm Shop", "Fredo's Farm Hub"],
+      ["Freddy's Farm Shop"],
       ["Mary's Online Shop"],
       receival_instructions: "Please shut the gate.",
       pickup_time: "midday"
@@ -137,9 +121,7 @@ describe Spree::Admin::ReportsController, type: :controller do
     order.completed_at = Time.zone.parse("2020-02-05 00:00:00 +1100")
     order.save
 
-    marys_user = mary.second
-    marys_online_shop.enterprise_roles.create!(user: marys_user)
-    allow(controller).to receive(:spree_current_user).and_return(marys_user)
+    allow(controller).to receive(:spree_current_user).and_return(mary)
   end
 
   it 'returns the right CSV' do
