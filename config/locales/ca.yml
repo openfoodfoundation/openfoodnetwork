@@ -2430,12 +2430,6 @@ ca:
           severity: Severitat
           description: Descripció
           resolve: Resoldre
-        exchange_products:
-          load_more_products: "Carrega més productes"
-          load_all_products: "Carrega tots els productes"
-          select_all_products: "Seleccioneu tots els productes %{total_number_of_products}"
-          products_loaded: "%{num_of_products_loaded} de %{total_number_of_products} productes carregats"
-          loading_products: "Carregant productes"
       tag_rules:
         shipping_method_tagged_top: "Els mètodes d'enviament etiquetats"
         shipping_method_tagged_bottom: "son:"

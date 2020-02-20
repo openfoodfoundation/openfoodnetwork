@@ -176,7 +176,7 @@ tr:
   title: Açık Gıda Ağı
   welcome_to: '''na Hoşgeldiniz'
   site_meta_description: "Açık Gıda Ağı, farklı ülkelerdeki temiz gıda üreticileri ve yazılımcılar tarafından yeni bir gıda sistemi oluşturmak üzere tasarlandı. Üretici ve türeticilerin bir araya gelerek aracısız bir gıda düzeni ile her açıdan daha sağlıklı bir toplum yaratmaları için çözümler sunar. Toplum yararına çalışır ve tamamen şeffaftır."
-  search_by_name: İsme veya bölgeye göre arama yapın...
+  search_by_name: İsim veya konuma göre arama yapın...
   producers_join: Yerel ve temiz üreticiler şimdi Açık Gıda Ağı'na katılabilirler.
   charges_sales_tax: KDV Uyguluyor mu?
   print_invoice: "Faturayı yazdır"
@@ -381,7 +381,7 @@ tr:
         search_by_email: "E-posta / kod ile arama ..."
         guest_label: 'Misafir Ödemesi'
       destroy:
-        has_associated_orders: 'Silme başarısız oldu: müşterinin ilişkili siparişleri var'
+        has_associated_orders: 'Silme başarısız oldu: müşterinin bağlantılı siparişleri var'
     contents:
       edit:
         title: İçerik
@@ -401,8 +401,8 @@ tr:
         fee_type: "Ücret Türü"
         name: "Ad"
         tax_category: "Vergi Tipi"
-        calculator: "Hesaplayıcı"
-        calculator_values: "Hesaplayıcı Değerleri"
+        calculator: "Hesaplama"
+        calculator_values: "Hesaplama Değerleri"
         search: "Arama"
         name_placeholder: "örn. paketleme ücreti"
     enterprise_groups:
@@ -514,10 +514,10 @@ tr:
         entries_with_errors: Öğeler hata içeriyor ve içe aktarılmayacak
         products_to_create: Ürünler oluşturulacak
         products_to_update: Ürünler güncellenecek
-        inventory_to_create: Stok kalemleri oluşturulacak
-        inventory_to_update: Stok kalemleri güncellenecek
+        inventory_to_create: Stok ürünleri oluşturulacak
+        inventory_to_update: Stok ürünleri güncellenecek
         products_to_reset: Mevcut ürünlerin stokları sıfırlanacak
-        inventory_to_reset: Mevcut  stok kalemleri sıfırlanacak
+        inventory_to_reset: Mevcut ürünlerinin stok seviyeleri sıfırlanacak
         line: Satır
         item_line: Öğe satırı
       import_review:
@@ -529,10 +529,10 @@ tr:
         final_results: Sonuçları içe aktarın
         products_created: Oluşturulan ürünler
         products_updated: Güncellenen ürünler
-        inventory_created: Stok kalemleri oluşturuldu
-        inventory_updated: Stok kalemleri güncellendi
+        inventory_created: Stok ürünleri oluşturuldu
+        inventory_updated: Stok ürünleri güncellendi
         products_reset: Ürünlerin stok seviyeleri sıfırlandı
-        inventory_reset: Stok ürünlerinin seviyesi sıfırlandı
+        inventory_reset: Ürünlerin stok seviyeleri sıfırlandı
         all_saved: "Tüm ürünler başarıyla kaydedildi"
         some_saved: "Ürünler başarıyla kaydedildi"
         save_errors: Yükleme Hatası
@@ -560,7 +560,7 @@ tr:
         no_matching_hidden_products: Arama kriterlerinize uyan gizlenmiş ürün yok
         no_new_products: Stoklara eklenecek yeni ürün yok
         no_matching_new_products: Arama kriterlerinize uyan yeni ürün yok
-        inventory_powertip: Burası sizin ürün envanteriniz. Ürün eklemek için menüdeki 'Yeni Ürün' butonun tıklayın.
+        inventory_powertip: Burası sizin ürün envanteriniz, stok takip merkeziniz. Ürün eklemek için menüdeki 'Yeni Ürün' butonun tıklayın.
         hidden_powertip: Bu ürünler stoklarınızda gizlendi ve tezgahlarınızda görünür olmayacak. Stoklarınıza ürün eklemek için 'Ekle' butonuna tıklayabilirsiniz.
         new_powertip: Bu ürünler stoklarınıza eklenmeye hazır. Stoğunuza ürün eklemek için 'Ekle'yi veya tezgahınızda gizlemek için 'Gizle'yi tıklayın. İstediğiniz zaman fikrinizi değiştirebilirsiniz!
       controls:
@@ -609,7 +609,7 @@ tr:
           abn: VKN/TCKN
           abn_placeholder: Örn. 12345678990
           acn: Tic. Sicil No.
-          acn_placeholder: Örneğin. 530 123 45 67
+          acn_placeholder: Örn. 0530 123 45 67
           display_invoice_logo: Faturalarda logoyu göster
           invoice_text: Faturaların sonuna özelleştirilmiş metin ekle
         contact:
@@ -636,14 +636,14 @@ tr:
           promo_image_note3: Kapak resmi, bir işletmenin profil sayfasının üstünde görüntülenir.
         inventory_settings:
           text1: Stok seviyelerini ve fiyatları şuradan yönetebilirsiniz
-          inventory: Stoklar
+          inventory: Stok
           text2: >
               Stok sistemini kullanıyorsanız, tedarikçileriniz yeni bir ürün eklediğinde,
-              ürünün satış listenize eklenmeden önce Stok'larınıza eklenip eklenmemesi
+              ürünün satış listenize eklenmeden önce Stok listenize eklenip eklenmemesi
               gerektiğini seçebilirsiniz.  Eğer ürünlerinizi yönetmek için Stok sistemini
-              kullanmıyorsanız 'tavsiye edilen' seçenek ile devam etmeniz gerekir.
+              kullanmıyorsanız 'tavsiye edilen' seçeneği ile devam etmeniz gerekir.
           preferred_product_selection_from_inventory_only_yes: Tezgahınıza yeni ürünler eklenebilir (önerilir)
-          preferred_product_selection_from_inventory_only_no: Yeni ürünler tezgahınıza eklemeden önce stoklara girilmelidir
+          preferred_product_selection_from_inventory_only_no: Yeni ürünler tezgahınıza eklemeden önce Stok listesine girilmelidir
         payment_methods:
           name: Ad
           applies: Uygulanma?
@@ -700,7 +700,7 @@ tr:
           enable_subscriptions_tip: "Üyelik işlevselliği etkinleştirilsin mi?"
           enable_subscriptions_false: "Kapalı"
           enable_subscriptions_true: "Etkin"
-          shopfront_message: "Mesajınız"
+          shopfront_message: "Tezgah Mesajınız"
           shopfront_message_placeholder: >
               Müşterilerinize merhaba diyebilir, tezgahınız ve alışveriş şartlarınız
               ile ilgili bilgi verebilirsiniz. Yazdıklarınız, müşteriler tezgahınızı
@@ -793,7 +793,7 @@ tr:
         profile_description_text: İnsanlar Açık Gıda Ağı üzerinden sizi bulabilir ve sizinle iletişim kurabilir. İşletmeniz haritada ve listelerde görünür olacak.
         hub_shop: Türetici Pazarı
         hub_shop_text: Başkalarının ürünlerini satın
-        hub_shop_description_text: İşletmeniz yerel gıda sisteminizin belkemiğidir. Diğer işletmelerin ürünlerini bir araya getirebilir, Açık Gıda Ağı'na kayıtlı tezgahınız üzerinden alıcılara ulaştırabilirsiniz.
+        hub_shop_description_text: İşletmeniz yerel gıda sisteminizin belkemiğidir. Diğer işletmelerin ürünlerini bir araya getirebilir, Açık Gıda Ağı'na kayıtlı pazar yeriniz üzerinden alıcılara ulaştırabilirsiniz.
         choose_option: Lütfen yukarıdaki seçeneklerden birini seçin.
         change_now: Değiştir
       enterprise_user_index:
@@ -882,13 +882,13 @@ tr:
       advanced_settings:
         title: Gelişmiş Ayarlar
         choose_product_tip: Gelen ve giden ürünleri sadece stokların %{inventory} 'i ile kısıtlayabilirsiniz.
-        preferred_product_selection_from_coordinator_inventory_only_here: Yalnızca Yönetici Envanteri
+        preferred_product_selection_from_coordinator_inventory_only_here: Yalnızca Koordinatör Stokları
         preferred_product_selection_from_coordinator_inventory_only_all: Tüm Mevcut Ürünler
         save_reload: Sayfayı Kaydet ve Yeniden Yükle
       coordinator_fees:
-        add: Yönetici ücreti ekle
+        add: Koordinatör ücreti ekle
       filters:
-        search_by_order_cycle_name: "Sipariş Dönemi adına göre ara ..."
+        search_by_order_cycle_name: "Sipariş Dönemi adına göre arayın ..."
         involving: "İçeriyor"
         any_enterprise: "Herhangi Bir İşletme"
         any_schedule: "Herhangi Bir Takvim"
@@ -911,7 +911,7 @@ tr:
       name_and_timing_form:
         name: ad
         orders_open: 'Siparişler şu zamanda açık:'
-        coordinator: yönetici
+        coordinator: Koordinatör
         orders_close: Siparişler kapalı
       row:
         suppliers: tedarikçileri
@@ -989,7 +989,7 @@ tr:
       customers:
         name: Müşteriler
       products_and_inventory:
-        name: Ürünler ve Stoklar
+        name: Ürünler ve Stok
       users_and_enterprises:
         name: Kullanıcılar ve İşletmeler
         description: 'İşletme Hesabı Yönetimi '
@@ -1021,7 +1021,7 @@ tr:
         just_a_few_more_steps: 'Başlamadan önce birkaç adım kaldı:'
         enable_subscriptions: "Tezgahlarınızdan/pazarlarınızdan en az biri için üyelikleri etkinleştirin"
         enable_subscriptions_step_1_html: 1. %{enterprises_link} sayfasına gidin, tezgahınızı bulun ve ‘Yönet’i tıklayın
-        enable_subscriptions_step_2: '''Vitrin Tercihleri'' altındaki Üyelikler seçeneğini etkinleştirin'
+        enable_subscriptions_step_2: '''Tezgah Tercihleri'' altındaki Üyelikler seçeneğini etkinleştirin'
         set_up_shipping_and_payment_methods_html: '%{shipping_link} ve %{payment_link} yöntemlerini ayarlayın'
         set_up_shipping_and_payment_methods_note_html: Yalnızca Nakit ve Şerit ödeme yöntemlerinin <br />'ü üyeliklerle kullanılabilir
         ensure_at_least_one_customer_html: En az bir %{customer_link} bulunduğundan emin olun
@@ -1330,7 +1330,7 @@ tr:
       cookies_policy_link_desc: "Daha fazla bilgi edinmek istiyorsanız,"
       cookies_policy_link: "çerezler politikası"
       cookies_accept_button: "Çerezleri kabul et"
-  home_shop: Şimdi alışveriş yap
+  home_shop: Şimdi Alışveriş Yap
   brandstory_headline: "Bağımsız, adil ve temiz gıda ..."
   brandstory_intro: "Bazen sistemi düzeltmenin en iyi yolu yeni bir sistem yaratmaktır…"
   brandstory_part1: "Açık Gıda Ağı, farklı ülkelerdeki temiz gıda üreticileri ve yazılımcılar tarafından yeni bir gıda sistemi oluşturmak üzere tasarlandı. Üretici ve türeticilerin bir araya gelerek aracısız bir gıda düzeni ile her açıdan daha sağlıklı bir toplum yaratmaları için çözümler sunar. Toplum yararına çalışır ve tamamen şeffaftır."
@@ -1397,7 +1397,7 @@ tr:
   order_includes_tax: (vergi dahil)
   order_payment_paypal_successful: PayPal ile ödemeniz başarıyla işlendi.
   order_hub_info: Pazar Bilgisi
-  order_back_to_store: Alışverişe Geri Dön
+  order_back_to_store: Siteye Geri Dön
   order_back_to_cart: Sepete geri dön
   bom_tip: "Birden çok siparişteki ürün miktarlarını değiştirmek için bu sayfayı kullanın. Ürünler gerektiğinde tüm siparişlerden tamamen kaldırılabilir."
   unsaved_changes_warning: "Kaydedilmemiş değişiklikler var ve devam ederseniz kaybolacak."
@@ -1497,7 +1497,7 @@ tr:
   enterprises_choose: "Siparişinizi ne zaman istediğinizi seçin:"
   maps_open: "Açık"
   maps_closed: "Kapalı"
-  hubs_buy: "Alışveriş ürünleri:"
+  hubs_buy: "Neler Bulabilirsiniz:"
   hubs_shopping_here: "Alışveriş noktası"
   hubs_orders_closed: "Siparişler kapalı"
   hubs_profile_only: "Yalnızca profil"
@@ -1533,7 +1533,7 @@ tr:
   products_update_error_data: "Geçersiz veriler nedeniyle kaydetme başarısız oldu:"
   products_changes_saved: "Değişiklikler kaydedildi."
   search_no_results_html: "Üzgünüz, %{query} için sonuç bulunamadı. Başka bir arama yapmak ister misiniz?"
-  components_profiles_popover: "Açık Gıda Ağında bir tezgahı olmayan ancak başka bir sitede kendi satış siteleri olan hesaplar"
+  components_profiles_popover: "Açık Gıda Ağında bir vitrini olmayan ancak başka bir sitede kendi satış siteleri olan hesaplar"
   components_profiles_show: "Profilleri göster"
   components_filters_nofilters: "Filtresiz"
   components_filters_clearfilters: "Tüm filtreleri temizle"
@@ -1806,9 +1806,9 @@ tr:
         enterprise_long_desc_placeholder: "Bu, işletmenizin hikayesini insanlara anlatmak için harika bir fırsat! - İnsanlara kendinizden bahsedin. Açıklamanızı 600 karakter veya 150 kelimenin altında tutmanızı öneririz."
         enterprise_long_desc_length: "%{num} karakter / 600'e kadar önerilir"
         enterprise_abn: "VKN/TCKN"
-        enterprise_abn_placeholder: "Örneğin. 99123456879"
+        enterprise_abn_placeholder: "Örn. 123 456 7890"
         enterprise_acn: "Tic. Sicil No."
-        enterprise_acn_placeholder: "Örneğin. 123 456 789"
+        enterprise_acn_placeholder: "Örn. 123 456 789"
         enterprise_tax_required: "Bir seçim yapmanız gerekiyor."
       images:
         title: "Görüntüler"
@@ -1940,9 +1940,9 @@ tr:
   delivery_method: Teslimat Yöntemi
   fee_type: "Ücret Türü"
   tax_category: "Vergi Kategorisi"
-  calculator: "Hesaplayıcı"
-  calculator_values: "Hesaplayıcı Değerleri"
-  calculator_settings_warning: "Hesaplayıcı türünü değiştiriyorsanız, ayarları düzenlemeden önce kaydetmeniz gerekir"
+  calculator: "Hesaplama"
+  calculator_values: "Hesaplama Değerleri"
+  calculator_settings_warning: "Hesaplama türünü değiştiriyorsanız, ayarları düzenlemeden önce kaydetmeniz gerekir"
   flat_percent_per_item: "Sabit Yüzde (ürün başına)"
   flat_rate_per_item: "Sabit Ücret (ürün başına)"
   flat_rate_per_order: "Sabit Ücret (sipariş Başına) "
@@ -2372,7 +2372,7 @@ tr:
               gerek yoktur.
           profile_only_text3: >
               Ürünlerinizi Açık Gıda Ağı'na ekleyin. Böylece üretici & türetici pazarları
-              gibi diğer  hesaplar ürünlerinizi kendi stoklarına ekleyip satışa sunabilsinler.
+              gibi diğer  hesaplar ürünlerinizi kendi listelerine ekleyip satışa sunabilsinler.
           producer_shop: Üretici Tezgahı
           producer_shop_text1: >
               Açık Gıda Ağı üzerindeki tezgahınız aracılığıyla ürünlerinizi alıcılara
@@ -2422,7 +2422,7 @@ tr:
           producer_desc: Gıda üreticileri
           producer_example: 'Örn: ÇİFTÇİLER, FIRINLAR, ÜRETİM KOOPERATİFLERİ vs.'
           non_producer_desc: Diğer tüm gıda işletmeleri
-          non_producer_example: 'Örn: Dükkanlar, Gıda Kooperatifleri, Gıda Toplulukları vs.'
+          non_producer_example: 'Örn: Manavlar, Gıda Kooperatifleri, Gıda Toplulukları vs.'
         enterprise_status:
           status_title: "%{name} kuruldu ve başlamaya hazır!"
           severity: Şiddet
@@ -2535,7 +2535,7 @@ tr:
         use_producer_settings: "Üretici stoklarını kullan"
         'yes': "Evet"
         'no': "Hayır"
-      inventory_products: "Envanter Ürünleri"
+      inventory_products: "Stok Ürünleri"
       hidden_products: "Gizli Ürünler"
       new_products: "Yeni ürünler"
       reset_stock_levels: Stok Seviyelerini Varsayılanlara Sıfırla
@@ -2609,7 +2609,7 @@ tr:
         fee_placements:
           supplier: "Gelen"
           distributor: "Giden"
-          coordinator: "koordinatör"
+          coordinator: "Koordinatör"
         tax_category_name:
           shipping_instance_rate: "Platform Hızı"
         formats:
@@ -2798,7 +2798,7 @@ tr:
     description: "Açıklama"
     type: "tür"
     default: "varsayılan"
-    calculator: "Hesaplayıcı"
+    calculator: "Hesaplama"
     zone: "bölge"
     display: "Görüntüle"
     environment: "çevre"
@@ -2845,7 +2845,7 @@ tr:
     layouts:
       admin:
         header:
-          store: mağaza
+          store: Ana Site
     admin:
       tab:
         dashboard: "Gösterge Paneli"
@@ -2855,7 +2855,7 @@ tr:
         products: "Ürünler"
         option_types: "Seçenek Türleri"
         properties: "Özellikler"
-        variant_overrides: "Envanter"
+        variant_overrides: "Stok"
         reports: "Raporlar"
         configuration: "Yapılandırma"
         users: "Kullanıcılar"
@@ -2977,7 +2977,7 @@ tr:
           name: "ad"
           products_distributor: "Dağıtımcı"
           zone: "bölge"
-          calculator: "Hesaplayıcı"
+          calculator: "Hesaplama"
           display: "Görüntüle"
           both: "Her ikisi de"
           front_end: "ön yüz"
@@ -3228,33 +3228,33 @@ tr:
           settings: Hesap ayarları
         unconfirmed_email: "Bekleyen e-posta onayı: %{unconfirmed_email}. Yeni e-posta onaylandıktan sonra e-posta adresiniz güncellenecektir."
       orders:
-        open_orders: Açık siparişler
+        open_orders: Açık Siparişler
         past_orders: Geçmiş Siparişler
       transactions:
         transaction_history: İşlem Geçmişi
       open_orders:
         order: Sipariş
-        shop: Dükkan
-        changes_allowed_until: Kadar İzin Verilen Değişiklikler
-        items: Öğeler
+        shop: Tezgah
+        changes_allowed_until: Değişiklikler Şu Zamana Kadar İzin Verildi
+        items: Ürünler
         total: Toplam
         edit: Düzenle
-        cancel: İptal etmek
+        cancel: İptal et
         closed: Kapalı
-        until: A kadar
+        until: Şu zamana kadar
       past_orders:
         order: Sipariş
         shop: Dükkan
-        completed_at: Bitiş Tarihi
-        items: Öğeler
+        completed_at: Tamamlanma Tarihi
+        items: Ürünler
         total: Toplam
-        paid?: Ücretli?
-        view: Görünüm
+        paid?: Ödendi?
+        view: Göster
       saved_cards:
         default?: Varsayılan?
         delete?: Sil?
       cards:
-        authorised_shops: Yetkili Mağazalar
+        authorised_shops: Yetkili Pazarlar
         authorised_shops_popover: Sahip olabileceğiniz tüm üyelikler (mesela tekrarlayan siparişleriniz) için varsayılan kredi kartınızdan işlem yapmasına izin verilen işletmelerin listesidir. Kart bilgileriniz güvende tutulacak ve işletme sahipleriyle paylaşılmayacak. Ödeme alındığında her zaman bilgilendirileceksiniz.
         saved_cards_popover: Bu, daha sonra kullanmak üzere kaydetmeyi seçtiğiniz sepetlerin listesidir. Bir siparişin ödemesi tamamlandığında 'varsayılan'ınız otomatik olarak seçilir ve izin verdiğiniz satıcılar tarafından ücretlendirilebilir (sağa bakın).
       authorised_shops:
@@ -3268,13 +3268,13 @@ tr:
       invalid_resource: "Geçersiz kaynak. Lütfen hataları düzeltin ve tekrar deneyin."
       resource_not_found: "Aradığınız kaynak bulunamadı."
       access: "API Erişimi"
-      key: "anahtar"
-      clear_key: "Temizle tuşu"
+      key: "Anahtar"
+      clear_key: "Anahtarı temizle"
       regenerate_key: "Anahtarı Yeniden Oluştur"
       no_key: "Anahtar yok"
       generate_key: "API anahtarı oluştur"
-      key_generated: "Anahtar üretildi"
-      key_cleared: "Anahtar silindi"
+      key_generated: "Anahtar oluşturuldu"
+      key_cleared: "Anahtar temizlendi"
       shipment:
         cannot_ready: "Gönderim hazırlanamıyor."
       invalid_taxonomy_id: "Geçersiz sınıflandırma kimliği."
