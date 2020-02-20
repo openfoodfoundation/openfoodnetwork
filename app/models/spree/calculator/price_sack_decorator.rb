@@ -17,9 +17,9 @@ module Spree
       order_amount = line_items_for(object).map { |x| x.price * x.quantity }.sum
 
       if order_amount < min
-        cost = preferred_normal_amount.to_i
+        cost = preferred_normal_amount.to_f
       elsif order_amount >= min
-        cost = preferred_discount_amount.to_i
+        cost = preferred_discount_amount.to_f
       end
 
       cost
