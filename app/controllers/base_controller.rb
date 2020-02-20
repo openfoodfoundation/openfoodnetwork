@@ -29,15 +29,21 @@ class BaseController < ApplicationController
       return
     end
 
-    @order_cycles = OrderCycle.with_distributor(@distributor).active
-      .order(@distributor.preferred_shopfront_order_cycle_order)
+    fetch_order_cycles(@distributor)
 
-    applicator = OpenFoodNetwork::TagRuleApplicator.new(@distributor,
+    set_order_cycle
+  end
+
+  def fetch_order_cycles(distributor)
+    return if @order_cycles.present?
+
+    @order_cycles = OrderCycle.with_distributor(distributor).active
+      .order(distributor.preferred_shopfront_order_cycle_order)
+
+    applicator = OpenFoodNetwork::TagRuleApplicator.new(distributor,
                                                         "FilterOrderCycles",
                                                         current_customer.andand.tag_list)
     applicator.filter!(@order_cycles)
-
-    reset_order_cycle
   end
 
   # Default to the only order cycle if there's only one
@@ -45,7 +51,7 @@ class BaseController < ApplicationController
   # Here we need to use @order_cycles.size not @order_cycles.count
   #   because TagRuleApplicator changes ActiveRecord::Relation @order_cycles
   #     and these changes are not seen if the relation is reloaded with count
-  def reset_order_cycle
+  def set_order_cycle
     return if @order_cycles.size != 1
 
     current_order(true).set_order_cycle! @order_cycles.first
