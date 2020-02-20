@@ -128,7 +128,11 @@ describe Spree::Admin::ReportsController, type: :controller do
       distributor: marys_online_shop,
       order_cycle: OrderCycle.find_by_name("Mary's Online Shop OC")
     )
-    order.line_items << create(:line_item, variant: beef.variants.first, quantity: 1)
+
+    beef_variant = beef.variants.first
+    OpenFoodNetwork::ScopeVariantToHub.new(marys_online_shop).scope(beef_variant)
+
+    order.add_variant(beef_variant, 1, nil, order.currency)
     order.finalize!
     order.completed_at = Time.zone.parse("2020-02-05 00:00:00 +1100")
     order.save
