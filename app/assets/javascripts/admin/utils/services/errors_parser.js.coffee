@@ -7,7 +7,7 @@ angular.module("admin.utils").factory "ErrorsParser", ->
       errorsString = ""
       if errors.length > 0
         # it is an array of errors
-        errorsString = errors.join("\n")
+        errorsString = errors.join("\n") + "\n"
       else
         # it is a hash of errors
         keys = Object.keys(errors)
