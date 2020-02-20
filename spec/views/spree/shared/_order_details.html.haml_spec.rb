@@ -42,9 +42,9 @@ describe "spree/shared/_order_details.html.haml" do
       order: order,
       payment_method: create(:payment_method, name: "Credit")
     )
-    first_payment.update_column(:updated_at, 3.days.ago)
-    second_payment.update_column(:updated_at, 2.days.ago)
-    third_payment.update_column(:updated_at, 1.day.ago)
+    first_payment.update_column(:created_at, 3.days.ago)
+    second_payment.update_column(:created_at, 2.days.ago)
+    third_payment.update_column(:created_at, 1.day.ago)
     order.payments.reload
 
     render
