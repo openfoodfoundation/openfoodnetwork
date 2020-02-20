@@ -51,12 +51,27 @@ module Api
         let(:exchange) { order_cycle.exchanges.outgoing.first }
         let(:products_relation) { Spree::Product.includes(:variants).where("spree_variants.id": exchange.variants.map(&:id)) }
 
-        it "paginates results" do
-          spree_get :index, exchange_id: exchange.id, page: 1, per_page: 1
+        before do
+          stub_const("Api::ExchangeProductsController::DEFAULT_PER_PAGE", 1)
+        end
 
-          expect(json_response["products"].size).to eq 1
-          expect(json_response["pagination"]["results"]).to eq 2
-          expect(json_response["pagination"]["pages"]).to eq 2
+        describe "when a specific page is requested" do
+          it "returns the requested page with paginated data" do
+            spree_get :index, exchange_id: exchange.id, page: 1
+
+            expect(json_response["products"].size).to eq 1
+            expect(json_response["pagination"]["results"]).to eq 2
+            expect(json_response["pagination"]["pages"]).to eq 2
+          end
+        end
+
+        describe "when no specific page is requested" do
+          it "returns all results without paginating" do
+            spree_get :index, exchange_id: exchange.id
+
+            expect(json_response["products"].size).to eq 2
+            expect(json_response["pagination"]).to be nil
+          end
         end
       end
     end

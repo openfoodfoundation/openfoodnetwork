@@ -3,6 +3,11 @@ angular.module("admin.indexUtils").factory 'SortOptions', ->
     predicate: ""
     reverse: true
 
+    getSortingExpr: () ->
+      sortingExpr = this.predicate + ' desc' if this.reverse
+      sortingExpr = this.predicate + ' asc' if !this.reverse
+      sortingExpr
+
     toggle: (predicate) ->
       @reverse = (@predicate == predicate) && !@reverse
       @predicate = predicate

@@ -701,6 +701,10 @@ nb:
           enable_subscriptions_false: "Deaktivert"
           enable_subscriptions_true: "Aktivert"
           shopfront_message: "Melding Butikk"
+          shopfront_message_placeholder: >
+              En valgfri melding for å ønske kunder velkommen og forklare hvordan
+              de handler hos deg. Hvis tekst legges inn her, vil den vises i en hjemmefane
+              når kundene først ankommer butikken din.
           shopfront_message_link_tooltip: "Sett inn / rediger lenke"
           shopfront_message_link_prompt: "Vennligst skriv inn en URL for å sette inn"
           shopfront_closed_message: "Melding Butikk Stengt"
@@ -1107,6 +1111,7 @@ nb:
     already_ordered:
       cart: "handlekurv"
       message_html: "Du har allerede en bestilling for denne bestillingsrunden. Sjekk %{cart}en for å se varene du bestilte før. Du kan også avbryte varer så lenge bestillingsrunden er åpen."
+    failed: "Utsjekk fra kassen mislyktes. Gi oss beskjed slik at vi kan behandle bestillingen din."
   shops:
     hubs:
       show_closed_shops: "Vis stengte butikker"
@@ -1277,6 +1282,7 @@ nb:
   saving_credit_card: Lagrer kredittkort ...
   card_has_been_removed: "Ditt kort er fjernet (nummer: %{number})"
   card_could_not_be_removed: Beklager, kortet kunne ikke fjernes
+  invalid_credit_card: "Ugyldig kort"
   ie_warning_headline: "Din nettleser er for gammel :-("
   ie_warning_text: "For den beste opplevelsen med Open Food Network anbefaler vi på det sterkeste å oppgradere nettleseren din:"
   ie_warning_chrome: Last ned Chrome
@@ -2420,11 +2426,11 @@ nb:
           description: Beskrivelse
           resolve: Løse
         exchange_products:
-          load_more_products: "Last inn flere produkter"
-          load_all_products: "Last inn alle produkter"
-          select_all_products: "Velg alle %{total_number_of_products} produkter"
-          products_loaded: "%{num_of_products_loaded} av %{total_number_of_products} produkter lastet"
-          loading_products: "Laster inn produkter"
+          load_more_variants: "Last inn flere varianter"
+          load_all_variants: "Last inn alle varianter"
+          select_all_variants: "Velg alle %{total_number_of_variants} varianter"
+          variants_loaded: "%{num_of_variants_loaded} av %{total_number_of_variants} Varianter lastet"
+          loading_variants: "Laster varianter"
       tag_rules:
         shipping_method_tagged_top: "Leveringsmetoder merket"
         shipping_method_tagged_bottom: "er:"
@@ -2824,6 +2830,8 @@ nb:
     zipcode: Postnummer
     weight: Vekt (per kg)
     error_user_destroy_with_orders: "Brukere med fullførte ordrer kan ikke slettes"
+    cannot_create_payment_without_payment_methods: "Du kan ikke opprette en betaling for en bestilling uten at det er definert noen betalingsmetoder."
+    please_define_payment_methods: "Vennligst angi noen betalingsmetoder først."
     options: "Valg"
     actions:
       update: "Oppdater"

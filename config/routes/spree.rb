@@ -50,7 +50,6 @@ Spree::Core::Engine.routes.draw do
   namespace :admin do
     get '/search/known_users' => "search#known_users", :as => :search_known_users
     get '/search/customers' => 'search#customers', :as => :search_customers
-    get '/search/customer_addresses' => 'search#customer_addresses', :as => :search_customer_addresses
 
     resources :users
 
@@ -85,18 +84,32 @@ Spree::Core::Engine.routes.draw do
     get '/variants/search', :to => "variants#search", :as => :search_variants
 
     resources :orders do
-      get :invoice, on: :member
-      get :print, on: :member
-      get :print_ticket, on: :member
-      get :managed, on: :collection
+      member do
+        put :fire
+        get :fire
+        post :resend
+        get :invoice
+        get :print
+        get :print_ticket
+      end
 
       collection do
+        get :managed
+
         resources :invoices, only: [:create, :show] do
           get :poll
         end
       end
 
       resources :adjustments
+
+      resources :payments do
+        member do
+          put :fire
+        end
+      end
+
+      resource :customer, :controller => "orders/customer_details"
     end
 
     resources :users do

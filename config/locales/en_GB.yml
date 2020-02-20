@@ -701,6 +701,10 @@ en_GB:
           enable_subscriptions_false: "Disabled"
           enable_subscriptions_true: "Enabled"
           shopfront_message: "Shopfront Message"
+          shopfront_message_placeholder: >
+              An optional message to welcome customers and explain how to shop with
+              you. If text is entered here it will be displayed in a home tab when
+              customers first arrive at your shopfront.
           shopfront_message_link_tooltip: "Insert / edit link"
           shopfront_message_link_prompt: "Please enter a URL to insert"
           shopfront_closed_message: "Shopfront Closed Message"
@@ -1107,6 +1111,7 @@ en_GB:
     already_ordered:
       cart: "cart"
       message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
+    failed: "The checkout failed. Please let us know so that we can process your order."
   shops:
     hubs:
       show_closed_shops: "Show closed shops"
@@ -1277,6 +1282,7 @@ en_GB:
   saving_credit_card: Saving credit card...
   card_has_been_removed: "Your card has been removed (number: %{number})"
   card_could_not_be_removed: Sorry, the card could not be removed
+  invalid_credit_card: "Invalid credit card"
   ie_warning_headline: "Your browser is out of date :-("
   ie_warning_text: "For the best Open Food Network experience, we strongly recommend upgrading your browser:"
   ie_warning_chrome: Download Chrome
@@ -2183,8 +2189,8 @@ en_GB:
   report_header_temp_controlled: TempControlled?
   report_header_is_producer: Producer?
   report_header_not_confirmed: Not Confirmed
-  report_header_gst_on_income: VAT on Income
-  report_header_gst_free_income: VAT Free Income
+  report_header_gst_on_income: 20%(VAT on Income)
+  report_header_gst_free_income: Zero Rated Income
   report_header_total_untaxable_produce: Total untaxable produce (no tax)
   report_header_total_taxable_produce: Total taxable produce (tax inclusive)
   report_header_total_untaxable_fees: Total untaxable fees (no tax)
@@ -2426,11 +2432,11 @@ en_GB:
           description: Description
           resolve: Resolve
         exchange_products:
-          load_more_products: "Load More Products"
-          load_all_products: "Load All Products"
-          select_all_products: "Select All %{total_number_of_products} Products"
-          products_loaded: "%{num_of_products_loaded} of %{total_number_of_products} Products Loaded"
-          loading_products: "Loading Products"
+          load_more_variants: "Load More Variants"
+          load_all_variants: "Load All Variants"
+          select_all_variants: "Select All %{total_number_of_variants} Variants"
+          variants_loaded: "%{num_of_variants_loaded} of %{total_number_of_variants} Variants Loaded"
+          loading_variants: "Loading Variants"
       tag_rules:
         shipping_method_tagged_top: "Shipping methods tagged"
         shipping_method_tagged_bottom: "are:"
@@ -2831,6 +2837,8 @@ en_GB:
     zipcode: Postcode
     weight: Weight (per kg)
     error_user_destroy_with_orders: "Users with completed orders may not be deleted"
+    cannot_create_payment_without_payment_methods: "You cannot create a payment for an order without any payment methods defined."
+    please_define_payment_methods: "Please define some payment methods first."
     options: "Options"
     actions:
       update: "Update"

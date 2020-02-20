@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+require "open_food_network/i18n_inflections"
+
 module OpenFoodNetwork
   class OptionValueNamer
     def initialize(variant = nil)
@@ -38,8 +42,7 @@ module OpenFoodNetwork
 
         else
           value = @variant.unit_value
-          unit_name = @variant.product.variant_unit_name
-          unit_name = unit_name.pluralize if value > 1
+          unit_name = pluralize(@variant.product.variant_unit_name, value)
         end
 
         value = value.to_i if value == value.to_i
@@ -71,6 +74,10 @@ module OpenFoodNetwork
       unit = units[@variant.product.variant_unit].first if unit.nil?
 
       unit
+    end
+
+    def pluralize(unit_name, count)
+      I18nInflections.pluralize(unit_name, count)
     end
   end
 end

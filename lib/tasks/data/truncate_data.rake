@@ -9,6 +9,9 @@ namespace :ofn do
 
       sql_delete_from "
         spree_inventory_units #{where_order_id_in_orders_to_delete}"
+      sql_delete_from "
+        spree_inventory_units
+        where shipment_id in (select id from spree_shipments #{where_order_id_in_orders_to_delete})"
 
       truncate_adjustments
 

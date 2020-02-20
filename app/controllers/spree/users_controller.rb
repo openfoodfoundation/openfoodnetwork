@@ -32,7 +32,7 @@ module Spree
           session[:guest_token] = nil
         end
 
-        redirect_back_or_default(root_url)
+        redirect_back_or_default(main_app.root_url)
       else
         render :new
       end

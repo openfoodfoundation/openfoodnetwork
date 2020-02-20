@@ -3,7 +3,7 @@ ruby "2.3.7"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
 gem 'i18n', '~> 0.6.11'
-gem 'i18n-js', '~> 3.5.1'
+gem 'i18n-js', '~> 3.6.0'
 gem 'rails', '~> 3.2.22'
 gem 'rails-i18n', '~> 3.0.0'
 gem 'rails_safe_tasks', '~> 1.0'
@@ -39,7 +39,7 @@ gem 'activemerchant', '~> 1.78'
 gem 'devise', '~> 2.2.5'
 gem 'devise-encryptable', '0.2.0'
 gem 'jwt', '~> 2.2'
-gem 'oauth2', '~> 1.4.2' # Used for Stripe Connect
+gem 'oauth2', '~> 1.4.4' # Used for Stripe Connect
 
 gem 'daemons'
 gem 'delayed_job_active_record'
@@ -93,7 +93,7 @@ gem 'wkhtmltopdf-binary'
 
 gem 'foreigner'
 gem 'immigrant'
-gem 'roo', '~> 2.8.2'
+gem 'roo', '~> 2.8.3'
 
 gem 'whenever', require: false
 

@@ -702,6 +702,10 @@ pt_BR:
           enable_subscriptions_false: "Desativado"
           enable_subscriptions_true: "ativado"
           shopfront_message: "Mensagem da vitrine da loja"
+          shopfront_message_placeholder: >
+              Uma mensagem opcional para dar as boas-vindas aos clientes e explicar
+              como comprar com você. Se o texto for inserido aqui, ele será exibido
+              em uma guia inicial quando os clientes chegarem à sua loja.
           shopfront_message_link_tooltip: "Inserir / editar link"
           shopfront_message_link_prompt: "Digite um URL para inserir"
           shopfront_closed_message: "Mensagem de loja fechada"
@@ -1106,6 +1110,7 @@ pt_BR:
     already_ordered:
       cart: "Carrinho"
       message_html: "Você já possui um pedido para esta compra. Verifique o %{cart} para ver os itens já encomendados. Você também pode cancelar itens enquanto o ciclo estiver aberto."
+    failed: "O checkout falhou. Informe-nos para que possamos processar seu pedido."
   shops:
     hubs:
       show_closed_shops: "Mostrar lojas fechadas"
@@ -1276,6 +1281,7 @@ pt_BR:
   saving_credit_card: Salvando cartão de crédito...
   card_has_been_removed: "O seu cartão foi removido (número: %{number})"
   card_could_not_be_removed: Desculpe, o cartão não pode ser removido
+  invalid_credit_card: "Cartão de crédito inválido"
   ie_warning_headline: "Seu navegador está desatualizado :("
   ie_warning_text: "Para a melhor experiência na Open Food Brasil, recomendamos que você atualize seu navegador:"
   ie_warning_chrome: Baixar Chrome
@@ -1936,6 +1942,7 @@ pt_BR:
   tax_category: "Categoria de taxa"
   calculator: "Calculadora"
   calculator_values: "Valores da calculadora"
+  calculator_settings_warning: "Se você estiver alterando o tipo de calculadora, salve primeiro antes de poder editar as configurações da calculadora."
   flat_percent_per_item: "Percentual (por unidade)"
   flat_rate_per_item: "Taxa fixa (por item)"
   flat_rate_per_order: "Taxa fixa ( por pedido)"
@@ -2423,11 +2430,11 @@ pt_BR:
           description: Descrição
           resolve: Resolver
         exchange_products:
-          load_more_products: "Carregar Mais Produtos"
-          load_all_products: "Carregar Todos os Produtos"
-          select_all_products: "Selecionar %{total_number_of_products}Produto(s)"
-          products_loaded: "%{num_of_products_loaded} de %{total_number_of_products}Produtos Carregados"
-          loading_products: "Carregando Produtos"
+          load_more_variants: "Carregar mais variantes"
+          load_all_variants: "Carregar todas as variantes"
+          select_all_variants: "Selecionar todas as %{total_number_of_variants} variantes"
+          variants_loaded: "%{num_of_variants_loaded} de %{total_number_of_variants} Variantes carregadas"
+          loading_variants: "Carregando variantes"
       tag_rules:
         shipping_method_tagged_top: "Métodos de envio selecionados"
         shipping_method_tagged_bottom: "são:"
@@ -2828,6 +2835,8 @@ pt_BR:
     zipcode: CEP
     weight: Peso (por kg)
     error_user_destroy_with_orders: "Usuários com pedidos concluídos não podem ser excluídos"
+    cannot_create_payment_without_payment_methods: "Você não pode criar um pagamento para um pedido sem métodos de pagamento definidos."
+    please_define_payment_methods: "Defina primeiro algum método de pagamento."
     options: "Opções"
     actions:
       update: "Atualizar"

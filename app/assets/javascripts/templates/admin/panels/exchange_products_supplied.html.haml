@@ -9,7 +9,7 @@
           'ng-model' => 'exchange.select_all_variants',
           'ng-change' => 'selectAllVariants(exchange, exchange.select_all_variants)',
           'id' => 'order_cycle_incoming_exchange_{{ $index }}_select_all_variants' }
-        {{ 'js.admin.panels.exchange_products.select_all_products' | t:{ total_number_of_products: enterprises[exchange.enterprise_id].num_of_products } }}
+        {{ 'js.admin.panels.exchange_products.select_all_variants' | t:{ total_number_of_variants: exchangeTotalVariants(exchange) } }}
 
     %div{ 'ng-include' => "'admin/panels/exchange_products_supplied_list.html'" }
 

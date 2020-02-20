@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 # This controller lists products that can be added to an exchange
+#
+# Pagination is optional and can be required by using param[:page]
 module Api
   class ExchangeProductsController < Api::BaseController
-    DEFAULT_PAGE = 1
     DEFAULT_PER_PAGE = 100
 
     skip_authorization_check only: [:index]
@@ -49,8 +50,10 @@ module Api
     end
 
     def paginated_products
+      return products unless pagination_required?
+
       products.
-        page(params[:page] || DEFAULT_PAGE).
+        page(params[:page]).
         per(params[:per_page] || DEFAULT_PER_PAGE)
     end
 
@@ -80,19 +83,23 @@ module Api
         order_cycle: @order_cycle
       )
 
-      render text: {
-        products: serializer,
-        pagination: pagination_data(paginated_products)
-      }.to_json
+      result = { products: serializer }
+      result = result.merge(pagination: pagination_data(paginated_products)) if pagination_required?
+
+      render text: result.to_json
     end
 
     def pagination_data(paginated_products)
       {
         results: paginated_products.total_count,
         pages: paginated_products.num_pages,
-        page: (params[:page] || DEFAULT_PAGE).to_i,
+        page: params[:page].to_i,
         per_page: (params[:per_page] || DEFAULT_PER_PAGE).to_i
       }
+    end
+
+    def pagination_required?
+      params[:page].present?
     end
   end
 end

@@ -1284,6 +1284,7 @@ fr:
   saving_credit_card: Enregistrement de la carte de crédit...
   card_has_been_removed: "Votre carte a été supprimée (numéro : %{number})"
   card_could_not_be_removed: Désolée, la carte n'a pas pu être supprimée :-(
+  invalid_credit_card: "Cette carte de crédit n'est pas valide"
   ie_warning_headline: "Votre navigateur n'est pas à jour :-("
   ie_warning_text: "Pour une expérience optimale sur Open Food France, nous vous recommandons fortement de mettre à jour votre navigateur:"
   ie_warning_chrome: Télécharger Chrome
@@ -2454,11 +2455,11 @@ fr:
           description: Description
           resolve: Résoudre
         exchange_products:
-          load_more_products: "Voir plus de produits"
-          load_all_products: "Voir tous les produits"
-          select_all_products: "Sélectionner tous les %{total_number_of_products}produits"
-          products_loaded: "%{num_of_products_loaded}sur %{total_number_of_products}produits affichés"
-          loading_products: "Produits en cours de chargement"
+          load_more_variants: "Afficher plus de variantes"
+          load_all_variants: "Afficher toutes les variantes"
+          select_all_variants: "Sélectionnez toutes les %{total_number_of_variants} variantes"
+          variants_loaded: " %{num_of_variants_loaded}sur %{total_number_of_variants} variantes"
+          loading_variants: "Chargement des variantes"
       tag_rules:
         shipping_method_tagged_top: "Les méthodes de livraison taguées"
         shipping_method_tagged_bottom: "sont:"
@@ -2860,6 +2861,8 @@ fr:
     zipcode: Code postal
     weight: Poids (au kg)
     error_user_destroy_with_orders: "Les utilisateurs avec des commandes finalisées pourraient ne pas être supprimés"
+    cannot_create_payment_without_payment_methods: "Vous ne pouvez pas ajouter un paiement pour une commande sans avoir défini de méthode de paiement au préalable."
+    please_define_payment_methods: "Il faut que vous définissiez une méthode de paiement avant tout !"
     options: "Options"
     actions:
       update: "Mettre à jour"

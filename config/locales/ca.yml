@@ -50,6 +50,8 @@ ca:
         shipping_method_ids: "Mètodes d'enviament"
         payment_method_ids: "Mètodes de Pagament"
     errors:
+      messages:
+        inclusion: "no està inclòs a la llista"
       models:
         subscription_validator:
           attributes:
@@ -700,6 +702,11 @@ ca:
           enable_subscriptions_false: "Deshabilitat"
           enable_subscriptions_true: "Habilitat"
           shopfront_message: "Missatge de la botiga"
+          shopfront_message_placeholder: >
+              Un missatge opcional per donar la benvinguda als clients i explicar
+              com comprar amb vosaltres. Si s'introdueix text aquí, es mostrarà a
+              la pestanya d'inici quan els clients arribin per primera vegada a la
+              vostra botiga.
           shopfront_message_link_tooltip: "Inserir / editar enllaç"
           shopfront_message_link_prompt: "Introduïu un URL per inserir"
           shopfront_closed_message: "Missatge de tancament de la botiga"
@@ -1101,10 +1108,13 @@ ca:
       destroy_attachment_does_not_exist: "El logotip no existeix"
     enterprise_promo_image:
       destroy_attachment_does_not_exist: "La imatge promocional no existeix"
+    orders:
+      failed_to_update: "No s'ha pogut actualitzar la comanda"
   checkout:
     already_ordered:
       cart: "cistella"
       message_html: "Ja teniu una comanda per a aquest cicle de comanda. Consulteu %{cart} per veure els articles que heu demanat anteriorment. També podeu cancel·lar articles sempre que el cicle de comanda estigui obert."
+    failed: "La comanda ha fallat. Informeu-nos perquè puguem processar la vostra comanda."
   shops:
     hubs:
       show_closed_shops: "Mostra les botigues tancades"
@@ -1935,6 +1945,7 @@ ca:
   tax_category: "Categoria d'impostos"
   calculator: "Calculadora"
   calculator_values: "Valors de la calculadora"
+  calculator_settings_warning: "Si canvieu el tipus de calculadora, primer heu de desar abans de poder editar la configuració de la calculadora"
   flat_percent_per_item: "Percentatge fixe (per article)"
   flat_rate_per_item: "Tarifa fixa (per article)"
   flat_rate_per_order: "Tarifa fixa (per comanda)"
@@ -2501,6 +2512,7 @@ ca:
           customer_placeholder: "consumidora@example.org"
           valid_email_error: "siusplau, introduïu una adreça de correu electrònic vàlida"
       subscriptions:
+        error_saving: "S'ha produït un error en desar la subscripció"
         new:
           please_select_a_shop: "Si us plau, seleccioneu una botiga"
     insufficient_stock: "No hi ha prou estoc disponible, només queda %{on_hand}"
@@ -2818,6 +2830,8 @@ ca:
     zipcode: Codi postal
     weight: Pes (per kg)
     error_user_destroy_with_orders: "No es poden esborrar usuaris amb comandes completades"
+    cannot_create_payment_without_payment_methods: "No podeu crear un pagament per a una comanda sense que hi hagi definit cap mètode de pagament."
+    please_define_payment_methods: "Primer definiu alguns mètodes de pagament."
     options: "Opcions"
     actions:
       update: "Actualitzar"
@@ -2904,6 +2918,7 @@ ca:
           capture: "Captura"
           ship: "Enviament"
           edit: "Editar"
+          order_not_updated: "La comanda no s'ha pogut actualitzar"
           note: "Nota"
           first: "Primer"
           last: "Últim"

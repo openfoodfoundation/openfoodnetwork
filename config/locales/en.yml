@@ -1364,6 +1364,7 @@ en:
   saving_credit_card: Saving credit card...
   card_has_been_removed: "Your card has been removed (number: %{number})"
   card_could_not_be_removed: Sorry, the card could not be removed
+  invalid_credit_card: "Invalid credit card"
 
   ie_warning_headline: "Your browser is out of date :-("
   ie_warning_text: "For the best Open Food Network experience, we strongly recommend upgrading your browser:"
@@ -2557,11 +2558,11 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           description: Description
           resolve: Resolve
         exchange_products:
-          load_more_products: "Load More Products"
-          load_all_products: "Load All Products"
-          select_all_products: "Select All %{total_number_of_products} Products"
-          products_loaded: "%{num_of_products_loaded} of %{total_number_of_products} Products Loaded"
-          loading_products: "Loading Products"
+          load_more_variants: "Load More Variants"
+          load_all_variants: "Load All Variants"
+          select_all_variants: "Select All %{total_number_of_variants} Variants"
+          variants_loaded: "%{num_of_variants_loaded} of %{total_number_of_variants} Variants Loaded"
+          loading_variants: "Loading Variants"
       tag_rules:
         shipping_method_tagged_top: "Shipping methods tagged"
         shipping_method_tagged_bottom: "are:"
@@ -2720,6 +2721,90 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       signup_or_login: "Start By Signing Up (or logging in)"
       have_an_account: "Already have an account?"
       action_login: "Log in now."
+
+  # Singular and plural forms of commonly used words.
+  # We use these entries to pluralize unit names in every language.
+  #
+  # Extracted with the following query:
+  # Spree::Product.group(:variant_unit_name).order("count_all DESC").count.each { |name, count|
+  #   puts "    # Used #{count} times."
+  #   puts "    #{name&.parameterize('_')}:"
+  #   puts "      one: \"#{name}\""
+  #   puts "      other: \"#{name}s\"";
+  # }
+  inflections:
+    each:
+      one: "each"
+      other: "each"
+    bunch:
+      one: "bunch"
+      other: "bunches"
+    pack:
+      one: "pack"
+      other: "packs"
+    box:
+      one: "box"
+      other: "boxes"
+    bottle:
+      one: "bottle"
+      other: "bottles"
+    jar:
+      one: "jar"
+      other: "jars"
+    head:
+      one: "head"
+      other: "heads"
+    bag:
+      one: "bag"
+      other: "bags"
+    loaf:
+      one: "loaf"
+      other: "loaves"
+    single:
+      one: "single"
+      other: "singles"
+    tub:
+      one: "tub"
+      other: "tubs"
+    punnet:
+      one: "punnet"
+      other: "punnets"
+    packet:
+      one: "packet"
+      other: "packets"
+    item:
+      one: "item"
+      other: "items"
+    dozen:
+      one: "dozen"
+      other: "dozens"
+    unit:
+      one: "unit"
+      other: "units"
+    serve:
+      one: "serve"
+      other: "serves"
+    tray:
+      one: "tray"
+      other: "trays"
+    piece:
+      one: "piece"
+      other: "pieces"
+    pot:
+      one: "pot"
+      other: "pots"
+    bundle:
+      one: "bundle"
+      other: "bundles"
+    flask:
+      one: "flask"
+      other: "flasks"
+    basket:
+      one: "basket"
+      other: "baskets"
+    sack:
+      one: "sack"
+      other: "sacks"
 
   producers:
     signup:
@@ -2988,6 +3073,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     zipcode: Postcode
     weight: Weight (per kg)
     error_user_destroy_with_orders: "Users with completed orders may not be deleted"
+    cannot_create_payment_without_payment_methods: "You cannot create a payment for an order without any payment methods defined."
+    please_define_payment_methods: "Please define some payment methods first."
     options: "Options"
 
     actions:

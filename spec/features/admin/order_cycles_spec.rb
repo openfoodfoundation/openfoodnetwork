@@ -369,7 +369,12 @@ feature '
         find(:css, "tags-input .tags input").set "wholesale\n"
       end
 
-      page.all("table.exchanges tr.distributor td.products").each(&:click)
+      exchange_rows = page.all("table.exchanges tbody")
+      exchange_rows.each do |exchange_row|
+        exchange_row.find("td.products").click
+        # Wait for the products panel to be visible.
+        expect(exchange_row).to have_selector "tr", count: 2
+      end
 
       uncheck "order_cycle_outgoing_exchange_2_variants_#{v1.id}"
       check "order_cycle_outgoing_exchange_2_variants_#{v2.id}"
@@ -537,7 +542,7 @@ feature '
       page.find("tr.supplier-#{supplier_enterprise.id} td.products").click
       expect(page).to have_selector ".exchange-product-details"
 
-      expect(page).to have_content "1 of 2 Products Loaded"
+      expect(page).to have_content "1 of 2 Variants Loaded"
       expect(page).to_not have_content new_product.name
     end
 
@@ -557,7 +562,7 @@ feature '
 
     def expect_all_products_loaded
       expect(page).to have_content new_product.name.upcase
-      expect(page).to have_content "2 of 2 Products Loaded"
+      expect(page).to have_content "2 of 2 Variants Loaded"
     end
   end
 

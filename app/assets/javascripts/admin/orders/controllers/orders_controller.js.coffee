@@ -64,10 +64,10 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, $timeout, Reque
       $scope.selected_orders.push order.id if $scope.select_all
 
   $scope.$watch 'sortOptions', (sort) ->
-    if sort && sort.predicate != ""
-      $scope.sorting = sort.predicate + ' desc' if sort.reverse
-      $scope.sorting = sort.predicate + ' asc' if !sort.reverse
-      $scope.fetchResults()
+    return unless sort && sort.predicate != ""
+
+    $scope.sorting = sort.getSortingExpr()
+    $scope.fetchProducts()
   , true
 
   $scope.capturePayment = (order) ->
