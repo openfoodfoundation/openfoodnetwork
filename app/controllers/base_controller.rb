@@ -37,9 +37,17 @@ class BaseController < ApplicationController
                                                         current_customer.andand.tag_list)
     applicator.filter!(@order_cycles)
 
-    # And default to the only order cycle if there's only the one
-    if @order_cycles.count == 1
-      current_order(true).set_order_cycle! @order_cycles.first
-    end
+    reset_order_cycle
+  end
+
+  # Default to the only order cycle if there's only one
+  #
+  # Here we need to use @order_cycles.size not @order_cycles.count
+  #   because TagRuleApplicator changes ActiveRecord::Relation @order_cycles
+  #     and these changes are not seen if the relation is reloaded with count
+  def reset_order_cycle
+    return if @order_cycles.size != 1
+
+    current_order(true).set_order_cycle! @order_cycles.first
   end
 end
