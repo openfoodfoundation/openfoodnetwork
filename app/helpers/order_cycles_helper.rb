@@ -47,17 +47,6 @@ module OrderCyclesHelper
     end
   end
 
-  def order_cycle_options
-    @order_cycles.
-      with_distributor(current_distributor).
-      map { |oc| [order_cycle_close_to_s(oc.orders_close_at), oc.id] }
-  end
-
-  def order_cycle_close_to_s(orders_close_at)
-    "%s (%s)" % [orders_close_at.strftime("#{orders_close_at.day.ordinalize} %b"),
-                 distance_of_time_in_words_to_now(orders_close_at)]
-  end
-
   def active_order_cycle_for_distributor?(_distributor)
     OrderCycle.active.with_distributor(@distributor).present?
   end
