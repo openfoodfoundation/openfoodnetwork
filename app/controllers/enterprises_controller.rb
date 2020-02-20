@@ -63,8 +63,6 @@ class EnterprisesController < BaseController
   end
 
   def reset_order
-    distributor = Enterprise.is_distributor.find_by_permalink(params[:id]) ||
-                  Enterprise.is_distributor.find(params[:id])
     order = current_order(true)
 
     reset_distributor(order, distributor)
@@ -74,6 +72,14 @@ class EnterprisesController < BaseController
     reset_order_cycle(order, distributor)
 
     order.save!
+  rescue ActiveRecord::RecordNotFound
+    flash[:error] = I18n.t(:enterprise_shop_show_error)
+    redirect_to shops_path
+  end
+
+  def distributor
+    @distributor ||= Enterprise.is_distributor.find_by_permalink(params[:id]) ||
+                     Enterprise.is_distributor.find(params[:id])
   end
 
   def reset_distributor(order, distributor)
