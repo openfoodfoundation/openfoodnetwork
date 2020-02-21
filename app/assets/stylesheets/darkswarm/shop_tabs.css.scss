@@ -16,6 +16,10 @@
         display: table;
         width: 100%;
       }
+
+      @media all and (max-width: 480px) {
+        padding: 0;
+      }
     }
   }
 
