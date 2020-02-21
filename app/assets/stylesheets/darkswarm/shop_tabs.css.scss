@@ -11,6 +11,11 @@
 
     .columns {
       display: flex;
+
+      @media all and (max-width: 1024px) {
+        display: table;
+        width: 100%;
+      }
     }
   }
 
@@ -56,6 +61,11 @@
       a {
         color: $teal-500;
       }
+    }
+
+    @media all and (max-width: 1024px) {
+      display: table-cell;
+      width: auto;
     }
   }
 
