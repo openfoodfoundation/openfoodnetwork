@@ -2,6 +2,8 @@ FactoryBot.define do
   factory :enterprise, class: Enterprise do
     transient do
       users []
+      logo {}
+      promo_image {}
     end
 
     owner { FactoryBot.create :user }
@@ -15,6 +17,8 @@ FactoryBot.define do
       proxy.users.each do |user|
         enterprise.users << user unless enterprise.users.include?(user)
       end
+      enterprise.logo = proxy.logo
+      enterprise.promo_image = proxy.promo_image
     end
   end
 
