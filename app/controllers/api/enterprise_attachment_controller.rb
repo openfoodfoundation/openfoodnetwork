@@ -1,3 +1,5 @@
+require 'api/admin/enterprise_serializer'
+
 module Api
   class EnterpriseAttachmentController < BaseController
     class MissingImplementationError < StandardError; end
