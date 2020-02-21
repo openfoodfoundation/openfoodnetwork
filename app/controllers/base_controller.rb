@@ -37,8 +37,8 @@ class BaseController < ApplicationController
   # Default to the only order cycle if there's only one
   #
   # Here we need to use @order_cycles.size not @order_cycles.count
-  #   because TagRuleApplicator changes ActiveRecord::Relation @order_cycles
-  #     and these changes are not seen if the relation is reloaded with count
+  #   because OrderCyclesList returns a modified ActiveRecord::Relation
+  #     and these modifications are not seen if it is reloaded with count
   def set_order_cycle
     return if @order_cycles.size != 1
 

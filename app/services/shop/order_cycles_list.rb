@@ -12,6 +12,14 @@ module Shop
       order_cycles = OrderCycle.with_distributor(@distributor).active
         .order(@distributor.preferred_shopfront_order_cycle_order)
 
+      apply_tag_rules!(order_cycles)
+    end
+
+    private
+
+    # order_cycles is a ActiveRecord::Relation that is modified with reject in the TagRuleApplicator
+    # If this relation is reloaded (for example by calling count on it), the modifications are lost
+    def apply_tag_rules!(order_cycles)
       applicator = OpenFoodNetwork::TagRuleApplicator.new(@distributor,
                                                           "FilterOrderCycles",
                                                           @customer.andand.tag_list)
