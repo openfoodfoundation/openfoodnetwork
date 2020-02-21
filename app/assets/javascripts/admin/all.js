@@ -20,7 +20,10 @@
 //= require angular
 //= require angular-resource
 //= require angular-animate
-//= require angular-sanitize
+// angular-sanitize is replaced by textAngular-sanitize further down.
+// We should include only one.
+// https://github.com/textAngular/textAngular#where-to-get-it
+// require angular-sanitize
 //= require angularjs-file-upload
 //= require ../shared/ng-infinite-scroll.min.js
 //= require ../shared/ng-tags-input.min.js
