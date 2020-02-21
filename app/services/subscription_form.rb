@@ -15,7 +15,7 @@ class SubscriptionForm
   end
 
   def save
-    subscription.assign_attributes(params)
+    subscription.assign_attributes(params.permit(:paused_at))
     return false unless valid?
 
     subscription.transaction do

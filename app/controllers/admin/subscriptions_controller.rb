@@ -149,7 +149,7 @@ module Admin
     # Overriding Spree method to load data from params here so that
     # we can authorise #create using an object with required attributes
     def build_resource
-      Subscription.new(params[:subscription])
+      Subscription.new(params.permit([:subscription])[:subscription])
     end
 
     def ams_prefix_whitelist
