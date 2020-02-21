@@ -96,8 +96,8 @@ class EnterprisesController < BaseController
   end
 
   def reset_order_cycle(order, distributor)
-    fetch_order_cycles(distributor)
-    order.order_cycle = @order_cycles.first if @order_cycles.size == 1
+    order_cycles = Shop::OrderCyclesList.new(distributor, current_customer).call
+    order.order_cycle = order_cycles.first if order_cycles.size == 1
   end
 
   def shop_order_cycles

@@ -29,21 +29,9 @@ class BaseController < ApplicationController
       return
     end
 
-    fetch_order_cycles(@distributor)
+    @order_cycles = Shop::OrderCyclesList.new(@distributor, current_customer).call
 
     set_order_cycle
-  end
-
-  def fetch_order_cycles(distributor)
-    return if @order_cycles.present?
-
-    @order_cycles = OrderCycle.with_distributor(distributor).active
-      .order(distributor.preferred_shopfront_order_cycle_order)
-
-    applicator = OpenFoodNetwork::TagRuleApplicator.new(distributor,
-                                                        "FilterOrderCycles",
-                                                        current_customer.andand.tag_list)
-    applicator.filter!(@order_cycles)
   end
 
   # Default to the only order cycle if there's only one
