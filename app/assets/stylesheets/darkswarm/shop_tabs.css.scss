@@ -34,7 +34,6 @@
       text-transform: uppercase;
       line-height: 1;
       font-size: 0.875em;
-      text-shadow: 0 -1px 1px #ffffff;
       padding: 1em 2em;
       border: none;
 
@@ -48,7 +47,6 @@
 
       @media all and (max-width: 640px) {
         padding: 0.35em 0 0.65em 0;
-        text-shadow: none;
       }
     }
 
