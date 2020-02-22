@@ -28,7 +28,7 @@ module Admin
     end
 
     def create
-      @customer = Customer.new(params[:customer])
+      @customer = Customer.new(customer_params)
       if user_can_create_customer?
         if @customer.save
           tag_rule_mapping = TagRule.mapping_for(Enterprise.where(id: @customer.enterprise))
@@ -79,6 +79,10 @@ module Admin
 
     def ams_prefix_whitelist
       [:subscription]
+    end
+
+    def customer_params
+      params.require(:customer).permit(:enterprise_id, :email)
     end
   end
 end
