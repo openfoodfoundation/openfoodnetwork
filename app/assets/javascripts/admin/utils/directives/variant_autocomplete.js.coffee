@@ -1,10 +1,6 @@
 angular.module("admin.utils").directive "variantAutocomplete", ($timeout) ->
   restrict: 'C'
   link: (scope, element, attrs) ->
-    # Make variantAutocomplete do nothing because it is called
-    # from core/app/assets/javascripts/admin/orders/edit.js
-    $.fn.variantAutocomplete = angular.noop
-
     $timeout ->
       if $("#variant_autocomplete_template").length > 0
         variantTemplate = Handlebars.compile($("#variant_autocomplete_template").text())

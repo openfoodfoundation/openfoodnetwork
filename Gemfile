@@ -19,9 +19,8 @@ gem 'activerecord-postgresql-adapter'
 gem 'pg', '~> 0.21.0'
 
 # OFN-maintained and patched version of Spree v2.0.4. See
-# https://github.com/openfoodfoundation/openfoodnetwork/wiki/Spree-2.0-upgrade
+# https://github.com/openfoodfoundation/openfoodnetwork/wiki/Tech-Doc:-OFN's-Spree-fork%F0%9F%8D%B4
 # for details.
-gem 'spree_backend', github: 'openfoodfoundation/spree', branch: '2-0-4-stable'
 gem 'spree_core', github: 'openfoodfoundation/spree', branch: '2-0-4-stable'
 
 gem 'spree_i18n', github: 'spree/spree_i18n', branch: '1-3-stable'
@@ -120,6 +119,8 @@ gem 'foundation_rails_helper', github: 'willrjmarshall/foundation_rails_helper',
 
 gem 'jquery-migrate-rails'
 gem 'jquery-rails', '3.0.4'
+gem 'jquery-ui-rails', '~> 4.0.0'
+gem 'select2-rails', '~> 3.4.7'
 
 gem 'ofn-qz', github: 'openfoodfoundation/ofn-qz', ref: '60da2ae4c44cbb4c8d602f59fb5fff8d0f21db3c'
 

@@ -83,6 +83,8 @@ Spree::Core::Engine.routes.draw do
 
     get '/variants/search', :to => "variants#search", :as => :search_variants
 
+    resources :properties
+
     resources :orders do
       member do
         put :fire
@@ -110,7 +112,15 @@ Spree::Core::Engine.routes.draw do
       end
 
       resource :customer, :controller => "orders/customer_details"
+
+      resources :return_authorizations do
+        member do
+          put :fire
+        end
+      end
     end
+
+    resources :reports
 
     resources :users do
       member do
@@ -126,6 +136,7 @@ Spree::Core::Engine.routes.draw do
     end
 
     resource :image_settings
+    resources :trackers
 
     resources :zones
     resources :countries do
@@ -152,6 +163,10 @@ Spree::Core::Engine.routes.draw do
     resources :tax_rates
     resource  :tax_settings
     resources :tax_categories
+
+    resources :shipping_methods
+    resources :shipping_categories
+    resources :payment_methods
   end
 
   resources :orders do
