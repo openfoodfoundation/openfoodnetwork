@@ -2,6 +2,8 @@ module Admin
   class InventoryItemsController < ResourceController
     respond_to :json
 
+    prepend_before_filter :permit_params
+
     respond_override update: { json: {
       success: lambda { render_as_json @inventory_item },
       failure: lambda { render json: { errors: @inventory_item.errors.full_messages }, status: :unprocessable_entity }
@@ -13,6 +15,10 @@ module Admin
     } }
 
     private
+
+    def permit_params
+      params.require(:inventory_item).permit!
+    end
 
     # Overriding Spree method to load data from params here so that
     # we can authorise #create using an object with required attributes

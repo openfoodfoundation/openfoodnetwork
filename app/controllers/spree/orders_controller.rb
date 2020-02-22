@@ -74,7 +74,7 @@ module Spree
         redirect_to(main_app.root_path) && return
       end
 
-      if @order.update_attributes(params[:order])
+      if @order.update_attributes(order_params)
         discard_empty_line_items
         with_open_adjustments { update_totals_and_taxes }
 
@@ -223,6 +223,10 @@ module Spree
         flash[:error] = I18n.t(:orders_cannot_remove_the_final_item)
         redirect_to order_path(order_to_update)
       end
+    end
+
+    def order_params
+      params.require(:order).permit(:distributor_id, :order_cycle_id)
     end
   end
 end
