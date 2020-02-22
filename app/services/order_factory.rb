@@ -35,13 +35,9 @@ class OrderFactory
   end
 
   def create_order
-    @order = Spree::Order.create!(create_attrs)
-  end
-
-  def create_attrs
     create_attrs = attrs.slice(:customer_id, :order_cycle_id, :distributor_id)
-    create_attrs[:email] = customer.email
-    create_attrs
+    @order = Spree::Order.create!(create_attrs)
+    @order.email = customer.email
   end
 
   def build_line_items
@@ -56,9 +52,10 @@ class OrderFactory
   end
 
   def build_item_from(attrs)
-    @order.line_items.build(
-      attrs.merge(skip_stock_check: opts[:skip_stock_check])
-    )
+    line_item = @order.line_items.build
+    line_item.variant_id = attrs[:variant_id]
+    line_item.quantity = attrs[:quantity]
+    line_item.skip_stock_check = opts[:skip_stock_check]
   end
 
   def set_user
@@ -66,7 +63,9 @@ class OrderFactory
   end
 
   def set_addresses
-    @order.update_attributes(attrs.slice(:bill_address_attributes, :ship_address_attributes))
+    @order.bill_address = Spree::Address.create(attrs[:bill_address_attributes])
+    @order.ship_address = Spree::Address.create(attrs[:ship_address_attributes])
+    @order.save!
   end
 
   def create_shipment
@@ -79,7 +78,10 @@ class OrderFactory
 
   def create_payment
     @order.update_distribution_charge!
-    @order.payments.create(payment_method_id: attrs[:payment_method_id], amount: @order.reload.total)
+
+    payment = @order.payments.build
+    payment.payment_method_id = attrs[:payment_method_id]
+    payment.amount = @order.reload.total
   end
 
   def stock_limited_quantity(variant_on_demand, variant_on_hand, requested)
