@@ -63,7 +63,7 @@ class SubscriptionPlacementJob
   end
 
   def unavailable_stock_lines_for(order)
-    order.line_items.where('variant_id NOT IN (?)', available_variants_for(order))
+    order.line_items.where('variant_id NOT IN (?)', available_variants_for(order).select(&:id))
   end
 
   def available_variants_for(order)
