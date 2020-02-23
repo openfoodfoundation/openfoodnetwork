@@ -1,21 +1,21 @@
 require 'open_food_network/proxy_order_syncer'
 
 class SubscriptionForm
-  attr_accessor :subscription, :params, :order_update_issues, :validator, :order_syncer, :estimator
+  attr_accessor :subscription, :subscription_params, :order_update_issues, :validator, :order_syncer, :estimator
 
   delegate :json_errors, :valid?, to: :validator
   delegate :order_update_issues, to: :order_syncer
 
-  def initialize(subscription, params = {})
+  def initialize(subscription, subscription_params = {})
     @subscription = subscription
-    @params = params
+    @subscription_params = subscription_params
     @estimator = SubscriptionEstimator.new(subscription)
     @validator = SubscriptionValidator.new(subscription)
     @order_syncer = OrderSyncer.new(subscription)
   end
 
   def save
-    subscription.assign_attributes(params)
+    subscription.assign_attributes(subscription_params)
     return false unless valid?
 
     subscription.transaction do

@@ -65,7 +65,7 @@ module Admin
     private
 
     def save_form_and_render(render_issues = true)
-      form = SubscriptionForm.new(@subscription, params[:subscription])
+      form = SubscriptionForm.new(@subscription, subscription_params)
       unless form.save
         render json: { errors: form.json_errors }, status: :unprocessable_entity
         return
@@ -149,11 +149,25 @@ module Admin
     # Overriding Spree method to load data from params here so that
     # we can authorise #create using an object with required attributes
     def build_resource
-      Subscription.new(params[:subscription])
+      Subscription.new(subscription_params)
     end
 
     def ams_prefix_whitelist
       [:index]
+    end
+
+    def subscription_params
+      return params[:subscription] if params[:subscription].empty?
+
+      params.require(:subscription).permit(
+        :shop_id, :schedule_id, :customer_id,
+        :payment_method_id, :shipping_method_id,
+        :begins_at, :ends_at,
+        :canceled_at, :paused_at,
+        :subscription_line_items_attributes => [:id, :quantity, :variant_id],
+        :bill_address_attributes => permitted_address_attributes,
+        :ship_address_attributes => permitted_address_attributes
+      )
     end
   end
 end
