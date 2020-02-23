@@ -237,6 +237,8 @@ module Admin
     end
 
     def order_cycle_params
+      return params[:order_cycle] if params[:order_cycle].empty?
+
       params.require(:order_cycle).permit(
         :incoming_exchanges, :outgoing_exchanges,
         :name, :orders_open_at, :orders_close_at, :coordinator_id, :schedule_ids, :coordinator_fee_ids
