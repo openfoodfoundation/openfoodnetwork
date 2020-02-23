@@ -3,16 +3,16 @@ require 'open_food_network/proxy_order_syncer'
 require 'open_food_network/order_cycle_form_applicator'
 
 class OrderCycleForm
-  def initialize(order_cycle, params, user)
+  def initialize(order_cycle, order_cycle_params, user)
     @order_cycle = order_cycle
-    @params = params
+    @order_cycle_params = order_cycle_params
     @user = user
     @permissions = OpenFoodNetwork::Permissions.new(user)
   end
 
   def save
     build_schedule_ids
-    order_cycle.assign_attributes(params[:order_cycle])
+    order_cycle.assign_attributes(order_cycle_params)
     return false unless order_cycle.valid?
 
     order_cycle.transaction do
@@ -27,7 +27,7 @@ class OrderCycleForm
 
   private
 
-  attr_accessor :order_cycle, :params, :user, :permissions
+  attr_accessor :order_cycle, :order_cycle_params, :user, :permissions
 
   def apply_exchange_changes
     return if exchanges_unchanged?
@@ -37,12 +37,12 @@ class OrderCycleForm
 
   def exchanges_unchanged?
     [:incoming_exchanges, :outgoing_exchanges].all? do |direction|
-      params[:order_cycle][direction].nil?
+      order_cycle_params[direction].nil?
     end
   end
 
   def schedule_ids?
-    params[:order_cycle][:schedule_ids].present?
+    order_cycle_params[:schedule_ids].present?
   end
 
   def build_schedule_ids
@@ -51,7 +51,7 @@ class OrderCycleForm
     result = existing_schedule_ids
     result |= (requested_schedule_ids & permitted_schedule_ids) # Add permitted and requested
     result -= ((result & permitted_schedule_ids) - requested_schedule_ids) # Remove permitted but not requested
-    params[:order_cycle][:schedule_ids] = result
+    order_cycle_params[:schedule_ids] = result
   end
 
   def sync_subscriptions
@@ -70,7 +70,7 @@ class OrderCycleForm
   end
 
   def requested_schedule_ids
-    params[:order_cycle][:schedule_ids].map(&:to_i)
+    order_cycle_params[:schedule_ids].map(&:to_i)
   end
 
   def permitted_schedule_ids
