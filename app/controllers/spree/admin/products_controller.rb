@@ -160,8 +160,14 @@ module Spree
       private
 
       def product_set_from_params(params)
-        collection_hash = Hash[params[:products].each_with_index.map { |p, i| [i, p] }]
+        collection_hash = Hash[products_params.each_with_index.map { |p, i| [i, p] }]
         Spree::ProductSet.new(collection_attributes: collection_hash)
+      end
+
+      def products_params
+        params.require(:products).map do |product|
+          ActionController::Parameters.new(product.to_hash).permit(:id, :name)
+        end
       end
 
       def bulk_index_query(params)
