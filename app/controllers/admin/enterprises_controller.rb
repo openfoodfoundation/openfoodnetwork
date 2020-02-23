@@ -42,7 +42,7 @@ module Admin
       tag_rules_attributes = params[object_name].delete :tag_rules_attributes
       update_tag_rules(tag_rules_attributes) if tag_rules_attributes.present?
       update_enterprise_notifications
-      if @object.update_attributes(params[object_name])
+      if @object.update_attributes(enterprise_params)
         invoke_callbacks(:update, :after)
         flash[:success] = flash_message_for(@object, :successfully_updated)
         respond_with(@object) do |format|
@@ -252,7 +252,7 @@ module Admin
     def override_sells
       unless spree_current_user.admin?
         has_hub = spree_current_user.owned_enterprises.is_hub.any?
-        new_enterprise_is_producer = Enterprise.new(params[:enterprise]).is_primary_producer
+        new_enterprise_is_producer = Enterprise.new(enterprise_params).is_primary_producer
         params[:enterprise][:sells] = has_hub && !new_enterprise_is_producer ? 'any' : 'none'
       end
     end
@@ -310,6 +310,21 @@ module Admin
 
     def ams_prefix_whitelist
       [:index, :basic]
+    end
+
+    def enterprise_params
+      return params[:enterprise] if params[:enterprise].empty?
+
+      params.require(:enterprise).permit(
+        :name, :is_primary_producer, :visible, :permalink,
+        :contact_name, :email_address, :phone, :sells, :owner_id,
+        :website, :facebook, :instagram, :linkedin, :twitter,
+        :abn, :acn, :charges_sales_tax, :display_invoice_logo,
+        :invoice_text, :description, :long_description, :promo_image,
+        :preferred_product_selection_from_inventory_only, :preferred_shopfront_message,
+        :preferred_shopfront_closed_message, :preferred_shopfront_taxon_order,
+        :preferred_shopfront_order_cycle_order, :require_login,
+        :allow_guest_orders, :allow_order_changes, :enable_subscriptions)
     end
   end
 end
