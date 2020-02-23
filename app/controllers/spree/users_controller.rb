@@ -25,7 +25,7 @@ module Spree
     end
 
     def create
-      @user = Spree::User.new(params[:user])
+      @user = Spree::User.new(user_params)
       if @user.save
 
         if current_order
@@ -39,7 +39,7 @@ module Spree
     end
 
     def update
-      if @user.update_attributes(params[:user])
+      if @user.update_attributes(user_params)
         if params[:user][:password].present?
           # this logic needed b/c devise wants to log us out after password changes
           Spree::User.reset_password_by_token(params[:user])
@@ -69,6 +69,10 @@ module Spree
 
     def accurate_title
       Spree.t(:my_account)
+    end
+
+    def user_params
+      params.require(:user).permit(:email, :password, :password_confirmation)
     end
   end
 end
