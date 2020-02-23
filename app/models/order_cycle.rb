@@ -63,7 +63,7 @@ class OrderCycle < ActiveRecord::Base
     if user.has_spree_role?('admin')
       where(nil)
     else
-      where(coordinator_id: user.enterprises)
+      where(coordinator_id: user.enterprises.to_sql)
     end
   }
 
