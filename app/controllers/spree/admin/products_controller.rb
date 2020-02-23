@@ -166,7 +166,7 @@ module Spree
 
       def products_params
         params.require(:products).map do |product|
-          ActionController::Parameters.new(product.to_hash).permit(:id, :name)
+          product.permit(:id, :name)
         end
       end
 

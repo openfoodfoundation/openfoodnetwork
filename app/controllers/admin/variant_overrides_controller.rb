@@ -68,7 +68,7 @@ module Admin
     end
 
     def load_collection
-      collection_hash = Hash[params[:variant_overrides].each_with_index.map { |vo, i| [i, vo] }]
+      collection_hash = Hash[variant_overrides_params.each_with_index.map { |vo, i| [i, vo] }]
       @vo_set = VariantOverrideSet.new @variant_overrides, collection_attributes: collection_hash
     end
 
@@ -91,6 +91,12 @@ module Admin
       full_messages = @collection.map { |element| element.errors.full_messages }.flatten
       full_messages.each { |fm| errors.add(:base, fm) }
       errors
+    end
+
+    def variant_overrides_params
+      params.require(:variant_overrides).map do |variant_override|
+        variant_override.permit(:id, :price, :count_on_hand, :sku, :on_demand)
+      end
     end
   end
 end
