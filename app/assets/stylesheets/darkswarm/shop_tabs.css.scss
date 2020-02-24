@@ -25,11 +25,12 @@
     width: 100%;
 
     >a {
+      @include headingFont;
+
       outline: none;
       display: block;
       background-color: #efefef;
       color: #222;
-      font-family: "Oswald", sans-serif;
     }
 
     a {

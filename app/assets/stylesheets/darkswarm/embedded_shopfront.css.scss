@@ -37,7 +37,8 @@ body.embedded {
         }
 
         span, a {
-          font-family: "Oswald", sans-serif;
+          @include headingFont;
+
           font-size: 1rem;
           font-weight: 300;
           color: #555;

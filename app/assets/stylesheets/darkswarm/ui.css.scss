@@ -10,7 +10,8 @@
 
   @include border-radius(0.5em);
 
-  font-family: $bodyFont;
+  @include bodyFont;
+
   background-color: transparent;
   border: 2px solid rgba(200, 200, 200, 1);
   color: #999;
@@ -63,7 +64,8 @@
 }
 
 .button.primary, button.primary {
-  font-family: $bodyFont;
+  @include bodyFont;
+
   background: $clr-brick;
   color: white;
 }
