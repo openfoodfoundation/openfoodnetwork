@@ -20,10 +20,6 @@
 //= require angular
 //= require angular-resource
 //= require angular-animate
-// angular-sanitize is replaced by textAngular-sanitize further down.
-// We should include only one.
-// https://github.com/textAngular/textAngular#where-to-get-it
-// require angular-sanitize
 //= require angularjs-file-upload
 //= require ../shared/ng-infinite-scroll.min.js
 //= require ../shared/ng-tags-input.min.js
@@ -70,6 +66,8 @@
 
 // text, dates and translations
 //= require textAngular-rangy.min.js
+// This replaces angular-sanitize. We should include only one.
+// https://github.com/textAngular/textAngular#where-to-get-it
 //= require textAngular-sanitize.min.js
 //= require textAngular.min.js
 //= require i18n/translations
