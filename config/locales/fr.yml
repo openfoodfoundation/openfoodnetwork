@@ -2619,6 +2619,79 @@ fr:
       signup_or_login: "Commencez par vous inscrire (ou connexion)"
       have_an_account: "Déjà inscrit?"
       action_login: "Se connecter."
+  inflections:
+    each:
+      one: "chacun"
+      other: "chacun"
+    bunch:
+      one: "bouquet"
+      other: "bouquets"
+    pack:
+      one: "caisse"
+      other: "caisses"
+    box:
+      one: "boîte"
+      other: "boîtes"
+    bottle:
+      one: "bouteille"
+      other: "bouteilles"
+    jar:
+      one: "bocal"
+      other: "bocaux"
+    head:
+      one: "tête"
+      other: "têtes"
+    bag:
+      one: "sac"
+      other: "sacs"
+    loaf:
+      one: "miche"
+      other: "miches"
+    single:
+      one: "unité"
+      other: "unités"
+    tub:
+      one: "bac"
+      other: "bacs"
+    punnet:
+      one: "barquette"
+      other: "barquettes"
+    packet:
+      one: "paquet"
+      other: "paquets"
+    item:
+      one: "article"
+      other: "articles"
+    dozen:
+      one: "dizaine"
+      other: "dizaines"
+    unit:
+      one: "unité"
+      other: "unités"
+    serve:
+      one: "service"
+      other: "services"
+    tray:
+      one: "plateau"
+      other: "plateaux"
+    piece:
+      one: "pièce"
+      other: "pièces"
+    pot:
+      one: "pot"
+      other: "pots"
+    bundle:
+      one: "botte"
+      other: "bottes"
+    flask:
+      one: "flacon"
+      other: "flacons"
+    basket:
+      one: "panier"
+      other: "paniers"
+    sack:
+      one: "sachet"
+      other: "sachets"
   producers:
     signup:
       start_free_profile: "Commencez par créer votre profil entreprise, et changez de formule quand vous êtes prêt !"
