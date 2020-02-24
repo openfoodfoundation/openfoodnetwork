@@ -4,15 +4,17 @@ $ofn-brand: #f27052;
 
 $ofn-grey: #808184;
 
-// old colors:
+// old color name but new design
+// Base orange: #f27052 = rgb(242, 112, 82) = hsl(11, 86%, 63.5%)
+$clr-brick: #f27052;
+$clr-brick-light-bright: rgba(242, 112, 82, 0.8);
+$clr-brick-light: rgba(242, 112, 82, 0.1);
+$clr-brick-ultra-light: rgba(242, 112, 82, 0.05);
+$clr-brick-light-trans: rgba(242, 112, 82, 0.1);
+$clr-brick-bright: hsl(11, 86%, 70%);
+$clr-brick-med-bright: hsl(11, 86%, 80%);
 
-$clr-brick: #c1122b;
-$clr-brick-light: #f5e6e7;
-$clr-brick-light-trans: rgba(245, 230, 231, 0.9);
-$clr-brick-ultra-light: #faf5f6;
-$clr-brick-bright: #eb4c46;
-$clr-brick-med-bright: #e5a2a0;
-$clr-brick-light-bright: #f5c4c9;
+// old colors:
 
 $clr-turquoise: #0b8c61;
 $clr-turquoise-light: #ceefe4;
