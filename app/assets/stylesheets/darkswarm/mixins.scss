@@ -141,57 +141,6 @@
 
 // Background options \\
 
-@mixin darkbg {
-  background-color: $clr-brick;
-
-  &, & * {
-    color: white;
-  }
-
-  a {
-    color: $clr-brick-ultra-light;
-
-    &:hover {
-      text-decoration: none;
-      color: $clr-brick-light;
-    }
-  }
-}
-
-@mixin lightbg {
-  background-color: $clr-brick-light;
-
-  &, & * {
-    color: black;
-  }
-
-  a {
-    color: $clr-brick;
-
-    &:hover {
-      text-decoration: none;
-      color: $clr-brick-bright;
-    }
-  }
-}
-
-@mixin turqbg {
-  background-color: $clr-turquoise-light;
-
-  &, & * {
-    color: $clr-turquoise;
-  }
-
-  a {
-    color: $clr-turquoise;
-
-    &:hover {
-      text-decoration: none;
-      color: $clr-turquoise-bright;
-    }
-  }
-}
-
 @mixin fullbg {
   background-position: center center;
   background-repeat: no-repeat;
@@ -199,12 +148,6 @@
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-}
-
-@mixin fullwidthbg {
-  background-position: center top;
-  background-repeat: no-repeat;
-  background-size: 100% auto;
 }
 
 @mixin gradient($gradient-clr1, $gradient-clr2) {
