@@ -61,7 +61,7 @@ gem 'haml'
 gem 'rabl'
 gem 'redcarpet'
 gem 'sass', "~> 3.3"
-gem 'sass-rails', '~> 3.2.3', groups: [:default, :assets]
+gem 'sass-rails', '~> 3.2.3'
 gem 'truncate_html'
 gem 'unicorn'
 
@@ -98,21 +98,17 @@ gem 'whenever', require: false
 
 gem 'test-unit', '~> 3.3'
 
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'compass-rails'
+gem 'coffee-rails', '~> 3.2.1'
+gem 'compass-rails'
 
-  gem 'mini_racer', '0.2.9'
+gem 'mini_racer', '0.2.9'
 
-  gem 'uglifier', '>= 1.0.3'
+gem 'uglifier', '>= 1.0.3'
 
-  gem 'angular-rails-templates', '~> 0.3.0'
-  gem 'foundation-icons-sass-rails'
-  gem 'momentjs-rails'
-  gem 'turbo-sprockets-rails3'
-end
+gem 'angular-rails-templates', '~> 0.3.0'
+gem 'foundation-icons-sass-rails'
+gem 'momentjs-rails'
+gem 'turbo-sprockets-rails3'
 
 gem "foundation-rails"
 gem 'foundation_rails_helper', github: 'willrjmarshall/foundation_rails_helper', branch: "rails3"
