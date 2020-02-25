@@ -15,9 +15,9 @@ module OpenFoodNetwork
     end
 
     def stripe_configuration_incomplete?(payment_method)
-      return true if payment_method.preferred_enterprise_id.zero?
-
-      payment_method.stripe_account_id.blank?
+      payment_method.preferred_enterprise_id.nil? ||
+        payment_method.preferred_enterprise_id.zero? ||
+        payment_method.stripe_account_id.blank?
     end
   end
 end
