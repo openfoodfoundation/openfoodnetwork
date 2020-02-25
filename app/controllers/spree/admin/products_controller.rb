@@ -166,8 +166,24 @@ module Spree
 
       def products_params
         params.require(:products).map do |product|
-          product.permit(:id, :name)
+          product.permit(permitted_product_attributes)
         end
+      end
+
+      def permitted_resource_params
+        params.require(:product).permit(permitted_product_attributes)
+      end
+
+      def permitted_product_attributes
+        [
+          :id, :name, :description, :supplier_id, :price, :permalink,
+          :variant_unit, :variant_unit_scale, :unit_value, :unit_description,
+          :display_as, :variant_unit_name,
+          :taxon_ids, :primary_taxon_id, :tax_category_id, :shipping_category_id,
+          :group_buy, :group_buy_unit_size,
+          :meta_keywords, :meta_description, :notes,
+          :inherits_properties, product_properties_attributes: [:id, :property_name, :value]
+        ]
       end
 
       def bulk_index_query(params)
