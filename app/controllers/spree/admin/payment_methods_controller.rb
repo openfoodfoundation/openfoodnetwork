@@ -93,7 +93,10 @@ module Spree
       private
 
       def payment_method_params
-        params.require(:payment_method).permit!
+        params.require(:payment_method).permit(
+          :name, :type, :environment, :preferred_password, :preferred_enterprise_id,
+          :distributor_ids => []
+        )
       end
 
       def force_environment
