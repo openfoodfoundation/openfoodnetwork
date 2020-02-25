@@ -317,7 +317,10 @@ module Admin
         :preferred_shopfront_closed_message, :preferred_shopfront_taxon_order,
         :preferred_shopfront_order_cycle_order, :require_login,
         :allow_guest_orders, :allow_order_changes, :enable_subscriptions,
-        address_attributes: permitted_address_attributes
+        group_ids: [], user_ids: [],
+        shipping_method_ids: [], payment_method_ids: [],
+        address_attributes: permitted_address_attributes,
+        producer_properties_attributes: [:id, :property_name, :value, :_destroy]
       )
     end
 
