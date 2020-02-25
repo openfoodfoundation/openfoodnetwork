@@ -861,7 +861,6 @@ Style/FrozenStringLiteralComment:
     - 'app/validators/date_time_string_validator.rb'
     - 'app/validators/distributors_validator.rb'
     - 'app/validators/integer_array_validator.rb'
-    - 'app/views/spree/admin/taxons/search.rabl'
     - 'config.ru'
     - 'engines/order_management/app/controllers/order_management/application_controller.rb'
     - 'engines/order_management/app/services/order_management/reports/enterprise_fee_summary/authorizer.rb'
