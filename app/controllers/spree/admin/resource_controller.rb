@@ -251,8 +251,11 @@ module Spree
         end
       end
 
+      # Permit specific list of params
+      #
+      # Example: params.require(object_name).permit(:name)
       def permitted_resource_params
-        params.require(object_name).permit!
+        raise "All extending controllers need to override the method permitted_resource_params"
       end
 
       def collection_url(options = {})
