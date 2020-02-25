@@ -203,6 +203,16 @@ feature '
       expect(p.reload.property('fooprop')).to be_nil
     end
 
+    scenario "loading new image page", js: true do
+      product = create(:simple_product, supplier: @supplier2)
+
+      visit spree.admin_product_images_path(product)
+      expect(page).to have_selector ".no-objects-found"
+
+      page.find('a#new_image_link').click
+      expect(page).to have_selector "#image_attachment"
+    end
+
     scenario "deleting product images", js: true do
       product = create(:simple_product, supplier: @supplier2)
       image = File.open(File.expand_path('../../../app/assets/images/logo-white.png', __dir__))

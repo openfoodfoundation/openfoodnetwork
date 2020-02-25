@@ -19,9 +19,8 @@ gem 'activerecord-postgresql-adapter'
 gem 'pg', '~> 0.21.0'
 
 # OFN-maintained and patched version of Spree v2.0.4. See
-# https://github.com/openfoodfoundation/openfoodnetwork/wiki/Spree-2.0-upgrade
+# https://github.com/openfoodfoundation/openfoodnetwork/wiki/Tech-Doc:-OFN's-Spree-fork%F0%9F%8D%B4
 # for details.
-gem 'spree_backend', github: 'openfoodfoundation/spree', branch: '2-0-4-stable'
 gem 'spree_core', github: 'openfoodfoundation/spree', branch: '2-0-4-stable'
 
 gem 'spree_i18n', github: 'spree/spree_i18n', branch: '1-3-stable'
@@ -62,7 +61,7 @@ gem 'haml'
 gem 'rabl'
 gem 'redcarpet'
 gem 'sass', "~> 3.3"
-gem 'sass-rails', '~> 3.2.3', groups: [:default, :assets]
+gem 'sass-rails', '~> 3.2.3'
 gem 'truncate_html'
 gem 'unicorn'
 
@@ -99,27 +98,25 @@ gem 'whenever', require: false
 
 gem 'test-unit', '~> 3.3'
 
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'compass-rails'
+gem 'coffee-rails', '~> 3.2.1'
+gem 'compass-rails'
 
-  gem 'mini_racer', '0.2.9'
+gem 'mini_racer', '0.2.9'
 
-  gem 'uglifier', '>= 1.0.3'
+gem 'uglifier', '>= 1.0.3'
 
-  gem 'angular-rails-templates', '~> 0.3.0'
-  gem 'foundation-icons-sass-rails'
-  gem 'momentjs-rails'
-  gem 'turbo-sprockets-rails3'
-end
+gem 'angular-rails-templates', '~> 0.3.0'
+gem 'foundation-icons-sass-rails'
+gem 'momentjs-rails'
+gem 'turbo-sprockets-rails3'
 
 gem "foundation-rails"
 gem 'foundation_rails_helper', github: 'willrjmarshall/foundation_rails_helper', branch: "rails3"
 
 gem 'jquery-migrate-rails'
 gem 'jquery-rails', '3.0.4'
+gem 'jquery-ui-rails', '~> 4.0.0'
+gem 'select2-rails', '~> 3.4.7'
 
 gem 'ofn-qz', github: 'openfoodfoundation/ofn-qz', ref: '60da2ae4c44cbb4c8d602f59fb5fff8d0f21db3c'
 

@@ -1,3 +1,5 @@
+require 'open_food_network/permissions'
+
 module Permissions
   class Order
     def initialize(user)

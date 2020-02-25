@@ -16,6 +16,7 @@
 //= require jquery.jstree/jquery.jstree
 //= require jquery.vAlign
 //= require jquery.horizontalNav
+//= require jquery.adaptivemenu
 //= require angular
 //= require angular-resource
 //= require angular-animate
@@ -28,11 +29,9 @@
 
 // spree
 //= require spree
-//= require admin/spree-select2
-//= require admin/spree_backend
+//= require admin/spree/spree-select2
 //= require modernizr
 //= require spin
-//= require jquery.adaptivemenu
 //= require equalize
 //= require css_browser_selector_dev
 //= require responsive-tables
