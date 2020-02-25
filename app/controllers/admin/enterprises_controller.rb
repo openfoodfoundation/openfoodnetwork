@@ -316,7 +316,7 @@ module Admin
       return params[:enterprise] if params[:enterprise].empty?
 
       params.require(:enterprise).permit(
-        :name, :is_primary_producer, :visible, :permalink,
+        :id, :name, :is_primary_producer, :visible, :permalink,
         :contact_name, :email_address, :phone, :sells, :owner_id,
         :website, :facebook, :instagram, :linkedin, :twitter,
         :abn, :acn, :charges_sales_tax, :display_invoice_logo,
@@ -324,7 +324,14 @@ module Admin
         :preferred_product_selection_from_inventory_only, :preferred_shopfront_message,
         :preferred_shopfront_closed_message, :preferred_shopfront_taxon_order,
         :preferred_shopfront_order_cycle_order, :require_login,
-        :allow_guest_orders, :allow_order_changes, :enable_subscriptions)
+        :allow_guest_orders, :allow_order_changes, :enable_subscriptions,
+        address_attributes: permitted_address_attributes
+      )
+    end
+
+    # Used in ResourceController#create
+    def permitted_resource_params
+      enterprise_params
     end
   end
 end
