@@ -95,7 +95,7 @@ module Admin
 
     def variant_overrides_params
       params.require(:variant_overrides).map do |variant_override|
-        variant_override.permit(:id, :price, :count_on_hand, :sku, :on_demand)
+        variant_override.permit(:id, :price, :count_on_hand, :sku, :on_demand, :variant_id, :hub_id)
       end
     end
   end
