@@ -117,12 +117,10 @@ module Spree
       private
 
       def taxon_params
-        params.require(:taxon).permit(permitted_params)
-      end
-
-      def permitted_params
-        [:name, :parent_id, :position, :icon, :description, :permalink,
-         :taxonomy_id, :meta_description, :meta_keywords, :meta_title]
+        params.require(:taxon).permit(
+          :name, :parent_id, :position, :icon, :description, :permalink,
+          :taxonomy_id, :meta_description, :meta_keywords, :meta_title
+        )
       end
     end
   end
