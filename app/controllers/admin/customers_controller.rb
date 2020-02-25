@@ -82,7 +82,15 @@ module Admin
     end
 
     def customer_params
-      params.require(:customer).permit(:enterprise_id, :email)
+      params.require(:customer).permit(
+        :enterprise_id, :email,
+        ship_address_attributes: permitted_address_attributes
+      )
+    end
+
+    # Used in ResourceController#update
+    def permitted_resource_params
+      customer_params
     end
   end
 end
