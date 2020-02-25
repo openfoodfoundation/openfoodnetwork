@@ -40,15 +40,7 @@ module Spree
           @payment_method = PaymentMethod.find(params[:id])
         end
 
-        update_params = params[ActiveModel::Naming.param_key(@payment_method)] || {}
-        attributes = payment_method_params.merge(update_params)
-        attributes.each do |k, _v|
-          if k.include?("password") && attributes[k].blank?
-            attributes.delete(k)
-          end
-        end
-
-        if @payment_method.update_attributes(attributes)
+        if @payment_method.update_attributes(params_for_update)
           invoke_callbacks(:update, :after)
           flash[:success] = Spree.t(:successfully_updated, resource: Spree.t(:payment_method))
           redirect_to edit_admin_payment_method_path(@payment_method)
@@ -159,6 +151,21 @@ module Spree
 
       def stripe_provider?(provider)
         provider.name.ends_with?("StripeConnect", "StripeSCA")
+      end
+
+      # Merge payment method params with gateway params like :gateway_stripe_connect
+      # Also, remove password if present and blank
+      def params_for_update
+        gateway_params = params[ActiveModel::Naming.param_key(@payment_method)] || {}
+        params_for_update = payment_method_params.merge(gateway_params)
+
+        params_for_update.each do |key, _value|
+          if key.include?("password") && params_for_update[key].blank?
+            params_for_update.delete(key)
+          end
+        end
+
+        params_for_update
       end
     end
   end
