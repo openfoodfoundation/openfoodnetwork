@@ -62,7 +62,9 @@ module ProductImport
     end
 
     def mark_as_new_variant(entry, product_id)
-      new_variant = Spree::Variant.new(entry.attributes.except('id', 'product_id', 'on_hand', 'on_demand'))
+      new_variant = Spree::Variant.new(
+        entry.attributes.except('id', 'product_id', 'on_hand', 'on_demand', 'shipping_category', 'tax_category')
+      )
       new_variant.save
       new_variant.on_demand = entry.attributes['on_demand'] if entry.attributes['on_demand'].present?
       new_variant.on_hand = entry.attributes['on_hand'] if entry.attributes['on_hand'].present?
@@ -295,7 +297,7 @@ module ProductImport
 
     def mark_as_new_product(entry)
       new_product = Spree::Product.new
-      new_product.assign_attributes(entry.attributes.except('id'))
+      new_product.assign_attributes(entry.attributes.except('id', 'shipping_category', 'tax_category'))
       new_product.supplier_id = entry.producer_id
       entry.on_hand = 0 if entry.on_hand.nil?
 
@@ -307,7 +309,9 @@ module ProductImport
     end
 
     def mark_as_existing_variant(entry, existing_variant)
-      existing_variant.assign_attributes(entry.attributes.except('id', 'product_id'))
+      existing_variant.assign_attributes(
+        entry.attributes.except('id', 'product_id', 'shipping_category', 'tax_category')
+      )
       check_on_hand_nil(entry, existing_variant)
 
       if existing_variant.valid?
