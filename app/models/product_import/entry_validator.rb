@@ -297,7 +297,7 @@ module ProductImport
 
     def mark_as_new_product(entry)
       new_product = Spree::Product.new
-      new_product.assign_attributes(entry.attributes.except('id', 'shipping_category', 'tax_category'))
+      new_product.assign_attributes(entry.attributes.except('id', 'producer', 'shipping_category', 'tax_category'))
       new_product.supplier_id = entry.producer_id
       entry.on_hand = 0 if entry.on_hand.nil?
 
@@ -310,7 +310,7 @@ module ProductImport
 
     def mark_as_existing_variant(entry, existing_variant)
       existing_variant.assign_attributes(
-        entry.attributes.except('id', 'product_id', 'shipping_category', 'tax_category')
+        entry.attributes.except('id', 'product_id', 'producer', 'shipping_category', 'tax_category')
       )
       check_on_hand_nil(entry, existing_variant)
 
