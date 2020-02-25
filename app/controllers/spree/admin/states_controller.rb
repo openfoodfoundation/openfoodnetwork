@@ -24,6 +24,10 @@ module Spree
       def load_data
         @countries = Country.order(:name)
       end
+
+      def permitted_resource_params
+        params.require(:state).permit(:name, :abbr)
+      end
     end
   end
 end
