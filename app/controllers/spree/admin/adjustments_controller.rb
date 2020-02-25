@@ -66,6 +66,12 @@ module Spree
       def enable_updates
         @adjustment.close
       end
+
+      def permitted_resource_params
+        params.require(:adjustment).permit(
+          :label, :amount, :included_tax
+        )
+      end
     end
   end
 end
