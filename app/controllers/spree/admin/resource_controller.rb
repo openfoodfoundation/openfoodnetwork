@@ -28,7 +28,7 @@ module Spree
 
       def update
         invoke_callbacks(:update, :before)
-        if @object.update_attributes(params[object_name])
+        if @object.update_attributes(permitted_resource_params)
           invoke_callbacks(:update, :after)
           flash[:success] = flash_message_for(@object, :successfully_updated)
           respond_with(@object) do |format|
@@ -43,7 +43,7 @@ module Spree
 
       def create
         invoke_callbacks(:create, :before)
-        @object.attributes = params[object_name]
+        @object.attributes = permitted_resource_params
         if @object.save
           invoke_callbacks(:create, :after)
           flash[:success] = flash_message_for(@object, :successfully_created)
@@ -249,6 +249,13 @@ module Spree
         else
           spree.public_send "admin_#{object_name}_url", target, options
         end
+      end
+
+      # Permit specific list of params
+      #
+      # Example: params.require(object_name).permit(:name)
+      def permitted_resource_params
+        raise "All extending controllers need to override the method permitted_resource_params"
       end
 
       def collection_url(options = {})
