@@ -35,8 +35,7 @@
 //= require equalize
 //= require css_browser_selector_dev
 //= require responsive-tables
-//  needs to be readded:
-//  require admin/spree_paypal_express
+//= require admin/spree_paypal_express
 //= require admin/handlebar_extensions
 
 // OFN specific
