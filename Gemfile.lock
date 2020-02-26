@@ -5,6 +5,15 @@ GIT
     custom_error_message (1.1.1)
 
 GIT
+  remote: https://github.com/luisramos0/better_spree_paypal_express.git
+  revision: dbed36c2d13556dfca245420ff06d1f376cfa53a
+  branch: 2-1-stable
+  specs:
+    spree_paypal_express (2.0.3)
+      paypal-sdk-merchant (= 1.106.1)
+      spree_core (~> 2.1.0)
+
+GIT
   remote: https://github.com/openfoodfoundation/spree.git
   revision: 95d3ccb32f2e4016d0fc73f39446d1739da56c50
   branch: 2-1-0-stable
@@ -478,6 +487,11 @@ GEM
       activerecord (>= 4.0, < 6.1)
     parser (2.7.0.2)
       ast (~> 2.4.0)
+    paypal-sdk-core (0.2.10)
+      multi_json (~> 1.0)
+      xml-simple
+    paypal-sdk-merchant (1.106.1)
+      paypal-sdk-core (~> 0.2.3)
     pg (0.21.0)
     polyamorous (0.6.4)
       activerecord (>= 3.0)
@@ -754,6 +768,7 @@ DEPENDENCIES
   spinjs-rails
   spree_core!
   spree_i18n!
+  spree_paypal_express!
   stripe
   test-unit (~> 3.3)
   timecop
