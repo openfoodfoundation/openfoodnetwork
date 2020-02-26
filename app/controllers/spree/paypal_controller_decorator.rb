@@ -1,3 +1,5 @@
+# This decorator modifies the Spree::PaypalController in the `better_paypal_express` gem
+
 Spree::PaypalController.class_eval do
   before_filter :enable_embedded_shopfront
   before_filter :destroy_orphaned_paypal_payments, only: :confirm
