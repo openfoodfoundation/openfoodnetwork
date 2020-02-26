@@ -3,7 +3,7 @@
 # Adapts checkout form data (params) so that the order can be directly saved to the database
 module Checkout
   class FormDataAdapter
-    attr_reader :shipping_method_id
+    attr_reader :params, :shipping_method_id
 
     def initialize(params, order, current_user)
       @params = params.dup
@@ -17,10 +17,6 @@ module Checkout
       construct_saved_card_attributes if @params[:order][:existing_card_id]
 
       @shipping_method_id = @params[:order].delete(:shipping_method_id)
-    end
-
-    def order_params
-      @params[:order]
     end
 
     private

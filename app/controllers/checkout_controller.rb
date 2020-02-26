@@ -43,7 +43,7 @@ class CheckoutController < Spree::StoreController
 
   def update
     params_adapter = Checkout::FormDataAdapter.new(params, @order, spree_current_user)
-    return update_failed unless @order.update_attributes(params_adapter.order_params)
+    return update_failed unless @order.update_attributes(order_params(params_adapter.params))
 
     fire_event('spree.checkout.update')
 
@@ -236,5 +236,22 @@ class CheckoutController < Spree::StoreController
         render json: { errors: @order.errors, flash: flash.to_hash }.to_json, status: :bad_request
       end
     end
+  end
+
+  def order_params(params)
+    params.require(:order).permit(
+      :email, :special_instructions,
+      payments_attributes:
+        [
+          :payment_method_id, :amount,
+          source_attributes: [
+            :gateway_payment_profile_id, :cc_type, :last_digits,
+            :month, :year, :first_name, :last_name,
+            :number, :verification_value
+          ]
+        ],
+      bill_address_attributes: permitted_address_attributes,
+      ship_address_attributes: permitted_address_attributes
+    )
   end
 end
