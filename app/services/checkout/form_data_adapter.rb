@@ -5,6 +5,8 @@ module Checkout
   class FormDataAdapter
     attr_reader :shipping_method_id
 
+    include Spree::Core::ControllerHelpers::StrongParameters
+
     def initialize(params, order, current_user)
       @params = params.dup
       @order = order
@@ -20,7 +22,20 @@ module Checkout
     end
 
     def order_params
-      @params[:order]
+      @params.require(:order).permit(
+        :email, :special_instructions,
+        payments_attributes:
+          [
+            :payment_method_id, :amount,
+            source_attributes: [
+              :gateway_payment_profile_id, :cc_type, :last_digits,
+              :month, :year, :first_name, :last_name,
+              :number, :verification_value
+            ]
+          ],
+        bill_address_attributes: permitted_address_attributes,
+        ship_address_attributes: permitted_address_attributes
+      )
     end
 
     private
