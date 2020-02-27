@@ -46,6 +46,10 @@ module ProductImport
       attrs.except(*non_product_attributes)
     end
 
+    def assignable_attributes
+      attributes.except(*non_assignable_attributes)
+    end
+
     def displayable_attributes
       # Modified attributes list for displaying in user feedback
       attrs = {}
@@ -91,6 +95,11 @@ module ProductImport
       ['line_number', 'valid', 'errors', 'product_object',
        'product_validations', 'inventory_validations', 'validates_as',
        'save_type', 'on_hand_nil', 'has_overrides']
+    end
+
+    def non_assignable_attributes
+      ['producer', 'producer_id', 'category', 'shipping_category', 'tax_category',
+       'units', 'unscaled_units', 'unit_type', 'enterprise', 'enterprise_id']
     end
   end
 end
