@@ -714,66 +714,6 @@ describe ProductImport::ProductImporter do
       expect(cabbage.count_on_hand).to eq 0    # In enterprise, not in file (reset)
       expect(lettuce.count_on_hand).to eq 96   # In different enterprise; unchanged
     end
-
-    it "can overwrite fields with selected defaults when importing to product list" do
-      csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "tax_category_id", "available_on", "shipping_category"]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", tax_category.id, "", shipping_category.name]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1", "kg", "", "", shipping_category.name]
-      end
-      settings = { enterprise.id.to_s => {
-        'import_into' => 'product_list',
-        'defaults' => {
-          'on_hand' => {
-            'active' => true,
-            'mode' => 'overwrite_all',
-            'value' => '9000'
-          },
-          'tax_category_id' => {
-            'active' => true,
-            'mode' => 'overwrite_empty',
-            'value' => tax_category2.id
-          },
-          'shipping_category_id' => {
-            'active' => true,
-            'mode' => 'overwrite_all',
-            'value' => shipping_category.id
-          },
-          'available_on' => {
-            'active' => true,
-            'mode' => 'overwrite_all',
-            'value' => '2020-01-01'
-          }
-        }
-      } }
-
-      importer = import_data csv_data, settings: settings
-
-      importer.validate_entries
-      entries = JSON.parse(importer.entries_json)
-
-      expect(filter('valid', entries)).to eq 2
-      expect(filter('invalid', entries)).to eq 0
-      expect(filter('create_product', entries)).to eq 2
-
-      importer.save_entries
-
-      expect(importer.products_created_count).to eq 2
-      expect(importer.updated_ids).to be_a(Array)
-      expect(importer.updated_ids.count).to eq 2
-
-      carrots = Spree::Product.find_by_name('Carrots')
-      expect(carrots.on_hand).to eq 9000
-      expect(carrots.tax_category_id).to eq tax_category.id
-      expect(carrots.shipping_category_id).to eq shipping_category.id
-      expect(carrots.available_on).to be_within(1.day).of(Time.zone.local(2020, 1, 1))
-
-      potatoes = Spree::Product.find_by_name('Potatoes')
-      expect(potatoes.on_hand).to eq 9000
-      expect(potatoes.tax_category_id).to eq tax_category2.id
-      expect(potatoes.shipping_category_id).to eq shipping_category.id
-      expect(potatoes.available_on).to be_within(1.day).of(Time.zone.local(2020, 1, 1))
-    end
   end
 end
 
