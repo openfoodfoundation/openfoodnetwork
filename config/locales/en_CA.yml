@@ -919,7 +919,7 @@ en_CA:
         distributors: distributors
         variants: variants
       simple_form:
-        ready_for: Ready for
+        ready_for: Options
         ready_for_placeholder: Date / time
         customer_instructions: Customer instructions
         customer_instructions_placeholder: 'Notes:'
@@ -2593,70 +2593,70 @@ en_CA:
       one: "each"
       other: "each"
     bunch:
-      one: "bunches"
+      one: "bunch"
       other: "bunches"
     pack:
-      one: "packs"
+      one: "pack"
       other: "packs"
     box:
-      one: "boxes"
+      one: "box"
       other: "boxes"
     bottle:
-      one: "bottles"
+      one: "bottle"
       other: "bottles"
     jar:
-      one: "jars"
+      one: "jar"
       other: "jars"
     head:
-      one: "heads"
+      one: "head"
       other: "heads"
     bag:
       one: "bag"
       other: "bags"
     loaf:
-      one: "loaves"
+      one: "loaf"
       other: "loaves"
     single:
-      one: "singles"
+      one: "single"
       other: "singles"
     tub:
-      one: "tubs"
+      one: "tub"
       other: "tubs"
     punnet:
-      one: "punnets"
+      one: "punnet"
       other: "punnets"
     packet:
-      one: "packets"
+      one: "packet"
       other: "packets"
     item:
-      one: "items"
+      one: "item"
       other: "items"
     dozen:
-      one: "dozens"
+      one: "dozen"
       other: "dozens"
     unit:
-      one: "units"
+      one: "unit"
       other: "units"
     serve:
-      one: "serves"
+      one: "serve"
       other: "serves"
     tray:
-      one: "trays"
+      one: "tray"
       other: "trays"
     piece:
-      one: "pieces"
+      one: "piece"
       other: "pieces"
     pot:
-      one: "pots"
+      one: "pot"
       other: "pots"
     bundle:
-      one: "bundles"
+      one: "bundle"
       other: "bundles"
     flask:
-      one: "flasks"
+      one: "flask"
       other: "flasks"
     basket:
-      one: "baskets"
+      one: "basket"
       other: "baskets"
     sack:
       one: "sack"
@@ -3011,7 +3011,7 @@ en_CA:
           email: "Customer E-Mail"
         invoice:
           issued_on: "Issued on"
-          tax_invoice: "TAX INVOICE"
+          tax_invoice: "Order Number"
           code: "Code"
           from: "From"
           to: "To"
