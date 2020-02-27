@@ -41,7 +41,7 @@ Spree::ShippingMethod.class_eval do
         select("distributor_id").
         select("BOOL_OR(spree_shipping_methods.require_ship_address = 'f') AS pickup").
         select("BOOL_OR(spree_shipping_methods.require_ship_address = 't') AS delivery").
-        map { |sm| [sm.distributor_id.to_i, { pickup: sm.pickup == 't', delivery: sm.delivery == 't' }] }
+        map { |sm| [sm.distributor_id.to_i, { pickup: sm.pickup, delivery: sm.delivery }] }
     ]
   end
 
