@@ -10,7 +10,7 @@ class UserRegistrationsController < Spree::UserRegistrationsController
 
   # POST /resource/sign_up
   def create
-    @user = build_resource(params[:spree_user])
+    @user = build_resource(spree_user_params)
     @user.locale = I18n.locale.to_s
     unless resource.save
       return render_error(@user.errors)
@@ -31,6 +31,11 @@ class UserRegistrationsController < Spree::UserRegistrationsController
   end
 
   private
+
+  def spree_user_params
+    params.require(:spree_user).
+      permit(:email, :password, :password_confirmation, :remember_me)
+  end
 
   def render_error(errors = {})
     clean_up_passwords(resource)

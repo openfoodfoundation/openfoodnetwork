@@ -15,7 +15,6 @@ require 'spree/product_filters'
 # https://github.com/openfoodfoundation/openfoodnetwork/issues/3121
 Spree::Gateway.class_eval do
   acts_as_taggable
-  attr_accessible :tag_list
 end
 
 require "#{Rails.root}/app/models/spree/payment_method_decorator"

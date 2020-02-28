@@ -41,10 +41,7 @@ states.each do |state|
   puts "State: " + state.to_s
 
   unless Spree::State.find_by(name: state['name'])
-    Spree::State.create!(
-      { name: state['name'], abbr: state['abbr'], country: country },
-      without_protection: true
-    )
+    Spree::State.create!({ name: state['name'], abbr: state['abbr'], country: country })
   end
 end
 

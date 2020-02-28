@@ -10,8 +10,6 @@ module Spree
 
     after_save :ensure_correct_adjustment, :update_order
 
-    attr_accessible :source
-
     localize_number :amount
 
     def ensure_correct_adjustment
@@ -64,7 +62,7 @@ module Spree
                               payment_method: payment_method,
                               amount: refund_amount.abs * -1,
                               response_code: response.authorization,
-                              state: 'completed' }, without_protection: true)
+                              state: 'completed' })
         else
           gateway_error(response)
         end
