@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'open_food_network/group_buy_report'
 
 module OpenFoodNetwork
   describe GroupBuyReport do

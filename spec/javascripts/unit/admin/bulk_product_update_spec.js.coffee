@@ -710,13 +710,22 @@ describe "AdminProductEditCtrl", ->
         $httpBackend.flush()
         expect($scope.displayFailure).toHaveBeenCalled()
 
-      it "shows an alert with error information when post returns 400 with an errors array", ->
-        spyOn(window, "alert")
-        $scope.products = "updated list of products"
-        $httpBackend.expectPOST("/admin/products/bulk_update").respond 400, { "errors": ["an error"] }
-        $scope.updateProducts "updated list of products"
-        $httpBackend.flush()
-        expect(window.alert).toHaveBeenCalledWith("Saving failed with the following error(s):\nan error\n")
+      describe "displaying the error information when post returns 400", ->
+        beforeEach ->
+          spyOn $scope, "displayFailure"
+          $scope.products = "updated list of products"
+
+        it "displays errors in an array", ->
+          $httpBackend.expectPOST("/admin/products/bulk_update").respond 400, { "errors": ["an error"] }
+          $scope.updateProducts "updated list of products"
+          $httpBackend.flush()
+          expect($scope.displayFailure).toHaveBeenCalledWith("Saving failed with the following error(s):\nan error\n")
+
+        it "displays errors in a hash", ->
+          $httpBackend.expectPOST("/admin/products/bulk_update").respond 400, { "errors": { "base": ["a basic error"] } }
+          $scope.updateProducts "updated list of products"
+          $httpBackend.flush()
+          expect($scope.displayFailure).toHaveBeenCalledWith("Saving failed with the following error(s):\na basic error\n")
 
 
   describe "adding variants", ->

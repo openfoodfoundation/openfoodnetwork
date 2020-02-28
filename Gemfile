@@ -60,7 +60,7 @@ gem 'haml'
 gem 'rabl'
 gem 'redcarpet'
 gem 'sass'
-gem 'sass-rails', groups: [:default]
+gem 'sass-rails'
 gem 'truncate_html'
 gem 'unicorn'
 

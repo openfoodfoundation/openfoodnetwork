@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'open_food_network/products_and_inventory_report'
 
 module OpenFoodNetwork
   describe ProductsAndInventoryReport do
