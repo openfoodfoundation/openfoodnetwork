@@ -117,6 +117,15 @@ Style/FormatString:
   Enabled: false
   StyleGuide: http://relaxed.ruby.style/#styleformatstring
 
+Style/HashEachMethods:
+  Enabled: false
+
+Style/HashTransformKeys:
+  Enabled: false
+
+Style/HashTransformValues:
+  Enabled: false
+
 Style/IfUnlessModifier:
   Enabled: false
   StyleGuide: http://relaxed.ruby.style/#styleifunlessmodifier
