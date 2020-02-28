@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'open_food_network/order_and_distributor_report'
 
 module OpenFoodNetwork
   describe OrderAndDistributorReport do

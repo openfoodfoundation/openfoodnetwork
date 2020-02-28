@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'open_food_network/customers_report'
 
 module OpenFoodNetwork
   describe CustomersReport do
