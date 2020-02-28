@@ -21,7 +21,7 @@ module Checkout
     private
 
     def spree_routes_helper
-      Spree::Core::Engine.routes_url_helpers
+      Spree::Core::Engine.routes.url_helpers
     end
   end
 end
