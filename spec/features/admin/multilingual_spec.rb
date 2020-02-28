@@ -12,10 +12,10 @@ feature 'Multilingual', js: true do
     visit spree.admin_dashboard_path
   end
 
-  it 'has two locales available' do
+  it 'has three locales available' do
     expect(Rails.application.config.i18n[:default_locale]).to eq 'en'
     expect(Rails.application.config.i18n[:locale]).to eq 'en'
-    expect(Rails.application.config.i18n[:available_locales]).to eq ['en', 'es']
+    expect(Rails.application.config.i18n[:available_locales]).to eq ['en', 'es', 'pt']
   end
 
   it 'can switch language by params' do
