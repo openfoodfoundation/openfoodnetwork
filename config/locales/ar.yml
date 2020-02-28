@@ -2589,6 +2589,21 @@ ar:
       signup_or_login: "البدء بالتسجيل (أو تسجيل الدخول)"
       have_an_account: "هل لديك حساب؟"
       action_login: "تسجيل الدخول الآن."
+  inflections:
+    each:
+      zero: "كل"
+      one: "كل"
+      two: "كل"
+      few: "كل"
+      many: "كل"
+      other: "كل"
+    pack:
+      zero: "حزم"
+      one: "رزمة"
+      two: "حزم"
+      few: "حزم"
+      many: "حزم"
+      other: "حزم"
   producers:
     signup:
       start_free_profile: "ابدأ بملف تعريف مجاني ، وتوسع عندما تكون جاهزًا!"

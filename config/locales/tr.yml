@@ -420,7 +420,7 @@ tr:
         display_as: Gösterme Şekli
         category: Kategori
         tax_category: Vergi Kategorisi
-        inherits_properties?: Özellikler kopyalanıyor mu?
+        inherits_properties?: Özellikler aktarılıyor mu?
         available_on: Mevcut Olma Tarihi
         av_on: "Mevcut Olma Tarihi"
         import_date: Aktarıldı
@@ -433,7 +433,7 @@ tr:
       search: "Ara"
       properties:
         property_name: "Özellik Adı"
-        inherited_property: "Kopyalanan Özellik"
+        inherited_property: "Aktarılan Özellik"
       variants:
         infinity: "Sonsuz"
         to_order_tip: "Sipariş üzerine yapılan ürünlerin, belirlenmiş stok seviyeleri yoktur."
@@ -547,7 +547,7 @@ tr:
         description: İşletmelerinizin stoklarını yönetmek için bu sayfayı kullanın. Burada yapılan değişiklikler 'Ürünler' sayfasındaki ayarları da günceller.
         enable_reset?: Stok Sıfırlama etkinleştirilsin mi?
         default_stock: "Varsayılan stok"
-        inherit?: Kopyala?
+        inherit?: Aktar?
         add: Ekle
         hide: Sakla
         import_date: Aktarıldı
@@ -1294,13 +1294,13 @@ tr:
       desc_part_1: "Çerezler, bazı web sitelerini ziyaret ettiğinizde bilgisayarınızda depolanan çok küçük metin dosyalarıdır."
       desc_part_2: "AGA'da gizliliğinize tamamen saygılıyız. Yalnızca size gıda satma/satın alma hizmetini sunmak için gerekli olan çerezleri kullanıyoruz. Verilerinizin hiçbirini satmıyoruz. Gelecekte, ekosistem için yararlı olabilecek yeni müşterek hizmetleri oluşturmak için bazı verilerinizi paylaşmanızı önerebiliriz (yerel gıda sistemleri için lojistik hizmetler gibi) ama henüz o seviyede değiliz ve bunu zaten sizin izniniz olmadan yapmayacağız :-)"
       desc_part_3: "Platforma 'Giriş' yaptığınızda kim olduğunuzu hatırlamak veya giriş yapmamış olsanız bile sepetinize koyduğunuz ürünleri hatırlayabilmek için çerezleri kullanırız. “Çerezleri kabul et” butonuna tuşlamadan gezinmeye devam ederseniz, web sitesinin çalışması için gerekli olan çerezleri saklamak için bize izin verdiğinizi varsayıyoruz. İşte kullandığımız çerezlerin listesi!"
-      essential_cookies: "Temel Çerezler"
+      essential_cookies: "Kullanılması Zorunlu Olan Çerezler"
       essential_cookies_desc: "Web sitemizin çalışması için aşağıdaki çerezler kesinlikle gereklidir."
       essential_cookies_note: "Çerezlerin çoğu yalnızca benzersiz bir tanımlayıcı içerir, ancak başka hiçbir veri içermez, bu nedenle örneğin e-posta adresiniz ve şifreniz hiçbir zaman bunlarda bulunmaz ve hiçbir zaman açıklanmaz."
       cookie_domain: "Olarak ayarla:"
       cookie_session_desc: "Web sitesinin sayfa ziyaretleri arasındaki kullanıcıları hatırlamasına, örneğin sepetinizdeki öğeleri hatırlamasına izin vermek için kullanılır."
       cookie_consent_desc: "Çerezleri depolamak için kullanıcı onayının durumunu korumak amacıyla kullanılır"
-      cookie_remember_me_desc: "Kullanıcı web sitesinden kendisini hatırlamasını isterse kullanılır. Bu çerez 12 gün sonra otomatik olarak silinir. Kullanıcı olarak bu çerezin silinmesini istiyorsanız, yalnızca çıkış yapmanız gerekir. Bu çerezin bilgisayarınıza yüklenmesini istemiyorsanız, giriş yaparken “beni hatırla” onay kutusunu işaretlememelisiniz."
+      cookie_remember_me_desc: "Kullanıcı web sitesinden kendisini hatırlamasını isterse kullanılır. Bu çerez 12 gün sonra otomatik olarak silinir. Kullanıcı olarak bu çerezin silinmesini istiyorsanız, hesabınızdan çıkış yapmanız yeterli. Bu çerezin bilgisayarınıza yüklenmesini istemiyorsanız, giriş yaparken “beni hatırla” onay kutusunu işaretlememelisiniz."
       cookie_openstreemap_desc: "Sevecen açık kaynak harita sağlayıcımız (OpenStreetMap) tarafından, belirli bir süre içinde çok fazla istek almamasını ve hizmetlerinin kötüye kullanılmasını önlemek için kullanılır."
       cookie_stripe_desc: "Sahtekarlık tespiti için ödeme işlemcimiz Stripe tarafından toplanan veriler https://stripe.com/cookies-policy/legal. Tüm mağazalar Stripe'ı ödeme yöntemi olarak kullanmaz, ancak dolandırıcılığın tüm sayfalara uygulanmasını önlemek iyi bir yöntemdir. Stripe muhtemelen sayfalarımızdan hangilerinin genellikle API'leriyle etkileşime girdiğini gösteren bir resim oluşturur ve daha sonra olağandışı bir şeyi işaretler. Dolayısıyla, Stripe çerezinin ayarlanması, kullanıcıya ödeme yönteminin sağlanmasından daha geniş bir işleve sahiptir. Kaldırılması hizmetin güvenliğini etkileyebilir. Stripe hakkında daha fazla bilgi edinebilir ve gizlilik politikasını https://stripe.com/privacy adresinde okuyabilirsiniz."
       statistics_cookies: "İstatistik Çerezleri"
@@ -1324,7 +1324,7 @@ tr:
       disabling_cookies_safari_link: "https://www.apple.com/legal/privacy/en-ww/cookies/"
       disabling_cookies_note: "Ancak, Açık Gıda Ağı tarafından kullanılan temel çerezleri silerseniz veya değiştirirseniz, web sitesinin çalışmadığını, örneğin ödeme yapmak için sepetinize hiçbir şey ekleyemeyeceğinizi unutmayın."
     cookies_banner:
-      cookies_usage: "Bu site, gezinmenizi sürtünmesiz ve güvenli hale getirmek ve sunduğumuz özellikleri iyileştirmek için nasıl kullandığınızı anlamamıza yardımcı olmak için çerezleri kullanır."
+      cookies_usage: "Bu site, gezinmenizi sorunsuz ve güvenli hale getirmek ve sunduğumuz özellikleri iyileştirmek için nasıl kullandığınızı anlamamıza yardımcı olmak için çerezleri kullanır."
       cookies_definition: "Çerezler, bazı web sitelerini ziyaret ettiğinizde bilgisayarınızda depolanan çok küçük metin dosyalarıdır."
       cookies_desc: "Yalnızca size çevrimiçi yiyecek satma / satın alma hizmetini sunmak için gerekli olan çerezleri kullanıyoruz. Verilerinizin hiçbirini satmıyoruz. Hizmete giriş yaptığınızda kim olduğunuzu hatırlamak veya giriş yapmamış olsanız bile sepetinize koyduğunuz öğeleri hatırlayabilmek için çerezleri kullanırız. Tıklamadan web sitesinde gezinmeye devam ederseniz “Çerezleri kabul et”, web sitesinin çalışması için gerekli olan çerezleri saklamak için bize izin verdiğinizi varsayıyoruz."
       cookies_policy_link_desc: "Daha fazla bilgi edinmek istiyorsanız,"
@@ -1791,7 +1791,7 @@ tr:
         yes_producer: "Evet, üreticiyim"
         no_producer: "Hayır, üretici değilim"
         producer_field_error: "Lütfen birini seçin. Üretici misiniz?"
-        yes_producer_help: "Siz de birşeyler yetiştiriyor, büyütüyor, sağıyor, hasat ediyor, pişiriyor kurutuyor veya hazırlıyorsanız, siz de bir üreticisiniz."
+        yes_producer_help: "Siz de birşeyler yetiştiriyor, büyütüyor, sağıyor, hasat ediyor, pişiriyor kurutuyor veya hazırlıyorsanız, üreticisiniz demektir."
         no_producer_help: "Üretici değilseniz muhtemelen gıdaya ulaşım sağlayan, dağıtım veya satış yapan bir grup ya da işletmesiniz. Bir dükkan, kooperatif, gıda topluluğu, restaurant veya toptancı bile olabilirsiniz.  "
         create_profile: "Profil oluştur"
       about:
@@ -2402,10 +2402,9 @@ tr:
         enterprise_producer:
           producer: Üretici
           producer_text1: >
-              Dürüst ve bilinçli üreticiler, insanlara sağlıklı ve lezzetli yiyecek
-              ve içecekler sağlar. Siz de tamamen doğal yollarla bir şeyler yetiştiriyor,
-              büyütüyor, pişiriyor, sağıyor veya mayalıyorsanız, bu üreticilerden
-              birisiniz demektir.
+              Dürüst ve bilinçli üreticiler, insanlara sağlıklı gıdalar sağlar. Siz
+              de birşeyler yetiştiriyor, büyütüyor, sağıyor, hasat ediyor, pişiriyor
+              kurutuyor veya hazırlıyorsanız, üreticisiniz demektir.
           producer_text2: >
               Üreticiler sistem üzerinde farklı şekillerde aktif olarak da hem kendilerine
               hem de diğer işletmelere daha faydalı olabilirler. Çevrelerindeki üreticilerin
@@ -2427,7 +2426,7 @@ tr:
           status_title: "%{name} kuruldu ve başlamaya hazır!"
           severity: Şiddet
           description: Açıklama
-          resolve: çözmek
+          resolve: Çözüm
         exchange_products:
           load_more_variants: "Daha Fazla Varyant Yükle"
           load_all_variants: "Tüm Varyantları Yükle"
@@ -2447,7 +2446,7 @@ tr:
         select_rule_type: "Bir kural türü seçin:"
         add_rule: "Kural Ekle"
       enterprise_fees:
-        inherit_from_product: "Üründen Kopyala"
+        inherit_from_product: "Üründen Aktar"
       orders:
         index:
           per_page: "sayfa başına %{results}"
@@ -2592,6 +2591,73 @@ tr:
       signup_or_login: "Kaydolarak Başlayın (veya giriş yapın)"
       have_an_account: "Zaten hesabınız var mı?"
       action_login: "Şimdi giriş yapın."
+  inflections:
+    each:
+      one: "her biri"
+      other: "her biri"
+    bunch:
+      one: "Demet"
+      other: "demet"
+    pack:
+      one: "pack"
+      other: "paket"
+    box:
+      one: "Kutu"
+      other: "koli"
+    bottle:
+      one: "şişe"
+      other: "şişe"
+    jar:
+      one: "kavanoz"
+      other: "kavanoz"
+    head:
+      one: "kafa"
+      other: "baş"
+    bag:
+      one: "sırt çantası"
+      other: "çanta"
+    loaf:
+      one: "somun"
+      other: "somun"
+    single:
+      one: "tek"
+      other: "tane"
+    tub:
+      one: "küvet"
+      other: "fıçı"
+    punnet:
+      one: "meyve sepeti"
+      other: "meyve sepeti"
+    packet:
+      one: "paket"
+      other: "paket"
+    item:
+      one: "madde"
+      other: "Ürün"
+    dozen:
+      one: "düzine"
+      other: "deste"
+    unit:
+      one: "birim"
+      other: "birimler"
+    serve:
+      one: "servis"
+      other: "porsiyon"
+    piece:
+      one: "parça"
+      other: "parça"
+    bundle:
+      one: "demeti"
+      other: "demet"
+    flask:
+      one: "şişe"
+      other: "cep şişesi"
+    basket:
+      one: "sepet"
+      other: "sepet"
+    sack:
+      one: "çuval"
+      other: "çuval"
   producers:
     signup:
       start_free_profile: "Ücretsiz bir profille başlayın ve hazır olduğunuzda devam edin!"
@@ -2867,7 +2933,7 @@ tr:
         groups: "Gruplar"
       product_properties:
         index:
-          inherits_properties_checkbox_hint: "Özellikler i%{supplier}'den kopyalanacak mı? (yukarıda geçersiz kılınmadıkça)"
+          inherits_properties_checkbox_hint: "Özellikler %{supplier}'den aktarılsın mı? (yukarıda geçersiz kılınmadıkça)"
           add_product_properties: "Ürün Özelliği Ekle"
           select_from_prototype: "Prototipten Seç"
       properties:
@@ -3051,7 +3117,7 @@ tr:
             display_as: Gösterme Şekli
             category: Kategori
             tax_category: Vergi Kategorisi
-            inherits_properties?: Özellikler kopyalanır mı?
+            inherits_properties?: Özellikler aktarılıyor mu?
             available_on: Şu Tarihte Hazır
             av_on: "Şu tarihte hazır"
             import_date: "İçe Aktarım Tarihi"

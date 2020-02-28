@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'open_food_network/orders_and_fulfillments_report'
 
 describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
   include AuthenticationWorkflow

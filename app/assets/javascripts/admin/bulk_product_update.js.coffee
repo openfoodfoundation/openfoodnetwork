@@ -1,4 +1,4 @@
-angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $filter, $http, $window, BulkProducts, DisplayProperties, DirtyProducts, VariantUnitManager, StatusMessage, producers, Taxons, Columns, tax_categories, RequestMonitor, SortOptions) ->
+angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $filter, $http, $window, BulkProducts, DisplayProperties, DirtyProducts, VariantUnitManager, StatusMessage, producers, Taxons, Columns, tax_categories, RequestMonitor, SortOptions, ErrorsParser) ->
   $scope.StatusMessage = StatusMessage
 
   $scope.columns = Columns.columns
@@ -230,10 +230,9 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
       BulkProducts.updateVariantLists(data.products || [])
       $timeout -> $scope.displaySuccess()
     ).error (data, status) ->
-      if status == 400 && data.errors? && data.errors.length > 0
-        errors = error + "\n" for error in data.errors
-        alert t("products_update_error") + "\n" + errors
-        $scope.displayFailure t("products_update_error")
+      if status == 400 && data.errors?
+        errorsString = ErrorsParser.toString(data.errors, status)
+        $scope.displayFailure t("products_update_error") + "\n" + errorsString
       else
         $scope.displayFailure t("products_update_error_data") + status
 
@@ -284,7 +283,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
 
 
   $scope.displayFailure = (failMessage) ->
-    StatusMessage.display  'failure', t("products_update_error_msg") + "#{failMessage}"
+    StatusMessage.display  'failure', t("products_update_error_msg") + " #{failMessage}"
 
 
   $scope.displayDirtyProducts = ->

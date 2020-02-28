@@ -2588,6 +2588,79 @@ nb:
       signup_or_login: "Kom i gang ved å registrere deg (eller logge inn)"
       have_an_account: "Har du allerede en konto?"
       action_login: "Logg inn nå."
+  inflections:
+    each:
+      one: "Hver"
+      other: "hver"
+    bunch:
+      one: "bunke"
+      other: "bunker"
+    pack:
+      one: "pakke"
+      other: "pakker"
+    box:
+      one: "eske"
+      other: "esker"
+    bottle:
+      one: "flaske"
+      other: "flasker"
+    jar:
+      one: "krukke"
+      other: "krukker"
+    head:
+      one: "hode"
+      other: "hoder"
+    bag:
+      one: "pose"
+      other: "poser"
+    loaf:
+      one: "skive"
+      other: "skiver"
+    single:
+      one: "enkelt"
+      other: "enkle"
+    tub:
+      one: "kar"
+      other: "kar"
+    punnet:
+      one: "eske"
+      other: "esker"
+    packet:
+      one: "pakke"
+      other: "pakker"
+    item:
+      one: "stk"
+      other: "stk"
+    dozen:
+      one: "dusin"
+      other: "dusin"
+    unit:
+      one: "enhet"
+      other: "enheter"
+    serve:
+      one: "porsjon"
+      other: "porsjoner"
+    tray:
+      one: "brett"
+      other: "brett"
+    piece:
+      one: "stykke"
+      other: "stykker"
+    pot:
+      one: "gryte"
+      other: "gryter"
+    bundle:
+      one: "bunt"
+      other: "bunter"
+    flask:
+      one: "kolbe"
+      other: "kolber"
+    basket:
+      one: "kurv"
+      other: "kurver"
+    sack:
+      one: "sekk"
+      other: "sekker"
   producers:
     signup:
       start_free_profile: "Start med en gratis profil, og utvid når du er klar!"

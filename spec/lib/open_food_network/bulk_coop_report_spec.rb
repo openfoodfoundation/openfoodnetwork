@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'open_food_network/bulk_coop_report'
 
 include AuthenticationWorkflow
 
