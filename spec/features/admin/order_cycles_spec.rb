@@ -117,10 +117,10 @@ feature '
   end
 
   describe 'listing order cycles with other locales' do
-    let!(:oc_de) { create(:simple_order_cycle, name: 'oc', orders_open_at: '2012-01-01 00:00') }
+    let!(:oc_pt) { create(:simple_order_cycle, name: 'oc', orders_open_at: '2012-01-01 00:00') }
 
     around(:each) do |spec|
-      I18n.locale = :de
+      I18n.locale = :pt
       spec.run
       I18n.locale = :en
     end
@@ -130,7 +130,7 @@ feature '
         quick_login_as_admin
         visit admin_order_cycles_path
 
-        within("tr.order-cycle-#{oc_de.id}") do
+        within("tr.order-cycle-#{oc_pt.id}") do
           expect(find('input.datetimepicker', match: :first).value).to start_with '2012-01-01 00:00'
           find('img.ui-datepicker-trigger', match: :first).click
         end
@@ -142,7 +142,7 @@ feature '
           find('button.ui-datepicker-close', match: :first).click
         end
 
-        within("tr.order-cycle-#{oc_de.id}") do
+        within("tr.order-cycle-#{oc_pt.id}") do
           expect(find('input.datetimepicker', match: :first).value).to eq '2012-01-30 00:00'
         end
       end
