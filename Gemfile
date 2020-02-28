@@ -118,7 +118,7 @@ gem 'jquery-rails', '3.0.4'
 gem 'jquery-ui-rails', '~> 4.0.0'
 gem 'select2-rails', '~> 3.4.7'
 
-# gem 'ofn-qz', github: 'openfoodfoundation/ofn-qz', ref: '60da2ae4c44cbb4c8d602f59fb5fff8d0f21db3c'
+gem 'ofn-qz', github: 'openfoodfoundation/ofn-qz', branch: 'ofn-rails-4'
 
 group :production, :staging do
   gem 'ddtrace'
