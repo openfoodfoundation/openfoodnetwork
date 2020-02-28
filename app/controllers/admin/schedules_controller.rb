@@ -95,7 +95,7 @@ module Admin
     end
 
     def permitted_resource_params
-      params.require(:schedule).permit(:name, order_cycle_ids: [])
+      params.permit(:name, order_cycle_ids: [])
     end
   end
 end
