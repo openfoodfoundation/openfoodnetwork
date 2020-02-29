@@ -96,7 +96,7 @@ gem 'roo', '~> 2.8.3'
 
 gem 'whenever', require: false
 
-gem 'test-unit', '~> 3.3'
+gem 'test-unit'
 
 gem 'coffee-rails', '~> 4.0.0'
 gem 'compass-rails'
