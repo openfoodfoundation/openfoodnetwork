@@ -2593,6 +2593,79 @@ pt_BR:
       signup_or_login: "Faça seu cadastro ou login para começar"
       have_an_account: "Já possui um conta?"
       action_login: "Entrar agora"
+  inflections:
+    each:
+      one: "cada"
+      other: "cada"
+    bunch:
+      one: "maço"
+      other: "maços"
+    pack:
+      one: "pacote"
+      other: "pacotes"
+    box:
+      one: "caixa"
+      other: "caixas"
+    bottle:
+      one: "garrafa"
+      other: "garrafas"
+    jar:
+      one: "jarro"
+      other: "jarros"
+    head:
+      one: "cabeça"
+      other: "cabeças"
+    bag:
+      one: "sacolas"
+      other: "sacolas"
+    loaf:
+      one: "pão"
+      other: "pães"
+    single:
+      one: "simples"
+      other: "simples"
+    tub:
+      one: "vaso"
+      other: "vasos"
+    punnet:
+      one: "vasilha"
+      other: "vasilhas"
+    packet:
+      one: "pacote"
+      other: "pacotes"
+    item:
+      one: "item"
+      other: "items"
+    dozen:
+      one: "dúzia"
+      other: "dúzias"
+    unit:
+      one: "unidade"
+      other: "unidades"
+    serve:
+      one: "servido"
+      other: "servidos"
+    tray:
+      one: "bandeja"
+      other: "bandejas"
+    piece:
+      one: "pedaço"
+      other: "pedaços"
+    pot:
+      one: "pote"
+      other: "potes"
+    bundle:
+      one: "pacote"
+      other: "pacotes"
+    flask:
+      one: "frasco"
+      other: "frascos"
+    basket:
+      one: "cesta"
+      other: "cestas"
+    sack:
+      one: "saco"
+      other: "sacos"
   producers:
     signup:
       start_free_profile: "Comece com um perfil gratuito e expanda quando estiver pronto!"
