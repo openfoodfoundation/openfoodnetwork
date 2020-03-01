@@ -78,6 +78,8 @@ Spree::ShippingMethod.class_eval do
   private
 
   def touch_distributors
-    distributors.each(&:touch)
+    distributors.each do |distributor|
+      distributor.touch if distributor.persisted?
+    end
   end
 end
