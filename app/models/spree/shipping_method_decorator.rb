@@ -6,7 +6,7 @@ Spree::ShippingMethod.class_eval do
 
   after_save :touch_distributors
 
-  validates_with DistributorsValidator
+  validate :distributor_validation
 
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
@@ -79,5 +79,9 @@ Spree::ShippingMethod.class_eval do
 
   def touch_distributors
     distributors.each(&:touch)
+  end
+
+  def distributor_validation
+    validates_with DistributorsValidator
   end
 end
