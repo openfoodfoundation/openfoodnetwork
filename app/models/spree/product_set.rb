@@ -35,7 +35,8 @@ class Spree::ProductSet < ModelSet
 
     product = find_model(@collection, attributes[:id])
     if product.nil?
-      @klass.new(attributes).save unless @reject_if.andand.call(attributes)
+      return if @reject_if.andand.call(attributes)
+      @klass.new(attributes.except!(:product_id)).save
     else
       update_product(product, attributes)
     end
