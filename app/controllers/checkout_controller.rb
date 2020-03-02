@@ -239,6 +239,8 @@ class CheckoutController < Spree::StoreController
   end
 
   def order_params(params)
+    return params[:order] if params[:order].empty?
+
     params.require(:order).permit(
       :email, :special_instructions,
       payments_attributes:
