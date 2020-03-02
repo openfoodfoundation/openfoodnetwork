@@ -178,11 +178,13 @@ module Spree
         [
           :id, :name, :description, :supplier_id, :price, :permalink,
           :variant_unit, :variant_unit_scale, :unit_value, :unit_description,
-          :display_as, :variant_unit_name,
+          :display_as, :variant_unit_name, :sku, :available_on,
           :taxon_ids, :primary_taxon_id, :tax_category_id, :shipping_category_id,
           :group_buy, :group_buy_unit_size,
           :meta_keywords, :meta_description, :notes,
-          :inherits_properties, product_properties_attributes: [:id, :property_name, :value]
+          :inherits_properties,
+          product_properties_attributes: [:id, :property_name, :value],
+          variants_attributes: [:id, :sku, :on_hand, :price, :unit_value, :unit_description, :display_name, :display_as]
         ]
       end
 
