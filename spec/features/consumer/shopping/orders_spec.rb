@@ -24,13 +24,9 @@ feature "Order Management", js: true do
     before do
       # For some reason, both bill_address and ship_address are not set
       # automatically.
-      #
-      # Also, assigning the shipping_method to a ShippingMethod instance results
-      # in a SystemStackError.
       order.update_attributes!(
         bill_address: bill_address,
-        ship_address: ship_address,
-        shipping_method_id: shipping_method.id
+        ship_address: ship_address
       )
     end
 
