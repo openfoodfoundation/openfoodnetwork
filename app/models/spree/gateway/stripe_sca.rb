@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'stripe/profile_storer'
+require 'stripe/credit_card_cloner'
 require 'active_merchant/billing/gateways/stripe_payment_intents'
 require 'active_merchant/billing/gateways/stripe_decorator'
 
@@ -52,7 +53,7 @@ module Spree
       def create_profile(payment)
         return unless payment.source.gateway_customer_profile_id.nil?
 
-        profile_storer = Stripe::ProfileStorer.new(payment, provider, stripe_account_id)
+        profile_storer = Stripe::ProfileStorer.new(payment, provider)
         profile_storer.create_customer_from_token
       end
 
@@ -70,10 +71,10 @@ module Spree
         options[:currency] = gateway_options[:currency]
         options[:stripe_account] = stripe_account_id
 
-        options[:customer] = creditcard.gateway_customer_profile_id
-        creditcard = creditcard.gateway_payment_profile_id
-
-        [money, creditcard, options]
+        customer_id, payment_method_id = Stripe::CreditCardCloner.new.clone(creditcard,
+                                                                            stripe_account_id)
+        options[:customer] = customer_id
+        [money, payment_method_id, options]
       end
 
       def failed_activemerchant_billing_response(error_message)
