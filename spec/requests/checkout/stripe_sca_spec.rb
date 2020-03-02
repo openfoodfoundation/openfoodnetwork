@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "checking out an order with a Stripe Connect payment method", type: :request do
+describe "checking out an order with a Stripe SCA payment method", type: :request do
   include ShopWorkflow
   include AuthenticationWorkflow
   include OpenFoodNetwork::ApiHelper
@@ -14,20 +14,19 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
       distributors: [enterprise]
     )
   end
-  let!(:payment_method) { create(:stripe_payment_method, distributors: [enterprise]) }
+  let!(:payment_method) { create(:stripe_sca_payment_method, distributors: [enterprise]) }
   let!(:stripe_account) { create(:stripe_account, enterprise: enterprise) }
   let!(:line_item) { create(:line_item, price: 12.34) }
   let!(:order) { line_item.order }
   let(:address) { create(:address) }
-  let(:token) { "token123" }
-  let(:new_token) { "newtoken123" }
-  let(:card_id) { "card_XyZ456" }
+  let(:stripe_payment_method) { "pm_123" }
+  let(:new_stripe_payment_method) { "new_pm_123" }
   let(:customer_id) { "cus_A123" }
   let(:payments_attributes) do
     {
       payment_method_id: payment_method.id,
       source_attributes: {
-        gateway_payment_profile_id: token,
+        gateway_payment_profile_id: stripe_payment_method,
         cc_type: "visa",
         last_digits: "4242",
         month: 10,
@@ -60,6 +59,9 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
       }
     }
   end
+  let(:payment_intent_response_mock) do
+    { status: 200, body: JSON.generate(object: "payment_intent", amount: 2000, charges: { data: [{ id: "ch_1234", amount: 2000 }]}) }
+  end
 
   before do
     order_cycle_distributed_variants = double(:order_cycle_distributed_variants)
@@ -73,32 +75,15 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
   end
 
   context "when a new card is submitted" do
-    let(:store_response_mock) do
-      {
-        status: 200,
-        body: JSON.generate(
-          id: customer_id,
-          default_card: card_id,
-          sources: { data: [{ id: "1" }] }
-        )
-      }
-    end
-    let(:token_response_mock) do
-      { status: 200, body: JSON.generate(id: new_token) }
-    end
-    let(:charge_response_mock) do
-      { status: 200, body: JSON.generate(id: "ch_1234", object: "charge", amount: 2000) }
-    end
-
     context "and the user doesn't request that the card is saved for later" do
       before do
         # Charges the card
-        stub_request(:post, "https://api.stripe.com/v1/charges")
-          .with(basic_auth: ["sk_test_12345", ""], body: /#{token}.*#{order.number}/)
-          .to_return(charge_response_mock)
+        stub_request(:post, "https://api.stripe.com/v1/payment_intents")
+          .with(basic_auth: ["sk_test_12345", ""], body: /#{stripe_payment_method}.*#{order.number}/)
+          .to_return(payment_intent_response_mock)
       end
 
-      context "and the charge request is successful" do
+      context "and the paymeent intent request is successful" do
         it "should process the payment without storing card details" do
           put update_checkout_path, params
 
@@ -108,7 +93,7 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
           card = order.payments.completed.first.source
 
           expect(card.gateway_customer_profile_id).to eq nil
-          expect(card.gateway_payment_profile_id).to eq token
+          expect(card.gateway_payment_profile_id).to eq stripe_payment_method
           expect(card.cc_type).to eq "visa"
           expect(card.last_digits).to eq "4242"
           expect(card.first_name).to eq "Jill"
@@ -116,9 +101,9 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
         end
       end
 
-      context "when the charge request returns an error message" do
-        let(:charge_response_mock) do
-          { status: 402, body: JSON.generate(error: { message: "charge-failure" }) }
+      context "when the payment intent request returns an error message" do
+        let(:payment_intent_response_mock) do
+          { status: 402, body: JSON.generate(error: { message: "payment-intent-failure" }) }
         end
 
         it "should not process the payment" do
@@ -126,36 +111,50 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
 
           expect(response.status).to be 400
 
-          expect(json_response["flash"]["error"]).to eq "charge-failure"
+          expect(json_response["flash"]["error"]).to eq "payment-intent-failure"
           expect(order.payments.completed.count).to be 0
         end
       end
     end
 
     context "and the customer requests that the card is saved for later" do
+      let(:payment_method_response_mock) do
+        {
+          status: 200,
+          body: JSON.generate(id: new_stripe_payment_method, customer: customer_id)
+        }
+      end
+
+      let(:customer_response_mock) do
+        {
+          status: 200,
+          body: JSON.generate(id: customer_id, sources: { data: [{ id: "1" }] })
+        }
+      end
+
       before do
         source_attributes = params[:order][:payments_attributes][0][:source_attributes]
         source_attributes[:save_requested_by_customer] = '1'
 
         # Saves the card against the user
         stub_request(:post, "https://api.stripe.com/v1/customers")
-          .with(basic_auth: ["sk_test_12345", ""], body: { card: token, email: order.email })
-          .to_return(store_response_mock)
+          .with(basic_auth: ["sk_test_12345", ""], body: { email: order.email })
+          .to_return(customer_response_mock)
 
-        # Requests a token from the newly saved card
-        stub_request(:post, "https://api.stripe.com/v1/tokens")
-          .with(body: { card: card_id, customer: customer_id })
-          .to_return(token_response_mock)
+        # Requests a payment method from the newly saved card
+        stub_request(:post, "https://api.stripe.com/v1/payment_methods/#{stripe_payment_method}/attach")
+          .with(body: { customer: customer_id })
+          .to_return(payment_method_response_mock)
 
         # Charges the card
-        stub_request(:post, "https://api.stripe.com/v1/charges")
+        stub_request(:post, "https://api.stripe.com/v1/payment_intents")
           .with(
             basic_auth: ["sk_test_12345", ""],
-            body: /#{token}.*#{order.number}/
-          ).to_return(charge_response_mock)
+            body: /.*#{order.number}/
+          ).to_return(payment_intent_response_mock)
       end
 
-      context "and the store, token and charge requests are successful" do
+      context "and the customer, payment_method and payment_intent requests are successful" do
         it "should process the payment, and stores the card/customer details" do
           put update_checkout_path, params
 
@@ -165,7 +164,7 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
           card = order.payments.completed.first.source
 
           expect(card.gateway_customer_profile_id).to eq customer_id
-          expect(card.gateway_payment_profile_id).to eq card_id
+          expect(card.gateway_payment_profile_id).to eq new_stripe_payment_method
           expect(card.cc_type).to eq "visa"
           expect(card.last_digits).to eq "4242"
           expect(card.first_name).to eq "Jill"
@@ -173,9 +172,9 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
         end
       end
 
-      context "when the store request returns an error message" do
-        let(:store_response_mock) do
-          { status: 402, body: JSON.generate(error: { message: "store-failure" }) }
+      context "when the customer request returns an error message" do
+        let(:customer_response_mock) do
+          { status: 402, body: JSON.generate(error: { message: "customer-store-failure" }) }
         end
 
         it "should not process the payment" do
@@ -184,14 +183,14 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
           expect(response.status).to be 400
 
           expect(json_response["flash"]["error"])
-            .to eq(I18n.t(:spree_gateway_error_flash_for_checkout, error: 'store-failure'))
+            .to eq(I18n.t(:spree_gateway_error_flash_for_checkout, error: 'customer-store-failure'))
           expect(order.payments.completed.count).to be 0
         end
       end
 
-      context "when the charge request returns an error message" do
-        let(:charge_response_mock) do
-          { status: 402, body: JSON.generate(error: { message: "charge-failure" }) }
+      context "when the payment intent request returns an error message" do
+        let(:payment_intent_response_mock) do
+          { status: 402, body: JSON.generate(error: { message: "payment-intent-failure" }) }
         end
 
         it "should not process the payment" do
@@ -199,23 +198,22 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
 
           expect(response.status).to be 400
 
-          expect(json_response["flash"]["error"]).to eq "charge-failure"
+          expect(json_response["flash"]["error"]).to eq "payment-intent-failure"
           expect(order.payments.completed.count).to be 0
         end
       end
 
-      context "when the token request returns an error message" do
-        let(:token_response_mock) do
-          { status: 402, body: JSON.generate(error: { message: "token-failure" }) }
+      context "when the payment_method request returns an error message" do
+        let(:payment_method_response_mock) do
+          { status: 402, body: JSON.generate(error: { message: "payment-method-failure" }) }
         end
 
-        # Note, no requests have been stubbed
         it "should not process the payment" do
           put update_checkout_path, params
 
           expect(response.status).to be 400
 
-          expect(json_response["flash"]["error"]).to eq "token-failure"
+          expect(json_response["flash"]["error"]).to include "payment-method-failure"
           expect(order.payments.completed.count).to be 0
         end
       end
@@ -227,7 +225,7 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
       create(
         :credit_card,
         user_id: order.user_id,
-        gateway_payment_profile_id: card_id,
+        gateway_payment_profile_id: stripe_payment_method,
         gateway_customer_profile_id: customer_id,
         last_digits: "4321",
         cc_type: "master",
@@ -237,27 +235,17 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
       )
     end
 
-    let(:token_response_mock) { { status: 200, body: JSON.generate(id: new_token) } }
-    let(:charge_response_mock) do
-      { status: 200, body: JSON.generate(id: "ch_1234", object: "charge", amount: 2000) }
-    end
-
     before do
       params[:order][:existing_card_id] = credit_card.id
       quick_login_as(order.user)
 
-      # Requests a token
-      stub_request(:post, "https://api.stripe.com/v1/tokens")
-        .with(body: { "card" => card_id, "customer" => customer_id })
-        .to_return(token_response_mock)
-
       # Charges the card
-      stub_request(:post, "https://api.stripe.com/v1/charges")
-        .with(basic_auth: ["sk_test_12345", ""], body: /#{token}.*#{order.number}/)
-        .to_return(charge_response_mock)
+      stub_request(:post, "https://api.stripe.com/v1/payment_intents")
+        .with(basic_auth: ["sk_test_12345", ""], body: %r{#{customer_id}.*#{stripe_payment_method}})
+        .to_return(payment_intent_response_mock)
     end
 
-    context "and the charge and token requests are accepted" do
+    context "and the payment intent and payment method requests are accepted" do
       it "should process the payment, and keep the profile ids and other card details" do
         put update_checkout_path, params
 
@@ -267,7 +255,7 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
         card = order.payments.completed.first.source
 
         expect(card.gateway_customer_profile_id).to eq customer_id
-        expect(card.gateway_payment_profile_id).to eq card_id
+        expect(card.gateway_payment_profile_id).to eq stripe_payment_method
         expect(card.cc_type).to eq "master"
         expect(card.last_digits).to eq "4321"
         expect(card.first_name).to eq "Sammy"
@@ -275,9 +263,9 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
       end
     end
 
-    context "when the charge request returns an error message" do
-      let(:charge_response_mock) do
-        { status: 402, body: JSON.generate(error: { message: "charge-failure" }) }
+    context "when the payment intent request returns an error message" do
+      let(:payment_intent_response_mock) do
+        { status: 402, body: JSON.generate(error: { message: "payment-intent-failure" }) }
       end
 
       it "should not process the payment" do
@@ -285,22 +273,7 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
 
         expect(response.status).to be 400
 
-        expect(json_response["flash"]["error"]).to eq "charge-failure"
-        expect(order.payments.completed.count).to be 0
-      end
-    end
-
-    context "when the token request returns an error message" do
-      let(:token_response_mock) do
-        { status: 402, body: JSON.generate(error: { message: "token-error" }) }
-      end
-
-      it "should not process the payment" do
-        put update_checkout_path, params
-
-        expect(response.status).to be 400
-
-        expect(json_response["flash"]["error"]).to eq "token-error"
+        expect(json_response["flash"]["error"]).to eq "payment-intent-failure"
         expect(order.payments.completed.count).to be 0
       end
     end

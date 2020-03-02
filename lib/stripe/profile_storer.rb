@@ -4,9 +4,10 @@
 
 module Stripe
   class ProfileStorer
-    def initialize(payment, provider)
+    def initialize(payment, provider, stripe_account_id = nil)
       @payment = payment
       @provider = provider
+      @stripe_account_id = stripe_account_id
     end
 
     def create_customer_from_token
@@ -28,7 +29,13 @@ module Stripe
         email: @payment.order.email,
         login: Stripe.api_key,
         address: address_for(@payment)
-      }
+      }.merge(stripe_account_option)
+    end
+
+    def stripe_account_option
+      return {} if @stripe_account_id.blank?
+
+      { stripe_account: @stripe_account_id }
     end
 
     def address_for(payment)
@@ -54,10 +61,22 @@ module Stripe
 
     def source_attrs_from(response)
       {
-        cc_type: @payment.source.cc_type, # side-effect of update_source!
-        gateway_customer_profile_id: response.params['id'],
-        gateway_payment_profile_id: response.params['default_source'] || response.params['default_card']
+        cc_type: @payment.source.cc_type,
+        gateway_customer_profile_id: customer_profile_id(response),
+        gateway_payment_profile_id: payment_profile_id(response)
       }
+    end
+
+    def customer_profile_id(response)
+      response.params['customer'] || response.params['id']
+    end
+
+    def payment_profile_id(response)
+      if response.params['customer'] # Payment Intents API
+        response.params['id']
+      else
+        response.params['default_source'] || response.params['default_card']
+      end
     end
   end
 end

@@ -151,8 +151,15 @@ FactoryBot.define do
     preferred_enterprise_id { distributors.first.id }
   end
 
+  factory :stripe_sca_payment_method, class: Spree::Gateway::StripeSCA do
+    name 'StripeSCA'
+    environment 'test'
+    distributors { [FactoryBot.create(:stripe_account).enterprise] }
+    preferred_enterprise_id { distributors.first.id }
+  end
+
   factory :stripe_account do
-    enterprise { FactoryBot.create :distributor_enterprise }
+    enterprise { FactoryBot.create(:distributor_enterprise) }
     stripe_user_id "abc123"
     stripe_publishable_key "xyz456"
   end

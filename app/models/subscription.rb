@@ -1,5 +1,7 @@
 class Subscription < ActiveRecord::Base
-  ALLOWED_PAYMENT_METHOD_TYPES = ["Spree::PaymentMethod::Check", "Spree::Gateway::StripeConnect"].freeze
+  ALLOWED_PAYMENT_METHOD_TYPES = ["Spree::PaymentMethod::Check",
+                                  "Spree::Gateway::StripeConnect",
+                                  "Spree::Gateway::StripeSCA"].freeze
 
   belongs_to :shop, class_name: 'Enterprise'
   belongs_to :customer

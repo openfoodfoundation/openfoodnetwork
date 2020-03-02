@@ -5,7 +5,7 @@ angular.module("admin.payments").factory 'AdminStripeElements', ($rootScope, Sta
     stripe: null
     card: null
 
-    # New Stripe Elements method
+    # Create Token to be used with the Stripe Charges API
     requestToken: (secrets, submit) ->
       return unless @stripe? && @card?
 
@@ -18,6 +18,21 @@ angular.module("admin.payments").factory 'AdminStripeElements', ($rootScope, Sta
           secrets.token = response.token.id
           secrets.cc_type = @mapCC(response.token.card.brand)
           secrets.card = response.token.card
+          submit()
+
+    # Create Payment Method to be used with the Stripe Payment Intents API
+    createPaymentMethod: (secrets, submit) ->
+      return unless @stripe? && @card?
+
+      cardData = @makeCardData(secrets)
+
+      @stripe.createPaymentMethod({ type: 'card', card: @card }, @card, cardData).then (response) =>
+        if(response.error)
+          StatusMessage.display 'error', response.error.message
+        else
+          secrets.token = response.paymentMethod.id
+          secrets.cc_type = response.paymentMethod.card.brand
+          secrets.card = response.paymentMethod.card
           submit()
 
     # Maps the brand returned by Stripe to that required by activemerchant
