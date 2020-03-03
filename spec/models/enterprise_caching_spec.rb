@@ -33,7 +33,7 @@ describe Enterprise do
         it "touches enterprise when the supplier of a product changes" do
           expect {
             product.update_attributes!(supplier: supplier2)
-          }.to change { enterprise.updated_at }
+          }.to change { enterprise.reload.updated_at }
         end
       end
 
