@@ -19,17 +19,10 @@ module Spree
       inventory_units.group_by(&:variant).map do |variant, units|
         states = {}
         units.group_by(&:state).each { |state, iu| states[state] = iu.count }
+        scoper.scope(variant)
         OpenStruct.new(variant: variant, quantity: units.length, states: states)
       end
     end
-
-    # The shipment manifest is built by loading inventory units and variants from the DB
-    # These variants come unscoped
-    # So, we need to scope the variants just after the manifest is built
-    def manifest_with_scoping
-      manifest_without_scoping.each { |item| scoper.scope(item.variant) }
-    end
-    alias_method_chain :manifest, :scoping
 
     def scoper
       @scoper ||= OpenFoodNetwork::ScopeVariantToHub.new(order.distributor)
