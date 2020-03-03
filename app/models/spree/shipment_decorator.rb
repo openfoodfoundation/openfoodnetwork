@@ -15,6 +15,14 @@ module Spree
       end
     end
 
+    def manifest
+      inventory_units.joins(:variant).includes(:variant).group_by(&:variant).map do |variant, units|
+        states = {}
+        units.group_by(&:state).each { |state, iu| states[state] = iu.count }
+        OpenStruct.new(variant: variant, quantity: units.length, states: states)
+      end
+    end
+
     # The shipment manifest is built by loading inventory units and variants from the DB
     # These variants come unscoped
     # So, we need to scope the variants just after the manifest is built
