@@ -171,12 +171,14 @@ module Spree
       end
 
       def permitted_resource_params
+        return params[:product] if params[:product].empty?
+
         params.require(:product).permit(permitted_product_attributes)
       end
 
       def permitted_product_attributes
         [
-          :id, :name, :description, :supplier_id, :price, :permalink,
+          :id, :name, :description, :supplier_id, :price, :cost_price, :permalink,
           :variant_unit, :variant_unit_scale, :unit_value, :unit_description,
           :display_as, :variant_unit_name, :sku, :available_on,
           :taxon_ids, :primary_taxon_id, :tax_category_id, :shipping_category_id,
@@ -184,7 +186,8 @@ module Spree
           :meta_keywords, :meta_description, :notes,
           :inherits_properties,
           product_properties_attributes: [:id, :property_name, :value],
-          variants_attributes: [:id, :sku, :on_hand, :price, :unit_value, :unit_description, :display_name, :display_as]
+          variants_attributes: [:id, :sku, :on_hand, :price, :unit_value, :unit_description, :display_name, :display_as],
+          images_attributes: [:attachment]
         ]
       end
 
