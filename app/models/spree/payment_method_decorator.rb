@@ -10,7 +10,7 @@ Spree::PaymentMethod.class_eval do
 
   after_initialize :init
 
-  validates_with DistributorsValidator
+  validate :distributor_validation
 
   # -- Scopes
   scope :managed_by, lambda { |user|
@@ -72,5 +72,11 @@ Spree::PaymentMethod.class_eval do
       i = name.rindex('::') + 2
       name[i..-1]
     end
+  end
+
+  private
+
+  def distributor_validation
+    validates_with DistributorsValidator
   end
 end
