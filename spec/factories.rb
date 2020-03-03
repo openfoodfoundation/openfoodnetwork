@@ -164,6 +164,10 @@ FactoryBot.modify do
     country { Spree::Country.find_by name: 'Australia' || Spree::Country.first }
   end
 
+  factory :credit_card do
+    cc_type 'visa'
+  end
+
   factory :payment do
     transient do
       distributor {
