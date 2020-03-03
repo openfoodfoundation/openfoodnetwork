@@ -1,6 +1,13 @@
 module Spree
   TaxRate.class_eval do
     class << self
+      def match(order)
+        return [] unless order.tax_zone
+        all.select do |rate|
+          rate.zone == order.tax_zone || rate.zone.contains?(order.tax_zone) || rate.zone.default_tax
+        end
+      end
+
       def match_with_sales_tax_registration(order)
         return [] if order.distributor && !order.distributor.charges_sales_tax
 
