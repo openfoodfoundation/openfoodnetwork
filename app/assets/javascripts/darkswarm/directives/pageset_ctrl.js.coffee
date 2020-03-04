@@ -1,4 +1,4 @@
-Darkswarm.directive "pagesetCtrl", (Tabsets, $location) ->
+Darkswarm.directive "pagesetCtrl", ($location) ->
   restrict: "C"
   scope:
     id: "@"
@@ -9,7 +9,7 @@ Darkswarm.directive "pagesetCtrl", (Tabsets, $location) ->
     $scope.selected = path[1..] if path
 
     this.toggle = (name) ->
-      Tabsets.toggle($scope.id, name, "open")
+      this.select(name)
 
     this.select = (selection) ->
       $scope.$broadcast("selection:changed", selection)
@@ -23,4 +23,4 @@ Darkswarm.directive "pagesetCtrl", (Tabsets, $location) ->
     this
 
   link: (scope, element, attrs, ctrl) ->
-    Tabsets.register(ctrl, scope.id, scope.selected)
+    ctrl.select(scope.selected) if scope.selected?
