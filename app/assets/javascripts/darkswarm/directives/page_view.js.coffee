@@ -8,8 +8,4 @@ Darkswarm.directive "pageView", ->
     scope.template = null
 
     ctrl.registerSelectionListener (prefix, selection) ->
-      if selection?
-        selection = "#{prefix}/#{selection}" if prefix?
-        scope.template = "#{selection}.html"
-      else
-        scope.template = null
+      scope.template = "#{prefix}/#{selection}.html"
