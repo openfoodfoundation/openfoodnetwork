@@ -27,7 +27,7 @@ describe Admin::BulkLineItemsController, type: :controller do
 
     context "as an administrator" do
       before do
-        allow(controller).to receive_messages spree_current_user: quick_login_as_admin
+        allow(controller).to receive_messages spree_current_user: create(:admin_user)
       end
 
       context "when no ransack params are passed in" do
