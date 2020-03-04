@@ -85,6 +85,10 @@ Spree::Variant.class_eval do
     ]
   end
 
+  def self.active(currency = nil)
+    where(id: joins(:prices).where(deleted_at: nil).where('spree_prices.currency' => currency || Spree::Config[:currency]).where('spree_prices.amount IS NOT NULL').select("spree_variants.id"))
+  end
+
   # We override in_stock? to avoid depending on the non-overridable method Spree::Stock::Quantifier.can_supply?
   #   VariantStock implements can_supply? itself which depends on overridable methods
   def in_stock?(quantity = 1)
