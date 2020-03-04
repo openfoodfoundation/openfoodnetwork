@@ -2,6 +2,7 @@
   = inject_current_order_cycle
 
 - unless no_open_order_cycles?
-  %ordercycle{"ng-controller" => "OrderCycleCtrl", "ng-cloak" => true}
+  %ordercycle{"ng-controller" => "OrderCycleCtrl", "ng-cloak" => true,
+    "ng-class" => "{'requires-selection': !OrderCycle.selected()}"}
     %form.custom
       = yield :order_cycle_form

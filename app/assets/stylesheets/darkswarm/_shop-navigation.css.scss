@@ -50,9 +50,26 @@ ordercycle {
   border-radius: 0.5em 0.5em 0 0;
   position: absolute;
   right: 1em;
-  padding: 1.2em 0;
+  padding: 1.5em 0;
   margin-top: 2em;
   height: 8.6em;
+
+  &.requires-selection {
+    background-color: $red-700;
+
+    .order-cycle-select {
+      border: 1px solid $red-500;
+
+      .select-label {
+        background-color: $red-500;
+      }
+
+      select {
+        background-color: $white;
+        background-image: url('/assets/black-caret.svg');
+      }
+    }
+  }
 
   p {
     max-width: 400px;
@@ -120,6 +137,7 @@ ordercycle {
       padding: 0.5em 1.25em 0.5em 0.75em;
       height: 2.35em;
       background-image: url('/assets/white-caret.svg');
+      border-radius: 0 0.5em 0.5em 0;
     }
 
     @media all and (max-width: 1024px) {
@@ -138,7 +156,7 @@ ordercycle {
   closing {
     @include headingFont;
     color: $white;
-    font-size: 1.5em;
+    font-size: 1.25rem;
     display: block;
     padding: 0 0 12px;
 
