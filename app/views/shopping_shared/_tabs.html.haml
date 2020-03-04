@@ -3,7 +3,7 @@
   - shop_tabs.each do |tab|
     = render "shopping_shared/tabs/#{tab[:name]}"
 
-  .pageset-ctrl#shop-tabs{ navigate: 'true', alwaysopen: 'true', selected: shop_tabs.first[:name], prefix: 'shop', ng: { cloak: true } }
+  .pageset-ctrl#shop-tabs{ selected: shop_tabs.first[:name], prefix: 'shop', ng: { cloak: true } }
     .tab-buttons
       .row
         .columns.small-12.large-8

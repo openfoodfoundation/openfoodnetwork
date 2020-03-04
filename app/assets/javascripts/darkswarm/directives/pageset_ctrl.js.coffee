@@ -3,22 +3,18 @@ Darkswarm.directive "pagesetCtrl", (Tabsets, $location) ->
   scope:
     id: "@"
     selected: "@"
-    navigate: "="
     prefix: "@?"
-    alwaysopen: "="
   controller: ($scope, $element) ->
-    if $scope.navigate
-      path = $location.path()?.match(/^\/\w+$/)?[0]
-      $scope.selected = path[1..] if path
+    path = $location.path()?.match(/^\/\w+$/)?[0]
+    $scope.selected = path[1..] if path
 
     this.toggle = (name) ->
-      state = if $scope.alwaysopen then 'open' else null
-      Tabsets.toggle($scope.id, name, state)
+      Tabsets.toggle($scope.id, name, "open")
 
     this.select = (selection) ->
       $scope.$broadcast("selection:changed", selection)
       $element.toggleClass("expanded", selection?)
-      $location.path(selection) if $scope.navigate
+      $location.path(selection)
 
     this.registerSelectionListener = (callback) ->
       $scope.$on "selection:changed", (event, selection) ->
