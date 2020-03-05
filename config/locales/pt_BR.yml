@@ -3217,6 +3217,12 @@ pt_BR:
           used_saved_card: "Use um cartão salvo:"
           or_enter_new_card: "Ou insira os detalhes de um novo cartão:"
           remember_this_card: Lembra-se deste cartão?
+        stripe_sca:
+          choose_one: Escolha um
+          enter_new_card: Digite os detalhes do novo cartão
+          used_saved_card: "Use um cartão já registrado"
+          or_enter_new_card: "Ou, adicione os dados para um novo cartão:"
+          remember_this_card: Lembrar deste cartão?
     date_picker:
       format: '%A-%m-'
       js_format: 'aa-mm-dd'
