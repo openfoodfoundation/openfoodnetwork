@@ -3,12 +3,12 @@
   - shop_tabs.each do |tab|
     = render "shopping_shared/tabs/#{tab[:name]}"
 
-  .pageset-ctrl#shop-tabs{ selected: shop_tabs.first[:name], prefix: 'shop', ng: { cloak: true } }
+  #shop-tabs{ ng: { controller: "PagesetCtrl", init: "selectDefault('#{shop_tabs.first[:name]}')", cloak: true } }
     .tab-buttons
       .row
         .columns.small-12.large-8
           - shop_tabs.each do |tab|
-            .page{ id: "tab_#{tab[:name]}", name: tab[:name] }
-              %a{ href: 'javascript:void(0)' }=tab[:title]
+            .page{ "ng-class" => "{ selected: selected() == '#{tab[:name]}' }" }
+              %a{ href: "##{tab[:name]}" }=tab[:title]
 
-    .page-view
+    .page-view{ "ng-include" => '"shop/" + selected() + ".html"' }
