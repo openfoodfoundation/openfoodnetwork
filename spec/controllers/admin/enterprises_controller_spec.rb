@@ -449,8 +449,8 @@ module Admin
       before do
         # As a user with permission
         allow(controller).to receive_messages spree_current_user: user
-        allow(OrderCycle).to receive_messages find_by_id: "existing OrderCycle"
-        allow(Enterprise).to receive_messages find_by_id: "existing Enterprise"
+        allow(OrderCycle).to receive_messages find_by: "existing OrderCycle"
+        allow(Enterprise).to receive_messages find_by: "existing Enterprise"
         allow(OrderCycle).to receive_messages new: "new OrderCycle"
 
         allow(OpenFoodNetwork::OrderCyclePermissions).to receive(:new) { permission_mock }
