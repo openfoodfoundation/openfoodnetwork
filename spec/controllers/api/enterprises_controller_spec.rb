@@ -52,7 +52,7 @@ module Api
       describe "submitting a valid image" do
         before do
           allow(Enterprise)
-            .to receive(:find_by_permalink).with(enterprise.id.to_s) { enterprise }
+            .to receive(:find_by).with({ permalink: enterprise.id.to_s }) { enterprise }
           allow(enterprise).to receive(:update_attributes).and_return(true)
         end
 
@@ -68,7 +68,7 @@ module Api
 
       before do
         allow(Enterprise)
-          .to receive(:find_by_permalink).with(enterprise.id.to_s) { enterprise }
+          .to receive(:find_by).with({ permalink: enterprise.id.to_s }) { enterprise }
         allow(controller).to receive(:spree_current_user) { non_managing_user }
       end
 
