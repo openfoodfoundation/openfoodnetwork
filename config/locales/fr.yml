@@ -3243,6 +3243,12 @@ fr:
           used_saved_card: "Utiliser une carte sauvegardée :"
           or_enter_new_card: "Ou entrez les informations pour utiliser une nouvelle carte :"
           remember_this_card: Se souvenir de cette carte ?
+        stripe_sca:
+          choose_one: En choisir un
+          enter_new_card: Entrer les informations pour la nouvelle carte
+          used_saved_card: "Utiliser une carte sauvegardée :"
+          or_enter_new_card: "Ou entrez les informations pour utiliser une nouvelle carte :"
+          remember_this_card: Se souvenir de cette carte ?
     date_picker:
       format: '%Y-%m-%d'
       js_format: 'yy-mm-dd'
