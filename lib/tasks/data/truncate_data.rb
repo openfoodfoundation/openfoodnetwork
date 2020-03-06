@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class TruncateData
-  def initialize(months_to_keep: nil)
+  def initialize(months_to_keep = nil)
     @date = (months_to_keep || 3).months.ago
   end
 

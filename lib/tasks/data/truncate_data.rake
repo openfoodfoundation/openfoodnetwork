@@ -9,10 +9,11 @@ require 'tasks/data/truncate_data'
 namespace :ofn do
   namespace :data do
     desc 'Truncate data'
-    task truncate: :environment do
+    task :truncate, [:months_to_keep] => :environment do |_task, args|
       guard_and_warn
 
-      TruncateData.new.call
+      months_to_keep = args.months_to_keep.to_i
+      TruncateData.new(months_to_keep).call
     end
 
     def guard_and_warn

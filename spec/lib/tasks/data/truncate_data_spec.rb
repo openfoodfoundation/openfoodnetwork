@@ -29,7 +29,7 @@ describe TruncateData do
         )
         create(:order, order_cycle: order_cycle)
 
-        TruncateData.new(months_to_keep: nil).call
+        TruncateData.new(nil).call
 
         expect(OrderCycle.all).to be_empty
       end
@@ -46,7 +46,7 @@ describe TruncateData do
         )
         create(:order, order_cycle: recent_order_cycle)
 
-        TruncateData.new(months_to_keep: 6).call
+        TruncateData.new(6).call
 
         expect(OrderCycle.all).to contain_exactly(recent_order_cycle)
       end
