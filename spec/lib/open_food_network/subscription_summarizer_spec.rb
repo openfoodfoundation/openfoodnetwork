@@ -1,9 +1,12 @@
+require 'spec_helper'
 require 'open_food_network/subscription_summarizer'
 
 module OpenFoodNetwork
   describe SubscriptionSummarizer do
     let(:order) { create(:order) }
     let(:summarizer) { OpenFoodNetwork::SubscriptionSummarizer.new }
+
+    before { allow(Rails.logger).to receive(:info) }
 
     describe "#summary_for" do
       let(:order) { double(:order, distributor_id: 123) }
@@ -53,6 +56,7 @@ module OpenFoodNetwork
 
       describe "#record_issue" do
         it "requests a summary for the order and calls #record_issue on it" do
+          expect(order).to receive(:id)
           expect(summary).to receive(:record_issue).with(:type, order, "message").once
           summarizer.record_issue(:type, order, "message")
         end
@@ -69,7 +73,6 @@ module OpenFoodNetwork
           end
 
           it "sends error info to the rails logger and calls #record_issue on itself with an error message" do
-            expect(Rails.logger).to receive(:info)
             expect(summarizer).to receive(:record_issue).with(:processing, order, "Errors: Some error")
             summarizer.record_and_log_error(:processing, order)
           end
@@ -81,7 +84,6 @@ module OpenFoodNetwork
           end
 
           it "falls back to calling record_issue" do
-            expect(Rails.logger).to_not receive(:info)
             expect(summarizer).to receive(:record_issue).with(:processing, order)
             summarizer.record_and_log_error(:processing, order)
           end

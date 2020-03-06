@@ -3212,6 +3212,12 @@ nb:
           used_saved_card: "Bruk et lagret kort:"
           or_enter_new_card: "Eller skriv inn detaljer for et nytt kort:"
           remember_this_card: Husk dette kortet?
+        stripe_sca:
+          choose_one: Velg en
+          enter_new_card: Skriv inn detaljer for et nytt kort
+          used_saved_card: "Bruk et lagret kort:"
+          or_enter_new_card: "Eller skriv inn detaljer for et nytt kort:"
+          remember_this_card: Husk dette kortet?
     date_picker:
       format: '%Y-%m-%d'
       js_format: 'yy-mm-dd'

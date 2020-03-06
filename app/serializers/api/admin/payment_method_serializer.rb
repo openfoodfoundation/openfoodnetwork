@@ -4,7 +4,8 @@ module Api
       delegate :serializable_hash, to: :method_serializer
 
       def method_serializer
-        if object.type == 'Spree::Gateway::StripeConnect'
+        if object.type == 'Spree::Gateway::StripeConnect' ||
+           object.type == 'Spree::Gateway::StripeSCA'
           Api::Admin::PaymentMethod::StripeSerializer.new(object)
         else
           Api::Admin::PaymentMethod::BaseSerializer.new(object)

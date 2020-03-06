@@ -17,27 +17,34 @@ module OpenFoodNetwork
     end
 
     def sync!
-      return sync_all! if @subscriptions
+      return sync_subscriptions! if @subscriptions
+
       return initialise_proxy_orders! unless @subscription.id
 
-      create_proxy_orders!
-      remove_orphaned_proxy_orders!
+      sync_subscription!
     end
 
     private
 
-    def sync_all!
+    def sync_subscriptions!
       @subscriptions.each do |subscription|
         @subscription = subscription
-        create_proxy_orders!
-        remove_orphaned_proxy_orders!
+        sync_subscription!
       end
     end
 
     def initialise_proxy_orders!
       uninitialised_order_cycle_ids.each do |order_cycle_id|
+        Rails.logger.info "Initializing Proxy Order " \
+          "of subscription #{@subscription.id} in order cycle #{order_cycle_id}"
         proxy_orders << ProxyOrder.new(subscription: subscription, order_cycle_id: order_cycle_id)
       end
+    end
+
+    def sync_subscription!
+      Rails.logger.info "Syncing Proxy Orders of subscription #{@subscription.id}"
+      create_proxy_orders!
+      remove_orphaned_proxy_orders!
     end
 
     def create_proxy_orders!
@@ -58,6 +65,8 @@ module OpenFoodNetwork
       orphaned_proxy_orders.where(nil).delete_all
     end
 
+    # Remove Proxy Orders that have not been placed yet
+    #   and are in Order Cycles that are out of range
     def orphaned_proxy_orders
       orphaned = proxy_orders.where(placed_at: nil)
       order_cycle_ids = in_range_order_cycles.pluck(:id)

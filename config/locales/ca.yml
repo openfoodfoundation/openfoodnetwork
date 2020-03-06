@@ -3139,6 +3139,12 @@ ca:
           used_saved_card: "Utilitza una targeta desada:"
           or_enter_new_card: "O bé introdueix els detalls d'una nova targeta:"
           remember_this_card: Recordar aquesta targeta?
+        stripe_sca:
+          choose_one: Escull-ne un
+          enter_new_card: Introdueix els detalls d'una targeta nova
+          used_saved_card: "Utilitza una targeta desada:"
+          or_enter_new_card: "O bé introdueix els detalls d'una nova targeta:"
+          remember_this_card: Recordar aquesta targeta?
     date_picker:
       format: '%d-% m-% Y'
       js_format: 'dd-mm-yy'

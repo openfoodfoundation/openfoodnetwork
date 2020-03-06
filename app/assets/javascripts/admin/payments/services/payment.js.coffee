@@ -21,7 +21,7 @@ angular.module('admin.payments').factory 'Payment', (AdminStripeElements, curren
               year: @form_data.card_year
               verification_value: @form_data.card_verification_value
           }
-        when 'stripe'
+        when 'stripe', 'stripe_sca'
           angular.extend munged_payment.payment, {
             source_attributes:
               gateway_payment_profile_id: @form_data.token
@@ -35,6 +35,8 @@ angular.module('admin.payments').factory 'Payment', (AdminStripeElements, curren
     purchase: ->
       if @paymentMethodType() == 'stripe'
         AdminStripeElements.requestToken(@form_data, @submit)
+      else if @paymentMethodType() == 'stripe_sca'
+        AdminStripeElements.createPaymentMethod(@form_data, @submit)
       else
         @submit()
 

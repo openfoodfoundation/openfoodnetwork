@@ -59,7 +59,10 @@ describe LineItemsController, type: :controller do
         end
 
         context "where the item's order is associated with the current user" do
-          before { order.update_attributes!(user_id: user.id) }
+          before do
+            order.update_attributes!(user_id: user.id)
+            allow(controller).to receive_messages spree_current_user: item.order.user
+          end
 
           context "without an order cycle or distributor" do
             it "denies deletion" do

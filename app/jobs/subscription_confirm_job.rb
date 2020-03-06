@@ -6,6 +6,7 @@ class SubscriptionConfirmJob
     ids = proxy_orders.pluck(:id)
     proxy_orders.update_all(confirmed_at: Time.zone.now)
     ProxyOrder.where(id: ids).each do |proxy_order|
+      Rails.logger.info "Confirming Order for Proxy Order #{proxy_order.id}"
       @order = proxy_order.order
       process!
     end

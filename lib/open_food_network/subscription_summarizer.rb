@@ -17,6 +17,7 @@ module OpenFoodNetwork
     end
 
     def record_issue(type, order, message = nil)
+      Rails.logger.info "Issue in Subscription Order #{order.id}: #{type}"
       summary_for(order).record_issue(type, order, message)
     end
 

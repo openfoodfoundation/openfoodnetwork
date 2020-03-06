@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe CartService do
   let(:order) { double(:order, id: 123) }
-  let(:currency) { double(:currency) }
+  let(:currency) { "EUR" }
   let(:params) { {} }
   let(:distributor) { double(:distributor) }
   let(:order_cycle) { double(:order_cycle) }

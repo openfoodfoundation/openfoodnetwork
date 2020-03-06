@@ -3155,6 +3155,12 @@ ar:
           used_saved_card: "استخدم بطاقة المحفوظة:"
           or_enter_new_card: "أو أدخل تفاصيل البطاقة الجديدة:"
           remember_this_card: تذكر هذه البطاقة؟
+        stripe_sca:
+          choose_one: اختيار واحد
+          enter_new_card: أدخل تفاصيل البطاقة الجديدة
+          used_saved_card: "استخدم بطاقة المحفوظة:"
+          or_enter_new_card: "أو أدخل تفاصيل البطاقة الجديدة:"
+          remember_this_card: تذكر هذه البطاقة؟
     date_picker:
       format: '٪ س-٪ م-%d'
       js_format: 'يوم-شهر-سنة'
