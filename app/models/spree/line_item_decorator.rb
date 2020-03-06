@@ -46,6 +46,9 @@ Spree::LineItem.class_eval do
       where('order_cycles.id = ?', order_cycle)
   }
 
+  # Here we are simply joining the line item to its variant and product
+  # We do this with SQL to avoid the default scopes,
+  #   and with that, include deleted variants and deleted products
   scope :supplied_by_any, lambda { |enterprises|
     joins("LEFT OUTER JOIN spree_variants
               ON spree_line_items.variant_id = spree_variants.id
