@@ -3053,6 +3053,12 @@ nl_BE:
           used_saved_card: "Gebruik een opgeslaan kaart : "
           or_enter_new_card: "Of, voer de gegevens in voor een nieuwe kaart : "
           remember_this_card: 'Deze kaart onthouden? '
+        stripe_sca:
+          choose_one: 'Kies één '
+          enter_new_card: Voer de gegevens in voor een nieuwe kaart
+          used_saved_card: "Gebruik een opgeslaan kaart : "
+          or_enter_new_card: "Of, voer de gegevens in voor een nieuwe kaart : "
+          remember_this_card: 'Deze kaart onthouden? '
     date_picker:
       format: '%Y-%m-%d'
       js_format: 'yy-mm-dd'

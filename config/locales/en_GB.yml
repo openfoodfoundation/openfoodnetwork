@@ -57,7 +57,7 @@ en_GB:
           attributes:
             subscription_line_items:
               at_least_one_product: "^Please add at least one product"
-              not_available: "^%{name} is not available from the selected schedule"
+              not_available: "^%{name} is not available from the selected schedule. Your changes have not been saved."
             ends_at:
               after_begins_at: "must be after begins at"
             customer:

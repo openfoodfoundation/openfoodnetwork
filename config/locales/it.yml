@@ -3123,6 +3123,12 @@ it:
           used_saved_card: "usare la carta salvata"
           or_enter_new_card: "Oppure, inserire dettagli di una nuova carta"
           remember_this_card: Ricordare questa Carta?
+        stripe_sca:
+          choose_one: Scegli uno
+          enter_new_card: Inserire dettagli per una nuova carta
+          used_saved_card: "usare la carta salvata"
+          or_enter_new_card: "Oppure, inserire dettagli di una nuova carta"
+          remember_this_card: Ricordare questa Carta?
     date_picker:
       format: '%Y-%m-%d'
       js_format: 'aa-mm-gg'

@@ -3065,6 +3065,12 @@ es:
           used_saved_card: "Usa una tarjeta guardada:"
           or_enter_new_card: "O introduce los detalles de una nueva tarjeta:"
           remember_this_card: ¿Recordar esta tarjeta?
+        stripe_sca:
+          choose_one: Elige uno
+          enter_new_card: Introduce los detalles para una nueva tarjeta
+          used_saved_card: "Usa una tarjeta guardada:"
+          or_enter_new_card: "O introduce los detalles de una nueva tarjeta:"
+          remember_this_card: ¿Recordar esta tarjeta?
     date_picker:
       format: '%Y-%m-%d'
       js_format: 'yy-mm-dd'
