@@ -6,36 +6,51 @@ class TruncateData
   end
 
   def call
-    sql_delete_from "
-        spree_inventory_units #{where_order_id_in_orders_to_delete}"
-    sql_delete_from "
-        spree_inventory_units
-        where shipment_id in (select id from spree_shipments #{where_order_id_in_orders_to_delete})"
-
+    truncate_inventory
     truncate_adjustments
-
-    sql_delete_from "spree_line_items #{where_order_id_in_orders_to_delete}"
-    sql_delete_from "spree_payments #{where_order_id_in_orders_to_delete}"
-    sql_delete_from "spree_shipments #{where_order_id_in_orders_to_delete}"
-    Spree::ReturnAuthorization.delete_all
-
+    truncate_order_associations
     truncate_order_cycle_data
 
-    sql_delete_from "proxy_orders #{where_oc_id_in_ocs_to_delete}"
-
     sql_delete_from "spree_orders #{where_oc_id_in_ocs_to_delete}"
-    sql_delete_from "order_cycle_schedules #{where_oc_id_in_ocs_to_delete}"
+
+    truncate_subscriptions
+
     sql_delete_from "order_cycles #{where_ocs_to_delete}"
 
     Spree::TokenizedPermission.where("created_at < '#{date}'").delete_all
-    Spree::StateChange.delete_all
-    Spree::LogEntry.delete_all
-    sql_delete_from "sessions"
+
+    remove_transient_data
   end
 
   private
 
   attr_reader :date
+
+  def truncate_order_associations
+    sql_delete_from "spree_line_items #{where_order_id_in_orders_to_delete}"
+    sql_delete_from "spree_payments #{where_order_id_in_orders_to_delete}"
+    sql_delete_from "spree_shipments #{where_order_id_in_orders_to_delete}"
+  end
+
+  def remove_transient_data
+    Spree::ReturnAuthorization.delete_all
+    Spree::StateChange.delete_all
+    Spree::LogEntry.delete_all
+    sql_delete_from "sessions"
+  end
+
+  def truncate_subscriptions
+    sql_delete_from "order_cycle_schedules #{where_oc_id_in_ocs_to_delete}"
+    sql_delete_from "proxy_orders #{where_oc_id_in_ocs_to_delete}"
+  end
+
+  def truncate_inventory
+    sql_delete_from "
+        spree_inventory_units #{where_order_id_in_orders_to_delete}"
+    sql_delete_from "
+        spree_inventory_units
+        where shipment_id in (select id from spree_shipments #{where_order_id_in_orders_to_delete})"
+  end
 
   def sql_delete_from(sql)
     ActiveRecord::Base.connection.execute("delete from #{sql}")
