@@ -70,13 +70,16 @@ class TruncateData
 
   def truncate_adjustments
     sql_delete_from "spree_adjustments where source_type = 'Spree::Order'
-    and source_id in (select id from spree_orders #{where_oc_id_in_ocs_to_delete})"
+      and source_id in (select id from spree_orders #{where_oc_id_in_ocs_to_delete})"
+
     sql_delete_from "spree_adjustments where source_type = 'Spree::Shipment'
-                      and source_id in (select id from spree_shipments #{where_order_id_in_orders_to_delete})"
+      and source_id in (select id from spree_shipments #{where_order_id_in_orders_to_delete})"
+
     sql_delete_from "spree_adjustments where source_type = 'Spree::Payment'
-                                        and source_id in (select id from spree_payments #{where_order_id_in_orders_to_delete})"
+      and source_id in (select id from spree_payments #{where_order_id_in_orders_to_delete})"
+
     sql_delete_from "spree_adjustments where source_type = 'Spree::LineItem'
-                                                          and source_id in (select id from spree_line_items #{where_order_id_in_orders_to_delete})"
+      and source_id in (select id from spree_line_items #{where_order_id_in_orders_to_delete})"
   end
 
   def truncate_order_cycle_data
