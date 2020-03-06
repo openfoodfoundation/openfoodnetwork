@@ -139,4 +139,18 @@ describe EnterprisesController, type: :controller do
       expect(response.status).to be 409
     end
   end
+
+  context "checking access on nonexistent enterprise" do
+    before do
+      spree_get :shop, id: "some_nonexistent_enterprise"
+    end
+
+    it "redirects to shops_path" do
+      expect(response).to redirect_to shops_path
+    end
+
+    it "shows a flash message with the error" do
+      expect(request.flash[:error]).to eq(I18n.t(:enterprise_shop_show_error))
+    end
+  end
 end
