@@ -10,20 +10,18 @@ namespace :ofn do
   namespace :data do
     desc 'Truncate data'
     task :truncate, [:months_to_keep] => :environment do |_task, args|
-      guard_and_warn
+      warn_with_confirmation
 
       months_to_keep = args.months_to_keep.to_i
       TruncateData.new(months_to_keep).call
     end
 
-    def guard_and_warn
-      if Rails.env.production?
-        Rails.logger.info("This task cannot be executed in production")
-        exit
-      end
-
-      message = "\n <%= color('This will permanently change DB contents', :yellow) %>,
-                are you sure you want to proceed? (y/N)"
+    def warn_with_confirmation
+      message = <<-MSG.strip_heredoc
+      \n
+      <%= color('This will permanently change DB contents. Please, make a backup first.', :yellow) %>
+      Are you sure you want to proceed? (y/N)
+      MSG
       exit unless HighLine.new.agree(message) { |q| q.default = "n" }
     end
   end
