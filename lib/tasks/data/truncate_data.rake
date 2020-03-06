@@ -6,6 +6,22 @@ require 'tasks/data/truncate_data'
 # This task can be used to significantly reduce the size of a database
 #   This is used for example when loading live data into a staging server
 #   This way the staging server is not overloaded with too much data
+#
+# This is also aimed at implementing data archiving. We assume data older than
+# 2 years can be safely removed and restored from a backup. This gives room for
+# hubs to do their tax declaration.
+#
+# It's a must to perform a backup right before executing this. Then, to allow
+# for a later data recovery we need to keep track of the exact moment this rake
+# task was executed.
+#
+# Execute this in production only when the instance users are sleeping to avoid any trouble.
+#
+# Example:
+#
+# $ bundle exec rake "ofn:data:truncate[24]"
+#
+# This will remove data older than 2 years (24 months).
 namespace :ofn do
   namespace :data do
     desc 'Truncate data'
