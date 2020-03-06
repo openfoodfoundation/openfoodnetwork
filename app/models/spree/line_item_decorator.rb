@@ -46,10 +46,6 @@ Spree::LineItem.class_eval do
       where('order_cycles.id = ?', order_cycle)
   }
 
-  scope :supplied_by, lambda { |enterprise|
-    joins(:product).
-      where('spree_products.supplier_id = ?', enterprise)
-  }
   scope :supplied_by_any, lambda { |enterprises|
     joins(:product).
       where('spree_products.supplier_id IN (?)', enterprises)
