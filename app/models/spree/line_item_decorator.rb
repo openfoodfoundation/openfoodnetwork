@@ -47,8 +47,11 @@ Spree::LineItem.class_eval do
   }
 
   scope :supplied_by_any, lambda { |enterprises|
-    joins(:product).
-      where('spree_products.supplier_id IN (?)', enterprises)
+    joins("LEFT OUTER JOIN spree_variants
+              ON spree_line_items.variant_id = spree_variants.id
+           LEFT OUTER JOIN spree_products
+              ON spree_variants.product_id = spree_products.id").
+      where("spree_products.supplier_id IN (?)", enterprises)
   }
 
   scope :with_tax, -> {
