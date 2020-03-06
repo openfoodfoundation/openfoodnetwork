@@ -98,7 +98,7 @@ module Admin
         variant_override.permit(
           :id, :variant_id, :hub_id,
           :price, :count_on_hand, :sku, :on_demand,
-          :default_stock, :resettable
+          :default_stock, :resettable, :tag_list
         )
       end
     end
