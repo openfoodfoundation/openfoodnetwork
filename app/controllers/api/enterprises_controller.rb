@@ -78,6 +78,8 @@ module Api
     end
 
     def save_enterprise_users(user_ids)
+      return unless user_ids
+
       user_ids.each do |user_id|
         next if @enterprise.user_ids.include? user_id.to_i
 
