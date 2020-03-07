@@ -94,8 +94,12 @@ module Spree
 
       def payment_method_params
         params.require(:payment_method).permit(
-          :name, :type, :environment, :preferred_password, :preferred_enterprise_id,
-          :distributor_ids => []
+          :name, :description, :type, :active,
+          :environment, :display_on, :tag_list,
+          :preferred_enterprise_id, :preferred_server, :preferred_login, :preferred_password,
+          :calculator_type,
+          :preferred_signature, :preferred_solution, :preferred_landing_page, :preferred_logourl,
+          :preferred_test_mode, distributor_ids: []
         )
       end
 
