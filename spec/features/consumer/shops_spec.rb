@@ -14,10 +14,6 @@ feature 'Shops', js: true do
   let!(:producer) { create(:supplier_enterprise) }
   let!(:er) { create(:enterprise_relationship, parent: distributor, child: producer) }
 
-  before :each do
-    use_api_as_unauthenticated_user
-  end
-
   before do
     producer.set_producer_property 'Organic', 'NASAA 12345'
   end
