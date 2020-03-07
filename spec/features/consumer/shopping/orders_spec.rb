@@ -31,7 +31,14 @@ feature "Order Management", js: true do
     end
 
     context "when checking out as an anonymous guest" do
-      let(:user) { Spree::User.anonymous! }
+      let!(:customer) { nil }
+      let!(:order) do
+        create(:order_with_credit_payment,
+               user: nil,
+               email: "guest@user.com",
+               distributor: distributor,
+               order_cycle: order_cycle)
+      end
 
       it "allows the user to see the details" do
         # Cannot load the page without token
