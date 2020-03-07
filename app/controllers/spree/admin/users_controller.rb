@@ -76,7 +76,6 @@ module Spree
         return @collection if @collection.present?
 
         if request.xhr? && params[:q].present?
-          # Disabling proper nested include here due to rails 3.1 bug
           @collection = Spree::User.
             includes(:bill_address, :ship_address).
             where("spree_users.email #{LIKE} :search
@@ -91,7 +90,7 @@ module Spree
                   search: "#{params[:q].strip}%").
             limit(params[:limit] || 100)
         else
-          @search = Spree::User.registered.ransack(params[:q])
+          @search = Spree::User.ransack(params[:q])
           @collection = @search.
             result.
             page(params[:page]).
