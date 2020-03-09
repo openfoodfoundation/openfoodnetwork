@@ -122,7 +122,6 @@ module ProductImport
 
     def save_new_inventory_item(entry)
       new_item = entry.product_object
-      assign_defaults(new_item, entry)
       new_item.import_date = @import_time
 
       if new_item.valid? && new_item.save
@@ -136,7 +135,6 @@ module ProductImport
 
     def save_existing_inventory_item(entry)
       existing_item = entry.product_object
-      assign_defaults(existing_item, entry)
       existing_item.import_date = @import_time
 
       if existing_item.valid? && existing_item.save
@@ -164,7 +162,6 @@ module ProductImport
       product = Spree::Product.new
       product.assign_attributes(entry.assignable_attributes.except('id', 'on_hand', 'on_demand', 'display_name'))
       product.supplier_id = entry.producer_id
-      assign_defaults(product, entry)
 
       if product.save
         ensure_variant_updated(product, entry)
@@ -179,7 +176,6 @@ module ProductImport
 
     def save_variant(entry)
       variant = entry.product_object
-      assign_defaults(variant, entry)
       variant.import_date = @import_time
 
       if variant.valid? && variant.save
@@ -197,37 +193,6 @@ module ProductImport
                number: line_number),
         errors
       )
-    end
-
-    def assign_defaults(object, entry)
-      # Assigns a default value for a specified field e.g. category='Vegetables', setting this value
-      # either for all entries (overwrite_all), or only for those entries where the field was blank
-      # in the spreadsheet (overwrite_empty), depending on selected import settings
-      return unless settings.defaults(entry)
-
-      settings.defaults(entry).each do |attribute, setting|
-        next unless setting['active']
-
-        case setting['mode']
-        when 'overwrite_all'
-          object.assign_attributes(attribute => setting['value'])
-          # In case of new products, some attributes are saved on the variant.
-          # We write them to the entry here to be copied to the variant later.
-          if entry.respond_to? "#{attribute}="
-            entry.public_send("#{attribute}=", setting['value'])
-          end
-        when 'overwrite_empty'
-          if object.public_send(attribute).blank? ||
-             ((attribute == 'on_hand') &&
-             entry.on_hand_nil)
-
-            object.assign_attributes(attribute => setting['value'])
-            if entry.respond_to? "#{attribute}="
-              entry.public_send("#{attribute}=", setting['value'])
-            end
-          end
-        end
-      end
     end
 
     def display_in_inventory(variant_override, is_new = false)
