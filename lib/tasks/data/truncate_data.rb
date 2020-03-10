@@ -35,7 +35,7 @@ class TruncateData
   def remove_transient_data
     Spree::ReturnAuthorization.delete_all
     Spree::StateChange.delete_all("created_at < '#{1.month.ago.to_date}'")
-    Spree::LogEntry.delete_all
+    Spree::LogEntry.delete_all("created_at < '#{1.month.ago.to_date}'")
     sql_delete_from "sessions"
   end
 

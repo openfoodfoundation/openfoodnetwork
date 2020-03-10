@@ -28,6 +28,14 @@ describe TruncateData do
           .to have_received(:delete_all)
           .with("created_at < '#{1.month.ago.to_date}'")
       end
+
+      it 'deletes log entries older than a month' do
+        TruncateData.new.call
+
+        expect(Spree::LogEntry)
+          .to have_received(:delete_all)
+          .with("created_at < '#{1.month.ago.to_date}'")
+      end
     end
 
     context 'when months_to_keep is nil' do
@@ -46,6 +54,14 @@ describe TruncateData do
         TruncateData.new.call
 
         expect(Spree::StateChange)
+          .to have_received(:delete_all)
+          .with("created_at < '#{1.month.ago.to_date}'")
+      end
+
+      it 'deletes log entries older than a month' do
+        TruncateData.new.call
+
+        expect(Spree::LogEntry)
           .to have_received(:delete_all)
           .with("created_at < '#{1.month.ago.to_date}'")
       end
@@ -71,6 +87,14 @@ describe TruncateData do
         TruncateData.new.call
 
         expect(Spree::StateChange)
+          .to have_received(:delete_all)
+          .with("created_at < '#{1.month.ago.to_date}'")
+      end
+
+      it 'deletes log entries older than a month' do
+        TruncateData.new.call
+
+        expect(Spree::LogEntry)
           .to have_received(:delete_all)
           .with("created_at < '#{1.month.ago.to_date}'")
       end
