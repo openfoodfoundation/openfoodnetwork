@@ -49,7 +49,7 @@ class Exchange < ActiveRecord::Base
   }
   scope :with_product, lambda { |product|
     joins(:exchange_variants).
-      where('exchange_variants.variant_id IN (?)', product.variants_including_master)
+      where('exchange_variants.variant_id IN (?)', product.variants_including_master.select(&:id))
   }
   scope :by_enterprise_name, -> {
     joins('INNER JOIN enterprises AS sender   ON (sender.id   = exchanges.sender_id)').

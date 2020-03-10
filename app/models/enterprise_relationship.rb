@@ -22,7 +22,7 @@ class EnterpriseRelationship < ActiveRecord::Base
   }
 
   scope :involving_enterprises, ->(enterprises) {
-    where('parent_id IN (?) OR child_id IN (?)', enterprises, enterprises)
+    where('parent_id IN (?) OR child_id IN (?)', enterprises.select(&:id), enterprises.select(&:id))
   }
 
   scope :permitting, ->(enterprise_ids) { where('child_id IN (?)', enterprise_ids) }
