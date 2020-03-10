@@ -77,6 +77,10 @@ Spree::Order.class_eval do
       joins('LEFT OUTER JOIN spree_products ON (spree_products.id = spree_variants.product_id)')
   }
 
+  scope :with_line_items_variants_and_products, lambda {
+    joins(line_items: { variant: :product })
+  }
+
   scope :not_state, lambda { |state|
     where("state != ?", state)
   }
