@@ -36,10 +36,10 @@ class TruncateData
     sql_delete_from "spree_line_items #{where_order_id_in_orders_to_delete}"
     sql_delete_from "spree_payments #{where_order_id_in_orders_to_delete}"
     sql_delete_from "spree_shipments #{where_order_id_in_orders_to_delete}"
+    sql_delete_from "spree_return_authorizations #{where_order_id_in_orders_to_delete}"
   end
 
   def remove_transient_data
-    Spree::ReturnAuthorization.delete_all
     Spree::StateChange.delete_all("created_at < '#{1.month.ago.to_date}'")
     Spree::LogEntry.delete_all("created_at < '#{1.month.ago.to_date}'")
     Session.delete_all("created_at < '#{2.weeks.ago.to_date}'")
