@@ -6,8 +6,8 @@ module Stock
 
     subject(:package) { Package.new(stock_location, order, contents) }
 
-    let(:enterprise) { build(:enterprise) }
-    let(:other_enterprise) { build(:enterprise) }
+    let(:enterprise) { create(:enterprise) }
+    let(:other_enterprise) { create(:enterprise) }
 
     let(:order) { build(:order, distributor: enterprise) }
 
