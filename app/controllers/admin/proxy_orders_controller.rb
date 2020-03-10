@@ -11,9 +11,8 @@ module Admin
       if @proxy_order.cancel
         render_as_json @proxy_order
       else
-        respond_with(@proxy_order) do |format|
-          format.json { render json: { errors: [t('admin.proxy_orders.cancel.could_not_cancel_the_order')] }, status: :unprocessable_entity }
-        end
+        render json: { errors: [t('admin.proxy_orders.cancel.could_not_cancel_the_order')] },
+               status: :unprocessable_entity
       end
     end
 
@@ -21,7 +20,8 @@ module Admin
       if @proxy_order.resume
         render_as_json @proxy_order
       else
-        render json: { errors: [t('admin.proxy_orders.resume.could_not_resume_the_order')] }, status: :unprocessable_entity
+        render json: { errors: [t('admin.proxy_orders.resume.could_not_resume_the_order')] },
+               status: :unprocessable_entity
       end
     end
   end
