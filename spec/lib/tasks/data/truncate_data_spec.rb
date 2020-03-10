@@ -20,6 +20,14 @@ describe TruncateData do
 
         expect(OrderCycle.all).to be_empty
       end
+
+      it 'deletes state changes older than a month' do
+        TruncateData.new.call
+
+        expect(Spree::StateChange)
+          .to have_received(:delete_all)
+          .with("created_at < '#{1.month.ago.to_date}'")
+      end
     end
 
     context 'when months_to_keep is nil' do
@@ -32,6 +40,14 @@ describe TruncateData do
         TruncateData.new(nil).call
 
         expect(OrderCycle.all).to be_empty
+      end
+
+      it 'deletes state changes older than a month' do
+        TruncateData.new.call
+
+        expect(Spree::StateChange)
+          .to have_received(:delete_all)
+          .with("created_at < '#{1.month.ago.to_date}'")
       end
     end
 
@@ -49,6 +65,14 @@ describe TruncateData do
         TruncateData.new(6).call
 
         expect(OrderCycle.all).to contain_exactly(recent_order_cycle)
+      end
+
+      it 'deletes state changes older than a month' do
+        TruncateData.new.call
+
+        expect(Spree::StateChange)
+          .to have_received(:delete_all)
+          .with("created_at < '#{1.month.ago.to_date}'")
       end
     end
   end
