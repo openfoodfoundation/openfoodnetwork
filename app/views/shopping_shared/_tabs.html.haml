@@ -11,4 +11,5 @@
             .page{ "ng-class" => "{ selected: selected() == '#{tab[:name]}' }" }
               %a{ href: "##{tab[:name]}" }=tab[:title]
 
-    .page-view{ "ng-include" => '"shop/" + selected() + ".html"' }
+    - shop_tabs.each do |tab|
+      .page-view{ ng: {include: "'shop/#{tab[:name]}.html'", if: "selected() == '#{tab[:name]}'" } }
