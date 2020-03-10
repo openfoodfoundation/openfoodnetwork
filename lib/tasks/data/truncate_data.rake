@@ -35,10 +35,12 @@ namespace :ofn do
     def warn_with_confirmation
       message = <<-MSG.strip_heredoc
       \n
-      <%= color('This will permanently change DB contents. Please, make a backup first.', :yellow) %>
+      <% highlighted_message = "This will permanently change DB contents. Please, make a backup first." %>
+      <%= color(highlighted_message, :blink, :on_red) %>
       Are you sure you want to proceed? (y/N)
       MSG
-      exit unless HighLine.new.agree(message) { |q| q.default = "n" }
+
+      exit unless HighLine.new.agree(message) { |q| q.default = "N" }
     end
   end
 end
