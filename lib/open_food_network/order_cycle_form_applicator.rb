@@ -184,6 +184,8 @@ module OpenFoodNetwork
     end
 
     def variants_to_a(variants)
+      return [] unless variants
+
       variants.select { |_k, v| v }.keys.map(&:to_i)
     end
   end
