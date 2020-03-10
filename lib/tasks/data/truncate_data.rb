@@ -53,7 +53,7 @@ class TruncateData
   end
 
   def sql_delete_from(sql)
-    ActiveRecord::Base.connection.execute("delete from #{sql}")
+    ActiveRecord::Base.connection.execute("DELETE FROM #{sql}")
   end
 
   def where_order_id_in_orders_to_delete
