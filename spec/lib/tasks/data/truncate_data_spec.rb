@@ -7,6 +7,7 @@ describe TruncateData do
       allow(Spree::ReturnAuthorization).to receive(:delete_all)
       allow(Spree::StateChange).to receive(:delete_all)
       allow(Spree::LogEntry).to receive(:delete_all)
+      allow(TruncateData::Session).to receive(:delete_all)
     end
 
     context 'when months_to_keep is not specified' do
@@ -36,6 +37,14 @@ describe TruncateData do
           .to have_received(:delete_all)
           .with("created_at < '#{1.month.ago.to_date}'")
       end
+
+      it 'deletes sessions older than two weeks' do
+        TruncateData.new.call
+
+        expect(TruncateData::Session)
+          .to have_received(:delete_all)
+          .with("created_at < '#{2.weeks.ago.to_date}'")
+      end
     end
 
     context 'when months_to_keep is nil' do
@@ -64,6 +73,14 @@ describe TruncateData do
         expect(Spree::LogEntry)
           .to have_received(:delete_all)
           .with("created_at < '#{1.month.ago.to_date}'")
+      end
+
+      it 'deletes sessions older than two weeks' do
+        TruncateData.new.call
+
+        expect(TruncateData::Session)
+          .to have_received(:delete_all)
+          .with("created_at < '#{2.weeks.ago.to_date}'")
       end
     end
 
@@ -97,6 +114,14 @@ describe TruncateData do
         expect(Spree::LogEntry)
           .to have_received(:delete_all)
           .with("created_at < '#{1.month.ago.to_date}'")
+      end
+
+      it 'deletes sessions older than two weeks' do
+        TruncateData.new.call
+
+        expect(TruncateData::Session)
+          .to have_received(:delete_all)
+          .with("created_at < '#{2.weeks.ago.to_date}'")
       end
     end
   end
