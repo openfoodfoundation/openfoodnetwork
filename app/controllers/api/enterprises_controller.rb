@@ -15,7 +15,7 @@ module Api
       user_ids = params[:enterprise].delete(:user_ids)
       @enterprise = Enterprise.new(params[:enterprise])
       if @enterprise.save
-        save_enterprise_users(user_ids)
+        @enterprise.user_ids = user_ids
         render text: @enterprise.id, status: :created
       else
         invalid_resource!(@enterprise)
@@ -75,16 +75,6 @@ module Api
 
     def override_visible
       params[:enterprise][:visible] = false
-    end
-
-    def save_enterprise_users(user_ids)
-      return unless user_ids
-
-      user_ids.each do |user_id|
-        next if @enterprise.user_ids.include? user_id.to_i
-
-        @enterprise.users << Spree::User.find(user_id)
-      end
     end
   end
 end
