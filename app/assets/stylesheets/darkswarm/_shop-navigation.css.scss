@@ -141,6 +141,7 @@ ordercycle {
       background-image: url('/assets/white-caret.svg');
       background-size: 30px auto;
       border-radius: 0 0.25em 0.25em 0;
+      min-width: 13em;
 
       @media all and (max-width: 480px) {
         width: 100%;
