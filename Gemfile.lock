@@ -518,7 +518,7 @@ GEM
     rack (1.4.7)
     rack-cache (1.9.0)
       rack (>= 0.4)
-    rack-mini-profiler (1.1.6)
+    rack-mini-profiler (2.0.0)
       rack (>= 1.2.0)
     rack-protection (1.5.5)
       rack
@@ -762,7 +762,7 @@ DEPENDENCIES
   pg (~> 0.21.0)
   pry-byebug (>= 3.4.3)
   rabl
-  rack-mini-profiler (< 2.0.0)
+  rack-mini-profiler (< 3.0.0)
   rack-rewrite
   rack-ssl
   rails (~> 3.2.22)
