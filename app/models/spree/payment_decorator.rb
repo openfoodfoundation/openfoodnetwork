@@ -12,6 +12,13 @@ module Spree
 
     localize_number :amount
 
+    # We bypass this after_rollback callback that is setup in Spree::Payment
+    # The issues the callback fixes are not experienced in OFN:
+    #   if a payment fails on checkout the state "failed" is persisted correctly
+    def persist_invalid
+      return
+    end
+
     def ensure_correct_adjustment
       revoke_adjustment_eligibility if ['failed', 'invalid'].include?(state)
       return if adjustment.try(:finalized?)
