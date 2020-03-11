@@ -1,4 +1,4 @@
-Darkswarm.controller "PagesetCtrl", ($scope, $location) ->
+Darkswarm.controller "PageSelectionCtrl", ($scope, $location) ->
   $scope.selected = ->
     $location.path()[1..] || $scope.defaultPage
 

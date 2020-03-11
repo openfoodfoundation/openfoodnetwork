@@ -3,7 +3,7 @@
   - shop_tabs.each do |tab|
     = render "shopping_shared/tabs/#{tab[:name]}"
 
-  #shop-tabs{ ng: { controller: "PagesetCtrl", init: "selectDefault('#{shop_tabs.first[:name]}')", cloak: true } }
+  #shop-tabs{ ng: { controller: "PageSelectionCtrl", init: "selectDefault('#{shop_tabs.first[:name]}')", cloak: true } }
     .tab-buttons
       .row
         .columns.small-12.large-8
