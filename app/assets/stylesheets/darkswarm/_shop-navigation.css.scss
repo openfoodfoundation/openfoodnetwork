@@ -50,9 +50,9 @@ ordercycle {
   border-radius: 0.5em 0.5em 0 0;
   position: absolute;
   right: 1em;
-  padding: 1.5em 0;
-  margin-top: 2em;
-  height: 8.6em;
+  padding: 1em;
+  margin-top: 3em;
+  height: 7.6em;
 
   &.requires-selection {
     background-color: $red-700;
@@ -61,7 +61,7 @@ ordercycle {
       border: 1px solid $red-500;
 
       .select-label {
-        background-color: $red-500;
+        background-color: rgba($red-500, 0.5);
       }
 
       select {
@@ -109,16 +109,16 @@ ordercycle {
     border: 1px solid $teal-300;
     display: inline-block;
     font-size: 1em;
-    border-radius: 0.5em;
+    border-radius: 0.25em;
 
     .select-label {
-      background-color: $teal-300;
+      background-color: rgba($teal-300, 0.5);
       display: inline-block;
-      border-radius: 0.5em 0 0 0.5em;
+      border-radius: 0.25em 0 0 0.25em;
       float: left;
       font-size: 1em;
       line-height: 1.5em;
-      padding: 0.5em 1em;
+      padding: 0.5em 0.75em;
       height: 2.35em;
 
       span {
@@ -139,7 +139,12 @@ ordercycle {
       padding: 0.5em 1.25em 0.5em 0.75em;
       height: 2.35em;
       background-image: url('/assets/white-caret.svg');
-      border-radius: 0 0.5em 0.5em 0;
+      background-size: 30px auto;
+      border-radius: 0 0.25em 0.25em 0;
+
+      @media all and (max-width: 480px) {
+        width: 100%;
+      }
     }
 
     @media all and (max-width: 1024px) {
