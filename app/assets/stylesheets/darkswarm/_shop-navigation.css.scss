@@ -67,6 +67,8 @@ ordercycle {
       select {
         background-color: $white;
         background-image: url('/assets/black-caret.svg');
+        color: $grey-500;
+        font-style: italic;
       }
     }
   }
