@@ -3,6 +3,7 @@ require 'open_food_network/proxy_order_syncer'
 
 module Admin
   class SchedulesController < ResourceController
+    before_filter :adapt_params, only: [:create, :update]
     before_filter :check_editable_order_cycle_ids, only: [:create, :update]
     before_filter :check_dependent_subscriptions, only: [:destroy]
     create.after :sync_subscriptions
@@ -46,6 +47,14 @@ module Admin
 
     def collection_actions
       [:index]
+    end
+
+    # In this controller, params like params[:name] are moved into params[:schedule] becoming params[:schedule][:name]
+    # For some reason in rails 4, this is not happening for params[:order_cycle_ids]
+    #   We do it manually in this filter
+    def adapt_params
+      params[:schedule] = {} if params[:schedule].blank?
+      params[:schedule][:order_cycle_ids] = params[:order_cycle_ids]
     end
 
     def check_editable_order_cycle_ids
