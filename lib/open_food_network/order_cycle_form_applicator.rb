@@ -149,7 +149,7 @@ module OpenFoodNetwork
       receiver = @order_cycle.coordinator
       exchange = find_exchange(sender.id, receiver.id, true)
 
-      requested_ids = attrs[:variants].select{ |_k, v| v }.keys.map(&:to_i) # Only the ids the user has requested
+      requested_ids = variants_to_a(attrs[:variants]) # Only the ids the user has requested
       existing_ids = exchange.present? ? exchange.variants.pluck(:id) : [] # The ids that already exist
       editable_ids = editable_variant_ids_for_incoming_exchange_between(sender, receiver) # The ids we are allowed to add/remove
 
@@ -166,7 +166,7 @@ module OpenFoodNetwork
       receiver = Enterprise.find(attrs[:enterprise_id])
       exchange = find_exchange(sender.id, receiver.id, false)
 
-      requested_ids = attrs[:variants].select{ |_k, v| v }.keys.map(&:to_i) # Only the ids the user has requested
+      requested_ids = variants_to_a(attrs[:variants]) # Only the ids the user has requested
       existing_ids = exchange.present? ? exchange.variants.pluck(:id) : [] # The ids that already exist
       editable_ids = editable_variant_ids_for_outgoing_exchange_between(sender, receiver) # The ids we are allowed to add/remove
 
@@ -184,7 +184,9 @@ module OpenFoodNetwork
     end
 
     def variants_to_a(variants)
-      variants.select { |_k, v| v }.keys.map(&:to_i).sort
+      return [] unless variants
+
+      variants.select { |_k, v| v }.keys.map(&:to_i)
     end
   end
 end
