@@ -1,5 +1,5 @@
 module Api
-  class EnterprisesController < BaseController
+  class EnterprisesController < Api::BaseController
     before_filter :override_owner, only: [:create, :update]
     before_filter :check_type, only: :update
     before_filter :override_sells, only: [:create, :update]
@@ -10,8 +10,12 @@ module Api
     def create
       authorize! :create, Enterprise
 
+      # params[:user_ids] breaks the enterprise creation
+      # We remove them from params and save them after creating the enterprise
+      user_ids = params[:enterprise].delete(:user_ids)
       @enterprise = Enterprise.new(params[:enterprise])
       if @enterprise.save
+        @enterprise.user_ids = user_ids
         render text: @enterprise.id, status: :created
       else
         invalid_resource!(@enterprise)

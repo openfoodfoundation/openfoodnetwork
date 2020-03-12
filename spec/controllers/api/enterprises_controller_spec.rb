@@ -19,24 +19,35 @@ module Api
         let(:australia) { Spree::Country.find_by(name: 'Australia') }
         let(:new_enterprise_params) do
           {
-            enterprise: {
-              name: 'name', contact_name: 'Sheila', address_attributes: {
-                address1: '123 Abc Street',
-                city: 'Northcote',
-                zipcode: '3070',
-                state_id: australia.states.first,
-                country_id: australia.id
-              }
+            name: 'name', contact_name: 'Sheila', address_attributes: {
+              address1: '123 Abc Street',
+              city: 'Northcote',
+              zipcode: '3070',
+              state_id: australia.states.first,
+              country_id: australia.id
             }
           }
         end
 
         it "creates as sells=any when it is not a producer" do
-          spree_post :create, new_enterprise_params
+          spree_post :create, { enterprise: new_enterprise_params }
           expect(response).to be_success
 
           enterprise = Enterprise.last
           expect(enterprise.sells).to eq('any')
+        end
+
+        it "saves all user ids submitted" do
+          manager1 = create(:user)
+          manager2 = create(:user)
+          spree_post :create, {
+            enterprise: new_enterprise_params.
+              merge({ user_ids: [enterprise_owner.id, manager1.id, manager2.id] })
+          }
+          expect(response).to be_success
+
+          enterprise = Enterprise.last
+          expect(enterprise.user_ids).to eq([enterprise_owner.id, manager1.id, manager2.id])
         end
       end
     end
