@@ -41,13 +41,6 @@ describe LineItemsController, type: :controller do
 
       before { allow(controller).to receive_messages spree_current_user: item.order.user }
 
-      context "without a line item id" do
-        it "fails and raises an error" do
-          delete :destroy
-          expect(response.status).to eq 404
-        end
-      end
-
       context "with a line item id" do
         let(:params) { { format: :json, id: item } }
 
