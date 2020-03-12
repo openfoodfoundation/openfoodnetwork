@@ -5,7 +5,28 @@ module Spree
     describe VariantsController, type: :controller do
       before { login_as_admin }
 
-      describe "search action" do
+      describe "#index" do
+        describe "deleted variants" do
+          let(:product) { create(:product, name: 'Product A') }
+          let(:deleted_variant) do
+            deleted_variant = product.variants.create(unit_value: "2")
+            deleted_variant.delete
+            deleted_variant
+          end
+
+          it "lists only non-deleted variants with params[:deleted] == off" do
+            spree_get :index, product_id: product.permalink, deleted: "off"
+            expect(assigns(:variants)).to eq(product.variants)
+          end
+
+          it "lists only deleted variants with params[:deleted] == on" do
+            spree_get :index, product_id: product.permalink, deleted: "on"
+            expect(assigns(:variants)).to eq([deleted_variant])
+          end
+        end
+      end
+
+      describe "#search" do
         let!(:p1) { create(:simple_product, name: 'Product 1') }
         let!(:p2) { create(:simple_product, name: 'Product 2') }
         let!(:v1) { p1.variants.first }
