@@ -2274,6 +2274,7 @@ nb:
   enterprise_register_success_notice: "Gratulerer! Registrering for %{enterprise} er fullført!"
   enterprise_bulk_update_success_notice: "Bedrifter oppdatert"
   enterprise_bulk_update_error: 'Oppdatering mislyktes'
+  enterprise_shop_show_error: "Butikken du leter etter eksisterer ikke eller er inaktiv på OFN. Sjekk gjerne ut andre butikker."
   order_cycles_create_notice: 'Din bestillingsrunde er opprettet.'
   order_cycles_update_notice: 'Din bestillingsrunde har blitt oppdatert.'
   order_cycles_bulk_update_notice: 'Bestillingsrundene er oppdatert.'

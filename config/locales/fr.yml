@@ -2221,7 +2221,7 @@ fr:
   no_change_to_save: "Pas de changement à sauvegarder"
   user_invited: "%{email}a été invité à gérer cette entreprise"
   add_manager: "Ajouter un utilisateur existant"
-  users: "Utilisateurs"
+  users: "Gestionnaires"
   about: "A propos"
   images: "Images"
   web: "Web"
@@ -2278,6 +2278,7 @@ fr:
   enterprise_register_success_notice: "Bravo ! L'entreprise %{enterprise} est maintenant inscrite sur Open Food France :-)"
   enterprise_bulk_update_success_notice: "Entreprises mises à jour avec succès"
   enterprise_bulk_update_error: 'Echec dans la mise à jour'
+  enterprise_shop_show_error: "La boutique que vous recherchez n'existe pas ou est inactive. Veuillez sélectionner une boutique depuis la liste ci-dessous."
   order_cycles_create_notice: 'Votre cycle de vente a été créé.'
   order_cycles_update_notice: 'Votre cycle de vente a été mis à jour.'
   order_cycles_bulk_update_notice: 'Des cycles de vente ont été mis à jour.'
