@@ -68,7 +68,7 @@ module OpenFoodNetwork
       else
         orders.
           where('spree_orders.id NOT IN (?)',
-                @permissions.editable_orders)
+                @permissions.editable_orders.select(&:id))
       end
     end
 

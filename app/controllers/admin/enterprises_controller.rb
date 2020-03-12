@@ -23,7 +23,6 @@ module Admin
     before_filter :setup_property, only: [:edit]
 
     helper 'spree/products'
-    include ActionView::Helpers::TextHelper
     include OrderCyclesHelper
 
     def index
@@ -77,19 +76,12 @@ module Admin
 
     def bulk_update
       @enterprise_set = EnterpriseSet.new(collection, params[:enterprise_set])
-      touched_enterprises = @enterprise_set.collection.select(&:changed?)
       if @enterprise_set.save
         flash[:success] = I18n.t(:enterprise_bulk_update_success_notice)
 
-        # 18-3-2015: It seems that the form for this action sometimes loads bogus values for
-        # the 'sells' field, and submitting that form results in a bunch of enterprises with
-        # values that have mysteriously changed. This statement is here to help debug that
-        # issue, and should be removed (along with its display in index.html.haml) when the
-        # issue has been resolved.
-        flash[:action] = "#{I18n.t(:updated)} #{pluralize(touched_enterprises.count, 'enterprise')}: #{touched_enterprises.map(&:name).join(', ')}"
-
         redirect_to main_app.admin_enterprises_path
       else
+        touched_enterprises = @enterprise_set.collection.select(&:changed?)
         @enterprise_set.collection.select! { |e| touched_enterprises.include? e }
         flash[:error] = I18n.t(:enterprise_bulk_update_error)
         render :index

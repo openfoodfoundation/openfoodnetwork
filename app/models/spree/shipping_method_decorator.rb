@@ -13,7 +13,7 @@ Spree::ShippingMethod.class_eval do
       where(nil)
     else
       joins(:distributors).
-        where('distributors_shipping_methods.distributor_id IN (?)', user.enterprises).
+        where('distributors_shipping_methods.distributor_id IN (?)', user.enterprises.select(&:id)).
         select('DISTINCT spree_shipping_methods.*')
     end
   }

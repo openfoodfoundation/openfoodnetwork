@@ -1,5 +1,5 @@
 require 'open_food_network/referer_parser'
-require 'spree/authentication_helpers'
+require_dependency 'spree/authentication_helpers'
 
 class ApplicationController < ActionController::Base
   protect_from_forgery

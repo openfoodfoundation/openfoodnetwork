@@ -253,13 +253,9 @@ describe Api::ProductsController, type: :controller do
       end
 
       it "filters results by import_date" do
-        product.variants.first.import_date = 1.day.ago
-        product2.variants.first.import_date = 2.days.ago
-        product3.variants.first.import_date = 1.day.ago
-
-        product.save
-        product2.save
-        product3.save
+        product.variants.first.update_attribute :import_date, 1.day.ago
+        product2.variants.first.update_attribute :import_date, 2.days.ago
+        product3.variants.first.update_attribute :import_date, 1.day.ago
 
         api_get :bulk_products, { page: 1, per_page: 15, import_date: 1.day.ago.to_date.to_s }, format: :json
         expect(returned_product_ids).to eq [product3.id, product.id]

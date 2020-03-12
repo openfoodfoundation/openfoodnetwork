@@ -62,7 +62,9 @@ Spree::Order.class_eval do
       # Find orders that are distributed by the user or have products supplied by the user
       # WARNING: This only filters orders, you'll need to filter line items separately using LineItem.managed_by
       with_line_items_variants_and_products_outer.
-        where('spree_orders.distributor_id IN (?) OR spree_products.supplier_id IN (?)', user.enterprises, user.enterprises).
+        where('spree_orders.distributor_id IN (?) OR spree_products.supplier_id IN (?)',
+              user.enterprises.select(&:id),
+              user.enterprises.select(&:id)).
         select('DISTINCT spree_orders.*')
     end
   }
@@ -71,7 +73,7 @@ Spree::Order.class_eval do
     if user.has_spree_role?('admin')
       where(nil)
     else
-      where('spree_orders.distributor_id IN (?)', user.enterprises)
+      where('spree_orders.distributor_id IN (?)', user.enterprises.select(&:id))
     end
   }
 
@@ -79,6 +81,10 @@ Spree::Order.class_eval do
     joins('LEFT OUTER JOIN spree_line_items ON (spree_line_items.order_id = spree_orders.id)').
       joins('LEFT OUTER JOIN spree_variants ON (spree_variants.id = spree_line_items.variant_id)').
       joins('LEFT OUTER JOIN spree_products ON (spree_products.id = spree_variants.product_id)')
+  }
+
+  scope :with_line_items_variants_and_products, lambda {
+    joins(line_items: { variant: :product })
   }
 
   scope :not_state, lambda { |state|
