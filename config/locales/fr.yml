@@ -701,7 +701,7 @@ fr:
           enable_subscriptions_tip: "Activer la fonction abonnements?"
           enable_subscriptions_false: "Désactivé"
           enable_subscriptions_true: "Activé"
-          shopfront_message: "Message d'accueil boutique ouverte"
+          shopfront_message: "Message d'accueil"
           shopfront_message_placeholder: >
               Vous pouvez indiquer ici un message de bienvenue ou un message expliquant
               les particularités de votre boutique. Ce message s'affiche dans l'onglet
