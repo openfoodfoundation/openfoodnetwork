@@ -247,7 +247,7 @@ module Spree
       end
 
       def suppliers_of_products_distributed_by(distributors)
-        distributors.map { |d| Spree::Product.in_distributor(d).includes(:supplier).all }.
+        distributors.map { |d| Spree::Product.in_distributor(d).includes(:supplier).to_a }.
           flatten.map(&:supplier).uniq
       end
 
