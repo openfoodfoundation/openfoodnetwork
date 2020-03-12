@@ -312,7 +312,7 @@ module Admin
         :contact_name, :email_address, :phone, :sells, :owner_id,
         :website, :facebook, :instagram, :linkedin, :twitter,
         :abn, :acn, :charges_sales_tax, :display_invoice_logo,
-        :invoice_text, :description, :long_description, :promo_image,
+        :invoice_text, :description, :long_description, :logo, :promo_image,
         :preferred_product_selection_from_inventory_only, :preferred_shopfront_message,
         :preferred_shopfront_closed_message, :preferred_shopfront_taxon_order,
         :preferred_shopfront_order_cycle_order, :require_login,
