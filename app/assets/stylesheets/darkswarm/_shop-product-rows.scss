@@ -35,19 +35,6 @@
       .row.variants {
         margin-left: 0;
         margin-right: 0;
-        background-color: #ECECEC;
-
-        &:hover, &:focus, &:active {
-          background-color: $clr-brick-light;
-        }
-
-        &:nth-of-type(even) {
-          background-color: #f9f9f9;
-
-          &:hover, &:focus, &:active {
-            background-color: $clr-brick-ultra-light;
-          }
-        }
 
         &.out-of-stock {
           opacity: 0.2;
