@@ -1,4 +1,4 @@
-Web::Engine.routes.draw do
+Openfoodnetwork::Application.routes.prepend do
   namespace :api do
     scope '/cookies' do
       resource :consent, only: [:show, :create, :destroy], controller: "cookies_consent"
