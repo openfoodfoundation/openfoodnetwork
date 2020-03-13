@@ -59,11 +59,6 @@
       display: block;
       color: $med-drk-grey;
 
-      &:hover, &:focus, &:active {
-        border-bottom: 1px solid $clr-brick-med-bright;
-        border-top: 1px solid $clr-brick-med-bright;
-      }
-
       // BULK
       .bulk-buy {
         font-size: 0.875rem;
