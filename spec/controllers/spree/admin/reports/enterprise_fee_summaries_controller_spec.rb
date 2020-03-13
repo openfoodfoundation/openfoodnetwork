@@ -13,7 +13,7 @@ describe Spree::Admin::Reports::EnterpriseFeeSummariesController, type: :control
 
   describe "#new" do
     it "renders the report form" do
-      get :new
+      get :new, use_route: OrderManagement
 
       expect(response).to be_success
       expect(response).to render_template(new_template_path)
@@ -23,7 +23,8 @@ describe Spree::Admin::Reports::EnterpriseFeeSummariesController, type: :control
   describe "#create" do
     context "when the parameters are valid" do
       it "sends the generated report in the correct format" do
-        post :create, report: { start_at: "2018-10-09 07:30:00" }, report_format: "csv"
+        post :create, use_route: OrderManagement,
+                      report: { start_at: "2018-10-09 07:30:00" }, report_format: "csv"
 
         expect(response).to be_success
         expect(response.body).not_to be_blank
@@ -33,7 +34,8 @@ describe Spree::Admin::Reports::EnterpriseFeeSummariesController, type: :control
 
     context "when the parameters are invalid" do
       it "renders the report form with an error" do
-        post :create, report: { start_at: "invalid date" }, report_format: "csv"
+        post :create, use_route: OrderManagement,
+                      report: { start_at: "invalid date" }, report_format: "csv"
 
         expect(flash[:error]).to eq(I18n.t("invalid_filter_parameters", scope: i18n_scope))
         expect(response).to render_template(new_template_path)
@@ -47,7 +49,8 @@ describe Spree::Admin::Reports::EnterpriseFeeSummariesController, type: :control
       let(:current_user) { distributor.owner }
 
       it "renders the report form with an error" do
-        post :create, report: { distributor_ids: [other_distributor.id] }, report_format: "csv"
+        post :create, use_route: OrderManagement,
+                      report: { distributor_ids: [other_distributor.id] }, report_format: "csv"
 
         expect(flash[:error]).to eq(report_klass::Authorizer.parameter_not_allowed_error_message)
         expect(response).to render_template(new_template_path)
@@ -64,7 +67,8 @@ describe Spree::Admin::Reports::EnterpriseFeeSummariesController, type: :control
       let(:current_user) { distributor.owner }
 
       it "applies permissions to report" do
-        post :create, report: {}, report_format: "csv"
+        post :create, use_route: OrderManagement,
+                      report: {}, report_format: "csv"
 
         expect(assigns(:permissions).allowed_order_cycles.to_a).to eq([order_cycle])
       end
