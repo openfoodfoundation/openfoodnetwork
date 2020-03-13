@@ -149,12 +149,6 @@
           h3 a {
             color: #222;
 
-            i {
-              @include csstrans;
-
-              font-size: 0.6em;
-            }
-
             &:hover, &:focus, &:active {
               color: $clr-brick;
             }
