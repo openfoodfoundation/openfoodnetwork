@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Spree::Admin::Reports::EnterpriseFeeSummariesController, type: :controller do
+describe OrderManagement::Reports::EnterpriseFeeSummariesController, type: :controller do
   let(:report_klass) { OrderManagement::Reports::EnterpriseFeeSummary }
 
   let!(:distributor) { create(:distributor_enterprise) }
@@ -76,6 +76,6 @@ describe Spree::Admin::Reports::EnterpriseFeeSummariesController, type: :control
   end
 
   def new_template_path
-    "spree/admin/reports/enterprise_fee_summaries/new"
+    "order_management/reports/enterprise_fee_summaries/new"
   end
 end
