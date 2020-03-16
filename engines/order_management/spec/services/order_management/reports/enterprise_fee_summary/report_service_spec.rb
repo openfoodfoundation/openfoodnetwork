@@ -610,10 +610,14 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
 
     describe "for specified shipping methods" do
       let!(:shipping_method_a) do
-        create(:shipping_method, name: "Shipping A", distributors: [distributor])
+        method = create(:shipping_method, name: "Shipping A", distributors: [distributor])
+        method.calculator.update_attribute(:preferred_amount, 1)
+        method
       end
       let!(:shipping_method_b) do
-        create(:shipping_method, name: "Shipping B", distributors: [distributor])
+        method = create(:shipping_method, name: "Shipping B", distributors: [distributor])
+        method.calculator.update_attribute(:preferred_amount, 1)
+        method
       end
       let!(:shipping_method_c) do
         create(:shipping_method, name: "Shipping C", distributors: [distributor])
@@ -638,10 +642,14 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
 
     describe "for specified payment methods" do
       let!(:payment_method_a) do
-        create(:payment_method, name: "Payment A", distributors: [distributor])
+        method = create(:payment_method, name: "Payment A", distributors: [distributor])
+        method.calculator.update_attribute(:preferred_amount, 1)
+        method
       end
       let!(:payment_method_b) do
-        create(:payment_method, name: "Payment B", distributors: [distributor])
+        method = create(:payment_method, name: "Payment B", distributors: [distributor])
+        method.calculator.update_attribute(:preferred_amount, 1)
+        method
       end
       let!(:payment_method_c) do
         create(:payment_method, name: "Payment C", distributors: [distributor])
