@@ -8,6 +8,7 @@ describe TruncateData do
       allow(Spree::StateChange).to receive(:delete_all)
       allow(Spree::LogEntry).to receive(:delete_all)
       allow(TruncateData::Session).to receive(:delete_all)
+      allow(Rails.logger).to receive(:info)
     end
 
     context 'when months_to_keep is not specified' do

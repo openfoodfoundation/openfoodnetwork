@@ -12,25 +12,33 @@ class TruncateData
   end
 
   def call
-    truncate_inventory
-    truncate_adjustments
-    truncate_order_associations
-    truncate_order_cycle_data
+    logging do
+      truncate_inventory
+      truncate_adjustments
+      truncate_order_associations
+      truncate_order_cycle_data
 
-    sql_delete_from "spree_orders #{where_oc_id_in_ocs_to_delete}"
+      sql_delete_from "spree_orders #{where_oc_id_in_ocs_to_delete}"
 
-    truncate_subscriptions
+      truncate_subscriptions
 
-    sql_delete_from "order_cycles #{where_ocs_to_delete}"
+      sql_delete_from "order_cycles #{where_ocs_to_delete}"
 
-    Spree::TokenizedPermission.where("created_at < '#{date}'").delete_all
+      Spree::TokenizedPermission.where("created_at < '#{date}'").delete_all
 
-    remove_transient_data
+      remove_transient_data
+    end
   end
 
   private
 
   attr_reader :date
+
+  def logging
+    Rails.logger.info("TruncateData started with truncation date #{date}")
+    yield
+    Rails.logger.info("TruncateData finished")
+  end
 
   def truncate_order_associations
     sql_delete_from "spree_line_items #{where_order_id_in_orders_to_delete}"
