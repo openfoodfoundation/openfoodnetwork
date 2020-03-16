@@ -76,7 +76,8 @@ module OpenFoodNetwork
         }
 
         it "does not include canceled orders in the balance" do
-          expect(UserBalanceCalculator.new(o4.email, hub1).balance).to eq(-9) # = 15 + 2 - 13 - 13
+
+          expect(UserBalanceCalculator.new(o4.email, hub1).balance).to eq(11) # = 15 + 2 - 13 - 13 + 20
         end
       end
 
