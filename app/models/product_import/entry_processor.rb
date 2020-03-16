@@ -74,7 +74,7 @@ module ProductImport
       if settings.importing_into_inventory?
         InventoryResetStrategy
       else
-        ProductsResetStrategy
+        Catalog::ProductImport::ProductsResetStrategy
       end
     end
 

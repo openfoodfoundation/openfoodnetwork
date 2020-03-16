@@ -91,6 +91,7 @@ Openfoodnetwork::Application.routes.draw do
 
   # Mount engine routes
   mount Web::Engine, :at => '/'
+  mount Catalog::Engine, :at => '/'
   mount OrderManagement::Engine, :at => '/'
 
   # Mount Spree's routes
