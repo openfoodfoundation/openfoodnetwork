@@ -95,16 +95,7 @@
           }
 
           @include breakpoint(phablet) {
-            background: #777;
-            color: $disabled-med;
-
-            .filled {
-              color: white;
-            }
-
-            .table-cell {
-              height: 27px;
-            }
+            display: none;
           }
         }
       }
