@@ -6,6 +6,9 @@
         %i.ofn-i_056-bulk><
         %em><
           \ {{::'bulk' | t}}
+  .medium-1.large-1.columns.total-price
+    %span{"ng-class" => "{filled: variant.line_item.total_price}"}
+      {{ variant.line_item.total_price | localizeCurrency }}
 
   %ng-include{src: "'partials/shop_variant_no_group_buy.html'"}
   %ng-include{src: "'partials/shop_variant_with_group_buy.html'"}
@@ -24,8 +27,3 @@
         "price-breakdown-append-to-body" => "true",
         "price-breakdown-placement" => "left",
         "price-breakdown-animation" => true}
-
-  .small-12.medium-2.large-2.columns.total-price.text-right
-    .table-cell
-      %strong{"ng-class" => "{filled: variant.line_item.total_price}"}
-        {{ variant.line_item.total_price | localizeCurrency }}
