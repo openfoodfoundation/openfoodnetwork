@@ -15,6 +15,7 @@ describe OrderSyncer do
       before do
         # Create shipping rates for available shipping methods.
         order.shipments.each(&:refresh_rates)
+        order.select_shipping_method(shipping_method)
       end
 
       it "updates the shipping_method on the order and on shipments" do
