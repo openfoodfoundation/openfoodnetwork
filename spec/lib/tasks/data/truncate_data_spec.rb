@@ -12,9 +12,9 @@ describe TruncateData do
     end
 
     context 'when months_to_keep is not specified' do
-      it 'truncates order cycles closed earlier than 3 months ago' do
+      it 'truncates order cycles closed earlier than 2 years ago' do
         order_cycle = create(
-          :order_cycle, orders_open_at: 4.months.ago, orders_close_at: 4.months.ago + 1.day
+          :order_cycle, orders_open_at: 25.months.ago, orders_close_at: 25.months.ago + 1.day
         )
         create(:order, order_cycle: order_cycle)
 
@@ -49,9 +49,9 @@ describe TruncateData do
     end
 
     context 'when months_to_keep is nil' do
-      it 'truncates order cycles closed earlier than 3 months ago' do
+      it 'truncates order cycles closed earlier than 2 years ago' do
         order_cycle = create(
-          :order_cycle, orders_open_at: 4.months.ago, orders_close_at: 4.months.ago + 1.day
+          :order_cycle, orders_open_at: 25.months.ago, orders_close_at: 25.months.ago + 1.day
         )
         create(:order, order_cycle: order_cycle)
 
