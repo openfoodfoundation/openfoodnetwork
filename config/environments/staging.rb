@@ -33,11 +33,12 @@ Openfoodnetwork::Application.configure do
   # Use https in email links
   config.action_mailer.default_url_options = { protocol: 'https' }
 
-  # See everything in the log (default is :info)
+  # Note: This config no longer works with our new logging strategy
   # config.log_level = :debug
 
   # Configure logging for Rails 3.2:
   config.logger = ActiveSupport::TaggedLogging.new(Logger.new(Rails.root.join("log", "#{Rails.env}.log")))
+  config.logger.level = Logger::INFO
   config.logger.formatter = Logger::Formatter.new
   config.logger.datetime_format = "%Y-%m-%d %H:%M:%S"
   # Once we get to Rails 4.0, we can replace the above with:
