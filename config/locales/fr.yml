@@ -245,7 +245,9 @@ fr:
   allow_cookies: "Autoriser les cookies"
   notes: Commentaires
   error: Erreur
-  processing_payment: Paiement en cours...
+  processing_payment: "Paiement en cours..."
+  no_pending_payments: "Aucun paiement en attente."
+  invalid_payment_state: "Statut de paiement invalide"
   filter_results: Filtrer les résultats
   quantity: Quantité
   pick_up: Retrait
