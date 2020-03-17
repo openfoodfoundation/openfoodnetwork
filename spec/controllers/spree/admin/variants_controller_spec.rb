@@ -69,7 +69,7 @@ module Spree
             variant.exchanges << exchange
 
             spree_delete :destroy, id: variant.id, product_id: variant.product.permalink, format: 'html'
-            expect(variant.exchanges).to be_empty
+            expect(variant.exchanges.reload).to be_empty
           end
         end
       end

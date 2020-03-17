@@ -1285,6 +1285,7 @@ ca:
   saving_credit_card: Desant la targeta de crèdit...
   card_has_been_removed: "S'ha eliminat la teva targeta (número: %{number})"
   card_could_not_be_removed: Ho sentim, no s'ha pogut eliminar la targeta
+  invalid_credit_card: "Targeta de crèdit no vàlida"
   ie_warning_headline: "El vostre navegador no està actualitzat :-("
   ie_warning_text: "Per obtenir la millor experiència a Open Food Network et recomanem que actualitzis el teu navegador:"
   ie_warning_chrome: Descarrega Chrome
@@ -2276,6 +2277,7 @@ ca:
   enterprise_register_success_notice: "Enhorabona! El registre de %{enterprise} s'ha completat!"
   enterprise_bulk_update_success_notice: "Les organitzacions s'han actualitzat correctament"
   enterprise_bulk_update_error: 'No s''ha pogut actualitzar'
+  enterprise_shop_show_error: "La botiga que busqueu no existeix o està inactiva a OFN. Consulteu altres botigues."
   order_cycles_create_notice: 'S''ha creat el cicle de comanda.'
   order_cycles_update_notice: 'S''ha actualitzat el cicle de comanda.'
   order_cycles_bulk_update_notice: 'S''han actualitzat els cicles de comanda.'
@@ -2430,6 +2432,12 @@ ca:
           severity: Severitat
           description: Descripció
           resolve: Resoldre
+        exchange_products:
+          load_more_variants: "Carregueu més variants"
+          load_all_variants: "Carregueu totes les variants"
+          select_all_variants: "Seleccioneu totes les %{total_number_of_variants} variants"
+          variants_loaded: "%{num_of_variants_loaded} de %{total_number_of_variants} variants carregades"
+          loading_variants: "Carregant variants"
       tag_rules:
         shipping_method_tagged_top: "Els mètodes d'enviament etiquetats"
         shipping_method_tagged_bottom: "son:"
@@ -2588,6 +2596,73 @@ ca:
       signup_or_login: "Comenceu registrant-vos (o iniciant sessió)"
       have_an_account: "Ja tens un compte?"
       action_login: "Inicia la sessió ara."
+  inflections:
+    each:
+      one: "cadascun"
+      other: "cadascun"
+    bunch:
+      one: "munt"
+      other: "grapats"
+    pack:
+      one: "paquet"
+      other: "paquets"
+    box:
+      one: "Caixa"
+      other: "caixes"
+    bottle:
+      one: "ampolla"
+      other: "ampolles"
+    jar:
+      one: "gerro"
+      other: "pots"
+    head:
+      one: "cap"
+      other: "caps"
+    bag:
+      one: "bossa"
+      other: "bosses"
+    loaf:
+      one: "pa"
+      other: "barres"
+    single:
+      one: "solter"
+      other: "únics"
+    tub:
+      one: "tina"
+      other: "cubells"
+    item:
+      one: "article"
+      other: "articles"
+    dozen:
+      one: "dotzena"
+      other: "dotzenes"
+    unit:
+      one: "unitat"
+      other: "unitats"
+    serve:
+      one: "servir"
+      other: "porcions"
+    tray:
+      one: "safata"
+      other: "safates"
+    piece:
+      one: "peça"
+      other: "peces"
+    pot:
+      one: "pot"
+      other: "pots"
+    bundle:
+      one: "paquet"
+      other: "paquets"
+    flask:
+      one: "matràs"
+      other: "ampolleta"
+    basket:
+      one: "cistella"
+      other: "cistelles"
+    sack:
+      one: "sac"
+      other: "sacs"
   producers:
     signup:
       start_free_profile: "Comença amb un perfil gratuït i amplia'l quan estiguis preparada."
@@ -3134,6 +3209,12 @@ ca:
     checkout:
       payment:
         stripe:
+          choose_one: Escull-ne un
+          enter_new_card: Introdueix els detalls d'una targeta nova
+          used_saved_card: "Utilitza una targeta desada:"
+          or_enter_new_card: "O bé introdueix els detalls d'una nova targeta:"
+          remember_this_card: Recordar aquesta targeta?
+        stripe_sca:
           choose_one: Escull-ne un
           enter_new_card: Introdueix els detalls d'una targeta nova
           used_saved_card: "Utilitza una targeta desada:"

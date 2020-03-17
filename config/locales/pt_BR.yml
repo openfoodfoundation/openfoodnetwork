@@ -1572,7 +1572,7 @@ pt_BR:
   login_invalid: "E-mail ou senha inválidos"
   modal_hubs: "Central de alimentos"
   modal_hubs_abstract: Nossas centrais são o ponto de contato entre você e as pessoas que produzem sua comida!
-  modal_hubs_content1: 'Você pode procurar por uma central conveniente à você por localização ou nome. Alguns possuem múltiplos pontos de entrega, onde você pode retirar suas compras, e outros ainda entregam na sua casa. Cada um é um ponto de venda independente, e por isso as ofertas e maneira de operar podem variar de um para outro. '
+  modal_hubs_content1: 'Você pode procurar a central mais próxima por localização ou nome. Alguns possuem múltiplos pontos de entrega, onde você pode retirar suas compras, e outros ainda entregam na sua casa. Cada um é um ponto de venda independente, e por isso as ofertas e maneira de operar podem variar de um para outro. '
   modal_hubs_content2: Você só pode comprar de uma central por vez.
   modal_groups: "Grupos / Regiões"
   modal_groups_content1: Estas são as organizações e as relações entre as centrais que compõem a Open Food Brasil.
@@ -2273,6 +2273,7 @@ pt_BR:
   enterprise_register_success_notice: "Parabéns! O registro para %{enterprise} está completo!"
   enterprise_bulk_update_success_notice: "Iniciativas atualizadas com sucesso"
   enterprise_bulk_update_error: 'Atualização falhou'
+  enterprise_shop_show_error: "A loja que você está procurando não existe na OFN ou está inativa. Por favor, busque por outras lojas. "
   order_cycles_create_notice: 'Seu ciclo de pedidos foi criado.'
   order_cycles_update_notice: 'Seu ciclo de pedidos foi atualizado.'
   order_cycles_bulk_update_notice: 'Ciclos de pedidos foram atualizados.'
@@ -2593,6 +2594,79 @@ pt_BR:
       signup_or_login: "Faça seu cadastro ou login para começar"
       have_an_account: "Já possui um conta?"
       action_login: "Entrar agora"
+  inflections:
+    each:
+      one: "cada"
+      other: "cada"
+    bunch:
+      one: "maço"
+      other: "maços"
+    pack:
+      one: "pacote"
+      other: "pacotes"
+    box:
+      one: "caixa"
+      other: "caixas"
+    bottle:
+      one: "garrafa"
+      other: "garrafas"
+    jar:
+      one: "jarro"
+      other: "jarros"
+    head:
+      one: "cabeça"
+      other: "cabeças"
+    bag:
+      one: "sacolas"
+      other: "sacolas"
+    loaf:
+      one: "pão"
+      other: "pães"
+    single:
+      one: "simples"
+      other: "simples"
+    tub:
+      one: "vaso"
+      other: "vasos"
+    punnet:
+      one: "vasilha"
+      other: "vasilhas"
+    packet:
+      one: "pacote"
+      other: "pacotes"
+    item:
+      one: "item"
+      other: "items"
+    dozen:
+      one: "dúzia"
+      other: "dúzias"
+    unit:
+      one: "unidade"
+      other: "unidades"
+    serve:
+      one: "servido"
+      other: "servidos"
+    tray:
+      one: "bandeja"
+      other: "bandejas"
+    piece:
+      one: "pedaço"
+      other: "pedaços"
+    pot:
+      one: "pote"
+      other: "potes"
+    bundle:
+      one: "pacote"
+      other: "pacotes"
+    flask:
+      one: "frasco"
+      other: "frascos"
+    basket:
+      one: "cesta"
+      other: "cestas"
+    sack:
+      one: "saco"
+      other: "sacos"
   producers:
     signup:
       start_free_profile: "Comece com um perfil gratuito e expanda quando estiver pronto!"
@@ -3144,6 +3218,12 @@ pt_BR:
           used_saved_card: "Use um cartão salvo:"
           or_enter_new_card: "Ou insira os detalhes de um novo cartão:"
           remember_this_card: Lembra-se deste cartão?
+        stripe_sca:
+          choose_one: Escolha um
+          enter_new_card: Digite os detalhes do novo cartão
+          used_saved_card: "Use um cartão já registrado"
+          or_enter_new_card: "Ou, adicione os dados para um novo cartão:"
+          remember_this_card: Lembrar deste cartão?
     date_picker:
       format: '%A-%m-'
       js_format: 'aa-mm-dd'

@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 module Spree
   describe TaxRate do
     describe "selecting tax rates to apply to an order" do

@@ -18,7 +18,7 @@ Spree::PaymentMethod.class_eval do
       where(nil)
     else
       joins(:distributors).
-        where('distributors_payment_methods.distributor_id IN (?)', user.enterprises).
+        where('distributors_payment_methods.distributor_id IN (?)', user.enterprises.select(&:id)).
         select('DISTINCT spree_payment_methods.*')
     end
   }
@@ -66,6 +66,8 @@ Spree::PaymentMethod.class_eval do
       "Pin Payments"
     when "Spree::Gateway::StripeConnect"
       "Stripe"
+    when "Spree::Gateway::StripeSCA"
+      "Stripe SCA"
     when "Spree::Gateway::PayPalExpress"
       "PayPal Express"
     else

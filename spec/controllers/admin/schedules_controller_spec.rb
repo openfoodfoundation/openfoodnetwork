@@ -10,19 +10,6 @@ describe Admin::SchedulesController, type: :controller do
     let!(:coordinated_schedule) { create(:schedule, order_cycles: [coordinated_order_cycle] ) }
     let!(:uncoordinated_schedule) { create(:schedule, order_cycles: [other_order_cycle] ) }
 
-    context "html" do
-      context "where I manage an order cycle coordinator" do
-        before do
-          allow(controller).to receive_messages spree_current_user: managed_coordinator.owner
-        end
-
-        it "returns an empty @collection" do
-          spree_get :index, format: :html
-          expect(assigns(:collection)).to eq []
-        end
-      end
-    end
-
     context "json" do
       context "where I manage an order cycle coordinator" do
         before do

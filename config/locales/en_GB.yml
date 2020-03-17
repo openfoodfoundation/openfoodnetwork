@@ -57,7 +57,7 @@ en_GB:
           attributes:
             subscription_line_items:
               at_least_one_product: "^Please add at least one product"
-              not_available: "^%{name} is not available from the selected schedule"
+              not_available: "^%{name} is not available from the selected schedule. Your changes have not been saved."
             ends_at:
               after_begins_at: "must be after begins at"
             customer:
@@ -294,7 +294,7 @@ en_GB:
     shipping_method: Shipping Method
     shop: Shop
     sku: SKU
-    status_state: County
+    status_state: State
     tags: Tags
     variant: Variant
     weight: Weight
@@ -2039,7 +2039,7 @@ en_GB:
   admin_share_city: "City"
   admin_share_zipcode: "Postcode"
   admin_share_country: "Country"
-  admin_share_state: "County"
+  admin_share_state: "State"
   hub_sidebar_hubs: "Hubs"
   hub_sidebar_none_available: "None Available"
   hub_sidebar_manage: "Manage"
@@ -2549,7 +2549,7 @@ en_GB:
       no_changes_to_save: No changes to save.'
       no_authorisation: "I couldn't get authorisation to save those changes, so they remain unsaved."
       some_trouble: "I had some trouble saving: %{errors}"
-      changing_on_hand_stock: Changing on hand stock levels...
+      changing_on_hand_stock: Changing 'in stock' stock levels...
       stock_reset: Stocks reset to defaults.
     tag_rules:
       show_hide_variants: 'Show or Hide variants in my shopfront'
@@ -2748,7 +2748,7 @@ en_GB:
     cannot_create_returns: Cannot create returns as this order has no shipped units.
     select_stock: "Select stock"
     location: "Location"
-    count_on_hand: "Count On Hand"
+    count_on_hand: "Count In Stock"
     quantity: "Quantity"
     package_from: "package from"
     item_description: "Item Description"
@@ -3214,6 +3214,12 @@ en_GB:
     checkout:
       payment:
         stripe:
+          choose_one: Choose one
+          enter_new_card: Enter details for a new card
+          used_saved_card: "Use a saved card:"
+          or_enter_new_card: "Or, enter details for a new card:"
+          remember_this_card: Remember this card?
+        stripe_sca:
           choose_one: Choose one
           enter_new_card: Enter details for a new card
           used_saved_card: "Use a saved card:"

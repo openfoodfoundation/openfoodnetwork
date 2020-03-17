@@ -1305,7 +1305,7 @@ tr:
       cookie_stripe_desc: "Sahtekarlık tespiti için ödeme işlemcimiz Stripe tarafından toplanan veriler https://stripe.com/cookies-policy/legal. Tüm mağazalar Stripe'ı ödeme yöntemi olarak kullanmaz, ancak dolandırıcılığın tüm sayfalara uygulanmasını önlemek iyi bir yöntemdir. Stripe muhtemelen sayfalarımızdan hangilerinin genellikle API'leriyle etkileşime girdiğini gösteren bir resim oluşturur ve daha sonra olağandışı bir şeyi işaretler. Dolayısıyla, Stripe çerezinin ayarlanması, kullanıcıya ödeme yönteminin sağlanmasından daha geniş bir işleve sahiptir. Kaldırılması hizmetin güvenliğini etkileyebilir. Stripe hakkında daha fazla bilgi edinebilir ve gizlilik politikasını https://stripe.com/privacy adresinde okuyabilirsiniz."
       statistics_cookies: "İstatistik Çerezleri"
       statistics_cookies_desc: "Aşağıdakiler mecburi değildir, ancak kullanıcı davranışını analiz etmemize, en çok kullandığınız veya kullanmadığınız özellikleri belirlememize veya kullanıcı deneyimi sorunlarını anlamamıza vb. izin vererek size en iyi kullanıcı deneyimini sunmaya yardımcı olur."
-      statistics_cookies_analytics_desc_html: "Platform kullanım verilerini toplamak ve analiz etmek için, Google Analytics&#39;i Spree ( <a href='https://matomo.org/' target='_blank'>temelde</a> oluşturduğumuz e-ticaret açık kaynak yazılımı) ile bağlantılı varsayılan hizmet olduğu için kullanıyoruz, ancak vizyonumuz <a href='https://matomo.org/' target='_blank'>Matomo&#39;ya</a> (eski Piwik, açık kaynak analitiği) geçmek GDPR uyumlu ve gizliliğinizi koruyan bir araç)."
+      statistics_cookies_analytics_desc_html: "Platform kullanım verilerini toplamak ve analiz etmek için, Google Analytics'i Spree ( <a href='https://matomo.org/' target='_blank'>temelde</a> oluşturduğumuz e-ticaret açık kaynak yazılımı) ile bağlantılı varsayılan hizmet olduğu için kullanıyoruz, ancak vizyonumuz <a href='https://matomo.org/' target='_blank'>Matomoya</a> (eski Piwik, açık kaynak analitiği) geçmek GDPR uyumlu ve gizliliğinizi koruyan bir araç)."
       statistics_cookies_matomo_desc_html: "Platform kullanım verilerini toplamak ve analiz etmek için, GDPR uyumlu ve gizliliğinizi koruyan açık kaynaklı bir analiz aracı olan <a href='https://matomo.org/' target='_blank'>Matomo</a> (eski Piwik) kullanıyoruz."
       statistics_cookies_matomo_optout: "Matomo analitiğinden çıkmak istiyor musunuz? Herhangi bir kişisel veri toplamıyoruz ve Matomo hizmetimizi geliştirmemize yardımcı oluyor, ancak seçiminize saygı duyuyoruz :-)"
       cookie_analytics_utma_desc: "Kullanıcıları ve oturumları ayırt etmek için kullanılır. Çerez, javascript kütüphanesi yürütüldüğünde ve mevcut __utma çerezleri olmadığında oluşturulur. Çerez, Google Analytics'e her veri gönderildiğinde güncellenir."
@@ -3204,6 +3204,12 @@ tr:
     checkout:
       payment:
         stripe:
+          choose_one: Birini seçin
+          enter_new_card: Yeni bir kart için bilgileri girin
+          used_saved_card: "Kayıtlı bir kart kullanın:"
+          or_enter_new_card: "Veya yeni bir kart için bilgileri girin:"
+          remember_this_card: Bu kartı hatırlıyor musunuz?
+        stripe_sca:
           choose_one: Birini seçin
           enter_new_card: Yeni bir kart için bilgileri girin
           used_saved_card: "Kayıtlı bir kart kullanın:"

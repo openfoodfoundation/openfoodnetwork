@@ -2274,6 +2274,7 @@ nb:
   enterprise_register_success_notice: "Gratulerer! Registrering for %{enterprise} er fullført!"
   enterprise_bulk_update_success_notice: "Bedrifter oppdatert"
   enterprise_bulk_update_error: 'Oppdatering mislyktes'
+  enterprise_shop_show_error: "Butikken du leter etter eksisterer ikke eller er inaktiv på OFN. Sjekk gjerne ut andre butikker."
   order_cycles_create_notice: 'Din bestillingsrunde er opprettet.'
   order_cycles_update_notice: 'Din bestillingsrunde har blitt oppdatert.'
   order_cycles_bulk_update_notice: 'Bestillingsrundene er oppdatert.'
@@ -3207,6 +3208,12 @@ nb:
     checkout:
       payment:
         stripe:
+          choose_one: Velg en
+          enter_new_card: Skriv inn detaljer for et nytt kort
+          used_saved_card: "Bruk et lagret kort:"
+          or_enter_new_card: "Eller skriv inn detaljer for et nytt kort:"
+          remember_this_card: Husk dette kortet?
+        stripe_sca:
           choose_one: Velg en
           enter_new_card: Skriv inn detaljer for et nytt kort
           used_saved_card: "Bruk et lagret kort:"

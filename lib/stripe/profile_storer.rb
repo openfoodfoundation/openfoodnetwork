@@ -54,10 +54,22 @@ module Stripe
 
     def source_attrs_from(response)
       {
-        cc_type: @payment.source.cc_type, # side-effect of update_source!
-        gateway_customer_profile_id: response.params['id'],
-        gateway_payment_profile_id: response.params['default_source'] || response.params['default_card']
+        cc_type: @payment.source.cc_type,
+        gateway_customer_profile_id: customer_profile_id(response),
+        gateway_payment_profile_id: payment_profile_id(response)
       }
+    end
+
+    def customer_profile_id(response)
+      response.params['customer'] || response.params['id']
+    end
+
+    def payment_profile_id(response)
+      if response.params['customer'] # Payment Intents API
+        response.params['id']
+      else
+        response.params['default_source'] || response.params['default_card']
+      end
     end
   end
 end

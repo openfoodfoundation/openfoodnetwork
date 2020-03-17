@@ -2274,6 +2274,7 @@ en_FR:
   enterprise_register_success_notice: "Congratulations! Registration for %{enterprise} is complete!"
   enterprise_bulk_update_success_notice: "Enterprises updated successfully"
   enterprise_bulk_update_error: 'Update failed'
+  enterprise_shop_show_error: "The shop you are looking for doesn't exist or is inactive on OFN. Please check other shops."
   order_cycles_create_notice: 'Your order cycle has been created.'
   order_cycles_update_notice: 'Your order cycle has been updated.'
   order_cycles_bulk_update_notice: 'Order cycles have been updated.'
@@ -3208,6 +3209,12 @@ en_FR:
     checkout:
       payment:
         stripe:
+          choose_one: Choose one
+          enter_new_card: Enter details for a new card
+          used_saved_card: "Use a saved card:"
+          or_enter_new_card: "Or, enter details for a new card:"
+          remember_this_card: Remember this card?
+        stripe_sca:
           choose_one: Choose one
           enter_new_card: Enter details for a new card
           used_saved_card: "Use a saved card:"

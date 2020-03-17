@@ -1,5 +1,5 @@
 %tr.product.even
-  %td.producer{ ng: { show: 'columns.producer.visible', bind: '::producersByID[product.producer_id].name'} }
+  %td.producer{ ng: { show: 'columns.producer.visible', bind: { html: '::producersByID[product.producer_id].name'} } }
   %td.product{ ng: { show: 'columns.product.visible', bind: '::product.name'} }
   %td.sku{ ng: { show: 'columns.sku.visible' } }
   %td.price{ ng: { show: 'columns.price.visible' } }

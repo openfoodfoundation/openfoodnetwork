@@ -5,8 +5,7 @@ class SubscriptionPlacementJob
     ids = proxy_orders.pluck(:id)
     proxy_orders.update_all(placed_at: Time.zone.now)
     ProxyOrder.where(id: ids).each do |proxy_order|
-      proxy_order.initialise_order!
-      process(proxy_order.order)
+      place_order_for(proxy_order)
     end
 
     send_placement_summary_emails
@@ -28,16 +27,18 @@ class SubscriptionPlacementJob
       .joins(:subscription).merge(Subscription.not_canceled.not_paused)
   end
 
-  def process(order)
+  def place_order_for(proxy_order)
+    Rails.logger.info "Placing Order for Proxy Order #{proxy_order.id}"
+    proxy_order.initialise_order!
+    place_order(proxy_order.order)
+  end
+
+  def place_order(order)
     record_order(order)
     return record_issue(:complete, order) if order.completed?
 
     changes = cap_quantity_and_store_changes(order)
-    if order.line_items.where('quantity > 0').empty?
-      order.reload.adjustments.destroy_all
-      order.update!
-      return send_empty_email(order, changes)
-    end
+    return handle_empty_order(order, changes) if order.line_items.where('quantity > 0').empty?
 
     move_to_completion(order)
     send_placement_email(order, changes)
@@ -58,12 +59,18 @@ class SubscriptionPlacementJob
     changes
   end
 
+  def handle_empty_order(order, changes)
+    order.reload.adjustments.destroy_all
+    order.update!
+    send_empty_email(order, changes)
+  end
+
   def move_to_completion(order)
     AdvanceOrderService.new(order).call!
   end
 
   def unavailable_stock_lines_for(order)
-    order.line_items.where('variant_id NOT IN (?)', available_variants_for(order))
+    order.line_items.where('variant_id NOT IN (?)', available_variants_for(order).select(&:id))
   end
 
   def available_variants_for(order)
