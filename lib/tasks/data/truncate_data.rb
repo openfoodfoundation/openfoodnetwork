@@ -8,7 +8,7 @@ class TruncateData
   end
 
   def initialize(months_to_keep = nil)
-    @date = (months_to_keep || 3).months.ago
+    @date = (months_to_keep || 3).to_i.months.ago
   end
 
   def call

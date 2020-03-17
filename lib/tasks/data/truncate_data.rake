@@ -28,8 +28,7 @@ namespace :ofn do
     task :truncate, [:months_to_keep] => :environment do |_task, args|
       warn_with_confirmation
 
-      months_to_keep = args.months_to_keep.to_i
-      TruncateData.new(months_to_keep).call
+      TruncateData.new(args.months_to_keep).call
     end
 
     def warn_with_confirmation
