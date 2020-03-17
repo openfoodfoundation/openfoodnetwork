@@ -149,7 +149,8 @@ ordercycle {
     }
 
     @media all and (max-width: 1024px) {
-      float: right;
+      float: none;
+      margin-right: 1em;
     }
 
     @media all and (max-width: 768px) {
@@ -169,9 +170,11 @@ ordercycle {
     padding: 0 0 12px;
 
     @media all and (max-width: 1024px) {
-      float: left;
+      float: none;
+      display: inline-block;
       padding: 0.2em 0 0;
       font-size: 1.2em;
+      margin-right: 1em;
     }
 
     @media all and (max-width: 768px) {
