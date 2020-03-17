@@ -33,7 +33,7 @@ Openfoodnetwork::Application.configure do
   # Use https in email links
   config.action_mailer.default_url_options = { protocol: 'https' }
 
-  # See everything in the log (default is :info)
+  # Note: This config no longer works with our new logging strategy
   # config.log_level = :debug
 
   # Configure logging for Rails 3.2:
