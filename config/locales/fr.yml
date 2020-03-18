@@ -1861,7 +1861,7 @@ fr:
         headline: "C'est terminé!"
         thanks: "Merci d'avoir complété le profil de %{enterprise}"
         login: "Vous pouvez modifier ou mettre à jour les détails de votre entreprise à tout moment en vous connectant sur Open Food France, rubrique Admin."
-        action: "Accueil Open Food France"
+        action: "Aller vers le tableau de bord"
   back: "Retour"
   continue: "Suivant"
   action_or: "OU"
