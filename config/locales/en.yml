@@ -1989,7 +1989,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         headline: "Finished!"
         thanks: "Thanks for filling out the details for %{enterprise}."
         login: "You can change or update your enterprise at any stage by logging into Open Food Network and going to Admin."
-        action: "Open Food Network home"
+        action: "Go to Enterprise Dashboard"
 
   back: "Back"
   continue: "Continue"
