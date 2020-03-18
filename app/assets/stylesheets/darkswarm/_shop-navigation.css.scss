@@ -44,15 +44,34 @@
 
 ordercycle {
   float: right;
-  background: $secondary-blue;
+  background: $teal-400;
   color: $white;
   width: 100%;
-  border-radius: 0.75em 0.75em 0 0;
+  border-radius: 0.5em 0.5em 0 0;
   position: absolute;
   right: 1em;
-  padding: 1.65em 0;
-  margin-top: 1em;
-  height: 9.6em;
+  padding: 1em;
+  margin-top: 3em;
+  height: 7.6em;
+
+  &.requires-selection {
+    background-color: $red-700;
+
+    .order-cycle-select {
+      border: 1px solid $red-500;
+
+      .select-label {
+        background-color: rgba($red-500, 0.5);
+      }
+
+      select {
+        background-color: $white;
+        background-image: url('/assets/black-caret.svg');
+        color: $grey-500;
+        font-style: italic;
+      }
+    }
+  }
 
   p {
     max-width: 400px;
@@ -87,20 +106,25 @@ ordercycle {
   }
 
   .order-cycle-select {
-    border: 1px solid $light-blue;
+    border: 1px solid $teal-300;
     display: inline-block;
     font-size: 1em;
-    border-radius: 0.5em;
+    border-radius: 0.25em;
 
     .select-label {
-      background-color: $light-blue;
+      background-color: rgba($teal-300, 0.5);
       display: inline-block;
-      border-radius: 0.5em 0 0 0.5em;
+      border-radius: 0.25em 0 0 0.25em;
       float: left;
       font-size: 1em;
       line-height: 1.5em;
-      padding: 0.5em 1em;
+      padding: 0.5em 0.75em;
       height: 2.35em;
+
+      span {
+        width: max-content;
+        display: block;
+      }
     }
 
     select {
@@ -115,28 +139,42 @@ ordercycle {
       padding: 0.5em 1.25em 0.5em 0.75em;
       height: 2.35em;
       background-image: url('/assets/white-caret.svg');
+      background-size: 30px auto;
+      border-radius: 0 0.25em 0.25em 0;
+      min-width: 13em;
+
+      @media all and (max-width: 480px) {
+        width: 100%;
+      }
     }
 
     @media all and (max-width: 1024px) {
-      float: right;
+      float: none;
+      margin-right: 1em;
     }
 
     @media all and (max-width: 768px) {
       float: none;
+    }
+
+    @media all and (max-width: 480px) {
+      display: flex;
     }
   }
 
   closing {
     @include headingFont;
     color: $white;
-    font-size: 1.5em;
+    font-size: 1.25rem;
     display: block;
     padding: 0 0 12px;
 
     @media all and (max-width: 1024px) {
-      float: left;
+      float: none;
+      display: inline-block;
       padding: 0.2em 0 0;
       font-size: 1.2em;
+      margin-right: 1em;
     }
 
     @media all and (max-width: 768px) {

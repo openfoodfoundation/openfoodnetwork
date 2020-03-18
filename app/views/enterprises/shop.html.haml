@@ -19,20 +19,24 @@
   - content_for :order_cycle_form do
 
     %div{"ng-controller" => "OrderCycleChangeCtrl", "ng-cloak" => true}
-      %closing{"ng-if" => "OrderCycle.selected()"}
-        = t :enterprises_next_closing
-        %strong {{ OrderCycle.orders_close_at() | date_in_words }}
+      %closing
+        %div{"ng-if" => "OrderCycle.selected()"}
+          = t :enterprises_next_closing
+          %strong {{ OrderCycle.orders_close_at() | date_in_words }}
+        %div{"ng-if" => "!OrderCycle.selected()"}
+          = t :enterprises_choose
 
-      .order-cycle-select{"popover-placement" => "left", "popover" => t(:enterprises_choose), "popover-trigger" => "openTrigger"}
+      .order-cycle-select
         .select-label
-          = t :enterprises_ready_for
+          %span= t :enterprises_ready_for
 
         %select.select2.avenir#order_cycle_id{"ng-model" => "order_cycle.order_cycle_id",
-                "ofn-change-order-cycle" => true,
-                "disabled" => require_customer?,
-                "ng-options" => "oc.id as oc.time for oc in #{@order_cycles.map {|oc| {time: pickup_time(oc), id: oc.id}}.to_json}"}
+          "ofn-change-order-cycle" => true,
+          "disabled" => require_customer?,
+          "ng-options" => "oc.id as oc.time for oc in #{oc_select_options.to_json}"}
 
-
+          - if oc_select_options.count > 1
+            %option{value: "", disabled: "", selected: ""}= t :shopping_oc_select
 
   = render partial: "shopping_shared/header"
   = render partial: "shopping_shared/tabs"

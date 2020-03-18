@@ -7,10 +7,19 @@
 
   .tab-buttons {
     color: $dark-grey;
-    box-shadow: 0 1px 0 $light-grey-transparency;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.05), 0 8px 6px -6px rgba(0, 0, 0, 0.2);
 
     .columns {
       display: flex;
+
+      @media all and (max-width: 1024px) {
+        display: table;
+        width: 100%;
+      }
+
+      @media all and (max-width: 480px) {
+        padding: 0;
+      }
     }
   }
 
@@ -23,7 +32,7 @@
     >a {
       outline: none;
       display: block;
-      color: $primary-grey;
+      color: $grey-500;
       font-family: "Oswald", sans-serif;
     }
 
@@ -34,12 +43,11 @@
       text-transform: uppercase;
       line-height: 1;
       font-size: 0.875em;
-      text-shadow: 0 -1px 1px #ffffff;
       padding: 1em 2em;
       border: none;
 
       &:hover, &:focus, &:active {
-        color: $primary-blue;
+        color: $teal-500;
       }
 
       &, &:hover {
@@ -48,16 +56,20 @@
 
       @media all and (max-width: 640px) {
         padding: 0.35em 0 0.65em 0;
-        text-shadow: none;
       }
     }
 
     &.selected {
-      border-bottom: 4px solid $primary-blue;
+      border-bottom: 4px solid $teal-500;
 
       a {
-        color: $primary-blue;
+        color: $teal-500;
       }
+    }
+
+    @media all and (max-width: 1024px) {
+      display: table-cell;
+      width: auto;
     }
   }
 
@@ -72,12 +84,21 @@
       padding: 1.25em 0;
       background-color: transparent;
 
+      a {
+        color: $orange-500;
+
+        &:hover {
+          color: $orange-600;
+        }
+      }
+
       img {
         margin: 0px 0px 0px 40px;
       }
 
       h5 {
         margin-bottom: 1em;
+        font-family: $body-font;
       }
 
       p {
@@ -95,8 +116,9 @@
 
       .header {
         text-align: center;
-        color: $med-grey;
+        color: $grey-600;
         margin-top: 0.75rem;
+        margin-bottom: 2px;
       }
     }
   }
