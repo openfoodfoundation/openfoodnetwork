@@ -9,7 +9,7 @@
 }
 
 $headingFont: "Oswald";
-$bodyFont: "Roboto";
+$body-font: "Roboto", Arial, sans-serif;
 
 body {
   @include bodyFont;
@@ -43,7 +43,7 @@ small, .small {
 .text-small {
   font-size: 0.875rem;
   margin-bottom: 0.5rem;
-  font-family: $bodyFont;
+  font-family: $body-font;
 
   &, & * {
     font-size: 0.875rem;
@@ -52,12 +52,12 @@ small, .small {
 
 .text-normal {
   font-weight: 400;
-  font-family: $bodyFont;
+  font-family: $body-font;
 }
 
 .text-skinny {
   font-weight: 300;
-  font-family: $bodyFont;
+  font-family: $body-font;
 }
 
 .word-wrap {
@@ -114,9 +114,9 @@ ul.bullet-list, ul.check-list {
   }
 
   li:before {
-    content: "";
+    content: "•";
     font-family: "OFN";
-    margin-left: -1.25em;
+    margin: 0 0.25em 0 -1.25em;
     display: inline-block;
     font-weight: normal;
     font-style: normal;

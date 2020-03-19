@@ -1,4 +1,7 @@
 %script{ type: "text/ng-template", id: "shop/shop.html" }
+  .order-cycle-bar.hide-for-large-up
+    = render partial: "shopping_shared/order_cycles"
+
   .row
     .small-12.columns
       - if no_open_order_cycles?
@@ -8,10 +11,8 @@
             = t :shopping_oc_closed
             %small
               %em
-                (
                 = render partial: "shopping_shared/next_order_cycle"
                 = render partial: "shopping_shared/last_order_cycle"
-                )
           %p
             = t :shopping_oc_closed_description
 

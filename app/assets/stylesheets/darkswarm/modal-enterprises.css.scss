@@ -111,6 +111,22 @@
 
   i {
     font-size: 2rem;
+
+    &.facebook {
+      color: $social-facebook;
+    }
+
+    &.twitter {
+      color: $social-twitter;
+    }
+
+    &.linkedin {
+      color: $social-linkedin;
+    }
+
+    &.instagram {
+      color: $social-instagram;
+    }
   }
 
   a {
