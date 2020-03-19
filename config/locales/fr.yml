@@ -245,7 +245,9 @@ fr:
   allow_cookies: "Autoriser les cookies"
   notes: Commentaires
   error: Erreur
-  processing_payment: Paiement en cours...
+  processing_payment: "Paiement en cours..."
+  no_pending_payments: "Aucun paiement en attente."
+  invalid_payment_state: "Statut de paiement invalide"
   filter_results: Filtrer les résultats
   quantity: Quantité
   pick_up: Retrait
@@ -1859,7 +1861,7 @@ fr:
         headline: "C'est terminé!"
         thanks: "Merci d'avoir complété le profil de %{enterprise}"
         login: "Vous pouvez modifier ou mettre à jour les détails de votre entreprise à tout moment en vous connectant sur Open Food France, rubrique Admin."
-        action: "Accueil Open Food France"
+        action: "Aller vers le tableau de bord"
   back: "Retour"
   continue: "Suivant"
   action_or: "OU"
