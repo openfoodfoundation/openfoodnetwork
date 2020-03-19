@@ -32,6 +32,11 @@ module Admin
       end
     end
 
+    def edit
+      @object = Enterprise.where(permalink: params[:id]).includes(users: [:ship_address, :bill_address]).first
+      super
+    end
+
     def welcome
       render layout: "spree/layouts/bare_admin"
     end
@@ -172,12 +177,14 @@ module Admin
     end
 
     def load_methods_and_fees
+      enterprise_payment_methods = @enterprise.payment_methods.to_a
+      enterprise_shipping_methods = @enterprise.shipping_methods.to_a
       # rubocop:disable Style/TernaryParentheses
       @payment_methods = Spree::PaymentMethod.managed_by(spree_current_user).sort_by! do |pm|
-        [(@enterprise.payment_methods.include? pm) ? 0 : 1, pm.name]
+        [(enterprise_payment_methods.include? pm) ? 0 : 1, pm.name]
       end
       @shipping_methods = Spree::ShippingMethod.managed_by(spree_current_user).sort_by! do |sm|
-        [(@enterprise.shipping_methods.include? sm) ? 0 : 1, sm.name]
+        [(enterprise_shipping_methods.include? sm) ? 0 : 1, sm.name]
       end
       # rubocop:enable Style/TernaryParentheses
 
