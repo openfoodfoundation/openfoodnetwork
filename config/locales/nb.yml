@@ -245,7 +245,7 @@ nb:
   allow_cookies: "Tillat informasjonskapsler"
   notes: Merknader
   error: Feil
-  processing_payment: Behandler betaling ...
+  processing_payment: "Behandler betaling ..."
   filter_results: Filtrer Resultater
   quantity: Mengde
   pick_up: Hent
@@ -1857,7 +1857,6 @@ nb:
         headline: "Ferdig!"
         thanks: "Takk for at du fyller ut detaljene for %{enterprise}."
         login: "Du kan endre eller oppdatere din virksomhet når som helst ved å logge inn på Open Food Network og gå til Admin."
-        action: "Open Food Network hjem"
   back: "Tilbake"
   continue: "Fortsett"
   action_or: "ELLER"

@@ -50,6 +50,8 @@ it:
         shipping_method_ids: "Metodi di spedizione"
         payment_method_ids: "Metodi di pagamento"
     errors:
+      messages:
+        inclusion: "non incluso nella lista"
       models:
         subscription_validator:
           attributes:
@@ -243,7 +245,9 @@ it:
   allow_cookies: "Accetta i cookies"
   notes: Note
   error: Eorrore
-  processing_payment: Elaborazione pagamento...
+  processing_payment: "Elaborazione pagamento..."
+  no_pending_payments: "nessun pagamento in sospeso"
+  invalid_payment_state: "stato del pagamento non valido"
   filter_results: Filtra i risultati
   quantity: Quantità
   pick_up: Ritiro
@@ -700,6 +704,10 @@ it:
           enable_subscriptions_false: "Disabilitata"
           enable_subscriptions_true: "Abilitata"
           shopfront_message: "Messaggio vetrina"
+          shopfront_message_placeholder: >
+              Un messaggio opzionale per dare in benvenuto ai clienti e spiegare come
+              acquistare. Il testo inserito qui verrà mostrato nel tab principale
+              della vetrina.
           shopfront_message_link_tooltip: "Inserisci / modifica link"
           shopfront_message_link_prompt: "Per favore inserisci un URL"
           shopfront_closed_message: "Messaggio Chiusura Vetrina"
@@ -1100,6 +1108,8 @@ it:
       destroy_attachment_does_not_exist: "Logo inesistente"
     enterprise_promo_image:
       destroy_attachment_does_not_exist: "Immagine promozionale inesistente"
+    orders:
+      failed_to_update: "Aggiornamento ordine fallito"
   checkout:
     already_ordered:
       cart: "carrello"
@@ -1274,6 +1284,7 @@ it:
   saving_credit_card: Salvando carta di credito...
   card_has_been_removed: "La tua Carta è stata rimossa (number: %{number})"
   card_could_not_be_removed: Spiacenti, la carta non ha potuto essere rimossa
+  invalid_credit_card: "Carta di credito non valida"
   ie_warning_headline: "Il tuo browser non è aggiornato :-("
   ie_warning_text: "Per una migliore esperienza con Open Food Network, ti raccomandiamo caldamente di aggiornare il browser:"
   ie_warning_chrome: Scarica Chrome
@@ -1848,7 +1859,6 @@ it:
         headline: "Finito!"
         thanks: "Grazie per aver riempito i dettagli per %{enterprise}."
         login: "Puoi cambiare o aggiornare la tua azienda ad ogni passo accedendo a Open Food Network e andando su Amministrazione."
-        action: "Open Food Network home"
   back: "Indietro"
   continue: "Continua"
   action_or: "O"
@@ -2418,6 +2428,10 @@ it:
           severity: Gravità
           description: Descrizione
           resolve: Risolvi
+        exchange_products:
+          load_more_variants: "Carica più Varianti"
+          load_all_variants: "Carica tutte le Varianti"
+          loading_variants: "Caricamento Varianti"
       tag_rules:
         shipping_method_tagged_top: "Metodi di consegna taggati"
         shipping_method_tagged_bottom: "sono:"
@@ -2500,6 +2514,7 @@ it:
           customer_placeholder: "cliente@esempio.org"
           valid_email_error: "Per favore inserisci un indirizzo email valido"
       subscriptions:
+        error_saving: "Errore nel salvataggio dell'abbonamento"
         new:
           please_select_a_shop: "Seleziona un negozio"
     insufficient_stock: "Scorte disponibili insufficienti, solo %{on_hand} rimanenti"
@@ -2575,6 +2590,10 @@ it:
       signup_or_login: "Inizia registrandoti (o accedendo)"
       have_an_account: "Hai già un account?"
       action_login: "Accedi ora."
+  inflections:
+    bunch:
+      one: "mazzo"
+      other: "grappoli"
   producers:
     signup:
       start_free_profile: "Inizia con un profilo gratuito e migliora quando sei pronto!"
