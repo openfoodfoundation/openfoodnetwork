@@ -1498,7 +1498,7 @@ fr:
   shopping_contact_social: "Suivre"
   shopping_groups_part_of: "fait partie de:"
   shopping_producers_of_hub: "Les producteurs de %{hub}:"
-  enterprises_next_closing: "Clôture des commandes pour ce cycle"
+  enterprises_next_closing: "Clôture des commandes"
   enterprises_ready_for: "Prêt pour"
   enterprises_choose: "Choisissez votre option:"
   maps_open: "Ouvert"
