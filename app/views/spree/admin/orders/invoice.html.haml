@@ -29,16 +29,21 @@
       %td{width: "10%" }
         &nbsp;
       %td{ :align => "right" }
-        %strong= "#{t('.to')}: #{@order.ship_address.full_name}"
+        %strong= "#{t('.to')}: #{@order.bill_address.full_name}"
         - if @order.andand.customer.andand.code.present?
           %br
           = "#{t('.code')}: #{@order.customer.code}"
         %br
-        = @order.ship_address.full_address
+        = @order.bill_address.full_address
         %br
         - if @order.andand.customer.andand.email.present?
           = "#{@order.customer.email},"
         = "#{@order.bill_address.phone}"
+        %br
+        %strong= "#{t('.shipping')}: #{@order.shipping_method&.name}"
+        - if @order.shipping_method&.require_ship_address && @order.ship_address != @order.bill_address
+          %br
+          = @order.ship_address.full_address
 
 = render 'spree/admin/orders/invoice_table'
 
