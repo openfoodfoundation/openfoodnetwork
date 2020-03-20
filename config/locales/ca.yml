@@ -245,7 +245,7 @@ ca:
   allow_cookies: "Permet les galetes"
   notes: Notes
   error: Error
-  processing_payment: S'està processant el pagament...
+  processing_payment: "S'està processant el pagament..."
   filter_results: Aplicar filtre
   quantity: Quantitat
   pick_up: Recollida
@@ -1860,7 +1860,6 @@ ca:
         headline: "Acabat!"
         thanks: "Gràcies per omplir els detalls de%{enterprise}."
         login: "Pots canviar o actualitzar la teva organització en qualsevol moment accedint a Katuma i anant a Admin."
-        action: "Inici"
   back: "Enrere"
   continue: "Continua"
   action_or: "O"

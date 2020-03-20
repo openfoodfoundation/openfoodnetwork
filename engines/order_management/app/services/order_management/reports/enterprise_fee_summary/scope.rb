@@ -342,12 +342,21 @@ module OrderManagement
 
         def group_data
           chain_to_scope do
-            group("enterprise_fees.id", "enterprises.id", "customers.id", "hubs.id",
-                  "spree_payment_methods.id", "spree_shipping_methods.id",
-                  "adjustment_metadata.enterprise_role", "spree_tax_categories.id",
-                  "product_tax_categories.id", "spree_adjustments.source_type",
-                  "adjustment_source_distributors.id", "incoming_exchange_enterprises.id",
-                  "outgoing_exchange_enterprises.id")
+            group(
+              "enterprise_fees.id",
+              "enterprises.id",
+              "customers.id",
+              "hubs.id",
+              "spree_payment_methods.id",
+              "spree_shipping_methods.id",
+              "adjustment_metadata.enterprise_role",
+              "spree_tax_categories.id",
+              "product_tax_categories.id",
+              "spree_adjustments.source_type",
+              "adjustment_source_distributors.id",
+              "incoming_exchange_enterprises.id",
+              "outgoing_exchange_enterprises.id"
+            )
           end
         end
 
@@ -355,12 +364,16 @@ module OrderManagement
           chain_to_scope do
             select(
               <<-JOIN_STRING.strip_heredoc
-                SUM(spree_adjustments.amount) AS total_amount, spree_payment_methods.name AS
-                  payment_method_name, spree_shipping_methods.name AS shipping_method_name,
-                  hubs.name AS hub_name, enterprises.name AS enterprise_name,
-                  enterprise_fees.fee_type AS fee_type, customers.name AS customer_name,
-                  customers.email AS customer_email, enterprise_fees.fee_type AS fee_type,
-                  enterprise_fees.name AS fee_name, spree_tax_categories.name AS tax_category_name,
+                SUM(spree_adjustments.amount) AS total_amount,
+                  spree_payment_methods.name AS payment_method_name,
+                  spree_shipping_methods.name AS shipping_method_name,
+                  hubs.name AS hub_name,
+                  enterprises.name AS enterprise_name,
+                  enterprise_fees.fee_type AS fee_type,
+                  customers.name AS customer_name,
+                  customers.email AS customer_email,
+                  enterprise_fees.name AS fee_name,
+                  spree_tax_categories.name AS tax_category_name,
                   enterprise_fees.inherits_tax_category AS enterprise_fee_inherits_tax_category,
                   product_tax_categories.name AS product_tax_category_name,
                   adjustment_metadata.enterprise_role AS placement_enterprise_role,

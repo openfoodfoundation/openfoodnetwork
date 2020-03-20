@@ -234,7 +234,7 @@ pt:
   allow_cookies: "Autorizar cookies"
   notes: Notas
   error: Erro
-  processing_payment: Pagamento em processamento...
+  processing_payment: "Pagamento em processamento..."
   filter_results: Filtrar resultados
   quantity: Quantidade
   pick_up: Levantamento
@@ -1798,7 +1798,6 @@ pt:
         headline: "Terminado!"
         thanks: "Obrigado por preencher os detalhes de %{enterprise}."
         login: "Pode alterar ou actualizar as informações da sua organização a qualquer momento fazendo login na Open Food Network e entrando na secção de Administração."
-        action: "Página principal"
   back: "Voltar"
   continue: "Continuar"
   action_or: "OU"

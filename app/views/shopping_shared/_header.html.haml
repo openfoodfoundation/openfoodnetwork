@@ -2,14 +2,13 @@
 
 %navigation
   %distributor.details.row
-    .small-12.medium-6.large-6.columns
+    .small-12.medium-12.large-8.columns
       #distributor_title
         - if distributor.logo?
           %img.left{src: distributor.logo.url(:thumb)}
         %h3
           = distributor.name
         %location= distributor.address.city
-        / Will this needs to be a drop-down to choose either pick-up point or delivery once shipping methods are implemented
 
-    .small-12.medium-6.large-6.columns
+    .show-for-large-up.large-4.columns
       = render partial: "shopping_shared/order_cycles"

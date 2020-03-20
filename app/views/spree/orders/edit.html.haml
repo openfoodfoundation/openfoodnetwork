@@ -22,7 +22,7 @@
     - if @order.line_items.empty?
       %div.row{"data-hook" => "empty_cart"}
         %p= t(:your_cart_is_empty)
-        %p= link_to t(:continue_shopping), main_app.shop_path, :class => 'button continue'
+        %p= link_to t(:continue_shopping), current_shop_products_path, :class => 'button continue'
 
     - else
       %div{"data-hook" => "outside_cart_form"}

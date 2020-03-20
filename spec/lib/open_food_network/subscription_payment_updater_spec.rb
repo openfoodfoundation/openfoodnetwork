@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'open_food_network/subscription_payment_updater'
 
 module OpenFoodNetwork
@@ -9,12 +10,12 @@ module OpenFoodNetwork
       context "when only one payment exists on the order" do
         let!(:payment) { create(:payment, order: order) }
 
-        context "where the payment is in the 'checkout' state" do
+        context "where the payment is pending" do
           it { expect(updater.send(:payment)).to eq payment }
         end
 
-        context "where the payment is in some other state" do
-          before { payment.update_attribute(:state, 'pending') }
+        context "where the payment is failed" do
+          before { payment.update_attribute(:state, 'failed') }
           it { expect(updater.send(:payment)).to be nil }
         end
       end
@@ -23,19 +24,19 @@ module OpenFoodNetwork
         let!(:payment1) { create(:payment, order: order) }
         let!(:payment2) { create(:payment, order: order) }
 
-        context "where more than one payment is in the 'checkout' state" do
+        context "where more than one payment is pending" do
           it { expect([payment1, payment2]).to include updater.send(:payment) }
         end
 
-        context "where only one payment is in the 'checkout' state" do
-          before { payment1.update_attribute(:state, 'pending') }
+        context "where only one payment is pending" do
+          before { payment1.update_attribute(:state, 'failed') }
           it { expect(updater.send(:payment)).to eq payment2 }
         end
 
-        context "where no payments are in the 'checkout' state" do
+        context "where no payments are pending" do
           before do
-            payment1.update_attribute(:state, 'pending')
-            payment2.update_attribute(:state, 'pending')
+            payment1.update_attribute(:state, 'failed')
+            payment2.update_attribute(:state, 'failed')
           end
 
           it { expect(updater.send(:payment)).to be nil }

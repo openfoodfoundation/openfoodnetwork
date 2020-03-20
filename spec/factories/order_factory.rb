@@ -94,27 +94,36 @@ end
 
 FactoryBot.modify do
   factory :order do
+    transient do
+      shipping_method { create(:shipping_method, distributors: [distributor]) }
+    end
+
     trait :with_line_item do
       transient do
         variant { FactoryGirl.create(:variant) }
       end
 
       after(:create) do |order, evaluator|
-        create(:line_item, order: order, variant: evaluator.variant)
+        line_item = create(:line_item_with_shipment, order: order,
+                                                     variant: evaluator.variant,
+                                                     shipping_method: evaluator.shipping_method)
+        order.shipments << line_item.target_shipment
       end
     end
 
     trait :completed do
       transient do
         payment_method { create(:payment_method, distributors: [distributor]) }
+        ship_address { create(:address) }
       end
 
       after(:create) do |order, evaluator|
-        order.create_shipment!
         create(:payment, state: "checkout", order: order, amount: order.total,
                          payment_method: evaluator.payment_method)
         order.update_distribution_charge!
-        while !order.completed? do break unless order.next! end
+        order.ship_address = evaluator.ship_address
+        while !order.completed? do break unless a = order.next! end
+        order.select_shipping_method(evaluator.shipping_method.id)
       end
     end
   end

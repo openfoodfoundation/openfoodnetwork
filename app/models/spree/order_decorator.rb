@@ -83,10 +83,6 @@ Spree::Order.class_eval do
       joins('LEFT OUTER JOIN spree_products ON (spree_products.id = spree_variants.product_id)')
   }
 
-  scope :with_line_items_variants_and_products, lambda {
-    joins(line_items: { variant: :product })
-  }
-
   scope :not_state, lambda { |state|
     where("state != ?", state)
   }
@@ -125,6 +121,12 @@ Spree::Order.class_eval do
       empty!
       save!
     end
+  end
+
+  # "Checkout" is the initial state and, for card payments, "pending" is the state after authorization
+  # These are both valid states to process the payment
+  def pending_payments
+    (payments.select(&:pending?) + payments.select(&:processing?) + payments.select(&:checkout?)).uniq
   end
 
   def remove_variant(variant)
