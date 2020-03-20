@@ -831,7 +831,7 @@ pt_BR:
         welcome_title: Bem-vindo à Open Food Brasil!
         welcome_text: Você criou com sucesso uma
         next_step: Próximo passo
-        choose_starting_point: 'Escolha o seu pacote:'
+        choose_starting_point: 'Escolha o seu tipo de perfil:'
         profile: 'Perfil'
         producer_profile: 'Perfil do produtor'
       invite_manager:
@@ -2001,7 +2001,7 @@ pt_BR:
   spree_admin_product_category: Categoria de Produto
   spree_admin_variant_unit_name: Nome da unidade variante
   unit_name: "Nome da unidade"
-  change_package: "Alterar embalagem"
+  change_package: "Alterar tipo de perfil"
   spree_admin_single_enterprise_hint: "Dica: Para permitir que as pessoas te encontrem, ative sua visibilidade em"
   spree_admin_eg_pickup_from_school: "ex: 'Buscar na Escola'"
   spree_admin_eg_collect_your_order: "ex: 'Por favor, colete seu pedido na Rua dos Sonhos, 123, casa 5, Bairro Liberdade"
@@ -2362,11 +2362,11 @@ pt_BR:
               essa iniciativa para ser um produtor.
           choose_package: Por favor escolha um pacote
           choose_package_text1: >
-              Sua iniciativa não será totalmente ativada até que um pacote seja selecionado
-              a partir das opções à esquerda.
+              Sua iniciativa não será totalmente ativada até que um tipo de perfil
+              seja selecionado a partir das opções à esquerda.
           choose_package_text2: >
               Clique em uma opção para ver informações mais detalhadas sobre cada
-              pacote, e aperte o botão vermelho SALVAR quando terminar.
+              tipo de perfil, e aperte o botão vermelho SALVAR quando terminar.
           profile_only: Somente perfil
           profile_only_cost: "CUSTO: SEMPRE GRATUITO"
           profile_only_text1: >
