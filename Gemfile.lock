@@ -438,7 +438,7 @@ GEM
     jaro_winkler (1.5.4)
     journey (1.0.4)
     jquery-migrate-rails (1.2.1)
-    jquery-rails (3.0.4)
+    jquery-rails (3.1.5)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (4.0.5)
@@ -748,7 +748,7 @@ DEPENDENCIES
   i18n-js (~> 3.6.0)
   immigrant
   jquery-migrate-rails
-  jquery-rails (= 3.0.4)
+  jquery-rails (= 3.1.5)
   jquery-ui-rails (~> 4.0.0)
   json_spec (~> 1.1.4)
   jwt (~> 2.2)

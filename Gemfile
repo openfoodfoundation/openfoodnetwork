@@ -115,7 +115,7 @@ gem "foundation-rails"
 gem 'foundation_rails_helper', github: 'willrjmarshall/foundation_rails_helper', branch: "rails3"
 
 gem 'jquery-migrate-rails'
-gem 'jquery-rails', '3.0.4'
+gem 'jquery-rails', '3.1.5'
 gem 'jquery-ui-rails', '~> 4.0.0'
 gem 'select2-rails', '~> 3.4.7'
 
