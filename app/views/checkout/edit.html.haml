@@ -15,7 +15,7 @@
       %strong
         = pickup_time current_order_cycle
 
-  = render partial: "shopping_shared/header"
+  = render partial: "shopping_shared/header", locals: { hide_oc_selector: true }
 
   %accordion{"close-others" => "false"}
     %checkout.row{"ng-controller" => "CheckoutCtrl"}
