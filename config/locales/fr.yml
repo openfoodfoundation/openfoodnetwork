@@ -1488,6 +1488,7 @@ fr:
   shopping_oc_closed_description: "Veuillez attendre l'ouverture du prochain cycle de vente (ou contactez-nous directement pour voir si nous pouvons accepter une commande tardive)"
   shopping_oc_last_closed: "Le dernier cycle de vente s'est terminé il y a %{distance_of_time}"
   shopping_oc_next_open: "Le prochain cycle de vente ouvrira dans %{distance_of_time}"
+  shopping_oc_select: "Sélectionner"
   shopping_tabs_home: "Accueil"
   shopping_tabs_shop: "Boutique"
   shopping_tabs_about: "A propos"
