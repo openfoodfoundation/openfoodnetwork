@@ -3,7 +3,7 @@
 @import "branding";
 
 // Tabs styling
-.tabset-ctrl#shop-tabs {
+#shop-tabs {
 
   .tab-buttons {
     color: $dark-grey;
@@ -23,7 +23,7 @@
     }
   }
 
-  .tab {
+  .page {
     text-align: center;
     border-top: 4px solid transparent;
     display: inline-block;
@@ -46,7 +46,7 @@
       padding: 1em 2em;
       border: none;
 
-      &:hover, &:focus, &:active {
+      &:hover, &:active {
         color: $teal-500;
       }
 
@@ -75,7 +75,7 @@
 
   // content revealed in accordion
 
-  .tab-view {
+  .page-view {
     margin-bottom: 5em;
     background: none;
     border: none;

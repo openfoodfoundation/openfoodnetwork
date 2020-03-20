@@ -27,7 +27,9 @@ feature "As a consumer I want to shop with a distributor", js: true do
       # Then we should see the distributor and its logo
       visit shop_path
       expect(page).to have_text distributor.name
-      find("#tab_about a").click
+      within ".tab-buttons" do
+        click_link "About"
+      end
       expect(first("distributor img")['src']).to include distributor.logo.url(:thumb)
     end
 
@@ -36,7 +38,9 @@ feature "As a consumer I want to shop with a distributor", js: true do
       add_variant_to_order_cycle(exchange, variant)
 
       visit shop_path
-      find("#tab_producers a").click
+      within ".tab-buttons" do
+        click_link "Producers"
+      end
       expect(page).to have_content supplier.name
     end
 
