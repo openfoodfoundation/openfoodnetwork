@@ -2,24 +2,28 @@ require 'open_food_network/permissions'
 
 module Permissions
   class Order
-    def initialize(user)
+    def initialize(user, search_params = nil)
       @user = user
       @permissions = OpenFoodNetwork::Permissions.new(@user)
+      @search_params = search_params
     end
 
     # Find orders that the user can see
     def visible_orders
-      Spree::Order.
+      orders = Spree::Order.
         with_line_items_variants_and_products_outer.
         where(visible_orders_where_values)
+      orders = orders.complete.not_state(:canceled).search(search_params).result if search_orders?
+      orders
     end
 
     # Any orders that the user can edit
     def editable_orders
-      Spree::Order.where(
-        managed_orders_where_values.
-          or(coordinated_orders_where_values)
-      )
+      orders = Spree::Order.
+        where(managed_orders_where_values.
+          or(coordinated_orders_where_values))
+      orders = orders.complete.not_state(:canceled).search(search_params).result if search_orders?
+      orders
     end
 
     def visible_line_items
@@ -34,6 +38,12 @@ module Permissions
     end
 
     private
+
+    attr_reader :search_params
+
+    def search_orders?
+      search_params.present?
+    end
 
     def visible_orders_where_values
       # Grouping keeps the 2 where clauses from produced_orders_where_values inside parentheses
