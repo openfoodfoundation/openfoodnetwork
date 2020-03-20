@@ -32,10 +32,10 @@ describe "spree/admin/orders/invoice.html.haml" do
     expect(rendered).to have_content "Code: Money Penny"
   end
 
-  it "displays the billing and shipping address" do
+  it "displays the billing address" do
     order.bill_address = adas_address
     render
-    expect(rendered).to have_content "To: Ada Lovelace"
+    expect(rendered).to have_content "Ada Lovelace"
     expect(rendered).to have_content adas_address.phone
     expect(rendered).to have_content adas_address_display
   end
@@ -49,19 +49,26 @@ describe "spree/admin/orders/invoice.html.haml" do
 
     render
     expect(rendered).to have_content "Shipping: Home delivery"
+    expect(rendered).to have_content adas_address.phone
     expect(rendered).to have_content adas_address_display
   end
 
-  it "prints address once if billing and shipping address are the same" do
-    order.bill_address = adas_address
-    order.ship_address = Spree::Address.new(order.bill_address.attributes)
+  it "displays special instructions" do
+    order.special_instructions = "The combination is 12345."
+
+    render
+    expect(rendered).to have_content "The combination is 12345."
+  end
+
+  it "hides billing address for pickups" do
+    order.ship_address = adas_address
     order.shipping_method.update_attributes!(
-      name: "Home delivery",
-      require_ship_address: true,
+      name: "Pickup",
+      require_ship_address: false,
     )
 
     render
-    expect(rendered).to have_content "Shipping: Home delivery"
-    expect(rendered.scan(/2 Mahome St, Thornbury, 3071/).count).to eq 1
+    expect(rendered).to have_content "Shipping: Pickup"
+    expect(rendered).to_not have_content adas_address_display
   end
 end
