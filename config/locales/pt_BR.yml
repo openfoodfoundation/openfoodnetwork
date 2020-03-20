@@ -246,6 +246,8 @@ pt_BR:
   notes: Notas
   error: Erro
   processing_payment: "Processando pagamento..."
+  no_pending_payments: "Nenhum pagamento pendente"
+  invalid_payment_state: "Situação de pagamento inválido"
   filter_results: Filtrar resultados
   quantity: Quantidade
   pick_up: Retirar
@@ -1483,6 +1485,7 @@ pt_BR:
   shopping_oc_closed_description: "Por favor aguarde até que o próximo ciclo seja aberto (ou entre em contato diretamente para saber se podemos aceitar pedidos atrasados)"
   shopping_oc_last_closed: "A último ciclo fechou a %{distance_of_time} atrás"
   shopping_oc_next_open: "A próximo ciclo abre em %{distance_of_time}"
+  shopping_oc_select: "Selecione..."
   shopping_tabs_home: "Início"
   shopping_tabs_shop: "Comprar"
   shopping_tabs_about: "Sobre"
@@ -1856,6 +1859,7 @@ pt_BR:
         headline: "Pronto!"
         thanks: "Obrigado por preencher os detalhes para %{enterprise}."
         login: "Você pode alterar ou atualizar suas informações a qualquer momento fazendo o login na Open Food Brasil e entrando na seção 'Admin'."
+        action: "Vá para o Painel de Controle da Iniciativa"
   back: "Voltar"
   continue: "Continuar"
   action_or: "OU"
