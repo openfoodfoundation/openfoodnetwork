@@ -157,18 +157,7 @@ module Admin
     end
 
     def subscription_params
-      return params[:subscription] if params[:subscription].empty?
-
-      params.require(:subscription).permit(
-        :id, :shop_id, :schedule_id, :customer_id,
-        :payment_method_id, :shipping_method_id,
-        :begins_at, :ends_at,
-        :canceled_at, :paused_at,
-        :shipping_fee_estimate, :payment_fee_estimate,
-        :subscription_line_items_attributes => [:id, :quantity, :variant_id, :price_estimate, :_destroy],
-        :bill_address_attributes => permitted_address_attributes,
-        :ship_address_attributes => permitted_address_attributes
-      )
+      PermittedAttributes::Subscription.new(params).call
     end
   end
 end
