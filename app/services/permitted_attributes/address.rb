@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PermittedAttributes
   class Address
     def self.attributes

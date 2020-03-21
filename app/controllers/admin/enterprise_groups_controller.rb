@@ -60,7 +60,7 @@ module Admin
       params.require(:enterprise_group).permit(
         :name, :description, :long_description, :on_front_page, :owner_id, :permalink,
         :email, :website, :facebook, :instagram, :linkedin, :twitter,
-        enterprise_ids: [], address_attributes: permitted_address_attributes
+        enterprise_ids: [], address_attributes: PermittedAttributes::Address.attributes
       )
     end
   end

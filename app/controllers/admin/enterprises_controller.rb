@@ -319,7 +319,7 @@ module Admin
         :allow_guest_orders, :allow_order_changes, :enable_subscriptions,
         group_ids: [], user_ids: [],
         shipping_method_ids: [], payment_method_ids: [],
-        address_attributes: permitted_address_attributes,
+        address_attributes: PermittedAttributes::Address.attributes,
         producer_properties_attributes: [:id, :property_name, :value, :_destroy]
       )
     end

@@ -84,8 +84,8 @@ module Admin
     def customer_params
       params.require(:customer).permit(
         :enterprise_id, :name, :email, :code, :tag_list,
-        ship_address_attributes: permitted_address_attributes,
-        bill_address_attributes: permitted_address_attributes,
+        ship_address_attributes: PermittedAttributes::Address.attributes,
+        bill_address_attributes: PermittedAttributes::Address.attributes,
       )
     end
 
