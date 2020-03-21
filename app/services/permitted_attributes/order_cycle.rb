@@ -9,9 +9,9 @@ module PermittedAttributes
 
       @params.require(:order_cycle).permit(
         :name, :orders_open_at, :orders_close_at, :coordinator_id,
-        :incoming_exchanges => permitted_exchange_attributes,
-        :outgoing_exchanges => permitted_exchange_attributes,
-        :schedule_ids => [], :coordinator_fee_ids => []
+        incoming_exchanges: permitted_exchange_attributes,
+        outgoing_exchanges: permitted_exchange_attributes,
+        schedule_ids: [], coordinator_fee_ids: []
       )
     end
 
