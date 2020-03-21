@@ -65,12 +65,7 @@ module Spree
       end
 
       def variant_params
-        params.require(:variant).permit(
-          :display_name, :display_as, :unit_value, :unit_description,
-          :sku, :price, :cost_price,
-          :weight, :height, :width, :depth,
-          :on_demand, :on_hand
-        )
+        params.require(:variant).permit(PermittedAttributes::Variant.attributes)
       end
 
       def permitted_resource_params
