@@ -35,8 +35,7 @@ class UserRegistrationsController < Spree::UserRegistrationsController
   def spree_user_params
     return params[:spree_user] if params[:spree_user].empty?
 
-    params.require(:spree_user).
-      permit(:email, :password, :password_confirmation, :remember_me)
+    PermittedAttributes::User.new(params, :spree_user).call([:remember_me])
   end
 
   def render_error(errors = {})
