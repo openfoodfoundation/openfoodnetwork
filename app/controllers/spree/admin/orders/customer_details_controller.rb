@@ -45,8 +45,8 @@ module Spree
           params.require(:order).permit(
             :email,
             :use_billing,
-            bill_address_attributes: PermittedAttributes::Address.attributes,
-            ship_address_attributes: PermittedAttributes::Address.attributes
+            bill_address_attributes: ::PermittedAttributes::Address.attributes,
+            ship_address_attributes: ::PermittedAttributes::Address.attributes
           )
         end
 
