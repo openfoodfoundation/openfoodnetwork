@@ -12,19 +12,24 @@ module OpenFoodNetwork
     private
 
     def completed_order_total
-      completed_orders.sum(&:total)
+      completed_not_cancelled_orders.sum(&:total)
     end
 
     def payment_total
       payments.sum(&:amount)
     end
 
-    def completed_orders
-      Spree::Order.where(distributor_id: @distributor, email: @email).complete.not_state(:canceled)
+    def user_orders
+      Spree::Order.where(distributor_id: @distributor, email: @email)
     end
 
+    def completed_not_cancelled_orders
+      user_orders.complete.not_state(:canceled)
+    end
+
+    # Lists all complete user payments including payments in incomplete or canceled orders
     def payments
-      Spree::Payment.where(order_id: completed_orders, state: "completed")
+      Spree::Payment.where(order_id: user_orders, state: "completed")
     end
   end
 end

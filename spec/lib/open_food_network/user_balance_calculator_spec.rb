@@ -69,14 +69,70 @@ module OpenFoodNetwork
           create(:order_with_totals_and_distribution,
                  user: user1, distributor: hub1,
                  completed_at: 1.day.ago, state: "canceled")
-        } # total=10
+        } # total=13 (10 + 3 shipping fee)
         let!(:p4) {
           create(:payment, order: o4, amount: 20.00,
                            state: "completed")
         }
 
         it "does not include canceled orders in the balance" do
-          expect(UserBalanceCalculator.new(o4.email, hub1).balance).to eq(-9) # = 15 + 2 - 13 - 13
+          expect(UserBalanceCalculator.new(o4.email, hub1).balance).to eq(11) # = 15 + 2 + 20 - 13 - 13
+        end
+      end
+
+      context "with void payments" do
+        let!(:o4) {
+          create(:order_with_totals_and_distribution,
+                 user: user1, distributor: hub1,
+                 completed_at: 1.day.ago)
+        } # total=13 (10 + 3 shipping fee)
+        let!(:p4) {
+          create(:payment, order: o4, amount: 20.00,
+                           state: "void")
+        }
+
+        it "does not include void in the balance" do
+          expect(UserBalanceCalculator.new(o4.email, hub1).balance).to eq(-22) # = 15 + 2 - 13 - 13 - 10
+        end
+      end
+
+      context "with invalid payments" do
+        let!(:o4) {
+          create(:order_with_totals_and_distribution,
+                 user: user1, distributor: hub1,
+                 completed_at: 1.day.ago)
+        } # total=13 (10 + 3 shipping fee)
+        let!(:p4) {
+          create(:payment, order: o4, amount: 20.00,
+                           state: "invalid")
+        }
+
+        it "does not include invalid payments in the balance" do
+          expect(UserBalanceCalculator.new(o4.email, hub1).balance).to eq(-22) # = 15 + 2 - 13 - 13 - 10
+        end
+      end
+
+      context "with multiple payments on single order" do
+        let!(:o4) {
+          create(:order_with_totals_and_distribution,
+                 user: user1, distributor: hub1,
+                 completed_at: 1.day.ago)
+        } # total=13 (10 + 3 shipping fee)
+        let!(:p4) {
+          create(:payment, order: o4, amount: 4.00,
+                           state: "completed")
+        }
+        let!(:p5) {
+          create(:payment, order: o4, amount: 5.00,
+                           state: "completed")
+        }
+        let!(:p6) {
+          create(:payment, order: o4, amount: 6.00,
+                           state: "completed")
+        }
+
+        it "includes orders with multiple payments in the balance" do
+          expect(UserBalanceCalculator.new(o4.email, hub1).balance).to eq(-7) # = 15 + 2 + 4 + 5 + 6 - 13 - 13 - 10
         end
       end
     end
