@@ -305,23 +305,7 @@ module Admin
     end
 
     def enterprise_params
-      return params[:enterprise] if params[:enterprise].empty?
-
-      params.require(:enterprise).permit(
-        :id, :name, :is_primary_producer, :visible, :permalink,
-        :contact_name, :email_address, :phone, :sells, :owner_id,
-        :website, :facebook, :instagram, :linkedin, :twitter,
-        :abn, :acn, :charges_sales_tax, :display_invoice_logo,
-        :invoice_text, :description, :long_description, :logo, :promo_image,
-        :preferred_product_selection_from_inventory_only, :preferred_shopfront_message,
-        :preferred_shopfront_closed_message, :preferred_shopfront_taxon_order,
-        :preferred_shopfront_order_cycle_order, :require_login,
-        :allow_guest_orders, :allow_order_changes, :enable_subscriptions,
-        group_ids: [], user_ids: [],
-        shipping_method_ids: [], payment_method_ids: [],
-        address_attributes: PermittedAttributes::Address.attributes,
-        producer_properties_attributes: [:id, :property_name, :value, :_destroy]
-      )
+      PermittedAttributes::Enterprise.new(params).call
     end
 
     # Used in ResourceController#create
