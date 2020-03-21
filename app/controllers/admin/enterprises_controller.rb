@@ -33,7 +33,8 @@ module Admin
     end
 
     def edit
-      @object = Enterprise.where(permalink: params[:id]).includes(users: [:ship_address, :bill_address]).first
+      @object = Enterprise.where(permalink: params[:id]).
+        includes(users: [:ship_address, :bill_address]).first
       super
     end
 

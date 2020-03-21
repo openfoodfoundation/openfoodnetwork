@@ -3,10 +3,10 @@ require 'open_food_network/enterprise_injection_data'
 module InjectionHelper
   include SerializerHelper
 
-  def inject_enterprises(enterprises = Enterprise.activated.includes(address: [:state, :country]).all)
+  def inject_enterprises(enterprises = nil)
     inject_json_ams(
       "enterprises",
-      enterprises,
+      enterprises || default_enterprise_query,
       Api::EnterpriseSerializer,
       enterprise_injection_data
     )
@@ -41,8 +41,14 @@ module InjectionHelper
   end
 
   def inject_enterprise_and_relatives
+    enterprises_and_relatives = current_distributor.
+      relatives_including_self.
+      activated.
+      includes(address: [:state, :country]).
+      all
+
     inject_json_ams "enterprises",
-                    current_distributor.relatives_including_self.activated.includes(address: [:state, :country]).all,
+                    enterprises_and_relatives,
                     Api::EnterpriseSerializer, enterprise_injection_data
   end
 
@@ -139,6 +145,10 @@ module InjectionHelper
   end
 
   private
+
+  def default_enterprise_query
+    Enterprise.activated.includes(address: [:state, :country]).all
+  end
 
   def enterprise_injection_data
     @enterprise_injection_data ||= OpenFoodNetwork::EnterpriseInjectionData.new
