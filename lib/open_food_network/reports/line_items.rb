@@ -12,9 +12,7 @@ module OpenFoodNetwork
       end
 
       def list(line_item_includes = nil)
-        line_items = @order_permissions.
-          visible_line_items.
-          merge(Spree::LineItem.where(order_id: orders.result))
+        line_items = @order_permissions.visible_line_items.in_orders(orders.result)
 
         if @params[:supplier_id_in].present?
           line_items = line_items.supplied_by_any(@params[:supplier_id_in])

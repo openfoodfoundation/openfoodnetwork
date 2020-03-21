@@ -36,6 +36,10 @@ Spree::LineItem.class_eval do
     end
   }
 
+  scope :in_orders, lambda { |orders|
+    where(order_id: orders)
+  }
+
   # Find line items that are from order sorted by variant name and unit value
   scope :sorted_by_name_and_unit_value, -> {
     joins(variant: :product).
