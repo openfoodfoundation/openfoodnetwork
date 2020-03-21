@@ -17,7 +17,7 @@
       %td{ :align => "right" }
         %h4= @order.order_cycle.andand.name
     %tr{ valign: "top" }
-      %td{ :align => "left" }
+      %td{ align: "left", colspan: 3 }
         %strong= "#{t('.from')}: #{@order.distributor.name}"
         - if @order.distributor.abn.present?
           %br
@@ -26,30 +26,42 @@
         = @order.distributor.address.full_address
         %br
         = @order.distributor.contact.email
-      %td{width: "10%" }
+    %tr{ valign: "top" }
+      %td{ colspan: 3 }
         &nbsp;
-      %td{ :align => "right" }
-        %strong= "#{t('.to')}: #{@order.ship_address.full_name}"
+    %tr{ valign: "top" }
+      %td{ align: "left" }
+        %strong= "#{t('.to')}:"
+        %br
+        = @order.bill_address.full_name
         - if @order.andand.customer.andand.code.present?
           %br
           = "#{t('.code')}: #{@order.customer.code}"
         %br
-        = @order.ship_address.full_address
+        = @order.bill_address.full_address
         %br
         - if @order.andand.customer.andand.email.present?
           = "#{@order.customer.email},"
         = "#{@order.bill_address.phone}"
+      %td
+        &nbsp;
+      %td{ align: "left", style: "border-left: .1em solid black; padding-left: 1em" }
+        %strong= "#{t('.shipping')}: #{@order.shipping_method&.name}"
+        - if @order.shipping_method&.require_ship_address
+          %br
+          = @order.ship_address.full_name
+          %br
+          = @order.ship_address.full_address
+          %br
+          = @order.ship_address.phone
+        - if @order.special_instructions.present?
+          %br
+          %br
+            %strong= t :customer_instructions
+          = @order.special_instructions
+
 
 = render 'spree/admin/orders/invoice_table'
-
-- if @order.special_instructions.present?
-  %p.callout
-    %strong
-      = t :customer_instructions
-  %p
-    %em= @order.special_instructions
-  %p
-    &nbsp;
 
 - if @order.distributor.invoice_text.present?
   %p
