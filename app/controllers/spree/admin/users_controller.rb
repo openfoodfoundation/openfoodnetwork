@@ -138,7 +138,7 @@ module Spree
       end
 
       def user_params
-        PermittedAttributes::User.new(params).call([:enterprise_limit])
+        ::PermittedAttributes::User.new(params).call([:enterprise_limit])
       end
     end
   end
