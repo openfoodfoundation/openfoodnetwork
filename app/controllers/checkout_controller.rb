@@ -239,27 +239,6 @@ class CheckoutController < Spree::StoreController
   end
 
   def permitted_params
-    params.permit(
-      order: [
-        :email, :special_instructions,
-        :existing_card_id, :shipping_method_id,
-        payments_attributes: [
-          :payment_method_id,
-          source_attributes: payment_source_attributes
-        ],
-        ship_address_attributes: permitted_address_attributes,
-        bill_address_attributes: permitted_address_attributes
-      ],
-      payment_source: payment_source_attributes
-    )
-  end
-
-  def payment_source_attributes
-    [
-      :gateway_payment_profile_id, :cc_type, :last_digits,
-      :month, :year, :first_name, :last_name,
-      :number, :verification_value,
-      :save_requested_by_customer
-    ]
+    PermittedAttributes::Checkout.new(params).call
   end
 end
