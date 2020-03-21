@@ -65,7 +65,7 @@ module Spree
       end
 
       def variant_params
-        params.require(:variant).permit(PermittedAttributes::Variant.attributes)
+        params.require(:variant).permit(::PermittedAttributes::Variant.attributes)
       end
 
       def permitted_resource_params
