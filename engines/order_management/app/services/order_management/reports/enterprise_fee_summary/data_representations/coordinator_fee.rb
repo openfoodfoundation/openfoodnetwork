@@ -19,7 +19,7 @@ module OrderManagement
           end
 
           def inherits_tax_category?
-            data["enterprise_fee_inherits_tax_category"] == "t"
+            data["enterprise_fee_inherits_tax_category"]
           end
         end
       end
