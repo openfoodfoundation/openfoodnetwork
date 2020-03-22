@@ -245,7 +245,9 @@ en_CA:
   allow_cookies: "Allow Cookies"
   notes: Notes
   error: Error
-  processing_payment: Processing payment...
+  processing_payment: "Processing payment..."
+  no_pending_payments: "No pending payments"
+  invalid_payment_state: "Invalid payment state"
   filter_results: Filter Results
   quantity: Quantity
   pick_up: Pick up
@@ -869,7 +871,7 @@ en_CA:
         incoming: "2. Incoming Products"
         outgoing: "3. Outgoing Products"
       exchange_form:
-        pickup_time_tip: When orders from this OC will be ready for the customer
+        pickup_time_tip: Date orders will be ready for pick-up/delivery. Or enter the customer type (e.g. 'wholesale',  'members only'...) if you are setting up multiple shopfronts.
         pickup_instructions_placeholder: "Pick-up instructions"
         pickup_instructions_tip: These instructions are shown to customers after they complete an order
         pickup_time_placeholder: "Ready for (ie. Date/Time)"
@@ -919,7 +921,7 @@ en_CA:
         distributors: distributors
         variants: variants
       simple_form:
-        ready_for: Options
+        ready_for: Ready for
         ready_for_placeholder: Date / time
         customer_instructions: Customer instructions
         customer_instructions_placeholder: 'Notes:'
@@ -1857,7 +1859,7 @@ en_CA:
         headline: "Finished!"
         thanks: "Thanks for filling out the details for %{enterprise}."
         login: "You can change or update your enterprise at any stage by logging into Open Food Network and going to Admin."
-        action: "Open Food Network home"
+        action: "Go to Enterprise Dashboard"
   back: "Back"
   continue: "Continue"
   action_or: "OR"
@@ -2274,6 +2276,7 @@ en_CA:
   enterprise_register_success_notice: "Congratulations! Registration for %{enterprise} is complete!"
   enterprise_bulk_update_success_notice: "Enterprises updated successfully"
   enterprise_bulk_update_error: 'Update failed'
+  enterprise_shop_show_error: "The shop you are looking for doesn't exist or is inactive on OFN. Please check other shops."
   order_cycles_create_notice: 'Your order cycle has been created.'
   order_cycles_update_notice: 'Your order cycle has been updated.'
   order_cycles_bulk_update_notice: 'Order cycles have been updated.'

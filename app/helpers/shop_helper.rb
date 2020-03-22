@@ -8,6 +8,10 @@ module ShopHelper
     end
   end
 
+  def oc_select_options
+    @order_cycles.map { |oc| { time: pickup_time(oc), id: oc.id } }
+  end
+
   def require_customer?
     current_distributor.require_login? && !user_is_related_to_distributor?
   end

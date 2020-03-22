@@ -243,7 +243,7 @@ de_DE:
   allow_cookies: "Cookies erlauben"
   notes: Anmerkungen
   error: Fehler
-  processing_payment: Bezahlung wird verarbeitet...
+  processing_payment: "Bezahlung wird verarbeitet..."
   filter_results: Ergebnisse filtern
   quantity: Menge
   pick_up: Abholen
@@ -1848,7 +1848,6 @@ de_DE:
         headline: "Fertig!"
         thanks: "Vielen Dank, dass Sie die Details für %{enterprise} ausgefüllt haben."
         login: "Sie können Ihr Unternehmen jederzeit ändern oder aktualisieren, indem Sie sich bei Open Food Network anmelden und zum Administrator wechseln."
-        action: "Open Food Network nach Hause"
   back: "Zurück"
   continue: "Fortsetzen"
   action_or: "ODER"

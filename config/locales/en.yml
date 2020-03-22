@@ -275,7 +275,9 @@ en:
   none: None
   notes: Notes
   error: Error
-  processing_payment: Processing payment...
+  processing_payment: "Processing payment..."
+  no_pending_payments: "No pending payments"
+  invalid_payment_state: "Invalid payment state"
   filter_results: Filter Results
   quantity: Quantity
   pick_up: Pick up
@@ -1590,6 +1592,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   shopping_oc_closed_description: "Please wait until the next cycle opens (or contact us directly to see if we can accept any late orders)"
   shopping_oc_last_closed: "The last cycle closed %{distance_of_time} ago"
   shopping_oc_next_open: "The next cycle opens in %{distance_of_time}"
+  shopping_oc_select: "Select..."
   shopping_tabs_home: "Home"
   shopping_tabs_shop: "Shop"
   shopping_tabs_about: "About"
@@ -1987,7 +1990,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         headline: "Finished!"
         thanks: "Thanks for filling out the details for %{enterprise}."
         login: "You can change or update your enterprise at any stage by logging into Open Food Network and going to Admin."
-        action: "Open Food Network home"
+        action: "Go to Enterprise Dashboard"
 
   back: "Back"
   continue: "Continue"

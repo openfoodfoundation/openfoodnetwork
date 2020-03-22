@@ -240,7 +240,7 @@ nl_BE:
   allow_cookies: "Cookies toestaan"
   notes: Notities
   error: Fout
-  processing_payment: Verwerking van de betaling.....
+  processing_payment: "Verwerking van de betaling....."
   filter_results: Filter resultaten
   quantity: Kwantiteit
   pick_up: Afhalen
@@ -1207,7 +1207,7 @@ nl_BE:
   no_payment: geen betaalmethodes
   no_shipping_or_payment: geen lever-of-betaalmethodes
   unconfirmed: Niet bevestigd
-  days: dagen
+  days: dag(en)
   authorization_failure: "Faling toelating "
   label_shop: "winkel"
   label_shops: "Winkels"
@@ -1825,7 +1825,6 @@ nl_BE:
         headline: "Einde !"
         thanks: "Bedankt voor het invullen van de informatie voor %{enterprise}."
         login: "Je kan je onderneming veranderen of updaten bij om het even welke stap door in te loggen in het OFN en naar de Admin te gaan."
-        action: "Open Food Network startpagina"
   back: "achterstevoren"
   continue: "Ga verder"
   action_or: "OF"

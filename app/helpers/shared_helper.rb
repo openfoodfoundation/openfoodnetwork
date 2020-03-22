@@ -16,4 +16,8 @@ module SharedHelper
   def admin_user?
     spree_current_user.andand.has_spree_role? 'admin'
   end
+
+  def current_shop_products_path
+    "#{main_app.enterprise_shop_path(current_distributor)}#/shop"
+  end
 end

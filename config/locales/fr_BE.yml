@@ -245,7 +245,7 @@ fr_BE:
   allow_cookies: "Autoriser les cookies"
   notes: Commentaires
   error: Erreur
-  processing_payment: Paiement en cours...
+  processing_payment: "Paiement en cours..."
   filter_results: Filtrer les résultats
   quantity: Quantité
   pick_up: Retrait
@@ -1858,7 +1858,6 @@ fr_BE:
         headline: "C'est terminé!"
         thanks: "Merci d'avoir complété le profil de %{enterprise}"
         login: "Vous pouvez modifier ou mettre à jour les détails de votre entreprise à tout moment en vous connectant sur Open Food Network, rubrique Admin."
-        action: "Accueil Open Food Network"
   back: "Retour"
   continue: "Suivant"
   action_or: "OU"

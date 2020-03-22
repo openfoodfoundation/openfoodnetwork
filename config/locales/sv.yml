@@ -1231,7 +1231,6 @@ sv:
         headline: "Klar!"
         thanks: "Tack för att du fyllt i alla uppgifter för %{enterprise}."
         login: "Du kan ändra eller uppdatera dina uppgifter när som helst genom att logga in på Open Food Network och klicka på Admin."
-        action: "Open Food Network hem"
   back: "Backa"
   continue: "Fortsätt"
   action_or: "Eller"

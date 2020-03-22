@@ -243,7 +243,7 @@ es:
   allow_cookies: "Permitir cookies"
   notes: Notas
   error: Error
-  processing_payment: Procesando el pago...
+  processing_payment: "Procesando el pago..."
   filter_results: Filtrar resultados
   quantity: Cantidad
   pick_up: Recogida
@@ -1833,7 +1833,6 @@ es:
         headline: "¡Terminado!"
         thanks: "Gracias por llenar los detalles de %{enterprise}."
         login: "Puede cambiar o actualizar su negocio en cualquier etapa iniciando sesión en Open Food Network y yendo a Admin."
-        action: "Página de inicio de Open Food Network"
   back: "Atrás"
   continue: "Continuar"
   action_or: "Ó"

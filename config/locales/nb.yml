@@ -245,7 +245,9 @@ nb:
   allow_cookies: "Tillat informasjonskapsler"
   notes: Merknader
   error: Feil
-  processing_payment: Behandler betaling ...
+  processing_payment: "Behandler betaling ..."
+  no_pending_payments: "Ingen ventende betalinger"
+  invalid_payment_state: "Ugyldig betalingstilstand"
   filter_results: Filtrer Resultater
   quantity: Mengde
   pick_up: Hent
@@ -1484,6 +1486,7 @@ nb:
   shopping_oc_closed_description: "Vent til neste runde åpner (eller kontakt oss direkte for å se om vi tar i mot sene bestillinger)"
   shopping_oc_last_closed: "Den siste runden stengte for %{distance_of_time} siden"
   shopping_oc_next_open: "Neste runde åpner om %{distance_of_time}"
+  shopping_oc_select: "Velg..."
   shopping_tabs_home: "Hjem"
   shopping_tabs_shop: "Butikk"
   shopping_tabs_about: "Om"
@@ -1857,7 +1860,7 @@ nb:
         headline: "Ferdig!"
         thanks: "Takk for at du fyller ut detaljene for %{enterprise}."
         login: "Du kan endre eller oppdatere din virksomhet når som helst ved å logge inn på Open Food Network og gå til Admin."
-        action: "Open Food Network hjem"
+        action: "Gå til Bedrift Dashboard"
   back: "Tilbake"
   continue: "Fortsett"
   action_or: "ELLER"

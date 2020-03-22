@@ -198,7 +198,7 @@ pt_BR:
   ongoing: Em progresso
   bill_address: Endereço de Cobrança
   ship_address: Endereço de Entrega
-  sort_order_cycles_on_shopfront_by: "Ordenar Ciclo de Pedidos no Mercado Por"
+  sort_order_cycles_on_shopfront_by: "Ordenar Ciclo de Pedidos na Loja Virtual Por"
   required_fields: Campos obrigatórios são indicados com um asterisco
   select_continue: Selecionar e continuar
   remove: Remover
@@ -229,7 +229,7 @@ pt_BR:
   admin_and_handling: Administração & Manuseio
   profile: Perfil
   supplier_only: Somente fornecedor
-  has_shopfront: Possui Vitrine
+  has_shopfront: Possui Loja Virtual
   weight: Peso
   volume: Volume
   items: Itens
@@ -241,11 +241,13 @@ pt_BR:
   y: 'S'
   n: 'N'
   powered_by: Distribuído por
-  blocked_cookies_alert: "Seu navegador pode estar bloqueando cookies necessários para usar esta loja. Clique abaixo para permitir cookies e recarregar a página."
+  blocked_cookies_alert: "Seu navegador pode estar bloqueando cookies necessários para usar esta loja virtual. Clique abaixo para permitir cookies e recarregar a página."
   allow_cookies: "Permitir cookies"
   notes: Notas
   error: Erro
-  processing_payment: Processando pagamento...
+  processing_payment: "Processando pagamento..."
+  no_pending_payments: "Nenhum pagamento pendente"
+  invalid_payment_state: "Situação de pagamento inválido"
   filter_results: Filtrar resultados
   quantity: Quantidade
   pick_up: Retirar
@@ -326,8 +328,8 @@ pt_BR:
     unsaved_confirm_leave: "Existem alterações não salvas nesta página. Continuar sem salvar? "
     unsaved_changes: "Você tem alterações não salvas"
     shopfront_settings:
-      embedded_shopfront_settings: "Configurações incorporadas à loja"
-      enable_embedded_shopfronts: "Ativar lojas incorporadas"
+      embedded_shopfront_settings: "Configurações incorporadas à loja virtual"
+      enable_embedded_shopfronts: "Ativar lojas virtuais incorporadas"
       embedded_shopfronts_whitelist: "Lista de permissões de domínios externos"
     number_localization:
       number_localization_settings: "Configurações de localização de número"
@@ -397,7 +399,7 @@ pt_BR:
     enterprise_fees:
       index:
         title: "Taxas da iniciativa"
-        enterprise: "Empreendimentos"
+        enterprise: "Iniciativas"
         fee_type: "Tipo de taxa"
         name: "Nome"
         tax_category: "Categoria de taxa"
@@ -449,7 +451,7 @@ pt_BR:
       title: Importação de produtos
       file_not_found: O arquivo não foi encontrado ou não pôde ser aberto
       no_data: Nenhum dado encontrado na planilha
-      confirm_reset: "Isso definirá o nível de estoque como zero em todos os produtos desta empresa que não estão presentes no arquivo carregado"
+      confirm_reset: "Isso definirá o nível de estoque como zero em todos os produtos desta iniciativa que não estão presentes no arquivo carregado"
       model:
         no_file: "erro: nenhum arquivo carregado"
         could_not_process: "não foi possível processar o arquivo: tipo de arquivo inválido"
@@ -459,7 +461,7 @@ pt_BR:
         not_found: não encontrado no banco de dados
         not_updatable: não pode ser atualizado em produtos existentes via importação do produto
         blank: Não pode ser vazio
-        products_no_permission: você não tem permissão para gerenciar produtos para esta empresa
+        products_no_permission: você não tem permissão para gerenciar produtos para esta iniciativa
         inventory_no_permission: você não tem permissão para criar inventário para este produtor
         none_saved: não salvou nenhum produto com sucesso
         line_number: "Linha %{number}:"
@@ -497,10 +499,10 @@ pt_BR:
         no_errors: Erros não encontrado!
         save_all_imported?: Salvar todos os produtos importados?
         options_and_defaults: Opções e padrões de importação
-        no_permission: você não tem permissão para gerenciar esta empresa
-        not_found: empresa não pôde ser encontrada no banco de dados
+        no_permission: você não tem permissão para gerenciar esta iniciativa
+        not_found: esta iniciativa não pôde ser encontrada no banco de dados
         no_name: Sem nome
-        blank_enterprise: alguns produtos não têm uma empresa definida
+        blank_enterprise: alguns produtos não têm uma iniciativa definida
         reset_absent?: Redefinir produtos ausentes
         reset_absent_tip: Defina o estoque como zero para todos os produtos existentes não presentes no arquivo
         overwrite_all: Sobrescreva tudo
@@ -643,8 +645,8 @@ pt_BR:
               ao seu inventário antes de serem estocados. Se você não está usando
               o inventário para gerenciar os seus produtos, você deve selecionar a
               opção 'recomendado' abaixo.
-          preferred_product_selection_from_inventory_only_yes: Novos produtos podem ser colocados na minha vitrine (recomendado)
-          preferred_product_selection_from_inventory_only_no: Novos produtos devem ser adicionados no meu inventário antes de serem colocados na minha vitrine
+          preferred_product_selection_from_inventory_only_yes: Novos produtos podem ser colocados na minha loja virtual (recomendado)
+          preferred_product_selection_from_inventory_only_no: Novos produtos devem ser adicionados no meu inventário antes de serem colocados na minha loja virtual
         payment_methods:
           name: Nome
           applies: Aplica?
@@ -673,9 +675,9 @@ pt_BR:
           permalink: Permalink (sem espaços)
           permalink_tip: "Esse link é usado para criar a URL para a sua loja: %{link}nome-loja/loja"
           link_to_front: Link para a loja
-          link_to_front_tip: Um link direto para a sua loja na Open Food Brasil.
+          link_to_front_tip: Um link direto para a sua loja virtual na Open Food Brasil.
           ofn_uid: OFN UID
-          ofn_uid_tip: O ID exclusivo usado para identificar a empresa na Open Food Brasil.
+          ofn_uid_tip: O ID exclusivo usado para identificar a iniciativa na Open Food Brasil.
         shipping_methods:
           name: Nome
           applies: Aplica?
@@ -684,14 +686,14 @@ pt_BR:
           create_one_button: Criar um agora
           no_method_yet: Você ainda não tem nenhuma forma de envio.
         shop_preferences:
-          shopfront_requires_login: "Mercado visível publicamente?"
-          shopfront_requires_login_tip: "Escolha se os clientes precisarão fazer o login para ver os produtos do mercado, ou se eles estarão visíveis para todos."
+          shopfront_requires_login: "Loja virtual visível publicamente?"
+          shopfront_requires_login_tip: "Escolha se os clientes precisarão fazer o login para ver os produtos da loja virtual, ou se eles estarão visíveis para todos."
           shopfront_requires_login_false: "Publico"
           shopfront_requires_login_true: "Disponível somente para clientes registrados"
           recommend_require_login: "Recomendamos pedir login dos usuários quando permitido que pedidos possam ser alterados."
           allow_guest_orders: "Pedidos dos convidados"
           allow_guest_orders_tip: "Permitir o checkout como convidado, ou requisitar um usuário registrado. "
-          allow_guest_orders_false: "Requisitar o registro para fazer pedidos"
+          allow_guest_orders_false: "Requisitar o login para fazer pedidos"
           allow_guest_orders_true: "Permitir checkout de convidados"
           allow_order_changes: "Mudar pedidos"
           allow_order_changes_tip: "Permitir que os consumidores mudem seus pedidos enquanto a compra estiver aberta."
@@ -701,19 +703,19 @@ pt_BR:
           enable_subscriptions_tip: "Ativar funcionalidade de inscrições?"
           enable_subscriptions_false: "Desativado"
           enable_subscriptions_true: "ativado"
-          shopfront_message: "Mensagem da vitrine da loja"
+          shopfront_message: "Mensagem da loja virtual"
           shopfront_message_placeholder: >
               Uma mensagem opcional para dar as boas-vindas aos clientes e explicar
               como comprar com você. Se o texto for inserido aqui, ele será exibido
-              em uma guia inicial quando os clientes chegarem à sua loja.
+              em uma guia inicial quando os clientes chegarem à sua loja virtual.
           shopfront_message_link_tooltip: "Inserir / editar link"
           shopfront_message_link_prompt: "Digite um URL para inserir"
-          shopfront_closed_message: "Mensagem de loja fechada"
+          shopfront_closed_message: "Mensagem de loja virtual fechada"
           shopfront_closed_message_placeholder: >
               Uma mensagem que forneça uma explicação detalhada sobre o porque de
               a loja estar fechada e quando os consumidores podem esperar que abra
               novamente, a ser exibida quando não houver nenhum ciclo de pedidos ativo.
-          shopfront_category_ordering: "Categoria de pedidos da loja"
+          shopfront_category_ordering: "Organização das Categorias da Loja Virtual"
           open_date: "Dia de abertura"
           close_date: "Dia de fechamento"
         social:
@@ -784,12 +786,12 @@ pt_BR:
         producer_description_text: Adicione os seus produtos à Open Food Brasil, permitindo que as centrais os comercialize em suas lojas.
         producer_shop: Loja do produtor
         sell_your_produce: 'Venda seus próprios produtos '
-        producer_shop_description_text: Venda seus produtos diretamente aos consumidores através da sua própria loja na Open Food Brasil.
+        producer_shop_description_text: Venda seus produtos diretamente aos consumidores através da sua própria loja virtual na Open Food Brasil.
         producer_shop_description_text2: Uma loja de produtor é apenas para o seu produto, se você quiser vender produtos produzidos por outras pessoas ou locais, selecione 'Central de produtor'.
         producer_hub: Central de produtor
         producer_hub_text: Comercialize seus próprios produtos e de outros produtores
         producer_hub_description_text: Sua iniciativa é a espinha dorsal do seu sistema de produção e consumo local. Você pode comercializar seus próprios bens, assim como produtos agregados de outras iniciativas e produtores, através da sua loja na Open Food Brasil.
-        profile: Somente perfil
+        profile: Perfil Simples
         get_listing: Obter uma listagem
         profile_description_text: As pessoas podem te encontrar e te contactar na Open Food Brasil. Sua iniciativa estará visível no mapa e poderá ser encontrada em buscas.
         hub_shop: Loja da central
@@ -829,7 +831,7 @@ pt_BR:
         welcome_title: Bem-vindo à Open Food Brasil!
         welcome_text: Você criou com sucesso uma
         next_step: Próximo passo
-        choose_starting_point: 'Escolha o seu pacote:'
+        choose_starting_point: 'Escolha o seu tipo de perfil:'
         profile: 'Perfil'
         producer_profile: 'Perfil do produtor'
       invite_manager:
@@ -891,7 +893,7 @@ pt_BR:
       filters:
         search_by_order_cycle_name: "Pesquisar por nome do ciclo de pedidos ..."
         involving: "Envolvendo"
-        any_enterprise: "Qualquer empresa"
+        any_enterprise: "Qualquer iniciativa"
         any_schedule: "Qualquer cronograma"
       form:
         general_settings: "Configurações Gerais"
@@ -1128,8 +1130,8 @@ pt_BR:
         checkout: "Fechar pedido agora"
         already_ordered_products: "Já pediu neste ciclo de pedido"
     register_call:
-      selling_on_ofn: "Interessado em participar da Open Food Brasil?"
-      register: "Registre-se aqui"
+      selling_on_ofn: "Interessado em registrar a sua iniciativa na Open Food Brasil?"
+      register: "Faça o cadastro aqui"
     footer:
       footer_secure: "Seguro e confiável."
       footer_secure_text: "A Open Food Brasil utiliza a criptografia SSL (2048 bit RSA) para manter suas informações em segurança. Nossos servidores não guardam os detalhes do seu cartão de crédito e os pagamentos são processados por serviços compatíveis com PCI."
@@ -1149,7 +1151,7 @@ pt_BR:
       footer_data_cookies_policy: "política de cookies"
   shop:
     messages:
-      login: "entrar"
+      login: "Login"
       signup: "inscrever-se"
       contact: "contato"
       require_customer_login: "Somente clientes aprovados podem acessar esta loja."
@@ -1251,7 +1253,7 @@ pt_BR:
   label_blog: "Blog"
   label_support: "Suporte"
   label_shopping: "Compras"
-  label_login: "Entrar"
+  label_login: "Login"
   label_logout: "Sair"
   label_signup: "Registre-se"
   label_administration: "Administração"
@@ -1483,6 +1485,7 @@ pt_BR:
   shopping_oc_closed_description: "Por favor aguarde até que o próximo ciclo seja aberto (ou entre em contato diretamente para saber se podemos aceitar pedidos atrasados)"
   shopping_oc_last_closed: "A último ciclo fechou a %{distance_of_time} atrás"
   shopping_oc_next_open: "A próximo ciclo abre em %{distance_of_time}"
+  shopping_oc_select: "Selecione..."
   shopping_tabs_home: "Início"
   shopping_tabs_shop: "Comprar"
   shopping_tabs_about: "Sobre"
@@ -1533,7 +1536,7 @@ pt_BR:
   products_update_error_data: "Falha no salvamento devido a dados inválidos:"
   products_changes_saved: "Modificações salvas."
   search_no_results_html: "Sinto muito, nenhum resultado encontrado para %{query}. Que tal tentar outra busca?"
-  components_profiles_popover: "Perfis não possuem uma loja na Open Food Brasil, mas podem ter suas próprias lojas físicas ou online em outro endereço"
+  components_profiles_popover: "Perfis Simples não possuem uma loja virtual na Open Food Brasil, mas podem ter suas próprias lojas físicas ou online em outro endereço"
   components_profiles_show: "Mostrar perfis"
   components_filters_nofilters: "Nenhum filtro"
   components_filters_clearfilters: "Limpar filtros"
@@ -1750,7 +1753,7 @@ pt_BR:
         registration_about_us: "'Sobre Nós'"
         registration_outcome_headline: "O que eu ganho?"
         registration_outcome1_html: "Seu perfil ajuda as pessoas a te <strong>encontrarem</strong> e entrarem em <strong>contato</strong> com você na Open Food Brasil."
-        registration_outcome2: "Use esse espaço para contar a história da sua empresa e ajudar a impulsionar as conexões com sua presença social e online."
+        registration_outcome2: "Use esse espaço para contar a história da sua iniciativa e ajudar a impulsionar as conexões com sua presença social e online."
         registration_outcome3: "Esse é também o primeiro passo para começar a comercializar na Open Food Brasil, ou abrir uma loja online."
         registration_action: "Vamos começar!"
       details:
@@ -1856,7 +1859,7 @@ pt_BR:
         headline: "Pronto!"
         thanks: "Obrigado por preencher os detalhes para %{enterprise}."
         login: "Você pode alterar ou atualizar suas informações a qualquer momento fazendo o login na Open Food Brasil e entrando na seção 'Admin'."
-        action: "Página inicial"
+        action: "Vá para o Painel de Controle da Iniciativa"
   back: "Voltar"
   continue: "Continuar"
   action_or: "OU"
@@ -1998,7 +2001,7 @@ pt_BR:
   spree_admin_product_category: Categoria de Produto
   spree_admin_variant_unit_name: Nome da unidade variante
   unit_name: "Nome da unidade"
-  change_package: "Alterar embalagem"
+  change_package: "Alterar tipo de perfil"
   spree_admin_single_enterprise_hint: "Dica: Para permitir que as pessoas te encontrem, ative sua visibilidade em"
   spree_admin_eg_pickup_from_school: "ex: 'Buscar na Escola'"
   spree_admin_eg_collect_your_order: "ex: 'Por favor, colete seu pedido na Rua dos Sonhos, 123, casa 5, Bairro Liberdade"
@@ -2359,11 +2362,11 @@ pt_BR:
               essa iniciativa para ser um produtor.
           choose_package: Por favor escolha um pacote
           choose_package_text1: >
-              Sua iniciativa não será totalmente ativada até que um pacote seja selecionado
-              a partir das opções à esquerda.
+              Sua iniciativa não será totalmente ativada até que um tipo de perfil
+              seja selecionado a partir das opções à esquerda.
           choose_package_text2: >
               Clique em uma opção para ver informações mais detalhadas sobre cada
-              pacote, e aperte o botão vermelho SALVAR quando terminar.
+              tipo de perfil, e aperte o botão vermelho SALVAR quando terminar.
           profile_only: Somente perfil
           profile_only_cost: "CUSTO: SEMPRE GRATUITO"
           profile_only_text1: >
@@ -2388,8 +2391,8 @@ pt_BR:
           producer_hub: Central de produtor
           producer_hub_text1: >
               A sua iniciativa é a espinha dorsal do seu sistema de produção e consumo
-              local. Através da sua loja na Open Food Brasil você pode vender os seus
-              próprios produtos, assim como produtos agregados de outras iniciativas.
+              local. Através da sua loja virtual na Open Food Brasil você pode vender
+              os seus próprios produtos, assim como produtos agregados de outras iniciativas.
           producer_hub_text2: >
               Central de produtor pode assumir várias formas, seja uma horta local
               comunitária, um CSA, cooperativa ou associação, formalizada ou não.
@@ -2551,10 +2554,10 @@ pt_BR:
       changing_on_hand_stock: Mudando nos níveis de estoque de mão...
       stock_reset: Estoque redefinido para padrões.
     tag_rules:
-      show_hide_variants: 'Mostrar ou Ocultar variantes na minha vitrine'
+      show_hide_variants: 'Mostrar ou Ocultar variantes na minha loja virtual'
       show_hide_shipping: 'Mostrar ou Ocultar métodos de envio no checkout'
       show_hide_payment: 'Mostrar ou Ocultar métodos de pagamento no checkout'
-      show_hide_order_cycles: 'Mostrar ou ocultar ciclos de pedidos na minha vitrine'
+      show_hide_order_cycles: 'Mostrar ou ocultar ciclos de pedidos na minha loja virtual'
       visible: VISÍVEL
       not_visible: NÃO VISÍVEL
     services:
@@ -2691,7 +2694,7 @@ pt_BR:
           csv:
             header:
               fee_type: "Tipo de taxa"
-              enterprise_name: "Proprietário da empresa"
+              enterprise_name: "Proprietário da iniciativa"
               fee_name: "Nome da taxa"
               customer_name: "Cliente"
               fee_placement: "Adição de taxa"
@@ -2701,7 +2704,7 @@ pt_BR:
           html:
             header:
               fee_type: "Tipo de taxa"
-              enterprise_name: "Proprietário da empresa"
+              enterprise_name: "Proprietário da iniciative"
               fee_name: "Nome da taxa"
               customer_name: "Cliente"
               fee_placement: "Adição da Taxa"

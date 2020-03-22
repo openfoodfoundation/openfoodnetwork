@@ -59,7 +59,7 @@ module Spree
         @collection ||= if @deleted.blank?
                           super
                         else
-                          Variant.where(product_id: parent.id).deleted
+                          Variant.unscoped.where(product_id: parent.id).deleted
                         end
         @collection
       end

@@ -59,6 +59,7 @@ module Spree
     # It destroys the whole customer object
     def destroy_at_stripe
       stripe_customer = Stripe::Customer.retrieve(@credit_card.gateway_customer_profile_id, {})
+
       stripe_customer.delete if stripe_customer
     end
 

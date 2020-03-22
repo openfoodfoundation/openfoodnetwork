@@ -2,7 +2,7 @@
 
 .darkswarm navigation {
   display: block;
-  background: #f7f7f7;
+  background: $white;
 
   distributor.details {
     box-sizing: border-box;
@@ -10,9 +10,11 @@
     min-height: 150px;
     padding: 30px 0 20px 0;
     position: relative;
+
     select {
       width: 200px;
     }
+
     img {
       display: block;
       height: 100px;
@@ -31,72 +33,158 @@
 
     #distributor_title h3 {
       margin-top: 0;
+      padding-top: 0.45em;
+
       @media all and (max-width: 768px) {
           margin-bottom: 8px;
       }
     }
+  }
+}
 
+ordercycle {
+  float: right;
+  background: $teal-400;
+  color: $white;
+  width: 100%;
+  border-radius: 0.5em 0.5em 0 0;
+  position: absolute;
+  right: 1em;
+  padding: 1em;
+  margin-top: 3em;
+  height: 7.6em;
 
+  &.requires-selection {
+    background-color: $red-700;
 
-    ordercycle {
-      text-align: right;
-      float: right;
-      p {
-        max-width: 400px;
+    .order-cycle-select {
+      border: 1px solid $red-500;
+
+      .select-label {
+        background-color: rgba($red-500, 0.5);
       }
-      h4 i {
-        margin-right: 0.3rem;
+
+      select {
+        background-color: $white;
+        background-image: url('/assets/black-caret.svg');
+        color: $grey-500;
+        font-style: italic;
       }
-      @media all and (max-width: 640px) {
-        float: left;
-        clear: left;
-        text-align: left;
-        padding: 12px 10px;
-        width: 100%;
-        margin-top: 10px;
-        background: #e5e5e5;
-        p {
-          max-width: 100%;
-        }
-      }
-      form.custom {
-        text-align: right;
-        & > strong {
-          line-height: 2.5;
-          font-size: 1.29em;
-          padding-right: 14px;
-        }
-        select {
-          width: inherit;
-          display: inline-block;
-          border: 1px #999;
-          color: #666;
-          font-size: 1em;
-          margin-bottom: 0;
-          padding: 8px 20px 8px 12px;
-          @media all and (max-width: 768px) {
-            font-size: 0.875em;
-          }
-          @media screen and (-webkit-min-device-pixel-ratio: 0) {
-            font-size: 16px;
-          }
-        }
-      }
-      closing {
-        @include headingFont;
-        color: black;
-        font-size: 1.5em;
+    }
+  }
+
+  p {
+    max-width: 400px;
+  }
+
+  h4 i {
+    margin-right: 0.3rem;
+  }
+
+  @media all and (max-width: 1024px) {
+    float: none;
+    padding: 0.5em 1em;
+    width: 100%;
+    margin-top: 0;
+    display: inline-block;
+    border-radius: 0;
+    position: relative;
+    right: 0;
+    height: auto;
+
+    p {
+      max-width: 100%;
+    }
+  }
+
+  @media all and (max-width: 768px) {
+    padding: 0.5em 1em 0.75em;
+  }
+
+  form.custom {
+    text-align: center;
+  }
+
+  .order-cycle-select {
+    border: 1px solid $teal-300;
+    display: inline-block;
+    font-size: 1em;
+    border-radius: 0.25em;
+
+    .select-label {
+      background-color: rgba($teal-300, 0.5);
+      display: inline-block;
+      border-radius: 0.25em 0 0 0.25em;
+      float: left;
+      font-size: 1em;
+      line-height: 1.5em;
+      padding: 0.5em 0.75em;
+      height: 2.35em;
+
+      span {
+        width: max-content;
         display: block;
-        padding-bottom: 12px;
-        @media all and (max-width: 768px) {
-          font-size: 1.2em;
-          padding-bottom: 10px;
-        }
-        span {
-          @media all and (max-width: 768px) {
-            font-size: 0.875em;
-          }
-        }
+      }
+    }
+
+    select {
+      width: inherit;
+      display: inline-block;
+      color: $white;
+      background-color: transparent;
+      border: 0;
+      margin-bottom: 0;
+      font-size: 1em;
+      line-height: 1.5em;
+      padding: 0.5em 1.25em 0.5em 0.75em;
+      height: 2.35em;
+      background-image: url('/assets/white-caret.svg');
+      background-size: 30px auto;
+      border-radius: 0 0.25em 0.25em 0;
+      min-width: 13em;
+
+      @media all and (max-width: 480px) {
+        width: 100%;
+      }
+    }
+
+    @media all and (max-width: 1024px) {
+      float: none;
+      margin-right: 1em;
+    }
+
+    @media all and (max-width: 768px) {
+      float: none;
+    }
+
+    @media all and (max-width: 480px) {
+      display: flex;
+    }
+  }
+
+  closing {
+    @include headingFont;
+    color: $white;
+    font-size: 1.25rem;
+    display: block;
+    padding: 0 0 12px;
+
+    @media all and (max-width: 1024px) {
+      float: none;
+      display: inline-block;
+      padding: 0.2em 0 0;
+      font-size: 1.2em;
+      margin-right: 1em;
+    }
+
+    @media all and (max-width: 768px) {
+      float: none;
+      padding: 0 0 10px;
+    }
+
+    span {
+      @media all and (max-width: 768px) {
+        font-size: 0.875em;
       }
     }
   }

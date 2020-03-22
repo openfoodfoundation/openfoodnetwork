@@ -245,7 +245,7 @@ ar:
   allow_cookies: "السماح لملفات تعريف الارتباط"
   notes: ملاحظات
   error: خطأ
-  processing_payment: معالجة الدفع...
+  processing_payment: "معالجة الدفع..."
   filter_results: تصفية النتائج
   quantity: الكمية
   pick_up: النقل
@@ -1864,7 +1864,6 @@ ar:
         headline: "تم الانتهاء !"
         thanks: "شكرًا لملء تفاصيل %{enterprise}."
         login: "يمكنك تغيير أو تحديث شركتك في أي مرحلة من خلال تسجيل الدخول إلى شبكة الغذاء المفتوح والذهاب إلى المسؤول."
-        action: "بيت شبكة الغذاء المفتوح"
   back: "عودة"
   continue: "استمر"
   action_or: "أو"

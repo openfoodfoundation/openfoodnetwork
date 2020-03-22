@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20191202165700) do
+ActiveRecord::Schema.define(:version => 20200209163549) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -605,7 +605,7 @@ ActiveRecord::Schema.define(:version => 20191202165700) do
     t.string   "avs_response"
     t.string   "identifier"
     t.string   "cvv_response_code"
-    t.string   "cvv_response_message"
+    t.text     "cvv_response_message"
   end
 
   add_index "spree_payments", ["order_id"], name: "index_spree_payments_on_order_id", using: :btree

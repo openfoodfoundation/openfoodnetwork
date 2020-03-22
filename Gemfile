@@ -11,6 +11,7 @@ gem 'rails_safe_tasks', '~> 1.0'
 gem "activerecord-import"
 gem 'nokogiri', '~> 1.6.8.1'
 
+gem "catalog", path: "./engines/catalog"
 gem "order_management", path: "./engines/order_management"
 gem 'web', path: './engines/web'
 

@@ -24,7 +24,7 @@ describe Api::EnterpriseShopfrontSerializer do
   end
 
   it "serializes next order cycle close time" do
-    expect(serializer.serializable_hash[:orders_close_at]).to match oc.orders_close_at
+    expect(serializer.serializable_hash[:orders_close_at].round).to match oc.orders_close_at.round
   end
 
   it "serializes shipping method types" do

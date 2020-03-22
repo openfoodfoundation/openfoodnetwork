@@ -245,7 +245,7 @@ tr:
   allow_cookies: "Çerezlere izin ver"
   notes: Notlar
   error: Hata
-  processing_payment: Ödeme İşlemi Gerçekleştiriliyor..
+  processing_payment: "Ödeme İşlemi Gerçekleştiriliyor.."
   filter_results: Sonuçları Filtrele
   quantity: Miktar
   pick_up: Teslimat Noktası
@@ -1856,7 +1856,6 @@ tr:
         headline: "Tamamlandı!"
         thanks: "%{enterprise} ile ilgili ayrıntıları doldurduğunuz için teşekkür ederiz."
         login: "Dilediğiniz zaman Açık Gıda Ağı üzerinden giriş yapıp Yönetici paneline giderek işletmenizin ayarlarını güncelleyebilirsiniz."
-        action: "Açık Gıda Ağı ana sayfası"
   back: "Geri"
   continue: "Devam et"
   action_or: "VEYA"
