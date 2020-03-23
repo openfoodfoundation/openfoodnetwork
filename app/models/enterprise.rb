@@ -25,8 +25,7 @@ class Enterprise < ActiveRecord::Base
   has_many :relationships_as_child, class_name: 'EnterpriseRelationship',
                                     foreign_key: 'child_id',
                                     dependent: :destroy
-  has_and_belongs_to_many :groups, join_table: 'enterprise_groups_enterprises',
-                                   class_name: 'EnterpriseGroup'
+  has_and_belongs_to_many :groups, class_name: 'EnterpriseGroup'
   has_many :producer_properties, foreign_key: 'producer_id'
   has_many :properties, through: :producer_properties
   has_many :supplied_products, class_name: 'Spree::Product',
@@ -97,6 +96,8 @@ class Enterprise < ActiveRecord::Base
   before_validation :set_unused_address_fields
   after_validation :geocode_address
 
+  validates :instagram, format: /\A[a-zA-Z0-9._]{1,30}\z/, allow_blank: true
+
   after_touch :touch_distributors
   after_create :set_default_contact
   after_create :relate_to_owners_enterprises
@@ -116,10 +117,7 @@ class Enterprise < ActiveRecord::Base
   scope :not_ready_for_checkout, lambda {
     # When ready_for_checkout is empty, return all rows when there are no enterprises ready for
     # checkout.
-    ready_enterprises = Enterprise.ready_for_checkout.
-      except(:select).
-      select('DISTINCT enterprises.id')
-
+    ready_enterprises = Enterprise.ready_for_checkout.select('enterprises.id')
     if ready_enterprises.present?
       where("enterprises.id NOT IN (?)", ready_enterprises)
     else
@@ -321,7 +319,7 @@ class Enterprise < ActiveRecord::Base
   def distributed_taxons
     Spree::Taxon.
       joins(:products).
-      where('spree_products.id IN (?)', Spree::Product.in_distributor(self).select(&:id)).
+      where('spree_products.id IN (?)', Spree::Product.in_distributor(self)).
       select('DISTINCT spree_taxons.*')
   end
 
@@ -337,7 +335,7 @@ class Enterprise < ActiveRecord::Base
   def supplied_taxons
     Spree::Taxon.
       joins(:products).
-      where('spree_products.id IN (?)', Spree::Product.in_supplier(self).select(&:id)).
+      where('spree_products.id IN (?)', Spree::Product.in_supplier(self)).
       select('DISTINCT spree_taxons.*')
   end
 
@@ -370,6 +368,10 @@ class Enterprise < ActiveRecord::Base
     abn.present?
   end
 
+  def instagram=(value)
+    self[:instagram] = ((value.downcase).try(:gsub, instagram_regex, '\1')).gsub('@','')
+  end
+
   protected
 
   def devise_mailer
@@ -377,6 +379,10 @@ class Enterprise < ActiveRecord::Base
   end
 
   private
+
+  def instagram_regex
+    %r{\A(?:https?://)?(?:www\.)?instagram\.com/([a-zA-Z0-9._@]{1,30})/?\z}
+  end
 
   def current_exchange_variants
     ExchangeVariant.joins(exchange: :order_cycle)
