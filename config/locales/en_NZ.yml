@@ -3019,7 +3019,8 @@ en_NZ:
           tax_invoice: "TAX INVOICE"
           code: "Code"
           from: "From"
-          to: "To"
+          to: "Bill to"
+          shipping: "Shipping"
         form:
           distribution_fields:
             title: "Distribution"
