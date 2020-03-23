@@ -17,7 +17,10 @@ module InjectionHelper
 
     inject_json_ams(
       "groups",
-      EnterpriseGroup.on_front_page.by_position.select(select_only).includes(address: :state).all,
+      EnterpriseGroup.on_front_page.by_position.select(select_only).
+        includes(enterprises: [:shipping_methods, { address: [:state, :country] }],
+                 address: :state).
+        all,
       Api::GroupListSerializer
     )
   end
