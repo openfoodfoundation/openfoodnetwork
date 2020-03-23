@@ -76,9 +76,11 @@ describe Spree.user_class do
     it "should send a confirmation email" do
       setup_email
 
-      expect do
-        create(:user, email: 'new_user@example.com', confirmation_sent_at: nil, confirmed_at: nil)
-      end.to send_confirmation_instructions
+      performing_deliveries do
+        expect do
+          create(:user, email: 'new_user@example.com', confirmation_sent_at: nil, confirmed_at: nil)
+        end.to send_confirmation_instructions
+      end
 
       sent_mail = ActionMailer::Base.deliveries.last
       expect(sent_mail.to).to eq ['new_user@example.com']
