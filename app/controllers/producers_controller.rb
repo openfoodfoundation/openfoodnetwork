@@ -8,7 +8,7 @@ class ProducersController < BaseController
       .activated
       .visible
       .is_primary_producer
-      .includes(address: :state)
+      .includes(address: [:state, :country])
       .includes(:properties)
       .includes(supplied_products: :properties)
       .all
