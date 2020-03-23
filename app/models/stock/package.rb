@@ -26,8 +26,8 @@ module Stock
     def shipping_methods
       available_shipping_methods = super.to_a
 
-      available_shipping_methods.delete_if do |shipping_method|
-        !ships_with?(order.distributor.shipping_methods.to_a, shipping_method)
+      available_shipping_methods.keep_if do |shipping_method|
+        ships_with?(order.distributor.shipping_methods.to_a, shipping_method)
       end
     end
 
