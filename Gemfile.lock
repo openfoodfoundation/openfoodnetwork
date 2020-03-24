@@ -718,7 +718,6 @@ DEPENDENCIES
   db2fog
   ddtrace
   debugger-linecache
-  deface
   delayed_job_active_record
   delayed_job_web
   devise (~> 3.0.1)
