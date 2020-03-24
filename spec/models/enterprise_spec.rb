@@ -147,7 +147,6 @@ describe Enterprise do
       end
 
       context "prevent an wrong instagram link pattern" do
-
         it "expects to be invalid the instagram attribute https://facebook.com/user" do
           e = build(:enterprise, instagram: 'https://facebook.com/user')
           expect(e).to_not be_valid

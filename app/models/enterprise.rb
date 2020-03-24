@@ -373,7 +373,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def instagram=(value)
-    self[:instagram] = value.downcase.try(:gsub, instagram_regex, '\1').gsub('@','')
+    self[:instagram] = value.downcase.try(:gsub, instagram_regex, '\1').gsub('@', '')
   end
 
   protected
