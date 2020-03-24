@@ -66,7 +66,7 @@ module OpenFoodNetwork
           create(:payment, order: cancelled_order, amount: 25.00, state: "completed")
         }
 
-        it "does not include canceled orders in the balance" do
+        it "includes complete payments of canceled orders in the balance (but not the amount of the canceled orders)" do
           expected_balance = initial_balance + cancelled_order_payment.amount
           expect(UserBalanceCalculator.new(user1.email, hub1).balance).to eq(expected_balance)
         end
@@ -80,7 +80,7 @@ module OpenFoodNetwork
         }
         let!(:payment5) { create(:payment, order: order5, amount: 200.00, state: "void") }
 
-        it "does not include void in the balance" do
+        it "does not include void payments in the balance" do
           expected_balance = initial_balance - order5.total
           expect(UserBalanceCalculator.new(user1.email, hub1).balance).to eq(expected_balance)
         end
