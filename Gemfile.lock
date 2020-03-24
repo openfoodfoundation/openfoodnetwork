@@ -760,7 +760,7 @@ DEPENDENCIES
   rack-mini-profiler (< 3.0.0)
   rack-rewrite
   rack-ssl
-  rails (~> 4.0.0)
+  rails (~> 4.0.13)
   rails-i18n (~> 4.0)
   rails_safe_tasks (~> 1.0)
   redcarpet
