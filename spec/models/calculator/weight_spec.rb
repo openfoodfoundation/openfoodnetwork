@@ -163,19 +163,11 @@ describe Calculator::Weight do
 
     before { subject.set_preference(:per_kg, 5) }
 
-    it "returns NaN if variant.weight is not present" do
-      expect(subject.compute(line_item1).nan?).to be_truthy
-    end
-
-    xit "uses zero weight if variant.weight is not present" do
+    it "uses zero weight if variant.weight is not present" do
       expect(subject.compute(line_item1)).to eq 0
     end
 
-    it "returns NaN if variant.weight is present" do
-      expect(subject.compute(line_item2).nan?).to be_truthy
-    end
-
-    xit "uses the variant weight if variant.weight is present" do
+    it "uses the variant weight if variant.weight is present" do
       expect(subject.compute(line_item2)).to eq 50.0
     end
   end
