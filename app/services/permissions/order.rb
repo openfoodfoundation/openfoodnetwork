@@ -13,8 +13,8 @@ module Permissions
       orders = Spree::Order.
         with_line_items_variants_and_products_outer.
         where(visible_orders_where_values)
-      orders = orders.complete.not_state(:canceled).search(search_params).result if search_orders?
-      orders
+
+      filtered_orders(orders)
     end
 
     # Any orders that the user can edit
@@ -22,8 +22,8 @@ module Permissions
       orders = Spree::Order.
         where(managed_orders_where_values.
           or(coordinated_orders_where_values))
-      orders = orders.complete.not_state(:canceled).search(search_params).result if search_orders?
-      orders
+
+      filtered_orders(orders)
     end
 
     def visible_line_items
@@ -41,7 +41,13 @@ module Permissions
 
     attr_reader :search_params
 
-    def search_orders?
+    def filtered_orders(orders)
+      return orders unless filter_orders?
+
+      orders.complete.not_state(:canceled).search(search_params).result
+    end
+
+    def filter_orders?
       search_params.present?
     end
 
