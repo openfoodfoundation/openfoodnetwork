@@ -243,10 +243,10 @@ GEM
     eventmachine (1.2.7)
     excon (0.71.1)
     execjs (2.7.0)
-    factory_bot (4.8.2)
+    factory_bot (4.10.0)
       activesupport (>= 3.0.0)
-    factory_bot_rails (4.8.2)
-      factory_bot (~> 4.8.2)
+    factory_bot_rails (4.10.0)
+      factory_bot (~> 4.10.0)
       railties (>= 3.0.0)
     faraday (1.0.0)
       multipart-post (>= 1.2, < 3)
@@ -724,7 +724,7 @@ DEPENDENCIES
   devise-encryptable
   diffy
   eventmachine (>= 1.2.3)
-  factory_bot_rails (= 4.8.2)
+  factory_bot_rails (= 4.10.0)
   figaro
   foreigner
   foundation-icons-sass-rails

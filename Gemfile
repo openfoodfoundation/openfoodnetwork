@@ -130,7 +130,7 @@ group :test, :development do
   gem 'awesome_print'
   gem 'capybara', '>= 2.18.0' # 3.0 requires nokogiri 1.8
   gem 'database_cleaner', require: false
-  gem "factory_bot_rails", '4.8.2', require: false
+  gem "factory_bot_rails", '4.10.0', require: false
   gem 'fuubar', '~> 2.4.1'
   gem 'json_spec', '~> 1.1.4'
   gem 'knapsack'
