@@ -220,7 +220,6 @@ describe Enterprise do
           expect(e).to be_valid
         end
 
-
         it "renders the expected pattern" do
           e = build(:enterprise, instagram: 'instagram.com/user')
           expect(e.instagram).to eq('user')
