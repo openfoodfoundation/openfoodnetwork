@@ -55,5 +55,13 @@ module Admin
     def collection
       EnterpriseGroup.by_position
     end
+
+    def permitted_resource_params
+      params.require(:enterprise_group).permit(
+        :name, :description, :long_description, :on_front_page, :owner_id, :permalink,
+        :email, :website, :facebook, :instagram, :linkedin, :twitter,
+        enterprise_ids: [], address_attributes: PermittedAttributes::Address.attributes
+      )
+    end
   end
 end

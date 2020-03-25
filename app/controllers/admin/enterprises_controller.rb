@@ -41,7 +41,7 @@ module Admin
       tag_rules_attributes = params[object_name].delete :tag_rules_attributes
       update_tag_rules(tag_rules_attributes) if tag_rules_attributes.present?
       update_enterprise_notifications
-      if @object.update_attributes(params[object_name])
+      if @object.update_attributes(enterprise_params)
         invoke_callbacks(:update, :after)
         flash[:success] = flash_message_for(@object, :successfully_updated)
         respond_with(@object) do |format|
@@ -244,7 +244,7 @@ module Admin
     def override_sells
       unless spree_current_user.admin?
         has_hub = spree_current_user.owned_enterprises.is_hub.any?
-        new_enterprise_is_producer = Enterprise.new(params[:enterprise]).is_primary_producer
+        new_enterprise_is_producer = Enterprise.new(enterprise_params).is_primary_producer
         params[:enterprise][:sells] = has_hub && !new_enterprise_is_producer ? 'any' : 'none'
       end
     end
@@ -302,6 +302,15 @@ module Admin
 
     def ams_prefix_whitelist
       [:index, :basic]
+    end
+
+    def enterprise_params
+      PermittedAttributes::Enterprise.new(params).call
+    end
+
+    # Used in ResourceController#create
+    def permitted_resource_params
+      enterprise_params
     end
   end
 end
