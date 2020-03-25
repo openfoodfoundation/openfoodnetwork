@@ -4,7 +4,7 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
 gem 'i18n', '~> 0.6.11'
 gem 'i18n-js', '~> 3.6.0'
-gem 'rails', '~> 4.0.0'
+gem 'rails', '~> 4.0.13'
 gem 'rails-i18n', '~> 4.0'
 gem 'rails_safe_tasks', '~> 1.0'
 
@@ -74,7 +74,6 @@ gem 'angularjs-file-upload-rails', '~> 2.4.1'
 gem 'blockenspiel'
 gem 'custom_error_message', github: 'jeremydurham/custom-err-msg'
 gem 'dalli'
-gem 'deface'
 gem 'diffy'
 gem 'figaro'
 gem 'geocoder'
@@ -131,7 +130,7 @@ group :test, :development do
   gem 'awesome_print'
   gem 'capybara', '>= 2.18.0' # 3.0 requires nokogiri 1.8
   gem 'database_cleaner', require: false
-  gem "factory_bot_rails", '4.8.2', require: false
+  gem "factory_bot_rails", '4.10.0', require: false
   gem 'fuubar', '~> 2.4.1'
   gem 'json_spec', '~> 1.1.4'
   gem 'knapsack'
