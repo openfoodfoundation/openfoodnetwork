@@ -165,7 +165,7 @@ class CheckoutController < Spree::StoreController
       checkout_succeeded
       redirect_to(order_path(@order)) && return
     else
-      flash[:error] = order_workflow_error
+      flash[:error] = order_error
       checkout_failed
     end
   end
@@ -179,8 +179,6 @@ class CheckoutController < Spree::StoreController
       @order.select_shipping_method(shipping_method_id) if @order.state == "delivery"
 
       next if advance_order_state(@order)
-
-      flash[:error] = order_workflow_error
       return update_failed
     end
 
@@ -205,7 +203,7 @@ class CheckoutController < Spree::StoreController
     false
   end
 
-  def order_workflow_error
+  def order_error
     if @order.errors.present?
       @order.errors.full_messages.to_sentence
     else
@@ -245,6 +243,7 @@ class CheckoutController < Spree::StoreController
   end
 
   def update_failed
+    flash[:error] = order_error if flash.empty?
     checkout_failed
     update_failed_response
   end

@@ -40,6 +40,8 @@ en:
         shipping_category_id: "Shipping Category"
         variant_unit: "Variant Unit"
         variant_unit_name: "Variant Unit Name"
+      spree/credit_card:
+        base: "Credit Card"
       order_cycle:
         orders_close_at: Close date
     errors:
@@ -50,6 +52,10 @@ en:
               taken: "There's already an account for this email. Please login or reset your password."
         spree/order:
           no_card: There are no authorised credit cards available to charge
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: "has expired"
         order_cycle:
           attributes:
             orders_close_at:
