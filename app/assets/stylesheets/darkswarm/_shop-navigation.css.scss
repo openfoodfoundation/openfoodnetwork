@@ -6,11 +6,8 @@ ordercycle {
   color: $white;
   width: 100%;
   border-radius: 0.5em 0.5em 0 0;
-  position: absolute;
-  right: 1em;
-  padding: 1em;
-  margin-top: 3em;
-  height: 7.6em;
+  margin-top: 1em;
+  padding: 1em 1em 0;
 
   &.requires-selection {
     background-color: $red-700;
@@ -146,4 +143,12 @@ ordercycle {
       }
     }
   }
+}
+
+shop navigation ordercycle {
+  margin-top: 3em;
+  padding: 1em;
+  height: 7.6em;
+  position: absolute;
+  right: 1em;
 }
