@@ -109,7 +109,10 @@ module Spree
       private
 
       def load_order
-        @order = Order.find_by_number!(params[:id], include: :adjustments) if params[:id]
+        if params[:id]
+          @order = Order.includes(:adjustments, :shipments, line_items: :adjustments).
+            find_by_number!(params[:id])
+        end
         authorize! action, @order
       end
 
@@ -128,7 +131,7 @@ module Spree
       def load_distribution_choices
         @shops = Enterprise.is_distributor.managed_by(spree_current_user).by_name
 
-        ocs = OrderCycle.managed_by(spree_current_user)
+        ocs = OrderCycle.includes(:suppliers, :distributors).managed_by(spree_current_user)
         @order_cycles = ocs.soonest_closing +
                         ocs.soonest_opening +
                         ocs.closed +

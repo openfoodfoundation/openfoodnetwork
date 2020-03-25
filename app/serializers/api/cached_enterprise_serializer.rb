@@ -107,7 +107,7 @@ module Api
     end
 
     def active
-      data.active_distributors.andand.include? enterprise
+      data.active_distributor_ids.andand.include? enterprise.id
     end
 
     # Map svg icons.
