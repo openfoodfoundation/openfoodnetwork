@@ -22,6 +22,9 @@
 
   = render partial: "shopping_shared/header"
 
+  .sub-header.show-for-medium-down
+    = render partial: "shopping_shared/order_cycles"
+
   %fieldset.footer-pad
     - if @order.line_items.empty?
       %div.row{"data-hook" => "empty_cart"}

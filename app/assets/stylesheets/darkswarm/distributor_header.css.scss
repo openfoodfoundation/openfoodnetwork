@@ -9,6 +9,8 @@ section {
 .darkswarm navigation {
   display: block;
   background: $white;
+  position: relative;
+  z-index: 2;
 
   distributor.details {
     box-sizing: border-box;
