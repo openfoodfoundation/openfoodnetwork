@@ -10,6 +10,5 @@
           = distributor.name
         %location= distributor.address.city
 
-    - unless defined? hide_oc_selector
-      .show-for-large-up.large-4.columns
-        = render partial: "shopping_shared/order_cycles"
+    .show-for-large-up.large-4.columns
+      = render partial: "shopping_shared/order_cycles"
