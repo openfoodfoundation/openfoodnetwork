@@ -203,7 +203,7 @@ module Admin
 
       context "as a manager of the coordinator" do
         let(:user) { coordinator.owner }
-        let(:expected) { [order_cycle, hash_including(order_cycle: allowed.merge(restricted)), user] }
+        let(:expected) { [order_cycle, allowed.merge(restricted), user] }
 
         it "allows me to update exchange information for exchanges, name and dates" do
           expect(OrderCycleForm).to receive(:new).with(*expected) { form_mock }
@@ -213,7 +213,7 @@ module Admin
 
       context "as a producer supplying to an order cycle" do
         let(:user) { producer.owner }
-        let(:expected) { [order_cycle, hash_including(order_cycle: allowed), user] }
+        let(:expected) { [order_cycle, allowed, user] }
 
         it "allows me to update exchange information for exchanges, but not name or dates" do
           expect(OrderCycleForm).to receive(:new).with(*expected) { form_mock }

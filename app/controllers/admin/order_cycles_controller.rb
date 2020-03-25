@@ -40,7 +40,7 @@ module Admin
     end
 
     def create
-      @order_cycle_form = OrderCycleForm.new(@order_cycle, params, spree_current_user)
+      @order_cycle_form = OrderCycleForm.new(@order_cycle, order_cycle_params, spree_current_user)
 
       if @order_cycle_form.save
         flash[:notice] = I18n.t(:order_cycles_create_notice)
@@ -56,7 +56,7 @@ module Admin
     end
 
     def update
-      @order_cycle_form = OrderCycleForm.new(@order_cycle, params, spree_current_user)
+      @order_cycle_form = OrderCycleForm.new(@order_cycle, order_cycle_params, spree_current_user)
 
       if @order_cycle_form.save
         respond_to do |format|
@@ -234,6 +234,10 @@ module Admin
 
     def ams_prefix_whitelist
       [:basic, :index]
+    end
+
+    def order_cycle_params
+      PermittedAttributes::OrderCycle.new(params).call
     end
   end
 end
