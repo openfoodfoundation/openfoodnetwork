@@ -8,7 +8,7 @@ module Spree
   describe Admin::PaymentMethodsController, type: :controller do
     describe "#create and #update" do
       let!(:enterprise) { create(:distributor_enterprise, owner: user) }
-      let(:payment_method) { GatewayWithPassword.create!(name: "Bogus", preferred_password: "haxme", distributor_ids: [enterprise.id], preferred_enterprise_id: enterprise.id) }
+      let(:payment_method) { GatewayWithPassword.create!(name: "Bogus", preferred_password: "haxme", distributor_ids: [enterprise.id]) }
       let!(:user) { create(:user) }
 
       before { allow(controller).to receive(:spree_current_user) { user } }
@@ -32,7 +32,7 @@ module Spree
 
       it "can create a payment method of a valid type" do
         expect {
-          spree_post :create, payment_method: { name: "Test Method", type: "Spree::Gateway::Bogus", distributor_ids: [enterprise.id], preferred_enterprise_id: enterprise.id }
+          spree_post :create, payment_method: { name: "Test Method", type: "Spree::Gateway::Bogus", distributor_ids: [enterprise.id] }
         }.to change(Spree::PaymentMethod, :count).by(1)
 
         expect(response).to be_redirect
@@ -41,7 +41,7 @@ module Spree
 
       it "can not create a payment method of an invalid type" do
         expect {
-          spree_post :create, payment_method: { name: "Invalid Payment Method", type: "Spree::InvalidType", distributor_ids: [enterprise.id], preferred_enterprise_id: enterprise.id }
+          spree_post :create, payment_method: { name: "Invalid Payment Method", type: "Spree::InvalidType", distributor_ids: [enterprise.id] }
         }.to change(Spree::PaymentMethod, :count).by(0)
 
         expect(response).to be_redirect
