@@ -14,6 +14,7 @@ angular.module("admin.payments").factory 'AdminStripeElements', ($rootScope, Sta
       @stripe.createToken(@card, cardData).then (response) =>
         if(response.error)
           StatusMessage.display 'error', response.error.message
+          console.log(JSON.stringify(response.error))
         else
           secrets.token = response.token.id
           secrets.cc_type = @mapCC(response.token.card.brand)
@@ -29,9 +30,10 @@ angular.module("admin.payments").factory 'AdminStripeElements', ($rootScope, Sta
       @stripe.createPaymentMethod({ type: 'card', card: @card }, @card, cardData).then (response) =>
         if(response.error)
           StatusMessage.display 'error', response.error.message
+          console.log(JSON.stringify(response.error))
         else
           secrets.token = response.paymentMethod.id
-          secrets.cc_type = response.paymentMethod.card.brand
+          secrets.cc_type = @mapCC(response.paymentMethod.card.brand)
           secrets.card = response.paymentMethod.card
           submit()
 

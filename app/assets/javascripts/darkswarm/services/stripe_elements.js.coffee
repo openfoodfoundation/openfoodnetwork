@@ -16,6 +16,7 @@ Darkswarm.factory 'StripeElements', ($rootScope, Loading, RailsFlashLoader) ->
           Loading.clear()
           RailsFlashLoader.loadFlash({error: t("error") + ": #{response.error.message}"})
           @triggerAngularDigest()
+          console.log(JSON.stringify(response.error))
         else
           secrets.token = response.token.id
           secrets.cc_type = @mapCC(response.token.card.brand)
@@ -34,9 +35,10 @@ Darkswarm.factory 'StripeElements', ($rootScope, Loading, RailsFlashLoader) ->
           Loading.clear()
           RailsFlashLoader.loadFlash({error: t("error") + ": #{response.error.message}"})
           @triggerAngularDigest()
+          console.log(JSON.stringify(response.error))
         else
           secrets.token = response.paymentMethod.id
-          secrets.cc_type = response.paymentMethod.card.brand
+          secrets.cc_type = @mapCC(response.paymentMethod.card.brand)
           secrets.card = response.paymentMethod.card
           submit()
 
