@@ -21,6 +21,12 @@ module Spree
         @states = State.order(:name)
         @zones = Zone.order(:name)
       end
+
+      def permitted_resource_params
+        params.require(:zone).permit(
+          :name, :description, :default_tax
+        )
+      end
     end
   end
 end

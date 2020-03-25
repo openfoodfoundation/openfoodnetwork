@@ -89,7 +89,7 @@ module Spree
           @update_children = true
         end
 
-        if @taxon.update_attributes(params[:taxon])
+        if @taxon.update_attributes(taxon_params)
           flash[:success] = flash_message_for(@taxon, :successfully_updated)
         end
 
@@ -112,6 +112,15 @@ module Spree
         @taxon = Taxon.find(params[:id])
         @taxon.destroy
         respond_with(@taxon) { |format| format.json { render json: '' } }
+      end
+
+      private
+
+      def taxon_params
+        params.require(:taxon).permit(
+          :name, :parent_id, :position, :icon, :description, :permalink,
+          :taxonomy_id, :meta_description, :meta_keywords, :meta_title
+        )
       end
     end
   end

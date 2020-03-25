@@ -93,5 +93,13 @@ module Admin
       syncer = OpenFoodNetwork::ProxyOrderSyncer.new(subscriptions)
       syncer.sync!
     end
+
+    def permitted_resource_params
+      params.require(:schedule).permit(
+        :id,
+        :name,
+        order_cycle_ids: []
+      )
+    end
   end
 end

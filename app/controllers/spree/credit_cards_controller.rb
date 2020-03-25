@@ -26,7 +26,7 @@ module Spree
 
       authorize! :update, @credit_card
 
-      if @credit_card.update_attributes(params[:credit_card])
+      if @credit_card.update_attributes(credit_card_params)
         render json: @credit_card, serializer: ::Api::CreditCardSerializer, status: :ok
       else
         update_failed
@@ -96,6 +96,10 @@ module Spree
 
     def update_failed
       render json: { flash: { error: t(:card_could_not_be_updated) } }, status: :bad_request
+    end
+
+    def credit_card_params
+      params.require(:credit_card).permit(:is_default, :year, :month)
     end
   end
 end

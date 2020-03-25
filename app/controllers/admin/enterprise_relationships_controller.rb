@@ -25,7 +25,7 @@ module Admin
     private
 
     def enterprise_relationship_params
-      params.require(:enterprise_relationship).permit(:parent_id, :child_id, :permissions_list)
+      params.require(:enterprise_relationship).permit(:parent_id, :child_id, permissions_list: [])
     end
   end
 end

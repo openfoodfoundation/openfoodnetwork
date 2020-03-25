@@ -34,6 +34,12 @@ module Spree
       def destroy_before
         @viewable = @image.viewable
       end
+
+      def permitted_resource_params
+        params.require(:image).permit(
+          :attachment, :viewable_id, :alt
+        )
+      end
     end
   end
 end
