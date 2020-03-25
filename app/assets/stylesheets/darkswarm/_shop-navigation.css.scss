@@ -2,31 +2,12 @@
 
 ordercycle {
   float: right;
-  background: $teal-400;
-  color: $white;
+  background: $grey-050;
+  color: $grey-800;
   width: 100%;
   border-radius: 0.5em 0.5em 0 0;
   margin-top: 1em;
   padding: 1em 1em 0;
-
-  &.requires-selection {
-    background-color: $red-700;
-
-    .order-cycle-select {
-      border: 1px solid $red-500;
-
-      .select-label {
-        background-color: rgba($red-500, 0.5);
-      }
-
-      select {
-        background-color: $white;
-        background-image: url('/assets/black-caret.svg');
-        color: $grey-500;
-        font-style: italic;
-      }
-    }
-  }
 
   p {
     max-width: 400px;
@@ -119,7 +100,7 @@ ordercycle {
 
   closing {
     @include headingFont;
-    color: $white;
+    color: $grey-800;
     font-size: 1.25rem;
     display: block;
     padding: 0 0 12px;
@@ -151,4 +132,29 @@ shop navigation ordercycle {
   height: 7.6em;
   position: absolute;
   right: 1em;
+  background: $teal-400;
+  color: $white;
+
+  &.requires-selection {
+    background-color: $red-700;
+
+    .order-cycle-select {
+      border: 1px solid $red-500;
+
+      .select-label {
+        background-color: rgba($red-500, 0.5);
+      }
+
+      select {
+        background-color: $white;
+        background-image: url('/assets/black-caret.svg');
+        color: $grey-500;
+        font-style: italic;
+      }
+    }
+  }
+
+  closing {
+    color: $white;
+  }
 }
