@@ -7,13 +7,16 @@
 
 .darkswarm.footer-pad
   - content_for :order_cycle_form do
-
     %closing
       = t :checkout_now
     %p
       = t :checkout_order_ready
       %strong
         = pickup_time current_order_cycle
+
+  - content_for :ordercycle_sidebar do
+    .show-for-large-up.large-4.columns
+      = render partial: "shopping_shared/order_cycles"
 
   = render partial: "shopping_shared/header"
 

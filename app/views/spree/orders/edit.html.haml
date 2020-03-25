@@ -16,6 +16,10 @@
         - else
           = @order.distributor.next_collection_at
 
+  - content_for :ordercycle_sidebar do
+    .show-for-large-up.large-4.columns
+      = render partial: "shopping_shared/order_cycles"
+
   = render partial: "shopping_shared/header"
 
   %fieldset.footer-pad
