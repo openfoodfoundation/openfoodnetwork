@@ -156,19 +156,24 @@ describe Calculator::Weight do
     let(:product) {
       create(:product, variant_unit: 'items', variant_unit_scale: nil, variant_unit_name: "bunch")
     }
-    let(:variant1) { create(:variant, product: product, unit_value: 0, weight: nil) }
-    let(:variant2) { create(:variant, product: product, unit_value: 0, weight: 10.0) }
-    let(:line_item1) { create(:line_item, variant: variant1, quantity: 1) }
-    let(:line_item2) { create(:line_item, variant: variant2, quantity: 1) }
+    let(:line_item) { create(:line_item, variant: variant, quantity: 1) }
 
     before { subject.set_preference(:per_kg, 5) }
 
-    it "uses zero weight if variant.weight is not present" do
-      expect(subject.compute(line_item1)).to eq 0
+    context "when variant.weight is present" do
+      let(:variant) { create(:variant, product: product, unit_value: 0, weight: 10.0) }
+
+      it "uses the variant weight" do
+        expect(subject.compute(line_item)).to eq 50.0
+      end
     end
 
-    it "uses the variant weight if variant.weight is present" do
-      expect(subject.compute(line_item2)).to eq 50.0
+    context "when variant.weight is nil" do
+      let(:variant) { create(:variant, product: product, unit_value: 0, weight: nil) }
+
+      it "uses zero weight" do
+        expect(subject.compute(line_item)).to eq 0
+      end
     end
   end
 end
