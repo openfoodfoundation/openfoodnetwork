@@ -71,9 +71,11 @@ Spree::LineItem.class_eval do
       where('spree_adjustments.id IS NULL')
   }
 
+  # Overridden so that LineItems always have access to soft-deleted Variant attributes
+  # In some situations, unscoped super will be nil, in these cases we fetch the variant using the variant_id
+  # See isssue #4946 for more details
   def variant
-    # Overridden so that LineItems always have access to soft-deleted Variant attributes
-    Spree::Variant.unscoped { super }
+    Spree::Variant.unscoped { super } || Spree::Variant.unscoped.find(self.variant_id)
   end
 
   def cap_quantity_at_stock!
