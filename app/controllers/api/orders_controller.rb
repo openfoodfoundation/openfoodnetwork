@@ -1,5 +1,5 @@
 module Api
-  class OrdersController < BaseController
+  class OrdersController < Api::BaseController
     def show
       authorize! :read, order
       render json: order, serializer: Api::OrderDetailedSerializer, current_order: order

@@ -1,5 +1,5 @@
 module Api
-  class OrderCyclesController < BaseController
+  class OrderCyclesController < Api::BaseController
     include EnterprisesHelper
     respond_to :json
 

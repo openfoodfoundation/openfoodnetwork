@@ -1,5 +1,5 @@
 module Api
-  class LogosController < EnterpriseAttachmentController
+  class LogosController < Api::EnterpriseAttachmentController
     private
 
     def attachment_name

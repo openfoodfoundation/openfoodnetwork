@@ -1,5 +1,5 @@
 module Api
-  class EnterpriseAttachmentController < BaseController
+  class EnterpriseAttachmentController < Api::BaseController
     class MissingImplementationError < StandardError; end
     class UnknownEnterpriseAuthorizationActionError < StandardError; end
 
