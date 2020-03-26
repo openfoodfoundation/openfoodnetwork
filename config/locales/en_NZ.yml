@@ -246,6 +246,8 @@ en_NZ:
   notes: Notes
   error: Error
   processing_payment: "Processing payment..."
+  no_pending_payments: "No pending payments"
+  invalid_payment_state: "Invalid payment state"
   filter_results: Filter Results
   quantity: Quantity
   pick_up: Pick up
@@ -1484,6 +1486,7 @@ en_NZ:
   shopping_oc_closed_description: "Please wait until the next cycle opens (or contact us directly to see if we can accept any late orders)"
   shopping_oc_last_closed: "The last cycle closed %{distance_of_time} ago"
   shopping_oc_next_open: "The next cycle opens in %{distance_of_time}"
+  shopping_oc_select: "Select..."
   shopping_tabs_home: "Home"
   shopping_tabs_shop: "Shop"
   shopping_tabs_about: "About"
@@ -1857,6 +1860,7 @@ en_NZ:
         headline: "Finished!"
         thanks: "Thanks for filling out the details for %{enterprise}."
         login: "You can change or update your enterprise at any stage by logging into Open Food Network and going to Admin."
+        action: "Go to Enterprise Dashboard"
   back: "Back"
   continue: "Continue"
   action_or: "OR"
@@ -2273,6 +2277,7 @@ en_NZ:
   enterprise_register_success_notice: "Congratulations! Registration for %{enterprise} is complete!"
   enterprise_bulk_update_success_notice: "Enterprises updated successfully"
   enterprise_bulk_update_error: 'Update failed'
+  enterprise_shop_show_error: "The shop you are looking for doesn't exist or is inactive on OFN. Please check other shops."
   order_cycles_create_notice: 'Your order cycle has been created.'
   order_cycles_update_notice: 'Your order cycle has been updated.'
   order_cycles_bulk_update_notice: 'Order cycles have been updated.'
@@ -3014,7 +3019,8 @@ en_NZ:
           tax_invoice: "TAX INVOICE"
           code: "Code"
           from: "From"
-          to: "To"
+          to: "Bill to"
+          shipping: "Shipping"
         form:
           distribution_fields:
             title: "Distribution"

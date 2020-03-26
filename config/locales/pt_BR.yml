@@ -175,7 +175,7 @@ pt_BR:
   home: "OFB"
   title: Open Food Brasil
   welcome_to: 'Bem-vindo a'
-  site_meta_description: "A gente começa pela base. Com agricultores e produtores preparados para contar suas histórias com orgulho e verdade. Com distribuidores prontos para conectar pessoas com produtos de forma justa e honesta. Com os compradores que acreditam que melhores decisões de compras semanais podem..."
+  site_meta_description: "A nossa proposta é conectar agricultoras/es, produtoras/es e consumidoras/es que estão próximos entre si. Buscamos, assim, potencializar a circulação e a comercialização de produtos agroecológicos, orgânicos e artesanais em circuitos curtos, bem como criar novas formas de relação, orientadas pela troca, diálogo e confiança."
   search_by_name: Procurar por nome ou localidade
   producers_join: Produtores nacionais estão convidados a se unirem à Open Food Brasil.
   charges_sales_tax: Cobra imposto sobre bens e serviços?
@@ -583,7 +583,7 @@ pt_BR:
         actions_delete: "Deletar selecionado"
         loading: "Carregando pedidos"
         no_results: "Nenhum pedido encontrado. "
-        group_buy_unit_size: "Tamanho de unidade para compras de Grupo"
+        group_buy_unit_size: "Tamanho da Unidade para Grupo de Compras"
         total_qtt_ordered: "Quantidade total do pedido"
         max_qtt_ordered: "Quantidade máxima do pedido"
         current_fulfilled_units: "Unidades completadas no momento"
@@ -598,7 +598,7 @@ pt_BR:
         title: Iniciativas
         new_enterprise: Nova iniciativa
         producer?: "Produtor?"
-        package: Embalagem
+        package: Tipo de Perfil
         status: Status
         manage: Administrar
       form:
@@ -806,7 +806,7 @@ pt_BR:
         manage: Administrar
         manage_link: Configurações
         producer?: "Produtor?"
-        package: "Embalagem"
+        package: "Tipo de Perfil"
         status: "Status"
       new_form:
         owner: Proprietário
@@ -1333,14 +1333,14 @@ pt_BR:
       cookies_policy_link: "política de cookies"
       cookies_accept_button: "Aceitar Cookies"
   home_shop: Compre Agora
-  brandstory_headline: "Alimentos, com liberdade"
-  brandstory_intro: "Às vezes, a melhor maneira de consertar o sistema é construir um novo..."
-  brandstory_part1: "Começamos do início. Com agricultores e produtores preparados para contar com orgulho suas verdadeiras histórias. Com distribuidores prontos para conectar pessoas com produtos de forma justa e honesta. Com consumidores que acreditam que melhores decisões de compras podem mudar seriamente o mundo."
-  brandstory_part2: "Então precisamos de uma forma para tornar isto real. Uma maneira para empoderar todos os que produzem, vendem e compram alimentos. Uma maneira de contar história e lidar com a logística. Uma maneira de transformar suas compras em mudanças positivas para a sociedade."
-  brandstory_part3: "Assim construímos um mercado de alimentos mais justo e transparente, por isso criamos relacionamentos reais. Nosso código é aberto, por isso é de todos. Nos multiplicamos por diversas regiões e países, com pessoas criando seus próprios mercados pelo mundo."
-  brandstory_part4: "É acessível a todos, em qualquer lugar do mundo."
-  brandstory_part5_strong: "Somos a Open Food Brasil."
-  brandstory_part6: "Todos amamos comida. Agora a gente também pode amar nosso maneira de consumir. "
+  brandstory_headline: "Comida de verdade, com autonomia "
+  brandstory_intro: "Comer é um ato político! Por trás de todo alimento há pessoas, processos e histórias. "
+  brandstory_part1: "A nossa proposta é conectar agricultoras/es, produtoras/es e consumidoras/es que estão próximos entre si. Buscamos, assim, potencializar a circulação e a comercialização de produtos agroecológicos, orgânicos e artesanais em circuitos curtos, bem como criar novas formas de relação, orientadas pela troca, diálogo e confiança."
+  brandstory_part2: "Para tornar essa ideia real, trouxemos a plataforma Open Food Network para o Brasil. Nosso código (a receita do site) é aberto e seu desenvolvimento é orientado globalmente pelas/os interessadas/os e baseado em uma cultura de autonomia e transparência."
+  brandstory_part3: "Uma maneira de incentivar a colaboração entre quem produz, vende e compra. Uma maneira de contar histórias e lidar com a logística. Uma maneira de transformar seu consumo de alimentos em mudanças positivas para a sociedade."
+  brandstory_part4: "Colabore com essa (des)construção!"
+  brandstory_part5_strong: "Open Food Brasil"
+  brandstory_part6: "–"
   learn_body: "Explore modelos, histórias e recursos para te dar suporte para desenvolver seu próprio negócio ou organização justa de alimentos. Encontre treinamento, eventos e outras oportunidades para aprender com quem faz parte do seu setor. "
   learn_cta: "Inspire-se"
   connect_body: "Procure em nossa lista de produtores, distribuidores e cooperativas para encontrar um comércio justo perto de você. Registre seu negócio ou organização na Open Food Brasil para que os consumidores possam te encontrar. Junte-se à comunidade para trocar experiências e resolver problemas."
@@ -1901,7 +1901,7 @@ pt_BR:
   successfully_updated: '%{resource} foi atualizado com sucesso!'
   running_balance: "Balanço corrente"
   outstanding_balance: "Saldo devedor"
-  admin_enterprise_relationships: "Permissões corporativas"
+  admin_enterprise_relationships: "Permissões da Iniciativa"
   admin_enterprise_relationships_everything: "Tudo"
   admin_enterprise_relationships_permits: "permite"
   admin_enterprise_relationships_seach_placeholder: "Buscar"
@@ -2133,7 +2133,7 @@ pt_BR:
   report_header_producer: Produtor
   report_header_producer_suburb: Subúrbio do produtor
   report_header_unit: Unidade
-  report_header_group_buy_unit_quantity: Quantidade de unidade de compra em grupo
+  report_header_group_buy_unit_quantity: Quantidade da Unidade para Grupo de Compras
   report_header_cost: Custo
   report_header_shipping_cost: ' Custo de envio'
   report_header_curr_cost_per_unit: Custo unitário atual
@@ -2229,7 +2229,7 @@ pt_BR:
   adrdress: "Endereço"
   contact: "Contato"
   social: "Social"
-  business_details: "Detalhes do negócio"
+  business_details: "Detalhes da iniciativa"
   properties: "Propriedades"
   shipping: "Envio"
   shipping_methods: "Métodos de envio"
@@ -2271,7 +2271,7 @@ pt_BR:
       mas não possuem métodos de envio e pagamento válidos. Até que você configure
       eles, os consumidores não poderão fazer compras nessas centrais.
   enterprise_fees_update_notice: As tarifas da sua iniciativa foram atualizadas.
-  enterprise_register_package_error: "Por favor selecione um pacote"
+  enterprise_register_package_error: "Por favor selecione um tipo de perfil"
   enterprise_register_error: "Não foi possível completar o registro para %{enterprise}"
   enterprise_register_success_notice: "Parabéns! O registro para %{enterprise} está completo!"
   enterprise_bulk_update_success_notice: "Iniciativas atualizadas com sucesso"
@@ -2360,7 +2360,7 @@ pt_BR:
           hub_shop_text3: >
               Se você também quer vender seus próprios produtos, você precisará mudar
               essa iniciativa para ser um produtor.
-          choose_package: Por favor escolha um pacote
+          choose_package: Por favor escolha um tipo de perfil
           choose_package_text1: >
               Sua iniciativa não será totalmente ativada até que um tipo de perfil
               seja selecionado a partir das opções à esquerda.
@@ -3023,7 +3023,8 @@ pt_BR:
           tax_invoice: "NOTA FISCAL"
           code: "Código"
           from: "De"
-          to: "Para"
+          to: "Informações de cobrança"
+          shipping: "Entrega"
         form:
           distribution_fields:
             title: "Distribuição"
@@ -3140,7 +3141,7 @@ pt_BR:
         primary_taxon_form:
           product_category: Categoria de Produto
         group_buy_form:
-          group_buy: "Compra de grupo?"
+          group_buy: "Grupo de Compras?"
           bulk_unit_size: Tamanho da unidade em massa
         display_as:
           display_as: Mostrar como

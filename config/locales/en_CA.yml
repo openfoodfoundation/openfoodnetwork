@@ -3018,7 +3018,8 @@ en_CA:
           tax_invoice: "Order Number"
           code: "Code"
           from: "From"
-          to: "To"
+          to: "Bill to"
+          shipping: "Shipping"
         form:
           distribution_fields:
             title: "Distribution"
