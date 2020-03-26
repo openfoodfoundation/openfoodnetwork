@@ -33,6 +33,14 @@ module Web
     end
 
     describe "language from locale" do
+      # keeps global state unchanged
+      around do |example|
+        original_available_locales = I18n.available_locales
+        I18n.available_locales = ['en', 'en_GB', '']
+        example.run
+        I18n.available_locales = original_available_locales
+      end
+
       scenario "when locale is the language" do
         I18n.locale = "en"
         expect(helper.locale_language).to eq "en"
