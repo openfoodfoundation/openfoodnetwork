@@ -1394,7 +1394,7 @@ it:
   order_delivery_address: Indirizzo di consegna
   order_delivery_time: Tempo di consegna
   order_special_instructions: "Tue note:"
-  order_pickup_time: Pronto per la raccolta
+  order_pickup_time: Pronto per il ritiro
   order_pickup_instructions: Istruzioni per la raccolta
   order_produce: Produrre
   order_total_price: Totale
@@ -1463,7 +1463,7 @@ it:
   email_shipping_delivery_time: "Consegna il"
   email_shipping_delivery_address: "Indirizzo di consegna"
   email_shipping_collection_details: Dettagli della raccolta
-  email_shipping_collection_time: "Pronto per la raccolta:"
+  email_shipping_collection_time: "Pronto per il ritiro:"
   email_shipping_collection_instructions: "Istruzioni per la raccolta:"
   email_special_instructions: "Tue note:"
   email_signup_greeting: Ciao!
@@ -3023,7 +3023,6 @@ it:
           tax_invoice: "FATTURA DELLE TASSE"
           code: "Codice"
           from: "Da"
-          to: "A"
         form:
           distribution_fields:
             title: "Distribuzione"

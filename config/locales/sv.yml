@@ -1972,7 +1972,6 @@ sv:
           tax_invoice: "FAKTURA"
           code: "Kod"
           from: "Från"
-          to: "Till"
         form:
           distribution_fields:
             title: "Distribution"

@@ -3018,7 +3018,6 @@ nb:
           tax_invoice: "AVGIFTSFAKTURA"
           code: "Kode"
           from: "Fra"
-          to: "Til"
         form:
           distribution_fields:
             title: "Distribusjon"

@@ -2865,7 +2865,6 @@ nl_BE:
           tax_invoice: "FACTUUR"
           code: "Code"
           from: "Van"
-          to: "tot"
         form:
           distribution_fields:
             title: "Distributie"

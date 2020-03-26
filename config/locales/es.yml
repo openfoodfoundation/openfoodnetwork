@@ -2877,7 +2877,6 @@ es:
           tax_invoice: "FACTURA DE IMPUESTOS"
           code: "Código"
           from: "De"
-          to: "A"
         form:
           distribution_fields:
             title: "Distribución"

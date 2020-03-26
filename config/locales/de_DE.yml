@@ -2927,7 +2927,6 @@ de_DE:
           tax_invoice: "Steuerrechnung"
           code: "Code"
           from: "Von"
-          to: "Zu"
         form:
           distribution_fields:
             title: "Verteilung"

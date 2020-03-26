@@ -1425,7 +1425,7 @@ ca:
   email_confirm_customer_greeting: "Hola %{name},"
   email_confirm_customer_intro_html: "Gràcies per comprar a <strong> %{distributor}</strong>."
   email_confirm_customer_number_html: "Confirmació de la comanda <strong> # %{number} </strong>"
-  email_confirm_customer_details_html: "Aquests són els detalls de la teva comanda de <strong> %{distributor} </ strong>:"
+  email_confirm_customer_details_html: "Aquests són els detalls de la teva comanda de<strong>%{distributor}</strong>:"
   email_confirm_customer_signoff: "Salutacions cordials,"
   email_confirm_shop_greeting: "Hola %{name},"
   email_confirm_shop_order_html: "Que bé! Tens una nova comanda per <strong> %{distributor} </ strong>."
@@ -3015,7 +3015,6 @@ ca:
           tax_invoice: "FACTURA D'IMPOSTOS"
           code: "Codi"
           from: "De"
-          to: "Per a"
         form:
           distribution_fields:
             title: "Distribució"

@@ -2927,7 +2927,6 @@ en_AU:
           tax_invoice: "TAX INVOICE"
           code: "Code"
           from: "From"
-          to: "To"
         form:
           distribution_fields:
             title: "Distribution"

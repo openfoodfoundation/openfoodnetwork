@@ -3029,7 +3029,6 @@ fr_CA:
           tax_invoice: "FACTURE"
           code: "Code"
           from: "De"
-          to: "A"
         form:
           distribution_fields:
             title: "Distribution"

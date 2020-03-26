@@ -3010,7 +3010,6 @@ tr:
           tax_invoice: "VERGİ FATURASI"
           code: "Kod"
           from: "İtibaren"
-          to: "Şu vakte kadar"
         form:
           distribution_fields:
             title: "Dağıtım"

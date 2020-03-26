@@ -2811,7 +2811,6 @@ pt:
           tax_invoice: "FACTURA FISCAL"
           code: "Código"
           from: "De"
-          to: "Para"
         form:
           distribution_fields:
             title: "Distribuição"
