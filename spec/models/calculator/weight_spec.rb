@@ -152,7 +152,7 @@ describe Calculator::Weight do
     end
   end
 
-  context "when variant_unit is 'items' and unit_value is zero" do
+  context "when variant_unit is 'items'" do
     let(:product) {
       create(:product, variant_unit: 'items', variant_unit_scale: nil, variant_unit_name: "bunch")
     }
@@ -160,7 +160,7 @@ describe Calculator::Weight do
 
     before { subject.set_preference(:per_kg, 5) }
 
-    context "when variant.weight is present" do
+    context "when unit_value is zero variant.weight is present" do
       let(:variant) { create(:variant, product: product, unit_value: 0, weight: 10.0) }
 
       it "uses the variant weight" do
@@ -168,10 +168,34 @@ describe Calculator::Weight do
       end
     end
 
-    context "when variant.weight is nil" do
+    context "when unit_value is zero variant.weight is nil" do
       let(:variant) { create(:variant, product: product, unit_value: 0, weight: nil) }
 
       it "uses zero weight" do
+        expect(subject.compute(line_item)).to eq 0
+      end
+    end
+
+    context "when unit_value is nil and variant.weight is present" do
+      let(:variant) {
+        create(:variant, product: product, unit_description: "bunches", unit_value: nil, weight: 10.0)
+      }
+
+      it "uses the variant weight" do
+        line_item.final_weight_volume = 1
+
+        expect(subject.compute(line_item)).to eq 50.0
+      end
+    end
+
+    context "when unit_value is nil and variant.weight is nil" do
+      let(:variant) {
+        create(:variant, product: product, unit_description: "bunches", unit_value: nil, weight: nil)
+      }
+
+      it "uses zero weight" do
+        line_item.final_weight_volume = 1
+
         expect(subject.compute(line_item)).to eq 0
       end
     end
