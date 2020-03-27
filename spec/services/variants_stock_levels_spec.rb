@@ -48,4 +48,30 @@ describe VariantsStockLevels do
       )
     end
   end
+
+  describe "when the variant has an override" do
+    let!(:distributor) { create(:distributor_enterprise) }
+    let(:supplier) { variant_in_the_order.product.supplier }
+    let!(:order_cycle) {
+      create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor],
+                                  variants: [variant_in_the_order])
+    }
+    let!(:variant_override) {
+      create(:variant_override, hub: distributor,
+                                variant: variant_in_the_order,
+                                count_on_hand: 404)
+    }
+
+    before do
+      order.order_cycle = order_cycle
+      order.distributor = distributor
+      order.save
+    end
+
+    xit "returns the on_hand value of the override" do
+      expect(variant_stock_levels.call(order, [variant_in_the_order.id])).to eq(
+        variant_in_the_order.id => { quantity: 2, max_quantity: 3, on_hand: 404, on_demand: false }
+      )
+    end
+  end
 end
