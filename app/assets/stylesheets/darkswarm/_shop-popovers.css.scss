@@ -1,31 +1,6 @@
 @import "mixins";
 @import "branding";
 
-// .darkswarm
-//   product
-
-ordercycle {
-  .joyride-tip-guide {
-    background-color: $clr-brick;
-
-    .joyride-nub.right {
-      border-color: $clr-brick !important;
-      border-top-color: transparent !important;
-      border-right-color: transparent !important;
-      border-bottom-color: transparent !important;
-    }
-
-    p {
-      margin: 0;
-      font-weight: 700;
-    }
-
-    @media all and (max-width: 768px) {
-      z-index: 10;
-    }
-  }
-}
-
 // Pop over
 // Foundation overrides
 .joyride-tip-guide.price_breakdown {

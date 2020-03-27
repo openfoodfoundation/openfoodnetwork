@@ -7,7 +7,7 @@
 
   .tab-buttons {
     color: $dark-grey;
-    box-shadow: 0 1px 0 rgba(0,0,0,0.05), 0 8px 6px -6px rgba(0, 0, 0, 0.2);
+    box-shadow: $distributor-header-shadow;
 
     .columns {
       display: flex;
