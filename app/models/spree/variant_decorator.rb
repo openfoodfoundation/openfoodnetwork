@@ -16,7 +16,8 @@ Spree::Variant.class_eval do
   has_many :variant_overrides
   has_many :inventory_items
 
-  attr_accessible :unit_value, :unit_description, :images_attributes, :display_as, :display_name, :import_date
+  attr_accessible :unit_value, :unit_description, :images_attributes,
+                  :display_as, :display_name, :import_date
   accepts_nested_attributes_for :images
 
   validates :unit_value, presence: true, if: ->(variant) {
@@ -53,13 +54,23 @@ Spree::Variant.class_eval do
   }
 
   scope :visible_for, lambda { |enterprise|
-    joins(:inventory_items).where('inventory_items.enterprise_id = (?) AND inventory_items.visible = (?)', enterprise, true)
+    joins(:inventory_items).
+      where(
+        'inventory_items.enterprise_id = (?) AND inventory_items.visible = (?)',
+        enterprise,
+        true
+      )
   }
 
   scope :not_hidden_for, lambda { |enterprise|
     return where("1=0") if enterprise.blank?
 
-    joins("LEFT OUTER JOIN (SELECT * from inventory_items WHERE enterprise_id = #{sanitize enterprise.andand.id}) AS o_inventory_items ON o_inventory_items.variant_id = spree_variants.id")
+    joins("
+      LEFT OUTER JOIN (SELECT *
+                         FROM inventory_items
+                         WHERE enterprise_id = #{sanitize enterprise.andand.id})
+        AS o_inventory_items
+        ON o_inventory_items.variant_id = spree_variants.id")
       .where("o_inventory_items.id IS NULL OR o_inventory_items.visible = (?)", true)
   }
 
@@ -68,7 +79,8 @@ Spree::Variant.class_eval do
   scope :stockable_by, lambda { |enterprise|
     return where("1=0") if enterprise.blank?
 
-    joins(:product).where(spree_products: { id: Spree::Product.stockable_by(enterprise).pluck(:id) })
+    joins(:product).
+      where(spree_products: { id: Spree::Product.stockable_by(enterprise).pluck(:id) })
   }
 
   # Define sope as class method to allow chaining with other scopes filtering id.
@@ -96,7 +108,8 @@ Spree::Variant.class_eval do
                                         select("spree_variants.id"))
   end
 
-  # We override in_stock? to avoid depending on the non-overridable method Spree::Stock::Quantifier.can_supply?
+  # We override in_stock? to avoid depending
+  #   on the non-overridable method Spree::Stock::Quantifier.can_supply?
   #   VariantStock implements can_supply? itself which depends on overridable methods
   def in_stock?(quantity = 1)
     can_supply?(quantity)
