@@ -7,8 +7,6 @@ class VariantsStockLevels
   def call(order, requested_variant_ids)
     variant_stock_levels = variant_stock_levels(order.line_items)
 
-    # Variants are not scoped here and so the stock levels reported are incorrect
-    # See cart_controller_spec for more details and #3222
     order_variant_ids = variant_stock_levels.keys
     missing_variant_ids = requested_variant_ids - order_variant_ids
     missing_variant_ids.each do |variant_id|
