@@ -3049,6 +3049,8 @@ fr:
           tax_invoice: "FACTURE"
           code: "Code"
           from: "De"
+          to: "Facturer à"
+          shipping: "Envoi"
         form:
           distribution_fields:
             title: "Distribution"
