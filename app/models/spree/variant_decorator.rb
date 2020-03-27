@@ -88,11 +88,12 @@ Spree::Variant.class_eval do
   def self.active(currency = nil)
     # "where(id:" is necessary so that the returned relation has no includes
     # The relation without includes will not be readonly and allow updates on it
-    where(id: joins(:prices).
-                where(deleted_at: nil).
-                where('spree_prices.currency' => currency || Spree::Config[:currency]).
-                where('spree_prices.amount IS NOT NULL').
-                select("spree_variants.id"))
+    where("spree_variants.id in (?)", joins(:prices).
+                                        where(deleted_at: nil).
+                                        where('spree_prices.currency' =>
+                                          currency || Spree::Config[:currency]).
+                                        where('spree_prices.amount IS NOT NULL').
+                                        select("spree_variants.id"))
   end
 
   # We override in_stock? to avoid depending on the non-overridable method Spree::Stock::Quantifier.can_supply?
