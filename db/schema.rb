@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20200209163549) do
+ActiveRecord::Schema.define(:version => 20200327105910) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -1202,7 +1202,7 @@ ActiveRecord::Schema.define(:version => 20200209163549) do
     t.string   "whodunnit"
     t.text     "object"
     t.datetime "created_at"
-    t.string   "custom_data"
+    t.text     "custom_data"
   end
 
   add_index "versions", ["item_type", "item_id"], :name => "index_versions_on_item_type_and_item_id"
