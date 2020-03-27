@@ -12,7 +12,7 @@ class VariantsStockLevels
     order_variant_ids = variant_stock_levels.keys
     missing_variant_ids = requested_variant_ids - order_variant_ids
     missing_variant_ids.each do |variant_id|
-      variant = Spree::Variant.find(variant_id)
+      variant = scoped_variant(order.distributor, Spree::Variant.find(variant_id))
       variant_stock_levels[variant_id] = { quantity: 0, max_quantity: 0, on_hand: variant.on_hand, on_demand: variant.on_demand }
     end
 
@@ -36,7 +36,7 @@ class VariantsStockLevels
   def variant_stock_levels(line_items)
     Hash[
       line_items.map do |line_item|
-        variant = scoped_variant(line_item)
+        variant = scoped_variant(line_item.order.distributor, line_item.variant)
 
         [variant.id,
          { quantity: line_item.quantity,
@@ -47,10 +47,7 @@ class VariantsStockLevels
     ]
   end
 
-  def scoped_variant(line_item)
-    distributor = line_item.order.distributor
-    variant = line_item.variant
-
+  def scoped_variant(distributor, variant)
     return variant if distributor.blank?
 
     OpenFoodNetwork::ScopeVariantToHub.new(distributor).scope(variant)

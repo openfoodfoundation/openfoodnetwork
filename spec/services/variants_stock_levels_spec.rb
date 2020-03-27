@@ -64,7 +64,7 @@ describe VariantsStockLevels do
     let!(:variant_override_not_in_order) {
       create(:variant_override, hub: distributor,
                                 variant: variant_not_in_the_order,
-                                count_on_hand: 404)
+                                count_on_hand: 201)
     }
 
     before do
@@ -76,17 +76,23 @@ describe VariantsStockLevels do
     context "when the variant is in the order" do
       it "returns the on_hand value of the override" do
         expect(variant_stock_levels.call(order, [variant_in_the_order.id])).to eq(
-          variant_in_the_order.id => { quantity: 2, max_quantity: 3, on_hand: 200, on_demand: false }
+          variant_in_the_order.id => {
+            quantity: 2, max_quantity: 3, on_hand: 200, on_demand: false
+          }
         )
       end
     end
 
     context "with variants that are not in the order" do
-      xit "returns the on_hand value of the override" do
+      it "returns the on_hand value of the override" do
         variant_ids = [variant_in_the_order.id, variant_not_in_the_order.id]
         expect(variant_stock_levels.call(order, variant_ids)).to eq(
-          variant_in_the_order.id => { quantity: 2, max_quantity: 3, on_hand: 200, on_demand: false },
-          variant_not_in_the_order.id => { quantity: 0, max_quantity: 0, on_hand: 404, on_demand: false }
+          variant_in_the_order.id => {
+            quantity: 2, max_quantity: 3, on_hand: 200, on_demand: false
+          },
+          variant_not_in_the_order.id => {
+            quantity: 0, max_quantity: 0, on_hand: 201, on_demand: false
+          }
         )
       end
     end
