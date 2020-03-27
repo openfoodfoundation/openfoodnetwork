@@ -47,14 +47,12 @@ Spree::LineItem.class_eval do
   }
 
   # Here we are simply joining the line item to its variant and product
-  # We do this with SQL to avoid the default scopes,
+  # We dont use joins here to avoid the default scopes,
   #   and with that, include deleted variants and deleted products
   scope :supplied_by_any, lambda { |enterprises|
-    joins("INNER JOIN spree_variants
-              ON spree_line_items.variant_id = spree_variants.id
-           INNER JOIN spree_products
-              ON spree_variants.product_id = spree_products.id").
-      where("spree_products.supplier_id IN (?)", enterprises)
+    product_ids = Spree::Product.unscoped.where(supplier_id: enterprises).select(:id)
+    variant_ids = Spree::Variant.unscoped.where(product_id: product_ids).select(:id)
+    where("spree_line_items.variant_id IN (?)", variant_ids)
   }
 
   scope :with_tax, -> {
