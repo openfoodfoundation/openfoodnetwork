@@ -50,9 +50,9 @@ Spree::LineItem.class_eval do
   # We do this with SQL to avoid the default scopes,
   #   and with that, include deleted variants and deleted products
   scope :supplied_by_any, lambda { |enterprises|
-    joins("LEFT OUTER JOIN spree_variants
+    joins("INNER JOIN spree_variants
               ON spree_line_items.variant_id = spree_variants.id
-           LEFT OUTER JOIN spree_products
+           INNER JOIN spree_products
               ON spree_variants.product_id = spree_products.id").
       where("spree_products.supplier_id IN (?)", enterprises)
   }
