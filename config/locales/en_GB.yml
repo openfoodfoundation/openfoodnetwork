@@ -3025,6 +3025,8 @@ en_GB:
           tax_invoice: "TAX INVOICE"
           code: "Code"
           from: "From"
+          to: "Bill to"
+          shipping: "Shipping"
         form:
           distribution_fields:
             title: "Distribution"
