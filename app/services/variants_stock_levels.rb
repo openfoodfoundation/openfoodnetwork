@@ -1,6 +1,8 @@
 # Report the stock levels of:
 #   - all variants in the order
 #   - all requested variant ids
+require 'open_food_network/scope_variant_to_hub'
+
 class VariantsStockLevels
   def call(order, requested_variant_ids)
     variant_stock_levels = variant_stock_levels(order.line_items)
@@ -34,12 +36,24 @@ class VariantsStockLevels
   def variant_stock_levels(line_items)
     Hash[
       line_items.map do |line_item|
-        [line_item.variant.id,
+        variant = scoped_variant(line_item)
+
+        [variant.id,
          { quantity: line_item.quantity,
            max_quantity: line_item.max_quantity,
-           on_hand: line_item.variant.on_hand,
-           on_demand: line_item.variant.on_demand }]
+           on_hand: variant.on_hand,
+           on_demand: variant.on_demand }]
       end
     ]
+  end
+
+  def scoped_variant(line_item)
+    distributor = line_item.order.distributor
+    variant = line_item.variant
+
+    return variant if distributor.blank?
+
+    OpenFoodNetwork::ScopeVariantToHub.new(distributor).scope(variant)
+    variant
   end
 end

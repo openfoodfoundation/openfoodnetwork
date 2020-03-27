@@ -59,7 +59,7 @@ describe VariantsStockLevels do
     let!(:variant_override) {
       create(:variant_override, hub: distributor,
                                 variant: variant_in_the_order,
-                                count_on_hand: 404)
+                                count_on_hand: 200)
     }
 
     before do
@@ -68,9 +68,9 @@ describe VariantsStockLevels do
       order.save
     end
 
-    xit "returns the on_hand value of the override" do
+    it "returns the on_hand value of the override" do
       expect(variant_stock_levels.call(order, [variant_in_the_order.id])).to eq(
-        variant_in_the_order.id => { quantity: 2, max_quantity: 3, on_hand: 404, on_demand: false }
+        variant_in_the_order.id => { quantity: 2, max_quantity: 3, on_hand: 200, on_demand: false }
       )
     end
   end
