@@ -175,7 +175,7 @@
             %span.error{ ng: { bind: 'line_item.errors.quantity' } }
           %td.max{ 'ng-show' => 'columns.max.visible' } {{ line_item.max_quantity }}
           %td.final_weight_volume{ 'ng-show' => 'columns.final_weight_volume.visible' }
-            %input.show-dirty{ :type => 'number', :name => 'final_weight_volume', :id => 'final_weight_volume', ng: { model: "line_item.final_weight_volume", readonly: "unitValueLessThanZero(line_item)", change: "weightAdjustedPrice(line_item)", required: "true", class: '{"update-error": line_item.errors.final_weight_volume}' }, min: 0, 'ng-pattern' => '/[1-9]+/' }
+            %input.show-dirty{ type: 'number', step: 'any', :name => 'final_weight_volume', :id => 'final_weight_volume', ng: { model: "line_item.final_weight_volume", readonly: "unitValueLessThanZero(line_item)", change: "weightAdjustedPrice(line_item)", required: "true", class: '{"update-error": line_item.errors.final_weight_volume}' }, min: 0, 'ng-pattern' => '/[0-9]*[.]?[0-9]+/' }
             %span.error{ ng: { bind: 'line_item.errors.final_weight_volume' } }
           %td.price{ 'ng-show' => 'columns.price.visible' }
             %input.show-dirty{ :type => 'text', :name => 'price', :id => 'price', :ng => { value: 'line_item.price * line_item.quantity | currency:""', readonly: "true", class: '{"update-error": line_item.errors.price}' } }
