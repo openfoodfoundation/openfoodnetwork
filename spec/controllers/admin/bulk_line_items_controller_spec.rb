@@ -36,22 +36,22 @@ describe Admin::BulkLineItemsController, type: :controller do
         end
 
         it "retrieves a list of line_items with appropriate attributes, including line items with appropriate attributes" do
-          keys = json_response.first.keys.map(&:to_sym)
+          keys = json_response['line_items'].first.keys.map(&:to_sym)
           expect(line_item_attributes.all?{ |attr| keys.include? attr }).to eq(true)
         end
 
         it "sorts line_items in ascending id line_item" do
-          ids = json_response.map{ |line_item| line_item['id'] }
+          ids = json_response['line_items'].map{ |line_item| line_item['id'] }
           expect(ids[0]).to be < ids[1]
           expect(ids[1]).to be < ids[2]
         end
 
         it "formats final_weight_volume as a float" do
-          expect(json_response.map{ |line_item| line_item['final_weight_volume'] }.all?{ |fwv| fwv.is_a?(Float) }).to eq(true)
+          expect(json_response['line_items'].map{ |line_item| line_item['final_weight_volume'] }.all?{ |fwv| fwv.is_a?(Float) }).to eq(true)
         end
 
         it "returns distributor object with id key" do
-          expect(json_response.map{ |line_item| line_item['supplier'] }.all?{ |d| d.key?('id') }).to eq(true)
+          expect(json_response['line_items'].map{ |line_item| line_item['supplier'] }.all?{ |d| d.key?('id') }).to eq(true)
         end
       end
 
@@ -61,7 +61,7 @@ describe Admin::BulkLineItemsController, type: :controller do
         end
 
         it "retrives a list of line items which match the criteria" do
-          expect(json_response.map{ |line_item| line_item['id'] }).to eq [line_item2.id, line_item3.id]
+          expect(json_response['line_items'].map{ |line_item| line_item['id'] }).to eq [line_item2.id, line_item3.id]
         end
       end
 
@@ -71,7 +71,7 @@ describe Admin::BulkLineItemsController, type: :controller do
         end
 
         it "retrives a list of line items whose orders match the criteria" do
-          expect(json_response.map{ |line_item| line_item['id'] }).to eq [line_item2.id, line_item3.id, line_item4.id]
+          expect(json_response['line_items'].map{ |line_item| line_item['id'] }).to eq [line_item2.id, line_item3.id, line_item4.id]
         end
       end
     end
@@ -106,7 +106,7 @@ describe Admin::BulkLineItemsController, type: :controller do
         end
 
         it "retrieves a list of line_items" do
-          keys = json_response.first.keys.map(&:to_sym)
+          keys = json_response['line_items'].first.keys.map(&:to_sym)
           expect(line_item_attributes.all?{ |attr| keys.include? attr }).to eq(true)
         end
       end
@@ -118,7 +118,7 @@ describe Admin::BulkLineItemsController, type: :controller do
         end
 
         it "retrieves a list of line_items" do
-          keys = json_response.first.keys.map(&:to_sym)
+          keys = json_response['line_items'].first.keys.map(&:to_sym)
           expect(line_item_attributes.all?{ |attr| keys.include? attr }).to eq(true)
         end
       end

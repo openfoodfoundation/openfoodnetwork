@@ -1,7 +1,8 @@
 angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout, $http, $q, StatusMessage, Columns, SortOptions, Dereferencer, Orders, LineItems, Enterprises, OrderCycles, VariantUnitManager, RequestMonitor) ->
   $scope.initialized = false
   $scope.RequestMonitor = RequestMonitor
-  $scope.filteredLineItems = []
+  $scope.pagination = LineItems.pagination
+  $scope.line_items = LineItems.all
   $scope.confirmDelete = true
   $scope.startDate = moment().startOf('day').subtract(7, 'days').format('YYYY-MM-DD')
   $scope.endDate = moment().startOf('day').format('YYYY-MM-DD')
@@ -11,18 +12,24 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   $scope.sharedResource = false
   $scope.columns = Columns.columns
   $scope.sorting = SortOptions
+  $scope.page = 1
+  $scope.per_page = 50
 
   $scope.confirmRefresh = ->
     LineItems.allSaved() || confirm(t("unsaved_changes_warning"))
 
   $scope.resetSelectFilters = ->
-    $scope.distributorFilter = 0
-    $scope.supplierFilter = 0
-    $scope.orderCycleFilter = 0
+    $scope.distributorFilter = ''
+    $scope.supplierFilter = ''
+    $scope.orderCycleFilter = ''
     $scope.quickSearch = ""
 
+  $scope.changePage = (newPage) ->
+    $scope.page = newPage
+    $scope.refreshData()
+
   $scope.refreshData = ->
-    unless !$scope.orderCycleFilter? || $scope.orderCycleFilter == 0
+    unless !$scope.orderCycleFilter? || $scope.orderCycleFilter == ''
       start_date = OrderCycles.byID[$scope.orderCycleFilter].orders_open_at
       end_date = OrderCycles.byID[$scope.orderCycleFilter].orders_close_at
       format = "YYYY-MM-DD HH:mm:ss Z"
@@ -37,15 +44,22 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     RequestMonitor.load $scope.orders = Orders.index(
       "q[state_not_eq]": "canceled",
       "q[completed_at_not_null]": "true",
+      "q[distributor_id_eq]": $scope.distributorFilter,
+      "q[order_cycle_id_eq]": $scope.orderCycleFilter,
       "q[completed_at_gteq]": formatted_start_date,
       "q[completed_at_lt]": formatted_end_date
     )
 
-    RequestMonitor.load $scope.lineItems = LineItems.index(
-      "q[order][state_not_eq]": "canceled",
-      "q[order][completed_at_not_null]": "true",
-      "q[order][completed_at_gteq]": formatted_start_date,
-      "q[order][completed_at_lt]": formatted_end_date
+    RequestMonitor.load LineItems.index(
+      "q[order_state_not_eq]": "canceled",
+      "q[order_completed_at_not_null]": "true",
+      "q[order_distributor_id_eq]": $scope.distributorFilter,
+      "q[variant_product_supplier_id_eq]": $scope.supplierFilter,
+      "q[order_order_cycle_id_eq]": $scope.orderCycleFilter,
+      "q[order_completed_at_gteq]": formatted_start_date,
+      "q[order_completed_at_lt]": formatted_end_date,
+      page: $scope.page,
+      per_page: $scope.per_page
     )
 
     unless $scope.initialized
@@ -53,11 +67,11 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
       RequestMonitor.load $scope.orderCycles = OrderCycles.index(ams_prefix: "basic", as: "distributor", "q[orders_close_at_gt]": "#{moment().subtract(90,'days').format()}")
       RequestMonitor.load $scope.suppliers = Enterprises.index(action: "visible", ams_prefix: "basic", "q[is_primary_producer_eq]": "true")
 
-    RequestMonitor.load $q.all([$scope.orders.$promise, $scope.distributors.$promise, $scope.orderCycles.$promise, $scope.suppliers.$promise, $scope.lineItems.$promise]).then ->
+    RequestMonitor.load $q.all([$scope.orders.$promise, $scope.distributors.$promise, $scope.orderCycles.$promise, $scope.suppliers.$promise, $scope.line_items.$promise]).then ->
       Dereferencer.dereferenceAttr $scope.orders, "distributor", Enterprises.byID
       Dereferencer.dereferenceAttr $scope.orders, "order_cycle", OrderCycles.byID
-      Dereferencer.dereferenceAttr $scope.lineItems, "supplier", Enterprises.byID
-      Dereferencer.dereferenceAttr $scope.lineItems, "order", Orders.byID
+      Dereferencer.dereferenceAttr $scope.line_items, "supplier", Enterprises.byID
+      Dereferencer.dereferenceAttr $scope.line_items, "order", Orders.byID
       $scope.bulk_order_form.$setPristine()
       StatusMessage.clear()
       unless $scope.initialized
@@ -82,13 +96,12 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
 
   $scope.deleteLineItem = (lineItem) ->
     if ($scope.confirmDelete && confirm(t "are_you_sure")) || !$scope.confirmDelete
-      LineItems.delete lineItem, =>
-        $scope.lineItems.splice $scope.lineItems.indexOf(lineItem), 1
+      LineItems.delete lineItem
 
-  $scope.deleteLineItems = (lineItems) ->
+  $scope.deleteLineItems = (lineItemsToDelete) ->
     existingState = $scope.confirmDelete
     $scope.confirmDelete = false
-    $scope.deleteLineItem lineItem for lineItem in lineItems when lineItem.checked
+    $scope.deleteLineItem lineItem for lineItem in lineItemsToDelete when lineItem.checked
     $scope.confirmDelete = existingState
 
   $scope.allBoxesChecked = ->
