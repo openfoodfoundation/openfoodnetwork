@@ -863,6 +863,12 @@ fr:
         cancel: "Annuler"
         back_to_list: "Retour à la liste"
       outgoing:
+        outgoing: "Produits sortants (mis en vente par/via un ou plusieurs hubs)"
+        distributor: "Distributeur"
+        products: "Produits"
+        tags: "Tags"
+        delivery_details: "Détails de livraison"
+        fees: "Commissions"
         previous: "Précédent"
         save: "Sauvegarder"
         save_and_back_to_list: "Sauvegarder et revenir à la liste"
