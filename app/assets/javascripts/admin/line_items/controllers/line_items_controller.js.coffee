@@ -12,6 +12,10 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   $scope.sharedResource = false
   $scope.columns = Columns.columns
   $scope.sorting = SortOptions
+  $scope.distributorFilter = ''
+  $scope.supplierFilter = ''
+  $scope.orderCycleFilter = ''
+  $scope.quickSearch = ''
   $scope.page = 1
   $scope.per_page = 50
 
@@ -22,7 +26,9 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     $scope.distributorFilter = ''
     $scope.supplierFilter = ''
     $scope.orderCycleFilter = ''
-    $scope.quickSearch = ""
+    $scope.quickSearch = ''
+    $scope.page = 1
+    $scope.refreshData()
 
   $scope.changePage = (newPage) ->
     $scope.page = newPage
@@ -76,8 +82,6 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
       StatusMessage.clear()
       unless $scope.initialized
         $scope.initialized = true
-        $timeout ->
-          $scope.resetSelectFilters()
 
   $scope.$watch 'bulk_order_form.$dirty', (newVal, oldVal) ->
     if newVal == true
