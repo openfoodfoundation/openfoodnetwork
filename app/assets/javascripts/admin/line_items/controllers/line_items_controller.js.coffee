@@ -29,6 +29,8 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     formatted_start_date = moment($scope.startDate).format()
     formatted_end_date = moment($scope.endDate).add(1,'day').format()
 
+    return unless moment(formatted_start_date).isValid() and moment(formatted_start_date).isValid()
+
     RequestMonitor.load $scope.orders = Orders.index(
       "q[state_not_eq]": "canceled",
       "q[completed_at_not_null]": "true",
