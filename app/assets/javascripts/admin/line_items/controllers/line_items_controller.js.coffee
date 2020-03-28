@@ -23,8 +23,11 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
 
   $scope.refreshData = ->
     unless !$scope.orderCycleFilter? || $scope.orderCycleFilter == 0
-      $scope.startDate = moment(OrderCycles.byID[$scope.orderCycleFilter].orders_open_at).format('YYYY-MM-DD')
-      $scope.endDate = moment(OrderCycles.byID[$scope.orderCycleFilter].orders_close_at).startOf('day').format('YYYY-MM-DD')
+      start_date = OrderCycles.byID[$scope.orderCycleFilter].orders_open_at
+      end_date = OrderCycles.byID[$scope.orderCycleFilter].orders_close_at
+      format = "YYYY-MM-DD HH:mm:ss Z"
+      $scope.startDate = moment(start_date, format).format('YYYY-MM-DD')
+      $scope.endDate = moment(end_date, format).startOf('day').format('YYYY-MM-DD')
 
     formatted_start_date = moment($scope.startDate).format()
     formatted_end_date = moment($scope.endDate).add(1,'day').format()
