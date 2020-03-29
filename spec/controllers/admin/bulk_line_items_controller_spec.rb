@@ -41,9 +41,8 @@ describe Admin::BulkLineItemsController, type: :controller do
         end
 
         it "sorts line_items in ascending id line_item" do
-          ids = json_response['line_items'].map{ |line_item| line_item['id'] }
-          expect(ids[0]).to be < ids[1]
-          expect(ids[1]).to be < ids[2]
+          expect(line_item_ids[0]).to be < line_item_ids[1]
+          expect(line_item_ids[1]).to be < line_item_ids[2]
         end
 
         it "formats final_weight_volume as a float" do
@@ -61,7 +60,7 @@ describe Admin::BulkLineItemsController, type: :controller do
         end
 
         it "retrives a list of line items which match the criteria" do
-          expect(json_response['line_items'].map{ |line_item| line_item['id'] }).to eq [line_item2.id, line_item3.id]
+          expect(line_item_ids).to eq [line_item2.id, line_item3.id]
         end
       end
 
@@ -71,7 +70,7 @@ describe Admin::BulkLineItemsController, type: :controller do
         end
 
         it "retrives a list of line items whose orders match the criteria" do
-          expect(json_response['line_items'].map{ |line_item| line_item['id'] }).to eq [line_item2.id, line_item3.id, line_item4.id]
+          expect(line_item_ids).to eq [line_item2.id, line_item3.id, line_item4.id]
         end
       end
     end
@@ -120,6 +119,32 @@ describe Admin::BulkLineItemsController, type: :controller do
         it "retrieves a list of line_items" do
           keys = json_response['line_items'].first.keys.map(&:to_sym)
           expect(line_item_attributes.all?{ |attr| keys.include? attr }).to eq(true)
+        end
+      end
+    end
+
+    context "paginating" do
+      before do
+        allow(controller).to receive_messages spree_current_user: create(:admin_user)
+      end
+
+      context "with pagination args" do
+        it "returns paginated results" do
+          spree_get :index, { page: 1, per_page: 2 }, format: :json
+
+          expect(line_item_ids).to eq [line_item1.id, line_item2.id]
+          expect(json_response['pagination']).to eq(
+            { 'page' => 1, 'per_page' => 2, 'pages' => 2, 'results' => 4 }
+          )
+        end
+
+        it "returns paginated results for a second page" do
+          spree_get :index, { page: 2, per_page: 2 }, format: :json
+
+          expect(line_item_ids).to eq [line_item3.id, line_item4.id]
+          expect(json_response['pagination']).to eq(
+            { 'page' => 2, 'per_page' => 2, 'pages' => 2, 'results' => 4 }
+          )
         end
       end
     end
@@ -258,5 +283,11 @@ describe Admin::BulkLineItemsController, type: :controller do
         expect(response.status).to eq 204
       end
     end
+  end
+
+  private
+
+  def line_item_ids
+    json_response['line_items'].map{ |line_item| line_item['id'] }
   end
 end
