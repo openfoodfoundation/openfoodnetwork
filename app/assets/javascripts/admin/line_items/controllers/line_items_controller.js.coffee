@@ -12,22 +12,21 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   $scope.sharedResource = false
   $scope.columns = Columns.columns
   $scope.sorting = SortOptions
-  $scope.distributorFilter = ''
-  $scope.supplierFilter = ''
-  $scope.orderCycleFilter = ''
-  $scope.quickSearch = ''
   $scope.page = 1
   $scope.per_page = 50
 
   $scope.confirmRefresh = ->
     LineItems.allSaved() || confirm(t("unsaved_changes_warning"))
 
-  $scope.resetSelectFilters = ->
+  $scope.resetFilters = ->
     $scope.distributorFilter = ''
     $scope.supplierFilter = ''
     $scope.orderCycleFilter = ''
     $scope.quickSearch = ''
     $scope.page = 1
+
+  $scope.resetSelectFilters = ->
+    $scope.resetFilters()
     $scope.refreshData()
 
   $scope.changePage = (newPage) ->
@@ -36,43 +35,57 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
 
   $scope.refreshData = ->
     unless !$scope.orderCycleFilter? || $scope.orderCycleFilter == ''
-      start_date = OrderCycles.byID[$scope.orderCycleFilter].orders_open_at
-      end_date = OrderCycles.byID[$scope.orderCycleFilter].orders_close_at
-      format = "YYYY-MM-DD HH:mm:ss Z"
-      $scope.startDate = moment(start_date, format).format('YYYY-MM-DD')
-      $scope.endDate = moment(end_date, format).startOf('day').format('YYYY-MM-DD')
+      $scope.setOrderCycleDateRange()
 
-    formatted_start_date = moment($scope.startDate).format()
-    formatted_end_date = moment($scope.endDate).add(1,'day').format()
+    $scope.formattedStartDate = moment($scope.startDate).format()
+    $scope.formattedEndDate = moment($scope.endDate).add(1,'day').format()
 
-    return unless moment(formatted_start_date).isValid() and moment(formatted_start_date).isValid()
+    return unless moment($scope.formattedStartDate).isValid() and moment($scope.formattedEndDate).isValid()
 
+    $scope.loadOrders()
+    $scope.loadLineItems()
+
+    unless $scope.initialized
+      $scope.loadAssociatedData()
+
+    $scope.dereferenceLoadedData()
+
+  $scope.setOrderCycleDateRange = ->
+    start_date = OrderCycles.byID[$scope.orderCycleFilter].orders_open_at
+    end_date = OrderCycles.byID[$scope.orderCycleFilter].orders_close_at
+    format = "YYYY-MM-DD HH:mm:ss Z"
+    $scope.startDate = moment(start_date, format).format('YYYY-MM-DD')
+    $scope.endDate = moment(end_date, format).startOf('day').format('YYYY-MM-DD')
+
+  $scope.loadOrders = ->
     RequestMonitor.load $scope.orders = Orders.index(
       "q[state_not_eq]": "canceled",
       "q[completed_at_not_null]": "true",
       "q[distributor_id_eq]": $scope.distributorFilter,
       "q[order_cycle_id_eq]": $scope.orderCycleFilter,
-      "q[completed_at_gteq]": formatted_start_date,
-      "q[completed_at_lt]": formatted_end_date
+      "q[completed_at_gteq]": $scope.formattedStartDate,
+      "q[completed_at_lt]": $scope.formattedEndDate
     )
 
+  $scope.loadLineItems = ->
     RequestMonitor.load LineItems.index(
       "q[order_state_not_eq]": "canceled",
       "q[order_completed_at_not_null]": "true",
       "q[order_distributor_id_eq]": $scope.distributorFilter,
       "q[variant_product_supplier_id_eq]": $scope.supplierFilter,
       "q[order_order_cycle_id_eq]": $scope.orderCycleFilter,
-      "q[order_completed_at_gteq]": formatted_start_date,
-      "q[order_completed_at_lt]": formatted_end_date,
+      "q[order_completed_at_gteq]": $scope.formattedStartDate,
+      "q[order_completed_at_lt]": $scope.formattedEndDate,
       page: $scope.page,
       per_page: $scope.per_page
     )
 
-    unless $scope.initialized
-      RequestMonitor.load $scope.distributors = Enterprises.index(action: "visible", ams_prefix: "basic", "q[sells_in][]": ["own", "any"])
-      RequestMonitor.load $scope.orderCycles = OrderCycles.index(ams_prefix: "basic", as: "distributor", "q[orders_close_at_gt]": "#{moment().subtract(90,'days').format()}")
-      RequestMonitor.load $scope.suppliers = Enterprises.index(action: "visible", ams_prefix: "basic", "q[is_primary_producer_eq]": "true")
+  $scope.loadAssociatedData = ->
+    RequestMonitor.load $scope.distributors = Enterprises.index(action: "visible", ams_prefix: "basic", "q[sells_in][]": ["own", "any"])
+    RequestMonitor.load $scope.orderCycles = OrderCycles.index(ams_prefix: "basic", as: "distributor", "q[orders_close_at_gt]": "#{moment().subtract(90,'days').format()}")
+    RequestMonitor.load $scope.suppliers = Enterprises.index(action: "visible", ams_prefix: "basic", "q[is_primary_producer_eq]": "true")
 
+  $scope.dereferenceLoadedData = ->
     RequestMonitor.load $q.all([$scope.orders.$promise, $scope.distributors.$promise, $scope.orderCycles.$promise, $scope.suppliers.$promise, $scope.line_items.$promise]).then ->
       Dereferencer.dereferenceAttr $scope.orders, "distributor", Enterprises.byID
       Dereferencer.dereferenceAttr $scope.orders, "order_cycle", OrderCycles.byID
@@ -80,6 +93,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
       Dereferencer.dereferenceAttr $scope.line_items, "order", Orders.byID
       $scope.bulk_order_form.$setPristine()
       StatusMessage.clear()
+
       unless $scope.initialized
         $scope.initialized = true
 
@@ -176,4 +190,5 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
       lineItem.final_weight_volume = LineItems.pristineByID[lineItem.id].final_weight_volume * lineItem.quantity / LineItems.pristineByID[lineItem.id].quantity
       $scope.weightAdjustedPrice(lineItem)
 
+  $scope.resetFilters()
   $scope.refreshData()
