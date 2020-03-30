@@ -14,22 +14,10 @@ class VariantsStockLevels
       variant_stock_levels[variant_id] = { quantity: 0, max_quantity: 0, on_hand: variant.on_hand, on_demand: variant.on_demand }
     end
 
-    # The code above is most probably dead code, this bugsnag notification will confirm it
-    notify_bugsnag(order, requested_variant_ids, order_variant_ids) if missing_variant_ids.present?
-
     variant_stock_levels
   end
 
   private
-
-  def notify_bugsnag(order, requested_variant_ids, order_variant_ids)
-    error_msg = "VariantsStockLevels.call with variants in the request that are not in the order"
-    Bugsnag.notify(RuntimeError.new(error_msg),
-                   requested_variant_ids: requested_variant_ids.as_json,
-                   order_variant_ids: order_variant_ids.as_json,
-                   order: order.as_json,
-                   line_items: order.line_items.as_json)
-  end
 
   def variant_stock_levels(line_items)
     Hash[
