@@ -97,7 +97,7 @@ class Enterprise < ActiveRecord::Base
   before_validation :set_unused_address_fields
   after_validation :geocode_address
 
-  validates :instagram, format: /\A[a-zA-Z0-9._]{1,30}\z/, allow_blank: true
+  validates :instagram, format: /\A[a-zA-Z0-9._-]{1,30}\z/, allow_blank: true
 
   after_touch :touch_distributors
   after_create :set_default_contact
@@ -385,7 +385,7 @@ class Enterprise < ActiveRecord::Base
   private
 
   def instagram_regex
-    %r{\A(?:https?://)?(?:www\.)?instagram\.com/([a-zA-Z0-9._@]{1,30})/?\z}
+    %r{\A(?:https?://)?(?:www\.)?instagram\.com/([a-zA-Z0-9._@-]{1,30})/?\z}
   end
 
   def current_exchange_variants
