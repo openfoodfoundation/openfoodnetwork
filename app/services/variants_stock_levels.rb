@@ -48,7 +48,11 @@ class VariantsStockLevels
   def scoped_variant(distributor, variant)
     return variant if distributor.blank?
 
-    OpenFoodNetwork::ScopeVariantToHub.new(distributor).scope(variant)
+    scoper(distributor).scope(variant)
     variant
+  end
+
+  def scoper(distributor)
+    @scoper ||= OpenFoodNetwork::ScopeVariantToHub.new(distributor)
   end
 end
