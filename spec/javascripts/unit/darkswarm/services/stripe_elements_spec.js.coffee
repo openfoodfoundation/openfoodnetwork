@@ -46,11 +46,10 @@ describe 'StripeElements Service', ->
       it "doesn't submit the form, shows an error message instead", inject (Loading, RailsFlashLoader) ->
         spyOn(Loading, "clear")
         spyOn(RailsFlashLoader, "loadFlash")
-        StripeElements.requestToken(secrets, submit)
-        $rootScope.$digest() # required for #then to by called
-        expect(submit).not.toHaveBeenCalled()
-        expect(Loading.clear).toHaveBeenCalled()
-        expect(RailsFlashLoader.loadFlash).toHaveBeenCalledWith({error: "Error: There was a problem"})
+        StripeElements.requestToken(secrets, submit).then (data) ->
+          expect(submit).not.toHaveBeenCalled()
+          expect(Loading.clear).toHaveBeenCalled()
+          expect(RailsFlashLoader.loadFlash).toHaveBeenCalledWith({error: "Error: There was a problem"})
 
   describe 'mapCC', ->
     it "maps the brand returned by Stripe to that required by activemerchant", ->
