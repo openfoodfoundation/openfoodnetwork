@@ -165,7 +165,7 @@ describe Enterprise do
 
       context "accepted pattern" do
         it "validates empty instagram attribute" do
-          e = build(:enterprise)
+          e = build(:enterprise, instagram: '')
           expect(e).to be_valid
           expect(e.instagram).to eq ""
         end
