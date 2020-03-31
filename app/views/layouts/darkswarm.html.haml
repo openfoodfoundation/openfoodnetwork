@@ -37,7 +37,7 @@
           #footer
     %loading
 
-    = render "layouts/bugsnag" if ENV["BUGSNAG_JS_KEY"].present?
+    = render "layouts/bugsnag"
     %script{:src => "https://js.stripe.com/v3/", :type => "text/javascript"}
     %script{src: "//maps.googleapis.com/maps/api/js?libraries=places,geometry#{ ENV['GOOGLE_MAPS_API_KEY'] ? '&key=' + ENV['GOOGLE_MAPS_API_KEY'] : ''} "}
     = javascript_include_tag "darkswarm/all"

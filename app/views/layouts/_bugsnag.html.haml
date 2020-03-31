@@ -1,3 +1,5 @@
-%script{src: "//d2wy8f7a9ursnm.cloudfront.net/v6/bugsnag.min.js"}
-:javascript
-  window.bugsnagClient = bugsnag('#{ENV["BUGSNAG_JS_KEY"]}');
+- bugsnag_js_key = ENV['BUGSNAG_JS_KEY'] || ENV['BUGSNAG_API_KEY']
+- if bugsnag_js_key.present?
+  %script{src: "//d2wy8f7a9ursnm.cloudfront.net/v6/bugsnag.min.js"}
+  :javascript
+    window.bugsnagClient = bugsnag("#{bugsnag_js_key}");
