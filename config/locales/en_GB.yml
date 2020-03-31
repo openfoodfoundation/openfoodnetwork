@@ -861,6 +861,12 @@ en_GB:
         cancel: "Cancel"
         back_to_list: "Back To List"
       outgoing:
+        outgoing: "Outgoing"
+        distributor: "Distributor"
+        products: "Products"
+        tags: "Tags"
+        delivery_details: "Delivery Details"
+        fees: "Fees"
         previous: "Previous"
         save: "Save"
         save_and_back_to_list: "Save and Back to List"
