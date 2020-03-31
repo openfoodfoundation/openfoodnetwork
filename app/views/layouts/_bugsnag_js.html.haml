@@ -2,4 +2,9 @@
 - if bugsnag_js_key.present?
   %script{src: "//d2wy8f7a9ursnm.cloudfront.net/v6/bugsnag.min.js"}
   :javascript
-    window.bugsnagClient = bugsnag("#{bugsnag_js_key}");
+    window.bugsnagClient = bugsnag({
+      apiKey: "#{bugsnag_js_key}",
+      beforeSend: function (report) {
+        report.app.releaseStage = "#{Rails.env}"
+      }
+    });
