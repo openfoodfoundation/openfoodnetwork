@@ -53,9 +53,8 @@ class CheckoutController < Spree::StoreController
   rescue Spree::Core::GatewayError => e
     rescue_from_spree_gateway_error(e)
   rescue StandardError => e
-    Bugsnag.notify(e)
     flash[:error] = I18n.t("checkout.failed")
-    update_failed
+    update_failed(e)
   end
 
   # Clears the cached order. Required for #current_order to return a new order
@@ -179,6 +178,7 @@ class CheckoutController < Spree::StoreController
       @order.select_shipping_method(shipping_method_id) if @order.state == "delivery"
 
       next if advance_order_state(@order)
+
       return update_failed
     end
 
@@ -216,7 +216,7 @@ class CheckoutController < Spree::StoreController
       checkout_succeeded
       update_succeeded_response
     else
-      update_failed
+      update_failed(RuntimeError.new("Order not complete after the checkout workflow"))
     end
   end
 
@@ -242,7 +242,9 @@ class CheckoutController < Spree::StoreController
     end
   end
 
-  def update_failed
+  def update_failed(error = RuntimeError.new(order_error))
+    Bugsnag.notify(error)
+
     flash[:error] = order_error if flash.empty?
     checkout_failed
     update_failed_response
