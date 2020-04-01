@@ -1,7 +1,6 @@
 angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout, $http, $q, StatusMessage, Columns, SortOptions, Dereferencer, Orders, LineItems, Enterprises, OrderCycles, VariantUnitManager, RequestMonitor) ->
   $scope.initialized = false
   $scope.RequestMonitor = RequestMonitor
-  $scope.pagination = LineItems.pagination
   $scope.line_items = LineItems.all
   $scope.confirmDelete = true
   $scope.startDate = moment().startOf('day').subtract(7, 'days').format('YYYY-MM-DD')
@@ -12,8 +11,6 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   $scope.sharedResource = false
   $scope.columns = Columns.columns
   $scope.sorting = SortOptions
-  $scope.page = 1
-  $scope.per_page = 50
 
   $scope.confirmRefresh = ->
     LineItems.allSaved() || confirm(t("unsaved_changes_warning"))
@@ -23,14 +20,9 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     $scope.supplierFilter = ''
     $scope.orderCycleFilter = ''
     $scope.quickSearch = ''
-    $scope.page = 1
 
   $scope.resetSelectFilters = ->
     $scope.resetFilters()
-    $scope.refreshData()
-
-  $scope.changePage = (newPage) ->
-    $scope.page = newPage
     $scope.refreshData()
 
   $scope.refreshData = ->
@@ -75,9 +67,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
       "q[variant_product_supplier_id_eq]": $scope.supplierFilter,
       "q[order_order_cycle_id_eq]": $scope.orderCycleFilter,
       "q[order_completed_at_gteq]": $scope.formattedStartDate,
-      "q[order_completed_at_lt]": $scope.formattedEndDate,
-      page: $scope.page,
-      per_page: $scope.per_page
+      "q[order_completed_at_lt]": $scope.formattedEndDate
     )
 
   $scope.loadAssociatedData = ->
