@@ -861,6 +861,12 @@ pt_BR:
         cancel: "Cancelar"
         back_to_list: "Voltar Para a Lista"
       outgoing:
+        outgoing: "Saída"
+        distributor: "Distribuidor"
+        products: "Produtos"
+        tags: "Etiqueta"
+        delivery_details: "Sobre a Entrega"
+        fees: "Taxas"
         previous: "Anterior"
         save: "Salvar"
         save_and_back_to_list: "Salvar e Voltar para a Lista"
@@ -1628,7 +1634,7 @@ pt_BR:
   sell_hubs_detail: "Crie um perfil para a sua iniciativa ou organização na Open Food Brasil. A qualquer momento você poderá fazer um upgrade para um mercado de multi-produtores. "
   sell_groups_detail: "Organize um lista personalizada de negócios (cultivos, cooperativas, comércios, etc.) para sua região ou organização. "
   sell_user_guide: "Saiba mais acessando nosso guia. "
-  sell_listing_price: "A listagem no OFN é gratuita. A abertura e administração de uma loja no OFN custa US $ 500 em vendas mensais. Se você vender mais, poderá escolher sua contribuição da comunidade entre 1% e 3% das vendas. Para mais detalhes sobre preços, visite a seção Plataforma do Software através do link Sobre no menu superior."
+  sell_listing_price: "A OFB está em sua versão beta. Por acreditarmos que a plataforma pode colaborar com a circulação e a comercialização de comida de verdade no período de quarentena imposto pela atual pandemia, sua utilização permanecerá gratuita nos próximos meses."
   sell_embed: "Também podemos incorporar uma loja da Open Food Brasil em seu próprio site personalizado ou criar um site específico para a sua região. "
   sell_ask_services: "Pergunte-nos sobre nossos serviços."
   shops_title: Lojas
@@ -3301,7 +3307,7 @@ pt_BR:
             Se o URL acima não funcionar, tente copiar e colá-lo em seu navegador.
             Se continuar a ter problemas, por favor não hesite em contactar-nos.
       confirmation_instructions:
-        subject: Confirme sua conta OFN
+        subject: Confirme sua conta na OFB
     users:
       form:
         account_settings: Configurações da conta
