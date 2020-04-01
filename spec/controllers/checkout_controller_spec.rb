@@ -197,13 +197,13 @@ describe CheckoutController, type: :controller do
       allow(controller).to receive(:current_order).and_return(order)
     end
 
-    it "returns errors" do
+    it "returns errors and flash if order.update_attributes fails" do
       spree_post :update, format: :json, order: {}
       expect(response.status).to eq(400)
-      expect(response.body).to eq({ errors: assigns[:order].errors, flash: {} }.to_json)
+      expect(response.body).to eq({ errors: assigns[:order].errors, flash: { error: order.errors.full_messages.to_sentence } }.to_json)
     end
 
-    it "returns flash" do
+    it "returns errors and flash if order.next fails" do
       allow(order).to receive(:update_attributes).and_return true
       allow(order).to receive(:next).and_return false
       spree_post :update, format: :json, order: {}

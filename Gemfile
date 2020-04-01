@@ -112,7 +112,6 @@ gem 'momentjs-rails'
 gem 'turbo-sprockets-rails3'
 
 gem "foundation-rails"
-gem 'foundation_rails_helper', github: 'willrjmarshall/foundation_rails_helper', branch: "rails3"
 
 gem 'jquery-migrate-rails'
 gem 'jquery-rails', '3.1.5'

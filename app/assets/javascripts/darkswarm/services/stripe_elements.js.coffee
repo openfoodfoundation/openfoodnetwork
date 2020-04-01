@@ -15,6 +15,7 @@ Darkswarm.factory 'StripeElements', ($rootScope, Loading, RailsFlashLoader) ->
         if(response.error)
           Loading.clear()
           RailsFlashLoader.loadFlash({error: t("error") + ": #{response.error.message}"})
+          @triggerAngularDigest()
         else
           secrets.token = response.token.id
           secrets.cc_type = @mapCC(response.token.card.brand)
@@ -32,11 +33,16 @@ Darkswarm.factory 'StripeElements', ($rootScope, Loading, RailsFlashLoader) ->
         if(response.error)
           Loading.clear()
           RailsFlashLoader.loadFlash({error: t("error") + ": #{response.error.message}"})
+          @triggerAngularDigest()
         else
           secrets.token = response.paymentMethod.id
           secrets.cc_type = response.paymentMethod.card.brand
           secrets.card = response.paymentMethod.card
           submit()
+
+    triggerAngularDigest: ->
+      # $evalAsync is improved way of triggering a digest without calling $apply
+      $rootScope.$evalAsync()
 
     # Maps the brand returned by Stripe to that required by activemerchant
     mapCC: (ccType) ->
