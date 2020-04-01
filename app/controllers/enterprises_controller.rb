@@ -96,8 +96,8 @@ class EnterprisesController < BaseController
   end
 
   def reset_order_cycle(order, distributor)
-    order_cycle_options = OrderCycle.active.with_distributor(distributor)
-    order.order_cycle = order_cycle_options.first if order_cycle_options.count == 1
+    order_cycles = Shop::OrderCyclesList.new(distributor, current_customer).call
+    order.order_cycle = order_cycles.first if order_cycles.size == 1
   end
 
   def shop_order_cycles

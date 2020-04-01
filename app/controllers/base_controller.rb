@@ -29,17 +29,19 @@ class BaseController < ApplicationController
       return
     end
 
-    @order_cycles = OrderCycle.with_distributor(@distributor).active
-      .order(@distributor.preferred_shopfront_order_cycle_order)
+    @order_cycles = Shop::OrderCyclesList.new(@distributor, current_customer).call
 
-    applicator = OpenFoodNetwork::TagRuleApplicator.new(@distributor,
-                                                        "FilterOrderCycles",
-                                                        current_customer.andand.tag_list)
-    applicator.filter!(@order_cycles)
+    set_order_cycle
+  end
 
-    # And default to the only order cycle if there's only the one
-    if @order_cycles.count == 1
-      current_order(true).set_order_cycle! @order_cycles.first
-    end
+  # Default to the only order cycle if there's only one
+  #
+  # Here we need to use @order_cycles.size not @order_cycles.count
+  #   because OrderCyclesList returns a modified ActiveRecord::Relation
+  #     and these modifications are not seen if it is reloaded with count
+  def set_order_cycle
+    return if @order_cycles.size != 1
+
+    current_order(true).set_order_cycle! @order_cycles.first
   end
 end
