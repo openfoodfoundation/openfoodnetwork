@@ -28,6 +28,7 @@ module Spree
       let(:oc_order) { create :order_with_totals_and_distribution }
 
       it "finds line items for products supplied by one of a number of enterprises" do
+        li1; li2
         expect(LineItem.supplied_by_any([s1])).to eq([li1])
         expect(LineItem.supplied_by_any([s2])).to eq([li2])
         expect(LineItem.supplied_by_any([s1, s2])).to match_array [li1, li2]
