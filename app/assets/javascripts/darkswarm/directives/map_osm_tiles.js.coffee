@@ -1,6 +1,6 @@
 Darkswarm.directive 'mapOsmTiles', ($timeout) ->
   restrict: 'E'
-  require: '^googleMap'
+  require: '^uiGmapGoogleMap'
   scope: {}
   link: (scope, elem, attrs, ctrl) ->
     $timeout =>
