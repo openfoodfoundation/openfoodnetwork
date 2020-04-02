@@ -1,6 +1,6 @@
 Darkswarm.service "Geo", ->
   new class Geo
-    OK: google.maps.GeocoderStatus.OK
+    OK: google?.maps?.GeocoderStatus?.OK
 
     # Usage:
     # Geo.geocode address, (results, status) ->
