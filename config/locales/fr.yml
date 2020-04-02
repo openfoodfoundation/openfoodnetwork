@@ -19,6 +19,8 @@ fr:
         shipping_category_id: "Condition de transport"
         variant_unit: "Unité"
         variant_unit_name: "Unité de la variante"
+      spree/credit_card:
+        base: "Carte de crédit"
       order_cycle:
         orders_close_at: Date de fermeture
     errors:
@@ -29,6 +31,10 @@ fr:
               taken: "Un compte existe déjà pour cet e-mail. Connectez-vous ou demandez un nouveau mot de passe."
         spree/order:
           no_card: Aucune carte de paiement autorisée disponible
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: "a expiré"
         order_cycle:
           attributes:
             orders_close_at:
