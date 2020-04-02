@@ -2,7 +2,6 @@ angular.module("admin.resources").factory 'LineItemResource', ($resource) ->
   $resource('/admin/bulk_line_items/:id.json', {}, {
     'index':
       method: 'GET'
-      isArray: true
     'update':
       method: 'PUT'
       transformRequest: (data, headersGetter) =>
