@@ -7,7 +7,7 @@ window.Darkswarm = angular.module("Darkswarm", [
   'templates',
   'ngSanitize',
   'ngAnimate',
-  'google-maps',
+  'uiGmapgoogle-maps',
   'duScroll',
   'angularFileUpload',
   'angularSlideables'

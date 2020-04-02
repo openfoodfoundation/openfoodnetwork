@@ -16,5 +16,5 @@
 //= require i18n
 
 angular.module('templates', [])
-angular.module('google-maps', []);
+angular.module('uiGmapgoogle-maps', []);
 angular.module('duScroll', []);
