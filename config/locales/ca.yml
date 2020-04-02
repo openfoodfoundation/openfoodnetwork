@@ -246,6 +246,8 @@ ca:
   notes: Notes
   error: Error
   processing_payment: "S'està processant el pagament..."
+  no_pending_payments: "No hi ha pagaments pendents"
+  invalid_payment_state: "Estat de pagament no vàlid"
   filter_results: Aplicar filtre
   quantity: Quantitat
   pick_up: Recollida
@@ -862,6 +864,12 @@ ca:
         cancel: "Cancel·lar"
         back_to_list: "Tornar a la llista"
       outgoing:
+        outgoing: "Sortint"
+        distributor: "Distribuïdora"
+        products: "Productes "
+        tags: "Etiquetes"
+        delivery_details: "Detalls d'enviament"
+        fees: "Comissions"
         previous: "Anterior"
         save: "Desa"
         save_and_back_to_list: "Desa i torna a la llista"
@@ -1487,6 +1495,7 @@ ca:
   shopping_oc_closed_description: "Si us plau espera fins que s'obri el pròxim cicle (o posa't en contacte amb nosaltres directament per veure si podem acceptar alguna comanda fora de temps)"
   shopping_oc_last_closed: "L'últim cicle va tancar fa %{distance_of_time} "
   shopping_oc_next_open: "El següent cicle s'obre en %{distance_of_time}"
+  shopping_oc_select: "Selecciona ..."
   shopping_tabs_home: "Inici"
   shopping_tabs_shop: "Botiga"
   shopping_tabs_about: "Sobre"
@@ -1860,6 +1869,7 @@ ca:
         headline: "Acabat!"
         thanks: "Gràcies per omplir els detalls de%{enterprise}."
         login: "Pots canviar o actualitzar la teva organització en qualsevol moment accedint a Katuma i anant a Admin."
+        action: "Vés al panell de control de l'organització"
   back: "Enrere"
   continue: "Continua"
   action_or: "O"
@@ -2629,6 +2639,12 @@ ca:
     tub:
       one: "tina"
       other: "cubells"
+    punnet:
+      one: "puntet"
+      other: "capses"
+    packet:
+      one: "paquet"
+      other: "paquets"
     item:
       one: "article"
       other: "articles"
@@ -3015,6 +3031,8 @@ ca:
           tax_invoice: "FACTURA D'IMPOSTOS"
           code: "Codi"
           from: "De"
+          to: "Facturar a"
+          shipping: "Enviament"
         form:
           distribution_fields:
             title: "Distribució"
