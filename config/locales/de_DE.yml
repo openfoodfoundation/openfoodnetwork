@@ -19,6 +19,8 @@ de_DE:
         shipping_category_id: "Versandkategorie"
         variant_unit: "Varianteneinheit"
         variant_unit_name: "Name der Varianteneinheit"
+      spree/credit_card:
+        base: "Kreditkarte"
       order_cycle:
         orders_close_at: Schlussdatum
     errors:
@@ -29,6 +31,10 @@ de_DE:
               taken: "Es gibt bereits ein Konto für diese E-Mail-Adresse. Bitte versuchen Sie sich einzuloggen oder setzen Sie Ihr Passwort zurück."
         spree/order:
           no_card: Es sind keine belastbaren Karten verfügbar.
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: "abgelaufen"
         order_cycle:
           attributes:
             orders_close_at:
@@ -36,7 +42,7 @@ de_DE:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "muss leer sein, da die Einstellungen des Produzentenbestands verwendet werden"
-            on_demand_but_count_on_hand_set: "muss bei Bedarf leer sein"
+            on_demand_but_count_on_hand_set: "muss leer sein falls Produktion auf Nachfrage"
             limited_stock_but_no_count_on_hand: "muss angegeben werden, da nur begrenzte Lagerbestände erforderlich sind"
   activemodel:
     attributes:
@@ -46,7 +52,7 @@ de_DE:
         distributor_ids: "Hubs"
         producer_ids: "Erzeuger"
         order_cycle_ids: "Bestellrunden"
-        enterprise_fee_ids: "Gebühren Namen"
+        enterprise_fee_ids: "Gebührennamen"
         shipping_method_ids: "Lieferart"
         payment_method_ids: "Zahlungsarten"
     errors:
@@ -1139,7 +1145,7 @@ de_DE:
         checkout: "Zur Kasse"
         already_ordered_products: "Bereits in diesem Bestellzyklus bestellt"
     register_call:
-      selling_on_ofn: "Interesse am Open Food Network?"
+      selling_on_ofn: "Sie möchten selbst im Open Food Network verkaufen?"
       register: "Hier anmelden"
     footer:
       footer_secure: "Sicher und vertrauenswürdig."
