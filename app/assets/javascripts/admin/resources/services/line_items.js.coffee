@@ -1,20 +1,27 @@
 angular.module("admin.resources").factory 'LineItems', ($q, LineItemResource) ->
   new class LineItems
+    all: []
     byID: {}
     pristineByID: {}
+    pagination: {}
 
     index: (params={}, callback=null) ->
-    	LineItemResource.index params, (data) =>
+    	request = LineItemResource.index params, (data) =>
         @load(data)
         (callback || angular.noop)(data)
+      @all.$promise = request.$promise
+      @all
 
     resetData: ->
+      @all.length = 0
       @byID = {}
       @pristineByID = {}
 
-    load: (lineItems) ->
+    load: (data) ->
+      angular.extend(@pagination, data.pagination)
       @resetData()
-      for lineItem in lineItems
+      for lineItem in data.line_items
+        @all.push lineItem
         @byID[lineItem.id] = lineItem
         @pristineByID[lineItem.id] = angular.copy(lineItem)
 
@@ -25,8 +32,9 @@ angular.module("admin.resources").factory 'LineItems', ($q, LineItemResource) ->
 
     save: (lineItem) ->
       deferred = $q.defer()
+      lineItemResource = new LineItemResource(lineItem)
       lineItem.errors = {}
-      lineItem.$update({id: lineItem.id})
+      lineItemResource.$update({id: lineItem.id})
       .then( (data) =>
         @pristineByID[lineItem.id] = angular.copy(lineItem)
         deferred.resolve(data)
@@ -54,8 +62,10 @@ angular.module("admin.resources").factory 'LineItems', ($q, LineItemResource) ->
 
     delete: (lineItem, callback=null) ->
       deferred = $q.defer()
-      lineItem.$delete({id: lineItem.id})
+      lineItemResource = new LineItemResource(lineItem)
+      lineItemResource.$delete({id: lineItem.id})
       .then( (data) =>
+        @all.splice(@all.indexOf(lineItem),1)
         delete @byID[lineItem.id]
         delete @pristineByID[lineItem.id]
         (callback || angular.noop)(data)

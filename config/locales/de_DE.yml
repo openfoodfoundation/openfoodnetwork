@@ -19,6 +19,8 @@ de_DE:
         shipping_category_id: "Versandkategorie"
         variant_unit: "Varianteneinheit"
         variant_unit_name: "Name der Varianteneinheit"
+      spree/credit_card:
+        base: "Kreditkarte"
       order_cycle:
         orders_close_at: Schlussdatum
     errors:
@@ -29,6 +31,10 @@ de_DE:
               taken: "Es gibt bereits ein Konto für diese E-Mail-Adresse. Bitte versuchen Sie sich einzuloggen oder setzen Sie Ihr Passwort zurück."
         spree/order:
           no_card: Es sind keine belastbaren Karten verfügbar.
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: "abgelaufen"
         order_cycle:
           attributes:
             orders_close_at:
@@ -36,7 +42,7 @@ de_DE:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "muss leer sein, da die Einstellungen des Produzentenbestands verwendet werden"
-            on_demand_but_count_on_hand_set: "muss bei Bedarf leer sein"
+            on_demand_but_count_on_hand_set: "muss leer sein falls Produktion auf Nachfrage"
             limited_stock_but_no_count_on_hand: "muss angegeben werden, da nur begrenzte Lagerbestände erforderlich sind"
   activemodel:
     attributes:
@@ -46,10 +52,12 @@ de_DE:
         distributor_ids: "Hubs"
         producer_ids: "Erzeuger"
         order_cycle_ids: "Bestellrunden"
-        enterprise_fee_ids: "Gebühren Namen"
+        enterprise_fee_ids: "Gebührennamen"
         shipping_method_ids: "Lieferart"
         payment_method_ids: "Zahlungsarten"
     errors:
+      messages:
+        inclusion: "ist in der Liste nicht enthalten"
       models:
         subscription_validator:
           attributes:
@@ -244,6 +252,8 @@ de_DE:
   notes: Anmerkungen
   error: Fehler
   processing_payment: "Bezahlung wird verarbeitet..."
+  no_pending_payments: "Keine ausstehenden Zahlungen"
+  invalid_payment_state: "Ungültiger Zahlungsstatus"
   filter_results: Ergebnisse filtern
   quantity: Menge
   pick_up: Abholen
@@ -700,6 +710,11 @@ de_DE:
           enable_subscriptions_false: "deaktiviert"
           enable_subscriptions_true: "aktiviert"
           shopfront_message: "Laden-Nachricht"
+          shopfront_message_placeholder: >
+              Eine optionale Nachricht, um Kunden willkommen zu heißen und zu erklären,
+              wie Sie bei Ihnen einkaufen können. Wenn hier Text eingegeben wird,
+              wird dieser in einem Home-Tab in Ihrem Shop angezeigt, wenn Kunden zum
+              ersten Mal ihren Shop besuchen.
           shopfront_message_link_tooltip: "Link einfügen / bearbeiten"
           shopfront_message_link_prompt: "Bitte geben Sie eine einzufügende URL ein"
           shopfront_closed_message: "Laden Geschlossen Nachricht"
@@ -854,6 +869,12 @@ de_DE:
         cancel: "Abbrechen"
         back_to_list: "Zurück zur Liste"
       outgoing:
+        outgoing: "Ausgehend"
+        distributor: "Verteiler"
+        products: "Produkte"
+        tags: "Stichwörter"
+        delivery_details: "Lieferdetails"
+        fees: "Gebühren"
         previous: "Bisherige"
         save: "Speichern"
         save_and_back_to_list: "Speichern und zurück zur Liste"
@@ -1100,10 +1121,13 @@ de_DE:
       destroy_attachment_does_not_exist: "Logo existiert nicht"
     enterprise_promo_image:
       destroy_attachment_does_not_exist: "Webebild existiert nicht"
+    orders:
+      failed_to_update: "Bestellung konnte nicht aktualisiert werden"
   checkout:
     already_ordered:
       cart: "Warenkorb"
       message_html: "Sie haben bereits eine Bestellung für diesen Bestellzyklus. Überprüfen Sie den %{cart}, um die Artikel zu sehen, die Sie zuvor bestellt haben. Sie können Artikel auch stornieren, solange der Bestellzyklus geöffnet ist."
+    failed: "Die Bestellung ist fehlgeschlagen. Bitte geben Sie uns Bescheid, damit wir Ihre Bestellung trotzdem bearbeiten können."
   shops:
     hubs:
       show_closed_shops: "Geschlossene Läden anzeigen"
@@ -1121,7 +1145,7 @@ de_DE:
         checkout: "Zur Kasse"
         already_ordered_products: "Bereits in diesem Bestellzyklus bestellt"
     register_call:
-      selling_on_ofn: "Interesse am Open Food Network?"
+      selling_on_ofn: "Sie möchten selbst im Open Food Network verkaufen?"
       register: "Hier anmelden"
     footer:
       footer_secure: "Sicher und vertrauenswürdig."
@@ -1274,6 +1298,7 @@ de_DE:
   saving_credit_card: Kreditkarte speichern ...
   card_has_been_removed: "Ihre Karte wurde entfernt (Nummer: %{number})"
   card_could_not_be_removed: Die Karte konnte nicht entfernt werden
+  invalid_credit_card: "Ungültige Kreditkarte"
   ie_warning_headline: "Ihr Browser ist veraltet :-("
   ie_warning_text: "Für das beste Open-Food-Network-Erlebnis empfehlen wir dringend, Ihren Browser zu aktualisieren:"
   ie_warning_chrome: Chrome herunterladen
@@ -1361,7 +1386,7 @@ de_DE:
   checkout_default_bill_address: "Als Standard-Rechnungsadresse speichern"
   checkout_shipping: Versandinformation
   checkout_default_ship_address: "Als Standardversandadresse speichern"
-  checkout_method_free: ??
+  checkout_method_free: kostenlos
   checkout_address_same: Lieferadresse wie Rechnungsadresse?
   checkout_ready_for: "Bereit am:"
   checkout_instructions: "Kommentare oder spezielle Anweisungen?"
@@ -1475,6 +1500,7 @@ de_DE:
   shopping_oc_closed_description: "Bitte warten Sie, bis der nächste Zyklus beginnt (oder kontaktieren Sie uns direkt, um zu sehen, ob wir verspätete Bestellungen annehmen können)"
   shopping_oc_last_closed: "Der letzte Zyklus wurde vor %{distance_of_time} geschlossen"
   shopping_oc_next_open: "Der nächste Zyklus wird in %{distance_of_time} geöffnet"
+  shopping_oc_select: "Wählen..."
   shopping_tabs_home: "Startseite"
   shopping_tabs_shop: "Laden"
   shopping_tabs_about: "Über Uns"
@@ -1758,13 +1784,13 @@ de_DE:
         address1_field_placeholder: "z.B. 123 Cranberry-Laufwerk"
         address1_field_error: "Bitte geben Sie eine Adresse an"
         address2_field: "Anschrift Zeile 2:"
-        suburb_field: "Vorort:"
+        suburb_field: "Ort:"
         suburb_field_placeholder: "z.B. Northcote"
         suburb_field_error: "Bitte geben Sie einen Vorort ein"
         postcode_field: "Postleitzahl:"
         postcode_field_placeholder: "z.B. 3070"
         postcode_field_error: "Postleitzahl erforderlich"
-        state_field: "Zustand:"
+        state_field: "Bundesland:"
         state_field_error: "Staat erforderlich"
         country_field: "Land:"
         country_field_error: "Bitte wähle ein Land"
@@ -1783,8 +1809,8 @@ de_DE:
         yes_producer: "Ja, ich bin ein Produzent."
         no_producer: "Nein, ich bin kein Produzent"
         producer_field_error: "Bitte wählen Sie: Sind Sie ein Produzent?"
-        yes_producer_help: "Hersteller machen leckere Dinge zu essen und / oder zu trinken. Du bist ein Produzent, wenn du ihn anbaust, erziehst ihn, braue ihn, backe ihn, gähre ihn, melke ihn oder forme ihn."
-        no_producer_help: "Wenn Sie kein Produzent sind, sind Sie wahrscheinlich jemand, der Lebensmittel verkauft und verteilt. Sie könnten ein Hub, Coop, Einkaufsgruppe, Einzelhändler, Großhändler oder andere sein."
+        yes_producer_help: "Die Produzenten machen leckere Sachen zum Essen und / oder Trinken. Sie sind ein Produzent, wenn Sie anbauen, brauen, backen, fermentieren, melken oder sonst wie Lebenmittel produzieren."
+        no_producer_help: "Wenn Sie kein Produzent sind, sind Sie wahrscheinlich jemand, der Lebensmittel verkauft und verteilt. Sie könnten ein Foodhub, eine Coop, eine Einkaufsgruppe, Einzelhändler, ein Hofladen, Großhändler oder vergleichbares sein."
         create_profile: "Profil erstellen"
       about:
         title: "Über Uns"
@@ -1848,6 +1874,7 @@ de_DE:
         headline: "Fertig!"
         thanks: "Vielen Dank, dass Sie die Details für %{enterprise} ausgefüllt haben."
         login: "Sie können Ihr Unternehmen jederzeit ändern oder aktualisieren, indem Sie sich bei Open Food Network anmelden und zum Administrator wechseln."
+        action: "Gehen Sie zum Enterprise Dashboard"
   back: "Zurück"
   continue: "Fortsetzen"
   action_or: "ODER"
@@ -1933,6 +1960,7 @@ de_DE:
   tax_category: "Steuerkategorie"
   calculator: "Rechner"
   calculator_values: "Rechnerwerte"
+  calculator_settings_warning: "Wenn Sie den Gebühren-Typ ändern, müssen Sie zuerst speichern, bevor Sie die Gebühren-Einstellungen bearbeiten können"
   flat_percent_per_item: "Flache Prozent (pro Artikel)"
   flat_rate_per_item: "Pauschale (pro Stück)"
   flat_rate_per_order: "Pauschalpreis pro Bestellung)"
@@ -2263,6 +2291,7 @@ de_DE:
   enterprise_register_success_notice: "Herzliche Glückwünsche! Registrierung für %{enterprise} ist abgeschlossen!"
   enterprise_bulk_update_success_notice: "Unternehmen wurden erfolgreich aktualisiert"
   enterprise_bulk_update_error: 'Update fehlgeschlagen'
+  enterprise_shop_show_error: "Der gesuchte Shop existiert nicht oder ist auf OFN inaktiv. Bitte schauen Sie nach anderen Shops!"
   order_cycles_create_notice: 'Ihr Bestellzyklus wurde erstellt.'
   order_cycles_update_notice: 'Ihr Bestellzyklus wurde aktualisiert.'
   order_cycles_bulk_update_notice: 'Bestellzyklen wurden aktualisiert.'
@@ -2417,6 +2446,12 @@ de_DE:
           severity: Schwere
           description: Beschreibung
           resolve: Entschlossenheit
+        exchange_products:
+          load_more_variants: "Weitere Varianten laden"
+          load_all_variants: "Alle Varianten laden"
+          select_all_variants: "Wählen Sie alle %{total_number_of_variants}-Varianten aus"
+          variants_loaded: "%{num_of_variants_loaded} von %{total_number_of_variants} Varianten geladen"
+          loading_variants: "lade Varianten"
       tag_rules:
         shipping_method_tagged_top: "Versandarten markiert"
         shipping_method_tagged_bottom: "sind:"
@@ -2499,6 +2534,7 @@ de_DE:
           customer_placeholder: "Kunde@beispiel.org"
           valid_email_error: "Bitte geben Sie eine gültige E-Mail-Adresse ein"
       subscriptions:
+        error_saving: "Fehler beim Speichern des Abonnements"
         new:
           please_select_a_shop: "Bitte wählen Sie einen Laden"
     insufficient_stock: "Nicht genügend Lagerbestand verfügbar, nur noch %{on_hand} verfügbar"
@@ -2575,9 +2611,78 @@ de_DE:
       have_an_account: "Hast du schon ein Konto?"
       action_login: "Jetzt einloggen."
   inflections:
+    each:
+      one: "jeder"
+      other: "pro Stück"
+    bunch:
+      one: "Bündel"
+      other: "Bündel"
+    pack:
+      one: "Pack"
+      other: "Packungen"
+    box:
+      one: "Box"
+      other: "Kisten"
     bottle:
       one: "Flasche"
       other: "Flaschen"
+    jar:
+      one: "Krug"
+      other: "Gläser"
+    head:
+      one: "Kopf"
+      other: "Köpfe"
+    bag:
+      one: "Tasche"
+      other: "Beutel"
+    loaf:
+      one: "Laib"
+      other: "Laibe"
+    single:
+      one: "Einzeln"
+      other: "Einzel"
+    tub:
+      one: "Wanne"
+      other: "Wannen"
+    punnet:
+      one: "Körbchen"
+      other: "Körbchen"
+    packet:
+      one: "Paket"
+      other: "Pakete"
+    item:
+      one: "Artikel"
+      other: "Artikel"
+    dozen:
+      one: "Dutzend"
+      other: "Dutzende"
+    unit:
+      one: "Einheit"
+      other: "Einheiten"
+    serve:
+      one: "Portion"
+      other: "Portionen"
+    tray:
+      one: "Schale"
+      other: "Schalen"
+    piece:
+      one: "Stück"
+      other: "Stücke"
+    pot:
+      one: "Topf"
+      other: "Töpfe"
+    bundle:
+      one: "bündeln"
+      other: "Bündel"
+    flask:
+      one: "Flasche"
+      other: "Flaschen"
+    basket:
+      one: "Korb"
+      other: "Körbe"
+    sack:
+      one: "Sack"
+      other: "Säcke"
   producers:
     signup:
       start_free_profile: "Beginnen Sie mit einem kostenlosen Profil und erweitern Sie es, wenn Sie fertig sind!"
@@ -2643,6 +2748,7 @@ de_DE:
   status: "Status"
   new: "Neu"
   start: "Start"
+  end: "Ende"
   stop: "Halt"
   first: "Zuerst"
   previous: "Bisherige"
@@ -2819,6 +2925,8 @@ de_DE:
     zipcode: Postleitzahl
     weight: Gewicht (pro kg)
     error_user_destroy_with_orders: "Benutzer mit abgeschlossenen Bestellungen dürfen nicht gelöscht werden"
+    cannot_create_payment_without_payment_methods: "Sie können keine Zahlung für eine Bestellung erstellen, ohne dass Zahlungsmethoden definiert sind."
+    please_define_payment_methods: "Bitte definieren Sie zunächst die Zahlungsmethoden."
     options: "Optionen"
     actions:
       update: "Aktualisieren"
@@ -2905,6 +3013,7 @@ de_DE:
           capture: "Erfassung"
           ship: "Liefern"
           edit: "Bearbeiten"
+          order_not_updated: "Die Bestellung konnte nicht aktualisiert werden"
           note: "Hinweis"
           first: "Zuerst"
           last: "Letzte"
@@ -2927,7 +3036,8 @@ de_DE:
           tax_invoice: "Steuerrechnung"
           code: "Code"
           from: "Von"
-          to: "Zu"
+          to: "Rechnungsempfänger"
+          shipping: "Versand"
         form:
           distribution_fields:
             title: "Verteilung"
@@ -3125,6 +3235,12 @@ de_DE:
           used_saved_card: "Verwende eine gespeicherte Karte:"
           or_enter_new_card: "Oder geben Sie Details für eine neue Karte ein:"
           remember_this_card: Erinnerst du dich an diese Karte?
+        stripe_sca:
+          choose_one: Wähle Sie eine Option
+          enter_new_card: Geben Sie Details für eine neue Karte ein
+          used_saved_card: "Verwenden Sie eine gespeicherte Karte:"
+          or_enter_new_card: "Oder geben Sie Details für eine neue Karte ein:"
+          remember_this_card: Diese Karte speichern?
     date_picker:
       format: '% Y-% m-%d'
       js_format: 'JJ-MM-TT'

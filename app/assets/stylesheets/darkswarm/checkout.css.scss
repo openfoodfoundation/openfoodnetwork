@@ -44,7 +44,7 @@ checkout {
   h5 {
     margin: 0;
     padding: 0.65em;
-    background: #f7f7f7;
+    background: $grey-050;
 
     .label {
       font-size: 1em;
@@ -109,9 +109,4 @@ checkout {
       }
     }
   }
-
-  .error {
-    color: #c82020;
-  }
 }
-

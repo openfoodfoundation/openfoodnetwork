@@ -19,6 +19,8 @@ es:
         shipping_category_id: "Categoría de envío"
         variant_unit: "Unidad Variante"
         variant_unit_name: "Nombre de la unidad de la variante"
+      spree/credit_card:
+        base: "Tarjeta de crédito"
       order_cycle:
         orders_close_at: Fecha de cierre
     errors:
@@ -845,6 +847,11 @@ es:
         next: "Siguiente"
         cancel: "Cancelar"
       outgoing:
+        outgoing: "Saliente"
+        distributor: "Distribuidora"
+        products: "Productos"
+        tags: "Tags"
+        fees: "Comisiones"
         previous: "Anterior"
         save: "Guardar"
         cancel: "Cancelar"
@@ -2877,7 +2884,6 @@ es:
           tax_invoice: "FACTURA DE IMPUESTOS"
           code: "Código"
           from: "De"
-          to: "A"
         form:
           distribution_fields:
             title: "Distribución"

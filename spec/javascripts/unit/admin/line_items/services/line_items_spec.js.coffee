@@ -1,5 +1,5 @@
 describe "LineItems service", ->
-  LineItems = LineItemResource = lineItems = $httpBackend = null
+  LineItems = LineItemResource = lineItems = $httpBackend = $rootScope = $timeout = null
 
   beforeEach ->
     module 'admin.lineItems'
@@ -15,24 +15,27 @@ describe "LineItems service", ->
       $httpBackend = _$httpBackend_
 
   describe "#index", ->
-    result = response = null
+    result = response = line_item = null
 
     beforeEach ->
-      response = [{ id: 5, name: 'LineItem 1'}]
+      line_item = { id: 5, name: 'LineItem 1'}
+      response = { line_items: [line_item] }
       $httpBackend.expectGET('/admin/bulk_line_items.json').respond 200, response
       result = LineItems.index()
       $httpBackend.flush()
 
     it "stores returned data in @byID, with ids as keys", ->
       # LineItemResource returns instances of Resource rather than raw objects
-      expect(LineItems.byID).toDeepEqual { 5: response[0] }
+      expect(LineItems.byID).toDeepEqual { 5: response['line_items'][0] }
 
     it "stores returned data in @pristineByID, with ids as keys", ->
-      expect(LineItems.pristineByID).toDeepEqual { 5: response[0] }
+      expect(LineItems.pristineByID).toDeepEqual { 5: response['line_items'][0] }
+
+    it "stores returned data in @all, as an array", ->
+      expect(LineItems.all).toDeepEqual [line_item]
 
     it "returns an array of line items", ->
-      expect(result).toDeepEqual response
-
+      expect(result).toDeepEqual [line_item]
 
   describe "#save", ->
     describe "success", ->
@@ -115,6 +118,7 @@ describe "LineItems service", ->
         lineItem = new LineItemResource({ id: 15, order: { number: '12345678'} })
         LineItems.pristineByID[15] = lineItem
         LineItems.byID[15] = lineItem
+        LineItems.all = [lineItem]
         $httpBackend.expectDELETE('/admin/bulk_line_items/15.json').respond 200, { id: 15, name: 'LineItem 1'}
         LineItems.delete(lineItem, callback).then( -> resolved = true).catch( -> rejected = true)
         $httpBackend.flush()
@@ -122,6 +126,7 @@ describe "LineItems service", ->
       it "updates the pristine copy of the lineItem", ->
         expect(LineItems.pristineByID[15]).toBeUndefined()
         expect(LineItems.byID[15]).toBeUndefined()
+        expect(LineItems.all).toEqual([])
 
       it "runs the callback", ->
         expect(callback).toHaveBeenCalled()

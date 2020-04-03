@@ -50,7 +50,7 @@ Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer,
           false
 
     calculateDistance: (query, firstMatching) ->
-      if query?.length > 0
+      if query?.length > 0 and Geo.OK
         if firstMatching?
           @setDistanceFrom firstMatching
         else

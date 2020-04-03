@@ -10,5 +10,4 @@
           = distributor.name
         %location= distributor.address.city
 
-    .show-for-large-up.large-4.columns
-      = render partial: "shopping_shared/order_cycles"
+    = yield :ordercycle_sidebar

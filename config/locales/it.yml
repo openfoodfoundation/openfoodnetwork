@@ -19,6 +19,8 @@ it:
         shipping_category_id: "Categoria di spedizione"
         variant_unit: "Unità Variante"
         variant_unit_name: "Nome Unità Variante"
+      spree/credit_card:
+        base: "Carta di Credito"
       order_cycle:
         orders_close_at: Data chiusura
     errors:
@@ -791,13 +793,13 @@ it:
         producer_shop_description_text2: Un Negozio produttore è solo per i tuoi prodotti. Se vuoi vendere prodotti altrui, seleziona "Hub produttore".
         producer_hub: Hub produttore
         producer_hub_text: Vendi prodotti tuoi e di altri
-        producer_hub_description_text: La tua azienda è un pilastro del nostro sistema di cibo locale. Puoi vendere i tuoi prodotti, ma anche prodotti di tuoi produttori fidati attraverso la tua vetrina di Open Food Network.
+        producer_hub_description_text: La tua azienda è un pilastro della nostra filiera del cibo. Puoi vendere i tuoi prodotti, ma anche prodotti di tuoi produttori fidati attraverso la tua vetrina di Open Food Network.
         profile: Solo Profilo
         get_listing: Ottieni un listino
         profile_description_text: Le persone ti possono trovare e contattare su OFN. La tua azienda sarà visibile sulla mappa e potrà essere trovata nelle ricerche degli utenti.
         hub_shop: Isola logistica
         hub_shop_text: Vendi prodotti di altri
-        hub_shop_description_text: La tua azienda è la spina dorsale del vostro sistema alimentare locale. Puoi aggregare i prodotti di altre aziende e venderli attraverso il tuo negozio su Open Food Network.
+        hub_shop_description_text: La tua azienda è la spina dorsale della vostra filiera locale del cibo. Puoi aggregare i prodotti di altre aziende e venderli attraverso il tuo negozio su Open Food Network.
         choose_option: Per favore seleziona una delle opzioni.
         change_now: Modifica ora
       enterprise_user_index:
@@ -862,6 +864,11 @@ it:
         cancel: "Annulla"
         back_to_list: "Indietro alla lista"
       outgoing:
+        outgoing: "In uscita"
+        distributor: "Distributore"
+        products: "Prodotti"
+        tags: "Tag"
+        fees: "Tariffe"
         previous: "Precedente"
         save: "Salva"
         save_and_back_to_list: "Salva e torna alla lista"
@@ -1114,6 +1121,7 @@ it:
     already_ordered:
       cart: "carrello"
       message_html: "Hai già un ordine per questo ciclo d'ordine. Controlla%{cart} per vedere gli articoli ordinati in precedenza. Puoi anche cancellare gli articoli finché il ciclo dell'ordine è aperto."
+    failed: "Checkout fallito. Contattaci per poter processare il tuo ordine."
   shops:
     hubs:
       show_closed_shops: "Mostra i negozi chiusi"
@@ -1341,7 +1349,7 @@ it:
   brandstory_part3: "Così costruiamo un mercato online che riequilibra le parti. E' trasparente, così crea raporti reali. E' open source, così è di tutti. Si adatta dalla scala regionale a quella nazionale, così le persone lo adottano in tutto il mondo."
   brandstory_part4: "Funziona ovunque. Cambia ogni cosa."
   brandstory_part5_strong: "Noi lo chiamiamo Open Food Network."
-  brandstory_part6: "Noi tutti amiamo il cibo. Adesso possiamo amare anche il nostro sistema cibo."
+  brandstory_part6: "Noi tutti amiamo il cibo. Adesso possiamo amare anche la nostra filiera del cibo."
   learn_body: "Esplora modelli, storie e risorse per aiutarti e sviluppare la tua azienda o la tua organizzazione in modo equo. Cerca corsi, eventi e altre opportunità per imparare da chi è come te."
   learn_cta: "Prendi ispirazione"
   connect_body: "Cerca la nostra intera lista di produttori, hub e gruppi per trovare chi è vicino a te. Aggiungi alla lista di OFN la tua azienda o organizzazionie così i clienti potranno trovarti. Unisciti alla comunità per avere consigli e risolvere problemi insieme."
@@ -1355,7 +1363,7 @@ it:
   system_step3_text: "Attendi per la tua consegna, o visita il tuo produttore o distributore per una connessione più personale con il tuo cibo. Comprare cibo così variegato come lo intende natura."
   cta_headline: "La spesa che rende il mondo un posto migliore."
   cta_label: "Sono Pronto"
-  stats_headline: "Stiamo creando un nuovo sistema del cibo."
+  stats_headline: "Stiamo creando una nuova filiera del cibo."
   stats_producers: "produttori"
   stats_shops: "negozi"
   stats_shoppers: "clienti"
@@ -1393,7 +1401,7 @@ it:
   order_delivery_address: Indirizzo di consegna
   order_delivery_time: Tempo di consegna
   order_special_instructions: "Tue note:"
-  order_pickup_time: Pronto per la raccolta
+  order_pickup_time: Pronto per il ritiro
   order_pickup_instructions: Istruzioni per la raccolta
   order_produce: Produrre
   order_total_price: Totale
@@ -1462,7 +1470,7 @@ it:
   email_shipping_delivery_time: "Consegna il"
   email_shipping_delivery_address: "Indirizzo di consegna"
   email_shipping_collection_details: Dettagli della raccolta
-  email_shipping_collection_time: "Pronto per la raccolta:"
+  email_shipping_collection_time: "Pronto per il ritiro:"
   email_shipping_collection_instructions: "Istruzioni per la raccolta:"
   email_special_instructions: "Tue note:"
   email_signup_greeting: Ciao!
@@ -1486,6 +1494,7 @@ it:
   shopping_oc_closed_description: "Per favore aspetta l'apertura del prossimo ciclo (o contattaci direttamente per sapere se possiamo accettare ordini fuori tempo)"
   shopping_oc_last_closed: "L'ultimo ciclo è chiuso %{distance_of_time} fa"
   shopping_oc_next_open: "Il prossimo ciclo aprirà tra %{distance_of_time}"
+  shopping_oc_select: "Seleziona..."
   shopping_tabs_home: "Home"
   shopping_tabs_shop: "Negozio"
   shopping_tabs_about: "Descrizione"
@@ -1859,6 +1868,7 @@ it:
         headline: "Finito!"
         thanks: "Grazie per aver riempito i dettagli per %{enterprise}."
         login: "Puoi cambiare o aggiornare la tua azienda ad ogni passo accedendo a Open Food Network e andando su Amministrazione."
+        action: "Vai alla dashboard aziendale"
   back: "Indietro"
   continue: "Continua"
   action_or: "O"
@@ -1944,6 +1954,7 @@ it:
   tax_category: "Categoria di imposta"
   calculator: "Calcolatore"
   calculator_values: "Valori del calcolatore"
+  calculator_settings_warning: "Se stai modificando il tipo di calcolatore, devi prima salvare prima di editare i setting del calcolatore"
   flat_percent_per_item: "Percentuale (per prodotto)"
   flat_rate_per_item: "Tariffa fissa (per articolo)"
   flat_rate_per_order: "Tariffa fissa (per gentile richiesta)"
@@ -2274,6 +2285,7 @@ it:
   enterprise_register_success_notice: "Congratulazioni! L registrazione di %{enterprise} è completa!"
   enterprise_bulk_update_success_notice: "Aziende aggiornate con successo"
   enterprise_bulk_update_error: 'Aggiornamento fallito'
+  enterprise_shop_show_error: "Il negozio che stai cercando non esiste o risulta inattivo su OFN. Prego visita altri shop."
   order_cycles_create_notice: 'Il tuo ciclo di richieste è stato creato.'
   order_cycles_update_notice: 'Il tuo ciclo di richieste è stato aggiornato'
   order_cycles_bulk_update_notice: 'I cicli di richieste sono stati aggiornati.'
@@ -2347,7 +2359,7 @@ it:
               alimentare locale attraverso Open Food Network sarà sempre gratuito..
           hub_shop: Isola logistica
           hub_shop_text1: >
-              La tua azienda è la spina dorsale del vostro sistema alimentare locale.
+              La tua azienda è la spina dorsale della vostra filiera alimentare locale.
               Puoi aggregare i prodotti di altre aziende e venderli attraverso il
               tuo negozio su Open Food Network.
           hub_shop_text2: >
@@ -2431,6 +2443,8 @@ it:
         exchange_products:
           load_more_variants: "Carica più Varianti"
           load_all_variants: "Carica tutte le Varianti"
+          select_all_variants: "Seleziona tutto %{total_number_of_variants} varianti"
+          variants_loaded: "%{num_of_variants_loaded} di %{total_number_of_variants} varianti caricate"
           loading_variants: "Caricamento Varianti"
       tag_rules:
         shipping_method_tagged_top: "Metodi di consegna taggati"
@@ -2591,9 +2605,78 @@ it:
       have_an_account: "Hai già un account?"
       action_login: "Accedi ora."
   inflections:
+    each:
+      one: "ogni"
+      other: "ogni"
     bunch:
       one: "mazzo"
       other: "grappoli"
+    pack:
+      one: "imballare"
+      other: "confezioni"
+    box:
+      one: "scatola"
+      other: "scatole"
+    bottle:
+      one: "bottiglia"
+      other: "bottiglie"
+    jar:
+      one: "vaso"
+      other: "barattoli"
+    head:
+      one: "testa"
+      other: "teste"
+    bag:
+      one: "Borsa"
+      other: "borse"
+    loaf:
+      one: "pagnotta"
+      other: "pagnotte"
+    single:
+      one: "singolo"
+      other: "singoli"
+    tub:
+      one: "vasca"
+      other: "vasche"
+    punnet:
+      one: "cestino"
+      other: "cestini"
+    packet:
+      one: "pacchetto"
+      other: "pacchetti"
+    item:
+      one: "articolo"
+      other: "elementi"
+    dozen:
+      one: "dozzina"
+      other: "dozzine"
+    unit:
+      one: "unità"
+      other: "unità"
+    serve:
+      one: "servire"
+      other: "porzioni"
+    tray:
+      one: "vassoio"
+      other: "vassoi"
+    piece:
+      one: "pezzo"
+      other: "pezzi"
+    pot:
+      one: "pentola"
+      other: "vasi"
+    bundle:
+      one: "fascio"
+      other: "gruppi"
+    flask:
+      one: "borraccia"
+      other: "fiaschi"
+    basket:
+      one: "cestino"
+      other: "cesti"
+    sack:
+      one: "sacco"
+      other: "sacchi"
   producers:
     signup:
       start_free_profile: "Inizia con un profilo gratuito e migliora quando sei pronto!"
@@ -2836,6 +2919,8 @@ it:
     zipcode: CAP
     weight: Peso (kg)
     error_user_destroy_with_orders: "Gli utenti con ordini completi non dovrebbero essere cancellati"
+    cannot_create_payment_without_payment_methods: "Non è possibile creare un pagamento per un ordine senza alcun metodo di pagamento definito."
+    please_define_payment_methods: "Definisci prima alcuni metodi di pagamento."
     options: "Opzioni"
     actions:
       update: "Aggiorna"
@@ -2922,6 +3007,7 @@ it:
           capture: "Cattura"
           ship: "Spedizione"
           edit: "Modifica"
+          order_not_updated: "L'ordine non può essere aggiornato"
           note: "Nota"
           first: "Primo"
           last: "Ultimo"
@@ -2944,7 +3030,6 @@ it:
           tax_invoice: "FATTURA DELLE TASSE"
           code: "Codice"
           from: "Da"
-          to: "A"
         form:
           distribution_fields:
             title: "Distribuzione"

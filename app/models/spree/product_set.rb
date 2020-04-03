@@ -1,6 +1,6 @@
 class Spree::ProductSet < ModelSet
   def initialize(attributes = {})
-    super(Spree::Product, [], attributes, proc { |attrs| attrs[:product_id].blank? })
+    super(Spree::Product, [], attributes)
   end
 
   def save
@@ -34,11 +34,9 @@ class Spree::ProductSet < ModelSet
     split_taxon_ids!(attributes)
 
     product = find_model(@collection, attributes[:id])
-    if product.nil?
-      @klass.new(attributes).save unless @reject_if.andand.call(attributes)
-    else
-      update_product(product, attributes)
-    end
+    return if product.nil?
+
+    update_product(product, attributes)
   end
 
   def split_taxon_ids!(attributes)

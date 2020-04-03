@@ -50,7 +50,7 @@ describe Api::CachedEnterpriseSerializer do
 
     context 'when the enterprise is not an active distributor' do
       let(:enterprise_injection_data) do
-        instance_double(OpenFoodNetwork::EnterpriseInjectionData, active_distributors: [])
+        instance_double(OpenFoodNetwork::EnterpriseInjectionData, active_distributor_ids: [])
       end
 
       it 'does not duplicate properties' do
@@ -69,7 +69,7 @@ describe Api::CachedEnterpriseSerializer do
 
     context 'when the enterprise is an active distributor' do
       let(:enterprise_injection_data) do
-        instance_double(OpenFoodNetwork::EnterpriseInjectionData, active_distributors: [shop])
+        instance_double(OpenFoodNetwork::EnterpriseInjectionData, active_distributor_ids: [shop.id])
       end
 
       it 'does not duplicate properties' do

@@ -494,7 +494,7 @@ feature '
 
         it "shows a dialog and ignores changes when confirm dialog is accepted" do
           page.driver.accept_modal :confirm, text: "Unsaved changes exist and will be lost if you continue." do
-            fill_in "start_date_filter", with: (Date.current - 9).strftime("%F %T")
+            fill_in "start_date_filter", with: (Date.current - 9).strftime('%Y-%m-%d')
           end
           expect(page).to have_no_selector "#save-bar"
           within("tr#li_#{li2.id} td.quantity") do
@@ -577,6 +577,7 @@ feature '
           find("div#bulk-actions-dropdown").click
           find("div#bulk-actions-dropdown div.menu_item", text: "Delete Selected" ).click
           expect(page).to have_no_selector "tr#li_#{li1.id}"
+          expect(page).to have_selector "#quick_search"
           fill_in "quick_search", with: ''
           wait_until { request_monitor_finished 'LineItemsCtrl' }
           expect(page).to have_selector "tr#li_#{li2.id}"

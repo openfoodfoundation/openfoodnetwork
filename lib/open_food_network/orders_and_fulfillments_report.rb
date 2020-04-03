@@ -83,7 +83,7 @@ module OpenFoodNetwork
 
     def order_permissions
       return @order_permissions unless @order_permissions.nil?
-      @order_permissions = ::Permissions::Order.new(@user)
+      @order_permissions = ::Permissions::Order.new(@user, options[:q])
     end
 
     def report_line_items

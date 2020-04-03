@@ -19,6 +19,8 @@ tr:
         shipping_category_id: "Nakliye  Kategorisi"
         variant_unit: "Varyant Birimi"
         variant_unit_name: "Varyant Birim Adı"
+      spree/credit_card:
+        base: "Kredi kartı"
       order_cycle:
         orders_close_at: Bitiş tarihi
     errors:
@@ -858,6 +860,11 @@ tr:
         cancel: "İptal et"
         back_to_list: "Listeye geri dön"
       outgoing:
+        outgoing: "Giden"
+        distributor: "Dağıtımcı"
+        products: "Ürünler"
+        tags: "Etiketler"
+        fees: "Ücretler"
         previous: "Önceki"
         save: "Kaydet"
         save_and_back_to_list: "Kaydet ve Listeye Dön"
@@ -3010,7 +3017,6 @@ tr:
           tax_invoice: "VERGİ FATURASI"
           code: "Kod"
           from: "İtibaren"
-          to: "Şu vakte kadar"
         form:
           distribution_fields:
             title: "Dağıtım"

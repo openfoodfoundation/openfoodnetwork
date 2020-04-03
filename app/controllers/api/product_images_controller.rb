@@ -1,5 +1,5 @@
 module Api
-  class ProductImagesController < BaseController
+  class ProductImagesController < Api::BaseController
     respond_to :json
 
     def update_product_image

@@ -9,6 +9,8 @@
 #= require angular-animate
 #= require angular-resource
 #= require lodash.underscore.js
+# bluebird.js is a dependency of angular-google-maps.js 2.0.0
+#= require bluebird.js
 #= require angular-scroll.min.js
 #= require angular-google-maps.min.js
 #= require ../shared/mm-foundation-tpls-0.9.0-20180826174721.min.js

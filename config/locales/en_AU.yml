@@ -19,6 +19,8 @@ en_AU:
         shipping_category_id: "Shipping Category"
         variant_unit: "Variant Unit"
         variant_unit_name: "Variant Unit Name"
+      spree/credit_card:
+        base: "Credit Card"
       order_cycle:
         orders_close_at: Close date
     errors:
@@ -699,6 +701,16 @@ en_AU:
           enable_subscriptions_false: "Disabled"
           enable_subscriptions_true: "Enabled"
           shopfront_message: "\"Home\" message"
+          shopfront_message_placeholder: >
+              Create your home page content to welcome customers and explain how people
+              can shop with you.
+
+              Include details about your delivery and pick up options, how often you
+              open the shop for orders, and all the details your customers will need
+              to understand the process of buying from you.
+
+              You can also include links to your newsletter sign up, so that people
+              can connect with you to hear when your next order cycle opens.
           shopfront_message_link_tooltip: "Insert / edit link"
           shopfront_message_link_prompt: "Please enter a URL to insert"
           shopfront_closed_message: "Shopfront Closed Message"
@@ -860,6 +872,11 @@ en_AU:
         cancel: "Cancel"
         back_to_list: "Back To List"
       outgoing:
+        outgoing: "Outgoing"
+        distributor: "Distributor"
+        products: "Products"
+        tags: "Tags"
+        fees: "Fees"
         previous: "Previous"
         save: "Save"
         save_and_back_to_list: "Save and Back to List"
@@ -2927,7 +2944,6 @@ en_AU:
           tax_invoice: "TAX INVOICE"
           code: "Code"
           from: "From"
-          to: "To"
         form:
           distribution_fields:
             title: "Distribution"

@@ -19,6 +19,8 @@ en_US:
         shipping_category_id: "Shipping Category"
         variant_unit: "Variant Unit"
         variant_unit_name: "Variant Unit Name"
+      spree/credit_card:
+        base: "Credit Card"
       order_cycle:
         orders_close_at: Close Date
     errors:
@@ -50,6 +52,8 @@ en_US:
         shipping_method_ids: "Shipping Methods"
         payment_method_ids: "Payment Methods"
     errors:
+      messages:
+        inclusion: "is not included in the list"
       models:
         subscription_validator:
           attributes:
@@ -116,7 +120,9 @@ en_US:
       email_welcome: "Welcome"
       email_registered: "is now part of"
       email_userguide_html: "The User Guide with detailed support for setting up your Producer or Hub is here: %{link}"
+      userguide: "Open Food Network User Guide"
       email_admin_html: "You can manage your account by logging into the %{link} or by clicking on the cog in the top right hand side of the homepage, and selecting Administration."
+      admin_panel: "Admin Panel"
       email_community_html: "We also have an online forum for community discussion related to OFN software and the unique challenges of running a food enterprise. You are encouraged to join in. We are constantly evolving and your input into this forum will shape what happens next. %{link}"
       join_community: "Join the community"
     invite_manager:
@@ -242,6 +248,8 @@ en_US:
   notes: Notes
   error: Error
   processing_payment: "Processing payment..."
+  no_pending_payments: "No pending payments"
+  invalid_payment_state: "Invalid payment state"
   filter_results: Filter Results
   quantity: Quantity
   pick_up: Pick up
@@ -434,9 +442,12 @@ en_US:
         infinity: "Infinity"
         to_order_tip: "Items made to order do not have a set stock level, such as loaves of bread made fresh to order."
       back_to_products_list: "Back to products list"
+      editing_product: "Editing Product"
       tabs:
+        product_details: "Product Details"
         group_buy_options: "Group Buy Options"
         images: "Images"
+        variants: "Variants"
         product_properties: "Product Properties"
     product_import:
       title: Product Import
@@ -539,6 +550,7 @@ en_US:
         title: Inventory
         description: Use this page to manage inventories for your enterprises. Any product details set here will override those set on the 'Products' page
         enable_reset?: Enable Stock Reset?
+        default_stock: "Default stock"
         inherit?: Inherit?
         add: Add
         hide: Hide
@@ -598,7 +610,7 @@ en_US:
           desc_long: About Us
           desc_long_placeholder: Tell customers about yourself. This information appears on your public profile.
         business_details:
-          abn: Tax ID Number or EIN (optional)
+          abn: Tax ID, DUNS Number, or other business ID
           abn_placeholder: eg. 123456789
           acn: Legal Business Name
           acn_placeholder: eg. Martin's Produce LLC
@@ -693,6 +705,10 @@ en_US:
           enable_subscriptions_false: "Disabled"
           enable_subscriptions_true: "Enabled"
           shopfront_message: "Shopfront Message"
+          shopfront_message_placeholder: >
+              An optional message to welcome customers and explain how to shop with
+              you. If text is entered here it will be displayed in a home tab when
+              customers first arrive at your shopfront.
           shopfront_message_link_tooltip: "Insert / edit link"
           shopfront_message_link_prompt: "Please enter a URL to insert"
           shopfront_closed_message: "Shopfront Closed Message"
@@ -830,20 +846,38 @@ en_US:
       new:
         create: "Create"
         cancel: "Cancel"
+        back_to_list: "Back To List"
       edit:
         advanced_settings: "Advanced Settings"
         save: "Save"
+        save_and_next: "Save and Next"
         next: "Next"
         cancel: "Cancel"
+        back_to_list: "Back To List"
+        save_and_back_to_list: "Save and Back to List"
         choose_products_from: "Choose Products From:"
       incoming:
         save: "Save"
+        save_and_next: "Save and Next"
         next: "Next"
         cancel: "Cancel"
+        back_to_list: "Back To List"
       outgoing:
+        outgoing: "Outgoing"
+        distributor: "Distributor"
+        products: "Products"
+        tags: "Tags"
+        delivery_details: "Delivery Details"
+        fees: "Fees"
         previous: "Previous"
         save: "Save"
+        save_and_back_to_list: "Save and Back to List"
         cancel: "Cancel"
+        back_to_list: "Back To List"
+      wizard_progress:
+        edit: "1. General Settings"
+        incoming: "2. Incoming Products"
+        outgoing: "3. Outgoing Products"
       exchange_form:
         pickup_time_tip: When orders from this OC will be ready for the customer
         pickup_instructions_placeholder: "Pick-up instructions"
@@ -1081,10 +1115,13 @@ en_US:
       destroy_attachment_does_not_exist: "Logo does not exist"
     enterprise_promo_image:
       destroy_attachment_does_not_exist: "Promo image does not exist"
+    orders:
+      failed_to_update: "Failed to update order"
   checkout:
     already_ordered:
       cart: "cart"
       message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
+    failed: "The checkout failed. Please let us know so that we can process your order."
   shops:
     hubs:
       show_closed_shops: "Show closed shops"
@@ -1143,11 +1180,11 @@ en_US:
   invoice_column_price_without_taxes: "Total price (Excl. tax)"
   invoice_column_tax_rate: "Tax rate"
   invoice_tax_total: "Tax total:"
-  tax_invoice: "TAX INVOICE"
+  tax_invoice: "INVOICE"
   tax_total: "Total tax (%{rate}):"
   total_excl_tax: "Total (Excl. tax):"
   total_incl_tax: "Total (Incl. tax):"
-  abn: "Tax ID Number or EIN (optional)"
+  abn: "Tax ID, DUNS Number, or other business ID"
   acn: "Legal Business Name"
   invoice_issued_on: "Invoice issued on:"
   order_number: "Invoice number:"
@@ -1255,6 +1292,7 @@ en_US:
   saving_credit_card: Saving credit card...
   card_has_been_removed: "Your card has been removed (number: %{number})"
   card_could_not_be_removed: Sorry, the card could not be removed
+  invalid_credit_card: "Invalid credit card"
   ie_warning_headline: "Your browser is out of date :-("
   ie_warning_text: "For the best Open Food Network experience, we strongly recommend upgrading your browser:"
   ie_warning_chrome: Download Chrome
@@ -1456,6 +1494,7 @@ en_US:
   shopping_oc_closed_description: "Please wait until the next cycle opens (or contact us directly to see if we can accept any late orders)"
   shopping_oc_last_closed: "The last cycle closed %{distance_of_time} ago"
   shopping_oc_next_open: "The next cycle opens in %{distance_of_time}"
+  shopping_oc_select: "Select..."
   shopping_tabs_home: "Home"
   shopping_tabs_shop: "Shop"
   shopping_tabs_about: "About"
@@ -1778,7 +1817,7 @@ en_US:
         enterprise_long_desc: "Long Description"
         enterprise_long_desc_placeholder: "This is your opportunity to tell the story of your enterprise - what makes you different and wonderful? We'd suggest keeping your description to under 600 characters or 150 words."
         enterprise_long_desc_length: "%{num} characters / up to 600 recommended"
-        enterprise_abn: "Tax ID Number or EIN (optional)"
+        enterprise_abn: "Tax ID, DUNS Number, or other business ID"
         enterprise_abn_placeholder: "eg. 123456789"
         enterprise_acn: "Legal Business Name"
         enterprise_acn_placeholder: "eg. Justins Produce LLC"
@@ -1829,6 +1868,7 @@ en_US:
         headline: "Finished!"
         thanks: "Thanks for filling out the details for %{enterprise}."
         login: "You can change or update your enterprise at any stage by logging into Open Food Network and going to Admin."
+        action: "Go to Enterprise Dashboard"
   back: "Back"
   continue: "Continue"
   action_or: "OR"
@@ -1914,6 +1954,7 @@ en_US:
   tax_category: "Tax Category"
   calculator: "Calculator"
   calculator_values: "Calculator values"
+  calculator_settings_warning: "If you are changing the calculator type, you must save first before you can edit the calculator settings"
   flat_percent_per_item: "Flat Percent (per item)"
   flat_rate_per_item: "Flat Rate (per item)"
   flat_rate_per_order: "Flat Rate (per order)"
@@ -2244,6 +2285,7 @@ en_US:
   enterprise_register_success_notice: "Congratulations! Registration for %{enterprise} is complete!"
   enterprise_bulk_update_success_notice: "Enterprises updated successfully"
   enterprise_bulk_update_error: 'Update failed'
+  enterprise_shop_show_error: "The shop you are looking for doesn't exist or is inactive on OFN. Please check other shops."
   order_cycles_create_notice: 'Your order cycle has been created.'
   order_cycles_update_notice: 'Your order cycle has been updated.'
   order_cycles_bulk_update_notice: 'Order cycles have been updated.'
@@ -2395,6 +2437,12 @@ en_US:
           severity: Severity
           description: Description
           resolve: Resolve
+        exchange_products:
+          load_more_variants: "Load More Variants"
+          load_all_variants: "Load All Variants"
+          select_all_variants: "Select All %{total_number_of_variants} Variants"
+          variants_loaded: "%{num_of_variants_loaded} of %{total_number_of_variants} Variants Loaded"
+          loading_variants: "Loading Variants"
       tag_rules:
         shipping_method_tagged_top: "Shipping methods tagged"
         shipping_method_tagged_bottom: "are:"
@@ -2477,6 +2525,7 @@ en_US:
           customer_placeholder: "customer@example.org"
           valid_email_error: "Please enter a valid email address"
       subscriptions:
+        error_saving: "Error saving subscription"
         new:
           please_select_a_shop: "Please select a shop"
     insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
@@ -2552,6 +2601,76 @@ en_US:
       signup_or_login: "Start By signing up (or logging in)"
       have_an_account: "Already have an account?"
       action_login: "Log in now."
+  inflections:
+    each:
+      one: "each"
+      other: "each"
+    bunch:
+      one: "bunch"
+      other: "bunches"
+    pack:
+      one: "pack"
+      other: "packs"
+    box:
+      one: "box"
+      other: "boxes"
+    bottle:
+      one: "bottle"
+      other: "bottles"
+    jar:
+      one: "jar"
+      other: "jars"
+    head:
+      one: "head"
+      other: "heads"
+    bag:
+      one: "bag"
+      other: "bags"
+    loaf:
+      one: "loaf"
+      other: "loaves"
+    single:
+      one: "single"
+      other: "singles"
+    tub:
+      one: "tub"
+      other: "tubs"
+    packet:
+      one: "packet"
+      other: "packets"
+    item:
+      one: "item"
+      other: "items"
+    dozen:
+      one: "dozen"
+      other: "dozens"
+    unit:
+      one: "unit"
+      other: "units"
+    serve:
+      one: "serve"
+      other: "serves"
+    tray:
+      one: "tray"
+      other: "trays"
+    piece:
+      one: "piece"
+      other: "pieces"
+    pot:
+      one: "pot"
+      other: "pots"
+    bundle:
+      one: "bundle"
+      other: "bundles"
+    flask:
+      one: "flask"
+      other: "flasks"
+    basket:
+      one: "basket"
+      other: "baskets"
+    sack:
+      one: "sack"
+      other: "sacks"
   producers:
     signup:
       start_free_profile: "Start with a free profile, and expand when you're ready!"
@@ -2777,6 +2896,12 @@ en_US:
     minimal_amount: "Minimal Amount"
     normal_amount: "Normal Amount"
     discount_amount: "Discount Amount"
+    no_images_found: "No Images Found"
+    new_image: "New Image"
+    filename: "Filename"
+    alt_text: "Alternative Text"
+    thumbnail: "Thumbnail"
+    back_to_images_list: "Back To Images List"
     email: Email
     account_updated: "Account updated!"
     email_updated: "The account will be updated once the new email is confirmed."
@@ -2788,6 +2913,9 @@ en_US:
     zipcode: Zipcode
     weight: Weight (per lb)
     error_user_destroy_with_orders: "Users with completed orders may not be deleted"
+    cannot_create_payment_without_payment_methods: "You cannot create a payment for an order without any payment methods defined."
+    please_define_payment_methods: "Please define some payment methods first."
+    options: "Options"
     actions:
       update: "Update"
     errors:
@@ -2819,27 +2947,53 @@ en_US:
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Inherit properties from %{supplier}? (unless overridden above)"
+          add_product_properties: "Add Product Properties"
+          select_from_prototype: "Select From Prototype"
       properties:
         index:
           properties: "Properties"
+          new_property: "New Property"
           name: "Name"
+          presentation: "Presentation"
+        new:
+          new_property: "New Property"
+        edit:
+          editing_property: "Editing Property"
+          back_to_properties_list: "Back To Properties List"
         form:
           name: "Name"
+          presentation: "Presentation"
       return_authorizations:
         index:
+          new_return_authorization: "New Return Authorization"
           return_authorizations: "Return Authorizations"
           back_to_orders_list: "Back To Orders List"
+          rma_number: "RMA Number"
           status: "Status"
           amount: "Amount"
           cannot_create_returns: "Cannot create returns as this order has no shipped units."
           continue: "Continue"
         new:
+          new_return_authorization: "New Return Authorization"
+          back_to_return_authorizations_list: "Back To Return Authorization List"
           continue: "Continue"
         edit:
+          receive: "receive"
           are_you_sure: "Are you sure?"
+          return_authorization: "Return Authorization"
         form:
           product: "Product"
+          quantity_shipped: "Quantity Shipped"
+          quantity_returned: "Quantity Returned"
+          return_quantity: "Return Quantity"
           amount: "Amount"
+          rma_value: "RMA Value"
+          reason: "Reason"
+          stock_location: "Stock Location"
+        states:
+          authorized: "Authorized"
+          received: "Received"
+          canceled: "Canceled"
       orders:
         index:
           listing_orders: "Listing Orders"
@@ -2847,6 +3001,7 @@ en_US:
           capture: "Capture"
           ship: "Ship"
           edit: "Edit"
+          order_not_updated: "The order could not be updated"
           note: "Note"
           first: "First"
           last: "Last"
@@ -2866,10 +3021,11 @@ en_US:
           email: "Customer E-mail"
         invoice:
           issued_on: "Issued on"
-          tax_invoice: "TAX INVOICE"
+          tax_invoice: "INVOICE"
           code: "Code"
           from: "From"
-          to: "To"
+          to: "Bill to"
+          shipping: "Shipping"
         form:
           distribution_fields:
             title: "Distribution"
@@ -3030,12 +3186,22 @@ en_US:
         index:
           sku: "SKU"
           price: "Price"
+          options: "Options"
           no_results: "No results"
+          to_add_variants_you_must_first_define: "To add variants, you must first define"
           option_types: "Option Types"
+          option_values: "Option Values"
+          and: "and"
+          new_variant: "New Variant"
+          show_active: "Show Active"
+          show_deleted: "Show Deleted"
+        new:
+          new_variant: "New Variant"
         form:
           sku: "SKU"
           price: "Price"
           display_as: "Display As"
+          display_name: "Display Name"
         autocomplete:
           producer_name: "Producer"
           unit: "Unit"
@@ -3181,3 +3347,19 @@ en_US:
         allow_charges?: "Allow Charges?"
     localized_number:
       invalid_format: has an invalid format. Please enter a number.
+    api:
+      invalid_api_key: "Invalid API key (%{key}) specified."
+      unauthorized: "You are not authorized to perform that action."
+      invalid_resource: "Invalid resource. Please fix errors and try again."
+      resource_not_found: "The resource you were looking for could not be found."
+      access: "API Access"
+      key: "Key"
+      clear_key: "Clear key"
+      regenerate_key: "Regenerate Key"
+      no_key: "No key"
+      generate_key: "Generate API key"
+      key_generated: "Key generated"
+      key_cleared: "Key cleared"
+      shipment:
+        cannot_ready: "Cannot ready shipment."
+      invalid_taxonomy_id: "Invalid taxonomy id."

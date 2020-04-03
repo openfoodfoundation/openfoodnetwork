@@ -38,6 +38,10 @@
           - if oc_select_options.count > 1
             %option{value: "", disabled: "", selected: ""}= t :shopping_oc_select
 
+  - content_for :ordercycle_sidebar do
+    .show-for-large-up.large-4.columns
+      = render partial: "shopping_shared/order_cycles"
+
   = render partial: "shopping_shared/header"
   = render partial: "shopping_shared/tabs"
 

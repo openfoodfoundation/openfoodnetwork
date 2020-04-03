@@ -3,12 +3,12 @@
   - shop_tabs.each do |tab|
     = render "shopping_shared/tabs/#{tab[:name]}"
 
-  .tabset-ctrl#shop-tabs{ navigate: 'true', alwaysopen: 'true', selected: shop_tabs.first[:name], prefix: 'shop', ng: { cloak: true } }
+  #shop-tabs{ ng: { controller: "PageSelectionCtrl", init: "whitelistPages(#{shop_tab_names.to_json})", cloak: true } }
     .tab-buttons
       .row
         .columns.small-12.large-8
           - shop_tabs.each do |tab|
-            .tab{ id: "tab_#{tab[:name]}", name: tab[:name] }
-              %a{ href: 'javascript:void(0)' }=tab[:title]
+            .page{ "ng-class" => "{ selected: selectedPage() == '#{tab[:name]}' }" }
+              %a{ href: "##{tab[:name]}" }=tab[:title]
 
-    .tab-view
+    .page-view{ ng: {include: "'shop/' + selectedPage() + '.html'" } }

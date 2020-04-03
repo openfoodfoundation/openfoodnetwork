@@ -24,8 +24,10 @@ module Stock
     #
     # @return [Array<Spree::ShippingMethod>]
     def shipping_methods
-      super.delete_if do |shipping_method|
-        !ships_with?(order.distributor, shipping_method)
+      available_shipping_methods = super.to_a
+
+      available_shipping_methods.keep_if do |shipping_method|
+        ships_with?(order.distributor.shipping_methods.to_a, shipping_method)
       end
     end
 
@@ -33,11 +35,11 @@ module Stock
 
     # Checks whether the given distributor provides the specified shipping method
     #
-    # @param distributor [Spree::Enterprise]
+    # @param shipping_methods [Array<Spree::ShippingMethod>]
     # @param shipping_method [Spree::ShippingMethod]
     # @return [Boolean]
-    def ships_with?(distributor, shipping_method)
-      distributor.shipping_methods.include?(shipping_method)
+    def ships_with?(shipping_methods, shipping_method)
+      shipping_methods.include?(shipping_method)
     end
   end
 end
