@@ -1145,7 +1145,7 @@ de_DE:
         checkout: "Zur Kasse"
         already_ordered_products: "Bereits in diesem Bestellzyklus bestellt"
     register_call:
-      selling_on_ofn: "Interesse am Open Food Network?"
+      selling_on_ofn: "Sie möchten selbst im Open Food Network verkaufen?"
       register: "Hier anmelden"
     footer:
       footer_secure: "Sicher und vertrauenswürdig."
