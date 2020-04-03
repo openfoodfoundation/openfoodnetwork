@@ -47,6 +47,18 @@ module Permissions
         it "should let me see the order" do
           expect(permissions.visible_orders).to include order
         end
+
+        context "with search params" do
+          let(:search_params) { { completed_at_gt: Time.zone.now.yesterday.strftime('%Y-%m-%d') } }
+          let(:permissions) { Permissions::Order.new(user, search_params) }
+
+          it "only returns completed, non-cancelled orders within search filter range" do
+            expect(permissions.visible_orders).to include order_completed
+            expect(permissions.visible_orders).to_not include order_cancelled
+            expect(permissions.visible_orders).to_not include order_cart
+            expect(permissions.visible_orders).to_not include order_from_last_year
+          end
+        end
       end
 
       context "as a producer which has granted P-OC to the distributor of an order" do
@@ -69,18 +81,6 @@ module Permissions
         context "which does not contain my products" do
           it "should not let me see the order" do
             expect(permissions.visible_orders).to_not include order
-          end
-        end
-
-        context "with search params" do
-          let(:search_params) { { completed_at_gt: Time.zone.now.yesterday.strftime('%Y-%m-%d') } }
-          let(:permissions) { Permissions::Order.new(user, search_params) }
-
-          it "only returns completed, non-cancelled orders within search filter range" do
-            expect(permissions.visible_orders).to include order_completed
-            expect(permissions.visible_orders).to_not include order_cancelled
-            expect(permissions.visible_orders).to_not include order_cart
-            expect(permissions.visible_orders).to_not include order_from_last_year
           end
         end
       end
