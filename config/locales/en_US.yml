@@ -19,6 +19,8 @@ en_US:
         shipping_category_id: "Shipping Category"
         variant_unit: "Variant Unit"
         variant_unit_name: "Variant Unit Name"
+      spree/credit_card:
+        base: "Credit Card"
       order_cycle:
         orders_close_at: Close Date
     errors:
@@ -608,7 +610,7 @@ en_US:
           desc_long: About Us
           desc_long_placeholder: Tell customers about yourself. This information appears on your public profile.
         business_details:
-          abn: Tax ID Number or EIN (optional)
+          abn: Tax ID, DUNS Number, or other business ID
           abn_placeholder: eg. 123456789
           acn: Legal Business Name
           acn_placeholder: eg. Martin's Produce LLC
@@ -861,6 +863,12 @@ en_US:
         cancel: "Cancel"
         back_to_list: "Back To List"
       outgoing:
+        outgoing: "Outgoing"
+        distributor: "Distributor"
+        products: "Products"
+        tags: "Tags"
+        delivery_details: "Delivery Details"
+        fees: "Fees"
         previous: "Previous"
         save: "Save"
         save_and_back_to_list: "Save and Back to List"
@@ -1172,11 +1180,11 @@ en_US:
   invoice_column_price_without_taxes: "Total price (Excl. tax)"
   invoice_column_tax_rate: "Tax rate"
   invoice_tax_total: "Tax total:"
-  tax_invoice: "TAX INVOICE"
+  tax_invoice: "INVOICE"
   tax_total: "Total tax (%{rate}):"
   total_excl_tax: "Total (Excl. tax):"
   total_incl_tax: "Total (Incl. tax):"
-  abn: "Tax ID Number or EIN (optional)"
+  abn: "Tax ID, DUNS Number, or other business ID"
   acn: "Legal Business Name"
   invoice_issued_on: "Invoice issued on:"
   order_number: "Invoice number:"
@@ -1809,7 +1817,7 @@ en_US:
         enterprise_long_desc: "Long Description"
         enterprise_long_desc_placeholder: "This is your opportunity to tell the story of your enterprise - what makes you different and wonderful? We'd suggest keeping your description to under 600 characters or 150 words."
         enterprise_long_desc_length: "%{num} characters / up to 600 recommended"
-        enterprise_abn: "Tax ID Number or EIN (optional)"
+        enterprise_abn: "Tax ID, DUNS Number, or other business ID"
         enterprise_abn_placeholder: "eg. 123456789"
         enterprise_acn: "Legal Business Name"
         enterprise_acn_placeholder: "eg. Justins Produce LLC"
@@ -2888,6 +2896,12 @@ en_US:
     minimal_amount: "Minimal Amount"
     normal_amount: "Normal Amount"
     discount_amount: "Discount Amount"
+    no_images_found: "No Images Found"
+    new_image: "New Image"
+    filename: "Filename"
+    alt_text: "Alternative Text"
+    thumbnail: "Thumbnail"
+    back_to_images_list: "Back To Images List"
     email: Email
     account_updated: "Account updated!"
     email_updated: "The account will be updated once the new email is confirmed."
@@ -2899,6 +2913,9 @@ en_US:
     zipcode: Zipcode
     weight: Weight (per lb)
     error_user_destroy_with_orders: "Users with completed orders may not be deleted"
+    cannot_create_payment_without_payment_methods: "You cannot create a payment for an order without any payment methods defined."
+    please_define_payment_methods: "Please define some payment methods first."
+    options: "Options"
     actions:
       update: "Update"
     errors:
@@ -2930,27 +2947,53 @@ en_US:
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Inherit properties from %{supplier}? (unless overridden above)"
+          add_product_properties: "Add Product Properties"
+          select_from_prototype: "Select From Prototype"
       properties:
         index:
           properties: "Properties"
+          new_property: "New Property"
           name: "Name"
+          presentation: "Presentation"
+        new:
+          new_property: "New Property"
+        edit:
+          editing_property: "Editing Property"
+          back_to_properties_list: "Back To Properties List"
         form:
           name: "Name"
+          presentation: "Presentation"
       return_authorizations:
         index:
+          new_return_authorization: "New Return Authorization"
           return_authorizations: "Return Authorizations"
           back_to_orders_list: "Back To Orders List"
+          rma_number: "RMA Number"
           status: "Status"
           amount: "Amount"
           cannot_create_returns: "Cannot create returns as this order has no shipped units."
           continue: "Continue"
         new:
+          new_return_authorization: "New Return Authorization"
+          back_to_return_authorizations_list: "Back To Return Authorization List"
           continue: "Continue"
         edit:
+          receive: "receive"
           are_you_sure: "Are you sure?"
+          return_authorization: "Return Authorization"
         form:
           product: "Product"
+          quantity_shipped: "Quantity Shipped"
+          quantity_returned: "Quantity Returned"
+          return_quantity: "Return Quantity"
           amount: "Amount"
+          rma_value: "RMA Value"
+          reason: "Reason"
+          stock_location: "Stock Location"
+        states:
+          authorized: "Authorized"
+          received: "Received"
+          canceled: "Canceled"
       orders:
         index:
           listing_orders: "Listing Orders"
@@ -2958,6 +3001,7 @@ en_US:
           capture: "Capture"
           ship: "Ship"
           edit: "Edit"
+          order_not_updated: "The order could not be updated"
           note: "Note"
           first: "First"
           last: "Last"
@@ -2977,9 +3021,11 @@ en_US:
           email: "Customer E-mail"
         invoice:
           issued_on: "Issued on"
-          tax_invoice: "TAX INVOICE"
+          tax_invoice: "INVOICE"
           code: "Code"
           from: "From"
+          to: "Bill to"
+          shipping: "Shipping"
         form:
           distribution_fields:
             title: "Distribution"
@@ -3140,12 +3186,22 @@ en_US:
         index:
           sku: "SKU"
           price: "Price"
+          options: "Options"
           no_results: "No results"
+          to_add_variants_you_must_first_define: "To add variants, you must first define"
           option_types: "Option Types"
+          option_values: "Option Values"
+          and: "and"
+          new_variant: "New Variant"
+          show_active: "Show Active"
+          show_deleted: "Show Deleted"
+        new:
+          new_variant: "New Variant"
         form:
           sku: "SKU"
           price: "Price"
           display_as: "Display As"
+          display_name: "Display Name"
         autocomplete:
           producer_name: "Producer"
           unit: "Unit"
@@ -3291,3 +3347,19 @@ en_US:
         allow_charges?: "Allow Charges?"
     localized_number:
       invalid_format: has an invalid format. Please enter a number.
+    api:
+      invalid_api_key: "Invalid API key (%{key}) specified."
+      unauthorized: "You are not authorized to perform that action."
+      invalid_resource: "Invalid resource. Please fix errors and try again."
+      resource_not_found: "The resource you were looking for could not be found."
+      access: "API Access"
+      key: "Key"
+      clear_key: "Clear key"
+      regenerate_key: "Regenerate Key"
+      no_key: "No key"
+      generate_key: "Generate API key"
+      key_generated: "Key generated"
+      key_cleared: "Key cleared"
+      shipment:
+        cannot_ready: "Cannot ready shipment."
+      invalid_taxonomy_id: "Invalid taxonomy id."

@@ -495,6 +495,11 @@ sv:
         next: "Näst"
         cancel: "Avbryt"
       outgoing:
+        outgoing: "Utgående"
+        distributor: "Distributör"
+        products: "Produkter"
+        tags: "Taggar"
+        fees: "Avgifter"
         cancel: "Avbryt"
       exchange_form:
         pickup_instructions_placeholder: "Instruktioner för upphämtning"

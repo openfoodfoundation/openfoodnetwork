@@ -19,6 +19,8 @@ ar:
         shipping_category_id: "نوع الشحن"
         variant_unit: "وحدة النوع"
         variant_unit_name: "اسم وحدة النوع"
+      spree/credit_card:
+        base: "بطاقة ائتمان"
       order_cycle:
         orders_close_at: تاريخ الاغلاق
     errors:
@@ -860,6 +862,11 @@ ar:
         cancel: "إلغاء"
         back_to_list: "العودة للقائمة"
       outgoing:
+        outgoing: "الصادر"
+        distributor: "الموزع"
+        products: "منتجات"
+        tags: "الاوسمة"
+        fees: "رسوم"
         previous: "السابق"
         save: "حفظ"
         save_and_back_to_list: "حفظ والعودة إلى القائمة"

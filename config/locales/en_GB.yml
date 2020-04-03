@@ -19,6 +19,8 @@ en_GB:
         shipping_category_id: "Shipping Category"
         variant_unit: "Variant Unit"
         variant_unit_name: "Variant Unit Name"
+      spree/credit_card:
+        base: "Credit Card"
       order_cycle:
         orders_close_at: Close date
     errors:

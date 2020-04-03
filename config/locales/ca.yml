@@ -19,6 +19,8 @@ ca:
         shipping_category_id: "Categoria d'enviament"
         variant_unit: "Unitat de la variant"
         variant_unit_name: "Nom de la unitat de la variant"
+      spree/credit_card:
+        base: "Targeta de crèdit"
       order_cycle:
         orders_close_at: Data de tancament
     errors:

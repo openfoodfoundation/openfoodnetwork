@@ -19,6 +19,8 @@ nb:
         shipping_category_id: "Leveringskategori"
         variant_unit: "Variant Enhet"
         variant_unit_name: "Enhetsnavn Variant"
+      spree/credit_card:
+        base: "Kredittkort"
       order_cycle:
         orders_close_at: Lukkedato
     errors:
@@ -861,6 +863,11 @@ nb:
         cancel: "Avbryt"
         back_to_list: "Tilbake til Listen"
       outgoing:
+        outgoing: "Utgående"
+        distributor: "Distributør"
+        products: "Produkter"
+        tags: "Merkelapper"
+        fees: "Avgifter"
         previous: "Tidligere"
         save: "Lagre"
         save_and_back_to_list: "Lagre og Tilbake til Listen"
