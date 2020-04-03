@@ -46,13 +46,13 @@ Spree::LineItem.class_eval do
       where('order_cycles.id = ?', order_cycle)
   }
 
-  scope :supplied_by, lambda { |enterprise|
-    joins(:product).
-      where('spree_products.supplier_id = ?', enterprise)
-  }
+  # Here we are simply joining the line item to its variant and product
+  # We dont use joins here to avoid the default scopes,
+  #   and with that, include deleted variants and deleted products
   scope :supplied_by_any, lambda { |enterprises|
-    joins(:product).
-      where('spree_products.supplier_id IN (?)', enterprises)
+    product_ids = Spree::Product.unscoped.where(supplier_id: enterprises).select(:id)
+    variant_ids = Spree::Variant.unscoped.where(product_id: product_ids).select(:id)
+    where("spree_line_items.variant_id IN (?)", variant_ids)
   }
 
   scope :with_tax, -> {
