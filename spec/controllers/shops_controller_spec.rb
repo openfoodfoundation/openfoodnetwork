@@ -7,7 +7,7 @@ describe ShopsController, type: :controller do
   let!(:distributor) { create(:distributor_enterprise) }
 
   before do
-    allow(Enterprise).to receive_message_chain(:distributors_with_active_order_cycles, :ready_for_checkout) { [distributor] }
+    allow(OpenFoodNetwork::EnterpriseInjectionData).to receive(:active_distributor_ids) { [distributor.id] }
   end
 
   it 'renders distributed product properties' do

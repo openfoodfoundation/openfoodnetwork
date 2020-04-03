@@ -53,6 +53,8 @@ module Calculator
     #    Customer ends up getting 350mL (line_item.final_weight_volume) of wine
     #      that represent 2.8 (quantity_implied_in_final_weight_volume) glasses of wine
     def quantity_implied_in_final_weight_volume(line_item)
+      return line_item.quantity if line_item.variant.unit_value.to_f.zero?
+
       (1.0 * line_item.final_weight_volume / line_item.variant.unit_value).round(3)
     end
 

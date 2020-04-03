@@ -40,10 +40,13 @@ module Spree
 
       describe "finding line items with and without tax" do
         let(:tax_rate) { create(:tax_rate, calculator: Spree::Calculator::DefaultTax.new) }
-        let!(:adjustment1) { create(:adjustment, adjustable: li1, originator: tax_rate, label: "TR", amount: 123, included_tax: 10.00) }
-        let!(:adjustment2) { create(:adjustment, adjustable: li1, originator: tax_rate, label: "TR", amount: 123, included_tax: 10.00) }
+        let!(:adjustment1) { create(:adjustment, originator: tax_rate, label: "TR", amount: 123, included_tax: 10.00) }
 
-        before { li1; li2 }
+        before do
+            li1
+            li2
+            li1.adjustments << adjustment1
+          end
 
         it "finds line items with tax" do
           expect(LineItem.with_tax).to eq([li1])

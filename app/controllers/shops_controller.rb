@@ -8,7 +8,7 @@ class ShopsController < BaseController
       .activated
       .visible
       .is_distributor
-      .includes(address: :state)
+      .includes(address: [:state, :country])
       .includes(:properties)
       .includes(supplied_products: :properties)
       .all

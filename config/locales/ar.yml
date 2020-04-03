@@ -19,6 +19,8 @@ ar:
         shipping_category_id: "نوع الشحن"
         variant_unit: "وحدة النوع"
         variant_unit_name: "اسم وحدة النوع"
+      spree/credit_card:
+        base: "بطاقة ائتمان"
       order_cycle:
         orders_close_at: تاريخ الاغلاق
     errors:
@@ -246,6 +248,8 @@ ar:
   notes: ملاحظات
   error: خطأ
   processing_payment: "معالجة الدفع..."
+  no_pending_payments: "لا توجد دفعات معلقة"
+  invalid_payment_state: "حالة الدفع غير صالحة"
   filter_results: تصفية النتائج
   quantity: الكمية
   pick_up: النقل
@@ -858,6 +862,11 @@ ar:
         cancel: "إلغاء"
         back_to_list: "العودة للقائمة"
       outgoing:
+        outgoing: "الصادر"
+        distributor: "الموزع"
+        products: "منتجات"
+        tags: "الاوسمة"
+        fees: "رسوم"
         previous: "السابق"
         save: "حفظ"
         save_and_back_to_list: "حفظ والعودة إلى القائمة"
@@ -1483,6 +1492,7 @@ ar:
   shopping_oc_closed_description: "يرجى الانتظار حتى تفتح الدورة التالية (أو اتصل بنا مباشرة لمعرفة ما إذا كان يمكننا قبول أي طلبات متأخرة)"
   shopping_oc_last_closed: "آخر دورة تم إغلاق %{distance_of_time} منذ"
   shopping_oc_next_open: "تفتح الدورة التالية في %{distance_of_time}"
+  shopping_oc_select: "اختيار..."
   shopping_tabs_home: "الصفحة الرئيسية"
   shopping_tabs_shop: "المتجر"
   shopping_tabs_about: "حول"
@@ -1864,6 +1874,7 @@ ar:
         headline: "تم الانتهاء !"
         thanks: "شكرًا لملء تفاصيل %{enterprise}."
         login: "يمكنك تغيير أو تحديث شركتك في أي مرحلة من خلال تسجيل الدخول إلى شبكة الغذاء المفتوح والذهاب إلى المسؤول."
+        action: "انتقل إلى واجهة الشركة"
   back: "عودة"
   continue: "استمر"
   action_or: "أو"
@@ -2278,6 +2289,7 @@ ar:
   enterprise_register_success_notice: "تهانينا! اكتمل التسجيل لـ %{enterprise}!"
   enterprise_bulk_update_success_notice: "تم تحديث المؤسسات بنجاح"
   enterprise_bulk_update_error: 'فشل التحديث'
+  enterprise_shop_show_error: "المتجر الذي تبحث عنه غير موجود أو غير نشط . يرجى التحقق من المحلات التجارية الأخرى."
   order_cycles_create_notice: 'تم إنشاء دورة الطلب الخاصة بك.'
   order_cycles_update_notice: 'تم تحديث دورة الطلب.'
   order_cycles_bulk_update_notice: 'تم تحديث دورات الطلب.'
@@ -2603,6 +2615,34 @@ ar:
       few: "حزم"
       many: "حزم"
       other: "حزم"
+    bottle:
+      zero: "زجاجات"
+      one: "زجاجة"
+      two: "زجاجات"
+      few: "زجاجات"
+      many: "زجاجات"
+      other: "زجاجات"
+    item:
+      zero: "العناصر"
+      one: "بند"
+      two: "العناصر"
+      few: "العناصر"
+      many: "العناصر"
+      other: "المواد"
+    dozen:
+      zero: "العشرات"
+      one: "دزينة"
+      two: "العشرات"
+      few: "العشرات"
+      many: "العشرات"
+      other: "العشرات"
+    unit:
+      zero: "الوحدات"
+      one: "وحدة"
+      two: "الوحدات"
+      few: "الوحدات"
+      many: "الوحدات"
+      other: "الوحدات"
   producers:
     signup:
       start_free_profile: "ابدأ بملف تعريف مجاني ، وتوسع عندما تكون جاهزًا!"
@@ -2956,7 +2996,8 @@ ar:
           tax_invoice: "فاتورة ضريبية"
           code: "الشفرة"
           from: "من "
-          to: "إلى"
+          to: "فاتورة الى"
+          shipping: "الشحن"
         form:
           distribution_fields:
             title: "توزيع"

@@ -19,8 +19,8 @@ describe Calculator::Weight do
   end
 
   describe "line item with variant_unit weight and variant unit_value" do
-    let(:variant) { build(:variant, unit_value: 10_000) }
-    let(:line_item) { build(:line_item, variant: variant, quantity: 2) }
+    let(:variant) { create(:variant, unit_value: 10_000) }
+    let(:line_item) { create(:line_item, variant: variant, quantity: 2) }
 
     before { subject.set_preference(:per_kg, 5) }
 
@@ -46,11 +46,11 @@ describe Calculator::Weight do
   end
 
   it "computes shipping cost for an object with an order" do
-    variant1 = build(:variant, unit_value: 10_000)
-    variant2 = build(:variant, unit_value: 20_000)
+    variant1 = create(:variant, unit_value: 10_000)
+    variant2 = create(:variant, unit_value: 20_000)
 
-    line_item1 = build(:line_item, variant: variant1, quantity: 1)
-    line_item2 = build(:line_item, variant: variant2, quantity: 2)
+    line_item1 = create(:line_item, variant: variant1, quantity: 1)
+    line_item2 = create(:line_item, variant: variant2, quantity: 2)
 
     order = double(:order, line_items: [line_item1, line_item2])
     object_with_order = double(:object_with_order, order: order)
@@ -65,7 +65,7 @@ describe Calculator::Weight do
 
     let(:calculator) { described_class.new(preferred_per_kg: 6) }
     let(:line_item) do
-      build(:line_item, variant: variant, quantity: 2).tap do |object|
+      create(:line_item, variant: variant, quantity: 2).tap do |object|
         object.send(:calculate_final_weight_volume)
       end
     end
@@ -141,13 +141,62 @@ describe Calculator::Weight do
     end
 
     context "when the product uses item unit" do
-      let!(:product_attributes) { { variant_unit: "items", variant_unit_scale: nil, variant_unit: "pc", display_as: "pc" } }
+      let!(:product_attributes) { { variant_unit: "items", variant_unit_scale: nil, variant_unit_name: "pc", display_as: "pc" } }
       let!(:variant_attributes) { { unit_value: 3.0, weight: 2.5, display_as: "pc" } }
 
       it "is correct" do
         expect(line_item.final_weight_volume).to eq(6) # 6 pcs
         line_item.final_weight_volume = 7 # 7 pcs
         expect(calculator.compute(line_item)).to eq(35.0) # 2.5 * (7/3) * 6
+      end
+    end
+  end
+
+  context "when variant_unit is 'items'" do
+    let(:product) {
+      create(:product, variant_unit: 'items', variant_unit_scale: nil, variant_unit_name: "bunch")
+    }
+    let(:line_item) { create(:line_item, variant: variant, quantity: 1) }
+
+    before { subject.set_preference(:per_kg, 5) }
+
+    context "when unit_value is zero variant.weight is present" do
+      let(:variant) { create(:variant, product: product, unit_value: 0, weight: 10.0) }
+
+      it "uses the variant weight" do
+        expect(subject.compute(line_item)).to eq 50.0
+      end
+    end
+
+    context "when unit_value is zero variant.weight is nil" do
+      let(:variant) { create(:variant, product: product, unit_value: 0, weight: nil) }
+
+      it "uses zero weight" do
+        expect(subject.compute(line_item)).to eq 0
+      end
+    end
+
+    context "when unit_value is nil and variant.weight is present" do
+      let(:variant) {
+        create(:variant, product: product, unit_description: "bunches", unit_value: nil, weight: 10.0)
+      }
+
+      it "uses the variant weight" do
+        line_item.final_weight_volume = 1
+
+        expect(subject.compute(line_item)).to eq 50.0
+      end
+    end
+
+    context "when unit_value is nil and variant.weight is nil" do
+      let(:variant) {
+        create(:variant, product: product, unit_description: "bunches", unit_value: nil, weight: nil)
+      }
+
+      it "uses zero weight" do
+        line_item.final_weight_volume = 1
+
+        expect(subject.compute(line_item)).to eq 0
       end
     end
   end

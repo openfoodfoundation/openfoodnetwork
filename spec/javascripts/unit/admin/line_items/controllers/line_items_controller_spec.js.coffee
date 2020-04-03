@@ -13,23 +13,23 @@ describe "LineItemsCtrl", ->
         compare: (actual, expected) ->
           { pass: angular.equals(actual, expected) }
 
-  beforeEach inject(($controller, $rootScope, $httpBackend, _$timeout_, _VariantUnitManager_, _Enterprises_, _Orders_, _LineItems_, _OrderCycles_) ->
+  beforeEach inject(($controller, $rootScope, $httpBackend, _$timeout_, _VariantUnitManager_, _Enterprises_, _Orders_, _OrderCycles_) ->
     scope = $rootScope.$new()
     ctrl = $controller
     $timeout = _$timeout_
     httpBackend = $httpBackend
     Enterprises = _Enterprises_
     Orders = _Orders_
-    LineItems = _LineItems_
     OrderCycles = _OrderCycles_
     VariantUnitManager = _VariantUnitManager_
-    momentMock = jasmine.createSpyObj('moment', ['format', 'startOf', 'endOf', 'subtract', 'add'])
+    momentMock = jasmine.createSpyObj('moment', ['format', 'startOf', 'endOf', 'subtract', 'add', 'isValid'])
     spyOn(window,"moment").and.returnValue momentMock
     momentMock.startOf.and.returnValue momentMock
     momentMock.endOf.and.returnValue momentMock
     momentMock.subtract.and.returnValue momentMock
     momentMock.add.and.returnValue momentMock
     momentMock.format.and.returnValue "SomeDate"
+    momentMock.isValid.and.returnValue true
 
     supplier = { id: 1, name: "Supplier" }
     distributor = { id: 5, name: "Distributor" }
@@ -37,8 +37,11 @@ describe "LineItemsCtrl", ->
     order = { id: 9, order_cycle: { id: 4 }, distributor: { id: 5 }, number: "R123456" }
     lineItem = { id: 7, quantity: 3, order: { id: 9 }, supplier: { id: 1 } }
 
-    httpBackend.expectGET("/api/orders.json?q%5Bcompleted_at_gteq%5D=SomeDate&q%5Bcompleted_at_lt%5D=SomeDate&q%5Bcompleted_at_not_null%5D=true&q%5Bstate_not_eq%5D=canceled").respond {orders: [order], pagination: {page: 1, pages: 1, results: 1}}
-    httpBackend.expectGET("/admin/bulk_line_items.json?q%5Border%5D%5Bcompleted_at_gteq%5D=SomeDate&q%5Border%5D%5Bcompleted_at_lt%5D=SomeDate&q%5Border%5D%5Bcompleted_at_not_null%5D=true&q%5Border%5D%5Bstate_not_eq%5D=canceled").respond [lineItem]
+    LineItems =
+      index: jasmine.createSpy('index').and.returnValue(lineItem)
+      all: [lineItem]
+
+    httpBackend.expectGET("/api/orders.json?q%5Bcompleted_at_gteq%5D=SomeDate&q%5Bcompleted_at_lt%5D=SomeDate&q%5Bcompleted_at_not_null%5D=true&q%5Bdistributor_id_eq%5D=&q%5Border_cycle_id_eq%5D=&q%5Bstate_not_eq%5D=canceled").respond {orders: [order], pagination: {page: 1, pages: 1, results: 1}}
     httpBackend.expectGET("/admin/enterprises/visible.json?ams_prefix=basic&q%5Bsells_in%5D%5B%5D=own&q%5Bsells_in%5D%5B%5D=any").respond [distributor]
     httpBackend.expectGET("/admin/order_cycles.json?ams_prefix=basic&as=distributor&q%5Borders_close_at_gt%5D=SomeDate").respond [orderCycle]
     httpBackend.expectGET("/admin/enterprises/visible.json?ams_prefix=basic&q%5Bis_primary_producer_eq%5D=true").respond [supplier]
@@ -51,12 +54,6 @@ describe "LineItemsCtrl", ->
   describe "before data is returned", ->
     it "the RequestMonitor will have a state of loading", ->
       expect(scope.RequestMonitor.loading).toBe true
-
-    it "will not have reset the select filters", ->
-      expect(scope.distributorFilter).toBeUndefined()
-      expect(scope.supplierFilter).toBeUndefined()
-      expect(scope.orderCycleFilter).toBeUndefined()
-      expect(scope.quickSearch).toBeUndefined()
 
     it "will not have reset the form state to pristine", ->
       expect(scope.bulk_order_form.$setPristine.calls.count()).toBe 0
@@ -83,48 +80,19 @@ describe "LineItemsCtrl", ->
         expect(scope.orders).toDeepEqual [ { id: 9, order_cycle: orderCycle, distributor: distributor, number: "R123456" } ]
 
       it "gets line_items, with dereferenced orders and suppliers", ->
-        expect(scope.lineItems).toDeepEqual [ { id: 7, quantity: 3, order: scope.orders[0], supplier: supplier } ]
+        expect(scope.line_items).toDeepEqual [ { id: 7, quantity: 3, order: scope.orders[0], supplier: supplier } ]
 
       it "the RequestMonitor will have a state of loaded", ->
         expect(scope.RequestMonitor.loading).toBe false
 
       it "resets the select filters", ->
-        expect(scope.distributorFilter).toBe 0
-        expect(scope.supplierFilter).toBe 0
-        expect(scope.orderCycleFilter).toBe 0
+        expect(scope.distributorFilter).toBe ''
+        expect(scope.supplierFilter).toBe ''
+        expect(scope.orderCycleFilter).toBe ''
         expect(scope.quickSearch).toBe = ""
 
       it "resets the form state to pristine", ->
         expect(scope.bulk_order_form.$setPristine.calls.count()).toBe 1
-
-    describe "deleting a line item", ->
-      order = line_item1 = line_item2 = null
-
-      beforeEach inject((LineItemResource) ->
-        spyOn(window,"confirm").and.returnValue true
-        order = { number: "R12345678" }
-        line_item1 = new LineItemResource({ id: 1, order: order })
-        line_item2 = new LineItemResource({ id: 2, order: order })
-        scope.lineItems= [ line_item1, line_item2 ]
-      )
-
-      describe "where the request is successful", ->
-        beforeEach ->
-          httpBackend.expectDELETE("/admin/bulk_line_items/1.json").respond "nothing"
-          scope.deleteLineItem line_item1
-          httpBackend.flush()
-
-        it "removes the deleted item from the line_items array", ->
-          expect(scope.lineItems).toEqual [line_item2]
-
-      describe "where the request is unsuccessful", ->
-        beforeEach ->
-          httpBackend.expectDELETE("/admin/bulk_line_items/1.json").respond 404, "NO CONTENT"
-          scope.deleteLineItem line_item1
-          httpBackend.flush()
-
-        it "does not remove line_item from the line_items array", ->
-          expect(scope.lineItems).toEqual [line_item1, line_item2]
 
     describe "deleting 'checked' line items", ->
       line_item1 = line_item2 = line_item3 = line_item4 = null
@@ -134,11 +102,11 @@ describe "LineItemsCtrl", ->
         line_item2 = { name: "line item 2", checked: true }
         line_item3 = { name: "line item 3", checked: false }
         line_item4 = { name: "line item 4", checked: true }
-        scope.lineItems = [ line_item1, line_item2, line_item3, line_item4 ]
+        scope.line_items = [ line_item1, line_item2, line_item3, line_item4 ]
 
       it "calls deletedLineItem for each 'checked' line item", ->
         spyOn(scope, "deleteLineItem")
-        scope.deleteLineItems(scope.lineItems)
+        scope.deleteLineItems(scope.line_items)
         expect(scope.deleteLineItem).toHaveBeenCalledWith(line_item2)
         expect(scope.deleteLineItem).toHaveBeenCalledWith(line_item4)
         expect(scope.deleteLineItem).not.toHaveBeenCalledWith(line_item1)

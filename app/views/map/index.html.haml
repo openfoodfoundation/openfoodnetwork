@@ -6,10 +6,10 @@
 
 .map-container{"fill-vertical" => true}
   %map{"ng-controller" => "MapCtrl"}
-    %google-map{options: "map.additional_options", center: "map.center", zoom: "map.zoom", styles: "map.styles", draggable: "true"}
+    %ui-gmap-google-map{options: "map.additional_options", center: "map.center", zoom: "map.zoom", styles: "map.styles", draggable: "true"}
       %map-osm-tiles
       %map-search
-      %markers{models: "OfnMap.enterprises", fit: "true",
+      %ui-gmap-markers{models: "OfnMap.enterprises", fit: "true",
       coords: "'self'", icon: "'icon'", click: "'reveal'"}
 
 .map-footer

@@ -1,77 +1,13 @@
 @import "typography";
 
-.darkswarm navigation {
-  display: block;
-  background: $white;
-
-  distributor.details {
-    box-sizing: border-box;
-    display: block;
-    min-height: 150px;
-    padding: 30px 0 20px 0;
-    position: relative;
-
-    select {
-      width: 200px;
-    }
-
-    img {
-      display: block;
-      height: 100px;
-      width: 100px;
-      margin-right: 12px;
-    }
-
-    location {
-      @include headingFont;
-    }
-    @media all and (max-width: 768px) {
-      location, location + small {
-        display: block;
-      }
-    }
-
-    #distributor_title h3 {
-      margin-top: 0;
-      padding-top: 0.45em;
-
-      @media all and (max-width: 768px) {
-          margin-bottom: 8px;
-      }
-    }
-  }
-}
-
 ordercycle {
   float: right;
-  background: $teal-400;
-  color: $white;
+  background: $grey-050;
+  color: $grey-800;
   width: 100%;
   border-radius: 0.5em 0.5em 0 0;
-  position: absolute;
-  right: 1em;
-  padding: 1em;
-  margin-top: 3em;
-  height: 7.6em;
-
-  &.requires-selection {
-    background-color: $red-700;
-
-    .order-cycle-select {
-      border: 1px solid $red-500;
-
-      .select-label {
-        background-color: rgba($red-500, 0.5);
-      }
-
-      select {
-        background-color: $white;
-        background-image: url('/assets/black-caret.svg');
-        color: $grey-500;
-        font-style: italic;
-      }
-    }
-  }
+  margin-top: 1em;
+  padding: 1em 1.25em 0;
 
   p {
     max-width: 400px;
@@ -97,12 +33,8 @@ ordercycle {
     }
   }
 
-  @media all and (max-width: 768px) {
+  @media all and (max-width: 480px) {
     padding: 0.5em 1em 0.75em;
-  }
-
-  form.custom {
-    text-align: center;
   }
 
   .order-cycle-select {
@@ -164,9 +96,44 @@ ordercycle {
 
   closing {
     @include headingFont;
-    color: $white;
+    color: $grey-800;
     font-size: 1.25rem;
     display: block;
+    padding: 0.5em 0;
+
+    span {
+      @media all and (max-width: 768px) {
+        font-size: 0.875em;
+      }
+    }
+  }
+}
+
+shop ordercycle {
+  background: $teal-400;
+  color: $white;
+
+  &.requires-selection {
+    background-color: $red-700;
+
+    .order-cycle-select {
+      border: 1px solid $red-500;
+
+      .select-label {
+        background-color: rgba($red-500, 0.5);
+      }
+
+      select {
+        background-color: $white;
+        background-image: url('/assets/black-caret.svg');
+        color: $grey-500;
+        font-style: italic;
+      }
+    }
+  }
+
+  closing {
+    color: $white;
     padding: 0 0 12px;
 
     @media all and (max-width: 1024px) {
@@ -181,11 +148,25 @@ ordercycle {
       float: none;
       padding: 0 0 10px;
     }
+  }
 
-    span {
-      @media all and (max-width: 768px) {
-        font-size: 0.875em;
-      }
+  form.custom {
+    text-align: center;
+  }
+}
+
+shop navigation ordercycle {
+  margin-top: 3em;
+  padding: 1em;
+  height: 7.6em;
+  position: absolute;
+  right: 1em;
+}
+
+.sub-header {
+  form {
+    p {
+      margin-bottom: 0.75em;
     }
   }
 }
