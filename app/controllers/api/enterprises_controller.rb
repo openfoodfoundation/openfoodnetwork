@@ -5,7 +5,6 @@ module Api
     before_filter :override_sells, only: [:create, :update]
     before_filter :override_visible, only: [:create, :update]
     respond_to :json
-    skip_authorization_check only: [:shopfront, :closed_shops]
 
     def create
       authorize! :create, Enterprise
@@ -40,25 +39,6 @@ module Api
       else
         invalid_resource!(@enterprise)
       end
-    end
-
-    def shopfront
-      enterprise = Enterprise.find_by_id(params[:id])
-
-      render text: Api::EnterpriseShopfrontSerializer.new(enterprise).to_json, status: :ok
-    end
-
-    def closed_shops
-      @active_distributor_ids = []
-      @earliest_closing_times = []
-
-      serialized_closed_shops = ActiveModel::ArraySerializer.new(
-        ShopsListService.new.closed_shops,
-        each_serializer: Api::EnterpriseSerializer,
-        data: OpenFoodNetwork::EnterpriseInjectionData.new
-      )
-
-      render json: serialized_closed_shops
     end
 
     private

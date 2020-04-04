@@ -1,4 +1,4 @@
-Darkswarm.factory 'Enterprises', (enterprises, EnterpriseResource, CurrentHub, Taxons, Dereferencer, Matcher, Geo, $rootScope) ->
+Darkswarm.factory 'Enterprises', (enterprises, ShopsResource, CurrentHub, Taxons, Dereferencer, Matcher, Geo, $rootScope) ->
   new class Enterprises
     enterprises: []
     enterprises_by_id: {}
@@ -46,7 +46,7 @@ Darkswarm.factory 'Enterprises', (enterprises, EnterpriseResource, CurrentHub, T
         @enterprises_by_id[enterprise.id] = enterprise
 
     loadClosedEnterprises: ->
-      request = EnterpriseResource.closed_shops {}, (data) =>
+      request = ShopsResource.closed_shops {}, (data) =>
         @initEnterprises(data)
 
       request.$promise
