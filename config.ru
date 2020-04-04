@@ -1,4 +1,13 @@
 # This file is used by Rack-based servers to start the application.
 
+if ENV.fetch('KILL_UNICORNS', false) && ['production', 'staging'].include?(ENV['RAILS_ENV'])
+  # Gracefully restart individual unicorn workers if they have:
+  # - performed between 25000 and 30000 requests
+  # - grown in memory usage to between 700 and 850 MB
+  require 'unicorn/worker_killer'
+  use Unicorn::WorkerKiller::MaxRequests, 25_000, 30_000
+  use Unicorn::WorkerKiller::Oom, (700 * (1024**2)), (850 * (1024**2))
+end
+
 require ::File.expand_path('../config/environment', __FILE__)
 run Openfoodnetwork::Application
