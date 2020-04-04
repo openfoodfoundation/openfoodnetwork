@@ -40,6 +40,8 @@ en:
         shipping_category_id: "Shipping Category"
         variant_unit: "Variant Unit"
         variant_unit_name: "Variant Unit Name"
+      spree/credit_card:
+        base: "Credit Card"
       order_cycle:
         orders_close_at: Close date
     errors:
@@ -50,6 +52,10 @@ en:
               taken: "There's already an account for this email. Please login or reset your password."
         spree/order:
           no_card: There are no authorised credit cards available to charge
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: "has expired"
         order_cycle:
           attributes:
             orders_close_at:
@@ -914,6 +920,12 @@ en:
         cancel: "Cancel"
         back_to_list: "Back To List"
       outgoing:
+        outgoing: "Outgoing"
+        distributor: "Distributor"
+        products: "Products"
+        tags: "Tags"
+        delivery_details: "Delivery Details"
+        fees: "Fees"
         previous: "Previous"
         save: "Save"
         save_and_back_to_list: "Save and Back to List"
@@ -3189,7 +3201,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           tax_invoice: "TAX INVOICE"
           code: "Code"
           from: "From"
-          to: "To"
+          to: "Bill to"
+          shipping: "Shipping"
         form:
           distribution_fields:
             title: "Distribution"

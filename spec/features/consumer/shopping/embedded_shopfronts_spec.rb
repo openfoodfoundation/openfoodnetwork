@@ -53,7 +53,7 @@ feature "Using embedded shopfront functionality", js: true do
         expect(page).to have_text 'Your shopping cart'
         find('a#checkout-link').click
 
-        expect(page).to have_text 'Checkout now'
+        expect(page).to have_text 'Ok, ready to checkout?'
 
         click_button 'Login'
         login_with_modal

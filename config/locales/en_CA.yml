@@ -19,6 +19,8 @@ en_CA:
         shipping_category_id: "Shipping Category"
         variant_unit: "Variant Unit"
         variant_unit_name: "Variant Unit Name"
+      spree/credit_card:
+        base: "Credit Card"
       order_cycle:
         orders_close_at: Close date
     errors:
@@ -861,6 +863,11 @@ en_CA:
         cancel: "Cancel"
         back_to_list: "Back to List"
       outgoing:
+        outgoing: "Outgoing"
+        distributor: "Distributor"
+        products: "Products"
+        tags: "Tags"
+        fees: "Fees"
         previous: "Previous"
         save: "Save"
         save_and_back_to_list: "Save and Back to List"
@@ -871,10 +878,10 @@ en_CA:
         incoming: "2. Incoming Products"
         outgoing: "3. Outgoing Products"
       exchange_form:
-        pickup_time_tip: Date orders will be ready for pick-up/delivery. Or enter the customer type (e.g. 'wholesale',  'members only'...) if you are setting up multiple shopfronts.
+        pickup_time_tip: 'This phrase will help buyers select their shop from multiple shops. It will be preceded by the phrase "Orders for". So enter a pick-up date,  or buyer group... '
         pickup_instructions_placeholder: "Pick-up instructions"
         pickup_instructions_tip: These instructions are shown to customers after they complete an order
-        pickup_time_placeholder: "Ready for (ie. Date/Time)"
+        pickup_time_placeholder: "Order for (ie. Date, or buyer group...)"
         receival_instructions_placeholder: "Receival instructions"
         add_fee: 'Add fee'
         remove: 'Remove'
@@ -921,7 +928,7 @@ en_CA:
         distributors: distributors
         variants: variants
       simple_form:
-        ready_for: Ready for
+        ready_for: Order for
         ready_for_placeholder: Date / time
         customer_instructions: Customer instructions
         customer_instructions_placeholder: 'Notes:'
@@ -1362,7 +1369,7 @@ en_CA:
   stats_orders: "orders"
   checkout_title: Checkout
   checkout_now: Checkout now
-  checkout_order_ready: Order ready for
+  checkout_order_ready: Order for
   checkout_hide: Hide
   checkout_expand: Expand
   checkout_headline: "Ok, ready to checkout?"
@@ -1374,7 +1381,7 @@ en_CA:
   checkout_default_ship_address: "Save as default shipping address"
   checkout_method_free: Free
   checkout_address_same: Shipping address same as billing address?
-  checkout_ready_for: "Ready for:"
+  checkout_ready_for: "Order for: "
   checkout_instructions: "Any comments or special instructions?"
   checkout_payment: Payment
   checkout_send: Place order now
@@ -1393,7 +1400,7 @@ en_CA:
   order_delivery_address: Delivery address
   order_delivery_time: Delivery time
   order_special_instructions: "Your notes:"
-  order_pickup_time: Ready for collection
+  order_pickup_time: 'Order for:'
   order_pickup_instructions: Collection Instructions
   order_produce: Subtotal
   order_total_price: Total
@@ -1462,7 +1469,7 @@ en_CA:
   email_shipping_delivery_time: "Delivery on:"
   email_shipping_delivery_address: "Delivery address:"
   email_shipping_collection_details: Collection details
-  email_shipping_collection_time: "Ready for collection:"
+  email_shipping_collection_time: "Order for:"
   email_shipping_collection_instructions: "Collection instructions:"
   email_special_instructions: "Your notes:"
   email_signup_greeting: Hello!
@@ -1486,6 +1493,7 @@ en_CA:
   shopping_oc_closed_description: "Please wait until the next cycle opens (or contact us directly to see if we can accept any late orders)"
   shopping_oc_last_closed: "The last cycle closed %{distance_of_time} ago"
   shopping_oc_next_open: "The next cycle opens in %{distance_of_time}"
+  shopping_oc_select: "Select"
   shopping_tabs_home: "Home"
   shopping_tabs_shop: "Shop"
   shopping_tabs_about: "About"
@@ -1496,7 +1504,7 @@ en_CA:
   shopping_groups_part_of: "is part of:"
   shopping_producers_of_hub: "%{hub}'s producers:"
   enterprises_next_closing: "Next order closing"
-  enterprises_ready_for: "Ready for"
+  enterprises_ready_for: "Order for"
   enterprises_choose: "Choose from the dropdown:"
   maps_open: "Open"
   maps_closed: "Closed"
@@ -1647,7 +1655,7 @@ en_CA:
   orders_fees: Fees...
   orders_edit_title: Shopping Cart
   orders_edit_headline: Your shopping cart
-  orders_edit_time: Order ready for
+  orders_edit_time: Order for
   orders_edit_continue: Continue shopping
   orders_edit_checkout: Checkout
   orders_form_empty_cart: "Empty cart"
@@ -3017,7 +3025,8 @@ en_CA:
           tax_invoice: "Order Number"
           code: "Code"
           from: "From"
-          to: "To"
+          to: "Bill to"
+          shipping: "Shipping"
         form:
           distribution_fields:
             title: "Distribution"

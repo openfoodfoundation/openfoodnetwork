@@ -1,5 +1,5 @@
 module Api
-  class EnterpriseFeesController < BaseController
+  class EnterpriseFeesController < Api::BaseController
     respond_to :json
 
     def destroy

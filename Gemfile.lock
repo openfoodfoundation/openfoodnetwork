@@ -56,16 +56,6 @@ GIT
       rails-i18n
       spree_core (>= 1.1)
 
-GIT
-  remote: https://github.com/willrjmarshall/foundation_rails_helper.git
-  revision: 4d5d53fdc4b1fb71e66524d298c5c635de82cfbb
-  branch: rails3
-  specs:
-    foundation_rails_helper (0.4)
-      actionpack (>= 3.0)
-      activemodel (>= 3.0)
-      railties (>= 3.0)
-
 PATH
   remote: engines/catalog
   specs:
@@ -194,7 +184,7 @@ GEM
       sass (>= 3.3.0, < 3.5)
     compass-import-once (1.0.5)
       sass (>= 3.2, < 3.5)
-    compass-rails (3.1.0)
+    compass-rails (4.0.0)
       compass (~> 1.0.0)
       sass-rails (< 5.1)
       sprockets (< 4.0)
@@ -210,7 +200,7 @@ GEM
       activerecord (>= 3.2.0, < 5.0)
       fog (~> 1.0)
       rails (>= 3.2.0, < 5.0)
-    ddtrace (0.33.1)
+    ddtrace (0.34.0)
       msgpack
     debugger-linecache (1.2.0)
     deface (1.0.2)
@@ -251,7 +241,7 @@ GEM
     faraday (1.0.0)
       multipart-post (>= 1.2, < 3)
     ffaker (1.32.1)
-    ffi (1.11.3)
+    ffi (1.12.2)
     figaro (1.1.1)
       thor (~> 0.14)
     fission (0.5.0)
@@ -434,7 +424,7 @@ GEM
     ipaddress (0.8.3)
     jaro_winkler (1.5.4)
     jquery-migrate-rails (1.2.1)
-    jquery-rails (3.0.4)
+    jquery-rails (3.1.5)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (4.0.5)
@@ -498,7 +488,7 @@ GEM
     parallel (1.19.1)
     paranoia (2.4.2)
       activerecord (>= 4.0, < 6.1)
-    parser (2.7.0.4)
+    parser (2.7.0.5)
       ast (~> 2.4.0)
     paypal-sdk-core (0.2.10)
       multi_json (~> 1.0)
@@ -519,7 +509,7 @@ GEM
     rabl (0.8.4)
       activesupport (>= 2.3.14)
     rack (1.5.5)
-    rack-mini-profiler (2.0.0)
+    rack-mini-profiler (2.0.1)
       rack (>= 1.2.0)
     rack-protection (1.5.5)
       rack
@@ -553,7 +543,7 @@ GEM
       activerecord (>= 3.0)
       polyamorous (~> 0.6.0)
     rb-fsevent (0.10.3)
-    rb-inotify (0.10.0)
+    rb-inotify (0.10.1)
       ffi (~> 1.0)
     rbvmomi (2.2.0)
       builder (~> 3.0)
@@ -596,15 +586,16 @@ GEM
     rspec-retry (0.6.2)
       rspec-core (> 3.3)
     rspec-support (3.9.2)
-    rubocop (0.80.1)
+    rubocop (0.81.0)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
       parser (>= 2.7.0.1)
       rainbow (>= 2.2.2, < 4.0)
       rexml
       ruby-progressbar (~> 1.7)
-      unicode-display_width (>= 1.4.0, < 1.7)
-    rubocop-rails (2.4.2)
+      unicode-display_width (>= 1.4.0, < 2.0)
+    rubocop-rails (2.5.0)
+      activesupport
       rack (>= 1.1)
       rubocop (>= 0.72.0)
     ruby-progressbar (1.10.1)
@@ -662,8 +653,8 @@ GEM
     tzinfo (0.3.56)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
-    unicode-display_width (1.6.1)
-    unicorn (5.5.3)
+    unicode-display_width (1.7.0)
+    unicorn (5.5.4)
       kgio (~> 2.6)
       raindrops (~> 0.7)
     unicorn-rails (2.2.1)
@@ -733,7 +724,6 @@ DEPENDENCIES
   foreigner
   foundation-icons-sass-rails
   foundation-rails (= 5.5.2.1)
-  foundation_rails_helper!
   fuubar (~> 2.4.1)
   geocoder
   gmaps4rails
@@ -742,7 +732,7 @@ DEPENDENCIES
   i18n-js (~> 3.6.0)
   immigrant
   jquery-migrate-rails
-  jquery-rails (= 3.0.4)
+  jquery-rails (= 3.1.5)
   jquery-ui-rails (~> 4.0.0)
   json_spec (~> 1.1.4)
   jwt (~> 2.2)

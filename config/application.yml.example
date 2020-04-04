@@ -37,6 +37,9 @@ SMTP_PASSWORD: 'f00d'
 # MAILS_FROM: hello@example.com
 # MAIL_BCC: manager@example.com
 
+# Javascript error reporting via Bugsnag.
+#BUGSNAG_JS_KEY: ""
+
 # SingleSignOn login for Discourse
 #
 # DISCOURSE_SSO_SECRET should be a random string. It must be the same as provided to your Discourse instance.

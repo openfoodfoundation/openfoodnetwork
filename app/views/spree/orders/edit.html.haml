@@ -16,7 +16,14 @@
         - else
           = @order.distributor.next_collection_at
 
+  - content_for :ordercycle_sidebar do
+    .show-for-large-up.large-4.columns
+      = render partial: "shopping_shared/order_cycles"
+
   = render partial: "shopping_shared/header"
+
+  .sub-header.show-for-medium-down
+    = render partial: "shopping_shared/order_cycles"
 
   %fieldset.footer-pad
     - if @order.line_items.empty?

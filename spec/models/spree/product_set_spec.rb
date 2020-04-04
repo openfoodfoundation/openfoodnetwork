@@ -12,7 +12,6 @@ describe Spree::ProductSet do
         let(:collection_hash) do
           {
             0 => {
-              product_id: 11,
               name: 'a product',
               price: 2.0,
               supplier_id: create(:enterprise).id,
@@ -25,11 +24,10 @@ describe Spree::ProductSet do
           }
         end
 
-        it 'creates it with the specified attributes' do
+        it 'does not create a new product' do
           product_set.save
 
-          expect(Spree::Product.last.attributes)
-            .to include('name' => 'a product')
+          expect(Spree::Product.last).to be nil
         end
       end
 

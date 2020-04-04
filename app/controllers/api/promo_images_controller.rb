@@ -1,5 +1,5 @@
 module Api
-  class PromoImagesController < EnterpriseAttachmentController
+  class PromoImagesController < Api::EnterpriseAttachmentController
     private
 
     def attachment_name
