@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20200327105910) do
+ActiveRecord::Schema.define(:version => 20200404081018) do
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -575,6 +575,7 @@ ActiveRecord::Schema.define(:version => 20200327105910) do
   add_index "spree_orders", ["distributor_id"], :name => "index_spree_orders_on_distributor_id"
   add_index "spree_orders", ["number"], :name => "index_orders_on_number"
   add_index "spree_orders", ["order_cycle_id"], :name => "index_spree_orders_on_order_cycle_id"
+  add_index "spree_orders", ["user_id"], :name => "index_spree_orders_on_user_id"
 
   create_table "spree_payment_methods", :force => true do |t|
     t.string   "type"
@@ -724,6 +725,7 @@ ActiveRecord::Schema.define(:version => 20200327105910) do
   add_index "spree_products", ["permalink"], :name => "index_products_on_permalink"
   add_index "spree_products", ["permalink"], :name => "permalink_idx_unique", :unique => true
   add_index "spree_products", ["primary_taxon_id"], :name => "index_spree_products_on_primary_taxon_id"
+  add_index "spree_products", ["supplier_id"], :name => "index_spree_products_on_supplier_id"
 
   create_table "spree_products_promotion_rules", :id => false, :force => true do |t|
     t.integer "product_id"
