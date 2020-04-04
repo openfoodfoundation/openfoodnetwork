@@ -17,7 +17,7 @@ class OrderCycle < ActiveRecord::Base
   has_many :distributors, source: :receiver, through: :cached_outgoing_exchanges, uniq: true
 
   has_and_belongs_to_many :schedules, join_table: 'order_cycle_schedules'
-  has_paper_trail meta: { custom_data: :schedule_ids }
+  has_paper_trail meta: { custom_data: proc { |order_cycle| order_cycle.schedule_ids.to_s } }
 
   attr_accessor :incoming_exchanges, :outgoing_exchanges
 

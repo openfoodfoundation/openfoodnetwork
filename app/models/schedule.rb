@@ -1,6 +1,6 @@
 class Schedule < ActiveRecord::Base
   has_and_belongs_to_many :order_cycles, join_table: 'order_cycle_schedules'
-  has_paper_trail meta: { custom_data: :order_cycle_ids }
+  has_paper_trail meta: { custom_data: proc { |schedule| schedule.order_cycle_ids.to_s } }
 
   has_many :coordinators, uniq: true, through: :order_cycles
 
