@@ -90,18 +90,30 @@ module Api
       let!(:category) { create(:taxon, name: 'Fruit') }
       let!(:product) { create(:product, supplier: producer, primary_taxon: category ) }
       let!(:relationship) { create(:enterprise_relationship, parent: hub, child: producer) }
+      let!(:closed_hub1) { create(:distributor_enterprise) }
+      let!(:closed_hub2) { create(:distributor_enterprise) }
 
       before do
         allow(controller).to receive(:spree_current_user) { nil }
       end
 
-      describe "fetching shopfronts data" do
-        it "returns data for an enterprise" do
+      describe "#shopfront" do
+        it "returns shopfront data for an enterprise" do
           spree_get :shopfront, id: producer.id, format: :json
 
           expect(json_response['name']).to eq 'Shopfront Test Producer'
           expect(json_response['hubs'][0]['name']).to eq 'Shopfront Test Hub'
           expect(json_response['supplied_taxons'][0]['name']).to eq 'Fruit'
+        end
+      end
+
+      describe "#closed_shops" do
+        it "returns data for all closed shops" do
+          spree_get :closed_shops, nil, format: :json
+
+          expect(json_response).not_to match hub.name
+          expect(json_response[0]['id']).to eq closed_hub1.id
+          expect(json_response[1]['id']).to eq closed_hub2.id
         end
       end
     end

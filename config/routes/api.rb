@@ -37,6 +37,10 @@ Openfoodnetwork::Application.routes.draw do
       member do
         get :shopfront
       end
+
+      collection do
+        get :closed_shops
+      end
     end
 
     resources :order_cycles do

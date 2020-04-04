@@ -1,27 +1,30 @@
-Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer, Matcher, Geo, $rootScope) ->
+Darkswarm.factory 'Enterprises', (enterprises, EnterpriseResource, CurrentHub, Taxons, Dereferencer, Matcher, Geo, $rootScope) ->
   new class Enterprises
+    enterprises: []
     enterprises_by_id: {}
 
     constructor: ->
       # Populate Enterprises.enterprises from json in page.
-      @enterprises = enterprises
+      @initEnterprises(enterprises)
 
+    initEnterprises: (enterprises) ->
       # Map enterprises to id/object pairs for lookup.
       for enterprise in enterprises
+        @enterprises.push enterprise
         @enterprises_by_id[enterprise.id] = enterprise
 
       # Replace enterprise and taxons ids with actual objects.
-      @dereferenceEnterprises()
+      @dereferenceEnterprises(enterprises)
 
       @producers = @enterprises.filter (enterprise)->
         enterprise.category in ["producer_hub", "producer_shop", "producer"]
       @hubs = @enterprises.filter (enterprise)->
         enterprise.category in ["hub", "hub_profile", "producer_hub", "producer_shop"]
 
-    dereferenceEnterprises: ->
+    dereferenceEnterprises: (enteprises) ->
       if CurrentHub.hub?.id
         CurrentHub.hub = @enterprises_by_id[CurrentHub.hub.id]
-      for enterprise in @enterprises
+      for enterprise in enterprises
         @dereferenceEnterprise enterprise
 
     dereferenceEnterprise: (enterprise) ->
@@ -41,6 +44,12 @@ Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer,
       return unless new_enterprises && new_enterprises.length
       for enterprise in new_enterprises
         @enterprises_by_id[enterprise.id] = enterprise
+
+    loadClosedEnterprises: ->
+      request = EnterpriseResource.closed_shops {}, (data) =>
+        @initEnterprises(data)
+
+      request.$promise
 
     flagMatching: (query) ->
       for enterprise in @enterprises
