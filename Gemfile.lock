@@ -410,6 +410,7 @@ GEM
     fuubar (2.5.0)
       rspec-core (~> 3.0)
       ruby-progressbar (~> 1.4)
+    gctools (0.2.4)
     geocoder (1.1.8)
     gmaps4rails (1.5.6)
     haml (4.0.7)
@@ -731,6 +732,7 @@ DEPENDENCIES
   foundation-icons-sass-rails
   foundation-rails
   fuubar (~> 2.5.0)
+  gctools
   geocoder
   gmaps4rails
   haml
