@@ -411,6 +411,8 @@ GEM
       rspec-core (~> 3.0)
       ruby-progressbar (~> 1.4)
     geocoder (1.1.8)
+    get_process_mem (0.2.5)
+      ffi (~> 1.0)
     gmaps4rails (1.5.6)
     haml (4.0.7)
       tilt
@@ -668,6 +670,9 @@ GEM
     unicorn-rails (2.2.1)
       rack
       unicorn
+    unicorn-worker-killer (0.4.4)
+      get_process_mem (~> 0)
+      unicorn (>= 4, < 6)
     uuidtools (2.1.5)
     warden (1.2.7)
       rack (>= 1.0)
@@ -792,6 +797,7 @@ DEPENDENCIES
   uglifier (>= 1.0.3)
   unicorn
   unicorn-rails
+  unicorn-worker-killer
   web!
   webdrivers
   webmock
