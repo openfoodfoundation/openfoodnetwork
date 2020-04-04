@@ -44,32 +44,20 @@
 %p
   = t 'legal.cookies_policy.essential_cookies_note'
 
-- if Spree::Config.cookies_policy_matomo_section || Spree::Config.cookies_policy_ga_section
+- if Spree::Config.cookies_policy_matomo_section
   %h2
     = t 'legal.cookies_policy.statistics_cookies'
   %p
     = t 'legal.cookies_policy.statistics_cookies_desc'
-
-  - if Spree::Config.cookies_policy_ga_section
-    %p
-      = t 'legal.cookies_policy.statistics_cookies_analytics_desc_html'
-  - if Spree::Config.cookies_policy_matomo_section
-    %p
-      = t 'legal.cookies_policy.statistics_cookies_matomo_desc_html'
+  %p
+    = t 'legal.cookies_policy.statistics_cookies_matomo_desc_html'
 
   %table{ng: { controller:"CookiesPolicyModalCtrl"}}
-    - if Spree::Config.cookies_policy_ga_section
-      = render_cookie_entry( "__utma", t( "legal.cookies_policy.cookie_analytics_utma_desc" ) )
-      = render_cookie_entry( "__utmt", t( "legal.cookies_policy.cookie_analytics_utmt_desc" ) )
-      = render_cookie_entry( "__utmb", t( "legal.cookies_policy.cookie_analytics_utmb_desc" ) )
-      = render_cookie_entry( "__utmc", t( "legal.cookies_policy.cookie_analytics_utmc_desc" ) )
-      = render_cookie_entry( "__utmz", t( "legal.cookies_policy.cookie_analytics_utmz_desc" ) )
-    - if Spree::Config.cookies_policy_matomo_section
-      = render_cookie_entry( "_pk_ref, _pk_cvar, _pk_id and _pk_ses", t( "legal.cookies_policy.cookie_matomo_basics_desc" ) )
-      = render_cookie_entry( "_pk_hsr, _pk_cvar, _pk_id and _pk_ses", t( "legal.cookies_policy.cookie_matomo_heatmap_desc" ) )
-      = render_cookie_entry( "piwik_ignore, _pk_cvar, _pk_id and _pk_ses", t( "legal.cookies_policy.cookie_matomo_ignore_desc" ) )
+    = render_cookie_entry( "_pk_ref, _pk_cvar, _pk_id and _pk_ses", t( "legal.cookies_policy.cookie_matomo_basics_desc" ) )
+    = render_cookie_entry( "_pk_hsr, _pk_cvar, _pk_id and _pk_ses", t( "legal.cookies_policy.cookie_matomo_heatmap_desc" ) )
+    = render_cookie_entry( "piwik_ignore, _pk_cvar, _pk_id and _pk_ses", t( "legal.cookies_policy.cookie_matomo_ignore_desc" ) )
 
-  - if Spree::Config.cookies_policy_matomo_section && Spree::Config.matomo_url.present?
+  - if Spree::Config.matomo_url.present?
     %p
       = t 'legal.cookies_policy.statistics_cookies_matomo_optout'
     %p
