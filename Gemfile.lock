@@ -1,12 +1,4 @@
 GIT
-  remote: https://github.com/RohanM/simple_form.git
-  revision: 45f08a213b40f3d4bda5f5398db841137587160a
-  specs:
-    simple_form (2.0.2)
-      actionpack (~> 3.0)
-      activemodel (~> 3.0)
-
-GIT
   remote: https://github.com/jeremydurham/custom-err-msg.git
   revision: 3a8ec9dddc7a5b0aab7c69a6060596de300c68f4
   specs:
@@ -776,7 +768,6 @@ DEPENDENCIES
   select2-rails (~> 3.4.7)
   selenium-webdriver
   shoulda-matchers
-  simple_form!
   simplecov
   spinjs-rails
   spree_core!
