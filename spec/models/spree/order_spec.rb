@@ -3,6 +3,43 @@ require 'spec_helper'
 describe Spree::Order do
   include OpenFoodNetwork::EmailHelper
 
+  describe "email validation" do
+    let(:order) { build(:order) }
+
+    it "has errors if email is blank" do
+      order.stub(require_email: true)
+      order.update_attributes email: ""
+
+      order.valid?
+      expect(order.errors[:email]).to eq ["can't be blank", "is invalid"]
+    end
+
+    it "has errors if email is invalid" do
+      order.stub(require_email: true)
+      order.update_attributes email: "invalid_email"
+
+      order.valid?
+      expect(order.errors[:email]).to eq ["is invalid"]
+    end
+
+    it "has errors if email has invalid domain" do
+      order.stub(require_email: true)
+      order.update_attributes email: "single_letter_tld@domain.z"
+
+      order.valid?
+      expect(order.errors[:email]).to eq ["is invalid"]
+    end
+
+    it "is valid if email is valid" do
+      order.stub(require_email: true)
+      order.update_attributes email: "a@b.ca"
+
+      order.valid?
+      expect(order.errors[:email]).to eq []
+    end
+
+  end
+
   describe "setting variant attributes" do
     it "sets attributes on line items for variants" do
       d = create(:distributor_enterprise)
