@@ -12,7 +12,6 @@
 # It's strongly recommended to check this file into your version control system.
 
 ActiveRecord::Schema.define(:version => 20200406085833) do
-
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
     t.integer "enterprise_id"
@@ -1010,14 +1009,6 @@ ActiveRecord::Schema.define(:version => 20200406085833) do
   end
 
   add_index "spree_tokenized_permissions", ["permissable_id", "permissable_type"], :name => "index_tokenized_name_and_type"
-
-  create_table "spree_trackers", :force => true do |t|
-    t.string   "environment"
-    t.string   "analytics_id"
-    t.boolean  "active",       :default => true
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
-  end
 
   create_table "spree_users", :force => true do |t|
     t.string   "encrypted_password"

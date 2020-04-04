@@ -3035,13 +3035,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     new_shipping_category: "New Shipping Category"
     back_to_shipping_categories: "Back To Shipping Categories"
 
-    analytics_trackers: "Analytics Trackers"
-    no_trackers_found: "No Trackers Found"
-    new_tracker: "New Tracker"
-    add_one: "Add One"
-    google_analytics_id: "Analytics ID"
-    back_to_trackers_list: "Back to Trackers List"
-
     name: "Name"
     description: "Description"
     type: "Type"
