@@ -4,6 +4,20 @@ Spree::AppConfiguration.class_eval do
   # we can allow to be modified in the UI by adding appropriate form
   # elements to existing or new configuration pages.
 
+  # Preferences related to image settings
+  preference :attachment_default_url, :string, default: '/spree/products/:id/:style/:basename.:extension'
+  preference :attachment_path, :string, default: ':rails_root/public/spree/products/:id/:style/:basename.:extension'
+  preference :attachment_url, :string, default: '/spree/products/:id/:style/:basename.:extension'
+  preference :attachment_styles, :string, default: "{\"mini\":\"48x48>\",\"small\":\"100x100>\",\"product\":\"240x240>\",\"large\":\"600x600>\"}"
+  preference :attachment_default_style, :string, default: 'product'
+  preference :s3_access_key, :string
+  preference :s3_bucket, :string
+  preference :s3_secret, :string
+  preference :s3_headers, :string, default: "{\"Cache-Control\":\"max-age=31557600\"}"
+  preference :use_s3, :boolean, default: false # Use S3 for images rather than the file system
+  preference :s3_protocol, :string
+  preference :s3_host_alias, :string
+
   # Embedded Shopfronts
   preference :enable_embedded_shopfronts, :boolean, default: false
   preference :embedded_shopfronts_whitelist, :text, default: nil
