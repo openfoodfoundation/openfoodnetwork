@@ -21,14 +21,14 @@ gem 'pg', '~> 0.21.0'
 # OFN-maintained and patched version of Spree v2.0.4. See
 # https://github.com/openfoodfoundation/openfoodnetwork/wiki/Tech-Doc:-OFN's-Spree-fork%F0%9F%8D%B4
 # for details.
-gem 'spree_core', github: 'openfoodfoundation/spree', branch: '2-1-0-stable'
+gem 'spree_core', github: 'openfoodfoundation/spree', branch: '2-2-0-stable'
 
 gem 'spree_i18n', github: 'spree/spree_i18n', branch: '1-3-stable'
 
 # Our branch contains two changes
 # - Pass customer email and phone number to PayPal (merged to upstream master)
 # - Change type of password from string to password to hide it in the form
-gem 'spree_paypal_express', github: 'openfoodfoundation/better_spree_paypal_express', branch: '2-1-0-stable'
+gem 'spree_paypal_express', github: 'openfoodfoundation/better_spree_paypal_express', branch: '2-2-stable'
 gem 'stripe'
 
 # We need at least this version to have Digicert's root certificate
@@ -50,7 +50,7 @@ gem 'delayed_job_web'
 
 # Spree's default pagination gem (locked to the current version used by Spree)
 # We use it's methods in OFN code as well, so this is a direct dependency
-gem 'kaminari', '~> 0.14.1'
+gem 'kaminari', '~> 0.15.0'
 
 gem 'andand'
 gem 'angularjs-rails', '1.5.5'
