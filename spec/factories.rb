@@ -148,6 +148,12 @@ FactoryBot.define do
     gateway_payment_profile_id "card_1EY..."
   end
 
+  factory :payment_method, class: Spree::PaymentMethod::Check do
+    name 'Check'
+    environment 'test'
+    distributors { [Enterprise.is_distributor.first || FactoryBot.create(:distributor_enterprise)] }
+  end
+
   factory :stripe_payment_method, class: Spree::Gateway::StripeConnect do
     name 'Stripe'
     environment 'test'
@@ -188,10 +194,6 @@ FactoryBot.modify do
       }
     end
     payment_method { FactoryBot.create(:payment_method, distributors: [distributor]) }
-  end
-
-  factory :payment_method do
-    distributors { [Enterprise.is_distributor.first || FactoryBot.create(:distributor_enterprise)] }
   end
 
   factory :option_type do
