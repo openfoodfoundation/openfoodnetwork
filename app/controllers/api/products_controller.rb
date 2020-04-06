@@ -24,7 +24,7 @@ module Api
           invalid_resource!(@product)
         end
       rescue ActiveRecord::RecordNotUnique
-        @product.permalink = nil
+        @product.slug = nil
         retry
       end
     end
@@ -92,7 +92,7 @@ module Api
     private
 
     def find_product(id)
-      product_scope.find_by!(permalink: id.to_s)
+      product_scope.find_by!(slug: id.to_s)
     rescue ActiveRecord::RecordNotFound
       product_scope.find(id)
     end

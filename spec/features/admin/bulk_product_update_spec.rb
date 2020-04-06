@@ -526,7 +526,7 @@ feature '
         end
 
         within_window new_window do
-          expect(URI.parse(current_url).path).to eq "/admin/products/#{p1.permalink}/edit"
+          expect(URI.parse(current_url).path).to eq "/admin/products/#{p1.slug}/edit"
           page.execute_script('window.close()')
         end
       end
@@ -544,7 +544,7 @@ feature '
         end
 
         within_window new_window do
-          expect(URI.parse(current_url).path).to eq "/admin/products/#{v1.product.permalink}/variants/#{v1.id}/edit"
+          expect(URI.parse(current_url).path).to eq "/admin/products/#{v1.product.slug}/variants/#{v1.id}/edit"
           page.execute_script('window.close()')
         end
       end

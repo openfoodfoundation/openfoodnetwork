@@ -115,13 +115,13 @@ describe Spree::ProductSet do
 
             context 'and when product attributes are also passed' do
               it 'updates product and variant attributes' do
-                collection_hash[0][:permalink] = "test_permalink"
+                collection_hash[0][:slug] = "test_permalink"
 
                 product_set.save
 
                 expect(product.reload.variants.first[:sku]).to eq variants_attributes.first[:sku]
                 expect(product.reload.attributes).to include(
-                  'permalink' => "test_permalink"
+                  'slug' => "test_permalink"
                 )
               end
             end

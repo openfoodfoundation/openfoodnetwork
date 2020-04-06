@@ -37,10 +37,10 @@ describe Api::ProductsController, type: :controller do
     end
 
     context "finds a product by permalink first then by id" do
-      let!(:other_product) { create(:product, permalink: "these-are-not-the-droids-you-are-looking-for") }
+      let!(:other_product) { create(:product, slug: "these-are-not-the-droids-you-are-looking-for") }
 
       before do
-        product.update_attribute(:permalink, "#{other_product.id}-and-1-ways")
+        product.update_attribute(:slug, "#{other_product.id}-and-1-ways")
       end
 
       specify do

@@ -94,7 +94,7 @@ describe Api::ProductSerializer do
 
   def serialized_attributes
     [
-      :id, :name, :permalink, :meta_keywords, :group_buy, :notes, :description, :description_html,
+      :id, :name, :slug, :meta_keywords, :group_buy, :notes, :description, :description_html,
       :properties_with_values, :price, :variants, :master, :primary_taxon, :taxons, :images,
       :supplier
     ]

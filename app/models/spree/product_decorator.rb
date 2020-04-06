@@ -1,9 +1,9 @@
-require 'open_food_network/permalink_generator'
+require 'open_food_network/slug_generator'
 require 'open_food_network/property_merge'
 require 'concerns/product_stock'
 
 Spree::Product.class_eval do
-  include PermalinkGenerator
+  include SlugGenerator
   include ProductStock
 
   # We have an after_destroy callback on Spree::ProductOptionType. However, if we
@@ -28,7 +28,7 @@ Spree::Product.class_eval do
             presence: { if: ->(p) { p.variant_unit == 'items' } }
 
   after_initialize :set_available_on_to_now, if: :new_record?
-  before_validation :sanitize_permalink
+  before_validation :sanitize_slug
   before_save :add_primary_taxon_to_taxons
   after_save :remove_previous_primary_taxon_from_taxons
   after_save :ensure_standard_variant
@@ -262,11 +262,11 @@ Spree::Product.class_eval do
     raise
   end
 
-  # Spree creates a permalink already but our implementation fixes an edge case.
-  def sanitize_permalink
-    if permalink.blank? || permalink_changed?
-      requested = permalink.presence || permalink_was.presence || name.presence || 'product'
-      self.permalink = create_unique_permalink(requested.parameterize)
+  # Spree creates a slug already but our implementation fixes an edge case.
+  def sanitize_slug
+    if slug.blank? || slug_changed?
+      requested = slug.presence || slug_was.presence || name.presence || 'product'
+      self.slug = create_unique_slug(requested.parameterize)
     end
   end
 end

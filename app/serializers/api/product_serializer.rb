@@ -3,7 +3,7 @@ require "open_food_network/scope_variant_to_hub"
 class Api::ProductSerializer < ActiveModel::Serializer
   include ActionView::Helpers::SanitizeHelper
 
-  attributes :id, :name, :permalink, :meta_keywords
+  attributes :id, :name, :slug, :meta_keywords
   attributes :group_buy, :notes, :description, :description_html
   attributes :properties_with_values, :price
 

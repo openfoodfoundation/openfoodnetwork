@@ -191,7 +191,7 @@ describe "filtering products for submission to database", ->
       description: ""
       available_on: available_on
       deleted_at: null
-      permalink: null
+      slug: null
       meta_description: null
       meta_keywords: null
       tax_category_id: null

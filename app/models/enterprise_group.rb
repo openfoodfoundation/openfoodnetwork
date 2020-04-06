@@ -1,9 +1,9 @@
 require 'open_food_network/locking'
-require 'open_food_network/permalink_generator'
+require 'open_food_network/slug_generator'
 require 'spree/core/s3_support'
 
 class EnterpriseGroup < ActiveRecord::Base
-  include PermalinkGenerator
+  include SlugGenerator
   acts_as_list
 
   has_and_belongs_to_many :enterprises, join_table: 'enterprise_groups_enterprises'

@@ -39,6 +39,6 @@ class Api::Admin::ProductSerializer < ActiveModel::Serializer
   end
 
   def permalink_live
-    object.permalink
+    object.slug
   end
 end

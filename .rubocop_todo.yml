@@ -35,7 +35,7 @@ Layout/EmptyLinesAroundBlockBody:
 # SupportedStylesAlignWith: keyword, variable, start_of_line
 Layout/EndAlignment:
   Exclude:
-    - 'lib/open_food_network/permalink_generator.rb'
+    - 'lib/open_food_network/slug_generator.rb'
 
 # Offense count: 2
 # Cop supports --auto-correct.
@@ -1172,7 +1172,7 @@ Style/FrozenStringLiteralComment:
     - 'lib/open_food_network/packing_report.rb'
     - 'lib/open_food_network/paperclippable.rb'
     - 'lib/open_food_network/payments_report.rb'
-    - 'lib/open_food_network/permalink_generator.rb'
+    - 'lib/open_food_network/slug_generator.rb'
     - 'lib/open_food_network/permissions.rb'
     - 'lib/open_food_network/products_and_inventory_report.rb'
     - 'lib/open_food_network/products_and_inventory_report_base.rb'
