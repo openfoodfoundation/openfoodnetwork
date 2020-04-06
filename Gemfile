@@ -118,6 +118,7 @@ gem 'ofn-qz', github: 'openfoodfoundation/ofn-qz', ref: '60da2ae4c44cbb4c8d602f5
 
 group :production, :staging do
   gem 'ddtrace'
+  gem 'unicorn-worker-killer'
 end
 
 group :test, :development do
