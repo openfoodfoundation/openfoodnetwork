@@ -80,8 +80,8 @@ class Enterprise < ActiveRecord::Base
   validates_attachment_content_type :promo_image, content_type: %r{\Aimage/.*\Z}
 
   include Spree::Core::S3Support
-  supports_s3 :logo
-  supports_s3 :promo_image
+  #supports_s3 :logo
+  #supports_s3 :promo_image
 
   validates :name, presence: true
   validate :name_is_unique

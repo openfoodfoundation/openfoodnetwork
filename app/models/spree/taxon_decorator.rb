@@ -4,7 +4,7 @@ Spree::Taxon.class_eval do
   has_many :classifications, dependent: :destroy
 
   include Spree::Core::S3Support
-  supports_s3 :icon
+  #supports_s3 :icon
 
   attachment_definitions[:icon][:path] = 'public/images/spree/taxons/:id/:style/:basename.:extension'
   attachment_definitions[:icon][:url] = '/images/spree/taxons/:id/:style/:basename.:extension'

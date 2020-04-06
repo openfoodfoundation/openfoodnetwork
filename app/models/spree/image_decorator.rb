@@ -2,7 +2,7 @@ require 'spree/core/s3_support'
 
 Spree::Image.class_eval do
   include Spree::Core::S3Support
-  supports_s3 :attachment
+  #supports_s3 :attachment
 
   Spree::Image.attachment_definitions[:attachment][:styles] = ActiveSupport::JSON.decode(Spree::Config[:attachment_styles]).symbolize_keys!
   Spree::Image.attachment_definitions[:attachment][:path] = Spree::Config[:attachment_path]
