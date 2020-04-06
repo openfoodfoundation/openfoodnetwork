@@ -1,17 +1,9 @@
-require 'open_food_network/subscription_payment_updater'
-require 'open_food_network/subscription_summarizer'
+require 'order_management/subscriptions/summarizer'
 
+# Confirms orders of unconfirmed proxy orders in recently closed Order Cycles
 class SubscriptionConfirmJob
   def perform
-    ids = proxy_orders.pluck(:id)
-    proxy_orders.update_all(confirmed_at: Time.zone.now)
-    ProxyOrder.where(id: ids).each do |proxy_order|
-      Rails.logger.info "Confirming Order for Proxy Order #{proxy_order.id}"
-      @order = proxy_order.order
-      process!
-    end
-
-    send_confirmation_summary_emails
+    confirm_proxy_orders!
   end
 
   private
@@ -20,10 +12,26 @@ class SubscriptionConfirmJob
   delegate :record_and_log_error, :send_confirmation_summary_emails, to: :summarizer
 
   def summarizer
-    @summarizer ||= OpenFoodNetwork::SubscriptionSummarizer.new
+    @summarizer ||= OrderManagement::Subscriptions::Summarizer.new
   end
 
-  def proxy_orders
+  def confirm_proxy_orders!
+    # Fetch all unconfirmed proxy orders
+    unconfirmed_proxy_orders_ids = unconfirmed_proxy_orders.pluck(:id)
+
+    # Mark these proxy orders as confirmed
+    unconfirmed_proxy_orders.update_all(confirmed_at: Time.zone.now)
+
+    # Confirm these proxy orders
+    ProxyOrder.where(id: unconfirmed_proxy_orders_ids).each do |proxy_order|
+      Rails.logger.info "Confirming Order for Proxy Order #{proxy_order.id}"
+      confirm_order!(proxy_order.order)
+    end
+
+    send_confirmation_summary_emails
+  end
+
+  def unconfirmed_proxy_orders
     ProxyOrder.not_canceled.where('confirmed_at IS NULL AND placed_at IS NOT NULL')
       .joins(:order_cycle).merge(recently_closed_order_cycles)
       .joins(:order).merge(Spree::Order.complete.not_state('canceled'))
@@ -33,30 +41,43 @@ class SubscriptionConfirmJob
     OrderCycle.closed.where('order_cycles.orders_close_at BETWEEN (?) AND (?) OR order_cycles.updated_at BETWEEN (?) AND (?)', 1.hour.ago, Time.zone.now, 1.hour.ago, Time.zone.now)
   end
 
-  def process!
-    record_order(@order)
-    update_payment! if @order.payment_required?
-    return send_failed_payment_email if @order.errors.present?
+  # It sets up payments, processes payments and sends confirmation emails
+  def confirm_order!(order)
+    record_order(order)
 
-    @order.process_payments! if @order.payment_required?
-    return send_failed_payment_email if @order.errors.present?
-
-    send_confirm_email
+    if process_payment!(order)
+      send_confirmation_email(order)
+    else
+      send_failed_payment_email(order)
+    end
   end
 
-  def update_payment!
-    OpenFoodNetwork::SubscriptionPaymentUpdater.new(@order).update!
+  def process_payment!(order)
+    return false if order.errors.present?
+    return true unless order.payment_required?
+
+    setup_payment!(order)
+    return false if order.errors.present?
+
+    order.process_payments!
+    return false if order.errors.present?
+
+    true
   end
 
-  def send_confirm_email
-    @order.update!
-    record_success(@order)
-    SubscriptionMailer.confirmation_email(@order).deliver
+  def setup_payment!(order)
+    OrderManagement::Subscriptions::PaymentSetup.new(order).call!
   end
 
-  def send_failed_payment_email
-    @order.update!
-    record_and_log_error(:failed_payment, @order)
-    SubscriptionMailer.failed_payment_email(@order).deliver
+  def send_confirmation_email(order)
+    order.update!
+    record_success(order)
+    SubscriptionMailer.confirmation_email(order).deliver
+  end
+
+  def send_failed_payment_email(order)
+    order.update!
+    record_and_log_error(:failed_payment, order)
+    SubscriptionMailer.failed_payment_email(order).deliver
   end
 end

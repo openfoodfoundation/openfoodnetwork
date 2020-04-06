@@ -1,5 +1,5 @@
 require 'open_food_network/permissions'
-require 'open_food_network/proxy_order_syncer'
+require 'order_management/subscriptions/proxy_order_syncer'
 
 module Admin
   class SchedulesController < ResourceController
@@ -81,7 +81,7 @@ module Admin
       return unless removed_ids.any? || new_ids.any?
 
       subscriptions = Subscription.where(schedule_id: @schedule)
-      syncer = OpenFoodNetwork::ProxyOrderSyncer.new(subscriptions)
+      syncer = OrderManagement::Subscriptions::ProxyOrderSyncer.new(subscriptions)
       syncer.sync!
     end
   end

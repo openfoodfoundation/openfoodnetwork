@@ -56,7 +56,7 @@ module Admin
     end
 
     def variant_if_eligible(variant_id)
-      SubscriptionVariantsService.eligible_variants(@shop).find_by_id(variant_id)
+      OrderManagement::Subscriptions::VariantsList.eligible_variants(@shop).find_by_id(variant_id)
     end
   end
 end
