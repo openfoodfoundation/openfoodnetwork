@@ -1,11 +1,19 @@
 module Spree
   Shipment.class_eval do
-    def ensure_correct_adjustment_with_included_tax
-      ensure_correct_adjustment_without_included_tax
+    def ensure_correct_adjustment
+      if adjustment
+        adjustment.originator = shipping_method
+        adjustment.label = shipping_method.adjustment_label
+        adjustment.amount = selected_shipping_rate.cost if adjustment.open?
+        adjustment.save!
+        adjustment.reload
+      elsif selected_shipping_rate_id
+        shipping_method.create_adjustment shipping_method.adjustment_label, order, self, true, "open"
+        reload #ensure adjustment is present on later saves
+      end
 
       update_adjustment_included_tax if adjustment
     end
-    alias_method_chain :ensure_correct_adjustment, :included_tax
 
     def update_adjustment_included_tax
       if Config.shipment_inc_vat && (order.distributor.nil? || order.distributor.charges_sales_tax)
