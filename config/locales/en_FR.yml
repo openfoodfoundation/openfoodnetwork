@@ -59,7 +59,7 @@ en_FR:
       messages:
         inclusion: "is not included in the list"
       models:
-        subscription_validator:
+        order_management/subscriptions/validator:
           attributes:
             subscription_line_items:
               at_least_one_product: "^Please add at least one product"
