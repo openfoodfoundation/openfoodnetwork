@@ -1,8 +1,11 @@
 class Api::Admin::ProductSimpleSerializer < ActiveModel::Serializer
-  attributes :id, :name
+  attributes :id, :name, :producer_id
 
-  has_one :supplier, key: :producer_id, embed: :id
   has_many :variants, key: :variants, serializer: Api::Admin::VariantSimpleSerializer
+
+  def producer_id
+    object.supplier_id
+  end
 
   def on_hand
     return 0 if object.on_hand.nil?
