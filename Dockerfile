@@ -12,7 +12,7 @@ ENV BUNDLE_PATH /bundles
 WORKDIR /usr/src/app
 COPY .ruby-version .
 
-# Rbenv & Ruby part
+# Install Rbenv & Ruby
 RUN git clone https://github.com/rbenv/rbenv.git ${RBENV_ROOT} && \
     git clone https://github.com/rbenv/ruby-build.git ${RBENV_ROOT}/plugins/ruby-build && \
     ${RBENV_ROOT}/plugins/ruby-build/install.sh && \
@@ -21,7 +21,7 @@ RUN git clone https://github.com/rbenv/rbenv.git ${RBENV_ROOT} && \
     rbenv global $(cat .ruby-version) && \
     gem install bundler --version=1.17.2
 
-# Postgres
+# Install Postgres
 RUN sh -c "echo 'deb https://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main' > /etc/apt/sources.list.d/pgdg.list" && \
     wget --quiet -O - https://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | apt-key add - && \
     apt-get update && \
@@ -38,4 +38,6 @@ RUN wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.z
     unzip chromedriver_linux64.zip -d /usr/bin && \
     chmod u+x /usr/bin/chromedriver
 
+# Copy code and install app dependencies
 COPY . /usr/src/app/
+RUN bundle install

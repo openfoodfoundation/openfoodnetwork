@@ -35,13 +35,20 @@ Download the Docker images and build the containers:
 $ docker-compose build
 ```
 
-Run the app with all the required containers:
+Setup the database and seed it with sample data:
+```sh
+$ docker-compose run web bundle exec rake db:reset
+$ docker-compose run web bundle exec rake db:test:prepare
+$ docker-compose run web bundle exec rake ofn:sample_data
+```
+
+Finally, run the app with all the required containers:
 
 ```sh
 $ docker-compose up
 ```
 
-This command will setup the database and seed it with sample data. The default admin user is 'ofn@example.com' with 'ofn123' password.
+The default admin user is 'ofn@example.com' with 'ofn123' password.
 Check the app in the browser at `http://localhost:3000`.
 
 You will then get the trace of the containers in the terminal. You can stop the containers using Ctrl-C in the terminal.
