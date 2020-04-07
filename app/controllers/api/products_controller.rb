@@ -74,7 +74,7 @@ module Api
 
       @products = paged_products_for_producers producers
 
-      render_paged_products @products
+      render_paged_products @products, ::Api::Admin::ProductSimpleSerializer
     end
 
     # POST /api/products/:product_id/clone
@@ -128,10 +128,10 @@ module Api
         page(params[:page]).per(params[:per_page])
     end
 
-    def render_paged_products(products)
+    def render_paged_products(products, product_serializer = ::Api::Admin::ProductSerializer)
       serializer = ActiveModel::ArraySerializer.new(
         products,
-        each_serializer: ::Api::Admin::ProductSerializer
+        each_serializer: product_serializer
       )
 
       render text: {
