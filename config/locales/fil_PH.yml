@@ -250,7 +250,7 @@ fil_PH:
   blocked_cookies_alert: " ang iyong browser ay maaaring hinaharang ang cookies na kailangan upang magamit ang shopfront na ito. Pindutin sa ibaba upang payagan ang mga cookies at i-reload ang pahina."
   allow_cookies: "Payagan ang cookies"
   notes: mga tala
-  error: pagkakamali
+  error: error
   processing_payment: "pinoproseso ang bayad"
   no_pending_payments: "walang nakabinbin na mga bayarin"
   invalid_payment_state: "hindi valid na estado ng pagbabayad"
