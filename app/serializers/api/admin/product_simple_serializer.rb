@@ -1,19 +1,25 @@
-class Api::Admin::ProductSimpleSerializer < ActiveModel::Serializer
-  attributes :id, :name, :producer_id
+# frozen_string_literal: true
 
-  has_many :variants, key: :variants, serializer: Api::Admin::VariantSimpleSerializer
+module Api
+  module Admin
+    class ProductSimpleSerializer < ActiveModel::Serializer
+      attributes :id, :name, :producer_id
 
-  def producer_id
-    object.supplier_id
-  end
+      has_many :variants, key: :variants, serializer: Api::Admin::VariantSimpleSerializer
 
-  def on_hand
-    return 0 if object.on_hand.nil?
+      def producer_id
+        object.supplier_id
+      end
 
-    object.on_hand
-  end
+      def on_hand
+        return 0 if object.on_hand.nil?
 
-  def price
-    object.price.nil? ? '0.0' : object.price
+        object.on_hand
+      end
+
+      def price
+        object.price.nil? ? '0.0' : object.price
+      end
+    end
   end
 end
