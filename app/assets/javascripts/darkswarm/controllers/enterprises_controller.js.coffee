@@ -9,6 +9,7 @@ Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, $timeout, $location
   $scope.show_closed = false
   $scope.filtersActive = false
   $scope.distanceMatchesShown = false
+  $scope.closed_shops_loading = false
   $scope.closed_shops_loaded = false
 
   $scope.$watch "query", (query)->
@@ -23,6 +24,7 @@ Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, $timeout, $location
     $timeout ->
       Enterprises.calculateDistance query, $scope.firstNameMatch()
       $rootScope.$broadcast 'enterprisesChanged'
+      $scope.closed_shops_loading = false
 
   $timeout ->
     if $location.search()['show_closed']?
@@ -78,6 +80,7 @@ Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, $timeout, $location
 
   $scope.showClosedShops = ->
     unless $scope.closed_shops_loaded
+      $scope.closed_shops_loading = true
       $scope.closed_shops_loaded = true
       Enterprises.loadClosedEnterprises().then ->
         $scope.resetSearch($scope.query)
