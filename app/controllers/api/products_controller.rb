@@ -121,6 +121,7 @@ module Api
     def paged_products_for_producers(producers)
       Spree::Product.scoped.
         merge(product_scope).
+        includes(variants: [:product, :default_price, :stock_items]).
         where(supplier_id: producers).
         by_producer.by_name.
         ransack(params[:q]).result.
