@@ -122,7 +122,7 @@ group :test, :development do
   # Pretty printed test output
   gem 'atomic'
   gem 'awesome_print'
-  gem 'capybara', '>= 2.18.0' # 3.0 requires nokogiri 1.8
+  gem 'capybara', '>= 2.18.0' # 3.0 requires rack 1.6 that only works with Rails 4.2
   gem 'database_cleaner', '0.7.1', require: false
   gem "factory_bot_rails", require: false
   gem 'fuubar', '~> 2.5.0'
