@@ -1,32 +1,32 @@
-- cache 'cached_producers_page_content', expires_in: 30.minutes do
-  - content_for(:title) do
-    = t :producers_title
+- content_for(:title) do
+  = t :producers_title
 
-  - content_for :injection_data do
+- content_for :injection_data do
+  - cache 'cached_producers_page_content', expires_in: 5.minutes do
     = inject_enterprises(@enterprises)
 
-  .producers{"ng-controller" => "EnterprisesCtrl", "ng-cloak" => true}
-    .row
-      .small-12.columns.pad-top
-        %h1
-          = t :producers_headline
+.producers{"ng-controller" => "EnterprisesCtrl", "ng-cloak" => true}
+  .row
+    .small-12.columns.pad-top
+      %h1
+        = t :producers_headline
 
-    = render partial: "shared/components/enterprise_search"
-    = render partial: "producers/filters"
+  = render partial: "shared/components/enterprise_search"
+  = render partial: "producers/filters"
 
-    .row
-      .small-12.columns
-        .active_table
-          %producer.active_table_node.row.animate-repeat{id: "{{producer.path}}",
-          "ng-repeat" => "producer in filteredEnterprises = (Enterprises.producers | searchEnterprises:query | taxons:activeTaxons | properties:activeProperties:'supplied_properties')",
-          "ng-controller" => "ProducerNodeCtrl",
-          "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !producer.active}",
-          id: "{{producer.hash}}"}
+  .row
+    .small-12.columns
+      .active_table
+        %producer.active_table_node.row.animate-repeat{id: "{{producer.path}}",
+        "ng-repeat" => "producer in filteredEnterprises = (Enterprises.producers | searchEnterprises:query | taxons:activeTaxons | properties:activeProperties:'supplied_properties')",
+        "ng-controller" => "ProducerNodeCtrl",
+        "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !producer.active}",
+        id: "{{producer.hash}}"}
 
-            .small-12.columns
-              = render partial: 'producers/skinny'
-              = render partial: 'producers/fat'
+          .small-12.columns
+            = render partial: 'producers/skinny'
+            = render partial: 'producers/fat'
 
-          = render partial: 'shared/components/enterprise_no_results'
+        = render partial: 'shared/components/enterprise_no_results'
 
-  = render partial: "shared/footer"
+= render partial: "shared/footer"
