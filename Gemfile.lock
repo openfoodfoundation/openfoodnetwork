@@ -442,7 +442,7 @@ GEM
     method_source (0.9.2)
     mime-types (1.25.1)
     mini_mime (1.0.1)
-    mini_portile2 (2.1.0)
+    mini_portile2 (2.4.0)
     mini_racer (0.2.9)
       libv8 (>= 6.9.411)
     momentjs-rails (2.20.1)
@@ -454,8 +454,8 @@ GEM
     multi_xml (0.6.0)
     multipart-post (2.1.1)
     newrelic_rpm (3.18.1.330)
-    nokogiri (1.6.8.1)
-      mini_portile2 (~> 2.1.0)
+    nokogiri (1.10.9)
+      mini_portile2 (~> 2.4.0)
     oauth2 (1.4.4)
       faraday (>= 0.8, < 2.0)
       jwt (>= 1.0, < 3.0)
@@ -737,7 +737,6 @@ DEPENDENCIES
   mini_racer (= 0.2.9)
   momentjs-rails
   newrelic_rpm (~> 3.0)
-  nokogiri (>= 1.6.7.1)
   oauth2 (~> 1.4.4)
   ofn-qz!
   oj
