@@ -45,6 +45,13 @@ describe 'Cart service', ->
     Cart.adjust(order.line_items[0])
     expect(Cart.line_items.length).toEqual 0
 
+  it "does not add an item in the cart without quantity", ->
+    Cart.line_items = []
+
+    spyOn(Cart, 'orderChanged')
+    order.line_items[0].max_quantity = 0
+    expect(Cart.orderChanged).not.toHaveBeenCalled()
+
   it "sums the quantity of each line item for cart total", ->
     order.line_items[0].quantity = 2
     expect(Cart.total_item_count()).toEqual 2
