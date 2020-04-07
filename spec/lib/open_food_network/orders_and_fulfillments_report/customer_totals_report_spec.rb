@@ -62,4 +62,26 @@ RSpec.describe OpenFoodNetwork::OrdersAndFulfillmentsReport::CustomerTotalsRepor
       expect(shipping_method_name_field).to eq shipping_method2.name
     end
   end
+
+  context 'when a variant override applies' do
+    let!(:order) do
+      create(:completed_order_with_totals, line_items_count: 1, user: customer.user,
+             customer: customer, distributor: distributor)
+    end
+    let(:overidden_sku) { 'magical_sku' }
+
+    before do
+      create(
+        :variant_override,
+        hub: distributor,
+        variant: order.line_items.first.variant,
+        sku: overidden_sku
+      )
+    end
+
+    it 'uses the sku from the variant override' do
+      sku_field = report_table.first[23]
+      expect(sku_field).to eq overidden_sku
+    end
+  end
 end

@@ -1,4 +1,5 @@
 require "open_food_network/reports/line_items"
+require "open_food_network/reports/variant_overrides"
 require "open_food_network/orders_and_fulfillments_report/supplier_totals_report"
 require "open_food_network/orders_and_fulfillments_report/supplier_totals_by_distributor_report"
 require "open_food_network/orders_and_fulfillments_report/distributor_totals_by_supplier_report"
@@ -18,6 +19,7 @@ module OpenFoodNetwork
       @options = options
       @report_type = options[:report_type]
       @render_table = render_table
+      @variant_scopers_by_distributor_id = {}
     end
 
     def search
@@ -43,6 +45,14 @@ module OpenFoodNetwork
 
     def product_name
       proc { |line_items| line_items.first.variant.product.name }
+    end
+
+    def variant_scoper_for(distributor_id)
+      @variant_scopers_by_distributor_id[distributor_id] ||=
+        OpenFoodNetwork::ScopeVariantToHub.new(
+          distributor_id,
+          report_variant_overrides[distributor_id]
+        )
     end
 
     private
@@ -88,6 +98,11 @@ module OpenFoodNetwork
 
     def report_line_items
       @report_line_items ||= Reports::LineItems.new(order_permissions, options)
+    end
+
+    def report_variant_overrides
+      @report_variant_overrides ||=
+        Reports::VariantOverrides.new(order_permissions.visible_line_items).indexed
     end
   end
 end
