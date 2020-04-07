@@ -8,7 +8,7 @@ describe Spree::Order do
 
     it "has errors if email is blank" do
       order.stub(require_email: true)
-      order.update_attributes email: ""
+      order.email = ""
 
       order.valid?
       expect(order.errors[:email]).to eq ["can't be blank", "is invalid"]
@@ -16,7 +16,7 @@ describe Spree::Order do
 
     it "has errors if email is invalid" do
       order.stub(require_email: true)
-      order.update_attributes email: "invalid_email"
+      order.email = "invalid_email"
 
       order.valid?
       expect(order.errors[:email]).to eq ["is invalid"]
@@ -24,7 +24,7 @@ describe Spree::Order do
 
     it "has errors if email has invalid domain" do
       order.stub(require_email: true)
-      order.update_attributes email: "single_letter_tld@domain.z"
+      order.email = "single_letter_tld@domain.z"
 
       order.valid?
       expect(order.errors[:email]).to eq ["is invalid"]
@@ -32,12 +32,11 @@ describe Spree::Order do
 
     it "is valid if email is valid" do
       order.stub(require_email: true)
-      order.update_attributes email: "a@b.ca"
+      order.email = "a@b.ca"
 
       order.valid?
       expect(order.errors[:email]).to eq []
     end
-
   end
 
   describe "setting variant attributes" do
