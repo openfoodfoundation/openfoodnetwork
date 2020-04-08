@@ -1,7 +1,5 @@
 .row.links{'data-hook' => "cart_buttons"}
-  .columns.large-8{"data-hook" => ""}
-    %a.button.large.secondary{href: current_shop_products_path}
-      = t :orders_edit_continue
-  .columns.large-4.text-right
-    %a#checkout-link.button.large.primary{href: main_app.checkout_path}
-      = t :orders_edit_checkout
+  %a.button.large.secondary{href: current_shop_products_path}
+    = t :orders_edit_continue
+  %a#checkout-link.button.large.primary.right{href: main_app.checkout_path}
+    = t :orders_edit_checkout
