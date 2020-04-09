@@ -42,8 +42,14 @@ feature '
         # Lists all other orders
         expect(page).to have_content d1o1.number.to_s
         expect(page).to have_content d1o2.number.to_s
+        expect(page).to have_link(distributor1.name,
+                                  href: "#{distributor1.permalink}/shop", count: 2)
         expect(page).to have_content d2o1.number.to_s
+        expect(page).to have_link(distributor2.name,
+                                  href: "#{distributor2.permalink}/shop", count: 1)
         expect(page).to have_content credit_order.number.to_s
+        expect(page).to have_link(distributor_credit.name,
+                                  href: "#{distributor_credit.permalink}/shop", count: 1)
 
         # Viewing transaction history
         click_link I18n.t('spree.users.show.tabs.transactions')
@@ -75,6 +81,8 @@ feature '
 
           expect(page).to have_link d1o1.number, href: spree.order_path(d1o1)
           expect(page).to have_link d1o2.number, href: spree.order_path(d1o2)
+          expect(page).to have_link(distributor1.name,
+                                  href: "#{distributor1.permalink}/shop", count: 2)
           expect(page).to have_link I18n.t('spree.users.open_orders.cancel'), href: spree.cancel_order_path(d1o1)
           expect(page).to have_link I18n.t('spree.users.open_orders.cancel'), href: spree.cancel_order_path(d1o2)
         end
