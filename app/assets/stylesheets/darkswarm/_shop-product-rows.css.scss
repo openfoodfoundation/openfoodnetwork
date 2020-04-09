@@ -58,11 +58,8 @@
 
         // Variant unit
         .variant-unit {
-          padding-left: 0rem;
-          padding-right: 0rem;
           color: #888;
           font-size: 0.875rem;
-          overflow: hidden;
 
           @include breakpoint(tablet) {
             font-size: 0.75rem;
