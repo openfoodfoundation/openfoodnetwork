@@ -2,25 +2,25 @@
   %span.joyride-nub.right
   .joyride-content-wrapper
     %ul
-      %li.cost
+      %li
         .right {{ ::variant.price | localizeCurrency }}
         %span{"ng-bind" => "::'item_cost' | t"}
-      %li.admin-fee{"ng-if" => "::variant.fees.admin"}
+      %li{"ng-if" => "::variant.fees.admin"}
         .right {{ ::variant.fees.admin | localizeCurrency }}
         %span{"ng-bind" => "::'admin_fee' | t"}
-      %li.sales-fee{"ng-if" => "::variant.fees.sales"}
+      %li{"ng-if" => "::variant.fees.sales"}
         .right {{ ::variant.fees.sales | localizeCurrency }}
         %span{"ng-bind" => "::'sales_fee' | t"}
-      %li.packing-fee{"ng-if" => "::variant.fees.packing"}
+      %li{"ng-if" => "::variant.fees.packing"}
         .right {{ ::variant.fees.packing | localizeCurrency }}
         %span{"ng-bind" => "::'packing_fee' | t"}
-      %li.transport-fee{"ng-if" => "::variant.fees.transport"}
+      %li{"ng-if" => "::variant.fees.transport"}
         .right {{ ::variant.fees.transport | localizeCurrency }}
         %span{"ng-bind" => "::'transport_fee' | t"}
-      %li.fundraising-fee{"ng-if" => "::variant.fees.fundraising"}
+      %li{"ng-if" => "::variant.fees.fundraising"}
         .right {{ ::variant.fees.fundraising | localizeCurrency }}
         %span{"ng-bind" => "::'fundraising_fee' | t"}
-      %li.total
+      %li
         %strong
           .right = {{ ::variant.price_with_fees | localizeCurrency }}
           &nbsp;
