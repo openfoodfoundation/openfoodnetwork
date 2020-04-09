@@ -6,20 +6,16 @@
       %i.ofn-i_056-bulk><
       %em><
         \ {{::'bulk' | t}}
+  .small-3.medium-3.large-3.columns.variant-price
+    -# Now in a template in app/assets/javascripts/templates !
+    %price-breakdown{"price-breakdown" => "_", variant: "variant",
+      "price-breakdown-append-to-body" => "true",
+      "price-breakdown-placement" => "left",
+      "price-breakdown-animation" => true}
+    {{ variant.price_with_fees | localizeCurrency }}
   .medium-1.large-1.columns.total-price
     %span{"ng-class" => "{filled: variant.line_item.total_price}"}
       {{ variant.line_item.total_price | localizeCurrency }}
 
   %ng-include{src: "'partials/shop_variant_no_group_buy.html'"}
   %ng-include{src: "'partials/shop_variant_with_group_buy.html'"}
-
-  .small-4.medium-2.large-2.columns.variant-price
-    .table-cell.price
-      %i.ofn-i_009-close
-      {{ variant.price_with_fees | localizeCurrency }}
-
-      -# Now in a template in app/assets/javascripts/templates !
-      %price-breakdown{"price-breakdown" => "_", variant: "variant",
-        "price-breakdown-append-to-body" => "true",
-        "price-breakdown-placement" => "left",
-        "price-breakdown-animation" => true}

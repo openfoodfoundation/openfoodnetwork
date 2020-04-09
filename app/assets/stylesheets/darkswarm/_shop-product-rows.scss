@@ -10,7 +10,6 @@
         .columns {
           padding-top: 0em;
           padding-bottom: 0em;
-          display: table;
           line-height: 1.1;
 
           // outline: 1px solid red
@@ -22,12 +21,6 @@
           @include breakpoint(phablet) {
             font-size: 0.75rem;
           }
-        }
-
-        .table-cell {
-          display: table-cell;
-          vertical-align: middle;
-          height: 37px;
         }
       }
 
