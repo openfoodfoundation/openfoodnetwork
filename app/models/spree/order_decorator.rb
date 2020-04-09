@@ -29,13 +29,14 @@ Spree::Order.class_eval do
   validate :products_available_from_new_distribution, if: lambda { distributor_id_changed? || order_cycle_id_changed? }
   validate :disallow_guest_order
 
-  # Removes Spree 2.1 additional email validation (currently failing every time)
-  # See: spree/core/validators/email.rb
+  # The EmailValidator introduced in Spree 2.1 is not working
+  # So here we remove it and re-introduce the regexp validation rule from Spree 2.0
   _validate_callbacks.each do |callback|
     if callback.raw_filter.respond_to? :attributes
       callback.raw_filter.attributes.delete :email
     end
   end
+  validates :email, presence: true, format: /\A([\w\.%\+\-']+)@([\w\-]+\.)+([\w]{2,})\z/i, if: :require_email
 
   before_validation :associate_customer, unless: :customer_id?
   before_validation :ensure_customer, unless: :customer_is_valid?
