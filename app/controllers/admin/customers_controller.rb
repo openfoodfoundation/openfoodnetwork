@@ -67,7 +67,7 @@ module Admin
       enterprise_id = Enterprise.managed_by(spree_current_user).
         select('enterprises.id').find_by_id(params[:enterprise_id])
 
-      Customer.of(enterprise_id)
+      Customer.of(enterprise_id).includes(user: :credit_cards)
     end
 
     def load_managed_shops
