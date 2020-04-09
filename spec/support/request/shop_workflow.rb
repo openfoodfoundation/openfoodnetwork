@@ -15,7 +15,7 @@ module ShopWorkflow
   end
 
   def have_price(price)
-    have_selector ".price", text: price
+    have_selector ".variant-price", text: price
   end
 
   def add_enterprise_fee(enterprise_fee)
