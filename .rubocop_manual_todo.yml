@@ -33,7 +33,6 @@ Layout/LineLength:
   - app/controllers/admin/inventory_items_controller.rb
   - app/controllers/admin/manager_invitations_controller.rb
   - app/controllers/admin/product_import_controller.rb
-  - app/controllers/admin/proxy_orders_controller.rb
   - app/controllers/admin/schedules_controller.rb
   - app/controllers/admin/subscriptions_controller.rb
   - app/controllers/admin/variant_overrides_controller.rb
