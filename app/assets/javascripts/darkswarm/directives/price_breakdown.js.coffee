@@ -15,6 +15,3 @@ Darkswarm.directive 'priceBreakdownPopup', ->
   replace: true
   templateUrl: 'price_breakdown.html'
   scope: false
-
-  link: (scope, elem, attrs) ->
-    scope.expanded = false unless scope.expanded?
