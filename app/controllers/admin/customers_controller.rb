@@ -64,8 +64,10 @@ module Admin
     def collection
       return Customer.where("1=0") unless json_request? && params[:enterprise_id].present?
 
-      enterprise = Enterprise.managed_by(spree_current_user).find_by_id(params[:enterprise_id])
-      Customer.of(enterprise)
+      enterprise_id = Enterprise.managed_by(spree_current_user).
+        select('enterprises.id').find_by_id(params[:enterprise_id])
+
+      Customer.of(enterprise_id)
     end
 
     def load_managed_shops
