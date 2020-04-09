@@ -125,7 +125,12 @@ module Spree
     end
 
     def default_card
-      credit_cards.where(is_default: true).first
+      # Don't re-fetch associated cards from the DB if they're already eager-loaded
+      if credit_cards.loaded?
+        credit_cards.to_a.find(&:is_default)
+      else
+        credit_cards.where(is_default: true).first
+      end
     end
 
     # Checks whether the specified user is a superadmin, with full control of the
