@@ -51,14 +51,8 @@
 
         .variant-name {
           @include breakpoint(phablet) {
-            background: #333;
-            color: white;
             padding-left: 0.9375rem;
             font-weight: bold;
-
-            .table-cell {
-              height: 27px;
-            }
           }
         }
 
