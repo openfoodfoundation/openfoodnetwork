@@ -133,13 +133,6 @@ class CheckoutController < Spree::StoreController
     @order.ship_address = finder.ship_address
   end
 
-  def before_delivery
-    return if params[:order].present?
-
-    packages = @order.shipments.map(&:to_package)
-    @differentiator = Spree::Stock::Differentiator.new(@order, packages)
-  end
-
   def before_payment
     current_order.payments.destroy_all if request.put?
   end
