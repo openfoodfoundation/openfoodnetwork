@@ -51,9 +51,9 @@ describe "VariantOverridesCtrl", ->
   it "adds products", ->
     spyOn(VariantOverrides, "ensureDataFor")
     expect(scope.products).toEqual []
-    scope.addProducts ['a', 'b']
+    scope.addProducts { products: ['a', 'b'] }
     expect(scope.products).toEqual ['a', 'b']
-    scope.addProducts ['c', 'd']
+    scope.addProducts { products: ['c', 'd'] }
     expect(scope.products).toEqual ['a', 'b', 'c', 'd']
     expect(VariantOverrides.ensureDataFor).toHaveBeenCalled()
 
