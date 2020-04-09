@@ -113,11 +113,6 @@ button.graph-button {
       color: $clr-brick-bright;
     }
   }
-
-  @include breakpoint(tablet) {
-    // Hide for small
-    display: none;
-  }
 }
 
 button.graph-button.open {
