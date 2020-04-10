@@ -119,6 +119,7 @@ describe 'Checkout service', ->
       it "puts errors into the scope", ->
         $httpBackend.expectPUT("/checkout.json").respond 400, {errors: {error: "frogs"}}
         Checkout.submit()
+
         $httpBackend.flush()
         expect(Checkout.errors).toEqual {error: "frogs"}
 

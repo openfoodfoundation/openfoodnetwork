@@ -14,15 +14,19 @@ Darkswarm.factory 'Checkout', ($injector, CurrentOrder, ShippingMethods, StripeE
 
     submit: =>
       Loading.message = t 'submitting_order'
-      $http.put('/checkout.json', {order: @preprocess()}).success (data, status)=>
-        Navigation.go data.path
-      .error (response, status)=>
-        if response.path
-          Navigation.go response.path
-        else
-          Loading.clear()
-          @errors = response.errors
-          RailsFlashLoader.loadFlash(response.flash)
+      $http.put('/checkout.json', {order: @preprocess()})
+      .then (response) =>
+        Navigation.go response.data.path
+      .catch (response) =>
+        try
+          if response.data.path
+            Navigation.go response.data.path
+          else
+            Loading.clear()
+            @errors = response.data.errors
+            RailsFlashLoader.loadFlash(response.data.flash)
+        catch error
+          RailsFlashLoader.loadFlash("Unkown error occurred")
 
     # Rails wants our Spree::Address data to be provided with _attributes
     preprocess: ->
