@@ -96,7 +96,10 @@ module Admin
       customer_tags = ::ActsAsTaggableOn::Tag.
         joins(:taggings).
         includes(:taggings).
-        where(taggings: { taggable_id: Customer.of(managed_enterprise_id), context: 'tags' })
+        where(taggings:
+                { taggable_type: 'Customer',
+                  taggable_id: Customer.of(managed_enterprise_id),
+                  context: 'tags' })
 
       customer_tags.each_with_object({}) do |tag, indexed_hash|
         customer_id = tag.taggings.first.taggable_id
