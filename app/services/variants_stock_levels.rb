@@ -8,10 +8,13 @@ class VariantsStockLevels
     variant_stock_levels = variant_stock_levels(order.line_items)
 
     order_variant_ids = variant_stock_levels.keys
-    missing_variant_ids = requested_variant_ids - order_variant_ids
-    missing_variant_ids.each do |variant_id|
-      variant = scoped_variant(order.distributor, Spree::Variant.find(variant_id))
-      variant_stock_levels[variant_id] = { quantity: 0, max_quantity: 0, on_hand: variant.on_hand, on_demand: variant.on_demand }
+    missing_variants = Spree::Variant.includes(:stock_items).
+      where(id: (requested_variant_ids - order_variant_ids))
+
+    missing_variants.each do |missing_variant|
+      variant = scoped_variant(order.distributor, missing_variant)
+      variant_stock_levels[variant.id] =
+        { quantity: 0, max_quantity: 0, on_hand: variant.on_hand, on_demand: variant.on_demand }
     end
 
     variant_stock_levels
