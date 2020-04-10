@@ -105,6 +105,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     $scope.producerFilter = "0"
     $scope.categoryFilter = "0"
     $scope.importDateFilter = "0"
+    $scope.fetchProducts()
 
   $scope.$watch 'sortOptions', (sort) ->
     return unless sort && sort.predicate != ""
