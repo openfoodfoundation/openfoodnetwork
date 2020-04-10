@@ -59,7 +59,7 @@ en_PH:
       messages:
         inclusion: "is not included in the list"
       models:
-        subscription_validator:
+        order_management/subscriptions/validator:
           attributes:
             subscription_line_items:
               at_least_one_product: "^Please add at least one product"
@@ -1203,8 +1203,8 @@ en_PH:
   menu_2_url: "/map"
   menu_3_title: "Producers"
   menu_3_url: "/producers"
-  menu_4_title: "Groups"
-  menu_4_url: "/groups"
+  menu_4_title: "Fees"
+  menu_4_url: "/sell"
   menu_5_title: "About"
   menu_5_url: "https://www.openfoodnetwork.org/about-us/"
   menu_6_title: "Connect"

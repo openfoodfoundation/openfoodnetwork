@@ -53,7 +53,7 @@ es:
         payment_method_ids: "Métodos de Pago"
     errors:
       models:
-        subscription_validator:
+        order_management/subscriptions/validator:
           attributes:
             subscription_line_items:
               at_least_one_product: "^Por favor agrega al menos un producto"

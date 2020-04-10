@@ -53,7 +53,7 @@ pt_BR:
       messages:
         inclusion: "não está incluso na lista"
       models:
-        subscription_validator:
+        order_management/subscriptions/validator:
           attributes:
             subscription_line_items:
               at_least_one_product: "^ Por favor, adicione pelo menos um produto"
