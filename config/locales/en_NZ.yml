@@ -31,6 +31,10 @@ en_NZ:
               taken: "There's already an account for this email. Please login or reset your password."
         spree/order:
           no_card: There are no authorised credit cards available to charge
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: "has expired"
         order_cycle:
           attributes:
             orders_close_at:
@@ -55,7 +59,7 @@ en_NZ:
       messages:
         inclusion: "is not included in the list"
       models:
-        subscription_validator:
+        order_management/subscriptions/validator:
           attributes:
             subscription_line_items:
               at_least_one_product: "^Please add at least one product"
@@ -867,6 +871,7 @@ en_NZ:
         distributor: "Distributor"
         products: "Products"
         tags: "Tags"
+        delivery_details: "Delivery Details"
         fees: "Fees"
         previous: "Previous"
         save: "Save"
