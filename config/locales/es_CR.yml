@@ -10,12 +10,12 @@ es_CR:
         completed_at: Completado en
         number: Número
         state: Provincia
-        email: E-mail del consumidor
+        email: e-mail de la consumidora
       spree/payment:
         amount: Cantidad
       spree/product:
         primary_taxon: "categoría del producto"
-        supplier: "Proveedora"
+        supplier: "Proveedor"
         shipping_category_id: "Categoría de envío"
         variant_unit: "Unidad Variante"
         variant_unit_name: "Nombre de la unidad de la variante"
