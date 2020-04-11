@@ -3,8 +3,9 @@
 module OpenFoodNetwork
   module Reports
     class VariantOverrides
-      def initialize(line_items)
+      def initialize(line_items:, distributor_ids:)
         @line_items = line_items
+        @distributor_ids = distributor_ids
       end
 
       def indexed
@@ -15,11 +16,16 @@ module OpenFoodNetwork
 
       private
 
-      attr_reader :line_items
+      attr_reader :line_items, :distributor_ids
 
       def variant_overrides
-        VariantOverride.joins(:variant)
-          .where(spree_variants: { id: line_items.select(:variant_id) })
+        VariantOverride
+          .joins(:variant)
+          .preload(:variant)
+          .where(
+            hub_id: distributor_ids,
+            variant_id: line_items.select(:variant_id)
+          )
       end
 
       def hash_of_hashes
