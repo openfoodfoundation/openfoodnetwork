@@ -101,7 +101,7 @@ module OpenFoodNetwork
 
     def report_variant_overrides
       @report_variant_overrides ||=
-        VariantOverrides.new(
+        VariantOverridesIndexed.new(
           line_items: order_permissions.visible_line_items,
           distributor_ids: report_line_items.orders.result.select('DISTINCT distributor_id'),
         ).indexed

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class VariantOverrides
+class VariantOverridesIndexed
   def initialize(line_items:, distributor_ids:)
     @line_items = line_items
     @distributor_ids = distributor_ids

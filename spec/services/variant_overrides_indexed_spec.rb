@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe VariantOverrides do
+describe VariantOverridesIndexed do
   subject(:variant_overrides) do
     described_class.new(
       line_items: order.line_items,
