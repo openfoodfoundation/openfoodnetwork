@@ -15,7 +15,7 @@ describe "Mail Methods" do
     end
 
     it "should be able to edit mail method settings" do
-      fill_in "mail_bcc", with: "spree@example.com99"
+      fill_in "mail_bcc", with: "ofn@example.com"
       click_button "Update"
       expect(page).to have_content("successfully updated!")
     end

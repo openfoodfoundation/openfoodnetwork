@@ -58,10 +58,10 @@ Now, your dreams of spinning up a development server can be realised:
 
     bundle exec rails server
 
-To login as Spree default user, use:
+To login as the default user, use:
 
-    email: spree@example.com
-    password: spree123
+    email: ofn@example.com
+    password: ofn123
 
 ### Testing
 

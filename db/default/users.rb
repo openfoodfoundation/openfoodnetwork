@@ -6,13 +6,13 @@ def prompt_for_admin_password
     password = ENV['ADMIN_PASSWORD'].dup
     say "Admin Password #{password}"
   else
-    password = ask('Password [spree123]: ') do |q|
+    password = ask('Password [ofn123]: ') do |q|
       q.echo = false
       q.validate = /^(|.{5,40})$/
       q.responses[:not_valid] = 'Invalid password. Must be at least 5 characters long.'
       q.whitespace = :strip
     end
-    password = 'spree123' if password.blank?
+    password = 'ofn123' if password.blank?
   end
 
   password
@@ -23,11 +23,11 @@ def prompt_for_admin_email
     email = ENV['ADMIN_EMAIL'].dup
     say "Admin User #{email}"
   else
-    email = ask('Email [spree@example.com]: ') do |q|
+    email = ask('Email [ofn@example.com]: ') do |q|
       q.echo = true
       q.whitespace = :strip
     end
-    email = 'spree@example.com' if email.blank?
+    email = 'ofn@example.com' if email.blank?
   end
 
   email
@@ -35,8 +35,8 @@ end
 
 def create_admin_user
   if ENV.fetch("AUTO_ACCEPT", true)
-    password = ENV.fetch("ADMIN_PASSWORD", "spree123").dup
-    email = ENV.fetch("ADMIN_EMAIL", "spree@example.com").dup
+    password = ENV.fetch("ADMIN_PASSWORD", "ofn123").dup
+    email = ENV.fetch("ADMIN_EMAIL", "ofn@example.com").dup
   else
     puts 'Create the admin user (press enter for defaults).'
     #name = prompt_for_admin_name unless name

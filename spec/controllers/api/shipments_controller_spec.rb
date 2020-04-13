@@ -131,7 +131,7 @@ describe Api::ShipmentsController, type: :controller do
       before do
         allow_any_instance_of(Spree::Order).to receive_messages(paid?: true, complete?: true)
         # For the shipment notification email
-        Spree::Config[:mails_from] = "spree@example.com"
+        Spree::Config[:mails_from] = "ofn@example.com"
 
         shipment.update!(shipment.order)
         expect(shipment.state).to eq("ready")
