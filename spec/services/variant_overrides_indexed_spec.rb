@@ -1,19 +1,10 @@
 require 'spec_helper'
 
 describe VariantOverridesIndexed do
-  subject(:variant_overrides) do
-    described_class.new(
-      line_items: order.line_items,
-      distributor_ids: [distributor.id],
-    )
-  end
+  subject(:variant_overrides) { described_class.new([variant.id],[distributor.id]) }
 
   let(:distributor) { create(:distributor_enterprise) }
-  let(:order) do
-    create(:completed_order_with_totals, line_items_count: 1,
-            distributor: distributor)
-  end
-  let(:line_item) { order.line_items.first }
+  let(:variant) { create(:variant) }
   let!(:variant_override) do
     create(
       :variant_override,
@@ -25,15 +16,15 @@ describe VariantOverridesIndexed do
   describe '#indexed' do
     let(:result) { variant_overrides.indexed }
 
-    context 'when variant overrides exist for variants of specified line items' do
-      let(:vo_variant) { line_item.variant }
+    context 'when variant overrides exist for variants of specified variants' do
+      let(:vo_variant) { variant }
 
       context 'when variant overrides apply to one of the specified distributors' do
         let(:vo_distributor) { distributor }
 
         it 'they are included in the mapping' do
           expect(result).to eq(
-            distributor.id => { line_item.variant => variant_override }
+            distributor.id => { variant => variant_override }
           )
         end
       end

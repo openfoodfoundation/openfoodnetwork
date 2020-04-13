@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class VariantOverridesIndexed
-  def initialize(line_items:, distributor_ids:)
-    @line_items = line_items
+  def initialize(variant_ids, distributor_ids)
+    @variant_ids = variant_ids
     @distributor_ids = distributor_ids
   end
 
@@ -14,7 +14,7 @@ class VariantOverridesIndexed
 
   private
 
-  attr_reader :line_items, :distributor_ids
+  attr_reader :variant_ids, :distributor_ids
 
   def variant_overrides
     VariantOverride
@@ -22,7 +22,7 @@ class VariantOverridesIndexed
       .preload(:variant)
       .where(
         hub_id: distributor_ids,
-        variant_id: line_items.select(:variant_id)
+        variant_id: variant_ids,
       )
   end
 
