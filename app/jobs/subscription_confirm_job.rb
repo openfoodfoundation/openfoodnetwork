@@ -57,16 +57,28 @@ class SubscriptionConfirmJob
     return true unless order.payment_required?
 
     setup_payment!(order)
-    return false if order.errors.present?
+    return false if order.errors.any?
+
+    authorize_payment!(order)
+    return false if order.errors.any?
 
     order.process_payments!
-    return false if order.errors.present?
+    return false if order.errors.any?
 
     true
   end
 
   def setup_payment!(order)
     OrderManagement::Subscriptions::PaymentSetup.new(order).call!
+    return if order.errors.any?
+
+    OrderManagement::Subscriptions::StripePaymentSetup.new(order).call!
+  end
+
+  def authorize_payment!(order)
+    return if order.subscription.payment_method.class != Spree::Gateway::StripeSCA
+
+    OrderManagement::Subscriptions::StripeScaPaymentAuthorize.new(order).call!
   end
 
   def send_confirmation_email(order)
