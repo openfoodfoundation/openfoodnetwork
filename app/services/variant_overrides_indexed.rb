@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+# Produces mappings of variant overrides by distributor id and variant id
+# The primary use case for data structured in this way is for injection into
+# the initializer of the OpenFoodNetwork::ScopeVariantToHub class
+
 class VariantOverridesIndexed
   def initialize(variant_ids, distributor_ids)
     @variant_ids = variant_ids
@@ -7,7 +11,7 @@ class VariantOverridesIndexed
   end
 
   def indexed
-    variant_overrides.each_with_object(hash_of_hashes) do |variant_override, indexed|
+    scoped_variant_overrides.each_with_object(hash_of_hashes) do |variant_override, indexed|
       indexed[variant_override.hub_id][variant_override.variant] = variant_override
     end
   end
@@ -16,7 +20,7 @@ class VariantOverridesIndexed
 
   attr_reader :variant_ids, :distributor_ids
 
-  def variant_overrides
+  def scoped_variant_overrides
     VariantOverride
       .joins(:variant)
       .preload(:variant)
@@ -27,6 +31,6 @@ class VariantOverridesIndexed
   end
 
   def hash_of_hashes
-    Hash.new { |h, k| h[k] = {} }
+    Hash.new { |hash, key| hash[key] = {} }
   end
 end
