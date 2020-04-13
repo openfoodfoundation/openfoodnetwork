@@ -1,5 +1,4 @@
 require "open_food_network/reports/line_items"
-require "open_food_network/reports/variant_overrides"
 require "open_food_network/orders_and_fulfillments_report/supplier_totals_report"
 require "open_food_network/orders_and_fulfillments_report/supplier_totals_by_distributor_report"
 require "open_food_network/orders_and_fulfillments_report/distributor_totals_by_supplier_report"
@@ -102,7 +101,7 @@ module OpenFoodNetwork
 
     def report_variant_overrides
       @report_variant_overrides ||=
-        Reports::VariantOverrides.new(
+        VariantOverrides.new(
           line_items: order_permissions.visible_line_items,
           distributor_ids: report_line_items.orders.result.select('DISTINCT distributor_id'),
         ).indexed
