@@ -28,7 +28,10 @@ services:
       ADMIN_PASSWORD: ofn123
       OFN_DB_HOST: db
     command: >
-      bash -c "wait-for-it -t 30 db:5432 &&
+      bash -c "(bundle check || bundle install) &&
+               wait-for-it -t 30 db:5432 &&
+               bundle exec rake db:create &&
+               bundle exec rake db:migrate &&
                rm -f tmp/pids/server.pid &&
                bundle exec rails s -p 3000 -b '0.0.0.0'"
 
