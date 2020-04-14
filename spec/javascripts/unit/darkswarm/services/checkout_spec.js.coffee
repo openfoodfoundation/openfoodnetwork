@@ -6,7 +6,9 @@ describe 'Checkout service', ->
   flash = null
   scope = null
   FlashLoaderMock =
-    loadFlash: (arg)->
+    loadFlash: (arg) ->
+  Loading =
+    clear: (arg)->
   paymentMethods = [{
       id: 99
       test: "foo"
@@ -48,6 +50,7 @@ describe 'Checkout service', ->
     module 'Darkswarm'
     module ($provide)->
       $provide.value "RailsFlashLoader", FlashLoaderMock
+      $provide.value "Loading", Loading
       $provide.value "currentOrder", orderData
       $provide.value "shippingMethods", shippingMethods
       $provide.value "paymentMethods", paymentMethods
@@ -122,6 +125,29 @@ describe 'Checkout service', ->
 
         $httpBackend.flush()
         expect(Checkout.errors).toEqual {error: "frogs"}
+
+      it "throws an exception and sends a flash message to the flash service when reponse doesnt contain errors nor a flash message", ->
+        spyOn(FlashLoaderMock, "loadFlash") # Stubbing out writes to window.location
+        $httpBackend.expectPUT("/checkout.json").respond 400, "broken response"
+        try
+          Checkout.submit()
+          $httpBackend.flush()
+        catch e
+          expect(e.data).toBe("broken response")
+
+        expect(FlashLoaderMock.loadFlash).toHaveBeenCalledWith({ error: t("checkout.failed") })
+
+      it "throws an exception and sends a flash message to the flash service when an exception is thrown while handling the error", ->
+        spyOn(FlashLoaderMock, "loadFlash") # Stubbing out writes to window.location
+        spyOn(Loading, "clear").and.callFake(-> throw "unexpected error")
+        $httpBackend.expectPUT("/checkout.json").respond 400, {flash: {error: "frogs"}}
+        try
+          Checkout.submit()
+          $httpBackend.flush()
+        catch e
+          expect(e).toBe("unexpected error")
+
+        expect(FlashLoaderMock.loadFlash).toHaveBeenCalledWith({ error: t("checkout.failed") })
 
     describe "when using the Stripe Connect gateway", ->
       beforeEach inject ($injector, StripeElements) ->

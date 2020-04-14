@@ -22,11 +22,14 @@ Darkswarm.factory 'Checkout', ($injector, CurrentOrder, ShippingMethods, StripeE
           if response.data.path
             Navigation.go response.data.path
           else
+            throw response unless response.data.errors || response.data.flash
+
             Loading.clear()
             @errors = response.data.errors
             RailsFlashLoader.loadFlash(response.data.flash)
         catch error
-          RailsFlashLoader.loadFlash("Unkown error occurred")
+          RailsFlashLoader.loadFlash(error: t("checkout.failed")) # inform the user about the unexpected error
+          throw error # generate a BugsnagJS alert
 
     # Rails wants our Spree::Address data to be provided with _attributes
     preprocess: ->
