@@ -28,7 +28,7 @@ Darkswarm.factory 'Checkout', ($injector, CurrentOrder, ShippingMethods, StripeE
       if response.data.path
         Navigation.go response.data.path
       else
-        throw response unless response.data.errors || response.data.flash
+        throw response unless response.data.flash
 
         @errors = response.data.errors
         @loadFlash(response.data.flash)

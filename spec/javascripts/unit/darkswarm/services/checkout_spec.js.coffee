@@ -120,12 +120,22 @@ describe 'Checkout service', ->
         $httpBackend.flush()
         expect(FlashLoaderMock.loadFlash).toHaveBeenCalledWith {error: "frogs"}
 
-      it "puts errors into the scope", ->
-        $httpBackend.expectPUT("/checkout.json").respond 400, {errors: {error: "frogs"}}
+      it "puts errors into the scope when there is a flash messages", ->
+        $httpBackend.expectPUT("/checkout.json").respond 400, {errors: {error: "frogs"}, flash: {error: "flash frogs"}}
         Checkout.submit()
 
         $httpBackend.flush()
         expect(Checkout.errors).toEqual {error: "frogs"}
+
+      it "throws exception and sends generic flash message when there are errors but no flash message", ->
+        $httpBackend.expectPUT("/checkout.json").respond 400, {errors: {error: "broken response"}}
+        try
+          Checkout.submit()
+          $httpBackend.flush()
+        catch error
+          expect(error.data.errors.error).toBe("broken response")
+
+        expect(Checkout.errors).toEqual {}
 
       it "throws an exception and sends a flash message to the flash service when reponse doesnt contain errors nor a flash message", ->
         spyOn(FlashLoaderMock, "loadFlash") # Stubbing out writes to window.location
@@ -133,8 +143,8 @@ describe 'Checkout service', ->
         try
           Checkout.submit()
           $httpBackend.flush()
-        catch e
-          expect(e.data).toBe("broken response")
+        catch error
+          expect(error.data).toBe("broken response")
 
         expect(FlashLoaderMock.loadFlash).toHaveBeenCalledWith({ error: t("checkout.failed") })
 
@@ -145,8 +155,8 @@ describe 'Checkout service', ->
         try
           Checkout.submit()
           $httpBackend.flush()
-        catch e
-          expect(e).toBe("unexpected error")
+        catch error
+          expect(error).toBe("unexpected error")
 
         expect(FlashLoaderMock.loadFlash).toHaveBeenCalledWith({ error: t("checkout.failed") })
 
