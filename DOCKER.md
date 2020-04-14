@@ -35,8 +35,15 @@ Download the Docker images and build the containers:
 $ docker-compose build
 ```
 
+Install the required gems:
+
+```sh
+$ docker-compose run web bundle exec bundle install
+```
+
 Setup the database and seed it with sample data:
 ```sh
+$ docker-compose run web bundle exec rake db:create
 $ docker-compose run web bundle exec rake db:reset
 $ docker-compose run web bundle exec rake db:test:prepare
 $ docker-compose run web bundle exec rake ofn:sample_data
