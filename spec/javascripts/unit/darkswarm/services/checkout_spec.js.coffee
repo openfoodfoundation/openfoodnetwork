@@ -3,6 +3,7 @@ describe 'Checkout service', ->
   orderData = null
   $httpBackend = null
   Navigation = null
+  navigationSpy = null
   flash = null
   scope = null
   FlashLoaderMock =
@@ -64,7 +65,7 @@ describe 'Checkout service', ->
       scope.Checkout = Checkout
       Navigation = $injector.get("Navigation")
       flash = $injector.get("flash")
-      spyOn(Navigation, "go") # Stubbing out writes to window.location
+      navigationSpy = spyOn(Navigation, "go") # Stubbing out writes to window.location
 
   it "defaults to no shipping method", ->
     expect(Checkout.order.shipping_method_id).toEqual null
@@ -139,8 +140,8 @@ describe 'Checkout service', ->
 
       it "throws an exception and sends a flash message to the flash service when an exception is thrown while handling the error", ->
         spyOn(FlashLoaderMock, "loadFlash") # Stubbing out writes to window.location
-        spyOn(Loading, "clear").and.callFake(-> throw "unexpected error")
-        $httpBackend.expectPUT("/checkout.json").respond 400, {flash: {error: "frogs"}}
+        navigationSpy.and.callFake(-> throw "unexpected error")
+        $httpBackend.expectPUT("/checkout.json").respond 400, {path: 'path'}
         try
           Checkout.submit()
           $httpBackend.flush()

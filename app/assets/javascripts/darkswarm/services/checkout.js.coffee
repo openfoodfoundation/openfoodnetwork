@@ -28,6 +28,7 @@ Darkswarm.factory 'Checkout', ($injector, CurrentOrder, ShippingMethods, StripeE
             @errors = response.data.errors
             RailsFlashLoader.loadFlash(response.data.flash)
         catch error
+          Loading.clear()
           RailsFlashLoader.loadFlash(error: t("checkout.failed")) # inform the user about the unexpected error
           throw error # generate a BugsnagJS alert
 
