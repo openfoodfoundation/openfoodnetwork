@@ -28,7 +28,9 @@ describe Spree::Admin::PaymentsController, type: :controller do
 
     context "order is complete" do
       let!(:order) do
-        create(:order_with_totals_and_distribution, distributor: shop, state: "complete", completed_at: Time.zone.now)
+        create(:order_with_totals_and_distribution, distributor: shop,
+                                                    state: "complete",
+                                                    completed_at: Time.zone.now)
       end
 
       context "with Check payment (payment.process! does nothing)" do
@@ -42,7 +44,11 @@ describe Spree::Admin::PaymentsController, type: :controller do
 
       context "with Stripe payment where payment.process! errors out" do
         let!(:payment_method) { create(:stripe_payment_method, distributors: [shop]) }
-        before { allow_any_instance_of(Spree::Payment).to receive(:process!).and_raise(Spree::Core::GatewayError.new("Payment Gateway Error")) }
+        before do
+          allow_any_instance_of(Spree::Payment).
+            to receive(:process!).
+            and_raise(Spree::Core::GatewayError.new("Payment Gateway Error"))
+        end
 
         it "redirects to new payment page with flash error" do
           spree_post :create, payment: params, order_id: order.number
@@ -56,7 +62,11 @@ describe Spree::Admin::PaymentsController, type: :controller do
         let!(:payment_method) { create(:stripe_sca_payment_method, distributors: [shop]) }
 
         context "where payment.authorize! raises GatewayError" do
-          before { allow_any_instance_of(Spree::Payment).to receive(:authorize!).and_raise(Spree::Core::GatewayError.new("Stripe Authorization Failure")) }
+          before do
+            allow_any_instance_of(Spree::Payment).
+              to receive(:authorize!).
+              and_raise(Spree::Core::GatewayError.new("Stripe Authorization Failure"))
+          end
 
           it "redirects to new payment page with flash error" do
             spree_post :create, payment: params, order_id: order.number
@@ -126,8 +136,10 @@ describe Spree::Admin::PaymentsController, type: :controller do
 
       context "that was processed by stripe" do
         let!(:payment_method) { create(:stripe_payment_method, distributors: [shop]) }
-        # let!(:credit_card) { create(:credit_card, gateway_customer_profile_id: "cus_1", gateway_payment_profile_id: 'card_2') }
-        let!(:payment) { create(:payment, order: order, state: 'completed', payment_method: payment_method, response_code: 'ch_1a2b3c', amount: order.total) }
+        let!(:payment) do
+          create(:payment, order: order, state: 'completed', payment_method: payment_method,
+                           response_code: 'ch_1a2b3c', amount: order.total)
+        end
 
         before do
           allow(Stripe).to receive(:api_key) { "sk_test_12345" }
@@ -137,7 +149,8 @@ describe Spree::Admin::PaymentsController, type: :controller do
           before do
             stub_request(:post, "https://api.stripe.com/v1/charges/ch_1a2b3c/refunds").
               with(basic_auth: ["sk_test_12345", ""]).
-              to_return(status: 200, body: JSON.generate(id: 're_123', object: 'refund', status: 'succeeded') )
+              to_return(status: 200,
+                        body: JSON.generate(id: 're_123', object: 'refund', status: 'succeeded') )
           end
 
           it "voids the payment" do
@@ -182,7 +195,10 @@ describe Spree::Admin::PaymentsController, type: :controller do
 
       context "that was processed by stripe" do
         let!(:payment_method) { create(:stripe_payment_method, distributors: [shop]) }
-        let!(:payment) { create(:payment, order: order, state: 'completed', payment_method: payment_method, response_code: 'ch_1a2b3c', amount: order.total + 5) }
+        let!(:payment) do
+          create(:payment, order: order, state: 'completed', payment_method: payment_method,
+                           response_code: 'ch_1a2b3c', amount: order.total + 5)
+        end
 
         before do
           allow(Stripe).to receive(:api_key) { "sk_test_12345" }
@@ -192,7 +208,8 @@ describe Spree::Admin::PaymentsController, type: :controller do
           before do
             stub_request(:post, "https://api.stripe.com/v1/charges/ch_1a2b3c/refunds").
               with(basic_auth: ["sk_test_12345", ""]).
-              to_return(status: 200, body: JSON.generate(id: 're_123', object: 'refund', status: 'succeeded') )
+              to_return(status: 200,
+                        body: JSON.generate(id: 're_123', object: 'refund', status: 'succeeded') )
           end
 
           it "partially refunds the payment" do

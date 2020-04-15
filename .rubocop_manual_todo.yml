@@ -156,7 +156,6 @@ Layout/LineLength:
   - spec/controllers/spree/admin/orders/customer_details_controller_spec.rb
   - spec/controllers/spree/admin/orders_controller_spec.rb
   - spec/controllers/spree/admin/payment_methods_controller_spec.rb
-  - spec/controllers/spree/admin/payments_controller_spec.rb
   - spec/controllers/spree/admin/products_controller_spec.rb
   - spec/controllers/spree/admin/reports_controller_spec.rb
   - spec/controllers/spree/admin/variants_controller_spec.rb
