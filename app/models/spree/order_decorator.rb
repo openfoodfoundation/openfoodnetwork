@@ -263,7 +263,11 @@ Spree::Order.class_eval do
   end
 
   def line_item_variants
-    line_items.map(&:variant)
+    if line_items.loaded?
+      line_items.map(&:variant)
+    else
+      line_items.includes(:variant).map(&:variant)
+    end
   end
 
   # Show already bought line items of this order cycle
