@@ -7,6 +7,6 @@
     %ul
       %li{"ng-repeat" => "permission in enterprise_relationship.permissions"}
         = t 'admin_enterprise_relationships_to'
-        {{ EnterpriseRelationships.permission_presentation(permission) }}
+        {{ EnterpriseRelationships.permission_presentation(permission.name) }}
   %td.actions
     %a.delete-enterprise-relationship.icon-trash.no-text{'ng-click' => 'delete(enterprise_relationship)'}
