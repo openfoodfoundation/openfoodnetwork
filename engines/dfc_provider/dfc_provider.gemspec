@@ -1,4 +1,6 @@
-$:.push File.expand_path("../lib", __FILE__)
+# frozen_string_literal: true
+
+$LOAD_PATH.push File.expand_path('lib', __dir__)
 
 # Maintain your gem's version:
 require "dfc_provider/version"
@@ -9,7 +11,7 @@ Gem::Specification.new do |s|
   s.version     = DfcProvider::VERSION
   s.authors     = ['Admin OFF']
   s.email       = ['admin@openfoodfrance.org']
-  s.summary     = 'Provdes an API stack implementing DFC semantic specifications'
+  s.summary     = 'Provides an API stack implementing DFC semantic specifications'
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ['MIT-LICENSE', 'Rakefile', 'README.rdoc']
   s.test_files = Dir['test/**/*']

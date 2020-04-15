@@ -1,26 +1,32 @@
-module Api::DfcProvider
-  class ProductsController < ActionController::Base
-    before_filter :set_enterprise
+# frozen_string_literal: true
 
-    def index
-      products = @enterprise.inventory_variants
-                            .includes(:product, :inventory_items)
+# Controller used to provide the API products for the DFC application
+module Api
+  module DfcProvider
+    class ProductsController < Api::BaseController
+      before_filter :set_enterprise
 
-      products_json = DfcProvider::ProductSerializer
-                      .new(@enterprise, products, base_url)
-                      .serialized_json
+      def index
+        products = @enterprise.
+          inventory_variants.
+          includes(:product, :inventory_items)
 
-      render json: products_json
-    end
+        products_json = ::DfcProvider::ProductSerializer.
+          new(@enterprise, products, base_url).
+          serialized_json
 
-    private
+        render json: products_json
+      end
 
-    def set_enterprise
-      @enterprise = ::Enterprise.find(params[:enterprise_id])
-    end
+      private
 
-    def base_url
-      "#{root_url}api/dfc_provider"
+      def set_enterprise
+        @enterprise = ::Enterprise.find(params[:enterprise_id])
+      end
+
+      def base_url
+        "#{root_url}api/dfc_provider"
+      end
     end
   end
 end

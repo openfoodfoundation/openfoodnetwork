@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 DfcProvider::Engine.routes.draw do
   namespace :api do
     namespace :dfc_provider do
