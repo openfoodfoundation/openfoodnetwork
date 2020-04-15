@@ -47,7 +47,7 @@ module InjectionHelper
     enterprises_and_relatives = current_distributor.
       relatives_including_self.
       activated.
-      includes(address: [:state, :country]).
+      includes(:properties, address: [:state, :country], supplied_products: :properties).
       all
 
     inject_json_ams "enterprises",
