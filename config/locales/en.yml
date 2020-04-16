@@ -476,6 +476,8 @@ en:
 
     products:
       unit_name_placeholder: 'eg. bunches'
+      display_as_placeholder: 'eg. 2 kg'
+      display_name_placeholder: 'eg. Tomatoes'
       index:
         unit: Unit
         display_as: Display As
