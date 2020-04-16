@@ -6,4 +6,9 @@ OrderCycleNotificationJob = Struct.new(:order_cycle_id) do
       ProducerMailer.order_cycle_report(supplier, order_cycle).deliver
     end
   end
+
+  # Temporally disable DJ's retries until we fix https://github.com/openfoodfoundation/openfoodnetwork/issues/5242.
+  def max_attempts
+    1
+  end
 end
