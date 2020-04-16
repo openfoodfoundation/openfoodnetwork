@@ -31,6 +31,10 @@ es:
               taken: "Ya existe una cuenta con este email. Inicie sesión o restablezca tu contraseña."
         spree/order:
           no_card: No hay tarjetas de crédito autorizadas disponibles para cargar
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: "ha expirado"
         order_cycle:
           attributes:
             orders_close_at:
@@ -52,6 +56,8 @@ es:
         shipping_method_ids: "Métodos de envío"
         payment_method_ids: "Métodos de Pago"
     errors:
+      messages:
+        inclusion: "no está incluido en la lista"
       models:
         order_management/subscriptions/validator:
           attributes:
@@ -246,6 +252,8 @@ es:
   notes: Notas
   error: Error
   processing_payment: "Procesando el pago..."
+  no_pending_payments: "No tiene pagos pendientes"
+  invalid_payment_state: "Estado de pago no válido"
   filter_results: Filtrar resultados
   quantity: Cantidad
   pick_up: Recogida
@@ -438,9 +446,12 @@ es:
         infinity: "infinito"
         to_order_tip: "Los artículos hechos según demanda no tienen un nivel de stock, como por ejemplo panes hechos según demanda."
       back_to_products_list: "Volver a la lista de productos"
+      editing_product: "Editando producto"
       tabs:
+        product_details: "Detalles del Producto"
         group_buy_options: "Opciones de compra grupales"
         images: "Imágenes"
+        variants: "variaciones"
         product_properties: "Propiedades del producto"
     product_import:
       title: Importación de productos
@@ -699,6 +710,11 @@ es:
           enable_subscriptions_false: "Deshabilitado"
           enable_subscriptions_true: "Habilitado"
           shopfront_message: "Mensaje de la Tienda"
+          shopfront_message_placeholder: >
+              Mensaje de bienvenida opcional para compradores, explica como comprar
+              en el sitio. si el texto se agrega en este campo, va a ser mostrado
+              en la pestaña de inicio cuando los clientes ingresen por primera vez
+              a la tienda.
           shopfront_message_link_tooltip: "Insertar / editar enlace"
           shopfront_message_link_prompt: "Por favor introduzca una URL para insertar"
           shopfront_closed_message: "Mensaje de tienda cerrada"
@@ -836,25 +852,38 @@ es:
       new:
         create: "Crear"
         cancel: "Cancelar"
+        back_to_list: "Regresar a la lista"
       edit:
         advanced_settings: "Configuración Avanzada"
         save: "Guardar"
+        save_and_next: "Salvar y continuar"
         next: "Siguiente"
         cancel: "Cancelar"
+        back_to_list: "Regresar a la lista"
+        save_and_back_to_list: "Salvar y volver a lista"
         choose_products_from: "Escoger Productos desde:"
       incoming:
         save: "Guardar"
+        save_and_next: "Salvar y continuar"
         next: "Siguiente"
         cancel: "Cancelar"
+        back_to_list: "Regresar a la lista"
       outgoing:
         outgoing: "Saliente"
         distributor: "Distribuidora"
         products: "Productos"
         tags: "Tags"
+        delivery_details: "Detalles de entrega"
         fees: "Comisiones"
         previous: "Anterior"
         save: "Guardar"
+        save_and_back_to_list: "Salvar y volver a lista"
         cancel: "Cancelar"
+        back_to_list: "Regresar a la lista"
+      wizard_progress:
+        edit: "1. Configuración general"
+        incoming: "2. Productos entrantes"
+        outgoing: "3. Productos salientes"
       exchange_form:
         pickup_time_tip: Cuando los pedidos de este ciclo de pedido estarán listos para la consumidora
         pickup_instructions_placeholder: "Instrucciones de recogida"
@@ -1092,10 +1121,13 @@ es:
       destroy_attachment_does_not_exist: "El logotipo no existe"
     enterprise_promo_image:
       destroy_attachment_does_not_exist: "La imagen promocional no existe"
+    orders:
+      failed_to_update: "Error al actualizar pedido"
   checkout:
     already_ordered:
       cart: "carrito"
       message_html: "Ya realizó un pedido para este ciclo de pedido. Compruebe el %{cart}para ver los artículos que pidió. También puede cancelar artículos mientras el ciclo de pedido siga abierto."
+    failed: "La finalización de compra falló, por favor comunicate con nosotros para procesar la orden."
   shops:
     hubs:
       show_closed_shops: "Mostrar tiendas cerradas"
@@ -1266,6 +1298,7 @@ es:
   saving_credit_card: Guardando tarjeta de crédito...
   card_has_been_removed: "Su tarjeta ha sido eliminada (número: %{number})"
   card_could_not_be_removed: Lo sentimos, la tarjeta no se pudo quitar
+  invalid_credit_card: "Tarjeta de crédito inválida"
   ie_warning_headline: "Su navegador está desactualizado :-("
   ie_warning_text: "Para la mejor esperiencia de Open Food Network, recomendamos actualizar su navegador:"
   ie_warning_chrome: Descargar Chrome
@@ -1467,6 +1500,7 @@ es:
   shopping_oc_closed_description: "Por favor espere hasta que el próximo ciclo abra (o contactanos de forma directa para ver si podemos aceptar algunos pedidos tardíos)"
   shopping_oc_last_closed: "El último ciclo cerró hace %{distance_of_time}"
   shopping_oc_next_open: "El próximo ciclo abrirá en %{distance_of_time}"
+  shopping_oc_select: "Seleccionar"
   shopping_tabs_home: "Inicio"
   shopping_tabs_shop: "Tienda"
   shopping_tabs_about: "Acerca de"
@@ -1840,6 +1874,7 @@ es:
         headline: "¡Terminado!"
         thanks: "Gracias por llenar los detalles de %{enterprise}."
         login: "Puede cambiar o actualizar su negocio en cualquier etapa iniciando sesión en Open Food Network y yendo a Admin."
+        action: "Ir al Panel de Organización"
   back: "Atrás"
   continue: "Continuar"
   action_or: "Ó"
@@ -1925,6 +1960,7 @@ es:
   tax_category: "Categoría del impuesto"
   calculator: "Calculadora"
   calculator_values: "Calculadora de valores"
+  calculator_settings_warning: "Si está cambiando el tipo de calculadora, debe de salvar primero antes de editar las configuraciones de la calculadora"
   flat_percent_per_item: "Porcentaje fijo (por artículo)"
   flat_rate_per_item: "Tarifa plana (por artículo)"
   flat_rate_per_order: "Tarifa plana (por pedido)"
@@ -2255,6 +2291,7 @@ es:
   enterprise_register_success_notice: "¡Felicidades! ¡Se ha completado el registro de %{enterprise}!"
   enterprise_bulk_update_success_notice: "Organizaciones actualizadas con éxito"
   enterprise_bulk_update_error: 'Error en la actualización'
+  enterprise_shop_show_error: "La tienda que busca no existe o esta inactiva en OFN. por favor visita otras tiendas."
   order_cycles_create_notice: 'Se ha creado el ciclo de pedido.'
   order_cycles_update_notice: 'Se ha actualizado su ciclo de pedido.'
   order_cycles_bulk_update_notice: 'Los ciclos de pedido han sido actualizados.'
@@ -2410,6 +2447,12 @@ es:
           severity: Gravedad
           description: Descripción
           resolve: Resolver
+        exchange_products:
+          load_more_variants: "Cargar mas variantes"
+          load_all_variants: "cargar todas las variantes"
+          select_all_variants: "Seleccionar todo"
+          variants_loaded: "%{num_of_variants_loaded} de %{total_number_of_variants} variantes cargadas"
+          loading_variants: "Cargando variantes"
       tag_rules:
         shipping_method_tagged_top: "Métodos de envío etiquetados"
         shipping_method_tagged_bottom: "son:"
@@ -2492,6 +2535,7 @@ es:
           customer_placeholder: "customer@example.org"
           valid_email_error: "Introduce un email válido"
       subscriptions:
+        error_saving: "Error al salvar suscripción "
         new:
           please_select_a_shop: "Por favor seleccione una tienda"
     insufficient_stock: "Stock insuficiente disponible, solo quedan %{on_hand}"
@@ -2567,6 +2611,79 @@ es:
       signup_or_login: "Empieza registrándose (o iniciando sesión)"
       have_an_account: "¿Ya tiene una cuenta?"
       action_login: "Inicie sesión ahora."
+  inflections:
+    each:
+      one: "each"
+      other: "cada"
+    bunch:
+      one: "manojo"
+      other: "manojos"
+    pack:
+      one: "paquete"
+      other: "paquetes"
+    box:
+      one: "caja"
+      other: "cajas"
+    bottle:
+      one: "botella"
+      other: "botellas"
+    jar:
+      one: "frasco"
+      other: "frascos"
+    head:
+      one: "cabeza"
+      other: "cabezas"
+    bag:
+      one: "bolsa"
+      other: "bolsas"
+    loaf:
+      one: "hogaza"
+      other: "hogazas"
+    single:
+      one: "single"
+      other: "individuales"
+    tub:
+      one: "tub"
+      other: "recipientes"
+    punnet:
+      one: "canastilla"
+      other: "canastillas"
+    packet:
+      one: "paquete"
+      other: "paquetes"
+    item:
+      one: "elemento"
+      other: "elementos"
+    dozen:
+      one: "docena"
+      other: "docenas"
+    unit:
+      one: "unidad"
+      other: "unidades"
+    serve:
+      one: "serve"
+      other: "porción"
+    tray:
+      one: "bandeja"
+      other: "bandejas"
+    piece:
+      one: "pieza"
+      other: "piezas"
+    pot:
+      one: "maceta"
+      other: "contenedores"
+    bundle:
+      one: "haz"
+      other: "paquetes"
+    flask:
+      one: "flask"
+      other: "frascos"
+    basket:
+      one: "canasta"
+      other: "canastas"
+    sack:
+      one: "sacos"
+      other: "sacos"
   producers:
     signup:
       start_free_profile: "Empieze con un perfil gratuito, y amplíelo cuando esté preparado!"
@@ -2792,6 +2909,12 @@ es:
     minimal_amount: "Cantidad mínima"
     normal_amount: "Cantidad normal"
     discount_amount: "Importe de descuento"
+    no_images_found: "No se encontraron imágenes "
+    new_image: "Nueva Imagen"
+    filename: "Nombre de archivo"
+    alt_text: "Texto Alternativo"
+    thumbnail: "Miniatura"
+    back_to_images_list: "Volver a lista de imágenes "
     email: Email
     account_updated: "Cuenta actualizada!"
     email_updated: "La cuenta se actualizará una vez que se confirme el nuevo correo electrónico."
@@ -2803,6 +2926,9 @@ es:
     zipcode: Código Postal
     weight: Peso (en kg)
     error_user_destroy_with_orders: "Los usuarios con pedidos completados no pueden ser eliminados"
+    cannot_create_payment_without_payment_methods: "No se puede crear un pago para una orden sin un medio de pago definido"
+    please_define_payment_methods: "por favor definir métodos de pago"
+    options: "Opciones"
     actions:
       update: "Actualizar"
     errors:
@@ -2834,27 +2960,53 @@ es:
       product_properties:
         index:
           inherits_properties_checkbox_hint: "¿Heredar propiedades desde %{supplier}? (a menos que sea anulado arriba)"
+          add_product_properties: "Agregar Propiedades del producto"
+          select_from_prototype: "seleccionar de prototipo"
       properties:
         index:
           properties: "Propiedades"
+          new_property: "Nueva propiedad"
           name: "Nombre"
+          presentation: "presentación"
+        new:
+          new_property: "Nueva propiedad"
+        edit:
+          editing_property: "Editar Propiedad"
+          back_to_properties_list: "volver a lista de propiedades"
         form:
           name: "Nombre"
+          presentation: "presentación"
       return_authorizations:
         index:
+          new_return_authorization: "Nueva autorización de devolución"
           return_authorizations: "Autorizaciones de devolución"
           back_to_orders_list: "Volver a la lista de pedidos"
+          rma_number: "número RMA"
           status: "Estado"
           amount: "Cantidad"
           cannot_create_returns: "No se pueden crear devoluciones ya que este pedido no tiene unidades enviadas."
           continue: "Continuar"
         new:
+          new_return_authorization: "Nueva autorización de devolución"
+          back_to_return_authorizations_list: "Back To Return Authorization List"
           continue: "Continuar"
         edit:
+          receive: "recibir"
           are_you_sure: "¿Está seguro?"
+          return_authorization: "volver a autorización"
         form:
           product: "Producto"
+          quantity_shipped: "cantidad enviada"
+          quantity_returned: "Cantidad devuelta"
+          return_quantity: "cantidad a devolver"
           amount: "Cantidad"
+          rma_value: "Valor RMA"
+          reason: "razón"
+          stock_location: "localización de inventario"
+        states:
+          authorized: "autorizado"
+          received: "recibido"
+          canceled: "cancelado"
       orders:
         index:
           listing_orders: "Pedidos de listado"
@@ -2862,6 +3014,7 @@ es:
           capture: "Captura"
           ship: "Envío"
           edit: "Editar"
+          order_not_updated: "El pedido no se pudo actualizar"
           note: "Nota"
           first: "primero"
           last: "Último"
@@ -2884,6 +3037,8 @@ es:
           tax_invoice: "FACTURA DE IMPUESTOS"
           code: "Código"
           from: "De"
+          to: "Facturar a"
+          shipping: "envío"
         form:
           distribution_fields:
             title: "Distribución"
@@ -3044,12 +3199,23 @@ es:
         index:
           sku: "SKU"
           price: "Precio"
+          options: "Opciones"
           no_results: "No hay resultados"
+          to_add_variants_you_must_first_define: "para agregar variantes, se debe primero definir"
           option_types: "Tipos de opciones"
+          option_values: "valores de opción"
+          and: "y"
+          new_variant: "Nueva Variante"
+          show_active: "mostrar activo"
+          show_deleted: "Mostrar eliminados"
+        new:
+          new_variant: "Nueva Variante"
         form:
+          cost_price: "Precio de costo"
           sku: "SKU"
           price: "Precio"
           display_as: "Mostrar como"
+          display_name: "Nombre para mostrar"
         autocomplete:
           producer_name: "Productora"
           unit: "Unidad"
@@ -3195,3 +3361,19 @@ es:
         allow_charges?: "¿Permitir cargos?"
     localized_number:
       invalid_format: tiene un formato invalido. Por favor introduzca un numero.
+    api:
+      invalid_api_key: "La llave de API especificada (%{key}) es inválida."
+      unauthorized: "No tiene autorización para realizar esta acción."
+      invalid_resource: "Recurso inválido. Por favor corrija los errores e intente nuevamente."
+      resource_not_found: "El recurso que buscaba no puede ser encontrado."
+      access: "acceso al API"
+      key: "Llave"
+      clear_key: "valor vacío"
+      regenerate_key: "Regenerar llave"
+      no_key: "sin valor"
+      generate_key: "Generar llave de API"
+      key_generated: "Llave generada"
+      key_cleared: "valor borrado"
+      shipment:
+        cannot_ready: "No se puede completar envío"
+      invalid_taxonomy_id: "El identificador de taxonomía es inválido."
