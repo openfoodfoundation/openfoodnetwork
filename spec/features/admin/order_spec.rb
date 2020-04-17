@@ -211,7 +211,8 @@ feature '
         visit spree.edit_admin_order_path(order)
       end
 
-      scenario "shows a list of line_items" do
+      scenario "verifying page contents" do
+        # shows a list of line_items
         within('table.index tbody', match: :first) do
           order.line_items.each do |item|
             expect(page).to have_selector "td", match: :first, text: item.full_name
@@ -220,41 +221,35 @@ feature '
             expect(page).to have_selector "td.item-total", text: item.display_amount
           end
         end
-      end
 
-      scenario "shows the order items total" do
+        # shows the order items total
         within('fieldset#order-total') do
           expect(page).to have_selector "span.order-total", text: order.display_item_total
         end
-      end
 
-      scenario "shows the order non-tax adjustments" do
+        # shows the order non-tax adjustments
         order.adjustments.eligible.each do |adjustment|
           expect(page).to have_selector "td", match: :first, text: adjustment.label
           expect(page).to have_selector "td.total", text: adjustment.display_amount
         end
-      end
 
-      scenario "shows the order total" do
+        # shows the order total
         expect(page).to have_selector "fieldset#order-total", text: order.display_total
-      end
 
-      scenario "shows the order tax adjustments" do
+        # shows the order tax adjustments
         within('fieldset', text: I18n.t('spree.admin.orders.form.line_item_adjustments').upcase) do
           expect(page).to have_selector "td", match: :first, text: "Tax 1"
           expect(page).to have_selector "td.total", text: Spree::Money.new(10)
         end
-      end
 
-      scenario "shows the dropdown menu" do
+        # shows the dropdown menu" do
         find("#links-dropdown .ofn-drop-down").click
         within "#links-dropdown" do
           expect(page).to have_link "Resend Confirmation",
                                     href: spree.resend_admin_order_path(order)
           expect(page).to have_link "Send Invoice", href: spree.invoice_admin_order_path(order)
           expect(page).to have_link "Print Invoice", href: spree.print_admin_order_path(order)
-          expect(page).to have_link "Cancel Order", href: spree.fire_admin_order_path(order,
-                                                                                      e: 'cancel')
+          expect(page).to have_link "Cancel Order", href: spree.fire_admin_order_path(order,                                                                                      e: 'cancel')
         end
       end
 
