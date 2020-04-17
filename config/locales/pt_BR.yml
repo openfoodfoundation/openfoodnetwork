@@ -16,7 +16,7 @@ pt_BR:
       spree/product:
         primary_taxon: "Categoria de Produto"
         supplier: "Fornecedor"
-        shipping_category_id: "Tipos de Envio"
+        shipping_category_id: "Tipos de Frete"
         variant_unit: "Unidade variante"
         variant_unit_name: "Nome da unidade variante"
       spree/credit_card:
@@ -210,7 +210,7 @@ pt_BR:
   remove: Remover
   or: ou
   collapse_all: Recolher todos
-  expand_all: Aumentar tudo
+  expand_all: Expandir tudo
   loading: Carregando...
   show_more: Mostrar mais
   show_all: Mostrar tudo
@@ -589,13 +589,13 @@ pt_BR:
         actions_delete: "Deletar selecionado"
         loading: "Carregando pedidos"
         no_results: "Nenhum pedido encontrado. "
-        group_buy_unit_size: "Tamanho da Unidade para Grupo de Compras"
+        group_buy_unit_size: "Unidade de Medida para Grupo de Compras"
         total_qtt_ordered: "Quantidade total do pedido"
         max_qtt_ordered: "Quantidade máxima do pedido"
         current_fulfilled_units: "Unidades completadas no momento"
         max_fulfilled_units: "Máximo de unidades completadas "
         order_error: "Alguns erros devem ser corrigidos antes de atualizar os pedidos.\nOs campos com bordas vermelhas contém erros."
-        variants_without_unit_value: "AVISO: Algumas variantes não possuem unidade de valor"
+        variants_without_unit_value: "AVISO: Algumas variantes não possuem unidade de medida"
       select_variant: "Selecione uma variante"
     enterprise:
       select_outgoing_oc_products_from: 'Selecione a saída do ciclo de pedidos  '
@@ -972,7 +972,7 @@ pt_BR:
       not_visible: "%{enterprise} não está visível e, portanto, não pode ser encontrado no mapa ou em pesquisas"
     reports:
       hidden: ESCONDIDO
-      unitsize: TAMANHO DA UNIDADE
+      unitsize: Unidade de Medida
       total: TOTAL
       total_items: TOTAL DE ITEMS
       supplier_totals: Total do fornecedor do ciclo de pedidos
@@ -1205,7 +1205,7 @@ pt_BR:
   menu_4_title: "Grupos"
   menu_4_url: "/groups"
   menu_5_title: "Sobre"
-  menu_5_url: "https://about.openfoodnetwork.org.au/"
+  menu_5_url: "https://about.openfoodbrasil.com.br/"
   menu_6_title: "Conectar"
   menu_6_url: "https://openfoodnetwork.org/au/connect/"
   menu_7_title: "Aprender"
@@ -1542,11 +1542,11 @@ pt_BR:
   products_cart_empty: "Carrinho vazio"
   products_edit_cart: "Edite seu carrinho"
   products_from: de
-  products_change: "Nenhuma modificação a ser salva."
+  products_change: "Nenhuma alteração a ser salva."
   products_update_error: "Falha ao salvar, com o seguinte erro:"
   products_update_error_msg: "Falha ao salvar."
   products_update_error_data: "Falha no salvamento devido a dados inválidos:"
-  products_changes_saved: "Modificações salvas."
+  products_changes_saved: "Alterações salvas."
   search_no_results_html: "Sinto muito, nenhum resultado encontrado para %{query}. Que tal tentar outra busca?"
   components_profiles_popover: "Perfis Simples não possuem uma loja virtual na Open Food Brasil, mas podem ter suas próprias lojas físicas ou online em outro endereço"
   components_profiles_show: "Mostrar perfis"
@@ -1899,7 +1899,7 @@ pt_BR:
   transaction_date: "DataData"
   payment_state: "Status do Pagamento"
   shipping_state: "Status da entrega"
-  value: "Valor"
+  value: "Quantidade"
   balance_due: "saldo devedor"
   credit: "Crédito"
   Paid: "Pago"
@@ -1946,7 +1946,7 @@ pt_BR:
   supplier: "Fornecedor"
   product_name: "Nome do Produto"
   product_description: "Descrição do Produto"
-  units: "O tamanho da unidade"
+  units: "Unidade de medida"
   coordinator: "Coordenador"
   distributor: "Distribuidor"
   enterprise_fees: "Taxas da iniciativa"
@@ -2154,14 +2154,14 @@ pt_BR:
   report_header_sells: Vende
   report_header_visible: Visível
   report_header_price: Preço
-  report_header_unit_size: Tamanho da Unidade
+  report_header_unit_size: Unidade de Medida
   report_header_distributor: Distribuidor
   report_header_distributor_address: Endereço do distribuidor
   report_header_distributor_city: Cidade do distribuidor
   report_header_distributor_postcode: CEP do distribuidor
   report_header_delivery_address: Endereço para entrega
   report_header_delivery_postcode: CEP para entrega
-  report_header_bulk_unit_size: Tamanho de unidade para atacado
+  report_header_bulk_unit_size: Unidade de Medida para atacado
   report_header_weight: Peso
   report_header_sum_total: Soma total
   report_header_date_of_order: Data do pedido
@@ -2307,7 +2307,7 @@ pt_BR:
     shipped: Enviado
   js:
     saving: 'Salvando...'
-    changes_saved: 'Mudanças salvas.'
+    changes_saved: 'Alterações salvas.'
     save_changes_first: Salve as alterações primeiro.
     all_changes_saved: Todas as alterações foram salvas
     unsaved_changes: Você possui alterações não salvas
@@ -2573,7 +2573,7 @@ pt_BR:
       visible: VISÍVEL
       not_visible: NÃO VISÍVEL
     services:
-      unsaved_changes_message: Existem mudanças não salvas, salvar agora ou ignorar?
+      unsaved_changes_message: Existem alterações não salvas. Salvar agora ou ignorar?
       save: SALVAR
       ignore: IGNORAR
       add_to_order_cycle: "adicionar ao ciclo de pedidos"
@@ -2876,7 +2876,7 @@ pt_BR:
     back_to_taxonomies_list: "Voltar à lista de taxonomias"
     shipping_methods: "Métodos de envio"
     shipping_categories: "Categorias de Remessa"
-    new_shipping_category: "Nova categoria de remessa"
+    new_shipping_category: "Nova categoria de frete"
     back_to_shipping_categories: "Voltar para categorias de remessa"
     analytics_trackers: "Rastreadores de análise"
     no_trackers_found: "Nenhum rastreador encontrado"
@@ -3119,8 +3119,8 @@ pt_BR:
           new_product: "Novo produto"
           supplier: "Fornecedor"
           product_name: "Nome do Produto"
-          units: "Tamanho da Unidade"
-          value: "Valor"
+          units: "Unidade de Medida"
+          value: "Quantidade"
           unit_name: "Nome da Unidade"
           price: "Preço"
           on_hand: "Disponível"

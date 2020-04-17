@@ -31,6 +31,10 @@ fr_BE:
               taken: "Un compte existe déjà pour cette adresse électronique. Connectez-vous ou demandez un nouveau mot de passe."
         spree/order:
           no_card: Aucune carte de paiement autorisée disponible
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: "a expiré"
         order_cycle:
           attributes:
             orders_close_at:
@@ -248,6 +252,8 @@ fr_BE:
   notes: Commentaires
   error: Erreur
   processing_payment: "Paiement en cours..."
+  no_pending_payments: "Aucun paiement en attente"
+  invalid_payment_state: "État de paiement invalide"
   filter_results: Filtrer les résultats
   quantity: Quantité
   pick_up: Retrait
@@ -867,6 +873,7 @@ fr_BE:
         distributor: "Distributeur·trice"
         products: "Produits"
         tags: "Tags"
+        delivery_details: "Détails de la livraison"
         fees: "Commission"
         previous: "Précédent"
         save: "Sauvergarder"
@@ -1129,11 +1136,11 @@ fr_BE:
   shared:
     menu:
       cart:
-        cart: "Cart"
+        cart: "Panier"
       signed_in:
         profile: "Profil"
       mobile_menu:
-        cart: "Carte"
+        cart: "Panier"
       joyride:
         checkout: "Passer la commande"
         already_ordered_products: "Déjà commandé dans ce cycle de vente"
@@ -1291,6 +1298,7 @@ fr_BE:
   saving_credit_card: Enregistrement de la carte de crédit...
   card_has_been_removed: "Votre carte a été supprimée (numéro : %{number})"
   card_could_not_be_removed: Désolée, la carte n'a pas pu être supprimée :-(
+  invalid_credit_card: "Carte de crédit non valable"
   ie_warning_headline: "Votre navigateur n'est pas à jour :-("
   ie_warning_text: "Pour une expérience optimale sur Open Food Network, nous vous recommandons fortement de mettre à jour votre navigateur:"
   ie_warning_chrome: Télécharger Chrome
@@ -1492,6 +1500,7 @@ fr_BE:
   shopping_oc_closed_description: "Veuillez attendre l'ouverture du prochain cycle de vente (ou contactez directement le comptoir pour voir si nous pouvons accepter une commande tardive)."
   shopping_oc_last_closed: "Le dernier cycle de vente s'est terminé il y a %{distance_of_time}"
   shopping_oc_next_open: "Le prochain cycle de vente ouvrira dans %{distance_of_time}"
+  shopping_oc_select: "Sélectionnez..."
   shopping_tabs_home: "Accueil"
   shopping_tabs_shop: "Comptoir"
   shopping_tabs_about: "A propos"
@@ -1865,6 +1874,7 @@ fr_BE:
         headline: "C'est terminé!"
         thanks: "Merci d'avoir complété le profil de %{enterprise}"
         login: "Vous pouvez modifier ou mettre à jour les détails de votre entreprise à tout moment en vous connectant sur Open Food Network, rubrique Admin."
+        action: "Aller au tableau de bord des entreprises"
   back: "Retour"
   continue: "Suivant"
   action_or: "OU"
@@ -2283,6 +2293,7 @@ fr_BE:
   enterprise_register_success_notice: "Bravo ! L'entreprise %{enterprise} est maintenant inscrite sur Open Food Network :-)"
   enterprise_bulk_update_success_notice: "Entreprises mises à jour avec succès"
   enterprise_bulk_update_error: 'Echec dans la mise à jour'
+  enterprise_shop_show_error: "Le comptoir que vous recherchez n'existe pas ou est inactif sur OFN. Veuillez vérifier les autres comptoirs."
   order_cycles_create_notice: 'Votre cycle de vente a été créé.'
   order_cycles_update_notice: 'Votre cycle de vente a été mis à jour.'
   order_cycles_bulk_update_notice: 'Des cycles de vente ont été mis à jour.'
@@ -2444,6 +2455,12 @@ fr_BE:
           severity: Rigueur
           description: Description
           resolve: Résoudre
+        exchange_products:
+          load_more_variants: "Charger plus de variantes"
+          load_all_variants: "Charger toutes les variantes"
+          select_all_variants: "Sélectionner toutes %{total_number_of_variants}les variantes"
+          variants_loaded: " %{num_of_variants_loaded}de %{total_number_of_variants}variantes chargées"
+          loading_variants: "Chargement des variantes"
       tag_rules:
         shipping_method_tagged_top: "Méthodes d'expédition étiquetées"
         shipping_method_tagged_bottom: "sont:"
@@ -2956,6 +2973,8 @@ fr_BE:
           tax_invoice: "FACTURE"
           code: "Code"
           from: "De"
+          to: "Facture à"
+          shipping: "Expédition"
         form:
           distribution_fields:
             title: "Distribution"

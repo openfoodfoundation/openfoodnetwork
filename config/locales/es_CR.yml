@@ -30,7 +30,7 @@ es_CR:
             email:
               taken: "Ya existe una cuenta con este correo electrónico. Inicie sesión o restablezca tu contraseña."
         spree/order:
-          no_card: No hay tarjetas de crédito autorizadas disponibles para realizar el cargo
+          no_card: No hay tarjetas de crédito autorizadas disponibles para realizar el cobro
         spree/credit_card:
           attributes:
             base:
@@ -83,21 +83,21 @@ es_CR:
       failed_to_send: "Se produjo un error al enviar su correo electrónico de confirmación."
       resend_confirmation_email: "Reenviar el correo electrónico de confirmación."
       confirmed: "¡Gracias por confirmar su correo electrónico! Ahora puede iniciar sesión."
-      not_confirmed: "Su dirección de correo electrónico no pudo ser confirmada. Tal vez ya has completado este paso?"
+      not_confirmed: "Su dirección de correo electrónico no pudo ser confirmada. -¿Tal vez ya realizó este paso?"
     user_confirmations:
       spree_user:
-        send_instructions: "Recibirás un correo electrónico con instrucciones sobre cómo confirmar su cuenta en unos minutos."
+        send_instructions: "Recibirá un correo electrónico con instrucciones sobre cómo confirmar su cuenta dentro de unos minutos."
         confirmation_sent: "Se ha enviado un correo electrónico de confirmación"
         confirmation_not_sent: "Error al enviar el correo electrónico de confirmación."
     user_registrations:
       spree_user:
-        signed_up_but_unconfirmed: "Se ha enviado un mensaje con un enlace de confirmación a tu dirección de correo electrónico. Abre el enlace para activar tu cuenta."
-        unknown_error: "Algo salió mal al crear tu cuenta. Comprueba tu dirección de correo electrónico y vuelve a intentarlo."
+        signed_up_but_unconfirmed: "Se ha enviado un mensaje con un enlace de confirmación a su dirección de correo electrónico. Abra el enlace para activar su cuenta."
+        unknown_error: "Algo salió mal al crear su cuenta. Compruebe su dirección de correo electrónico y vuelva a intentarlo."
     failure:
       invalid: |
           Correo o contraseña inválidos.
-          ¿Has sido invitada? Tal vez necesites crear una cuenta o recuperar tu contraseña.
-      unconfirmed: "Debes confirmar tu cuenta antes de continuar."
+          ¿Ha sido invitada? Tal vez necesite crear una cuenta nueva o recuperar su contraseña.
+      unconfirmed: "Debe confirmar su cuenta antes de continuar."
       already_registered: "Esta dirección de correo electrónico ya está registrada. Inicie sesión para continuar, o vuelva atrás y use otra dirección de correo electrónico."
     success:
       logged_in_succesfully: "Sesión iniciada con éxito"
@@ -221,7 +221,7 @@ es_CR:
   distributors: Distribuidores
   bulk_order_management: Gestión de pedidos en bloque
   enterprises: Organizaciones
-  enterprise_groups: Redes
+  enterprise_groups: Grupos
   reports: Reportes
   variant_overrides: Inventario
   import: Importar
@@ -554,7 +554,7 @@ es_CR:
         title: Inventario
         description: Utilice esta página para administrar inventarios para sus organizaciones. Todos los detalles del producto establecidos aquí anularán los establecidos en la página de 'Productos'
         enable_reset?: ¿Activar Reset del Stock?
-        default_stock: "Stock predeterminado"
+        default_stock: "Inventario predeterminado"
         inherit?: ¿Heredado?
         add: Añadir
         hide: Ocultar
@@ -663,9 +663,9 @@ es_CR:
         primary_details:
           name: Nombre
           name_placeholder: ej. Professor Plum's Biodynamic Truffles
-          groups: Redes
-          groups_tip: Seleccione las redes o zonas de los que es miembro. Esto ayudará a los consumidores a encontrar tu organización.
-          groups_placeholder: Escribe para buscar las redes disponibles...
+          groups: Grupos
+          groups_tip: Seleccione cualquier grupo o región de la que sea miembro. Esto ayudará a los clientes a encontrar su organización.
+          groups_placeholder: Comience a escribir para buscar los grupos disponibles ...
           primary_producer: Productora Principal?
           primary_producer_tip: Seleciona "Productora" si eres la principal productora.
           producer: Productora
@@ -739,7 +739,7 @@ es_CR:
           confirm_modal:
             title: Conectar con Stripe
             part1: Stripe es un servicio de pagos que permite a las tiendas aceptar pagos con tarjeta de crédito de las consumidoras.
-            part2: Para usar esta función, debes conectar tu cuenta Stripe con OFN. Al hacer clic en 'Acepto' a continuación, se redireccionará al sitio web de Stripe donde puedes conectar una cuenta de Stripe existente o crear una nueva si aún no la tienes.
+            part2: Para usar esta función, debes conectar su cuenta Stripe con OFN. Al hacer clic en 'Acepto' a continuación, se redireccionará al sitio web de Stripe donde puede conectar una cuenta de Stripe existente o crear una nueva si aún no la tiene.
             part3: Esto permitirá que Open Food Network acepte pagos con tarjeta de crédito de los clientes en su nombre. Tenga en cuenta que deberá mantener su propia cuenta de Stripe, pagar las tarifas de Stripe y gestionar los reembolsos y el servicio al cliente por usted mismo.
             i_agree: Estoy de acuerdo
             cancel: Cancelar
@@ -796,13 +796,13 @@ es_CR:
         sell_your_produce: Vende tu propia producción
         producer_shop_description_text: Venda sus productos directamente a los clientes a través de su propia tienda.
         producer_shop_description_text2: Una tienda de productora es para vender sus productos solamente, si quiere vender productos de otros productores, seleccione "Grupo de Productoras"
-        producer_hub: Centro de acopio
+        producer_hub: Hub de productoras
         producer_hub_text: Vende tu propia producción y la de otros
         producer_hub_description_text: Tu organización es la columna vertebral de un sistema de consumo local. Agrega productos tuyos o de otras organizaciones y véndelo a través de tu tienda en Open Food Network.
         profile: Solo perfil
         get_listing: Obtener un listado
         profile_description_text: La gente podrá encontrarte y ponerse en contacto contigo en Open Food Network. Su organización será visible en el mapa y se podrá buscar en los listados.
-        hub_shop: Tienda del centro de acopio
+        hub_shop: Tienda del Hub
         hub_shop_text: Vender la producción de otros
         hub_shop_description_text: Tu organización es la columna vertebral de un sistema de consumo local. Agrega productos de otras organizaciones y véndelo a través de tu tienda en Open Food Network.
         choose_option: Por favor, elija una de las opciones anteriores.
@@ -1205,7 +1205,7 @@ es_CR:
   menu_2_url: "/map"
   menu_3_title: "Productoras"
   menu_3_url: "/producers"
-  menu_4_title: "Redes"
+  menu_4_title: "Grupos"
   menu_4_url: "/groups"
   menu_5_title: "Acerca de"
   menu_5_url: "https://laferia.cr/"
@@ -1261,7 +1261,7 @@ es_CR:
   label_map: "Mapa"
   label_producer: "Productora"
   label_producers: "Productoras"
-  label_groups: "Redes"
+  label_groups: "Grupos"
   label_about: "Acerca de"
   label_connect: "Conectar"
   label_learn: "Aprender"
@@ -1322,7 +1322,7 @@ es_CR:
       cookie_stripe_desc: "Datos recopilados por nuestro procesador de pagos Stripe para detectar fraudes https://stripe.com/cookies-policy/legal. No todas las tiendas usan Stripe como método de pago pero es una buena práctica evitar fraude aplicarlo a todas las páginas. Stripe probablemente crea una imagen de cuáles de nuestras páginas generalmente interactúan con su API y luego marca cualquier cosa inusual. Por lo tanto configurar la cookie Stripe tiene una función más amplia que la simple provisión de un método de pago a un usuario. Eliminarla podría afectar la seguridad del servicio en sí. Puede obtener más información acerca de Stripe y leer su política de privacidad en https://stripe.com/privacy."
       statistics_cookies: "Cookies de estadísticas"
       statistics_cookies_desc: "Las siguientes no son estrictamente necesarias, pero ayudan a proporcionarle una mejor experiencia de usuario al permitirnos analizar el comportamiento del usuario, identificar qué funciones usa más o no, comprender los problemas de la experiencia del usuario, etc."
-      statistics_cookies_analytics_desc_html: "Para recopilar y analizar los datos de uso de la plataforma utilizamos Google Analytics, ya que era el servicio predeterminado conectado con Spree (el software de código abierto de comercio electrónico en el que creamos) pero nuestra visión es cambiar a <a href = 'https: / /matomo.org/ 'target =' _ blank '> Matomo </a> (ex Piwik, herramienta analítica de código abierto que cumple con GDPR y protege tu privacidad) tan pronto como podamos."
+      statistics_cookies_analytics_desc_html: "Para recopilar y analizar los datos de uso de la plataforma utilizamos Google Analytics, ya que era el servicio predeterminado conectado con Spree (el software de código abierto de comercio electrónico que utilizamos) pero nuestra visión es cambiar a <a href = 'https: / /matomo.org/ 'target =' _ blank '> Matomo </a> (ex Piwik, herramienta analítica de código abierto que cumple con GDPR y protege su privacidad) tan pronto como podamos."
       statistics_cookies_matomo_desc_html: "Para recopilar y analizar los datos de uso de la plataforma, utilizamos <a href='https://matomo.org/' target='_blank'> Matomo </a> (ex Piwik), una herramienta analítica de código abierto que cumple con GDPR y protege tu privacidad"
       statistics_cookies_matomo_optout: "¿Deseas excluirte de Matomo Analytics? No recopilamos ningún dato personal y Matomo nos ayuda a mejorar nuestro servicio, pero respetamos tu elección :-)"
       cookie_analytics_utma_desc: "Se usa para distinguir usuarios y sesiones. La cookie se crea cuando la biblioteca javascript se ejecuta y no existe ninguna cookie __utma existente. La cookie se actualiza cada vez que se envían datos a Google Analytics."
@@ -1483,7 +1483,7 @@ es_CR:
   email_signup_welcome: "Bienvenido a %{sitename}!"
   email_signup_confirmed_email: "Gracias por confirmar su email."
   email_signup_shop_html: "Ahora puedes iniciar sesión en %{link}."
-  email_signup_text: "Gracias por unirse a la red. Si es un comprador, ¡esperamos presentarle a muchos agricultores, grupos de consumo y comida deliciosa! Si eres una productora o formas parte de una organización de alimentos, estamos emocionados de que formes parte de la red."
+  email_signup_text: "Gracias por unirse a la red. Si es un comprador, ¡esperamos presentarle a muchos agricultores, grupos de consumo y comida deliciosa! Si es un productor o forma parte de una organización de alimentos, estamos emocionados de que forme parte de la red."
   email_signup_help_html: "Agradecemos todas tus preguntas y feedback; puedes usar el botón de <em>Enviar Feedback</em> en el sitio o escribir un email a %{email}"
   invite_email:
     greeting: "¡Hola!"
@@ -1555,11 +1555,11 @@ es_CR:
   components_profiles_show: "Mostrar perfiles"
   components_filters_nofilters: "Sin filtros"
   components_filters_clearfilters: "Limpiar todos los filtros"
-  groups_title: Redes
-  groups_headline: Redes / regiones
-  groups_text: "Cada productora es única. Cada organización tiene algo diferente que ofrecer. Nuestras redes son colectivos de productoras, grupos y distribuidoras que comparten valores agroecológicos. Esto hace que tu experiencia de compra sea más fácil. Puedes buscar las redes y estar seguro que se ha hecho una selección de proyectos con estos criterios."
+  groups_title: Grupos
+  groups_headline: Grupos / regiones
+  groups_text: "Cada productor es único. Cada organización tiene algo diferente que ofrecer. Nuestros grupos son colectivos de productores, centros de acopio y distribuidores que comparten valores agroecológicos. Esto hace que su experiencia de compra sea más fácil."
   groups_search: "Buscar nombre o palabra clave"
-  groups_no_groups: "No se encontraron redes"
+  groups_no_groups: "No se encontraron grupos"
   groups_about: "Acerca de nosotras"
   groups_producers: "Nuestras productoras"
   groups_hubs: "Nuestros Grupos de Consumo"
@@ -1570,7 +1570,7 @@ es_CR:
   groups_contact_website: Visite nuestro sitio web
   groups_contact_facebook: Síganos en Facebook
   groups_signup_title: Registrarse como un grupo
-  groups_signup_headline: Registro de redes
+  groups_signup_headline: Registro de grupos
   groups_signup_intro: "Somos una asombrosa plataforma de mercadeo colaborativo, la forma más sencilla para que sus miembros e interesados encuentren nuevos mercados. No tenemos fines de lucro, somos asequibles y simples."
   groups_signup_email: Envíenos un correo electrónico
   groups_signup_motivation1: Nosotros transformamos sistemas de comida de forma justa.
@@ -1592,9 +1592,9 @@ es_CR:
   modal_hubs_abstract: ¡Nuestros Grupos de Consumo son el punto de contacto entre usted y la gente que hace su comida!
   modal_hubs_content1: Puede buscar un grupo de consumo conveniente por ubicación o nombre. Algunos grupos de consumo tienen múltiples puntos en loa que puede recoger las compras, y algunos también brindan opciones de entrega a domicilio. Cada Grupo de Consumo es un punto de venta con operaciones de negocio y logística independientes, entonces puede esperar diferencias entre Grupos de Consumo.
   modal_hubs_content2: Sólo puedes comprar en un grupo de consumo a la vez.
-  modal_groups: "Redes / Regiones"
+  modal_groups: "Grupos / Regiones"
   modal_groups_content1: Estas son las organizaciones y relaciones entre grupos de consumo que conforman el Open Food Network.
-  modal_groups_content2: Algunas redes están organizadas por ubicación, otros por afinidades no geográficas.
+  modal_groups_content2: Algunos grupos están organizados por ubicación, otros por afinidades no geográficas.
   modal_how: "Cómo funciona"
   modal_how_shop: Comprar en Open Food Network
   modal_how_shop_explained: ¡Buscar un grupo de consumo cerca de ti para empezar a comprar! Puedes expandir cada grupo de consumo para ver qué tipos de productos están disponibles, y hacer clic para empezar a comprar. (Sólo puedes comprar en un grupo de consumo a la vez.)
@@ -1638,13 +1638,13 @@ es_CR:
   sell_motivation: "Muestra tus preciosos alimentos."
   sell_producers: "Productoras"
   sell_hubs: "Hubs"
-  sell_groups: "Redes"
+  sell_groups: "Grupos"
   sell_producers_detail: "Crea tu perfil en OFN en cuestión de minutos. En cualquier momento puedes actualizar tu perfil a una tienda en línea y vender tus productos directamente a los consumidores."
   sell_hubs_detail: "Crea un perfil para tu organización en OFN. En cualquier momento puedes actualizar tu perfil a una tienda de varias productoras."
   sell_groups_detail: "Crea un directorio personalizado de organizaciones (productoras u otras organizaciones) para tu región o para tu organización."
   sell_user_guide: "Descubre mucho más en la guía de usuario."
   sell_listing_price: "Listado en la OFN es gratis. Abrir y administrar una tienda en OFN es gratis hasta $ 500 en ventas mensuales. Si vende más, puede elegir la contribución de su comunidad entre el 1% y el 3% de las ventas. Para obtener más detalles sobre los precios, visite la sección Plataforma de software a través del enlace Acerca de en el menú superior."
-  sell_embed: "También podemos incrustar una tienda OFN en tu propia web personalizada o crear un sitio web de la red local a medida para tu región."
+  sell_embed: "También podemos incrustar una tienda OFN en tu propia web personalizada o crear un sitio web de la red local a medida para su región."
   sell_ask_services: "Pregúntanos sobre los servicios de OFN"
   shops_title: Tiendas
   shops_headline: Compras, transformadas.
@@ -1921,7 +1921,7 @@ es_CR:
   admin_enterprise_relationships_permits: "Permite"
   admin_enterprise_relationships_seach_placeholder: "Buscar"
   admin_enterprise_relationships_button_create: "Crear"
-  admin_enterprise_groups: "Redes de organizaciones"
+  admin_enterprise_groups: "Grupos de organizaciones"
   admin_enterprise_groups_name: "Nombre"
   admin_enterprise_groups_owner: "Propietaria"
   admin_enterprise_groups_on_front_page: "¿En la página principal?"
@@ -1976,7 +1976,7 @@ es_CR:
   delete: Borrar
   add_producer_property: "Añadir propiedad de productora"
   in_progress: "En Proceso"
-  started_at: "Empezo el"
+  started_at: "Empezó el"
   queued: "En Cola"
   scheduled_for: "Planificado para"
   customers: "Consumidores"
@@ -2540,7 +2540,7 @@ es_CR:
           please_select_a_shop: "Por favor seleccione una tienda"
     insufficient_stock: "Stock insuficiente disponible, solo quedan %{on_hand}"
     out_of_stock:
-      reduced_stock_available: Stock reducido disponible
+      reduced_stock_available: Inventario reducido disponible
       out_of_stock_text: >
           Mientras estabas comprando, los niveles de stock para uno o más de los productos
           de tu carrito se han reducido. Aquí está lo que ha cambiado:
@@ -2956,7 +2956,7 @@ es_CR:
         enterprises: "Organizaciones"
         enterprise_relationships: "Permisos"
         customers: "Consumidoras"
-        groups: "Redes"
+        groups: "Grupos"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "¿Heredar propiedades desde %{supplier}? (a menos que sea anulado arriba)"

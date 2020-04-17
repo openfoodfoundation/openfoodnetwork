@@ -1543,7 +1543,7 @@ fr:
   products_loading: "Produits en cours de chargement..."
   products_updating_cart: "Actualisation du panier..."
   products_cart_empty: "Panier vide"
-  products_edit_cart: "Valider votre panier"
+  products_edit_cart: "Poursuivre"
   products_from: de
   products_change: "Aucun changement à sauvegarder."
   products_update_error: "Échec de l'enregistrement dû à:"

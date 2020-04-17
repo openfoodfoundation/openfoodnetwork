@@ -3030,6 +3030,7 @@ it:
           tax_invoice: "FATTURA DELLE TASSE"
           code: "Codice"
           from: "Da"
+          shipping: "Spedizione"
         form:
           distribution_fields:
             title: "Distribuzione"

@@ -9,14 +9,14 @@ tr:
         shipment_state: ' Teslimat Durumu'
         completed_at: Oluşturulma Tarihi
         number: Numara
-        state: Şehir
+        state: Durum
         email: Müşteri E-postası
       spree/payment:
         amount: Tutar
       spree/product:
         primary_taxon: "Ürün Kategorisi"
         supplier: "Tedarikçi"
-        shipping_category_id: "Nakliye  Kategorisi"
+        shipping_category_id: "Teslimat Kategorisi"
         variant_unit: "Varyant Birimi"
         variant_unit_name: "Varyant Birim Adı"
       spree/credit_card:
@@ -31,20 +31,24 @@ tr:
               taken: "Bu e-posta adına kayıtlı bir hesap var. Lütfen giriş yapın veya şifrenizi sıfırlayın."
         spree/order:
           no_card: Ödeme alınabilecek kayıtlı bir kredi kartı bulunmamaktadır.
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: "süresi doldu"
         order_cycle:
           attributes:
             orders_close_at:
               after_orders_open_at: Açılış tarihinden sonra olmalı
         variant_override:
           count_on_hand:
-            using_producer_stock_settings_but_count_on_hand_set: "Boş bırakılmalı çünkü üreticinin stokları kullanılıyor"
+            using_producer_stock_settings_but_count_on_hand_set: "Boş bırakılmalı çünkü üretici stok ayarları kullanılıyor"
             on_demand_but_count_on_hand_set: "talep üzerine is boş bırakılmalıdır"
             limited_stock_but_no_count_on_hand: "Sınırlı stok durumundan dolayı belirtilmeli"
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
         start_at: "Başlangıç"
-        end_at: "Son"
+        end_at: "Bitiş"
         distributor_ids: "Pazarlar"
         producer_ids: "Üreticiler"
         order_cycle_ids: "Sipariş Dönemleri"
@@ -67,12 +71,12 @@ tr:
             schedule:
               not_coordinated_by_shop: "%{shop} tarafından koordine edilmiyor"
             payment_method:
-              not_available_to_shop: "%{shop} tarafından kullanılamıyor"
+              not_available_to_shop: "%{shop} için müsait değil"
               invalid_type: "Nakit veya online ödeme yöntemi olmalıdır"
-              charges_not_allowed: "^ Bu müşteri tarafından kredi kartı ile ödeme yöntemi kabul edilmemektedir."
+              charges_not_allowed: "^ Bu müşteri tarafından kredi kartı ücretlendirme kabul edilmemektedir."
               no_default_card: "^ Bu müşteri için kayıtlı kart bulunmuyor"
             shipping_method:
-              not_available_to_shop: "%{shop} tarafından kullanılamıyor"
+              not_available_to_shop: "%{shop} için kullanıma uygun değil"
   devise:
     confirmations:
       send_instructions: "Birkaç dakika içinde, hesabınızı nasıl doğrulayacağınız ile ilgili talimatları içeren bir e-posta alacaksınız."
@@ -118,7 +122,7 @@ tr:
     welcome:
       subject: "%{enterprise} şimdi %{sitename} 'de"
       email_welcome: "Hoşgeldiniz"
-      email_registered: "şimdi şunun bir parçası"
+      email_registered: "şimdi bir parçası"
       email_userguide_html: "Tezgah veya Pazar hesapları ayarları ile ilgili ayrıntılı desteğe sahip Kullanıcı Kılavuzu burada: %{link}"
       userguide: "Açık Gıda Ağı Kullanıcı Kılavuzu"
       email_admin_html: "%{link}'dan oturum açarak veya ana sayfanın sağ üst kısmındaki ayarlar simgesini tıkladıktan sonra Yönetim' butonu üzerinden hesabınızı yönetebilirsiniz."
@@ -137,8 +141,8 @@ tr:
       shipment_summary: "Teslimat Özeti"
       subject: "Teslimat Bildirimi"
       thanks: "İş birliğiniz için teşekkür ederim."
-      track_information: "Kargo Takip Bilgileri: %{tracking}"
-      track_link: "Kargo Takip Bağlantısı: %{url}"
+      track_information: "Takip Bilgileri: %{tracking}"
+      track_link: "Takip Bağlantısı: %{url}"
   subscription_mailer:
     placement_summary_email:
       subject: Yakın zamanda oluşturulan üye siparişlerinin bir özeti
@@ -149,7 +153,7 @@ tr:
       greeting: "Merhaba %{name},"
       intro: "Aşağıda, %{shop} için yeni tamamlanmış olan üye siparişlerinin bir özeti bulunmaktadır."
     summary_overview:
-      total: Otomatik işlem için toplam %{count} üye işaretlendi.
+      total: Otomatik işlem için toplam %{count} üyelik işaretlendi.
       success_zero: Bunlardan hiçbiri başarıyla işlenmedi.
       success_some: Bunlardan %{count} işlem başarıyla tamamlandı.
       success_all: Hepsi başarıyla işlendi.
@@ -176,10 +180,10 @@ tr:
         explainer: Bu siparişlerin otomatik olarak işlenmesi bilinmeyen bir nedenden dolayı başarısız oldu. Bu gerçekleşmemesi gereken bir durum, bu hatayı alıyorsanız lütfen bizimle iletişime geçin.
   home: "AGA"
   title: Açık Gıda Ağı
-  welcome_to: '''na Hoşgeldiniz'
-  site_meta_description: "Açık Gıda Ağı, farklı ülkelerdeki temiz gıda üreticileri ve yazılımcılar tarafından yeni bir gıda sistemi oluşturmak üzere tasarlandı. Üretici ve türeticilerin bir araya gelerek aracısız bir gıda düzeni ile her açıdan daha sağlıklı bir toplum yaratmaları için çözümler sunar. Toplum yararına çalışır ve tamamen şeffaftır."
+  welcome_to: 'Hoşgeldiniz'
+  site_meta_description: "Açık Gıda Ağı, adil ve temiz bir gıda sistemi oluşturmak için tasarlanan bir sosyal girişim projesidir. Üretici ve türeticilerin bir araya gelerek aracısız bir gıda düzeni ile her açıdan daha sağlıklı bir toplum yaratmaları için çözümler sunar. Toplum yararına çalışır, iletişim, dürüstlük ve dayanışmayı destekler."
   search_by_name: İsim veya konuma göre arama yapın...
-  producers_join: Yerel ve temiz üreticiler şimdi Açık Gıda Ağı'na katılabilirler.
+  producers_join: Temiz gıda üreticileri! Açık Gıda Ağı sizler için kullanıma açıldı.
   charges_sales_tax: KDV Uyguluyor mu?
   print_invoice: "Faturayı yazdır"
   print_ticket: "Etiketi Yazdır"
@@ -188,7 +192,7 @@ tr:
   resend_confirmation: "Onayı Tekrar Gönderin"
   view_order: "Siparişi Görüntüle"
   edit_order: "Siparişi Düzenle"
-  ship_order: "Siparişi Teslim Et"
+  ship_order: "Siparişi Gönder"
   cancel_order: "Siparişi İptal Et"
   confirm_send_invoice: "Bu siparişin faturası müşteriye gönderilecek. Devam etmek istiyor musunuz?"
   confirm_resend_order_confirmation: "Sipariş onayı e-postasını tekrar göndermek istediğinizden emin misiniz?"
@@ -220,7 +224,7 @@ tr:
   enterprise_groups: Gruplar
   reports: Raporlar
   variant_overrides: Stok
-  import: İçe Aktar
+  import: Aktar
   spree_products: Spree Ürünleri
   all: Hepsi
   current: Güncel
@@ -237,20 +241,22 @@ tr:
   items: Kalemler
   summary: Özet
   detailed: Detaylı
-  updated: Güncellenmiş
+  updated: Güncel
   'yes': "Evet"
   'no': "Hayır"
-  y: 'Y'
-  n: 'N'
-  powered_by: Tarafından desteklenmektedir
+  y: 'E'
+  n: 'H'
+  powered_by: Destekleyici
   blocked_cookies_alert: "Tarayıcınız bu ekranı kullanmak için gereken çerezleri engelliyor olabilir. Çerezlere izin vermek ve sayfayı yeniden yüklemek için aşağıya tıklayın."
   allow_cookies: "Çerezlere izin ver"
   notes: Notlar
   error: Hata
   processing_payment: "Ödeme İşlemi Gerçekleştiriliyor.."
+  no_pending_payments: "Bekleyen ödeme yok"
+  invalid_payment_state: "Geçersiz ödeme durumu"
   filter_results: Sonuçları Filtrele
   quantity: Miktar
-  pick_up: Teslimat Noktası
+  pick_up: Teslim Alma
   copy: Kopyala
   change_my_password: "Şifremi Değiştir"
   update_password: "Şifreyi Güncelle"
@@ -258,8 +264,8 @@ tr:
   reset_password_token: Şifre kodunu sıfırla
   expired: Süresi doldu, lütfen yeni bir tane isteyin
   back_to_payments_list: "Ödeme Listesine Geri Dön"
-  maestro_or_solo_cards: "Maestro / Solo kartları"
-  backordered: "Bekleyen Sipariş"
+  maestro_or_solo_cards: "Ödeme kartları"
+  backordered: "Bakiye Sipariş"
   on hand: "Mevcut"
   ship: "Teslimat"
   actions:
@@ -272,13 +278,13 @@ tr:
     delete: "Sil"
   admin:
     begins_at: Başlangıç
-    begins_on: Başlangıç
+    begins_on: Başlangıç vakti
     customer: Müşteri
     date: Tarih
     email: E-posta
     ends_at: Bitiş
-    ends_on: 'Bitiş '
-    name: Ad
+    ends_on: Bitiş vakti
+    name: İsim
     on_hand: Mevcut
     on_demand: Talep Üzerine
     on_demand?: Talep Üzerine?
@@ -296,7 +302,7 @@ tr:
     shipping_method: Teslimat Yöntemi
     shop: Tezgah
     sku: Stok Kodu
-    status_state: Şehir
+    status_state: Durum
     tags: Etiketler
     variant: Varyant
     weight: Ağırlık
@@ -342,11 +348,11 @@ tr:
         enable_receipt_printing?: "Sipariş listesinde termal yazıcılar kullanarak makbuz yazdırma seçeneklerini göster?"
     stripe_connect_settings:
       edit:
-        title: "Şerit Bağlantısı"
+        title: "Ödeme Bağlantısı"
         settings: "Ayarlar"
-        stripe_connect_enabled: Satıcıların Stripe Connect kullanarak ödeme kabul etmesine izin verilsin mi?
-        no_api_key_msg: Bu işletme için Stripe hesabı yok.
-        configuration_explanation_html: Stripe Connect entegrasyonunu yapılandırma hakkında ayrıntılı talimatlar için lütfen <a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'>bu kılavuza bakın</a> .
+        stripe_connect_enabled: Satıcıların online ödeme kullanarak ödeme kabul etmesine izin verilsin mi?
+        no_api_key_msg: Bu işletme için online ödeme hesabı yok.
+        configuration_explanation_html: Online ödeme entegrasyonunu yapılandırma hakkında ayrıntılı talimatlar için lütfen <a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'>bu kılavuza bakın</a> .
         status: Durum
         ok: Tamam
         instance_secret_key: Örnek Gizli Anahtarı
@@ -355,7 +361,7 @@ tr:
         charges_enabled: Ücretlendirmeler Etkin
         charges_enabled_warning: "Uyarı: Hesabınız için ücretlendirmeler etkin değil"
         auth_fail_error: Girdiğiniz API anahtarı geçersiz
-        empty_api_key_error_html: Stripe API anahtarı sağlanmadı. API anahtarınızı ayarlamak için lütfen <a href="https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance" target="_blank">bu talimatları</a> izleyin
+        empty_api_key_error_html: Ödeme API anahtarı sağlanmadı. API anahtarınızı ayarlamak için lütfen <a href="https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance" target="_blank">bu talimatları</a> izleyin
     matomo_settings:
       edit:
         title: "Matomo Ayarları"
@@ -390,12 +396,12 @@ tr:
         header: Başlık
         home_page: Ana Sayfa
         producer_signup_page: Üretici kayıt sayfası
-        hub_signup_page: Pazar Yeri kayıt sayfası
+        hub_signup_page: Pazar kayıt sayfası
         group_signup_page: Grup kayıt sayfası
         main_links: Ana Menü Bağlantıları
         footer_and_external_links: Altbilgi ve Dış Bağlantılar
         your_content: İçeriğiniz
-        user_guide: Kullanici Rehberi
+        user_guide: Kullanici Kılavuzu
     enterprise_fees:
       index:
         title: "İşletme Ücretleri"
@@ -470,8 +476,8 @@ tr:
       index:
         notice: "Dikkat"
         beta_notice: "Bu özellik hala beta sürümündedir: kullanırken bazı hatalarla karşılaşabilirsiniz. Lütfen teknik destek için iletişime geçmekten çekinmeyin."
-        select_file: Yüklemek için bir çizelge seçin
-        spreadsheet: Çizelge
+        select_file: Yüklemek için bir dosya seçin
+        spreadsheet: Dosya
         choose_import_type: İçe aktarım türünü seçin
         import_into: İçe aktarım türü
         product_list: Ürün listesi
@@ -484,7 +490,7 @@ tr:
         category_values: Mevcut Kategori Değerleri
         product_categories: Ürün Kategorileri
         tax_categories: Vergi Kategorileri
-        shipping_categories: Nakliye Kategorileri
+        shipping_categories: Teslimat Kategorileri
       import:
         review: İncele
         import: İçe Aktar
@@ -509,7 +515,7 @@ tr:
         overwrite_empty: Boşsa üzerine yaz
         default_stock: Stok seviyesini ayarla
         default_tax_cat: Vergi kategorisini ayarla
-        default_shipping_cat: Nakliye kategorisi belirle
+        default_shipping_cat: Teslimat kategorisi belirle
         default_available_date: Tarih belirle
         validation_overview: İçe aktarım doğrulaması gözden geçirme
         entries_found: İçe aktarılan dosyada bulunan girişler
@@ -592,7 +598,7 @@ tr:
         variants_without_unit_value: "UYARI: Bazı varyantların birim değeri yok"
       select_variant: "Bir varyant seçin"
     enterprise:
-      select_outgoing_oc_products_from: sipariş döneminde dıları gidecek ürünleri şurdan seçin
+      select_outgoing_oc_products_from: Sipariş dönemi giden ürünleri şurdan seçin
     enterprises:
       index:
         title: İşletmeler
@@ -635,7 +641,7 @@ tr:
           promo_image_placeholder: 'Bu görsel ''Hakkımızda'' kısmında görüntülenir'
           promo_image_note1: 'DİKKAT:'
           promo_image_note2: Kapak resmi 1200 x 260 formatına göre kırpılacaktır.
-          promo_image_note3: Kapak resmi, bir işletmenin profil sayfasının üstünde görüntülenir.
+          promo_image_note3: Kapak resmi, işletmenin profil sayfasının üstünde görüntülenir.
         inventory_settings:
           text1: Stok seviyelerini ve fiyatları şuradan yönetebilirsiniz
           inventory: Stok
@@ -644,8 +650,8 @@ tr:
               ürünün satış listenize eklenmeden önce Stok listenize eklenip eklenmemesi
               gerektiğini seçebilirsiniz.  Eğer ürünlerinizi yönetmek için Stok sistemini
               kullanmıyorsanız 'tavsiye edilen' seçeneği ile devam etmeniz gerekir.
-          preferred_product_selection_from_inventory_only_yes: Tezgahınıza yeni ürünler eklenebilir (önerilir)
-          preferred_product_selection_from_inventory_only_no: Yeni ürünler tezgahınıza eklemeden önce Stok listesine girilmelidir
+          preferred_product_selection_from_inventory_only_yes: Vitrininize yeni ürünler eklenebilir (önerilir)
+          preferred_product_selection_from_inventory_only_no: Yeni ürünler vitrininize eklemeden önce Stok listesine girilmelidir
         payment_methods:
           name: Ad
           applies: Uygulanma?
@@ -670,13 +676,13 @@ tr:
           visible_in_search: Haritada görünsün mü?
           visible_in_search_tip: Sitede arama yapılırken bu işletmenin müşteriler tarafından görünür olup olmayacağını belirler.
           visible: Görünür
-          not_visible: Görünmez
+          not_visible: Gizli
           permalink: Bağlantı Adı (boşluk yok)
           permalink_tip: "Bağlantı adı, mağazanızın bağlantı URL'sini oluşturmak için kullanılır: %{link}sectiginiz-ad/tezgah"
           link_to_front: Tezgah linkiniz
           link_to_front_tip: Açık Gıda Ağı’ndaki tezgahınıza doğrudan bağlantı linki
           ofn_uid: AGA KN
-          ofn_uid_tip: Açık Gıda Topluluğu'na kayıtlı işletmenize özel tanımlanan kimlik numarası
+          ofn_uid_tip: Açık Gıda Ağı'na kayıtlı işletmenize özel tanımlanan kimlik numarası
         shipping_methods:
           name: Ad
           applies: Uygulanma?
@@ -702,16 +708,16 @@ tr:
           enable_subscriptions_tip: "Üyelik işlevselliği etkinleştirilsin mi?"
           enable_subscriptions_false: "Kapalı"
           enable_subscriptions_true: "Etkin"
-          shopfront_message: "Tezgah Mesajınız"
+          shopfront_message: "Vitrin Mesajınız"
           shopfront_message_placeholder: >
               Müşterilerinize merhaba diyebilir, tezgahınız ve alışveriş şartlarınız
-              ile ilgili bilgi verebilirsiniz. Yazdıklarınız, müşteriler tezgahınızı
+              ile ilgili bilgi verebilirsiniz. Yazdıklarınız, müşteriler vitrininizi
               ziyaret ettiğinde görünür olacak.
           shopfront_message_link_tooltip: "Bağlantı ekle / düzenle"
           shopfront_message_link_prompt: "Lütfen eklemek için bir URL girin"
-          shopfront_closed_message: "Kapalı Tezgah Mesajı"
+          shopfront_closed_message: "Kapalı Vitrin Mesajı"
           shopfront_closed_message_placeholder: >
-              Tezgahınızın neden satışa kapalı olduğunu ve ne zaman açılacağını müşterilerinize
+              Vitrininizin neden satışa kapalı olduğunu ve ne zaman açılacağını müşterilerinize
               açıklayan bir mesaj yazın. Bu mesaj, açık sipariş döneminiz olmadığında
               sizi ziyaret edenler tarafından görülecek.
           shopfront_category_ordering: "Vitrin Kategori Sıralaması"
@@ -723,15 +729,15 @@ tr:
           facebook_placeholder: "Örn: www.facebook.com/TurkiyeKoop"
           linkedin_placeholder: "Örn: www.linkedin.com/in/adınızsoyadınız"
         stripe_connect:
-          connect_with_stripe: "Stripe ile bağlan"
-          stripe_connect_intro: "Kredi kartı ile ödeme kabul etmek için, şerit hesabınızı Açık Gıda Ağına bağlamanız gerekir. Başlamak için sağdaki düğmeyi kullanın."
-          stripe_account_connected: "Stripe hesabı bağlı."
+          connect_with_stripe: "Iyzico sistemi ile bağlan"
+          stripe_connect_intro: "Kredi kartı ile ödeme kabul etmek için, Iyzico hesabınızı Açık Gıda Ağına bağlamanız gerekir. Başlamak için sağdaki düğmeyi kullanın."
+          stripe_account_connected: "Iyzico hesabı bağlı."
           disconnect: "Çıkış yap"
           confirm_modal:
-            title: Stripe ile bağlan
-            part1: Stripe, AGA'ya kayıtlı satıcıların, müşterilerinden kredi kartı ödemelerini kabul etmelerine imkan veren bir hizmet sağlayıcıdır.
-            part2: Bu özelliği kullanmak için Stripe hesabınızı AGA'ya bağlamanız gerekir. Aşağıdaki 'Kabul Ediyorum' butonunu tıkladığınızda, mevcut bir Stripe hesabını bağlayabileceğiniz Stripe web sitesine yönlendirilir veya hesabınız yoksa yeni bir tane oluşturabilirsiniz.
-            part3: AGA'nın müşterilerden sizin adınıza kredi kartı ödemelerini kabul etmesini sağlayacaktır. Kendi Stripe hesabınızı korumanız, Stripe ücretlerini ödemeniz ve ters ibrazları ve müşteri hizmetlerini kendiniz ele almanız gerektiğini lütfen unutmayın.
+            title: Iyzico ile bağlan
+            part1: Iyzico, AGA'ya kayıtlı satıcıların, müşterilerinden kredi kartı ödemelerini kabul etmelerine imkan veren bir hizmet sağlayıcıdır.
+            part2: Bu özelliği kullanmak için Iyzico hesabınızı AGA'ya bağlamanız gerekir. Aşağıdaki 'Kabul Ediyorum' butonunu tıkladığınızda, mevcut bir Iyzico hesabını bağlayabileceğiniz Iyzico web sitesine yönlendirilir veya hesabınız yoksa yeni bir tane oluşturabilirsiniz.
+            part3: AGA'nın müşterilerden sizin adınıza kredi kartı ödemelerini kabul etmesini sağlayacaktır. Kendi Iyzico hesabınızı korumanız, Iyzico ücretlerini ödemeniz ve ters ibrazları ve müşteri hizmetlerini kendiniz ele almanız gerektiğini lütfen unutmayın.
             i_agree: Onaylıyorum
             cancel: İptal Et
         tag_rules:
@@ -782,7 +788,7 @@ tr:
         producer_profile: Üretici Profili
         connect_ofn: AGA üzerinden bağlan
         always_free: HER ZAMAN ÜCRETSİZ
-        producer_description_text: Ürünlerinizi Açık Gıda Ağı'na yükleyin. Böylece ürünleriniz ortak hesaplar üzerinden satışa sunulabilir.
+        producer_description_text: Ürünlerinizi Açık Gıda Ağı'na yükleyin. Böylece ürünleriniz pazar hesapları üzerinden satışa sunulabilir.
         producer_shop: Üretici Tezgahı
         sell_your_produce: Kendi ürününü sat
         producer_shop_description_text: Açık Gıda Ağı üzerinden açtığınız bireysel tezgahınız ile ürünlerinizi doğrudan müşterilere ulaştırabilirsiniz.
@@ -864,6 +870,7 @@ tr:
         distributor: "Dağıtımcı"
         products: "Ürünler"
         tags: "Etiketler"
+        delivery_details: "Teslimat Detayları"
         fees: "Ücretler"
         previous: "Önceki"
         save: "Kaydet"
@@ -916,8 +923,8 @@ tr:
         schedules: Takvimler
         new_schedule: Yeni Takvim
       name_and_timing_form:
-        name: ad
-        orders_open: 'Siparişler şu zamanda açık:'
+        name: Ad
+        orders_open: 'Sipariş açılma vakti:'
         coordinator: Koordinatör
         orders_close: Siparişler kapalı
       row:
@@ -950,7 +957,7 @@ tr:
         could_not_resume_the_order: Sipariş sürdürülemedi
     shared:
       user_guide_link:
-        user_guide: Kullanici rehberi
+        user_guide: Kullanıcı Kılavuzu
       enterprises_hubs_tabs:
         has_no_payment_methods: "%{enterprise} için bir ödeme yöntemi yok"
         has_no_shipping_methods: "%{enterprise} için bir teslimat yöntemi yok"
@@ -1030,7 +1037,7 @@ tr:
         enable_subscriptions_step_1_html: 1. %{enterprises_link} sayfasına gidin, tezgahınızı bulun ve ‘Yönet’i tıklayın
         enable_subscriptions_step_2: '''Tezgah Tercihleri'' altındaki Üyelikler seçeneğini etkinleştirin'
         set_up_shipping_and_payment_methods_html: '%{shipping_link} ve %{payment_link} yöntemlerini ayarlayın'
-        set_up_shipping_and_payment_methods_note_html: Yalnızca Nakit ve Şerit ödeme yöntemlerinin <br />'ü üyeliklerle kullanılabilir
+        set_up_shipping_and_payment_methods_note_html: Yalnızca Nakit ve Online ödeme yöntemlerinin <br />'ü üyeliklerle kullanılabilir
         ensure_at_least_one_customer_html: En az bir %{customer_link} bulunduğundan emin olun
         create_at_least_one_schedule: En az bir Takvim oluşturun
         create_at_least_one_schedule_step_1_html: 1. %{order_cycles_link} sayfasına gidin
@@ -1055,7 +1062,7 @@ tr:
       details:
         details: Bilgi
         invalid_error: Hata! Lütfen zorunlu alanların tümünü doldurun ...
-        allowed_payment_method_types_tip: Şu anda yalnızca Nakit ve Stripe ödeme yöntemleri kullanılabilir
+        allowed_payment_method_types_tip: Şu anda yalnızca belirli ödeme yöntemleri kullanılabilir
         credit_card: Kredi kartı
         charges_not_allowed: Bu müşteri ücret yansıtılmasına izin vermiyor
         no_default_card: Müşterinin tahsilat yapılabilecek bir kartı yok
@@ -1101,11 +1108,11 @@ tr:
         associated_subscriptions_error: Bağlantılı üyelikler olduğu için bu takvim silinemiyor
     controllers:
       enterprises:
-        stripe_connect_cancelled: "Stripe bağlantısı iptal edildi"
-        stripe_connect_success: "Stripe hesabı başarıyla bağlandı"
-        stripe_connect_fail: Maalesef, Stripe hesabınızın bağlantısı başarısız oldu
+        stripe_connect_cancelled: "Iyzico bağlantısı iptal edildi"
+        stripe_connect_success: "Iyzico hesabı başarıyla bağlandı"
+        stripe_connect_fail: Maalesef, Iyzico hesabınızın bağlantısı başarısız oldu
       stripe_connect_settings:
-        resource: Stripe Connect yapılandırması
+        resource: Iyzico yapılandırması
   api:
     enterprise_logo:
       destroy_attachment_does_not_exist: "Logo mevcut değil"
@@ -1120,8 +1127,8 @@ tr:
     failed: "Ödeme başarısız oldu. Siparişinizi işleme koyabilmemiz için lütfen bizimle iletişime geçin."
   shops:
     hubs:
-      show_closed_shops: "Kapalı pazarları göster"
-      hide_closed_shops: "Kapalı pazarları gizle"
+      show_closed_shops: "Kapalı dükkanları göster"
+      hide_closed_shops: "Kapalı dükkanları gizle"
       show_on_map: "Tümünü haritada göster"
   shared:
     menu:
@@ -1185,24 +1192,24 @@ tr:
   invoice_issued_on: "Fatura Düznleme Tarihi"
   order_number: "Fatura numarası:"
   date_of_transaction: "İşlem tarihi:"
-  ticket_column_qty: "miktar"
-  ticket_column_item: "ürün"
+  ticket_column_qty: "Miktar"
+  ticket_column_item: "Ürün"
   ticket_column_unit_price: "Birim fiyat"
   ticket_column_total_price: "Toplam tutar"
   menu_1_title: "Pazarlar"
-  menu_1_url: "/pazarlar"
+  menu_1_url: "/shops"
   menu_2_title: "harita"
-  menu_2_url: "/harita"
+  menu_2_url: "/map"
   menu_3_title: "üreticiler"
-  menu_3_url: "/ üreticiler"
+  menu_3_url: "/producers"
   menu_4_title: "Gruplar"
   menu_4_url: "/ gruplar"
   menu_5_title: "hakkında"
-  menu_5_url: "https://about.openfoodnetwork.org.au/"
+  menu_5_url: "https://acikgida.com"
   menu_6_title: "Bağlan"
-  menu_6_url: "https://openfoodnetwork.org/au/connect/"
+  menu_6_url: "https://acikgida.com"
   menu_7_title: "öğren"
-  menu_7_url: "https://openfoodnetwork.org/au/learn/"
+  menu_7_url: "https://acikgida.com"
   logo: "Logo (640x130)"
   logo_mobile: "Cep telefonu logosu (75x26)"
   logo_mobile_svg: "Cep Telefonu logo (SVG)"
@@ -1277,7 +1284,7 @@ tr:
   card_securitycode: "Güvenlik Kodu"
   card_expiry_date: Son kullanma tarihi
   card_masked_digit: "X"
-  card_expiry_abbreviation: "Tecrübe"
+  card_expiry_abbreviation: "Son kullanma tarihi"
   new_credit_card: "Yeni kredi kartı"
   my_credit_cards: Kredi kartlarım
   add_new_credit_card: Yeni kredi kartı ekle
@@ -1490,6 +1497,7 @@ tr:
   shopping_oc_closed_description: "Lütfen bir sonraki dönem açılana kadar bekleyin (veya geç siparişleri kabul edip edemeyeceğimizi görmek için doğrudan bizimle iletişime geçin)"
   shopping_oc_last_closed: "Son dönem %{distance_of_time} önce kapandı"
   shopping_oc_next_open: "Bir sonraki dönem %{distance_of_time}'da açılıyor"
+  shopping_oc_select: "Seçin..."
   shopping_tabs_home: "Ana sayfa"
   shopping_tabs_shop: "Alışveriş yap"
   shopping_tabs_about: "hakkında"
@@ -1539,7 +1547,7 @@ tr:
   products_update_error_msg: "Kaydetme başarısız oldu."
   products_update_error_data: "Geçersiz veriler nedeniyle kaydetme başarısız oldu:"
   products_changes_saved: "Değişiklikler kaydedildi."
-  search_no_results_html: "Üzgünüz, %{query} için sonuç bulunamadı. Başka bir arama yapmak ister misiniz?"
+  search_no_results_html: "Üzgünüz, %{query} sonuç bulunamadı. Başka bir arama yapmak ister misiniz?"
   components_profiles_popover: "Açık Gıda Ağında bir vitrini olmayan ancak başka bir sitede kendi satış siteleri olan hesaplar"
   components_profiles_show: "Profilleri göster"
   components_filters_nofilters: "Filtresiz"
@@ -1635,9 +1643,9 @@ tr:
   sell_listing_price: "AGA üzerinde görünür olmak ücretsizdir. OFN&#39;de bir mağaza açmak ve işletmek aylık 500 dolara kadar ücretsizdir. Daha fazla satıyorsanız, satışların% 1&#39;i ile% 3&#39;ü arasında topluluk katkınızı seçebilirsiniz. Fiyatlandırma hakkında daha fazla bilgi için, üst menüdeki Hakkında bağlantısını kullanarak Yazılım Platformu bölümünü ziyaret edin."
   sell_embed: "Açık Gıda Ağı üzerinden oluşturduğunuz tezgahınızı kendi web siteniz üzerinden de kullanmanıza yardımcı olabiliriz. Müşterileriniz mevcut internet siteniz üzerinden de aynı şekilde sipariş verebilirler. "
   sell_ask_services: "Bize AGA hizmetleri hakkında soru sorun."
-  shops_title: Mağazalar
+  shops_title: Dükkanlar
   shops_headline: Alışveriş biçim değiştiriyor
-  shops_text: Gıdalar döngüler halinde büyür, çiftçiler döngüler halinde hasat eder ve döngüler halinde yiyecek sipariş ederiz. Sipariş döngüsünün kapalı olduğunu fark ederseniz, kısa süre sonra tekrar kontrol edin.
+  shops_text: Gıda dönemsel yetişir, dönemsel hasat edilir ve dönemsel sipariş edilir. Aradığınız sipariş dönemi kapalı ise kısa süre sonra tekrar kontrol edin.
   shops_signup_title: Pazar olarak kaydolun
   shops_signup_headline: Gıda pazarları, sınır yok.
   shops_signup_motivation: Her türlü gıda işletmesi/topluluğu modelini destekliyoruz. Bağımsız ve şeffaf bir sosyal girişimiz. İşlerinizi kolaylaştırmaya çalışan yol arkadaşlarıyız.
@@ -1863,6 +1871,7 @@ tr:
         headline: "Tamamlandı!"
         thanks: "%{enterprise} ile ilgili ayrıntıları doldurduğunuz için teşekkür ederiz."
         login: "Dilediğiniz zaman Açık Gıda Ağı üzerinden giriş yapıp Yönetici paneline giderek işletmenizin ayarlarını güncelleyebilirsiniz."
+        action: "İşletme Paneline Git"
   back: "Geri"
   continue: "Devam et"
   action_or: "VEYA"
@@ -2279,6 +2288,7 @@ tr:
   enterprise_register_success_notice: "Tebrikler! %{enterprise}için kayıt tamamlandı!"
   enterprise_bulk_update_success_notice: "İşletmeler başarıyla güncellendi"
   enterprise_bulk_update_error: 'Güncelleştirme başarısız'
+  enterprise_shop_show_error: "Aradığınız dükkan AGA üzerinde bulunamıyor veya gizli durumda. Lütfen diğerlerini kontrol edin."
   order_cycles_create_notice: 'Sipariş döneminiz oluşturuldu.'
   order_cycles_update_notice: 'Sipariş döneminiz güncellendi.'
   order_cycles_bulk_update_notice: 'Sipariş dönemleri güncellendi.'
@@ -2859,7 +2869,7 @@ tr:
     shipping_methods: "Teslimat Yöntemleri"
     shipping_categories: "Nakliye Kategorileri"
     new_shipping_category: "Yeni Nakliye Kategorisi"
-    back_to_shipping_categories: "Nakliye Kategorilerine Geri Dön"
+    back_to_shipping_categories: "Teslimat Kategorilerine Geri Dön"
     analytics_trackers: "Analitik İzleyiciler"
     no_trackers_found: "İzleyici Bulunamadı"
     new_tracker: "Yeni İzleyici"
@@ -3017,6 +3027,8 @@ tr:
           tax_invoice: "VERGİ FATURASI"
           code: "Kod"
           from: "İtibaren"
+          to: "Fatura Adresi"
+          shipping: "Teslimat"
         form:
           distribution_fields:
             title: "Dağıtım"
@@ -3219,7 +3231,7 @@ tr:
           enter_new_card: Yeni bir kart için bilgileri girin
           used_saved_card: "Kayıtlı bir kart kullanın:"
           or_enter_new_card: "Veya yeni bir kart için bilgileri girin:"
-          remember_this_card: Bu kartı hatırlıyor musunuz?
+          remember_this_card: Bu kart hatırlansın mı?
     date_picker:
       format: '% Y-% A-%d'
       js_format: 'yy-aa-gg'
