@@ -14,16 +14,8 @@ feature '
   let(:distributor) { create(:distributor_enterprise, owner: user, charges_sales_tax: true) }
   let(:order_cycle) { create(:simple_order_cycle, name: 'One', distributors: [distributor], variants: [product.variants.first]) }
 
-  context "with complete order" do
-    before do
-      @order = create(:order_with_totals_and_distribution, user: user, distributor: distributor, order_cycle: order_cycle, state: 'complete', payment_state: 'balance_due')
-      @customer = create(:customer, enterprise: distributor, email: user.email, user: user, ship_address: create(:address))
-
-      # ensure order has a payment to capture
-      @order.finalize!
-
-      create :check_payment, order: @order, amount: @order.total
-    end
+  context "with a complete order" do
+    let(:order) { create(:order_with_totals_and_distribution, user: user, distributor: distributor, order_cycle: order_cycle, state: 'complete', payment_state: 'balance_due') }
 
     scenario "order cycles appear in descending order by close date on orders page" do
       create(:simple_order_cycle, name: 'Two', orders_close_at: 2.weeks.from_now)
@@ -35,37 +27,44 @@ feature '
 
       open_select2('#s2id_q_order_cycle_id_in')
 
-      expect(find('#q_order_cycle_id_in', visible: :all)[:innerHTML]).to have_content(/.*Four.*Three.*Two.*One/m)
+      expect(find('#q_order_cycle_id_in', visible: :all)[:innerHTML]).to have_content(/.*Four.*Three.*Two/m)
     end
 
-    scenario "capture payment from the orders index page" do
-      quick_login_as_admin
+    context "with a capturable order" do
+      before do
+        order.finalize! # ensure order has a payment to capture
+        create :check_payment, order: order, amount: order.total
+      end
 
-      visit spree.admin_orders_path
-      expect(page).to have_current_path spree.admin_orders_path
+      scenario "capture payment" do
+        quick_login_as_admin
 
-      # click the 'capture' link for the order
-      page.find("[data-powertip=Capture]").click
+        visit spree.admin_orders_path
+        expect(page).to have_current_path spree.admin_orders_path
 
-      expect(page).to have_css "i.success"
-      expect(page).to have_css "button.icon-road"
+        # click the 'capture' link for the order
+        page.find("[data-powertip=Capture]").click
 
-      # check the order was captured
-      expect(@order.reload.payment_state).to eq "paid"
+        expect(page).to have_css "i.success"
+        expect(page).to have_css "button.icon-road"
 
-      # we should still be on the same page
-      expect(page).to have_current_path spree.admin_orders_path
-    end
+        # check the order was captured
+        expect(order.reload.payment_state).to eq "paid"
 
-    scenario "ship order from the orders index page" do
-      @order.payments.first.capture!
-      quick_login_as_admin
-      visit spree.admin_orders_path
+        # we should still be on the same page
+        expect(page).to have_current_path spree.admin_orders_path
+      end
 
-      page.find("[data-powertip=Ship]").click
+      scenario "ship order from the orders index page" do
+        order.payments.first.capture!
+        quick_login_as_admin
+        visit spree.admin_orders_path
 
-      expect(page).to have_css "i.success"
-      expect(@order.reload.shipments.any?(&:shipped?)).to be true
+        page.find("[data-powertip=Ship]").click
+
+        expect(page).to have_css "i.success"
+        expect(order.reload.shipments.any?(&:shipped?)).to be true
+      end
     end
   end
 
