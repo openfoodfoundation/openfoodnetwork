@@ -9,19 +9,19 @@ feature '
   include WebHelper
   include CheckoutHelper
 
-  background do
-    @user = create(:user)
-    @product = create(:simple_product)
-    @distributor = create(:distributor_enterprise, owner: @user, charges_sales_tax: true)
-    @order_cycle = create(:simple_order_cycle, name: 'One', distributors: [@distributor], variants: [@product.variants.first])
+  let(:user) { create(:user) }
+  let(:product) { create(:simple_product) }
+  let(:distributor) { create(:distributor_enterprise, owner: user, charges_sales_tax: true) }
+  let(:order_cycle) { create(:simple_order_cycle, name: 'One', distributors: [distributor], variants: [product.variants.first]) }
 
-    @order = create(:order_with_totals_and_distribution, user: @user, distributor: @distributor, order_cycle: @order_cycle, state: 'complete', payment_state: 'balance_due')
-    @customer = create(:customer, enterprise: @distributor, email: @user.email, user: @user, ship_address: create(:address))
+  let(:order) { create(:order_with_totals_and_distribution, user: user, distributor: distributor, order_cycle: order_cycle, state: 'complete', payment_state: 'balance_due') }
+  let(:customer) { create(:customer, enterprise: distributor, email: user.email, user: user, ship_address: create(:address)) }
 
+  before do
     # ensure order has a payment to capture
-    @order.finalize!
+    order.finalize!
 
-    create :check_payment, order: @order, amount: @order.total
+    create :check_payment, order: order, amount: order.total
   end
 
   def new_order_with_distribution(distributor, order_cycle)
@@ -49,37 +49,37 @@ feature '
     expect(page).to have_selector "#s2id_order_order_cycle_id.select2-container-disabled"
 
     # When we select a distributor, it should limit order cycle selection to those for that distributor
-    select2_select @distributor.name, from: 'order_distributor_id'
+    select2_select distributor.name, from: 'order_distributor_id'
     expect(page).to have_select2 'order_order_cycle_id', options: ['One (open)']
-    select2_select @order_cycle.name, from: 'order_order_cycle_id'
+    select2_select order_cycle.name, from: 'order_order_cycle_id'
     click_button 'Next'
 
     # it suppresses validation errors when setting distribution
     expect(page).not_to have_selector '#errorExplanation'
     expect(page).to have_content 'ADD PRODUCT'
-    targetted_select2_search @product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
+    targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
     find('button.add_variant').click
     page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr" # Wait for JS
-    expect(page).to have_selector 'td', text: @product.name
+    expect(page).to have_selector 'td', text: product.name
 
     click_button 'Update'
 
     expect(page).to have_selector 'h1', text: 'Customer Details'
     o = Spree::Order.last
-    expect(o.distributor).to eq(@distributor)
-    expect(o.order_cycle).to eq(@order_cycle)
+    expect(o.distributor).to eq(distributor)
+    expect(o.order_cycle).to eq(order_cycle)
   end
 
   scenario "can add a product to an existing order" do
     quick_login_as_admin
-    visit spree.edit_admin_order_path(@order)
+    visit spree.edit_admin_order_path(order)
 
-    targetted_select2_search @product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
+    targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
 
     find('button.add_variant').click
 
-    expect(page).to have_selector 'td', text: @product.name
-    expect(@order.line_items(true).map(&:product)).to include @product
+    expect(page).to have_selector 'td', text: product.name
+    expect(order.line_items(true).map(&:product)).to include product
   end
 
   scenario "displays error when incorrect distribution for products is chosen" do
@@ -87,15 +87,15 @@ feature '
     oc = create(:simple_order_cycle, distributors: [d])
 
     # Move the order back to the cart state
-    @order.state = 'cart'
-    @order.completed_at = nil
+    order.state = 'cart'
+    order.completed_at = nil
     # A nil user keeps the order in the cart state
     #   Even if the edit page tries to automatically progress the order workflow
-    @order.user = nil
-    @order.save
+    order.user = nil
+    order.save
 
     quick_login_as_admin
-    visit spree.edit_admin_order_path(@order)
+    visit spree.edit_admin_order_path(order)
 
     expect(page).to have_select2 "order_distributor_id", with_options: [d.name]
     select2_select d.name, from: 'order_distributor_id'
@@ -109,20 +109,20 @@ feature '
     product = create(:simple_product)
 
     quick_login_as_admin
-    visit spree.edit_admin_order_path(@order)
+    visit spree.edit_admin_order_path(order)
 
     expect(page).not_to have_select2 "add_variant_id", with_options: [product.name]
   end
 
   scenario "can't change distributor or order cycle once order has been finalized" do
     quick_login_as_admin
-    visit spree.edit_admin_order_path(@order)
+    visit spree.edit_admin_order_path(order)
 
     expect(page).not_to have_select2 'order_distributor_id'
     expect(page).not_to have_select2 'order_order_cycle_id'
 
-    expect(page).to have_selector 'p', text: "Distributor: #{@order.distributor.name}"
-    expect(page).to have_selector 'p', text: "Order cycle: #{@order.order_cycle.name}"
+    expect(page).to have_selector 'p', text: "Distributor: #{order.distributor.name}"
+    expect(page).to have_selector 'p', text: "Order cycle: #{order.order_cycle.name}"
   end
 
   scenario "filling customer details" do
@@ -130,18 +130,18 @@ feature '
 
     # We change the 1st order's address details
     #   This way we validate that the original details (stored in customer) are picked up in the 2nd order
-    @order.ship_address = create(:address, lastname: 'Ship')
-    @order.bill_address = create(:address, lastname: 'Bill')
-    @order.save!
+    order.ship_address = create(:address, lastname: 'Ship')
+    order.bill_address = create(:address, lastname: 'Bill')
+    order.save!
 
     # We set the existing shipping method to delivery, this shipping method will be used in the 2nd order
     #   Otherwise order_updater.shipping_address_from_distributor will set the 2nd order address to the distributor address
-    @order.shipping_method.update_attribute :require_ship_address, true
+    order.shipping_method.update_attribute :require_ship_address, true
 
     # When I create a new order
-    quick_login_as @user
-    new_order_with_distribution(@distributor, @order_cycle)
-    targetted_select2_search @product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
+    quick_login_as user
+    new_order_with_distribution(distributor, order_cycle)
+    targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
     find('button.add_variant').click
     page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr" # Wait for JS
     click_button 'Update'
@@ -149,14 +149,14 @@ feature '
     expect(page).to have_selector 'h1.page-title', text: "Customer Details"
 
     # And I select that customer's email address and save the order
-    targetted_select2_search @customer.email, from: '#customer_search_override', dropdown_css: '.select2-drop'
+    targetted_select2_search customer.email, from: '#customer_search_override', dropdown_css: '.select2-drop'
     click_button 'Update'
     expect(page).to have_selector "h1.page-title", text: "Customer Details"
 
     # Then their addresses should be associated with the order
     order = Spree::Order.last
-    expect(order.ship_address.lastname).to eq @customer.ship_address.lastname
-    expect(order.bill_address.lastname).to eq @customer.bill_address.lastname
+    expect(order.ship_address.lastname).to eq customer.ship_address.lastname
+    expect(order.bill_address.lastname).to eq customer.bill_address.lastname
   end
 
   context "as an enterprise manager" do

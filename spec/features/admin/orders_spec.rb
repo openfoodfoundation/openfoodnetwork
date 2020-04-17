@@ -7,7 +7,6 @@ feature '
 ', js: true do
   include AuthenticationWorkflow
   include WebHelper
-  include CheckoutHelper
 
   let(:user) { create(:user) }
   let(:product) { create(:simple_product) }
