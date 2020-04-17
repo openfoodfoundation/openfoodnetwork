@@ -6,10 +6,8 @@ feature '
     As an administrator
     I want to create and edit orders
 ', js: true do
-  include ActionView::Helpers::NumberHelper
   include AuthenticationWorkflow
   include WebHelper
-  include CheckoutHelper
 
   let(:user) { create(:user) }
   let(:product) { create(:simple_product) }
@@ -198,13 +196,6 @@ feature '
       let!(:shipping_method_for_distributor1) do
         create(:shipping_method, name: "Normal", distributors: [distributor1])
       end
-      let!(:different_shipping_method_for_distributor1) do
-        create(:shipping_method, name: "Different", distributors: [distributor1])
-      end
-      let!(:shipping_method_for_distributor2) do
-        create(:shipping_method, name: "Other", distributors: [distributor2])
-      end
-
       let!(:order) do
         create(:order_with_taxes, distributor: distributor1, ship_address: create(:address),
                                   product_price: 110, tax_rate_amount: 0.1,
@@ -215,7 +206,6 @@ feature '
       end
 
       background do
-        Spree::Config[:enable_receipt_printing?] = true
         distributor1.update_attribute(:abn, '12345678')
 
         visit spree.edit_admin_order_path(order)
@@ -274,20 +264,31 @@ feature '
         expect(page).to_not have_selector '.split-item'
       end
 
-      scenario "can edit shipping method" do
-        expect(page).to_not have_content different_shipping_method_for_distributor1.name
+      context "with different shipping methods" do
+        let!(:different_shipping_method_for_distributor1) do
+          create(:shipping_method, name: "Different", distributors: [distributor1])
+        end
+        let!(:shipping_method_for_distributor2) do
+          create(:shipping_method, name: "Other", distributors: [distributor2])
+        end
 
-        find('.edit-method').click
-        expect(page).to have_select2 'selected_shipping_rate_id',
-                                     with_options: [
-                                       shipping_method_for_distributor1.name,
-                                       different_shipping_method_for_distributor1.name
-                                     ], without_options: [shipping_method_for_distributor2.name]
-        select2_select different_shipping_method_for_distributor1.name,
-                       from: 'selected_shipping_rate_id'
-        find('.save-method').click
+        scenario "can edit shipping method" do
+          visit spree.edit_admin_order_path(order)
 
-        expect(page).to have_content different_shipping_method_for_distributor1.name
+          expect(page).to_not have_content different_shipping_method_for_distributor1.name
+
+          find('.edit-method').click
+          expect(page).to have_select2 'selected_shipping_rate_id',
+                                       with_options: [
+                                         shipping_method_for_distributor1.name,
+                                         different_shipping_method_for_distributor1.name
+                                       ], without_options: [shipping_method_for_distributor2.name]
+          select2_select different_shipping_method_for_distributor1.name,
+                         from: 'selected_shipping_rate_id'
+          find('.save-method').click
+
+          expect(page).to have_content different_shipping_method_for_distributor1.name
+        end
       end
 
       scenario "can edit tracking number" do
@@ -299,60 +300,6 @@ feature '
         find('.save-tracking').click
 
         expect(page).to have_content test_tracking_number
-      end
-
-      scenario "can print an order's ticket" do
-        find("#links-dropdown .ofn-drop-down").click
-
-        ticket_window = window_opened_by do
-          within('#links-dropdown') do
-            click_link('Print Ticket')
-          end
-        end
-
-        within_window ticket_window do
-          accept_alert do
-            print_data = page.evaluate_script('printData');
-            elements_in_print_data = [
-              order.distributor.name,
-              order.distributor.address.address_part1,
-              order.distributor.address.address_part2,
-              order.distributor.contact.email, order.number,
-              line_items_in_print_data,
-              adjustments_in_print_data,
-              order.display_total.format(with_currency: false),
-              taxes_in_print_data,
-              display_checkout_total_less_tax(order).format(with_currency: false)
-            ]
-            expect(print_data.join).to include(*elements_in_print_data.flatten)
-          end
-        end
-      end
-
-      def line_items_in_print_data
-        order.line_items.map { |line_item|
-          [line_item.quantity.to_s,
-           line_item.product.name,
-           line_item.single_display_amount_with_adjustments.format(symbol: false,
-                                                                   with_currency: false),
-           line_item.display_amount_with_adjustments.format(symbol: false, with_currency: false)]
-        }
-      end
-
-      def adjustments_in_print_data
-        checkout_adjustments_for(order, exclude: [:line_item]).
-          reject { |a| a.amount == 0 }.
-          map do |adjustment|
-            [raw(adjustment.label),
-             display_adjustment_amount(adjustment).format(symbol: false, with_currency: false)]
-          end
-      end
-
-      def taxes_in_print_data
-        display_checkout_taxes_hash(order).map { |tax_rate, tax_value|
-          [tax_rate,
-           tax_value.format(with_currency: false)]
-        }
       end
 
       scenario "editing shipping fees" do

@@ -1,5 +1,6 @@
+# frozen_string_literal: true
+
 require "spec_helper"
-include ActionView::Helpers::NumberHelper
 
 feature '
     As an administrator
