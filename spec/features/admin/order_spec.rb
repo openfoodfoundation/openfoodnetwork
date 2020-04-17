@@ -25,7 +25,7 @@ feature '
   end
 
   def new_order_with_distribution(distributor, order_cycle)
-    visit 'admin/orders/new'
+    visit spree.new_admin_order_path
     expect(page).to have_selector('#s2id_order_distributor_id')
     select2_select distributor.name, from: 'order_distributor_id'
     select2_select order_cycle.name, from: 'order_order_cycle_id'
@@ -37,8 +37,7 @@ feature '
     create(:simple_order_cycle, name: 'Two')
 
     quick_login_as_admin
-
-    visit '/admin/orders'
+    visit spree.admin_orders_path
     click_link 'New Order'
 
     # Distributors without an order cycle should be shown as disabled
@@ -73,9 +72,7 @@ feature '
 
   scenario "can add a product to an existing order" do
     quick_login_as_admin
-    visit '/admin/orders'
-
-    click_icon :edit
+    visit spree.edit_admin_order_path(@order)
 
     targetted_select2_search @product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
 
@@ -98,11 +95,8 @@ feature '
     @order.save
 
     quick_login_as_admin
-    visit '/admin/orders'
-    uncheck 'Only show complete orders'
-    page.find('a.icon-search').click
+    visit spree.edit_admin_order_path(@order)
 
-    click_icon :edit
     expect(page).to have_select2 "order_distributor_id", with_options: [d.name]
     select2_select d.name, from: 'order_distributor_id'
     select2_select oc.name, from: 'order_order_cycle_id'
@@ -115,16 +109,14 @@ feature '
     product = create(:simple_product)
 
     quick_login_as_admin
-    visit '/admin/orders'
-    page.find('td.actions a.icon-edit').click
+    visit spree.edit_admin_order_path(@order)
 
     expect(page).not_to have_select2 "add_variant_id", with_options: [product.name]
   end
 
   scenario "can't change distributor or order cycle once order has been finalized" do
     quick_login_as_admin
-    visit '/admin/orders'
-    page.find('td.actions a.icon-edit').click
+    visit spree.edit_admin_order_path(@order)
 
     expect(page).not_to have_select2 'order_distributor_id'
     expect(page).not_to have_select2 'order_order_cycle_id'
@@ -330,7 +322,7 @@ feature '
         fill_in "Amount", with: "5"
         click_button "Continue"
 
-        expect(page.find("td.amount")).to have_content "$5.00"
+        expect(page.find("td.amount")).to have_content "5.00"
       end
 
       context "when an included variant has been deleted" do
