@@ -17,7 +17,7 @@ class ProducerMailer < Spree::BaseMailer
         order_cycle_subject = I18n.t('producer_mailer.order_cycle.subject', producer: producer.name)
         subject = "[#{Spree::Config.site_name}] #{order_cycle_subject}"
 
-        return unless has_orders?(order_cycle, producer)
+        return unless orders?(order_cycle, producer)
 
         mail(
           to: @producer.contact.email,
@@ -32,7 +32,7 @@ class ProducerMailer < Spree::BaseMailer
 
   private
 
-  def has_orders?(order_cycle, producer)
+  def orders?(order_cycle, producer)
     line_items_from(order_cycle, producer).any?
   end
 

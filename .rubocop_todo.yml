@@ -173,7 +173,6 @@ Naming/MethodParameterName:
 Naming/PredicateName:
   Exclude:
     - 'spec/**/*'
-    - 'app/mailers/producer_mailer.rb'
     - 'app/models/enterprise.rb'
     - 'app/models/enterprise_relationship.rb'
     - 'app/models/order_cycle.rb'
@@ -630,7 +629,6 @@ Style/FrozenStringLiteralComment:
     - 'app/jobs/subscription_placement_job.rb'
     - 'app/jobs/welcome_enterprise_job.rb'
     - 'app/mailers/enterprise_mailer.rb'
-    - 'app/mailers/producer_mailer.rb'
     - 'app/mailers/spree/base_mailer_decorator.rb'
     - 'app/mailers/spree/order_mailer_decorator.rb'
     - 'app/mailers/spree/user_mailer.rb'
