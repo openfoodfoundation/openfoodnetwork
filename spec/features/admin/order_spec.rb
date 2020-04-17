@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require "spec_helper"
-include ActionView::Helpers::NumberHelper
 
 feature '
     As an administrator
     I want to create and edit orders
 ', js: true do
+  include ActionView::Helpers::NumberHelper
   include AuthenticationWorkflow
   include WebHelper
   include CheckoutHelper
@@ -12,10 +14,20 @@ feature '
   let(:user) { create(:user) }
   let(:product) { create(:simple_product) }
   let(:distributor) { create(:distributor_enterprise, owner: user, charges_sales_tax: true) }
-  let(:order_cycle) { create(:simple_order_cycle, name: 'One', distributors: [distributor], variants: [product.variants.first]) }
+  let(:order_cycle) do
+    create(:simple_order_cycle, name: 'One', distributors: [distributor],
+                                variants: [product.variants.first])
+  end
 
-  let(:order) { create(:order_with_totals_and_distribution, user: user, distributor: distributor, order_cycle: order_cycle, state: 'complete', payment_state: 'balance_due') }
-  let(:customer) { create(:customer, enterprise: distributor, email: user.email, user: user, ship_address: create(:address)) }
+  let(:order) do
+    create(:order_with_totals_and_distribution, user: user, distributor: distributor,
+                                                order_cycle: order_cycle, state: 'complete',
+                                                payment_state: 'balance_due')
+  end
+  let(:customer) do
+    create(:customer, enterprise: distributor, email: user.email,
+                      user: user, ship_address: create(:address))
+  end
 
   before do
     # ensure order has a payment to capture
@@ -42,13 +54,14 @@ feature '
 
     # Distributors without an order cycle should be shown as disabled
     open_select2('#s2id_order_distributor_id')
-    expect(page).to have_selector "ul.select2-results li.select2-result.select2-disabled", text: distributor_disabled.name
+    expect(page).to have_selector "ul.select2-results li.select2-result.select2-disabled",
+                                  text: distributor_disabled.name
     close_select2('#s2id_order_distributor_id')
 
     # Order cycle selector should be disabled
     expect(page).to have_selector "#s2id_order_order_cycle_id.select2-container-disabled"
 
-    # When we select a distributor, it should limit order cycle selection to those for that distributor
+    # The distributor selector should limit the order cycle selection to those for that distributor
     select2_select distributor.name, from: 'order_distributor_id'
     expect(page).to have_select2 'order_order_cycle_id', options: ['One (open)']
     select2_select order_cycle.name, from: 'order_order_cycle_id'
@@ -102,7 +115,8 @@ feature '
     select2_select oc.name, from: 'order_order_cycle_id'
 
     click_button 'Update And Recalculate Fees'
-    expect(page).to have_content "Distributor or order cycle cannot supply the products in your cart"
+    expect(page).to have_content "Distributor or order cycle " \
+                                 "cannot supply the products in your cart"
   end
 
   scenario "can't add products to an order outside the order's hub and order cycle" do
@@ -128,14 +142,15 @@ feature '
   scenario "filling customer details" do
     # Given a customer with an order, which includes their shipping and billing address
 
-    # We change the 1st order's address details
-    #   This way we validate that the original details (stored in customer) are picked up in the 2nd order
+    # We change the 1st order's address details, this way
+    #   we validate that the original details (stored in customer) are picked up in the 2nd order
     order.ship_address = create(:address, lastname: 'Ship')
     order.bill_address = create(:address, lastname: 'Bill')
     order.save!
 
-    # We set the existing shipping method to delivery, this shipping method will be used in the 2nd order
-    #   Otherwise order_updater.shipping_address_from_distributor will set the 2nd order address to the distributor address
+    # We set the existing ship method to delivery, this ship method will be used in the 2nd order
+    #   Otherwise order_updater.shipping_address_from_distributor will set
+    #     the 2nd order address to the distributor address
     order.shipping_method.update_attribute :require_ship_address, true
 
     # When I create a new order
@@ -149,7 +164,8 @@ feature '
     expect(page).to have_selector 'h1.page-title', text: "Customer Details"
 
     # And I select that customer's email address and save the order
-    targetted_select2_search customer.email, from: '#customer_search_override', dropdown_css: '.select2-drop'
+    targetted_select2_search customer.email, from: '#customer_search_override',
+                                             dropdown_css: '.select2-drop'
     click_button 'Update'
     expect(page).to have_selector "h1.page-title", text: "Customer Details"
 
@@ -167,7 +183,9 @@ feature '
     let!(:supplier1) { order_cycle1.suppliers.first }
     let!(:supplier2) { order_cycle1.suppliers.last }
     let!(:distributor1) { order_cycle1.distributors.first }
-    let!(:distributor2) { order_cycle1.distributors.reject{ |d| d == distributor1 }.last } # ensure d1 != d2
+    let!(:distributor2) do
+      order_cycle1.distributors.reject{ |d| d == distributor1 }.last # ensure d1 != d2
+    end
     let(:product) { order_cycle1.products.first }
 
     before(:each) do
@@ -180,9 +198,15 @@ feature '
     end
 
     feature "viewing the edit page" do
-      let!(:shipping_method_for_distributor1) { create(:shipping_method, name: "Normal", distributors: [distributor1]) }
-      let!(:different_shipping_method_for_distributor1) { create(:shipping_method, name: "Different", distributors: [distributor1]) }
-      let!(:shipping_method_for_distributor2) { create(:shipping_method, name: "Other", distributors: [distributor2]) }
+      let!(:shipping_method_for_distributor1) do
+        create(:shipping_method, name: "Normal", distributors: [distributor1])
+      end
+      let!(:different_shipping_method_for_distributor1) do
+        create(:shipping_method, name: "Different", distributors: [distributor1])
+      end
+      let!(:shipping_method_for_distributor2) do
+        create(:shipping_method, name: "Other", distributors: [distributor2])
+      end
 
       let!(:order) do
         create(:order_with_taxes, distributor: distributor1, ship_address: create(:address),
@@ -240,15 +264,18 @@ feature '
       scenario "shows the dropdown menu" do
         find("#links-dropdown .ofn-drop-down").click
         within "#links-dropdown" do
-          expect(page).to have_link "Resend Confirmation", href: spree.resend_admin_order_path(order)
+          expect(page).to have_link "Resend Confirmation",
+                                    href: spree.resend_admin_order_path(order)
           expect(page).to have_link "Send Invoice", href: spree.invoice_admin_order_path(order)
           expect(page).to have_link "Print Invoice", href: spree.print_admin_order_path(order)
-          expect(page).to have_link "Cancel Order", href: spree.fire_admin_order_path(order, e: 'cancel')
+          expect(page).to have_link "Cancel Order", href: spree.fire_admin_order_path(order,
+                                                                                      e: 'cancel')
         end
       end
 
       scenario "cannot split the order in different stock locations" do
-        # There's only 1 stock location in OFN, so the split functionality that comes with spree should be hidden
+        # There's only 1 stock location in OFN,
+        #   so the split functionality that comes with spree should be hidden
         expect(page).to_not have_selector '.split-item'
       end
 
@@ -256,8 +283,13 @@ feature '
         expect(page).to_not have_content different_shipping_method_for_distributor1.name
 
         find('.edit-method').click
-        expect(page).to have_select2 'selected_shipping_rate_id', with_options: [shipping_method_for_distributor1.name, different_shipping_method_for_distributor1.name], without_options: [shipping_method_for_distributor2.name]
-        select2_select different_shipping_method_for_distributor1.name, from: 'selected_shipping_rate_id'
+        expect(page).to have_select2 'selected_shipping_rate_id',
+                                     with_options: [
+                                       shipping_method_for_distributor1.name,
+                                       different_shipping_method_for_distributor1.name
+                                     ], without_options: [shipping_method_for_distributor2.name]
+        select2_select different_shipping_method_for_distributor1.name,
+                       from: 'selected_shipping_rate_id'
         find('.save-method').click
 
         expect(page).to have_content different_shipping_method_for_distributor1.name
@@ -286,33 +318,46 @@ feature '
         within_window ticket_window do
           accept_alert do
             print_data = page.evaluate_script('printData');
-            elements_in_print_data =
-              [
-                order.distributor.name,
-                order.distributor.address.address_part1,
-                order.distributor.address.address_part2,
-                order.distributor.contact.email,
-                order.number,
-                order.line_items.map { |line_item|
-                  [line_item.quantity.to_s,
-                   line_item.product.name,
-                   line_item.single_display_amount_with_adjustments.format(symbol: false, with_currency: false),
-                   line_item.display_amount_with_adjustments.format(symbol: false, with_currency: false)]
-                },
-                checkout_adjustments_for(order, exclude: [:line_item]).reject { |a| a.amount == 0 }.map { |adjustment|
-                  [raw(adjustment.label),
-                   display_adjustment_amount(adjustment).format(symbol: false, with_currency: false)]
-                },
-                order.display_total.format(with_currency: false),
-                display_checkout_taxes_hash(order).map { |tax_rate, tax_value|
-                  [tax_rate,
-                   tax_value.format(with_currency: false)]
-                },
-                display_checkout_total_less_tax(order).format(with_currency: false)
-              ]
+            elements_in_print_data = [
+              order.distributor.name,
+              order.distributor.address.address_part1,
+              order.distributor.address.address_part2,
+              order.distributor.contact.email, order.number,
+              line_items_in_print_data,
+              adjustments_in_print_data,
+              order.display_total.format(with_currency: false),
+              taxes_in_print_data,
+              display_checkout_total_less_tax(order).format(with_currency: false)
+            ]
             expect(print_data.join).to include(*elements_in_print_data.flatten)
           end
         end
+      end
+
+      def line_items_in_print_data
+        order.line_items.map { |line_item|
+          [line_item.quantity.to_s,
+           line_item.product.name,
+           line_item.single_display_amount_with_adjustments.format(symbol: false,
+                                                                   with_currency: false),
+           line_item.display_amount_with_adjustments.format(symbol: false, with_currency: false)]
+        }
+      end
+
+      def adjustments_in_print_data
+        checkout_adjustments_for(order, exclude: [:line_item]).
+          reject { |a| a.amount == 0 }.
+          map do |adjustment|
+            [raw(adjustment.label),
+             display_adjustment_amount(adjustment).format(symbol: false, with_currency: false)]
+          end
+      end
+
+      def taxes_in_print_data
+        display_checkout_taxes_hash(order).map { |tax_rate, tax_value|
+          [tax_rate,
+           tax_value.format(with_currency: false)]
+        }
       end
 
       scenario "editing shipping fees" do
@@ -345,14 +390,16 @@ feature '
       targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
 
       find('button.add_variant').click
-      page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr" # Wait for JS
+      page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr"
       expect(page).to have_selector 'td', text: product.name
 
       expect(page).to have_select2 'order_distributor_id', with_options: [distributor1.name]
       expect(page).to_not have_select2 'order_distributor_id', with_options: [distributor2.name]
 
-      expect(page).to have_select2 'order_order_cycle_id', with_options: ["#{order_cycle1.name} (open)"]
-      expect(page).to_not have_select2 'order_order_cycle_id', with_options: ["#{order_cycle2.name} (open)"]
+      expect(page).to have_select2 'order_order_cycle_id',
+                                   with_options: ["#{order_cycle1.name} (open)"]
+      expect(page).to_not have_select2 'order_order_cycle_id',
+                                       with_options: ["#{order_cycle2.name} (open)"]
 
       click_button 'Update'
 

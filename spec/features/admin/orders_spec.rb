@@ -11,10 +11,17 @@ feature '
   let(:user) { create(:user) }
   let(:product) { create(:simple_product) }
   let(:distributor) { create(:distributor_enterprise, owner: user, charges_sales_tax: true) }
-  let(:order_cycle) { create(:simple_order_cycle, name: 'One', distributors: [distributor], variants: [product.variants.first]) }
+  let(:order_cycle) do
+    create(:simple_order_cycle, name: 'One', distributors: [distributor],
+                                variants: [product.variants.first])
+  end
 
   context "with a complete order" do
-    let(:order) { create(:order_with_totals_and_distribution, user: user, distributor: distributor, order_cycle: order_cycle, state: 'complete', payment_state: 'balance_due') }
+    let(:order) do
+      create(:order_with_totals_and_distribution, user: user, distributor: distributor,
+                                                  order_cycle: order_cycle,
+                                                  state: 'complete', payment_state: 'balance_due')
+    end
 
     scenario "order cycles appear in descending order by close date on orders page" do
       create(:simple_order_cycle, name: 'Two', orders_close_at: 2.weeks.from_now)
@@ -26,7 +33,8 @@ feature '
 
       open_select2('#s2id_q_order_cycle_id_in')
 
-      expect(find('#q_order_cycle_id_in', visible: :all)[:innerHTML]).to have_content(/.*Four.*Three.*Two/m)
+      expect(find('#q_order_cycle_id_in',
+                  visible: :all)[:innerHTML]).to have_content(/.*Four.*Three.*Two/m)
     end
 
     context "with a capturable order" do

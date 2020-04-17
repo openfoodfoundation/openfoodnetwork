@@ -181,7 +181,6 @@ Layout/LineLength:
   - spec/features/admin/image_settings_spec.rb
   - spec/features/admin/multilingual_spec.rb
   - spec/features/admin/order_cycles_spec.rb
-  - spec/features/admin/orders_spec.rb
   - spec/features/admin/overview_spec.rb
   - spec/features/admin/payment_method_spec.rb
   - spec/features/admin/product_import_spec.rb
@@ -468,7 +467,6 @@ Metrics/BlockLength:
   - spec/factories/shipping_method_factory.rb
   - spec/factories/subscription_factory.rb
   - spec/factories/variant_factory.rb
-  - spec/features/admin/orders_spec.rb
   - spec/features/consumer/shopping/embedded_shopfronts_spec.rb
   - spec/lib/open_food_network/group_buy_report_spec.rb
   - spec/models/tag_rule/discount_order_spec.rb
