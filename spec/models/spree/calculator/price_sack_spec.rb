@@ -8,36 +8,46 @@ describe Spree::Calculator::PriceSack do
     calculator.preferred_discount_amount = 1
     calculator
   end
-  let(:floatCalculator) do
-    floatCalculator = Spree::Calculator::PriceSack.new
-    floatCalculator.preferred_minimal_amount = 5
-    floatCalculator.preferred_normal_amount = 10.4
-    floatCalculator.preferred_discount_amount = 1.2
-    floatCalculator
-  end
-
   let(:line_item) { build(:line_item, price: price, quantity: 2) }
 
   context 'when the order amount is below preferred minimal' do
     let(:price) { 2 }
+
     it "uses the preferred normal amount" do
       expect(calculator.compute(line_item)).to eq(10)
-    end
-    context "and preferred normal amount is float" do
-      it "uses the float preferred normal amount" do
-        expect(floatCalculator.compute(line_item)).to eq(10.4)
-      end
     end
   end
 
   context 'when the order amount is above preferred minimal' do
     let(:price) { 6 }
+
     it "uses the preferred discount amount" do
       expect(calculator.compute(line_item)).to eq(1)
     end
-    context "and preferred discount amount is float" do
+  end
+
+  context "preferred discount amount is float" do
+    let(:float_calculator) do
+      float_calculator = Spree::Calculator::PriceSack.new
+      float_calculator.preferred_minimal_amount = 5
+      float_calculator.preferred_normal_amount = 10.4
+      float_calculator.preferred_discount_amount = 1.2
+      float_calculator
+    end
+
+    context 'when the order amount is below preferred minimal' do
+      let(:price) { 2 }
+
+      it "uses the float preferred normal amount" do
+        expect(float_calculator.compute(line_item)).to eq(10.4)
+      end
+    end
+
+    context 'when the order amount is above preferred minimal' do
+      let(:price) { 6 }
+
       it "uses the float preferred discount amount" do
-        expect(floatCalculator.compute(line_item)).to eq(1.2)
+        expect(float_calculator.compute(line_item)).to eq(1.2)
       end
     end
   end
