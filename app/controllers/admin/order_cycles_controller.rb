@@ -16,7 +16,7 @@ module Admin
           render_as_json @collection,
                          ams_prefix: params[:ams_prefix],
                          current_user: spree_current_user,
-                         subscriptions_count: SubscriptionsCount.new(@collection)
+                         subscriptions_count: OrderManagement::Subscriptions::Count.new(@collection)
         end
       end
     end
@@ -74,7 +74,7 @@ module Admin
         render_as_json @order_cycles,
                        ams_prefix: 'index',
                        current_user: spree_current_user,
-                       subscriptions_count: SubscriptionsCount.new(@collection)
+                       subscriptions_count: OrderManagement::Subscriptions::Count.new(@collection)
       else
         order_cycle = order_cycle_set.collection.find{ |oc| oc.errors.present? }
         render json: { errors: order_cycle.errors.full_messages }, status: :unprocessable_entity

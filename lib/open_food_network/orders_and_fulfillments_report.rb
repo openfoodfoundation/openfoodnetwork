@@ -18,6 +18,7 @@ module OpenFoodNetwork
       @options = options
       @report_type = options[:report_type]
       @render_table = render_table
+      @variant_scopers_by_distributor_id = {}
     end
 
     def search
@@ -43,6 +44,14 @@ module OpenFoodNetwork
 
     def product_name
       proc { |line_items| line_items.first.variant.product.name }
+    end
+
+    def variant_scoper_for(distributor_id)
+      @variant_scopers_by_distributor_id[distributor_id] ||=
+        OpenFoodNetwork::ScopeVariantToHub.new(
+          distributor_id,
+          report_variant_overrides[distributor_id] || {},
+        )
     end
 
     private
@@ -88,6 +97,14 @@ module OpenFoodNetwork
 
     def report_line_items
       @report_line_items ||= Reports::LineItems.new(order_permissions, options)
+    end
+
+    def report_variant_overrides
+      @report_variant_overrides ||=
+        VariantOverridesIndexed.new(
+          order_permissions.visible_line_items.select('DISTINCT variant_id'),
+          report_line_items.orders.result.select('DISTINCT distributor_id'),
+        ).indexed
     end
   end
 end

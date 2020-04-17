@@ -59,7 +59,7 @@ de_DE:
       messages:
         inclusion: "ist in der Liste nicht enthalten"
       models:
-        subscription_validator:
+        order_management/subscriptions/validator:
           attributes:
             subscription_line_items:
               at_least_one_product: "^ Bitte fügen Sie mindestens ein Produkt hinzu"
@@ -1784,13 +1784,13 @@ de_DE:
         address1_field_placeholder: "z.B. 123 Cranberry-Laufwerk"
         address1_field_error: "Bitte geben Sie eine Adresse an"
         address2_field: "Anschrift Zeile 2:"
-        suburb_field: "Vorort:"
+        suburb_field: "Ort:"
         suburb_field_placeholder: "z.B. Northcote"
         suburb_field_error: "Bitte geben Sie einen Vorort ein"
         postcode_field: "Postleitzahl:"
         postcode_field_placeholder: "z.B. 3070"
         postcode_field_error: "Postleitzahl erforderlich"
-        state_field: "Zustand:"
+        state_field: "Bundesland:"
         state_field_error: "Staat erforderlich"
         country_field: "Land:"
         country_field_error: "Bitte wähle ein Land"
@@ -1809,8 +1809,8 @@ de_DE:
         yes_producer: "Ja, ich bin ein Produzent."
         no_producer: "Nein, ich bin kein Produzent"
         producer_field_error: "Bitte wählen Sie: Sind Sie ein Produzent?"
-        yes_producer_help: "Hersteller machen leckere Dinge zu essen und / oder zu trinken. Du bist ein Produzent, wenn du ihn anbaust, erziehst ihn, braue ihn, backe ihn, gähre ihn, melke ihn oder forme ihn."
-        no_producer_help: "Wenn Sie kein Produzent sind, sind Sie wahrscheinlich jemand, der Lebensmittel verkauft und verteilt. Sie könnten ein Hub, Coop, Einkaufsgruppe, Einzelhändler, Großhändler oder andere sein."
+        yes_producer_help: "Die Produzenten machen leckere Sachen zum Essen und / oder Trinken. Sie sind ein Produzent, wenn Sie anbauen, brauen, backen, fermentieren, melken oder sonst wie Lebenmittel produzieren."
+        no_producer_help: "Wenn Sie kein Produzent sind, sind Sie wahrscheinlich jemand, der Lebensmittel verkauft und verteilt. Sie könnten ein Foodhub, eine Coop, eine Einkaufsgruppe, Einzelhändler, ein Hofladen, Großhändler oder vergleichbares sein."
         create_profile: "Profil erstellen"
       about:
         title: "Über Uns"

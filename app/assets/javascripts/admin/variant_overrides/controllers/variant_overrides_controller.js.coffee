@@ -43,12 +43,11 @@ angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl",
 
   $scope.fetchProducts = ->
     url = "/api/products/overridable?page=::page::;per_page=100"
-    PagedFetcher.fetch url, (data) => $scope.addProducts data.products
+    PagedFetcher.fetch url, $scope.addProducts
 
-
-  $scope.addProducts = (products) ->
-    $scope.products = $scope.products.concat products
-    VariantOverrides.ensureDataFor hubs, products
+  $scope.addProducts = (data) ->
+    $scope.products = $scope.products.concat data.products
+    VariantOverrides.ensureDataFor hubs, data.products
 
   $scope.displayDirty = ->
     if DirtyVariantOverrides.count() > 0

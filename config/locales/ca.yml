@@ -19,6 +19,8 @@ ca:
         shipping_category_id: "Categoria d'enviament"
         variant_unit: "Unitat de la variant"
         variant_unit_name: "Nom de la unitat de la variant"
+      spree/credit_card:
+        base: "Targeta de crèdit"
       order_cycle:
         orders_close_at: Data de tancament
     errors:
@@ -29,6 +31,10 @@ ca:
               taken: "Ja hi ha un compte per a aquest correu electrònic. Si us plau, inicia sessió o restableix la contrasenya."
         spree/order:
           no_card: No hi ha targetes de crèdit autoritzades disponibles per carregar
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: "Ha expirat"
         order_cycle:
           attributes:
             orders_close_at:
@@ -53,7 +59,7 @@ ca:
       messages:
         inclusion: "no està inclòs a la llista"
       models:
-        subscription_validator:
+        order_management/subscriptions/validator:
           attributes:
             subscription_line_items:
               at_least_one_product: "^Afegiu com a mínim un producte"

@@ -19,6 +19,8 @@ fr_CA:
         shipping_category_id: "Condition de transport"
         variant_unit: "Unité"
         variant_unit_name: "Unité de la variante"
+      spree/credit_card:
+        base: "Carte de crédit"
       order_cycle:
         orders_close_at: Date de fermeture
     errors:
@@ -53,7 +55,7 @@ fr_CA:
       messages:
         inclusion: "n'est pas inclus dans la liste"
       models:
-        subscription_validator:
+        order_management/subscriptions/validator:
           attributes:
             subscription_line_items:
               at_least_one_product: "Veuillez ajouter au moins un produit"
@@ -863,6 +865,11 @@ fr_CA:
         cancel: "Annuler"
         back_to_list: "Retour à la liste"
       outgoing:
+        outgoing: "Produits sortants (mis en vente par/via un ou plusieurs hubs)"
+        distributor: "Hub-distributeur"
+        products: "Produits"
+        tags: "Tags"
+        fees: "Commissions"
         previous: "Précédent"
         save: "Enregistrer"
         save_and_back_to_list: "Sauvegarder et suivant"

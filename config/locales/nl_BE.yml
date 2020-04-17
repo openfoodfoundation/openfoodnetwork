@@ -3,7 +3,7 @@ nl_BE:
   activerecord:
     attributes:
       enterprise_fee:
-        fee_type: Sprookjesachtig type
+        fee_type: Soort commissie
       spree/order:
         payment_state: Status Betaling
         shipment_state: Status Verzending
@@ -19,6 +19,8 @@ nl_BE:
         shipping_category_id: "Verzendcategorie"
         variant_unit: "Eénheid"
         variant_unit_name: "Variant Unit Name"
+      spree/credit_card:
+        base: "Kredietkaart"
       order_cycle:
         orders_close_at: Sluitingsdatum
     errors:
@@ -51,7 +53,7 @@ nl_BE:
         payment_method_ids: "Betaalmethodes"
     errors:
       models:
-        subscription_validator:
+        order_management/subscriptions/validator:
           attributes:
             subscription_line_items:
               at_least_one_product: "^Gelieve minstens één product toe te voegen"
@@ -839,6 +841,11 @@ nl_BE:
         next: "Volgende"
         cancel: "Annuleren"
       outgoing:
+        outgoing: "Uitgaande"
+        distributor: "Distributeur"
+        products: "Producten"
+        tags: "Tags"
+        fees: "Vergoedingen"
         previous: "Voorgaande"
         save: "Save"
         cancel: "Annuleren"

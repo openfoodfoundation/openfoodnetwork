@@ -45,10 +45,6 @@ gem 'daemons'
 gem 'delayed_job_active_record'
 gem 'delayed_job_web'
 
-# Fix bug in simple_form preventing collection_check_boxes usage within form_for block
-# When merged, revert to upstream gem
-gem 'simple_form', github: 'RohanM/simple_form'
-
 # Spree's default pagination gem (locked to the current version used by Spree)
 # We use it's methods in OFN code as well, so this is a direct dependency
 gem 'kaminari', '~> 0.14.1'
@@ -122,6 +118,7 @@ gem 'ofn-qz', github: 'openfoodfoundation/ofn-qz', ref: '60da2ae4c44cbb4c8d602f5
 
 group :production, :staging do
   gem 'ddtrace'
+  gem 'unicorn-worker-killer'
 end
 
 group :test, :development do

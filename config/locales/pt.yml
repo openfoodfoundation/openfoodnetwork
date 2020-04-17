@@ -17,6 +17,8 @@ pt:
         primary_taxon: "Categoria de Produto"
         supplier: "Fornecedor"
         variant_unit: "Unidade da Variante"
+      spree/credit_card:
+        base: "Cartão de Crédito"
       order_cycle:
         orders_close_at: Data de fecho
     errors:
@@ -49,7 +51,7 @@ pt:
         payment_method_ids: "Métodos de pagamento"
     errors:
       models:
-        subscription_validator:
+        order_management/subscriptions/validator:
           attributes:
             subscription_line_items:
               at_least_one_product: "^Por favor adicione pelo menos um produto"
@@ -826,6 +828,11 @@ pt:
         next: "Seguinte"
         cancel: "Cancelar"
       outgoing:
+        outgoing: "Saída"
+        distributor: "Distribuidor"
+        products: "Produtos"
+        tags: "Etiquetas"
+        fees: "Taxas"
         previous: "Anterior"
         save: "Guardar"
         cancel: "Cancelar"

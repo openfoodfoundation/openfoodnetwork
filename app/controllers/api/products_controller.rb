@@ -69,12 +69,12 @@ module Api
     end
 
     def overridable
-      producers = OpenFoodNetwork::Permissions.new(current_api_user).
-        variant_override_producers.by_name
+      producer_ids = OpenFoodNetwork::Permissions.new(current_api_user).
+        variant_override_producers.by_name.select('enterprises.id')
 
-      @products = paged_products_for_producers producers
+      @products = paged_products_for_producers producer_ids
 
-      render_paged_products @products
+      render_paged_products @products, ::Api::Admin::ProductSimpleSerializer
     end
 
     # POST /api/products/:product_id/clone
@@ -118,19 +118,20 @@ module Api
       ]
     end
 
-    def paged_products_for_producers(producers)
+    def paged_products_for_producers(producer_ids)
       Spree::Product.scoped.
         merge(product_scope).
-        where(supplier_id: producers).
+        includes(variants: [:product, :default_price, :stock_items]).
+        where(supplier_id: producer_ids).
         by_producer.by_name.
         ransack(params[:q]).result.
         page(params[:page]).per(params[:per_page])
     end
 
-    def render_paged_products(products)
+    def render_paged_products(products, product_serializer = ::Api::Admin::ProductSerializer)
       serializer = ActiveModel::ArraySerializer.new(
         products,
-        each_serializer: ::Api::Admin::ProductSerializer
+        each_serializer: product_serializer
       )
 
       render text: {

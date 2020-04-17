@@ -7,9 +7,11 @@ module OpenFoodNetwork
       attr_reader :context
 
       delegate :line_item_name, to: :context
+      delegate :variant_scoper_for, to: :context
 
       def initialize(context)
         @context = context
+        @scopers_by_distributor_id = {}
       end
 
       # rubocop:disable Metrics/AbcSize
@@ -159,7 +161,11 @@ module OpenFoodNetwork
           },
 
           proc { |_line_items| "" },
-          proc { |line_items| line_items.first.variant.sku },
+          proc do |line_items|
+            line_item = line_items.first
+            variant_scoper_for(line_item.order.distributor_id).scope(line_item.variant)
+            line_item.variant.sku
+          end,
 
           proc { |line_items| line_items.first.order.order_cycle.andand.name },
           proc { |line_items|
