@@ -10,12 +10,6 @@ module Spree
 
     scope :sorted, -> { order(:name) }
 
-    scope :applied_by, ->(enterprise) {
-      select('DISTINCT spree_properties.*').
-        joins(:product_properties).
-        where('spree_product_properties.product_id IN (?)', enterprise.supplied_product_ids)
-    }
-
     scope :ever_sold_by, ->(shop) {
       joins(products: { variants: { exchanges: :order_cycle } }).
         merge(Exchange.outgoing).
