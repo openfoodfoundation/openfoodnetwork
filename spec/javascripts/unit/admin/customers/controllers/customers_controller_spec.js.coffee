@@ -20,7 +20,6 @@ describe "CustomersCtrl", ->
       {id: 109, name: "Australia", states: [{id: 55, name: "ACT", abbr: "ACT"}]}
     ]
 
-
     inject ($controller, $rootScope, _CustomerResource_, $httpBackend) ->
       scope = $rootScope
       http = $httpBackend
