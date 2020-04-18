@@ -13,7 +13,8 @@
     %div{"ng-repeat" => "permission in EnterpriseRelationships.all_permissions"}
       %label
         %input{type: "checkbox", "ng-model" => "permissions[permission]"}
-        to {{ EnterpriseRelationships.permission_presentation(permission) }}
+        = t 'admin_enterprise_relationships_to'
+        {{ EnterpriseRelationships.permission_presentation(permission) }}
   %td.actions
     %input{type: "button", value: t(:admin_enterprise_relationships_button_create), "ng-click" => "create()"}
     .errors {{ EnterpriseRelationships.create_errors }}
