@@ -10,18 +10,6 @@ module Spree
 
     scope :sorted, -> { order(:name) }
 
-    scope :ever_sold_by, ->(shop) {
-      joins(products: { variants: { exchanges: :order_cycle } }).
-        merge(Exchange.outgoing).
-        merge(Exchange.to_enterprise(shop)).
-        select('DISTINCT spree_properties.*')
-    }
-
-    scope :currently_sold_by, ->(shop) {
-      ever_sold_by(shop).
-        merge(OrderCycle.active)
-    }
-
     def property
       self
     end
