@@ -9,5 +9,9 @@ module Admin
         adjustment.originator_type == "Spree::ShippingMethod"
       end
     end
+
+    def last_payment_method(order)
+      OrderPaymentFinder.new(order).last_payment&.payment_method
+    end
   end
 end
