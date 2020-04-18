@@ -76,20 +76,17 @@
   // content revealed in accordion
 
   .page-view {
-    margin-bottom: 5em;
     background: none;
+    background-color: $grey-080;
     border: none;
+    padding-bottom: 5em;
 
     .content {
       padding: 1.25em 0;
       background-color: transparent;
 
       a {
-        color: $orange-500;
-
-        &:hover {
-          color: $orange-600;
-        }
+        color: $teal-500;
       }
 
       img {

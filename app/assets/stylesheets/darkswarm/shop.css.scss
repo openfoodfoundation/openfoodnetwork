@@ -126,7 +126,6 @@
   }
 
   .shopfront_closed_message, .shopfront_hidden_message {
-    padding: 15px;
     border-radius: 5px;
   }
 
@@ -135,11 +134,6 @@
   }
 
   .shopfront_closed_message {
-    margin: 2em 0em;
-  }
-
-  .shopfront_hidden_message {
-    border: 2px solid #db4;
     margin: 2em 0em;
   }
 }
