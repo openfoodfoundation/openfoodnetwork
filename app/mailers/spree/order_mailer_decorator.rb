@@ -2,6 +2,7 @@ Spree::OrderMailer.class_eval do
   helper HtmlHelper
   helper CheckoutHelper
   helper SpreeCurrencyHelper
+  helper OrderHelper
   include I18nHelper
 
   def cancel_email(order_or_order_id, resend = false)
