@@ -1645,6 +1645,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   products_with: with
   products_search: "Search by product or producer"
   products_filter_by: "Filter by"
+  products_filter_selected: "selected"
   products_loading: "Loading products..."
   products_updating_cart: "Updating cart..."
   products_cart_empty: "Cart empty"
