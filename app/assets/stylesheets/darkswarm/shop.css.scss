@@ -12,9 +12,25 @@
 @import "shop-popovers";
 
 .darkswarm {
+  .shop-searchbar {
+    background-color: $grey-100;
+    height: 5em;
+    padding: 1em;
+    margin-bottom: 1em;
+    position: relative;
+    z-index: 5;
+
+    input#search {
+      height: 3.5em;
+      border-radius: 0.25em;
+      border: solid 1px $grey-300;
+      background-color: $white;
+      margin: 0;
+    }
+  }
+
   products {
     display: block;
-    padding-top: 20px;
 
     @media all and (max-width: 768px) {
       input.button.right {

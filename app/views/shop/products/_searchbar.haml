@@ -1,0 +1,7 @@
+.shop-searchbar
+  .row
+    .small-5.columns
+      %input#search.text{"ng-model" => "query",
+            placeholder: t(:products_search),
+            "ng-debounce" => "200",
+            "ofn-disable-enter" => true}
