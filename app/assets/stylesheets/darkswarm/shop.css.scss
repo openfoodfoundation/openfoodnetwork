@@ -11,6 +11,11 @@
 @import "shop-taxon-flag";
 @import "shop-popovers";
 
+$sidebar-small-width: 85%;
+$sidebar-medium-width: 65%;
+$sidebar-large-width: 45%;
+$sidebar-footer-height: 5em;
+
 .darkswarm {
   .shop-searchbar {
     background-color: $grey-100;
@@ -68,9 +73,15 @@
       background-color: rgba(0, 0, 0, 0.15);
       opacity: 0;
       transition: opacity 250ms ease-in-out 0s;
+    }
 
-      &.shown {
+    &.shown {
+      .background {
         opacity: 1;
+      }
+
+      .sidebar, .sidebar-footer {
+        margin-right: 0;
       }
     }
 
@@ -80,24 +91,58 @@
       right: 0;
       z-index: 210;
       height: 100%;
-      width: 45%;
-      margin-right: -45%;
+      width: $sidebar-large-width;
+      margin-right: -$sidebar-large-width;
       background-color: rgba($white, 0.95);
       padding: 1em;
       transition: margin 250ms ease-in-out 0s;
+      overflow-y: scroll;
 
-      &.shown {
-        margin-right: 0;
+      .property-selectors {
+        margin-bottom: $sidebar-footer-height + 2em;
       }
+    }
 
-      @media all and (max-width: 768px) {
-        width: 65%;
-        margin-right: -65%;
+    .sidebar-footer {
+      background-color: $grey-800;
+      width: $sidebar-large-width;
+      margin-right: -$sidebar-large-width;
+      height: $sidebar-footer-height;
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      transition: margin 250ms ease-in-out 0s;
+      padding: 1em;
+
+      button {
+        height: 3em;
+        background-color: $grey-800;
+        color: $white;
+        border: 1px solid $grey-600;
+        border-radius: 0.5em;
+        width: 47%;
+        margin: 0;
+        padding: 0;
+
+        &.done {
+          background-color: $orange-500;
+          border: none;
+          margin-left: 3%;
+        }
       }
+    }
 
-      @media all and (max-width: 480px) {
-        width: 85%;
-        margin-right: -85%;
+    @media all and (max-width: 768px) {
+      .sidebar, .sidebar-footer {
+        width: $sidebar-medium-width;
+        margin-right: -$sidebar-medium-width;
+      }
+    }
+
+    @media all and (max-width: 480px) {
+      .sidebar, .sidebar-footer {
+        width: $sidebar-small-width;
+        margin-right: -$sidebar-small-width;
       }
     }
   }
