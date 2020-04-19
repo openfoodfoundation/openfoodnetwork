@@ -7,7 +7,7 @@
             "ofn-disable-enter" => true}
 
       .hide-for-large-up
-        %button{type: 'button'}
+        %button{type: 'button', ng: {click: 'toggleFilterSidebar()'}}
           Filters
           %span{ng: {show: 'filtersCount()' }}
             ({{ filtersCount() }})
