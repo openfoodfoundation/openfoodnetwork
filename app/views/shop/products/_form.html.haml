@@ -54,3 +54,12 @@
                 %span{ng: {show: 'filtersCount()' }}
                   = "({{ filtersCount() }} #{t(:products_filter_selected)})"
               = render partial: "shop/products/filters"
+
+            .shop-filters-sidebar.hide-for-large-up{ng: {show: 'showFilterSidebar'}}
+              .background{ng: {click: 'toggleFilterSidebar()'}}
+              .sidebar
+                %h5
+                  = t(:products_filter_by)
+                  %span{ng: {show: 'filtersCount()' }}
+                    = "({{ filtersCount() }} #{t(:products_filter_selected)})"
+                = render partial: "shop/products/filters"
