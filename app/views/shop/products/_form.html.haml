@@ -49,5 +49,8 @@
                   %input.small.button.primary.right.add_to_cart{type: :submit, value: "{{ Cart.dirty ? '#{t(:products_updating_cart)}' : (Cart.empty() ? '#{t(:products_cart_empty)}' : '#{t(:products_edit_cart)}' ) }}", "ng-disabled" => "Cart.dirty || Cart.empty()", "ng-class" => "{ dirty: Cart.dirty }" }
 
             .hide-for-medium-down.large-2.columns
-              %h5= t(:products_filter_by)
+              %h5
+                = t(:products_filter_by)
+                %span{ng: {show: 'filtersCount()' }}
+                  = "({{ filtersCount() }} #{t(:products_filter_selected)})"
               = render partial: "shop/products/filters"
