@@ -7,13 +7,6 @@
   // #search
   @include placeholder(rgba(0, 0, 0, 0.4), #777);
 
-  input#search {
-    @include medium-input(rgba(0, 0, 0, 0.3), #777, $clr-brick);
-
-    // avoid zoom on iphone, see issue #4535
-    font-size: 1rem;
-  }
-
   // ordering
   product {
     input {
