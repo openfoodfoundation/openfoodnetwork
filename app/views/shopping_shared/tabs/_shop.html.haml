@@ -13,12 +13,11 @@
               %em
                 = render partial: "shopping_shared/next_order_cycle"
                 = render partial: "shopping_shared/last_order_cycle"
-          %p
-            = t :shopping_oc_closed_description
-
+          .shopfront_closed_message
           - if shopfront_closed_message?
-            .shopfront_closed_message
-              = current_distributor.preferred_shopfront_closed_message.html_safe
+            = current_distributor.preferred_shopfront_closed_message.html_safe
+          - else
+            = t :shopping_oc_closed_description
 
       - unless require_customer?
         = render partial: "shop/products/form"
