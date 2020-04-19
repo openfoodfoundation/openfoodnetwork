@@ -2,23 +2,23 @@
   .order-cycle-bar.hide-for-large-up
     = render partial: "shopping_shared/order_cycles"
 
-  .row
-    .small-12.columns
-      - if no_open_order_cycles?
-        .content
-          %h4
-            %i.ofn-i_012-warning
-            = t :shopping_oc_closed
-            %small
-              %em
-                = render partial: "shopping_shared/next_order_cycle"
-                = render partial: "shopping_shared/last_order_cycle"
-          %p
-            = t :shopping_oc_closed_description
+  - if no_open_order_cycles?
+    .row
+      .small-12.columns
+      .content
+        %h4
+          %i.ofn-i_012-warning
+          = t :shopping_oc_closed
+          %small
+            %em
+              = render partial: "shopping_shared/next_order_cycle"
+              = render partial: "shopping_shared/last_order_cycle"
+        %p
+          = t :shopping_oc_closed_description
 
-          - if shopfront_closed_message?
-            .shopfront_closed_message
-              = current_distributor.preferred_shopfront_closed_message.html_safe
+        - if shopfront_closed_message?
+          .shopfront_closed_message
+            = current_distributor.preferred_shopfront_closed_message.html_safe
 
-      - unless require_customer?
-        = render partial: "shop/products/form"
+  - unless require_customer?
+    = render partial: "shop/products/form"

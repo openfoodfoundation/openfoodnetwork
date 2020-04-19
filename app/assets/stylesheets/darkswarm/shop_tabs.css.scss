@@ -8,6 +8,8 @@
   .tab-buttons {
     color: $dark-grey;
     box-shadow: $distributor-header-shadow;
+    position: relative;
+    z-index: 10;
 
     .columns {
       display: flex;
