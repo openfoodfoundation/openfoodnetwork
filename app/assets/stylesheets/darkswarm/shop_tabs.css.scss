@@ -77,7 +77,6 @@
 
   .page-view {
     background: none;
-    background-color: $grey-080;
     border: none;
     padding-bottom: 5em;
 
@@ -118,5 +117,9 @@
         margin-bottom: 2px;
       }
     }
+  }
+
+  .page-view.with-darker-background {
+    background-color: $grey-080;
   }
 }
