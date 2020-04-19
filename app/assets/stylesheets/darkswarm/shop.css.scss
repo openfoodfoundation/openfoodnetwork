@@ -57,6 +57,12 @@
       height: 100%;
       width: 100%;
       background-color: rgba(0, 0, 0, 0.15);
+      opacity: 0;
+      transition: opacity 250ms ease-in-out 0s;
+
+      &.shown {
+        opacity: 1;
+      }
     }
 
     .sidebar {
@@ -66,15 +72,23 @@
       z-index: 210;
       height: 100%;
       width: 45%;
+      margin-right: -45%;
       background-color: rgba($white, 0.95);
       padding: 1em;
+      transition: margin 250ms ease-in-out 0s;
+
+      &.shown {
+        margin-right: 0;
+      }
 
       @media all and (max-width: 768px) {
         width: 65%;
+        margin-right: -65%;
       }
 
       @media all and (max-width: 480px) {
         width: 85%;
+        margin-right: -85%;
       }
     }
   }

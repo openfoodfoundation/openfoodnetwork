@@ -56,8 +56,8 @@
               = render partial: "shop/products/filters"
 
             .shop-filters-sidebar.hide-for-large-up{ng: {show: 'showFilterSidebar'}}
-              .background{ng: {click: 'toggleFilterSidebar()'}}
-              .sidebar
+              .background{ng: {click: 'toggleFilterSidebar()', class: "{'shown': showFilterSidebar}"}}
+              .sidebar{ng: {class: "{'shown': showFilterSidebar}"}}
                 %h5
                   = t(:products_filter_by)
                   %span{ng: {show: 'filtersCount()' }}
