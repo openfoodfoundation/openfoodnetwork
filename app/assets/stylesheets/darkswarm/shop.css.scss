@@ -34,6 +34,14 @@
         font-style: italic;
       }
     }
+
+    button {
+      background-color: $grey-600;
+      margin-left: 1em;
+      height: 3em;
+      width: 7em;
+      padding: 0;
+    }
   }
 
   products {
