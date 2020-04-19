@@ -94,3 +94,6 @@ Darkswarm.controller "ProductsCtrl", ($scope, $filter, $rootScope, Products, Ord
       $scope.Products.products = []
       $scope.update_filters()
       $scope.loadProducts()
+
+  $scope.filtersCount = () ->
+    $scope.taxonSelectors.totalActive() + $scope.propertySelectors.totalActive()
