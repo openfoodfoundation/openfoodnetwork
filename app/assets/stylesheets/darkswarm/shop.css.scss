@@ -21,11 +21,18 @@
     z-index: 5;
 
     input#search {
-      height: 3.5em;
+      height: 3em;
       border-radius: 0.25em;
       border: solid 1px $grey-300;
-      background-color: $white;
       margin: 0;
+      padding: 0 1em 0 2.75em;
+      width: 100%;
+      background: $white url("/assets/icn-search-grey.png") 1em center no-repeat;
+      font-size: 1em;
+
+      &::placeholder {
+        font-style: italic;
+      }
     }
   }
 
