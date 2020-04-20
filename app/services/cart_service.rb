@@ -23,21 +23,25 @@ class CartService
   end
 
   def attempt_cart_add_variants(variants_data)
+    loaded_variants = indexed_variants(variants_data)
+
     variants_data.each do |variant_data|
-      if varies_from_cart(variant_data)
-        attempt_cart_add(variant_data[:variant_id], variant_data[:quantity], variant_data[:max_quantity])
+      loaded_variant = loaded_variants[variant_data[:variant_id].to_i]
+
+      if varies_from_cart(variant_data, loaded_variant)
+        attempt_cart_add(
+          loaded_variant, variant_data[:quantity], variant_data[:max_quantity]
+        )
       end
     end
   end
 
-  def attempt_cart_add(variant_id, quantity, max_quantity = nil)
+  def attempt_cart_add(variant, quantity, max_quantity = nil)
     quantity = quantity.to_i
     max_quantity = max_quantity.to_i if max_quantity
     return unless quantity > 0
 
-    variant = Spree::Variant.find(variant_id)
     scoper.scope(variant)
-
     return unless valid_variant?(variant)
 
     cart_add(variant, quantity, max_quantity)
@@ -102,8 +106,8 @@ class CartService
   end
 
   # Returns true if the saved cart differs from what's in the posted data, otherwise false
-  def varies_from_cart(variant_data)
-    li = line_item_for_variant_id variant_data[:variant_id]
+  def varies_from_cart(variant_data, loaded_variant)
+    li = line_item_for_variant loaded_variant
 
     li_added = li.nil? && (variant_data[:quantity].to_i > 0 || variant_data[:max_quantity].to_i > 0)
     li_quantity_changed     = li.present? && li.quantity.to_i     != variant_data[:quantity].to_i
@@ -135,11 +139,22 @@ class CartService
     false
   end
 
-  def line_item_for_variant_id(variant_id)
-    order.find_line_item_by_variant Spree::Variant.find(variant_id)
+  def line_item_for_variant(variant)
+    order.find_line_item_by_variant variant
   end
 
   def variant_ids_in_cart
     @order.line_items.pluck :variant_id
+  end
+
+  def indexed_variants(variants_data)
+    @indexed_variants ||= begin
+      variant_ids_in_data = variants_data.map{ |v| v[:variant_id] }
+
+      Spree::Variant.where(id: variant_ids_in_data).
+        includes(:stock_items, :product).
+        all.
+        index_by(&:id)
+    end
   end
 end
