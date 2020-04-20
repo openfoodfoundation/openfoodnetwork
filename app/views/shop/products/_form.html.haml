@@ -6,25 +6,10 @@
     .row
       .small-12.columns
         .footer-pad.small-12.columns
-          .row.animate-slide{ "ng-show" => "query || appliedPropertiesList() || appliedTaxonsList()" }
-            .small-12.columns
-              .alert-box.search-alert.ng-scope
-                %a.right{"ng-click" => "clearAll()"}
-                  = t :products_clear_all
-                  %i.ofn-i_009-close
-                %span.filter-label
-                  = t :products_showing
-                  %span.applied-properties
-                    {{ appliedPropertiesList() }}
-                  %span.applied-taxons
-                    {{ appliedTaxonsList() }}
-                  %span{ ng: { hide: "!query"} }
-                    %span{ "ng-show" => "appliedPropertiesList() || appliedTaxonsList()" }
-                      = t :products_with
-                    %span.applied-search "{{ query }}"
-
           .row
             .medium-12.large-10.columns
+              = render partial: "shop/products/search_feedback"
+
               %div.pad-top{ "infinite-scroll" => "loadMore()", "infinite-scroll-distance" => "1", "infinite-scroll-disabled" => 'Products.loading' }
                 %product.animate-repeat{"ng-controller" => "ProductNodeCtrl", "ng-repeat" => "product in Products.products track by product.id", "id" => "product-{{ product.id }}"}
                   = render "shop/products/summary"
