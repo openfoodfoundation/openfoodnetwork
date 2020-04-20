@@ -6,6 +6,8 @@ module Api
     skip_authorization_check
 
     def products
+      render_no_products unless order_cycle.open?
+
       products = ProductsRenderer.new(
         distributor,
         order_cycle,
@@ -15,7 +17,7 @@ module Api
 
       render json: products
     rescue ProductsRenderer::NoProducts
-      render status: :not_found, json: ''
+      render_no_products
     end
 
     def taxons
@@ -34,6 +36,10 @@ module Api
     end
 
     private
+
+    def render_no_products
+      render status: :not_found, json: ''
+    end
 
     def product_properties
       Spree::Property.
