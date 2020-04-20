@@ -23,16 +23,6 @@
                     .small-12.columns.text-center
                       %img.spinner{ src: "/assets/spinning-circles.svg" }
 
-                %div{"ng-show" => "Products.products.length == 0 && !Products.loading"}
-                  .row.summary
-                    .small-12.columns
-                      %p.no-results
-                        = t :search_no_results_html, query: "<strong>{{query}}</strong>".html_safe
-              .row
-                .small-12.columns
-                  %i.ofn-i_011-spinner.cart-spinner{"ng-show" => "Cart.dirty"}
-                  %input.small.button.primary.right.add_to_cart{type: :submit, value: "{{ Cart.dirty ? '#{t(:products_updating_cart)}' : (Cart.empty() ? '#{t(:products_cart_empty)}' : '#{t(:products_edit_cart)}' ) }}", "ng-disabled" => "Cart.dirty || Cart.empty()", "ng-class" => "{ dirty: Cart.dirty }" }
-
             .hide-for-medium-down.large-2.columns
               %h5
                 = t(:products_filter_by)

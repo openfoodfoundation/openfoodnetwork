@@ -122,6 +122,24 @@
     }
   }
 
+  .no-results {
+    color: $grey-800;
+    font-style: italic;
+    font-size: 1.25em;
+  }
+
+  .clear-search {
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    color: $orange-500;
+    font-size: 1.25em;
+
+    &:hover {
+      color: $orange-400;
+    }
+  }
+
   span {
     color: $grey-800;
     font-style: italic;
