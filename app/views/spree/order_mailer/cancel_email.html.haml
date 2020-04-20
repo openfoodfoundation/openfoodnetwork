@@ -21,5 +21,12 @@
   = t(".details")
 
 = render 'order_summary'
+
+%p
+  - if @order.paid?
+    = t(".paid_order", distributor: @order.distributor.name)
+  - else
+    = t(".unpaid_order")
+
 = render 'signoff'
 = render 'shared/mailers/social_and_contact'
