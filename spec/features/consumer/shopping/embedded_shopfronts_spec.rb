@@ -46,9 +46,8 @@ feature "Using embedded shopfront functionality", js: true do
     it "allows shopping and checkout" do
       on_embedded_page do
         fill_in "variants[#{variant.id}]", with: 1
-        wait_until_enabled 'input.add_to_cart'
 
-        first("input.add_to_cart:not([disabled='disabled'])").click
+        edit_cart
 
         expect(page).to have_text 'Your shopping cart'
         find('a#checkout-link').click
@@ -91,11 +90,11 @@ feature "Using embedded shopfront functionality", js: true do
 
     it "redirects to embedded hub on logout when embedded" do
       on_embedded_page do
-        wait_for_shop_loaded
+        wait_for_cart
         find('ul.right li#login-link a').click
         login_with_modal
 
-        wait_for_shop_loaded
+        wait_for_cart
         wait_until { page.find('ul.right li.user-menu.has-dropdown').value.present? }
         logout_via_navigation
 
@@ -105,14 +104,6 @@ feature "Using embedded shopfront functionality", js: true do
   end
 
   private
-
-  # When you have pending changes and try to navigate away from a page, it asks you "Are you sure?".
-  # When we click the "Update" button to save changes, we need to wait
-  #   until it is actually saved and "loading" disappears before doing anything else.
-  def wait_for_shop_loaded
-    page.has_no_content? "Loading"
-    page.has_no_css? "input[value='Updating cart...']"
-  end
 
   def login_with_modal
     page.has_selector? 'div.login-modal', visible: true
