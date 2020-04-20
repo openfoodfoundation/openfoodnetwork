@@ -15,17 +15,17 @@ class CartService
     @distributor, @order_cycle = distributor_and_order_cycle
 
     @order.with_lock do
-      variants = read_variants from_hash
-      attempt_cart_add_variants variants
-      overwrite_variants variants unless !overwrite
+      variants_data = read_variants from_hash
+      attempt_cart_add_variants variants_data
+      overwrite_variants variants_data if overwrite
     end
     valid?
   end
 
-  def attempt_cart_add_variants(variants)
-    variants.each do |v|
-      if varies_from_cart(v)
-        attempt_cart_add(v[:variant_id], v[:quantity], v[:max_quantity])
+  def attempt_cart_add_variants(variants_data)
+    variants_data.each do |variant_data|
+      if varies_from_cart(variant_data)
+        attempt_cart_add(variant_data[:variant_id], variant_data[:quantity], variant_data[:max_quantity])
       end
     end
   end
@@ -99,6 +99,7 @@ class CartService
     [@order.distributor, @order.order_cycle]
   end
 
+  # Returns true if the saved cart differs from what's in the posted data, otherwise false
   def varies_from_cart(variant_data)
     li = line_item_for_variant_id variant_data[:variant_id]
 
