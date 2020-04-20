@@ -15,8 +15,11 @@
   = t(".dont_cancel", email: @order.distributor.contact.email)
 
 %p &nbsp;
+%h4
+  = t(".order_summary_canceled_html", number: @order.number)
+%p
+  = t(".details")
 
-= t(".order_summary_canceled")
 = render 'order_summary'
 = render 'signoff'
 = render 'shared/mailers/social_and_contact'
