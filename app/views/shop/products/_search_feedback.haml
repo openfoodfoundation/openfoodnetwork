@@ -1,17 +1,26 @@
 .row.animate-slide{ "ng-show" => "query || appliedPropertiesList() || appliedTaxonsList()" }
   .small-12.columns
     .alert-box.search-alert.ng-scope
-      %a.clear-all.right{"ng-click" => "clearAll()"}
-        = t :products_clear
-        %i.ofn-i_009-close
-      %span.filter-label
-        = t :products_results_for
-        %span.applied-properties
-          {{ appliedPropertiesList() }}
-        %span.applied-taxons
-          {{ appliedTaxonsList() }}
-        %span{ ng: { hide: "!query"} }
-          %span{ "ng-show" => "appliedPropertiesList() || appliedTaxonsList()" }
-            = t :products_with
-          %span.applied-search
-            {{ query }}
+      %div{"ng-show" => "Products.products.length > 0"}
+        %a.clear-all.right{"ng-click" => "clearAll()"}
+          = t :products_clear
+          %i.ofn-i_009-close
+        %span.filter-label
+          = t :products_results_for
+          %span.applied-properties
+            {{ appliedPropertiesList() }}
+          %span.applied-taxons
+            {{ appliedTaxonsList() }}
+          %span{ ng: { hide: "!query"} }
+            %span{ "ng-show" => "appliedPropertiesList() || appliedTaxonsList()" }
+              = t :products_with
+            %span.applied-search
+              {{ query }}
+
+      %div{"ng-show" => "Products.products.length == 0 && !Products.loading"}
+        .row.summary
+          .small-12.columns
+            %p.no-results
+              = t :products_no_results_html, query: "<strong>{{query}}</strong>".html_safe
+            %button.clear-search{type: 'button', ng: {click: 'clearAll()'}}
+              = t :products_clear_search
