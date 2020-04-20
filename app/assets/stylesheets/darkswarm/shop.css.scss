@@ -32,6 +32,7 @@ $sidebar-footer-height: 5em;
       margin: 0;
       padding: 0 1em 0 2.75em;
       width: 100%;
+      min-width: 0;
       background: $white url("/assets/icn-search-grey.png") 1em center no-repeat;
       font-size: 1em;
 
