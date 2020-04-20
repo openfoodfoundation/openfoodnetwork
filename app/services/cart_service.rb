@@ -33,10 +33,12 @@ class CartService
   def attempt_cart_add(variant_id, quantity, max_quantity = nil)
     quantity = quantity.to_i
     max_quantity = max_quantity.to_i if max_quantity
+    return unless quantity > 0
+
     variant = Spree::Variant.find(variant_id)
     scoper.scope(variant)
 
-    return unless quantity > 0 && valid_variant?(variant)
+    return unless valid_variant?(variant)
 
     cart_add(variant, quantity, max_quantity)
   end
