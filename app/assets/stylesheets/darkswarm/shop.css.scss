@@ -125,7 +125,44 @@
     }
   }
 
-  .shopfront_closed_message {
-    margin: 2em 0em;
+  .closed_shop_header {
+    background-color: $grey-650;
+    color: $white;
+
+    h4 {
+      color: $white;
+
+      div {
+        display: inline-block;
+      }
+    }
+
+    p {
+      line-height: 2.5rem;
+      margin-bottom: 0;
+    }
+  }
+
+  .warning_sign {
+    margin: 0 10px 0 5px;
+
+    .rectangle {
+      position: absolute;
+      top: 27px;
+      color: $grey-650;
+      width: 23px;
+      height: 23px;
+      transform: rotate(-315deg);
+      border-radius: 4px;
+      background-color: #ffffff;
+    }
+
+    strong {
+      text-align: center;
+      color: $grey-650;
+      display: block;
+      position: relative;
+      width: 23px;
+    }
   }
 }
