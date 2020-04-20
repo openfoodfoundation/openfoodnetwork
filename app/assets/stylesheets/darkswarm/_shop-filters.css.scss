@@ -107,26 +107,37 @@
 // Alert when search, taxon, filter is triggered
 
 .alert-box.search-alert {
-  background-color: $clr-yellow-light;
-  border-color: $clr-yellow-light;
+  background-color: $white;
   color: #777;
-  font-size: 0.75rem;
-  padding: 0.5rem 0.75rem;
+  font-size: 1em;
+  padding: 0.35em 0 0;
+  border: 0;
+  margin: 0;
 
-  span.applied-properties {
-    color: #333;
+  .clear-all {
+    color: $grey-500;
+
+    &:hover {
+      color: $grey-600;
+    }
   }
 
-  span.applied-taxons {
-    color: $clr-blue;
-  }
+  span {
+    color: $grey-800;
+    font-style: italic;
 
-  span.applied-search {
-    color: $clr-brick;
-  }
+    &.applied-properties {
+      color: $grey-800;
+    }
 
-  span.filter-label {
-    opacity: 0.75;
+    &.applied-taxons {
+      color: $clr-blue;
+    }
+
+    &.applied-search {
+      font-weight: bold;
+      color: $teal-500;
+    }
   }
 }
 
