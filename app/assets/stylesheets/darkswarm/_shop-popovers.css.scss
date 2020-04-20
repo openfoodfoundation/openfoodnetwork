@@ -114,7 +114,7 @@ button.graph-button {
     }
   }
 
-  @media all and (max-width: 768px) {
+  @include breakpoint(tablet) {
     // Hide for small
     display: none;
   }

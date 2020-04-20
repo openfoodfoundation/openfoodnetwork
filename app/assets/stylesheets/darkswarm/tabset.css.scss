@@ -10,7 +10,7 @@
   .tab {
     text-align: center;
 
-    @media all and (max-width: 640px) {
+    @include breakpoint(phablet) {
       text-align: left;
     }
 
@@ -24,7 +24,7 @@
       padding: 1em;
       border: none;
 
-      @media all and (max-width: 640px) {
+      @include breakpoint(phablet) {
         padding: 0.35em 0 0.65em 0;
         text-shadow: none;
       }
@@ -37,7 +37,7 @@
       border-bottom: 4px solid $clr-brick-bright;
       cursor: pointer;
 
-      @media all and (max-width: 640px) {
+      @include breakpoint(phablet) {
         transition: none;
         color: white;
         background-color: $clr-brick-bright;
@@ -46,7 +46,7 @@
       a {
         color: $clr-brick-bright;
 
-        @media all and (max-width: 640px) {
+        @include breakpoint(phablet) {
           color: #ffffff;
         }
       }
@@ -55,14 +55,14 @@
     &.selected {
       border-bottom: 4px solid $clr-brick;
 
-      @media all and (max-width: 640px) {
+      @include breakpoint(phablet) {
         background-color: $clr-brick;
       }
 
       a {
         color: $clr-brick;
 
-        @media all and (max-width: 640px) {
+        @include breakpoint(phablet) {
           color: #ffffff;
         }
       }
