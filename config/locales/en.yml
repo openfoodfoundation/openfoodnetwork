@@ -1639,8 +1639,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     other: You have <a href='%{path}' target='_blank'>%{count} orders with %{shop}</a> currently open for review. You can make changes until %{oc_close}.
   orders_changeable_orders_alert_html: This order has been confirmed, but you can make changes until <strong>%{oc_close}</strong>.
 
-  products_clear_all: Clear all
+  products_clear: Clear
   products_showing: "Showing:"
+  products_results_for: "Results for"
   products_or: "OR"
   products_with: with
   products_search: "Search..."
