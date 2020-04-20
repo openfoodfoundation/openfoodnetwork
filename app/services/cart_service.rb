@@ -34,7 +34,7 @@ class CartService
     quantity = quantity.to_i
     max_quantity = max_quantity.to_i if max_quantity
     variant = Spree::Variant.find(variant_id)
-    OpenFoodNetwork::ScopeVariantToHub.new(@distributor).scope(variant)
+    scoper.scope(variant)
 
     return unless quantity > 0 && valid_variant?(variant)
 
@@ -67,6 +67,10 @@ class CartService
   end
 
   private
+
+  def scoper
+    @scoper ||= OpenFoodNetwork::ScopeVariantToHub.new(@distributor)
+  end
 
   def read_variants(data)
     @variants_h = read_products_hash(data) +
