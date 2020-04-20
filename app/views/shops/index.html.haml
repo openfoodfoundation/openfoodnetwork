@@ -2,7 +2,8 @@
   = t :shops_title
 
 - content_for :injection_data do
-  = inject_enterprises(@enterprises)
+  - cache "shops/index/inject_enterprises", expires_in: 15.seconds do
+    = inject_enterprises(@enterprises)
 
 #panes
   #shops.pane
