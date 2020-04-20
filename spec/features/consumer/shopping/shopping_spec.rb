@@ -246,24 +246,25 @@ feature "As a consumer I want to shop with a distributor", js: true do
         before do
           add_variant_to_order_cycle(exchange, variant)
           set_order_cycle(order, oc1)
+          set_order(order)
           visit shop_path
         end
 
         it "should save group buy data to the cart and display it on shopfront reload" do
           # -- Quantity
           fill_in "variants[#{variant.id}]", with: 6
+          wait_for_debounce
           expect(page).to have_in_cart product.name
           wait_until { !cart_dirty }
 
-          li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
-          expect(li.quantity).to eq(6)
+          expect(order.reload.line_items.first.quantity).to eq(6)
 
           # -- Max quantity
           fill_in "variant_attributes[#{variant.id}][max_quantity]", with: 7
+          wait_for_debounce
           wait_until { !cart_dirty }
 
-          li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
-          expect(li.max_quantity).to eq(7)
+          expect(order.reload.line_items.first.max_quantity).to eq(7)
 
           # -- Reload
           visit shop_path
@@ -535,5 +536,11 @@ feature "As a consumer I want to shop with a distributor", js: true do
   def shows_products_without_customer_warning
     expect(page).to have_no_content "This shop is for customers only."
     expect(page).to have_content product.name
+  end
+
+  def wait_for_debounce
+    # The auto-submit on these specific form elements (add to cart) now has a small built-in
+    # waiting period before submitting the data...
+    sleep 0.6
   end
 end
