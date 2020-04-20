@@ -21,17 +21,23 @@ module Api
     end
 
     def taxons
-      taxons = Spree::Taxon.
-        joins(:products).
-        where(spree_products: { id: distributed_products }).
-        select('DISTINCT spree_taxons.*')
+      taxons = Rails.cache.fetch("oc-taxons-#{order_cycle.id}", expires_in: 30.seconds) do
+        Spree::Taxon.
+          joins(:products).
+          where(spree_products: { id: distributed_products }).
+          select('DISTINCT spree_taxons.*')
+      end
 
       render json: ActiveModel::ArraySerializer.new(taxons, each_serializer: Api::TaxonSerializer)
     end
 
     def properties
+      properties = Rails.cache.fetch("oc-properties-#{order_cycle.id}", expires_in: 30.seconds) do
+        product_properties | producer_properties
+      end
+
       render json: ActiveModel::ArraySerializer.new(
-        product_properties | producer_properties, each_serializer: Api::PropertySerializer
+        properties, each_serializer: Api::PropertySerializer
       )
     end
 
