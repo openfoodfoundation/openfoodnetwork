@@ -23,22 +23,22 @@
       border-color: #b3b3b3;
       text-align: right;
 
-      @media all and (max-width: 1024px) {
+      @include breakpoint(desktop) {
         width: 8rem;
       }
 
-      @media all and (max-width: 768px) {
+      @include breakpoint(tablet) {
         width: 7rem;
       }
 
-      @media all and (max-width: 640px) {
+      @include breakpoint(phablet) {
         float: left !important;
         font-size: 0.75rem;
         padding-left: 0.25rem;
         padding-right: 0.25rem;
       }
 
-      @media all and (max-width: 480px) {
+      @include breakpoint(mobile) {
         width: 5.8rem;
       }
 
@@ -62,15 +62,15 @@
     input.bulk {
       width: 5rem;
 
-      @media all and (max-width: 1024px) {
+      @include breakpoint(desktop) {
         width: 4rem;
       }
 
-      @media all and (max-width: 768px) {
+      @include breakpoint(tablet) {
         width: 3.5rem;
       }
 
-      @media all and (max-width: 480px) {
+      @include breakpoint(mobile) {
         width: 2.8rem;
       }
     }
@@ -86,7 +86,7 @@
     .bulk-input-container {
       float: right;
 
-      @media all and (max-width: 640px) {
+      @include breakpoint(phablet) {
         float: left !important;
       }
 

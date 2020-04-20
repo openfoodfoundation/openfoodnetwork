@@ -1,3 +1,4 @@
+@import "mixins";
 @import 'typography';
 
 section {
@@ -34,7 +35,7 @@ section {
       @include headingFont;
     }
 
-    @media all and (max-width: 768px) {
+    @include breakpoint(tablet) {
       location, location + small {
         display: block;
       }
@@ -44,7 +45,7 @@ section {
       margin-top: 0;
       padding-top: 0.45em;
 
-      @media all and (max-width: 768px) {
+      @include breakpoint(tablet) {
         margin-bottom: 8px;
       }
     }

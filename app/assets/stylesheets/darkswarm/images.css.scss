@@ -13,7 +13,7 @@
   &.placeholder {
     opacity: 0.35;
 
-    @media all and (max-width: 1024px) {
+    @include breakpoint(desktop) {
       display: none;
     }
   }
@@ -31,7 +31,7 @@
   max-height: 260px;
   overflow: hidden;
 
-  @media all and (max-width: 640px) {
+  @include breakpoint(phablet) {
     min-height: 68px;
   }
 }

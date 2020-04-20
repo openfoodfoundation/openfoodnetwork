@@ -14,12 +14,12 @@
     .columns {
       display: flex;
 
-      @media all and (max-width: 1024px) {
+      @include breakpoint(desktop) {
         display: table;
         width: 100%;
       }
 
-      @media all and (max-width: 480px) {
+      @include breakpoint(mobile) {
         padding: 0;
       }
     }
@@ -56,7 +56,7 @@
         background: none;
       }
 
-      @media all and (max-width: 640px) {
+      @include breakpoint(phablet) {
         padding: 0.35em 0 0.65em 0;
       }
     }
@@ -69,7 +69,7 @@
       }
     }
 
-    @media all and (max-width: 1024px) {
+    @include breakpoint(desktop) {
       display: table-cell;
       width: auto;
     }
@@ -106,7 +106,7 @@
       p {
         max-width: 100%;
 
-        @media all and (max-width: 768px) {
+        @include breakpoint(tablet) {
           height: auto !important;
         }
       }
