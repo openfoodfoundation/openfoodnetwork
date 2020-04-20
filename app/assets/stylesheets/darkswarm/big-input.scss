@@ -23,7 +23,7 @@
   box-shadow: none;
   color: $inputactv;
 
-  @media all and (max-width: 640px) {
+  @include breakpoint(phablet) {
     font-size: 1.25rem;
   }
 

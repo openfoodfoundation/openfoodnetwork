@@ -16,7 +16,7 @@
   padding-top: 100px;
   padding-bottom: 100px;
 
-  @media all and (max-width: 640px) {
+  @include breakpoint(phablet) {
     padding-top: 25px;
   }
 }
@@ -254,4 +254,19 @@
   background-position: center 50px;
   background-repeat: no-repeat;
   background-size: 922px 922px;
+}
+
+@mixin breakpoint($point) {
+  @if $point == desktop {
+    @media all and (max-width: 1024px) { @content; }
+  }
+  @else if $point == tablet {
+    @media all and (max-width: 768px) { @content; }
+  }
+  @else if $point == phablet {
+    @media all and (max-width: 640px)  { @content; }
+  }
+  @else if $point == mobile {
+    @media all and (max-width: 480px)  { @content; }
+  }
 }

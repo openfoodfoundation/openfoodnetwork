@@ -26,7 +26,7 @@
   display: block;
   border: 0;
 
-  @media all and (max-width: 640px) {
+  @include breakpoint(phablet) {
     margin-bottom: 1rem;
   }
 
@@ -45,7 +45,7 @@
   }
 
   // Generic text resize
-  @media all and (max-width: 640px) {
+  @include breakpoint(phablet) {
     &, & * {
       font-size: 0.875rem;
     }
@@ -114,7 +114,7 @@
     .fat > div {
       border-top: 1px solid #aaa;
 
-      @media all and (max-width: 640px) {
+      @include breakpoint(phablet) {
         margin-top: 1em;
       }
 

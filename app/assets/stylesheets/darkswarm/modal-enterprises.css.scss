@@ -57,7 +57,7 @@
   p {
     line-height: 2.4;
 
-    @media all and (max-width: 640px) {
+    @include breakpoint(phablet) {
       line-height: 1.4;
     }
   }
@@ -193,7 +193,7 @@
       display: inline-block;
       border-bottom: 1px solid transparent;
 
-      @media all and (max-width: 640px) {
+      @include breakpoint(phablet) {
         display: none;
       }
     }

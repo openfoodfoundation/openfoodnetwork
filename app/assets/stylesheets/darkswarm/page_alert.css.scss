@@ -1,3 +1,4 @@
+@import "mixins";
 @import "branding";
 @import "animations";
 @import "compass/css3/transition";
@@ -19,7 +20,7 @@ $page-alert-height: 55px;
     margin: 0;
 
     h6 {
-      @media all and (max-width: 480px) {
+      @include breakpoint(mobile) {
         font-size: 10px;
         line-height: 24px;
       }
