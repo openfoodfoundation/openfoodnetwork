@@ -2,6 +2,7 @@
 @import "branding";
 @import "big-input";
 @import "animations";
+@import "variables";
 
 @mixin filter-selector($base-clr, $border-clr, $hover-clr) {
   &.inline-block, ul.inline-block {
@@ -156,6 +157,14 @@
       font-weight: bold;
       color: $teal-500;
     }
+
+    &.filter-label {
+      float: left;
+    }
+  }
+
+  @include breakpoint(desktop) {
+    text-align: center;
   }
 }
 
