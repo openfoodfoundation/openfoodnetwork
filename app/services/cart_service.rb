@@ -27,12 +27,11 @@ class CartService
 
     variants_data.each do |variant_data|
       loaded_variant = loaded_variants[variant_data[:variant_id].to_i]
+      next unless varies_from_cart(variant_data, loaded_variant)
 
-      if varies_from_cart(variant_data, loaded_variant)
-        attempt_cart_add(
-          loaded_variant, variant_data[:quantity], variant_data[:max_quantity]
-        )
-      end
+      attempt_cart_add(
+        loaded_variant, variant_data[:quantity], variant_data[:max_quantity]
+      )
     end
   end
 
