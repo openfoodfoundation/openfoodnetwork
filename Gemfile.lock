@@ -502,8 +502,6 @@ GEM
       byebug (>= 9.0, < 9.1)
       pry (~> 0.10)
     public_suffix (4.0.3)
-    rabl (0.8.4)
-      activesupport (>= 2.3.14)
     rack (1.4.7)
     rack-cache (1.11.0)
       rack (>= 0.4)
@@ -754,7 +752,6 @@ DEPENDENCIES
   paperclip (~> 3.4.1)
   pg (~> 0.21.0)
   pry-byebug (>= 3.4.3)
-  rabl
   rack-mini-profiler (< 3.0.0)
   rack-rewrite
   rack-ssl

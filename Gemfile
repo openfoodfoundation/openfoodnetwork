@@ -55,7 +55,6 @@ gem 'aws-sdk'
 gem 'bugsnag'
 gem 'db2fog'
 gem 'haml'
-gem 'rabl'
 gem 'redcarpet'
 gem 'sass', "~> 3.3"
 gem 'sass-rails', '~> 3.2.3'
