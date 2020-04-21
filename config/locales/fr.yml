@@ -596,7 +596,7 @@ fr:
         max_fulfilled_units: "Nombre max d'unités commandées"
         order_error: "Des erreurs doivent être résolues avant de pouvoir mettre à jour les commandes.\nLes champs entourés en rouge contiennent des erreurs."
         variants_without_unit_value: "ATTENTION: certaines variantes n'ont pas de nombre d'unités"
-      select_variant: "Choisir une variante"
+      select_variant: "Rechercher un produit et sélectionner une variante"
     enterprise:
       select_outgoing_oc_products_from: Sélectionner les produits sortants pour le cycle de vente parmi
     enterprises:
@@ -1921,6 +1921,7 @@ fr:
   admin_enterprise_relationships_permits: "autorise"
   admin_enterprise_relationships_seach_placeholder: "Rechercher"
   admin_enterprise_relationships_button_create: "Créer"
+  admin_enterprise_relationships_to: "à"
   admin_enterprise_groups: "Groupes d'entreprises"
   admin_enterprise_groups_name: "Produit/Variante"
   admin_enterprise_groups_owner: "Gestionnaire principal"
@@ -2790,6 +2791,8 @@ fr:
     location: "Localisation"
     count_on_hand: "Quantité en stock"
     quantity: "Quantité"
+    on_demand: "A volonté"
+    on_hand: "En stock"
     package_from: "conditionnement par"
     item_description: "Description de la pièce"
     price: "Prix"

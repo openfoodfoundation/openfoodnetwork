@@ -2135,7 +2135,7 @@ pt_BR:
   report_header_quantity: Quantidade
   report_header_max_quantity: Quantidade máxima
   report_header_variant: Variante
-  report_header_variant_value: Valor variante
+  report_header_variant_value: Valor da variante
   report_header_variant_unit: Unidade variante
   report_header_total_available: Total disponível
   report_header_unallocated: Não atribuído
@@ -3201,7 +3201,7 @@ pt_BR:
           no_results: "Nenhum Resultado"
           to_add_variants_you_must_first_define: "Para adicionar variantes, primeiro você precisa definir"
           option_types: "Tipos de Opções"
-          option_values: "Valores de Opções"
+          option_values: "Valores das Opções"
           and: "e"
           new_variant: "Nova Variante"
           show_active: "Mostra Ativos"
