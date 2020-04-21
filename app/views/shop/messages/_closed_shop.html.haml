@@ -1,11 +1,11 @@
-.row.closed_shop_header
+.row.closed-shop-header
   .small-12.columns
     .content{ "darker-background" => true }
       %h4
-        .warning_sign
+        .warning-sign
           .rectangle
           %strong !
-        %div
+        .message
           = t :shopping_oc_closed
       %p
         = render partial: "shopping_shared/next_order_cycle"

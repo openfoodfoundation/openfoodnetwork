@@ -114,7 +114,7 @@
     margin-bottom: 0px;
   }
 
-  .shopfront-message {
+  .open-shop-message {
     a {
       color: #0096ad;
 
@@ -125,43 +125,43 @@
     }
   }
 
-  .closed_shop_header {
+  .closed-shop-header {
     background-color: $grey-650;
     color: $white;
 
     h4 {
       color: $white;
-
-      div {
-        display: inline-block;
-      }
     }
 
     p {
       line-height: 2.5rem;
       margin-bottom: 0;
     }
+
+    .message {
+      display: inline-block;
+    }
   }
 
-  .warning_sign {
+  .warning-sign {
     margin: 0 10px 0 5px;
 
-    .rectangle {
-      position: absolute;
-      top: 27px;
-      color: $grey-650;
-      width: 23px;
-      height: 23px;
-      transform: rotate(-315deg);
-      border-radius: 4px;
-      background-color: #ffffff;
-    }
-
     strong {
-      text-align: center;
       color: $grey-650;
       display: block;
       position: relative;
+      text-align: center;
+      width: 23px;
+    }
+
+    .rectangle {
+      background-color: $black;
+      border-radius: 4px;
+      color: $grey-650;
+      height: 23px;
+      position: absolute;
+      top: 27px;
+      transform: rotate(-315deg);
       width: 23px;
     }
   }
