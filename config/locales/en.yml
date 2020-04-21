@@ -1642,7 +1642,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   products_clear: Clear
   products_showing: "Showing:"
   products_results_for: "Results for"
-  products_or: "OR"
+  products_or: "or"
+  products_filters_in: "in"
   products_with: with
   products_search: "Search..."
   products_filter_by: "Filter by"
