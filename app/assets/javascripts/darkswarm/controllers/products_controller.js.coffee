@@ -85,6 +85,9 @@ Darkswarm.controller "ProductsCtrl", ($scope, $filter, $rootScope, Products, Ord
 
   $scope.clearAll = ->
     $scope.query = ""
+    $scope.clearFilters()
+
+  $scope.clearFilters = ->
     $scope.taxonSelectors.clearAll()
     $scope.propertySelectors.clearAll()
 
