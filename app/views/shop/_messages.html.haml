@@ -18,8 +18,12 @@
           = t '.require_customer_html',
             {contact: link_to(t('.contact'), '#contact'),
              enterprise: current_distributor.name}
-- elsif current_distributor.preferred_shopfront_message.present?
-  .row
-    .small-12.columns
-      .shopfront-message
-        = current_distributor.preferred_shopfront_message.html_safe
+- else
+  - if no_open_order_cycles?
+    = render partial: "shop/closed_shop"
+
+  - elsif current_distributor.preferred_shopfront_message.present?
+    .row
+      .small-12.columns
+        .shopfront-message
+          = current_distributor.preferred_shopfront_message.html_safe
