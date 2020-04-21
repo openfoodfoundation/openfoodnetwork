@@ -8,6 +8,6 @@
 
       .hide-for-large-up
         %button{type: 'button', ng: {click: 'toggleFilterSidebar()'}}
-          Filters
+          = t(:products_filter_heading)
           %span{ng: {show: 'filtersCount()' }}
             ({{ filtersCount() }})
