@@ -56,26 +56,6 @@
             @include transform-scale(scale(1.1));
           }
         }
-
-        @include breakpoint(tablet) {
-          top: 2px;
-          width: 4rem;
-          height: 4rem;
-
-          &:hover, &:focus, &:active {
-            i {
-              left: 30%;
-              top: 30%;
-              font-size: 2rem;
-            }
-          }
-        }
-
-        @include breakpoint(phablet) {
-          display: none;
-          width: 0rem;
-          height: 0rem;
-        }
       }
     }
   }
