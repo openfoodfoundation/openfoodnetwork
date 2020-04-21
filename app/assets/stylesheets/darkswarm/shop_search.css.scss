@@ -1,0 +1,44 @@
+@import "mixins";
+@import "branding";
+
+.shop-searchbar {
+  background-color: $grey-100;
+  height: 5em;
+  padding: 1em 0;
+  margin-bottom: 1em;
+  position: relative;
+  z-index: 5;
+
+  input#search {
+    height: 3em;
+    border-radius: 0.25em;
+    border: solid 1px $grey-300;
+    margin: 0;
+    padding: 0 1em 0 2.75em;
+    width: 100%;
+    min-width: 0;
+    background: $white url("/assets/icn-search-grey.png") 1em center no-repeat;
+    font-size: 1rem; // avoid zoom on iphone, see issue #4535
+
+    &::placeholder {
+      font-style: italic;
+    }
+  }
+
+  button {
+    background-color: $grey-600;
+    margin-left: 1em;
+    height: 3em;
+    width: 7em;
+    padding: 0;
+    font-size: 1em;
+
+    @include breakpoint(mobile) {
+      margin-left: 0.75em;
+    }
+  }
+
+  @include breakpoint(mobile) {
+    font-size: 0.9em;
+  }
+}
