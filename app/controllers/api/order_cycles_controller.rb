@@ -2,8 +2,9 @@ module Api
   class OrderCyclesController < Api::BaseController
     include EnterprisesHelper
     respond_to :json
-
     skip_authorization_check
+
+    FILTERS_EXPIRE = 30.seconds.freeze
 
     def products
       render_no_products unless order_cycle.open?
@@ -21,20 +22,22 @@ module Api
     end
 
     def taxons
-      taxons = CacheService.cache("oc-taxons-#{order_cycle.id}", expires_in: 30.seconds) do
-        Spree::Taxon.
-          joins(:products).
-          where(spree_products: { id: distributed_products }).
-          select('DISTINCT spree_taxons.*')
-      end
+      taxons =
+        CacheService.cache("oc-taxons-#{order_cycle.id}", expires_in: FILTERS_EXPIRE) do
+          Spree::Taxon.
+            joins(:products).
+            where(spree_products: { id: distributed_products }).
+            select('DISTINCT spree_taxons.*')
+        end
 
       render json: ActiveModel::ArraySerializer.new(taxons, each_serializer: Api::TaxonSerializer)
     end
 
     def properties
-      properties = CacheService.cache("oc-properties-#{order_cycle.id}", expires_in: 30.seconds) do
-        product_properties | producer_properties
-      end
+      properties =
+        CacheService.cache("oc-properties-#{order_cycle.id}", expires_in: FILTERS_EXPIRE) do
+          product_properties | producer_properties
+        end
 
       render json: ActiveModel::ArraySerializer.new(
         properties, each_serializer: Api::PropertySerializer
