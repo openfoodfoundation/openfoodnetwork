@@ -112,22 +112,24 @@
             padding-left: 0.9375rem;
           }
 
-          small {
-            font-size: 80%;
-          }
+          .product-producer {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-style: italic;
 
-          small a {
-            color: $teal-500;
+            a {
+              color: $teal-500;
 
-            &:hover, &:focus, &:active {
-              color: $teal-600;
-              text-decoration: underline;
+              &:hover, &:focus, &:active {
+                color: $teal-600;
+                text-decoration: underline;
+              }
             }
           }
 
           h3 {
             font-size: 1.5rem;
-            margin: 0;
           }
 
           h3 a {
@@ -136,6 +138,28 @@
             &:hover, &:focus, &:active {
               color: $orange-600;
               text-decoration: underline;
+            }
+          }
+
+          .product-description {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+          .product-properties {
+            margin: .5em 0;
+
+            li {
+              margin: 0 0.25rem 0 0;
+
+              a {
+                padding: 0.1em 0.625em;
+
+                &.has-tip {
+                  font-weight: normal;
+                }
+              }
             }
           }
         }
