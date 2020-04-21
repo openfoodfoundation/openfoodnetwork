@@ -16,12 +16,8 @@ class CacheService
   end
 
   # Gets the :updated_at value of the most recently updated record for a given class, and returns
-  # it as a timestamp, eg: `1583836069`. The timestamp for the class is stored in a memoized hash,
-  # so the same value isn't fetched from the database more than once per request cycle.
+  # it as a timestamp, eg: `1583836069`.
   def self.latest_timestamp_by_class(cached_class)
-    @memoized_timestamps ||= Hash.new do |hash, key|
-      hash[key] = key.maximum(:updated_at).to_i
-    end
-    @memoized_timestamps[cached_class]
+    cached_class.maximum(:updated_at).to_i
   end
 end
