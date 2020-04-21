@@ -1,10 +1,13 @@
 .shop-searchbar
   .row
     .small-12.large-5.columns.flex
-      %input#search.text{"ng-model" => "query",
-            placeholder: t(:products_search),
-            "ng-debounce" => "200",
-            "ofn-disable-enter" => true}
+      %div.search-wrap
+        %input#search.text{"ng-model" => "query",
+              placeholder: t(:products_search),
+              "ng-debounce" => "200",
+              "ofn-disable-enter" => true}
+        %a.clear{type: 'button', ng: {show: 'query', click: 'clearQuery()'}}
+          %img{ src: "/assets/icn-close.png" }
 
       .hide-for-large-up
         %button{type: 'button', ng: {click: 'toggleFilterSidebar()'}}
