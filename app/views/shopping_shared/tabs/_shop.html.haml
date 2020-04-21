@@ -3,27 +3,7 @@
     = render partial: "shopping_shared/order_cycles"
 
   - if no_open_order_cycles?
-    .row.closed_shop_header
-      .small-12.columns
-        .content
-          %h4
-            .warning_sign
-              .rectangle
-              %strong !
-            %div
-              = t :shopping_oc_closed
-          %p
-            = render partial: "shopping_shared/next_order_cycle"
-            = render partial: "shopping_shared/last_order_cycle"
-
-    .row
-      .small-12.columns
-        .content
-          .shopfront_closed_message
-          - if shopfront_closed_message?
-            = current_distributor.preferred_shopfront_closed_message.html_safe
-          - else
-            = t :shopping_oc_closed_description
+    = render partial: "shop/closed_shop"
 
   - unless require_customer?
     .row
