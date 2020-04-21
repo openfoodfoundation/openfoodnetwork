@@ -11,16 +11,6 @@
           padding-top: 0em;
           padding-bottom: 0em;
           line-height: 1.1;
-
-          // outline: 1px solid red
-
-          @include breakpoint(tablet) {
-            font-size: 0.875rem;
-          }
-
-          @include breakpoint(phablet) {
-            font-size: 0.75rem;
-          }
         }
       }
 
@@ -36,16 +26,11 @@
         // Variant name
         .variant-name {
           padding-left: 7.9375rem;
-
-          @include breakpoint(tablet) {
-            padding-left: 4.9375rem;
-          }
         }
 
         .variant-name {
           @include breakpoint(phablet) {
             padding-left: 0.9375rem;
-            font-weight: bold;
           }
         }
 
@@ -53,10 +38,6 @@
         .variant-unit {
           color: #888;
           font-size: 0.875rem;
-
-          @include breakpoint(tablet) {
-            font-size: 0.75rem;
-          }
         }
 
         // Variant price
@@ -103,14 +84,6 @@
 
         .summary-header {
           padding-left: 7.9375rem;
-
-          @include breakpoint(tablet) {
-            padding-left: 4.9375rem;
-          }
-
-          @include breakpoint(phablet) {
-            padding-left: 0.9375rem;
-          }
 
           .product-producer {
             white-space: nowrap;
