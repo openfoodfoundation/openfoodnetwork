@@ -23,7 +23,7 @@
   - if no_open_order_cycles?
     = render partial: "shop/closed_shop"
 
-  - elsif current_distributor.preferred_shopfront_message.present?
+  - else
     .content
       .row
         .small-12.columns

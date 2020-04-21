@@ -5,7 +5,7 @@
   - if no_open_order_cycles?
     = render partial: "shop/closed_shop"
 
-  - unless require_customer?
+  - else
     .row
       .small-12.columns
         = render partial: "shop/products/form"
