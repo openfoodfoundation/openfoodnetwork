@@ -1,9 +1,0 @@
-- if require_customer?
-  = render partial: "shop/messages/customer_required"
-
-- else
-  - if no_open_order_cycles?
-    = render partial: "shop/messages/closed_shop"
-
-  - else
-    = render partial: "shop/messages/open_shop"
