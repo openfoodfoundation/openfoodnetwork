@@ -1,4 +1,4 @@
-Darkswarm.controller "ProductsCtrl", ($scope, $filter, $rootScope, Products, OrderCycle, OrderCycleResource, FilterSelectorsService, Cart, Dereferencer, Taxons, Properties, currentHub, $timeout) ->
+Darkswarm.controller "ProductsCtrl", ($scope, $sce, $filter, $rootScope, Products, OrderCycle, OrderCycleResource, FilterSelectorsService, Cart, Dereferencer, Taxons, Properties, currentHub, $timeout) ->
   $scope.Products = Products
   $scope.Cart = Cart
   $scope.query = ""
@@ -76,12 +76,15 @@ Darkswarm.controller "ProductsCtrl", ($scope, $filter, $rootScope, Products, Ord
   $scope.appliedTaxonsList = ->
     $scope.activeTaxons.map( (taxon_id) ->
       Taxons.taxons_by_id[taxon_id].name
-    ).join(" #{t('products_or')} ") if $scope.activeTaxons?
+    ).join($scope.filtersJoinWord()) if $scope.activeTaxons?
 
   $scope.appliedPropertiesList = ->
     $scope.activeProperties.map( (property_id) ->
       Properties.properties_by_id[property_id].name
-    ).join(" #{t('products_or')} ") if $scope.activeProperties?
+    ).join($scope.filtersJoinWord()) if $scope.activeProperties?
+
+  $scope.filtersJoinWord = ->
+    $sce.trustAsHtml(" <span>#{t('products_or')}</span> ")
 
   $scope.clearAll = ->
     $scope.clearQuery()
