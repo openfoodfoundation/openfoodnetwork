@@ -84,8 +84,11 @@ Darkswarm.controller "ProductsCtrl", ($scope, $filter, $rootScope, Products, Ord
     ).join(" #{t('products_or')} ") if $scope.activeProperties?
 
   $scope.clearAll = ->
-    $scope.query = ""
+    $scope.clearQuery()
     $scope.clearFilters()
+
+  $scope.clearQuery = ->
+    $scope.query = ""
 
   $scope.clearFilters = ->
     $scope.taxonSelectors.clearAll()
