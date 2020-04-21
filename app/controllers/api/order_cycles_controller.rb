@@ -21,7 +21,7 @@ module Api
     end
 
     def taxons
-      taxons = Rails.cache.fetch("oc-taxons-#{order_cycle.id}", expires_in: 30.seconds) do
+      taxons = CacheService.cache("oc-taxons-#{order_cycle.id}", expires_in: 30.seconds) do
         Spree::Taxon.
           joins(:products).
           where(spree_products: { id: distributed_products }).
@@ -32,7 +32,7 @@ module Api
     end
 
     def properties
-      properties = Rails.cache.fetch("oc-properties-#{order_cycle.id}", expires_in: 30.seconds) do
+      properties = CacheService.cache("oc-properties-#{order_cycle.id}", expires_in: 30.seconds) do
         product_properties | producer_properties
       end
 

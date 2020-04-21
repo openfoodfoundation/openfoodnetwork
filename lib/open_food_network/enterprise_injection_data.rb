@@ -1,7 +1,5 @@
 module OpenFoodNetwork
   class EnterpriseInjectionData
-    include CacheHelper
-
     def active_distributor_ids
       @active_distributor_ids ||=
         Enterprise.distributors_with_active_order_cycles.ready_for_checkout.pluck(:id)
@@ -13,7 +11,7 @@ module OpenFoodNetwork
 
     def shipping_method_services
       @shipping_method_services ||= begin
-        cached_data_by_class("shipping_method_services", Spree::ShippingMethod) do
+        CacheService.cached_data_by_class("shipping_method_services", Spree::ShippingMethod) do
           Spree::ShippingMethod.services
         end
       end
@@ -21,7 +19,7 @@ module OpenFoodNetwork
 
     def supplied_taxons
       @supplied_taxons ||= begin
-        cached_data_by_class("supplied_taxons", Spree::Taxon) do
+        CacheService.cached_data_by_class("supplied_taxons", Spree::Taxon) do
           Spree::Taxon.supplied_taxons
         end
       end
