@@ -28,5 +28,14 @@ module Spree
         expect(Taxon.distributed_taxons(:current)).to eq(e.id => Set.new([t1.id]))
       end
     end
+
+    describe "touches" do
+      let!(:taxon) { create(:taxon) }
+      let!(:product) { create(:simple_product) }
+
+      it "is touched when applied to a product" do
+        expect{ product.taxons << taxon }.to change { taxon.reload.updated_at }
+      end
+    end
   end
 end
