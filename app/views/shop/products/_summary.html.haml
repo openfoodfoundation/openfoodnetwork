@@ -4,13 +4,16 @@
     %img{"ng-src" => "{{::product.primaryImageOrMissing}}", "ng-click" => "triggerProductModal()"}
 
 .row.summary
-  .small-10.medium-10.large-11.columns.summary-header
+  .small-10.medium-10.large-11.summary-header
     %h3
       %a{"ng-click" => "triggerProductModal()", href: 'javascript:void(0)'}
         %span{"ng-bind" => "::product.name"}
-    %small
-      %em
-        = t :products_from
+    %p.product-description{ng: {bind: "::product.description", click: "triggerProductModal()"}}
+    .product-producer
+      = t :products_from
       %span
         %enterprise-modal
           %span{"ng-bind" => "::enterprise.name"}
+
+    .product-properties.filter-shopfront.property-selectors
+      %filter-selector{ 'selector-set' => "productPropertySelectors", objects: "[product] | propertiesWithValuesOf" }
