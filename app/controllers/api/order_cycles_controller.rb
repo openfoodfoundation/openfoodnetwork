@@ -6,7 +6,9 @@ module Api
     skip_authorization_check
     skip_before_filter :authenticate_user, :ensure_api_key, only: [:taxons, :properties]
 
-    caches_action :taxons, :properties, expires_in: CacheService::FILTERS_EXPIRY
+    caches_action :taxons, :properties,
+                  expires_in: CacheService::FILTERS_EXPIRY,
+                  cache_path: proc { |controller| controller.request.url }
 
     def products
       render_no_products unless order_cycle.open?
