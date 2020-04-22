@@ -3,6 +3,7 @@
 class CacheService
   HOME_STATS_EXPIRY = 1.day.freeze
   FILTERS_EXPIRY = 30.seconds.freeze
+  SHOPS_EXPIRY = 15.seconds.freeze
 
   def self.cache(cache_key, options = {})
     Rails.cache.fetch cache_key.to_s, options do
