@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class CacheService
+  FILTERS_EXPIRY = 30.seconds.freeze
+  SHOPS_EXPIRY = 15.seconds.freeze
+
   def self.cache(cache_key, options = {})
     Rails.cache.fetch cache_key.to_s, options do
       yield
