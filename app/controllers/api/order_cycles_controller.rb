@@ -5,7 +5,9 @@ module Api
 
     skip_authorization_check
 
-    caches_action :taxons, :properties, expires_in: CacheService::FILTERS_EXPIRY
+    caches_action :taxons, :properties,
+                  expires_in: CacheService::FILTERS_EXPIRY,
+                  cache_path: proc { |controller| controller.request.url }
 
     def products
       products = ProductsRenderer.new(
