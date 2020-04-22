@@ -18,9 +18,11 @@ class HomeController < BaseController
 
   private
 
-  # Cache the value of the query count for 24 hours
+  # Cache the value of the query count
   def cached_count(key, query)
-    Rails.cache.fetch("home_stats_count_#{key}", expires_in: 1.day, race_condition_ttl: 10) do
+    CacheService.cache("home_stats_count_#{key}",
+                       expires_in: CacheService::HOME_STATS_EXPIRY,
+                       race_condition_ttl: 10) do
       query.count
     end
   end

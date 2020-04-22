@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class CacheService
+  HOME_STATS_EXPIRY = 1.day.freeze
   FILTERS_EXPIRY = 30.seconds.freeze
   SHOPS_EXPIRY = 15.seconds.freeze
 
