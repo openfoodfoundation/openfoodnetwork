@@ -102,9 +102,11 @@ module Admin
                   context: 'tags' })
 
       customer_tags.each_with_object({}) do |tag, indexed_hash|
-        customer_id = tag.taggings.first.taggable_id
-        indexed_hash[customer_id] ||= []
-        indexed_hash[customer_id] << tag.name
+        tag.taggings.each do |tagging|
+          customer_id = tagging.taggable_id
+          indexed_hash[customer_id] ||= []
+          indexed_hash[customer_id] << tag.name
+        end
       end
     end
   end
