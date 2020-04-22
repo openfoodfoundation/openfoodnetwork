@@ -9,8 +9,6 @@ gem 'rails-i18n', '~> 3.0.0'
 gem 'rails_safe_tasks', '~> 1.0'
 
 gem "activerecord-import"
-# Patched version. See http://rubysec.com/advisories/CVE-2015-5312/.
-gem 'nokogiri', '>= 1.6.7.1'
 
 gem "catalog", path: "./engines/catalog"
 gem "order_management", path: "./engines/order_management"
@@ -69,7 +67,6 @@ gem 'angularjs-file-upload-rails', '~> 2.4.1'
 gem 'blockenspiel'
 gem 'custom_error_message', github: 'jeremydurham/custom-err-msg'
 gem 'dalli'
-gem 'deface', '1.0.2'
 gem 'diffy'
 gem 'figaro'
 gem 'geocoder'
@@ -124,7 +121,7 @@ group :test, :development do
   # Pretty printed test output
   gem 'atomic'
   gem 'awesome_print'
-  gem 'capybara', '>= 2.18.0' # 3.0 requires nokogiri 1.8
+  gem 'capybara', '>= 2.18.0' # 3.0 requires rack 1.6 that only works with Rails 4.2
   gem 'database_cleaner', '0.7.1', require: false
   gem "factory_bot_rails", require: false
   gem 'fuubar', '~> 2.5.0'
