@@ -88,7 +88,6 @@ Layout/LineLength:
   - app/models/spree/tax_rate_decorator.rb
   - app/models/spree/taxon_decorator.rb
   - app/models/spree/user.rb
-  - app/models/spree/variant_decorator.rb
   - app/models/subscription.rb
   - app/models/variant_override.rb
   - app/models/variant_override_set.rb
