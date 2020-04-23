@@ -1,12 +1,13 @@
 @import "mixins";
 @import "typography";
+@import "variables";
 
 ordercycle {
   float: right;
   background: $grey-050;
   color: $grey-800;
   width: 100%;
-  border-radius: 0.5em 0.5em 0 0;
+  border-radius: $radius-medium $radius-medium 0 0;
   margin-top: 1em;
   padding: 1em 1.25em 0;
 
@@ -42,12 +43,12 @@ ordercycle {
     border: 1px solid $teal-300;
     display: inline-block;
     font-size: 1em;
-    border-radius: 0.25em;
+    border-radius: $radius-small;
 
     .select-label {
       background-color: rgba($teal-300, 0.5);
       display: inline-block;
-      border-radius: 0.25em 0 0 0.25em;
+      border-radius: $radius-small 0 0 $radius-small;
       float: left;
       font-size: 1em;
       line-height: 1.5em;
@@ -73,7 +74,7 @@ ordercycle {
       height: 2.35em;
       background-image: url('/assets/white-caret.svg');
       background-size: 30px auto;
-      border-radius: 0 0.25em 0.25em 0;
+      border-radius: 0 $radius-small $radius-small 0;
       min-width: 13em;
 
       @include breakpoint(mobile) {

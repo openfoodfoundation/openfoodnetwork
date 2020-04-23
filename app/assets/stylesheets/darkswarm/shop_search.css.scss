@@ -1,5 +1,6 @@
 @import "mixins";
 @import "branding";
+@import "variables";
 
 .shop-searchbar {
   background-color: $grey-100;
@@ -11,7 +12,7 @@
 
   input#search {
     height: 3em;
-    border-radius: 0.25em;
+    border-radius: $radius-small;
     border: solid 1px $grey-300;
     margin: 0;
     padding: 0 1em 0 2.75em;
