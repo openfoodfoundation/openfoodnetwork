@@ -113,7 +113,7 @@ module Api
     end
 
     def active
-      data.active_distributor_ids.andand.include? enterprise.id
+      @active ||= data.active_distributor_ids.andand.include? enterprise.id
     end
 
     # Map svg icons.

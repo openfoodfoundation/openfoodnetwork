@@ -18,7 +18,8 @@ module Api
     end
 
     def active
-      enterprise.ready_for_checkout? && OrderCycle.active.with_distributor(enterprise).exists?
+      @active ||=
+        enterprise.ready_for_checkout? && OrderCycle.active.with_distributor(enterprise).exists?
     end
 
     def pickup
