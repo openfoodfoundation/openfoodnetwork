@@ -59,6 +59,10 @@ dialog
 dialog .close-reveal-modal
 , .reveal-modal .close-reveal-modal {
   @include close-button(0.25rem);
+
+  background-color: $grey-500;
+  color: $white;
+  font-size: 1.5rem;
   right: 0.25rem;
 }
 
