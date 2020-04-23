@@ -1,5 +1,6 @@
 @import "branding";
 @import "mixins";
+@import "variables";
 
 .account-summary {
   color: #4a4a4a;
@@ -99,7 +100,7 @@
 
   table {
     width: 100%;
-    border-radius: 0.5em 0.5em 0 0;
+    border-radius: $radius-medium $radius-medium 0 0;
 
     tr:nth-of-type(even) {
       background: transparent;

@@ -29,9 +29,9 @@ $sidebar-footer-height: 5em;
       z-index: 200;
       height: 100%;
       width: 100%;
-      background-color: rgba(0, 0, 0, 0.15);
+      background-color: $shop-sidebar-overlay;
       opacity: 0;
-      transition: opacity 250ms ease-in-out 0s;
+      transition: opacity $transition-sidebar;
     }
 
     &.shown {
@@ -54,7 +54,7 @@ $sidebar-footer-height: 5em;
       margin-right: -$sidebar-large-width;
       background-color: rgba($white, 0.95);
       padding: 1em;
-      transition: margin 250ms ease-in-out 0s;
+      transition: margin $transition-sidebar;
       overflow-y: scroll;
 
       .property-selectors {
@@ -70,7 +70,7 @@ $sidebar-footer-height: 5em;
       position: fixed;
       bottom: 0;
       right: 0;
-      transition: margin 250ms ease-in-out 0s;
+      transition: margin $transition-sidebar;
       padding: 1em;
 
       button {
@@ -78,7 +78,7 @@ $sidebar-footer-height: 5em;
         background-color: $grey-800;
         color: $white;
         border: 1px solid $grey-600;
-        border-radius: 0.5em;
+        border-radius: $radius-medium;
         width: 47%;
         margin: 0;
         padding: 0;
