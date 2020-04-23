@@ -64,13 +64,13 @@
 
 .button.primary, button.primary {
   font-family: $body-font;
-  background: $clr-brick;
+  background: $orange-450;
   color: white;
 }
 
 .button.primary:hover, .button.primary:active, .button.primary:focus, button.primary:hover, button.primary:active, button.primary:focus {
-  background: $clr-brick-bright;
-  text-shadow: 0 1px 0 $clr-brick;
+  background: $orange-400;
+  text-shadow: 0 1px 0 $orange-450;
 }
 
 button.success, .button.success {
