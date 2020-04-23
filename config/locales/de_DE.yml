@@ -2765,6 +2765,8 @@ de_DE:
     location: "Ort"
     count_on_hand: "Zählen Sie zur Hand"
     quantity: "Menge"
+    on_demand: "Unbegrenzt"
+    on_hand: "Verfügbar"
     package_from: "Paket von"
     item_description: "Artikelbeschreibung"
     price: "Preis"

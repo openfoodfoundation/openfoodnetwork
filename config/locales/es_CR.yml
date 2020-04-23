@@ -41,7 +41,7 @@ es_CR:
               after_orders_open_at: debe ser después de la fecha de apertura
         variant_override:
           count_on_hand:
-            using_producer_stock_settings_but_count_on_hand_set: "debe estar en blanco porque estás usando la configuración de inventario de la productora"
+            using_producer_stock_settings_but_count_on_hand_set: "debe estar en blanco porque está usando la configuración de inventario del productor"
             on_demand_but_count_on_hand_set: "debe estar en blanco si es bajo demanda"
             limited_stock_but_no_count_on_hand: "debe estar especificado porque se ha definido un inventario limitado"
   activemodel:
@@ -105,7 +105,7 @@ es_CR:
       spree_user:
         updated_not_active: "Su contraseña ha sido restablecida, pero su correo electrónico aún no ha sido confirmado."
         updated: "Su contraseña ha sido cambiada con éxito. Ya tienes la sesión iniciada."
-        send_instructions: "Recibirás un correo electrónico con instrucciones sobre cómo confirmar su cuenta en unos minutos."
+        send_instructions: "Recibirá un correo electrónico con instrucciones sobre cómo confirmar su cuenta en unos minutos."
   models:
     order_cycle:
       cloned_order_cycle_name: "COPIA DE %{order_cycle}"
@@ -124,8 +124,8 @@ es_CR:
       email_welcome: "Bienvenido"
       email_registered: "ahora es parte de"
       email_userguide_html: "La Guía de Usuario con soporte detallado para configurar su Productora o Grupo de Consumo está aquí: %{link}"
-      userguide: "Guía de usuario de La Feria"
-      email_admin_html: "Puede administrar su cuenta iniciando sesión en %{link} o haciendo clic en el engrane arriba a la derecha de la página de inicio, y seleccionando Administración."
+      userguide: "Guía de usuario de Open Food Network (LaFeriaCR)"
+      email_admin_html: "Puede administrar su cuenta iniciando sesión en %{link} o haciendo clic en el engranaje arriba a la derecha de la página de inicio, y seleccionando Administración."
       admin_panel: "Panel de administración"
       email_community_html: "También tenemos un foro en línea para la discusión comunitaria relacionada con el software OFN y los retos únicos del funcionamiento de una organización de alimentación. Lo invitamos a unirse. Estamos evolucionando constantemente y su aporte en este foro le dará forma a lo que pase luego. %{link}"
       join_community: "Unirse a la comunidad"
@@ -174,7 +174,7 @@ es_CR:
         explainer: El procesamiento automático de estas órdenes falló debido a un error. El error será mostrado en los casos en que sea posible.
       failed_payment:
         title: Error en el pago (%{count} pedidos)
-        explainer: El procesamiento automático del pago de estos pedidos falló debido a un error. El error ha sido listado donde a sido posible.
+        explainer: El procesamiento automático del pago de estos pedidos falló debido a un error. El error ha sido listado donde ha sido posible.
       other:
         title: Otros fallos (%{count} pedidos)
         explainer: El procesamiento automático de estas órdenes falló por un motivo desconocido. Esto no debería ocurrir, contáctanos si estás viendo esto.
@@ -256,7 +256,7 @@ es_CR:
   invalid_payment_state: "Estado de pago no válido"
   filter_results: Filtrar resultados
   quantity: Cantidad
-  pick_up: Recogida
+  pick_up: Recoger
   copy: Copia
   change_my_password: "Cambiar mi contraseña"
   update_password: "Actualizar contraseña"
@@ -264,8 +264,8 @@ es_CR:
   reset_password_token: token de restablecimiento de contraseña
   expired: ha expirado, por favor solicite una nueva
   back_to_payments_list: "Volver a la lista de pagos"
-  maestro_or_solo_cards: "Tarjetas Maestro/Solo"
-  backordered: "Reabastecido"
+  maestro_or_solo_cards: "Solo tarjetas MasterCard"
+  backordered: "Pedido pendiente"
   on hand: "Disponibles"
   ship: "Envío"
   actions:
@@ -338,11 +338,11 @@ es_CR:
       enable_embedded_shopfronts: "Habilitar tiendas integradas"
       embedded_shopfronts_whitelist: "Lista de dominios externos permitidos"
     number_localization:
-      number_localization_settings: "Number Localization Settings"
+      number_localization_settings: "Configuración de ubicación de número"
       enable_localized_number: "Usar la logica internacional separador miles/decimales"
     invoice_settings:
       edit:
-        title: "Configuración de Factura"
+        title: "Configuración de factura"
         enable_invoices?: "Habilitar facturas?"
         invoice_style2?: "Utiliza el modelo de factura alternativo que incluye el desglose fiscal total por tipo de interés y tasa de impuestos por artículo (todavía no es adecuado para países que muestran los precios sin impuestos)"
         enable_receipt_printing?: "¿Mostrar opciones para imprimir recibos usando impresoras térmicas en el desplegable del pedido?"
@@ -356,8 +356,8 @@ es_CR:
         status: Estado
         ok: Ok
         instance_secret_key: Clave secreta de instancia
-        account_id: Account ID
-        business_name: Nombre de la Organización
+        account_id: ID de cuenta
+        business_name: Nombre de la organización
         charges_enabled: Cargos habilitados
         charges_enabled_warning: "Advertencia: los cargos no están habilitados para su cuenta"
         auth_fail_error: La clave API que proporcionó no es válida.
@@ -378,8 +378,8 @@ es_CR:
         ship_address: "Dirección de envío"
         update_address_success: 'Dirección actualizada correctamente.'
         update_address_error: 'Introduce todos los campos requeridos'
-        edit_bill_address: 'Edita la Dirección de Facturación'
-        edit_ship_address: 'Editar Dirección de Envío'
+        edit_bill_address: 'Editar la dirección de facturación'
+        edit_ship_address: 'Editar dirección de envío'
         required_fileds: 'Los campos obligatorios se indican con un asterisco'
         select_country: 'Selecciona país'
         select_state: 'Selecciona provincia'
@@ -415,14 +415,14 @@ es_CR:
         name_placeholder: "por ejemplo, comision de embalaje"
     enterprise_groups:
       index:
-        new_button: Nuevo Grupo de Organización
+        new_button: Nuevo grupo de organización
     enterprise_roles:
       form:
-        manages: Gestiona
+        manages: Administra
       enterprise_role:
-        manages: Gestionan
+        manages: Administra
     products:
-      unit_name_placeholder: 'ej. manojos'
+      unit_name_placeholder: 'ej. racimos'
       index:
         unit: Unidad
         display_as: Mostrar como
@@ -444,14 +444,14 @@ es_CR:
         inherited_property: "Propiedad heredada"
       variants:
         infinity: "infinito"
-        to_order_tip: "Los artículos hechos según demanda no tienen un nivel de stock, como por ejemplo panes hechos según demanda."
+        to_order_tip: "Los artículos hechos según el pedido no tienen un nivel fijado de inventario, como por ejemplo panes hechos según demanda."
       back_to_products_list: "Volver a la lista de productos"
       editing_product: "Editando producto"
       tabs:
         product_details: "Detalles del producto"
         group_buy_options: "Opciones de compra grupales"
         images: "Imágenes"
-        variants: "Variedades"
+        variants: "Variante"
         product_properties: "Propiedades del producto"
     product_import:
       title: Importe de producto
@@ -774,7 +774,7 @@ es_CR:
       actions:
         edit_profile: Configuración
         properties: Propiedades
-        payment_methods: Métodos de Pago
+        payment_methods: Métodos de pago
         payment_methods_tip: Esta organización no tiene métodos de pago
         shipping_methods: Métodos de envío
         shipping_methods_tip: Esta organización tiene métodos de envío
@@ -785,42 +785,42 @@ es_CR:
         role: Rol
         sells: Vende
         visible: ¿Visible?
-        owner: Propietaria
-        producer: Productora
+        owner: Propietario
+        producer: Productor
       change_type_form:
-        producer_profile: Perfil Productora
+        producer_profile: Perfil del productor
         connect_ofn: Conectar a través de OFN
         always_free: SIEMPRE GRATIS
         producer_description_text: Añade tus productos a Open Food Network, permitiendo a los Grupos de Consumo vender tus productos.
-        producer_shop: Tienda Productora
+        producer_shop: Tienda de productor
         sell_your_produce: Vende tu propia producción
         producer_shop_description_text: Venda sus productos directamente a los clientes a través de su propia tienda.
-        producer_shop_description_text2: Una tienda de productora es para vender sus productos solamente, si quiere vender productos de otros productores, seleccione "Grupo de Productoras"
-        producer_hub: Hub de productoras
+        producer_shop_description_text2: Una tienda de productor es para vender sus productos solamente, si quiere vender productos de otros productores, seleccione "Hub de Productor"
+        producer_hub: Hub de productor
         producer_hub_text: Vende tu propia producción y la de otros
-        producer_hub_description_text: Tu organización es la columna vertebral de un sistema de consumo local. Agrega productos tuyos o de otras organizaciones y véndelo a través de tu tienda en Open Food Network.
+        producer_hub_description_text: Su organización es la columna vertebral de un sistema de consumo local. Agregue productos suyos o de otras organizaciones y véndalo a través de su tienda en Open Food Network (LaFeriaCR).
         profile: Solo perfil
         get_listing: Obtener un listado
-        profile_description_text: La gente podrá encontrarte y ponerse en contacto contigo en Open Food Network. Su organización será visible en el mapa y se podrá buscar en los listados.
+        profile_description_text: La gente podrá encontrarlo y ponerse en contacto con usted en Open Food Network (LaFeriaCR). Su organización será visible en el mapa y se podrá buscar en los listados.
         hub_shop: Tienda del Hub
         hub_shop_text: Vender la producción de otros
-        hub_shop_description_text: Tu organización es la columna vertebral de un sistema de consumo local. Agrega productos de otras organizaciones y véndelo a través de tu tienda en Open Food Network.
+        hub_shop_description_text: Su organización es la columna vertebral de un sistema de consumo local. Agregue productos de otras organizaciones y véndalo a través de su tienda en Open Food Network (LaFeriaCR).
         choose_option: Por favor, elija una de las opciones anteriores.
         change_now: Cambiar
       enterprise_user_index:
         loading_enterprises: CARGANDO ORGANIZACIONES
         no_enterprises_found: No se encuentran organizaciones.
-        search_placeholder: Buscar por Nombre
-        manage: Gestionar
+        search_placeholder: Buscar por nombre
+        manage: Administrar
         manage_link: Configuración
-        producer?: "¿Productora?"
+        producer?: "¿Productor?"
         package: "Perfil"
         status: "Estado"
       new_form:
-        owner: Propietaria
-        owner_tip: La principal usaría responsable para esta organización.
-        i_am_producer: Soy una Productora
-        contact_name: Nombre de Contacto
+        owner: Propietario
+        owner_tip: El usuario principal responsable para esta organización.
+        i_am_producer: Soy un productor
+        contact_name: Nombre de contacto
       edit:
         editing: 'Configuración:'
         back_link: Volver a la lista de organizaciones
@@ -828,56 +828,56 @@ es_CR:
         title: Nueva Organización
         back_link: Volver a la lista de organizaciones
       remove_logo:
-        remove: "Eliminar la imagen"
+        remove: "Eliminar la imágen"
         removed_successfully: "Logotipo eliminado con éxito"
         immediate_removal_warning: "El logotipo se eliminará inmediatamente después de confirmar."
       remove_promo_image:
         remove: "Eliminar la imagen"
-        removed_successfully: "Imagen promocional eliminada con éxito"
-        immediate_removal_warning: "La imagen promocional se eliminará inmediatamente después de confirmar."
+        removed_successfully: "Imágen promocional eliminada con éxito"
+        immediate_removal_warning: "La imágen promocional se eliminará inmediatamente después de confirmar."
       welcome:
-        welcome_title: Bienvenida a Open Food Network!
-        welcome_text: Has creado correctamente un
+        welcome_title: ¡Bienvenido a Open Food Network (LaFeriaCR)!
+        welcome_text: Ha creado correctamente un
         next_step: Siguiente paso
-        choose_starting_point: 'Selecciona tu perfil:'
+        choose_starting_point: 'Seleccione su perfil:'
         profile: 'Perfil'
-        producer_profile: 'Perfil Productora'
+        producer_profile: 'Perfil de Productor'
       invite_manager:
         user_already_exists: "El usuario ya existe"
         error: "Algo salió mal"
     order_cycles:
       loading_flash:
         loading_order_cycles: Cargando ciclos de pedido
-        loading: Cargando...
+        loading: CARGANDO...
       new:
         create: "Crear"
         cancel: "Cancelar"
         back_to_list: "Regresar a la lista"
       edit:
-        advanced_settings: "Configuración Avanzada"
+        advanced_settings: "Configuración avanzada"
         save: "Guardar"
-        save_and_next: "Salvar y continuar"
+        save_and_next: "Guardar y continuar"
         next: "Siguiente"
         cancel: "Cancelar"
         back_to_list: "Regresar a la lista"
-        save_and_back_to_list: "Salvar y volver a lista"
-        choose_products_from: "Escoger Productos desde:"
+        save_and_back_to_list: "Guardar y volver a lista"
+        choose_products_from: "Escoger productos desde:"
       incoming:
         save: "Guardar"
-        save_and_next: "Salvar y continuar"
+        save_and_next: "Guardar y continuar"
         next: "Siguiente"
         cancel: "Cancelar"
         back_to_list: "Regresar a la lista"
       outgoing:
         outgoing: "Saliente"
-        distributor: "Distribuidora"
+        distributor: "Distribuidor"
         products: "Productos"
-        tags: "Tags"
+        tags: "Etiquetas"
         delivery_details: "Detalles de entrega"
         fees: "Comisiones"
         previous: "Anterior"
         save: "Guardar"
-        save_and_back_to_list: "Salvar y volver a lista"
+        save_and_back_to_list: "Guardar y volver a lista"
         cancel: "Cancelar"
         back_to_list: "Regresar a la lista"
       wizard_progress:
@@ -887,19 +887,19 @@ es_CR:
       exchange_form:
         pickup_time_tip: Cuándo estarán listos los pedidos de este ciclo de pedido para los clientes
         pickup_instructions_placeholder: "Instrucciones de recogida"
-        pickup_instructions_tip: Estas instrucciones se muestran a las consumidoras después de completar un pedido.
+        pickup_instructions_tip: Estas instrucciones se muestran a los clientes después de completar un pedido.
         pickup_time_placeholder: "Listo para ( Fecha / Hora)"
         receival_instructions_placeholder: "Instrucciones de recepción"
         add_fee: 'Añadir comisión'
         remove: 'Eliminar'
         selected: 'seleccionado'
       add_exchange_form:
-        add_supplier: 'Añadir proveedora'
-        add_distributor: 'Añadir distribuidora'
+        add_supplier: 'Añadir proveedor'
+        add_distributor: 'Añadir distribuidor'
       advanced_settings:
-        title: Configuración Avanzada
+        title: Configuración avanzada
         choose_product_tip: Puede restringir los productos entrantes y salientes a solo el inventario de %{inventory}.
-        preferred_product_selection_from_coordinator_inventory_only_here: Solo el Inventario de la Coordinadora
+        preferred_product_selection_from_coordinator_inventory_only_here: Solo el inventario del coordinador
         preferred_product_selection_from_coordinator_inventory_only_all: Todos los productos disponibles
         save_reload: Guardar y recargar la página
       coordinator_fees:
@@ -912,14 +912,14 @@ es_CR:
       form:
         general_settings: "Configuración general"
         incoming: Entrante
-        supplier: Proveedora
+        supplier: Proveedor
         receival_details: Detalles de la recepción
         fees: Comisiones
         outgoing: Saliente
         distributor: Distribuidor
         products: Productos
         tags: Etiquetas
-        add_a_tag: Add a tag
+        add_a_tag: Añade una etiqueta
         delivery_details: Detalles de Recogida / Entrega
       index:
         schedule: Programación
@@ -928,11 +928,11 @@ es_CR:
       name_and_timing_form:
         name: Nombre
         orders_open: Pedidos abiertos a
-        coordinator: Coordinadora
-        orders_close: Cierre de Pedidos
+        coordinator: Coordinador
+        orders_close: Cierre de pedidos
       row:
-        suppliers: proveedoras
-        distributors: distribuidoras
+        suppliers: proveedores
+        distributors: distribuidores
         variants: variedades
       simple_form:
         ready_for: Listo para
@@ -952,7 +952,7 @@ es_CR:
         proceed: Proceder
     producer_properties:
       index:
-        title: Propiedades de la Productora
+        title: Propiedades del productor
     proxy_orders:
       cancel:
         could_not_cancel_the_order: No se pudo cancelar la orden
@@ -960,21 +960,21 @@ es_CR:
         could_not_resume_the_order: No se pudo reanudar el pedido
     shared:
       user_guide_link:
-        user_guide: Manual de Usuario
+        user_guide: Manual de usuario
       enterprises_hubs_tabs:
-        has_no_payment_methods: "%{enterprise} no tiene formas de pago"
+        has_no_payment_methods: "%{enterprise} no tiene métodos de pago"
         has_no_shipping_methods: "%{enterprise} no tiene ningún método de envío"
         has_no_enterprise_fees: "%{enterprise} no tiene comisiones de organización"
     enterprise_issues:
       create_new: Crear nuevo
-      resend_email: Reenviar email
-      has_no_payment_methods: "%{enterprise} actualmente no tiene formas de pago"
+      resend_email: Reenviar correo electrónico
+      has_no_payment_methods: "%{enterprise} actualmente no tiene métodos de pago"
       has_no_shipping_methods: "%{enterprise} no tiene actualmente métodos de envío"
       email_confirmation: "La confirmación de correo electrónico está pendiente. Hemos enviado un correo electrónico de confirmación a %{email}."
       not_visible: "%{enterprise} no es visible y no se puede encontrar en el mapa o en búsquedas"
     reports:
       hidden: OCULTO
-      unitsize: UNIDAD DE MEDIDA
+      unitsize: TAMAÑO DE LA UNIDAD
       total: TOTAL
       total_items: ARTÍCULOS TOTALES
       supplier_totals: Totales de proveedores del Ciclo de Pedido
@@ -989,11 +989,11 @@ es_CR:
       payment_methods: Reporte de los métodos de pago
       delivery: Reporte de entrega
       tax_types: Tipos de impuestos
-      tax_rates: '% Impuestos'
+      tax_rates: Tarifas de impuesto
       pack_by_customer: Paquete por cliente
       pack_by_supplier: Pack por proveedor
       orders_and_distributors:
-        name: Pedidos y Distribuidores
+        name: Pedidos y distribuidores
         description: Pedidos con detalles de distribuidor
       bulk_coop:
         name: Bulk Co-Op
@@ -1004,12 +1004,12 @@ es_CR:
       orders_and_fulfillment:
         name: Reportes de Pedidos y Repartos
       customers:
-        name: Consumidoras
+        name: Clientes
       products_and_inventory:
-        name: Productos & Inventario
+        name: Productos e inventario
       users_and_enterprises:
-        name: Usuarias y Organizaciones
-        description: Propiedad y Estado de la Organización
+        name: Usuarios y organizaciones
+        description: Posesión y estado de la organización
       order_cycle_management:
         name: Gestión del Ciclo de Pedido
       sales_tax:
@@ -1029,21 +1029,21 @@ es_CR:
       edit: Editar suscripción
       table:
         edit_subscription: Editar suscripción
-        pause_subscription: Pausa Suscripción
+        pause_subscription: Pausar suscripción
         unpause_subscription: Reanudar suscripción
         cancel_subscription: Cancelar suscripción
       filters:
         query_placeholder: "Buscar por correo electrónico ..."
       setup_explanation:
         just_a_few_more_steps: 'Solo unos pocos pasos más antes de que pueda comenzar:'
-        enable_subscriptions: "Habilita suscripciones para al menos una de tus tiendas"
-        enable_subscriptions_step_1_html: 1. Vaya a la página %{enterprises_link}, encuentre su tienda y haga clic en "Administrar"
+        enable_subscriptions: "Habilita suscripciones para al menos una de sus tiendas"
+        enable_subscriptions_step_1_html: 1. Ir a la página %{enterprises_link}, encuentre su tienda y haga clic en "Administrar"
         enable_subscriptions_step_2: 2. En "Preferencias de la tienda", habilite la opción Suscripciones
         set_up_shipping_and_payment_methods_html: Configurar los métodos %{shipping_link} y %{payment_link}
         set_up_shipping_and_payment_methods_note_html: Tenga en cuenta que solo se pueden usar <br /> métodos de pago en efectivo y Stripe con las suscripciones
         ensure_at_least_one_customer_html: Asegúrese de que exista al menos un %{customer_link}
         create_at_least_one_schedule: Crear al menos una programación
-        create_at_least_one_schedule_step_1_html: 1. Vaya a la página %{order_cycles_link}
+        create_at_least_one_schedule_step_1_html: 1. Ir a la página %{order_cycles_link}
         create_at_least_one_schedule_step_2: 2. Crea un ciclo de pedido si aún no lo has hecho
         create_at_least_one_schedule_step_3: 3. Haga clic en '+ Nueva programación' y complete el formulario
         once_you_are_done_you_can_html: Una vez que haya terminado, puede %{reload_this_page_link}
@@ -1297,14 +1297,14 @@ es_CR:
   you_have_no_saved_cards: Aún no has guardado ninguna tarjeta.
   saving_credit_card: Guardando tarjeta de crédito...
   card_has_been_removed: "Su tarjeta ha sido eliminada (número: %{number})"
-  card_could_not_be_removed: Lo sentimos, la tarjeta no se pudo quitar
+  card_could_not_be_removed: Lo sentimos, la tarjeta no se pudo eliminar
   invalid_credit_card: "Tarjeta de crédito inválida"
   ie_warning_headline: "Su navegador está desactualizado :-("
   ie_warning_text: "Para una mejor experiencia utilizando La Feria, le recomendamos actualizar su navegador:"
   ie_warning_chrome: Descargar Chrome
   ie_warning_firefox: Descargar Firefox
   ie_warning_ie: Actualizar Internet Explorer
-  ie_warning_other: "¿No puede actualizar su navegador? Pruebe usar La Feria en su teléfono :-)"
+  ie_warning_other: "¿No puede actualizar su navegador? Pruebe usar Open Food Network (LaFeriaCR) en su teléfono :-)"
   legal:
     cookies_policy:
       header: "Cómo utilizamos las cookies"
@@ -1560,8 +1560,8 @@ es_CR:
   groups_text: "Cada productor es único. Cada organización tiene algo diferente que ofrecer. Nuestros grupos son colectivos de productores, centros de acopio y distribuidores que comparten valores agroecológicos. Esto hace que su experiencia de compra sea más fácil."
   groups_search: "Buscar nombre o palabra clave"
   groups_no_groups: "No se encontraron grupos"
-  groups_about: "Acerca de nosotras"
-  groups_producers: "Nuestras productoras"
+  groups_about: "Acerca de nosotros"
+  groups_producers: "Nuestros productores"
   groups_hubs: "Nuestros Grupos de Consumo"
   groups_contact_web: Contacto
   groups_contact_social: Seguir
@@ -1602,10 +1602,10 @@ es_CR:
   modal_how_pickup_explained: Algunos grupos de consumo hacen entregas hasta su puerta, mientras otros requieren que recojas las compras. Puedes ver que opciones están disponibles en su página de inicio, y seleccionar cuál te gustaría en las páginas de compras y revisión. Las entregas costarán más, y el precio cambia entre grupos de consumo. Cada grupo es un punto de venta con operaciones y logística independientes, las diferencias son normales y deseables.
   modal_how_more: Aprender más
   modal_how_more_explained: "Si quieres saber más acerca de Open Food Network, cómo trabajamos y nos organizamos, visita:"
-  modal_producers: "Productoras"
+  modal_producers: "Productores"
   modal_producers_explained: "Nuestras productoras hacen todos los deliciosos alimentos que puedes comprar en Open Food Network."
   producers_about: Acerca de nosotros
-  producers_buy: Comprar
+  producers_buy: Comprar para
   producers_contact: Contacto
   producers_contact_phone: Llamar
   producers_contact_social: Seguir
@@ -1613,14 +1613,14 @@ es_CR:
   producers_filter: Filtrar por
   producers_filter_type: Tipo
   producers_filter_property: Propiedad
-  producers_title: Productoras
+  producers_title: Productores
   producers_headline: Encuentra productoras locales
   producers_signup_title: Registrarse como productora
   producers_signup_headline: Productoras de alimentos, empoderadas.
   producers_signup_motivation: Venda sus alimentos y cuente sus historias en distintos nuevos mercados. Ahorre tiempo y dinero en costos administrativos. Apoyamos la innovación sin el riesgo. Hemos nivelado el campo de juego.
   producers_signup_send: Únase ahora
   producers_signup_enterprise: Cuentas de organización
-  producers_signup_studies: Historias de nuestras productoras.
+  producers_signup_studies: Historias de nuestros productores.
   producers_signup_cta_headline: ¡Únase ahora!
   producers_signup_cta_action: Únase ahora
   producers_signup_detail: Aquí esta el detalle.
@@ -1746,13 +1746,13 @@ es_CR:
   email_unconfirmed: "Debe confirmar su dirección de correo electrónico antes de poder restablecer su contraseña."
   email_required: "Debe brindar una dirección de correo electrónico"
   logging_in: "Espere un momento, le vamos a iniciar una sesión"
-  signup_email: "Tu correo electrónico"
-  choose_password: "Escoje una contraseña"
+  signup_email: "Su correo electrónico"
+  choose_password: "Elige una contraseña"
   confirm_password: "Confirmar contraseña"
   action_signup: "Registrarse ahora"
   forgot_password: "¿Se le olvidó su contraseña?"
   password_reset_sent: "¡Le enviamos un correo electrónico con instrucciones para restaurar la contraseña!"
-  reset_password: "Restaurar contraseña"
+  reset_password: "Restablecer contraseña"
   update_and_recalculate_fees: "Actualizar y recalcular comisiones"
   registration:
     steps:
@@ -2270,7 +2270,7 @@ es_CR:
   enterprise_owner_error: "^ %{email} no está autorizado a tener más organizaciones (el límite es %{enterprise_limit})."
   enterprise_role_uniqueness_error: "^Este rol ya está presente."
   inventory_item_visibility_error: Debe ser verdadero o falso
-  product_importer_file_error: "Error: no se ha subido ningún archivo"
+  product_importer_file_error: "error: no se ha subido ningún archivo"
   product_importer_spreadsheet_error: "No se pudo procesar el archivo: tipo de archivo inválido"
   product_importer_products_save_error: No se guardó ningún producto con éxito
   product_import_file_not_found_notice: 'Archivo no encontrado o no se pudo abrir'
@@ -2303,7 +2303,7 @@ es_CR:
   back_to_orders_list: "Volver a la lista de pedidos"
   no_orders_found: "No se encontraron pedidos"
   order_information: "información del pedido"
-  date_completed: "Fecha de finalización"
+  date_completed: "Fecha completada"
   amount: "Cantidad"
   state_names:
     ready: Listo
@@ -2314,7 +2314,7 @@ es_CR:
     changes_saved: 'Cambios guardados.'
     save_changes_first: Guarda los cambios primero.
     all_changes_saved: Todos los cambios guardados
-    unsaved_changes: Tienes cambios sin guardar
+    unsaved_changes: Tiene cambios sin guardar
     all_changes_saved_successfully: Todos los cambios guardados correctamente
     oh_no: "¡Vaya! No se ha podido guardar los cambios."
     unauthorized: "No estás autorizado a acceder a esta página."
@@ -2336,7 +2336,7 @@ es_CR:
         invite_title: "Invitar a un usuario no registrado"
         tag_rule_help:
           title: Reglas de las etiquetas
-          overview: Visión general
+          overview: Vista general
           overview_text: >
               Las reglas de etiqueta proporcionan una manera de describir qué elementos
               son visibles o no para determinados consumidores. Los artículos pueden

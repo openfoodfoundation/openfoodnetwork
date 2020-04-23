@@ -2756,6 +2756,8 @@ tr:
     location: "yer"
     count_on_hand: "Eldeki Miktar"
     quantity: "miktar"
+    on_demand: "Talep Üzerine"
+    on_hand: "Mevcut"
     package_from: "gelen paket"
     item_description: "Ürün Açıklaması"
     price: "Fiyat"

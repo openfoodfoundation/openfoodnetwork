@@ -2765,6 +2765,8 @@ fr_CA:
     location: "Localisation"
     count_on_hand: "Quantité en stock"
     quantity: "Quantité"
+    on_demand: "A volonté"
+    on_hand: "En stock"
     package_from: "conditionnement par"
     item_description: "Description de la pièce"
     price: "Prix"

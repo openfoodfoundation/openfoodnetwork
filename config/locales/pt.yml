@@ -2597,6 +2597,8 @@ pt:
     location: "Localização"
     count_on_hand: "Disponível"
     quantity: "Quantidade"
+    on_demand: "Sob Encomenda"
+    on_hand: "Disponível"
     package_from: "Embalagem de"
     item_description: "Descrição do Item"
     price: "Preço"

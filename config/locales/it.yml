@@ -2759,6 +2759,8 @@ it:
     location: "Posizione"
     count_on_hand: "Conta a mente"
     quantity: "Quantità"
+    on_demand: "A richiesta"
+    on_hand: "Disponibile"
     package_from: "pacchetto da"
     item_description: "descrizione dell'articolo"
     price: "Prezzo"

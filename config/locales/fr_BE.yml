@@ -2702,6 +2702,8 @@ fr_BE:
     location: "Site"
     count_on_hand: "Compté à la main"
     quantity: "Nb commandé"
+    on_demand: "A volonté"
+    on_hand: "En stock"
     package_from: "colis provenant de "
     item_description: "Description de l'article "
     price: "Prix"

@@ -669,9 +669,9 @@ ca:
           primary_producer: Productora principal?
           primary_producer_tip: Selecciona "Productora" si ets productora principal d'aliments.
           producer: Productora
-          any: Cap
-          none: No productora
-          own: Propi
+          any: Qualsevol
+          none: Cap
+          own: Propis
           sells: Ven
           sells_tip: "Cap: l'organització no ven als clients directament. <br /> Propietari: l'organització ven productes propis als clients. <br /> Qualsevol: l'organització pot vendre productes propis o d'altres empreses. <br />"
           visible_in_search: Visible a la cerca?
@@ -2766,6 +2766,8 @@ ca:
     location: "Ubicació"
     count_on_hand: "Compte disponible"
     quantity: "Quantitat"
+    on_demand: "Sota demanda"
+    on_hand: "Disponibles"
     package_from: "perfil de"
     item_description: "Descripció de l'article"
     price: "Preu"

@@ -2641,6 +2641,8 @@ nl_BE:
     location: "Locatie"
     count_on_hand: "Count On Hand"
     quantity: "Kwantiteit"
+    on_demand: "Op Aanvraag"
+    on_hand: "Bij de Hand"
     package_from: "pakje van "
     item_description: "Artikelbeschrijving"
     price: "Prijs"

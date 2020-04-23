@@ -2772,6 +2772,8 @@ fil_PH:
     location: "Lokasyon"
     count_on_hand: "bilangin ang on hand"
     quantity: "dami"
+    on_demand: "on demand"
+    on_hand: "on hand"
     package_from: "package mula sa"
     item_description: "Paglalarawan ng item"
     price: "presyo"

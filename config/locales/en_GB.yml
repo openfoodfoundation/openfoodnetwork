@@ -2766,6 +2766,8 @@ en_GB:
     location: "Location"
     count_on_hand: "Count In Stock"
     quantity: "Quantity"
+    on_demand: "Unlimited"
+    on_hand: "In Stock"
     package_from: "package from"
     item_description: "Item Description"
     price: "Price"

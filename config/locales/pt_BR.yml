@@ -2764,6 +2764,8 @@ pt_BR:
     location: "Localização"
     count_on_hand: "Contagem na mão"
     quantity: "Quantidade"
+    on_demand: "Sob Encomenda"
+    on_hand: "Disponível"
     package_from: "pacote de"
     item_description: "Descrição do Item"
     price: "Preço"

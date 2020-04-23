@@ -2754,6 +2754,8 @@ nb:
     location: "Plassering"
     count_on_hand: "Antall På Lager"
     quantity: "Mengde"
+    on_demand: "Ved forespørsel"
+    on_hand: "Tilgjengelig"
     package_from: "pakke fra"
     item_description: "Beskrivelse Element"
     price: "Pris"

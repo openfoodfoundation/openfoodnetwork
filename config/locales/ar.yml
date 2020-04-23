@@ -2725,6 +2725,8 @@ ar:
     location: "الموقع"
     count_on_hand: "الاعتماد على المتوفر"
     quantity: "الكمية"
+    on_demand: "على الطلب"
+    on_hand: "متوفر"
     package_from: "التعبئة من"
     item_description: "وصف السلعة"
     price: "السعر"

@@ -2754,6 +2754,8 @@ en_CA:
     location: "Location"
     count_on_hand: "Count On Hand"
     quantity: "Quantity"
+    on_demand: "On Demand"
+    on_hand: "On Hand"
     package_from: "package from"
     item_description: "Item Description"
     price: "Price"
