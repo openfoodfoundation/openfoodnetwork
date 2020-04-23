@@ -45,3 +45,4 @@ coverage
 /reports/
 !/reports/README.md
 bin/
+.vscode/
