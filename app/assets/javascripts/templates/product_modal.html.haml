@@ -1,5 +1,4 @@
 .row
-
   .columns.small-12.large-6.product-header
     %h3{"ng-bind" => "::product.name"}
     %span
@@ -19,3 +18,7 @@
     %img.product-img.placeholder{ src: "/assets/noimage/large.png", "ng-if" => "::!product.largeImage"}
 
 %ng-include{src: "'partials/close.html'"}
+
+.buttons
+  .button.bottom-close-button{"ng-click" => "$close()"}
+    = t('js.shop.products.product_modal.close')
