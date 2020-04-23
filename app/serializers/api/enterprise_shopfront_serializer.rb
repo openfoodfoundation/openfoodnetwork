@@ -74,12 +74,16 @@ module Api
     end
 
     def supplied_taxons
+      return [] unless enterprise.is_primary_producer
+
       ActiveModel::ArraySerializer.new(
         enterprise.supplied_taxons, each_serializer: Api::TaxonSerializer
       )
     end
 
     def supplied_properties
+      return [] unless enterprise.is_primary_producer
+
       (product_properties + producer_properties).uniq do |property_object|
         property_object.property.presentation
       end
