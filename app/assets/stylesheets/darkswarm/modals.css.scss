@@ -18,15 +18,15 @@ dialog
   // Reveal.js break point:
   // @media only screen and (max-width: 40.063em)
 
-  // Small - when modal IS full screen
+  // Small - smaller outside area
   @media only screen and (max-width: 640px) {
-    left: 0;
-    max-height: 100%;
-    position: absolute !important;
-    top: 0;
+    left: 4%;
+    max-height: 92%;
+    max-width: 92%;
+    top: 4%;
   }
 
-  // Medium and up - when modal IS NOT full screen
+  // Medium and up - larger outside area
   @media only screen and (min-width: 641px) {
     max-height: 90%;
     top: 5%;
