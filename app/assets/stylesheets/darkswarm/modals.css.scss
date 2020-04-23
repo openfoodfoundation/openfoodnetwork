@@ -5,8 +5,6 @@ dialog
 , .reveal-modal {
   border: none;
   outline: none;
-  padding: 30px 20px 0 20px;
-  border-bottom: 30px solid white;
   overflow-y: scroll;
   overflow-x: hidden;
   min-height: 260px;
@@ -23,12 +21,15 @@ dialog
     left: 4%;
     max-height: 92%;
     max-width: 92%;
+    padding: 15px 0 0 0;
     top: 4%;
   }
 
   // Medium and up - larger outside area
   @media only screen and (min-width: 641px) {
+    border-bottom: 30px solid white;
     max-height: 90%;
+    padding: 30px 20px 0 20px;
     top: 5%;
   }
 }
@@ -78,6 +79,7 @@ dialog .mobile-close-reveal-modal
 
   .bottom-close-button {
     background-color: $orange-500;
+    margin: 0 0 1rem;
 
     @media only screen and (min-width: 640px) {
       display: none;

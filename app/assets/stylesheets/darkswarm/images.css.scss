@@ -14,6 +14,12 @@
       display: none;
     }
   }
+
+  @media only screen and (max-width: 1024px) {
+    margin-top: 0;
+    margin-bottom: 1em;
+    padding: 5px;
+  }
 }
 
 .hero-img {
@@ -45,11 +51,4 @@
 
 .producer-logo {
   max-width: 220px;
-}
-
-@media only screen and (max-width: 1024px) {
-  .product-img {
-    margin-top: 2em;
-    margin-bottom: 1em;
-  }
 }
