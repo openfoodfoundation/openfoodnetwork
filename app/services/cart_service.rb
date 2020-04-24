@@ -22,6 +22,8 @@ class CartService
     valid?
   end
 
+  private
+
   def attempt_cart_add_variants(variants_data)
     loaded_variants = indexed_variants(variants_data)
 
@@ -70,8 +72,6 @@ class CartService
       cart_remove(id)
     end
   end
-
-  private
 
   def scoper
     @scoper ||= OpenFoodNetwork::ScopeVariantToHub.new(@distributor)
