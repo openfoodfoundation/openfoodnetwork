@@ -30,11 +30,20 @@ module Spree
     end
 
     describe "touches" do
-      let!(:taxon) { create(:taxon) }
-      let!(:product) { create(:simple_product) }
+      let!(:taxon1) { create(:taxon) }
+      let!(:taxon2) { create(:taxon) }
+      let!(:taxon3) { create(:taxon) }
+      let!(:product) { create(:simple_product, primary_taxon: taxon1, taxons: [taxon1, taxon2]) }
 
-      it "is touched when applied to a product" do
-        expect{ product.taxons << taxon }.to change { taxon.reload.updated_at }
+      it "is touched when a taxon is applied to a product" do
+        expect{ product.taxons << taxon3 }.to change { taxon3.reload.updated_at }
+      end
+
+      it "is touched when assignment of primary_taxon on a product changes" do
+        expect do
+          product.primary_taxon = taxon2
+          product.save
+        end.to change { taxon2.reload.updated_at }
       end
     end
   end
