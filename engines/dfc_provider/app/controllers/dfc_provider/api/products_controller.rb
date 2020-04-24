@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
 # Controller used to provide the API products for the DFC application
-module Api
-  module DfcProvider
-    class ProductsController < Api::BaseController
+module DfcProvider
+  module Api
+    class ProductsController < ::Api::BaseController
+      skip_before_filter :authenticate_user
       before_filter :set_enterprise
+      before_filter :authenticate_user
+      skip_authorization_check
 
       def index
         products = @enterprise.
@@ -19,6 +22,10 @@ module Api
       end
 
       private
+
+      def authenticate_user
+        @current_api_user = @enterprise.owner
+      end
 
       def set_enterprise
         @enterprise = ::Enterprise.find(params[:enterprise_id])

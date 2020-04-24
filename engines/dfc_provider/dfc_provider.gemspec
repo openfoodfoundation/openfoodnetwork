@@ -13,6 +13,6 @@ Gem::Specification.new do |s|
   s.email       = ['admin@openfoodfrance.org']
   s.summary     = 'Provides an API stack implementing DFC semantic specifications'
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ['MIT-LICENSE', 'Rakefile', 'README.rdoc']
+  s.files = Dir["{app,config,db,lib}/**/*"] + ['README.rdoc']
   s.test_files = Dir['test/**/*']
 end
