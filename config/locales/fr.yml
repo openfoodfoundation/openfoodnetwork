@@ -3247,7 +3247,9 @@ fr:
         autocomplete:
           producer_name: "Producteur"
           unit: "Unité"
-      general_settings:
+      shared:
+        sortable_header:
+          name: "Produit/Variante"
         edit:
           legal_settings: "Configuration légales"
           cookies_consent_banner_toggle: "Afficher la bannière de consentement à l'utilisation des cookies"
