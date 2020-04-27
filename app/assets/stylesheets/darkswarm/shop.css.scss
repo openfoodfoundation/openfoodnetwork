@@ -74,20 +74,7 @@ $sidebar-footer-height: 5em;
       padding: 1em;
 
       button {
-        height: 3em;
-        background-color: $grey-800;
-        color: $white;
-        border: 1px solid $grey-600;
-        border-radius: $radius-medium;
-        width: 47%;
-        margin: 0;
-        padding: 0;
-
-        &.done {
-          background-color: $orange-500;
-          border: none;
-          margin-left: 3%;
-        }
+        width: 48%;
       }
     }
 
