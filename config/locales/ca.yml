@@ -323,6 +323,7 @@ ca:
     show_n_more: Mostra %{num} més
     choose: "Tria ..."
     please_select: Seleccioneu ...
+    column_save_as_default: Per defecte
     columns: Columnes
     actions: Accions
     viewing: "Veient: %{current_view_name}"
@@ -1464,9 +1465,9 @@ ca:
   email_so_edit_false_html: "Pots <a href='%{order_url}'> veure detalls d'aquesta comanda </a> en qualsevol moment."
   email_so_contact_distributor_html: "Si tens alguna pregunta pots contactar amb <strong>%{distributor}</strong> a través d'%{email}."
   email_so_contact_distributor_to_change_order_html: "Aquesta comanda s'ha creat automàticament per a vostè. Podeu fer canvis fins que les comandes es tanquin a %{orders_close_at} contactant a <strong> %{distributor} </ strong> a través d'%{email}."
-  email_so_confirmation_intro_html: "La teva comanda amb <strong> %{distributor} </ strong> ja està confirmada"
+  email_so_confirmation_intro_html: "La teva comanda amb <strong>%{distributor}</strong> ja està confirmada"
   email_so_confirmation_explainer_html: "Vas realitzar aquesta comanda automàticament i ara s'ha finalitzat."
-  email_so_confirmation_details_html: "A continuació trobareu tot el que necessiteu saber sobre la comanda de <strong> %{distributor} </ strong>:"
+  email_so_confirmation_details_html: "A continuació trobareu tot el que necessiteu saber sobre la comanda de <strong>%{distributor}</strong> :"
   email_so_empty_intro_html: "Hem intentat fer una nova comanda amb <strong> %{distributor} </ strong>, però hem tingut alguns problemes..."
   email_so_empty_explainer_html: "Malauradament, cap dels productes que heu demanat estava disponible, de manera que no s'ha realitzat cap comanda. Les quantitats originals que heu sol·licitat apareixen ratllades a sota."
   email_so_empty_details_html: "Aquests són els detalls de la comanda sense confirmar per <strong> %{distributor} </ strong>:"
@@ -1922,6 +1923,7 @@ ca:
   admin_enterprise_relationships_permits: "Permet"
   admin_enterprise_relationships_seach_placeholder: "Cerca"
   admin_enterprise_relationships_button_create: "Crear"
+  admin_enterprise_relationships_to: "a"
   admin_enterprise_groups: "Grups d'organització"
   admin_enterprise_groups_name: "Nom"
   admin_enterprise_groups_owner: "Propietària"
