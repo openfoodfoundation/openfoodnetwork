@@ -323,6 +323,7 @@ fil_PH:
     show_n_more: Ipakita%{num}pa
     choose: "pumili..."
     please_select: pumili
+    column_save_as_default: i-save bilang default
     columns: hanay
     actions: mga  kilos
     viewing: "Tinitignan: %{current_view_name}"
@@ -1921,6 +1922,7 @@ fil_PH:
   admin_enterprise_relationships_permits: "mga permit"
   admin_enterprise_relationships_seach_placeholder: "hanapin"
   admin_enterprise_relationships_button_create: "gumawa"
+  admin_enterprise_relationships_to: "sa"
   admin_enterprise_groups: "mga grupo ng enterprise"
   admin_enterprise_groups_name: "pangalan"
   admin_enterprise_groups_owner: "may-ari"
