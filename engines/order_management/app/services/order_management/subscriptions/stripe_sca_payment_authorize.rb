@@ -5,7 +5,7 @@ module OrderManagement
     class StripeScaPaymentAuthorize
       def initialize(order)
         @order = order
-        @payment = @order.pending_payments.last
+        @payment = OrderPaymentFinder.new(@order).last_pending_payment
       end
 
       def call!
