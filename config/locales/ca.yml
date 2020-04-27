@@ -664,7 +664,7 @@ ca:
         primary_details:
           name: Nom
           name_placeholder: p. ex. Horta Josep Ribes
-          groups: Grups
+          groups: Xarxes/Grups
           groups_tip: Seleccioneu grups o xarxes de la quals sou membres. Això ajudarà les consumidores a trobar la vostra organització o empresa.
           groups_placeholder: Comenceu a escriure per cercar xarxes disponibles...
           primary_producer: Productora principal?
@@ -1207,7 +1207,7 @@ ca:
   menu_2_url: "/map"
   menu_3_title: "Productors"
   menu_3_url: "/producers"
-  menu_4_title: "Grups"
+  menu_4_title: "Xarxes/Grups"
   menu_4_url: "/groups"
   menu_5_title: "Sobre"
   menu_5_url: "http://katuma.org/"
@@ -1263,7 +1263,7 @@ ca:
   label_map: "Mapa"
   label_producer: "Productora"
   label_producers: "Productors"
-  label_groups: "Grups"
+  label_groups: "Xarxes/Grups"
   label_about: "Sobre"
   label_connect: "Connecta"
   label_learn: "Aprèn"
@@ -1557,8 +1557,8 @@ ca:
   components_profiles_show: "Mostra els perfils"
   components_filters_nofilters: "Sense filtres"
   components_filters_clearfilters: "Esborra tots els filtres"
-  groups_title: Grups
-  groups_headline: Xarxes / regions
+  groups_title: Xarxes/Grups
+  groups_headline: Xarxes /Grups
   groups_text: "Cada productora és única. Tots els negocis tenen alguna cosa diferent per oferir. Els nostres grups són col·lectius o xarxes de productores, grups de consum o distribuïdores que comparteixen alguna cosa comú com la ubicació, la parada en un mercat de pagès o la filosofia. Això fa que la teva experiència de compra sigui més fàcil. Explora els nostres grups."
   groups_search: "Cerca nom o paraula clau"
   groups_no_groups: "No s'ha trobat cap xarxa"
@@ -1594,7 +1594,7 @@ ca:
   modal_hubs_abstract: Els nostres grups són el punt de contacte entre tu i les persones que fan els teus aliments.
   modal_hubs_content1: Pots cercar un grup convenient per ubicació o nom. Alguns grups tenen diversos punts on pots recollir les vostres comandes i alguns també proporcionen opcions de lliurament. Cada grup és un punt de venda amb operacions comercials i logística independents, per la qual cosa és normal que existeixin variacions d'un grup a un altre.
   modal_hubs_content2: Només pots comprar en un grup de consum a la vegada.
-  modal_groups: "Xarxes / regions"
+  modal_groups: "Xarxes /Grups"
   modal_groups_content1: Aquestes són les organitzacions i les relacions entre els grups que conformen l'OFN
   modal_groups_content2: Alguns grups estan agrupats per localització o Ajuntament, altres per similituds no geogràfiques.
   modal_how: "Com funciona"
@@ -3223,7 +3223,9 @@ ca:
         autocomplete:
           producer_name: "Productor"
           unit: "Unitat"
-      general_settings:
+      shared:
+        sortable_header:
+          name: "Nom"
         edit:
           legal_settings: "Paràmetres legals"
           cookies_consent_banner_toggle: "Mostra banner de consentiment de cookies"
