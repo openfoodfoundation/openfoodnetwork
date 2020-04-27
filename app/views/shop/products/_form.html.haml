@@ -52,7 +52,7 @@
                 = render partial: "shop/products/filters"
 
                 .sidebar-footer
-                  %button{type: 'button', ng: {click: 'clearFilters()'}}
+                  %button.large.dark.left{type: 'button', ng: {click: 'clearFilters()'}}
                     = t(:products_filter_clear)
-                  %button.done{type: 'button', ng: {click: 'toggleFilterSidebar()'}}
+                  %button.large.bright.right{type: 'button', ng: {click: 'toggleFilterSidebar()'}}
                     = t(:products_filter_done)
