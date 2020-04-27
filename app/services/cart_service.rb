@@ -151,7 +151,7 @@ class CartService
       variant_ids_in_data = variants_data.map{ |v| v[:variant_id] }
 
       Spree::Variant.where(id: variant_ids_in_data).
-        includes(:stock_items, :product).
+        includes(:default_price, :stock_items, :product).
         all.
         index_by(&:id)
     end
