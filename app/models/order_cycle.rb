@@ -240,7 +240,8 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def exchanges_supplying(order)
-    exchanges.supplying_to(order.distributor).with_any_variant(order.variants.map(&:id))
+    variants_relation = Spree::Variant.joins(:line_items).merge(Spree::LineItem.in_orders(order))
+    exchanges.supplying_to(order.distributor).with_any_variant(variants_relation)
   end
 
   def coordinated_by?(user)
