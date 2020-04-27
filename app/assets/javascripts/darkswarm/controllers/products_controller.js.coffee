@@ -10,6 +10,7 @@ Darkswarm.controller "ProductsCtrl", ($scope, $filter, $rootScope, Products, Ord
   $scope.order_cycle = OrderCycle.order_cycle
   $scope.supplied_taxons = null
   $scope.supplied_properties = null
+  $scope.showFilterSidebar = false
 
   $rootScope.$on "orderCycleSelected", ->
     $scope.update_filters()
@@ -84,6 +85,9 @@ Darkswarm.controller "ProductsCtrl", ($scope, $filter, $rootScope, Products, Ord
 
   $scope.clearAll = ->
     $scope.query = ""
+    $scope.clearFilters()
+
+  $scope.clearFilters = ->
     $scope.taxonSelectors.clearAll()
     $scope.propertySelectors.clearAll()
 
@@ -94,3 +98,9 @@ Darkswarm.controller "ProductsCtrl", ($scope, $filter, $rootScope, Products, Ord
       $scope.Products.products = []
       $scope.update_filters()
       $scope.loadProducts()
+
+  $scope.filtersCount = () ->
+    $scope.taxonSelectors.totalActive() + $scope.propertySelectors.totalActive()
+
+  $scope.toggleFilterSidebar = ->
+    $scope.showFilterSidebar = !$scope.showFilterSidebar

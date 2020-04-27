@@ -14,7 +14,7 @@
     @include border-radius(0);
 
     padding: 0;
-    margin: 0 0 0.25rem 0.25rem;
+    margin: 0 0.25rem 0.25rem 0;
 
     &:hover, &:focus {
       background: transparent;
@@ -140,25 +140,6 @@
 .filter-shopfront {
   &.taxon-selectors, &.property-selectors {
     background: transparent;
-
-    single-line-selectors {
-      overflow-x: hidden;
-      white-space: nowrap;
-
-      .f-dropdown {
-        overflow-x: auto;
-        white-space: normal;
-      }
-    }
-
-    ul {
-      margin: 0;
-      display: inline-block;
-    }
-
-    ul, ul li {
-      list-style: none;
-    }
   }
 
   // Shopfront taxons
@@ -169,5 +150,9 @@
   // Shopfront properties
   &.property-selectors {
     @include filter-selector(#666, #ccc, #777);
+  }
+
+  ul {
+    margin: 0;
   }
 }

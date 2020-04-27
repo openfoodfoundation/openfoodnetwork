@@ -4,7 +4,7 @@
 .producers {
   .active_table .active_table_node {
     // Header row
-    @media all and (max-width: 640px) {
+    @include breakpoint(phablet) {
       .skinny-head {
         background-color: $clr-turquoise-light;
 
@@ -137,7 +137,7 @@
       .active_table_row.closed {
         border: 1px solid transparent;
 
-        @media all and (max-width: 640px) {
+        @include breakpoint(phablet) {
           border-color: $clr-turquoise-light;
         }
 

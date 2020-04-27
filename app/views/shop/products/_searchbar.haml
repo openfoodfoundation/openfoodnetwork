@@ -1,0 +1,13 @@
+.shop-searchbar
+  .row
+    .small-12.large-5.columns.flex
+      %input#search.text{"ng-model" => "query",
+            placeholder: t(:products_search),
+            "ng-debounce" => "200",
+            "ofn-disable-enter" => true}
+
+      .hide-for-large-up
+        %button{type: 'button', ng: {click: 'toggleFilterSidebar()'}}
+          = t(:products_filter_heading)
+          %span{ng: {show: 'filtersCount()' }}
+            ({{ filtersCount() }})
