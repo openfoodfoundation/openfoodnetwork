@@ -3223,7 +3223,9 @@ en_GB:
         autocomplete:
           producer_name: "Producer"
           unit: "Unit"
-      general_settings:
+      shared:
+        sortable_header:
+          name: "Name"
         edit:
           legal_settings: "Legal Settings"
           cookies_consent_banner_toggle: "Display cookies consent banner"
