@@ -41,8 +41,21 @@ module.exports = function(config) {
     },
 
     autoWatch: true,
-
-    browsers: ['ChromeHeadless'],
+    browsers: ['CustomHeadlessChrome'],
+    customLaunchers: {
+      CustomHeadlessChrome: {
+        base: 'ChromeHeadless',
+        flags: [
+          '--no-sandbox',
+          '--remote-debugging-port=9222',
+          '--enable-logging',
+          '--disable-background-timer-throttling',
+          '--disable-renderer-backgrounding',
+          '--proxy-bypass-list=*',
+          '--proxy-server=\'direct://\''
+       ]
+      }
+    },
 
     junitReporter: {
       outputFile: 'log/testacular-unit.xml',
