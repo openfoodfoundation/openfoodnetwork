@@ -14,9 +14,7 @@ class CartController < BaseController
       cart_service = CartService.new(order)
 
       if cart_service.populate(params.slice(:products, :variants, :quantity), true)
-        fire_event('spree.cart.add')
-        fire_event('spree.order.contents_changed')
-
+        order.update_distribution_charge!
         order.cap_quantity_at_stock!
         order.update!
 
