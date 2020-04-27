@@ -323,6 +323,7 @@ es_CR:
     show_n_more: Mostrar %{num} más
     choose: "Escoger..."
     please_select: Por favor selecciona ...
+    column_save_as_default: Guardar por defecto
     columns: Columnas
     actions: Acciones
     viewing: "Viendo: %{current_view_name}"
@@ -2084,12 +2085,12 @@ es_CR:
   report_tax_rates: Porcentajes de los Impuestos
   report_tax_types: Tipos de Impuestos
   report_header_order_cycle: Ciclo de Pedido
-  report_header_user: Usuaria
-  report_header_email: Email
+  report_header_user: Usuario
+  report_header_email: Correo electrónico
   report_header_status: Estado
   report_header_comments: Comentarios
   report_header_first_name: Nombre
-  report_header_last_name: Apellido
+  report_header_last_name: Apellidos
   report_header_phone: Teléfono
   report_header_suburb: Barrio
   report_header_address: Dirección
@@ -2106,14 +2107,14 @@ es_CR:
   report_header_shipping_method: Método de envío
   report_header_shipping_instructions: Instrucciones de envío
   report_header_ship_street: Calle de envío
-  report_header_ship_street_2: Calle de envío 2
+  report_header_ship_street_2: 'Calle 2 de envío '
   report_header_ship_city: Ciudad de envío
   report_header_ship_postcode: Código postal de envío
   report_header_ship_state: Provincia de envío
   report_header_billing_street: Calle de facturación
-  report_header_billing_street_2: Calle de facturación 2
-  report_header_billing_street_3: Calle de facturación 3
-  report_header_billing_street_4: Calle de facturación 4
+  report_header_billing_street_2: 'Calle 2 de facturación '
+  report_header_billing_street_3: 'Calle 3 de facturación '
+  report_header_billing_street_4: 'Calle 4 de facturación '
   report_header_billing_city: Ciudad de facturación
   report_header_billing_postcode: Código postal de facturación
   report_header_billing_state: Provincia de facturación
@@ -2122,12 +2123,12 @@ es_CR:
   report_header_order_number: Número de pedido
   report_header_date: Fecha
   report_header_confirmation_date: Fecha de confirmación
-  report_header_tags: Tags
+  report_header_tags: Etiquetas
   report_header_items: Artículos
   report_header_items_total: "Artículos en total %{currency_symbol}"
-  report_header_taxable_items_total: "Artículos con Impuestos en Total (%{currency_symbol})"
-  report_header_sales_tax: "Impuesto sobre las Ventas (%{currency_symbol})"
-  report_header_delivery_charge: "Gastos de Envío (%{currency_symbol})"
+  report_header_taxable_items_total: "Total en artículos con impuestos (%{currency_symbol})"
+  report_header_sales_tax: "Impuesto sobre las ventas (%{currency_symbol})"
+  report_header_delivery_charge: "Cobros de Envío (%{currency_symbol})"
   report_header_tax_on_delivery: "Impuestos sobre la entrega (%{currency_symbol})"
   report_header_tax_on_fees: "Impuesto sobre las comisiones (%{currency_symbol})"
   report_header_total_tax: "Total Impuestos (%{currency_symbol})"
@@ -2144,22 +2145,22 @@ es_CR:
   report_header_total_available: Total disponible
   report_header_unallocated: Sin asignar
   report_header_max_quantity_excess: Cantidad máxima
-  report_header_taxons: Clasificación
+  report_header_taxons: Clasificaciones
   report_header_supplier: Proveedor
-  report_header_producer: Productora
+  report_header_producer: Productor
   report_header_producer_suburb: Barrio Productora
   report_header_unit: Unidad
   report_header_group_buy_unit_quantity: Agrupar por cantidad unidad
-  report_header_cost: Coste
-  report_header_shipping_cost: Coste del envío
-  report_header_curr_cost_per_unit: Coste por unidad actual
-  report_header_total_shipping_cost: Coste total del envío
+  report_header_cost: Costo
+  report_header_shipping_cost: Costo del envío
+  report_header_curr_cost_per_unit: Costo por unidad actual
+  report_header_total_shipping_cost: Costo total del envío
   report_header_payment_method: Método de pago
   report_header_sells: Vende
   report_header_visible: Visible
   report_header_price: Precio
-  report_header_unit_size: Unidad de medida
-  report_header_distributor: Distribuidora
+  report_header_unit_size: Tamaño de la unidad
+  report_header_distributor: Distribuidor
   report_header_distributor_address: Dirección del distribuidor
   report_header_distributor_city: Ciudad del distribuidor
   report_header_distributor_postcode: Código postal del distribuidor
@@ -2174,7 +2175,7 @@ es_CR:
   report_header_units_required: Unidades requeridas
   report_header_remainder: Recordatorio
   report_header_order_date: Fecha de pedido
-  report_header_order_id: ID de Pedido
+  report_header_order_id: ID de pedido
   report_header_item_name: Nombre del artículo
   report_header_temp_controlled_items: ¿Artículos de temperatura controlada?
   report_header_customer_name: Nombre del cliente
@@ -3222,7 +3223,9 @@ es_CR:
         autocomplete:
           producer_name: "Productor"
           unit: "Unidad"
-      general_settings:
+      shared:
+        sortable_header:
+          name: "Nombre"
         edit:
           legal_settings: "Configuraciones legales"
           cookies_consent_banner_toggle: "Mostrar el banner de consentimiento de cookies"
