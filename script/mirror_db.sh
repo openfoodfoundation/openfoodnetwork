@@ -10,6 +10,7 @@ HOST="$1"
 BUCKET="$2"
 : ${DB_USER='ofn_user'}
 : ${DB_DATABASE='openfoodnetwork'}
+: ${DB_CACHE_FILE="tmp/$HOST.sql"}
 
 DB_OPTIONS=(
 --exclude-table-data=sessions
@@ -32,20 +33,30 @@ fi
 
 # -- Mirror database
 echo "Mirroring database..."
-dropdb -h localhost -U ofn open_food_network_dev
+dropdb -h localhost -U ofn open_food_network_dev --if-exists
 createdb -h localhost -U ofn open_food_network_dev
-ssh -C "$HOST" "pg_dump -h localhost -U $DB_USER $DB_DATABASE ${DB_OPTIONS[@]}" | psql -h localhost -U ofn open_food_network_dev
+
+if [ -s "$DB_CACHE_FILE" ]; then
+  echo "Using cached dump '$DB_CACHE_FILE'."
+  psql -h localhost -U ofn open_food_network_dev < "$DB_CACHE_FILE"
+else
+  echo "Downlowding dump to '$DB_CACHE_FILE'."
+  ssh -C "$HOST" "pg_dump -h localhost -U $DB_USER $DB_DATABASE ${DB_OPTIONS[@]}"\
+  | tee "$DB_CACHE_FILE"\
+  | psql -h localhost -U ofn open_food_network_dev
+fi
 
 # -- Disable S3
 echo "Preparing mirrored database..."
 $RAILS_RUN script/prepare_imported_db.rb
 
 # -- Mirror images
-if [ -n "$BUCKET" ] && hash aws 2>/dev/null; then
+if [ -n "$BUCKET" ]; then
+  if hash aws 2>/dev/null; then
     echo "Mirroring images..."
     aws s3 sync "s3://$BUCKET/public public/"
-
-else
+  else
     echo "Please install the AWS CLI tools so that I can copy the images from $BUCKET for you."
     echo "eg. sudo easy_install awscli"
+  fi
 fi
