@@ -1324,14 +1324,8 @@ ca:
       cookie_stripe_desc: "Dades recollides pel nostre processador de pagaments Stripe per a la detecció de frau https://stripe.com/cookies-policy/legal. No totes les botigues utilitzen Stripe com a mètode de pagament, però és una bona pràctica per evitar que el frau s'apliqui a totes les pàgines. Probablement Stripe construeixi una imatge de quines de les nostres pàgines solen interactuar amb la seva API i, a continuació, marca qualsevol cosa inusual. Així, configurar les cookies d'Stripe té una funció més àmplia que simplement proporcionar un mètode de pagament a un usuari. Eliminant-lo podria afectar la seguretat del propi servei. Pots obtenir més informació sobre Stripe i llegir la seva política de privadesa a https://stripe.com/privacy."
       statistics_cookies: "Cookies d'estadístiques"
       statistics_cookies_desc: "Les següents no són estrictament necessàries, però ajuden a proporcionar-vos la millor experiència d'usuari, permetent-nos analitzar el comportament de l'usuari, identificar quines funcions s'utilitzen més o quines no es fan servir, comprendre problemes d'experiència d'usuari, etc."
-      statistics_cookies_analytics_desc_html: "Per recopilar i analitzar les dades d'ús de la plataforma utilitzem Google Analytics ja que era el servei predeterminat connectat amb Spree (el programari de codi obert de comerç en línia que hem construït), però la nostra visió és canviar a <a href = 'https: / / /matomo.org/ 'target =' _ blank '> Matomo </ a> (ex Piwik, eina d'anàlisi de codi obert compatible amb GDPR i protegeix la vostra privadesa) tan aviat com puguem. "
       statistics_cookies_matomo_desc_html: "Per recopilar i analitzar les dades d'ús de la plataforma, utilitzem <a href='https://matomo.org/' target='_blank'> Matomo </ a> (ex Piwik), una eina d'anàlisi de codi obert que és compatible amb GDPR i protegeix la vostra privadesa."
       statistics_cookies_matomo_optout: "Vols desactivar l'anàlisi de dades de Matomo? No recopilem cap dada personal i Matomo ens ajuda a millorar el nostre servei però respectem la teva elecció :-)"
-      cookie_analytics_utma_desc: "S'utilitza per distingir usuaris i sessions. La cookie es crea quan s'executa la biblioteca javascript i no existeixen cookies __utma existents. La cookie s'actualitza cada cop que s'envien dades a Google Analytics."
-      cookie_analytics_utmt_desc: "S'utilitza per accelerar la quantitat de sol·licituds."
-      cookie_analytics_utmb_desc: "S'utilitza per determinar noves sessions / visites. La cookie es crea quan s'executa la biblioteca javascript i no existeixen cookies __utmb existents. La cookie s'actualitza cada cop que s'envien dades a Google Analytics."
-      cookie_analytics_utmc_desc: "No s'utilitza a ga.js. Estableix la interoperabilitat amb urchin.js. Històricament, aquesta cookie funcionava juntament amb la cookie __utmb per determinar si l'usuari estava en una nova sessió / visita."
-      cookie_analytics_utmz_desc: "Emmagatzema l'origen del codi o la campanya que explica com l'usuari ha arribat al vostre lloc. La cookie es crea quan s'executa i s'actualitza la biblioteca javascript cada vegada que s'envien dades a Google Analytics."
       cookie_matomo_basics_desc: "Les primeres cookies de Matomo per recollir estadístiques."
       cookie_matomo_heatmap_desc: "Galeta d'enregistrament de sessió i heatmap de Matomo"
       cookie_matomo_ignore_desc: "La cookie usada per excloure l'usuari de ser seguit."
@@ -2691,6 +2685,14 @@ ca:
       start_free_profile: "Comença amb un perfil gratuït i amplia'l quan estiguis preparada."
   order_management:
     reports:
+      enterprise_fee_summaries:
+        filters:
+          date_range: "Interval de dates"
+          report_format_csv: "Descarrega com a CSV"
+          generate_report: "Generar informe"
+        report:
+          none: "Cap"
+          select_and_search: "Seleccioneu els filtres i feu clic a GENERAR INFORME per accedir a les dades."
       enterprise_fee_summary:
         date_end_before_start_error: "ha de ser després de l'inici"
         parameter_not_allowed_error: "No esteu autoritzats a utilitzar un o més filtres seleccionats per a aquest informe."
@@ -2884,12 +2886,6 @@ ca:
     shipping_categories: "Tipus d'enviament"
     new_shipping_category: "Nova categoria d’enviament"
     back_to_shipping_categories: "Tornar a les categories d'enviament"
-    analytics_trackers: "Rastrejadors d'anàlisi"
-    no_trackers_found: "No s'ha trobat cap rastrejador"
-    new_tracker: "Nou rastrejador"
-    add_one: "Afegeix-ne un"
-    google_analytics_id: "ID d'Analytics"
-    back_to_trackers_list: "Torna a la llista de rastrejadors"
     name: "Nom"
     description: "Descripció"
     type: "Tipus"
@@ -3171,14 +3167,6 @@ ca:
           bulk_coop_allocation: 'Compra grupal - Assignació'
           bulk_coop_packing_sheets: 'Compra grupal - Fulls de preparació de cistelles'
           bulk_coop_customer_payments: 'Compra grupal - Pagaments de les consumidores'
-        enterprise_fee_summaries:
-          filters:
-            date_range: "Interval de dates"
-            report_format_csv: "Descarrega com a CSV"
-            generate_report: "Generar informe"
-          report:
-            none: "No productora"
-            select_and_search: "Seleccioneu els filtres i feu clic a GENERAR INFORME per accedir a les dades."
       users:
         index:
           listing_users: "Llistat d'usuàries"
@@ -3232,7 +3220,6 @@ ca:
           privacy_policy_url: "URL de la política de privacitat "
           enterprises_require_tos: "Les organitzacions han d'acceptar les condicions del servei"
           cookies_policy_matomo_section: "Mostra la secció de Matomo a la pàgina de política de cookies"
-          cookies_policy_ga_section: "Mostra la secció de Google Analytics a la pàgina de política de cookies"
           footer_tos_url: "URL de les condicions d'ús"
     checkout:
       payment:
