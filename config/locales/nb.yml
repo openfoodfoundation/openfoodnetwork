@@ -31,6 +31,10 @@ nb:
               taken: "Det finnes allerede en konto for denne eposten. Vennligst logg inn eller tilbakestill passordet ditt."
         spree/order:
           no_card: Det er ingen gyldige kredittkort tilgjengelig for å trekke
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: "har utgått"
         order_cycle:
           attributes:
             orders_close_at:
@@ -319,6 +323,7 @@ nb:
     show_n_more: Vis %{num} flere
     choose: "Velg..."
     please_select: Vennligst velg...
+    column_save_as_default: Lagre som Standard
     columns: Kolonner
     actions: Handlinger
     viewing: "Viser: %{current_view_name}"
@@ -867,6 +872,7 @@ nb:
         distributor: "Distributør"
         products: "Produkter"
         tags: "Merkelapper"
+        delivery_details: "Leveringsdetaljer"
         fees: "Avgifter"
         previous: "Tidligere"
         save: "Lagre"
@@ -1914,6 +1920,7 @@ nb:
   admin_enterprise_relationships_permits: "tillater"
   admin_enterprise_relationships_seach_placeholder: "Søk"
   admin_enterprise_relationships_button_create: "Opprett"
+  admin_enterprise_relationships_to: "til"
   admin_enterprise_groups: "Bedriftsgrupper"
   admin_enterprise_groups_name: "Navn"
   admin_enterprise_groups_owner: "Eier"
@@ -3027,6 +3034,8 @@ nb:
           tax_invoice: "AVGIFTSFAKTURA"
           code: "Kode"
           from: "Fra"
+          to: "Fakturér til"
+          shipping: "Levering"
         form:
           distribution_fields:
             title: "Distribusjon"
@@ -3207,7 +3216,9 @@ nb:
         autocomplete:
           producer_name: "Produsent"
           unit: "Enhet"
-      general_settings:
+      shared:
+        sortable_header:
+          name: "Navn"
         edit:
           legal_settings: "Juridiske innstillinger"
           cookies_consent_banner_toggle: "Vis informasjonskapsler samtykkebanner"
