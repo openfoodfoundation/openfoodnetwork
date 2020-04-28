@@ -1321,14 +1321,8 @@ en_GB:
       cookie_stripe_desc: "Data collected by our payment processor Stripe for fraud detection https://stripe.com/cookies-policy/legal. Not all shops use Stripe as a payment method but it is a good practice to prevent fraud to apply it to all pages. Stripe probably build a picture of which of our pages usually interact with their API and then flag anything unusual. So setting the Stripe cookie has a broader function than simply the provision of a payment method to a user. Removing it could affect the security of the service itself. You can learn more about Stripe and read its privacy policy at https://stripe.com/privacy."
       statistics_cookies: "Statistics Cookies"
       statistics_cookies_desc: "The following are not strictly necessary, but help to provide you with the best user experience by allowing us to analyse user behaviour, identify which features you use most, or don’t use, understand user experience issues, etc."
-      statistics_cookies_analytics_desc_html: "To collect and analyse platform usage data, we use Google Analytics."
       statistics_cookies_matomo_desc_html: "To collect and analyse platform usage data, we use <a href='https://matomo.org/' target='_blank'>Matomo</a> (ex Piwik), an open source analytics tool that is GDPR compliant and protects your privacy."
       statistics_cookies_matomo_optout: "Would you like to opt-out of Matomo analytics? We use Matomo to help us improve our service, but we don't collect any personal data."
-      cookie_analytics_utma_desc: "Used to distinguish users and sessions. The cookie is created when the javascript library executes and no existing __utma cookies exists. The cookie is updated every time data is sent to Google Analytics."
-      cookie_analytics_utmt_desc: "Used to throttle request rate."
-      cookie_analytics_utmb_desc: "Used to determine new sessions/visits. The cookie is created when the javascript library executes and no existing __utmb cookies exists. The cookie is updated every time data is sent to Google Analytics."
-      cookie_analytics_utmc_desc: "Not used in ga.js. Set for interoperability with urchin.js. Historically, this cookie operated in conjunction with the __utmb cookie to determine whether the user was in a new session/visit."
-      cookie_analytics_utmz_desc: "Stores the traffic source or campaign that explains how the user reached your site. The cookie is created when the javascript library executes and is updated every time data is sent to Google Analytics."
       cookie_matomo_basics_desc: "Matomo first party cookies to collect statistics."
       cookie_matomo_heatmap_desc: "Matomo Heatmap & Session Recording cookie."
       cookie_matomo_ignore_desc: "Cookie used to exclude user from being tracked."
@@ -2691,6 +2685,14 @@ en_GB:
       start_free_profile: "Start with a free profile, and expand when you're ready!"
   order_management:
     reports:
+      enterprise_fee_summaries:
+        filters:
+          date_range: "Date Range"
+          report_format_csv: "Download as CSV"
+          generate_report: "Generate Report"
+        report:
+          none: "None"
+          select_and_search: "Select filters and click on GENERATE REPORT to access your data."
       enterprise_fee_summary:
         date_end_before_start_error: "must be after start"
         parameter_not_allowed_error: "You are not authorised to use one or more selected filters for this report."
@@ -2884,12 +2886,6 @@ en_GB:
     shipping_categories: "Shipping Categories"
     new_shipping_category: "New Shipping Category"
     back_to_shipping_categories: "Back To Shipping Categories"
-    analytics_trackers: "Analytics Trackers"
-    no_trackers_found: "No Trackers Found"
-    new_tracker: "New Tracker"
-    add_one: "Add One"
-    google_analytics_id: "Analytics ID"
-    back_to_trackers_list: "Back to Trackers List"
     name: "Name"
     description: "Description"
     type: "Type"
@@ -3171,14 +3167,6 @@ en_GB:
           bulk_coop_allocation: 'Bulk Co-op - Allocation'
           bulk_coop_packing_sheets: 'Bulk Co-op - Packing Sheets'
           bulk_coop_customer_payments: 'Bulk Co-op - Customer Payments'
-        enterprise_fee_summaries:
-          filters:
-            date_range: "Date Range"
-            report_format_csv: "Download as CSV"
-            generate_report: "Generate Report"
-          report:
-            none: "None"
-            select_and_search: "Select filters and click on GENERATE REPORT to access your data."
       users:
         index:
           listing_users: "Listing Users"
@@ -3232,7 +3220,6 @@ en_GB:
           privacy_policy_url: "Privacy Policy URL"
           enterprises_require_tos: "Enterprises must accept Terms of Service"
           cookies_policy_matomo_section: "Display Matomo section on cookies policy page"
-          cookies_policy_ga_section: "Display Google Analytics section on cookies policy page"
           footer_tos_url: "Terms of Service URL"
     checkout:
       payment:
