@@ -4,8 +4,13 @@
 module DfcProvider
   module Api
     class ProductsController < ::ActionController::Metal
-      include Spree::Api::ControllerSetup
-
+      include ActionController::Head
+      include AbstractController::Rendering
+      include ActionController::Rendering
+      include ActionController::Renderers::All
+      include ActionController::MimeResponds
+      include ActionController::ImplicitRender
+      include AbstractController::Callbacks
       # To access 'base_url' helper
       include ActionController::UrlFor
       include Rails.application.routes.url_helpers
@@ -14,6 +19,8 @@ module DfcProvider
                     :check_enterprise,
                     :check_user,
                     :check_accessibility
+
+      respond_to :json
 
       def index
         products = @enterprise.
