@@ -1323,14 +1323,8 @@ fr:
       cookie_stripe_desc: "Utilisé par le terminal de payement en ligne Stripe (proposé aux utilisateurs d'Open Food France) https://stripe.com/fr/cookies-policy/legal. Même si toutes les boutiques n'utilisent pas Stripe, c'est une bonne pratique en matière de sécurité d'appliquer ce cookie sur toutes les pages vues. Stripe construit probablement une image des pages qui ont un quelconque lien avec l'API connectant Open Food France à leur système de paiement pour détecter les comportements anormaux pouvant suggérer un risque de fraude. Donc ce cookie a un rôle qui va au-delà de la simple fourniture d'un système de paiement. Le supprimer pourrait affecter la sécurité du service. Pour en savoir plus sur la politique de confidentialité de Stripe: https://stripe.com/fr/privacy."
       statistics_cookies: "Cookies d'analyse de navigation"
       statistics_cookies_desc: "Ces cookies ne sont pas obligatoires, mais nous permettent de mieux comprendre votre usage de la plateforme, les endroits où vous bloquez, les fonctionnalités qui semblent vous manquer, ou que vous n'utilisez jamais, afin de fournir le service le plus adapté possible aux besoins des utilisateurs."
-      statistics_cookies_analytics_desc_html: "Pour analyser les données concernant votre usage de la plateforme, nous utilisons Google Analytics, pas vraiment par choix, mais simplement parce que c'était l'outil d'analyse connecté par défaut via Spree, le logiciel e-commerce open source sur lequel nous avons construit. Mais nous espérons pouvoir rapidement migrer vers <a href='https://matomo.org/' target='_blank'>Matomo</a> (anciennement Piwik), outil d'analyse open source compatible RGPD et engagé sur le respect de la vie privée des utilisateurs."
       statistics_cookies_matomo_desc_html: "Pour analyser les données concernant votre usage de la plateforme, nous utilisons <a href='https://matomo.org/' target='_blank'>Matomo</a>(anciennement Piwik), outil d'analyse open source compatible RGPD et engagé sur le respect de la vie privée des utilisateurs."
       statistics_cookies_matomo_optout: "Vous ne voulez pas que vos données soient analysées par Matomo ? Nous ne collectons aucune donnée personnelle, et Matomo nous aide à améliorer le service que nous vous offrons, mais nous respectons votre choix :-)"
-      cookie_analytics_utma_desc: "Utilisé pour distinguer les utilisateurs et les sessions. Ce cookie est installé quand la librairie Javascript s'exécute et qu'aucun cookie __utma n'existe déjà. Le cookie est mis à jour à chaque fois que des données sont envoyées à Google Analytics."
-      cookie_analytics_utmt_desc: "Utilisé pour limiter le taux de requêtes."
-      cookie_analytics_utmb_desc: "Utilisé pour distinguer les nouvelles sessions/visites. Ce cookie est installé quand la librairie Javascript s'exécute et qu'aucun cookie __utmb n'existe déjà. Le cookie est mis à jour à chaque fois que des données sont envoyées à Google Analytics. "
-      cookie_analytics_utmc_desc: "Non utilisé dans ga.js. Utilisé pour l'interopérabilité avec urchin.js. Historiquement, ce cookie fonctionnait en conjonction avec le cookie __utmb pour déterminer si l'utilisateur était dans une nouvelle session/visite ou pas."
-      cookie_analytics_utmz_desc: "Ce cookie stocke les sources de trafic qui expliquent comment l'utilisateur est arrivé sur le site (via une campagne, une recherche sur un moteur de recherche, etc.). Ce cookie est installé quand la librairie Javascript s'exécute et mis à jour à chaque fois que des données sont envoyées à Google Analytics. "
       cookie_matomo_basics_desc: "Cookies déposés par Matomo pour collecter les statistiques de trafic."
       cookie_matomo_heatmap_desc: "Utilisé par Matomo pour enregistrer les sessions et \"cartes thermiques\" (représentations graphiques des données)"
       cookie_matomo_ignore_desc: "Cookie utilisé pour se souvenir qu'un utilisateur a souhaité explicitement que sa navigation ne soit pas analysée par Matomo, et exclure cet utilisateur du suivi du site."
@@ -2715,6 +2709,14 @@ fr:
       start_free_profile: "Commencez par créer votre profil entreprise, et changez de formule quand vous êtes prêt !"
   order_management:
     reports:
+      enterprise_fee_summaries:
+        filters:
+          date_range: "Période"
+          report_format_csv: "Télécharger le CSV"
+          generate_report: "Générer le rapport"
+        report:
+          none: "Aucun"
+          select_and_search: "Sélectionnez les filtres et cliquez sur \"générer le rapport\" pour accéder aux données."
       enterprise_fee_summary:
         date_end_before_start_error: "doit être après date début"
         parameter_not_allowed_error: "Vous n'êtes pas authorisé.e à utiliser un ou plusieurs des filtres sélectionnés pour ce rapport."
@@ -2908,12 +2910,6 @@ fr:
     shipping_categories: "Conditions de transport"
     new_shipping_category: "Nouvelle condition de transport"
     back_to_shipping_categories: "Retour aux conditions de transport"
-    analytics_trackers: "Traqueurs analyse navigation"
-    no_trackers_found: "Pas de traqueur trouvé"
-    new_tracker: "Nouveau traqueur"
-    add_one: "En ajouter un"
-    google_analytics_id: "ID analytique"
-    back_to_trackers_list: "Retour à la liste des traqueurs"
     name: "Produit/Variante"
     description: "Description"
     type: "Catégorie"
@@ -3195,14 +3191,6 @@ fr:
           bulk_coop_allocation: 'Achats groupés - Allocation'
           bulk_coop_packing_sheets: 'Achats groupés - Feuilles de préparation des paniers'
           bulk_coop_customer_payments: 'Achats groupés - Paiement des acheteurs'
-        enterprise_fee_summaries:
-          filters:
-            date_range: "Période"
-            report_format_csv: "Télécharger le CSV"
-            generate_report: "Générer le rapport"
-          report:
-            none: "Aucun"
-            select_and_search: "Sélectionnez les filtres et cliquez sur \"générer le rapport\" pour accéder aux données."
       users:
         index:
           listing_users: "Liste des utilisateurs"
@@ -3256,7 +3244,6 @@ fr:
           privacy_policy_url: "URL de la politique de confidentialité"
           enterprises_require_tos: "Les entreprises doivent accepter les Conditions Générales d'Utilisation"
           cookies_policy_matomo_section: "Afficher la section Matomo sur la politique de cookies"
-          cookies_policy_ga_section: "Afficher la section Google Analytics sur la politique de cookies"
           footer_tos_url: "Conditions d'utilisation URL"
     checkout:
       payment:
