@@ -4,6 +4,10 @@
   background: $cookies-policy-modal-background-color;
   border-bottom-color: $cookies-policy-modal-border-bottom-color;
 
+  @media only screen and (max-width: 640px) {
+    padding: 15px 15px 0 15px;
+  }
+
   table {
     width: 100%;
 
