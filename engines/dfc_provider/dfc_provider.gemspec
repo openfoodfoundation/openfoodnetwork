@@ -9,8 +9,7 @@ require "dfc_provider/version"
 Gem::Specification.new do |spec|
   spec.name        = 'dfc_provider'
   spec.version     = DfcProvider::VERSION
-  spec.authors     = ['Admin OFF']
-  spec.email       = ['admin@openfoodfrance.org']
+  spec.authors     = ["developers@ofn"]
   spec.summary     = 'Provides an API stack implementing DFC semantic ' \
                   'specifications'
 
