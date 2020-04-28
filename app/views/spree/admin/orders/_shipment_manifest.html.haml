@@ -1,5 +1,6 @@
 - shipment.manifest.each do |item|
   - line_item = order.find_line_item_by_variant(item.variant)
+  - break if line_item.blank?
 
   %tr.stock-item{ "data-item-quantity" => "#{item.quantity}" }
     %td.item-image

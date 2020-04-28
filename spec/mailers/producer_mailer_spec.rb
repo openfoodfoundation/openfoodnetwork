@@ -101,6 +101,19 @@ describe ProducerMailer, type: :mailer do
     end.to change(ActionMailer::Base.deliveries, :count).by(0)
   end
 
+  it "shows a deleted variant's full name" do
+    variant = p1.variants.first
+    full_name = variant.full_name
+    variant.delete
+
+    expect(mail.body.encoded).to include(full_name)
+  end
+
+  it 'shows deleted products' do
+    p1.delete
+    expect(mail.body.encoded).to include(p1.name)
+  end
+
   private
 
   def body_lines_including(mail, s)

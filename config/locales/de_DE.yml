@@ -59,7 +59,7 @@ de_DE:
       messages:
         inclusion: "ist in der Liste nicht enthalten"
       models:
-        subscription_validator:
+        order_management/subscriptions/validator:
           attributes:
             subscription_line_items:
               at_least_one_product: "^ Bitte fügen Sie mindestens ein Produkt hinzu"
@@ -2765,6 +2765,8 @@ de_DE:
     location: "Ort"
     count_on_hand: "Zählen Sie zur Hand"
     quantity: "Menge"
+    on_demand: "Unbegrenzt"
+    on_hand: "Verfügbar"
     package_from: "Paket von"
     item_description: "Artikelbeschreibung"
     price: "Preis"

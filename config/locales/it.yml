@@ -55,7 +55,7 @@ it:
       messages:
         inclusion: "non incluso nella lista"
       models:
-        subscription_validator:
+        order_management/subscriptions/validator:
           attributes:
             subscription_line_items:
               at_least_one_product: "^Aggiungi almeno un prodotto"
@@ -2759,6 +2759,8 @@ it:
     location: "Posizione"
     count_on_hand: "Conta a mente"
     quantity: "Quantità"
+    on_demand: "A richiesta"
+    on_hand: "Disponibile"
     package_from: "pacchetto da"
     item_description: "descrizione dell'articolo"
     price: "Prezzo"
@@ -3030,6 +3032,7 @@ it:
           tax_invoice: "FATTURA DELLE TASSE"
           code: "Codice"
           from: "Da"
+          shipping: "Spedizione"
         form:
           distribution_fields:
             title: "Distribuzione"

@@ -8,7 +8,7 @@
     = t :email_payment_summary
 %h4
   = t :email_payment_method
-  %strong=  OrderPaymentFinder.last_payment_method(@order)&.name
+  %strong=  last_payment_method(@order)&.name
 %p
-  %em= OrderPaymentFinder.last_payment_method(@order)&.description
+  %em= last_payment_method(@order)&.description
 %p &nbsp;

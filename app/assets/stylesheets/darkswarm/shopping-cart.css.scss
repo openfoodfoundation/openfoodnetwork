@@ -115,3 +115,14 @@
     height: 36px;
   }
 }
+
+.links {
+  .button {
+    padding: 1.125rem 0 1.1875rem;
+    width: 210px;
+
+    @media all and (max-width: 480px) {
+      width: 100%;
+    }
+  }
+}

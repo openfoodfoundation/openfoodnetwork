@@ -29,6 +29,8 @@ module Spree
             return
           end
 
+          authorize_stripe_sca_payment
+
           if @order.completed?
             @payment.process!
             flash[:success] = flash_message_for(@payment, :successfully_created)
@@ -93,7 +95,7 @@ module Spree
           available(:back_end).
           select{ |pm| pm.has_distributor? @order.distributor }
 
-        @payment_method = if @payment && @payment.payment_method
+        @payment_method = if @payment&.payment_method
                             @payment.payment_method
                           else
                             @payment_methods.first
@@ -123,6 +125,13 @@ module Spree
 
       def load_payment
         @payment = Payment.find(params[:id])
+      end
+
+      def authorize_stripe_sca_payment
+        return unless @payment.payment_method.class == Spree::Gateway::StripeSCA
+
+        @payment.authorize!
+        raise Spree::Core::GatewayError, I18n.t('authorization_failure') unless @payment.pending?
       end
     end
   end

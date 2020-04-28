@@ -9,25 +9,19 @@ module Admin
 
     def cancel
       if @proxy_order.cancel
-        respond_with(@proxy_order) do |format|
-          format.json { render_as_json @proxy_order }
-        end
+        render_as_json @proxy_order
       else
-        respond_with(@proxy_order) do |format|
-          format.json { render json: { errors: [t('admin.proxy_orders.cancel.could_not_cancel_the_order')] }, status: :unprocessable_entity }
-        end
+        render json: { errors: [t('admin.proxy_orders.cancel.could_not_cancel_the_order')] },
+               status: :unprocessable_entity
       end
     end
 
     def resume
       if @proxy_order.resume
-        respond_with(@proxy_order) do |format|
-          format.json { render_as_json @proxy_order }
-        end
+        render_as_json @proxy_order
       else
-        respond_with(@proxy_order) do |format|
-          format.json { render json: { errors: [t('admin.proxy_orders.resume.could_not_resume_the_order')] }, status: :unprocessable_entity }
-        end
+        render json: { errors: [t('admin.proxy_orders.resume.could_not_resume_the_order')] },
+               status: :unprocessable_entity
       end
     end
   end

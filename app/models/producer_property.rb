@@ -4,18 +4,6 @@ class ProducerProperty < ActiveRecord::Base
 
   default_scope { order("#{table_name}.position") }
 
-  scope :ever_sold_by, ->(shop) {
-    joins(producer: { supplied_products: { variants: { exchanges: :order_cycle } } }).
-      merge(Exchange.outgoing).
-      merge(Exchange.to_enterprise(shop)).
-      select('DISTINCT producer_properties.*')
-  }
-
-  scope :currently_sold_by, ->(shop) {
-    ever_sold_by(shop).
-      merge(OrderCycle.active)
-  }
-
   def property_name
     property.name if property
   end

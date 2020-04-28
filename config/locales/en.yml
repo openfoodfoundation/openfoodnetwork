@@ -80,7 +80,7 @@ en:
       messages:
         inclusion: "is not included in the list"
       models:
-        subscription_validator:
+        order_management/subscriptions/validator:          
           attributes:
             subscription_line_items:
               at_least_one_product: "^Please add at least one product"
@@ -362,6 +362,7 @@ en:
     choose: "Choose..."
     please_select: Please select...
 
+    column_save_as_default: Save As Default
     columns: Columns
     actions: Actions
     viewing: "Viewing: %{current_view_name}"
@@ -2053,6 +2054,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   admin_enterprise_relationships_permits: "permits"
   admin_enterprise_relationships_seach_placeholder: "Search"
   admin_enterprise_relationships_button_create: "Create"
+  admin_enterprise_relationships_to: "to"
   admin_enterprise_groups: "Enterprise Groups"
   admin_enterprise_groups_name: "Name"
   admin_enterprise_groups_owner: "Owner"
@@ -2828,6 +2830,14 @@ See the %{link} to find out more about %{sitename}'s features and to start using
 
   order_management:
     reports:
+      enterprise_fee_summaries:
+        filters:
+          date_range: "Date Range"
+          report_format_csv: "Download as CSV"
+          generate_report: "Generate Report"
+        report:
+          none: "None"
+          select_and_search: "Select filters and click on GENERATE REPORT to access your data."
       enterprise_fee_summary:
         date_end_before_start_error: "must be after start"
         parameter_not_allowed_error: "You are not authorized to use one or more selected filters for this report."
@@ -2910,6 +2920,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     location: "Location"
     count_on_hand: "Count On Hand"
     quantity: "Quantity"
+    on_demand: "On Demand"
+    on_hand: "On Hand"
     package_from: "package from"
     item_description: "Item Description"
     price: "Price"
@@ -3331,14 +3343,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           bulk_coop_allocation: 'Bulk Co-op - Allocation'
           bulk_coop_packing_sheets: 'Bulk Co-op - Packing Sheets'
           bulk_coop_customer_payments: 'Bulk Co-op - Customer Payments'
-        enterprise_fee_summaries:
-          filters:
-            date_range: "Date Range"
-            report_format_csv: "Download as CSV"
-            generate_report: "Generate Report"
-          report:
-            none: "None"
-            select_and_search: "Select filters and click on GENERATE REPORT to access your data."
       users:
         index:
           listing_users: "Listing Users"
@@ -3384,6 +3388,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           producer_name: "Producer"
           unit: "Unit"
       general_settings:
+      shared:
+        sortable_header:
+          name: "Name"
         edit:
           legal_settings: "Legal Settings"
           cookies_consent_banner_toggle: "Display cookies consent banner"

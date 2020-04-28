@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20200327105910) do
+ActiveRecord::Schema.define(:version => 20200406085833) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -578,7 +578,7 @@ ActiveRecord::Schema.define(:version => 20200327105910) do
   add_index "spree_orders", ["number"], name: "index_orders_on_number", using: :btree
   add_index "spree_orders", ["distributor_id"], name: "index_spree_orders_on_distributor_id", using: :btree
   add_index "spree_orders", ["order_cycle_id"], name: "index_spree_orders_on_order_cycle_id", using: :btree
-
+  add_index "spree_orders", ["user_id"], name: "index_spree_orders_on_user_id", using: :btree
 
   create_table "spree_payment_methods", force: true do |t|
     t.string   "type"
@@ -728,6 +728,7 @@ ActiveRecord::Schema.define(:version => 20200327105910) do
   add_index "spree_products", ["permalink"], name: "index_products_on_permalink", using: :btree
   add_index "spree_products", ["permalink"], name: "permalink_idx_unique", unique: true, using: :btree
   add_index "spree_products", ["primary_taxon_id"], name: "index_spree_products_on_primary_taxon_id", using: :btree
+  add_index "spree_products", ["supplier_id"], name: "index_spree_products_on_supplier_id"
 
   create_table "spree_products_promotion_rules", id: false, force: true do |t|
     t.integer "product_id"
@@ -1050,7 +1051,7 @@ ActiveRecord::Schema.define(:version => 20200327105910) do
     t.datetime "reset_password_sent_at"
     t.string   "api_key",                limit: 40
     t.integer  "enterprise_limit",                  default: 5, null: false
-    t.string   "locale",                 limit: 5
+    t.string   "locale",                 limit: 6
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"

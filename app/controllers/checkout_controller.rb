@@ -133,13 +133,6 @@ class CheckoutController < Spree::StoreController
     @order.ship_address = finder.ship_address
   end
 
-  def before_delivery
-    return if params[:order].present?
-
-    packages = @order.shipments.map(&:to_package)
-    @differentiator = Spree::Stock::Differentiator.new(@order, packages)
-  end
-
   def before_payment
     current_order.payments.destroy_all if request.put?
   end
@@ -153,10 +146,12 @@ class CheckoutController < Spree::StoreController
   end
 
   def valid_payment_intent_provided?
-    params["payment_intent"]&.starts_with?("pi_") &&
-      @order.state == "payment" &&
-      @order.payments.last.state == "pending" &&
-      @order.payments.last.response_code == params["payment_intent"]
+    return false unless params["payment_intent"]&.starts_with?("pi_")
+
+    last_payment = OrderPaymentFinder.new(@order).last_payment
+    @order.state == "payment" &&
+      last_payment&.state == "pending" &&
+      last_payment&.response_code == params["payment_intent"]
   end
 
   def handle_redirect_from_stripe

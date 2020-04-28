@@ -1,12 +1,16 @@
 require 'spec_helper'
 
 describe Api::Admin::CustomerSerializer do
-  let(:customer) { create(:customer, tag_list: "one, two, three") }
+  let(:tag_list) { ["one", "two", "three"] }
+  let(:customer) { create(:customer, tag_list: tag_list) }
   let!(:tag_rule) { create(:tag_rule, enterprise: customer.enterprise, preferred_customer_tags: "two") }
 
   it "serializes a customer with tags" do
     tag_rule_mapping = TagRule.mapping_for(Enterprise.where(id: customer.enterprise_id))
-    serializer = Api::Admin::CustomerSerializer.new customer, tag_rule_mapping: tag_rule_mapping
+    customer_tag_list = { customer.id => tag_list }
+    serializer = Api::Admin::CustomerSerializer.new customer,
+                                                    tag_rule_mapping: tag_rule_mapping,
+                                                    customer_tags: customer_tag_list
     result = JSON.parse(serializer.to_json)
     expect(result['email']).to eq customer.email
     tags = result['tags']
@@ -26,5 +30,12 @@ describe Api::Admin::CustomerSerializer do
     result['tags'].each do |tag|
       expect(tag['rules']).to be nil
     end
+  end
+
+  it 'serializes a customer without customer_tags' do
+    serializer = Api::Admin::CustomerSerializer.new customer
+    result = JSON.parse(serializer.to_json)
+
+    expect(result['tags'].first['text']).to eq tag_list.first
   end
 end

@@ -5,7 +5,6 @@ module Api
     before_filter :override_sells, only: [:create, :update]
     before_filter :override_visible, only: [:create, :update]
     respond_to :json
-    skip_authorization_check only: [:shopfront]
 
     def create
       authorize! :create, Enterprise
@@ -44,12 +43,6 @@ module Api
       else
         invalid_resource!(@enterprise)
       end
-    end
-
-    def shopfront
-      enterprise = Enterprise.find_by(id: params[:id])
-
-      render text: Api::EnterpriseShopfrontSerializer.new(enterprise).to_json, status: :ok
     end
 
     private

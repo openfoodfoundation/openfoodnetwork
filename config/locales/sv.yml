@@ -1898,6 +1898,8 @@ sv:
   spree:
     resend: Återsänd
     quantity: "Antal"
+    on_demand: "På begäran"
+    on_hand: "På lager"
     price: "Pris"
     total: "Summa"
     edit: "Redigera"

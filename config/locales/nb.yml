@@ -55,7 +55,7 @@ nb:
       messages:
         inclusion: "er ikke inkludert i listen"
       models:
-        subscription_validator:
+        order_management/subscriptions/validator:
           attributes:
             subscription_line_items:
               at_least_one_product: "^Vennligst legg til minst ett produkt"
@@ -2754,6 +2754,8 @@ nb:
     location: "Plassering"
     count_on_hand: "Antall På Lager"
     quantity: "Mengde"
+    on_demand: "Ved forespørsel"
+    on_hand: "Tilgjengelig"
     package_from: "pakke fra"
     item_description: "Beskrivelse Element"
     price: "Pris"

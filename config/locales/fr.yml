@@ -59,7 +59,7 @@ fr:
       messages:
         inclusion: "n'est pas inclus dans la liste"
       models:
-        subscription_validator:
+        order_management/subscriptions/validator:
           attributes:
             subscription_line_items:
               at_least_one_product: "^Veuillez ajouter au moins un produit"
@@ -596,7 +596,7 @@ fr:
         max_fulfilled_units: "Nombre max d'unités commandées"
         order_error: "Des erreurs doivent être résolues avant de pouvoir mettre à jour les commandes.\nLes champs entourés en rouge contiennent des erreurs."
         variants_without_unit_value: "ATTENTION: certaines variantes n'ont pas de nombre d'unités"
-      select_variant: "Choisir une variante"
+      select_variant: "Rechercher un produit et sélectionner une variante"
     enterprise:
       select_outgoing_oc_products_from: Sélectionner les produits sortants pour le cycle de vente parmi
     enterprises:
@@ -1543,7 +1543,7 @@ fr:
   products_loading: "Produits en cours de chargement..."
   products_updating_cart: "Actualisation du panier..."
   products_cart_empty: "Panier vide"
-  products_edit_cart: "Valider votre panier"
+  products_edit_cart: "Poursuivre"
   products_from: de
   products_change: "Aucun changement à sauvegarder."
   products_update_error: "Échec de l'enregistrement dû à:"
@@ -1670,7 +1670,7 @@ fr:
   orders_form_admin: Admin & traitements
   orders_form_total: Total
   orders_oc_expired_headline: Les commandes ne sont plus possibles pour ce cycle de vente.
-  orders_oc_expired_text: "Désolé, les commandes pour ce cycle de vente ont été clôturées il y a %{time}! Veuillez contacter directement le hub pour voir s'il accepte les commandes tardives."
+  orders_oc_expired_text: "Désolé, les commandes pour ce cycle de vente ont été clôturées il y a %{time}!"
   orders_oc_expired_text_others_html: "Désolé, les commandes pour ce cycle de vente ont été clôturées il y a %{time}! Veuillez contacter directement le hub pour voir s'il accepte les commandes tardives <strong>%{link}</strong>."
   orders_oc_expired_text_link: "ou voir si d'autres cycles de vente sont ouverts pour ce hub"
   orders_oc_expired_email: "Email:"
@@ -1921,6 +1921,7 @@ fr:
   admin_enterprise_relationships_permits: "autorise"
   admin_enterprise_relationships_seach_placeholder: "Rechercher"
   admin_enterprise_relationships_button_create: "Créer"
+  admin_enterprise_relationships_to: "à"
   admin_enterprise_groups: "Groupes d'entreprises"
   admin_enterprise_groups_name: "Produit/Variante"
   admin_enterprise_groups_owner: "Gestionnaire principal"
@@ -2790,6 +2791,8 @@ fr:
     location: "Localisation"
     count_on_hand: "Quantité en stock"
     quantity: "Quantité"
+    on_demand: "A volonté"
+    on_hand: "En stock"
     package_from: "conditionnement par"
     item_description: "Description de la pièce"
     price: "Prix"

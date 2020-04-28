@@ -26,8 +26,11 @@
         %a{href: "", "ng-click" => "showDistanceMatches()"}
           = t :hubs_distance_filter, location: "{{ nameMatchesFiltered[0].name }}"
   .more-controls
-    %a.button{href: "", ng: {click: "showClosedShops()", show: "!show_closed"}}
-      = t '.show_closed_shops'
-    %a.button{href: "", ng: {click: "hideClosedShops()", show: "show_closed"}}
-      = t '.hide_closed_shops'
+    %img.spinner.text-center{ng: {show: "closed_shops_loading"}, src: "/assets/spinning-circles.svg" }
+    %span{ng: {if: "!show_closed", cloak: true}}
+      %a.button{href: "", ng: {click: "showClosedShops()"}}
+        = t '.show_closed_shops'
+    %span{ng: {if: "show_closed", cloak: true}}
+      %a.button{href: "", ng: {click: "hideClosedShops()"}}
+        = t '.hide_closed_shops'
     %a.button{href: main_app.map_path}= t '.show_on_map'

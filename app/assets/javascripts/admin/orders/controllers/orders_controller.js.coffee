@@ -67,7 +67,7 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, $timeout, Reque
     return unless sort && sort.predicate != ""
 
     $scope.sorting = sort.getSortingExpr()
-    $scope.fetchProducts()
+    $scope.fetchResults()
   , true
 
   $scope.capturePayment = (order) ->

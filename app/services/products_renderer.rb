@@ -40,7 +40,7 @@ class ProductsRenderer
   end
 
   def product_scoper
-    OpenFoodNetwork::ScopeProductToHub.new(distributor)
+    @product_scoper ||= OpenFoodNetwork::ScopeProductToHub.new(distributor)
   end
 
   def enterprise_fee_calculator

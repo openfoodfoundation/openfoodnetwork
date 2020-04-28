@@ -24,7 +24,7 @@ Darkswarm.controller "HubNodeCtrl", ($scope, HashNavigation, CurrentHub, $http, 
     $scope.shopfront_loading = true
     $scope.toggle_tab(event)
 
-    $http.get("/api/enterprises/" + $scope.hub.id + "/shopfront")
+    $http.get("/api/shops/" + $scope.hub.id)
       .success (data) ->
         $scope.shopfront_loading = false
         $scope.hub = data
