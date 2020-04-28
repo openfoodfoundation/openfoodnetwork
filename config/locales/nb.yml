@@ -1321,14 +1321,8 @@ nb:
       cookie_stripe_desc: "Data samlet inn av betalingsprosessoren vår Stripe for svindeloppdagelse https://stripe.com/cookies-policy/legal. Ikke alle butikker bruker Stripe som betalingsmetode, men det er en god praksis å forhindre at svindel gjelder for alle sider. Stripe bygger sannsynligvis et bilde av hvilke av våre sider som til vanlig samhandler med API-en og deretter flagge alt uvanlig. Så å sette Stripe-cookien har en bredere funksjon enn bare å levere en betalingsmetode til en bruker. Fjerning av det kan påvirke sikkerheten til selve tjenesten. Du kan lære mer om Stripe og lese retningslinjene for personvern på https://stripe.com/privacy."
       statistics_cookies: "Statistikkkapsler"
       statistics_cookies_desc: "Følgende er ikke strengt nødvendige, men hjelper deg med å gi deg den beste brukeropplevelsen ved å tillate oss å analysere brukeradferd, identifisere hvilke funksjoner du bruker mest, eller ikke bruker, forstå brukeropplevelsesproblemer osv."
-      statistics_cookies_analytics_desc_html: "For å samle og analysere plattformbruksdata bruker vi Google Analytics, da det var standardtjenesten som var koblet til Spree (ehandel open source programvare som vi bygde på), men visjonen vår er å bytte til <a href='https://matomo.org/' target='_blank'>Matomo</a> (ex Piwik, open source analyseverktøy som er GDPR-kompatibelt og beskytter ditt privatliv) så snart vi kan."
       statistics_cookies_matomo_desc_html: "For å samle og analysere plattformbruksdata bruker vi <a href='https://matomo.org/' target='_blank'> Matomo </a> (ex Piwik), et åpen kildekodeanalyseverktøy som er kompatibelt med GDPR og beskytter personvernet ditt."
       statistics_cookies_matomo_optout: "Ønsker du å melde deg av Matomo analytics? Vi samler ikke inn personlige data, og Matomo hjelper oss med å forbedre vår tjeneste, men vi respekterer ditt valg :-)"
-      cookie_analytics_utma_desc: "Brukes til å skille mellom brukere og økter. Kapselen er opprettet når javascriptbiblioteket utføres, og ingen eksisterende __utma-informasjonskapsler eksisterer. Cookien oppdateres hver gang data sendes til Google Analytics."
-      cookie_analytics_utmt_desc: "Brukes til pådragsforespørselsrate."
-      cookie_analytics_utmb_desc: "Brukes til å bestemme nye økter/besøk. Kapselen blir opprettet når javascriptbiblioteket kjøres, og ingen eksisterende __utmb-cookies eksisterer. Cookien oppdateres hver gang data sendes til Google Analytics."
-      cookie_analytics_utmc_desc: "Ikke brukt i ga.js. Satt for interoperabilitet med urchin.js. Historisk kjørte denne informasjonskapselen sammen med __utmb-cookien for å avgjøre om brukeren var i en ny økt/besøk."
-      cookie_analytics_utmz_desc: "Lagrer trafikkilden eller kampanjen som forklarer hvordan brukeren nådde nettstedet ditt. Kapselen blir opprettet når javascriptbiblioteket utføres og oppdateres hver gang data sendes til Google Analytics."
       cookie_matomo_basics_desc: "Matomo førstehånds kapsler for å samle statistikk."
       cookie_matomo_heatmap_desc: "Matomo Heatmap & Session opptakskapsel."
       cookie_matomo_ignore_desc: "Kapsel brukes til å utelukke at bruker blir sporet."
@@ -2684,6 +2678,14 @@ nb:
       start_free_profile: "Start med en gratis profil, og utvid når du er klar!"
   order_management:
     reports:
+      enterprise_fee_summaries:
+        filters:
+          date_range: "Datointervall"
+          report_format_csv: "Last ned som CSV"
+          generate_report: "Generer rapport"
+        report:
+          none: "Ingen"
+          select_and_search: "Velg filtre og klikk på GENERER RAPPORT for å få tilgang til dataene dine."
       enterprise_fee_summary:
         date_end_before_start_error: "må være etter start"
         parameter_not_allowed_error: "Du er ikke autorisert til å bruke ett eller flere utvalgte filtre for denne rapporten."
@@ -2877,12 +2879,6 @@ nb:
     shipping_categories: "Fraktkategorier"
     new_shipping_category: "Ny Fraktkategori"
     back_to_shipping_categories: "Tilbake til Leveringskategorier"
-    analytics_trackers: "Analyseverktøy"
-    no_trackers_found: "Ingen sporingsverktøy funnet"
-    new_tracker: "Nytt Sporingsverktøy"
-    add_one: "Legg til en"
-    google_analytics_id: "Analytics ID"
-    back_to_trackers_list: "Tilbake til Liste over Sporingsverktøy"
     name: "Navn"
     description: "Beskrivelse"
     type: "Type"
@@ -3164,14 +3160,6 @@ nb:
           bulk_coop_allocation: 'Bulk Co-op - Allokering'
           bulk_coop_packing_sheets: 'Bulk Co-op - Pakkseddel'
           bulk_coop_customer_payments: 'Bulk Co-op - Kunde Betalinger'
-        enterprise_fee_summaries:
-          filters:
-            date_range: "Datointervall"
-            report_format_csv: "Last ned som CSV"
-            generate_report: "Generer rapport"
-          report:
-            none: "Ingen"
-            select_and_search: "Velg filtre og klikk på GENERER RAPPORT for å få tilgang til dataene dine."
       users:
         index:
           listing_users: "Lister opp brukere"
@@ -3225,7 +3213,6 @@ nb:
           privacy_policy_url: "Personvernspolicy URL"
           enterprises_require_tos: "Bedrifter må godta Tjenestevilkår"
           cookies_policy_matomo_section: "Vis Matomo-delen på informasjonskapsler-siden"
-          cookies_policy_ga_section: "Vis Google Analytics-delen om informasjonskapsler på policy-siden om informasjonskapsler"
           footer_tos_url: "Vilkår URL"
     checkout:
       payment:
