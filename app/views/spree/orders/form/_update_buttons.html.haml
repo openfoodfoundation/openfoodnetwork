@@ -3,11 +3,9 @@
     - if current_order.nil? || current_order.distributor.nil? || current_order.distributor == @order.distributor
       - if current_order&.line_items.present?
         = link_to main_app.cart_path, :class => "button expand" do
-          %i.ofn-i_008-caret-left
           = t(:order_back_to_cart)
       - else
         = link_to "#{main_app.enterprise_shop_path(@order.distributor)}#/shop", class: "button expand" do
-          %i.ofn-i_008-caret-left
           = t(:order_back_to_store)
     - else
       &nbsp;

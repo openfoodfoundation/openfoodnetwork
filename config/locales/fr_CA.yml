@@ -55,7 +55,7 @@ fr_CA:
       messages:
         inclusion: "n'est pas inclus dans la liste"
       models:
-        subscription_validator:
+        order_management/subscriptions/validator:
           attributes:
             subscription_line_items:
               at_least_one_product: "Veuillez ajouter au moins un produit"
@@ -2765,6 +2765,8 @@ fr_CA:
     location: "Localisation"
     count_on_hand: "Quantité en stock"
     quantity: "Quantité"
+    on_demand: "A volonté"
+    on_hand: "En stock"
     package_from: "conditionnement par"
     item_description: "Description de la pièce"
     price: "Prix"

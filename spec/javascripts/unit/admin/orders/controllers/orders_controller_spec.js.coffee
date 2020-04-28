@@ -36,9 +36,18 @@ describe "ordersCtrl", ->
         'q[s]': 'completed_at desc'
       }))
 
-
   describe "using pagination", ->
     it "changes the page", ->
       $scope.changePage(2)
       expect($scope.page).toEqual 2
       expect(Orders.index).toHaveBeenCalled()
+
+  describe "sorting products", ->
+    it "sorts orders", ->
+      spyOn $scope, "fetchResults"
+
+      $scope.sortOptions.toggle('number')
+      $scope.$apply()
+
+      expect($scope.sorting).toEqual 'number asc'
+      expect($scope.fetchResults).toHaveBeenCalled()

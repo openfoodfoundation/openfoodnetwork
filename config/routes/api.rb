@@ -33,9 +33,11 @@ Openfoodnetwork::Application.routes.draw do
 
       resource :logo, only: [:destroy]
       resource :promo_image, only: [:destroy]
+    end
 
-      member do
-        get :shopfront
+    resources :shops, only: [:show] do
+      collection do
+        get :closed_shops
       end
     end
 

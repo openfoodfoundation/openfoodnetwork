@@ -33,7 +33,6 @@ Layout/LineLength:
   - app/controllers/admin/inventory_items_controller.rb
   - app/controllers/admin/manager_invitations_controller.rb
   - app/controllers/admin/product_import_controller.rb
-  - app/controllers/admin/proxy_orders_controller.rb
   - app/controllers/admin/schedules_controller.rb
   - app/controllers/admin/subscriptions_controller.rb
   - app/controllers/admin/variant_overrides_controller.rb
@@ -89,7 +88,6 @@ Layout/LineLength:
   - app/models/spree/tax_rate_decorator.rb
   - app/models/spree/taxon_decorator.rb
   - app/models/spree/user.rb
-  - app/models/spree/variant_decorator.rb
   - app/models/subscription.rb
   - app/models/variant_override.rb
   - app/models/variant_override_set.rb
@@ -98,7 +96,6 @@ Layout/LineLength:
   - app/services/embedded_page_service.rb
   - app/services/order_cycle_form.rb
   - app/services/order_factory.rb
-  - app/services/subscriptions_count.rb
   - app/services/variants_stock_levels.rb
   - engines/web/app/helpers/web/cookies_policy_helper.rb
   - lib/discourse/single_sign_on.rb
@@ -158,7 +155,6 @@ Layout/LineLength:
   - spec/controllers/spree/admin/orders/customer_details_controller_spec.rb
   - spec/controllers/spree/admin/orders_controller_spec.rb
   - spec/controllers/spree/admin/payment_methods_controller_spec.rb
-  - spec/controllers/spree/admin/payments_controller_spec.rb
   - spec/controllers/spree/admin/products_controller_spec.rb
   - spec/controllers/spree/admin/reports_controller_spec.rb
   - spec/controllers/spree/admin/variants_controller_spec.rb
@@ -183,7 +179,6 @@ Layout/LineLength:
   - spec/features/admin/image_settings_spec.rb
   - spec/features/admin/multilingual_spec.rb
   - spec/features/admin/order_cycles_spec.rb
-  - spec/features/admin/orders_spec.rb
   - spec/features/admin/overview_spec.rb
   - spec/features/admin/payment_method_spec.rb
   - spec/features/admin/product_import_spec.rb
@@ -239,10 +234,7 @@ Layout/LineLength:
   - spec/lib/open_food_network/packing_report_spec.rb
   - spec/lib/open_food_network/permissions_spec.rb
   - spec/lib/open_food_network/products_and_inventory_report_spec.rb
-  - spec/lib/open_food_network/proxy_order_syncer_spec.rb
   - spec/lib/open_food_network/scope_variant_to_hub_spec.rb
-  - spec/lib/open_food_network/subscription_payment_updater_spec.rb
-  - spec/lib/open_food_network/subscription_summarizer_spec.rb
   - spec/lib/open_food_network/tag_rule_applicator_spec.rb
   - spec/lib/open_food_network/users_and_enterprises_report_spec.rb
   - spec/lib/open_food_network/xero_invoices_report_spec.rb
@@ -317,10 +309,6 @@ Layout/LineLength:
   - spec/services/permissions/order_spec.rb
   - spec/services/product_tag_rules_filterer_spec.rb
   - spec/services/products_renderer_spec.rb
-  - spec/services/subscription_estimator_spec.rb
-  - spec/services/subscription_form_spec.rb
-  - spec/services/subscription_validator_spec.rb
-  - spec/services/subscription_variants_service_spec.rb
   - spec/spec_helper.rb
   - spec/support/cancan_helper.rb
   - spec/support/delayed_job_helper.rb
@@ -386,7 +374,6 @@ Metrics/AbcSize:
   - app/helpers/spree/admin/base_helper.rb
   - app/helpers/spree/admin/zones_helper.rb
   - app/helpers/spree/orders_helper.rb
-  - app/mailers/producer_mailer.rb
   - app/models/calculator/flat_percent_per_item.rb
   - app/models/column_preference.rb
   - app/models/enterprise.rb
@@ -411,7 +398,7 @@ Metrics/AbcSize:
   - app/services/cart_service.rb
   - app/services/create_order_cycle.rb
   - app/services/order_syncer.rb
-  - app/services/subscription_validator.rb
+  - engines/order_management/app/services/order_management/subscriptions/validator.rb
   - lib/active_merchant/billing/gateways/stripe_decorator.rb
   - lib/active_merchant/billing/gateways/stripe_payment_intents.rb
   - lib/discourse/single_sign_on.rb
@@ -477,7 +464,6 @@ Metrics/BlockLength:
   - spec/factories/shipping_method_factory.rb
   - spec/factories/subscription_factory.rb
   - spec/factories/variant_factory.rb
-  - spec/features/admin/orders_spec.rb
   - spec/features/consumer/shopping/embedded_shopfronts_spec.rb
   - spec/lib/open_food_network/group_buy_report_spec.rb
   - spec/models/tag_rule/discount_order_spec.rb
@@ -583,7 +569,6 @@ Metrics/MethodLength:
   - app/helpers/spree/admin/navigation_helper.rb
   - app/helpers/spree/admin/base_helper.rb
   - app/jobs/subscription_placement_job.rb
-  - app/mailers/producer_mailer.rb
   - app/models/column_preference.rb
   - app/models/enterprise.rb
   - app/models/enterprise_relationship.rb
@@ -686,6 +671,12 @@ Metrics/ModuleLength:
   - app/helpers/injection_helper.rb
   - app/helpers/spree/admin/navigation_helper.rb
   - app/helpers/spree/admin/base_helper.rb
+  - engines/order_management/spec/services/order_management/subscriptions/estimator_spec.rb
+  - engines/order_management/spec/services/order_management/subscriptions/form_spec.rb
+  - engines/order_management/spec/services/order_management/subscriptions/proxy_order_syncer_spec.rb
+  - engines/order_management/spec/services/order_management/subscriptions/summarizer_spec.rb
+  - engines/order_management/spec/services/order_management/subscriptions/validator_spec.rb
+  - engines/order_management/spec/services/order_management/subscriptions/variants_list_spec.rb
   - lib/open_food_network/column_preference_defaults.rb
   - spec/controllers/admin/enterprises_controller_spec.rb
   - spec/controllers/admin/order_cycles_controller_spec.rb
@@ -701,9 +692,7 @@ Metrics/ModuleLength:
   - spec/lib/open_food_network/order_grouper_spec.rb
   - spec/lib/open_food_network/permissions_spec.rb
   - spec/lib/open_food_network/products_and_inventory_report_spec.rb
-  - spec/lib/open_food_network/proxy_order_syncer_spec.rb
   - spec/lib/open_food_network/scope_variant_to_hub_spec.rb
-  - spec/lib/open_food_network/subscription_payment_updater_spec.rb
   - spec/lib/open_food_network/tag_rule_applicator_spec.rb
   - spec/lib/open_food_network/users_and_enterprises_report_spec.rb
   - spec/models/spree/ability_spec.rb

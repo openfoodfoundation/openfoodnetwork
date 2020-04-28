@@ -156,12 +156,6 @@ Spree::Core::Engine.routes.draw do
       resources :taxons
     end
 
-    resources :taxons, :only => [] do
-      collection do
-        get :search
-      end
-    end
-
     resources :tax_rates
     resource  :tax_settings
     resources :tax_categories

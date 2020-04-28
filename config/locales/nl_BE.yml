@@ -53,7 +53,7 @@ nl_BE:
         payment_method_ids: "Betaalmethodes"
     errors:
       models:
-        subscription_validator:
+        order_management/subscriptions/validator:
           attributes:
             subscription_line_items:
               at_least_one_product: "^Gelieve minstens één product toe te voegen"
@@ -2641,6 +2641,8 @@ nl_BE:
     location: "Locatie"
     count_on_hand: "Count On Hand"
     quantity: "Kwantiteit"
+    on_demand: "Op Aanvraag"
+    on_hand: "Bij de Hand"
     package_from: "pakje van "
     item_description: "Artikelbeschrijving"
     price: "Prijs"

@@ -1,5 +1,4 @@
 require 'open_food_network/permissions'
-require 'open_food_network/proxy_order_syncer'
 
 module Admin
   class SubscriptionsController < ResourceController
@@ -65,7 +64,7 @@ module Admin
     private
 
     def save_form_and_render(render_issues = true)
-      form = SubscriptionForm.new(@subscription, subscription_params)
+      form = OrderManagement::Subscriptions::Form.new(@subscription, subscription_params)
       unless form.save
         render json: { errors: form.json_errors }, status: :unprocessable_entity
         return

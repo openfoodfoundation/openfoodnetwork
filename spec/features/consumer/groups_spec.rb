@@ -60,8 +60,8 @@ feature 'Groups', js: true do
       let!(:group) { create(:enterprise_group, enterprises: [d1, d2], on_front_page: true) }
       let!(:order_cycle) { create(:simple_order_cycle, distributors: [d1, d2], coordinator: create(:distributor_enterprise)) }
       let(:producer) { create(:supplier_enterprise) }
-      let(:d1) { create(:distributor_enterprise) }
-      let(:d2) { create(:distributor_enterprise) }
+      let(:d1) { create(:distributor_enterprise, with_payment_and_shipping: true) }
+      let(:d2) { create(:distributor_enterprise, with_payment_and_shipping: true) }
       let(:p1) { create(:simple_product, supplier: producer) }
       let(:p2) { create(:simple_product, supplier: create(:supplier_enterprise)) }
       let(:ex_d1) { order_cycle.exchanges.outgoing.where(receiver_id: d1).first }

@@ -9,7 +9,6 @@ gem 'rails-i18n', '~> 4.0'
 gem 'rails_safe_tasks', '~> 1.0'
 
 gem "activerecord-import"
-gem 'nokogiri', '~> 1.6.8.1'
 
 gem "catalog", path: "./engines/catalog"
 gem "order_management", path: "./engines/order_management"
@@ -44,10 +43,6 @@ gem 'daemons'
 gem 'delayed_job_active_record'
 gem 'delayed_job_web'
 
-# Fix bug in simple_form preventing collection_check_boxes usage within form_for block
-# When merged, revert to upstream gem
-# gem 'simple_form', github: 'RohanM/simple_form'
-
 # Spree's default pagination gem (locked to the current version used by Spree)
 # We use it's methods in OFN code as well, so this is a direct dependency
 gem 'kaminari', '~> 0.14.1'
@@ -58,7 +53,6 @@ gem 'aws-sdk'
 gem 'bugsnag'
 gem 'db2fog'
 gem 'haml'
-gem 'rabl'
 gem 'redcarpet'
 gem 'sass'
 gem 'sass-rails'
@@ -101,7 +95,7 @@ gem 'test-unit', '~> 3.3'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'compass-rails'
 
-gem 'mini_racer', '0.2.9'
+gem 'mini_racer', '0.2.10'
 
 gem 'uglifier', '>= 1.0.3'
 
@@ -120,16 +114,17 @@ gem 'ofn-qz', github: 'openfoodfoundation/ofn-qz', branch: 'ofn-rails-4'
 
 group :production, :staging do
   gem 'ddtrace'
+  gem 'unicorn-worker-killer'
 end
 
 group :test, :development do
   # Pretty printed test output
   gem 'atomic'
   gem 'awesome_print'
-  gem 'capybara', '>= 2.18.0' # 3.0 requires nokogiri 1.8
+  gem 'capybara', '>= 2.18.0' # 3.0 requires rack 1.6 that only works with Rails 4.2
   gem 'database_cleaner', require: false
   gem "factory_bot_rails", '4.10.0', require: false
-  gem 'fuubar', '~> 2.4.1'
+  gem 'fuubar', '~> 2.5.0'
   gem 'json_spec', '~> 1.1.4'
   gem 'knapsack'
   gem 'letter_opener', '>= 1.4.1'

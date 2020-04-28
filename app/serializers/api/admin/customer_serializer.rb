@@ -6,7 +6,7 @@ class Api::Admin::CustomerSerializer < ActiveModel::Serializer
   has_one :bill_address, serializer: Api::AddressSerializer
 
   def tag_list
-    object.tag_list.join(",")
+    customer_tag_list.join(",")
   end
 
   def name
@@ -14,7 +14,7 @@ class Api::Admin::CustomerSerializer < ActiveModel::Serializer
   end
 
   def tags
-    object.tag_list.map do |tag|
+    customer_tag_list.map do |tag|
       tag_rule_map = options[:tag_rule_mapping].andand[tag]
       tag_rule_map || { text: tag, rules: nil }
     end
@@ -24,5 +24,13 @@ class Api::Admin::CustomerSerializer < ActiveModel::Serializer
     return unless object.user
 
     object.user.default_card.present?
+  end
+
+  private
+
+  def customer_tag_list
+    return object.tag_list unless options[:customer_tags]
+
+    options[:customer_tags].andand[object.id] || []
   end
 end

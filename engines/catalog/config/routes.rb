@@ -1,2 +1,2 @@
-Catalog::Engine.routes.draw do
+Openfoodnetwork::Application.routes.prepend do
 end

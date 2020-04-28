@@ -1,4 +1,5 @@
 .three.columns.omega{ "ng-if" => "product.variant_unit_with_scale != 'items'" }
   = f.field_container :display_as do
     = f.label :product_display_as, t('.display_as')
+    %span.required *
     %input#product_display_as.fullwidth{name: "product[display_as]", placeholder: "{{ placeholder_text }}", type: "text"}

@@ -1,6 +1,6 @@
 require 'open_food_network/permissions'
-require 'open_food_network/proxy_order_syncer'
 require 'open_food_network/order_cycle_form_applicator'
+require 'order_management/subscriptions/proxy_order_syncer'
 
 class OrderCycleForm
   def initialize(order_cycle, order_cycle_params, user)
@@ -58,7 +58,7 @@ class OrderCycleForm
     return unless schedule_ids?
     return unless schedule_sync_required?
 
-    OpenFoodNetwork::ProxyOrderSyncer.new(subscriptions_to_sync).sync!
+    OrderManagement::Subscriptions::ProxyOrderSyncer.new(subscriptions_to_sync).sync!
   end
 
   def schedule_sync_required?

@@ -298,9 +298,18 @@ module Spree
       end
 
       def url_for_report(report)
-        public_send("#{report}_admin_reports_url".to_sym)
+        if report_in_order_management_engine?(report)
+          main_app.public_send("new_order_management_reports_#{report}_url".to_sym)
+        else
+          public_send("#{report}_admin_reports_url".to_sym)
+        end
       rescue NoMethodError
         url_for([:new, :admin, :reports, report.to_s.singularize])
+      end
+
+      # List of reports that have been moved to the Order Management engine
+      def report_in_order_management_engine?(report)
+        report == :enterprise_fee_summary
       end
 
       def timestamp
