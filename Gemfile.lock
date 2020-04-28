@@ -57,14 +57,16 @@ GIT
       spree_core (>= 1.1)
 
 PATH
-  remote: engines/dfc_provider
-  specs:
-    dfc_provider (0.0.1)
-
-PATH
   remote: engines/catalog
   specs:
     catalog (0.0.1)
+
+PATH
+  remote: engines/dfc_provider
+  specs:
+    dfc_provider (0.0.1)
+      jwt (~> 2.2)
+      rspec (~> 3.9)
 
 PATH
   remote: engines/order_management

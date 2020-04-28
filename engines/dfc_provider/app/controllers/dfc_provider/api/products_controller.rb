@@ -3,11 +3,24 @@
 # Controller used to provide the API products for the DFC application
 module DfcProvider
   module Api
-    class ProductsController < ::Api::BaseController
-      skip_before_filter :authenticate_user
-      before_filter :set_enterprise
-      before_filter :authenticate_user
-      skip_authorization_check
+    class ProductsController < ::ActionController::Metal
+      include ActionController::Head
+      include AbstractController::Rendering
+      include ActionController::Rendering
+      include ActionController::Renderers::All
+      include ActionController::MimeResponds
+      include ActionController::ImplicitRender
+      include AbstractController::Callbacks
+      # To access 'base_url' helper
+      include ActionController::UrlFor
+      include Rails.application.routes.url_helpers
+
+      before_filter :check_authorization,
+                    :check_enterprise,
+                    :check_user,
+                    :check_accessibility
+
+      respond_to :json
 
       def index
         products = @enterprise.
@@ -23,16 +36,44 @@ module DfcProvider
 
       private
 
-      def authenticate_user
-        @current_api_user = @enterprise.owner
+      def check_enterprise
+        @enterprise = ::Enterprise.where(id: params[:enterprise_id]).first
+
+        return if @enterprise.present?
+
+        head :not_found
       end
 
-      def set_enterprise
-        @enterprise = ::Enterprise.find(params[:enterprise_id])
+      def check_authorization
+        return if access_token.present?
+
+        head :unauthorized
+      end
+
+      def check_user
+        @user = authorization_control.process
+
+        return if @user.present?
+
+        head :unprocessable_entity
+      end
+
+      def check_accessibility
+        return if @enterprise.owner == @user
+
+        head :forbidden
       end
 
       def base_url
         "#{root_url}api/dfc_provider"
+      end
+
+      def access_token
+        request.headers['Authorization'].to_s.split(' ').last
+      end
+
+      def authorization_control
+        DfcProvider::AuthorizationControl.new(access_token)
       end
     end
   end

@@ -6,13 +6,17 @@ $LOAD_PATH.push File.expand_path('lib', __dir__)
 require "dfc_provider/version"
 
 # Describe your gem and declare its dependencies:
-Gem::Specification.new do |s|
-  s.name        = 'dfc_provider'
-  s.version     = DfcProvider::VERSION
-  s.authors     = ['Admin OFF']
-  s.email       = ['admin@openfoodfrance.org']
-  s.summary     = 'Provides an API stack implementing DFC semantic specifications'
+Gem::Specification.new do |spec|
+  spec.name        = 'dfc_provider'
+  spec.version     = DfcProvider::VERSION
+  spec.authors     = ['Admin OFF']
+  spec.email       = ['admin@openfoodfrance.org']
+  spec.summary     = 'Provides an API stack implementing DFC semantic ' \
+                  'specifications'
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ['README.rdoc']
-  s.test_files = Dir['test/**/*']
+  spec.files = Dir["{app,config,lib}/**/*"] + ['README.md']
+  spec.test_files = Dir['spec/**/*']
+
+  spec.add_dependency 'jwt', '~> 2.2'
+  spec.add_dependency 'rspec', '~> 3.9'
 end
