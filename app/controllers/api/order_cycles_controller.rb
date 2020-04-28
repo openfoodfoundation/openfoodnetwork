@@ -1,9 +1,11 @@
 module Api
   class OrderCyclesController < Api::BaseController
     include EnterprisesHelper
-    respond_to :json
+    include ApiActionCaching
 
     skip_authorization_check
+
+    caches_action :taxons, :properties, expires_in: CacheService::FILTERS_EXPIRY
 
     def products
       products = ProductsRenderer.new(
