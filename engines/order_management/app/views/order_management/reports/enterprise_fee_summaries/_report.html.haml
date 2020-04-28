@@ -13,7 +13,7 @@
 
       - if @renderer.data_rows.empty?
         %tr
-          %td{colspan: @renderer.header.length}= t(:none)
+          %td{colspan: @renderer.header.length}= t('.none')
 - else
   %p.report__message
     = t(".select_and_search")
