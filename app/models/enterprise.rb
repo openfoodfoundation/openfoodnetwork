@@ -118,7 +118,7 @@ class Enterprise < ActiveRecord::Base
       except(:select).
       select('DISTINCT enterprises.id')
 
-    if ready_enterprises.present?
+    if ready_enterprises.any?
       where("enterprises.id NOT IN (?)", ready_enterprises)
     else
       where(nil)
