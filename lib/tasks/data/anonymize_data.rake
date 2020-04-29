@@ -18,8 +18,6 @@ namespace :ofn do
       anonymize_payments_accounts
 
       Spree::TokenizedPermission.update_all("token = null")
-      ActiveRecord::Base.connection.execute("update spree_mail_methods
-                                             set environment = '#{Rails.env}'")
 
       # Delete all preferences that may contain sensitive information
       Spree::Preference
