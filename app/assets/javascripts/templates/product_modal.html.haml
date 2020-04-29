@@ -19,6 +19,6 @@
 
 %ng-include{src: "'partials/close.html'"}
 
-.buttons
+.buttons{ "ng-show": "hasVerticalScrollBar('.reveal-modal')" }
   .button.bottom-close-button{"ng-click" => "$close()"}
     = t('js.shop.products.product_modal.close')
