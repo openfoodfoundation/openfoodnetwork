@@ -914,6 +914,11 @@ en:
         save_and_back_to_list: "Save and Back to List"
         choose_products_from: "Choose Products From:"
       incoming:
+        incoming: "Incoming"
+        supplier: "Supplier"
+        products: "Products"
+        receival_details: "Receival Details"
+        fees: "Fees"
         save: "Save"
         save_and_next: "Save and Next"
         next: "Next"
@@ -3103,8 +3108,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         blank: "can't be blank"
     layouts:
       admin:
-        header:
-          store: Store
+        login_nav:
+          header:
+            store: Store
     admin:
       tab:
         dashboard: "Dashboard"
