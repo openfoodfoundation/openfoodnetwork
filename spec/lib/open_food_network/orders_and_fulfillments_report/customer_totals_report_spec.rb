@@ -35,6 +35,22 @@ RSpec.describe OpenFoodNetwork::OrdersAndFulfillmentsReport::CustomerTotalsRepor
       total_field = report_table.last[5]
       expect(total_field).to eq I18n.t("admin.reports.total")
     end
+
+    it 'includes the order number and date in item rows' do
+      order_number_and_date_fields = report_table.first[33..34]
+      expect(order_number_and_date_fields).to eq([
+        order.number,
+        order.completed_at.strftime("%F %T"),
+      ])
+    end
+
+    it 'includes the order number and date in total rows' do
+      order_number_and_date_fields = report_table.last[33..34]
+      expect(order_number_and_date_fields).to eq([
+        order.number,
+        order.completed_at.strftime("%F %T"),
+      ])
+    end
   end
 
   context "loading shipping methods" do
