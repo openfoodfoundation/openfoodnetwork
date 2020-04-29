@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20200406085833) do
+ActiveRecord::Schema.define(:version => 20200429122446) do
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
     t.integer "enterprise_id"
@@ -503,13 +503,6 @@ ActiveRecord::Schema.define(:version => 20200406085833) do
     t.text     "details"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-  end
-
-  create_table "spree_mail_methods", :force => true do |t|
-    t.string   "environment"
-    t.boolean  "active",      :default => true
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
   end
 
   create_table "spree_option_types", :force => true do |t|
