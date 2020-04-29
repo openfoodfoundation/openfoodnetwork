@@ -44,6 +44,15 @@ module VariantStock
     #   This provides a default value for variant.on_demand using Spree::StockLocation.backorderable_default
     return Spree::StockLocation.first.backorderable_default if new_record? || deleted?
 
+    # This can be removed unless we have seen this error in Bugsnag recently
+    if stock_item.nil?
+      Bugsnag.notify(
+        RuntimeError.new("Variant #stock_item called, but the stock_item does not exist!"),
+        object: as_json
+      )
+      return Spree::StockLocation.first.backorderable_default
+    end
+
     stock_item.backorderable?
   end
 
