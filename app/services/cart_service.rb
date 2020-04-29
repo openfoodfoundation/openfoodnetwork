@@ -37,6 +37,17 @@ class CartService
     end
   end
 
+  def indexed_variants(variants_data)
+    @indexed_variants ||= begin
+      variant_ids_in_data = variants_data.map{ |v| v[:variant_id] }
+
+      Spree::Variant.where(id: variant_ids_in_data).
+        includes(:default_price, :stock_items, :product).
+        all.
+        index_by(&:id)
+    end
+  end
+
   def attempt_cart_add(variant, quantity, max_quantity = nil)
     quantity = quantity.to_i
     max_quantity = max_quantity.to_i if max_quantity
@@ -144,16 +155,5 @@ class CartService
 
   def variant_ids_in_cart
     @order.line_items.pluck :variant_id
-  end
-
-  def indexed_variants(variants_data)
-    @indexed_variants ||= begin
-      variant_ids_in_data = variants_data.map{ |v| v[:variant_id] }
-
-      Spree::Variant.where(id: variant_ids_in_data).
-        includes(:default_price, :stock_items, :product).
-        all.
-        index_by(&:id)
-    end
   end
 end
