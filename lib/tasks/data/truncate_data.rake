@@ -34,7 +34,7 @@ namespace :ofn do
     def warn_with_confirmation
       message = <<-MSG.strip_heredoc
       \n
-      <% highlighted_message = "This will permanently change DB contents. Please, make a backup first." %>
+      <% highlighted_message = "This will permanently change DB contents. This is not meant to be run in production as it needs more thorough testing." %>
       <%= color(highlighted_message, :blink, :on_red) %>
       Are you sure you want to proceed? (y/N)
       MSG
