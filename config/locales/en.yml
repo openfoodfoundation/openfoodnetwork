@@ -3348,6 +3348,14 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         autocomplete:
           producer_name: "Producer"
           unit: "Unit"
+      shared:
+        sortable_header:
+          number: "Number"
+          state: "State"
+          payment_state: "Payment State"
+          shipment_state: "Shipment State"
+          email: "Email"
+          total: "Total"
       general_settings:
       shared:
         sortable_header:
