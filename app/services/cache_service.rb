@@ -35,7 +35,7 @@ class CacheService
 
   module FragmentCaching
     # Rails' caching in views is called "Fragment Caching" and uses some slightly different logic.
-    # Note: supplied keys are actually prepended with "view/" under the hood.
+    # Note: keys supplied here are actually prepended with "views/" under the hood.
 
     def self.ams_all_taxons_key
       "inject-all-taxons-#{CacheService.latest_timestamp_by_class(Spree::Taxon)}"
