@@ -48,9 +48,9 @@
     = inject_current_hub
     = inject_current_user
     = inject_rails_flash
-    - cache "inject-all-taxons-#{CacheService.latest_timestamp_by_class(Spree::Taxon)}" do
+    - cache CacheService::FragmentCaching.ams_all_taxons_key do
       = inject_taxons
-    - cache "inject-all-properties-#{CacheService.latest_timestamp_by_class(Spree::Property)}" do
+    - cache CacheService::FragmentCaching.ams_all_properties_key do
       = inject_properties
     = inject_current_order
     = inject_currency_config
