@@ -9,6 +9,34 @@ feature "Shops caching", js: true, caching: true do
   let!(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true, is_primary_producer: true) }
   let!(:order_cycle) { create(:open_order_cycle, distributors: [distributor], coordinator: distributor) }
 
+  describe "caching enterprises AMS data" do
+    it "caches data for all enterprises, with the provided options" do
+      visit shops_path
+
+      key, options = CacheService::FragmentCaching.ams_shops
+      expect_cached "views/#{key}", options
+    end
+
+    it "keeps data cached for a short time on subsequent requests" do
+      Timecop.travel(10.minutes.ago) do
+        visit shops_path
+
+        expect(page).to have_content distributor.name
+
+        distributor.name = "New Name"
+        distributor.save!
+
+        visit shops_path
+
+        expect(page).to_not have_content "New Name" # Displayed name is unchanged
+      end
+
+      # A while later...
+      visit shops_path
+      expect(page).to have_content "New Name" # Displayed name is now changed
+    end
+  end
+
   describe "API action caching on taxons and properties" do
     let!(:taxon) { create(:taxon, name: "Cached Taxon") }
     let!(:taxon2) { create(:taxon, name: "New Taxon") }
@@ -37,8 +65,7 @@ feature "Shops caching", js: true, caching: true do
     end
 
     it "keeps data cached for a short time on subsequent requests" do
-      # One minute ago...
-      Timecop.travel(Time.zone.now - 1.minute) do
+      Timecop.travel(10.minutes.ago) do
         visit enterprise_shop_path(distributor)
 
         expect(page).to have_content taxon.name
