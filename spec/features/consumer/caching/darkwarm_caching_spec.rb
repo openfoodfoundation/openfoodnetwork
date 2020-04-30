@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-feature "Caching", js: true, caching: true do
+feature "Darkswarm data caching", js: true, caching: true do
   let!(:taxon) { create(:taxon, name: "Cached Taxon") }
   let!(:property) { create(:property, presentation: "Cached Property") }
 
