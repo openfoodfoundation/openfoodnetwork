@@ -22,7 +22,7 @@ describe CacheService do
 
     before do
       rails_cache.stub(:fetch)
-      CacheService.stub(:latest_timestamp_by_class) { timestamp }
+      allow(Enterprise).to receive(:maximum).with(:updated_at).and_return(timestamp)
     end
 
     it "caches data by timestamp for last record of that class" do
@@ -30,7 +30,6 @@ describe CacheService do
         "TEST"
       end
 
-      expect(CacheService).to have_received(:latest_timestamp_by_class).with(Enterprise)
       expect(rails_cache).to have_received(:fetch).with("test-cache-key-Enterprise-#{timestamp}")
     end
   end
