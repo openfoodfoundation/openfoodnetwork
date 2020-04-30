@@ -18,6 +18,18 @@ feature "Darkswarm data caching", js: true, caching: true do
 
   describe "caching injected taxons and properties" do
     it "caches taxons and properties" do
+      expect(Spree::Taxon).to receive(:all) { [taxon] }
+      expect(Spree::Property).to receive(:all) { [property] }
+
+      visit shops_path
+
+      expect(Spree::Taxon).to_not receive(:all)
+      expect(Spree::Property).to_not receive(:all)
+
+      visit shops_path
+    end
+
+    it "invalidates caches for taxons and properties" do
       visit shops_path
 
       taxon_timestamp1 = CacheService.latest_timestamp_by_class(Spree::Taxon)
