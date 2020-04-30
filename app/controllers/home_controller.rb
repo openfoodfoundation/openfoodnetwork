@@ -19,10 +19,8 @@ class HomeController < BaseController
   private
 
   # Cache the value of the query count
-  def cached_count(key, query)
-    CacheService.cache("home_stats_count_#{key}",
-                       expires_in: CacheService::HOME_STATS_EXPIRY,
-                       race_condition_ttl: 10) do
+  def cached_count(statistic, query)
+    CacheService.home_stats(statistic) do
       query.count
     end
   end

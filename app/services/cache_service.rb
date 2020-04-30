@@ -25,6 +25,14 @@ class CacheService
     cached_class.maximum(:updated_at).to_i
   end
 
+  def self.home_stats(statistic)
+    Rails.cache.fetch("home_stats_count_#{statistic}",
+                      expires_in: HOME_STATS_EXPIRY,
+                      race_condition_ttl: 10) do
+      yield
+    end
+  end
+
   module FragmentCaching
     # Rails' caching in views is called "Fragment Caching" and uses some slightly different logic.
     # Note: supplied keys are actually prepended with "view/" under the hood.
