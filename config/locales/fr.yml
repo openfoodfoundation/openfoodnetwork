@@ -1583,22 +1583,6 @@ fr:
   groups_signup_contact_text: "Prenez contact et découvrez ce qu'Open Food France peut faire pour vous:"
   groups_signup_detail: "Plus de précisions."
   login_invalid: "Email ou mot de passe erroné"
-  modal_hubs: "Food Hubs"
-  modal_hubs_abstract: Nos food hubs sont les points de contact entre vous et les personnes qui produisent votre nourriture!
-  modal_hubs_content1: Vous pouvez chercher le hub qui vous convient par localisation ou par nom. Certains hubs ont de multiples points de retrait de vos achats, et certains proposent également la livraison à domicile. Chaque food hub est un point de vente et gère de façon indépendante ses opérations et sa logistique - attendez-vous donc à des disparités de fonctionnement entre les hubs.
-  modal_hubs_content2: Vous pouvez uniquement faire vos courses dans un hub à la fois.
-  modal_groups: "Groupes / réseaux territoriaux"
-  modal_groups_content1: Voilà les organisations et les relations inter-hubs qui constituent l'Open Food Network.
-  modal_groups_content2: Certains groupes sont regroupés pas localisation ou région, d'autres sur des smilitudes non géographiques.
-  modal_how: "Comment ça marche"
-  modal_how_shop: Faire vos courses sur Open Food France
-  modal_how_shop_explained: Recherchez un food hub près de chez vous et commencez vos achats! Vous pouvez afficher plus d'infos sur chaque food hub pour voir le type de produits qu'il propose, et cliquer sur le hub pour commencer vos achats. (Vous ne pouvez faire vos courses que dans un food hub à la fois.)
-  modal_how_pickup: Frais de retrait, livraison et transport
-  modal_how_pickup_explained: Certains food hubs livrent à domicile, d'autres vous demandent de venir récupérer vos achats dans un point de retrait. Vous pouvez voir quelle options sont proposées sur la page d'accueil du hub, et sélectionner votre choix au moment de la validation de la commande. La livraison à domicile coûtera souvent plus cher, et les prix diffèrent selon le hub. Chaque food hub est un point de vente et gère de façon indépendante ses opérations et sa logistique - attendez-vous donc à des disparités de fonctionnement entre les hubs.
-  modal_how_more: En savoir plus
-  modal_how_more_explained: "Pour en savoir plus sur Open Food France, comment ça marche, et contribuer, allez voir:"
-  modal_producers: "Producteurs"
-  modal_producers_explained: "Nos producteurs font pousser et fabriquent tous les délicieux produits que vous pouvez acheter sur Open Food France."
   producers_about: A propos
   producers_buy: Acheter
   producers_contact: Contact
@@ -2856,14 +2840,6 @@ fr:
     smtp_send_copy_to_this_addresses: "Envoyer une copie de tous les mails sortants à cette adresse. Si plusieurs adresses, les séparer par une virgule."
     intercept_email_address: "Adresse email d'interception"
     intercept_email_instructions: "Modifier l'email destinataire et le remplacer avec cette adresse."
-    smtp: "SMTP"
-    smtp_domain: "Domaine SMTP"
-    smtp_mail_host: "Hôte de messagerie SMTP"
-    smtp_port: "Port SMTP"
-    secure_connection_type: "Type de connexion sécurisée"
-    smtp_authentication_type: "Type d'authentification SMTP"
-    smtp_username: "Nom d'utilisateur SMTP"
-    smtp_password: "Mot de passe SMTP"
     image_settings: "Paramètres des images"
     image_settings_warning: "Vous devrez générer de nouvelles vignettes si vous mettez à jour les styles paperclip. Utilisez rake paperclip:refresh:thumbnails CLASS=Spree::Image pour le faire."
     attachment_default_style: Style des pièces jointes
@@ -3232,6 +3208,8 @@ fr:
           price: "Prix"
           display_as: "Unité affichée"
           display_name: "Nom affiché"
+          display_as_placeholder: 'ex. 2 kg'
+          display_name_placeholder: 'ex. Tomates'
         autocomplete:
           producer_name: "Producteur"
           unit: "Unité"
