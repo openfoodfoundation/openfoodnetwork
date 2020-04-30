@@ -6,7 +6,7 @@
   = current_distributor.logo.url
 
 - content_for :injection_data do
-  - cache "enterprises/shop/inject_enterprise_shopfront-#{@enterprise.id}", expires_in: CacheService::SHOPS_EXPIRY do
+  - cache(*CacheService::FragmentCaching.ams_shop(@enterprise)) do
     = inject_enterprise_shopfront(@enterprise)
 
 %shop.darkswarm

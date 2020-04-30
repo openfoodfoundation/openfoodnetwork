@@ -36,5 +36,19 @@ class CacheService
     def self.ams_all_properties_key
       "inject-all-properties-#{CacheService.latest_timestamp_by_class(Spree::Property)}"
     end
+
+    def self.ams_shops
+      [
+        "shops/index/inject_enterprises",
+        { expires_in: SHOPS_EXPIRY }
+      ]
+    end
+
+    def self.ams_shop(enterprise)
+      [
+        "enterprises/shop/inject_enterprise_shopfront-#{enterprise.id}",
+        { expires_in: SHOPS_EXPIRY }
+      ]
+    end
   end
 end
