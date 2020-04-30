@@ -24,7 +24,7 @@ class SubscriptionConfirmJob
 
     # Confirm these proxy orders
     ProxyOrder.where(id: unconfirmed_proxy_orders_ids).each do |proxy_order|
-      Rails.logger.info "Confirming Order for Proxy Order #{proxy_order.id}"
+      JobLogger.logger.info "Confirming Order for Proxy Order #{proxy_order.id}"
       confirm_order!(proxy_order.order)
     end
 
