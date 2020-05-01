@@ -118,8 +118,8 @@
       }
     }
 
-    .with-darker-background {
-        background-color: $grey-080;
+    &.with-darker-background {
+      background-color: $very-light-grey-transparency;
     }
   }
 }
