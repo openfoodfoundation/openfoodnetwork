@@ -85,7 +85,11 @@
       background-color: transparent;
 
       a {
-        color: $teal-500;
+        color: $orange-500;
+
+        &:hover {
+          color: $orange-600;
+        }
       }
 
       img {
@@ -120,6 +124,10 @@
 
     &.with-darker-background {
       background-color: $very-light-grey-transparency;
+
+      a {
+        color: $teal-500;
+      }
     }
   }
 }
