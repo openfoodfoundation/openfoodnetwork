@@ -75,6 +75,10 @@ ordercycle {
       border-radius: 0 0.25em 0.25em 0;
       min-width: 13em;
 
+      option {
+        color: $grey-700;
+      }
+
       @media all and (max-width: 480px) {
         width: 100%;
       }
