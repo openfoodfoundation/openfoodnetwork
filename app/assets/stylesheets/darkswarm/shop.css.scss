@@ -145,6 +145,7 @@
 
   .warning-sign {
     margin: 0 10px 0 5px;
+    display: inline-block;
 
     strong {
       color: $grey-650;
@@ -155,7 +156,7 @@
     }
 
     .rectangle {
-      background-color: $black;
+      background-color: $white;
       border-radius: 4px;
       color: $grey-650;
       height: 23px;
