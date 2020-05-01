@@ -3,7 +3,7 @@ class Api::Admin::OrderSerializer < ActiveModel::Serializer
              :edit_path, :state, :payment_state, :shipment_state,
              :payments_path, :ready_to_ship, :ready_to_capture, :created_at,
              :distributor_name, :special_instructions,
-             :item_total, :adjustment_total, :payment_total, :total
+             :item_total, :adjustment_total, :payment_total, :total, :display_outstanding_balance
 
   has_one :distributor, serializer: Api::Admin::IdSerializer
   has_one :order_cycle, serializer: Api::Admin::IdSerializer
@@ -14,6 +14,12 @@ class Api::Admin::OrderSerializer < ActiveModel::Serializer
 
   def distributor_name
     object.distributor.andand.name
+  end
+
+  def display_outstanding_balance
+    return "" unless ["balance_due", "credit_owed"].include?(object.payment_state)
+
+    "(#{object.display_outstanding_balance.to_html})"
   end
 
   def edit_path

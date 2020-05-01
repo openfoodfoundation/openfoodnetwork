@@ -68,6 +68,7 @@
         %span.state{'ng-class' => 'order.payment_state', 'ng-if' => 'order.payment_state'}
           %a{'ng-href' => '{{order.payments_path}}' }
             {{'js.admin.orders.payment_states.' + order.payment_state | t}}
+            {{order.display_outstanding_balance}}
       %td.align-center
         %span.state{'ng-class' => 'order.shipment_state', 'ng-if' => 'order.shipment_state'}
           {{'js.admin.orders.shipment_states.' + order.shipment_state | t}}
