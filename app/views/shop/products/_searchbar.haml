@@ -3,6 +3,7 @@
     .small-12.large-5.columns.flex
       %div.search-wrap
         %input#search.text{"ng-model" => "query",
+              type: 'search',
               placeholder: t(:products_search),
               "ng-debounce" => "200",
               "ofn-disable-enter" => true}
