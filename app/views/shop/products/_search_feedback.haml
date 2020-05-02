@@ -13,7 +13,7 @@
           = t :products_clear
           %i.ofn-i_009-close
 
-      %div{"ng-show" => "Products.products.length == 0 && !Products.loading"}
+      %div.no-results-bar{"ng-show" => "Products.products.length == 0 && !Products.loading"}
         .row.summary
           .small-12.columns
             %p.no-results
