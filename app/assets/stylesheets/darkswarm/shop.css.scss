@@ -114,6 +114,15 @@
     margin-bottom: 0px;
   }
 
+  .select-oc-message {
+    margin-top: 1rem;
+
+    .highlighted {
+      color: $red-700;
+      font-weight: bold;
+    }
+  }
+
   .open-shop-message {
     a {
       color: #0096ad;
