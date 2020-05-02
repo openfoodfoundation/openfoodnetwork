@@ -148,6 +148,10 @@
     &.applied-taxons, &.applied-properties {
       color: $clr-blue;
       font-weight: bold;
+
+      .join-word {
+        font-weight: normal;
+      }
     }
 
     &.applied-search {

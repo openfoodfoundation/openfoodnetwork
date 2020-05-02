@@ -84,7 +84,7 @@ Darkswarm.controller "ProductsCtrl", ($scope, $sce, $filter, $rootScope, Product
     ).join($scope.filtersJoinWord()) if $scope.activeProperties?
 
   $scope.filtersJoinWord = ->
-    $sce.trustAsHtml(" <span>#{t('products_or')}</span> ")
+    $sce.trustAsHtml(" <span class='join-word'>#{t('products_or')}</span> ")
 
   $scope.clearAll = ->
     $scope.clearQuery()
