@@ -204,7 +204,7 @@ es_CR:
   ongoing: En marcha
   bill_address: Dirección de facturación
   ship_address: Dirección de envío
-  sort_order_cycles_on_shopfront_by: "Ordenar Ciclos de Pedidos en Tienda por"
+  sort_order_cycles_on_shopfront_by: "Ordenar ciclos de pedidos en tienda por"
   required_fields: Los campos obligatorios se indican con un asterisco
   select_continue: Seleccione y Continue
   remove: Eliminar
@@ -235,7 +235,7 @@ es_CR:
   admin_and_handling: Administración y Manejo
   profile: Perfil
   supplier_only: Sólo proveedor
-  has_shopfront: Tiene puesto de tienda
+  has_shopfront: Tiene tienda
   weight: Peso
   volume: Volumen
   items: Elementos
@@ -261,7 +261,7 @@ es_CR:
   change_my_password: "Cambiar mi contraseña"
   update_password: "Actualizar contraseña"
   password_confirmation: Confirmación de contraseña
-  reset_password_token: token de restablecimiento de contraseña
+  reset_password_token: Token de restablecimiento de contraseña
   expired: ha expirado, por favor solicite una nueva
   back_to_payments_list: "Volver a la lista de pagos"
   maestro_or_solo_cards: "Solo tarjetas MasterCard"
@@ -388,7 +388,7 @@ es_CR:
         update_address: 'Actualizar dirección'
         confirm_delete: '¿Confirmas que quieres borrar?'
         search_by_email: "Buscar por correo electrónico/código"
-        guest_label: 'Hacer pedido como invitado'
+        guest_label: 'Retirar como invitado'
       destroy:
         has_associated_orders: 'Error al eliminar: el cliente tiene pedidos asociados a su tienda.'
     contents:
@@ -560,16 +560,16 @@ es_CR:
         add: Añadir
         hide: Ocultar
         import_date: Importado
-        select_a_shop: Selecciona una Tienda
+        select_a_shop: Seleccione una tienda
         review_now: Revisar ahora
         new_products_alert_message: Hay %{new_product_count} nuevos productos disponibles para añadir a tu inventario.
-        currently_empty: Tu inventario está vacio
-        no_matching_products: No se encuentran productos que concuerden en tu inventario
-        no_hidden_products: No hay productos ocultados de tu inventario
-        no_matching_hidden_products: No se encuentran productos ocultos que concuerden
+        currently_empty: Su inventario está vacio
+        no_matching_products: No se encuentran productos que concuerden en su inventario
+        no_hidden_products: No hay productos que hayan sido ocultados de su inventario
+        no_matching_hidden_products: No se encuentran productos ocultos que concuerden con su criterio de búsqueda
         no_new_products: No hay nuevos productos disponibles para añadir a este inventario
-        no_matching_new_products: No hay nuevos productos que concuerden
-        inventory_powertip: Este es tu inventario de productos. Para añadir productos a tu inventario, selecciona "Nuevos Productos" en el menú desplegable.
+        no_matching_new_products: No hay nuevos productos que concuerden con su criterio de búsqueda
+        inventory_powertip: Este es su inventario de productos. Para añadir productos a su inventario, seleccione "Nuevos Productos" en el menú desplegable.
         hidden_powertip: Estos productos han sido ocultados de tu inventario y no están disponibles para añadir a tu tienda. Puedes hacer click en "Añadir" para añadir un producto a tu inventario.
         new_powertip: Estos productos están disponibles para añadirlos a tu inventario. Haz clic en "Añadir" para añadir un producto a tu inventario o "Ocultar" para ocultarlo de la vista. Siempre puedes cambiar de idea!
       controls:
@@ -682,7 +682,7 @@ es_CR:
           permalink: Permalink (sin espacios)
           permalink_tip: "Se usa para crear la URL de tu tienda: %{link}nombre-de-tu-tienda/shop"
           link_to_front: Link a la tienda
-          link_to_front_tip: Enlace directo a tu tienda en Open Food Networks
+          link_to_front_tip: Enlace directo a tu tienda en Open Food Networks (LaFeriaCR)
           ofn_uid: UID de OFN
           ofn_uid_tip: La identificación única utilizada para identificar la organización en Open Food Network.
         shipping_methods:
@@ -710,10 +710,10 @@ es_CR:
           enable_subscriptions_tip: "¿Habilitar la funcionalidad de suscripciones?"
           enable_subscriptions_false: "Deshabilitado"
           enable_subscriptions_true: "Habilitado"
-          shopfront_message: "Mensaje de la Tienda"
+          shopfront_message: "Mensaje de la tienda"
           shopfront_message_placeholder: >
               Mensaje de bienvenida opcional para compradores, explica como comprar
-              en el sitio. si el texto se agrega en este campo, va a ser mostrado
+              en el sitio. Si el texto se agrega en este campo, va a ser mostrado
               en la pestaña de inicio cuando los clientes ingresen por primera vez
               a la tienda.
           shopfront_message_link_tooltip: "Insertar / editar enlace"
@@ -1094,7 +1094,7 @@ es_CR:
       confirm_cancel_msg: "¿Seguro que quieres cancelar esta suscripción? Esta acción no se puede deshacer."
       cancel_failure_msg: "Lo sentimos ¡la cancelación falló!"
       confirm_pause_msg: "¿Seguro que quieres pausar esta suscripción?"
-      pause_failure_msg: "Lo sentimos ¡pausar falló!"
+      pause_failure_msg: "Lo sentimos ¡no se pude pausar!"
       confirm_unpause_msg: "Si tiene un ciclo de pedido abierto en el horario de esta suscripción, se creará un pedido para este cliente. ¿Estás seguro de que deseas anular la pausa de esta suscripción?"
       unpause_failure_msg: "Lo sentimos ¡no se pudo reanudar!"
       confirm_cancel_open_orders_msg: "Algunos pedidos de esta suscripción están actualmente abiertos. El cliente ya ha sido notificado de que se realizará el pedido. ¿Desea cancelar estos pedidos o conservarlos?"
@@ -1146,7 +1146,7 @@ es_CR:
         checkout: "Validar el carrito ahora"
         already_ordered_products: "Pedido en este ciclo de pedido"
     register_call:
-      selling_on_ofn: "¿Tiene interés sobre entrar en Open Food Network (LaFeriaCR)?"
+      selling_on_ofn: "¿Quiere ser parte de Open Food Network (LaFeriaCR)?"
       register: "Regístrarse aquí"
     footer:
       footer_secure: "Seguro y de confianza."
@@ -1209,7 +1209,7 @@ es_CR:
   menu_4_title: "Grupos"
   menu_4_url: "/groups"
   menu_5_title: "Acerca de"
-  menu_5_url: "https://laferia.cr/"
+  menu_5_url: "https://about.laferia.cr/"
   menu_6_title: "Conectar"
   menu_6_url: " "
   menu_7_title: "Aprender"
@@ -1323,14 +1323,8 @@ es_CR:
       cookie_stripe_desc: "Datos recopilados por nuestro procesador de pagos Stripe para detectar fraudes https://stripe.com/cookies-policy/legal. No todas las tiendas usan Stripe como método de pago pero es una buena práctica evitar fraude aplicarlo a todas las páginas. Stripe probablemente crea una imagen de cuáles de nuestras páginas generalmente interactúan con su API y luego marca cualquier cosa inusual. Por lo tanto configurar la cookie Stripe tiene una función más amplia que la simple provisión de un método de pago a un usuario. Eliminarla podría afectar la seguridad del servicio en sí. Puede obtener más información acerca de Stripe y leer su política de privacidad en https://stripe.com/privacy."
       statistics_cookies: "Cookies de estadísticas"
       statistics_cookies_desc: "Las siguientes no son estrictamente necesarias, pero ayudan a proporcionarle una mejor experiencia de usuario al permitirnos analizar el comportamiento del usuario, identificar qué funciones usa más o no, comprender los problemas de la experiencia del usuario, etc."
-      statistics_cookies_analytics_desc_html: "Para recopilar y analizar los datos de uso de la plataforma utilizamos Google Analytics, ya que era el servicio predeterminado conectado con Spree (el software de código abierto de comercio electrónico que utilizamos) pero nuestra visión es cambiar a <a href = 'https: / /matomo.org/ 'target =' _ blank '> Matomo </a> (ex Piwik, herramienta analítica de código abierto que cumple con GDPR y protege su privacidad) tan pronto como podamos."
       statistics_cookies_matomo_desc_html: "Para recopilar y analizar los datos de uso de la plataforma, utilizamos <a href='https://matomo.org/' target='_blank'> Matomo </a> (ex Piwik), una herramienta analítica de código abierto que cumple con GDPR y protege tu privacidad"
       statistics_cookies_matomo_optout: "¿Deseas excluirte de Matomo Analytics? No recopilamos ningún dato personal y Matomo nos ayuda a mejorar nuestro servicio, pero respetamos tu elección :-)"
-      cookie_analytics_utma_desc: "Se usa para distinguir usuarios y sesiones. La cookie se crea cuando la biblioteca javascript se ejecuta y no existe ninguna cookie __utma existente. La cookie se actualiza cada vez que se envían datos a Google Analytics."
-      cookie_analytics_utmt_desc: "Se usa para acelerar la tasa de solicitud."
-      cookie_analytics_utmb_desc: "Se utiliza para determinar nuevas sesiones / visitas. La cookie se crea cuando la librería javascript se ejecuta y no existe ninguna cookie __utmb existente. La cookie se actualiza cada vez que los datos se envían a Google Analytics."
-      cookie_analytics_utmc_desc: "No utilizado en ga.js. Establecer para la interoperabilidad con urchin.js. Históricamente, esta cookie funcionó junto con la cookie __utmb para determinar si el usuario estaba en una nueva sesión / visita."
-      cookie_analytics_utmz_desc: "Almacena la fuente de tráfico o la campaña que explica cómo el usuario llegó a su sitio. La cookie se crea cuando se ejecuta la librería javascript y se actualiza cada vez que se envían datos a Google Analytics."
       cookie_matomo_basics_desc: "Matomo cookies de origen para recopilar estadísticas."
       cookie_matomo_heatmap_desc: "Matomo Heatmap y sesión de grabación de cookies."
       cookie_matomo_ignore_desc: "Cookie utilizada para excluir al usuario de ser rastreado."
@@ -1349,7 +1343,7 @@ es_CR:
       cookies_policy_link: "política de cookies"
       cookies_accept_button: "Aceptar cookies"
   home_shop: Comprar ahora
-  brandstory_headline: "Consume con valores."
+  brandstory_headline: "Consuma con valores."
   brandstory_intro: "A veces la mejor forma de arreglar el sistema es empezar uno nuevo…"
   brandstory_part1: "Nosotros empezamos desde abajo. Con granjeros y productoras listas para contar sus historias con orgullo y autenticidad. Con distribuidoras listas para conectar gente con productos de forma justa y honesta. Con compradores que creen que mejores decisiones de compras semanales pueden seriamente cambiar el mundo."
   brandstory_part2: "Luego necesitamos una forma de hacerlo real. Una forma de empoderar a todos los que producen, venden y compran comida. Una forma de contar todas las historias, de manejar todas las logísticas. Una forma de convertir transacción en transformación todos los días."
@@ -1363,11 +1357,11 @@ es_CR:
   connect_cta: "Explorar"
   system_headline: "Compras - aquí está cómo funcionan."
   system_step1: "1. Buscar"
-  system_step1_text: "Busque comida local y de temporada en nuestras tiendas diversas e independientes. Busque por cantón y categoría de comida o si prefiere entrega o recoger."
+  system_step1_text: "Busque comida local y de temporada en nuestras tiendas diversas e independientes. Puede buscar por cantón y tipo de comida o si prefiere por método de envío."
   system_step2: "2. Comprar"
-  system_step2_text: "Transforme su consumo con comida local y asequible de diversos productores ¡Conoce las historias detrás de su comida y la gente que la hace!"
+  system_step2_text: "Transforme su consumo con comida local y asequible de diversos productores ¡Conozca las historias detrás de su comida y la gente que la hace!"
   system_step3: "3. Recogida"
-  system_step3_text: "Visite su productor para crear un vínculo más directo con los productores y sus vecinos, también puedes comprar directamente a algunos productores. Compre su comida de una manera tan diversa como la naturaleza."
+  system_step3_text: "Visite su productor para crear un vínculo más directo con los productores y sus vecinos, también puede comprar directamente a algunos productores. Compre su comida de una manera tan diversa como la naturaleza."
   cta_headline: "Compras que hacen el mundo un mejor lugar."
   cta_label: "Estoy listo"
   stats_headline: "Entre todos creamos un nuevo sistema de producción, distribución y consumo."
@@ -1551,8 +1545,8 @@ es_CR:
   products_update_error_msg: "No se ha podido guardar."
   products_update_error_data: "Error al guardar datos no válidos:"
   products_changes_saved: "Cambios guardados."
-  search_no_results_html: "Lo sentimos, no hay resultados para %{query}. ¿Intentar otra búsqueda?"
-  components_profiles_popover: "Los perfiles no tienen una tienda en Open Food Network, pero pueden tener su propia tienda física o en línea en otro lugar"
+  search_no_results_html: "Lo sentimos, no hay resultados para %{query}. ¿Por qué no intenta otra búsqueda?"
+  components_profiles_popover: "Los perfiles no tienen una tienda en Open Food Network (LaFeriaCR), pero pueden tener su propia tienda física o en línea en otro lugar"
   components_profiles_show: "Mostrar perfiles"
   components_filters_nofilters: "Sin filtros"
   components_filters_clearfilters: "Limpiar todos los filtros"
@@ -1589,22 +1583,6 @@ es_CR:
   groups_signup_contact_text: "Póngase en conta para descubrir qué puede hacer OFN por usted:"
   groups_signup_detail: "Aquí está el detalle."
   login_invalid: "Correo electrónico o contraseña inválidos"
-  modal_hubs: "Hubs"
-  modal_hubs_abstract: ¡Nuestros Grupos de Consumo son el punto de contacto entre usted y la gente que hace su comida!
-  modal_hubs_content1: Puede buscar un grupo de consumo conveniente por ubicación o nombre. Algunos grupos de consumo tienen múltiples puntos en loa que puede recoger las compras, y algunos también brindan opciones de entrega a domicilio. Cada Grupo de Consumo es un punto de venta con operaciones de negocio y logística independientes, entonces puede esperar diferencias entre Grupos de Consumo.
-  modal_hubs_content2: Sólo puedes comprar en un grupo de consumo a la vez.
-  modal_groups: "Grupos / Regiones"
-  modal_groups_content1: Estas son las organizaciones y relaciones entre grupos de consumo que conforman el Open Food Network.
-  modal_groups_content2: Algunos grupos están organizados por ubicación, otros por afinidades no geográficas.
-  modal_how: "Cómo funciona"
-  modal_how_shop: Comprar en Open Food Network
-  modal_how_shop_explained: ¡Buscar un grupo de consumo cerca de ti para empezar a comprar! Puedes expandir cada grupo de consumo para ver qué tipos de productos están disponibles, y hacer clic para empezar a comprar. (Sólo puedes comprar en un grupo de consumo a la vez.)
-  modal_how_pickup: Recogida, entrega y gastos de envío
-  modal_how_pickup_explained: Algunos grupos de consumo hacen entregas hasta su puerta, mientras otros requieren que recojas las compras. Puedes ver que opciones están disponibles en su página de inicio, y seleccionar cuál te gustaría en las páginas de compras y revisión. Las entregas costarán más, y el precio cambia entre grupos de consumo. Cada grupo es un punto de venta con operaciones y logística independientes, las diferencias son normales y deseables.
-  modal_how_more: Aprender más
-  modal_how_more_explained: "Si quieres saber más acerca de Open Food Network, cómo trabajamos y nos organizamos, visita:"
-  modal_producers: "Productores"
-  modal_producers_explained: "Nuestras productoras hacen todos los deliciosos alimentos que puedes comprar en Open Food Network."
   producers_about: Acerca de nosotros
   producers_buy: Comprar para
   producers_contact: Contacto
@@ -1831,7 +1809,7 @@ es_CR:
         enterprise_tax_required: "Necesita seleccionar algo."
       images:
         title: "Imágenes"
-        headline: "¡Ya casi lo tenemos!"
+        headline: "¡Gracias!"
         description: "¡Sube algunas fotografías así el perfil se verá mucho mejor! :)"
         uploading: "Subiendo..."
         continue: "Continuar"
@@ -1875,7 +1853,7 @@ es_CR:
         headline: "¡Terminado!"
         thanks: "Gracias por llenar los detalles de %{enterprise}."
         login: "Puede cambiar o actualizar su negocio en cualquier etapa iniciando sesión en Open Food Network y yendo a Admin."
-        action: "Ir al Panel de Organización"
+        action: "Ir al panel de organización"
   back: "Atrás"
   continue: "Continuar"
   action_or: "Ó"
@@ -1888,14 +1866,14 @@ es_CR:
   shop_variant_quantity_max: "máximo"
   follow: "Seguir"
   shop_for_products_html: "Comprar productos de <span class=\"turquoise\">%{enterprise}</span> en:"
-  change_shop: "Cambiar de tienda:"
-  shop_at: "Comprar en:"
+  change_shop: "Cambiar de tienda a:"
+  shop_at: "Comprar ahora en:"
   price_breakdown: "Desglose de precios completo"
   admin_fee: "Comisión de administración"
   sales_fee: "Comisión de ventas"
-  packing_fee: "Comisión de empaquetado"
+  packing_fee: "Cuota de empaquetado"
   transport_fee: "Comisión de transporte"
-  fundraising_fee: "Comisión para recaptación de fondos"
+  fundraising_fee: "Cuota para recaudación de fondos"
   price_graph: "Gráfico de precios"
   included_tax: "Impuesto incluido"
   balance: "Saldo"
@@ -2408,7 +2386,7 @@ es_CR:
           producer_hub_text1: >
               Tu organización es la columna vertebral de un sistema de consumo local.
               Agrega productos tuyos o de otras organizaciones y véndelo a través
-              de tu tienda en Open Food Network.
+              de tu tienda en Open Food Network (LaFeriaCR).
           producer_hub_text2: >
               Los Hubs de Productoras pueden tener diferentes finalidades, ya sea
               una cooperativa de alimentos, un grupo de consumo o un supermercado
@@ -2691,6 +2669,14 @@ es_CR:
       start_free_profile: "¡Empieze con un perfil gratuito, y amplíelo cuando esté preparado!"
   order_management:
     reports:
+      enterprise_fee_summaries:
+        filters:
+          date_range: "Rango de fechas"
+          report_format_csv: "Descargar como CSV"
+          generate_report: "Generar reporte"
+        report:
+          none: "Ninguno"
+          select_and_search: "Seleccione los filtros y haga clic en GENERAR REPORTE para acceder a sus datos."
       enterprise_fee_summary:
         date_end_before_start_error: "debe ser después del comienzo"
         parameter_not_allowed_error: "Usted no está autorizado a usar uno o más filtros seleccionados para este reporte."
@@ -2830,14 +2816,6 @@ es_CR:
     smtp_send_copy_to_this_addresses: "Envía una copia de todos los correos salientes a esta dirección. Para direcciones múltiples, sepárelas con comas."
     intercept_email_address: "Interceptar la dirección de correo electrónico"
     intercept_email_instructions: "Anular destinatario de correo electrónico y reemplazar con esta dirección."
-    smtp: "SMTP"
-    smtp_domain: "Dominio SMTP"
-    smtp_mail_host: "Alojamiento de correo SMTP"
-    smtp_port: "Puerto SMTP"
-    secure_connection_type: "Tipo de conexión segura"
-    smtp_authentication_type: "Tipo de autenticación SMTP"
-    smtp_username: "Nombre de usuario SMTP"
-    smtp_password: "Contraseña SMTP"
     image_settings: "Ajustes de imágen"
     image_settings_warning: "Deberá regenerar las miniaturas si actualiza los estilos de paperclip. Utilize rake paperclip:refresh:thumbnails CLASS=Spree::Image para hacer esto."
     attachment_default_style: Estilo de los archivos adjuntos
@@ -2884,12 +2862,6 @@ es_CR:
     shipping_categories: "Categorías de envío"
     new_shipping_category: "Nueva categoría de envío"
     back_to_shipping_categories: "Volver a las categorías de envío"
-    analytics_trackers: "Rastreador de analizador"
-    no_trackers_found: "No se encontraron rastreadores"
-    new_tracker: "Nuevo rastreador"
-    add_one: "Agrega uno"
-    google_analytics_id: "ID de analizador"
-    back_to_trackers_list: "Volver a la lista de rastreadores"
     name: "Nombre"
     description: "Descripción"
     type: "Tipo"
@@ -3171,14 +3143,6 @@ es_CR:
           bulk_coop_allocation: 'Bulk Co-op - Asignación'
           bulk_coop_packing_sheets: 'Bulk Co-op - Hojas de Empaquetado'
           bulk_coop_customer_payments: 'Bulk Co-op - Pagos de clientes'
-        enterprise_fee_summaries:
-          filters:
-            date_range: "Rango de fechas"
-            report_format_csv: "Descargar como CSV"
-            generate_report: "Generar reporte"
-          report:
-            none: "Ninguno"
-            select_and_search: "Seleccione los filtros y haga clic en GENERAR REPORTE para acceder a sus datos."
       users:
         index:
           listing_users: "Listando usuarios"
@@ -3232,7 +3196,6 @@ es_CR:
           privacy_policy_url: "Vínculo con la política de privacidad"
           enterprises_require_tos: "Las organizaciones deben aceptar los Términos del Servicio"
           cookies_policy_matomo_section: "Mostrar la sección de Matomo en la página de política de cookies"
-          cookies_policy_ga_section: "Mostrar la sección de Google Analytics en la página de la política de cookies"
           footer_tos_url: "URL de términos y servicios"
     checkout:
       payment:

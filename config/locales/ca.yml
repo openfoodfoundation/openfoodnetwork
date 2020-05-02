@@ -1584,22 +1584,6 @@ ca:
   groups_signup_contact_text: "Posa't en contacte per descobrir què pot fer OFN per tu:"
   groups_signup_detail: "Aquest és el detall."
   login_invalid: "Correu electrònic o contrasenya no vàlids"
-  modal_hubs: "Grups"
-  modal_hubs_abstract: Els nostres grups són el punt de contacte entre tu i les persones que fan els teus aliments.
-  modal_hubs_content1: Pots cercar un grup convenient per ubicació o nom. Alguns grups tenen diversos punts on pots recollir les vostres comandes i alguns també proporcionen opcions de lliurament. Cada grup és un punt de venda amb operacions comercials i logística independents, per la qual cosa és normal que existeixin variacions d'un grup a un altre.
-  modal_hubs_content2: Només pots comprar en un grup de consum a la vegada.
-  modal_groups: "Xarxes /Grups"
-  modal_groups_content1: Aquestes són les organitzacions i les relacions entre els grups que conformen l'OFN
-  modal_groups_content2: Alguns grups estan agrupats per localització o Ajuntament, altres per similituds no geogràfiques.
-  modal_how: "Com funciona"
-  modal_how_shop: Compreu a Open Food Network
-  modal_how_shop_explained: Cerca un grup de consum a prop teu per començar a comprar. Pots expandir cada grup per veure quins tipus de productes estan disponibles i fer clic per començar a comprar. (Només pots comprar en un grup alhora).
-  modal_how_pickup: Costes de recollida, lliurament i enviament
-  modal_how_pickup_explained: Algunes organitzacións o grups lliuren a la vostra porta, mentre que altres requereixen que aneu a buscar les vostres comandes. Podeu veure quines opcions hi ha disponibles a la pàgina d'inici i seleccionar el que vulgueu a les pàgines de confirmació de la compra. L'enviament costarà més, i els preus difereixen de l'organització. Cada grup és un punt de venda amb operacions comercials i logística independents, per la qual cosa es existeixen  variacions entre grups.
-  modal_how_more: Aprèn-ne més
-  modal_how_more_explained: "Si vols saber-ne més sobre l'Open Food Network, com funciona i participar-hi, consulta:"
-  modal_producers: "Productors"
-  modal_producers_explained: "Les nostres productores elaboren tot el menjar deliciós que pots adquirir a l'Open Food Network."
   producers_about: Sobre nosaltres
   producers_buy: 'Compreu '
   producers_contact: Contacte
@@ -2832,14 +2816,6 @@ ca:
     smtp_send_copy_to_this_addresses: "Envia una còpia de tots els correus sortints a aquesta adreça. Per a diverses adreces, separeu amb comes."
     intercept_email_address: "Intercepta adreça de correu"
     intercept_email_instructions: "Invalida el destinatari de correu electrònic i reemplaça amb aquesta adreça."
-    smtp: "SMTP"
-    smtp_domain: "Domini SMTP"
-    smtp_mail_host: "Servidor de correu SMTP"
-    smtp_port: "Port SMTP"
-    secure_connection_type: "Tipus de connexió segura"
-    smtp_authentication_type: "Tipus d'autenticació SMTP"
-    smtp_username: "Nom d'usuari SMTP"
-    smtp_password: "Contrasenya SMTP"
     image_settings: "Configuració de la imatge"
     image_settings_warning: "Haureu de regenerar thumbnails si actualitzeu els estils de paperclip. Feu servir rake paperclip:refresh:thumbnails CLASS=Spree::Image per fer-ho."
     attachment_default_style: Estil de fitxers adjunts

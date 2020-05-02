@@ -1581,22 +1581,6 @@ en_GB:
   groups_signup_contact_text: "Get in touch to discover what OFN can do for you:"
   groups_signup_detail: "Here's the detail."
   login_invalid: "Invalid email or password"
-  modal_hubs: "Food Hubs"
-  modal_hubs_abstract: Our food hubs are the point of contact between you and the people who make your food!
-  modal_hubs_content1: You can search for a convenient hub by location or name. Some hubs have multiple points where you can pick-up your purchases, and some will also provide delivery options. Each food hub is a sales point with independent business operations and logistics - so variations between hubs are to be expected.
-  modal_hubs_content2: You can only shop at one food hub at a time.
-  modal_groups: "Groups / Regions"
-  modal_groups_content1: These are the organisations and relationships between hubs which make up the Open Food Network.
-  modal_groups_content2: Some groups are clustered by location or council, others by non-geographic similarities.
-  modal_how: "How it works"
-  modal_how_shop: Shop the Open Food Network
-  modal_how_shop_explained: Search for a food hub near you to start shopping! You can expand each food hub to see what kinds of goodies are available, and click through to start shopping. (You can only shop one food hub at a time.)
-  modal_how_pickup: Pick-ups, delivery and shipping costs
-  modal_how_pickup_explained: Some food hubs deliver to your door, while others require you to pick-up your purchases. You can see which options are available on the homepage, and select which you'd like at the shopping and check-out pages. Delivery will cost more, and pricing differs from hub-to-hub. Each food hub is a sales point with independent business operations and logisitics - so variations between hubs are to be expected.
-  modal_how_more: Learn more
-  modal_how_more_explained: "If you want to learn more about the Open Food Network, how it works, and get involved, check out:"
-  modal_producers: "Producers"
-  modal_producers_explained: "Our producers make all the delicious food you can shop for on the Open Food Network."
   producers_about: About us
   producers_buy: Shop for
   producers_contact: Contact
@@ -2832,14 +2816,6 @@ en_GB:
     smtp_send_copy_to_this_addresses: "Sends a copy of all outgoing mails to this address. For multiple addresses, separate with commas."
     intercept_email_address: "Intercept Email Address"
     intercept_email_instructions: "Override email recipient and replace with this address."
-    smtp: "SMTP"
-    smtp_domain: "SMTP Domain"
-    smtp_mail_host: "SMTP Mail Host"
-    smtp_port: "SMTP Port"
-    secure_connection_type: "Secure Connection Type"
-    smtp_authentication_type: "SMTP Authentication Type"
-    smtp_username: "SMTP Username"
-    smtp_password: "SMTP Password"
     image_settings: "Image Settings"
     image_settings_warning: "You will need to regenerate thumbnails if you update the paperclip styles. Use rake paperclip:refresh:thumbnails CLASS=Spree::Image to do this."
     attachment_default_style: Attachments Style

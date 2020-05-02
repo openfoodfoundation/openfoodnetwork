@@ -1314,14 +1314,8 @@ ar:
       cookie_stripe_desc: "البيانات التي يتم جمعها بواسطة معالج الدفع لدينا Stripe للكشف عن الاحتيال https://stripe.com/cookies-policy/legal. لا تستخدم جميع المتاجر Stripe كوسيلة للدفع ، ولكن من الممارسات الجيدة منع الاحتيال لتطبيقه على جميع الصفحات. من المحتمل أن يقوم Stripe بإنشاء صورة لصفحاتنا التي تتفاعل عادةً مع واجهة برمجة التطبيقات الخاصة بهم ومن ثم وضع علامة على أي شيء غير عادي. لذلك فإن إعداد ملف تعريف الارتباط للشريط له وظيفة أوسع من مجرد توفير طريقة الدفع للمستخدم. يمكن أن تؤثر إزالتها على أمان الخدمة نفسها. يمكنك معرفة المزيد حول الشريط وقراءة سياسة الخصوصية الخاصة به على https://stripe.com/privacy."
       statistics_cookies: "إحصائيات ملفات تعريف الارتباط"
       statistics_cookies_desc: "ما يلي ليس ضروريًا تمامًا ، ولكنه يساعد في تزويدك بأفضل تجربة للمستخدم من خلال السماح لنا بتحليل سلوك المستخدم ، وتحديد الميزات التي تستخدمها أكثر من غيرها ، أو عدم استخدامها ، وفهم مشكلات تجربة المستخدم ، إلخ."
-      statistics_cookies_analytics_desc_html: "لجمع وتحليل بيانات استخدام النظام الأساسي ، نستخدم Google Analytics ، لأنها كانت الخدمة الافتراضية المرتبطة بـ Spree (برمجيات المصدر المفتوح للتجارة الإلكترونية التي بنينا عليها) ولكن رؤيتنا هي التحول إلى <a href='https://matomo.org/' target='_blank'>Matomo</a> (على سبيل المثال Piwik ، تحليلات مفتوحة المصدر أداة متوافقة مع الناتج المحلي الإجمالي وتحمي خصوصيتك) في أسرع وقت ممكن."
       statistics_cookies_matomo_desc_html: "لجمع وتحليل بيانات استخدام النظام الأساسي ، نستخدم <a href='https://matomo.org/' target='_blank'>Matomo</a> (ex Piwik) ، وهي أداة تحليل مفتوحة المصدر متوافقة مع إجمالي الناتج المحلي وتحمي خصوصيتك."
       statistics_cookies_matomo_optout: "هل تريد إلغاء الاشتراك في تحليلات Matomo؟ نحن لا نجمع أي بيانات شخصية ، ويساعدنا Matomo على تحسين خدماتنا ، لكننا نحترم اختيارك :-)"
-      cookie_analytics_utma_desc: "تستخدم لتمييز المستخدمين والجلسات. يتم إنشاء ملف تعريف الارتباط عندما تنفذ مكتبة جافا سكريبت ولا توجد ملفات تعريف الارتباط __utma الموجودة. يتم تحديث ملف تعريف الارتباط في كل مرة يتم فيها إرسال البيانات إلى Google Analytics."
-      cookie_analytics_utmt_desc: "تستخدم لرفع معدل الطلب."
-      cookie_analytics_utmb_desc: "يستخدم لتحديد جلسات / زيارات جديدة. يتم إنشاء ملف تعريف الارتباط عندما تنفذ مكتبة جافا سكريبت ولا توجد ملفات تعريف الارتباط الموجودة. يتم تحديث ملف تعريف الارتباط في كل مرة يتم فيها إرسال البيانات إلى Google Analytics."
-      cookie_analytics_utmc_desc: "غير مستخدم في ga.js. تعيين إمكانية التشغيل المتداخل مع urchin.js. تاريخياً ، يتم تشغيل ملف تعريف الارتباط هذا بالتزامن مع ملف تعريف الارتباط __utmb لتحديد ما إذا كان المستخدم في جلسة / زيارة جديدة."
-      cookie_analytics_utmz_desc: "يخزن مصدر حركة المرور أو الحملة التي تشرح كيف وصل المستخدم إلى موقعك. يتم إنشاء ملف تعريف الارتباط عندما تنفذ مكتبة جافا سكريبت ويتم تحديثها في كل مرة يتم فيها إرسال البيانات إلى Google Analytics."
       cookie_matomo_basics_desc: "ملفات تعريف الارتباط الطرف الأول Matomo لجمع الإحصاءات."
       cookie_matomo_heatmap_desc: "ملف تعريف الارتباط Matmo Heatmap وتسجيل الجلسة."
       cookie_matomo_ignore_desc: "يستخدم ملف تعريف الارتباط لاستبعاد المستخدم من التعقب."
@@ -1584,22 +1578,6 @@ ar:
   groups_signup_contact_text: "تواصل لتكتشف ما يمكن أن تفعله شبكة الغذاء المفتوح لك:"
   groups_signup_detail: "هنا التفاصيل."
   login_invalid: "البريد الإلكتروني أو كلمة السر خاطئة"
-  modal_hubs: "نقطة بيع الطعام"
-  modal_hubs_abstract: مراكز الغذاء لدينا هي نقطة الاتصال بينك وبين الأشخاص الذين يصنعون طعامك!
-  modal_hubs_content1: يمكنك البحث عن مركز مناسب حسب الموقع أو الاسم. تحتوي بعض لوحات الوصل على نقاط متعددة حيث يمكنك التقاط مشترياتك ، وسيوفر بعضها أيضًا خيارات التسليم. كل مركز غذاء هو نقطة مبيعات لها عمليات أعمال ولوجستيات مستقلة - لذلك من المتوقع حدوث تباينات بين المراكز.
-  modal_hubs_content2: يمكنك التسوق فقط في مركز طعام واحد في وقت واحد.
-  modal_groups: "المجموعات / المناطق"
-  modal_groups_content1: هذه هي المنظمات والعلاقات بين المحاور التي تشكل شبكة الغذاء المفتوح.
-  modal_groups_content2: يتم تجميع بعض المجموعات حسب الموقع أو المجلس ، والبعض الآخر حسب أوجه التشابه غير الجغرافية.
-  modal_how: "كيف تعمل"
-  modal_how_shop: تسوق في شبكة الغذاء المفتوح
-  modal_how_shop_explained: ابحث عن مركز طعام بالقرب منك لبدء التسوق! يمكنك توسيع كل مركز طعام لمعرفة أنواع الأشياء الجيدة المتاحة ، والنقر من خلاله البدء للتسوق. (يمكنك فقط الشراء من مركز طعام واحد في كل مرة.)
-  modal_how_pickup: الاستلام ، تكاليف التوصيل والشحن
-  modal_how_pickup_explained: تقوم بعض مراكز الطعام بالتوصيل إلى باب منزلك ، بينما يطلب منك البعض الآخر شراء مشترياتك. يمكنك معرفة الخيارات المتاحة على الصفحة الرئيسية ، وتحديد الخيارات التي تريدها في صفحات التسوق وتسجيل المغادرة. سيكلف التسليم أكثر ، ويختلف السعر من مركز الى اخر . كل مركز غذاء هو نقطة مبيعات مع عمليات تجارية مستقلة ولوجستية - لذلك من المتوقع حدوث اختلافات بين المراكز.
-  modal_how_more: أعرف أكثر
-  modal_how_more_explained: "إذا كنت تريد معرفة المزيد عن شبكة الغذاء المفتوح ، وكيف تعمل ، والمشاركة ، تحقق من:"
-  modal_producers: "المنتجين"
-  modal_producers_explained: "ينتج المنتجون لدينا جميع الأطعمة اللذيذة التي يمكنك تسوقها على شبكة الغذاء المفتوح."
   producers_about: معلومات عنا
   producers_buy: متجر لل
   producers_contact: اتصل
@@ -2648,6 +2626,14 @@ ar:
       start_free_profile: "ابدأ بملف تعريف مجاني ، وتوسع عندما تكون جاهزًا!"
   order_management:
     reports:
+      enterprise_fee_summaries:
+        filters:
+          date_range: "نطاق الموعد"
+          report_format_csv: "تنزيل بتنسيق CSV"
+          generate_report: "توليد تقرير"
+        report:
+          none: "لا شيء"
+          select_and_search: "حدد المرشحات وانقر على GENERATE REPORT للوصول إلى بياناتك."
       enterprise_fee_summary:
         date_end_before_start_error: "يجب أن يكون بعد البداية"
         parameter_not_allowed_error: "غير مصرح لك باستخدام عامل تصفية واحد أو أكثر لهذا التقرير."
@@ -2787,14 +2773,6 @@ ar:
     smtp_send_copy_to_this_addresses: "يرسل نسخة من جميع الرسائل الصادرة إلى هذا العنوان. لعناوين متعددة ، افصل بينها بفواصل."
     intercept_email_address: "اعتراض عنوان البريد الإلكتروني"
     intercept_email_instructions: "تجاوز مستلم البريد الإلكتروني واستبداله بهذا العنوان."
-    smtp: "SMTP"
-    smtp_domain: "مجال SMTP"
-    smtp_mail_host: "مضيف بريد SMTP"
-    smtp_port: "منفذ SMTP"
-    secure_connection_type: "نوع اتصال آمن"
-    smtp_authentication_type: "نوع مصادقة SMTP"
-    smtp_username: "اسم مستخدم SMTP"
-    smtp_password: "كلمة مرور SMTP"
     image_settings: "إعدادات الصورة"
     image_settings_warning: "ستحتاج إلى تجديد الصور المصغرة إذا قمت بتحديث أنماط مشبك الورق. استخدم rap paperclip: refresh: الصور المصغرة CLASS = Spree :: Image للقيام بذلك."
     attachment_default_style: نمط المرفقات
@@ -2841,12 +2819,6 @@ ar:
     shipping_categories: "فئات الشحن"
     new_shipping_category: "فئة الشحن الجديدة"
     back_to_shipping_categories: "العودة إلى فئات الشحن"
-    analytics_trackers: "تحليلات التتبع"
-    no_trackers_found: "لم يتم العثور على متتبعين"
-    new_tracker: "متتبع جديد"
-    add_one: "أضف واحدا"
-    google_analytics_id: "معرف التحليلات"
-    back_to_trackers_list: "العودة إلى قائمة التتبعات"
     name: "اسم"
     description: "وصف"
     type: "نوع"
@@ -3128,14 +3100,6 @@ ar:
           bulk_coop_allocation: 'معظم التعاونية - تخصيص'
           bulk_coop_packing_sheets: 'معظم التعاونية - صحائف التعبئة'
           bulk_coop_customer_payments: ' الجمعية التعاونية - مدفوعات العملاء بالجملة'
-        enterprise_fee_summaries:
-          filters:
-            date_range: "نطاق الموعد"
-            report_format_csv: "تنزيل بتنسيق CSV"
-            generate_report: "توليد تقرير"
-          report:
-            none: "لا شيء"
-            select_and_search: "حدد المرشحات وانقر على GENERATE REPORT للوصول إلى بياناتك."
       users:
         index:
           listing_users: "قائمة المستخدمين"
@@ -3180,14 +3144,15 @@ ar:
         autocomplete:
           producer_name: "المنتج"
           unit: "وحدة"
-      general_settings:
+      shared:
+        sortable_header:
+          name: "الاسم"
         edit:
           legal_settings: "الإعدادات القانونية"
           cookies_consent_banner_toggle: "عرض راية موافقة ملفات تعريف الارتباط"
           privacy_policy_url: "URL سياسة الخصوصية"
           enterprises_require_tos: "يجب على المؤسسات قبول شروط الخدمة"
           cookies_policy_matomo_section: "عرض قسم Matomo في صفحة سياسة ملفات تعريف الارتباط"
-          cookies_policy_ga_section: "عرض قسم Google Analytics في صفحة سياسة ملفات تعريف الارتباط"
           footer_tos_url: "شروط الخدمة URL"
     checkout:
       payment:

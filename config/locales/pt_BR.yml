@@ -1144,7 +1144,7 @@ pt_BR:
         already_ordered_products: "Já pediu neste ciclo de pedido"
     register_call:
       selling_on_ofn: "Interessado em registrar a sua iniciativa na Open Food Brasil?"
-      register: "Faça o cadastro aqui"
+      register: "Registre-se aqui"
     footer:
       footer_secure: "Seguro e confiável."
       footer_secure_text: "A Open Food Brasil utiliza a criptografia SSL (2048 bit RSA) para manter suas informações em segurança. Nossos servidores não guardam os detalhes do seu cartão de crédito e os pagamentos são processados por serviços compatíveis com PCI."
@@ -1580,22 +1580,6 @@ pt_BR:
   groups_signup_contact_text: "Entre em contato para descobrir o que a OFB pode fazer por você"
   groups_signup_detail: "Aqui está o detalhe. "
   login_invalid: "E-mail ou senha inválidos"
-  modal_hubs: "Central de alimentos"
-  modal_hubs_abstract: Nossas centrais são o ponto de contato entre você e as pessoas que produzem sua comida!
-  modal_hubs_content1: 'Você pode procurar a central mais próxima por localização ou nome. Alguns possuem múltiplos pontos de entrega, onde você pode retirar suas compras, e outros ainda entregam na sua casa. Cada um é um ponto de venda independente, e por isso as ofertas e maneira de operar podem variar de um para outro. '
-  modal_hubs_content2: Você só pode comprar de uma central por vez.
-  modal_groups: "Grupos / Regiões"
-  modal_groups_content1: Estas são as organizações e as relações entre as centrais que compõem a Open Food Brasil.
-  modal_groups_content2: Alguns grupos estão organizados por localização, outros por similaridades não geográficas.
-  modal_how: "Como funciona"
-  modal_how_shop: Compre na Open Food Brasil
-  modal_how_shop_explained: Procure por um produtor ou central próximo e comece suas compras! Em cada mercado você pode ver, em detalhe, quais produtos são oferecidos (você só pode comprar em um mercado de cada vez).
-  modal_how_pickup: 'Custos de retirada e entrega '
-  modal_how_pickup_explained: Algumas centrais entregam na sua casa, enquanto outros exigem que você mesmo retire suas compras. É possível ver quais opções estão disponíveis no perfil individual de cada um, e fazer sua escolha no momento do check-out. A entrega custará mais e o preço difere de central para central. Cada um é um ponto de venda com operação comercial e logística independente - então as variações são esperadas.
-  modal_how_more: Saiba mais
-  modal_how_more_explained: "Se você quiser saber mais sobre como a Open Food Brasil funciona e se envolver, confira:"
-  modal_producers: "Produtores"
-  modal_producers_explained: "Nossos produtores fazem todos os alimentos deliciosos que você pode comprar no Open Food Brasil."
   producers_about: Sobre nós
   producers_buy: Compre por
   producers_contact: Contato
@@ -1624,16 +1608,16 @@ pt_BR:
   products_producer: "Produtor"
   products_price: "Preço"
   name_or_sku: "NOME OU SKU"
-  register_title: Registro
+  register_title: Registre-se
   sell_title: "Registrar"
-  sell_headline: "Fazer parte do Open Food Brasil!"
-  sell_motivation: "Mostre seus belos produtos."
+  sell_headline: "Faça parte da Open Food Brasil."
+  sell_motivation: "Queremos conhecer seus produtos!"
   sell_producers: "Produtores"
   sell_hubs: "Centrais"
   sell_groups: "Grupos"
-  sell_producers_detail: "Crie um perfil para seu negócio em apenas alguns minutos. A qualquer momento você pode atualizar seu perfil para uma loja online e vender seus produtos diretamente aos consumidores."
-  sell_hubs_detail: "Crie um perfil para a sua iniciativa ou organização na Open Food Brasil. A qualquer momento você poderá fazer um upgrade para um mercado de multi-produtores. "
-  sell_groups_detail: "Organize um lista personalizada de negócios (cultivos, cooperativas, comércios, etc.) para sua região ou organização. "
+  sell_producers_detail: "Crie um perfil para a sua atividade em apenas alguns minutos. A qualquer momento você pode transformá-lo em uma loja online e vender seus produtos diretamente aos consumidores."
+  sell_hubs_detail: "Crie um perfil para a sua iniciativa ou organização na Open Food Brasil e comece a distribuir os produtos dos seus fornecedores locais. "
+  sell_groups_detail: "Organize um lista personalizada de iniciativas (cultivos, cooperativas, feiras, grupos de compra, etc.) para sua região ou organização. "
   sell_user_guide: "Saiba mais acessando nosso guia. "
   sell_listing_price: "A OFB está em sua versão beta. Por acreditarmos que a plataforma pode colaborar com a circulação e a comercialização de comida de verdade no período de quarentena imposto pela atual pandemia, sua utilização permanecerá gratuita nos próximos meses."
   sell_embed: "Também podemos incorporar uma loja da Open Food Brasil em seu próprio site personalizado ou criar um site específico para a sua região. "
@@ -2830,14 +2814,6 @@ pt_BR:
     smtp_send_copy_to_this_addresses: "Envia uma cópia de todos os correios enviados para este endereço. Para vários endereços, separe com vírgulas."
     intercept_email_address: "Interceptar endereço de email"
     intercept_email_instructions: "Substitua o destinatário do email e substitua por este endereço."
-    smtp: "SMTP"
-    smtp_domain: "Domínio SMTP"
-    smtp_mail_host: "Host de email SMTP"
-    smtp_port: "Porta SMTP"
-    secure_connection_type: "Tipo de conexão segura"
-    smtp_authentication_type: "Tipo de autenticação SMTP"
-    smtp_username: "Nome de usuário SMTP"
-    smtp_password: "Senha SMTP"
     image_settings: "Configurações de imagem"
     image_settings_warning: "Você precisará gerar novamente as miniaturas se atualizar os estilos de clipes de papel. Use o clipe de papel rake: refresh: miniaturas CLASS = Spree :: Image para fazer isso."
     attachment_default_style: Estilo dos Anexos

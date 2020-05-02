@@ -47,12 +47,12 @@ fil_PH:
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
-        start_at: "Simula"
-        end_at: "Hanggang"
+        start_at: "Magsisimula"
+        end_at: "Matatapos"
         distributor_ids: "Hubs"
         producer_ids: "Producers"
         order_cycle_ids: "Order Cycles"
-        enterprise_fee_ids: "pangalan ng mga bayarin"
+        enterprise_fee_ids: "pangalan ng mga Fees"
         shipping_method_ids: "Mga Paraan ng Pagpapadala"
         payment_method_ids: "Mga Paraan ng Pagbabayad"
     errors:
@@ -65,7 +65,7 @@ fil_PH:
               at_least_one_product: "^Magdagdag ng kahit isang produkto"
               not_available: "^%{name} ay hindi available sa napiling iskedyul"
             ends_at:
-              after_begins_at: "ay dapat pagkatapos ng nagsisimula sa"
+              after_begins_at: "ay dapat pagkatapos ng magsisimula ng"
             customer:
               does_not_belong_to_shop: "ay hindi nabibilang sa%{shop}"
             schedule:
@@ -151,7 +151,7 @@ fil_PH:
     confirmation_summary_email:
       subject: Buod ng mga bagong kumpirmadong subscription orders
       greeting: "Magandang araw%{name},"
-      intro: "sa ilalim ay ang buod ng mga subscription order na na-finalize para sa%{shop}."
+      intro: "sa ilalim ay ang buod ng mga nauulit na order na na-finalize para sa%{shop}."
     summary_overview:
       total: may kabuuuan na %{count}subscriptions ang minarkahan para sa awtomatikong pagproseso.
       success_zero: sa lahat ng ito, walang matagumpay na naproseso
@@ -168,7 +168,7 @@ fil_PH:
         explainer: ang mga order na ito ay hindi naproseso sapagkat walang stock  ng mga ni-request na item.
       complete:
         title: Naproseso Na (%{count}na order)
-        explainer: ang mga order na ito ay namarkahan na kumpleto at hindi na babaguhin
+        explainer: ang mga order na ito ay Kumpleto na at hindi na maaaring babaguhin
       processing:
         title: May Error na Kinaharap (%{count}na order)
         explainer: ang awtomatikong pagproseso ng mga order na ito ay hindi nagtagumpay dahil sa isang error. ang error ay nailista na upang mabusisi kung saan posibleng nagsimula.
@@ -219,7 +219,7 @@ fil_PH:
   edit: i-edit
   clone: Gayahin
   distributors: Mga Distributor
-  bulk_order_management: Pamamahala sa pangmaramihang order
+  bulk_order_management: Pamamahala sa mga Bulk Order
   enterprises: Mga Enterprise
   enterprise_groups: Mga grupo
   reports: Mga Ulat
@@ -311,8 +311,8 @@ fil_PH:
     select_all: piliin ang lahat
     quick_search: madaliang paghahanap
     clear_all: alisin lahat
-    start_date: "Petsa na nagsimula"
-    end_date: "Petsa na natapos"
+    start_date: "Petsa ng Pagsimula"
+    end_date: "Petsa ng Pagtatapos"
     form_invalid: "ang form ay may nawawala o hindi valid na sagot sa mga patlang"
     clear_filters: alisin ang mga filter
     clear: alisin
@@ -346,7 +346,7 @@ fil_PH:
         title: "settings ng invoice"
         enable_invoices?: "paganahin ang mga invoice?"
         invoice_style2?: "gamitin ang alternatibong modelo ng invoice na kinabibilangan ng kabuuang breakdown ng tax bawat rate at impormasyon ng rate ng tax kada item (hindi pa akma para sa mga bansang nagpapakita na presyo na hindi kasama ang tax)"
-        enable_receipt_printing?: "ipakita ang mga pagpipilian sa pag-print ng mga resibo gamit ang thermal printers sa dropdown ng order."
+        enable_receipt_printing?: "ipakita ang mga pagpipilian sa pag-print ng mga resibo gamit ang thermal printers sa dropdown ng order?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -378,7 +378,7 @@ fil_PH:
         bill_address: "Billing Address"
         ship_address: "Shipping Address"
         update_address_success: 'matagumpay na na-update ang address'
-        update_address_error: 'pakisagutan lahat ng kailangang impormasyon'
+        update_address_error: 'Paunawa! Sagutan lahat ng mga kailangang impormasyon!'
         edit_bill_address: 'i-edit ang Billing Address'
         edit_ship_address: 'i-edit ang shipping address'
         required_fileds: 'ang mga kailangang may sagot ay may nakalagay na asterisk'
@@ -405,7 +405,7 @@ fil_PH:
         user_guide: gabay sa gumagamit
     enterprise_fees:
       index:
-        title: "bayad para sa enterprise"
+        title: "fees para sa Enterprise"
         enterprise: "Enterprise"
         fee_type: "uri ng bayad"
         name: "pangalan"
@@ -564,10 +564,10 @@ fil_PH:
         review_now: tignan ngayon
         new_products_alert_message: mayroong%{new_product_count}bagong mga produkto na maaaring idagdag sa inyong imbentaryo
         currently_empty: ang iyong imbentaryo ay kasalukuyang walang laman
-        no_matching_products: Walang nahanap na katumbas na produkto sa inyong imbentaryo
-        no_hidden_products: Walang produkto na nakatago mula sa imbentaryong ito
+        no_matching_products: Walang nahanap na parehong produkto sa inyong imbentaryo
+        no_hidden_products: Walang produkto na itinago sa imbentaryong ito
         no_matching_hidden_products: walang nakatagong produkto na tugma sa inyong hinahanap na pamantayan
-        no_new_products: walang bagong produkto na maaaring idagdag sa inyong imbentaryo
+        no_new_products: walang bagong produkto na maaaring idagdag sa imbentaryong ito
         no_matching_new_products: walang bagong mga produkto na tugma sa inyong hinahanap na pamantayan
         inventory_powertip: Ito ang imbentaryo ng inyong mga produkto. Upang magdagdag ng produkto sa inyong imbentaryo, piliin ang "Bagong Produkto" sa viewing dropdown.
         hidden_powertip: ang mga produktong ito ay nakatago sa inyong imbentaryo at hindi maaaring idagdag sa inyong shop. maaaring pindutin ang "Idagdag" para madagdag ang produkto sa inyong imbentaryo.
@@ -576,13 +576,13 @@ fil_PH:
         back_to_my_inventory: bumalik sa aking imbentaryo
     orders:
       invoice_email_sent: 'ang invoice email ay naipadala na'
-      order_email_resent: 'ang email ng order ay napadala na muli'
+      order_email_resent: 'ang email ng order ay naipadala na muli'
       bulk_management:
         tip: "gamitin ang pahina na ito para baguhin ang dami ng mga produkto sa maramihang mga order. maaari ding magtanggal ng mga produkto mula sa order kung kinakailangan."
         shared: "ibinahaging pinagkuhanan?"
         order_no: "Order No."
         order_date: "nakumpleto sa"
-        max: "Labis"
+        max: "Max"
         product_unit: "Produkto: Yunit"
         weight_volume: "Timbang/Dami"
         ask: "itanong?"
@@ -634,8 +634,8 @@ fil_PH:
         enterprise_fees:
           name: pangalan
           fee_type: uri ng kabayaran
-          manage_fees: pamahalaan ang mga bayarin para sa enterprise
-          no_fees_yet: wala ka pang kahit anong bayaring pang-enterprise
+          manage_fees: pamahalaan ang fees para sa enterprise
+          no_fees_yet: wala ka pang kahit anong fees para sa enterprise
           create_button: gumawa ng isa ngayon
         images:
           logo: Logo
@@ -741,7 +741,7 @@ fil_PH:
             title: Kumonekta sa Stripe
             part1: ang Stripe ay isang serbisyong nagpoproseso ng mga bayad na ginagawang posible para sa mga shop sa OFN na tumanggap ng bayad gamit ang mga credit card mula sa mga customer.
             part2: para magamit ito, kailangang ikonekta ang iyong Stripe account sa OFN. ang pagpindot ng "pumapayag ako" sa ibaba ay ididirekta ka sa Stripe website kung saan mo maaaring ikonek ang iyong Stripe account o gumawa ng bago kung wala ka pa nito.
-            part3: pinapayagan nito ang Open Food Network na tumanggap para sa iyo ng bayad gamit ang mga credit card mula sa mga customer. tandaan na kailangan mong pangalagaan ang sarili mong Stripe Account, bayaran ang serbisyo ng Stripe, isaayos ang mga paniningil at gawin ang serbisyo sa customer sa sarili mong paraan.
+            part3: pinapayagan nito ang Open Food Network na tumanggap para sa iyo ng bayad gamit ang mga credit card mula sa mga customer. tandaan na kailangan mong pangalagaan ang sarili mong Stripe Account, bayaran ang serbisyo ng Stripe, asikasuhin ang mga chargebacks at Customer service sa sarili mong paraan.
             i_agree: pumapayag ako
             cancel: i-cancel
         tag_rules:
@@ -779,8 +779,8 @@ fil_PH:
         payment_methods_tip: ang enterprise na ito ay walang mga paraan ng pagbabayad
         shipping_methods: mga paraan ng pagpapadala
         shipping_methods_tip: ang enterprise na ito ay may mga paraan ng pagpapadala
-        enterprise_fees: bayad para sa enterprise
-        enterprise_fees_tip: ang enterprise na ito  walang mga bayarin
+        enterprise_fees: fees para sa enterprise
+        enterprise_fees_tip: ang enterprise na ito ay walang fees
       admin_index:
         name: Pangalan
         role: papel na gagampanan
@@ -875,7 +875,7 @@ fil_PH:
         products: "mga produkto"
         tags: "tags"
         delivery_details: "detalye ng pag-deliver"
-        fees: "mga bayarin"
+        fees: "Fees"
         previous: "nauna"
         save: "i-save"
         save_and_back_to_list: "i-save at bumalik sa listahan"
@@ -915,7 +915,7 @@ fil_PH:
         incoming: papasok
         supplier: Supplier
         receival_details: detalye ng pagtanggap
-        fees: mga bayarin
+        fees: Fees
         outgoing: papalabas
         distributor: Distributor
         products: mga produkto
@@ -941,7 +941,7 @@ fil_PH:
         customer_instructions: panuto ng Customer
         customer_instructions_placeholder: tala para sa pag-pick-up o pagdeliver
         products: mga produkto
-        fees: mga bayarin
+        fees: Fees
       destroy_errors:
         orders_present: ang order cycle na ito ay napili na ng isang customer at hindi na maaaring tanggalin. upang maiwasan na ma-access muli, isarado muna ito.
         schedule_present: ang order cycle na ito ay naka-link sa isang iskedyul at hindi maaaring tanggalin. maaaring tanggalin muna ang link o tanggalin muna ang iskedyul.
@@ -965,7 +965,7 @@ fil_PH:
       enterprises_hubs_tabs:
         has_no_payment_methods: "%{enterprise}ay walang paraan ng pagbabayad"
         has_no_shipping_methods: "%{enterprise}ay walang paraan ng pagpapadala"
-        has_no_enterprise_fees: "%{enterprise}ay walang mga bayarin sa enterpise"
+        has_no_enterprise_fees: "%{enterprise}ay walang fees para sa enterpise"
     enterprise_issues:
       create_new: gumawa ng bago
       resend_email: ipadala muli ang email
@@ -1022,7 +1022,7 @@ fil_PH:
         name: ulat sa pagbabalot
       enterprise_fee_summary:
         name: "buod ng bayad sa enterprise"
-        description: "buod ng mga nakolektang bayad sa enterprise"
+        description: "buod ng mga nakolektang fees para sa enterprise"
     subscriptions:
       subscriptions: mga subscription
       new: bagong subscription
@@ -1583,22 +1583,6 @@ fil_PH:
   groups_signup_contact_text: "Makipag-ugnayan upang malaman kung paano ka matutulungan ng OFN:"
   groups_signup_detail: "ito ang mga detalye:"
   login_invalid: "hindi valid ang email o password"
-  modal_hubs: "Mga Hub ng pagkain"
-  modal_hubs_abstract: ang mga Hub ng pagkain ang namamagitan sa iyo at sa mga gumagawa ng inyong pagkain!
-  modal_hubs_content1: maaari kang humanap ng pinakamalapit na Hub gamit ang lokasyon o pangalan. Ang ibang Hub ay may maraming mga lugar kung saan maaari mong kunin ang iyong pinamili habang ang  iba ay bibigyan ka rin ng iba pang opsyon kung paano mo makukuha ang iyong order. Bawat Food Hub ay may iba ibang paraan ng operasyon at proseso kaya asahan ang kaibahan sa mga binibigay na serbisyo.
-  modal_hubs_content2: Maaari ka lamang mamili sa isang hub ng pagkain sa bawat pagkakataon.
-  modal_groups: "Mga Grupo / Mga Rehiyon"
-  modal_groups_content1: ito ang mga organisasyon at mga relasyon na namamagitan sa mga Hub na bumubuo sa Open Food Network.
-  modal_groups_content2: ang ibang grupo ay pinagsasama sama depende sa lokasyon o lupon, at ang iba ay sa hindi pangheograpiyang pagkakapareho.
-  modal_how: "Paano it gumagana"
-  modal_how_shop: Mamili sa Open Food Network
-  modal_how_shop_explained: maghanap ng hub ng pagkain na pinakamalapit sa iyo para makapagsimulang makapamili. maaring palawakin ng bawat hub upang makita kung anong uri ng pagkain ang inaalok nila at pindutin ng tuluyan para magsimula mamili. (maaari lamang mamili sa isang hub sa isang pagkakataon.)
-  modal_how_pickup: Singil sa Pick-up, pag-deliver at pagpapadala
-  modal_how_pickup_explained: ang ibang food hub ay magde-deliver mismo sa inyong tirahan, habang ang iba ay kakailanganin kang kunin ng personal sa kanila ang inyong mga order. Mababasa sa homepage ang mga opsyon, at piliin ang mga produkto na nais sa pahina ng pamimili at checkout. Ang pagpapa-deliver ay mas mahal at ang halagang babayaran ay nakadepende sa iba't ibang food hub. Bawat Food Hub ay may iba't ibang paraan ng operasyon at proseso kaya dapat asahan ang kaibahan sa mga binibigay na serbisyo.
-  modal_how_more: dagdagan ang kaalaman
-  modal_how_more_explained: "kung nais mong mas maintindihan ang Open Food Network, kung paano ito gumagana at paano makasali dito, tignan ito:"
-  modal_producers: "Producers"
-  modal_producers_explained: "ang aming mga producer ay gumagawa ng masasarap na pagkain na maaari mong mabili sa Open Food Network."
   producers_about: Tungkol sa amin
   producers_buy: 'mamili para sa '
   producers_contact: Makipag-ugnayan
@@ -1724,7 +1708,7 @@ fil_PH:
   error_not_found_in_database: "%{name}ay hindi mahanap sa database"
   error_not_primary_producer: "%{name}ay hindi isang producer"
   error_no_permission_for_enterprise: "\"%{name}\": wala kang permiso para pamahalaan ang mga produkto ng enterprise na ito."
-  item_handling_fees: "bayad sa paghawak ng item (kasama sa kabuuan ng item)"
+  item_handling_fees: "Fee para sa paghawak ng item (kasama sa kabuuan ng item)"
   january: "Enero"
   february: "Pebrero"
   march: "Marso"
@@ -1748,7 +1732,7 @@ fil_PH:
   forgot_password: "nakalimutan ang password?"
   password_reset_sent: "ang email na may panuto kung paano papalitan ang inyong password ay napadala na!"
   reset_password: "palitan ang password"
-  update_and_recalculate_fees: "i-update at kwentahin muli ang mga bayarin"
+  update_and_recalculate_fees: "i-update at kuwentahin muli ang fees"
   registration:
     steps:
       introduction:
@@ -1875,7 +1859,7 @@ fil_PH:
   action_or: "O"
   enterprise_limit: Limitasyon ng enterprise
   shipping_method_destroy_error: "ang paraan ng pagpapadala ay hindi maaaring burahin sapagkat ito ay nakasangguni na sa isang order:%{number}."
-  fees: "mga bayarin"
+  fees: "fees"
   item_cost: "halaga ng item"
   bulk: "Bulto"
   shop_variant_quantity_min: "pinakakaunti"
@@ -2124,7 +2108,7 @@ fil_PH:
   report_header_sales_tax: "tax sa mga nabenta (%{currency_symbol})"
   report_header_delivery_charge: "bayad sa pag-deliver(%{currency_symbol})"
   report_header_tax_on_delivery: "tax sa pagdeliver (%{currency_symbol})"
-  report_header_tax_on_fees: "tax sa mga bayarin (%{currency_symbol})"
+  report_header_tax_on_fees: "Buwis sa Fees (%{currency_symbol})"
   report_header_total_tax: "kabuuang tax(%{currency_symbol})"
   report_header_enterprise: Enterprise
   report_header_customer: customer
@@ -2179,7 +2163,7 @@ fil_PH:
   report_header_payment_state: status ng pagbabayad
   report_header_payment_type: uri ng pagbabayad
   report_header_item_price: "item(%{currency})"
-  report_header_item_fees_price: "item + bayad (%{currency})"
+  report_header_item_fees_price: "item + fees (%{currency})"
   report_header_admin_handling_fees: "Admin at paghawak (%{currency})"
   report_header_ship_price: "pagdala (%{currency})"
   report_header_pay_fee_price: "Bayad sa pagbabayad (%{currency})"
@@ -2206,8 +2190,8 @@ fil_PH:
   report_header_gst_free_income: GST sa Libreng Kinikita
   report_header_total_untaxable_produce: kabuuang produkto na untaxable (walang tax)
   report_header_total_taxable_produce: kabuuang produkto na taxable (may kasamang tax)
-  report_header_total_untaxable_fees: kabuuang bayarin na untaxable (walang tax)
-  report_header_total_taxable_fees: kabuuang bayarin na taxable (may kasamang tax)
+  report_header_total_untaxable_fees: kabuuang fees na untaxable (walang tax)
+  report_header_total_taxable_fees: kabuuang fees na taxable (may kasamang tax)
   report_header_delivery_shipping_cost: Singil sa pagdeliver ng pinapadala (kasama ang tax)
   report_header_transaction_fee: Bayad sa Transaksyon (walang tax)
   report_header_total_untaxable_admin: kabuuang untaxable na pagsasaayos ng admin (walang tax)
@@ -2283,7 +2267,7 @@ fil_PH:
       cycle ngunit walang valid na paraan ng pagpapadala at pagbabayad. Hanggang hindi
       pa naisasaayos ang pagset-up, hindi makakapamili ang mga customer sa mga hub
       na ito.
-  enterprise_fees_update_notice: ang mga bayarin ng inyong enterprise ay na-update na
+  enterprise_fees_update_notice: ang fees ng inyong enterprise ay na-update na.
   enterprise_register_package_error: "pumili ng package"
   enterprise_register_error: "hindi makumpleto ang rehistrasyon para sa%{enterprise}"
   enterprise_register_success_notice: "maligayang pagbati! ang rehistrasyon para sa%{enterprise}ay kumpleto na!"
@@ -2838,14 +2822,6 @@ fil_PH:
     smtp_send_copy_to_this_addresses: "nagpapadala ng kopya ng lahat ng lumalabas na mga sulat sa address na ito, para sa maraming address, paghiwalayin gamit ang kuwit."
     intercept_email_address: "harangin ang email address"
     intercept_email_instructions: "pawalang halaga ang tatanggap ng email at palitan ng address na ito"
-    smtp: "SMTP"
-    smtp_domain: "SMTP Domain"
-    smtp_mail_host: "SMTP Mail Host"
-    smtp_port: "SMTP Port"
-    secure_connection_type: "Secure Connection Type"
-    smtp_authentication_type: "SMTP Authentication Type"
-    smtp_username: "SMTP username"
-    smtp_password: "SMTP password"
     image_settings: "mga setting ng larawan"
     image_settings_warning: "kinakailangang gumawa muli ng mga thumbnail kung ia-update ang mga estilo ng paperclip. gumamit ng rake paperclip:refresh:thumbnails CLASS=Spree::Image para gawin ito."
     attachment_default_style: estilo ng mga attachment
