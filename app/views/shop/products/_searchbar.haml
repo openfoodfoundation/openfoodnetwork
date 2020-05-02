@@ -6,7 +6,7 @@
               placeholder: t(:products_search),
               "ng-debounce" => "200",
               "ofn-disable-enter" => true}
-        %a.clear{type: 'button', ng: {show: 'query', click: 'clearQuery()'}}
+        %a.clear{type: 'button', ng: {show: 'query', click: 'clearQuery()'}, 'focus-search' => true}
           %img{ src: "/assets/icn-close.png" }
 
       .hide-for-large-up
