@@ -17,7 +17,7 @@
         .row.summary
           .small-12.columns
             %p.no-results
-              = t :products_no_results_html, query: "<strong>{{query}}</strong>".html_safe
+              = t :products_no_results_html, query: "<span class='applied-search'>{{query}}</span>".html_safe
               = render partial: 'shop/products/applied_filters_feedback'
             %button.clear-search{type: 'button', ng: {click: 'clearAll()'}}
               = t :products_clear_search
