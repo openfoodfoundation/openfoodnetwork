@@ -16,9 +16,8 @@ module DfcProvider
       include Rails.application.routes.url_helpers
 
       before_filter :check_authorization,
-                    :check_enterprise,
                     :check_user,
-                    :check_accessibility
+                    :check_enterprise
 
       respond_to :json
 
@@ -28,7 +27,7 @@ module DfcProvider
           includes(:product, :inventory_items)
 
         products_json = ::DfcProvider::ProductSerializer.
-          new(@enterprise, products, base_url).
+          new(products, base_url).
           serialized_json
 
         render json: products_json
@@ -37,7 +36,7 @@ module DfcProvider
       private
 
       def check_enterprise
-        @enterprise = ::Enterprise.where(id: params[:enterprise_id]).first
+        @enterprise = @user.enterprises.first
 
         return if @enterprise.present?
 
@@ -47,7 +46,7 @@ module DfcProvider
       def check_authorization
         return if access_token.present?
 
-        head :unauthorized
+        head :unprocessable_entity
       end
 
       def check_user
@@ -55,13 +54,7 @@ module DfcProvider
 
         return if @user.present?
 
-        head :unprocessable_entity
-      end
-
-      def check_accessibility
-        return if @enterprise.owner == @user
-
-        head :forbidden
+        head :unauthorized
       end
 
       def base_url

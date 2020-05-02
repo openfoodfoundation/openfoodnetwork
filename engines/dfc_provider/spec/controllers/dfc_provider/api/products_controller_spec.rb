@@ -5,7 +5,8 @@ require 'spec_helper'
 describe DfcProvider::Api::ProductsController, type: :controller do
   render_views
 
-  let(:enterprise) { create(:distributor_enterprise) }
+  let(:user) { create(:user) }
+  let(:enterprise) { create(:distributor_enterprise, owner: user) }
   let(:product) do
     create(:simple_product, supplier: enterprise )
   end
@@ -15,7 +16,6 @@ describe DfcProvider::Api::ProductsController, type: :controller do
            variant: product.variants.first,
            visible: true)
   end
-  let(:user) { enterprise.owner }
 
   describe('.index') do
     context 'with authorization token' do
@@ -23,64 +23,48 @@ describe DfcProvider::Api::ProductsController, type: :controller do
         request.env['Authorization'] = 'Bearer 123456.abcdef.123456'
       end
 
-      context 'with an enterprise' do
-        context 'with a linked user' do
-          before do
-            allow_any_instance_of(DfcProvider::AuthorizationControl)
-              .to receive(:process)
-              .and_return(user)
+      context 'with an authenticated user' do
+        before do
+          allow_any_instance_of(DfcProvider::AuthorizationControl)
+            .to receive(:process)
+            .and_return(user)
+        end
+
+        context 'with an enterprise' do
+          before { get :index }
+
+          it 'is successful' do
+            expect(response.status).to eq 200
           end
 
-          context 'with valid accessibility' do
-            before do
-              get :index, enterprise_id: enterprise.id
-            end
-
-            it 'is successful' do
-              expect(response.status).to eq 200
-            end
-
-            it 'renders the related product' do
-              expect(response.body)
-                .to include("\"DFC:description\":\"#{product.variants.first.name}\"")
-            end
-          end
-
-          context 'without valid accessibility' do
-            before do
-              get :index, enterprise_id: create(:enterprise).id
-            end
-
-            it 'returns unauthorized head' do
-              expect(response.status).to eq 403
-            end
+          it 'renders the related product' do
+            expect(response.body)
+              .to include("\"DFC:description\":\"#{product.variants.first.name}\"")
           end
         end
 
-        context 'without a linked user' do
-          before do
-            allow_any_instance_of(DfcProvider::AuthorizationControl)
-              .to receive(:process)
-              .and_return(nil)
-          end
+        context 'without a recorded enterprise' do
+          let(:enterprise) { create(:enterprise) }
 
-          before do
-            get :index, enterprise_id: enterprise.id
-          end
+          before { get :index }
 
-          it 'returns unprocessable_entity head' do
-            expect(response.status).to eq 422
+          it 'returns not_found head' do
+            expect(response.status).to eq 404
           end
         end
       end
 
-      context 'without a recorded enterprise' do
+      context 'without an authenticated user' do
         before do
-          get :index, enterprise_id: '123456'
+          allow_any_instance_of(DfcProvider::AuthorizationControl)
+            .to receive(:process)
+            .and_return(nil)
         end
 
-        it 'returns not_found head' do
-          expect(response.status).to eq 404
+        before { get :index }
+
+        it 'returns unauthorized head' do
+          expect(response.status).to eq 401
         end
       end
     end
@@ -88,8 +72,8 @@ describe DfcProvider::Api::ProductsController, type: :controller do
     context 'without an authorization token' do
       before { get :index, enterprise_id: enterprise.id }
 
-      it 'returns unauthorized head' do
-        expect(response.status).to eq 401
+      it 'returns unprocessable_entity head' do
+        expect(response.status).to eq 422
       end
     end
   end

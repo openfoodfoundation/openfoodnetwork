@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.version     = DfcProvider::VERSION
   spec.authors     = ["developers@ofn"]
   spec.summary     = 'Provides an API stack implementing DFC semantic ' \
-                  'specifications'
+                     'specifications'
 
   spec.files = Dir["{app,config,lib}/**/*"] + ['README.md']
   spec.test_files = Dir['spec/**/*']

@@ -4,8 +4,7 @@
 # into JSON-LD format based on DFC ontology
 module DfcProvider
   class ProductSerializer
-    def initialize(enterprise, products, base_url)
-      @enterprise = enterprise
+    def initialize(products, base_url)
       @products = products
       @base_url = base_url
     end
@@ -17,7 +16,7 @@ module DfcProvider
           "DFC" => "http://datafoodconsortium.org/ontologies/DFC_FullModel.owl#",
           "@base" => @base_url
         },
-        "@id" => "/enterprises/#{@enterprise.id}/products",
+        "@id" => "/enterprise/products",
         "DFC:supplies" => serialized_products
       }.to_json
     end
