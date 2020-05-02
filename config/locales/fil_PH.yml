@@ -63,7 +63,7 @@ fil_PH:
           attributes:
             subscription_line_items:
               at_least_one_product: "^Magdagdag ng kahit isang produkto"
-              not_available: "^%{name} ay hindi magagamit mula sa napiling iskedyul"
+              not_available: "^%{name} ay hindi available sa napiling iskedyul"
             ends_at:
               after_begins_at: "ay dapat pagkatapos ng nagsisimula sa"
             customer:
@@ -92,20 +92,20 @@ fil_PH:
     user_registrations:
       spree_user:
         signed_up_but_unconfirmed: "ang mensahe na may nakalakip na confirmation link ay napadala na sa inyong email address. Maaari lamang na buksan ang link para ma-activate ang inyong account."
-        unknown_error: "may maling nangyari habang ginagawa ang inyong account. I-check ang email address at subukang muli."
+        unknown_error: "may problemang kinaharap habang ginagawa ang inyong account. I-check ang inyong email address at subukang muli."
     failure:
       invalid: |
           hindi valid ang email o password.
-          isa ka bang Guest dati? marahil ay kailangang gumawa ng account o i-reset ang inyong password.
+          ikaw ba ay Guest noong bumisita dati? marahil ay kailangang gumawa ng sariling account o i-reset ang inyong password.
       unconfirmed: "Kailangang kumpirmahin ang inyong account bago magpatuloy."
       already_registered: "Ang email address na ito ay nakarehistro na. Maglog-in upang makapagpatuloy o bumalik at gumamit ng ibang email address."
     success:
       logged_in_succesfully: "Matagumpay na nakapaglog-in."
     user_passwords:
       spree_user:
-        updated_not_active: "ang inyong password ay na-reset na ngunit ang inyong email ay hindi pa nakumpirma."
+        updated_not_active: "ang inyong password ay na-reset na, ngunit ang inyong email ay hindi pa nakumpirma."
         updated: "Ang password ay matagumpay na napalitan. Ikaw ay nakasign-in na."
-        send_instructions: "Kayo ay makakatanggap ng email na may panuto kung paano kumpirmahin ang inyong account sa loob ng ilang minuto."
+        send_instructions: "Ikaw ay makakatanggap ng email na may panuto kung paano kumpirmahin ang inyong account, sa loob ng ilang minuto."
   models:
     order_cycle:
       cloned_order_cycle_name: "KOPYA NG%{order_cycle}"
@@ -118,14 +118,14 @@ fil_PH:
       invalid_element_error: "ay dapat naglalaman lamang ng valid na integers"
   enterprise_mailer:
     confirmation_instructions:
-      subject: "Pakikumpirma ang email address para sa %{enterprise}"
+      subject: "Kumpirmahin ang email address para sa %{enterprise}"
     welcome:
       subject: "%{enterprise}ay nasa %{sitename}na ngayon"
-      email_welcome: "Maligayang pagdating"
+      email_welcome: "Maligayang Pagdating"
       email_registered: "ay miyembro na ng"
       email_userguide_html: "Narito ang Gabay sa Paggamit na may detalyadong suporta para sa pagset-up ng iyong Producer o Hub: %{link}"
       userguide: "Gabay sa Paggamit ng Open Food Network"
-      email_admin_html: "maaaring pamahalaan ang iyong account sa pamamagitan ng paglog-in sa%{link}o sa pagpindot sa cog sa pinakataas na kanang bahagi ng homepage at pagpili sa Administration."
+      email_admin_html: "maaaring pamahalaan ang iyong account sa pamamagitan ng paglog-in sa%{link}o sa pagpindot sa cog sa pinakataas na kanang bahagi ng homepage, at piliin ang Administration."
       admin_panel: "Admin Panel"
       email_community_html: "Kami ay mayroon ding online forum para sa talakayang pangkomunidad na may kinalaman sa OFN software at sa mga natatanging hamon sa pagpapatakbo ng enterprise ng pagkain. Kayo ay hinihikayat namin na sumali rito. Kami ay patuloy na nagbabago para makapagbigay ng mas mabuting serbisyo, at ang inyong suhestiyon sa forum ay makakatulong para mga susunod na pagbabago.%{link}"
       join_community: "Sumali sa Komunidad"
@@ -177,17 +177,17 @@ fil_PH:
         explainer: ang awtomatikong pagproseso ng bayad para sa mga order na ito ay hindi nagtagumpay dahil sa isang error. ang error ay nailista upang mabusisi kung saan posibleng nagsimula.
       other:
         title: Iba Pang Dahilan ng Error (%{count}na order)
-        explainer: Hindi naging matagumpay ang awtomatikong pagproseso ng mga order na ito dahil sa hindi maipaliwanag na kadahilanan. Makipag-uganayan sa amin kung nakita ang mensaheng ito.
+        explainer: Hindi naging matagumpay ang awtomatikong pagproseso ng mga order na ito dahil sa hindi maipaliwanag na kadahilanan. Makipag-uganayan sa amin kung nakikita ang mensaheng ito.
   home: "OFN"
   title: Open Food Network
   welcome_to: 'Maligayang Pagdating sa'
   site_meta_description: "Kami ay nagsimula sa pinakaibaba pataas. Kasama ang mga magsasaka at tagatanim na handang ibahagi at ipagmalaki ang kanilang mga kuwento. May mga tapat at patas na Distributors na handang makipag-usap sa mga gumagawa ng produkto. At mga mamimili na naniniwala na ang mabusising lingguhang pamimili ay..."
   search_by_name: Hanapin gamit ang pangalan o lungsod...
   producers_join: Ang mga Pilipinong producers ay inaanyayahang naming sumali sa Open Food Network.
-  charges_sales_tax: Charges GST?
+  charges_sales_tax: naniningil ng GST?
   print_invoice: "i-print ang invoice"
   print_ticket: "i-print ang ticket"
-  select_ticket_printer: "pumili ng printer para sa tickets"
+  select_ticket_printer: "pumili ng printer para sa mga ticket"
   send_invoice: "ipadala ang invoice"
   resend_confirmation: "ipadala muli ang kumpirmasyon"
   view_order: "tignan ang order"
@@ -196,17 +196,17 @@ fil_PH:
   cancel_order: "i-cancel ang order"
   confirm_send_invoice: "ang invoice para sa order na ito ay ipapadala sa customer. nais mo bang magpatuloy?"
   confirm_resend_order_confirmation: "nais mo bang ipadala muli ang order confirmation email?"
-  must_have_valid_business_number: "%{enterprise_name}ay dapat may valid na ABN bago makapagpadala ng mga invoice"
+  must_have_valid_business_number: "%{enterprise_name}ay dapat may valid na TIN bago makapagpadala ng mga invoice"
   invoice: "invoice"
   more: "Karagdagang Impormasyon"
   say_no: "Hindi"
   say_yes: "Oo"
   ongoing: Nagaganap
   bill_address: Billing Address
-  ship_address: Address kung saan ipapadala
+  ship_address: Shipping Address
   sort_order_cycles_on_shopfront_by: "Uriin ang mga order cycle sa shopfront gamit ang"
-  required_fields: ang mga kailangang may sagot ay may nakalagay na asterisk
-  select_continue: pumili at magpatuloy
+  required_fields: ang mga kailangang sagutan ay may nakalagay na asterisk
+  select_continue: Pumili at Magpatuloy
   remove: Tanggalin
   or: o
   collapse_all: Itago lahat
@@ -217,14 +217,14 @@ fil_PH:
   show_all_with_more: "Ipakita lahat (%{num}pa)"
   cancel: i-cancel
   edit: i-edit
-  clone: Clone
+  clone: Gayahin
   distributors: Mga Distributor
   bulk_order_management: Pamamahala sa pangmaramihang order
   enterprises: Mga Enterprise
   enterprise_groups: Mga grupo
-  reports: mga ulat
+  reports: Mga Ulat
   variant_overrides: Imbentaryo
-  import: i-import
+  import: ilipat
   spree_products: mga produktong Spree
   all: Lahat
   current: kasalukuyan
@@ -256,14 +256,14 @@ fil_PH:
   invalid_payment_state: "hindi valid na status ng pagbabayad"
   filter_results: I-filter ang mga resulta
   quantity: Dami
-  pick_up: kunin
+  pick_up: Pick up
   copy: Kopyahin
   change_my_password: "Palitan ang aking password"
   update_password: "i-update ang password"
   password_confirmation: Kumpirmasyon ng password
   reset_password_token: i-reset ang password token
   expired: ay expired na, magrequest ng bago
-  back_to_payments_list: "ibalik sa listahan ng mga bayad"
+  back_to_payments_list: "bumalik sa listahan ng mga bayad"
   maestro_or_solo_cards: "Maestro/Solo cards"
   backordered: "na-backorder"
   on hand: "on hand"
@@ -309,7 +309,7 @@ fil_PH:
     volume: dami
     items: mga item
     select_all: piliin ang lahat
-    quick_search: mabilis na paghahanap
+    quick_search: madaliang paghahanap
     clear_all: alisin lahat
     start_date: "Petsa na nagsimula"
     end_date: "Petsa na natapos"
@@ -323,6 +323,7 @@ fil_PH:
     show_n_more: Ipakita%{num}pa
     choose: "pumili..."
     please_select: pumili
+    column_save_as_default: i-save bilang default
     columns: hanay
     actions: mga  kilos
     viewing: "Tinitignan: %{current_view_name}"
@@ -342,7 +343,7 @@ fil_PH:
       enable_localized_number: "gamitin ang international thousand/decimal separator logic"
     invoice_settings:
       edit:
-        title: "settings para sa invoice"
+        title: "settings ng invoice"
         enable_invoices?: "paganahin ang mga invoice?"
         invoice_style2?: "gamitin ang alternatibong modelo ng invoice na kinabibilangan ng kabuuang breakdown ng tax bawat rate at impormasyon ng rate ng tax kada item (hindi pa akma para sa mga bansang nagpapakita na presyo na hindi kasama ang tax)"
         enable_receipt_printing?: "ipakita ang mga pagpipilian sa pag-print ng mga resibo gamit ang thermal printers sa dropdown ng order."
@@ -375,14 +376,14 @@ fil_PH:
         code: Code
         duplicate_code: "ang code na ito ay nagamit na"
         bill_address: "Billing Address"
-        ship_address: "Address kung saan ipapadala"
+        ship_address: "Shipping Address"
         update_address_success: 'matagumpay na na-update ang address'
         update_address_error: 'pakisagutan lahat ng kailangang impormasyon'
         edit_bill_address: 'i-edit ang Billing Address'
-        edit_ship_address: 'i-edit ang address kung saan ipapadala'
+        edit_ship_address: 'i-edit ang shipping address'
         required_fileds: 'ang mga kailangang may sagot ay may nakalagay na asterisk'
         select_country: 'Piliin ang bansa'
-        select_state: 'pumili ng status'
+        select_state: 'pumili ng Lalawigan'
         edit: 'i-edit'
         update_address: 'i-update ang address'
         confirm_delete: 'siguradong tatanggalin?'
@@ -432,7 +433,7 @@ fil_PH:
         available_on: Magagamit Nakabukas
         av_on: "Av On"
         import_date: na-import
-        upload_an_image: maglagay ng larawan
+        upload_an_image: mag-upload ng larawan
       seo:
         product_search_keywords: "mga keyword sa paghahanap ng produkto"
         product_search_tip: "isulat ang mga salita para mahanap ang inyong produkto sa mga shop. gumamit ng laktaw upang paghiwalayin ang bawat keyword."
@@ -445,12 +446,12 @@ fil_PH:
       variants:
         infinity: "walang hanggan"
         to_order_tip: "ang mga item na made to order ay walang paraan ng pag-set ng lebel ng stock, tulad ng mga tinapay na ginagawa lamang kapag may order."
-      back_to_products_list: "bumalik sa listahan ng produkto"
+      back_to_products_list: "bumalik sa listahan ng mga produkto"
       editing_product: "ine-edit ang mga produkto"
       tabs:
-        product_details: "Detalye ng produkto"
+        product_details: "mga detalye ng produkto"
         group_buy_options: "pagpipilian para sa Grupong pagbili"
-        images: "larawan"
+        images: "mga larawan"
         variants: "mga uri"
         product_properties: "mga katangian ng produkto"
     product_import:
@@ -614,9 +615,9 @@ fil_PH:
           desc_long: tungkol sa amin
           desc_long_placeholder: magkuwento sa Customer tungkol sa inyong sarili. Ang impormasyon na ito ay makikita at lalabas sa inyong profile.
         business_details:
-          abn: ABN
+          abn: 'TIN:'
           abn_placeholder: hal. 99 123 456 789
-          acn: ACN
+          acn: Branch TIN
           acn_placeholder: hal. 123 456 789
           display_invoice_logo: ipakita ang Logo sa mga invoice
           invoice_text: magdagdag ng sariling mensahe sa dulo ng bawat invoice
@@ -1190,8 +1191,8 @@ fil_PH:
   tax_total: "Kabuuang Tax (%{rate}):"
   total_excl_tax: "Kabuuan (Hindi kasama ang tax):"
   total_incl_tax: "Kabuuan (Kasama ang tax):"
-  abn: "ABN:"
-  acn: "ACN:"
+  abn: "TIN:"
+  acn: "Branch TIN:"
   invoice_issued_on: "inilabas ang invoice noong:"
   order_number: "numero ng invoice"
   date_of_transaction: "Petsa ng Transaksiyon:"
@@ -1322,14 +1323,8 @@ fil_PH:
       cookie_stripe_desc: "Mga data na nakolekta ng Stripe, ang tagaproseso para sa bayad, upang magamit sa pag-detect ng fraud https://stripe.com/cookies-policy/legal. hindi lahat ng shop ay gumagamit ng Stripe bilang paraan ng pagbabayad ngunit iminumungkahi namin itong gamitin sa lahat ng pahina upang maiwasan ang fraud at ilegal na pagkuha ng iyong impormasyon."
       statistics_cookies: "katayuan ng cookies"
       statistics_cookies_desc: "ang mga sumusunod ay hindi mahigpit na kinakailangan, ngunit nakakatulong upang mabigyan namin kayo ng mga pinakamagandang serbisyo sa pamamagitan ng pagpayag na suriin namin ang kilos ng mga gumagamit, alamin ang mga features na madalas gamitin o hindi ginagamit, intindihin ang mga problemang kinaharap ng gumagamit, at iba pa."
-      statistics_cookies_analytics_desc_html: "upang kolektahin at suriin ang data sa paggamit ng platform, ginagamit namin ang Google Analytics, bilang ito ang default na serbisyo na ginagamit ng Spree (ang e-commerce open source software kung saan kami nagsimula) ngunit ang aming layunin ay makalipat sa <a href='https://matomo.org/' target='_blank'>Matomo</a>(halimbawa ay Piwik, open source analytics tool na sumusunod sa GDPR at pinangangalagaan ang inyong privacy) sa lalong madaling panahon."
       statistics_cookies_matomo_desc_html: "para makolekta at masuri ang mga data na ginagamit, gumagamit kami ng<a href='https://matomo.org/' target='_blank'>Matomo</a>(halimbawa ay Piwik), isang open source analytics na tool na sumusunod sa GDPR at pinangangalagaan ang inyong privacy."
       statistics_cookies_matomo_optout: "nais mo bang gamitin ang Matomo Analytics? hindi kami kumukolekta ng kahit anong personal na impormasyon, at tinutulungan kami ng Matomo na pag-igihin ang aming serbisyo, ngunit mas pinapahalagahan namin ang inyong desisyon :-)"
-      cookie_analytics_utma_desc: "ginagamit upang pag-ibahin ang mga gumagamit at mga sesyon. Ang cookie ay nabubuo kapag ang javascript library ay naisagawa at walang __utma cookies. ang cookie na ito ay ina-update sa tuwing may ipinapadala na data sa Google Analytics."
-      cookie_analytics_utmt_desc: "ginagamit upang makontrol ang bilis ng pagpasok ng mga request."
-      cookie_analytics_utmb_desc: "ginagamit upang matukoy ang mga bagong sesyon/bisita. ang cookie ay nabubuo kapag ang javascript library ay naisagawa at walang __utma cookies. ang cookie na ito ay ina-update sa tuwing may ipinapadala na data sa Google Analytics."
-      cookie_analytics_utmc_desc: "hindi ginagamit sa ga.js. i-set para sa interoperability sa urchin.js. Kahit sa nakaraan, ang cookie na ito ay ginagamit kasama ang the __utmb cookie para matukoy kung ang gumagamit ay nasa bagong sesyon/bisita."
-      cookie_analytics_utmz_desc: "sine-save ang traffic source o campaign na nagpapaliwanag kung paano napunta ang gumagamit sa inyong site. ang cookie ay nagagawa kapag ang javascript library ay nagamit at na-update sa tuwing may ipinapadalang data sa Google Analytics."
       cookie_matomo_basics_desc: "mga cookies ng Matomo first party para mangolekta ng istatistika."
       cookie_matomo_heatmap_desc: "cookies para sa Matomo Heatmap & Session Recording."
       cookie_matomo_ignore_desc: "Cookie na ginagamit upang hindi maisama ang gumagamit sa pag-track."
@@ -1790,8 +1785,8 @@ fil_PH:
         postcode_field: "Postcode:"
         postcode_field_placeholder: "hal. 3070"
         postcode_field_error: "kailangang ilagay ang postcode"
-        state_field: "Probinsiya:"
-        state_field_error: "Kailangang ang probinsiya"
+        state_field: "Lalawigan:"
+        state_field_error: "Kailangang isaad ang lalawigan"
         country_field: "Bansa:"
         country_field_error: "pumili ng bansa"
       contact:
@@ -1823,9 +1818,9 @@ fil_PH:
         enterprise_long_desc: "mahabang  paglalarawan"
         enterprise_long_desc_placeholder: "ito ang inyong pagkakataon upang ipakilala ang iyong enterprise-kung ano ang kaibahan mo sa iba at paano ka nakahihigit? iminumungkahi namin na gumamit ng 600 na letra o mas mababa pa o 150 salita sa pagbibigay ng paglalarawan."
         enterprise_long_desc_length: "%{num}na mga letra/ hanggang 600 ang iminumungkahi"
-        enterprise_abn: "ABN"
+        enterprise_abn: "TIN"
         enterprise_abn_placeholder: "hal. 99 123 456 789"
-        enterprise_acn: "ACN"
+        enterprise_acn: "Branch TIN"
         enterprise_acn_placeholder: "hal. 123 456 789"
         enterprise_tax_required: "kailangang gumawa ng pagpipilian."
       images:
@@ -1921,6 +1916,7 @@ fil_PH:
   admin_enterprise_relationships_permits: "mga permit"
   admin_enterprise_relationships_seach_placeholder: "hanapin"
   admin_enterprise_relationships_button_create: "gumawa"
+  admin_enterprise_relationships_to: "sa"
   admin_enterprise_groups: "mga grupo ng enterprise"
   admin_enterprise_groups_name: "pangalan"
   admin_enterprise_groups_owner: "may-ari"
@@ -1936,7 +1932,7 @@ fil_PH:
   admin_enterprise_groups_contact_city_placeholder: "hal. Northcote"
   admin_enterprise_groups_contact_zipcode: "Postcode"
   admin_enterprise_groups_contact_zipcode_placeholder: "hal. 3070"
-  admin_enterprise_groups_contact_state_id: "Probinsiya"
+  admin_enterprise_groups_contact_state_id: "Lalawigan"
   admin_enterprise_groups_contact_country_id: "Bansa"
   admin_enterprise_groups_web: "mga pinagkukuhanan ng Web"
   admin_enterprise_groups_web_twitter: "hal. @the_prof"
@@ -2006,7 +2002,7 @@ fil_PH:
   spree_admin_enterprises_create_new_product: "GUMAWA NG BAGONG PRODUKTO"
   spree_admin_single_enterprise_alert_mail_confirmation: "kumpirmahin ang email address para sa/kay"
   spree_admin_single_enterprise_alert_mail_sent: "naipadala na ang email sa"
-  spree_admin_overview_action_required: "kinakailangan ng aksyon"
+  spree_admin_overview_action_required: "kailangan ng aksyon"
   spree_admin_overview_check_your_inbox: "tignan ang iyong inbox para sa karagdagang panuto. maraming salamat!"
   spree_admin_unit_value: halaga kada yunit
   spree_admin_unit_description: paglalarawan sa bawat yunit
@@ -2695,6 +2691,14 @@ fil_PH:
       start_free_profile: "Magsimula sa libreng profile at palawakin kapag handa ka na!"
   order_management:
     reports:
+      enterprise_fee_summaries:
+        filters:
+          date_range: "saklaw na petsa"
+          report_format_csv: "i-download bilang CSV"
+          generate_report: "Bumuo ng ulat"
+        report:
+          none: "wala"
+          select_and_search: "pumili ng mga filter at pindutin ang GUMAWA NG REPORT para ma-access ang inyong data."
       enterprise_fee_summary:
         date_end_before_start_error: "ay dapat pagkatapos magsimula"
         parameter_not_allowed_error: "ikaw ay hindi awtorisadong gumamit ng isa o higit pa na mga filter para sa ulat na ito."
@@ -2868,16 +2872,16 @@ fil_PH:
     default_tax: "default na tax"
     default_tax_zone: "default na sona ng tax"
     country_based: "Country Based"
-    state_based: "Nakabase sa probinsiya"
+    state_based: "Nakabase sa Lalawigan"
     countries: "Mga Bansa"
     listing_countries: "Listahan ng mga Bansa"
     iso_name: "pangalan ng ISO"
-    states_required: "Kailangang may mga probinsiya"
+    states_required: "Kailangang nakasaad ang mga Lalawigan"
     editing_country: "pag-edit ng bansa"
     back_to_countries_list: "bumalik sa listahan ng mga bansa"
-    states: "Mga probinsiya"
+    states: "Mga Lalawigan"
     abbreviation: "Pinaikli"
-    new_state: "Bagong Probinsiya"
+    new_state: "Bagong Status"
     payment_methods: "Mga Paraan ng Pagbabayad"
     new_payment_method: "Bagong Paraan ng pagbabayad"
     provider: "tagapagbigay ng serbisyo"
@@ -2888,12 +2892,6 @@ fil_PH:
     shipping_categories: "mga kategorya ng pagpapadala"
     new_shipping_category: "bagong kategorya ng pagpapadala"
     back_to_shipping_categories: "bumalik sa kategorya ng pagpapadala"
-    analytics_trackers: "mga tracker ng analytic"
-    no_trackers_found: "walang natagpuang tracker"
-    new_tracker: "bagong tracker"
-    add_one: "Magdagdag ng isa"
-    google_analytics_id: "Analytics ID"
-    back_to_trackers_list: "bumalik sa listahan ng tracker"
     name: "pangalan"
     description: "paglalarawan"
     type: "uri"
@@ -3175,14 +3173,6 @@ fil_PH:
           bulk_coop_allocation: 'bultuhang Co-Op - Alokasyon'
           bulk_coop_packing_sheets: 'bultuhang Co-Op - piraso ng pagbabalot'
           bulk_coop_customer_payments: 'bultuhang Co-Op - mga bayad ng customer'
-        enterprise_fee_summaries:
-          filters:
-            date_range: "saklaw na petsa"
-            report_format_csv: "i-download bilang CSV"
-            generate_report: "Bumuo ng ulat"
-          report:
-            none: "wala"
-            select_and_search: "pumili ng mga filter at pindutin ang GUMAWA NG REPORT para ma-access ang inyong data."
       users:
         index:
           listing_users: "Nililista ang mga User"
@@ -3227,14 +3217,15 @@ fil_PH:
         autocomplete:
           producer_name: "Producer"
           unit: "yunit"
-      general_settings:
+      shared:
+        sortable_header:
+          name: "Pangalan"
         edit:
           legal_settings: "Legal Settings"
           cookies_consent_banner_toggle: "ipakita ang banner ng pagpayag sa cookies"
           privacy_policy_url: "Patakaran sa privacy URL"
           enterprises_require_tos: "ang mga enterprise ay dapat tanggapin ang Termino ng serbisyo."
           cookies_policy_matomo_section: "ipakita ang seksyon ng Matomo sa pahina ng patakaran sa cookies"
-          cookies_policy_ga_section: "ipakita ang seksyon ng Google Analytics sa pahina ng patakaran sa cookies"
           footer_tos_url: "URL ng Termino ng Serbisyo"
     checkout:
       payment:
