@@ -1,15 +1,12 @@
-%table.social.white-bg{:width => "100%"}
-  %tr
-    %td
-      %table.column{:align => "left"}
-        %tr
-          %td
-            %h3
-              = t(".customer_greeting", name: @order.bill_address.firstname)
-            %h4
-              = t(".instructions_html", distributor: @order.distributor.name )
-            %img.float-left{:src => "#{@order.distributor.logo.url(:medium)}"}/
-      %span.clear
+%table.social.white-bg{width: "100%"}
+  %table.column{align: "left"}
+    %tr
+      %td
+        %h3
+          = t(".customer_greeting", name: @order.bill_address.firstname)
+        %h4
+          = t(".instructions_html", distributor: @order.distributor.name )
+        %img.float-left{src: "#{@order.distributor.logo.url(:medium)}"}
 
 %p.callout
   = t(".dont_cancel", email: @order.distributor.contact.email)
