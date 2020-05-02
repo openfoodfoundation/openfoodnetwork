@@ -63,8 +63,4 @@
     position: sticky;
     top: $mobile-nav-height;
   }
-
-  @include breakpoint(mobile) {
-    font-size: 0.9em;
-  }
 }
