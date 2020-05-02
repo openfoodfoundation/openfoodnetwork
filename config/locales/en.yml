@@ -1234,10 +1234,10 @@ en:
       footer_data_cookies_policy: "cookies policy"
   shop:
     messages:
-      login: "login"
-      signup: "signup"
-      contact: "contact"
       customer_required:
+        login: "login"
+        signup: "signup"
+        contact: "contact"
         require_customer_login: "Only approved customers can access this shop."
         require_login_html: "If you're already an approved customer, %{login} or %{signup} to proceed."
         require_login_2_html: "Want to start shopping here? Please %{contact} %{enterprise} and ask about joining."
