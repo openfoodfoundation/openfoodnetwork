@@ -50,7 +50,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
       it "selects an order cycle if only one is open" do
         exchange1.update_attribute :pickup_time, "turtles"
         visit shop_path
-        expect(page).to have_selector "option[selected]", text: 'turtles'
+        expect(page).to have_selector "p", text: 'turtles'
       end
 
       describe "with multiple order cycles" do
