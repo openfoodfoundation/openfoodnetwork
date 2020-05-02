@@ -145,12 +145,9 @@
     color: $grey-800;
     font-style: italic;
 
-    &.applied-properties {
-      color: $grey-800;
-    }
-
-    &.applied-taxons {
+    &.applied-taxons, &.applied-properties {
       color: $clr-blue;
+      font-weight: bold;
     }
 
     &.applied-search {
