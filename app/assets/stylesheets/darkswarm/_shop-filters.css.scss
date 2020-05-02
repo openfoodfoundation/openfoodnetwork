@@ -123,6 +123,12 @@
     }
   }
 
+  .no-results-bar {
+    @include breakpoint(desktop) {
+      text-align: center;
+    }
+  }
+
   .no-results {
     color: $grey-800;
     font-style: italic;
@@ -162,10 +168,6 @@
     &.filter-label {
       float: left;
     }
-  }
-
-  @include breakpoint(desktop) {
-    text-align: center;
   }
 }
 
