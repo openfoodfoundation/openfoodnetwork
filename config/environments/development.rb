@@ -50,7 +50,7 @@ Openfoodnetwork::Application.configure do
   # You can remove them by simply running:
   #
   #   $ bundle exec rake assets:clean
-  config.assets.debug = !ENV["PROFILE"]
+  config.assets.debug = !!ENV["DEBUG_ASSETS"]
 
   # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
   # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
