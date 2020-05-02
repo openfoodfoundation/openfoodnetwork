@@ -2,16 +2,17 @@
   .small-12.columns
     .alert-box.search-alert.ng-scope
       %div{"ng-show" => "Products.products.length > 0"}
+
+        %a.clear-all.right{"ng-click" => "clearAll()"}
+          = t :products_clear
+          %i.ofn-i_009-close
+
         %span.filter-label
           = t :products_results_for
           %span{ ng: { hide: "!query"} }
             %span.applied-search
               {{ query }}
           = render partial: 'shop/products/applied_filters_feedback'
-
-        %a.clear-all.right{"ng-click" => "clearAll()"}
-          = t :products_clear
-          %i.ofn-i_009-close
 
       %div.no-results-bar{"ng-show" => "Products.products.length == 0 && !Products.loading"}
         .row.summary
