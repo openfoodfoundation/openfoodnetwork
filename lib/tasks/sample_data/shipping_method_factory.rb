@@ -26,7 +26,7 @@ class ShippingMethodFactory
   def create_pickup(enterprise)
     create_shipping_method(
       enterprise,
-      name: "Pickup",
+      name: "Pickup #{enterprise.name}",
       description: "pick-up at your awesome hub gathering place",
       require_ship_address: false,
       calculator_type: "Calculator::Weight"
@@ -36,7 +36,7 @@ class ShippingMethodFactory
   def create_delivery(enterprise)
     delivery = create_shipping_method(
       enterprise,
-      name: "Home delivery",
+      name: "Home delivery #{enterprise.name}",
       description: "yummy food delivered at your door",
       require_ship_address: true,
       calculator_type: "Spree::Calculator::FlatRate"
