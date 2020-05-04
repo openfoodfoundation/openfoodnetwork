@@ -11,6 +11,8 @@ module Spree
       end
 
       def total_on_hand
+        return 0 if @variant.deleted?
+
         stock_items.sum(&:count_on_hand)
       end
 
