@@ -55,7 +55,7 @@ button.graph-button {
   margin: 0;
   display: inline;
   background-color: rgba(255, 255, 255, 0.5);
-  padding: 4px;
+  vertical-align: bottom;
 
   @include box-shadow(none);
 
