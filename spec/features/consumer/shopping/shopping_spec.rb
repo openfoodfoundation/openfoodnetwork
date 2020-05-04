@@ -429,6 +429,34 @@ feature "As a consumer I want to shop with a distributor", js: true do
           end
         end
       end
+
+      context "when a variant is soft-deleted" do
+        describe "adding the soft-deleted variant to the cart" do
+          it "handles it as if the variant has gone out of stock" do
+            variant.delete
+
+            fill_in "variants[#{variant.id}]", with: '1'
+
+            expect_out_of_stock_behavior
+          end
+        end
+
+        context "when the soft-deleted variant has an associated override" do
+          describe "adding the soft-deleted variant to the cart" do
+            let!(:variant_override) {
+              create(:variant_override, variant: variant, hub: distributor, count_on_hand: 100)
+            }
+
+            it "handles it as if the variant has gone out of stock" do
+              variant.delete
+
+              fill_in "variants[#{variant.id}]", with: '1'
+
+              expect_out_of_stock_behavior
+            end
+          end
+        end
+      end
     end
 
     context "when no order cycles are available" do
@@ -542,5 +570,25 @@ feature "As a consumer I want to shop with a distributor", js: true do
     # The auto-submit on these specific form elements (add to cart) now has a small built-in
     # waiting period before submitting the data...
     sleep 0.6
+  end
+
+  def expect_out_of_stock_behavior
+    wait_for_debounce
+    wait_until { !cart_dirty }
+
+    # Shows an "out of stock" modal, with helpful user feedback
+    within(".out-of-stock-modal") do
+      expect(page).to have_content I18n.t('js.out_of_stock.out_of_stock_text')
+    end
+
+    # Removes the item from the client-side cart and marks the variant as unavailable
+    expect(page).to have_field "variants[#{variant.id}]", with: '0', disabled: true
+    expect(page).to have_selector "#variant-#{variant.id}.out-of-stock"
+    expect(page).to have_selector "#variants_#{variant.id}[ofn-on-hand='0']"
+    expect(page).to have_selector "#variants_#{variant.id}[disabled='disabled']"
+
+    # We need to wait again for the cart to finish updating in Angular or the test can fail
+    # as the session cannot be reset properly (after the test) while it's still loading
+    wait_until { !cart_dirty }
   end
 end
