@@ -15,14 +15,18 @@ describe CartService do
   context "end-to-end" do
     let(:order) { create(:order, distributor: distributor, order_cycle: order_cycle) }
     let(:distributor) { create(:distributor_enterprise) }
-    let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], variants: [v]) }
+    let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor],
+                               variants: [variant]) }
     let(:cart_service) { CartService.new(order) }
-    let(:v) { create(:variant) }
+    let(:variant) { create(:variant) }
 
-    describe "populate" do
+    describe "#populate" do
       it "adds a variant" do
-        cart_service.populate({ variants: { v.id.to_s => { quantity: '1', max_quantity: '2' } } }, true)
-        li = order.find_line_item_by_variant(v)
+        cart_service.populate(
+          { variants: { variant.id.to_s => { quantity: '1', max_quantity: '2' } } },
+          true
+        )
+        li = order.find_line_item_by_variant(variant)
         expect(li).to be
         expect(li.quantity).to eq(1)
         expect(li.max_quantity).to eq(2)
@@ -30,10 +34,13 @@ describe CartService do
       end
 
       it "updates a variant's quantity, max quantity and final_weight_volume" do
-        order.add_variant v, 1, 2
+        order.add_variant variant, 1, 2
 
-        cart_service.populate({ variants: { v.id.to_s => { quantity: '2', max_quantity: '3' } } }, true)
-        li = order.find_line_item_by_variant(v)
+        cart_service.populate(
+          { variants: { variant.id.to_s => { quantity: '2', max_quantity: '3' } } },
+          true
+        )
+        li = order.find_line_item_by_variant(variant)
         expect(li).to be
         expect(li.quantity).to eq(2)
         expect(li.max_quantity).to eq(3)
@@ -41,12 +48,42 @@ describe CartService do
       end
 
       it "removes a variant" do
-        order.add_variant v, 1, 2
+        order.add_variant variant, 1, 2
 
         cart_service.populate({ variants: {} }, true)
         order.line_items(:reload)
-        li = order.find_line_item_by_variant(v)
+        li = order.find_line_item_by_variant(variant)
         expect(li).not_to be
+      end
+
+      context "when a variant has been soft-deleted" do
+        let(:relevant_line_item) { order.reload.find_line_item_by_variant(variant) }
+
+        describe "when the soft-deleted variant is not in the cart yet" do
+          xit "doesn't fail, and does not add the deleted variant to the cart" do
+            variant.delete
+
+            cart_service.populate({ variants: { variant.id.to_s => { quantity: '2' } } }, true)
+
+            expect(relevant_line_item).to be_nil
+            expect(cart_service.errors.count).to be 0
+          end
+        end
+
+        describe "when the soft-deleted variant already has a line_item in the cart" do
+          let!(:existing_line_item) {
+            create(:line_item, variant: variant, quantity: 2, order: order)
+          }
+
+          xit "doesn't fail, and removes the line_item from the cart" do
+            variant.delete
+
+            cart_service.populate({ variants: { variant.id.to_s => { quantity: '2' } } }, true)
+
+            expect(relevant_line_item).to be_nil
+            expect(cart_service.errors.count).to be 0
+          end
+        end
       end
     end
   end
