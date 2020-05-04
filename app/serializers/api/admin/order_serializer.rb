@@ -17,7 +17,7 @@ class Api::Admin::OrderSerializer < ActiveModel::Serializer
   end
 
   def display_outstanding_balance
-    return "" unless ["balance_due", "credit_owed"].include?(object.payment_state)
+    return "" if object.outstanding_balance.zero?
 
     object.display_outstanding_balance.to_s
   end
