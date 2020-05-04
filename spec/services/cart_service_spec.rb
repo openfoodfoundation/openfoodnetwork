@@ -60,7 +60,7 @@ describe CartService do
         let(:relevant_line_item) { order.reload.find_line_item_by_variant(variant) }
 
         describe "when the soft-deleted variant is not in the cart yet" do
-          xit "doesn't fail, and does not add the deleted variant to the cart" do
+          it "does not add the deleted variant to the cart" do
             variant.delete
 
             cart_service.populate({ variants: { variant.id.to_s => { quantity: '2' } } }, true)
@@ -70,17 +70,17 @@ describe CartService do
           end
         end
 
-        describe "when the soft-deleted variant already has a line_item in the cart" do
+        describe "when the soft-deleted variant is already in the cart" do
           let!(:existing_line_item) {
             create(:line_item, variant: variant, quantity: 2, order: order)
           }
 
-          xit "doesn't fail, and removes the line_item from the cart" do
+          it "removes the line_item from the cart" do
             variant.delete
 
-            cart_service.populate({ variants: { variant.id.to_s => { quantity: '2' } } }, true)
+            cart_service.populate({ variants: { variant.id.to_s => { quantity: '3' } } }, true)
 
-            expect(relevant_line_item).to be_nil
+            expect(Spree::LineItem.where(id: relevant_line_item).first).to be_nil
             expect(cart_service.errors.count).to be 0
           end
         end
