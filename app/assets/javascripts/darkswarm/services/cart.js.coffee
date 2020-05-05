@@ -50,7 +50,6 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
         @popQueue() if @update_enqueued
 
       .error (response, status)=>
-        @scheduleRetry(status)
         @update_running = false
 
     compareAndNotifyStockLevels: (stockLevels) =>
@@ -86,13 +85,6 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
           quantity: li.quantity
           max_quantity: li.max_quantity
       {variants: variants}
-
-    scheduleRetry: (status) =>
-      console.log "Error updating cart: #{status}. Retrying in 3 seconds..."
-      $timeout =>
-        console.log "Retrying cart update"
-        @orderChanged()
-      , 3000
 
     saved: =>
       @dirty = false
