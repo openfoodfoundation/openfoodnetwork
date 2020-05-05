@@ -43,7 +43,6 @@ class CartService
 
       Spree::Variant.where(id: variant_ids_in_data).
         includes(:default_price, :stock_items, :product).
-        all.
         index_by(&:id)
     end
   end
