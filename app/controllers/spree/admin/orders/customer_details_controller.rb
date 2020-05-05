@@ -25,7 +25,6 @@ module Spree
 
             AdvanceOrderService.new(@order).call
 
-            @order.shipments.map(&:refresh_rates)
             flash[:success] = Spree.t('customer_details_updated')
             redirect_to admin_order_customer_path(@order)
           else
