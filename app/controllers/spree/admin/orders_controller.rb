@@ -33,8 +33,6 @@ module Spree
       end
 
       def edit
-        @order.shipments.map(&:refresh_rates)
-
         AdvanceOrderService.new(@order).call
 
         # The payment step shows an error of 'No pending payments'
