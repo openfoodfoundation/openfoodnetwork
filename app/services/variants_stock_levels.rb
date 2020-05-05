@@ -5,7 +5,7 @@ require 'open_food_network/scope_variant_to_hub'
 
 class VariantsStockLevels
   def call(order, requested_variant_ids)
-    variant_stock_levels = variant_stock_levels(order.line_items)
+    variant_stock_levels = variant_stock_levels(order.line_items.includes(variant: :stock_items))
 
     order_variant_ids = variant_stock_levels.keys
     missing_variants = Spree::Variant.includes(:stock_items).

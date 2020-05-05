@@ -210,7 +210,7 @@ Spree::Order.class_eval do
   end
 
   def cap_quantity_at_stock!
-    line_items.each(&:cap_quantity_at_stock!)
+    line_items.includes(variant: :stock_items).all.each(&:cap_quantity_at_stock!)
   end
 
   def set_distributor!(distributor)
@@ -237,7 +237,10 @@ Spree::Order.class_eval do
     with_lock do
       EnterpriseFee.clear_all_adjustments_on_order self
 
-      line_items.each do |line_item|
+      loaded_line_items =
+        line_items.includes(variant: :product, order: [:distributor, :order_cycle]).all
+
+      loaded_line_items.each do |line_item|
         if provided_by_order_cycle? line_item
           OpenFoodNetwork::EnterpriseFeeCalculator.new.create_line_item_adjustments_for line_item
         end
