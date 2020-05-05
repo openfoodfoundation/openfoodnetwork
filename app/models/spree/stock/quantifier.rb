@@ -11,6 +11,8 @@ module Spree
       end
 
       def total_on_hand
+        # Associated stock_items no longer exist if the variant has been soft-deleted. A variant
+        # may still be in an active cart after it's deleted, so this will mark it as out of stock.
         return 0 if @variant.deleted?
 
         stock_items.sum(&:count_on_hand)
