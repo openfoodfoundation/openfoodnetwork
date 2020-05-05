@@ -7,7 +7,7 @@ module Api
     skip_before_filter :authenticate_user, :ensure_api_key, only: [:taxons, :properties]
 
     def products
-      render_no_products unless order_cycle.open?
+      return render_no_products unless order_cycle.open?
 
       products = ProductsRenderer.new(
         distributor,
