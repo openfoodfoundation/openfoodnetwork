@@ -103,11 +103,7 @@ describe VariantStock do
     end
 
     context 'when the variant has been soft-deleted' do
-      let(:deleted_variant) { create(:variant) }
-
-      before do
-        deleted_variant.destroy
-      end
+      let(:deleted_variant) { create(:variant).tap(&:destroy) }
 
       it 'has no stock items' do
         expect(deleted_variant.stock_items.count).to eq 0
