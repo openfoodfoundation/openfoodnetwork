@@ -24,11 +24,23 @@ class SearchOrders
   attr_reader :params, :current_user
 
   def fetch_orders
-    @search = ::Permissions::Order.new(current_user).editable_orders.ransack(params[:q])
+    @search = search_query.ransack(params[:q])
 
     return paginated_results if using_pagination?
 
     @search.result(distinct: true)
+  end
+
+  def search_query
+    base_query = ::Permissions::Order.new(current_user).editable_orders
+    return base_query unless params[:shipping_method_id]
+
+    base_query
+      .joins(shipments: :shipping_rates)
+      .where(spree_shipping_rates: {
+               selected: true,
+               shipping_method_id: params[:shipping_method_id]
+             })
   end
 
   def paginated_results
