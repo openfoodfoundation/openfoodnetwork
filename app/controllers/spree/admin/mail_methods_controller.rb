@@ -4,10 +4,6 @@ module Spree
       after_filter :initialize_mail_settings
 
       def update
-        if params[:smtp_password].blank?
-          params.delete(:smtp_password)
-        end
-
         params.each do |name, value|
           next unless Spree::Config.has_preference? name
 

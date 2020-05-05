@@ -39,9 +39,18 @@ module VariantStock
 
   # Checks whether this variant is produced on demand.
   def on_demand
-    # A variant that has not been saved yet, doesn't have a stock item
+    # A variant that has not been saved yet or has been soft-deleted doesn't have a stock item
     #   This provides a default value for variant.on_demand using Spree::StockLocation.backorderable_default
-    return Spree::StockLocation.first.backorderable_default if stock_items.empty?
+    return Spree::StockLocation.first.backorderable_default if new_record? || deleted?
+
+    # This can be removed unless we have seen this error in Bugsnag recently
+    if stock_item.nil?
+      Bugsnag.notify(
+        RuntimeError.new("Variant #stock_item called, but the stock_item does not exist!"),
+        object: as_json
+      )
+      return Spree::StockLocation.first.backorderable_default
+    end
 
     stock_item.backorderable?
   end

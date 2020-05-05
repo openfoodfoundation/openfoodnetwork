@@ -1322,14 +1322,8 @@ es:
       cookie_stripe_desc: "Datos recopilados por nuestro procesador de pagos Stripe para detectar fraudes https://stripe.com/cookies-policy/legal. No todas las tiendas usan Stripe como método de pago pero es una buena práctica evitar fraude aplicarlo a todas las páginas. Stripe probablemente crea una imagen de cuáles de nuestras páginas generalmente interactúan con su API y luego marca cualquier cosa inusual. Por lo tanto configurar la cookie Stripe tiene una función más amplia que la simple provisión de un método de pago a un usuario. Eliminarla podría afectar la seguridad del servicio en sí. Puede obtener más información acerca de Stripe y leer su política de privacidad en https://stripe.com/privacy."
       statistics_cookies: "Cookies de estadísticas"
       statistics_cookies_desc: "Las siguientes no son estrictamente necesarias, pero ayudan a proporcionarle una mejor experiencia de usuario al permitirnos analizar el comportamiento del usuario, identificar qué funciones usa más o no, comprender los problemas de la experiencia del usuario, etc."
-      statistics_cookies_analytics_desc_html: "Para recopilar y analizar los datos de uso de la plataforma utilizamos Google Analytics, ya que era el servicio predeterminado conectado con Spree (el software de código abierto de comercio electrónico en el que creamos) pero nuestra visión es cambiar a <a href = 'https: / /matomo.org/ 'target =' _ blank '> Matomo </a> (ex Piwik, herramienta analítica de código abierto que cumple con GDPR y protege tu privacidad) tan pronto como podamos."
       statistics_cookies_matomo_desc_html: "Para recopilar y analizar los datos de uso de la plataforma, utilizamos <a href='https://matomo.org/' target='_blank'> Matomo </a> (ex Piwik), una herramienta analítica de código abierto que cumple con GDPR y protege tu privacidad"
       statistics_cookies_matomo_optout: "¿Deseas excluirte de Matomo Analytics? No recopilamos ningún dato personal y Matomo nos ayuda a mejorar nuestro servicio, pero respetamos tu elección :-)"
-      cookie_analytics_utma_desc: "Se usa para distinguir usuarios y sesiones. La cookie se crea cuando la biblioteca javascript se ejecuta y no existe ninguna cookie __utma existente. La cookie se actualiza cada vez que se envían datos a Google Analytics."
-      cookie_analytics_utmt_desc: "Se usa para acelerar la tasa de solicitud."
-      cookie_analytics_utmb_desc: "Se utiliza para determinar nuevas sesiones / visitas. La cookie se crea cuando la librería javascript se ejecuta y no existe ninguna cookie __utmb existente. La cookie se actualiza cada vez que los datos se envían a Google Analytics."
-      cookie_analytics_utmc_desc: "No utilizado en ga.js. Establecer para la interoperabilidad con urchin.js. Históricamente, esta cookie funcionó junto con la cookie __utmb para determinar si el usuario estaba en una nueva sesión / visita."
-      cookie_analytics_utmz_desc: "Almacena la fuente de tráfico o la campaña que explica cómo el usuario llegó a su sitio. La cookie se crea cuando se ejecuta la librería javascript y se actualiza cada vez que se envían datos a Google Analytics."
       cookie_matomo_basics_desc: "Matomo cookies de origen para recopilar estadísticas."
       cookie_matomo_heatmap_desc: "Matomo Heatmap y sesión de grabación de cookies."
       cookie_matomo_ignore_desc: "Cookie utilizada para excluir al usuario de ser rastreado."
@@ -1588,22 +1582,6 @@ es:
   groups_signup_contact_text: "Póngase en conta para descubrir qué puede hacer OFN por usted:"
   groups_signup_detail: "Aquí está el detalle."
   login_invalid: "Correo electrónico o contraseña inválidos"
-  modal_hubs: "Hubs"
-  modal_hubs_abstract: ¡Nuestros Grupos de Consumo son el punto de contacto entre usted y la gente que hace su comida!
-  modal_hubs_content1: Puede buscar un grupo de consumo conveniente por ubicación o nombre. Algunos grupos de consumo tienen múltiples puntos en loa que puede recoger las compras, y algunos también brindan opciones de entrega a domicilio. Cada Grupo de Consumo es un punto de venta con operaciones de negocio y logística independientes, entonces puede esperar diferencias entre Grupos de Consumo.
-  modal_hubs_content2: Sólo puedes comprar en un grupo de consumo a la vez.
-  modal_groups: "Redes / Regiones"
-  modal_groups_content1: Estas son las organizaciones y relaciones entre grupos de consumo que conforman el Open Food Network.
-  modal_groups_content2: Algunas redes están organizadas por ubicación, otros por afinidades no geográficas.
-  modal_how: "Cómo funciona"
-  modal_how_shop: Comprar en Open Food Network
-  modal_how_shop_explained: ¡Buscar un grupo de consumo cerca de ti para empezar a comprar! Puedes expandir cada grupo de consumo para ver qué tipos de productos están disponibles, y hacer clic para empezar a comprar. (Sólo puedes comprar en un grupo de consumo a la vez.)
-  modal_how_pickup: Recogida, entrega y gastos de envío
-  modal_how_pickup_explained: Algunos grupos de consumo hacen entregas hasta su puerta, mientras otros requieren que recojas las compras. Puedes ver que opciones están disponibles en su página de inicio, y seleccionar cuál te gustaría en las páginas de compras y revisión. Las entregas costarán más, y el precio cambia entre grupos de consumo. Cada grupo es un punto de venta con operaciones y logística independientes, las diferencias son normales y deseables.
-  modal_how_more: Aprender más
-  modal_how_more_explained: "Si quieres saber más acerca de Open Food Network, cómo trabajamos y nos organizamos, visita:"
-  modal_producers: "Productoras"
-  modal_producers_explained: "Nuestras productoras hacen todos los deliciosos alimentos que puedes comprar en Open Food Network."
   producers_about: Acerca de nosotras
   producers_buy: Comprar
   producers_contact: Contacto
@@ -2689,6 +2667,14 @@ es:
       start_free_profile: "Empieze con un perfil gratuito, y amplíelo cuando esté preparado!"
   order_management:
     reports:
+      enterprise_fee_summaries:
+        filters:
+          date_range: "Rango de fechas"
+          report_format_csv: "Descargar como CSV"
+          generate_report: "Generar informe"
+        report:
+          none: "Ninguno"
+          select_and_search: "Seleccione los filtros y haga clic en GENERAR INFORME para acceder a sus datos."
       enterprise_fee_summary:
         date_end_before_start_error: "debe ser después del comienzo"
         parameter_not_allowed_error: "No está autorizado a usar uno o más filtros seleccionados para este informe."
@@ -2828,14 +2814,6 @@ es:
     smtp_send_copy_to_this_addresses: "Envía una copia de todos los correos salientes a esta dirección. Para direcciones múltiples, sepárelas con comas."
     intercept_email_address: "Interceptar la dirección de correo electrónico"
     intercept_email_instructions: "Anular destinatario de correo electrónico y reemplazar con esta dirección."
-    smtp: "SMTP"
-    smtp_domain: "Dominio SMTP"
-    smtp_mail_host: "Alojamiento de correo SMTP"
-    smtp_port: "Puerto SMTP"
-    secure_connection_type: "Tipo de conexión segura"
-    smtp_authentication_type: "Tipo de autenticación SMTP"
-    smtp_username: "Nombre de usuario SMTP"
-    smtp_password: "Contraseña SMTP"
     image_settings: "Ajustes de imagen"
     image_settings_warning: "Deberá regenerar las miniaturas si actualiza los estilos de paperclip. Utilize rake paperclip:refresh:thumbnails CLASS=Spree::Image para hacer esto."
     attachment_default_style: Estilo de los archivos adjuntos
@@ -2882,12 +2860,6 @@ es:
     shipping_categories: "Categorías de envío"
     new_shipping_category: "Nueva categoría de envío"
     back_to_shipping_categories: "Volver a las categorías de envío"
-    analytics_trackers: "Analizadores de seguimiento"
-    no_trackers_found: "No se encontraron rastreadores"
-    new_tracker: "Nuevo rastreador"
-    add_one: "Agrega uno"
-    google_analytics_id: "ID d'Analytics"
-    back_to_trackers_list: "Volver a la lista de rastreadores"
     name: "Nombre"
     description: "Descripción"
     type: "Tipo"
@@ -3169,14 +3141,6 @@ es:
           bulk_coop_allocation: 'Bulk Co-op - Asignación'
           bulk_coop_packing_sheets: 'Bulk Co-op - Hojas de Empaquetado'
           bulk_coop_customer_payments: 'Bulk Co-op - Pagos de las Consumidoras'
-        enterprise_fee_summaries:
-          filters:
-            date_range: "Rango de fechas"
-            report_format_csv: "Descargar como CSV"
-            generate_report: "Generar informe"
-          report:
-            none: "Ninguno"
-            select_and_search: "Seleccione los filtros y haga clic en GENERAR INFORME para acceder a sus datos."
       users:
         index:
           listing_users: "Listado de Usuarias"
@@ -3221,14 +3185,15 @@ es:
         autocomplete:
           producer_name: "Productora"
           unit: "Unidad"
-      general_settings:
+      shared:
+        sortable_header:
+          name: "Nombre"
         edit:
           legal_settings: "Configuraciones legales"
           cookies_consent_banner_toggle: "Mostrar el banner de consentimiento de cookies"
           privacy_policy_url: "Vínculo con la Política de privacidad"
           enterprises_require_tos: "Las organizaciones deben aceptar los Términos del Servicio"
           cookies_policy_matomo_section: "Mostrar la sección de Matomo en la página de política de cookies"
-          cookies_policy_ga_section: "Mostrar la sección de Google Analytics en la página de la política de cookies"
           footer_tos_url: "URL de términos y servicios"
     checkout:
       payment:

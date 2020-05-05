@@ -31,6 +31,10 @@ nb:
               taken: "Det finnes allerede en konto for denne eposten. Vennligst logg inn eller tilbakestill passordet ditt."
         spree/order:
           no_card: Det er ingen gyldige kredittkort tilgjengelig for å trekke
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: "har utgått"
         order_cycle:
           attributes:
             orders_close_at:
@@ -319,6 +323,7 @@ nb:
     show_n_more: Vis %{num} flere
     choose: "Velg..."
     please_select: Vennligst velg...
+    column_save_as_default: Lagre som Standard
     columns: Kolonner
     actions: Handlinger
     viewing: "Viser: %{current_view_name}"
@@ -867,6 +872,7 @@ nb:
         distributor: "Distributør"
         products: "Produkter"
         tags: "Merkelapper"
+        delivery_details: "Leveringsdetaljer"
         fees: "Avgifter"
         previous: "Tidligere"
         save: "Lagre"
@@ -1315,14 +1321,8 @@ nb:
       cookie_stripe_desc: "Data samlet inn av betalingsprosessoren vår Stripe for svindeloppdagelse https://stripe.com/cookies-policy/legal. Ikke alle butikker bruker Stripe som betalingsmetode, men det er en god praksis å forhindre at svindel gjelder for alle sider. Stripe bygger sannsynligvis et bilde av hvilke av våre sider som til vanlig samhandler med API-en og deretter flagge alt uvanlig. Så å sette Stripe-cookien har en bredere funksjon enn bare å levere en betalingsmetode til en bruker. Fjerning av det kan påvirke sikkerheten til selve tjenesten. Du kan lære mer om Stripe og lese retningslinjene for personvern på https://stripe.com/privacy."
       statistics_cookies: "Statistikkkapsler"
       statistics_cookies_desc: "Følgende er ikke strengt nødvendige, men hjelper deg med å gi deg den beste brukeropplevelsen ved å tillate oss å analysere brukeradferd, identifisere hvilke funksjoner du bruker mest, eller ikke bruker, forstå brukeropplevelsesproblemer osv."
-      statistics_cookies_analytics_desc_html: "For å samle og analysere plattformbruksdata bruker vi Google Analytics, da det var standardtjenesten som var koblet til Spree (ehandel open source programvare som vi bygde på), men visjonen vår er å bytte til <a href='https://matomo.org/' target='_blank'>Matomo</a> (ex Piwik, open source analyseverktøy som er GDPR-kompatibelt og beskytter ditt privatliv) så snart vi kan."
       statistics_cookies_matomo_desc_html: "For å samle og analysere plattformbruksdata bruker vi <a href='https://matomo.org/' target='_blank'> Matomo </a> (ex Piwik), et åpen kildekodeanalyseverktøy som er kompatibelt med GDPR og beskytter personvernet ditt."
       statistics_cookies_matomo_optout: "Ønsker du å melde deg av Matomo analytics? Vi samler ikke inn personlige data, og Matomo hjelper oss med å forbedre vår tjeneste, men vi respekterer ditt valg :-)"
-      cookie_analytics_utma_desc: "Brukes til å skille mellom brukere og økter. Kapselen er opprettet når javascriptbiblioteket utføres, og ingen eksisterende __utma-informasjonskapsler eksisterer. Cookien oppdateres hver gang data sendes til Google Analytics."
-      cookie_analytics_utmt_desc: "Brukes til pådragsforespørselsrate."
-      cookie_analytics_utmb_desc: "Brukes til å bestemme nye økter/besøk. Kapselen blir opprettet når javascriptbiblioteket kjøres, og ingen eksisterende __utmb-cookies eksisterer. Cookien oppdateres hver gang data sendes til Google Analytics."
-      cookie_analytics_utmc_desc: "Ikke brukt i ga.js. Satt for interoperabilitet med urchin.js. Historisk kjørte denne informasjonskapselen sammen med __utmb-cookien for å avgjøre om brukeren var i en ny økt/besøk."
-      cookie_analytics_utmz_desc: "Lagrer trafikkilden eller kampanjen som forklarer hvordan brukeren nådde nettstedet ditt. Kapselen blir opprettet når javascriptbiblioteket utføres og oppdateres hver gang data sendes til Google Analytics."
       cookie_matomo_basics_desc: "Matomo førstehånds kapsler for å samle statistikk."
       cookie_matomo_heatmap_desc: "Matomo Heatmap & Session opptakskapsel."
       cookie_matomo_ignore_desc: "Kapsel brukes til å utelukke at bruker blir sporet."
@@ -1581,22 +1581,6 @@ nb:
   groups_signup_contact_text: "Ta kontakt for å oppdage hva OFN kan gjøre for deg:"
   groups_signup_detail: "Her er detaljene."
   login_invalid: "Ugyldig epost eller passord"
-  modal_hubs: "Mathubs"
-  modal_hubs_abstract: Våre hubs er kontaktpunkt mellom deg og menneskene som lager maten din!
-  modal_hubs_content1: Du kan søke etter en passende hub på lokasjon eller navn. Noen hubs har flere hentepunkt hvor du kan plukke opp det du har kjøpt, og noen tilbyr også levering. Hver mathub er en butikk med uavhengig drift og logistikk - så det vil være forskjeller mellom huber.
-  modal_hubs_content2: Du kan kun handle hos en hub om gangen.
-  modal_groups: "Grupper / Regioner"
-  modal_groups_content1: Dette er organisasjonene og hub-koblingene som utgjør Open Food Network.
-  modal_groups_content2: Noen grupper er klynger basert på lokalnivå eller regionnivå, andre har ingen geografiske likheter.
-  modal_how: "Slik fungerer det"
-  modal_how_shop: Handle på Open Food Network
-  modal_how_shop_explained: Søk etter en mathub nær deg for å begynne å handle! Du kan se detaljer for hver mathub for å se hvilke godbiter som finnes, og klikk deg videre for å handle. (Du kan kun handle hos en mathub om gangen).
-  modal_how_pickup: Henting, levering og fraktkostnader
-  modal_how_pickup_explained: Noen mathubs leverer på døren, mens andre krever at du henter varene du har kjøpt. Du kan se hvilke alternativ som er tilgjengelige på hjemmesiden, og velge hvilket du ønsker på handle- og betalingssidene. Levering koster mer, og prisene varierer fra hub til hub. Hver mathub er en forretning med uavhengig drift og logistikk - så variasjoner mellom hubs er naturlig.
-  modal_how_more: Finn ut mer
-  modal_how_more_explained: "Hvis du ønsker å lære mer om Open Food Network, hvordan det fungerer og ta del, sjekk ut:"
-  modal_producers: "Produsenter"
-  modal_producers_explained: "Våre produsenter lager all den herlige maten du kan handle på Open Food Network."
   producers_about: Om oss
   producers_buy: Handle
   producers_contact: Kontakt
@@ -1914,6 +1898,7 @@ nb:
   admin_enterprise_relationships_permits: "tillater"
   admin_enterprise_relationships_seach_placeholder: "Søk"
   admin_enterprise_relationships_button_create: "Opprett"
+  admin_enterprise_relationships_to: "til"
   admin_enterprise_groups: "Bedriftsgrupper"
   admin_enterprise_groups_name: "Navn"
   admin_enterprise_groups_owner: "Eier"
@@ -2677,6 +2662,14 @@ nb:
       start_free_profile: "Start med en gratis profil, og utvid når du er klar!"
   order_management:
     reports:
+      enterprise_fee_summaries:
+        filters:
+          date_range: "Datointervall"
+          report_format_csv: "Last ned som CSV"
+          generate_report: "Generer rapport"
+        report:
+          none: "Ingen"
+          select_and_search: "Velg filtre og klikk på GENERER RAPPORT for å få tilgang til dataene dine."
       enterprise_fee_summary:
         date_end_before_start_error: "må være etter start"
         parameter_not_allowed_error: "Du er ikke autorisert til å bruke ett eller flere utvalgte filtre for denne rapporten."
@@ -2816,14 +2809,6 @@ nb:
     smtp_send_copy_to_this_addresses: "Sender en kopi av alle utgående eposter til denne adressen. For flere adresser, skill med komma."
     intercept_email_address: "Avskjær epostadresse"
     intercept_email_instructions: "Overstyr epost mottaker og erstatt med denne adressen."
-    smtp: "SMTP"
-    smtp_domain: "SMTP-domene"
-    smtp_mail_host: "SMTP epost-vert"
-    smtp_port: "SMTP-port"
-    secure_connection_type: "Sikker tilkoblingstype"
-    smtp_authentication_type: "SMTP-godkjenningstype"
-    smtp_username: "SMTP Brukernavn"
-    smtp_password: "SMTP-passord"
     image_settings: "Bildeinnstillinger"
     image_settings_warning: "Du må regenerere miniatyrbilder hvis du oppdaterer paperclip-stiler. Bruk rake paperclip:refresh:thumbnails CLASS=Spree::Image for å gjøre dette"
     attachment_default_style: Vedlegg Stil
@@ -2870,12 +2855,6 @@ nb:
     shipping_categories: "Fraktkategorier"
     new_shipping_category: "Ny Fraktkategori"
     back_to_shipping_categories: "Tilbake til Leveringskategorier"
-    analytics_trackers: "Analyseverktøy"
-    no_trackers_found: "Ingen sporingsverktøy funnet"
-    new_tracker: "Nytt Sporingsverktøy"
-    add_one: "Legg til en"
-    google_analytics_id: "Analytics ID"
-    back_to_trackers_list: "Tilbake til Liste over Sporingsverktøy"
     name: "Navn"
     description: "Beskrivelse"
     type: "Type"
@@ -3027,6 +3006,8 @@ nb:
           tax_invoice: "AVGIFTSFAKTURA"
           code: "Kode"
           from: "Fra"
+          to: "Fakturér til"
+          shipping: "Levering"
         form:
           distribution_fields:
             title: "Distribusjon"
@@ -3155,14 +3136,6 @@ nb:
           bulk_coop_allocation: 'Bulk Co-op - Allokering'
           bulk_coop_packing_sheets: 'Bulk Co-op - Pakkseddel'
           bulk_coop_customer_payments: 'Bulk Co-op - Kunde Betalinger'
-        enterprise_fee_summaries:
-          filters:
-            date_range: "Datointervall"
-            report_format_csv: "Last ned som CSV"
-            generate_report: "Generer rapport"
-          report:
-            none: "Ingen"
-            select_and_search: "Velg filtre og klikk på GENERER RAPPORT for å få tilgang til dataene dine."
       users:
         index:
           listing_users: "Lister opp brukere"
@@ -3207,14 +3180,15 @@ nb:
         autocomplete:
           producer_name: "Produsent"
           unit: "Enhet"
-      general_settings:
+      shared:
+        sortable_header:
+          name: "Navn"
         edit:
           legal_settings: "Juridiske innstillinger"
           cookies_consent_banner_toggle: "Vis informasjonskapsler samtykkebanner"
           privacy_policy_url: "Personvernspolicy URL"
           enterprises_require_tos: "Bedrifter må godta Tjenestevilkår"
           cookies_policy_matomo_section: "Vis Matomo-delen på informasjonskapsler-siden"
-          cookies_policy_ga_section: "Vis Google Analytics-delen om informasjonskapsler på policy-siden om informasjonskapsler"
           footer_tos_url: "Vilkår URL"
     checkout:
       payment:

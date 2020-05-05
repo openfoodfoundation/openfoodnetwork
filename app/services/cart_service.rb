@@ -15,28 +15,45 @@ class CartService
     @distributor, @order_cycle = distributor_and_order_cycle
 
     @order.with_lock do
-      variants = read_variants from_hash
-      attempt_cart_add_variants variants
-      overwrite_variants variants unless !overwrite
+      variants_data = read_variants from_hash
+      attempt_cart_add_variants variants_data
+      overwrite_variants variants_data if overwrite
     end
     valid?
   end
 
-  def attempt_cart_add_variants(variants)
-    variants.each do |v|
-      if varies_from_cart(v)
-        attempt_cart_add(v[:variant_id], v[:quantity], v[:max_quantity])
-      end
+  private
+
+  def attempt_cart_add_variants(variants_data)
+    loaded_variants = indexed_variants(variants_data)
+
+    variants_data.each do |variant_data|
+      loaded_variant = loaded_variants[variant_data[:variant_id].to_i]
+      next unless varies_from_cart(variant_data, loaded_variant)
+
+      attempt_cart_add(
+        loaded_variant, variant_data[:quantity], variant_data[:max_quantity]
+      )
     end
   end
 
-  def attempt_cart_add(variant_id, quantity, max_quantity = nil)
+  def indexed_variants(variants_data)
+    @indexed_variants ||= begin
+      variant_ids_in_data = variants_data.map{ |v| v[:variant_id] }
+
+      Spree::Variant.where(id: variant_ids_in_data).
+        includes(:default_price, :stock_items, :product).
+        index_by(&:id)
+    end
+  end
+
+  def attempt_cart_add(variant, quantity, max_quantity = nil)
     quantity = quantity.to_i
     max_quantity = max_quantity.to_i if max_quantity
-    variant = Spree::Variant.find(variant_id)
-    OpenFoodNetwork::ScopeVariantToHub.new(@distributor).scope(variant)
+    return unless quantity > 0
 
-    return unless quantity > 0 && valid_variant?(variant)
+    scoper.scope(variant)
+    return unless valid_variant?(variant)
 
     cart_add(variant, quantity, max_quantity)
   end
@@ -66,25 +83,12 @@ class CartService
     end
   end
 
-  private
+  def scoper
+    @scoper ||= OpenFoodNetwork::ScopeVariantToHub.new(@distributor)
+  end
 
   def read_variants(data)
-    @variants_h = read_products_hash(data) +
-                  read_variants_hash(data)
-  end
-
-  def read_products_hash(data)
-    # This is most probably dead code, this bugsnag notification will confirm it
-    notify_bugsnag(data) if data[:products].present?
-
-    (data[:products] || []).map do |_product_id, variant_id|
-      { variant_id: variant_id, quantity: data[:quantity] }
-    end
-  end
-
-  def notify_bugsnag(data)
-    Bugsnag.notify(RuntimeError.new("CartService.populate called with products hash"),
-                   data: data.as_json)
+    @variants_h = read_variants_hash(data)
   end
 
   def read_variants_hash(data)
@@ -110,8 +114,9 @@ class CartService
     [@order.distributor, @order.order_cycle]
   end
 
-  def varies_from_cart(variant_data)
-    li = line_item_for_variant_id variant_data[:variant_id]
+  # Returns true if the saved cart differs from what's in the posted data, otherwise false
+  def varies_from_cart(variant_data, loaded_variant)
+    li = line_item_for_variant loaded_variant
 
     li_added = li.nil? && (variant_data[:quantity].to_i > 0 || variant_data[:max_quantity].to_i > 0)
     li_quantity_changed     = li.present? && li.quantity.to_i     != variant_data[:quantity].to_i
@@ -143,8 +148,8 @@ class CartService
     false
   end
 
-  def line_item_for_variant_id(variant_id)
-    order.find_line_item_by_variant Spree::Variant.find(variant_id)
+  def line_item_for_variant(variant)
+    order.find_line_item_by_variant variant
   end
 
   def variant_ids_in_cart

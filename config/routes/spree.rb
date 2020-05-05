@@ -138,7 +138,6 @@ Spree::Core::Engine.routes.draw do
     end
 
     resource :image_settings
-    resources :trackers
 
     resources :zones
     resources :countries do

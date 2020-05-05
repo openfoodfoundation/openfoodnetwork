@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20200406085833) do
+ActiveRecord::Schema.define(:version => 20200429122446) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -505,13 +505,6 @@ ActiveRecord::Schema.define(:version => 20200406085833) do
     t.integer  "source_id"
     t.string   "source_type"
     t.text     "details"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "spree_mail_methods", force: true do |t|
-    t.string   "environment"
-    t.boolean  "active",      default: true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -1014,14 +1007,6 @@ ActiveRecord::Schema.define(:version => 20200406085833) do
   end
 
   add_index "spree_tokenized_permissions", ["permissable_id", "permissable_type"], name: "index_tokenized_name_and_type", using: :btree
-
-  create_table "spree_trackers", force: true do |t|
-    t.string   "environment"
-    t.string   "analytics_id"
-    t.boolean  "active",       default: true
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "spree_users", force: true do |t|
     t.string   "encrypted_password"

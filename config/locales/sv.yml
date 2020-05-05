@@ -964,22 +964,6 @@ sv:
   groups_signup_contact_text: "Ta kontakt för att upptäcka vad OFN kan göra för dig:"
   groups_signup_detail: "Här är haken."
   login_invalid: "Ogiltig e-postadress eller lösenord"
-  modal_hubs: "Mathubbar"
-  modal_hubs_abstract: Våra mathubbar är kontaktpunkten mellan dig och de människor som gör din mat!
-  modal_hubs_content1: Du kan söka efter en lämplig hub enligt plats eller namn. Vissa hubbar har flera samlingspunkter där du kan plocka upp dina köp, och några kommer även tillhandahålla leveransalternativ. Varje mathub är en försäljningspunkt med oberoende affärsverksamhet och logistik - så variation mellan hubbar är att förväntas.
-  modal_hubs_content2: Du kan endast handla vid en hubb i taget.
-  modal_groups: "Grupper / Regioner"
-  modal_groups_content1: Detta är organisationerna och förhållandena mellan hubbar som skapar Open Food Network.
-  modal_groups_content2: Vissa grupper är klustrade enligt plats eller råd, andra efter icke-geografiska likheter.
-  modal_how: "Så här fungerar det"
-  modal_how_shop: Handla på Open Food Network
-  modal_how_shop_explained: Sök efter en mathubb nära dig för att börja handla! Du kan expandera varje mathubb för att se vilka typer av godsaker som finns tillgängliga och klicka genom för att börja handla. (Du kan bara handla vid en mathubb i taget.)
-  modal_how_pickup: Upphämtning, leverans och fraktavgifter
-  modal_how_pickup_explained: Vissa mathubbar levererar till din dörr, medan andra kräver att du hämtar upp dina köp. Du kan se vilka alternativ som finns tillgängliga på hemsidan, och välja vilka du vill ha vid handels- och utcheckningssidorna. Frakt kostar mer, och prissättning varierar mellan hubbar. Varje mathubb är en försäljningspunkt med oberoende affärsverksamheter och logistik - så variationer mellan hubbar är att förväntas.
-  modal_how_more: Lär dig mer
-  modal_how_more_explained: "Om du vill lära dig mer om Open Food Network, hur det fungerar, och hur du kan involvera dig, kolla in:"
-  modal_producers: "Producenter "
-  modal_producers_explained: "Våra tillverkare producerar all den delikata mat du kan handla efter på Open Food Network."
   producers_about: Om oss
   producers_buy: Handla
   producers_contact: Kontakt
@@ -1869,6 +1853,9 @@ sv:
       start_free_profile: "Börja med en gratis profil och uppgradera när du är redo!"
   order_management:
     reports:
+      enterprise_fee_summaries:
+        report:
+          none: "Ingen"
       enterprise_fee_summary:
         fee_calculated_on_transfer_through_all: "Alla"
         fee_placements:
@@ -2035,9 +2022,6 @@ sv:
           bulk_coop_allocation: 'Bulk Co-op - Allokering'
           bulk_coop_packing_sheets: 'Bulk Co-op - Förpackningssedlar'
           bulk_coop_customer_payments: 'Bulk Co-op - kundbetalningar'
-        enterprise_fee_summaries:
-          report:
-            none: "Ingen"
       users:
         index:
           user: "Användare"
@@ -2060,7 +2044,9 @@ sv:
         autocomplete:
           producer_name: "Producent"
           unit: "Enhet"
-      general_settings:
+      shared:
+        sortable_header:
+          name: "Namn"
         edit:
           enterprises_require_tos: "Företag måste acceptera servicevillkoren"
           footer_tos_url: "Användarvillkor URL"

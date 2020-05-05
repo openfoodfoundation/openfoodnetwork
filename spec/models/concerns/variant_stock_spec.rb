@@ -90,11 +90,27 @@ describe VariantStock do
       end
     end
 
-    context 'when the variant has no stock item' do
+    context 'when the variant has not been saved yet' do
       let(:variant) { build(:variant) }
+
+      it 'has no stock items' do
+        expect(variant.stock_items.count).to eq 0
+      end
 
       it 'returns stock location default' do
         expect(variant.on_demand).to be_falsy
+      end
+    end
+
+    context 'when the variant has been soft-deleted' do
+      let(:deleted_variant) { create(:variant).tap(&:destroy) }
+
+      it 'has no stock items' do
+        expect(deleted_variant.stock_items.count).to eq 0
+      end
+
+      it 'returns stock location default' do
+        expect(deleted_variant.on_demand).to be_falsy
       end
     end
   end

@@ -36,7 +36,9 @@ module OpenFoodNetwork
          I18n.t(:report_header_customer_code), I18n.t(:report_header_tags),
          I18n.t(:report_header_billing_street), I18n.t(:report_header_billing_street_2),
          I18n.t(:report_header_billing_city), I18n.t(:report_header_billing_postcode),
-         I18n.t(:report_header_billing_state)]
+         I18n.t(:report_header_billing_state),
+         I18n.t(:report_header_order_number),
+         I18n.t(:report_header_date)]
       end
       # rubocop:enable Metrics/AbcSize
       # rubocop:enable Metrics/MethodLength
@@ -92,7 +94,9 @@ module OpenFoodNetwork
               proc { |_line_items| "" },
               proc { |_line_items| "" },
               proc { |_line_items| "" },
-              proc { |_line_items| "" }
+              proc { |_line_items| "" },
+              proc { |line_items| line_items.first.order.number },
+              proc { |line_items| line_items.first.order.completed_at.strftime("%F %T") },
             ]
           },
           {
@@ -187,7 +191,9 @@ module OpenFoodNetwork
           proc { |line_items| line_items.first.order.bill_address.andand.address2 },
           proc { |line_items| line_items.first.order.bill_address.andand.city },
           proc { |line_items| line_items.first.order.bill_address.andand.zipcode },
-          proc { |line_items| line_items.first.order.bill_address.andand.state }
+          proc { |line_items| line_items.first.order.bill_address.andand.state },
+          proc { |line_items| line_items.first.order.number },
+          proc { |line_items| line_items.first.order.completed_at.strftime("%F %T") },
         ]
       end
       # rubocop:enable Metrics/AbcSize

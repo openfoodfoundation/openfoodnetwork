@@ -54,7 +54,7 @@ $RAILS_RUN script/prepare_imported_db.rb
 if [ -n "$BUCKET" ]; then
   if hash aws 2>/dev/null; then
     echo "Mirroring images..."
-    aws s3 sync "s3://$BUCKET/public public/"
+    aws s3 sync "s3://$BUCKET/public" public/
   else
     echo "Please install the AWS CLI tools so that I can copy the images from $BUCKET for you."
     echo "eg. sudo easy_install awscli"

@@ -198,7 +198,7 @@ GEM
       activerecord (>= 3.2.0, < 5.0)
       fog (~> 1.0)
       rails (>= 3.2.0, < 5.0)
-    ddtrace (0.34.2)
+    ddtrace (0.35.0)
       msgpack
     debugger-linecache (1.2.0)
     delayed_job (4.1.8)
@@ -646,7 +646,7 @@ GEM
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (1.7.0)
-    unicorn (5.5.4)
+    unicorn (5.5.5)
       kgio (~> 2.6)
       raindrops (~> 0.7)
     unicorn-rails (2.2.1)
