@@ -495,6 +495,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           expect(page).to have_content "Only approved customers can access this shop."
           expect(page).to have_content "login or signup"
           expect(page).to have_no_content product.name
+          expect(page).not_to have_selector "ordercycle"
         end
       end
 
@@ -512,6 +513,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
             expect(page).to have_content "Only approved customers can access this shop."
             expect(page).to have_content "please contact #{distributor.name}"
             expect(page).to have_no_content product.name
+            expect(page).not_to have_selector "ordercycle"
           end
         end
 
