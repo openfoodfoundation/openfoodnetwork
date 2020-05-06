@@ -39,9 +39,6 @@
               = preference_field_tag(:cookies_policy_matomo_section, Spree::Config[:cookies_policy_matomo_section], :type => Spree::Config.preference_type(:cookies_policy_matomo_section))
               = label_tag(:cookies_policy_matomo_section, t('.cookies_policy_matomo_section')) + tag(:br)
             .field
-              = preference_field_tag(:cookies_policy_ga_section, Spree::Config[:cookies_policy_ga_section], :type => Spree::Config.preference_type(:cookies_policy_ga_section))
-              = label_tag(:cookies_policy_ga_section, t('.cookies_policy_ga_section')) + tag(:br)
-            .field
               = label_tag(:privacy_policy_url, t('.privacy_policy_url')) + tag(:br)
               = preference_field_tag(:privacy_policy_url, Spree::Config[:privacy_policy_url], type: Spree::Config.preference_type(:privacy_policy_url))
           %fieldset.embedded_shopfronts.no-border-bottom

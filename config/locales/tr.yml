@@ -204,7 +204,7 @@ tr:
   ongoing: Devam eden
   bill_address: Fatura Adresi
   ship_address: Teslimat Adresi
-  sort_order_cycles_on_shopfront_by: "Sipariş Dönemlerini Vitrinde Şuna Göre Sırala"
+  sort_order_cycles_on_shopfront_by: "Sipariş Dönemlerini Mağazada Şuna Göre Sırala"
   required_fields: Zorunlu alanlar yıldız ile belirtilmiştir
   select_continue: Seç ve Devam Et
   remove: Kaldır
@@ -229,13 +229,13 @@ tr:
   all: Hepsi
   current: Güncel
   available: Mevcut
-  dashboard: Gösterge Paneli
+  dashboard: KONTROL PANELİ
   undefined: tanımsız
   unused: kullanılmamış
   admin_and_handling: Yönetici & İşlemler
   profile: Profil
   supplier_only: Sadece Tedarikçi
-  has_shopfront: Vitrini Var
+  has_shopfront: Mağazası Var
   weight: Ağırlık
   volume: Hacim
   items: Kalemler
@@ -284,7 +284,7 @@ tr:
     email: E-posta
     ends_at: Bitiş
     ends_on: Bitiş vakti
-    name: İsim
+    name: İsİM
     on_hand: Mevcut
     on_demand: Talep Üzerine
     on_demand?: Talep Üzerine?
@@ -323,6 +323,7 @@ tr:
     show_n_more: '%{num} tane daha göster'
     choose: "Seç..."
     please_select: Lütfen seçin...
+    column_save_as_default: Varsayılan Olarak Kaydet
     columns: Sütunlar
     actions: Eylemler
     viewing: "Görüntülenen: %{current_view_name}"
@@ -334,8 +335,8 @@ tr:
     unsaved_confirm_leave: "Kaydedilmemiş değişiklikler var. Kaydetmeden devam etmek istiyor musunuz?"
     unsaved_changes: "Kaydedilmemiş değişiklikleriniz var"
     shopfront_settings:
-      embedded_shopfront_settings: "Yerleştirilmiş Vitrin Ayarları"
-      enable_embedded_shopfronts: "Gömülü Vitrinleri Etkinleştir"
+      embedded_shopfront_settings: "Yerleştirilmiş Mağaza Ayarları"
+      enable_embedded_shopfronts: "Gömülü Mağazaları Etkinleştir"
       embedded_shopfronts_whitelist: "Beyaz Listedeki harici Domain'ler"
     number_localization:
       number_localization_settings: "Numara Yerelleştirme Ayarları"
@@ -428,7 +429,7 @@ tr:
         display_as: Gösterme Şekli
         category: Kategori
         tax_category: Vergi Kategorisi
-        inherits_properties?: Özellikler aktarılıyor mu?
+        inherits_properties?: Özellikler devralınsın mı?
         available_on: Mevcut Olma Tarihi
         av_on: "Mevcut Olma Tarihi"
         import_date: Aktarıldı
@@ -441,7 +442,7 @@ tr:
       search: "Ara"
       properties:
         property_name: "Özellik Adı"
-        inherited_property: "Aktarılan Özellik"
+        inherited_property: "Devralınan Özellik"
       variants:
         infinity: "Sonsuz"
         to_order_tip: "Sipariş üzerine yapılan ürünlerin, belirlenmiş stok seviyeleri yoktur."
@@ -507,7 +508,7 @@ tr:
         options_and_defaults: İçe aktarma seçenekleri ve varsayılanlar
         no_permission: bu işletmeyi yönetme izniniz yok
         not_found: işletme veritabanında bulunamadı
-        no_name: İsimsiz
+        no_name: İsİMSİZ
         blank_enterprise: bazı ürünler için tanımlanmış bir işletme yok
         reset_absent?: Mevcut olmayan ürünleri sıfırla
         reset_absent_tip: Dosyada bulunmayan tüm mevcut ürünler için stoğu sıfıra ayarlayın
@@ -555,7 +556,7 @@ tr:
         description: İşletmelerinizin stoklarını yönetmek için bu sayfayı kullanın. Burada yapılan değişiklikler 'Ürünler' sayfasındaki ayarları da günceller.
         enable_reset?: Stok Sıfırlama etkinleştirilsin mi?
         default_stock: "Varsayılan stok"
-        inherit?: Aktar?
+        inherit?: Devral?
         add: Ekle
         hide: Sakla
         import_date: Aktarıldı
@@ -650,15 +651,15 @@ tr:
               ürünün satış listenize eklenmeden önce Stok listenize eklenip eklenmemesi
               gerektiğini seçebilirsiniz.  Eğer ürünlerinizi yönetmek için Stok sistemini
               kullanmıyorsanız 'tavsiye edilen' seçeneği ile devam etmeniz gerekir.
-          preferred_product_selection_from_inventory_only_yes: Vitrininize yeni ürünler eklenebilir (önerilir)
-          preferred_product_selection_from_inventory_only_no: Yeni ürünler vitrininize eklemeden önce Stok listesine girilmelidir
+          preferred_product_selection_from_inventory_only_yes: Mağazanıza yeni ürünler eklenebilir (önerilir)
+          preferred_product_selection_from_inventory_only_no: Yeni ürünler mağazanıza eklemeden önce Stok listesine girilmelidir
         payment_methods:
           name: Ad
           applies: Uygulanma?
           manage: Ödeme Yöntemlerini Yönet
           no_method_yet: Henüz herhangi bir ödeme yönteminiz yok.
           create_button: Yeni Ödeme Yöntemi Oluştur
-          create_one_button: Şimdi Bir Tane Oluştur
+          create_one_button: Şimdi Oluştur
         primary_details:
           name: Ad
           name_placeholder: Örn. Ahmet Amca'nın Ekolojik Meyveleri
@@ -669,9 +670,9 @@ tr:
           primary_producer_tip: Siz de birincil üreticisiyseniz 'Üretici' yi seçin.
           producer: Üretici
           any: Hepsi
-          none: Hiç
-          own: Kendi
-          sells: Satıyor
+          none: SATMIYOR
+          own: KENDİ ÜRÜNLERİ
+          sells: NE SATIYOR
           sells_tip: "Hiç - İşletme müşterilere doğrudan satış yapmaz. <br /> Kendi - İşletme müşterilerine kendi ürünlerini satar. <br /> Hepsi - İşletme kendi ürünlerini veya diğer işletmelerin ürünlerini satabilir. <br />"
           visible_in_search: Haritada görünsün mü?
           visible_in_search_tip: Sitede arama yapılırken bu işletmenin müşteriler tarafından görünür olup olmayacağını belirler.
@@ -680,7 +681,7 @@ tr:
           permalink: Bağlantı Adı (boşluk yok)
           permalink_tip: "Bağlantı adı, mağazanızın bağlantı URL'sini oluşturmak için kullanılır: %{link}sectiginiz-ad/tezgah"
           link_to_front: Tezgah linkiniz
-          link_to_front_tip: Açık Gıda Ağı’ndaki tezgahınıza doğrudan bağlantı linki
+          link_to_front_tip: Açık Gıda Ağı’ndaki mağazanıza doğrudan bağlantı linki
           ofn_uid: AGA KN
           ofn_uid_tip: Açık Gıda Ağı'na kayıtlı işletmenize özel tanımlanan kimlik numarası
         shipping_methods:
@@ -691,8 +692,8 @@ tr:
           create_one_button: Şimdi Oluştur
           no_method_yet: Henüz herhangi bir teslimat yönteminiz yok.
         shop_preferences:
-          shopfront_requires_login: "Tezgahınız haritada görünür olsun mu?"
-          shopfront_requires_login_tip: "Tezgahınızın yalnızca üyelerinize mi yoksa herkese mi açık olduğunu seçin."
+          shopfront_requires_login: "Mağazanız haritada görünür olsun mu?"
+          shopfront_requires_login_tip: "Mağazanızın yalnızca üyelerinize mi yoksa herkese mi açık olduğunu seçin."
           shopfront_requires_login_false: "Herkese açık"
           shopfront_requires_login_true: "Yalnızca kayıtlı müşteriler tarafından görülebilir"
           recommend_require_login: "Siparişlerin değiştirilebileceği durumlarda kullanıcıların oturum açmasını öneriyoruz."
@@ -708,19 +709,19 @@ tr:
           enable_subscriptions_tip: "Üyelik işlevselliği etkinleştirilsin mi?"
           enable_subscriptions_false: "Kapalı"
           enable_subscriptions_true: "Etkin"
-          shopfront_message: "Vitrin Mesajınız"
+          shopfront_message: "Mağaza Mesajınız"
           shopfront_message_placeholder: >
               Müşterilerinize merhaba diyebilir, tezgahınız ve alışveriş şartlarınız
-              ile ilgili bilgi verebilirsiniz. Yazdıklarınız, müşteriler vitrininizi
+              ile ilgili bilgi verebilirsiniz. Yazdıklarınız, müşteriler mağazanızı
               ziyaret ettiğinde görünür olacak.
           shopfront_message_link_tooltip: "Bağlantı ekle / düzenle"
           shopfront_message_link_prompt: "Lütfen eklemek için bir URL girin"
-          shopfront_closed_message: "Kapalı Vitrin Mesajı"
+          shopfront_closed_message: "Kapalı Mağaza Mesajı"
           shopfront_closed_message_placeholder: >
               Vitrininizin neden satışa kapalı olduğunu ve ne zaman açılacağını müşterilerinize
               açıklayan bir mesaj yazın. Bu mesaj, açık sipariş döneminiz olmadığında
               sizi ziyaret edenler tarafından görülecek.
-          shopfront_category_ordering: "Vitrin Kategori Sıralaması"
+          shopfront_category_ordering: "Mağaza Kategori Sıralaması"
           open_date: "Açılış Tarihi"
           close_date: "Kapanış Tarih"
         social:
@@ -754,7 +755,7 @@ tr:
           email_confirmation_notice_html: "E-posta onayı bekleniyor. %{email} adresine bir doğrulama e-postası gönderdik."
           resend: Yeniden gönder
           owner: 'Yönetici'
-          contact: "İletişim"
+          contact: "İLETİŞİM"
           contact_tip: "İşletme adına sipariş ve bildirim e-postalarını alacak olan yönetici. Onaylanmış bir e-posta adresi olması gerekir."
           owner_tip: Bu işletmeden sorumlu birincil kullanıcı.
           notifications: Bildirimler
@@ -780,7 +781,7 @@ tr:
       admin_index:
         name: Ad
         role: Görev
-        sells: Satıyor
+        sells: NE SATIYOR
         visible: Haritada görünür mü?
         owner: Yönetici
         producer: Üretici
@@ -791,11 +792,11 @@ tr:
         producer_description_text: Ürünlerinizi Açık Gıda Ağı'na yükleyin. Böylece ürünleriniz pazar hesapları üzerinden satışa sunulabilir.
         producer_shop: Üretici Tezgahı
         sell_your_produce: Kendi ürününü sat
-        producer_shop_description_text: Açık Gıda Ağı üzerinden açtığınız bireysel tezgahınız ile ürünlerinizi doğrudan müşterilere ulaştırabilirsiniz.
+        producer_shop_description_text: Açık Gıda Ağı üzerinden açtığınız bireysel mağazanız ile ürünlerinizi doğrudan müşterilere ulaştırabilirsiniz.
         producer_shop_description_text2: Üretici Tezgahı sadece sizin ürünleriniz içindir.  Üretiminiz haricindeki ürünleri satabilmek için lütfen 'Üretici Pazarı' seçeneğini seçin.
         producer_hub: Üretici Pazarı
         producer_hub_text: Kendi ürünleriniz ile beraber başkalarından ürünlerini de satın
-        producer_hub_description_text: İşletmeniz, yerel gıda sisteminizin belkemiğidir. Açık Gıda Ağı'ndaki pazar yeriniz aracılığıyla kendi ürünlerinizi ve çevrenizdeki diğer üreticilerin ürünlerini beraber satabilirsiniz.
+        producer_hub_description_text: İşletmeniz, yerel gıda sisteminizin bel kemiğidir. Açık Gıda Ağı'ndaki mağazanız aracılığıyla kendi ürünlerinizi ve çevrenizdeki diğer üreticilerin ürünlerini beraber satabilirsiniz.
         profile: Yalnızca Profil
         get_listing: Görünür ol
         profile_description_text: İnsanlar Açık Gıda Ağı üzerinden sizi bulabilir ve sizinle iletişim kurabilir. İşletmeniz haritada ve listelerde görünür olacak.
@@ -816,14 +817,14 @@ tr:
       new_form:
         owner: Yönetici
         owner_tip: Bu işletmeden sorumlu birincil kullanıcı.
-        i_am_producer: Üreticiyim
-        contact_name: İşetişim Kurulacak Kişi
+        i_am_producer: ÜRETİCİYİM
+        contact_name: İLETİŞİM Kurulacak KİŞİ
       edit:
         editing: 'Ayarlar:'
-        back_link: İşletmeler listesine geri dön
+        back_link: İşletmeler LİSTESİNE gerİ dön
       new:
         title: Yeni İşletme
-        back_link: İşletmeler listesine geri dön
+        back_link: İşletmeler LİSTESİNE gerİ dön
       remove_logo:
         remove: "Resmi Kaldır"
         removed_successfully: "Logo başarıyla kaldırıldı"
@@ -977,11 +978,11 @@ tr:
       supplier_totals: Sipariş Dönemi Tedarikçi Toplamları
       supplier_totals_by_distributor: Dağıtımcıya Göre Sipariş Dönemi Tedarikçi Toplamları
       totals_by_supplier: Tedarikçiye Göre Sipariş Dönemi Dağıtımcı Toplamları
-      customer_totals: Sipariş Döngüsü Müşteri Toplamları
+      customer_totals: Sipariş Dönemi Müşteri Toplamları
       all_products: Tüm ürünler
       inventory: Stok (mevcut)
       lettuce_share: Hasat Ortaklığı
-      mailing_list: Mail listesi
+      mailing_list: E-posta listesi
       addresses: Adresler
       payment_methods: Ödeme Yöntemleri Raporu
       delivery: Teslimat raporu
@@ -1139,7 +1140,7 @@ tr:
       mobile_menu:
         cart: "Sepet"
       joyride:
-        checkout: "Ödemeyi Şimdi Yap"
+        checkout: "Alışverişi Tamamla"
         already_ordered_products: "Bu sipariş dönemi içinde zaten sipariş verildi"
     register_call:
       selling_on_ofn: "Açık Gıda Ağı'na katılmak ister misiniz?"
@@ -1151,7 +1152,7 @@ tr:
       footer_contact_email: "Bize e-posta gönderin"
       footer_nav_headline: "Gezin"
       footer_join_headline: "Bize katılın"
-      footer_join_body: "Açık Gıda Ağı üzerinden aracısız, adil ve temiz gıdaya ulaşma yolları keşfedin."
+      footer_join_body: "Açık Gıda Ağı üzerinden aracısız, adil ve temiz gıdaya ulaşma yollarını keşfedin."
       footer_join_cta: "Daha fazlasını anlat!"
       footer_legal_call: "Okuyun"
       footer_legal_tos: "Şartlar ve koşullar"
@@ -1165,7 +1166,7 @@ tr:
     messages:
       login: "oturum aç"
       signup: "Kaydol"
-      contact: "İletişim"
+      contact: "İLETİŞİM"
       require_customer_login: "Yalnızca onaylı müşteriler buradan alışveriş yapabilir."
       require_login_html: "Zaten onaylanmış bir müşteriyseniz, devam etmek için %{login} veya %{signup}. Buradan alışveriş yapmaya başlamak ister misiniz? Lütfen katılmak için %{contact} %{enterprise} ile iletişime geçin."
       require_customer_html: "Buradan alışveriş yapmaya başlamak istiyorsanız, katılmak için lütfen %{contact} %{enterprise} 'a sorun."
@@ -1196,7 +1197,7 @@ tr:
   ticket_column_item: "Ürün"
   ticket_column_unit_price: "Birim fiyat"
   ticket_column_total_price: "Toplam tutar"
-  menu_1_title: "Pazar Yeri"
+  menu_1_title: "PAZAR YERİ"
   menu_1_url: "/shops"
   menu_2_title: "HARİTA"
   menu_2_url: "/map"
@@ -1226,7 +1227,7 @@ tr:
   footer_links_md: "Bağlantılar"
   footer_about_url: "URL hakkında"
   user_guide_link: "Kullanıcı Kılavuzu Linki"
-  name: İsim
+  name: İSİM
   first_name: Ad
   last_name: Soyadı
   email: E-posta
@@ -1235,7 +1236,7 @@ tr:
   address: Adres
   address_placeholder: Örn. Barış Mah. 3. Cadde
   address2: Adres (devam)
-  city: Şehir
+  city: ŞEHİR
   city_placeholder: Örn. Bursa
   postcode: posta kodu
   postcode_placeholder: Örn. 16000
@@ -1254,12 +1255,12 @@ tr:
   days: günler
   authorization_failure: "Yetki Hatası"
   label_shop: "Pazar"
-  label_shops: "Pazar Yeri"
+  label_shops: "PAZAR YERİ"
   label_map: "HARİTA"
   label_producer: "Üretici"
   label_producers: "ÜRETİCİLER"
   label_groups: "Gruplar"
-  label_about: "hakkında"
+  label_about: "HAKKINDA"
   label_connect: "Bağlan"
   label_learn: "Öğren"
   label_blog: "Blog"
@@ -1319,14 +1320,8 @@ tr:
       cookie_stripe_desc: "Sahtekarlık tespiti için ödeme işlemcimiz Stripe tarafından toplanan veriler https://stripe.com/cookies-policy/legal. Tüm mağazalar Stripe'ı ödeme yöntemi olarak kullanmaz, ancak dolandırıcılığın tüm sayfalara uygulanmasını önlemek iyi bir yöntemdir. Stripe muhtemelen sayfalarımızdan hangilerinin genellikle API'leriyle etkileşime girdiğini gösteren bir resim oluşturur ve daha sonra olağandışı bir şeyi işaretler. Dolayısıyla, Stripe çerezinin ayarlanması, kullanıcıya ödeme yönteminin sağlanmasından daha geniş bir işleve sahiptir. Kaldırılması hizmetin güvenliğini etkileyebilir. Stripe hakkında daha fazla bilgi edinebilir ve gizlilik politikasını https://stripe.com/privacy adresinde okuyabilirsiniz."
       statistics_cookies: "İstatistik Çerezleri"
       statistics_cookies_desc: "Aşağıdakiler mecburi değildir, ancak kullanıcı davranışını analiz etmemize, en çok kullandığınız veya kullanmadığınız özellikleri belirlememize veya kullanıcı deneyimi sorunlarını anlamamıza vb. izin vererek size en iyi kullanıcı deneyimini sunmaya yardımcı olur."
-      statistics_cookies_analytics_desc_html: "Platform kullanım verilerini toplamak ve analiz etmek için, Google Analytics'i Spree ( <a href='https://matomo.org/' target='_blank'>temelde</a> oluşturduğumuz e-ticaret açık kaynak yazılımı) ile bağlantılı varsayılan hizmet olduğu için kullanıyoruz, ancak vizyonumuz <a href='https://matomo.org/' target='_blank'>Matomoya</a> (eski Piwik, açık kaynak analitiği) geçmek GDPR uyumlu ve gizliliğinizi koruyan bir araç)."
       statistics_cookies_matomo_desc_html: "Platform kullanım verilerini toplamak ve analiz etmek için, GDPR uyumlu ve gizliliğinizi koruyan açık kaynaklı bir analiz aracı olan <a href='https://matomo.org/' target='_blank'>Matomo</a> (eski Piwik) kullanıyoruz."
       statistics_cookies_matomo_optout: "Matomo analitiğinden çıkmak istiyor musunuz? Herhangi bir kişisel veri toplamıyoruz ve Matomo hizmetimizi geliştirmemize yardımcı oluyor, ancak seçiminize saygı duyuyoruz :-)"
-      cookie_analytics_utma_desc: "Kullanıcıları ve oturumları ayırt etmek için kullanılır. Çerez, javascript kütüphanesi yürütüldüğünde ve mevcut __utma çerezleri olmadığında oluşturulur. Çerez, Google Analytics'e her veri gönderildiğinde güncellenir."
-      cookie_analytics_utmt_desc: "Talep oranını azaltmak için kullanılır."
-      cookie_analytics_utmb_desc: "Yeni oturumları / ziyaretleri belirlemek için kullanılır. Çerez, javascript kütüphanesi yürütüldüğünde ve mevcut __utmb çerezleri olmadığında oluşturulur. Çerez, Google Analytics'e her veri gönderildiğinde güncellenir."
-      cookie_analytics_utmc_desc: "Ga.js'de kullanılmaz Urchin.js ile birlikte çalışabilirlik için ayarlayın. Tarihsel olarak, bu çerez, kullanıcının yeni bir oturumda / ziyarette olup olmadığını belirlemek için __utmb çereziyle birlikte çalışıyor."
-      cookie_analytics_utmz_desc: "Kullanıcının sitenize nasıl ulaştığını açıklayan trafik kaynağını veya kampanyayı depolar. Çerez, javascript kitaplığı yürütüldüğünde oluşturulur ve Google Analytics'e her veri gönderildiğinde güncellenir."
       cookie_matomo_basics_desc: "Matomo istatistik toplamak için birinci taraf çerezleri."
       cookie_matomo_heatmap_desc: "Matomo Heatmap & Session Kayıt çerezi."
       cookie_matomo_ignore_desc: "Kullanıcının izlenmesini önlemek için kullanılan çerez."
@@ -1363,7 +1358,7 @@ tr:
   system_step2: "2. Alışveriş Yap"
   system_step2_text: "Gıdanızı yerel üretici tezgahlarından, üretici ve türetici pazarlarından temin edin. Yaşanabilir bir dünya için alışkanlıklarınızı şimdi değiştirin. Gıdanızın ve onu size getiren insanların hikayelerini öğrenin!"
   system_step3: "3. Teslimat "
-  system_step3_text: "Gıdanıza ulaşmak için eve teslim edilmesini ya da kargoyu bekleyin veya gıdanız ile daha kişisel bir bağ kurmak için üreticinizi veya pazarını kendiniz ziyaret edin. Doğayla ve gıdayla istediğiniz  şekilde ama gerçek bir bağ kurun. "
+  system_step3_text: "Seçtiğiniz gıdaya ulaşmak için adresinize teslim edilmesini  bekleyin veya gıdanız ile daha kişisel bir bağ kurmak için üreticinizi veya pazarını ziyaret edin. Doğayla ve gıdayla istediğiniz  şekilde ama gerçek bir bağ kurun. "
   cta_headline: "Dünyayı daha iyi bir yer yapan alışveriş biçimi."
   cta_label: "Hazırım"
   stats_headline: "Yeni bir gıda sistemi yaratıyoruz."
@@ -1372,7 +1367,7 @@ tr:
   stats_shoppers: "gıda alıcıları"
   stats_orders: "GIDA SİPARİŞLERİ"
   checkout_title: Ödeme Yap
-  checkout_now: Şimdi ödeme yap
+  checkout_now: Alışverişi Tamamla
   checkout_order_ready: Sipariş şu tarihte hazır
   checkout_hide: Gizle
   checkout_expand: genişlet
@@ -1500,10 +1495,10 @@ tr:
   shopping_oc_select: "Seçin..."
   shopping_tabs_home: "Ana sayfa"
   shopping_tabs_shop: "Alışveriş yap"
-  shopping_tabs_about: "hakkında"
-  shopping_tabs_contact: "İletişim"
+  shopping_tabs_about: "Hakkında"
+  shopping_tabs_contact: "İLETİŞİM"
   shopping_contact_address: "Adres"
-  shopping_contact_web: "İletişim"
+  shopping_contact_web: "İLETİŞİM"
   shopping_contact_social: "Takip et"
   shopping_groups_part_of: "şunun parçası:"
   shopping_producers_of_hub: "%{hub} üreticileri:"
@@ -1548,7 +1543,7 @@ tr:
   products_update_error_data: "Geçersiz veriler nedeniyle kaydetme başarısız oldu:"
   products_changes_saved: "Değişiklikler kaydedildi."
   search_no_results_html: "Üzgünüz, %{query} sonuç bulunamadı. Başka bir arama yapmak ister misiniz?"
-  components_profiles_popover: "Açık Gıda Ağında bir vitrini olmayan ancak başka bir sitede kendi satış siteleri olan hesaplar"
+  components_profiles_popover: "Açık Gıda Ağında bir mağazası olmayan ancak başka bir sitede kendi satış siteleri olan hesaplar"
   components_profiles_show: "Profilleri göster"
   components_filters_nofilters: "Filtresiz"
   components_filters_clearfilters: "Tüm filtreleri temizle"
@@ -1560,7 +1555,7 @@ tr:
   groups_about: "Hakkımızda"
   groups_producers: "Üreticilerimiz"
   groups_hubs: "Pazarlarımız"
-  groups_contact_web: İletişim
+  groups_contact_web: İLETİŞİM
   groups_contact_social: Takip et
   groups_contact_address: Adres
   groups_contact_email: Bize e-posta gönderin
@@ -1585,25 +1580,9 @@ tr:
   groups_signup_contact_text: "AGA'nın sizin için neler yapabileceğini keşfetmek için iletişime geçin:"
   groups_signup_detail: "İşte bilgiler."
   login_invalid: "Geçersiz e-posta veya şifre"
-  modal_hubs: "Gıda Pazarları"
-  modal_hubs_abstract: Pazarlarımız, bizi gıdamızı yetiştiren insanlarla bir araya getiren temas noktalarıdır!
-  modal_hubs_content1: Konuma veya ada göre uygun bir pazar arayabilirsiniz. Bazı pazarlar ürünlerinizi alabileceğiniz teslimat noktaları belirlerken bazıları da kargo ile evinize teslim edebilir.. Her bir gıda pazarı tedarik, satış ve lojistik süreçlerini bağımsız olarak yöneten gruplardır - bu nedenle pazarlar arasında farklılıklar olması beklenir.
-  modal_hubs_content2: Bir seferde yalnızca bir pazardan alışveriş yapabilirsiniz.
-  modal_groups: "Gruplar / Bölgeler"
-  modal_groups_content1: Bunlar, Açık Gıda Ağını oluşturan pazarlar arasındaki ilişkiler ve işbirlikleridir.
-  modal_groups_content2: Bazı gruplar yalnızca fiziksel yakınlıklarından dolayı bir araya gelirken bazıları ortak değerler etrafında kümelenir.
-  modal_how: "Nasıl çalışır"
-  modal_how_shop: Açık Gıda Ağı'nda Alışveriş Yapın
-  modal_how_shop_explained: Alışverişe başlamak için size en yakın pazarları arayın! Ürünleri ve diğer bilgileri görmek için her bir pazar detayını genişletebilir ve bir tuşla alışverişe başlayabilirsiniz. (Bir seferde yalnızca bir pazardan alışveriş yapabilirsiniz.)
-  modal_how_pickup: Teslimat noktası, kargo ve gönderi masrafları
-  modal_how_pickup_explained: Bazı pazarlar kargo ile gönderim yaparken bazıları ile yalnızca teslimat noktalarında buluşabilirsiniz. İşletme ana sayfasına hangi seçeneklerin mevcut olduğunu görebilir ve alışveriş ve ödeme sayfalarından seçim yapabilirsiniz. Kargo maliyetleri her pazarda farklılık gösterebilir. Her pazar, bağımsız iş operasyonları ve nakliye süreçleri olan satış noktalarıdır- bu nedenle pazarlar arasında farklılıklar olması beklenir.
-  modal_how_more: Daha fazla bilgi edin
-  modal_how_more_explained: "Açık Gıda Ağı nasıl çalışır öğrenmek ve bu ailenin bir parçası olmak için göz göz atın:"
-  modal_producers: "Üreticiler"
-  modal_producers_explained: "Üreticilerimiz, Açık Gıda Ağı üzerinden ulaşabileceğiniz temiz gıda ürünlerini hazırlıyor."
   producers_about: Hakkımızda
   producers_buy: Alışveriş ürünleri
-  producers_contact: İletişim
+  producers_contact: İLETİŞİM
   producers_contact_phone: Ara
   producers_contact_social: Takip et
   producers_buy_at_html: "%{enterprise} ürünleri için buradan alışveriş yapın:"
@@ -1645,7 +1624,7 @@ tr:
   sell_ask_services: "Bize AGA hizmetleri hakkında soru sorun."
   shops_title: Dükkanlar
   shops_headline: Alışveriş biçim değiştiriyor
-  shops_text: Gıda dönemsel yetiştirilir, dönemsel hasat edilir ve dönemsel sipariş edilir. Aradığınız sipariş dönemi kapalı ise kısa süre sonra tekrar kontrol edin.
+  shops_text: Gıda dönemsel yetiştirilir, dönemsel hasat edilir ve dönemsel sipariş edilir. Aradığınız mağazanın sipariş dönemi kapalı ise kısa süre sonra tekrar kontrol edin.
   shops_signup_title: Pazar olarak kaydolun
   shops_signup_headline: Gıda pazarları, sınır yok.
   shops_signup_motivation: Her türlü gıda işletmesi/topluluğu modelini destekliyoruz. Bağımsız ve şeffaf bir sosyal girişimiz. İşlerinizi kolaylaştırmaya çalışan yol arkadaşlarıyız.
@@ -1755,7 +1734,7 @@ tr:
     steps:
       introduction:
         registration_greeting: "Merhaba!"
-        registration_intro: "Artık Üretici veya Pazar için bir profil oluşturabilirsiniz"
+        registration_intro: "Şimdi AGA üzerinden bir Üretici veya Türetici profili oluşturabilirsiniz"
         registration_checklist: "Neye ihtiyacım var?"
         registration_time: "5-10 dakika"
         registration_enterprise_address: "İşletme adresi"
@@ -1773,8 +1752,8 @@ tr:
         headline: "Hadi Başlayalım !"
         enterprise: "Merhaba! Öncelikle işletmenizi tanıyalım:"
         producer: "Merhaba! Öncelikle çiftliğinizi tanıyalım:"
-        enterprise_name_field: "İşletme Adı:"
-        producer_name_field: "Çiftlik Adı:"
+        enterprise_name_field: "İŞLETME ADI:"
+        producer_name_field: "ÇİFTLİK ADI:"
         producer_name_field_placeholder: "örn. Ali Baba Çiftliği"
         producer_name_field_error: "Lütfen işletmeniz için özgün bir ad seçin"
         address1_field: "Adres satırı 1:"
@@ -1792,10 +1771,10 @@ tr:
         country_field: "Ülke:"
         country_field_error: "lütfen bir ülke seçiniz"
       contact:
-        title: "İletişim"
+        title: "İLETİŞİM"
         who_is_managing_enterprise: "%{enterprise}'ın yönetiminden kim sorumlu?"
         contact_field: "Birincil Kontak"
-        contact_field_placeholder: "Kişi Adı"
+        contact_field_placeholder: "İLETİŞİM"
         contact_field_required: "Birincil kişi girmeniz gerekiyor."
         phone_field: "Telefon numarası"
         phone_field_placeholder: "Örn. (0530) 123 45 67"
@@ -1810,7 +1789,7 @@ tr:
         no_producer_help: "Üretici değilseniz muhtemelen gıdaya ulaşım sağlayan, dağıtım veya satış yapan bir grup ya da işletmesiniz. Bir dükkan, kooperatif, gıda topluluğu, restaurant veya toptancı bile olabilirsiniz.  "
         create_profile: "Profil oluştur"
       about:
-        title: "hakkında"
+        title: "Hakkında"
         headline: "Güzel!"
         message: "Şimdi ayrıntıları açıklayalım"
         success: "Sonunda! %{enterprise} Açık Gıda Ağı'na eklendi"
@@ -1871,7 +1850,7 @@ tr:
         headline: "Tamamlandı!"
         thanks: "%{enterprise} ile ilgili ayrıntıları doldurduğunuz için teşekkür ederiz."
         login: "Dilediğiniz zaman Açık Gıda Ağı üzerinden giriş yapıp Yönetici paneline giderek işletmenizin ayarlarını güncelleyebilirsiniz."
-        action: "İşletme Paneline Git"
+        action: "İşletme Kontrol Paneline Git"
   back: "Geri"
   continue: "Devam et"
   action_or: "VEYA"
@@ -1918,6 +1897,7 @@ tr:
   admin_enterprise_relationships_permits: "izinler"
   admin_enterprise_relationships_seach_placeholder: "Ara"
   admin_enterprise_relationships_button_create: "Oluştur"
+  admin_enterprise_relationships_to: "'a"
   admin_enterprise_groups: "İşletme Grupları"
   admin_enterprise_groups_name: "Ad"
   admin_enterprise_groups_owner: "Sahip"
@@ -1926,7 +1906,7 @@ tr:
   admin_enterprise_groups_data_powertip: "Bu gruptan sorumlu birincil kullanıcı."
   admin_enterprise_groups_data_powertip_logo: "Grubun logosu"
   admin_enterprise_groups_data_powertip_promo_image: "Bu resim grup profilinin üstünde görüntülenir"
-  admin_enterprise_groups_contact: "İletişim"
+  admin_enterprise_groups_contact: "İLETİŞİM"
   admin_enterprise_groups_contact_phone_placeholder: "Örneğin. 532 100 05 01"
   admin_enterprise_groups_contact_address1_placeholder: "Örneğin. 123 Cadde"
   admin_enterprise_groups_contact_city: "İlçe"
@@ -1962,7 +1942,7 @@ tr:
   flat_rate_per_item: "Sabit Ücret (ürün başına)"
   flat_rate_per_order: "Sabit Ücret (sipariş Başına) "
   flexible_rate: "Esnek Ücret"
-  price_sack: "Fiyat Torbası"
+  price_sack: "Değişken Ücret"
   new_order_cycles: "Yeni Sipariş Dönemleri"
   new_order_cycle: "Yeni Sipariş Dönemi"
   select_a_coordinator_for_your_order_cycle: "Sipariş döneminiz için bir koordinatör seçin"
@@ -2040,8 +2020,8 @@ tr:
   order_cycles: "Sipariş Dönemleri"
   enterprise_relationships: "İşletme izinleri"
   remove_tax: "Vergiyi kaldır"
-  first_name_begins_with: "Adının Baş harfi"
-  last_name_begins_with: "Soyadının Baş Harfi"
+  first_name_begins_with: "Adının BAŞ HARFİ"
+  last_name_begins_with: "Soyadının BAŞ HARFİ"
   enterprise_tos_link: "İşletme Hizmet Şartları bağlantısı"
   enterprise_tos_message: "Amaçlarımızı ve değerlerimizi paylaşan insanlarla çalışmak istiyoruz. Bu nedenle yeni işletmelerden bunu kabul etmesini istiyoruz:"
   enterprise_tos_link_text: "Kullanım Şartları."
@@ -2050,7 +2030,7 @@ tr:
   products_require_tax_category: "ürünler vergi kategorisi gerektirir"
   admin_shared_address_1: "Adres"
   admin_shared_address_2: "Adres (devam)"
-  admin_share_city: "Şehir"
+  admin_share_city: "ŞEHİR"
   admin_share_zipcode: "posta kodu"
   admin_share_country: "ülke"
   admin_share_state: "Şehir"
@@ -2103,14 +2083,14 @@ tr:
   report_header_shipping_instructions: Teslimat  bilgileri
   report_header_ship_street: Teslimat Adresi
   report_header_ship_street_2: Teslimat Adresi 2
-  report_header_ship_city: Teslimat Şehri
+  report_header_ship_city: TESLİMAT ŞEHRİ
   report_header_ship_postcode: Teslimat Posta Kodu
   report_header_ship_state: Teslimat Durumu
   report_header_billing_street: Fatura Adresi
   report_header_billing_street_2: Fatura Adresi 2
   report_header_billing_street_3: Fatura Adresi 3
   report_header_billing_street_4: Fatura Adresi 4
-  report_header_billing_city: Fatura Adresi
+  report_header_billing_city: FATURA ADRESİ
   report_header_billing_postcode: Fatura Posta Kodu
   report_header_billing_state: Fatura Durumu
   report_header_incoming_transport: Gelen Nakliye
@@ -2151,17 +2131,17 @@ tr:
   report_header_curr_cost_per_unit: Birim Maliyet
   report_header_total_shipping_cost: Toplam Teslimat Maliyeti
   report_header_payment_method: Ödeme Yöntemi
-  report_header_sells: Satıyor
+  report_header_sells: NE SATIYOR
   report_header_visible: Görünür
   report_header_price: Fiyat
   report_header_unit_size: Ölçü Birimi
   report_header_distributor: Dağıtımcı
   report_header_distributor_address: Dağıtımcı adresi
-  report_header_distributor_city: Dağıtımcı şehri
+  report_header_distributor_city: DAĞITIMCI ŞEHRİ
   report_header_distributor_postcode: Dağıtımcı posta kodu
   report_header_delivery_address: Teslimat Adresi
   report_header_delivery_postcode: Teslimat Adresi Posta Kodu
-  report_header_bulk_unit_size: Toplu Ölçü
+  report_header_bulk_unit_size: Toplu Alım Miktarı
   report_header_weight: Ağırlık
   report_header_sum_total: Toplamı
   report_header_date_of_order: Sipariş Tarihi
@@ -2173,10 +2153,10 @@ tr:
   report_header_order_id: Sipariş Kimliği
   report_header_item_name: Ürün adı
   report_header_temp_controlled_items: Soğuk Sevkiyat Ürünleri?
-  report_header_customer_name: müşteri adı
+  report_header_customer_name: MÜŞTERİ adı
   report_header_customer_email: Müşteri e-postası
   report_header_customer_phone: Müşteri Telefonu
-  report_header_customer_city: Müşteri Şehri
+  report_header_customer_city: MÜŞTERİ ŞEHRİ
   report_header_payment_state: Ödeme Durumu
   report_header_payment_type: Ödeme şekli
   report_header_item_price: "Ürün (%{currency})"
@@ -2213,7 +2193,7 @@ tr:
   report_header_transaction_fee: İşlem Ücreti (vergi yok)
   report_header_total_untaxable_admin: Toplam vergisiz yönetici düzenlemeleri (vergi yok)
   report_header_total_taxable_admin: Vergiye tabi toplam yönetim düzenlemeleri (vergi dahil)
-  initial_invoice_number: "İlk fatura numarası:"
+  initial_invoice_number: "Başlangıç fatura numarası:"
   invoice_date: "Fatura tarihi:"
   due_date: "Vade tarihi:"
   account_code: "Hesap kodu:"
@@ -2239,7 +2219,7 @@ tr:
   web: "Web"
   primary_details: "Temel Bilgiler"
   adrdress: "Adres"
-  contact: "İletişim"
+  contact: "İLETİŞİM"
   social: "Sosyal"
   business_details: "İşletme Detayları"
   properties: "Özellikler"
@@ -2252,7 +2232,7 @@ tr:
   payment_updated: "Ödeme Güncellendi"
   inventory_settings: "Stok Ayarları"
   tag_rules: "Etiket Kuralları"
-  shop_preferences: "Vitrin Tercihleri"
+  shop_preferences: "Mağaza Tercihleri"
   enterprise_fee_whole_order: Tüm sipariş
   enterprise_fee_by: "%{role}%{enterprise_name} tarafından%{type} ücreti"
   validation_msg_relationship_already_established: "^ Bu ilişki zaten kurulmuş."
@@ -2391,7 +2371,7 @@ tr:
               gibi diğer  hesaplar ürünlerinizi kendi listelerine ekleyip satışa sunabilsinler.
           producer_shop: Üretici Tezgahı
           producer_shop_text1: >
-              Açık Gıda Ağı üzerindeki tezgahınız aracılığıyla ürünlerinizi alıcılara
+              Açık Gıda Ağı üzerindeki mağazanız aracılığıyla ürünlerinizi alıcılara
               direk olarak satın.
           producer_shop_text2: >
               Üretici Tezgahı yalnızca kendi ürünlerinizi satmanız içindir. Kendi
@@ -2462,7 +2442,7 @@ tr:
         select_rule_type: "Bir kural türü seçin:"
         add_rule: "Kural Ekle"
       enterprise_fees:
-        inherit_from_product: "Üründen Aktar"
+        inherit_from_product: "Üründen Devral"
       orders:
         index:
           per_page: "sayfa başına %{results}"
@@ -2551,7 +2531,7 @@ tr:
         'yes': "Evet"
         'no': "Hayır"
       inventory_products: "Stok Ürünleri"
-      hidden_products: "Gizli Ürünler"
+      hidden_products: "GİZLİ ÜRÜNLER"
       new_products: "Yeni ürünler"
       reset_stock_levels: Stok Seviyelerini Varsayılanlara Sıfırla
       changes_to: Değiştirir
@@ -2564,10 +2544,10 @@ tr:
       changing_on_hand_stock: Eldeki stok seviyeleri değiştiriliyor ...
       stock_reset: Stoklar varsayılana ayarlanır
     tag_rules:
-      show_hide_variants: 'Vitrinimde varyantları Göster veya Gizle'
+      show_hide_variants: 'Mağazamda varyantları Göster veya Gizle'
       show_hide_shipping: 'Ödeme sırasında teslimat yöntemlerini göster veya gizle'
       show_hide_payment: 'Ödeme sırasında ödeme yöntemlerini göster veya gizle'
-      show_hide_order_cycles: 'Vitrinimde sipariş dönemlerini göster veya gizle'
+      show_hide_order_cycles: 'Mağazamda sipariş dönemlerini göster veya gizle'
       visible: GÖRÜNÜR
       not_visible: GÖRÜNÜR DEĞİL
     services:
@@ -2679,6 +2659,14 @@ tr:
       start_free_profile: "Ücretsiz bir profille başlayın ve hazır olduğunuzda devam edin!"
   order_management:
     reports:
+      enterprise_fee_summaries:
+        filters:
+          date_range: "Tarih Aralığı"
+          report_format_csv: "CSV olarak indir"
+          generate_report: "Rapor Oluştur"
+        report:
+          none: "HİÇ"
+          select_and_search: "Filtreleri seçin ve verilerinize erişmek için RAPOR OLUŞTUR'a tıklayın."
       enterprise_fee_summary:
         date_end_before_start_error: "başlangıçtan sonra olmalı"
         parameter_not_allowed_error: "Bu rapor için seçilen bir veya daha fazla filtreyi kullanma yetkiniz yok."
@@ -2709,7 +2697,7 @@ tr:
             header:
               fee_type: "Ücret Türü"
               enterprise_name: "İşletme Sahibi"
-              fee_name: "Ücret Adı"
+              fee_name: "ÜCRET ADI"
               customer_name: "Müşteri"
               fee_placement: "Ücret Yerleşimi"
               fee_calculated_on_transfer_through_name: "Aktarma Ücreti Hesaplama"
@@ -2733,14 +2721,14 @@ tr:
   new_product: "Yeni ürün"
   administration: "yönetim"
   logged_in_as: "olarak giriş yapıldı"
-  account: "hesap"
+  account: "Hesap"
   logout: "Çıkış Yap"
   date_range: "Tarih aralığı"
   status: "durum"
   new: "Yeni"
   start: "Başlangıç"
   end: "Son"
-  stop: "Dur"
+  stop: "Bitiş"
   first: "İlk"
   previous: "Önceki"
   last: "Son"
@@ -2771,14 +2759,14 @@ tr:
     customer_details: "Müşteri detayları"
     customer_search: "Müşteri Arama"
     choose_a_customer: "Bir müşteri seçin"
-    account: "hesap"
+    account: "Hesap"
     billing_address: "Fatura Adresi"
     shipping_address: "Teslimat Adresi"
     first_name: "İsim"
     last_name: "Soyadı"
     street_address: "Açık adres"
     street_address_2: "Açık Adres (devam)"
-    city: "Şehir"
+    city: "ŞEHİR"
     zip: "Postakodu"
     country: "ülke"
     state: "Şehir"
@@ -2809,7 +2797,7 @@ tr:
     hide_cents: "Kuruşları gizle"
     display_currency: "Para birimini göster"
     choose_currency: "Para Birimini Seç"
-    mail_method_settings: "Posta Yöntemi Ayarları"
+    mail_method_settings: "E-posta Ayarları"
     general: "Genel"
     enable_mail_delivery: "Posta Dağıtımını Etkinleştir"
     send_mails_as: "Postaları Farklı Gönder"
@@ -2818,14 +2806,6 @@ tr:
     smtp_send_copy_to_this_addresses: "Tüm giden postaların bir kopyasını bu adrese gönderir. Birden çok adres için virgülle ayırın."
     intercept_email_address: "Durdurma E-posta Adresi"
     intercept_email_instructions: "E-posta alıcısını geçersiz kılın ve bu adresle değiştirin."
-    smtp: "SMTP"
-    smtp_domain: "SMTP Alanı"
-    smtp_mail_host: "SMTP Posta Ana Bilgisayarı"
-    smtp_port: "SMTP Bağlantı Noktası"
-    secure_connection_type: "Güvenli Bağlantı Türü"
-    smtp_authentication_type: "SMTP Kimlik Doğrulama Türü"
-    smtp_username: "SMTP Kullanıcı Adı"
-    smtp_password: "SMTP Parolası"
     image_settings: "Görüntü Ayarları"
     image_settings_warning: "Ataç stillerini güncellerseniz küçük resimleri yeniden oluşturmanız gerekir. Bunu yapmak için rake ataç kullanın: refresh: thumbnail CLASS = Spree :: Image."
     attachment_default_style: Ekler Stili
@@ -2872,12 +2852,6 @@ tr:
     shipping_categories: "Nakliye Kategorileri"
     new_shipping_category: "Yeni Nakliye Kategorisi"
     back_to_shipping_categories: "Teslimat Kategorilerine Geri Dön"
-    analytics_trackers: "Analitik İzleyiciler"
-    no_trackers_found: "İzleyici Bulunamadı"
-    new_tracker: "Yeni İzleyici"
-    add_one: "Bir tane Ekle"
-    google_analytics_id: "Analytik Kimliği"
-    back_to_trackers_list: "İzleyiciler Listesine Geri Dön"
     name: "ad"
     description: "Açıklama"
     type: "Çeşit"
@@ -2932,7 +2906,7 @@ tr:
           store: Ana Site
     admin:
       tab:
-        dashboard: "Gösterge Paneli"
+        dashboard: "KONTROL PANELİ"
         orders: "Siparişler"
         bulk_order_management: "Toplu Sipariş Yönetimi"
         subscriptions: "Üyelikler"
@@ -2941,7 +2915,7 @@ tr:
         properties: "Özellikler"
         variant_overrides: "Stok"
         reports: "Raporlar"
-        configuration: "Yapılandırma"
+        configuration: "KURULUM"
         users: "Kullanıcılar"
         roles: "Roller"
         order_cycles: "Sipariş Dönemleri"
@@ -2951,7 +2925,7 @@ tr:
         groups: "Gruplar"
       product_properties:
         index:
-          inherits_properties_checkbox_hint: "Özellikler %{supplier}'den aktarılsın mı? (yukarıda geçersiz kılınmadıkça)"
+          inherits_properties_checkbox_hint: "Özellikler %{supplier}'den devralınsın mı? (yukarıda geçersiz kılınmadıkça)"
           add_product_properties: "Ürün Özelliği Ekle"
           select_from_prototype: "Prototipten Seç"
       properties:
@@ -3112,10 +3086,10 @@ tr:
           title: "Yeni Ürün"
           new_product: "Yeni Ürün"
           supplier: "Tedarikçi"
-          product_name: "Ürün adı"
+          product_name: "ÜRÜN ADI"
           units: "Ölçü Birimi"
           value: "değer"
-          unit_name: "Birim adı"
+          unit_name: "BİRİM ADI"
           price: "Fiyat"
           on_hand: "Mevcut"
           on_demand: "Talep üzerine"
@@ -3136,19 +3110,19 @@ tr:
             display_as: Gösterme Şekli
             category: Kategori
             tax_category: Vergi Kategorisi
-            inherits_properties?: Özellikler aktarılıyor mu?
+            inherits_properties?: Özellikler devralınsın mı?
             available_on: Şu Tarihte Hazır
             av_on: "Şu tarihte hazır"
             import_date: "İçe Aktarım Tarihi"
           products_variant:
             variant_has_n_overrides: "Bu varyant %{n} geçersiz kılınma özelliğine sahip"
             new_variant: "Yeni Varyant"
-          product_name: Ürün adı
+          product_name: ÜRÜN ADI
         primary_taxon_form:
           product_category: Ürün Kategorisi
         group_buy_form:
           group_buy: "Grup Alımı?"
-          bulk_unit_size: 'Toplu Ölçü '
+          bulk_unit_size: Toplu Alım Miktarı
         display_as:
           display_as: Gösterme Şekli
       reports:
@@ -3159,14 +3133,6 @@ tr:
           bulk_coop_allocation: 'Müşteri Bazında Toplu Alım Rakamları'
           bulk_coop_packing_sheets: 'Toplu Alım - Paketleme Sayfaları'
           bulk_coop_customer_payments: 'Toplu Alım - Müşteri Ödemeleri'
-        enterprise_fee_summaries:
-          filters:
-            date_range: "Tarih Aralığı"
-            report_format_csv: "CSV olarak indir"
-            generate_report: "Rapor Oluştur"
-          report:
-            none: "Yok"
-            select_and_search: "Filtreleri seçin ve verilerinize erişmek için RAPOR OLUŞTUR'a tıklayın."
       users:
         index:
           listing_users: "Kullanıcılar Listeleniyor"
@@ -3211,14 +3177,15 @@ tr:
         autocomplete:
           producer_name: "Üretici"
           unit: "Birim"
-      general_settings:
+      shared:
+        sortable_header:
+          name: "Ad"
         edit:
           legal_settings: "Yasal Ayarlar"
           cookies_consent_banner_toggle: "Çerezler onay başlığını göster"
           privacy_policy_url: "Gizlilik Politikası URLsi"
           enterprises_require_tos: "İşletmeler Hizmet Şartlarını kabul etmelidir"
           cookies_policy_matomo_section: "Çerez politikası sayfasında Matomo bölümünü görüntüle"
-          cookies_policy_ga_section: "Çerez politikası sayfasında Google Analytics bölümünü görüntüle"
           footer_tos_url: "Hizmet Şartları URLsi"
     checkout:
       payment:

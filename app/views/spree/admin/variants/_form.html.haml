@@ -1,10 +1,10 @@
 .label-block.left.six.columns.alpha{'ng-app' => 'admin.products'}
   .field
     = f.label :display_name, t('.display_name')
-    = f.text_field :display_name, class: "fullwidth"
+    = f.text_field :display_name, class: "fullwidth", placeholder: t('.display_name_placeholder')
   .field
     = f.label :display_as, t('.display_as')
-    = f.text_field :display_as, class: "fullwidth"
+    = f.text_field :display_as, class: "fullwidth", placeholder: t('.display_as_placeholder')
 
   - if product_has_variant_unit_option_type?(@product)
     - if @product.variant_unit != 'items'

@@ -69,7 +69,6 @@ describe Spree::Order do
 
     it "skips order cycle per-order adjustments for orders that don't have an order cycle" do
       allow(EnterpriseFee).to receive(:clear_all_adjustments_on_order)
-      allow(subject).to receive(:line_items) { [] }
 
       allow(subject).to receive(:order_cycle) { nil }
 
@@ -78,8 +77,7 @@ describe Spree::Order do
 
     it "ensures the correct adjustment(s) are created for order cycles" do
       allow(EnterpriseFee).to receive(:clear_all_adjustments_on_order)
-      line_item = double(:line_item)
-      allow(subject).to receive(:line_items) { [line_item] }
+      line_item = create(:line_item, order: subject)
       allow(subject).to receive(:provided_by_order_cycle?) { true }
 
       order_cycle = double(:order_cycle)
@@ -94,7 +92,6 @@ describe Spree::Order do
 
     it "ensures the correct per-order adjustment(s) are created for order cycles" do
       allow(EnterpriseFee).to receive(:clear_all_adjustments_on_order)
-      allow(subject).to receive(:line_items) { [] }
 
       order_cycle = double(:order_cycle)
       expect_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator).

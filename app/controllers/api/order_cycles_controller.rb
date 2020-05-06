@@ -4,8 +4,11 @@ module Api
     respond_to :json
 
     skip_authorization_check
+    skip_before_filter :authenticate_user, :ensure_api_key, only: [:taxons, :properties]
 
     def products
+      render_no_products unless order_cycle.open?
+
       products = ProductsRenderer.new(
         distributor,
         order_cycle,
@@ -15,7 +18,7 @@ module Api
 
       render json: products
     rescue ProductsRenderer::NoProducts
-      render status: :not_found, json: ''
+      render_no_products
     end
 
     def taxons
@@ -34,6 +37,10 @@ module Api
     end
 
     private
+
+    def render_no_products
+      render status: :not_found, json: ''
+    end
 
     def product_properties
       Spree::Property.
@@ -70,11 +77,11 @@ module Api
     end
 
     def distributor
-      Enterprise.find_by(id: params[:distributor])
+      @distributor ||= Enterprise.find_by(id: params[:distributor])
     end
 
     def order_cycle
-      OrderCycle.find_by(id: params[:id])
+      @order_cycle ||= OrderCycle.find_by(id: params[:id])
     end
 
     def customer

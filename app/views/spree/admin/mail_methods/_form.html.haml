@@ -1,60 +1,28 @@
 %div
   .row
-    .alpha.six.columns
-      %fieldset.no-border-bottom
-        %legend{align: "center"}= t("spree.general")
-        .field
-          = preference_field_tag("enable_mail_delivery", Spree::Config[:enable_mail_delivery], type: :boolean)
-          = label_tag :enable_mail_delivery, t("spree.enable_mail_delivery")
-        .field
-          = label_tag :mails_from, t("spree.send_mails_as")
-          %br/
-          = text_field_tag :mails_from, Spree::Config[:mails_from], maxlength: 256, class: 'fullwidth'
-          %br/
-          %span.info
-            = t("spree.smtp_send_all_emails_as_from_following_address")
-        .field
-          = label_tag :mail_bcc, t("spree.send_copy_of_all_mails_to")
-          %br/
-          = text_field_tag :mail_bcc, Spree::Config[:mail_bcc], maxlength: 256, class: 'fullwidth'
-          %br/
-          %span.info
-            = t("spree.smtp_send_copy_to_this_addresses")
-        .field
-          = label_tag :intercept_email, t("spree.intercept_email_address")
-          %br/
-          = text_field_tag :intercept_email, Spree::Config[:intercept_email], maxlength: 256, class: 'fullwidth'
-          %br/
-          %span.info
-            = t("spree.intercept_email_instructions")
-    .six.columns.omega
-      %fieldset.no-border-bottom
-        %legend{align: "center"}= t("spree.smtp")
-        .field
-          = label_tag :mail_domain, t("spree.smtp_domain")
-          %br/
-          = text_field_tag :mail_domain, Spree::Config[:mail_domain], class: 'fullwidth'
-        .field
-          = label_tag :mail_host, t("spree.smtp_mail_host")
-          %br/
-          = text_field_tag :mail_host, Spree::Config[:mail_host], class: 'fullwidth'
-        .field
-          = label_tag :mail_port, t("spree.smtp_port")
-          %br/
-          = text_field_tag :mail_port, Spree::Config[:mail_port], class: 'fullwidth'
-        .field
-          = label_tag :secure_connection_type, t("spree.secure_connection_type")
-          %br/
-          = select_tag(:secure_connection_type, options_from_collection_for_select(Spree::Core::MailSettings::SECURE_CONNECTION_TYPES.map{|w| Spree.t(w.downcase.to_sym, default: w)}, :to_s, :to_s, Spree::Config[:secure_connection_type]), class: 'select2 fullwidth')
-        .field
-          = label_tag :mail_auth_type, t("spree.smtp_authentication_type")
-          %br/
-          = select_tag(:mail_auth_type, options_from_collection_for_select(Spree::Core::MailSettings::MAIL_AUTH.map{|w| Spree.t(w.downcase.to_sym, default: w)}, :to_s, :to_s, Spree::Config[:mail_auth_type]), class: 'select2 fullwidth')
-        .field
-          = label_tag :smtp_username, t("spree.smtp_username")
-          %br/
-          = text_field_tag :smtp_username, Spree::Config[:smtp_username], class: 'fullwidth'
-        .field
-          = label_tag :preferred_smtp_password, t("spree.smtp_password")
-          %br/
-          = password_field_tag :smtp_password, Spree::Config[:smtp_password], class: 'fullwidth'
+    %fieldset.no-border-bottom
+      %legend{align: "center"}= t("spree.general")
+      .field
+        = preference_field_tag("enable_mail_delivery", Spree::Config[:enable_mail_delivery], type: :boolean)
+        = label_tag :enable_mail_delivery, t("spree.enable_mail_delivery")
+      .field
+        = label_tag :mails_from, t("spree.send_mails_as")
+        %br/
+        = text_field_tag :mails_from, Spree::Config[:mails_from], maxlength: 256, class: 'fullwidth'
+        %br/
+        %span.info
+          = t("spree.smtp_send_all_emails_as_from_following_address")
+      .field
+        = label_tag :mail_bcc, t("spree.send_copy_of_all_mails_to")
+        %br/
+        = text_field_tag :mail_bcc, Spree::Config[:mail_bcc], maxlength: 256, class: 'fullwidth'
+        %br/
+        %span.info
+          = t("spree.smtp_send_copy_to_this_addresses")
+      .field
+        = label_tag :intercept_email, t("spree.intercept_email_address")
+        %br/
+        = text_field_tag :intercept_email, Spree::Config[:intercept_email], maxlength: 256, class: 'fullwidth'
+        %br/
+        %span.info
+          = t("spree.intercept_email_instructions")

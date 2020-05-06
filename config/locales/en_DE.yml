@@ -1288,14 +1288,8 @@ en_DE:
       cookie_stripe_desc: "Data collected by our payment processor Stripe for fraud detection https://stripe.com/cookies-policy/legal. Not all shops use Stripe as a payment method but it is a good practice to prevent fraud to apply it to all pages. Stripe probably build a picture of which of our pages usually interact with their API and then flag anything unusual. So setting the Stripe cookie has a broader function than simply the provision of a payment method to a user. Removing it could affect the security of the service itself. You can learn more about Stripe and read its privacy policy at https://stripe.com/privacy."
       statistics_cookies: "Statistics Cookies"
       statistics_cookies_desc: "The following are not strictly necessary, but help to provide you with the best user experience by allowing us to analyse user behaviour, identify which features you use most, or don’t use, understand user experience issues, etc."
-      statistics_cookies_analytics_desc_html: "To collect and analyse platform usage data, we use Google Analytics, as it was the default service connected with Spree (the e-commerce open source software that we built on) but our vision is to switch to <a href='https://matomo.org/' target='_blank'>Matomo</a> (ex Piwik, open source analytics tool that is GDPR compliant and protects your privacy) as soon as we can."
       statistics_cookies_matomo_desc_html: "To collect and analyse platform usage data, we use <a href='https://matomo.org/' target='_blank'>Matomo</a> (ex Piwik), an open source analytics tool that is GDPR compliant and protects your privacy."
       statistics_cookies_matomo_optout: "Do you want to opt-out of Matomo analytics? We don’t collect any personal data, and Matomo helps us to improve our service, but we respect your choice :-)"
-      cookie_analytics_utma_desc: "Used to distinguish users and sessions. The cookie is created when the javascript library executes and no existing __utma cookies exists. The cookie is updated every time data is sent to Google Analytics."
-      cookie_analytics_utmt_desc: "Used to throttle request rate."
-      cookie_analytics_utmb_desc: "Used to determine new sessions/visits. The cookie is created when the javascript library executes and no existing __utmb cookies exists. The cookie is updated every time data is sent to Google Analytics."
-      cookie_analytics_utmc_desc: "Not used in ga.js. Set for interoperability with urchin.js. Historically, this cookie operated in conjunction with the __utmb cookie to determine whether the user was in a new session/visit."
-      cookie_analytics_utmz_desc: "Stores the traffic source or campaign that explains how the user reached your site. The cookie is created when the javascript library executes and is updated every time data is sent to Google Analytics."
       cookie_matomo_basics_desc: "Matomo first party cookies to collect statistics."
       cookie_matomo_heatmap_desc: "Matomo Heatmap & Session Recording cookie."
       cookie_matomo_ignore_desc: "Cookie used to exclude user from being tracked."
@@ -1553,22 +1547,6 @@ en_DE:
   groups_signup_contact_text: "Get in touch to discover what OFN can do for you:"
   groups_signup_detail: "Here's the detail."
   login_invalid: "Invalid email or password"
-  modal_hubs: "Food Hubs"
-  modal_hubs_abstract: Our food hubs are the point of contact between you and the people who make your food!
-  modal_hubs_content1: You can search for a convenient hub by location or name. Some hubs have multiple points where you can pick-up your purchases, and some will also provide delivery options. Each food hub is a sales point with independent business operations and logistics - so variations between hubs are to be expected.
-  modal_hubs_content2: You can only shop at one food hub at a time.
-  modal_groups: "Groups / Regions"
-  modal_groups_content1: These are the organisations and relationships between hubs which make up the Open Food Network.
-  modal_groups_content2: Some groups are clustered by location or council, others by non-geographic similarities.
-  modal_how: "How it works"
-  modal_how_shop: Shop the Open Food Network
-  modal_how_shop_explained: Search for a food hub near you to start shopping! You can expand each food hub to see what kinds of goodies are available, and click through to start shopping. (You can only shop one food hub at a time.)
-  modal_how_pickup: Pick-ups, delivery and shipping costs
-  modal_how_pickup_explained: Some food hubs deliver to your door, while others require you to pick-up your purchases. You can see which options are available on the homepage, and select which you'd like at the shopping and check-out pages. Delivery will cost more, and pricing differs from hub-to-hub. Each food hub is a sales point with independent business operations and logisitics - so variations between hubs are to be expected.
-  modal_how_more: Learn more
-  modal_how_more_explained: "If you want to learn more about the Open Food Network, how it works, and get involved, check out:"
-  modal_producers: "Producers"
-  modal_producers_explained: "Our producers make all the delicious food you can shop for on the Open Food Network."
   producers_about: About us
   producers_buy: Shop for
   producers_contact: Contact
@@ -2567,6 +2545,14 @@ en_DE:
       start_free_profile: "Start with a free profile, and expand when you're ready!"
   order_management:
     reports:
+      enterprise_fee_summaries:
+        filters:
+          date_range: "Date Range"
+          report_format_csv: "Download as CSV"
+          generate_report: "Generate Report"
+        report:
+          none: "None"
+          select_and_search: "Select filters and click on GENERATE REPORT to access your data."
       enterprise_fee_summary:
         date_end_before_start_error: "must be after start"
         parameter_not_allowed_error: "You are not authorized to use one or more selected filters for this report."
@@ -2706,14 +2692,6 @@ en_DE:
     smtp_send_copy_to_this_addresses: "Sends a copy of all outgoing mails to this address. For multiple addresses, separate with commas."
     intercept_email_address: "Intercept Email Address"
     intercept_email_instructions: "Override email recipient and replace with this address."
-    smtp: "SMTP"
-    smtp_domain: "SMTP Domain"
-    smtp_mail_host: "SMTP Mail Host"
-    smtp_port: "SMTP Port"
-    secure_connection_type: "Secure Connection Type"
-    smtp_authentication_type: "SMTP Authentication Type"
-    smtp_username: "SMTP Username"
-    smtp_password: "SMTP Password"
     image_settings: "Image Settings"
     image_settings_warning: "You will need to regenerate thumbnails if you update the paperclip styles. Use rake paperclip:refresh:thumbnails CLASS=Spree::Image to do this."
     attachment_default_style: Attachments Style
@@ -2760,12 +2738,6 @@ en_DE:
     shipping_categories: "Shipping Categories"
     new_shipping_category: "New Shipping Category"
     back_to_shipping_categories: "Back To Shipping Categories"
-    analytics_trackers: "Analytics Trackers"
-    no_trackers_found: "No Trackers Found"
-    new_tracker: "New Tracker"
-    add_one: "Add One"
-    google_analytics_id: "Analytics ID"
-    back_to_trackers_list: "Back to Trackers List"
     name: "Name"
     description: "Description"
     type: "Type"
@@ -3009,14 +2981,6 @@ en_DE:
           bulk_coop_allocation: 'Bulk Co-op - Allocation'
           bulk_coop_packing_sheets: 'Bulk Co-op - Packing Sheets'
           bulk_coop_customer_payments: 'Bulk Co-op - Customer Payments'
-        enterprise_fee_summaries:
-          filters:
-            date_range: "Date Range"
-            report_format_csv: "Download as CSV"
-            generate_report: "Generate Report"
-          report:
-            none: "None"
-            select_and_search: "Select filters and click on GENERATE REPORT to access your data."
       users:
         index:
           listing_users: "Listing Users"
@@ -3050,14 +3014,15 @@ en_DE:
         autocomplete:
           producer_name: "Producer"
           unit: "Unit"
-      general_settings:
+      shared:
+        sortable_header:
+          name: "Name"
         edit:
           legal_settings: "Legal Settings"
           cookies_consent_banner_toggle: "Display cookies consent banner"
           privacy_policy_url: "Privacy Policy URL"
           enterprises_require_tos: "Enterprises must accept Terms of Service"
           cookies_policy_matomo_section: "Display Matomo section on cookies policy page"
-          cookies_policy_ga_section: "Display Google Analytics section on cookies policy page"
           footer_tos_url: "Terms of Service URL"
     checkout:
       payment:

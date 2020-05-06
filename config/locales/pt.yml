@@ -1255,14 +1255,8 @@ pt:
       cookie_stripe_desc: "Cookie definida pelo nosso fornecedor de serviços de pagamento Stripe. Para mais informações veja https://stripe.com/cookies-policy/legal e https://stripe.com/privacy."
       statistics_cookies: "Cookies de Estatísticas"
       statistics_cookies_desc: "As seguintes cookies não são estritamente necessárias mas ajudam a uma melhor experiência do/a utilizador/a."
-      statistics_cookies_analytics_desc_html: "Para coletar e analisar dados de utilização da plataforma nós usamos Google Analytics e <a href='https://matomo.org/' target='_blank'>Matomo</a> (ex Piwik, uma ferramenta de analytics de código aberto que está confirme do RGPD e protege a sua privacidade)."
       statistics_cookies_matomo_desc_html: "Para coletar e analisar dados de utilização da plataforma nós usamos <a href='https://matomo.org/' target='_blank'>Matomo</a> (ex Piwik, uma ferramenta de analytics de código aberto que está confirme do RGPD e protege a sua privacidade)."
       statistics_cookies_matomo_optout: "Quer optar por não usar a cookie Matomo?"
-      cookie_analytics_utma_desc: "Usado para distinguir utilizadores e sessões."
-      cookie_analytics_utmt_desc: "Usado para evitar demasiados pedidos aos servidores."
-      cookie_analytics_utmb_desc: "Usado para determinar novas visitas/sessões."
-      cookie_analytics_utmc_desc: "Versão anterior usada para determinar novas visitas/sessões."
-      cookie_analytics_utmz_desc: "Usado para guarda a origem do trafego."
       cookie_matomo_basics_desc: "Cookies Matomo para recolher estatísticas."
       cookie_matomo_heatmap_desc: "Cookie Matomo para registo de sessões."
       cookie_matomo_ignore_desc: "Cookie Matomo para registar opt-out de utilizadores."
@@ -1520,22 +1514,6 @@ pt:
   groups_signup_contact_text: "Entre em contato para descobrir o que a OFN pode fazer por si:"
   groups_signup_detail: "Aqui está o detalhe. "
   login_invalid: "Email ou palavra-passe inválidos"
-  modal_hubs: "Centrais de Alimentos"
-  modal_hubs_abstract: As nossas centrais de alimentos são o ponto de contato entre si e as pessoas que produzem a sua comida!
-  modal_hubs_content1: 'Pode procurar por uma central conveniente por localização ou por nome. Algumas centrais têm múltiplos pontos de entrega, onde pode levantar as suas compras, e outros ainda entregam na sua casa. Cada central é um ponto de venda independente, e por isso as ofertas e maneira de operar podem variar de um para outro. '
-  modal_hubs_content2: Só pode comprar numa central de alimentos de cada vez.
-  modal_groups: "Grupos / Regiões"
-  modal_groups_content1: Estas são as organizações e relações entre as centrais que constroem a Open Food Network
-  modal_groups_content2: Alguns grupos estão organizados por localização, outros por similaridades não geográficas.
-  modal_how: "Como funciona"
-  modal_how_shop: Compre na Open Food Network
-  modal_how_shop_explained: Procure por um mercado próximo e comece as suas compras! Em cada mercado pode ver, em detalhe, quais os produtos que são oferecidos (só pode comprar num mercado de cada vez).
-  modal_how_pickup: 'Custos de levantamento e entrega. '
-  modal_how_pickup_explained: Alguns mercados entregam em sua casa, outros oferecem um local para que levante os produtos. É possível ver quais as opções que estão disponíveis no perfil individual de cada um, e fazer a sua escolha no momento do checkout. Provavelmente será cobrada uma taxa de entrega, que pode variar de mercado para mercado.
-  modal_how_more: Saiba mais
-  modal_how_more_explained: "Para saber mais sobre a Open Food Network, como funciona, e participar, visite:"
-  modal_producers: "Produtores"
-  modal_producers_explained: "Os nosso produtores são quem disponibilizam toda a comida que pode comprar na Open Food Network."
   producers_about: Sobre nós
   producers_buy: Comprar
   producers_contact: Contacto
@@ -2522,6 +2500,14 @@ pt:
       start_free_profile: "Comece com um perfil gratuito e expanda quando estivere pronto/a!"
   order_management:
     reports:
+      enterprise_fee_summaries:
+        filters:
+          date_range: "Intervalo de Datas"
+          report_format_csv: "Descarregar como csv"
+          generate_report: "Gerar Relatório"
+        report:
+          none: "Nenhum"
+          select_and_search: "Selecione filtros e carregue em Gerar Relatório para ver os seus dados."
       enterprise_fee_summary:
         date_end_before_start_error: "deve ser depois do início"
         parameter_not_allowed_error: "Não está autorizado a usar um ou mais filtros selecionados neste relatório."
@@ -2658,14 +2644,6 @@ pt:
     smtp_send_copy_to_this_addresses: "Envia uma cópia de todos os email enviados para este endereço. Para múltiplos endereços, separar por vírgulas."
     intercept_email_address: "Interceptar Endereço de Email"
     intercept_email_instructions: "Substituir destinatário de todos os email por este endereço."
-    smtp: "SMTP"
-    smtp_domain: "Domínio SMTP"
-    smtp_mail_host: "Servidor de Email SMTP"
-    smtp_port: "Porta SMTP"
-    secure_connection_type: "Tipo de Ligação Segura"
-    smtp_authentication_type: "Tipo de Autenticação SMTP"
-    smtp_username: "Utilizador SMTP"
-    smtp_password: "Password SMTP"
     image_settings: "Configurações de Imagens"
     image_settings_warning: "Terá de regenerar os ícones se alterar is estilos. Para tal execute rake paperclip:refresh:thumbnails CLASS=Spree::Image"
     attachment_default_style: Estilo dos Anexos
@@ -2712,12 +2690,6 @@ pt:
     shipping_categories: "Categorias de Envio"
     new_shipping_category: "Nova Categoria de Envio"
     back_to_shipping_categories: "Voltar à Lista de Categorias de Envio"
-    analytics_trackers: "Trackers do Analytics"
-    no_trackers_found: "Nenhum Tracker encontrado"
-    new_tracker: "Novo Tracker"
-    add_one: "Adicionar um"
-    google_analytics_id: "ID do Analytics"
-    back_to_trackers_list: "Voltar à Lista de Trackers"
     name: "Nome"
     description: "Descrição"
     type: "Tipo"
@@ -2933,14 +2905,6 @@ pt:
           bulk_coop_allocation: 'Compra em Grupo - Alocação'
           bulk_coop_packing_sheets: 'Compra em Grupo - Folhas de Empacotamento'
           bulk_coop_customer_payments: 'Compra em Grupo - Pagamentos do Consumidor'
-        enterprise_fee_summaries:
-          filters:
-            date_range: "Intervalo de Datas"
-            report_format_csv: "Descarregar como csv"
-            generate_report: "Gerar Relatório"
-          report:
-            none: "Nenhum"
-            select_and_search: "Selecione filtros e carregue em Gerar Relatório para ver os seus dados."
       users:
         index:
           listing_users: "Lista de Utilizadores"
@@ -2974,14 +2938,15 @@ pt:
         autocomplete:
           producer_name: "Produtor"
           unit: "Unidade"
-      general_settings:
+      shared:
+        sortable_header:
+          name: "Nome"
         edit:
           legal_settings: "Configurações Legais"
           cookies_consent_banner_toggle: "Mostrar o Banner de consentimento de Cookies"
           privacy_policy_url: "URL da Politíca de Privacidade"
           enterprises_require_tos: "As organizações têm de aceitar os Termos de Serviço"
           cookies_policy_matomo_section: "Mostrar a secção do Matomo na página da política de Cookies"
-          cookies_policy_ga_section: "Mostrar a secção do Google Analytics na página de política de Cookies"
           footer_tos_url: "URL dos Termos de Serviço"
     checkout:
       payment:

@@ -1281,14 +1281,8 @@ nl_BE:
       cookie_stripe_desc: "Gegevens verzamelt door onze betalingsverwerker Stripe voor fraudedetectie https://stripe.com/cookies-policy/legal. Niet alle winkels gebruiken Stripe als een betaalmethode maar het is een goede manier om te verhinderen dat er gefraudeerd wordt op alle webpagina's. Waarschijnlijk heeft Stripe een idee welke van onze pagina's vaak met hun API interageren en signaleren dan zo ongebruikelijke activiteit. Dus het instellen van de Stripe cookie heeft een ruimer nut dan enkel het voorzien van een betaalmethode naar een gebruiker. De cookie verwijderen kan dus een invloed hebben op de veiligheid van de dienst zelf. Je kan meer te weten komen over Stripe en hun privacy beleid op https://stripe.com/privacy."
       statistics_cookies: "Statistiek Cookies"
       statistics_cookies_desc: "Het volgende is niet strikt noodzakelijk, maar helpt om je te voorzien met de beste gebruikerservaring door toe te staan om gebruikersgedrag te analyseren, te identificeren welke functionaliteiten je het meest gebruikt, of juist niet, te begrijpen welke gebruikerservaring problemen er zich voordoen, enzovoort ..."
-      statistics_cookies_analytics_desc_html: "Om platform-gebruikersgegevens te verzamelen en te analyseren, gebruiken we Google Analytics, aangezien het de standaard dienst was gekoppeld met Spree (de opensource e-commerce software waarop we hebben verder gebouwd) maar onze visie is om zo snel mogelijk over te schakelen naar <a href='https://matomo.org/' target='_blank'>Matomo</a>(ex Piwik, een opensource analytics tool die GDPR-compliant is en je privacy beschermt). "
       statistics_cookies_matomo_desc_html: "Om platform gebruikersgegevens te verzamelen en te analyseren, gebruiken we <a href='https://matomo.org/' target='_blank'>Matomo </a>(ex Piwik, een opensource analytics tool die GDPR-compliant is en je privacy beschermt). "
       statistics_cookies_matomo_optout: "Wil je je uitschrijven uit Matomo analytics? We verzamelen geen persoonlijke gegevens, en Matomo helpt ons om onze diensten te verbeteren, maar we respecteren je keuze :-)"
-      cookie_analytics_utma_desc: "Gebruikt om gebruikers en sessies te onderscheiden. De cookies worden aangemaakt wanneer de javascript bibliotheek uitvoert en er nog geen bestaande __utma cookie bestaat. Deze cookie wordt geüpdatet elke keer gegevens worden verstuurd naar Google Analytics."
-      cookie_analytics_utmt_desc: "Gebruikt om request rate in te perken"
-      cookie_analytics_utmb_desc: "Gebruikt om nieuwe sessies/ bezoeken vast te stellen. De cookie worden aangemaakt wanneer de javascript bibliotheek uitvoert en er nog geen bestaande __utma cookie bestaat. Deze cookie wordt geüpdatet elke keer gegevens worden verstuurd naar Google Analytics."
-      cookie_analytics_utmc_desc: "Niet gebruikt in ga.js. Ingesteld voor compatibiliteit met urchin.js. Historisch gezien, wordt deze cookie gebruikt in relatie met de __utmb cookie om vast te stellen welke gebruiker in een nieuwe sessie / bezoek was."
-      cookie_analytics_utmz_desc: "Bewaart de trafiek bron of de route die verklaart hoe de gebruiker je website bereikte. Deze cookie wordt aangemaakt wanneer de javascript bibliotheek wordt geraadpleegd en wordt geüpdatet elke keer gegevens verzonden worden naar Google Analytics."
       cookie_matomo_basics_desc: "First party cookies van Matomo om statistieken te verzamelen."
       cookie_matomo_heatmap_desc: "Heatmap & Sessie Recording cookie van Matomo."
       cookie_matomo_ignore_desc: "Cookie gebruikt om de gebruiker te verhinderen gevolgd te worden."
@@ -1546,22 +1540,6 @@ nl_BE:
   groups_signup_contact_text: "Contacteer ons om te ontdekken wat OFN voor jou kan betekenen:"
   groups_signup_detail: "Hier het gedetailleerder."
   login_invalid: "Ongeldige E-mail of wachtwoord"
-  modal_hubs: "VoedselHubs"
-  modal_hubs_abstract: Onze voedselhubs zijn het contactpunt tussen jou en de mensen die het eten maken!
-  modal_hubs_content1: Je kan kiezen voor geschikte hub op basis van locatie of naam. Sommige hubs hebben meerdere punten waar je je aankopen kan ophalen, en sommige zullen leveringsopties ter beschikking stellen. Elke voedselhub is een verkoopspunt met een onafhankelijk zakelijke werking en logistiek - dus variatie tussen hubs is te verwachten.
-  modal_hubs_content2: Je kan slechts winkelen bij één voedselhub tergelijkertijd.
-  modal_groups: "Groepen / Regio's"
-  modal_groups_content1: Dit zijn de organisaties en connecties tussen hubs die het Open Food Network vormen.
-  modal_groups_content2: Deze groepen zijn geclusterd per locatie of provincie, andere per niet-geografische gelijkenissen.
-  modal_how: "Hoe het werkt"
-  modal_how_shop: Winkel in het Open Food Network
-  modal_how_shop_explained: Zoek voor een voedselhub bij jou in de buurt en start met shoppen! Je kan elke voedselhub uitvergroten om te zien welke soort producten er beschikbaar zijn, en klik via begin met winkelen. (Je kan enkel bij één voedselhub tergelijkertijd winkelen.)
-  modal_how_pickup: Ophaal-, levering-en-verzendskosten
-  modal_how_pickup_explained: Sommige voedselhubs leveren aan de deur, terwijl andere vereisen dat je je aankopen komt ophalen. Je kan zien welke mogelijkheden beschikbaar zijn op de startpagina, en selecteren welke je graag wil hebben op de winkel-en-betaalpagina's. Elke voedselhub is een verkoopspunt met onafhankelijke werking en logistiek - dus variaties tussen hubs zijn te verwachten.
-  modal_how_more: Ontdek
-  modal_how_more_explained: "Als je meer wil te weten komen over het Open Food Network, hoe het werkt en hoe je betrokken kan raken, kijk eens naar:"
-  modal_producers: "Producenten"
-  modal_producers_explained: "Onze producent maken al het héérlijke eten dat je kan winkelen in ons Open Food Network."
   producers_about: Over ons
   producers_buy: op Zoek naar
   producers_contact: Contact
@@ -2566,6 +2544,14 @@ nl_BE:
       start_free_profile: "Eerst uw bedrijfsprofiel maken en wijzig de formule als U klaar bent !"
   order_management:
     reports:
+      enterprise_fee_summaries:
+        filters:
+          date_range: "Datumbereik"
+          report_format_csv: "Opladen als CSV"
+          generate_report: "Ontwikkel verslag"
+        report:
+          none: "Geen enkele"
+          select_and_search: "Selecteer filters en klik op 'ONTWIKKEL VERSLAG' om toegang te krijgen tot je gegevens."
       enterprise_fee_summary:
         date_end_before_start_error: "moet zijn na het starten "
         parameter_not_allowed_error: "Je hebt geen machtiging om één of meerdere geselecteerde filters toe te passen op dit verslag."
@@ -2703,14 +2689,6 @@ nl_BE:
     smtp_send_copy_to_this_addresses: "Stuurt een kopie van alle uitgaande mails naar dit adres. In geval van meerdere adressen, die met een comma scheiden."
     intercept_email_address: "Email adres onderscheppen"
     intercept_email_instructions: "De mailontvanger omzeilen en door dit adres vervangen. "
-    smtp: "SMTP"
-    smtp_domain: "SMTP Domein"
-    smtp_mail_host: "SMPT Mail Host"
-    smtp_port: "SMTP Port"
-    secure_connection_type: "Secure Connection Type"
-    smtp_authentication_type: "SMTP Authentication Type"
-    smtp_username: "SMPT Gebruikersnaam"
-    smtp_password: "SMPT Wachtwoord"
     image_settings: "Beeldinstellingen "
     image_settings_warning: "Logos regeneren als de paperclips stylen bijgewerkt worden. Paperclip harken gebruiken :opfrissen:logos CLASS=Spree::Image om het doen. "
     attachment_default_style: Bijlagestijl
@@ -2757,12 +2735,6 @@ nl_BE:
     shipping_categories: "Verzendingscategorieën"
     new_shipping_category: "Nieuwe verzendingscategorie"
     back_to_shipping_categories: "Terug naar verzendingscategoriëen"
-    analytics_trackers: "Analyse van Trackers"
-    no_trackers_found: "Geen Trackers gevonden"
-    new_tracker: "Nieuwe Tracker"
-    add_one: "Eén toevoegen"
-    google_analytics_id: "ID analyse "
-    back_to_trackers_list: "Terug naar de Trackerslijst"
     name: "Naam"
     description: "Beschrijving"
     type: "Type"
@@ -3002,14 +2974,6 @@ nl_BE:
           bulk_coop_allocation: 'Groepsaankoop-Toelage'
           bulk_coop_packing_sheets: 'Groepsaankoop- voorbereidingsdokumenten voor de manden'
           bulk_coop_customer_payments: 'Groepsaankoop-betalingen van de klanten'
-        enterprise_fee_summaries:
-          filters:
-            date_range: "Datumbereik"
-            report_format_csv: "Opladen als CSV"
-            generate_report: "Ontwikkel verslag"
-          report:
-            none: "Geen enkele"
-            select_and_search: "Selecteer filters en klik op 'ONTWIKKEL VERSLAG' om toegang te krijgen tot je gegevens."
       users:
         index:
           listing_users: "Advertentiegebruikers"
@@ -3043,14 +3007,15 @@ nl_BE:
         autocomplete:
           producer_name: "Producent"
           unit: "Unit"
-      general_settings:
+      shared:
+        sortable_header:
+          name: "Naam"
         edit:
           legal_settings: "De legale instelling"
           cookies_consent_banner_toggle: "Laat de strook met uw akkoord voor de cookies zien"
           privacy_policy_url: "Privacybeleid URL"
           enterprises_require_tos: "Debedrijven moeten de Algemene gebruiksvoorwaarden aanvaarden"
           cookies_policy_matomo_section: "Geef Matomosectie weer op cookiesprivacypagina"
-          cookies_policy_ga_section: "Geef Google Analytics-sectie weer op cookiesprivacypagina"
           footer_tos_url: "Gebruiksvoorwaarden URL"
     checkout:
       payment:

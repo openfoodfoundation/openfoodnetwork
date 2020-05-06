@@ -323,6 +323,7 @@ pt_BR:
     show_n_more: 'Mostrar mais %{num} '
     choose: "Escolher..."
     please_select: Por favor selecione...
+    column_save_as_default: Salvar Como Padrão
     columns: Colunas
     actions: Ações
     viewing: "Visualizando: %{current_view_name}"
@@ -1143,7 +1144,7 @@ pt_BR:
         already_ordered_products: "Já pediu neste ciclo de pedido"
     register_call:
       selling_on_ofn: "Interessado em registrar a sua iniciativa na Open Food Brasil?"
-      register: "Faça o cadastro aqui"
+      register: "Registre-se aqui"
     footer:
       footer_secure: "Seguro e confiável."
       footer_secure_text: "A Open Food Brasil utiliza a criptografia SSL (2048 bit RSA) para manter suas informações em segurança. Nossos servidores não guardam os detalhes do seu cartão de crédito e os pagamentos são processados por serviços compatíveis com PCI."
@@ -1319,14 +1320,8 @@ pt_BR:
       cookie_stripe_desc: "Dados coletados pelo nosso processador de pagamentos Stripe para detecção de fraude https://stripe.com/cookies-policy/legal. Nem todas as lojas usam o Stripe como método de pagamento, mas é uma boa prática para evitar fraudes aplicá-lo a todas as páginas. O Stripe provavelmente cria uma imagem de quais de nossas páginas geralmente interagem com a API e sinaliza algo incomum. Portanto, definir o cookie Stripe tem uma função mais ampla do que simplesmente fornecer um método de pagamento a um usuário. Removê-lo pode afetar a segurança do próprio serviço. Você pode aprender mais sobre o Stripe e ler sua política de privacidade em https://stripe.com/privacy."
       statistics_cookies: "Estatísticas de cookies"
       statistics_cookies_desc: "O seguinte não é estritamente necessário, mas ajuda a fornecer a melhor experiência do usuário, permitindo-nos analisar o comportamento do usuário, identificar quais recursos você mais usa ou não usar, entender problemas de experiência do usuário etc."
-      statistics_cookies_analytics_desc_html: "Para coletar e analisar dados de uso da plataforma, usamos o Google Analytics, pois era o serviço padrão conectado ao Spree (o software de código aberto de comércio eletrônico em que construímos), mas nossa visão é mudar para o <a href='https://matomo.org/' target='_blank'>Matomo</a> (ex Piwik, análise de código aberto) ferramenta compatível com GDPR e protege sua privacidade) assim que possível."
       statistics_cookies_matomo_desc_html: "Para coletar e analisar dados de uso da plataforma, usamos o <a href='https://matomo.org/' target='_blank'>Matomo</a> (ex Piwik), uma ferramenta de análise de código aberto compatível com o GDPR e que protege sua privacidade."
       statistics_cookies_matomo_optout: "Deseja desativar a análise da Matomo? Não coletamos dados pessoais, e o Matomo nos ajuda a melhorar nosso serviço, mas respeitamos sua escolha :-)"
-      cookie_analytics_utma_desc: "Usado para distinguir usuários e sessões. O cookie é criado quando a biblioteca javascript é executada e não existem cookies __utma existentes. O cookie é atualizado sempre que os dados são enviados para o Google Analytics."
-      cookie_analytics_utmt_desc: "Usado para acelerar a taxa de solicitação."
-      cookie_analytics_utmb_desc: "Usado para determinar novas sessões / visitas. O cookie é criado quando a biblioteca javascript é executada e nenhum cookie __utmb existente existe. O cookie é atualizado sempre que os dados são enviados para o Google Analytics."
-      cookie_analytics_utmc_desc: "Não usado em ga.js. Definido para interoperabilidade com o urchin.js. Historicamente, esse cookie operava em conjunto com o cookie __utmb para determinar se o usuário estava em uma nova sessão / visita."
-      cookie_analytics_utmz_desc: "Armazena a origem ou a campanha de tráfego que explica como o usuário chegou ao seu site. O cookie é criado quando a biblioteca javascript é executada e atualizada sempre que os dados são enviados ao Google Analytics."
       cookie_matomo_basics_desc: "Cookies primários Matomo para coletar estatísticas."
       cookie_matomo_heatmap_desc: "Cookie Matomo Heatmap e gravação de sessão."
       cookie_matomo_ignore_desc: "Cookie usado para excluir o usuário de ser rastreado."
@@ -1585,22 +1580,6 @@ pt_BR:
   groups_signup_contact_text: "Entre em contato para descobrir o que a OFB pode fazer por você"
   groups_signup_detail: "Aqui está o detalhe. "
   login_invalid: "E-mail ou senha inválidos"
-  modal_hubs: "Central de alimentos"
-  modal_hubs_abstract: Nossas centrais são o ponto de contato entre você e as pessoas que produzem sua comida!
-  modal_hubs_content1: 'Você pode procurar a central mais próxima por localização ou nome. Alguns possuem múltiplos pontos de entrega, onde você pode retirar suas compras, e outros ainda entregam na sua casa. Cada um é um ponto de venda independente, e por isso as ofertas e maneira de operar podem variar de um para outro. '
-  modal_hubs_content2: Você só pode comprar de uma central por vez.
-  modal_groups: "Grupos / Regiões"
-  modal_groups_content1: Estas são as organizações e as relações entre as centrais que compõem a Open Food Brasil.
-  modal_groups_content2: Alguns grupos estão organizados por localização, outros por similaridades não geográficas.
-  modal_how: "Como funciona"
-  modal_how_shop: Compre na Open Food Brasil
-  modal_how_shop_explained: Procure por um produtor ou central próximo e comece suas compras! Em cada mercado você pode ver, em detalhe, quais produtos são oferecidos (você só pode comprar em um mercado de cada vez).
-  modal_how_pickup: 'Custos de retirada e entrega '
-  modal_how_pickup_explained: Algumas centrais entregam na sua casa, enquanto outros exigem que você mesmo retire suas compras. É possível ver quais opções estão disponíveis no perfil individual de cada um, e fazer sua escolha no momento do check-out. A entrega custará mais e o preço difere de central para central. Cada um é um ponto de venda com operação comercial e logística independente - então as variações são esperadas.
-  modal_how_more: Saiba mais
-  modal_how_more_explained: "Se você quiser saber mais sobre como a Open Food Brasil funciona e se envolver, confira:"
-  modal_producers: "Produtores"
-  modal_producers_explained: "Nossos produtores fazem todos os alimentos deliciosos que você pode comprar no Open Food Brasil."
   producers_about: Sobre nós
   producers_buy: Compre por
   producers_contact: Contato
@@ -1629,16 +1608,16 @@ pt_BR:
   products_producer: "Produtor"
   products_price: "Preço"
   name_or_sku: "NOME OU SKU"
-  register_title: Registro
+  register_title: Registre-se
   sell_title: "Registrar"
-  sell_headline: "Fazer parte do Open Food Brasil!"
-  sell_motivation: "Mostre seus belos produtos."
+  sell_headline: "Faça parte da Open Food Brasil."
+  sell_motivation: "Queremos conhecer seus produtos!"
   sell_producers: "Produtores"
   sell_hubs: "Centrais"
   sell_groups: "Grupos"
-  sell_producers_detail: "Crie um perfil para seu negócio em apenas alguns minutos. A qualquer momento você pode atualizar seu perfil para uma loja online e vender seus produtos diretamente aos consumidores."
-  sell_hubs_detail: "Crie um perfil para a sua iniciativa ou organização na Open Food Brasil. A qualquer momento você poderá fazer um upgrade para um mercado de multi-produtores. "
-  sell_groups_detail: "Organize um lista personalizada de negócios (cultivos, cooperativas, comércios, etc.) para sua região ou organização. "
+  sell_producers_detail: "Crie um perfil para a sua atividade em apenas alguns minutos. A qualquer momento você pode transformá-lo em uma loja online e vender seus produtos diretamente aos consumidores."
+  sell_hubs_detail: "Crie um perfil para a sua iniciativa ou organização na Open Food Brasil e comece a distribuir os produtos dos seus fornecedores locais. "
+  sell_groups_detail: "Organize um lista personalizada de iniciativas (cultivos, cooperativas, feiras, grupos de compra, etc.) para sua região ou organização. "
   sell_user_guide: "Saiba mais acessando nosso guia. "
   sell_listing_price: "A OFB está em sua versão beta. Por acreditarmos que a plataforma pode colaborar com a circulação e a comercialização de comida de verdade no período de quarentena imposto pela atual pandemia, sua utilização permanecerá gratuita nos próximos meses."
   sell_embed: "Também podemos incorporar uma loja da Open Food Brasil em seu próprio site personalizado ou criar um site específico para a sua região. "
@@ -1918,6 +1897,7 @@ pt_BR:
   admin_enterprise_relationships_permits: "permite"
   admin_enterprise_relationships_seach_placeholder: "Buscar"
   admin_enterprise_relationships_button_create: "Criar"
+  admin_enterprise_relationships_to: "para"
   admin_enterprise_groups: "Grupos de iniciativas"
   admin_enterprise_groups_name: "Nome"
   admin_enterprise_groups_owner: "Dono"
@@ -2687,6 +2667,14 @@ pt_BR:
       start_free_profile: "Comece com um perfil gratuito e expanda quando estiver pronto!"
   order_management:
     reports:
+      enterprise_fee_summaries:
+        filters:
+          date_range: "Período"
+          report_format_csv: "Baixar como CSV"
+          generate_report: "Gerar Relatório"
+        report:
+          none: "Nenhum"
+          select_and_search: "Selecione filtros e clique em GERAR RELATÓRIO para acessar seus dados"
       enterprise_fee_summary:
         date_end_before_start_error: "deve ser após o início"
         parameter_not_allowed_error: "Você não está autorizado a usar um ou mais filtros selecionados para este relatório."
@@ -2826,14 +2814,6 @@ pt_BR:
     smtp_send_copy_to_this_addresses: "Envia uma cópia de todos os correios enviados para este endereço. Para vários endereços, separe com vírgulas."
     intercept_email_address: "Interceptar endereço de email"
     intercept_email_instructions: "Substitua o destinatário do email e substitua por este endereço."
-    smtp: "SMTP"
-    smtp_domain: "Domínio SMTP"
-    smtp_mail_host: "Host de email SMTP"
-    smtp_port: "Porta SMTP"
-    secure_connection_type: "Tipo de conexão segura"
-    smtp_authentication_type: "Tipo de autenticação SMTP"
-    smtp_username: "Nome de usuário SMTP"
-    smtp_password: "Senha SMTP"
     image_settings: "Configurações de imagem"
     image_settings_warning: "Você precisará gerar novamente as miniaturas se atualizar os estilos de clipes de papel. Use o clipe de papel rake: refresh: miniaturas CLASS = Spree :: Image para fazer isso."
     attachment_default_style: Estilo dos Anexos
@@ -2880,12 +2860,6 @@ pt_BR:
     shipping_categories: "Categorias de Remessa"
     new_shipping_category: "Nova categoria de frete"
     back_to_shipping_categories: "Voltar para categorias de remessa"
-    analytics_trackers: "Rastreadores de análise"
-    no_trackers_found: "Nenhum rastreador encontrado"
-    new_tracker: "Novo Rastreador"
-    add_one: "Adicione um"
-    google_analytics_id: "ID do Google Analytics"
-    back_to_trackers_list: "Voltar à lista de rastreadores"
     name: "Nome"
     description: "Descrição"
     type: "Tipo"
@@ -3167,14 +3141,6 @@ pt_BR:
           bulk_coop_allocation: 'Atacado Cooperativa - Alocação'
           bulk_coop_packing_sheets: 'Atacado Cooperativa - Folhas de Empacotamento'
           bulk_coop_customer_payments: 'Atacado Cooperativa - Pagamentos de Cliente'
-        enterprise_fee_summaries:
-          filters:
-            date_range: "Período"
-            report_format_csv: "Transferir como CSV"
-            generate_report: "Gerar relatório"
-          report:
-            none: "Nenhum"
-            select_and_search: "Selecione os filtros e clique em GERAR RELATÓRIO para acessar seus dados."
       users:
         index:
           listing_users: "Listando Usuários"
@@ -3219,14 +3185,15 @@ pt_BR:
         autocomplete:
           producer_name: "Produtor"
           unit: "Unidade"
-      general_settings:
+      shared:
+        sortable_header:
+          name: "Nome"
         edit:
-          legal_settings: "Configurações legais"
-          cookies_consent_banner_toggle: "Exibir banner de consentimento de cookies"
+          legal_settings: "Configurações de Legislação"
+          cookies_consent_banner_toggle: "Mostrar banner sobre permissão para cookies"
           privacy_policy_url: " Política de Privacidade URL"
           enterprises_require_tos: "As iniciativas devem aceitar os Termos de Serviço"
           cookies_policy_matomo_section: "Exibir a seção Matomo nos cookies da página de política"
-          cookies_policy_ga_section: "Exibir a seção do Google Analytics na página de política de cookies"
           footer_tos_url: "URL Termos de Serviço"
     checkout:
       payment:

@@ -19,14 +19,5 @@ describe "Mail Methods" do
       click_button "Update"
       expect(page).to have_content("successfully updated!")
     end
-
-    # Regression test for #2094
-    it "does not clear password if not provided" do
-      Spree::Config[:smtp_password] = "haxme"
-      click_button "Update"
-      expect(page).to have_content("successfully updated!")
-
-      expect(Spree::Config[:smtp_password]).not_to be_blank
-    end
   end
 end

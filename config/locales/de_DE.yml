@@ -1322,14 +1322,8 @@ de_DE:
       cookie_stripe_desc: "Daten gesammelt von unserem Zahlungsabwickler Stripe für die Betrugserkennung https://stripe.com/cookies-policy/legal. Nicht alle Geschäfte verwenden Stripe als Zahlungsmethode, aber es ist eine gute Vorgehensweise, sie auf alle Seiten anzuwenden. Stripe erstellt wahrscheinlich ein Bild davon, welche unserer Seiten normalerweise mit ihrer API interagieren und merkt, wenn etwas Ungewöhnliches passiert. Das Festlegen des Stripe-Cookies hat also eine breitere Funktion als die Bereitstellung einer Zahlungsmethode für einen Benutzer. Das Entfernen könnte die Sicherheit des Dienstes selbst beeinträchtigen. Sie können mehr über Stripe erfahren und dessen Datenschutzrichtlinie unter https://stripe.com/privacy lesen."
       statistics_cookies: "Statistik-Cookies"
       statistics_cookies_desc: "Die folgenden Punkte sind nicht unbedingt erforderlich, helfen Ihnen jedoch, die beste Benutzererfahrung zu bieten, indem wir das Benutzerverhalten analysieren, die am häufigsten verwendeten Funktionen identifizieren oder nicht verwenden, Probleme mit der Benutzerfreundlichkeit verstehen usw."
-      statistics_cookies_analytics_desc_html: "Zur Erfassung und Analyse von Daten zur Nutzung der Plattform verwenden wir Google Analytics, da es sich um den Standarddienst handelt, der mit Spree (der E-Commerce-Open-Source-Software, auf der wir aufgebaut haben) verbunden ist. Unsere Vision ist jedoch der Wechsel zu <a href = 'https: / /matomo.org/ 'target =' _ blank '> Matomo </a> (ex Piwik, ein Open-Source-Analysetool, das der DSGVO entspricht und Ihre Privatsphäre schützt), sobald wir können."
       statistics_cookies_matomo_desc_html: "Um Daten zur Nutzung der Plattform zu erfassen und zu analysieren, verwenden wir <a href='https://matomo.org/ 'target='_blank'> Matomo </a> (ex Piwik), ein Open-Source-Analysetool, das der DSGVO-Richtlinie entspricht schützt Ihre Privatsphäre."
       statistics_cookies_matomo_optout: "Möchten Sie Matomo Analytics deaktivieren? Wir sammeln keine persönlichen Daten und Matomo hilft uns, unseren Service zu verbessern, aber wir respektieren Ihre Wahl :-)"
-      cookie_analytics_utma_desc: "Wird zur Unterscheidung von Benutzern und Sitzungen verwendet. Der Cookie wird erstellt, wenn die JavaScript-Bibliothek ausgeführt wird und keine vorhandenen __utma-Cookies vorhanden sind. Der Cookie wird jedes Mal aktualisiert, wenn Daten an Google Analytics gesendet werden."
-      cookie_analytics_utmt_desc: "Wird zum Drosseln der Anforderungsrate verwendet."
-      cookie_analytics_utmb_desc: "Wird verwendet, um neue Sitzungen / Besuche zu bestimmen. Der Cookie wird erstellt, wenn die JavaScript-Bibliothek ausgeführt wird und keine vorhandenen __utmb-Cookies vorhanden sind. Der Cookie wird jedes Mal aktualisiert, wenn Daten an Google Analytics gesendet werden."
-      cookie_analytics_utmc_desc: "Wird nicht in ga.js verwendet Stellen Sie die Interoperabilität mit urchin.js ein. In der Vergangenheit wurde dieser Cookie in Verbindung mit dem __utmb-Cookie verwendet, um festzustellen, ob sich der Benutzer in einer neuen Sitzung / einem neuen Besuch befand."
-      cookie_analytics_utmz_desc: "Speichert die Zugriffsquelle oder Kampagne, die erläutert, wie der Nutzer Ihre Website erreicht hat. Der Cookie wird erstellt, wenn die JavaScript-Bibliothek ausgeführt wird, und wird jedes Mal aktualisiert, wenn Daten an Google Analytics gesendet werden."
       cookie_matomo_basics_desc: "Matomo First Party Cookies zum Sammeln von Statistiken."
       cookie_matomo_heatmap_desc: "Matomo Heatmap & Session Aufnahme-Cookie."
       cookie_matomo_ignore_desc: "Cookie verwendet, um Benutzer von der Verfolgung auszuschließen."
@@ -1588,22 +1582,6 @@ de_DE:
   groups_signup_contact_text: "Kontaktieren Sie uns, um herauszufinden, was OFN für Sie tun kann:"
   groups_signup_detail: "Hier ist das Detail."
   login_invalid: "Ungültige E-Mail-Adresse oder ungültiges Passwort"
-  modal_hubs: "Lebensmittel-Hubs"
-  modal_hubs_abstract: Unsere Hubs sind der Kontaktpunkt zwischen Ihnen und den Menschen, die Ihre Lebensmittel herstellen!
-  modal_hubs_content1: Sie können nach einem geeigneten Hub nach Standort oder Namen suchen. Einige Hubs haben mehrere Punkte, an denen Sie Ihre Einkäufe abholen können, und einige bieten auch Lieferoptionen. Jeder Food-Hub ist eine Verkaufsstelle mit eigenständigem Geschäftsbetrieb und Logistik - so sind Unterschiede zwischen den Hubs zu erwarten.
-  modal_hubs_content2: Sie können nicht bei mehr als einem Hub gleichzeitig einkaufen.
-  modal_groups: "Gruppen / Regionen"
-  modal_groups_content1: Dies sind die Organisationen und Beziehungen zwischen Hubs, aus denen das Open Food Network besteht.
-  modal_groups_content2: Einige Gruppen sind nach Standort oder Rat gruppiert, andere nach nichtgeographischen Ähnlichkeiten.
-  modal_how: "Wie es funktioniert"
-  modal_how_shop: Einkaufen im Open Food Network
-  modal_how_shop_explained: Suchen Sie nach einem Hub in Ihrer Nähe, um mit dem Einkauf zu beginnen! Sie können ein Hub erweitern, um zu sehen, welche Arten von Produkten verfügbar sind. Klicken Sie durch, um dort einzukaufen. (Sie können jeweils nur bei einem Hub gleichzeitig einkaufen.)
-  modal_how_pickup: Abhol-, Liefer- und Versandkosten
-  modal_how_pickup_explained: Manche Hubs liefern an, bei anderen müssen Sie abholen. Sie können auf der Startseite sehen, welche Optionen verfügbar sind, und und diese dann an der Kasse wählen. Lieferungen kosten mehr und die Preise unterscheiden sich von Hub zu Hub. Jedes Hub ist eine Verkaufsstelle mit eigenständigem Geschäftsbetrieb und Logistik - so sind Schwankungen zwischen den Hubs zu erwarten.
-  modal_how_more: Mehr erfahren
-  modal_how_more_explained: "Wenn Sie mehr über das Open Food Network erfahren wollen, wie es funktioniert und sich einbringen, schauen Sie nach:"
-  modal_producers: "Produzenten"
-  modal_producers_explained: "Unsere Produzenten stellen all das leckere Essen her, das Sie im Open Food Network kaufen können."
   producers_about: Über uns
   producers_buy: Suchen
   producers_contact: Kontakt
@@ -2688,6 +2666,11 @@ de_DE:
       start_free_profile: "Beginnen Sie mit einem kostenlosen Profil und erweitern Sie es, wenn Sie fertig sind!"
   order_management:
     reports:
+      enterprise_fee_summaries:
+        filters:
+          date_range: "Datumsbereich"
+        report:
+          none: "Keine"
       enterprise_fee_summary:
         date_end_before_start_error: "muss nach dem start sein"
         parameter_not_allowed_error: "Sie sind nicht berechtigt, einen oder mehrere ausgewählte Filter für diesen Bericht zu verwenden."
@@ -2827,14 +2810,6 @@ de_DE:
     smtp_send_copy_to_this_addresses: "Sendet eine Kopie aller ausgehenden Mails an diese Adresse. Bei mehreren Adressen trennen Sie diese durch Kommas."
     intercept_email_address: "E-Mail-Adresse abfangen"
     intercept_email_instructions: "Überschreiben Sie den E-Mail-Empfänger und ersetzen Sie ihn mit dieser Adresse."
-    smtp: "SMTP"
-    smtp_domain: "SMTP-Domäne"
-    smtp_mail_host: "SMTP-Mail-Host"
-    smtp_port: "SMTP-Port"
-    secure_connection_type: "Sicherer Verbindungstyp"
-    smtp_authentication_type: "SMTP-Authentifizierungstyp"
-    smtp_username: "SMTP-Benutzername"
-    smtp_password: "SMTP-Passwort"
     image_settings: "Bildeinstellungen"
     image_settings_warning: "Sie müssen die Miniaturbilder neu erstellen, wenn Sie die Büroklammerformate aktualisieren. Verwenden Sie dazu die Rake-Büroklammer: Refresh: thumbnails CLASS = Spree :: Image."
     attachment_default_style: Anhänge-Stil
@@ -2881,12 +2856,6 @@ de_DE:
     shipping_categories: "Versandkategorien"
     new_shipping_category: "Neue Versandkategorie"
     back_to_shipping_categories: "Zurück zu den Versandkategorien"
-    analytics_trackers: "Analytics-Tracker"
-    no_trackers_found: "Keine Tracker gefunden"
-    new_tracker: "Neuer Tracker"
-    add_one: "Füge eins hinzu"
-    google_analytics_id: "Analytics-ID"
-    back_to_trackers_list: "Zurück zur Trackers-Liste"
     name: "Name"
     description: "Beschreibung"
     type: "Art"
@@ -3168,14 +3137,6 @@ de_DE:
           bulk_coop_allocation: 'Massenkoop - Zuteilung'
           bulk_coop_packing_sheets: 'Massenkoop - Verpackungsblätter'
           bulk_coop_customer_payments: 'Massenkoop - Kundenzahlungen'
-        enterprise_fee_summaries:
-          filters:
-            date_range: "Datumsbereich"
-            report_format_csv: "Als CSV herunterladen"
-            generate_report: "Bericht generieren"
-          report:
-            none: "Keine"
-            select_and_search: "Wählen Sie Filter aus und klicken Sie auf GENERATE REPORT, um auf Ihre Daten zuzugreifen."
       users:
         index:
           listing_users: "Benutzer auflisten"
@@ -3220,14 +3181,11 @@ de_DE:
         autocomplete:
           producer_name: "Produzent"
           unit: "Einheit"
-      general_settings:
+      shared:
+        sortable_header:
+          name: "Name"
         edit:
-          legal_settings: "Rechtliche Einstellungen"
-          cookies_consent_banner_toggle: "Zeigen Sie das Zustimmungsbanner für Cookies"
-          privacy_policy_url: "Datenschutz URL"
           enterprises_require_tos: "Unternehmen müssen die AGB akzeptieren"
-          cookies_policy_matomo_section: "Zeigen Sie den Matomo-Abschnitt auf der Cookie-Richtlinienseite an"
-          cookies_policy_ga_section: "Google Analytics-Abschnitt auf der Cookie-Richtlinienseite anzeigen"
           footer_tos_url: "AGB URL"
     checkout:
       payment:

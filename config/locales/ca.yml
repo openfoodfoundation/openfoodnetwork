@@ -323,6 +323,7 @@ ca:
     show_n_more: Mostra %{num} més
     choose: "Tria ..."
     please_select: Seleccioneu ...
+    column_save_as_default: Per defecte
     columns: Columnes
     actions: Accions
     viewing: "Veient: %{current_view_name}"
@@ -663,7 +664,7 @@ ca:
         primary_details:
           name: Nom
           name_placeholder: p. ex. Horta Josep Ribes
-          groups: Grups
+          groups: Xarxes/Grups
           groups_tip: Seleccioneu grups o xarxes de la quals sou membres. Això ajudarà les consumidores a trobar la vostra organització o empresa.
           groups_placeholder: Comenceu a escriure per cercar xarxes disponibles...
           primary_producer: Productora principal?
@@ -1206,7 +1207,7 @@ ca:
   menu_2_url: "/map"
   menu_3_title: "Productors"
   menu_3_url: "/producers"
-  menu_4_title: "Grups"
+  menu_4_title: "Xarxes/Grups"
   menu_4_url: "/groups"
   menu_5_title: "Sobre"
   menu_5_url: "http://katuma.org/"
@@ -1262,7 +1263,7 @@ ca:
   label_map: "Mapa"
   label_producer: "Productora"
   label_producers: "Productors"
-  label_groups: "Grups"
+  label_groups: "Xarxes/Grups"
   label_about: "Sobre"
   label_connect: "Connecta"
   label_learn: "Aprèn"
@@ -1323,14 +1324,8 @@ ca:
       cookie_stripe_desc: "Dades recollides pel nostre processador de pagaments Stripe per a la detecció de frau https://stripe.com/cookies-policy/legal. No totes les botigues utilitzen Stripe com a mètode de pagament, però és una bona pràctica per evitar que el frau s'apliqui a totes les pàgines. Probablement Stripe construeixi una imatge de quines de les nostres pàgines solen interactuar amb la seva API i, a continuació, marca qualsevol cosa inusual. Així, configurar les cookies d'Stripe té una funció més àmplia que simplement proporcionar un mètode de pagament a un usuari. Eliminant-lo podria afectar la seguretat del propi servei. Pots obtenir més informació sobre Stripe i llegir la seva política de privadesa a https://stripe.com/privacy."
       statistics_cookies: "Cookies d'estadístiques"
       statistics_cookies_desc: "Les següents no són estrictament necessàries, però ajuden a proporcionar-vos la millor experiència d'usuari, permetent-nos analitzar el comportament de l'usuari, identificar quines funcions s'utilitzen més o quines no es fan servir, comprendre problemes d'experiència d'usuari, etc."
-      statistics_cookies_analytics_desc_html: "Per recopilar i analitzar les dades d'ús de la plataforma utilitzem Google Analytics ja que era el servei predeterminat connectat amb Spree (el programari de codi obert de comerç en línia que hem construït), però la nostra visió és canviar a <a href = 'https: / / /matomo.org/ 'target =' _ blank '> Matomo </ a> (ex Piwik, eina d'anàlisi de codi obert compatible amb GDPR i protegeix la vostra privadesa) tan aviat com puguem. "
       statistics_cookies_matomo_desc_html: "Per recopilar i analitzar les dades d'ús de la plataforma, utilitzem <a href='https://matomo.org/' target='_blank'> Matomo </ a> (ex Piwik), una eina d'anàlisi de codi obert que és compatible amb GDPR i protegeix la vostra privadesa."
       statistics_cookies_matomo_optout: "Vols desactivar l'anàlisi de dades de Matomo? No recopilem cap dada personal i Matomo ens ajuda a millorar el nostre servei però respectem la teva elecció :-)"
-      cookie_analytics_utma_desc: "S'utilitza per distingir usuaris i sessions. La cookie es crea quan s'executa la biblioteca javascript i no existeixen cookies __utma existents. La cookie s'actualitza cada cop que s'envien dades a Google Analytics."
-      cookie_analytics_utmt_desc: "S'utilitza per accelerar la quantitat de sol·licituds."
-      cookie_analytics_utmb_desc: "S'utilitza per determinar noves sessions / visites. La cookie es crea quan s'executa la biblioteca javascript i no existeixen cookies __utmb existents. La cookie s'actualitza cada cop que s'envien dades a Google Analytics."
-      cookie_analytics_utmc_desc: "No s'utilitza a ga.js. Estableix la interoperabilitat amb urchin.js. Històricament, aquesta cookie funcionava juntament amb la cookie __utmb per determinar si l'usuari estava en una nova sessió / visita."
-      cookie_analytics_utmz_desc: "Emmagatzema l'origen del codi o la campanya que explica com l'usuari ha arribat al vostre lloc. La cookie es crea quan s'executa i s'actualitza la biblioteca javascript cada vegada que s'envien dades a Google Analytics."
       cookie_matomo_basics_desc: "Les primeres cookies de Matomo per recollir estadístiques."
       cookie_matomo_heatmap_desc: "Galeta d'enregistrament de sessió i heatmap de Matomo"
       cookie_matomo_ignore_desc: "La cookie usada per excloure l'usuari de ser seguit."
@@ -1464,9 +1459,9 @@ ca:
   email_so_edit_false_html: "Pots <a href='%{order_url}'> veure detalls d'aquesta comanda </a> en qualsevol moment."
   email_so_contact_distributor_html: "Si tens alguna pregunta pots contactar amb <strong>%{distributor}</strong> a través d'%{email}."
   email_so_contact_distributor_to_change_order_html: "Aquesta comanda s'ha creat automàticament per a vostè. Podeu fer canvis fins que les comandes es tanquin a %{orders_close_at} contactant a <strong> %{distributor} </ strong> a través d'%{email}."
-  email_so_confirmation_intro_html: "La teva comanda amb <strong> %{distributor} </ strong> ja està confirmada"
+  email_so_confirmation_intro_html: "La teva comanda amb <strong>%{distributor}</strong> ja està confirmada"
   email_so_confirmation_explainer_html: "Vas realitzar aquesta comanda automàticament i ara s'ha finalitzat."
-  email_so_confirmation_details_html: "A continuació trobareu tot el que necessiteu saber sobre la comanda de <strong> %{distributor} </ strong>:"
+  email_so_confirmation_details_html: "A continuació trobareu tot el que necessiteu saber sobre la comanda de <strong>%{distributor}</strong> :"
   email_so_empty_intro_html: "Hem intentat fer una nova comanda amb <strong> %{distributor} </ strong>, però hem tingut alguns problemes..."
   email_so_empty_explainer_html: "Malauradament, cap dels productes que heu demanat estava disponible, de manera que no s'ha realitzat cap comanda. Les quantitats originals que heu sol·licitat apareixen ratllades a sota."
   email_so_empty_details_html: "Aquests són els detalls de la comanda sense confirmar per <strong> %{distributor} </ strong>:"
@@ -1556,8 +1551,8 @@ ca:
   components_profiles_show: "Mostra els perfils"
   components_filters_nofilters: "Sense filtres"
   components_filters_clearfilters: "Esborra tots els filtres"
-  groups_title: Grups
-  groups_headline: Xarxes / regions
+  groups_title: Xarxes/Grups
+  groups_headline: Xarxes /Grups
   groups_text: "Cada productora és única. Tots els negocis tenen alguna cosa diferent per oferir. Els nostres grups són col·lectius o xarxes de productores, grups de consum o distribuïdores que comparteixen alguna cosa comú com la ubicació, la parada en un mercat de pagès o la filosofia. Això fa que la teva experiència de compra sigui més fàcil. Explora els nostres grups."
   groups_search: "Cerca nom o paraula clau"
   groups_no_groups: "No s'ha trobat cap xarxa"
@@ -1589,22 +1584,6 @@ ca:
   groups_signup_contact_text: "Posa't en contacte per descobrir què pot fer OFN per tu:"
   groups_signup_detail: "Aquest és el detall."
   login_invalid: "Correu electrònic o contrasenya no vàlids"
-  modal_hubs: "Grups"
-  modal_hubs_abstract: Els nostres grups són el punt de contacte entre tu i les persones que fan els teus aliments.
-  modal_hubs_content1: Pots cercar un grup convenient per ubicació o nom. Alguns grups tenen diversos punts on pots recollir les vostres comandes i alguns també proporcionen opcions de lliurament. Cada grup és un punt de venda amb operacions comercials i logística independents, per la qual cosa és normal que existeixin variacions d'un grup a un altre.
-  modal_hubs_content2: Només pots comprar en un grup de consum a la vegada.
-  modal_groups: "Xarxes / regions"
-  modal_groups_content1: Aquestes són les organitzacions i les relacions entre els grups que conformen l'OFN
-  modal_groups_content2: Alguns grups estan agrupats per localització o Ajuntament, altres per similituds no geogràfiques.
-  modal_how: "Com funciona"
-  modal_how_shop: Compreu a Open Food Network
-  modal_how_shop_explained: Cerca un grup de consum a prop teu per començar a comprar. Pots expandir cada grup per veure quins tipus de productes estan disponibles i fer clic per començar a comprar. (Només pots comprar en un grup alhora).
-  modal_how_pickup: Costes de recollida, lliurament i enviament
-  modal_how_pickup_explained: Algunes organitzacións o grups lliuren a la vostra porta, mentre que altres requereixen que aneu a buscar les vostres comandes. Podeu veure quines opcions hi ha disponibles a la pàgina d'inici i seleccionar el que vulgueu a les pàgines de confirmació de la compra. L'enviament costarà més, i els preus difereixen de l'organització. Cada grup és un punt de venda amb operacions comercials i logística independents, per la qual cosa es existeixen  variacions entre grups.
-  modal_how_more: Aprèn-ne més
-  modal_how_more_explained: "Si vols saber-ne més sobre l'Open Food Network, com funciona i participar-hi, consulta:"
-  modal_producers: "Productors"
-  modal_producers_explained: "Les nostres productores elaboren tot el menjar deliciós que pots adquirir a l'Open Food Network."
   producers_about: Sobre nosaltres
   producers_buy: 'Compreu '
   producers_contact: Contacte
@@ -1922,6 +1901,7 @@ ca:
   admin_enterprise_relationships_permits: "Permet"
   admin_enterprise_relationships_seach_placeholder: "Cerca"
   admin_enterprise_relationships_button_create: "Crear"
+  admin_enterprise_relationships_to: "a"
   admin_enterprise_groups: "Grups d'organització"
   admin_enterprise_groups_name: "Nom"
   admin_enterprise_groups_owner: "Propietària"
@@ -2689,6 +2669,14 @@ ca:
       start_free_profile: "Comença amb un perfil gratuït i amplia'l quan estiguis preparada."
   order_management:
     reports:
+      enterprise_fee_summaries:
+        filters:
+          date_range: "Interval de dates"
+          report_format_csv: "Descarrega com a CSV"
+          generate_report: "Generar informe"
+        report:
+          none: "Cap"
+          select_and_search: "Seleccioneu els filtres i feu clic a GENERAR INFORME per accedir a les dades."
       enterprise_fee_summary:
         date_end_before_start_error: "ha de ser després de l'inici"
         parameter_not_allowed_error: "No esteu autoritzats a utilitzar un o més filtres seleccionats per a aquest informe."
@@ -2828,14 +2816,6 @@ ca:
     smtp_send_copy_to_this_addresses: "Envia una còpia de tots els correus sortints a aquesta adreça. Per a diverses adreces, separeu amb comes."
     intercept_email_address: "Intercepta adreça de correu"
     intercept_email_instructions: "Invalida el destinatari de correu electrònic i reemplaça amb aquesta adreça."
-    smtp: "SMTP"
-    smtp_domain: "Domini SMTP"
-    smtp_mail_host: "Servidor de correu SMTP"
-    smtp_port: "Port SMTP"
-    secure_connection_type: "Tipus de connexió segura"
-    smtp_authentication_type: "Tipus d'autenticació SMTP"
-    smtp_username: "Nom d'usuari SMTP"
-    smtp_password: "Contrasenya SMTP"
     image_settings: "Configuració de la imatge"
     image_settings_warning: "Haureu de regenerar thumbnails si actualitzeu els estils de paperclip. Feu servir rake paperclip:refresh:thumbnails CLASS=Spree::Image per fer-ho."
     attachment_default_style: Estil de fitxers adjunts
@@ -2882,12 +2862,6 @@ ca:
     shipping_categories: "Tipus d'enviament"
     new_shipping_category: "Nova categoria d’enviament"
     back_to_shipping_categories: "Tornar a les categories d'enviament"
-    analytics_trackers: "Rastrejadors d'anàlisi"
-    no_trackers_found: "No s'ha trobat cap rastrejador"
-    new_tracker: "Nou rastrejador"
-    add_one: "Afegeix-ne un"
-    google_analytics_id: "ID d'Analytics"
-    back_to_trackers_list: "Torna a la llista de rastrejadors"
     name: "Nom"
     description: "Descripció"
     type: "Tipus"
@@ -3169,14 +3143,6 @@ ca:
           bulk_coop_allocation: 'Compra grupal - Assignació'
           bulk_coop_packing_sheets: 'Compra grupal - Fulls de preparació de cistelles'
           bulk_coop_customer_payments: 'Compra grupal - Pagaments de les consumidores'
-        enterprise_fee_summaries:
-          filters:
-            date_range: "Interval de dates"
-            report_format_csv: "Descarrega com a CSV"
-            generate_report: "Generar informe"
-          report:
-            none: "No productora"
-            select_and_search: "Seleccioneu els filtres i feu clic a GENERAR INFORME per accedir a les dades."
       users:
         index:
           listing_users: "Llistat d'usuàries"
@@ -3221,14 +3187,15 @@ ca:
         autocomplete:
           producer_name: "Productor"
           unit: "Unitat"
-      general_settings:
+      shared:
+        sortable_header:
+          name: "Nom"
         edit:
           legal_settings: "Paràmetres legals"
           cookies_consent_banner_toggle: "Mostra banner de consentiment de cookies"
           privacy_policy_url: "URL de la política de privacitat "
           enterprises_require_tos: "Les organitzacions han d'acceptar les condicions del servei"
           cookies_policy_matomo_section: "Mostra la secció de Matomo a la pàgina de política de cookies"
-          cookies_policy_ga_section: "Mostra la secció de Google Analytics a la pàgina de política de cookies"
           footer_tos_url: "URL de les condicions d'ús"
     checkout:
       payment:
