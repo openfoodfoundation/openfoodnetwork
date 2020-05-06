@@ -15,7 +15,6 @@ Darkswarm.factory "OfnMap", (Enterprises, EnterpriseListModal, MapConfiguration)
       hash[enterprise.id] = { id: enterprise.id, name: enterprise.name, icon: enterprise.icon_font }
       hash
 
-
     # Adding methods to each enterprise
     extend: (enterprise) ->
       marker = @coordinates[[enterprise.latitude, enterprise.longitude]]
