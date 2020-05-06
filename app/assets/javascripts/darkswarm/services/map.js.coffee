@@ -1,4 +1,4 @@
-Darkswarm.factory "OfnMap", (Enterprises, EnterpriseModal, MapConfiguration) ->
+Darkswarm.factory "OfnMap", (Enterprises, EnterpriseListModal, MapConfiguration) ->
   new class OfnMap
     constructor: ->
       @coordinates = {}
@@ -7,9 +7,6 @@ Darkswarm.factory "OfnMap", (Enterprises, EnterpriseModal, MapConfiguration) ->
         enterprise.latitude != null || enterprise.longitude != null
       @enterprises = @enterprise_markers(@enterprises)
       self = this
-      @enterprises = @enterprises.filter (enterprise) ->
-        # Remove enterprises w/o lat or long
-        enterprise.latitude != null || enterprise.longitude != null
 
     enterprise_markers: (enterprises) ->
       @extend(enterprise) for enterprise in enterprises
@@ -33,7 +30,7 @@ Darkswarm.factory "OfnMap", (Enterprises, EnterpriseModal, MapConfiguration) ->
           id: [enterprise.id]
           enterprises: self.enterprise_hash({}, enterprise)
           reveal: =>
-            EnterpriseModal.open this.enterprises
+            EnterpriseListModal.open this.enterprises
         @coordinates[[enterprise.latitude, enterprise.longitude]] = marker
       else
         marker.icon = MapConfiguration.options.cluster_icon

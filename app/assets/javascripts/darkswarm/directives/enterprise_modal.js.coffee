@@ -7,4 +7,4 @@ Darkswarm.directive "enterpriseModal", (EnterpriseModal) ->
     elem.on "click", (event) =>
       event.stopPropagation()
 
-      scope.modalInstance = EnterpriseModal.open [scope.enterprise]
+      scope.modalInstance = EnterpriseModal.open scope.enterprise

@@ -332,11 +332,15 @@ feature '
       select 'My supplier', from: 'new_supplier_id'
       click_button 'Add supplier'
       expect(page).to have_selector("table.exchanges tr.supplier", text: "My supplier")
-      page.all("table.exchanges tr.supplier td.products").each(&:click)
 
+      page.all("table.exchanges tr.supplier td.products").each do |tab|
+        tab.click
+        sleep 1
+      end
 
       expect(page).to have_selector "#order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}", visible: true
       page.find("#order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}", visible: true).click # uncheck (with visible:true filter)
+      expect(page).to have_selector "#order_cycle_incoming_exchange_2_variants_#{v1.id}", visible: true
       check "order_cycle_incoming_exchange_2_variants_#{v1.id}"
       check "order_cycle_incoming_exchange_2_variants_#{v2.id}"
 
@@ -886,6 +890,7 @@ feature '
         # Open the products list for managed_supplier's incoming exchange
         within "tr.distributor-#{distributor_managed.id}" do
           page.find("td.products").click
+          sleep 3
         end
 
         # I should be able to see and toggle v1

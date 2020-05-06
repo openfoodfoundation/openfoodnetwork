@@ -1,7 +1,7 @@
-Darkswarm.controller "GroupEnterprisesCtrl", ($scope, Search, FilterSelectorsService, EnterpriseBox) ->
+Darkswarm.controller "GroupEnterprisesCtrl", ($scope, Search, FilterSelectorsService, EnterpriseModal) ->
   $scope.filterSelectors = FilterSelectorsService.createSelectors()
   $scope.query = Search.search()
-  $scope.openModal = EnterpriseBox.open
+  $scope.openModal = EnterpriseModal.open
   $scope.activeTaxons = []
   $scope.show_profiles = false
   $scope.filtersActive = false
