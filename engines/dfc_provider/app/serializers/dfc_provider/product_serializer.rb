@@ -9,7 +9,7 @@ module DfcProvider
       @base_url = base_url
     end
 
-    def serialized_json
+    def serialized_data
       {
         "@context" =>
         {
@@ -18,7 +18,7 @@ module DfcProvider
         },
         "@id" => "/enterprise/products",
         "DFC:supplies" => serialized_products
-      }.to_json
+      }
     end
 
     private

@@ -18,11 +18,11 @@ module DfcProvider
           inventory_variants.
           includes(:product, :inventory_items)
 
-        products_json = ::DfcProvider::ProductSerializer.
+        serialized_data = ::DfcProvider::ProductSerializer.
           new(products, base_url).
-          serialized_json
+          serialized_data
 
-        render json: products_json
+        render json: serialized_data
       end
 
       private
