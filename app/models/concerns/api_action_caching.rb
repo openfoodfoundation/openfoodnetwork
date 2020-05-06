@@ -13,7 +13,7 @@ module ApiActionCaching
 
     # These configs are not assigned to the controller automatically with ActionController::Metal
     self.cache_store = Rails.configuration.cache_store
-    self.perform_caching = ActionController::Base.perform_caching
+    self.perform_caching = true
 
     # ActionController::Caching asks for a controller's layout, but they're not used in the API
     layout false
