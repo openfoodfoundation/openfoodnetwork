@@ -13,7 +13,7 @@ The following guides are located in the wiki and provide more OS-specific step-b
 ### Dependencies
 
 * Rails 3.2.x
-* Ruby 2.1.9
+* Ruby 2.3.7
 * PostgreSQL database
 * PhantomJS (for testing)
 * See Gemfile for a list of gems required
