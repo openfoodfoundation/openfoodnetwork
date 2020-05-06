@@ -28,7 +28,12 @@ module DfcProvider
       private
 
       def check_enterprise
-        @enterprise = @user.enterprises.first
+        @enterprise =
+          if params[:enterprise_id] == 'default'
+            @user.enterprises.first
+          else
+            @user.enterprises.where(id: params[:enterprise_id]).first
+          end
 
         return if @enterprise.present?
 

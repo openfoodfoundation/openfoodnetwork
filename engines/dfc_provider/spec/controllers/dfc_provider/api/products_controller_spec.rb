@@ -7,9 +7,7 @@ describe DfcProvider::Api::ProductsController, type: :controller do
 
   let(:user) { create(:user) }
   let(:enterprise) { create(:distributor_enterprise, owner: user) }
-  let(:product) do
-    create(:simple_product, supplier: enterprise )
-  end
+  let(:product) { create(:simple_product, supplier: enterprise ) }
   let!(:visible_inventory_item) do
     create(:inventory_item,
            enterprise: enterprise,
@@ -31,22 +29,49 @@ describe DfcProvider::Api::ProductsController, type: :controller do
         end
 
         context 'with an enterprise' do
-          before { get :index }
+          context 'given with an id' do
+            context 'related to the user' do
+              before { get :index, enterprise_id: enterprise.id }
 
-          it 'is successful' do
-            expect(response.status).to eq 200
+              it 'is successful' do
+                expect(response.status).to eq 200
+              end
+
+              it 'renders the related product' do
+                expect(response.body)
+                  .to include(product.variants.first.name)
+              end
+            end
+
+            context 'not related to the user' do
+              let(:enterprise) { create(:enterprise) }
+
+              before { get :index, enterprise_id: enterprise.id }
+
+              it 'returns not_found head' do
+                expect(response.status).to eq 404
+              end
+            end
           end
 
-          it 'renders the related product' do
-            expect(response.body)
-              .to include("\"DFC:description\":\"#{product.variants.first.name}\"")
+          context 'as default' do
+            before { get :index, enterprise_id: 'default' }
+
+            it 'is successful' do
+              expect(response.status).to eq 200
+            end
+
+            it 'renders the related product' do
+              expect(response.body)
+                .to include(product.variants.first.name)
+            end
           end
         end
 
         context 'without a recorded enterprise' do
           let(:enterprise) { create(:enterprise) }
 
-          before { get :index }
+          before { get :index, enterprise_id: 'default' }
 
           it 'returns not_found head' do
             expect(response.status).to eq 404
@@ -61,7 +86,7 @@ describe DfcProvider::Api::ProductsController, type: :controller do
             .and_return(nil)
         end
 
-        before { get :index }
+        before { get :index, enterprise_id: 'default' }
 
         it 'returns unauthorized head' do
           expect(response.status).to eq 401
