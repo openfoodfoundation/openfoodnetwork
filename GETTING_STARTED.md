@@ -2,6 +2,8 @@
 
 This is a general guide to setting up an Open Food Network development environment on your local machine.
 
+The fastest way to make it work locally is to use Docker, see the [Docker setup guide](DOCKER.md).
+
 The following guides are located in the wiki and provide more OS-specific step-by-step instructions:
 
 - [Ubuntu Setup Guide][ubuntu]
