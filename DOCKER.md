@@ -39,7 +39,6 @@ Setup the database and seed it with sample data:
 ```sh
 $ docker-compose run web bundle exec rake db:reset
 $ docker-compose run web bundle exec rake db:test:prepare
-$ docker-compose run web bundle exec rake db:seed
 $ docker-compose run web bundle exec rake ofn:sample_data
 ```
 
