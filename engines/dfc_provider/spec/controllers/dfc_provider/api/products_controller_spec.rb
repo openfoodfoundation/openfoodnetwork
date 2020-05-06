@@ -31,7 +31,7 @@ describe DfcProvider::Api::ProductsController, type: :controller do
         context 'with an enterprise' do
           context 'given with an id' do
             context 'related to the user' do
-              before { get :index, enterprise_id: enterprise.id }
+              before { get :index, enterprise_id: 'default' }
 
               it 'is successful' do
                 expect(response.status).to eq 200
@@ -46,9 +46,8 @@ describe DfcProvider::Api::ProductsController, type: :controller do
             context 'not related to the user' do
               let(:enterprise) { create(:enterprise) }
 
-              before { get :index, enterprise_id: enterprise.id }
-
               it 'returns not_found head' do
+                get :index, enterprise_id: enterprise.id
                 expect(response.status).to eq 404
               end
             end
@@ -71,33 +70,28 @@ describe DfcProvider::Api::ProductsController, type: :controller do
         context 'without a recorded enterprise' do
           let(:enterprise) { create(:enterprise) }
 
-          before { get :index, enterprise_id: 'default' }
-
           it 'returns not_found head' do
+            get :index, enterprise_id: 'default'
             expect(response.status).to eq 404
           end
         end
       end
 
       context 'without an authenticated user' do
-        before do
+        it 'returns unauthorized head' do
           allow_any_instance_of(DfcProvider::AuthorizationControl)
             .to receive(:process)
             .and_return(nil)
-        end
 
-        before { get :index, enterprise_id: 'default' }
-
-        it 'returns unauthorized head' do
+          get :index, enterprise_id: 'default'
           expect(response.status).to eq 401
         end
       end
     end
 
     context 'without an authorization token' do
-      before { get :index, enterprise_id: enterprise.id }
-
       it 'returns unprocessable_entity head' do
+        get :index, enterprise_id: enterprise.id
         expect(response.status).to eq 422
       end
     end
