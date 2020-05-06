@@ -21,6 +21,10 @@ Darkswarm.factory "OfnMap", (Enterprises, EnterpriseListModal, MapConfiguration)
       marker = @coordinates[[enterprise.latitude, enterprise.longitude]]
       self = this
       if !marker
+        marker.icon = MapConfiguration.options.cluster_icon
+        self.enterprise_hash(marker.enterprises, enterprise)
+        marker.id.push(enterprise.id)
+      else
         marker = new class MapMarker
           # We cherry-pick attributes because GMaps tries to crawl
           # our data, and our data is cyclic, so it breaks
@@ -32,8 +36,4 @@ Darkswarm.factory "OfnMap", (Enterprises, EnterpriseListModal, MapConfiguration)
           reveal: =>
             EnterpriseListModal.open this.enterprises
         @coordinates[[enterprise.latitude, enterprise.longitude]] = marker
-      else
-        marker.icon = MapConfiguration.options.cluster_icon
-        self.enterprise_hash(marker.enterprises, enterprise)
-        marker.id.push(enterprise.id)
       marker
