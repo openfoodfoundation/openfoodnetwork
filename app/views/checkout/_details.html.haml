@@ -21,7 +21,7 @@
 
       .row
         .small-6.columns
-          = validated_input t(:email), 'order.email', type: :email, "ofn-focus" => "accordion['details']"
+          = validated_input t(:email), 'order.email', type: "email", inputmode: "email", "ofn-focus" => "accordion['details']"
 
         .small-6.columns
           = validated_input t(:phone), 'order.bill_address.phone'
@@ -30,3 +30,4 @@
         .small-12.columns.text-right
           %button.primary{"ng-disabled" => "details.$invalid", "ng-click" => "login_or_next($event)"}
             = t :next
+
