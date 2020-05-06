@@ -3,16 +3,8 @@
 # Controller used to provide the API products for the DFC application
 module DfcProvider
   module Api
-    class ProductsController < ::ActionController::Metal
-      include ActionController::Head
-      include AbstractController::Rendering
-      include ActionController::Rendering
-      include ActionController::Renderers::All
-      include ActionController::MimeResponds
-      include ActionController::ImplicitRender
-      include AbstractController::Callbacks
+    class ProductsController < ::ActionController::Base
       # To access 'base_url' helper
-      include ActionController::UrlFor
       include Rails.application.routes.url_helpers
 
       before_filter :check_authorization,
