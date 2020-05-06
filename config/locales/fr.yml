@@ -2308,6 +2308,10 @@ fr:
     resolve_errors: Veuillez corriger les erreurs suivantes
     more_items: "+ %{count} en plus"
     default_card_updated: La carte bancaire par défaut a été mise à jour
+    cart:
+      add_to_cart_failed: >
+          Il y a eu un problème lors de l'ajout de votre produit au panier. Peut-être
+          qu'il n'est plus en stock ou que la boutique sur laquelle vous étiez a fermé.
     admin:
       enterprise_limit_reached: "Vous avez atteint le nombre limite d'entreprises autorisées par défaut. Ecrivez à %{contact_email}si vous avez besoin d'augmenter cette limite."
       modals:
