@@ -12,7 +12,7 @@ Spree::Product.class_eval do
   has_many :option_types, through: :product_option_types, dependent: :destroy
 
   belongs_to :supplier, class_name: 'Enterprise', touch: true
-  belongs_to :primary_taxon, class_name: 'Spree::Taxon'
+  belongs_to :primary_taxon, class_name: 'Spree::Taxon', touch: true
 
   delegate_belongs_to :master, :unit_value, :unit_description
   delegate :images_attributes=, :display_as=, to: :master

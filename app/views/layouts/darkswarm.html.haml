@@ -48,8 +48,10 @@
     = inject_current_hub
     = inject_current_user
     = inject_rails_flash
-    = inject_taxons
-    = inject_properties
+    - cache CacheService::FragmentCaching.ams_all_taxons_key do
+      = inject_taxons
+    - cache CacheService::FragmentCaching.ams_all_properties_key do
+      = inject_properties
     = inject_current_order
     = inject_currency_config
     = yield :injection_data

@@ -22,4 +22,17 @@ class CacheService
   def self.latest_timestamp_by_class(cached_class)
     cached_class.maximum(:updated_at).to_i
   end
+
+  module FragmentCaching
+    # Rails' caching in views is called "Fragment Caching" and uses some slightly different logic.
+    # Note: supplied keys are actually prepended with "view/" under the hood.
+
+    def self.ams_all_taxons_key
+      "inject-all-taxons-#{CacheService.latest_timestamp_by_class(Spree::Taxon)}"
+    end
+
+    def self.ams_all_properties_key
+      "inject-all-properties-#{CacheService.latest_timestamp_by_class(Spree::Property)}"
+    end
+  end
 end
