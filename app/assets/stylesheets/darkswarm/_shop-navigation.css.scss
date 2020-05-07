@@ -80,6 +80,10 @@ ordercycle {
       }
     }
 
+    option {
+      color: $grey-700;
+    }
+
     @media all and (max-width: 1024px) {
       float: none;
       margin-right: 1em;
