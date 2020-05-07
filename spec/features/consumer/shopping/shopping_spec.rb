@@ -50,7 +50,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
       it "selects an order cycle if only one is open" do
         exchange1.update_attribute :pickup_time, "turtles"
         visit shop_path
-        expect(page).to have_selector "option[selected]", text: 'turtles'
+        expect(page).to have_selector "p", text: 'turtles'
       end
 
       describe "with multiple order cycles" do
@@ -209,8 +209,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
       it "filters search results properly" do
         visit shop_path
-        select "frogs", from: "order_cycle_id"
-
         fill_in "search", with: "74576345634XXXXXX"
         expect(page).to have_content "Sorry, no results found"
         expect(page).not_to have_content product2.name
@@ -222,8 +220,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
       it "returns search results for products where the search term matches one of the product's variant names" do
         visit shop_path
-        select "frogs", from: "order_cycle_id"
-
         fill_in "search", with: "Badg"           # For variant with display_name "Badgers"
 
         within('div.pad-top') do

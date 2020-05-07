@@ -49,7 +49,7 @@ ordercycle {
       border-radius: 0.25em 0 0 0.25em;
       float: left;
       font-size: 1em;
-      line-height: 1.5em;
+      line-height: 1.3em;
       padding: 0.5em 0.75em;
       height: 2.35em;
 
@@ -60,6 +60,15 @@ ordercycle {
     }
 
     select {
+      background-image: url('/assets/white-caret.svg');
+    }
+
+    p {
+      text-align: left;
+    }
+
+    select,
+    p {
       width: inherit;
       display: inline-block;
       color: $white;
@@ -67,10 +76,9 @@ ordercycle {
       border: 0;
       margin-bottom: 0;
       font-size: 1em;
-      line-height: 1.5em;
+      line-height: 1.3em;
       padding: 0.5em 1.25em 0.5em 0.75em;
       height: 2.35em;
-      background-image: url('/assets/white-caret.svg');
       background-size: 30px auto;
       border-radius: 0 0.25em 0.25em 0;
       min-width: 13em;
