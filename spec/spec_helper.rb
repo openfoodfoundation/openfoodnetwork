@@ -114,6 +114,15 @@ RSpec.configure do |config|
       .each { |s| s.driver.reset! }
   end
 
+  # Enable caching in any specs tagged with `caching: true`. Usage is exactly the same as the
+  # well-known `js: true` tag used to enable javascript in feature specs.
+  config.around(:each, :caching) do |example|
+    caching = ActionController::Base.perform_caching
+    ActionController::Base.perform_caching = example.metadata[:caching]
+    example.run
+    ActionController::Base.perform_caching = caching
+  end
+
   config.before(:all) { restart_phantomjs }
 
   # Geocoding
