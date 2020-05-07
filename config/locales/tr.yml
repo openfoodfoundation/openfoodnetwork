@@ -3,26 +3,26 @@ tr:
   activerecord:
     attributes:
       enterprise_fee:
-        fee_type: Ücret Türü
+        fee_type: Ücret TÜRÜ
       spree/order:
         payment_state: Ödeme Durumu
         shipment_state: ' Teslimat Durumu'
-        completed_at: Oluşturulma Tarihi
+        completed_at: Oluşturulma TARİHİ
         number: Numara
         state: Durum
         email: Müşteri E-postası
       spree/payment:
         amount: Tutar
       spree/product:
-        primary_taxon: "Ürün Kategorisi"
-        supplier: "Tedarikçi"
-        shipping_category_id: "Teslimat Kategorisi"
-        variant_unit: "Varyant Birimi"
+        primary_taxon: "ÜRÜN KATEGORİSİ"
+        supplier: "TEDARİKÇİ"
+        shipping_category_id: "Teslimat KategOrİSİ"
+        variant_unit: "Varyant BİRİMİ"
         variant_unit_name: "Varyant Birim Adı"
       spree/credit_card:
         base: "Kredi kartı"
       order_cycle:
-        orders_close_at: Bitiş tarihi
+        orders_close_at: BİTİŞ TARİHİ
     errors:
       models:
         spree/user:
@@ -47,14 +47,14 @@ tr:
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
-        start_at: "Başlangıç"
-        end_at: "Bitiş"
+        start_at: "BAŞLANGIÇ"
+        end_at: "BİTİŞ"
         distributor_ids: "Pazarlar"
         producer_ids: "ÜRETİCİLER"
-        order_cycle_ids: "Sipariş Dönemleri"
-        enterprise_fee_ids: "Ücret İsimleri"
-        shipping_method_ids: "Teslimat Yöntemleri"
-        payment_method_ids: "Ödeme Yöntemleri"
+        order_cycle_ids: "SİPARİŞ DÖNEMLERİ"
+        enterprise_fee_ids: "ÜCRET İSİMLERİ"
+        shipping_method_ids: "TESLİMAT YÖNTEMLERİ"
+        payment_method_ids: "ÖDEME YÖNTEMLERİ"
     errors:
       messages:
         inclusion: "Listeye dahil değil"
@@ -393,8 +393,8 @@ tr:
         has_associated_orders: 'Silme başarısız oldu: müşterinin bağlantılı siparişleri var'
     contents:
       edit:
-        title: İçerik
-        header: Başlık
+        title: İÇERİK
+        header: BaşlIK
         home_page: Ana Sayfa
         producer_signup_page: Üretici kayıt sayfası
         hub_signup_page: Pazar kayıt sayfası
@@ -855,11 +855,11 @@ tr:
         advanced_settings: "Gelişmiş Ayarlar"
         save: "Kaydet"
         save_and_next: "Kaydet ve İlerle"
-        next: "Sonraki"
+        next: "Sonrakİ"
         cancel: "İptal et"
         back_to_list: "Listeye geri dön"
         save_and_back_to_list: "Kaydet ve Listeye Dön"
-        choose_products_from: "Ürünleri Buradan Seç:"
+        choose_products_from: "Ürünlerİ Buradan SeÇ:"
       incoming:
         save: "Kaydet"
         save_and_next: "Kaydet ve İlerle"
@@ -1164,7 +1164,7 @@ tr:
       footer_data_cookies_policy: "çerez politikası"
   shop:
     messages:
-      login: "oturum aç"
+      login: "Oturum Aç"
       signup: "Kaydol"
       contact: "İLETİŞİM"
       require_customer_login: "Yalnızca onaylı müşteriler buradan alışveriş yapabilir."
@@ -1352,7 +1352,7 @@ tr:
   learn_cta: "İlham Alın"
   connect_body: "Yakınınızdaki adil ve temiz gıda tüccarlarını bulmak için üreticilerin, pazarların ve topluluklarının tümünü gözden geçirin. İşletmenizi veya topluluğunuzu Açık Gıda Ağı üzerinden listeleyin, böylece alıcılar sizi bulabilir. Ortak hareket etmek için diğer hesaplar ile iletişime geçmekten çekinmeyin, birlikte daha güçlüsünüz. Tavsiye almak ve sorunları birlikte çözmek için topluluğa katılın."
   connect_cta: "Keşfedin"
-  system_headline: "Alışveriş - işte böyle çalışıyor."
+  system_headline: "Nasıl çalışıyor ?"
   system_step1: "1. Ara"
   system_step1_text: "Yerel, adil, temiz ve mevsimsel gıda için, bağımsız ve cesur üreticilerimizin pazarlarından alışveriş yapın.  Uzaklığa göre, ürün kategorisine veya teslimat tercihlerine göre arama yapabilirsiniz. "
   system_step2: "2. Alışveriş Yap"
@@ -2303,6 +2303,10 @@ tr:
     resolve_errors: Lütfen aşağıdaki hataları düzeltin
     more_items: "+ %{count} Daha "
     default_card_updated: Varsayılan Kart Güncellendi
+    cart:
+      add_to_cart_failed: >
+          Bu ürünü sepete eklerken bir hata oluştu. Ürün stokları bitmiş veya mağaza
+          kapanıyor olabilir.
     admin:
       enterprise_limit_reached: "Hesap başına standart işletme sınırına ulaştınız. Artırmanız gerekiyorsa %{contact_email}'a yazın."
       modals:
@@ -2457,7 +2461,7 @@ tr:
           awaiting_return: "dönüş bekleniyor"
           canceled: "iptal edildi"
           cart: "sepet"
-          complete: "tamamla"
+          complete: "Tamamla"
           confirm: "onayla"
           delivery: "Eve Teslim"
           paused: "Durduruldu"
@@ -2842,10 +2846,10 @@ tr:
     countries: "Ülkeler"
     listing_countries: "Ülkeler Listeleniyor"
     iso_name: "ISO Adı"
-    states_required: "Şehir Gerekli"
+    states_required: "Şehİr Gerekli"
     editing_country: "Ülkeyi Düzenle"
     back_to_countries_list: "Ülke Listesine Geri Dön"
-    states: "Şehirler"
+    states: "Şehİrler"
     abbreviation: "Kısaltma"
     new_state: "Yeni Şehir"
     payment_methods: "Ödeme yöntemleri"
