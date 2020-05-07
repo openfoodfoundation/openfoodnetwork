@@ -2,7 +2,6 @@ Darkswarm.factory "EnterpriseListModal", ($modal, $rootScope, $http, EnterpriseM
   new class EnterpriseListModal
     open: (enterprises)->
       scope = $rootScope.$new(true)
-      scope.embedded_layout = window.location.search.indexOf("embedded_shopfront=true") != -1
       scope.enterprises = enterprises
       scope.openModal = EnterpriseModal.open
       if Object.keys(enterprises).length > 1
