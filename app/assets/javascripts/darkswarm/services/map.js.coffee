@@ -19,7 +19,7 @@ Darkswarm.factory "OfnMap", (Enterprises, EnterpriseListModal, MapConfiguration)
     extend: (enterprise) ->
       marker = @coordinates[[enterprise.latitude, enterprise.longitude]]
       self = this
-      if !marker
+      if marker
         marker.icon = MapConfiguration.options.cluster_icon
         self.enterprise_hash(marker.enterprises, enterprise)
         marker.id.push(enterprise.id)
