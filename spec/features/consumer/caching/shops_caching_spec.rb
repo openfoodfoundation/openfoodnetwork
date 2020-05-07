@@ -18,6 +18,7 @@ feature "Shops caching", js: true, caching: true do
     end
 
     it "keeps data cached for a short time on subsequent requests" do
+      # Ensure sufficient time for requests to load and timed caches to expire
       Timecop.travel(10.minutes.ago) do
         visit shops_path
 
@@ -65,6 +66,7 @@ feature "Shops caching", js: true, caching: true do
     end
 
     it "keeps data cached for a short time on subsequent requests" do
+      # Ensure sufficient time for requests to load and timed caches to expire
       Timecop.travel(10.minutes.ago) do
         visit enterprise_shop_path(distributor)
 
