@@ -109,6 +109,8 @@ module Spree
       private
 
       def order_params
+        return params[:order] if params[:order].blank?
+
         params.require(:order).permit(:distributor_id, :order_cycle_id)
       end
 
