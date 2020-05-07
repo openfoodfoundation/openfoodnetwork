@@ -1,8 +1,7 @@
 Darkswarm.factory "EnterpriseListModal", ($modal, $rootScope, $http, EnterpriseModal)->
-  # Build a modal popup for an enterprise.
   new class EnterpriseListModal
     open: (enterprises)->
-      scope = $rootScope.$new(true) # Spawn an isolate to contain the enterprise
+      scope = $rootScope.$new(true)
       scope.embedded_layout = window.location.search.indexOf("embedded_shopfront=true") != -1
       scope.enterprises = enterprises
       scope.openModal = EnterpriseModal.open
