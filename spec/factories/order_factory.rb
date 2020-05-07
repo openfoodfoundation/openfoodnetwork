@@ -46,8 +46,12 @@ FactoryBot.define do
     distributor { create(:distributor_enterprise) }
     order_cycle { create(:simple_order_cycle) }
 
-    after(:create) do |order|
-      create(:payment, amount: order.total + 10_000, order: order, state: "completed")
+    transient do
+      credit_amount { 10_000 }
+    end
+
+    after(:create) do |order, evaluator|
+      create(:payment, amount: order.total + evaluator.credit_amount, order: order, state: "completed")
       order.reload
     end
   end
@@ -56,8 +60,12 @@ FactoryBot.define do
     distributor { create(:distributor_enterprise) }
     order_cycle { create(:simple_order_cycle) }
 
-    after(:create) do |order|
-      create(:payment, amount: order.total - 1, order: order, state: "completed")
+    transient do
+      unpaid_amount { 1 }
+    end
+
+    after(:create) do |order, evaluator|
+      create(:payment, amount: order.total - evaluator.unpaid_amount, order: order, state: "completed")
       order.reload
     end
   end
