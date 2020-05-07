@@ -62,10 +62,14 @@ module Api
     end
 
     def supplied_taxons
+      return [] unless enterprise.is_primary_producer
+
       ids_to_objs data.supplied_taxons[enterprise.id]
     end
 
     def supplied_properties
+      return [] unless enterprise.is_primary_producer
+
       (product_properties + producer_properties).uniq do |property_object|
         property_object.property.presentation
       end
@@ -113,7 +117,7 @@ module Api
     end
 
     def active
-      data.active_distributor_ids.andand.include? enterprise.id
+      @active ||= data.active_distributor_ids.andand.include? enterprise.id
     end
 
     # Map svg icons.
