@@ -50,6 +50,9 @@ feature "Darkswarm data caching", js: true, caching: true do
       property.presentation = "Changed Property"
       property.save
 
+      # Clear timed shops cache so we can test uncached supplied properties
+      clear_shops_cache
+
       visit shops_path
 
       taxon_timestamp2 = CacheService.latest_timestamp_by_class(Spree::Taxon)
@@ -72,5 +75,10 @@ feature "Darkswarm data caching", js: true, caching: true do
 
   def expect_cached(key)
     expect(Rails.cache.exist?(key)).to be true
+  end
+
+  def clear_shops_cache
+    cache_key = "views/#{CacheService::FragmentCaching.ams_shops[0]}"
+    Rails.cache.delete cache_key
   end
 end
