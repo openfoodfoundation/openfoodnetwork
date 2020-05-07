@@ -11,7 +11,7 @@ module Api
                   cache_path: proc { |controller| controller.request.url }
 
     def products
-      render_no_products unless order_cycle.open?
+      return render_no_products unless order_cycle.open?
 
       products = ProductsRenderer.new(
         distributor,
