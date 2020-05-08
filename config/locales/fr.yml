@@ -867,6 +867,7 @@ fr:
         incoming: "Produits entrants (pouvant être mis en vente par les hubs)"
         supplier: "Fournisseur"
         products: "Produits"
+        receival_details: "Détails livraison"
         fees: "Commissions"
         save: "Sauvegarder"
         save_and_next: "Sauvegarder et suivant"
