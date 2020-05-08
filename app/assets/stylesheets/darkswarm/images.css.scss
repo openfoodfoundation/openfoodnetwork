@@ -4,7 +4,6 @@
 
 .product-img {
   padding: 5px;
-  margin-bottom: 10px;
 
   // placeholder for when no product images
   &.placeholder {
@@ -17,7 +16,6 @@
 
   @media only screen and (max-width: 1024px) {
     margin-top: 0;
-    margin-bottom: 1em;
     padding: 5px;
   }
 }

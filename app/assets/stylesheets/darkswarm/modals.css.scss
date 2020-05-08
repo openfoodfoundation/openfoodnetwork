@@ -27,7 +27,7 @@ dialog
 
   // Medium and up - larger outside area
   @media only screen and (min-width: 641px) {
-    border-bottom: 30px solid white;
+    border-bottom: 30px solid $white;
     max-height: 90%;
     padding: 30px 20px 0 20px;
     top: 5%;
