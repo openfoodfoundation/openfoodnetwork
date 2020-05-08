@@ -3177,6 +3177,8 @@ nb:
           price: "Pris"
           display_as: "Vis som"
           display_name: "Visningsnavn"
+          display_as_placeholder: 'f.eks. 2 kg'
+          display_name_placeholder: 'f.eks. Tomater'
         autocomplete:
           producer_name: "Produsent"
           unit: "Enhet"
