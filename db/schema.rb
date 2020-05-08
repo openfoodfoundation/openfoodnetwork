@@ -11,7 +11,8 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20200429122446) do
+ActiveRecord::Schema.define(:version => 20200430105459) do
+
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
     t.integer "enterprise_id"
@@ -269,8 +270,10 @@ ActiveRecord::Schema.define(:version => 20200429122446) do
   add_index "inventory_items", ["enterprise_id", "variant_id"], :name => "index_inventory_items_on_enterprise_id_and_variant_id", :unique => true
 
   create_table "order_cycle_schedules", :force => true do |t|
-    t.integer "order_cycle_id", :null => false
-    t.integer "schedule_id",    :null => false
+    t.integer  "order_cycle_id", :null => false
+    t.integer  "schedule_id",    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "order_cycle_schedules", ["order_cycle_id"], :name => "index_order_cycle_schedules_on_order_cycle_id"
