@@ -1239,12 +1239,16 @@ en:
       footer_data_cookies_policy: "cookies policy"
   shop:
     messages:
-      login: "login"
-      signup: "signup"
-      contact: "contact"
-      require_customer_login: "Only approved customers can access this shop."
-      require_login_html: "If you're already an approved customer, %{login} or %{signup} to proceed. Want to start shopping here? Please %{contact} %{enterprise} and ask about joining."
-      require_customer_html: "If you'd like to start shopping here, please %{contact} %{enterprise} to ask about joining."
+      customer_required:
+        login: "login"
+        signup: "signup"
+        contact: "contact"
+        require_customer_login: "Only approved customers can access this shop."
+        require_login_html: "If you're already an approved customer, %{login} or %{signup} to proceed."
+        require_login_2_html: "Want to start shopping here? Please %{contact} %{enterprise} and ask about joining."
+        require_customer_html: "If you'd like to start shopping here, please %{contact} %{enterprise} to ask about joining."
+      select_oc:
+        select_oc_html: "Please <span class='highlighted'>choose when you want your order</span>, to see what products are available."
 
   # Front-end controller translations
   card_could_not_be_updated: Card could not be updated

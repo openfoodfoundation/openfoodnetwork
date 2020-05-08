@@ -51,6 +51,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
         exchange1.update_attribute :pickup_time, "turtles"
         visit shop_path
         expect(page).to have_selector "p", text: 'turtles'
+        expect(page).not_to have_content "choose when you want your order"
       end
 
       describe "with multiple order cycles" do
@@ -63,8 +64,10 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
         it "shows a select with all order cycles, but doesn't show the products by default" do
           visit shop_path
+
           expect(page).to have_selector "option", text: 'frogs'
           expect(page).to have_selector "option", text: 'turtles'
+          expect(page).to have_content "choose when you want your order"
           expect(page).not_to have_selector("input.button.right", visible: true)
         end
 

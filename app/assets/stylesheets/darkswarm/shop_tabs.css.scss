@@ -76,9 +76,9 @@
   // content revealed in accordion
 
   .page-view {
-    margin-bottom: 5em;
     background: none;
     border: none;
+    padding-bottom: 5em;
 
     .content {
       padding: 1.25em 0;
@@ -119,6 +119,14 @@
         color: $grey-600;
         margin-top: 0.75rem;
         margin-bottom: 2px;
+      }
+    }
+
+    &.with-darker-background {
+      background-color: $very-light-grey-transparency;
+
+      a {
+        color: $teal-500;
       }
     }
   }

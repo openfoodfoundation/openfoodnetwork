@@ -114,7 +114,16 @@
     margin-bottom: 0px;
   }
 
-  .shopfront-message {
+  .select-oc-message {
+    margin-top: 1rem;
+
+    .highlighted {
+      color: $red-700;
+      font-weight: bold;
+    }
+  }
+
+  .open-shop-message {
     a {
       color: #0096ad;
 
@@ -125,21 +134,44 @@
     }
   }
 
-  .shopfront_closed_message, .shopfront_hidden_message {
-    padding: 15px;
-    border-radius: 5px;
+  .closed-shop-header {
+    background-color: $grey-650;
+    color: $white;
+
+    h4 {
+      color: $white;
+    }
+
+    p {
+      margin: 1rem 0 0.4rem;
+    }
+
+    .message {
+      display: inline-block;
+    }
   }
 
-  .shopfront_closed_message {
-    border: 2px solid #eb4c46;
-  }
+  .warning-sign {
+    margin: 0 10px 0 5px;
+    display: inline-block;
 
-  .shopfront_closed_message {
-    margin: 2em 0em;
-  }
+    strong {
+      color: $grey-650;
+      display: block;
+      position: relative;
+      text-align: center;
+      width: 23px;
+    }
 
-  .shopfront_hidden_message {
-    border: 2px solid #db4;
-    margin: 2em 0em;
+    .rectangle {
+      background-color: $white;
+      border-radius: 4px;
+      color: $grey-650;
+      height: 23px;
+      position: absolute;
+      top: 27px;
+      transform: rotate(-315deg);
+      width: 23px;
+    }
   }
 }

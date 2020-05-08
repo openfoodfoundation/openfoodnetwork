@@ -1,4 +1,2 @@
 - if next_oc = OrderCycle.first_opening_for(@distributor)
-  (
   = t :shopping_oc_next_open, distance_of_time: distance_of_time_in_words_to_now(next_oc.orders_open_at)
-  )
