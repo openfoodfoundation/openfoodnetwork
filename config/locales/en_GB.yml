@@ -865,6 +865,7 @@ en_GB:
         incoming: "Incoming"
         supplier: "Supplier"
         products: "Products"
+        receival_details: "Receival Details"
         fees: "Fees"
         save: "Save"
         save_and_next: "Save and Next"
@@ -2308,6 +2309,10 @@ en_GB:
     resolve_errors: Please resolve the following errors
     more_items: "+ %{count} More"
     default_card_updated: Default Card Updated
+    cart:
+      add_to_cart_failed: >
+          There was a problem adding this product to your basket. Perhaps it has become
+          unavailable or the shop is closing.
     admin:
       enterprise_limit_reached: "You have reached the standard limit of enterprises per account. Write to %{contact_email} if you need to increase it."
       modals:
