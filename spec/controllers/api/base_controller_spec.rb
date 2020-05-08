@@ -15,7 +15,7 @@ describe Api::BaseController do
   context "signed in as a user using an authentication extension" do
     before do
       allow(controller).to receive_messages try_spree_current_user:
-                                              double(email: "spree@example.com")
+                                              double(email: "ofn@example.com")
     end
 
     it "can make a request" do
