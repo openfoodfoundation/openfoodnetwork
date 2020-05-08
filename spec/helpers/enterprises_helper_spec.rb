@@ -28,6 +28,14 @@ describe EnterprisesHelper, type: :helper do
         expect(helper.available_shipping_methods).to_not include other_distributor_shipping_method
         expect(helper.available_shipping_methods).to include distributor_shipping_method
       end
+
+      it "does not return 'back office only' shipping method" do
+        backoffice_only_shipping_method = create(:shipping_method, require_ship_address: false, distributors: [distributor], display_on: 'back_end')
+
+        expect(helper.available_shipping_methods).to_not include backoffice_only_shipping_method
+        expect(helper.available_shipping_methods).to_not include other_distributor_shipping_method
+        expect(helper.available_shipping_methods).to include distributor_shipping_method
+      end
     end
 
     context "when FilterShippingMethods tag rules are in effect" do
