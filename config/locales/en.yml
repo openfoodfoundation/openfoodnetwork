@@ -3354,6 +3354,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           unit: "Unit"
       shared:
         sortable_header:
+          name: "Name"
           number: "Number"
           state: "State"
           payment_state: "Payment State"
@@ -3361,9 +3362,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           email: "Email"
           total: "Total"
       general_settings:
-      shared:
-        sortable_header:
-          name: "Name"
         edit:
           legal_settings: "Legal Settings"
           cookies_consent_banner_toggle: "Display cookies consent banner"
