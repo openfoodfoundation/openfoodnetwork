@@ -864,6 +864,10 @@ es_CR:
         save_and_back_to_list: "Guardar y volver a lista"
         choose_products_from: "Escoger productos desde:"
       incoming:
+        incoming: "Entrante"
+        supplier: "Proveedor"
+        products: "Productos"
+        fees: "Comisiones"
         save: "Guardar"
         save_and_next: "Guardar y continuar"
         next: "Siguiente"
@@ -2912,8 +2916,9 @@ es_CR:
         blank: "no puede estar en blanco"
     layouts:
       admin:
-        header:
-          store: Tienda
+        login_nav:
+          header:
+            store: Tienda
     admin:
       tab:
         dashboard: "Panel de inicio"

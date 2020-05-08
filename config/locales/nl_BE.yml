@@ -837,6 +837,10 @@ nl_BE:
         cancel: "Annuleren"
         choose_products_from: "Kies Producten Uit:"
       incoming:
+        incoming: "Binnenkomend"
+        supplier: "Leverancier"
+        products: "Producten"
+        fees: "Vergoedingen"
         save: "Save"
         next: "Volgende"
         cancel: "Annuleren"
@@ -2774,8 +2778,9 @@ nl_BE:
         blank: "kan niet leeg zijn"
     layouts:
       admin:
-        header:
-          store: Zicht koper
+        login_nav:
+          header:
+            store: Zicht koper
     admin:
       tab:
         dashboard: "Dashboard"

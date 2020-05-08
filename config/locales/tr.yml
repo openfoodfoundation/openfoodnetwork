@@ -861,6 +861,10 @@ tr:
         save_and_back_to_list: "Kaydet ve Listeye Dön"
         choose_products_from: "Ürünlerİ Buradan SeÇ:"
       incoming:
+        incoming: "Gelen"
+        supplier: "TEDARİKÇİ"
+        products: "Ürünler"
+        fees: "Ücretler"
         save: "Kaydet"
         save_and_next: "Kaydet ve İlerle"
         next: "Sonraki"
@@ -1536,7 +1540,7 @@ tr:
   products_updating_cart: "Sepet güncelleniyor ..."
   products_cart_empty: "Sepetiniz boş"
   products_edit_cart: "Sepetini düzenle"
-  products_from: itibaren
+  products_from: üretici
   products_change: "Kaydedilecek değişiklik yok."
   products_update_error: "Kaydetme başarısız oldu:"
   products_update_error_msg: "Kaydetme başarısız oldu."
@@ -2912,8 +2916,9 @@ tr:
         blank: "boş olamaz"
     layouts:
       admin:
-        header:
-          store: Ana Site
+        login_nav:
+          header:
+            store: Ana Site
     admin:
       tab:
         dashboard: "KONTROL PANELİ"

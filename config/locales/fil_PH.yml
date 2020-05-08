@@ -48,7 +48,7 @@ fil_PH:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
         start_at: "Magsisimula"
-        end_at: "Matatapos"
+        end_at: "Magtatapos"
         distributor_ids: "Hubs"
         producer_ids: "Producers"
         order_cycle_ids: "Order Cycles"
@@ -153,7 +153,7 @@ fil_PH:
       greeting: "Magandang araw%{name},"
       intro: "sa ilalim ay ang buod ng mga nauulit na order na na-finalize para sa%{shop}."
     summary_overview:
-      total: may kabuuuan na %{count}subscriptions ang minarkahan para sa awtomatikong pagproseso.
+      total: may kabuuuan na %{count}na nauulit na order ang minarkahan para sa awtomatikong pagproseso.
       success_zero: sa lahat ng ito, walang matagumpay na naproseso
       success_some: sa lahat ng ito, %{count}ay matagumpay na naproseso
       success_all: Ang lahat ay matagumpay na naproseso
@@ -171,10 +171,10 @@ fil_PH:
         explainer: ang mga order na ito ay Kumpleto na at hindi na maaaring babaguhin
       processing:
         title: May Error na Kinaharap (%{count}na order)
-        explainer: ang awtomatikong pagproseso ng mga order na ito ay hindi nagtagumpay dahil sa isang error. ang error ay nailista na upang mabusisi kung saan posibleng nagsimula.
+        explainer: ang awtomatikong pagproseso ng mga order na ito ay hindi nagtagumpay dahil sa isang error. ang error ay itinala upang mabusisi kung saan posibleng nagsimula.
       failed_payment:
         title: Hindi Nagtagumpay Ang Pagbayad (%{count}na order)
-        explainer: ang awtomatikong pagproseso ng bayad para sa mga order na ito ay hindi nagtagumpay dahil sa isang error. ang error ay nailista upang mabusisi kung saan posibleng nagsimula.
+        explainer: ang awtomatikong pagproseso ng bayad para sa mga order na ito ay hindi nagtagumpay dahil sa isang error. ang error ay itinala upang mabusisi kung saan posibleng nagsimula.
       other:
         title: Iba Pang Dahilan ng Error (%{count}na order)
         explainer: Hindi naging matagumpay ang awtomatikong pagproseso ng mga order na ito dahil sa hindi maipaliwanag na kadahilanan. Makipag-uganayan sa amin kung nakikita ang mensaheng ito.
@@ -193,7 +193,7 @@ fil_PH:
   view_order: "tignan ang order"
   edit_order: "i-edit ang order"
   ship_order: "i-ship ang order"
-  cancel_order: "i-cancel ang order"
+  cancel_order: "kanselahin ang order"
   confirm_send_invoice: "ang invoice para sa order na ito ay ipapadala sa customer. nais mo bang magpatuloy?"
   confirm_resend_order_confirmation: "nais mo bang ipadala muli ang order confirmation email?"
   must_have_valid_business_number: "%{enterprise_name}ay dapat may valid na TIN bago makapagpadala ng mga invoice"
@@ -215,7 +215,7 @@ fil_PH:
   show_more: Ipakita lahat
   show_all: Ipakita lahat
   show_all_with_more: "Ipakita lahat (%{num}pa)"
-  cancel: i-cancel
+  cancel: kanselahin
   edit: i-edit
   clone: Gayahin
   distributors: Mga Distributor
@@ -252,7 +252,7 @@ fil_PH:
   notes: mga tala
   error: Error
   processing_payment: "Pinoproseso ang bayad..."
-  no_pending_payments: "walang nakabinbin na mga bayarin"
+  no_pending_payments: "walang nakabinbin na mga bayad"
   invalid_payment_state: "hindi valid na status ng pagbabayad"
   filter_results: I-filter ang mga resulta
   quantity: Dami
@@ -271,7 +271,7 @@ fil_PH:
   actions:
     create_and_add_another: "Gumawa at magdagdag ng isa pa"
     create: "gumawa"
-    cancel: "i-cancel"
+    cancel: "kanselahin"
     save: "i-save"
     edit: "i-edit"
     update: "i-update"
@@ -289,7 +289,7 @@ fil_PH:
     on_demand: on demand
     on_demand?: on demand?
     order_cycle: Order Cycle
-    payment: kabayaran
+    payment: Bayad
     payment_method: Paraan ng pagbayad
     phone: Telepono
     price: Presyo
@@ -381,7 +381,7 @@ fil_PH:
         update_address_error: 'Paunawa! Sagutan lahat ng mga kailangang impormasyon!'
         edit_bill_address: 'i-edit ang Billing Address'
         edit_ship_address: 'i-edit ang shipping address'
-        required_fileds: 'ang mga kailangang may sagot ay may nakalagay na asterisk'
+        required_fileds: 'ang mga patlang na kailangang may sagot ay may nakalagay na asterisk'
         select_country: 'Piliin ang bansa'
         select_state: 'pumili ng Lalawigan'
         edit: 'i-edit'
@@ -413,7 +413,7 @@ fil_PH:
         calculator: "calculator"
         calculator_values: "calculator values"
         search: "hanapin"
-        name_placeholder: "hal. bayad sa pag-iimpake"
+        name_placeholder: "hal. bayad sa pagbalot"
     enterprise_groups:
       index:
         new_button: bagong grupo ng enterprise
@@ -429,23 +429,23 @@ fil_PH:
         display_as: ipakita bilang
         category: kategorya
         tax_category: kategorya ng tax
-        inherits_properties?: minana ang mga katangian?
+        inherits_properties?: gayahin ang mga katangian?
         available_on: Magagamit Nakabukas
         av_on: "Av On"
         import_date: na-import
         upload_an_image: mag-upload ng larawan
       seo:
         product_search_keywords: "mga keyword sa paghahanap ng produkto"
-        product_search_tip: "isulat ang mga salita para mahanap ang inyong produkto sa mga shop. gumamit ng laktaw upang paghiwalayin ang bawat keyword."
+        product_search_tip: "mag-type ng mga salita upang matulungang mahanap ang inyong produkto sa mga shop. gumamit ng laktaw sa paghihiwalay ng bawat keyword."
         SEO_keywords: "SEO Keywords"
-        seo_tip: "isulat ang mga salita para mahanap ang inyong produkto sa web. gumamit ng laktaw upang paghiwalayin ang bawat keyword."
+        seo_tip: "mag-type ng mga salita upang matulungang mahanap ang inyong produkto sa web. gumamit ng laktaw sa paghihiwalay ng bawat keyword."
       search: "hanapin"
       properties:
-        property_name: "Pangalan ng Pag-aari"
-        inherited_property: "minanang pag-aari"
+        property_name: "Pangalan ng Katangian"
+        inherited_property: "gayahin ang katangian"
       variants:
-        infinity: "walang hanggan"
-        to_order_tip: "ang mga item na made to order ay walang paraan ng pag-set ng lebel ng stock, tulad ng mga tinapay na ginagawa lamang kapag may order."
+        infinity: "walang katapusan"
+        to_order_tip: "ang mga item na made to order ay hindi maaaring i-set ng lebel ng stock, tulad ng mga tinapay na ginagawa lamang kapag may order."
       back_to_products_list: "bumalik sa listahan ng mga produkto"
       editing_product: "ine-edit ang mga produkto"
       tabs:
@@ -458,7 +458,7 @@ fil_PH:
       title: paglipat ng produkto
       file_not_found: 'ang file ay hindi mahanap o mabuksan '
       no_data: walang data na mahanap sa spreadsheet
-      confirm_reset: "ito ay ilalagay ang lebel ng stock ng lahat ng mga produkto sa zero\nmga enterprise na hindi  makikita sa nilagay na file."
+      confirm_reset: "ilalagay nito sa zero ang lebel ng stock ng lahat ng mga produkto ng\nenterprise na ito, na hindi makikita sa in-upload na file."
       model:
         no_file: "error: walang file na na-upload"
         could_not_process: "hindi maproseso ang file: invalid na uri ng file"
@@ -500,7 +500,7 @@ fil_PH:
         save_imported: i-save ang inilipat na mga produkto
         no_valid_entries: walang nahanap na mga valid na entry
         none_to_save: Walang mga entry na maaaring i-save
-        some_invalid_entries: ang mga nilipat na file ay naglalaman na hindi valid na mga entry
+        some_invalid_entries: ang mga nilipat na file ay naglalaman ng hindi valid na mga entry
         fix_before_import: Ayusin ang error na ito at subukang ilipat muli ang file
         save_valid?: i-save ang mga valid na entry at hayaan ang iba?
         no_errors: walang error na nakita!
@@ -511,7 +511,7 @@ fil_PH:
         no_name: walang pangalan
         blank_enterprise: ang ibang mga produkto ay walang tinutukoy na enterprise
         reset_absent?: i-reset ang mga nawawalang produkto
-        reset_absent_tip: i-set sa zero ang mga produkto na hindi makikita sa file
+        reset_absent_tip: i-set ang stock sa zero ng lahat ng mga produkto na hindi makikita sa file
         overwrite_all: sulatan lahat
         overwrite_empty: sulatan kung walang nakalagay
         default_stock: i-set ang lebel ng stock
@@ -519,14 +519,14 @@ fil_PH:
         default_shipping_cat: i-set ang kategorya ng pagpapadala
         default_available_date: i-set ang available na petsa
         validation_overview: pagtingin sa pagpapatunay ng paglipat
-        entries_found: May mga entry na nahanap sa inilipat na file
+        entries_found: mga entry na nahanap sa inilipat na file
         entries_with_errors: ang mga item ay naglalaman ng error at hindi maililipat
         products_to_create: ang mga produkto ay gagawin
         products_to_update: ang mga produkto ay i-a-update
         inventory_to_create: ang imbentaryo ng mga item ay gagawin
         inventory_to_update: ang mga imbentaryong item ay i-a-update
-        products_to_reset: ang mga produkto na narito ay mare-reset ang stock sa zero
-        inventory_to_reset: ang imbentaryo ng mga item na narito ay mare-reset ang stock sa zero
+        products_to_reset: ang mga produkto ay mari-reset ang stock sa zero
+        inventory_to_reset: ang imbentaryo ng mga item  ay mari-reset ang stock sa zero
         line: linya
         item_line: linya ng item
       import_review:
@@ -537,7 +537,7 @@ fil_PH:
       save_results:
         final_results: Ilipat ang pinakahuling mga resulta
         products_created: ang mga produkto ay nagawa na
-        products_updated: inupdate ang mga produkto
+        products_updated: in-update ang mga produkto
         inventory_created: ang mga imbentaryo ng item ay nagawa na
         inventory_updated: inupdate ang mga inimbentaryong item
         products_reset: na-reset sa zero ang lebel ng stock ng mga produkto
@@ -561,7 +561,7 @@ fil_PH:
         hide: itago
         import_date: na-import
         select_a_shop: pumili ng shop
-        review_now: tignan ngayon
+        review_now: surin ngayon
         new_products_alert_message: mayroong%{new_product_count}bagong mga produkto na maaaring idagdag sa inyong imbentaryo
         currently_empty: ang iyong imbentaryo ay kasalukuyang walang laman
         no_matching_products: Walang nahanap na parehong produkto sa inyong imbentaryo
@@ -578,16 +578,16 @@ fil_PH:
       invoice_email_sent: 'ang invoice email ay naipadala na'
       order_email_resent: 'ang email ng order ay naipadala na muli'
       bulk_management:
-        tip: "gamitin ang pahina na ito para baguhin ang dami ng mga produkto sa maramihang mga order. maaari ding magtanggal ng mga produkto mula sa order kung kinakailangan."
+        tip: "gamitin ang pahina na ito para baguhin ang dami ng mga produkto sa maramihang mga order. maaari ding magtanggal ng mga produkto mula sa mga order kung kinakailangan."
         shared: "ibinahaging pinagkuhanan?"
         order_no: "Order No."
         order_date: "nakumpleto sa"
         max: "Max"
         product_unit: "Produkto: Yunit"
         weight_volume: "Timbang/Dami"
-        ask: "itanong?"
-        page_title: "Pamamahala sa pangmaramihang order"
-        actions_delete: "burahin ang napili"
+        ask: "magtanong?"
+        page_title: "Pamamahala sa Bulk order"
+        actions_delete: "tanggalin ang napili"
         loading: "nilo-load ang mga order"
         no_results: "walang nahanap na mga order"
         group_buy_unit_size: "laki ng yunit para sa maramihang pagbili"
@@ -613,14 +613,14 @@ fil_PH:
           desc_short: maikling paglalarawan
           desc_short_placeholder: magsalaysay ukol sa inyong enterprise gamit ang isa hanggang dalawang pangungusap.
           desc_long: tungkol sa amin
-          desc_long_placeholder: magkuwento sa Customer tungkol sa inyong sarili. Ang impormasyon na ito ay makikita at lalabas sa inyong profile.
+          desc_long_placeholder: ipakilala ang inyong sarili sa mga customer. Ang impormasyon na ito ay makikita at lalabas sa inyong profile.
         business_details:
           abn: 'TIN:'
           abn_placeholder: hal. 99 123 456 789
           acn: Branch TIN
           acn_placeholder: hal. 123 456 789
           display_invoice_logo: ipakita ang Logo sa mga invoice
-          invoice_text: magdagdag ng sariling mensahe sa dulo ng bawat invoice
+          invoice_text: magdagdag ng sariling mensahe sa dulo ng mga invoice
         contact:
           name: pangalan
           name_placeholder: hal. Gustav Plum
@@ -633,54 +633,54 @@ fil_PH:
           website_placeholder: hal. www.truffles.com
         enterprise_fees:
           name: pangalan
-          fee_type: uri ng kabayaran
+          fee_type: uri ng fees
           manage_fees: pamahalaan ang fees para sa enterprise
           no_fees_yet: wala ka pang kahit anong fees para sa enterprise
-          create_button: gumawa ng isa ngayon
+          create_button: lumikha ng isa ngayon
         images:
           logo: Logo
           promo_image_placeholder: 'ang larawan na ito ay makikita sa "tungkol sa amin"'
           promo_image_note1: 'TANDAAN:'
-          promo_image_note2: ang kahit anong larawan na ilalagay rito ay maka-crop sa 1200 x 260.
-          promo_image_note3: ang promo na larawan ay makikita sa taas na pahina ng profile ng enterprise at pop-ups.
+          promo_image_note2: ang kahit anong larawan na ilalagay dito ay maka-crop sa 1200 x 260.
+          promo_image_note3: ang promo na larawan ay makikita sa itaas na bahagi sa pahina ng profile ng enterprise at pop-ups.
         inventory_settings:
           text1: maaari mong piliin na pamahalaan ang lebel ng mga stock at presyo sa iyong
           inventory: imbentaryo
           text2: >
-              kung ikaw ay gumagamit ng tool para sa imbentaryo, piliin na ang mga
-              bagong produktong dinagdag ng inyong mga supplier ay kailangan munang
-              idagdag sa inyong imbentaryo bago ito mai-stock. kung hindi ka naman
-              gumagamit ng imbentaryo para pamahalaan ang inyong produkto, piliin
+              kung ikaw ay gumagamit ng tool para sa imbentaryo, maaaring piliin na
+              ang mga bagong produktong dinagdag ng inyong mga supplier ay kailangan
+              munang idagdag sa inyong imbentaryo bago ito mai-stock. kung hindi ka
+              naman gumagamit ng imbentaryo para pamahalaan ang inyong produkto, piliin
               ang "nirerekomenda" sa pagpipilian sa baba:
-          preferred_product_selection_from_inventory_only_yes: mga bagong produkto ay maaaring ilagay sa aking shopfront (nirerekomenda)
+          preferred_product_selection_from_inventory_only_yes: ang mga bagong produkto ay maaaring ilagay sa aking shopfront (nirerekomenda)
           preferred_product_selection_from_inventory_only_no: ang mga bagong produkto ay dapat idagdag muna sa aking imbentaryo bago mailagay sa aking shopfront.
         payment_methods:
           name: pangalan
           applies: naaangkop?
           manage: pamahalaan ang mga paraan ng pagbabayad
           no_method_yet: wala ka pang kahit anong paraan ng pagbabayad.
-          create_button: gumawa ng bagong paraan ng pagbabayad
-          create_one_button: gumawa ng isa ngayon
+          create_button: lumikha ng bagong paraan ng pagbabayad
+          create_one_button: lumikha ng isa ngayon
         primary_details:
           name: pangalan
           name_placeholder: hal. Professor Plum's Biodynamic Truffles
           groups: mga grupo
           groups_tip: pumili ng grupo o rehiyon kung saan ka kabilang. makakatulong ito sa mga customer sa paghahanap ng inyong enterprise.
-          groups_placeholder: magsimulang magsulat para maghanap ng mga grupo...
-          primary_producer: pangunahing producer
+          groups_placeholder: magsimulang magtype upang maghanap ng mga grupo...
+          primary_producer: pangunahing producer?
           primary_producer_tip: piliin ang "Producer" kung ikaw ay pangunahing producer ng pagkain.
           producer: Producer
           any: kahit ano
           none: wala
           own: sarili
           sells: nagbebenta
-          sells_tip: "Wala- ang mga enterprise ay hindi nagbebenta ng direkta sa mga customer<br />Sarili- ang mga enterprise ay nagbebenta ng sariling mga produkto sa mga customer<br />Iba- ang enterprise ay maaaring magbenta ng sariling produkto pati na rin ang mga produkto ng enterprise.<br />"
+          sells_tip: "Wala- ang enterprise ay hindi nagbebenta ng direkta sa mga customer<br />Sarili- ang enterprise ay nagbebenta ng sariling mga produkto sa mga customer<br />kahit ano- ang enterprise ay maaaring magbenta ng sariling produkto pati na rin ang mga produkto ng ibang mga enterprise.<br />"
           visible_in_search: makikita sa paghahanap?
-          visible_in_search_tip: timutukoy kung ang enterprise na ito ay makikita ng mga customer kapag naghahanap sa site.
+          visible_in_search_tip: tinutukoy kung ang enterprise na ito ay makikita ng mga customer kapag naghahanap sa site.
           visible: nakikita
           not_visible: hindi nakikita
           permalink: Permalink (walang espasyo)
-          permalink_tip: "ang permalink na ito ay ginamit para gumawa ng url sa inyong shop: %{link}your-shop-name/shop"
+          permalink_tip: "ang permalink na ito ay ginamit para lumikha ng url sa inyong shop: %{link}your-shop-name/shop"
           link_to_front: Link sa shop front
           link_to_front_tip: direktang link sa inyong shopfront sa Open Food Network.
           ofn_uid: UID sa OFN
@@ -689,7 +689,7 @@ fil_PH:
           name: pangalan
           applies: naaangkop?
           manage: pamahalaan ang mga paraan ng pagpapadala
-          create_button: gumawa ng bagong paraan ng pagpapadala
+          create_button: lumikha ng bagong paraan ng pagpapadala
           create_one_button: gumawa ng isa ngayon
           no_method_yet: wala ka pang inilagay na paraan ng pagpapadala.
         shop_preferences:
@@ -699,31 +699,31 @@ fil_PH:
           shopfront_requires_login_true: "nakikita lamang ng rehistradong mga customer"
           recommend_require_login: "nirerekomenda namin na kailangang maglog-in muna ang Users kapag ang mga order ay maaaring baguhin."
           allow_guest_orders: "mga order ng guest"
-          allow_guest_orders_tip: "payagang mag-checkout bilang guest o kailangang rehistrado ang user."
+          allow_guest_orders_tip: "pahintulutang mag-checkout bilang guest o kailangang rehistrado ang user."
           allow_guest_orders_false: "kailangang maglog-in para makapag-order"
-          allow_guest_orders_true: "payagan ang guest checkout"
-          allow_order_changes: "magpalit ng mga order"
-          allow_order_changes_tip: "payagan ang mga kustomer na palitan ang kanilang order hanggang bukas ang order cycle"
-          allow_order_changes_false: "ang na-place na mga order ay hindi na maaaring palitan o i-cancel"
-          allow_order_changes_true: "maaari pang palitan ng customer o i-cancel ang kanilang mga order habang ang order cycle ay bukas pa."
-          enable_subscriptions: "mga subscription"
+          allow_guest_orders_true: "pahintulutan ang guest checkout"
+          allow_order_changes: "palitan ang mga order"
+          allow_order_changes_tip: "pahintulutan ang mga customer na palitan ang kanilang order hangga't bukas pa ang order cycle"
+          allow_order_changes_false: "ang na-place na mga order ay hindi na maaaring palitan/kanselahin"
+          allow_order_changes_true: "maaari pang palitan/kanselahin ng mga customer ang kanilang mga order hangga't ang order cycle ay bukas pa."
+          enable_subscriptions: "mga nauulit na order"
           enable_subscriptions_tip: "paganahina ng paggamit ng mga subscription?"
           enable_subscriptions_false: "huwag paganahin"
           enable_subscriptions_true: "paganahin"
           shopfront_message: "mensahe sa Shopfront"
           shopfront_message_placeholder: >
-              opsyonal na mensahe para batiin ang mga customers at upang maipaliwanag
-              kung paano mamili sa iyong shop. kung ang teksto ay ipinasok dito, ito
-              ay makikita sa home tab kapag ang customer ay nasa loob na ng inyong
+              opsyonal na mensahe para sa pagbati sa mga customer at pagpapaliwanag
+              kung paano mamili sa inyong shop. kung ang teksto ay ipinasok dito,
+              ito ay makikita sa home tab kapag ang customer ay nasa loob na ng inyong
               shopfront.
           shopfront_message_link_tooltip: "ilagay/ i-edit ang link"
           shopfront_message_link_prompt: "ilagay ang URL na ipapasok"
           shopfront_closed_message: "pagsasarang mensahe ng Shopfront"
           shopfront_closed_message_placeholder: >
               isang mensahe na nagbibigay ng mas detalyadong paliwanag kung bakit
-              ang iyong shop ay sarado at/o kapag ang mga customer ay makakaasang
-              magbubukas ito muli. Ito ay makikita sa iyong shop kapag ikaw ay walang
-              aktibong order cycle (hal. sarado ang shop).
+              ang iyong shop ay sarado at/o kung ang mga customer ay makakaasang magbubukas
+              ito muli. Ito ay makikita sa iyong shop kapag ikaw ay walang aktibong
+              order cycle (hal. sarado ang shop).
           shopfront_category_ordering: "kategorya ng pag-order sa Shopfront"
           open_date: "petsa ng pagbubukas"
           close_date: "petsa ng pagsasara"
@@ -734,16 +734,16 @@ fil_PH:
           linkedin_placeholder: "hal. www.linkedin.com/in/YourNameHere"
         stripe_connect:
           connect_with_stripe: "Kumonekta sa Stripe"
-          stripe_connect_intro: "upang tumanggap ng bayad gamit ang credit card, kailangan munang ikonekta ang iyong Stripe account sa Open Food Network. Gamitin ang pindutan sa kanan para magsimula."
+          stripe_connect_intro: "upang tumanggap ng bayad gamit ang credit card, kailangan munang ikonekta ang iyong Stripe account sa Open Food Network. Gamitin ang button sa kanan para magsimula."
           stripe_account_connected: "ang Stripe account ay konektado na."
           disconnect: "tanggalin ang koneksyon ng account"
           confirm_modal:
             title: Kumonekta sa Stripe
             part1: ang Stripe ay isang serbisyong nagpoproseso ng mga bayad na ginagawang posible para sa mga shop sa OFN na tumanggap ng bayad gamit ang mga credit card mula sa mga customer.
             part2: para magamit ito, kailangang ikonekta ang iyong Stripe account sa OFN. ang pagpindot ng "pumapayag ako" sa ibaba ay ididirekta ka sa Stripe website kung saan mo maaaring ikonek ang iyong Stripe account o gumawa ng bago kung wala ka pa nito.
-            part3: pinapayagan nito ang Open Food Network na tumanggap para sa iyo ng bayad gamit ang mga credit card mula sa mga customer. tandaan na kailangan mong pangalagaan ang sarili mong Stripe Account, bayaran ang serbisyo ng Stripe, asikasuhin ang mga chargebacks at Customer service sa sarili mong paraan.
+            part3: pinapayagan nito ang Open Food Network na tumanggap para sa iyo ng bayad gamit ang mga credit card mula sa mga customer. tandaan na kailangan mong pangalagaan ang sarili mong Stripe Account, bayaran ang serbisyo ng Stripe, asikasuhin ang mga chargebacks pati na rin ang Customer service sa sarili mong paraan.
             i_agree: pumapayag ako
-            cancel: i-cancel
+            cancel: kanselahin
         tag_rules:
           default_rules:
             by_default: bilang default
@@ -759,19 +759,19 @@ fil_PH:
           resend: Ipadala muli
           owner: 'May-ari'
           contact: "Makipag-usap"
-          contact_tip: "ang tagapamahala na makakatanggap ng enterprise emails at notipikasyon. kailangang may kumpirmadong email address."
+          contact_tip: "ang tagapamahala na makakatanggap ng enterprise emails para sa mga order at mga abiso. kailangang may kumpirmadong email address."
           owner_tip: ang pangunahing gumagamit na responsable sa enterprise na ito.
-          notifications: notipikasyon
-          notifications_tip: ang mga notipikasyon tungkol sa mga order ay ipapadala sa email address na ito.
+          notifications: mga abiso
+          notifications_tip: ang mga abiso tungkol sa mga order ay ipapadala sa email address na ito.
           notifications_placeholder: hal. gustav@truffles.com
           notifications_note: 'Tandaan: ang bagong email address ay kailangang kumpirmado bago magamit'
           managers: Tagapamahala
           managers_tip: ang ibang gagamit na may permisong pamahalaan ang enterprise na ito.
           invite_manager: "Mag-imbita ng Tagapamahala"
-          invite_manager_tip: "mag-imbita ng hindi rehistradong gagamit na mag-sign-up at maging tagapamahala ng enterprise na ito."
+          invite_manager_tip: "mag-imbita ng hindi rehistradong user na mag-sign-up at maging tagapamahala ng enterprise na ito."
           add_unregistered_user: "magdagdag ng hindi rehistradong user"
-          email_confirmed: "ang email ay kumpirmado"
-          email_not_confirmed: "ang email ay hindi kumpirmado"
+          email_confirmed: "ang email ay kumpirmado na"
+          email_not_confirmed: "ang email ay hindi pa kumpirmado"
       actions:
         edit_profile: Settings
         properties: mga katangian
@@ -790,27 +790,27 @@ fil_PH:
         producer: Producer
       change_type_form:
         producer_profile: Profile ng Producer
-        connect_ofn: kumonekta gamit ang OFN
+        connect_ofn: kumonekta sa pamamagitan ng OFN
         always_free: PALAGING LIBRE
-        producer_description_text: ilagay ang inyong mga produkto sa Open Food Network, upang mapayagan ang mga Hub na mag-stock ng iyong produkto sa kanilang mga tindahan.
+        producer_description_text: ilagay ang inyong mga produkto sa Open Food Network, upang mapahintulutan ang mga Hub na mag-stock ng inyong mga produkto sa kanilang mga tindahan.
         producer_shop: Producer Shop
         sell_your_produce: magbenta ng sariling produkto
-        producer_shop_description_text: ibenta ang iyong mga produkto direkta sa mga customer sa pamamagitan ng iyong sariling Open Foof Network shopfront.
+        producer_shop_description_text: ibenta ang inyong mga produkto direkta sa mga customer sa pamamagitan ng inyong sariling Open Food Network shopfront.
         producer_shop_description_text2: ang 'Producer Shop' ay para lamang sa iyong produkto, kung nais mong magbenta ng mga produktong itinanim o ginawa sa labas ng site, piliin ang 'Producer Hub'
         producer_hub: Producer Hub
         producer_hub_text: magbenta ng produkto mula sa sarili at sa iba
-        producer_hub_description_text: ang iyong enterprise ang saligan ng iyong lokal na sistema ng pagkain. maaari mong ibenta ang sarili mong produkto pati na rin ang mga produktong pinagsama sama mula sa ibang enterprise gamit ang iyong shop sa Open Food Network.
+        producer_hub_description_text: ang iyong enterprise ang sandigan ng iyong lokal na sistema ng pagkain. maaari mong ibenta ang sarili mong produkto pati na rin ang mga produktong pinagsama sama mula sa ibang enterprise gamit ang iyong shop sa Open Food Network.
         profile: Profile lamang
         get_listing: kumuha ng listahan
         profile_description_text: Maaari kang mahanap ng mga tao sa Open Food Network. Ang iyong enterprise ay makikita sa mapa, at maaaring mahanap sa mga listahan.
         hub_shop: Hub Shop
         hub_shop_text: magbenta ng produkto mula sa iba
-        hub_shop_description_text: ang iyong enterprise ang saligan ng iyong lokal na sistema ng pagkain. maaari mong pagsama samahin ang mga produkto mula sa ibang enterprise at ibenta ito gamit ang iyong shop sa Open Food Network.
-        choose_option: pumili mula sa pagpipilian sa itaas.
+        hub_shop_description_text: ang iyong enterprise ang sandigan ng iyong lokal na sistema ng pagkain. maaari mong pagsama samahin ang mga produkto mula sa ibang enterprise at ibenta ito gamit ang iyong shop sa Open Food Network.
+        choose_option: pumili ng isa mula sa pagpipilian sa itaas.
         change_now: palitan ngayon
       enterprise_user_index:
         loading_enterprises: NILO-LOAD ANG MGA ENTERPRISE
-        no_enterprises_found: walang mahanap na enterprise
+        no_enterprises_found: walang mahanap na enterprise.
         search_placeholder: hanapin gamit ang pangalan
         manage: pamahalaan
         manage_link: settings
@@ -819,7 +819,7 @@ fil_PH:
         status: "Status"
       new_form:
         owner: may-ari
-        owner_tip: ang pangunahing gumagamit na responsable sa enterprise na ito.
+        owner_tip: ang pangunahing user na responsable sa enterprise na ito.
         i_am_producer: ako ay isang producer
         contact_name: Contact name
       edit:
@@ -852,22 +852,26 @@ fil_PH:
         loading: NILO-LOAD...
       new:
         create: "gumawa"
-        cancel: "i-cancel"
+        cancel: "kanselahin"
         back_to_list: "bumalik sa listahan"
       edit:
         advanced_settings: "Advanced settings"
         save: "i-save"
         save_and_next: "i-save at sunod"
         next: "sunod"
-        cancel: "i-cancel"
+        cancel: "kanselahin"
         back_to_list: "bumalik sa listahan"
         save_and_back_to_list: "i-save at bumalik sa listahan"
-        choose_products_from: "pumili sa mga produkto mula sa:"
+        choose_products_from: "pumili ng mga produkto mula sa:"
       incoming:
+        incoming: "paparating"
+        supplier: "Supplier"
+        products: "mga produkto"
+        fees: "fees"
         save: "i-save"
         save_and_next: "i-save at sunod"
         next: "sunod"
-        cancel: "i-cancel"
+        cancel: "kanselahin"
         back_to_list: "bumalik sa listahan"
       outgoing:
         outgoing: "papalabas"
@@ -879,16 +883,16 @@ fil_PH:
         previous: "nauna"
         save: "i-save"
         save_and_back_to_list: "i-save at bumalik sa listahan"
-        cancel: "i-cancel"
+        cancel: "kanselahin"
         back_to_list: "bumalik sa listahan"
       wizard_progress:
         edit: "1. Pangkalahatang Setting"
-        incoming: "2. Papasok na mga produkto"
+        incoming: "2. Paparating na mga produkto"
         outgoing: "3. Palabas na mga produkto"
       exchange_form:
         pickup_time_tip: kapag ang mga order mula sa OC ay handa  na para sa customer
         pickup_instructions_placeholder: "mga panuto sa pagpick-up"
-        pickup_instructions_tip: ang mga panuto na ito ay ipapakita sa mga customer pagkatapos nilang makumpleto ang pag-order
+        pickup_instructions_tip: ang mga panuto na ito ay ipinapakita sa mga customer pagkatapos nilang makumpleto ang pag-order
         pickup_time_placeholder: "handa na para sa (hal. Date / Time)"
         receival_instructions_placeholder: "panuto sa pagtanggap"
         add_fee: 'idagdag ang bayad'
@@ -937,7 +941,7 @@ fil_PH:
         variants: mga uri
       simple_form:
         ready_for: handa para sa
-        ready_for_placeholder: petsa/ oras
+        ready_for_placeholder: petsa / oras
         customer_instructions: panuto ng Customer
         customer_instructions_placeholder: tala para sa pag-pick-up o pagdeliver
         products: mga produkto
@@ -949,14 +953,14 @@ fil_PH:
         no_data: may nangyaring mali. walang mahanap na order cycle.
       date_warning:
         msg: ang order cycle na ito ay naka-link sa %{n}na bukas na subscription order. ang pagpapalit ng petsa ay hindi maaapektuhan ang iba pang order na nagawa na, ngunit kung maaaring iwasan ay huwag na muling gawin. Gusto bang magpatuloy?
-        cancel: i-cancel
+        cancel: kanselahin
         proceed: magpatuloy
     producer_properties:
       index:
         title: mga katangian ng producer
     proxy_orders:
       cancel:
-        could_not_cancel_the_order: hindi ma-cancel ang order
+        could_not_cancel_the_order: hindi makansela ang order
       resume:
         could_not_resume_the_order: hindi maituloy ang order
     shared:
@@ -969,7 +973,7 @@ fil_PH:
     enterprise_issues:
       create_new: gumawa ng bago
       resend_email: ipadala muli ang email
-      has_no_payment_methods: "%{enterprise}ay kasakuluyang walang mga paraan ng pagbabayad"
+      has_no_payment_methods: "%{enterprise}ay kasalukuyang walang mga paraan ng pagbabayad"
       has_no_shipping_methods: "%{enterprise}ay kasalukuyang walang mga paraan ng pagpapadala"
       email_confirmation: "ang kumpirmasyon ng email ay nakabinbin pa. kami ay nagpadala ng kumpirmasyon ng email sa %{email}."
       not_visible: "%{enterprise}ay hindi nakikita kaya hindi matagpuan sa mapa o sa kahit saang paghahanap"
@@ -1009,7 +1013,7 @@ fil_PH:
       products_and_inventory:
         name: mga produkto at imbentaryo
       users_and_enterprises:
-        name: mga gumagamit at enterprise
+        name: mga user at enterprise
         description: pag-aari ng enterprise at status
       order_cycle_management:
         name: pamamahala sa order cycle
@@ -1027,12 +1031,12 @@ fil_PH:
       subscriptions: mga subscription
       new: bagong subscription
       create: gumawa ng subscription
-      edit: ayusin ang subscription
+      edit: i-edit ang subscription
       table:
-        edit_subscription: ayusin ang subsciption
+        edit_subscription: i-edit ang subscription
         pause_subscription: ihinto saglit ang subscription
         unpause_subscription: ituloy ang subscription
-        cancel_subscription: itigil ang subscription
+        cancel_subscription: kanselahin ang nauulit na order
       filters:
         query_placeholder: "hanapin gamit ang email..."
       setup_explanation:
@@ -1040,7 +1044,7 @@ fil_PH:
         enable_subscriptions: "paganahin ang subscription sa kahit isa sa iyong mga shop"
         enable_subscriptions_step_1_html: 1. pumunta sa%{enterprises_link}pahina, hanapin ang iyong shop at pindutin ang "pamahalaan"
         enable_subscriptions_step_2: 2. sa ilalim ng "shop preference", paganahin ang Subscriptions sa pagpipilian
-        set_up_shipping_and_payment_methods_html: iset-up ang %{shipping_link}at%{payment_link} na pagbabayad
+        set_up_shipping_and_payment_methods_html: iset-up ang paraan ng%{shipping_link}at%{payment_link}
         set_up_shipping_and_payment_methods_note_html: tandaan na Cash at Stripe na pamamaraan ang maaaring<br /> gamitin sa mga subscription
         ensure_at_least_one_customer_html: siguraduhing mayroong kahit isang%{customer_link}na nakikita
         create_at_least_one_schedule: gumawa ng kahit isang iskedyul
@@ -1091,15 +1095,15 @@ fil_PH:
       orders:
         number: bilang
         confirm_edit: sigurado ka bang nais mo ayusin ang order na ito? maaaring magdulot ito ng mas mahirap na awtomatikong pagsasaayos ng mga subscription sa hinaharap.
-      confirm_cancel_msg: "sigurado ka bang nais mong itigil ang subscription na ito? hindi na ito maaring ibalik kapag napalitan na."
-      cancel_failure_msg: "paumahin ngunit hindi naging matagumpay ang pagcancel!"
+      confirm_cancel_msg: "sigurado ka bang nais mong kanselahin ang nauulit na order na ito? hindi na ito maaaring ibalik kapag nagawa na."
+      cancel_failure_msg: "paumanhin ngunit hindi naging matagumpay ang pagkansela!"
       confirm_pause_msg: "sigurado ka bang nais mong pansamantalang itigil ang subscription na ito?"
       pause_failure_msg: "paumanhin ngunit hindi matagumpay ang pansamantalang pagtigil"
       confirm_unpause_msg: "kung ikaw ay may bukas na order cycle sa iskedyul ng subscription na ito, isang order ang gagawin para sa customer. sigurado ka bang nais mong ipagpatuloy ang subscription?"
       unpause_failure_msg: "paumanhin ngunit hindi naging matagumpay ang pagpatuloy!"
-      confirm_cancel_open_orders_msg: "ang ibang order sa subscription na ito ay kasalukuyang nakabukas. ang customer ay nasabihan nang ang order ay magpapatuloy. nais mo bang itigil ang order(mga order) o ipagpatuloy ito?"
+      confirm_cancel_open_orders_msg: "ang ibang order sa subscription na ito ay kasalukuyang nakabukas. ang customer ay naabisuhang ang order ay magpapatuloy. nais mo bang kanselahin ang order(mga order) o ipagpatuloy ito?"
       resume_canceled_orders_msg: "ang ibang order sa subsciption na ito ay maaaring ituloy. maaari mo itong ituloy sa dropdown ng mga order."
-      yes_cancel_them: wag ituloy
+      yes_cancel_them: kanselahin
       no_keep_them: ituloy
       yes_i_am_sure: sigurado ako
       order_update_issues_msg: ang ibang mga order ay hindi awtomatikong ma-update, sapagkat ito ay manwal na inayos. Tignan ang mga isyu na nakalista sa baba at gawin ang nararapat na pag-aayos sa bawat order kung kinakailangan.
@@ -1112,7 +1116,7 @@ fil_PH:
         associated_subscriptions_error: ang iskedyul na ito ay hindi maialis sapagkat ito ay nauugnay sa ibang mga subscription.
     controllers:
       enterprises:
-        stripe_connect_cancelled: "ang pagkonekta sa Stripe ay kinansel"
+        stripe_connect_cancelled: "koneksyon sa Stripe ay kinansel"
         stripe_connect_success: "matagumpay na nakonekta ang stripe account"
         stripe_connect_fail: paumanhin, ang konekyson ng inyong Stripe account ay hindi nagtagumpay
       stripe_connect_settings:
@@ -1127,7 +1131,7 @@ fil_PH:
   checkout:
     already_ordered:
       cart: "cart"
-      message_html: "mayroon ka ng order para sa order cycle na ito. tignan ang%{cart}para makita ang mga item na dating inorder. maaari  mo ring i-cancel ang mga item habang ang order cycle ay bukas pa."
+      message_html: "mayroon ka ng order para sa order cycle na ito. tingnan ang%{cart}para makita ang mga item na dating inorder. maaari  mo ring kanselahin ang mga item habang ang order cycle ay bukas pa."
     failed: "hindi matagumpay ang pag-check out. ipaalam sa amin upang maproseso ang inyong order."
   shops:
     hubs:
@@ -1377,12 +1381,12 @@ fil_PH:
   checkout_headline: "ok, handa na ba magcheckout?"
   checkout_as_guest: "mag-checkout bilang bisita"
   checkout_details: "ang inyong detalye"
-  checkout_billing: "impormasyon sa paniningil"
-  checkout_default_bill_address: "i-save bilang default na address para sa paniningil"
+  checkout_billing: "Billing info"
+  checkout_default_bill_address: "i-save bilang default na billing address"
   checkout_shipping: impormasyon sa pagpapadala
-  checkout_default_ship_address: "i-save bilang default na address para sa pagpapadalahan"
+  checkout_default_ship_address: "i-save bilang default na shipping address"
   checkout_method_free: libre
-  checkout_address_same: address ng pagpapadalahan pareho sa address ng paniningil?
+  checkout_address_same: Shipping address ay pareho sa billing address?
   checkout_ready_for: "handa na para sa :"
   checkout_instructions: "komento o dagdag na tagubilin?"
   checkout_payment: kabayaran
@@ -1397,7 +1401,7 @@ fil_PH:
   order_not_paid: HINDI PA BAYAD
   order_total: kabuuang order
   order_payment: "magbabayad sa pamamagitan ng:"
-  order_billing_address: address na pagsisingilan
+  order_billing_address: Billing address
   order_delivery_on: petsa ng delivery
   order_delivery_address: address kung saan ide-deliver
   order_delivery_time: oras ng pagde-deliver
@@ -1657,10 +1661,10 @@ fil_PH:
   orders_show_title: Kumpirmasyon ng order
   orders_show_time: 'ang order ay handa na sa:'
   orders_show_order_number: "Order #%{number}"
-  orders_show_cancelled: Kinansela
+  orders_show_cancelled: kanselado
   orders_show_confirmed: Kumpirmado
   orders_your_order_has_been_cancelled: "ang inyong order ay nakansela"
-  orders_could_not_cancel: "paumanhin sapagkat hindi makansela ang inyong order"
+  orders_could_not_cancel: "paumanhin, hindi makansela ang inyong order"
   orders_cannot_remove_the_final_item: "hindi matanggal ang huling item mula sa isang order, maaaring kanselahin na lamang ang order."
   orders_bought_items_notice:
     one: "isang karagdagang item ang nakumpirma na para sa order cycle na ito"
@@ -1858,7 +1862,7 @@ fil_PH:
   continue: "Magpatuloy"
   action_or: "O"
   enterprise_limit: Limitasyon ng enterprise
-  shipping_method_destroy_error: "ang paraan ng pagpapadala ay hindi maaaring burahin sapagkat ito ay nakasangguni na sa isang order:%{number}."
+  shipping_method_destroy_error: "ang paraan ng pagpapadala ay hindi maaaring tanggalin sapagkat ito ay nakasangguni na sa isang order:%{number}."
   fees: "fees"
   item_cost: "halaga ng item"
   bulk: "Bulto"
@@ -2089,13 +2093,13 @@ fil_PH:
   report_header_ship_city: lungsod na pagpapadalahan
   report_header_ship_postcode: postcode ng pagpapadalahan
   report_header_ship_state: status ng pagpapadala
-  report_header_billing_street: address na papadalahan ng bayarin
-  report_header_billing_street_2: address na papadalahan ng bayarin 2
-  report_header_billing_street_3: address na papadalahan ng bayarin 3
-  report_header_billing_street_4: address na papadalahan ng bayarin 4
-  report_header_billing_city: lungsod na papadalahan ng bayarin
-  report_header_billing_postcode: postcode ng papadalahan ng bayarin
-  report_header_billing_state: status ng papadalahan ng bayarin
+  report_header_billing_street: Billing Street
+  report_header_billing_street_2: Billing Street 2
+  report_header_billing_street_3: Billing Street 3
+  report_header_billing_street_4: Billing Street 4
+  report_header_billing_city: Billing City
+  report_header_billing_postcode: Billing Postcode
+  report_header_billing_state: Billing Province
   report_header_incoming_transport: papasok na sasakyan
   report_header_special_instructions: espesyal na mga panuto
   report_header_order_number: numero ng order
@@ -2130,9 +2134,9 @@ fil_PH:
   report_header_unit: yunit
   report_header_group_buy_unit_quantity: Dami ng yunit para sa Maramihang pagbili
   report_header_cost: gastos
-  report_header_shipping_cost: gastos sa pagpapadala
+  report_header_shipping_cost: bayad sa pagpapadala
   report_header_curr_cost_per_unit: kasalukuyang gastos kada yunit
-  report_header_total_shipping_cost: 'kabuuang gastos sa pagpapadala '
+  report_header_total_shipping_cost: 'kabuuang bayad sa pagpapadala '
   report_header_payment_method: paraan ng pagbayad
   report_header_sells: nagbebenta
   report_header_visible: nakikita
@@ -2192,7 +2196,7 @@ fil_PH:
   report_header_total_taxable_produce: kabuuang produkto na taxable (may kasamang tax)
   report_header_total_untaxable_fees: kabuuang fees na untaxable (walang tax)
   report_header_total_taxable_fees: kabuuang fees na taxable (may kasamang tax)
-  report_header_delivery_shipping_cost: Singil sa pagdeliver ng pinapadala (kasama ang tax)
+  report_header_delivery_shipping_cost: bayad sa pagdeliver ng pinapadala (kasama ang tax)
   report_header_transaction_fee: Bayad sa Transaksyon (walang tax)
   report_header_total_untaxable_admin: kabuuang untaxable na pagsasaayos ng admin (walang tax)
   report_header_total_taxable_admin: kabuuang taxable na pagsasaayos ng admin (kasama ang tax)
@@ -2319,10 +2323,10 @@ fil_PH:
           title: panuntunan sa pag-tag
           overview: pangkalahatang ideya
           overview_text: >
-              ang panuntunan sa tag na nagbibigay ng paraan upang maisalarawan kung
-              anong mga item ang nakikita at kung sa kaninong mga customer dapat ito
-              maipakita. Ang mga item ay maaaring paraan ng pagpapadala, paraan ng
-              pagbabayad, mga produkto at mga order cycle.
+              ang panuntunan sa pag-tag ay nagbibigay ng paraan upang maisalarawan
+              kung anong mga item ang makikita at kung kaninong mga customer dapat
+              ito maipakita. Ang mga item ay maaaring paraan ng pagpapadala, paraan
+              ng pagbabayad, mga produkto at mga order cycle.
           by_default_rules: "'By Default...' mga panuntunan"
           by_default_rules_text: >
               ang default na mga panuntunan ay papayagan ka na magtago ng mga item
@@ -2465,7 +2469,7 @@ fil_PH:
           address: "tirahan"
           adjustments: "mga pagsasaayos"
           awaiting_return: "naghihintay ng pagbalik"
-          canceled: "na-cancel"
+          canceled: "kanselado"
           cart: "cart"
           complete: "kumpleto"
           confirm: "kumpirmahin"
@@ -2482,7 +2486,7 @@ fil_PH:
           pending: "nakabinbin"
           ready: "handa na"
           shipped: "nai-ship na"
-          canceled: "na-cancel"
+          canceled: "kanselado"
         payment_states:
           balance_due: "balanse"
           completed: "nakumpleto na"
@@ -2769,7 +2773,7 @@ fil_PH:
     edit: "i-edit"
     split: "paghiwalayin"
     delete: "tanggalin"
-    cannot_set_shipping_method_without_address: "hindi ma-set ang paraan ng pagdadala hanggang hindi binibigay ang detalye ng customer."
+    cannot_set_shipping_method_without_address: "hindi mai-set ang paraan ng pagpapadala hanggang hindi binibigay ang detalye ng customer."
     no_tracking_present: "walang detalye ng tracking na ibinigay."
     order_total: "kabuuan ng order"
     customer_details: "detalye ng customer"
@@ -2777,7 +2781,7 @@ fil_PH:
     choose_a_customer: "pumili ng customer"
     account: "Account"
     billing_address: "Billing Address"
-    shipping_address: "Address kung saan ipapadala"
+    shipping_address: "Shipping Address"
     first_name: "Pangalan"
     last_name: "apelyido"
     street_address: "address ng kalye"
@@ -2788,7 +2792,7 @@ fil_PH:
     state: "status"
     phone: "telepono"
     update: "i-update"
-    use_billing_address: "gamitin ang address para sa paniningil"
+    use_billing_address: "gamitin ang billing address"
     adjustments: "mga pagsasa-ayos"
     continue: "Magpatuloy"
     fill_in_customer_info: "sagutan ang impormasyon tungkol sa customer"
@@ -2867,7 +2871,7 @@ fil_PH:
     shipping_methods: "mga paraan ng pagpapadala"
     shipping_categories: "mga kategorya ng pagpapadala"
     new_shipping_category: "bagong kategorya ng pagpapadala"
-    back_to_shipping_categories: "bumalik sa kategorya ng pagpapadala"
+    back_to_shipping_categories: "bumalik sa mga kategorya ng pagpapadala"
     name: "pangalan"
     description: "paglalarawan"
     type: "uri"
@@ -2918,8 +2922,9 @@ fil_PH:
         blank: "hindi maaaring iwanang blanko"
     layouts:
       admin:
-        header:
-          store: tindahan
+        login_nav:
+          header:
+            store: tindahan
     admin:
       tab:
         dashboard: "Dashboard"
@@ -2988,7 +2993,7 @@ fil_PH:
         states:
           authorized: "pinayagan"
           received: "natanggap"
-          canceled: "na-cancel"
+          canceled: "kanselado"
       orders:
         index:
           listing_orders: "listahan ng mga order"
@@ -3062,7 +3067,7 @@ fil_PH:
           new_shipping_method: "bagong paraan ng pagpapadala"
           back_to_shipping_methods_list: "bumalik sa listahan ng mga paraan ng pagpapadala"
         edit:
-          editing_shipping_method: "iayos ang paraan ng pagpapadala"
+          editing_shipping_method: "i-edit ang paraan ng pagpapadala"
           new: "Bago"
           back_to_shipping_methods_list: "bumalik sa listahan ng mga paraan ng pagpapadala"
         form:
@@ -3250,9 +3255,9 @@ fil_PH:
     order_mailer:
       cancel_email:
         customer_greeting: "hi %{name}!"
-        instructions: "ang iyong order ay NA-CANCEL. Panatilihin ang impormasyon na ito ng kanselasyon para sa inyong talaan."
-        order_summary_canceled: "Buod ng order [NA-CANCEL]"
-        subject: "Pag-cancel ng order"
+        instructions: "ang iyong order ay NAKANSELA. Panatilihin ang impormasyon na ito ng kanselasyon para sa inyong talaan."
+        order_summary_canceled: "Buod ng order [KANSELADO]"
+        subject: "Pagkansela ng order"
       confirm_email:
         subject: "Kumpirmasyon ng order"
       invoice_email:
@@ -3262,7 +3267,7 @@ fil_PH:
       address: tirahan
       adjustments: mga pagsasaayos
       awaiting_return: naghihintay ng pagbalik
-      canceled: na-cancel
+      canceled: kanselado
       cart: cart
       complete: kumpleto
       confirm: kumpirmahin
@@ -3278,7 +3283,7 @@ fil_PH:
       pending: nakabinbin
       ended: natapos na
       paused: nakahinto
-      canceled: na-cancel
+      canceled: kanselado
     user_mailer:
       reset_password_instructions:
         request_sent_text: |
@@ -3313,7 +3318,7 @@ fil_PH:
         items: mga item
         total: kabuuan
         edit: i-edit
-        cancel: i-cancel
+        cancel: kanselahin
         closed: sarado
         until: hanggang
       past_orders:

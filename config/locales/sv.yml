@@ -492,6 +492,10 @@ sv:
         cancel: "Avbryt"
         choose_products_from: "Välj produkter från:"
       incoming:
+        incoming: "Inkommande"
+        supplier: "Leverantör"
+        products: "Produkter"
+        fees: "Avgifter"
         next: "Näst"
         cancel: "Avbryt"
       outgoing:

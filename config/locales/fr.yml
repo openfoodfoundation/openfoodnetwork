@@ -864,6 +864,10 @@ fr:
         save_and_back_to_list: "Sauvegarder et revenir à la liste"
         choose_products_from: "Choisir produits depuis :"
       incoming:
+        incoming: "Produits entrants (pouvant être mis en vente par les hubs)"
+        supplier: "Fournisseur"
+        products: "Produits"
+        fees: "Commissions"
         save: "Sauvegarder"
         save_and_next: "Sauvegarder et suivant"
         next: "Suivant"
@@ -2940,8 +2944,9 @@ fr:
         blank: "Champ obligatoire"
     layouts:
       admin:
-        header:
-          store: Vue acheteur
+        login_nav:
+          header:
+            store: Vue acheteur
     admin:
       tab:
         dashboard: "Tableau de bord"
