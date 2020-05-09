@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class CacheService
+  HOME_STATS_EXPIRY = 1.day.freeze
   FILTERS_EXPIRY = 30.seconds.freeze
+  SHOPS_EXPIRY = 15.seconds.freeze
 
   def self.cache(cache_key, options = {})
     Rails.cache.fetch cache_key.to_s, options do
@@ -23,9 +25,17 @@ class CacheService
     cached_class.maximum(:updated_at).to_i
   end
 
+  def self.home_stats(statistic)
+    Rails.cache.fetch("home_stats_count_#{statistic}",
+                      expires_in: HOME_STATS_EXPIRY,
+                      race_condition_ttl: 10) do
+      yield
+    end
+  end
+
   module FragmentCaching
     # Rails' caching in views is called "Fragment Caching" and uses some slightly different logic.
-    # Note: supplied keys are actually prepended with "view/" under the hood.
+    # Note: keys supplied here are actually prepended with "views/" under the hood.
 
     def self.ams_all_taxons_key
       "inject-all-taxons-#{CacheService.latest_timestamp_by_class(Spree::Taxon)}"
@@ -33,6 +43,20 @@ class CacheService
 
     def self.ams_all_properties_key
       "inject-all-properties-#{CacheService.latest_timestamp_by_class(Spree::Property)}"
+    end
+
+    def self.ams_shops
+      [
+        "shops/index/inject_enterprises",
+        { expires_in: SHOPS_EXPIRY }
+      ]
+    end
+
+    def self.ams_shop(enterprise)
+      [
+        "enterprises/shop/inject_enterprise_shopfront-#{enterprise.id}",
+        { expires_in: SHOPS_EXPIRY }
+      ]
     end
   end
 end

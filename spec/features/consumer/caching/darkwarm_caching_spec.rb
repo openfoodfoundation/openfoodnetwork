@@ -45,10 +45,11 @@ feature "Darkswarm data caching", js: true, caching: true do
         expect(page).to have_content property.presentation
       end
 
-      taxon.name = "Changed Taxon"
-      taxon.save
-      property.presentation = "Changed Property"
-      property.save
+      taxon.update_attributes!(name: "Changed Taxon")
+      property.update_attributes!(presentation: "Changed Property")
+
+      # Clear timed shops cache so we can test uncached supplied properties
+      clear_shops_cache
 
       visit shops_path
 
@@ -72,5 +73,10 @@ feature "Darkswarm data caching", js: true, caching: true do
 
   def expect_cached(key)
     expect(Rails.cache.exist?(key)).to be true
+  end
+
+  def clear_shops_cache
+    cache_key = "views/#{CacheService::FragmentCaching.ams_shops[0]}"
+    Rails.cache.delete cache_key
   end
 end
