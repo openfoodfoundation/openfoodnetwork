@@ -1172,12 +1172,16 @@ fr:
       footer_data_cookies_policy: "politique de cookies"
   shop:
     messages:
-      login: "Se connecter"
-      signup: "inscrivez-vous"
-      contact: "contacter"
-      require_customer_login: "Seul les acheteurs autorisés peuvent accéder à cette boutique."
-      require_login_html: "Si vous êtes déjà autorisé à accéder à la boutique, %{login}ou %{signup} pour continuer. Si vous voulez demander à y accéder, veuillez %{contact} %{enterprise}. "
-      require_customer_html: "Si vous voulez demander à y accéder, veuillez %{contact} %{enterprise}."
+      customer_required:
+        login: "Se connecter"
+        signup: "inscrivez-vous"
+        contact: "contacter"
+        require_customer_login: "Seul les acheteurs autorisés peuvent accéder à cette boutique."
+        require_login_html: "Si vous êtes déjà autorisé à accéder à la boutique, %{login}ou %{signup}pour continuer."
+        require_login_2_html: "Vous souhaitez réaliser vos courses ici? Merci de %{contact}%{enterprise} afin d'avoir l'autorisation d'accès à la boutique."
+        require_customer_html: "Si vous voulez demander à y accéder, veuillez %{contact} %{enterprise}."
+      select_oc:
+        select_oc_html: "Merci de <span class='highlighted'>sélectionner une option dans la liste déroulante</span>, afin de voir quel produits sont disponibles."
   card_could_not_be_updated: La carte bancaire n'a pas pu être mise à jour
   card_could_not_be_saved: la carte n'a pas pu être sauvegardée
   spree_gateway_error_flash_for_checkout: "Il y a eu un problème avec vos informations de paiement : %{error}"
