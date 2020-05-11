@@ -83,7 +83,7 @@ dialog .mobile-close-reveal-modal
 
   .bottom-close-button {
     background-color: $orange-500;
-    margin: 0 0 1rem;
+    margin: 0.5rem 0 1rem 0;
 
     @media only screen and (min-width: 640px) {
       display: none;
