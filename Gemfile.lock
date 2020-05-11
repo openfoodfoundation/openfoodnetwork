@@ -62,6 +62,13 @@ PATH
     catalog (0.0.1)
 
 PATH
+  remote: engines/dfc_provider
+  specs:
+    dfc_provider (0.0.1)
+      jwt (~> 2.2)
+      rspec (~> 3.9)
+
+PATH
   remote: engines/order_management
   specs:
     order_management (0.0.1)
@@ -710,6 +717,7 @@ DEPENDENCIES
   delayed_job_web
   devise (~> 2.2.5)
   devise-encryptable (= 0.2.0)
+  dfc_provider!
   diffy
   eventmachine (>= 1.2.3)
   factory_bot_rails

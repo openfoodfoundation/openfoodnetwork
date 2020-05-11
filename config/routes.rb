@@ -89,6 +89,9 @@ Openfoodnetwork::Application.routes.draw do
 
   get 'sitemap.xml', to: 'sitemap#index', defaults: { format: 'xml' }
 
+  # Mount DFC API endpoints
+  mount DfcProvider::Engine, at: '/'
+
   # Mount Spree's routes
   mount Spree::Core::Engine, :at => '/'
 end
