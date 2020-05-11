@@ -92,7 +92,7 @@ module OpenFoodNetwork
     # @return [Array]
     def row_for(line_item, order)
       [
-        order.created_at,
+        order.completed_at.strftime("%F %T"),
         order.id,
         order.bill_address.full_name,
         order.email,

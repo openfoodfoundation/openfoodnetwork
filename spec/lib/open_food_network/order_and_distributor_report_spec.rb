@@ -38,7 +38,7 @@ module OpenFoodNetwork
           table = subject.table
 
           expect(table[0]).to eq([
-                                   order.reload.created_at,
+                                   order.reload.completed_at.strftime("%F %T"),
                                    order.id,
                                    bill_address.full_name,
                                    order.email,
