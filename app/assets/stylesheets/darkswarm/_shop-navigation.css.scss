@@ -63,6 +63,8 @@ ordercycle {
 
     select {
       background-image: url('/assets/white-caret.svg');
+      background-size: 30px auto;
+      background-position-x: 102%;
     }
 
     p {
@@ -71,20 +73,18 @@ ordercycle {
 
     select,
     p {
-      width: 200px;
       display: inline-block;
       color: $white;
       background-color: transparent;
       border: 0;
       border-radius: 0 $radius-small $radius-small 0;
       margin-bottom: 0;
+      padding: 0.5em 1.25em 0.5em 0.75em;
       font-size: 1em;
       line-height: 1.3em;
-      padding: 0.5em 1.25em 0.5em 0.75em;
       height: 2.35em;
-      background-position-x: 102%;
-      background-size: 30px auto;      
       min-width: 13em;
+      width: 200px;
 
       @include breakpoint(mobile) {
         width: 100%;
