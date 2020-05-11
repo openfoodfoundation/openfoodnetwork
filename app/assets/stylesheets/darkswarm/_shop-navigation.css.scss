@@ -71,7 +71,7 @@ ordercycle {
 
     select,
     p {
-      width: inherit;
+      width: 200px;
       display: inline-block;
       color: $white;
       background-color: transparent;
@@ -88,6 +88,10 @@ ordercycle {
       @include breakpoint(mobile) {
         width: 100%;
         min-width: 0;
+      }
+
+      @media all and (min-width: 640px) and (max-width: 1024px), (min-width: 1200px) {
+        width: 250px;
       }
     }
 
