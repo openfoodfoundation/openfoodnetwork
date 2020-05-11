@@ -111,6 +111,7 @@ ordercycle {
 
     @include breakpoint(mobile) {
       display: flex;
+      margin-right: 0;
     }
   }
 
