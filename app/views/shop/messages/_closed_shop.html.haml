@@ -1,15 +1,16 @@
-.row.closed-shop-header
-  .small-12.columns
-    .content{ "darker-background" => true }
-      %h4
-        .warning-sign
-          .rectangle
-          %strong !
-        .message
-          = t :shopping_oc_closed
-      %p
-        = render partial: "shopping_shared/next_order_cycle"
-        = render partial: "shopping_shared/last_order_cycle"
+.closed-shop-header
+  .row
+    .small-12.columns
+      .content{ "darker-background" => true }
+        %h4
+          .warning-sign
+            .rectangle
+            %strong !
+          .message
+            = t :shopping_oc_closed
+        %p
+          = render partial: "shopping_shared/next_order_cycle"
+          = render partial: "shopping_shared/last_order_cycle"
 
 .row
   .small-12.columns
