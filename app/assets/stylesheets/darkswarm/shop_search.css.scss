@@ -38,6 +38,14 @@
     &::placeholder {
       font-style: italic;
     }
+
+    // Remove conflicting "clear search" buttons added by Chrome
+    &::-webkit-search-decoration,
+    &::-webkit-search-cancel-button,
+    &::-webkit-search-results-button,
+    &::-webkit-search-results-decoration {
+      display: none;
+    }
   }
 
   button {
