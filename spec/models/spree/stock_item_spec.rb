@@ -7,6 +7,33 @@ RSpec.describe Spree::StockItem do
 
   subject { stock_location.stock_items.order(:id).first }
 
+  describe "validation" do
+    let(:stock_item) { stock_location.stock_items.first }
+
+    it "requires count_on_hand to be positive if not backorderable" do
+      stock_item.backorderable = false
+
+      stock_item.__send__(:count_on_hand=, 1)
+      expect(stock_item.valid?).to eq(true)
+
+      stock_item.__send__(:count_on_hand=, 0)
+      expect(stock_item.valid?).to eq(true)
+
+      stock_item.__send__(:count_on_hand=, -1)
+      expect(stock_item.valid?).to eq(false)
+    end
+
+    it "allows count_on_hand to be negative if backorderable" do
+      stock_item.backorderable = true
+
+      stock_item.__send__(:count_on_hand=, 1)
+      expect(stock_item.valid?).to eq(true)
+
+      stock_item.__send__(:count_on_hand=, -1)
+      expect(stock_item.valid?).to eq(true)
+    end
+  end
+
   it 'maintains the count on hand for a variant' do
     expect(subject.count_on_hand).to eq 15
   end
@@ -53,7 +80,10 @@ RSpec.describe Spree::StockItem do
       let(:inventory_unit) { double('InventoryUnit') }
       let(:inventory_unit_2) { double('InventoryUnit2') }
 
-      before { subject.adjust_count_on_hand(- (current_on_hand + 2)) }
+      before do
+        allow(subject).to receive(:backorderable?).and_return(true)
+        subject.adjust_count_on_hand(- (current_on_hand + 2))
+      end
 
       it "doesn't process backorders" do
         expect(subject).not_to receive(:backordered_inventory_units)

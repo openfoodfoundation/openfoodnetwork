@@ -10,6 +10,7 @@ module Spree
     # rubocop:disable Rails/UniqueValidationWithoutIndex
     validates :variant_id, uniqueness: { scope: :stock_location_id }
     # rubocop:enable Rails/UniqueValidationWithoutIndex
+    validates :count_on_hand, numericality: { greater_than_or_equal_to: 0, unless: :backorderable? }
 
     attr_accessible :count_on_hand, :variant, :stock_location, :backorderable, :variant_id
 
