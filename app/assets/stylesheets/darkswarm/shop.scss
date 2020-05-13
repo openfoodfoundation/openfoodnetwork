@@ -11,6 +11,13 @@
 @import "shop-popovers";
 
 .darkswarm {
+  .product-listing {
+    @include breakpoint(desktop) {
+      padding-right: 0;
+      padding-left: 0;
+    }
+  }
+
   products {
     display: block;
 
