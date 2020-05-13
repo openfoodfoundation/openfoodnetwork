@@ -7,7 +7,9 @@ module Spree
     has_many :stock_movements, dependent: :destroy
 
     validates :stock_location, :variant, presence: true
+    # rubocop:disable Rails/UniqueValidationWithoutIndex
     validates :variant_id, uniqueness: { scope: :stock_location_id }
+    # rubocop:enable Rails/UniqueValidationWithoutIndex
 
     attr_accessible :count_on_hand, :variant, :stock_location, :backorderable, :variant_id
 
