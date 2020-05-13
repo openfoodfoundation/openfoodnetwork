@@ -2,6 +2,8 @@
 .alpha.eleven.columns{ "ng-app" => "admin.shippingMethods",
   "ng-controller" => "shippingMethodCtrl" }
   .row
+    = t '.deactivation_warning'
+  .row
     .alpha.three.columns
       = f.label :name, t(:name)
     .omega.eight.columns
