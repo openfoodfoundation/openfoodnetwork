@@ -42,7 +42,7 @@ module Spree
     private
 
     def count_on_hand=(value)
-      write_attribute(:count_on_hand, value)
+      self[:count_on_hand] = value
     end
 
     def process_backorders
