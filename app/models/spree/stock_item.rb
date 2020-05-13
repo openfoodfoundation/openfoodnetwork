@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Spree
   class StockItem < ActiveRecord::Base
     belongs_to :stock_location, class_name: 'Spree::StockLocation'
@@ -39,15 +40,17 @@ module Spree
     end
 
     private
-      def count_on_hand=(value)
-        write_attribute(:count_on_hand, value)
-      end
 
-      def process_backorders
-        backordered_inventory_units.each do |unit|
-          return unless in_stock?
-          unit.fill_backorder
-        end
+    def count_on_hand=(value)
+      write_attribute(:count_on_hand, value)
+    end
+
+    def process_backorders
+      backordered_inventory_units.each do |unit|
+        return unless in_stock?
+
+        unit.fill_backorder
       end
+    end
   end
 end
