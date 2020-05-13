@@ -45,7 +45,7 @@
     }
 
     //Hub Link
-    @media all and (max-width: 640px) {
+    @include breakpoint(phablet) {
       a.hub {
         display: block;
       }
@@ -67,7 +67,7 @@
       .active_table_row {
         border: 1px solid transparent;
 
-        @media all and (max-width: 640px) {
+        @include breakpoint(phablet) {
           border-color: $clr-brick-light;
         }
 
@@ -85,7 +85,7 @@
     }
 
     &.open, &.closed {
-      @media all and (max-width: 640px) {
+      @include breakpoint(phablet) {
         .active_table_row:first-child .skinny-head {
           background-color: $clr-brick-light;
 
@@ -164,7 +164,7 @@
           }
         }
 
-        @media all and (max-width: 640px) {
+        @include breakpoint(phablet) {
           .active_table_row:first-child .skinny-head {
             background-color: rgba(255, 255, 255, 0.85);
           }
@@ -218,7 +218,7 @@
           }
 
           // Small devices
-          @media all and (max-width: 640px) {
+          @include breakpoint(phablet) {
             .active_table_row:first-child .skinny-head {
               background-color: $disabled-bright;
             }
@@ -226,7 +226,7 @@
         }
 
         // Small devices
-        @media all and (max-width: 640px) {
+        @include breakpoint(phablet) {
           .active_table_row, .active_table_row:first-child, .active_table_row:last-child {
             border-color: $disabled-bright;
             background-color: transparent;
@@ -253,7 +253,7 @@
             cursor: auto;
           }
 
-          @media all and (max-width: 640px) {
+          @include breakpoint(phablet) {
             border-color: transparent;
           }
         }

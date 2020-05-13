@@ -86,7 +86,7 @@ feature "shopping with variant overrides defined", js: true do
 
     it "shows the correct prices in the shopping cart" do
       fill_in "variants[#{product1_variant1.id}]", with: "2"
-      add_to_cart
+      edit_cart
 
       expect(page).to have_selector "tr.line-item.variant-#{product1_variant1.id} .cart-item-price", text: with_currency(61.11)
       expect(page).to have_field "order[line_items_attributes][0][quantity]", with: '2'

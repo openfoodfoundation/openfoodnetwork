@@ -1,0 +1,17 @@
+.shop-searchbar
+  .row
+    .small-12.large-5.columns.flex
+      %div.search-wrap
+        %input#search.text{"ng-model" => "query",
+              type: 'search',
+              placeholder: t(:products_search),
+              "ng-debounce" => "200",
+              "ofn-disable-enter" => true}
+        %a.clear{type: 'button', ng: {show: 'query', click: 'clearQuery()'}, 'focus-search' => true}
+          %img{ src: "/assets/icn-close.png" }
+
+      .hide-for-large-up
+        %button{type: 'button', ng: {click: 'toggleFilterSidebar()'}}
+          = t(:products_filter_heading)
+          %span{ng: {show: 'filtersCount()' }}
+            ({{ filtersCount() }})

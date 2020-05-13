@@ -171,7 +171,7 @@ nav.top-bar {
 .tab-bar {
   background-color: white;
   border-bottom: 1px solid $light-grey-transparency;
-  height: 2.8em;
+  height: $mobile-nav-height;
   position: fixed;
   width: 100%;
   z-index: 1;
@@ -208,6 +208,10 @@ nav.top-bar {
       }
     }
   }
+}
+
+.off-canvas-wrap {
+  overflow: inherit;
 }
 
 .off-canvas-list li.language-switcher ul li {

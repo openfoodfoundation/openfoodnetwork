@@ -1,11 +1,13 @@
+@import "mixins";
 @import "typography";
+@import "variables";
 
 ordercycle {
   float: right;
   background: $grey-050;
   color: $grey-800;
   width: 100%;
-  border-radius: 0.5em 0.5em 0 0;
+  border-radius: $radius-medium $radius-medium 0 0;
   margin-top: 1em;
   padding: 1em 1.25em 0;
 
@@ -17,7 +19,7 @@ ordercycle {
     margin-right: 0.3rem;
   }
 
-  @media all and (max-width: 1024px) {
+  @include breakpoint(desktop) {
     float: none;
     padding: 0.5em 1em;
     width: 100%;
@@ -33,7 +35,7 @@ ordercycle {
     }
   }
 
-  @media all and (max-width: 480px) {
+  @include breakpoint(mobile) {
     padding: 0.5em 1em 0.75em;
   }
 
@@ -41,12 +43,12 @@ ordercycle {
     border: 1px solid $teal-300;
     display: inline-block;
     font-size: 1em;
-    border-radius: 0.25em;
+    border-radius: $radius-small;
 
     .select-label {
       background-color: rgba($teal-300, 0.5);
       display: inline-block;
-      border-radius: 0.25em 0 0 0.25em;
+      border-radius: $radius-small 0 0 $radius-small;
       float: left;
       font-size: 1em;
       line-height: 1.3em;
@@ -80,11 +82,12 @@ ordercycle {
       padding: 0.5em 1.25em 0.5em 0.75em;
       height: 2.35em;
       background-size: 30px auto;
-      border-radius: 0 0.25em 0.25em 0;
+      border-radius: 0 $radius-small $radius-small 0;
       min-width: 13em;
 
-      @media all and (max-width: 480px) {
+      @include breakpoint(mobile) {
         width: 100%;
+        min-width: 0;
       }
     }
 
@@ -92,16 +95,17 @@ ordercycle {
       color: $grey-700;
     }
 
-    @media all and (max-width: 1024px) {
+    @include breakpoint(desktop) {
       float: none;
       margin-right: 1em;
     }
 
-    @media all and (max-width: 768px) {
+    @include breakpoint(tablet) {
       float: none;
+      margin-right: 0;
     }
 
-    @media all and (max-width: 480px) {
+    @include breakpoint(mobile) {
       display: flex;
     }
   }
@@ -114,7 +118,7 @@ ordercycle {
     padding: 0.5em 0;
 
     span {
-      @media all and (max-width: 768px) {
+      @include breakpoint(tablet) {
         font-size: 0.875em;
       }
     }
@@ -148,7 +152,7 @@ shop ordercycle {
     color: $white;
     padding: 0 0 12px;
 
-    @media all and (max-width: 1024px) {
+    @include breakpoint(desktop) {
       float: none;
       display: inline-block;
       padding: 0.2em 0 0;
@@ -156,7 +160,7 @@ shop ordercycle {
       margin-right: 1em;
     }
 
-    @media all and (max-width: 768px) {
+    @include breakpoint(tablet) {
       float: none;
       padding: 0 0 10px;
     }

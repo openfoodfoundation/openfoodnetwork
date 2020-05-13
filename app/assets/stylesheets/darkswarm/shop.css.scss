@@ -11,18 +11,98 @@
 @import "shop-taxon-flag";
 @import "shop-popovers";
 
+$sidebar-small-width: 75%;
+$sidebar-medium-width: 65%;
+$sidebar-large-width: 45%;
+$sidebar-footer-height: 5em;
+
 .darkswarm {
+  .shop-filters-sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .background {
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 200;
+      height: 100%;
+      width: 100%;
+      background-color: $shop-sidebar-overlay;
+      opacity: 0;
+      transition: opacity $transition-sidebar;
+    }
+
+    &.shown {
+      .background {
+        opacity: 1;
+      }
+
+      .sidebar, .sidebar-footer {
+        margin-right: 0;
+      }
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 210;
+      height: 100%;
+      width: $sidebar-large-width;
+      margin-right: -$sidebar-large-width;
+      background-color: rgba($white, 0.95);
+      padding: 1em;
+      transition: margin $transition-sidebar;
+      overflow-y: scroll;
+
+      .property-selectors {
+        margin-bottom: $sidebar-footer-height + 2em;
+      }
+    }
+
+    .sidebar-footer {
+      background-color: $grey-800;
+      width: $sidebar-large-width;
+      margin-right: -$sidebar-large-width;
+      height: $sidebar-footer-height;
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      transition: margin $transition-sidebar;
+      padding: 1em;
+
+      button {
+        width: 48%;
+      }
+    }
+
+    @include breakpoint(tablet) {
+      .sidebar, .sidebar-footer {
+        width: $sidebar-medium-width;
+        margin-right: -$sidebar-medium-width;
+      }
+    }
+
+    @include breakpoint(mobile) {
+      .sidebar, .sidebar-footer {
+        width: $sidebar-small-width;
+        margin-right: -$sidebar-small-width;
+      }
+    }
+  }
+
   products {
     display: block;
-    padding-top: 20px;
 
-    @media all and (max-width: 768px) {
+    @include breakpoint(tablet) {
       input.button.right {
         float: left;
       }
     }
 
-    @media all and (max-width: 480px) {
+    @include breakpoint(mobile) {
       .add_to_cart {
         margin-top: 2rem;
       }
@@ -69,7 +149,7 @@
       .bulk-buy {
         font-size: 0.875rem;
 
-        @media all and (max-width: 768px) {
+        @include breakpoint(tablet) {
           font-size: 0.75rem;
         }
       }
@@ -92,7 +172,7 @@
         font-size: 0.75em;
         padding-right: 0.9375rem;
 
-        @media all and (max-width: 640px) {
+        @include breakpoint(phablet) {
           padding-right: 0.25rem;
         }
       }

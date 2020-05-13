@@ -2,6 +2,7 @@
 @import "branding";
 @import "big-input";
 @import "animations";
+@import "variables";
 
 @mixin filter-selector($base-clr, $border-clr, $hover-clr) {
   &.inline-block, ul.inline-block {
@@ -14,7 +15,7 @@
     @include border-radius(0);
 
     padding: 0;
-    margin: 0 0 0.25rem 0.25rem;
+    margin: 0 0.5rem 0.5rem 0;
 
     &:hover, &:focus {
       background: transparent;
@@ -107,26 +108,63 @@
 // Alert when search, taxon, filter is triggered
 
 .alert-box.search-alert {
-  background-color: $clr-yellow-light;
-  border-color: $clr-yellow-light;
+  background-color: $white;
   color: #777;
-  font-size: 0.75rem;
-  padding: 0.5rem 0.75rem;
+  font-size: 1em;
+  padding: 0.35em 0 0;
+  border: 0;
+  margin: 0;
 
-  span.applied-properties {
-    color: #333;
+  .clear-all {
+    color: $grey-500;
+    margin-left: 1.5em;
+
+    &:hover {
+      color: $grey-600;
+    }
   }
 
-  span.applied-taxons {
-    color: $clr-blue;
+  .no-results-bar {
+    @include breakpoint(desktop) {
+      text-align: center;
+    }
   }
 
-  span.applied-search {
-    color: $clr-brick;
+  .no-results {
+    color: $grey-800;
+    font-style: italic;
+    font-size: 1.25em;
   }
 
-  span.filter-label {
-    opacity: 0.75;
+  .clear-search {
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    color: $orange-500;
+    font-size: 1.25em;
+
+    &:hover {
+      color: $orange-400;
+    }
+  }
+
+  span {
+    color: $grey-800;
+    font-style: italic;
+
+    &.applied-taxons, &.applied-properties {
+      color: $clr-blue;
+      font-weight: bold;
+
+      .join-word {
+        font-weight: normal;
+      }
+    }
+
+    &.applied-search {
+      font-weight: bold;
+      color: $teal-500;
+    }
   }
 }
 
@@ -140,25 +178,6 @@
 .filter-shopfront {
   &.taxon-selectors, &.property-selectors {
     background: transparent;
-
-    single-line-selectors {
-      overflow-x: hidden;
-      white-space: nowrap;
-
-      .f-dropdown {
-        overflow-x: auto;
-        white-space: normal;
-      }
-    }
-
-    ul {
-      margin: 0;
-      display: inline-block;
-    }
-
-    ul, ul li {
-      list-style: none;
-    }
   }
 
   // Shopfront taxons
@@ -169,5 +188,9 @@
   // Shopfront properties
   &.property-selectors {
     @include filter-selector(#666, #ccc, #777);
+  }
+
+  ul {
+    margin: 0;
   }
 }

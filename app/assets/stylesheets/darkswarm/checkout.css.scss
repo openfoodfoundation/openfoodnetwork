@@ -13,7 +13,7 @@
 checkout {
   display: block;
 
-  @media all and (max-width: 640px) {
+  @include breakpoint(phablet) {
     &.row .row {
       margin-left: 0;
       margin-right: 0;
@@ -24,7 +24,7 @@ checkout {
     .button, table {
       width: 100%;
     }
-    @media all and (max-width: 640px) {
+    @include breakpoint(phablet) {
       form.edit_order {
         border: 1px solid $disabled-bright;
         margin-bottom: 2rem;

@@ -57,7 +57,7 @@
     }
   }
 
-  @media all and (max-width: 640px) {
+  @include breakpoint(phablet) {
     render-svg {
       svg {
         width: 24px;
