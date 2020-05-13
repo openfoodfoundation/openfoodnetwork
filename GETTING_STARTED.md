@@ -2,6 +2,8 @@
 
 This is a general guide to setting up an Open Food Network development environment on your local machine.
 
+The fastest way to make it work locally is to use Docker, see the [Docker setup guide](DOCKER.md).
+
 The following guides are located in the wiki and provide more OS-specific step-by-step instructions:
 
 - [Ubuntu Setup Guide][ubuntu]
@@ -11,7 +13,7 @@ The following guides are located in the wiki and provide more OS-specific step-b
 ### Dependencies
 
 * Rails 3.2.x
-* Ruby 2.1.9
+* Ruby 2.3.7
 * PostgreSQL database
 * PhantomJS (for testing)
 * See Gemfile for a list of gems required
@@ -58,10 +60,10 @@ Now, your dreams of spinning up a development server can be realised:
 
     bundle exec rails server
 
-To login as Spree default user, use:
+To login as the default user, use:
 
-    email: spree@example.com
-    password: spree123
+    email: ofn@example.com
+    password: ofn123
 
 ### Testing
 

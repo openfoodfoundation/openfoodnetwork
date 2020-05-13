@@ -1,0 +1,10 @@
+.modal-list
+  .row{"ng-repeat" => "(id, enterprise) in ::enterprises"}
+    .highlight
+      .highlight-top.row.enterprise
+        .small-12.medium-12.large-12.columns
+          %h4
+            %a.heading{"ng-click" => "::openModal(enterprise)"}
+              %i{"ng-class" => "enterprise.icon"}
+              %span{"ng-bind" => "enterprise.name"}
+      %img.hero-img{"ng-src" => "{{::enterprise.promo_image}}"}

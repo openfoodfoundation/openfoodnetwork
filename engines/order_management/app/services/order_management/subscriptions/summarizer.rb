@@ -18,7 +18,7 @@ module OrderManagement
       end
 
       def record_issue(type, order, message = nil)
-        Rails.logger.info "Issue in Subscription Order #{order.id}: #{type}"
+        JobLogger.logger.info("Issue in Subscription Order #{order.id}: #{type}")
         summary_for(order).record_issue(type, order, message)
       end
 
@@ -28,7 +28,7 @@ module OrderManagement
         error = "Subscription#{type.to_s.camelize}Error"
         line1 = "#{error}: Cannot process order #{order.number} due to errors"
         line2 = "Errors: #{order.errors.full_messages.join(', ')}"
-        Rails.logger.info("#{line1}\n#{line2}")
+        JobLogger.logger.info("#{line1}\n#{line2}")
         record_issue(type, order, line2)
       end
 

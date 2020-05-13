@@ -842,6 +842,10 @@ en_DE:
         cancel: "Cancel"
         choose_products_from: "Choose Products From:"
       incoming:
+        incoming: "Incoming"
+        supplier: "Supplier"
+        products: "Products"
+        fees: "Fees"
         save: "Save"
         next: "Next"
         cancel: "Cancel"
@@ -2779,8 +2783,9 @@ en_DE:
         blank: "can't be blank"
     layouts:
       admin:
-        header:
-          store: Store
+        login_nav:
+          header:
+            store: Store
     admin:
       tab:
         dashboard: "Dashboard"

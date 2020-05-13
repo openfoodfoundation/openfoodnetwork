@@ -18,7 +18,8 @@ module Api
     end
 
     def active
-      enterprise.ready_for_checkout? && OrderCycle.active.with_distributor(enterprise).exists?
+      @active ||=
+        enterprise.ready_for_checkout? && OrderCycle.active.with_distributor(enterprise).exists?
     end
 
     def pickup
@@ -73,12 +74,16 @@ module Api
     end
 
     def supplied_taxons
+      return [] unless enterprise.is_primary_producer
+
       ActiveModel::ArraySerializer.new(
         enterprise.supplied_taxons, each_serializer: Api::TaxonSerializer
       )
     end
 
     def supplied_properties
+      return [] unless enterprise.is_primary_producer
+
       (product_properties + producer_properties).uniq do |property_object|
         property_object.property.presentation
       end
@@ -118,7 +123,7 @@ module Api
     private
 
     def product_properties
-      enterprise.supplied_products.flat_map(&:properties)
+      enterprise.supplied_products.includes(:properties).flat_map(&:properties)
     end
 
     def producer_properties

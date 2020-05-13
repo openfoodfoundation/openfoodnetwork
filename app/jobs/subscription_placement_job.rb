@@ -28,7 +28,7 @@ class SubscriptionPlacementJob
   end
 
   def place_order_for(proxy_order)
-    Rails.logger.info "Placing Order for Proxy Order #{proxy_order.id}"
+    JobLogger.logger.info("Placing Order for Proxy Order #{proxy_order.id}")
     proxy_order.initialise_order!
     place_order(proxy_order.order)
   end

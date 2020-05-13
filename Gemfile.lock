@@ -61,6 +61,13 @@ PATH
     catalog (0.0.1)
 
 PATH
+  remote: engines/dfc_provider
+  specs:
+    dfc_provider (0.0.1)
+      jwt (~> 2.2)
+      rspec (~> 3.9)
+
+PATH
   remote: engines/order_management
   specs:
     order_management (0.0.1)
@@ -198,7 +205,7 @@ GEM
       activerecord (>= 3.2.0, < 5.0)
       fog (~> 1.0)
       rails (>= 3.2.0, < 5.0)
-    ddtrace (0.35.0)
+    ddtrace (0.35.2)
       msgpack
     debugger-linecache (1.2.0)
     delayed_job (4.1.8)
@@ -712,6 +719,7 @@ DEPENDENCIES
   delayed_job_web
   devise (~> 3.0.1)
   devise-encryptable
+  dfc_provider!
   diffy
   eventmachine (>= 1.2.3)
   factory_bot_rails (= 4.10.0)

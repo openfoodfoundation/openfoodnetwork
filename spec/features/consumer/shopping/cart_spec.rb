@@ -34,7 +34,7 @@ feature "full-page cart", js: true do
         click_link "Continue shopping"
 
         expect(page).to have_no_link "Continue shopping"
-        expect(page).to have_button "Edit your cart"
+        expect(page).to have_link "Shop"
         expect(page).to have_no_content distributor.preferred_shopfront_message
       end
     end

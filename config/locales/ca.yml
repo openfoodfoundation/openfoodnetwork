@@ -865,6 +865,10 @@ ca:
         save_and_back_to_list: "Desa i torna a la llista"
         choose_products_from: "Trieu Productes des de:"
       incoming:
+        incoming: "Entrant"
+        supplier: "Proveïdora"
+        products: "Productes "
+        fees: "Comissions"
         save: "Desa"
         save_and_next: "Desa i següent"
         next: "Següent"
@@ -2912,8 +2916,9 @@ ca:
         blank: "no es pot deixar en blanc"
     layouts:
       admin:
-        header:
-          store: Botiga
+        login_nav:
+          header:
+            store: Botiga
     admin:
       tab:
         dashboard: "Panell"

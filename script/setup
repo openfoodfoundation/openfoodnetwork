@@ -54,7 +54,7 @@ if [ ! -f config/newrelic.yml ]; then
 fi
 
 # Set up the database for both development and test
-# Confirming the default user and password Spree prompts
+# Confirming the default user and password
 printf '\n\n' | bundle exec rake db:setup db:test:prepare
 printf '\n'
 
@@ -65,8 +65,8 @@ printf '\n'
 printf "${YELLOW}WELCOME TO OPEN FOOD NETWORK!\n"
 printf '\n'
 
-printf "To login as the Spree default user, use:"
+printf "To login as the default user, use:"
 printf '\n'
 printf '\n'
-printf '  email: spree@example.com\n'
-printf "  password: spree123\n${NO_COLOR}"
+printf '  email: ofn@example.com\n'
+printf "  password: ofn123\n${NO_COLOR}"

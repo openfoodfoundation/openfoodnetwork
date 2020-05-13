@@ -1,4 +1,4 @@
-Darkswarm.controller "ProductsCtrl", ($scope, $filter, $rootScope, Products, OrderCycle, OrderCycleResource, FilterSelectorsService, Cart, Dereferencer, Taxons, Properties, currentHub, $timeout) ->
+Darkswarm.controller "ProductsCtrl", ($scope, $sce, $filter, $rootScope, Products, OrderCycle, OrderCycleResource, FilterSelectorsService, Cart, Dereferencer, Taxons, Properties, currentHub, $timeout) ->
   $scope.Products = Products
   $scope.Cart = Cart
   $scope.query = ""
@@ -10,6 +10,7 @@ Darkswarm.controller "ProductsCtrl", ($scope, $filter, $rootScope, Products, Ord
   $scope.order_cycle = OrderCycle.order_cycle
   $scope.supplied_taxons = null
   $scope.supplied_properties = null
+  $scope.showFilterSidebar = false
 
   $rootScope.$on "orderCycleSelected", ->
     $scope.update_filters()
@@ -75,15 +76,24 @@ Darkswarm.controller "ProductsCtrl", ($scope, $filter, $rootScope, Products, Ord
   $scope.appliedTaxonsList = ->
     $scope.activeTaxons.map( (taxon_id) ->
       Taxons.taxons_by_id[taxon_id].name
-    ).join(" #{t('products_or')} ") if $scope.activeTaxons?
+    ).join($scope.filtersJoinWord()) if $scope.activeTaxons?
 
   $scope.appliedPropertiesList = ->
     $scope.activeProperties.map( (property_id) ->
       Properties.properties_by_id[property_id].name
-    ).join(" #{t('products_or')} ") if $scope.activeProperties?
+    ).join($scope.filtersJoinWord()) if $scope.activeProperties?
+
+  $scope.filtersJoinWord = ->
+    $sce.trustAsHtml(" <span class='join-word'>#{t('products_or')}</span> ")
 
   $scope.clearAll = ->
+    $scope.clearQuery()
+    $scope.clearFilters()
+
+  $scope.clearQuery = ->
     $scope.query = ""
+
+  $scope.clearFilters = ->
     $scope.taxonSelectors.clearAll()
     $scope.propertySelectors.clearAll()
 
@@ -94,3 +104,9 @@ Darkswarm.controller "ProductsCtrl", ($scope, $filter, $rootScope, Products, Ord
       $scope.Products.products = []
       $scope.update_filters()
       $scope.loadProducts()
+
+  $scope.filtersCount = () ->
+    $scope.taxonSelectors.totalActive() + $scope.propertySelectors.totalActive()
+
+  $scope.toggleFilterSidebar = ->
+    $scope.showFilterSidebar = !$scope.showFilterSidebar

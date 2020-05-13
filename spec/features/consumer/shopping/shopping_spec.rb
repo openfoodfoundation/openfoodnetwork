@@ -50,7 +50,8 @@ feature "As a consumer I want to shop with a distributor", js: true do
       it "selects an order cycle if only one is open" do
         exchange1.update_attribute :pickup_time, "turtles"
         visit shop_path
-        expect(page).to have_selector "option[selected]", text: 'turtles'
+        expect(page).to have_selector "p", text: 'turtles'
+        expect(page).not_to have_content "choose when you want your order"
       end
 
       describe "with multiple order cycles" do
@@ -63,8 +64,10 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
         it "shows a select with all order cycles, but doesn't show the products by default" do
           visit shop_path
+
           expect(page).to have_selector "option", text: 'frogs'
           expect(page).to have_selector "option", text: 'turtles'
+          expect(page).to have_content "choose when you want your order"
           expect(page).not_to have_selector("input.button.right", visible: true)
         end
 
@@ -209,8 +212,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
       it "filters search results properly" do
         visit shop_path
-        select "frogs", from: "order_cycle_id"
-
         fill_in "search", with: "74576345634XXXXXX"
         expect(page).to have_content "Sorry, no results found"
         expect(page).not_to have_content product2.name
@@ -222,8 +223,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
       it "returns search results for products where the search term matches one of the product's variant names" do
         visit shop_path
-        select "frogs", from: "order_cycle_id"
-
         fill_in "search", with: "Badg"           # For variant with display_name "Badgers"
 
         within('div.pad-top') do
@@ -429,6 +428,34 @@ feature "As a consumer I want to shop with a distributor", js: true do
           end
         end
       end
+
+      context "when a variant is soft-deleted" do
+        describe "adding the soft-deleted variant to the cart" do
+          it "handles it as if the variant has gone out of stock" do
+            variant.delete
+
+            fill_in "variants[#{variant.id}]", with: '1'
+
+            expect_out_of_stock_behavior
+          end
+        end
+
+        context "when the soft-deleted variant has an associated override" do
+          describe "adding the soft-deleted variant to the cart" do
+            let!(:variant_override) {
+              create(:variant_override, variant: variant, hub: distributor, count_on_hand: 100)
+            }
+
+            it "handles it as if the variant has gone out of stock" do
+              variant.delete
+
+              fill_in "variants[#{variant.id}]", with: '1'
+
+              expect_out_of_stock_behavior
+            end
+          end
+        end
+      end
     end
 
     context "when no order cycles are available" do
@@ -467,6 +494,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           expect(page).to have_content "Only approved customers can access this shop."
           expect(page).to have_content "login or signup"
           expect(page).to have_no_content product.name
+          expect(page).not_to have_selector "ordercycle"
         end
       end
 
@@ -484,6 +512,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
             expect(page).to have_content "Only approved customers can access this shop."
             expect(page).to have_content "please contact #{distributor.name}"
             expect(page).to have_no_content product.name
+            expect(page).not_to have_selector "ordercycle"
           end
         end
 
@@ -542,5 +571,25 @@ feature "As a consumer I want to shop with a distributor", js: true do
     # The auto-submit on these specific form elements (add to cart) now has a small built-in
     # waiting period before submitting the data...
     sleep 0.6
+  end
+
+  def expect_out_of_stock_behavior
+    wait_for_debounce
+    wait_until { !cart_dirty }
+
+    # Shows an "out of stock" modal, with helpful user feedback
+    within(".out-of-stock-modal") do
+      expect(page).to have_content I18n.t('js.out_of_stock.out_of_stock_text')
+    end
+
+    # Removes the item from the client-side cart and marks the variant as unavailable
+    expect(page).to have_field "variants[#{variant.id}]", with: '0', disabled: true
+    expect(page).to have_selector "#variant-#{variant.id}.out-of-stock"
+    expect(page).to have_selector "#variants_#{variant.id}[ofn-on-hand='0']"
+    expect(page).to have_selector "#variants_#{variant.id}[disabled='disabled']"
+
+    # We need to wait again for the cart to finish updating in Angular or the test can fail
+    # as the session cannot be reset properly (after the test) while it's still loading
+    wait_until { !cart_dirty }
   end
 end

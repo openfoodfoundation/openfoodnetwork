@@ -11,6 +11,7 @@ gem 'rails_safe_tasks', '~> 1.0'
 gem "activerecord-import"
 
 gem "catalog", path: "./engines/catalog"
+gem 'dfc_provider', path: './engines/dfc_provider'
 gem "order_management", path: "./engines/order_management"
 gem 'web', path: './engines/web'
 

@@ -1,5 +1,6 @@
-@import "branding";
-@import "mixins";
+@import 'branding';
+@import 'mixins';
+@import 'admin/globals/variables';
 
 // Generic styles for use
 
@@ -20,6 +21,24 @@
   border-bottom: 1px solid $light-grey;
   margin-top: 0.75rem;
   margin-bottom: 0.5rem;
+}
+
+.modal-list {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 400;
+  border-bottom: 1px solid $light-grey;
+  margin-top: 0.75rem;
+  margin-bottom: 0.5rem;
+
+  a.heading {
+    color: $color-link;
+
+    &:hover {
+      color: $color-link-hover;
+      text-decoration: underline;
+    }
+  }
 }
 
 // Enterprise promo image and text
@@ -54,10 +73,16 @@
     color: $clr-brick;
   }
 
+  &.enterprise {
+    margin: auto;
+    text-align: center;
+    width: 100%;
+  }
+
   p {
     line-height: 2.4;
 
-    @media all and (max-width: 640px) {
+    @include breakpoint(phablet) {
       line-height: 1.4;
     }
   }
@@ -193,7 +218,7 @@
       display: inline-block;
       border-bottom: 1px solid transparent;
 
-      @media all and (max-width: 640px) {
+      @include breakpoint(phablet) {
         display: none;
       }
     }

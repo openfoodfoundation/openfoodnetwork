@@ -856,6 +856,10 @@ ar:
         save_and_back_to_list: "حفظ والعودة إلى القائمة"
         choose_products_from: "اختر المنتجات من:"
       incoming:
+        incoming: "الوارد"
+        supplier: "المورد"
+        products: "منتجات"
+        fees: "رسوم"
         save: "حفظ"
         save_and_next: "حفظ والتالي"
         next: "التالى"
@@ -2869,8 +2873,9 @@ ar:
         blank: "لا يمكن أن تكون فارغة"
     layouts:
       admin:
-        header:
-          store: متجر
+        login_nav:
+          header:
+            store: متجر
     admin:
       tab:
         dashboard: "لوحة العرض"

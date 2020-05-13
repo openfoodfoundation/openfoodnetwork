@@ -1,3 +1,5 @@
+@import "mixins";
+
 .darkswarm {
   products {
     product {
@@ -10,7 +12,7 @@
         padding-top: 0.25rem;
         z-index: 999999;
 
-        @media all and (max-width: 480px) {
+        @include breakpoint(mobile) {
           background-size: 28px 32px;
           min-height: 32px;
           width: 28px;
@@ -27,11 +29,11 @@
           }
         }
 
-        @media all and (max-width: 768px) {
+        @include breakpoint(tablet) {
           margin-top: -0.85rem;
         }
 
-        @media all and (max-width: 480px) {
+        @include breakpoint(mobile) {
           render-svg {
             svg {
               width: 18px;

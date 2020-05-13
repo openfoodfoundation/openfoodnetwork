@@ -862,6 +862,10 @@ pt_BR:
         save_and_back_to_list: "Salvar e Voltar para a Lista"
         choose_products_from: "Escolha produtos de:"
       incoming:
+        incoming: "Entrada"
+        supplier: "Fornecedor"
+        products: "Produtos"
+        fees: "Taxas"
         save: "Salvar"
         save_and_next: "Salvar e Seguir"
         next: "Próximo"
@@ -2908,10 +2912,6 @@ pt_BR:
     errors:
       messages:
         blank: "Não pode ser vazio"
-    layouts:
-      admin:
-        header:
-          store: Loja
     admin:
       tab:
         dashboard: "Painel"

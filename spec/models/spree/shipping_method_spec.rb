@@ -109,5 +109,15 @@ module Spree
         expect(shipping_method.include?(address)).to be true
       end
     end
+
+    describe "touches" do
+      let!(:distributor) { create(:distributor_enterprise) }
+      let!(:shipping_method) { create(:shipping_method) }
+      let(:add_distributor) { shipping_method.distributors << distributor }
+
+      it "is touched when applied to a distributor" do
+        expect{ add_distributor }.to change { shipping_method.reload.updated_at}
+      end
+    end
   end
 end

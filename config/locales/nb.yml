@@ -862,6 +862,10 @@ nb:
         save_and_back_to_list: "Lagre og Tilbake til Listen"
         choose_products_from: "Velg Produkter Fra:"
       incoming:
+        incoming: "Innkommende"
+        supplier: "Leverandør"
+        products: "Produkter"
+        fees: "Avgifter"
         save: "Lagre"
         save_and_next: "Lagre og Neste"
         next: "Neste"
@@ -2905,8 +2909,9 @@ nb:
         blank: "kan ikke være tomt"
     layouts:
       admin:
-        header:
-          store: Butikk
+        login_nav:
+          header:
+            store: Butikk
     admin:
       tab:
         dashboard: "Dashboard"
@@ -3177,6 +3182,8 @@ nb:
           price: "Pris"
           display_as: "Vis som"
           display_name: "Visningsnavn"
+          display_as_placeholder: 'f.eks. 2 kg'
+          display_name_placeholder: 'f.eks. Tomater'
         autocomplete:
           producer_name: "Produsent"
           unit: "Enhet"

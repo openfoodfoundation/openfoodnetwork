@@ -16,7 +16,7 @@
 
   margin-top: 2px;
 
-  @media all and (max-width: 640px) {
+  @include breakpoint(phablet) {
     margin-bottom: 1em;
   }
 }

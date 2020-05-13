@@ -13,7 +13,7 @@ module ShopHelper
   end
 
   def require_customer?
-    current_distributor.require_login? && !user_is_related_to_distributor?
+    @require_customer ||= current_distributor.require_login? && !user_is_related_to_distributor?
   end
 
   def user_is_related_to_distributor?
@@ -48,6 +48,6 @@ module ShopHelper
   end
 
   def no_open_order_cycles?
-    @order_cycles && @order_cycles.empty?
+    @no_open_order_cycles ||= @order_cycles&.empty?
   end
 end

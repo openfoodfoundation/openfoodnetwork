@@ -331,7 +331,7 @@ it:
     unsaved_changes: "Hai modifiche non salvate"
     shopfront_settings:
       embedded_shopfront_settings: "Impostazioni di vetrina incorporate"
-      enable_embedded_shopfronts: "Disabilita Vetrine incorporata"
+      enable_embedded_shopfronts: "Abilita vetrine incorporate"
       embedded_shopfronts_whitelist: "Whitelist dei domini esterni"
     number_localization:
       number_localization_settings: "Settaggi del Numero di Localizzazione"
@@ -858,6 +858,10 @@ it:
         save_and_back_to_list: "Salva e torna alla lista"
         choose_products_from: "Scegli i prodotti da:"
       incoming:
+        incoming: "In arrivo"
+        supplier: "Fornitore"
+        products: "Prodotti"
+        fees: "Tariffe"
         save: "Salva"
         save_and_next: "Salva e continua"
         next: "Prossimo"
@@ -2903,8 +2907,9 @@ it:
         blank: "non può essere lasciato vuoto"
     layouts:
       admin:
-        header:
-          store: Memorizzare
+        login_nav:
+          header:
+            store: Memorizzare
     admin:
       tab:
         dashboard: "Pannello di controllo"

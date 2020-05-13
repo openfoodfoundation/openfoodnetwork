@@ -864,6 +864,10 @@ fr:
         save_and_back_to_list: "Sauvegarder et revenir à la liste"
         choose_products_from: "Choisir produits depuis :"
       incoming:
+        incoming: "Produits entrants (pouvant être mis en vente par les hubs)"
+        supplier: "Fournisseur"
+        products: "Produits"
+        fees: "Commissions"
         save: "Sauvegarder"
         save_and_next: "Sauvegarder et suivant"
         next: "Suivant"
@@ -2308,6 +2312,10 @@ fr:
     resolve_errors: Veuillez corriger les erreurs suivantes
     more_items: "+ %{count} en plus"
     default_card_updated: La carte bancaire par défaut a été mise à jour
+    cart:
+      add_to_cart_failed: >
+          Il y a eu un problème lors de l'ajout de votre produit au panier. Peut-être
+          qu'il n'est plus en stock ou que la boutique sur laquelle vous étiez a fermé.
     admin:
       enterprise_limit_reached: "Vous avez atteint le nombre limite d'entreprises autorisées par défaut. Ecrivez à %{contact_email}si vous avez besoin d'augmenter cette limite."
       modals:
@@ -2936,8 +2944,9 @@ fr:
         blank: "Champ obligatoire"
     layouts:
       admin:
-        header:
-          store: Vue acheteur
+        login_nav:
+          header:
+            store: Vue acheteur
     admin:
       tab:
         dashboard: "Tableau de bord"
