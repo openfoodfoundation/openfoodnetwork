@@ -47,7 +47,7 @@ module Spree
 
     def process_backorders
       backordered_inventory_units.each do |unit|
-        return unless in_stock?
+        break unless in_stock?
 
         unit.fill_backorder
       end
