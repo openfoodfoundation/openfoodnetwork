@@ -34,7 +34,7 @@
               %br/
           %td= method.type
           %td.align-center= method.environment.to_s.titleize
-          %td.align-center= method.display_on.blank? ? Spree.t(:both) : Spree.t(method.display_on)
+          %td.align-center= method.display_on.blank? ? t('.both') : t('.' + method.display_on.to_s)
           %td.align-center= method.active ? Spree.t(:say_yes) : Spree.t(:say_no)
           %td.actions
             = link_to_edit method, no_text: true

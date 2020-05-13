@@ -21,7 +21,7 @@
     .alpha.three.columns
       = label_tag nil, t(:display)
     .omega.eight.columns
-      = select(:payment_method, :display_on, Spree::PaymentMethod::DISPLAY.collect { |display| [t(display), display == :both ? nil : display.to_s] }, {}, {class: 'select2 fullwidth'})
+      = select(:payment_method, :display_on, Spree::PaymentMethod::DISPLAY.collect { |display| [t('.' + display.to_s), display == :both ? nil : display.to_s] }, {}, {class: 'select2 fullwidth'})
   .row
     .alpha.three.columns
       = label_tag nil, t(:active)
