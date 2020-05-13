@@ -323,6 +323,7 @@ en_NZ:
     show_n_more: Show %{num} more
     choose: "Choose..."
     please_select: Please select...
+    column_save_as_default: Save As Default
     columns: Columns
     actions: Actions
     viewing: "Viewing: %{current_view_name}"
@@ -864,6 +865,7 @@ en_NZ:
         incoming: "Incoming"
         supplier: "Supplier"
         products: "Products"
+        receival_details: "Receival Details"
         fees: "Fees"
         save: "Save"
         save_and_next: "Save and Next"
@@ -1168,12 +1170,16 @@ en_NZ:
       footer_data_cookies_policy: "cookies policy"
   shop:
     messages:
-      login: "login"
-      signup: "signup"
-      contact: "contact"
-      require_customer_login: "Only approved customers can access this shop."
-      require_login_html: "If you're already an approved customer, %{login} or %{signup} to proceed. Want to start shopping here? Please %{contact} %{enterprise} and ask about joining."
-      require_customer_html: "If you'd like to start shopping here, please %{contact} %{enterprise} to ask about joining."
+      customer_required:
+        login: "login"
+        signup: "signup"
+        contact: "contact"
+        require_customer_login: "Only approved customers can access this shop."
+        require_login_html: "If you're already an approved customer, %{login} or %{signup} to proceed."
+        require_login_2_html: "Want to start shopping here? Please %{contact} %{enterprise} and ask about joining."
+        require_customer_html: "If you'd like to start shopping here, please %{contact} %{enterprise} to ask about joining."
+      select_oc:
+        select_oc_html: "Please <span class='highlighted'>choose when you want your order</span>, to see what products are available."
   card_could_not_be_updated: Card could not be updated
   card_could_not_be_saved: card could not be saved
   spree_gateway_error_flash_for_checkout: "There was a problem with your payment information: %{error}"
@@ -1901,6 +1907,7 @@ en_NZ:
   admin_enterprise_relationships_permits: "permits"
   admin_enterprise_relationships_seach_placeholder: "Search"
   admin_enterprise_relationships_button_create: "Create"
+  admin_enterprise_relationships_to: "to"
   admin_enterprise_groups: "Enterprise Groups"
   admin_enterprise_groups_name: "Name"
   admin_enterprise_groups_owner: "Owner"
@@ -2306,6 +2313,10 @@ en_NZ:
     resolve_errors: Please resolve the following errors
     more_items: "+ %{count} More"
     default_card_updated: Default Card Updated
+    cart:
+      add_to_cart_failed: >
+          There was a problem adding this product to the cart. Perhaps it has become
+          unavailable or the shop is closing.
     admin:
       enterprise_limit_reached: "You have reached the standard limit of enterprises per account. Write to %{contact_email} if you need to increase it."
       modals:
@@ -3181,6 +3192,8 @@ en_NZ:
           price: "Price"
           display_as: "Display As"
           display_name: "Display Name"
+          display_as_placeholder: 'eg. 2 kg'
+          display_name_placeholder: 'eg. Tomatoes'
         autocomplete:
           producer_name: "Producer"
           unit: "Unit"
