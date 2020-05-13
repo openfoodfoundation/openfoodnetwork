@@ -32,7 +32,7 @@ class OrderFactory
     order = create_complete_order
     order.payments.first.capture!
     order.save
-    order.shipment.ship!
+    order.shipment.reload.ship!
   end
 
   private
