@@ -17,9 +17,7 @@ module Spree
       Spree::InventoryUnit.backordered_for_stock_item(self)
     end
 
-    def variant_name
-      variant.name
-    end
+    delegate :name, to: :variant, prefix: true
 
     def adjust_count_on_hand(value)
       with_lock do
