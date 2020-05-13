@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'spec_helper'
 
 RSpec.describe Spree::StockItem do
@@ -59,7 +60,7 @@ RSpec.describe Spree::StockItem do
       end
 
       context "adds new items" do
-        before { subject.stub(:backordered_inventory_units => [inventory_unit, inventory_unit_2]) }
+        before { subject.stub(backordered_inventory_units: [inventory_unit, inventory_unit_2]) }
 
         it "fills existing backorders" do
           inventory_unit.should_receive(:fill_backorder)

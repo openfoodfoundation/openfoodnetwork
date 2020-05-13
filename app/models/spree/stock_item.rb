@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Spree
   class StockItem < ActiveRecord::Base
     belongs_to :stock_location, class_name: 'Spree::StockLocation'
