@@ -31,7 +31,7 @@ module Spree
     end
 
     def in_stock?
-      count_on_hand > 0
+      count_on_hand.positive?
     end
 
     # Tells whether it's available to be included in a shipment
