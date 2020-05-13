@@ -130,8 +130,14 @@
               a {
                 padding: 0.1em 0.625em;
 
+                cursor: auto;
+
                 &.has-tip {
+                  cursor: pointer;
                   font-weight: normal;
+                }
+                &:hover, &:focus {
+                  border-color: #ccc;
                 }
               }
             }
