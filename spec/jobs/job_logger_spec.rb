@@ -8,9 +8,7 @@ describe JobLogger do
       job_logger = instance_double(::Logger)
       allow(job_logger).to receive(:formatter=)
       allow(job_logger).to receive(:info)
-
-      worker_logger = instance_double(::Logger, clone: job_logger)
-      allow(Delayed::Worker).to receive(:logger) { worker_logger }
+      allow(Delayed::Worker).to receive(:logger) { job_logger }
 
       JobLogger.logger.info('log message')
 
