@@ -3025,8 +3025,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     new_state: "New State"
 
     payment_methods: "Payment Methods"
-    new_payment_method: "New Payment Method"
-    provider: "Provider"
 
     taxonomies: "Taxonomies"
     new_taxonomy: "New Taxonomy"
