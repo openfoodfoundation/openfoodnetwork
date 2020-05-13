@@ -4,26 +4,35 @@
     = render partial: "shop/products/searchbar"
 
     .row
-      .small-12.columns
-        .footer-pad.small-12.columns.no-gutter
-          .row
-            .medium-12.large-10.columns
-              = render partial: "shop/products/search_feedback"
+      .footer-pad.small-12.columns.product-listing
+        .row
+          .medium-12.large-10.columns
+            = render partial: "shop/products/search_feedback"
 
-              %div.pad-top{ "infinite-scroll" => "loadMore()", "infinite-scroll-distance" => "1", "infinite-scroll-disabled" => 'Products.loading' }
-                %product.animate-repeat{"ng-controller" => "ProductNodeCtrl", "ng-repeat" => "product in Products.products track by product.id", "id" => "product-{{ product.id }}"}
-                  = render "shop/products/summary"
-                  %shop-variant{variant: 'variant', "ng-repeat" => "variant in product.variants | orderBy: ['name_to_display','unit_value'] track by variant.id", "id" => "variant-{{ variant.id }}", "ng-class" => "{'out-of-stock': !variant.on_demand && variant.on_hand == 0}"}
+            %div.pad-top{ "infinite-scroll" => "loadMore()", "infinite-scroll-distance" => "1", "infinite-scroll-disabled" => 'Products.loading' }
+              %product.animate-repeat{"ng-controller" => "ProductNodeCtrl", "ng-repeat" => "product in Products.products track by product.id", "id" => "product-{{ product.id }}"}
+                = render "shop/products/summary"
+                %shop-variant{variant: 'variant', "ng-repeat" => "variant in product.variants | orderBy: ['name_to_display','unit_value'] track by variant.id", "id" => "variant-{{ variant.id }}", "ng-class" => "{'out-of-stock': !variant.on_demand && variant.on_hand == 0}"}
 
-                %product{"ng-show" => "Products.loading"}
-                  .row.summary
-                    .small-12.columns.text-center
-                      = t :products_loading
-                  .row
-                    .small-12.columns.text-center
-                      %img.spinner{ src: "/assets/spinning-circles.svg" }
+              %product{"ng-show" => "Products.loading"}
+                .row.summary
+                  .small-12.columns.text-center
+                    = t :products_loading
+                .row
+                  .small-12.columns.text-center
+                    %img.spinner{ src: "/assets/spinning-circles.svg" }
 
-            .hide-for-medium-down.large-2.columns
+          .hide-for-medium-down.large-2.columns
+            %h5
+              = t(:products_filter_by)
+              %span{ng: {show: 'filtersCount()' }}
+                = "({{ filtersCount() }} #{t(:products_filter_selected)})"
+
+            = render partial: "shop/products/filters"
+
+          .shop-filters-sidebar.hide-for-large-up{ng: {show: 'showFilterSidebar', class: "{'shown': showFilterSidebar}"}}
+            .background{ng: {click: 'toggleFilterSidebar()'}}
+            .sidebar
               %h5
                 = t(:products_filter_by)
                 %span{ng: {show: 'filtersCount()' }}
@@ -31,18 +40,8 @@
 
               = render partial: "shop/products/filters"
 
-            .shop-filters-sidebar.hide-for-large-up{ng: {show: 'showFilterSidebar', class: "{'shown': showFilterSidebar}"}}
-              .background{ng: {click: 'toggleFilterSidebar()'}}
-              .sidebar
-                %h5
-                  = t(:products_filter_by)
-                  %span{ng: {show: 'filtersCount()' }}
-                    = "({{ filtersCount() }} #{t(:products_filter_selected)})"
-
-                = render partial: "shop/products/filters"
-
-                .sidebar-footer
-                  %button.large.dark.left{type: 'button', ng: {click: 'clearFilters()'}}
-                    = t(:products_filter_clear)
-                  %button.large.bright.right{type: 'button', ng: {click: 'toggleFilterSidebar()'}}
-                    = t(:products_filter_done)
+              .sidebar-footer
+                %button.large.dark.left{type: 'button', ng: {click: 'clearFilters()'}}
+                  = t(:products_filter_clear)
+                %button.large.bright.right{type: 'button', ng: {click: 'toggleFilterSidebar()'}}
+                  = t(:products_filter_done)

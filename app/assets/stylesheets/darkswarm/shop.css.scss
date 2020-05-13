@@ -16,6 +16,13 @@ $sidebar-large-width: 45%;
 $sidebar-footer-height: 5em;
 
 .darkswarm {
+  .product-listing {
+    @include breakpoint(desktop) {
+      padding-right: 0;
+      padding-left: 0;
+    }
+  }
+
   .shop-filters-sidebar {
     display: flex;
     flex-direction: column;
