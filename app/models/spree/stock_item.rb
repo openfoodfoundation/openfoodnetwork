@@ -6,8 +6,8 @@ module Spree
     belongs_to :variant, class_name: 'Spree::Variant'
     has_many :stock_movements, dependent: :destroy
 
-    validates_presence_of :stock_location, :variant
-    validates_uniqueness_of :variant_id, scope: :stock_location_id
+    validates :stock_location, :variant, presence: true
+    validates :variant_id, uniqueness: { scope: :stock_location_id }
 
     attr_accessible :count_on_hand, :variant, :stock_location, :backorderable, :variant_id
 
