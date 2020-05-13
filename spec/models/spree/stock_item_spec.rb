@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::StockItem do
+RSpec.describe Spree::StockItem do
   let(:stock_location) { create(:stock_location_with_items) }
 
   subject { stock_location.stock_items.order(:id).first }
