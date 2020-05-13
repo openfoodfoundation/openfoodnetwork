@@ -20,21 +20,21 @@ module Spree
     end
 
     def adjust_count_on_hand(value)
-      self.with_lock do
-        self.count_on_hand = self.count_on_hand + value
+      with_lock do
+        self.count_on_hand = count_on_hand + value
         process_backorders if in_stock?
 
-        self.save!
+        save!
       end
     end
 
     def in_stock?
-      self.count_on_hand > 0
+      count_on_hand > 0
     end
 
     # Tells whether it's available to be included in a shipment
     def available?
-      self.in_stock? || self.backorderable?
+      in_stock? || backorderable?
     end
 
     private
