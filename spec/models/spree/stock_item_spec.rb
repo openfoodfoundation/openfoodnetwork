@@ -8,7 +8,7 @@ RSpec.describe Spree::StockItem do
   subject { stock_location.stock_items.order(:id).first }
 
   it 'maintains the count on hand for a variant' do
-    expect(subject.count_on_hand).to eq 10
+    expect(subject.count_on_hand).to eq 15
   end
 
   it "can return the stock item's variant's name" do
