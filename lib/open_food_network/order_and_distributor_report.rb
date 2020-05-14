@@ -34,7 +34,9 @@ module OpenFoodNetwork
     end
 
     def search
-      @permissions.visible_orders.complete.not_state(:canceled).search(@params[:q])
+      @permissions.visible_orders.select("DISTINCT spree_orders.*").
+        complete.not_state(:canceled).
+        search(@params[:q])
     end
 
     def table

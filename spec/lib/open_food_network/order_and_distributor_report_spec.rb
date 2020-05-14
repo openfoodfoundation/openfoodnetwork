@@ -73,14 +73,12 @@ module OpenFoodNetwork
         end
 
         it "prints one row per line item" do
-          pending "Each line item is shown multiple times when there is more than one item in the order"
-
           create(:line_item_with_shipment, order: order)
 
           subject = OrderAndDistributorReport.new(create(:admin_user), {}, true)
 
           table = subject.table
-          expect(table.size).to eq 2 # currently 4
+          expect(table.size).to eq 2
         end
       end
     end
