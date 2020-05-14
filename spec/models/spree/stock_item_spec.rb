@@ -8,30 +8,30 @@ RSpec.describe Spree::StockItem do
   subject { stock_location.stock_items.order(:id).first }
 
   it 'maintains the count on hand for a variant' do
-    subject.count_on_hand.should eq 10
+    expect(subject.count_on_hand).to eq 10
   end
 
   it "can return the stock item's variant's name" do
-    subject.variant_name.should == subject.variant.name
+    expect(subject.variant_name).to eq(subject.variant.name)
   end
 
   context "available to be included in shipment" do
     context "has stock" do
-      it { subject.should be_available }
+      it { expect(subject).to be_available }
     end
 
     context "backorderable" do
       before { subject.backorderable = true }
-      it { subject.should be_available }
+      it { expect(subject).to be_available }
     end
 
     context "no stock and not backorderable" do
       before do
         subject.backorderable = false
-        subject.stub(count_on_hand: 0)
+        allow(subject).to receive_messages(count_on_hand: 0)
       end
 
-      it { subject.should_not be_available }
+      it { expect(subject).not_to be_available }
     end
   end
 
@@ -42,11 +42,11 @@ RSpec.describe Spree::StockItem do
       copy = Spree::StockItem.find(subject.id)
 
       subject.adjust_count_on_hand(5)
-      subject.count_on_hand.should eq(current_on_hand + 5)
+      expect(subject.count_on_hand).to eq(current_on_hand + 5)
 
-      copy.count_on_hand.should eq(current_on_hand)
+      expect(copy.count_on_hand).to eq(current_on_hand)
       copy.adjust_count_on_hand(5)
-      copy.count_on_hand.should eq(current_on_hand + 10)
+      expect(copy.count_on_hand).to eq(current_on_hand + 10)
     end
 
     context "item out of stock (by two items)" do
@@ -56,19 +56,19 @@ RSpec.describe Spree::StockItem do
       before { subject.adjust_count_on_hand(- (current_on_hand + 2)) }
 
       it "doesn't process backorders" do
-        subject.should_not_receive(:backordered_inventory_units)
+        expect(subject).not_to receive(:backordered_inventory_units)
         subject.adjust_count_on_hand(1)
       end
 
       context "adds new items" do
-        before { subject.stub(backordered_inventory_units: [inventory_unit, inventory_unit_2]) }
+        before { allow(subject).to receive_messages(backordered_inventory_units: [inventory_unit, inventory_unit_2]) }
 
         it "fills existing backorders" do
-          inventory_unit.should_receive(:fill_backorder)
-          inventory_unit_2.should_receive(:fill_backorder)
+          expect(inventory_unit).to receive(:fill_backorder)
+          expect(inventory_unit_2).to receive(:fill_backorder)
 
           subject.adjust_count_on_hand(3)
-          subject.count_on_hand.should == 1
+          expect(subject.count_on_hand).to eq(1)
         end
       end
     end
