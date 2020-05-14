@@ -47,6 +47,7 @@ module OpenFoodNetwork
 
           table = subject.table
 
+          expect(table.size).to eq 1
           expect(table[0]).to eq([
                                    order.reload.completed_at.strftime("%F %T"),
                                    order.id,
@@ -69,6 +70,17 @@ module OpenFoodNetwork
                                    shipping_method.name,
                                    shipping_instructions
                                  ])
+        end
+
+        it "prints one row per line item" do
+          pending "Each line item is shown multiple times when there is more than one item in the order"
+
+          create(:line_item_with_shipment, order: order)
+
+          subject = OrderAndDistributorReport.new(create(:admin_user), {}, true)
+
+          table = subject.table
+          expect(table.size).to eq 2 # currently 4
         end
       end
     end
