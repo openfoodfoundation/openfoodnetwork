@@ -14,6 +14,7 @@
           type: "email",
           id: "email",
           tabindex: 1,
+          inputmode: "email",
           "ng-model" => "spree_user.email"}
         %span.error{"ng-show" => "errors.email != null"}
           {{ errors.email.join(' ') }}
@@ -25,6 +26,7 @@
           id: "password",
           autocomplete: "off",
           tabindex: 2,
+          inputmode: "password",
           "ng-model" => "spree_user.password"}
         %span.error{"ng-show" => "errors.password != null"}
           {{ errors.password.join(' ') }}
@@ -36,6 +38,7 @@
           id: "password_confirmation",
           autocomplete: "off",
           tabindex: 2,
+          inputmode: "password",
           "ng-model" => "spree_user.password_confirmation"}
     .row
       .large-12.columns
@@ -43,3 +46,4 @@
           tabindex: "3",
           type: "submit",
           value: "{{'action_signup' | t}}"}
+
