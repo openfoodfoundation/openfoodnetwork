@@ -867,6 +867,7 @@ fr:
         incoming: "Produits entrants (pouvant être mis en vente par les hubs)"
         supplier: "Fournisseur"
         products: "Produits"
+        receival_details: "Détails livraison"
         fees: "Commissions"
         save: "Sauvegarder"
         save_and_next: "Sauvegarder et suivant"
@@ -1171,12 +1172,16 @@ fr:
       footer_data_cookies_policy: "politique de cookies"
   shop:
     messages:
-      login: "Se connecter"
-      signup: "inscrivez-vous"
-      contact: "contacter"
-      require_customer_login: "Seul les acheteurs autorisés peuvent accéder à cette boutique."
-      require_login_html: "Si vous êtes déjà autorisé à accéder à la boutique, %{login}ou %{signup} pour continuer. Si vous voulez demander à y accéder, veuillez %{contact} %{enterprise}. "
-      require_customer_html: "Si vous voulez demander à y accéder, veuillez %{contact} %{enterprise}."
+      customer_required:
+        login: "Se connecter"
+        signup: "inscrivez-vous"
+        contact: "contacter"
+        require_customer_login: "Seul les acheteurs autorisés peuvent accéder à cette boutique."
+        require_login_html: "Si vous êtes déjà autorisé à accéder à la boutique, %{login}ou %{signup}pour continuer."
+        require_login_2_html: "Vous souhaitez réaliser vos courses ici? Merci de %{contact}%{enterprise} afin d'avoir l'autorisation d'accès à la boutique."
+        require_customer_html: "Si vous voulez demander à y accéder, veuillez %{contact} %{enterprise}."
+      select_oc:
+        select_oc_html: "Merci de <span class='highlighted'>sélectionner une option dans la liste déroulante</span>, afin de voir quel produits sont disponibles."
   card_could_not_be_updated: La carte bancaire n'a pas pu être mise à jour
   card_could_not_be_saved: la carte n'a pas pu être sauvegardée
   spree_gateway_error_flash_for_checkout: "Il y a eu un problème avec vos informations de paiement : %{error}"
@@ -1534,11 +1539,19 @@ fr:
     one: Votre commande chez <a href='%{path}' target='_blank'>%{shop} / %{order}</a> est ouverte pour vérification. Vous pouvez effectuer des modifications jusqu'au %{oc_close}.
     other: Vous avez <a href='%{path}' target='_blank'>%{count} commandes avec %{shop}</a> ouvertes à la vérification. Vous pouvez effectuer des modifications jusqu'au %{oc_close}.
   orders_changeable_orders_alert_html: Cette commande a été confirmée, mais vous pouvez effectuer des modifications jusqu'à <strong>%{oc_close}</strong>.
-  products_clear_all: Vider
+  products_clear: Annuler
   products_showing: "Afficher:"
-  products_or: "OU"
+  products_results_for: "Résultats pour"
+  products_or: "ou"
+  products_and: "et"
+  products_filters_in: "dans"
   products_with: avec
-  products_search: "Recherche par produit ou producteur"
+  products_search: "Rechercher..."
+  products_filter_by: "Filtrer par"
+  products_filter_selected: "sélectionné"
+  products_filter_heading: "Filtres"
+  products_filter_clear: "Annuler"
+  products_filter_done: "Fait"
   products_loading: "Produits en cours de chargement..."
   products_updating_cart: "Actualisation du panier..."
   products_cart_empty: "Panier vide"
@@ -1549,6 +1562,8 @@ fr:
   products_update_error_msg: "Échec de l'enregistrement."
   products_update_error_data: "Échec de l'enregistrement dû à des données non valides."
   products_changes_saved: "Modifications enregistrées."
+  products_no_results_html: "Nous sommes navrés, mais aucun résultat n'a été trouvé pour %{query}"
+  products_clear_search: "Annuler la recherche"
   search_no_results_html: "Désolé, aucun résultat pour %{query}. Autre recherche?"
   components_profiles_popover: "Certaines entreprises ont juste créé leur profil sur Open Food France mais ne vendent pas via la plateforme. Elles ont peut-être une boutique physique, ou une boutique en ligne sur une autre plateforme."
   components_profiles_show: "Afficher aussi les profils"
