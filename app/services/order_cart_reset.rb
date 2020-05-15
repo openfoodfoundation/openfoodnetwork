@@ -1,0 +1,53 @@
+# frozen_string_literal: false
+
+# Resets an order by verifying it's state and fixing any issues
+class OrderCartReset
+  def initialize(order, distributor_id, current_user, current_customer)
+    @order = order
+    @distributor ||= Enterprise.is_distributor.find_by_permalink(distributor_id) ||
+                     Enterprise.is_distributor.find(distributor_id)
+    @current_user = current_user
+    @current_customer = current_customer
+  end
+
+  def call
+    reset_distributor
+    reset_user_and_customer if current_user
+    reset_order_cycle
+    order.save!
+  end
+
+  private
+
+  attr_reader :order, :distributor, :current_user, :current_customer
+
+  def reset_distributor
+    if order.distributor && order.distributor != distributor
+      order.empty!
+      order.set_order_cycle! nil
+    end
+    order.distributor = distributor
+  end
+
+  def reset_user_and_customer
+    order.associate_user!(current_user) if order.user.blank? || order.email.blank?
+    order.__send__(:associate_customer) if order.customer.nil? # Only associates existing customers
+  end
+
+  def reset_order_cycle
+    order_cycles = Shop::OrderCyclesList.new(distributor, current_customer).call
+
+    if order.order_cycle.present? && !order_cycles.include?(order.order_cycle)
+      order.order_cycle = nil
+      order.empty!
+    end
+
+    select_default_order_cycle(order, order_cycles)
+  end
+
+  def select_default_order_cycle(order, order_cycles)
+    return unless order.order_cycle.blank? && order_cycles.size == 1
+
+    order.order_cycle = order_cycles.first
+  end
+end

@@ -65,51 +65,10 @@ class EnterprisesController < BaseController
   def reset_order
     order = current_order(true)
 
-    reset_distributor(order, distributor)
-
-    reset_user_and_customer(order) if try_spree_current_user
-
-    reset_order_cycle(order, distributor)
-
-    order.save!
+    OrderCartReset.new(order, params[:id], try_spree_current_user, current_customer).call
   rescue ActiveRecord::RecordNotFound
     flash[:error] = I18n.t(:enterprise_shop_show_error)
     redirect_to shops_path
-  end
-
-  def distributor
-    @distributor ||= Enterprise.is_distributor.find_by_permalink(params[:id]) ||
-                     Enterprise.is_distributor.find(params[:id])
-  end
-
-  def reset_distributor(order, distributor)
-    if order.distributor && order.distributor != distributor
-      order.empty!
-      order.set_order_cycle! nil
-    end
-    order.distributor = distributor
-  end
-
-  def reset_user_and_customer(order)
-    order.associate_user!(spree_current_user) if order.user.blank? || order.email.blank?
-    order.__send__(:associate_customer) if order.customer.nil? # Only associates existing customers
-  end
-
-  def reset_order_cycle(order, distributor)
-    order_cycles = Shop::OrderCyclesList.new(distributor, current_customer).call
-
-    if order.order_cycle.present? && !order_cycles.include?(order.order_cycle)
-      order.order_cycle = nil
-      order.empty!
-    end
-
-    select_default_order_cycle(order, order_cycles)
-  end
-
-  def select_default_order_cycle(order, order_cycles)
-    return unless order.order_cycle.blank? && order_cycles.size == 1
-
-    order.order_cycle = order_cycles.first
   end
 
   def set_noindex_meta_tag
