@@ -14,7 +14,7 @@ module Checkout
 
     def failure
       @order.updater.shipping_address_from_distributor
-      RestartCheckout.new(@order).call
+      OrderCheckoutRestart.new(@order).call
     end
 
     private

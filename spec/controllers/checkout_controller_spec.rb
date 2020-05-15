@@ -299,11 +299,11 @@ describe CheckoutController, type: :controller do
   end
 
   describe "#update_failed" do
-    let(:restart_checkout) { instance_double(RestartCheckout, call: true) }
+    let(:restart_checkout) { instance_double(OrderCheckoutRestart, call: true) }
 
     before do
       controller.instance_variable_set(:@order, order)
-      allow(RestartCheckout).to receive(:new) { restart_checkout }
+      allow(OrderCheckoutRestart).to receive(:new) { restart_checkout }
       allow(controller).to receive(:current_order) { order }
     end
 
