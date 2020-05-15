@@ -112,14 +112,6 @@ class EnterprisesController < BaseController
     order.order_cycle = order_cycles.first
   end
 
-  def shop_order_cycles
-    if current_order_cycle
-      [current_order_cycle]
-    else
-      OrderCycle.not_closed.with_distributor(current_distributor)
-    end
-  end
-
   def set_noindex_meta_tag
     @noindex_meta_tag = true unless current_distributor.visible?
   end
