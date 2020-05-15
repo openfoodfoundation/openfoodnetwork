@@ -55,7 +55,6 @@ describe "ordersCtrl", ->
 
   describe "filtering orders", ->
     it "filters orders by all selected order cycles", ->
-
       $scope['q']['order_cycle_id_in'] = ['4', '5']
 
       $scope.fetchResults()

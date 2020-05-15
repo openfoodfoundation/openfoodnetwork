@@ -39,7 +39,6 @@ feature '
     end
 
     scenario "filter by multiple order cycles" do
-      # Set up 3 orders and 3 order cycles
       order_cycle_2 = create(:simple_order_cycle, name: 'Two')
       order_cycle_3 = create(:simple_order_cycle, name: 'Three')
       order_cycle_4 = create(:simple_order_cycle, name: 'Four')
@@ -54,11 +53,9 @@ feature '
       quick_login_as_admin
       visit 'admin/orders'
 
-      # Select order cycle 2 and 3
       multi_select2_select 'Two', from: 'q_order_cycle_id_in'
       multi_select2_select 'Three', from: 'q_order_cycle_id_in'
 
-      # click link "Filter Results"
       page.find('.filter-actions .button.icon-search').click
 
       # Order 2 and 3 should show, but not 4
