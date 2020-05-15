@@ -1175,7 +1175,11 @@ en_GB:
         signup: "signup"
         contact: "contact"
         require_customer_login: "Only approved customers can access this shop."
+        require_login_html: "If you're already an approved customer, %{login} or %{signup} to proceed."
+        require_login_2_html: "Want to start shopping here? Please %{contact} %{enterprise} and ask about joining."
         require_customer_html: "If you'd like to start shopping here, please %{contact} %{enterprise} to ask about joining."
+      select_oc:
+        select_oc_html: "Please <span class='highlighted'>choose when you want your order</span>, to see what products are available."
   card_could_not_be_updated: Card could not be updated
   card_could_not_be_saved: card could not be saved
   spree_gateway_error_flash_for_checkout: "There was a problem with your payment information: %{error}"
@@ -1535,12 +1539,17 @@ en_GB:
   orders_changeable_orders_alert_html: This order has been confirmed, but you can make changes until <strong>%{oc_close}</strong>.
   products_clear: Clear
   products_showing: "Showing:"
+  products_results_for: "Results for"
   products_or: "or"
   products_and: "and"
+  products_filters_in: "in"
   products_with: with
+  products_search: "Search..."
   products_filter_by: "Filter by"
   products_filter_selected: "selected"
+  products_filter_heading: "Filters"
   products_filter_clear: "Clear"
+  products_filter_done: "Done"
   products_loading: "Loading products..."
   products_updating_cart: "Updating cart..."
   products_cart_empty: "Cart empty"
@@ -1551,6 +1560,8 @@ en_GB:
   products_update_error_msg: "Saving failed."
   products_update_error_data: "Save failed due to invalid data:"
   products_changes_saved: "Changes saved."
+  products_no_results_html: "Sorry, no results found for %{query}"
+  products_clear_search: "Clear search"
   search_no_results_html: "Sorry, no results found for %{query}. Try another search?"
   components_profiles_popover: "Profiles do not have a shopfront on the Open Food Network, but may have their own physical or online shop elsewhere"
   components_profiles_show: "Show profiles"
