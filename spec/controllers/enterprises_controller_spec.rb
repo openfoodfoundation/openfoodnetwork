@@ -95,7 +95,7 @@ describe EnterprisesController, type: :controller do
     describe "when an out of stock item is in the cart" do
       let(:variant) { create(:variant, on_demand: false, on_hand: 10) }
       let(:line_item) { create(:line_item, variant: variant) }
-      let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], variants: [variant]) }
+      let(:order_cycle) { create(:simple_order_cycle, distributors: [current_distributor], variants: [variant]) }
 
       before do
         order.set_distribution! current_distributor, order_cycle
