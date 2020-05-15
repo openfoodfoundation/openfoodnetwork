@@ -77,20 +77,6 @@ dialog .mobile-close-reveal-modal
   }
 }
 
-.reveal-modal .buttons {
-  margin: 0 auto;
-  text-align: center;
-
-  .bottom-close-button {
-    background-color: $orange-500;
-    margin: 0.5rem 0 1rem 0;
-
-    @media only screen and (min-width: 640px) {
-      display: none;
-    }
-  }
-}
-
 // Prevent body from scrolling when a modal is open
 body.modal-open {
   overflow: hidden;

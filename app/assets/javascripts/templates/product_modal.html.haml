@@ -18,7 +18,3 @@
     %img.product-img.placeholder{ src: "/assets/noimage/large.png", "ng-if" => "::!product.largeImage"}
 
 %ng-include{src: "'partials/close.html'"}
-
-.buttons{ "ng-show": "hasVerticalScrollBar('.reveal-modal')" }
-  .button.bottom-close-button{"ng-click" => "$close()"}
-    = t('js.shop.products.product_modal.close')

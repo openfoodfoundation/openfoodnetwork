@@ -2736,10 +2736,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       signup_or_login: "Start By Signing Up (or logging in)"
       have_an_account: "Already have an account?"
       action_login: "Log in now."
-    shop:
-      products:
-        product_modal:
-          close: "Close"
 
   # Singular and plural forms of commonly used words.
   # We use these entries to pluralize unit names in every language.
