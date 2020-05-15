@@ -102,6 +102,10 @@
       float: right;
     }
   }
+
+  input.warning {
+    border: 1px solid $clr-brick;
+  }
 }
 
 .item-thumb-image {
