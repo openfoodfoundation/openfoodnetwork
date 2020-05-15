@@ -22,7 +22,7 @@ Spree::PaypalController.class_eval do
     if current_order.complete?
       flash[:notice] = t(:order_processed_successfully)
 
-      ResetOrderService.new(self, current_order).call
+      OrderCompletionReset.new(self, current_order).call
       session[:access_token] = current_order.token
     end
   end

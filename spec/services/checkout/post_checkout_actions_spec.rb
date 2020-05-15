@@ -11,10 +11,10 @@ describe Checkout::PostCheckoutActions do
     let(:params) { { order: {} } }
     let(:current_user) { order.distributor.owner }
 
-    let(:reset_order_service) { instance_double(ResetOrderService) }
+    let(:reset_order_service) { instance_double(OrderCompletionReset) }
 
     before do
-      expect(ResetOrderService).to receive(:new).
+      expect(OrderCompletionReset).to receive(:new).
         with(controller, order).and_return(reset_order_service)
       expect(reset_order_service).to receive(:call)
     end

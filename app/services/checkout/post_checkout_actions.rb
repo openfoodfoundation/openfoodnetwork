@@ -9,7 +9,7 @@ module Checkout
 
     def success(controller, params, current_user)
       save_order_addresses_as_user_default(params, current_user)
-      ResetOrderService.new(controller, @order).call
+      OrderCompletionReset.new(controller, @order).call
     end
 
     def failure
