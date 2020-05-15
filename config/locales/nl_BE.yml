@@ -1130,12 +1130,12 @@ nl_BE:
       footer_data_cookies_policy: "cookie policy"
   shop:
     messages:
-      login: "login"
-      signup: "inschrijven"
-      contact: "contact"
-      require_customer_login: "Alleen goedgekeurde klanten hebben toegang tot deze winkel. "
-      require_login_html: "Als u al een goedgekeurde klant bent %{login} of %{signup} wilt doorgaan. Wil je hier beginnen met winkelen? Alstublieft %{contact}en%{enterprise} vragen over meedoen."
-      require_customer_html: "Als u hier wilt beginnen met winkelen, kunt u vragen of %{contact}%{enterprise}u lid wilt worden."
+      customer_required:
+        login: "login"
+        signup: "inschrijven"
+        contact: "contact"
+        require_customer_login: "Alleen goedgekeurde klanten hebben toegang tot deze winkel. "
+        require_customer_html: "Als u hier wilt beginnen met winkelen, kunt u vragen of %{contact}%{enterprise}u lid wilt worden."
   card_could_not_be_updated: De bankkaart kon niet worden geüpdatet.
   card_could_not_be_saved: De bankkaart kon niet worden bewaard.
   spree_gateway_error_flash_for_checkout: "Er was een probleem met betaalinformatie: %{error}"
@@ -1491,11 +1491,13 @@ nl_BE:
     one: Je bestelling bij <a href='%{path}' target='_blank'>%{shop}/%{order}</a> wordt op dit moment nagekeken. Je kan veranderingen maken tot %{oc_close}.
     other: Je hebt <a href='%{path}' target='_blank'>%{count} bestellingen bij %{shop}</a>die op dit moment nog open staan voor nazicht. Je kan aanpassingen maken tot %{oc_close}.
   orders_changeable_orders_alert_html: Deze bestelling is bevestigd, maar je kan aanpassingen maken tot <strong>%{oc_close}</strong>.
-  products_clear_all: Wis alles
+  products_clear: Duidelijk
   products_showing: "Toont:"
-  products_or: "OF"
+  products_or: "of"
   products_with: met
-  products_search: "Zoek op producten of producenten"
+  products_filter_by: "Sorteer op"
+  products_filter_selected: "Geselecteerd"
+  products_filter_clear: "Duidelijk"
   products_loading: "Laad producten..."
   products_updating_cart: "winkelwagentje wordt geüpdatet..."
   products_cart_empty: "Winkelwagentje is leeg"

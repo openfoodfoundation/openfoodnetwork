@@ -1164,12 +1164,12 @@ fr_CA:
       footer_data_cookies_policy: "politique de cookies"
   shop:
     messages:
-      login: "se connecter"
-      signup: "inscrivez-vous"
-      contact: "contact"
-      require_customer_login: "Seul les acheteurs autorisés peuvent accéder à cette boutique."
-      require_login_html: "Si vous êtes déjà autorisé à accéder à la boutique, %{login}ou %{signup} pour continuer. Si vous voulez demander à y accéder, veuillez %{contact} %{enterprise}. "
-      require_customer_html: "Si vous voulez demander à y accéder, veuillez %{contact} %{enterprise}."
+      customer_required:
+        login: "se connecter"
+        signup: "inscrivez-vous"
+        contact: "contact"
+        require_customer_login: "Seul les acheteurs autorisés peuvent accéder à cette boutique."
+        require_customer_html: "Si vous voulez demander à y accéder, veuillez %{contact} %{enterprise}."
   card_could_not_be_updated: La carte n'a pu être mise à jour
   card_could_not_be_saved: la carte n'a pas pu être sauvegardée
   spree_gateway_error_flash_for_checkout: "Il y a eu un problème avec vos informations de paiement : %{error}"
@@ -1526,11 +1526,14 @@ fr_CA:
     one: Votre commande avec <a href='%{path}' target='_blank'>%{shop} / %{order}</a> est ouverte pour vérification. Vous pouvez effectuer des modification jusqu'à %{oc_close}.
     other: Vous avez <a href='%{path}' target='_blank'>%{count} commandes avec %{shop}</a>ouvertes à la vérification. Vous pouvez effectuer des modifications jusqu'à %{oc_close}.
   orders_changeable_orders_alert_html: Cette commande a été confirmée, mais vous pouvez effectuer des modifications jusqu'à <strong>%{oc_close}</strong>.
-  products_clear_all: Vider
+  products_clear: Effacer
   products_showing: "Afficher:"
-  products_or: "OU"
+  products_or: "ou"
+  products_and: "et"
   products_with: avec
-  products_search: "Recherche par produit ou producteur"
+  products_filter_by: "Filtrer par"
+  products_filter_selected: "sélectionné"
+  products_filter_clear: "Effacer"
   products_loading: "Produits en cours de chargement..."
   products_updating_cart: "Actualisation du panier..."
   products_cart_empty: "Panier vide"

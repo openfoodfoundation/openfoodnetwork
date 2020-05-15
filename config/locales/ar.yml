@@ -1162,12 +1162,12 @@ ar:
       footer_data_cookies_policy: "اتفاقية ملفات تعريف الارتباط"
   shop:
     messages:
-      login: "تسجيل الدخول"
-      signup: "سجل"
-      contact: "اتصل"
-      require_customer_login: "يمكن للعملاء المعتمدين فقط الوصول إلى هذا المتجر."
-      require_login_html: "إذا كنت بالفعل عميلًا معتمدًا ، فتابع %{login} أو %{signup} للمتابعة. تريد أن تبدأ التسوق هنا؟ يرجى %{contact} %{enterprise} واسأل عن الانضمام."
-      require_customer_html: "إذا كنت ترغب في بدء التسوق هنا ، فيرجى %{contact} %{enterprise} أن تسأل عن الانضمام."
+      customer_required:
+        login: "تسجيل الدخول"
+        signup: "سجل"
+        contact: "اتصل"
+        require_customer_login: "يمكن للعملاء المعتمدين فقط الوصول إلى هذا المتجر."
+        require_customer_html: "إذا كنت ترغب في بدء التسوق هنا ، فيرجى %{contact} %{enterprise} أن تسأل عن الانضمام."
   card_could_not_be_updated: لا يمكن تحديث البطاقة
   card_could_not_be_saved: لا يمكن حفظ البطاقة
   spree_gateway_error_flash_for_checkout: "حدثت مشكلة في معلومات الدفع الخاصة بك: %{error}"
@@ -1529,11 +1529,14 @@ ar:
     many: لديك <a href='%{path}' target='_blank'>%{count} أوامر مع %{shop}</a> مفتوحة حاليًا للمراجعة. يمكنك إجراء تغييرات حتى %{oc_close}.
     other: لديك <a href='%{path}' target='_blank'>%{count} أوامر مع %{shop}</a> مفتوحة حاليًا للمراجعة. يمكنك إجراء تغييرات حتى %{oc_close}.
   orders_changeable_orders_alert_html: تم تأكيد هذا الطلب ، ولكن يمكنك إجراء تغييرات حتى <strong>%{oc_close}</strong> .
-  products_clear_all: امسح الكل
+  products_clear: ازالة
   products_showing: "عرض:"
   products_or: "أو"
+  products_and: "و"
   products_with: مع
-  products_search: "البحث عن طريق المنتج أو المنتج"
+  products_filter_by: "مرشح بواسطة"
+  products_filter_selected: "تم الاختيار"
+  products_filter_clear: "ازالة"
   products_loading: "جارٍ تحميل المنتجات ..."
   products_updating_cart: "جارٍ تحديث سلة المشتريات..."
   products_cart_empty: "السلة فارغة"

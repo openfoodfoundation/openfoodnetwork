@@ -1164,12 +1164,12 @@ it:
       footer_data_cookies_policy: "cookies policy"
   shop:
     messages:
-      login: "fai il login"
-      signup: "Registrati"
-      contact: "contatto"
-      require_customer_login: "Solo utenti approvati hanno accesso a questo negozio"
-      require_login_html: "Se sei già un utente approvato, %{login} o %{signup}per procedere. Vuoi iniziare a frequentare questo negozio? Per favore %{contact} %{enterprise} e chiedi come raggiungerlo."
-      require_customer_html: "Se vuoi iniziare a comprare, per favore %{contact} %{enterprise} per chiedere di raggiungerci."
+      customer_required:
+        login: "fai il login"
+        signup: "Registrati"
+        contact: "contatto"
+        require_customer_login: "Solo utenti approvati hanno accesso a questo negozio"
+        require_customer_html: "Se vuoi iniziare a comprare, per favore %{contact} %{enterprise} per chiedere di raggiungerci."
   card_could_not_be_updated: La Carta non ha potuto essere rinnovata
   card_could_not_be_saved: La Carta non ha potuto essere salvata
   spree_gateway_error_flash_for_checkout: "C'è stato un problema con le informazioni sul pagamento: %{error}"
@@ -1527,11 +1527,14 @@ it:
     one: La tua gentile richiesta con <a href='%{path}' target='_blank'>%{shop} / %{order}</a> è aperta. Puoi apportare modifiche fino a%{oc_close}.
     other: Hai <a href='%{path}' target='_blank'>%{count} gentili richieste con %{shop}</a> attualmente aperte. Puoi effettuare modifiche fino a %{oc_close}.
   orders_changeable_orders_alert_html: Questa gentile richiesta è stata confermata, ma puoi effettuare modifiche fino a <strong>%{oc_close}</strong>.
-  products_clear_all: Cancella tutto
+  products_clear: Pulisci
   products_showing: "Mostra:"
-  products_or: "O"
+  products_or: "o"
+  products_and: "e"
   products_with: con
-  products_search: "Cerca per prodotto o produttore"
+  products_filter_by: "Filtra per"
+  products_filter_selected: "selezionato"
+  products_filter_clear: "Pulisci"
   products_loading: "Caricamento prodotti..."
   products_updating_cart: "Aggiornamento del carrello..."
   products_cart_empty: "Carrello vuoto"

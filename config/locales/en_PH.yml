@@ -1168,12 +1168,12 @@ en_PH:
       footer_data_cookies_policy: "cookies policy"
   shop:
     messages:
-      login: "login"
-      signup: "signup"
-      contact: "contact"
-      require_customer_login: "Only approved customers can access this shop."
-      require_login_html: "If you're already an approved customer, %{login} or %{signup} to proceed. Want to start shopping here? Please %{contact} %{enterprise} and ask about joining."
-      require_customer_html: "If you'd like to start shopping here, please %{contact} %{enterprise} to ask about joining."
+      customer_required:
+        login: "login"
+        signup: "signup"
+        contact: "contact"
+        require_customer_login: "Only approved customers can access this shop."
+        require_customer_html: "If you'd like to start shopping here, please %{contact} %{enterprise} to ask about joining."
   card_could_not_be_updated: Card could not be updated
   card_could_not_be_saved: card could not be saved
   spree_gateway_error_flash_for_checkout: "There was a problem with your payment information: %{error}"
@@ -1531,11 +1531,14 @@ en_PH:
     one: Your order with <a href='%{path}' target='_blank'>%{shop} / %{order}</a> is open for review. You can make changes until %{oc_close}.
     other: You have <a href='%{path}' target='_blank'>%{count} orders with %{shop}</a> currently open for review. You can make changes until %{oc_close}.
   orders_changeable_orders_alert_html: This order has been confirmed, but you can make changes until <strong>%{oc_close}</strong>.
-  products_clear_all: Clear all
+  products_clear: Clear
   products_showing: "Showing:"
-  products_or: "OR"
+  products_or: "or"
+  products_and: "and"
   products_with: with
-  products_search: "Search by product or producer"
+  products_filter_by: "Filter by"
+  products_filter_selected: "selected"
+  products_filter_clear: "Clear"
   products_loading: "Loading products..."
   products_updating_cart: "Updating cart..."
   products_cart_empty: "Cart empty"

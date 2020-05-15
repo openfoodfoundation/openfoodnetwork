@@ -1170,12 +1170,9 @@ de_DE:
       footer_data_cookies_policy: "Cookie-Richtlinien"
   shop:
     messages:
-      login: "Anmeldung"
-      signup: "Anmelden"
-      contact: "Kontakt"
-      require_customer_login: "Nur zugelassene Kunden können auf diesen Shop zugreifen."
-      require_login_html: "Wenn Sie bereits ein genehmigter Kunde sind, fahren Sie mit %{login} oder %{signup} fort. Möchten Sie hier einkaufen? Bitte %{contact} %{enterprise} und frage nach Beitritt."
-      require_customer_html: "Wenn Sie hier einkaufen möchten, fragen Sie bitte %{contact} %{enterprise} nach dem Beitritt."
+      customer_required:
+        login: "Anmeldung"
+        contact: "Kontakt"
   card_could_not_be_updated: Die Karte konnte nicht aktualisiert werden
   card_could_not_be_saved: Karte konnte nicht gespeichert werden
   spree_gateway_error_flash_for_checkout: "Bei den Zahlungsinformationen ist ein Problem aufgetreten: %{error}"
@@ -1213,7 +1210,7 @@ de_DE:
   menu_4_url: "/groups"
   menu_5_title: "Über Uns"
   menu_5_url: "https://wp.openfoodnetwork.de/"
-  menu_6_title: "Verbinden"
+  menu_6_title: "Support"
   menu_6_url: "https://wp.openfoodnetwork.de/support/"
   menu_7_title: "Mehr Erfahren"
   menu_7_url: "https://openfoodnetwork.org/au/learn/"
@@ -1533,11 +1530,13 @@ de_DE:
     one: Ihre Bestellung mit <a href='%{path}' target='_blank'> %{shop} / %{order} </a> kann bearbeitet werden. Sie können Änderungen bis %{oc_close} vornehmen.
     other: Sie haben <a href='%{path}' target='_blank'> %{count} Bestellungen mit %{shop} </a> zur Überprüfung geöffnet. Sie können Änderungen bis %{oc_close} vornehmen.
   orders_changeable_orders_alert_html: Diese Bestellung wurde bestätigt, Sie können jedoch bis <strong> %{oc_close} </ strong> Änderungen vornehmen.
-  products_clear_all: Alles löschen
+  products_clear: Leeren
   products_showing: "Angezeigt:"
-  products_or: "ODER"
+  products_or: "oder"
   products_with: mit
-  products_search: "Suche nach Produkt oder Hersteller"
+  products_filter_by: "Filtern nach"
+  products_filter_selected: "ausgewählt"
+  products_filter_clear: "Leeren"
   products_loading: "Lade Produkte..."
   products_updating_cart: "Einkaufswagen aktualisieren..."
   products_cart_empty: "Leerer Einkaufswagen"

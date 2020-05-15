@@ -654,8 +654,9 @@ sv:
       footer_legal_text_html: "Open Food Network är en avgiftsfri plattform för öppen källkod. Vårt innehåll har licens med  %{content_license} och vår kod med %{code_license}."
   shop:
     messages:
-      login: "Logga in"
-      contact: "kontakta"
+      customer_required:
+        login: "Logga in"
+        contact: "kontakta"
   invoice_billing_address: "Faktureringsadress"
   invoice_column_tax: "VAT"
   invoice_column_price: "Pris"
@@ -915,11 +916,12 @@ sv:
     one: Din beställning med <a href='%{path}' target='_blank'> %{shop} / %{order} </a> är öppen för recension. Du kan göra ändringar till %{oc_close}.
     other: Du har <a href='%{path}' target='_blank'> %{count} beställningar hos %{shop} </a> som granskas för tillfället. Du kan göra ändringar till och med%{oc_close}.
   orders_changeable_orders_alert_html: Denna beställning har bekräftats, men du kan göra ändringar till och med <strong>%{oc_close}</strong>.
-  products_clear_all: Rensa allt
+  products_clear: Rensa
   products_showing: "Visande:"
-  products_or: "Eller"
+  products_or: "eller"
   products_with: med
-  products_search: "Sök per produkt eller producent"
+  products_filter_by: "Filtrera med"
+  products_filter_clear: "Rensa"
   products_loading: "Laddar produkter"
   products_updating_cart: "Uppdatera din varukorg"
   products_cart_empty: "Tom varukorg"

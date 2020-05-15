@@ -1108,8 +1108,9 @@ pt:
       footer_data_cookies_policy: "política de cookies"
   shop:
     messages:
-      login: "Entrar"
-      contact: "contacto"
+      customer_required:
+        login: "Entrar"
+        contact: "contacto"
   card_could_not_be_updated: O cartão não pode ser actualizado
   card_could_not_be_saved: o cartão não pode ser guardado
   spree_gateway_error_flash_for_checkout: "Houve um problema com a sua informação de pagamento: %{error}"
@@ -1465,11 +1466,13 @@ pt:
     one: Tem encomendas com actualmente abertas para revisão. Pode fazer alterações até .
     other: 'Tem <a href=''%{path}'' target=''_blank''>%{count}encomendas com %{shop}</a> actualmente abertas para revisão. Pode fazer alterações até %{oc_close}. '
   orders_changeable_orders_alert_html: Esta encomenda está confirmada, mas pode fazer alterações até <strong>%{oc_close}</strong>.
-  products_clear_all: Limpar tudo
+  products_clear: Limpar
   products_showing: "Mostrando:"
-  products_or: "OU"
+  products_or: "ou"
   products_with: com
-  products_search: "Procurar por produto ou produtor"
+  products_filter_by: "Filtrar por"
+  products_filter_selected: "selecionado"
+  products_filter_clear: "Limpar"
   products_loading: "Carregando produtos..."
   products_updating_cart: "Atualizando carrinho..."
   products_cart_empty: "Carrinho vazio"

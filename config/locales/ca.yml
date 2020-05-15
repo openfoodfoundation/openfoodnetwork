@@ -1172,12 +1172,12 @@ ca:
       footer_data_cookies_policy: "política de cookies"
   shop:
     messages:
-      login: "Inicia sessió"
-      signup: "registra't"
-      contact: "contacta"
-      require_customer_login: "Només els clients autoritzats poden accedir a aquesta botiga."
-      require_login_html: "Si ja ets una consumidora aprovada, %{login} o %{signup} per continuar. Vols començar a comprar aquí? Si us plau, %{contact} %{enterprise} i demana la teva incorporació."
-      require_customer_html: "Si vols començar a comprar aquí, si us plau %{contact} %{enterprise} per unir-t'hi."
+      customer_required:
+        login: "Inicia sessió"
+        signup: "registra't"
+        contact: "contacta"
+        require_customer_login: "Només els clients autoritzats poden accedir a aquesta botiga."
+        require_customer_html: "Si vols començar a comprar aquí, si us plau %{contact} %{enterprise} per unir-t'hi."
   card_could_not_be_updated: No s'ha pogut actualitzar la targeta
   card_could_not_be_saved: no s'ha pogut desar la targeta
   spree_gateway_error_flash_for_checkout: "Hi ha hagut un problema amb la vostra informació de pagament: %{error}"
@@ -1535,11 +1535,14 @@ ca:
     one: El vostre ordre amb <a href='%{path}' target='_blank'> %{shop} / %{order} </ a> està obert per a la seva revisió. Podeu fer canvis fins %{oc_close}.
     other: Tens <a href='%{path}' target='_blank'> %{count} comandes amb %{shop} </a> actualment obertes per a la seva revisió. Pots fer canvis fins %{oc_close}.
   orders_changeable_orders_alert_html: S'ha confirmat aquesta comanda però pots fer-hi canvis fins a <strong> %{oc_close} </ strong>.
-  products_clear_all: Esborra-ho tot
+  products_clear: Netejar
   products_showing: "S'està mostrant:"
-  products_or: "O"
+  products_or: "o"
+  products_and: "i"
   products_with: amb
-  products_search: "Cerca per producte o productora"
+  products_filter_by: "Filtra per"
+  products_filter_selected: "seleccionat"
+  products_filter_clear: "Netejar"
   products_loading: "S'estan carregant els productes..."
   products_updating_cart: "Actualitzant la cistella..."
   products_cart_empty: "Cistella buida"

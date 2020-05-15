@@ -1171,12 +1171,12 @@ es_CR:
       footer_data_cookies_policy: "política de cookies"
   shop:
     messages:
-      login: "Ingresar"
-      signup: "Registrarse"
-      contact: "contactar"
-      require_customer_login: "Sólo los clientes aprobados pueden acceder a esta tienda."
-      require_login_html: "Si ya es un cliente aprobado, %{login} o %{signup} para continuar. ¿Quiere empezar a comprar aquí? Por favor, %{contact} %{enterprise} y pregunte acerca de participar."
-      require_customer_html: "Si desea comenzar a comprar aquí, por favor %{contact} %{enterprise} para preguntar acerca de incorporación."
+      customer_required:
+        login: "Ingresar"
+        signup: "Registrarse"
+        contact: "contactar"
+        require_customer_login: "Sólo los clientes aprobados pueden acceder a esta tienda."
+        require_customer_html: "Si desea comenzar a comprar aquí, por favor %{contact} %{enterprise} para preguntar acerca de incorporación."
   card_could_not_be_updated: La tarjeta no se pudo actualizar
   card_could_not_be_saved: la tarjeta no se pudo guardar
   spree_gateway_error_flash_for_checkout: "Hubo un problema con su información de pago: %{error}"
@@ -1534,11 +1534,14 @@ es_CR:
     one: Su pedido con <a href='%{path}' target='_blank'> %{shop} / %{order} </a> está abierto para revisión. Puede realizar cambios hasta %{oc_close}.
     other: 'Usted tiene <a href=''%{path}'' target=''_blank''> %{count} pedidos con %{shop} </a> actualmente abiertos para revisión. Puede realizar cambios hasta %{oc_close}. '
   orders_changeable_orders_alert_html: Este pedido ha sido confirmado, pero puede realizar cambios hasta <strong>%{oc_close}</strong>.
-  products_clear_all: Limpiar todo
+  products_clear: Limpiar
   products_showing: "Mostrando:"
-  products_or: "Ó"
+  products_or: "o"
+  products_and: "y"
   products_with: con
-  products_search: "Buscar por producto o productor"
+  products_filter_by: "Fitrar por"
+  products_filter_selected: "seleccionado"
+  products_filter_clear: "Limpiar"
   products_loading: "Cargando productos..."
   products_updating_cart: "Actualizando su carrito..."
   products_cart_empty: "Carrito vacío"

@@ -181,7 +181,7 @@ tr:
   home: "AGA"
   title: Açık Gıda Ağı
   welcome_to: 'Hoşgeldiniz'
-  site_meta_description: "Açık Gıda Ağı, adil ve temiz bir gıda sistemi oluşturmak için tasarlanan bir sosyal girişim projesidir. Üretici ve türeticilerin bir araya gelerek aracısız bir gıda düzeni ile her açıdan daha sağlıklı bir toplum yaratmaları için çözümler sunar.  Kar amacı gütmez, toplum yararına çalışır, iletişim, dürüstlük ve dayanışmayı destekler."
+  site_meta_description: "Açık Gıda Ağı, bağımsız, adil ve temiz bir gıda sistemi oluşturmak için tasarlanan bir sosyal girişim projesidir. Üretici ve türeticilerin bir araya gelerek aracısız bir gıda düzeni ile her açıdan daha sağlıklı bir toplum yaratmaları için çözümler sunar.  Kar amacı gütmez, toplum yararına çalışır, iletişim, dürüstlük ve dayanışmayı destekler."
   search_by_name: İsim veya konuma göre arama yapın...
   producers_join: Temiz gıda üreticileri! Açık Gıda Ağı sizler için kullanıma açıldı.
   charges_sales_tax: KDV Uyguluyor mu?
@@ -294,7 +294,7 @@ tr:
     phone: Telefon
     price: Fiyat
     producer: Üretici
-    image: Görüntü
+    image: Görsel
     product: Ürün
     quantity: Miktar
     schedule: Takvim
@@ -617,7 +617,7 @@ tr:
         business_details:
           abn: VKN/TCKN
           abn_placeholder: Örn. 12345678990
-          acn: Tic. Sicil No.
+          acn: Mersis no.
           acn_placeholder: Örn. 0530 123 45 67
           display_invoice_logo: Faturalarda logoyu göster
           invoice_text: Faturaların sonuna özelleştirilmiş metin ekle
@@ -754,7 +754,7 @@ tr:
         users:
           email_confirmation_notice_html: "E-posta onayı bekleniyor. %{email} adresine bir doğrulama e-postası gönderdik."
           resend: Yeniden gönder
-          owner: 'Yönetici'
+          owner: 'Sahip'
           contact: "İLETİŞİM"
           contact_tip: "İşletme adına sipariş ve bildirim e-postalarını alacak olan yönetici. Onaylanmış bir e-posta adresi olması gerekir."
           owner_tip: Bu işletmeden sorumlu birincil kullanıcı.
@@ -783,7 +783,7 @@ tr:
         role: Görev
         sells: NE SATIYOR
         visible: Haritada görünür mü?
-        owner: Yönetici
+        owner: Sahip
         producer: Üretici
       change_type_form:
         producer_profile: Üretici Profili
@@ -815,7 +815,7 @@ tr:
         package: "Paket"
         status: "Durum"
       new_form:
-        owner: Yönetici
+        owner: Sahip
         owner_tip: Bu işletmeden sorumlu birincil kullanıcı.
         i_am_producer: ÜRETİCİYİM
         contact_name: İLETİŞİM Kurulacak KİŞİ
@@ -888,7 +888,7 @@ tr:
         outgoing: "3. Giden Ürünler"
       exchange_form:
         pickup_time_tip: Bu sipariş dönemine ait siparişlerin müşteriler için hazır olma tarihi
-        pickup_instructions_placeholder: "Teslim Alma Talimatları"
+        pickup_instructions_placeholder: "Teslimat Talimatları"
         pickup_instructions_tip: Bu talimatlar, siparişi tamamladıktan sonra müşterilere iletilir
         pickup_time_placeholder: "ŞU TARİHTE HAZIR (örn. Tarİh / Saat)"
         receival_instructions_placeholder: "Teslim Alma talimatları"
@@ -1168,12 +1168,12 @@ tr:
       footer_data_cookies_policy: "çerez politikası"
   shop:
     messages:
-      login: "Oturum Aç"
-      signup: "Kaydol"
-      contact: "İLETİŞİM"
-      require_customer_login: "Yalnızca onaylı müşteriler buradan alışveriş yapabilir."
-      require_login_html: "Zaten onaylanmış bir müşteriyseniz, devam etmek için %{login} veya %{signup}. Buradan alışveriş yapmaya başlamak ister misiniz? Lütfen katılmak için %{contact} %{enterprise} ile iletişime geçin."
-      require_customer_html: "Buradan alışveriş yapmaya başlamak istiyorsanız, katılmak için lütfen %{contact} %{enterprise} 'a sorun."
+      customer_required:
+        login: "Oturum Aç"
+        signup: "Kaydol"
+        contact: "İLETİŞİM"
+        require_customer_login: "Yalnızca onaylı müşteriler buradan alışveriş yapabilir."
+        require_customer_html: "Buradan alışveriş yapmaya başlamak istiyorsanız, katılmak için lütfen %{contact} %{enterprise} 'a sorun."
   card_could_not_be_updated: Kart güncellenemedi
   card_could_not_be_saved: kart kaydedilemedi
   spree_gateway_error_flash_for_checkout: "Ödeme bilgilerinizde bir sorun oluştu: %{error}"
@@ -1193,7 +1193,7 @@ tr:
   total_excl_tax: "Toplam (vergi hariç):"
   total_incl_tax: "Toplam (Vergi dahil):"
   abn: "VKN/TCKN:"
-  acn: "Tic. Sicil No:"
+  acn: "Mersis no."
   invoice_issued_on: "Fatura Düznleme Tarihi"
   order_number: "Fatura numarası:"
   date_of_transaction: "İşlem tarihi:"
@@ -1346,7 +1346,7 @@ tr:
   home_shop: ŞİMDİ ALIŞVERİŞ YAPIN
   brandstory_headline: "Bağımsız, adil ve temiz gıda ..."
   brandstory_intro: "Bazen sistemi düzeltmenin en iyi yolu yeni bir sistem yaratmaktır…"
-  brandstory_part1: "Açık Gıda Ağı, adil ve temiz bir gıda sistemi oluşturmak için tasarlanan bir sosyal girişim projesidir. Üretici ve türeticilerin bir araya gelerek aracısız bir gıda düzeni ile her açıdan daha sağlıklı bir toplum yaratmaları için çözümler sunar. Kar amacı gütmez, toplum yararına çalışır, iletişim, dürüstlük ve dayanışmayı destekler."
+  brandstory_part1: "Açık Gıda Ağı, bağımsız, adil ve temiz bir gıda sistemi oluşturmak için tasarlanan bir sosyal girişim projesidir. Üretici ve türeticilerin bir araya gelerek aracısız bir gıda düzeni ile her açıdan daha sağlıklı bir toplum yaratmaları için çözümler sunar. Kar amacı gütmez, toplum yararına çalışır, iletişim, dürüstlük ve dayanışmayı destekler."
   brandstory_part2: "AGA, üreticilere ve alıcılara aracısız ticaret faydaları sağlar ve toplumsal iletişimi ve güveni cesaretlendirerek üretici-türetici ilişkisi oluşturmayı hedefler. Gıda yetiştiriciliği ve satışının kendine özgü ihtiyaçlarını  karşılamaya ve sorunlarını çözmeye yönelik olarak tasarlanmıştır. Temiz gıdaya ulaşım sürecini ve yönetimini kolaylaştırır."
   brandstory_part3: "Platform üzerinden yalnızca temiz gıda üreticileri satış yapabilir. Eğer siz de temiz gıda üreticisi iseniz, ürünlerinizi AGA üzerinden oluşturduğunuz tezgah ile doğrudan alıcılara ulaştırabilirsiniz. Dilerseniz bölgenizdeki diğer üreticiler ile bir araya gelerek kendi ortak 'Üretici Pazarı' veya 'Türetici Pazarı' nızı oluşturursunuz. Bu şekilde çeşitliliği ve bereketi artırır, dayanışmanın getirdiği diğer faydalardan da yararlanabilirsiniz."
   brandstory_part4: "Her yerde çalışıyor. Her şeyi değiştiriyor."
@@ -1531,11 +1531,14 @@ tr:
     one: <a href='%{path}' target='_blank'>%{shop} / %{order}</a> ile siparişiniz incelemeye açık. %{oc_close} tarihine kadar değişiklik yapabilirsiniz.
     other: Şu anda düzenlemeye açık <a href='%{path}' target='_blank'>%{shop} ile %{count} siparişiniz</a> var. %{oc_close} tarihine kadar değişiklik yapabilirsiniz.
   orders_changeable_orders_alert_html: Bu sipariş onaylandı, ancak <strong>%{oc_close}</strong> tarihine kadar değişiklik <strong>yapabilirsiniz</strong> .
-  products_clear_all: Hepsini temizle
+  products_clear: Temizle
   products_showing: "Gösterilen:"
-  products_or: "VEYA"
+  products_or: "veya"
+  products_and: "ve"
   products_with: ile
-  products_search: "Ürün veya üreticiye göre ara"
+  products_filter_by: "Filtrele"
+  products_filter_selected: "seçildi"
+  products_filter_clear: "Temizle"
   products_loading: "Ürünler yükleniyor ..."
   products_updating_cart: "Sepet güncelleniyor ..."
   products_cart_empty: "Sepetiniz boş"
@@ -1687,7 +1690,7 @@ tr:
   are_you_sure: "Emin misiniz?"
   orders_open: 'SİPARİŞ AÇILIŞ:'
   closing: "Kapanış"
-  going_back_to_home_page: "Sizi ana sayfaya götürüyor"
+  going_back_to_home_page: "Ana sayfaya yönlendiriliyorsunuz.."
   creating: oluşturuluyor
   updating: Güncelleniyor
   failed_to_create_enterprise: "İşletme oluşturma başarısız."
@@ -1805,7 +1808,7 @@ tr:
         enterprise_long_desc_length: "%{num} karakter / 600'e kadar önerilir"
         enterprise_abn: "VKN/TCKN"
         enterprise_abn_placeholder: "Örn. 123 456 7890"
-        enterprise_acn: "Tic. Sicil No."
+        enterprise_acn: "Mersis no."
         enterprise_acn_placeholder: "Örn. 123 456 789"
         enterprise_tax_required: "Bir seçim yapmanız gerekiyor."
       images:
@@ -1870,11 +1873,11 @@ tr:
   change_shop: "Mağazayı şuna değiştir:"
   shop_at: "Şimdi alışveriş yapın:"
   price_breakdown: "Fiyat dökümü"
-  admin_fee: "yönetici ücreti"
-  sales_fee: "Satış ücreti"
-  packing_fee: "Paketleme ücreti"
-  transport_fee: "Taşıma ücreti"
-  fundraising_fee: "Kaynak Yaratma ücreti"
+  admin_fee: "Yönetim Ücreti"
+  sales_fee: "Satış Ücreti"
+  packing_fee: "Paketleme Ücreti"
+  transport_fee: "Taşıma Ücreti"
+  fundraising_fee: "Finans Ücreti"
   price_graph: "Fiyat grafiği"
   included_tax: "Vergi Dahil"
   balance: "Bakiye"
@@ -1944,7 +1947,7 @@ tr:
   calculator_settings_warning: "Hesaplama türünü değiştiriyorsanız, ayarları düzenlemeden önce kaydetmeniz gerekir"
   flat_percent_per_item: "Sabit Yüzde (ürün başına)"
   flat_rate_per_item: "Sabit Ücret (ürün başına)"
-  flat_rate_per_order: "Sabit Ücret (sipariş Başına) "
+  flat_rate_per_order: "Sabit Ücret (sipariş başına) "
   flexible_rate: "Esnek Ücret"
   price_sack: "Değişken Ücret"
   new_order_cycles: "Yeni Sipariş Dönemleri"
@@ -2887,8 +2890,8 @@ tr:
     additional_item: "Ek Ürün Maliyeti"
     max_items: "Maks. Ürün"
     minimal_amount: "Minimum Tutar"
-    normal_amount: "Normal Tutar"
-    discount_amount: "İndirim tutarı"
+    normal_amount: "NORMAL ÜCRET"
+    discount_amount: "İNDİRİMLİ ÜCRET"
     no_images_found: "Resim Bulunamadı"
     new_image: "Yeni Görüntü"
     filename: "Dosya adı"
@@ -3109,7 +3112,7 @@ tr:
           on_hand: "Mevcut"
           on_demand: "Talep üzerine"
           product_description: "Ürün Açıklaması"
-          image: "görüntü"
+          image: "Görsel"
           or: "veya"
         unit_name_placeholder: 'Örneğin. demet'
         index:

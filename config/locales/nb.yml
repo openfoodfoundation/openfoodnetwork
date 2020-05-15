@@ -1169,12 +1169,12 @@ nb:
       footer_data_cookies_policy: "policy informasjonskapsler"
   shop:
     messages:
-      login: "innlogging"
-      signup: "melde deg på"
-      contact: "kontakt"
-      require_customer_login: "Kun godkjente kunder kan få tilgang til denne butikken."
-      require_login_html: "Hvis du allerede er en godkjent kunde, kan du fortsette %{login} eller %{signup}. Vil du begynne å handle her? Vennligst %{contact} %{enterprise} og spør om å bli med."
-      require_customer_html: "Hvis du vil begynne å handle her, vennligst %{contact} %{enterprise} for å spørre om å bli med."
+      customer_required:
+        login: "innlogging"
+        signup: "melde deg på"
+        contact: "kontakt"
+        require_customer_login: "Kun godkjente kunder kan få tilgang til denne butikken."
+        require_customer_html: "Hvis du vil begynne å handle her, vennligst %{contact} %{enterprise} for å spørre om å bli med."
   card_could_not_be_updated: Kortet kunne ikke oppdateres
   card_could_not_be_saved: kort kunne ikke lagres
   spree_gateway_error_flash_for_checkout: "Det oppstod et problem med betalingsinformasjonen din: %{error}"
@@ -1532,11 +1532,14 @@ nb:
     one: Din bestilling med <a href='%{path}' target='_blank'> %{shop} / %{order} </a> er åpen for vurdering. Du kan gjøre endringer til %{oc_close}.
     other: Du har <a href='%{path}' target='_blank'> %{count} bestillinger med %{shop} </a> for øyeblikket åpen for gjennomgang. Du kan gjøre endringer til %{oc_close}.
   orders_changeable_orders_alert_html: Denne bestillingen er bekreftet, men du kan gjøre endringer til <strong>%{oc_close}</strong>.
-  products_clear_all: Fjern alt
+  products_clear: Fjern
   products_showing: "Viser:"
-  products_or: "ELLER"
+  products_or: "eller"
+  products_and: "og"
   products_with: med
-  products_search: "Søk på produkt eller produsent"
+  products_filter_by: "Filtrer på"
+  products_filter_selected: "valgt"
+  products_filter_clear: "Fjern"
   products_loading: "Laster produkter..."
   products_updating_cart: "Oppdaterer handlekurv..."
   products_cart_empty: "Handlekurv tom"

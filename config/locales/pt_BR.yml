@@ -1168,12 +1168,9 @@ pt_BR:
       footer_data_cookies_policy: "política de cookies"
   shop:
     messages:
-      login: "Login"
-      signup: "inscrever-se"
-      contact: "contato"
-      require_customer_login: "Somente clientes aprovados podem acessar esta loja."
-      require_login_html: "Se você já é um cliente aprovado, %{login} ou %{signup} para prosseguir. Deseja começar a fazer compras aqui? Por favor, %{contact} %{enterprise} e pergunte sobre a adesão."
-      require_customer_html: "Se você gostaria de começar a fazer compras aqui, %{contact} %{enterprise} para perguntar sobre a adesão."
+      customer_required:
+        login: "Login"
+        contact: "contato"
   card_could_not_be_updated: Não foi possível atualizar o cartão
   card_could_not_be_saved: o cartão não pôde ser salvo
   spree_gateway_error_flash_for_checkout: "Ocorreu um problema com os seus dados de pagamento: %{error}"
@@ -1531,11 +1528,14 @@ pt_BR:
     one: Seu pedido com <a href='%{path}' target='_blank'> %{shop} / %{order} </a> está aberto para revisão. Você pode fazer alterações até %{oc_close}.
     other: Você tem <a href='%{path}' target='_blank'> %{count} pedidos com %{shop} </a> atualmente aberto para revisão. Você pode fazer alterações até %{oc_close}.
   orders_changeable_orders_alert_html: Este pedido foi confirmado, mas você pode fazer alterações até <strong> %{oc_close}.
-  products_clear_all: Apagar tudo
+  products_clear: Limpar
   products_showing: "Mostrando:"
-  products_or: "OU"
+  products_or: "ou"
+  products_and: "e"
   products_with: com
-  products_search: "Procurar por produto ou produtor"
+  products_filter_by: "Filtrar por"
+  products_filter_selected: "selecionar"
+  products_filter_clear: "Limpar"
   products_loading: "Carregando produtos..."
   products_updating_cart: "Atualizando carrinho..."
   products_cart_empty: "Carrinho vazio"

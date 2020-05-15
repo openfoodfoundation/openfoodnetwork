@@ -1170,12 +1170,12 @@ fr_BE:
       footer_data_cookies_policy: "politique de cookies"
   shop:
     messages:
-      login: "Se connecter"
-      signup: "s'inscrire"
-      contact: "contacter"
-      require_customer_login: "Seuls les clients approuvés peuvent accéder à ce comptoir."
-      require_login_html: "Si vous êtes déjà un client approuvé, %{login} ou %{signup}si vous souhaitez continuer. Voulez-vous commencer à faire vos courses ici? S'il vous plaît %{contact} %{enterprise}et demandez à rejoindre."
-      require_customer_html: "Si vous souhaitez commencer à magasiner ici, veuillez %{contact}%{enterprise}demander si vous souhaitez vous inscrire."
+      customer_required:
+        login: "Se connecter"
+        signup: "s'inscrire"
+        contact: "contacter"
+        require_customer_login: "Seuls les clients approuvés peuvent accéder à ce comptoir."
+        require_customer_html: "Si vous souhaitez commencer à magasiner ici, veuillez %{contact}%{enterprise}demander si vous souhaitez vous inscrire."
   card_could_not_be_updated: La carte bancaire n'a pas pu être mise à jour
   card_could_not_be_saved: la carte n'a pas pu être sauvegardée
   spree_gateway_error_flash_for_checkout: "Il y a eu un problème avec vos informations de paiement : %{error}"
@@ -1533,11 +1533,14 @@ fr_BE:
     one: Votre commande chez <a href='%{path}' target='_blank'>%{shop} / %{order}</a> est ouverte pour vérification. Vous pouvez effectuer des modifications jusqu'au %{oc_close}.
     other: Vous avez <a href='%{path}' target='_blank'>%{count} commandes avec %{shop}</a> ouvertes à la vérification. Vous pouvez effectuer des modifications jusqu'au %{oc_close}.
   orders_changeable_orders_alert_html: Cette commande a été confirmée, mais vous pouvez effectuer des modifications jusqu'à <strong>%{oc_close}</strong>.
-  products_clear_all: Vider
+  products_clear: Annuler
   products_showing: "Afficher:"
-  products_or: "OU"
+  products_or: "ou"
+  products_and: "et"
   products_with: avec
-  products_search: "Recherche par produit ou producteur"
+  products_filter_by: "Filtrer par"
+  products_filter_selected: "sélectionné"
+  products_filter_clear: "Annuler"
   products_loading: "Produits en cours de chargement..."
   products_updating_cart: "Actualisation du panier..."
   products_cart_empty: "Panier vide"
