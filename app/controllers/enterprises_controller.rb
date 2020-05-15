@@ -98,11 +98,11 @@ class EnterprisesController < BaseController
   def reset_order_cycle(order, distributor)
     order_cycles = Shop::OrderCyclesList.new(distributor, current_customer).call
 
-    select_first_order_cycle(order, order_cycles)
+    select_default_order_cycle(order, order_cycles)
   end
 
-  def select_first_order_cycle(order, order_cycles)
-    return unless order_cycles.size == 1
+  def select_default_order_cycle(order, order_cycles)
+    return unless order.order_cycle.blank? && order_cycles.size == 1
 
     order.order_cycle = order_cycles.first
   end
