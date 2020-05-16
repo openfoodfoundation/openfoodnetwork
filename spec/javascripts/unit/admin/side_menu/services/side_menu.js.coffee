@@ -69,25 +69,3 @@ describe "SideMenu service", ->
     it "returns null if no items are found", ->
       SideMenu.items = [ { name: "Name 1"}, { name: "Name 2"} ]
       expect(SideMenu.find_by_name("Name 3")).toBe null
-
-  describe "hiding an item by name", ->
-    it "sets visible to false on the response from find_by_name", ->
-      mockItem = { visible: true }
-      spyOn(SideMenu, 'find_by_name').and.returnValue mockItem
-      SideMenu.hide_item_by_name()
-      expect(mockItem.visible).toBe false
-
-    it "doesn't crash if null is returned from find_by_name", ->
-      spyOn(SideMenu, 'find_by_name').and.returnValue null
-      SideMenu.hide_item_by_name()
-
-  describe "showing an item by name", ->
-    it "sets visible to false on the response from find_by_name", ->
-      mockItem = { visible: false }
-      spyOn(SideMenu, 'find_by_name').and.returnValue mockItem
-      SideMenu.show_item_by_name()
-      expect(mockItem.visible).toBe true
-
-    it "doesn't crash if null is returned from find_by_name", ->
-      spyOn(SideMenu, 'find_by_name').and.returnValue null
-      SideMenu.show_item_by_name()
