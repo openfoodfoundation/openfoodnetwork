@@ -865,6 +865,7 @@ pt_BR:
         incoming: "Entrada"
         supplier: "Fornecedor"
         products: "Produtos"
+        receival_details: "Detalhes do Recebimento"
         fees: "Taxas"
         save: "Salvar"
         save_and_next: "Salvar e Seguir"
@@ -1170,7 +1171,14 @@ pt_BR:
     messages:
       customer_required:
         login: "Login"
+        signup: "cadastre-se"
         contact: "contato"
+        require_customer_login: "Somente compradores cadastrados podem acessar esta loja"
+        require_login_html: "Se você já é um comprador cadastrado %{login}ou %{signup}para prosseguir."
+        require_login_2_html: "Quer começar a comprar aqui? Entre em contato com %{enterprise} para saber como. "
+        require_customer_html: "Se quiser começar a comprar aqui, entre em contato com %{enterprise}para saber como."
+      select_oc:
+        select_oc_html: "Favor <span class='highlighted'>escolher a data que quer receber seu pedido</span> para saber quais produtos estão disponíveis."
   card_could_not_be_updated: Não foi possível atualizar o cartão
   card_could_not_be_saved: o cartão não pôde ser salvo
   spree_gateway_error_flash_for_checkout: "Ocorreu um problema com os seus dados de pagamento: %{error}"
@@ -1530,12 +1538,17 @@ pt_BR:
   orders_changeable_orders_alert_html: Este pedido foi confirmado, mas você pode fazer alterações até <strong> %{oc_close}.
   products_clear: Limpar
   products_showing: "Mostrando:"
+  products_results_for: "Resultados para"
   products_or: "ou"
   products_and: "e"
+  products_filters_in: "em"
   products_with: com
+  products_search: "Busca..."
   products_filter_by: "Filtrar por"
   products_filter_selected: "selecionar"
+  products_filter_heading: "Filtros"
   products_filter_clear: "Limpar"
+  products_filter_done: "Feito"
   products_loading: "Carregando produtos..."
   products_updating_cart: "Atualizando carrinho..."
   products_cart_empty: "Carrinho vazio"
@@ -1546,6 +1559,8 @@ pt_BR:
   products_update_error_msg: "Falha ao salvar."
   products_update_error_data: "Falha no salvamento devido a dados inválidos:"
   products_changes_saved: "Alterações salvas."
+  products_no_results_html: "Desculpe, nenhuma busca encontrada para %{query}."
+  products_clear_search: "Nova busca"
   search_no_results_html: "Sinto muito, nenhum resultado encontrado para %{query}. Que tal tentar outra busca?"
   components_profiles_popover: "Perfis Simples não possuem uma loja virtual na Open Food Brasil, mas podem ter suas próprias lojas físicas ou online em outro endereço"
   components_profiles_show: "Mostrar perfis"
@@ -2307,6 +2322,10 @@ pt_BR:
     resolve_errors: Por favor resolva os seguintes erros
     more_items: "+ %{count} Mais"
     default_card_updated: Cartão padrão atualizado
+    cart:
+      add_to_cart_failed: >
+          Houve um problema ao adicionar este produto ao carrinho. Talvez ele tenha
+          ficado indisponível ou a loja tenha fechado.
     admin:
       enterprise_limit_reached: "Você atingiu o limite padrão de empresas por conta. Escreva para %{contact_email} se precisar aumentá-lo."
       modals:
@@ -2912,6 +2931,11 @@ pt_BR:
     errors:
       messages:
         blank: "Não pode ser vazio"
+    layouts:
+      admin:
+        login_nav:
+          header:
+            store: Loja
     admin:
       tab:
         dashboard: "Painel"
@@ -3182,6 +3206,8 @@ pt_BR:
           price: "Preço"
           display_as: "Mostrar Como"
           display_name: "Mostrar Nome"
+          display_as_placeholder: 'ex. 2 kg'
+          display_name_placeholder: 'ex. Tomates'
         autocomplete:
           producer_name: "Produtor"
           unit: "Unidade"
