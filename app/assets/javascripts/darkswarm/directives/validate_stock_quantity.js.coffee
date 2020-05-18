@@ -1,6 +1,7 @@
 Darkswarm.directive "validateStockQuantity", (StockQuantity) ->
   restrict: 'A'
   require: "ngModel"
+  scope: true
 
   link: (scope, element, attr, ngModel) ->
     ngModel.$parsers.push (selectedQuantity) ->
