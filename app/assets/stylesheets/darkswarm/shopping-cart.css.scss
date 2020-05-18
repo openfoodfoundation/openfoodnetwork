@@ -103,8 +103,10 @@
     }
   }
 
-  input.ng-invalid-stock {
-    border: 1px solid $clr-brick;
+  input {
+    &.ng-invalid-stock, &.ng-invalid-number {
+      border: 1px solid $clr-brick;
+    }
   }
 }
 
