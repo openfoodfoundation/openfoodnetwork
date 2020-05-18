@@ -29,11 +29,15 @@ class CartService
 
     variants_data.each do |variant_data|
       loaded_variant = loaded_variants[variant_data[:variant_id].to_i]
+
+      if loaded_variant.deleted?
+        remove_deleted_variant(loaded_variant)
+        next
+      end
+
       next unless varies_from_cart(variant_data, loaded_variant)
 
-      attempt_cart_add(
-        loaded_variant, variant_data[:quantity], variant_data[:max_quantity]
-      )
+      attempt_cart_add(loaded_variant, variant_data[:quantity], variant_data[:max_quantity])
     end
   end
 
@@ -41,10 +45,14 @@ class CartService
     @indexed_variants ||= begin
       variant_ids_in_data = variants_data.map{ |v| v[:variant_id] }
 
-      Spree::Variant.where(id: variant_ids_in_data).
+      Spree::Variant.with_deleted.where(id: variant_ids_in_data).
         includes(:default_price, :stock_items, :product).
         index_by(&:id)
     end
+  end
+
+  def remove_deleted_variant(variant)
+    line_item_for_variant(variant).andand.destroy
   end
 
   def attempt_cart_add(variant, quantity, max_quantity = nil)

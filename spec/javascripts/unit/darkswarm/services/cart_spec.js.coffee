@@ -1,6 +1,7 @@
 describe 'Cart service', ->
   Cart = null
   Variants = null
+  RailsFlashLoader = null
   variant = null
   order = null
   $httpBackend = null
@@ -18,9 +19,15 @@ describe 'Cart service', ->
       ]
     }
     angular.module('Darkswarm').value('currentOrder', order)
-    inject ($injector, _$httpBackend_, _$timeout_)->
+
+    module ($provide)->
+      $provide.value "railsFlash", null
+      null
+
+    inject ($injector, _$httpBackend_, _$timeout_, _RailsFlashLoader_)->
       Variants =  $injector.get("Variants")
       Cart =  $injector.get("Cart")
+      RailsFlashLoader = _RailsFlashLoader_
       $httpBackend = _$httpBackend_
       $timeout = _$timeout_
 
@@ -86,6 +93,9 @@ describe 'Cart service', ->
   describe "updating the cart", ->
     data = {variants: {}}
 
+    beforeEach ->
+      spyOn(RailsFlashLoader, "loadFlash")
+
     it "sets update_running during the update, and clears it on success", ->
       $httpBackend.expectPOST("/cart/populate", data).respond 200, {}
       expect(Cart.update_running).toBe(false)
@@ -127,12 +137,11 @@ describe 'Cart service', ->
       $httpBackend.flush()
       expect(Cart.popQueue).not.toHaveBeenCalled()
 
-    it "retries the update on failure", ->
-      spyOn(Cart, 'scheduleRetry')
+    it "shows an error on cart update failure", ->
       $httpBackend.expectPOST("/cart/populate", data).respond 404, {}
       Cart.update()
       $httpBackend.flush()
-      expect(Cart.scheduleRetry).toHaveBeenCalled()
+      expect(RailsFlashLoader.loadFlash).toHaveBeenCalledWith({error: t('js.cart.add_to_cart_failed')})
 
   describe "verifying stock levels after update", ->
     describe "when an item is out of stock", ->
@@ -219,12 +228,6 @@ describe 'Cart service', ->
     Cart.popQueue()
     expect(Cart.update_enqueued).toBe(false)
     expect(Cart.scheduleUpdate).toHaveBeenCalled()
-
-  it "schedules retries of updates", ->
-    spyOn(Cart, 'orderChanged')
-    Cart.scheduleRetry()
-    $timeout.flush()
-    expect(Cart.orderChanged).toHaveBeenCalled()
 
   it "clears the cart", ->
     expect(Cart.line_items).not.toEqual []

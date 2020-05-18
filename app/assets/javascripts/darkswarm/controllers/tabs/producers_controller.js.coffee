@@ -1,2 +1,2 @@
-Darkswarm.controller "ProducersTabCtrl", ($scope, Shopfront, EnterpriseModal) ->
+Darkswarm.controller "ProducersTabCtrl", ($scope, Shopfront) ->
   $scope.shopfront = Shopfront.shopfront

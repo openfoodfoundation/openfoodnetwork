@@ -863,6 +863,10 @@ es:
         save_and_back_to_list: "Salvar y volver a lista"
         choose_products_from: "Escoger Productos desde:"
       incoming:
+        incoming: "Entrante"
+        supplier: "Proveedora"
+        products: "Productos"
+        fees: "Comisiones"
         save: "Guardar"
         save_and_next: "Salvar y continuar"
         next: "Siguiente"
@@ -2910,8 +2914,9 @@ es:
         blank: "no puede estar vacío"
     layouts:
       admin:
-        header:
-          store: Tienda
+        login_nav:
+          header:
+            store: Tienda
     admin:
       tab:
         dashboard: "Panel de inicio"

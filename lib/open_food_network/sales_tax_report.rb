@@ -57,7 +57,7 @@ module OpenFoodNetwork
           totals = totals_of order.line_items
           shipping_cost = shipping_cost_for order
 
-          [order.number, order.created_at, totals[:items], totals[:items_total],
+          [order.number, order.completed_at.strftime("%F %T"), totals[:items], totals[:items_total],
            totals[:taxable_total], totals[:sales_tax], shipping_cost, order.shipping_tax, order.enterprise_fee_tax, order.total_tax,
            order.bill_address.full_name, order.distributor.andand.name]
         end

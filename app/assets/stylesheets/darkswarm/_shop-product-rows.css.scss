@@ -1,3 +1,4 @@
+@import "mixins";
 @import "branding";
 @import "animations";
 
@@ -14,11 +15,11 @@
 
           // outline: 1px solid red
 
-          @media all and (max-width: 768px) {
+          @include breakpoint(tablet) {
             font-size: 0.875rem;
           }
 
-          @media all and (max-width: 640px) {
+          @include breakpoint(phablet) {
             font-size: 0.75rem;
           }
         }
@@ -56,13 +57,13 @@
         .variant-name {
           padding-left: 7.9375rem;
 
-          @media all and (max-width: 768px) {
+          @include breakpoint(tablet) {
             padding-left: 4.9375rem;
           }
         }
 
         .variant-name {
-          @media all and (max-width: 640px) {
+          @include breakpoint(phablet) {
             background: #333;
             color: white;
             padding-left: 0.9375rem;
@@ -82,7 +83,7 @@
           font-size: 0.875rem;
           overflow: hidden;
 
-          @media all and (max-width: 768px) {
+          @include breakpoint(tablet) {
             font-size: 0.75rem;
           }
         }
@@ -92,7 +93,7 @@
           padding-left: 0.25rem;
           padding-right: 0.25rem;
 
-          @media all and (max-width: 640px) {
+          @include breakpoint(phablet) {
             text-align: right;
           }
         }
@@ -106,7 +107,7 @@
             color: $med-drk-grey;
           }
 
-          @media all and (max-width: 640px) {
+          @include breakpoint(phablet) {
             background: #777;
             color: $disabled-med;
 
@@ -132,7 +133,7 @@
           padding-bottom: 1em;
           line-height: 1;
 
-          @media all and (max-width: 768px) {
+          @include breakpoint(tablet) {
             padding-top: 0.65rem;
             padding-bottom: 0.65rem;
           }
@@ -141,11 +142,11 @@
         .summary-header {
           padding-left: 7.9375rem;
 
-          @media all and (max-width: 768px) {
+          @include breakpoint(tablet) {
             padding-left: 4.9375rem;
           }
 
-          @media all and (max-width: 640px) {
+          @include breakpoint(phablet) {
             padding-left: 0.9375rem;
           }
 

@@ -862,6 +862,10 @@ en_FR:
         save_and_back_to_list: "Save and Back to List"
         choose_products_from: "Choose Products From:"
       incoming:
+        incoming: "Incoming"
+        supplier: "Supplier"
+        products: "Products"
+        fees: "Fees"
         save: "Save"
         save_and_next: "Save and Next"
         next: "Next"
@@ -2304,6 +2308,10 @@ en_FR:
     resolve_errors: Please resolve the following errors
     more_items: "+ %{count} More"
     default_card_updated: Default Card Updated
+    cart:
+      add_to_cart_failed: >
+          There was a problem adding this product to the cart. Perhaps it has become
+          unavailable or the shop is closing.
     admin:
       enterprise_limit_reached: "You have reached the standard limit of enterprises per account. Write to %{contact_email} if you need to increase it."
       modals:
@@ -2906,8 +2914,9 @@ en_FR:
         blank: "can't be blank"
     layouts:
       admin:
-        header:
-          store: Store
+        login_nav:
+          header:
+            store: Store
     admin:
       tab:
         dashboard: "Dashboard"

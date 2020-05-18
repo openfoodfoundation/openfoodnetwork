@@ -2,7 +2,8 @@
   = t :shops_title
 
 - content_for :injection_data do
-  = inject_enterprises(@enterprises)
+  - cache(*CacheService::FragmentCaching.ams_shops) do
+    = inject_enterprises(@enterprises)
 
 #panes
   #shops.pane

@@ -2,6 +2,7 @@
 @import "branding";
 @import "mixins";
 @import "typography";
+@import "variables";
 
 // Button class extensions
 
@@ -123,9 +124,37 @@ button.success, .button.success {
   }
 }
 
+button.large {
+  height: 3em;
+  font-size: 1em;
+  color: $white;
+  border-radius: $radius-medium;
+  margin: 0;
+  padding: 0;
+
+  &.dark {
+    background-color: $grey-800;
+    border: 1px solid $grey-600;
+  }
+
+  &.bright {
+    background-color: $orange-500;
+    border: none;
+  }
+}
+
 // Responsive
 @media screen and (min-width: 768px) {
   [role="main"] {
     padding: 0;
   }
+}
+
+.flex {
+  display: flex;
+}
+
+.no-gutter {
+  padding-right: 0;
+  padding-left: 0;
 }

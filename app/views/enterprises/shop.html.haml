@@ -6,7 +6,8 @@
   = current_distributor.logo.url
 
 - content_for :injection_data do
-  = inject_enterprise_shopfront(@enterprise)
+  - cache(*CacheService::FragmentCaching.ams_shop(@enterprise)) do
+    = inject_enterprise_shopfront(@enterprise)
 
 %shop.darkswarm
   - if @shopfront_layout == 'embedded'
@@ -17,26 +18,7 @@
     %a.close{ ng: { click: "alert.close()" } } &times;
 
   - content_for :order_cycle_form do
-
-    %div{"ng-controller" => "OrderCycleChangeCtrl", "ng-cloak" => true}
-      %closing
-        %div{"ng-if" => "OrderCycle.selected()"}
-          = t :enterprises_next_closing
-          %strong {{ OrderCycle.orders_close_at() | date_in_words }}
-        %div{"ng-if" => "!OrderCycle.selected()"}
-          = t :enterprises_choose
-
-      .order-cycle-select
-        .select-label
-          %span= t :enterprises_ready_for
-
-        %select.select2.avenir#order_cycle_id{"ng-model" => "order_cycle.order_cycle_id",
-          "ofn-change-order-cycle" => true,
-          "disabled" => require_customer?,
-          "ng-options" => "oc.id as oc.time for oc in #{oc_select_options.to_json}"}
-
-          - if oc_select_options.count > 1
-            %option{value: "", disabled: "", selected: ""}= t :shopping_oc_select
+    = render partial: "change_order_cycle"
 
   - content_for :ordercycle_sidebar do
     .show-for-large-up.large-4.columns

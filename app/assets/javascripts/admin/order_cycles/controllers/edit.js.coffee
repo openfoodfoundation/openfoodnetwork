@@ -1,5 +1,5 @@
 angular.module('admin.orderCycles')
-  .controller 'AdminEditOrderCycleCtrl', ($scope, $controller, $filter, $location, $window, OrderCycle, Enterprise, EnterpriseFee, StatusMessage, Schedules, RequestMonitor, ocInstance) ->
+  .controller 'AdminEditOrderCycleCtrl', ($scope, $controller, $filter, $location, $window, OrderCycle, Enterprise, EnterpriseFee, StatusMessage, Schedules, RequestMonitor, NavigationCheck, ocInstance) ->
     $controller('AdminOrderCycleBasicCtrl', {$scope: $scope, ocInstance: ocInstance})
 
     order_cycle_id = $location.absUrl().match(/\/admin\/order_cycles\/(\d+)/)[1]
@@ -18,5 +18,12 @@ angular.module('admin.orderCycles')
 
     $scope.submit = ($event, destination) ->
       $event.preventDefault()
+      NavigationCheck.clear()
       StatusMessage.display 'progress', t('js.saving')
       OrderCycle.update(destination, $scope.order_cycle_form)
+
+    warnAboutUnsavedChanges = ->
+      if $scope.order_cycle_form?.$dirty
+        t('admin.unsaved_confirm_leave')
+
+    NavigationCheck.register(warnAboutUnsavedChanges)

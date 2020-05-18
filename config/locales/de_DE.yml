@@ -863,6 +863,10 @@ de_DE:
         save_and_back_to_list: "Speichern und zurück zur Liste"
         choose_products_from: "Wählen Sie Produkte von:"
       incoming:
+        incoming: "Eingehend"
+        supplier: "Anbieter"
+        products: "Produkte"
+        fees: "Gebühren"
         save: "Speichern"
         save_and_next: "Speichern und weiter"
         next: "Weiter"
@@ -1210,7 +1214,7 @@ de_DE:
   menu_5_title: "Über Uns"
   menu_5_url: "https://wp.openfoodnetwork.de/"
   menu_6_title: "Verbinden"
-  menu_6_url: "https://openfoodnetwork.org/au/connect/"
+  menu_6_url: "https://wp.openfoodnetwork.de/support/"
   menu_7_title: "Mehr Erfahren"
   menu_7_url: "https://openfoodnetwork.org/au/learn/"
   logo: "Logo (640x130)"
@@ -2906,8 +2910,9 @@ de_DE:
         blank: "kann nicht leer sein"
     layouts:
       admin:
-        header:
-          store: openfoodnetwork.de
+        login_nav:
+          header:
+            store: openfoodnetwork.de
     admin:
       tab:
         dashboard: "Übersicht"

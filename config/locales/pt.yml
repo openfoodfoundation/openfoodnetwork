@@ -824,6 +824,10 @@ pt:
         cancel: "Cancelar"
         choose_products_from: "Escolha produtos de:"
       incoming:
+        incoming: "Entrada"
+        supplier: "Fornecedor"
+        products: "Produtos"
+        fees: "Taxas"
         save: "Guardar"
         next: "Seguinte"
         cancel: "Cancelar"
@@ -2720,8 +2724,9 @@ pt:
         blank: "não pode ser vazio"
     layouts:
       admin:
-        header:
-          store: Loja
+        login_nav:
+          header:
+            store: Loja
     admin:
       tab:
         dashboard: "Painel de controlo"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20200429122446) do
+ActiveRecord::Schema.define(version: 20200430105459) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -275,6 +275,8 @@ ActiveRecord::Schema.define(:version => 20200429122446) do
   create_table "order_cycle_schedules", force: true do |t|
     t.integer "order_cycle_id", null: false
     t.integer "schedule_id",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "order_cycle_schedules", ["order_cycle_id"], name: "index_order_cycle_schedules_on_order_cycle_id", using: :btree

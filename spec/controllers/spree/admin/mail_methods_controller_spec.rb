@@ -8,13 +8,13 @@ describe Spree::Admin::MailMethodsController do
   context "#update" do
     it "should reinitialize the mail settings" do
       expect(Spree::Core::MailSettings).to receive(:init)
-      spree_put :update, enable_mail_delivery: "1", mails_from: "spree@example.com"
+      spree_put :update, enable_mail_delivery: "1", mails_from: "ofn@example.com"
     end
   end
 
   it "can trigger testmail" do
     request.env["HTTP_REFERER"] = "/"
-    user = double('User', email: 'user@spree.com',
+    user = double('User', email: 'user@example.com',
                           spree_api_key: 'fake',
                           id: nil,
                           owned_groups: nil)

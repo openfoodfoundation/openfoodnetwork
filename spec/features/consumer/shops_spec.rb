@@ -106,13 +106,13 @@ feature 'Shops', js: true do
 
   describe "taxon badges" do
     let!(:closed_oc) { create(:closed_order_cycle, distributors: [shop], variants: [p_closed.variants.first]) }
-    let!(:p_closed) { create(:simple_product, taxons: [taxon_closed]) }
+    let!(:p_closed) { create(:simple_product, primary_taxon: taxon_closed, taxons: [taxon_closed]) }
     let(:shop) { create(:distributor_enterprise, with_payment_and_shipping: true) }
     let(:taxon_closed) { create(:taxon, name: 'Closed') }
 
     describe "open shops" do
       let!(:open_oc) { create(:open_order_cycle, distributors: [shop], variants: [p_open.variants.first]) }
-      let!(:p_open) { create(:simple_product, taxons: [taxon_open]) }
+      let!(:p_open) { create(:simple_product, primary_taxon: taxon_open, taxons: [taxon_open]) }
       let(:taxon_open) { create(:taxon, name: 'Open') }
 
       it "shows taxons for open order cycles only" do

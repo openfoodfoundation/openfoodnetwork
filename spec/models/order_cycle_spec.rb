@@ -227,6 +227,14 @@ describe OrderCycle do
           expect(oc.variants_distributed_by(d2)).not_to include p1_v_hidden, p1_v_deleted
           expect(oc.variants_distributed_by(d1)).to include p2_v
         end
+
+        context "with soft-deleted variants" do
+          it "does not consider soft-deleted variants to be currently distributed in the oc" do
+            p2_v.delete
+
+            expect(oc.variants_distributed_by(d1)).to_not include p2_v
+          end
+        end
       end
 
       context "when hub prefers product selection from inventory only" do

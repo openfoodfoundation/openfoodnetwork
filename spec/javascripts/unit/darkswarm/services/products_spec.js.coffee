@@ -3,6 +3,7 @@ describe 'Products service', ->
   Products = null
   OrderCycle = {}
   Shopfront = null
+  RailsFlashLoader = null
   Variants = null
   Cart = null
   shopfront = null
@@ -43,6 +44,8 @@ describe 'Products service', ->
     OrderCycle =
       order_cycle:
         order_cycle_id: 1
+    RailsFlashLoader =
+      loadFlash: (arg) ->
 
     module 'Darkswarm'
     module ($provide)->
@@ -52,12 +55,14 @@ describe 'Products service', ->
       $provide.value "properties", properties
       $provide.value "Geo", Geo
       $provide.value "OrderCycle", OrderCycle
+      $provide.value "railsFlash", null
       null
 
-    inject ($injector, _$httpBackend_)->
+    inject ($injector, _$httpBackend_, _RailsFlashLoader_)->
       Products = $injector.get("Products")
       Shopfront = $injector.get("Shopfront")
       Properties = $injector.get("Properties")
+      RailsFlashLoader = _RailsFlashLoader_
       Variants = $injector.get("Variants")
       Cart = $injector.get("Cart")
       $httpBackend = _$httpBackend_

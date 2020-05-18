@@ -37,8 +37,9 @@ module Api
           spree_get :closed_shops, nil
 
           expect(json_response).not_to match hub.name
-          expect(json_response[0]['id']).to eq closed_hub1.id
-          expect(json_response[1]['id']).to eq closed_hub2.id
+
+          response_ids = json_response.map { |shop| shop['id'] }
+          expect(response_ids).to contain_exactly(closed_hub1.id, closed_hub2.id)
         end
       end
     end

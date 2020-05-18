@@ -1,7 +1,17 @@
 module ShopWorkflow
-  def add_to_cart
-    wait_until_enabled 'input.add_to_cart'
-    first("input.add_to_cart:not([disabled='disabled'])").click
+  def wait_for_cart
+    first("#cart").click
+    within '.cart-dropdown' do
+      expect(page).to_not have_link "Updating cart..."
+    end
+  end
+
+  def edit_cart
+    wait_for_cart
+    within '.cart-dropdown' do
+      expect(page).to have_link "Edit your cart"
+    end
+    first("a.add_to_cart").click
   end
 
   def have_price(price)
