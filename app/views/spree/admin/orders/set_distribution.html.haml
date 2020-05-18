@@ -1,13 +1,10 @@
-- content_for :page_title do
-  = t(:new)
-
 - content_for :page_actions do
   %li= button_link_to t(:back_to_orders_list), spree.admin_orders_path, :icon => 'icon-arrow-left'
 
 = admin_inject_shops(module: 'admin.orders')
 = admin_inject_order_cycles
 
-= render 'spree/admin/shared/order_tabs', :current => 'Order Details'
+= render 'spree/admin/shared/order_tabs', :current => 'Order Details', :new_order => true
 
 = csrf_meta_tags
 

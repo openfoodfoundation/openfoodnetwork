@@ -1,7 +1,13 @@
+- if defined?(new_order) && (new_order)
+  - order_prefix = t(:new_order)
+- else
+  - order_prefix = t(:order)
+
 - content_for :page_title do
-  = t(:order)
+  = order_prefix
   \#
   = @order.number
+
 
 - if @order.bill_address.present?
   = @order.bill_address.firstname
