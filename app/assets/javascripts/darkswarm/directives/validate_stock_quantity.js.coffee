@@ -1,4 +1,4 @@
-Darkswarm.directive "validateStockQuantity", ->
+Darkswarm.directive "validateStockQuantity", (StockQuantity) ->
   restrict: 'A'
   require: "ngModel"
 
@@ -12,6 +12,4 @@ Darkswarm.directive "validateStockQuantity", ->
       selectedQuantity
 
     scope.available_quantity = ->
-      on_hand = parseInt(attr.ofnOnHand)
-      finalized_quantity = parseInt(attr.finalizedquantity) || 0 # finalizedquantity is optional
-      on_hand + finalized_quantity
+      StockQuantity.available_quantity(attr.ofnOnHand, attr.finalizedquantity)
