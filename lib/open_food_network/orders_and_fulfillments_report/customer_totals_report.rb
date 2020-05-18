@@ -20,7 +20,7 @@ module OpenFoodNetwork
         [I18n.t(:report_header_hub), I18n.t(:report_header_customer), I18n.t(:report_header_email),
          I18n.t(:report_header_phone), I18n.t(:report_header_producer),
          I18n.t(:report_header_product), I18n.t(:report_header_variant),
-         I18n.t(:report_header_amount),
+         I18n.t(:report_header_quantity),
          I18n.t(:report_header_item_price, currency: currency_symbol),
          I18n.t(:report_header_item_fees_price, currency: currency_symbol),
          I18n.t(:report_header_admin_handling_fees, currency: currency_symbol),
