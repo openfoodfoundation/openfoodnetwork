@@ -4,10 +4,10 @@ Darkswarm.directive "validateStockQuantity", ->
 
   link: (scope, element, attr, ngModel) ->
     ngModel.$parsers.push (selectedQuantity) ->
-      if parseInt(selectedQuantity) > scope.available_quantity()
-        ngModel.$setValidity('stock', false);
-      else
-        ngModel.$setValidity('stock', true);
+      valid_number = parseInt(selectedQuantity) != NaN
+      valid_quantity = parseInt(selectedQuantity) <= scope.available_quantity()
+
+      ngModel.$setValidity('stock', (valid_number && valid_quantity) );
 
       selectedQuantity
 
