@@ -45,7 +45,7 @@ module OpenFoodNetwork
           supplier_name,
           product_name,
           line_items_name,
-          proc { |line_items| line_items.sum(&:quantity) },
+          proc { |line_items| line_items.sum(:quantity) },
           proc { |line_items| line_items.first.price },
           proc { |line_items| line_items.sum { |li| li.quantity * li.price } },
           proc { |_line_items| "" },

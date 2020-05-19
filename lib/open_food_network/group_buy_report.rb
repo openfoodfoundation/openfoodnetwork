@@ -38,7 +38,7 @@ module OpenFoodNetwork
           # Cycle thorugh variant of a product
           variant_groups = line_items_by_product.group_by(&:variant)
           variant_groups.each do |variant, line_items_by_variant|
-            sum_quantities = line_items_by_variant.sum(&:quantity)
+            sum_quantities = line_items_by_variant.sum(:quantity)
             sum_max_quantities = line_items_by_variant.sum { |li| li.max_quantity || 0 }
             variants_and_quantities << GroupBuyVariantRow.new(variant, sum_quantities, sum_max_quantities)
           end
