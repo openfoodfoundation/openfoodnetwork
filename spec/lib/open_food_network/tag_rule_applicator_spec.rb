@@ -1,4 +1,5 @@
 require 'open_food_network/tag_rule_applicator'
+require 'spec_helper'
 
 module OpenFoodNetwork
   describe TagRuleApplicator do
