@@ -64,7 +64,7 @@ class ProducerMailer < Spree::BaseMailer
   end
 
   def tax_total_from_line_items(line_items)
-    Spree::Money.new line_items.sum(&:included_tax)
+    Spree::Money.new line_items.sum(:included_tax)
   end
 
   # This hack makes ActiveRecord skip the default_scope (deleted_at IS NULL)
