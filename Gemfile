@@ -4,7 +4,7 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
 gem 'i18n', '~> 0.6.11'
 gem 'i18n-js', '~> 3.7.1'
-gem 'rails', '~> 4.0.13'
+gem 'rails', '~> 4.1.16'
 gem 'rails-i18n', '~> 4.0'
 gem 'rails_safe_tasks', '~> 1.0'
 
