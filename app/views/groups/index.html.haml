@@ -15,10 +15,9 @@
     .small-12.columns
       %p
         %input{type: "search",
-        "ng-model" => "search",
+        "ng-model" => "query",
         placeholder: t(:groups_search),
         inputmode: "search",
-        name: "search",
         "ng-debounce" => "150",
         "ofn-disable-enter" => true}
 
