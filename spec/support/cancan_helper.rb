@@ -13,7 +13,7 @@ module Spree
       ability_hash.each do |action, _true_or_false|
         @ability_result[action] = ability.can?(action, target)
       end
-      ability_hash.diff(@ability_result).none?
+      assert_equal(ability_hash, @ability_result)
     end
 
     failure_message do |user|
