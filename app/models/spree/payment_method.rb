@@ -95,7 +95,7 @@ module Spree
     end
 
     def init
-      unless reflections.key?(:calculator)
+      unless _reflections.key?(:calculator)
         self.class.include Spree::Core::CalculatedAdjustments
       end
 
