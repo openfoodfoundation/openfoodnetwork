@@ -50,6 +50,7 @@ class ModelSet
     # Remove all elements to be deleted from collection and return them
     # Allows us to render @model_set.collection without deleted elements
     deleted = []
+    @collection = collection.to_a
     collection.delete_if { |e| deleted << e if @delete_if.andand.call(e.attributes) }
     deleted
   end
