@@ -45,7 +45,7 @@ Spree::PaymentMethod.class_eval do
   }
 
   def init
-    unless reflections.key?(:calculator)
+    unless _reflections.key?(:calculator)
       self.class.include Spree::Core::CalculatedAdjustments
     end
 
