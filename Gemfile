@@ -60,6 +60,7 @@ gem 'sass-rails'
 gem 'truncate_html'
 gem 'unicorn'
 
+gem 'actionpack-action_caching'
 # AMS is pinned to 0.8.4 because 0.9.x is a complete re-write, as is 0.10.x
 # Once Rails is updated to 5.x we should bump directly to 0.10.x
 gem "active_model_serializers", "0.8.4"

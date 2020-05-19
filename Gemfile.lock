@@ -90,6 +90,8 @@ GEM
       erubis (~> 2.7.0)
       rack (~> 1.5.2)
       rack-test (~> 0.6.2)
+    actionpack-action_caching (1.2.1)
+      actionpack (>= 4.0.0)
     active_model_serializers (0.8.4)
       activemodel (>= 3.0)
     activemerchant (1.78.0)
@@ -687,6 +689,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  actionpack-action_caching
   active_model_serializers (= 0.8.4)
   activemerchant (~> 1.78.0)
   activerecord-import
