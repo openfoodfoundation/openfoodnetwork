@@ -180,11 +180,11 @@ module OpenFoodNetwork
     end
 
     def total_untaxable_products(order)
-      order.line_items.without_tax.sum(&:amount)
+      order.line_items.without_tax.to_a.sum(&:amount)
     end
 
     def total_taxable_products(order)
-      order.line_items.with_tax.sum(&:amount)
+      order.line_items.with_tax.to_a.sum(&:amount)
     end
 
     def total_untaxable_fees(order)
