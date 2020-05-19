@@ -176,7 +176,7 @@ feature "full-page cart", js: true do
       end
 
       describe "with insufficient stock available" do
-        xit "prevents user from entering invalid values" do
+        it "prevents user from entering invalid values" do
           add_product_to_cart order, product_with_fee
 
           variant.update_attributes!(on_hand: 2, on_demand: false)

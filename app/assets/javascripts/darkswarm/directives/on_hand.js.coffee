@@ -1,6 +1,7 @@
 Darkswarm.directive "ofnOnHand", ->
   restrict: 'A'
   require: "ngModel"
+  scope: true
 
   link: (scope, elem, attr, ngModel) ->
     # In cases where this field gets its value from the HTML element rather than the model,
