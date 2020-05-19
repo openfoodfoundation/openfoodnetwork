@@ -313,11 +313,11 @@ Spree::Order.class_eval do
   end
 
   def shipping_tax
-    adjustments(:reload).shipping.sum(&:included_tax)
+    adjustments(:reload).shipping.sum(:included_tax)
   end
 
   def enterprise_fee_tax
-    adjustments(:reload).enterprise_fee.sum(&:included_tax)
+    adjustments(:reload).enterprise_fee.sum(:included_tax)
   end
 
   def total_tax

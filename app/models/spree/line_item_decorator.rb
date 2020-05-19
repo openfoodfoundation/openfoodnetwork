@@ -95,7 +95,7 @@ Spree::LineItem.class_eval do
   end
 
   def included_tax
-    adjustments.included_tax.sum(&:included_tax)
+    adjustments.included_tax.sum(:included_tax)
   end
 
   def tax_rates
@@ -109,7 +109,7 @@ Spree::LineItem.class_eval do
 
     line_item_adjustments = OrderAdjustmentsFetcher.new(order).line_item_adjustments(self)
 
-    (price + line_item_adjustments.sum(&:amount) / quantity).round(2)
+    (price + line_item_adjustments.sum(:amount) / quantity).round(2)
   end
 
   def single_display_amount_with_adjustments
