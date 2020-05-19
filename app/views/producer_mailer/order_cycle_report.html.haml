@@ -37,13 +37,13 @@
           %td
             #{raw(product_and_full_name)}
           %td.text-right
-            #{line_items.sum(&:quantity)}
+            #{line_items.sum(:quantity)}
           %td.text-right
             #{line_items.first.single_money}
           %td.text-right
             #{Spree::Money.new(line_items.sum(&:total), currency: line_items.first.currency) }
           %td.tax.text-right
-            #{Spree::Money.new(line_items.sum(&:included_tax), currency: line_items.first.currency) }
+            #{Spree::Money.new(line_items.sum(:included_tax), currency: line_items.first.currency) }
       %tr.total-row
         %td
         %td
