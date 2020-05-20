@@ -226,7 +226,6 @@ Layout/LineLength:
   - spec/lib/open_food_network/group_buy_report_spec.rb
   - spec/lib/open_food_network/lettuce_share_report_spec.rb
   - spec/lib/open_food_network/option_value_namer_spec.rb
-  - spec/lib/open_food_network/order_and_distributor_report_spec.rb
   - spec/lib/open_food_network/order_cycle_form_applicator_spec.rb
   - spec/lib/open_food_network/order_cycle_permissions_spec.rb
   - spec/lib/open_food_network/order_grouper_spec.rb

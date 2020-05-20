@@ -8,11 +8,16 @@ module OpenFoodNetwork
         subject = OrderAndDistributorReport.new nil
 
         header = subject.header
-        expect(header).to eq(['Order date', 'Order Id',
-                              'Customer Name', 'Customer Email', 'Customer Phone', 'Customer City',
-                              'SKU', 'Item name', 'Variant', 'Quantity', 'Max Quantity', 'Cost', 'Shipping Cost',
-                              'Payment Method',
-                              'Distributor', 'Distributor address', 'Distributor city', 'Distributor postcode', 'Shipping Method', 'Shipping instructions'])
+        expect(header).to eq(
+          [
+            'Order date', 'Order Id',
+            'Customer Name', 'Customer Email', 'Customer Phone', 'Customer City',
+            'SKU', 'Item name', 'Variant', 'Quantity', 'Max Quantity', 'Cost', 'Shipping Cost',
+            'Payment Method',
+            'Distributor', 'Distributor address', 'Distributor city', 'Distributor postcode',
+            'Shipping Method', 'Shipping instructions'
+          ]
+        )
       end
 
       context 'with completed order' do
@@ -21,7 +26,12 @@ module OpenFoodNetwork
         let(:product) { create(:product) }
         let(:shipping_method) { create(:shipping_method) }
         let(:shipping_instructions) { 'pick up on thursday please!' }
-        let(:order) { create(:order, state: 'complete', completed_at: Time.zone.now, distributor: distributor, bill_address: bill_address, special_instructions: shipping_instructions) }
+        let(:order) {
+          create(:order,
+                 state: 'complete', completed_at: Time.zone.now,
+                 distributor: distributor, bill_address: bill_address,
+                 special_instructions: shipping_instructions)
+        }
         let(:payment_method) { create(:payment_method, distributors: [distributor]) }
         let(:payment) { create(:payment, payment_method: payment_method, order: order) }
         let(:line_item) { create(:line_item_with_shipment, product: product, order: order) }
@@ -37,6 +47,7 @@ module OpenFoodNetwork
 
           table = subject.table
 
+          expect(table.size).to eq 1
           expect(table[0]).to eq([
                                    order.reload.completed_at.strftime("%F %T"),
                                    order.id,
@@ -59,6 +70,15 @@ module OpenFoodNetwork
                                    shipping_method.name,
                                    shipping_instructions
                                  ])
+        end
+
+        it "prints one row per line item" do
+          create(:line_item_with_shipment, order: order)
+
+          subject = OrderAndDistributorReport.new(create(:admin_user), {}, true)
+
+          table = subject.table
+          expect(table.size).to eq 2
         end
       end
     end
