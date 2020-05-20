@@ -32,6 +32,10 @@ module ProductImport
       {
         'g' => { scale: 1, unit: 'weight' },
         'kg' => { scale: 1000, unit: 'weight' },
+        # We have _no idea_ what this is doing. It has units?
+        # And it maybe is connected to something related to shipping?
+        # TODO: DELETE THIS ^^^
+        'lb' => { scale: 453.592, unit: 'weight' },
         't' => { scale: 1_000_000, unit: 'weight' },
         'ml' => { scale: 0.001, unit: 'volume' },
         'l' => { scale: 1, unit: 'volume' },
