@@ -73,5 +73,7 @@ Openfoodnetwork::Application.routes.draw do
         end
       end
     end
+
+    resources :user, only: [:index]
   end
 end
