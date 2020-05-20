@@ -25,18 +25,15 @@
         // Variant name
         .variant-name {
           padding-left: 7.9375rem;
-        }
 
-        .variant-name {
           @include breakpoint(phablet) {
             padding-left: 0.9375rem;
           }
-        }
 
-        // Variant unit
-        .variant-unit {
-          color: #888;
-          font-size: 0.875rem;
+          & > *:nth-child(n + 2) {
+            color: #888;
+            font-size: 0.875rem;
+          }
         }
 
         // Variant price
