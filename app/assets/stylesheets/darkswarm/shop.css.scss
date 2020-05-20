@@ -145,19 +145,6 @@ $sidebar-footer-height: 5em;
       display: block;
       color: $med-drk-grey;
 
-      // BULK
-      .bulk-buy {
-        font-size: 0.875rem;
-
-        @include breakpoint(tablet) {
-          font-size: 0.75rem;
-        }
-      }
-
-      .bulk-buy, .bulk-buy i {
-        color: #888;
-      }
-
       .inline {
         display: inline;
       }
