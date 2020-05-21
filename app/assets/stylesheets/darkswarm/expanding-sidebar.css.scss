@@ -54,8 +54,12 @@
     transition: margin $transition-sidebar;
     padding: 1em;
 
-    button {
+    button, a.button {
       width: 48%;
+    }
+
+    a.button {
+      line-height: 2.75em;
     }
   }
 
