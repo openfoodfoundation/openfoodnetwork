@@ -20,7 +20,6 @@ Darkswarm.factory 'Variants', ->
         name = variant.product_name
       else
         name =  "#{variant.product_name} - #{variant.name_to_display}"
-      name += " (#{variant.options_text})" if variant.options_text
       name
 
     lineItemFor: (variant) ->
