@@ -10,7 +10,6 @@
 
   .cart-header {
     padding: 1em;
-    border-bottom: 1px solid $grey-100;
 
     .title {
       color: $grey-800;
@@ -29,6 +28,16 @@
 
   .cart-content {
     margin-bottom: $sidebar-footer-height + 2em;
+
+    .cart-empty {
+      text-align: center;
+      padding-top: 10em;
+      width: 100%;
+
+      span {
+        font-size: 1.5em;
+      }
+    }
   }
 
   table {
@@ -41,7 +50,7 @@
       background-color: white;
 
       td {
-        border-bottom: 1px solid $grey-100;
+        border-top: 1px solid $grey-100;
         padding: 0.75em 1em 0.5em 1em;
         vertical-align: top;
 

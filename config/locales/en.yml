@@ -1221,6 +1221,7 @@ en:
         edit_cart: "Edit cart"
         items_in_cart: "%{num} items in your cart"
         close: "Close"
+        cart_empty: "Your cart is empty"
       signed_in:
         profile: "Profile"
       mobile_menu:
