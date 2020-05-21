@@ -146,10 +146,11 @@ group :test do
 end
 
 group :development do
-  gem 'byebug', '~> 9.0.0' # 9.1 requires ruby 2.2
+  gem 'byebug', '~> 11.0' # 11.1 requires ruby 2.4
   gem 'debugger-linecache'
   gem "newrelic_rpm", "~> 3.0"
-  gem 'pry-byebug', '>= 3.4.3'
+  gem "pry", "~> 0.12.0" # pry 0.13 is not compatible with pry-byebug 3.7
+  gem 'pry-byebug', '~> 3.7' # 3.8 requires ruby 2.4
   gem 'rubocop'
   gem 'rubocop-rails'
   gem 'spring', '1.7.2'
