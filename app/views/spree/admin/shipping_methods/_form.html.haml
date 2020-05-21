@@ -18,7 +18,7 @@
       .alpha.three.columns
         = f.label :display_on, t(:display)
       .omega.eight.columns
-        = select(:shipping_method, :display_on, Spree::ShippingMethod::DISPLAY.collect { |display| [t(".#{display}"), display == :both ? nil : display.to_s] }, {}, {class: 'select2 fullwidth'})
+        = select(:shipping_method, :display_on, [[t(".both"), nil], [t(".back_end"), "back_end"]], {}, {class: 'select2 fullwidth'})
         = error_message_on :shipping_method, :display_on
 
   .row

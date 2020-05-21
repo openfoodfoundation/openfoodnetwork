@@ -30,6 +30,7 @@ Spree::ShippingMethod.class_eval do
   }
 
   scope :by_name, -> { order('spree_shipping_methods.name ASC') }
+  scope :display_on_checkout, -> { where("spree_shipping_methods.display_on is null OR spree_shipping_methods.display_on = ''") }
 
   # Return the services (pickup, delivery) that different distributors provide, in the format:
   # {distributor_id => {pickup: true, delivery: false}, ...}
