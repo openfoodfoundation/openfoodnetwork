@@ -83,4 +83,11 @@
     text-align: center;
     margin: -0.5em 0 0.75em 0;
   }
+
+  @include breakpoint(mobile) {
+    .sidebar, .sidebar-footer {
+      width: 100%;
+      margin-right: -100%;
+    }
+  }
 }
