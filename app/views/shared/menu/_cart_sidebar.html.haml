@@ -2,11 +2,12 @@
   .background{ng: {click: 'toggleCartSidebar()'}}
   .sidebar
     .cart-header
-      %span.title
+      %span.title{"ng-show" => "Cart.line_items.length > 0"}
         = t('.items_in_cart', num: "{{ Cart.total_item_count() }}")
       %a.close{ng: {click: 'toggleCartSidebar()'}}
         = t('.close')
         %i.ofn-i_009-close
+
     .cart-content
       %table
         %tr.product-cart{"ng-repeat" => "line_item in Cart.line_items", "id" => "cart-variant-{{ line_item.variant.id }}"}
@@ -21,8 +22,12 @@
           %td
             %span.total-price.right {{ line_item.total_price | localizeCurrency }}
 
-    .sidebar-footer
-      %p.cart-total{"ng-show" => "Cart.line_items.length > 0"}
+      .cart-empty{"ng-show" => "Cart.line_items.length == 0"}
+        %span
+          = t('.cart_empty')
+
+    .sidebar-footer{"ng-show" => "Cart.line_items.length > 0"}
+      %p.cart-total
         %strong
           = t 'total'
           \:
