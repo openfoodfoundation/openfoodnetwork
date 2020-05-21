@@ -56,7 +56,11 @@ feature '
 
         # It shows all hubs that have been ordered from with balance or credit
         expect(page).to have_content distributor1.name
+        expect(page).to have_link(distributor1.name,
+                                  href: "#{distributor1.permalink}/shop", count: 1)
         expect(page).to have_content distributor2.name
+        expect(page).to have_link(distributor2.name,
+                                  href: "#{distributor2.permalink}/shop", count: 1)
         expect(page).not_to have_content distributor_without_orders.name
 
         expect(page).to have_content distributor1.name + " " + "Balance due"
