@@ -1216,6 +1216,11 @@ en:
     menu:
       cart:
         cart: "Cart"
+      cart_sidebar:
+        checkout: "Checkout"
+        edit_cart: "Edit cart"
+        items_in_cart: "%{num} items in your cart"
+        close: "Close"
       signed_in:
         profile: "Profile"
       mobile_menu:
