@@ -1,0 +1,8 @@
+.cart-sidebar{ng: {show: 'showCartSidebar', class: "{'shown': showCartSidebar, 'hidden': !showCartSidebar}"}}
+  .background{ng: {click: 'toggleCartSidebar()'}}
+  .sidebar
+    .sidebar-footer
+      %button.large.dark.left{type: 'button'}
+        Edit Cart
+      %button.large.bright.right{type: 'button', ng: {click: 'toggleCartSidebar()'}}
+        Checkout
