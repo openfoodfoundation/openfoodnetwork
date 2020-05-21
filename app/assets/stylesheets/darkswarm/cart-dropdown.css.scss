@@ -1,0 +1,77 @@
+@import "mixins";
+@import "variables";
+@import "branding";
+
+.expanding-sidebar.cart-sidebar {
+  .sidebar {
+    padding: 0;
+    background-color: $white;
+  }
+
+  .cart-header {
+    padding: 1em;
+    border-bottom: 1px solid $grey-100;
+
+    .title {
+      color: $grey-800;
+      margin: 0;
+    }
+
+    .close {
+      color: $grey-500;
+      float: right;
+
+      i {
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .cart-content {
+    margin-bottom: $sidebar-footer-height + 2em;
+  }
+
+  table {
+    width: 100%;
+    border: none;
+    border-spacing: 0;
+    margin: 0;
+
+    tr.product-cart {
+      background-color: white;
+
+      td {
+        border-bottom: 1px solid $grey-100;
+        padding: 0.75em 1em 0.5em 1em;
+        vertical-align: top;
+
+        &.image {
+          width: 42px;
+          padding: 0.5em 0 0.5em 1em;
+        }
+
+        span {
+          color: $grey-800;
+          font-size: 16px;
+          line-height: 1.25;
+        }
+
+        img {
+          max-width: 56px;
+          max-height: 56px;
+        }
+
+        .options-text {
+          color: $grey-500;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  .cart-total {
+    color: $white;
+    text-align: center;
+    margin: -0.5em 0 0.75em 0;
+  }
+}
