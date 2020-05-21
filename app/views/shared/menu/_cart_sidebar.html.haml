@@ -1,8 +1,34 @@
-.cart-sidebar{ng: {show: 'showCartSidebar', class: "{'shown': showCartSidebar, 'hidden': !showCartSidebar}"}}
+.expanding-sidebar.cart-sidebar{ng: {controller: 'CartCtrl', show: 'showCartSidebar', class: "{'shown': showCartSidebar, 'hidden': !showCartSidebar}"}}
   .background{ng: {click: 'toggleCartSidebar()'}}
   .sidebar
+    .cart-header
+      %span.title
+        5 items in your cart
+      %span.close
+        Close
+        %i.ofn-i_009-close
+    .cart-content
+      %table
+        %tr.product-cart{"ng-repeat" => "line_item in Cart.line_items", "id" => "cart-variant-{{ line_item.variant.id }}"}
+          %td.image
+            %img{'ng-src' => '{{ line_item.variant.thumb_url }}'}
+          %td
+            %span {{ line_item.variant.extended_name }}
+            %br
+            %span.options-text {{ line_item.variant.options_text }}
+          %td.text-right
+            %span.quantity {{ line_item.quantity }}
+          %td
+            %span.total-price.right {{ line_item.total_price | localizeCurrency }}
+
     .sidebar-footer
-      %button.large.dark.left{type: 'button'}
-        Edit Cart
-      %button.large.bright.right{type: 'button', ng: {click: 'toggleCartSidebar()'}}
-        Checkout
+      %p.cart-total{"ng-show" => "Cart.line_items.length > 0"}
+        %strong
+          = t 'total'
+          \:
+          {{ Cart.total()  | localizeCurrency }}
+
+      %button.large.dark.left{href: main_app.cart_path, "ng-disabled" => "Cart.dirty || Cart.empty()", "ng-class" => "{ dirty: Cart.dirty }"}
+        = "{{ Cart.dirty ? '#{t(:cart_updating)}' : (Cart.empty() ? '#{t(:cart_empty)}' : '#{t(:cart_edit)}' ) }}"
+      %button.large.bright.right{href: main_app.checkout_path, "ng-disabled" => "Cart.dirty || Cart.empty()"}
+        = t '.checkout'
