@@ -3,9 +3,9 @@
   .sidebar
     .cart-header
       %span.title
-        5 items in your cart
+        = t('.items_in_cart', num: "{{ Cart.total_item_count() }}")
       %a.close{ng: {click: 'toggleCartSidebar()'}}
-        Close
+        = t('.close')
         %i.ofn-i_009-close
     .cart-content
       %table
@@ -29,6 +29,6 @@
           {{ Cart.total()  | localizeCurrency }}
 
       %button.large.dark.left{href: main_app.cart_path, "ng-disabled" => "Cart.dirty || Cart.empty()", "ng-class" => "{ dirty: Cart.dirty }"}
-        = "{{ Cart.dirty ? '#{t(:cart_updating)}' : (Cart.empty() ? '#{t(:cart_empty)}' : '#{t(:cart_edit)}' ) }}"
+        = "{{ Cart.dirty ? '#{t(:cart_updating)}' : (Cart.empty() ? '#{t(:cart_empty)}' : '#{t('.edit_cart')}' ) }}"
       %button.large.bright.right{href: main_app.checkout_path, "ng-disabled" => "Cart.dirty || Cart.empty()"}
         = t '.checkout'
