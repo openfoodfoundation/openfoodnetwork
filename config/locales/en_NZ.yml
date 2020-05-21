@@ -3208,6 +3208,13 @@ en_NZ:
       shared:
         sortable_header:
           name: "Name"
+          number: "Number"
+          state: "State"
+          payment_state: "Payment State"
+          shipment_state: "Shipment State"
+          email: "Email"
+          total: "Total"
+      general_settings:
         edit:
           legal_settings: "Legal Settings"
           cookies_consent_banner_toggle: "Display cookies consent banner"
