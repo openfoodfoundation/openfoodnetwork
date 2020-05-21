@@ -4,7 +4,7 @@
     .cart-header
       %span.title
         5 items in your cart
-      %span.close
+      %a.close{ng: {click: 'toggleCartSidebar()'}}
         Close
         %i.ofn-i_009-close
     .cart-content
