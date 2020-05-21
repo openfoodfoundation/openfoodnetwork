@@ -47,7 +47,7 @@ module Api
           expect(response).to be_success
 
           enterprise = Enterprise.last
-          expect(enterprise.user_ids).to eq([enterprise_owner.id, manager1.id, manager2.id])
+          expect(enterprise.user_ids).to match_array([enterprise_owner.id, manager1.id, manager2.id])
         end
       end
     end
