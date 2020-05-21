@@ -11,6 +11,7 @@ nav.top-bar {
   font-size: 16px;
   margin-bottom: 0;
   height: $topbar-height;
+  z-index: 190;
 }
 
 @media #{$large-only} {
@@ -174,7 +175,7 @@ nav.top-bar {
   height: $mobile-nav-height;
   position: fixed;
   width: 100%;
-  z-index: 1;
+  z-index: 190;
 
   .cart-span {
     background-color: #f4704c;
