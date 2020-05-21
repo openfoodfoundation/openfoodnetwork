@@ -3,9 +3,18 @@
 @import "branding";
 
 .expanding-sidebar.cart-sidebar {
+  .background {
+    z-index: 150;
+  }
+
   .sidebar {
-    padding: 0;
+    padding: $topbar-height 0 0;
     background-color: $white;
+    z-index: 160;
+
+    @include breakpoint(desktop) {
+      padding: $mobile-nav-height 0 0;
+    }
   }
 
   .cart-header {
