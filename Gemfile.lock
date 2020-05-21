@@ -150,7 +150,7 @@ GEM
     bugsnag (6.13.1)
       concurrent-ruby (~> 1.0)
     builder (3.0.4)
-    byebug (9.0.6)
+    byebug (11.0.1)
     cancan (1.6.10)
     capybara (2.18.0)
       addressable
@@ -446,7 +446,7 @@ GEM
     mail (2.5.5)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    method_source (0.9.2)
+    method_source (1.0.0)
     mime-types (1.25.1)
     mini_mime (1.0.1)
     mini_portile2 (2.4.0)
@@ -495,11 +495,11 @@ GEM
       activerecord (~> 3.0)
     polyglot (0.3.5)
     power_assert (1.1.5)
-    pry (0.12.2)
-      coderay (~> 1.1.0)
-      method_source (~> 0.9.0)
-    pry-byebug (3.4.3)
-      byebug (>= 9.0, < 9.1)
+    pry (0.13.1)
+      coderay (~> 1.1)
+      method_source (~> 1.0)
+    pry-byebug (3.7.0)
+      byebug (~> 11.0)
       pry (~> 0.10)
     public_suffix (4.0.3)
     rack (1.4.7)
@@ -700,7 +700,7 @@ DEPENDENCIES
   aws-sdk
   blockenspiel
   bugsnag
-  byebug (~> 9.0.0)
+  byebug (~> 11.0)
   capybara (>= 2.18.0)
   catalog!
   coffee-rails (~> 3.2.1)
@@ -750,7 +750,7 @@ DEPENDENCIES
   paper_trail (~> 5.2.3)
   paperclip (~> 3.4.1)
   pg (~> 0.21.0)
-  pry-byebug (>= 3.4.3)
+  pry-byebug (~> 3.7)
   rack-mini-profiler (< 3.0.0)
   rack-rewrite
   rack-ssl
@@ -796,4 +796,4 @@ RUBY VERSION
    ruby 2.3.7p456
 
 BUNDLED WITH
-   1.17.2
+   1.17.3
