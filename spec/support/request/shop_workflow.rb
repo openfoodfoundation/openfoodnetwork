@@ -1,17 +1,17 @@
 module ShopWorkflow
   def wait_for_cart
     first("#cart").click
-    within '.cart-dropdown' do
+    within '.cart-sidebar' do
       expect(page).to_not have_link "Updating cart..."
     end
   end
 
   def edit_cart
     wait_for_cart
-    within '.cart-dropdown' do
-      expect(page).to have_link "Edit your cart"
+    within '.cart-sidebar' do
+      expect(page).to have_link I18n.t('shared.menu.cart_sidebar.edit_cart')
     end
-    first("a.add_to_cart").click
+    first("a.edit-cart").click
   end
 
   def have_price(price)

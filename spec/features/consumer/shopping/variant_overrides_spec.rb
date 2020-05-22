@@ -67,8 +67,8 @@ feature "shopping with variant overrides defined", js: true do
 
     it "shows the correct prices when products are in the cart" do
       fill_in "variants[#{product1_variant1.id}]", with: "2"
-      show_cart
-      wait_until_enabled 'li.cart a.button'
+      toggle_cart
+      wait_until_enabled '.cart-sidebar a.edit-cart'
       visit shop_path
       expect(page).to have_price with_currency(61.11)
     end
@@ -78,9 +78,8 @@ feature "shopping with variant overrides defined", js: true do
 
     it "shows the overridden price with fees in the quick cart" do
       fill_in "variants[#{product1_variant1.id}]", with: "2"
-      show_cart
+      toggle_cart
       expect(page).to have_selector "#cart-variant-#{product1_variant1.id} .quantity", text: '2'
-      expect(page).to have_selector "#cart-variant-#{product1_variant1.id} .price", text: with_currency(61.11)
       expect(page).to have_selector "#cart-variant-#{product1_variant1.id} .total-price", text: with_currency(122.22)
     end
 
@@ -202,8 +201,8 @@ feature "shopping with variant overrides defined", js: true do
   end
 
   def click_checkout
-    show_cart
-    wait_until_enabled 'li.cart a.button'
-    first(:link, 'Checkout now').click
+    toggle_cart
+    wait_until_enabled '.cart-sidebar a.edit-cart'
+    first(:link, I18n.t('shared.menu.cart_sidebar.checkout')).click
   end
 end

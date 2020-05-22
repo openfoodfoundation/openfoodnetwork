@@ -59,13 +59,13 @@ module UIComponentHelper
   end
 
   def have_in_cart(name)
-    show_cart
-    within "li.cart" do
+    toggle_cart
+    within ".cart-sidebar" do
       have_content name
     end
   end
 
-  def show_cart
+  def toggle_cart
     page.find("#cart").click
   end
 
