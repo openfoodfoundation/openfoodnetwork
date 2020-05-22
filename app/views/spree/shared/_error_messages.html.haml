@@ -1,10 +1,9 @@
 - if target && target.errors.any?
   #errorExplanation.errorExplanation
     %h2
-      = Spree.t(:errors_prohibited_this_record_from_being_saved, count: target.errors.count)
-      \:
+      = t(".errors_prohibited_this_record_from_being_saved", count: target.errors.count)
     %p
-      = Spree.t(:there_were_problems_with_the_following_fields)
+      = t(".there_were_problems_with_the_following_fields")
       \:
     %ul
       - target.errors.full_messages.each do |msg|
