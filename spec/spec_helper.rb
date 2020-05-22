@@ -108,7 +108,7 @@ RSpec.configure do |config|
     RackRequestBlocker.wait_for_requests_complete
   end
 
-  def restart_phantomjs
+  def restart_driver
     Capybara.send('session_pool').values
       .select { |s| s.driver.is_a?(Capybara::Selenium::Driver) }
       .each { |s| s.driver.reset! }
@@ -123,7 +123,7 @@ RSpec.configure do |config|
     ActionController::Base.perform_caching = caching
   end
 
-  config.before(:all) { restart_phantomjs }
+  config.before(:all) { restart_driver }
 
   # Geocoding
   config.before(:each) { allow_any_instance_of(Spree::Address).to receive(:geocode).and_return([1, 1]) }
