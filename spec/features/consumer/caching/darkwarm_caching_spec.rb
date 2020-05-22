@@ -18,8 +18,8 @@ feature "Darkswarm data caching", js: true, caching: true do
 
   describe "caching injected taxons and properties" do
     it "caches taxons and properties" do
-      expect(Spree::Taxon).to receive(:all) { [taxon] }
-      expect(Spree::Property).to receive(:all) { [property] }
+      expect(Spree::Taxon).to receive(:all).at_least(:once).and_call_original
+      expect(Spree::Property).to receive(:all).at_least(:once).and_call_original
 
       visit shops_path
 
