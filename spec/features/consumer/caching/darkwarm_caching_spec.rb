@@ -33,10 +33,10 @@ feature "Darkswarm data caching", js: true, caching: true do
       visit shops_path
 
       taxon_timestamp1 = CacheService.latest_timestamp_by_class(Spree::Taxon)
-      expect_cached "views/#{CacheService::FragmentCaching.ams_all_taxons_key}"
+      expect_cached "views/#{CacheService::FragmentCaching.ams_all_taxons[0]}"
 
       property_timestamp1 = CacheService.latest_timestamp_by_class(Spree::Property)
-      expect_cached "views/#{CacheService::FragmentCaching.ams_all_properties_key}"
+      expect_cached "views/#{CacheService::FragmentCaching.ams_all_properties[0]}"
 
       toggle_filters
 
@@ -54,10 +54,10 @@ feature "Darkswarm data caching", js: true, caching: true do
       visit shops_path
 
       taxon_timestamp2 = CacheService.latest_timestamp_by_class(Spree::Taxon)
-      expect_cached "views/#{CacheService::FragmentCaching.ams_all_taxons_key}"
+      expect_cached "views/#{CacheService::FragmentCaching.ams_all_taxons[0]}"
 
       property_timestamp2 = CacheService.latest_timestamp_by_class(Spree::Property)
-      expect_cached "views/#{CacheService::FragmentCaching.ams_all_properties_key}"
+      expect_cached "views/#{CacheService::FragmentCaching.ams_all_properties[0]}"
 
       expect(taxon_timestamp1).to_not eq taxon_timestamp2
       expect(property_timestamp1).to_not eq property_timestamp2

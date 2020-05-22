@@ -37,25 +37,31 @@ class CacheService
     # Rails' caching in views is called "Fragment Caching" and uses some slightly different logic.
     # Note: keys supplied here are actually prepended with "views/" under the hood.
 
-    def self.ams_all_taxons_key
-      "inject-all-taxons-#{CacheService.latest_timestamp_by_class(Spree::Taxon)}"
+    def self.ams_all_taxons
+      [
+        "inject-all-taxons-#{CacheService.latest_timestamp_by_class(Spree::Taxon)}",
+        { skip_digest: true }
+      ]
     end
 
-    def self.ams_all_properties_key
-      "inject-all-properties-#{CacheService.latest_timestamp_by_class(Spree::Property)}"
+    def self.ams_all_properties
+      [
+        "inject-all-properties-#{CacheService.latest_timestamp_by_class(Spree::Property)}",
+        { skip_digest: true }
+      ]
     end
 
     def self.ams_shops
       [
         "shops/index/inject_enterprises",
-        { expires_in: SHOPS_EXPIRY }
+        { expires_in: SHOPS_EXPIRY, skip_digest: true }
       ]
     end
 
     def self.ams_shop(enterprise)
       [
         "enterprises/shop/inject_enterprise_shopfront-#{enterprise.id}",
-        { expires_in: SHOPS_EXPIRY }
+        { expires_in: SHOPS_EXPIRY, skip_digest: true }
       ]
     end
   end
