@@ -741,12 +741,12 @@ en:
           ofn_uid: OFN UID
           ofn_uid_tip: The unique id used to identify the enterprise on Open Food Network.
         shipping_methods:
-          name: Name
-          applies: Applies?
-          manage: Manage Shipping Methods
-          create_button: Create New Shipping Method
-          create_one_button: Create One Now
-          no_method_yet: You don't have any shipping methods yet.
+          name: "Name"
+          applies: "Active?"
+          manage: "Manage Shipping Methods"
+          create_button: "Create New Shipping Method"
+          create_one_button: "Create One Now"
+          no_method_yet: "You don't have any shipping methods yet."
         shop_preferences:
           shopfront_requires_login: "Publicly visible shopfront?"
           shopfront_requires_login_tip: "Choose whether customers must login to view the shopfront or if it's visible to everybody."
@@ -3246,6 +3246,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           zones: "Zones"
           both: "Both Checkout and Back office"
           back_end: "Back office only"
+          deactivation_warning: "De-activating a shipping method can make the shipping method disappear from your list. Alternatively, you can hide a shipping method from the checkout page by setting the option 'Display' to 'back office only'."
       payment_methods:
         new:
           new_payment_method: "New Payment Method"
