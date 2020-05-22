@@ -3406,7 +3406,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       format: ! '%Y-%m-%d'
       js_format: 'yy-mm-dd'
     orders:
-      error_flash_for_unavailable_items: "An item in your cart has become unavailable."
+      error_flash_for_unavailable_items: "An item in your cart has become unavailable. Please update the selected quantities."
       edit:
         login_to_view_order: "Please log in to view your order."
       bought:

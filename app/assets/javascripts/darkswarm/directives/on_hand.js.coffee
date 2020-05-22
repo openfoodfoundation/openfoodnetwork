@@ -1,4 +1,4 @@
-Darkswarm.directive "ofnOnHand", ->
+Darkswarm.directive "ofnOnHand", (StockQuantity) ->
   restrict: 'A'
   require: "ngModel"
   scope: true
@@ -24,6 +24,4 @@ Darkswarm.directive "ofnOnHand", ->
       viewValue
 
     scope.available_quantity = ->
-      on_hand = parseInt(attr.ofnOnHand)
-      finalized_quantity = parseInt(attr.finalizedquantity) || 0 # finalizedquantity is optional
-      on_hand + finalized_quantity
+      StockQuantity.available_quantity(attr.ofnOnHand, attr.finalizedquantity)
