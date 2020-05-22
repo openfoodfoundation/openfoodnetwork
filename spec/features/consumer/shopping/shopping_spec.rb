@@ -121,7 +121,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
             expect(page).not_to have_selector "tr.product-cart"
             within('product:not(.ng-leave)') { fill_in "variants[#{variant.id}]", with: 1 }
 
-            toggle_cart
+            wait_for_cart
             within(".cart-sidebar") { expect(page).to have_content with_currency(19.99) }
           end
 
