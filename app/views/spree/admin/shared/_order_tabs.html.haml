@@ -1,8 +1,3 @@
-- content_for :page_title do
-  = t(:order)
-  \#
-  = @order.number
-
 - if @order.bill_address.present?
   = @order.bill_address.firstname
   = @order.bill_address.lastname
