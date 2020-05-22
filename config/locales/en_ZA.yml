@@ -31,6 +31,10 @@ en_ZA:
               taken: "There's already an account for this email. Please login or reset your password."
         spree/order:
           no_card: There are no authorised credit cards available to charge
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: "has expired"
         order_cycle:
           attributes:
             orders_close_at:
@@ -52,6 +56,8 @@ en_ZA:
         shipping_method_ids: "Shipping Methods"
         payment_method_ids: "Payment Methods"
     errors:
+      messages:
+        inclusion: "is not included in the list"
       models:
         order_management/subscriptions/validator:
           attributes:
@@ -118,7 +124,9 @@ en_ZA:
       email_welcome: "Welcome"
       email_registered: "is now part of"
       email_userguide_html: "The User Guide with detailed support for setting up your Producer or Hub is here: %{link}"
+      userguide: "Open Food Network User Guide"
       email_admin_html: "You can manage your account by logging into the %{link} or by clicking on the cog in the top right hand side of the homepage, and selecting Administration."
+      admin_panel: "Admin Panel"
       email_community_html: "We also have an online forum for community discussion related to OFN software and the unique challenges of running a food enterprise. You are encouraged to join in. We are constantly evolving and your input into this forum will shape what happens next. %{link}"
       join_community: "Join the community"
     invite_manager:
@@ -244,6 +252,8 @@ en_ZA:
   notes: Notes
   error: Error
   processing_payment: "Processing payment..."
+  no_pending_payments: "No pending payments"
+  invalid_payment_state: "Invalid payment state"
   filter_results: Filter Results
   quantity: Quantity
   pick_up: Pick up
@@ -255,6 +265,7 @@ en_ZA:
   expired: has expired, please request a new one
   back_to_payments_list: "Back to Payments List"
   maestro_or_solo_cards: "Maestro/Solo cards"
+  backordered: "Backordered"
   on hand: "In Stock"
   ship: "Ship"
   actions:
@@ -312,6 +323,7 @@ en_ZA:
     show_n_more: Show %{num} more
     choose: "Choose..."
     please_select: Please select...
+    column_save_as_default: Save As Default
     columns: Columns
     actions: Actions
     viewing: "Viewing: %{current_view_name}"
@@ -435,9 +447,12 @@ en_ZA:
         infinity: "Infinity"
         to_order_tip: "Items made to order do not have a set stock level, such as loaves of bread made fresh to order."
       back_to_products_list: "Back to products list"
+      editing_product: "Editing Product"
       tabs:
+        product_details: "Product Details"
         group_buy_options: "Group Buy Options"
         images: "Images"
+        variants: "Variants"
         product_properties: "Product Properties"
     product_import:
       title: Product Import
@@ -540,6 +555,7 @@ en_ZA:
         title: Inventory
         description: Use this page to manage inventories for your enterprises. Any product details set here will override those set on the 'Products' page
         enable_reset?: Enable Stock Reset?
+        default_stock: "Default stock"
         inherit?: Inherit?
         add: Add
         hide: Hide
@@ -669,12 +685,11 @@ en_ZA:
           ofn_uid: OFN UID
           ofn_uid_tip: The unique id used to identify the enterprise on Open Food Network.
         shipping_methods:
-          name: Name
-          applies: Applies?
-          manage: Manage Shipping Methods
-          create_button: Create New Shipping Method
-          create_one_button: Create One Now
-          no_method_yet: You don't have any shipping methods yet.
+          name: "Name"
+          manage: "Manage Shipping Methods"
+          create_button: "Create New Shipping Method"
+          create_one_button: "Create One Now"
+          no_method_yet: "You don't have any shipping methods yet."
         shop_preferences:
           shopfront_requires_login: "Publicly visible shopfront?"
           shopfront_requires_login_tip: "Choose whether customers must login to view the shopfront or if it's visible to everybody."
@@ -694,6 +709,10 @@ en_ZA:
           enable_subscriptions_false: "Disabled"
           enable_subscriptions_true: "Enabled"
           shopfront_message: "Shopfront Message"
+          shopfront_message_placeholder: >
+              An optional message to welcome customers and explain how to shop with
+              you. Any text entered here will be displayed when customers first arrive
+              at your shopfront.
           shopfront_message_link_tooltip: "Insert / edit link"
           shopfront_message_link_prompt: "Please enter a URL to insert"
           shopfront_closed_message: "Shopfront Closed Message"
@@ -831,29 +850,43 @@ en_ZA:
       new:
         create: "Create"
         cancel: "Cancel"
+        back_to_list: "Back To List"
       edit:
         advanced_settings: "Advanced Settings"
         save: "Save"
+        save_and_next: "Save and Next"
         next: "Next"
         cancel: "Cancel"
+        back_to_list: "Back To List"
+        save_and_back_to_list: "Save and Back to List"
         choose_products_from: "Choose Products From:"
       incoming:
         incoming: "Incoming"
         supplier: "Supplier"
         products: "Products"
+        receival_details: "Receival Details"
         fees: "Fees"
         save: "Save"
+        save_and_next: "Save and Next"
         next: "Next"
         cancel: "Cancel"
+        back_to_list: "Back To List"
       outgoing:
         outgoing: "Outgoing"
         distributor: "Distributor"
         products: "Products"
         tags: "Tags"
+        delivery_details: "Delivery Details"
         fees: "Fees"
         previous: "Previous"
         save: "Save"
+        save_and_back_to_list: "Save and Back to List"
         cancel: "Cancel"
+        back_to_list: "Back To List"
+      wizard_progress:
+        edit: "1. General Settings"
+        incoming: "2. Incoming Products"
+        outgoing: "3. Outgoing Products"
       exchange_form:
         pickup_time_tip: When orders from this OC will be ready for the customer
         pickup_instructions_placeholder: "Pick-up instructions"
@@ -1091,10 +1124,13 @@ en_ZA:
       destroy_attachment_does_not_exist: "Logo does not exist"
     enterprise_promo_image:
       destroy_attachment_does_not_exist: "Promo image does not exist"
+    orders:
+      failed_to_update: "Failed to update order"
   checkout:
     already_ordered:
       cart: "cart"
       message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
+    failed: "The checkout failed. Please let us know so that we can process your order."
   shops:
     hubs:
       show_closed_shops: "Show closed shops"
@@ -1138,7 +1174,11 @@ en_ZA:
         signup: "signup"
         contact: "contact"
         require_customer_login: "Only approved customers can access this shop."
+        require_login_html: "If you're already an approved customer, %{login} or %{signup} to proceed."
+        require_login_2_html: "Want to start shopping here? Please %{contact} %{enterprise} and ask about joining."
         require_customer_html: "If you'd like to start shopping here, please %{contact} %{enterprise} to ask about joining."
+      select_oc:
+        select_oc_html: "Please <span class='highlighted'>choose when you want your order</span>, to see what products are available."
   card_could_not_be_updated: Card could not be updated
   card_could_not_be_saved: card could not be saved
   spree_gateway_error_flash_for_checkout: "There was a problem with your payment information: %{error}"
@@ -1265,6 +1305,7 @@ en_ZA:
   saving_credit_card: Saving credit card...
   card_has_been_removed: "Your card has been removed (number: %{number})"
   card_could_not_be_removed: Sorry, the card could not be removed
+  invalid_credit_card: "Invalid credit card"
   ie_warning_headline: "Your browser is out of date :-("
   ie_warning_text: "For the best Open Food Network experience, we strongly recommend upgrading your browser:"
   ie_warning_chrome: Download Chrome
@@ -1460,6 +1501,7 @@ en_ZA:
   shopping_oc_closed_description: "Please wait until the next cycle opens (or contact us directly to see if we can accept any late orders)"
   shopping_oc_last_closed: "The last cycle closed %{distance_of_time} ago"
   shopping_oc_next_open: "The next cycle opens in %{distance_of_time}"
+  shopping_oc_select: "Select..."
   shopping_tabs_home: "Home"
   shopping_tabs_shop: "Shop"
   shopping_tabs_about: "About"
@@ -1496,11 +1538,17 @@ en_ZA:
   orders_changeable_orders_alert_html: This order has been confirmed, but you can make changes until <strong>%{oc_close}</strong>.
   products_clear: Clear
   products_showing: "Showing:"
+  products_results_for: "Results for"
   products_or: "or"
+  products_and: "and"
+  products_filters_in: "in"
   products_with: with
+  products_search: "Search..."
   products_filter_by: "Filter by"
   products_filter_selected: "selected"
+  products_filter_heading: "Filters"
   products_filter_clear: "Clear"
+  products_filter_done: "Done"
   products_loading: "Loading products..."
   products_updating_cart: "Updating cart..."
   products_cart_empty: "Cart empty"
@@ -1511,6 +1559,8 @@ en_ZA:
   products_update_error_msg: "Saving failed."
   products_update_error_data: "Save failed due to invalid data:"
   products_changes_saved: "Changes saved."
+  products_no_results_html: "Sorry, no results found for %{query}"
+  products_clear_search: "Clear search"
   search_no_results_html: "Sorry, no results found for %{query}. Try another search?"
   components_profiles_popover: "Profiles do not have a shopfront on the Open Food Network, but may have their own physical or online shop elsewhere"
   components_profiles_show: "Show profiles"
@@ -1819,6 +1869,7 @@ en_ZA:
         headline: "Finished!"
         thanks: "Thanks for filling out the details for %{enterprise}."
         login: "You can change or update your enterprise at any stage by logging into Open Food Network and going to Admin."
+        action: "Go to Enterprise Dashboard"
   back: "Back"
   continue: "Continue"
   action_or: "OR"
@@ -1865,6 +1916,7 @@ en_ZA:
   admin_enterprise_relationships_permits: "permits"
   admin_enterprise_relationships_seach_placeholder: "Search"
   admin_enterprise_relationships_button_create: "Create"
+  admin_enterprise_relationships_to: "to"
   admin_enterprise_groups: "Enterprise Groups"
   admin_enterprise_groups_name: "Name"
   admin_enterprise_groups_owner: "Owner"
@@ -1904,6 +1956,7 @@ en_ZA:
   tax_category: "Tax Category"
   calculator: "Calculator"
   calculator_values: "Calculator values"
+  calculator_settings_warning: "If you are changing the calculator type, you must save first before you can edit the calculator settings"
   flat_percent_per_item: "Flat Percent (per item)"
   flat_rate_per_item: "Flat Rate (per item)"
   flat_rate_per_order: "Flat Rate (per order)"
@@ -2234,6 +2287,7 @@ en_ZA:
   enterprise_register_success_notice: "Congratulations! Registration for %{enterprise} is complete!"
   enterprise_bulk_update_success_notice: "Enterprises updated successfully"
   enterprise_bulk_update_error: 'Update failed'
+  enterprise_shop_show_error: "The shop you are looking for doesn't exist or is inactive on OFN. Please check other shops."
   order_cycles_create_notice: 'Your order cycle has been created.'
   order_cycles_update_notice: 'Your order cycle has been updated.'
   order_cycles_bulk_update_notice: 'Order cycles have been updated.'
@@ -2268,6 +2322,10 @@ en_ZA:
     resolve_errors: Please resolve the following errors
     more_items: "+ %{count} More"
     default_card_updated: Default Card Updated
+    cart:
+      add_to_cart_failed: >
+          There was a problem adding this product to the cart. Perhaps it has become
+          unavailable or the shop is closing.
     admin:
       enterprise_limit_reached: "You have reached the standard limit of enterprises per account. Write to %{contact_email} if you need to increase it."
       modals:
@@ -2392,6 +2450,8 @@ en_ZA:
           severity: Severity
           description: Description
           resolve: Resolve
+        exchange_products:
+          load_more_variants: "Load More Variants"
       tag_rules:
         shipping_method_tagged_top: "Shipping methods tagged"
         shipping_method_tagged_bottom: "are:"
@@ -2891,9 +2951,6 @@ en_ZA:
           zone: "Zone"
           calculator: "Calculator"
           display: "Display"
-          both: "Both"
-          front_end: "Front End"
-          back_end: "Back End"
           no_shipping_methods_found: "No shipping methods found"
         new:
           new_shipping_method: "New Shipping Method"
@@ -2905,9 +2962,6 @@ en_ZA:
         form:
           categories: "Categories"
           zones: "Zones"
-          both: "Both"
-          front_end: "Front End"
-          back_end: "Back End"
       payment_methods:
         new:
           new_payment_method: "New Payment Method"
@@ -3012,6 +3066,7 @@ en_ZA:
           price: "Price"
           no_results: "No results"
           option_types: "Option Types"
+          and: "and"
         form:
           sku: "SKU"
           price: "Price"
@@ -3022,6 +3077,13 @@ en_ZA:
       shared:
         sortable_header:
           name: "Name"
+          number: "Number"
+          state: "Province"
+          payment_state: "Payment State"
+          shipment_state: "Shipment State"
+          email: "Email"
+          total: "Total"
+      general_settings:
         edit:
           legal_settings: "Legal Settings"
           cookies_consent_banner_toggle: "Display cookies consent banner"
@@ -3047,7 +3109,6 @@ en_ZA:
       format: '%Y-%m-%d'
       js_format: 'yy-mm-dd'
     orders:
-      error_flash_for_unavailable_items: "An item in your cart has become unavailable."
       edit:
         login_to_view_order: "Please log in to view your order."
       bought:
@@ -3162,3 +3223,6 @@ en_ZA:
         allow_charges?: "Allow Charges?"
     localized_number:
       invalid_format: has an invalid format. Please enter a number.
+    api:
+      key_generated: "Key generated"
+      key_cleared: "Key cleared"

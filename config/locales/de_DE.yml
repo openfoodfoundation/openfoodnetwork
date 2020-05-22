@@ -685,12 +685,11 @@ de_DE:
           ofn_uid: OFN UID
           ofn_uid_tip: Die eindeutige ID, mit der das Unternehmen in Open Food Network identifiziert wird.
         shipping_methods:
-          name: Name
-          applies: Gilt?
-          manage: Lieferarten verwalten
-          create_button: Neue Lieferart erstellen
-          create_one_button: Erstelle jetzt eine
-          no_method_yet: Sie haben noch keine Lieferarten.
+          name: "Name"
+          manage: "Lieferarten verwalten"
+          create_button: "Neue Lieferart erstellen"
+          create_one_button: "Erstelle jetzt eine"
+          no_method_yet: "Sie haben noch keine Lieferarten."
         shop_preferences:
           shopfront_requires_login: "Öffentlich sichtbarer Laden?"
           shopfront_requires_login_tip: "Wählen Sie aus, ob sich Kunden anmelden müssen, um den Laden zu sehen oder ob sie für alle sichtbar sind."
@@ -3046,9 +3045,6 @@ de_DE:
           zone: "Zone"
           calculator: "Rechner"
           display: "Anzeige"
-          both: "Beide"
-          front_end: "Vorderes Ende"
-          back_end: "Back End"
           no_shipping_methods_found: "Keine Versandmethoden gefunden"
         new:
           new_shipping_method: "Neue Versandart"
@@ -3060,9 +3056,6 @@ de_DE:
         form:
           categories: "Kategorien"
           zones: "Zonen"
-          both: "Beide"
-          front_end: "Vorderes Ende"
-          back_end: "Back End"
       payment_methods:
         new:
           new_payment_method: "Neue Zahlungsart"
@@ -3188,6 +3181,13 @@ de_DE:
       shared:
         sortable_header:
           name: "Name"
+          number: "Nummer"
+          state: "Status"
+          payment_state: "Zahlungsstatus"
+          shipment_state: "Lieferstatus"
+          email: "E-Mail"
+          total: "Gesamt"
+      general_settings:
         edit:
           enterprises_require_tos: "Unternehmen müssen die AGB akzeptieren"
           footer_tos_url: "AGB URL"
@@ -3209,7 +3209,6 @@ de_DE:
       format: '% Y-% m-%d'
       js_format: 'JJ-MM-TT'
     orders:
-      error_flash_for_unavailable_items: "Ein Artikel in Ihrem Warenkorb ist nicht mehr verfügbar."
       edit:
         login_to_view_order: "Bitte loggen Sie sich ein, um Ihre Bestellung anzuzeigen."
       bought:

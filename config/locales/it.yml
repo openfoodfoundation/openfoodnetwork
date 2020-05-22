@@ -681,12 +681,11 @@ it:
           ofn_uid: OFN UID
           ofn_uid_tip: Il codice univoco utilizzato per identificare l'azienda su OFN
         shipping_methods:
-          name: Nome
-          applies: Applica?
-          manage: Gestisci metodi di spedizione
-          create_button: Crea un nuovo metodo di consegna
-          create_one_button: Crea uno ora
-          no_method_yet: Non hai ancora un metodo di consegna
+          name: "Nome"
+          manage: "Gestisci metodi di spedizione"
+          create_button: "Crea un nuovo metodo di consegna"
+          create_one_button: "Crea uno ora"
+          no_method_yet: "Non hai ancora un metodo di consegna"
         shop_preferences:
           shopfront_requires_login: "Vetrina visibile pubblicamente?"
           shopfront_requires_login_tip: "Scegli se i consumatori devono essere registrati per poter vedere la vetrina o se è visibile a tutti"
@@ -698,7 +697,7 @@ it:
           allow_guest_orders_false: "Richiedi il login per ordinare"
           allow_guest_orders_true: "Permetti acquisto come ospite"
           allow_order_changes: "Modifica gentili richieste"
-          allow_order_changes_tip: "Permetti ai consumatori di modificare le proprie gentili richieste finché il ciclo di richieste è aperto."
+          allow_order_changes_tip: "Permetti ai consumatori di modificare le proprie richieste finché il ciclo di richieste è aperto."
           allow_order_changes_false: "Le gentili richieste confermate non possono essere modificate / annullate"
           allow_order_changes_true: "Gli utenti possono modificare / annullare le gentili richieste mentre il ciclo di richieste è aperto"
           enable_subscriptions: "Sottoscrizioni"
@@ -925,7 +924,7 @@ it:
         new_schedule: Nuovo programma
       name_and_timing_form:
         name: Nome
-        orders_open: Gentili richieste aperte a
+        orders_open: Richieste aperte a
         coordinator: Referente
         orders_close: Gentili richieste chiuse
       row:
@@ -1092,7 +1091,7 @@ it:
       cancel_failure_msg: "Ci dispiace, eliminazione non riuscita!"
       confirm_pause_msg: "Sei sicura/o di voler mettere in pausa questo abbonamento?"
       pause_failure_msg: "Spiacente, pausa fallita!"
-      confirm_unpause_msg: "If you have an open Order Cycle in this subscription's schedule, an order will be created for this customer. Are you sure you want to unpause this subscription?"
+      confirm_unpause_msg: "Se hai un ciclo di richieste aperto durante questa registrazione, sarà creato un ordine per l'utente registrato. Vuoi annullare la registrazione?"
       unpause_failure_msg: "Ci dispiace, ripresa non riuscita!"
       confirm_cancel_open_orders_msg: "Alcune di queste richieste sono attualmente attive. I consumatori sono già stati avvisati che le richieste verranno soddisfatte. Vuoi eliminare questa/e richiesta/e o mantenerla?"
       resume_canceled_orders_msg: "Alcuni ordini per questo abbonamento possono essere ripresi in questo momento. Puoi riprenderli dal menu a discesa degli ordini."
@@ -1152,7 +1151,7 @@ it:
       footer_contact_email: "Scrivici"
       footer_nav_headline: "Naviga"
       footer_join_headline: "Unisciti a noi"
-      footer_join_body: "Crea una lista, un negozio o un gruppo su Open Food Network."
+      footer_join_body: "Crea un catalogo, un negozio o un gruppo su Open Food Network."
       footer_join_cta: "Dimmi di più!"
       footer_legal_call: "Leggi i nostri"
       footer_legal_tos: "Termini e condizioni"
@@ -1340,7 +1339,7 @@ it:
       cookies_policy_link: "cookies policy"
       cookies_accept_button: "Accetta Cookies"
   home_shop: Compra ora
-  brandstory_headline: "Cibo, libero."
+  brandstory_headline: "Cibo sano, cibo locale!"
   brandstory_intro: "A volte il modo migliore di correggere il sistema è crearne uno nuovo..."
   brandstory_part1: "Cominciamo da zero. Con i produttori e gli allevatori pronti a raccontare le loro storie, sinceramente e orgogliosamente. Con i distributori pronti a connettere le persone con i prodotti in modo giusto ed equo. Con i compratori che credono che migliori decisioni per l'acquisto settimanale possano seriamente cambiare il mondo."
   brandstory_part2: "Poi abbiamo bisogno di un modo per renderlo reale. Un modo per dare più forza a chi coltiva, vende e acquista cibo. Un modo per raccontare tutte le storie, per gestire tutta la logistica. Un modo per cambiare la transazione in trasformazione ogni giorno."
@@ -1613,7 +1612,7 @@ it:
   name_or_sku: "NOME O SKU"
   register_title: Registra
   sell_title: "Registrati"
-  sell_headline: "Vieni su Open Food Network!"
+  sell_headline: "Entra nella rete OFN Italia!"
   sell_motivation: "Esponi i tuoi bellissimi prodotti."
   sell_producers: "Produttori"
   sell_hubs: "Distributori"
@@ -1629,7 +1628,7 @@ it:
   shops_headline: La spesa, ripensata.
   shops_text: Il cibo cresce in ciclo, gli agricoltori raccolgono in cicli, e noi ordiniamo il cibo in cicli. Se trovi un ciclo d'ordine chiuso, torna a controllare presto.
   shops_signup_title: Iscriviti come hub
-  shops_signup_headline: Hub di cibo, illimitati.
+  shops_signup_headline: Hub illimitati.
   shops_signup_motivation: Qualsiasi sia il tuo modello, noi ti supportiamo. Comunque tu cambi, noi siamo con te. Siamo no-profit, indipendenti e a codice aperto. Siamo i partner per il software che desideravi.
   shops_signup_action: Unisciti ora
   shops_signup_pricing: Account Azienda
@@ -1684,7 +1683,7 @@ it:
   password: Password
   remember_me: Ricordami
   are_you_sure: "Sei sicuro?"
-  orders_open: Ordini aperti
+  orders_open: Richieste aperte
   closing: "In chiusura"
   going_back_to_home_page: "Reindirizzamento alla homepage"
   creating: In creazione
@@ -1789,7 +1788,7 @@ it:
         no_producer: "No, non sono un produttore"
         producer_field_error: "Per favore scegline uno. Sei un produttore?"
         yes_producer_help: "I produttori fanno cose buone da mangiare e/o bere. Sei un produttore se le coltivi, le allevi, le infondi, le cucini, le fai fermentare, le mungi o le modelli."
-        no_producer_help: "Se non sei un produttore, probabilmente sei qualcuno che vende e distribuisce cibo. potresti essere un hub, una cooperativa, un gruppo d'acquisto, un rivenditore al dettaglio o all'ingrosso, o altro."
+        no_producer_help: "Se non sei un produttore, probabilmente sei qualcuno che vende e distribuisce. Potresti essere un hub, una cooperativa, un gruppo d'acquisto, un rivenditore al dettaglio o all'ingrosso, o altro."
         create_profile: "Crea profilo"
       about:
         title: "Descrizione"
@@ -1835,7 +1834,7 @@ it:
         enterprise_final_step: "Ultimo passo!"
         enterprise_social_text: "Come possono le persone trovare on-line %{enterprise}?"
         website: "Sito web"
-        website_placeholder: "p.es. openfoodnetwork.org.au"
+        website_placeholder: "p.es. openfoodnetwork.it"
         facebook: "Facebook"
         facebook_placeholder: "p.es. www.facebook.com/PageNameHere"
         linkedin: "LinkedIn"
@@ -3046,9 +3045,6 @@ it:
           zone: "Zone"
           calculator: "Calcolatrice"
           display: "Visualizza"
-          both: "Entrambi"
-          front_end: "Front End"
-          back_end: "Back End"
           no_shipping_methods_found: "Nessun metodo di spedizione trovato"
         new:
           new_shipping_method: "Nuovo metodo di spedizione"
@@ -3060,9 +3056,6 @@ it:
         form:
           categories: "categorie"
           zones: "Zone"
-          both: "Entrambi"
-          front_end: "Front End"
-          back_end: "Back End"
       payment_methods:
         new:
           new_payment_method: "Nuovo metodo di pagamento"
@@ -3188,6 +3181,13 @@ it:
       shared:
         sortable_header:
           name: "Nome"
+          number: "Numero"
+          state: "Stato"
+          payment_state: "Stato Pagamento"
+          shipment_state: "Stato della spedizione"
+          email: "Email"
+          total: "Totale"
+      general_settings:
         edit:
           legal_settings: "Impostazioni Legali"
           cookies_consent_banner_toggle: "Mostra banner di consenso per i cookie"
@@ -3213,7 +3213,6 @@ it:
       format: '%Y-%m-%d'
       js_format: 'aa-mm-gg'
     orders:
-      error_flash_for_unavailable_items: "Un articolo nel tuo carrello è diventato non disponibile."
       edit:
         login_to_view_order: "Effettua il login per visualizzare il tuo ordine."
       bought:
@@ -3294,7 +3293,7 @@ it:
           settings: Impostazioni account
         unconfirmed_email: "Email di conferma in sospeso per: %{unconfirmed_email}. Il tuo indirizzo email sarà aggiornato quando la nuova email sarà confermata. "
       orders:
-        open_orders: Gentili richieste aperte
+        open_orders: Richieste aperte
         past_orders: Gentili richieste passate
       transactions:
         transaction_history: Storico Transazioni

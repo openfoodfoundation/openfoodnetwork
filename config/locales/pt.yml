@@ -655,12 +655,11 @@ pt:
           link_to_front: Link para a loja
           link_to_front_tip: Um link direto para a sua loja no Open Food Network.
         shipping_methods:
-          name: Nome
-          applies: Aplicável?
-          manage: Gerir Métodos de Envio
-          create_button: Criar Nova Forma de Envio
-          create_one_button: Criar um agora
-          no_method_yet: Ainda não tem nenhuma forma de envio.
+          name: "Nome"
+          manage: "Gerir Métodos de Envio"
+          create_button: "Criar Nova Forma de Envio"
+          create_one_button: "Criar um agora"
+          no_method_yet: "Ainda não tem nenhuma forma de envio."
         shop_preferences:
           shopfront_requires_login: "Loja visível publicamente?"
           shopfront_requires_login_tip: "Escolha se os consumidores vão precisar de fazer login para ver a loja, ou se esta estará visível para toda a gente."
@@ -2949,6 +2948,13 @@ pt:
       shared:
         sortable_header:
           name: "Nome"
+          number: "Número"
+          state: "Estado"
+          payment_state: "Estado do Pagamento"
+          shipment_state: "Estado do envio"
+          email: "Email"
+          total: "Total"
+      general_settings:
         edit:
           legal_settings: "Configurações Legais"
           cookies_consent_banner_toggle: "Mostrar o Banner de consentimento de Cookies"
@@ -2974,7 +2980,6 @@ pt:
       format: '%Y-%m-%d'
       js_format: 'aa-mm-dd'
     orders:
-      error_flash_for_unavailable_items: "Um item do seu carrinho ficou indisponível."
       edit:
         login_to_view_order: "Por favor faça login para ver a sua encomenda."
       bought:

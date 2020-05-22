@@ -685,12 +685,11 @@ tr:
           ofn_uid: AGA KN
           ofn_uid_tip: Açık Gıda Ağı'na kayıtlı işletmenize özel tanımlanan kimlik numarası
         shipping_methods:
-          name: Ad
-          applies: Uygulanma?
-          manage: Teslimat Yöntemlerini Yönet
-          create_button: Yeni Teslimat Yöntemi Oluştur
-          create_one_button: Şimdi Oluştur
-          no_method_yet: Henüz herhangi bir teslimat yönteminiz yok.
+          name: "Ad"
+          manage: "Teslimat Yöntemlerini Yönet"
+          create_button: "Yeni Teslimat Yöntemi Oluştur"
+          create_one_button: "Şimdi Oluştur"
+          no_method_yet: "Henüz herhangi bir teslimat yönteminiz yok."
         shop_preferences:
           shopfront_requires_login: "MAĞAZANIZ HARİTADA GÖRÜNÜR OLSUN MU?"
           shopfront_requires_login_tip: "Mağazanızın yalnızca üyelerinize mi yoksa herkese mi açık olduğunu seçin."
@@ -3068,9 +3067,6 @@ tr:
           zone: "bölge"
           calculator: "Hesaplama"
           display: "Görüntüle"
-          both: "Her ikisi de"
-          front_end: "ön yüz"
-          back_end: "Arka yüz"
           no_shipping_methods_found: "Hiçbir teslimat yöntemi bulunamadı"
         new:
           new_shipping_method: "Yeni Teslimat Yöntemi"
@@ -3082,9 +3078,6 @@ tr:
         form:
           categories: "Kategoriler"
           zones: "bölgeler"
-          both: "Her ikisi de"
-          front_end: "ön yüz"
-          back_end: "Arka yüz"
       payment_methods:
         new:
           new_payment_method: "Yeni Ödeme Yöntemi"
@@ -3212,6 +3205,13 @@ tr:
       shared:
         sortable_header:
           name: "Ad"
+          number: "Numara"
+          state: "Durum"
+          payment_state: "Ödeme Durumu"
+          shipment_state: "Teslimat Durumu"
+          email: "E-posta"
+          total: "Toplam"
+      general_settings:
         edit:
           legal_settings: "Yasal Ayarlar"
           cookies_consent_banner_toggle: "Çerezler onay başlığını göster"
@@ -3237,7 +3237,6 @@ tr:
       format: '% Y-% A-%d'
       js_format: 'yy-aa-gg'
     orders:
-      error_flash_for_unavailable_items: "Sepetinizdeki bir ürün mevcut değil olarak güncellendi."
       edit:
         login_to_view_order: "Siparişinizi görmek için lütfen giriş yapın."
       bought:

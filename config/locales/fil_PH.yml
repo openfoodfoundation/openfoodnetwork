@@ -686,12 +686,11 @@ fil_PH:
           ofn_uid: UID sa OFN
           ofn_uid_tip: ang natatanging id na ito ay ginagamit para matukoy ang enterprise sa Open Food Network.
         shipping_methods:
-          name: pangalan
-          applies: naaangkop?
-          manage: pamahalaan ang mga paraan ng pagpapadala
-          create_button: lumikha ng bagong paraan ng pagpapadala
-          create_one_button: lumikha ng isa ngayon
-          no_method_yet: wala ka pang inilagay na paraan ng pagpapadala.
+          name: "pangalan"
+          manage: "pamahalaan ang mga paraan ng pagpapadala"
+          create_button: "lumikha ng bagong paraan ng pagpapadala"
+          create_one_button: "lumikha ng isa ngayon"
+          no_method_yet: "wala ka pang inilagay na paraan ng pagpapadala."
         shop_preferences:
           shopfront_requires_login: "nakikita sa publiko ang shopfront?"
           shopfront_requires_login_tip: "pumili kung nais na maglog-in muna ang customer bago makita ang shopfront o nakikita ito ng lahat."
@@ -1738,13 +1737,13 @@ fil_PH:
   action_signup: "magsign-up ngayon"
   forgot_password: "nakalimutan ang password?"
   password_reset_sent: "ang email na may panuto kung paano papalitan ang inyong password ay napadala na!"
-  reset_password: "palitan ang password"
+  reset_password: "i-reset ang password"
   update_and_recalculate_fees: "i-update at kuwentahin muli ang fees"
   registration:
     steps:
       introduction:
         registration_greeting: "Kumusta?"
-        registration_intro: "maaari ka ng gumawa ng profile para sa inyong Producer o Hub"
+        registration_intro: "maaari ka ng lumikha ng profile para sa inyong Producer o Hub"
         registration_checklist: "ano ang kailangan ko gawin?"
         registration_time: "5-10 minuto"
         registration_enterprise_address: "Address ng enterprise"
@@ -1754,24 +1753,24 @@ fil_PH:
         registration_about_us: "'Tungkol sa Amin' na teksto"
         registration_outcome_headline: "ano ang makukuha ko?"
         registration_outcome1_html: "ang iyong profile ang makakatulong sa mga tao<strong>na hanapin</strong>at<strong>kontakin</strong> ka sa Open Food Network."
-        registration_outcome2: "gamitin ang espasyo na ito upang ipakilala ang iyong enterprise, para na rin sa pagpapalawig ng iyong koneksyon sa internet."
-        registration_outcome3: "ito rin ay unang hakbang para makipagkalakalan sa Open Food Network, o pagbubukas ng sariling tindahan sa internet."
+        registration_outcome2: "gamitin ang espasyo na ito upang ipakilala ang inyong enterprise at upang palawigin na rin ang iyong koneksyon sa internet."
+        registration_outcome3: "ito rin ay unang hakbang para makipagkalakalan sa Open Food Network o pagbubukas ng sariling online store"
         registration_action: "Magsimula na tayo!"
       details:
-        title: "detalye"
+        title: "mga detalye"
         headline: "magsimula na tayo"
-        enterprise: "una sa lahat ay kailangan naming mas makilala ang iyong enterprise:"
-        producer: "una sa lahat ay kailangan naming mas makilala  ang iyong bukid:"
+        enterprise: "una ay kailangan naming makilala ang inyong enterprise:"
+        producer: "una ay kailangan naming makilala  ang inyong bukid:"
         enterprise_name_field: "pangalan ng enterprise:"
         producer_name_field: "pangalan ng bukid:"
-        producer_name_field_placeholder: "hal. Charlie's Awesome Farm"
+        producer_name_field_placeholder: "hal. Jose's Awesome Farm"
         producer_name_field_error: "pumili ng natatanging pangalan para sa inyong enterprise"
         address1_field: "linya ng address 1 :"
-        address1_field_placeholder: "hal. 123 Cranberry Drive"
+        address1_field_placeholder: "hal. 123 Kapayapaan St."
         address1_field_error: "isulat ang address"
         address2_field: "linya ng address 2 :"
         suburb_field: "lungsod:"
-        suburb_field_placeholder: "hal. Northcote"
+        suburb_field_placeholder: "hal. Mandaluyong"
         suburb_field_error: "isulat ang lungsod"
         postcode_field: "Postcode:"
         postcode_field_placeholder: "hal. 3070"
@@ -1790,14 +1789,14 @@ fil_PH:
         phone_field_placeholder: "hal. (03) 1234 5678"
       type:
         title: "uri"
-        headline: "huling hakbang para maidagdag ang%{enterprise}!"
+        headline: "huling hakbang upang maidagdag ang%{enterprise}!"
         question: "isa ka bang producer?"
         yes_producer: "oo, ako ay isang producer"
         no_producer: "hindi ako producer"
         producer_field_error: "pumili ng isa. ikaw ba ay isang producer?"
-        yes_producer_help: "Ang mga producer ay gumagawa ng masasarap na bagay na maaaring makain o mainom. Ikaw ay isang producer kung itinatanim mo ito, pinapalaki, binuburo, niluluto, hinuhurno, ginagatasan o hinuhulma."
-        no_producer_help: "kung hindi ka isang producer, malamang ikaw ay nagbebenta at namamahagi ng mga pagkain. maaaring ikaw ay isang Hub, coop, grupo ng mamimili, nagtitingi, namamakyaw o iba pa."
-        create_profile: "gumawa ng profile"
+        yes_producer_help: "Ang mga producer ay gumagawa ng masasarap na bagay na maaaring makain at/o mainom. Ikaw ay isang producer kung itinatanim mo ito, pinapalaki, binuburo, niluluto, hinuhurno, ginagatasan o hinuhulma."
+        no_producer_help: "kung hindi ka isang producer, malamang ikaw ay nagbebenta at namamahagi ng mga pagkain. maaaring ikaw ay isang Hub, coop, grupo ng mamimili, retailer, wholesaler o iba pa."
+        create_profile: "lumikha ng profile"
       about:
         title: "tungkol sa"
         headline: "binabati kita!"
@@ -3062,9 +3061,6 @@ fil_PH:
           zone: "sona"
           calculator: "calculator"
           display: "Ipakita"
-          both: "pareho"
-          front_end: "harapan"
-          back_end: "Likuran"
           no_shipping_methods_found: "walang mahanap na mga paraan ng pagpapadala"
         new:
           new_shipping_method: "bagong paraan ng pagpapadala"
@@ -3076,9 +3072,6 @@ fil_PH:
         form:
           categories: "mga kategorya"
           zones: "mga sona"
-          both: "pareho"
-          front_end: "harapan"
-          back_end: "Likuran"
       payment_methods:
         new:
           new_payment_method: "Bagong Paraan ng pagbabayad"
@@ -3204,6 +3197,13 @@ fil_PH:
       shared:
         sortable_header:
           name: "Pangalan"
+          number: "Bilang"
+          state: "province"
+          payment_state: "status ng pagbabayad"
+          shipment_state: "status ng kargamento"
+          email: "Email"
+          total: "kabuuan"
+      general_settings:
         edit:
           legal_settings: "Legal Settings"
           cookies_consent_banner_toggle: "ipakita ang banner ng pagpayag sa cookies"
@@ -3229,7 +3229,6 @@ fil_PH:
       format: '%Y-%m-%d'
       js_format: 'yy-mm-dd'
     orders:
-      error_flash_for_unavailable_items: "ang isang item sa inyong cart ay hindi na available."
       edit:
         login_to_view_order: "Maglog-in para makita ang inyong order."
       bought:

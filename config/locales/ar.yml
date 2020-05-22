@@ -680,12 +680,11 @@ ar:
           ofn_uid: شبكة الغذاء المفتوح UID
           ofn_uid_tip: المعرف الفريد المستخدم لتحديد الشركة على شبكة الغذاء المفتوح.
         shipping_methods:
-          name: اسم
-          applies: ينطبق؟
-          manage: إدارة طرق الشحن
-          create_button: إنشاء طريقة شحن جديدة
-          create_one_button: إنشاء واحدة الآن
-          no_method_yet: ليس لديك أي طرق شحن حتى الآن.
+          name: "اسم"
+          manage: "إدارة طرق الشحن"
+          create_button: "إنشاء طريقة شحن جديدة"
+          create_one_button: "إنشاء واحدة الآن"
+          no_method_yet: "ليس لديك أي طرق شحن حتى الآن."
         shop_preferences:
           shopfront_requires_login: "واجهة المتجر مرئية للعام؟"
           shopfront_requires_login_tip: "اختر ما إذا كان يجب على العملاء تسجيل الدخول لعرض واجهة المحل أو إذا كان مرئيًا للجميع."
@@ -3013,9 +3012,6 @@ ar:
           zone: "منطقة"
           calculator: "آلة حاسبة"
           display: "عرض"
-          both: "على حد سواء"
-          front_end: "الواجهة "
-          back_end: "عودة النهاية"
           no_shipping_methods_found: "لم يتم العثور على طرق الشحن"
         new:
           new_shipping_method: "طريقة الشحن الجديدة"
@@ -3027,9 +3023,6 @@ ar:
         form:
           categories: "التصنيفات"
           zones: "مناطق"
-          both: "على حد سواء"
-          front_end: "الواجهة "
-          back_end: "عودة النهاية"
       payment_methods:
         new:
           new_payment_method: "طريقة الدفع الجديدة"
@@ -3155,6 +3148,13 @@ ar:
       shared:
         sortable_header:
           name: "الاسم"
+          number: "رقم "
+          state: "ولاية"
+          payment_state: "حالة الدفعة"
+          shipment_state: "حالة الشحن"
+          email: "البريد الإلكتروني"
+          total: "المجموع"
+      general_settings:
         edit:
           legal_settings: "الإعدادات القانونية"
           cookies_consent_banner_toggle: "عرض راية موافقة ملفات تعريف الارتباط"
@@ -3180,7 +3180,6 @@ ar:
       format: '٪ س-٪ م-%d'
       js_format: 'يوم-شهر-سنة'
     orders:
-      error_flash_for_unavailable_items: "المادة في سلة التسوق غير متاح."
       edit:
         login_to_view_order: "يرجى تسجيل الدخول لعرض طلبك."
       bought:

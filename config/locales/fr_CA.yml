@@ -681,12 +681,11 @@ fr_CA:
           ofn_uid: ID OFN
           ofn_uid_tip: L'identifiant unique pour les comptes entreprises sur Open Food Network.
         shipping_methods:
-          name: Nom
-          applies: S'applique?
-          manage: Gérer les méthodes de livraison
-          create_button: Créer nouvelle méthode de livraison
-          create_one_button: En créer une maintenant
-          no_method_yet: Vous n'avez pas encore paramétré de méthode de livraison.
+          name: "Nom"
+          manage: "Gérer les méthodes de livraison"
+          create_button: "Créer nouvelle méthode de livraison"
+          create_one_button: "En créer une maintenant"
+          no_method_yet: "Vous n'avez pas encore paramétré de méthode de livraison."
         shop_preferences:
           shopfront_requires_login: "Boutique visible par tous?"
           shopfront_requires_login_tip: "Choisissez si les acheteurs doivent être logués pour voir la boutique ou si la boutique est visible par tout le monde."
@@ -3051,9 +3050,6 @@ fr_CA:
           zone: "Zone"
           calculator: "Calculateur"
           display: "Afficher"
-          both: "Les deux"
-          front_end: "Front End"
-          back_end: "Back End"
           no_shipping_methods_found: "Aucune méthode de livraison trouvée"
         new:
           new_shipping_method: "Nouvelle méthode de livraison"
@@ -3065,9 +3061,6 @@ fr_CA:
         form:
           categories: "Conditions de transport"
           zones: "Zones"
-          both: "Les deux"
-          front_end: "Front End"
-          back_end: "Back End"
       payment_methods:
         new:
           new_payment_method: "Nouvelle méthode de paiement"
@@ -3193,6 +3186,13 @@ fr_CA:
       shared:
         sortable_header:
           name: "Nom"
+          number: "N° commande"
+          state: "Département"
+          payment_state: "Statut du Paiement"
+          shipment_state: "Statut de la livraison"
+          email: "Email"
+          total: "Total"
+      general_settings:
         edit:
           legal_settings: "Configuration légales"
           cookies_consent_banner_toggle: "Afficher la bannière de consentement à l'utilisation des cookies"
@@ -3218,7 +3218,6 @@ fr_CA:
       format: '%Y-%m-%d'
       js_format: 'yy-mm-dd'
     orders:
-      error_flash_for_unavailable_items: "Un produit de votre panier n'est plus disponible."
       edit:
         login_to_view_order: "Veuillez vous connecter pour voir votre commande."
       bought:

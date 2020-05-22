@@ -554,7 +554,7 @@ pt_BR:
       index:
         title: Inventário
         description: Utilize essa página para gerenciar inventários para suas iniciativas. Qualquer detalhe de produtos especificado aqui irá substituir o que foi especificado na página de 'Produtos'
-        enable_reset?: Ativar restauração de estoque?
+        enable_reset?: Ativar Restauração de Estoque?
         default_stock: "Estoque padrão"
         inherit?: Herdar?
         add: Adicionar
@@ -644,16 +644,15 @@ pt_BR:
           promo_image_note2: Qualquer imagem promocional carregada aqui será cortada para 1200 x 260.
           promo_image_note3: A imagem promocional é exibida no topo da página do perfil dos empreendimento e em pop-ups.
         inventory_settings:
-          text1: Você pode optar por gerenciar o seu nível de estoque e preços através de seu
-          inventory: inventório
+          text1: Você pode optar por modificar preços e nível de estoque através de seu
+          inventory: inventário
           text2: >
-              Se você está usando a ferramenta de inventário, você pode selecionar
-              se novos produtos adicionados pelos seus fornecedores precisam ser adicionados
-              ao seu inventário antes de serem estocados. Se você não está usando
-              o inventário para gerenciar os seus produtos, você deve selecionar a
-              opção 'recomendado' abaixo.
-          preferred_product_selection_from_inventory_only_yes: Novos produtos podem ser colocados na minha loja virtual (recomendado)
-          preferred_product_selection_from_inventory_only_no: Novos produtos devem ser adicionados no meu inventário antes de serem colocados na minha loja virtual
+              Utilizando a ferramenta Inventário, é possível permitir que apenas os
+              produtos do inventário possam ser disponibilizados na sua loja virtual.
+              Se você não está usando o inventário para gerenciar os seus produtos,
+              selecione a opção 'recomendado' abaixo.
+          preferred_product_selection_from_inventory_only_yes: Todos os produtos dos meus fornecedores podem ser disponibilizados na minha loja virtual (recomendado)
+          preferred_product_selection_from_inventory_only_no: Somente produtos que eu adicionar ao meu Inventário podem ser disponibilizados na minha loja virtual.
         payment_methods:
           name: Nome
           applies: Aplica?
@@ -686,12 +685,12 @@ pt_BR:
           ofn_uid: OFN UID
           ofn_uid_tip: O ID exclusivo usado para identificar a iniciativa na Open Food Brasil.
         shipping_methods:
-          name: Nome
-          applies: Aplica?
-          manage: Gerenciar formas de envio
-          create_button: Criar nova forma de envio
-          create_one_button: Criar um agora
-          no_method_yet: Você ainda não tem nenhuma forma de envio.
+          name: "Nome"
+          applies: "Ativo?"
+          manage: "Gerenciar formas de envio"
+          create_button: "Criar nova forma de envio"
+          create_one_button: "Criar um agora"
+          no_method_yet: "Você ainda não tem nenhuma forma de envio."
         shop_preferences:
           shopfront_requires_login: "Loja virtual visível publicamente?"
           shopfront_requires_login_tip: "Escolha se os clientes precisarão fazer o login para ver os produtos da loja virtual, ou se eles estarão visíveis para todos."
@@ -2558,7 +2557,7 @@ pt_BR:
       inventory_products: "Produtos de Inventário"
       hidden_products: "Produtos Ocultos"
       new_products: "Novos Produtos"
-      reset_stock_levels: Redefinir os Níveis de Estoque para os Padrões
+      reset_stock_levels: Restaurar os Níveis de Estoque para os Padrões
       changes_to: Muda para
       one_override: uma substituição
       overrides: substitui
@@ -2826,7 +2825,7 @@ pt_BR:
     currency_symbol_position: Coloque "símbolo de moeda antes ou depois do valor em dólar?"
     currency_thousands_separator: "Separador de milhares de moedas"
     hide_cents: "Ocultar centavos"
-    display_currency: "Moeda de exibição"
+    display_currency: "Mostrar moeda"
     choose_currency: "Escolha a Moeda"
     mail_method_settings: "Configurações do método de email"
     general: "Geral"
@@ -3070,9 +3069,6 @@ pt_BR:
           zone: "Zona"
           calculator: "Calculadora"
           display: "Exibição"
-          both: "Ambos"
-          front_end: "a parte dianteira"
-          back_end: "a parte traseira"
           no_shipping_methods_found: "Nenhum método de envio encontrado"
         new:
           new_shipping_method: "Novo método de envio"
@@ -3084,9 +3080,7 @@ pt_BR:
         form:
           categories: "Categorias"
           zones: "Zonas"
-          both: "Ambos"
-          front_end: "a parte dianteira"
-          back_end: "a parte traseira"
+          deactivation_warning: "Desativar um método de envio pode fazer com que ele desapareça da sua lista. Como alternativa, você pode esconder um método de envio da página de checkout s"
       payment_methods:
         new:
           new_payment_method: "Novo método de pagamento"
@@ -3214,6 +3208,13 @@ pt_BR:
       shared:
         sortable_header:
           name: "Nome"
+          number: "Número"
+          state: "Estado"
+          payment_state: "Estado de pagamento"
+          shipment_state: "Situação do Envio"
+          email: "E-mail"
+          total: "Total"
+      general_settings:
         edit:
           legal_settings: "Configurações de Legislação"
           cookies_consent_banner_toggle: "Mostrar banner sobre permissão para cookies"
@@ -3239,7 +3240,6 @@ pt_BR:
       format: '%A-%m-'
       js_format: 'aa-mm-dd'
     orders:
-      error_flash_for_unavailable_items: "Um item no seu carrinho ficou indisponível."
       edit:
         login_to_view_order: "Faça o login para visualizar seu pedido."
       bought:

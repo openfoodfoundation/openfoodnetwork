@@ -668,12 +668,11 @@ nl_BE:
           ofn_uid: OFN UID
           ofn_uid_tip: Het unieke ID dat wordt gebruikt om de onderneming in Open Food Network te identificeren.
         shipping_methods:
-          name: Naam
-          applies: Van toepassing?
-          manage: Beheer Verzendmethodes
-          create_button: Creëer Nieuwe Verzendmethodes
-          create_one_button: Creëer er nu één
-          no_method_yet: Je hebt nog geen verzendmethodes.
+          name: "Naam"
+          manage: "Beheer Verzendmethodes"
+          create_button: "Creëer Nieuwe Verzendmethodes"
+          create_one_button: "Creëer er nu één"
+          no_method_yet: "Je hebt nog geen verzendmethodes."
         shop_preferences:
           shopfront_requires_login: "Publiekelijk zichtbare etalage"
           shopfront_requires_login_tip: "Kies of je klanten ingelogd moeten zijn om je etalage te bekijken of kies om je etalage zichtbaar te maken voor iedereen."
@@ -2886,9 +2885,6 @@ nl_BE:
           zone: "Zone"
           calculator: "Rekenmachine"
           display: "Display"
-          both: "Beide"
-          front_end: "Voorkant"
-          back_end: "Back End"
           no_shipping_methods_found: "Geen verzendmethoden gevonden"
         new:
           new_shipping_method: "New Shipping Method"
@@ -2900,9 +2896,6 @@ nl_BE:
         form:
           categories: "Categorieën"
           zones: "Zones "
-          both: "Beide"
-          front_end: "Voorkant"
-          back_end: "Back End"
       payment_methods:
         new:
           new_payment_method: "Nieuwe betalingswijze"
@@ -3017,6 +3010,13 @@ nl_BE:
       shared:
         sortable_header:
           name: "Naam"
+          number: "Nummer"
+          state: "Staat"
+          payment_state: "Status Betaling"
+          shipment_state: "Status Verzending"
+          email: "E-mail"
+          total: "Totaal"
+      general_settings:
         edit:
           legal_settings: "De legale instelling"
           cookies_consent_banner_toggle: "Laat de strook met uw akkoord voor de cookies zien"
@@ -3042,7 +3042,6 @@ nl_BE:
       format: '%Y-%m-%d'
       js_format: 'yy-mm-dd'
     orders:
-      error_flash_for_unavailable_items: "Een gegeven op je kaart is onbereikbaar."
       edit:
         login_to_view_order: "Gelieve U te connecteren om uw bestelling te zien."
       bought:

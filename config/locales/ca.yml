@@ -686,12 +686,11 @@ ca:
           ofn_uid: UID d'OFN
           ofn_uid_tip: L'identificador únic que s’utilitza per identificar l'organització a Open Food Network.
         shipping_methods:
-          name: Nom
-          applies: 'Aplicar? '
-          manage: Gestiona els mètodes d'enviament
-          create_button: Crea un nou mètode d'enviament
-          create_one_button: Crea'n un ara
-          no_method_yet: Encara no teniu cap mètode d'enviament.
+          name: "Nom"
+          manage: "Gestiona els mètodes d'enviament"
+          create_button: "Crea un nou mètode d'enviament"
+          create_one_button: "Crea'n un ara"
+          no_method_yet: "Encara no teniu cap mètode d'enviament."
         shop_preferences:
           shopfront_requires_login: "Botiga visible públicament?"
           shopfront_requires_login_tip: "Trieu si les consumidores han d'iniciar sessió per veure la botiga o si és visible per a tothom."
@@ -868,6 +867,7 @@ ca:
         incoming: "Entrant"
         supplier: "Proveïdora"
         products: "Productes "
+        receival_details: "Detalls de la recepció"
         fees: "Comissions"
         save: "Desa"
         save_and_next: "Desa i següent"
@@ -1177,7 +1177,11 @@ ca:
         signup: "registra't"
         contact: "contacta"
         require_customer_login: "Només els clients autoritzats poden accedir a aquesta botiga."
+        require_login_html: "Si ja sou una consumidora aprovat, %{login} o %{signup} podeu continuar."
+        require_login_2_html: "Voleu començar a comprar aquí? Per favor, %{contact} %{enterprise} i pregunteu com unir-vos."
         require_customer_html: "Si vols començar a comprar aquí, si us plau %{contact} %{enterprise} per unir-t'hi."
+      select_oc:
+        select_oc_html: "<span class='highlighted'>Trieu quan voleu la vostra comanda</span> per veure quins productes estan disponibles."
   card_could_not_be_updated: No s'ha pogut actualitzar la targeta
   card_could_not_be_saved: no s'ha pogut desar la targeta
   spree_gateway_error_flash_for_checkout: "Hi ha hagut un problema amb la vostra informació de pagament: %{error}"
@@ -1441,7 +1445,7 @@ ca:
   email_confirm_customer_details_html: "Aquests són els detalls de la teva comanda de<strong>%{distributor}</strong>:"
   email_confirm_customer_signoff: "Salutacions cordials,"
   email_confirm_shop_greeting: "Hola %{name},"
-  email_confirm_shop_order_html: "Que bé! Tens una nova comanda per <strong> %{distributor} </ strong>."
+  email_confirm_shop_order_html: "Que bé! Tens una nova comanda per <strong> %{distributor}</strong>! "
   email_confirm_shop_number_html: "Confirmació de la comanda <strong> # %{number}</strong>"
   email_order_summary_item: "Article"
   email_order_summary_quantity: "quant."
@@ -1454,23 +1458,23 @@ ca:
   email_payment_not_paid: 'NO PAGAT '
   email_payment_summary: Resum del pagament
   email_payment_method: "Pagament a través de:"
-  email_so_placement_intro_html: "Tens una nova comanda amb <strong> %{distributor} </ strong>"
+  email_so_placement_intro_html: "Tens una nova comanda amb <strong> %{distributor}</strong>"
   email_so_placement_details_html: "Aquests són els detalls de la comanda de <strong>%{distributor}</strong> :"
   email_so_placement_changes: "Malauradament, no tots els productes que has demanat estaven disponibles. Les quantitats originals que has sol·licitat apareixen ratllades a sota."
-  email_so_payment_success_intro_html: "S'ha processat un pagament automàtic per a la vostra comanda des de <strong> %{distributor} </ strong>."
+  email_so_payment_success_intro_html: "S'ha processat un pagament automàtic per a la vostra comanda des de <strong> %{distributor}</strong>."
   email_so_placement_explainer_html: "Aquesta comanda s'ha creat automàticament per tu."
   email_so_edit_true_html: "Pots <a href='%{order_url}'>fer canvis</a> fins que les comandes es tanquin el %{orders_close_at}."
   email_so_edit_false_html: "Pots <a href='%{order_url}'> veure detalls d'aquesta comanda </a> en qualsevol moment."
   email_so_contact_distributor_html: "Si tens alguna pregunta pots contactar amb <strong>%{distributor}</strong> a través d'%{email}."
-  email_so_contact_distributor_to_change_order_html: "Aquesta comanda s'ha creat automàticament per a vostè. Podeu fer canvis fins que les comandes es tanquin a %{orders_close_at} contactant a <strong> %{distributor} </ strong> a través d'%{email}."
+  email_so_contact_distributor_to_change_order_html: "Aquesta comanda s'ha creat automàticament per a vostè. Podeu fer canvis fins que les comandes es tanquin a %{orders_close_at} contactant a <strong> %{distributor} </strong> a través d'%{email}."
   email_so_confirmation_intro_html: "La teva comanda amb <strong>%{distributor}</strong> ja està confirmada"
   email_so_confirmation_explainer_html: "Vas realitzar aquesta comanda automàticament i ara s'ha finalitzat."
   email_so_confirmation_details_html: "A continuació trobareu tot el que necessiteu saber sobre la comanda de <strong>%{distributor}</strong> :"
-  email_so_empty_intro_html: "Hem intentat fer una nova comanda amb <strong> %{distributor} </ strong>, però hem tingut alguns problemes..."
+  email_so_empty_intro_html: "Hem intentat fer una nova comanda amb <strong> %{distributor} </strong>, però hem tingut alguns problemes..."
   email_so_empty_explainer_html: "Malauradament, cap dels productes que heu demanat estava disponible, de manera que no s'ha realitzat cap comanda. Les quantitats originals que heu sol·licitat apareixen ratllades a sota."
-  email_so_empty_details_html: "Aquests són els detalls de la comanda sense confirmar per <strong> %{distributor} </ strong>:"
+  email_so_empty_details_html: "Aquests són els detalls de la comanda sense confirmar per <strong> %{distributor} </strong>:"
   email_so_failed_payment_intro_html: "Hem intentat processar un pagament però hem tingut alguns problemes..."
-  email_so_failed_payment_explainer_html: "El pagament de la vostra subscripció amb <strong> %{distributor} </ strong> ha fallat a causa d'un problema amb la vostra targeta de crèdit. S'ha notificat a <strong> %{distributor} </ strong> d'aquest pagament fallit."
+  email_so_failed_payment_explainer_html: "El pagament de la vostra subscripció amb <strong> %{distributor} </strong> ha fallat a causa d'un problema amb la vostra targeta de crèdit. S'ha notificat a <strong> %{distributor} </strong> d'aquest pagament fallit."
   email_so_failed_payment_details_html: "Aquests són els detalls de l'error proporcionats per la passarel·la de pagament:"
   email_shipping_delivery_details: Detalls de lliurament
   email_shipping_delivery_time: "Lliurament a:"
@@ -1534,15 +1538,20 @@ ca:
   shop_changeable_orders_alert_html:
     one: El vostre ordre amb <a href='%{path}' target='_blank'> %{shop} / %{order} </ a> està obert per a la seva revisió. Podeu fer canvis fins %{oc_close}.
     other: Tens <a href='%{path}' target='_blank'> %{count} comandes amb %{shop} </a> actualment obertes per a la seva revisió. Pots fer canvis fins %{oc_close}.
-  orders_changeable_orders_alert_html: S'ha confirmat aquesta comanda però pots fer-hi canvis fins a <strong> %{oc_close} </ strong>.
+  orders_changeable_orders_alert_html: S'ha confirmat aquesta comanda però pots fer-hi canvis fins a <strong> %{oc_close} </strong>.
   products_clear: Netejar
   products_showing: "S'està mostrant:"
+  products_results_for: "Resultats"
   products_or: "o"
   products_and: "i"
+  products_filters_in: "a"
   products_with: amb
+  products_search: "Cerca..."
   products_filter_by: "Filtra per"
   products_filter_selected: "seleccionat"
+  products_filter_heading: "Filtres"
   products_filter_clear: "Netejar"
+  products_filter_done: "Fet"
   products_loading: "S'estan carregant els productes..."
   products_updating_cart: "Actualitzant la cistella..."
   products_cart_empty: "Cistella buida"
@@ -1553,6 +1562,8 @@ ca:
   products_update_error_msg: "S'ha produït un error en desar."
   products_update_error_data: "S'ha produït un error en desar a causa de dades no vàlides:"
   products_changes_saved: "S'han desat els canvis."
+  products_no_results_html: "Ho sentim, no s'ha trobat cap resultat per a %{query}"
+  products_clear_search: "Esborra la cerca"
   search_no_results_html: "Ho sentim, no s'ha trobat cap resultat per %{query}. Intentar una altra cerca?"
   components_profiles_popover: "Els perfils no tenen una botiga a l'OFN però poden tenir la seva pròpia botiga física o en línia en altres llocs"
   components_profiles_show: "Mostra els perfils"
@@ -1658,7 +1669,7 @@ ca:
   orders_form_total: Total
   orders_oc_expired_headline: S'han tancat les comandes per a aquest cicle de comanda
   orders_oc_expired_text: "Ho sentim, les comandes d'aquest cicle de comanda es van tancar fa %{time} ! Posa't en contacte amb el teu grup directament per veure si poden acceptar comandes fora de temps."
-  orders_oc_expired_text_others_html: "Ho sentim, les comandes d'aquest cicle de comanda es van tancar fa %{time} ! Posa't en contacte amb el teu grup directament per veure si poden acceptar comandes fora de temps<strong> %{link} </ strong>."
+  orders_oc_expired_text_others_html: "Ho sentim, les comandes d'aquest cicle de comanda es van tancar fa %{time} ! Posa't en contacte amb el teu grup directament per veure si poden acceptar comandes fora de temps<strong> %{link} </strong>."
   orders_oc_expired_text_link: "o consulta els altres cicles de comanda disponibles en aquest grup"
   orders_oc_expired_email: "Correu electrònic:"
   orders_oc_expired_phone: "Telèfon:"
@@ -1754,7 +1765,7 @@ ca:
         registration_promo_image: "Imatge promocional per al vostre perfil"
         registration_about_us: "Text \"Sobre nosaltres\""
         registration_outcome_headline: "Què aconsegueixo?"
-        registration_outcome1_html: "El vostre perfil ajuda els usuaris <strong> a trobar </ strong> i <strong> contactar </ strong> a l'Open Food Network."
+        registration_outcome1_html: "El vostre perfil ajuda els usuaris <strong> a trobar </strong> i <strong> contactar </strong> a l'Open Food Network."
         registration_outcome2: "Utilitzeu aquest espai per explicar la història de la vostra organització, per ajudar a connectar amb la vostra presència social i en línia."
         registration_outcome3: "També és el primer pas cap al comenrç a través d'Open Food Network o per obrir una botiga en línia."
         registration_action: "Comencem!"
@@ -2314,6 +2325,10 @@ ca:
     resolve_errors: Si us plau, resol els errors següents
     more_items: "+ %{count} Més"
     default_card_updated: Targeta predeterminada actualitzada
+    cart:
+      add_to_cart_failed: >
+          S'ha produït un problema en afegir aquest producte a la cistella. Potser
+          ha deixat d'estar disponible o la botiga a tancat.
     admin:
       enterprise_limit_reached: "Has assolit el límit estàndard d'organitzacions per compte. Escriu a %{contact_email} si necessites augmentar-lo."
       modals:
@@ -3056,9 +3071,6 @@ ca:
           zone: "Zona"
           calculator: "Calculadora"
           display: "Mostra"
-          both: "Ambdós"
-          front_end: "Front End"
-          back_end: "Back End"
           no_shipping_methods_found: "No s’han trobat mètodes d’enviament"
         new:
           new_shipping_method: "Nou mètode d'enviament"
@@ -3070,9 +3082,7 @@ ca:
         form:
           categories: "Categories"
           zones: "Zones"
-          both: "Ambdós"
-          front_end: "Front End"
-          back_end: "Back End"
+          both: "Comandes com administració"
       payment_methods:
         new:
           new_payment_method: "Nou mètode de pagament"
@@ -3192,12 +3202,21 @@ ca:
           price: "Preu"
           display_as: "Mostra com"
           display_name: "Nom de visualització"
+          display_as_placeholder: 'per exemple. 2 kg'
+          display_name_placeholder: 'per exemple. Tomàquets'
         autocomplete:
           producer_name: "Productor"
           unit: "Unitat"
       shared:
         sortable_header:
           name: "Nom"
+          number: "Número"
+          state: "Estat"
+          payment_state: "Estat del pagament"
+          shipment_state: "Estat de la Tramesa"
+          email: "Correu electrònic"
+          total: "Total"
+      general_settings:
         edit:
           legal_settings: "Paràmetres legals"
           cookies_consent_banner_toggle: "Mostra banner de consentiment de cookies"
@@ -3223,7 +3242,6 @@ ca:
       format: '%d-% m-% Y'
       js_format: 'dd-mm-yy'
     orders:
-      error_flash_for_unavailable_items: "Un article de la teva cistella ha deixat d'estar disponible."
       edit:
         login_to_view_order: "Si us plau inicia sessió per veure la teva comanda."
       bought:

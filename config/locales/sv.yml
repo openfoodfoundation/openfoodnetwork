@@ -366,12 +366,11 @@ sv:
           link_to_front: Länk till sitt skyltfönster
           link_to_front_tip: En direkt länk till ditt skyltfönster på OFN
         shipping_methods:
-          name: Namn
-          applies: Gäller?
-          manage: Bestäm leversmetoder
-          create_button: Skapa ny leveransmetod
-          create_one_button: Skapa en nu
-          no_method_yet: Du har inte bestämt leveransmetod ännu.
+          name: "Namn"
+          manage: "Bestäm leversmetoder"
+          create_button: "Skapa ny leveransmetod"
+          create_one_button: "Skapa en nu"
+          no_method_yet: "Du har inte bestämt leveransmetod ännu."
         shop_preferences:
           shopfront_requires_login: "Offentligt visat skyltfönster?"
           shopfront_requires_login_tip: "Välj om kunderna måste logga in för att se skyltfönstret eller om det skall visas för alla."
@@ -2053,6 +2052,12 @@ sv:
       shared:
         sortable_header:
           name: "Namn"
+          state: "Region"
+          payment_state: "Betalningsstatus"
+          shipment_state: "Leveransstatus"
+          email: "E-post"
+          total: "Summa"
+      general_settings:
         edit:
           enterprises_require_tos: "Företag måste acceptera servicevillkoren"
           footer_tos_url: "Användarvillkor URL"

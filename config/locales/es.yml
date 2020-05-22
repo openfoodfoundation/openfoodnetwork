@@ -685,12 +685,11 @@ es:
           ofn_uid: UID de OFN
           ofn_uid_tip: La identificación única utilizada para identificar la organización en Open Food Network.
         shipping_methods:
-          name: Nombre
-          applies: ¿Aplicar?
-          manage: Gestionar métodos de envío
-          create_button: Crear nuevo método de envío
-          create_one_button: Crear una ahora
-          no_method_yet: Todavía no tienes ningún método de envío.
+          name: "Nombre"
+          manage: "Gestionar métodos de envío"
+          create_button: "Crear nuevo método de envío"
+          create_one_button: "Crear una ahora"
+          no_method_yet: "Todavía no tienes ningún método de envío."
         shop_preferences:
           shopfront_requires_login: "¿Quieres que la tienda sea visible y pública?"
           shopfront_requires_login_tip: "Elije si los clientes deben iniciar sesión para ver la tienda o si es visible para todos."
@@ -3054,9 +3053,6 @@ es:
           zone: "Zona"
           calculator: "Calculadora"
           display: "Mostrar"
-          both: "Ambos"
-          front_end: "Front End"
-          back_end: "Back End"
           no_shipping_methods_found: "No se encontraron métodos de envío"
         new:
           new_shipping_method: "Nuevo método de envío"
@@ -3068,9 +3064,6 @@ es:
         form:
           categories: "Categorías"
           zones: "Zonas"
-          both: "Ambos"
-          front_end: "Front End"
-          back_end: "Back End"
       payment_methods:
         new:
           new_payment_method: "Nuevo método de pago"
@@ -3196,6 +3189,13 @@ es:
       shared:
         sortable_header:
           name: "Nombre"
+          number: "Número"
+          state: "Provincia"
+          payment_state: "Estado del pago"
+          shipment_state: "Estado del envío"
+          email: "Email"
+          total: "Total"
+      general_settings:
         edit:
           legal_settings: "Configuraciones legales"
           cookies_consent_banner_toggle: "Mostrar el banner de consentimiento de cookies"
@@ -3221,7 +3221,6 @@ es:
       format: '%Y-%m-%d'
       js_format: 'yy-mm-dd'
     orders:
-      error_flash_for_unavailable_items: "Un artículo de su carrito ya no está disponible."
       edit:
         login_to_view_order: "Por favor inicie sesión para ver su pedido."
       bought:

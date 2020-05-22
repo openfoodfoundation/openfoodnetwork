@@ -685,12 +685,11 @@ en_IE:
           ofn_uid: OFN UID
           ofn_uid_tip: The unique id used to identify the enterprise on Open Food Network.
         shipping_methods:
-          name: Name
-          applies: Applies?
-          manage: Manage Shipping Methods
-          create_button: Create New Shipping Method
-          create_one_button: Create One Now
-          no_method_yet: You don't have any shipping methods yet.
+          name: "Name"
+          manage: "Manage Shipping Methods"
+          create_button: "Create New Shipping Method"
+          create_one_button: "Create One Now"
+          no_method_yet: "You don't have any shipping methods yet."
         shop_preferences:
           shopfront_requires_login: "Publicly visible shopfront?"
           shopfront_requires_login_tip: "Choose whether customers must login to view the shopfront or if it's visible to everybody."
@@ -3072,9 +3071,6 @@ en_IE:
           zone: "Zone"
           calculator: "Calculator"
           display: "Display"
-          both: "Both"
-          front_end: "Front End"
-          back_end: "Back End"
           no_shipping_methods_found: "No shipping methods found"
         new:
           new_shipping_method: "New Shipping Method"
@@ -3086,9 +3082,6 @@ en_IE:
         form:
           categories: "Categories"
           zones: "Zones"
-          both: "Both"
-          front_end: "Front End"
-          back_end: "Back End"
       payment_methods:
         new:
           new_payment_method: "New Payment Method"
@@ -3216,6 +3209,13 @@ en_IE:
       shared:
         sortable_header:
           name: "Name"
+          number: "Number"
+          state: "County"
+          payment_state: "Payment County"
+          shipment_state: "Shipment County"
+          email: "Email"
+          total: "Total"
+      general_settings:
         edit:
           legal_settings: "Legal Settings"
           cookies_consent_banner_toggle: "Display cookies consent banner"
@@ -3241,7 +3241,6 @@ en_IE:
       format: '%Y-%m-%d'
       js_format: 'yy-mm-dd'
     orders:
-      error_flash_for_unavailable_items: "An item in your cart has become unavailable."
       edit:
         login_to_view_order: "Please log in to view your order."
       bought:

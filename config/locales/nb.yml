@@ -685,12 +685,11 @@ nb:
           ofn_uid: OFN UID
           ofn_uid_tip: Den unike ID-en som brukes til å identifisere bedriften på Open Food Network.
         shipping_methods:
-          name: Navn
-          applies: Gjelder?
-          manage: Administrer Leveringsmetoder
-          create_button: Opprett Ny Leveringsmetode
-          create_one_button: Opprett en nå
-          no_method_yet: Du har ingen leveringsmetoder ennå.
+          name: "Navn"
+          manage: "Administrer Leveringsmetoder"
+          create_button: "Opprett Ny Leveringsmetode"
+          create_one_button: "Opprett en nå"
+          no_method_yet: "Du har ingen leveringsmetoder ennå."
         shop_preferences:
           shopfront_requires_login: "Offentlig synlig butikk?"
           shopfront_requires_login_tip: "Velg om kunder må logge inn for å se butikken eller om den er synlig for alle."
@@ -3049,9 +3048,6 @@ nb:
           zone: "Sone"
           calculator: "Kalkulator"
           display: "Visning"
-          both: "Begge"
-          front_end: "Frontend"
-          back_end: "Backend"
           no_shipping_methods_found: "Ingen leveringsmetoder funnet"
         new:
           new_shipping_method: "Ny Leveringsmetode"
@@ -3063,9 +3059,6 @@ nb:
         form:
           categories: "Kategorier"
           zones: "Soner"
-          both: "Begge"
-          front_end: "Frontend"
-          back_end: "Backend"
       payment_methods:
         new:
           new_payment_method: "Ny Betalingsmetode"
@@ -3193,6 +3186,13 @@ nb:
       shared:
         sortable_header:
           name: "Navn"
+          number: "Antall"
+          state: "Tilstand"
+          payment_state: "Betalingsstatus"
+          shipment_state: "Leveringsstatus"
+          email: "Epost"
+          total: "Total"
+      general_settings:
         edit:
           legal_settings: "Juridiske innstillinger"
           cookies_consent_banner_toggle: "Vis informasjonskapsler samtykkebanner"
@@ -3218,7 +3218,6 @@ nb:
       format: '%Y-%m-%d'
       js_format: 'yy-mm-dd'
     orders:
-      error_flash_for_unavailable_items: "Et element i handlekurven din er blitt utilgjengelig."
       edit:
         login_to_view_order: "Vennligst logg inn for å se bestillingen din."
       bought:

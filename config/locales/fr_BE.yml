@@ -123,8 +123,8 @@ fr_BE:
       subject: "%{enterprise} est maintenant sur %{sitename}"
       email_welcome: "Bienvenue"
       email_registered: "fait maintenant partie de"
-      email_userguide_html: "Le Guide Utilisateur expliquant comment mettre en place son profil producteur ou son comptoir est accessible ici: %{link}"
-      userguide: "Guide de l'utilisateur Open Food Network"
+      email_userguide_html: "Le Guide d'utilisation expliquant comment mettre en place son profil producteur ou son comptoir est accessible ici: %{link}"
+      userguide: "Guide d'utilisation Open Food Network"
       email_admin_html: "Vous pouvez gérer votre compte en vous connectant ici %{link} ou en cliquant sur la roue en haut à droite de la page d'accueil et en sélectionnant Administration."
       admin_panel: "Panneau de l'administrateur"
       email_community_html: "Nous avons aussi un forum de discussion en ligne (en anglais) pour échanger avec la communauté sur des questions liées au logiciel OFN et aux défis de la gestion d'un food hub.  Nous vous invitons à y participer. Nous sommes en constante évolution et vos contributions à ce forum vont façonner les prochaines étapes. %{link}"
@@ -401,7 +401,7 @@ fr_BE:
         main_links: Liens du menu principal
         footer_and_external_links: Pied de page et Liens Externes
         your_content: Votre contenu
-        user_guide: Guide utilisateur
+        user_guide: Guide d'utilisation
     enterprise_fees:
       index:
         title: "Marges et Commissions"
@@ -685,12 +685,11 @@ fr_BE:
           ofn_uid: OFN UID
           ofn_uid_tip: L'identifiant unique utilisé pour identifier l'entreprise sur Open Food Network.
         shipping_methods:
-          name: Nom
-          applies: Active?
-          manage: Gérer les méthodes de livraison
-          create_button: Créer nouvelle méthode de livraison
-          create_one_button: En créer une maintenant
-          no_method_yet: Vous n'avez pas encore paramétré de méthode de livraison.
+          name: "Nom"
+          manage: "Gérer les méthodes de livraison"
+          create_button: "Créer nouvelle méthode de livraison"
+          create_one_button: "En créer une maintenant"
+          no_method_yet: "Vous n'avez pas encore paramétré de méthode de livraison."
         shop_preferences:
           shopfront_requires_login: "Comptoir visible par tous?"
           shopfront_requires_login_tip: "Choisissez si les acheteurs doivent être connectés pour voir le magasin ou si le comptoir est visible par tout le monde."
@@ -698,7 +697,7 @@ fr_BE:
           shopfront_requires_login_true: "Visible uniquement pour les acheteurs logués"
           recommend_require_login: "Nous recommandons de demander aux utilisateur·trice·s de se connecter si vous souhaitez leur permettre de modifier leur commande."
           allow_guest_orders: "Commandes des invité·e·s"
-          allow_guest_orders_tip: "Autoriser la commande en tant qu'invité-e ou demander que la personne qui achète soit logué."
+          allow_guest_orders_tip: "Autoriser la commande en tant qu'invité·e ou demander que la personne qui achète soit logué."
           allow_guest_orders_false: "Demander que la personne qui achète se logue pour pouvoir commander"
           allow_guest_orders_true: "Autoriser les commandes en mode invité·e"
           allow_order_changes: "Modifier la commande"
@@ -964,7 +963,7 @@ fr_BE:
         could_not_resume_the_order: La commande n'a pas pu être reprise
     shared:
       user_guide_link:
-        user_guide: Guide utilisateur
+        user_guide: Guide d'utilisation
       enterprises_hubs_tabs:
         has_no_payment_methods: "%{enterprise} n'a pas défini de méthode de paiement"
         has_no_shipping_methods: "%{enterprise} n'a pas défini de méthode de livraison"
@@ -1175,7 +1174,11 @@ fr_BE:
         signup: "s'inscrire"
         contact: "contacter"
         require_customer_login: "Seuls les clients approuvés peuvent accéder à ce comptoir."
-        require_customer_html: "Si vous souhaitez commencer à magasiner ici, veuillez %{contact}%{enterprise}demander si vous souhaitez vous inscrire."
+        require_login_html: "Si vous êtes déjà un client approuvé, %{login} ou %{signup} pour continuer."
+        require_login_2_html: "Vous voulez commencer à faire vos achats ici? Veuillez %{contact} %{enterprise} et demandez à vous inscrire."
+        require_customer_html: "Si vous souhaitez commencer à faire vos achats ici, veuillez %{contact}%{enterprise} et demandez pour vous inscrire."
+      select_oc:
+        select_oc_html: "Veuillez <span class='highlighted'>choisir quand vous voulez votre commande</span> , pour voir quels produits sont disponibles."
   card_could_not_be_updated: La carte bancaire n'a pas pu être mise à jour
   card_could_not_be_saved: la carte n'a pas pu être sauvegardée
   spree_gateway_error_flash_for_checkout: "Il y a eu un problème avec vos informations de paiement : %{error}"
@@ -1232,7 +1235,7 @@ fr_BE:
   footer_email: "Email"
   footer_links_md: "Liens"
   footer_about_url: "A propos de l'URL"
-  user_guide_link: "Lien vers le guide utilisateur"
+  user_guide_link: "Lien vers le guide d'utilisation"
   name: Nom
   first_name: Prénom
   last_name: Nom de famille
@@ -1356,7 +1359,7 @@ fr_BE:
   brandstory_part6: "Nous pouvons toutes et tous participer à la construction d’un système alimentaire plus juste, respectueux de l’Homme qui préserve la planète."
   learn_body: "Explorer les modèles, les histoires et les ressources disponibles pour vous aider à développer votre propre initiative de commerce/organisation oeuvrant pour un système alimentaire équitable et juste. Trouver des outils pour vous former, des événements et autres opportunités d'apprendre de vos pairs."
   learn_cta: "Découvrir "
-  connect_body: "Rechercher dans le répertoire des producteurs, des comptoirs et des groupes pour trouver des commerçants éthiques à côté de chez vous. Inscrivez votre commerce ou organisation sur OFFrance pour que les acheteurs puissent vous trouver. Rejoignez la communauté pour recevoir du soutien et résoudre ensemble les problèmes."
+  connect_body: "Rechercher dans le répertoire des producteurs, des comptoirs et des groupes pour trouver des commerçants éthiques à côté de chez vous. Inscrivez votre commerce ou organisation sur la plateforme OFN de votre pays/région pour que les acheteurs puissent vous trouver. Rejoignez la communauté pour recevoir du soutien et résoudre ensemble les problèmes."
   connect_cta: "Explorer"
   system_headline: "Faire mes courses - comment ça marche?"
   system_step1: "1. Recherche"
@@ -1551,6 +1554,7 @@ fr_BE:
   products_update_error_msg: "Échec de l'enregistrement."
   products_update_error_data: "Échec de l'enregistrement dû à des données non valides."
   products_changes_saved: "Modifications enregistrées."
+  products_no_results_html: "Désolé, aucun résultat trouvé pour %{query}"
   search_no_results_html: "Désolé, aucun résultat pour %{query}. Autre recherche?"
   components_profiles_popover: "Certaines entreprises ont juste créé leur profil sur Open Food Network mais ne vendent pas via la plateforme. Elles ont peut-être une comptoir physique, ou une comptoir en ligne sur une autre plateforme."
   components_profiles_show: "Afficher aussi les profils"
@@ -1628,9 +1632,9 @@ fr_BE:
   sell_hubs_detail: "Créer un profil pour votre activité sur OFN en quelques minutes. A tout moment vous pourrez créer un comptoir en ligne pour vendre vos produits en direct aux acheteurs."
   sell_groups_detail: "Créer un répertoire sur mesure (regroupant différents producteurs et comptoirs) pour votre région ou votre organisation."
   sell_user_guide: "En savoir plus en explorant le guide d'utilisation."
-  sell_listing_price: "L'inscription à l'OFN est libre de contribution. Ouvrir et utiliser un comptoir sur OFN vous permet de gagner jusqu'à 500 $ de ventes mensuelles. Si vous vendez plus, vous pouvez choisir votre contribution communautaire entre 1% et 3% des ventes. Pour plus de détails sur les prix, visitez la section Plateforme logicielle via le lien \"À propos\" de dans le menu supérieur."
-  sell_embed: "D’ici là, vous pouvez également participer au projet. Soit en co-créant la communauté belge, en contribuant à l’amélioration des fonctionnalités…  Soit en mettant à disposition : un local pour la démonstration de l’outil ou un point relais pour faciliter les livraisons… Soit en le finançant par un don (déductible fiscalement à partir de 40€) versé à Oxfam-Magasins du monde qui coordonne le projet :  BE41 0682 2264 2410 – com: Open Food Network Nous consulter sur les services des partenaires OFN."
-  sell_ask_services: "Nous consulter sur les services des partenaires OFN."
+  sell_listing_price: "L'inscription à l'OFN est libre de contribution. Ouvrir et utiliser un comptoir sur OFN vous permet de gagner jusqu'à 500 € de ventes mensuelles, le service est gratuit les 6 premiers mois. Ensuite, une contribution entre 1 à 3% de votre chiffre de vente est demandée."
+  sell_embed: "D’ici là, vous pouvez également participer au projet. \nSoit en co-créant la communauté belge et en contribuant à l’amélioration des fonctionnalité. Soit en mettant à disposition un local pour faciliter les livraisons ou un lieu pour former les utilisateurs·trices à la plateforme, etc. Soit en soutenant le projet par un don (déductible fiscalement à partir de 40€) à verser sur le compte d'Oxfam-Magasins du monde qui facilite la plateforme :  BE41 0682 2264 2410 – en communication Open Food Network Belgium."
+  sell_ask_services: "Contactez-nous pour en savoir plus."
   shops_title: Comptoirs
   shops_headline: Des achats qui transforment.
   shops_text: Les aliments poussent selon des cycles naturels, les fermiers récoltent selon les saisons. Alors ici, nous achetons aussi en suivant des cycles. Si un cycle de vente est terminé, attendez le suivant ou contactez votre comptoir favori !
@@ -1859,7 +1863,7 @@ fr_BE:
         headline: "C'est terminé!"
         thanks: "Merci d'avoir complété le profil de %{enterprise}"
         login: "Vous pouvez modifier ou mettre à jour les détails de votre entreprise à tout moment en vous connectant sur Open Food Network, rubrique Admin."
-        action: "Aller au tableau de bord des entreprises"
+        action: "Allez au tableau de bord des entreprises"
   back: "Retour"
   continue: "Suivant"
   action_or: "OU"
@@ -2031,7 +2035,7 @@ fr_BE:
   first_name_begins_with: "Début du prénom"
   last_name_begins_with: "Début du nom de famille"
   enterprise_tos_link: "Lien vers les Conditions Générales d'Utilisation"
-  enterprise_tos_message: "Nous soutenons la mise en place d'un système alimentaire résilient et durable, et souhaitons œuvrer avec des entreprises qui partagent nos valeurs et notre vision. Ainsi, nous demandons aux entreprises s'enregistrant sur Open Food Network de valider nos "
+  enterprise_tos_message: "Nous soutenons la mise en place d'un système alimentaire résilient et durable, et souhaitons œuvrer avec des acteurs et actrices qui partagent nos valeurs et notre vision. Ainsi, nous demandons aux acteurs s'enregistrant sur Open Food Network de valider nos "
   enterprise_tos_link_text: "Conditions d'utilisation"
   enterprise_tos_agree: "J'adhère aux valeurs d'Open Food Network et valide les Conditions Générales d'Utilisation."
   tax_settings: "Paramètres TVA"
@@ -2313,6 +2317,10 @@ fr_BE:
     resolve_errors: Veuillez corriger les erreurs suivantes
     more_items: "+ %{count} en plus"
     default_card_updated: La carte bancaire par défaut a été mise à jour
+    cart:
+      add_to_cart_failed: >
+          Il y a eu un problème pour ajouter ce produit au panier. Il est peut-être
+          devenu indisponible ou le magasin est en train de fermer.
     admin:
       enterprise_limit_reached: "Vous avez atteint le nombre limite d'entreprises autorisées par défaut. Ecrivez à %{contact_email}si vous avez besoin d'augmenter cette limite."
       modals:
@@ -2695,7 +2703,7 @@ fr_BE:
     location: "Site"
     count_on_hand: "Compté à la main"
     quantity: "Nb commandé"
-    on_demand: "A volonté"
+    on_demand: "A la demande"
     on_hand: "En stock"
     package_from: "colis provenant de "
     item_description: "Description de l'article "
@@ -2855,7 +2863,7 @@ fr_BE:
       admin:
         login_nav:
           header:
-            store: Vue acheteur·euse
+            store: Aperçu
     admin:
       tab:
         dashboard: "Tableau de bord"
@@ -2990,9 +2998,6 @@ fr_BE:
           zone: "Zone"
           calculator: "Calculateur"
           display: "Ecran"
-          both: "Tou·te·s les deux"
-          front_end: "L'extrémité avant"
-          back_end: "Back End"
           no_shipping_methods_found: "Aucune méthode de livraison trouvée"
         new:
           new_shipping_method: "Nouvelle méthode de livraison"
@@ -3004,9 +3009,6 @@ fr_BE:
         form:
           categories: "Les catégories"
           zones: "Zones"
-          both: "Tous les deux"
-          front_end: "L'extrémité avant"
-          back_end: "Back End"
       payment_methods:
         new:
           new_payment_method: "Nouvelle méthode de paiement"
@@ -3132,6 +3134,13 @@ fr_BE:
       shared:
         sortable_header:
           name: "Nom"
+          number: "N° commande"
+          state: "Province"
+          payment_state: "Statut du Paiement"
+          shipment_state: "Statut livraison"
+          email: "Email"
+          total: "Total"
+      general_settings:
         edit:
           legal_settings: "Configuration légales"
           cookies_consent_banner_toggle: "Afficher la bannière de consentement à l'utilisation des cookies"
@@ -3157,7 +3166,6 @@ fr_BE:
       format: '%Y-%m-%d'
       js_format: 'yy-mm-dd'
     orders:
-      error_flash_for_unavailable_items: "Une donnée n'est plus disponible sur votre carte."
       edit:
         login_to_view_order: "Veuillez vous connecter pour voir votre commande."
       bought:
