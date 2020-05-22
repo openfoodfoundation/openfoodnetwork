@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ResetOrderService do
+describe OrderCompletionReset do
   let(:current_token) { double(:current_token) }
   let(:current_distributor) { double(:distributor) }
   let(:current_order) do

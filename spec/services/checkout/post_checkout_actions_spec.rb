@@ -11,10 +11,10 @@ describe Checkout::PostCheckoutActions do
     let(:params) { { order: {} } }
     let(:current_user) { order.distributor.owner }
 
-    let(:reset_order_service) { instance_double(ResetOrderService) }
+    let(:reset_order_service) { instance_double(OrderCompletionReset) }
 
     before do
-      expect(ResetOrderService).to receive(:new).
+      expect(OrderCompletionReset).to receive(:new).
         with(controller, order).and_return(reset_order_service)
       expect(reset_order_service).to receive(:call)
     end
@@ -48,10 +48,10 @@ describe Checkout::PostCheckoutActions do
   end
 
   describe "#failure" do
-    let(:restart_checkout_service) { instance_double(RestartCheckout) }
+    let(:restart_checkout_service) { instance_double(OrderCheckoutRestart) }
 
     it "restarts the checkout process" do
-      expect(RestartCheckout).to receive(:new).with(order).and_return(restart_checkout_service)
+      expect(OrderCheckoutRestart).to receive(:new).with(order).and_return(restart_checkout_service)
       expect(restart_checkout_service).to receive(:call)
 
       postCheckoutActions.failure

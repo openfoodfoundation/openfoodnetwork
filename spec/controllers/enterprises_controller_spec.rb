@@ -3,14 +3,15 @@ require 'spec_helper'
 describe EnterprisesController, type: :controller do
   describe "shopping for a distributor" do
     let(:order) { controller.current_order(true) }
-
+    let(:line_item) { create(:line_item) }
     let!(:current_distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
     let!(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
-    let!(:order_cycle1) { create(:simple_order_cycle, distributors: [distributor], orders_open_at: 2.days.ago, orders_close_at: 3.days.from_now ) }
+    let!(:order_cycle1) { create(:simple_order_cycle, distributors: [distributor], orders_open_at: 2.days.ago, orders_close_at: 3.days.from_now, variants: [line_item.variant] ) }
     let!(:order_cycle2) { create(:simple_order_cycle, distributors: [distributor], orders_open_at: 3.days.ago, orders_close_at: 4.days.from_now ) }
 
     before do
       order.set_distributor! current_distributor
+      order.line_items << line_item
     end
 
     it "sets the shop as the distributor on the order when shopping for the distributor" do
@@ -81,21 +82,16 @@ describe EnterprisesController, type: :controller do
     end
 
     it "should not empty an order if returning to the same distributor" do
-      product = create(:product)
-      create(:simple_order_cycle, distributors: [current_distributor], variants: [product.variants.first])
-      line_item = create(:line_item, variant: product.variants.first)
-      controller.current_order.line_items << line_item
-
       spree_get :shop, id: current_distributor
 
       expect(controller.current_order.distributor).to eq current_distributor
-      expect(controller.current_order.line_items.first.variant).to eq product.variants.first
+      expect(controller.current_order.line_items.first.variant).to eq line_item.variant
     end
 
     describe "when an out of stock item is in the cart" do
       let(:variant) { create(:variant, on_demand: false, on_hand: 10) }
       let(:line_item) { create(:line_item, variant: variant) }
-      let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], variants: [variant]) }
+      let(:order_cycle) { create(:simple_order_cycle, distributors: [current_distributor], variants: [variant]) }
 
       before do
         order.set_distribution! current_distributor, order_cycle
@@ -110,6 +106,19 @@ describe EnterprisesController, type: :controller do
 
         expect(response).to redirect_to cart_path
       end
+    end
+
+    it "resets order if the order cycle of the current order is no longer open or visible" do
+      order.distributor = distributor
+      order.order_cycle = order_cycle1
+      order.save
+      order_cycle1.update_attribute :orders_close_at, Time.zone.now
+
+      spree_get :shop, id: distributor
+
+      expect(controller.current_order.distributor).to eq(distributor)
+      expect(controller.current_order.order_cycle).to eq(order_cycle2)
+      expect(controller.current_order.line_items).to be_empty
     end
 
     it "sets order cycle if only one is available at the chosen distributor" do

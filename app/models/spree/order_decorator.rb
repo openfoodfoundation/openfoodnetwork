@@ -109,12 +109,12 @@ Spree::Order.class_eval do
   alias_method_chain :empty!, :clear_shipping_and_payments
 
   def set_order_cycle!(order_cycle)
-    unless self.order_cycle == order_cycle
-      self.order_cycle = order_cycle
-      self.distributor = nil unless order_cycle.nil? || order_cycle.has_distributor?(distributor)
-      empty!
-      save!
-    end
+    return if self.order_cycle == order_cycle
+
+    self.order_cycle = order_cycle
+    self.distributor = nil unless order_cycle.nil? || order_cycle.has_distributor?(distributor)
+    empty!
+    save!
   end
 
   # "Checkout" is the initial state and, for card payments, "pending" is the state after authorization
