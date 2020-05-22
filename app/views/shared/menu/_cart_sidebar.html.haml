@@ -30,7 +30,6 @@
       %p.cart-total
         %strong
           = t 'total'
-          \:
           {{ Cart.total()  | localizeCurrency }}
 
       %a.edit-cart.button.large.dark.left{href: main_app.cart_path, "ng-disabled" => "Cart.dirty || Cart.empty()", "ng-class" => "{ dirty: Cart.dirty }"}
