@@ -3096,9 +3096,8 @@ fr:
           zone: "Zone"
           calculator: "Calculateur"
           display: "Afficher"
-          both: "Les deux"
-          front_end: "Front End"
-          back_end: "Back End"
+          both: "Vu par l'acheteur sur la boutique"
+          back_end: "Visible pour l'administration uniquement"
           no_shipping_methods_found: "Aucune méthode de livraison trouvée"
         new:
           new_shipping_method: "Nouvelle méthode de livraison"
@@ -3110,9 +3109,8 @@ fr:
         form:
           categories: "Conditions de transport"
           zones: "Zones"
-          both: "Les deux"
-          front_end: "Front End"
-          back_end: "Back End"
+          both: "Vu par l'acheteur sur la boutique"
+          back_end: "Visible pour l'administration uniquement"
       payment_methods:
         new:
           new_payment_method: "Nouvelle méthode de paiement"
@@ -3240,6 +3238,13 @@ fr:
       shared:
         sortable_header:
           name: "Produit/Variante"
+          number: "N° commande"
+          state: "Statut"
+          payment_state: "Statut du Paiement"
+          shipment_state: "Statut livraison"
+          email: "Email"
+          total: "Total"
+      general_settings:
         edit:
           legal_settings: "Configuration légales"
           cookies_consent_banner_toggle: "Afficher la bannière de consentement à l'utilisation des cookies"
