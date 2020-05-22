@@ -3066,9 +3066,8 @@ en_FR:
           zone: "Zone"
           calculator: "Calculator"
           display: "Display"
-          both: "Both"
-          front_end: "Front End"
-          back_end: "Back End"
+          both: "Both Checkout and Back office"
+          back_end: "Back office only"
           no_shipping_methods_found: "No shipping methods found"
         new:
           new_shipping_method: "New Shipping Method"
@@ -3080,9 +3079,8 @@ en_FR:
         form:
           categories: "Categories"
           zones: "Zones"
-          both: "Both"
-          front_end: "Front End"
-          back_end: "Back End"
+          both: "Both Checkout and Back office"
+          back_end: "Back office only"
       payment_methods:
         new:
           new_payment_method: "New Payment Method"
@@ -3210,6 +3208,13 @@ en_FR:
       shared:
         sortable_header:
           name: "Name"
+          number: "Number"
+          state: "State"
+          payment_state: "Payment State"
+          shipment_state: "Shipment State"
+          email: "Email"
+          total: "Total"
+      general_settings:
         edit:
           legal_settings: "Legal Settings"
           cookies_consent_banner_toggle: "Display cookies consent banner"
