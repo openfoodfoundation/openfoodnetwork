@@ -2,17 +2,12 @@ require 'spec_helper'
 
 describe JobLogger do
   describe '.logger' do
-    it 'passes the message to the Logger instance' do
-      job_logger = instance_double(::Logger)
-      allow(job_logger).to receive(:formatter=)
-      allow(job_logger).to receive(:info)
+    it "returns a Ruby's logger instance" do
+      expect(JobLogger.logger).to respond_to(:info)
+    end
 
-      worker_logger = instance_double(::Logger, clone: job_logger)
-      allow(Delayed::Worker).to receive(:logger) { worker_logger }
-
-      JobLogger.logger.info('log message')
-
-      expect(job_logger).to have_received(:info).with('log message')
+    it 'returns custom formatted logger instance' do
+      expect(JobLogger.logger.formatter).to be_instance_of(JobLogger::Formatter)
     end
   end
 

@@ -158,7 +158,7 @@ products .filter-box {
 
   @include placeholder(rgba(0, 0, 0, 0.4), #777);
 
-  input[type="text"] {
+  input[type="text"], input[type="search"] {
     @include big-input(rgba(0, 0, 0, 0.3), #777, $clr-brick);
   }
 }

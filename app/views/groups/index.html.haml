@@ -14,9 +14,10 @@
   #active-table-search.row.pad-top
     .small-12.columns
       %p
-        %input{type: :text,
+        %input{type: "search",
         "ng-model" => "query",
         placeholder: t(:groups_search),
+        inputmode: "search",
         "ng-debounce" => "150",
         "ofn-disable-enter" => true}
 

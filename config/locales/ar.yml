@@ -680,12 +680,11 @@ ar:
           ofn_uid: شبكة الغذاء المفتوح UID
           ofn_uid_tip: المعرف الفريد المستخدم لتحديد الشركة على شبكة الغذاء المفتوح.
         shipping_methods:
-          name: اسم
-          applies: ينطبق؟
-          manage: إدارة طرق الشحن
-          create_button: إنشاء طريقة شحن جديدة
-          create_one_button: إنشاء واحدة الآن
-          no_method_yet: ليس لديك أي طرق شحن حتى الآن.
+          name: "اسم"
+          manage: "إدارة طرق الشحن"
+          create_button: "إنشاء طريقة شحن جديدة"
+          create_one_button: "إنشاء واحدة الآن"
+          no_method_yet: "ليس لديك أي طرق شحن حتى الآن."
         shop_preferences:
           shopfront_requires_login: "واجهة المتجر مرئية للعام؟"
           shopfront_requires_login_tip: "اختر ما إذا كان يجب على العملاء تسجيل الدخول لعرض واجهة المحل أو إذا كان مرئيًا للجميع."
@@ -1162,12 +1161,12 @@ ar:
       footer_data_cookies_policy: "اتفاقية ملفات تعريف الارتباط"
   shop:
     messages:
-      login: "تسجيل الدخول"
-      signup: "سجل"
-      contact: "اتصل"
-      require_customer_login: "يمكن للعملاء المعتمدين فقط الوصول إلى هذا المتجر."
-      require_login_html: "إذا كنت بالفعل عميلًا معتمدًا ، فتابع %{login} أو %{signup} للمتابعة. تريد أن تبدأ التسوق هنا؟ يرجى %{contact} %{enterprise} واسأل عن الانضمام."
-      require_customer_html: "إذا كنت ترغب في بدء التسوق هنا ، فيرجى %{contact} %{enterprise} أن تسأل عن الانضمام."
+      customer_required:
+        login: "تسجيل الدخول"
+        signup: "سجل"
+        contact: "اتصل"
+        require_customer_login: "يمكن للعملاء المعتمدين فقط الوصول إلى هذا المتجر."
+        require_customer_html: "إذا كنت ترغب في بدء التسوق هنا ، فيرجى %{contact} %{enterprise} أن تسأل عن الانضمام."
   card_could_not_be_updated: لا يمكن تحديث البطاقة
   card_could_not_be_saved: لا يمكن حفظ البطاقة
   spree_gateway_error_flash_for_checkout: "حدثت مشكلة في معلومات الدفع الخاصة بك: %{error}"
@@ -1529,11 +1528,14 @@ ar:
     many: لديك <a href='%{path}' target='_blank'>%{count} أوامر مع %{shop}</a> مفتوحة حاليًا للمراجعة. يمكنك إجراء تغييرات حتى %{oc_close}.
     other: لديك <a href='%{path}' target='_blank'>%{count} أوامر مع %{shop}</a> مفتوحة حاليًا للمراجعة. يمكنك إجراء تغييرات حتى %{oc_close}.
   orders_changeable_orders_alert_html: تم تأكيد هذا الطلب ، ولكن يمكنك إجراء تغييرات حتى <strong>%{oc_close}</strong> .
-  products_clear_all: امسح الكل
+  products_clear: ازالة
   products_showing: "عرض:"
   products_or: "أو"
+  products_and: "و"
   products_with: مع
-  products_search: "البحث عن طريق المنتج أو المنتج"
+  products_filter_by: "مرشح بواسطة"
+  products_filter_selected: "تم الاختيار"
+  products_filter_clear: "ازالة"
   products_loading: "جارٍ تحميل المنتجات ..."
   products_updating_cart: "جارٍ تحديث سلة المشتريات..."
   products_cart_empty: "السلة فارغة"
@@ -3010,9 +3012,6 @@ ar:
           zone: "منطقة"
           calculator: "آلة حاسبة"
           display: "عرض"
-          both: "على حد سواء"
-          front_end: "الواجهة "
-          back_end: "عودة النهاية"
           no_shipping_methods_found: "لم يتم العثور على طرق الشحن"
         new:
           new_shipping_method: "طريقة الشحن الجديدة"
@@ -3024,9 +3023,6 @@ ar:
         form:
           categories: "التصنيفات"
           zones: "مناطق"
-          both: "على حد سواء"
-          front_end: "الواجهة "
-          back_end: "عودة النهاية"
       payment_methods:
         new:
           new_payment_method: "طريقة الدفع الجديدة"
@@ -3152,6 +3148,13 @@ ar:
       shared:
         sortable_header:
           name: "الاسم"
+          number: "رقم "
+          state: "ولاية"
+          payment_state: "حالة الدفعة"
+          shipment_state: "حالة الشحن"
+          email: "البريد الإلكتروني"
+          total: "المجموع"
+      general_settings:
         edit:
           legal_settings: "الإعدادات القانونية"
           cookies_consent_banner_toggle: "عرض راية موافقة ملفات تعريف الارتباط"
@@ -3177,7 +3180,6 @@ ar:
       format: '٪ س-٪ م-%d'
       js_format: 'يوم-شهر-سنة'
     orders:
-      error_flash_for_unavailable_items: "المادة في سلة التسوق غير متاح."
       edit:
         login_to_view_order: "يرجى تسجيل الدخول لعرض طلبك."
       bought:

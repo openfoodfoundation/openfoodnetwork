@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe RestartCheckout do
+describe OrderCheckoutRestart do
   let(:order) { create(:order_with_distributor) }
 
   describe "#call" do
     context "when the order is already in the 'cart' state" do
       it "does nothing" do
         expect(order).to_not receive(:restart_checkout!)
-        RestartCheckout.new(order).call
+        OrderCheckoutRestart.new(order).call
       end
     end
 
@@ -25,7 +25,7 @@ describe RestartCheckout do
         before { order.ship_address = nil }
 
         it "resets the order state, and clears incomplete shipments and payments" do
-          RestartCheckout.new(order).call
+          OrderCheckoutRestart.new(order).call
 
           expect_cart_state_and_reset_adjustments
         end
@@ -35,7 +35,7 @@ describe RestartCheckout do
         before { order.ship_address = order.address_from_distributor }
 
         it "resets the order state, and clears incomplete shipments and payments" do
-          RestartCheckout.new(order).call
+          OrderCheckoutRestart.new(order).call
 
           expect_cart_state_and_reset_adjustments
         end
@@ -46,7 +46,7 @@ describe RestartCheckout do
 
         it "does not reset the order state nor clears incomplete shipments and payments" do
           expect do
-            RestartCheckout.new(order).call
+            OrderCheckoutRestart.new(order).call
           end.to raise_error(StateMachine::InvalidTransition)
 
           expect(order.state).to eq 'payment'

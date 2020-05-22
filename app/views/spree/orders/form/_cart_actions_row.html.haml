@@ -1,7 +1,7 @@
 %tr
   %td{colspan:"2"}
   %td
-    = button_tag :class => 'secondary radius expand small', :id => 'update-button' do
+    %button#update-button.secondary.radius.expand.small{"ng-class" => "{ alert: form.$dirty && form.$valid }"}
       %i.ofn-i_023-refresh
       = t(:update)
   %td

@@ -229,6 +229,15 @@ feature "As a consumer I want to check out my cart", js: true do
         end
       end
 
+      it "filters out 'Back office only' shipping methods" do
+        expect(page).to have_content shipping_with_fee.name
+        shipping_with_fee.update_attribute :display_on, 'back_end' # Back office only
+
+        visit checkout_path
+        checkout_as_guest
+        expect(page).not_to have_content shipping_with_fee.name
+      end
+
       context "using FilterShippingMethods" do
         let(:user) { create(:user) }
         let(:customer) { create(:customer, user: user, enterprise: distributor) }

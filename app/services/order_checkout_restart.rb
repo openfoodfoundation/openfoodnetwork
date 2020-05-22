@@ -1,5 +1,5 @@
 # Resets the passed order to cart state while clearing associated payments and shipments
-class RestartCheckout
+class OrderCheckoutRestart
   def initialize(order)
     @order = order
   end

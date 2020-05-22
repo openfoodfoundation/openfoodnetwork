@@ -685,12 +685,11 @@ nb:
           ofn_uid: OFN UID
           ofn_uid_tip: Den unike ID-en som brukes til å identifisere bedriften på Open Food Network.
         shipping_methods:
-          name: Navn
-          applies: Gjelder?
-          manage: Administrer Leveringsmetoder
-          create_button: Opprett Ny Leveringsmetode
-          create_one_button: Opprett en nå
-          no_method_yet: Du har ingen leveringsmetoder ennå.
+          name: "Navn"
+          manage: "Administrer Leveringsmetoder"
+          create_button: "Opprett Ny Leveringsmetode"
+          create_one_button: "Opprett en nå"
+          no_method_yet: "Du har ingen leveringsmetoder ennå."
         shop_preferences:
           shopfront_requires_login: "Offentlig synlig butikk?"
           shopfront_requires_login_tip: "Velg om kunder må logge inn for å se butikken eller om den er synlig for alle."
@@ -1169,12 +1168,12 @@ nb:
       footer_data_cookies_policy: "policy informasjonskapsler"
   shop:
     messages:
-      login: "innlogging"
-      signup: "melde deg på"
-      contact: "kontakt"
-      require_customer_login: "Kun godkjente kunder kan få tilgang til denne butikken."
-      require_login_html: "Hvis du allerede er en godkjent kunde, kan du fortsette %{login} eller %{signup}. Vil du begynne å handle her? Vennligst %{contact} %{enterprise} og spør om å bli med."
-      require_customer_html: "Hvis du vil begynne å handle her, vennligst %{contact} %{enterprise} for å spørre om å bli med."
+      customer_required:
+        login: "innlogging"
+        signup: "melde deg på"
+        contact: "kontakt"
+        require_customer_login: "Kun godkjente kunder kan få tilgang til denne butikken."
+        require_customer_html: "Hvis du vil begynne å handle her, vennligst %{contact} %{enterprise} for å spørre om å bli med."
   card_could_not_be_updated: Kortet kunne ikke oppdateres
   card_could_not_be_saved: kort kunne ikke lagres
   spree_gateway_error_flash_for_checkout: "Det oppstod et problem med betalingsinformasjonen din: %{error}"
@@ -1532,11 +1531,14 @@ nb:
     one: Din bestilling med <a href='%{path}' target='_blank'> %{shop} / %{order} </a> er åpen for vurdering. Du kan gjøre endringer til %{oc_close}.
     other: Du har <a href='%{path}' target='_blank'> %{count} bestillinger med %{shop} </a> for øyeblikket åpen for gjennomgang. Du kan gjøre endringer til %{oc_close}.
   orders_changeable_orders_alert_html: Denne bestillingen er bekreftet, men du kan gjøre endringer til <strong>%{oc_close}</strong>.
-  products_clear_all: Fjern alt
+  products_clear: Fjern
   products_showing: "Viser:"
-  products_or: "ELLER"
+  products_or: "eller"
+  products_and: "og"
   products_with: med
-  products_search: "Søk på produkt eller produsent"
+  products_filter_by: "Filtrer på"
+  products_filter_selected: "valgt"
+  products_filter_clear: "Fjern"
   products_loading: "Laster produkter..."
   products_updating_cart: "Oppdaterer handlekurv..."
   products_cart_empty: "Handlekurv tom"
@@ -3046,9 +3048,6 @@ nb:
           zone: "Sone"
           calculator: "Kalkulator"
           display: "Visning"
-          both: "Begge"
-          front_end: "Frontend"
-          back_end: "Backend"
           no_shipping_methods_found: "Ingen leveringsmetoder funnet"
         new:
           new_shipping_method: "Ny Leveringsmetode"
@@ -3060,9 +3059,6 @@ nb:
         form:
           categories: "Kategorier"
           zones: "Soner"
-          both: "Begge"
-          front_end: "Frontend"
-          back_end: "Backend"
       payment_methods:
         new:
           new_payment_method: "Ny Betalingsmetode"
@@ -3190,6 +3186,13 @@ nb:
       shared:
         sortable_header:
           name: "Navn"
+          number: "Antall"
+          state: "Tilstand"
+          payment_state: "Betalingsstatus"
+          shipment_state: "Leveringsstatus"
+          email: "Epost"
+          total: "Total"
+      general_settings:
         edit:
           legal_settings: "Juridiske innstillinger"
           cookies_consent_banner_toggle: "Vis informasjonskapsler samtykkebanner"
@@ -3215,7 +3218,6 @@ nb:
       format: '%Y-%m-%d'
       js_format: 'yy-mm-dd'
     orders:
-      error_flash_for_unavailable_items: "Et element i handlekurven din er blitt utilgjengelig."
       edit:
         login_to_view_order: "Vennligst logg inn for å se bestillingen din."
       bought:

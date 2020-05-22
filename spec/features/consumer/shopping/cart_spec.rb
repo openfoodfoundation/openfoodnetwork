@@ -159,6 +159,7 @@ feature "full-page cart", js: true do
     describe "updating quantities" do
       let(:li) { order.line_items(true).last }
       let(:variant) { product_with_tax.variants.first }
+      let(:variant2) { product_with_fee.variants.first }
 
       before do
         add_product_to_cart order, product_with_tax
@@ -175,15 +176,26 @@ feature "full-page cart", js: true do
       end
 
       describe "with insufficient stock available" do
-        it "prevents user from entering an invalid value" do
-          # Given we have 2 on hand, and we've loaded the page after that fact
+        it "prevents user from entering invalid values" do
+          add_product_to_cart order, product_with_fee
+
           variant.update_attributes!(on_hand: 2, on_demand: false)
+          variant2.update_attributes!(on_hand: 3, on_demand: false)
           visit main_app.cart_path
 
           accept_alert 'Insufficient stock available, only 2 remaining' do
-            fill_in "order_line_items_attributes_0_quantity", with: '4'
+            within "tr.variant-#{variant.id}" do
+              fill_in "order_line_items_attributes_0_quantity", with: '4'
+            end
           end
           expect(page).to have_field "order_line_items_attributes_0_quantity", with: '2'
+
+          accept_alert 'Insufficient stock available, only 3 remaining' do
+            within "tr.variant-#{variant2.id}" do
+              fill_in "order_line_items_attributes_1_quantity", with: '4'
+            end
+          end
+          expect(page).to have_field "order_line_items_attributes_1_quantity", with: '3'
         end
 
         it "shows the quantities saved, not those submitted" do
@@ -200,6 +212,40 @@ feature "full-page cart", js: true do
 
           expect(page).to have_content "Insufficient stock available, only 2 remaining"
           expect(page).to have_field "order_line_items_attributes_0_quantity", with: '1'
+        end
+
+        describe "full UX for correcting selected quantities with insufficient stock" do
+          before do
+            add_product_to_cart order, product_with_tax, quantity: 5
+            variant.update_attributes! on_hand: 4, on_demand: false
+          end
+
+          it "gives clear user feedback during the correcting process" do
+            visit main_app.cart_path
+
+            # shows a relevant Flash message
+            expect(page).to have_selector ".alert-box", text: I18n.t('spree.orders.error_flash_for_unavailable_items')
+
+            # "Continue Shopping" and "Checkout" buttons are disabled
+            expect(page).to have_selector "a.continue-shopping[disabled=disabled]"
+            expect(page).to have_selector "a#checkout-link[disabled=disabled]"
+
+            # Quantity field clearly marked as invalid and "Update" button is not highlighted
+            expect(page).to have_selector "#order_line_items_attributes_0_quantity.ng-invalid-stock"
+            expect(page).to_not have_selector "#update-button.alert"
+
+            fill_in "order_line_items_attributes_0_quantity", with: 4
+
+            # Quantity field not marked as invalid and "Update" button is highlighted after correction
+            expect(page).to_not have_selector "#order_line_items_attributes_0_quantity.ng-invalid-stock"
+            expect(page).to have_selector "#update-button.alert"
+
+            click_button I18n.t("update")
+
+            # "Continue Shopping" and "Checkout" buttons are not disabled after cart is updated
+            expect(page).to_not have_selector "a.continue-shopping[disabled=disabled]"
+            expect(page).to_not have_selector "a#checkout-link[disabled=disabled]"
+          end
         end
       end
     end
