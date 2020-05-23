@@ -57,10 +57,6 @@
     button, a.button {
       width: 48%;
     }
-
-    a.button {
-      line-height: 2.75em;
-    }
   }
 
   @include breakpoint(tablet) {
