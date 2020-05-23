@@ -26,7 +26,7 @@
         %p
           = t('.cart_empty')
 
-        %a.go-shopping.button.large.bright{ng: {href: "{{ CurrentHub.hub.id ? '#{main_app.shop_path}' : '#{main_app.shops_path}' }}"}}
+        %a.go-shopping.button.large.bright{ng: {show: "#{show_shopping_cta?}", href: "{{ CurrentHub.hub.id ? '#{main_app.shop_path}' : '#{main_app.shops_path}' }}"}}
           = t('.take_me_shopping')
 
     .sidebar-footer{"ng-show" => "Cart.line_items.length > 0"}
