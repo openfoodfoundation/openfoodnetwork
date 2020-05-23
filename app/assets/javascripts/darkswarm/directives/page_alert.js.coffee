@@ -14,8 +14,8 @@ Darkswarm.directive "ofnPageAlert", ($timeout) ->
     # Wait a moment after page load before showing the alert. Otherwise we often miss the
     # start of the animation.
     $timeout ->
-      container_elems.addClass("move-down")
+      container_elems.addClass("move-up")
     , 1000
 
     scope.close = ->
-      container_elems.removeClass("move-down")
+      container_elems.removeClass("move-up")
