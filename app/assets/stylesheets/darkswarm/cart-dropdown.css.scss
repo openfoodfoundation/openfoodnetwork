@@ -43,9 +43,18 @@
       padding-top: 10em;
       width: 100%;
 
-      span {
+      p {
         font-size: 1.5em;
       }
+    }
+  }
+
+  .go-shopping {
+    display: none;
+    padding: 0 1.5em;
+
+    @include breakpoint(mobile) {
+      display: inline-block;
     }
   }
 

@@ -23,8 +23,11 @@
             %span.total-price.right {{ line_item.total_price | localizeCurrency }}
 
       .cart-empty{"ng-show" => "Cart.line_items.length == 0"}
-        %span
+        %p
           = t('.cart_empty')
+
+        %a.go-shopping.button.large.bright{ng: {href: "{{ CurrentHub.hub.id ? '#{main_app.shop_path}' : '#{main_app.shops_path}' }}"}}
+          = t('.take_me_shopping')
 
     .sidebar-footer{"ng-show" => "Cart.line_items.length > 0"}
       %p.cart-total
