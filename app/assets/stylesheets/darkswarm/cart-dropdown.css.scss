@@ -93,8 +93,11 @@
     margin: -0.5em 0 0.75em 0;
   }
 
-  @include breakpoint(mobile) {
-    .sidebar, .sidebar-footer {
+  .sidebar, .sidebar-footer {
+    width: 375px;
+    margin-right: -375px;
+
+    @include breakpoint(mobile) {
       width: 100%;
       margin-right: -100%;
     }
