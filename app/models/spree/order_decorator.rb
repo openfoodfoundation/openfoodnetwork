@@ -313,12 +313,14 @@ Spree::Order.class_eval do
   end
 
   def tax_adjustments
-    adjustments.with_tax +
-      line_items.includes(:adjustments).map { |li| li.adjustments.with_tax }.flatten
+    adjustments + price_adjustments
   end
 
   def tax_adjustment_totals
     tax_adjustments.each_with_object({}) do |adjustment, hash|
+      # No need of dealing with a missing Tax Rate if no tax setup
+      next if adjustment.included_tax.zero?
+
       tax_rates = TaxRateFinder.tax_rates_of(adjustment)
       tax_rates_hash = Hash[tax_rates.collect do |tax_rate|
         tax_amount = tax_rates.one? ? adjustment.included_tax : tax_rate.compute_tax(adjustment.amount)
@@ -326,21 +328,6 @@ Spree::Order.class_eval do
       end]
       hash.update(tax_rates_hash) { |_tax_rate, amount1, amount2| amount1 + amount2 }
     end
-  end
-
-  def price_adjustments
-    adjustments = []
-
-    line_items.each { |line_item| adjustments.concat line_item.adjustments }
-
-    adjustments
-  end
-
-  def price_adjustment_totals
-    Hash[tax_adjustment_totals.map do |tax_rate, tax_amount|
-      [tax_rate.name,
-       Spree::Money.new(tax_amount, currency: currency)]
-    end]
   end
 
   def has_taxes_included
