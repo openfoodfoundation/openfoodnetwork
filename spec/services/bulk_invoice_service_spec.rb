@@ -47,4 +47,11 @@ describe BulkInvoiceService do
       expect(filepath).to eq 'tmp/invoices/1234567.pdf'
     end
   end
+
+  describe "#orders_from" do
+    it "orders with completed desc" do
+      expect(service.send(:orders_from, [1, 2]).to_sql)
+        .to include('ORDER BY completed_at DESC')
+    end
+  end
 end

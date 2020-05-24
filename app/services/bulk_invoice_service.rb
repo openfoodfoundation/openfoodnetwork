@@ -7,9 +7,8 @@ class BulkInvoiceService
 
   def start_pdf_job(order_ids)
     pdf = CombinePDF.new
-    orders = Spree::Order.where(id: order_ids)
 
-    orders.each do |order|
+    orders_from(order_ids).each do |order|
       invoice = renderer.render_to_string(order)
 
       pdf << CombinePDF.parse(invoice)
@@ -28,6 +27,10 @@ class BulkInvoiceService
   end
 
   private
+
+  def orders_from(order_ids)
+    Spree::Order.where(id: order_ids).order("completed_at DESC")
+  end
 
   def new_invoice_id
     Time.zone.now.to_i.to_s
