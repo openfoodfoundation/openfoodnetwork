@@ -35,9 +35,9 @@ feature '
 
     scenario "select all products" do
       # replace with scroll_to method when upgrading to Capybara >= 3.13.0
-      cb_id = "order_cycle_incoming_exchange_0_select_all_variants"
-      page.execute_script("document.getElementById('#{cb_id}').scrollIntoView()")
-      check cb_id
+      checkbox_id = "order_cycle_incoming_exchange_0_select_all_variants"
+      page.execute_script("document.getElementById('#{checkbox_id}').scrollIntoView()")
+      check checkbox_id
 
       expect_all_products_loaded
 
