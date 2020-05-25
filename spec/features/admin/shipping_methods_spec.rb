@@ -108,7 +108,7 @@ feature 'shipping methods' do
       # Show the correct fields
       expect(page).to have_field 'shipping_method_name'
       expect(page).to have_field 'shipping_method_description'
-      expect(page).not_to have_select 'shipping_method_display_on'
+      expect(page).to have_select 'shipping_method_display_on'
       expect(page).to have_css 'div#shipping_method_zones_field'
       expect(page).to have_field 'shipping_method_require_ship_address_true', checked: true
 
