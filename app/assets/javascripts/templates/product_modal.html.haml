@@ -1,5 +1,5 @@
 .row
-  .columns.small-12.large-6.product-header
+  .columns.small-12.medium-6.large-6.product-header
     %h3{"ng-bind" => "::product.name"}
     %span
       %em {{'products_from' | t}}
@@ -13,7 +13,7 @@
     .product-description{"ng-if" => "product.description_html"}
       %p.text-small{"ng-bind-html" => "::product.description_html"}
 
-  .columns.small-12.large-6
+  .columns.small-12.medium-6.large-6
     %img.product-img{"ng-src" => "{{::product.largeImage}}", "ng-if" => "::product.largeImage"}
     %img.product-img.placeholder{ src: "/assets/noimage/large.png", "ng-if" => "::!product.largeImage"}
 
