@@ -32,13 +32,8 @@
             %tab{heading: t(:label_map),
                 active: "tabs.map.active",
                 select: "select(\'map\')"}
-              .map-container
-                %map{"ng-controller" => "MapCtrl", "ng-if" => "(isActive(\'/map\') && (mapShowed = true)) || mapShowed"}
-                  %ui-gmap-google-map{options: "map.additional_options", center: "map.center", zoom: "map.zoom", styles: "map.styles", draggable: "true"}
-                    %map-osm-tiles
-                    %map-search
-                    %ui-gmap-markers{models: "OfnMap.enterprises", fit: "true",
-                    coords: "'self'", icon: "'icon'", click: "'reveal'"}
+              %div{"ng-if" => "(isActive(\'/map\') && (mapShowed = true)) || mapShowed"}
+                = render partial: "shared/map"
 
             %tab{heading: t(:groups_about),
                 active: "tabs.about.active",
