@@ -17,11 +17,11 @@
         = label_tag nil, t(:environment)
       .omega.eight.columns
         = collection_select(:payment_method, :environment, Rails.configuration.database_configuration.keys.sort, :to_s, :titleize, {}, {id: 'gtwy-env', class: 'select2 fullwidth'})
-    .row
-      .alpha.three.columns
-        = label_tag nil, t(:display)
-      .omega.eight.columns
-        = select(:payment_method, :display_on, Spree::PaymentMethod::DISPLAY.collect { |display| [t(display), display == :both ? nil : display.to_s] }, {}, {class: 'select2 fullwidth'})
+  .row
+    .alpha.three.columns
+      = label_tag nil, t(:display)
+    .omega.eight.columns
+      = select(:payment_method, :display_on, Spree::PaymentMethod::DISPLAY.collect { |display| [t(display), display == :both ? nil : display.to_s] }, {}, {class: 'select2 fullwidth'})
   .row
     .alpha.three.columns
       = label_tag nil, t(:active)
