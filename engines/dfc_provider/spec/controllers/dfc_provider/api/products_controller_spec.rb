@@ -18,7 +18,7 @@ describe DfcProvider::Api::ProductsController, type: :controller do
   describe('.index') do
     context 'with authorization token' do
       before do
-        request.env['Authorization'] = 'Bearer 123456.abcdef.123456'
+        request.headers['Authorization'] = 'Bearer 123456.abcdef.123456'
       end
 
       context 'with an authenticated user' do
