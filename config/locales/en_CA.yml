@@ -1213,7 +1213,7 @@ en_CA:
   menu_2_url: "/map"
   menu_3_title: "Producers"
   menu_3_url: "/producers"
-  menu_4_title: "Groups"
+  menu_4_title: "Markets"
   menu_4_url: "/groups"
   menu_5_title: "About"
   menu_5_url: "https://about.openfoodnetwork.ca"
@@ -1360,7 +1360,7 @@ en_CA:
   brandstory_part6: "We all love food. Now we can love our food system too."
   learn_body: "Explore models, stories and resources to support you to develop your local business or organisation.  Find training, events and other opportunities to learn from peers."
   learn_cta: "Get Inspired"
-  connect_body: "Search our full directories of producers, hubs and groups to find fair and sustainably produced products near you.  List your business or organisation on the OFN so buyers can find you.  Join the community to get advice and solve problems together."
+  connect_body: "Search our full directories of producers, hubs and markets to find fair and sustainably produced products near you.  List your business or organisation on the OFN so buyers can find you.  Join the community to get advice and solve problems together."
   connect_cta: "Go Exploring"
   system_headline: "Shopping - here's how it works."
   system_step1: "1. Search"
@@ -1568,7 +1568,7 @@ en_CA:
   components_filters_nofilters: "No filters"
   components_filters_clearfilters: "Clear all filters"
   groups_title: Groups
-  groups_headline: Groups / regions
+  groups_headline: 'Markets / Regions '
   groups_text: "Every producer is unique. Every business has something different to offer. Our groups are collectives of producers, hubs and distributors who share something in common like location, farmers market or philosophy. This makes your shopping experience easier. So explore our groups and have the curating done for you."
   groups_search: "Search name or keyword"
   groups_no_groups: "No groups found"
