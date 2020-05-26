@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe EnterprisesController, type: :controller do
   describe "shopping for a distributor" do
+    let(:user) { create(:user) }
     let(:order) { controller.current_order(true) }
     let(:line_item) { create(:line_item) }
     let!(:current_distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
@@ -17,8 +18,21 @@ describe EnterprisesController, type: :controller do
     it "sets the shop as the distributor on the order when shopping for the distributor" do
       spree_get :shop, id: distributor
 
+      expect(controller.current_distributor).to eq(distributor)
       expect(controller.current_order.distributor).to eq(distributor)
       expect(controller.current_order.order_cycle).to be_nil
+    end
+
+    context "when user is logged in" do
+      before { allow(controller).to receive(:spree_current_user) { user } }
+
+      it "sets the shop as the distributor on the order when shopping for the distributor" do
+        spree_get :shop, id: distributor
+
+        expect(controller.current_distributor).to eq(distributor)
+        expect(controller.current_order.distributor).to eq(distributor)
+        expect(controller.current_order.order_cycle).to be_nil
+      end
     end
 
     it "sorts order cycles by the distributor's preferred ordering attr" do
@@ -32,7 +46,6 @@ describe EnterprisesController, type: :controller do
     end
 
     context "using FilterOrderCycles tag rules" do
-      let(:user) { create(:user) }
       let!(:order_cycle3) { create(:simple_order_cycle, distributors: [distributor], orders_open_at: 3.days.ago, orders_close_at: 4.days.from_now) }
       let!(:oc3_exchange) { order_cycle3.exchanges.outgoing.to_enterprise(distributor).first }
       let(:customer) { create(:customer, user: user, enterprise: distributor) }
