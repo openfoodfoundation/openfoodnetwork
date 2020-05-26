@@ -20,7 +20,7 @@
           .supplier {{ product.supplier_name }}
 
         .exchange-product-variant{'ng-repeat' => 'variant in product.variants | visibleVariants:exchange:order_cycle.visible_variants_for_outgoing_exchanges | filter:variantSuppliedToOrderCycle'}
-          %label
+          %label{ "ofn-with-tip" => "You don't have permissions to add this variant or this variant is hidden in your inventory" }
             %input{ type: 'checkbox', name: 'order_cycle_outgoing_exchange_{{ $parent.$parent.$index }}_variants_{{ variant.id }}',
               value: 1,
               'ng-model' => 'exchange.variants[variant.id]',

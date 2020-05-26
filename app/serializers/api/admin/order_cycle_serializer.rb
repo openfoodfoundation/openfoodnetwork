@@ -41,7 +41,10 @@ class Api::Admin::OrderCycleSerializer < ActiveModel::Serializer
     # work out which variants should be editable within incoming exchanges from that enterprise
     editable = {}
     visible_enterprises.each do |enterprise|
-      variants = permissions.editable_variants_for_outgoing_exchanges_to(enterprise).pluck(:id)
+      variants = permissions.
+        editable_variants_for_outgoing_exchanges_to(enterprise).
+        not_hidden_for(enterprise).
+        pluck(:id)
       editable[enterprise.id] = variants if variants.any?
     end
     editable
@@ -61,8 +64,7 @@ class Api::Admin::OrderCycleSerializer < ActiveModel::Serializer
                      visible_for(enterprise)
                  else
                    permissions.
-                     visible_variants_for_outgoing_exchanges_to(enterprise).
-                     not_hidden_for(enterprise)
+                     visible_variants_for_outgoing_exchanges_to(enterprise)
                  end.pluck(:id)
       visible[enterprise.id] = variants if variants.any?
     end
