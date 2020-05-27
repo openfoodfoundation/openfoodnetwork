@@ -63,9 +63,15 @@ module OpenFoodNetwork
     end
 
     def scale_for_unit_value
-      # We're not entirely sure what this is connected to either.
-      # TODO: DELETE THIS
-      units = { 'weight' => { 1.0 => 'g', 1000.0 => 'kg', 1_000_000.0 => 'T', 1.0 => 'oz' },
+      # TODO: We _think_ this will cause the following weird results:
+      #   29g of product would use the `oz` measurement
+      #   445g of product would use the `lb` measurement
+      # So we probably want to keep the metric and imperial measures
+      # in their own lanes; perhaps using a configurable value on a per
+      # shop or producer basis?
+
+      units = { 'weight' => { 1.0 => 'g', 1000.0 => 'kg', 1_000_000.0 => 'T',
+                              28.34952 => 'oz', 453.59237 => 'lb'},
                 'volume' => { 0.001 => 'mL', 1.0 => 'L',  1000.0 => 'kL' } }
 
       # Find the largest available unit where unit_value comes to >= 1 when expressed in it.
