@@ -700,7 +700,7 @@ DEPENDENCIES
   aws-sdk
   blockenspiel
   bugsnag
-  byebug (~> 11.0.0)
+  byebug (~> 11.0)
   capybara (>= 2.18.0)
   catalog!
   coffee-rails (~> 3.2.1)
@@ -751,7 +751,7 @@ DEPENDENCIES
   paperclip (~> 3.4.1)
   pg (~> 0.21.0)
   pry (~> 0.12.0)
-  pry-byebug (~> 3.7.0)
+  pry-byebug (~> 3.7)
   rack-mini-profiler (< 3.0.0)
   rack-rewrite
   rack-ssl
