@@ -68,6 +68,10 @@ table.social {
     background-color: white !important;
     border: 1px solid #ebebeb;
   }
+
+  &.fullwidth {
+    width: 100%;
+  }
 }
 
 table.order-summary {

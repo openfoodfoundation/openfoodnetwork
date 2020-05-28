@@ -3434,9 +3434,14 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       invalid: invalid
     order_mailer:
       cancel_email:
-        customer_greeting: "Hi %{name}!"
-        instructions: "Your order has been CANCELED. Please retain this cancellation information for your records."
-        order_summary_canceled: "Order Summary [CANCELED]"
+        customer_greeting: "Dear %{name},"
+        instructions_html: "Your order with <strong>%{distributor}</strong> has been CANCELED. Please retain this cancellation information for your records."
+        dont_cancel: "If you have changed your mind or don't wish to cancel this order please contact %{email}"
+        order_summary_canceled_html: "<strong>Order Summary #%{number} [CANCELED]</strong>"
+        details: "Here are the details of what you ordered:"
+        unpaid_order: "Your order was unpaid so no refund has been made"
+        paid_order: "Your order was paid so %{distributor} has refunded the full amount"
+        credit_order: "Your order was paid so your account has been credited"
         subject: "Cancellation of Order"
       confirm_email:
         subject: "Order Confirmation"
