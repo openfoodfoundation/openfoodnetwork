@@ -65,7 +65,6 @@ gem 'unicorn'
 gem "active_model_serializers", "0.8.4"
 gem 'acts-as-taggable-on', '~> 3.4'
 gem 'angularjs-file-upload-rails', '~> 2.4.1'
-gem 'blockenspiel'
 gem 'custom_error_message', github: 'jeremydurham/custom-err-msg'
 gem 'dalli'
 gem 'diffy'

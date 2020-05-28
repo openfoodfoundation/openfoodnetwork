@@ -18,47 +18,45 @@ module OpenFoodNetwork::Reports
       ]
     end
 
-    organise do
-      group { |li| li.product.supplier }
-      sort(&:name)
-
-      organise do
-        group(&:product)
-        sort(&:name)
-
-        summary_row do
-          column { |lis| supplier_name(lis) }
-          column { |lis| product_name(lis) }
-          column { |lis| group_buy_unit_size_f(lis) }
-          column { |_lis| "" }
-          column { |_lis| "" }
-          column { |_lis| "" }
-          column { |_lis| "" }
-          column { |lis| total_amount(lis) }
-          column { |lis| units_required(lis) }
-          column { |lis| remainder(lis) }
-          column { |lis| max_quantity_excess(lis) }
-        end
-
-        organise do
-          group(&:full_name)
-          sort { |full_name| full_name }
-        end
-      end
+    def rules
+      [
+        { group_by: proc { |line_item| line_item.product.supplier },
+          sort_by: proc { |supplier| supplier.name } },
+        { group_by: proc { |line_item| line_item.product },
+          sort_by: proc { |product| product.name },
+          summary_columns: [
+            proc { |lis| supplier_name(lis) },
+            proc { |lis| product_name(lis) },
+            proc { |lis| group_buy_unit_size_f(lis) },
+            proc { |_lis| "" },
+            proc { |_lis| "" },
+            proc { |_lis| "" },
+            proc { |_lis| "" },
+            proc { |lis| total_amount(lis) },
+            proc { |lis| units_required(lis) },
+            proc { |lis| remainder(lis) },
+            proc { |lis| max_quantity_excess(lis) }
+          ]
+        },
+        { group_by: proc { |line_item| line_item.full_name },
+          sort_by: proc { |full_name| full_name } }
+      ]
     end
 
-    columns do
-      column { |lis| supplier_name(lis) }
-      column { |lis| product_name(lis) }
-      column { |lis| group_buy_unit_size_f(lis) }
-      column { |lis| lis.first.full_name }
-      column { |lis| OpenFoodNetwork::OptionValueNamer.new(lis.first).value }
-      column { |lis| OpenFoodNetwork::OptionValueNamer.new(lis.first).unit }
-      column { |lis| lis.first.weight_from_unit_value || 0 }
-      column { |lis| total_amount(lis) }
-      column { |_lis| '' }
-      column { |_lis| '' }
-      column { |_lis| '' }
+    def columns
+      [
+        proc { |lis| supplier_name(lis) },
+        proc { |lis| product_name(lis) },
+        proc { |lis| group_buy_unit_size_f(lis) },
+        proc { |lis| lis.first.full_name },
+        proc { |lis| OpenFoodNetwork::OptionValueNamer.new(lis.first).value },
+        proc { |lis| OpenFoodNetwork::OptionValueNamer.new(lis.first).unit },
+        proc { |lis| lis.first.weight_from_unit_value || 0 },
+        proc { |lis| total_amount(lis) },
+        proc { |_lis| '' },
+        proc { |_lis| '' },
+        proc { |_lis| '' }
+      ]
     end
   end
 end
