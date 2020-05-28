@@ -4,7 +4,6 @@ angular.module("admin.side_menu")
       items: []
       selected: null
 
-
       # Checks for path and uses it to set the view
       # If no path, loads first view
       init: =>
@@ -31,11 +30,3 @@ angular.module("admin.side_menu")
         for item in @items when item.name is name
           return item
         null
-
-      hide_item_by_name: (name) =>
-        item = @find_by_name(name)
-        item.visible = false if item
-
-      show_item_by_name: (name) =>
-        item = @find_by_name(name)
-        item.visible = true if item
