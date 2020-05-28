@@ -1175,8 +1175,8 @@ tr:
         contact: "İLETİŞİM"
         require_customer_login: "Yalnızca onaylı müşteriler buradan alışveriş yapabilir."
         require_login_html: "Zaten onaylanmış bir müşteri iseniz, devam etmek için %{login} veya %{signup}"
-        require_login_2_html: "Buradan alışveriş mi yapmak istiyorsunuz? Lütfen katılmak için %{contact}%{enterprise} ile iletişime geçin!"
-        require_customer_html: "Buradan alışveriş yapmaya başlamak istiyorsanız, katılmak için lütfen %{contact} %{enterprise} 'a sorun."
+        require_login_2_html: "Buradan alışveriş mi yapmak istiyorsunuz? Lütfen katılmak için sorun: %{contact}%{enterprise} "
+        require_customer_html: "Buradan alışveriş yapmaya başlamak istiyorsanız, katılmak için lütfen sorun: %{contact} %{enterprise} "
       select_oc:
         select_oc_html: "Hangi ürünlerin uygun olduğunu görmek için lütfen <span class='highlighted'>ne zaman için sipariş vermek istediğinizi seçin</span> "
   card_could_not_be_updated: Kart güncellenemedi
@@ -1913,10 +1913,10 @@ tr:
   outstanding_balance: "Ödenmemiş bakiye"
   admin_enterprise_relationships: "İŞLETME İZİNLERİ"
   admin_enterprise_relationships_everything: "her şey"
-  admin_enterprise_relationships_permits: "izinler"
+  admin_enterprise_relationships_permits: "izin veriyor"
   admin_enterprise_relationships_seach_placeholder: "Ara"
   admin_enterprise_relationships_button_create: "Oluştur"
-  admin_enterprise_relationships_to: "'a"
+  admin_enterprise_relationships_to: "-"
   admin_enterprise_groups: "İşletme Grupları"
   admin_enterprise_groups_name: "Ad"
   admin_enterprise_groups_owner: "Sahip"
@@ -3224,7 +3224,7 @@ tr:
           privacy_policy_url: "Gizlilik Politikası URLsi"
           enterprises_require_tos: "İşletmeler Üyelik Sözleşmesini kabul etmelidir"
           cookies_policy_matomo_section: "Çerez politikası sayfasında Matomo bölümünü görüntüle"
-          footer_tos_url: "Üyelik Sözleşmesi URLsi"
+          footer_tos_url: "Kullanıcı Sözleşmesi URLsi"
     checkout:
       payment:
         stripe:
