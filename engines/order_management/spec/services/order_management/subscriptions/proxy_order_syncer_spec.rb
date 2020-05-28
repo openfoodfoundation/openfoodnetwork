@@ -102,14 +102,6 @@ module OrderManagement
             let!(:oc) { upcoming_closes_on_begins_at_oc }
 
             let(:schedule) { create(:schedule, order_cycles: [oc]) }
-            let(:subscription) do
-              build(
-                :subscription,
-                begins_at: now + 1.minute,
-                ends_at: now + 2.minutes,
-                schedule: schedule
-              )
-            end
             let(:syncer) { ProxyOrderSyncer.new(subscription) }
 
             it "creates a new proxy order for that oc" do
