@@ -686,6 +686,7 @@ tr:
           ofn_uid_tip: Açık Gıda Ağı'na kayıtlı işletmenize özel tanımlanan kimlik numarası
         shipping_methods:
           name: "Ad"
+          applies: "Aktif?"
           manage: "Teslimat Yöntemlerini Yönet"
           create_button: "Yeni Teslimat Yöntemi Oluştur"
           create_one_button: "Şimdi Oluştur"
@@ -1637,9 +1638,9 @@ tr:
   sell_hubs_detail: "AGA üzerinden gıda işletmeniz veya topluluğunuz için bir profil oluşturun. İstediğiniz zaman profilinizi çok üreticili bir pazara yükseltebilirsiniz."
   sell_groups_detail: "Bölgenizdeki veya ağınızdaki işletmelerin (üreticilerin, pazarların veya diğer grupların) detaylı rehber listesini oluşturun."
   sell_user_guide: "Kullanım kılavuzumuzda daha fazla bilgi edinin."
-  sell_listing_price: "AGA üzerinde görünür olmak ücretsizdir. Fiyatlandırma hakkında daha fazla bilgi için, üst menüdeki Hakkında bağlantısını kullanarak Yazılım Platformu bölümünü ziyaret edin."
-  sell_embed: "Açık Gıda Ağı üzerinden oluşturduğunuz tezgahınızı kendi web siteniz üzerinden de kullanmanıza yardımcı olabiliriz. Müşterileriniz mevcut internet siteniz üzerinden de aynı şekilde sipariş verebilirler. "
-  sell_ask_services: "Bize AGA hizmetleri hakkında soru sorun."
+  sell_listing_price: "AGA üzerinde görünür olmak ücretsizdir. Platform üzerinden satış yapan işletmeler için işlem başına uygulanan ücretlendirme %5'tir.  Fiyatlandırma hakkında daha fazla bilgi için, üst menüdeki Hakkımızda bağlantısını kullanarak Fiyatlandırma bölümünü ziyaret edin."
+  sell_embed: "Kendi e-ticaret siteniz olsa bile Açık Gıda Ağı size hikayenizi anlatmanız ve ürünlerinizi satmanız için yeni ve farklı bir seçenek sunuyor. Siz de bu ailenin bir parçası olun, hep beraber büyüyelim!"
+  sell_ask_services: "Detaylar için bizimle iletişime geçin."
   shops_title: Mağazalar
   shops_headline: Alışveriş biçim değiştiriyor
   shops_text: Gıda dönemsel yetiştirilir, dönemsel hasat edilir ve dönemsel sipariş edilir. Aradığınız mağazanın sipariş dönemi kapalı ise kısa süre sonra tekrar kontrol edin.
@@ -3067,6 +3068,8 @@ tr:
           zone: "bölge"
           calculator: "Hesaplama"
           display: "Görüntüle"
+          both: "Ödeme Sayfası ve Panel"
+          back_end: "Sadece panel"
           no_shipping_methods_found: "Hiçbir teslimat yöntemi bulunamadı"
         new:
           new_shipping_method: "Yeni Teslimat Yöntemi"
@@ -3078,6 +3081,9 @@ tr:
         form:
           categories: "Kategoriler"
           zones: "bölgeler"
+          both: "Ödeme Sayfası ve Panel"
+          back_end: "Sadece panel"
+          deactivation_warning: "Bir teslimat yöntemini etkisiz hale getirmek listenizden kaldırılmasına sebep olabilir. Alternatif olarak, ayarlarınızı 'Göster' yerine 'sadece panel' olarak değiştirerek teslimat yöntemini ödeme sayfasında gizleyebilirsiniz."
       payment_methods:
         new:
           new_payment_method: "Yeni Ödeme Yöntemi"
@@ -3237,6 +3243,7 @@ tr:
       format: '% Y-% A-%d'
       js_format: 'yy-aa-gg'
     orders:
+      error_flash_for_unavailable_items: "Sepetinizdeki ürünlerden biri bitti veya azaldı. Lütfen seçili miktarı güncelleyin."
       edit:
         login_to_view_order: "Siparişinizi görmek için lütfen giriş yapın."
       bought:
