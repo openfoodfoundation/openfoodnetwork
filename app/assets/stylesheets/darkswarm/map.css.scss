@@ -49,15 +49,18 @@
     left: 54px;
     width: 50%;
     z-index: 1000;
+
     .autocomplete-input,
     .autocomplete-result-list {
-      border: 2px solid #888;
+      border: 2px solid $grey-500;
+
       &:hover, &:active, &:focus {
         border-color: $clr-brick;
       }
     }
+
     .autocomplete-result-list {
-      border-top: 1px dotted #888;
+      border-top: 1px dotted $grey-500;
     }
   }
 }
