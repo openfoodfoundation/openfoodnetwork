@@ -219,7 +219,7 @@ pt_BR:
   edit: Editar
   clone: Cópia
   distributors: Distribuidores
-  bulk_order_management: Gerenciamento de Pedidos em Atacado
+  bulk_order_management: Gestão de Pedidos  em Atacado
   enterprises: Iniciativas
   enterprise_groups: Grupos
   reports: Relatórios
@@ -450,7 +450,7 @@ pt_BR:
       editing_product: "Editando Produto"
       tabs:
         product_details: "Detalhes do Produto"
-        group_buy_options: "Opções de Grupo de Compras"
+        group_buy_options: "Opções de Compra em Grupo"
         images: "Imagens"
         variants: "Variantes"
         product_properties: "Propriedades do produto"
@@ -583,18 +583,18 @@ pt_BR:
         order_no: "Pedido nº"
         order_date: "Concluído em"
         max: "Máximo"
-        product_unit: "Produto: unidade"
+        product_unit: "Produto: Unidade"
         weight_volume: "Peso/Volume"
         ask: "Perguntar?"
-        page_title: "Gestão de Pedidos em Atacado"
+        page_title: "Gestão de Pedidos  em Atacado"
         actions_delete: "Deletar selecionado"
         loading: "Carregando pedidos"
         no_results: "Nenhum pedido encontrado. "
-        group_buy_unit_size: "Unidade de Medida para Grupo de Compras"
+        group_buy_unit_size: "Unidade de Medida para Compra em Grupo"
         total_qtt_ordered: "Quantidade total do pedido"
         max_qtt_ordered: "Quantidade máxima do pedido"
-        current_fulfilled_units: "Unidades completadas no momento"
-        max_fulfilled_units: "Máximo de unidades completadas "
+        current_fulfilled_units: "Pedidos / Limite Mínimo (Atual)"
+        max_fulfilled_units: "Pedidos / Limite Mínimo (Max)"
         order_error: "Alguns erros devem ser corrigidos antes de atualizar os pedidos.\nOs campos com bordas vermelhas contém erros."
         variants_without_unit_value: "AVISO: Algumas variantes não possuem unidade de medida"
       select_variant: "Selecione uma variante"
@@ -1248,7 +1248,7 @@ pt_BR:
   city_placeholder: 'ex: República'
   postcode: CEP
   postcode_placeholder: 'ex: 05429-130'
-  suburb: Bairro
+  suburb: Cidade
   state: Estado
   country: País
   unauthorized: Não autorizado
@@ -1927,7 +1927,7 @@ pt_BR:
   admin_enterprise_groups_contact: "Contato"
   admin_enterprise_groups_contact_phone_placeholder: "ex: 987654321"
   admin_enterprise_groups_contact_address1_placeholder: "ex: Rua Alta, 123"
-  admin_enterprise_groups_contact_city: "Bairro"
+  admin_enterprise_groups_contact_city: "Cidade"
   admin_enterprise_groups_contact_city_placeholder: "ex: República"
   admin_enterprise_groups_contact_zipcode: "CEP"
   admin_enterprise_groups_contact_zipcode_placeholder: "ex: 02341-001"
@@ -2085,7 +2085,7 @@ pt_BR:
   report_header_first_name: Nome
   report_header_last_name: Sobrenome
   report_header_phone: Telefone
-  report_header_suburb: Bairro
+  report_header_suburb: Cidade
   report_header_address: Endereço
   report_header_billing_address: Endereço de cobrança
   report_header_relationship: Relação
@@ -2143,7 +2143,7 @@ pt_BR:
   report_header_producer: Produtor
   report_header_producer_suburb: Subúrbio do produtor
   report_header_unit: Unidade
-  report_header_group_buy_unit_quantity: Quantidade da Unidade para Grupo de Compras
+  report_header_group_buy_unit_quantity: Quantidade da Unidade para Compra em Grupo
   report_header_cost: Custo
   report_header_shipping_cost: ' Custo de envio'
   report_header_curr_cost_per_unit: Custo unitário atual
@@ -2159,7 +2159,7 @@ pt_BR:
   report_header_distributor_postcode: CEP do distribuidor
   report_header_delivery_address: Endereço para entrega
   report_header_delivery_postcode: CEP para entrega
-  report_header_bulk_unit_size: Unidade de Medida para atacado
+  report_header_bulk_unit_size: Quantidade Mínima para Compra em Atacado
   report_header_weight: Peso
   report_header_sum_total: Soma total
   report_header_date_of_order: Data do pedido
@@ -2939,7 +2939,7 @@ pt_BR:
       tab:
         dashboard: "Painel"
         orders: "Encomendas"
-        bulk_order_management: "Gestão de Pedidos em Atacado"
+        bulk_order_management: "Gestão de Pedidos  em Atacado"
         subscriptions: "Assinaturas"
         products: "Produtos"
         option_types: "Tipos de opção"
@@ -3147,8 +3147,8 @@ pt_BR:
         primary_taxon_form:
           product_category: Categoria de Produto
         group_buy_form:
-          group_buy: "Grupo de Compras?"
-          bulk_unit_size: Tamanho da unidade em massa
+          group_buy: "Compra em Grupo?"
+          bulk_unit_size: Quantidade Mínima para Compra em Atacado
         display_as:
           display_as: Mostrar como
       reports:

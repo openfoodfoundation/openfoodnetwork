@@ -2477,7 +2477,7 @@ fr:
           load_more_variants: "Afficher plus de variantes"
           load_all_variants: "Afficher toutes les variantes"
           select_all_variants: "Sélectionnez toutes les %{total_number_of_variants} variantes"
-          variants_loaded: " %{num_of_variants_loaded}sur %{total_number_of_variants} variantes"
+          variants_loaded: " %{num_of_variants_loaded} sur %{total_number_of_variants} variantes"
           loading_variants: "Chargement des variantes"
       tag_rules:
         shipping_method_tagged_top: "Les méthodes de livraison taguées"

@@ -1213,7 +1213,7 @@ en_CA:
   menu_2_url: "/map"
   menu_3_title: "Producers"
   menu_3_url: "/producers"
-  menu_4_title: "Markets"
+  menu_4_title: "Groups"
   menu_4_url: "/groups"
   menu_5_title: "About"
   menu_5_url: "https://about.openfoodnetwork.ca"
@@ -1269,7 +1269,7 @@ en_CA:
   label_map: "Map"
   label_producer: "Producer"
   label_producers: "Producers"
-  label_groups: "Groups"
+  label_groups: "Markets"
   label_about: "About"
   label_connect: "Connect"
   label_learn: "Learn"
@@ -1567,9 +1567,9 @@ en_CA:
   components_profiles_show: "Show profiles"
   components_filters_nofilters: "No filters"
   components_filters_clearfilters: "Clear all filters"
-  groups_title: Groups
+  groups_title: Markets
   groups_headline: 'Markets / Regions '
-  groups_text: "Every producer is unique. Every business has something different to offer. Our groups are collectives of producers, hubs and distributors who share something in common like location, farmers market or philosophy. This makes your shopping experience easier. So explore our groups and have the curating done for you."
+  groups_text: "Markets are collectives of producers, hubs and distributors who share something in common like location, farmers market or philosophy. This makes your shopping experience easier. So explore our groups and have the curating done for you."
   groups_search: "Search name or keyword"
   groups_no_groups: "No groups found"
   groups_about: "About Us"
