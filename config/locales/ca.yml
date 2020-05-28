@@ -687,6 +687,7 @@ ca:
           ofn_uid_tip: L'identificador únic que s’utilitza per identificar l'organització a Open Food Network.
         shipping_methods:
           name: "Nom"
+          applies: "Actiu?"
           manage: "Gestiona els mètodes d'enviament"
           create_button: "Crea un nou mètode d'enviament"
           create_one_button: "Crea'n un ara"
@@ -3071,6 +3072,8 @@ ca:
           zone: "Zona"
           calculator: "Calculadora"
           display: "Mostra"
+          both: "Ambdues, validació de comanda i administració"
+          back_end: "Només pàgina administració (back office) "
           no_shipping_methods_found: "No s’han trobat mètodes d’enviament"
         new:
           new_shipping_method: "Nou mètode d'enviament"
@@ -3083,6 +3086,8 @@ ca:
           categories: "Categories"
           zones: "Zones"
           both: "Comandes com administració"
+          back_end: "Només pàgina administració (back office) "
+          deactivation_warning: "Desactivar un mètode d'enviament pot fer que desaparegui de la teva llista. Pots ocultar-lo de la pàgina de validació de comanda configurant l'opció \"Mostrar\" a \"només a la pàgina d'administració\" (back end)."
       payment_methods:
         new:
           new_payment_method: "Nou mètode de pagament"
@@ -3242,6 +3247,7 @@ ca:
       format: '%d-% m-% Y'
       js_format: 'dd-mm-yy'
     orders:
+      error_flash_for_unavailable_items: "Un ítem del teu carret ja no està disponible. Sis plau actualitza les quantitats seleccionades."
       edit:
         login_to_view_order: "Si us plau inicia sessió per veure la teva comanda."
       bought:
