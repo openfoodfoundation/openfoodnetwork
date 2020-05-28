@@ -97,7 +97,7 @@ gem 'test-unit', '~> 3.3'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'compass-rails'
 
-gem 'mini_racer', '0.2.10'
+gem 'mini_racer', '0.2.14'
 
 gem 'uglifier', '>= 1.0.3'
 
@@ -109,7 +109,7 @@ gem 'foundation-rails', '= 5.5.2.1'
 
 gem 'jquery-migrate-rails'
 gem 'jquery-rails', '3.1.5'
-gem 'jquery-ui-rails', '~> 4.0.0'
+gem 'jquery-ui-rails', '~> 4.2'
 gem 'select2-rails', '~> 3.4.7'
 
 gem 'ofn-qz', github: 'openfoodfoundation/ofn-qz', branch: 'ofn-rails-4'
@@ -147,10 +147,11 @@ group :test do
 end
 
 group :development do
-  gem 'byebug', '~> 9.0.0' # 9.1 requires ruby 2.2
+  gem 'byebug', '~> 11.0' # 11.1 requires ruby 2.4
   gem 'debugger-linecache'
   gem "newrelic_rpm", "~> 3.0"
-  gem 'pry-byebug', '>= 3.4.3'
+  gem "pry", "~> 0.12.0" # pry 0.13 is not compatible with pry-byebug 3.7
+  gem 'pry-byebug', '~> 3.7' # 3.8 requires ruby 2.4
   gem 'rubocop'
   gem 'rubocop-rails'
   gem 'spring'

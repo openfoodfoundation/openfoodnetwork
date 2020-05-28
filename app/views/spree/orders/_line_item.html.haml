@@ -23,7 +23,11 @@
     = line_item.single_display_amount_with_adjustments.to_html
   %td.text-center.cart-item-quantity{"data-hook" => "cart_item_quantity"}
     - finalized_quantity = @order.completed? ? line_item.quantity : 0
-    = item_form.number_field :quantity, :min => 0, "ofn-on-hand" => "#{variant.on_demand && 9999 || variant.on_hand}", "finalizedquantity" => finalized_quantity, "ng-model" => "line_item_#{line_item.id}", :class => "line_item_quantity", :size => 5
+    = item_form.number_field :quantity,
+      :min => 0, "ofn-on-hand" => "#{variant.on_demand && 9999 || variant.on_hand}",
+      "finalizedquantity" => finalized_quantity, :class => "line_item_quantity", :size => 5,
+      "ng-model" => "line_item_#{line_item.id}",
+      "validate-stock-quantity" => true
   %td.cart-item-total.text-right{"data-hook" => "cart_item_total"}
     = line_item.display_amount_with_adjustments.to_html unless line_item.quantity.nil?
 

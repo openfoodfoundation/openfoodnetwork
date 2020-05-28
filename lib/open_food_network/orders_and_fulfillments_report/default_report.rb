@@ -12,7 +12,7 @@ module OpenFoodNetwork
           I18n.t(:report_header_producer),
           I18n.t(:report_header_product),
           I18n.t(:report_header_variant),
-          I18n.t(:report_header_amount),
+          I18n.t(:report_header_quantity),
           I18n.t(:report_header_curr_cost_per_unit),
           I18n.t(:report_header_total_cost),
           I18n.t(:report_header_status),

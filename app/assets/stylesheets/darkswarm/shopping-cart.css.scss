@@ -72,6 +72,12 @@
 }
 
 // Shopping cart
+#update-cart {
+  #errorExplanation {
+    display: none;
+  }
+}
+
 #cart-detail {
   .cart-item-delete, .bought-item-delete {
     a {
@@ -100,6 +106,12 @@
 
     .already-confirmed {
       float: right;
+    }
+  }
+
+  input {
+    &.ng-invalid-stock, &.ng-invalid-number {
+      border: 1px solid $clr-brick;
     }
   }
 }

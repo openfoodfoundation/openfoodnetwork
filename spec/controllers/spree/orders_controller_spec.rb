@@ -161,7 +161,7 @@ describe Spree::OrdersController, type: :controller do
         it "displays a flash message when we view the cart" do
           spree_get :edit
           expect(response.status).to eq 200
-          expect(flash[:error]).to eq("An item in your cart has become unavailable.")
+          expect(flash[:error]).to eq I18n.t('spree.orders.error_flash_for_unavailable_items')
         end
       end
 
@@ -173,7 +173,7 @@ describe Spree::OrdersController, type: :controller do
         it "displays a flash message when we view the cart" do
           spree_get :edit
           expect(response.status).to eq 200
-          expect(flash[:error]).to eq("An item in your cart has become unavailable.")
+          expect(flash[:error]).to eq I18n.t('spree.orders.error_flash_for_unavailable_items')
         end
       end
     end

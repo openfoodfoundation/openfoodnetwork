@@ -40,7 +40,7 @@ class CheckoutController < Spree::StoreController
     # This is only required because of spree_paypal_express. If we implement
     # a version of paypal that uses this controller, and more specifically
     # the #update_failed method, then we can remove this call
-    RestartCheckout.new(@order).call
+    OrderCheckoutRestart.new(@order).call
   end
 
   def update

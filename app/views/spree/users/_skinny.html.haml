@@ -2,7 +2,8 @@
   .columns.small-2
     %img.margin-top.account-logo{"logo-fallback" => true, "ng-src" => "{{shop.logo}}"}
   .columns.small-5
-    %h3.margin-top{"ng-bind" => "::shop.name"}
+    %h3.margin-top
+      %a{"ng-href" => "{{::shop.hash}}#{main_app.shop_path}", "ng-bind" => "::shop.name"}
   .columns.small-4.text-right
     %h3.margin-top.distributor-balance{"ng-bind" => "::shop.balance | formatBalance", "ng-class" => "{'credit' : shop.balance < 0, 'debit' : shop.balance > 0, 'paid' : shop.balance == 0}" }
   .columns.small-1.text-right

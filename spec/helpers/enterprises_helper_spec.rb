@@ -8,8 +8,8 @@ describe EnterprisesHelper, type: :helper do
   before { allow(helper).to receive(:spree_current_user) { user } }
 
   describe "loading available shipping methods" do
-    let!(:sm1) { create(:shipping_method, require_ship_address: false, distributors: [distributor]) }
-    let!(:sm2) { create(:shipping_method, require_ship_address: false, distributors: [some_other_distributor]) }
+    let!(:distributor_shipping_method) { create(:shipping_method, require_ship_address: false, distributors: [distributor]) }
+    let!(:other_distributor_shipping_method) { create(:shipping_method, require_ship_address: false, distributors: [some_other_distributor]) }
 
     context "when the order has no current_distributor" do
       before do
@@ -25,8 +25,16 @@ describe EnterprisesHelper, type: :helper do
       before { allow(helper).to receive(:current_distributor) { distributor } }
 
       it "finds the shipping methods for the current distributor" do
-        expect(helper.available_shipping_methods).to_not include sm2
-        expect(helper.available_shipping_methods).to include sm1
+        expect(helper.available_shipping_methods).to_not include other_distributor_shipping_method
+        expect(helper.available_shipping_methods).to include distributor_shipping_method
+      end
+
+      it "does not return 'back office only' shipping method" do
+        backoffice_only_shipping_method = create(:shipping_method, require_ship_address: false, distributors: [distributor], display_on: 'back_end')
+
+        expect(helper.available_shipping_methods).to_not include backoffice_only_shipping_method
+        expect(helper.available_shipping_methods).to_not include other_distributor_shipping_method
+        expect(helper.available_shipping_methods).to include distributor_shipping_method
       end
     end
 
@@ -44,8 +52,8 @@ describe EnterprisesHelper, type: :helper do
                is_default: true,
                preferred_shipping_method_tags: "local-delivery")
       }
-      let!(:tagged_sm) { sm1 }
-      let!(:untagged_sm) { sm2 }
+      let!(:tagged_sm) { distributor_shipping_method }
+      let!(:untagged_sm) { other_distributor_shipping_method }
 
       before do
         tagged_sm.update_attribute(:tag_list, 'local-delivery')

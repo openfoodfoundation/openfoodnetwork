@@ -1,5 +1,5 @@
 .row.links{'data-hook' => "cart_buttons"}
-  %a.button.large.secondary{href: current_shop_products_path}
+  %a.continue-shopping.button.large.secondary{href: current_shop_products_path, "ng-disabled" => "#{@insufficient_stock_lines.any?}", "disable-dynamically" => true}
     = t :orders_edit_continue
-  %a#checkout-link.button.large.primary.right{href: main_app.checkout_path}
+  %a#checkout-link.button.large.primary.right{href: main_app.checkout_path, "ng-disabled" => "#{@insufficient_stock_lines.any?}", "disable-dynamically" => true}
     = t :orders_edit_checkout

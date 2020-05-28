@@ -1,7 +1,8 @@
 #active-table-search.row
   .small-12.columns
-    %input{type: :text,
+    %input{type: "search",
     "ng-model" => "query",
     placeholder: t('search_by_name'),
+    inputmode: "search",
     "ng-debounce" => "500",
     "ofn-disable-enter" => true}
