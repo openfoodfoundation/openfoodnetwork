@@ -3,7 +3,7 @@ require 'order_management/subscriptions/proxy_order_syncer'
 
 module Admin
   class SchedulesController < ResourceController
-    before_filter :adapt_params, only: [:create, :update]
+    before_filter :adapt_params, only: [:update]
     before_filter :check_editable_order_cycle_ids, only: [:create, :update]
     before_filter :check_dependent_subscriptions, only: [:destroy]
     create.after :sync_subscriptions
@@ -25,6 +25,25 @@ module Admin
         format.json do
           render_as_json @collection, ams_prefix: params[:ams_prefix], editable_schedule_ids: permissions.editable_schedules.pluck(:id)
         end
+      end
+    end
+
+    def create
+      invoke_callbacks(:create, :before)
+      @object.attributes = permitted_resource_params
+      @object.save!
+
+      @object.order_cycle_ids = params[:order_cycle_ids]
+      if @object.save
+        invoke_callbacks(:create, :after)
+        flash[:success] = flash_message_for(@object, :successfully_created)
+        respond_with(@object) do |format|
+          format.html { redirect_to location_after_save }
+          format.js   { render layout: false }
+        end
+      else
+        invoke_callbacks(:create, :fails)
+        respond_with(@object)
       end
     end
 
@@ -95,11 +114,7 @@ module Admin
     end
 
     def permitted_resource_params
-      params.require(:schedule).permit(
-        :id,
-        :name,
-        order_cycle_ids: []
-      )
+      params.require(:schedule).permit(:id, :name)
     end
   end
 end
