@@ -29,10 +29,7 @@ module Admin
     end
 
     def create
-      invoke_callbacks(:create, :before)
-
       if params[:order_cycle_ids].blank?
-        invoke_callbacks(:create, :fails)
         return respond_with(@object)
       end
 
@@ -49,7 +46,6 @@ module Admin
           format.js   { render layout: false }
         end
       else
-        invoke_callbacks(:create, :fails)
         respond_with(@object)
       end
     end
