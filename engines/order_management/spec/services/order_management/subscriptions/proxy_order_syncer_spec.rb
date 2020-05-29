@@ -101,9 +101,6 @@ module OrderManagement
           context "and the schedule includes upcoming oc that closes on begins_at" do
             let!(:oc) { upcoming_closes_on_begins_at_oc }
 
-            let(:schedule) { create(:schedule, order_cycles: [oc]) }
-            let(:syncer) { ProxyOrderSyncer.new(subscription) }
-
             it "creates a new proxy order for that oc" do
               syncer.sync!
 
@@ -116,15 +113,6 @@ module OrderManagement
             let!(:oc) { upcoming_closes_on_ends_at_oc }
 
             it "creates a new proxy order for that oc" do
-              schedule = create(:schedule, order_cycles: [oc])
-              subscription = build(
-                :subscription,
-                begins_at: now + 1.minute,
-                ends_at: now + 2.minutes,
-                schedule: schedule
-              )
-
-              syncer = ProxyOrderSyncer.new(subscription)
               syncer.sync!
 
               expect{ subscription.save! }.to change(ProxyOrder, :count).from(0).to(1)
@@ -212,6 +200,7 @@ module OrderManagement
               context "and the proxy order has not already been placed" do
                 context "the oc is closed (ie. closed before opens_at)" do
                   let(:oc) { closed_oc }
+
                   it "removes the proxy order" do
                     expect{ syncer.sync! }.to change(ProxyOrder, :count).from(1).to(0)
                     expect(proxy_orders).to_not include proxy_order
@@ -220,82 +209,65 @@ module OrderManagement
 
                 context "and the schedule includes an open oc that closes before begins_at" do
                   let(:oc) { open_oc_closes_before_begins_at_oc }
+
                   it "removes the proxy order" do
                     expect{ syncer.sync! }.to change(ProxyOrder, :count).from(1).to(0)
                     expect(proxy_orders).to_not include proxy_order
                   end
                 end
 
-                context "and the oc is open and closes between begins_at and ends_at" do
-                  let(:oc) { open_oc }
-
-                  it "keeps the proxy order" do
-                    schedule = create(:schedule, order_cycles: [oc])
-                    subscription = build(
+                context 'and the proxy orders are already synced' do
+                  let(:subscription) do
+                    build(
                       :subscription,
                       begins_at: now + 1.minute,
                       ends_at: now + 2.minutes,
                       schedule: schedule
                     )
+                  end
 
-                    syncer = ProxyOrderSyncer.new(subscription)
-                    syncer.sync!
+                  before { syncer.sync! }
 
-                    expect{ syncer.sync! }.to_not change(ProxyOrder, :count).from(1)
-                    expect(proxy_orders).to include proxy_order
+                  context "and the oc is open and closes between begins_at and ends_at" do
+                    let(:oc) { open_oc }
+
+                    it "keeps the proxy order" do
+                      expect{ syncer.sync! }.to_not change(ProxyOrder, :count).from(1)
+                      expect(proxy_orders).to include proxy_order
+                    end
+                  end
+
+                  context "and the oc is upcoming and closes on begins_at" do
+                    let(:oc) { upcoming_closes_on_begins_at_oc }
+
+                    it "keeps the proxy order" do
+                      expect{ syncer.sync! }.to_not change(ProxyOrder, :count).from(1)
+                      expect(proxy_orders).to include proxy_order
+                    end
+                  end
+
+                  context "and the oc is upcoming and closes on ends_at" do
+                    let(:oc) { upcoming_closes_on_ends_at_oc }
+
+                    it "keeps the proxy order" do
+                      expect{ syncer.sync! }.to_not change(ProxyOrder, :count).from(1)
+                      expect(proxy_orders).to include proxy_order
+                    end
                   end
                 end
 
                 context "and the oc is upcoming and closes before begins_at" do
                   let(:oc) { upcoming_closes_before_begins_at_oc }
+
                   it "removes the proxy order" do
                     expect{ syncer.sync! }.to change(ProxyOrder, :count).from(1).to(0)
                     expect(proxy_orders).to_not include proxy_order
                   end
                 end
 
-                context "and the oc is upcoming and closes on begins_at" do
-                  let(:oc) { upcoming_closes_on_begins_at_oc }
-
-                  it "keeps the proxy order" do
-                    schedule = create(:schedule, order_cycles: [oc])
-                    subscription = build(
-                      :subscription,
-                      begins_at: now + 1.minute,
-                      ends_at: now + 2.minutes,
-                      schedule: schedule
-                    )
-
-                    syncer = ProxyOrderSyncer.new(subscription)
-                    syncer.sync!
-
-                    expect{ syncer.sync! }.to_not change(ProxyOrder, :count).from(1)
-                    expect(proxy_orders).to include proxy_order
-                  end
-                end
-
-                context "and the oc is upcoming and closes on ends_at" do
-                  let(:oc) { upcoming_closes_on_ends_at_oc }
-
-                  it "keeps the proxy order" do
-                    schedule = create(:schedule, order_cycles: [oc])
-                    subscription = build(
-                      :subscription,
-                      begins_at: now + 1.minute,
-                      ends_at: now + 2.minutes,
-                      schedule: schedule
-                    )
-
-                    syncer = ProxyOrderSyncer.new(subscription)
-                    syncer.sync!
-
-                    expect{ syncer.sync! }.to_not change(ProxyOrder, :count).from(1)
-                    expect(proxy_orders).to include proxy_order
-                  end
-                end
-
                 context "and the oc is upcoming and closes after ends_at" do
                   let(:oc) { upcoming_closes_after_ends_at_oc }
+
                   it "removes the proxy order" do
                     expect{ syncer.sync! }.to change(ProxyOrder, :count).from(1).to(0)
                     expect(proxy_orders).to_not include proxy_order
