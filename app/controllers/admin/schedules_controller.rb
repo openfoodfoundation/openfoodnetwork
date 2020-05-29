@@ -34,10 +34,11 @@ module Admin
       end
 
       @schedule.attributes = permitted_resource_params
-      @schedule.save!
 
-      @schedule.order_cycle_ids = params[:order_cycle_ids]
       if @schedule.save
+        @schedule.order_cycle_ids = params[:order_cycle_ids]
+        @schedule.save!
+
         sync_subscriptions_create
 
         flash[:success] = flash_message_for(@schedule, :successfully_created)
