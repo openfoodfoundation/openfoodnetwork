@@ -3,7 +3,7 @@ ruby "2.3.7"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
 gem 'i18n', '~> 0.6.11'
-gem 'i18n-js', '~> 3.6.0'
+gem 'i18n-js', '~> 3.7.0'
 gem 'rails', '~> 3.2.22'
 gem 'rails-i18n', '~> 3.0.0'
 gem 'rails_safe_tasks', '~> 1.0'
