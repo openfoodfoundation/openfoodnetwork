@@ -4,10 +4,10 @@ require 'order_management/subscriptions/proxy_order_syncer'
 module Admin
   class SchedulesController < ResourceController
     before_filter :adapt_params, only: [:update]
-    before_filter :check_editable_order_cycle_ids_create, only: [:create]
-    before_filter :check_editable_order_cycle_ids_update, only: [:update]
+    before_filter :editable_order_cycle_ids_for_create, only: [:create]
+    before_filter :editable_order_cycle_ids_for_update, only: [:update]
     before_filter :check_dependent_subscriptions, only: [:destroy]
-    update.after :sync_subscriptions_update
+    update.after :sync_subscriptions_for_update
 
     respond_to :json
 
@@ -39,7 +39,7 @@ module Admin
         @schedule.order_cycle_ids = params[:order_cycle_ids]
         @schedule.save!
 
-        sync_subscriptions_create
+        sync_subscriptions_for_create
 
         flash[:success] = flash_message_for(@schedule, :successfully_created)
         respond_with(@schedule)
@@ -77,24 +77,20 @@ module Admin
       params[:schedule][:order_cycle_ids] = params[:order_cycle_ids]
     end
 
-    def check_editable_order_cycle_ids_create
+    def editable_order_cycle_ids_for_create
       return unless params[:order_cycle_ids]
 
-      requested = params[:order_cycle_ids]
       @existing_order_cycle_ids = []
-
-      result = editable_order_cycles(requested)
+      result = editable_order_cycles(params[:order_cycle_ids])
 
       params[:order_cycle_ids] = result
     end
 
-    def check_editable_order_cycle_ids_update
+    def editable_order_cycle_ids_for_update
       return unless params[:schedule][:order_cycle_ids]
 
-      requested = params[:schedule][:order_cycle_ids]
       @existing_order_cycle_ids = @schedule.order_cycle_ids
-
-      result = editable_order_cycles(requested)
+      result = editable_order_cycles(params[:schedule][:order_cycle_ids])
 
       params[:schedule][:order_cycle_ids] = result
       @schedule.order_cycle_ids = result
@@ -123,13 +119,13 @@ module Admin
       @permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
     end
 
-    def sync_subscriptions_update
+    def sync_subscriptions_for_update
       return unless params[:schedule][:order_cycle_ids]
 
       sync_subscriptions
     end
 
-    def sync_subscriptions_create
+    def sync_subscriptions_for_create
       return unless params[:order_cycle_ids]
 
       sync_subscriptions
