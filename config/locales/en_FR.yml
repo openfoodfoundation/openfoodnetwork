@@ -3269,9 +3269,14 @@ en_FR:
       invalid: invalid
     order_mailer:
       cancel_email:
-        customer_greeting: "Hi %{name}!"
-        instructions: "Your order has been CANCELED. Please retain this cancellation information for your records."
-        order_summary_canceled: "Order Summary [CANCELED]"
+        customer_greeting: "Bonjour %{name},"
+        instructions_html: "Votre commande avec<strong>%{distributor}</strong> a été annulée. Merci de conserver cet email."
+        dont_cancel: "Si vous avez changé d'avis ou vous ne souhaitez pas annuler cette commande, merci de contacter %{email}."
+        order_summary_canceled_html: "<strong>[ANNULATION] Commande #%{number}</strong>"
+        details: "Voici les produits que vous aviez commandé:"
+        unpaid_order: "Votre commande n'avait pas été réglée donc aucun remboursement n'a été effectué."
+        paid_order: "Votre commande avait été réglée, ainsi %{distributor} a remboursé la totalité de votre commande."
+        credit_order: "Votre commande avait été payée, votre compte a donc été crédité"
         subject: "Cancellation of Order"
       confirm_email:
         subject: "Order Confirmation"
