@@ -2134,7 +2134,7 @@ fr:
   report_header_customer_code: Code acheteur
   report_header_product: Produit
   report_header_product_properties: Propriétés / labels Produits
-  report_header_quantity: Nb commandé
+  report_header_quantity: Quantité
   report_header_max_quantity: Quantité Max
   report_header_variant: Variante
   report_header_variant_value: Nb Unités Variante
@@ -2193,7 +2193,7 @@ fr:
   report_header_eft_price: "TEF / Transfert Electronique (%{currency})"
   report_header_paypal_price: "Paypal (%{currency})"
   report_header_sku: Référence Produit
-  report_header_amount: Quantité
+  report_header_amount: Montant
   report_header_balance: Solde
   report_header_total_cost: "Coût Total"
   report_header_total_ordered: Total Commandé
@@ -3299,9 +3299,14 @@ fr:
       invalid: invalide
     order_mailer:
       cancel_email:
-        customer_greeting: "Bonjour %{name} !"
-        instructions: "Votre commande a été ANNULÉE. Vous trouverez ci-dessous les informations concernant cette commande. "
-        order_summary_canceled: "Résumé de la commande [ANNULEE]"
+        customer_greeting: "Bonjour %{name},"
+        instructions_html: "Votre commande avec <strong>%{distributor}</strong>a été annulée. Merci de conserver cet email."
+        dont_cancel: "Si vous avez changé d'avis ou l'annulation a été réalisée par erreur, merci de contacter %{email}"
+        order_summary_canceled_html: "<strong>[ANNULATION] Commande #%{number}</strong>"
+        details: "Voici le détail des produits commandés:"
+        unpaid_order: "Votre commande n'avait pas été réglée, aucun remboursement n'a donc été effectué"
+        paid_order: "Votre commande avait été réglée, ainsi %{distributor}a remboursé la totalité du montant"
+        credit_order: "Votre commande avait été payée, votre compte a donc été crédité"
         subject: "Annulation de Commande"
       confirm_email:
         subject: "Confirmation de commande"
