@@ -7,7 +7,7 @@ module Admin
     before_filter :check_editable_order_cycle_ids_create, only: [:create]
     before_filter :check_editable_order_cycle_ids_update, only: [:update]
     before_filter :check_dependent_subscriptions, only: [:destroy]
-    update.after :sync_subscriptions
+    update.after :sync_subscriptions_update
 
     respond_to :json
 
@@ -125,21 +125,19 @@ module Admin
       @permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
     end
 
-    def sync_subscriptions
+    def sync_subscriptions_update
       return unless params[:schedule][:order_cycle_ids]
 
-      removed_ids = @existing_order_cycle_ids - @schedule.order_cycle_ids
-      new_ids = @schedule.order_cycle_ids - @existing_order_cycle_ids
-      return unless removed_ids.any? || new_ids.any?
-
-      subscriptions = Subscription.where(schedule_id: @schedule)
-      syncer = OrderManagement::Subscriptions::ProxyOrderSyncer.new(subscriptions)
-      syncer.sync!
+      sync_subscriptions
     end
 
     def sync_subscriptions_create
       return unless params[:order_cycle_ids]
 
+      sync_subscriptions
+    end
+
+    def sync_subscriptions
       removed_ids = @existing_order_cycle_ids - @schedule.order_cycle_ids
       new_ids = @schedule.order_cycle_ids - @existing_order_cycle_ids
       return unless removed_ids.any? || new_ids.any?
