@@ -70,7 +70,7 @@ class OrderCycle < ActiveRecord::Base
   }
 
   # Return order cycles that user coordinates, sends to or receives from
-  scope :accessible_by, lambda { |user|
+  scope :visible_by, lambda { |user|
     if user.has_spree_role?('admin')
       scoped
     else

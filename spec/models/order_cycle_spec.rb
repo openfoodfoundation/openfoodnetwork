@@ -65,8 +65,8 @@ describe OrderCycle do
     oc_received = create(:simple_order_cycle, distributors: [e2])
     oc_not_accessible = create(:simple_order_cycle, coordinator: e1)
 
-    expect(OrderCycle.accessible_by(user)).to include(oc_coordinated, oc_sent, oc_received)
-    expect(OrderCycle.accessible_by(user)).not_to include(oc_not_accessible)
+    expect(OrderCycle.visible_by(user)).to include(oc_coordinated, oc_sent, oc_received)
+    expect(OrderCycle.visible_by(user)).not_to include(oc_not_accessible)
   end
 
   it "finds the most recently closed order cycles" do
