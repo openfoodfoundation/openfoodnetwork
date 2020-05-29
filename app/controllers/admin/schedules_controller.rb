@@ -4,9 +4,9 @@ require 'order_management/subscriptions/proxy_order_syncer'
 module Admin
   class SchedulesController < ResourceController
     before_filter :adapt_params, only: [:update]
-    before_filter :check_editable_order_cycle_ids, only: [:create, :update]
+    before_filter :check_editable_order_cycle_ids_create, only: [:create]
+    before_filter :check_editable_order_cycle_ids, only: [:update]
     before_filter :check_dependent_subscriptions, only: [:destroy]
-    create.after :sync_subscriptions
     update.after :sync_subscriptions
 
     respond_to :json
@@ -30,12 +30,19 @@ module Admin
 
     def create
       invoke_callbacks(:create, :before)
+
+      if params[:order_cycle_ids].blank?
+        invoke_callbacks(:create, :fails)
+        return respond_with(@object)
+      end
+
       @object.attributes = permitted_resource_params
       @object.save!
 
       @object.order_cycle_ids = params[:order_cycle_ids]
       if @object.save
-        invoke_callbacks(:create, :after)
+        sync_subscriptions_create
+
         flash[:success] = flash_message_for(@object, :successfully_created)
         respond_with(@object) do |format|
           format.html { redirect_to location_after_save }
@@ -76,8 +83,24 @@ module Admin
       params[:schedule][:order_cycle_ids] = params[:order_cycle_ids]
     end
 
+    def check_editable_order_cycle_ids_create
+      return unless params[:order_cycle_ids]
+
+      requested = params[:order_cycle_ids]
+
+      @existing_order_cycle_ids = @schedule.persisted? ? @schedule.order_cycle_ids : []
+
+      permitted = OrderCycle.where(id: params[:order_cycle_ids] | @existing_order_cycle_ids).merge(OrderCycle.managed_by(spree_current_user)).pluck(:id)
+
+      result = @existing_order_cycle_ids
+      result |= (requested & permitted) # add any requested & permitted ids
+      result -= ((result & permitted) - requested) # remove any existing and permitted ids that were not specifically requested
+
+      params[:order_cycle_ids] = result
+    end
+
     def check_editable_order_cycle_ids
-      return unless params[:schedule][:order_cycle_ids]
+      return unless params[:schedule][:order_cycle_ids] || params[:order_cycle_ids]
 
       requested = params[:schedule][:order_cycle_ids]
       @existing_order_cycle_ids = @schedule.persisted? ? @schedule.order_cycle_ids : []
@@ -103,6 +126,18 @@ module Admin
 
     def sync_subscriptions
       return unless params[:schedule][:order_cycle_ids]
+
+      removed_ids = @existing_order_cycle_ids - @schedule.order_cycle_ids
+      new_ids = @schedule.order_cycle_ids - @existing_order_cycle_ids
+      return unless removed_ids.any? || new_ids.any?
+
+      subscriptions = Subscription.where(schedule_id: @schedule)
+      syncer = OrderManagement::Subscriptions::ProxyOrderSyncer.new(subscriptions)
+      syncer.sync!
+    end
+
+    def sync_subscriptions_create
+      return unless params[:order_cycle_ids]
 
       removed_ids = @existing_order_cycle_ids - @schedule.order_cycle_ids
       new_ids = @schedule.order_cycle_ids - @existing_order_cycle_ids
