@@ -60,16 +60,16 @@
 
   table {
     width: 100%;
-    border: none;
+    border: 0;
     border-spacing: 0;
     margin: 0;
 
     tr.product-cart {
-      background-color: white;
+      background-color: $white;
 
       td {
         border-top: 1px solid $grey-100;
-        padding: 0.75em 1em 0.5em 1em;
+        padding: 0.75em 1em 0.5em;
         vertical-align: top;
 
         &.image {
@@ -99,10 +99,11 @@
   .cart-total {
     color: $white;
     text-align: center;
-    margin: -0.5em 0 0.75em 0;
+    margin: -0.5em 0 0.75em;
   }
 
-  .sidebar, .sidebar-footer {
+  .sidebar,
+  .sidebar-footer {
     width: 375px;
     margin-right: -375px;
 

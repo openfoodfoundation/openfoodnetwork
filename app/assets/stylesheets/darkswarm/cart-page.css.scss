@@ -10,7 +10,8 @@
 }
 
 #cart-detail {
-  .cart-item-delete, .bought-item-delete {
+  .cart-item-delete,
+  .bought-item-delete {
     a {
       font-size: 1.125em;
     }
@@ -20,7 +21,8 @@
     color: $clr-brick;
   }
 
-  button, .button {
+  button,
+  .button {
     margin: 0;
   }
 
@@ -41,7 +43,8 @@
   }
 
   input {
-    &.ng-invalid-stock, &.ng-invalid-number {
+    &.ng-invalid-stock,
+    &.ng-invalid-number {
       border: 1px solid $clr-brick;
     }
   }
@@ -50,7 +53,7 @@
 .item-thumb-image {
   display: none;
 
-  @media screen and (min-width: 640px) {
+  @include breakpoint(phablet) {
     display: inline-block;
     float: left;
     padding-right: 0.5em;
@@ -64,7 +67,7 @@
     padding: 1.125rem 0 1.1875rem;
     width: 210px;
 
-    @media all and (max-width: 480px) {
+    @include breakpoint(mobile) {
       width: 100%;
     }
   }

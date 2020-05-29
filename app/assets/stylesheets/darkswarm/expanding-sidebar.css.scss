@@ -24,7 +24,8 @@
       opacity: 1;
     }
 
-    .sidebar, .sidebar-footer {
+    .sidebar,
+    .sidebar-footer {
       margin-right: 0;
     }
   }
@@ -54,20 +55,23 @@
     transition: margin $transition-sidebar;
     padding: 1em;
 
-    button, a.button {
+    button,
+    a.button {
       width: 48%;
     }
   }
 
   @include breakpoint(tablet) {
-    .sidebar, .sidebar-footer {
+    .sidebar,
+    .sidebar-footer {
       width: $sidebar-medium-width;
       margin-right: -$sidebar-medium-width;
     }
   }
 
   @include breakpoint(mobile) {
-    .sidebar, .sidebar-footer {
+    .sidebar,
+    .sidebar-footer {
       width: $sidebar-small-width;
       margin-right: -$sidebar-small-width;
     }
