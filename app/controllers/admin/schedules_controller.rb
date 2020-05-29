@@ -30,20 +30,20 @@ module Admin
 
     def create
       if params[:order_cycle_ids].blank?
-        return respond_with(@object)
+        return respond_with(@schedule)
       end
 
-      @object.attributes = permitted_resource_params
-      @object.save!
+      @schedule.attributes = permitted_resource_params
+      @schedule.save!
 
-      @object.order_cycle_ids = params[:order_cycle_ids]
-      if @object.save
+      @schedule.order_cycle_ids = params[:order_cycle_ids]
+      if @schedule.save
         sync_subscriptions_create
 
-        flash[:success] = flash_message_for(@object, :successfully_created)
-        respond_with(@object)
+        flash[:success] = flash_message_for(@schedule, :successfully_created)
+        respond_with(@schedule)
       else
-        respond_with(@object)
+        respond_with(@schedule)
       end
     end
 
@@ -96,7 +96,7 @@ module Admin
       result = editable_order_cycles(requested)
 
       params[:schedule][:order_cycle_ids] = result
-      @object.order_cycle_ids = result
+      @schedule.order_cycle_ids = result
     end
 
     def editable_order_cycles(requested)
