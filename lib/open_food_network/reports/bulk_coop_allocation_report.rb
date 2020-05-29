@@ -1,7 +1,5 @@
-require 'open_food_network/reports/bulk_coop_report'
-
 module OpenFoodNetwork::Reports
-  class BulkCoopAllocationReport < BulkCoopReport
+  class BulkCoopAllocationReport
     def header
       [
         I18n.t(:report_header_customer),
@@ -24,17 +22,17 @@ module OpenFoodNetwork::Reports
           group_by: proc { |line_item| line_item.product },
           sort_by: proc { |product| product.name },
           summary_columns: [
-            proc { |_lis| I18n.t('admin.reports.total') },
-            proc { |lis| product_name(lis) },
-            proc { |lis| group_buy_unit_size_f(lis) },
-            proc { |_lis| "" },
-            proc { |_lis| "" },
-            proc { |_lis| "" },
-            proc { |_lis| "" },
-            proc { |lis| total_amount(lis) },
-            proc { |lis| total_available(lis) },
-            proc { |lis| remainder(lis) },
-            proc { |lis| max_quantity_excess(lis) }
+            :total_label,
+            :variant_product_name,
+            :variant_product_group_buy_unit_size_f,
+            :empty_cell,
+            :empty_cell,
+            :empty_cell,
+            :empty_cell,
+            :total_amount,
+            :total_available,
+            :remainder,
+            :max_quantity_excess
           ]
         },
         {
@@ -46,17 +44,17 @@ module OpenFoodNetwork::Reports
 
     def columns
       [
-        proc { |lis| lis.first.order.bill_address.firstname + " " + lis.first.order.bill_address.lastname },
-        proc { |lis| lis.first.product.name },
-        proc { |lis| lis.first.product.group_buy_unit_size || 0.0 },
-        proc { |lis| lis.first.full_name },
-        proc { |lis| OpenFoodNetwork::OptionValueNamer.new(lis.first).value },
-        proc { |lis| OpenFoodNetwork::OptionValueNamer.new(lis.first).unit },
-        proc { |lis| lis.first.weight_from_unit_value || 0 },
-        proc { |lis| total_amount(lis) },
-        proc { |_lis| "" },
-        proc { |_lis| "" },
-        proc { |_lis| "" }
+        :order_billing_address_name,
+        :product_name,
+        :product_group_buy_unit_size,
+        :full_name,
+        :option_value_value,
+        :option_value_unit,
+        :weight_from_unit_value,
+        :total_amount,
+        :empty_cell,
+        :empty_cell,
+        :empty_cell
       ]
     end
   end

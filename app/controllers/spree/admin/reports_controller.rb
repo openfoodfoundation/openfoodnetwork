@@ -260,7 +260,7 @@ module Spree
       end
 
       def order_grouper_table
-        order_grouper = OpenFoodNetwork::OrderGrouper.new @report.rules, @report.columns
+        order_grouper = OpenFoodNetwork::OrderGrouper.new @report.rules, @report.columns, @report
         order_grouper.table(@report.table_items)
       end
 
