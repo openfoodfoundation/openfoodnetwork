@@ -18,7 +18,7 @@ describe DfcProvider::Api::ProductsController, type: :controller do
   describe('.index') do
     context 'with authorization token' do
       before do
-        request.env['Authorization'] = 'Bearer 123456.abcdef.123456'
+        request.headers['Authorization'] = 'Bearer 123456.abcdef.123456'
       end
 
       context 'with an authenticated user' do
@@ -31,7 +31,7 @@ describe DfcProvider::Api::ProductsController, type: :controller do
         context 'with an enterprise' do
           context 'given with an id' do
             context 'related to the user' do
-              before { get :index, enterprise_id: 'default' }
+              before { api_get :index, enterprise_id: 'default' }
 
               it 'is successful' do
                 expect(response.status).to eq 200
@@ -47,14 +47,14 @@ describe DfcProvider::Api::ProductsController, type: :controller do
               let(:enterprise) { create(:enterprise) }
 
               it 'returns not_found head' do
-                get :index, enterprise_id: enterprise.id
+                api_get :index, enterprise_id: enterprise.id
                 expect(response.status).to eq 404
               end
             end
           end
 
           context 'as default' do
-            before { get :index, enterprise_id: 'default' }
+            before { api_get :index, enterprise_id: 'default' }
 
             it 'is successful' do
               expect(response.status).to eq 200
@@ -71,7 +71,7 @@ describe DfcProvider::Api::ProductsController, type: :controller do
           let(:enterprise) { create(:enterprise) }
 
           it 'returns not_found head' do
-            get :index, enterprise_id: 'default'
+            api_get :index, enterprise_id: 'default'
             expect(response.status).to eq 404
           end
         end
@@ -83,7 +83,7 @@ describe DfcProvider::Api::ProductsController, type: :controller do
             .to receive(:process)
             .and_return(nil)
 
-          get :index, enterprise_id: 'default'
+          api_get :index, enterprise_id: 'default'
           expect(response.status).to eq 401
         end
       end
@@ -91,7 +91,7 @@ describe DfcProvider::Api::ProductsController, type: :controller do
 
     context 'without an authorization token' do
       it 'returns unprocessable_entity head' do
-        get :index, enterprise_id: enterprise.id
+        api_get :index, enterprise_id: enterprise.id
         expect(response.status).to eq 422
       end
     end
