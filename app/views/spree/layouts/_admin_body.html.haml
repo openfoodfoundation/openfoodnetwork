@@ -10,11 +10,9 @@
     .flash.success= flash[:success]
 
   #progress
-    .wrapper
-      #spinner
-      .progress-message
-        = Spree.t(:loading)
-        \...
+    %img.spinner{ src: "/assets/spinning-circles.svg" }
+    = Spree.t(:loading)
+    \...
 
   %header#header{"data-hook" => ""}
     .container

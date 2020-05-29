@@ -30,7 +30,6 @@
 //= require spree
 //= require admin/spree/spree-select2
 //= require modernizr
-//= require spin
 //= require equalize
 //= require css_browser_selector_dev
 //= require responsive-tables
