@@ -41,10 +41,7 @@ module Admin
         sync_subscriptions_create
 
         flash[:success] = flash_message_for(@object, :successfully_created)
-        respond_with(@object) do |format|
-          format.html { redirect_to location_after_save }
-          format.js   { render layout: false }
-        end
+        respond_with(@object)
       else
         respond_with(@object)
       end
