@@ -5,7 +5,7 @@ module Admin
   class SchedulesController < ResourceController
     before_filter :adapt_params, only: [:update]
     before_filter :check_editable_order_cycle_ids_create, only: [:create]
-    before_filter :check_editable_order_cycle_ids, only: [:update]
+    before_filter :check_editable_order_cycle_ids_update, only: [:update]
     before_filter :check_dependent_subscriptions, only: [:destroy]
     update.after :sync_subscriptions
 
@@ -87,29 +87,34 @@ module Admin
       return unless params[:order_cycle_ids]
 
       requested = params[:order_cycle_ids]
+      @existing_order_cycle_ids = []
 
-      @existing_order_cycle_ids = @schedule.persisted? ? @schedule.order_cycle_ids : []
-
-      permitted = OrderCycle.where(id: params[:order_cycle_ids] | @existing_order_cycle_ids).merge(OrderCycle.managed_by(spree_current_user)).pluck(:id)
-
-      result = @existing_order_cycle_ids
-      result |= (requested & permitted) # add any requested & permitted ids
-      result -= ((result & permitted) - requested) # remove any existing and permitted ids that were not specifically requested
+      result = editable_order_cycles(requested)
 
       params[:order_cycle_ids] = result
     end
 
-    def check_editable_order_cycle_ids
-      return unless params[:schedule][:order_cycle_ids] || params[:order_cycle_ids]
+    def check_editable_order_cycle_ids_update
+      return unless params[:schedule][:order_cycle_ids]
 
       requested = params[:schedule][:order_cycle_ids]
-      @existing_order_cycle_ids = @schedule.persisted? ? @schedule.order_cycle_ids : []
-      permitted = OrderCycle.where(id: params[:schedule][:order_cycle_ids] | @existing_order_cycle_ids).merge(OrderCycle.managed_by(spree_current_user)).pluck(:id)
+      @existing_order_cycle_ids = @schedule.order_cycle_ids
+
+      result = editable_order_cycles(requested)
+
+      params[:schedule][:order_cycle_ids] = result
+      @object.order_cycle_ids = result
+    end
+
+    def editable_order_cycles(requested)
+      permitted = OrderCycle
+        .where(id: params[:order_cycle_ids] | @existing_order_cycle_ids)
+        .merge(OrderCycle.managed_by(spree_current_user))
+        .pluck(:id)
       result = @existing_order_cycle_ids
       result |= (requested & permitted) # add any requested & permitted ids
       result -= ((result & permitted) - requested) # remove any existing and permitted ids that were not specifically requested
-      params[:schedule][:order_cycle_ids] = result
-      @object.order_cycle_ids = result
+      result
     end
 
     def check_dependent_subscriptions
