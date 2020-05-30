@@ -6,11 +6,11 @@ require 'yaml'
 app_config = YAML.load_file(File.join(__dir__, 'application.yml'))
 
 env "MAILTO", app_config["SCHEDULE_NOTIFICATIONS"] if app_config["SCHEDULE_NOTIFICATIONS"]
+set :path, ENV['WHENEVER_PATH'] if ENV['WHENEVER_PATH']
 
 # If we use -e with a file containing specs, rspec interprets it and filters out our examples
 job_type :run_file, "cd :path; :environment_variable=:environment bundle exec script/rails runner :task :output"
 job_type :enqueue_job,  "cd :path; :environment_variable=:environment bundle exec script/enqueue :task :priority :output"
-
 
 every 1.day, at: '2:45am' do
   rake 'db2fog:clean' if app_config['S3_BACKUPS_BUCKET']
