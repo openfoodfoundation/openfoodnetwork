@@ -28,7 +28,16 @@ FactoryBot.define do
 
   factory :schedule, class: Schedule do
     sequence(:name) { |n| "Schedule #{n}" }
-    order_cycles { [OrderCycle.first || FactoryBot.create(:simple_order_cycle)] }
+
+    transient do
+      order_cycles { [OrderCycle.first || create(:simple_order_cycle)] }
+    end
+
+    before(:create) do |schedule, evaluator|
+      evaluator.order_cycles.each do |order_cycle|
+        order_cycle.schedules << schedule
+      end
+    end
   end
 
   factory :proxy_order, class: ProxyOrder do

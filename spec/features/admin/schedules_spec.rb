@@ -129,10 +129,10 @@ feature 'Schedules', js: true do
         end
 
         expect(Schedule.find_by(id: weekly_schedule.id)).to be_nil
-        expect(oc1.schedules).to eq []
-        expect(oc2.schedules).to eq []
-        expect(oc3.schedules).to eq []
-        expect(oc4.schedules).to eq []
+        expect(oc1.reload.schedules).to eq []
+        expect(oc2.reload.schedules).to eq []
+        expect(oc3.reload.schedules).to eq []
+        expect(oc4.reload.schedules).to eq []
       end
     end
   end
