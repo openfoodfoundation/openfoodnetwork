@@ -133,6 +133,13 @@ RSpec.configure do |config|
 
   config.before(:all) { restart_driver }
 
+  # Configure Devise to work nicely with controller specs
+  # See: https://github.com/openfoodfoundation/openfoodnetwork/issues/5533
+  config.before(:each, :controller) do
+    setup_controller_for_warden
+    @request.env["devise.mapping"] = Devise.mappings[:spree_user]
+  end
+
   # Geocoding
   config.before(:each) { allow_any_instance_of(Spree::Address).to receive(:geocode).and_return([1, 1]) }
 
