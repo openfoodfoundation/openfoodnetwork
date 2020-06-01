@@ -53,7 +53,7 @@
 .item-thumb-image {
   display: none;
 
-  @include breakpoint(phablet) {
+  @media screen and (min-width: 640px) {
     display: inline-block;
     float: left;
     padding-right: 0.5em;
