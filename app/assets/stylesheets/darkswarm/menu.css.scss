@@ -175,7 +175,7 @@ nav.top-bar {
   height: $mobile-nav-height;
   position: fixed;
   width: 100%;
-  z-index: 190;
+  z-index: 190; // Above cart sidebar and shaded overlay
 
   .cart-span {
     background-color: #f4704c;
