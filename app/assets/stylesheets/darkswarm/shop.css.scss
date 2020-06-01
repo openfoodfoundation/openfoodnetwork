@@ -129,11 +129,13 @@ products {
 
 .open-shop-message {
   a {
-    color: #0096ad;
+    color: $teal-500;
 
-    &:hover, &:focus, &:active {
+    &:hover,
+    &:focus,
+    &:active {
       text-decoration: none;
-      color: #4aadbd;
+      color: $teal-400;
     }
   }
 }
