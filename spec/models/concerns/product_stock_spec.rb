@@ -5,7 +5,7 @@ describe ProductStock do
 
   context "when product has no variants" do
     before do
-      product.variants.first.destroy
+      product.variants.destroy
       product.variants.reload
     end
 
