@@ -39,7 +39,7 @@ describe Api::EnterprisesController, type: :controller do
       it "saves all user ids submitted" do
         manager1 = create(:user)
         manager2 = create(:user)
-        spree_post :create, {
+        api_post :create, {
           enterprise: new_enterprise_params.
             merge({ user_ids: [enterprise_owner.id, manager1.id, manager2.id] })
         }
@@ -67,7 +67,7 @@ describe Api::EnterprisesController, type: :controller do
       end
 
       it "I can update enterprise image" do
-        spree_post :update_image, logo: 'a logo', id: enterprise.id
+        api_post :update_image, logo: 'a logo', id: enterprise.id
         expect(response).to be_success
       end
     end
@@ -86,7 +86,7 @@ describe Api::EnterprisesController, type: :controller do
       before { allow(enterprise).to receive(:update_attributes).and_return(true) }
 
       it "I can't update enterprise image" do
-        spree_post :update_image, logo: 'a logo', id: enterprise.id
+        api_post :update_image, logo: 'a logo', id: enterprise.id
         assert_unauthorized!
       end
     end
