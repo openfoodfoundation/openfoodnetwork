@@ -23,14 +23,14 @@ module Api
               address1: '123 Abc Street',
               city: 'Northcote',
               zipcode: '3070',
-              state_id: australia.states.first,
+              state_id: australia.states.first.id,
               country_id: australia.id
             }
           }
         end
 
         it "creates as sells=any when it is not a producer" do
-          spree_post :create, { enterprise: new_enterprise_params }
+          api_post :create, { enterprise: new_enterprise_params }
           expect(response).to be_success
 
           enterprise = Enterprise.last
