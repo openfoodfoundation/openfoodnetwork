@@ -199,6 +199,9 @@ feature "
 
             expect do
               click_button 'Save Changes'
+
+              # We need to wait_until because the save action is not fast enough for the have_content matcher
+              wait_until { page.find("#status-message").text != "Saving..." }
               expect(page).to have_content "I couldn't get authorisation to save those changes, so they remain unsaved."
             end.to change(VariantOverride, :count).by(0)
           end
