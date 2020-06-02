@@ -19,23 +19,23 @@ module ControllerRequestsHelper
     api_process(action, params, session, flash, "DELETE")
   end
 
-  def spree_get(action, parameters = nil, session = nil, flash = nil)
-    process_spree_action(action, parameters, session, flash, "GET")
+  def spree_get(action, params = {}, session = nil, flash = nil)
+    process_spree_action(action, params, session, flash, "GET")
   end
 
   # Executes a request simulating POST HTTP method and set/volley the response
-  def spree_post(action, parameters = nil, session = nil, flash = nil)
-    process_spree_action(action, parameters, session, flash, "POST")
+  def spree_post(action, params = {}, session = nil, flash = nil)
+    process_spree_action(action, params, session, flash, "POST")
   end
 
   # Executes a request simulating PUT HTTP method and set/volley the response
-  def spree_put(action, parameters = nil, session = nil, flash = nil)
-    process_spree_action(action, parameters, session, flash, "PUT")
+  def spree_put(action, params = {}, session = nil, flash = nil)
+    process_spree_action(action, params, session, flash, "PUT")
   end
 
   # Executes a request simulating DELETE HTTP method and set/volley the response
-  def spree_delete(action, parameters = nil, session = nil, flash = nil)
-    process_spree_action(action, parameters, session, flash, "DELETE")
+  def spree_delete(action, params = {}, session = nil, flash = nil)
+    process_spree_action(action, params, session, flash, "DELETE")
   end
 
   private
@@ -48,9 +48,9 @@ module ControllerRequestsHelper
                          method)
   end
 
-  def process_spree_action(action, parameters = {}, session = nil, flash = nil, method = "GET")
+  def process_spree_action(action, params = {}, session = nil, flash = nil, method = "GET")
     process(action,
-            parameters.merge!(use_route: :spree),
+            params.merge!(use_route: :spree),
             session,
             flash,
             method)
