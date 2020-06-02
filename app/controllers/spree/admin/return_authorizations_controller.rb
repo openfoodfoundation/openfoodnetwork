@@ -19,6 +19,11 @@ module Spree
           @return_authorization.add_variant(variant_id.to_i, qty.to_i)
         end
       end
+
+      def permitted_resource_params
+        params.require(:return_authorization).
+          permit(:amount, :reason, :stock_location_id)
+      end
     end
   end
 end
