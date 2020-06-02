@@ -1,6 +1,6 @@
 require 'active_support/all'
 
-module ControllerHacks
+module ControllerRequestsHelper
   def api_get(action, params = {}, session = nil, flash = nil)
     api_process(action, params, session, flash, "GET")
   end
@@ -25,8 +25,4 @@ module ControllerHacks
             flash,
             method)
   end
-end
-
-RSpec.configure do |config|
-  config.include ControllerHacks, type: :controller
 end

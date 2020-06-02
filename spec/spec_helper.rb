@@ -148,8 +148,9 @@ RSpec.configure do |config|
   config.include Spree::UrlHelpers
   config.include Spree::CheckoutHelpers
   config.include Spree::MoneyHelper
-  config.include Spree::TestingSupport::ControllerRequests, type: :controller
   config.include Spree::TestingSupport::Preferences
+  config.include Spree::TestingSupport::ControllerRequests, type: :controller
+  config.include ControllerRequestsHelper, type: :controller
   config.include Devise::TestHelpers, type: :controller
   config.extend  Spree::Api::TestingSupport::Setup, type: :controller
   config.include OpenFoodNetwork::ApiHelper, type: :controller
