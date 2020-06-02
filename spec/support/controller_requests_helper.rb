@@ -50,7 +50,7 @@ module ControllerRequestsHelper
 
   def process_spree_action(action, params = {}, session = nil, flash = nil, method = "GET")
     process(action,
-            params.merge!(use_route: :spree),
+            params.merge!(use_route: :main_app),
             session,
             flash,
             method)
