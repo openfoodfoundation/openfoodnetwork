@@ -142,7 +142,6 @@ Layout/LineLength:
   - spec/controllers/api/product_images_controller_spec.rb
   - spec/controllers/api/products_controller_spec.rb
   - spec/controllers/api/promo_images_controller_spec.rb
-  - spec/controllers/api/shipments_controller_spec.rb
   - spec/controllers/api/variants_controller_spec.rb
   - spec/controllers/cart_controller_spec.rb
   - spec/controllers/checkout_controller_spec.rb
