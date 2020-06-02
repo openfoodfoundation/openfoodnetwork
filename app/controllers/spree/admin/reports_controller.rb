@@ -255,7 +255,7 @@ module Spree
       def my_order_cycles
         OrderCycle.
           active_or_complete.
-          accessible_by(spree_current_user).
+          visible_by(spree_current_user).
           order('orders_close_at DESC')
       end
 

@@ -15,13 +15,12 @@
     .omega.eight.columns
       = f.text_area :description, class: 'fullwidth', rows: 2, placeholder: t(:spree_admin_eg_collect_your_order)
       = error_message_on :shipping_method, :description
-  - if spree_current_user.admin?
-    .row
-      .alpha.three.columns
-        = f.label :display_on, t(:display)
-      .omega.eight.columns
-        = select(:shipping_method, :display_on, [[t(".both"), nil], [t(".back_end"), "back_end"]], {}, {class: 'select2 fullwidth'})
-        = error_message_on :shipping_method, :display_on
+  .row
+    .alpha.three.columns
+      = f.label :display_on, t(:display)
+    .omega.eight.columns
+      = select(:shipping_method, :display_on, [[t(".both"), nil], [t(".back_end"), "back_end"]], {}, {class: 'select2 fullwidth'})
+      = error_message_on :shipping_method, :display_on
 
   .row
     .alpha.three.columns

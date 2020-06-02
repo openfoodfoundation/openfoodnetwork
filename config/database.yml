@@ -5,6 +5,7 @@ defaults: &defaults
   host: <%= ENV.fetch('OFN_DB_HOST', 'localhost') %>
   username: <%= ENV.fetch('OFN_DB_USERNAME', 'ofn') %>
   password: <%= ENV.fetch('OFN_DB_PASSWORD', 'f00d') %>
+  port:  <%= ENV.fetch('OFN_DB_PORT', 5432) %>
 
 development:
   <<: *defaults

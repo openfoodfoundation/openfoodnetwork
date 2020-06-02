@@ -145,7 +145,7 @@ module Admin
         preload(:schedules).
         ransack(params[:q]).
         result.
-        accessible_by(spree_current_user)
+        visible_by(spree_current_user)
     end
 
     def load_data_for_index

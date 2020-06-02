@@ -10,7 +10,7 @@ describe OrderCartReset do
     let(:new_distributor) { create(:distributor_enterprise) }
 
     it "empties order" do
-      OrderCartReset.new(order, new_distributor.id.to_s, nil, nil).call
+      OrderCartReset.new(order, new_distributor.id.to_s).reset_distributor
 
       expect(order.line_items).to be_empty
     end
@@ -28,7 +28,7 @@ describe OrderCartReset do
     it "empties order and makes order cycle nil" do
       expect(order_cycle_list).to receive(:call).and_return([])
 
-      OrderCartReset.new(order, distributor.id.to_s, nil, nil).call
+      OrderCartReset.new(order, distributor.id.to_s).reset_other!(nil, nil)
 
       expect(order.line_items).to be_empty
       expect(order.order_cycle).to be_nil
@@ -38,7 +38,7 @@ describe OrderCartReset do
       other_order_cycle = create(:simple_order_cycle, distributors: [distributor])
       expect(order_cycle_list).to receive(:call).and_return([other_order_cycle])
 
-      OrderCartReset.new(order, distributor.id.to_s, nil, nil).call
+      OrderCartReset.new(order, distributor.id.to_s).reset_other!(nil, nil)
 
       expect(order.order_cycle).to eq other_order_cycle
     end

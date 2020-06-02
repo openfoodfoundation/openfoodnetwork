@@ -207,7 +207,7 @@ GEM
       activerecord (>= 3.2.0, < 5.0)
       fog (~> 1.0)
       rails (>= 3.2.0, < 5.0)
-    ddtrace (0.35.2)
+    ddtrace (0.36.0)
       msgpack
     debugger-linecache (1.2.0)
     delayed_job (4.1.8)
@@ -510,7 +510,7 @@ GEM
       pry (~> 0.10)
     public_suffix (4.0.3)
     rack (1.5.5)
-    rack-mini-profiler (2.0.1)
+    rack-mini-profiler (2.0.2)
       rack (>= 1.2.0)
     rack-protection (1.5.5)
       rack
@@ -705,7 +705,7 @@ DEPENDENCIES
   aws-sdk
   blockenspiel
   bugsnag
-  byebug (~> 11.0)
+  byebug (~> 11.0.0)
   capybara (>= 2.18.0)
   catalog!
   coffee-rails (~> 4.0.0)
@@ -756,7 +756,7 @@ DEPENDENCIES
   paperclip (~> 3.4.1)
   pg (~> 0.21.0)
   pry (~> 0.12.0)
-  pry-byebug (~> 3.7)
+  pry-byebug (~> 3.7.0)
   rack-mini-profiler (< 3.0.0)
   rack-rewrite
   rack-ssl

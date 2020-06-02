@@ -1982,14 +1982,14 @@ fil_PH:
   spree_admin_overview_enterprises_header: "ang aking mga enterprise"
   spree_admin_overview_enterprises_footer: "PAMAHALAAN ANG AKING MGA ENTERPRISE"
   spree_admin_enterprises_hubs_name: "pangalan"
-  spree_admin_enterprises_create_new: "GUMAWA NG BAGO"
+  spree_admin_enterprises_create_new: "LUMIKHA NG BAGO"
   spree_admin_enterprises_shipping_methods: "mga paraan ng pagpapadala"
   spree_admin_enterprises_fees: "bayad para sa enterprise"
-  spree_admin_enterprises_none_create_a_new_enterprise: "GUMAWA NG BAGONG ENTERPRISE"
+  spree_admin_enterprises_none_create_a_new_enterprise: "LUMIKHA NG BAGONG ENTERPRISE"
   spree_admin_enterprises_none_text: "wala ka pang mga enterprise"
   spree_admin_enterprises_tabs_hubs: "MGA HUB"
   spree_admin_enterprises_producers_manage_products: "PAMAHALAAN ANG MGA PRODUKTO"
-  spree_admin_enterprises_create_new_product: "GUMAWA NG BAGONG PRODUKTO"
+  spree_admin_enterprises_create_new_product: "LUMIKHA NG BAGONG PRODUKTO"
   spree_admin_single_enterprise_alert_mail_confirmation: "kumpirmahin ang email address para sa/kay"
   spree_admin_single_enterprise_alert_mail_sent: "naipadala na ang email sa"
   spree_admin_overview_action_required: "kailangan ng aksyon"
@@ -2004,8 +2004,8 @@ fil_PH:
   unit_name: "pangalan ng yunit"
   change_package: "palitan ang package"
   spree_admin_single_enterprise_hint: "payo: para mahanap ka ng mga tao, i-turn on ang visibility sa ilalim ng"
-  spree_admin_eg_pickup_from_school: "hal. 'Pick-up from Primary School'"
-  spree_admin_eg_collect_your_order: "hal. 'Please collect your order from 123 Imaginary St, Northcote, 3070'"
+  spree_admin_eg_pickup_from_school: "hal. 'Pick-up mula sa Primary School'"
+  spree_admin_eg_collect_your_order: "hal. 'Kolektahin ang inyong order sa 123 Kapayapaan St., Tobias Fornier, Antique 5716'"
   spree_classification_primary_taxon_error: "ang Tax sa%{taxon}ay ang pangunahing tax ng %{product}at hindi maaaring tanggalin"
   spree_order_availability_error: "ang distributor o order cycle ay hindi kayang ibigay ang mga produkto sa inyong cart"
   spree_order_populator_error: "ang distributor o order cycle na ito ay hindi kayang ibigay lahat ng mga produkto sa inyong cart. pumili ng iba."
@@ -2023,10 +2023,10 @@ fil_PH:
   add_and_manage_order_cycles: "magdagdag at pamahalaan ang mga order cycle"
   manage_order_cycles: "pamahalaan ang mga order cycle"
   manage_products: "pamahalaan ang mga produkto"
-  edit_profile_details: "ayusin ang mga detalye ng profile"
-  edit_profile_details_etc: "palitan ang paglalarawan, larawan at iba pa ng iyong profile"
+  edit_profile_details: "i-edit ang mga detalye ng profile"
+  edit_profile_details_etc: "palitan ang paglalarawan ng profile, larawan at iba pa"
   order_cycle: "order cycle"
-  order_cycles: "order cycles"
+  order_cycles: "mga order cycle"
   enterprise_relationships: "mga permiso ng enterprise"
   remove_tax: "alisin ang tax"
   first_name_begins_with: "ang pangalan ay nagsisimula sa"
@@ -2037,20 +2037,20 @@ fil_PH:
   enterprise_tos_agree: "ako ay sumasang-ayon sa palatuntunan ng serbisyo na nasa itaas."
   tax_settings: "settings ng tax"
   products_require_tax_category: "ang mga produkto ay kailangang may kategorya ng tax"
-  admin_shared_address_1: "tirahan"
+  admin_shared_address_1: "address"
   admin_shared_address_2: "address (pagpapatuloy)"
   admin_share_city: "Lungsod"
   admin_share_zipcode: "Postcode"
   admin_share_country: "Bansa"
   admin_share_state: "Status"
-  hub_sidebar_hubs: "Hubs"
+  hub_sidebar_hubs: "Mga Hub"
   hub_sidebar_none_available: "walang available"
   hub_sidebar_manage: "pamahalaan"
   hub_sidebar_at_least: "pumili ng kahit isa sa mga Hub"
   hub_sidebar_blue: "bughaw"
   hub_sidebar_red: "pula"
   report_customers_distributor: "Distributor"
-  report_customers_supplier: "Suuplier"
+  report_customers_supplier: "Supplier"
   report_customers_cycle: "order cycle"
   report_customers_type: "uri ng ulat"
   report_customers_csv: "i-download bilang csv"
@@ -2077,7 +2077,7 @@ fil_PH:
   report_header_last_name: Apelyido
   report_header_phone: telepono
   report_header_suburb: lungsod
-  report_header_address: tirahan
+  report_header_address: address
   report_header_billing_address: Billing Address
   report_header_relationship: relasyon
   report_header_hub: Hub
@@ -2185,7 +2185,7 @@ fil_PH:
   report_header_total_cost: "Kabuuang Gastos"
   report_header_total_ordered: Kabuuang na-order
   report_header_total_max: kabuuang pinakamataas na limit
-  report_header_total_units: kabuuang yunit
+  report_header_total_units: kabuuang mga yunit
   report_header_sum_max_total: "kabuuan"
   report_header_total_excl_vat: "Kabuuang tax na hindi kasama (%{currency_symbol})"
   report_header_total_incl_vat: "Kabuuang tax na kasama (%{currency_symbol})"
@@ -2217,8 +2217,8 @@ fil_PH:
   failure: "pagkabigo"
   unsaved_changes_confirmation: "ang mga hindi na-save na pagbabago ay mawawala. magpatuloy pa rin?"
   one_product_unsaved: "ang mga pagbabagong ginawa sa isang produkto ay hindi pa nase-save."
-  products_unsaved: "ang mga pagbabagong ginawa sa%{n} produkto ay hindi pa nase-save."
-  is_already_manager: "ay isa nang tagapamahala"
+  products_unsaved: "ang mga pagbabagong ginawa sa%{n} mga produkto ay hindi pa nase-save."
+  is_already_manager: "ay isa nang tagapamahala!"
   no_change_to_save: "walang pagbabagong ise-save"
   user_invited: "%{email}ay naimbitahan na para pamahalaan ang enterprise na ito."
   add_manager: "magdagdag ng gumagamit"
@@ -2431,7 +2431,7 @@ fil_PH:
               producer sa mga mamili, maaaring sa pamamagitan ng pagsasama sama, pagmamarka,
               pagbabalot, pagbebenta o pagde-deliver ng pagkain.
           producer_desc: mga producer ng pagkain
-          producer_example: hal. NAGPAPATUBO, PANADERO, MANGANGALAKAL, YUMAYARI
+          producer_example: hal. NAGTATANIM, PANADERO, MANGANGALAKAL, YUMAYARI
           non_producer_desc: Iba pang mga enterprise ng pagkain
           non_producer_example: hal. Grocery, Food co-ops, Buying groups
         enterprise_status:
@@ -2447,13 +2447,13 @@ fil_PH:
           loading_variants: "nilo-load ang Variants"
       tag_rules:
         shipping_method_tagged_top: "naka-tag ng mga paraan ng pagpapadala"
-        shipping_method_tagged_bottom: "ay:"
-        payment_method_tagged_top: "naka-tag na paraan ng pagbabayad"
-        payment_method_tagged_bottom: "ay:"
+        shipping_method_tagged_bottom: "ay ang mga:"
+        payment_method_tagged_top: "naka-tag na mga paraan ng pagbabayad"
+        payment_method_tagged_bottom: "ay ang mga:"
         order_cycle_tagged_top: "naka-tag na mga Order Cycle"
-        order_cycle_tagged_bottom: "ay:"
+        order_cycle_tagged_bottom: "ay ang mga:"
         inventory_tagged_top: "nakatag- na mga uri ng imbentaryo"
-        inventory_tagged_bottom: "ay:"
+        inventory_tagged_bottom: "ay ang mga:"
       new_tag_rule_dialog:
         select_rule_type: "pumili ng uri ng panuntunan:"
         add_rule: "magdagdag ng panuntunan"
@@ -2463,12 +2463,12 @@ fil_PH:
         index:
           per_page: "%{results}kada pahina"
           view_file: "tignan ang file"
-          compiling_invoices: "tipunin ang mga invoice"
+          compiling_invoices: "tinitipon ang mga invoice"
           bulk_invoice_created: "nagawa ang maramihang invoice"
           bulk_invoice_failed: "hindi nagtagumpay na gumawa ng maramihang invoice"
           please_wait: "hintayin na maihanda ang PDF bago isara ang modal na ito."
         order_state:
-          address: "tirahan"
+          address: "address"
           adjustments: "mga pagsasaayos"
           awaiting_return: "naghihintay ng pagbalik"
           canceled: "kanselado"
@@ -2507,23 +2507,23 @@ fil_PH:
         failed: "hindi matagumpay ang muling pagpapadala ✗"
       order_cycles:
         schedules:
-          adding_a_new_schedule: "Pagdadagdag ng Bagong Iskedyul"
-          updating_a_schedule: "pag-update sa iskedyul"
-          create_schedule: "Gumawa ng iskedyul"
+          adding_a_new_schedule: "nagdadagdag ng Bagong Iskedyul"
+          updating_a_schedule: "ina-update ang iskedyul"
+          create_schedule: "Lumikha ng iskedyul"
           update_schedule: "i-update ang iskedyul"
-          delete_schedule: "burahin ang iskedyul"
+          delete_schedule: "tanggalin ang iskedyul"
           schedule_name_placeholder: "pangalan ng iskedyul"
-          created_schedule: "nakagawa ng iskedyul"
+          created_schedule: "nakalikha ng iskedyul"
           updated_schedule: "na-update na iskedyul"
           deleted_schedule: "binurang iskedyul"
-          name_required_error: "Maglagay ng name para sa iskedyul na ito"
+          name_required_error: "Maglagay ng pangalan para sa iskedyul na ito"
           no_order_cycles_error: "pumili kahit isang order cycle (i-drag at i-drop)"
           available: "Available"
           selected: "napili"
       customers:
         index:
           add_customer: "magdagdag ng Customer"
-          add_a_new_customer_for: "magdadag ng customer para sa%{shop_name}"
+          add_a_new_customer_for: "magdadag ng bagong customer para sa%{shop_name}"
           customer_placeholder: "customer@example.org"
           valid_email_error: "maglagay ng valid na email address"
       subscriptions:
