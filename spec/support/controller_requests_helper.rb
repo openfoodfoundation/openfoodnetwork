@@ -41,16 +41,18 @@ module ControllerRequestsHelper
   private
 
   def api_process(action, params = {}, session = nil, flash = nil, method = "get")
+    process_spree_action(action,
+                         params.reverse_merge!(format: :json),
+                         session,
+                         flash,
+                         method)
+  end
+
+  def process_spree_action(action, parameters = {}, session = nil, flash = nil, method = "GET")
     process(action,
-            params.
-              reverse_merge!(use_route: :spree, format: :json),
+            parameters.merge!(use_route: :spree),
             session,
             flash,
             method)
-  end
-
-  def process_spree_action(action, parameters = nil, session = nil, flash = nil, method = "GET")
-    parameters ||= {}
-    process(action, parameters.merge!(use_route: :spree), session, flash, method)
   end
 end
