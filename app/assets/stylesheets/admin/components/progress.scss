@@ -20,10 +20,11 @@
   text-align: center;
   text-transform: uppercase;
 
-  img {
+  .spinner {
     position: absolute;
-    height: 30px;
     left: 50%;
+    width: 30px;
+    height: 30px;
     top: -5px;
     margin-left: -15px;
   }
