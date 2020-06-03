@@ -2685,6 +2685,11 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         in your cart have reduced. Here's what's changed:
       now_out_of_stock: is now out of stock.
       only_n_remainging: "now only has %{num} remaining."
+    shop_variant_no_group_buy:
+      add: "Add"
+      increment: "＋" # U+FF0B Fullwidth Plus Sign
+      decrement: "－" # U+FF0D Fullwidth Hyphen-Minus
+      in_cart: "%{quantity} in cart"
     variants:
       on_demand:
         "yes": "On demand"

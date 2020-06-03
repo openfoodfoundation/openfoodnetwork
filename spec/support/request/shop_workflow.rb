@@ -50,28 +50,17 @@ module ShopWorkflow
   end
 
   # Add an item to the cart
-  #
-  # At the moment, the user enters the quantity into an input field.
-  # But with the coming mobile-friendly UX, the user will click a button to
-  # add an item, hence the naming.
-  #
-  # This is temporary code. The duplication will be removed by the mobile
-  # product listings feature. This has been backported to avoid merge
-  # conflicts and to make the current build more stable.
   def click_add_to_cart(variant = nil, quantity = 1)
     within_variant(variant) do
-      input = page.find("input")
-      new_quantity = input.value.to_i + quantity
-      fill_in input[:name], with: new_quantity
+      click_button "Add"
+      (quantity - 1).times { click_button "＋" }
     end
     wait_for_cart
   end
 
   def click_remove_from_cart(variant = nil, quantity = 1)
     within_variant(variant) do
-      input = page.find("input")
-      new_quantity = input.value.to_i - quantity
-      fill_in input[:name], with: new_quantity
+      quantity.times { click_button "－" }
     end
     wait_for_cart
   end
