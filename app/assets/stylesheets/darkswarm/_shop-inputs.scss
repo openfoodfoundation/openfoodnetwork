@@ -9,54 +9,6 @@
 
   // ordering
   product {
-    input {
-      @include border-radius(0);
-
-      @include csstrans;
-
-      margin: 0;
-      width: 10rem;
-      display: inline;
-
-      @include box-shadow(none);
-
-      border-color: #b3b3b3;
-      text-align: right;
-
-      @include breakpoint(desktop) {
-        width: 8rem;
-      }
-
-      @include breakpoint(tablet) {
-        width: 7rem;
-      }
-
-      @include breakpoint(phablet) {
-        float: left !important;
-        font-size: 0.75rem;
-        padding-left: 0.25rem;
-        padding-right: 0.25rem;
-      }
-
-      @include breakpoint(mobile) {
-        width: 5.8rem;
-      }
-
-      &:hover {
-        @include box-shadow(none);
-
-        border-color: #888;
-        background-color: #fafafa;
-      }
-
-      &:active, &:focus, &.active {
-        @include box-shadow(none);
-
-        background-color: #f9f4b9;
-        border-color: #666;
-      }
-    }
-
     // BULK
 
     input.bulk {
@@ -94,5 +46,63 @@
         float: left;
       }
     }
+  }
+}
+
+// Components to add variants to cart and change quanities
+//
+// They are not nested so that they can be used in modals.
+button.add-variant, button.variant-quantity {
+  height: 2.5rem;
+  border-radius: 0;
+  background-color: $orange-500;
+  color: white;
+  // Override foundation button styles:
+  font-size: 1rem;
+  margin: 0;
+  padding: 0;
+  transition: none;
+
+  &[disabled] {
+    &:hover, &:focus {
+      background-color: $orange-500;
+    }
+  }
+  &:nth-of-type(1) {
+    border-bottom-left-radius: 0.25em;
+    border-top-left-radius: 0.25em;
+  }
+  &:nth-last-of-type(1) {
+    border-top-right-radius: 0.25em;
+    border-bottom-right-radius: 0.25em;
+  }
+}
+button.add-variant {
+  min-width: 6rem;
+  padding: 0 1em;
+
+  &[disabled] {
+    &:hover, &:focus {
+      background-color: $orange-500;
+    }
+  }
+}
+button.variant-quantity {
+  width: 3rem;
+
+  &:nth-of-type(1) {
+    border-right: .1em solid $orange-400;
+  }
+}
+.variant-quantity-display {
+  display: inline-block;
+  font-size: 0.875em;
+  margin-top: 0.25em;
+  text-align: center;
+  width: 6rem;
+  visibility: hidden;
+
+  &.visible {
+    visibility: visible;
   }
 }
