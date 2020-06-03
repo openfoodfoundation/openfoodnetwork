@@ -9,7 +9,7 @@ module ApiActionCaching
   included do
     include ActionController::Caching
     include ActionController::Caching::Actions
-    include AbstractController::Layouts
+    include ActionView::Layouts
 
     # These configs are not assigned to the controller automatically with ActionController::Metal
     self.cache_store = Rails.configuration.cache_store
