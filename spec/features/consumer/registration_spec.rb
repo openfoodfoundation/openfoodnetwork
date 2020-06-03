@@ -124,6 +124,10 @@ feature "Registration", js: true do
 
       click_link "Go to Enterprise Dashboard"
       expect(page).to have_content "CHOOSE YOUR PACKAGE"
+
+      page.find('.full_hub h3').click
+      click_button "Select and Continue"
+      expect(page).to have_content "Your profile live"
     end
 
     context "when the user has no more remaining enterprises" do

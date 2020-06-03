@@ -23,6 +23,20 @@ gem 'pg', '~> 0.21.0'
 # for details.
 gem 'spree_core', github: 'openfoodfoundation/spree', branch: '2-1-0-stable'
 
+### Dependencies brought from spree core
+gem 'acts_as_list', '= 0.2.0'
+gem 'awesome_nested_set', '~> 3.0.0.rc.1'
+gem 'cancan', '~> 1.6.10'
+gem 'ffaker', '~> 1.16'
+gem 'highline', '= 1.6.18' # Necessary for the install generator
+gem 'httparty', '~> 0.11' # For checking alerts.
+gem 'json', '>= 1.7.7'
+gem 'money', '5.1.1'
+gem 'paranoia', '~> 2.0'
+gem 'ransack', '1.0.0'
+gem 'state_machine', '1.2.0'
+gem 'stringex', '~> 1.5.1'
+
 gem 'spree_i18n', github: 'spree/spree_i18n', branch: '1-3-stable'
 
 # Our branch contains two changes
@@ -50,14 +64,14 @@ gem 'kaminari', '~> 0.14.1'
 
 gem 'andand'
 gem 'angularjs-rails', '1.5.5'
-gem 'aws-sdk'
+gem 'aws-sdk', '1.11.1' # temporarily locked down due to https://github.com/aws/aws-sdk-ruby/issues/273
 gem 'bugsnag'
 gem 'db2fog'
 gem 'haml'
 gem 'redcarpet'
 gem 'sass'
 gem 'sass-rails'
-gem 'truncate_html'
+gem 'truncate_html', '0.9.2'
 gem 'unicorn'
 
 gem 'actionpack-action_caching'

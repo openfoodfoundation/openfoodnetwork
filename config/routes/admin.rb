@@ -27,7 +27,7 @@ Openfoodnetwork::Application.routes.draw do
 
       member do
         get :welcome
-        put :register
+        patch :register
       end
 
       resources :producer_properties do
