@@ -73,6 +73,7 @@
 //= require i18n/translations
 //= require darkswarm/i18n.translate.js
 //= require moment
+//= require moment/ca.js
 //= require moment/de.js
 //= require moment/en-gb.js
 //= require moment/es.js
