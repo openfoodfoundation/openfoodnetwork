@@ -2785,7 +2785,7 @@ fr:
   new: "Nouveau"
   start: "Début"
   end: "Fin"
-  stop: "Arrêter"
+  stop: "Fin"
   first: "Début"
   previous: "Précédent"
   last: "Fin"
@@ -2900,8 +2900,6 @@ fr:
     abbreviation: "Code"
     new_state: "Nouveau département"
     payment_methods: "Méthodes de paiement"
-    new_payment_method: "Nouvelle méthode de paiement"
-    provider: "Fournisseur"
     taxonomies: "Taxonomies"
     new_taxonomy: "Nouvelle taxonomie"
     back_to_taxonomies_list: "Retour à la liste des taxonomies"
@@ -3113,10 +3111,26 @@ fr:
           back_end: "Visible pour l'administration uniquement"
           deactivation_warning: "Désactiver une méthode de livraison peut engendre sa disparition de la liste ici. Si vous souhaitez uniquement ne plus l'afficher pour l'acheteur, modifiez-là et utilisez l'option d'affichage \"visible pour l'administrateur uniquement\"."
       payment_methods:
+        index:
+          payment_methods: "Méthodes de paiement"
+          new_payment_method: "Nouvelle méthode de paiement"
+          name: "Produit/Variante"
+          products_distributor: "Distributeur"
+          provider: "Fournisseur"
+          environment: "Environnement"
+          display: "Afficher"
+          active: "Actif"
+          both: "Les deux"
+          front_end: "Visible par l'acheteur uniquement"
+          back_end: "Visible pour l'administration uniquement"
+          active_yes: "Oui"
+          active_no: "Non"
+          no_payment_methods_found: "Aucune méthode de paiement n'a été trouvée"
         new:
           new_payment_method: "Nouvelle méthode de paiement"
           back_to_payment_methods_list: "Retour à la liste des méthodes de paiement"
         edit:
+          new: "Nouveau"
           editing_payment_method: "Modification de la méthode de paiement"
           back_to_payment_methods_list: "Retour à la liste des méthodes de paiement"
         stripe_connect:
@@ -3132,6 +3146,21 @@ fr:
           account_id: Identifiant Compte
           business_name: Nom de l'entreprise
           charges_enabled: Frais activés
+        form:
+          name: "Produit/Variante"
+          description: "Description"
+          environment: "Environnement"
+          display: "Afficher"
+          active: "Actif"
+          active_yes: "Oui"
+          active_no: "Non"
+          both: "Visible par l'acheteur sur la boutique"
+          front_end: "Visible par l'acheteur uniquement"
+          back_end: "Visible pour l'administration uniquement"
+          tags: "Tags"
+          deactivation_warning: "Désactiver une méthode de paiement peut faire disparaitre cette méthode de votre liste. Si vous souhaitez uniquement la rendre invisible par l'acheteur, modifiez la méthode et utilisez l'affichage pour l'administrateur uniquement."
+        providers:
+          provider: "Fournisseur"
       payments:
         source_forms:
           stripe:
