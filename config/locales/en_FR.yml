@@ -2870,8 +2870,6 @@ en_FR:
     abbreviation: "Abbreviation"
     new_state: "New State"
     payment_methods: "Payment Methods"
-    new_payment_method: "New Payment Method"
-    provider: "Provider"
     taxonomies: "Taxonomies"
     new_taxonomy: "New Taxonomy"
     back_to_taxonomies_list: "Back to Taxonomies List"
@@ -3083,10 +3081,26 @@ en_FR:
           back_end: "Back office only"
           deactivation_warning: "De-activating a shipping method can make the shipping method disappear from your list. Alternatively, you can hide a shipping method from the checkout page by setting the option 'Display' to 'back office only'."
       payment_methods:
+        index:
+          payment_methods: "Payment Methods"
+          new_payment_method: "New Payment Method"
+          name: "Name"
+          products_distributor: "Distributor"
+          provider: "Provider"
+          environment: "Environment"
+          display: "Display"
+          active: "Active"
+          both: "Both"
+          front_end: "Checkout only"
+          back_end: "Back office only"
+          active_yes: "Yes"
+          active_no: "No"
+          no_payment_methods_found: "No payment methods found"
         new:
           new_payment_method: "New Payment Method"
           back_to_payment_methods_list: "Back To Payment Methods List"
         edit:
+          new: "New"
           editing_payment_method: "Editing Payment Method"
           back_to_payment_methods_list: "Back To Payment Methods List"
         stripe_connect:
@@ -3102,6 +3116,21 @@ en_FR:
           account_id: Account ID
           business_name: Business Name
           charges_enabled: Charges Enabled
+        form:
+          name: "Name"
+          description: "Description"
+          environment: "Environment"
+          display: "Display"
+          active: "Active"
+          active_yes: "Yes"
+          active_no: "No"
+          both: "Both Checkout and Back office"
+          front_end: "Checkout only"
+          back_end: "Back office only"
+          tags: "Tags"
+          deactivation_warning: "De-activating a payment method can make the payment method disappear from your list. Alternatively, you can hide a payment method from the checkout page by setting the option 'Display' to 'back office only'."
+        providers:
+          provider: "Provider"
       payments:
         source_forms:
           stripe:
@@ -3269,14 +3298,14 @@ en_FR:
       invalid: invalid
     order_mailer:
       cancel_email:
-        customer_greeting: "Bonjour %{name},"
-        instructions_html: "Votre commande avec<strong>%{distributor}</strong> a été annulée. Merci de conserver cet email."
-        dont_cancel: "Si vous avez changé d'avis ou vous ne souhaitez pas annuler cette commande, merci de contacter %{email}."
-        order_summary_canceled_html: "<strong>[ANNULATION] Commande #%{number}</strong>"
-        details: "Voici les produits que vous aviez commandé:"
-        unpaid_order: "Votre commande n'avait pas été réglée donc aucun remboursement n'a été effectué."
-        paid_order: "Votre commande avait été réglée, ainsi %{distributor} a remboursé la totalité de votre commande."
-        credit_order: "Votre commande avait été payée, votre compte a donc été crédité"
+        customer_greeting: "Dear %{name},"
+        instructions_html: "Your order with<strong>%{distributor}</strong> has been CANCELED. Please retain this cancellation information for your records"
+        dont_cancel: "If you have changed your mind or don't wish to cancel this order please contact %{email}"
+        order_summary_canceled_html: "<strong>Order Summary #%{number}[CANCELED]</strong>"
+        details: "Here are the details of what you ordered:"
+        unpaid_order: "Your order was unpaid so no refund has been made"
+        paid_order: "Your order was paid so %{distributor} has refunded the full amount"
+        credit_order: "Your order was paid so your account has been credited"
         subject: "Cancellation of Order"
       confirm_email:
         subject: "Order Confirmation"
