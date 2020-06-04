@@ -232,6 +232,28 @@ feature "As a consumer I want to shop with a distributor", js: true do
           expect(page).not_to have_content variant3.display_name
         end
       end
+
+      context "when the distributor has no available payment/shipping methods" do
+        before do
+          distributor.update_attributes shipping_methods: [], payment_methods: []
+        end
+
+        # Display only shops are a very useful hack that is described in the user guide
+        it "still renders a display only shop" do
+          visit shop_path
+          expect(page).to have_content product.name
+
+          # Add product to cart
+          fill_in "variants[#{variant.id}]", with: '1'
+          wait_for_debounce
+          expect(page).to have_in_cart product.name
+          wait_until { !cart_dirty }
+
+          # Try to go to cart
+          visit main_app.cart_path
+          expect(page).to have_content "The hub you have selected is temporarily closed for orders. Please try again later."
+        end
+      end
     end
 
     describe "group buy products" do
@@ -463,11 +485,13 @@ feature "As a consumer I want to shop with a distributor", js: true do
         visit shop_path
         expect(page).to have_content "Orders are closed"
       end
+
       it "shows the last order cycle" do
         oc1 = create(:simple_order_cycle, distributors: [distributor], orders_open_at: 17.days.ago, orders_close_at: 10.days.ago)
         visit shop_path
         expect(page).to have_content "The last cycle closed 10 days ago"
       end
+
       it "shows the next order cycle" do
         oc1 = create(:simple_order_cycle, distributors: [distributor], orders_open_at: 10.days.from_now, orders_close_at: 17.days.from_now)
         visit shop_path
