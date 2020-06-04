@@ -11,173 +11,175 @@
 @import "shop-taxon-flag";
 @import "shop-popovers";
 
+.darkswarm {
+  products {
+    display: block;
+
+    @include breakpoint(tablet) {
+      input.button.right {
+        float: left;
+      }
+    }
+
+    @include breakpoint(mobile) {
+      .add_to_cart {
+        margin-top: 2rem;
+      }
+    }
+
+    form {
+      input.small.button.primary.right.add_to_cart {
+        &.dirty {
+          padding-left: 3.2rem;
+        }
+      }
+
+      i.cart-spinner {
+        position: absolute;
+        top: 14px;
+        right: 146px;
+        color: white;
+        font-size: 1.2em;
+
+        // Necessary to be below Z index of cart popover:
+        z-index: 98;
+        -webkit-animation: spin 2s infinite linear;
+        animation: spin 2s infinite linear;
+      }
+    }
+
+    product {
+      @include csstrans;
+
+      border-bottom: 1px solid #e5e5e5;
+      border-top: 1px solid #e5e5e5;
+      padding-bottom: 1px;
+      margin-bottom: 20px !important;
+      position: relative;
+      display: block;
+      color: $med-drk-grey;
+
+      &:hover, &:focus, &:active {
+        border-bottom: 1px solid $clr-brick-med-bright;
+        border-top: 1px solid $clr-brick-med-bright;
+      }
+
+      // BULK
+      .bulk-buy {
+        font-size: 0.875rem;
+
+        @include breakpoint(tablet) {
+          font-size: 0.75rem;
+        }
+      }
+
+      .bulk-buy, .bulk-buy i {
+        color: #888;
+      }
+
+      .inline {
+        display: inline;
+      }
+
+      .spinner {
+        width: 100px;
+        margin-bottom: 20px;
+      }
+
+      // ICONS
+      i {
+        font-size: 0.75em;
+        padding-right: 0.9375rem;
+
+        @include breakpoint(phablet) {
+          padding-right: 0.25rem;
+        }
+      }
+
+      i.ofn-i_056-bulk {
+        font-size: 1rem;
+        padding-right: 0rem;
+      }
+
+      i.ofn-i_036-producers {
+        padding-left: 0.2rem;
+        padding-right: 0rem;
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+  .alert-box.changeable-orders-alert {
+    margin-bottom: 0px;
+  }
+
+  .select-oc-message {
+    margin-top: 1rem;
+
+    .highlighted {
+      color: $red-700;
+      font-weight: bold;
+    }
+  }
+
+  .open-shop-message {
+    a {
+      color: $teal-500;
+
+      &:hover,
+      &:focus,
+      &:active {
+        text-decoration: none;
+        color: $teal-400;
+      }
+    }
+  }
+
+  .closed-shop-header {
+    background-color: $grey-650;
+    color: $white;
+
+    h4 {
+      color: $white;
+    }
+
+    p {
+      margin: 1rem 0 0.4rem;
+    }
+
+    .message {
+      display: inline-block;
+    }
+  }
+
+.warning-sign {
+  margin: 0 10px 0 5px;
+  display: inline-block;
+  line-height: 1.9rem;
+
+    strong {
+      color: $grey-650;
+      display: block;
+      position: relative;
+      text-align: center;
+      width: 23px;
+    }
+
+    .rectangle {
+      background-color: $white;
+      border-radius: 4px;
+      color: $grey-650;
+      height: 23px;
+      position: absolute;
+      top: 27px;
+      transform: rotate(-315deg);
+      width: 23px;
+    }
+  }
+}
+
 .shop-filters-sidebar {
   .property-selectors {
     margin-bottom: $sidebar-footer-height + 2em;
-  }
-}
-
-products {
-  display: block;
-
-  @include breakpoint(tablet) {
-    input.button.right {
-      float: left;
-    }
-  }
-
-  @include breakpoint(mobile) {
-    .add_to_cart {
-      margin-top: 2rem;
-    }
-  }
-
-  form {
-    input.small.button.primary.right.add_to_cart {
-      &.dirty {
-        padding-left: 3.2rem;
-      }
-    }
-
-    i.cart-spinner {
-      position: absolute;
-      top: 14px;
-      right: 146px;
-      color: white;
-      font-size: 1.2em;
-
-      // Necessary to be below Z index of cart popover:
-      z-index: 98;
-      -webkit-animation: spin 2s infinite linear;
-      animation: spin 2s infinite linear;
-    }
-  }
-
-  product {
-    @include csstrans;
-
-    border-bottom: 1px solid #e5e5e5;
-    border-top: 1px solid #e5e5e5;
-    padding-bottom: 1px;
-    margin-bottom: 20px !important;
-    position: relative;
-    display: block;
-    color: $med-drk-grey;
-
-    &:hover, &:focus, &:active {
-      border-bottom: 1px solid $clr-brick-med-bright;
-      border-top: 1px solid $clr-brick-med-bright;
-    }
-
-    // BULK
-    .bulk-buy {
-      font-size: 0.875rem;
-
-      @include breakpoint(tablet) {
-        font-size: 0.75rem;
-      }
-    }
-
-    .bulk-buy, .bulk-buy i {
-      color: #888;
-    }
-
-    .inline {
-      display: inline;
-    }
-
-    .spinner {
-      width: 100px;
-      margin-bottom: 20px;
-    }
-
-    // ICONS
-    i {
-      font-size: 0.75em;
-      padding-right: 0.9375rem;
-
-      @include breakpoint(phablet) {
-        padding-right: 0.25rem;
-      }
-    }
-
-    i.ofn-i_056-bulk {
-      font-size: 1rem;
-      padding-right: 0rem;
-    }
-
-    i.ofn-i_036-producers {
-      padding-left: 0.2rem;
-      padding-right: 0rem;
-      font-size: 0.8rem;
-    }
-  }
-}
-
-.alert-box.changeable-orders-alert {
-  margin-bottom: 0px;
-}
-
-.select-oc-message {
-  margin-top: 1rem;
-
-  .highlighted {
-    color: $red-700;
-    font-weight: bold;
-  }
-}
-
-.open-shop-message {
-  a {
-    color: $teal-500;
-
-    &:hover,
-    &:focus,
-    &:active {
-      text-decoration: none;
-      color: $teal-400;
-    }
-  }
-}
-
-.closed-shop-header {
-  background-color: $grey-650;
-  color: $white;
-
-  h4 {
-    color: $white;
-  }
-
-  p {
-    margin: 1rem 0 0.4rem;
-  }
-
-  .message {
-    display: inline-block;
-  }
-}
-
-  .warning-sign {
-    margin: 0 10px 0 5px;
-    display: inline-block;
-    line-height: 1.9rem;
-
-  strong {
-    color: $grey-650;
-    display: block;
-    position: relative;
-    text-align: center;
-    width: 23px;
-  }
-
-  .rectangle {
-    background-color: $white;
-    border-radius: 4px;
-    color: $grey-650;
-    height: 23px;
-    position: absolute;
-    top: 27px;
-    transform: rotate(-315deg);
-    width: 23px;
   }
 }
