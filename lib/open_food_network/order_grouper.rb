@@ -1,6 +1,6 @@
 module OpenFoodNetwork
   class OrderGrouper
-    def initialize(rules, column_constructors, report=nil)
+    def initialize(rules, column_constructors, report = nil)
       @rules = rules
       @column_constructors = column_constructors
       @report = report
@@ -62,7 +62,7 @@ module OpenFoodNetwork
 
     def build_cell(column_constructor, items)
       if column_constructor.is_a?(Symbol)
-        @report.send(column_constructor, items)
+        @report.__send__(column_constructor, items)
       else
         column_constructor.call(items)
       end

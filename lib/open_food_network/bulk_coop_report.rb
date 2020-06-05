@@ -153,7 +153,7 @@ module OpenFoodNetwork
       line_items.map(&:order).uniq.sum(&:payment_total)
     end
 
-    def empty_cell(line_items)
+    def empty_cell(*)
       ""
     end
 
@@ -211,12 +211,12 @@ module OpenFoodNetwork
       remainder >= 0 ? remainder : ''
     end
 
-    def scaled_final_weight_volume(li)
-      (li.final_weight_volume || 0) / (li.product.variant_unit_scale || 1)
+    def scaled_final_weight_volume(line_item)
+      (line_item.final_weight_volume || 0) / (line_item.product.variant_unit_scale || 1)
     end
 
-    def scaled_unit_value(v)
-      (v.unit_value || 0) / (v.product.variant_unit_scale || 1)
+    def scaled_unit_value(variant)
+      (variant.unit_value || 0) / (variant.product.variant_unit_scale || 1)
     end
 
     def total_amount(line_items)
@@ -235,7 +235,7 @@ module OpenFoodNetwork
       line_items.sum(&:quantity)
     end
 
-    def total_label(line_items)
+    def total_label(*)
       I18n.t('admin.reports.total')
     end
 
