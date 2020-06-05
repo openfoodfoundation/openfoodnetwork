@@ -382,6 +382,7 @@ pt:
         footer_and_external_links: Rodapé e Ligações Externas
         your_content: O seu conteúdo
         user_guide: Manual do Utilizador
+        map: Mapa
     enterprise_fees:
       index:
         title: "Taxas de Organização"
@@ -2623,6 +2624,8 @@ pt:
     fill_in_customer_info: "Por favor preencha informação do/a consumidor/a"
     new_payment: "Novo Pagamento"
     capture: "Capturar"
+    login: "Entrar"
+    password: "Palavra-passe"
     configurations: "Configurações"
     general_settings: "Configurações Gerais"
     site_name: "Nome do Site"
@@ -2687,8 +2690,6 @@ pt:
     abbreviation: "Abreviatura"
     new_state: "Nova Região"
     payment_methods: "Métodos de pagamento"
-    new_payment_method: "Novo Método de Pagamento"
-    provider: "Fornecedor"
     taxonomies: "Taxonomias"
     new_taxonomy: "Nova Taxonomia"
     back_to_taxonomies_list: "Voltar à Lista de Taxonomias"
@@ -2837,10 +2838,22 @@ pt:
         form:
           zones: "Zonas"
       payment_methods:
+        index:
+          payment_methods: "Métodos de pagamento"
+          new_payment_method: "Novo Método de Pagamento"
+          name: "Nome"
+          products_distributor: "Distribuidor"
+          provider: "Fornecedor"
+          environment: "Ambiente"
+          display: "Mostrar"
+          active: "Ativo"
+          active_yes: "Sim"
+          active_no: "Não"
         new:
           new_payment_method: "Novo Método de Pagamento"
           back_to_payment_methods_list: "Voltar à Lista de Métodos de Pagamento"
         edit:
+          new: "Novo"
           editing_payment_method: "Editar Método de Pagamento"
           back_to_payment_methods_list: "Voltar à Lista de Métodos de Pagamento"
         stripe_connect:
@@ -2856,6 +2869,17 @@ pt:
           account_id: ID de Conta
           business_name: Nome do Negócio
           charges_enabled: Taxas activas
+        form:
+          name: "Nome"
+          description: "Descrição"
+          environment: "Ambiente"
+          display: "Mostrar"
+          active: "Ativo"
+          active_yes: "Sim"
+          active_no: "Não"
+          tags: "Etiquetas"
+        providers:
+          provider: "Fornecedor"
       payments:
         source_forms:
           stripe:
@@ -3007,9 +3031,6 @@ pt:
       invalid: inválido
     order_mailer:
       cancel_email:
-        customer_greeting: "Olá %{name}!"
-        instructions: "A sua encomenda foi cancelada. Para seu registo, por favor guarde esta informação de cancelamento."
-        order_summary_canceled: "Sumário de Encomenda [CANCELADA]"
         subject: "Cancelamento de Encomenda"
       confirm_email:
         subject: "Confimação de Encomenda"

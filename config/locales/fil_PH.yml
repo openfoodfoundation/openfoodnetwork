@@ -403,6 +403,7 @@ fil_PH:
         footer_and_external_links: Footer at panlabas na mga link
         your_content: ang iyong nilalaman
         user_guide: gabay sa gumagamit
+        map: Mapa
     enterprise_fees:
       index:
         title: "fees para sa Enterprise"
@@ -2801,6 +2802,8 @@ fil_PH:
     new_payment: "Bagong Pagbabayad"
     capture: "kunan"
     void: "walang bisa"
+    login: "Login"
+    password: "Password"
     configurations: "mga pagsasaayos"
     general_settings: "Pangkalahatang Setting"
     site_name: "Pangalan ng site"
@@ -2865,8 +2868,6 @@ fil_PH:
     abbreviation: "Pinaikli"
     new_state: "Bagong Status"
     payment_methods: "Mga Paraan ng Pagbabayad"
-    new_payment_method: "Bagong Paraan ng pagbabayad"
-    provider: "tagapagbigay ng serbisyo"
     taxonomies: "taxonomies"
     new_taxonomy: "bagong taxonomy"
     back_to_taxonomies_list: "bumalik sa listahan ng mga taxonomy"
@@ -3073,10 +3074,23 @@ fil_PH:
           categories: "mga kategorya"
           zones: "mga sona"
       payment_methods:
+        index:
+          payment_methods: "Mga Paraan ng Pagbabayad"
+          new_payment_method: "Bagong Paraan ng pagbabayad"
+          name: "Pangalan"
+          products_distributor: "Distributor"
+          provider: "tagapagbigay ng serbisyo"
+          environment: "kapaligiran"
+          display: "Ipakita"
+          active: "aktibo"
+          both: "pareho"
+          active_yes: "Oo"
+          active_no: "Hindi"
         new:
           new_payment_method: "Bagong Paraan ng pagbabayad"
           back_to_payment_methods_list: "bumalik sa listahan ng mga paraan ng pagbabayad"
         edit:
+          new: "Bago"
           editing_payment_method: "iayos ang paraan ng pagbabayad"
           back_to_payment_methods_list: "bumalik sa listahan ng mga paraan ng pagbabayad"
         stripe_connect:
@@ -3092,6 +3106,17 @@ fil_PH:
           account_id: Account ID
           business_name: pangalan ng negosyo
           charges_enabled: pinagana ang paniningil
+        form:
+          name: "Pangalan"
+          description: "paglalarawan"
+          environment: "kapaligiran"
+          display: "Ipakita"
+          active: "aktibo"
+          active_yes: "Oo"
+          active_no: "Hindi"
+          tags: "tags"
+        providers:
+          provider: "tagapagbigay ng serbisyo"
       payments:
         source_forms:
           stripe:
@@ -3256,9 +3281,6 @@ fil_PH:
       invalid: invalid
     order_mailer:
       cancel_email:
-        customer_greeting: "hi %{name}!"
-        instructions: "ang iyong order ay NAKANSELA. Panatilihin ang impormasyon na ito ng kanselasyon para sa inyong talaan."
-        order_summary_canceled: "Buod ng order [KANSELADO]"
         subject: "Pagkansela ng order"
       confirm_email:
         subject: "Kumpirmasyon ng order"

@@ -398,6 +398,7 @@ ar:
         footer_and_external_links: تذييل والروابط الخارجية
         your_content: المحتوى الخاص بك
         user_guide: دليل المستخدم
+        map: خريطة
     enterprise_fees:
       index:
         title: "رسوم الشركة"
@@ -2752,6 +2753,8 @@ ar:
     new_payment: "دفعة جديد"
     capture: "إلتقاط"
     void: "فارغ"
+    login: "تسجيل الدخول"
+    password: "كلمه السر"
     configurations: "تهيئة"
     general_settings: "الاعدادات العامة"
     site_name: "اسم الموقع"
@@ -2816,8 +2819,6 @@ ar:
     abbreviation: "الاختصار"
     new_state: "محافظة جديدة"
     payment_methods: "طرق الدفع"
-    new_payment_method: "طريقة الدفع الجديدة"
-    provider: "مزود"
     taxonomies: "التصنيفات"
     new_taxonomy: "تصنيف جديد"
     back_to_taxonomies_list: "العودة إلى قائمة التصنيفات"
@@ -3024,10 +3025,23 @@ ar:
           categories: "التصنيفات"
           zones: "مناطق"
       payment_methods:
+        index:
+          payment_methods: "طريقة الدفع"
+          new_payment_method: "طريقة الدفع الجديدة"
+          name: "الاسم"
+          products_distributor: "الموزع"
+          provider: "مزود"
+          environment: "بيئة"
+          display: "عرض"
+          active: "نشط"
+          both: "على حد سواء"
+          active_yes: "نعم"
+          active_no: "لا"
         new:
           new_payment_method: "طريقة الدفع الجديدة"
           back_to_payment_methods_list: "العودة إلى قائمة طرق الدفع"
         edit:
+          new: "جديد"
           editing_payment_method: "تحرير طريقة الدفع"
           back_to_payment_methods_list: "العودة إلى قائمة طرق الدفع"
         stripe_connect:
@@ -3043,6 +3057,17 @@ ar:
           account_id: معرف الحساب
           business_name: الاسم التجاري
           charges_enabled: تم تمكين الدفع
+        form:
+          name: "الاسم"
+          description: "وصف"
+          environment: "بيئة"
+          display: "عرض"
+          active: "نشط"
+          active_yes: "نعم"
+          active_no: "لا"
+          tags: "الاوسمة"
+        providers:
+          provider: "مزود"
       payments:
         source_forms:
           stripe:
@@ -3207,9 +3232,6 @@ ar:
       invalid: غير صالحة
     order_mailer:
       cancel_email:
-        customer_greeting: "مرحبًا %{name}!"
-        instructions: "تم إلغاء طلبك. يرجى الاحتفاظ بمعلومات الإلغاء هذه بسجلاتك."
-        order_summary_canceled: "ملخص الطلب [ملغى]"
         subject: "إلغاء الطلب"
       confirm_email:
         subject: "تأكيد الطلب"

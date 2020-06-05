@@ -403,6 +403,7 @@ ca:
         footer_and_external_links: Peu de pàgina i enllaços externs
         your_content: El vostre contingut
         user_guide: Guia de l'usuari
+        map: Mapa
     enterprise_fees:
       index:
         title: "Comissions de l'organització"
@@ -2812,6 +2813,8 @@ ca:
     new_payment: "Nou pagament"
     capture: "Captura"
     void: "Buit"
+    login: "Inicia sessió"
+    password: "Contrasenya"
     configurations: "Configuracions"
     general_settings: "Configuració general"
     site_name: "Nom del lloc"
@@ -2876,8 +2879,6 @@ ca:
     abbreviation: "Abreviatura"
     new_state: "Nou estat"
     payment_methods: "Mètodes de Pagament"
-    new_payment_method: "Nou mètode de pagament"
-    provider: "Proveïdor"
     taxonomies: "Taxonomies"
     new_taxonomy: "Nova taxonomia"
     back_to_taxonomies_list: "Torna a la llista de taxonomies"
@@ -3089,10 +3090,24 @@ ca:
           back_end: "Només pàgina administració (back office) "
           deactivation_warning: "Desactivar un mètode d'enviament pot fer que desaparegui de la teva llista. Pots ocultar-lo de la pàgina de validació de comanda configurant l'opció \"Mostrar\" a \"només a la pàgina d'administració\" (back end)."
       payment_methods:
+        index:
+          payment_methods: "Mètodes de Pagament"
+          new_payment_method: "Nou mètode de pagament"
+          name: "Nom"
+          products_distributor: "Distribuïdora"
+          provider: "Proveïdor"
+          environment: "Ambient"
+          display: "Mostra"
+          active: "Actiu"
+          both: "Ambdós"
+          back_end: "Només pàgina administració (back office) "
+          active_yes: "Sí"
+          active_no: "No"
         new:
           new_payment_method: "Nou mètode de pagament"
           back_to_payment_methods_list: "Tornar a la llista de mètodes de pagament"
         edit:
+          new: "Nou"
           editing_payment_method: "Edició del mètode de pagament"
           back_to_payment_methods_list: "Tornar a la llista de mètodes de pagament"
         stripe_connect:
@@ -3108,6 +3123,19 @@ ca:
           account_id: Identificador del compte
           business_name: Nom de l'empresa
           charges_enabled: Càrrecs habilitats
+        form:
+          name: "Nom"
+          description: "Descripció"
+          environment: "Ambient"
+          display: "Mostra"
+          active: "Actiu"
+          active_yes: "Sí"
+          active_no: "No"
+          both: "Ambdues, validació de comanda i administració"
+          back_end: "Només pàgina administració (back office) "
+          tags: "Etiquetes"
+        providers:
+          provider: "Proveïdor"
       payments:
         source_forms:
           stripe:
@@ -3281,8 +3309,8 @@ ca:
         order_summary_canceled_html: "<strong>Resum de comanda # %{number} [CANCELAT]</strong>"
         details: "Aquí teniu els detalls del que vau demanar:"
         unpaid_order: "La vostra comanda no s'havia pagat, per la qual cosa no s'ha realitzat cap reemborsament"
-        paid_order: "La teva comanda s'havia pagat per la qual cosa %{distributor} ha reemborsat l'import complet"
-        credit_order: "S'ha pagat la comanda i s'ha abonat l'import al vostre compte"
+        paid_order: "La vostra comanda s'havia pagat per la qual cosa %{distributor} ha reemborsat l'import complet"
+        credit_order: "La vostra comanda s'havia pagat i per tant, s'ha abonat l'import al vostre compte"
         subject: "Cancel·lació de la comanda"
       confirm_email:
         subject: "Confirmació de la comanda"

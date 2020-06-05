@@ -182,7 +182,7 @@ tr:
   title: Açık Gıda Ağı
   welcome_to: 'Hoşgeldiniz'
   site_meta_description: "Açık Gıda Ağı, bağımsız, adil ve temiz bir gıda sistemi oluşturmak için tasarlanan bir sosyal girişim projesidir. Üretici ve türeticilerin bir araya gelerek aracısız bir gıda düzeni ile her açıdan daha sağlıklı bir toplum yaratmaları için çözümler sunar.  Kar amacı gütmez, toplum yararına çalışır, iletişim, dürüstlük ve dayanışmayı destekler."
-  search_by_name: İsim veya konuma göre arama yapın...
+  search_by_name: Üretici adına veya konuma göre arama yapın...
   producers_join: Temiz gıda üreticileri! Açık Gıda Ağı sizler için kullanıma açıldı.
   charges_sales_tax: KDV Uyguluyor mu?
   print_invoice: "Faturayı yazdır"
@@ -387,7 +387,7 @@ tr:
         edit: 'Düzenle'
         update_address: 'Adresi Güncelle'
         confirm_delete: 'Silmek istediğinizden emin misiniz?'
-        search_by_email: "E-posta / kod ile arama ..."
+        search_by_email: "E-posta/kod ile arama ..."
         guest_label: 'Misafir Ödemesi'
       destroy:
         has_associated_orders: 'Silme başarısız oldu: müşterinin bağlantılı siparişleri var'
@@ -403,6 +403,7 @@ tr:
         footer_and_external_links: Altbilgi ve Dış Bağlantılar
         your_content: İçeriğiniz
         user_guide: Kullanici Kılavuzu
+        map: HARİTA
     enterprise_fees:
       index:
         title: "İşletme Ücretleri"
@@ -612,7 +613,7 @@ tr:
         about_us:
           desc_short: Kısa Açıklama
           desc_short_placeholder: Bir veya iki cümleyle bize işletmenizden bahsedin
-          desc_long: Hakkımızda
+          desc_long: HAKKIMIZDA
           desc_long_placeholder: Müşterilerinize kendinizden bahsedin. Bu bilgiler profilinizde görünür.
         business_details:
           abn: VKN/TCKN
@@ -795,7 +796,7 @@ tr:
         producer_shop_description_text: Açık Gıda Ağı üzerinden açtığınız bireysel mağazanız ile ürünlerinizi doğrudan müşterilere ulaştırabilirsiniz.
         producer_shop_description_text2: Üretici Tezgahı sadece sizin ürünleriniz içindir.  Üretiminiz haricindeki ürünleri satabilmek için lütfen 'Üretici Pazarı' seçeneğini seçin.
         producer_hub: ÜRETİCİ PAZARI
-        producer_hub_text: Kendi ürünleriniz ile beraber başkalarından ürünlerini de satın
+        producer_hub_text: Kendi ürünleriniz ile beraber başkalarının ürünlerini de satın
         producer_hub_description_text: İşletmeniz, yerel gıda sisteminizin bel kemiğidir. Açık Gıda Ağı'ndaki mağazanız aracılığıyla kendi ürünlerinizi ve çevrenizdeki diğer üreticilerin ürünlerini beraber satabilirsiniz.
         profile: Yalnızca Profil
         get_listing: Görünür ol
@@ -1148,7 +1149,7 @@ tr:
         checkout: "Alışverişi Tamamla"
         already_ordered_products: "Bu sipariş dönemi içinde zaten sipariş verildi"
     register_call:
-      selling_on_ofn: "Açık Gıda Ağı'na katılmak ister misiniz?"
+      selling_on_ofn: "Açık Gıda Ağı üzerinden satış yapmak ister misiniz?"
       register: "Buradan kaydolun"
     footer:
       footer_secure: "Güvenli ve güvenilir."
@@ -1157,7 +1158,7 @@ tr:
       footer_contact_email: "Bize e-posta gönderin"
       footer_nav_headline: "Gezin"
       footer_join_headline: "Bize katılın"
-      footer_join_body: "Açık Gıda Ağı üzerinden aracısız, adil ve temiz gıdaya ulaşma yollarını keşfedin."
+      footer_join_body: "Açık Gıda Ağı üzerinden ürünlerinizi sergileyin, çevirimiçi mağazanızı oluşturun veya grubunuzu listeleyin."
       footer_join_cta: "Daha fazlasını anlat!"
       footer_legal_call: "Okuyun"
       footer_legal_tos: "Şartlar ve koşullar"
@@ -1170,7 +1171,7 @@ tr:
   shop:
     messages:
       customer_required:
-        login: "Oturum Aç"
+        login: "Oturum Aç / Kaydol"
         signup: "Kaydol"
         contact: "İLETİŞİM"
         require_customer_login: "Yalnızca onaylı müşteriler buradan alışveriş yapabilir."
@@ -1214,7 +1215,7 @@ tr:
   menu_3_url: "/producers"
   menu_4_title: "Gruplar"
   menu_4_url: "/groups"
-  menu_5_title: "hakkında"
+  menu_5_title: "HAKKIMIZDA"
   menu_5_url: "https://hakkimizda.acikgida.com"
   menu_6_title: "Bağlan"
   menu_6_url: "https://acikgida.com/connect"
@@ -1234,7 +1235,7 @@ tr:
   footer_pinterest_url: "Pinterest URL"
   footer_email: "E-posta"
   footer_links_md: "Bağlantılar"
-  footer_about_url: "URL hakkında"
+  footer_about_url: "HAKKIMIZDA URL"
   user_guide_link: "Kullanıcı Kılavuzu Linki"
   name: İSİM
   first_name: Ad
@@ -1359,11 +1360,11 @@ tr:
   brandstory_part6: "Hepimiz gıdamızı seviyoruz. Artık gıda sistemimizi de sevmeye başlayabiliriz."
   learn_body: "Adil ve temiz gıda işletmenizi veya topluluğunuzu geliştirmenize yardımcı olacak modelleri, hikayeleri ve kaynakları keşfedin. Dostlardan öğrenmek için eğitim, etkinlikler ve diğer fırsatlara göz atın."
   learn_cta: "İlham Alın"
-  connect_body: "Yakınınızdaki adil ve temiz gıda tüccarlarını bulmak için üreticilerin, pazarların ve topluluklarının tümünü gözden geçirin. İşletmenizi veya topluluğunuzu Açık Gıda Ağı üzerinden listeleyin, böylece alıcılar sizi bulabilir. Ortak hareket etmek için diğer hesaplar ile iletişime geçmekten çekinmeyin, birlikte daha güçlüsünüz. Tavsiye almak ve sorunları birlikte çözmek için topluluğa katılın."
+  connect_body: "Yakınınızdaki adil ve temiz gıda noktalarını bulmak için üreticilerin, pazarların ve topluluklarının tümünü gözden geçirin. İşletmenizi veya topluluğunuzu Açık Gıda Ağı üzerinden listeleyin, böylece alıcılar sizi bulabilir. Ortak hareket etmek için diğer hesaplar ile iletişime geçmekten çekinmeyin, birlikte daha güçlüsünüz. Tavsiye almak ve sorunları birlikte çözmek için topluluğa katılın."
   connect_cta: "Keşfedin"
   system_headline: "Nasıl çalışıyor ?"
   system_step1: "1. Ara"
-  system_step1_text: "Yerel, adil, temiz ve mevsimsel gıda için, bağımsız ve cesur üreticilerimizin pazarlarından alışveriş yapın.  Uzaklığa göre, ürün kategorisine veya teslimat tercihlerine göre arama yapabilirsiniz. "
+  system_step1_text: "Yerel, adil, temiz ve mevsimsel gıda için, bağımsız ve cesur üreticilerimizin mağazalarından alışveriş yapın.  Konuma, ürün kategorisine, üretici özelliklerine veya teslimat tercihlerine göre arama yapabilirsiniz. "
   system_step2: "2. Alışveriş Yap"
   system_step2_text: "Gıdanızı yerel üretici tezgahlarından, üretici ve türetici pazarlarından temin edin. Yaşanabilir bir dünya için alışkanlıklarınızı şimdi değiştirin. Gıdanızın ve onu size getiren insanların hikayelerini öğrenin!"
   system_step3: "3. Teslimat "
@@ -1383,7 +1384,7 @@ tr:
   checkout_headline: "Tamam, ödeme yapmaya hazır mısın?"
   checkout_as_guest: "Misafir olarak ödeme yap"
   checkout_details: "Bilgilerin"
-  checkout_billing: "fatura bilgisi"
+  checkout_billing: "Fatura Bilgisi"
   checkout_default_bill_address: "Varsayılan fatura adresi olarak kaydet"
   checkout_shipping: Teslimat bilgileri
   checkout_default_ship_address: "Varsayılan teslimat adresi olarak kaydet"
@@ -1638,7 +1639,7 @@ tr:
   sell_hubs_detail: "AGA üzerinden gıda işletmeniz veya topluluğunuz için bir profil oluşturun. İstediğiniz zaman profilinizi çok üreticili bir pazara yükseltebilirsiniz."
   sell_groups_detail: "Bölgenizdeki veya ağınızdaki işletmelerin (üreticilerin, pazarların veya diğer grupların) detaylı rehber listesini oluşturun."
   sell_user_guide: "Kullanım kılavuzumuzdan daha fazla bilgi edinin."
-  sell_listing_price: "AGA üzerinde görünür olmak ücretsizdir. Platform üzerinden satış yapan işletmeler için işlem başına uygulanan ücretlendirme %5'tir.  Fiyatlandırma hakkında daha fazla bilgi için, üst menüdeki Hakkımızda bağlantısını kullanarak Fiyatlandırma bölümünü ziyaret edin."
+  sell_listing_price: "AGA üzerinde görünür olmak ücretsizdir. Platform üzerinden satış yapan işletmeler için işlem başına uygulanan ücretlendirme KDV dahil %5'tir. Kar amacı gütmeyen topluluklar, kooperatifler ve ekoloji/gıda temelli dernekler ile çalışan üreticiler karşılıklı dayanışma ve özel fiyatlandırma için iletişime geçebilirler. Fiyatlandırma hakkında bilgi almak için, üst menüdeki Hakkımızda bağlantısını kullanarak Fiyatlandırma bölümünü ziyaret edin."
   sell_embed: "Kendi e-ticaret siteniz olsa bile Açık Gıda Ağı size hikayenizi anlatmanız ve ürünlerinizi satmanız için yeni ve farklı bir seçenek sunuyor. Siz de bu ailenin bir parçası olun, hep beraber büyüyelim!"
   sell_ask_services: "Detaylar için bizimle iletişime geçin."
   shops_title: Mağazalar
@@ -1713,7 +1714,7 @@ tr:
   filter_by: "Filtrele"
   hide_filters: "Filtreleri gizle"
   one_filter_applied: "1 filtre uygulandı"
-  x_filters_applied: "filtreler uygulandı"
+  x_filters_applied: "filtre uygulandı"
   submitting_order: "Siparişiniz gönderiliyor: lütfen bekleyin"
   confirm_hub_change: "Emin misiniz? Seçtiğiniz pazar değiştirilecek ve alışveriş sepetinizdeki tüm ürünler kaldırılacak."
   confirm_oc_change: "Emin misiniz? Seçtiğiniz sipariş dönemi değiştirilecek ve alışveriş sepetinizdeki tüm ürünler kaldırılacak."
@@ -1753,14 +1754,14 @@ tr:
     steps:
       introduction:
         registration_greeting: "Merhaba!"
-        registration_intro: "Şimdi AGA üzerinden bir Üretici veya Türetici profili oluşturabilirsiniz"
+        registration_intro: "Şimdi AGA üzerinden Üretici veya Türetici profilleri oluşturabilirsiniz"
         registration_checklist: "Neye ihtiyacım var?"
         registration_time: "5-10 dakika"
         registration_enterprise_address: "İşletme adresi"
         registration_contact_details: "Birincil iletişim bilgileri"
         registration_logo: "Logo resminiz"
         registration_promo_image: "Profiliniz için duvar resmi"
-        registration_about_us: "'Hakkımızda' metni"
+        registration_about_us: "'Hakkımızda' metni - Hikayeniz"
         registration_outcome_headline: "Ne kazanacağım?"
         registration_outcome1_html: "Profiliniz, insanların Açık Gıda Ağı üzerinde sizi <strong>bulmasına</strong> ve <strong>sizinle iletişim kurmasına</strong> yardımcı olur."
         registration_outcome2: "Bu alanı kendinizin, çiftliğinizin ve işletmenizin hikayesini anlatmak, yeni işbirlikleri, yeni bağlantılar kurmak için kullanın. "
@@ -1808,7 +1809,7 @@ tr:
         no_producer_help: "Üretici değilseniz muhtemelen gıdaya ulaşım sağlayan, dağıtım veya satış yapan bir grup ya da işletmesiniz. Bir dükkan, kooperatif, gıda topluluğu, restaurant veya toptancı bile olabilirsiniz.  "
         create_profile: "Profil oluştur"
       about:
-        title: "Hakkında"
+        title: "HAKKIMIZDA"
         headline: "Güzel!"
         message: "Şimdi ayrıntıları açıklayalım"
         success: "Sonunda! %{enterprise} Açık Gıda Ağı'na eklendi"
@@ -2233,7 +2234,7 @@ tr:
   user_invited: "%{email} bu işletmeyi yönetmeye davet edildi"
   add_manager: "Mevcut bir kullanıcıyı ekle"
   users: "Kullanıcılar"
-  about: "Hakkında"
+  about: "HAKKIMIZDA"
   images: "Görseller"
   web: "Web"
   primary_details: "Temel Bilgiler"
@@ -2261,7 +2262,7 @@ tr:
   content_configuration_pricing_table: "(YAPILACAKLAR: Fiyatlandırma tablosu)"
   content_configuration_case_studies: "(TODO: Vaka çalışmaları)"
   content_configuration_detail: "(YAPILACAKLAR: Detay)"
-  enterprise_name_error: "çoktan alındı. İşletme size aitse ve sahiplik talebinde bulunmak istiyorsanız veya bu işletmeyle ticaret yapmak istiyorsanız lütfen %{email} numaralı telefondan bu profilin şu anki yöneticisiyle iletişime geçin."
+  enterprise_name_error: "çoktan alındı. İşletme size aitse ve sahiplik talebinde bulunmak istiyorsanız veya bu işletmeyle ticaret yapmak istiyorsanız lütfen %{email} üzerinden bu profilin şu anki yöneticisiyle iletişime geçin."
   enterprise_owner_error: "^ %{email}‘ın daha fazla işletmeye sahip olmasına izin verilmiyor (limit %{enterprise_limit})."
   enterprise_role_uniqueness_error: "^ Bu rol zaten var."
   inventory_item_visibility_error: doğru veya yanlış olmalı
@@ -2354,7 +2355,7 @@ tr:
         saved: KAYDEDİLDİ
         saving: KAYDEDİYOR
         enterprise_package:
-          hub_profile: Türetici Pazarı Profili
+          hub_profile: Pazar Profili
           hub_profile_cost: "MALİYET: HER ZAMAN ÜCRETSİZ"
           hub_profile_text1: >
               İnsanlar Açık Gıda Ağı üzerinden size ulaşabilir. Haritada görünür ve
@@ -2369,8 +2370,7 @@ tr:
               alıcılara ulaştırabilirsiniz.
           hub_shop_text2: >
               Pazarlar gerçek anlamı dışında da bir çok şekil alabilir: Gıda kooperatifleri,
-              gıda toplulukları, haftalık gıda kolisi üyelikleri, alım grupları, dükkanlar
-              vs.
+              gıda toplulukları, haftalık gıda kolisi üyelikleri, alım grupları vs.
           hub_shop_text3: >
               Kendi ürünlerinizi de satmak isterseniz, işletme bilginizi üretici olarak
               güncellemelisiniz.
@@ -2808,6 +2808,8 @@ tr:
     new_payment: "Yeni Ödeme"
     capture: "Tahsilat"
     void: "Geçersiz"
+    login: "Oturum aç"
+    password: "Parola"
     configurations: "yapılandırmalar"
     general_settings: "Genel Ayarlar"
     site_name: "Site adı"
@@ -2872,8 +2874,6 @@ tr:
     abbreviation: "Kısaltma"
     new_state: "Yeni Şehir"
     payment_methods: "Ödeme yöntemleri"
-    new_payment_method: "Yeni Ödeme Yöntemi"
-    provider: "Sağlayıcı"
     taxonomies: "cinsler"
     new_taxonomy: "Yeni Cins"
     back_to_taxonomies_list: "Cinsler Listesine Geri Dön"
@@ -3085,10 +3085,24 @@ tr:
           back_end: "Sadece panel"
           deactivation_warning: "Bir teslimat yöntemini etkisiz hale getirmek listenizden kaldırılmasına sebep olabilir. Alternatif olarak, ayarlarınızı 'Göster' yerine 'sadece panel' olarak değiştirerek teslimat yöntemini ödeme sayfasında gizleyebilirsiniz."
       payment_methods:
+        index:
+          payment_methods: "ÖDEME YÖNTEMLERİ"
+          new_payment_method: "Yeni Ödeme Yöntemi"
+          name: "İSİM"
+          products_distributor: "Dağıtımcı"
+          provider: "Sağlayıcı"
+          environment: "çevre"
+          display: "Görüntüle"
+          active: "Aktif"
+          both: "Her ikisi de"
+          back_end: "Sadece panel"
+          active_yes: "Evet"
+          active_no: "Hayır"
         new:
           new_payment_method: "Yeni Ödeme Yöntemi"
           back_to_payment_methods_list: "Ödeme Yöntemleri Listesine Geri Dön"
         edit:
+          new: "Yeni"
           editing_payment_method: "Ödeme Yöntemi Düzenleniyor"
           back_to_payment_methods_list: "Ödeme Yöntemleri Listesine Geri Dön"
         stripe_connect:
@@ -3104,6 +3118,19 @@ tr:
           account_id: Hesap Kimliği
           business_name: işletme adı
           charges_enabled: Masraflar Etkin
+        form:
+          name: "İSİM"
+          description: "Açıklama"
+          environment: "çevre"
+          display: "Görüntüle"
+          active: "Aktif"
+          active_yes: "Evet"
+          active_no: "Hayır"
+          both: "Ödeme Sayfası ve Panel"
+          back_end: "Sadece panel"
+          tags: "Etiketler"
+        providers:
+          provider: "Sağlayıcı"
       payments:
         source_forms:
           stripe:

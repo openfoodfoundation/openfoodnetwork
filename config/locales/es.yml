@@ -403,6 +403,7 @@ es:
         footer_and_external_links: Pie de página y enlaces externos
         your_content: Tu contenido
         user_guide: Manual de Usuario
+        map: Mapa
     enterprise_fees:
       index:
         title: "Comisiones de la Organización"
@@ -2812,6 +2813,8 @@ es:
     new_payment: "Nuevo pago"
     capture: "Captura"
     void: "Vacío"
+    login: "Iniciar sesión"
+    password: "Contraseña"
     configurations: "Configuraciones"
     general_settings: "Configuración general"
     site_name: "Nombre del sitio"
@@ -2876,8 +2879,6 @@ es:
     abbreviation: "Abreviatura"
     new_state: "Nuevo estado"
     payment_methods: "Métodos de Pago"
-    new_payment_method: "Nuevo método de pago"
-    provider: "Proveedor"
     taxonomies: "Taxonomias"
     new_taxonomy: "Nueva taxonomía"
     back_to_taxonomies_list: "Volver a la Lista de Taxonomías"
@@ -3089,10 +3090,24 @@ es:
           back_end: "Solo en Administración"
           deactivation_warning: "Desactivar un método de envío puede hacer que el método de envío desaparezca de tu lista. Como alternativa, puedes ocultar el método de envío de la página  \"Hacer pedidos\" configurándolo con la opción \"Solo en Administración\" "
       payment_methods:
+        index:
+          payment_methods: "Métodos de Pago"
+          new_payment_method: "Nuevo método de pago"
+          name: "Nombre"
+          products_distributor: "Distribuidora"
+          provider: "Proveedor"
+          environment: "Ambiente"
+          display: "Mostrar"
+          active: "Activo"
+          both: "Ambos"
+          back_end: "Solo en Administración"
+          active_yes: "Sí"
+          active_no: "No"
         new:
           new_payment_method: "Nuevo método de pago"
           back_to_payment_methods_list: "Volver a la lista de métodos de pago"
         edit:
+          new: "Nuevo"
           editing_payment_method: "Edición del método de pago"
           back_to_payment_methods_list: "Volver a la lista de métodos de pago"
         stripe_connect:
@@ -3108,6 +3123,19 @@ es:
           account_id: Account ID
           business_name: Nombre de la Organización
           charges_enabled: Cargos habilitados
+        form:
+          name: "Nombre"
+          description: "Descripción"
+          environment: "Ambiente"
+          display: "Mostrar"
+          active: "Activo"
+          active_yes: "Sí"
+          active_no: "No"
+          both: "Tanto en Hacer pedido como en Administración"
+          back_end: "Solo en Administración"
+          tags: "Tags"
+        providers:
+          provider: "Proveedor"
       payments:
         source_forms:
           stripe:

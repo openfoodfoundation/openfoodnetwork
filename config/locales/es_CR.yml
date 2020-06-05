@@ -403,6 +403,7 @@ es_CR:
         footer_and_external_links: Pie de página y enlaces externos
         your_content: Tu contenido
         user_guide: Manual de usuario
+        map: Mapa
     enterprise_fees:
       index:
         title: "Comisiones de la organización"
@@ -2795,6 +2796,8 @@ es_CR:
     new_payment: "Nuevo pago"
     capture: "Captura"
     void: "Vacío"
+    login: "Iniciar sesión"
+    password: "Contraseña"
     configurations: "Configuraciones"
     general_settings: "Configuración general"
     site_name: "Nombre del sitio"
@@ -2859,8 +2862,6 @@ es_CR:
     abbreviation: "Abreviatura"
     new_state: "Nueva provincia"
     payment_methods: "Métodos de pago"
-    new_payment_method: "Nuevo método de pago"
-    provider: "Proveedor"
     taxonomies: "Taxonomías"
     new_taxonomy: "Nueva taxonomía"
     back_to_taxonomies_list: "Volver a la lista de taxonomías"
@@ -3067,10 +3068,23 @@ es_CR:
           categories: "Categorías"
           zones: "Zonas"
       payment_methods:
+        index:
+          payment_methods: "Métodos de pago"
+          new_payment_method: "Nuevo método de pago"
+          name: "Nombre"
+          products_distributor: "Distribuidor"
+          provider: "Proveedor"
+          environment: "Ambiente"
+          display: "Mostrar"
+          active: "Activo"
+          both: "Ambos"
+          active_yes: "Sí"
+          active_no: "No"
         new:
           new_payment_method: "Nuevo método de pago"
           back_to_payment_methods_list: "Volver a la lista de métodos de pago"
         edit:
+          new: "Nuevo"
           editing_payment_method: "Edición del método de pago"
           back_to_payment_methods_list: "Volver a la lista de métodos de pago"
         stripe_connect:
@@ -3086,6 +3100,17 @@ es_CR:
           account_id: ID de cuenta
           business_name: Nombre de la organización
           charges_enabled: Cargos habilitados
+        form:
+          name: "Nombre"
+          description: "Descripción"
+          environment: "Ambiente"
+          display: "Mostrar"
+          active: "Activo"
+          active_yes: "Sí"
+          active_no: "No"
+          tags: "Etiquetas"
+        providers:
+          provider: "Proveedor"
       payments:
         source_forms:
           stripe:
@@ -3250,9 +3275,6 @@ es_CR:
       invalid: inválido
     order_mailer:
       cancel_email:
-        customer_greeting: "Hola %{name}!"
-        instructions: "Su pedido ha sido CANCELADO. Por favor, conserve esta información de cancelación para sus registros."
-        order_summary_canceled: "Resumen del pedido [CANCELADO]"
         subject: "Cancelación del pedido"
       confirm_email:
         subject: "Confirmación del pedido"

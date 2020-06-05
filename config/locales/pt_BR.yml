@@ -403,6 +403,7 @@ pt_BR:
         footer_and_external_links: Rodapé e links externos
         your_content: Seu conteúdo
         user_guide: Guia do Usuário
+        map: Mapa
     enterprise_fees:
       index:
         title: "Taxas da iniciativa"
@@ -697,7 +698,7 @@ pt_BR:
           shopfront_requires_login_false: "Publico"
           shopfront_requires_login_true: "Disponível somente para clientes registrados"
           recommend_require_login: "Recomendamos pedir login dos usuários quando permitido que pedidos possam ser alterados."
-          allow_guest_orders: "Pedidos dos convidados"
+          allow_guest_orders: "Pedidos de convidados"
           allow_guest_orders_tip: "Permitir o checkout como convidado, ou requisitar um usuário registrado. "
           allow_guest_orders_false: "Requisitar o login para fazer pedidos"
           allow_guest_orders_true: "Permitir checkout de convidados"
@@ -2809,6 +2810,8 @@ pt_BR:
     new_payment: "Novo Pagamento"
     capture: "Capturar"
     void: "Vazio"
+    login: "Login"
+    password: "Senha"
     configurations: "Configurações"
     general_settings: "Configurações Gerais"
     site_name: "Nome do site"
@@ -2873,8 +2876,6 @@ pt_BR:
     abbreviation: "Abreviação"
     new_state: "Estado novo"
     payment_methods: "Métodos de pagamento"
-    new_payment_method: "Novo método de pagamento"
-    provider: "Fornecedor"
     taxonomies: "Taxonomias"
     new_taxonomy: "Nova taxonomia"
     back_to_taxonomies_list: "Voltar à lista de taxonomias"
@@ -3086,10 +3087,22 @@ pt_BR:
           back_end: "Somente Área Administrativa"
           deactivation_warning: "Desativar um método de envio pode fazer com que ele desapareça da sua lista. Como alternativa, você pode esconder um método de envio da página de checkout s"
       payment_methods:
+        index:
+          payment_methods: "Métodos de pagamento"
+          new_payment_method: "Novo método de pagamento"
+          name: "Nome"
+          products_distributor: "Distribuidor"
+          environment: "Ambiente"
+          display: "Exibição"
+          both: "Ambos"
+          back_end: "Somente Área Administrativa"
+          active_yes: "Sim"
+          active_no: "Não"
         new:
           new_payment_method: "Novo método de pagamento"
           back_to_payment_methods_list: "Voltar à lista de formas de pagamento"
         edit:
+          new: "Novo"
           editing_payment_method: "Editando método de pagamento"
           back_to_payment_methods_list: "Voltar à lista de formas de pagamento"
         stripe_connect:
@@ -3105,6 +3118,16 @@ pt_BR:
           account_id: ID da conta
           business_name: Nome da iniciativa/negócio
           charges_enabled: Taxas habilitadas
+        form:
+          name: "Nome"
+          description: "Descrição"
+          environment: "Ambiente"
+          display: "Exibição"
+          active_yes: "Sim"
+          active_no: "Não"
+          both: "Tanto Checkout quanto Área Administrativa"
+          back_end: "Somente Área Administrativa"
+          tags: "Tags"
       payments:
         source_forms:
           stripe:
@@ -3272,9 +3295,6 @@ pt_BR:
       invalid: inváliod
     order_mailer:
       cancel_email:
-        customer_greeting: "Oi %{name}!"
-        instructions: "Seu pedido foi CANCELADO. Guarde essas informações de cancelamento para seus registros."
-        order_summary_canceled: "Resumo do pedido [CANCELADO]"
         subject: "Cancelamento do Pedido"
       confirm_email:
         subject: "Confimação de Pedido"

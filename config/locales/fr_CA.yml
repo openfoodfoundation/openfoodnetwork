@@ -398,6 +398,7 @@ fr_CA:
         footer_and_external_links: Pied de page et Liens Externes
         your_content: Votre contenu
         user_guide: Guide utilisateur
+        map: Carte
     enterprise_fees:
       index:
         title: "Marges et Commissions"
@@ -2792,6 +2793,8 @@ fr_CA:
     new_payment: "Nouveau paiement"
     capture: "Payée"
     void: "Annulé"
+    login: "Se connecter"
+    password: "Mot de passe"
     configurations: "Configurations"
     general_settings: "Configurations générales"
     site_name: "Nom du site"
@@ -2856,8 +2859,6 @@ fr_CA:
     abbreviation: "Code"
     new_state: "Nouveau Région:"
     payment_methods: "Méthodes de paiement"
-    new_payment_method: "Nouvelle méthode de paiement"
-    provider: "Fournisseur"
     taxonomies: "Taxonomies"
     new_taxonomy: "Nouvelle taxonomie"
     back_to_taxonomies_list: "Retour à la liste des taxonomies"
@@ -3062,10 +3063,23 @@ fr_CA:
           categories: "Conditions de transport"
           zones: "Zones"
       payment_methods:
+        index:
+          payment_methods: "Méthodes de paiement"
+          new_payment_method: "Nouvelle méthode de paiement"
+          name: "Nom"
+          products_distributor: "Hub-distributeur"
+          provider: "Fournisseur"
+          environment: "Environnement"
+          display: "Afficher"
+          active: "Actif"
+          both: "Les deux"
+          active_yes: "Oui"
+          active_no: "Non"
         new:
           new_payment_method: "Nouvelle méthode de paiement"
           back_to_payment_methods_list: "Retour à la liste des méthodes de paiement"
         edit:
+          new: "Nouveau"
           editing_payment_method: "Modification de la méthode de paiement"
           back_to_payment_methods_list: "Retour à la liste des méthodes de paiement"
         stripe_connect:
@@ -3081,6 +3095,17 @@ fr_CA:
           account_id: Identifiant Compte
           business_name: Nom de l'entreprise
           charges_enabled: Frais activés
+        form:
+          name: "Nom"
+          description: "Description"
+          environment: "Environnement"
+          display: "Afficher"
+          active: "Actif"
+          active_yes: "Oui"
+          active_no: "Non"
+          tags: "Tags"
+        providers:
+          provider: "Fournisseur"
       payments:
         source_forms:
           stripe:
@@ -3245,9 +3270,6 @@ fr_CA:
       invalid: invalide
     order_mailer:
       cancel_email:
-        customer_greeting: "Bonjour %{name}!"
-        instructions: "Votre commande a été ANNULÉE. Vous trouverez ci-dessous les informations concernant cette commande. "
-        order_summary_canceled: "Résumé de la commande [ANNULEE]"
         subject: "Annulation de Commande"
       confirm_email:
         subject: "Confirmation de commande"
