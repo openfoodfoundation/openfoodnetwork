@@ -12,7 +12,6 @@ require 'open_food_network/order_cycle_management_report'
 require 'open_food_network/packing_report'
 require 'open_food_network/sales_tax_report'
 require 'open_food_network/xero_invoices_report'
-require 'open_food_network/bulk_coop_report'
 require 'open_food_network/payments_report'
 require 'open_food_network/orders_and_fulfillments_report'
 
@@ -20,6 +19,11 @@ module Spree
   module Admin
     class ReportsController < Spree::Admin::BaseController
       include Spree::ReportsHelper
+
+      ORDER_MANAGEMENT_ENGINE_REPORTS = [
+        :bulk_coop,
+        :enterprise_fee_summary
+      ]
 
       helper_method :render_content?
 
@@ -309,7 +313,7 @@ module Spree
 
       # List of reports that have been moved to the Order Management engine
       def report_in_order_management_engine?(report)
-        report == :enterprise_fee_summary
+        ORDER_MANAGEMENT_ENGINE_REPORTS.include?(report)
       end
 
       def timestamp
