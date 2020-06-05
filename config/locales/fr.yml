@@ -403,6 +403,7 @@ fr:
         footer_and_external_links: Pied de page et Liens Externes
         your_content: Votre contenu
         user_guide: Guide utilisateur
+        map: Carte
     enterprise_fees:
       index:
         title: "Marges et Commissions"
@@ -2836,6 +2837,14 @@ fr:
     new_payment: "Nouveau paiement"
     capture: "Payée"
     void: "Annulé"
+    login: "Se connecter"
+    password: "Mot de passe"
+    signature: "Signature"
+    solution: "Solution"
+    landing_page: "Page d'accueil (landing page)"
+    server: "Serveur"
+    test_mode: "Mode test"
+    logourl: "URL du logo"
     configurations: "Configurations"
     general_settings: "Configurations générales"
     site_name: "Nom du site"
