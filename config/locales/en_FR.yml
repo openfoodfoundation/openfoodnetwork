@@ -403,6 +403,7 @@ en_FR:
         footer_and_external_links: Footer and External Links
         your_content: Your content
         user_guide: User Guide
+        map: Map
     enterprise_fees:
       index:
         title: "Enterprise Fees"
@@ -2806,6 +2807,14 @@ en_FR:
     new_payment: "New Payment"
     capture: "Capture"
     void: "Void"
+    login: "Login"
+    password: "Password"
+    signature: "Signature"
+    solution: "Solution"
+    landing_page: "Landing Page"
+    server: "Server"
+    test_mode: "Test Mode"
+    logourl: "Logourl"
     configurations: "Configurations"
     general_settings: "General Settings"
     site_name: "Site Name"
