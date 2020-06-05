@@ -3275,9 +3275,14 @@ ca:
       invalid: invàlid
     order_mailer:
       cancel_email:
-        customer_greeting: "Hola %{name}!"
-        instructions: "La teva comanda ha estat anul·lada. Conserva aquesta informació de cancel·lació per als teus registres."
-        order_summary_canceled: "Resum de comanda [CANCEL·LADA]"
+        customer_greeting: "Benvolgut/da,%{name}"
+        instructions_html: "La teva comanda<strong> %{distributor}</strong> ha estat CANCEL·LADA"
+        dont_cancel: "Si heu canviat d'opinió o no voleu cancel·lar aquesta comanda, poseu-vos en contacte amb %{email}"
+        order_summary_canceled_html: "<strong>Resum de comanda # %{number} [CANCELAT]</strong>"
+        details: "Aquí teniu els detalls del que vau demanar:"
+        unpaid_order: "La vostra comanda no s'havia pagat, per la qual cosa no s'ha realitzat cap reemborsament"
+        paid_order: "La teva comanda s'havia pagat per la qual cosa %{distributor} ha reemborsat l'import complet"
+        credit_order: "S'ha pagat la comanda i s'ha abonat l'import al vostre compte"
         subject: "Cancel·lació de la comanda"
       confirm_email:
         subject: "Confirmació de la comanda"

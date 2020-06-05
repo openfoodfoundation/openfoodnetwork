@@ -686,6 +686,7 @@ tr:
           ofn_uid_tip: Açık Gıda Ağı'na kayıtlı işletmenize özel tanımlanan kimlik numarası
         shipping_methods:
           name: "Ad"
+          applies: "Aktif?"
           manage: "Teslimat Yöntemlerini Yönet"
           create_button: "Yeni Teslimat Yöntemi Oluştur"
           create_one_button: "Şimdi Oluştur"
@@ -702,8 +703,8 @@ tr:
           allow_guest_orders_true: "Misafir alışverişine izin ver"
           allow_order_changes: "Siparişleri düzenle"
           allow_order_changes_tip: "Sipariş dönemi açık olduğu sürece müşterilerin siparişlerini düzenlemelerine izin verin."
-          allow_order_changes_false: "Oluşturulan siparişler değiştirilemez / iptal edilemez"
-          allow_order_changes_true: "Müşteriler sipariş dönemi açıkken siparişleri değiştirebilir / iptal edebilir"
+          allow_order_changes_false: "Oluşturulan siparişler değiştirilemez/iptal edilemez"
+          allow_order_changes_true: "Müşteriler sipariş dönemi açıkken siparişleri değiştirebilir/iptal edebilir"
           enable_subscriptions: "Üyelikler"
           enable_subscriptions_tip: "Üyelik işlevselliği etkinleştirilsin mi?"
           enable_subscriptions_false: "Kapalı"
@@ -713,7 +714,7 @@ tr:
               Müşterilerinize merhaba diyebilir, tezgahınız ve alışveriş şartlarınız
               ile ilgili bilgi verebilirsiniz. Yazdıklarınız, müşteriler mağazanızı
               ziyaret ettiğinde görünür olacak.
-          shopfront_message_link_tooltip: "Bağlantı ekle / düzenle"
+          shopfront_message_link_tooltip: "Bağlantı ekle/düzenle"
           shopfront_message_link_prompt: "Lütfen eklemek için bir URL girin"
           shopfront_closed_message: "KAPALI MAĞAZA MESAJI"
           shopfront_closed_message_placeholder: >
@@ -857,7 +858,7 @@ tr:
         next: "Sonrakİ"
         cancel: "İptal et"
         back_to_list: "Listeye geri dön"
-        save_and_back_to_list: "Kaydet ve Listeye Dön"
+        save_and_back_to_list: "KAYDET VE LİSTEYE DÖN"
         choose_products_from: "Ürünlerİ Buradan SeÇ:"
       incoming:
         incoming: "Gelen"
@@ -879,7 +880,7 @@ tr:
         fees: "Ücretler"
         previous: "Önceki"
         save: "Kaydet"
-        save_and_back_to_list: "Kaydet ve Listeye Dön"
+        save_and_back_to_list: "KAYDET VE LİSTEYE DÖN"
         cancel: "İptal et"
         back_to_list: "Listeye geri dön"
       wizard_progress:
@@ -903,7 +904,7 @@ tr:
         choose_product_tip: Gelen ve giden ürünleri sadece stokların %{inventory} 'i ile kısıtlayabilirsiniz.
         preferred_product_selection_from_coordinator_inventory_only_here: Yalnızca Koordinatör Stokları
         preferred_product_selection_from_coordinator_inventory_only_all: Tüm Mevcut Ürünler
-        save_reload: Sayfayı Kaydet ve Yeniden Yükle
+        save_reload: SAYFAYI KAYDET VE YENİDEN YÜKLE
       coordinator_fees:
         add: Koordinatör ücreti ekle
       filters:
@@ -922,7 +923,7 @@ tr:
         products: Ürünler
         tags: Etiketler
         add_a_tag: Etiket ekle
-        delivery_details: Teslimat / Gönderim Bilgileri
+        delivery_details: Teslimat/Gönderim Bilgileri
       index:
         schedule: Takvim
         schedules: Takvimler
@@ -938,7 +939,7 @@ tr:
         variants: Varyantlar
       simple_form:
         ready_for: ŞU TARİHTE HAZIR
-        ready_for_placeholder: Tarih / saat
+        ready_for_placeholder: Tarih/saat
         customer_instructions: Müşteri talimatları
         customer_instructions_placeholder: Teslimat / Gönderim Notları
         products: Ürünler
@@ -1164,8 +1165,8 @@ tr:
       footer_legal_text_html: "Açık Gıda Ağı ücretsiz ve açık kaynaklı bir yazılım platformudur. İçeriklerimiz %{content_license} ve kodumuz %{code_license} ile lisanslıdır."
       footer_data_text_with_privacy_policy_html: "Verilerinize iyi bakıyoruz. Bkz. %{privacy_policy} ve %{cookies_policy}"
       footer_data_text_without_privacy_policy_html: "Verilerinize iyi bakıyoruz. Bkz. %{cookies_policy}"
-      footer_data_privacy_policy: "Gizlilik Politikası"
-      footer_data_cookies_policy: "çerez politikası"
+      footer_data_privacy_policy: "Gizlilik ve Kişisel Verilerin Korunması Politikası "
+      footer_data_cookies_policy: "Çerez Politikası"
   shop:
     messages:
       customer_required:
@@ -1174,8 +1175,8 @@ tr:
         contact: "İLETİŞİM"
         require_customer_login: "Yalnızca onaylı müşteriler buradan alışveriş yapabilir."
         require_login_html: "Zaten onaylanmış bir müşteri iseniz, devam etmek için %{login} veya %{signup}"
-        require_login_2_html: "Buradan alışveriş mi yapmak istiyorsunuz? Lütfen katılmak için %{contact}%{enterprise} ile iletişime geçin!"
-        require_customer_html: "Buradan alışveriş yapmaya başlamak istiyorsanız, katılmak için lütfen %{contact} %{enterprise} 'a sorun."
+        require_login_2_html: "Buradan alışveriş mi yapmak istiyorsunuz? Lütfen katılmak için sorun: %{contact}%{enterprise} "
+        require_customer_html: "Buradan alışveriş yapmaya başlamak istiyorsanız, katılmak için lütfen sorun: %{contact} %{enterprise} "
       select_oc:
         select_oc_html: "Hangi ürünlerin uygun olduğunu görmek için lütfen <span class='highlighted'>ne zaman için sipariş vermek istediğinizi seçin</span> "
   card_could_not_be_updated: Kart güncellenemedi
@@ -1214,11 +1215,11 @@ tr:
   menu_4_title: "Gruplar"
   menu_4_url: "/groups"
   menu_5_title: "hakkında"
-  menu_5_url: "https://acikgida.com"
+  menu_5_url: "https://hakkimizda.acikgida.com"
   menu_6_title: "Bağlan"
-  menu_6_url: "https://acikgida.com"
+  menu_6_url: "https://acikgida.com/connect"
   menu_7_title: "öğren"
-  menu_7_url: "https://acikgida.com"
+  menu_7_url: "https://acikgida.com/learn"
   logo: "Logo (640x130)"
   logo_mobile: "Cep telefonu logosu (75x26)"
   logo_mobile_svg: "Cep Telefonu logo (SVG)"
@@ -1268,7 +1269,7 @@ tr:
   label_producer: "ÜRETİCİ"
   label_producers: "ÜRETİCİLER"
   label_groups: "Gruplar"
-  label_about: "HAKKINDA"
+  label_about: "HAKKIMIZDA"
   label_connect: "Bağlan"
   label_learn: "Öğren"
   label_blog: "Blog"
@@ -1566,7 +1567,7 @@ tr:
   components_filters_nofilters: "Filtresiz"
   components_filters_clearfilters: "Tüm filtreleri temizle"
   groups_title: Gruplar
-  groups_headline: Gruplar / bölgeler
+  groups_headline: Gruplar
   groups_text: "Her üretici özeldir ve her işletmenin ortaya koyabileceği farklı bir değer vardır. Üyelerimiz, ürünlerini ve emeklerini, ya da sadece gıdanın ortak değerleri paylaşan üretici, türetici ve dağıtımcı kolektifleridir. Bu bileşenler, adil ve temiz gıdaya ulaşım yollarını kolaylaştırır ve bozulmuş gıda sistemini hep beraber düzeltmemize yardımcı olur."
   groups_search: "İsim veya anahtar kelime ile ara"
   groups_no_groups: "Grup bulunamadı"
@@ -1636,10 +1637,10 @@ tr:
   sell_producers_detail: "AGA üzerinden işletmeniz adına bir profil oluşturun. Dilediğiniz zaman profilinizi bir tezgaha yükseltebilir ve ürünlerinizi müşterilerinize doğrudan satabilirsiniz."
   sell_hubs_detail: "AGA üzerinden gıda işletmeniz veya topluluğunuz için bir profil oluşturun. İstediğiniz zaman profilinizi çok üreticili bir pazara yükseltebilirsiniz."
   sell_groups_detail: "Bölgenizdeki veya ağınızdaki işletmelerin (üreticilerin, pazarların veya diğer grupların) detaylı rehber listesini oluşturun."
-  sell_user_guide: "Kullanım kılavuzumuzda daha fazla bilgi edinin."
-  sell_listing_price: "AGA üzerinde görünür olmak ücretsizdir. Fiyatlandırma hakkında daha fazla bilgi için, üst menüdeki Hakkında bağlantısını kullanarak Yazılım Platformu bölümünü ziyaret edin."
-  sell_embed: "Açık Gıda Ağı üzerinden oluşturduğunuz tezgahınızı kendi web siteniz üzerinden de kullanmanıza yardımcı olabiliriz. Müşterileriniz mevcut internet siteniz üzerinden de aynı şekilde sipariş verebilirler. "
-  sell_ask_services: "Bize AGA hizmetleri hakkında soru sorun."
+  sell_user_guide: "Kullanım kılavuzumuzdan daha fazla bilgi edinin."
+  sell_listing_price: "AGA üzerinde görünür olmak ücretsizdir. Platform üzerinden satış yapan işletmeler için işlem başına uygulanan ücretlendirme %5'tir.  Fiyatlandırma hakkında daha fazla bilgi için, üst menüdeki Hakkımızda bağlantısını kullanarak Fiyatlandırma bölümünü ziyaret edin."
+  sell_embed: "Kendi e-ticaret siteniz olsa bile Açık Gıda Ağı size hikayenizi anlatmanız ve ürünlerinizi satmanız için yeni ve farklı bir seçenek sunuyor. Siz de bu ailenin bir parçası olun, hep beraber büyüyelim!"
+  sell_ask_services: "Detaylar için bizimle iletişime geçin."
   shops_title: Mağazalar
   shops_headline: Alışveriş biçim değiştiriyor
   shops_text: Gıda dönemsel yetiştirilir, dönemsel hasat edilir ve dönemsel sipariş edilir. Aradığınız mağazanın sipariş dönemi kapalı ise kısa süre sonra tekrar kontrol edin.
@@ -1912,10 +1913,10 @@ tr:
   outstanding_balance: "Ödenmemiş bakiye"
   admin_enterprise_relationships: "İŞLETME İZİNLERİ"
   admin_enterprise_relationships_everything: "her şey"
-  admin_enterprise_relationships_permits: "izinler"
+  admin_enterprise_relationships_permits: "izin veriyor"
   admin_enterprise_relationships_seach_placeholder: "Ara"
   admin_enterprise_relationships_button_create: "Oluştur"
-  admin_enterprise_relationships_to: "'a"
+  admin_enterprise_relationships_to: "-"
   admin_enterprise_groups: "İşletme Grupları"
   admin_enterprise_groups_name: "Ad"
   admin_enterprise_groups_owner: "Sahip"
@@ -1985,7 +1986,7 @@ tr:
   price: "Fiyat"
   on_hand: "Mevcut"
   review: "gözden geçir"
-  save_changes: "Değişiklikleri Kaydet"
+  save_changes: "DEĞİŞİKLİKLERİ KAYDET"
   order_saved: "Sipariş Kaydedildi"
   no_products: Ürün yok
   spree_admin_overview_enterprises_header: "İşletmelerim"
@@ -2041,7 +2042,7 @@ tr:
   first_name_begins_with: "Adının BAŞ HARFİ"
   last_name_begins_with: "Soyadının BAŞ HARFİ"
   enterprise_tos_link: "İşletme Üyelik Sözleşmesi bağlantısı"
-  enterprise_tos_message: "Amaçlarımızı ve değerlerimizi paylaşan insanlarla çalışmak istiyoruz. Bu nedenle yeni işletmelerden bunu kabul etmesini istiyoruz:"
+  enterprise_tos_message: "Amaçlarımızı ve değerlerimizi paylaşan insanlarla çalışmak istiyoruz. Yasal zorunluluk gereği de yeni işletmelerden kabul etmesini istiyoruz:"
   enterprise_tos_link_text: "Üyelik Sözleşmesi"
   enterprise_tos_agree: "Yukarıdaki Üyelik Sözleşmesini kabul ediyorum"
   tax_settings: "Vergi Ayarları"
@@ -2784,7 +2785,7 @@ tr:
     cannot_set_shipping_method_without_address: "Müşteri bilgileri girilmeden teslimat yöntemi belirlenemez.."
     no_tracking_present: "Hiçbir takip detayı sağlanmadı."
     order_total: "sipariş toplamı"
-    customer_details: "Müşteri detayları"
+    customer_details: "MÜŞTERİ DETAYLARI"
     customer_search: "Müşteri Arama"
     choose_a_customer: "Bir müşteri seçin"
     account: "Hesap"
@@ -3067,6 +3068,8 @@ tr:
           zone: "bölge"
           calculator: "Hesaplama"
           display: "Görüntüle"
+          both: "Ödeme Sayfası ve Panel"
+          back_end: "Sadece panel"
           no_shipping_methods_found: "Hiçbir teslimat yöntemi bulunamadı"
         new:
           new_shipping_method: "Yeni Teslimat Yöntemi"
@@ -3078,6 +3081,9 @@ tr:
         form:
           categories: "Kategoriler"
           zones: "bölgeler"
+          both: "Ödeme Sayfası ve Panel"
+          back_end: "Sadece panel"
+          deactivation_warning: "Bir teslimat yöntemini etkisiz hale getirmek listenizden kaldırılmasına sebep olabilir. Alternatif olarak, ayarlarınızı 'Göster' yerine 'sadece panel' olarak değiştirerek teslimat yöntemini ödeme sayfasında gizleyebilirsiniz."
       payment_methods:
         new:
           new_payment_method: "Yeni Ödeme Yöntemi"
@@ -3237,6 +3243,7 @@ tr:
       format: '% Y-% A-%d'
       js_format: 'yy-aa-gg'
     orders:
+      error_flash_for_unavailable_items: "Sepetinizdeki ürünlerden biri bitti veya azaldı. Lütfen seçili miktarı güncelleyin."
       edit:
         login_to_view_order: "Siparişinizi görmek için lütfen giriş yapın."
       bought:
@@ -3264,9 +3271,14 @@ tr:
       invalid: geçersiz
     order_mailer:
       cancel_email:
-        customer_greeting: "Merhaba %{name}!"
-        instructions: "Siparişiniz iptal edildi. Lütfen kayıtlarınız için bu iptal bilgilerini saklayın."
-        order_summary_canceled: "Sipariş Özeti [İPTAL EDİLDİ]"
+        customer_greeting: "Sevgili %{name},"
+        instructions_html: "<strong>%{distributor}</strong> siparişiniz İPTAL EDİLDİ. Lütfen not edin."
+        dont_cancel: "Eğer fikrinizi değiştirdiyseniz ve siparişi iptal etmek istemiyorsanız lütfen %{email} ile iletişime geçin."
+        order_summary_canceled_html: "<strong>Sipariş Özeti #%{number}(İPTAL EDİLDİ)</strong>"
+        details: "İşte siparişinizin özeti:"
+        unpaid_order: "Sipariş ödemeniz yapılmadığı için iade işlemi yapılmadı"
+        paid_order: "Siparişinizin ödemesi yapılmıştı, bu sebeple %{distributor}iade işlemi gerçekleştirdi."
+        credit_order: "Siparişinizin ödemesi yapılmıştı, bu sebeple hesabınızdan düşüldü."
         subject: "Sipariş İptali"
       confirm_email:
         subject: "Sipariş Onayı"
