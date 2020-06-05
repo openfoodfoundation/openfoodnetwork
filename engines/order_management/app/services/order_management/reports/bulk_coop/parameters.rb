@@ -12,7 +12,7 @@ module OrderManagement
 
         validates :start_at, :end_at, date_time_string: true
         validates :distributor_ids, integer_array: true
-        validates_inclusion_of :report_type, in: OrderManagement::Reports::BulkCoop::BulkCoopReport::REPORT_TYPES.map(&:to_s)
+        validates_inclusion_of :report_type, in: BulkCoopReport::REPORT_TYPES.map(&:to_s)
 
         validate :require_valid_datetime_range
 

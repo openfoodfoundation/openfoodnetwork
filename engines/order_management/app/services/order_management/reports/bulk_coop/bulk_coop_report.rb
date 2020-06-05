@@ -9,7 +9,7 @@ module OrderManagement
           :bulk_coop_allocation,
           :bulk_coop_packing_sheets,
           :bulk_coop_customer_payments
-        ]
+        ].freeze
 
         attr_reader :params
         def initialize(user, params = {}, render_table = false)
@@ -141,6 +141,7 @@ module OrderManagement
 
         def order_permissions
           return @order_permissions unless @order_permissions.nil?
+
           @order_permissions = ::Permissions::Order.new(@user, @params[:q])
         end
 
