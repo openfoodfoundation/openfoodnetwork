@@ -434,6 +434,8 @@ GEM
     jquery-ui-rails (4.2.1)
       railties (>= 3.2.16)
     json (1.8.6)
+    json-schema (2.8.1)
+      addressable (>= 2.4)
     json_spec (1.1.5)
       multi_json (~> 1.0)
       rspec (>= 2.0, < 4.0)
@@ -590,6 +592,19 @@ GEM
     rspec-retry (0.6.2)
       rspec-core (> 3.3)
     rspec-support (3.9.2)
+    rswag (2.2.0)
+      rswag-api (= 2.2.0)
+      rswag-specs (= 2.2.0)
+      rswag-ui (= 2.2.0)
+    rswag-api (2.2.0)
+      railties (>= 3.1, < 6.1)
+    rswag-specs (2.2.0)
+      activesupport (>= 3.1, < 6.1)
+      json-schema (~> 2.2)
+      railties (>= 3.1, < 6.1)
+    rswag-ui (2.2.0)
+      actionpack (>= 3.1, < 6.1)
+      railties (>= 3.1, < 6.1)
     rubocop (0.81.0)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
@@ -780,7 +795,8 @@ DEPENDENCIES
   roo (~> 2.8.3)
   rspec-rails (>= 3.5.2)
   rspec-retry
-  rubocop
+  rswag (= 2.2.0)
+  rubocop (= 0.81)
   rubocop-rails
   sass
   sass-rails
