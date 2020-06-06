@@ -1,26 +1,32 @@
-= form_for @report.search, :url => spree.packing_admin_reports_path do |f|
-  = render 'date_range_form', f: f
+= form_tag spree.packing_admin_reports_path, :method => :post do
+  = render 'date_range_form'
 
   .row
     .alpha.two.columns= label_tag nil, t(:report_hubs)
-    .omega.fourteen.columns= f.collection_select(:distributor_id_in, @distributors, :id, :name, {}, {class: "select2 fullwidth", multiple: true})
+    .omega.fourteen.columns
+      = collection_select("q", "distributor_id_in", @distributors, :id, :name, {selected: params[:q].andand[:distributor_id_in]}, {class: "select2 fullwidth", multiple: true})
 
   .row
     .alpha.two.columns= label_tag nil, t(:report_producers)
-    .omega.fourteen.columns= select_tag(:supplier_id_in, options_from_collection_for_select(@suppliers, :id, :name, params[:supplier_id_in]), {class: "select2 fullwidth", multiple: true})
-
-  .row
-    .alpha.two.columns= label_tag nil, t(:report_customers_cycle)
     .omega.fourteen.columns
-      = f.select(:order_cycle_id_in, report_order_cycle_options(@order_cycles), {selected: params[:q][:order_cycle_id_in]}, {class: "select2 fullwidth", multiple: true})
+      = select_tag("q[supplier_id_in]", options_from_collection_for_select(@suppliers, :id, :name, params[:supplier_id_in]), {class: "select2 fullwidth", multiple: true})
+
+  -#.row
+  -#  .alpha.two.columns= label_tag nil, t(:report_customers_cycle)
+  -#  .omega.fourteen.columns
+  -#    = f.select(:order_cycle_id_in, report_order_cycle_options(@order_cycles), {selected: params[:q].andand[:order_cycle_id_in]}, {class: "select2 fullwidth", multiple: true})
+  -#
+  -# .row
+  -#   .alpha.two.columns= label_tag nil, t(:report_type)
+  -#   .omega.fourteen.columns= select_tag(:report_type, options_for_select(@report_types, @report_type))
 
   .row
-    .alpha.two.columns= label_tag nil, t(:report_type)
-    .omega.fourteen.columns= select_tag(:report_type, options_for_select(@report_types, @report_type))
-
+    = label_tag :report_format, "Generate report:"
+    %br
+    = select_tag :report_format, options_for_select({'On screen' => '', 'CSV Spreadsheet' => 'csv', 'Excel Spreadsheet' => 'xlsx', 'OpenOffice Spreadsheet' => 'ods'})
   .row
-    = check_box_tag :csv
-    = label_tag :csv, t(:report_customers_csv)
+    = check_box_tag "options[exclude_summaries]", true, params[:options].andand[:exclude_summaries]
+    = label_tag "hide_summary_rows"
 
   .row
   = button t(:search)
