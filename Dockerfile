@@ -43,4 +43,5 @@ RUN wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.z
 
 # Copy code and install app dependencies
 COPY . /usr/src/app/
-RUN bundle install
+# Run bundler install in parallel with the amount of available CPUs
+RUN bundle install --jobs="$(nproc)"
