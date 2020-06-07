@@ -13,8 +13,8 @@ WORKDIR /usr/src/app
 COPY .ruby-version .
 
 # Install Rbenv & Ruby
-RUN git clone https://github.com/rbenv/rbenv.git ${RBENV_ROOT} && \
-    git clone https://github.com/rbenv/ruby-build.git ${RBENV_ROOT}/plugins/ruby-build && \
+RUN git clone --depth 1 --branch v1.1.2 https://github.com/rbenv/rbenv.git ${RBENV_ROOT} && \
+    git clone --depth 1 --branch v20200520 https://github.com/rbenv/ruby-build.git ${RBENV_ROOT}/plugins/ruby-build && \
     ${RBENV_ROOT}/plugins/ruby-build/install.sh && \
     echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh && \
     rbenv install $(cat .ruby-version) && \
