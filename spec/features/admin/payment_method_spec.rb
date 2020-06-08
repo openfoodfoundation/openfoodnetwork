@@ -185,16 +185,6 @@ feature '
       expect(page).not_to have_content payment_method3.name
     end
 
-    it "shows only the providers of the existing payment methods" do
-      payment_method1
-      payment_method2
-      payment_method3
-
-      visit spree.admin_payment_methods_path
-
-      expect(page).to have_content "Cash/EFT/etc. (payments for which automatic validation is not required)", count: 2
-    end
-
     it "does not show duplicates of payment methods" do
       payment_method1
       payment_method2
