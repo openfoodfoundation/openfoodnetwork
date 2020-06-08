@@ -1,0 +1,20 @@
+- if params[:q].present?
+  %table.report__table{id: id}
+    %thead
+      %tr
+        - @report.table_headers.each do |heading|
+          %th
+            = t("admin.reports.table.headings.#{heading}")
+    %tbody
+      - @report.table_rows.each do |row|
+        - if row
+          %tr
+            - row.each do |cell|
+              %td
+                = cell
+      - if @report.table_rows.empty?
+        %tr
+          %td{colspan: @report.table_headers.count}= t(:none)
+- else
+  %p.report__message
+    = t(".select_and_search", option: msg_option.upcase)

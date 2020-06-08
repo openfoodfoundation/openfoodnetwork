@@ -1,0 +1,9 @@
+.row.date-range-filter
+  = label_tag nil, t(:date_range)
+  %br
+  = label_tag nil, t(:start), :class => 'inline'
+  = text_field_tag "q[completed_at_gt]", params.dig(:q, :completed_at_gt), :class => 'datetimepicker datepicker-from'
+  %span.range-divider
+    %i.icon-arrow-right
+  = text_field_tag "q[completed_at_lt]", params.dig(:q, :completed_at_lt), :class => 'datetimepicker datepicker-to'
+  = label_tag nil, t(:end), :class => 'inline'
