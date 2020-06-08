@@ -29,10 +29,8 @@ module Reporting
       :order_id
     end
 
-    def summary_rows
-      [
-        { title: 'TOTAL', sum: [:quantity] }
-      ]
+    def summary_row
+      { title: 'TOTAL', sum: [:quantity] }
     end
 
     def hide_columns
