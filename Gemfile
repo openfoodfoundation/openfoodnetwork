@@ -101,6 +101,7 @@ gem 'wkhtmltopdf-binary'
 gem 'foreigner'
 gem 'immigrant'
 gem 'roo', '~> 2.8.3'
+gem 'spreadsheet_architect'
 
 gem 'whenever', require: false
 
