@@ -52,6 +52,10 @@ module Reporting
 
     attr_reader :current_user, :ransack_params
 
+    def build_report
+      @report_rows = ReportBuilder.new(@report_rows, self).call
+    end
+
     def rows_as_arrays
       report_array = [headers]
 
@@ -68,45 +72,6 @@ module Reporting
       row_values[0] = summary_row_title if summary_row_title
 
       row_values
-    end
-
-    def build_report
-      build_rows
-      order_by(ordering)
-      summarise_group(summary_group)
-      remove_columns(*hide_columns)
-    end
-
-    def build_rows
-      collection.each do |object|
-        @report_rows << report_row(object)
-      end
-    end
-
-    def order_by(columns)
-      return unless columns.length
-
-      reverse_columns = columns.select { |head| head.to_s.ends_with?('!') }
-      sort = columns.map { |head| head.to_s.sub(/\!\z/, '').to_sym }
-      reverse_sort = reverse_columns.map { |head| head.to_s.sub(/\!\z/, '').to_sym }
-
-      @report_rows.sort! do |row1, row2|
-        key1 = sort.map { |column| reverse_sort.include?(column) ? row2[column] : row1[column] }
-        key2 = sort.map { |column| reverse_sort.include?(column) ? row1[column] : row2[column] }
-        key1 <=> key2
-      end
-    end
-
-    def summarise_group(group_column)
-      @report_rows = ReportSummariser.new(group_column, @report_rows, self).call
-    end
-
-    def remove_columns(columns)
-      return unless columns.length
-
-      @report_rows.each do |row|
-        row.except!(columns)
-      end
     end
 
     # Implement the methods below to create a custom report.
