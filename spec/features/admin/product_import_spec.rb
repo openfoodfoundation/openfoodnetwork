@@ -377,6 +377,24 @@ feature "Product Import", js: true do
       expect(page).to have_no_selector 'input[type=submit][value="Save"]'
       File.delete('/tmp/test.csv')
     end
+
+    it "handles cases where files contains malformed data" do
+      csv_data = "name,producer,category,on_hand,price,units,unit_type,shipping_category\n"
+      csv_data += "Malformed \rBrocolli,#{enterprise.name},Vegetables,8,2.50,200,g,#{shipping_category.name}\n"
+
+      File.write('/tmp/test.csv', csv_data)
+
+      visit main_app.admin_product_import_path
+      attach_file 'file', '/tmp/test.csv'
+      click_button 'Upload'
+
+      expect(page).to have_no_selector '.create-count'
+      expect(page).to have_no_selector '.update-count'
+      expect(page).to have_no_selector 'input[type=submit][value="Save"]'
+      expect(flash_message).to match(I18n.t('admin.product_import.model.malformed_csv', error_message: ""))
+
+      File.delete('/tmp/test.csv')
+    end
   end
 
   describe "handling enterprise permissions" do
