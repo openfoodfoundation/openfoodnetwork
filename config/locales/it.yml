@@ -5,18 +5,18 @@ it:
       enterprise_fee:
         fee_type: Tipo di tariffa
       spree/order:
-        payment_state: Stato del pagamento
-        shipment_state: Stato della spedizione
-        completed_at: Completo al
+        payment_state: Stato Pagamento
+        shipment_state: Stato Spedizione
+        completed_at: Completo Al
         number: Numero
         state: Stato
-        email: Mail consumatore
+        email: E-Mail Cliente
       spree/payment:
         amount: Quantità
       spree/product:
-        primary_taxon: "Categoria prodotto"
+        primary_taxon: "Categoria Prodotto"
         supplier: "Fornitore"
-        shipping_category_id: "Categoria di spedizione"
+        shipping_category_id: "Categoria Spedizioni"
         variant_unit: "Unità Variante"
         variant_unit_name: "Nome Unità Variante"
       spree/credit_card:
