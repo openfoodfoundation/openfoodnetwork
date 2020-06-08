@@ -179,6 +179,7 @@ Lint/AssignmentInCondition:
 
 Metrics/AbcSize:
   Max: 15
+  IgnoredMethods: ["report_row"]
 
 Metrics/BlockLength:
   Max: 25
@@ -210,6 +211,7 @@ Metrics/CyclomaticComplexity:
 
 Metrics/MethodLength:
   Max: 10
+  ExcludedMethods: ["report_row"]
 
 Metrics/ParameterLists:
   Max: 5

@@ -143,6 +143,14 @@ module Openfoodnetwork
       #{config.root}/app/jobs
     )
 
+    initializer "ofn.reports" do |_app|
+      module ::Reports; end
+      loader = Zeitwerk::Loader.new
+      loader.push_dir("#{Rails.root}/lib/reports", namespace: ::Reports)
+      loader.setup
+      loader.eager_load
+    end
+
     config.paths["config/routes.rb"] = %w(
       config/routes/api.rb
       config/routes.rb
