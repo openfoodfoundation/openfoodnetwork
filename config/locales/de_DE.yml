@@ -402,6 +402,7 @@ de_DE:
         footer_and_external_links: Fußzeile und externe Links
         your_content: Ihr Inhalt
         user_guide: Benutzerhandbuch
+        map: Karte
     enterprise_fees:
       index:
         title: "Unternehmensgebühren"
@@ -2785,6 +2786,8 @@ de_DE:
     new_payment: "Neue Zahlung"
     capture: "Erfassung"
     void: "Leere"
+    login: "Anmeldung"
+    password: "Passwort"
     configurations: "Konfigurationen"
     general_settings: "Allgemeine Einstellungen"
     site_name: "Site-Name"
@@ -2849,8 +2852,6 @@ de_DE:
     abbreviation: "Abkürzung"
     new_state: "Neuer Staat"
     payment_methods: "Zahlungsarten"
-    new_payment_method: "Neue Zahlungsart"
-    provider: "Anbieter"
     taxonomies: "Taxonomien"
     new_taxonomy: "Neue Taxonomie"
     back_to_taxonomies_list: "Zurück zur Taxonomieliste"
@@ -3057,6 +3058,13 @@ de_DE:
           categories: "Kategorien"
           zones: "Zonen"
       payment_methods:
+        index:
+          payment_methods: "Zahlungsarten"
+          name: "Name"
+          products_distributor: "Verteiler"
+          both: "Beide"
+          active_yes: "Ja"
+          active_no: "Nein"
         new:
           new_payment_method: "Neue Zahlungsart"
           back_to_payment_methods_list: "Zurück zur Liste der Zahlungsmethoden"
@@ -3076,6 +3084,12 @@ de_DE:
           account_id: Konto-ID
           business_name: Geschäftsname
           charges_enabled: Gebühren aktiviert
+        form:
+          name: "Name"
+          description: "Beschreibung"
+          active_yes: "Ja"
+          active_no: "Nein"
+          tags: "Stichwörter"
       payments:
         source_forms:
           stripe:
@@ -3236,9 +3250,6 @@ de_DE:
       invalid: ungültig
     order_mailer:
       cancel_email:
-        customer_greeting: "Hallo %{name}!"
-        instructions: "Ihre Bestellung wurde storniert. Bitte bewahren Sie diese Stornierungsinformationen für Ihre Unterlagen auf."
-        order_summary_canceled: "Bestellübersicht [STORNIERT]"
         subject: "Stornierung der Bestellung"
       confirm_email:
         subject: "Bestellbestätigung"

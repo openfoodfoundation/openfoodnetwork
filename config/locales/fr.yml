@@ -403,6 +403,7 @@ fr:
         footer_and_external_links: Pied de page et Liens Externes
         your_content: Votre contenu
         user_guide: Guide utilisateur
+        map: Carte
     enterprise_fees:
       index:
         title: "Marges et Commissions"
@@ -2134,7 +2135,7 @@ fr:
   report_header_customer_code: Code acheteur
   report_header_product: Produit
   report_header_product_properties: Propriétés / labels Produits
-  report_header_quantity: Nb commandé
+  report_header_quantity: Quantité
   report_header_max_quantity: Quantité Max
   report_header_variant: Variante
   report_header_variant_value: Nb Unités Variante
@@ -2193,7 +2194,7 @@ fr:
   report_header_eft_price: "TEF / Transfert Electronique (%{currency})"
   report_header_paypal_price: "Paypal (%{currency})"
   report_header_sku: Référence Produit
-  report_header_amount: Quantité
+  report_header_amount: Montant
   report_header_balance: Solde
   report_header_total_cost: "Coût Total"
   report_header_total_ordered: Total Commandé
@@ -2785,7 +2786,7 @@ fr:
   new: "Nouveau"
   start: "Début"
   end: "Fin"
-  stop: "Arrêter"
+  stop: "Fin"
   first: "Début"
   previous: "Précédent"
   last: "Fin"
@@ -2836,6 +2837,14 @@ fr:
     new_payment: "Nouveau paiement"
     capture: "Payée"
     void: "Annulé"
+    login: "Se connecter"
+    password: "Mot de passe"
+    signature: "Signature"
+    solution: "Solution"
+    landing_page: "Page d'accueil (landing page)"
+    server: "Serveur"
+    test_mode: "Mode test"
+    logourl: "URL du logo"
     configurations: "Configurations"
     general_settings: "Configurations générales"
     site_name: "Nom du site"
@@ -2900,8 +2909,6 @@ fr:
     abbreviation: "Code"
     new_state: "Nouveau département"
     payment_methods: "Méthodes de paiement"
-    new_payment_method: "Nouvelle méthode de paiement"
-    provider: "Fournisseur"
     taxonomies: "Taxonomies"
     new_taxonomy: "Nouvelle taxonomie"
     back_to_taxonomies_list: "Retour à la liste des taxonomies"
@@ -3113,10 +3120,26 @@ fr:
           back_end: "Visible pour l'administration uniquement"
           deactivation_warning: "Désactiver une méthode de livraison peut engendre sa disparition de la liste ici. Si vous souhaitez uniquement ne plus l'afficher pour l'acheteur, modifiez-là et utilisez l'option d'affichage \"visible pour l'administrateur uniquement\"."
       payment_methods:
+        index:
+          payment_methods: "Méthodes de paiement"
+          new_payment_method: "Nouvelle méthode de paiement"
+          name: "Produit/Variante"
+          products_distributor: "Distributeur"
+          provider: "Fournisseur"
+          environment: "Environnement"
+          display: "Afficher"
+          active: "Actif"
+          both: "Les deux"
+          front_end: "Visible par l'acheteur uniquement"
+          back_end: "Visible pour l'administration uniquement"
+          active_yes: "Oui"
+          active_no: "Non"
+          no_payment_methods_found: "Aucune méthode de paiement n'a été trouvée"
         new:
           new_payment_method: "Nouvelle méthode de paiement"
           back_to_payment_methods_list: "Retour à la liste des méthodes de paiement"
         edit:
+          new: "Nouveau"
           editing_payment_method: "Modification de la méthode de paiement"
           back_to_payment_methods_list: "Retour à la liste des méthodes de paiement"
         stripe_connect:
@@ -3132,6 +3155,21 @@ fr:
           account_id: Identifiant Compte
           business_name: Nom de l'entreprise
           charges_enabled: Frais activés
+        form:
+          name: "Produit/Variante"
+          description: "Description"
+          environment: "Environnement"
+          display: "Afficher"
+          active: "Actif"
+          active_yes: "Oui"
+          active_no: "Non"
+          both: "Visible par l'acheteur sur la boutique"
+          front_end: "Visible par l'acheteur uniquement"
+          back_end: "Visible pour l'administration uniquement"
+          tags: "Tags"
+          deactivation_warning: "Désactiver une méthode de paiement peut faire disparaitre cette méthode de votre liste. Si vous souhaitez uniquement la rendre invisible par l'acheteur, modifiez la méthode et utilisez l'affichage pour l'administrateur uniquement."
+        providers:
+          provider: "Fournisseur"
       payments:
         source_forms:
           stripe:
@@ -3299,9 +3337,14 @@ fr:
       invalid: invalide
     order_mailer:
       cancel_email:
-        customer_greeting: "Bonjour %{name} !"
-        instructions: "Votre commande a été ANNULÉE. Vous trouverez ci-dessous les informations concernant cette commande. "
-        order_summary_canceled: "Résumé de la commande [ANNULEE]"
+        customer_greeting: "Bonjour %{name},"
+        instructions_html: "Votre commande avec <strong>%{distributor}</strong>a été annulée. Merci de conserver cet email."
+        dont_cancel: "Si vous avez changé d'avis ou l'annulation a été réalisée par erreur, merci de contacter %{email}"
+        order_summary_canceled_html: "<strong>[ANNULATION] Commande #%{number}</strong>"
+        details: "Voici le détail des produits commandés:"
+        unpaid_order: "Votre commande n'avait pas été réglée, aucun remboursement n'a donc été effectué"
+        paid_order: "Votre commande avait été réglée, ainsi %{distributor}a remboursé la totalité du montant"
+        credit_order: "Votre commande avait été payée, votre compte a donc été crédité"
         subject: "Annulation de Commande"
       confirm_email:
         subject: "Confirmation de commande"

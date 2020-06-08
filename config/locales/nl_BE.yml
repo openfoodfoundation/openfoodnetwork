@@ -389,6 +389,7 @@ nl_BE:
         footer_and_external_links: Voettekst en externe links
         your_content: Uw inhoud
         user_guide: Gebruikershandleiding
+        map: Kaart
     enterprise_fees:
       index:
         title: "Ondernemingsvergoedingen"
@@ -2667,6 +2668,8 @@ nl_BE:
     new_payment: "Nieuwe betaling"
     capture: "Capture"
     void: "leegte"
+    login: "Log in"
+    password: "Wachtwoord"
     configurations: "configuraties "
     general_settings: "Algemene instellingen"
     site_name: "Website Naam"
@@ -2731,8 +2734,6 @@ nl_BE:
     abbreviation: "Afkortingen "
     new_state: "Nieuw Provincie"
     payment_methods: "Betalingsmethode"
-    new_payment_method: "Nieuwe betalingswijze"
-    provider: "Leverancier"
     taxonomies: "Taxonomies "
     new_taxonomy: "Nieuwe taxonomie "
     back_to_taxonomies_list: "Terug naar de lijst Taxonomies"
@@ -2897,10 +2898,23 @@ nl_BE:
           categories: "Categorieën"
           zones: "Zones "
       payment_methods:
+        index:
+          payment_methods: "Betalingsmethode"
+          new_payment_method: "Nieuwe betalingswijze"
+          name: "Naam"
+          products_distributor: "Distributeur"
+          provider: "Leverancier"
+          environment: "Omgeving"
+          display: "Display"
+          active: "Aktief"
+          both: "Beide"
+          active_yes: "Ya"
+          active_no: "Néé"
         new:
           new_payment_method: "Nieuwe betalingswijze"
           back_to_payment_methods_list: "Terug naar de lijst van de betalingswijzes"
         edit:
+          new: "Nieuw"
           editing_payment_method: "Wijziging van de betalingswijze"
           back_to_payment_methods_list: "Terug naar de lijst van de betalingswijzes"
         stripe_connect:
@@ -2916,6 +2930,17 @@ nl_BE:
           account_id: Account ID
           business_name: Bedrijfsnaam
           charges_enabled: Kosten ingeschakeld
+        form:
+          name: "Naam"
+          description: "Beschrijving"
+          environment: "Omgeving"
+          display: "Display"
+          active: "Aktief"
+          active_yes: "Ya"
+          active_no: "Néé"
+          tags: "Tags"
+        providers:
+          provider: "Leverancier"
       payments:
         source_forms:
           stripe:
@@ -3069,9 +3094,6 @@ nl_BE:
       invalid: fout
     order_mailer:
       cancel_email:
-        customer_greeting: "Hello%{name}!"
-        instructions: "Uw bestelling is GEANNULEERD. Bewaar deze annuleringsinformatie voor uw administratie."
-        order_summary_canceled: "Overzicht van de bestelling [KANNELD]"
         subject: "Annulering van de bestelling"
       confirm_email:
         subject: "Bestellingsinformatie"

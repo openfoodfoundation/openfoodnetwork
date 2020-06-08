@@ -403,6 +403,7 @@ en_CA:
         footer_and_external_links: Footer and External Links
         your_content: Your content
         user_guide: User Guide
+        map: Map
     enterprise_fees:
       index:
         title: "Enterprise Fees"
@@ -664,8 +665,8 @@ en_CA:
           name: Name
           name_placeholder: eg. Professor Plum's Biodynamic Truffles
           groups: Groups
-          groups_tip: Select any groups or regions that you are a member of. This will help customers find your enterprise.
-          groups_placeholder: Start typing to search available groups...
+          groups_tip: Select any markets or groups that you are a member of. This will help customers find your enterprise.
+          groups_placeholder: Start typing to search available markets or groups...
           primary_producer: Primary Producer?
           primary_producer_tip: Select 'Producer' if you are a primary producer, grower, maker or designer
           producer: Producer
@@ -1213,7 +1214,7 @@ en_CA:
   menu_2_url: "/map"
   menu_3_title: "Producers"
   menu_3_url: "/producers"
-  menu_4_title: "Groups"
+  menu_4_title: "Markets"
   menu_4_url: "/groups"
   menu_5_title: "About"
   menu_5_url: "https://about.openfoodnetwork.ca"
@@ -1573,7 +1574,7 @@ en_CA:
   groups_search: "Search name or keyword"
   groups_no_groups: "No groups found"
   groups_about: "About Us"
-  groups_producers: "Our producers"
+  groups_producers: "Our vendors"
   groups_hubs: "Our hubs"
   groups_contact_web: Contact
   groups_contact_social: Follow
@@ -2805,6 +2806,8 @@ en_CA:
     new_payment: "New Payment"
     capture: "Capture"
     void: "Void"
+    login: "Login"
+    password: "Password"
     configurations: "Configurations"
     general_settings: "General Settings"
     site_name: "Site Name"
@@ -2869,8 +2872,6 @@ en_CA:
     abbreviation: "Abbreviation"
     new_state: "New Province"
     payment_methods: "Payment Methods"
-    new_payment_method: "New Payment Method"
-    provider: "Provider"
     taxonomies: "Taxonomies"
     new_taxonomy: "New Taxonomy"
     back_to_taxonomies_list: "Back to Taxonomies List"
@@ -3082,10 +3083,24 @@ en_CA:
           back_end: "Back office only"
           deactivation_warning: "De-activating a shipping method can make the shipping method disappear from your list. Alternatively, you can hide a shipping method from the checkout page by setting the option 'Display' to 'back office only'."
       payment_methods:
+        index:
+          payment_methods: "Payment Methods"
+          new_payment_method: "New Payment Method"
+          name: "Name"
+          products_distributor: "Distributor"
+          provider: "Provider"
+          environment: "Environment"
+          display: "Display"
+          active: "Active"
+          both: "Both"
+          back_end: "Back office only"
+          active_yes: "Yes"
+          active_no: "No"
         new:
           new_payment_method: "New Payment Method"
           back_to_payment_methods_list: "Back To Payment Methods List"
         edit:
+          new: "New"
           editing_payment_method: "Editing Payment Method"
           back_to_payment_methods_list: "Back To Payment Methods List"
         stripe_connect:
@@ -3101,6 +3116,19 @@ en_CA:
           account_id: Account ID
           business_name: Business Name
           charges_enabled: Charges Enabled
+        form:
+          name: "Name"
+          description: "Description"
+          environment: "Environment"
+          display: "Display"
+          active: "Active"
+          active_yes: "Yes"
+          active_no: "No"
+          both: "Both Checkout and Back office"
+          back_end: "Back office only"
+          tags: "Tags"
+        providers:
+          provider: "Provider"
       payments:
         source_forms:
           stripe:
@@ -3268,9 +3296,14 @@ en_CA:
       invalid: invalid
     order_mailer:
       cancel_email:
-        customer_greeting: "Hi %{name}!"
-        instructions: "Your order has been CANCELED. Please retain this cancellation information for your records."
-        order_summary_canceled: "Order Summary [CANCELED]"
+        customer_greeting: "Dear %{name},"
+        instructions_html: "Your order with 1%{distributor}1 has been CANCELED. Please retain this cancellation information for your records."
+        dont_cancel: "If you have changed your mind or don't wish to cancel this order please contact %{email}  "
+        order_summary_canceled_html: "<strong>Order Summary #%{number} [CANCELED]</strong>"
+        details: "Here are the details of what you ordered:"
+        unpaid_order: "Your order was unpaid so no refund has been made"
+        paid_order: "Your order was paid so %{distributor} has refunded the full amount"
+        credit_order: "Your order was paid so your account has been credited"
         subject: "Cancellation of Order"
       confirm_email:
         subject: "Order Confirmation"

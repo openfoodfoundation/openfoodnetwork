@@ -32,7 +32,8 @@ module Admin
         PreferenceSections::GroupSignupPageSection.new,
         PreferenceSections::MainLinksSection.new,
         PreferenceSections::FooterAndExternalLinksSection.new,
-        PreferenceSections::UserGuideSection.new
+        PreferenceSections::UserGuideSection.new,
+        PreferenceSections::MapSection.new
       ]
     end
   end

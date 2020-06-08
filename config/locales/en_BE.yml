@@ -389,6 +389,7 @@ en_BE:
         footer_and_external_links: Footer and External Links
         your_content: Your content
         user_guide: User Guide
+        map: Map
     enterprise_fees:
       index:
         title: "Enterprise Fees"
@@ -2658,6 +2659,8 @@ en_BE:
     new_payment: "New Payment"
     capture: "Capture"
     void: "Void"
+    login: "Login"
+    password: "Password"
     configurations: "Configurations"
     general_settings: "General Settings"
     site_name: "Site Name"
@@ -2722,8 +2725,6 @@ en_BE:
     abbreviation: "Abbreviation"
     new_state: "New State"
     payment_methods: "Payment Methods"
-    new_payment_method: "New Payment Method"
-    provider: "Provider"
     taxonomies: "Taxonomies"
     new_taxonomy: "New Taxonomy"
     back_to_taxonomies_list: "Back to Taxonomies List"
@@ -2888,10 +2889,23 @@ en_BE:
           categories: "Categories"
           zones: "Zones"
       payment_methods:
+        index:
+          payment_methods: "Payment Methods"
+          new_payment_method: "New Payment Method"
+          name: "Name"
+          products_distributor: "Distributor"
+          provider: "Provider"
+          environment: "Environment"
+          display: "Display"
+          active: "Active"
+          both: "Both"
+          active_yes: "Yes"
+          active_no: "No"
         new:
           new_payment_method: "New Payment Method"
           back_to_payment_methods_list: "Back To Payment Methods List"
         edit:
+          new: "New"
           editing_payment_method: "Editing Payment Method"
           back_to_payment_methods_list: "Back To Payment Methods List"
         stripe_connect:
@@ -2907,6 +2921,17 @@ en_BE:
           account_id: Account ID
           business_name: Business Name
           charges_enabled: Charges Enabled
+        form:
+          name: "Name"
+          description: "Description"
+          environment: "Environment"
+          display: "Display"
+          active: "Active"
+          active_yes: "Yes"
+          active_no: "No"
+          tags: "Tags"
+        providers:
+          provider: "Provider"
       payments:
         source_forms:
           stripe:
@@ -3060,9 +3085,6 @@ en_BE:
       invalid: invalid
     order_mailer:
       cancel_email:
-        customer_greeting: "Hi%{name}!"
-        instructions: "Your order has been CANCELED. Please retain this cancellation information for your records."
-        order_summary_canceled: "Order Summary [CANCELED]"
         subject: "Cancellation of Order"
       confirm_email:
         subject: "Order Confirmation"

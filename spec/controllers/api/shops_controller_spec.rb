@@ -33,7 +33,7 @@ describe Api::ShopsController, type: :controller do
 
     describe "#closed_shops" do
       it "returns data for all closed shops" do
-        spree_get :closed_shops, nil
+        spree_get :closed_shops, {}
 
         expect(json_response).not_to match hub.name
 

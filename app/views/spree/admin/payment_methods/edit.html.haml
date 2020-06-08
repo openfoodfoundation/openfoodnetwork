@@ -4,7 +4,7 @@
   = @payment_method.name
 - content_for :page_actions do
   %li
-    = button_link_to t(:new), spree.new_admin_payment_method_path, icon: 'icon-plus'
+    = button_link_to t('.new'), spree.new_admin_payment_method_path, icon: 'icon-plus'
   %li
     = button_link_to t('.back_to_payment_methods_list'), spree.admin_payment_methods_path, icon: 'icon-arrow-left'
 = render partial: 'spree/shared/error_messages', locals: { target: @payment_method }

@@ -100,6 +100,10 @@ module InjectionHelper
     inject_json_ams "currencyConfig", {}, Api::CurrencyConfigSerializer
   end
 
+  def inject_open_street_map_config
+    inject_json_ams "openStreetMapConfig", {}, Api::OpenStreetMapConfigSerializer
+  end
+
   def inject_spree_api_key
     render partial: "json/injection_ams", locals: { name: 'spreeApiKey', json: "'#{@spree_api_key}'" }
   end

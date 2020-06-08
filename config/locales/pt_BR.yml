@@ -53,7 +53,7 @@ pt_BR:
         producer_ids: "Produtores"
         order_cycle_ids: "Ciclos de pedidos"
         enterprise_fee_ids: "Nomes das taxas"
-        shipping_method_ids: "Métodos de envio"
+        shipping_method_ids: "Método de Envio"
         payment_method_ids: "Métodos de pagamento"
     errors:
       messages:
@@ -204,7 +204,7 @@ pt_BR:
   ongoing: Em progresso
   bill_address: Endereço de Cobrança
   ship_address: Endereço de Entrega
-  sort_order_cycles_on_shopfront_by: "Ordenar Ciclo de Pedidos na Loja Virtual Por"
+  sort_order_cycles_on_shopfront_by: "Ordenar Ciclos de Pedidos na Loja Virtual Por"
   required_fields: Campos obrigatórios são indicados com um asterisco
   select_continue: Selecionar e continuar
   remove: Remover
@@ -303,7 +303,7 @@ pt_BR:
     shop: Loja
     sku: SKU
     status_state: Estado
-    tags: Etiqueta
+    tags: Tags
     variant: Variante
     weight: Peso
     volume: Tamanho
@@ -329,7 +329,7 @@ pt_BR:
     viewing: "Visualizando: %{current_view_name}"
     description: Descrição
     whats_this: O que é isso?
-    tag_has_rules: "Regras existentes para essa etiqueta: %{num}"
+    tag_has_rules: "Regras existentes para essa tag: %{num}"
     has_one_rule: "possui uma regra"
     has_n_rules: "tem %{num} regras"
     unsaved_confirm_leave: "Existem alterações não salvas nesta página. Continuar sem salvar? "
@@ -403,6 +403,7 @@ pt_BR:
         footer_and_external_links: Rodapé e links externos
         your_content: Seu conteúdo
         user_guide: Guia do Usuário
+        map: Mapa
     enterprise_fees:
       index:
         title: "Taxas da iniciativa"
@@ -687,22 +688,22 @@ pt_BR:
         shipping_methods:
           name: "Nome"
           applies: "Ativo?"
-          manage: "Gerenciar formas de envio"
+          manage: "Gerenciar métodos de envio"
           create_button: "Criar nova forma de envio"
           create_one_button: "Criar um agora"
-          no_method_yet: "Você ainda não tem nenhuma forma de envio."
+          no_method_yet: "Você ainda não tem nenhum método de envio."
         shop_preferences:
-          shopfront_requires_login: "Loja virtual visível publicamente?"
+          shopfront_requires_login: "Loja virtual visível ao público?"
           shopfront_requires_login_tip: "Escolha se os clientes precisarão fazer o login para ver os produtos da loja virtual, ou se eles estarão visíveis para todos."
           shopfront_requires_login_false: "Publico"
           shopfront_requires_login_true: "Disponível somente para clientes registrados"
           recommend_require_login: "Recomendamos pedir login dos usuários quando permitido que pedidos possam ser alterados."
-          allow_guest_orders: "Pedidos dos convidados"
+          allow_guest_orders: "Pedidos de convidados"
           allow_guest_orders_tip: "Permitir o checkout como convidado, ou requisitar um usuário registrado. "
           allow_guest_orders_false: "Requisitar o login para fazer pedidos"
           allow_guest_orders_true: "Permitir checkout de convidados"
           allow_order_changes: "Mudar pedidos"
-          allow_order_changes_tip: "Permitir que os consumidores mudem seus pedidos enquanto a compra estiver aberta."
+          allow_order_changes_tip: "Permitir que os consumidores mudem seus pedidos enquanto o ciclo de pedidos estiver aberto."
           allow_order_changes_false: "Pedidos enviados não podem ser mudados ou cancelados."
           allow_order_changes_true: "Consumidor pode mudar ou cancelar pedidos enquanto a compra estiver aberta."
           enable_subscriptions: "Assinaturas"
@@ -721,7 +722,7 @@ pt_BR:
               Uma mensagem que forneça uma explicação detalhada sobre o porque de
               a loja estar fechada e quando os consumidores podem esperar que abra
               novamente, a ser exibida quando não houver nenhum ciclo de pedidos ativo.
-          shopfront_category_ordering: "Organização das Categorias da Loja Virtual"
+          shopfront_category_ordering: "Organização da Loja Virtual por Categorias"
           open_date: "Dia de abertura"
           close_date: "Dia de fechamento"
         social:
@@ -746,11 +747,11 @@ pt_BR:
             by_default: Por padrão
             no_rules_yet: Ainda não existe nenhuma regra padrão
             add_new_button: '+ Adicionar nova regra padrão'
-          no_tags_yet: Nenhuma etiqueta foi aplicada a esta iniciativa
-          no_rules_yet: Nenhuma regra foi aplicada a essa etiqueta
+          no_tags_yet: Nenhuma tag foi aplicada a esta iniciativa
+          no_rules_yet: Nenhuma regra foi aplicada a essa tag
           for_customers_tagged: 'Para consumidores marcados:'
           add_new_rule: '+ Adicionar nova regra'
-          add_new_tag: '+ Adicionar nova etiqueta'
+          add_new_tag: '+ Adicionar nova tag'
         users:
           email_confirmation_notice_html: "Confirmação de e-mail está pendente. Enviamos um e-mail de confirmação para %{email}."
           resend: Reenviar
@@ -774,8 +775,8 @@ pt_BR:
         properties: Propriedades
         payment_methods: Formas de pagamento
         payment_methods_tip: Essa iniciativa não tem formas de pagamento
-        shipping_methods: Formas de entrega
-        shipping_methods_tip: Essa iniciativa não tem formas de entrega
+        shipping_methods: Métodos de envio
+        shipping_methods_tip: Essa iniciativa não tem métodos de envio
         enterprise_fees: Taxas da iniciativa
         enterprise_fees_tip: Essa iniciativa não tem taxas
       admin_index:
@@ -875,7 +876,7 @@ pt_BR:
         outgoing: "Saída"
         distributor: "Distribuidor"
         products: "Produtos"
-        tags: "Etiqueta"
+        tags: "Tag"
         delivery_details: "Sobre a Entrega"
         fees: "Taxas"
         previous: "Anterior"
@@ -921,8 +922,8 @@ pt_BR:
         outgoing: Saída
         distributor: Distribuidor
         products: Produtos
-        tags: Etiquetas
-        add_a_tag: Adicionar etiqueta
+        tags: Tags
+        add_a_tag: Adicionar tag
         delivery_details: Detalhes de entrega/retirada
       index:
         schedule: Cronograma
@@ -948,7 +949,7 @@ pt_BR:
         orders_present: Esse ciclo de pedidos foi selecionado por um cliente e não pode ser excluído. Para impedir que os clientes acessem, feche-o.
         schedule_present: Esse ciclo de pedidos está vinculado a um cronograma e não pode ser excluído. Desvincule ou exclua o cronograma primeiro.
       bulk_update:
-        no_data: Hum, algo deu errado. Não foram encontrados dados do ciclo do pedido.
+        no_data: Hum, algo deu errado. Não foram encontrados dados do ciclo do pedidos.
       date_warning:
         msg: Esse ciclo de pedidos está vinculado a %{n}de pedidos abertos. Alterar essa data agora não afetará nenhum pedido que já tenha sido feito, mas deve ser evitado, se possível. Tem certeza de que deseja continuar?
         cancel: Cancelar
@@ -1080,7 +1081,7 @@ pt_BR:
         details: Detalhes
         address: Endereço
         products: Produtos
-        no_open_or_upcoming_order_cycle: "Nenhum ciclo de pedido futuro"
+        no_open_or_upcoming_order_cycle: "Nenhum ciclo de pedidos agendado"
       products_panel:
         save: "SALVAR"
         saving: "SALVANDO"
@@ -1145,7 +1146,7 @@ pt_BR:
         cart: "Carrinho"
       joyride:
         checkout: "Fechar pedido agora"
-        already_ordered_products: "Já pediu neste ciclo de pedido"
+        already_ordered_products: "Já pediu neste ciclo de pedidos"
     register_call:
       selling_on_ofn: "Interessado em registrar a sua iniciativa na Open Food Brasil?"
       register: "Registre-se aqui"
@@ -1688,11 +1689,11 @@ pt_BR:
   products_cart_distributor_change: "O distribuidor para este pedido será trocado para %{name} se você adicionar este produto no carrinho."
   products_cart_distributor_is: "O distribuidor para este pedido é %{name}."
   products_distributor_error: "Por favor complete seu pedido no %{link} antes de comprar com outro distribuidor."
-  products_oc: "Ciclo de pedido para seu pedido:"
-  products_oc_change: "O ciclo de pedido para esse pedido será trocada para %{name} se você adicionar este produto ao carrinho."
-  products_oc_is: "O ciclo de pedido para este pedido é %{name}."
+  products_oc: "Ciclo de pedidos para seu pedido:"
+  products_oc_change: "O ciclo de pedidos para esse pedido será trocado para %{name} se você adicionar este produto ao carrinho."
+  products_oc_is: "O ciclo de pedidos para este pedido é %{name}."
   products_oc_error: "Por favor complete seu pedido no %{link} antes de comprar em outro ciclo de pedido."
-  products_oc_current: "seu ciclo de pedido atual"
+  products_oc_current: "seu ciclo de pedidos atual"
   products_max_quantity: Quantidade máxima
   products_distributor: Distribuidor
   products_distributor_info: Quando você selecionar um distribuidor para seu pedido, o endereço e data para retirada serão exibidos aqui.
@@ -1961,8 +1962,8 @@ pt_BR:
   flat_rate_per_order: "Taxa fixa ( por pedido)"
   flexible_rate: "Tarifa flexível"
   price_sack: "Preço da saca"
-  new_order_cycles: "Novo ciclo de pedidos"
-  new_order_cycle: "Novo ciclo de pedido"
+  new_order_cycles: "Novos ciclos de pedidos"
+  new_order_cycle: "Novo ciclo de pedidos"
   select_a_coordinator_for_your_order_cycle: "Selecione um coordenador para o seu ciclo de pedidos"
   notify_producers: 'Notificar produtores'
   edit_order_cycle: "Editar ciclo de pedidos"
@@ -1992,7 +1993,7 @@ pt_BR:
   spree_admin_overview_enterprises_footer: "GERENCIAR MINHAS INICIATIVAS"
   spree_admin_enterprises_hubs_name: "Nome"
   spree_admin_enterprises_create_new: "CRIAR NOVA"
-  spree_admin_enterprises_shipping_methods: "Métodos de entrega"
+  spree_admin_enterprises_shipping_methods: "Métodos de envio"
   spree_admin_enterprises_fees: "Taxas da iniciativa"
   spree_admin_enterprises_none_create_a_new_enterprise: "CRIAR NOVA INICIATIVA"
   spree_admin_enterprises_none_text: "Você ainda não possui nenhuma iniciativa"
@@ -2016,7 +2017,7 @@ pt_BR:
   spree_admin_eg_pickup_from_school: "ex: 'Buscar na Escola'"
   spree_admin_eg_collect_your_order: "ex: 'Por favor, colete seu pedido na Rua dos Sonhos, 123, casa 5, Bairro Liberdade"
   spree_classification_primary_taxon_error: "O táxon %{taxon} é o táxon principal de %{product} e não pode ser excluído"
-  spree_order_availability_error: "O ciclo do distribuidor ou do pedido não pode fornecer os produtos no seu carrinho"
+  spree_order_availability_error: "O distribuidor ou o ciclo de pedidos não pode fornecer os produtos no seu carrinho"
   spree_order_populator_error: "Distribuidor ou ciclo de pedidos não pode fornecer os produtos no seu carrinho. Por favor, escolha outro."
   spree_order_populator_availability_error: "Esse produto não está disponível no distribuidor escolhido ou no ciclo de pedidos."
   spree_distributors_error: "Pelo menos uma central deve ser selecionado"
@@ -2029,7 +2030,7 @@ pt_BR:
   manage: "Gerenciar"
   resend: "Re-enviar"
   add_and_manage_products: "Adicionar e gerenciar produtos"
-  add_and_manage_order_cycles: "Adicione e gerenciar ciclos de pedidos"
+  add_and_manage_order_cycles: "Adicionar e gerenciar ciclos de pedidos"
   manage_order_cycles: "Gerenciar ciclos de pedidos"
   manage_products: "Gerenciar produtos"
   edit_profile_details: "Editar detalhes de perfil "
@@ -2116,7 +2117,7 @@ pt_BR:
   report_header_order_number: Número do pedido
   report_header_date: Data
   report_header_confirmation_date: Data de Confirmação
-  report_header_tags: Etiqueta
+  report_header_tags: Tags
   report_header_items: Itens
   report_header_items_total: "Total de itens%{currency_symbol}"
   report_header_taxable_items_total: "Total de itens tributáveis ​​(%{currency_symbol})"
@@ -2337,18 +2338,18 @@ pt_BR:
           overview: Visão geral
           overview_text: >
               As regras de tag fornecem uma maneira para descrever quais itens são
-              visíveis ou não e para quais clientes, como formas de pagamento, formas
+              visíveis ou não e para quais clientes, como métodos de pagamento, método
               de entrega, produtos e ciclos de pedidos.
           by_default_rules: "Regras \"Padrão ...\""
           by_default_rules_text: >
               As regras padrão permitem ocultar itens para que eles não estejam visíveis
               por padrão. Esse comportamento pode ser substituído por regras não padrão
-              para clientes com etiquetas específicas.
+              para clientes com tags específicas.
           customer_tagged_rules: "Regras de \"Clientes marcados ...\""
           customer_tagged_rules_text: >
-              Ao criar regras relacionadas a uma etiqueta de cliente específica, você
-              pode substituir o comportamento padrão (seja para mostrar ou para ocultar
-              itens) para clientes com a etiqueta especificada.
+              Ao criar regras relacionadas a uma tag de cliente específica, você pode
+              substituir o comportamento padrão (seja para mostrar ou para ocultar
+              itens) para clientes com a tagespecificada.
       panels:
         save: SALVAR
         saved: SALVO
@@ -2460,7 +2461,7 @@ pt_BR:
         payment_method_tagged_bottom: "são:"
         order_cycle_tagged_top: "Ciclos de pedidos marcados"
         order_cycle_tagged_bottom: "são:"
-        inventory_tagged_top: "Variantes de inventário marcadas"
+        inventory_tagged_top: "Variantes do inventário marcadas com tag"
         inventory_tagged_bottom: "são:"
       new_tag_rule_dialog:
         select_rule_type: "Selecione um tipo de regra:"
@@ -2525,7 +2526,7 @@ pt_BR:
           updated_schedule: "Lista atualizada"
           deleted_schedule: "Lista excluída"
           name_required_error: "Digite um nome para esta lista"
-          no_order_cycles_error: "Selecione pelo menos um ciclo de pedido (arraste e solte)"
+          no_order_cycles_error: "Selecione pelo menos um ciclo de pedidos (arraste e solte)"
           available: "Disponível"
           selected: "Selecionado"
       customers:
@@ -2589,9 +2590,9 @@ pt_BR:
           Isso ajustará o nível de estoque para zero em todos os produtos para esta
           iniciativa que não está presente no arquivo carregado.
     order_cycles:
-      create_failure: "Falha ao criar o ciclo do pedido"
+      create_failure: "Falha ao criar o ciclo do pedidos"
       update_success: 'O seu ciclo de pedidos foi atualizado.'
-      update_failure: "Falha ao atualizar o ciclo do pedido"
+      update_failure: "Falha ao atualizar o ciclo do pedidos"
       no_distributors: Não há distribuidores neste ciclo de pedidos. Este ciclo de pedidos não será visível para os clientes até você adicionar um. Você gostaria de continuar salvando esse ciclo de pedidos?
     enterprises:
       producer: "Produtor"
@@ -2809,6 +2810,8 @@ pt_BR:
     new_payment: "Novo Pagamento"
     capture: "Capturar"
     void: "Vazio"
+    login: "Login"
+    password: "Senha"
     configurations: "Configurações"
     general_settings: "Configurações Gerais"
     site_name: "Nome do site"
@@ -2873,8 +2876,6 @@ pt_BR:
     abbreviation: "Abreviação"
     new_state: "Estado novo"
     payment_methods: "Métodos de pagamento"
-    new_payment_method: "Novo método de pagamento"
-    provider: "Fornecedor"
     taxonomies: "Taxonomias"
     new_taxonomy: "Nova taxonomia"
     back_to_taxonomies_list: "Voltar à lista de taxonomias"
@@ -3040,7 +3041,7 @@ pt_BR:
           distribution_fields:
             title: "Distribuição"
             distributor: "Distribuidor:"
-            order_cycle: "Ciclo de pedido:"
+            order_cycle: "Ciclo de pedidos:"
           line_item_adjustments: "Ajustes de itens de linha"
           order_adjustments: "Ajustes de Pedidos"
           order_total: "total de pedidos"
@@ -3057,7 +3058,7 @@ pt_BR:
           order_cycles_tip: "Os ciclos de pedidos determinam quando e onde seus produtos estão disponíveis para os clientes."
           you_have_active:
             zero: "Você não possui ciclos de pedidos ativos."
-            one: "Você tem um ciclo de pedido ativo."
+            one: "Você tem um ciclo de pedidos ativo."
             other: "Você tem %{count} ciclos de pedidos ativos."
           manage_order_cycles: "GERENCIAR CICLOS DE PEDIDOS"
       shipping_methods:
@@ -3069,6 +3070,8 @@ pt_BR:
           zone: "Zona"
           calculator: "Calculadora"
           display: "Exibição"
+          both: "Tanto Checkout quanto Área Administrativa"
+          back_end: "Somente Área Administrativa"
           no_shipping_methods_found: "Nenhum método de envio encontrado"
         new:
           new_shipping_method: "Novo método de envio"
@@ -3080,12 +3083,26 @@ pt_BR:
         form:
           categories: "Categorias"
           zones: "Zonas"
+          both: "Tanto Checkout quanto Área Administrativa"
+          back_end: "Somente Área Administrativa"
           deactivation_warning: "Desativar um método de envio pode fazer com que ele desapareça da sua lista. Como alternativa, você pode esconder um método de envio da página de checkout s"
       payment_methods:
+        index:
+          payment_methods: "Métodos de pagamento"
+          new_payment_method: "Novo método de pagamento"
+          name: "Nome"
+          products_distributor: "Distribuidor"
+          environment: "Ambiente"
+          display: "Exibição"
+          both: "Ambos"
+          back_end: "Somente Área Administrativa"
+          active_yes: "Sim"
+          active_no: "Não"
         new:
           new_payment_method: "Novo método de pagamento"
           back_to_payment_methods_list: "Voltar à lista de formas de pagamento"
         edit:
+          new: "Novo"
           editing_payment_method: "Editando método de pagamento"
           back_to_payment_methods_list: "Voltar à lista de formas de pagamento"
         stripe_connect:
@@ -3101,6 +3118,16 @@ pt_BR:
           account_id: ID da conta
           business_name: Nome da iniciativa/negócio
           charges_enabled: Taxas habilitadas
+        form:
+          name: "Nome"
+          description: "Descrição"
+          environment: "Ambiente"
+          display: "Exibição"
+          active_yes: "Sim"
+          active_no: "Não"
+          both: "Tanto Checkout quanto Área Administrativa"
+          back_end: "Somente Área Administrativa"
+          tags: "Tags"
       payments:
         source_forms:
           stripe:
@@ -3240,10 +3267,11 @@ pt_BR:
       format: '%A-%m-'
       js_format: 'aa-mm-dd'
     orders:
+      error_flash_for_unavailable_items: "Um item no seu carrinho ficou indisponível. Por favor atualize as quantidades selecionadas. "
       edit:
         login_to_view_order: "Faça o login para visualizar seu pedido."
       bought:
-        item: "Já pediu neste ciclo de pedido"
+        item: "Já pediu neste ciclo de pedidos"
       line_item:
         insufficient_stock: "Estoque disponível insuficiente, apenas %{on_hand} restante"
         out_of_stock: "Fora de estoque"
@@ -3267,9 +3295,6 @@ pt_BR:
       invalid: inváliod
     order_mailer:
       cancel_email:
-        customer_greeting: "Oi %{name}!"
-        instructions: "Seu pedido foi CANCELADO. Guarde essas informações de cancelamento para seus registros."
-        order_summary_canceled: "Resumo do pedido [CANCELADO]"
         subject: "Cancelamento do Pedido"
       confirm_email:
         subject: "Confimação de Pedido"

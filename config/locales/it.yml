@@ -398,6 +398,7 @@ it:
         footer_and_external_links: Footer e link esterni
         your_content: I tuoi contenuti
         user_guide: Guida per gli utenti
+        map: Mappa
     enterprise_fees:
       index:
         title: "Tariffe azienda"
@@ -2786,6 +2787,8 @@ it:
     new_payment: "Nuovo pagamento"
     capture: "Cattura"
     void: "vuoto"
+    login: "Login"
+    password: "Password"
     configurations: "Configurazioni"
     general_settings: "Impostazioni generali"
     site_name: "Nome del sito"
@@ -2850,8 +2853,6 @@ it:
     abbreviation: "Abbreviazione"
     new_state: "Nuovo stato"
     payment_methods: "Metodi di pagamento"
-    new_payment_method: "Nuovo metodo di pagamento"
-    provider: "Provider"
     taxonomies: "Tassonomie"
     new_taxonomy: "Nuova tassonomia"
     back_to_taxonomies_list: "Torna all'elenco delle tassonomie"
@@ -3057,10 +3058,23 @@ it:
           categories: "categorie"
           zones: "Zone"
       payment_methods:
+        index:
+          payment_methods: "Metodi di pagamento"
+          new_payment_method: "Nuovo metodo di pagamento"
+          name: "Nome"
+          products_distributor: "Distributore"
+          provider: "Provider"
+          environment: "Ambiente"
+          display: "Visualizza"
+          active: "Attivo"
+          both: "Entrambi"
+          active_yes: "Sì"
+          active_no: "No"
         new:
           new_payment_method: "Nuovo metodo di pagamento"
           back_to_payment_methods_list: "Torna all'elenco dei metodi di pagamento"
         edit:
+          new: "Nuovo"
           editing_payment_method: "Modifica metodo di pagamento"
           back_to_payment_methods_list: "Torna all'elenco dei metodi di pagamento"
         stripe_connect:
@@ -3076,6 +3090,17 @@ it:
           account_id: Account ID
           business_name: Ragione sociale
           charges_enabled: Cambi Consentiti
+        form:
+          name: "Nome"
+          description: "Descrizione"
+          environment: "Ambiente"
+          display: "Visualizza"
+          active: "Attivo"
+          active_yes: "Sì"
+          active_no: "No"
+          tags: "Tag"
+        providers:
+          provider: "Provider"
       payments:
         source_forms:
           stripe:
@@ -3240,9 +3265,6 @@ it:
       invalid: invalido
     order_mailer:
       cancel_email:
-        customer_greeting: "Ciao %{name}!"
-        instructions: "Il tuo ordine è stato ANNULLATO. Per favore conserva queste informazioni di cancellazione per i tuoi record."
-        order_summary_canceled: "Riepilogo dell'ordine [CANCELLATO]"
         subject: "Cancellazione dell'ordine"
       confirm_email:
         subject: "Conferma dell'ordine"

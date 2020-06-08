@@ -403,6 +403,7 @@ nb:
         footer_and_external_links: Footer og eksterne lenker
         your_content: Ditt innhold
         user_guide: Brukermanual
+        map: Kart
     enterprise_fees:
       index:
         title: "Bedriftsavgifter"
@@ -2788,6 +2789,8 @@ nb:
     new_payment: "Ny betaling"
     capture: "Fang"
     void: "Ugyldig"
+    login: "Logg inn"
+    password: "Passord"
     configurations: "Konfigurasjoner"
     general_settings: "Generelle innstillinger"
     site_name: "Sidenavn"
@@ -2852,8 +2855,6 @@ nb:
     abbreviation: "Forkortelse"
     new_state: "Ny Region"
     payment_methods: "Betalingsmetoder"
-    new_payment_method: "Ny Betalingsmetode"
-    provider: "Tilbyder"
     taxonomies: "Taksonomier"
     new_taxonomy: "Ny Taksonomi"
     back_to_taxonomies_list: "Tilbake til Taksonomiliste"
@@ -3060,10 +3061,23 @@ nb:
           categories: "Kategorier"
           zones: "Soner"
       payment_methods:
+        index:
+          payment_methods: "Betalingsmetoder"
+          new_payment_method: "Ny Betalingsmetode"
+          name: "Navn"
+          products_distributor: "Distributør"
+          provider: "Tilbyder"
+          environment: "Miljø"
+          display: "Visning"
+          active: "Aktiv"
+          both: "Begge"
+          active_yes: "Ja"
+          active_no: "Nei"
         new:
           new_payment_method: "Ny Betalingsmetode"
           back_to_payment_methods_list: "Tilbake til listen over betalingsmetoder"
         edit:
+          new: "Ny"
           editing_payment_method: "Redigerer betalingsmetode"
           back_to_payment_methods_list: "Tilbake til listen over betalingsmetoder"
         stripe_connect:
@@ -3079,6 +3093,17 @@ nb:
           account_id: Konto-ID
           business_name: Bedriftsnavn
           charges_enabled: Avgifter Aktivert
+        form:
+          name: "Navn"
+          description: "Beskrivelse"
+          environment: "Miljø"
+          display: "Visning"
+          active: "Aktiv"
+          active_yes: "Ja"
+          active_no: "Nei"
+          tags: "Merkelapper"
+        providers:
+          provider: "Tilbyder"
       payments:
         source_forms:
           stripe:
@@ -3245,9 +3270,6 @@ nb:
       invalid: ugyldig
     order_mailer:
       cancel_email:
-        customer_greeting: "Hei %{name}!"
-        instructions: "Din bestilling har blitt avbrutt. Vennligst behold denne avbestillingsinformasjonen som referanse."
-        order_summary_canceled: "Bestillingssammendrag [KANSELLERT]"
         subject: "Kansellering av bestilling"
       confirm_email:
         subject: "Ordrebekreftelse"

@@ -1,9 +1,9 @@
 # Contributing
-We love pull requests from everyone. Any contribution is valuable, but there are two issue streams that we especially love people to work on:
+We love pull requests from everyone. Any contribution is valuable!
 
-1) Our delivery backlog, is managed via a ZenHub board (ZenHub extensions are available for most major browsers). We use a Kanban-style approach, whereby devs pick issues from the top of the backlog which has been organised according to current priorities. If you have some time and are interested in working on some issues from the backlog, please make yourself known on the [#dev][slack-dev] channel on Slack and we can direct you to the most appropriate issue to pick up.
+If you have some time and are interested in working on some issues please make yourself known on the [#dev][slack-dev] channel on Slack.
 
-2) Our list of bugs and other self-contained issues that we consider to be a good starting point for new contributors, or devs who aren’t able to commit to seeing a whole feature through. These issues are marked with the `# good first issue` label.
+We have curated all issues we consider to be a good starting point for new members of the community within the [Welcome New Developers project board][welcome-dev]. Have a look and pick the one you would prefer working on!
 
 ## Set up
 
@@ -18,10 +18,6 @@ Create a new branch on your local machine to make your changes against (based on
 If you want to run the whole test suite, we recommend using a free CI service to run your tests in parallel. Running the whole suite locally in series is likely to take > 40 minutes. [TravisCI][travis] and [SemaphoreCI][semaphore] both work great in our experience. Either way, make sure the tests pass on your new branch:
 
     bundle exec rspec spec
-
-## Which issue to pick first?
-
-We have curated all issues interesting for new members of the community within the [Welcome New Developers project board][welcome-dev]. Have a look and pick the one you would prefer working on!
 
 ## Internationalisation (i18n)
 

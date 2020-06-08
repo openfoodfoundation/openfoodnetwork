@@ -1,7 +1,7 @@
 #provider-settings{ ng: { controller: "ProvidersCtrl" } }
   .row
     .alpha.three.columns
-      = label :payment_method, :type, t(:provider)
+      = label :payment_method, :type, t('.provider')
     .omega.eight.columns
       = collection_select(:payment_method, :type, @providers, :to_s, :clean_name, (!@object.persisted? ? { :selected => "Spree::PaymentMethod::Check"} : {}), { class: 'select2 fullwidth', 'provider-prefs-for' => "#{@object.id}"})
 

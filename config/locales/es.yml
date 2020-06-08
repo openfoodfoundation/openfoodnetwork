@@ -323,6 +323,7 @@ es:
     show_n_more: Mostrar %{num} más
     choose: "Escoger..."
     please_select: Por favor selecciona ...
+    column_save_as_default: Guardar por defecto
     columns: Columnas
     actions: Acciones
     viewing: "Viendo: %{current_view_name}"
@@ -402,6 +403,7 @@ es:
         footer_and_external_links: Pie de página y enlaces externos
         your_content: Tu contenido
         user_guide: Manual de Usuario
+        map: Mapa
     enterprise_fees:
       index:
         title: "Comisiones de la Organización"
@@ -686,6 +688,7 @@ es:
           ofn_uid_tip: La identificación única utilizada para identificar la organización en Open Food Network.
         shipping_methods:
           name: "Nombre"
+          applies: "¿Activo?"
           manage: "Gestionar métodos de envío"
           create_button: "Crear nuevo método de envío"
           create_one_button: "Crear una ahora"
@@ -865,6 +868,7 @@ es:
         incoming: "Entrante"
         supplier: "Proveedora"
         products: "Productos"
+        receival_details: "Detalles de la recepción"
         fees: "Comisiones"
         save: "Guardar"
         save_and_next: "Salvar y continuar"
@@ -1174,7 +1178,11 @@ es:
         signup: "Regístrate"
         contact: "contactar"
         require_customer_login: "Sólo las consumidoras aprobadas pueden acceder a esta tienda."
+        require_login_html: "Si ya eres un cliente aprovado, %{login} o %{signup} para continuar"
+        require_login_2_html: "¿Quieres comprar en esta tienda? %{contact}%{enterprise}y solicita tu admisión."
         require_customer_html: "Si desea comenzar a comprar aquí, por favor %{contact} %{enterprise} para preguntar acerca de incorporación."
+      select_oc:
+        select_oc_html: "Por favor <span class='highlighted'>debes elegir cuando quieres tu pedido</span>, para poder ver qué productos hay disponibles."
   card_could_not_be_updated: La tarjeta no se pudo actualizar
   card_could_not_be_saved: la tarjeta no se pudo guardar
   spree_gateway_error_flash_for_checkout: "Hubo un problema con tu información de pago: %{error}"
@@ -1534,12 +1542,17 @@ es:
   orders_changeable_orders_alert_html: Este pedido ha sido confirmado, pero puede realizar cambios hasta <strong>%{oc_close}</strong>.
   products_clear: Limpiar
   products_showing: "Mostrando:"
+  products_results_for: "Resultados para"
   products_or: "o"
   products_and: "y"
+  products_filters_in: "en"
   products_with: con
+  products_search: "Buscar…"
   products_filter_by: "Fitrar por"
   products_filter_selected: "seleccionado"
+  products_filter_heading: "Filtros"
   products_filter_clear: "Limpiar"
+  products_filter_done: "Hecho"
   products_loading: "Cargando productos..."
   products_updating_cart: "Actualizando su carrito..."
   products_cart_empty: "Carrito vacío"
@@ -1550,6 +1563,8 @@ es:
   products_update_error_msg: "No se ha podido guardar."
   products_update_error_data: "Error al guardar datos no válidos:"
   products_changes_saved: "Cambios guardados."
+  products_no_results_html: "Lo sentimos, no se han encontrado resultados para %{query}"
+  products_clear_search: "Limpiar la búsqueda"
   search_no_results_html: "Lo sentimos, no hay resultados para %{query}. ¿Intentar otra búsqueda?"
   components_profiles_popover: "Los perfiles no tienen una tienda en Open Food Network, pero pueden tener su propia tienda física o en línea en otro lugar"
   components_profiles_show: "Mostrar perfiles"
@@ -1905,6 +1920,7 @@ es:
   admin_enterprise_relationships_permits: "Permite"
   admin_enterprise_relationships_seach_placeholder: "Buscar"
   admin_enterprise_relationships_button_create: "Crear"
+  admin_enterprise_relationships_to: "para"
   admin_enterprise_groups: "Redes de organizaciones"
   admin_enterprise_groups_name: "Nombre"
   admin_enterprise_groups_owner: "Propietaria"
@@ -2310,6 +2326,10 @@ es:
     resolve_errors: Resuelve los siguientes errores
     more_items: "+ %{count} Más"
     default_card_updated: Tarjeta predeterminada actualizada
+    cart:
+      add_to_cart_failed: >
+          Ha habido un problema al añadir este producto en el carrito. Puede que haya
+          dejado de estar disponible o que la tinda haya cerrado.
     admin:
       enterprise_limit_reached: "Has alcanzado el límite estándar de organizaciones por cuenta. Escriba a %{contact_email} si necesita aumentarlo."
       modals:
@@ -2793,6 +2813,8 @@ es:
     new_payment: "Nuevo pago"
     capture: "Captura"
     void: "Vacío"
+    login: "Iniciar sesión"
+    password: "Contraseña"
     configurations: "Configuraciones"
     general_settings: "Configuración general"
     site_name: "Nombre del sitio"
@@ -2857,8 +2879,6 @@ es:
     abbreviation: "Abreviatura"
     new_state: "Nuevo estado"
     payment_methods: "Métodos de Pago"
-    new_payment_method: "Nuevo método de pago"
-    provider: "Proveedor"
     taxonomies: "Taxonomias"
     new_taxonomy: "Nueva taxonomía"
     back_to_taxonomies_list: "Volver a la Lista de Taxonomías"
@@ -3053,6 +3073,8 @@ es:
           zone: "Zona"
           calculator: "Calculadora"
           display: "Mostrar"
+          both: "Tanto en Hacer pedido como en Administración"
+          back_end: "Solo en Administración"
           no_shipping_methods_found: "No se encontraron métodos de envío"
         new:
           new_shipping_method: "Nuevo método de envío"
@@ -3064,11 +3086,28 @@ es:
         form:
           categories: "Categorías"
           zones: "Zonas"
+          both: "Tanto en Hacer pedido como en Administración"
+          back_end: "Solo en Administración"
+          deactivation_warning: "Desactivar un método de envío puede hacer que el método de envío desaparezca de tu lista. Como alternativa, puedes ocultar el método de envío de la página  \"Hacer pedidos\" configurándolo con la opción \"Solo en Administración\" "
       payment_methods:
+        index:
+          payment_methods: "Métodos de Pago"
+          new_payment_method: "Nuevo método de pago"
+          name: "Nombre"
+          products_distributor: "Distribuidora"
+          provider: "Proveedor"
+          environment: "Ambiente"
+          display: "Mostrar"
+          active: "Activo"
+          both: "Ambos"
+          back_end: "Solo en Administración"
+          active_yes: "Sí"
+          active_no: "No"
         new:
           new_payment_method: "Nuevo método de pago"
           back_to_payment_methods_list: "Volver a la lista de métodos de pago"
         edit:
+          new: "Nuevo"
           editing_payment_method: "Edición del método de pago"
           back_to_payment_methods_list: "Volver a la lista de métodos de pago"
         stripe_connect:
@@ -3084,6 +3123,19 @@ es:
           account_id: Account ID
           business_name: Nombre de la Organización
           charges_enabled: Cargos habilitados
+        form:
+          name: "Nombre"
+          description: "Descripción"
+          environment: "Ambiente"
+          display: "Mostrar"
+          active: "Activo"
+          active_yes: "Sí"
+          active_no: "No"
+          both: "Tanto en Hacer pedido como en Administración"
+          back_end: "Solo en Administración"
+          tags: "Tags"
+        providers:
+          provider: "Proveedor"
       payments:
         source_forms:
           stripe:
@@ -3183,6 +3235,8 @@ es:
           price: "Precio"
           display_as: "Mostrar como"
           display_name: "Nombre para mostrar"
+          display_as_placeholder: 'p. ej. 2 Kg'
+          display_name_placeholder: 'p. ej. Tomates'
         autocomplete:
           producer_name: "Productora"
           unit: "Unidad"
@@ -3221,6 +3275,7 @@ es:
       format: '%Y-%m-%d'
       js_format: 'yy-mm-dd'
     orders:
+      error_flash_for_unavailable_items: "Un artículo de tu carrito ahora no está disponible. Por favor actualiza las cantidades seleccionadas"
       edit:
         login_to_view_order: "Por favor inicie sesión para ver su pedido."
       bought:
@@ -3248,9 +3303,14 @@ es:
       invalid: inválido
     order_mailer:
       cancel_email:
-        customer_greeting: "Hola %{name}!"
-        instructions: "Su pedido ha sido CANCELADO. Por favor, conserve esta información de cancelación para sus registros."
-        order_summary_canceled: "Resumen del pedido [CANCELADO]"
+        customer_greeting: "Hola %{name}"
+        instructions_html: "Tu pedido con <strong>%{distributor}</strong> ha sido CANCELADO. Por favor guarda esta información de la cancelación por si es necesaria en el futuro. "
+        dont_cancel: "Si has cambiado de opinión o no deseas cancelar este pedido, por favor contacta con  %{email}"
+        order_summary_canceled_html: "<strong>Resumen del pedido [CANCELADO] %{number}  "
+        details: "Estos son los detalles de su pedido:"
+        unpaid_order: "Como su pedido no se había pagado, no se ha hecho ninguna devolución."
+        paid_order: "Su pedido estaba pagado por lo que %{distributor}ha devuelto el importe completo."
+        credit_order: "Su pedido estaba pagado por lo que se ha abonado en su cuenta."
         subject: "Cancelación del pedido"
       confirm_email:
         subject: "Confirmación del pedido"
