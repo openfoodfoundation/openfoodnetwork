@@ -9,9 +9,7 @@
 
   .row
     .small-12.columns
-      .name-matches{"ng-show" => "nameMatchesFiltered.length > 0"}
-        %h2
-          = t :hubs_matches
+      .name-matches{"ng-show" => "nameMatchesFiltered.length > 0 || query.length > 0"}
         = render "hubs_table", enterprises: "nameMatches"
 
       .distance-matches{"ng-if" => "nameMatchesFiltered.length == 0 || distanceMatchesShown"}
