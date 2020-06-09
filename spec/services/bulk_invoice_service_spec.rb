@@ -50,8 +50,11 @@ describe BulkInvoiceService do
 
   describe "#orders_from" do
     it "orders with completed desc" do
-      expect(service.send(:orders_from, [1, 2]).to_sql)
-        .to include('ORDER BY completed_at DESC')
+      order_old = create(:order_with_distributor, :completed, completed_at: 2.minutes.ago)
+      order_older = create(:order_with_distributor, :completed, completed_at: 3.minutes.ago)
+
+      expect(service.send(:orders_from, [order_older.id, order_old.id]).pluck(:id))
+        .to eq([order_old.id, order_older.id])
     end
   end
 end
