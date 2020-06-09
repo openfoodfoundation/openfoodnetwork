@@ -2,8 +2,10 @@
   .background{ng: {click: 'toggleCartSidebar()'}}
   .sidebar
     .cart-header
-      %span.title{"ng-show" => "Cart.line_items.length > 0"}
-        = t('.items_in_cart', num: "{{ Cart.total_item_count() }}")
+      %span.title{"ng-show" => "Cart.line_items.length == 1"}
+        = t('.items_in_cart_singular', num: "{{ Cart.total_item_count() }}")
+      %span.title{"ng-show" => "Cart.line_items.length > 1"}
+        = t('.items_in_cart_plural', num: "{{ Cart.total_item_count() }}")
       %a.close{ng: {click: 'toggleCartSidebar()'}}
         = t('.close')
         %i.ofn-i_009-close

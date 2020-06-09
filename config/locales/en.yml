@@ -1219,7 +1219,8 @@ en:
       cart_sidebar:
         checkout: "Checkout"
         edit_cart: "Edit cart"
-        items_in_cart: "%{num} items in your cart"
+        items_in_cart_singular: "%{num} item in your cart"
+        items_in_cart_plural: "%{num} items in your cart"
         close: "Close"
         cart_empty: "Your cart is empty"
         take_me_shopping: "Take me shopping!"
