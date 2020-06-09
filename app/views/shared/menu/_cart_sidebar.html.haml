@@ -31,12 +31,13 @@
         %a.go-shopping.button.large.bright{ng: {show: "#{show_shopping_cta?}", href: "{{ CurrentHub.hub.id ? '#{main_app.shop_path}' : '#{main_app.shops_path}' }}"}}
           = t('.take_me_shopping')
 
-    .sidebar-footer{"ng-show" => "Cart.line_items.length > 0"}
-      %p.cart-total
-        %strong
-          = t 'total'
-          {{ Cart.total()  | localizeCurrency }}
+  .sidebar-footer{"ng-show" => "Cart.line_items.length > 0"}
+    %p.cart-total
+      %strong
+        = t 'total'
+        {{ Cart.total()  | localizeCurrency }}
 
+    %div.fullwidth
       %a.edit-cart.button.large.dark.left{href: main_app.cart_path, "ng-disabled" => "Cart.dirty || Cart.empty()", "ng-class" => "{ dirty: Cart.dirty }"}
         = "{{ Cart.dirty ? '#{t(:cart_updating)}' : (Cart.empty() ? '#{t(:cart_empty)}' : '#{t('.edit_cart')}' ) }}"
       %a.checkout.button.large.bright.right{href: main_app.checkout_path, "ng-disabled" => "Cart.dirty || Cart.empty()"}
