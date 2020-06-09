@@ -312,24 +312,6 @@ Spree::Order.class_eval do
     (adjustments + price_adjustments).sum(&:included_tax)
   end
 
-  def tax_adjustments
-    adjustments + price_adjustments
-  end
-
-  def tax_adjustment_totals
-    tax_adjustments.each_with_object({}) do |adjustment, hash|
-      # No need of dealing with a missing Tax Rate if no tax setup
-      next if adjustment.included_tax.zero?
-
-      tax_rates = TaxRateFinder.tax_rates_of(adjustment)
-      tax_rates_hash = Hash[tax_rates.collect do |tax_rate|
-        tax_amount = tax_rates.one? ? adjustment.included_tax : tax_rate.compute_tax(adjustment.amount)
-        [tax_rate, tax_amount]
-      end]
-      hash.update(tax_rates_hash) { |_tax_rate, amount1, amount2| amount1 + amount2 }
-    end
-  end
-
   def has_taxes_included
     !line_items.with_tax.empty?
   end
