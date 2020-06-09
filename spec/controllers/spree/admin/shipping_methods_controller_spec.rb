@@ -4,19 +4,29 @@ describe Spree::Admin::ShippingMethodsController, type: :controller do
   include AuthenticationWorkflow
 
   describe "#update" do
-    describe "calculator details" do
+    let(:params) {
+      {
+        id: shipping_method.id,
+        shipping_method: {
+          calculator_attributes: {
+            id: shipping_method.calculator.id
+          }
+        }
+      }
+    }
+
+    describe "flat rate calculator details" do
       let(:shipping_method) { create(:shipping_method_with, :flat_rate) }
 
-      it "updates flat rate calculator preferred_amount" do
+      it "updates preferred_amount and preferred_currency" do
         login_as_admin
-        spree_post :update, id: shipping_method.id,
-                            shipping_method: {
-                              calculator_attributes: {
-                                id: shipping_method.calculator.id,
-                                preferred_amount: 123
-                              }
-                            }
+        params[:shipping_method][:calculator_attributes][:preferred_amount] = 123
+        params[:shipping_method][:calculator_attributes][:preferred_currency] = "EUR"
+
+        spree_post :update, params
+
         expect(shipping_method.reload.calculator.preferred_amount).to eq 123
+        expect(shipping_method.reload.calculator.preferred_currency).to eq "EUR"
       end
     end
   end
