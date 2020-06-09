@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'spreadsheet_architect'
-
 module Reporting
   class Report
-    delegate :to_json, to: :data_hashes
+    delegate :as_hashes, :as_arrays, :table_headers, :table_rows,
+             :to_csv, :to_xlsx, :to_ods, :to_json, to: :report_renderer
+
     attr_reader :options
 
     def initialize(current_user, ransack_params, options = {})
@@ -20,34 +20,6 @@ module Reporting
       @report_rows.first.andand.keys || []
     end
 
-    def table_headers
-      data_arrays.first
-    end
-
-    def table_rows
-      data_arrays.drop(1)
-    end
-
-    def to_csv
-      ::SpreadsheetArchitect.to_csv(headers: table_headers, data: table_rows)
-    end
-
-    def to_ods
-      ::SpreadsheetArchitect.to_ods(headers: table_headers, data: table_rows)
-    end
-
-    def to_xlsx
-      ::SpreadsheetArchitect.to_xlsx(headers: table_headers, data: table_rows)
-    end
-
-    def data_hashes
-      @report_rows
-    end
-
-    def data_arrays
-      @data_arrays ||= rows_as_arrays
-    end
-
     private
 
     attr_reader :current_user, :ransack_params
@@ -56,22 +28,8 @@ module Reporting
       @report_rows = ReportBuilder.new(@report_rows, self).call
     end
 
-    def rows_as_arrays
-      report_array = [headers]
-
-      @report_rows.each do |row|
-        report_array << row_with_summaries(row)
-      end
-
-      report_array
-    end
-
-    def row_with_summaries(row)
-      summary_row_title = row.delete :summary_row_title
-      row_values = row.values
-      row_values[0] = summary_row_title if summary_row_title
-
-      row_values
+    def report_renderer
+      @report_renderer ||= ReportRenderer.new(@report_rows, self)
     end
 
     # Implement the methods below to create a custom report.
