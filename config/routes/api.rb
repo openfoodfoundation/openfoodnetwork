@@ -73,5 +73,9 @@ Openfoodnetwork::Application.routes.draw do
         end
       end
     end
+
+    namespace :reports do
+      get :packing
+    end
   end
 end
