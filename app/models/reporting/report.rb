@@ -20,19 +20,7 @@ module Reporting
       @report_rows.first.andand.keys || []
     end
 
-    private
-
-    attr_reader :current_user, :ransack_params
-
-    def build_report
-      @report_rows = ReportBuilder.new(@report_rows, self).call
-    end
-
-    def report_renderer
-      @report_renderer ||= ReportRenderer.new(@report_rows, self)
-    end
-
-    # Implement the methods below to create a custom report.
+    # Implement the template methods below to create a custom report.
 
     def collection; end
 
@@ -54,6 +42,18 @@ module Reporting
 
     def hide_columns
       []
+    end
+
+    private
+
+    attr_reader :current_user, :ransack_params
+
+    def build_report
+      @report_rows = ReportBuilder.new(@report_rows, self).call
+    end
+
+    def report_renderer
+      @report_renderer ||= ReportRenderer.new(@report_rows, self)
     end
   end
 end
