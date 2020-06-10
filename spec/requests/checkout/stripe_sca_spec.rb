@@ -64,12 +64,20 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
     }
   end
   let(:payment_intent_response_mock) do
-    { status: 200, body: JSON.generate(object: "payment_intent", amount: 2000, charges: { data: [{ id: "ch_1234", amount: 2000 }] }) }
+    {
+      status: 200, body: JSON.generate(object: "payment_intent",
+                                       amount: 2000,
+                                       charges: { data: [{ id: "ch_1234", amount: 2000 }] })
+    }
   end
   let(:payment_intent_authorize_response_mock) do
-    { status: 200, body: JSON.generate(id: payment_intent_id, object: "payment_intent", amount: 2000,
+    {
+      status: 200, body: JSON.generate(id: payment_intent_id,
+                                       object: "payment_intent",
+                                       amount: 2000,
                                        status: "requires_capture", last_payment_error: nil,
-                                       charges: { data: [{ id: "ch_1234", amount: 2000 }] }) }
+                                       charges: { data: [{ id: "ch_1234", amount: 2000 }] })
+    }
   end
 
   before do
@@ -166,13 +174,15 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
               headers: { 'Stripe-Account' => 'abc123' })
         .to_return(hubs_payment_method_response_mock)
 
-      # Creates a customer (this stubs the customers call to the main stripe account and also the call to the connected account)
+      # Creates a customer
+      #   This stubs the customers call to both the main stripe account and the connected account
       stub_request(:post, "https://api.stripe.com/v1/customers")
         .with(body: { email: order.email })
         .to_return(customer_response_mock)
 
       # Attaches the payment method to the customer in the hub's stripe account
-      stub_request(:post, "https://api.stripe.com/v1/payment_methods/#{hubs_stripe_payment_method}/attach")
+      stub_request(:post,
+                   "https://api.stripe.com/v1/payment_methods/#{hubs_stripe_payment_method}/attach")
         .with(body: { customer: customer_id },
               headers: { 'Stripe-Account' => 'abc123' })
         .to_return(hubs_payment_method_response_mock)
@@ -191,7 +201,8 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
         source_attributes[:save_requested_by_customer] = '1'
 
         # Attaches the payment method to the customer
-        stub_request(:post, "https://api.stripe.com/v1/payment_methods/#{stripe_payment_method}/attach")
+        stub_request(:post,
+                     "https://api.stripe.com/v1/payment_methods/#{stripe_payment_method}/attach")
           .with(body: { customer: customer_id })
           .to_return(payment_method_attach_response_mock)
       end
@@ -316,9 +327,13 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
 
       context "when the stripe API sends a url for the authorization of the transaction" do
         let(:payment_intent_authorize_response_mock) do
-          { status: 200, body: JSON.generate(id: payment_intent_id, object: "payment_intent",
-                                             next_source_action: { type: "authorize_with_url", authorize_with_url: { url: stripe_redirect_url } },
-                                             status: "requires_source_action" ) }
+          { status: 200, body: JSON.generate(id: payment_intent_id,
+                                             object: "payment_intent",
+                                             next_source_action: {
+                                               type: "authorize_with_url",
+                                               authorize_with_url: { url: stripe_redirect_url }
+                                             },
+                                             status: "requires_source_action") }
         end
 
         it "redirects the user to the authorization stripe url" do
