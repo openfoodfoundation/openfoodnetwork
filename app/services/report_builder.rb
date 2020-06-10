@@ -19,7 +19,11 @@ class ReportBuilder
 
   def build_rows
     @report.collection.each do |object|
-      @report_rows << @report.report_row(object)
+      row = @report.report_row(object)
+
+      replace_sensitive_data!(object, row) if mask_data
+
+      @report_rows << row
     end
   end
 
@@ -47,5 +51,17 @@ class ReportBuilder
     @report_rows.each do |row|
       row.except!(*columns)
     end
+  end
+
+  def replace_sensitive_data!(object, row)
+    return unless mask_data[:rule].call(object)
+
+    mask_data[:columns].each do |column|
+      row[column] = mask_data[:replacement]
+    end
+  end
+
+  def mask_data
+    @report.mask_data
   end
 end

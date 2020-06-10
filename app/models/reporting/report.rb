@@ -44,6 +44,10 @@ module Reporting
       []
     end
 
+    def mask_data
+      nil
+    end
+
     private
 
     attr_reader :current_user, :ransack_params

@@ -37,6 +37,14 @@ module Reporting
       [:order_id]
     end
 
+    def mask_data
+      {
+        columns: [:customer_code, :first_name, :last_name],
+        replacement: "< Hidden >",
+        rule: proc{ |line_item| !can_view_customer_data?(line_item) }
+      }
+    end
+
     private
 
     def permissions
@@ -59,6 +67,14 @@ module Reporting
         option_values: :option_type,
         variant: { product: [:supplier, :shipping_category] }
       }]
+    end
+
+    def can_view_customer_data?(line_item)
+      managed_enterprise_ids.include? orders[line_item.order_id].distributor_id
+    end
+
+    def managed_enterprise_ids
+      @managed_enterprise_ids ||= Enterprise.managed_by(current_user).pluck(:id)
     end
   end
 end
