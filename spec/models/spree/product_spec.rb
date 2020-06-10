@@ -257,6 +257,37 @@ module Spree
         end
       end
 
+      describe "in_distributors" do
+        let!(:distributor1) { create(:distributor_enterprise) }
+        let!(:distributor2) { create(:distributor_enterprise) }
+        let!(:product1) { create(:product) }
+        let!(:product2) { create(:product) }
+        let!(:product3) { create(:product) }
+        let!(:product4) { create(:product) }
+        let!(:order_cycle1) {
+          create(:order_cycle, distributors: [distributor1],
+                               variants: [product1.variants.first, product2.variants.first])
+        }
+        let!(:order_cycle2) {
+          create(:order_cycle, distributors: [distributor2],
+                               variants: [product3.variants.first])
+        }
+
+        it "returns distributed products for a given Enterprise AR relation" do
+          distributors_relation = Enterprise.where(id: [distributor1.id, distributor2.id])
+
+          expect(Product.in_distributors(distributors_relation)).to include product1, product2, product3
+          expect(Product.in_distributors(distributors_relation)).to_not include product4
+        end
+
+        it "returns distributed products for a given array of enterprise ids" do
+          distributors_ids = [distributor1.id, distributor2.id]
+
+          expect(Product.in_distributors(distributors_ids)).to include product1, product2, product3
+          expect(Product.in_distributors(distributors_ids)).to_not include product4
+        end
+      end
+
       describe "in_supplier_or_distributor" do
         it "shows products in supplier" do
           s1 = create(:supplier_enterprise)

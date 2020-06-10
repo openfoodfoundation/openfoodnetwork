@@ -84,6 +84,12 @@ Spree::Product.class_eval do
       select('distinct spree_products.*')
   }
 
+  scope :in_distributors, lambda { |distributors|
+    with_order_cycles_outer.
+      where('(o_exchanges.incoming = ? AND o_exchanges.receiver_id IN (?))', false, distributors).
+      uniq
+  }
+
   # Products supplied by a given enterprise or distributed via that enterprise through an OC
   scope :in_supplier_or_distributor, lambda { |enterprise|
     enterprise = enterprise.respond_to?(:id) ? enterprise.id : enterprise.to_i
