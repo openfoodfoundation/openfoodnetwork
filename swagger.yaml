@@ -342,7 +342,10 @@ paths:
 
   /orders:
     get:
-      description: Gets all Orders. Use combinations of parameters to filter your query. For example /api/orders?q[completed_at_gt]=2020_02_02&q[completed_at_lt]=2020_02_10 returns orders between 2nd and 10th February 2020.
+      description: >
+        Gets all Orders. Use combinations of parameters to filter your query. 
+        For example /api/orders?q[completed_at_gt]=2020_02_02&q[completed_at_lt]=2020_02_10 returns orders between 2nd and 10th February 2020. 
+        Query parameters are generated for the '#/components/schemas/Order_Concise' model with [Ransack](https://github.com/activerecord-hackery/ransack#search-matchers) search matchers
       tags:
         - orders
       parameters:
