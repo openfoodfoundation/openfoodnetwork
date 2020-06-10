@@ -131,7 +131,7 @@ Spree::Core::Engine.routes.draw do
 
     # Configuration section
     resource :general_settings
-    resource :mail_method, :only => [:edit, :update] do
+    resource :mail_methods, :only => [:edit, :update] do
       post :testmail, :on => :collection
     end
 
