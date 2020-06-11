@@ -274,10 +274,10 @@ module Spree
         }
 
         it "returns distributed products for a given Enterprise AR relation" do
-          distributors_relation = Enterprise.where(id: [distributor1.id, distributor2.id])
+          distributors = Enterprise.where(id: [distributor1.id, distributor2.id]).to_a
 
-          expect(Product.in_distributors(distributors_relation)).to include product1, product2, product3
-          expect(Product.in_distributors(distributors_relation)).to_not include product4
+          expect(Product.in_distributors(distributors)).to include product1, product2, product3
+          expect(Product.in_distributors(distributors)).to_not include product4
         end
 
         it "returns distributed products for a given array of enterprise ids" do
