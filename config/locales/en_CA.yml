@@ -23,6 +23,8 @@ en_CA:
         base: "Credit Card"
       order_cycle:
         orders_close_at: Close date
+      variant_override:
+        count_on_hand: "On Hand"
     errors:
       models:
         spree/user:
@@ -259,7 +261,7 @@ en_CA:
   pick_up: Pick up
   copy: Copy
   change_my_password: "Change my password"
-  update_password: "Update passord"
+  update_password: "Update password"
   password_confirmation: Password Confirmation
   reset_password_token: Reset password token
   expired: has expired, please request a new one
@@ -368,7 +370,10 @@ en_CA:
         title: "Matomo Settings"
         matomo_url: "Matomo URL"
         matomo_site_id: "Matomo Site ID"
+        matomo_tag_manager_url: "Matomo Tag Manager URL"
+        info_html: "Matomo is a Web and Mobile Analytics application. You can either host Matomo on-premises or use a cloud-hosted service. See 1matomo.org1 for more information."
         config_instructions_html: "Here you can configure the OFN Matomo integration. The Matomo URL below should point to the Matomo instance where the user tracking information will be sent to; if it is left empty, Matomo user tracking will be disabled. The Site ID field is not mandatory but useful if you are tracking more than one website on a single Matomo instance; it can be found on the Matomo instance console."
+        config_instructions_tag_manager_html: "Setting the Matomo Tag Manager URL enables Matomo Tag Manager. This tool allows you to set up analytics events. The Matomo Tag Manager URL is copied from the Install Code section of Matomo Tag Manager. Ensure you select the right container and environment as these options change the URL."
     customers:
       index:
         new_customer: "New Customer"
@@ -1574,7 +1579,7 @@ en_CA:
   groups_no_groups: "No groups found"
   groups_about: "About Us"
   groups_producers: "Our vendors"
-  groups_hubs: "Our hubs"
+  groups_hubs: "Go Shopping!"
   groups_contact_web: Contact
   groups_contact_social: Follow
   groups_contact_address: Address
@@ -2807,6 +2812,12 @@ en_CA:
     void: "Void"
     login: "Login"
     password: "Password"
+    signature: "Signature"
+    solution: "Solution"
+    landing_page: "Landing Page"
+    server: "Server"
+    test_mode: "Test Mode"
+    logourl: "Logourl"
     configurations: "Configurations"
     general_settings: "General Settings"
     site_name: "Site Name"
@@ -2923,6 +2934,12 @@ en_CA:
     options: "Options"
     actions:
       update: "Update"
+    shared:
+      error_messages:
+        errors_prohibited_this_record_from_being_saved:
+          one: " 1 errors prohibited this record from being saved:"
+          other: " %{count}errors prohibited this record from being saved:"
+        there_were_problems_with_the_following_fields: "There were problems with the following fields"
     errors:
       messages:
         blank: "can't be blank"
@@ -3092,9 +3109,11 @@ en_CA:
           display: "Display"
           active: "Active"
           both: "Both"
+          front_end: "Checkout only"
           back_end: "Back office only"
           active_yes: "Yes"
           active_no: "No"
+          no_payment_methods_found: "No payment methods found"
         new:
           new_payment_method: "New Payment Method"
           back_to_payment_methods_list: "Back To Payment Methods List"
@@ -3124,8 +3143,10 @@ en_CA:
           active_yes: "Yes"
           active_no: "No"
           both: "Both Checkout and Back office"
+          front_end: "Checkout only"
           back_end: "Back office only"
           tags: "Tags"
+          deactivation_warning: "De-activating a payment method can make the payment method disappear from your list. Alternatively, you can hide a payment method from the checkout page by setting the option 'Display' to 'back office only'."
         providers:
           provider: "Provider"
       payments:
