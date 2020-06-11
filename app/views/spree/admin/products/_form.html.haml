@@ -43,37 +43,6 @@
 
     .clear
 
-    - unless @product.has_variants?
-      = f.field_container :sku do
-        = f.label :sku, t(:sku)
-        = f.text_field :sku, :size => 16
-
-      .alpha.two.columns
-        = f.field_container :on_hand do
-          = f.label :on_hand, t(:on_hand)
-          = f.number_field :on_hand, :min => 0
-      .omega.two.columns
-        = f.field_container :on_demand, :class => ['checkbox'] do
-          %label
-            = f.check_box :on_demand
-            = t(:on_demand)
-
-      .clear
-
-      %ul#shipping_specs
-        %li#shipping_specs_weight_field.field.alpha.two.columns
-          = f.label :weight, t(:weight)
-          = f.text_field :weight, :size => 4
-        %li#shipping_specs_height_field.field.omega.two.columns
-          = f.label :height, t(:height)
-          = f.text_field :height, :size => 4
-        %li#shipping_specs_width_field.field.alpha.two.columns
-          = f.label :width, t(:width)
-          = f.text_field :width, :size => 4
-        %li#shipping_specs_depth_field.field.omega.two.columns
-          = f.label :depth, t(:depth)
-          = f.text_field :depth, :size => 4
-
     = f.field_container :shipping_categories do
       = f.label :shipping_category_id, t(:shipping_categories)
       = f.collection_select(:shipping_category_id, @shipping_categories, :id, :name, { :include_blank => 'None' }, { :class => 'select2' })

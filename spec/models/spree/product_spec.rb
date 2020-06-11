@@ -610,57 +610,6 @@ module Spree
       end
     end
 
-    describe "stock filtering" do
-      it "considers products that are on_demand as being in stock" do
-        product = create(:simple_product, on_demand: true)
-        product.master.update_attribute(:on_hand, 0)
-        expect(product.has_stock?).to eq(true)
-      end
-
-      describe "finding products in stock for a particular distribution" do
-        it "returns on-demand products" do
-          p = create(:simple_product, on_demand: true)
-          p.variants.first.update_attributes!(on_hand: 0, on_demand: true)
-          d = create(:distributor_enterprise)
-          oc = create(:simple_order_cycle, distributors: [d])
-          oc.exchanges.outgoing.first.variants << p.variants.first
-
-          expect(p).to have_stock_for_distribution(oc, d)
-        end
-
-        it "returns products with in-stock variants" do
-          p = create(:simple_product)
-          v = create(:variant, product: p)
-          v.update_attribute(:on_hand, 1)
-          d = create(:distributor_enterprise)
-          oc = create(:simple_order_cycle, distributors: [d])
-          oc.exchanges.outgoing.first.variants << v
-
-          expect(p).to have_stock_for_distribution(oc, d)
-        end
-
-        it "returns products with on-demand variants" do
-          p = create(:simple_product)
-          v = create(:variant, product: p, on_demand: true)
-          v.update_attribute(:on_hand, 0)
-          d = create(:distributor_enterprise)
-          oc = create(:simple_order_cycle, distributors: [d])
-          oc.exchanges.outgoing.first.variants << v
-
-          expect(p).to have_stock_for_distribution(oc, d)
-        end
-
-        it "does not return products that have stock not in the distribution" do
-          p = create(:simple_product)
-          p.master.update_attribute(:on_hand, 1)
-          d = create(:distributor_enterprise)
-          oc = create(:simple_order_cycle, distributors: [d])
-
-          expect(p).not_to have_stock_for_distribution(oc, d)
-        end
-      end
-    end
-
     describe "taxons" do
       let(:taxon1) { create(:taxon) }
       let(:taxon2) { create(:taxon) }
