@@ -6,6 +6,7 @@
     - if @return_authorization.can_cancel?
       = button_link_to t('actions.cancel'), fire_admin_order_return_authorization_url(@order, @return_authorization, e: 'cancel'), method: :put, data: { confirm: t('.are_you_sure') }, icon: 'icon-remove'
 
+= render partial: 'spree/admin/shared/order_page_title'
 = render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Return Authorizations' }
 
 - content_for :page_title do
