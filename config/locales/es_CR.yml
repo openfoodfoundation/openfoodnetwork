@@ -368,7 +368,6 @@ es_CR:
         title: "Configuración de Matomo"
         matomo_url: "URL de Matomo"
         matomo_site_id: "ID de sitio de Matomo"
-        info_html: "Matomo es un analizador web y móvil. Puede alojar Matomo en sus servidores o utilizar un servicio alojado en la nube. Consulte <a href='http://matomo.org' target='_blank'> matomo.org </a> para obtener más información."
         config_instructions_html: "Aquí puede configurar la integración de OFN Matomo. La siguiente URL de Matomo debe apuntar a la instancia de Matomo a la que se enviará la información de seguimiento del usuario; si se deja vacío, el seguimiento del usuario Matomo se desactivará. El campo ID del sitio no es obligatorio, pero es útil si está rastreando más de un sitio web en una sola instancia de Matomo; se puede encontrar en la consola de la instancia de Matomo."
     customers:
       index:
@@ -3211,6 +3210,7 @@ es_CR:
           display_as: "Mostrar como"
           display_name: "Nombre para mostrar"
         autocomplete:
+          out_of_stock: "Agotado"
           producer_name: "Productor"
           unit: "Unidad"
       shared:

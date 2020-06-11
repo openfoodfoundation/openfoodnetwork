@@ -368,7 +368,6 @@ pt_BR:
         title: "Configurações do Matomo"
         matomo_url: "Matomo URL"
         matomo_site_id: "Matomo Site ID"
-        info_html: "Matomo é uma Web e Mobile Analytics. Você pode hospedar o Matomo localmente ou usar um serviço hospedado na nuvem. Veja <a href='http://matomo.org' target='_blank'>matomo.org</a> para mais informações."
         config_instructions_html: "Aqui você pode configurar a integração do OFN Matomo. O URL do Matomo abaixo deve apontar para a instância do Matomo para onde as informações de rastreamento do usuário serão enviadas; se for deixado em branco, o rastreamento de usuários do Matomo será desativado. O campo ID do site não é obrigatório, mas é útil se você estiver controlando mais de um site em uma única instância do Matomo. ele pode ser encontrado no console da instância Matomo."
     customers:
       index:
@@ -3230,6 +3229,7 @@ pt_BR:
           display_as_placeholder: 'ex. 2 kg'
           display_name_placeholder: 'ex. Tomates'
         autocomplete:
+          out_of_stock: "Sem estoque"
           producer_name: "Produtor"
           unit: "Unidade"
       shared:

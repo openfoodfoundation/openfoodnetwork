@@ -63,6 +63,8 @@ ordercycle {
 
     select {
       background-image: url('/assets/white-caret.svg');
+      background-size: 30px auto;
+      background-position-x: 102%;
     }
 
     p {
@@ -71,23 +73,26 @@ ordercycle {
 
     select,
     p {
-      width: inherit;
       display: inline-block;
       color: $white;
       background-color: transparent;
       border: 0;
+      border-radius: 0 $radius-small $radius-small 0;
       margin-bottom: 0;
+      padding: 0.5em 1.25em 0.5em 0.75em;
       font-size: 1em;
       line-height: 1.3em;
-      padding: 0.5em 1.25em 0.5em 0.75em;
       height: 2.35em;
-      background-size: 30px auto;
-      border-radius: 0 $radius-small $radius-small 0;
       min-width: 13em;
+      width: 200px;
 
       @include breakpoint(mobile) {
         width: 100%;
         min-width: 0;
+      }
+
+      @media all and (min-width: 640px) and (max-width: 1024px), (min-width: 1200px) {
+        width: 250px;
       }
     }
 
@@ -107,6 +112,7 @@ ordercycle {
 
     @include breakpoint(mobile) {
       display: flex;
+      margin-right: 0;
     }
   }
 
@@ -162,7 +168,7 @@ shop ordercycle {
 
     @include breakpoint(tablet) {
       float: none;
-      padding: 0 0 10px;
+      padding: 0;
     }
   }
 

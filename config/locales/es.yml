@@ -368,8 +368,10 @@ es:
         title: "Configuración de Matomo"
         matomo_url: "URL de Matomo"
         matomo_site_id: "ID de sitio de Matomo"
-        info_html: "Matomo es un analizador web y móvil. Puede alojar Matomo en sus servidores o utilizar un servicio alojado en la nube. Consulte <a href='http://matomo.org' target='_blank'> matomo.org </a> para obtener más información."
+        matomo_tag_manager_url: "URL de Matomo Tag Manager"
+        info_html: "Matomo es una aplicación de análisis web y móvil. Puede alojar Matomo localmente o utilizar un servicio alojado en la nube. Ver <a href='http://matomo.org' target='_blank'>matomo.org</a> para más información."
         config_instructions_html: "Aquí puede configurar la integración de OFN Matomo. La siguiente URL de Matomo debe apuntar a la instancia de Matomo a la que se enviará la información de seguimiento del usuario; si se deja vacío, el seguimiento del usuario Matomo se desactivará. El campo ID del sitio no es obligatorio, pero es útil si está rastreando más de un sitio web en una sola instancia de Matomo; se puede encontrar en la consola de la instancia de Matomo."
+        config_instructions_tag_manager_html: "La configuración de la URL de Matomo Tag Manager habilita Matomo Tag Manager. Esta herramienta le permite configurar eventos analíticos. La URL de Matomo Tag Manager se copia de la sección Código de instalación de Matomo Tag Manager. Asegúrese de seleccionar el contenedor y el entorno correctos, ya que estas opciones cambian la URL."
     customers:
       index:
         new_customer: "Nuevo Consumidor"
@@ -2815,6 +2817,12 @@ es:
     void: "Vacío"
     login: "Iniciar sesión"
     password: "Contraseña"
+    signature: "Firma"
+    solution: "Solución"
+    landing_page: "Página de inicio"
+    server: "Servidor"
+    test_mode: "Modo de prueba"
+    logourl: "URL del logo"
     configurations: "Configuraciones"
     general_settings: "Configuración general"
     site_name: "Nombre del sitio"
@@ -2931,6 +2939,12 @@ es:
     options: "Opciones"
     actions:
       update: "Actualizar"
+    shared:
+      error_messages:
+        errors_prohibited_this_record_from_being_saved:
+          one: "1 error prohibió guardar este registro:"
+          other: "%{count} errores impidieron que se guardara este registro:"
+        there_were_problems_with_the_following_fields: "Hubo problemas con los siguientes campos"
     errors:
       messages:
         blank: "no puede estar vacío"
@@ -3100,9 +3114,11 @@ es:
           display: "Mostrar"
           active: "Activo"
           both: "Ambos"
+          front_end: "Solo visible para el comprador"
           back_end: "Solo en Administración"
           active_yes: "Sí"
           active_no: "No"
+          no_payment_methods_found: "No se encontraron métodos de pago."
         new:
           new_payment_method: "Nuevo método de pago"
           back_to_payment_methods_list: "Volver a la lista de métodos de pago"
@@ -3132,8 +3148,10 @@ es:
           active_yes: "Sí"
           active_no: "No"
           both: "Tanto en Hacer pedido como en Administración"
+          front_end: "Solo visible para el comprador"
           back_end: "Solo en Administración"
           tags: "Tags"
+          deactivation_warning: "La desactivación de un método de pago puede hacer que el método de pago desaparezca de su lista. Alternativamente, puede ocultar un método de pago desde la página de pago configurando la opción 'Mostrar' como 'Solo visible para el administrador'."
         providers:
           provider: "Proveedor"
       payments:
@@ -3238,6 +3256,7 @@ es:
           display_as_placeholder: 'p. ej. 2 Kg'
           display_name_placeholder: 'p. ej. Tomates'
         autocomplete:
+          out_of_stock: "Agotado"
           producer_name: "Productora"
           unit: "Unidad"
       shared:

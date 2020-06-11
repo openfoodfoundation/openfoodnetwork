@@ -247,8 +247,10 @@ module Spree
       end
 
       def suppliers_of_products_distributed_by(distributors)
-        distributors.map { |d| Spree::Product.in_distributor(d).includes(:supplier).to_a }.
-          flatten.map(&:supplier).uniq
+        supplier_ids = Spree::Product.in_distributors(distributors).
+          select('spree_products.supplier_id')
+
+        Enterprise.where(id: supplier_ids)
       end
 
       # Load order cycles the current user has access to

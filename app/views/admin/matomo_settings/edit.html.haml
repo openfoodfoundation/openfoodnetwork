@@ -18,6 +18,10 @@
     = label_tag(:matomo_site_id, t('.matomo_site_id')) + tag(:br)
     = preference_field_tag("preferences[#{:matomo_site_id}]", Spree::Config[:matomo_site_id], type: Spree::Config.preference_type(:matomo_site_id))
 
+  .field
+    = label_tag(:matomo_tag_manager_url, t('.matomo_tag_manager_url')) + tag(:br)
+    = preference_field_tag("preferences[#{:matomo_tag_manager_url}]", Spree::Config[:matomo_tag_manager_url], type: Spree::Config.preference_type(:matomo_tag_manager_url))
+    .warning.note= t('.config_instructions_tag_manager_html')
 
   .form-buttons{"data-hook" => "buttons"}
     = button t(:update), 'icon-refresh'

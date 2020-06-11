@@ -903,8 +903,8 @@ describe "AdminProductEditCtrl", ->
         $scope.categoryFilter = "6"
         $scope.resetSelectFilters()
         expect($scope.query).toBe ""
-        expect($scope.producerFilter).toBe "0"
-        expect($scope.categoryFilter).toBe "0"
+        expect($scope.producerFilter).toBeUndefined
+        expect($scope.categoryFilter).toBeUndefined
 
 
 describe "converting arrays of objects with ids to an object with ids as keys", ->

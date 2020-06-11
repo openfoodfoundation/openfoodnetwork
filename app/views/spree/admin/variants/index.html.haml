@@ -3,40 +3,32 @@
 = render partial: 'spree/admin/shared/product_tabs', locals: {current: 'Variants'}
 
 #new_variant
-- if @variants.any?
-  %table.index.sortable{"data-sortable-link" => update_positions_admin_product_variants_path(@product)}
-    %colgroup
-      %col{style: "width: 5%"}/
-      %col{style: "width: 25%"}/
-      %col{style: "width: 20%"}/
-      %col{style: "width: 20%"}/
-      %col{style: "width: 15%"}/
-      %col{style: "width: 15%"}/
-    %thead
-      %tr
-        %th{colspan: "2"}= t('.options')
-        %th= t('.price')
-        %th= t('.sku')
-        %th.actions
-    %tbody
-      - @variants.each do |variant|
-        %tr{id: spree_dom_id(variant), class: cycle('odd', 'even'), style: "#{"color:red;" if variant.deleted? }" }
-          %td.no-border
-            %span.handle
-          %td= variant.full_name
-          %td.align-center= variant.display_price.to_html
-          %td.align-center= variant.sku
-          %td.actions
-            = link_to_edit(variant, no_text: true) unless variant.deleted?
-            = link_to_delete(variant, no_text: true) unless variant.deleted?
-    - unless @product.has_variants?
-      %tr
-        %td{colspan: "5"}= t(:none)
 
-- else
-  .alpha.twelve.columns.no-objects-found
-    = t('.no_results')
-    \.
+%table.index.sortable{"data-sortable-link" => update_positions_admin_product_variants_path(@product)}
+  %colgroup
+    %col{style: "width: 5%"}/
+    %col{style: "width: 25%"}/
+    %col{style: "width: 20%"}/
+    %col{style: "width: 20%"}/
+    %col{style: "width: 15%"}/
+    %col{style: "width: 15%"}/
+  %thead
+    %tr
+      %th{colspan: "2"}= t('.options')
+      %th= t('.price')
+      %th= t('.sku')
+      %th.actions
+  %tbody
+    - @variants.each do |variant|
+      %tr{id: spree_dom_id(variant), class: cycle('odd', 'even'), style: "#{"color:red;" if variant.deleted? }" }
+        %td.no-border
+          %span.handle
+        %td= variant.full_name
+        %td.align-center= variant.display_price.to_html
+        %td.align-center= variant.sku
+        %td.actions
+          = link_to_edit(variant, no_text: true) unless variant.deleted?
+          = link_to_delete(variant, no_text: true) unless variant.deleted?
 
 - if @product.empty_option_values?
   %p.first_add_option_types.no-objects-found

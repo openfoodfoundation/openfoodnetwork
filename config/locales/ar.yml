@@ -363,7 +363,6 @@ ar:
         title: "إعدادات Matomo"
         matomo_url: "العنوان الالكتروني ل Matomo "
         matomo_site_id: "معرف موقع Matomo"
-        info_html: "Matomo هو تحليلات الويب والجوال. يمكنك إما تنصيب Matomo محليًا أو استخدام خدمة استضافة سحابية. انظر <a href='http://matomo.org' target='_blank'>matomo.org</a> لمزيد من المعلومات."
         config_instructions_html: "هنا يمكنك تهيئة تكامل Matomo لشبكة الغذاء المفتوح. يجب أن يشير عنوان الالكتروني URL الخاص بـ Matomo أدناه إلى مثيل Matomo حيث سيتم إرسال معلومات تتبع المستخدم إلى ؛ إذا تم تركه فارغًا ، فسيتم تعطيل تتبع مستخدم Matomo. حقل معرف الموقع ليس إلزاميًا ولكنه مفيد إذا كنت تتعقب أكثر من موقع ويب على مثيل Matomo  ؛ يمكن العثور عليه على وحدة تحكم مثيل Matomo."
     customers:
       index:
@@ -3168,6 +3167,7 @@ ar:
           display_as: "عرض ب"
           display_name: "اسم العرض"
         autocomplete:
+          out_of_stock: "غير متوفر"
           producer_name: "المنتج"
           unit: "وحدة"
       shared:

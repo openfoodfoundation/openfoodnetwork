@@ -367,7 +367,6 @@ fr_BE:
         title: "Configuration Matomo"
         matomo_url: "URL de l'instance sur Matomo"
         matomo_site_id: "ID de l'instance sur Matomo"
-        info_html: "Matomo est un outil d'analyse de trafic web (ordinateur et téléphone). Vous pouvez installer vous-même Matomo ou utiliser une version hébergée. Voir <a href='http://matomo.org' target='_blank'>matomo.org</a> pour plus d'information."
         config_instructions_html: "Pour utiliser Matomo, vous devez configurer l'intégration avec Open Food France. L'URL de l'instance sur Matomo correspond à l'url du site internet visé par le suivi de la navigation utilisateur. Si le champ est vide, Matomo n'effectuera aucune analyse sur ce site. L'ID de l'instance sur Matomo n'est pas obligatoire, mais nécessaire si vous souhaitez analyser plusieurs sites web sur une seule instance Matomo. Cet ID peut être trouvé sur l'espace administrateur Matomo."
     customers:
       index:
@@ -3154,6 +3153,7 @@ fr_BE:
           display_as: "Unité affichéé"
           display_name: "Nom d'affichage"
         autocomplete:
+          out_of_stock: "Pas en stock"
           producer_name: "Producteur·trice"
           unit: "Unité"
       shared:

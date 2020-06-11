@@ -368,7 +368,6 @@ tr:
         title: "Matomo Ayarları"
         matomo_url: "Matomo URL'si"
         matomo_site_id: "Matomo Site Kimliği"
-        info_html: "Matomo bir Web ve Mobil Analitik programıdır. Matomo'yu şirket içinde kullanabilir veya bulutta saklanan bir hizmet olarak kullanabilirsiniz. Daha fazla bilgi için <a href='http://matomo.org' target='_blank'>matomo.org adresini</a> ziyaret edin."
         config_instructions_html: "Burada OFN Matomo entegrasyonunu yapılandırabilirsiniz. Aşağıdaki Matomo URL'si, kullanıcı izleme bilgilerinin gönderileceği Matomo örneğini göstermelidir; boş bırakılırsa Matomo kullanıcı takibi devre dışı bırakılır. Site Kimliği alanı zorunlu değildir, ancak tek bir Matomo örneğinde birden fazla web sitesini izliyorsanız yararlıdır; Matomo örnek konsolunda bulunabilir."
     customers:
       index:
@@ -2297,7 +2296,7 @@ tr:
   order_cycles_no_permission_to_coordinate_error: "Hiçbir işletmenizin sipariş dönemini koordine etme izni yok"
   order_cycles_no_permission_to_create_error: "Bu işletme tarafından koordine edilen bir sipariş dönemi oluşturma izniniz yok"
   back_to_orders_list: "Sipariş listesine geri dön"
-  no_orders_found: "Sipariş bulunamadı"
+  no_orders_found: "SİPARİŞ BULUNAMADI"
   order_information: "Sipariş Bilgisi"
   date_completed: "Tamamlanma Tarihi"
   amount: "Tutar"
@@ -2810,6 +2809,12 @@ tr:
     void: "Geçersiz"
     login: "Oturum aç"
     password: "Parola"
+    signature: "İmza"
+    solution: "Çözüm"
+    landing_page: "Ana Sayfa"
+    server: "Server"
+    test_mode: "Test Modu"
+    logourl: "Logourl"
     configurations: "yapılandırmalar"
     general_settings: "Genel Ayarlar"
     site_name: "Site adı"
@@ -2887,7 +2892,7 @@ tr:
     default: "varsayılan"
     calculator: "Hesaplama"
     zone: "bölge"
-    display: "Görüntüle"
+    display: "GÖSTER"
     environment: "çevre"
     active: "Aktif"
     nore: "Daha fazla"
@@ -2937,7 +2942,7 @@ tr:
     admin:
       tab:
         dashboard: "KONTROL PANELİ"
-        orders: "Siparişler"
+        orders: "SİPARİŞLER"
         bulk_order_management: "Toplu Sipariş Yönetimi"
         subscriptions: "Üyelikler"
         products: "Ürünler"
@@ -2976,7 +2981,7 @@ tr:
         index:
           new_return_authorization: "Yeni İade Yetkisi"
           return_authorizations: "İade Yetkileri"
-          back_to_orders_list: "Siparişler Listesine Geri Dön"
+          back_to_orders_list: "SİPARİŞLER LİSTESİNE GERİ DÖN"
           rma_number: "RMA Numarası"
           status: "Durum"
           amount: "Miktar"
@@ -3005,7 +3010,7 @@ tr:
           canceled: "İptal edildi"
       orders:
         index:
-          listing_orders: "Siparişler Listeleniyor"
+          listing_orders: "SİPARİŞLER LİSTELENİYOR"
           new_order: "Yeni Sipariş"
           capture: "Tahsilat"
           ship: "Teslimat"
@@ -3017,7 +3022,7 @@ tr:
           previous: "Önceki"
           next: "Sonraki"
           loading: "Yükleniyor"
-          no_orders_found: "Sipariş Bulunamadı"
+          no_orders_found: "SİPARİŞ BULUNAMADI"
           results_found: "%{number} Sonuç bulundu."
           viewing: "%{start} - %{end} görüntüleniyor."
           print_invoices: "Faturaları Yazdır"
@@ -3067,7 +3072,7 @@ tr:
           products_distributor: "Dağıtımcı"
           zone: "bölge"
           calculator: "Hesaplama"
-          display: "Görüntüle"
+          display: "GÖSTER"
           both: "Ödeme Sayfası ve Panel"
           back_end: "Sadece panel"
           no_shipping_methods_found: "Hiçbir teslimat yöntemi bulunamadı"
@@ -3091,13 +3096,15 @@ tr:
           name: "İSİM"
           products_distributor: "Dağıtımcı"
           provider: "Sağlayıcı"
-          environment: "çevre"
-          display: "Görüntüle"
+          environment: "Çevre"
+          display: "GÖSTER"
           active: "Aktif"
           both: "Her ikisi de"
+          front_end: "Sadece Ödeme"
           back_end: "Sadece panel"
           active_yes: "Evet"
           active_no: "Hayır"
+          no_payment_methods_found: "Ödeme yöntemi bulunamadı"
         new:
           new_payment_method: "Yeni Ödeme Yöntemi"
           back_to_payment_methods_list: "Ödeme Yöntemleri Listesine Geri Dön"
@@ -3121,14 +3128,16 @@ tr:
         form:
           name: "İSİM"
           description: "Açıklama"
-          environment: "çevre"
-          display: "Görüntüle"
+          environment: "Çevre"
+          display: "GÖSTER"
           active: "Aktif"
           active_yes: "Evet"
           active_no: "Hayır"
           both: "Ödeme Sayfası ve Panel"
+          front_end: "Sadece Ödeme"
           back_end: "Sadece panel"
           tags: "Etiketler"
+          deactivation_warning: "Bir ödeme yöntemini kaldırmak listenizden silinmesine sebep olabilir. Alternatif olarak, ödeme yöntemi ayarını 'Göster' yerine 'Sadece Panel' olarak değiştirebilirsiniz.    "
         providers:
           provider: "Sağlayıcı"
       payments:
@@ -3233,6 +3242,7 @@ tr:
           display_as_placeholder: 'örn. 2 kg'
           display_name_placeholder: 'örn. Domates'
         autocomplete:
+          out_of_stock: "Stok tükendi"
           producer_name: "Üretici"
           unit: "Birim"
       shared:
@@ -3350,14 +3360,14 @@ tr:
         account_settings: Hesap Ayarları
       show:
         tabs:
-          orders: Siparişler
+          orders: SİPARİŞLER
           cards: Kredi kartları
           transactions: İşlemler
           settings: Hesap ayarları
         unconfirmed_email: "Bekleyen e-posta onayı: %{unconfirmed_email}. Yeni e-posta onaylandıktan sonra e-posta adresiniz güncellenecektir."
       orders:
-        open_orders: Açık Siparişler
-        past_orders: Geçmiş Siparişler
+        open_orders: AÇIK SİPARİŞLER
+        past_orders: GEÇMİŞ SİPARİŞLER
       transactions:
         transaction_history: İşlem Geçmişi
       open_orders:

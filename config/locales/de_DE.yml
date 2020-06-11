@@ -367,7 +367,6 @@ de_DE:
         title: "Matomo-Einstellungen"
         matomo_url: "Matomo-URL"
         matomo_site_id: "Matomo-Site-ID"
-        info_html: "Matomo ist eine Web- und Mobile Analytics. Sie können Matomo entweder lokal hosten oder einen von der Cloud gehosteten Dienst verwenden. Weitere Informationen finden Sie unter <a href='http://matomo.org' target='_blank'> matomo.org </a>."
         config_instructions_html: "Hier können Sie die OFN Matomo Integration konfigurieren. Die unten angegebene Matomo-URL sollte auf die Matomo-Instanz verweisen, an die die Benutzerverfolgungsinformationen gesendet werden. Wenn es leer bleibt, wird das Matomo-Benutzer-Tracking deaktiviert. Das Feld Site-ID ist nicht obligatorisch, aber nützlich, wenn Sie mehr als eine Website in einer einzelnen Matomo-Instanz verfolgen. Es kann auf der Matomo-Instanzkonsole gefunden werden."
     customers:
       index:

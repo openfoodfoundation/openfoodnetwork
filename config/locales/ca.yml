@@ -368,8 +368,10 @@ ca:
         title: "Configuració de Matomo"
         matomo_url: "URL de Matomo"
         matomo_site_id: "Identificador de Matomo"
-        info_html: "Matomo és un analitzador de webs i mòbils. Podeu allotjar Matomo de manera local o utilitzar un servei al núvol. Vegeu <a href='http://matomo.org' target='_blank'> matomo.org </a> per obtenir més informació."
+        matomo_tag_manager_url: "URL de Matomo Tag Manager"
+        info_html: "Matomo és una aplicació d'analytics web i mòbil. Podeu allotjar Matomo en local o bé utilitzar un servei allotjat al núvol. Consulteu <a href='http://matomo.org' target='_blank'>matomo.org</a> per obtenir més informació."
         config_instructions_html: "Aquí podeu configurar la integració Matomo OFN. L'URL de Matomo que us apareix a continuació ha d'indicar la instància de Matomo en la qual s'enviarà la informació de seguiment de l'usuari; si es deixa buit, el seguiment de l'usuari de Matomo estarà desactivat. El camp d'identificació del lloc no és obligatori, però és útil si fa un seguiment de més d'un lloc web en una sola instància de Matomo; es pot trobar a la consola d'instància de Matomo."
+        config_instructions_tag_manager_html: "En configurar l'URL de Matomo Tag Manager s'activa Matomo Tag Manager. Aquesta eina us permet configurar esdeveniments d’analítica. L’URL de Matomo Tag Manager es copia de la secció Instal·lar codi de Matomo Tag Manager. Assegureu-vos de seleccionar el contenidor i l’entorn adequats ja que aquestes opcions canvien l’URL."
     customers:
       index:
         new_customer: "Nova consumidora"
@@ -2815,6 +2817,12 @@ ca:
     void: "Buit"
     login: "Inicia sessió"
     password: "Contrasenya"
+    signature: "Signatura"
+    solution: "Solució"
+    landing_page: "Pàgina d'inici"
+    server: "Servidor"
+    test_mode: "Mode de prova"
+    logourl: "URL del logo"
     configurations: "Configuracions"
     general_settings: "Configuració general"
     site_name: "Nom del lloc"
@@ -2931,6 +2939,12 @@ ca:
     options: "Opcions"
     actions:
       update: "Actualitzar"
+    shared:
+      error_messages:
+        errors_prohibited_this_record_from_being_saved:
+          one: "Un error va prohibir guardar aquest registre:"
+          other: "%{count} errors han impedit guardar aquest registre:"
+        there_were_problems_with_the_following_fields: "Hi ha hagut problemes amb els camps següents"
     errors:
       messages:
         blank: "no es pot deixar en blanc"
@@ -3100,9 +3114,11 @@ ca:
           display: "Mostra"
           active: "Actiu"
           both: "Ambdós"
+          front_end: "Visible només per al comprador"
           back_end: "Només pàgina administració (back office) "
           active_yes: "Sí"
           active_no: "No"
+          no_payment_methods_found: "No s'han trobat mètodes de pagament"
         new:
           new_payment_method: "Nou mètode de pagament"
           back_to_payment_methods_list: "Tornar a la llista de mètodes de pagament"
@@ -3132,8 +3148,10 @@ ca:
           active_yes: "Sí"
           active_no: "No"
           both: "Ambdues, validació de comanda i administració"
+          front_end: "Visible només per al comprador"
           back_end: "Només pàgina administració (back office) "
           tags: "Etiquetes"
+          deactivation_warning: "Desactivar un mètode de pagament pot fer que el mètode de pagament desapareixi de la vostra llista. De forma alternativa, podeu amagar un mètode de pagament a la pàgina de compra configurant l'opció \"Mostrar\" a \"només a la pàgina d'administració\" (back end)."
         providers:
           provider: "Proveïdor"
       payments:
@@ -3238,6 +3256,7 @@ ca:
           display_as_placeholder: 'per exemple. 2 kg'
           display_name_placeholder: 'per exemple. Tomàquets'
         autocomplete:
+          out_of_stock: "Fora d'existència"
           producer_name: "Productor"
           unit: "Unitat"
       shared:

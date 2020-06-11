@@ -79,6 +79,12 @@ Spree::Product.class_eval do
       select('distinct spree_products.*')
   }
 
+  scope :in_distributors, lambda { |distributors|
+    with_order_cycles_outer.
+      where('(o_exchanges.incoming = ? AND o_exchanges.receiver_id IN (?))', false, distributors).
+      uniq
+  }
+
   # Products supplied by a given enterprise or distributed via that enterprise through an OC
   scope :in_supplier_or_distributor, lambda { |enterprise|
     enterprise = enterprise.respond_to?(:id) ? enterprise.id : enterprise.to_i
@@ -151,18 +157,6 @@ Spree::Product.class_eval do
 
   def in_order_cycle?(order_cycle)
     self.class.in_order_cycle(order_cycle).include? self
-  end
-
-  # overriding to check self.on_demand as well
-  def has_stock?
-    has_variants? ? variants.any?(&:in_stock?) : (on_demand || master.in_stock?)
-  end
-
-  def has_stock_for_distribution?(order_cycle, distributor)
-    # This product has stock for a distribution if it is available on-demand
-    # or if one of its variants in the distribution is in stock
-    (!has_variants? && on_demand) ||
-      variants_distributed_by(order_cycle, distributor).any?(&:in_stock?)
   end
 
   def variants_distributed_by(order_cycle, distributor)
