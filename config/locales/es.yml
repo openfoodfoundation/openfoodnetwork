@@ -23,6 +23,8 @@ es:
         base: "Tarjeta de crédito"
       order_cycle:
         orders_close_at: Fecha de cierre
+      variant_override:
+        count_on_hand: "Disponibles"
     errors:
       models:
         spree/user:
