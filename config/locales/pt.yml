@@ -347,7 +347,6 @@ pt:
         title: "Configurações Matomo"
         matomo_url: "URL Matomo"
         matomo_site_id: "Site ID Matomo"
-        info_html: "Matomo é uma ferramenta de análise web e mobile. Pode instalar o Matomo no seu servidor ou utilizar um serviço na cloud. Veja <a href='http://matomo.org' target='_blank'>matomo.org</a> para mais informações."
         config_instructions_html: "Aqui pode configurar a integração com Matomo. O URL Matomo em baixo deve apontar para o serviror para onde a informação de tracking de utilizadores será enviada; se deixado vazio, o tracking de utilizadores através do Matomo ficará desactivado. O campo Site ID não é obrigatório mas útil se estive a fazer tracking de mais do que um website numa instância única do Matomo; pode ser encontrado na consola da instância Matomo."
     customers:
       index:
@@ -2967,6 +2966,7 @@ pt:
           price: "Preço"
           display_as: "Mostrar como"
         autocomplete:
+          out_of_stock: "Sem Stock"
           producer_name: "Produtor"
           unit: "Unidade"
       shared:

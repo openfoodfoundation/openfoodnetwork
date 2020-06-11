@@ -368,7 +368,6 @@ nb:
         title: "Matomo Innstillinger"
         matomo_url: "Matomo URL"
         matomo_site_id: "Matomo Site ID"
-        info_html: "Matomo er en web- og mobilanalyse. Du kan enten hoste Matomo selv eller bruke en skytjeneste. Se <a href='http://matomo.org' target='_blank'> matomo.org </a> for mer informasjon."
         config_instructions_html: "Her kan du konfigurere OFN-Matomo integrasjonen. URL til Matomo nedenfor skal peke på Matomo-instansen der brukersporingsinformasjonen skal sendes til; Hvis den er tom, blir Matomo-brukersporing deaktivert. Site-ID feltet er ikke obligatorisk, men nyttig hvis du sporer mer enn ett nettsted på en enkelt Matomo-instans; den kan bli funnet på Matomo-konsollen."
     customers:
       index:
@@ -3206,6 +3205,7 @@ nb:
           display_as_placeholder: 'f.eks. 2 kg'
           display_name_placeholder: 'f.eks. Tomater'
         autocomplete:
+          out_of_stock: "Ikke på Lager"
           producer_name: "Produsent"
           unit: "Enhet"
       shared:

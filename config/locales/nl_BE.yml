@@ -354,7 +354,6 @@ nl_BE:
         title: "Matomo instellingen"
         matomo_url: "Matomo URL"
         matomo_site_id: "Matomo Site ID"
-        info_html: "Matomo is een Web en Mobile Analytics. U kunt Matomo on-premises hosten of gebruik maken van een cloud-hosted service. Zie <a href='http://matomo.org' target='_blank'>matomo.org</a> voor meer informatie."
         config_instructions_html: "Hier kunt u de OFN Matomo integratie configureren. De Matomo URL hieronder zou moeten verwijzen naar de Matomo instantie waar de gebruiker tracking informatie naartoe wordt gestuurd; als deze leeg wordt gelaten, wordt Matomo gebruiker tracking uitgeschakeld. Het veld Site ID is niet verplicht, maar handig als je meer dan één website volgt op één Matomo instance; het is te vinden op de Matomo instance console. Vertaald met www.DeepL.com/Translator"
     customers:
       index:
@@ -3030,6 +3029,7 @@ nl_BE:
           price: "Prijs"
           display_as: "Weergeven als"
         autocomplete:
+          out_of_stock: "Geen voorraad"
           producer_name: "Producent"
           unit: "Unit"
       shared:
