@@ -238,14 +238,18 @@ module ProductImport
       end
       []
     rescue CSV::MalformedCSVError => e
-      # NOTE the init_product_importer method calls build_entries and
-      # buils_all_entries resulting in the error being raised twice
-      unless errors.added?(:importer, I18n.t('admin.product_import.model.malformed_csv',
-                                             error_message: e.message))
-        errors.add(:importer, I18n.t('admin.product_import.model.malformed_csv',
-                                     error_message: e.message))
-      end
+      add_malformed_csv_error e.message
       []
+    end
+
+    # This error is raised twice because init_product_importer calls both
+    # build_entries and buils_all_entries
+    def add_malformed_csv_error(error_message)
+      unless errors.added?(:importer, I18n.t('admin.product_import.model.malformed_csv',
+                                             error_message: error_message))
+        errors.add(:importer, I18n.t('admin.product_import.model.malformed_csv',
+                                     error_message: error_message))
+      end
     end
 
     def build_entries_in_range

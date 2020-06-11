@@ -170,7 +170,7 @@ describe ProductImport::ProductImporter do
   end
 
   describe "when uploading a spreadsheet with some malformed data" do
-    # Use a simple string as CVS.generate will do some escaping
+    # Use a simple string as CSV.generate will do some escaping
     let(:csv_data) {
       csv = "name,producer,category,on_hand,price,units,unit_type,shipping_category\n"
       csv += "Good Carrots,#{enterprise.name},Vegetables,5,3.20,500,g,#{shipping_category.name}\n"
@@ -178,8 +178,8 @@ describe ProductImport::ProductImporter do
     }
     let(:importer) { import_data csv_data }
 
-    # NOTE an unquoted \n will create a non valid line which will fail entry validation hence why we are only testing with \r
-    it "should raise an unquoted field error if data include unquoted filed with \r character" do
+    # an unquoted \n will create a non valid line which will fail entry validation hence why we are only testing with \r
+    it "should raise an unquoted field error if data include unquoted field with \r character" do
       expect(importer.errors.messages.values).to include(
         [I18n.t('admin.product_import.model.malformed_csv', error_message: "Unquoted fields do not allow \\r or \\n (line 3).")]
       )
