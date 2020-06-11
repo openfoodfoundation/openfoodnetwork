@@ -23,6 +23,8 @@ ca:
         base: "Targeta de crèdit"
       order_cycle:
         orders_close_at: Data de tancament
+      variant_override:
+        count_on_hand: "Disponibles"
     errors:
       models:
         spree/user:
