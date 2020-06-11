@@ -77,7 +77,7 @@ module OpenFoodNetwork
        ba.phone,
        order.shipping_method.andand.name,
        order.payments.first.andand.payment_method.andand.name,
-       order.payments.first.amount,
+       order.payments.first.andand.amount,
        OpenFoodNetwork::UserBalanceCalculator.new(order.email, order.distributor).balance]
     end
 
@@ -92,7 +92,7 @@ module OpenFoodNetwork
        sa.phone,
        order.shipping_method.andand.name,
        order.payments.first.andand.payment_method.andand.name,
-       order.payments.first.amount,
+       order.payments.first.andand.amount,
        OpenFoodNetwork::UserBalanceCalculator.new(order.email, order.distributor).balance,
        has_temperature_controlled_items?(order),
        order.special_instructions]
