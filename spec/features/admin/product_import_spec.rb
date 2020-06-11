@@ -378,7 +378,7 @@ feature "Product Import", js: true do
       File.delete('/tmp/test.csv')
     end
 
-    it "handles cases where files contains malformed data" do
+    it "handles cases where files contain malformed data" do
       csv_data = "name,producer,category,on_hand,price,units,unit_type,shipping_category\n"
       csv_data += "Malformed \rBrocolli,#{enterprise.name},Vegetables,8,2.50,200,g,#{shipping_category.name}\n"
 
