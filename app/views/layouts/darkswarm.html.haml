@@ -18,7 +18,7 @@
     = stylesheet_link_tag "darkswarm/all"
     = csrf_meta_tags
 
-  %body{class: body_classes, ng: {app: "Darkswarm"}}
+  %body{class: body_classes, "body-scroll" => true , ng: {app: "Darkswarm"}}
     / [if lte IE 8]
       = render partial: "shared/ie_warning"
       = javascript_include_tag "iehack"
