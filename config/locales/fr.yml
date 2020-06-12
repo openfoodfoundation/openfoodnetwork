@@ -2772,6 +2772,7 @@ fr:
   customer_details: "Informations acheteur"
   adjustments: "Ajustements"
   payments: "Paiements"
+  return_authorizations: "Autorisations de retours"
   payment: "Paiement"
   payment_method: "Méthode de paiement"
   shipment: "Livraison"
