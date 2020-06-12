@@ -2748,6 +2748,7 @@ es:
   customer_details: "Detalles de la consumidora"
   adjustments: "Ajustes"
   payments: "Pagos"
+  return_authorizations: "Autorizaciones de devolución"
   payment: "Pago"
   payment_method: "Método de pago"
   shipment: "Envío"
