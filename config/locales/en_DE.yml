@@ -359,7 +359,6 @@ en_DE:
         title: "Matomo Settings"
         matomo_url: "Matomo URL"
         matomo_site_id: "Matomo Site ID"
-        info_html: "Matomo is a Web and Mobile Analytics. You can either host Matomo on-premises or use a cloud-hosted service. See <a href='http://matomo.org' target='_blank'>matomo.org</a> for more information."
         config_instructions_html: "Here you can configure the OFN Matomo integration. The Matomo URL below should point to the Matomo instance where the user tracking information will be sent to; if it is left empty, Matomo user tracking will be disabled. The Site ID field is not mandatory but useful if you are tracking more than one website on a single Matomo instance; it can be found on the Matomo instance console."
     customers:
       index:
@@ -394,6 +393,7 @@ en_DE:
         footer_and_external_links: Footer and External Links
         your_content: Your content
         user_guide: User Guide
+        map: Map
     enterprise_fees:
       index:
         title: "Enterprise Fees"
@@ -2670,6 +2670,8 @@ en_DE:
     new_payment: "New Payment"
     capture: "Capture"
     void: "Void"
+    login: "Login"
+    password: "Password"
     configurations: "Configurations"
     general_settings: "General Settings"
     site_name: "Site Name"
@@ -2734,8 +2736,6 @@ en_DE:
     abbreviation: "Abbreviation"
     new_state: "New State"
     payment_methods: "Payment Methods"
-    new_payment_method: "New Payment Method"
-    provider: "Provider"
     taxonomies: "Taxonomies"
     new_taxonomy: "New Taxonomy"
     back_to_taxonomies_list: "Back to Taxonomies List"
@@ -2904,10 +2904,23 @@ en_DE:
           categories: "Categories"
           zones: "Zones"
       payment_methods:
+        index:
+          payment_methods: "Payment Methods"
+          new_payment_method: "New Payment Method"
+          name: "Name"
+          products_distributor: "Distributor"
+          provider: "Provider"
+          environment: "Environment"
+          display: "Display"
+          active: "Active"
+          both: "Both"
+          active_yes: "Yes"
+          active_no: "No"
         new:
           new_payment_method: "New Payment Method"
           back_to_payment_methods_list: "Back To Payment Methods List"
         edit:
+          new: "New"
           editing_payment_method: "Editing Payment Method"
           back_to_payment_methods_list: "Back To Payment Methods List"
         stripe_connect:
@@ -2923,6 +2936,17 @@ en_DE:
           account_id: Account ID
           business_name: Business Name
           charges_enabled: Charges Enabled
+        form:
+          name: "Name"
+          description: "Description"
+          environment: "Environment"
+          display: "Display"
+          active: "Active"
+          active_yes: "Yes"
+          active_no: "No"
+          tags: "Tags"
+        providers:
+          provider: "Provider"
       payments:
         source_forms:
           stripe:
@@ -3012,6 +3036,7 @@ en_DE:
           price: "Price"
           display_as: "Display As"
         autocomplete:
+          out_of_stock: "Out of Stock"
           producer_name: "Producer"
           unit: "Unit"
       shared:
@@ -3076,9 +3101,6 @@ en_DE:
       invalid: invalid
     order_mailer:
       cancel_email:
-        customer_greeting: "Hi %{name}!"
-        instructions: "Your order has been CANCELED. Please retain this cancellation information for your records."
-        order_summary_canceled: "Order Summary [CANCELED]"
         subject: "Cancellation of Order"
       confirm_email:
         subject: "Order Confirmation"

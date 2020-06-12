@@ -37,6 +37,7 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, $timeout, Reque
       'q[distributor_id_in][]': $scope['q']['distributor_id_in'],
       'q[order_cycle_id_in][]': $scope['q']['order_cycle_id_in'],
       'q[s]': $scope.sorting || 'completed_at desc',
+      shipping_method_id: $scope.shipping_method_id,
       per_page: $scope.per_page,
       page: page
     }

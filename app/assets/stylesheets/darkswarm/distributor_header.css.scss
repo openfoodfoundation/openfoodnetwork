@@ -11,7 +11,7 @@ section {
   display: block;
   background: $white;
   position: relative;
-  z-index: 2;
+  z-index: 20;
 
   .details {
     box-sizing: border-box;
@@ -19,10 +19,6 @@ section {
     min-height: 150px;
     padding: 30px 0 0;
     position: relative;
-
-    select {
-      width: 200px;
-    }
 
     img {
       display: block;

@@ -39,7 +39,7 @@ class AbilityDecorator
   # OR if they manage a producer which is included in any order cycles
   def can_manage_order_cycles?(user)
     can_manage_orders?(user) ||
-      OrderCycle.accessible_by(user).any?
+      OrderCycle.visible_by(user).any?
   end
 
   # Users can manage orders if they have a sells own/any enterprise.
@@ -193,7 +193,7 @@ class AbilityDecorator
 
   def add_order_cycle_management_abilities(user)
     can [:admin, :index, :read, :edit, :update, :incoming, :outgoing], OrderCycle do |order_cycle|
-      OrderCycle.accessible_by(user).include? order_cycle
+      OrderCycle.visible_by(user).include? order_cycle
     end
     can [:admin, :index, :create], Schedule
     can [:admin, :update, :destroy], Schedule do |schedule|

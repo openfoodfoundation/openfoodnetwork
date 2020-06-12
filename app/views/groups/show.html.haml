@@ -6,7 +6,9 @@
   = @group.logo.url
 
 - content_for :injection_data do
+  = inject_available_countries
   = inject_group_enterprises
+  = inject_open_street_map_config
 
 #group-page.row.pad-top.footer-pad{"ng-controller" => "GroupPageCtrl"}
   .small-12.columns.pad-top
@@ -32,13 +34,8 @@
             %tab{heading: t(:label_map),
                 active: "tabs.map.active",
                 select: "select(\'map\')"}
-              .map-container
-                %map{"ng-if" => "(isActive(\'/map\') && (mapShowed = true)) || mapShowed"}
-                  %ui-gmap-google-map{options: "map.additional_options", center: "map.center", zoom: "map.zoom", styles: "map.styles", draggable: "true"}
-                    %map-osm-tiles
-                    %map-search
-                    %ui-gmap-markers{models: "mapMarkers", fit: "true",
-                    coords: "'self'", icon: "'icon'", click: "'reveal'"}
+              %div{"ng-if" => "(isActive(\'/map\') && (mapShowed = true)) || mapShowed"}
+                = render partial: "shared/map"
 
             %tab{heading: t(:groups_about),
                 active: "tabs.about.active",

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 module Api
@@ -52,7 +54,7 @@ module Api
         let(:products_relation) { Spree::Product.includes(:variants).where("spree_variants.id": exchange.variants.map(&:id)) }
 
         before do
-          stub_const("Api::ExchangeProductsController::DEFAULT_PER_PAGE", 1)
+          stub_const("#{Api::ExchangeProductsController}::DEFAULT_PER_PAGE", 1)
         end
 
         describe "when a specific page is requested" do

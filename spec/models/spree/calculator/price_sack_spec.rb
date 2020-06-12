@@ -49,6 +49,32 @@ describe Spree::Calculator::PriceSack do
     end
   end
 
+  context "minimal amount is float" do
+    before do
+      calculator.preferred_minimal_amount = 16.5
+      calculator.preferred_normal_amount = 5
+      calculator.preferred_discount_amount = 1
+      line_item.quantity = 2
+    end
+
+    context "with price bellow minimal amount" do
+      let(:price) { 8 }
+
+      it "returns the correct value of cost" do
+        expect(calculator.compute(line_item)).to eq(5)
+      end
+    end
+
+    context "with price above minimal amount" do
+      let(:price) { 8.5 }
+
+      it "returns the correct value of cost" do
+        expect(calculator.compute(line_item)).to eq(1)
+      end
+    end
+
+  end
+
   context "extends LocalizedNumber" do
     it_behaves_like "a model using the LocalizedNumber module", [:preferred_minimal_amount, :preferred_normal_amount, :preferred_discount_amount]
   end

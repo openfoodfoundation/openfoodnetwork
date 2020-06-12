@@ -1,7 +1,7 @@
 describe "Enterprises service", ->
   Enterprises = $rootScope = null
   CurrentHubMock = {}
-  Geo =
+  GmapsGeo =
     OK: 'ok'
     succeed: true
     geocode: (query, callback) ->
@@ -31,7 +31,7 @@ describe "Enterprises service", ->
     module 'Darkswarm'
     module ($provide)->
       $provide.value "CurrentHub", CurrentHubMock
-      $provide.value "Geo", Geo
+      $provide.value "GmapsGeo", GmapsGeo
       null
     angular.module('Darkswarm').value('enterprises', enterprises)
     angular.module('Darkswarm').value('taxons', taxons)
@@ -118,12 +118,12 @@ describe "Enterprises service", ->
       spyOn(Enterprises, "setDistanceFrom")
 
     it "calculates distance for all enterprises when geocoding succeeds", ->
-      Geo.succeed = true
+      GmapsGeo.succeed = true
       Enterprises.calculateDistanceGeo('query')
       expect(Enterprises.setDistanceFrom).toHaveBeenCalledWith("location")
 
     it "resets distance when geocoding fails", ->
-      Geo.succeed = false
+      GmapsGeo.succeed = false
       spyOn(Enterprises, "resetDistance")
       Enterprises.calculateDistanceGeo('query')
       expect(Enterprises.setDistanceFrom).not.toHaveBeenCalled()

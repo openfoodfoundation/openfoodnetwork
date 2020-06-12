@@ -3,7 +3,7 @@ module OrderManagement
     module EnterpriseFeeSummary
       class Permissions < ::Reports::Permissions
         def allowed_order_cycles
-          @allowed_order_cycles ||= OrderCycle.accessible_by(user)
+          @allowed_order_cycles ||= OrderCycle.visible_by(user)
         end
 
         def allowed_distributors

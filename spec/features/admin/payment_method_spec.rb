@@ -158,6 +158,8 @@ feature '
     it "creates payment methods" do
       visit spree.new_admin_payment_method_path
       fill_in 'payment_method_name', with: 'Cheque payment method'
+      expect(page).to have_field 'payment_method_description'
+      expect(page).to have_select 'payment_method_display_on'
 
       check "payment_method_distributor_ids_#{distributor1.id}"
       find(:css, "tags-input .tags input").set "local\n"

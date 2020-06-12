@@ -2,6 +2,10 @@
 @import "mixins";
 
 #registration-modal {
+  @media only screen and (max-width: 640px) {
+    margin: 0 15px;
+  }
+
   header {
     text-align: center;
 

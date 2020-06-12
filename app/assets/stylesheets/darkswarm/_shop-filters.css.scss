@@ -27,13 +27,11 @@
 
     a, a.button {
       display: block;
-      padding-top: 0.5rem;
 
       @include border-radius(0.5em);
 
       border: 1px solid $border-clr;
       padding: 0.5em 0.625em;
-      font-size: 0.875em;
       color: $base-clr;
       font-size: 0.75em;
       background: white;

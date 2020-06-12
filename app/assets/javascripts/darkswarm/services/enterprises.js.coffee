@@ -1,4 +1,4 @@
-Darkswarm.factory 'Enterprises', (enterprises, ShopsResource, CurrentHub, Taxons, Dereferencer, Matcher, Geo, $rootScope) ->
+Darkswarm.factory 'Enterprises', (enterprises, ShopsResource, CurrentHub, Taxons, Dereferencer, Matcher, GmapsGeo, $rootScope) ->
   new class Enterprises
     enterprises: []
     enterprises_by_id: {}
@@ -59,7 +59,7 @@ Darkswarm.factory 'Enterprises', (enterprises, ShopsResource, CurrentHub, Taxons
           false
 
     calculateDistance: (query, firstMatching) ->
-      if query?.length > 0 and Geo.OK
+      if query?.length > 0 and GmapsGeo.OK
         if firstMatching?
           @setDistanceFrom firstMatching
         else
@@ -68,9 +68,9 @@ Darkswarm.factory 'Enterprises', (enterprises, ShopsResource, CurrentHub, Taxons
         @resetDistance()
 
     calculateDistanceGeo: (query) ->
-      Geo.geocode query, (results, status) =>
+      GmapsGeo.geocode query, (results, status) =>
         $rootScope.$apply =>
-          if status == Geo.OK
+          if status == GmapsGeo.OK
             #console.log "Geocoded #{query} -> #{results[0].geometry.location}."
             @setDistanceFrom results[0].geometry.location
           else
@@ -79,7 +79,7 @@ Darkswarm.factory 'Enterprises', (enterprises, ShopsResource, CurrentHub, Taxons
 
     setDistanceFrom: (locatable) ->
       for enterprise in @enterprises
-        enterprise.distance = Geo.distanceBetween enterprise, locatable
+        enterprise.distance = GmapsGeo.distanceBetween enterprise, locatable
       $rootScope.$broadcast 'enterprisesChanged'
 
     resetDistance: ->

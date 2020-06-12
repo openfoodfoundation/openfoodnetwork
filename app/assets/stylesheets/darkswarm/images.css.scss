@@ -3,18 +3,22 @@
 @import "branding";
 
 .product-img {
-  padding: 5px;
-  margin-bottom: 10px;
-  outline: 1px solid #ccc;
+  text-align: center;
 
-  @include box-shadow(0 1px 2px 1px rgba(0, 0, 0, 0.15));
+  img {
+    padding: 0.3rem;
 
-  // placeholder for when no product images
-  &.placeholder {
-    opacity: 0.35;
+    // placeholder for when no product images
+    &.placeholder {
+      opacity: 0.35;
 
-    @include breakpoint(desktop) {
-      display: none;
+      @include breakpoint(desktop) {
+        display: none;
+      }
+    }
+
+    @media only screen and (max-width: 1024px) {
+      margin: 0 0 0.5rem;
     }
   }
 }
@@ -48,11 +52,4 @@
 
 .producer-logo {
   max-width: 220px;
-}
-
-@media only screen and (max-width: 1024px) {
-  .product-img {
-    margin-top: 2em;
-    margin-bottom: 1em;
-  }
 }

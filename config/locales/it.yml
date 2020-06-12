@@ -3,20 +3,20 @@ it:
   activerecord:
     attributes:
       enterprise_fee:
-        fee_type: Tipo di tariffa
+        fee_type: Tipo Tariffa
       spree/order:
-        payment_state: Stato del pagamento
-        shipment_state: Stato della spedizione
-        completed_at: Completo al
+        payment_state: Stato Pagamento
+        shipment_state: Stato Spedizione
+        completed_at: Completato Al
         number: Numero
         state: Stato
-        email: Mail consumatore
+        email: E-Mail Cliente
       spree/payment:
         amount: Quantità
       spree/product:
-        primary_taxon: "Categoria prodotto"
+        primary_taxon: "Categoria Prodotto"
         supplier: "Fornitore"
-        shipping_category_id: "Categoria di spedizione"
+        shipping_category_id: "Categoria Spedizioni"
         variant_unit: "Unità Variante"
         variant_unit_name: "Nome Unità Variante"
       spree/credit_card:
@@ -31,6 +31,10 @@ it:
               taken: "Esiste già un account con questa email. Ti preghiamo di effettuare il login o impostare una nuova password."
         spree/order:
           no_card: Non ci sono carte di credito autorizzate disponibili per l'addebito
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: "è scaduto"
         order_cycle:
           attributes:
             orders_close_at:
@@ -39,7 +43,7 @@ it:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "deve restare vuoto perché si stanno utilizzando le impostazioni di magazzino del produttore"
             on_demand_but_count_on_hand_set: "deve restare vuoto se su richiesta"
-            limited_stock_but_no_count_on_hand: "Torna alla lista dei pagamenti"
+            limited_stock_but_no_count_on_hand: "deve essere specificato a causa di una disponibilità limitata"
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
@@ -47,10 +51,10 @@ it:
         end_at: "Fine"
         distributor_ids: "Distributori"
         producer_ids: "Produttori"
-        order_cycle_ids: "Cicli di richieste"
-        enterprise_fee_ids: "Nome commissione"
-        shipping_method_ids: "Metodi di spedizione"
-        payment_method_ids: "Metodi di pagamento"
+        order_cycle_ids: "Cicli di Richieste"
+        enterprise_fee_ids: "Nomi Tariffe"
+        shipping_method_ids: "Metodi di Spedizione"
+        payment_method_ids: "Metodi di Pagamento"
     errors:
       messages:
         inclusion: "non incluso nella lista"
@@ -58,7 +62,7 @@ it:
         order_management/subscriptions/validator:
           attributes:
             subscription_line_items:
-              at_least_one_product: "^Aggiungi almeno un prodotto"
+              at_least_one_product: "^Per favore aggiungi almeno un prodotto"
               not_available: "^%{name} non è disponibile nel programma selezionato"
             ends_at:
               after_begins_at: "deve essere dopo l'inizio il"
@@ -67,28 +71,28 @@ it:
             schedule:
               not_coordinated_by_shop: "non è coordinato da %{shop}"
             payment_method:
-              not_available_to_shop: "non è disponibile al %{shop}"
-              invalid_type: "Il metodo dev'essere Cash o Stripe"
-              charges_not_allowed: "L'addebito su carta di credito non è consentito da questo consumatore"
-              no_default_card: "Nessuna carta predefinita è consentita per questo consumatore"
+              not_available_to_shop: "non è disponibile da %{shop}"
+              invalid_type: "il metodo deve essere Cash o Stripe"
+              charges_not_allowed: "L'addebito su carta di credito non è consentito per questo cliente"
+              no_default_card: "^Nessuna carta predefinita è disponibile per questo cliente"
             shipping_method:
               not_available_to_shop: "non è disponibile al %{shop}"
   devise:
     confirmations:
-      send_instructions: "A breve riceverai un'email con le istruzioni utili a confermare il tuo account."
-      failed_to_send: "C'è stato un errore nell'invio della tua mail di conferma."
-      resend_confirmation_email: "Re-invia la mail di conferma"
-      confirmed: "Grazie per aver confermato la tua mail! Ora puoi effettuare il log in."
+      send_instructions: "A breve riceverai una email con le istruzioni per la conferma del tuo account."
+      failed_to_send: "C'è stato un errore nell'invio dell'email di conferma."
+      resend_confirmation_email: "Invia di nuovo l'email di conferma."
+      confirmed: "Grazie per aver confermato la tua email! Ora puoi effettuare il log in."
       not_confirmed: "Il tuo indirizzo email non può essere confermato. Forse avevi già completato questo passaggio?"
     user_confirmations:
       spree_user:
-        send_instructions: "A breve riceverai un'email con le istruzioni utili a confermare il tuo account."
+        send_instructions: "A breve riceverai una email con le istruzioni per la conferma del tuo account."
         confirmation_sent: "Email di conferma inviata"
         confirmation_not_sent: "Errore invio emai di conferma"
     user_registrations:
       spree_user:
         signed_up_but_unconfirmed: "Abbiamo inviato un link di conferma al tuo indirizzo email. Per favore apri il link per attivare il tuo account."
-        unknown_error: "Qualcosa è andato storto durante la creazione del tuo account. Controlla il tuo indirizzo e-mail e riprova"
+        unknown_error: "Qualcosa è andato storto durante la creazione del tuo account. Controlla il tuo indirizzo email e riprova"
     failure:
       invalid: |
           Email o password non valida.
@@ -101,29 +105,29 @@ it:
       spree_user:
         updated_not_active: "La tua password è stata resettata, ma la tua email non è ancora stata confermata."
         updated: "La tua password è stata modificata con successo.\nOra sei collegato."
-        send_instructions: "A breve riceverai un'email con le istruzioni utili a confermare il tuo account."
+        send_instructions: "A breve riceverai una email con le istruzioni per la conferma del tuo account."
   models:
     order_cycle:
       cloned_order_cycle_name: "COPIA DI %{order_cycle}"
   validators:
     date_time_string_validator:
-      not_string_error: "Deve essere una linea"
-      invalid_format_error: "Deve essere valido"
+      not_string_error: "deve essere una stringa"
+      invalid_format_error: "deve essere valido"
     integer_array_validator:
-      not_array_error: "Deve essere una sequenza"
-      invalid_element_error: "Deve contenere solo numeri interi"
+      not_array_error: "deve essere un array"
+      invalid_element_error: "deve contenere solo numeri interi"
   enterprise_mailer:
     confirmation_instructions:
-      subject: "Per favore conferma l'indirizzo email per %{enterprise}"
+      subject: "Per favore conferma l'indirizzo email di %{enterprise}"
     welcome:
       subject: "%{enterprise} è ora su %{sitename}"
       email_welcome: "Benvenuto"
       email_registered: "è ora parte di"
-      email_userguide_html: "La Guida Utente con supporto dettagliato per l'impostazione del tuo Produttore o Hub è qui: %{link}"
-      userguide: "Guida di Open Food Network"
+      email_userguide_html: "La Guida Utente con supporto dettagliato per l'impostazione del tuo Produttore o Distributore è qui: %{link}"
+      userguide: "Guida Utente di Open Food Network"
       email_admin_html: "Puoi gestire il tuo profilo facendo il log in al link %{link} o cliccando sull'ingranaggio in alto a destra della homepage, e selezionando Amministrazione"
-      admin_panel: "Pannello di controllo"
-      email_community_html: "Abbiamo anche un forum on-line per le discussioni della comunità sul software OFN e le sfide uniche legate all'avere un'impresa del cibo. Sei invitato ad unirti. Ci evolviamo in continuo e il tuo contributo in questo forum plasmerà ciò che sarà. %{link}"
+      admin_panel: "Panello Amministrativo"
+      email_community_html: "Abbiamo anche un forum per le discussioni comunitarie legate al software di OFN e le sfide uniche legate all'avere un'impresa alimentare. Ti incoraggiamo a farne parte. Siamo in continua evoluzione e il tuo contributo al forum delineerà quello che succederà in futuro. %{link}"
       join_community: "Unisciti alla community"
     invite_manager:
       subject: "%{enterprise} ti a invitato ad essere un referente"
@@ -132,30 +136,30 @@ it:
       subject: "Resoconto degli ordini per %{producer}"
   shipment_mailer:
     shipped_email:
-      dear_customer: "Caro consumatore,"
+      dear_customer: "Caro Cliente,"
       instructions: "Il tuo ordine è stato spedito"
-      shipment_summary: "Riepilogo della spedizione"
-      subject: "Avviso di spedizione"
-      thanks: "Grazie per utilizzare la piattaforma per il tuo commercio"
-      track_information: "Informazioni di tracciamento"
-      track_link: "Link del tracciamento"
+      shipment_summary: "Riepilogo della Spedizione"
+      subject: "Notifica di Spedizione"
+      thanks: "Grazie per il tuo lavoro."
+      track_information: "Informazioni Tracking: %{tracking}"
+      track_link: "Tracking Link: %{url}"
   subscription_mailer:
     placement_summary_email:
       subject: Riassunto degli ordini più recenti
       greeting: "Ciao %{name},"
-      intro: "Qui sotto un riassunto degli ordini appena inviati per%{shop} ,"
+      intro: "Qui sotto un riassunto degli ordini appena inviati per%{shop},"
     confirmation_summary_email:
       subject: Riassunto delle richieste recentemente confermate
       greeting: "Ciao %{name},"
       intro: "Qui sotto un riassunto delle richieste che hai appena confermato per %{shop}."
     summary_overview:
-      total: Un totale di %{count} abbonamenti sono stati contrassegnati per l'elaborazione automatica..
-      success_zero: Di questi, nessuno è stato modificato con successo
+      total: Un totale di %{count} sottoscrizioni sono stati contrassegnati per l'elaborazione automatica.
+      success_zero: Di questi, nessuno è stato elaborato con successo.
       success_some: Di questi, %{count} sono stati elaborati con successo.
       success_all: Tutti sono stati elaborati con successo.
-      issues: Qui sotto i dettagli dei problemi incontrati.
+      issues: Qui sotto i dettagli dei problemi riscontrati.
     summary_detail:
-      no_message_provided: 'Nessun messaggio di errore '
+      no_message_provided: Nessun messaggio di errore fornito
       changes:
         title: Scorte insufficienti (%{count} gentili richieste)
         explainer: Queste gentili richieste sono state elaborate, ma la quantità richiesta di alcuni prodotti non è disponibile
@@ -176,7 +180,7 @@ it:
         explainer: L'elaborazione automatica di queste gentili richieste non è riuscita per una ragione sconosciuta. Questo non dovrebbe accadere, ti preghiamo di contattarci se visualizzi questo messaggio.
   home: "OFN"
   title: Open Food Network
-  welcome_to: 'Benvenuto a'
+  welcome_to: 'Benvenuto su'
   site_meta_description: "Cominciamo da zero. Con i produttori e gli allevatori pronti a raccontare le loro storie, sinceramente e orgogliosamente. Con i distributori pronti a connettere le persone con i prodotti in modo giusto ed equo. Con i compratori che credono che migliori decisioni per l'acquisto settimanale possano..."
   search_by_name: Cerca per nome o zona...
   producers_join: I Produttori sono ora invitati ad unirsi ad Open Food Network
@@ -184,12 +188,12 @@ it:
   print_invoice: "Stampa fattura"
   print_ticket: "Stampa Biglietto"
   select_ticket_printer: "Seleziona la stampante per i biglietti"
-  send_invoice: "Manda fattura"
-  resend_confirmation: "Rimanda conferma"
-  view_order: "Vedi l'ordine"
-  edit_order: "Modifica l'ordine"
-  ship_order: "Invia l'ordine"
-  cancel_order: "Cancella l'ordine"
+  send_invoice: "Invia Fattura"
+  resend_confirmation: "Rimanda Conferma"
+  view_order: "Vedi Ordine"
+  edit_order: "Modifica Ordine"
+  ship_order: "Invia Ordine"
+  cancel_order: "Cancella Ordine"
   confirm_send_invoice: "Una fattura per quest'ordine verrà mandata al cliente. Sei sicuro di voler continuare?"
   confirm_resend_order_confirmation: "Sei sicuro di voler inviare di nuovo l'email di conferma per l'ordine?"
   must_have_valid_business_number: "%{enterprise_name} deve avere una partita iva valida per poter emettere fattura."
@@ -198,11 +202,11 @@ it:
   say_no: "No"
   say_yes: "Sì"
   ongoing: Attivo
-  bill_address: Indirizzo di fatturazione
-  ship_address: Indirizzo di consegna
-  sort_order_cycles_on_shopfront_by: "Ordina cicli d'ordine in vetrina per"
+  bill_address: Indirizzo Fatturazione
+  ship_address: Indirizzo Consegna
+  sort_order_cycles_on_shopfront_by: "Ordina Cicli Ordine in Vetrina per"
   required_fields: I campi obbligatori sono contrassegnati con un asterisco
-  select_continue: Seleziona e continua
+  select_continue: Seleziona e Continua
   remove: Rimuovi
   or: o
   collapse_all: Riduci tutto
@@ -215,7 +219,7 @@ it:
   edit: Modifica
   clone: Duplica
   distributors: Distributori
-  bulk_order_management: Gestione richieste all'ingrosso
+  bulk_order_management: Gestione Ordini Massivi
   enterprises: Aziende
   enterprise_groups: Gruppi
   reports: Resoconti
@@ -223,15 +227,15 @@ it:
   import: Importazione
   spree_products: Prodotti Spree
   all: Tutti
-  current: Attuali
+  current: Correnti
   available: Disponibile
   dashboard: Pannello di controllo
   undefined: non definito
   unused: non in uso
   admin_and_handling: Admin
   profile: Profilo
-  supplier_only: Solo per i fornitori
-  has_shopfront: Informazioni di tracciamento
+  supplier_only: Solo Fornitori
+  has_shopfront: Ha una Vetrina
   weight: Peso
   volume: Volume
   items: Prodotti
@@ -246,26 +250,26 @@ it:
   blocked_cookies_alert: "Il tuo browser sembra stia bloccando i cookies necessari ad usare questa pagina del negozio. Clicca sotto per consentire i cookies e ricaricare la pagina."
   allow_cookies: "Accetta i cookies"
   notes: Note
-  error: Eorrore
+  error: Errore
   processing_payment: "Elaborazione pagamento..."
-  no_pending_payments: "nessun pagamento in sospeso"
-  invalid_payment_state: "stato del pagamento non valido"
+  no_pending_payments: "Nessun pagamento in sospeso"
+  invalid_payment_state: "Stato del pagamento non valido"
   filter_results: Filtra i risultati
   quantity: Quantità
   pick_up: Ritiro
   copy: Copia
   change_my_password: "Cambia la mia password"
   update_password: "Aggiorna password"
-  password_confirmation: 'Conferma password '
+  password_confirmation: 'Conferma Password '
   reset_password_token: Token per il reset della password
   expired: è scaduto, si prega di richiederne uno nuovo
-  back_to_payments_list: "Torna alla lista dei pagamenti"
-  maestro_or_solo_cards: "carte Maestro/Solo"
-  backordered: "ordini arretrati"
+  back_to_payments_list: "Torna alla Lista dei Pagamenti"
+  maestro_or_solo_cards: "Carte Maestro/Solo"
+  backordered: "Ordini arretrati"
   on hand: "Disponibile"
   ship: "Spedizione"
   actions:
-    create_and_add_another: "Crea e aggiungi un altro"
+    create_and_add_another: "Crea e Aggiungi un Altro"
     create: "Crea"
     cancel: "Annulla"
     save: "Salva"
@@ -275,7 +279,7 @@ it:
   admin:
     begins_at: Inizia a
     begins_on: Inizia da
-    customer: Consumatore
+    customer: Cliente
     date: Data
     email: Email
     ends_at: Termina a
@@ -319,6 +323,7 @@ it:
     show_n_more: Mostra %{num} di più
     choose: "Scegli..."
     please_select: Seleziona...
+    column_save_as_default: Salva Come Predefinito
     columns: Colonne
     actions: Azioni
     viewing: "Vista: %{current_view_name}"
@@ -363,11 +368,10 @@ it:
         title: "Impostazioni Matomo"
         matomo_url: "URL Matomo"
         matomo_site_id: "Site ID Matomo"
-        info_html: "Matomo è una Web and Mobile Analytics. È possibile ospitare Matomo in sede o utilizzare un servizio cloud. Vedi matomo.org per maggiori informazioni<a href='http://matomo.org' target='_blank'>matomo.org</a> for more information."
         config_instructions_html: "Qui è possibile configurare l'integrazione OFN Matomo. L'URL di Matomo qui sotto dovrebbe puntare l'istanza di Matomo a cui saranno inviate le informazioni di monitoraggio dell'utente; se lasciato vuoto, il monitoraggio dell'utente da parte di Matomo sarà disabilitato. Il campo Site ID non è obbligatorio ma è utile se si sta tracciando più di un sito web su una singola istanza di Matomo; si può trovare sulla console dell'istanza di Matomo. "
     customers:
       index:
-        new_customer: "Nuovo cliente"
+        new_customer: "Nuovo Cliente"
         code: Codice
         duplicate_code: "Questo codice è già usato."
         bill_address: "Indirizzo di fatturazione"
@@ -385,7 +389,7 @@ it:
         search_by_email: "Cerca per email/codice..."
         guest_label: 'Check-out ospite'
       destroy:
-        has_associated_orders: 'Cancellazione non riuscita: l''utente ha ordini associati al suo negozio'
+        has_associated_orders: 'Cancellazione fallita: l''utente ha ordini associati al negozio'
     contents:
       edit:
         title: Contenuto
@@ -398,6 +402,7 @@ it:
         footer_and_external_links: Footer e link esterni
         your_content: I tuoi contenuti
         user_guide: Guida per gli utenti
+        map: Mappa
     enterprise_fees:
       index:
         title: "Tariffe azienda"
@@ -608,7 +613,7 @@ it:
           desc_short: Breve descrizione
           desc_short_placeholder: Raccontaci la tua attività in una o due frasi
           desc_long: Chi siamo
-          desc_long_placeholder: Racconta di te ai consumatori. Questa informazione comparirà nel tuo profilo pubblico.
+          desc_long_placeholder: Racconta di te ai tuoi clienti. Questa informazione comparirà nel tuo profilo pubblico.
         business_details:
           abn: ABN
           abn_placeholder: es. 99 123 456 789
@@ -660,7 +665,7 @@ it:
           name: Nome
           name_placeholder: es. Tartufi Biodinamici Alba
           groups: Gruppi
-          groups_tip: Seleziona i gruppi o le regioni di cui sei membro. Questo aiuterà i consumatori a trovare la tua azienda.
+          groups_tip: Seleziona i gruppi o le regioni di cui sei membro. Questo aiuterà i clienti a trovare la tua azienda.
           groups_placeholder: 'Inizia a digitare per trovare i gruppi '
           primary_producer: Produttore primario?
           primary_producer_tip: Seleziona "Produttore" se sei un produttore primario di cibo
@@ -669,9 +674,9 @@ it:
           none: Nessuno
           own: Proprio
           sells: Vende
-          sells_tip: "Nessuno -  L'azienda non vende direttamente ai consumatori.<br />Proprio - L'azienda vende i propri prodotti ai consumatori.<br />Proprio e altrui - L'azienda può vendere prodotti propri o di altre aziende.<br />"
+          sells_tip: "Nessuno -  L'azienda non vende direttamente ai clienti.<br />Proprio - L'azienda vende i propri prodotti ai clienti.<br />Proprio e altrui - L'azienda può vendere prodotti propri o di altre aziende.<br />"
           visible_in_search: Visibile nella ricerca?
-          visible_in_search_tip: Determina se questa azienda sarà visibile ai consumatori quando cercano nel sito.
+          visible_in_search_tip: Determina se questa azienda sarà visibile ai clienti quando cercano nel sito.
           visible: Visibile
           not_visible: Non visibile
           permalink: Permalink (nessuno spazio)
@@ -682,13 +687,14 @@ it:
           ofn_uid_tip: Il codice univoco utilizzato per identificare l'azienda su OFN
         shipping_methods:
           name: "Nome"
+          applies: "Attivo?"
           manage: "Gestisci metodi di spedizione"
           create_button: "Crea un nuovo metodo di consegna"
           create_one_button: "Crea uno ora"
           no_method_yet: "Non hai ancora un metodo di consegna"
         shop_preferences:
           shopfront_requires_login: "Vetrina visibile pubblicamente?"
-          shopfront_requires_login_tip: "Scegli se i consumatori devono essere registrati per poter vedere la vetrina o se è visibile a tutti"
+          shopfront_requires_login_tip: "Scegli se i clienti devono essere registrati per poter vedere la vetrina o se è visibile a tutti."
           shopfront_requires_login_false: "Pubblica"
           shopfront_requires_login_true: "Visibile solo agli utenti registrati"
           recommend_require_login: "Consigliamo di richiedere la registrazione quando si dà la possibilità di modificare gli ordini."
@@ -697,7 +703,7 @@ it:
           allow_guest_orders_false: "Richiedi il login per ordinare"
           allow_guest_orders_true: "Permetti acquisto come ospite"
           allow_order_changes: "Modifica gentili richieste"
-          allow_order_changes_tip: "Permetti ai consumatori di modificare le proprie richieste finché il ciclo di richieste è aperto."
+          allow_order_changes_tip: "Permetti ai clienti di modificare i propri ordini fino a quando il ciclo degli ordini è aperto."
           allow_order_changes_false: "Le gentili richieste confermate non possono essere modificate / annullate"
           allow_order_changes_true: "Gli utenti possono modificare / annullare le gentili richieste mentre il ciclo di richieste è aperto"
           enable_subscriptions: "Sottoscrizioni"
@@ -706,7 +712,7 @@ it:
           enable_subscriptions_true: "Abilitata"
           shopfront_message: "Messaggio vetrina"
           shopfront_message_placeholder: >
-              Un messaggio opzionale per dare in benvenuto ai clienti e spiegare come
+              Un messaggio opzionale per dare il benvenuto ai clienti e spiegare come
               acquistare. Il testo inserito qui verrà mostrato nel tab principale
               della vetrina.
           shopfront_message_link_tooltip: "Inserisci / modifica link"
@@ -734,7 +740,7 @@ it:
             title: Collegati con Stripe
             part1: Stripe è un servizio di elaborazione dei pagamenti che permette ai negozi su OFN di accettare pagamenti con carta di credito da parte dei clienti.
             part2: Per utilizzare questa funzione, è necessario collegare il proprio account Stripe a OFN. Cliccando su 'Accetto' qui sotto sarai reindirizzato al sito web Stripe dove potrai collegare un account Stripe esistente o crearne uno nuovo se non ne hai già uno.
-            part3: Questo consentirà alla piattaforma di accettare pagamenti con carta di credito da clienti di tua fiducia. Tieni presente che dovrai mantenere il tuo conto Stripe, pagare la tariffa di Strip e gestire gli eventuali rimborsi e i servizi al cliente.
+            part3: Questo consentirà alla piattaforma di accettare pagamenti con carta di credito da clienti di tua fiducia. Tieni presente che dovrai mantenere il tuo conto Stripe, pagare la commissione di Stripe e gestire gli eventuali rimborsi e i servizi al cliente.
             i_agree: Sono d'accordo
             cancel: Annulla
         tag_rules:
@@ -744,7 +750,7 @@ it:
             add_new_button: ' + Aggiungi una nuova regola predefinita'
           no_tags_yet: Nessuna etichetta per questa azienda
           no_rules_yet: Nessuna regola per questa etichetta
-          for_customers_tagged: 'Per i clienti etichettati'
+          for_customers_tagged: 'Per i clienti etichettati:'
           add_new_rule: '+ Aggiungi una nuova regola'
           add_new_tag: '+ Aggiungi una nuova tag'
         users:
@@ -788,7 +794,7 @@ it:
         producer_description_text: Aggiungi i tuoi prodotti, permettendo agli hubs di inserire i tuoi prodotti nei loro negozi.
         producer_shop: Negozio produttore
         sell_your_produce: Vendi i tuoi prodotti
-        producer_shop_description_text: Vendi i tuoi prodotti direttamente ai consumatori tramite la tua propria vetrina su OFN
+        producer_shop_description_text: Vendi i tuoi prodotti direttamente ai clienti tramite la tua personale vetrina su Open Food Network.
         producer_shop_description_text2: Un Negozio produttore è solo per i tuoi prodotti. Se vuoi vendere prodotti altrui, seleziona "Hub produttore".
         producer_hub: Hub produttore
         producer_hub_text: Vendi prodotti tuoi e di altri
@@ -860,6 +866,7 @@ it:
         incoming: "In arrivo"
         supplier: "Fornitore"
         products: "Prodotti"
+        receival_details: "Dettagli Ricevimento"
         fees: "Tariffe"
         save: "Salva"
         save_and_next: "Salva e continua"
@@ -871,6 +878,7 @@ it:
         distributor: "Distributore"
         products: "Prodotti"
         tags: "Tag"
+        delivery_details: "Dettagli Spedizione"
         fees: "Tariffe"
         previous: "Precedente"
         save: "Salva"
@@ -882,7 +890,7 @@ it:
         incoming: "2. Prodotti in entrata"
         outgoing: "3. Prodotti in uscita"
       exchange_form:
-        pickup_time_tip: Quando gli ordini di questa Lista d'ordine saranno pronti per il cliente
+        pickup_time_tip: Quando gli ordini di questo ciclo saranno pronti per il cliente
         pickup_instructions_placeholder: "Istruzioni per la consegna"
         pickup_instructions_tip: Queste istruzioni saranno visibili agli utenti dopo che hanno completato una gentile richiesta
         pickup_time_placeholder: "Pronto per (es. Data / Ora)"
@@ -934,12 +942,12 @@ it:
       simple_form:
         ready_for: Pronto per
         ready_for_placeholder: Data / Ora
-        customer_instructions: Istruzioni consumatori
+        customer_instructions: Istruzioni per i consumatori
         customer_instructions_placeholder: Note per ritiro / consegna
         products: Prodotti
         fees: Tariffe
       destroy_errors:
-        orders_present: Questo ciclo di richieste è stato selezionato da un consumatore e non può essere cancellato. Per evitare altri accessi, chiudi il ciclo.
+        orders_present: Questo ciclo di richieste è stato selezionato da un cliente e non può essere cancellato. Per prevenire altri accessi da parte dei clienti, per favore chiudi il ciclo.
         schedule_present: Questo ciclo di richieste è connesso a un programma e non può essere cancellato. Puoi eliminare il link o cancellare il programma prima.
       bulk_update:
         no_data: mmm, qualcosa è andato storto. Nessun dato per ciclo di richieste trovato.
@@ -977,7 +985,7 @@ it:
       supplier_totals: Totali Ciclo di richieste fornitori
       supplier_totals_by_distributor: Totali Ciclo di richieste fornitori per distributore
       totals_by_supplier: Totali Ciclo di richieste fornitori per fornitore
-      customer_totals: Totali ciclo di richieste consumatori
+      customer_totals: Ciclo Ordini Cliente Totale
       all_products: Tutti i prodotti
       inventory: Inventario (in mano)
       lettuce_share: LettuceShare
@@ -987,7 +995,7 @@ it:
       delivery: Rapporto Consegne
       tax_types: Tipologia tariffe
       tax_rates: Aliquote d'imposta
-      pack_by_customer: Smistato dai consumatori
+      pack_by_customer: Imballato dal Cliente
       pack_by_supplier: Smistato dai fornitori
       orders_and_distributors:
         name: Gentili richieste e distributori
@@ -1001,7 +1009,7 @@ it:
       orders_and_fulfillment:
         name: Gentili richieste e resoconti di soddifazione
       customers:
-        name: Consumatori
+        name: Clienti
       products_and_inventory:
         name: Prodotti e inventario
       users_and_enterprises:
@@ -1038,7 +1046,7 @@ it:
         enable_subscriptions_step_2: 2. In "Preferenze Negozio", attiva l'opzione Abbonamenti
         set_up_shipping_and_payment_methods_html: 'Imposta i metodi %{shipping_link} e %{payment_link} '
         set_up_shipping_and_payment_methods_note_html: Nota con gli abbonamenti può <br />essere utilizzato solo il metodo Contanti
-        ensure_at_least_one_customer_html: 'Assicurati che esista almeno un %{customer_link} '
+        ensure_at_least_one_customer_html: Assicurati che almeno un %{customer_link} esista
         create_at_least_one_schedule: Crea almeno un programma
         create_at_least_one_schedule_step_1_html: '1. Vai alla pagina %{order_cycles_link} '
         create_at_least_one_schedule_step_2: 2. Crea un Ciclo di Richieste se non l'hai già fatto
@@ -1064,9 +1072,9 @@ it:
         invalid_error: Oops! Per favore compila i campi obbligatori...
         allowed_payment_method_types_tip: Al momento può essere utilizzato solo il metodo di pagamento Contanti
         credit_card: Carta di Credito
-        charges_not_allowed: Non sono consentiti Oneri per questo cliente
+        charges_not_allowed: Non sono consentiti ricarichi per questo cliente
         no_default_card: Il cliente non ha carte disponibili da caricare
-        card_ok: il cliente ha una carta disponibile da caricare
+        card_ok: Il cliente ha una carta disponibile da caricare
         begins_at_placeholder: "Seleziona una data"
         ends_at_placeholder: "Facoltativo"
       loading_flash:
@@ -1091,9 +1099,9 @@ it:
       cancel_failure_msg: "Ci dispiace, eliminazione non riuscita!"
       confirm_pause_msg: "Sei sicura/o di voler mettere in pausa questo abbonamento?"
       pause_failure_msg: "Spiacente, pausa fallita!"
-      confirm_unpause_msg: "Se hai un ciclo di richieste aperto durante questa registrazione, sarà creato un ordine per l'utente registrato. Vuoi annullare la registrazione?"
+      confirm_unpause_msg: "Se hai aperto un Ciclo d'Ordini durante questa sottoscrizione pianificata, un ordine per l'utente verrà creato per questo cliente. Sei sicuro di voler attivare questa sottoscrizione?"
       unpause_failure_msg: "Ci dispiace, ripresa non riuscita!"
-      confirm_cancel_open_orders_msg: "Alcune di queste richieste sono attualmente attive. I consumatori sono già stati avvisati che le richieste verranno soddisfatte. Vuoi eliminare questa/e richiesta/e o mantenerla?"
+      confirm_cancel_open_orders_msg: "Alcuni ordini per questa sottoscrizione sono attualmente aperti. I clienti sono già stati avvisati che le richieste verranno soddisfatte. Vuoi eliminare questa/e richiesta/e o mantenerle?"
       resume_canceled_orders_msg: "Alcuni ordini per questo abbonamento possono essere ripresi in questo momento. Puoi riprenderli dal menu a discesa degli ordini."
       yes_cancel_them: Cancella l'articolo
       no_keep_them: Tieni l'articolo
@@ -1167,8 +1175,12 @@ it:
         login: "fai il login"
         signup: "Registrati"
         contact: "contatto"
-        require_customer_login: "Solo utenti approvati hanno accesso a questo negozio"
+        require_customer_login: "Solo clienti approvati hanno accesso a questo negozio"
+        require_login_html: "Se sei già un cliente approvato, %{login} o %{signup} per procedere."
+        require_login_2_html: "Vuoi iniziare a acquistare qui? Per favore %{contact}%{enterprise}e chiedi di essere aggiunto."
         require_customer_html: "Se vuoi iniziare a comprare, per favore %{contact} %{enterprise} per chiedere di raggiungerci."
+      select_oc:
+        select_oc_html: "Per favore <span class='highlighted'>scegli quando vuoi il tuo ordine </span>, per vedere quali prodotti sono disponibili."
   card_could_not_be_updated: La Carta non ha potuto essere rinnovata
   card_could_not_be_saved: La Carta non ha potuto essere salvata
   spree_gateway_error_flash_for_checkout: "C'è stato un problema con le informazioni sul pagamento: %{error}"
@@ -1176,7 +1188,7 @@ it:
   invoice_column_tax: "IVA"
   invoice_column_price: "Prezzo"
   invoice_column_item: "Articolo"
-  invoice_column_qty: "Qtà."
+  invoice_column_qty: "Qtà"
   invoice_column_unit_price_with_taxes: "Prezzo unitario (incl. tasse)"
   invoice_column_unit_price_without_taxes: "Prezzo unitario (escl. tasse)"
   invoice_column_price_with_taxes: "Prezzo totale (incl. tasse)"
@@ -1392,14 +1404,14 @@ it:
   order_paid: PAGATO
   order_not_paid: NON PAGATO
   order_total: Totale dell'ordine
-  order_payment: "Pagamento via:"
+  order_payment: "Pagamento attraverso:"
   order_billing_address: Indirizzo di fatturazione
   order_delivery_on: Consegna il
   order_delivery_address: Indirizzo di consegna
   order_delivery_time: Tempo di consegna
   order_special_instructions: "Tue note:"
   order_pickup_time: Pronto per il ritiro
-  order_pickup_instructions: Istruzioni per la raccolta
+  order_pickup_instructions: Istruzioni per la Distribuzione
   order_produce: Produrre
   order_total_price: Totale
   order_includes_tax: (include le tasse)
@@ -1425,17 +1437,17 @@ it:
   email_social: "Connettiti con Noi:"
   email_contact: "Scrivici:"
   email_signoff: "Saluti,"
-  email_signature: "Team di %{sitename}"
+  email_signature: "Il team di %{sitename}"
   email_confirm_customer_greeting: "Ciao %{name},"
   email_confirm_customer_intro_html: "Grazie per aver acquistato presso <strong>%{distributor}</strong>!"
   email_confirm_customer_number_html: "Conferma dell'Ordine <strong>#%{number}</strong>"
-  email_confirm_customer_details_html: "Qui sono i dettagli del tuo ordine da <strong>%{distributor}</strong>:"
+  email_confirm_customer_details_html: "Ecco i dettagli del tuo ordine da <strong>%{distributor}</strong>:"
   email_confirm_customer_signoff: "Cordiali saluti,"
   email_confirm_shop_greeting: "Ciao %{name},"
   email_confirm_shop_order_html: "Ben fatto! Hai un nuovo ordine per <strong>%{distributor}</strong>!"
   email_confirm_shop_number_html: "Conferma dell'Ordine <strong>#%{number}</strong>"
   email_order_summary_item: "Articolo"
-  email_order_summary_quantity: "Qtà."
+  email_order_summary_quantity: "Qtà"
   email_order_summary_sku: "SKU"
   email_order_summary_price: "Prezzo"
   email_order_summary_subtotal: "Subtotale:"
@@ -1443,8 +1455,8 @@ it:
   email_order_summary_includes_tax: "(include le tasse)"
   email_payment_paid: PAGATO
   email_payment_not_paid: NON PAGATO
-  email_payment_summary: Riassunto del pagamento
-  email_payment_method: "Pagamento via:"
+  email_payment_summary: Riepilogo di pagamento
+  email_payment_method: "Pagamento attraverso:"
   email_so_placement_intro_html: "Hai una nuova gentile richiesta di <strong>%{distributor}</strong>"
   email_so_placement_details_html: "Ecco i dettagli della gentile richiesta per <strong>%{distributor}</strong>:"
   email_so_placement_changes: "Purtroppo alcuni prodotti richiesti non sono disponibili. Le quantità originali richieste sono barrate qui sotto."
@@ -1468,13 +1480,13 @@ it:
   email_shipping_delivery_address: "Indirizzo di consegna"
   email_shipping_collection_details: Dettagli della raccolta
   email_shipping_collection_time: "Pronto per il ritiro:"
-  email_shipping_collection_instructions: "Istruzioni per la raccolta:"
+  email_shipping_collection_instructions: "Istruzioni per la distribuzione:"
   email_special_instructions: "Tue note:"
   email_signup_greeting: Ciao!
   email_signup_welcome: "Benvenuto a %{sitename}!"
   email_signup_confirmed_email: "Grazie di aver confermato la tua mail."
   email_signup_shop_html: "Puoi effettuare il log in qui: %{link}."
-  email_signup_text: "Grazie per esserti unito alla rete. Se sei un cliente, non vediamo l'ora di introdurti a molti produttori fantastici, distributori di cibo spettacolari e cibo delizioso! Se sei un produttore o un'impresa del cibo, siamo entusiasti di averti come parte della rete."
+  email_signup_text: "Grazie per esserti unito alla rete. Se sei un cliente, non vediamo l'ora di introdurti a molti produttori fantastici, distributori di cibo spettacolari e cibo delizioso! Se sei un produttore o un'impresa alimentare, siamo entusiasti di averti come parte della rete."
   email_signup_help_html: "Accettiamo volentieri tutte le tue domane e i tuoi suggerimenti: puoi usare il bottone <em>Invia Feedback</em> sul sito o scriverci a %{email}"
   invite_email:
     greeting: "Ciao!"
@@ -1528,12 +1540,17 @@ it:
   orders_changeable_orders_alert_html: Questa gentile richiesta è stata confermata, ma puoi effettuare modifiche fino a <strong>%{oc_close}</strong>.
   products_clear: Pulisci
   products_showing: "Mostra:"
+  products_results_for: "Risultati per"
   products_or: "o"
   products_and: "e"
+  products_filters_in: "in"
   products_with: con
+  products_search: "Ricerca..."
   products_filter_by: "Filtra per"
   products_filter_selected: "selezionato"
+  products_filter_heading: "Filtri"
   products_filter_clear: "Pulisci"
+  products_filter_done: "Fatto"
   products_loading: "Caricamento prodotti..."
   products_updating_cart: "Aggiornamento del carrello..."
   products_cart_empty: "Carrello vuoto"
@@ -1544,6 +1561,8 @@ it:
   products_update_error_msg: "Salvataggio fallito."
   products_update_error_data: "Salvataggio fallito per dati non validi:"
   products_changes_saved: "Modifiche salvate."
+  products_no_results_html: "Mi spiace, nessun risultato per %{query}"
+  products_clear_search: "Pulisci ricerca"
   search_no_results_html: "Mi dispiace, nessun risultato per %{query}. Vuoi provare un'altra ricerca?"
   components_profiles_popover: "I profili non hanno una vetrina su Open Food Network, ma potrebbero avere il proprio negozio fisico o online altrove"
   components_profiles_show: "Mostra profili"
@@ -1899,6 +1918,7 @@ it:
   admin_enterprise_relationships_permits: "permessi"
   admin_enterprise_relationships_seach_placeholder: "Cerca"
   admin_enterprise_relationships_button_create: "Crea"
+  admin_enterprise_relationships_to: "a"
   admin_enterprise_groups: "Gruppi dell'azienda"
   admin_enterprise_groups_name: "Nome"
   admin_enterprise_groups_owner: "Proprietario"
@@ -1959,7 +1979,7 @@ it:
   scheduled_for: "Programmato per"
   customers: "Clienti"
   please_select_hub: "Seleziona un hub"
-  loading_customers: "Clienti in caricamento"
+  loading_customers: "Caricamento Clienti"
   no_customers_found: "Nessun cliente trovato"
   go: "Vai"
   hub: "Distributore"
@@ -2109,8 +2129,8 @@ it:
   report_header_tax_on_fees: "Oneri sulle provvigioni (%{currency_symbol})"
   report_header_total_tax: "Oneri totali (%{currency_symbol})"
   report_header_enterprise: Azienda
-  report_header_customer: Consumatore
-  report_header_customer_code: Codice cliente
+  report_header_customer: Cliente
+  report_header_customer_code: Codice Cliente
   report_header_product: Prodotto
   report_header_product_properties: Proprietà prodotto
   report_header_quantity: Quantità
@@ -2154,10 +2174,10 @@ it:
   report_header_order_id: ID richiesta
   report_header_item_name: Nome articolo
   report_header_temp_controlled_items: Articolo a Temperatura Controllata
-  report_header_customer_name: Nome Consumatore
-  report_header_customer_email: Email consumatore
-  report_header_customer_phone: Telefono Consumatore
-  report_header_customer_city: Città consumatore
+  report_header_customer_name: Nome Cliente
+  report_header_customer_email: Email Cliente
+  report_header_customer_phone: Telefono Cliente
+  report_header_customer_city: Città Cliente
   report_header_payment_state: Stato Pagamento
   report_header_payment_type: Tipo Pagamento
   report_header_item_price: "Articolo (%{currency})"
@@ -2257,12 +2277,12 @@ it:
   adjustments_tax_rate_error: "^Verificate che l'aliquota d'imposta per questo adeguamento sia corretta."
   active_distributors_not_ready_for_checkout_message_singular: >-
       L'hub %{distributor_names} figura in un ciclo di richieste attivo, ma non ha
-      metodi di consegna e di pagamento validi. Finché non li imposti, i consumatori
-      non potranno acquistare da questo hub.
+      metodi di consegna e di pagamento validi. Finché non li imposti, i clienti non
+      potranno acquistare da questo hub.
   active_distributors_not_ready_for_checkout_message_plural: >-
-      Gli hub %{distributor_names}figurano in un ciclo di richieste attivo, ma non
-      hanno metodi di consegna e di pagamento validi. Finché non li imposti, i consumatori
-      non potranno acquistare da questi hub.
+      I distributori %{distributor_names} figurano in un ciclo di richieste attivo,
+      ma non hanno metodi di consegna e di pagamento validi. Finché non li imposti,
+      i clienti non potranno acquistare da questi distributori.
   enterprise_fees_update_notice: Le tariffe della tua azienda sono state aggiornate.
   enterprise_register_package_error: "Per favore seleziona un pacchetto"
   enterprise_register_error: "Non abbiamo potuto completare la registrazione per %{enterprise}"
@@ -2304,6 +2324,10 @@ it:
     resolve_errors: 'Per favore risolvi i seguenti errori:'
     more_items: "+ %{count} ancora"
     default_card_updated: Carta predefinita aggiornata
+    cart:
+      add_to_cart_failed: >
+          C'è stato un problema nell'aggiungere questo prodotto al carrello. Forse
+          non é più disponibile o il negozio sta chiudendo.
     admin:
       enterprise_limit_reached: "Hai raggiunto il limite standard di aziende per account. Scrivi a  %{contact_email} se hai bisogno di aumentarlo."
       modals:
@@ -2315,9 +2339,9 @@ it:
           title: Regole Tag
           overview: Panoramica
           overview_text: >
-              Le regole per le tag forniscono un modo per definire quali elementi
-              sono visibili, o a quali utenti. Gli elementi possono essere: metodi
-              di consegna, metodi di pagamento, prodotti e cicli di richieste.
+              Le regole per le tag forniscono un modo per descrivere quali elementi
+              sono visibili, o a quali utenti. Gli elementi possono essere: Metodi
+              di Consegna, Metodi di Pagamento, Prodotti e Cicli d'Ordine.
           by_default_rules: "Regole predefinite"
           by_default_rules_text: >
               Le regole predefinite ti permettono di nascondere gli elementi affinché
@@ -2560,7 +2584,7 @@ it:
       edit_profile: "modifica profilo"
       add_products_to_inventory: "aggiungi prodotti all'inventario"
     resources:
-      could_not_delete_customer: 'Non è possibile annullare utente'
+      could_not_delete_customer: 'Non è possibile cancellare il cliente'
     product_import:
       confirmation: |
           Questo imposterà il livello delle scorte a zero su tutti i prodotti per questa
@@ -2569,7 +2593,7 @@ it:
       create_failure: "Impossibile creare il ciclo dell'ordine"
       update_success: 'Il tuo ciclo di richieste è stato aggiornato'
       update_failure: "Impossibile aggiornare il ciclo dell'ordine"
-      no_distributors: Non ci sono distributori in questo ciclo dell'ordine. Questo ciclo dell'ordine non sarà visibile ai consumatori fino a quando non ne verrà aggiunto uno. Vuoi continuare a salvare questo ciclo dell'ordine?
+      no_distributors: Non ci sono distributori in questo ciclo d'ordine. Questo ciclo d'ordine non sarà visibile ai clienti fino a quando non ne verrà aggiunto uno. Vuoi continuare a salvare questo ciclo d'ordine?
     enterprises:
       producer: "Produttore"
       non_producer: "Non-produttore"
@@ -2695,7 +2719,7 @@ it:
               fee_type: "Tipo di tariffa"
               enterprise_name: "Proprietario dell'azienda"
               fee_name: "Nome della tariffa"
-              customer_name: "Consumatore"
+              customer_name: "Cliente"
               fee_placement: "Posizionamento della tariffa"
               fee_calculated_on_transfer_through_name: "Calcolo della commissione sul trasferimento tramite"
               tax_category_name: "Categoria d'imposta"
@@ -2705,7 +2729,7 @@ it:
               fee_type: "Tipo di tariffa"
               enterprise_name: "Proprietario dell'azienda"
               fee_name: "Nome della tariffa"
-              customer_name: "Consumatore"
+              customer_name: "Cliente"
               fee_placement: "Posizionamento della tariffa"
               fee_calculated_on_transfer_through_name: "Calcolo della commissione sul trasferimento tramite"
               tax_category_name: "Categoria d'imposta"
@@ -2714,7 +2738,7 @@ it:
   order: "Gentile Richiesta"
   distribution: "Distribuzione"
   order_details: "Dettagli ordine"
-  customer_details: "Dettagli cliente"
+  customer_details: "Dettagli Cliente"
   adjustments: "Regolazioni"
   payments: "Pagamenti"
   payment: "Pagamento"
@@ -2763,8 +2787,8 @@ it:
     cannot_set_shipping_method_without_address: "Impossibile impostare il metodo di spedizione finché non vengono forniti i dettagli del cliente."
     no_tracking_present: "Nessun dettaglio di tracciamento fornito."
     order_total: "Ordine totale"
-    customer_details: "Dettagli cliente"
-    customer_search: "Ricerca clienti"
+    customer_details: "Dettagli Cliente"
+    customer_search: "Ricerca Clienti"
     choose_a_customer: "Scegli un cliente"
     account: "Account"
     billing_address: "Indirizzo di fatturazione"
@@ -2782,10 +2806,18 @@ it:
     use_billing_address: "Utilizzare l'indirizzo di fatturazione"
     adjustments: "Regolazioni"
     continue: "Continua"
-    fill_in_customer_info: "Si prega di compilare le informazioni del cliente"
+    fill_in_customer_info: "Per favore compila le informazioni del cliente"
     new_payment: "Nuovo pagamento"
     capture: "Cattura"
     void: "vuoto"
+    login: "Login"
+    password: "Password"
+    signature: "Firma"
+    solution: "Soluzione"
+    landing_page: "Landing Page"
+    server: "Server"
+    test_mode: "Modalità di Test"
+    logourl: "Logourl"
     configurations: "Configurazioni"
     general_settings: "Impostazioni generali"
     site_name: "Nome del sito"
@@ -2850,8 +2882,6 @@ it:
     abbreviation: "Abbreviazione"
     new_state: "Nuovo stato"
     payment_methods: "Metodi di pagamento"
-    new_payment_method: "Nuovo metodo di pagamento"
-    provider: "Provider"
     taxonomies: "Tassonomie"
     new_taxonomy: "Nuova tassonomia"
     back_to_taxonomies_list: "Torna all'elenco delle tassonomie"
@@ -2929,7 +2959,7 @@ it:
         order_cycles: "Cicli di richieste"
         enterprises: "Aziende"
         enterprise_relationships: "permessi"
-        customers: "Consumatori"
+        customers: "Clienti"
         groups: "Gruppi"
       product_properties:
         index:
@@ -3005,12 +3035,13 @@ it:
           completed_at: "Completo al"
           number: "Numero"
           state: "Stato"
-          email: "Mail consumatore"
+          email: "E-mail Cliente"
         invoice:
           issued_on: "Emesso il"
           tax_invoice: "FATTURA DELLE TASSE"
           code: "Codice"
           from: "Da"
+          to: "Pagamento a"
           shipping: "Spedizione"
         form:
           distribution_fields:
@@ -3030,7 +3061,7 @@ it:
             other: "Hai il %{count} di prodotti disponibili"
         order_cycles:
           order_cycles: "Cicli di richieste"
-          order_cycles_tip: "I cicli di richieste determinano dove e quando i tuoi prodotti sono disponibili per i consumatori."
+          order_cycles_tip: "I cicli di richieste determinano dove e quando i tuoi prodotti sono disponibili per i clienti."
           you_have_active:
             zero: "Non hai nessun ciclo di richieste attivo."
             one: "Hai un ciclo di richieste attivo."
@@ -3045,6 +3076,8 @@ it:
           zone: "Zone"
           calculator: "Calcolatrice"
           display: "Visualizza"
+          both: "Entrambi Checkout e Back office"
+          back_end: "Solo Back office"
           no_shipping_methods_found: "Nessun metodo di spedizione trovato"
         new:
           new_shipping_method: "Nuovo metodo di spedizione"
@@ -3056,11 +3089,30 @@ it:
         form:
           categories: "categorie"
           zones: "Zone"
+          both: "Entrambi Checkout e Back Office"
+          back_end: "Solo Back office"
+          deactivation_warning: "Disattivare un metodo di spedizione può far sparire il metodo di spedizione dalla tua lista. Alternativamente, puoi nascondere il metodo di spedizione dalla pagina di checkout impostando l'opzione 'Visualizza' su 'Solo Back office'."
       payment_methods:
+        index:
+          payment_methods: "Metodi di pagamento"
+          new_payment_method: "Nuovo metodo di pagamento"
+          name: "Nome"
+          products_distributor: "Distributore"
+          provider: "Provider"
+          environment: "Ambiente"
+          display: "Visualizza"
+          active: "Attivo"
+          both: "Entrambi"
+          front_end: "Solo checkout"
+          back_end: "Solo Back office"
+          active_yes: "Sì"
+          active_no: "No"
+          no_payment_methods_found: "Nessun metodo di pagamento trovato"
         new:
           new_payment_method: "Nuovo metodo di pagamento"
           back_to_payment_methods_list: "Torna all'elenco dei metodi di pagamento"
         edit:
+          new: "Nuovo"
           editing_payment_method: "Modifica metodo di pagamento"
           back_to_payment_methods_list: "Torna all'elenco dei metodi di pagamento"
         stripe_connect:
@@ -3076,6 +3128,21 @@ it:
           account_id: Account ID
           business_name: Ragione sociale
           charges_enabled: Cambi Consentiti
+        form:
+          name: "Nome"
+          description: "Descrizione"
+          environment: "Ambiente"
+          display: "Visualizza"
+          active: "Attivo"
+          active_yes: "Sì"
+          active_no: "No"
+          both: "Entrambi Checkout e Back Office"
+          front_end: "Solo checkout"
+          back_end: "Solo Back office"
+          tags: "Tag"
+          deactivation_warning: "Disattivare un metodo di pagamento può far sparire il metodo di pagamento dalla tua lista. Alternativamente, puoi nascondere il metodo di pagamento dalla pagina di checkout impostando l'opzione 'Visualizza' su 'Solo Back office'."
+        providers:
+          provider: "Provider"
       payments:
         source_forms:
           stripe:
@@ -3133,7 +3200,7 @@ it:
           bulk_coop_supplier_report: 'Totali per fornitore - tabella'
           bulk_coop_allocation: 'Assegnazione - tabella'
           bulk_coop_packing_sheets: 'Imballaggio - tabella'
-          bulk_coop_customer_payments: 'Pagamenti clienti - tabella'
+          bulk_coop_customer_payments: 'Bulk Co-op - Pagamenti Clienti'
       users:
         index:
           listing_users: "Elenco Utenti"
@@ -3175,7 +3242,10 @@ it:
           price: "Prezzo"
           display_as: "Visualizza come"
           display_name: "Nome da visualizzare"
+          display_as_placeholder: 'es. 2 kg'
+          display_name_placeholder: 'es. Pomodori'
         autocomplete:
+          out_of_stock: "Esaurito"
           producer_name: "Produttore"
           unit: "Unità"
       shared:
@@ -3213,6 +3283,7 @@ it:
       format: '%Y-%m-%d'
       js_format: 'aa-mm-gg'
     orders:
+      error_flash_for_unavailable_items: "Un oggetto nel tuo carrello è diventato non disponibile, Per favore aggiorna le quantità selezionate."
       edit:
         login_to_view_order: "Effettua il login per visualizzare il tuo ordine."
       bought:
@@ -3240,9 +3311,14 @@ it:
       invalid: invalido
     order_mailer:
       cancel_email:
-        customer_greeting: "Ciao %{name}!"
-        instructions: "Il tuo ordine è stato ANNULLATO. Per favore conserva queste informazioni di cancellazione per i tuoi record."
-        order_summary_canceled: "Riepilogo dell'ordine [CANCELLATO]"
+        customer_greeting: "Caro %{name},"
+        instructions_html: "Il tuo ordine con <strong>%{distributor}</strong> è stato CANCELLATO. Per favore conserva questa informazione per i tuoi dati."
+        dont_cancel: "Se hai cambiato idea o non desideri annullare questo ordine, ti preghiamo di contattare%{email}"
+        order_summary_canceled_html: "<strong>Riepilogo Ordine #%{number} [CANCELLATO]</strong>"
+        details: "Qui ci sono i dettagli di quello che hai ordinato:"
+        unpaid_order: "Il tuo ordine risulta pendente nessun rimborso è stato eseguito"
+        paid_order: "Il tuo ordine era già stato pagato così %{distributor} ha rimborsato l'intero costo"
+        credit_order: "Il tuo ordine è stato pagato, quindi il tuo acconto è stato accreditato"
         subject: "Cancellazione dell'ordine"
       confirm_email:
         subject: "Conferma dell'ordine"

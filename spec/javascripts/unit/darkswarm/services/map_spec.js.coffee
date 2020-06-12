@@ -1,7 +1,7 @@
 describe "Hubs service", ->
   OfnMap = null
   CurrentHubMock = {}
-  Geo = {}
+  GmapsGeo = {}
   enterprises = [
     {
       id: 2
@@ -54,7 +54,7 @@ describe "Hubs service", ->
     angular.module('Darkswarm').value('enterprises', enterprises)
     module ($provide)->
       $provide.value "CurrentHub", CurrentHubMock
-      $provide.value "Geo", Geo
+      $provide.value "GmapsGeo", GmapsGeo
       null
     inject ($injector)->
       OfnMap = $injector.get("OfnMap")

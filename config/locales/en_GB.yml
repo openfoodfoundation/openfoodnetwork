@@ -368,7 +368,6 @@ en_GB:
         title: "Matomo Settings"
         matomo_url: "Matomo URL"
         matomo_site_id: "Matomo Site ID"
-        info_html: "Matomo is a Web and Mobile Analytics. You can either host Matomo on-premises or use a cloud-hosted service. See <a href='http://matomo.org' target='_blank'>matomo.org</a> for more information."
         config_instructions_html: "Here you can configure the OFN Matomo integration. The Matomo URL below should point to the Matomo instance where the user tracking information will be sent to; if it is left empty, Matomo user tracking will be disabled. The Site ID field is not mandatory but useful if you are tracking more than one website on a single Matomo instance; it can be found on the Matomo instance console."
     customers:
       index:
@@ -403,6 +402,7 @@ en_GB:
         footer_and_external_links: Footer and External Links
         your_content: Your content
         user_guide: User Guide
+        map: Map
     enterprise_fees:
       index:
         title: "Enterprise Fees"
@@ -686,6 +686,7 @@ en_GB:
           ofn_uid_tip: The unique id used to identify the enterprise on Open Food Network.
         shipping_methods:
           name: "Name"
+          applies: "Active?"
           manage: "Manage Shipping Methods"
           create_button: "Create New Shipping Method"
           create_one_button: "Create One Now"
@@ -2811,6 +2812,8 @@ en_GB:
     new_payment: "New Payment"
     capture: "Capture"
     void: "Void"
+    login: "Login"
+    password: "Password"
     configurations: "Configurations"
     general_settings: "General Settings"
     site_name: "Site Name"
@@ -2875,8 +2878,6 @@ en_GB:
     abbreviation: "Abbreviation"
     new_state: "New County"
     payment_methods: "Payment Methods"
-    new_payment_method: "New Payment Method"
-    provider: "Provider"
     taxonomies: "Taxonomies"
     new_taxonomy: "New Taxonomy"
     back_to_taxonomies_list: "Back to Taxonomies List"
@@ -3071,6 +3072,8 @@ en_GB:
           zone: "Zone"
           calculator: "Calculator"
           display: "Display"
+          both: "Both Checkout and Back office"
+          back_end: "Back office only"
           no_shipping_methods_found: "No shipping methods found"
         new:
           new_shipping_method: "New Shipping Method"
@@ -3082,11 +3085,28 @@ en_GB:
         form:
           categories: "Categories"
           zones: "Zones"
+          both: "Both Checkout and Back office"
+          back_end: "Back office only"
+          deactivation_warning: "De-activating a shipping method can make the shipping method disappear from your list. Alternatively, you can hide a shipping method from the checkout page by setting the option 'Display' to 'back office only'."
       payment_methods:
+        index:
+          payment_methods: "Payment Methods"
+          new_payment_method: "New Payment Method"
+          name: "Name"
+          products_distributor: "Distributor"
+          provider: "Provider"
+          environment: "Environment"
+          display: "Display"
+          active: "Active"
+          both: "Both"
+          back_end: "Back office only"
+          active_yes: "Yes"
+          active_no: "No"
         new:
           new_payment_method: "New Payment Method"
           back_to_payment_methods_list: "Back To Payment Methods List"
         edit:
+          new: "New"
           editing_payment_method: "Editing Payment Method"
           back_to_payment_methods_list: "Back To Payment Methods List"
         stripe_connect:
@@ -3102,6 +3122,19 @@ en_GB:
           account_id: Account ID
           business_name: Business Name
           charges_enabled: Charges Enabled
+        form:
+          name: "Name"
+          description: "Description"
+          environment: "Environment"
+          display: "Display"
+          active: "Active"
+          active_yes: "Yes"
+          active_no: "No"
+          both: "Both Checkout and Back office"
+          back_end: "Back office only"
+          tags: "Tags"
+        providers:
+          provider: "Provider"
       payments:
         source_forms:
           stripe:
@@ -3204,6 +3237,7 @@ en_GB:
           display_as_placeholder: 'eg. 2 kg'
           display_name_placeholder: 'eg. Tomatoes'
         autocomplete:
+          out_of_stock: "Out of Stock"
           producer_name: "Producer"
           unit: "Unit"
       shared:
@@ -3241,6 +3275,7 @@ en_GB:
       format: '%Y-%m-%d'
       js_format: 'yy-mm-dd'
     orders:
+      error_flash_for_unavailable_items: "An item in your basket has become unavailable. Please update the selected quantities."
       edit:
         login_to_view_order: "Please log in to view your order."
       bought:
@@ -3268,9 +3303,6 @@ en_GB:
       invalid: invalid
     order_mailer:
       cancel_email:
-        customer_greeting: "Hi %{name}!"
-        instructions: "Your order has been CANCELED. Please retain this cancellation information for your records."
-        order_summary_canceled: "Order Summary [CANCELED]"
         subject: "Cancellation of Order"
       confirm_email:
         subject: "Order Confirmation"

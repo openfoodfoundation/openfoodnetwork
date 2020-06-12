@@ -363,7 +363,6 @@ ar:
         title: "إعدادات Matomo"
         matomo_url: "العنوان الالكتروني ل Matomo "
         matomo_site_id: "معرف موقع Matomo"
-        info_html: "Matomo هو تحليلات الويب والجوال. يمكنك إما تنصيب Matomo محليًا أو استخدام خدمة استضافة سحابية. انظر <a href='http://matomo.org' target='_blank'>matomo.org</a> لمزيد من المعلومات."
         config_instructions_html: "هنا يمكنك تهيئة تكامل Matomo لشبكة الغذاء المفتوح. يجب أن يشير عنوان الالكتروني URL الخاص بـ Matomo أدناه إلى مثيل Matomo حيث سيتم إرسال معلومات تتبع المستخدم إلى ؛ إذا تم تركه فارغًا ، فسيتم تعطيل تتبع مستخدم Matomo. حقل معرف الموقع ليس إلزاميًا ولكنه مفيد إذا كنت تتعقب أكثر من موقع ويب على مثيل Matomo  ؛ يمكن العثور عليه على وحدة تحكم مثيل Matomo."
     customers:
       index:
@@ -398,6 +397,7 @@ ar:
         footer_and_external_links: تذييل والروابط الخارجية
         your_content: المحتوى الخاص بك
         user_guide: دليل المستخدم
+        map: خريطة
     enterprise_fees:
       index:
         title: "رسوم الشركة"
@@ -2752,6 +2752,8 @@ ar:
     new_payment: "دفعة جديد"
     capture: "إلتقاط"
     void: "فارغ"
+    login: "تسجيل الدخول"
+    password: "كلمه السر"
     configurations: "تهيئة"
     general_settings: "الاعدادات العامة"
     site_name: "اسم الموقع"
@@ -2816,8 +2818,6 @@ ar:
     abbreviation: "الاختصار"
     new_state: "محافظة جديدة"
     payment_methods: "طرق الدفع"
-    new_payment_method: "طريقة الدفع الجديدة"
-    provider: "مزود"
     taxonomies: "التصنيفات"
     new_taxonomy: "تصنيف جديد"
     back_to_taxonomies_list: "العودة إلى قائمة التصنيفات"
@@ -3024,10 +3024,23 @@ ar:
           categories: "التصنيفات"
           zones: "مناطق"
       payment_methods:
+        index:
+          payment_methods: "طريقة الدفع"
+          new_payment_method: "طريقة الدفع الجديدة"
+          name: "الاسم"
+          products_distributor: "الموزع"
+          provider: "مزود"
+          environment: "بيئة"
+          display: "عرض"
+          active: "نشط"
+          both: "على حد سواء"
+          active_yes: "نعم"
+          active_no: "لا"
         new:
           new_payment_method: "طريقة الدفع الجديدة"
           back_to_payment_methods_list: "العودة إلى قائمة طرق الدفع"
         edit:
+          new: "جديد"
           editing_payment_method: "تحرير طريقة الدفع"
           back_to_payment_methods_list: "العودة إلى قائمة طرق الدفع"
         stripe_connect:
@@ -3043,6 +3056,17 @@ ar:
           account_id: معرف الحساب
           business_name: الاسم التجاري
           charges_enabled: تم تمكين الدفع
+        form:
+          name: "الاسم"
+          description: "وصف"
+          environment: "بيئة"
+          display: "عرض"
+          active: "نشط"
+          active_yes: "نعم"
+          active_no: "لا"
+          tags: "الاوسمة"
+        providers:
+          provider: "مزود"
       payments:
         source_forms:
           stripe:
@@ -3143,6 +3167,7 @@ ar:
           display_as: "عرض ب"
           display_name: "اسم العرض"
         autocomplete:
+          out_of_stock: "غير متوفر"
           producer_name: "المنتج"
           unit: "وحدة"
       shared:
@@ -3207,9 +3232,6 @@ ar:
       invalid: غير صالحة
     order_mailer:
       cancel_email:
-        customer_greeting: "مرحبًا %{name}!"
-        instructions: "تم إلغاء طلبك. يرجى الاحتفاظ بمعلومات الإلغاء هذه بسجلاتك."
-        order_summary_canceled: "ملخص الطلب [ملغى]"
         subject: "إلغاء الطلب"
       confirm_email:
         subject: "تأكيد الطلب"

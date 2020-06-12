@@ -194,6 +194,7 @@ sv:
         footer_and_external_links: Sidfot och externa länkar
         your_content: Ditt innehåll
         user_guide: Användarinstruktion
+        map: Karta
     enterprise_fees:
       index:
         title: "Företagsavgifter"
@@ -1905,6 +1906,8 @@ sv:
     update: "Uppdatera"
     continue: "Fortsätt"
     capture: "Fånga"
+    login: "Logga in"
+    password: "Lösenord"
     tax rate: "Skattesatser"
     tax_category: "Skattekategori"
     tax_settings: "Skatteskalor"
@@ -1996,6 +1999,19 @@ sv:
           name: "Namn"
           products_distributor: "Distributör"
           calculator: "Beräkning"
+      payment_methods:
+        index:
+          payment_methods: "Betalningssätt"
+          name: "Namn"
+          products_distributor: "Distributör"
+          active_yes: "Ja"
+          active_no: "Nej"
+        form:
+          name: "Namn"
+          description: "Beskrivning"
+          active_yes: "Ja"
+          active_no: "Nej"
+          tags: "Taggar"
       products:
         new:
           supplier: "Leverantör"

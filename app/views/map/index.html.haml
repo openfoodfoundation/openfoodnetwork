@@ -2,15 +2,8 @@
   = t :label_map
 
 - content_for :injection_data do
+  = inject_available_countries
   = inject_enterprise_shopfront_list
+  = inject_open_street_map_config
 
-.map-container{"fill-vertical" => true}
-  %map{"ng-controller" => "MapCtrl"}
-    %ui-gmap-google-map{options: "map.additional_options", center: "map.center", zoom: "map.zoom", styles: "map.styles", draggable: "true"}
-      %map-osm-tiles
-      %map-search
-      %ui-gmap-markers{models: "OfnMap.enterprises", fit: "true",
-      coords: "'self'", icon: "'icon'", click: "'reveal'"}
-
-.map-footer
-  %a{:href => "http://www.openstreetmap.org/copyright"} &copy; OpenStreetMap contributors
+= render partial: "shared/map"

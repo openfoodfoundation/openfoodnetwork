@@ -26,6 +26,7 @@ Spree::AppConfiguration.class_eval do
   preference :bugherd_api_key, :string, default: nil
   preference :matomo_url, :string, default: nil
   preference :matomo_site_id, :string, default: nil
+  preference :matomo_tag_manager_url, :string, default: nil
 
   # Invoices & Receipts
   preference :enable_invoices?, :boolean, default: true

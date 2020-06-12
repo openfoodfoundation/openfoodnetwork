@@ -2,21 +2,17 @@
 
 This is a general guide to setting up an Open Food Network development environment on your local machine.
 
-The fastest way to make it work locally is to use Docker, see the [Docker setup guide](DOCKER.md).
+### Requirements
 
-The following guides are located in the wiki and provide more OS-specific step-by-step instructions:
-
-- [Ubuntu Setup Guide][ubuntu]
-- [macOS Sierra Setup Guide][sierra]
-- [OSX El Capitan Setup Guide][el-capitan]
-
-### Dependencies
-
-* Rails 3.2.x
-* Ruby 2.3.7
+The fastest way to make it work locally is to use Docker, you only need to setup git, see the [Docker setup guide](DOCKER.md).
+Otherwise, for a local setup you will need:
+* Ruby 2.3.7 and bundler
 * PostgreSQL database
-* PhantomJS (for testing)
-* See Gemfile for a list of gems required
+* Chrome (for testing)
+
+The following guides will provide OS-specific step-by-step instructions to get these requirements installed:
+- [Ubuntu Setup Guide][ubuntu]
+- [OSX Setup Guide][osx]
 
 If you are likely to need to manage multiple version of ruby on your local machine, we recommend version managers such as [rbenv](https://github.com/rbenv/rbenv) or [RVM](https://rvm.io/).
 
@@ -52,13 +48,11 @@ This will create the "ofn" user as superuser and allowing it to create databases
 
 Once done, run `script/setup`. If the script succeeds you're ready to start developing. If not, take a look at the output as it should be informative enough to help you troubleshoot.
 
-If you run into any other issues getting your local environment up and running please consult [the wiki][wiki].
-
-If still you get stuck do not hesitate to open an issue reporting the full output of the script.
-
 Now, your dreams of spinning up a development server can be realised:
 
     bundle exec rails server
+
+Go to [http://localhost:3000](http://localhost:3000) to play around!
 
 To login as the default user, use:
 
@@ -79,7 +73,7 @@ The tests of all custom engines can be run with:
 
     bundle exec rake ofn:specs:engines:rspec
 
-Note: If your OS is not explicitly supported in the setup guides then not all tests may pass. However, you may still be able to develop. Get in touch with the [#dev][slack-dev] channel on Slack to troubleshoot issues and determine if they will preclude you from contributing to OFN.
+Note: If your OS is not explicitly supported in the setup guides then not all tests may pass. However, you may still be able to develop.
 
 Note: The time zone on your machine should match the one defined in `config/application.yml`.
 
@@ -120,8 +114,7 @@ $ createdb open_food_network_test --owner=ofn
 If these commands succeed, you should be able to [continue the setup process](#get-it-running).
 
 [developer-wiki]: https://github.com/openfoodfoundation/openfoodnetwork/wiki
-[sierra]: https://github.com/openfoodfoundation/openfoodnetwork/wiki/Development-Environment-Setup%3A-macOS-%28Sierra%2C-HighSierra%2C-Mojave-and-Catalina%29
-[el-capitan]: https://github.com/openfoodfoundation/openfoodnetwork/wiki/Development-Environment-Setup:-OS-X-(El-Capitan)
+[osx]: https://github.com/openfoodfoundation/openfoodnetwork/wiki/Development-Environment-Setup:-OS-X
 [ubuntu]: https://github.com/openfoodfoundation/openfoodnetwork/wiki/Development-Environment-Setup:-Ubuntu
 [wiki]: https://github.com/openfoodfoundation/openfoodnetwork/wiki
 [zeus]: https://github.com/burke/zeus

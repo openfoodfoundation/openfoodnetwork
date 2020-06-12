@@ -367,7 +367,6 @@ de_DE:
         title: "Matomo-Einstellungen"
         matomo_url: "Matomo-URL"
         matomo_site_id: "Matomo-Site-ID"
-        info_html: "Matomo ist eine Web- und Mobile Analytics. Sie können Matomo entweder lokal hosten oder einen von der Cloud gehosteten Dienst verwenden. Weitere Informationen finden Sie unter <a href='http://matomo.org' target='_blank'> matomo.org </a>."
         config_instructions_html: "Hier können Sie die OFN Matomo Integration konfigurieren. Die unten angegebene Matomo-URL sollte auf die Matomo-Instanz verweisen, an die die Benutzerverfolgungsinformationen gesendet werden. Wenn es leer bleibt, wird das Matomo-Benutzer-Tracking deaktiviert. Das Feld Site-ID ist nicht obligatorisch, aber nützlich, wenn Sie mehr als eine Website in einer einzelnen Matomo-Instanz verfolgen. Es kann auf der Matomo-Instanzkonsole gefunden werden."
     customers:
       index:
@@ -402,6 +401,7 @@ de_DE:
         footer_and_external_links: Fußzeile und externe Links
         your_content: Ihr Inhalt
         user_guide: Benutzerhandbuch
+        map: Karte
     enterprise_fees:
       index:
         title: "Unternehmensgebühren"
@@ -2785,6 +2785,8 @@ de_DE:
     new_payment: "Neue Zahlung"
     capture: "Erfassung"
     void: "Leere"
+    login: "Anmeldung"
+    password: "Passwort"
     configurations: "Konfigurationen"
     general_settings: "Allgemeine Einstellungen"
     site_name: "Site-Name"
@@ -2849,8 +2851,6 @@ de_DE:
     abbreviation: "Abkürzung"
     new_state: "Neuer Staat"
     payment_methods: "Zahlungsarten"
-    new_payment_method: "Neue Zahlungsart"
-    provider: "Anbieter"
     taxonomies: "Taxonomien"
     new_taxonomy: "Neue Taxonomie"
     back_to_taxonomies_list: "Zurück zur Taxonomieliste"
@@ -3057,6 +3057,13 @@ de_DE:
           categories: "Kategorien"
           zones: "Zonen"
       payment_methods:
+        index:
+          payment_methods: "Zahlungsarten"
+          name: "Name"
+          products_distributor: "Verteiler"
+          both: "Beide"
+          active_yes: "Ja"
+          active_no: "Nein"
         new:
           new_payment_method: "Neue Zahlungsart"
           back_to_payment_methods_list: "Zurück zur Liste der Zahlungsmethoden"
@@ -3076,6 +3083,12 @@ de_DE:
           account_id: Konto-ID
           business_name: Geschäftsname
           charges_enabled: Gebühren aktiviert
+        form:
+          name: "Name"
+          description: "Beschreibung"
+          active_yes: "Ja"
+          active_no: "Nein"
+          tags: "Stichwörter"
       payments:
         source_forms:
           stripe:
@@ -3236,9 +3249,6 @@ de_DE:
       invalid: ungültig
     order_mailer:
       cancel_email:
-        customer_greeting: "Hallo %{name}!"
-        instructions: "Ihre Bestellung wurde storniert. Bitte bewahren Sie diese Stornierungsinformationen für Ihre Unterlagen auf."
-        order_summary_canceled: "Bestellübersicht [STORNIERT]"
         subject: "Stornierung der Bestellung"
       confirm_email:
         subject: "Bestellbestätigung"
