@@ -66,6 +66,7 @@
   .button {
     padding: 1.125rem 0 1.1875rem;
     width: 210px;
+    font-size: 1.1em;
 
     @include breakpoint(mobile) {
       width: 100%;
