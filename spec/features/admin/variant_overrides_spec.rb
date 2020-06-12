@@ -190,7 +190,7 @@ feature "
             end
           end
 
-          it "displays an error when unauthorised to access the page" do
+          xit "displays an error when unauthorised to access the page" do
             fill_in "variant-overrides-#{variant.id}-price", with: '777.77'
             fill_in "variant-overrides-#{variant.id}-count_on_hand", with: '123'
             expect(page).to have_content "Changes to one override remain unsaved."
