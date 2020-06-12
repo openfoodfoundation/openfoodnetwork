@@ -20,10 +20,15 @@ class OrderTaxAdjustmentsFetcher
   attr_reader :order
 
   def all
-    order.adjustments.with_tax +
-      order.line_items.includes(:adjustments).map { |li|
-        li.adjustments.with_tax
-      }.flatten
+    Spree::Adjustment
+      .with_tax
+      .where(adjustable_id: order.id, adjustable_type: 'Spree::Order')
+      .order('created_at ASC') +
+
+      Spree::Adjustment
+        .with_tax
+        .where(adjustable_id: order.line_item_ids, adjustable_type: 'Spree::LineItem')
+        .order('created_at ASC')
   end
 
   def tax_rates_hash(adjustment)
