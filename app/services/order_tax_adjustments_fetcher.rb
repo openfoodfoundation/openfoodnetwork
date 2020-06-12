@@ -22,13 +22,22 @@ class OrderTaxAdjustmentsFetcher
   def all
     Spree::Adjustment
       .with_tax
-      .where(adjustable_id: order.id, adjustable_type: 'Spree::Order')
-      .order('created_at ASC') +
+      .where(order_adjustments.or(line_item_adjustments))
+      .order('created_at ASC')
+  end
 
-      Spree::Adjustment
-        .with_tax
-        .where(adjustable_id: order.line_item_ids, adjustable_type: 'Spree::LineItem')
-        .order('created_at ASC')
+  def order_adjustments
+    table[:adjustable_id].eq(order.id)
+      .and(table[:adjustable_type].eq('Spree::Order'))
+  end
+
+  def line_item_adjustments
+    table[:adjustable_id].eq(order.line_item_ids.join(','))
+      .and(table[:adjustable_type].eq('Spree::LineItem'))
+  end
+
+  def table
+    @table ||= Spree::Adjustment.arel_table
   end
 
   def tax_rates_hash(adjustment)
