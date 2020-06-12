@@ -23,6 +23,8 @@ en_FR:
         base: "Credit Card"
       order_cycle:
         orders_close_at: Close date
+      variant_override:
+        count_on_hand: "On Hand"
     errors:
       models:
         spree/user:
@@ -2740,6 +2742,7 @@ en_FR:
   customer_details: "Customer Details"
   adjustments: "Adjustments"
   payments: "Payments"
+  return_authorizations: "Return Authorizations"
   payment: "Payment"
   payment_method: "Payment Method"
   shipment: "Shipment"

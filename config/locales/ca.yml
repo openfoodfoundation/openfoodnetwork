@@ -23,6 +23,8 @@ ca:
         base: "Targeta de crèdit"
       order_cycle:
         orders_close_at: Data de tancament
+      variant_override:
+        count_on_hand: "Disponibles"
     errors:
       models:
         spree/user:
@@ -2746,6 +2748,7 @@ ca:
   customer_details: "Detalls de la consumidora"
   adjustments: "Ajustaments"
   payments: "Pagaments"
+  return_authorizations: "Autoritzacions de devolució"
   payment: "Pagament"
   payment_method: "Mètode de pagament"
   shipment: "Enviament"
