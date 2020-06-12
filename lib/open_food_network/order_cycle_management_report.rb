@@ -69,12 +69,12 @@ module OpenFoodNetwork
 
     def payment_method_row(order)
       ba = order.billing_address
-      [ba.firstname,
-       ba.lastname,
+      [ba.andand.firstname,
+       ba.andand.lastname,
        order.distributor.andand.name,
        customer_code(order.email),
        order.email,
-       ba.phone,
+       ba.andand.phone,
        order.shipping_method.andand.name,
        order.payments.first.andand.payment_method.andand.name,
        order.payments.first.andand.amount,
