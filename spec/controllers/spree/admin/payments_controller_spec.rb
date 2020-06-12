@@ -92,9 +92,25 @@ describe Spree::Admin::PaymentsController, type: :controller do
         context "where both payment.process! and payment.authorize! work" do
           before do
             allow_any_instance_of(Spree::Payment).to receive(:authorize!) do |payment|
-              payment.update_attribute :state, "pending"
+              payment.update state: "pending"
             end
             allow_any_instance_of(Spree::Payment).to receive(:process!).and_return(true)
+          end
+
+          it "makes a payment with the provided card details" do
+            source_attributes = {
+              gateway_payment_profile_id: "pm_123",
+              cc_type: "visa",
+              last_digits: "4242",
+              month: "4",
+              year: "2100"
+            }
+
+            spree_post :create, payment: params.merge({ source_attributes: source_attributes }),
+                                order_id: order.number
+
+            payment = order.reload.payments.last
+            expect(payment.source.attributes.transform_keys(&:to_sym)).to include source_attributes
           end
 
           it "redirects to list of payments with success flash" do
