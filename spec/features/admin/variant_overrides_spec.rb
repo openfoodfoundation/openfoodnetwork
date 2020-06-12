@@ -195,7 +195,8 @@ feature "
             fill_in "variant-overrides-#{variant.id}-count_on_hand", with: '123'
             expect(page).to have_content "Changes to one override remain unsaved."
 
-            user.enterprises.clear
+            # Set a user without suficient permissions
+            allow_any_instance_of(Spree::Admin::BaseController).to receive(:current_spree_user).and_return(build(:user))
 
             expect do
               click_button 'Save Changes'
