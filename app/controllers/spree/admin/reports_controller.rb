@@ -95,19 +95,6 @@ module Spree
         render_report(@report.header, @report.table, params[:csv], "sales_tax.csv")
       end
 
-      def bulk_coop
-        # -- Prepare form options
-        @distributors = my_distributors
-        @report_type = params[:report_type]
-
-        # -- Build Report with Order Grouper
-        @report = OpenFoodNetwork::BulkCoopReport.new spree_current_user, params, render_content?
-        @table = order_grouper_table
-        csv_file_name = "bulk_coop_#{params[:report_type]}_#{timestamp}.csv"
-
-        render_report(@report.header, @table, params[:csv], csv_file_name)
-      end
-
       def payments
         # -- Prepare Form Options
         @distributors = my_distributors
