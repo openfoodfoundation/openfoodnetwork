@@ -66,30 +66,5 @@ describe OrderManagement::Reports::BulkCoop::BulkCoopReport do
         end
       end
     end
-
-    context "as a manager of a distributor" do
-      let!(:user) { create(:user) }
-      subject { PackingReport.new user, {}, true }
-
-      before do
-        d1.enterprise_roles.create!(user: user)
-      end
-
-      it "only shows line items distributed by enterprises managed by the current user" do
-        d2 = create(:distributor_enterprise)
-        d2.enterprise_roles.create!(user: create(:user))
-        o2 = create(:order, distributor: d2, completed_at: 1.day.ago)
-        o2.line_items << build(:line_item_with_shipment)
-        expect(subject.table_items).to eq([li1])
-      end
-
-      it "only shows the selected order cycle" do
-        oc2 = create(:simple_order_cycle)
-        o2 = create(:order, distributor: d1, order_cycle: oc2)
-        o2.line_items << build(:line_item)
-        allow(subject).to receive(:params).and_return(order_cycle_id_in: oc1.id)
-        expect(subject.table_items).to eq([li1])
-      end
-    end
   end
 end
