@@ -265,7 +265,7 @@ class AbilityDecorator
     end
 
     # Reports page
-    can [:admin, :index, :customers, :group_buys, :bulk_coop, :sales_tax, :payments,
+    can [:admin, :index, :customers, :group_buys, :sales_tax, :payments,
          :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory,
          :order_cycle_management, :xero_invoices], Spree::Admin::ReportsController
     add_bulk_coop_abilities
