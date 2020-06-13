@@ -8,10 +8,7 @@
         .flash.notice= notice
       - if flash[:success]
         .flash.success= flash[:success]
-      #progress
-        %img.spinner{ src: "/assets/spinning-circles.svg" }
-        = Spree.t(:loading)
-        \...
+      = render partial: "spree/layouts/admin/progress_spinner"
 
       %header#header{"data-hook" => ""}
         .container
