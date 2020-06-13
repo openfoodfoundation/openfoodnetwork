@@ -64,10 +64,6 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     RequestMonitor.load(BulkProducts.fetch(params).$promise).then ->
       $scope.resetProducts()
 
-  # Used by directive enterToSubmit
-  $scope.submit = ->
-    $scope.fetchProducts()
-
   removeClearedValues = ->
     delete $scope.producerFilter if $scope.producerFilter == "0"
     delete $scope.categoryFilter if $scope.categoryFilter == "0"
