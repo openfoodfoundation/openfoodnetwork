@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "open_food_network/reports/line_items"
 
 module OrderManagement
@@ -58,6 +60,7 @@ module OrderManagement
 
         def table_items
           return [] unless @render_table
+
           report_line_items.list(line_item_includes)
         end
 

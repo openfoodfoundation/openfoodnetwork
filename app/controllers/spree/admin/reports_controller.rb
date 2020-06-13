@@ -23,7 +23,7 @@ module Spree
       ORDER_MANAGEMENT_ENGINE_REPORTS = [
         :bulk_coop,
         :enterprise_fee_summary
-      ]
+      ].freeze
 
       helper_method :render_content?
 

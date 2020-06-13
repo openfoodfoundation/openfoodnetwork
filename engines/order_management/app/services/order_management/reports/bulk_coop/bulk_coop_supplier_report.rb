@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OrderManagement
   module Reports
     module BulkCoop
@@ -36,8 +38,7 @@ module OrderManagement
                 :units_required,
                 :remainder,
                 :max_quantity_excess
-              ]
-            },
+              ] },
             { group_by: proc { |line_item| line_item.full_name },
               sort_by: proc { |full_name| full_name } }
           ]

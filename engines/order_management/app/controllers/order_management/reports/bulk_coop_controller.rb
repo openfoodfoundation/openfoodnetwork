@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OrderManagement
   module Reports
     class BulkCoopController < Spree::Admin::BaseController
