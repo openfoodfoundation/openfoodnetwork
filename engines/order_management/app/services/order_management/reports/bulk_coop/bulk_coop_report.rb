@@ -161,7 +161,7 @@ module OrderManagement
           line_items.map(&:order).uniq.sum(&:payment_total)
         end
 
-        def empty_cell(*)
+        def empty_cell(_line_items)
           ""
         end
 
@@ -243,7 +243,7 @@ module OrderManagement
           line_items.sum(&:quantity)
         end
 
-        def total_label(*)
+        def total_label(_line_items)
           I18n.t('admin.reports.total')
         end
 
