@@ -13,7 +13,7 @@ module Reports
       end
 
       def self.date_end_before_start_error_message
-        i18n_scope = "order_management.reports.base"
+        i18n_scope = "order_management.reports.enterprise_fee_summary"
         I18n.t("date_end_before_start_error", scope: i18n_scope)
       end
 
