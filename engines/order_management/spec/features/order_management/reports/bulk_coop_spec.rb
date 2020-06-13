@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 
 feature "bulk coop" do
@@ -13,5 +15,3 @@ feature "bulk coop" do
     expect(page).to have_content 'Supplier'
   end
 end
-
-
