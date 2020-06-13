@@ -1,7 +1,5 @@
 require 'spec_helper'
 
-include AuthenticationWorkflow
-
 describe OrderManagement::Reports::BulkCoop::BulkCoopReport do
   describe "fetching orders" do
     let(:d1) { create(:distributor_enterprise) }
