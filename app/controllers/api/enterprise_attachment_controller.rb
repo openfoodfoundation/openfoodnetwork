@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'api/admin/enterprise_serializer'
 
 module Api

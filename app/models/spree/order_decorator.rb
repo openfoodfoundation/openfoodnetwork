@@ -36,7 +36,8 @@ Spree::Order.class_eval do
       callback.raw_filter.attributes.delete :email
     end
   end
-  validates :email, presence: true, format: /\A([\w\.%\+\-']+)@([\w\-]+\.)+([\w]{2,})\z/i, if: :require_email
+  validates :email, presence: true, format: /\A([\w\.%\+\-']+)@([\w\-]+\.)+([\w]{2,})\z/i,
+                    if: :require_email
 
   before_validation :associate_customer, unless: :customer_id?
   before_validation :ensure_customer, unless: :customer_is_valid?

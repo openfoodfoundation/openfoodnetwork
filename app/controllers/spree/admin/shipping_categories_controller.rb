@@ -1,7 +1,6 @@
 module Spree
   module Admin
     class ShippingCategoriesController < ResourceController
-
       protected
 
       def permitted_resource_params

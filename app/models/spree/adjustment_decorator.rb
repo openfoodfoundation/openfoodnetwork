@@ -12,7 +12,6 @@ module Spree
     belongs_to :tax_rate, -> { where spree_adjustments: { originator_type: 'Spree::TaxRate' } },
                foreign_key: 'originator_id'
 
-
     scope :enterprise_fee, -> { where(originator_type: 'EnterpriseFee') }
     scope :admin,          -> { where(source_type: nil, originator_type: nil) }
     scope :included_tax,   -> {

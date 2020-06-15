@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PermittedAttributes
   class OrderCycle
     def initialize(params)
@@ -22,9 +24,10 @@ module PermittedAttributes
         :id, :sender_id, :receiver_id, :enterprise_id, :incoming, :active,
         :select_all_variants, :receival_instructions,
         :pickup_time, :pickup_instructions,
-        :tag_list, :tags => [:text],
-        :enterprise_fee_ids => [],
-        :variants => permitted_variant_ids
+        :tag_list,
+        tags: [:text],
+        enterprise_fee_ids: [],
+        variants: permitted_variant_ids
       ]
     end
 
