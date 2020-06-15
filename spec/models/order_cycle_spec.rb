@@ -421,11 +421,11 @@ describe OrderCycle do
     let!(:oc3) { create(:simple_order_cycle, orders_close_at: time3, distributors: [e2]) }
 
     it "returns the closing time, indexed by enterprise id" do
-      expect(OrderCycle.earliest_closing_times[e1.id]).to eq(time1)
+      expect(OrderCycle.earliest_closing_times[e1.id].round).to eq(time1.round)
     end
 
     it "returns the earliest closing time" do
-      expect(OrderCycle.earliest_closing_times[e2.id]).to eq(time2)
+      expect(OrderCycle.earliest_closing_times[e2.id].round).to eq(time2.round)
     end
   end
 

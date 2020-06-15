@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 feature '
@@ -14,7 +16,7 @@ feature '
     let!(:new_product) { create(:product, supplier: supplier_enterprise) }
 
     before do
-      stub_const("Api::ExchangeProductsController::DEFAULT_PER_PAGE", 1)
+      stub_const("#{Api::ExchangeProductsController}::DEFAULT_PER_PAGE", 1)
 
       quick_login_as_admin
       visit admin_order_cycle_incoming_path(order_cycle)

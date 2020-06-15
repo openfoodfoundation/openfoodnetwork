@@ -135,4 +135,8 @@ FactoryBot.modify do
       end
     end
   end
+
+  factory :completed_order_with_totals do
+    distributor { create(:distributor_enterprise) }
+  end
 end

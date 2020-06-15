@@ -11,7 +11,7 @@ module Admin
     end
 
     def create
-      @enterprise_relationship = EnterpriseRelationship.new params[:enterprise_relationship]
+      @enterprise_relationship = EnterpriseRelationship.new enterprise_relationship_params
 
       if @enterprise_relationship.save
         render text: Api::Admin::EnterpriseRelationshipSerializer.new(@enterprise_relationship).to_json
@@ -24,6 +24,12 @@ module Admin
       @enterprise_relationship = EnterpriseRelationship.find params[:id]
       @enterprise_relationship.destroy
       render nothing: true
+    end
+
+    private
+
+    def enterprise_relationship_params
+      params.require(:enterprise_relationship).permit(:parent_id, :child_id, permissions_list: [])
     end
   end
 end

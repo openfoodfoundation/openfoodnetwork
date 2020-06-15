@@ -2,45 +2,43 @@
 
 require 'spec_helper'
 
-module Api
-  describe ShopsController, type: :controller do
-    include AuthenticationWorkflow
-    render_views
+describe Api::ShopsController, type: :controller do
+  include AuthenticationWorkflow
+  render_views
 
-    context "as a non-authenticated user" do
-      let!(:hub) {
-        create(:distributor_enterprise, with_payment_and_shipping: true, name: 'Shopfront Test Hub')
-      }
-      let!(:producer) { create(:supplier_enterprise, name: 'Shopfront Test Producer') }
-      let!(:category) { create(:taxon, name: 'Fruit') }
-      let!(:product) { create(:product, supplier: producer, primary_taxon: category ) }
-      let!(:relationship) { create(:enterprise_relationship, parent: hub, child: producer) }
-      let!(:closed_hub1) { create(:distributor_enterprise) }
-      let!(:closed_hub2) { create(:distributor_enterprise) }
+  context "as a non-authenticated user" do
+    let!(:hub) {
+      create(:distributor_enterprise, with_payment_and_shipping: true, name: 'Shopfront Test Hub')
+    }
+    let!(:producer) { create(:supplier_enterprise, name: 'Shopfront Test Producer') }
+    let!(:category) { create(:taxon, name: 'Fruit') }
+    let!(:product) { create(:product, supplier: producer, primary_taxon: category ) }
+    let!(:relationship) { create(:enterprise_relationship, parent: hub, child: producer) }
+    let!(:closed_hub1) { create(:distributor_enterprise) }
+    let!(:closed_hub2) { create(:distributor_enterprise) }
 
-      before do
-        allow(controller).to receive(:spree_current_user) { nil }
+    before do
+      allow(controller).to receive(:spree_current_user) { nil }
+    end
+
+    describe "#show" do
+      it "returns shopfront data for an enterprise" do
+        spree_get :show, id: producer.id
+
+        expect(json_response['name']).to eq 'Shopfront Test Producer'
+        expect(json_response['hubs'][0]['name']).to eq 'Shopfront Test Hub'
+        expect(json_response['supplied_taxons'][0]['name']).to eq 'Fruit'
       end
+    end
 
-      describe "#show" do
-        it "returns shopfront data for an enterprise" do
-          spree_get :show, id: producer.id
+    describe "#closed_shops" do
+      it "returns data for all closed shops" do
+        spree_get :closed_shops, {}
 
-          expect(json_response['name']).to eq 'Shopfront Test Producer'
-          expect(json_response['hubs'][0]['name']).to eq 'Shopfront Test Hub'
-          expect(json_response['supplied_taxons'][0]['name']).to eq 'Fruit'
-        end
-      end
+        expect(json_response).not_to match hub.name
 
-      describe "#closed_shops" do
-        it "returns data for all closed shops" do
-          spree_get :closed_shops, {}
-
-          expect(json_response).not_to match hub.name
-
-          response_ids = json_response.map { |shop| shop['id'] }
-          expect(response_ids).to contain_exactly(closed_hub1.id, closed_hub2.id)
-        end
+        response_ids = json_response.map { |shop| shop['id'] }
+        expect(response_ids).to contain_exactly(closed_hub1.id, closed_hub2.id)
       end
     end
   end

@@ -63,6 +63,14 @@ module Spree
                         end
         @collection
       end
+
+      def variant_params
+        params.require(:variant).permit(::PermittedAttributes::Variant.attributes)
+      end
+
+      def permitted_resource_params
+        variant_params
+      end
     end
   end
 end

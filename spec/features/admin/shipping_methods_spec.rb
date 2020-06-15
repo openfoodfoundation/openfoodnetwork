@@ -36,7 +36,7 @@ feature 'shipping methods' do
       expect(page).to have_no_button I18n.t("actions.create")
 
       # Then the shipping method should have its distributor set
-      message = "Shipping method \"Carrier Pidgeon\" has been successfully created!"
+      message = "Shipping Method \"Carrier Pidgeon\" has been successfully created!"
       expect(page).to have_flash_message message
 
       sm = Spree::ShippingMethod.last
@@ -49,7 +49,7 @@ feature 'shipping methods' do
     scenario "deleting a shipping method" do
       visit_delete spree.admin_shipping_method_path(@shipping_method)
 
-      expect(page).to have_content "Shipping method \"#{@shipping_method.name}\" has been successfully removed!"
+      expect(page).to have_content "Shipping Method \"#{@shipping_method.name}\" has been successfully removed!"
       expect(Spree::ShippingMethod.where(id: @shipping_method.id)).to be_empty
     end
 
@@ -126,11 +126,11 @@ feature 'shipping methods' do
       click_button I18n.t("actions.create")
 
       expect(page).to have_content I18n.t('spree.admin.shipping_methods.edit.editing_shipping_method')
-      expect(flash_message).to eq I18n.t('successfully_created', resource: 'Shipping method "Teleport"')
+      expect(flash_message).to eq I18n.t('successfully_created', resource: 'Shipping Method "Teleport"')
 
       expect(first('tags-input .tag-list ti-tag-item')).to have_content "local"
 
-      shipping_method = Spree::ShippingMethod.find_by_name('Teleport')
+      shipping_method = Spree::ShippingMethod.find_by(name: 'Teleport')
       expect(shipping_method.distributors).to eq([distributor1])
       expect(shipping_method.tag_list).to eq(["local"])
     end

@@ -160,7 +160,9 @@ module ProductImport
       end
 
       product = Spree::Product.new
-      product.assign_attributes(entry.attributes.except('id', 'on_hand', 'on_demand'))
+      product.assign_attributes(
+        entry.assignable_attributes.except('id', 'on_hand', 'on_demand', 'display_name')
+      )
       product.supplier_id = entry.producer_id
 
       if product.save

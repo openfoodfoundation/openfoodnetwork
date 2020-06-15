@@ -18,8 +18,8 @@ feature "Darkswarm data caching", js: true, caching: true do
 
   describe "caching injected taxons and properties" do
     it "caches taxons and properties" do
-      expect(Spree::Taxon).to receive(:all) { [taxon] }
-      expect(Spree::Property).to receive(:all) { [property] }
+      expect(Spree::Taxon).to receive(:all).at_least(:once).and_call_original
+      expect(Spree::Property).to receive(:all).at_least(:once).and_call_original
 
       visit shops_path
 
@@ -29,14 +29,14 @@ feature "Darkswarm data caching", js: true, caching: true do
       visit shops_path
     end
 
-    xit "invalidates caches for taxons and properties" do
+    it "invalidates caches for taxons and properties" do
       visit shops_path
 
       taxon_timestamp1 = CacheService.latest_timestamp_by_class(Spree::Taxon)
-      expect_cached "views/#{CacheService::FragmentCaching.ams_all_taxons_key}"
+      expect_cached "views/#{CacheService::FragmentCaching.ams_all_taxons[0]}"
 
       property_timestamp1 = CacheService.latest_timestamp_by_class(Spree::Property)
-      expect_cached "views/#{CacheService::FragmentCaching.ams_all_properties_key}"
+      expect_cached "views/#{CacheService::FragmentCaching.ams_all_properties[0]}"
 
       toggle_filters
 
@@ -54,10 +54,10 @@ feature "Darkswarm data caching", js: true, caching: true do
       visit shops_path
 
       taxon_timestamp2 = CacheService.latest_timestamp_by_class(Spree::Taxon)
-      expect_cached "views/#{CacheService::FragmentCaching.ams_all_taxons_key}"
+      expect_cached "views/#{CacheService::FragmentCaching.ams_all_taxons[0]}"
 
       property_timestamp2 = CacheService.latest_timestamp_by_class(Spree::Property)
-      expect_cached "views/#{CacheService::FragmentCaching.ams_all_properties_key}"
+      expect_cached "views/#{CacheService::FragmentCaching.ams_all_properties[0]}"
 
       expect(taxon_timestamp1).to_not eq taxon_timestamp2
       expect(property_timestamp1).to_not eq property_timestamp2

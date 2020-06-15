@@ -24,6 +24,14 @@ require 'paper_trail/frameworks/rspec'
 
 require 'webdrivers'
 
+require 'shoulda/matchers'
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
+end
+
 # Allow connections to phantomjs/selenium whilst raising errors
 # when connecting to external sites
 require 'webmock/rspec'

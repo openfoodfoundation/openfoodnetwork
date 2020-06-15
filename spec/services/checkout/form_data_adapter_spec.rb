@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe Checkout::FormDataAdapter do
-  describe '#order_params' do
+  describe '#params' do
     let(:params) { { order: { order_id: "123" } } }
     let(:order) { create(:order) }
     let(:user) { create(:user) }
@@ -11,9 +11,7 @@ describe Checkout::FormDataAdapter do
     let(:adapter) { Checkout::FormDataAdapter.new(params, order, user) }
 
     it "returns the :order item in the params provided" do
-      order_params = adapter.order_params
-
-      expect(order_params).to eq params[:order]
+      expect(adapter.params[:order]).to eq params[:order]
     end
 
     describe "when payment_attributes are provided" do
@@ -25,9 +23,7 @@ describe Checkout::FormDataAdapter do
         before { params[:payment_source] = { "123" => source_attributes } }
 
         it "moves payment source attributes to the order payment attributes" do
-          order_params = adapter.order_params
-
-          expect(order_params[:payments_attributes].
+          expect(adapter.params[:order][:payments_attributes].
                    first[:source_attributes]).to eq source_attributes
         end
       end
@@ -36,9 +32,7 @@ describe Checkout::FormDataAdapter do
         before { order.total = "50.0" }
 
         it "sets the payment attributes amount to the order total" do
-          order_params = adapter.order_params
-
-          expect(order_params[:payments_attributes].first[:amount]).to eq order.total
+          expect(adapter.params[:order][:payments_attributes].first[:amount]).to eq order.total
         end
       end
 
@@ -51,10 +45,8 @@ describe Checkout::FormDataAdapter do
           before { params[:order][:existing_card_id] = credit_card.id }
 
           it "adds card details to payment attributes" do
-            order_params = adapter.order_params
-
-            expect(order_params[:payments_attributes].first[:source][:id]).to eq credit_card.id
-            expect(order_params[:payments_attributes].
+            expect(adapter.params[:order][:payments_attributes].first[:source][:id]).to eq credit_card.id
+            expect(adapter.params[:order][:payments_attributes].
                      first[:source][:last_digits]).to eq credit_card.last_digits
           end
         end
@@ -63,7 +55,7 @@ describe Checkout::FormDataAdapter do
           let(:credit_card) { create(:credit_card) }
 
           it "raises exception if credit card provided doesnt belong to the current user" do
-            expect { adapter.order_params }.to raise_error Spree::Core::GatewayError
+            expect { adapter.params[:order] }.to raise_error Spree::Core::GatewayError
           end
         end
       end

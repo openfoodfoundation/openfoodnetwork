@@ -81,6 +81,14 @@ module Spree
         @available_zones = Zone.order(:name)
         @calculators = ShippingMethod.calculators.sort_by(&:name)
       end
+
+      def permitted_resource_params
+        params.require(:shipping_method).permit(
+          :name, :description, :display_on,
+          :require_ship_address, :tag_list, :calculator_type,
+          distributor_ids: []
+        )
+      end
     end
   end
 end

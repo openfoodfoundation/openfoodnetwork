@@ -21,6 +21,13 @@ module Spree
       def create_after
         Rails.cache.delete('vat_rates')
       end
+
+      def permitted_resource_params
+        params.require(:tax_rate).permit(
+          :name, :amount, :included_in_price, :zone_id,
+          :tax_category_id, :show_rate_in_label, :calculator_type
+        )
+      end
     end
   end
 end

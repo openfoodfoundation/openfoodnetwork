@@ -39,7 +39,7 @@ module Openfoodnetwork
       Spree::Config['checkout_zone'] = ENV['CHECKOUT_ZONE']
       Spree::Config['currency'] = ENV['CURRENCY']
       if Spree::Country.table_exists?
-        country = Spree::Country.find_by_iso(ENV['DEFAULT_COUNTRY_CODE'])
+        country = Spree::Country.find_by(iso: ENV['DEFAULT_COUNTRY_CODE'])
         Spree::Config['default_country_id'] = country.id if country.present?
       else
         Spree::Config['default_country_id'] = 12  # Australia
@@ -106,7 +106,7 @@ module Openfoodnetwork
       #{config.root}/app/jobs
     )
 
-    config.paths["config/routes"] = %w(
+    config.paths["config/routes.rb"] = %w(
       config/routes/api.rb
       config/routes.rb
       config/routes/admin.rb
@@ -137,9 +137,6 @@ module Openfoodnetwork
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
-
-    # Configure sensitive parameters which will be filtered from the log file.
-    config.filter_parameters += [:password]
 
     # Enable the asset pipeline
     config.assets.enabled = true

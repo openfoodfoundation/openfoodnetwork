@@ -32,6 +32,12 @@ module Api
     use_renderers :json
     check_authorization
 
+    # Temporary measure to help debugging strong_parameters
+    rescue_from ActiveModel::ForbiddenAttributesError, with: :print_params
+    def print_params
+      raise ActiveModel::ForbiddenAttributesError, params.to_s
+    end
+
     def set_jsonp_format
       return unless params[:callback] && request.get?
 
@@ -55,7 +61,7 @@ module Api
         return
       end
 
-      return if @current_api_user = Spree.user_class.find_by_spree_api_key(api_key.to_s)
+      return if @current_api_user = Spree.user_class.find_by(spree_api_key: api_key.to_s)
 
       invalid_api_key
     end

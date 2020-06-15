@@ -12,10 +12,6 @@ Spree::LineItem.class_eval do
   # Allows manual skipping of Stock::AvailabilityValidator
   attr_accessor :skip_stock_check
 
-  attr_accessible :max_quantity, :final_weight_volume, :price
-  attr_accessible :final_weight_volume, :price, as: :api
-  attr_accessible :skip_stock_check
-
   before_save :calculate_final_weight_volume, if: :quantity_changed?, unless: :final_weight_volume_changed?
   after_save :update_units
 
@@ -26,7 +22,7 @@ Spree::LineItem.class_eval do
   # -- Scopes
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
-      scoped
+      where(nil)
     else
       # Find line items that are from orders distributed by the user or supplied by the user
       joins(variant: :product).
@@ -54,13 +50,13 @@ Spree::LineItem.class_eval do
       where('order_cycles.id = ?', order_cycle)
   }
 
-  scope :supplied_by, lambda { |enterprise|
-    joins(:product).
-      where('spree_products.supplier_id = ?', enterprise)
-  }
+  # Here we are simply joining the line item to its variant and product
+  # We dont use joins here to avoid the default scopes,
+  #   and with that, include deleted variants and deleted products
   scope :supplied_by_any, lambda { |enterprises|
-    joins(:product).
-      where('spree_products.supplier_id IN (?)', enterprises)
+    product_ids = Spree::Product.unscoped.where(supplier_id: enterprises).select(:id)
+    variant_ids = Spree::Variant.unscoped.where(product_id: product_ids).select(:id)
+    where("spree_line_items.variant_id IN (?)", variant_ids)
   }
 
   scope :with_tax, -> {
@@ -79,9 +75,12 @@ Spree::LineItem.class_eval do
       where('spree_adjustments.id IS NULL')
   }
 
+  # Overridden so that LineItems always have access to soft-deleted Variant
+  # attributes. In some situations, unscoped super will be nil, in these cases
+  # we fetch the variant using the variant_id. See isssue #4946 for more
+  # details
   def variant
-    # Overridden so that LineItems always have access to soft-deleted Variant attributes
-    Spree::Variant.unscoped { super }
+    Spree::Variant.unscoped { super } || Spree::Variant.unscoped.find(variant_id)
   end
 
   def cap_quantity_at_stock!

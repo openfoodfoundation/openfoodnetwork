@@ -41,7 +41,7 @@ describe OrderShipment do
 
         it "returns nil for empty shipping_method_id" do
           empty_shipping_method_id = ' '
-          expect(shipment.shipping_rates).to_not receive(:find_by_shipping_method_id).with(empty_shipping_method_id)
+          expect(shipment.shipping_rates).to_not receive(:find_by).with(shipping_method_id: empty_shipping_method_id)
 
           expect(order.select_shipping_method(empty_shipping_method_id)).to be_nil
         end
@@ -50,7 +50,7 @@ describe OrderShipment do
       context "when shipping_method_id is not valid for the order" do
         it "returns nil" do
           invalid_shipping_method_id = order.shipment.shipping_method.id + 1000
-          expect(shipment.shipping_rates).to receive(:find_by_shipping_method_id).with(invalid_shipping_method_id) { nil }
+          expect(shipment.shipping_rates).to receive(:find_by).with(shipping_method_id: invalid_shipping_method_id) { nil }
 
           expect(order.select_shipping_method(invalid_shipping_method_id)).to be_nil
         end

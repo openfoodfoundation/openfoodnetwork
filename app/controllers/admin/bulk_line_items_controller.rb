@@ -28,7 +28,7 @@ module Admin
       # See https://github.com/rails/rails/blob/3-2-stable/activerecord/lib/active_record/locking/pessimistic.rb#L69
       # and https://www.postgresql.org/docs/current/static/sql-select.html#SQL-FOR-UPDATE-SHARE
       order.with_lock do
-        if @line_item.update_attributes(params[:line_item])
+        if @line_item.update_attributes(line_item_params)
           order.update_distribution_charge!
           render nothing: true, status: :no_content # No Content, does not trigger ng resource auto-update
         else
@@ -77,6 +77,10 @@ module Admin
 
     def order
       @line_item.order
+    end
+
+    def line_item_params
+      params.require(:line_item).permit(:price, :quantity, :final_weight_volume)
     end
 
     def order_permissions

@@ -22,7 +22,7 @@ module Spree
           roles = params[:user].delete("spree_role_ids")
         end
 
-        @user = Spree::User.new(params[:user])
+        @user = Spree::User.new(user_params)
         if @user.save
 
           if roles
@@ -41,7 +41,7 @@ module Spree
           roles = params[:user].delete("spree_role_ids")
         end
 
-        if @user.update_attributes(params[:user])
+        if @user.update_attributes(user_params)
           if roles
             @user.spree_roles = roles.reject(&:blank?).collect{ |r| Spree::Role.find(r) }
           end
@@ -76,7 +76,6 @@ module Spree
         return @collection if @collection.present?
 
         if request.xhr? && params[:q].present?
-          # Disabling proper nested include here due to rails 3.1 bug
           @collection = Spree::User.
             includes(:bill_address, :ship_address).
             where("spree_users.email #{LIKE} :search
@@ -91,7 +90,7 @@ module Spree
                   search: "#{params[:q].strip}%").
             limit(params[:limit] || 100)
         else
-          @search = Spree::User.registered.ransack(params[:q])
+          @search = Spree::User.ransack(params[:q])
           @collection = @search.
             result.
             page(params[:page]).
@@ -131,11 +130,15 @@ module Spree
       end
 
       def load_roles
-        @roles = Spree::Role.scoped
+        @roles = Spree::Role.where(nil)
       end
 
       def new_email_unconfirmed?
         params[:user][:email] != @user.email
+      end
+
+      def user_params
+        ::PermittedAttributes::User.new(params).call([:enterprise_limit])
       end
     end
   end

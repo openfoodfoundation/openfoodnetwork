@@ -1,6 +1,4 @@
 class InventoryItem < ActiveRecord::Base
-  attr_accessible :enterprise, :enterprise_id, :variant, :variant_id, :visible
-
   belongs_to :enterprise
   belongs_to :variant, class_name: "Spree::Variant"
 

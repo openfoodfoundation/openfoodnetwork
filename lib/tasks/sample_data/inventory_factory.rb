@@ -5,7 +5,7 @@ class InventoryFactory
 
   def create_samples(products)
     log "Creating inventories"
-    marys_shop = Enterprise.find_by_name("Mary's Online Shop")
+    marys_shop = Enterprise.find_by(name: "Mary's Online Shop")
     products.each do |product|
       create_item(marys_shop, product)
     end
@@ -18,7 +18,7 @@ class InventoryFactory
       enterprise: shop,
       variant: product.variants.first,
       visible: true
-    ).find_or_create_by_variant_id!(product.variants.first.id)
+    ).find_or_create_by!(variant_id: product.variants.first.id)
     create_override(shop, product)
   end
 
@@ -29,6 +29,6 @@ class InventoryFactory
       price: 12,
       on_demand: false,
       count_on_hand: 5
-    ).find_or_create_by_variant_id!(product.variants.first.id)
+    ).find_or_create_by!(variant_id: product.variants.first.id)
   end
 end

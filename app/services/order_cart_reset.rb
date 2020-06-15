@@ -4,7 +4,7 @@
 class OrderCartReset
   def initialize(order, distributor_id)
     @order = order
-    @distributor ||= Enterprise.is_distributor.find_by_permalink(distributor_id) ||
+    @distributor ||= Enterprise.is_distributor.find_by(permalink: distributor_id) ||
                      Enterprise.is_distributor.find(distributor_id)
   end
 

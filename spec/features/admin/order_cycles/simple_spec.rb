@@ -229,7 +229,7 @@ feature '
         end
 
         click_button 'Save and Back to List'
-        order_cycle = OrderCycle.find_by_name('My order cycle')
+        order_cycle = OrderCycle.find_by(name: 'My order cycle')
         expect(page).to have_input "oc#{order_cycle.id}[name]", value: order_cycle.name
 
         expect(order_cycle.suppliers).to match_array [supplier_managed, supplier_permitted]

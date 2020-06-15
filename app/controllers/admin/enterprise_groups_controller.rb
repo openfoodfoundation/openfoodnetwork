@@ -28,7 +28,9 @@ module Admin
     def build_resource_with_address
       enterprise_group = build_resource_without_address
       enterprise_group.address = Spree::Address.new
-      enterprise_group.address.country = Spree::Country.find_by_id(Spree::Config[:default_country_id])
+      enterprise_group.address.country = Spree::Country.find_by(
+        id: Spree::Config[:default_country_id]
+      )
       enterprise_group
     end
     alias_method_chain :build_resource, :address
@@ -38,7 +40,7 @@ module Admin
     # The ! version is important to raise a RecordNotFound error.
     def find_resource
       permalink = params[:id] || params[:enterprise_group_id]
-      EnterpriseGroup.find_by_permalink!(permalink)
+      EnterpriseGroup.find_by!(permalink: permalink)
     end
 
     private
@@ -54,6 +56,14 @@ module Admin
 
     def collection
       EnterpriseGroup.by_position
+    end
+
+    def permitted_resource_params
+      params.require(:enterprise_group).permit(
+        :name, :description, :long_description, :on_front_page, :owner_id, :permalink,
+        :email, :website, :facebook, :instagram, :linkedin, :twitter,
+        enterprise_ids: [], address_attributes: PermittedAttributes::Address.attributes
+      )
     end
   end
 end

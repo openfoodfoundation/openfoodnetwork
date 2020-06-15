@@ -27,12 +27,8 @@ module Spree
 
       let(:oc_order) { create :order_with_totals_and_distribution }
 
-      it "finds line items for products supplied by a particular enterprise" do
-        expect(LineItem.supplied_by(s1)).to eq([li1])
-        expect(LineItem.supplied_by(s2)).to eq([li2])
-      end
-
       it "finds line items for products supplied by one of a number of enterprises" do
+        li1; li2
         expect(LineItem.supplied_by_any([s1])).to eq([li1])
         expect(LineItem.supplied_by_any([s2])).to eq([li2])
         expect(LineItem.supplied_by_any([s1, s2])).to match_array [li1, li2]
@@ -639,7 +635,7 @@ module Spree
 
     describe "deleting unit option values" do
       let!(:p) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
-      let!(:ot) { Spree::OptionType.find_by_name 'unit_weight' }
+      let!(:ot) { Spree::OptionType.find_by name: 'unit_weight' }
       let!(:li) { create(:line_item, product: p) }
 
       it "removes option value associations for unit option types" do

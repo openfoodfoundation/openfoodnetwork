@@ -20,9 +20,8 @@ FactoryBot.define do
                                                           3,
                                                           subscription: subscription)
         subscription.order_cycles.each do |oc|
-          ex = oc.exchanges.outgoing.find_by_sender_id_and_receiver_id(
-            subscription.shop_id, subscription.shop_id
-          )
+          ex = oc.exchanges.outgoing.find_by(sender_id: subscription.shop_id,
+                                             receiver_id: subscription.shop_id)
           ex ||= create(:exchange, order_cycle: oc,
                                    sender: subscription.shop,
                                    receiver: subscription.shop,

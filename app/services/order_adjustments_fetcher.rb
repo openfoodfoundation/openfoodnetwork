@@ -61,7 +61,7 @@ class OrderAdjustmentsFetcher
         match_by_scope(adjustment, adjustment_scope)
       end
     else
-      adjustments.scoped.public_send scope
+      adjustments.where(nil).public_send scope
     end
   end
 

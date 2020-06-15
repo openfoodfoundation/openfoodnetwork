@@ -5,7 +5,9 @@ Openfoodnetwork::Application.configure do
   # test suite.  You never need to work with it otherwise.  Remember that
   # your test database is "scratch space" for the test suite and is wiped
   # and recreated between test runs.  Don't rely on the data there!
-  config.cache_classes = true
+  config.cache_classes = false
+
+  config.eager_load = false
 
   # Configure static asset server for tests with Cache-Control for performance
   config.serve_static_assets = true
@@ -13,10 +15,6 @@ Openfoodnetwork::Application.configure do
 
   # Separate cache stores when running in parallel
   config.cache_store = :file_store, Rails.root.join("tmp", "cache", "paralleltests#{ENV['TEST_ENV_NUMBER']}")
-
-
-  # Log error messages when you accidentally call methods on nil
-  config.whiny_nils = true
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
@@ -37,7 +35,7 @@ Openfoodnetwork::Application.configure do
 
   # Tests assume English text on the site.
   config.i18n.default_locale = "en"
-  config.i18n.available_locales = ['en', 'es']
+  config.i18n.available_locales = ['en', 'es', 'pt']
   config.i18n.fallbacks = [:en]
   I18n.locale = config.i18n.locale = config.i18n.default_locale
 

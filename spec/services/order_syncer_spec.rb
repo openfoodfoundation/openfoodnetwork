@@ -416,7 +416,7 @@ describe OrderSyncer do
           line_items = Spree::LineItem.where(order_id: subscription.orders, variant_id: sli.variant_id)
           expect(line_items.map(&:quantity)).to eq [1]
           expect(order.reload.total.to_f).to eq 59.97
-          line_item = order.line_items.find_by_variant_id(sli.variant_id)
+          line_item = order.line_items.find_by(variant_id: sli.variant_id)
           expect(syncer.order_update_issues[order.id]).to include "#{line_item.product.name} - #{line_item.variant.full_name} - Insufficient stock available"
         end
 
@@ -427,7 +427,7 @@ describe OrderSyncer do
 
           expect(syncer.sync!).to be true
 
-          line_item = order.line_items.find_by_variant_id(sli.variant_id)
+          line_item = order.line_items.find_by(variant_id: sli.variant_id)
           expect(syncer.order_update_issues[order.id]).to include "#{line_item.product.name} - #{line_item.variant.full_name} - Out of Stock"
         end
       end
@@ -436,7 +436,7 @@ describe OrderSyncer do
     context "where the quantity of the item on an initialised order has already been changed" do
       let(:params) { { subscription_line_items_attributes: [{ id: sli.id, quantity: 3 }] } }
       let(:syncer) { OrderSyncer.new(subscription) }
-      let(:changed_line_item) { order.line_items.find_by_variant_id(sli.variant_id) }
+      let(:changed_line_item) { order.line_items.find_by(variant_id: sli.variant_id) }
 
       before { variant.update_attribute(:on_hand, 3) }
 

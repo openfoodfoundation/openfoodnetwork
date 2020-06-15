@@ -44,7 +44,7 @@ module Spree
       end
 
       def update
-        unless @order.update_attributes(params[:order]) && @order.line_items.present?
+        unless @order.update_attributes(order_params) && @order.line_items.present?
           if @order.line_items.empty?
             @order.errors.add(:line_items, Spree.t('errors.messages.blank'))
           end
@@ -107,6 +107,12 @@ module Spree
       end
 
       private
+
+      def order_params
+        return params[:order] if params[:order].blank?
+
+        params.require(:order).permit(:distributor_id, :order_cycle_id)
+      end
 
       def load_order
         if params[:id]

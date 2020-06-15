@@ -165,7 +165,7 @@ module Api
         before { allow(controller).to receive(:spree_current_user) { admin_user } }
 
         it "when no order number is given" do
-          get :show, id: nil
+          get :show, id: ""
           expect(response).to have_http_status(:not_found)
         end
 

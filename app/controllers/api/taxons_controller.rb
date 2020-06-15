@@ -26,7 +26,7 @@ module Api
       authorize! :create, Spree::Taxon
       @taxon = Spree::Taxon.new(params[:taxon])
       @taxon.taxonomy_id = params[:taxonomy_id]
-      taxonomy = Spree::Taxonomy.find_by_id(params[:taxonomy_id])
+      taxonomy = Spree::Taxonomy.find_by(id: params[:taxonomy_id])
 
       if taxonomy.nil?
         @taxon.errors[:taxonomy_id] = I18n.t(:invalid_taxonomy_id, scope: 'spree.api')

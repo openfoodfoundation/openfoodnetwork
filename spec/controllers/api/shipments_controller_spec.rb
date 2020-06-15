@@ -222,7 +222,7 @@ describe Api::ShipmentsController, type: :controller do
     end
 
     def make_order_contents_fail
-      expect(Spree::Order).to receive(:find_by_number!) { order }
+      expect(Spree::Order).to receive(:find_by!).with({ number: order.number }) { order }
       expect(order).to receive(:contents) { raise error_message }
     end
 

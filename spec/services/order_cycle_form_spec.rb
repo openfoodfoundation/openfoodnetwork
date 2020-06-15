@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'order_management/subscriptions/proxy_order_syncer'
 
 describe OrderCycleForm do
@@ -8,7 +9,7 @@ describe OrderCycleForm do
       let(:form) { OrderCycleForm.new(order_cycle, params, shop.owner) }
 
       context "when creation is successful" do
-        let(:params) { { order_cycle: { name: "Test Order Cycle", coordinator_id: shop.id } } }
+        let(:params) { { name: "Test Order Cycle", coordinator_id: shop.id } }
 
         it "returns true" do
           expect do
@@ -18,7 +19,7 @@ describe OrderCycleForm do
       end
 
       context "when creation fails" do
-        let(:params) { { order_cycle: { name: "Test Order Cycle" } } }
+        let(:params) { { name: "Test Order Cycle" } }
 
         it "returns false" do
           expect do
@@ -34,7 +35,7 @@ describe OrderCycleForm do
       let(:form) { OrderCycleForm.new(order_cycle, params, shop.owner) }
 
       context "when update is successful" do
-        let(:params) { { order_cycle: { name: "Test Order Cycle", coordinator_id: shop.id } } }
+        let(:params) { { name: "Test Order Cycle", coordinator_id: shop.id } }
 
         it "returns true" do
           expect do
@@ -44,7 +45,7 @@ describe OrderCycleForm do
       end
 
       context "when updating fails" do
-        let(:params) { { order_cycle: { name: nil } } }
+        let(:params) { { name: nil } }
 
         it "returns false" do
           expect do
@@ -75,7 +76,7 @@ describe OrderCycleForm do
       end
 
       context "and I add an schedule that I own, and remove another that I own" do
-        let(:params) { { order_cycle: { schedule_ids: [coordinated_schedule2.id] } } }
+        let(:params) { { schedule_ids: [coordinated_schedule2.id] } }
 
         it "associates the order cycle to the schedule" do
           expect(form.save).to be true
@@ -86,7 +87,7 @@ describe OrderCycleForm do
       end
 
       context "and I add a schedule that I don't own" do
-        let(:params) { { order_cycle: { schedule_ids: [coordinated_schedule.id, uncoordinated_schedule.id] } } }
+        let(:params) { { schedule_ids: [coordinated_schedule.id, uncoordinated_schedule.id] } }
 
         it "ignores the schedule that I don't own" do
           expect(form.save).to be true
@@ -97,7 +98,7 @@ describe OrderCycleForm do
       end
 
       context "when I make no changes to the schedule ids" do
-        let(:params) { { order_cycle: { schedule_ids: [coordinated_schedule.id] } } }
+        let(:params) { { schedule_ids: [coordinated_schedule.id] } }
 
         it "ignores the schedule that I don't own" do
           expect(form.save).to be true
@@ -113,7 +114,7 @@ describe OrderCycleForm do
     let(:order_cycle) { create(:simple_order_cycle) }
     let(:form_applicator_mock) { instance_double(OpenFoodNetwork::OrderCycleFormApplicator) }
     let(:form) { OrderCycleForm.new(order_cycle, params, user) }
-    let(:params) { { order_cycle: { name: 'Some new name' } } }
+    let(:params) { { name: 'Some new name' } }
 
     before do
       allow(OpenFoodNetwork::OrderCycleFormApplicator).to receive(:new) { form_applicator_mock }
@@ -122,7 +123,7 @@ describe OrderCycleForm do
 
     context "when exchange params are provided" do
       let(:exchange_params) { { incoming_exchanges: [], outgoing_exchanges: [] } }
-      before { params[:order_cycle].merge!(exchange_params) }
+      before { params.merge!(exchange_params) }
 
       it "runs the OrderCycleFormApplicator, and saves other changes" do
         expect(form.save).to be true

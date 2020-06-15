@@ -20,6 +20,20 @@ module ProductImport
                   :tax_category_id, :shipping_category_id, :description,
                   :import_date, :enterprise, :enterprise_id
 
+    NON_DISPLAY_ATTRIBUTES = ['id', 'product_id', 'unscaled_units', 'variant_id', 'enterprise',
+                              'enterprise_id', 'producer_id', 'distributor_id', 'primary_taxon',
+                              'primary_taxon_id', 'category_id', 'shipping_category_id',
+                              'tax_category_id', 'variant_unit_scale', 'variant_unit',
+                              'unit_value'].freeze
+
+    NON_PRODUCT_ATTRIBUTES = ['line_number', 'valid', 'errors', 'product_object',
+                              'product_validations', 'inventory_validations', 'validates_as',
+                              'save_type', 'on_hand_nil', 'has_overrides'].freeze
+
+    NON_ASSIGNABLE_ATTRIBUTES = ['producer', 'producer_id', 'category', 'shipping_category',
+                                 'tax_category', 'units', 'unscaled_units', 'unit_type',
+                                 'enterprise', 'enterprise_id'].freeze
+
     def initialize(attrs)
       @validates_as = ''
       remove_empty_skus attrs
@@ -43,7 +57,11 @@ module ProductImport
       instance_variables.each do |var|
         attrs[var.to_s.delete("@")] = instance_variable_get(var)
       end
-      attrs.except(*non_product_attributes)
+      attrs.except(*NON_PRODUCT_ATTRIBUTES)
+    end
+
+    def assignable_attributes
+      attributes.except(*NON_ASSIGNABLE_ATTRIBUTES)
     end
 
     def displayable_attributes
@@ -52,7 +70,7 @@ module ProductImport
       instance_variables.each do |var|
         attrs[var.to_s.delete("@")] = instance_variable_get(var)
       end
-      attrs.except(*non_product_attributes, *non_display_attributes)
+      attrs.except(*NON_PRODUCT_ATTRIBUTES, *NON_DISPLAY_ATTRIBUTES)
     end
 
     def invalid_attributes
@@ -61,7 +79,7 @@ module ProductImport
       errors.each do |attr, message|
         invalid_attrs[attr.to_s] = "#{attr.to_s.capitalize} #{message.first}"
       end
-      invalid_attrs.except(*non_product_attributes, *non_display_attributes)
+      invalid_attrs.except(* NON_PRODUCT_ATTRIBUTES, *NON_DISPLAY_ATTRIBUTES)
     end
 
     private
@@ -75,22 +93,9 @@ module ProductImport
 
       units.converted_attributes.each do |attr, value|
         if respond_to?("#{attr}=")
-          public_send("#{attr}=", value) unless non_product_attributes.include?(attr)
+          public_send("#{attr}=", value) unless NON_PRODUCT_ATTRIBUTES.include?(attr)
         end
       end
-    end
-
-    def non_display_attributes
-      ['id', 'product_id', 'unscaled_units', 'variant_id', 'enterprise',
-       'enterprise_id', 'producer_id', 'distributor_id', 'primary_taxon',
-       'primary_taxon_id', 'category_id', 'shipping_category_id',
-       'tax_category_id', 'variant_unit_scale', 'variant_unit', 'unit_value']
-    end
-
-    def non_product_attributes
-      ['line_number', 'valid', 'errors', 'product_object',
-       'product_validations', 'inventory_validations', 'validates_as',
-       'save_type', 'on_hand_nil', 'has_overrides']
     end
   end
 end

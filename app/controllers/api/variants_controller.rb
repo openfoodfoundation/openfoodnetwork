@@ -47,7 +47,7 @@ module Api
     private
 
     def product
-      @product ||= Spree::Product.find_by_permalink(params[:product_id]) if params[:product_id]
+      @product ||= Spree::Product.find_by(permalink: params[:product_id]) if params[:product_id]
     end
 
     def scope
@@ -58,7 +58,7 @@ module Api
                      @product.variants_including_master
                    end
       else
-        variants = Spree::Variant.scoped
+        variants = Spree::Variant.where(nil)
         if current_api_user.has_spree_role?("admin")
           unless params[:show_deleted]
             variants = Spree::Variant.active

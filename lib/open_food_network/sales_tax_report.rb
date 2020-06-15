@@ -95,7 +95,7 @@ module OpenFoodNetwork
     end
 
     def shipping_cost_for(order)
-      shipping_cost = order.adjustments.find_by_label("Shipping").andand.amount
+      shipping_cost = order.adjustments.find_by(label: "Shipping").andand.amount
       shipping_cost.nil? ? 0.0 : shipping_cost
     end
 

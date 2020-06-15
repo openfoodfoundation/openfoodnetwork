@@ -10,9 +10,9 @@ feature "Registration", js: true do
     before do
       Spree::Config.enterprises_require_tos = false
 
-      albania = Spree::Country.create!({ name: "Albania", iso3: "ALB", iso: "AL", iso_name: "ALBANIA", numcode: "8" }, without_protection: true)
-      Spree::State.create!({ name: "Berat", abbr: "BRA", country: albania }, without_protection: true)
-      Spree::Country.create!({ name: "Chad", iso3: "TCD", iso: "TD", iso_name: "CHAD", numcode: "148" }, without_protection: true)
+      albania = Spree::Country.create!({ name: "Albania", iso3: "ALB", iso: "AL", iso_name: "ALBANIA", numcode: "8" })
+      Spree::State.create!({ name: "Berat", abbr: "BRA", country: albania })
+      Spree::Country.create!({ name: "Chad", iso3: "TCD", iso: "TD", iso_name: "CHAD", numcode: "148" })
     end
 
     after do
@@ -72,7 +72,7 @@ feature "Registration", js: true do
       expect(page).to have_content 'Nice one!'
 
       # Enterprise should be created
-      e = Enterprise.find_by_name('My Awesome Enterprise')
+      e = Enterprise.find_by(name: 'My Awesome Enterprise')
       expect(e.address.address1).to eq "123 Abc Street"
       expect(e.sells).to eq "unspecified"
       expect(e.is_primary_producer).to eq true
@@ -124,6 +124,10 @@ feature "Registration", js: true do
 
       click_link "Go to Enterprise Dashboard"
       expect(page).to have_content "CHOOSE YOUR PACKAGE"
+
+      page.find('.full_hub h3').click
+      click_button "Select and Continue"
+      expect(page).to have_content "Your profile live"
     end
 
     context "when the user has no more remaining enterprises" do

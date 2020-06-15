@@ -14,6 +14,12 @@ module Spree
           end
         end
       end
+
+      private
+
+      def permitted_resource_params
+        params.require(:tax_category).permit(:name, :description, :is_default)
+      end
     end
   end
 end

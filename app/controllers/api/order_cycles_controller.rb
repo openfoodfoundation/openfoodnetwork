@@ -81,11 +81,11 @@ module Api
     end
 
     def distributor
-      @distributor ||= Enterprise.find_by_id(params[:distributor])
+      @distributor ||= Enterprise.find_by(id: params[:distributor])
     end
 
     def order_cycle
-      @order_cycle ||= OrderCycle.find_by_id(params[:id])
+      @order_cycle ||= OrderCycle.find_by(id: params[:id])
     end
 
     def customer

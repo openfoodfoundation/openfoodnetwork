@@ -6,7 +6,7 @@ module OpenFoodNetwork
     context "As a site admin" do
       let(:user) do
         user = create(:user)
-        user.spree_roles << Spree::Role.find_or_create_by_name!("admin")
+        user.spree_roles << Spree::Role.find_or_create_by!(name: 'admin')
         user
       end
       subject do
@@ -96,18 +96,18 @@ module OpenFoodNetwork
       end
 
       describe "Filtering variants" do
-        let(:variants) { Spree::Variant.scoped.joins(:product).where(is_master: false) }
+        let(:variants) { Spree::Variant.where(nil).joins(:product).where(is_master: false) }
         it "should return unfiltered variants sans-params" do
           product1 = create(:simple_product, supplier: supplier)
           product2 = create(:simple_product, supplier: supplier)
 
-          expect(subject.filter(Spree::Variant.scoped)).to match_array [product1.master, product1.variants.first, product2.master, product2.variants.first]
+          expect(subject.filter(Spree::Variant.where(nil))).to match_array [product1.master, product1.variants.first, product2.master, product2.variants.first]
         end
         it "should filter deleted products" do
           product1 = create(:simple_product, supplier: supplier)
           product2 = create(:simple_product, supplier: supplier)
           product2.destroy
-          expect(subject.filter(Spree::Variant.scoped)).to match_array [product1.master, product1.variants.first]
+          expect(subject.filter(Spree::Variant.where(nil))).to match_array [product1.master, product1.variants.first]
         end
         describe "based on report type" do
           it "returns only variants on hand" do
@@ -200,9 +200,9 @@ module OpenFoodNetwork
 
           # Remove the distribution of one product for one distributor but still
           # sell it through the other distributor.
-          order_cycle.exchanges.outgoing.find_by_receiver_id(distributor.id).
+          order_cycle.exchanges.outgoing.find_by(receiver_id: distributor.id).
             exchange_variants.
-            find_by_variant_id(variant_filtered_by_distributor).
+            find_by(variant_id: variant_filtered_by_distributor).
             destroy
 
           # Make product available to be filtered later. See OC comment above.

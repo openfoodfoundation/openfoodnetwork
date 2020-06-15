@@ -1,11 +1,5 @@
 Spree::CreditCard.class_eval do
-  # Allows user to submit these attributes with checkout request
-  # Required to be able to correctly store details for token-based charges
-  # Obviously can be removed once we are using strong params
-  attr_accessible :cc_type, :last_digits
-
   # For holding customer preference in memory
-  attr_accessible :save_requested_by_customer, :is_default
   attr_writer :save_requested_by_customer
 
   # Should be able to remove once we reach Spree v2.2.0

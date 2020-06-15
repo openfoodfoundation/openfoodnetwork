@@ -80,7 +80,7 @@ describe Admin::SchedulesController, type: :controller do
 
         it "allows me to add/remove only order cycles I coordinate to/from the schedule" do
           order_cycle_ids = [coordinated_order_cycle2.id, uncoordinated_order_cycle2.id, uncoordinated_order_cycle3.id]
-          spree_put :update, format: :json, id: coordinated_schedule.id, schedule: { order_cycle_ids: order_cycle_ids }
+          spree_put :update, format: :json, id: coordinated_schedule.id, order_cycle_ids: order_cycle_ids
           expect(assigns(:schedule)).to eq coordinated_schedule
           # coordinated_order_cycle2 is added, uncoordinated_order_cycle is NOT removed
           expect(coordinated_schedule.reload.order_cycles).to include coordinated_order_cycle2, uncoordinated_order_cycle, uncoordinated_order_cycle3
@@ -93,9 +93,9 @@ describe Admin::SchedulesController, type: :controller do
           allow(OrderManagement::Subscriptions::ProxyOrderSyncer).to receive(:new) { syncer_mock }
           expect(syncer_mock).to receive(:sync!).exactly(2).times
 
-          spree_put :update, format: :json, id: coordinated_schedule.id, schedule: { order_cycle_ids: [coordinated_order_cycle.id, coordinated_order_cycle2.id] }
-          spree_put :update, format: :json, id: coordinated_schedule.id, schedule: { order_cycle_ids: [coordinated_order_cycle.id] }
-          spree_put :update, format: :json, id: coordinated_schedule.id, schedule: { order_cycle_ids: [coordinated_order_cycle.id] }
+          spree_put :update, format: :json, id: coordinated_schedule.id, order_cycle_ids: [coordinated_order_cycle.id, coordinated_order_cycle2.id]
+          spree_put :update, format: :json, id: coordinated_schedule.id, order_cycle_ids: [coordinated_order_cycle.id]
+          spree_put :update, format: :json, id: coordinated_schedule.id, order_cycle_ids: [coordinated_order_cycle.id]
         end
       end
 
@@ -138,7 +138,7 @@ describe Admin::SchedulesController, type: :controller do
 
         context "where I manage at least one of the order cycles to be added to the schedules" do
           before do
-            params[:schedule].merge!( order_cycle_ids: [coordinated_order_cycle.id, uncoordinated_order_cycle.id] )
+            params.merge!( order_cycle_ids: [coordinated_order_cycle.id, uncoordinated_order_cycle.id] )
           end
 
           it "allows me to create the schedule, adding only order cycles that I manage" do
@@ -159,7 +159,7 @@ describe Admin::SchedulesController, type: :controller do
 
         context "where I don't manage any of the order cycles to be added to the schedules" do
           before do
-            params[:schedule].merge!( order_cycle_ids: [uncoordinated_order_cycle.id] )
+            params.merge!( order_cycle_ids: [uncoordinated_order_cycle.id] )
           end
 
           it "prevents me from creating the schedule" do
@@ -171,7 +171,7 @@ describe Admin::SchedulesController, type: :controller do
       context 'as an admin user' do
         before do
           allow(controller).to receive(:spree_current_user) { create(:admin_user) }
-          params[:schedule].merge!( order_cycle_ids: [coordinated_order_cycle.id, uncoordinated_order_cycle.id] )
+          params.merge!( order_cycle_ids: [coordinated_order_cycle.id, uncoordinated_order_cycle.id] )
         end
 
         it "allows me to create a schedule" do

@@ -1,5 +1,9 @@
 FactoryBot.modify do
   factory :user do
+    transient do
+      enterprises []
+    end
+
     confirmation_sent_at '1970-01-01 00:00:00'
     confirmed_at '1970-01-01 00:00:01'
 
@@ -13,8 +17,10 @@ FactoryBot.modify do
       end
     end
 
-    after(:create) do |user|
+    after(:create) do |user, proxy|
       user.spree_roles.clear # Remove admin role
+
+      user.enterprises << proxy.enterprises
     end
   end
 
@@ -23,7 +29,7 @@ FactoryBot.modify do
     confirmed_at '1970-01-01 00:00:01'
 
     after(:create) do |user|
-      user.spree_roles << Spree::Role.find_or_create_by_name!('admin')
+      user.spree_roles << Spree::Role.find_or_create_by!(name: 'admin')
     end
   end
 end

@@ -3,10 +3,11 @@ require 'order_management/subscriptions/proxy_order_syncer'
 
 module Admin
   class SchedulesController < ResourceController
-    before_filter :check_editable_order_cycle_ids, only: [:create, :update]
+    before_filter :adapt_params, only: [:update]
+    before_filter :editable_order_cycle_ids_for_create, only: [:create]
+    before_filter :editable_order_cycle_ids_for_update, only: [:update]
     before_filter :check_dependent_subscriptions, only: [:destroy]
-    create.after :sync_subscriptions
-    update.after :sync_subscriptions
+    update.after :sync_subscriptions_for_update
 
     respond_to :json
 
@@ -25,6 +26,23 @@ module Admin
           render_as_json @collection, ams_prefix: params[:ams_prefix], editable_schedule_ids: permissions.editable_schedules.pluck(:id)
         end
       end
+    end
+
+    def create
+      return respond_with(@schedule) if params[:order_cycle_ids].blank?
+
+      @schedule.attributes = permitted_resource_params
+
+      if @schedule.save
+        @schedule.order_cycle_ids = params[:order_cycle_ids]
+        @schedule.save!
+
+        sync_subscriptions_for_create
+
+        flash[:success] = flash_message_for(@schedule, :successfully_created)
+      end
+
+      respond_with(@schedule)
     end
 
     private
@@ -48,17 +66,43 @@ module Admin
       [:index]
     end
 
-    def check_editable_order_cycle_ids
+    # In this controller, params like params[:name] are moved into
+    #   params[:schedule] becoming params[:schedule][:name].
+    # For some reason in rails 4, this is not happening for params[:order_cycle_ids]
+    #   We do it manually in this filter
+    def adapt_params
+      params[:schedule] = {} if params[:schedule].blank?
+      params[:schedule][:order_cycle_ids] = params[:order_cycle_ids]
+    end
+
+    def editable_order_cycle_ids_for_create
+      return unless params[:order_cycle_ids]
+
+      @existing_order_cycle_ids = []
+      result = editable_order_cycles(params[:order_cycle_ids])
+
+      params[:order_cycle_ids] = result
+    end
+
+    def editable_order_cycle_ids_for_update
       return unless params[:schedule][:order_cycle_ids]
 
-      requested = params[:schedule][:order_cycle_ids]
-      @existing_order_cycle_ids = @schedule.persisted? ? @schedule.order_cycle_ids : []
-      permitted = OrderCycle.where(id: params[:schedule][:order_cycle_ids] | @existing_order_cycle_ids).merge(OrderCycle.managed_by(spree_current_user)).pluck(:id)
+      @existing_order_cycle_ids = @schedule.order_cycle_ids
+      result = editable_order_cycles(params[:schedule][:order_cycle_ids])
+
+      params[:schedule][:order_cycle_ids] = result
+      @schedule.order_cycle_ids = result
+    end
+
+    def editable_order_cycles(requested)
+      permitted = OrderCycle
+        .where(id: params[:order_cycle_ids] | @existing_order_cycle_ids)
+        .merge(OrderCycle.managed_by(spree_current_user))
+        .pluck(:id)
       result = @existing_order_cycle_ids
       result |= (requested & permitted) # add any requested & permitted ids
       result -= ((result & permitted) - requested) # remove any existing and permitted ids that were not specifically requested
-      params[:schedule][:order_cycle_ids] = result
-      @object.order_cycle_ids = result
+      result
     end
 
     def check_dependent_subscriptions
@@ -73,9 +117,19 @@ module Admin
       @permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
     end
 
-    def sync_subscriptions
+    def sync_subscriptions_for_update
       return unless params[:schedule][:order_cycle_ids]
 
+      sync_subscriptions
+    end
+
+    def sync_subscriptions_for_create
+      return unless params[:order_cycle_ids]
+
+      sync_subscriptions
+    end
+
+    def sync_subscriptions
       removed_ids = @existing_order_cycle_ids - @schedule.order_cycle_ids
       new_ids = @schedule.order_cycle_ids - @existing_order_cycle_ids
       return unless removed_ids.any? || new_ids.any?
@@ -83,6 +137,10 @@ module Admin
       subscriptions = Subscription.where(schedule_id: @schedule)
       syncer = OrderManagement::Subscriptions::ProxyOrderSyncer.new(subscriptions)
       syncer.sync!
+    end
+
+    def permitted_resource_params
+      params.require(:schedule).permit(:id, :name)
     end
   end
 end

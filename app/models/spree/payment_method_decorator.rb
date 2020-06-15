@@ -8,16 +8,14 @@ Spree::PaymentMethod.class_eval do
 
   has_many :credit_cards, class_name: "Spree::CreditCard" # from Spree v.2.3.0 d470b31798f37
 
-  attr_accessible :tag_list
-
   after_initialize :init
 
-  validates_with DistributorsValidator
+  validate :distributor_validation
 
   # -- Scopes
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
-      scoped
+      where(nil)
     else
       joins(:distributors).
         where('distributors_payment_methods.distributor_id IN (?)', user.enterprises.select(&:id)).
@@ -76,5 +74,11 @@ Spree::PaymentMethod.class_eval do
       i = name.rindex('::') + 2
       name[i..-1]
     end
+  end
+
+  private
+
+  def distributor_validation
+    validates_with DistributorsValidator
   end
 end

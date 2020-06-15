@@ -46,6 +46,17 @@ module OpenFoodNetwork
       proc { |line_items| line_items.first.variant.product.name }
     end
 
+    def total_units(line_items)
+      return " " if not_all_have_unit?(line_items)
+
+      total_units = line_items.sum do |li|
+        product = li.variant.product
+        li.quantity * li.unit_value / scale_factor(product)
+      end
+
+      total_units.round(3)
+    end
+
     def variant_scoper_for(distributor_id)
       @variant_scopers_by_distributor_id[distributor_id] ||=
         OpenFoodNetwork::ScopeVariantToHub.new(
@@ -69,17 +80,6 @@ module OpenFoodNetwork
       else
         DefaultReport
       end
-    end
-
-    def total_units(line_items)
-      return " " if not_all_have_unit?(line_items)
-
-      total_units = line_items.sum do |li|
-        product = li.variant.product
-        li.quantity * li.unit_value / scale_factor(product)
-      end
-
-      total_units.round(3)
     end
 
     def not_all_have_unit?(line_items)

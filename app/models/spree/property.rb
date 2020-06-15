@@ -4,8 +4,6 @@ module Spree
     has_many :products, through: :product_properties
     has_many :producer_properties
 
-    attr_accessible :name, :presentation
-
     validates :name, :presentation, presence: true
 
     scope :sorted, -> { order(:name) }

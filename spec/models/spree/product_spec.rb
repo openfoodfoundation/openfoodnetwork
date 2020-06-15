@@ -274,10 +274,10 @@ module Spree
         }
 
         it "returns distributed products for a given Enterprise AR relation" do
-          distributors_relation = Enterprise.where(id: [distributor1.id, distributor2.id])
+          distributors = Enterprise.where(id: [distributor1.id, distributor2.id]).to_a
 
-          expect(Product.in_distributors(distributors_relation)).to include product1, product2, product3
-          expect(Product.in_distributors(distributors_relation)).to_not include product4
+          expect(Product.in_distributors(distributors)).to include product1, product2, product3
+          expect(Product.in_distributors(distributors)).to_not include product4
         end
 
         it "returns distributed products for a given array of enterprise ids" do
@@ -481,9 +481,9 @@ module Spree
         pb = Spree::Property.create! name: 'B', presentation: 'B'
         pc = Spree::Property.create! name: 'C', presentation: 'C'
 
-        product.product_properties.create!({ property_id: pa.id, value: '1', position: 1 }, without_protection: true)
-        product.product_properties.create!({ property_id: pc.id, value: '3', position: 3 }, without_protection: true)
-        supplier.producer_properties.create!({ property_id: pb.id, value: '2', position: 2 }, without_protection: true)
+        product.product_properties.create!({ property_id: pa.id, value: '1', position: 1 })
+        product.product_properties.create!({ property_id: pc.id, value: '3', position: 3 })
+        supplier.producer_properties.create!({ property_id: pb.id, value: '2', position: 2 })
 
         expect(product.properties_including_inherited).to eq(
           [{ id: pa.id, name: "A", value: '1' },
@@ -541,7 +541,7 @@ module Spree
         end
 
         it "removes the related option values from all its variants and replaces them" do
-          ot = Spree::OptionType.find_by_name 'unit_weight'
+          ot = Spree::OptionType.find_by name: 'unit_weight'
           v = create(:variant, unit_value: 1, product: p)
           p.reload
 
@@ -556,7 +556,7 @@ module Spree
         end
 
         it "removes the related option values from its master variant and replaces them" do
-          ot = Spree::OptionType.find_by_name 'unit_weight'
+          ot = Spree::OptionType.find_by name: 'unit_weight'
           p.master.update_attributes!(unit_value: 1)
           p.reload
 

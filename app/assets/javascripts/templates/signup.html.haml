@@ -40,6 +40,8 @@
           tabindex: 2,
           inputmode: "password",
           "ng-model" => "spree_user.password_confirmation"}
+        %span.error{"ng-show" => "errors.password_confirmation != null"}
+          {{ errors.password_confirmation.join(' ') }}
     .row
       .large-12.columns
         %input.button.primary{name: "commit",

@@ -106,11 +106,9 @@ module Permissions
     # Any from visible orders, where the product is produced by one of my managed producers
     def produced_line_items
       Spree::LineItem.where(order_id: visible_orders.select("DISTINCT spree_orders.id")).
-        joins(:product).
-        where(spree_products:
-        {
-          supplier_id: @permissions.managed_enterprises.is_primary_producer.select("enterprises.id")
-        })
+        supplied_by_any(
+          @permissions.managed_enterprises.is_primary_producer.select("enterprises.id")
+        )
     end
   end
 end

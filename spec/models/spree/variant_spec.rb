@@ -459,7 +459,7 @@ module Spree
     describe "deleting unit option values" do
       before do
         p = create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1)
-        ot = Spree::OptionType.find_by_name 'unit_weight'
+        ot = Spree::OptionType.find_by name: 'unit_weight'
         @v = create(:variant, product: p)
       end
 

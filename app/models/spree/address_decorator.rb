@@ -1,7 +1,7 @@
 Spree::Address.class_eval do
   include AddressDisplay
 
-  has_one :enterprise, dependent: :restrict
+  has_one :enterprise, dependent: :restrict_with_exception
   belongs_to :country, class_name: "Spree::Country"
 
   after_save :touch_enterprise

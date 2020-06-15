@@ -17,11 +17,6 @@ Spree::Product.class_eval do
   delegate_belongs_to :master, :unit_value, :unit_description
   delegate :images_attributes=, :display_as=, to: :master
 
-  attr_accessible :supplier_id, :primary_taxon_id, :distributor_ids
-  attr_accessible :group_buy, :group_buy_unit_size, :unit_description, :notes, :images_attributes, :display_as
-  attr_accessible :variant_unit, :variant_unit_scale, :variant_unit_name, :unit_value
-  attr_accessible :inherits_properties, :sku
-
   validates :supplier, presence: true
   validates :primary_taxon, presence: true
   validates :tax_category_id, presence: true, if: "Spree::Config.products_require_tax_category"
@@ -121,7 +116,7 @@ Spree::Product.class_eval do
 
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
-      scoped
+      where(nil)
     else
       where('supplier_id IN (?)', user.enterprises.select("enterprises.id"))
     end
@@ -178,7 +173,7 @@ Spree::Product.class_eval do
       option_type_name = "unit_#{variant_unit}"
       option_type_presentation = variant_unit.capitalize
 
-      Spree::OptionType.find_by_name(option_type_name) ||
+      Spree::OptionType.find_by(name: option_type_name) ||
         Spree::OptionType.create!(name: option_type_name,
                                   presentation: option_type_presentation)
     end

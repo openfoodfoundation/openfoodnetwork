@@ -40,7 +40,7 @@ module PermalinkGenerator
     if self.class.respond_to?(:with_deleted)
       self.class.with_deleted
     else
-      self.class.scoped
+      self.class.where(nil)
     end
   end
 end

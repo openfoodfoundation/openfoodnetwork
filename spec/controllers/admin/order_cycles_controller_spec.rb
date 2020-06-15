@@ -203,7 +203,7 @@ module Admin
 
       context "as a manager of the coordinator" do
         let(:user) { coordinator.owner }
-        let(:expected) { [order_cycle, hash_including(order_cycle: allowed.merge(restricted)), user] }
+        let(:expected) { [order_cycle, allowed.merge(restricted), user] }
 
         it "allows me to update exchange information for exchanges, name and dates" do
           expect(OrderCycleForm).to receive(:new).with(*expected) { form_mock }
@@ -213,7 +213,7 @@ module Admin
 
       context "as a producer supplying to an order cycle" do
         let(:user) { producer.owner }
-        let(:expected) { [order_cycle, hash_including(order_cycle: allowed), user] }
+        let(:expected) { [order_cycle, allowed, user] }
 
         it "allows me to update exchange information for exchanges, but not name or dates" do
           expect(OrderCycleForm).to receive(:new).with(*expected) { form_mock }
@@ -291,7 +291,7 @@ module Admin
       let(:user) { create_enterprise_user }
       let(:admin_user) do
         user = create(:user)
-        user.spree_roles << Spree::Role.find_or_create_by_name!('admin')
+        user.spree_roles << Spree::Role.find_or_create_by!(name: 'admin')
         user
       end
       let(:order_cycle) { create(:simple_order_cycle) }
@@ -320,7 +320,7 @@ module Admin
       describe "when an order cycle is deleteable" do
         it "allows the order_cycle to be destroyed" do
           spree_get :destroy, id: oc.id
-          expect(OrderCycle.find_by_id(oc.id)).to be nil
+          expect(OrderCycle.find_by(id: oc.id)).to be nil
         end
       end
 

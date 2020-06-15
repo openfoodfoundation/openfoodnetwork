@@ -26,7 +26,7 @@ feature '
 
       expect(flash_message).to eq('Payment Method has been successfully created!')
 
-      payment_method = Spree::PaymentMethod.find_by_name('Cheque payment method')
+      payment_method = Spree::PaymentMethod.find_by(name: 'Cheque payment method')
       expect(payment_method.distributors).to eq([@distributors[0]])
     end
 
@@ -108,7 +108,7 @@ feature '
 
     expect(first('tags-input .tag-list ti-tag-item')).to have_content "member"
 
-    payment_method = Spree::PaymentMethod.find_by_name('New PM Name')
+    payment_method = Spree::PaymentMethod.find_by(name: 'New PM Name')
     expect(payment_method.distributors).to include @distributors[1], @distributors[2]
     expect(payment_method.distributors).not_to include @distributors[0]
     expect(payment_method.type).to eq "Spree::Gateway::PayPalExpress"
@@ -123,7 +123,7 @@ feature '
     expect(page).to have_field 'Password', with: ''
     expect(first('tags-input .tag-list ti-tag-item')).to have_content "member"
 
-    payment_method = Spree::PaymentMethod.find_by_name('New PM Name')
+    payment_method = Spree::PaymentMethod.find_by(name: 'New PM Name')
     expect(payment_method.tag_list).to eq ["member"]
     expect(payment_method.preferences[:login]).to eq 'otherlogin'
     expect(payment_method.preferences[:password]).to eq 'secret'
@@ -168,7 +168,7 @@ feature '
       expect(flash_message).to eq('Payment Method has been successfully created!')
       expect(first('tags-input .tag-list ti-tag-item')).to have_content "local"
 
-      payment_method = Spree::PaymentMethod.find_by_name('Cheque payment method')
+      payment_method = Spree::PaymentMethod.find_by(name: 'Cheque payment method')
       expect(payment_method.distributors).to eq([distributor1])
       expect(payment_method.tag_list).to eq(["local"])
     end
