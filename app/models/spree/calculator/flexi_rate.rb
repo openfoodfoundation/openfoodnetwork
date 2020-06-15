@@ -28,8 +28,9 @@ module Spree
         sum = 0
         max = preferred_max_items.to_i
         items_count = line_items_for(object).map(&:quantity).sum
+
         # check max value to avoid divide by 0 errors
-        unless max == 0
+        unless max.zero?
           if items_count > max
             sum += (max - 1) * preferred_additional_item.to_f + preferred_first_item.to_f
           elsif items_count <= max
