@@ -1,32 +1,39 @@
+# frozen_string_literal: false
+
 require_dependency 'spree/calculator'
 # For #to_d method on Ruby 1.8
 require 'bigdecimal/util'
+require 'spree/localized_number'
 
 module Spree
   module Calculator
     class PriceSack < Calculator
+      extend Spree::LocalizedNumber
+
       preference :minimal_amount, :decimal, default: 0
       preference :normal_amount, :decimal, default: 0
       preference :discount_amount, :decimal, default: 0
       preference :currency, :string, default: Spree::Config[:currency]
 
+      localize_number :preferred_minimal_amount,
+                      :preferred_normal_amount,
+                      :preferred_discount_amount
+
       def self.description
-        Spree.t(:price_sack)
+        I18n.t(:price_sack)
       end
 
-      # as object we always get line items, as calculable we have Coupon, ShippingMethod
       def compute(object)
-        if object.is_a?(Array)
-          base = object.map { |o| o.respond_to?(:amount) ? o.amount : BigDecimal(o.to_s) }.sum
-        else
-          base = object.respond_to?(:amount) ? object.amount : BigDecimal(object.to_s)
+        min = preferred_minimal_amount.to_f
+        order_amount = line_items_for(object).map { |x| x.price * x.quantity }.sum
+
+        if order_amount < min
+          cost = preferred_normal_amount.to_f
+        elsif order_amount >= min
+          cost = preferred_discount_amount.to_f
         end
 
-        if base < self.preferred_minimal_amount
-          self.preferred_normal_amount
-        else
-          self.preferred_discount_amount
-        end
+        cost
       end
     end
   end

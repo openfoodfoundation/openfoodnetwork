@@ -1,25 +1,34 @@
+# frozen_string_literal: false
+
 require_dependency 'spree/calculator'
+require 'spree/localized_number'
 
 module Spree
   module Calculator
     class PerItem < Calculator
+      extend Spree::LocalizedNumber
+
       preference :amount, :decimal, default: 0
       preference :currency, :string, default: Spree::Config[:currency]
 
+      localize_number :preferred_amount
+
       def self.description
-        Spree.t(:flat_rate_per_item)
+        I18n.t(:flat_rate_per_item)
       end
 
-      def compute(object=nil)
+      def compute(object = nil)
         return 0 if object.nil?
-        self.preferred_amount * object.line_items.reduce(0) do |sum, value|
-          if matching_products.blank? || matching_products.include?(value.product)
-            value_to_add = value.quantity
-          else
-            value_to_add = 0
-          end
+
+        number_of_line_items = line_items_for(object).reduce(0) do |sum, line_item|
+          value_to_add = if matching_products.blank? || matching_products.include?(line_item.product)
+                           line_item.quantity
+                         else
+                           0
+                         end
           sum + value_to_add
         end
+        preferred_amount * number_of_line_items
       end
 
       # Returns all products that match this calculator, but only if the calculator

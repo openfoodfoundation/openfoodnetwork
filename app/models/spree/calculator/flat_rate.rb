@@ -1,17 +1,24 @@
+# frozen_string_literal: false
+
 require_dependency 'spree/calculator'
+require 'spree/localized_number'
 
 module Spree
   module Calculator
     class FlatRate < Calculator
+      extend Spree::LocalizedNumber
+
       preference :amount, :decimal, default: 0
       preference :currency, :string, default: Spree::Config[:currency]
 
+      localize_number :preferred_amount
+
       def self.description
-        Spree.t(:flat_rate_per_order)
+        I18n.t(:flat_rate_per_order)
       end
 
-      def compute(object=nil)
-        self.preferred_amount
+      def compute(_object = nil)
+        preferred_amount
       end
     end
   end
