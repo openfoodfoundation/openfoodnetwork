@@ -207,7 +207,7 @@ feature "
             end.to change(VariantOverride, :count).by(0)
           end
 
-          it "displays an error when unauthorised to update a particular override" do
+          xit "displays an error when unauthorised to update a particular override" do
             fill_in "variant-overrides-#{variant_related.id}-price", with: '777.77'
             fill_in "variant-overrides-#{variant_related.id}-count_on_hand", with: '123'
             expect(page).to have_content "Changes to one override remain unsaved."
