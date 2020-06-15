@@ -1,22 +1,22 @@
 require_dependency 'spree/calculator'
 
 module Spree
-  class Calculator::DefaultTax < Calculator
-    def self.description
-      Spree.t(:default_tax)
-    end
+  module Calculator
+    class DefaultTax < Calculator
+      def self.description
+        Spree.t(:default_tax)
+      end
 
-    def compute(computable)
-      case computable
+      def compute(computable)
+        case computable
         when Spree::Order
           compute_order(computable)
         when Spree::LineItem
           compute_line_item(computable)
+        end
       end
-    end
 
-
-    private
+      private
 
       def rate
         self.calculable
@@ -54,6 +54,6 @@ module Spree
       def deduced_total_by_rate(total, rate)
         round_to_two_places(total - ( total / (1 + rate.amount) ) )
       end
-
+    end
   end
 end
