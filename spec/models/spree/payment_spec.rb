@@ -138,7 +138,7 @@ module Spree
         let!(:payment_method) { create(:payment_method, calculator: calculator) }
 
         let!(:calculator) do
-          Spree::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10)
+          Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10)
         end
 
         context "when order complete and inventory tracking enabled" do
@@ -159,7 +159,7 @@ module Spree
         let(:shop) { create(:enterprise) }
         let(:payment_method) { create(:stripe_payment_method, distributor_ids: [create(:distributor_enterprise).id], preferred_enterprise_id: shop.id) }
         let(:payment) { create(:payment, order: order, payment_method: payment_method, amount: order.total) }
-        let(:calculator) { Spree::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
+        let(:calculator) { Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
 
         before do
           payment_method.calculator = calculator
