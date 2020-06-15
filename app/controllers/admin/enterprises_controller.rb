@@ -211,7 +211,8 @@ module Admin
       # record is persisted. This problem is compounded by the use of calculators.
       @object.transaction do
         tag_rules_attributes.select{ |_i, attrs| attrs[:type].present? }.each do |_i, attrs|
-          rule = @object.tag_rules.find_by(id: attrs.delete(:id)) || attrs[:type].constantize.new(enterprise: @object)
+          rule = @object.tag_rules.find_by(id: attrs.delete(:id)) ||
+                 attrs[:type].constantize.new(enterprise: @object)
           create_calculator_for(rule, attrs) if rule.type == "TagRule::DiscountOrder" && rule.calculator.nil?
           rule.update_attributes(attrs)
         end
@@ -234,7 +235,9 @@ module Admin
     def check_can_change_bulk_sells
       unless spree_current_user.admin?
         params[:enterprise_set][:collection_attributes].each do |_i, enterprise_params|
-          enterprise_params.delete :sells unless spree_current_user == Enterprise.find_by(id: enterprise_params[:id]).owner
+          unless spree_current_user == Enterprise.find_by(id: enterprise_params[:id]).owner
+            enterprise_params.delete :sells
+          end
         end
       end
     end

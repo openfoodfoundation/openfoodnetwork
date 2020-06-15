@@ -24,22 +24,28 @@ module OrderManagement
           create(:simple_order_cycle, orders_open_at: now - 1.minute, orders_close_at: now)
         }
         let(:open_oc_closes_before_begins_at_oc) { # Open, but closes before begins at
-          create(:simple_order_cycle, orders_open_at: now - 1.minute, orders_close_at: now + 59.seconds)
+          create(:simple_order_cycle,
+                 orders_open_at: now - 1.minute, orders_close_at: now + 59.seconds)
         }
         let(:open_oc) { # Open & closes between begins at and ends at
-          create(:simple_order_cycle, orders_open_at: now - 1.minute, orders_close_at: now + 90.seconds)
+          create(:simple_order_cycle,
+                 orders_open_at: now - 1.minute, orders_close_at: now + 90.seconds)
         }
         let(:upcoming_closes_before_begins_at_oc) { # Upcoming, but closes before begins at
-          create(:simple_order_cycle, orders_open_at: now + 30.seconds, orders_close_at: now + 59.seconds)
+          create(:simple_order_cycle,
+                 orders_open_at: now + 30.seconds, orders_close_at: now + 59.seconds)
         }
         let(:upcoming_closes_on_begins_at_oc) { # Upcoming & closes on begins at
-          create(:simple_order_cycle, orders_open_at: now + 30.seconds, orders_close_at: now + 1.minute)
+          create(:simple_order_cycle,
+                 orders_open_at: now + 30.seconds, orders_close_at: now + 1.minute)
         }
         let(:upcoming_closes_on_ends_at_oc) { # Upcoming & closes on ends at
-          create(:simple_order_cycle, orders_open_at: now + 30.seconds, orders_close_at: now + 2.minutes)
+          create(:simple_order_cycle,
+                 orders_open_at: now + 30.seconds, orders_close_at: now + 2.minutes)
         }
         let(:upcoming_closes_after_ends_at_oc) { # Upcoming & closes after ends at
-          create(:simple_order_cycle, orders_open_at: now + 30.seconds, orders_close_at: now + 121.seconds)
+          create(:simple_order_cycle,
+                 orders_open_at: now + 30.seconds, orders_close_at: now + 121.seconds)
         }
 
         let(:subscription) {

@@ -299,7 +299,9 @@ module ProductImport
 
     def mark_as_new_product(entry)
       new_product = Spree::Product.new
-      new_product.assign_attributes(entry.assignable_attributes.except('id', 'on_hand', 'on_demand', 'display_name'))
+      new_product.assign_attributes(
+        entry.assignable_attributes.except('id', 'on_hand', 'on_demand', 'display_name')
+      )
       new_product.supplier_id = entry.producer_id
       entry.on_hand = 0 if entry.on_hand.nil?
 

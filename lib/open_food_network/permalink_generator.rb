@@ -41,6 +41,6 @@ module PermalinkGenerator
       self.class.with_deleted
     else
       self.class.where(nil)
-end
+    end
   end
 end

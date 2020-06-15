@@ -29,9 +29,7 @@ module Admin
     end
 
     def create
-      if params[:order_cycle_ids].blank?
-        return respond_with(@schedule)
-      end
+      return respond_with(@schedule) if params[:order_cycle_ids].blank?
 
       @schedule.attributes = permitted_resource_params
 
@@ -42,10 +40,9 @@ module Admin
         sync_subscriptions_for_create
 
         flash[:success] = flash_message_for(@schedule, :successfully_created)
-        respond_with(@schedule)
-      else
-        respond_with(@schedule)
       end
+
+      respond_with(@schedule)
     end
 
     private
@@ -69,7 +66,8 @@ module Admin
       [:index]
     end
 
-    # In this controller, params like params[:name] are moved into params[:schedule] becoming params[:schedule][:name]
+    # In this controller, params like params[:name] are moved into
+    #   params[:schedule] becoming params[:schedule][:name].
     # For some reason in rails 4, this is not happening for params[:order_cycle_ids]
     #   We do it manually in this filter
     def adapt_params

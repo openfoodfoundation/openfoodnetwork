@@ -28,7 +28,9 @@ module Admin
     def build_resource_with_address
       enterprise_group = build_resource_without_address
       enterprise_group.address = Spree::Address.new
-      enterprise_group.address.country = Spree::Country.find_by(id: Spree::Config[:default_country_id])
+      enterprise_group.address.country = Spree::Country.find_by(
+        id: Spree::Config[:default_country_id]
+      )
       enterprise_group
     end
     alias_method_chain :build_resource, :address
