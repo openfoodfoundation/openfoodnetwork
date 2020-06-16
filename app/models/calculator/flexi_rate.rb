@@ -29,12 +29,12 @@ module Calculator
       items_count = line_items_for(object).map(&:quantity).sum
 
       # check max value to avoid divide by 0 errors
-      unless max.zero?
-        if items_count > max
-          sum += (max - 1) * preferred_additional_item.to_f + preferred_first_item.to_f
-        elsif items_count <= max
-          sum += (items_count - 1) * preferred_additional_item.to_f + preferred_first_item.to_f
-        end
+      return 0 if max.zero?
+
+      if items_count > max
+        sum += (max - 1) * preferred_additional_item.to_f + preferred_first_item.to_f
+      elsif items_count <= max
+        sum += (items_count - 1) * preferred_additional_item.to_f + preferred_first_item.to_f
       end
 
       sum
