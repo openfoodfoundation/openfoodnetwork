@@ -2,28 +2,36 @@
 
 class MoveAllCalculatorsOutsideTheSpreeNamespace < ActiveRecord::Migration
   def up
-    convert_calculator("Spree::Calculator::DefaultTax", "Calculator::DefaultTax")
-    convert_calculator("Spree::Calculator::FlatPercentItemTotal",
-                       "Calculator::FlatPercentItemTotal")
-    convert_calculator("Spree::Calculator::FlatRate", "Calculator::FlatRate")
-    convert_calculator("Spree::Calculator::FlexiRate", "Calculator::FlexiRate")
-    convert_calculator("Spree::Calculator::PerItem", "Calculator::PerItem")
-    convert_calculator("Spree::Calculator::PriceSack", "Calculator::PriceSack")
+    convert_calculator("DefaultTax")
+    convert_calculator("FlatPercentItemTotal")
+    convert_calculator("FlatRate")
+    convert_calculator("FlexiRate")
+    convert_calculator("PerItem")
+    convert_calculator("PriceSack")
   end
 
   def down
-    convert_calculator("Calculator::DefaultTax", "Spree::Calculator::DefaultTax")
-    convert_calculator("Calculator::FlatPercentItemTotal",
-                       "Spree::Calculator::FlatPercentItemTotal")
-    convert_calculator("Calculator::FlatRate", "Spree::Calculator::FlatRate")
-    convert_calculator("Calculator::FlexiRate", "Spree::Calculator::FlexiRate")
-    convert_calculator("Calculator::PerItem", "Spree::Calculator::PerItem")
-    convert_calculator("Calculator::PriceSack", "Spree::Calculator::PriceSack")
+    revert_calculator("DefaultTax")
+    revert_calculator("FlatPercentItemTotal")
+    revert_calculator("FlatRate")
+    revert_calculator("FlexiRate")
+    revert_calculator("PerItem")
+    revert_calculator("PriceSack")
   end
 
   private
 
-  def convert_calculator(from, to)
+  def convert_calculator(calculator_base_name)
+    update_calculator("Spree::Calculator::" + calculator_base_name,
+                      "Calculator::" + calculator_base_name)
+  end
+
+  def revert_calculator(calculator_base_name)
+    update_calculator("Calculator::" + calculator_base_name,
+                      "Spree::Calculator::" + calculator_base_name)
+  end
+
+  def update_calculator(from, to)
     Spree::Calculator.connection.execute(
       "UPDATE spree_calculators SET type = '" + to + "' WHERE type = '" + from + "'"
     )
