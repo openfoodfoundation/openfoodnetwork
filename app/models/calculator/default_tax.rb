@@ -26,12 +26,6 @@ module Calculator
 
     # Enable calculation of tax for enterprise fees with tax rates where included_in_price = false
     def compute_order(order)
-      matched_line_items = order.line_items.select do |line_item|
-        line_item.product.tax_category == rate.tax_category
-      end
-
-      line_items_total = matched_line_items.sum(&:total)
-
       calculator = OpenFoodNetwork::EnterpriseFeeCalculator.new(order.distributor,
                                                                 order.order_cycle)
 
@@ -54,9 +48,17 @@ module Calculator
         .select { |applicator| applicator.enterprise_fee.tax_category == rate.tax_category }
         .sum { |applicator| applicator.enterprise_fee.compute_amount(order) }
 
-      [line_items_total, per_item_fees_total, per_order_fees_total].sum do |total|
+      [line_items_total(order), per_item_fees_total, per_order_fees_total].sum do |total|
         round_to_two_places(total * rate.amount)
       end
+    end
+
+    def line_items_total(order)
+      matched_line_items = order.line_items.select do |line_item|
+        line_item.product.tax_category == rate.tax_category
+      end
+
+      matched_line_items.sum(&:total)
     end
 
     def compute_line_item(line_item)
