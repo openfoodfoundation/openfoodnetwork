@@ -79,7 +79,7 @@ gem 'actionpack-action_caching'
 # Once Rails is updated to 5.x we should bump directly to 0.10.x
 gem "active_model_serializers", "0.8.4"
 gem 'activerecord-session_store'
-gem 'acts-as-taggable-on', '~> 3.4'
+gem 'acts-as-taggable-on', '~> 4.0'
 gem 'angularjs-file-upload-rails', '~> 2.4.1'
 gem 'blockenspiel'
 gem 'custom_error_message', github: 'jeremydurham/custom-err-msg'
