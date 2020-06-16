@@ -160,6 +160,7 @@ module Openfoodnetwork
     config.assets.precompile += ['mail/all.css']
     config.assets.precompile += ['shared/*']
     config.assets.precompile += ['qz/*']
+    config.assets.precompile += ['*.jpg', '*.jpeg', '*.png', '*.gif' '*.svg']
 
     config.active_support.escape_html_entities_in_json = true
   end
