@@ -36,4 +36,22 @@ describe "Zones" do
 
     expect(page).to have_content("successfully created!")
   end
+
+  scenario "edit existing zone", js: true do
+    zone = create(:zone_with_member)
+    visit spree.edit_admin_zone_path(zone.id)
+
+    expect(page).to have_checked_field "country_based"
+
+    # Toggle to state based zone
+    choose "State Based"
+
+    # click Add State
+    page.find("#nested-state").click
+    # select first state available
+    find('.select2').find(:xpath, 'option[2]').select_option
+
+    click_button "Update"
+    expect(page).to have_content("successfully updated!")
+  end
 end
