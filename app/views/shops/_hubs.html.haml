@@ -26,7 +26,7 @@
         %a{href: "", "ng-click" => "showDistanceMatches()"}
           = t :hubs_distance_filter, location: "{{ nameMatchesFiltered[0].name }}"
   .more-controls
-    %img.spinner.text-center{ng: {show: "closed_shops_loading"}, src: "/assets/spinning-circles.svg" }
+    %img.spinner.text-center{ng: {show: "closed_shops_loading"}, src: image_path("spinning-circles.svg") }
     %span{ng: {if: "!show_closed", cloak: true}}
       %a.button{href: "", ng: {click: "showClosedShops()"}}
         = t '.show_closed_shops'
