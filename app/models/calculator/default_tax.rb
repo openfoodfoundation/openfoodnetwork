@@ -51,14 +51,15 @@ module Calculator
     def per_item_fees_total(order, calculator)
       order.line_items.sum do |line_item|
         calculator.per_item_enterprise_fee_applicators_for(line_item.variant)
-          .select { |applicator|
-            (!applicator.enterprise_fee.inherits_tax_category &&
-              applicator.enterprise_fee.tax_category == rate.tax_category) ||
-              (applicator.enterprise_fee.inherits_tax_category &&
-               line_item.product.tax_category == rate.tax_category)
-          }
+          .select { |applicator| applicable_rate?(applicator, line_item) }
           .sum { |applicator| applicator.enterprise_fee.compute_amount(line_item) }
       end
+    end
+
+    def applicable_rate?(applicator, line_item)
+      fee = applicator.enterprise_fee
+      (!fee.inherits_tax_category && fee.tax_category == rate.tax_category) ||
+        (fee.inherits_tax_category && line_item.product.tax_category == rate.tax_category)
     end
 
     # Finds relevant fees for whole order,
