@@ -24,7 +24,6 @@ module Calculator
     end
 
     def compute(object)
-      sum = 0
       max = preferred_max_items.to_i
       items_count = line_items_for(object).map(&:quantity).sum
 
@@ -32,12 +31,10 @@ module Calculator
       return 0 if max.zero?
 
       if items_count > max
-        sum += (max - 1) * preferred_additional_item.to_f + preferred_first_item.to_f
+        (max - 1) * preferred_additional_item.to_f + preferred_first_item.to_f
       elsif items_count <= max
-        sum += (items_count - 1) * preferred_additional_item.to_f + preferred_first_item.to_f
+        (items_count - 1) * preferred_additional_item.to_f + preferred_first_item.to_f
       end
-
-      sum
     end
   end
 end
