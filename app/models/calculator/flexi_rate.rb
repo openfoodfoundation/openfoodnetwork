@@ -31,10 +31,16 @@ module Calculator
       return 0 if max.zero?
 
       if items_count > max
-        (max - 1) * preferred_additional_item.to_f + preferred_first_item.to_f
+        compute_for(max - 1)
       elsif items_count <= max
-        (items_count - 1) * preferred_additional_item.to_f + preferred_first_item.to_f
+        compute_for(items_count - 1)
       end
+    end
+
+    private
+
+    def compute_for(count)
+      count * preferred_additional_item.to_f + preferred_first_item.to_f
     end
   end
 end
