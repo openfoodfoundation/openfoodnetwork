@@ -29,13 +29,11 @@ module Calculator
       calculator = OpenFoodNetwork::EnterpriseFeeCalculator.new(order.distributor,
                                                                 order.order_cycle)
 
-      # Finds relevant fees for whole order,
-      #   calculates the tax on them, and returns the total tax
-      per_order_fees_total = calculator.per_order_enterprise_fee_applicators_for(order)
-        .select { |applicator| applicator.enterprise_fee.tax_category == rate.tax_category }
-        .sum { |applicator| applicator.enterprise_fee.compute_amount(order) }
-
-      [line_items_total(order), per_item_fees_total(order, calculator), per_order_fees_total].sum do |total|
+      [
+        line_items_total(order),
+        per_item_fees_total(order, calculator),
+        per_order_fees_total(order, calculator)
+      ].sum do |total|
         round_to_two_places(total * rate.amount)
       end
     end
@@ -61,6 +59,14 @@ module Calculator
           }
           .sum { |applicator| applicator.enterprise_fee.compute_amount(line_item) }
       end
+    end
+
+    # Finds relevant fees for whole order,
+    #   calculates the tax on them, and returns the total tax
+    def per_order_fees_total(order, calculator)
+      calculator.per_order_enterprise_fee_applicators_for(order)
+        .select { |applicator| applicator.enterprise_fee.tax_category == rate.tax_category }
+        .sum { |applicator| applicator.enterprise_fee.compute_amount(order) }
     end
 
     def compute_line_item(line_item)
