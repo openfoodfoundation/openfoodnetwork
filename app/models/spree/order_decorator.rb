@@ -312,6 +312,21 @@ Spree::Order.class_eval do
     (adjustments + price_adjustments).sum(&:included_tax)
   end
 
+  def price_adjustments
+    adjustments = []
+
+    line_items.each { |line_item| adjustments.concat line_item.adjustments }
+
+    adjustments
+  end
+
+  def price_adjustment_totals
+    Hash[tax_adjustment_totals.map do |tax_rate, tax_amount|
+      [tax_rate.name,
+       Spree::Money.new(tax_amount, currency: currency)]
+    end]
+  end
+
   def has_taxes_included
     !line_items.with_tax.empty?
   end
