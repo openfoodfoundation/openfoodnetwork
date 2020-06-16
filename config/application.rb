@@ -66,6 +66,7 @@ module Openfoodnetwork
         Calculator::PriceSack,
         Calculator::Weight
       ]
+
       app.config.spree.calculators.add_class('payment_methods')
       config.spree.calculators.payment_methods = [
         Calculator::FlatPercentItemTotal,
@@ -73,6 +74,11 @@ module Openfoodnetwork
         Calculator::FlexiRate,
         Calculator::PerItem,
         Calculator::PriceSack
+      ]
+
+      app.config.spree.calculators.add_class('tax_rates')
+      config.spree.calculators.tax_rates = [
+        Calculator::DefaultTax
       ]
     end
 
