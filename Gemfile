@@ -108,7 +108,7 @@ gem 'whenever', require: false
 
 gem 'test-unit', '~> 3.3'
 
-gem 'coffee-rails', '~> 4.0.0'
+gem 'coffee-rails', '~> 4.2.2'
 gem 'compass-rails'
 
 gem 'mini_racer', '0.2.14'
