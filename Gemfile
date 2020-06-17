@@ -4,7 +4,7 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
 gem 'i18n', '~> 0.6.11'
 gem 'i18n-js', '~> 3.7.0'
-gem 'rails', '~> 4.0.13'
+gem 'rails', '~> 4.1.16'
 gem 'rails-i18n', '~> 4.0'
 gem 'rails_safe_tasks', '~> 1.0'
 
@@ -33,7 +33,7 @@ gem 'httparty', '~> 0.11' # For checking alerts.
 gem 'json', '>= 1.7.7'
 gem 'money', '5.1.1'
 gem 'paranoia', '~> 2.0'
-gem 'ransack', '1.0.0'
+gem 'ransack', '~> 1.2.3'
 gem 'state_machine', '1.2.0'
 gem 'stringex', '~> 1.5.1'
 
@@ -108,7 +108,7 @@ gem 'whenever', require: false
 
 gem 'test-unit', '~> 3.3'
 
-gem 'coffee-rails', '~> 4.0.0'
+gem 'coffee-rails', '~> 4.2.2'
 gem 'compass-rails'
 
 gem 'mini_racer', '0.2.14'
