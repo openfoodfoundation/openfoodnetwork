@@ -145,7 +145,7 @@ group :test, :development do
   gem 'letter_opener', '>= 1.4.1'
   gem 'rspec-rails', ">= 3.5.2"
   gem 'rspec-retry'
-  gem 'rswag', "2.2.0"
+  gem 'rswag'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'
   gem 'timecop'
@@ -166,7 +166,7 @@ group :development do
   gem "newrelic_rpm", "~> 3.0"
   gem "pry", "~> 0.12.0" # pry 0.13 is not compatible with pry-byebug 3.7
   gem 'pry-byebug', '~> 3.7.0' # 3.8 requires ruby 2.4
-  gem 'rubocop', '0.81'
+  gem 'rubocop'
   gem 'rubocop-rails'
   gem 'spring'
   gem 'spring-commands-rspec'

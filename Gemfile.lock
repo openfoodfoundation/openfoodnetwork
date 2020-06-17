@@ -795,8 +795,8 @@ DEPENDENCIES
   roo (~> 2.8.3)
   rspec-rails (>= 3.5.2)
   rspec-retry
-  rswag (= 2.2.0)
-  rubocop (= 0.81)
+  rswag
+  rubocop
   rubocop-rails
   sass
   sass-rails
