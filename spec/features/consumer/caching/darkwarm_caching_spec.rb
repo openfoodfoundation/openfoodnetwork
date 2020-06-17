@@ -29,7 +29,7 @@ feature "Darkswarm data caching", js: true, caching: true do
       visit shops_path
     end
 
-    xit "invalidates caches for taxons and properties" do
+    it "invalidates caches for taxons and properties" do
       visit shops_path
 
       taxon_timestamp1 = CacheService.latest_timestamp_by_class(Spree::Taxon)
