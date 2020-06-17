@@ -33,7 +33,7 @@ gem 'httparty', '~> 0.11' # For checking alerts.
 gem 'json', '>= 1.7.7'
 gem 'money', '5.1.1'
 gem 'paranoia', '~> 2.0'
-gem 'ransack', '~> 1.2.3'
+gem 'ransack', '~> 1.8.10'
 gem 'state_machine', '1.2.0'
 gem 'stringex', '~> 1.5.1'
 
