@@ -45,8 +45,8 @@ feature "Darkswarm data caching", js: true, caching: true do
         expect(page).to have_content property.presentation
       end
 
-      taxon.update_attributes!(name: "Changed Taxon")
-      property.update_attributes!(presentation: "Changed Property")
+      taxon.update!(name: "Changed Taxon")
+      property.update!(presentation: "Changed Property")
 
       # Clear timed shops cache so we can test uncached supplied properties
       clear_shops_cache
