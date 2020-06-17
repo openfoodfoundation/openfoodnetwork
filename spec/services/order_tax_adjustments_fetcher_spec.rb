@@ -7,17 +7,17 @@ describe OrderTaxAdjustmentsFetcher do
     let(:zone)            { create(:zone_with_member) }
     let(:coordinator)     { create(:distributor_enterprise, charges_sales_tax: true) }
 
-    let(:tax_rate10)      { create(:tax_rate, included_in_price: true, calculator: Spree::Calculator::DefaultTax.new, amount: 0.1, zone: zone) }
-    let(:tax_rate15)      { create(:tax_rate, included_in_price: true, calculator: Spree::Calculator::DefaultTax.new, amount: 0.15, zone: zone) }
-    let(:tax_rate20)      { create(:tax_rate, included_in_price: true, calculator: Spree::Calculator::DefaultTax.new, amount: 0.2, zone: zone) }
-    let(:tax_rate25)      { create(:tax_rate, included_in_price: true, calculator: Spree::Calculator::DefaultTax.new, amount: 0.25, zone: zone) }
+    let(:tax_rate10)      { create(:tax_rate, included_in_price: true, calculator: Calculator::DefaultTax.new, amount: 0.1, zone: zone) }
+    let(:tax_rate15)      { create(:tax_rate, included_in_price: true, calculator: Calculator::DefaultTax.new, amount: 0.15, zone: zone) }
+    let(:tax_rate20)      { create(:tax_rate, included_in_price: true, calculator: Calculator::DefaultTax.new, amount: 0.2, zone: zone) }
+    let(:tax_rate25)      { create(:tax_rate, included_in_price: true, calculator: Calculator::DefaultTax.new, amount: 0.25, zone: zone) }
     let(:tax_category10)  { create(:tax_category, tax_rates: [tax_rate10]) }
     let(:tax_category15)  { create(:tax_category, tax_rates: [tax_rate15]) }
     let(:tax_category20)  { create(:tax_category, tax_rates: [tax_rate20]) }
     let(:tax_category25)  { create(:tax_category, tax_rates: [tax_rate25]) }
 
     let(:variant)         { create(:variant, product: create(:product, tax_category: tax_category10)) }
-    let(:enterprise_fee)  { create(:enterprise_fee, enterprise: coordinator, tax_category: tax_category20, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 48.0)) }
+    let(:enterprise_fee)  { create(:enterprise_fee, enterprise: coordinator, tax_category: tax_category20, calculator: Calculator::FlatRate.new(preferred_amount: 48.0)) }
     let(:additional_adjustment) { create(:adjustment, amount: 50.0, included_tax: tax_rate25.compute_tax(50.0)) }
 
     let(:order_cycle)     { create(:simple_order_cycle, coordinator: coordinator, coordinator_fees: [enterprise_fee], distributors: [coordinator], variants: [variant]) }
@@ -38,7 +38,7 @@ describe OrderTaxAdjustmentsFetcher do
       allow(Spree::Config).to receive(:shipping_tax_rate).and_return(tax_rate15.amount)
     end
 
-    let(:shipping_method) { create(:shipping_method, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 46.0)) }
+    let(:shipping_method) { create(:shipping_method, calculator: Calculator::FlatRate.new(preferred_amount: 46.0)) }
     let!(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method, order: order) }
 
     before do
