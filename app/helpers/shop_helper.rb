@@ -52,7 +52,7 @@ module ShopHelper
   end
 
   def show_shopping_cta?
-    return false if current_page?(main_app.shops_path)
+    return false if current_page?(main_app.shops_path) && current_distributor.blank?
 
     return false if current_distributor.present? &&
                     current_page?(main_app.enterprise_shop_path(current_distributor))
