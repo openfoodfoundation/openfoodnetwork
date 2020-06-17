@@ -1,1 +1,2 @@
-%a.edit-order{href: "/admin/orders/#{value}"}= value
+- order_number = value
+= link_to order_number, edit_admin_order_url(order_number), class: 'edit-order'
