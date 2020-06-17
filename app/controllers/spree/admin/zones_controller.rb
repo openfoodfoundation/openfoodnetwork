@@ -24,8 +24,13 @@ module Spree
 
       def permitted_resource_params
         params.require(:zone).permit(
-          :name, :description, :default_tax
+          :name, :description, :default_tax, :kind,
+          zone_members_attributes: [:id, :zoneable_id, :zoneable_type, :_destroy]
         )
+      end
+
+      def location_after_save
+        edit_object_url(@zone)
       end
     end
   end
