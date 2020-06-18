@@ -1,8 +1,6 @@
 # Represents the minimum details of an Enterprise when all shopfronts are being listed
 module Api
   class EnterpriseShopfrontListSerializer < ActiveModel::Serializer
-    include SerializerHelper
-
     attributes :name, :id, :latitude, :longitude, :is_primary_producer, :is_distributor,
                :path, :icon, :icon_font, :producer_icon_font, :address_id, :sells,
                :permalink
@@ -21,7 +19,7 @@ module Api
         producer_shop: "map_003-producer-shop.svg",
         producer: "map_001-producer-only.svg",
       }
-      image_path icons[enterprise.category]
+      ImagePathService.image_path(icons[enterprise.category])
     end
 
     def icon_font
