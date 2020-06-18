@@ -158,15 +158,15 @@ it:
       total: Un totale di %{count} sottoscrizioni sono stati contrassegnati per l'elaborazione automatica.
       success_zero: Di questi, nessuno è stato elaborato con successo.
       success_some: Di questi, %{count} sono stati elaborati con successo.
-      success_all: Tutti sono stati elaborati con successo.
+      success_all: Sono stati elaborati tutti con successo.
       issues: Qui sotto i dettagli dei problemi riscontrati.
     summary_detail:
       no_message_provided: Nessun messaggio di errore fornito
       changes:
-        title: Scorte insufficienti (%{count} gentili richieste)
-        explainer: Queste gentili richieste sono state elaborate, ma la quantità richiesta di alcuni prodotti non è disponibile
+        title: Scorte insufficienti (%{count} ordini)
+        explainer: Questi ordini sono stati processati ma la quantità richiesta di alcuni prodotti non è disponibile
       empty:
-        title: Nessuna scorta (%{count} gentili richieste)
+        title: Nessuna scorta (%{count} ordini)
         explainer: Queste gentili richieste non sono state confermate perchè alcuni prodotti richiesti non sono disponibili.
       complete:
         title: Già elaborate (%{count} gentili richieste)
@@ -449,7 +449,7 @@ it:
         property_name: "Nome della Proprietà"
         inherited_property: "Proprietà Ereditata"
       variants:
-        infinity: "Infinito..."
+        infinity: "Infinito"
         to_order_tip: "Gli articoli messi in ordine non hanno un livello di stock impostato, come ad esempio il Pane fresco su ordinazione."
       back_to_products_list: "Indietro alla lista dei prodotti"
       editing_product: "Modifica prodotto"
@@ -1446,12 +1446,12 @@ it:
   email_signature: "Il team di %{sitename}"
   email_confirm_customer_greeting: "Ciao %{name},"
   email_confirm_customer_intro_html: "Grazie per aver acquistato presso <strong>%{distributor}</strong>!"
-  email_confirm_customer_number_html: "Conferma dell'Ordine <strong>#%{number}</strong>"
+  email_confirm_customer_number_html: "Conferma ordine <strong>#%{number}</strong>"
   email_confirm_customer_details_html: "Ecco i dettagli del tuo ordine da <strong>%{distributor}</strong>:"
   email_confirm_customer_signoff: "Cordiali saluti,"
   email_confirm_shop_greeting: "Ciao %{name},"
   email_confirm_shop_order_html: "Ben fatto! Hai un nuovo ordine per <strong>%{distributor}</strong>!"
-  email_confirm_shop_number_html: "Conferma dell'Ordine <strong>#%{number}</strong>"
+  email_confirm_shop_number_html: "Conferma ordine <strong>#%{number}</strong>"
   email_order_summary_item: "Articolo"
   email_order_summary_quantity: "Qtà"
   email_order_summary_sku: "SKU"
@@ -1489,7 +1489,7 @@ it:
   email_shipping_collection_instructions: "Istruzioni per la distribuzione:"
   email_special_instructions: "Tue note:"
   email_signup_greeting: Ciao!
-  email_signup_welcome: "Benvenuto a %{sitename}!"
+  email_signup_welcome: "Benvenuto su %{sitename}!"
   email_signup_confirmed_email: "Grazie di aver confermato la tua mail."
   email_signup_shop_html: "Puoi effettuare il log in qui: %{link}."
   email_signup_text: "Grazie per esserti unito alla rete. Se sei un cliente, non vediamo l'ora di introdurti a molti produttori fantastici, distributori di cibo spettacolari e cibo delizioso! Se sei un produttore o un'impresa alimentare, siamo entusiasti di averti come parte della rete."
@@ -1678,7 +1678,7 @@ it:
   orders_oc_expired_text_link: "o vedi gli altri cicli d'ordine disponibili per questo hub"
   orders_oc_expired_email: "Email:"
   orders_oc_expired_phone: "Telefono:"
-  orders_show_title: Conferma dell'ordine
+  orders_show_title: Conferma Ordine
   orders_show_time: Ordine pronto
   orders_show_order_number: "Gentile richiesta #%{number}"
   orders_show_cancelled: Annullato
@@ -3334,7 +3334,7 @@ it:
         credit_order: "Il tuo ordine è stato pagato, quindi il tuo acconto è stato accreditato"
         subject: "Cancellazione dell'ordine"
       confirm_email:
-        subject: "Conferma dell'ordine"
+        subject: "Conferma Ordine"
       invoice_email:
         hi: "Ciao %{name}"
         invoice_attached_text: 'Aggiunge una fattura per il tuo recente ordine di '

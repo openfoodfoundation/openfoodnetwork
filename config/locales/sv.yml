@@ -11,6 +11,8 @@ sv:
       spree/product:
         supplier: "Leverantör"
         variant_unit: "Enhet för variant"
+      variant_override:
+        count_on_hand: "På lager"
     errors:
       models:
         spree/user:

@@ -23,6 +23,8 @@ pt_BR:
         base: "Cartão de Crédito"
       order_cycle:
         orders_close_at: Dia de fechamento
+      variant_override:
+        count_on_hand: "Disponível"
     errors:
       models:
         spree/user:
@@ -2740,6 +2742,7 @@ pt_BR:
   customer_details: "Detalhes do cliente"
   adjustments: "Ajustes"
   payments: "Pagamentos"
+  return_authorizations: "Autorizações de Retorno"
   payment: "Pagamento"
   payment_method: "Método de Pagamento"
   shipment: "Envio"

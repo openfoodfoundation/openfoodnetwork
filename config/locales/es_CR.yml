@@ -23,6 +23,8 @@ es_CR:
         base: "Tarjeta de crédito"
       order_cycle:
         orders_close_at: Fecha de cierre
+      variant_override:
+        count_on_hand: "Disponibles"
     errors:
       models:
         spree/user:
@@ -2726,6 +2728,7 @@ es_CR:
   customer_details: "Detalles del cliente"
   adjustments: "Ajustes"
   payments: "Pagos"
+  return_authorizations: "Autorizaciones de devolución"
   payment: "Pago"
   payment_method: "Método de pago"
   shipment: "Envío"
