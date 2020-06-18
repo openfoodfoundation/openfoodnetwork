@@ -54,6 +54,10 @@ module UIComponentHelper
     end
   end
 
+  def close_modal
+    find("a.close-reveal-modal").click
+  end
+
   def have_reset_password
     have_content "An email with instructions on resetting your password has been sent!"
   end

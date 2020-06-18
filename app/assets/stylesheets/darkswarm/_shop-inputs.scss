@@ -6,47 +6,6 @@
 .darkswarm {
   // #search
   @include placeholder(rgba(0, 0, 0, 0.4), #777);
-
-  // ordering
-  product {
-    // BULK
-
-    input.bulk {
-      width: 5rem;
-
-      @include breakpoint(desktop) {
-        width: 4rem;
-      }
-
-      @include breakpoint(tablet) {
-        width: 3.5rem;
-      }
-
-      @include breakpoint(mobile) {
-        width: 2.8rem;
-      }
-    }
-
-    input.bulk.first {
-      border-right: 0;
-    }
-
-    input.bulk.second {
-      border-left: 0;
-    }
-
-    .bulk-input-container {
-      float: right;
-
-      @include breakpoint(phablet) {
-        float: left !important;
-      }
-
-      .bulk-input {
-        float: left;
-      }
-    }
-  }
 }
 
 // Components to add variants to cart and change quanities
@@ -105,4 +64,30 @@ button.variant-quantity {
   &.visible {
     visibility: visible;
   }
+}
+
+button.bulk-buy.variant-quantity {
+  background-color: transparent;
+  border: .1em solid $grey-200;
+  color: inherit;
+}
+button.bulk-buy-add.variant-quantity {
+  width: 2.5rem
+}
+span.bulk-buy.variant-quantity {
+  border: .1em solid $grey-200;
+  height: 2.5rem;
+  display: inline-block;
+  min-width: 3em;
+  padding: .5em;
+  text-align: center;
+  vertical-align: top;
+}
+.variant-bulk-buy-price-summary {
+  color: $disabled-med;
+  margin-bottom: 1em;
+}
+.variant-bulk-buy-quantity-label {
+  font-size: 0.875rem;
+  margin-bottom: .5em;
 }

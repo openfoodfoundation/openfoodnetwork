@@ -6,12 +6,6 @@ module ShopWorkflow
   end
 
   def wait_for_cart
-    # Wait for debounce
-    #
-    # The auto-submit on these specific form elements (add to cart) now has a small built-in
-    # waiting period before submitting the data...
-    sleep 0.6
-
     within find_body do
       # We ignore visibility in case the cart dropdown is not open.
       within '.cart-sidebar', visible: false do
@@ -67,18 +61,21 @@ module ShopWorkflow
 
   def click_add_bulk_to_cart(variant = nil, quantity = 1)
     within_variant(variant) do
-      input = page.find("input")
-      new_quantity = input.value.to_i + quantity
-      fill_in input[:name], with: new_quantity
+      click_button "Add"
+    end
+    within(".reveal-modal") do
+      (quantity - 1).times do
+        first(:button, "＋").click
+      end
     end
     wait_for_cart
   end
 
   def click_add_bulk_max_to_cart(variant = nil, quantity = 1)
-    within_variant(variant) do
-      input = page.find(:field, "variant_attributes[#{variant.id}][max_quantity]")
-      new_quantity = input.value.to_i + quantity
-      fill_in input[:name], with: new_quantity
+    within(".reveal-modal") do
+      quantity.times do
+        page.all("button", text: "＋").last.click
+      end
     end
     wait_for_cart
   end
@@ -88,6 +85,12 @@ module ShopWorkflow
     expect(page).to have_selector selector
     within(selector) do
       yield
+    end
+  end
+
+  def open_bulk_quantity_modal(variant)
+    within_variant(variant) do
+      page.first("button.bulk-buy").click
     end
   end
 
