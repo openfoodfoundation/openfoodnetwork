@@ -94,7 +94,6 @@ gem 'paperclip', '~> 3.4.1'
 gem 'rack-rewrite'
 gem 'rack-ssl', require: 'rack/ssl'
 gem 'roadie-rails', '~> 1.3.0'
-gem 'spinjs-rails'
 
 gem 'combine_pdf'
 gem 'wicked_pdf'

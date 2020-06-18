@@ -1,38 +1,31 @@
 @import 'admin/globals/variables';
 @import 'admin/globals/mixins';
 
-#progress { 
-  display: none;
+#progress {
+  @include border-radius(10px);
   position: fixed;
-  top: 0;  
+  top: -10px;
+  left: 50%;
   z-index: 1000;
   opacity: 0.8;
-  width: 100%;
+  width: 200px;
+  background-color: $spree-blue;
+  color: $color-1;
+  display: none;
+  font-size: 120%;
+  font-weight: bold;
+  line-height: 40px;
+  margin-left: -100px;
+  padding-top: 15px;
+  text-align: center;
+  text-transform: uppercase;
 
-  .wrapper {
-    @include border-radius(10px);
-    top: -10px;
+  .spinner {
     position: absolute;
     left: 50%;
-    width: 200px;
-    margin-left: -100px;
-    padding: 11px 0;
-    background-color: $color-3;
-    color: $color-1;
-    text-align: center;
-  }
-
-  #spinner {    
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    margin-left: -5px;
-  }
-
-  .progress-message {
-    font-size: 120%;
-    font-weight: $font-weight-bold;
-    margin-top: 20px;
-    text-transform: uppercase;
+    width: 30px;
+    height: 30px;
+    top: -5px;
+    margin-left: -15px;
   }
 }
