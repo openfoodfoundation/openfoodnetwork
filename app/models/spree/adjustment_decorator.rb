@@ -18,7 +18,7 @@ module Spree
       where(originator_type: 'Spree::TaxRate', adjustable_type: 'Spree::LineItem')
     }
 
-    scope :with_tax,       -> { where('spree_adjustments.included_tax > 0') }
+    scope :with_tax,       -> { where('spree_adjustments.included_tax <> 0') }
     scope :without_tax,    -> { where('spree_adjustments.included_tax = 0') }
     scope :payment_fee,    -> { where(AdjustmentScopes::PAYMENT_FEE_SCOPE) }
     scope :shipping,       -> { where(AdjustmentScopes::SHIPPING_SCOPE) }
