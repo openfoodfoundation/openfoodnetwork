@@ -479,6 +479,7 @@ es:
         line_number: "Línea %{number}:"
         encoding_error: "Verifique la configuración de idioma de su archivo fuente y asegúrese de que esté guardado con la codificación UTF-8"
         unexpected_error: "La importación de productos encontró un error inesperado al abrir el archivo: %{error_message}"
+        malformed_csv: "La importación de producto encontró un CSV con formato incorrecto: %{error_message}"
       index:
         notice: "aviso"
         beta_notice: "Esta funcionalidad aún está en versión beta: puede experimentar algunos errores mientras la usa. Por favor no dude en ponerse en contacto con nosotros."
