@@ -1,0 +1,34 @@
+.row
+  .columns.small-12
+    %h3{"ng-bind" => "::variant.extended_name"}
+
+.row.variant-bulk-buy-price-summary
+  .columns.small-6
+    .variant-unit {{ ::variant.unit_to_display }}
+  .columns.small-6
+    {{ variant.line_item.total_price | localizeCurrency }}
+
+.row
+  .columns.small-6
+    .variant-bulk-buy-quantity-label
+      Min quantity
+    %div
+      %button.bulk-buy-add.variant-quantity{type: "button", ng: {click: "add(-1)", disabled: "!canAdd(-1)"}}>
+        {{ "js.shop_variant_no_group_buy.decrement" | t }}
+      %span.bulk-buy.variant-quantity>
+        {{ variant.line_item.quantity }}
+      %button.bulk-buy-add.variant-quantity{type: "button", ng: {click: "add(1)", disabled: "!canAdd(1)"}}
+        {{ "js.shop_variant_no_group_buy.increment" | t }}
+  .columns.small-6
+    .variant-bulk-buy-quantity-label
+      Max quantity
+    %div
+      %button.bulk-buy-add.variant-quantity{type: "button", ng: {click: "addMax(-1)", disabled: "!canAddMax(-1)"}}>
+        {{ "js.shop_variant_no_group_buy.decrement" | t }}
+      %span.bulk-buy.variant-quantity>
+        {{ variant.line_item.max_quantity }}
+      %button.bulk-buy-add.variant-quantity{type: "button", ng: {click: "addMax(1)", disabled: "!canAddMax(1)"}}
+        {{ "js.shop_variant_no_group_buy.increment" | t }}
+
+
+%ng-include{src: "'partials/close.html'"}
