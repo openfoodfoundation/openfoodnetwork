@@ -49,8 +49,9 @@ gem 'stripe'
 # which is needed for Pin Payments (and possibly others).
 gem 'activemerchant', '~> 1.78.0'
 
-gem 'devise', '~> 3.5.10'
+gem 'devise', '~> 3.5.10' # v4.0.0 needs rails 4.1
 gem 'devise-encryptable'
+gem 'devise-token_authenticatable', '~> 0.4.10' # v0.5.0 needs devise v4
 gem 'jwt', '~> 2.2'
 gem 'oauth2', '~> 1.4.4' # Used for Stripe Connect
 
