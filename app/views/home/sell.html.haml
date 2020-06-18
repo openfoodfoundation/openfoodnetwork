@@ -18,7 +18,7 @@
         %h3= t :sell_producers
         %p
           = t :sell_producers_detail
-          %a{href: "https://openfoodnetwork.org/user-guide/"}= t(:sell_user_guide)
+          %a{href: ContentConfig.user_guide_link}= t(:sell_user_guide)
         %a.button.transparent{href: signup_producers_path}
           = t :register_title
 
@@ -26,7 +26,7 @@
         %h3= t :sell_hubs
         %p
           = t :sell_hubs_detail
-          %a{href: "https://openfoodnetwork.org/user-guide/"}= t(:sell_user_guide)
+          %a{href: ContentConfig.user_guide_link}= t(:sell_user_guide)
         %a.button.transparent{href: signup_shops_path}
           = t :register_title
 
@@ -34,7 +34,7 @@
         %h3= t :sell_groups
         %p
           = t :sell_groups_detail
-          %a{href: "https://openfoodnetwork.org/user-guide/"}= t(:sell_user_guide)
+          %a{href: ContentConfig.user_guide_link}= t(:sell_user_guide)
         %a.button.transparent{href: signup_groups_path}
           = t :register_title
 
