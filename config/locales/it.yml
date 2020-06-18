@@ -23,6 +23,8 @@ it:
         base: "Carta di Credito"
       order_cycle:
         orders_close_at: Data chiusura
+      variant_override:
+        count_on_hand: "Disponibile"
     errors:
       models:
         spree/user:
@@ -180,7 +182,7 @@ it:
         explainer: L'elaborazione automatica di queste gentili richieste non è riuscita per una ragione sconosciuta. Questo non dovrebbe accadere, ti preghiamo di contattarci se visualizzi questo messaggio.
   home: "OFN"
   title: Open Food Network
-  welcome_to: 'Benvenuto su'
+  welcome_to: 'Benvenuto su '
   site_meta_description: "Cominciamo da zero. Con i produttori e gli allevatori pronti a raccontare le loro storie, sinceramente e orgogliosamente. Con i distributori pronti a connettere le persone con i prodotti in modo giusto ed equo. Con i compratori che credono che migliori decisioni per l'acquisto settimanale possano..."
   search_by_name: Cerca per nome o zona...
   producers_join: I Produttori sono ora invitati ad unirsi ad Open Food Network
@@ -368,7 +370,10 @@ it:
         title: "Impostazioni Matomo"
         matomo_url: "URL Matomo"
         matomo_site_id: "Site ID Matomo"
+        matomo_tag_manager_url: "Matomo Tag Manager URL"
+        info_html: "Matomo è una applicazione Analitica per Web e Mobile. Puoi ospitare Matomo in locale o utilizzare un servizio ospitato su cloud. Visita <a href='http://matomo.org' target='_blank'>matomo.org</a> per maggiori informazioni."
         config_instructions_html: "Qui è possibile configurare l'integrazione OFN Matomo. L'URL di Matomo qui sotto dovrebbe puntare l'istanza di Matomo a cui saranno inviate le informazioni di monitoraggio dell'utente; se lasciato vuoto, il monitoraggio dell'utente da parte di Matomo sarà disabilitato. Il campo Site ID non è obbligatorio ma è utile se si sta tracciando più di un sito web su una singola istanza di Matomo; si può trovare sulla console dell'istanza di Matomo. "
+        config_instructions_tag_manager_html: "La configurazione di Matomo Tag Manager URL abilita Matomo Tag Manager. Questo strumento consente di impostare eventi di analisi. Il Matomo Tag Manager URL è copiato dalla sezione Install Code di Matomo Tag Manager. Assicurati di selezionare il giusto container e l'ambiente perché queste opzioni modificano l'URL."
     customers:
       index:
         new_customer: "Nuovo Cliente"
@@ -474,6 +479,7 @@ it:
         line_number: "Linea %{number}:"
         encoding_error: "Controlla l'impostazione della lingua del file sorgente e assicurati che sia salvato con la codifica UTF-8."
         unexpected_error: "L'importazione del prodotto ha incontrato un errore imprevisto durante l'apertura del file:%{error_message}"
+        malformed_csv: "L'Importazione Prodotti ha incontro un CSV non valido: %{error_message}"
       index:
         notice: "Avviso"
         beta_notice: "Questa opzione è ancora in fase beta: potresti incontrare errori mentre la usi. Per favore non esitare a contattare il servizio di supporto."
@@ -1703,7 +1709,7 @@ it:
   remember_me: Ricordami
   are_you_sure: "Sei sicuro?"
   orders_open: Richieste aperte
-  closing: "In chiusura"
+  closing: "In chiusura "
   going_back_to_home_page: "Reindirizzamento alla homepage"
   creating: In creazione
   updating: In aggiornamento
@@ -2741,6 +2747,7 @@ it:
   customer_details: "Dettagli Cliente"
   adjustments: "Regolazioni"
   payments: "Pagamenti"
+  return_authorizations: "Authorizationi reso"
   payment: "Pagamento"
   payment_method: "Metodo di pagamento"
   shipment: "Spedizione"
@@ -2934,6 +2941,12 @@ it:
     options: "Opzioni"
     actions:
       update: "Aggiorna"
+    shared:
+      error_messages:
+        errors_prohibited_this_record_from_being_saved:
+          one: "1 errore ha proibito il salvataggio di questo record:"
+          other: "%{count} errori hanno proibito il salvataggio di questo record:"
+        there_were_problems_with_the_following_fields: "Si sono verificati problemi con i seguenti campi"
     errors:
       messages:
         blank: "non può essere lasciato vuoto"
