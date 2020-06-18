@@ -13,4 +13,11 @@ module SerializerHelper
 
     (serializer_attributes & model_attributes).map { |attr| "#{model.table_name}.#{attr}" }
   end
+
+  # Since Rails 4 has adjusted the way assets paths are handled, we have to access certain
+  # asset-based helpers like this, when outside of a view or controller context.
+  # See: https://stackoverflow.com/a/16609815
+  def image_path(path)
+    ActionController::Base.helpers.image_path(path)
+  end
 end
