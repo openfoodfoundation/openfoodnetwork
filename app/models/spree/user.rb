@@ -49,10 +49,6 @@ module Spree
       has_spree_role?('admin')
     end
 
-    def send_reset_password_instructions
-      generate_reset_password_token!
-      UserMailer.reset_password_instructions(id).deliver
-    end
     # handle_asynchronously will define send_reset_password_instructions_with_delay.
     # If handle_asynchronously is called twice, we get an infinite job loop.
     handle_asynchronously :send_reset_password_instructions unless method_defined? :send_reset_password_instructions_with_delay

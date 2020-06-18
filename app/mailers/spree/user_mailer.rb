@@ -5,12 +5,11 @@ module Spree
     include I18nHelper
 
     # Overrides `Devise::Mailer.reset_password_instructions`
-    def reset_password_instructions(user)
-      recipient = user.respond_to?(:id) ? user : Spree.user_class.find(user)
+    def reset_password_instructions(user, token, _opts = {})
       @edit_password_reset_url = spree.
-        edit_spree_user_password_url(reset_password_token: recipient.reset_password_token)
+        edit_spree_user_password_url(reset_password_token: token)
 
-      mail(to: recipient.email, from: from_address,
+      mail(to: user.email, from: from_address,
            subject: Spree::Config[:site_name] + ' ' +
              I18n.t(:subject, scope: [:devise, :mailer, :reset_password_instructions]))
     end
