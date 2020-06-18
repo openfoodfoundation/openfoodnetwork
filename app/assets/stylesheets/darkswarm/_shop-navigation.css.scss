@@ -62,7 +62,7 @@ ordercycle {
     }
 
     select {
-      background-image: url('/assets/white-caret.svg');
+      background-image: image-url('white-caret.svg');
       background-size: 30px auto;
       background-position-x: 102%;
     }
@@ -147,7 +147,7 @@ shop ordercycle {
 
       select {
         background-color: $white;
-        background-image: url('/assets/black-caret.svg');
+        background-image: image-url('black-caret.svg');
         color: $grey-500;
         font-style: italic;
       }

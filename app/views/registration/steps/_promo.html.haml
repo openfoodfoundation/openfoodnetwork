@@ -39,6 +39,6 @@
               .message{ ng: { hide: "imageSrc() || imageUploader.isUploading" } }
                 = t(".promo_image_placeholder")
               .loading{ ng: { hide: "!imageUploader.isUploading" } }
-                %img.spinner{ src: "/assets/spinning-circles.svg" }
+                %img.spinner{ src: image_path("spinning-circles.svg") }
                 %br/
                 = t("registration.steps.images.uploading")

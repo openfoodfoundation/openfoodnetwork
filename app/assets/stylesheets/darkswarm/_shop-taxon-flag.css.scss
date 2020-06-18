@@ -4,7 +4,7 @@
   products {
     product {
       .taxon-flag {
-        background: transparent url("/assets/flag.svg") top center no-repeat;
+        background: transparent image-url("flag.svg") top center no-repeat;
         background-size: 34px 39px;
         min-height: 40px;
         width: 34px;

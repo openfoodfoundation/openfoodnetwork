@@ -81,7 +81,7 @@
         %span{'ng-bind-html' => 'order.display_total'}
       %td.actions
         %div.row-loading-icons
-          %img.spinner{src: "/assets/spinning-circles.svg", ng: {show: 'rowStatus[order.id] == "loading"'} }
+          %img.spinner{src: image_path("spinning-circles.svg"), ng: {show: 'rowStatus[order.id] == "loading"'} }
           %i.success.icon-ok-sign{ng: {show: 'rowStatus[order.id] == "success"'} }
           %i.error.icon-remove-sign.with-tip{ng: {show: 'rowStatus[order.id] == "error"'}, 'ofn-with-tip' => t('.order_not_updated')}
         %a.icon_link.with-tip.icon-edit.no-text{'ng-href' => '{{order.edit_path}}', 'data-action' => 'edit', 'ofn-with-tip' => t('.edit')}
@@ -93,7 +93,7 @@
 .orders-loading{'ng-show' => 'RequestMonitor.loading'}
   .row
     .small-12.columns.fullwidth.text-center
-      %img.spinner{ src: "/assets/spinning-circles.svg" }
+      %img.spinner{ src: image_path("spinning-circles.svg") }
   .row
     .small-12.columns.fullwidth.text-center
       %span= t('.loading')
