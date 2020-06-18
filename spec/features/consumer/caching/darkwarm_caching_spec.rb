@@ -29,7 +29,7 @@ feature "Darkswarm data caching", js: true, caching: true do
       visit shops_path
     end
 
-    xit "invalidates caches for taxons and properties" do
+    it "invalidates caches for taxons and properties" do
       visit shops_path
 
       taxon_timestamp1 = CacheService.latest_timestamp_by_class(Spree::Taxon)
@@ -45,13 +45,16 @@ feature "Darkswarm data caching", js: true, caching: true do
         expect(page).to have_content property.presentation
       end
 
-      taxon.update_attributes!(name: "Changed Taxon")
-      property.update_attributes!(presentation: "Changed Property")
+      taxon.update!(name: "Changed Taxon")
+      property.update!(presentation: "Changed Property")
 
       # Clear timed shops cache so we can test uncached supplied properties
       clear_shops_cache
 
       visit shops_path
+
+      # Wait for /shops page to load properly before checking for new timestamps
+      expect(page).to_not have_selector ".row.filter-row", visible: true
 
       taxon_timestamp2 = CacheService.latest_timestamp_by_class(Spree::Taxon)
       expect_cached "views/#{CacheService::FragmentCaching.ams_all_taxons[0]}"
