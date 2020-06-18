@@ -1,6 +1,8 @@
 # Represents the minimum details of an Enterprise when all shopfronts are being listed
 module Api
   class EnterpriseShopfrontListSerializer < ActiveModel::Serializer
+    include SerializerHelper
+
     attributes :name, :id, :latitude, :longitude, :is_primary_producer, :is_distributor,
                :path, :icon, :icon_font, :producer_icon_font, :address_id, :sells,
                :permalink
@@ -13,13 +15,13 @@ module Api
 
     def icon
       icons = {
-        hub: "/assets/map_005-hub.svg",
-        hub_profile: "/assets/map_006-hub-profile.svg",
-        producer_hub: "/assets/map_005-hub.svg",
-        producer_shop: "/assets/map_003-producer-shop.svg",
-        producer: "/assets/map_001-producer-only.svg",
+        hub: "map_005-hub.svg",
+        hub_profile: "map_006-hub-profile.svg",
+        producer_hub: "map_005-hub.svg",
+        producer_shop: "map_003-producer-shop.svg",
+        producer: "map_001-producer-only.svg",
       }
-      icons[enterprise.category]
+      image_path icons[enterprise.category]
     end
 
     def icon_font
