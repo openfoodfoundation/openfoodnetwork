@@ -49,7 +49,7 @@ gem 'stripe'
 # which is needed for Pin Payments (and possibly others).
 gem 'activemerchant', '~> 1.78.0'
 
-gem 'devise', '~> 3.0.1'
+gem 'devise', '~> 3.5.10'
 gem 'devise-encryptable'
 gem 'jwt', '~> 2.2'
 gem 'oauth2', '~> 1.4.4' # Used for Stripe Connect
