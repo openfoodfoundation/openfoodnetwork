@@ -25,8 +25,9 @@ module Spree
     end
 
     # Overrides `Devise::Mailer.confirmation_instructions`
-    def confirmation_instructions(user, _opts)
+    def confirmation_instructions(user, token, _opts = {})
       @user = user
+      @token = token
       @instance = Spree::Config[:site_name]
       @contact = ContentConfig.footer_email
 
