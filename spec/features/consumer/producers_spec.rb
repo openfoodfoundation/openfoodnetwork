@@ -22,10 +22,6 @@ feature '
   let(:shop) { create(:distributor_enterprise) }
   let!(:er) { create(:enterprise_relationship, parent: shop, child: producer1) }
 
-  before :each do
-    use_api_as_unauthenticated_user
-  end
-
   before do
     product1.set_property 'Organic', 'NASAA 12345'
     product2.set_property 'Biodynamic', 'ABC123'

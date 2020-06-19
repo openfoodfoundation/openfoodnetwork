@@ -13,9 +13,9 @@ class ProductFactory
   private
 
   def product_data(enterprises)
-    vegetables = Spree::Taxon.find_by_name('Vegetables')
-    fruit = Spree::Taxon.find_by_name('Fruit')
-    meat = Spree::Taxon.find_by_name('Meat and Fish')
+    vegetables = Spree::Taxon.find_by(name: 'Vegetables')
+    fruit = Spree::Taxon.find_by(name: 'Fruit')
+    meat = Spree::Taxon.find_by(name: 'Meat and Fish')
     producers = enterprises.select(&:is_primary_producer)
     distributors = enterprises.select(&:is_distributor)
     [
@@ -75,14 +75,14 @@ class ProductFactory
       shipping_category: DefaultShippingCategory.find_or_create,
       tax_category_id: find_or_create_tax_category.id
     )
-    product = Spree::Product.create_with(params).find_or_create_by_name!(params[:name])
+    product = Spree::Product.create_with(params).find_or_create_by!(name: params[:name])
     product.variants.first.update_attribute :on_demand, true
     product
   end
 
   def find_or_create_tax_category
     tax_category_name = "Tax Category"
-    tax_category = Spree::TaxCategory.find_by_name(tax_category_name)
+    tax_category = Spree::TaxCategory.find_by(name: tax_category_name)
     tax_category ||= Spree::TaxCategory.create!(name: tax_category_name)
     tax_category
   end

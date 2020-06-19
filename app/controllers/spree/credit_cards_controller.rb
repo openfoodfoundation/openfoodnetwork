@@ -21,12 +21,12 @@ module Spree
     end
 
     def update
-      @credit_card = Spree::CreditCard.find_by_id(params[:id])
+      @credit_card = Spree::CreditCard.find_by(id: params[:id])
       return update_failed unless @credit_card
 
       authorize! :update, @credit_card
 
-      if @credit_card.update_attributes(params[:credit_card])
+      if @credit_card.update_attributes(credit_card_params)
         render json: @credit_card, serializer: ::Api::CreditCardSerializer, status: :ok
       else
         update_failed
@@ -36,7 +36,7 @@ module Spree
     end
 
     def destroy
-      @credit_card = Spree::CreditCard.find_by_id(params[:id])
+      @credit_card = Spree::CreditCard.find_by(id: params[:id])
       if @credit_card
         authorize! :destroy, @credit_card
         destroy_at_stripe
@@ -96,6 +96,10 @@ module Spree
 
     def update_failed
       render json: { flash: { error: t(:card_could_not_be_updated) } }, status: :bad_request
+    end
+
+    def credit_card_params
+      params.require(:credit_card).permit(:is_default, :year, :month)
     end
   end
 end

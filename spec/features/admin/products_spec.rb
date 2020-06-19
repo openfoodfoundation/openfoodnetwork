@@ -48,7 +48,7 @@ feature '
 
       expect(current_path).to eq spree.admin_products_path
       expect(flash_message).to eq('Product "A new product !!!" has been successfully created!')
-      product = Spree::Product.find_by_name('A new product !!!')
+      product = Spree::Product.find_by(name: 'A new product !!!')
       expect(product.supplier).to eq(@supplier)
       expect(product.variant_unit).to eq('weight')
       expect(product.variant_unit_scale).to eq(1000)
@@ -86,7 +86,7 @@ feature '
       click_button 'Create'
 
       expect(current_path).to eq spree.admin_products_path
-      product = Spree::Product.find_by_name('Hot Cakes')
+      product = Spree::Product.find_by(name: 'Hot Cakes')
       expect(product.variants.count).to eq(1)
       variant = product.variants.first
       expect(variant.on_demand).to be true
@@ -131,7 +131,7 @@ feature '
           click_button 'Create'
 
           expect(flash_message).to eq('Product "A new product !!!" has been successfully created!')
-          product = Spree::Product.find_by_name('A new product !!!')
+          product = Spree::Product.find_by(name: 'A new product !!!')
           expect(product.supplier).to eq(@supplier2)
           expect(product.tax_category).to be_nil
         end

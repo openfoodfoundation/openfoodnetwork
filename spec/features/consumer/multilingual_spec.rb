@@ -7,10 +7,10 @@ feature 'Multilingual', js: true do
   include UIComponentHelper
   include CookieHelper
 
-  it 'has two locales available' do
+  it 'has three locales available' do
     expect(Rails.application.config.i18n[:default_locale]).to eq 'en'
     expect(Rails.application.config.i18n[:locale]).to eq 'en'
-    expect(Rails.application.config.i18n[:available_locales]).to eq ['en', 'es']
+    expect(Rails.application.config.i18n[:available_locales]).to eq ['en', 'es', 'pt']
   end
 
   it '18n-js fallsback to default language' do # in backend it doesn't until we change enforce_available_locales to `true`

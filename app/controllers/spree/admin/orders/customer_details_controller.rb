@@ -18,9 +18,9 @@ module Spree
         end
 
         def update
-          if @order.update_attributes(params[:order])
+          if @order.update_attributes(order_params)
             if params[:guest_checkout] == "false"
-              @order.associate_user!(Spree.user_class.find_by_email(@order.email))
+              @order.associate_user!(Spree.user_class.find_by(email: @order.email))
             end
 
             AdvanceOrderService.new(@order).call
@@ -41,6 +41,15 @@ module Spree
 
         private
 
+        def order_params
+          params.require(:order).permit(
+            :email,
+            :use_billing,
+            bill_address_attributes: ::PermittedAttributes::Address.attributes,
+            ship_address_attributes: ::PermittedAttributes::Address.attributes
+          )
+        end
+
         def load_order
           @order = Order.find_by_number!(params[:order_id], include: :adjustments)
         end
@@ -57,7 +66,7 @@ module Spree
         end
 
         def set_guest_checkout_status
-          registered_user = Spree::User.find_by_email(params[:order][:email])
+          registered_user = Spree::User.find_by(email: params[:order][:email])
 
           params[:order][:guest_checkout] = registered_user.nil?
 

@@ -50,11 +50,11 @@ describe ProductImport::ProductImporter do
     let(:csv_data) {
       CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "variant_unit_name", "on_demand", "shipping_category"]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", "", "", shipping_category.name]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "2", "kg", "", "", shipping_category.name]
-        csv << ["Pea Soup", "User Enterprise", "Vegetables", "8", "5.50", "750", "ml", "", "0", shipping_category.name]
-        csv << ["Salad", "User Enterprise", "Vegetables", "7", "4.50", "1", "", "bags", "", shipping_category.name]
-        csv << ["Hot Cross Buns", "User Enterprise", "Cake", "7", "3.50", "1", "", "buns", "1", shipping_category.name]
+        csv << ["Carrots", enterprise.name, "Vegetables", "5", "3.20", "500", "g", "", "", shipping_category.name]
+        csv << ["Potatoes", enterprise.name, "Vegetables", "6", "6.50", "2", "kg", "", "", shipping_category.name]
+        csv << ["Pea Soup", enterprise.name, "Vegetables", "8", "5.50", "750", "ml", "", "0", shipping_category.name]
+        csv << ["Salad", enterprise.name, "Vegetables", "7", "4.50", "1", "", "bags", "", shipping_category.name]
+        csv << ["Hot Cross Buns", enterprise.name, "Cake", "7", "3.50", "1", "", "buns", "1", shipping_category.name]
       end
     }
     let(:importer) { import_data csv_data }
@@ -80,7 +80,7 @@ describe ProductImport::ProductImporter do
       expect(importer.updated_ids).to be_a(Array)
       expect(importer.updated_ids.count).to eq 5
 
-      carrots = Spree::Product.find_by_name('Carrots')
+      carrots = Spree::Product.find_by(name: 'Carrots')
       expect(carrots.supplier).to eq enterprise
       expect(carrots.on_hand).to eq 5
       expect(carrots.price).to eq 3.20
@@ -90,7 +90,7 @@ describe ProductImport::ProductImporter do
       expect(carrots.on_demand).to_not eq true
       expect(carrots.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
-      potatoes = Spree::Product.find_by_name('Potatoes')
+      potatoes = Spree::Product.find_by(name: 'Potatoes')
       expect(potatoes.supplier).to eq enterprise
       expect(potatoes.on_hand).to eq 6
       expect(potatoes.price).to eq 6.50
@@ -100,7 +100,7 @@ describe ProductImport::ProductImporter do
       expect(potatoes.on_demand).to_not eq true
       expect(potatoes.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
-      pea_soup = Spree::Product.find_by_name('Pea Soup')
+      pea_soup = Spree::Product.find_by(name: 'Pea Soup')
       expect(pea_soup.supplier).to eq enterprise
       expect(pea_soup.on_hand).to eq 8
       expect(pea_soup.price).to eq 5.50
@@ -110,7 +110,7 @@ describe ProductImport::ProductImporter do
       expect(pea_soup.on_demand).to_not eq true
       expect(pea_soup.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
-      salad = Spree::Product.find_by_name('Salad')
+      salad = Spree::Product.find_by(name: 'Salad')
       expect(salad.supplier).to eq enterprise
       expect(salad.on_hand).to eq 7
       expect(salad.price).to eq 4.50
@@ -120,7 +120,7 @@ describe ProductImport::ProductImporter do
       expect(salad.on_demand).to_not eq true
       expect(salad.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
-      buns = Spree::Product.find_by_name('Hot Cross Buns')
+      buns = Spree::Product.find_by(name: 'Hot Cross Buns')
       expect(buns.supplier).to eq enterprise
       expect(buns.on_hand).to eq 7
       expect(buns.price).to eq 3.50
@@ -136,7 +136,7 @@ describe ProductImport::ProductImporter do
     let(:csv_data) {
       CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "shipping_category"]
-        csv << ["Good Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", shipping_category.name]
+        csv << ["Good Carrots", enterprise.name, "Vegetables", "5", "3.20", "500", "g", shipping_category.name]
         csv << ["Bad Potatoes", "", "Vegetables", "6", "6.50", "1", "", shipping_category.name]
       end
     }
@@ -159,13 +159,30 @@ describe ProductImport::ProductImporter do
       expect(importer.updated_ids).to be_a(Array)
       expect(importer.updated_ids.count).to eq 1
 
-      carrots = Spree::Product.find_by_name('Good Carrots')
+      carrots = Spree::Product.find_by(name: 'Good Carrots')
       expect(carrots.supplier).to eq enterprise
       expect(carrots.on_hand).to eq 5
       expect(carrots.price).to eq 3.20
       expect(carrots.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
-      expect(Spree::Product.find_by_name('Bad Potatoes')).to eq nil
+      expect(Spree::Product.find_by(name: 'Bad Potatoes')).to eq nil
+    end
+  end
+
+  describe "when uploading a spreadsheet with some malformed data" do
+    # Use a simple string as CSV.generate will do some escaping
+    let(:csv_data) {
+      csv = "name,producer,category,on_hand,price,units,unit_type,shipping_category\n"
+      csv += "Good Carrots,#{enterprise.name},Vegetables,5,3.20,500,g,#{shipping_category.name}\n"
+      csv += "Malformed \rBrocolli,#{enterprise.name},Vegetables,8,2.50,200,g,#{shipping_category.name}\n"
+    }
+    let(:importer) { import_data csv_data }
+
+    # an unquoted \n will create a non valid line which will fail entry validation hence why we are only testing with \r
+    it "should raise an unquoted field error if data include unquoted field with \r character" do
+      expect(importer.errors.messages.values).to include(
+        [I18n.t('admin.product_import.model.malformed_csv', error_message: "Unquoted fields do not allow \\r or \\n (line 3).")]
+      )
     end
   end
 
@@ -173,7 +190,7 @@ describe ProductImport::ProductImporter do
     let(:csv_data) {
       CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "variant_unit_name", "on_demand", "shipping_category"]
-        csv << ["Shipping Test", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", "", nil, nil]
+        csv << ["Shipping Test", enterprise.name, "Vegetables", "5", "3.20", "500", "g", "", nil, nil]
       end
     }
     let(:importer) { import_data csv_data }
@@ -191,7 +208,7 @@ describe ProductImport::ProductImporter do
       CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type"]
         csv << ["Product 1", "Non-existent Enterprise", "Vegetables", "5", "5.50", "500", "g"]
-        csv << ["Product 2", "Non-Producer", "Vegetables", "5", "5.50", "500", "g"]
+        csv << ["Product 2", enterprise4.name, "Vegetables", "5", "5.50", "500", "g"]
       end
     }
     let(:importer) { import_data csv_data }
@@ -209,8 +226,8 @@ describe ProductImport::ProductImporter do
     let(:csv_data) {
       CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "display_name", "shipping_category"]
-        csv << ["Hypothetical Cake", "Another Enterprise", "Cake", "5", "5.50", "500", "g", "Preexisting Banana", shipping_category.name]
-        csv << ["Hypothetical Cake", "Another Enterprise", "Cake", "6", "3.50", "500", "g", "Emergent Coffee", shipping_category.name]
+        csv << ["Hypothetical Cake", enterprise2.name, "Cake", "5", "5.50", "500", "g", "Preexisting Banana", shipping_category.name]
+        csv << ["Hypothetical Cake", enterprise2.name, "Cake", "6", "3.50", "500", "g", "Emergent Coffee", shipping_category.name]
       end
     }
     let(:importer) { import_data csv_data }
@@ -233,13 +250,13 @@ describe ProductImport::ProductImporter do
       expect(importer.updated_ids).to be_a(Array)
       expect(importer.updated_ids.count).to eq 2
 
-      added_coffee = Spree::Variant.find_by_display_name('Emergent Coffee')
+      added_coffee = Spree::Variant.find_by(display_name: 'Emergent Coffee')
       expect(added_coffee.product.name).to eq 'Hypothetical Cake'
       expect(added_coffee.price).to eq 3.50
       expect(added_coffee.on_hand).to eq 6
       expect(added_coffee.import_date).to be_within(1.minute).of Time.zone.now
 
-      updated_banana = Spree::Variant.find_by_display_name('Preexisting Banana')
+      updated_banana = Spree::Variant.find_by(display_name: 'Preexisting Banana')
       expect(updated_banana.product.name).to eq 'Hypothetical Cake'
       expect(updated_banana.price).to eq 5.50
       expect(updated_banana.on_hand).to eq 5
@@ -251,7 +268,7 @@ describe ProductImport::ProductImporter do
     let(:csv_data) {
       CSV.generate do |csv|
         csv << ["name", "producer", "description", "category", "on_hand", "price", "units", "unit_type", "display_name", "shipping_category"]
-        csv << ["Hypothetical Cake", "Another Enterprise", "New Description", "Cake", "5", "5.50", "500", "g", "Preexisting Banana", shipping_category.name]
+        csv << ["Hypothetical Cake", enterprise2.name, "New Description", "Cake", "5", "5.50", "500", "g", "Preexisting Banana", shipping_category.name]
       end
     }
     let(:importer) { import_data csv_data }
@@ -270,11 +287,11 @@ describe ProductImport::ProductImporter do
     let(:csv_data) {
       CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "display_name", "shipping_category"]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "5", "3.50", "500", "g", "Small Bag", shipping_category.name]
-        csv << ["Chives", "User Enterprise", "Vegetables", "6", "4.50", "500", "g", "Bunch", shipping_category.name]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "5.50", "2", "kg", "Big Bag", shipping_category.name]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "22.00", "10000", "g", "Small Sack", shipping_category.name]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "60.00", "30000", "", "Big Sack", shipping_category.name]
+        csv << ["Potatoes", enterprise.name, "Vegetables", "5", "3.50", "500", "g", "Small Bag", shipping_category.name]
+        csv << ["Chives", enterprise.name, "Vegetables", "6", "4.50", "500", "g", "Bunch", shipping_category.name]
+        csv << ["Potatoes", enterprise.name, "Vegetables", "6", "5.50", "2", "kg", "Big Bag", shipping_category.name]
+        csv << ["Potatoes", enterprise.name, "Vegetables", "6", "22.00", "10000", "g", "Small Sack", shipping_category.name]
+        csv << ["Potatoes", enterprise.name, "Vegetables", "6", "60.00", "30000", "", "Big Sack", shipping_category.name]
       end
     }
     let(:importer) { import_data csv_data }
@@ -295,21 +312,21 @@ describe ProductImport::ProductImporter do
       expect(importer.updated_ids).to be_a(Array)
       expect(importer.updated_ids.count).to eq 3
 
-      small_bag = Spree::Variant.find_by_display_name('Small Bag')
+      small_bag = Spree::Variant.find_by(display_name: 'Small Bag')
       expect(small_bag.product.name).to eq 'Potatoes'
       expect(small_bag.price).to eq 3.50
       expect(small_bag.on_hand).to eq 5
 
-      big_bag = Spree::Variant.find_by_display_name("Big Bag")
+      big_bag = Spree::Variant.find_by(display_name: "Big Bag")
       expect(big_bag).to be_blank
 
-      small_sack = Spree::Variant.find_by_display_name("Small Sack")
+      small_sack = Spree::Variant.find_by(display_name: "Small Sack")
       expect(small_sack.product.name).to eq "Potatoes"
       expect(small_sack.price).to eq 22.00
       expect(small_sack.on_hand).to eq 6
       expect(small_sack.product.id).to eq small_bag.product.id
 
-      big_sack = Spree::Variant.find_by_display_name("Big Sack")
+      big_sack = Spree::Variant.find_by(display_name: "Big Sack")
       expect(big_sack).to be_blank
     end
   end
@@ -318,8 +335,8 @@ describe ProductImport::ProductImporter do
     let(:csv_data) {
       CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "on_demand", "sku", "shipping_category"]
-        csv << ["Beetroot", "And Another Enterprise", "Vegetables", "5", "3.50", "500", "g", "0", nil, shipping_category.name]
-        csv << ["Tomato", "And Another Enterprise", "Vegetables", "6", "5.50", "500", "g", "1", "TOMS", shipping_category.name]
+        csv << ["Beetroot", enterprise3.name, "Vegetables", "5", "3.50", "500", "g", "0", nil, shipping_category.name]
+        csv << ["Tomato", enterprise3.name, "Vegetables", "6", "5.50", "500", "g", "1", "TOMS", shipping_category.name]
       end
     }
     let(:importer) { import_data csv_data }
@@ -342,11 +359,11 @@ describe ProductImport::ProductImporter do
       expect(importer.updated_ids).to be_a(Array)
       expect(importer.updated_ids.count).to eq 2
 
-      beetroot = Spree::Product.find_by_name('Beetroot').variants.first
+      beetroot = Spree::Product.find_by(name: 'Beetroot').variants.first
       expect(beetroot.price).to eq 3.50
       expect(beetroot.on_demand).to_not eq true
 
-      tomato = Spree::Product.find_by_name('Tomato').variants.first
+      tomato = Spree::Product.find_by(name: 'Tomato').variants.first
       expect(tomato.price).to eq 5.50
       expect(tomato.on_demand).to eq true
     end
@@ -356,8 +373,8 @@ describe ProductImport::ProductImporter do
     let(:csv_data) {
       CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type"]
-        csv << ["Beetroot", "And Another Enterprise", "Meat", "5", "3.50", "500", "g"]
-        csv << ["Tomato", "And Another Enterprise", "Vegetables", "6", "5.50", "500", "Kg"]
+        csv << ["Beetroot", enterprise3.name, "Meat", "5", "3.50", "500", "g"]
+        csv << ["Tomato", enterprise3.name, "Vegetables", "6", "5.50", "500", "Kg"]
       end
     }
     let(:importer) { import_data csv_data }
@@ -379,11 +396,11 @@ describe ProductImport::ProductImporter do
     let(:csv_data) {
       CSV.generate do |csv|
         csv << ["name", "producer", "category", "description", "on_hand", "price", "units", "unit_type", "display_name", "shipping_category"]
-        csv << ["Oats", "User Enterprise", "Cereal", "", "50", "3.50", "500", "g", "Rolled Oats", shipping_category.name]   # Update
-        csv << ["Oats", "User Enterprise", "Cereal", "", "80", "3.75", "500", "g", "Flaked Oats", shipping_category.name]   # Update
-        csv << ["Oats", "User Enterprise", "Cereal", "", "60", "5.50", "500", "g", "Magic Oats", shipping_category.name]    # Add
-        csv << ["Oats", "User Enterprise", "Cereal", "", "70", "8.50", "500", "g", "French Oats", shipping_category.name]   # Add
-        csv << ["Oats", "User Enterprise", "Cereal", "", "70", "8.50", "500", "g", "Scottish Oats", shipping_category.name] # Add
+        csv << ["Oats", enterprise.name, "Cereal", "", "50", "3.50", "500", "g", "Rolled Oats", shipping_category.name]   # Update
+        csv << ["Oats", enterprise.name, "Cereal", "", "80", "3.75", "500", "g", "Flaked Oats", shipping_category.name]   # Update
+        csv << ["Oats", enterprise.name, "Cereal", "", "60", "5.50", "500", "g", "Magic Oats", shipping_category.name]    # Add
+        csv << ["Oats", enterprise.name, "Cereal", "", "70", "8.50", "500", "g", "French Oats", shipping_category.name]   # Add
+        csv << ["Oats", enterprise.name, "Cereal", "", "70", "8.50", "500", "g", "Scottish Oats", shipping_category.name] # Add
       end
     }
     let(:importer) { import_data csv_data }
@@ -415,11 +432,11 @@ describe ProductImport::ProductImporter do
     let(:csv_data) {
       CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "display_name", "shipping_category"]
-        csv << ["Bag of Oats", "User Enterprise", "Cereal", "60", "5.50", "500", "g", "Magic Oats", shipping_category.name]     # Add
-        csv << ["Bag of Oats", "User Enterprise", "Cereal", "70", "8.50", "500", "g", "French Oats", shipping_category.name]    # Add
-        csv << ["Bag of Oats", "User Enterprise", "Cereal", "80", "9.50", "500", "g", "Organic Oats", shipping_category.name]   # Add
-        csv << ["Bag of Oats", "User Enterprise", "Cereal", "90", "7.50", "500", "g", "Scottish Oats", shipping_category.name]  # Add
-        csv << ["Bag of Oats", "User Enterprise", "Cereal", "30", "6.50", "500", "g", "Breakfast Oats", shipping_category.name] # Add
+        csv << ["Bag of Oats", enterprise.name, "Cereal", "60", "5.50", "500", "g", "Magic Oats", shipping_category.name]     # Add
+        csv << ["Bag of Oats", enterprise.name, "Cereal", "70", "8.50", "500", "g", "French Oats", shipping_category.name]    # Add
+        csv << ["Bag of Oats", enterprise.name, "Cereal", "80", "9.50", "500", "g", "Organic Oats", shipping_category.name]   # Add
+        csv << ["Bag of Oats", enterprise.name, "Cereal", "90", "7.50", "500", "g", "Scottish Oats", shipping_category.name]  # Add
+        csv << ["Bag of Oats", enterprise.name, "Cereal", "30", "6.50", "500", "g", "Breakfast Oats", shipping_category.name] # Add
       end
     }
 
@@ -481,9 +498,9 @@ describe ProductImport::ProductImporter do
       let(:csv_data) {
         CSV.generate do |csv|
           csv << ["name", "distributor", "producer", "on_hand", "price", "units", "unit_type", "variant_unit_name"]
-          csv << ["Beans", "Another Enterprise", "User Enterprise", "5", "3.20", "500", "g", ""]
-          csv << ["Sprouts", "Another Enterprise", "User Enterprise", "6", "6.50", "500", "g", ""]
-          csv << ["Cabbage", "Another Enterprise", "User Enterprise", "2001", "1.50", "1", "", "Whole"]
+          csv << ["Beans", enterprise2.name, enterprise.name, "5", "3.20", "500", "g", ""]
+          csv << ["Sprouts", enterprise2.name, enterprise.name, "6", "6.50", "500", "g", ""]
+          csv << ["Cabbage", enterprise2.name, enterprise.name, "2001", "1.50", "1", "", "Whole"]
         end
       }
       let(:importer) { import_data csv_data, import_into: 'inventories' }
@@ -525,7 +542,7 @@ describe ProductImport::ProductImporter do
       let(:csv_data) {
         CSV.generate do |csv|
           csv << ["name", "display_name", "distributor", "producer", "on_hand", "price", "units"]
-          csv << ["Oats", "Porridge Oats", "Another Enterprise", "User Enterprise", "900", "", "500"]
+          csv << ["Oats", "Porridge Oats", enterprise2.name, enterprise.name, "900", "", "500"]
         end
       }
       let(:importer) { import_data csv_data, import_into: 'inventories' }
@@ -548,7 +565,7 @@ describe ProductImport::ProductImporter do
       let(:csv_data) {
         CSV.generate do |csv|
           csv << ["name", "distributor", "producer", "on_hand", "price", "units", "variant_unit_name"]
-          csv << ["Cabbage", "Another Enterprise", "User Enterprise", "900", "", "1", "Whole"]
+          csv << ["Cabbage", enterprise2.name, enterprise.name, "900", "", "1", "Whole"]
         end
       }
       let(:importer) { import_data csv_data, import_into: 'inventories' }
@@ -571,8 +588,8 @@ describe ProductImport::ProductImporter do
     it "only allows product import into enterprises the user is permitted to manage" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "shipping_category"]
-        csv << ["My Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", shipping_category.name]
-        csv << ["Your Potatoes", "Another Enterprise", "Vegetables", "6", "6.50", "1", "kg", shipping_category.name]
+        csv << ["My Carrots", enterprise.name, "Vegetables", "5", "3.20", "500", "g", shipping_category.name]
+        csv << ["Your Potatoes", enterprise2.name, "Vegetables", "6", "6.50", "1", "kg", shipping_category.name]
       end
       importer = import_data csv_data, import_user: user
 
@@ -589,14 +606,14 @@ describe ProductImport::ProductImporter do
       expect(importer.updated_ids).to be_a(Array)
       expect(importer.updated_ids.count).to eq 1
 
-      expect(Spree::Product.find_by_name('My Carrots')).to be_a Spree::Product
-      expect(Spree::Product.find_by_name('Your Potatoes')).to eq nil
+      expect(Spree::Product.find_by(name: 'My Carrots')).to be_a Spree::Product
+      expect(Spree::Product.find_by(name: 'Your Potatoes')).to eq nil
     end
 
     it "allows creating inventories for producers that a user's hub has permission for" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "producer", "distributor", "on_hand", "price", "units", "unit_type"]
-        csv << ["Beans", "User Enterprise", "Another Enterprise", "777", "3.20", "500", "g"]
+        csv << ["Beans", enterprise.name, enterprise2.name, "777", "3.20", "500", "g"]
       end
       importer = import_data csv_data, import_into: 'inventories'
 
@@ -620,8 +637,8 @@ describe ProductImport::ProductImporter do
     it "does not allow creating inventories for producers that a user's hubs don't have permission for" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "producer", "on_hand", "price", "units", "unit_type"]
-        csv << ["Beans", "User Enterprise", "5", "3.20", "500", "g"]
-        csv << ["Sprouts", "User Enterprise", "6", "6.50", "500", "g"]
+        csv << ["Beans", enterprise.name, "5", "3.20", "500", "g"]
+        csv << ["Sprouts", enterprise.name, "6", "6.50", "500", "g"]
       end
       importer = import_data csv_data, import_into: 'inventories'
 
@@ -644,8 +661,8 @@ describe ProductImport::ProductImporter do
     it "can reset all products for an enterprise that are not present in the uploaded file to zero stock" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "shipping_category"]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", shipping_category.name]
-        csv << ["Beans", "User Enterprise", "Vegetables", "6", "6.50", "500", "g", shipping_category.name]
+        csv << ["Carrots", enterprise.name, "Vegetables", "5", "3.20", "500", "g", shipping_category.name]
+        csv << ["Beans", enterprise.name, "Vegetables", "6", "6.50", "500", "g", shipping_category.name]
       end
       importer = import_data csv_data, reset_all_absent: true
 
@@ -671,18 +688,18 @@ describe ProductImport::ProductImporter do
 
       expect(importer.products_reset_count).to eq 7
 
-      expect(Spree::Product.find_by_name('Carrots').on_hand).to eq 5    # Present in file, added
-      expect(Spree::Product.find_by_name('Beans').on_hand).to eq 6      # Present in file, updated
-      expect(Spree::Product.find_by_name('Sprouts').on_hand).to eq 0    # In enterprise, not in file
-      expect(Spree::Product.find_by_name('Cabbage').on_hand).to eq 0    # In enterprise, not in file
-      expect(Spree::Product.find_by_name('Lettuce').on_hand).to eq 100  # In different enterprise; unchanged
+      expect(Spree::Product.find_by(name: 'Carrots').on_hand).to eq 5    # Present in file, added
+      expect(Spree::Product.find_by(name: 'Beans').on_hand).to eq 6      # Present in file, updated
+      expect(Spree::Product.find_by(name: 'Sprouts').on_hand).to eq 0    # In enterprise, not in file
+      expect(Spree::Product.find_by(name: 'Cabbage').on_hand).to eq 0    # In enterprise, not in file
+      expect(Spree::Product.find_by(name: 'Lettuce').on_hand).to eq 100  # In different enterprise; unchanged
     end
 
     it "can reset all inventory items for an enterprise that are not present in the uploaded file to zero stock" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "distributor", "producer", "on_hand", "price", "units", "unit_type"]
-        csv << ["Beans", "Another Enterprise", "User Enterprise", "6", "3.20", "500", "g"]
-        csv << ["Sprouts", "Another Enterprise", "User Enterprise", "7", "6.50", "500", "g"]
+        csv << ["Beans", enterprise2.name, enterprise.name, "6", "3.20", "500", "g"]
+        csv << ["Sprouts", enterprise2.name, enterprise.name, "7", "6.50", "500", "g"]
       end
       importer = import_data csv_data, import_into: 'inventories', reset_all_absent: true
 

@@ -1,7 +1,7 @@
 module Openfoodnetwork
   class Application < Rails::Application
-    config.middleware.insert_before(Rack::Lock, Rack::Rewrite) do
-      r301   '/admin/products/bulk_edit',  '/admin/products' # TODO: Date added 15/06/2018
+    config.middleware.insert_before(Rack::Runtime, Rack::Rewrite) do
+      r301 '/admin/products/bulk_edit', '/admin/products'
     end
   end
 end

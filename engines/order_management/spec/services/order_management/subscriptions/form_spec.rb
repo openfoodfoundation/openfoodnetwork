@@ -105,15 +105,15 @@ module OrderManagement
           expect(subscription.subscription_line_items[2].price_estimate).to eq 4.25
 
           # This order cycle has already closed, so no order is initialized
-          proxy_order1 = subscription.proxy_orders.find_by_order_cycle_id(order_cycle1.id)
+          proxy_order1 = subscription.proxy_orders.find_by(order_cycle_id: order_cycle1.id)
           expect(proxy_order1).to be nil
 
           # Currently open order cycle, closing after begins_at and before ends_at
-          proxy_order2 = subscription.proxy_orders.find_by_order_cycle_id(order_cycle2.id)
+          proxy_order2 = subscription.proxy_orders.find_by(order_cycle_id: order_cycle2.id)
           expect(proxy_order2).to be_a ProxyOrder
           order2 = proxy_order2.initialise_order!
           expect(order2.line_items.count).to eq 3
-          expect(order2.line_items.find_by_variant_id(variant3.id).quantity).to be 3
+          expect(order2.line_items.find_by(variant_id: variant3.id).quantity).to be 3
           expect(order2.shipments.count).to eq 1
           expect(order2.shipments.first.shipping_method).to eq shipping_method
           expect(order2.payments.count).to eq 1
@@ -124,12 +124,12 @@ module OrderManagement
 
           # Future order cycle, closing after begins_at and before ends_at
           # Adds line items for variants that aren't yet available from the order cycle
-          proxy_order3 = subscription.proxy_orders.find_by_order_cycle_id(order_cycle3.id)
+          proxy_order3 = subscription.proxy_orders.find_by(order_cycle_id: order_cycle3.id)
           expect(proxy_order3).to be_a ProxyOrder
           order3 = proxy_order3.initialise_order!
           expect(order3).to be_a Spree::Order
           expect(order3.line_items.count).to eq 3
-          expect(order2.line_items.find_by_variant_id(variant3.id).quantity).to be 3
+          expect(order2.line_items.find_by(variant_id: variant3.id).quantity).to be 3
           expect(order3.shipments.count).to eq 1
           expect(order3.shipments.first.shipping_method).to eq shipping_method
           expect(order3.payments.count).to eq 1
@@ -139,7 +139,7 @@ module OrderManagement
           expect(order3.completed?).to be false
 
           # Future order cycle closing after ends_at
-          proxy_order4 = subscription.proxy_orders.find_by_order_cycle_id(order_cycle4.id)
+          proxy_order4 = subscription.proxy_orders.find_by(order_cycle_id: order_cycle4.id)
           expect(proxy_order4).to be nil
         end
       end

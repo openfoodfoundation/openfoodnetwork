@@ -47,4 +47,25 @@ describe BulkInvoiceService do
       expect(filepath).to eq 'tmp/invoices/1234567.pdf'
     end
   end
+
+  describe "#orders_from" do
+    let(:renderer) { InvoiceRenderer.new }
+
+    before do
+      allow(InvoiceRenderer).to receive(:new).and_return(renderer)
+    end
+
+    it "orders with completed desc" do
+      order_old = create(:order_with_distributor, :completed, completed_at: 2.minutes.ago)
+      order_oldest = create(:order_with_distributor, :completed, completed_at: 4.minutes.ago)
+      order_older = create(:order_with_distributor, :completed, completed_at: 3.minutes.ago)
+
+      expect(renderer).to receive(:render_to_string).with(order_old).ordered.and_return("")
+      expect(renderer).to receive(:render_to_string).with(order_older).ordered.and_return("")
+      expect(renderer).to receive(:render_to_string).with(order_oldest).ordered.and_return("")
+
+      order_ids = [order_oldest, order_old, order_older].map(&:id)
+      service.start_pdf_job_without_delay(order_ids)
+    end
+  end
 end

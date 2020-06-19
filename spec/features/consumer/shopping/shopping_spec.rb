@@ -105,8 +105,9 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
             # -- Cart shows correct price
             fill_in "variants[#{variant.id}]", with: 1
-            show_cart
-            within("li.cart") { expect(page).to have_content with_currency(1020.99) }
+            toggle_cart
+            within(".cart-sidebar") { expect(page).to have_content with_currency(1020.99) }
+            toggle_cart
 
             # -- Changing order cycle
             accept_alert do
@@ -119,8 +120,9 @@ feature "As a consumer I want to shop with a distributor", js: true do
             # that we are not filling in the quantity on the outgoing row
             expect(page).not_to have_selector "tr.product-cart"
             within('product:not(.ng-leave)') { fill_in "variants[#{variant.id}]", with: 1 }
-            show_cart
-            within("li.cart") { expect(page).to have_content with_currency(19.99) }
+
+            wait_for_cart
+            within(".cart-sidebar") { expect(page).to have_content with_currency(19.99) }
           end
 
           describe "declining to clear the cart" do
@@ -136,9 +138,9 @@ feature "As a consumer I want to shop with a distributor", js: true do
             it "leaves the cart untouched when the user declines" do
               handle_js_confirm(false) do
                 select "frogs", from: "order_cycle_id"
-                show_cart
+                toggle_cart
                 expect(page).to have_selector "tr.product-cart"
-                expect(page).to have_selector 'li.cart', text: '1'
+                expect(page).to have_selector '.cart-sidebar', text: '1'
 
                 # The order cycle choice should not have changed
                 expect(page).to have_select 'order_cycle_id', selected: 'turtles'
@@ -155,21 +157,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
             distributor.save
             quick_login_as order.user
             visit shop_path
-          end
-
-          it "shows previous orders if order cycle was selected already" do
-            select "frogs", from: "order_cycle_id"
-            expect(page).to have_content "Next order closing in 2 days"
-            visit shop_path
-            find("#cart").click
-            expect(page).to have_text(I18n.t("shared.menu.joyride.already_ordered_products"))
-          end
-
-          it "shows previous orders after selecting an order cycle" do
-            select "frogs", from: "order_cycle_id"
-            expect(page).to have_content "Next order closing in 2 days"
-            find("#cart").click
-            expect(page).to have_text(I18n.t("shared.menu.joyride.already_ordered_products"))
           end
         end
       end
@@ -230,6 +217,28 @@ feature "As a consumer I want to shop with a distributor", js: true do
           expect(page).to have_content variant2.display_name
           expect(page).not_to have_content product2.name
           expect(page).not_to have_content variant3.display_name
+        end
+      end
+
+      context "when the distributor has no available payment/shipping methods" do
+        before do
+          distributor.update_attributes shipping_methods: [], payment_methods: []
+        end
+
+        # Display only shops are a very useful hack that is described in the user guide
+        it "still renders a display only shop" do
+          visit shop_path
+          expect(page).to have_content product.name
+
+          # Add product to cart
+          fill_in "variants[#{variant.id}]", with: '1'
+          wait_for_debounce
+          expect(page).to have_in_cart product.name
+          wait_until { !cart_dirty }
+
+          # Try to go to cart
+          visit main_app.cart_path
+          expect(page).to have_content "The hub you have selected is temporarily closed for orders. Please try again later."
         end
       end
     end
@@ -294,7 +303,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
         expect(li.quantity).to eq(1)
 
         fill_in "variants[#{variant.id}]", with: '0'
-        within('li.cart') { expect(page).not_to have_content product.name }
+        within('.cart-sidebar') { expect(page).not_to have_content product.name }
         wait_until { !cart_dirty }
 
         expect(Spree::LineItem.where(id: li)).to be_empty
@@ -463,11 +472,13 @@ feature "As a consumer I want to shop with a distributor", js: true do
         visit shop_path
         expect(page).to have_content "Orders are closed"
       end
+
       it "shows the last order cycle" do
         oc1 = create(:simple_order_cycle, distributors: [distributor], orders_open_at: 17.days.ago, orders_close_at: 10.days.ago)
         visit shop_path
         expect(page).to have_content "The last cycle closed 10 days ago"
       end
+
       it "shows the next order cycle" do
         oc1 = create(:simple_order_cycle, distributors: [distributor], orders_open_at: 10.days.from_now, orders_close_at: 17.days.from_now)
         visit shop_path

@@ -10,9 +10,12 @@ module Spree
 
     after_save :ensure_correct_adjustment, :update_order
 
-    attr_accessible :source
-
     localize_number :amount
+
+    # We bypass this after_rollback callback that is setup in Spree::Payment
+    # The issues the callback fixes are not experienced in OFN:
+    #   if a payment fails on checkout the state "failed" is persisted correctly
+    def persist_invalid; end
 
     def ensure_correct_adjustment
       revoke_adjustment_eligibility if ['failed', 'invalid'].include?(state)
@@ -59,12 +62,12 @@ module Spree
         record_response(response)
 
         if response.success?
-          self.class.create({ order: order,
-                              source: self,
-                              payment_method: payment_method,
-                              amount: refund_amount.abs * -1,
-                              response_code: response.authorization,
-                              state: 'completed' }, without_protection: true)
+          self.class.create(order: order,
+                            source: self,
+                            payment_method: payment_method,
+                            amount: refund_amount.abs * -1,
+                            response_code: response.authorization,
+                            state: 'completed')
         else
           gateway_error(response)
         end

@@ -21,13 +21,6 @@ class EnterpriseGroup < ActiveRecord::Base
   before_validation :sanitize_permalink
   validates :permalink, uniqueness: true, presence: true
 
-  attr_accessible :name, :description, :long_description, :on_front_page, :enterprise_ids
-  attr_accessible :owner_id
-  attr_accessible :permalink
-  attr_accessible :logo, :promo_image
-  attr_accessible :address_attributes
-  attr_accessible :email, :website, :facebook, :instagram, :linkedin, :twitter
-
   delegate :phone, :address1, :address2, :city, :zipcode, :state, :country, to: :address
 
   has_attached_file :logo,
@@ -51,7 +44,7 @@ class EnterpriseGroup < ActiveRecord::Base
   scope :on_front_page, -> { where(on_front_page: true) }
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
-      scoped
+      where(nil)
     else
       where('owner_id = ?', user.id)
     end

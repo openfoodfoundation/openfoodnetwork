@@ -23,6 +23,8 @@ ca:
         base: "Targeta de crèdit"
       order_cycle:
         orders_close_at: Data de tancament
+      variant_override:
+        count_on_hand: "Disponibles"
     errors:
       models:
         spree/user:
@@ -368,8 +370,10 @@ ca:
         title: "Configuració de Matomo"
         matomo_url: "URL de Matomo"
         matomo_site_id: "Identificador de Matomo"
-        info_html: "Matomo és un analitzador de webs i mòbils. Podeu allotjar Matomo de manera local o utilitzar un servei al núvol. Vegeu <a href='http://matomo.org' target='_blank'> matomo.org </a> per obtenir més informació."
+        matomo_tag_manager_url: "URL de Matomo Tag Manager"
+        info_html: "Matomo és una aplicació d'analytics web i mòbil. Podeu allotjar Matomo en local o bé utilitzar un servei allotjat al núvol. Consulteu <a href='http://matomo.org' target='_blank'>matomo.org</a> per obtenir més informació."
         config_instructions_html: "Aquí podeu configurar la integració Matomo OFN. L'URL de Matomo que us apareix a continuació ha d'indicar la instància de Matomo en la qual s'enviarà la informació de seguiment de l'usuari; si es deixa buit, el seguiment de l'usuari de Matomo estarà desactivat. El camp d'identificació del lloc no és obligatori, però és útil si fa un seguiment de més d'un lloc web en una sola instància de Matomo; es pot trobar a la consola d'instància de Matomo."
+        config_instructions_tag_manager_html: "En configurar l'URL de Matomo Tag Manager s'activa Matomo Tag Manager. Aquesta eina us permet configurar esdeveniments d’analítica. L’URL de Matomo Tag Manager es copia de la secció Instal·lar codi de Matomo Tag Manager. Assegureu-vos de seleccionar el contenidor i l’entorn adequats ja que aquestes opcions canvien l’URL."
     customers:
       index:
         new_customer: "Nova consumidora"
@@ -403,6 +407,7 @@ ca:
         footer_and_external_links: Peu de pàgina i enllaços externs
         your_content: El vostre contingut
         user_guide: Guia de l'usuari
+        map: Mapa
     enterprise_fees:
       index:
         title: "Comissions de l'organització"
@@ -474,6 +479,7 @@ ca:
         line_number: "Línia %{number}:"
         encoding_error: "Comproveu la configuració de l'idioma del vostre fitxer d'origen i assegureu-vos que es desa amb la codificació UTF-8"
         unexpected_error: "La importació de productes ha detectat un error inesperat mentre obria el fitxer: %{error_message}"
+        malformed_csv: "La importació de producte ha trobat un CSV mal format: %{error_message}"
       index:
         notice: "Avís"
         beta_notice: "Aquesta funcionalitat continua en fase beta: podeu experimentar alguns errors mentre l'utilitzeu. No dubteu en contactar amb nosaltres."
@@ -2743,6 +2749,7 @@ ca:
   customer_details: "Detalls de la consumidora"
   adjustments: "Ajustaments"
   payments: "Pagaments"
+  return_authorizations: "Autoritzacions de devolució"
   payment: "Pagament"
   payment_method: "Mètode de pagament"
   shipment: "Enviament"
@@ -2812,6 +2819,14 @@ ca:
     new_payment: "Nou pagament"
     capture: "Captura"
     void: "Buit"
+    login: "Inicia sessió"
+    password: "Contrasenya"
+    signature: "Signatura"
+    solution: "Solució"
+    landing_page: "Pàgina d'inici"
+    server: "Servidor"
+    test_mode: "Mode de prova"
+    logourl: "URL del logo"
     configurations: "Configuracions"
     general_settings: "Configuració general"
     site_name: "Nom del lloc"
@@ -2876,8 +2891,6 @@ ca:
     abbreviation: "Abreviatura"
     new_state: "Nou estat"
     payment_methods: "Mètodes de Pagament"
-    new_payment_method: "Nou mètode de pagament"
-    provider: "Proveïdor"
     taxonomies: "Taxonomies"
     new_taxonomy: "Nova taxonomia"
     back_to_taxonomies_list: "Torna a la llista de taxonomies"
@@ -2930,6 +2943,12 @@ ca:
     options: "Opcions"
     actions:
       update: "Actualitzar"
+    shared:
+      error_messages:
+        errors_prohibited_this_record_from_being_saved:
+          one: "Un error va prohibir guardar aquest registre:"
+          other: "%{count} errors han impedit guardar aquest registre:"
+        there_were_problems_with_the_following_fields: "Hi ha hagut problemes amb els camps següents"
     errors:
       messages:
         blank: "no es pot deixar en blanc"
@@ -3089,10 +3108,26 @@ ca:
           back_end: "Només pàgina administració (back office) "
           deactivation_warning: "Desactivar un mètode d'enviament pot fer que desaparegui de la teva llista. Pots ocultar-lo de la pàgina de validació de comanda configurant l'opció \"Mostrar\" a \"només a la pàgina d'administració\" (back end)."
       payment_methods:
+        index:
+          payment_methods: "Mètodes de Pagament"
+          new_payment_method: "Nou mètode de pagament"
+          name: "Nom"
+          products_distributor: "Distribuïdora"
+          provider: "Proveïdor"
+          environment: "Ambient"
+          display: "Mostra"
+          active: "Actiu"
+          both: "Ambdós"
+          front_end: "Visible només per al comprador"
+          back_end: "Només pàgina administració (back office) "
+          active_yes: "Sí"
+          active_no: "No"
+          no_payment_methods_found: "No s'han trobat mètodes de pagament"
         new:
           new_payment_method: "Nou mètode de pagament"
           back_to_payment_methods_list: "Tornar a la llista de mètodes de pagament"
         edit:
+          new: "Nou"
           editing_payment_method: "Edició del mètode de pagament"
           back_to_payment_methods_list: "Tornar a la llista de mètodes de pagament"
         stripe_connect:
@@ -3108,6 +3143,21 @@ ca:
           account_id: Identificador del compte
           business_name: Nom de l'empresa
           charges_enabled: Càrrecs habilitats
+        form:
+          name: "Nom"
+          description: "Descripció"
+          environment: "Ambient"
+          display: "Mostra"
+          active: "Actiu"
+          active_yes: "Sí"
+          active_no: "No"
+          both: "Ambdues, validació de comanda i administració"
+          front_end: "Visible només per al comprador"
+          back_end: "Només pàgina administració (back office) "
+          tags: "Etiquetes"
+          deactivation_warning: "Desactivar un mètode de pagament pot fer que el mètode de pagament desapareixi de la vostra llista. De forma alternativa, podeu amagar un mètode de pagament a la pàgina de compra configurant l'opció \"Mostrar\" a \"només a la pàgina d'administració\" (back end)."
+        providers:
+          provider: "Proveïdor"
       payments:
         source_forms:
           stripe:
@@ -3210,6 +3260,7 @@ ca:
           display_as_placeholder: 'per exemple. 2 kg'
           display_name_placeholder: 'per exemple. Tomàquets'
         autocomplete:
+          out_of_stock: "Fora d'existència"
           producer_name: "Productor"
           unit: "Unitat"
       shared:
@@ -3275,9 +3326,14 @@ ca:
       invalid: invàlid
     order_mailer:
       cancel_email:
-        customer_greeting: "Hola %{name}!"
-        instructions: "La teva comanda ha estat anul·lada. Conserva aquesta informació de cancel·lació per als teus registres."
-        order_summary_canceled: "Resum de comanda [CANCEL·LADA]"
+        customer_greeting: "Benvolgut/da,%{name}"
+        instructions_html: "La teva comanda<strong> %{distributor}</strong> ha estat CANCEL·LADA"
+        dont_cancel: "Si heu canviat d'opinió o no voleu cancel·lar aquesta comanda, poseu-vos en contacte amb %{email}"
+        order_summary_canceled_html: "<strong>Resum de comanda # %{number} [CANCELAT]</strong>"
+        details: "Aquí teniu els detalls del que vau demanar:"
+        unpaid_order: "La vostra comanda no s'havia pagat, per la qual cosa no s'ha realitzat cap reemborsament"
+        paid_order: "La vostra comanda s'havia pagat per la qual cosa %{distributor} ha reemborsat l'import complet"
+        credit_order: "La vostra comanda s'havia pagat i per tant, s'ha abonat l'import al vostre compte"
         subject: "Cancel·lació de la comanda"
       confirm_email:
         subject: "Confirmació de la comanda"

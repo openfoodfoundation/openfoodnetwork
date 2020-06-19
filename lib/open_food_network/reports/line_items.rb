@@ -19,7 +19,7 @@ module OpenFoodNetwork
         end
 
         if line_item_includes.present?
-          line_items = line_items.includes(*line_item_includes)
+          line_items = line_items.includes(*line_item_includes).references(:line_items)
         end
 
         editable_line_items = editable_line_items(line_items)

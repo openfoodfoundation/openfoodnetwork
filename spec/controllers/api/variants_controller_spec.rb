@@ -113,7 +113,6 @@ describe Api::VariantsController, type: :controller do
 
     let(:product) { create(:product) }
     let(:variant) { product.master }
-    let(:resource_scoping) { { product_id: variant.product.to_param } }
 
     context "deleted variants" do
       before do
@@ -121,7 +120,7 @@ describe Api::VariantsController, type: :controller do
       end
 
       it "are visible by admin" do
-        api_get :index, show_deleted: 1
+        api_get :index, show_deleted: 1, product_id: variant.product.to_param
 
         expect(json_response.count).to eq(2)
       end
@@ -129,7 +128,7 @@ describe Api::VariantsController, type: :controller do
 
     it "can create a new variant" do
       original_number_of_variants = variant.product.variants.count
-      api_post :create, variant: { sku: "12345", unit_value: "weight", unit_description: "L" }
+      api_post :create, variant: { sku: "12345", unit_value: "weight", unit_description: "L" }, product_id: variant.product.to_param
 
       expect(attributes.all?{ |attr| json_response.include? attr.to_s }).to eq(true)
       expect(response.status).to eq(201)

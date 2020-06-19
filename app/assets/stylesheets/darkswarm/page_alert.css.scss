@@ -14,7 +14,7 @@ $page-alert-height: 55px;
     border-left: none;
     border-right: none;
     background-color: #bbb;
-    background-image: url("/assets/tile-wide.png");
+    background-image: image-url("tile-wide.png");
     background-position: center center;
     padding: 12px 0 8px 0;
     margin: 0;
@@ -55,19 +55,18 @@ $page-alert-height: 55px;
 .off-canvas-fixed nav.tab-bar,
 .off-canvas-fixed .page-alert {
   @include transition(all 1000ms ease-in-out);
-
-  &.move-down {
-    margin-top: $page-alert-height;
-  }
 }
 
 .off-canvas-wrap .page-alert {
-  top: -1 * $page-alert-height;
+  bottom: -1 * $page-alert-height;
+  top: unset;
   z-index: 100;
-}
 
-.off-canvas-wrap.move-right .inner-wrap.move-down {
-  .left-off-canvas-menu {
-    top: -1 * $page-alert-height;
+  &.move-up {
+    bottom: 0;
+  }
+
+  .alert-box {
+    border-bottom: 0;
   }
 }

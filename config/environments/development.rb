@@ -13,8 +13,7 @@ Openfoodnetwork::Application.configure do
   # :file_store is used by default when no cache store is specifically configured.
   config.cache_store = :memory_store if !!ENV["PROFILE"]
 
-  # Log error messages when you accidentally call methods on nil.
-  config.whiny_nils = true
+  config.eager_load = false
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true

@@ -12,7 +12,7 @@ describe 'Products service', ->
   productWithImage = null
   properties = null
   taxons = null
-  Geo = {}
+  GmapsGeo = {}
   endpoint = "/api/order_cycles/1/products?distributor=1"
 
   beforeEach ->
@@ -53,7 +53,7 @@ describe 'Products service', ->
       $provide.value "currentOrder", currentOrder
       $provide.value "taxons", taxons
       $provide.value "properties", properties
-      $provide.value "Geo", Geo
+      $provide.value "GmapsGeo", GmapsGeo
       $provide.value "OrderCycle", OrderCycle
       $provide.value "railsFlash", null
       null

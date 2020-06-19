@@ -31,6 +31,6 @@ end
 FactoryBot.modify do
   factory :shipment, class: Spree::Shipment do
     # keeps test shipments unique per order
-    initialize_with { Spree::Shipment.find_or_create_by_order_id(order.id) }
+    initialize_with { Spree::Shipment.find_or_create_by(order_id: order.id) }
   end
 end

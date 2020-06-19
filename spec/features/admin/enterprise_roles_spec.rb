@@ -159,7 +159,7 @@ feature '
         expect(page).not_to have_selector "#invite-manager-modal"
         expect(page).to have_selector "table.managers"
 
-        new_user = Spree::User.find_by_email_and_confirmed_at(new_email, nil)
+        new_user = Spree::User.find_by(email: new_email, confirmed_at: nil)
         expect(Enterprise.managed_by(new_user)).to include enterprise
 
         within 'table.managers' do

@@ -23,6 +23,8 @@ en_CA:
         base: "Credit Card"
       order_cycle:
         orders_close_at: Close date
+      variant_override:
+        count_on_hand: "On Hand"
     errors:
       models:
         spree/user:
@@ -259,7 +261,7 @@ en_CA:
   pick_up: Pick up
   copy: Copy
   change_my_password: "Change my password"
-  update_password: "Update passord"
+  update_password: "Update password"
   password_confirmation: Password Confirmation
   reset_password_token: Reset password token
   expired: has expired, please request a new one
@@ -368,8 +370,10 @@ en_CA:
         title: "Matomo Settings"
         matomo_url: "Matomo URL"
         matomo_site_id: "Matomo Site ID"
-        info_html: "Matomo is a Web and Mobile Analytics. You can either host Matomo on-premises or use a cloud-hosted service. See <a href='http://matomo.org' target='_blank'>matomo.org</a> for more information."
+        matomo_tag_manager_url: "Matomo Tag Manager URL"
+        info_html: "Matomo is a Web and Mobile Analytics application. You can either host Matomo on-premises or use a cloud-hosted service. See 1matomo.org1 for more information."
         config_instructions_html: "Here you can configure the OFN Matomo integration. The Matomo URL below should point to the Matomo instance where the user tracking information will be sent to; if it is left empty, Matomo user tracking will be disabled. The Site ID field is not mandatory but useful if you are tracking more than one website on a single Matomo instance; it can be found on the Matomo instance console."
+        config_instructions_tag_manager_html: "Setting the Matomo Tag Manager URL enables Matomo Tag Manager. This tool allows you to set up analytics events. The Matomo Tag Manager URL is copied from the Install Code section of Matomo Tag Manager. Ensure you select the right container and environment as these options change the URL."
     customers:
       index:
         new_customer: "New Customer"
@@ -403,6 +407,7 @@ en_CA:
         footer_and_external_links: Footer and External Links
         your_content: Your content
         user_guide: User Guide
+        map: Map
     enterprise_fees:
       index:
         title: "Enterprise Fees"
@@ -664,8 +669,8 @@ en_CA:
           name: Name
           name_placeholder: eg. Professor Plum's Biodynamic Truffles
           groups: Groups
-          groups_tip: Select any groups or regions that you are a member of. This will help customers find your enterprise.
-          groups_placeholder: Start typing to search available groups...
+          groups_tip: Select any markets or groups that you are a member of. This will help customers find your enterprise.
+          groups_placeholder: Start typing to search available markets or groups...
           primary_producer: Primary Producer?
           primary_producer_tip: Select 'Producer' if you are a primary producer, grower, maker or designer
           producer: Producer
@@ -1269,7 +1274,7 @@ en_CA:
   label_map: "Map"
   label_producer: "Producer"
   label_producers: "Producers"
-  label_groups: "Groups"
+  label_groups: "Markets"
   label_about: "About"
   label_connect: "Connect"
   label_learn: "Learn"
@@ -1567,14 +1572,14 @@ en_CA:
   components_profiles_show: "Show profiles"
   components_filters_nofilters: "No filters"
   components_filters_clearfilters: "Clear all filters"
-  groups_title: Groups
+  groups_title: Markets
   groups_headline: 'Markets / Regions '
-  groups_text: "Every producer is unique. Every business has something different to offer. Our groups are collectives of producers, hubs and distributors who share something in common like location, farmers market or philosophy. This makes your shopping experience easier. So explore our groups and have the curating done for you."
+  groups_text: "Markets are collectives of producers, hubs and distributors who share something in common like location, farmers market or philosophy. This makes your shopping experience easier. So explore our groups and have the curating done for you."
   groups_search: "Search name or keyword"
   groups_no_groups: "No groups found"
   groups_about: "About Us"
-  groups_producers: "Our producers"
-  groups_hubs: "Our hubs"
+  groups_producers: "Our vendors"
+  groups_hubs: "Go Shopping!"
   groups_contact_web: Contact
   groups_contact_social: Follow
   groups_contact_address: Address
@@ -2736,6 +2741,7 @@ en_CA:
   customer_details: "Customer Details"
   adjustments: "Adjustments"
   payments: "Payments"
+  return_authorizations: "Return Authoriations"
   payment: "Payment"
   payment_method: "Payment Method"
   shipment: "Shipment"
@@ -2805,6 +2811,14 @@ en_CA:
     new_payment: "New Payment"
     capture: "Capture"
     void: "Void"
+    login: "Login"
+    password: "Password"
+    signature: "Signature"
+    solution: "Solution"
+    landing_page: "Landing Page"
+    server: "Server"
+    test_mode: "Test Mode"
+    logourl: "Logourl"
     configurations: "Configurations"
     general_settings: "General Settings"
     site_name: "Site Name"
@@ -2869,8 +2883,6 @@ en_CA:
     abbreviation: "Abbreviation"
     new_state: "New Province"
     payment_methods: "Payment Methods"
-    new_payment_method: "New Payment Method"
-    provider: "Provider"
     taxonomies: "Taxonomies"
     new_taxonomy: "New Taxonomy"
     back_to_taxonomies_list: "Back to Taxonomies List"
@@ -2923,6 +2935,12 @@ en_CA:
     options: "Options"
     actions:
       update: "Update"
+    shared:
+      error_messages:
+        errors_prohibited_this_record_from_being_saved:
+          one: " 1 errors prohibited this record from being saved:"
+          other: " %{count}errors prohibited this record from being saved:"
+        there_were_problems_with_the_following_fields: "There were problems with the following fields"
     errors:
       messages:
         blank: "can't be blank"
@@ -3082,10 +3100,26 @@ en_CA:
           back_end: "Back office only"
           deactivation_warning: "De-activating a shipping method can make the shipping method disappear from your list. Alternatively, you can hide a shipping method from the checkout page by setting the option 'Display' to 'back office only'."
       payment_methods:
+        index:
+          payment_methods: "Payment Methods"
+          new_payment_method: "New Payment Method"
+          name: "Name"
+          products_distributor: "Distributor"
+          provider: "Provider"
+          environment: "Environment"
+          display: "Display"
+          active: "Active"
+          both: "Both"
+          front_end: "Checkout only"
+          back_end: "Back office only"
+          active_yes: "Yes"
+          active_no: "No"
+          no_payment_methods_found: "No payment methods found"
         new:
           new_payment_method: "New Payment Method"
           back_to_payment_methods_list: "Back To Payment Methods List"
         edit:
+          new: "New"
           editing_payment_method: "Editing Payment Method"
           back_to_payment_methods_list: "Back To Payment Methods List"
         stripe_connect:
@@ -3101,6 +3135,21 @@ en_CA:
           account_id: Account ID
           business_name: Business Name
           charges_enabled: Charges Enabled
+        form:
+          name: "Name"
+          description: "Description"
+          environment: "Environment"
+          display: "Display"
+          active: "Active"
+          active_yes: "Yes"
+          active_no: "No"
+          both: "Both Checkout and Back office"
+          front_end: "Checkout only"
+          back_end: "Back office only"
+          tags: "Tags"
+          deactivation_warning: "De-activating a payment method can make the payment method disappear from your list. Alternatively, you can hide a payment method from the checkout page by setting the option 'Display' to 'back office only'."
+        providers:
+          provider: "Provider"
       payments:
         source_forms:
           stripe:
@@ -3203,6 +3252,7 @@ en_CA:
           display_as_placeholder: 'eg. 2 kg'
           display_name_placeholder: 'eg. Tomatoes'
         autocomplete:
+          out_of_stock: "Out of Stock"
           producer_name: "Producer"
           unit: "Unit"
       shared:
@@ -3268,9 +3318,14 @@ en_CA:
       invalid: invalid
     order_mailer:
       cancel_email:
-        customer_greeting: "Hi %{name}!"
-        instructions: "Your order has been CANCELED. Please retain this cancellation information for your records."
-        order_summary_canceled: "Order Summary [CANCELED]"
+        customer_greeting: "Dear %{name},"
+        instructions_html: "Your order with 1%{distributor}1 has been CANCELED. Please retain this cancellation information for your records."
+        dont_cancel: "If you have changed your mind or don't wish to cancel this order please contact %{email}  "
+        order_summary_canceled_html: "<strong>Order Summary #%{number} [CANCELED]</strong>"
+        details: "Here are the details of what you ordered:"
+        unpaid_order: "Your order was unpaid so no refund has been made"
+        paid_order: "Your order was paid so %{distributor} has refunded the full amount"
+        credit_order: "Your order was paid so your account has been credited"
         subject: "Cancellation of Order"
       confirm_email:
         subject: "Order Confirmation"

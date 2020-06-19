@@ -9,7 +9,7 @@ fr_BE:
         shipment_state: Statut livraison
         completed_at: 'Passée à '
         number: N° commande
-        state: Province
+        state: Statut de la commande
         email: Adresse électronique acheteur
       spree/payment:
         amount: Montant
@@ -23,6 +23,8 @@ fr_BE:
         base: "Carte de crédit"
       order_cycle:
         orders_close_at: Date de fermeture
+      variant_override:
+        count_on_hand: "En stock"
     errors:
       models:
         spree/user:
@@ -367,7 +369,6 @@ fr_BE:
         title: "Configuration Matomo"
         matomo_url: "URL de l'instance sur Matomo"
         matomo_site_id: "ID de l'instance sur Matomo"
-        info_html: "Matomo est un outil d'analyse de trafic web (ordinateur et téléphone). Vous pouvez installer vous-même Matomo ou utiliser une version hébergée. Voir <a href='http://matomo.org' target='_blank'>matomo.org</a> pour plus d'information."
         config_instructions_html: "Pour utiliser Matomo, vous devez configurer l'intégration avec Open Food France. L'URL de l'instance sur Matomo correspond à l'url du site internet visé par le suivi de la navigation utilisateur. Si le champ est vide, Matomo n'effectuera aucune analyse sur ce site. L'ID de l'instance sur Matomo n'est pas obligatoire, mais nécessaire si vous souhaitez analyser plusieurs sites web sur une seule instance Matomo. Cet ID peut être trouvé sur l'espace administrateur Matomo."
     customers:
       index:
@@ -402,6 +403,7 @@ fr_BE:
         footer_and_external_links: Pied de page et Liens Externes
         your_content: Votre contenu
         user_guide: Guide d'utilisation
+        map: Carte
     enterprise_fees:
       index:
         title: "Marges et Commissions"
@@ -1632,7 +1634,7 @@ fr_BE:
   sell_hubs_detail: "Créer un profil pour votre activité sur OFN en quelques minutes. A tout moment vous pourrez créer un comptoir en ligne pour vendre vos produits en direct aux acheteurs."
   sell_groups_detail: "Créer un répertoire sur mesure (regroupant différents producteurs et comptoirs) pour votre région ou votre organisation."
   sell_user_guide: "En savoir plus en explorant le guide d'utilisation."
-  sell_listing_price: "L'inscription à l'OFN est libre de contribution. Ouvrir et utiliser un comptoir sur OFN vous permet de gagner jusqu'à 500 € de ventes mensuelles, le service est gratuit les 6 premiers mois. Ensuite, une contribution entre 1 à 3% de votre chiffre de vente est demandée."
+  sell_listing_price: "L'inscription sur la plateforme d'OFN est libre de contribution. Le service est gratuit les 6 premiers mois. Ensuite, une contribution de 2% de votre chiffre de vente est demandée."
   sell_embed: "D’ici là, vous pouvez également participer au projet. \nSoit en co-créant la communauté belge et en contribuant à l’amélioration des fonctionnalité. Soit en mettant à disposition un local pour faciliter les livraisons ou un lieu pour former les utilisateurs·trices à la plateforme, etc. Soit en soutenant le projet par un don (déductible fiscalement à partir de 40€) à verser sur le compte d'Oxfam-Magasins du monde qui facilite la plateforme :  BE41 0682 2264 2410 – en communication Open Food Network Belgium."
   sell_ask_services: "Contactez-nous pour en savoir plus."
   shops_title: Comptoirs
@@ -2669,6 +2671,7 @@ fr_BE:
   customer_details: "Données client·e"
   adjustments: "Corrections"
   payments: "Paiements"
+  return_authorizations: "Autorisations de retour"
   payment: "Paiement"
   payment_method: "Méthode de paiement"
   shipment: "Envoi"
@@ -2738,6 +2741,8 @@ fr_BE:
     new_payment: "Nouveau paiement"
     capture: "Payée"
     void: "Vide"
+    login: "Se connecter"
+    password: "Mot de passe"
     configurations: "Configurations"
     general_settings: "Réglages Généraux"
     site_name: "Nom du site"
@@ -2802,8 +2807,6 @@ fr_BE:
     abbreviation: "Abréviation"
     new_state: "Nouvelle Province"
     payment_methods: "Méthodes de paiement"
-    new_payment_method: "Nouvelle méthode de paiement"
-    provider: "Fournisseur"
     taxonomies: "Taxonomies "
     new_taxonomy: "Nouvelle taxonomie"
     back_to_taxonomies_list: "Retour à la liste des taxonomies"
@@ -3010,10 +3013,23 @@ fr_BE:
           categories: "Les catégories"
           zones: "Zones"
       payment_methods:
+        index:
+          payment_methods: "Méthodes de paiement"
+          new_payment_method: "Nouvelle méthode de paiement"
+          name: "Nom"
+          products_distributor: "Distributeur"
+          provider: "Fournisseur"
+          environment: "Environnement"
+          display: "Ecran"
+          active: "Actif"
+          both: "Les deux"
+          active_yes: "Oui"
+          active_no: "Non"
         new:
           new_payment_method: "Nouvelle méthode de paiement"
           back_to_payment_methods_list: "Retour à la liste des paiements"
         edit:
+          new: "Nouveau"
           editing_payment_method: "Modification des méthodes de paiement en cours"
           back_to_payment_methods_list: "Retour à la liste des paiements"
         stripe_connect:
@@ -3029,6 +3045,17 @@ fr_BE:
           account_id: Identifiant Compte
           business_name: Nom de l'entreprise
           charges_enabled: Frais activés
+        form:
+          name: "Nom"
+          description: "Description"
+          environment: "Environnement"
+          display: "Ecran"
+          active: "Actif"
+          active_yes: "Oui"
+          active_no: "Non"
+          tags: "Tags"
+        providers:
+          provider: "Fournisseur"
       payments:
         source_forms:
           stripe:
@@ -3129,13 +3156,14 @@ fr_BE:
           display_as: "Unité affichéé"
           display_name: "Nom d'affichage"
         autocomplete:
+          out_of_stock: "Pas en stock"
           producer_name: "Producteur·trice"
           unit: "Unité"
       shared:
         sortable_header:
           name: "Nom"
           number: "N° commande"
-          state: "Province"
+          state: "Statut de la commande"
           payment_state: "Statut du Paiement"
           shipment_state: "Statut livraison"
           email: "Email"
@@ -3193,9 +3221,6 @@ fr_BE:
       invalid: invalide
     order_mailer:
       cancel_email:
-        customer_greeting: "Bonjour%{name}! "
-        instructions: "Votre commande a été ANNULÉE. Veuillez conserver ces informations d'annulation pour vos dossiers."
-        order_summary_canceled: "Résumé de la commande [ANNULÉE]"
         subject: "Annulation de Commande"
       confirm_email:
         subject: "Confirmation de commande"

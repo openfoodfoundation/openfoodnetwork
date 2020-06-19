@@ -14,8 +14,6 @@ module Spree
 
       validate :ensure_enterprise_selected
 
-      attr_accessible :preferred_enterprise_id
-
       def method_type
         'stripe_sca'
       end

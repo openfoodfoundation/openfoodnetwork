@@ -5,14 +5,12 @@ Spree::ShippingMethod.class_eval do
   has_many :distributors, through: :distributor_shipping_methods, class_name: 'Enterprise', foreign_key: 'distributor_id'
 
   after_save :touch_distributors
-  attr_accessible :distributor_ids, :description
-  attr_accessible :require_ship_address, :tag_list
 
-  validates_with DistributorsValidator
+  validate :distributor_validation
 
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
-      scoped
+      where(nil)
     else
       joins(:distributors).
         where('distributors_shipping_methods.distributor_id IN (?)', user.enterprises.select(&:id)).
@@ -42,7 +40,7 @@ Spree::ShippingMethod.class_eval do
         select("distributor_id").
         select("BOOL_OR(spree_shipping_methods.require_ship_address = 'f') AS pickup").
         select("BOOL_OR(spree_shipping_methods.require_ship_address = 't') AS delivery").
-        map { |sm| [sm.distributor_id.to_i, { pickup: sm.pickup == 't', delivery: sm.delivery == 't' }] }
+        map { |sm| [sm.distributor_id.to_i, { pickup: sm.pickup, delivery: sm.delivery }] }
     ]
   end
 
@@ -81,6 +79,12 @@ Spree::ShippingMethod.class_eval do
   private
 
   def touch_distributors
-    distributors.each(&:touch)
+    distributors.each do |distributor|
+      distributor.touch if distributor.persisted?
+    end
+  end
+
+  def distributor_validation
+    validates_with DistributorsValidator
   end
 end

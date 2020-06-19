@@ -36,7 +36,7 @@ class Customer < ActiveRecord::Base
   end
 
   def associate_user
-    self.user = user || Spree::User.find_by_email(email)
+    self.user = user || Spree::User.find_by(email: email)
   end
 
   def check_for_orders

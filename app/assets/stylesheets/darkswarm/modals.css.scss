@@ -5,8 +5,6 @@ dialog
 , .reveal-modal {
   border: none;
   outline: none;
-  padding: 30px 20px 0 20px;
-  border-bottom: 30px solid white;
   overflow-y: scroll;
   overflow-x: hidden;
   min-height: 260px;
@@ -18,23 +16,26 @@ dialog
   // Reveal.js break point:
   // @media only screen and (max-width: 40.063em)
 
-  // Small - when modal IS full screen
+  // Small - smaller outside area
   @media only screen and (max-width: 640px) {
-    left: 0;
-    max-height: 100%;
-    position: absolute !important;
-    top: 0;
+    left: 4%;
+    max-height: 92%;
+    max-width: 92%;
+    padding: 15px 0 0;
+    top: 4%;
   }
 
-  // Medium and up - when modal IS NOT full screen
+  // Medium and up - larger outside area
   @media only screen and (min-width: 641px) {
+    border-bottom: 30px solid $white;
     max-height: 90%;
+    padding: 30px 20px 0 20px;
     top: 5%;
   }
 }
 
 .reveal-modal-bg {
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: $black;
   position: fixed;
 }
 
@@ -58,6 +59,10 @@ dialog
 dialog .close-reveal-modal
 , .reveal-modal .close-reveal-modal {
   @include close-button(0.25rem);
+
+  background-color: $grey-500;
+  color: $white;
+  font-size: 1.5rem;
   right: 0.25rem;
 }
 

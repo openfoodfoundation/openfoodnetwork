@@ -102,7 +102,7 @@
     %columns-dropdown{ action: "#{controller_name}_#{action_name}" }
 
   %div.sixteen.columns.alpha#loading{ 'ng-if' => 'RequestMonitor.loading' }
-    %img.spinner{ src: "/assets/spinning-circles.svg" }
+    %img.spinner{ src: image_path("spinning-circles.svg") }
     %h1
       = t("admin.orders.bulk_management.loading")
 

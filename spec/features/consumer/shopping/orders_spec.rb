@@ -24,18 +24,21 @@ feature "Order Management", js: true do
     before do
       # For some reason, both bill_address and ship_address are not set
       # automatically.
-      #
-      # Also, assigning the shipping_method to a ShippingMethod instance results
-      # in a SystemStackError.
       order.update_attributes!(
         bill_address: bill_address,
-        ship_address: ship_address,
-        shipping_method_id: shipping_method.id
+        ship_address: ship_address
       )
     end
 
     context "when checking out as an anonymous guest" do
-      let(:user) { Spree::User.anonymous! }
+      let!(:customer) { nil }
+      let!(:order) do
+        create(:order_with_credit_payment,
+               user: nil,
+               email: "guest@user.com",
+               distributor: distributor,
+               order_cycle: order_cycle)
+      end
 
       it "allows the user to see the details" do
         # Cannot load the page without token
@@ -170,7 +173,7 @@ feature "Order Management", js: true do
         end
 
         expect(find(".order-total.grand-total")).to have_content "105.00"
-        expect(Spree::LineItem.find_by_id(item2.id)).to be nil
+        expect(Spree::LineItem.find_by(id: item2.id)).to be nil
 
         # Cancelling the order
         accept_alert do

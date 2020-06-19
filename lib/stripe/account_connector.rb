@@ -32,7 +32,7 @@ module Stripe
     end
 
     def enterprise
-      @enterprise ||= Enterprise.find_by_permalink(state["enterprise_id"])
+      @enterprise ||= Enterprise.find_by(permalink: state["enterprise_id"])
     end
 
     private

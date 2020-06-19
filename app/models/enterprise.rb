@@ -17,8 +17,6 @@ class Enterprise < ActiveRecord::Base
 
   self.inheritance_column = nil
 
-  acts_as_gmappable process_geocoding: false
-
   has_many :relationships_as_parent, class_name: 'EnterpriseRelationship',
                                      foreign_key: 'parent_id',
                                      dependent: :destroy
@@ -93,9 +91,9 @@ class Enterprise < ActiveRecord::Base
   validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
 
   before_validation :initialize_permalink, if: lambda { permalink.nil? }
-  before_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
   before_validation :set_unused_address_fields
   after_validation :geocode_address
+  after_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
 
   after_touch :touch_distributors
   after_create :set_default_contact
@@ -120,10 +118,10 @@ class Enterprise < ActiveRecord::Base
       except(:select).
       select('DISTINCT enterprises.id')
 
-    if ready_enterprises.present?
+    if ready_enterprises.any?
       where("enterprises.id NOT IN (?)", ready_enterprises)
     else
-      where("TRUE")
+      where(nil)
     end
   }
   scope :is_primary_producer, -> { where(is_primary_producer: true) }
@@ -182,7 +180,7 @@ class Enterprise < ActiveRecord::Base
 
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
-      scoped
+      where(nil)
     else
       joins(:enterprise_roles).where('enterprise_roles.user_id = ?', user.id)
     end

@@ -21,7 +21,7 @@
                       = t :products_loading
                   .row
                     .small-12.columns.text-center
-                      %img.spinner{ src: "/assets/spinning-circles.svg" }
+                      %img.spinner{ src: image_path("spinning-circles.svg") }
 
             .hide-for-medium-down.large-2.columns
               %h5
@@ -31,7 +31,7 @@
 
               = render partial: "shop/products/filters"
 
-            .shop-filters-sidebar.hide-for-large-up{ng: {show: 'showFilterSidebar', class: "{'shown': showFilterSidebar}"}}
+            .expanding-sidebar.shop-filters-sidebar.hide-for-large-up{ng: {show: 'showFilterSidebar', class: "{'shown': showFilterSidebar}"}}
               .background{ng: {click: 'toggleFilterSidebar()'}}
               .sidebar
                 %h5

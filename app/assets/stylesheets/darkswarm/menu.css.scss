@@ -11,6 +11,7 @@ nav.top-bar {
   font-size: 16px;
   margin-bottom: 0;
   height: $topbar-height;
+  z-index: 190;
 }
 
 @media #{$large-only} {
@@ -174,7 +175,7 @@ nav.top-bar {
   height: $mobile-nav-height;
   position: fixed;
   width: 100%;
-  z-index: 1;
+  z-index: 190; // Above cart sidebar and shaded overlay
 
   .cart-span {
     background-color: #f4704c;
@@ -225,14 +226,7 @@ nav.top-bar {
 
 .off-canvas-wrap .tab-bar .menu-icon {
   @include box-shadow(none);
-}
-
-.off-canvas-wrap.move-right .tab-bar .menu-icon span {
-  box-shadow: 0 0px 0 1px #666, 0 7px 0 1px #666, 0 14px 0 1px #666;
-}
-
-.tab-bar .menu-icon span::after {
-  box-shadow: 0 0 0 1px black, 0 7px 0 1px black, 0 14px 0 1px black;
+  text-indent: 0;
 }
 
 .tab-bar .ofn-logo {

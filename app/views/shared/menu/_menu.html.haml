@@ -1,4 +1,6 @@
-= render "shared/menu/large_menu"
-%ofn-flash
-= render "shared/menu/mobile_menu"
-= render "shared/menu/offcanvas_menu"
+%div{'ng-controller' => 'CartDropdownCtrl'}
+  = render "shared/menu/large_menu"
+  %ofn-flash
+  = render "shared/menu/mobile_menu"
+  = render "shared/menu/offcanvas_menu"
+  = render "shared/menu/cart_sidebar"

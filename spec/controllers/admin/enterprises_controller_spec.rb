@@ -18,8 +18,8 @@ module Admin
     before { @request.env['HTTP_REFERER'] = 'http://test.com/' }
 
     describe "creating an enterprise" do
-      let(:country) { Spree::Country.find_by_name 'Australia' }
-      let(:state) { Spree::State.find_by_name 'Victoria' }
+      let(:country) { Spree::Country.find_by name: 'Australia' }
+      let(:state) { Spree::State.find_by name: 'Victoria' }
       let(:enterprise_params) { { enterprise: { name: 'zzz', permalink: 'zzz', is_primary_producer: '0', address_attributes: { address1: 'a', city: 'a', zipcode: 'a', country_id: country.id, state_id: state.id } } } }
 
       it "grants management permission if the current user is an enterprise user" do
@@ -27,7 +27,7 @@ module Admin
         enterprise_params[:enterprise][:owner_id] = distributor_manager
 
         spree_put :create, enterprise_params
-        enterprise = Enterprise.find_by_name 'zzz'
+        enterprise = Enterprise.find_by name: 'zzz'
         expect(response).to redirect_to edit_admin_enterprise_path enterprise
         expect(distributor_manager.enterprise_roles.where(enterprise_id: enterprise).first).to be
       end
@@ -37,7 +37,7 @@ module Admin
         enterprise_params[:enterprise][:owner_id] = user
 
         spree_put :create, enterprise_params
-        enterprise = Enterprise.find_by_name 'zzz'
+        enterprise = Enterprise.find_by name: 'zzz'
         expect(response).to redirect_to edit_admin_enterprise_path enterprise
         expect(distributor_manager.enterprise_roles.where(enterprise_id: enterprise).first).to be
       end
@@ -50,7 +50,7 @@ module Admin
           enterprise_params[:enterprise][:owner_id] = distributor_owner
 
           spree_put :create, enterprise_params
-          enterprise = Enterprise.find_by_name 'zzz'
+          enterprise = Enterprise.find_by name: 'zzz'
           expect(response).to redirect_to edit_admin_enterprise_path enterprise
           expect(enterprise.sells).to eq('any')
         end
@@ -61,7 +61,7 @@ module Admin
           enterprise_params[:enterprise][:is_primary_producer] = '1'
 
           spree_put :create, enterprise_params
-          enterprise = Enterprise.find_by_name 'zzz'
+          enterprise = Enterprise.find_by name: 'zzz'
           expect(response).to redirect_to edit_admin_enterprise_path enterprise
           expect(enterprise.sells).to eq('none')
         end
@@ -74,7 +74,7 @@ module Admin
           enterprise_params[:enterprise][:sells] = 'none'
 
           spree_put :create, enterprise_params
-          enterprise = Enterprise.find_by_name 'zzz'
+          enterprise = Enterprise.find_by name: 'zzz'
           expect(response).to redirect_to edit_admin_enterprise_path enterprise
           expect(enterprise.sells).to eq('none')
         end
@@ -86,7 +86,7 @@ module Admin
           enterprise_params[:enterprise][:owner_id] = supplier_manager
 
           spree_put :create, enterprise_params
-          enterprise = Enterprise.find_by_name 'zzz'
+          enterprise = Enterprise.find_by name: 'zzz'
           expect(enterprise.sells).to eq('none')
         end
 
@@ -96,7 +96,7 @@ module Admin
           enterprise_params[:enterprise][:sells] = 'any'
 
           spree_put :create, enterprise_params
-          enterprise = Enterprise.find_by_name 'zzz'
+          enterprise = Enterprise.find_by name: 'zzz'
           expect(enterprise.sells).to eq('any')
         end
       end
@@ -449,8 +449,8 @@ module Admin
       before do
         # As a user with permission
         allow(controller).to receive_messages spree_current_user: user
-        allow(OrderCycle).to receive_messages find_by_id: "existing OrderCycle"
-        allow(Enterprise).to receive_messages find_by_id: "existing Enterprise"
+        allow(OrderCycle).to receive_messages find_by: "existing OrderCycle"
+        allow(Enterprise).to receive_messages find_by: "existing Enterprise"
         allow(OrderCycle).to receive_messages new: "new OrderCycle"
 
         allow(OpenFoodNetwork::OrderCyclePermissions).to receive(:new) { permission_mock }

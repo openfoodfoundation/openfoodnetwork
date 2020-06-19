@@ -74,7 +74,7 @@ module Spree
            @payment.payment_method.payment_profiles_supported? &&
            params[:card].present? &&
            (params[:card] != 'new')
-          @payment.source = CreditCard.find_by_id(params[:card])
+          @payment.source = CreditCard.find_by(id: params[:card])
         end
       end
 
@@ -84,7 +84,11 @@ module Spree
            source_params = params.delete(:payment_source)[params[:payment][:payment_method_id]]
           params[:payment][:source_attributes] = source_params
         end
-        params[:payment]
+
+        params.require(:payment).permit(
+          :amount, :payment_method_id,
+          source_attributes: ::PermittedAttributes::PaymentSource.attributes
+        )
       end
 
       def load_data

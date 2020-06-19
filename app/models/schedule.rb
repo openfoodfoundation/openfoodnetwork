@@ -3,11 +3,8 @@ class Schedule < ActiveRecord::Base
 
   has_many :order_cycles, through: :order_cycle_schedules
   has_many :order_cycle_schedules, dependent: :destroy
-  has_many :coordinators, uniq: true, through: :order_cycles
 
-  attr_accessible :name, :order_cycle_ids
-
-  validates :order_cycles, presence: true
+  has_many :coordinators, -> { uniq }, through: :order_cycles
 
   scope :with_coordinator, lambda { |enterprise| joins(:order_cycles).where('coordinator_id = ?', enterprise.id).select('DISTINCT schedules.*') }
 

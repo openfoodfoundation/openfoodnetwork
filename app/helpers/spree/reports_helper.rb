@@ -11,10 +11,13 @@ module Spree
     end
 
     def report_payment_method_options(orders)
-      orders.map do |o|
-        pm = o.payments.first.payment_method
-        [pm.andand.name, pm.andand.id]
-      end.uniq
+      orders.map do |order|
+        payment_method = order.payments.first.andand.payment_method
+
+        next unless payment_method
+
+        [payment_method.name, payment_method.id]
+      end.compact.uniq
     end
 
     def report_shipping_method_options(orders)

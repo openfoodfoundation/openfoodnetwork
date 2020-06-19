@@ -29,7 +29,7 @@ module Admin
     end
 
     def create
-      @customer = Customer.new(params[:customer])
+      @customer = Customer.new(customer_params)
       if user_can_create_customer?
         if @customer.save
           tag_rule_mapping = TagRule.mapping_for(Enterprise.where(id: @customer.enterprise))
@@ -71,7 +71,7 @@ module Admin
 
     def managed_enterprise_id
       @managed_enterprise_id ||= Enterprise.managed_by(spree_current_user).
-        select('enterprises.id').find_by_id(params[:enterprise_id])
+        select('enterprises.id').find_by(id: params[:enterprise_id])
     end
 
     def load_managed_shops
@@ -85,6 +85,19 @@ module Admin
 
     def ams_prefix_whitelist
       [:subscription]
+    end
+
+    def customer_params
+      params.require(:customer).permit(
+        :enterprise_id, :name, :email, :code, :tag_list,
+        ship_address_attributes: PermittedAttributes::Address.attributes,
+        bill_address_attributes: PermittedAttributes::Address.attributes,
+      )
+    end
+
+    # Used in ResourceController#update
+    def permitted_resource_params
+      customer_params
     end
 
     def tag_rule_mapping

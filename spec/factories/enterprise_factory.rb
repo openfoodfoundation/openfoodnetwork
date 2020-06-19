@@ -1,11 +1,24 @@
 FactoryBot.define do
   factory :enterprise, class: Enterprise do
+    transient do
+      users []
+      logo {}
+      promo_image {}
+    end
+
     owner { FactoryBot.create :user }
     sequence(:name) { |n| "Enterprise #{n}" }
     sells 'any'
     description 'enterprise'
     long_description '<p>Hello, world!</p><p>This is a paragraph.</p>'
     address { FactoryBot.create(:address) }
+
+    after(:create) do |enterprise, proxy|
+      proxy.users.each do |user|
+        enterprise.users << user unless enterprise.users.include?(user)
+      end
+      enterprise.update_attributes logo: proxy.logo, promo_image: proxy.promo_image
+    end
   end
 
   factory :supplier_enterprise, parent: :enterprise do

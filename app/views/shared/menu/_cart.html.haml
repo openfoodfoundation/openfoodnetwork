@@ -1,10 +1,8 @@
 %span.cart-span{"ng-controller" => "CartCtrl", "ng-class" => "{ dirty: Cart.dirty || Cart.empty(), 'pure-dirty': Cart.dirty }"}
-  %a#cart.icon{"cart-toggle" => true}
+  %a#cart.icon{"ng-click" => "toggleCartSidebar()"}
     %span
       = t '.cart'
     %span.count
-      %img{ src: "/assets/menu/icn-cart.svg" }
+      %img{ src: image_path("menu/icn-cart.svg") }
       %span
         {{ Cart.total_item_count() }}
-
-  = render 'shared/menu/joyride'

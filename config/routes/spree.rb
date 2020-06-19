@@ -1,5 +1,7 @@
 # Overriding Devise routes to use our own controller
 Spree::Core::Engine.routes.draw do
+  root to: 'home#index'
+
   devise_for :spree_user,
              :class_name => 'Spree::User',
              :controllers => { :sessions => 'spree/user_sessions',
@@ -131,7 +133,7 @@ Spree::Core::Engine.routes.draw do
 
     # Configuration section
     resource :general_settings
-    resource :mail_method, :only => [:edit, :update] do
+    resource :mail_methods, :only => [:edit, :update] do
       post :testmail, :on => :collection
     end
 

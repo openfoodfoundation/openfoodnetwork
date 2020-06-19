@@ -11,7 +11,7 @@ class EnterpriseFactory
       name = data[:name]
       log "- #{name}"
       data[:long_description] = data[:long_description].strip_heredoc.tr("\n", " ")
-      Enterprise.create_with(data).find_or_create_by_name!(name)
+      Enterprise.create_with(data).find_or_create_by!(name: name)
     end
   end
 

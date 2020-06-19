@@ -15,7 +15,7 @@ module Api
     private
 
     def enterprise_fee
-      @enterprise_fee ||= EnterpriseFee.find_by_id params[:id]
+      @enterprise_fee ||= EnterpriseFee.find_by id: params[:id]
     end
   end
 end

@@ -60,8 +60,8 @@ feature "Product Import", js: true do
       expect(page).to have_selector '.created-count', text: '2'
       expect(page).to have_no_selector '.updated-count'
 
-      carrots = Spree::Product.find_by_name('Carrots')
-      potatoes = Spree::Product.find_by_name('Potatoes')
+      carrots = Spree::Product.find_by(name: 'Carrots')
+      potatoes = Spree::Product.find_by(name: 'Potatoes')
       expect(potatoes.supplier).to eq enterprise
       expect(potatoes.on_hand).to eq 6
       expect(potatoes.price).to eq 6.50
@@ -127,7 +127,7 @@ feature "Product Import", js: true do
       expect(page).to have_selector '.created-count', text: '1'
       expect(page).to have_no_selector '.updated-count'
 
-      carrots = Spree::Product.find_by_name('Carrots')
+      carrots = Spree::Product.find_by(name: 'Carrots')
       expect(carrots.tax_category).to eq tax_category
       expect(carrots.shipping_category).to eq shipping_category
     end
@@ -150,9 +150,9 @@ feature "Product Import", js: true do
 
       save_data
 
-      carrots = Spree::Product.find_by_name('Carrots')
+      carrots = Spree::Product.find_by(name: 'Carrots')
       expect(carrots.variants.first.import_date).to be_within(1.minute).of Time.zone.now
-      potatoes = Spree::Product.find_by_name('Potatoes')
+      potatoes = Spree::Product.find_by(name: 'Potatoes')
       expect(potatoes.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
       click_link I18n.t('admin.product_import.save_results.view_products')
@@ -200,9 +200,9 @@ feature "Product Import", js: true do
       expect(page).to have_selector '.created-count', text: '1'
       expect(page).to have_selector '.reset-count', text: '3'
 
-      expect(Spree::Product.find_by_name('Carrots').on_hand).to eq 500
-      expect(Spree::Product.find_by_name('Cabbage').on_hand).to eq 0
-      expect(Spree::Product.find_by_name('Beans').on_hand).to eq 0
+      expect(Spree::Product.find_by(name: 'Carrots').on_hand).to eq 500
+      expect(Spree::Product.find_by(name: 'Cabbage').on_hand).to eq 0
+      expect(Spree::Product.find_by(name: 'Beans').on_hand).to eq 0
     end
 
     it "can save a new product and variant of that product at the same time, add variant to existing product" do
@@ -229,12 +229,12 @@ feature "Product Import", js: true do
 
       save_data
 
-      small_bag = Spree::Variant.find_by_display_name('Small Bag')
+      small_bag = Spree::Variant.find_by(display_name: 'Small Bag')
       expect(small_bag.product.name).to eq 'Potatoes'
       expect(small_bag.price).to eq 3.50
       expect(small_bag.on_hand).to eq 5
 
-      big_bag = Spree::Variant.find_by_display_name('Big Bag')
+      big_bag = Spree::Variant.find_by(display_name: 'Big Bag')
       expect(big_bag.product.name).to eq 'Potatoes'
       expect(big_bag.price).to eq 5.50
       expect(big_bag.on_hand).to eq 6
@@ -377,6 +377,24 @@ feature "Product Import", js: true do
       expect(page).to have_no_selector 'input[type=submit][value="Save"]'
       File.delete('/tmp/test.csv')
     end
+
+    it "handles cases where files contain malformed data" do
+      csv_data = "name,producer,category,on_hand,price,units,unit_type,shipping_category\n"
+      csv_data += "Malformed \rBrocolli,#{enterprise.name},Vegetables,8,2.50,200,g,#{shipping_category.name}\n"
+
+      File.write('/tmp/test.csv', csv_data)
+
+      visit main_app.admin_product_import_path
+      attach_file 'file', '/tmp/test.csv'
+      click_button 'Upload'
+
+      expect(page).to have_no_selector '.create-count'
+      expect(page).to have_no_selector '.update-count'
+      expect(page).to have_no_selector 'input[type=submit][value="Save"]'
+      expect(flash_message).to match(I18n.t('admin.product_import.model.malformed_csv', error_message: ""))
+
+      File.delete('/tmp/test.csv')
+    end
   end
 
   describe "handling enterprise permissions" do
@@ -453,9 +471,9 @@ feature "Product Import", js: true do
         expect_import_completed
 
         # Check that all rows are saved.
-        expect(producer.supplied_products.find_by_name("Imported Product 10")).to be_present
-        expect(producer.supplied_products.find_by_name("Imported Product 60")).to be_present
-        expect(producer.supplied_products.find_by_name("Imported Product 110")).to be_present
+        expect(producer.supplied_products.find_by(name: "Imported Product 10")).to be_present
+        expect(producer.supplied_products.find_by(name: "Imported Product 60")).to be_present
+        expect(producer.supplied_products.find_by(name: "Imported Product 110")).to be_present
       end
     end
   end

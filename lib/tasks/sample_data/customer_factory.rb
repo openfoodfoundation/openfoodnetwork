@@ -6,7 +6,7 @@ class CustomerFactory
   def create_samples(users)
     log "Creating customers"
     jane = users["Jane Customer"]
-    maryse_shop = Enterprise.find_by_name("Maryse's Private Shop")
+    maryse_shop = Enterprise.find_by(name: "Maryse's Private Shop")
     return if Customer.where(user_id: jane, enterprise_id: maryse_shop).exists?
 
     log "- #{jane.email}"

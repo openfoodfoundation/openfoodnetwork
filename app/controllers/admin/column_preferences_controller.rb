@@ -8,7 +8,6 @@ module Admin
       @cp_set.collection.each { |cp| authorize! :bulk_update, cp }
 
       if @cp_set.save
-        # Return saved VOs with IDs
         render json: @cp_set.collection, each_serializer: Api::Admin::ColumnPreferenceSerializer
       else
         if @cp_set.errors.present?
@@ -21,14 +20,23 @@ module Admin
 
     private
 
+    def permitted_params
+      params.permit(
+        :action_name,
+        column_preferences: [:id, :user_id, :action_name, :column_name, :name, :visible]
+      )
+    end
+
     def load_collection
-      collection_hash = Hash[params[:column_preferences].each_with_index.map { |cp, i| [i, cp] }]
-      collection_hash.select!{ |_i, cp| cp[:action_name] == params[:action_name] }
+      collection_hash = Hash[permitted_params[:column_preferences].
+        each_with_index.map { |cp, i| [i, cp] }]
+      collection_hash.select!{ |_i, cp| cp[:action_name] == permitted_params[:action_name] }
       @cp_set = ColumnPreferenceSet.new @column_preferences, collection_attributes: collection_hash
     end
 
     def collection
-      ColumnPreference.where(user_id: spree_current_user, action_name: params[:action_name])
+      ColumnPreference.where(user_id: spree_current_user,
+                             action_name: permitted_params[:action_name])
     end
 
     def collection_actions

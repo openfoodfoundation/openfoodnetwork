@@ -18,8 +18,8 @@ feature "Darkswarm data caching", js: true, caching: true do
 
   describe "caching injected taxons and properties" do
     it "caches taxons and properties" do
-      expect(Spree::Taxon).to receive(:all) { [taxon] }
-      expect(Spree::Property).to receive(:all) { [property] }
+      expect(Spree::Taxon).to receive(:all).at_least(:once).and_call_original
+      expect(Spree::Property).to receive(:all).at_least(:once).and_call_original
 
       visit shops_path
 
@@ -29,14 +29,14 @@ feature "Darkswarm data caching", js: true, caching: true do
       visit shops_path
     end
 
-    xit "invalidates caches for taxons and properties" do
+    it "invalidates caches for taxons and properties" do
       visit shops_path
 
       taxon_timestamp1 = CacheService.latest_timestamp_by_class(Spree::Taxon)
-      expect_cached "views/#{CacheService::FragmentCaching.ams_all_taxons_key}"
+      expect_cached "views/#{CacheService::FragmentCaching.ams_all_taxons[0]}"
 
       property_timestamp1 = CacheService.latest_timestamp_by_class(Spree::Property)
-      expect_cached "views/#{CacheService::FragmentCaching.ams_all_properties_key}"
+      expect_cached "views/#{CacheService::FragmentCaching.ams_all_properties[0]}"
 
       toggle_filters
 
@@ -45,19 +45,22 @@ feature "Darkswarm data caching", js: true, caching: true do
         expect(page).to have_content property.presentation
       end
 
-      taxon.update_attributes!(name: "Changed Taxon")
-      property.update_attributes!(presentation: "Changed Property")
+      taxon.update!(name: "Changed Taxon")
+      property.update!(presentation: "Changed Property")
 
       # Clear timed shops cache so we can test uncached supplied properties
       clear_shops_cache
 
       visit shops_path
 
+      # Wait for /shops page to load properly before checking for new timestamps
+      expect(page).to_not have_selector ".row.filter-row", visible: true
+
       taxon_timestamp2 = CacheService.latest_timestamp_by_class(Spree::Taxon)
-      expect_cached "views/#{CacheService::FragmentCaching.ams_all_taxons_key}"
+      expect_cached "views/#{CacheService::FragmentCaching.ams_all_taxons[0]}"
 
       property_timestamp2 = CacheService.latest_timestamp_by_class(Spree::Property)
-      expect_cached "views/#{CacheService::FragmentCaching.ams_all_properties_key}"
+      expect_cached "views/#{CacheService::FragmentCaching.ams_all_properties[0]}"
 
       expect(taxon_timestamp1).to_not eq taxon_timestamp2
       expect(property_timestamp1).to_not eq property_timestamp2

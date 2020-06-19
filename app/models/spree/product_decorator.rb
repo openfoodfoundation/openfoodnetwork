@@ -17,11 +17,6 @@ Spree::Product.class_eval do
   delegate_belongs_to :master, :unit_value, :unit_description
   delegate :images_attributes=, :display_as=, to: :master
 
-  attr_accessible :supplier_id, :primary_taxon_id, :distributor_ids
-  attr_accessible :group_buy, :group_buy_unit_size, :unit_description, :notes, :images_attributes, :display_as
-  attr_accessible :variant_unit, :variant_unit_scale, :variant_unit_name, :unit_value
-  attr_accessible :inherits_properties, :sku
-
   validates :supplier, presence: true
   validates :primary_taxon, presence: true
   validates :tax_category_id, presence: true, if: "Spree::Config.products_require_tax_category"
@@ -84,6 +79,12 @@ Spree::Product.class_eval do
       select('distinct spree_products.*')
   }
 
+  scope :in_distributors, lambda { |distributors|
+    with_order_cycles_outer.
+      where('(o_exchanges.incoming = ? AND o_exchanges.receiver_id IN (?))', false, distributors).
+      uniq
+  }
+
   # Products supplied by a given enterprise or distributed via that enterprise through an OC
   scope :in_supplier_or_distributor, lambda { |enterprise|
     enterprise = enterprise.respond_to?(:id) ? enterprise.id : enterprise.to_i
@@ -115,7 +116,7 @@ Spree::Product.class_eval do
 
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
-      scoped
+      where(nil)
     else
       where('supplier_id IN (?)', user.enterprises.select("enterprises.id"))
     end
@@ -158,18 +159,6 @@ Spree::Product.class_eval do
     self.class.in_order_cycle(order_cycle).include? self
   end
 
-  # overriding to check self.on_demand as well
-  def has_stock?
-    has_variants? ? variants.any?(&:in_stock?) : (on_demand || master.in_stock?)
-  end
-
-  def has_stock_for_distribution?(order_cycle, distributor)
-    # This product has stock for a distribution if it is available on-demand
-    # or if one of its variants in the distribution is in stock
-    (!has_variants? && on_demand) ||
-      variants_distributed_by(order_cycle, distributor).any?(&:in_stock?)
-  end
-
   def variants_distributed_by(order_cycle, distributor)
     order_cycle.variants_distributed_by(distributor).where(product_id: self)
   end
@@ -184,7 +173,7 @@ Spree::Product.class_eval do
       option_type_name = "unit_#{variant_unit}"
       option_type_presentation = variant_unit.capitalize
 
-      Spree::OptionType.find_by_name(option_type_name) ||
+      Spree::OptionType.find_by(name: option_type_name) ||
         Spree::OptionType.create!(name: option_type_name,
                                   presentation: option_type_presentation)
     end

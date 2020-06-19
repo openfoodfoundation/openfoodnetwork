@@ -89,15 +89,19 @@ module InjectionHelper
   end
 
   def inject_taxons
-    inject_json_ams "taxons", Spree::Taxon.all, Api::TaxonSerializer
+    inject_json_ams "taxons", Spree::Taxon.all.to_a, Api::TaxonSerializer
   end
 
   def inject_properties
-    inject_json_ams "properties", Spree::Property.all, Api::PropertySerializer
+    inject_json_ams "properties", Spree::Property.all.to_a, Api::PropertySerializer
   end
 
   def inject_currency_config
     inject_json_ams "currencyConfig", {}, Api::CurrencyConfigSerializer
+  end
+
+  def inject_open_street_map_config
+    inject_json_ams "openStreetMapConfig", {}, Api::OpenStreetMapConfigSerializer
   end
 
   def inject_spree_api_key

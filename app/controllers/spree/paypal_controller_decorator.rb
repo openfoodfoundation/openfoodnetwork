@@ -2,6 +2,7 @@ Spree::PaypalController.class_eval do
   before_filter :enable_embedded_shopfront
   before_filter :destroy_orphaned_paypal_payments, only: :confirm
   after_filter :reset_order_when_complete, only: :confirm
+  before_filter :permit_parameters!
 
   def cancel
     flash[:notice] = Spree.t('flash.cancel', scope: 'paypal')
@@ -17,6 +18,10 @@ Spree::PaypalController.class_eval do
   end
 
   private
+
+  def permit_parameters!
+    params.permit(:token, :payment_method_id, :PayerID)
+  end
 
   def reset_order_when_complete
     if current_order.complete?

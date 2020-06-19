@@ -1,11 +1,29 @@
-%h3
-  = t(".customer_greeting", name: @order.bill_address.firstname)
-%h4
-  = t(".instructions")
-%span.clear
+%table.social.white-bg.fullwidth
+  %table.column
+    %tr
+      %td
+        %h3
+          = t(".customer_greeting", name: @order.bill_address.firstname)
+        %h4
+          = t(".instructions_html", distributor: @order.distributor.name )
+        %img{src: "#{@order.distributor.logo.url(:medium)}"}
+
+%p.callout
+  = t(".dont_cancel", email: @order.distributor.contact.email)
 
 %p &nbsp;
+%h4
+  = t(".order_summary_canceled_html", number: @order.number)
+%p
+  = t(".details")
 
-= t(".order_summary_canceled")
 = render 'order_summary'
+
+%p
+  - if @order.paid?
+    = t(".paid_order", distributor: @order.distributor.name)
+  - else
+    = t(".unpaid_order")
+
 = render 'signoff'
+= render 'shared/mailers/social_and_contact'

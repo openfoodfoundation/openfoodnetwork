@@ -126,7 +126,7 @@ describe SubscriptionPlacementJob do
     let(:subscription) { create(:subscription, shop: shop, with_items: true) }
     let(:proxy_order) { create(:proxy_order, subscription: subscription) }
     let(:oc) { proxy_order.order_cycle }
-    let(:ex) { oc.exchanges.outgoing.find_by_sender_id_and_receiver_id(shop.id, shop.id) }
+    let(:ex) { oc.exchanges.outgoing.find_by(sender_id: shop.id, receiver_id: shop.id) }
     let(:fee) { create(:enterprise_fee, enterprise: shop, fee_type: 'sales', amount: 10) }
     let!(:exchange_fee) { ExchangeFee.create!(exchange: ex, enterprise_fee: fee) }
     let!(:order) { proxy_order.initialise_order! }

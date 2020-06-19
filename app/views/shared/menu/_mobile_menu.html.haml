@@ -1,7 +1,7 @@
 %nav.tab-bar.show-for-medium-down
   %section.left
     %a.left-off-canvas-toggle.menu-icon
-      %span
+      = image_tag "menu/btn-menu-mobile.png"
 
   %section.left
     .ofn-logo
@@ -9,12 +9,12 @@
         %img{src: ContentConfig.logo_mobile.url, srcset: ContentConfig.logo_mobile_svg.url, width: "75", height: "26"}
 
   %section.right{"ng-cloak" => true}
-    %span.cart-span{"ng-controller" => "CartCtrl", "ng-class" => "{ dirty: Cart.dirty || Cart.empty(), 'pure-dirty': Cart.dirty }"}
-      %a.icon{href: main_app.cart_path}
+    %span.cart-span{"ng-class" => "{ dirty: Cart.dirty || Cart.empty(), 'pure-dirty': Cart.dirty }"}
+      %a.icon{ng: {click: 'toggleCartSidebar()'}}
         %span
           = t '.cart'
         %span.count
-          %img{ src: "/assets/menu/icn-cart.svg" }
+          = image_tag "menu/icn-cart.svg"
           %span
             {{ Cart.total_item_count() }}
 

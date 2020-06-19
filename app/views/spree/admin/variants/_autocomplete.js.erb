@@ -4,7 +4,7 @@
       {{#if variant.image }}
         <img src='{{variant.image}}' />
       {{ else }}
-        <img src='/assets/noimage/mini.png' />
+        <img src='<%= image_path("noimage/mini.png") %>' />
       {{/if}}
     </figure>
 
@@ -57,7 +57,7 @@
                 <button class="add_variant no-text icon-plus icon_link with-tip" data-stock-location-id="{{variant.stock_location_id}}" title="Add" data-action="add"></button>
               </td>
             {{else}}
-              <td><%= Spree.t(:out_of_stock) %></td>
+              <td><%= t('.out_of_stock') %></td>
               <td>0</td>
             {{/if}}
           </tr>

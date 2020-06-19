@@ -92,7 +92,7 @@ module Api
     private
 
     def find_product(id)
-      product_scope.find_by_permalink!(id.to_s)
+      product_scope.find_by!(permalink: id.to_s)
     rescue ActiveRecord::RecordNotFound
       product_scope.find(id)
     end
@@ -119,7 +119,7 @@ module Api
     end
 
     def paged_products_for_producers(producer_ids)
-      Spree::Product.scoped.
+      Spree::Product.where(nil).
         merge(product_scope).
         includes(variants: [:product, :default_price, :stock_items]).
         where(supplier_id: producer_ids).

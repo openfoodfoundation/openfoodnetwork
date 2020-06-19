@@ -21,13 +21,13 @@ end
 set_mail_configuration
 
 # -- Spree
-unless Spree::Country.find_by_iso(ENV['DEFAULT_COUNTRY_CODE'])
+unless Spree::Country.find_by(iso: ENV['DEFAULT_COUNTRY_CODE'])
   puts "[db:seed] Seeding Spree"
   Spree::Core::Engine.load_seed if defined?(Spree::Core)
   Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
 end
 
-country = Spree::Country.find_by_iso(ENV['DEFAULT_COUNTRY_CODE'])
+country = Spree::Country.find_by(iso: ENV['DEFAULT_COUNTRY_CODE'])
 puts "Country is #{country.to_s}"
 
 puts "[db:seed] loading states yaml"
@@ -40,11 +40,8 @@ puts "[db:seed] Seeding states for " + country.name
 states.each do |state|
   puts "State: " + state.to_s
 
-  unless Spree::State.find_by_name(state['name'])
-    Spree::State.create!(
-      { name: state['name'], abbr: state['abbr'], country: country },
-      without_protection: true
-    )
+  unless Spree::State.find_by(name: state['name'])
+    Spree::State.create!({ name: state['name'], abbr: state['abbr'], country: country })
   end
 end
 

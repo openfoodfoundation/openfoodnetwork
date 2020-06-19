@@ -3,7 +3,7 @@ class Api::VariantSerializer < ActiveModel::Serializer
              :options_text, :unit_value, :unit_description, :unit_to_display,
              :display_as, :display_name, :name_to_display,
              :price, :on_demand, :on_hand, :fees, :price_with_fees,
-             :tag_list
+             :tag_list, :thumb_url
 
   delegate :price, to: :object
 
@@ -29,5 +29,13 @@ class Api::VariantSerializer < ActiveModel::Serializer
     return [] unless object.respond_to?(:tag_list)
 
     object.tag_list
+  end
+
+  def thumb_url
+    if object.product.images.present?
+      object.product.images.first.attachment.url(:mini)
+    else
+      "/assets/noimage/mini.png"
+    end
   end
 end

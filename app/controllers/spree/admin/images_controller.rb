@@ -19,7 +19,7 @@ module Spree
       end
 
       def load_data
-        @product = Product.find_by_permalink(params[:product_id])
+        @product = Product.find_by(permalink: params[:product_id])
         @variants = @product.variants.collect do |variant|
           [variant.options_text, variant.id]
         end
@@ -33,6 +33,12 @@ module Spree
 
       def destroy_before
         @viewable = @image.viewable
+      end
+
+      def permitted_resource_params
+        params.require(:image).permit(
+          :attachment, :viewable_id, :alt
+        )
       end
     end
   end

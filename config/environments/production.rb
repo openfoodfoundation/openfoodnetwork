@@ -1,6 +1,8 @@
 Openfoodnetwork::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
+  config.eager_load = true
+
   # Code is not reloaded between requests
   config.cache_classes = true
 
@@ -33,16 +35,11 @@ Openfoodnetwork::Application.configure do
   # Use https in email links
   config.action_mailer.default_url_options = { protocol: 'https' }
 
-  # Note: This config no longer works with our new logging strategy
-  # config.log_level = :debug
+  # Set log level (default is :debug in Rails 4)
+  config.log_level = :info
 
-  # Configure logging for Rails 3.2:
-  config.logger = ActiveSupport::TaggedLogging.new(Logger.new(Rails.root.join("log", "#{Rails.env}.log")))
-  config.logger.level = Logger::INFO
-  config.logger.formatter = Logger::Formatter.new
-  config.logger.datetime_format = "%Y-%m-%d %H:%M:%S"
-  # Once we get to Rails 4.0, we can replace the above with:
-  #config.log_formatter = Logger::Formatter.new.tap { |f| f.datetime_format = "%Y-%m-%d %H:%M:%S" }
+  # Configure logging:
+  config.log_formatter = Logger::Formatter.new.tap { |f| f.datetime_format = "%Y-%m-%d %H:%M:%S" }
 
   # Use a different cache store in production
   memcached_value_max_megabytes = ENV.fetch("MEMCACHED_VALUE_MAX_MEGABYTES", 1).to_i

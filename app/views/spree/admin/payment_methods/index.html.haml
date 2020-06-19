@@ -1,9 +1,9 @@
 - content_for :page_title do
-  = Spree.t(:payment_methods)
+  = t('.payment_methods')
 
 - content_for :page_actions do
   %li
-    = button_link_to Spree.t(:new_payment_method), new_object_url, icon: 'icon-plus', id: 'admin_new_payment_methods_link'
+    = button_link_to t('.new_payment_method'), new_object_url, icon: 'icon-plus', id: 'admin_new_payment_methods_link'
 
 - if @payment_methods.any?
   %table#listing_payment_methods.index
@@ -17,12 +17,12 @@
       %col{style: "width: 11%"}
     %thead
       %tr
-        %th= Spree.t(:name)
-        %th= t(:products_distributor)
-        %th= Spree.t(:provider)
-        %th= Spree.t(:environment)
-        %th= Spree.t(:display)
-        %th= Spree.t(:active)
+        %th= t('.name')
+        %th= t('.products_distributor')
+        %th= t('.provider')
+        %th= t('.environment')
+        %th= t('.display')
+        %th= t('.active')
         %th.actions
     %tbody
       - @payment_methods.each do |method|
@@ -34,10 +34,10 @@
               %br/
           %td= method.type
           %td.align-center= method.environment.to_s.titleize
-          %td.align-center= method.display_on.blank? ? Spree.t(:both) : Spree.t(method.display_on)
-          %td.align-center= method.active ? Spree.t(:say_yes) : Spree.t(:say_no)
+          %td.align-center= method.display_on.blank? ? t('.both') : t('.' + method.display_on.to_s)
+          %td.align-center= method.active ? t('.active_yes') : t('.active_no')
           %td.actions
             = link_to_edit method, no_text: true
             = link_to_delete method, no_text: true
 - else
-  .alpha.twelve.columns.no-objects-found= Spree.t(:no_payment_methods_found)
+  .alpha.twelve.columns.no-objects-found= t('.no_payment_methods_found')

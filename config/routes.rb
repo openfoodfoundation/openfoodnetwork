@@ -24,7 +24,7 @@ Openfoodnetwork::Application.routes.draw do
   get "/learn", to: redirect("https://openfoodnetwork.org/#{ENV['DEFAULT_COUNTRY_CODE'].andand.downcase}/learn/")
 
   get "/cart", :to => "spree/orders#edit", :as => :cart
-  put "/cart", :to => "spree/orders#update", :as => :update_cart
+  patch "/cart", :to => "spree/orders#update", :as => :update_cart
   put "/cart/empty", :to => 'spree/orders#empty', :as => :empty_cart
   get '/orders/:id/token/:token' => 'spree/orders#show', :as => :token_order
 

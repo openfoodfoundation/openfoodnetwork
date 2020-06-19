@@ -47,8 +47,8 @@ feature "Shops caching", js: true, caching: true do
     let(:exchange) { order_cycle.exchanges.to_enterprises(distributor).outgoing.first }
 
     let(:test_domain) { "#{Capybara.current_session.server.host}:#{Capybara.current_session.server.port}" }
-    let(:taxons_key) { "views/#{test_domain}/api/order_cycles/#{order_cycle.id}/taxons?distributor=#{distributor.id}" }
-    let(:properties_key) { "views/#{test_domain}/api/order_cycles/#{order_cycle.id}/properties?distributor=#{distributor.id}" }
+    let(:taxons_key) { "views/#{test_domain}/api/order_cycles/#{order_cycle.id}/taxons?distributor=#{distributor.id}.json" }
+    let(:properties_key) { "views/#{test_domain}/api/order_cycles/#{order_cycle.id}/properties?distributor=#{distributor.id}.json" }
     let(:options) { { expires_in: CacheService::FILTERS_EXPIRY } }
 
     before do

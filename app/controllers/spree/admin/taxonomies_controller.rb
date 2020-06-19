@@ -16,6 +16,10 @@ module Spree
           admin_taxonomies_url
         end
       end
+
+      def permitted_resource_params
+        params.require(:taxonomy).permit(:name)
+      end
     end
   end
 end

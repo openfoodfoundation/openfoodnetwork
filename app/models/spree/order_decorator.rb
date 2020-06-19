@@ -21,15 +21,23 @@ Spree::Order.class_eval do
   # This removes "inverse_of: source" which breaks shipment adjustment calculations
   #   This change is done in Spree 2.1 (see https://github.com/spree/spree/commit/3fa44165c7825f79a2fa4eb79b99dc29944c5d55)
   #   When OFN gets to Spree 2.1, this can be removed
-  has_many :adjustments,
+  has_many :adjustments, -> { order "#{Spree::Adjustment.table_name}.created_at ASC" },
            as: :adjustable,
-           dependent: :destroy,
-           order: "#{Spree::Adjustment.table_name}.created_at ASC"
+           dependent: :destroy
 
   validates :customer, presence: true, if: :require_customer?
   validate :products_available_from_new_distribution, if: lambda { distributor_id_changed? || order_cycle_id_changed? }
   validate :disallow_guest_order
-  attr_accessible :order_cycle_id, :distributor_id, :customer_id
+
+  # The EmailValidator introduced in Spree 2.1 is not working
+  # So here we remove it and re-introduce the regexp validation rule from Spree 2.0
+  _validate_callbacks.each do |callback|
+    if callback.raw_filter.respond_to? :attributes
+      callback.raw_filter.attributes.delete :email
+    end
+  end
+  validates :email, presence: true, format: /\A([\w\.%\+\-']+)@([\w\-]+\.)+([\w]{2,})\z/i,
+                    if: :require_email
 
   before_validation :associate_customer, unless: :customer_id?
   before_validation :ensure_customer, unless: :customer_is_valid?
@@ -51,7 +59,7 @@ Spree::Order.class_eval do
   # -- Scopes
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
-      scoped
+      where(nil)
     else
       # Find orders that are distributed by the user or have products supplied by the user
       # WARNING: This only filters orders, you'll need to filter line items separately using LineItem.managed_by
@@ -65,7 +73,7 @@ Spree::Order.class_eval do
 
   scope :distributed_by_user, lambda { |user|
     if user.has_spree_role?('admin')
-      scoped
+      where(nil)
     else
       where('spree_orders.distributor_id IN (?)', user.enterprises.select(&:id))
     end
@@ -193,7 +201,7 @@ Spree::Order.class_eval do
     Bugsnag.notify(e) do |report|
       report.add_tab(:order, attributes)
       report.add_tab(:shipment, shipment.attributes)
-      report.add_tab(:shipment_in_db, Spree::Shipment.find_by_id(shipment.id).attributes)
+      report.add_tab(:shipment_in_db, Spree::Shipment.find_by(id: shipment.id).attributes)
     end
   end
 
@@ -304,20 +312,12 @@ Spree::Order.class_eval do
     (adjustments + price_adjustments).sum(&:included_tax)
   end
 
-  def tax_adjustments
-    adjustments.with_tax +
-      line_items.includes(:adjustments).map { |li| li.adjustments.with_tax }.flatten
-  end
+  def price_adjustments
+    adjustments = []
 
-  def tax_adjustment_totals
-    tax_adjustments.each_with_object({}) do |adjustment, hash|
-      tax_rates = TaxRateFinder.tax_rates_of(adjustment)
-      tax_rates_hash = Hash[tax_rates.collect do |tax_rate|
-        tax_amount = tax_rates.one? ? adjustment.included_tax : tax_rate.compute_tax(adjustment.amount)
-        [tax_rate, tax_amount]
-      end]
-      hash.update(tax_rates_hash) { |_tax_rate, amount1, amount2| amount1 + amount2 }
-    end
+    line_items.each { |line_item| adjustments.concat line_item.adjustments }
+
+    adjustments
   end
 
   def price_adjustment_totals
@@ -394,7 +394,7 @@ Spree::Order.class_eval do
   def associate_customer
     return customer if customer.present?
 
-    self.customer = Customer.of(distributor).find_by_email(email_for_customer)
+    self.customer = Customer.of(distributor).find_by(email: email_for_customer)
   end
 
   def ensure_customer

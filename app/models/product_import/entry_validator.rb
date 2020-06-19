@@ -62,7 +62,11 @@ module ProductImport
     end
 
     def mark_as_new_variant(entry, product_id)
-      new_variant = Spree::Variant.new(entry.attributes.except('id', 'product_id', 'on_hand', 'on_demand'))
+      new_variant = Spree::Variant.new(
+        entry.assignable_attributes.except('id', 'product_id', 'on_hand', 'on_demand',
+                                           'variant_unit', 'variant_unit_name',
+                                           'variant_unit_scale', 'primary_taxon_id')
+      )
       new_variant.save
       new_variant.on_demand = entry.attributes['on_demand'] if entry.attributes['on_demand'].present?
       new_variant.on_hand = entry.attributes['on_hand'] if entry.attributes['on_hand'].present?
@@ -295,7 +299,9 @@ module ProductImport
 
     def mark_as_new_product(entry)
       new_product = Spree::Product.new
-      new_product.assign_attributes(entry.attributes.except('id'))
+      new_product.assign_attributes(
+        entry.assignable_attributes.except('id', 'on_hand', 'on_demand', 'display_name')
+      )
       new_product.supplier_id = entry.producer_id
       entry.on_hand = 0 if entry.on_hand.nil?
 
@@ -307,7 +313,10 @@ module ProductImport
     end
 
     def mark_as_existing_variant(entry, existing_variant)
-      existing_variant.assign_attributes(entry.attributes.except('id', 'product_id'))
+      existing_variant.assign_attributes(
+        entry.assignable_attributes.except('id', 'product_id', 'variant_unit', 'variant_unit_name',
+                                           'variant_unit_scale', 'primary_taxon_id')
+      )
       check_on_hand_nil(entry, existing_variant)
 
       if existing_variant.valid?

@@ -44,6 +44,8 @@ en:
         base: "Credit Card"
       order_cycle:
         orders_close_at: Close date
+      variant_override:
+        count_on_hand: "On Hand"
     errors:
       models:
         spree/user:
@@ -415,8 +417,10 @@ en:
         title: "Matomo Settings"
         matomo_url: "Matomo URL"
         matomo_site_id: "Matomo Site ID"
-        info_html: "Matomo is a Web and Mobile Analytics. You can either host Matomo on-premises or use a cloud-hosted service. See <a href='http://matomo.org' target='_blank'>matomo.org</a> for more information."
+        matomo_tag_manager_url: "Matomo Tag Manager URL"
+        info_html: "Matomo is a Web and Mobile Analytics application. You can either host Matomo on-premises or use a cloud-hosted service. See <a href='http://matomo.org' target='_blank'>matomo.org</a> for more information."
         config_instructions_html: "Here you can configure the OFN Matomo integration. The Matomo URL below should point to the Matomo instance where the user tracking information will be sent to; if it is left empty, Matomo user tracking will be disabled. The Site ID field is not mandatory but useful if you are tracking more than one website on a single Matomo instance; it can be found on the Matomo instance console."
+        config_instructions_tag_manager_html: "Setting the Matomo Tag Manager URL enables Matomo Tag Manager. This tool allows you to set up analytics events. The Matomo Tag Manager URL is copied from the Install Code section of Matomo Tag Manager. Ensure you select the right container and environment as these options change the URL."
 
     customers:
       index:
@@ -452,6 +456,7 @@ en:
         footer_and_external_links: Footer and External Links
         your_content: Your content
         user_guide: User Guide
+        map: Map
 
     enterprise_fees:
       index:
@@ -528,6 +533,7 @@ en:
         line_number: "Line %{number}:"
         encoding_error: "Please check the language setting of your source file and ensure it is saved with UTF-8 encoding"
         unexpected_error: "Product Import encountered an unexpected error whilst opening the file: %{error_message}"
+        malformed_csv: "Product Import encountered a malformed CSV: %{error_message}"
       index:
         notice: "Notice"
         beta_notice: "This feature is still in beta: you may experience some errors while using it. Please don't hesitate to contact support."
@@ -1210,13 +1216,18 @@ en:
     menu:
       cart:
         cart: "Cart"
+      cart_sidebar:
+        checkout: "Checkout"
+        edit_cart: "Edit cart"
+        items_in_cart_singular: "%{num} item in your cart"
+        items_in_cart_plural: "%{num} items in your cart"
+        close: "Close"
+        cart_empty: "Your cart is empty"
+        take_me_shopping: "Take me shopping!"
       signed_in:
         profile: "Profile"
       mobile_menu:
         cart: "Cart"
-      joyride:
-        checkout: "Checkout now"
-        already_ordered_products: "Already ordered in this order cycle"
     register_call:
       selling_on_ofn: "Interested in getting on the Open Food Network?"
       register: "Register here"
@@ -2879,6 +2890,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   customer_details: "Customer Details"
   adjustments: "Adjustments"
   payments: "Payments"
+  return_authorizations: "Return Authorizations"
 
   payment: "Payment"
   payment_method: "Payment Method"
@@ -2952,6 +2964,14 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     new_payment: "New Payment"
     capture: "Capture"
     void: "Void"
+    login: "Login"
+    password: "Password"
+    signature: "Signature"
+    solution: "Solution"
+    landing_page: "Landing Page"
+    server: "Server"
+    test_mode: "Test Mode"
+    logourl: "Logourl"
 
     configurations: "Configurations"
     general_settings: "General Settings"
@@ -3025,8 +3045,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     new_state: "New State"
 
     payment_methods: "Payment Methods"
-    new_payment_method: "New Payment Method"
-    provider: "Provider"
 
     taxonomies: "Taxonomies"
     new_taxonomy: "New Taxonomy"
@@ -3089,6 +3107,12 @@ See the %{link} to find out more about %{sitename}'s features and to start using
 
     actions:
       update: "Update"
+    shared:
+      error_messages:
+        errors_prohibited_this_record_from_being_saved:
+          one: "1 error prohibited this record from being saved:"
+          other: "%{count} errors prohibited this record from being saved:"
+        there_were_problems_with_the_following_fields: "There were problems with the following fields"
     errors:
       messages:
         blank: "can't be blank"
@@ -3248,10 +3272,26 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           back_end: "Back office only"
           deactivation_warning: "De-activating a shipping method can make the shipping method disappear from your list. Alternatively, you can hide a shipping method from the checkout page by setting the option 'Display' to 'back office only'."
       payment_methods:
+        index:
+          payment_methods: "Payment Methods"
+          new_payment_method: "New Payment Method"
+          name: "Name"
+          products_distributor: "Distributor"
+          provider: "Provider"
+          environment: "Environment"
+          display: "Display"
+          active: "Active"
+          both: "Both"
+          front_end: "Checkout only"
+          back_end: "Back office only"
+          active_yes: "Yes"
+          active_no: "No"
+          no_payment_methods_found: "No payment methods found"
         new:
           new_payment_method: "New Payment Method"
           back_to_payment_methods_list: "Back To Payment Methods List"
         edit:
+          new: "New"
           editing_payment_method: "Editing Payment Method"
           back_to_payment_methods_list: "Back To Payment Methods List"
         stripe_connect:
@@ -3267,6 +3307,21 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           account_id: Account ID
           business_name: Business Name
           charges_enabled: Charges Enabled
+        form:
+          name: "Name"
+          description: "Description"
+          environment: "Environment"
+          display: "Display"
+          active: "Active"
+          active_yes: "Yes"
+          active_no: "No"
+          both: "Both Checkout and Back office"
+          front_end: "Checkout only"
+          back_end: "Back office only"
+          tags: "Tags"
+          deactivation_warning: "De-activating a payment method can make the payment method disappear from your list. Alternatively, you can hide a payment method from the checkout page by setting the option 'Display' to 'back office only'."
+        providers:
+          provider: "Provider"
       payments:
         source_forms:
           stripe:
@@ -3369,6 +3424,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           display_as_placeholder: 'eg. 2 kg'
           display_name_placeholder: 'eg. Tomatoes'
         autocomplete:
+          out_of_stock: "Out of Stock"
           producer_name: "Producer"
           unit: "Unit"
       shared:
@@ -3434,9 +3490,14 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       invalid: invalid
     order_mailer:
       cancel_email:
-        customer_greeting: "Hi %{name}!"
-        instructions: "Your order has been CANCELED. Please retain this cancellation information for your records."
-        order_summary_canceled: "Order Summary [CANCELED]"
+        customer_greeting: "Dear %{name},"
+        instructions_html: "Your order with <strong>%{distributor}</strong> has been CANCELED. Please retain this cancellation information for your records."
+        dont_cancel: "If you have changed your mind or don't wish to cancel this order please contact %{email}"
+        order_summary_canceled_html: "<strong>Order Summary #%{number} [CANCELED]</strong>"
+        details: "Here are the details of what you ordered:"
+        unpaid_order: "Your order was unpaid so no refund has been made"
+        paid_order: "Your order was paid so %{distributor} has refunded the full amount"
+        credit_order: "Your order was paid so your account has been credited"
         subject: "Cancellation of Order"
       confirm_email:
         subject: "Order Confirmation"

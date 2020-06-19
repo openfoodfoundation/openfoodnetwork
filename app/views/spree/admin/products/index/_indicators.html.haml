@@ -1,6 +1,6 @@
 %div.sixteen.columns.alpha#loading{ 'ng-if' => 'RequestMonitor.loading' }
   %br
-  %img.spinner{ src: "/assets/spinning-circles.svg" }
+  %img.spinner{ src: image_path("spinning-circles.svg") }
   %h1= t('.title')
 
 %div.sixteen.columns.alpha{ 'ng-show' => '!RequestMonitor.loading && products.length == 0 && query.length==0' }

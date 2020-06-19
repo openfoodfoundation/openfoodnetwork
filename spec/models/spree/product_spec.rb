@@ -257,6 +257,37 @@ module Spree
         end
       end
 
+      describe "in_distributors" do
+        let!(:distributor1) { create(:distributor_enterprise) }
+        let!(:distributor2) { create(:distributor_enterprise) }
+        let!(:product1) { create(:product) }
+        let!(:product2) { create(:product) }
+        let!(:product3) { create(:product) }
+        let!(:product4) { create(:product) }
+        let!(:order_cycle1) {
+          create(:order_cycle, distributors: [distributor1],
+                               variants: [product1.variants.first, product2.variants.first])
+        }
+        let!(:order_cycle2) {
+          create(:order_cycle, distributors: [distributor2],
+                               variants: [product3.variants.first])
+        }
+
+        it "returns distributed products for a given Enterprise AR relation" do
+          distributors = Enterprise.where(id: [distributor1.id, distributor2.id]).to_a
+
+          expect(Product.in_distributors(distributors)).to include product1, product2, product3
+          expect(Product.in_distributors(distributors)).to_not include product4
+        end
+
+        it "returns distributed products for a given array of enterprise ids" do
+          distributors_ids = [distributor1.id, distributor2.id]
+
+          expect(Product.in_distributors(distributors_ids)).to include product1, product2, product3
+          expect(Product.in_distributors(distributors_ids)).to_not include product4
+        end
+      end
+
       describe "in_supplier_or_distributor" do
         it "shows products in supplier" do
           s1 = create(:supplier_enterprise)
@@ -450,9 +481,9 @@ module Spree
         pb = Spree::Property.create! name: 'B', presentation: 'B'
         pc = Spree::Property.create! name: 'C', presentation: 'C'
 
-        product.product_properties.create!({ property_id: pa.id, value: '1', position: 1 }, without_protection: true)
-        product.product_properties.create!({ property_id: pc.id, value: '3', position: 3 }, without_protection: true)
-        supplier.producer_properties.create!({ property_id: pb.id, value: '2', position: 2 }, without_protection: true)
+        product.product_properties.create!({ property_id: pa.id, value: '1', position: 1 })
+        product.product_properties.create!({ property_id: pc.id, value: '3', position: 3 })
+        supplier.producer_properties.create!({ property_id: pb.id, value: '2', position: 2 })
 
         expect(product.properties_including_inherited).to eq(
           [{ id: pa.id, name: "A", value: '1' },
@@ -510,7 +541,7 @@ module Spree
         end
 
         it "removes the related option values from all its variants and replaces them" do
-          ot = Spree::OptionType.find_by_name 'unit_weight'
+          ot = Spree::OptionType.find_by name: 'unit_weight'
           v = create(:variant, unit_value: 1, product: p)
           p.reload
 
@@ -525,7 +556,7 @@ module Spree
         end
 
         it "removes the related option values from its master variant and replaces them" do
-          ot = Spree::OptionType.find_by_name 'unit_weight'
+          ot = Spree::OptionType.find_by name: 'unit_weight'
           p.master.update_attributes!(unit_value: 1)
           p.reload
 
@@ -575,57 +606,6 @@ module Spree
 
           # And the option values themselves should still exist
           expect(Spree::OptionValue.where(id: [ov1.id, ov2.id]).count).to eq(2)
-        end
-      end
-    end
-
-    describe "stock filtering" do
-      it "considers products that are on_demand as being in stock" do
-        product = create(:simple_product, on_demand: true)
-        product.master.update_attribute(:on_hand, 0)
-        expect(product.has_stock?).to eq(true)
-      end
-
-      describe "finding products in stock for a particular distribution" do
-        it "returns on-demand products" do
-          p = create(:simple_product, on_demand: true)
-          p.variants.first.update_attributes!(on_hand: 0, on_demand: true)
-          d = create(:distributor_enterprise)
-          oc = create(:simple_order_cycle, distributors: [d])
-          oc.exchanges.outgoing.first.variants << p.variants.first
-
-          expect(p).to have_stock_for_distribution(oc, d)
-        end
-
-        it "returns products with in-stock variants" do
-          p = create(:simple_product)
-          v = create(:variant, product: p)
-          v.update_attribute(:on_hand, 1)
-          d = create(:distributor_enterprise)
-          oc = create(:simple_order_cycle, distributors: [d])
-          oc.exchanges.outgoing.first.variants << v
-
-          expect(p).to have_stock_for_distribution(oc, d)
-        end
-
-        it "returns products with on-demand variants" do
-          p = create(:simple_product)
-          v = create(:variant, product: p, on_demand: true)
-          v.update_attribute(:on_hand, 0)
-          d = create(:distributor_enterprise)
-          oc = create(:simple_order_cycle, distributors: [d])
-          oc.exchanges.outgoing.first.variants << v
-
-          expect(p).to have_stock_for_distribution(oc, d)
-        end
-
-        it "does not return products that have stock not in the distribution" do
-          p = create(:simple_product)
-          p.master.update_attribute(:on_hand, 1)
-          d = create(:distributor_enterprise)
-          oc = create(:simple_order_cycle, distributors: [d])
-
-          expect(p).not_to have_stock_for_distribution(oc, d)
         end
       end
     end

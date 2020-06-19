@@ -23,6 +23,8 @@ fr:
         base: "Carte de crédit"
       order_cycle:
         orders_close_at: Date de fermeture
+      variant_override:
+        count_on_hand: "En stock"
     errors:
       models:
         spree/user:
@@ -368,8 +370,10 @@ fr:
         title: "Configuration Matomo"
         matomo_url: "URL de l'instance sur Matomo"
         matomo_site_id: "ID de l'instance sur Matomo"
-        info_html: "Matomo est un outil d'analyse de trafic web (ordinateur et téléphone). Vous pouvez installer vous-même Matomo ou utiliser une version hébergée. Voir <a href='http://matomo.org' target='_blank'>matomo.org</a> pour plus d'information."
+        matomo_tag_manager_url: "URL du Matomo Tag Manager"
+        info_html: "Matomo est un outil de suivi de traffic et de comportement des utilisateurs. Matomo est open source et validée par la CNIL française car non intrusif dans les données personnelles des utilisateurs. Pour plus d'infos : <a href='http://matomo.org' target='_blank'>matomo.org</a>."
         config_instructions_html: "Pour utiliser Matomo, vous devez configurer l'intégration avec Open Food France. L'URL de l'instance sur Matomo correspond à l'url du site internet visé par le suivi de la navigation utilisateur. Si le champ est vide, Matomo n'effectuera aucune analyse sur ce site. L'ID de l'instance sur Matomo n'est pas obligatoire, mais nécessaire si vous souhaitez analyser plusieurs sites web sur une seule instance Matomo. Cet ID peut être trouvé sur l'espace administrateur Matomo."
+        config_instructions_tag_manager_html: "Ajouter l'URL du Tag Manager rend actif Matomo Tag Manager. Cet outil vous permet de suivre des évènements en particulier. Pour trouver l'URL rendez-vous sur l' \"Install Code section\" du Tag Manager. Attention à bien copier le bon contener et le bon environnement, car ils font varier l'URL."
     customers:
       index:
         new_customer: "Nouvel acheteur"
@@ -403,6 +407,7 @@ fr:
         footer_and_external_links: Pied de page et Liens Externes
         your_content: Votre contenu
         user_guide: Guide utilisateur
+        map: Carte
     enterprise_fees:
       index:
         title: "Marges et Commissions"
@@ -474,6 +479,7 @@ fr:
         line_number: "Ligne %{number} :"
         encoding_error: "Veuillez vérifier le paramètre de langue de votre code source et vous assurer qu'il est encodé en UTF-8"
         unexpected_error: "L'import de fichier produits à rencontré une erreur inconnue à l'ouverture du fichier : %{error_message}"
+        malformed_csv: "L'outil d'import a rencontré un fichier CSV avec le ou les problèmes suivants : %{error_message}"
       index:
         notice: "Notice"
         beta_notice: "Cette fonctionnalité est en mode bêta : il est possible que vous rencontriez des erreurs en l'utilisant. N'hésitez pas à contacter le support utilisateurs."
@@ -2134,7 +2140,7 @@ fr:
   report_header_customer_code: Code acheteur
   report_header_product: Produit
   report_header_product_properties: Propriétés / labels Produits
-  report_header_quantity: Nb commandé
+  report_header_quantity: Quantité
   report_header_max_quantity: Quantité Max
   report_header_variant: Variante
   report_header_variant_value: Nb Unités Variante
@@ -2193,7 +2199,7 @@ fr:
   report_header_eft_price: "TEF / Transfert Electronique (%{currency})"
   report_header_paypal_price: "Paypal (%{currency})"
   report_header_sku: Référence Produit
-  report_header_amount: Quantité
+  report_header_amount: Montant
   report_header_balance: Solde
   report_header_total_cost: "Coût Total"
   report_header_total_ordered: Total Commandé
@@ -2477,7 +2483,7 @@ fr:
           load_more_variants: "Afficher plus de variantes"
           load_all_variants: "Afficher toutes les variantes"
           select_all_variants: "Sélectionnez toutes les %{total_number_of_variants} variantes"
-          variants_loaded: " %{num_of_variants_loaded}sur %{total_number_of_variants} variantes"
+          variants_loaded: " %{num_of_variants_loaded} sur %{total_number_of_variants} variantes"
           loading_variants: "Chargement des variantes"
       tag_rules:
         shipping_method_tagged_top: "Les méthodes de livraison taguées"
@@ -2767,6 +2773,7 @@ fr:
   customer_details: "Informations acheteur"
   adjustments: "Ajustements"
   payments: "Paiements"
+  return_authorizations: "Autorisations de retours"
   payment: "Paiement"
   payment_method: "Méthode de paiement"
   shipment: "Livraison"
@@ -2785,7 +2792,7 @@ fr:
   new: "Nouveau"
   start: "Début"
   end: "Fin"
-  stop: "Arrêter"
+  stop: "Fin"
   first: "Début"
   previous: "Précédent"
   last: "Fin"
@@ -2836,6 +2843,14 @@ fr:
     new_payment: "Nouveau paiement"
     capture: "Payée"
     void: "Annulé"
+    login: "Se connecter"
+    password: "Mot de passe"
+    signature: "Signature"
+    solution: "Solution"
+    landing_page: "Page d'accueil (landing page)"
+    server: "Serveur"
+    test_mode: "Mode test"
+    logourl: "URL du logo"
     configurations: "Configurations"
     general_settings: "Configurations générales"
     site_name: "Nom du site"
@@ -2900,8 +2915,6 @@ fr:
     abbreviation: "Code"
     new_state: "Nouveau département"
     payment_methods: "Méthodes de paiement"
-    new_payment_method: "Nouvelle méthode de paiement"
-    provider: "Fournisseur"
     taxonomies: "Taxonomies"
     new_taxonomy: "Nouvelle taxonomie"
     back_to_taxonomies_list: "Retour à la liste des taxonomies"
@@ -2954,6 +2967,12 @@ fr:
     options: "Options"
     actions:
       update: "Mettre à jour"
+    shared:
+      error_messages:
+        errors_prohibited_this_record_from_being_saved:
+          one: "1 erreur n'a pas permis de sauvegarder:"
+          other: "%{count} erreurs ne permettent pas de sauvegarder:"
+        there_were_problems_with_the_following_fields: "Ils a eu des soucis avec les champs suivants"
     errors:
       messages:
         blank: "Champ obligatoire"
@@ -3113,10 +3132,26 @@ fr:
           back_end: "Visible pour l'administration uniquement"
           deactivation_warning: "Désactiver une méthode de livraison peut engendre sa disparition de la liste ici. Si vous souhaitez uniquement ne plus l'afficher pour l'acheteur, modifiez-là et utilisez l'option d'affichage \"visible pour l'administrateur uniquement\"."
       payment_methods:
+        index:
+          payment_methods: "Méthodes de paiement"
+          new_payment_method: "Nouvelle méthode de paiement"
+          name: "Produit/Variante"
+          products_distributor: "Distributeur"
+          provider: "Fournisseur"
+          environment: "Environnement"
+          display: "Afficher"
+          active: "Actif"
+          both: "Les deux"
+          front_end: "Visible par l'acheteur uniquement"
+          back_end: "Visible pour l'administration uniquement"
+          active_yes: "Oui"
+          active_no: "Non"
+          no_payment_methods_found: "Aucune méthode de paiement n'a été trouvée"
         new:
           new_payment_method: "Nouvelle méthode de paiement"
           back_to_payment_methods_list: "Retour à la liste des méthodes de paiement"
         edit:
+          new: "Nouveau"
           editing_payment_method: "Modification de la méthode de paiement"
           back_to_payment_methods_list: "Retour à la liste des méthodes de paiement"
         stripe_connect:
@@ -3132,6 +3167,21 @@ fr:
           account_id: Identifiant Compte
           business_name: Nom de l'entreprise
           charges_enabled: Frais activés
+        form:
+          name: "Produit/Variante"
+          description: "Description"
+          environment: "Environnement"
+          display: "Afficher"
+          active: "Actif"
+          active_yes: "Oui"
+          active_no: "Non"
+          both: "Visible par l'acheteur sur la boutique"
+          front_end: "Visible par l'acheteur uniquement"
+          back_end: "Visible pour l'administration uniquement"
+          tags: "Tags"
+          deactivation_warning: "Désactiver une méthode de paiement peut faire disparaitre cette méthode de votre liste. Si vous souhaitez uniquement la rendre invisible par l'acheteur, modifiez la méthode et utilisez l'affichage pour l'administrateur uniquement."
+        providers:
+          provider: "Fournisseur"
       payments:
         source_forms:
           stripe:
@@ -3234,6 +3284,7 @@ fr:
           display_as_placeholder: 'ex. 2 kg'
           display_name_placeholder: 'ex. Tomates'
         autocomplete:
+          out_of_stock: "En rupture de stock"
           producer_name: "Producteur"
           unit: "Unité"
       shared:
@@ -3299,9 +3350,14 @@ fr:
       invalid: invalide
     order_mailer:
       cancel_email:
-        customer_greeting: "Bonjour %{name} !"
-        instructions: "Votre commande a été ANNULÉE. Vous trouverez ci-dessous les informations concernant cette commande. "
-        order_summary_canceled: "Résumé de la commande [ANNULEE]"
+        customer_greeting: "Bonjour %{name},"
+        instructions_html: "Votre commande avec <strong>%{distributor}</strong>a été annulée. Merci de conserver cet email."
+        dont_cancel: "Si vous avez changé d'avis ou l'annulation a été réalisée par erreur, merci de contacter %{email}"
+        order_summary_canceled_html: "<strong>[ANNULATION] Commande #%{number}</strong>"
+        details: "Voici le détail des produits commandés:"
+        unpaid_order: "Votre commande n'avait pas été réglée, aucun remboursement n'a donc été effectué"
+        paid_order: "Votre commande avait été réglée, ainsi %{distributor}a remboursé la totalité du montant"
+        credit_order: "Votre commande avait été payée, votre compte a donc été crédité"
         subject: "Annulation de Commande"
       confirm_email:
         subject: "Confirmation de commande"
