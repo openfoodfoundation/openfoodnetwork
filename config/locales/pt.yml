@@ -21,6 +21,8 @@ pt:
         base: "Cartão de Crédito"
       order_cycle:
         orders_close_at: Data de fecho
+      variant_override:
+        count_on_hand: "Disponível"
     errors:
       models:
         spree/user:

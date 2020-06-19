@@ -13,7 +13,7 @@
     = stylesheet_link_tag "darkswarm/all"
     = csrf_meta_tags
 
-  %body.off-canvas{"ng-app" => "Darkswarm", style: 'background-image: url("/assets/tile-wide.png")' }
+  %body.off-canvas{"ng-app" => "Darkswarm", style: "background-image: url(#{image_path('tile-wide.png')})" }
     / [if lte IE 8]
       = render partial: "shared/ie_warning"
       = javascript_include_tag "iehack"

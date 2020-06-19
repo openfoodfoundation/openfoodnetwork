@@ -8,12 +8,7 @@
         .flash.notice= notice
       - if flash[:success]
         .flash.success= flash[:success]
-      #progress
-        .wrapper
-          #spinner
-          .progress-message
-            = t(:loading)
-            \...
+      = render partial: "spree/layouts/admin/progress_spinner"
 
       %header#header{"data-hook" => ""}
         .container

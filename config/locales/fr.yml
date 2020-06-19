@@ -479,6 +479,7 @@ fr:
         line_number: "Ligne %{number} :"
         encoding_error: "Veuillez vérifier le paramètre de langue de votre code source et vous assurer qu'il est encodé en UTF-8"
         unexpected_error: "L'import de fichier produits à rencontré une erreur inconnue à l'ouverture du fichier : %{error_message}"
+        malformed_csv: "L'outil d'import a rencontré un fichier CSV avec le ou les problèmes suivants : %{error_message}"
       index:
         notice: "Notice"
         beta_notice: "Cette fonctionnalité est en mode bêta : il est possible que vous rencontriez des erreurs en l'utilisant. N'hésitez pas à contacter le support utilisateurs."

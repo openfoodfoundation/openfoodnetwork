@@ -479,6 +479,7 @@ ca:
         line_number: "Línia %{number}:"
         encoding_error: "Comproveu la configuració de l'idioma del vostre fitxer d'origen i assegureu-vos que es desa amb la codificació UTF-8"
         unexpected_error: "La importació de productes ha detectat un error inesperat mentre obria el fitxer: %{error_message}"
+        malformed_csv: "La importació de producte ha trobat un CSV mal format: %{error_message}"
       index:
         notice: "Avís"
         beta_notice: "Aquesta funcionalitat continua en fase beta: podeu experimentar alguns errors mentre l'utilitzeu. No dubteu en contactar amb nosaltres."

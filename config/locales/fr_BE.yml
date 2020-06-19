@@ -9,7 +9,7 @@ fr_BE:
         shipment_state: Statut livraison
         completed_at: 'Passée à '
         number: N° commande
-        state: Province
+        state: Statut de la commande
         email: Adresse électronique acheteur
       spree/payment:
         amount: Montant
@@ -23,6 +23,8 @@ fr_BE:
         base: "Carte de crédit"
       order_cycle:
         orders_close_at: Date de fermeture
+      variant_override:
+        count_on_hand: "En stock"
     errors:
       models:
         spree/user:
@@ -1632,7 +1634,7 @@ fr_BE:
   sell_hubs_detail: "Créer un profil pour votre activité sur OFN en quelques minutes. A tout moment vous pourrez créer un comptoir en ligne pour vendre vos produits en direct aux acheteurs."
   sell_groups_detail: "Créer un répertoire sur mesure (regroupant différents producteurs et comptoirs) pour votre région ou votre organisation."
   sell_user_guide: "En savoir plus en explorant le guide d'utilisation."
-  sell_listing_price: "L'inscription à l'OFN est libre de contribution. Ouvrir et utiliser un comptoir sur OFN vous permet de gagner jusqu'à 500 € de ventes mensuelles, le service est gratuit les 6 premiers mois. Ensuite, une contribution entre 1 à 3% de votre chiffre de vente est demandée."
+  sell_listing_price: "L'inscription sur la plateforme d'OFN est libre de contribution. Le service est gratuit les 6 premiers mois. Ensuite, une contribution de 2% de votre chiffre de vente est demandée."
   sell_embed: "D’ici là, vous pouvez également participer au projet. \nSoit en co-créant la communauté belge et en contribuant à l’amélioration des fonctionnalité. Soit en mettant à disposition un local pour faciliter les livraisons ou un lieu pour former les utilisateurs·trices à la plateforme, etc. Soit en soutenant le projet par un don (déductible fiscalement à partir de 40€) à verser sur le compte d'Oxfam-Magasins du monde qui facilite la plateforme :  BE41 0682 2264 2410 – en communication Open Food Network Belgium."
   sell_ask_services: "Contactez-nous pour en savoir plus."
   shops_title: Comptoirs
@@ -2669,6 +2671,7 @@ fr_BE:
   customer_details: "Données client·e"
   adjustments: "Corrections"
   payments: "Paiements"
+  return_authorizations: "Autorisations de retour"
   payment: "Paiement"
   payment_method: "Méthode de paiement"
   shipment: "Envoi"
@@ -3014,12 +3017,12 @@ fr_BE:
           payment_methods: "Méthodes de paiement"
           new_payment_method: "Nouvelle méthode de paiement"
           name: "Nom"
-          products_distributor: "Distributeur·trice"
+          products_distributor: "Distributeur"
           provider: "Fournisseur"
           environment: "Environnement"
           display: "Ecran"
           active: "Actif"
-          both: "Tou·te·s les deux"
+          both: "Les deux"
           active_yes: "Oui"
           active_no: "Non"
         new:
@@ -3160,7 +3163,7 @@ fr_BE:
         sortable_header:
           name: "Nom"
           number: "N° commande"
-          state: "Province"
+          state: "Statut de la commande"
           payment_state: "Statut du Paiement"
           shipment_state: "Statut livraison"
           email: "Email"

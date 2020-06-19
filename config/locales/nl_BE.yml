@@ -23,6 +23,8 @@ nl_BE:
         base: "Kredietkaart"
       order_cycle:
         orders_close_at: Sluitingsdatum
+      variant_override:
+        count_on_hand: "Bij de Hand"
     errors:
       models:
         spree/user:

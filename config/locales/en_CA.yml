@@ -2741,6 +2741,7 @@ en_CA:
   customer_details: "Customer Details"
   adjustments: "Adjustments"
   payments: "Payments"
+  return_authorizations: "Return Authoriations"
   payment: "Payment"
   payment_method: "Payment Method"
   shipment: "Shipment"

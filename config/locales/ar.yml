@@ -23,6 +23,8 @@ ar:
         base: "بطاقة ائتمان"
       order_cycle:
         orders_close_at: تاريخ الاغلاق
+      variant_override:
+        count_on_hand: "متوفر"
     errors:
       models:
         spree/user:
@@ -2683,6 +2685,7 @@ ar:
   customer_details: "تفاصيل العميل"
   adjustments: "التعديلات"
   payments: "المدفوعات"
+  return_authorizations: "عودة التراخيص"
   payment: "دفعة"
   payment_method: "طريقة الدفع او السداد"
   shipment: "الشحنة"

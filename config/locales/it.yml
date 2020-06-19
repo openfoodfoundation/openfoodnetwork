@@ -23,6 +23,8 @@ it:
         base: "Carta di Credito"
       order_cycle:
         orders_close_at: Data chiusura
+      variant_override:
+        count_on_hand: "Disponibile"
     errors:
       models:
         spree/user:
@@ -156,15 +158,15 @@ it:
       total: Un totale di %{count} sottoscrizioni sono stati contrassegnati per l'elaborazione automatica.
       success_zero: Di questi, nessuno è stato elaborato con successo.
       success_some: Di questi, %{count} sono stati elaborati con successo.
-      success_all: Tutti sono stati elaborati con successo.
+      success_all: Sono stati elaborati tutti con successo.
       issues: Qui sotto i dettagli dei problemi riscontrati.
     summary_detail:
       no_message_provided: Nessun messaggio di errore fornito
       changes:
-        title: Scorte insufficienti (%{count} gentili richieste)
-        explainer: Queste gentili richieste sono state elaborate, ma la quantità richiesta di alcuni prodotti non è disponibile
+        title: Scorte insufficienti (%{count} ordini)
+        explainer: Questi ordini sono stati processati ma la quantità richiesta di alcuni prodotti non è disponibile
       empty:
-        title: Nessuna scorta (%{count} gentili richieste)
+        title: Nessuna scorta (%{count} ordini)
         explainer: Queste gentili richieste non sono state confermate perchè alcuni prodotti richiesti non sono disponibili.
       complete:
         title: Già elaborate (%{count} gentili richieste)
@@ -180,7 +182,7 @@ it:
         explainer: L'elaborazione automatica di queste gentili richieste non è riuscita per una ragione sconosciuta. Questo non dovrebbe accadere, ti preghiamo di contattarci se visualizzi questo messaggio.
   home: "OFN"
   title: Open Food Network
-  welcome_to: 'Benvenuto su'
+  welcome_to: 'Benvenuto su '
   site_meta_description: "Cominciamo da zero. Con i produttori e gli allevatori pronti a raccontare le loro storie, sinceramente e orgogliosamente. Con i distributori pronti a connettere le persone con i prodotti in modo giusto ed equo. Con i compratori che credono che migliori decisioni per l'acquisto settimanale possano..."
   search_by_name: Cerca per nome o zona...
   producers_join: I Produttori sono ora invitati ad unirsi ad Open Food Network
@@ -368,7 +370,10 @@ it:
         title: "Impostazioni Matomo"
         matomo_url: "URL Matomo"
         matomo_site_id: "Site ID Matomo"
+        matomo_tag_manager_url: "Matomo Tag Manager URL"
+        info_html: "Matomo è una applicazione Analitica per Web e Mobile. Puoi ospitare Matomo in locale o utilizzare un servizio ospitato su cloud. Visita <a href='http://matomo.org' target='_blank'>matomo.org</a> per maggiori informazioni."
         config_instructions_html: "Qui è possibile configurare l'integrazione OFN Matomo. L'URL di Matomo qui sotto dovrebbe puntare l'istanza di Matomo a cui saranno inviate le informazioni di monitoraggio dell'utente; se lasciato vuoto, il monitoraggio dell'utente da parte di Matomo sarà disabilitato. Il campo Site ID non è obbligatorio ma è utile se si sta tracciando più di un sito web su una singola istanza di Matomo; si può trovare sulla console dell'istanza di Matomo. "
+        config_instructions_tag_manager_html: "La configurazione di Matomo Tag Manager URL abilita Matomo Tag Manager. Questo strumento consente di impostare eventi di analisi. Il Matomo Tag Manager URL è copiato dalla sezione Install Code di Matomo Tag Manager. Assicurati di selezionare il giusto container e l'ambiente perché queste opzioni modificano l'URL."
     customers:
       index:
         new_customer: "Nuovo Cliente"
@@ -444,7 +449,7 @@ it:
         property_name: "Nome della Proprietà"
         inherited_property: "Proprietà Ereditata"
       variants:
-        infinity: "Infinito..."
+        infinity: "Infinito"
         to_order_tip: "Gli articoli messi in ordine non hanno un livello di stock impostato, come ad esempio il Pane fresco su ordinazione."
       back_to_products_list: "Indietro alla lista dei prodotti"
       editing_product: "Modifica prodotto"
@@ -474,6 +479,7 @@ it:
         line_number: "Linea %{number}:"
         encoding_error: "Controlla l'impostazione della lingua del file sorgente e assicurati che sia salvato con la codifica UTF-8."
         unexpected_error: "L'importazione del prodotto ha incontrato un errore imprevisto durante l'apertura del file:%{error_message}"
+        malformed_csv: "L'Importazione Prodotti ha incontro un CSV non valido: %{error_message}"
       index:
         notice: "Avviso"
         beta_notice: "Questa opzione è ancora in fase beta: potresti incontrare errori mentre la usi. Per favore non esitare a contattare il servizio di supporto."
@@ -1440,12 +1446,12 @@ it:
   email_signature: "Il team di %{sitename}"
   email_confirm_customer_greeting: "Ciao %{name},"
   email_confirm_customer_intro_html: "Grazie per aver acquistato presso <strong>%{distributor}</strong>!"
-  email_confirm_customer_number_html: "Conferma dell'Ordine <strong>#%{number}</strong>"
+  email_confirm_customer_number_html: "Conferma ordine <strong>#%{number}</strong>"
   email_confirm_customer_details_html: "Ecco i dettagli del tuo ordine da <strong>%{distributor}</strong>:"
   email_confirm_customer_signoff: "Cordiali saluti,"
   email_confirm_shop_greeting: "Ciao %{name},"
   email_confirm_shop_order_html: "Ben fatto! Hai un nuovo ordine per <strong>%{distributor}</strong>!"
-  email_confirm_shop_number_html: "Conferma dell'Ordine <strong>#%{number}</strong>"
+  email_confirm_shop_number_html: "Conferma ordine <strong>#%{number}</strong>"
   email_order_summary_item: "Articolo"
   email_order_summary_quantity: "Qtà"
   email_order_summary_sku: "SKU"
@@ -1483,7 +1489,7 @@ it:
   email_shipping_collection_instructions: "Istruzioni per la distribuzione:"
   email_special_instructions: "Tue note:"
   email_signup_greeting: Ciao!
-  email_signup_welcome: "Benvenuto a %{sitename}!"
+  email_signup_welcome: "Benvenuto su %{sitename}!"
   email_signup_confirmed_email: "Grazie di aver confermato la tua mail."
   email_signup_shop_html: "Puoi effettuare il log in qui: %{link}."
   email_signup_text: "Grazie per esserti unito alla rete. Se sei un cliente, non vediamo l'ora di introdurti a molti produttori fantastici, distributori di cibo spettacolari e cibo delizioso! Se sei un produttore o un'impresa alimentare, siamo entusiasti di averti come parte della rete."
@@ -1672,7 +1678,7 @@ it:
   orders_oc_expired_text_link: "o vedi gli altri cicli d'ordine disponibili per questo hub"
   orders_oc_expired_email: "Email:"
   orders_oc_expired_phone: "Telefono:"
-  orders_show_title: Conferma dell'ordine
+  orders_show_title: Conferma Ordine
   orders_show_time: Ordine pronto
   orders_show_order_number: "Gentile richiesta #%{number}"
   orders_show_cancelled: Annullato
@@ -1703,7 +1709,7 @@ it:
   remember_me: Ricordami
   are_you_sure: "Sei sicuro?"
   orders_open: Richieste aperte
-  closing: "In chiusura"
+  closing: "In chiusura "
   going_back_to_home_page: "Reindirizzamento alla homepage"
   creating: In creazione
   updating: In aggiornamento
@@ -2741,6 +2747,7 @@ it:
   customer_details: "Dettagli Cliente"
   adjustments: "Regolazioni"
   payments: "Pagamenti"
+  return_authorizations: "Authorizationi reso"
   payment: "Pagamento"
   payment_method: "Metodo di pagamento"
   shipment: "Spedizione"
@@ -2934,6 +2941,12 @@ it:
     options: "Opzioni"
     actions:
       update: "Aggiorna"
+    shared:
+      error_messages:
+        errors_prohibited_this_record_from_being_saved:
+          one: "1 errore ha proibito il salvataggio di questo record:"
+          other: "%{count} errori hanno proibito il salvataggio di questo record:"
+        there_were_problems_with_the_following_fields: "Si sono verificati problemi con i seguenti campi"
     errors:
       messages:
         blank: "non può essere lasciato vuoto"
@@ -3321,7 +3334,7 @@ it:
         credit_order: "Il tuo ordine è stato pagato, quindi il tuo acconto è stato accreditato"
         subject: "Cancellazione dell'ordine"
       confirm_email:
-        subject: "Conferma dell'ordine"
+        subject: "Conferma Ordine"
       invoice_email:
         hi: "Ciao %{name}"
         invoice_attached_text: 'Aggiunge una fattura per il tuo recente ordine di '
