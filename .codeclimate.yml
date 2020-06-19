@@ -16,6 +16,10 @@ plugins:
         enabled: false
       PropertySortOrder:
         enabled: false
+      StringQuotes:
+        enabled: false
+      DeclarationOrder:
+        enabled: false
   duplication:
     enabled: true
     exclude_patterns:

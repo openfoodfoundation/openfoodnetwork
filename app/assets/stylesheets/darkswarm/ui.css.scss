@@ -124,7 +124,12 @@ button.success, .button.success {
   }
 }
 
-button.large {
+a.button.large {
+  line-height: 2.75em;
+}
+
+button.large,
+a.button.large {
   height: 3em;
   font-size: 1em;
   color: $white;
@@ -157,4 +162,8 @@ button.large {
 .no-gutter {
   padding-right: 0;
   padding-left: 0;
+}
+
+.disable-scroll {
+  overflow: hidden;
 }

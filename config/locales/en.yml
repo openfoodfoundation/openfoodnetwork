@@ -1216,13 +1216,18 @@ en:
     menu:
       cart:
         cart: "Cart"
+      cart_sidebar:
+        checkout: "Checkout"
+        edit_cart: "Edit cart"
+        items_in_cart_singular: "%{num} item in your cart"
+        items_in_cart_plural: "%{num} items in your cart"
+        close: "Close"
+        cart_empty: "Your cart is empty"
+        take_me_shopping: "Take me shopping!"
       signed_in:
         profile: "Profile"
       mobile_menu:
         cart: "Cart"
-      joyride:
-        checkout: "Checkout now"
-        already_ordered_products: "Already ordered in this order cycle"
     register_call:
       selling_on_ofn: "Interested in getting on the Open Food Network?"
       register: "Register here"

@@ -11,88 +11,7 @@
 @import "shop-taxon-flag";
 @import "shop-popovers";
 
-$sidebar-small-width: 75%;
-$sidebar-medium-width: 65%;
-$sidebar-large-width: 45%;
-$sidebar-footer-height: 5em;
-
 .darkswarm {
-  .shop-filters-sidebar {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-
-    .background {
-      position: fixed;
-      top: 0;
-      right: 0;
-      z-index: 200;
-      height: 100%;
-      width: 100%;
-      background-color: $shop-sidebar-overlay;
-      opacity: 0;
-      transition: opacity $transition-sidebar;
-    }
-
-    &.shown {
-      .background {
-        opacity: 1;
-      }
-
-      .sidebar, .sidebar-footer {
-        margin-right: 0;
-      }
-    }
-
-    .sidebar {
-      position: fixed;
-      top: 0;
-      right: 0;
-      z-index: 210;
-      height: 100%;
-      width: $sidebar-large-width;
-      margin-right: -$sidebar-large-width;
-      background-color: rgba($white, 0.95);
-      padding: 1em;
-      transition: margin $transition-sidebar;
-      overflow-y: scroll;
-
-      .property-selectors {
-        margin-bottom: $sidebar-footer-height + 2em;
-      }
-    }
-
-    .sidebar-footer {
-      background-color: $grey-800;
-      width: $sidebar-large-width;
-      margin-right: -$sidebar-large-width;
-      height: $sidebar-footer-height;
-      position: fixed;
-      bottom: 0;
-      right: 0;
-      transition: margin $transition-sidebar;
-      padding: 1em;
-
-      button {
-        width: 48%;
-      }
-    }
-
-    @include breakpoint(tablet) {
-      .sidebar, .sidebar-footer {
-        width: $sidebar-medium-width;
-        margin-right: -$sidebar-medium-width;
-      }
-    }
-
-    @include breakpoint(mobile) {
-      .sidebar, .sidebar-footer {
-        width: $sidebar-small-width;
-        margin-right: -$sidebar-small-width;
-      }
-    }
-  }
-
   products {
     display: block;
 
@@ -205,11 +124,13 @@ $sidebar-footer-height: 5em;
 
   .open-shop-message {
     a {
-      color: #0096ad;
+      color: $teal-500;
 
-      &:hover, &:focus, &:active {
+      &:hover,
+      &:focus,
+      &:active {
         text-decoration: none;
-        color: #4aadbd;
+        color: $teal-400;
       }
     }
   }
@@ -231,10 +152,10 @@ $sidebar-footer-height: 5em;
     }
   }
 
-  .warning-sign {
-    margin: 0 10px 0 5px;
-    display: inline-block;
-    line-height: 1.9rem;
+.warning-sign {
+  margin: 0 10px 0 5px;
+  display: inline-block;
+  line-height: 1.9rem;
 
     strong {
       color: $grey-650;
@@ -254,5 +175,11 @@ $sidebar-footer-height: 5em;
       transform: rotate(-315deg);
       width: 23px;
     }
+  }
+}
+
+.shop-filters-sidebar {
+  .property-selectors {
+    margin-bottom: $sidebar-footer-height + 2em;
   }
 }

@@ -50,4 +50,13 @@ module ShopHelper
   def no_open_order_cycles?
     @no_open_order_cycles ||= @order_cycles&.empty?
   end
+
+  def show_shopping_cta?
+    return false if current_page?(main_app.shops_path) && current_distributor.blank?
+
+    return false if current_distributor.present? &&
+                    current_page?(main_app.enterprise_shop_path(current_distributor))
+
+    true
+  end
 end
