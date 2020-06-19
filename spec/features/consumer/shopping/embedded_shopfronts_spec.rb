@@ -45,7 +45,7 @@ feature "Using embedded shopfront functionality", js: true do
 
     it "allows shopping and checkout" do
       on_embedded_page do
-        fill_in "variants[#{variant.id}]", with: 1
+        click_add_to_cart
 
         edit_cart
 
