@@ -73,7 +73,7 @@ class OrderFactory
   end
 
   def delivery_shipping_method_id
-    @distributor.shipping_methods.find_by(name: "Home delivery").id
+    @distributor.shipping_methods.find_by(name: "Home delivery Fredo's Farm Hub").id
   end
 
   def order_address
