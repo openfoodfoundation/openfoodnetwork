@@ -69,7 +69,6 @@ module Api
 
         it "retrieves a list of orders with appropriate attributes,
             including line items with appropriate attributes" do
-
           returns_orders(json_response)
         end
 
