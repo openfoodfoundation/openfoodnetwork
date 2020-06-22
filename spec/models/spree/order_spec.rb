@@ -658,7 +658,7 @@ describe Spree::Order do
         end
 
         it "does not attempt to update such adjustments" do
-          order.update_attributes(line_items_attributes: [{ id: order.line_items.first.id, quantity: 0 }])
+          order.update(line_items_attributes: [{ id: order.line_items.first.id, quantity: 0 }])
 
           # Check if fees got updated
           order.reload
@@ -685,7 +685,7 @@ describe Spree::Order do
 
       it "removes transaction fees" do
         # Change the payment method
-        order.payments.first.update_attributes(payment_method_id: payment_method.id)
+        order.payments.first.update(payment_method_id: payment_method.id)
         order.save
 
         # Check if fees got updated
@@ -780,7 +780,7 @@ describe Spree::Order do
       let!(:order_cycle) { proxy_order.order_cycle }
 
       context "and order_cycle has no order_close_at set" do
-        before { order.order_cycle.update_attributes(orders_close_at: nil) }
+        before { order.order_cycle.update(orders_close_at: nil) }
 
         it "requires a payment" do
           expect(order.payment_required?).to be true
@@ -788,7 +788,7 @@ describe Spree::Order do
       end
 
       context "and the order_cycle has closed" do
-        before { order.order_cycle.update_attributes(orders_close_at: 5.minutes.ago) }
+        before { order.order_cycle.update(orders_close_at: 5.minutes.ago) }
 
         it "returns the payments on the order" do
           expect(order.payment_required?).to be true
@@ -796,7 +796,7 @@ describe Spree::Order do
       end
 
       context "and the order_cycle has not yet closed" do
-        before { order.order_cycle.update_attributes(orders_close_at: 5.minutes.from_now) }
+        before { order.order_cycle.update(orders_close_at: 5.minutes.from_now) }
 
         it "returns an empty array" do
           expect(order.payment_required?).to be false

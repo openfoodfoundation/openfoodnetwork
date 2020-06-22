@@ -222,7 +222,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
       context "when the distributor has no available payment/shipping methods" do
         before do
-          distributor.update_attributes shipping_methods: [], payment_methods: []
+          distributor.update shipping_methods: [], payment_methods: []
         end
 
         # Display only shops are a very useful hack that is described in the user guide
@@ -310,7 +310,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
       end
 
       it "lets us add a quantity greater than on_hand value if product is on_demand" do
-        variant.update_attributes on_hand: 5, on_demand: true
+        variant.update on_hand: 5, on_demand: true
         visit shop_path
 
         fill_in "variants[#{variant.id}]", with: '10'
@@ -319,7 +319,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
       end
 
       it "alerts us when we enter a quantity greater than the stock available" do
-        variant.update_attributes on_hand: 5
+        variant.update on_hand: 5
         visit shop_path
 
         accept_alert 'Insufficient stock available, only 5 remaining' do
@@ -333,7 +333,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
         it "stops the attempt, shows an error message and refreshes the products asynchronously" do
           expect(page).to have_content "Product"
 
-          variant.update_attributes! on_hand: 0
+          variant.update! on_hand: 0
 
           # -- Messaging
           expect(page).to have_input "variants[#{variant.id}]"
@@ -360,7 +360,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
         it 'does not show out of stock modal if product is on_demand' do
           expect(page).to have_content "Product"
 
-          variant.update_attributes! on_hand: 0, on_demand: true
+          variant.update! on_hand: 0, on_demand: true
 
           expect(page).to have_input "variants[#{variant.id}]"
           fill_in "variants[#{variant.id}]", with: '1'
@@ -376,7 +376,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
             # -- Place in cart so we can set max_quantity, then make out of stock
             fill_in "variants[#{variant.id}]", with: '1'
             wait_until { !cart_dirty }
-            variant.update_attributes! on_hand: 0
+            variant.update! on_hand: 0
 
             # -- Messaging
             fill_in "variant_attributes[#{variant.id}][max_quantity]", with: '1'
@@ -403,7 +403,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
             fill_in "variants[#{variant.id}]", with: '2'
             wait_until { !cart_dirty }
 
-            variant.update_attributes! on_hand: 1
+            variant.update! on_hand: 1
 
             fill_in "variants[#{variant2.id}]", with: '1'
             wait_until { !cart_dirty }
@@ -421,7 +421,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
               fill_in "variants[#{variant.id}]", with: '2'
               fill_in "variant_attributes[#{variant.id}][max_quantity]", with: '3'
               wait_until { !cart_dirty }
-              variant.update_attributes! on_hand: 1
+              variant.update! on_hand: 1
 
               fill_in "variants[#{variant2.id}]", with: '1'
               wait_until { !cart_dirty }

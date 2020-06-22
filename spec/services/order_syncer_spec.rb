@@ -175,7 +175,7 @@ describe OrderSyncer do
 
       context "when the bill_address on the order doesn't match that on the subscription" do
         before do
-          order.bill_address.update_attributes!(firstname: "Jane")
+          order.bill_address.update!(firstname: "Jane")
           order.update!
         end
 
@@ -220,7 +220,7 @@ describe OrderSyncer do
 
       context "when the bill_address on the order doesn't match that on the subscription" do
         before do
-          order.bill_address.update_attributes!(firstname: "Jane")
+          order.bill_address.update!(firstname: "Jane")
           order.update!
         end
 
@@ -348,7 +348,7 @@ describe OrderSyncer do
 
       context "when the ship address on the order doesn't match that on the subscription" do
         before do
-          order.ship_address.update_attributes(firstname: "Jane")
+          order.ship_address.update(firstname: "Jane")
           order.update!
         end
 
@@ -441,7 +441,7 @@ describe OrderSyncer do
       before { variant.update_attribute(:on_hand, 3) }
 
       context "when the changed line_item quantity matches the new quantity on the subscription line item" do
-        before { changed_line_item.update_attributes(quantity: 3) }
+        before { changed_line_item.update(quantity: 3) }
 
         it "does not change the quantity, and doesn't add the order to order_update_issues" do
           expect(order.reload.total.to_f).to eq 99.95
@@ -454,7 +454,7 @@ describe OrderSyncer do
       end
 
       context "when the changed line_item quantity doesn't match the new quantity on the subscription line item" do
-        before { changed_line_item.update_attributes(quantity: 2) }
+        before { changed_line_item.update(quantity: 2) }
 
         it "does not change the quantity, and adds the order to order_update_issues" do
           expect(order.reload.total.to_f).to eq 79.96

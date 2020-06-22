@@ -123,8 +123,8 @@ feature "full-page cart", js: true do
         }
 
         before do
-          product_with_fee.variants.first.update_attributes(unit_value: '2000.0')
-          product_with_tax.variants.first.update_attributes(unit_value: '5000.0')
+          product_with_fee.variants.first.update(unit_value: '2000.0')
+          product_with_tax.variants.first.update(unit_value: '5000.0')
 
           add_enterprise_fee admin_fee
 
@@ -167,7 +167,7 @@ feature "full-page cart", js: true do
 
       describe "when on_hand is zero but variant is on demand" do
         it "allows updating the quantity" do
-          variant.update_attributes!(on_hand: 0, on_demand: true)
+          variant.update!(on_hand: 0, on_demand: true)
           visit main_app.cart_path
 
           fill_in "order_line_items_attributes_0_quantity", with: '5'
@@ -179,8 +179,8 @@ feature "full-page cart", js: true do
         it "prevents user from entering invalid values" do
           add_product_to_cart order, product_with_fee
 
-          variant.update_attributes!(on_hand: 2, on_demand: false)
-          variant2.update_attributes!(on_hand: 3, on_demand: false)
+          variant.update!(on_hand: 2, on_demand: false)
+          variant2.update!(on_hand: 3, on_demand: false)
           visit main_app.cart_path
 
           accept_alert 'Insufficient stock available, only 2 remaining' do
@@ -200,10 +200,10 @@ feature "full-page cart", js: true do
 
         it "shows the quantities saved, not those submitted" do
           # Given we load the page with 3 on hand, then the number available drops to 2
-          variant.update_attributes! on_demand: false
-          variant.update_attributes! on_hand: 3
+          variant.update! on_demand: false
+          variant.update! on_hand: 3
           visit main_app.cart_path
-          variant.update_attributes! on_hand: 2
+          variant.update! on_hand: 2
 
           accept_alert do
             fill_in "order_line_items_attributes_0_quantity", with: '4'
@@ -217,7 +217,7 @@ feature "full-page cart", js: true do
         describe "full UX for correcting selected quantities with insufficient stock" do
           before do
             add_product_to_cart order, product_with_tax, quantity: 5
-            variant.update_attributes! on_hand: 4, on_demand: false
+            variant.update! on_hand: 4, on_demand: false
           end
 
           it "gives clear user feedback during the correcting process" do

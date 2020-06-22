@@ -52,7 +52,7 @@ module Admin
         @subscription.proxy_orders.placed_and_open.each(&:cancel)
       end
 
-      @subscription.update_attributes(paused_at: Time.zone.now)
+      @subscription.update(paused_at: Time.zone.now)
       render_as_json @subscription
     end
 

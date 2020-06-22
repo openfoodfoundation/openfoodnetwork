@@ -32,7 +32,7 @@ module Api
     def update
       authorize! :update, Spree::Product
       @product = find_product(params[:id])
-      if @product.update_attributes(params[:product])
+      if @product.update(params[:product])
         render json: @product, serializer: Api::Admin::ProductSerializer, status: :ok
       else
         invalid_resource!(@product)

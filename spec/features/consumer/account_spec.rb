@@ -76,7 +76,7 @@ feature '
 
       context "when there is at least one changeable order" do
         before do
-          distributor1.update_attributes(allow_order_changes: true)
+          distributor1.update(allow_order_changes: true)
         end
 
         it "shows such orders in a section labelled 'Open Orders'" do

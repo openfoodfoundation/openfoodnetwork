@@ -45,7 +45,7 @@ class CheckoutController < Spree::StoreController
 
   def update
     params_adapter = Checkout::FormDataAdapter.new(permitted_params, @order, spree_current_user)
-    return update_failed unless @order.update_attributes(params_adapter.params[:order])
+    return update_failed unless @order.update(params_adapter.params[:order])
 
     fire_event('spree.checkout.update')
 

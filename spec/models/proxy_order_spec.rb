@@ -12,7 +12,7 @@ describe ProxyOrder, type: :model do
 
     context "when the order cycle is not yet closed" do
       let(:proxy_order) { create(:proxy_order, subscription: subscription, order: order, order_cycle: order_cycle) }
-      before { order_cycle.update_attributes(orders_open_at: 1.day.ago, orders_close_at: 3.days.from_now) }
+      before { order_cycle.update(orders_open_at: 1.day.ago, orders_close_at: 3.days.from_now) }
 
       context "and an order has not been initialised" do
         let(:order) { nil }
@@ -50,7 +50,7 @@ describe ProxyOrder, type: :model do
 
     context "when the order cycle is already closed" do
       let(:proxy_order) { create(:proxy_order, subscription: subscription, order: order, order_cycle: order_cycle) }
-      before { order_cycle.update_attributes(orders_open_at: 3.days.ago, orders_close_at: 1.minute.ago) }
+      before { order_cycle.update(orders_open_at: 3.days.ago, orders_close_at: 1.minute.ago) }
 
       context "and an order has not been initialised" do
         let(:order) { nil }
@@ -91,7 +91,7 @@ describe ProxyOrder, type: :model do
     end
 
     context "when the order cycle is not yet closed" do
-      before { order_cycle.update_attributes(orders_open_at: 1.day.ago, orders_close_at: 3.days.from_now) }
+      before { order_cycle.update(orders_open_at: 1.day.ago, orders_close_at: 3.days.from_now) }
 
       context "and the order has not been initialised" do
         let(:order) { nil }
@@ -131,7 +131,7 @@ describe ProxyOrder, type: :model do
     end
 
     context "when the order cycle is already closed" do
-      before { order_cycle.update_attributes(orders_open_at: 3.days.ago, orders_close_at: 1.minute.ago) }
+      before { order_cycle.update(orders_open_at: 3.days.ago, orders_close_at: 1.minute.ago) }
 
       context "and the order has not been initialised" do
         let(:order) { nil }
@@ -188,7 +188,7 @@ describe ProxyOrder, type: :model do
       let(:existing_order) { create(:order) }
 
       before do
-        proxy_order.update_attributes(order: existing_order)
+        proxy_order.update(order: existing_order)
       end
 
       it "returns the existing order" do

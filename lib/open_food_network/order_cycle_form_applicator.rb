@@ -83,7 +83,7 @@ module OpenFoodNetwork
 
       remove_unauthorized_exchange_attributes(exchange, attrs)
       variant_ids = attrs.delete :variant_ids
-      exchange.update_attributes!(attrs)
+      exchange.update!(attrs)
       ExchangeVariantBulkUpdater.new(exchange).update!(variant_ids) unless variant_ids.nil?
 
       @touched_exchanges << exchange

@@ -531,13 +531,13 @@ module Spree
         let!(:ot_volume) { create(:option_type, name: 'unit_volume', presentation: 'Volume') }
 
         it "removes the old option type and assigns the new one" do
-          p.update_attributes!(variant_unit: 'volume', variant_unit_scale: 0.001)
+          p.update!(variant_unit: 'volume', variant_unit_scale: 0.001)
           expect(p.option_types).to eq([ot_volume])
         end
 
         it "does not remove and re-add the option type if it is not changed" do
           expect(p.option_types).to receive(:delete).never
-          p.update_attributes!(name: 'foo')
+          p.update!(name: 'foo')
         end
 
         it "removes the related option values from all its variants and replaces them" do
@@ -548,7 +548,7 @@ module Spree
           expect(v.option_values.map(&:name).include?("1L")).to eq(false)
           expect(v.option_values.map(&:name).include?("1g")).to eq(true)
           expect {
-            p.update_attributes!(variant_unit: 'volume', variant_unit_scale: 0.001)
+            p.update!(variant_unit: 'volume', variant_unit_scale: 0.001)
           }.to change(p.master.option_values(true), :count).by(0)
           v.reload
           expect(v.option_values.map(&:name).include?("1L")).to eq(true)
@@ -557,13 +557,13 @@ module Spree
 
         it "removes the related option values from its master variant and replaces them" do
           ot = Spree::OptionType.find_by name: 'unit_weight'
-          p.master.update_attributes!(unit_value: 1)
+          p.master.update!(unit_value: 1)
           p.reload
 
           expect(p.master.option_values.map(&:name).include?("1L")).to eq(false)
           expect(p.master.option_values.map(&:name).include?("1g")).to eq(true)
           expect {
-            p.update_attributes!(variant_unit: 'volume', variant_unit_scale: 0.001)
+            p.update!(variant_unit: 'volume', variant_unit_scale: 0.001)
           }.to change(p.master.option_values(true), :count).by(0)
           p.reload
           expect(p.master.option_values.map(&:name).include?("1L")).to eq(true)

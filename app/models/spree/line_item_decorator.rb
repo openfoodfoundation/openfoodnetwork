@@ -87,7 +87,7 @@ Spree::LineItem.class_eval do
     scoper.scope(variant)
     return if variant.on_demand
 
-    update_attributes!(quantity: variant.on_hand) if quantity > variant.on_hand
+    update!(quantity: variant.on_hand) if quantity > variant.on_hand
   end
 
   def has_tax?

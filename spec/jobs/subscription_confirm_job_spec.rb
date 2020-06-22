@@ -27,22 +27,22 @@ describe SubscriptionConfirmJob do
     end
 
     it "returns proxy orders for paused subscriptions" do
-      subscription.update_attributes!(paused_at: 1.minute.ago)
+      subscription.update!(paused_at: 1.minute.ago)
       expect(proxy_orders).to include proxy_order
     end
 
     it "returns proxy orders for cancelled subscriptions" do
-      subscription.update_attributes!(canceled_at: 1.minute.ago)
+      subscription.update!(canceled_at: 1.minute.ago)
       expect(proxy_orders).to include proxy_order
     end
 
     it "ignores proxy orders where the OC closed more than 1 hour ago" do
-      proxy_order.update_attributes!(order_cycle_id: order_cycle2.id)
+      proxy_order.update!(order_cycle_id: order_cycle2.id)
       expect(proxy_orders).to_not include proxy_order
     end
 
     it "ignores cancelled proxy orders" do
-      proxy_order.update_attributes!(canceled_at: 5.minutes.ago)
+      proxy_order.update!(canceled_at: 5.minutes.ago)
       expect(proxy_orders).to_not include proxy_order
     end
 
@@ -53,17 +53,17 @@ describe SubscriptionConfirmJob do
     end
 
     it "ignores proxy orders without an associated order" do
-      proxy_order.update_attributes!(order_id: nil)
+      proxy_order.update!(order_id: nil)
       expect(proxy_orders).to_not include proxy_order
     end
 
     it "ignores proxy orders that haven't been placed yet" do
-      proxy_order.update_attributes!(placed_at: nil)
+      proxy_order.update!(placed_at: nil)
       expect(proxy_orders).to_not include proxy_order
     end
 
     it "ignores proxy orders that have already been confirmed" do
-      proxy_order.update_attributes!(confirmed_at: 1.second.ago)
+      proxy_order.update!(confirmed_at: 1.second.ago)
       expect(proxy_orders).to_not include proxy_order
     end
 

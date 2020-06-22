@@ -69,7 +69,7 @@ module Spree
           end
 
           context "as a user that manages the existing stripe account holder" do
-            before { enterprise2.update_attributes!(owner_id: user.id) }
+            before { enterprise2.update!(owner_id: user.id) }
 
             it "allows the stripe account holder to be updated" do
               spree_put :update, params

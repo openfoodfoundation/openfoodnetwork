@@ -81,7 +81,7 @@ module Spree
           @update_children = true
         end
 
-        if @taxon.update_attributes(taxon_params)
+        if @taxon.update(taxon_params)
           flash[:success] = flash_message_for(@taxon, :successfully_updated)
         end
 

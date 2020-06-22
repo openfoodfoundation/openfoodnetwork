@@ -105,7 +105,7 @@ feature "Order Management", js: true do
     let!(:item3) { create(:line_item, order: order) }
 
     before do
-      order.shipment.shipping_method.calculator.update_attributes(preferred_amount: 5.0)
+      order.shipment.shipping_method.calculator.update(preferred_amount: 5.0)
       order.save
       order.reload
 
@@ -119,7 +119,7 @@ feature "Order Management", js: true do
 
     context "when the distributor doesn't allow changes to be made to orders" do
       before do
-        order.distributor.update_attributes(allow_order_changes: false)
+        order.distributor.update(allow_order_changes: false)
       end
 
       it "doesn't show form elements for editing the order" do
@@ -136,7 +136,7 @@ feature "Order Management", js: true do
         setup_email
       end
       before do
-        order.distributor.update_attributes(allow_order_changes: true)
+        order.distributor.update(allow_order_changes: true)
       end
 
       it "allows quantity to be changed, items to be removed and the order to be cancelled" do

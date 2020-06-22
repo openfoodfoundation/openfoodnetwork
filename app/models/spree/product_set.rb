@@ -99,7 +99,7 @@ class Spree::ProductSet < ModelSet
   def create_or_update_variant(product, variant_attributes)
     variant = find_model(product.variants_including_master, variant_attributes[:id])
     if variant.present?
-      variant.update_attributes(variant_attributes.except(:id))
+      variant.update(variant_attributes.except(:id))
     else
       create_variant(product, variant_attributes)
     end

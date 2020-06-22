@@ -32,7 +32,7 @@ module Spree
     end
 
     def set_absolute_included_tax!(tax)
-      update_attributes! included_tax: tax.round(2)
+      update! included_tax: tax.round(2)
     end
 
     def display_included_tax

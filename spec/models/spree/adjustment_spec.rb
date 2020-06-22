@@ -117,7 +117,7 @@ module Spree
           end
 
           it "records 0% tax on shipments when the distributor does not charge sales tax" do
-            order.distributor.update_attributes! charges_sales_tax: false
+            order.distributor.update! charges_sales_tax: false
             order.shipments = [shipment]
 
             expect(order.adjustments.first.included_tax).to eq(0)

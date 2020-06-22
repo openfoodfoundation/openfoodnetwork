@@ -30,7 +30,7 @@ module Api
         @shipment.adjustment.open
       end
 
-      @shipment.update_attributes(params[:shipment])
+      @shipment.update(params[:shipment])
 
       if unlock == 'yes'
         @shipment.adjustment.close
@@ -88,7 +88,7 @@ module Api
 
     def find_and_update_shipment
       @shipment = @order.shipments.find_by!(number: params[:id])
-      @shipment.update_attributes(params[:shipment])
+      @shipment.update(params[:shipment])
       @shipment.reload
     end
 

@@ -47,7 +47,7 @@ module Admin
       tag_rules_attributes = params[object_name].delete :tag_rules_attributes
       update_tag_rules(tag_rules_attributes) if tag_rules_attributes.present?
       update_enterprise_notifications
-      if @object.update_attributes(enterprise_params)
+      if @object.update(enterprise_params)
         invoke_callbacks(:update, :after)
         flash[:success] = flash_message_for(@object, :successfully_updated)
         respond_with(@object) do |format|
@@ -71,7 +71,7 @@ module Admin
 
       attributes = { sells: params[:sells], visible: true }
 
-      if @enterprise.update_attributes(attributes)
+      if @enterprise.update(attributes)
         flash[:success] = I18n.t(:enterprise_register_success_notice, enterprise: @enterprise.name)
         redirect_to admin_dashboard_path
       else
@@ -214,7 +214,7 @@ module Admin
           rule = @object.tag_rules.find_by(id: attrs.delete(:id)) ||
                  attrs[:type].constantize.new(enterprise: @object)
           create_calculator_for(rule, attrs) if rule.type == "TagRule::DiscountOrder" && rule.calculator.nil?
-          rule.update_attributes(attrs)
+          rule.update(attrs)
         end
       end
     end
@@ -227,7 +227,7 @@ module Admin
 
     def create_calculator_for(rule, attrs)
       if attrs[:calculator_type].present? && attrs[:calculator_attributes].present?
-        rule.update_attributes(calculator_type: attrs[:calculator_type])
+        rule.update(calculator_type: attrs[:calculator_type])
         attrs[:calculator_attributes].merge!( id: rule.calculator.id )
       end
     end
