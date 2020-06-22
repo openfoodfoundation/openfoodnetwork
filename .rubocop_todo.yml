@@ -57,12 +57,6 @@ Lint/UselessAccessModifier:
     - 'lib/open_food_network/reports/bulk_coop_report.rb'
     - 'spec/lib/open_food_network/reports/report_spec.rb'
 
-# Offense count: 1
-# Configuration parameters: CheckForMethodsWithNoSideEffects.
-Lint/Void:
-  Exclude:
-    - 'app/serializers/api/enterprise_serializer.rb'
-
 # Offense count: 6
 # Configuration parameters: IgnoredMethods.
 Metrics/AbcSize:
