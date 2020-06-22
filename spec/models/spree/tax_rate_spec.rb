@@ -61,7 +61,7 @@ module Spree
 
       it "restores both values when an exception is raised" do
         expect do
-          tax_rate.send(:with_tax_included_in_price) { raise Exception, 'oops' }
+          tax_rate.send(:with_tax_included_in_price) { raise StandardError, 'oops' }
         end.to raise_error 'oops'
 
         expect(tax_rate.included_in_price).to be false
