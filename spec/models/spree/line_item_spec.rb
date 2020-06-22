@@ -39,10 +39,10 @@ module Spree
         let!(:adjustment1) { create(:adjustment, originator: tax_rate, label: "TR", amount: 123, included_tax: 10.00) }
 
         before do
-            li1
-            li2
-            li1.adjustments << adjustment1
-          end
+          li1
+          li2
+          li1.adjustments << adjustment1
+        end
 
         it "finds line items with tax" do
           expect(LineItem.with_tax).to eq([li1])

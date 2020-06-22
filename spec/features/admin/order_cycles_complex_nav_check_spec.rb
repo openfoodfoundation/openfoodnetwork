@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 feature '
@@ -15,7 +17,7 @@ feature '
     visit edit_admin_order_cycle_path(oc)
 
     wait_for_edit_form_to_load_order_cycle(oc)
-   
+
     expect(page).to have_selector '.wizard-progress .current a', text: '1. GENERAL SETTINGS'
     expect(page.find('#order_cycle_name').value).to eq(oc.name)
     expect(page).to have_button("Save", disabled: true)

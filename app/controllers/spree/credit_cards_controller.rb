@@ -65,7 +65,7 @@ module Spree
 
     def stripe_account_id
       StripeAccount.
-        find_by_enterprise_id(@credit_card.payment_method.preferred_enterprise_id).
+        find_by(enterprise_id: @credit_card.payment_method.preferred_enterprise_id).
         andand.
         stripe_user_id
     end

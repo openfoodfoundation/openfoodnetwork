@@ -45,7 +45,7 @@ module OrderManagement
       end
 
       def use_saved_credit_card
-        @payment.update_attributes(source: saved_credit_card)
+        @payment.update(source: saved_credit_card)
       end
     end
   end

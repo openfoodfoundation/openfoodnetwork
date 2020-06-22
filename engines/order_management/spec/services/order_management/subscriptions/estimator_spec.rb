@@ -13,12 +13,12 @@ module OrderManagement
         let(:estimator) { Estimator.new(subscription) }
 
         before do
-          sli1.update_attributes(price_estimate: 4.0)
-          sli2.update_attributes(price_estimate: 5.0)
-          sli3.update_attributes(price_estimate: 6.0)
-          sli1.variant.update_attributes(price: 1.0)
-          sli2.variant.update_attributes(price: 2.0)
-          sli3.variant.update_attributes(price: 3.0)
+          sli1.update(price_estimate: 4.0)
+          sli2.update(price_estimate: 5.0)
+          sli3.update(price_estimate: 6.0)
+          sli1.variant.update(price: 1.0)
+          sli2.variant.update(price: 2.0)
+          sli3.variant.update(price: 3.0)
 
           # Simulating assignment of attrs from params
           sli1.assign_attributes(price_estimate: 7.0)
@@ -91,9 +91,9 @@ module OrderManagement
 
         before do
           allow(estimator).to receive(:assign_price_estimates)
-          sli1.update_attributes(price_estimate: 4.0)
-          sli2.update_attributes(price_estimate: 5.0)
-          sli3.update_attributes(price_estimate: 6.0)
+          sli1.update(price_estimate: 4.0)
+          sli2.update(price_estimate: 5.0)
+          sli3.update(price_estimate: 6.0)
         end
 
         context "using flat rate calculators" do

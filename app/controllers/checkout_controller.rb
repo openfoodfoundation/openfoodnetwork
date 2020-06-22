@@ -91,6 +91,7 @@ class CheckoutController < Spree::StoreController
 
     redirect_to(main_app.shop_path) && return if redirect_to_shop?
     redirect_to_cart_path && return unless valid_order_line_items?
+
     before_address
     setup_for_current_state
   end

@@ -6,7 +6,7 @@ module Api
     skip_authorization_check only: [:show, :closed_shops]
 
     def show
-      enterprise = Enterprise.find_by_id(params[:id])
+      enterprise = Enterprise.find_by(id: params[:id])
 
       render text: Api::EnterpriseShopfrontSerializer.new(enterprise).to_json, status: :ok
     end

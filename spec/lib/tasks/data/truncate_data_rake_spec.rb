@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'rake'
 
@@ -19,8 +21,8 @@ describe 'truncate_data.rake' do
         create(:order, order_cycle: old_order_cycle)
         recent_order_cycle = create(
           :order_cycle,
-          orders_open_at: 1.months.ago,
-          orders_close_at: 1.months.ago + 1.day,
+          orders_open_at: 1.month.ago,
+          orders_close_at: 1.month.ago + 1.day,
         )
         create(:order, order_cycle: recent_order_cycle)
 

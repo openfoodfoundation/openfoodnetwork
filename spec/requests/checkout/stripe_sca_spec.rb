@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe "checking out an order with a Stripe SCA payment method", type: :request do
@@ -62,12 +64,12 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
     }
   end
   let(:payment_intent_response_mock) do
-    { status: 200, body: JSON.generate(object: "payment_intent", amount: 2000, charges: { data: [{ id: "ch_1234", amount: 2000 }]}) }
+    { status: 200, body: JSON.generate(object: "payment_intent", amount: 2000, charges: { data: [{ id: "ch_1234", amount: 2000 }] }) }
   end
   let(:payment_intent_authorize_response_mock) do
     { status: 200, body: JSON.generate(id: payment_intent_id, object: "payment_intent", amount: 2000,
                                        status: "requires_capture", last_payment_error: nil,
-                                       charges: { data: [{ id: "ch_1234", amount: 2000 }]}) }
+                                       charges: { data: [{ id: "ch_1234", amount: 2000 }] }) }
   end
 
   before do
@@ -76,7 +78,7 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
     allow(order_cycle_distributed_variants).to receive(:distributes_order_variants?) { true }
 
     allow(Stripe).to receive(:api_key) { "sk_test_12345" }
-    order.update_attributes(distributor_id: enterprise.id, order_cycle_id: order_cycle.id)
+    order.update(distributor_id: enterprise.id, order_cycle_id: order_cycle.id)
     order.reload.update_totals
     set_order order
 
@@ -145,10 +147,10 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
 
   context "when saving a card or using a stored card is involved" do
     let(:hubs_payment_method_response_mock) do
-    {
-      status: 200,
-      body: JSON.generate(id: hubs_stripe_payment_method, customer: customer_id)
-    }
+      {
+        status: 200,
+        body: JSON.generate(id: hubs_stripe_payment_method, customer: customer_id)
+      }
     end
     let(:customer_response_mock) do
       {
@@ -315,8 +317,8 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
       context "when the stripe API sends a url for the authorization of the transaction" do
         let(:payment_intent_authorize_response_mock) do
           { status: 200, body: JSON.generate(id: payment_intent_id, object: "payment_intent",
-                                             next_source_action: { type: "authorize_with_url", authorize_with_url: { url: stripe_redirect_url }},
-                                             status: "requires_source_action" )}
+                                             next_source_action: { type: "authorize_with_url", authorize_with_url: { url: stripe_redirect_url } },
+                                             status: "requires_source_action" ) }
         end
 
         it "redirects the user to the authorization stripe url" do

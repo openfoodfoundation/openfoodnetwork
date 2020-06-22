@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Resets the passed order to cart state while clearing associated payments and shipments
 class OrderCheckoutRestart
   def initialize(order)

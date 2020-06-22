@@ -44,11 +44,11 @@ feature '
       order_cycle_4 = create(:simple_order_cycle, name: 'Four')
 
       order_2 = create(:order_with_credit_payment, user: user, distributor: distributor,
-                                                  order_cycle: order_cycle_2)
+                                                   order_cycle: order_cycle_2)
       order_3 = create(:order_with_credit_payment, user: user, distributor: distributor,
-                                                  order_cycle: order_cycle_3)
+                                                   order_cycle: order_cycle_3)
       order_4 = create(:order_with_credit_payment, user: user, distributor: distributor,
-                                                  order_cycle: order_cycle_4)
+                                                   order_cycle: order_cycle_4)
 
       quick_login_as_admin
       visit 'admin/orders'
@@ -62,7 +62,6 @@ feature '
       expect(page).to have_content order_2.number
       expect(page).to have_content order_3.number
       expect(page).to_not have_content order_4.number
-
     end
 
     context "with a capturable order" do

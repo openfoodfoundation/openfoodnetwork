@@ -27,9 +27,7 @@ class VariantOverride < ActiveRecord::Base
   localize_number :price
 
   def self.indexed(hub)
-    Hash[
-      for_hubs(hub).preload(:variant).map { |vo| [vo.variant, vo] }
-    ]
+    for_hubs(hub).preload(:variant).index_by(&:variant)
   end
 
   def stock_overridden?
