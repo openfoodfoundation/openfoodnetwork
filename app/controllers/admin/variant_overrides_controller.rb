@@ -18,12 +18,10 @@ module Admin
       if @vo_set.save
         # Return saved VOs with IDs
         render json: @vo_set.collection, each_serializer: Api::Admin::VariantOverrideSerializer
+      elsif @vo_set.errors.present?
+        render json: { errors: @vo_set.errors }, status: :bad_request
       else
-        if @vo_set.errors.present?
-          render json: { errors: @vo_set.errors }, status: :bad_request
-        else
-          render nothing: true, status: :internal_server_error
-        end
+        render nothing: true, status: :internal_server_error
       end
     end
 

@@ -7,12 +7,10 @@ module Api
     def index
       if taxonomy
         @taxons = taxonomy.root.children
+      elsif params[:ids]
+        @taxons = Spree::Taxon.where(id: params[:ids].split(","))
       else
-        if params[:ids]
-          @taxons = Spree::Taxon.where(id: params[:ids].split(","))
-        else
-          @taxons = Spree::Taxon.ransack(params[:q]).result
-        end
+        @taxons = Spree::Taxon.ransack(params[:q]).result
       end
       render json: @taxons, each_serializer: Api::TaxonSerializer
     end
