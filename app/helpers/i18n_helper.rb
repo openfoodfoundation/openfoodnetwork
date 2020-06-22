@@ -2,7 +2,7 @@ module I18nHelper
   def set_locale
     # Save a given locale
     if params[:locale] && available_locale?(params[:locale])
-      spree_current_user.update!(locale: params[:locale]) if spree_current_user
+      spree_current_user&.update!(locale: params[:locale])
       cookies[:locale] = params[:locale]
     end
 
