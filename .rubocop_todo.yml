@@ -27,12 +27,6 @@ Lint/IneffectiveAccessModifier:
     - 'lib/open_food_network/feature_toggle.rb'
     - 'spec/lib/open_food_network/reports/report_spec.rb'
 
-# Offense count: 3
-Lint/ShadowingOuterLocalVariable:
-  Exclude:
-    - 'app/models/model_set.rb'
-    - 'spec/models/model_set_spec.rb'
-
 # Offense count: 5
 # Configuration parameters: ContextCreatingMethods, MethodCreatingMethods.
 Lint/UselessAccessModifier:
