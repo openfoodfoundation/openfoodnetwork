@@ -8,9 +8,9 @@ module Spree
 
       include I18nHelper
 
-      before_filter :authorize_admin
-      before_filter :set_locale
-      before_filter :warn_invalid_order_cycles, if: :html_request?
+      before_action :authorize_admin
+      before_action :set_locale
+      before_action :warn_invalid_order_cycles, if: :html_request?
 
       # Warn the user when they have an active order cycle with hubs that are not ready
       # for checkout (ie. does not have valid shipping and payment methods).

@@ -3,7 +3,7 @@ require 'stripe/webhook_handler'
 module Stripe
   class WebhooksController < BaseController
     protect_from_forgery except: :create
-    before_filter :verify_webhook
+    before_action :verify_webhook
 
     # POST /stripe/webhooks
     def create

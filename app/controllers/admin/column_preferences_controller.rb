@@ -1,6 +1,6 @@
 module Admin
   class ColumnPreferencesController < ResourceController
-    before_filter :load_collection, only: [:bulk_update]
+    before_action :load_collection, only: [:bulk_update]
 
     respond_to :json
 

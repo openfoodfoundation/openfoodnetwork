@@ -1,9 +1,9 @@
 module Api
   class EnterprisesController < Api::BaseController
-    before_filter :override_owner, only: [:create, :update]
-    before_filter :check_type, only: :update
-    before_filter :override_sells, only: [:create, :update]
-    before_filter :override_visible, only: [:create, :update]
+    before_action :override_owner, only: [:create, :update]
+    before_action :check_type, only: :update
+    before_action :override_sells, only: [:create, :update]
+    before_action :override_visible, only: [:create, :update]
     respond_to :json
 
     def create

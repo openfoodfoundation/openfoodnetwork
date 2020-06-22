@@ -13,22 +13,22 @@ class CheckoutController < Spree::StoreController
 
   # We need pessimistic locking to avoid race conditions.
   # Otherwise we fail on duplicate indexes or end up with negative stock.
-  prepend_around_filter CurrentOrderLocker, only: :update
+  prepend_around_action CurrentOrderLocker, only: :update
 
-  prepend_before_filter :check_hub_ready_for_checkout
-  prepend_before_filter :check_order_cycle_expiry
-  prepend_before_filter :require_order_cycle
-  prepend_before_filter :require_distributor_chosen
+  prepend_before_action :check_hub_ready_for_checkout
+  prepend_before_action :check_order_cycle_expiry
+  prepend_before_action :require_order_cycle
+  prepend_before_action :require_distributor_chosen
 
-  before_filter :load_order
+  before_action :load_order
 
-  before_filter :ensure_order_not_completed
-  before_filter :ensure_checkout_allowed
-  before_filter :ensure_sufficient_stock_lines
+  before_action :ensure_order_not_completed
+  before_action :ensure_checkout_allowed
+  before_action :ensure_sufficient_stock_lines
 
-  before_filter :associate_user
-  before_filter :check_authorization
-  before_filter :enable_embedded_shopfront
+  before_action :associate_user
+  before_action :check_authorization
+  before_action :enable_embedded_shopfront
 
   helper 'spree/orders'
 

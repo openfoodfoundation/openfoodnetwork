@@ -4,8 +4,8 @@ require_dependency 'spree/authentication_helpers'
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  prepend_before_filter :restrict_iframes
-  before_filter :set_cache_headers # prevent cart emptying via cache when using back button #1213
+  prepend_before_action :restrict_iframes
+  before_action :set_cache_headers # prevent cart emptying via cache when using back button #1213
 
   include EnterprisesHelper
   include Spree::AuthenticationHelpers

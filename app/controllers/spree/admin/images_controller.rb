@@ -6,7 +6,7 @@ module Spree
       # See here https://github.com/spree/spree/commit/334a011d2b8e16355e4ae77ae07cd93f7cbc8fd1
       belongs_to 'spree/product', find_by: :permalink
 
-      before_filter :load_data
+      before_action :load_data
 
       create.before :set_viewable
       update.before :set_viewable

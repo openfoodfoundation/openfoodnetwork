@@ -3,7 +3,7 @@ module Api
     respond_to :json
 
     skip_authorization_check only: [:index, :show]
-    before_filter :product
+    before_action :product
 
     def index
       @variants = scope.includes(option_values: :option_type).ransack(params[:q]).result

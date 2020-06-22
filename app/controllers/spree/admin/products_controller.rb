@@ -13,10 +13,10 @@ module Spree
       create.before :create_before
       update.before :update_before
 
-      before_filter :load_data
-      before_filter :load_form_data, only: [:index, :new, :create, :edit, :update]
-      before_filter :load_spree_api_key, only: [:index, :variant_overrides]
-      before_filter :strip_new_properties, only: [:create, :update]
+      before_action :load_data
+      before_action :load_form_data, only: [:index, :new, :create, :edit, :update]
+      before_action :load_spree_api_key, only: [:index, :variant_overrides]
+      before_action :strip_new_properties, only: [:create, :update]
 
       respond_override create: { html: {
         success: lambda {

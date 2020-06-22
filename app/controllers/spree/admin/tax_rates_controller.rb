@@ -1,7 +1,7 @@
 module Spree
   module Admin
     class TaxRatesController < ResourceController
-      before_filter :load_data
+      before_action :load_data
 
       update.after :update_after
       create.after :create_after
