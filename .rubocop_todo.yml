@@ -148,13 +148,6 @@ Naming/PredicateName:
     - 'lib/open_food_network/packing_report.rb'
     - 'lib/tasks/data.rake'
 
-# Offense count: 6
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: snake_case, normalcase, non_integer
-Naming/VariableNumber:
-  Exclude:
-    - 'spec/features/admin/orders_spec.rb'
-
 # Offense count: 1
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: strict, flexible
@@ -1431,11 +1424,6 @@ Style/MixinUsage:
     - 'spec/lib/open_food_network/bulk_coop_report_spec.rb'
     - 'spec/lib/open_food_network/order_cycle_management_report_spec.rb'
     - 'spec/lib/open_food_network/packing_report_spec.rb'
-
-# Offense count: 1
-Style/MultipleComparison:
-  Exclude:
-    - 'spec/models/product_importer_spec.rb'
 
 # Offense count: 41
 # Cop supports --auto-correct.
