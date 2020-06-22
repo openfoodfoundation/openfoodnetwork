@@ -41,12 +41,6 @@ Lint/ShadowingOuterLocalVariable:
     - 'app/models/model_set.rb'
     - 'spec/models/model_set_spec.rb'
 
-# Offense count: 2
-# Configuration parameters: AllowKeywordBlockArguments.
-Lint/UnderscorePrefixedVariableName:
-  Exclude:
-    - 'spec/support/cancan_helper.rb'
-
 # Offense count: 5
 # Configuration parameters: ContextCreatingMethods, MethodCreatingMethods.
 Lint/UselessAccessModifier:
