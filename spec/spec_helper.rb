@@ -43,7 +43,7 @@ WebMock.disable_net_connect!(
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
-Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
 require 'spree/testing_support/capybara_ext'
 require 'spree/api/testing_support/setup'
 require 'spree/testing_support/authorization_helpers'
