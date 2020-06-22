@@ -18,7 +18,7 @@ RSpec.describe OpenFoodNetwork::OrdersAndFulfillmentsReport::CustomerTotalsRepor
   context "viewing the report" do
     let!(:order) do
       create(:completed_order_with_totals, line_items_count: 1, user: customer.user,
-             customer: customer, distributor: distributor)
+                                           customer: customer, distributor: distributor)
     end
 
     it "generates the report" do
@@ -65,7 +65,7 @@ RSpec.describe OpenFoodNetwork::OrdersAndFulfillmentsReport::CustomerTotalsRepor
     }
     let!(:order) do
       create(:completed_order_with_totals, line_items_count: 1, user: customer.user,
-             customer: customer, distributor: distributor)
+                                           customer: customer, distributor: distributor)
     end
 
     before do
@@ -82,7 +82,7 @@ RSpec.describe OpenFoodNetwork::OrdersAndFulfillmentsReport::CustomerTotalsRepor
   context 'when a variant override applies' do
     let!(:order) do
       create(:completed_order_with_totals, line_items_count: 1, user: customer.user,
-             customer: customer, distributor: distributor)
+                                           customer: customer, distributor: distributor)
     end
     let(:overidden_sku) { 'magical_sku' }
 
