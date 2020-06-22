@@ -8,22 +8,22 @@ module Spree
 
     ssl_required :show
 
-    before_filter :check_authorization
+    before_action :check_authorization
     rescue_from ActiveRecord::RecordNotFound, with: :render_404
     helper 'spree/products', 'spree/orders'
 
     respond_to :html
     respond_to :json
 
-    before_filter :update_distribution, only: :update
-    before_filter :filter_order_params, only: :update
-    before_filter :enable_embedded_shopfront
+    before_action :update_distribution, only: :update
+    before_action :filter_order_params, only: :update
+    before_action :enable_embedded_shopfront
 
-    prepend_before_filter :require_order_authentication, only: :show
-    prepend_before_filter :require_order_cycle, only: :edit
-    prepend_before_filter :require_distributor_chosen, only: :edit
-    before_filter :check_hub_ready_for_checkout, only: :edit
-    before_filter :check_at_least_one_line_item, only: :update
+    prepend_before_action :require_order_authentication, only: :show
+    prepend_before_action :require_order_cycle, only: :edit
+    prepend_before_action :require_distributor_chosen, only: :edit
+    before_action :check_hub_ready_for_checkout, only: :edit
+    before_action :check_at_least_one_line_item, only: :update
 
     def show
       @order = Spree::Order.find_by!(number: params[:id])

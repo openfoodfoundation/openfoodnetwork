@@ -2,15 +2,15 @@ module Spree
   class UsersController < Spree::StoreController
     layout 'darkswarm'
     ssl_required
-    skip_before_filter :set_current_order, only: :show
-    prepend_before_filter :load_object, only: [:show, :edit, :update]
-    prepend_before_filter :authorize_actions, only: :new
+    skip_before_action :set_current_order, only: :show
+    prepend_before_action :load_object, only: [:show, :edit, :update]
+    prepend_before_action :authorize_actions, only: :new
 
     include Spree::Core::ControllerHelpers
     include I18nHelper
 
-    before_filter :set_locale
-    before_filter :enable_embedded_shopfront
+    before_action :set_locale
+    before_action :enable_embedded_shopfront
 
     # Ignores invoice orders, only order where state: 'complete'
     def show

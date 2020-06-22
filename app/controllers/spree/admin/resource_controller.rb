@@ -4,7 +4,7 @@ module Spree
   module Admin
     class ResourceController < Spree::Admin::BaseController
       helper_method :new_object_url, :edit_object_url, :object_url, :collection_url
-      before_filter :load_resource, except: [:update_positions]
+      before_action :load_resource, except: [:update_positions]
       rescue_from ActiveRecord::RecordNotFound, with: :resource_not_found
       rescue_from CanCan::AccessDenied, with: :unauthorized
 

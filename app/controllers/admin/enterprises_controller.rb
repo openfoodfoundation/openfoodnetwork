@@ -5,22 +5,22 @@ require 'open_food_network/order_cycle_permissions'
 module Admin
   class EnterprisesController < ResourceController
     # These need to run before #load_resource so that @object is initialised with sanitised values
-    prepend_before_filter :override_owner, only: :create
-    prepend_before_filter :override_sells, only: :create
+    prepend_before_action :override_owner, only: :create
+    prepend_before_action :override_sells, only: :create
 
-    before_filter :load_enterprise_set, only: :index
-    before_filter :load_countries, except: [:index, :register, :check_permalink]
-    before_filter :load_methods_and_fees, only: [:edit, :update]
-    before_filter :load_groups, only: [:new, :edit, :update, :create]
-    before_filter :load_taxons, only: [:new, :edit, :update, :create]
-    before_filter :check_can_change_sells, only: :update
-    before_filter :check_can_change_bulk_sells, only: :bulk_update
-    before_filter :check_can_change_owner, only: :update
-    before_filter :check_can_change_bulk_owner, only: :bulk_update
-    before_filter :check_can_change_managers, only: :update
-    before_filter :strip_new_properties, only: [:create, :update]
-    before_filter :load_properties, only: [:edit, :update]
-    before_filter :setup_property, only: [:edit]
+    before_action :load_enterprise_set, only: :index
+    before_action :load_countries, except: [:index, :register, :check_permalink]
+    before_action :load_methods_and_fees, only: [:edit, :update]
+    before_action :load_groups, only: [:new, :edit, :update, :create]
+    before_action :load_taxons, only: [:new, :edit, :update, :create]
+    before_action :check_can_change_sells, only: :update
+    before_action :check_can_change_bulk_sells, only: :bulk_update
+    before_action :check_can_change_owner, only: :update
+    before_action :check_can_change_bulk_owner, only: :bulk_update
+    before_action :check_can_change_managers, only: :update
+    before_action :strip_new_properties, only: [:create, :update]
+    before_action :load_properties, only: [:edit, :update]
+    before_action :setup_property, only: [:edit]
 
     helper 'spree/products'
     include OrderCyclesHelper

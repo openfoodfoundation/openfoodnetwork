@@ -4,7 +4,7 @@ class DiscourseSsoController < ApplicationController
   include SharedHelper
   include DiscourseHelper
 
-  before_filter :require_config
+  before_action :require_config
 
   def login
     if require_activation?

@@ -4,7 +4,7 @@ module Admin
   class StripeConnectSettingsController < Spree::Admin::BaseController
     StripeConnectSettings = Struct.new(:stripe_connect_enabled)
 
-    before_filter :load_settings, only: [:edit]
+    before_action :load_settings, only: [:edit]
 
     def edit
       return @stripe_account = { status: :empty_api_key_error_html } if Stripe.api_key.blank?

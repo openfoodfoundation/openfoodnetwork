@@ -4,8 +4,8 @@ module Api
   class ShipmentsController < Api::BaseController
     respond_to :json
 
-    before_filter :find_order
-    before_filter :find_and_update_shipment, only: [:ship, :ready, :add, :remove]
+    before_action :find_order
+    before_action :find_and_update_shipment, only: [:ship, :ready, :add, :remove]
 
     def create
       variant = scoped_variant(params[:variant_id])

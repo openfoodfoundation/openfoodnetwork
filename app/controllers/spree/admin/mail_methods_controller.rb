@@ -1,7 +1,7 @@
 module Spree
   module Admin
     class MailMethodsController < Spree::Admin::BaseController
-      after_filter :initialize_mail_settings
+      after_action :initialize_mail_settings
 
       def update
         params.each do |name, value|

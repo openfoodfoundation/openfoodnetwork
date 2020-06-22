@@ -7,7 +7,7 @@ module Api
     class MissingImplementationError < StandardError; end
     class UnknownEnterpriseAuthorizationActionError < StandardError; end
 
-    before_filter :load_enterprise
+    before_action :load_enterprise
 
     respond_to :json
 

@@ -3,11 +3,11 @@ module Spree
     class UsersController < ResourceController
       rescue_from Spree::User::DestroyWithOrdersError, with: :user_destroy_with_orders_error
 
-      after_filter :sign_in_if_change_own_password, only: :update
+      after_action :sign_in_if_change_own_password, only: :update
 
       # http://spreecommerce.com/blog/2010/11/02/json-hijacking-vulnerability/
-      before_filter :check_json_authenticity, only: :index
-      before_filter :load_roles, only: [:edit, :new, :update, :create,
+      before_action :check_json_authenticity, only: :index
+      before_action :load_roles, only: [:edit, :new, :update, :create,
                                         :generate_api_key, :clear_api_key]
 
       def index

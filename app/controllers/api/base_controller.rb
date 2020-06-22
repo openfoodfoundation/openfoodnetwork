@@ -11,9 +11,9 @@ module Api
 
     attr_accessor :current_api_user
 
-    before_filter :set_content_type
-    before_filter :authenticate_user
-    after_filter  :set_jsonp_format
+    before_action :set_content_type
+    before_action :authenticate_user
+    after_action  :set_jsonp_format
 
     rescue_from Exception, with: :error_during_processing
     rescue_from CanCan::AccessDenied, with: :unauthorized

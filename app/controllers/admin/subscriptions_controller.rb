@@ -2,12 +2,12 @@ require 'open_food_network/permissions'
 
 module Admin
   class SubscriptionsController < ResourceController
-    before_filter :load_shops, only: [:index]
-    before_filter :load_form_data, only: [:new, :edit]
-    before_filter :strip_banned_attrs, only: [:update]
-    before_filter :wrap_nested_attrs, only: [:create, :update]
-    before_filter :check_for_open_orders, only: [:cancel, :pause]
-    before_filter :check_for_canceled_orders, only: [:unpause]
+    before_action :load_shops, only: [:index]
+    before_action :load_form_data, only: [:new, :edit]
+    before_action :strip_banned_attrs, only: [:update]
+    before_action :wrap_nested_attrs, only: [:create, :update]
+    before_action :check_for_open_orders, only: [:cancel, :pause]
+    before_action :check_for_canceled_orders, only: [:unpause]
     respond_to :json
 
     def index

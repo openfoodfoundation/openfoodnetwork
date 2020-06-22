@@ -1,10 +1,10 @@
 module Spree
   module Admin
     class PaymentMethodsController < ResourceController
-      skip_before_filter :load_resource, only: [:create, :show_provider_preferences]
-      before_filter :load_data
-      before_filter :validate_payment_method_provider, only: [:create]
-      before_filter :load_hubs, only: [:new, :edit, :update]
+      skip_before_action :load_resource, only: [:create, :show_provider_preferences]
+      before_action :load_data
+      before_action :validate_payment_method_provider, only: [:create]
+      before_action :load_hubs, only: [:new, :edit, :update]
       create.before :load_hubs
 
       respond_to :html
