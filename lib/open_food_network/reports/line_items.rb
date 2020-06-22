@@ -24,8 +24,8 @@ module OpenFoodNetwork
 
         editable_line_items = editable_line_items(line_items)
 
-        line_items.select{ |li|
-          !editable_line_items.include? li
+        line_items.reject{ |li|
+          editable_line_items.include? li
         }.each do |line_item|
           # TODO We should really be hiding customer code here too, but until we
           # have an actual association between order and customer, it's a bit tricky
