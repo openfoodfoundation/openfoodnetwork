@@ -405,7 +405,7 @@ module ProductImport
 
     def inventory_permission?(enterprise_id, producer_id)
       @current_user.admin? ||
-        ( @inventory_permissions[enterprise_id]&.include?(producer_id) )
+        @inventory_permissions[enterprise_id]&.include?(producer_id)
     end
 
     def mark_as_invalid(entry, options = {})

@@ -1469,12 +1469,6 @@ Style/NumericPredicate:
     - 'lib/spree/money_decorator.rb'
     - 'lib/tasks/sample_data.rake'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/RedundantParentheses:
-  Exclude:
-    - 'app/models/product_import/entry_validator.rb'
-
 # Offense count: 231
 Style/Send:
   Exclude:
