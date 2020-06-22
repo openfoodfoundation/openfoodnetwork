@@ -191,7 +191,7 @@ module ProductImport
     end
 
     def staged_import?
-      @import_settings&.key?(:start) && @import_settings.key?(:end)
+      @import_settings&.key?(:start) && @import_settings&.key?(:end)
     end
 
     def init_permissions
