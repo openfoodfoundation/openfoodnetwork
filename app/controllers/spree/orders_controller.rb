@@ -166,7 +166,7 @@ module Spree
     # recalculates the shipment taxes
     def update_totals_and_taxes
       @order.updater.update_totals
-      @order.shipment.ensure_correct_adjustment_with_included_tax if @order.shipment
+      @order.shipment&.ensure_correct_adjustment_with_included_tax
     end
 
     # Sets the adjustments to open to perform the block's action and restores

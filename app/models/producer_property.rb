@@ -5,7 +5,7 @@ class ProducerProperty < ActiveRecord::Base
   default_scope { order("#{table_name}.position") }
 
   def property_name
-    property.name if property
+    property&.name
   end
 
   def property_name=(name)

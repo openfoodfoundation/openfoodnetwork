@@ -154,21 +154,21 @@ module ProductImport
     def unit_fields_validation(entry)
       unit_types = ['g', 'kg', 't', 'ml', 'l', 'kl', '']
 
-      unless entry.units && entry.units.present?
+      unless entry.units&.present?
         mark_as_invalid(entry, attribute: 'units', error: I18n.t('admin.product_import.model.blank'))
       end
 
       return if import_into_inventory?
 
       # unit_type must be valid type
-      if entry.unit_type && entry.unit_type.present?
+      if entry.unit_type&.present?
         unit_type = entry.unit_type.to_s.strip.downcase
         mark_as_invalid(entry, attribute: 'unit_type', error: I18n.t('admin.product_import.model.incorrect_value')) unless unit_types.include?(unit_type)
         return
       end
 
       # variant_unit_name must be present if unit_type not present
-      mark_as_invalid(entry, attribute: 'variant_unit_name', error: I18n.t('admin.product_import.model.conditional_blank')) unless entry.variant_unit_name && entry.variant_unit_name.present?
+      mark_as_invalid(entry, attribute: 'variant_unit_name', error: I18n.t('admin.product_import.model.conditional_blank')) unless entry.variant_unit_name&.present?
     end
 
     def variant_of_product_validation(entry)
@@ -372,8 +372,7 @@ module ProductImport
 
     def inventory_permission?(enterprise_id, producer_id)
       @current_user.admin? ||
-        ( @inventory_permissions[enterprise_id] &&
-          @inventory_permissions[enterprise_id].include?(producer_id) )
+        ( @inventory_permissions[enterprise_id]&.include?(producer_id) )
     end
 
     def mark_as_invalid(entry, options = {})

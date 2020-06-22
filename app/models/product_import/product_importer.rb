@@ -190,7 +190,7 @@ module ProductImport
     end
 
     def staged_import?
-      @import_settings && @import_settings.key?(:start) && @import_settings.key?(:end)
+      @import_settings&.key?(:start) && @import_settings.key?(:end)
     end
 
     def init_permissions
@@ -224,7 +224,7 @@ module ProductImport
     end
 
     def rows
-      return [] unless @sheet && @sheet.last_row
+      return [] unless @sheet&.last_row
 
       (2..@sheet.last_row).map do |i|
         @sheet.row(i)
