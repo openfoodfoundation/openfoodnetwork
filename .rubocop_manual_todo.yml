@@ -59,7 +59,6 @@ Layout/LineLength:
   - app/models/enterprise_role.rb
   - app/models/inventory_item.rb
   - app/models/product_import/entry_processor.rb
-  - app/models/product_import/product_importer.rb
   - app/models/product_import/spreadsheet_entry.rb
   - app/models/product_import/unit_converter.rb
   - app/models/proxy_order.rb
