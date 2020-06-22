@@ -117,7 +117,7 @@ module Spree
       def load_order
         if params[:id]
           @order = Order.includes(:adjustments, :shipments, line_items: :adjustments).
-            find_by_number!(params[:id])
+            find_by!(number: params[:id])
         end
         authorize! action, @order
       end

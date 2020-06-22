@@ -38,7 +38,7 @@ module WebHelper
 
   def select_by_value(value, options = {})
     from = options.delete :from
-    page.find_by_id(from).find("option[value='#{value}']").select_option
+    page.find_by(id: from).find("option[value='#{value}']").select_option
   end
 
   def flash_message
