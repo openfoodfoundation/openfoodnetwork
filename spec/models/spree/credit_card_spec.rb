@@ -46,7 +46,7 @@ module Spree
 
           context "without specifying it as the default" do
             it "keeps the existing default" do
-              card2.update_attributes!(stored_card_attrs)
+              card2.update!(stored_card_attrs)
 
               expect(card1.reload.is_default).to be true
               expect(card2.reload.is_default).to be false
@@ -55,7 +55,7 @@ module Spree
 
           context "and I specify it as the default" do
             it "switches the default to the updated card" do
-              card2.update_attributes!(stored_default_card_attrs)
+              card2.update!(stored_default_card_attrs)
 
               expect(card1.reload.is_default).to be false
               expect(card2.reload.is_default).to be true
@@ -101,7 +101,7 @@ module Spree
             # The checkout first creates a one-time card and then converts it
             # to a re-usable card.
             # This imitates Stripe::ProfileStorer.
-            card1.update_attributes!(store_card_profile_attrs)
+            card1.update!(store_card_profile_attrs)
             expect(card1.reload.is_default).to be true
           end
         end

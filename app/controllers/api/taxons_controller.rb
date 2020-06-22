@@ -44,7 +44,7 @@ module Api
 
     def update
       authorize! :update, Spree::Taxon
-      if taxon.update_attributes(params[:taxon])
+      if taxon.update(params[:taxon])
         render json: taxon, serializer: Api::TaxonSerializer, status: :ok
       else
         invalid_resource!(taxon)

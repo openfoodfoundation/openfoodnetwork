@@ -54,7 +54,7 @@ class SubscriptionPlacementJob
     end
     unavailable_stock_lines_for(order).each do |line_item|
       changes[line_item.id] = changes[line_item.id] || line_item.quantity
-      line_item.update_attributes(quantity: 0)
+      line_item.update(quantity: 0)
     end
     changes
   end

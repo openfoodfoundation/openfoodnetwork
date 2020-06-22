@@ -13,27 +13,27 @@ describe SubscriptionPlacementJob do
 
     it "ignores proxy orders where the OC has closed" do
       expect(job.send(:proxy_orders)).to include proxy_order
-      proxy_order.update_attributes!(order_cycle_id: order_cycle2.id)
+      proxy_order.update!(order_cycle_id: order_cycle2.id)
       expect(job.send(:proxy_orders)).to_not include proxy_order
     end
 
     it "ignores proxy orders for paused or cancelled subscriptions" do
       expect(job.send(:proxy_orders)).to include proxy_order
-      subscription.update_attributes!(paused_at: 1.minute.ago)
+      subscription.update!(paused_at: 1.minute.ago)
       expect(job.send(:proxy_orders)).to_not include proxy_order
-      subscription.update_attributes!(paused_at: nil)
+      subscription.update!(paused_at: nil)
       expect(job.send(:proxy_orders)).to include proxy_order
-      subscription.update_attributes!(canceled_at: 1.minute.ago)
+      subscription.update!(canceled_at: 1.minute.ago)
       expect(job.send(:proxy_orders)).to_not include proxy_order
     end
 
     it "ignores proxy orders that have been marked as cancelled or placed" do
       expect(job.send(:proxy_orders)).to include proxy_order
-      proxy_order.update_attributes!(canceled_at: 5.minutes.ago)
+      proxy_order.update!(canceled_at: 5.minutes.ago)
       expect(job.send(:proxy_orders)).to_not include proxy_order
-      proxy_order.update_attributes!(canceled_at: nil)
+      proxy_order.update!(canceled_at: nil)
       expect(job.send(:proxy_orders)).to include proxy_order
-      proxy_order.update_attributes!(placed_at: 5.minutes.ago)
+      proxy_order.update!(placed_at: 5.minutes.ago)
       expect(job.send(:proxy_orders)).to_not include proxy_order
     end
   end

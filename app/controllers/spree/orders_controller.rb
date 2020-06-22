@@ -74,7 +74,7 @@ module Spree
         redirect_to(main_app.root_path) && return
       end
 
-      if @order.update_attributes(order_params)
+      if @order.update(order_params)
         discard_empty_line_items
         with_open_adjustments { update_totals_and_taxes }
 

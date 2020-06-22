@@ -67,7 +67,7 @@ module Spree
       let!(:li) { create(:line_item, variant: v, quantity: 10, max_quantity: 10) }
 
       before do
-        v.update_attributes! on_hand: 5
+        v.update! on_hand: 5
       end
 
       it "caps quantity" do
@@ -89,7 +89,7 @@ module Spree
       end
 
       it "does nothing for on_demand items" do
-        v.update_attributes! on_demand: true
+        v.update! on_demand: true
         li.cap_quantity_at_stock!
         li.reload
         expect(li.quantity).to eq 10
@@ -97,7 +97,7 @@ module Spree
       end
 
       it "caps at zero when stock is negative" do
-        v.update_attributes! on_hand: -2
+        v.update! on_hand: -2
         li.cap_quantity_at_stock!
         expect(li.reload.quantity).to eq 0
       end
@@ -107,7 +107,7 @@ module Spree
         let!(:vo) { create(:variant_override, hub: hub, variant: v, count_on_hand: 2) }
 
         before do
-          li.order.update_attributes(distributor_id: hub.id)
+          li.order.update(distributor_id: hub.id)
 
           # li#scoper is memoised, and this makes it difficult to update test conditions
           # so we reset it after the line_item is created for each spec
@@ -120,10 +120,10 @@ module Spree
         end
 
         context "when count on hand is negative" do
-          before { vo.update_attributes(count_on_hand: -3) }
+          before { vo.update(count_on_hand: -3) }
 
           it "caps at zero" do
-            v.update_attributes(on_hand: -2)
+            v.update(on_hand: -2)
             li.cap_quantity_at_stock!
             expect(li.reload.quantity).to eq 0
           end
@@ -260,7 +260,7 @@ module Spree
       end
 
       context "when the stock on the variant is not sufficient" do
-        before { v.update_attributes(on_hand: 4) }
+        before { v.update(on_hand: 4) }
 
         context "when no variant override is in place" do
           it { expect(li.sufficient_stock?).to be false }
@@ -274,7 +274,7 @@ module Spree
           end
 
           context "and stock on the variant override is not sufficient" do
-            before { vo.update_attributes(count_on_hand: 4) }
+            before { vo.update(count_on_hand: 4) }
 
             it { expect(li.sufficient_stock?).to be false }
           end
@@ -375,7 +375,7 @@ module Spree
 
             context "and quantity is not changed" do
               before do
-                li.update_attributes(attrs)
+                li.update(attrs)
               end
 
               it "uses the value given" do
@@ -386,7 +386,7 @@ module Spree
             context "and quantity is changed" do
               before do
                 attrs[:quantity] = 4
-                li.update_attributes(attrs)
+                li.update(attrs)
               end
 
               it "uses the value given" do
@@ -400,7 +400,7 @@ module Spree
 
             context "and quantity is not changed" do
               before do
-                li.update_attributes(attrs)
+                li.update(attrs)
               end
 
               it "does not change final_weight_volume" do
@@ -414,7 +414,7 @@ module Spree
                   before do
                     expect(li.final_weight_volume).to eq 3000
                     attrs[:quantity] = 4
-                    li.update_attributes(attrs)
+                    li.update(attrs)
                   end
 
                   it "scales the final_weight_volume based on the change in quantity" do
@@ -424,9 +424,9 @@ module Spree
 
                 context "and a final_weight_volume has not been set" do
                   before do
-                    li.update_attributes(final_weight_volume: nil)
+                    li.update(final_weight_volume: nil)
                     attrs[:quantity] = 1
-                    li.update_attributes(attrs)
+                    li.update(attrs)
                   end
 
                   it "calculates a final_weight_volume from the variants unit_value" do
@@ -436,13 +436,13 @@ module Spree
               end
 
               context "from 0" do
-                before { li.update_attributes(quantity: 0) }
+                before { li.update(quantity: 0) }
 
                 context "and a final_weight_volume has been set" do
                   before do
                     expect(li.final_weight_volume).to eq 0
                     attrs[:quantity] = 4
-                    li.update_attributes(attrs)
+                    li.update(attrs)
                   end
 
                   it "recalculates a final_weight_volume from the variants unit_value" do
@@ -452,9 +452,9 @@ module Spree
 
                 context "and a final_weight_volume has not been set" do
                   before do
-                    li.update_attributes(final_weight_volume: nil)
+                    li.update(final_weight_volume: nil)
                     attrs[:quantity] = 1
-                    li.update_attributes(attrs)
+                    li.update(attrs)
                   end
 
                   it "calculates a final_weight_volume from the variants unit_value" do

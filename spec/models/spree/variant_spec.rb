@@ -366,8 +366,8 @@ module Spree
           p = create(:simple_product, variant_unit: 'volume')
           v = create(:variant, product: p, weight: nil)
 
-          p.update_attributes! variant_unit: 'weight', variant_unit_scale: 1
-          v.update_attributes! unit_value: 10, unit_description: 'foo'
+          p.update! variant_unit: 'weight', variant_unit_scale: 1
+          v.update! unit_value: 10, unit_description: 'foo'
 
           expect(v.reload.weight).to eq(0.01)
         end
@@ -376,8 +376,8 @@ module Spree
           p = create(:simple_product, variant_unit: 'volume')
           v = create(:variant, product: p, weight: 123)
 
-          p.update_attributes! variant_unit: 'volume', variant_unit_scale: 1
-          v.update_attributes! unit_value: 10, unit_description: 'foo'
+          p.update! variant_unit: 'volume', variant_unit_scale: 1
+          v.update! unit_value: 10, unit_description: 'foo'
 
           expect(v.reload.weight).to eq(123)
         end
@@ -386,11 +386,11 @@ module Spree
           p = create(:simple_product, variant_unit: 'volume')
           v = create(:variant, product: p, weight: 123)
 
-          p.update_attributes! variant_unit: 'weight', variant_unit_scale: 1
+          p.update! variant_unit: 'weight', variant_unit_scale: 1
 
           # Although invalid, this calls the before_validation callback, which would
           # error if not handling unit_value == nil case
-          expect(v.update_attributes(unit_value: nil, unit_description: 'foo')).to be false
+          expect(v.update(unit_value: nil, unit_description: 'foo')).to be false
 
           expect(v.reload.weight).to eq(123)
         end
@@ -404,7 +404,7 @@ module Spree
           ov_orig = v.option_values.last
 
           expect {
-            v.update_attributes!(unit_value: 10, unit_description: 'foo')
+            v.update!(unit_value: 10, unit_description: 'foo')
           }.to change(Spree::OptionValue, :count).by(1)
 
           expect(v.option_values).not_to include ov_orig
@@ -423,7 +423,7 @@ module Spree
           ov_new  = v0.option_values.last
 
           expect {
-            v.update_attributes!(unit_value: 10, unit_description: 'foo')
+            v.update!(unit_value: 10, unit_description: 'foo')
           }.to change(Spree::OptionValue, :count).by(0)
 
           expect(v.option_values).not_to include ov_orig
@@ -437,7 +437,7 @@ module Spree
 
         it "requests the name of the new option_value from OptionValueName" do
           expect_any_instance_of(OpenFoodNetwork::OptionValueNamer).to receive(:name).exactly(1).times.and_call_original
-          v.update_attributes(unit_value: 10, unit_description: 'foo')
+          v.update(unit_value: 10, unit_description: 'foo')
           ov = v.option_values.last
           expect(ov.name).to eq("10g foo")
         end
@@ -449,7 +449,7 @@ module Spree
 
         it "does not request the name of the new option_value from OptionValueName" do
           expect_any_instance_of(OpenFoodNetwork::OptionValueNamer).not_to receive(:name)
-          v.update_attributes!(unit_value: 10, unit_description: 'foo')
+          v.update!(unit_value: 10, unit_description: 'foo')
           ov = v.option_values.last
           expect(ov.name).to eq("FOOS!")
         end
@@ -500,7 +500,7 @@ module Spree
       end
 
       it "saves without infinite loop" do
-        expect(variant1.update_attributes(cost_price: 1)).to be_truthy
+        expect(variant1.update(cost_price: 1)).to be_truthy
       end
     end
   end
