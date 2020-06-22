@@ -65,7 +65,7 @@ class LineItemSyncer
   def update_quantity(line_item, sli)
     if line_item.quantity == sli.quantity_was
       return line_item.update(quantity: sli.quantity,
-                                         skip_stock_check: skip_stock_check?(line_item.order))
+                              skip_stock_check: skip_stock_check?(line_item.order))
     end
     line_item.quantity == sli.quantity
   end
