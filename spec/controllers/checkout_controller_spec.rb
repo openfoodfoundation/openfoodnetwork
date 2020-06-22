@@ -227,7 +227,7 @@ describe CheckoutController, type: :controller do
 
       spree_post :update, format: :json, order: {}
       expect(response.status).to eq(400)
-      expect(response.body).to eq({ errors: {}, flash: {error: I18n.t("checkout.failed")} }.to_json)
+      expect(response.body).to eq({ errors: {}, flash: { error: I18n.t("checkout.failed") } }.to_json)
     end
 
     describe "stale object handling" do
