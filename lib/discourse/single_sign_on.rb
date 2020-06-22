@@ -93,8 +93,8 @@ module Discourse
       end
 
       @custom_fields&.each do |k, v|
-          payload["custom.#{k}"] = v.to_s
-        end
+        payload["custom.#{k}"] = v.to_s
+      end
 
       Rack::Utils.build_query(payload)
     end
