@@ -39,17 +39,17 @@ RSpec.describe OpenFoodNetwork::OrdersAndFulfillmentsReport::CustomerTotalsRepor
     it 'includes the order number and date in item rows' do
       order_number_and_date_fields = report_table.first[33..34]
       expect(order_number_and_date_fields).to eq([
-        order.number,
-        order.completed_at.strftime("%F %T"),
-      ])
+                                                   order.number,
+                                                   order.completed_at.strftime("%F %T"),
+                                                 ])
     end
 
     it 'includes the order number and date in total rows' do
       order_number_and_date_fields = report_table.last[33..34]
       expect(order_number_and_date_fields).to eq([
-        order.number,
-        order.completed_at.strftime("%F %T"),
-      ])
+                                                   order.number,
+                                                   order.completed_at.strftime("%F %T"),
+                                                 ])
     end
   end
 

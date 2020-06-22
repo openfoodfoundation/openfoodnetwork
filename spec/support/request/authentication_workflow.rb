@@ -29,7 +29,7 @@ module AuthenticationWorkflow
     new_user = build(:user, attrs)
     new_user.spree_roles = [Spree::Role.find_or_create_by!(name: 'user')]
     new_user.save
-    if attrs.has_key? :enterprises
+    if attrs.key? :enterprises
       attrs[:enterprises].each do |enterprise|
         enterprise.users << new_user
       end

@@ -8,7 +8,7 @@ module Spree
 
     # Overriden to eager-load :states
     def available_countries
-      checkout_zone = Zone.find_by_name(Spree::Config[:checkout_zone])
+      checkout_zone = Zone.find_by(name: Spree::Config[:checkout_zone])
 
       countries = if checkout_zone && checkout_zone.kind == 'country'
                     checkout_zone.country_list

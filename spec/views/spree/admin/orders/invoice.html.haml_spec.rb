@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 
 describe "spree/admin/orders/invoice.html.haml" do
@@ -41,7 +43,7 @@ describe "spree/admin/orders/invoice.html.haml" do
   end
 
   it "displays shipping info" do
-    order.shipping_method.update_attributes!(
+    order.shipping_method.update!(
       name: "Home delivery",
       require_ship_address: true,
     )
@@ -62,7 +64,7 @@ describe "spree/admin/orders/invoice.html.haml" do
 
   it "hides billing address for pickups" do
     order.ship_address = adas_address
-    order.shipping_method.update_attributes!(
+    order.shipping_method.update!(
       name: "Pickup",
       require_ship_address: false,
     )

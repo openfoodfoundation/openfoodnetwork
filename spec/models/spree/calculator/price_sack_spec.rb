@@ -72,7 +72,6 @@ describe Spree::Calculator::PriceSack do
         expect(calculator.compute(line_item)).to eq(1)
       end
     end
-
   end
 
   context "extends LocalizedNumber" do
