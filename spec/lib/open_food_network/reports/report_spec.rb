@@ -34,13 +34,13 @@ module OpenFoodNetwork::Reports
 
   class HelperReport < Report
     columns do
-      column { |o| my_helper(o) }
+      column { |obj| my_helper(obj) }
     end
 
     private
 
-    def self.my_helper(o)
-      o[:one]
+    def self.my_helper(obj)
+      obj[:one]
     end
   end
 

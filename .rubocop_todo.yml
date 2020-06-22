@@ -112,17 +112,6 @@ Naming/MemoizedInstanceVariableName:
     - 'app/mailers/producer_mailer.rb'
     - 'lib/open_food_network/address_finder.rb'
 
-# Offense count: 6
-# Configuration parameters: MinNameLength, AllowNamesEndingInNumbers, AllowedNames, ForbiddenNames.
-# AllowedNames: io, id, to, by, on, in, at, ip, db, os, pp
-Naming/MethodParameterName:
-  Exclude:
-    - 'app/helpers/spree/base_helper_decorator.rb'
-    - 'lib/open_food_network/reports/bulk_coop_report.rb'
-    - 'lib/open_food_network/xero_invoices_report.rb'
-    - 'spec/lib/open_food_network/reports/report_spec.rb'
-    - 'spec/mailers/producer_mailer_spec.rb'
-
 # Offense count: 19
 # Configuration parameters: NamePrefix, ForbiddenPrefixes, AllowedMethods, MethodDefinitionMacros.
 # NamePrefix: is_, has_, have_
