@@ -370,7 +370,10 @@ tr:
         title: "Matomo Ayarları"
         matomo_url: "Matomo URL'si"
         matomo_site_id: "Matomo Site Kimliği"
+        matomo_tag_manager_url: "Matomo Tag Manager URL"
+        info_html: "Matomo, Web ve Mobil Analitik uygulamasıdır. Daha fazla bilgi için <a href='http://matomo.org' target='_blank'>matomo.org</a> sitesini ziyaret edin."
         config_instructions_html: "Burada OFN Matomo entegrasyonunu yapılandırabilirsiniz. Aşağıdaki Matomo URL'si, kullanıcı izleme bilgilerinin gönderileceği Matomo örneğini göstermelidir; boş bırakılırsa Matomo kullanıcı takibi devre dışı bırakılır. Site Kimliği alanı zorunlu değildir, ancak tek bir Matomo örneğinde birden fazla web sitesini izliyorsanız yararlıdır; Matomo örnek konsolunda bulunabilir."
+        config_instructions_tag_manager_html: "Setting the Matomo Tag Manager URL enables Matomo Tag Manager. This tool allows you to set up analytics events. The Matomo Tag Manager URL is copied from the Install Code section of Matomo Tag Manager. Ensure you select the right container and environment as these options change the URL."
     customers:
       index:
         new_customer: "Yeni Müşteri"
@@ -476,6 +479,7 @@ tr:
         line_number: "%{number}. satır:"
         encoding_error: "Lütfen kaynak dosyanızın dil ayarını kontrol edin ve UTF-8 kodlamasıyla kaydedildiğinden emin olun"
         unexpected_error: "Ürün içe aktarımında dosyayı açarken beklenmeyen bir hatayla karşılaşıldı: %{error_message}"
+        malformed_csv: "Ürün içe aktarımında CSV biçim hatası ile karşılaşıldı: %{error_message}"
       index:
         notice: "Dikkat"
         beta_notice: "Bu özellik hala beta sürümündedir: kullanırken bazı hatalarla karşılaşabilirsiniz. Lütfen teknik destek için iletişime geçmekten çekinmeyin."
@@ -2939,7 +2943,7 @@ tr:
         errors_prohibited_this_record_from_being_saved:
           one: "1 hata kaydedilmesini engelledi:"
           other: "%{count}hata kaydedilmeyi engelledi:"
-        there_were_problems_with_the_following_fields: "Gösterilen alanlar ile ilgili sorun oluştu:"
+        there_were_problems_with_the_following_fields: "Belirtilen alanlar ile ilgili sorun oluştu:"
     errors:
       messages:
         blank: "boş olamaz"
@@ -3251,7 +3255,7 @@ tr:
           display_as_placeholder: 'örn. 2 kg'
           display_name_placeholder: 'örn. Domates'
         autocomplete:
-          out_of_stock: "Stok tükendi"
+          out_of_stock: "Tükendi"
           producer_name: "Üretici"
           unit: "Birim"
       shared:
