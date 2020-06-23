@@ -54,12 +54,12 @@ module OpenFoodNetwork::Reports
         end
       end
 
-      def scaled_final_weight_volume(li)
-        (li.final_weight_volume || 0) / (li.product.variant_unit_scale || 1)
+      def scaled_final_weight_volume(line_item)
+        (line_item.final_weight_volume || 0) / (line_item.product.variant_unit_scale || 1)
       end
 
-      def scaled_unit_value(v)
-        (v.unit_value || 0) / (v.product.variant_unit_scale || 1)
+      def scaled_unit_value(variant)
+        (variant.unit_value || 0) / (variant.product.variant_unit_scale || 1)
       end
     end
   end

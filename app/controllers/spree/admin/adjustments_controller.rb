@@ -4,9 +4,9 @@ module Spree
       belongs_to 'spree/order', find_by: :number
       destroy.after :reload_order
 
-      prepend_before_filter :set_included_tax, only: [:create, :update]
-      before_filter :set_default_tax_rate, only: :edit
-      before_filter :enable_updates, only: :update
+      prepend_before_action :set_included_tax, only: [:create, :update]
+      before_action :set_default_tax_rate, only: :edit
+      before_action :enable_updates, only: :update
 
       private
 

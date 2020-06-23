@@ -116,8 +116,8 @@ describe ProducerMailer, type: :mailer do
 
   private
 
-  def body_lines_including(mail, s)
-    mail.body.to_s.lines.select { |line| line.include? s }
+  def body_lines_including(mail, str)
+    mail.body.to_s.lines.select { |line| line.include? str }
   end
 
   def body_as_html(mail)

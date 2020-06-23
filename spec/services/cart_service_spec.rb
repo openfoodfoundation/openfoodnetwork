@@ -15,8 +15,10 @@ describe CartService do
   context "end-to-end" do
     let(:order) { create(:order, distributor: distributor, order_cycle: order_cycle) }
     let(:distributor) { create(:distributor_enterprise) }
-    let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor],
-                               variants: [variant]) }
+    let(:order_cycle) {
+      create(:simple_order_cycle, distributors: [distributor],
+                                  variants: [variant])
+    }
     let(:cart_service) { CartService.new(order) }
     let(:variant) { create(:variant) }
 
@@ -92,7 +94,7 @@ describe CartService do
     let!(:variant) { create(:variant) }
 
     it "returns true when item is not in cart and a quantity is specified" do
-      variant_data = { variant_id: variant.id, quantity: '2'}
+      variant_data = { variant_id: variant.id, quantity: '2' }
 
       expect(cart_service).to receive(:line_item_for_variant).with(variant).and_return(nil)
       expect(cart_service.send(:varies_from_cart, variant_data, variant )).to be true

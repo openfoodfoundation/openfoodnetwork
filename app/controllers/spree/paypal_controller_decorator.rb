@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 Spree::PaypalController.class_eval do
-  before_filter :enable_embedded_shopfront
-  before_filter :destroy_orphaned_paypal_payments, only: :confirm
-  after_filter :reset_order_when_complete, only: :confirm
-  before_filter :permit_parameters!
+  before_action :enable_embedded_shopfront
+  before_action :destroy_orphaned_paypal_payments, only: :confirm
+  after_action :reset_order_when_complete, only: :confirm
+  before_action :permit_parameters!
 
   def cancel
     flash[:notice] = Spree.t('flash.cancel', scope: 'paypal')

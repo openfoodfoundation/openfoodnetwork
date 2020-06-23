@@ -40,6 +40,12 @@ Layout/MultilineMethodCallIndentation:
 Layout/LineLength:
   Max: 100
 
+Lint/RaiseException:
+  Enabled: true
+
+Lint/StructNewOverride:
+  Enabled: true
+
 ## TEMPORARY/CONTESTED SETTINGS
 #
 # These are still to be decided upon, but recommended for inclusion by

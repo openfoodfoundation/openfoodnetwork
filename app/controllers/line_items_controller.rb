@@ -1,7 +1,7 @@
 class LineItemsController < BaseController
   respond_to :json
 
-  before_filter :load_line_item, only: :destroy
+  before_action :load_line_item, only: :destroy
 
   def bought
     respond_with bought_items, each_serializer: Api::LineItemSerializer

@@ -11,7 +11,7 @@ module Api
       @customer = Customer.find(params[:id])
       authorize! :update, @customer
 
-      if @customer.update_attributes(params[:customer])
+      if @customer.update(params[:customer])
         render json: @customer, serializer: CustomerSerializer, status: :ok
       else
         invalid_resource!(@customer)

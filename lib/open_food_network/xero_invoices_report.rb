@@ -175,8 +175,8 @@ module OpenFoodNetwork
       adjustment.adjustable.is_a?(Spree::Order) ? adjustment.adjustable : nil
     end
 
-    def invoice_number_for(order, i)
-      @opts[:initial_invoice_number] ? @opts[:initial_invoice_number].to_i + i : order.number
+    def invoice_number_for(order, idx)
+      @opts[:initial_invoice_number] ? @opts[:initial_invoice_number].to_i + idx : order.number
     end
 
     def total_untaxable_products(order)

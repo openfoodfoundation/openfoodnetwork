@@ -3,10 +3,10 @@ require 'order_management/subscriptions/proxy_order_syncer'
 
 module Admin
   class SchedulesController < ResourceController
-    before_filter :adapt_params, only: [:update]
-    before_filter :editable_order_cycle_ids_for_create, only: [:create]
-    before_filter :editable_order_cycle_ids_for_update, only: [:update]
-    before_filter :check_dependent_subscriptions, only: [:destroy]
+    before_action :adapt_params, only: [:update]
+    before_action :editable_order_cycle_ids_for_create, only: [:create]
+    before_action :editable_order_cycle_ids_for_update, only: [:update]
+    before_action :check_dependent_subscriptions, only: [:destroy]
     update.after :sync_subscriptions_for_update
 
     respond_to :json

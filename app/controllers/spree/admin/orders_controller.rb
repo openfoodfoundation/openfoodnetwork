@@ -7,21 +7,21 @@ module Spree
       include OpenFoodNetwork::SpreeApiKeyLoader
       helper CheckoutHelper
 
-      before_filter :load_order, only: [:edit, :update, :fire, :resend,
+      before_action :load_order, only: [:edit, :update, :fire, :resend,
                                         :invoice, :print, :print_ticket]
-      before_filter :load_distribution_choices, only: [:new, :edit, :update]
+      before_action :load_distribution_choices, only: [:new, :edit, :update]
 
       # Ensure that the distributor is set for an order when
-      before_filter :ensure_distribution, only: :new
+      before_action :ensure_distribution, only: :new
 
       # After updating an order, the fees should be updated as well
       # Currently, adding or deleting line items does not trigger updating the
       # fees! This is a quick fix for that.
       # TODO: update fees when adding/removing line items
       # instead of the update_distribution_charge method.
-      after_filter :update_distribution_charge, only: :update
+      after_action :update_distribution_charge, only: :update
 
-      before_filter :require_distributor_abn, only: :invoice
+      before_action :require_distributor_abn, only: :invoice
 
       respond_to :html, :json
 
@@ -44,7 +44,7 @@ module Spree
       end
 
       def update
-        unless @order.update_attributes(order_params) && @order.line_items.present?
+        unless @order.update(order_params) && @order.line_items.present?
           if @order.line_items.empty?
             @order.errors.add(:line_items, Spree.t('errors.messages.blank'))
           end
@@ -117,7 +117,7 @@ module Spree
       def load_order
         if params[:id]
           @order = Order.includes(:adjustments, :shipments, line_items: :adjustments).
-            find_by_number!(params[:id])
+            find_by!(number: params[:id])
         end
         authorize! action, @order
       end

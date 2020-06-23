@@ -14,8 +14,8 @@ class BaseController < ApplicationController
 
   helper 'spree/base'
 
-  before_filter :set_locale
-  before_filter :check_order_cycle_expiry
+  before_action :set_locale
+  before_action :check_order_cycle_expiry
 
   private
 

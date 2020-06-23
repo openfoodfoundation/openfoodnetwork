@@ -7,14 +7,14 @@ module Api
     class MissingImplementationError < StandardError; end
     class UnknownEnterpriseAuthorizationActionError < StandardError; end
 
-    before_filter :load_enterprise
+    before_action :load_enterprise
 
     respond_to :json
 
     def destroy
       return respond_with_conflict(error: destroy_attachment_does_not_exist_error_message) unless @enterprise.public_send("#{attachment_name}?")
 
-      @enterprise.update_attributes!(attachment_name => nil)
+      @enterprise.update!(attachment_name => nil)
       render json: @enterprise, serializer: Admin::EnterpriseSerializer, spree_current_user: spree_current_user
     end
 

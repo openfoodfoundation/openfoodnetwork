@@ -49,7 +49,7 @@ class OrderSyncer
       return order_update_issues.add(order, I18n.t('bill_address'))
     end
 
-    order.bill_address.update_attributes(bill_address.attributes.slice(*relevant_address_attrs))
+    order.bill_address.update(bill_address.attributes.slice(*relevant_address_attrs))
   end
 
   def update_payment_for(order)
@@ -123,7 +123,7 @@ class OrderSyncer
   def save_ship_address_in_order(order)
     return unless ship_address_updatable?(order)
 
-    order.ship_address.update_attributes(ship_address.attributes.slice(*relevant_address_attrs))
+    order.ship_address.update(ship_address.attributes.slice(*relevant_address_attrs))
   end
 
   def pending_shipment_with?(order, shipping_method_id)

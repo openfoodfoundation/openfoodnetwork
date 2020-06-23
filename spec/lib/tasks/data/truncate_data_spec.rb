@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'tasks/data/truncate_data'
 
@@ -92,7 +94,7 @@ describe TruncateData do
         )
         create(:order, order_cycle: old_order_cycle)
         recent_order_cycle = create(
-          :order_cycle, orders_open_at: 1.months.ago, orders_close_at: 1.months.ago + 1.day
+          :order_cycle, orders_open_at: 1.month.ago, orders_close_at: 1.month.ago + 1.day
         )
         create(:order, order_cycle: recent_order_cycle)
 
@@ -127,4 +129,3 @@ describe TruncateData do
     end
   end
 end
-

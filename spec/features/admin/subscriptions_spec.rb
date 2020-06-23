@@ -19,9 +19,9 @@ feature 'Subscriptions' do
       let!(:subscription_unmanaged) { create(:subscription, shop: shop_unmanaged, with_items: true, with_proxy_orders: true) }
 
       before do
-        subscription.update_attributes(shipping_fee_estimate: 3.5)
+        subscription.update(shipping_fee_estimate: 3.5)
         subscription.subscription_line_items.each do |sli|
-          sli.update_attributes(price_estimate: 5)
+          sli.update(price_estimate: 5)
         end
       end
 
@@ -412,7 +412,7 @@ feature 'Subscriptions' do
         let(:order) { proxy_order.initialise_order! }
         let(:line_item) { order.line_items.first }
 
-        before { line_item.update_attributes(quantity: 3) }
+        before { line_item.update(quantity: 3) }
 
         it "reports issues encountered during the update" do
           visit edit_admin_subscription_path(subscription)

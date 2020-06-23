@@ -1,7 +1,7 @@
 class HomeController < BaseController
   layout 'darkswarm'
 
-  before_filter :enable_embedded_shopfront
+  before_action :enable_embedded_shopfront
 
   def index
     if ContentConfig.home_show_stats

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 module PermittedAttributes
@@ -37,6 +39,6 @@ module PermittedAttributes
         expect(exchange_variants["7"]).to be true
         expect(exchange_variants["12"]).to be true
       end
-    end    
+    end
   end
 end

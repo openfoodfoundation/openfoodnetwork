@@ -66,7 +66,7 @@ class OrderFactory
   end
 
   def set_addresses
-    @order.update_attributes(attrs.slice(:bill_address_attributes, :ship_address_attributes))
+    @order.update(attrs.slice(:bill_address_attributes, :ship_address_attributes))
   end
 
   def create_shipment

@@ -32,7 +32,7 @@ describe Customer, type: :model do
                        phone: "455500146",
                        address1: "U 3/32 Florence Road Surrey Hills2",
                        country_id: 1 }
-      customer.update_attributes!(ship_address_attributes: ship_address)
+      customer.update!(ship_address_attributes: ship_address)
 
       expect(customer.ship_address.city).to eq 'Melbourne'
       expect(customer.ship_address.firstname).to eq 'fname'

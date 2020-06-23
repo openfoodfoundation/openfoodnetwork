@@ -127,7 +127,7 @@ class CartService
     li = line_item_for_variant loaded_variant
 
     li_added = li.nil? && (variant_data[:quantity].to_i > 0 || variant_data[:max_quantity].to_i > 0)
-    li_quantity_changed     = li.present? && li.quantity.to_i     != variant_data[:quantity].to_i
+    li_quantity_changed = li.present? && li.quantity.to_i != variant_data[:quantity].to_i
     li_max_quantity_changed = li.present? && li.max_quantity.to_i != variant_data[:max_quantity].to_i
 
     li_added || li_quantity_changed || li_max_quantity_changed

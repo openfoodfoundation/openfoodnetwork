@@ -764,7 +764,7 @@ def filter(type, entries)
 
     valid_count += 1 if type == 'valid' && (validates_as != '')
     valid_count += 1 if type == 'invalid' && (validates_as == '')
-    valid_count += 1 if type == 'create_product' && (validates_as == 'new_product' || validates_as == 'new_variant')
+    valid_count += 1 if type == 'create_product' && ['new_product', 'new_variant'].include?(validates_as)
     valid_count += 1 if type == 'update_product' && validates_as == 'existing_variant'
     valid_count += 1 if type == 'create_inventory' && validates_as == 'new_inventory_item'
     valid_count += 1 if type == 'update_inventory' && validates_as == 'existing_inventory_item'

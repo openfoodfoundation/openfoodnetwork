@@ -5,7 +5,7 @@ class Spree::ProductSet < ModelSet
 
   def save
     @collection_hash.each_value.all? do |product_attributes|
-      update_attributes(product_attributes)
+      update_product_attributes(product_attributes)
     end
   end
 
@@ -18,19 +18,19 @@ class Spree::ProductSet < ModelSet
   private
 
   # A separate method of updating products was required due to an issue with
-  # the way Rails' assign_attributes and updates_attributes behave when
+  # the way Rails' assign_attributes and update behave when
   # delegated attributes of a nested object are updated via the parent object
   # (ie. price of variants). Updating such attributes by themselves did not
   # work using:
   #
-  #   product.update_attributes(variants_attributes: [{ id: y, price: xx.x }])
+  #   product.update(variants_attributes: [{ id: y, price: xx.x }])
   #
-  # and so an explicit call to update attributes on each individual variant was
+  # and so an explicit call to update on each individual variant was
   # required. ie:
   #
-  #   variant.update_attributes( { price: xx.x } )
+  #   variant.update( { price: xx.x } )
   #
-  def update_attributes(attributes)
+  def update_product_attributes(attributes)
     split_taxon_ids!(attributes)
 
     product = find_model(@collection, attributes[:id])
@@ -99,7 +99,7 @@ class Spree::ProductSet < ModelSet
   def create_or_update_variant(product, variant_attributes)
     variant = find_model(product.variants_including_master, variant_attributes[:id])
     if variant.present?
-      variant.update_attributes(variant_attributes.except(:id))
+      variant.update(variant_attributes.except(:id))
     else
       create_variant(product, variant_attributes)
     end

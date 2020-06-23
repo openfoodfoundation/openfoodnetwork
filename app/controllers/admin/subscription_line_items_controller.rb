@@ -4,9 +4,9 @@ require 'open_food_network/scope_variant_to_hub'
 
 module Admin
   class SubscriptionLineItemsController < ResourceController
-    before_filter :load_build_context, only: [:build]
-    before_filter :ensure_shop, only: [:build]
-    before_filter :ensure_variant, only: [:build]
+    before_action :load_build_context, only: [:build]
+    before_action :ensure_shop, only: [:build]
+    before_action :ensure_variant, only: [:build]
 
     respond_to :json
 

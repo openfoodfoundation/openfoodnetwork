@@ -63,7 +63,7 @@ describe Api::EnterprisesController, type: :controller do
       before do
         allow(Enterprise)
           .to receive(:find_by).with({ permalink: enterprise.id.to_s }) { enterprise }
-        allow(enterprise).to receive(:update_attributes).and_return(true)
+        allow(enterprise).to receive(:update).and_return(true)
       end
 
       it "I can update enterprise image" do
@@ -83,8 +83,6 @@ describe Api::EnterprisesController, type: :controller do
     end
 
     describe "submitting a valid image" do
-      before { allow(enterprise).to receive(:update_attributes).and_return(true) }
-
       it "I can't update enterprise image" do
         api_post :update_image, logo: 'a logo', id: enterprise.id
         assert_unauthorized!

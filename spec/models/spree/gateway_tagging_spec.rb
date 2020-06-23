@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 
 # We extended Spree::PaymentMethod to be taggable. Unfortunately, an inheritance

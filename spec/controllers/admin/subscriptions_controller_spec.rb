@@ -23,7 +23,7 @@ describe Admin::SubscriptionsController, type: :controller do
       end
 
       context 'as an enterprise user' do
-        before { shop.update_attributes(owner: user) }
+        before { shop.update(owner: user) }
         let!(:not_enabled_shop) { create(:distributor_enterprise, owner: user) }
 
         context "where I manage a shop that is set up for subscriptions" do
@@ -60,7 +60,7 @@ describe Admin::SubscriptionsController, type: :controller do
       end
 
       context 'as an enterprise user' do
-        before { shop.update_attributes(owner: user) }
+        before { shop.update(owner: user) }
         let!(:shop2) { create(:distributor_enterprise, owner: user) }
         let!(:subscription2) { create(:subscription, shop: shop2) }
 
@@ -357,7 +357,7 @@ describe Admin::SubscriptionsController, type: :controller do
           end
 
           context 'where the specified variants are available from the shop' do
-            before { outgoing_exchange.update_attributes(variants: [variant1, variant2]) }
+            before { outgoing_exchange.update(variants: [variant1, variant2]) }
 
             it 'creates subscription line items for the subscription' do
               expect{ spree_post :update, params }.to change{ subscription.subscription_line_items.count }.by(1)
@@ -397,7 +397,7 @@ describe Admin::SubscriptionsController, type: :controller do
       context 'as an enterprise user' do
         context "without authorisation" do
           let!(:shop2) { create(:distributor_enterprise) }
-          before { shop2.update_attributes(owner: user) }
+          before { shop2.update(owner: user) }
 
           it 'redirects to unauthorized' do
             spree_put :cancel, params
@@ -406,7 +406,7 @@ describe Admin::SubscriptionsController, type: :controller do
         end
 
         context "with authorisation" do
-          before { shop.update_attributes(owner: user) }
+          before { shop.update(owner: user) }
 
           context "when at least one associated order is still 'open'" do
             let(:order_cycle) { subscription.order_cycles.first }
@@ -496,7 +496,7 @@ describe Admin::SubscriptionsController, type: :controller do
       context 'as an enterprise user' do
         context "without authorisation" do
           let!(:shop2) { create(:distributor_enterprise) }
-          before { shop2.update_attributes(owner: user) }
+          before { shop2.update(owner: user) }
 
           it 'redirects to unauthorized' do
             spree_put :pause, params
@@ -505,7 +505,7 @@ describe Admin::SubscriptionsController, type: :controller do
         end
 
         context "with authorisation" do
-          before { shop.update_attributes(owner: user) }
+          before { shop.update(owner: user) }
 
           context "when at least one associated order is still 'open'" do
             let(:order_cycle) { subscription.order_cycles.first }
@@ -595,7 +595,7 @@ describe Admin::SubscriptionsController, type: :controller do
       context 'as an enterprise user' do
         context "without authorisation" do
           let!(:shop2) { create(:distributor_enterprise) }
-          before { shop2.update_attributes(owner: user) }
+          before { shop2.update(owner: user) }
 
           it 'redirects to unauthorized' do
             spree_put :unpause, params
@@ -604,7 +604,7 @@ describe Admin::SubscriptionsController, type: :controller do
         end
 
         context "with authorisation" do
-          before { shop.update_attributes(owner: user) }
+          before { shop.update(owner: user) }
 
           context "when at least one order in an open order cycle is 'complete'" do
             let(:order_cycle) { subscription.order_cycles.first }

@@ -2,7 +2,9 @@ require 'open_food_network/property_merge'
 
 class Api::EnterpriseSerializer < ActiveModel::Serializer
   # We reference this here because otherwise the serializer complains about its absence
+  # rubocop:disable Lint/Void
   Api::IdSerializer
+  # rubocop:enable Lint/Void
 
   def serializable_hash
     cached_serializer_hash.merge uncached_serializer_hash
