@@ -1134,13 +1134,13 @@ ar:
     menu:
       cart:
         cart: "سلة"
+      cart_sidebar:
+        checkout: "تابع للخروج"
+        close: "إغلاق"
       signed_in:
         profile: "الملف الشخصي"
       mobile_menu:
         cart: "سلة"
-      joyride:
-        checkout: "الخروج الآن"
-        already_ordered_products: "تم الطلب بالفعل في دورة الطلب هذه"
     register_call:
       selling_on_ofn: "هل أنت مهتم بالحصول على شبكة الغذاء المفتوح؟"
       register: "سجل هنا"

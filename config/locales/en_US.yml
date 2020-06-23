@@ -33,6 +33,10 @@ en_US:
               taken: "There's already an account registered for this email. Please login to reset your password."
         spree/order:
           no_card: There are no authorized credit cards available to charge
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: "has expired"
         order_cycle:
           attributes:
             orders_close_at:
@@ -321,6 +325,7 @@ en_US:
     show_n_more: Show %{num} more
     choose: "Choose..."
     please_select: Please select...
+    column_save_as_default: Save As Default
     columns: Columns
     actions: Actions
     viewing: "Viewing: %{current_view_name}"
@@ -365,7 +370,10 @@ en_US:
         title: "Matomo Settings"
         matomo_url: "Matomo URL"
         matomo_site_id: "Matomo Site ID"
+        matomo_tag_manager_url: "Matomo Tag Manager URL"
+        info_html: "Matomo is a Web and Mobile Analytics application. You can either host Matomo on-premises or use a cloud-hosted service. See <a href='http://matomo.org' target='_blank'>matomo.org</a> for more information."
         config_instructions_html: "Here you can configure the OFN Matomo integration. The Matomo URL below should point to the Matomo instance where the user tracking information will be sent to; if it is left empty, Matomo user tracking will be disabled. The Site ID field is not mandatory but useful if you are tracking more than one website on a single Matomo instance; it can be found on the Matomo instance console."
+        config_instructions_tag_manager_html: "Setting the Matomo Tag Manager URL enables Matomo Tag Manager. This tool allows you to set up analytics events. The Matomo Tag Manager URL is copied from the Install Code section of Matomo Tag Manager. Ensure you select the right container and environment as these options change the URL."
     customers:
       index:
         new_customer: "New Customer"
@@ -471,6 +479,7 @@ en_US:
         line_number: "Line %{number}:"
         encoding_error: "Please check the language setting of your source file and ensure it is saved with UTF-8 encoding"
         unexpected_error: "Product Import encountered an unexpected error when opening the file: %{error_message}"
+        malformed_csv: "Product Import encountered a malformed CSV: %{error_message}"
       index:
         notice: "Notice"
         beta_notice: "This feature is still in beta: you may experience some errors while using it. Please don't hesitate to contact support."
@@ -683,6 +692,7 @@ en_US:
           ofn_uid_tip: The unique id used to identify the enterprise on Open Food Network.
         shipping_methods:
           name: "Name"
+          applies: "Active?"
           manage: "Manage Shipping Methods"
           create_button: "Create New Shipping Method"
           create_one_button: "Create One Now"
@@ -861,6 +871,7 @@ en_US:
         incoming: "Incoming"
         supplier: "Supplier"
         products: "Products"
+        receival_details: "Receival Details"
         fees: "Fees"
         save: "Save"
         save_and_next: "Save and Next"
@@ -1136,13 +1147,18 @@ en_US:
     menu:
       cart:
         cart: "Cart"
+      cart_sidebar:
+        checkout: "Checkout"
+        edit_cart: "Edit cart"
+        items_in_cart_singular: "%{num} item in your cart"
+        items_in_cart_plural: "%{num} items in your cart"
+        close: "Close"
+        cart_empty: "Your cart is empty"
+        take_me_shopping: "Let's go shopping!"
       signed_in:
         profile: "Profile"
       mobile_menu:
         cart: "Cart"
-      joyride:
-        checkout: "Checkout now"
-        already_ordered_products: "Already ordered in this order cycle"
     register_call:
       selling_on_ofn: "Interested in selling through the Open Food Network?"
       register: "Register here"
@@ -1170,7 +1186,11 @@ en_US:
         signup: "signup"
         contact: "contact"
         require_customer_login: "Only approved customers can access this shop."
+        require_login_html: "If you're already an approved customer, %{login} or %{signup} to proceed."
+        require_login_2_html: "Want to start shopping here? Please %{contact} %{enterprise} and ask about joining."
         require_customer_html: "If you'd like to start shopping here, please %{contact} %{enterprise} to ask about joining."
+      select_oc:
+        select_oc_html: "Please <span class='highlighted'>choose when you want your order</span>, to see what products are available."
   card_could_not_be_updated: Card could not be updated
   card_could_not_be_saved: card could not be saved
   spree_gateway_error_flash_for_checkout: "There was a problem with your payment information: %{error}"
@@ -1530,12 +1550,17 @@ en_US:
   orders_changeable_orders_alert_html: This order has been confirmed, but you can make changes until <strong>%{oc_close}</strong>.
   products_clear: Clear
   products_showing: "Showing:"
+  products_results_for: "Results for"
   products_or: "or"
   products_and: "and"
+  products_filters_in: "in"
   products_with: with
+  products_search: "Search..."
   products_filter_by: "Filter by"
   products_filter_selected: "selected"
+  products_filter_heading: "Filters"
   products_filter_clear: "Clear"
+  products_filter_done: "Done"
   products_loading: "Loading products..."
   products_updating_cart: "Updating cart..."
   products_cart_empty: "Cart empty"
@@ -1546,6 +1571,8 @@ en_US:
   products_update_error_msg: "Saving failed."
   products_update_error_data: "Save failed due to invalid data:"
   products_changes_saved: "Changes saved."
+  products_no_results_html: "Sorry, no results found for %{query}"
+  products_clear_search: "Clear search"
   search_no_results_html: "Sorry, no results found for %{query}. Try another search?"
   components_profiles_popover: "Profiles do not have a shopfront on the Open Food Network, but may have their own physical or online shop elsewhere"
   components_profiles_show: "Show profiles"
@@ -1901,6 +1928,7 @@ en_US:
   admin_enterprise_relationships_permits: "permits"
   admin_enterprise_relationships_seach_placeholder: "Search"
   admin_enterprise_relationships_button_create: "Create"
+  admin_enterprise_relationships_to: "to"
   admin_enterprise_groups: "Enterprise Groups"
   admin_enterprise_groups_name: "Name"
   admin_enterprise_groups_owner: "Owner"
@@ -2306,6 +2334,10 @@ en_US:
     resolve_errors: Please resolve the following errors
     more_items: "+ %{count} More"
     default_card_updated: Default Card Updated
+    cart:
+      add_to_cart_failed: >
+          There was a problem adding this product to the cart. Perhaps it has become
+          unavailable or the shop is closing.
     admin:
       enterprise_limit_reached: "You have reached the standard limit of enterprises per account. Write to %{contact_email} if you need to increase it."
       modals:
@@ -2621,6 +2653,9 @@ en_US:
     tub:
       one: "tub"
       other: "tubs"
+    punnet:
+      one: "baskets"
+      other: "baskets"
     packet:
       one: "packet"
       other: "packets"
@@ -2785,6 +2820,12 @@ en_US:
     void: "Void"
     login: "Login"
     password: "Password"
+    signature: "Signature"
+    solution: "Solution"
+    landing_page: "Landing Page"
+    server: "Server"
+    test_mode: "Test Mode"
+    logourl: "Logourl"
     configurations: "Configurations"
     general_settings: "General Settings"
     site_name: "Site Name"
@@ -2901,6 +2942,12 @@ en_US:
     options: "Options"
     actions:
       update: "Update"
+    shared:
+      error_messages:
+        errors_prohibited_this_record_from_being_saved:
+          one: "1 error prohibited this record from being saved:"
+          other: "%{count} errors prohibited this record from being saved:"
+        there_were_problems_with_the_following_fields: "There were problems with the following fields"
     errors:
       messages:
         blank: "can't be blank"
@@ -3043,6 +3090,8 @@ en_US:
           zone: "Zone"
           calculator: "Calculator"
           display: "Display"
+          both: "Both Checkout and Back office"
+          back_end: "Back office only"
           no_shipping_methods_found: "No shipping methods found"
         new:
           new_shipping_method: "New Shipping Method"
@@ -3054,6 +3103,9 @@ en_US:
         form:
           categories: "Categories"
           zones: "Zones"
+          both: "Both Checkout and Back office"
+          back_end: "Back office only"
+          deactivation_warning: "De-activating a shipping method can make the shipping method disappear from your list. Alternatively, you can hide a shipping method from the checkout page by setting the option 'Display' to 'back office only'."
       payment_methods:
         index:
           payment_methods: "Payment Methods"
@@ -3065,8 +3117,11 @@ en_US:
           display: "Display"
           active: "Active"
           both: "Both"
+          front_end: "Checkout only"
+          back_end: "Back office only"
           active_yes: "Yes"
           active_no: "No"
+          no_payment_methods_found: "No payment methods found"
         new:
           new_payment_method: "New Payment Method"
           back_to_payment_methods_list: "Back To Payment Methods List"
@@ -3095,7 +3150,11 @@ en_US:
           active: "Active"
           active_yes: "Yes"
           active_no: "No"
+          both: "Both Checkout and Back office"
+          front_end: "Checkout only"
+          back_end: "Back office only"
           tags: "Tags"
+          deactivation_warning: "De-activating a payment method can make the payment method disappear from your list. Alternatively, you can hide a payment method from the checkout page by setting the option 'Display' to 'back office only'."
         providers:
           provider: "Provider"
       payments:
@@ -3192,10 +3251,13 @@ en_US:
         new:
           new_variant: "New Variant"
         form:
+          cost_price: "Cost Price"
           sku: "SKU"
           price: "Price"
           display_as: "Display As"
           display_name: "Display Name"
+          display_as_placeholder: 'For example, 2 kg'
+          display_name_placeholder: 'For example, Tomatoes'
         autocomplete:
           out_of_stock: "Out of Stock"
           producer_name: "Producer"
@@ -3235,6 +3297,7 @@ en_US:
       format: '%Y-%m-%d'
       js_format: 'yy-mm-dd'
     orders:
+      error_flash_for_unavailable_items: "An item in your cart has become unavailable. Please update the selected quantities."
       edit:
         login_to_view_order: "Please log in to view your order."
       bought:
@@ -3262,6 +3325,14 @@ en_US:
       invalid: Invalid
     order_mailer:
       cancel_email:
+        customer_greeting: "Dear %{name},"
+        instructions_html: "Your order with <strong>%{distributor}</strong> has been CANCELED. Please retain this cancellation information for your records."
+        dont_cancel: "If you have changed your mind or don't wish to cancel this order please contact %{email}"
+        order_summary_canceled_html: "<strong>Order Summary #%{number} [CANCELED]</strong>"
+        details: "Here are the details of what you ordered:"
+        unpaid_order: "Your order was unpaid so no refund has been made"
+        paid_order: "Your order was paid so %{distributor} has refunded the full amount"
+        credit_order: "Your order was paid so your account has been credited"
         subject: "Cancellation of Order"
       confirm_email:
         subject: "Order Confirmation"

@@ -1141,13 +1141,13 @@ pt_BR:
     menu:
       cart:
         cart: "Carrinho"
+      cart_sidebar:
+        checkout: "Fechar pedido"
+        close: "Fechado"
       signed_in:
         profile: "Perfil"
       mobile_menu:
         cart: "Carrinho"
-      joyride:
-        checkout: "Fechar pedido agora"
-        already_ordered_products: "Já pediu neste ciclo de pedidos"
     register_call:
       selling_on_ofn: "Interessado em registrar a sua iniciativa na Open Food Brasil?"
       register: "Registre-se aqui"

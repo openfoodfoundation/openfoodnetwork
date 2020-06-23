@@ -1142,13 +1142,13 @@ fr_BE:
     menu:
       cart:
         cart: "Panier"
+      cart_sidebar:
+        checkout: "Etape suivante (coordonnées)"
+        close: "Ferme"
       signed_in:
         profile: "Profil"
       mobile_menu:
         cart: "Panier"
-      joyride:
-        checkout: "Passer la commande"
-        already_ordered_products: "Déjà commandé dans ce cycle de vente"
     register_call:
       selling_on_ofn: "Intéressé·e à vendre sur Open Food Network?"
       register: "Démarrez ici"

@@ -1149,13 +1149,18 @@ fr:
     menu:
       cart:
         cart: "Panier"
+      cart_sidebar:
+        checkout: "Etape suivante (coordonnées)"
+        edit_cart: "Modifier le panier"
+        items_in_cart_singular: "%{num} élément dans le panier"
+        items_in_cart_plural: "%{num} éléments dans le panier"
+        close: "Fermer"
+        cart_empty: "Le panier est vide"
+        take_me_shopping: "Continuer mes achats"
       signed_in:
         profile: "Profil"
       mobile_menu:
         cart: "Panier"
-      joyride:
-        checkout: "Poursuivre la commande"
-        already_ordered_products: "Déjà commandé dans ce cycle de vente"
     register_call:
       selling_on_ofn: "Vous souhaitez proposer vos produits sur Open Food France?"
       register: "Démarrez ici"
@@ -1183,8 +1188,8 @@ fr:
         signup: "inscrivez-vous"
         contact: "contacter"
         require_customer_login: "Seul les acheteurs autorisés peuvent accéder à cette boutique."
-        require_login_html: "Si vous êtes déjà autorisé à accéder à la boutique, %{login}ou %{signup}pour continuer."
-        require_login_2_html: "Vous souhaitez réaliser vos courses ici? Merci de %{contact}%{enterprise} afin d'avoir l'autorisation d'accès à la boutique."
+        require_login_html: "Si vous êtes déjà autorisé à accéder à la boutique, %{login} ou %{signup} pour continuer."
+        require_login_2_html: "Vous souhaitez réaliser vos courses ici ? Merci de %{contact} %{enterprise} afin d'avoir l'autorisation d'accès à la boutique."
         require_customer_html: "Si vous voulez demander à y accéder, veuillez %{contact} %{enterprise}."
       select_oc:
         select_oc_html: "Merci de <span class='highlighted'>sélectionner une option dans la liste déroulante</span>, afin de voir quel produits sont disponibles."

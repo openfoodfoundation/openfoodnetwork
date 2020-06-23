@@ -1149,13 +1149,13 @@ es:
     menu:
       cart:
         cart: "Carrito"
+      cart_sidebar:
+        checkout: "Validar"
+        close: "Cerrar"
       signed_in:
         profile: "Perfil"
       mobile_menu:
         cart: "Carrito"
-      joyride:
-        checkout: "Validar el carrito ahora"
-        already_ordered_products: "Pedido en este ciclo de pedido"
     register_call:
       selling_on_ofn: "¿Estás interesada en entrar en Open Food Network?"
       register: "Regístrate aquí"

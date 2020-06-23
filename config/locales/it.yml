@@ -1148,13 +1148,13 @@ it:
     menu:
       cart:
         cart: "Carrello"
+      cart_sidebar:
+        checkout: "Paga"
+        close: "Chiuso"
       signed_in:
         profile: "Profilo"
       mobile_menu:
         cart: "Carrello"
-      joyride:
-        checkout: "Checkout adesso"
-        already_ordered_products: "Già richiesto in questo ciclo di richieste"
     register_call:
       selling_on_ofn: "Interessato ad entrare in Open Food Network?"
       register: "Registrati qui"

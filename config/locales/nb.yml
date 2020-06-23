@@ -1147,13 +1147,13 @@ nb:
     menu:
       cart:
         cart: "Handlekurv"
+      cart_sidebar:
+        checkout: "Kassen"
+        close: "Lukk"
       signed_in:
         profile: "Profil"
       mobile_menu:
         cart: "Handlekurv"
-      joyride:
-        checkout: "Sjekk ut nå"
-        already_ordered_products: "Allerede bestilt i denne bestillingssyklusen"
     register_call:
       selling_on_ofn: "Interessert i å bli med i Open Food Network?"
       register: "Registrer her"

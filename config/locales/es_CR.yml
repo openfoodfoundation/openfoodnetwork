@@ -1143,15 +1143,15 @@ es_CR:
     menu:
       cart:
         cart: "Carrito"
+      cart_sidebar:
+        checkout: "Validar el carrito"
+        close: "Cerrar"
       signed_in:
         profile: "Perfil"
       mobile_menu:
         cart: "Carrito"
-      joyride:
-        checkout: "Validar el carrito ahora"
-        already_ordered_products: "Pedido en este ciclo de pedido"
     register_call:
-      selling_on_ofn: "¿Quiere ser parte de Open Food Network (LaFeriaCR)?"
+      selling_on_ofn: "¿Tiene interés en vender a través de Open Food Network (LaFeriaCR)?"
       register: "Regístrarse aquí"
     footer:
       footer_secure: "Seguro y de confianza."

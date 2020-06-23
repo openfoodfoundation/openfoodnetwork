@@ -1142,13 +1142,13 @@ de_DE:
     menu:
       cart:
         cart: "Wagen"
+      cart_sidebar:
+        checkout: "Kasse"
+        close: "Abschließen"
       signed_in:
         profile: "Profil"
       mobile_menu:
         cart: "Wagen"
-      joyride:
-        checkout: "Zur Kasse"
-        already_ordered_products: "Bereits in diesem Bestellzyklus bestellt"
     register_call:
       selling_on_ofn: "Sie möchten selbst im Open Food Network verkaufen?"
       register: "Hier anmelden"

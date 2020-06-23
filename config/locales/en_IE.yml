@@ -1142,13 +1142,13 @@ en_IE:
     menu:
       cart:
         cart: "Basket"
+      cart_sidebar:
+        checkout: "Checkout"
+        close: "Close"
       signed_in:
         profile: "Profile"
       mobile_menu:
         cart: "Basket"
-      joyride:
-        checkout: "Checkout now"
-        already_ordered_products: "Already ordered in this order cycle"
     register_call:
       selling_on_ofn: "Interested in selling through the Open Food Network?"
       register: "Register here"
