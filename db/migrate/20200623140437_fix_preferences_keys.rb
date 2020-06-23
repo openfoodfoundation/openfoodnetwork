@@ -7,6 +7,8 @@ class FixPreferencesKeys < ActiveRecord::Migration
     new_preferences.delete_all
 
     Spree::Preference.update_all("key = '/' || key")
+
+    Rails.cache.clear
   end
 
   def down
