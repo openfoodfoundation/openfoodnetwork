@@ -53,6 +53,10 @@ module Spree
     # If handle_asynchronously is called twice, we get an infinite job loop.
     handle_asynchronously :send_reset_password_instructions unless method_defined? :send_reset_password_instructions_with_delay
 
+    def regenerate_reset_password_token
+      set_reset_password_token
+    end
+
     def known_users
       if admin?
         Spree::User.where(nil)

@@ -1,7 +1,7 @@
 require "spec_helper"
 
 feature "Confirm invitation as manager" do
-  include UIComponentHelper # for be_logged_in_as
+  include UIComponentHelper
   include OpenFoodNetwork::EmailHelper
 
   describe "confirm email and set password" do
@@ -15,8 +15,8 @@ feature "Confirm invitation as manager" do
       user.save!
     end
 
-    it "allows you to set a password" do
-      visit spree.spree_user_confirmation_url(confirmation_token: user.confirmation_token)
+    it "lets the user set a password" do
+      visit spree.spree_user_confirmation_path(confirmation_token: user.confirmation_token)
 
       expect(user.reload.confirmed?).to be true
       expect(page).to have_text I18n.t(:change_my_password)
