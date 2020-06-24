@@ -148,17 +148,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
             end
           end
         end
-
-        context "when logged in" do
-          let!(:prev_order) { create(:completed_order_with_totals, order_cycle: oc1, distributor: distributor, user: order.user) }
-
-          before do
-            distributor.allow_order_changes = true
-            distributor.save
-            quick_login_as order.user
-            visit shop_path
-          end
-        end
       end
     end
 
