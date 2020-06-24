@@ -11,7 +11,7 @@ describe UserConfirmationsController, type: :controller do
 
   before do
     @request.env["devise.mapping"] = Devise.mappings[:spree_user]
-    confirmed_user.confirm!
+    confirmed_user.confirm
   end
 
   context "confirming a user" do
