@@ -479,6 +479,7 @@ en_CA:
         line_number: "Line %{number}:"
         encoding_error: "Please check the language setting of your source file and ensure it is saved with UTF-8 encoding"
         unexpected_error: "Product Import encountered an unexpected error whilst opening the file: %{error_message}"
+        malformed_csv: "Product Import encountered a malformed CSV: %{error_message}"
       index:
         notice: "Notice"
         beta_notice: "This feature is still in beta: you may experience some errors while using it. Please don't hesitate to contact support."
@@ -1146,13 +1147,18 @@ en_CA:
     menu:
       cart:
         cart: "Cart"
+      cart_sidebar:
+        checkout: "Checkout"
+        edit_cart: "Edit cart"
+        items_in_cart_singular: "%{num}item in your cart"
+        items_in_cart_plural: "%{num}items in your cart"
+        close: "Close"
+        cart_empty: "Your cart is empty"
+        take_me_shopping: "Take me shopping!"
       signed_in:
         profile: "Profile"
       mobile_menu:
         cart: "Cart"
-      joyride:
-        checkout: "Checkout now"
-        already_ordered_products: "Already ordered in this order cycle"
     register_call:
       selling_on_ofn: "Interested in getting on the Open Food Network?"
       register: "Register here"
