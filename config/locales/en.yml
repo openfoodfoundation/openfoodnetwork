@@ -1522,6 +1522,9 @@ en:
   order_back_to_store: Back To Store
   order_back_to_cart: Back To Cart
 
+  paypal:
+    no_payment_via_admin_backend: No Payment Via Admin Backend
+
   bom_tip: "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required."
 
   unsaved_changes_warning: "Unsaved changes exist and will be lost if you continue."
