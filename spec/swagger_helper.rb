@@ -9,7 +9,9 @@ RSpec.configure do |config|
       openapi: '3.0.1',
       info: {
         title: 'The Open Food Network',
-        description: 'Some endpoints are public and require no authorization; others require authorization. Talk to us to get your credentials set up. Check out our repo! https://github.com/openfoodfoundation/openfoodnetwork',
+        description: 'This spec is auto generated using the rswag gem. It is incomplete and not yet valid for openapi 3.0.1. Do not publish this. \
+Some endpoints are public and require no authorization; others require authorization. Talk to us to get your credentials set up. \
+Check out our repo! https://github.com/openfoodfoundation/openfoodnetwork',
         version: '0.1',
       },
       components: {

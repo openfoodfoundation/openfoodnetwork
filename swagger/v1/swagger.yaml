@@ -2,9 +2,10 @@
 openapi: 3.0.1
 info:
   title: The Open Food Network
-  description: Some endpoints are public and require no authorization; others require
-    authorization. Talk to us to get your credentials set up. Check out our repo!
-    https://github.com/openfoodfoundation/openfoodnetwork
+  description: |-
+    This spec is auto generated using the rswag gem. It is incomplete and not yet valid for openapi 3.0.1. Do not publish this. \
+    Some endpoints are public and require no authorization; others require authorization. Talk to us to get your credentials set up. \
+    Check out our repo! https://github.com/openfoodfoundation/openfoodnetwork
   version: '0.1'
 components:
   securitySchemes:
@@ -75,50 +76,42 @@ paths:
       parameters:
       - name: X-Spree-Token
         in: header
-        schema:
-          type: string
+        type: string
       - name: q[distributor_id_eq]
         in: query
-        schema:
-          type: string
-        style: deepObject
+        type: string
+        required: false
         description: Query orders for a specific distributor id.
       - name: q[completed_at_gt]
         in: query
-        schema:
-          type: string
-        style: deepObject
+        type: string
+        required: false
         description: Query orders completed after a date.
       - name: q[completed_at_lt]
         in: query
-        schema:
-          type: string
-        style: deepObject
+        type: string
+        required: false
         description: Query orders completed before a date.
       - name: q[state_eq]
         in: query
-        schema:
-          type: string
-        style: deepObject
+        type: string
+        required: false
         description: Query orders by order state, eg 'cart', 'complete'.
       - name: q[payment_state_eq]
         in: query
-        schema:
-          type: string
-        style: deepObject
+        type: string
+        required: false
         description: Query orders by order payment_state, eg 'balance_due', 'paid',
           'failed'.
       - name: q[email_cont]
         in: query
-        schema:
-          type: string
-        style: deepObject
+        type: string
+        required: false
         description: Query orders where the order email contains a string.
       - name: q[order_cycle_id_eq]
         in: query
-        schema:
-          type: string
-        style: deepObject
+        type: string
+        required: false
         description: Query orders for a specific order_cycle id.
       responses:
         '200':
