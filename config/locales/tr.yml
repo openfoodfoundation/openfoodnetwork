@@ -78,7 +78,7 @@ tr:
               charges_not_allowed: "^ Bu müşteri tarafından kredi kartı ücretlendirme kabul edilmemektedir."
               no_default_card: "^ Bu müşteri için kayıtlı kart bulunmuyor"
             shipping_method:
-              not_available_to_shop: "%{shop} için kullanıma uygun değil"
+              not_available_to_shop: "%{shop} için müsait değil"
   devise:
     confirmations:
       send_instructions: "Birkaç dakika içinde, hesabınızı nasıl doğrulayacağınız ile ilgili talimatları içeren bir e-posta alacaksınız."
@@ -183,7 +183,7 @@ tr:
   home: "AGA"
   title: Açık Gıda Ağı
   welcome_to: 'Hoşgeldiniz'
-  site_meta_description: "Açık Gıda Ağı, yerel, bağımsız, adil ve temiz bir gıda sistemi oluşturmak için tasarlanan bir sosyal girişim projesidir. Üretici ve türeticilerin bir araya gelerek aracısız bir gıda düzeni ile her açıdan daha sağlıklı bir toplum yaratmaları için çözümler sunar.  Toplum yararına çalışır, iletişim, dürüstlük ve dayanışmayı destekler."
+  site_meta_description: "Açık Gıda Ağı, bağımsız, adil ve temiz bir gıda sistemi oluşturmak için tasarlanan bir sosyal girişim projesidir. Üretici ve türeticilerin bir araya gelerek aracısız bir gıda düzeni ile her açıdan daha sağlıklı bir toplum yaratmaları için çözümler sunar.  Toplum yararına çalışır, iletişim, dayanışma ve şeffaflığı destekler."
   search_by_name: Üretici adına veya konuma göre arama yapın...
   producers_join: Bağımsız gıda üreticileri! Açık Gıda Ağı sizler için kullanıma açıldı.
   charges_sales_tax: KDV Uyguluyor mu?
@@ -206,7 +206,7 @@ tr:
   ongoing: Devam eden
   bill_address: Fatura Adresi
   ship_address: Teslimat Adresi
-  sort_order_cycles_on_shopfront_by: "SİPARİŞ DÖNEMLERİNİ MAĞAZAMDA ŞUNA GÖRE SIRALA"
+  sort_order_cycles_on_shopfront_by: "SİPARİŞ DÖNEMLERİNİ DÜKKANIMDA ŞUNA GÖRE SIRALA"
   required_fields: Zorunlu alanlar yıldız ile belirtilmiştir
   select_continue: Seç ve Devam Et
   remove: Kaldır
@@ -237,7 +237,7 @@ tr:
   admin_and_handling: Yönetici & İşlemler
   profile: Profil
   supplier_only: Sadece Tedarikçi
-  has_shopfront: MAĞAZASı Var
+  has_shopfront: DÜKKANI VAR
   weight: Ağırlık
   volume: Hacim
   items: Kalemler
@@ -302,7 +302,7 @@ tr:
     schedule: Takvim
     shipping: Teslimat
     shipping_method: Teslimat Yöntemi
-    shop: Tezgah
+    shop: Dükkan
     sku: Stok Kodu
     status_state: Durum
     tags: Etiketler
@@ -337,8 +337,8 @@ tr:
     unsaved_confirm_leave: "Kaydedilmemiş değişiklikler var. Kaydetmeden devam etmek istiyor musunuz?"
     unsaved_changes: "Kaydedilmemiş değişiklikleriniz var"
     shopfront_settings:
-      embedded_shopfront_settings: "YERLEŞTİRİLMİŞ MAĞAZA AYARLARI"
-      enable_embedded_shopfronts: "YERLEŞTİRİLMİŞ MAĞAZALARI ETKİNLEŞTİR"
+      embedded_shopfront_settings: "YERLEŞTİRİLMİŞ DÜKKAN AYARLARI"
+      enable_embedded_shopfronts: "YERLEŞTİRİLMİŞ DÜKKANLARI ETKİNLEŞTİR"
       embedded_shopfronts_whitelist: "Beyaz Listedeki harici Domain'ler"
     number_localization:
       number_localization_settings: "Numara Yerelleştirme Ayarları"
@@ -441,7 +441,7 @@ tr:
         upload_an_image: Görsel yükleyin
       seo:
         product_search_keywords: "Ürün araması için anahtar kelimeler"
-        product_search_tip: "Pazarlarda ürünlerinizin aranmasına yardımcı olacak kelimeler yazın. Her bir anahtar kelimeyi ayırmak için boşluk kullanın."
+        product_search_tip: "Pazaryerinde ürünlerinizin aranmasına yardımcı olacak kelimeler yazın. Her bir anahtar kelimeyi ayırmak için boşluk kullanın."
         SEO_keywords: "Arama Motoru Anahtar Kelimeleri"
         seo_tip: "Ürünlerinizi internet üzerinde  aramanıza yardımcı olacak kelimeler yazın. Her bir anahtar kelimeyi ayırmak için boşluk kullanın."
       search: "Ara"
@@ -566,7 +566,7 @@ tr:
         add: Ekle
         hide: Sakla
         import_date: Aktarıldı
-        select_a_shop: Bir Mağaza Seçin
+        select_a_shop: Bir Dükkan Seçin
         review_now: Şimdi İncele
         new_products_alert_message: Stoklarınıza eklemek için %{new_product_count} yeni ürün var.
         currently_empty: Stoklarınız şu anda boş
@@ -576,7 +576,7 @@ tr:
         no_new_products: Stoklara eklenecek yeni ürün yok
         no_matching_new_products: Arama kriterlerinize uyan yeni ürün yok
         inventory_powertip: Burası sizin ürün envanteriniz, stok takip merkeziniz. Ürün eklemek için menüdeki 'Yeni Ürün' butonun tıklayın.
-        hidden_powertip: Bu ürünler stoklarınızda gizlendi ve mağazanızda görünür olmayacak. Stoklarınıza ürün eklemek için 'Ekle' butonuna tıklayabilirsiniz.
+        hidden_powertip: Bu ürünler stoklarınızda gizlendi ve dükkanınızda görünür olmayacak. Stoklarınıza ürün eklemek için 'Ekle' butonuna tıklayabilirsiniz.
         new_powertip: Bu ürünler stoklarınıza eklenmeye hazır. Stoğunuza ürün eklemek için 'Ekle'yi veya tezgahınızda gizlemek için 'Gizle'yi tıklayın. İstediğiniz zaman fikrinizi değiştirebilirsiniz!
       controls:
         back_to_my_inventory: Stoklarıma geri dön
@@ -657,8 +657,8 @@ tr:
               ürünün satış listenize eklenmeden önce Stok listenize eklenip eklenmemesi
               gerektiğini seçebilirsiniz.  Eğer ürünlerinizi yönetmek için Stok sistemini
               kullanmıyorsanız 'tavsiye edilen' seçeneği ile devam etmeniz gerekir.
-          preferred_product_selection_from_inventory_only_yes: MAĞAZANIZA YENİ ÜRÜNLER EKLENEBİLİR (ÖNERİLİR)
-          preferred_product_selection_from_inventory_only_no: Yeni ürünler mağazanıza eklemeden önce Stok listesine girilmelidir
+          preferred_product_selection_from_inventory_only_yes: DÜKKANINIZA YENİ ÜRÜNLER EKLENEBİLİR (ÖNERİLİR)
+          preferred_product_selection_from_inventory_only_no: Yeni ürünler dükkanınıza eklemeden önce Stok listesine girilmelidir
         payment_methods:
           name: Ad
           applies: Uygulanma?
@@ -680,14 +680,14 @@ tr:
           own: KENDİ ÜRÜNLERİ
           sells: NE SATIYOR
           sells_tip: "Hiç - İşletme müşterilere doğrudan satış yapmaz. <br /> Kendi - İşletme müşterilerine kendi ürünlerini satar. <br /> Hepsi - İşletme kendi ürünlerini veya diğer işletmelerin ürünlerini satabilir. <br />"
-          visible_in_search: Haritada görünsün mü?
+          visible_in_search: ARAMADA GÖRÜNÜR MÜ?
           visible_in_search_tip: Sitede arama yapılırken bu işletmenin müşteriler tarafından görünür olup olmayacağını belirler.
-          visible: Görünür
-          not_visible: Gizli
+          visible: GÖRÜNÜR
+          not_visible: GİZLİ
           permalink: Bağlantı Adı (boşluk yok)
-          permalink_tip: "Bağlantı adı, mağazanızın bağlantı URL'sini oluşturmak için kullanılır: %{link}sectiginiz-ad/tezgah"
-          link_to_front: Mağaza linkiniz
-          link_to_front_tip: Açık Gıda Ağı’ndaki mağazanıza doğrudan bağlantı linki
+          permalink_tip: "Bağlantı adı, mağazanızın bağlantı URL'sini oluşturmak için kullanılır: %{link}sectiginiz-ad/dükkan"
+          link_to_front: Dükkan linkiniz
+          link_to_front_tip: Açık Gıda Ağı’ndaki dükkanınıza doğrudan bağlantı linki
           ofn_uid: AGA KN
           ofn_uid_tip: Açık Gıda Ağı'na kayıtlı işletmenize özel tanımlanan kimlik numarası
         shipping_methods:
@@ -698,8 +698,8 @@ tr:
           create_one_button: "Şimdi Oluştur"
           no_method_yet: "Henüz herhangi bir teslimat yönteminiz yok."
         shop_preferences:
-          shopfront_requires_login: "MAĞAZANIZ HERKESE AÇIK MI?"
-          shopfront_requires_login_tip: "Mağazanızın yalnızca üyelerinize mi yoksa herkese mi açık olduğunu seçin."
+          shopfront_requires_login: "DÜKKANINIZ HERKESE AÇIK MI?"
+          shopfront_requires_login_tip: "Dükkanınızın yalnızca üyelerinize mi yoksa herkese mi açık olduğunu seçin."
           shopfront_requires_login_false: "Herkese açık"
           shopfront_requires_login_true: "Yalnızca kayıtlı müşteriler tarafından görülebilir"
           recommend_require_login: "Siparişlerin değiştirilebileceği durumlarda kullanıcıların oturum açmasını öneriyoruz."
@@ -715,19 +715,20 @@ tr:
           enable_subscriptions_tip: "Üyelik işlevselliği etkinleştirilsin mi?"
           enable_subscriptions_false: "Kapalı"
           enable_subscriptions_true: "Etkin"
-          shopfront_message: "MAĞAZA MESAJINIZ"
+          shopfront_message: "DÜKKAN MESAJINIZ"
           shopfront_message_placeholder: >
-              Müşterilerinize merhaba diyebilir, tezgahınız ve alışveriş şartlarınız
+              Müşterilerinize merhaba diyebilir, dükkanınız ve alışveriş şartlarınız
               ile ilgili bilgi verebilirsiniz. Yazdıklarınız, müşteriler mağazanızı
               ziyaret ettiğinde görünür olacak.
           shopfront_message_link_tooltip: "Bağlantı ekle/düzenle"
           shopfront_message_link_prompt: "Lütfen eklemek için bir URL girin"
-          shopfront_closed_message: "KAPALI MAĞAZA MESAJI"
+          shopfront_closed_message: "KAPALI DÜKKAN MESAJI"
           shopfront_closed_message_placeholder: >
               Mağazanızın neden satışa kapalı olduğunu ve ne zaman açılacağını müşterilerinize
-              açıklayan bir mesaj yazın. Bu mesaj, açık sipariş döneminiz olmadığında
-              sizi ziyaret edenler tarafından görülecek.
-          shopfront_category_ordering: "MAĞAZA KATEGORİ SIRALAMASI"
+              açıklayan bir mesaj yazın. Bu mesaj, açık bir sipariş döneminiz olmadığında
+              sizi ziyaret edenler tarafından görülecek. (örn. neden kapalı olduğunu
+              ve ne zaman açılacağını belirtebilirsiniz)
+          shopfront_category_ordering: "DÜKKAN KATEGORİ SIRALAMASI"
           open_date: "Açılış Tarihi"
           close_date: "Kapanış Tarih"
         social:
@@ -788,7 +789,7 @@ tr:
         name: Ad
         role: Görev
         sells: NE SATIYOR
-        visible: Haritada görünür mü?
+        visible: GÖRÜNÜR MÜ?
         owner: Sahip
         producer: ÜRETİCİ
       change_type_form:
@@ -796,10 +797,10 @@ tr:
         connect_ofn: AGA üzerinden bağlan
         always_free: HER ZAMAN ÜCRETSİZ
         producer_description_text: Ürünlerinizi Açık Gıda Ağı'na yükleyin. Böylece ürünleriniz pazar hesapları üzerinden satışa sunulabilir.
-        producer_shop: ÜRETİCİ TEZGAHI
+        producer_shop: ÜRETİCİ DÜKKANI
         sell_your_produce: Kendi ürününü sat
-        producer_shop_description_text: Açık Gıda Ağı üzerinden açtığınız bireysel mağazanız ile ürünlerinizi doğrudan müşterilere ulaştırabilirsiniz.
-        producer_shop_description_text2: Üretici Tezgahı sadece sizin ürünleriniz içindir.  Üretiminiz haricindeki ürünleri satabilmek için lütfen 'Üretici Pazarı' seçeneğini seçin.
+        producer_shop_description_text: Açık Gıda Ağı üzerinden açtığınız bireysel dükkanınız ile ürünlerinizi doğrudan müşterilere ulaştırabilirsiniz.
+        producer_shop_description_text2: Üretici Dükkanı sadece sizin ürünleriniz içindir.  Üretiminiz haricindeki ürünleri satabilmek için lütfen 'Üretici Pazarı' seçeneğini seçin.
         producer_hub: ÜRETİCİ PAZARI
         producer_hub_text: Kendi ürünleriniz ile beraber başkalarının ürünlerini de satın
         producer_hub_description_text: İşletmeniz, yerel gıda sisteminizin bel kemiğidir. Açık Gıda Ağı'ndaki mağazanız aracılığıyla kendi ürünlerinizi ve çevrenizdeki diğer üreticilerin ürünlerini beraber satabilirsiniz.
@@ -808,7 +809,7 @@ tr:
         profile_description_text: İnsanlar Açık Gıda Ağı üzerinden sizi bulabilir ve sizinle iletişim kurabilir. İşletmeniz haritada ve listelerde görünür olacak.
         hub_shop: Türetici Pazarı
         hub_shop_text: Başkalarının ürünlerini satın
-        hub_shop_description_text: İşletmeniz yerel gıda sisteminizin belkemiğidir. Diğer işletmelerin ürünlerini bir araya getirebilir, Açık Gıda Ağı'na kayıtlı mağazanız üzerinden alıcılara ulaştırabilirsiniz.
+        hub_shop_description_text: İşletmeniz yerel gıda sisteminizin belkemiğidir. Diğer işletmelerin ürünlerini bir araya getirebilir, Açık Gıda Ağı'na kayıtlı dükkanınız üzerinden alıcılara ulaştırabilirsiniz.
         choose_option: Lütfen yukarıdaki seçeneklerden birini seçin.
         change_now: Değiştir
       enterprise_user_index:
@@ -1045,9 +1046,9 @@ tr:
         query_placeholder: "E-posta ile ara ..."
       setup_explanation:
         just_a_few_more_steps: 'Başlamadan önce birkaç adım kaldı:'
-        enable_subscriptions: "Mağazalarınızdan en az biri için üyelikleri etkinleştirin"
-        enable_subscriptions_step_1_html: 1. %{enterprises_link} sayfasına gidin, tezgahınızı bulun ve ‘Yönet’i tıklayın
-        enable_subscriptions_step_2: 2. 'Mağaza Tercihleri' altındaki Üyelikler seçeneğini etkinleştirin
+        enable_subscriptions: "Dükkanınızdan en az biri için üyelikleri etkinleştirin"
+        enable_subscriptions_step_1_html: 1. %{enterprises_link} sayfasına gidin, dükkanınızı bulun ve ‘Yönet’i tıklayın
+        enable_subscriptions_step_2: 2. 'Dükkan Tercihleri' altındaki Üyelikler seçeneğini etkinleştirin
         set_up_shipping_and_payment_methods_html: '%{shipping_link} ve %{payment_link} yöntemlerini ayarlayın'
         set_up_shipping_and_payment_methods_note_html: Yalnızca Nakit ve Online ödeme yöntemlerinin <br />'ü üyeliklerle kullanılabilir
         ensure_at_least_one_customer_html: En az bir %{customer_link} bulunduğundan emin olun
@@ -1139,20 +1140,25 @@ tr:
     failed: "Ödeme başarısız oldu. Siparişinizi işleme koyabilmemiz için lütfen bizimle iletişime geçin."
   shops:
     hubs:
-      show_closed_shops: "Kapalı mağazaları göster"
-      hide_closed_shops: "Kapalı mağazaları gizle"
+      show_closed_shops: "Kapalı dükkanları göster"
+      hide_closed_shops: "Kapalı dükkanları gizle"
       show_on_map: "Tümünü haritada göster"
   shared:
     menu:
       cart:
         cart: "Sepet"
+      cart_sidebar:
+        checkout: "Ödeme Yap"
+        edit_cart: "Sepeti düzenle"
+        items_in_cart_singular: "Sepetnizide %{num} ürün var"
+        items_in_cart_plural: "Sepetinizde %{num} ürün var"
+        close: "KAPANIŞ"
+        cart_empty: "Sepetiniz boş"
+        take_me_shopping: "Alışveriş yap!"
       signed_in:
         profile: "Profil"
       mobile_menu:
         cart: "Sepet"
-      joyride:
-        checkout: "Alışverişi Tamamla"
-        already_ordered_products: "Bu sipariş dönemi içinde zaten sipariş verildi"
     register_call:
       selling_on_ofn: "Açık Gıda Ağı üzerinden satış yapmak ister misiniz?"
       register: "Buradan kaydolun"
@@ -1163,7 +1169,7 @@ tr:
       footer_contact_email: "Bize e-posta gönderin"
       footer_nav_headline: "Gezin"
       footer_join_headline: "Bize katılın"
-      footer_join_body: "Açık Gıda Ağı üzerinden ürünlerinizi sergileyin, çevirimiçi mağazanızı oluşturun veya grubunuzu listeleyin."
+      footer_join_body: "Açık Gıda Ağı üzerinden ürünlerinizi sergileyin, dükkanınızı oluşturun veya topluluğunuzu, grubunuzu listeleyin."
       footer_join_cta: "Daha fazlasını anlat!"
       footer_legal_call: "Okuyun"
       footer_legal_tos: "Şartlar ve koşullar"
@@ -1179,7 +1185,7 @@ tr:
         login: "Oturum Aç / Kaydol"
         signup: "Kaydol"
         contact: "İLETİŞİM"
-        require_customer_login: "Yalnızca onaylı müşteriler buradan alışveriş yapabilir."
+        require_customer_login: "Yalnızca onaylı müşteriler (üyeler) buradan alışveriş yapabilir."
         require_login_html: "Zaten onaylanmış bir müşteri iseniz, devam etmek için %{login} veya %{signup}"
         require_login_2_html: "Buradan alışveriş mi yapmak istiyorsunuz? Lütfen katılmak için sorun: %{contact}%{enterprise} "
         require_customer_html: "Buradan alışveriş yapmaya başlamak istiyorsanız, katılmak için lütfen sorun: %{contact} %{enterprise} "
@@ -1269,7 +1275,7 @@ tr:
   unconfirmed: doğrulanmamış
   days: günler
   authorization_failure: "Yetki Hatası"
-  label_shop: "Pazar"
+  label_shop: "Dükkan"
   label_shops: "PAZAR YERİ"
   label_map: "HARİTA"
   label_producer: "ÜRETİCİ"
@@ -1354,10 +1360,10 @@ tr:
       cookies_policy_link_desc: "Daha fazla bilgi edinmek istiyorsanız,"
       cookies_policy_link: "çerezler politikası"
       cookies_accept_button: "Çerezleri kabul et"
-  home_shop: ŞİMDİ ALIŞVERİŞ YAPIN
+  home_shop: 'ŞİMDİ ALIŞVERİŞE BAŞLAYIN '
   brandstory_headline: "Bağımsız, adil ve temiz gıda ..."
   brandstory_intro: "Bazen sistemi düzeltmenin en iyi yolu yeni bir sistem yaratmaktır…"
-  brandstory_part1: "Açık Gıda Ağı, yerel, bağımsız, adil ve temiz bir gıda sistemi oluşturmak için tasarlanan bir sosyal girişim projesidir. Üretici ve türeticilerin bir araya gelerek aracısız bir gıda düzeni ile her açıdan daha sağlıklı bir toplum yaratmaları için çözümler sunar. Toplum yararına çalışır, iletişim, dürüstlük ve dayanışmayı destekler."
+  brandstory_part1: "Açık Gıda Ağı, adil, temiz bir gıda sistemi oluşturmak için tasarlanan bir sosyal girişim projesidir. Üretici ve türeticilerin bir araya gelerek aracısız bir gıda düzeni ile her açıdan daha sağlıklı bir toplum yaratmaları için çözümler sunar. Toplum yararına çalışır, iletişim, dürüstlük ve dayanışmayı destekler."
   brandstory_part2: "AGA, üreticilere ve alıcılara aracısız ticaret faydaları sağlar ve toplumsal iletişimi ve güveni cesaretlendirir. Gıda yetiştiriciliği ve satışının kendine özgü ihtiyaçlarını karşılamak için geliştirilmiştir. Temiz gıdaya ulaşım sürecini kolaylaştırır."
   brandstory_part3: "Platform üzerinden yalnızca yerel ve bağımsız gıda üreticileri ve dağıtımcıları satış yapabilir. Siz de ürünlerinizi AGA üzerinden oluşturduğunuz tezgah ile doğrudan alıcılara ulaştırabilir, dilerseniz bölgenizdeki diğer üreticiler ile bir araya gelerek kendi ortak 'Üretici Pazarı' veya 'Türetici Pazarı' nızı oluşturabilirsiniz. Bu şekilde çeşitliliği ve bereketi artırır, dayanışmanın getirdiği faydalardan da yararlanabilirsiniz."
   brandstory_part4: "Her yerde çalışıyor. Her şeyi değiştiriyor."
@@ -1537,7 +1543,7 @@ tr:
   hubs_matches: "Bunu mu arıyordunuz?"
   hubs_intro: Bulunduğunuz bölgeden alışveriş yapın
   hubs_distance: En yakın
-  hubs_distance_filter: "Bana %{location} yakınındaki tezgahları göster"
+  hubs_distance_filter: "Bana %{location} yakınındaki dükkanları göster"
   shop_changeable_orders_alert_html:
     one: <a href='%{path}' target='_blank'>%{shop} / %{order}</a> ile siparişiniz incelemeye açık. %{oc_close} tarihine kadar değişiklik yapabilirsiniz.
     other: Şu anda düzenlemeye açık <a href='%{path}' target='_blank'>%{shop} ile %{count} siparişiniz</a> var. %{oc_close} tarihine kadar değişiklik yapabilirsiniz.
@@ -1568,7 +1574,7 @@ tr:
   products_no_results_html: "Üzgünüz, sonuç bulunamadı %{query}"
   products_clear_search: "Aramayı temizle"
   search_no_results_html: "Üzgünüz, %{query} sonuç bulunamadı. Başka bir arama yapmak ister misiniz?"
-  components_profiles_popover: "Açık Gıda Ağında bir mağazası olmayan ancak başka bir sitede kendi satış siteleri olan hesaplar"
+  components_profiles_popover: "Açık Gıda Ağında bir dükkanı olmayan ancak başka bir sitede kendi satış siteleri olan hesaplar"
   components_profiles_show: "Profilleri göster"
   components_filters_nofilters: "Filtresiz"
   components_filters_clearfilters: "Tüm filtreleri temizle"
@@ -1645,9 +1651,9 @@ tr:
   sell_groups_detail: "Bölgenizdeki veya ağınızdaki işletmelerin (üreticilerin, pazarların veya diğer grupların) detaylı rehber listesini oluşturun."
   sell_user_guide: "Kullanım kılavuzumuzdan daha fazla bilgi edinin."
   sell_listing_price: "AGA üzerinde görünür olmak ücretsizdir. Platform üzerinden satış yapan işletmeler için işlem başına uygulanan ücretlendirme KDV dahil %5'tir. Kar amacı gütmeyen topluluklar, kooperatifler ve ekoloji/gıda temelli dernekler ile çalışan üreticiler karşılıklı dayanışma ve özel fiyatlandırma için iletişime geçebilirler. Fiyatlandırma hakkında bilgi almak için, üst menüdeki Hakkımızda bağlantısını kullanarak Fiyatlandırma bölümünü ziyaret edin."
-  sell_embed: "Kendi e-ticaret siteniz olsa bile Açık Gıda Ağı size hikayenizi anlatmanız ve ürünlerinizi satmanız için yeni ve farklı bir seçenek sunuyor. Siz de bu ailenin bir parçası olun, hep beraber büyüyelim!"
+  sell_embed: "Kendi e-ticaret siteniz veya farklı satış kanallarınız olsa bile Açık Gıda Ağı size hikayenizi anlatmanız ve ürünlerinizi satmanız için yeni ve farklı bir seçenek sunuyor. Siz de bu ailenin bir parçası olun, hep beraber büyüyelim!"
   sell_ask_services: "Detaylar için bizimle iletişime geçin."
-  shops_title: Mağazalar
+  shops_title: Dükkanlar
   shops_headline: Alışveriş biçim değiştiriyor
   shops_text: Gıda dönemsel yetiştirilir, dönemsel hasat edilir ve dönemsel sipariş edilir. Aradığınız mağazanın sipariş dönemi kapalı ise kısa süre sonra tekrar kontrol edin.
   shops_signup_title: Pazar olarak kaydolun
@@ -1694,11 +1700,11 @@ tr:
   products_cart_distributor_choice: "Siparişinizin dağıtımcısı:"
   products_cart_distributor_change: "Bu ürünü sepetinize eklerseniz, bu sipariş için dağıtımcınız %{name} olarak değiştirilecektir."
   products_cart_distributor_is: "Bu sipariş için dağıtımcınız %{name}."
-  products_distributor_error: "Başka bir dağıtımcıdan alışveriş yapmadan önce lütfen siparişinizi %{link} adresinden tamamlayın."
+  products_distributor_error: "Başka bir dağıtımcıdan alışveriş yapmadan önce lütfen %{link} adresinden siparişinizi tamamlayın."
   products_oc: "Siparişiniz için sipariş dönemi:"
   products_oc_change: "Bu ürünü sepetinize eklerseniz, bu sipariş için sipariş döneminiz %{name} olarak değiştirilecektir."
   products_oc_is: "Bu sipariş için sipariş döneminiz %{name}."
-  products_oc_error: "Farklı bir sipariş döneminden alışveriş yapmadan önce lütfen siparişinizi %{link} ' tamamlayın."
+  products_oc_error: "Farklı bir sipariş döneminden alışveriş yapmadan önce lütfen  %{link} siparişinizi tamamlayın."
   products_oc_current: "mevcut sipariş döneminiz"
   products_max_quantity: Maks miktar
   products_distributor: Dağıtımcı
@@ -1888,7 +1894,7 @@ tr:
   shop_variant_quantity_max: "maks"
   follow: "Takip et"
   shop_for_products_html: "<span class=\"turquoise\">%{enterprise}</span> ürünleri için şuradan alışveriş yapın:"
-  change_shop: "Mağazayı şuna değiştir:"
+  change_shop: "Dükkanı şuna değiştir:"
   shop_at: "Şimdi alışveriş yapın:"
   price_breakdown: "Fiyat dökümü"
   admin_fee: "Yönetim Ücreti"
@@ -2323,14 +2329,14 @@ tr:
     unavailable: Kullanım dışı
     profile: Profil
     hub: pazar
-    shop: MAĞAZA
+    shop: Dükkan
     choose: Seç
     resolve_errors: Lütfen aşağıdaki hataları düzeltin
     more_items: "+ %{count} Daha "
     default_card_updated: Varsayılan Kart Güncellendi
     cart:
       add_to_cart_failed: >
-          Bu ürünü sepete eklerken bir hata oluştu. Ürün stokları bitmiş veya mağaza
+          Bu ürünü sepete eklerken bir hata oluştu. Ürün stokları bitmiş veya dükkan
           kapanıyor olabilir.
     admin:
       enterprise_limit_reached: "Hesap başına standart işletme sınırına ulaştınız. Artırmanız gerekiyorsa %{contact_email}'a yazın."
@@ -2368,7 +2374,7 @@ tr:
           hub_profile_text2: >
               Bir profil sahibi olmak, Açık Gıda Ağı üzerinden bağlantı kurmak her
               zaman ücretsiz olacaktır.
-          hub_shop: Pazar Mağazası
+          hub_shop: Pazar Dükkanı
           hub_shop_text1: >
               İşletmeniz yerel gıda sisteminizin bel kemiğidir. Ulaşabilir olduğunuz
               bölgedeki üreticilerin ürünlerini bir araya getirip Açık Gıda Ağı üzerinden
@@ -2392,17 +2398,17 @@ tr:
               ve yeni işbirlikleri aramak için güzel bir yerdesiniz.
           profile_only_text2: >
               Eğer yalnızca çiftçiliğe odaklanmak ve ürünlerin satış kısmını başkalarına
-              bırakmak istiyorsanız, Açık Gıda Ağı üzerinde bir tezgah sahibi olmanıza
+              bırakmak istiyorsanız, Açık Gıda Ağı üzerinde bir dükkan sahibi olmanıza
               gerek yoktur.
           profile_only_text3: >
               Ürünlerinizi Açık Gıda Ağı'na ekleyin. Böylece üretici & türetici pazarları
               gibi diğer  hesaplar ürünlerinizi kendi listelerine ekleyip satışa sunabilsinler.
-          producer_shop: ÜRETİCİ TEZGAHI
+          producer_shop: ÜRETİCİ DÜKKANI
           producer_shop_text1: >
-              Açık Gıda Ağı üzerindeki mağazanız aracılığıyla ürünlerinizi alıcılara
+              Açık Gıda Ağı üzerindeki dükkanınız aracılığıyla ürünlerinizi alıcılara
               direk olarak satın.
           producer_shop_text2: >
-              Üretici Tezgahı yalnızca kendi ürünlerinizi satmanız içindir. Kendi
+              Üretici Dükkanı yalnızca kendi ürünlerinizi satmanız içindir. Kendi
               üretiminiz haricindeki ürünlerden de satmak isterseniz lütfen 'Üretici
               Pazarı' nı seçin.
           producer_hub: Üretici Pazarı
@@ -2541,7 +2547,7 @@ tr:
       subscriptions:
         error_saving: "Üyelik kaydedilirken hata oluştu"
         new:
-          please_select_a_shop: "Lütfen bir mağaza seçin"
+          please_select_a_shop: "Lütfen bir dükkan seçin"
     insufficient_stock: "Yetersiz stok, sadece %{on_hand} kaldı"
     out_of_stock:
       reduced_stock_available: Azaltılmış stok mevcut
@@ -2572,12 +2578,12 @@ tr:
       changing_on_hand_stock: Eldeki stok seviyeleri değiştiriliyor ...
       stock_reset: Stoklar varsayılana ayarlanır
     tag_rules:
-      show_hide_variants: 'MAĞAZAMDA VARYANTLARI GÖSTER VEYA GİZLE'
+      show_hide_variants: 'DÜKKANIMDA VARYANTLARI GÖSTER VEYA GİZLE'
       show_hide_shipping: 'Ödeme sırasında teslimat yöntemlerini göster veya gizle'
       show_hide_payment: 'Ödeme sırasında ödeme yöntemlerini göster veya gizle'
-      show_hide_order_cycles: 'MAĞAZAMDA SİPARİŞ DÖNEMLERİNİ GÖSTER VEYA GİZLE'
+      show_hide_order_cycles: 'DÜKKANIMDA SİPARİŞ DÖNEMLERİNİ GÖSTER VEYA GİZLE'
       visible: GÖRÜNÜR
-      not_visible: GÖRÜNÜR DEĞİL
+      not_visible: GİZLİ
     services:
       unsaved_changes_message: Kaydedilmemiş değişiklikler var, şimdi kaydet veya yoksay?
       save: KAYDET
@@ -2601,7 +2607,7 @@ tr:
       producer: "Üretici"
       non_producer: "Üretici Değil"
     customers:
-      select_shop: 'Lütfen önce bir mağaza seçin'
+      select_shop: 'Lütfen önce bir dükkan seçin'
       could_not_create: Afedersiniz! Oluşturulamadı
     subscriptions:
       closes: kapanır
@@ -3255,7 +3261,7 @@ tr:
           display_as_placeholder: 'örn. 2 kg'
           display_name_placeholder: 'örn. Domates'
         autocomplete:
-          out_of_stock: "Tükendi"
+          out_of_stock: "Stokta Yok"
           producer_name: "Üretici"
           unit: "Birim"
       shared:
@@ -3385,7 +3391,7 @@ tr:
         transaction_history: İşlem Geçmişi
       open_orders:
         order: Sipariş
-        shop: MAĞAZA
+        shop: DÜKKAN
         changes_allowed_until: Değişiklikler Şu Zamana Kadar İzin Verildi
         items: Ürünler
         total: Toplam
@@ -3395,7 +3401,7 @@ tr:
         until: Şu zamana kadar
       past_orders:
         order: Sipariş
-        shop: MAĞAZA
+        shop: DÜKKAN
         completed_at: Tamamlanma Tarihi
         items: Ürünler
         total: Toplam
@@ -3409,7 +3415,7 @@ tr:
         authorised_shops_popover: Sahip olabileceğiniz tüm üyelikler (mesela tekrarlayan siparişleriniz) için varsayılan kredi kartınızdan işlem yapmasına izin verilen işletmelerin listesidir. Kart bilgileriniz güvende tutulacak ve işletme sahipleriyle paylaşılmayacak. Ödeme alındığında her zaman bilgilendirileceksiniz.
         saved_cards_popover: Bu, daha sonra kullanmak üzere kaydetmeyi seçtiğiniz kartların listesidir. Bir siparişin ödemesi tamamlandığında 'varsayılan'ınız otomatik olarak seçilir ve izin verdiğiniz satıcılar tarafından ücretlendirilebilir (sağa bakın).
       authorised_shops:
-        shop_name: "MAĞAZA ADI"
+        shop_name: "DÜKKAN ADI"
         allow_charges?: "Ücretlere İzin Verilsin mi?"
     localized_number:
       invalid_format: geçersiz bir biçime sahip. Lütfen bir numara giriniz.
