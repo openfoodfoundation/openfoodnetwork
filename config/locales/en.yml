@@ -302,6 +302,7 @@ en:
   on_hand: "On Hand"
   "on hand": "On Hand"
   ship: "Ship"
+  shipping_category: "Shipping Category"
 
   actions:
     create_and_add_another: "Create and Add Another"
