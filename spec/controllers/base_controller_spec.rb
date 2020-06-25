@@ -20,6 +20,6 @@ describe BaseController, type: :controller do
 
     expect(session[:expired_order_cycle_id]).to eq oc.id
     expect(response).to redirect_to root_url
-    expect(flash[:info]).to eq "The order cycle you've selected has just closed. Please try again!"
+    expect(flash[:info]).to eq I18n.t('order_cycle_closed')
   end
 end

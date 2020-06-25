@@ -99,8 +99,7 @@ class ApplicationController < ActionController::Base
     if current_distributor_closed?
       current_order.empty!
       current_order.set_distribution! nil, nil
-      flash[:info] = "The hub you have selected is temporarily closed for orders. "\
-        "Please try again later."
+      flash[:info] = I18n.t('order_cycles_closed_for_hub')
       redirect_to main_app.root_url
     end
   end
@@ -117,7 +116,7 @@ class ApplicationController < ActionController::Base
       session[:expired_order_cycle_id] = current_order_cycle.id
       current_order.empty!
       current_order.set_order_cycle! nil
-      flash[:info] = "The order cycle you've selected has just closed. Please try again!"
+      flash[:info] = I18n.t('order_cycle_closed')
       redirect_to main_app.root_url
     end
   end

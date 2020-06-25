@@ -116,7 +116,7 @@ describe Spree::OrdersController, type: :controller do
       spree_get :edit
 
       expect(response).to redirect_to root_url
-      expect(flash[:info]).to eq("The hub you have selected is temporarily closed for orders. Please try again later.")
+      expect(flash[:info]).to eq(I18n.t('order_cycles_closed_for_hub'))
     end
 
     describe "when an item is in the cart" do
