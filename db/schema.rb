@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200623140437) do
+ActiveRecord::Schema.define(version: 20200624091611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -273,8 +273,8 @@ ActiveRecord::Schema.define(version: 20200623140437) do
   add_index "inventory_items", ["enterprise_id", "variant_id"], name: "index_inventory_items_on_enterprise_id_and_variant_id", unique: true, using: :btree
 
   create_table "order_cycle_schedules", force: true do |t|
-    t.integer "order_cycle_id", null: false
-    t.integer "schedule_id",    null: false
+    t.integer  "order_cycle_id", null: false
+    t.integer  "schedule_id",    null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -570,8 +570,8 @@ ActiveRecord::Schema.define(version: 20200623140437) do
 
   add_index "spree_orders", ["completed_at", "user_id", "created_by_id", "created_at"], name: "spree_orders_completed_at_user_id_created_by_id_created_at_idx", using: :btree
   add_index "spree_orders", ["customer_id"], name: "index_spree_orders_on_customer_id", using: :btree
-  add_index "spree_orders", ["number"], name: "index_orders_on_number", using: :btree
   add_index "spree_orders", ["distributor_id"], name: "index_spree_orders_on_distributor_id", using: :btree
+  add_index "spree_orders", ["number"], name: "index_orders_on_number", using: :btree
   add_index "spree_orders", ["order_cycle_id"], name: "index_spree_orders_on_order_cycle_id", using: :btree
   add_index "spree_orders", ["user_id"], name: "index_spree_orders_on_user_id", using: :btree
 
@@ -644,9 +644,9 @@ ActiveRecord::Schema.define(version: 20200623140437) do
   add_index "spree_preferences", ["key"], name: "index_spree_preferences_on_key", unique: true, using: :btree
 
   create_table "spree_prices", force: true do |t|
-    t.integer "variant_id",                         null: false
-    t.decimal "amount",     precision: 8, scale: 2
-    t.string  "currency"
+    t.integer  "variant_id",                         null: false
+    t.decimal  "amount",     precision: 8, scale: 2
+    t.string   "currency"
     t.datetime "deleted_at"
   end
 
@@ -723,7 +723,7 @@ ActiveRecord::Schema.define(version: 20200623140437) do
   add_index "spree_products", ["permalink"], name: "index_products_on_permalink", using: :btree
   add_index "spree_products", ["permalink"], name: "permalink_idx_unique", unique: true, using: :btree
   add_index "spree_products", ["primary_taxon_id"], name: "index_spree_products_on_primary_taxon_id", using: :btree
-  add_index "spree_products", ["supplier_id"], name: "index_spree_products_on_supplier_id"
+  add_index "spree_products", ["supplier_id"], name: "index_spree_products_on_supplier_id", using: :btree
 
   create_table "spree_products_promotion_rules", id: false, force: true do |t|
     t.integer "product_id"
@@ -1189,9 +1189,9 @@ ActiveRecord::Schema.define(version: 20200623140437) do
   add_index "variant_overrides", ["variant_id", "hub_id"], name: "index_variant_overrides_on_variant_id_and_hub_id", using: :btree
 
   create_table "versions", force: true do |t|
-    t.string   "item_type",  null: false
-    t.integer  "item_id",    null: false
-    t.string   "event",      null: false
+    t.string   "item_type",   null: false
+    t.integer  "item_id",     null: false
+    t.string   "event",       null: false
     t.string   "whodunnit"
     t.text     "object"
     t.datetime "created_at"
