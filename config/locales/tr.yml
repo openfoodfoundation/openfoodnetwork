@@ -6,7 +6,7 @@ tr:
         fee_type: Ücret TÜRÜ
       spree/order:
         payment_state: Ödeme Durumu
-        shipment_state: ' Teslimat Durumu'
+        shipment_state: ' TESLİMAT Durumu'
         completed_at: Oluşturulma TARİHİ
         number: Numara
         state: Durum
@@ -16,11 +16,11 @@ tr:
       spree/product:
         primary_taxon: "ÜRÜN KATEGORİSİ"
         supplier: "TEDARİKÇİ"
-        shipping_category_id: "Teslimat KategOrİSİ"
+        shipping_category_id: "TESLİMAT KATEGORİSİ"
         variant_unit: "Varyant BİRİMİ"
-        variant_unit_name: "Varyant Birim Adı"
+        variant_unit_name: "Varyant Birim ADI"
       spree/credit_card:
-        base: "Kredi kartı"
+        base: "Kredİ kartI"
       order_cycle:
         orders_close_at: BİTİŞ TARİHİ
       variant_override:
@@ -128,7 +128,7 @@ tr:
       email_userguide_html: "Tezgah veya Pazar hesapları ayarları ile ilgili ayrıntılı desteğe sahip Kullanıcı Kılavuzu burada: %{link}"
       userguide: "Açık Gıda Ağı Kullanıcı Kılavuzu"
       email_admin_html: "%{link}'dan oturum açarak veya ana sayfanın sağ üst kısmındaki ayarlar simgesini tıkladıktan sonra Yönetim' butonu üzerinden hesabınızı yönetebilirsiniz."
-      admin_panel: "Yönetici Paneli"
+      admin_panel: "YönetiİCİ Panelİ"
       email_community_html: "Ayrıca, AGA yazılımı ve bir işletmeyi yönetmek ile ilgili fikir alışverişlerinde bulunduğumuz bir forumumuz var. Sizleri de paylaşmaya bekliyoruz. Sürekli olarak kendimizi yenillemeye çalışıyoruz ve düşünceleriniz bundan sonra olacakları şekillendirecek. %{link}"
       join_community: "Topluluğa katılın !"
     invite_manager:
@@ -139,7 +139,7 @@ tr:
   shipment_mailer:
     shipped_email:
       dear_customer: "Değerli müşterimiz,"
-      instructions: "Siparişiniz kargoya teslim edildi"
+      instructions: "Siparişiniz gönderildi"
       shipment_summary: "Teslimat Özeti"
       subject: "TESLİMAT BİLDİRİMİ"
       thanks: "İş birliğiniz için teşekkür ederim."
@@ -270,6 +270,7 @@ tr:
   backordered: "Bakiye Sipariş"
   on hand: "Mevcut"
   ship: "Teslimat"
+  shipping_category: "Teslimat KategOrİSİ"
   actions:
     create_and_add_another: "Oluştur ve Yeni Ekle"
     create: "Oluştur"
@@ -2071,6 +2072,7 @@ tr:
   hub_sidebar_at_least: "En az bir pazar seçilmelidir"
   hub_sidebar_blue: "mavi"
   hub_sidebar_red: "kırmızı"
+  order_cycles_closed_for_hub: "Seçtiğiniz pazar geçici olarak siparişlere kapalı durumdadır. Lütfen daha sonra tekrar deneyiniz."
   report_customers_distributor: "Dağıtımcı"
   report_customers_supplier: "Tedarikçi"
   report_customers_cycle: "Sipariş Dönemi"
@@ -2151,7 +2153,7 @@ tr:
   report_header_total_available: Toplam mevcut
   report_header_unallocated: Paylaştırılmamış
   report_header_max_quantity_excess: Maksimum Miktar Fazlası
-  report_header_taxons: sınıflar
+  report_header_taxons: KATEGORİ
   report_header_supplier: Tedarikçi
   report_header_producer: Üretici
   report_header_producer_suburb: Yapımcı İlçesi
@@ -2307,6 +2309,7 @@ tr:
   order_cycles_email_to_producers_notice: 'Üreticilere gönderilecek e-postalar gönderilmek üzere sıraya alınmıştır.'
   order_cycles_no_permission_to_coordinate_error: "Hiçbir işletmenizin sipariş dönemini koordine etme izni yok"
   order_cycles_no_permission_to_create_error: "Bu işletme tarafından koordine edilen bir sipariş dönemi oluşturma izniniz yok"
+  order_cycle_closed: "Seçmiş olduğunuz sipariş dönemi az önce kapandı. Lütfen daha sonra tekrar deneyin :("
   back_to_orders_list: "Sipariş listesine geri dön"
   no_orders_found: "SİPARİŞ BULUNAMADI"
   order_information: "Sipariş Bilgisi"
@@ -2774,6 +2777,7 @@ tr:
   previous: "Önceki"
   last: "Son"
   spree:
+    more: "Daha Fazla"
     your_order_is_empty_add_product: "Sepetiniz boş, lütfen bir ürün arayın ve ekleyin"
     add_product: "ürün ekle"
     name_or_sku: "Ad veya STOK KODU (ürün adının en az ilk 4 karakterini girin)"
@@ -2892,9 +2896,9 @@ tr:
     abbreviation: "Kısaltma"
     new_state: "Yeni Şehir"
     payment_methods: "Ödeme yöntemleri"
-    taxonomies: "cinsler"
-    new_taxonomy: "Yeni Cins"
-    back_to_taxonomies_list: "Cinsler Listesine Geri Dön"
+    taxonomies: "KATEGORİ"
+    new_taxonomy: "YENİ KATEGORİ"
+    back_to_taxonomies_list: "Kategori Listesine Geri Dön"
     shipping_methods: "Teslimat Yöntemleri"
     shipping_categories: "Nakliye Kategorileri"
     new_shipping_category: "Yeni Nakliye Kategorisi"
@@ -3434,4 +3438,4 @@ tr:
       key_cleared: "Anahtar temizlendi"
       shipment:
         cannot_ready: "Gönderim hazırlanamıyor."
-      invalid_taxonomy_id: "Geçersiz sınıflandırma kimliği."
+      invalid_taxonomy_id: "Geçersiz kategori kimliği."
