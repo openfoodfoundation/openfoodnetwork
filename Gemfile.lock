@@ -92,8 +92,10 @@ GEM
       rack-test (~> 0.6.2)
     actionpack-action_caching (1.2.1)
       actionpack (>= 4.0.0)
-    active_model_serializers (0.8.4)
-      activemodel (>= 3.0)
+    active_model_serializers (0.10.0)
+      actionpack (>= 4.0)
+      activemodel (>= 4.0)
+      railties (>= 4.0)
     activemerchant (1.78.0)
       activesupport (>= 3.2.14, < 6.x)
       builder (>= 2.1.2, < 4.0.0)
@@ -689,7 +691,7 @@ PLATFORMS
 
 DEPENDENCIES
   actionpack-action_caching
-  active_model_serializers (= 0.8.4)
+  active_model_serializers (= 0.10.0)
   activemerchant (~> 1.78.0)
   activerecord-import
   activerecord-postgresql-adapter
