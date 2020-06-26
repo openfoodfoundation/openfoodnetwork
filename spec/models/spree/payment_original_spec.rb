@@ -536,7 +536,7 @@ describe Spree::Payment do
       end
 
       context "when successfully connecting to the gateway" do
-        it "should create a payment profile" do
+        xit "should create a payment profile" do
           gateway.name = 'Gateway'
           gateway.distributors << create(:distributor_enterprise)
           gateway.save!
