@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module Core
     module ControllerHelpers
@@ -8,7 +10,7 @@ module Spree
           before_filter :ensure_api_key
           helper_method :try_spree_current_user
 
-          rescue_from CanCan::AccessDenied do |exception|
+          rescue_from CanCan::AccessDenied do
             unauthorized
           end
         end
@@ -18,9 +20,10 @@ module Spree
           @current_ability ||= Spree::Ability.new(try_spree_current_user)
         end
 
-        # Redirect as appropriate when an access request fails.  The default action is to redirect to the login screen.
-        # Override this method in your controllers if you want to have special behavior in case the user is not authorized
-        # to access the requested action.  For example, a popup window might simply close itself.
+        # Redirect as appropriate when an access request fails.  The default action is to redirect
+        #   to the login screen. Override this method in your controllers if you want to have
+        #   special behavior in case the user is not authorized to access the requested action.
+        # For example, a popup window might simply close itself.
         def unauthorized
           if try_spree_current_user
             flash[:error] = Spree.t(:authorization_failure)
@@ -37,18 +40,17 @@ module Spree
           disallowed_urls = []
           authentication_routes.each do |route|
             if respond_to?(route)
-              disallowed_urls << send(route)
+              disallowed_urls << __send__(route)
             end
           end
 
           disallowed_urls.map!{ |url| url[/\/\w+$/] }
-          unless disallowed_urls.include?(request.fullpath)
-            session['spree_user_return_to'] = request.fullpath.gsub('//', '/')
-          end
+          return if disallowed_urls.include?(request.fullpath)
+
+          session['spree_user_return_to'] = request.fullpath.gsub('//', '/')
         end
 
-        # proxy method to *possible* spree_current_user method
-        # Authentication extensions (such as spree_auth_devise) are meant to provide spree_current_user
+        # This was a proxy method in spree, in OFN this just redirects to spree_current_user
         def try_spree_current_user
           respond_to?(:spree_current_user) ? spree_current_user : nil
         end
@@ -61,11 +63,11 @@ module Spree
         # Need to generate an API key for a user due to some actions potentially
         # requiring authentication to the Spree API
         def ensure_api_key
-          if user = try_spree_current_user
-            if user.respond_to?(:spree_api_key) && user.spree_api_key.blank?
-              user.generate_spree_api_key!
-            end
-          end
+          return unless (user = try_spree_current_user)
+
+          return unless user.respond_to?(:spree_api_key) && user.spree_api_key.blank?
+
+          user.generate_spree_api_key!
         end
       end
     end
