@@ -17,7 +17,7 @@ describe Spree::Payment do
   before { allow(card).to receive(:has_payment_profile?).and_return(true) }
 
   let(:payment) do
-    payment = Spree::Payment.new
+    payment = create(:payment)
     payment.source = card
     payment.order = order
     payment.payment_method = gateway
@@ -54,7 +54,6 @@ describe Spree::Payment do
 
   # Regression test for https://github.com/spree/spree/pull/2224
   context 'failure' do
-
     it 'should transition to failed from pending state' do
       payment.state = 'pending'
       payment.failure
@@ -472,6 +471,12 @@ describe Spree::Payment do
   context "#credit" do
     context "when amount <= credit_allowed" do
       it "makes the state processing" do
+        payment.payment_method.name = 'Gateway'
+        payment.payment_method.distributors << create(:distributor_enterprise)
+        payment.payment_method.save!
+
+        payment.order = create(:order)
+
         payment.state = 'completed'
         payment.stub(:credit_allowed).and_return(10)
         payment.partial_credit(10)
@@ -496,7 +501,12 @@ describe Spree::Payment do
 
   context "#save" do
     it "should call order#update!" do
-      payment = Spree::Payment.create(:amount => 100, :order => order)
+      gateway.name = 'Gateway'
+      gateway.distributors << create(:distributor_enterprise)
+      gateway.save!
+
+      order = create(:order)
+      payment = Spree::Payment.create(:amount => 100, :order => order, :payment_method => gateway)
       order.should_receive(:update!)
       payment.save
     end
@@ -527,10 +537,17 @@ describe Spree::Payment do
 
       context "when successfully connecting to the gateway" do
         it "should create a payment profile" do
-          payment.payment_method.should_receive :create_profile
+          gateway.name = 'Gateway'
+          gateway.distributors << create(:distributor_enterprise)
+          gateway.save!
+
+          payment.payment_method = gateway
+
+          expect(gateway).to receive(:create_profile)
+
           payment = Spree::Payment.create(
             :amount => 100,
-            :order => order,
+            :order => create(:order),
             :source => card,
             :payment_method => gateway
           )
@@ -544,10 +561,14 @@ describe Spree::Payment do
       before { gateway.stub :payment_profiles_supported? => false }
 
       it "should not create a payment profile" do
+        gateway.name = 'Gateway'
+        gateway.distributors << create(:distributor_enterprise)
+        gateway.save!
+
         gateway.should_not_receive :create_profile
         payment = Spree::Payment.create(
           :amount => 100,
-          :order => order,
+          :order => create(:order),
           :source => card,
           :payment_method => gateway
         )
@@ -615,9 +636,13 @@ describe Spree::Payment do
 
     context "other payment exists" do
       let(:other_payment) {
+        gateway.name = 'Gateway'
+        gateway.distributors << create(:distributor_enterprise)
+        gateway.save!
+
         payment = Spree::Payment.new
         payment.source = card
-        payment.order = order
+        payment.order = create(:order)
         payment.payment_method = gateway
         payment
       }
