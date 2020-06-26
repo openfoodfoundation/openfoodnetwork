@@ -2,48 +2,6 @@ require 'spec_helper'
 
 module Spree
   describe Payment do
-    describe "available actions" do
-      context "for most gateways" do
-        let(:payment) { create(:payment, source: create(:credit_card)) }
-
-        it "can capture and void" do
-          expect(payment.actions).to match_array %w(capture void)
-        end
-
-        describe "when a payment has been taken" do
-          before do
-            allow(payment).to receive(:state) { 'completed' }
-            allow(payment).to receive(:order) { double(:order, payment_state: 'credit_owed') }
-          end
-
-          it "can void and credit" do
-            expect(payment.actions).to match_array %w(void credit)
-          end
-        end
-      end
-
-      context "for Pin Payments" do
-        let(:d) { create(:distributor_enterprise) }
-        let(:pin) { Gateway::Pin.create! name: 'pin', distributor_ids: [d.id] }
-        let(:payment) { create(:payment, source: create(:credit_card), payment_method: pin) }
-
-        it "does not void" do
-          expect(payment.actions).not_to include 'void'
-        end
-
-        describe "when a payment has been taken" do
-          before do
-            allow(payment).to receive(:state) { 'completed' }
-            allow(payment).to receive(:order) { double(:order, payment_state: 'credit_owed') }
-          end
-
-          it "can refund instead of crediting" do
-            expect(payment.actions).not_to include 'credit'
-            expect(payment.actions).to     include 'refund'
-          end
-        end
-      end
-    end
 
     describe "refunding" do
       let(:payment) { create(:payment) }
