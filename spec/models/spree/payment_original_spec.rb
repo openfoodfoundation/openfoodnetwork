@@ -396,7 +396,7 @@ describe Spree::Payment do
           payment.stub :credit_allowed => 10
 
           offsetting_payment = payment.credit!
-          offsetting_payment.amount.to_f.should == -10
+          expect(offsetting_payment.amount.to_f).to eq(-10)
           expect(offsetting_payment).to be_completed
           expect(offsetting_payment.response_code).to eq('12345')
           expect(offsetting_payment.source).to eq(payment)
