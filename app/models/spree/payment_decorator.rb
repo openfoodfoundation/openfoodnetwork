@@ -8,8 +8,6 @@ module Spree
 
     has_one :adjustment, as: :source, dependent: :destroy
 
-    after_save :ensure_correct_adjustment, :update_order
-
     localize_number :amount
 
     # We bypass this after_rollback callback that is setup in Spree::Payment

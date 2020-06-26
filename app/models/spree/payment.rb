@@ -18,7 +18,7 @@ module Spree
     after_save :create_payment_profile, if: :profiles_supported?
 
     # update the order totals, etc.
-    after_save :update_order
+    after_save :ensure_correct_adjustment, :update_order
     # invalidate previously entered payments
     after_create :invalidate_old_payments
 
