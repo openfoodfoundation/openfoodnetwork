@@ -37,7 +37,7 @@ describe Spree::Payment do
 
   before(:each) do
     # So it doesn't create log entries every time a processing method is called
-    allow(payment.log_entries).to receive(:create)
+    allow(payment).to receive(:record_response)
   end
 
   context 'validations' do
@@ -126,8 +126,8 @@ describe Spree::Payment do
       end
 
       it "should log the response" do
-        expect(payment.log_entries).to receive(:create).with(:details => anything)
         payment.authorize!
+        expect(payment).to have_received(:record_response)
       end
 
       context "when gateway does not match the environment" do
@@ -177,8 +177,8 @@ describe Spree::Payment do
       end
 
       it "should log the response" do
-        payment.log_entries.should_receive(:create).with(:details => anything)
         payment.purchase!
+        expect(payment).to have_received(:record_response)
       end
 
       context "when gateway does not match the environment" do
@@ -292,8 +292,8 @@ describe Spree::Payment do
       end
 
       it "should log the response" do
-        payment.log_entries.should_receive(:create).with(:details => anything)
         payment.void_transaction!
+        expect(payment).to have_received(:record_response)
       end
 
       context "when gateway does not match the environment" do
@@ -374,8 +374,8 @@ describe Spree::Payment do
       end
 
       it "should log the response" do
-        payment.log_entries.should_receive(:create).with(:details => anything)
         payment.credit!
+        expect(payment).to have_received(:record_response)
       end
 
       context "when gateway does not match the environment" do
