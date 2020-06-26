@@ -7,6 +7,8 @@ module Spree
 
     IDENTIFIER_CHARS = (('A'..'Z').to_a + ('0'..'9').to_a - %w(0 1 I O)).freeze
 
+    delegate :line_items, to: :order
+
     belongs_to :order, class_name: 'Spree::Order'
     belongs_to :source, polymorphic: true
     belongs_to :payment_method, class_name: 'Spree::PaymentMethod'
