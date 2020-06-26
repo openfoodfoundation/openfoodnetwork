@@ -2,13 +2,9 @@ require 'spree/localized_number'
 
 module Spree
   Payment.class_eval do
-    extend Spree::LocalizedNumber
-
     delegate :line_items, to: :order
 
     has_one :adjustment, as: :source, dependent: :destroy
-
-    localize_number :amount
 
     # We bypass this after_rollback callback that is setup in Spree::Payment
     # The issues the callback fixes are not experienced in OFN:

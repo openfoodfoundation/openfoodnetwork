@@ -1,6 +1,9 @@
 module Spree
   class Payment < ActiveRecord::Base
     include Spree::Payment::Processing
+    extend Spree::LocalizedNumber
+
+    localize_number :amount
 
     IDENTIFIER_CHARS = (('A'..'Z').to_a + ('0'..'9').to_a - %w(0 1 I O)).freeze
 

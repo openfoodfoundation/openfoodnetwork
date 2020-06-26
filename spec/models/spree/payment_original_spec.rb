@@ -40,6 +40,10 @@ describe Spree::Payment do
     allow(payment).to receive(:record_response)
   end
 
+  context "extends LocalizedNumber" do
+    it_behaves_like "a model using the LocalizedNumber module", [:amount]
+  end
+
   context 'validations' do
     it "returns useful error messages when source is invalid" do
       payment.source = Spree::CreditCard.new
