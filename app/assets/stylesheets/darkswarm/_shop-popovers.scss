@@ -75,13 +75,13 @@ button.graph-button {
     background-color: rgba(255, 255, 255, 1);
 
     &:before {
-      color: $clr-brick-bright;
+      color: $teal-500;
     }
   }
 }
 
 button.graph-button.open {
-  background-color: $clr-brick-bright;
+  background-color: $teal-500;
 
   &:before {
     content: "";
