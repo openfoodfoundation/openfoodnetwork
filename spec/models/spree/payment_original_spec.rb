@@ -703,4 +703,84 @@ describe Spree::Payment do
       end
     end
   end
+
+  describe "refunding" do
+    let(:payment) { create(:payment) }
+    let(:success) { double(success?: true, authorization: 'abc123') }
+    let(:failure) { double(success?: false) }
+
+    it "always checks the environment" do
+      allow(payment.payment_method).to receive(:refund) { success }
+      expect(payment).to receive(:check_environment)
+      payment.refund!
+    end
+
+    describe "calculating refund amount" do
+      it "returns the parameter amount when given" do
+        expect(payment.send(:calculate_refund_amount, 123)).to be === 123.0
+      end
+
+      it "refunds up to the value of the payment when the outstanding balance is larger" do
+        allow(payment).to receive(:credit_allowed) { 123 }
+        allow(payment).to receive(:order) { double(:order, outstanding_balance: 1000) }
+        expect(payment.send(:calculate_refund_amount)).to eq(123)
+      end
+
+      it "refunds up to the outstanding balance of the order when the payment is larger" do
+        allow(payment).to receive(:credit_allowed) { 1000 }
+        allow(payment).to receive(:order) { double(:order, outstanding_balance: 123) }
+        expect(payment.send(:calculate_refund_amount)).to eq(123)
+      end
+    end
+
+    describe "performing refunds" do
+      before do
+        allow(payment).to receive(:calculate_refund_amount) { 123 }
+        expect(payment.payment_method).to receive(:refund).and_return(success)
+      end
+
+      it "performs the refund without payment profiles" do
+        allow(payment.payment_method).to receive(:payment_profiles_supported?) { false }
+        payment.refund!
+      end
+
+      it "performs the refund with payment profiles" do
+        allow(payment.payment_method).to receive(:payment_profiles_supported?) { true }
+        payment.refund!
+      end
+    end
+
+    it "records the response" do
+      allow(payment).to receive(:calculate_refund_amount) { 123 }
+      allow(payment.payment_method).to receive(:refund).and_return(success)
+      expect(payment).to receive(:record_response).with(success)
+      payment.refund!
+    end
+
+    it "records a payment on success" do
+      allow(payment).to receive(:calculate_refund_amount) { 123 }
+      allow(payment.payment_method).to receive(:refund).and_return(success)
+      allow(payment).to receive(:record_response)
+
+      expect do
+        payment.refund!
+      end.to change(Spree::Payment, :count).by(1)
+
+      p = Spree::Payment.last
+      expect(p.order).to eq(payment.order)
+      expect(p.source).to eq(payment)
+      expect(p.payment_method).to eq(payment.payment_method)
+      expect(p.amount).to eq(-123)
+      expect(p.response_code).to eq(success.authorization)
+      expect(p.state).to eq('completed')
+    end
+
+    it "logs the error on failure" do
+      allow(payment).to receive(:calculate_refund_amount) { 123 }
+      allow(payment.payment_method).to receive(:refund).and_return(failure)
+      allow(payment).to receive(:record_response)
+      expect(payment).to receive(:gateway_error).with(failure)
+      payment.refund!
+    end
+  end
 end
