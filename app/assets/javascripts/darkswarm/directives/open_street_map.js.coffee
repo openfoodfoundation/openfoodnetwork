@@ -1,4 +1,4 @@
-Darkswarm.directive 'ofnOpenStreetMap', ($window, Enterprises, EnterpriseModal, availableCountries, openStreetMapConfig) ->
+Darkswarm.directive 'ofnOpenStreetMap', ($window, MapCentreCalculator, Enterprises, EnterpriseModal, availableCountries, openStreetMapConfig) ->
   restrict: 'E'
   replace: true
   scope: true
@@ -10,34 +10,6 @@ Darkswarm.directive 'ofnOpenStreetMap', ($window, Enterprises, EnterpriseModal, 
     enterpriseNames = []
     openStreetMapProviderName = openStreetMapConfig.open_street_map_provider_name
     openStreetMapProviderOptions = JSON.parse(openStreetMapConfig.open_street_map_provider_options)
-
-    average = (values) ->
-      total = values.reduce (sum, value) ->
-        sum = sum + value
-      , 0
-      total / values.length
-
-    averageAngle = (angleName) ->
-      positiveAngles = []
-      negativeAngles = []
-      for enterprise in Enterprises.enterprises
-        if enterprise.latitude? && enterprise.longitude?
-          if enterprise[angleName] > 0
-            positiveAngles.push(enterprise[angleName])
-          else
-            negativeAngles.push(enterprise[angleName])
-
-      averageNegativeAngle = average(negativeAngles)
-      averagePositiveAngle = average(positiveAngles)
-
-      if negativeAngles.length == 0
-        averagePositiveAngle
-      else if positiveAngles.length == 0
-        averageNegativeAngle
-      else if averagePositiveAngle > averageNegativeAngle
-        averagePositiveAngle - averageNegativeAngle
-      else
-        averageNegativeAngle - averagePositiveAngle
 
     buildMarker = (enterprise, latlng, title) ->
       icon = L.icon
@@ -90,15 +62,15 @@ Darkswarm.directive 'ofnOpenStreetMap', ($window, Enterprises, EnterpriseModal, 
 
     initialLatitude = () ->
       if geocodedEnterprises().length > 0
-        averageAngle("latitude")
+        MapCentreCalculator.calculate_latitude(geocodedEnterprises())
       else
-        openStreetMapConfig.open_street_map_default_latitude || -37.4713077
+        openStreetMapConfig.open_street_map_default_latitude
 
     initialLongitude = () ->
       if geocodedEnterprises().length > 0
-        averageAngle("longitude")
+        MapCentreCalculator.calculate_longitude(geocodedEnterprises())
       else
-        openStreetMapConfig.open_street_map_default_longitude || 144.7851531
+        openStreetMapConfig.open_street_map_default_longitude
 
     overwriteInlinePositionRelativeToAbsoluteOnSearchField = ->
       $('#open-street-map--search').css("position", "absolute")
