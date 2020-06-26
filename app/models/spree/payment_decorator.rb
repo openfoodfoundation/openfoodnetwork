@@ -60,16 +60,6 @@ module Spree
       end
     end
 
-    # Import from future Spree v.2.3.0 d470b31798f37
-    def build_source
-      return if source_attributes.nil?
-      return unless payment_method.andand.payment_source_class
-
-      self.source = payment_method.payment_source_class.new(source_attributes)
-      source.payment_method_id = payment_method.id
-      source.user_id = order.user_id if order
-    end
-
     private
 
     def calculate_refund_amount(refund_amount = nil)
