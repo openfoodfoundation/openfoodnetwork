@@ -59,13 +59,6 @@ body.embedded {
         line-height: $large-menu-height;
         height: $large-menu-height;
         vertical-align: top;
-
-        &.cart {
-          div.joyride-tip-guide { // Cart Dropdown
-            top: 75px;
-            overflow: visible;
-          }
-        }
       }
     }
 
