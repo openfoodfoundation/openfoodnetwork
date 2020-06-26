@@ -5,7 +5,8 @@
 // Foundation overrides
 .joyride-tip-guide.price_breakdown {
   // JS needs to be tweaked to adjust for left alignment - this is dynamic can't rewrite in CSS
-  margin-left: -8px;
+  margin-left: -7.4rem;
+  margin-top: 0.1rem;
 
   @include box-shadow(0 2px 8px 0 rgba(0, 0, 0, 0.35));
 
@@ -22,12 +23,8 @@
     color: #1f1f1f;
   }
 
-  .joyride-nub.right {
-    top: 38px;
-    border-color: $grey-800 !important;
-    border-top-color: transparent !important;
-    border-right-color: transparent !important;
-    border-bottom-color: transparent !important;
+  .joyride-nub.top {
+    left: 7.4rem;
   }
 
   ul, li {
