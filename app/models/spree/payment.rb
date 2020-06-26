@@ -107,22 +107,19 @@ module Spree
       source.user_id = order.user_id if order
     end
 
-    def actions
-      return [] unless payment_source and payment_source.respond_to? :actions
-      payment_source.actions.select { |action| !payment_source.respond_to?("can_#{action}?") or payment_source.send("can_#{action}?", self) }
-    end
-
     # Pin payments lacks void and credit methods, but it does have refund
     # Here we swap credit out for refund and remove void as a possible action
-    def actions_with_pin_payment_adaptations
-      actions = actions_without_pin_payment_adaptations
+    def actions
+      return [] unless payment_source and payment_source.respond_to? :actions
+      actions = payment_source.actions.select { |action| !payment_source.respond_to?("can_#{action}?") or payment_source.send("can_#{action}?", self) }
+
       if payment_method.is_a? Gateway::Pin
         actions << 'refund' if actions.include? 'credit'
         actions.reject! { |a| ['credit', 'void'].include? a }
       end
+
       actions
     end
-    alias_method_chain :actions, :pin_payment_adaptations
 
     def payment_source
       res = source.is_a?(Payment) ? source.source : source
