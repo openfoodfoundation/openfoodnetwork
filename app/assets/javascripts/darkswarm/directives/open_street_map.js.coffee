@@ -61,28 +61,47 @@ Darkswarm.directive 'ofnOpenStreetMap', ($window, Enterprises, EnterpriseModal, 
 
     displayMap = ->
       setMapDimensions()
-      averageLatitude = averageAngle("latitude")
-      averageLongitude = averageAngle("longitude")
       zoomLevel = 6
       map = L.map('open-street-map')
       L.tileLayer.provider(openStreetMapProviderName, openStreetMapProviderOptions).addTo(map)
-      map.setView([averageLatitude, averageLongitude], zoomLevel)
+      map.setView([initialLatitude(), initialLongitude()], zoomLevel)
 
     displayEnterprises = ->
-      for enterprise in Enterprises.enterprises
-        if enterprise.latitude? && enterprise.longitude?
-          marker = buildMarker(enterprise, { lat: enterprise.latitude, lng: enterprise.longitude }, enterprise.name).addTo(map)
-          enterpriseNames.push(enterpriseName(enterprise))
-          markers.push(marker)
+      for enterprise in geocodedEnterprises()
+        marker = buildMarker(enterprise, { lat: enterprise.latitude, lng: enterprise.longitude }, enterprise.name).addTo(map)
+        enterpriseNames.push(enterpriseName(enterprise))
+        markers.push(marker)
+
+    disableSearchField = () =>
+      $('#open-street-map--search input').prop("disabled", true)
 
     displaySearchField = () ->
       new Autocomplete('#open-street-map--search',
         onSubmit: goToEnterprise
         search: searchEnterprises
       )
-      overwriteInlinePositionRelativeToPositionSearchField = ->
-        $('#open-street-map--search').css("position", "absolute")
-      overwriteInlinePositionRelativeToPositionSearchField()
+      overwriteInlinePositionRelativeToAbsoluteOnSearchField()
+      if geocodedEnterprises().length == 0
+        disableSearchField()
+
+    geocodedEnterprises = () ->
+      Enterprises.enterprises.filter (enterprise) ->
+        enterprise.latitude? && enterprise.longitude?
+
+    initialLatitude = () ->
+      if geocodedEnterprises().length > 0
+        averageAngle("latitude")
+      else
+        openStreetMapConfig.open_street_map_default_latitude || -37.4713077
+
+    initialLongitude = () ->
+      if geocodedEnterprises().length > 0
+        averageAngle("longitude")
+      else
+        openStreetMapConfig.open_street_map_default_longitude || 144.7851531
+
+    overwriteInlinePositionRelativeToAbsoluteOnSearchField = ->
+      $('#open-street-map--search').css("position", "absolute")
 
     searchEnterprises = (input) ->
       if input.length < 1
