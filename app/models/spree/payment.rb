@@ -15,6 +15,8 @@ module Spree
       class_name: "Spree::Payment", foreign_key: :source_id
     has_many :log_entries, as: :source
 
+    has_one :adjustment, as: :source, dependent: :destroy
+
     before_validation :validate_source
     before_save :set_unique_identifier
 
@@ -125,7 +127,37 @@ module Spree
       res || payment_method
     end
 
+    def ensure_correct_adjustment
+      revoke_adjustment_eligibility if ['failed', 'invalid'].include?(state)
+      return if adjustment.try(:finalized?)
+
+      if adjustment
+        adjustment.originator = payment_method
+        adjustment.label = adjustment_label
+        adjustment.save
+      else
+        payment_method.create_adjustment(adjustment_label, order, self, true)
+        association(:adjustment).reload
+      end
+    end
+
+    def adjustment_label
+      I18n.t('payment_method_fee')
+    end
+
     private
+
+    # Don't charge fees for invalid or failed payments.
+    # This is called twice for failed payments, because the persistence of the 'failed'
+    # state is acheived through some trickery using an after_rollback callback on the
+    # payment model. See Spree::Payment#persist_invalid
+    def revoke_adjustment_eligibility
+      return unless adjustment.try(:reload)
+      return if adjustment.finalized?
+
+      adjustment.update_attribute(:eligible, false)
+      adjustment.finalize!
+    end
 
     def validate_source
       if source && !source.valid?
