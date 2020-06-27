@@ -77,7 +77,7 @@ gem 'unicorn'
 gem 'actionpack-action_caching'
 # AMS is pinned to 0.8.4 because 0.9.x is a complete re-write, as is 0.10.x
 # Once Rails is updated to 5.x we should bump directly to 0.10.x
-gem "active_model_serializers", "0.10.0"
+gem "active_model_serializers", "0.9.7"
 gem 'activerecord-session_store'
 gem 'acts-as-taggable-on', '~> 4.0'
 gem 'angularjs-file-upload-rails', '~> 2.4.1'
