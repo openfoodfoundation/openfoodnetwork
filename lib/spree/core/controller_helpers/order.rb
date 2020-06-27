@@ -39,13 +39,13 @@ module Spree
 
           if create_order_if_necessary && (@current_order.nil? || @current_order.completed?)
             @current_order = Spree::Order.new(currency: current_currency)
-            @current_order.user ||= try_spree_current_user
+            @current_order.user ||= spree_current_user
             # See https://github.com/spree/spree/issues/3346 for reasons why this line is here
-            @current_order.created_by ||= try_spree_current_user
+            @current_order.created_by ||= spree_current_user
             @current_order.save!
 
             # Verify that the user has access to the order (if they are a guest)
-            if try_spree_current_user.nil?
+            if spree_current_user.nil?
               session[:access_token] = @current_order.token
             end
           end
@@ -59,9 +59,9 @@ module Spree
 
         def associate_user
           @order ||= current_order
-          if try_spree_current_user && @order
+          if spree_current_user && @order
             if @order.user.blank? || @order.email.blank?
-              @order.associate_user!(try_spree_current_user)
+              @order.associate_user!(spree_current_user)
             end
           end
 
@@ -69,7 +69,7 @@ module Spree
           # Assuming of course that this session variable was set correctly in
           # the authentication provider's registrations controller
           if session[:spree_user_signup] && @order
-            fire_event('spree.user.signup', user: try_spree_current_user,
+            fire_event('spree.user.signup', user: spree_current_user,
                                             order: @order)
             session[:spree_user_signup] = nil
           end
@@ -80,7 +80,7 @@ module Spree
         # Do not attempt to merge incomplete and current orders.
         #   Instead, destroy the incomplete orders.
         def set_current_order
-          return unless (user = try_spree_current_user)
+          return unless (user = spree_current_user)
 
           last_incomplete_order = user.last_incomplete_spree_order
 

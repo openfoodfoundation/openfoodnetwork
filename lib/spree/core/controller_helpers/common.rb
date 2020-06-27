@@ -27,7 +27,7 @@ module Spree
           #   This method can be overriden to provide additional data when
           # responding to a notification
           def default_notification_payload
-            { user: try_spree_current_user, order: current_order }
+            { user: spree_current_user, order: current_order }
           end
 
           # This can be used in views as well as controllers.

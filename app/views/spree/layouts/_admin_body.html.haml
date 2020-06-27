@@ -66,4 +66,4 @@
 %div{"data-hook" => "admin_footer_scripts"}
 
 %script
-  = raw "Spree.api_key = \"#{try_spree_current_user.try(:spree_api_key).to_s}\";"
+  = raw "Spree.api_key = \"#{spree_current_user.try(:spree_api_key).to_s}\";"
