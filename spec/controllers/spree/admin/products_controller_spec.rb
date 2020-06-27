@@ -16,7 +16,7 @@ describe Spree::Admin::ProductsController, type: :controller do
       end
 
       it "denies access" do
-        expect(response).to redirect_to spree.unauthorized_url
+        expect(response).to redirect_to unauthorized_path
       end
 
       it "does not update any product" do

@@ -106,7 +106,7 @@ describe Admin::SchedulesController, type: :controller do
 
         it "prevents me from updating the schedule" do
           spree_put :update, format: :json, id: coordinated_schedule.id, schedule: { name: "my awesome schedule" }
-          expect(response).to redirect_to spree.unauthorized_path
+          expect(response).to redirect_to unauthorized_path
           expect(assigns(:schedule)).to eq nil
           expect(coordinated_schedule.name).to_not eq "my awesome schedule"
         end

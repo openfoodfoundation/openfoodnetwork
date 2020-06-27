@@ -294,7 +294,7 @@ describe Admin::EnterprisesController, type: :controller do
 
       it "does not allow access" do
         spree_post :register, id: enterprise.id, sells: 'none'
-        expect(response).to redirect_to spree.unauthorized_path
+        expect(response).to redirect_to unauthorized_path
       end
     end
 
@@ -306,7 +306,7 @@ describe Admin::EnterprisesController, type: :controller do
 
       it "does not allow access" do
         spree_post :register, id: enterprise.id, sells: 'none'
-        expect(response).to redirect_to spree.unauthorized_path
+        expect(response).to redirect_to unauthorized_path
       end
     end
 
