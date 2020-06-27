@@ -16,6 +16,10 @@ class HomeController < BaseController
 
   def sell; end
 
+  def unauthorized
+    render 'shared/unauthorized', status: :unauthorized
+  end
+
   private
 
   # Cache the value of the query count
