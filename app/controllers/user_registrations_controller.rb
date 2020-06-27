@@ -16,7 +16,6 @@ class UserRegistrationsController < Spree::UserRegistrationsController
       return render_error(@user.errors)
     end
 
-    session[:spree_user_signup] = true
     session[:confirmation_return_url] = params[:return_url]
     associate_user
 

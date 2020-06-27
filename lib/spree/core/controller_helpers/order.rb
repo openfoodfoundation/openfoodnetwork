@@ -65,15 +65,6 @@ module Spree
             end
           end
 
-          # This will trigger any "first order" promotions to be triggered
-          # Assuming of course that this session variable was set correctly in
-          # the authentication provider's registrations controller
-          if session[:spree_user_signup] && @order
-            fire_event('spree.user.signup', user: spree_current_user,
-                                            order: @order)
-            session[:spree_user_signup] = nil
-          end
-
           session[:guest_token] = nil
         end
 

@@ -23,7 +23,6 @@ module Spree
       if resource.save
         set_flash_message(:notice, :signed_up)
         sign_in(:spree_user, @user)
-        session[:spree_user_signup] = true
         associate_user
         respond_with resource, location: after_sign_up_path_for(resource)
       else
