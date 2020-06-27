@@ -1,4 +1,4 @@
-require 'spree/core/controller_helpers/order_decorator'
+require 'spree/core/controller_helpers/order'
 
 class CartController < BaseController
   before_action :check_authorization

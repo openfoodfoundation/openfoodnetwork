@@ -1,5 +1,5 @@
-require 'spree/core/controller_helpers/order_decorator'
-require 'spree/core/controller_helpers/auth_decorator'
+require 'spree/core/controller_helpers/order'
+require 'spree/core/controller_helpers/auth'
 
 module Spree
   class OrdersController < Spree::StoreController
