@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'open_food_network/scope_variant_to_hub'
+
 module Spree
   module Core
     module ControllerHelpers
@@ -12,8 +14,21 @@ module Spree
           end
         end
 
-        # The current incomplete session order used in cart and checkout
         def current_order(create_order_if_necessary = false)
+          order = spree_current_order(create_order_if_necessary)
+
+          if order
+            scoper = OpenFoodNetwork::ScopeVariantToHub.new(order.distributor)
+            order.line_items.each do |li|
+              scoper.scope(li.variant)
+            end
+          end
+
+          order
+        end
+
+        # The current incomplete session order used in cart and checkout
+        def spree_current_order(create_order_if_necessary = false)
           return @current_order if @current_order
 
           if session[:order_id]
@@ -62,16 +77,19 @@ module Spree
           session[:guest_token] = nil
         end
 
+        # Do not attempt to merge incomplete and current orders.
+        #   Instead, destroy the incomplete orders.
         def set_current_order
           return unless (user = try_spree_current_user)
 
           last_incomplete_order = user.last_incomplete_spree_order
+
           if session[:order_id].nil? && last_incomplete_order
             session[:order_id] = last_incomplete_order.id
           elsif current_order(true) &&
                 last_incomplete_order &&
                 current_order != last_incomplete_order
-            current_order.merge!(last_incomplete_order)
+            last_incomplete_order.destroy
           end
         end
 
