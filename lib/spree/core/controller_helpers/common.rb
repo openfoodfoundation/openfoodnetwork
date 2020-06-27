@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module Core
     module ControllerHelpers
@@ -16,22 +18,24 @@ module Spree
 
           # Convenience method for firing instrumentation events with the default payload hash
           def fire_event(name, extra_payload = {})
-            ActiveSupport::Notifications.instrument(name, default_notification_payload.merge(extra_payload))
+            ActiveSupport::Notifications.instrument(name, default_notification_payload.
+                                                            merge(extra_payload))
           end
 
-          # Creates the hash that is sent as the payload for all notifications. Specific notifications will
-          # add additional keys as appropriate. Override this method if you need additional data when
+          # Creates the hash that is sent as the payload for all notifications.
+          #   Specific notifications will add additional keys as appropriate.
+          #   This method can be overriden to provide additional data when
           # responding to a notification
           def default_notification_payload
-            {:user => try_spree_current_user, :order => current_order}
+            { user: try_spree_current_user, order: current_order }
           end
 
-          # can be used in views as well as controllers.
+          # This can be used in views as well as controllers.
           # e.g. <% self.title = 'This is a custom title for this view' %>
           attr_writer :title
 
           def title
-            title_string = @title.present? ? @title : accurate_title
+            title_string = @title.presence || accurate_title
             if title_string.present?
               if Spree::Config[:always_put_site_name_in_title]
                 [title_string, default_title].join(' - ')
@@ -47,15 +51,20 @@ module Spree
             Spree::Config[:site_name]
           end
 
-          # this is a hook for subclasses to provide title
+          # This is a hook for subclasses to provide title
           def accurate_title
             Spree::Config[:default_seo_title]
           end
 
-          def render_404(exception = nil)
+          def render_404(_exception = nil)
             respond_to do |type|
-              type.html { render :status => :not_found, :file    => "#{::Rails.root}/public/404", :formats => [:html], :layout => nil}
-              type.all  { render :status => :not_found, :nothing => true }
+              type.html {
+                render status: :not_found,
+                       file: "#{::Rails.root}/public/404",
+                       formats: [:html],
+                       layout: nil
+              }
+              type.all { render status: :not_found, nothing: true }
             end
           end
 
@@ -65,20 +74,18 @@ module Spree
             locale = session[:locale]
             locale ||= config_locale if respond_to?(:config_locale, true)
             locale ||= Rails.application.config.i18n.default_locale
-            locale ||= I18n.default_locale unless I18n.available_locales.map(&:to_s).include?(locale)
+            unless I18n.available_locales.map(&:to_s).include?(locale)
+              locale ||= I18n.default_locale
+            end
             I18n.locale = locale
           end
 
           # Returns which layout to render.
-          # 
-          # You can set the layout you want to render inside your Spree configuration with the +:layout+ option.
-          # 
+          #   The layout to render can be set inside Spree configuration with the +:layout+ option.
           # Default layout is: +app/views/spree/layouts/spree_application+
-          # 
           def get_layout
             layout ||= Spree::Config[:layout]
           end
-
         end
       end
     end
