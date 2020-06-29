@@ -26,7 +26,7 @@ module Spree
 
       authorize! :update, @credit_card
 
-      if @credit_card.update_attributes(credit_card_params)
+      if @credit_card.update(credit_card_params)
         render json: @credit_card, serializer: ::Api::CreditCardSerializer, status: :ok
       else
         update_failed
@@ -60,12 +60,12 @@ module Spree
     def destroy_at_stripe
       stripe_customer = Stripe::Customer.retrieve(@credit_card.gateway_customer_profile_id, {})
 
-      stripe_customer.delete if stripe_customer
+      stripe_customer&.delete
     end
 
     def stripe_account_id
       StripeAccount.
-        find_by_enterprise_id(@credit_card.payment_method.preferred_enterprise_id).
+        find_by(enterprise_id: @credit_card.payment_method.preferred_enterprise_id).
         andand.
         stripe_user_id
     end

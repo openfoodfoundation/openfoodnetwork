@@ -10,7 +10,7 @@ module Spree
     ssl_required :new, :create, :destroy, :update
     ssl_allowed :login_bar
 
-    before_filter :set_checkout_redirect, only: :create
+    before_action :set_checkout_redirect, only: :create
 
     def create
       authenticate_spree_user!

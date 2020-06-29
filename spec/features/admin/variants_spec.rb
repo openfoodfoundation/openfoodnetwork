@@ -29,7 +29,7 @@ feature '
       # Given a product with unit-related option types, with a variant
       product = create(:simple_product, variant_unit: "weight", variant_unit_scale: "1")
       variant = product.variants.first
-      variant.update_attributes( unit_value: 1, unit_description: 'foo' )
+      variant.update( unit_value: 1, unit_description: 'foo' )
 
       # And the product has option types for the unit-related and non-unit-related option values
       product.option_types << variant.option_values.first.option_type
@@ -60,7 +60,7 @@ feature '
     scenario "can update unit_description when variant_unit is items" do
       product = create(:simple_product, variant_unit: "items", variant_unit_name: "bunches")
       variant = product.variants.first
-      variant.update_attributes(unit_description: 'foo')
+      variant.update(unit_description: 'foo')
 
       login_to_admin_section
       visit spree.edit_admin_product_variant_path(product, variant)

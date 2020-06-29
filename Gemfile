@@ -33,7 +33,7 @@ gem 'httparty', '~> 0.18' # Used to check alerts in spree_core, this is not used
 gem 'json', '>= 1.7.7'
 gem 'money', '5.1.1'
 gem 'paranoia', '~> 2.0'
-gem 'ransack', '~> 1.2.3'
+gem 'ransack', '~> 1.8.10'
 gem 'state_machine', '1.2.0'
 gem 'stringex', '~> 1.5.1'
 
@@ -79,7 +79,7 @@ gem 'actionpack-action_caching'
 # Once Rails is updated to 5.x we should bump directly to 0.10.x
 gem "active_model_serializers", "0.8.4"
 gem 'activerecord-session_store'
-gem 'acts-as-taggable-on', '~> 3.4'
+gem 'acts-as-taggable-on', '~> 4.0'
 gem 'angularjs-file-upload-rails', '~> 2.4.1'
 gem 'custom_error_message', github: 'jeremydurham/custom-err-msg'
 gem 'dalli'

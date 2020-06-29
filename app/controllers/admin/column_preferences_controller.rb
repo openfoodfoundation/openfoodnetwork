@@ -1,6 +1,6 @@
 module Admin
   class ColumnPreferencesController < ResourceController
-    before_filter :load_collection, only: [:bulk_update]
+    before_action :load_collection, only: [:bulk_update]
 
     respond_to :json
 
@@ -9,12 +9,10 @@ module Admin
 
       if @cp_set.save
         render json: @cp_set.collection, each_serializer: Api::Admin::ColumnPreferenceSerializer
+      elsif @cp_set.errors.present?
+        render json: { errors: @cp_set.errors }, status: :bad_request
       else
-        if @cp_set.errors.present?
-          render json: { errors: @cp_set.errors }, status: :bad_request
-        else
-          render nothing: true, status: :internal_server_error
-        end
+        render nothing: true, status: :internal_server_error
       end
     end
 

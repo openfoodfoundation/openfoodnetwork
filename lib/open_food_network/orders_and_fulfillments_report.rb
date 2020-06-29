@@ -27,6 +27,7 @@ module OpenFoodNetwork
 
     def table_items
       return [] unless @render_table
+
       report_line_items.list(report.line_item_includes)
     end
 
@@ -92,6 +93,7 @@ module OpenFoodNetwork
 
     def order_permissions
       return @order_permissions unless @order_permissions.nil?
+
       @order_permissions = ::Permissions::Order.new(@user, options[:q])
     end
 

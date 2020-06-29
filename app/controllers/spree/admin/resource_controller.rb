@@ -4,7 +4,7 @@ module Spree
   module Admin
     class ResourceController < Spree::Admin::BaseController
       helper_method :new_object_url, :edit_object_url, :object_url, :collection_url
-      before_filter :load_resource, except: [:update_positions]
+      before_action :load_resource, except: [:update_positions]
       rescue_from ActiveRecord::RecordNotFound, with: :resource_not_found
       rescue_from CanCan::AccessDenied, with: :unauthorized
 
@@ -28,7 +28,7 @@ module Spree
 
       def update
         invoke_callbacks(:update, :before)
-        if @object.update_attributes(permitted_resource_params)
+        if @object.update(permitted_resource_params)
           invoke_callbacks(:update, :after)
           flash[:success] = flash_message_for(@object, :successfully_updated)
           respond_with(@object) do |format|

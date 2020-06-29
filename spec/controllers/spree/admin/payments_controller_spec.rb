@@ -255,7 +255,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
             expect(payment.reload.state).to eq 'completed'
             order.reload
             expect(order.payment_total).to eq order.total + 5
-            expect(order.outstanding_balance).to eq -5
+            expect(order.outstanding_balance).to eq(-5)
             expect(flash[:error]).to eq "Bup-bow!"
           end
         end

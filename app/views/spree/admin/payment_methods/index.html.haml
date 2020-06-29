@@ -32,7 +32,7 @@
             - method.distributors.each do |distributor|
               = distributor.name
               %br/
-          %td= method.type
+          %td= method.class.clean_name
           %td.align-center= method.environment.to_s.titleize
           %td.align-center= method.display_on.blank? ? t('.both') : t('.' + method.display_on.to_s)
           %td.align-center= method.active ? t('.active_yes') : t('.active_no')

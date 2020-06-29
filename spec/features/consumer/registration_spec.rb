@@ -132,7 +132,7 @@ feature "Registration", js: true do
 
     context "when the user has no more remaining enterprises" do
       before do
-        user.update_attributes(enterprise_limit: 0)
+        user.update(enterprise_limit: 0)
       end
 
       it "displays the limit reached page" do

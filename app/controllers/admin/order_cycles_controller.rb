@@ -2,12 +2,12 @@ module Admin
   class OrderCyclesController < ResourceController
     include OrderCyclesHelper
 
-    prepend_before_filter :set_order_cycle_id, only: [:incoming, :outgoing]
-    before_filter :load_data_for_index, only: :index
-    before_filter :require_coordinator, only: :new
-    before_filter :remove_protected_attrs, only: [:update]
-    before_filter :require_order_cycle_set_params, only: [:bulk_update]
-    around_filter :protect_invalid_destroy, only: :destroy
+    prepend_before_action :set_order_cycle_id, only: [:incoming, :outgoing]
+    before_action :load_data_for_index, only: :index
+    before_action :require_coordinator, only: :new
+    before_action :remove_protected_attrs, only: [:update]
+    before_action :require_order_cycle_set_params, only: [:bulk_update]
+    around_action :protect_invalid_destroy, only: :destroy
 
     def index
       respond_to do |format|

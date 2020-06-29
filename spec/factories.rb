@@ -44,9 +44,7 @@ FactoryBot.define do
     subscription
     order_cycle { subscription.order_cycles.first }
     before(:create) do |proxy_order, _proxy|
-      if proxy_order.order
-        proxy_order.order.update_attribute(:order_cycle_id, proxy_order.order_cycle_id)
-      end
+      proxy_order.order&.update_attribute(:order_cycle_id, proxy_order.order_cycle_id)
     end
   end
 

@@ -1,9 +1,9 @@
 module Api
   class EnterprisesController < Api::BaseController
-    before_filter :override_owner, only: [:create, :update]
-    before_filter :check_type, only: :update
-    before_filter :override_sells, only: [:create, :update]
-    before_filter :override_visible, only: [:create, :update]
+    before_action :override_owner, only: [:create, :update]
+    before_action :check_type, only: :update
+    before_action :override_sells, only: [:create, :update]
+    before_action :override_visible, only: [:create, :update]
     respond_to :json
 
     def create
@@ -25,7 +25,7 @@ module Api
       @enterprise = Enterprise.find_by(permalink: params[:id]) || Enterprise.find(params[:id])
       authorize! :update, @enterprise
 
-      if @enterprise.update_attributes(params[:enterprise])
+      if @enterprise.update(params[:enterprise])
         render text: @enterprise.id, status: :ok
       else
         invalid_resource!(@enterprise)
@@ -36,9 +36,9 @@ module Api
       @enterprise = Enterprise.find_by(permalink: params[:id]) || Enterprise.find(params[:id])
       authorize! :update, @enterprise
 
-      if params[:logo] && @enterprise.update_attributes( logo: params[:logo] )
+      if params[:logo] && @enterprise.update( logo: params[:logo] )
         render text: @enterprise.logo.url(:medium), status: :ok
-      elsif params[:promo] && @enterprise.update_attributes( promo_image: params[:promo] )
+      elsif params[:promo] && @enterprise.update( promo_image: params[:promo] )
         render text: @enterprise.promo_image.url(:medium), status: :ok
       else
         invalid_resource!(@enterprise)

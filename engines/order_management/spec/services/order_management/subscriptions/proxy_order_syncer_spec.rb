@@ -144,7 +144,7 @@ module OrderManagement
 
             context "for an oc included in the relevant schedule" do
               context "and the proxy order has already been placed" do
-                before { proxy_order.update_attributes(placed_at: 5.minutes.ago) }
+                before { proxy_order.update(placed_at: 5.minutes.ago) }
 
                 context "the oc is closed (ie. closed before opens_at)" do
                   let(:oc) { closed_oc }
@@ -292,7 +292,7 @@ module OrderManagement
               end
 
               context "and the proxy order has already been placed" do
-                before { proxy_order.update_attributes(placed_at: 5.minutes.ago) }
+                before { proxy_order.update(placed_at: 5.minutes.ago) }
 
                 context "the oc is closed (ie. closed before opens_at)" do
                   let(:oc) { closed_oc }

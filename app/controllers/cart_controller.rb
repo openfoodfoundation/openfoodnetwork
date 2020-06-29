@@ -1,7 +1,7 @@
 require 'spree/core/controller_helpers/order_decorator'
 
 class CartController < BaseController
-  before_filter :check_authorization
+  before_action :check_authorization
 
   def populate
     order = current_order(true)

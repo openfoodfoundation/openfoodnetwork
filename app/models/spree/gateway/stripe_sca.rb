@@ -27,7 +27,7 @@ module Spree
       end
 
       def stripe_account_id
-        StripeAccount.find_by_enterprise_id(preferred_enterprise_id).andand.stripe_user_id
+        StripeAccount.find_by(enterprise_id: preferred_enterprise_id).andand.stripe_user_id
       end
 
       # NOTE: the name of this method is determined by Spree::Payment::Processing
@@ -110,7 +110,7 @@ module Spree
       def fetch_payment(creditcard, gateway_options)
         order_number = gateway_options[:order_id].split('-').first
 
-        Spree::Order.find_by_number(order_number).payments.merge(creditcard.payments).last
+        Spree::Order.find_by(number: order_number).payments.merge(creditcard.payments).last
       end
 
       def failed_activemerchant_billing_response(error_message)

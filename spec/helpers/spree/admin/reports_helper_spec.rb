@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 
-
 describe Spree::ReportsHelper, type: :helper do
   describe "#report_payment_method_options" do
     let(:order_with_payments) { create(:order_ready_to_ship) }

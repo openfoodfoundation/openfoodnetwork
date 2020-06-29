@@ -3,10 +3,10 @@
 module Spree
   module Admin
     class PaymentsController < Spree::Admin::BaseController
-      before_filter :load_order, except: [:show]
-      before_filter :load_payment, only: [:fire, :show]
-      before_filter :load_data
-      before_filter :can_transition_to_payment
+      before_action :load_order, except: [:show]
+      before_action :load_payment, only: [:fire, :show]
+      before_action :load_data
+      before_action :can_transition_to_payment
 
       respond_to :html
 
@@ -122,7 +122,7 @@ module Spree
       end
 
       def load_order
-        @order = Order.find_by_number!(params[:order_id])
+        @order = Order.find_by!(number: params[:order_id])
         authorize! action, @order
         @order
       end

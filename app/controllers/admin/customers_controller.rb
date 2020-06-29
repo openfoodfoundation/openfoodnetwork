@@ -2,7 +2,7 @@ require 'open_food_network/address_finder'
 
 module Admin
   class CustomersController < ResourceController
-    before_filter :load_managed_shops, only: :index, if: :html_request?
+    before_action :load_managed_shops, only: :index, if: :html_request?
     respond_to :json
 
     respond_override update: { json: {

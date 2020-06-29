@@ -471,8 +471,8 @@ feature "
       end
       first_variant = inventory_items.first.variant
       last_variant = inventory_items.last.variant
-      first_variant.product.update_attributes!(name: "A First Product")
-      last_variant.product.update_attributes!(name: "Z Last Product")
+      first_variant.product.update!(name: "A First Product")
+      last_variant.product.update!(name: "Z Last Product")
       quick_login_as supplier.users.first
       visit admin_inventory_path
 

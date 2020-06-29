@@ -152,8 +152,8 @@ describe Exchange do
       end
 
       it "correctly determines direction of exchanges between the same enterprise" do
-        incoming_exchange.update_attributes sender: coordinator, incoming: true
-        outgoing_exchange.update_attributes receiver: coordinator, incoming: false
+        incoming_exchange.update sender: coordinator, incoming: true
+        outgoing_exchange.update receiver: coordinator, incoming: false
         expect(Exchange.incoming).to eq([incoming_exchange])
         expect(Exchange.outgoing).to eq([outgoing_exchange])
       end

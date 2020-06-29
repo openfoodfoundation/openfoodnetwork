@@ -116,7 +116,7 @@ module Spree
       let(:add_distributor) { shipping_method.distributors << distributor }
 
       it "is touched when applied to a distributor" do
-        expect{ add_distributor }.to change { shipping_method.reload.updated_at}
+        expect{ add_distributor }.to change { shipping_method.reload.updated_at }
       end
     end
   end

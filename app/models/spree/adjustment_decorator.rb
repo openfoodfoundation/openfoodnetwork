@@ -32,7 +32,11 @@ module Spree
     end
 
     def set_absolute_included_tax!(tax)
+      # This rubocop issue can only be fixed when Adjustment#update! is brought from Spree to OFN
+      #   and renamed to something else, then AR's update! can be used instead of update_attributes!
+      # rubocop:disable Rails/ActiveRecordAliases
       update_attributes! included_tax: tax.round(2)
+      # rubocop:enable Rails/ActiveRecordAliases
     end
 
     def display_included_tax

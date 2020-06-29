@@ -39,16 +39,16 @@ feature '
     end
 
     scenario "filter by multiple order cycles" do
-      order_cycle_2 = create(:simple_order_cycle, name: 'Two')
-      order_cycle_3 = create(:simple_order_cycle, name: 'Three')
-      order_cycle_4 = create(:simple_order_cycle, name: 'Four')
+      order_cycle2 = create(:simple_order_cycle, name: 'Two')
+      order_cycle3 = create(:simple_order_cycle, name: 'Three')
+      order_cycle4 = create(:simple_order_cycle, name: 'Four')
 
-      order_2 = create(:order_with_credit_payment, user: user, distributor: distributor,
-                                                  order_cycle: order_cycle_2)
-      order_3 = create(:order_with_credit_payment, user: user, distributor: distributor,
-                                                  order_cycle: order_cycle_3)
-      order_4 = create(:order_with_credit_payment, user: user, distributor: distributor,
-                                                  order_cycle: order_cycle_4)
+      order2 = create(:order_with_credit_payment, user: user, distributor: distributor,
+                                                  order_cycle: order_cycle2)
+      order3 = create(:order_with_credit_payment, user: user, distributor: distributor,
+                                                  order_cycle: order_cycle3)
+      order4 = create(:order_with_credit_payment, user: user, distributor: distributor,
+                                                  order_cycle: order_cycle4)
 
       quick_login_as_admin
       visit 'admin/orders'
@@ -59,10 +59,9 @@ feature '
       page.find('.filter-actions .button.icon-search').click
 
       # Order 2 and 3 should show, but not 4
-      expect(page).to have_content order_2.number
-      expect(page).to have_content order_3.number
-      expect(page).to_not have_content order_4.number
-
+      expect(page).to have_content order2.number
+      expect(page).to have_content order3.number
+      expect(page).to_not have_content order4.number
     end
 
     context "with a capturable order" do

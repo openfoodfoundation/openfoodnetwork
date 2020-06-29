@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 feature '
@@ -300,11 +302,11 @@ feature '
 
         # Incoming exchange
         ex_in = oc.exchanges.where(sender_id: supplier_managed, receiver_id: distributor_managed, incoming: true).first
-        ex_in.update_attributes(variant_ids: [v1.id, v2.id])
+        ex_in.update(variant_ids: [v1.id, v2.id])
 
         # Outgoing exchange
         ex_out = oc.exchanges.where(sender_id: distributor_managed, receiver_id: distributor_managed, incoming: false).first
-        ex_out.update_attributes(variant_ids: [v1.id, v2.id])
+        ex_out.update(variant_ids: [v1.id, v2.id])
 
         # Stub editable_variants_for_outgoing_exchanges method so we can test permissions
         serializer = Api::Admin::OrderCycleSerializer.new(oc, current_user: new_user)
@@ -368,11 +370,11 @@ feature '
 
         # Incoming exchange
         ex_in = oc.exchanges.where(sender_id: supplier_managed, receiver_id: distributor_managed, incoming: true).first
-        ex_in.update_attributes(variant_ids: [v1.id, v2.id])
+        ex_in.update(variant_ids: [v1.id, v2.id])
 
         # Outgoing exchange
         ex_out = oc.exchanges.where(sender_id: distributor_managed, receiver_id: my_distributor, incoming: false).first
-        ex_out.update_attributes(variant_ids: [v1.id, v2.id])
+        ex_out.update(variant_ids: [v1.id, v2.id])
 
         # Stub editable_variants_for_incoming_exchanges method so we can test permissions
         serializer = Api::Admin::OrderCycleSerializer.new(oc, current_user: new_user)
@@ -503,7 +505,7 @@ feature '
       fee = create(:enterprise_fee, name: 'my fee', enterprise: enterprise)
       oc = create(:simple_order_cycle, suppliers: [enterprise], coordinator: enterprise, distributors: [enterprise], variants: [v1], coordinator_fees: [fee])
       ex = oc.exchanges.outgoing.first
-      ex.update_attributes! pickup_time: 'pickup time', pickup_instructions: 'pickup instructions'
+      ex.update! pickup_time: 'pickup time', pickup_instructions: 'pickup instructions'
 
       # When I edit it
       quick_login_as_admin
@@ -536,7 +538,7 @@ feature '
       fee2 = create(:enterprise_fee, name: 'that fee', enterprise: enterprise)
       oc = create(:simple_order_cycle, suppliers: [enterprise], coordinator: enterprise, distributors: [enterprise], variants: [v1], coordinator_fees: [fee1])
       ex = oc.exchanges.outgoing.first
-      ex.update_attributes! pickup_time: 'pickup time', pickup_instructions: 'pickup instructions'
+      ex.update! pickup_time: 'pickup time', pickup_instructions: 'pickup instructions'
 
       # When I edit it
       quick_login_as_admin

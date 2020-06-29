@@ -27,9 +27,9 @@ module Spree
 
       helper_method :render_content?
 
-      before_filter :cache_search_state
+      before_action :cache_search_state
       # Fetches user's distributors, suppliers and order_cycles
-      before_filter :load_data,
+      before_action :load_data,
                     only: [:customers, :products_and_inventory, :order_cycle_management, :packing]
 
       respond_to :html

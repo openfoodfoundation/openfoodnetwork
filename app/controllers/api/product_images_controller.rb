@@ -11,7 +11,7 @@ module Api
         render json: @image, serializer: ImageSerializer, status: :created
       else
         @image = @product.images.first
-        @image.update_attributes(attachment: params[:file])
+        @image.update(attachment: params[:file])
         render json: @image, serializer: ImageSerializer, status: :ok
       end
     end

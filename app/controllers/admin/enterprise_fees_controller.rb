@@ -1,7 +1,7 @@
 module Admin
   class EnterpriseFeesController < ResourceController
-    before_filter :load_enterprise_fee_set, only: :index
-    before_filter :load_data
+    before_action :load_enterprise_fee_set, only: :index
+    before_action :load_data
 
     def index
       @include_calculators = params[:include_calculators].present?

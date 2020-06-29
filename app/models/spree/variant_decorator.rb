@@ -90,9 +90,7 @@ Spree::Variant.class_eval do
   end
 
   def self.indexed
-    Hash[
-      scoped.map { |v| [v.id, v] }
-    ]
+    scoped.index_by(&:id)
   end
 
   def self.active(currency = nil)

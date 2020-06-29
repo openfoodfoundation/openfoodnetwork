@@ -4,7 +4,7 @@ module Api
     include ApiActionCaching
 
     skip_authorization_check
-    skip_before_filter :authenticate_user, :ensure_api_key, only: [:taxons, :properties]
+    skip_before_action :authenticate_user, :ensure_api_key, only: [:taxons, :properties]
 
     caches_action :taxons, :properties,
                   expires_in: CacheService::FILTERS_EXPIRY,

@@ -302,6 +302,7 @@ en:
   on_hand: "On Hand"
   "on hand": "On Hand"
   ship: "Ship"
+  shipping_category: "Shipping Category"
 
   actions:
     create_and_add_another: "Create and Add Another"
@@ -2203,6 +2204,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   hub_sidebar_at_least: "At least one hub must be selected"
   hub_sidebar_blue: "blue"
   hub_sidebar_red: "red"
+  order_cycles_closed_for_hub: "The hub you have selected is temporarily closed for orders. Please try again later."
   report_customers_distributor: "Distributor"
   report_customers_supplier: "Supplier"
   report_customers_cycle: "Order Cycle"
@@ -2441,6 +2443,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   order_cycles_email_to_producers_notice: 'Emails to be sent to producers have been queued for sending.'
   order_cycles_no_permission_to_coordinate_error: "None of your enterprises have permission to coordinate an order cycle"
   order_cycles_no_permission_to_create_error: "You don't have permission to create an order cycle coordinated by that enterprise"
+  order_cycle_closed: "The order cycle you've selected has just closed. Please try again!"
   back_to_orders_list: "Back to order list"
   no_orders_found: "No Orders Found"
   order_information: "Order Information"
@@ -2918,6 +2921,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   last: "Last"
 
   spree:
+    more: "More"
     your_order_is_empty_add_product: "Your order is empty, please search for and add a product above"
     add_product: "Add Product"
     name_or_sku: "Name or SKU (enter at least first 4 characters of product name)"

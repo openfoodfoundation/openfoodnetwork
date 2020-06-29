@@ -33,7 +33,7 @@ class ProxyOrder < ActiveRecord::Base
 
     transaction do
       update_column(:canceled_at, Time.zone.now)
-      order.cancel if order
+      order&.cancel
       true
     end
   end
@@ -43,7 +43,7 @@ class ProxyOrder < ActiveRecord::Base
 
     transaction do
       update_column(:canceled_at, nil)
-      order.resume if order
+      order&.resume
       true
     end
   end
