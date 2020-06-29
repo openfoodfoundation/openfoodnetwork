@@ -12,7 +12,7 @@ class Api::Admin::ProductSerializer < ActiveModel::Serializer
     if object.images.present?
       object.images.first.attachment.url(:product)
     else
-      "/assets/noimage/product.png"
+      "/noimage/product.png"
     end
   end
 
@@ -20,7 +20,7 @@ class Api::Admin::ProductSerializer < ActiveModel::Serializer
     if object.images.present?
       object.images.first.attachment.url(:mini)
     else
-      "/assets/noimage/mini.png"
+      "/noimage/mini.png"
     end
   end
 

@@ -770,7 +770,7 @@ feature '
         expect(page).to have_selector "td.image"
 
         # Shows default image when no image set
-        expect(page).to have_css "img[src='/assets/noimage/mini.png']"
+        expect(page).to have_css "img[src='/noimage/mini.png']"
         @old_thumb_src = page.find("a.image-modal img")['src']
 
         # Click image
