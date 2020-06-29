@@ -155,15 +155,6 @@ feature '
     expect(page).to have_content 'Order date'
   end
 
-  scenario "bulk co-op report" do
-    quick_login_as_admin
-    visit spree.admin_reports_path
-    click_link 'Bulk Co-Op'
-    click_button 'Search'
-
-    expect(page).to have_content 'Supplier'
-  end
-
   scenario "payments reports" do
     quick_login_as_admin
     visit spree.admin_reports_path

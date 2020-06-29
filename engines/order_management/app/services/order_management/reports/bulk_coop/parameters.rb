@@ -1,31 +1,25 @@
+# frozen_string_literal: true
+
 module OrderManagement
   module Reports
-    module EnterpriseFeeSummary
+    module BulkCoop
       class Parameters < ::Reports::Parameters::Base
         extend ActiveModel::Naming
         extend ActiveModel::Translation
         include ActiveModel::Validations
 
-        attr_accessor :start_at, :end_at, :distributor_ids, :producer_ids, :order_cycle_ids,
-                      :enterprise_fee_ids, :shipping_method_ids, :payment_method_ids
+        attr_accessor :start_at, :end_at, :distributor_ids, :report_type
 
         before_validation :cleanup_arrays
 
         validates :start_at, :end_at, date_time_string: true
-        validates :distributor_ids, :producer_ids, integer_array: true
-        validates :order_cycle_ids, integer_array: true
-        validates :enterprise_fee_ids, integer_array: true
-        validates :shipping_method_ids, :payment_method_ids, integer_array: true
+        validates :distributor_ids, integer_array: true
+        validates_inclusion_of :report_type, in: BulkCoopReport::REPORT_TYPES.map(&:to_s)
 
         validate :require_valid_datetime_range
 
         def initialize(attributes = {})
           self.distributor_ids = []
-          self.producer_ids = []
-          self.order_cycle_ids = []
-          self.enterprise_fee_ids = []
-          self.shipping_method_ids = []
-          self.payment_method_ids = []
 
           super(attributes)
         end
@@ -44,11 +38,6 @@ module OrderManagement
         # https://api.rubyonrails.org/classes/ActionView/Helpers/FormOptionsHelper.html#method-i-select
         def cleanup_arrays
           distributor_ids.reject!(&:blank?)
-          producer_ids.reject!(&:blank?)
-          order_cycle_ids.reject!(&:blank?)
-          enterprise_fee_ids.reject!(&:blank?)
-          shipping_method_ids.reject!(&:blank?)
-          payment_method_ids.reject!(&:blank?)
         end
       end
     end

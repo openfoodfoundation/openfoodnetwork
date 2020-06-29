@@ -93,18 +93,6 @@ describe Spree::Admin::ReportsController, type: :controller do
       end
     end
 
-    describe 'Bulk Coop' do
-      let!(:present_objects) { [orderA1, orderA2, orderB1, orderB2] }
-
-      it "only shows orders that I have access to" do
-        spree_post :bulk_coop, q: {}
-
-        expect(resulting_orders).to     include(orderA1, orderB1)
-        expect(resulting_orders).not_to include(orderA2)
-        expect(resulting_orders).not_to include(orderB2)
-      end
-    end
-
     describe 'Payments' do
       let!(:present_objects) { [orderA1, orderA2, orderB1, orderB2] }
 
@@ -153,31 +141,6 @@ describe Spree::Admin::ReportsController, type: :controller do
         report_types = assigns(:reports).keys
         expect(report_types).to include :orders_and_fulfillment, :products_and_inventory, :packing # and others
         expect(report_types).to_not include :sales_tax
-      end
-    end
-
-    describe 'Bulk Coop' do
-      context "where I have granted P-OC to the distributor" do
-        let!(:present_objects) { [orderA1, orderA2] }
-
-        before do
-          create(:enterprise_relationship, parent: supplier1, child: distributor1, permissions_list: [:add_to_order_cycle])
-        end
-
-        it "only shows product line items that I am supplying" do
-          spree_post :bulk_coop, q: {}
-
-          expect(resulting_products).to     include product1
-          expect(resulting_products).not_to include product2, product3
-        end
-      end
-
-      context "where I have not granted P-OC to the distributor" do
-        it "shows product line items that I am supplying" do
-          spree_post :bulk_coop
-
-          expect(resulting_products).not_to include product1, product2, product3
-        end
       end
     end
 
