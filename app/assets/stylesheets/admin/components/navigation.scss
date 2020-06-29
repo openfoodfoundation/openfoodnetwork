@@ -67,15 +67,17 @@ nav.menu {
 
   li {
     min-width: 90px;
+    font-size: 12px;
 
     a {
-      display: block;
+      display: flex;
+      justify-content: center;
       padding: 25px 20px;
       color: $color-1 !important;
       text-transform: uppercase;
       position: relative;
       text-align: center;
-      font-weight: 600;      
+      font-weight: 600;
 
       i {
         display: inline;
