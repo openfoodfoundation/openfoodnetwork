@@ -8,7 +8,7 @@
   @include placeholder(rgba(0, 0, 0, 0.4), #777);
 }
 
-// Components to add variants to cart and change quanities
+// Components to add variants to cart and change quantities
 //
 // They are not nested so that they can be used in modals.
 button.add-variant, button.variant-quantity {
@@ -36,6 +36,7 @@ button.add-variant, button.variant-quantity {
     border-bottom-right-radius: 0.25em;
   }
 }
+
 button.add-variant {
   min-width: 6rem;
   padding: 0 1em;
@@ -46,6 +47,7 @@ button.add-variant {
     }
   }
 }
+
 button.variant-quantity {
   width: 3rem;
 
@@ -53,6 +55,7 @@ button.variant-quantity {
     border-right: .1em solid $orange-400;
   }
 }
+
 .variant-quantity-display {
   display: inline-block;
   font-size: 0.875em;
@@ -71,9 +74,11 @@ button.bulk-buy.variant-quantity {
   border: .1em solid $grey-200;
   color: inherit;
 }
+
 button.bulk-buy-add.variant-quantity {
   width: 2.5rem
 }
+
 span.bulk-buy.variant-quantity {
   border: .1em solid $grey-200;
   height: 2.5rem;
@@ -83,10 +88,12 @@ span.bulk-buy.variant-quantity {
   text-align: center;
   vertical-align: top;
 }
+
 .variant-bulk-buy-price-summary {
   color: $disabled-med;
   margin-bottom: 1em;
 }
+
 .variant-bulk-buy-quantity-label {
   font-size: 0.875rem;
   margin-bottom: .5em;
