@@ -7,7 +7,7 @@ module PermittedAttributes
     end
 
     def call
-      return @params[:order_cycle] if @params[:order_cycle].empty?
+      return @params[:order_cycle] if @params[:order_cycle].blank?
 
       @params.require(:order_cycle).permit(
         :name, :orders_open_at, :orders_close_at, :coordinator_id,

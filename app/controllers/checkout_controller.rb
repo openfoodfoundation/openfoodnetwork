@@ -241,7 +241,7 @@ class CheckoutController < Spree::StoreController
   def update_failed(error = RuntimeError.new(order_error))
     Bugsnag.notify(error)
 
-    flash[:error] = order_error if flash.empty?
+    flash[:error] = order_error if flash.blank?
     checkout_failed
     update_failed_response
   end
