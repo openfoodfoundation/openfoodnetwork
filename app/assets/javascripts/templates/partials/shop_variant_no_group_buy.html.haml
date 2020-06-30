@@ -10,5 +10,5 @@
   .variant-quantity-display{ng: {class: "{visible: variant.line_item.quantity}"}}
     {{ "js.shop_variant_no_group_buy.in_cart" | t:{quantity: variant.line_item.quantity} }}
   %input{type: :hidden,
-  name: "variants[{{::variant.id}}]",
-  ng: {model: "variant.line_item.quantity"}}
+         name: "variants[{{::variant.id}}]",
+         ng: {model: "variant.line_item.quantity"}}
