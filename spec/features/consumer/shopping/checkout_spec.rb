@@ -102,7 +102,7 @@ feature "As a consumer I want to check out my cart", js: true do
             user.ship_address = existing_address
           end
 
-          xit "updates billing address and shipping address" do
+          it "updates billing address and shipping address" do
             expect(order.bill_address).to be_nil
             expect(order.ship_address).to be_nil
 
