@@ -2690,6 +2690,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       increment: "＋" # U+FF0B Fullwidth Plus Sign
       decrement: "－" # U+FF0D Fullwidth Hyphen-Minus
       in_cart: "%{quantity} in cart"
+    bulk_buy_modal:
+      min_quantity: "Min quantity"
+      max_quantity: "Max quantity"
     variants:
       on_demand:
         "yes": "On demand"
