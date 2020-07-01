@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module Stock
     class Coordinator
@@ -10,7 +12,7 @@ module Spree
       def packages
         packages = build_packages
         packages = prioritize_packages(packages)
-        packages = estimate_packages(packages)
+        estimate_packages(packages)
       end
 
       # Build packages as per stock location
@@ -20,11 +22,12 @@ module Spree
       # to build a package because it would be empty. Plus we avoid errors down
       # the stack because it would assume the stock location has stock items
       # for the given order
-      # 
+      #
       # Returns an array of Package instances
-      def build_packages(packages = Array.new)
+      def build_packages(packages = [])
         StockLocation.active.each do |stock_location|
-          next unless stock_location.stock_items.where(:variant_id => order.line_items.pluck(:variant_id)).exists?
+          next unless stock_location.stock_items.
+            where(variant_id: order.line_items.pluck(:variant_id)).exists?
 
           packer = build_packer(stock_location, order)
           packages += packer.packages
@@ -33,6 +36,7 @@ module Spree
       end
 
       private
+
       def prioritize_packages(packages)
         prioritizer = Prioritizer.new(order, packages)
         prioritizer.prioritized_packages
@@ -50,7 +54,7 @@ module Spree
         Packer.new(stock_location, order, splitters(stock_location))
       end
 
-      def splitters(stock_location)
+      def splitters(_stock_location)
         # extension point to return custom splitters for a location
         Rails.application.config.spree.stock_splitters
       end
