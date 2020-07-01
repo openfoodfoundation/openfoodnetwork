@@ -59,7 +59,7 @@ module Spree
       end
 
       it '1st has some, 2nd has remaining' do
-        order.line_items[0].stub(quantity: 5)
+        allow(order.line_items[0]).to receive_messages(quantity: 5)
         package1 = pack do |package|
           package.add variant1, 2, :on_hand
         end
@@ -76,7 +76,7 @@ module Spree
       end
 
       it '1st has backorder, 2nd has some' do
-        order.line_items[0].stub(quantity: 5)
+        allow(order.line_items[0]).to receive_messages(quantity: 5)
         package1 = pack do |package|
           package.add variant1, 5, :backordered
         end
@@ -93,7 +93,7 @@ module Spree
       end
 
       it '1st has backorder, 2nd has all' do
-        order.line_items[0].stub(quantity: 5)
+        allow(order.line_items[0]).to receive_messages(quantity: 5)
         package1 = pack do |package|
           package.add variant1, 3, :backordered
           package.add variant2, 1, :on_hand

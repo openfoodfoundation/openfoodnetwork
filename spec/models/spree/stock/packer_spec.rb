@@ -11,7 +11,7 @@ module Spree
       subject { Packer.new(stock_location, order) }
 
       before do
-        Spree::Config.stub(:package_factory) { Package }
+        allow(Spree::Config).to receive(:package_factory) { Package }
       end
 
       context 'packages' do
@@ -48,8 +48,8 @@ module Spree
           let(:package) { double(:package, add: true) }
 
           it 'calls Spree::Stock::Package' do
-            Package
-              .should_receive(:new)
+            expect(Package)
+              .to receive(:new)
               .with(stock_location, order)
               .and_return(package)
 
@@ -59,7 +59,7 @@ module Spree
 
         context 'when a packer factory is specified' do
           before do
-            Spree::Config.stub(:package_factory) { TestPackageFactory }
+            allow(Spree::Config).to receive(:package_factory) { TestPackageFactory }
           end
 
           class TestPackageFactory; end
@@ -67,8 +67,8 @@ module Spree
           let(:package) { double(:package, add: true) }
 
           it 'calls the specified factory' do
-            TestPackageFactory
-              .should_receive(:new)
+            expect(TestPackageFactory)
+              .to receive(:new)
               .with(stock_location, order)
               .and_return(package)
 
