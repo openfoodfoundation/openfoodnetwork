@@ -1,3 +1,5 @@
+@import '../admin/variables';
+
 /* -------------------------------------
  *		GLOBAL
  *------------------------------------- */
@@ -116,7 +118,7 @@ table.payment-list {
 
   tbody tr td {
     padding: 5px;
-    border-bottom: 1px solid #666;
+    border-bottom: 1px solid $medium-grey;
 
     .payment-method-name {
       display: block;
@@ -129,7 +131,7 @@ table.payment-list {
   }
 
   thead tr th {
-    border-bottom: 1px solid #666;
+    border-bottom: 1px solid $medium-grey;
     padding: 10px 5px 5px;
     text-transform: uppercase;
     text-align: left;
