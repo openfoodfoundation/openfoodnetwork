@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Spree
   module Stock
     class Prioritizer
       attr_reader :packages, :order
 
-      def initialize(order, packages, adjuster_class=Adjuster)
+      def initialize(order, packages, adjuster_class = Adjuster)
         @order = order
         @packages = packages
         @adjuster_class = adjuster_class
@@ -17,6 +19,7 @@ module Spree
       end
 
       private
+
       def adjust_packages
         order.line_items.each do |line_item|
           adjuster = @adjuster_class.new(line_item.variant, line_item.quantity, :on_hand)
@@ -40,7 +43,7 @@ module Spree
       end
 
       def prune_packages
-        packages.reject! { |pkg| pkg.empty? }
+        packages.reject!(&:empty?)
       end
     end
   end

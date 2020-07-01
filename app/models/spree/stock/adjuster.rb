@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Used by Prioritizer to adjust item quantities
 # see prioritizer_spec for use cases
 module Spree
@@ -21,7 +23,7 @@ module Spree
       end
 
       def fulfilled?
-        @need == 0
+        @need.zero?
       end
     end
   end
