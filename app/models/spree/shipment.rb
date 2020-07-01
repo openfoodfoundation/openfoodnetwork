@@ -315,13 +315,5 @@ module Spree
     def update_order
       order.update!
     end
-
-    # NOTE: This is an override of spree's method, needed to allow orders
-    # without line items (ie. user invoices) to not have inventory units
-    def require_inventory
-      return false unless line_items.count > 0 # This line altered
-
-      order.completed? && !order.canceled?
-    end
   end
 end

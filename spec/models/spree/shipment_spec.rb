@@ -339,7 +339,7 @@ describe Spree::Shipment do
   context "#ship" do
     before do
       order.stub(:update!)
-      shipment.stub(require_inventory: false, update_order: true, state: 'ready')
+      shipment.stub(update_order: true, state: 'ready')
       shipment.stub(adjustment: charge)
       shipping_method.stub(:create_adjustment)
       shipment.stub(:ensure_correct_adjustment)
