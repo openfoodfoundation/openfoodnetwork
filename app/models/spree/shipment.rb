@@ -241,6 +241,25 @@ module Spree
       inventory_units.create(variant_id: variant.id, state: state, order_id: order.id)
     end
 
+    def ensure_correct_adjustment
+      if adjustment
+        adjustment.originator = shipping_method
+        adjustment.label = shipping_method.adjustment_label
+        adjustment.amount = selected_shipping_rate.cost if adjustment.open?
+        adjustment.save!
+        adjustment.reload
+      elsif selected_shipping_rate_id
+        shipping_method.create_adjustment(shipping_method.adjustment_label,
+                                          order,
+                                          self,
+                                          true,
+                                          "open")
+        reload # ensure adjustment is present on later saves
+      end
+
+      update_adjustment_included_tax if adjustment
+    end
+
     private
 
     def manifest_unstock(item)
@@ -283,25 +302,6 @@ module Spree
 
     def send_shipped_email
       ShipmentMailer.shipped_email(id).deliver
-    end
-
-    def ensure_correct_adjustment
-      if adjustment
-        adjustment.originator = shipping_method
-        adjustment.label = shipping_method.adjustment_label
-        adjustment.amount = selected_shipping_rate.cost if adjustment.open?
-        adjustment.save!
-        adjustment.reload
-      elsif selected_shipping_rate_id
-        shipping_method.create_adjustment(shipping_method.adjustment_label,
-                                          order,
-                                          self,
-                                          true,
-                                          "open")
-        reload # ensure adjustment is present on later saves
-      end
-
-      update_adjustment_included_tax if adjustment
     end
 
     def update_adjustment_included_tax
