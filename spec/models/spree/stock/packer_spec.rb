@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 module Spree
@@ -33,7 +35,7 @@ module Spree
         end
 
         it 'variants are added as backordered without enough on_hand' do
-          stock_location.should_receive(:fill_status).exactly(5).times.and_return([2,3])
+          stock_location.should_receive(:fill_status).exactly(5).times.and_return([2, 3])
 
           package = subject.default_package
           package.on_hand.size.should eq 5
