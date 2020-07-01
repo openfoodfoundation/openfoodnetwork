@@ -12,7 +12,7 @@ module OrderManagement
         splitter2 = BasicSplitter.new(packer, splitter1)
         packages = []
 
-        splitter1.should_receive(:split).with(packages)
+        expect(splitter1).to receive(:split).with(packages)
         splitter2.split(packages)
       end
 
