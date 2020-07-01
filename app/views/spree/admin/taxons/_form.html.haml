@@ -12,11 +12,6 @@
       %br/
       = @taxon.permalink.split("/")[0...-1].join("/") + "/"
       = text_field_tag :permalink_part, @permalink_part
-    = f.field_container :icon do
-      = f.label :icon, t(:icon)
-      %br/
-      = f.file_field :icon
-      %img{src: @taxon.icon(:original)}
     = f.field_container :meta_title do
       = f.label :meta_title, t(:meta_title)
       %br/
