@@ -47,14 +47,14 @@ module ShopWorkflow
   def click_add_to_cart(variant = nil, quantity = 1)
     within_variant(variant) do
       click_button "Add"
-      (quantity - 1).times { click_button "＋" }
+      (quantity - 1).times { click_button increase_quantity_symbol }
     end
     wait_for_cart
   end
 
   def click_remove_from_cart(variant = nil, quantity = 1)
     within_variant(variant) do
-      quantity.times { click_button "－" }
+      quantity.times { click_button decrease_quantity_symbol }
     end
     wait_for_cart
   end
@@ -65,7 +65,7 @@ module ShopWorkflow
     end
     within(".reveal-modal") do
       (quantity - 1).times do
-        first(:button, "＋").click
+        first(:button, increase_quantity_symbol).click
       end
     end
     wait_for_cart
@@ -74,7 +74,7 @@ module ShopWorkflow
   def click_add_bulk_max_to_cart(variant = nil, quantity = 1)
     within(".reveal-modal") do
       quantity.times do
-        page.all("button", text: "＋").last.click
+        page.all("button", text: increase_quantity_symbol).last.click
       end
     end
     wait_for_cart
@@ -92,6 +92,14 @@ module ShopWorkflow
     within_variant(variant) do
       page.first("button.bulk-buy").click
     end
+  end
+
+  def increase_quantity_symbol
+    "＋"
+  end
+
+  def decrease_quantity_symbol
+    "－"
   end
 
   def toggle_accordion(name)

@@ -311,7 +311,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
         within_variant(variant) do
           expect(page).to have_content "5 in cart"
-          expect(page).to have_button "＋", disabled: true
+          expect(page).to have_button increase_quantity_symbol, disabled: true
         end
       end
 
@@ -364,7 +364,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
             # -- Messaging
             within(".reveal-modal") do
-              page.all("button", text: "＋").last.click
+              page.all("button", text: increase_quantity_symbol).last.click
             end
             close_modal
             wait_for_cart
