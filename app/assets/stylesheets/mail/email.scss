@@ -109,21 +109,22 @@ table.order-summary {
 
 // put in separate order invoice scss file?
 table.payment-list {
-  width:100%;
+  width: 100%;
   border-collapse: separate;
   border-spacing: 0px;
-  font-size:12px;
+  font-size: 12px;
 
   tbody tr td {
     padding: 5px;
     border-bottom: 1px solid #666;
-    
-    .payment-method-name{
-      display:block;
-      font-weight:bold;
+
+    .payment-method-name {
+      display: block;
+      font-weight: bold;
     }
-    .payment-method-description{
-      display:block;
+
+    .payment-method-description {
+      display: block;
     }
   }
 
@@ -134,16 +135,16 @@ table.payment-list {
     text-align: left;
   }
 
-  th.amount, td.amount{
+  th.amount, td.amount {
     text-align: right;
-    padding-right:15px;
+    padding-right: 15px;
   }
 
-  th.payment-state{
+  th.payment-state {
     text-align: right;
   }
 
-  td.payment-state{
+  td.payment-state {
     text-align: right;
     text-transform: uppercase;
   }
