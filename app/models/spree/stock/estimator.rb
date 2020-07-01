@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module Stock
     class Estimator
@@ -9,13 +11,13 @@ module Spree
       end
 
       def shipping_rates(package, frontend_only = true)
-        shipping_rates = Array.new
+        shipping_rates = []
         shipping_methods = shipping_methods(package)
         return [] unless shipping_methods
 
         shipping_methods.each do |shipping_method|
           cost = calculate_cost(shipping_method, package)
-          shipping_rates << shipping_method.shipping_rates.new(:cost => cost) unless cost.nil?
+          shipping_rates << shipping_method.shipping_rates.new(cost: cost) unless cost.nil?
         end
 
         shipping_rates.sort_by! { |r| r.cost || 0 }
@@ -23,7 +25,7 @@ module Spree
         unless shipping_rates.empty?
           if frontend_only
             shipping_rates.each do |rate|
-              rate.selected = true and break if rate.shipping_method.frontend?
+              rate.selected = true && break if rate.shipping_method.frontend?
             end
           else
             shipping_rates.first.selected = true
@@ -34,11 +36,15 @@ module Spree
       end
 
       private
+
       def shipping_methods(package)
         shipping_methods = package.shipping_methods
         shipping_methods.delete_if { |ship_method| !ship_method.calculator.available?(package) }
         shipping_methods.delete_if { |ship_method| !ship_method.include?(order.ship_address) }
-        shipping_methods.delete_if { |ship_method| !(ship_method.calculator.preferences[:currency].nil? || ship_method.calculator.preferences[:currency] == currency) }
+        shipping_methods.delete_if { |ship_method|
+          !(ship_method.calculator.preferences[:currency].nil? ||
+            ship_method.calculator.preferences[:currency] == currency)
+        }
         shipping_methods
       end
 
