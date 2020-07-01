@@ -72,21 +72,6 @@
         width: 100px;
         margin-bottom: 20px;
       }
-
-      // ICONS
-      i {
-        font-size: 0.75em;
-        padding-right: 0.9375rem;
-
-        @include breakpoint(phablet) {
-          padding-right: 0.25rem;
-        }
-      }
-
-      i.ofn-i_056-bulk {
-        font-size: 1rem;
-        padding-right: 0rem;
-      }
     }
   }
 
