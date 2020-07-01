@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 module Spree
@@ -51,9 +53,9 @@ module Spree
 
       it 'set contents from flattened' do
         flattened = [Package::ContentItem.new(variant, 1, :on_hand),
-                    Package::ContentItem.new(variant, 1, :on_hand),
-                    Package::ContentItem.new(variant, 1, :backordered),
-                    Package::ContentItem.new(variant, 1, :backordered)]
+                     Package::ContentItem.new(variant, 1, :on_hand),
+                     Package::ContentItem.new(variant, 1, :backordered),
+                     Package::ContentItem.new(variant, 1, :backordered)]
 
         subject.flattened = flattened
         subject.on_hand.size.should eq 1
@@ -66,8 +68,10 @@ module Spree
       it 'builds a list of shipping methods from all categories' do
         shipping_method1 = create(:shipping_method)
         shipping_method2 = create(:shipping_method)
-        variant1 = mock_model(Variant, shipping_category: shipping_method1.shipping_categories.first)
-        variant2 = mock_model(Variant, shipping_category: shipping_method2.shipping_categories.first)
+        variant1 = mock_model(Variant,
+                              shipping_category: shipping_method1.shipping_categories.first)
+        variant2 = mock_model(Variant,
+                              shipping_category: shipping_method2.shipping_categories.first)
         variant3 = mock_model(Variant, shipping_category: nil)
         contents = [Package::ContentItem.new(variant1, 1),
                     Package::ContentItem.new(variant1, 1),
@@ -78,30 +82,31 @@ module Spree
         package.shipping_methods.size.should eq 2
       end
 
-
       it "can convert to a shipment" do
         flattened = [Package::ContentItem.new(variant, 2, :on_hand),
-                    Package::ContentItem.new(variant, 1, :backordered)]
+                     Package::ContentItem.new(variant, 1, :backordered)]
         subject.flattened = flattened
 
         shipping_method = build(:shipping_method)
-        subject.shipping_rates = [ Spree::ShippingRate.new(shipping_method: shipping_method, cost: 10.00, selected: true) ]
+        subject.shipping_rates = [
+          Spree::ShippingRate.new(shipping_method: shipping_method, cost: 10.00, selected: true)
+        ]
 
         shipment = subject.to_shipment
-        shipment.order.should == subject.order
-        shipment.stock_location.should == subject.stock_location
-        shipment.inventory_units.size.should == 3
+        expect(shipment.order).to eq subject.order
+        expect(shipment.stock_location).to eq subject.stock_location
+        expect(shipment.inventory_units.size).to eq 3
 
         first_unit = shipment.inventory_units.first
-        first_unit.variant.should == variant
-        first_unit.state.should == 'on_hand'
-        first_unit.order.should == subject.order
+        expect(first_unit.variant).to eq variant
+        expect(first_unit.state).to eq 'on_hand'
+        expect(first_unit.order).to eq subject.order
         first_unit.should be_pending
 
         last_unit = shipment.inventory_units.last
-        last_unit.variant.should == variant
-        last_unit.state.should == 'backordered'
-        last_unit.order.should == subject.order
+        expect(last_unit.variant).to eq variant
+        expect(last_unit.state).to eq 'backordered'
+        expect(last_unit.order).to eq subject.order
 
         shipment.shipping_method.should eq shipping_method
       end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module Stock
     class Package
@@ -6,14 +8,14 @@ module Spree
       attr_reader :stock_location, :order, :contents
       attr_accessor :shipping_rates
 
-      def initialize(stock_location, order, contents=[])
+      def initialize(stock_location, order, contents = [])
         @stock_location = stock_location
         @order = order
         @contents = contents
-        @shipping_rates = Array.new
+        @shipping_rates = []
       end
 
-      def add(variant, quantity, state=:on_hand)
+      def add(variant, quantity, state = :on_hand)
         contents << ContentItem.new(variant, quantity, state)
       end
 
@@ -29,26 +31,26 @@ module Spree
         contents.select { |item| item.state == :backordered }
       end
 
-      def find_item(variant, state=:on_hand)
+      def find_item(variant, state = :on_hand)
         contents.select do |item|
           item.variant == variant &&
-          item.state == state
+            item.state == state
         end.first
       end
 
-      def quantity(state=nil)
+      def quantity(state = nil)
         case state
         when :on_hand
-          on_hand.sum { |item| item.quantity }
+          on_hand.sum(&:quantity)
         when :backordered
-          backordered.sum { |item| item.quantity }
+          backordered.sum(&:quantity)
         else
-          contents.sum { |item| item.quantity }
+          contents.sum(&:quantity)
         end
       end
 
       def empty?
-        quantity == 0
+        quantity.zero?
       end
 
       def flattened
@@ -74,7 +76,7 @@ module Spree
       end
 
       def currency
-        #TODO calculate from first variant?
+        # TODO calculate from first variant?
       end
 
       def shipping_categories
@@ -82,7 +84,7 @@ module Spree
       end
 
       def shipping_methods
-        shipping_categories.map { |sc| sc.shipping_methods }.flatten.uniq
+        shipping_categories.map(&:shipping_methods).flatten.uniq
       end
 
       def inspect
@@ -100,7 +102,7 @@ module Spree
         shipment.shipping_rates = shipping_rates
 
         contents.each do |item|
-          item.quantity.times do |n|
+          item.quantity.times do
             unit = shipment.inventory_units.build
             unit.pending = true
             unit.order = order
