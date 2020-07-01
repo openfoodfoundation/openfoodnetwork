@@ -5,7 +5,7 @@ require 'spec_helper'
 module Spree
   module Stock
     describe Estimator do
-      let!(:shipping_method) { create(:shipping_method) }
+      let!(:shipping_method) { create(:shipping_method, zones: [Spree::Zone.global] ) }
       let(:package) { build(:stock_package_fulfilled) }
       let(:order) { package.order }
       subject { Estimator.new(order) }
@@ -16,7 +16,7 @@ module Spree
           ShippingMethod.any_instance.stub_chain(:calculator, :available?).and_return(true)
           ShippingMethod.any_instance.stub_chain(:calculator, :compute).and_return(4.00)
           ShippingMethod.any_instance.
-            stub_chain(:calculator, :preferences).and_return({ currency: "USD" })
+            stub_chain(:calculator, :preferences).and_return({ currency: order.currency })
           ShippingMethod.any_instance.stub_chain(:calculator, :marked_for_destruction?)
 
           package.stub(shipping_methods: [shipping_method])
@@ -25,15 +25,15 @@ module Spree
         context "the order's ship address is in the same zone" do
           it "returns shipping rates from a shipping method" do
             shipping_rates = subject.shipping_rates(package)
-            shipping_rates.first.cost.should eq 4.00
+            expect(shipping_rates.first.cost).to eq 4.00
           end
         end
 
         context "the order's ship address is in a different zone" do
-          it "does not return shipping rates from a shipping method" do
+          it "still returns shipping rates from a shipping method" do
             shipping_method.zones.each{ |z| z.members.delete_all }
             shipping_rates = subject.shipping_rates(package)
-            shipping_rates.should == []
+            expect(shipping_rates.first.cost).to eq 4.00
           end
         end
 
@@ -41,22 +41,22 @@ module Spree
           it "does not return shipping rates from a shipping method" do
             ShippingMethod.any_instance.stub_chain(:calculator, :available?).and_return(false)
             shipping_rates = subject.shipping_rates(package)
-            shipping_rates.should == []
+            expect(shipping_rates).to eq []
           end
         end
 
         context "the currency matches the order's currency" do
           it "returns shipping rates from a shipping method" do
             shipping_rates = subject.shipping_rates(package)
-            shipping_rates.first.cost.should eq 4.00
+            expect(shipping_rates.first.cost).to eq 4.00
           end
         end
 
         context "the currency is different than the order's currency" do
           it "does not return shipping rates from a shipping method" do
-            order.currency = "GBP"
+            order.currency = "USD"
             shipping_rates = subject.shipping_rates(package)
-            shipping_rates.should == []
+            expect(shipping_rates).to eq []
           end
         end
 

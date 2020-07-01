@@ -25,7 +25,10 @@ module Spree
         unless shipping_rates.empty?
           if frontend_only
             shipping_rates.each do |rate|
-              rate.selected = true && break if rate.shipping_method.frontend?
+              if rate.shipping_method.frontend?
+                rate.selected = true
+                break
+              end
             end
           else
             shipping_rates.first.selected = true
