@@ -74,7 +74,7 @@ feature "As a consumer I want to check out my cart", js: true do
           fill_out_form
         end
 
-        it "allows user to save default billing address and shipping address" do
+        it "creates a new default billing address and shipping address" do
           expect(user.bill_address).to be_nil
           expect(user.ship_address).to be_nil
 
@@ -92,6 +92,32 @@ feature "As a consumer I want to check out my cart", js: true do
 
           expect(user.reload.bill_address.address1).to eq '123 Your Head'
           expect(user.reload.ship_address.address1).to eq '123 Your Head'
+        end
+
+        context "when the user and customer have existing default addresses" do
+          let(:existing_address) { create(:address) }
+
+          before do
+            user.bill_address = existing_address
+            user.ship_address = existing_address
+          end
+
+          it "updates billing address and shipping address" do
+            expect(order.bill_address).to be_nil
+            expect(order.ship_address).to be_nil
+
+            place_order
+            expect(page).to have_content "Your order has been processed successfully"
+
+            expect(order.reload.bill_address.address1).to eq '123 Your Head'
+            expect(order.reload.ship_address.address1).to eq '123 Your Head'
+
+            expect(order.customer.bill_address.address1).to eq '123 Your Head'
+            expect(order.customer.ship_address.address1).to eq '123 Your Head'
+
+            expect(user.reload.bill_address.address1).to eq '123 Your Head'
+            expect(user.reload.ship_address.address1).to eq '123 Your Head'
+          end
         end
 
         it "it doesn't tell about previous orders" do
