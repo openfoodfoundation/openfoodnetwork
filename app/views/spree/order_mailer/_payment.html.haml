@@ -3,12 +3,15 @@
     - if @order.paid?
       = t :email_payment_paid
     - else
-      = t :email_payment_not_paid
+      - if @order.outstanding_balance?
+        = @order.outstanding_balance < 0 ? t(:credit_owed) : t(:balance_due)
+        \:
+        %strong= @order.display_outstanding_balance
+      - else
+        = t :email_payment_not_paid
   %strong
     = t :email_payment_summary
-%h4
-  = t :email_payment_method
-  %strong=  last_payment_method(@order)&.name
-%p
-  %em= last_payment_method(@order)&.description
-%p &nbsp;
+- if @order.payments.any?
+  = render partial: 'list', locals: { payments: @order.payments }
+- else
+  .alpha.twelve.columns.no-objects-found= t(:order_has_no_payments)
