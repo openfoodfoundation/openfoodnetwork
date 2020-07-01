@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'ostruct'
 
 module Spree
@@ -28,7 +30,8 @@ module Spree
     scope :with_state, ->(*s) { where(state: s) }
     scope :trackable, -> { where("tracking IS NOT NULL AND tracking != ''") }
 
-    # shipment state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
+    # Shipment state machine
+    # See http://github.com/pluginaweek/state_machine/tree/master for details
     state_machine initial: :pending, use_transactions: false do
       event :ready do
         transition from: :pending, to: :ready, if: lambda { |shipment|
@@ -70,12 +73,13 @@ module Spree
     end
 
     def backordered?
-      inventory_units.any? { |inventory_unit| inventory_unit.backordered? }
+      inventory_units.any?(&:backordered?)
     end
 
     def shipped=(value)
       return unless value == '1' && shipped_at.nil?
-      self.shipped_at = Time.now
+
+      self.shipped_at = Time.zone.now
     end
 
     def shipping_method
@@ -97,7 +101,7 @@ module Spree
     def selected_shipping_rate_id=(id)
       shipping_rates.update_all(selected: false)
       shipping_rates.update(id, selected: true)
-      self.save!
+      save!
     end
 
     def refresh_rates
@@ -119,8 +123,9 @@ module Spree
       order ? order.currency : Spree::Config[:currency]
     end
 
-    # The adjustment amount associated with this shipment (if any.)  Returns only the first adjustment to match
-    # the shipment but there should never really be more than one.
+    # The adjustment amount associated with this shipment (if any)
+    #   Returns only the first adjustment to match the shipment
+    #   There should never really be more than one.
     def cost
       adjustment ? adjustment.amount : 0
     end
@@ -149,7 +154,7 @@ module Spree
       Spree::Money.new(total_cost, { currency: currency })
     end
 
-    def editable_by?(user)
+    def editable_by?(_user)
       !shipped?
     end
 
@@ -162,7 +167,7 @@ module Spree
     end
 
     def line_items
-      if order.complete? and Spree::Config[:track_inventory_levels]
+      if order.complete? && Spree::Config[:track_inventory_levels]
         order.line_items.select { |li| inventory_units.pluck(:variant_id).include?(li.variant_id) }
       else
         order.line_items
@@ -182,14 +187,15 @@ module Spree
       manifest.each { |item| manifest_unstock(item) }
     end
 
-    # Updates various aspects of the Shipment while bypassing any callbacks.  Note that this method takes an explicit reference to the
-    # Order object.  This is necessary because the association actually has a stale (and unsaved) copy of the Order and so it will not
-    # yield the correct results.
+    # Updates various aspects of the Shipment while bypassing any callbacks.
+    #   Note that this method takes an explicit reference to the Order object.
+    #   This is necessary because the association actually has a stale (and unsaved) copy of the
+    #     Order and so it will not yield the correct results.
     def update!(order)
       old_state = state
       new_state = determine_state(order)
       update_column :state, new_state
-      after_ship if new_state == 'shipped' and old_state != 'shipped'
+      after_ship if new_state == 'shipped' && old_state != 'shipped'
     end
 
     # Determines the appropriate +state+ according to the following logic:
@@ -200,8 +206,9 @@ module Spree
     def determine_state(order)
       return 'canceled' if order.canceled?
       return 'pending' unless order.can_ship?
-      return 'pending' if inventory_units.any? &:backordered?
+      return 'pending' if inventory_units.any?(&:backordered?)
       return 'shipped' if state == 'shipped'
+
       order.paid? ? 'ready' : 'pending'
     end
 
@@ -226,65 +233,72 @@ module Spree
     end
 
     def set_up_inventory(state, variant, order)
-      self.inventory_units.create(variant_id: variant.id, state: state, order_id: order.id)
+      inventory_units.create(variant_id: variant.id, state: state, order_id: order.id)
     end
 
     private
 
-      def manifest_unstock(item)
-        stock_location.unstock item.variant, item.quantity, self
-      end
+    def manifest_unstock(item)
+      stock_location.unstock item.variant, item.quantity, self
+    end
 
-      def manifest_restock(item)
-        stock_location.restock item.variant, item.quantity, self
-      end
+    def manifest_restock(item)
+      stock_location.restock item.variant, item.quantity, self
+    end
 
-      def generate_shipment_number
-        return number unless number.blank?
-        record = true
-        while record
-          random = "H#{Array.new(11) { rand(9) }.join}"
-          record = self.class.where(number: random).first
-        end
-        self.number = random
-      end
+    def generate_shipment_number
+      return number if number.present?
 
-      def description_for_shipping_charge
-        "#{Spree.t(:shipping)} (#{shipping_method.name})"
+      record = true
+      while record
+        random = "H#{Array.new(11) { rand(9) }.join}"
+        record = self.class.where(number: random).first
       end
+      self.number = random
+    end
 
-      def validate_shipping_method
-        unless shipping_method.nil?
-          errors.add :shipping_method, Spree.t(:is_not_available_to_shipment_address) unless shipping_method.include?(address)
-        end
-      end
+    def description_for_shipping_charge
+      "#{Spree.t(:shipping)} (#{shipping_method.name})"
+    end
 
-      def after_ship
-        inventory_units.each &:ship!
-        adjustment.finalize!
-        send_shipped_email
-        touch :shipped_at
-      end
+    def validate_shipping_method
+      return if shipping_method.nil?
 
-      def send_shipped_email
-        ShipmentMailer.shipped_email(self.id).deliver
-      end
+      return if shipping_method.include?(address)
 
-      def ensure_correct_adjustment
-        if adjustment
-          adjustment.originator = shipping_method
-          adjustment.label = shipping_method.adjustment_label
-          adjustment.amount = selected_shipping_rate.cost if adjustment.open?
-          adjustment.save!
-          adjustment.reload
-        elsif selected_shipping_rate_id
-          shipping_method.create_adjustment shipping_method.adjustment_label, order, self, true, "open"
-          reload #ensure adjustment is present on later saves
-        end
-      end
+      errors.add :shipping_method, Spree.t(:is_not_available_to_shipment_address)
+    end
 
-      def update_order
-        order.update!
+    def after_ship
+      inventory_units.each(&:ship!)
+      adjustment.finalize!
+      send_shipped_email
+      touch :shipped_at
+    end
+
+    def send_shipped_email
+      ShipmentMailer.shipped_email(id).deliver
+    end
+
+    def ensure_correct_adjustment
+      if adjustment
+        adjustment.originator = shipping_method
+        adjustment.label = shipping_method.adjustment_label
+        adjustment.amount = selected_shipping_rate.cost if adjustment.open?
+        adjustment.save!
+        adjustment.reload
+      elsif selected_shipping_rate_id
+        shipping_method.create_adjustment(shipping_method.adjustment_label,
+                                          order,
+                                          self,
+                                          true,
+                                          "open")
+        reload # ensure adjustment is present on later saves
       end
+    end
+
+    def update_order
+      order.update!
+    end
   end
 end
