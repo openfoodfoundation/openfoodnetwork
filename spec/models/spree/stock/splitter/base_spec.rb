@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 module Spree
@@ -18,7 +20,7 @@ module Spree
         it 'builds package using package factory' do
           # Basic extension of Base splitter used to test build_package method
           class ::BasicSplitter < Base
-            def split(packages)
+            def split(_packages)
               build_package
             end
           end
