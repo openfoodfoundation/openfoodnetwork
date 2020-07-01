@@ -83,7 +83,7 @@ module Openfoodnetwork
     #     we must use this splitter and no other
     initializer "spree.register.stock_splitters" do |app|
       app.config.spree.stock_splitters = [
-        Spree::Stock::Splitter::Base
+        OrderManagement::Stock::BasicSplitter
       ]
     end
 
