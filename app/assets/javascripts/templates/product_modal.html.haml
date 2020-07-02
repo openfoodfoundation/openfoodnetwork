@@ -15,6 +15,6 @@
 
   .columns.small-12.medium-6.large-6.product-img
     %img{"ng-src" => "{{::product.largeImage}}", "ng-if" => "::product.largeImage"}
-    %img.placeholder{ src: "/assets/noimage/large.png", "ng-if" => "::!product.largeImage"}
+    %img.placeholder{ src: "/noimage/large.png", "ng-if" => "::!product.largeImage"}
 
 %ng-include{src: "'partials/close.html'"}

@@ -16,10 +16,7 @@
       %td.cart-item-description
 
         %div.item-thumb-image
-          - if variant.images.length == 0
-            = mini_image(variant.product)
-          - else
-            = image_tag(variant.images.first.attachment.url(:mini))
+          = render 'spree/shared/variant_thumbnail', variant: variant
 
         = render 'spree/shared/line_item_name', line_item: line_item
         %span.already-confirmed= t(:orders_bought_already_confirmed)

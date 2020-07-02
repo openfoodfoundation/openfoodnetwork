@@ -22,7 +22,7 @@
           - if @group.logo.present?
             %img.group-logo{"src" => @group.logo}
           - else
-            %img.group-logo{"src" => image_path('noimage/group.png') }
+            %img.group-logo{"src" => '/noimage/group.png' }
           %h2.group-name= @group.name
           %p= @group.description
 
