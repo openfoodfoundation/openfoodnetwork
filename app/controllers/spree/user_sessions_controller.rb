@@ -6,11 +6,13 @@ module Spree
     include Spree::Core::ControllerHelpers::Common
     include Spree::Core::ControllerHelpers::Order
     include Spree::Core::ControllerHelpers::SSL
+    include I18nHelper
 
     ssl_required :new, :create, :destroy, :update
     ssl_allowed :login_bar
 
     before_action :set_checkout_redirect, only: :create
+    after_action :ensure_valid_locale, only: :create
 
     def create
       authenticate_spree_user!
@@ -47,6 +49,12 @@ module Spree
     def redirect_back_or_default(default)
       redirect_to(session["spree_user_return_to"] || default)
       session["spree_user_return_to"] = nil
+    end
+
+    def ensure_valid_locale
+      return unless spree_current_user && !available_locale?(spree_current_user.locale)
+
+      spree_current_user.update!(locale: I18n.default_locale)
     end
   end
 end

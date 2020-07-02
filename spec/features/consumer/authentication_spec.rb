@@ -161,7 +161,7 @@ feature "Authentication", js: true do
           user.update!(locale: "xx")
         end
 
-        xit "logs in successfully and resets the user's locale to the default" do
+        it "logs in successfully and resets the user's locale to the default" do
           fill_in_and_submit_login_form(user)
           expect_logged_in
 
