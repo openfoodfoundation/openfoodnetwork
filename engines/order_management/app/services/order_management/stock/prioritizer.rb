@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-module Spree
+module OrderManagement
   module Stock
     class Prioritizer
       attr_reader :packages, :order
 
-      def initialize(order, packages, adjuster_class = Adjuster)
+      def initialize(order, packages, adjuster_class = OrderManagement::Stock::Adjuster)
         @order = order
         @packages = packages
         @adjuster_class = adjuster_class

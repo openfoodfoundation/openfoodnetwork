@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module OrderManagement
   module Stock
     class Packer
       attr_reader :stock_location, :order
@@ -17,7 +17,7 @@ module Spree
       def default_package
         package = OrderManagement::Stock::Package.new(stock_location, order)
         order.line_items.each do |line_item|
-          if Config.track_inventory_levels
+          if Spree::Config.track_inventory_levels
             next unless stock_location.stock_item(line_item.variant)
 
             on_hand, backordered = stock_location.fill_status(line_item.variant, line_item.quantity)

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module OrderManagement
   module Stock
     describe Estimator do
       let!(:shipping_method) { create(:shipping_method, zones: [Spree::Zone.global] ) }
@@ -13,11 +13,11 @@ module Spree
       context "#shipping rates" do
         before(:each) do
           shipping_method.zones.first.members.create(zoneable: order.ship_address.country)
-          allow_any_instance_of(ShippingMethod).to receive_message_chain(:calculator, :available?).and_return(true)
-          allow_any_instance_of(ShippingMethod).to receive_message_chain(:calculator, :compute).and_return(4.00)
-          allow_any_instance_of(ShippingMethod).
+          allow_any_instance_of(Spree::ShippingMethod).to receive_message_chain(:calculator, :available?).and_return(true)
+          allow_any_instance_of(Spree::ShippingMethod).to receive_message_chain(:calculator, :compute).and_return(4.00)
+          allow_any_instance_of(Spree::ShippingMethod).
             to receive_message_chain(:calculator, :preferences).and_return({ currency: order.currency })
-          allow_any_instance_of(ShippingMethod).to receive_message_chain(:calculator, :marked_for_destruction?)
+          allow_any_instance_of(Spree::ShippingMethod).to receive_message_chain(:calculator, :marked_for_destruction?)
 
           allow(package).to receive_messages(shipping_methods: [shipping_method])
         end
@@ -39,7 +39,7 @@ module Spree
 
         context "the calculator is not available for that order" do
           it "does not return shipping rates from a shipping method" do
-            allow_any_instance_of(ShippingMethod).to receive_message_chain(:calculator, :available?).and_return(false)
+            allow_any_instance_of(Spree::ShippingMethod).to receive_message_chain(:calculator, :available?).and_return(false)
             shipping_rates = subject.shipping_rates(package)
             expect(shipping_rates).to eq []
           end

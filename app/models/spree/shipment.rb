@@ -107,7 +107,7 @@ module Spree
     def refresh_rates
       return shipping_rates if shipped?
 
-      self.shipping_rates = Stock::Estimator.new(order).shipping_rates(to_package)
+      self.shipping_rates = OrderManagement::Stock::Estimator.new(order).shipping_rates(to_package)
 
       if shipping_method
         selected_rate = shipping_rates.detect { |rate|

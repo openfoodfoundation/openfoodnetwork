@@ -38,12 +38,12 @@ module OrderManagement
       private
 
       def prioritize_packages(packages)
-        prioritizer = Spree::Stock::Prioritizer.new(order, packages)
+        prioritizer = OrderManagement::Stock::Prioritizer.new(order, packages)
         prioritizer.prioritized_packages
       end
 
       def estimate_packages(packages)
-        estimator = Spree::Stock::Estimator.new(order)
+        estimator = OrderManagement::Stock::Estimator.new(order)
         packages.each do |package|
           package.shipping_rates = estimator.shipping_rates(package)
         end
@@ -51,7 +51,7 @@ module OrderManagement
       end
 
       def build_packer(stock_location, order)
-        Spree::Stock::Packer.new(stock_location, order)
+        OrderManagement::Stock::Packer.new(stock_location, order)
       end
     end
   end

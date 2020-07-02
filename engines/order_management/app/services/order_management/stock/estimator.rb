@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module OrderManagement
   module Stock
     class Estimator
       attr_reader :order, :currency

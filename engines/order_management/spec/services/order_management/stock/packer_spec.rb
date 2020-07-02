@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module OrderManagement
   module Stock
     describe Packer do
       let(:order) { create(:order_with_line_items, line_items_count: 5) }

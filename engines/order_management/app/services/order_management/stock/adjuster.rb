@@ -2,7 +2,7 @@
 
 # Used by Prioritizer to adjust item quantities
 # see prioritizer_spec for use cases
-module Spree
+module OrderManagement
   module Stock
     class Adjuster
       attr_accessor :variant, :need, :status
