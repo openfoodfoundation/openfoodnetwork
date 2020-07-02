@@ -1150,13 +1150,18 @@ ca:
     menu:
       cart:
         cart: "Cistella"
+      cart_sidebar:
+        checkout: "Realitza la comanda"
+        edit_cart: "Edita la cistella"
+        items_in_cart_singular: "%{num} item a la teva cistella"
+        items_in_cart_plural: "%{num} item a la teva cistella"
+        close: "Tanca"
+        cart_empty: "La teva cistella és buida"
+        take_me_shopping: "Porta’m de compres!"
       signed_in:
         profile: "Perfil"
       mobile_menu:
         cart: "Cistella"
-      joyride:
-        checkout: "Validar ara"
-        already_ordered_products: "Ja està demanat en aquest cicle de comanda"
     register_call:
       selling_on_ofn: "Estàs interessat en formar part d'Open Food Network?"
       register: "Registra't aquí"
