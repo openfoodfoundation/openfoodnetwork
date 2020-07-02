@@ -456,7 +456,7 @@ GEM
     mime-types-data (3.2020.0512)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
-    mini_racer (0.2.14)
+    mini_racer (0.2.15)
       libv8 (> 7.3)
     minitest (4.7.5)
     momentjs-rails (2.20.1)
@@ -749,7 +749,7 @@ DEPENDENCIES
   kaminari (~> 0.14.1)
   knapsack
   letter_opener (>= 1.4.1)
-  mini_racer (= 0.2.14)
+  mini_racer (= 0.2.15)
   momentjs-rails
   money (= 5.1.1)
   newrelic_rpm (~> 3.0)
