@@ -266,6 +266,7 @@ ar:
   backordered: "طلبات متأخرة"
   on hand: "متوفر"
   ship: "الشحن"
+  shipping_category: "نوع الشحن"
   actions:
     create_and_add_another: "إنشاء وإضافة آخر"
     create: "انشاء"
@@ -1134,13 +1135,13 @@ ar:
     menu:
       cart:
         cart: "سلة"
+      cart_sidebar:
+        checkout: "تابع للخروج"
+        close: "إغلاق"
       signed_in:
         profile: "الملف الشخصي"
       mobile_menu:
         cart: "سلة"
-      joyride:
-        checkout: "الخروج الآن"
-        already_ordered_products: "تم الطلب بالفعل في دورة الطلب هذه"
     register_call:
       selling_on_ofn: "هل أنت مهتم بالحصول على شبكة الغذاء المفتوح؟"
       register: "سجل هنا"
@@ -2709,6 +2710,7 @@ ar:
   previous: "السابق"
   last: "الاخير"
   spree:
+    more: "أكثر"
     your_order_is_empty_add_product: "طلبك فارغ ، يرجى البحث عن المنتج أعلاه وإضافته"
     add_product: "أضف منتج"
     name_or_sku: "الاسم أو SKU (أدخل أول 4 أحرف على الأقل من اسم المنتج)"

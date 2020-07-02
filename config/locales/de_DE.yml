@@ -270,6 +270,7 @@ de_DE:
   backordered: "Nachbestellt"
   on hand: "Verfügbar"
   ship: "Liefern"
+  shipping_category: "Versandkategorie"
   actions:
     create_and_add_another: "Erstellen und weitere hinzufügen"
     create: "Neu"
@@ -1142,13 +1143,13 @@ de_DE:
     menu:
       cart:
         cart: "Wagen"
+      cart_sidebar:
+        checkout: "Kasse"
+        close: "Abschließen"
       signed_in:
         profile: "Profil"
       mobile_menu:
         cart: "Wagen"
-      joyride:
-        checkout: "Zur Kasse"
-        already_ordered_products: "Bereits in diesem Bestellzyklus bestellt"
     register_call:
       selling_on_ofn: "Sie möchten selbst im Open Food Network verkaufen?"
       register: "Hier anmelden"
@@ -2741,6 +2742,7 @@ de_DE:
   previous: "Bisherige"
   last: "Zuletzt"
   spree:
+    more: "Mehr"
     your_order_is_empty_add_product: "Ihre Bestellung ist leer. Suchen Sie oben ein Produkt und fügen Sie es hinzu"
     add_product: "Produkt hinzufügen"
     name_or_sku: "Name oder SKU (geben Sie mindestens die ersten 4 Zeichen des Produktnamens ein)"

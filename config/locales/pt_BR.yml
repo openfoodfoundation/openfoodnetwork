@@ -270,6 +270,7 @@ pt_BR:
   backordered: "Pedidos em atraso"
   on hand: "Disponível"
   ship: "Envio"
+  shipping_category: "Tipos de Frete"
   actions:
     create_and_add_another: "Criar e adicionar outro"
     create: "Criar"
@@ -1141,13 +1142,13 @@ pt_BR:
     menu:
       cart:
         cart: "Carrinho"
+      cart_sidebar:
+        checkout: "Fechar pedido"
+        close: "Fechado"
       signed_in:
         profile: "Perfil"
       mobile_menu:
         cart: "Carrinho"
-      joyride:
-        checkout: "Fechar pedido agora"
-        already_ordered_products: "Já pediu neste ciclo de pedidos"
     register_call:
       selling_on_ofn: "Interessado em registrar a sua iniciativa na Open Food Brasil?"
       register: "Registre-se aqui"
@@ -2766,6 +2767,7 @@ pt_BR:
   previous: "Anterior"
   last: "Último"
   spree:
+    more: "Mais"
     your_order_is_empty_add_product: "Seu pedido está vazio, pesquise e adicione um produto acima"
     add_product: "Adicionar produto"
     name_or_sku: "Nome ou SKU (digite pelo menos os 4 primeiros caracteres do nome do produto)"

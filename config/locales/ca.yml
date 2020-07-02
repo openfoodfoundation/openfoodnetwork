@@ -270,6 +270,7 @@ ca:
   backordered: "Reabastit"
   on hand: "Disponibles"
   ship: "Enviament"
+  shipping_category: "Categoria d'enviament"
   actions:
     create_and_add_another: "Crea i afegeix-ne una altra"
     create: "Crear"
@@ -898,7 +899,7 @@ ca:
         incoming: "2. Productes entrants"
         outgoing: "3. Productes sortints"
       exchange_form:
-        pickup_time_tip: Quan les comandes d'aquest cicle de comandes estiguin preparades per a les consumidores
+        pickup_time_tip: Quan les comandes d'aquest cicle de comandes estiguin llestes per a les consumidores
         pickup_instructions_placeholder: "Instruccions de recollida"
         pickup_instructions_tip: Aquestes instruccions es mostraran a les consumidores després d'haver completat una comanda
         pickup_time_placeholder: "Preparat per (és a dir, data / hora)"
@@ -948,7 +949,7 @@ ca:
         distributors: distribuïdores
         variants: variants
       simple_form:
-        ready_for: Preparat per
+        ready_for: Llest per
         ready_for_placeholder: Data / hora
         customer_instructions: Instruccions de la consumidora
         customer_instructions_placeholder: Notes de recollida o de lliurament
@@ -1109,7 +1110,7 @@ ca:
       pause_failure_msg: "Ho sentim, la pausa ha fallat!"
       confirm_unpause_msg: "Si teniu un cicle de comanda obert a la programació d'aquesta subscripció, es crearà una comanda per a aquesta consumidora. Esteu segur que voleu anul·lar aquesta subscripció?"
       unpause_failure_msg: "Ho sentim, la represa ha fallat!"
-      confirm_cancel_open_orders_msg: "Actualment hi ha algunes comandes obertes per a aquesta subscripció. Ja s'ha notificat a les consumidores que les comandes serà atesa. Voleu cancel·lar aquestes comandes o conservar-les?"
+      confirm_cancel_open_orders_msg: "Actualment hi ha algunes comandes obertes per a aquesta subscripció. Ja s'ha notificat a les consumidores que la comanda seran ateses. Voleu cancel·lar aquestes comandes o conservar-les?"
       resume_canceled_orders_msg: "Algunes comandes d'aquesta subscripció es poden reprendre ara mateix. Podeu reprendre-les des del menú desplegable de comandes."
       yes_cancel_them: Cancel·lar-les
       no_keep_them: Conservar-les
@@ -1392,7 +1393,7 @@ ca:
   stats_orders: "comandes de menjar"
   checkout_title: Realitza la comanda
   checkout_now: Validar ara
-  checkout_order_ready: Comanda preparada per
+  checkout_order_ready: Comanda llesta per
   checkout_hide: Amaga
   checkout_expand: Expandeix
   checkout_headline: "Estàs preparada per validar la compra?"
@@ -1404,7 +1405,7 @@ ca:
   checkout_default_ship_address: "Desa per defecte com a adreça d'enviament "
   checkout_method_free: Gratuït
   checkout_address_same: L'adreça d'enviament és igual que l'adreça de facturació?
-  checkout_ready_for: "Preparat per:"
+  checkout_ready_for: "Llest per:"
   checkout_instructions: "Alguns comentaris o instruccions especials?"
   checkout_payment: Pagament
   checkout_send: Realitza una comanda ara
@@ -1527,7 +1528,7 @@ ca:
   shopping_groups_part_of: "forma part de:"
   shopping_producers_of_hub: "Productores de%{hub}:"
   enterprises_next_closing: "Tancament de la comanda següent"
-  enterprises_ready_for: "Preparat per"
+  enterprises_ready_for: "Llest per"
   enterprises_choose: "Escull quan vols la teva comanda:"
   maps_open: "Obert"
   maps_closed: "Tancat"
@@ -1672,7 +1673,7 @@ ca:
   orders_fees: Comissions...
   orders_edit_title: Cistella de la compra
   orders_edit_headline: El teu cistell de la compra
-  orders_edit_time: Comanda preparada per
+  orders_edit_time: Comanda llesta per
   orders_edit_continue: Continuar comprant
   orders_edit_checkout: Realitza la compra
   orders_form_empty_cart: "Cistella buida"
@@ -2778,6 +2779,7 @@ ca:
   previous: "Anterior"
   last: "Últim"
   spree:
+    more: "Més"
     your_order_is_empty_add_product: "La comanda està buida, si us plau cerca i afegeix un producte a dalt"
     add_product: "Afegeix un producte"
     name_or_sku: "Nom o codi (introduïu com a mínim els primers 4 caràcters del nom del producte)"

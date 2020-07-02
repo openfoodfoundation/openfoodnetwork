@@ -257,6 +257,7 @@ nl_BE:
   back_to_payments_list: "Terug naar Betalingslijst"
   on hand: "Bij de Hand"
   ship: "Verzenden"
+  shipping_category: "Verzendcategorie"
   actions:
     create_and_add_another: "Een ander maken en toevoegen"
     create: "Maak"
@@ -1102,13 +1103,13 @@ nl_BE:
     menu:
       cart:
         cart: "kar"
+      cart_sidebar:
+        checkout: "Kassa"
+        close: "Sluit"
       signed_in:
         profile: "Profiel"
       mobile_menu:
         cart: "kar"
-      joyride:
-        checkout: "Naar de kassa"
-        already_ordered_products: "Reeds besteld in de huidige bestelcyclus"
     register_call:
       selling_on_ofn: "Geïnteresseerd om deel uit te maken van het Open Food Network?"
       register: "Registreer hier"
@@ -2625,6 +2626,7 @@ nl_BE:
   previous: "Voorgaande"
   last: "Laatst"
   spree:
+    more: "Meer"
     your_order_is_empty_add_product: "Je bestelling is leeg, gelieve hierboven  een product te zoeken en toe te voegen "
     add_product: "Voeg een product toe"
     name_or_sku: "Beschrijving of artikelnummer ( tenminste 4 letters van de productnaam invoeren )"

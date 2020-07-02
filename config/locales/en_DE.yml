@@ -262,6 +262,7 @@ en_DE:
   backordered: "Backordered"
   on hand: "On Hand"
   ship: "Ship"
+  shipping_category: "Shipping Category"
   actions:
     create_and_add_another: "Create and Add Another"
     create: "Create"
@@ -1109,13 +1110,13 @@ en_DE:
     menu:
       cart:
         cart: "Cart"
+      cart_sidebar:
+        checkout: "Checkout"
+        close: "Close"
       signed_in:
         profile: "Profile"
       mobile_menu:
         cart: "Cart"
-      joyride:
-        checkout: "Checkout now"
-        already_ordered_products: "Already ordered in this order cycle"
     register_call:
       selling_on_ofn: "Interested in getting on the Open Food Network?"
       register: "Register here"
@@ -2627,6 +2628,7 @@ en_DE:
   previous: "Previous"
   last: "Last"
   spree:
+    more: "More"
     your_order_is_empty_add_product: "Your order is empty, please search for and add a product above"
     add_product: "Add Product"
     name_or_sku: "Name or SKU (enter at least first 4 characters of product name)"

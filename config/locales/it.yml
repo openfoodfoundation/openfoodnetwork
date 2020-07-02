@@ -270,6 +270,7 @@ it:
   backordered: "Ordini arretrati"
   on hand: "Disponibile"
   ship: "Spedizione"
+  shipping_category: "Categoria Spedizioni"
   actions:
     create_and_add_another: "Crea e Aggiungi un Altro"
     create: "Crea"
@@ -1148,13 +1149,13 @@ it:
     menu:
       cart:
         cart: "Carrello"
+      cart_sidebar:
+        checkout: "Paga"
+        close: "Chiuso"
       signed_in:
         profile: "Profilo"
       mobile_menu:
         cart: "Carrello"
-      joyride:
-        checkout: "Checkout adesso"
-        already_ordered_products: "Già richiesto in questo ciclo di richieste"
     register_call:
       selling_on_ofn: "Interessato ad entrare in Open Food Network?"
       register: "Registrati qui"
@@ -2771,6 +2772,7 @@ it:
   previous: "Precedente"
   last: "Ultimo"
   spree:
+    more: "Di più"
     your_order_is_empty_add_product: "Il tuo ordine è vuoto, cerca e aggiungi un prodotto qui sopra"
     add_product: "Aggiungi prodotto"
     name_or_sku: "Nome o SKU (inserisci almeno i primi 4 caratteri del nome del prodotto)"

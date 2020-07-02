@@ -270,6 +270,7 @@ nb:
   backordered: "Restbestilte"
   on hand: "Tilgjengelig"
   ship: "Levere"
+  shipping_category: "Leveringskategori"
   actions:
     create_and_add_another: "Opprett og legg til en annen"
     create: "Opprett"
@@ -2771,6 +2772,7 @@ nb:
   previous: "Tidligere"
   last: "Siste"
   spree:
+    more: "Mer"
     your_order_is_empty_add_product: "Bestillingen din er tom, vennligst søk etter og legg til et produkt over"
     add_product: "Legg til produkt"
     name_or_sku: "Navn eller SKU (skriv inn minst 4 tegn av produktnavn)"

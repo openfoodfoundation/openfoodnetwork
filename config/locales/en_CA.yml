@@ -270,6 +270,7 @@ en_CA:
   backordered: "Backordered"
   on hand: "On Hand"
   ship: "Ship"
+  shipping_category: "Shipping Category"
   actions:
     create_and_add_another: "Create and Add Another"
     create: "Create"
@@ -2771,6 +2772,7 @@ en_CA:
   previous: "Previous"
   last: "Last"
   spree:
+    more: "More"
     your_order_is_empty_add_product: "Your order is empty, please search for and add a product above"
     add_product: "Add Product"
     name_or_sku: "Name or SKU (enter at least first 4 characters of product name)"

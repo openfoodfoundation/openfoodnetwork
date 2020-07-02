@@ -271,6 +271,7 @@ fr_CA:
   backordered: "à volonté"
   on hand: "En stock"
   ship: "Expédier"
+  shipping_category: "Condition de transport"
   actions:
     create_and_add_another: "Créer et ajouter nouveau"
     create: "Créer"
@@ -1148,13 +1149,13 @@ fr_CA:
     menu:
       cart:
         cart: "Panier"
+      cart_sidebar:
+        checkout: "Finalisation commande"
+        close: "Ferme"
       signed_in:
         profile: "Profil"
       mobile_menu:
         cart: "Panier"
-      joyride:
-        checkout: "Passer la commande"
-        already_ordered_products: "Déjà commandé dans ce cycle de vente"
     register_call:
       selling_on_ofn: "Vous souhaitez proposer vos produits sur Open Food Network?"
       register: "Démarrez ici"
@@ -2779,6 +2780,7 @@ fr_CA:
   previous: "Précédent"
   last: "Fin"
   spree:
+    more: "Plus"
     your_order_is_empty_add_product: "Votre commande est vide, veuillez ajouter des produits"
     add_product: "Ajouter un produit"
     name_or_sku: "Nom ou Ref Produit (entrer au moins les 4 premiers caractères du nom du produit)"

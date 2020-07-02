@@ -633,11 +633,11 @@ sv:
       show_on_map: "Visa allt på kartan"
   shared:
     menu:
+      cart_sidebar:
+        checkout: "Utcheckning"
+        close: "Stängd"
       signed_in:
         profile: "Profil"
-      joyride:
-        checkout: "Slutför beställning"
-        already_ordered_products: "Redan beställd i denna beställningsomgång"
     register_call:
       selling_on_ofn: "Intresserad av att gå med i Open Food Network?"
       register: "Registrera dig här"
