@@ -10,11 +10,7 @@ module OrderManagement
         @order = order
       end
 
-      def packages
-        [default_package]
-      end
-
-      def default_package
+      def package
         package = OrderManagement::Stock::Package.new(stock_location, order)
         order.line_items.each do |line_item|
           next unless stock_location.stock_item(line_item.variant)

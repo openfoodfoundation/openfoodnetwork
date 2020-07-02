@@ -15,24 +15,14 @@ module OrderManagement
         estimate_packages(packages)
       end
 
-      # Build packages as per stock location
+      # Build package with default stock location
+      # No need to check items are in the stock location,
+      #   there is only one stock location so the items will be on that stock location.
       #
-      # It needs to check whether each stock location holds at least one stock
-      # item for the order. In case none is found it wouldn't make any sense
-      # to build a package because it would be empty. Plus we avoid errors down
-      # the stack because it would assume the stock location has stock items
-      # for the given order
-      #
-      # Returns an array of Package instances
-      def build_packages(packages = [])
-        Spree::StockLocation.active.each do |stock_location|
-          next unless stock_location.stock_items.
-            where(variant_id: order.line_items.pluck(:variant_id)).exists?
-
-          packer = build_packer(stock_location, order)
-          packages += packer.packages
-        end
-        packages
+      # Returns an array with a single Package for the default stock location
+      def build_packages
+        packer = build_packer(order)
+        [packer.package]
       end
 
       private
@@ -50,7 +40,8 @@ module OrderManagement
         packages
       end
 
-      def build_packer(stock_location, order)
+      def build_packer(order)
+        stock_location = DefaultStockLocation.find_or_create
         OrderManagement::Stock::Packer.new(stock_location, order)
       end
     end
