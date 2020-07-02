@@ -39,19 +39,6 @@ module Spree
           expect(package.backordered.size).to eq 5
         end
 
-        context 'when a packer factory is not specified' do
-          let(:package) { double(:package, add: true) }
-
-          it 'calls Spree::Stock::Package' do
-            expect(Package)
-              .to receive(:new)
-              .with(stock_location, order)
-              .and_return(package)
-
-            subject.default_package
-          end
-        end
-
         context 'when a packer factory is specified' do
           before do
             allow(Spree::Config).to receive(:package_factory) { TestPackageFactory }

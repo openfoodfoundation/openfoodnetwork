@@ -41,4 +41,8 @@ Spree::AppConfiguration.class_eval do
 
   # Enable cache
   preference :enable_products_cache?, :boolean, default: (Rails.env.production? || Rails.env.staging?)
+
+  def package_factory
+    @package_factory ||= OrderManagement::Stock::Package
+  end
 end
