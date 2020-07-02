@@ -146,7 +146,7 @@ module Admin
         enterprises = OpenFoodNetwork::OrderCyclePermissions.new(spree_current_user, @order_cycle)
           .visible_enterprises
 
-        unless enterprises.empty?
+        if enterprises.present?
           enterprises.includes(
             supplied_products:
               [:supplier, master: [:images], variants: { option_values: :option_type }]

@@ -26,7 +26,7 @@ module Spree
       def update_styles(params)
         if params[:new_attachment_styles].present?
           params[:new_attachment_styles].each do |_index, style|
-            params[:attachment_styles][style[:name]] = style[:value] unless style[:value].empty?
+            params[:attachment_styles][style[:name]] = style[:value] if style[:value].present?
           end
         end
 
@@ -38,7 +38,7 @@ module Spree
       def update_headers(params)
         if params[:new_s3_headers].present?
           params[:new_s3_headers].each do |_index, header|
-            params[:s3_headers][header[:name]] = header[:value] unless header[:value].empty?
+            params[:s3_headers][header[:name]] = header[:value] if header[:value].present?
           end
         end
 
