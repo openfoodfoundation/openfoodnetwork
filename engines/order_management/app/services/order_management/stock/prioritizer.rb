@@ -12,7 +12,6 @@ module OrderManagement
       end
 
       def prioritized_packages
-        sort_packages
         adjust_packages
         prune_packages
         packages
@@ -36,10 +35,6 @@ module OrderManagement
           item = package.find_item adjuster.variant, adjuster.status
           adjuster.adjust(item) if item
         end
-      end
-
-      def sort_packages
-        # order packages by preferred stock_locations
       end
 
       def prune_packages
