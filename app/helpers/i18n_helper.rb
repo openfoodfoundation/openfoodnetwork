@@ -11,7 +11,7 @@ module I18nHelper
       spree_current_user&.update!(locale: params[:locale])
     end
 
-    I18n.locale = current_user_locale || cookies[:locale] || I18n.default_locale
+    I18n.locale = valid_current_locale
   end
 
   def valid_locale(user)
@@ -32,5 +32,15 @@ module I18nHelper
 
   def current_user_locale
     spree_current_user.andand.locale
+  end
+
+  def valid_current_locale
+    if available_locale?(current_user_locale)
+      current_user_locale
+    elsif available_locale?(cookies[:locale])
+      cookies[:locale]
+    else
+      I18n.default_locale
+    end
   end
 end
