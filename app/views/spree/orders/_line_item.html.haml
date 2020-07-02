@@ -2,10 +2,10 @@
   %td.cart-item-description{'data-hook' => "cart_item_description"}
 
     %div.item-thumb-image{"data-hook" => "cart_item_image"}
-      - if variant.images.length == 0
-        = mini_image(variant.product)
+      - if variant.product.images.length == 0
+        = image_tag("/noimage/mini.png")
       - else
-        = image_tag(variant.images.first.attachment.url(:mini))
+        = image_tag(variant.product.images.first.attachment.url(:mini))
 
     = render 'spree/shared/line_item_name', line_item: line_item
 

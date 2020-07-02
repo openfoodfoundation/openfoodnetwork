@@ -16,10 +16,10 @@
         %td(data-hook = "order_item_description")
 
           %div.item-thumb-image{"data-hook" => "order_item_image"}
-            - if item.variant.images.length == 0
-              = mini_image(item.variant.product)
+            - if item.variant.product.images.length == 0
+              = image_tag("/noimage/mini.png")
             - else
-              = image_tag(item.variant.images.first.attachment.url(:mini))
+              = image_tag(item.variant.product.images.first.attachment.url(:mini))
 
 
           = render 'spree/shared/line_item_name', line_item: item
