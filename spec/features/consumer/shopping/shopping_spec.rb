@@ -104,9 +104,8 @@ feature "As a consumer I want to shop with a distributor", js: true do
             expect(page).to have_content with_currency(1020.99)
 
             # -- Cart shows correct price
-            fill_in "variants[#{variant.id}]", with: 1
-            toggle_cart
-            within(".cart-sidebar") { expect(page).to have_content with_currency(1020.99) }
+            click_add_to_cart variant
+            expect(page).to have_in_cart with_currency(1020.99)
             toggle_cart
 
             # -- Changing order cycle
@@ -119,10 +118,8 @@ feature "As a consumer I want to shop with a distributor", js: true do
             # ng-animate means that the old product row is likely to be present, so we ensure
             # that we are not filling in the quantity on the outgoing row
             expect(page).not_to have_selector "tr.product-cart"
-            within('product:not(.ng-leave)') { fill_in "variants[#{variant.id}]", with: 1 }
-
-            wait_for_cart
-            within(".cart-sidebar") { expect(page).to have_content with_currency(19.99) }
+            within('product:not(.ng-leave)') { click_add_to_cart variant }
+            expect(page).to have_in_cart with_currency(19.99)
           end
 
           describe "declining to clear the cart" do
@@ -132,31 +129,19 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
               visit shop_path
               select "turtles", from: "order_cycle_id"
-              fill_in "variants[#{variant.id}]", with: 1
+              click_add_to_cart variant
             end
 
             it "leaves the cart untouched when the user declines" do
               handle_js_confirm(false) do
                 select "frogs", from: "order_cycle_id"
-                toggle_cart
+                expect(page).to have_in_cart "1"
                 expect(page).to have_selector "tr.product-cart"
-                expect(page).to have_selector '.cart-sidebar', text: '1'
 
                 # The order cycle choice should not have changed
                 expect(page).to have_select 'order_cycle_id', selected: 'turtles'
               end
             end
-          end
-        end
-
-        context "when logged in" do
-          let!(:prev_order) { create(:completed_order_with_totals, order_cycle: oc1, distributor: distributor, user: order.user) }
-
-          before do
-            distributor.allow_order_changes = true
-            distributor.save
-            quick_login_as order.user
-            visit shop_path
           end
         end
       end
@@ -230,11 +215,8 @@ feature "As a consumer I want to shop with a distributor", js: true do
           visit shop_path
           expect(page).to have_content product.name
 
-          # Add product to cart
-          fill_in "variants[#{variant.id}]", with: '1'
-          wait_for_debounce
+          click_add_to_cart variant
           expect(page).to have_in_cart product.name
-          wait_until { !cart_dirty }
 
           # Try to go to cart
           visit main_app.cart_path
@@ -260,17 +242,14 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
         it "should save group buy data to the cart and display it on shopfront reload" do
           # -- Quantity
-          fill_in "variants[#{variant.id}]", with: 6
-          wait_for_debounce
+          click_add_bulk_to_cart variant, 6
           expect(page).to have_in_cart product.name
-          wait_until { !cart_dirty }
+          toggle_cart
 
           expect(order.reload.line_items.first.quantity).to eq(6)
 
           # -- Max quantity
-          fill_in "variant_attributes[#{variant.id}][max_quantity]", with: 7
-          wait_for_debounce
-          wait_until { !cart_dirty }
+          click_add_bulk_max_to_cart variant, 7
 
           expect(order.reload.line_items.first.max_quantity).to eq(7)
 
@@ -296,15 +275,15 @@ feature "As a consumer I want to shop with a distributor", js: true do
       end
 
       it "lets us add and remove products from our cart" do
-        fill_in "variants[#{variant.id}]", with: '1'
+        click_add_to_cart variant
         expect(page).to have_in_cart product.name
-        wait_until { !cart_dirty }
         li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
         expect(li.quantity).to eq(1)
 
-        fill_in "variants[#{variant.id}]", with: '0'
+        toggle_cart
+        click_remove_from_cart variant
+        toggle_cart
         within('.cart-sidebar') { expect(page).not_to have_content product.name }
-        wait_until { !cart_dirty }
 
         expect(Spree::LineItem.where(id: li)).to be_empty
       end
@@ -313,7 +292,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
         variant.update on_hand: 5, on_demand: true
         visit shop_path
 
-        fill_in "variants[#{variant.id}]", with: '10'
+        click_add_to_cart variant, 10
 
         expect(page).to have_field "variants[#{variant.id}]", with: '10'
       end
@@ -322,6 +301,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
         variant.update on_hand: 5
         visit shop_path
 
+        
         accept_alert 'Insufficient stock available, only 5 remaining' do
           fill_in "variants[#{variant.id}]", with: '10'
         end
@@ -336,9 +316,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           variant.update! on_hand: 0
 
           # -- Messaging
-          expect(page).to have_input "variants[#{variant.id}]"
-          fill_in "variants[#{variant.id}]", with: '1'
-          wait_until { !cart_dirty }
+          click_add_to_cart variant
 
           within(".out-of-stock-modal") do
             expect(page).to have_content "stock levels for one or more of the products in your cart have reduced"
@@ -353,8 +331,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
           # Update amount available in product list
           #   If amount falls to zero, variant should be greyed out and input disabled
           expect(page).to have_selector "#variant-#{variant.id}.out-of-stock"
-          expect(page).to have_selector "#variants_#{variant.id}[ofn-on-hand='0']"
-          expect(page).to have_selector "#variants_#{variant.id}[disabled='disabled']"
         end
 
         it 'does not show out of stock modal if product is on_demand' do
@@ -362,9 +338,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
           variant.update! on_hand: 0, on_demand: true
 
-          expect(page).to have_input "variants[#{variant.id}]"
-          fill_in "variants[#{variant.id}]", with: '1'
-          wait_until { !cart_dirty }
+          click_add_to_cart variant
 
           expect(page).to_not have_selector '.out-of-stock-modal'
         end
@@ -374,13 +348,11 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
           it "does the same" do
             # -- Place in cart so we can set max_quantity, then make out of stock
-            fill_in "variants[#{variant.id}]", with: '1'
-            wait_until { !cart_dirty }
+            click_add_bulk_to_cart variant
             variant.update! on_hand: 0
 
             # -- Messaging
-            fill_in "variant_attributes[#{variant.id}][max_quantity]", with: '1'
-            wait_until { !cart_dirty }
+            click_add_bulk_max_to_cart variant
 
             within(".out-of-stock-modal") do
               expect(page).to have_content "stock levels for one or more of the products in your cart have reduced"
@@ -400,13 +372,11 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
         context "when the update is for another product" do
           it "updates quantity" do
-            fill_in "variants[#{variant.id}]", with: '2'
-            wait_until { !cart_dirty }
+            click_add_to_cart variant, 2
 
             variant.update! on_hand: 1
 
-            fill_in "variants[#{variant2.id}]", with: '1'
-            wait_until { !cart_dirty }
+            click_add_to_cart variant2
 
             within(".out-of-stock-modal") do
               expect(page).to have_content "stock levels for one or more of the products in your cart have reduced"
@@ -418,13 +388,12 @@ feature "As a consumer I want to shop with a distributor", js: true do
             let(:product) { create(:simple_product, group_buy: true) }
 
             it "does not update max_quantity" do
-              fill_in "variants[#{variant.id}]", with: '2'
-              fill_in "variant_attributes[#{variant.id}][max_quantity]", with: '3'
-              wait_until { !cart_dirty }
+              click_add_bulk_to_cart variant, 2
+              click_add_bulk_max_to_cart variant, 3
+
               variant.update! on_hand: 1
 
-              fill_in "variants[#{variant2.id}]", with: '1'
-              wait_until { !cart_dirty }
+              click_add_bulk_to_cart variant2
 
               within(".out-of-stock-modal") do
                 expect(page).to have_content "stock levels for one or more of the products in your cart have reduced"
@@ -443,7 +412,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           it "handles it as if the variant has gone out of stock" do
             variant.delete
 
-            fill_in "variants[#{variant.id}]", with: '1'
+            click_add_to_cart variant
 
             expect_out_of_stock_behavior
           end
@@ -458,7 +427,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
             it "handles it as if the variant has gone out of stock" do
               variant.delete
 
-              fill_in "variants[#{variant.id}]", with: '1'
+              click_add_to_cart variant
 
               expect_out_of_stock_behavior
             end
@@ -578,16 +547,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
     expect(page).to have_content product.name
   end
 
-  def wait_for_debounce
-    # The auto-submit on these specific form elements (add to cart) now has a small built-in
-    # waiting period before submitting the data...
-    sleep 0.6
-  end
-
   def expect_out_of_stock_behavior
-    wait_for_debounce
-    wait_until { !cart_dirty }
-
     # Shows an "out of stock" modal, with helpful user feedback
     within(".out-of-stock-modal") do
       expect(page).to have_content I18n.t('js.out_of_stock.out_of_stock_text')
@@ -598,9 +558,5 @@ feature "As a consumer I want to shop with a distributor", js: true do
     expect(page).to have_selector "#variant-#{variant.id}.out-of-stock"
     expect(page).to have_selector "#variants_#{variant.id}[ofn-on-hand='0']"
     expect(page).to have_selector "#variants_#{variant.id}[disabled='disabled']"
-
-    # We need to wait again for the cart to finish updating in Angular or the test can fail
-    # as the session cannot be reset properly (after the test) while it's still loading
-    wait_until { !cart_dirty }
   end
 end
