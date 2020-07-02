@@ -14,7 +14,7 @@ describe Spree::Calculator::FlatPercentItemTotal do
     it_behaves_like "a model using the LocalizedNumber module", [:preferred_flat_percent]
   end
 
-  it "computes amount correctly for a given Stock::Package" do
+  it "computes amount correctly for a given OrderManagement::Stock::Package" do
     order = double(:order, line_items: [line_item] )
     package = double(:package, order: order)
 
