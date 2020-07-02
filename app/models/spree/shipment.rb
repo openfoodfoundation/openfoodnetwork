@@ -67,7 +67,6 @@ module Spree
     end
 
     def to_param
-      number if number
       generate_shipment_number unless number
       number.to_s.to_url.upcase
     end
@@ -136,7 +135,7 @@ module Spree
     alias_method :amount, :cost
 
     def display_cost
-      Spree::Money.new(cost, { currency: currency })
+      Spree::Money.new(cost, currency: currency)
     end
 
     alias_method :display_amount, :display_cost
@@ -146,7 +145,7 @@ module Spree
     end
 
     def display_item_cost
-      Spree::Money.new(item_cost, { currency: currency })
+      Spree::Money.new(item_cost, currency: currency)
     end
 
     def total_cost
@@ -154,7 +153,7 @@ module Spree
     end
 
     def display_total_cost
-      Spree::Money.new(total_cost, { currency: currency })
+      Spree::Money.new(total_cost, currency: currency)
     end
 
     def editable_by?(_user)

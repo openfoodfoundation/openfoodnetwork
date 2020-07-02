@@ -19,7 +19,7 @@ module OrderManagement
             to receive_message_chain(:calculator, :compute).and_return(4.00)
           allow_any_instance_of(Spree::ShippingMethod).
             to receive_message_chain(:calculator, :preferences).
-            and_return({ currency: order.currency })
+            and_return(currency: order.currency)
           allow_any_instance_of(Spree::ShippingMethod).
             to receive_message_chain(:calculator, :marked_for_destruction?)
 

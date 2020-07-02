@@ -391,6 +391,7 @@ Metrics/AbcSize:
   - app/models/spree/order_decorator.rb
   - app/models/spree/payment_decorator.rb
   - app/models/spree/product_decorator.rb
+  - app/models/spree/shipment.rb
   - app/models/spree/taxon_decorator.rb
   - app/models/spree/tax_rate_decorator.rb
   - app/serializers/api/admin/enterprise_serializer.rb
@@ -400,6 +401,9 @@ Metrics/AbcSize:
   - app/services/create_order_cycle.rb
   - app/services/order_cycle_form.rb
   - app/services/order_syncer.rb
+  - engines/order_management/app/services/order_management/stock/estimator.rb
+  - engines/order_management/app/services/order_management/stock/package.rb
+  - engines/order_management/app/services/order_management/stock/packer.rb
   - engines/order_management/app/services/order_management/subscriptions/validator.rb
   - lib/active_merchant/billing/gateways/stripe_decorator.rb
   - lib/active_merchant/billing/gateways/stripe_payment_intents.rb
@@ -457,6 +461,7 @@ Metrics/BlockLength:
     "scenario"
   ]
   Exclude:
+  - app/models/spree/shipment.rb
   - lib/tasks/data.rake
   - spec/controllers/spree/admin/invoices_controller_spec.rb
   - spec/factories/enterprise_factory.rb
@@ -496,6 +501,7 @@ Metrics/CyclomaticComplexity:
   - app/models/spree/product_decorator.rb
   - app/models/variant_override_set.rb
   - app/services/cart_service.rb
+  - engines/order_management/app/services/order_management/stock/estimator.rb
   - lib/active_merchant/billing/gateways/stripe_payment_intents.rb
   - lib/discourse/single_sign_on.rb
   - lib/open_food_network/bulk_coop_report.rb
@@ -520,6 +526,7 @@ Metrics/PerceivedComplexity:
   - app/models/spree/ability_decorator.rb
   - app/models/spree/order_decorator.rb
   - app/models/spree/product_decorator.rb
+  - engines/order_management/app/services/order_management/stock/estimator.rb
   - lib/active_merchant/billing/gateways/stripe_payment_intents.rb
   - lib/discourse/single_sign_on.rb
   - lib/open_food_network/bulk_coop_report.rb
@@ -585,11 +592,14 @@ Metrics/MethodLength:
   - app/models/spree/payment_decorator.rb
   - app/models/spree/payment_method_decorator.rb
   - app/models/spree/product_decorator.rb
+  - app/models/spree/shipment.rb
   - app/serializers/api/admin/order_cycle_serializer.rb
   - app/serializers/api/cached_enterprise_serializer.rb
   - app/services/order_cycle_form.rb
   - app/services/permitted_attributes/checkout.rb
   - engines/order_management/app/services/order_management/reports/enterprise_fee_summary/scope.rb
+  - engines/order_management/app/services/order_management/stock/estimator.rb
+  - engines/order_management/app/services/order_management/stock/package.rb
   - lib/active_merchant/billing/gateways/stripe_payment_intents.rb
   - lib/discourse/single_sign_on.rb
   - lib/open_food_network/bulk_coop_report.rb
@@ -652,6 +662,7 @@ Metrics/ClassLength:
   - app/models/product_import/entry_validator.rb
   - app/models/product_import/product_importer.rb
   - app/models/spree/ability_decorator.rb
+  - app/models/spree/shipment.rb
   - app/models/spree/user.rb
   - app/serializers/api/cached_enterprise_serializer.rb
   - app/serializers/api/enterprise_shopfront_serializer.rb
@@ -676,6 +687,7 @@ Metrics/ModuleLength:
   - app/helpers/injection_helper.rb
   - app/helpers/spree/admin/base_helper.rb
   - app/helpers/spree/admin/navigation_helper.rb
+  - engines/order_management/spec/services/order_management/stock/package_spec.rb
   - engines/order_management/spec/services/order_management/subscriptions/estimator_spec.rb
   - engines/order_management/spec/services/order_management/subscriptions/form_spec.rb
   - engines/order_management/spec/services/order_management/subscriptions/proxy_order_syncer_spec.rb
