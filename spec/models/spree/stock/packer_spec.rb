@@ -20,11 +20,6 @@ module Spree
           expect(packages.size).to eq 1
           expect(packages.first.contents.size).to eq 5
         end
-
-        it 'allows users to set splitters to an empty array' do
-          packages = Packer.new(stock_location, order, []).packages
-          expect(packages.size).to eq 1
-        end
       end
 
       context 'default_package' do
