@@ -7,7 +7,7 @@ module I18nHelper
     end
 
     # After logging in, check if the user chose a locale before
-    if current_user_locale.nil? && cookies[:locale]
+    if current_user_locale.nil? && cookies[:locale] && available_locale?(params[:locale])
       spree_current_user&.update!(locale: params[:locale])
     end
 
