@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200630070422) do
+ActiveRecord::Schema.define(version: 20200702112157) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -884,6 +884,8 @@ ActiveRecord::Schema.define(version: 20200630070422) do
     t.string   "stateful_type"
     t.string   "next_state"
   end
+
+  add_index "spree_state_changes", ["stateful_id"], name: "index_spree_state_changes_on_stateful_id", using: :btree
 
   create_table "spree_states", force: true do |t|
     t.string  "name"
