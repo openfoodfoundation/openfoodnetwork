@@ -24,11 +24,11 @@ module I18nHelper
     end
   end
 
-  private
-
   def available_locale?(locale)
     Rails.application.config.i18n.available_locales.include?(locale)
   end
+
+  private
 
   def current_user_locale
     spree_current_user.andand.locale
