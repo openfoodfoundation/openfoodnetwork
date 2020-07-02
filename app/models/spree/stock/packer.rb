@@ -3,12 +3,11 @@
 module Spree
   module Stock
     class Packer
-      attr_reader :stock_location, :order, :package_factory
+      attr_reader :stock_location, :order
 
       def initialize(stock_location, order)
         @stock_location = stock_location
         @order = order
-        @package_factory = Spree::Config.package_factory
       end
 
       def packages
@@ -16,7 +15,7 @@ module Spree
       end
 
       def default_package
-        package = package_factory.new(stock_location, order)
+        package = OrderManagement::Stock::Package.new(stock_location, order)
         order.line_items.each do |line_item|
           if Config.track_inventory_levels
             next unless stock_location.stock_item(line_item.variant)

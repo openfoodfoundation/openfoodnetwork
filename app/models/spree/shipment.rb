@@ -230,7 +230,7 @@ module Spree
     end
 
     def to_package
-      package = Spree::Config.package_factory.new(stock_location, order)
+      package = OrderManagement::Stock::Package.new(stock_location, order)
       inventory_units.includes(:variant).each do |inventory_unit|
         package.add inventory_unit.variant, 1, inventory_unit.state_name
       end

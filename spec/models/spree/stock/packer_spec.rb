@@ -10,10 +10,6 @@ module Spree
 
       subject { Packer.new(stock_location, order) }
 
-      before do
-        allow(Spree::Config).to receive(:package_factory) { Package }
-      end
-
       context 'packages' do
         it 'builds an array of packages' do
           packages = subject.packages
@@ -37,25 +33,6 @@ module Spree
           package = subject.default_package
           expect(package.on_hand.size).to eq 5
           expect(package.backordered.size).to eq 5
-        end
-
-        context 'when a packer factory is specified' do
-          before do
-            allow(Spree::Config).to receive(:package_factory) { TestPackageFactory }
-          end
-
-          class TestPackageFactory; end
-
-          let(:package) { double(:package, add: true) }
-
-          it 'calls the specified factory' do
-            expect(TestPackageFactory)
-              .to receive(:new)
-              .with(stock_location, order)
-              .and_return(package)
-
-            subject.default_package
-          end
         end
       end
     end
