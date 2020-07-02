@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module OrderManagement
   module Stock
     class Coordinator
       attr_reader :order
@@ -25,7 +25,7 @@ module Spree
       #
       # Returns an array of Package instances
       def build_packages(packages = [])
-        StockLocation.active.each do |stock_location|
+        Spree::StockLocation.active.each do |stock_location|
           next unless stock_location.stock_items.
             where(variant_id: order.line_items.pluck(:variant_id)).exists?
 
@@ -38,12 +38,12 @@ module Spree
       private
 
       def prioritize_packages(packages)
-        prioritizer = Prioritizer.new(order, packages)
+        prioritizer = Spree::Stock::Prioritizer.new(order, packages)
         prioritizer.prioritized_packages
       end
 
       def estimate_packages(packages)
-        estimator = Estimator.new(order)
+        estimator = Spree::Stock::Estimator.new(order)
         packages.each do |package|
           package.shipping_rates = estimator.shipping_rates(package)
         end
@@ -51,7 +51,7 @@ module Spree
       end
 
       def build_packer(stock_location, order)
-        Packer.new(stock_location, order)
+        Spree::Stock::Packer.new(stock_location, order)
       end
     end
   end

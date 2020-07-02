@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module OrderManagement
   module Stock
     describe Coordinator do
       let!(:order) { create(:order_with_line_items, distributor: create(:distributor_enterprise)) }
