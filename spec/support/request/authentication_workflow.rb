@@ -68,6 +68,11 @@ module AuthenticationWorkflow
     fill_in "password", with: user.password
     click_button "Login"
   end
+
+  def expect_logged_in
+    # Ensure page has been reloaded after submitting login form
+    expect(page).to_not have_selector ".menu #login-link"
+  end
 end
 
 RSpec.configure do |config|

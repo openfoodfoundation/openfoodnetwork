@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 feature "Authentication", js: true do
+  include AuthenticationWorkflow
   include UIComponentHelper
   include OpenFoodNetwork::EmailHelper
 
@@ -134,6 +135,40 @@ feature "Authentication", js: true do
       visit "/login"
       uri = URI.parse(current_url)
       expect(uri.path + "#" + uri.fragment).to eq('/#/login')
+    end
+
+    describe "with user locales" do
+      before do
+        visit root_path
+        open_login_modal
+      end
+
+      context "when the user has a valid locale saved" do
+        before do
+          user.update!(locale: "es")
+        end
+
+        it "logs in successfully, applying the saved locale" do
+          fill_in_and_submit_login_form(user)
+          expect_logged_in
+
+          expect(page).to have_content I18n.t(:home_shop, locale: :es).upcase
+        end
+      end
+
+      context "when the user has an unavailable locale saved" do
+        before do
+          user.update!(locale: "xx")
+        end
+
+        xit "logs in successfully and resets the user's locale to the default" do
+          fill_in_and_submit_login_form(user)
+          expect_logged_in
+
+          expect(page).to have_content I18n.t(:home_shop, locale: :en).upcase
+          expect(user.reload.locale).to eq "en"
+        end
+      end
     end
   end
 end
