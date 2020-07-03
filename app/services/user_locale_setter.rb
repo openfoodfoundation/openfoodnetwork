@@ -21,7 +21,7 @@ class UserLocaleSetter
   end
 
   def self.valid_locale_for_user(user)
-    if user.present? && user.locale.present? && available_locale?(user.locale)
+    if user.andand.locale.present? && available_locale?(user.locale)
       user.locale
     else
       I18n.default_locale
