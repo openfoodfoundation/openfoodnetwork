@@ -7,17 +7,17 @@ class UserLocaleSetter
     @cookies = cookies
   end
 
-  def call
+  def set_locale
     save_locale_from_params
     save_locale_from_cookies
 
     I18n.locale = valid_current_locale
   end
 
-  def self.ensure_valid_locale_persisted(user)
-    return unless user && !available_locale?(user.locale)
+  def ensure_valid_locale_persisted
+    return unless current_user && !available_locale?(current_user.locale)
 
-    user.update!(locale: I18n.default_locale)
+    current_user.update!(locale: valid_current_locale)
   end
 
   def self.valid_locale_for_user(user)

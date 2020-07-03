@@ -175,7 +175,7 @@ feature "Authentication", js: true do
           user.update!(locale: nil)
         end
 
-        xit "logs in successfully and uses the locale from cookies" do
+        it "logs in successfully and uses the locale from cookies" do
           page.driver.browser.manage.add_cookie(name: 'locale', value: 'es')
 
           fill_in_and_submit_login_form(user)
