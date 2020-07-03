@@ -125,8 +125,10 @@ describe Spree::Shipment do
       let(:mock_estimator) { double('estimator', shipping_rates: shipping_rates) }
 
       it 'should request new rates, and maintain shipping_method selection' do
-        expect(OrderManagement::Stock::Estimator).to receive(:new).with(shipment.order).and_return(mock_estimator)
-        # The first call is for the original shippping method, the second call is after the Estimator was executed
+        expect(OrderManagement::Stock::Estimator).
+          to receive(:new).with(shipment.order).and_return(mock_estimator)
+        # The first call is for the original shippping method,
+        #   the second call is for the shippping method after the Estimator was executed
         allow(shipment).to receive(:shipping_method).and_return(shipping_method2, shipping_method1)
 
         expect(shipment.refresh_rates).to eq shipping_rates
@@ -134,7 +136,8 @@ describe Spree::Shipment do
       end
 
       it 'should handle no shipping_method selection' do
-        expect(OrderManagement::Stock::Estimator).to receive(:new).with(shipment.order).and_return(mock_estimator)
+        expect(OrderManagement::Stock::Estimator).
+          to receive(:new).with(shipment.order).and_return(mock_estimator)
         allow(shipment).to receive_messages(shipping_method: nil)
         expect(shipment.refresh_rates).to eq shipping_rates
         expect(shipment.reload.selected_shipping_rate).to_not be_nil
@@ -149,11 +152,12 @@ describe Spree::Shipment do
 
       context 'to_package' do
         it 'should use symbols for states when adding contents to package' do
-          allow(shipment).to receive_message_chain(:inventory_units,
-                              includes: [build(:inventory_unit, variant: variant,
-                                                                state: 'on_hand'),
-                                         build(:inventory_unit, variant: variant,
-                                                                state: 'backordered')] )
+          allow(shipment).
+            to receive_message_chain(:inventory_units,
+                                     includes: [build(:inventory_unit, variant: variant,
+                                                                       state: 'on_hand'),
+                                                build(:inventory_unit, variant: variant,
+                                                                       state: 'backordered')] )
           package = shipment.to_package
           expect(package.on_hand.count).to eq 1
           expect(package.backordered.count).to eq 1
@@ -288,8 +292,8 @@ describe Spree::Shipment do
       unit = double(:inventory_unit, variant: variant)
       allow(unit).to receive(:quantity) { 1 }
       allow(shipment).to receive_message_chain(:inventory_units,
-                          :group_by,
-                          map: [unit])
+                                               :group_by,
+                                               map: [unit])
       shipment.stock_location = build(:stock_location)
       expect(shipment.stock_location).to receive(:restock).with(variant, 1, shipment)
       shipment.after_cancel
@@ -312,8 +316,8 @@ describe Spree::Shipment do
       unit = create(:inventory_unit, variant: variant)
       allow(unit).to receive(:quantity) { 1 }
       allow(shipment).to receive_message_chain(:inventory_units,
-                          :group_by,
-                          map: [unit])
+                                               :group_by,
+                                               map: [unit])
       shipment.stock_location = create(:stock_location)
       expect(shipment.stock_location).to receive(:unstock).with(variant, 1, shipment)
       shipment.after_resume
@@ -384,7 +388,7 @@ describe Spree::Shipment do
     it "should create adjustment when not present" do
       allow(shipment).to receive_messages(selected_shipping_rate_id: 1)
       expect(shipping_method).to receive(:create_adjustment).with(shipping_method.adjustment_label,
-                                                              order, shipment, true, "open")
+                                                                  order, shipment, true, "open")
       shipment.__send__(:ensure_correct_adjustment)
     end
 
@@ -393,12 +397,13 @@ describe Spree::Shipment do
       allow(shipment).to receive_messages(selected_shipping_rate_id: 1)
       allow(shipping_method).to receive_messages(adjustment_label: "Foobar")
       expect(shipping_method).to receive(:create_adjustment).with("Foobar", order,
-                                                              shipment, true, "open")
+                                                                  shipment, true, "open")
       shipment.__send__(:ensure_correct_adjustment)
     end
 
     it "should update originator when adjustment is present" do
-      allow(shipment).to receive_messages(selected_shipping_rate: Spree::ShippingRate.new(cost: 10.00))
+      allow(shipment).
+        to receive_messages(selected_shipping_rate: Spree::ShippingRate.new(cost: 10.00))
       adjustment = build(:adjustment)
       allow(shipment).to receive_messages(adjustment: adjustment)
       allow(adjustment).to receive(:open?) { true }
@@ -411,7 +416,8 @@ describe Spree::Shipment do
     end
 
     it 'should not update amount if adjustment is not open?' do
-      allow(shipment).to receive_messages(selected_shipping_rate: Spree::ShippingRate.new(cost: 10.00))
+      allow(shipment).
+        to receive_messages(selected_shipping_rate: Spree::ShippingRate.new(cost: 10.00))
       adjustment = build(:adjustment)
       allow(shipment).to receive_messages(adjustment: adjustment)
       allow(adjustment).to receive(:open?) { false }
