@@ -61,9 +61,9 @@ class UserLocaleSetter
   end
 
   def valid_current_locale
-    if available_locale?(current_user_locale)
+    if current_user_locale && available_locale?(current_user_locale)
       current_user_locale
-    elsif available_locale?(cookies[:locale])
+    elsif cookies[:locale] && available_locale?(cookies[:locale])
       cookies[:locale]
     else
       I18n.default_locale
