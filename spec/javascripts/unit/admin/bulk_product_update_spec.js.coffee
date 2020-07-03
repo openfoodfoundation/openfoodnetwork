@@ -246,7 +246,7 @@ describe "filtering products for submission to database", ->
     ]
 
 describe "AdminProductEditCtrl", ->
-  $ctrl = $scope = $timeout = $httpBackend = BulkProducts = DirtyProducts = DisplayProperties = null
+  $ctrl = $scope = $timeout = $httpBackend = BulkProducts = DirtyProducts = DisplayProperties = windowStub = null
 
   beforeEach ->
     module "ofn.admin"
@@ -267,14 +267,35 @@ describe "AdminProductEditCtrl", ->
     DirtyProducts = _DirtyProducts_
     DisplayProperties = _DisplayProperties_
 
-    $ctrl "AdminProductEditCtrl", {$scope: $scope, $timeout: $timeout}
+    # Stub the window object so we don't get redirected when href is updated 
+    windowStub = {navigator: {userAgent: 'foo'}, location: {href: ''}}
+
+    $ctrl "AdminProductEditCtrl", {$scope: $scope, $timeout: $timeout, $window: windowStub}
   )
 
   describe "loading data upon initialisation", ->
-    it "gets a list of producers and then resets products with a list of data", ->
+    beforeEach ->
       spyOn($scope, "fetchProducts").and.returnValue "nothing"
+
+    it "gets a list of producers and then resets products with a list of data", ->
       $scope.initialise()
       expect($scope.fetchProducts.calls.count()).toBe 1
+
+    it "gets a list of products applying filters from the url", inject ($location) ->
+      query = 'lala' 
+      producerFilter = 2
+      categoryFilter = 5
+      sorting = 'name desc'
+      importDateFilter = '2020-06-08'
+      $location.search({query: query, producerFilter: producerFilter, categoryFilter: categoryFilter, sorting: sorting, importDateFilter: importDateFilter})
+
+      $scope.initialise()
+
+      expect($scope.query).toBe query
+      expect($scope.producerFilter).toBe producerFilter
+      expect($scope.categoryFilter).toBe categoryFilter
+      expect($scope.sorting).toBe sorting
+      expect($scope.importDateFilter).toBe importDateFilter
 
   describe "fetching products", ->
     $q = null
@@ -294,6 +315,28 @@ describe "AdminProductEditCtrl", ->
       $scope.fetchProducts()
       $scope.$digest()
       expect($scope.resetProducts).toHaveBeenCalled()
+
+    it "updates url wihth filter after data has been received", inject ($location, $window) ->
+      query = 'lala'
+      producerFilter = 2
+      categoryFilter = 5
+      sorting = 'name desc'
+      importDateFilter = '2020-06-08'
+
+      $scope.query = query
+      $scope.producerFilter = producerFilter
+      $scope.categoryFilter = categoryFilter
+      $scope.sorting = sorting
+      $scope.importDateFilter = importDateFilter
+
+      $scope.fetchProducts()
+      $scope.$digest()
+
+      encodedSorting = $window.encodeURIComponent(sorting)
+      encodedDate = $window.encodeURIComponent(importDateFilter)
+      expect($location.url()).toBe(
+        "?producerFilter=#{producerFilter}&categoryFilter=#{categoryFilter}&query=#{query}&sorting=#{encodedSorting}&importDateFilter=#{encodedDate}"
+      )
 
   describe "resetting products", ->
     beforeEach ->
@@ -893,7 +936,76 @@ describe "AdminProductEditCtrl", ->
             id: 13
             name: "P1"
 
+  describe "editWarn", ->
+    testProduct = testVariant = null
 
+    beforeEach ->
+      available_on = new Date()
+      testProduct =
+        id: 1
+        name: "TestProduct"
+        description: ""
+        available_on: available_on
+        deleted_at: null
+        permalink: 'test-product'
+        permalink_live: 'test-product'
+        meta_description: null
+        meta_keywords: null
+        tax_category_id: null
+        shipping_category_id: null
+        created_at: null
+        updated_at: null
+        on_hand: 0
+        on_demand: false
+        producer_id: 5
+        group_buy: null
+        group_buy_unit_size: null
+        master:
+          id: 2
+          unit_value: 250
+          unit_description: "foo"
+
+    describe 'product has variant', ->
+      it 'should load the edit product variant page', ->
+        testVariant =
+          id: 2
+          name: "TestVariant"
+
+        $scope.editWarn(testProduct, testVariant)
+
+        expect(windowStub.location.href).toBe(
+          "/admin/products/#{testProduct.permalink_live}/variants/#{testVariant.id}/edit"
+        )
+
+    describe 'product has no variant', ->
+      it 'should display unsaved changes confirmation if there are any DirtyProduct', inject ($window, DirtyProducts) ->
+        spyOn($window, 'confirm')
+        spyOn(DirtyProducts, 'count').and.returnValue 2
+
+        $scope.editWarn(testProduct, null)
+        expect($window.confirm).toHaveBeenCalled()
+
+      it 'should load the edit product page', inject ->
+        $scope.editWarn(testProduct, null)
+
+        expect(windowStub.location.href).toBe(
+          "/admin/products/#{testProduct.permalink_live}/edit"
+        )
+
+      it 'should load edit product page including the selected filters', inject ($httpParamSerializer) ->
+        query = 'lala'
+        category = 3
+        $scope.query = query
+        $scope.categoryFilter = category
+
+        # use $httpParamSerializer as it will sort parameters alphabetically
+        expectedFilter = $httpParamSerializer({ query: query, categoryFilter: category })
+
+        $scope.editWarn(testProduct, null)
+        
+        expect(windowStub.location.href).toBe(
+          "/admin/products/#{testProduct.permalink_live}/edit?#{expectedFilter}"
+        )
 
   describe "filtering products", ->
     describe "clearing filters", ->

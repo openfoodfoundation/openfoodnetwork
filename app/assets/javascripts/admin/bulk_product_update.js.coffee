@@ -1,4 +1,4 @@
-angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $filter, $http, $window, BulkProducts, DisplayProperties, DirtyProducts, VariantUnitManager, StatusMessage, producers, Taxons, Columns, tax_categories, RequestMonitor, SortOptions, ErrorsParser) ->
+angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $filter, $http, $window, $location, $httpParamSerializer, BulkProducts, DisplayProperties, DirtyProducts, VariantUnitManager, StatusMessage, producers, Taxons, Columns, tax_categories, RequestMonitor, SortOptions, ErrorsParser) ->
   $scope.StatusMessage = StatusMessage
 
   $scope.columns = Columns.columns
@@ -13,34 +13,30 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     {id: 100, name: t('js.admin.orders.index.per_page', results: 100)}
   ]
 
-  $scope.filterableColumns = [
-    { name: t("label_producers"),       db_column: "producer_name" },
-    { name: t("name"),           db_column: "name" }
-  ]
-
-  $scope.filterTypes = [
-    { name: t("equals"),         predicate: "eq" },
-    { name: t("contains"),       predicate: "cont" }
-  ]
-
-  $scope.optionTabs =
-    filters:        { title: t("filter_products"),   visible: false }
+  productFilters = ['producerFilter', 'categoryFilter', 'query', 'sorting', 'importDateFilter']
+  $scope.producerFilter = ""
+  $scope.categoryFilter = ""
+  $scope.importDateFilter = ""
+  $scope.query = ""
+  $scope.sorting = ""
 
   $scope.producers = producers
   $scope.taxons = Taxons.all
   $scope.tax_categories = tax_categories
-  $scope.producerFilter = ""
-  $scope.categoryFilter = ""
-  $scope.importDateFilter = ""
   $scope.page = 1
   $scope.per_page = 15
   $scope.products = BulkProducts.products
-  $scope.query = ""
   $scope.DisplayProperties = DisplayProperties
 
   $scope.sortOptions = SortOptions
 
+  loadFilterFromUrl = ->
+    filters = $location.search()
+    for filter in productFilters
+      $scope[filter] = if filters[filter] then filters[filter] else ""
+
   $scope.initialise = ->
+    loadFilterFromUrl()
     $scope.fetchProducts()
 
   $scope.$watchCollection '[query, producerFilter, categoryFilter, importDateFilter, per_page]', ->
@@ -49,6 +45,13 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
   $scope.changePage = (newPage) ->
     $scope.page = newPage
     $scope.fetchProducts()
+
+  generateFilter = ->
+    filters = {}
+    for filter in productFilters
+      filters[filter] = $scope[filter] if $scope[filter]
+    
+    filters
 
   $scope.fetchProducts = ->
     removeClearedValues()
@@ -62,6 +65,8 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
       per_page: $scope.per_page
     }
     RequestMonitor.load(BulkProducts.fetch(params).$promise).then ->
+      # update url with the filters used
+      $location.search(generateFilter())
       $scope.resetProducts()
 
   removeClearedValues = ->
@@ -122,8 +127,9 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
 
   $scope.editWarn = (product, variant) ->
     if confirm_unsaved_changes()
-      window.open(editProductUrl(product, variant), "_blank")
-
+      filterUrl = $httpParamSerializer(generateFilter())
+      filterUrl = "?#{filterUrl}" if filterUrl isnt ""
+      $window.location.href = "#{editProductUrl(product, variant)}#{filterUrl}"
 
   $scope.toggleShowAllVariants = ->
     showVariants = !DisplayProperties.showVariants 0

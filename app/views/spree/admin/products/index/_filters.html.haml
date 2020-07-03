@@ -18,9 +18,7 @@
     .filter_select.three.columns
       %label{ for: 'import_filter' } Import Date
       %br
-      %select.fullwidth{ id: 'import_date_filter', 'ofn-select2-min-search' => 5, ng: {model: 'importDateFilter', init: "importDates = #{@import_dates}; showLatestImport = #{@show_latest_import}"}}
-        %option{value: "{{date.id}}", ng: {repeat: "date in importDates" }}
-          {{date.name}}
+      %select.fullwidth{ id: 'import_date_filter', 'ofn-select2-min-search' => 5, ng: {model: 'importDateFilter', init: "importDates = #{@import_dates}; showLatestImport = #{@show_latest_import}", options: 'date.id as date.name for date in importDates'} }
 
     .filter_clear.three.columns.omega
       %label{ for: 'clear_all_filters' }
