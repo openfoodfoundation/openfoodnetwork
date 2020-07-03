@@ -31,6 +31,19 @@ module Spree
         }
       } }
 
+      respond_override update: { html: {
+        success: lambda {
+          redirect_to edit_admin_product_url(@product, @url_filter)
+        },
+        failure: lambda {
+          redirect_to edit_admin_product_url(@product, @url_filter)
+        }
+      } }
+
+      PRODUCT_FILTER = [
+        'query', 'producerFilter', 'categoryFilter', 'sorting', 'importDateFilter'
+      ].freeze
+
       def new
         @object.shipping_category = DefaultShippingCategory.find_or_create
         super
@@ -56,9 +69,17 @@ module Spree
         @show_latest_import = params[:latest_import] || false
       end
 
-      def update
-        original_supplier_id = @product.supplier_id
+      def edit
+        filters = product_filters(params)
+        @url_filters = filters.empty? ? "" : "?#{filters.to_query}"
 
+        super
+      end
+
+      def update
+        @url_filter = product_filters(request.query_parameters)
+
+        original_supplier_id = @product.supplier_id
         delete_stock_params_and_set_after do
           super
           if original_supplier_id != @product.supplier_id
@@ -257,6 +278,10 @@ module Spree
 
       def set_product_master_variant_price_to_zero
         @product.price = 0 if @product.price.nil?
+      end
+
+      def product_filters(params)
+        params.select { |k, _v| PRODUCT_FILTER.include?(k) }
       end
     end
   end

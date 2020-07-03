@@ -151,6 +151,24 @@ feature '
       expect(product.tax_category).to eq(tax_category)
     end
 
+    scenario "editing a product comming from the bulk product update page with filter" do
+      product = create(:simple_product, name: 'a product', supplier: @supplier2)
+
+      filter_query = "producerFilter=2"
+      visit "#{spree.edit_admin_product_path(product)}?#{filter_query}"
+
+      click_button 'Update'
+      expect(flash_message).to eq('Product "a product" has been successfully updated!')
+
+      # Check the url still includes the filters
+      uri = URI.parse(current_url)
+      expect("#{uri.path}?#{uri.query}").to eq "#{spree.edit_admin_product_path(product)}?#{filter_query}"
+
+      # Link back to the bulk product update page should include the filters
+      expect(page).to have_link(I18n.t('admin.products.back_to_products_list'), href: %r{admin\/products#\?#{filter_query}})
+      expect(page).to have_link(I18n.t(:cancel), href: %r{admin\/products#\?#{filter_query}})
+    end
+
     scenario "editing product group buy options" do
       product = product = create(:simple_product, supplier: @supplier2)
 
