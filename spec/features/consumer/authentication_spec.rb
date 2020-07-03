@@ -169,6 +169,24 @@ feature "Authentication", js: true do
           expect(user.reload.locale).to eq "en"
         end
       end
+
+      context "when the user has never selected a locale, but one has been selected before login" do
+        before do
+          user.update!(locale: nil)
+        end
+
+        xit "logs in successfully and uses the locale from cookies" do
+          page.driver.browser.manage.add_cookie(name: 'locale', value: 'es')
+
+          fill_in_and_submit_login_form(user)
+          expect_logged_in
+
+          expect(page).to have_content I18n.t(:home_shop, locale: :es).upcase
+          expect(user.reload.locale).to eq "es"
+
+          page.driver.browser.manage.delete_cookie('locale')
+        end
+      end
     end
   end
 end
