@@ -36,7 +36,6 @@ module OpenFoodNetwork
     end
 
     # Using the `in_stock?` method allows overrides by distributors.
-    # It also allows the upgrade to Spree 2.0.
     def filter_on_hand(variants)
       if params[:report_type] == 'inventory'
         variants.select(&:in_stock?)
