@@ -126,7 +126,8 @@ describe Spree::Shipment do
 
       it 'should request new rates, and maintain shipping_method selection' do
         OrderManagement::Stock::Estimator.should_receive(:new).with(shipment.order).and_return(mock_estimator)
-        shipment.stub(shipping_method: shipping_method2)
+        # The first call is for the original shippping method, the second call is after the Estimator was executed
+        allow(shipment).to receive(:shipping_method).and_return(shipping_method2, shipping_method1)
 
         expect(shipment.refresh_rates).to eq shipping_rates
         expect(shipment.reload.selected_shipping_rate.shipping_method_id).to eq shipping_method2.id

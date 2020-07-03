@@ -108,17 +108,33 @@ module Spree
 
       # The call to Stock::Estimator below will replace the current shipping_method
       original_shipping_method_id = shipping_method.try(:id)
-
       self.shipping_rates = OrderManagement::Stock::Estimator.new(order).shipping_rates(to_package)
 
-      if original_shipping_method_id
-        selected_rate = shipping_rates.detect { |rate|
-          rate.shipping_method_id == original_shipping_method_id
-        }
-        self.selected_shipping_rate_id = selected_rate.id if selected_rate
-      end
+      keep_original_shipping_method_selection(original_shipping_method_id)
 
       shipping_rates
+    end
+
+    def keep_original_shipping_method_selection(original_shipping_method_id)
+      return if shipping_method&.id == original_shipping_method_id
+
+      rate_for_original_shipping_method = find_shipping_rate_for(original_shipping_method_id)
+      if rate_for_original_shipping_method.present?
+        self.selected_shipping_rate_id = rate_for_original_shipping_method.id
+      else
+        # If there's no original ship method to keep, or if it cannot be found on the ship rates
+        #   But there's a new ship method selected (first if clause in this method)
+        #   We need to save the shipment so that callbacks are triggered
+        save!
+      end
+    end
+
+    def find_shipping_rate_for(shipping_method_id)
+      return unless shipping_method_id
+
+      shipping_rates.detect { |rate|
+        rate.shipping_method_id == shipping_method_id
+      }
     end
 
     def currency
