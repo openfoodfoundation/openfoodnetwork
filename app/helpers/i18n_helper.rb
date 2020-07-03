@@ -1,49 +1,9 @@
 module I18nHelper
   def set_locale
-    save_locale_from_params
-
-    # After logging in, check if the user chose a locale before
-    if current_user_locale.nil? && cookies[:locale] && available_locale?(params[:locale])
-      spree_current_user&.update!(locale: params[:locale])
-    end
-
-    I18n.locale = valid_current_locale
+    UserLocaleSetter.new(spree_current_user, params[:locale], cookies).call
   end
 
   def valid_locale(user)
-    if user.present? &&
-       user.locale.present? &&
-       available_locale?(user.locale)
-      user.locale
-    else
-      I18n.default_locale
-    end
-  end
-
-  def available_locale?(locale)
-    Rails.application.config.i18n.available_locales.include?(locale)
-  end
-
-  private
-
-  def save_locale_from_params
-    return unless params[:locale] && available_locale?(params[:locale])
-
-    spree_current_user&.update!(locale: params[:locale])
-    cookies[:locale] = params[:locale]
-  end
-
-  def current_user_locale
-    spree_current_user.andand.locale
-  end
-
-  def valid_current_locale
-    if available_locale?(current_user_locale)
-      current_user_locale
-    elsif available_locale?(cookies[:locale])
-      cookies[:locale]
-    else
-      I18n.default_locale
-    end
+    UserLocaleSetter.valid_locale_for_user(user)
   end
 end

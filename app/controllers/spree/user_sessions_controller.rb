@@ -6,7 +6,6 @@ module Spree
     include Spree::Core::ControllerHelpers::Common
     include Spree::Core::ControllerHelpers::Order
     include Spree::Core::ControllerHelpers::SSL
-    include I18nHelper
 
     ssl_required :new, :create, :destroy, :update
     ssl_allowed :login_bar
@@ -54,9 +53,8 @@ module Spree
     def ensure_valid_locale_persisted
       # When creating a new user session we have to wait until after a successful
       # login to be able to persist a locale on the current user
-      return unless spree_current_user && !available_locale?(spree_current_user.locale)
 
-      spree_current_user.update!(locale: I18n.default_locale)
+      UserLocaleSetter.ensure_valid_locale_persisted(spree_current_user)
     end
   end
 end
