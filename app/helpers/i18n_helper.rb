@@ -1,10 +1,6 @@
 module I18nHelper
   def set_locale
-    # Save a given locale from params
-    if params[:locale] && available_locale?(params[:locale])
-      spree_current_user&.update!(locale: params[:locale])
-      cookies[:locale] = params[:locale]
-    end
+    save_locale_from_params
 
     # After logging in, check if the user chose a locale before
     if current_user_locale.nil? && cookies[:locale] && available_locale?(params[:locale])
@@ -29,6 +25,13 @@ module I18nHelper
   end
 
   private
+
+  def save_locale_from_params
+    return unless params[:locale] && available_locale?(params[:locale])
+
+    spree_current_user&.update!(locale: params[:locale])
+    cookies[:locale] = params[:locale]
+  end
 
   def current_user_locale
     spree_current_user.andand.locale
