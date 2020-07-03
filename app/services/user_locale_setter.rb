@@ -9,11 +9,7 @@ class UserLocaleSetter
 
   def call
     save_locale_from_params
-
-    # After logging in, check if the user chose a locale before
-    if current_user_locale.nil? && cookies[:locale] && available_locale?(params_locale)
-      current_user&.update!(locale: params_locale)
-    end
+    save_locale_from_cookies
 
     I18n.locale = valid_current_locale
   end
@@ -45,6 +41,13 @@ class UserLocaleSetter
 
     current_user&.update!(locale: params_locale)
     cookies[:locale] = params_locale
+  end
+
+  def save_locale_from_cookies
+    return unless current_user_locale.nil? && cookies[:locale] &&
+                  available_locale?(params_locale)
+
+    current_user&.update!(locale: params_locale)
   end
 
   def available_locale?(locale)
