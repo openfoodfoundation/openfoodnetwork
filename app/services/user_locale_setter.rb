@@ -45,9 +45,9 @@ class UserLocaleSetter
 
   def save_locale_from_cookies
     return unless current_user_locale.nil? && cookies[:locale] &&
-                  available_locale?(params_locale)
+                  available_locale?(cookies[:locale])
 
-    current_user&.update!(locale: params_locale)
+    current_user&.update!(locale: cookies[:locale])
   end
 
   def available_locale?(locale)
