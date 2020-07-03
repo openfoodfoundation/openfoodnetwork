@@ -12,7 +12,7 @@ module Spree
     ssl_allowed :login_bar
 
     before_action :set_checkout_redirect, only: :create
-    after_action :ensure_valid_locale, only: :create
+    after_action :ensure_valid_locale_persisted, only: :create
 
     def create
       authenticate_spree_user!
@@ -51,7 +51,9 @@ module Spree
       session["spree_user_return_to"] = nil
     end
 
-    def ensure_valid_locale
+    def ensure_valid_locale_persisted
+      # When creating a new user session we have to wait until after a successful
+      # login to be able to persist a locale on the current user
       return unless spree_current_user && !available_locale?(spree_current_user.locale)
 
       spree_current_user.update!(locale: I18n.default_locale)
