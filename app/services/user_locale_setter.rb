@@ -44,6 +44,8 @@ class UserLocaleSetter
   end
 
   def save_locale_from_cookies
+    # If the user account has a selected locale: we ignore the locale set in cookies,
+    # which is persisted per-device but not per-user.
     return unless current_user_locale.nil? && cookies[:locale] &&
                   available_locale?(cookies[:locale])
 
