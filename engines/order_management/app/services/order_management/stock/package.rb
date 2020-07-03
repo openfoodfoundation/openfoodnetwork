@@ -92,7 +92,7 @@ module OrderManagement
       #
       # @return [Array<Spree::ShippingMethod>]
       def shipping_methods
-        available_shipping_methods = shipping_categories.map(&:shipping_methods).flatten.uniq.to_a
+        available_shipping_methods = shipping_categories.flat_map(&:shipping_methods).uniq.to_a
 
         available_shipping_methods.keep_if do |shipping_method|
           ships_with?(order.distributor.shipping_methods.to_a, shipping_method)
