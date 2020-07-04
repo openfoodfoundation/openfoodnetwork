@@ -32,18 +32,18 @@ feature "Darkswarm data caching", js: true, caching: true do
     it "invalidates caches for taxons and properties" do
       visit shops_path
 
-      taxon_timestamp1 = CacheService.latest_timestamp_by_class(Spree::Taxon)
-      expect_cached "views/#{CacheService::FragmentCaching.ams_all_taxons[0]}"
-
-      property_timestamp1 = CacheService.latest_timestamp_by_class(Spree::Property)
-      expect_cached "views/#{CacheService::FragmentCaching.ams_all_properties[0]}"
-
       toggle_filters
 
       within "#hubs .filter-row" do
         expect(page).to have_content taxon.name
         expect(page).to have_content property.presentation
       end
+
+      taxon_timestamp1 = CacheService.latest_timestamp_by_class(Spree::Taxon)
+      expect_cached "views/#{CacheService::FragmentCaching.ams_all_taxons[0]}"
+
+      property_timestamp1 = CacheService.latest_timestamp_by_class(Spree::Property)
+      expect_cached "views/#{CacheService::FragmentCaching.ams_all_properties[0]}"
 
       taxon.update!(name: "Changed Taxon")
       property.update!(presentation: "Changed Property")
@@ -56,6 +56,13 @@ feature "Darkswarm data caching", js: true, caching: true do
       # Wait for /shops page to load properly before checking for new timestamps
       expect(page).to_not have_selector ".row.filter-row", visible: true
 
+      toggle_filters
+
+      within "#hubs .filter-row" do
+        expect(page).to have_content "Changed Taxon"
+        expect(page).to have_content "Changed Property"
+      end
+
       taxon_timestamp2 = CacheService.latest_timestamp_by_class(Spree::Taxon)
       expect_cached "views/#{CacheService::FragmentCaching.ams_all_taxons[0]}"
 
@@ -64,13 +71,6 @@ feature "Darkswarm data caching", js: true, caching: true do
 
       expect(taxon_timestamp1).to_not eq taxon_timestamp2
       expect(property_timestamp1).to_not eq property_timestamp2
-
-      toggle_filters
-
-      within "#hubs .filter-row" do
-        expect(page).to have_content "Changed Taxon"
-        expect(page).to have_content "Changed Property"
-      end
     end
   end
 
