@@ -19,8 +19,14 @@ class UserLocaleSetter
     current_user.update!(locale: valid_current_locale)
   end
 
-  def valid_locale_for_user
-    valid_current_locale
+  def valid_current_locale
+    if current_user_locale && available_locale?(current_user_locale)
+      current_user_locale
+    elsif cookies[:locale] && available_locale?(cookies[:locale])
+      cookies[:locale]
+    else
+      I18n.default_locale
+    end
   end
 
   private
@@ -39,16 +45,6 @@ class UserLocaleSetter
   end
 
   def current_user_locale
-    current_user.andand.locale
-  end
-
-  def valid_current_locale
-    if current_user_locale && available_locale?(current_user_locale)
-      current_user_locale
-    elsif cookies[:locale] && available_locale?(cookies[:locale])
-      cookies[:locale]
-    else
-      I18n.default_locale
-    end
+    current_user&.locale
   end
 end

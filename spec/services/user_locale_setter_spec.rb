@@ -120,19 +120,19 @@ describe UserLocaleSetter do
     end
   end
 
-  describe "#valid_locale_for_user" do
+  describe "#valid_current_locale" do
     let(:service) { UserLocaleSetter.new(user) }
 
     context "when the user has a locale set" do
       it "returns the user's locale" do
         user.update(locale: "es")
-        expect(service.valid_locale_for_user).to eq "es"
+        expect(service.valid_current_locale).to eq "es"
       end
     end
 
     context "when the user has no locale set" do
       it "returns the default locale" do
-        expect(service.valid_locale_for_user).to eq default_locale
+        expect(service.valid_current_locale).to eq default_locale
       end
     end
 
@@ -140,7 +140,7 @@ describe UserLocaleSetter do
       let(:user) { nil }
 
       it "returns the default locale" do
-        expect(service.valid_locale_for_user).to eq default_locale
+        expect(service.valid_current_locale).to eq default_locale
       end
     end
   end
