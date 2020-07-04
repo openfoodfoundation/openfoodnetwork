@@ -4,6 +4,6 @@ module I18nHelper
   end
 
   def valid_locale(user)
-    UserLocaleSetter.valid_locale_for_user(user)
+    UserLocaleSetter.new(user).valid_locale_for_user
   end
 end

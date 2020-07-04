@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UserLocaleSetter
-  def initialize(current_user, params_locale, cookies)
+  def initialize(current_user, params_locale = nil, cookies = {})
     @current_user = current_user
     @params_locale = params_locale
     @cookies = cookies
@@ -19,16 +19,8 @@ class UserLocaleSetter
     current_user.update!(locale: valid_current_locale)
   end
 
-  def self.valid_locale_for_user(user)
-    if user.andand.locale.present? && available_locale?(user.locale)
-      user.locale
-    else
-      I18n.default_locale
-    end
-  end
-
-  def self.available_locale?(locale)
-    Rails.application.config.i18n.available_locales.include?(locale)
+  def valid_locale_for_user
+    valid_current_locale
   end
 
   private
@@ -43,7 +35,7 @@ class UserLocaleSetter
   end
 
   def available_locale?(locale)
-    self.class.available_locale?(locale)
+    Rails.application.config.i18n.available_locales.include?(locale)
   end
 
   def current_user_locale
