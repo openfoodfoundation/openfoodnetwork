@@ -3,15 +3,7 @@
 module OrderManagement
   module Reports
     module Packing
-      class Supplier < Report
-        def self.report_subtypes
-          ['customer', 'supplier']
-        end
-
-        def collection
-          Spree::LineItem.includes(*line_item_includes).where(order_id: order_ids).uniq
-        end
-
+      class Supplier < Base
         def report_row(object)
           {
             order_id: object.order_id,
@@ -33,54 +25,6 @@ module OrderManagement
 
         def summary_group
           :supplier
-        end
-
-        def summary_row
-          { title: 'TOTAL', sum: [:quantity] }
-        end
-
-        def hide_columns
-          [:order_id]
-        end
-
-        def mask_data
-          {
-              columns: [:customer_code, :first_name, :last_name],
-              replacement: "< Hidden >",
-              rule: proc{ |line_item| !can_view_customer_data?(line_item) }
-          }
-        end
-
-        private
-
-        def permissions
-          Permissions::Order.new(current_user, ransack_params)
-        end
-
-        def orders
-          @orders ||= permissions.visible_orders.
-              complete.not_state(:canceled).
-              includes(:bill_address, :distributor, :customer).
-              ransack(ransack_params).result.index_by(&:id)
-        end
-
-        def order_ids
-          orders.keys
-        end
-
-        def line_item_includes
-          [{
-               option_values: :option_type,
-               variant: { product: [:supplier, :shipping_category] }
-           }]
-        end
-
-        def can_view_customer_data?(line_item)
-          managed_enterprise_ids.include? orders[line_item.order_id].distributor_id
-        end
-
-        def managed_enterprise_ids
-          @managed_enterprise_ids ||= Enterprise.managed_by(current_user).pluck(:id)
         end
       end
     end
