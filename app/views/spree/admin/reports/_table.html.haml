@@ -3,19 +3,21 @@
   %table.report__table{id: id}
     %thead
       %tr
-        - @report.table_headers.each do |heading|
-          %th
-            = heading
+        - @header.each do |heading|
+          %th= heading
     %tbody
-      - @report.table_rows.each do |row|
-        - if row
-          %tr
-            - row.each do |cell|
-              %td
-                = cell
-      - if @report.table_rows.empty?
+      - @table.each do |row|
         %tr
-          %td{colspan: @report.table_headers.count}= t(:none)
+          - row.each_with_index do |cell_value, column_index|
+            %td
+              - partial = column_partials[column_index]
+              - if partial
+                = render partial, value: cell_value
+              - else
+                = cell_value
+      - if @table.empty?
+        %tr
+          %td{colspan: @header.count}= t(:none)
 - else
   %p.report__message
     = t(".select_and_search", option: msg_option.upcase)
