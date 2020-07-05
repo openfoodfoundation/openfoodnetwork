@@ -3,6 +3,8 @@
 module OrderManagement
   module Reports
     class ReportLoader
+      delegate :report_subtypes, to: :base_class
+
       def initialize(report_type, report_subtype = nil)
         @report_type = report_type
         @report_subtype = report_subtype
@@ -13,9 +15,7 @@ module OrderManagement
       end
 
       def default_report_subtype
-        base_class = "#{report_module}::Base".constantize
-
-        base_class.report_subtypes.first || "base"
+        report_subtypes.first || "base"
       end
 
       private
@@ -30,6 +30,10 @@ module OrderManagement
         subtype = report_subtype || default_report_subtype
 
         "#{subtype.camelize}"
+      end
+
+      def base_class
+        "#{report_module}::Base".constantize
       end
     end
   end
