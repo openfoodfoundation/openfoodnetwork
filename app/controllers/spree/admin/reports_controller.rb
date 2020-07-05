@@ -29,7 +29,7 @@ module Spree
       before_action :cache_search_state
       # Fetches user's distributors, suppliers and order_cycles
       before_action :load_data,
-                    only: [:customers, :products_and_inventory, :order_cycle_management, :packing]
+                    only: [:customers, :products_and_inventory, :order_cycle_management]
 
       respond_to :html
 
@@ -283,7 +283,7 @@ module Spree
           public_send("#{report}_admin_reports_url".to_sym)
         end
       rescue NoMethodError
-        url_for([:new, :admin, :reports, report.to_s.singularize])
+        main_app.order_management_reports_url(report_type: report)
       end
 
       # List of reports that have been moved to the Order Management engine

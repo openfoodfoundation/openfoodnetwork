@@ -2843,6 +2843,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     reports:
       table:
         select_and_search: "Select filters and click on %{option} to access your data."
+      packing:
+        customer_report: "Pack By Customer"
+        supplier_report: "Pack By Supplier"
       enterprise_fee_summaries:
         filters:
           date_range: "Date Range"
