@@ -16,19 +16,9 @@ module OrderManagement
       private
 
       def report_class
-        return if report_type.blank?
+        return unless params[:report_type]
 
-        "Reports::#{report_type}#{report_subtype}".constantize
-      end
-
-      def report_type
-        params[:report_type].camelize
-      end
-
-      def report_subtype
-        return unless params[:report_subtype]
-
-        "::#{params[:report_subtype].camelize}"
+        Reports::ReportLoader.new(params[:report_type], params[:report_subtype]).report_class
       end
 
       def render_report

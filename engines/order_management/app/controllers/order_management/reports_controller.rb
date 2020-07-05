@@ -24,24 +24,14 @@ module OrderManagement
       params[:report_subtype]
     end
 
+    def report_loader
+      @report_loader ||= Reports::ReportLoader.new(report_type, report_subtype)
+    end
+
     def report_class
       return if report_type.blank?
 
-      "#{report_module}#{report_class_subtype}".constantize
-    end
-
-    def report_module
-      "OrderManagement::Reports::#{report_class_type}"
-    end
-
-    def report_class_type
-      report_type.camelize
-    end
-
-    def report_class_subtype
-      subtype = report_subtype || default_report_subtype
-
-      "::#{subtype.camelize}"
+      report_loader.report_class
     end
 
     def export_spreadsheet?
@@ -62,16 +52,10 @@ module OrderManagement
 
     def assign_report_options
       @report_type = report_type
-      @report_subtype = report_subtype || default_report_subtype
+      @report_subtype = report_subtype || report_loader.default_report_subtype
       @report_subtypes = report_class.report_subtypes.map do |subtype|
         [t("order_management.reports.packing.#{subtype}_report"), subtype]
       end
-    end
-
-    def default_report_subtype
-      base_class = "#{report_module}::Base".constantize
-
-      base_class.report_subtypes.first || "base"
     end
 
     def load_data_for_forms
