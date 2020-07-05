@@ -13,7 +13,7 @@ module OrderManagement
         end
 
         def summary_row
-          { title: 'TOTAL', sum: [:quantity] }
+          { title: I18n.t("summary_row.total", scope: i18n_scope), sum: [:quantity] }
         end
 
         def hide_columns
@@ -23,7 +23,7 @@ module OrderManagement
         def mask_data
           {
             columns: [:customer_code, :first_name, :last_name],
-            replacement: "< Hidden >",
+            replacement: I18n.t("hidden_field", scope: i18n_scope),
             rule: proc{ |line_item| !can_view_customer_data?(line_item) }
           }
         end
@@ -58,6 +58,14 @@ module OrderManagement
 
         def managed_enterprise_ids
           @managed_enterprise_ids ||= Enterprise.managed_by(current_user).pluck(:id)
+        end
+
+        def temp_controlled_value(object)
+          object.product.shipping_category&.temperature_controlled ? I18n.t(:yes) : I18n.t(:no)
+        end
+
+        def i18n_scope
+          "order_management.reports"
         end
       end
     end

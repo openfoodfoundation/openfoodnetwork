@@ -15,7 +15,7 @@ module OrderManagement
             product: object.product.name,
             variant: object.full_name,
             quantity: object.quantity,
-            is_temperature_controlled: object.product.shipping_category.andand.temperature_controlled ? "Yes" : "No"
+            is_temperature_controlled: temp_controlled_value(object)
           }
         end
 
