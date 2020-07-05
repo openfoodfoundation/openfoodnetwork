@@ -9,5 +9,9 @@ module OrderManagement
         ["#{oc.name} &nbsp; (#{orders_open_at} - #{orders_close_at})".html_safe, oc.id]
       end
     end
+
+    def report_subtypes(report)
+      OrderManagement::Reports::ReportLoader.new(report).report_subtypes
+    end
   end
 end

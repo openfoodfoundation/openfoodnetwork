@@ -18,6 +18,7 @@ module Spree
   module Admin
     class ReportsController < Spree::Admin::BaseController
       include Spree::ReportsHelper
+      helper OrderManagement::ReportsHelper
 
       ORDER_MANAGEMENT_ENGINE_REPORTS = [
         :bulk_coop,
