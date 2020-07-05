@@ -66,14 +66,6 @@ module Spree
                       "order_cycle_management_#{timestamp}.csv")
       end
 
-      def packing
-        return unless render_content?
-
-        @report = Reporting::PackingReport.new(spree_current_user, params[:q], params[:options])
-
-        export_report
-      end
-
       def orders_and_distributors
         @report = OpenFoodNetwork::OrderAndDistributorReport.new spree_current_user,
                                                                  params,
@@ -170,17 +162,6 @@ module Spree
 
       def model_class
         Spree::Admin::ReportsController
-      end
-
-      def export_report
-        return unless ['xlsx', 'ods', 'csv'].include?(report_format)
-
-        render report_format.to_sym => @report.public_send("to_#{report_format}"),
-               :filename => "#{params[:report_type] || action_name}_#{timestamp}.#{report_format}"
-      end
-
-      def report_format
-        params[:report_format]
       end
 
       # Some actions are changing the `params` object. That is unfortunate Spree

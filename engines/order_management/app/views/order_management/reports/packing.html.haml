@@ -1,5 +1,5 @@
-= form_tag spree.packing_admin_reports_path, :method => :post do
-  = render 'date_range_form'
+= form_tag main_app.order_management_reports_path, report_type: 'packing' do
+  = render partial: 'date_range_form'
 
   .row
     .alpha.two.columns= label_tag nil, t(:report_hubs)
@@ -11,14 +11,15 @@
     .omega.fourteen.columns
       = select_tag("q[supplier_id_in]", options_from_collection_for_select(@suppliers, :id, :name, params[:supplier_id_in]), {class: "select2 fullwidth", multiple: true})
 
-  -#.row
-  -#  .alpha.two.columns= label_tag nil, t(:report_customers_cycle)
-  -#  .omega.fourteen.columns
-  -#    = f.select(:order_cycle_id_in, report_order_cycle_options(@order_cycles), {selected: params[:q].andand[:order_cycle_id_in]}, {class: "select2 fullwidth", multiple: true})
-  -#
-  -# .row
-  -#   .alpha.two.columns= label_tag nil, t(:report_type)
-  -#   .omega.fourteen.columns= select_tag(:report_type, options_for_select(@report_types, @report_type))
+  .row
+    .alpha.two.columns= label_tag nil, t(:report_customers_cycle)
+    .omega.fourteen.columns
+      = select_tag("q[order_cycle_id_in]", options_for_select(report_order_cycle_options(@order_cycles), params[:q].andand[:order_cycle_id_in]), {class: "select2 fullwidth", multiple: true})
+
+  .row
+    .alpha.two.columns= label_tag nil, t(:report_type)
+    .omega.fourteen.columns
+      = select_tag(:report_subtype, options_for_select(@report_subtypes, @report_subtype))
 
   .row
     = label_tag :report_format, "Generate report:"
