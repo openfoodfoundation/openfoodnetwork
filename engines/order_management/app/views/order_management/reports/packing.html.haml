@@ -21,13 +21,7 @@
     .omega.fourteen.columns
       = select_tag(:report_subtype, options_for_select(@report_subtypes, @report_subtype))
 
-  .row
-    = label_tag :report_format, "Generate report:"
-    %br
-    = select_tag :report_format, options_for_select({'On screen' => '', 'CSV Spreadsheet' => 'csv', 'Excel Spreadsheet' => 'xlsx', 'OpenOffice Spreadsheet' => 'ods'})
-  .row
-    = check_box_tag "options[exclude_summaries]", true, params[:options].andand[:exclude_summaries]
-    = label_tag "hide_summary_rows"
+  = render "rendering_options"
 
   .row
   = button t(:search)

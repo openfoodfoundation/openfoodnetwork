@@ -2843,6 +2843,13 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     reports:
       table:
         select_and_search: "Select filters and click on %{option} to access your data."
+      rendering_options:
+        generate_report: "Generate report:"
+        on_screen: "On screen"
+        csv_spreadsheet: "CSV Spreadsheet"
+        excel_spreadsheet: "Excel Spreadsheet"
+        openoffice_spreadsheet: "OpenOffice Spreadsheet"
+        hide_summary_rows: "Hide summary Rows"
       packing:
         customer_report: "Pack By Customer"
         supplier_report: "Pack By Supplier"
