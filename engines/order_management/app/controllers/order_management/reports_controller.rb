@@ -24,14 +24,14 @@ module OrderManagement
       params[:report_subtype]
     end
 
-    def report_loader
-      @report_loader ||= Reports::ReportLoader.new(report_type, report_subtype)
-    end
-
     def report_class
       return if report_type.blank?
 
       report_loader.report_class
+    end
+
+    def report_loader
+      @report_loader ||= Reports::ReportLoader.new(report_type, report_subtype)
     end
 
     def export_spreadsheet?
@@ -44,13 +44,13 @@ module OrderManagement
     end
 
     def render_report
-      assign_report_options
-      load_data_for_forms
+      assign_view_data
+      load_form_options
 
       render "order_management/reports/#{report_type}"
     end
 
-    def assign_report_options
+    def assign_view_data
       @report_type = report_type
       @report_subtype = report_subtype || report_loader.default_report_subtype
       @report_subtypes = report_class.report_subtypes.map do |subtype|
@@ -58,36 +58,19 @@ module OrderManagement
       end
     end
 
-    def load_data_for_forms
-      return unless ["packing"].include? report_type
+    def load_form_options
+      return unless form_options_required?
 
-      @distributors = my_distributors
-      @suppliers = my_suppliers | suppliers_of_products_distributed_by(@distributors)
-      @order_cycles = my_order_cycles
+      form_options = Reports::FormOptionsLoader.new(spree_current_user)
+
+      @distributors = form_options.distributors
+      @suppliers = form_options.suppliers
+      @order_cycles = form_options.order_cycles
     end
 
-    # Load managed distributor enterprises of current user
-    def my_distributors
-      Enterprise.is_distributor.managed_by(spree_current_user)
-    end
-
-    # Load managed producer enterprises of current user
-    def my_suppliers
-      Enterprise.is_primary_producer.managed_by(spree_current_user)
-    end
-
-    def suppliers_of_products_distributed_by(distributors)
-      supplier_ids = Spree::Product.in_distributors(distributors.select('enterprises.id')).
-        select('spree_products.supplier_id')
-
-      Enterprise.where(id: supplier_ids)
-    end
-
-    def my_order_cycles
-      OrderCycle.
-        active_or_complete.
-        visible_by(spree_current_user).
-        order('orders_close_at DESC')
+    def form_options_required?
+      [:packing, :customers, :products_and_inventory, :order_cycle_management].
+        include? report_type.to_sym
     end
 
     def report_format
