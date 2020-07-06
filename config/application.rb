@@ -76,17 +76,6 @@ module Openfoodnetwork
       ]
     end
 
-    # Every splitter (except Base splitter) will split the order in multiple packages
-    #   Each package will generate a separate shipment in the order
-    #   Base splitter does not split the packages
-    #   So, because in OFN we have locked orders to have only one shipment,
-    #     we must use this splitter and no other
-    initializer "spree.register.stock_splitters" do |app|
-      app.config.spree.stock_splitters = [
-        Spree::Stock::Splitter::Base
-      ]
-    end
-
     # Register Spree payment methods
     initializer "spree.gateway.payment_methods", :after => "spree.register.payment_methods" do |app|
       app.config.spree.payment_methods << Spree::Gateway::Migs

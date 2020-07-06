@@ -30,7 +30,6 @@ Spree.config do |config|
   config.auto_capture = true
   #config.override_actionmailer_config = false
 
-  config.package_factory = Stock::Package
   config.order_updater_decorator = OrderUpdater
 
   # S3 settings
