@@ -342,9 +342,63 @@ paths:
 
   /orders:
     get:
-      description: Gets all Orders.
+      description: >
+        Gets all Orders. Use combinations of parameters to filter your query. 
+        For example /api/orders?q[completed_at_gt]=2020_02_02&q[completed_at_lt]=2020_02_10 returns orders between 2nd and 10th February 2020. 
+        Query parameters are generated for the '#/components/schemas/Order_Concise' model with [Ransack](https://github.com/activerecord-hackery/ransack#search-matchers) search matchers
       tags:
         - orders
+      parameters:
+        - in: query
+          name: q[distributor_id_eq]
+          schema:
+            type: string
+          style: deepObject
+          description: Query orders for a specific distributor id. 
+          required: false
+        - in: query
+          name: q[completed_at_gt]
+          schema:
+            type: string
+          style: deepObject
+          description: Query orders completed after a date. 
+          required: false
+        - in: query
+          name: q[completed_at_lt]
+          schema:
+            type: string
+          style: deepObject
+          description: Query orders completed before a date. 
+          required: false
+        - in: query
+          name: q[state_eq]
+          schema:
+            type: string
+          style: deepObject
+          description: Query orders by order state, eg 'cart', 'complete'. 
+          required: false
+        - in: query
+          name: q[payment_state_eq]
+          schema:
+            type: string
+          style: deepObject
+          description: Query orders by order payment_state, eg 'balance_due', 'paid', 'failed'. 
+          required: false
+        - in: query
+          name: q[email_cont]
+          schema:
+            type: string
+          style: deepObject
+          description: Query orders where the order email contains a string. 
+          required: false
+        - in: query
+          name: q[order_cycle_id_eq]
+          schema:
+            type: string
+          style: deepObject
+          description: Query orders for a specific order_cycle id. 
+          required: false
+
       responses:
         '200':
           description: successful operation
