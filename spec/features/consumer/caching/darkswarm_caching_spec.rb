@@ -45,6 +45,9 @@ feature "Darkswarm data caching", js: true, caching: true do
         expect(page).to have_content property.presentation
       end
 
+      # Update rows which should also update the timestamp.
+      # The timestamp represents seconds, so waiting one second is enough.
+      sleep 1
       taxon.update!(name: "Changed Taxon")
       property.update!(presentation: "Changed Property")
 
