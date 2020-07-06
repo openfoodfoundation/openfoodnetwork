@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails/all'
 require 'active_merchant'
 require 'acts_as_list'
@@ -11,15 +13,16 @@ require 'ransack'
 require 'state_machine'
 
 module Spree
-
   mattr_accessor :user_class
 
   def self.user_class
     if @@user_class.is_a?(Class)
       raise "Spree.user_class MUST be a String object, not a Class object."
-    elsif @@user_class.is_a?(String)
-      @@user_class.constantize
     end
+
+    return unless @@user_class.is_a?(String)
+
+    @@user_class.constantize
   end
 
   # Used to configure Spree.
