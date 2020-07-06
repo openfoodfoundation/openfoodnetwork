@@ -3050,16 +3050,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     intercept_email_address: "Intercept Email Address"
     intercept_email_instructions: "Override email recipient and replace with this address."
 
-    image_settings: "Image Settings"
-    image_settings_warning: "You will need to regenerate thumbnails if you update the paperclip styles. Use rake paperclip:refresh:thumbnails CLASS=Spree::Image to do this."
-    attachment_default_style: Attachments Style
-    attachment_default_url: "Attachments Default URL"
-    attachment_path: "Attachments Path"
-    attachment_styles: "Paperclip Styles"
-    attachment_url: "Attachments URL"
-    add_new_style: "Add New Style"
-    image_settings_updated: "Image Settings successfully updated."
-
     tax_categories: "Tax Categories"
     listing_tax_categories: "Listing Tax Categories"
     back_to_tax_categories_list: "Back To Tax Categories List"
