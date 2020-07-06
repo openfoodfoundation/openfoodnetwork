@@ -1,22 +1,26 @@
+# frozen_string_literal: true
+
 require 'rspec/expectations'
 require 'spree/i18n'
 require 'spree/testing_support/i18n'
 
 describe "i18n" do
   before do
-    I18n.backend.store_translations(:en,
-    {
-      :spree => {
-        :foo => "bar",
-        :bar => {
-          :foo => "bar within bar scope",
-          :invalid => nil,
-          :legacy_translation => "back in the day..."
-        },
-        :invalid => nil,
-        :legacy_translation => "back in the day..."
+    I18n.backend.store_translations(
+      :en,
+      {
+        spree: {
+          foo: "bar",
+          bar: {
+            foo: "bar within bar scope",
+            invalid: nil,
+            legacy_translation: "back in the day..."
+          },
+          invalid: nil,
+          legacy_translation: "back in the day..."
+        }
       }
-    })
+    )
   end
 
   it "translates within the spree scope" do
@@ -42,11 +46,11 @@ describe "i18n" do
   end
 
   it "prepends a string scope" do
-    Spree.normal_t(:foo, :scope => "bar").should eql("bar within bar scope")
+    Spree.normal_t(:foo, scope: "bar").should eql("bar within bar scope")
   end
 
   it "prepends to an array scope" do
-    Spree.normal_t(:foo, :scope => ["bar"]).should eql("bar within bar scope")
+    Spree.normal_t(:foo, scope: ["bar"]).should eql("bar within bar scope")
   end
 
   it "returns two translations" do
@@ -74,7 +78,7 @@ describe "i18n" do
       end
 
       it "logs missing translations" do
-        Spree.t(:missing, :scope => [:else, :where])
+        Spree.t(:missing, scope: [:else, :where])
         Spree.check_missing_translations
         assert_missing_translation("else")
         assert_missing_translation("else.where")
