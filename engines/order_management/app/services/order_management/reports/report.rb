@@ -62,7 +62,7 @@ module OrderManagement
       end
 
       def report_renderer
-        @report_renderer ||= ReportRenderer.new(@report_rows, self)
+        @report_renderer ||= ReportRenderer.new(@report_rows)
       end
     end
   end

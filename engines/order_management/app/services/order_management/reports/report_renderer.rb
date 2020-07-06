@@ -5,9 +5,8 @@ require 'spreadsheet_architect'
 module OrderManagement
   module Reports
     class ReportRenderer
-      def initialize(report_rows, report)
+      def initialize(report_rows)
         @report_rows = report_rows
-        @report = report
       end
 
       def table_headers
@@ -41,13 +40,17 @@ module OrderManagement
       private
 
       def rows_as_arrays
-        report_array = [@report.headers]
+        report_array = [header_row]
 
         @report_rows.each do |row|
           report_array << row_or_summary(row)
         end
 
         report_array
+      end
+
+      def header_row
+        @report_rows.first.keys - [:summary_row_title]
       end
 
       def row_or_summary(row)
