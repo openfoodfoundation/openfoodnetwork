@@ -67,6 +67,7 @@ module UIComponentHelper
 
   def toggle_cart
     page.find("#cart").click
+    sleep 0.3 # Allow 300ms for sidebar animation to finish
   end
 
   def wait_for_ajax
