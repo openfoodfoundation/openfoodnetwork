@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'i18n'
 require 'active_support/core_ext/array/extract_options'
 require 'spree/i18n/base'
@@ -24,13 +26,13 @@ module Spree
     end
 
     def virtual_path
-      if context
-        path = context.instance_variable_get("@virtual_path")
+      return unless context
 
-        if path
-          path.gsub(/spree/, '')
-        end
-      end
+      path = context.instance_variable_get("@virtual_path")
+
+      return unless path
+
+      path.gsub(/spree/, '')
     end
   end
 end
