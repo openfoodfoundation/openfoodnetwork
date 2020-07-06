@@ -42,6 +42,33 @@ Spree.config do |config|
   config.attachment_url = ENV['ATTACHMENT_URL'] if ENV['ATTACHMENT_URL']
   config.attachment_styles = ENV['ATTACHMENT_STYLES'] if ENV['ATTACHMENT_STYLES']
   config.attachment_default_style = ENV['ATTACHMENT_DEFAULT_STYLE'] if ENV['ATTACHMENT_DEFAULT_STYLE']
+
+  # update_paperclip_settings
+  if config.use_s3
+    s3_creds = { access_key_id: config.s3_access_key,
+                 secret_access_key: config.s3_secret,
+                 bucket: config.s3_bucket }
+    Spree::Image.attachment_definitions[:attachment][:storage] = :s3
+    Spree::Image.attachment_definitions[:attachment][:s3_credentials] = s3_creds
+    Spree::Image.attachment_definitions[:attachment][:s3_headers] =
+      ActiveSupport::JSON.decode(config.s3_headers)
+    Spree::Image.attachment_definitions[:attachment][:bucket] = config.s3_bucket
+  else
+    Spree::Image.attachment_definitions[:attachment].delete :storage
+  end
+
+  Spree::Image.attachment_definitions[:attachment][:styles] =
+    ActiveSupport::JSON.decode(config.attachment_styles).symbolize_keys!
+  Spree::Image.attachment_definitions[:attachment][:path] = config.attachment_path
+  Spree::Image.attachment_definitions[:attachment][:default_url] =
+    config.attachment_default_url
+  Spree::Image.attachment_definitions[:attachment][:default_style] =
+    config.attachment_default_style
+
+  # Spree stores attachent definitions in JSON. This converts the style name and format to
+  # strings. However, when paperclip encounters these, it doesn't recognise the format.
+  # Here we solve that problem by converting format and style name to symbols.
+  Spree::Image.reformat_styles
 end
 
 # Spree 2.0 recommends explicitly setting this here when using spree_auth_devise
