@@ -10,6 +10,9 @@ module OrderManagement
 
       def call
         build_rows
+
+        return [] unless @report_rows.length
+
         order_by(@report.ordering)
         summarise_group(@report.summary_group)
         remove_columns(@report.hide_columns)
