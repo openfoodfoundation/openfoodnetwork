@@ -10,7 +10,9 @@ module OrderManagement
       end
 
       def call
-        insert_summary_rows unless exclude_summaries?
+        unless @group_column.blank? || @report.summary_row.blank? || exclude_summaries?
+          insert_summary_rows
+        end
 
         @report_rows
       end
