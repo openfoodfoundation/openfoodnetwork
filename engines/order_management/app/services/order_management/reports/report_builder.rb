@@ -3,9 +3,9 @@
 module OrderManagement
   module Reports
     class ReportBuilder
-      def initialize(report_rows, report)
-        @report_rows = report_rows
+      def initialize(report)
         @report = report
+        @report_rows = []
       end
 
       def call

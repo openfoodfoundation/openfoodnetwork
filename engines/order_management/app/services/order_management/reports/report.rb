@@ -58,7 +58,7 @@ module OrderManagement
       attr_reader :current_user, :ransack_params
 
       def build_report
-        @report_rows = ReportBuilder.new(@report_rows, self).call
+        @report_rows = ReportBuilder.new(self).call
       end
 
       def report_renderer
