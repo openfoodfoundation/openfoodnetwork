@@ -29,12 +29,11 @@ module OrderManagement
           end
 
           grouped_rows << row
+          previous_grouping = current_grouping
 
           if last_row?(row_index)
             grouped_rows << build_summary_row(@group_column, previous_grouping, @report.summary_row)
           end
-
-          previous_grouping = current_grouping
         end
 
         @report_rows = grouped_rows
