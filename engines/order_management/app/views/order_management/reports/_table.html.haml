@@ -4,7 +4,7 @@
       %tr
         - @report.table_headers.each do |heading|
           %th
-            = heading
+            = t("order_management.reports.table.headings.#{heading}")
     %tbody
       - @report.table_rows.each do |row|
         - if row

@@ -2846,6 +2846,16 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         total: "TOTAL"
       table:
         select_and_search: "Select filters and click on %{option} to access your data."
+        headings:
+          hub: "Hub"
+          customer_code: "Code"
+          first_name: "First Name"
+          last_name: "Last Name"
+          supplier: "Supplier"
+          product: "Product"
+          variant: "Variant"
+          quantity: "Quantity"
+          is_temperature_controlled: "TempControlled?"
       rendering_options:
         generate_report: "Generate report:"
         on_screen: "On screen"
