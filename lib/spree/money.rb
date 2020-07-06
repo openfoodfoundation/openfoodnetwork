@@ -1,12 +1,14 @@
+# frozen_string_literal: false
+
 require 'money'
 
 module Spree
   class Money
     attr_reader :money
 
-    delegate :cents, :to => :money
+    delegate :cents, to: :money
 
-    def initialize(amount, options={})
+    def initialize(amount, options = {})
       @money = ::Money.parse([amount, (options[:currency] || Spree::Config[:currency])].join)
       @options = {}
       @options[:with_currency] = Spree::Config[:display_currency]
@@ -23,7 +25,7 @@ module Spree
       @money.format(@options)
     end
 
-    def to_html(options = { :html => true })
+    def to_html(options = { html: true })
       output = @money.format(@options.merge(options))
       if options[:html]
         # 1) prevent blank, breaking spaces
@@ -33,8 +35,8 @@ module Spree
       output
     end
 
-    def ==(obj)
-      @money == obj.money
+    def ==(other)
+      @money == other.money
     end
   end
 end

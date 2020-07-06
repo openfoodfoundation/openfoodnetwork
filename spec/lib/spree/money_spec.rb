@@ -1,6 +1,5 @@
 # frozen_string_literal: false
 
-# coding: utf-8
 require 'spec_helper'
 
 describe Spree::Money do
@@ -24,13 +23,13 @@ describe Spree::Money do
 
   context "with currency" do
     it "passed in option" do
-      money = Spree::Money.new(10, :with_currency => true, :html => false)
+      money = Spree::Money.new(10, with_currency: true, html: false)
       money.to_s.should == "$10.00 USD"
     end
 
     it "config option" do
       Spree::Config[:display_currency] = true
-      money = Spree::Money.new(10, :html => false)
+      money = Spree::Money.new(10, html: false)
       money.to_s.should == "$10.00 USD"
     end
   end
@@ -52,14 +51,14 @@ describe Spree::Money do
   context "currency parameter" do
     context "when currency is specified in Canadian Dollars" do
       it "uses the currency param over the global configuration" do
-        money = Spree::Money.new(10, :currency => 'CAD', :with_currency => true, :html => false)
+        money = Spree::Money.new(10, currency: 'CAD', with_currency: true, html: false)
         money.to_s.should == "$10.00 CAD"
       end
     end
 
     context "when currency is specified in Japanese Yen" do
       it "uses the currency param over the global configuration" do
-        money = Spree::Money.new(100, :currency => 'JPY', :html => false)
+        money = Spree::Money.new(100, currency: 'JPY', html: false)
         money.to_s.should == "¥100"
       end
     end
@@ -67,18 +66,18 @@ describe Spree::Money do
 
   context "symbol positioning" do
     it "passed in option" do
-      money = Spree::Money.new(10, :symbol_position => :after, :html => false)
+      money = Spree::Money.new(10, symbol_position: :after, html: false)
       money.to_s.should == "10.00 $"
     end
 
     it "passed in option string" do
-      money = Spree::Money.new(10, :symbol_position => "after", :html => false)
+      money = Spree::Money.new(10, symbol_position: "after", html: false)
       money.to_s.should == "10.00 $"
     end
 
     it "config option" do
       Spree::Config[:currency_symbol_position] = :after
-      money = Spree::Money.new(10, :html => false)
+      money = Spree::Money.new(10, html: false)
       money.to_s.should == "10.00 $"
     end
   end
@@ -93,7 +92,7 @@ describe Spree::Money do
     end
 
     it "formats correctly" do
-      money = Spree::Money.new(1000, :html => false)
+      money = Spree::Money.new(1000, html: false)
       money.to_s.should == "¥1,000"
     end
   end
@@ -129,7 +128,7 @@ describe Spree::Money do
 
     it "formats as HTML if asked (nicely) to" do
       money = Spree::Money.new(10)
-      # The HTML'ified version of "10.00 €"
+      # The HTMLified version of the euro sign
       money.to_html.should == "10.00&nbsp;&#x20AC;"
     end
   end
