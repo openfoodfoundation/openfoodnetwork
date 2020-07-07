@@ -14,6 +14,15 @@
         }
       }
 
+      .shop-variants {
+        padding-left: 7.9375rem;
+
+        @include breakpoint(phablet) {
+          padding-left: 0;
+          clear: left;
+        }
+      }
+
       // ROW VARIANTS
       .row.variants {
         margin: 0 0 1em 0;
@@ -30,7 +39,7 @@
 
         // Variant name
         .variant-name {
-          padding-left: 7.9375rem;
+          padding-left: 0;
 
           @include breakpoint(phablet) {
             padding-left: 0.5rem;
@@ -68,7 +77,7 @@
       }
 
       // ROW SUMMARY
-      .row.summary {
+      .summary {
         margin-left: 0;
         margin-right: 0;
         margin-bottom: 1.25em;
