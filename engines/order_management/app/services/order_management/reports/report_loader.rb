@@ -12,6 +12,8 @@ module OrderManagement
 
       def report_class
         "#{report_module}::#{report_subtype_class}".constantize
+      rescue NameError
+        raise OrderManagement::Errors::ReportNotFound, "Report not found"
       end
 
       def default_report_subtype
@@ -29,7 +31,7 @@ module OrderManagement
       def report_subtype_class
         subtype = report_subtype || default_report_subtype
 
-        "#{subtype.camelize}"
+        subtype.camelize
       end
 
       def base_class

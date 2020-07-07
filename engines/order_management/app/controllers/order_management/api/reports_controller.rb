@@ -2,12 +2,12 @@
 
 module OrderManagement
   module Api
-    class ReportsController < BaseController
-      skip_authorization_check # Authorization is handled via permissions
+    class ReportsController < ::Api::BaseController
+      before_action :authorize, :validate_params
+
+      rescue_from OrderManagement::Errors::Base, with: :render_error
 
       def show
-        render_missing_params && return if ransack_params.blank?
-
         @report = report_class.new(current_api_user, ransack_params, report_options)
 
         render_report
@@ -15,18 +15,43 @@ module OrderManagement
 
       private
 
-      def report_class
-        return unless params[:report_type]
+      def authorize
+        authorize! :admin, Spree::Order
+      end
 
-        Reports::ReportLoader.new(params[:report_type], params[:report_subtype]).report_class
+      def validate_params
+        if report_type.blank?
+          raise OrderManagement::Errors::ReportNotFound, 'Please specify a report type'
+        end
+
+        if report_class.blank?
+          raise OrderManagement::Errors::ReportNotFound, 'Report not found'
+        end
+
+        return if ransack_params.present?
+
+        raise OrderManagement::Errors::MissingQueryParams,
+              'Please supply Ransack search params in the request'
+      end
+
+      def report_class
+        Reports::ReportLoader.new(report_type, report_subtype).report_class
       end
 
       def render_report
         render json: @report.as_hashes
       end
 
-      def render_missing_params
-        render json: { errors: 'Please supply Ransack search params in the request' }
+      def render_error(error)
+        render json: { error: error.message }, status: :unprocessable_entity
+      end
+
+      def report_type
+        params[:report_type]
+      end
+
+      def report_subtype
+        params[:report_subtype]
       end
 
       def ransack_params
