@@ -87,6 +87,7 @@ feature '
     select 'Supplier fee 2', from: 'order_cycle_incoming_exchange_2_enterprise_fees_0_enterprise_fee_id'
 
     click_button 'Save and Next'
+    expect(page).to have_content 'Your order cycle has been updated.'
 
     # And I add a distributor and some products
     select 'My distributor', from: 'new_distributor_id'
