@@ -109,8 +109,10 @@ feature '
     exchange_rows = page.all("table.exchanges tbody")
     exchange_rows.each do |exchange_row|
       exchange_row.find("td.products").click
-      # Wait for the products panel to be visible.
-      expect(exchange_row).to have_selector "tr", count: 2
+      within(exchange_row) do
+        # Wait for the products panel to be visible.
+        expect(page).to have_selector ".exchange-distributed-products"
+      end
     end
 
     uncheck "order_cycle_outgoing_exchange_2_variants_#{v1.id}"
