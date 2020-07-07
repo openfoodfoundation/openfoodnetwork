@@ -3,6 +3,7 @@
 module OrderManagement
   module Api
     class ReportsController < ::Api::BaseController
+      include OrderManagement::Concerns::ReportsActions
       before_action :authorize, :validate_params
 
       rescue_from OrderManagement::Errors::Base, with: :render_error
@@ -34,32 +35,12 @@ module OrderManagement
               'Please supply Ransack search params in the request'
       end
 
-      def report_class
-        Reports::ReportLoader.new(report_type, report_subtype).report_class
-      end
-
       def render_report
         render json: @report.as_hashes
       end
 
       def render_error(error)
         render json: { error: error.message }, status: :unprocessable_entity
-      end
-
-      def report_type
-        params[:report_type]
-      end
-
-      def report_subtype
-        params[:report_subtype]
-      end
-
-      def ransack_params
-        params[:q]
-      end
-
-      def report_options
-        params[:options]
       end
     end
   end
