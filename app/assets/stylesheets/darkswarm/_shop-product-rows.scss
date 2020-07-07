@@ -33,7 +33,7 @@
           padding-left: 7.9375rem;
 
           @include breakpoint(phablet) {
-            padding-left: 0.9375rem;
+            padding-left: 0.5rem;
           }
 
           & > *:nth-child(n + 2) {
