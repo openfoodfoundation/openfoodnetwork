@@ -49,6 +49,18 @@ module OrderManagement
               expect(service.report_class).to eq OrderManagement::Reports::Bananas::Base
             end
           end
+
+          context "given a report type that does not exist" do
+            let(:arguments) { ["apples"] }
+            let(:report_subtypes) { [] }
+
+            it "returns base class" do
+              expect{service.report_class}.to raise_error(
+                OrderManagement::Errors::ReportNotFound,
+                I18n.t('order_management.reports.errors.report_not_found')
+              )
+            end
+          end
         end
       end
 
