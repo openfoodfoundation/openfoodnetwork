@@ -5,8 +5,8 @@
 
     .row
       .footer-pad.small-12.columns.product-listing
-        .row
-          .medium-12.large-10.columns
+        .row.full
+          .medium-12.large-10.columns.full
             = render partial: "shop/products/search_feedback"
 
             %div{ "infinite-scroll" => "loadMore()", "infinite-scroll-distance" => "1", "infinite-scroll-disabled" => 'Products.loading' }
@@ -19,7 +19,7 @@
                 .summary
                   .small-12.columns.text-center
                     = t :products_loading
-                .row
+                .row.full
                   .small-12.columns.text-center
                     %img.spinner{ src: image_path("spinning-circles.svg") }
 

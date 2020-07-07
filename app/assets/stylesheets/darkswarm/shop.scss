@@ -16,6 +16,16 @@
       padding-right: 0;
       padding-left: 0;
     }
+
+    .row.full {
+      width: 100%;
+      margin: 0;
+
+      .columns.full {
+        padding-right: 0;
+        padding-left: 0;
+      }
+    }
   }
 
   products {
