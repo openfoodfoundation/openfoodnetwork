@@ -22,17 +22,19 @@ module OrderManagement
 
       def validate_params
         if report_type.blank?
-          raise OrderManagement::Errors::ReportNotFound, 'Please specify a report type'
+          raise OrderManagement::Errors::ReportNotFound,
+                I18n.t('errors.no_report_type', scope: i18n_scope)
         end
 
         if report_class.blank?
-          raise OrderManagement::Errors::ReportNotFound, 'Report not found'
+          raise OrderManagement::Errors::ReportNotFound,
+                I18n.t('errors.report_not_found', scope: i18n_scope)
         end
 
         return if ransack_params.present?
 
         raise OrderManagement::Errors::MissingQueryParams,
-              'Please supply Ransack search params in the request'
+              I18n.t('errors.missing_ransack_params', scope: i18n_scope)
       end
 
       def render_report

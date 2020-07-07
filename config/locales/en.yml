@@ -2841,6 +2841,10 @@ See the %{link} to find out more about %{sitename}'s features and to start using
 
   order_management:
     reports:
+      errors:
+        no_report_type: "Please specify a report type"
+        report_not_found: "Report not found"
+        missing_ransack_params: "Please supply Ransack search params in the request"
       hidden_field: "< Hidden >"
       summary_row:
         total: "TOTAL"

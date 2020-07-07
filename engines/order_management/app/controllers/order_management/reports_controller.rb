@@ -34,7 +34,7 @@ module OrderManagement
       @report_type = report_type
       @report_subtype = report_subtype || report_loader.default_report_subtype
       @report_subtypes = report_class.report_subtypes.map do |subtype|
-        [t("order_management.reports.packing.#{subtype}_report"), subtype]
+        [t("packing.#{subtype}_report", scope: i18n_scope), subtype]
       end
     end
 
