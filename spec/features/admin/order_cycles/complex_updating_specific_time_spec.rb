@@ -69,7 +69,8 @@ feature '
     select 'My supplier', from: 'new_supplier_id'
     click_button 'Add supplier'
     expect(page).to have_selector("table.exchanges tr.supplier", text: "My supplier")
-    page.all("table.exchanges tr.supplier td.products").each(&:click)
+
+    open_all_exchange_product_tabs
 
     expect(page).to have_selector "#order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}", visible: true
     page.find("#order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}", visible: true).click # uncheck (with visible:true filter)
@@ -106,14 +107,7 @@ feature '
       find(:css, "tags-input .tags input").set "wholesale\n"
     end
 
-    exchange_rows = page.all("table.exchanges tbody")
-    exchange_rows.each do |exchange_row|
-      exchange_row.find("td.products").click
-      within(exchange_row) do
-        # Wait for the products panel to be visible.
-        expect(page).to have_selector ".exchange-distributed-products"
-      end
-    end
+    open_all_exchange_product_tabs
 
     uncheck "order_cycle_outgoing_exchange_2_variants_#{v1.id}"
     check "order_cycle_outgoing_exchange_2_variants_#{v2.id}"
@@ -167,5 +161,16 @@ feature '
 
   def wait_for_edit_form_to_load_order_cycle(order_cycle)
     expect(page).to have_field "order_cycle_name", with: order_cycle.name
+  end
+
+  def open_all_exchange_product_tabs
+    exchange_rows = page.all("table.exchanges tbody")
+    exchange_rows.each do |exchange_row|
+      exchange_row.find("td.products").click
+      within(exchange_row) do
+        # Wait for the products panel to be visible.
+        expect(page).to have_selector ".exchange-products"
+      end
+    end
   end
 end
