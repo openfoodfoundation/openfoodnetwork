@@ -52,9 +52,8 @@ button.graph-button {
   // z-index: 9999999
   padding: 0;
   margin: 0;
-  display: inline;
+  display: inline-block;
   background-color: rgba(255, 255, 255, 0.5);
-  vertical-align: bottom;
 
   @include box-shadow(none);
 
