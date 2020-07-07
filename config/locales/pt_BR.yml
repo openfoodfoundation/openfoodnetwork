@@ -181,8 +181,8 @@ pt_BR:
         title: Outras Falhas(%{count} pedidos)
         explainer: O processamento automático desses pedidos falhou por um motivo desconhecido. Isso não deve ocorrer, entre em contato conosco se você está vendo isso.
   home: "OFB"
-  title: Open Food Brasil
-  welcome_to: 'Bem-vindo a'
+  title: "Open Food Brasil"
+  welcome_to: "Bem vindo a"
   site_meta_description: "A nossa proposta é conectar agricultoras/es, produtoras/es e consumidoras/es que estão próximos entre si. Buscamos, assim, potencializar a circulação e a comercialização de produtos agroecológicos, orgânicos e artesanais em circuitos curtos, bem como criar novas formas de relação, orientadas pela troca, diálogo e confiança."
   search_by_name: Procurar por nome ou localidade
   producers_join: Produtores nacionais estão convidados a se unirem à Open Food Brasil.
@@ -372,7 +372,7 @@ pt_BR:
         matomo_url: "Matomo URL"
         matomo_site_id: "Matomo Site ID"
         matomo_tag_manager_url: "URL do Gestor de Tag Matomo"
-        info_html: "Matomo é uma aplicação de análise Mobile e Web. Você pode hospedar o Matomo localmente ou usar um serviço de hospedagem na nuvem. Veja <a href='http://matomo.org' target='_blank'>matomo.org</a> para mais informações."
+        info_html: "Matomo é uma aplicação de  Mobile e Web Analytics . Você pode hospedar o Matomo localmente ou usar um serviço de hospedagem na nuvem. Veja <a href='http://matomo.org' target='_blank'>matomo.org</a> para mais informações."
         config_instructions_html: "Aqui você pode configurar a integração do OFN Matomo. O URL do Matomo abaixo deve apontar para a instância do Matomo para onde as informações de rastreamento do usuário serão enviadas; se for deixado em branco, o rastreamento de usuários do Matomo será desativado. O campo ID do site não é obrigatório, mas é útil se você estiver controlando mais de um site em uma única instância do Matomo. ele pode ser encontrado no console da instância Matomo."
         config_instructions_tag_manager_html: "Ao configurar a URL para o Matomo Tag Manager, você habilita o Matomo Tag Manager. Esta ferramenta permite que você configure eventos de 'analytics'.  A URL do Matomo Tag Manager é copiada do Matomo Tag Manager. Certifique-se de que você seleciou o 'container' e o 'environment' corretos, já que estas opções mudam o URL.  "
     customers:
@@ -1711,7 +1711,7 @@ pt_BR:
   password: Senha
   remember_me: Lembre-me
   are_you_sure: "Tem certeza?"
-  orders_open: Pedidos abertos
+  orders_open: "Pedidos abertos"
   closing: "Fechando"
   going_back_to_home_page: "Voltando à pagina inicial"
   creating: Criando
