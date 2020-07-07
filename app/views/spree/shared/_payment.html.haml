@@ -4,7 +4,7 @@
       = t :email_payment_paid
     - else
       - if @order.outstanding_balance?
-        = @order.outstanding_balance < 0 ? t(:credit_owed) : t(:balance_due)
+        = outstanding_balance_label(@order)
         \:
         %strong= @order.display_outstanding_balance
       - else
@@ -12,6 +12,4 @@
   %strong
     = t :email_payment_summary
 - if @order.payments.any?
-  = render partial: 'list', locals: { payments: @order.payments }
-- else
-  .alpha.twelve.columns.no-objects-found= t(:order_has_no_payments)
+  = render partial: 'spree/shared/payments_list', locals: { payments: @order.payments }
