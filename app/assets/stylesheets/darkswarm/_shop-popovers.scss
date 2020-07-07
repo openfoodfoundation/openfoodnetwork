@@ -50,7 +50,6 @@
 
 button.graph-button {
   // z-index: 9999999
-  border: 1px solid transparent;
   padding: 0;
   margin: 0;
   display: inline;
@@ -69,7 +68,6 @@ button.graph-button {
   }
 
   &:focus {
-    border: 1px solid #e0e0e0;
     background-color: rgba(255, 255, 255, 1);
 
     &:before {
@@ -79,7 +77,6 @@ button.graph-button {
 
   &:hover, &:active {
     background-color: rgba(255, 255, 255, 1);
-    border: 1px solid transparent;
 
     &:before {
       color: $clr-brick-bright;
@@ -88,7 +85,6 @@ button.graph-button {
 }
 
 button.graph-button.open {
-  border: 1px solid transparent;
   background-color: $clr-brick-bright;
 
   &:before {
