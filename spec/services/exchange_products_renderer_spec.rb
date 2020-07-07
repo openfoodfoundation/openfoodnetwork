@@ -36,8 +36,8 @@ describe ExchangeProductsRenderer do
         expect(variants.first.product.supplier.name).to eq exchange.variants.first.product.supplier.name
       end
 
-      xdescribe "when OC is showing only the coordinators inventory" do
-        let(:exchange_with_visible_variant) { order_cycle.exchanges.incoming.second }
+      describe "when OC is showing only the coordinators inventory" do
+        let(:exchange_with_visible_variant) { order_cycle.exchanges.incoming.last }
         let(:exchange_with_hidden_variant) { order_cycle.exchanges.incoming.first }
         let!(:visible_inventory_item) { create(:inventory_item, enterprise: order_cycle.coordinator, variant: exchange_with_visible_variant.variants.first, visible: true) }
         let!(:hidden_inventory_item) { create(:inventory_item, enterprise: order_cycle.coordinator, variant: exchange_with_hidden_variant.variants.first, visible: false) }
