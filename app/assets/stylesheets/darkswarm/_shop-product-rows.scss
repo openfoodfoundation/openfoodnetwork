@@ -22,6 +22,12 @@
           opacity: 0.2;
         }
 
+        .variant-name,
+        .variant-price,
+        .total-price {
+          line-height: 2.5em;
+        }
+
         // Variant name
         .variant-name {
           padding-left: 7.9375rem;
