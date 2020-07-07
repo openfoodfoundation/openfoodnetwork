@@ -60,7 +60,7 @@ module OrderManagement
 
       def initialize_empty_row
         row = {}
-        @report.headers.each do |key|
+        report_headers.each do |key|
           row[key.to_sym] = ""
         end
 
@@ -73,6 +73,10 @@ module OrderManagement
 
       def exclude_summaries?
         @report.options[:exclude_summaries]
+      end
+
+      def report_headers
+        @report_rows.first&.keys
       end
     end
   end

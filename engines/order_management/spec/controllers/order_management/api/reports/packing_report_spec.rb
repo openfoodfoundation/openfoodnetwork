@@ -98,8 +98,16 @@ describe OrderManagement::Api::ReportsController, type: :controller do
 
   def summary_row(order)
     {
+      "summary_row_title" => I18n.t("summary_row.total", scope: i18n_scope),
+      "hub" => "",
+      "customer_code" => "",
+      "first_name" => "",
+      "last_name" => "",
+      "supplier" => "",
+      "product" => "",
+      "variant" => "",
       "quantity" => order.line_items.sum(&:quantity),
-      "summary_row_title" => I18n.t("summary_row.total", scope: i18n_scope)
+      "is_temperature_controlled" => "",
     }
   end
 
