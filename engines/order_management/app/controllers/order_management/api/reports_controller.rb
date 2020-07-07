@@ -17,7 +17,7 @@ module OrderManagement
       private
 
       def authorize
-        authorize! :admin, Spree::Order
+        authorize! :admin, Enterprise
       end
 
       def validate_params
