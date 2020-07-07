@@ -7,7 +7,7 @@
     %h3
       %a{"ng-click" => "triggerProductModal()", href: 'javascript:void(0)'}
         %span{"ng-bind" => "::product.name"}
-    %p.product-description{ng: {bind: "::product.description", click: "triggerProductModal()"}}
+    %p.product-description{ng: {bind: "::product.description", click: "triggerProductModal()", show: "product.description.length"}}
     .product-producer
       = t :products_from
       %span
