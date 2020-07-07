@@ -109,7 +109,7 @@ gem 'test-unit', '~> 3.3'
 gem 'coffee-rails', '~> 4.2.2'
 gem 'compass-rails'
 
-gem 'mini_racer', '0.2.14'
+gem 'mini_racer', '0.2.15'
 
 gem 'uglifier', '>= 1.0.3'
 
