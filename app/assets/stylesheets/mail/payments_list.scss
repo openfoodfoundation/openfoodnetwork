@@ -5,11 +5,11 @@
 .payments-list {
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0px;
+  border-spacing: 0;
   font-size: 12px;
   margin-bottom: 20px;
 
-  tbody tr td {
+  td {
     padding: 5px;
     border-bottom: 1px solid $medium-grey;
 
@@ -23,7 +23,7 @@
     }
   }
 
-  thead tr th {
+  thead th {
     border-bottom: 1px solid $medium-grey;
     padding: 10px 5px 5px;
     text-transform: uppercase;
