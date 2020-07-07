@@ -75,8 +75,8 @@ gem 'truncate_html', '0.9.2'
 gem 'unicorn'
 
 gem 'actionpack-action_caching'
-# AMS is pinned to 0.8.4 because 0.9.x is a complete re-write, as is 0.10.x
-# Once Rails is updated to 5.x we should bump directly to 0.10.x
+# AMS 0.9.x and 0.10.x are very different from 0.8.4 and the upgrade is not straight forward
+#   AMS is deprecated, we will introduce an alternative at some point
 gem "active_model_serializers", "0.8.4"
 gem 'activerecord-session_store'
 gem 'acts-as-taggable-on', '~> 4.0'
