@@ -96,6 +96,7 @@ module ShopWorkflow
 
   def within_variant(variant = nil)
     selector = variant ? "#variant-#{variant.id}" : ".variants"
+    expect(page).to have_selector selector
     within(selector) do
       yield
     end
