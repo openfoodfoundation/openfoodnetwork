@@ -2,8 +2,28 @@
 
 module OrderManagement
   module Errors
-    class Base < StandardError; end
-    class ReportNotFound < Base; end
-    class MissingQueryParams < Base; end
+    class Base < StandardError
+      def i18n_error_scope
+        'order_management.reports.errors'
+      end
+    end
+
+    class NoReportType < Base
+      def message
+        I18n.t('no_report_type', scope: i18n_error_scope)
+      end
+    end
+
+    class ReportNotFound < Base
+      def message
+        I18n.t('report_not_found', scope: i18n_error_scope)
+      end
+    end
+
+    class MissingQueryParams < Base
+      def message
+        I18n.t('missing_ransack_params', scope: i18n_error_scope)
+      end
+    end
   end
 end

@@ -13,8 +13,7 @@ module OrderManagement
       def report_class
         "#{report_module}::#{report_subtype_class}".constantize
       rescue NameError
-        raise OrderManagement::Errors::ReportNotFound,
-              I18n.t('order_management.reports.errors.report_not_found')
+        raise OrderManagement::Errors::ReportNotFound
       end
 
       def default_report_subtype

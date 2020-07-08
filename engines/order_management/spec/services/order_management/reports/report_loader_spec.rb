@@ -56,8 +56,7 @@ module OrderManagement
 
             it "returns base class" do
               expect{service.report_class}.to raise_error(
-                OrderManagement::Errors::ReportNotFound,
-                I18n.t('order_management.reports.errors.report_not_found')
+                OrderManagement::Errors::ReportNotFound
               )
             end
           end
