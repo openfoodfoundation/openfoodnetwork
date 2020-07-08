@@ -11,7 +11,7 @@
 .row
   .columns.small-6
     .variant-bulk-buy-quantity-label
-      {{ "js.bulk_buy_modal.min_quantity" | t }}
+      {{ "js.shopfront.bulk_buy_modal.min_quantity" | t }}
     %div
       %button.bulk-buy-add.variant-quantity{type: "button", ng: {click: "add(-1)", disabled: "!canAdd(-1)"}}>
         －
@@ -21,7 +21,7 @@
         ＋
   .columns.small-6
     .variant-bulk-buy-quantity-label
-      {{ "js.bulk_buy_modal.max_quantity" | t }}
+      {{ "js.shopfront.bulk_buy_modal.max_quantity" | t }}
     %div
       %button.bulk-buy-add.variant-quantity{type: "button", ng: {click: "addMax(-1)", disabled: "!canAddMax(-1)"}}>
         －
