@@ -2706,9 +2706,11 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         in your cart have reduced. Here's what's changed:
       now_out_of_stock: is now out of stock.
       only_n_remainging: "now only has %{num} remaining."
-    shop_variant_no_group_buy:
-      add: "Add"
-      in_cart: "%{quantity} in cart"
+    shopfront:
+      variant:
+        add_to_cart: "Add"
+        in_cart: "in cart"
+        quantity_in_cart: "%{quantity} in cart"
     bulk_buy_modal:
       min_quantity: "Min quantity"
       max_quantity: "Max quantity"
