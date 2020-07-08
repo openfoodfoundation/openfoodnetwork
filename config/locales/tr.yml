@@ -181,8 +181,8 @@ tr:
         title: Diğer Hatalar (%{count} sipariş)
         explainer: Bu siparişlerin otomatik olarak işlenmesi bilinmeyen bir nedenden dolayı başarısız oldu. Bu gerçekleşmemesi gereken bir durum, bu hatayı alıyorsanız lütfen bizimle iletişime geçin.
   home: "AGA"
-  title: Açık Gıda Ağı
-  welcome_to: 'Hoşgeldiniz'
+  title: "Açık Gıda Ağı"
+  welcome_to: "Hoşgeldiniz"
   site_meta_description: "Açık Gıda Ağı, bağımsız, adil ve temiz bir gıda sistemi oluşturmak için tasarlanan bir sosyal girişim projesidir. Üretici ve türeticilerin bir araya gelerek aracısız bir gıda düzeni ile her açıdan daha sağlıklı bir toplum yaratmaları için çözümler sunar.  Toplum yararına çalışır, iletişim, dayanışma ve şeffaflığı destekler."
   search_by_name: Üretici adına veya konuma göre arama yapın...
   producers_join: Bağımsız gıda üreticileri! Açık Gıda Ağı sizler için kullanıma açıldı.
@@ -1713,7 +1713,7 @@ tr:
   password: Parola
   remember_me: Beni Hatırla
   are_you_sure: "Emin misiniz?"
-  orders_open: Siparişler açık
+  orders_open: "Siparişler açık"
   closing: "Kapanış"
   going_back_to_home_page: "Ana sayfaya yönlendiriliyorsunuz.."
   creating: oluşturuluyor
