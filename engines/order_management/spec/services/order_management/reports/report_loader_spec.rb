@@ -55,7 +55,7 @@ module OrderManagement
             let(:report_subtypes) { [] }
 
             it "raises and error" do
-              expect{service.report_class}.to raise_error(
+              expect{ service.report_class }.to raise_error(
                 OrderManagement::Errors::ReportNotFound
               )
             end
@@ -86,7 +86,7 @@ module OrderManagement
           let(:report_subtypes) { [] }
 
           it "raises and error" do
-            expect{service.report_class}.to raise_error(
+            expect{ service.report_class }.to raise_error(
               OrderManagement::Errors::ReportNotFound
             )
           end

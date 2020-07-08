@@ -44,23 +44,36 @@ module OrderManagement
             end
 
             context "that has granted P-OC to the distributor" do
-              let(:o2) { create(:order, distributor: d1, completed_at: 1.day.ago, bill_address: create(:address), ship_address: create(:address)) }
-              let(:li2) { build(:line_item_with_shipment, product: create(:simple_product, supplier: s1)) }
+              let(:o2) {
+                create(:order, distributor: d1, completed_at: 1.day.ago,
+                               bill_address: create(:address), ship_address: create(:address))
+              }
+              let(:li2) {
+                build(:line_item_with_shipment, product: create(:simple_product, supplier: s1))
+              }
 
               before do
                 o2.line_items << li2
-                create(:enterprise_relationship, parent: s1, child: d1, permissions_list: [:add_to_order_cycle])
+                create(:enterprise_relationship, parent: s1, child: d1,
+                                                 permissions_list: [:add_to_order_cycle])
               end
 
               it "shows line items supplied by my producers, with names hidden" do
                 expect(subject.collection).to eq([li2])
-                expect(subject.as_hashes.first[:first_name]).to eq I18n.t('order_management.reports.hidden_field')
+                expect(subject.as_hashes.first[:first_name]).to eq(
+                  I18n.t('order_management.reports.hidden_field')
+                )
               end
             end
 
             context "that has not granted P-OC to the distributor" do
-              let(:o2) { create(:order, distributor: d1, completed_at: 1.day.ago, bill_address: create(:address), ship_address: create(:address)) }
-              let(:li2) { build(:line_item_with_shipment, product: create(:simple_product, supplier: s1)) }
+              let(:o2) {
+                create(:order, distributor: d1, completed_at: 1.day.ago,
+                               bill_address: create(:address), ship_address: create(:address))
+              }
+              let(:li2) {
+                build(:line_item_with_shipment, product: create(:simple_product, supplier: s1))
+              }
 
               before do
                 o2.line_items << li2

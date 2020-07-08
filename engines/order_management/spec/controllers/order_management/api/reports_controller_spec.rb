@@ -51,7 +51,7 @@ describe OrderManagement::Api::ReportsController, type: :controller do
       let(:current_user) { enterprise_user }
 
       it "returns an error" do
-        api_get :show, { report_type: "xxxxxx", q: { example: 'test' } }
+        api_get :show, report_type: "xxxxxx", q: { example: 'test' }
 
         expect(response.status).to eq 422
         expect(json_response["error"]).to eq I18n.t('errors.report_not_found', scope: i18n_scope)
@@ -62,10 +62,12 @@ describe OrderManagement::Api::ReportsController, type: :controller do
       let(:current_user) { enterprise_user }
 
       it "returns an error" do
-        api_get :show, { report_type: "packing" }
+        api_get :show, report_type: "packing"
 
         expect(response.status).to eq 422
-        expect(json_response["error"]).to eq I18n.t('errors.missing_ransack_params', scope: i18n_scope)
+        expect(json_response["error"]).to eq(
+          I18n.t('errors.missing_ransack_params', scope: i18n_scope)
+        )
       end
     end
   end

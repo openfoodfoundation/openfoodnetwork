@@ -25,7 +25,7 @@ module OrderManagement
 
       def collection; end
 
-      def report_row(object)
+      def report_row(_object)
         {}
       end
 

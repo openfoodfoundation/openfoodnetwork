@@ -27,7 +27,7 @@ describe OrderManagement::Api::ReportsController, type: :controller do
 
     context "as an enterprise user with full order permissions (distributor)" do
       let!(:distributor) { create(:distributor_enterprise) }
-      let!(:order) { create(:completed_order_with_totals, distributor: distributor)}
+      let!(:order) { create(:completed_order_with_totals, distributor: distributor) }
       let(:current_user) { distributor.owner }
 
       it "renders results" do
@@ -78,7 +78,8 @@ describe OrderManagement::Api::ReportsController, type: :controller do
       "product" => line_item.product.name,
       "variant" => line_item.full_name,
       "quantity" => line_item.quantity,
-      "is_temperature_controlled" => line_item.product.shipping_category&.temperature_controlled ? I18n.t(:yes) : I18n.t(:no)
+      "is_temperature_controlled" =>
+        line_item.product.shipping_category&.temperature_controlled ? I18n.t(:yes) : I18n.t(:no)
     }
   end
 
@@ -92,7 +93,8 @@ describe OrderManagement::Api::ReportsController, type: :controller do
       "product" => line_item.product.name,
       "variant" => line_item.full_name,
       "quantity" => line_item.quantity,
-      "is_temperature_controlled" => line_item.product.shipping_category&.temperature_controlled ? I18n.t(:yes) : I18n.t(:no)
+      "is_temperature_controlled" =>
+        line_item.product.shipping_category&.temperature_controlled ? I18n.t(:yes) : I18n.t(:no)
     }
   end
 
