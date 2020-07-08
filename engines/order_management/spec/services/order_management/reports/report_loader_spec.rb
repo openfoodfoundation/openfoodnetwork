@@ -54,7 +54,7 @@ module OrderManagement
             let(:arguments) { ["apples"] }
             let(:report_subtypes) { [] }
 
-            it "returns base class" do
+            it "raises and error" do
               expect{service.report_class}.to raise_error(
                 OrderManagement::Errors::ReportNotFound
               )
@@ -78,6 +78,17 @@ module OrderManagement
 
           it "returns base" do
             expect(service.default_report_subtype).to eq "base"
+          end
+        end
+
+        context "given a report type that does not exist" do
+          let(:arguments) { ["apples"] }
+          let(:report_subtypes) { [] }
+
+          it "raises and error" do
+            expect{service.report_class}.to raise_error(
+              OrderManagement::Errors::ReportNotFound
+            )
           end
         end
       end

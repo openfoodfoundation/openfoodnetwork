@@ -36,6 +36,8 @@ module OrderManagement
 
       def base_class
         "#{report_module}::Base".constantize
+      rescue NameError
+        raise OrderManagement::Errors::ReportNotFound
       end
     end
   end
