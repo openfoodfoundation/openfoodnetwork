@@ -32,18 +32,10 @@ module OrderManagement
         end
       end
 
-      def order_by(columns)
-        return unless columns.length
+      def order_by(sort_keys)
+        return unless sort_keys.length
 
-        reverse_columns = columns.select { |head| head.to_s.ends_with?('!') }
-        sort = columns.map { |head| head.to_s.sub(/\!\z/, '').to_sym }
-        reverse_sort = reverse_columns.map { |head| head.to_s.sub(/\!\z/, '').to_sym }
-
-        @report_rows.sort! do |row1, row2|
-          key1 = sort.map { |column| reverse_sort.include?(column) ? row2[column] : row1[column] }
-          key2 = sort.map { |column| reverse_sort.include?(column) ? row1[column] : row2[column] }
-          key1 <=> key2
-        end
+        @report_rows = ReportOrderer.new(@report_rows, sort_keys).call
       end
 
       def summarise_group(group_column)
