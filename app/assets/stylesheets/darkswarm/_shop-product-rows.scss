@@ -48,6 +48,8 @@
           & > *:nth-child(n + 2) {
             color: #888;
             font-size: 0.875rem;
+            line-height: normal;
+            margin-top: -0.75em;
           }
         }
 
