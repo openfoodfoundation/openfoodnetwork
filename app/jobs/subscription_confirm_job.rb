@@ -50,6 +50,8 @@ class SubscriptionConfirmJob
     else
       send_failed_payment_email(order)
     end
+  rescue StandardError => e
+    Bugsnag.notify(e, order: order)
   end
 
   def process_payment!(order)
