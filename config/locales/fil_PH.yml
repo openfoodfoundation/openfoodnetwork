@@ -181,8 +181,7 @@ fil_PH:
         title: Iba Pang Dahilan ng Error (%{count}na order)
         explainer: Hindi naging matagumpay ang awtomatikong pagproseso ng mga order na ito dahil sa hindi maipaliwanag na kadahilanan. Makipag-uganayan sa amin kung nakikita ang mensaheng ito.
   home: "OFN"
-  title: Open Food Network
-  welcome_to: 'Maligayang Pagdating sa'
+  title: "Open Food Network"
   site_meta_description: "Kami ay nagsimula sa pinakaibaba pataas. Kasama ang mga magsasaka at tagatanim na handang ibahagi at ipagmalaki ang kanilang mga kuwento. May mga tapat at patas na Distributors na handang makipag-usap sa mga gumagawa ng produkto. At mga mamimili na naniniwala na ang mabusising lingguhang pamimili ay..."
   search_by_name: Hanapin gamit ang pangalan o lungsod...
   producers_join: Ang mga Pilipinong producers ay inaanyayahang naming sumali sa Open Food Network.
@@ -1693,8 +1692,7 @@ fil_PH:
   password: Password
   remember_me: tandaan ako
   are_you_sure: "Sigurado ka ba?"
-  orders_open: bukas ang mga order
-  closing: "sinasara"
+  orders_open: "bukas ang mga order"
   going_back_to_home_page: "binabalik ka sa homepage"
   creating: ginagawa
   updating: ina-update

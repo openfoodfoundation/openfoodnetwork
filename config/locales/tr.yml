@@ -53,7 +53,7 @@ tr:
         end_at: "BİTİŞ"
         distributor_ids: "Pazarlar"
         producer_ids: "ÜRETİCİLER"
-        order_cycle_ids: "SİPARİŞ DÖNEMLERİ"
+        order_cycle_ids: "Sipariş Dönemleri"
         enterprise_fee_ids: "ÜCRET İSİMLERİ"
         shipping_method_ids: "TESLİMAT YÖNTEMLERİ"
         payment_method_ids: "ÖDEME YÖNTEMLERİ"
@@ -725,7 +725,7 @@ tr:
           shopfront_message_link_prompt: "Lütfen eklemek için bir URL girin"
           shopfront_closed_message: "KAPALI DÜKKAN MESAJI"
           shopfront_closed_message_placeholder: >
-              Mağazanızın neden satışa kapalı olduğunu ve ne zaman açılacağını müşterilerinize
+              Dükkanınızın neden satışa kapalı olduğunu ve ne zaman açılacağını müşterilerinize
               açıklayan bir mesaj yazın. Bu mesaj, açık bir sipariş döneminiz olmadığında
               sizi ziyaret edenler tarafından görülecek. (örn. neden kapalı olduğunu
               ve ne zaman açılacağını belirtebilirsiniz)
@@ -905,7 +905,7 @@ tr:
         remove: 'Kaldır'
         selected: 'seçildi'
       add_exchange_form:
-        add_supplier: 'Tedarikçi ekle'
+        add_supplier: 'TEDARİKÇİ EKLE'
         add_distributor: 'Dağıtımcı ekle'
       advanced_settings:
         title: Gelişmiş Ayarlar
@@ -938,7 +938,7 @@ tr:
         new_schedule: Yeni Takvim
       name_and_timing_form:
         name: Ad
-        orders_open: 'SİPARİŞ AÇILIŞ:'
+        orders_open: Siparişler Açık
         coordinator: KOORDİNATÖR
         orders_close: SİPARİŞ KAPANIŞ
       row:
@@ -1361,7 +1361,7 @@ tr:
       cookies_policy_link_desc: "Daha fazla bilgi edinmek istiyorsanız,"
       cookies_policy_link: "çerezler politikası"
       cookies_accept_button: "Çerezleri kabul et"
-  home_shop: 'ŞİMDİ ALIŞVERİŞE BAŞLAYIN '
+  home_shop: 'ALIŞVERİŞE BAŞLAYIN '
   brandstory_headline: "Bağımsız, adil ve temiz gıda ..."
   brandstory_intro: "Bazen sistemi düzeltmenin en iyi yolu yeni bir sistem yaratmaktır…"
   brandstory_part1: "Açık Gıda Ağı, adil, temiz bir gıda sistemi oluşturmak için tasarlanan bir sosyal girişim projesidir. Üretici ve türeticilerin bir araya gelerek aracısız bir gıda düzeni ile her açıdan daha sağlıklı bir toplum yaratmaları için çözümler sunar. Toplum yararına çalışır, iletişim, dürüstlük ve dayanışmayı destekler."
@@ -1376,7 +1376,7 @@ tr:
   connect_cta: "Keşfedin"
   system_headline: "Nasıl çalışıyor ?"
   system_step1: "1. Ara"
-  system_step1_text: "Yerel, adil, temiz ve mevsimsel gıda için, bağımsız ve cesur üreticilerimizin mağazalarından alışveriş yapın.  Konuma, ürün kategorisine, üretici özelliklerine veya teslimat tercihlerine göre arama yapabilirsiniz. "
+  system_step1_text: "Yerel, adil, temiz ve mevsimsel gıda için, bağımsız ve cesur üreticilerimizin ve dağıtımcılarımızın dükkanlarından alışveriş yapın.  Konuma, ürün kategorisine, üretici özelliklerine veya teslimat tercihlerine göre arama yapabilirsiniz. "
   system_step2: "2. Alışveriş Yap"
   system_step2_text: "Gıdanızı yerel üretici tezgahlarından, üretici ve türetici pazarlarından temin edin. Yaşanabilir bir dünya için alışkanlıklarınızı şimdi değiştirin. Gıdanızın ve onu size getiren insanların hikayelerini öğrenin!"
   system_step3: "3. Teslimat "
@@ -1385,7 +1385,7 @@ tr:
   cta_label: "Hazırım"
   stats_headline: "Yeni bir gıda sistemi yaratıyoruz."
   stats_producers: "ÜRETİCİ"
-  stats_shops: "MAĞAZA"
+  stats_shops: "DÜKKAN"
   stats_shoppers: "TÜRETİCİ"
   stats_orders: "ALIŞVERİŞ"
   checkout_title: Ödeme Yap
@@ -1713,7 +1713,7 @@ tr:
   password: Parola
   remember_me: Beni Hatırla
   are_you_sure: "Emin misiniz?"
-  orders_open: "Siparişler açık"
+  orders_open: "Siparişler Açık"
   closing: "Kapanış"
   going_back_to_home_page: "Ana sayfaya yönlendiriliyorsunuz.."
   creating: oluşturuluyor
@@ -1886,7 +1886,7 @@ tr:
   back: "Geri"
   continue: "Devam et"
   action_or: "VEYA"
-  enterprise_limit: İşletme Limiti
+  enterprise_limit: İŞLETME LİMİTİ
   shipping_method_destroy_error: "Bu teslimat yöntemi silinemez çünkü tamamlanmış siparişler mevcut\n: %{number}."
   fees: "Ücretler"
   item_cost: "Ürün maliyeti"
@@ -1983,7 +1983,7 @@ tr:
   roles: "Roller"
   update: "Güncelle"
   delete: Sil
-  add_producer_property: "Üretici özelliği ekle"
+  add_producer_property: "ÜRETİCİ ÖZELLİĞİ EKLE"
   in_progress: "Devam ediyor"
   started_at: "Başlama tarihi"
   queued: "sıraya eklendi"
@@ -2265,7 +2265,7 @@ tr:
   payment_updated: "Ödeme Güncellendi"
   inventory_settings: "Stok Ayarları"
   tag_rules: "ETİKET KURALLARI"
-  shop_preferences: "Mağaza Tercihleri"
+  shop_preferences: "Dükkan Tercihleri"
   enterprise_fee_whole_order: Tüm sipariş
   enterprise_fee_by: "%{role}%{enterprise_name} tarafından%{type} ücreti"
   validation_msg_relationship_already_established: "^ Bu ilişki zaten kurulmuş."
@@ -2591,10 +2591,10 @@ tr:
       unsaved_changes_message: Kaydedilmemiş değişiklikler var, şimdi kaydet veya yoksay?
       save: KAYDET
       ignore: YOKSAY
-      add_to_order_cycle: "sipariş dönemine ekle"
-      manage_products: "ürünleri yönet"
-      edit_profile: "profili Düzenle"
-      add_products_to_inventory: "Stoka ürün ekle"
+      add_to_order_cycle: "SİPARİŞ DÖNEMİNE EKLE"
+      manage_products: "ÜRÜNLERİ YÖNET"
+      edit_profile: "PROFİLİ DÜZENLE"
+      add_products_to_inventory: "STOKA ÜRÜN EKLE"
     resources:
       could_not_delete_customer: 'Müşteri silinemedi'
     product_import:
@@ -3226,7 +3226,7 @@ tr:
           listing_users: "Kullanıcılar Listeleniyor"
           new_user: "Yeni Kullanıcı"
           user: "Kullanıcı"
-          enterprise_limit: "İşletme Limiti"
+          enterprise_limit: "İŞLETME LİMİTİ"
           search: "Ara"
           email: "E-posta"
         edit:
@@ -3236,7 +3236,7 @@ tr:
         form:
           email: "E-posta"
           roles: "Roller"
-          enterprise_limit: "İşletme Limiti"
+          enterprise_limit: "İŞLETME LİMİTİ"
           confirm_password: "Parolayı Onayla"
           password: "Parola"
         email_confirmation:

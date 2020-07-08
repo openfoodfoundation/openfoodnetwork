@@ -2824,7 +2824,7 @@ pt_BR:
     fill_in_customer_info: "Por favor, preencha as informações do cliente"
     new_payment: "Novo Pagamento"
     capture: "Capturar"
-    void: "Vazio"
+    void: "Apagar"
     login: "Login"
     password: "Senha"
     signature: "Assinatura"
