@@ -3,6 +3,7 @@
 module OrderManagement
   class ReportsController < Spree::Admin::BaseController
     include OrderManagement::Concerns::ReportsActions
+    before_action :authorize_report
 
     def show
       render_report && return if ransack_params.blank?

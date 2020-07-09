@@ -7,6 +7,10 @@ module OrderManagement
 
       private
 
+      def authorize_report
+        authorize! report_type&.to_sym, :report
+      end
+
       def report_class
         return if report_type.blank?
 

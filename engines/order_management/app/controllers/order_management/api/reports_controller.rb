@@ -4,7 +4,7 @@ module OrderManagement
   module Api
     class ReportsController < ::Api::BaseController
       include OrderManagement::Concerns::ReportsActions
-      before_action :authorize, :validate_params
+      before_action :validate_report, :authorize_report, :validate_query
 
       rescue_from OrderManagement::Errors::Base, with: :render_error
 
@@ -16,13 +16,12 @@ module OrderManagement
 
       private
 
-      def authorize
-        authorize! :admin, Enterprise
-      end
-
-      def validate_params
+      def validate_report
         raise OrderManagement::Errors::NoReportType if report_type.blank?
         raise OrderManagement::Errors::ReportNotFound if report_class.blank?
+      end
+
+      def validate_query
         raise OrderManagement::Errors::MissingQueryParams if ransack_params.blank?
       end
 
