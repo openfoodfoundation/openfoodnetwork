@@ -23,10 +23,13 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, $timeout, Reque
     $scope.fetchResults()
 
   $scope.fetchResults = (page=1) ->
+    startDateWithTime = $scope.appendStringIfNotEmpty($scope['q']['completed_at_gteq'], ' 00:00:00')
+    endDateWithTime = $scope.appendStringIfNotEmpty($scope['q']['completed_at_lteq'], ' 23:59:59')
+
     $scope.resetSelected()
     params = {
-      'q[completed_at_lt]': $scope['q']['completed_at_lt'],
-      'q[completed_at_gt]': $scope['q']['completed_at_gt'],
+      'q[completed_at_gteq]': startDateWithTime,
+      'q[completed_at_lteq]': endDateWithTime,
       'q[state_eq]': $scope['q']['state_eq'],
       'q[number_cont]': $scope['q']['number_cont'],
       'q[email_cont]': $scope['q']['email_cont'],
@@ -42,6 +45,11 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, $timeout, Reque
       page: page
     }
     RequestMonitor.load(Orders.index(params).$promise)
+
+  $scope.appendStringIfNotEmpty = (baseString, stringToAppend) ->
+    return baseString unless baseString
+
+    baseString + stringToAppend
 
   $scope.resetSelected = ->
     $scope.selected_orders.length = 0
