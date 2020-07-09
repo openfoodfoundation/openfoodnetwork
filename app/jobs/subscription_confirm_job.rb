@@ -52,6 +52,7 @@ class SubscriptionConfirmJob
     end
   rescue StandardError => e
     Bugsnag.notify(e, order: order)
+    send_failed_payment_email(order, e.message)
   end
 
   def process_payment!(order)
@@ -89,9 +90,9 @@ class SubscriptionConfirmJob
     SubscriptionMailer.confirmation_email(order).deliver
   end
 
-  def send_failed_payment_email(order)
+  def send_failed_payment_email(order, error_message = nil)
     order.update!
-    record_and_log_error(:failed_payment, order)
+    record_and_log_error(:failed_payment, order, error_message)
     SubscriptionMailer.failed_payment_email(order).deliver
   end
 end
