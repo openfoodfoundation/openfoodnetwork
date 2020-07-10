@@ -94,5 +94,7 @@ class SubscriptionConfirmJob
     order.update!
     record_and_log_error(:failed_payment, order, error_message)
     SubscriptionMailer.failed_payment_email(order).deliver
+  rescue StandardError => e
+    Bugsnag.notify(e, order: order, error_message: error_message)
   end
 end
