@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class Payment < ActiveRecord::Base
     include Spree::Payment::Processing
@@ -14,7 +16,7 @@ module Spree
     belongs_to :payment_method, class_name: 'Spree::PaymentMethod'
 
     has_many :offsets, -> { where("source_type = 'Spree::Payment' AND amount < 0 AND state = 'completed'") },
-      class_name: "Spree::Payment", foreign_key: :source_id
+             class_name: "Spree::Payment", foreign_key: :source_id
     has_many :log_entries, as: :source
 
     has_one :adjustment, as: :source, dependent: :destroy
@@ -43,8 +45,9 @@ module Spree
 
     def persist_invalid
       return unless ['failed', 'invalid'].include?(state)
+
       state_will_change!
-      save 
+      save
     end
 
     # order state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
@@ -74,9 +77,7 @@ module Spree
       end
     end
 
-    def currency
-      order.currency
-    end
+    delegate :currency, to: :order
 
     def money
       Spree::Money.new(amount, { currency: currency })
@@ -110,8 +111,9 @@ module Spree
     # Pin payments lacks void and credit methods, but it does have refund
     # Here we swap credit out for refund and remove void as a possible action
     def actions
-      return [] unless payment_source and payment_source.respond_to? :actions
-      actions = payment_source.actions.select { |action| !payment_source.respond_to?("can_#{action}?") or payment_source.send("can_#{action}?", self) }
+      return [] unless payment_source&.respond_to?(:actions)
+
+      actions = payment_source.actions.select { |action| !payment_source.respond_to?("can_#{action}?") || payment_source.send("can_#{action}?", self) }
 
       if payment_method.is_a? Gateway::Pin
         actions << 'refund' if actions.include? 'credit'
@@ -162,10 +164,10 @@ module Spree
       if source && !source.valid?
         source.errors.each do |field, error|
           field_name = I18n.t("activerecord.attributes.#{source.class.to_s.underscore}.#{field}")
-          self.errors.add(Spree.t(source.class.to_s.demodulize.underscore), "#{field_name} #{error}")
+          errors.add(Spree.t(source.class.to_s.demodulize.underscore), "#{field_name} #{error}")
         end
       end
-      return !errors.present?
+      errors.blank?
     end
 
     def profiles_supported?
@@ -184,9 +186,7 @@ module Spree
     end
 
     def invalidate_old_payments
-      order.payments.with_state('checkout').where("id != ?", self.id).each do |payment|
-        payment.invalidate!
-      end
+      order.payments.with_state('checkout').where("id != ?", id).each(&:invalidate!)
     end
 
     def update_order
@@ -202,7 +202,7 @@ module Spree
     def set_unique_identifier
       begin
         self.identifier = generate_identifier
-      end while self.class.exists?(identifier: self.identifier)
+      end while self.class.exists?(identifier: identifier)
     end
 
     def generate_identifier
