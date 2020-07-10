@@ -9,13 +9,13 @@ module Spree
 
     it "updates totals" do
       payments = [double(:amount => 5), double(:amount => 5)]
-      order.stub_chain(:payments, :completed).and_return(payments)
+      allow(order).to receive_message_chain(:payments, :completed).and_return(payments)
 
       line_items = [double(:amount => 10), double(:amount => 20)]
-      order.stub :line_items => line_items
+      allow(order).to receive_messages :line_items => line_items
 
       adjustments = [double(:amount => 10), double(:amount => -20)]
-      order.stub_chain(:adjustments, :eligible).and_return(adjustments)
+      allow(order).to receive_message_chain(:adjustments, :eligible).and_return(adjustments)
 
       updater.update_totals
       expect(order.payment_total).to eq 10
@@ -26,9 +26,9 @@ module Spree
 
     context "updating shipment state" do
       before do
-        order.stub_chain(:shipments, :shipped, :count).and_return(0)
-        order.stub_chain(:shipments, :ready, :count).and_return(0)
-        order.stub_chain(:shipments, :pending, :count).and_return(0)
+        allow(order).to receive_message_chain(:shipments, :shipped, :count).and_return(0)
+        allow(order).to receive_message_chain(:shipments, :ready, :count).and_return(0)
+        allow(order).to receive_message_chain(:shipments, :pending, :count).and_return(0)
       end
 
       it "is backordered" do
@@ -39,8 +39,8 @@ module Spree
       end
 
       it "is nil" do
-        order.stub_chain(:shipments, :states).and_return([])
-        order.stub_chain(:shipments, :count).and_return(0)
+        allow(order).to receive_message_chain(:shipments, :states).and_return([])
+        allow(order).to receive_message_chain(:shipments, :count).and_return(0)
 
         updater.update_shipment_state
         expect(order.shipment_state).to be_nil
@@ -49,14 +49,14 @@ module Spree
 
       ["shipped", "ready", "pending"].each do |state|
         it "is #{state}" do
-          order.stub_chain(:shipments, :states).and_return([state])
+          allow(order).to receive_message_chain(:shipments, :states).and_return([state])
           updater.update_shipment_state
           expect(order.shipment_state).to eq state.to_s
         end
       end
 
       it "is partial" do
-        order.stub_chain(:shipments, :states).and_return(["pending", "ready"])
+        allow(order).to receive_message_chain(:shipments, :states).and_return(["pending", "ready"])
         updater.update_shipment_state
         expect(order.shipment_state).to eq 'partial'
       end
@@ -64,32 +64,32 @@ module Spree
 
     context "updating payment state" do
       it "is failed if last payment failed" do
-        order.stub_chain(:payments, :last, :state).and_return('failed')
+        allow(order).to receive_message_chain(:payments, :last, :state).and_return('failed')
 
         updater.update_payment_state
         expect(order.payment_state).to eq 'failed'
       end
 
       it "is balance due with no line items" do
-        order.stub_chain(:line_items, :empty?).and_return(true)
+        allow(order).to receive_message_chain(:line_items, :empty?).and_return(true)
 
         updater.update_payment_state
         expect(order.payment_state).to eq 'balance_due'
       end
 
       it "is credit owed if payment is above total" do
-        order.stub_chain(:line_items, :empty?).and_return(false)
-        order.stub :payment_total => 31
-        order.stub :total => 30
+        allow(order).to receive_message_chain(:line_items, :empty?).and_return(false)
+        allow(order).to receive_messages :payment_total => 31
+        allow(order).to receive_messages :total => 30
 
         updater.update_payment_state
         expect(order.payment_state).to eq 'credit_owed'
       end
 
       it "is paid if order is paid in full" do
-        order.stub_chain(:line_items, :empty?).and_return(false)
-        order.stub :payment_total => 30
-        order.stub :total => 30
+        allow(order).to receive_message_chain(:line_items, :empty?).and_return(false)
+        allow(order).to receive_messages :payment_total => 30
+        allow(order).to receive_messages :total => 30
 
         updater.update_payment_state
         expect(order.payment_state).to eq 'paid'
@@ -127,11 +127,11 @@ module Spree
       it "updates each shipment" do
         shipment = build(:shipment)
         shipments = [shipment]
-        order.stub :shipments => shipments
-        shipments.stub :states => []
-        shipments.stub :ready => []
-        shipments.stub :pending => []
-        shipments.stub :shipped => []
+        allow(order).to receive_messages :shipments => shipments
+        allow(shipments).to receive_messages :states => []
+        allow(shipments).to receive_messages :ready => []
+        allow(shipments).to receive_messages :pending => []
+        allow(shipments).to receive_messages :shipped => []
 
         expect(shipment).to receive(:update!).with(order)
         updater.update
@@ -139,7 +139,7 @@ module Spree
     end
 
     context "incompleted order" do
-      before { order.stub completed?: false }
+      before { allow(order).to receive_messages completed?: false }
 
       it "doesnt update payment state" do
         expect(updater).not_to receive(:update_payment_state)
@@ -154,11 +154,11 @@ module Spree
       it "doesnt update each shipment" do
         shipment = build(:shipment)
         shipments = [shipment]
-        order.stub :shipments => shipments
-        shipments.stub :states => []
-        shipments.stub :ready => []
-        shipments.stub :pending => []
-        shipments.stub :shipped => []
+        allow(order).to receive_messages :shipments => shipments
+        allow(shipments).to receive_messages :states => []
+        allow(shipments).to receive_messages :ready => []
+        allow(shipments).to receive_messages :pending => []
+        allow(shipments).to receive_messages :shipped => []
 
         expect(shipment).not_to receive(:update!).with(order)
         updater.update
