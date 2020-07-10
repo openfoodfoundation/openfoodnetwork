@@ -16,21 +16,6 @@ require 'spree/testing_support/factories'
 #   * completed_order_with_totals
 #
 
-# allows credit card info to be saved to the database which is needed for factories to work properly
-class TestCard < Spree::CreditCard
-  def remove_readonly_attributes(attributes) attributes; end
-end
-
-FactoryBot.define do
-  factory :credit_card, class: TestCard do
-    verification_value 123
-    month 12
-    year { Time.now.year + 1 }
-    number '4111111111111111'
-    cc_type 'visa'
-  end
-end
-
 FactoryBot.define do
   factory :classification, class: Spree::Classification do
   end
@@ -196,6 +181,10 @@ FactoryBot.modify do
   factory :address do
     state { Spree::State.find_by name: 'Victoria' }
     country { Spree::Country.find_by name: 'Australia' || Spree::Country.first }
+  end
+
+  factory :credit_card do
+    cc_type 'visa'
   end
 
   factory :payment do
