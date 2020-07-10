@@ -28,7 +28,7 @@ module Spree
       end
 
       update_promotion_adjustments
-      update_shipping_adjustments
+      update_all_adjustments
       # update totals a second time in case updated adjustments have an effect on the total
       update_totals
 
@@ -137,10 +137,8 @@ module Spree
       choose_best_promotion_adjustment
     end
 
-    # Shipping adjustments don't receive order on update! because they calculated
-    # over a shipping / package object rather than an order object
-    def update_shipping_adjustments
-      order.adjustments.reload.shipping.each(&:update!)
+    def update_all_adjustments
+      order.adjustments.reload.each(&:update!)
     end
 
     def before_save_hook
