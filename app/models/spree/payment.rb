@@ -15,9 +15,9 @@ module Spree
     belongs_to :source, polymorphic: true
     belongs_to :payment_method, class_name: 'Spree::PaymentMethod'
 
-    has_many :offsets, -> { where("source_type = 'Spree::Payment' AND amount < 0 AND state = 'completed'") },
+    has_many :offsets, -> { where("source_type = 'Spree::Payment' AND amount < 0").completed },
              class_name: "Spree::Payment", foreign_key: :source_id
-    has_many :log_entries, as: :source
+    has_many :log_entries, as: :source, dependent: :destroy
 
     has_one :adjustment, as: :source, dependent: :destroy
 
@@ -71,7 +71,7 @@ module Spree
     delegate :currency, to: :order
 
     def money
-      Spree::Money.new(amount, { currency: currency })
+      Spree::Money.new(amount, currency: currency)
     end
     alias display_amount money
 
@@ -84,7 +84,7 @@ module Spree
     end
 
     def can_credit?
-      credit_allowed > 0
+      credit_allowed.positive?
     end
 
     # see https://github.com/spree/spree/issues/981
@@ -104,7 +104,10 @@ module Spree
     def actions
       return [] unless payment_source&.respond_to?(:actions)
 
-      actions = payment_source.actions.select { |action| !payment_source.respond_to?("can_#{action}?") || payment_source.send("can_#{action}?", self) }
+      actions = payment_source.actions.select do |action|
+        !payment_source.respond_to?("can_#{action}?") ||
+          payment_source.__send__("can_#{action}?", self)
+      end
 
       if payment_method.is_a? Gateway::Pin
         actions << 'refund' if actions.include? 'credit'
@@ -162,7 +165,8 @@ module Spree
     end
 
     def profiles_supported?
-      payment_method.respond_to?(:payment_profiles_supported?) && payment_method.payment_profiles_supported?
+      payment_method.respond_to?(:payment_profiles_supported?) &&
+        payment_method.payment_profiles_supported?
     end
 
     def create_payment_profile
@@ -191,9 +195,7 @@ module Spree
     # and this is it. Related to #1998.
     # See https://github.com/spree/spree/issues/1998#issuecomment-12869105
     def set_unique_identifier
-      begin
-        self.identifier = generate_identifier
-      end while self.class.exists?(identifier: identifier)
+      self.identifier = generate_identifier while self.class.exists?(identifier: identifier)
     end
 
     def generate_identifier
