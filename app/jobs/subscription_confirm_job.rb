@@ -61,13 +61,16 @@ class SubscriptionConfirmJob
     raise if order.errors.present?
     return unless order.payment_required?
 
+    prepare_for_payment!(order)
+    order.process_payments!
+    raise if order.errors.any?
+  end
+
+  def prepare_for_payment!(order)
     setup_payment!(order)
     raise if order.errors.any?
 
     authorize_payment!(order)
-    raise if order.errors.any?
-
-    order.process_payments!
     raise if order.errors.any?
   end
 
