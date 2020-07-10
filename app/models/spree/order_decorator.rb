@@ -89,6 +89,10 @@ Spree::Order.class_eval do
     where("state != ?", state)
   }
 
+  def updater
+    @updater ||= Spree::OrderUpdater.new(self)
+  end
+
   def create_proposed_shipments
     adjustments.shipping.delete_all
     shipments.destroy_all

@@ -108,20 +108,12 @@ module Spree
     # The +payment_state+ value helps with reporting, etc. since it provides a quick and easy way
     #   to locate Orders needing attention.
     def update_payment_state
-      # line_items are empty when user empties cart
-      if line_items.empty? || round_money(order.payment_total) < round_money(order.total)
-        order.payment_state = if payments.present? && payments.last.state == 'failed'
-                                'failed'
-                              else
-                                'balance_due'
-                              end
-      elsif round_money(order.payment_total) > round_money(order.total)
-        order.payment_state = 'credit_owed'
-      else
-        order.payment_state = 'paid'
-      end
+      last_payment_state = order.payment_state
 
-      order.state_changed('payment')
+      order.payment_state = infer_payment_state
+      track_payment_state_change(last_payment_state)
+
+      order.payment_state
     end
 
     def update_all_adjustments
@@ -129,13 +121,80 @@ module Spree
     end
 
     def before_save_hook
-      # no op
+      shipping_address_from_distributor
+    end
+
+    # Sets the distributor's address as shipping address of the order for those
+    # shipments using a shipping method that doesn't require address, such us
+    # a pickup.
+    def shipping_address_from_distributor
+      return if order.shipping_method.blank? || order.shipping_method.require_ship_address
+
+      order.ship_address = order.address_from_distributor
     end
 
     private
 
     def round_money(value)
       (value * 100).round / 100.0
+    end
+
+    def infer_payment_state
+      if failed_payments?
+        'failed'
+      elsif canceled_and_not_paid_for?
+        'void'
+      else
+        infer_payment_state_from_balance
+      end
+    end
+
+    def infer_payment_state_from_balance
+      # This part added so that we don't need to override
+      # order.outstanding_balance
+      balance = order.outstanding_balance
+      balance = -1 * order.payment_total if canceled_and_paid_for?
+
+      infer_state(balance)
+    end
+
+    def infer_state(balance)
+      if balance > 0
+        'balance_due'
+      elsif balance < 0
+        'credit_owed'
+      elsif balance.zero?
+        'paid'
+      end
+    end
+
+    # Tracks the state transition through a state_change for this order. It
+    # does so until the last state is reached. That is, when the infered next
+    # state is the same as the order has now.
+    #
+    # @param last_payment_state [String]
+    def track_payment_state_change(last_payment_state)
+      return if last_payment_state == order.payment_state
+
+      order.state_changed('payment')
+    end
+
+    # Taken from order.outstanding_balance in Spree 2.4
+    # See: https://github.com/spree/spree/commit/7b264acff7824f5b3dc6651c106631d8f30b147a
+    def canceled_and_paid_for?
+      order.canceled? && paid?
+    end
+
+    def canceled_and_not_paid_for?
+      order.state == 'canceled' && order.payment_total.zero?
+    end
+
+    def paid?
+      payments.present? && !payments.completed.empty?
+    end
+
+    def failed_payments?
+      payments.present? && payments.valid.empty?
     end
   end
 end
