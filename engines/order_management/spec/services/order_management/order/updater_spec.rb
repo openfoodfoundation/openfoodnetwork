@@ -28,22 +28,21 @@ module OrderManagement
       end
 
       context "updating shipment state" do
+        let(:shipment) { build(:shipment) }
+
         before do
-          allow(order).to receive_message_chain(:shipments, :shipped, :count).and_return(0)
-          allow(order).to receive_message_chain(:shipments, :ready, :count).and_return(0)
-          allow(order).to receive_message_chain(:shipments, :pending, :count).and_return(0)
+          allow(order).to receive(:shipments).and_return([shipment])
         end
 
         it "is backordered" do
-          allow(order).to receive(:backordered?) { true }
+          allow(shipment).to receive(:backordered?) { true }
           updater.update_shipment_state
 
           expect(order.shipment_state).to eq 'backorder'
         end
 
         it "is nil" do
-          allow(order).to receive_message_chain(:shipments, :states).and_return([])
-          allow(order).to receive_message_chain(:shipments, :count).and_return(0)
+          allow(shipment).to receive(:state).and_return(nil)
 
           updater.update_shipment_state
           expect(order.shipment_state).to be_nil
@@ -51,17 +50,10 @@ module OrderManagement
 
         ["shipped", "ready", "pending"].each do |state|
           it "is #{state}" do
-            allow(order).to receive_message_chain(:shipments, :states).and_return([state])
+            allow(shipment).to receive(:state).and_return(state)
             updater.update_shipment_state
             expect(order.shipment_state).to eq state.to_s
           end
-        end
-
-        it "is partial" do
-          allow(order).
-            to receive_message_chain(:shipments, :states).and_return(["pending", "ready"])
-          updater.update_shipment_state
-          expect(order.shipment_state).to eq 'partial'
         end
       end
 
@@ -93,14 +85,9 @@ module OrderManagement
           updater.update
         end
 
-        it "updates each shipment" do
+        it "updates the order shipment" do
           shipment = build(:shipment)
-          shipments = [shipment]
-          allow(order).to receive_messages shipments: shipments
-          allow(shipments).to receive_messages states: []
-          allow(shipments).to receive_messages ready: []
-          allow(shipments).to receive_messages pending: []
-          allow(shipments).to receive_messages shipped: []
+          allow(order).to receive_messages shipments: [shipment]
 
           expect(shipment).to receive(:update!).with(order)
           updater.update
@@ -120,14 +107,9 @@ module OrderManagement
           updater.update
         end
 
-        it "doesnt update each shipment" do
+        it "doesnt update the order shipment" do
           shipment = build(:shipment)
-          shipments = [shipment]
-          allow(order).to receive_messages shipments: shipments
-          allow(shipments).to receive_messages states: []
-          allow(shipments).to receive_messages ready: []
-          allow(shipments).to receive_messages pending: []
-          allow(shipments).to receive_messages shipped: []
+          allow(order).to receive_messages shipments: [shipment]
 
           expect(shipment).not_to receive(:update!).with(order)
           updater.update
@@ -139,13 +121,9 @@ module OrderManagement
         updater.update
       end
 
-      context "update adjustments" do
-        context "shipments" do
-          it "updates" do
-            expect(updater).to receive(:update_all_adjustments)
-            updater.update
-          end
-        end
+      it "updates all adjustments" do
+        expect(updater).to receive(:update_all_adjustments)
+        updater.update
       end
 
       it "is failed if no valid payments" do
