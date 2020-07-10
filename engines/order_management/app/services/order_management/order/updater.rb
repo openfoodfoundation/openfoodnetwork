@@ -33,14 +33,12 @@ module OrderManagement
         update_totals
 
         order.update_attributes_without_callbacks(
-          {
-            payment_state: order.payment_state,
-            shipment_state: order.shipment_state,
-            item_total: order.item_total,
-            adjustment_total: order.adjustment_total,
-            payment_total: order.payment_total,
-            total: order.total
-          }
+          payment_state: order.payment_state,
+          shipment_state: order.shipment_state,
+          item_total: order.item_total,
+          adjustment_total: order.adjustment_total,
+          payment_total: order.payment_total,
+          total: order.total
         )
 
         run_hooks
