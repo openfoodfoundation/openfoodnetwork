@@ -27,7 +27,6 @@ module Spree
         update_shipment_state
       end
 
-      update_promotion_adjustments
       update_all_adjustments
       # update totals a second time in case updated adjustments have an effect on the total
       update_totals
@@ -125,18 +124,6 @@ module Spree
       order.state_changed('payment')
     end
 
-    # Updates each of the Order adjustments.
-    #
-    # This is intended to be called from an Observer so that the Order can
-    # respond to external changes to LineItem, Shipment, other Adjustments, etc.
-    #
-    # Adjustments will check if they are still eligible. Ineligible adjustments
-    # are preserved but not counted towards adjustment_total.
-    def update_promotion_adjustments
-      order.adjustments.reload.promotion.each { |adjustment| adjustment.update!(order) }
-      choose_best_promotion_adjustment
-    end
-
     def update_all_adjustments
       order.adjustments.reload.each(&:update!)
     end
@@ -146,16 +133,6 @@ module Spree
     end
 
     private
-
-    # Picks one (and only one) promotion to be eligible for this order
-    # This promotion provides the most discount, and if two promotions
-    # have the same amount, then it will pick the latest one.
-    def choose_best_promotion_adjustment
-      return unless best_promotion_adjustment = order.adjustments.promotion.eligible.reorder("amount ASC, created_at DESC").first
-
-      other_promotions = order.adjustments.promotion.where("id NOT IN (?)", best_promotion_adjustment.id)
-      other_promotions.update_all(eligible: false)
-    end
 
     def round_money(value)
       (value * 100).round / 100.0
