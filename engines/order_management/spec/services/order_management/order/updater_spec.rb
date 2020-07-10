@@ -58,7 +58,8 @@ module OrderManagement
         end
 
         it "is partial" do
-          allow(order).to receive_message_chain(:shipments, :states).and_return(["pending", "ready"])
+          allow(order).
+            to receive_message_chain(:shipments, :states).and_return(["pending", "ready"])
           updater.update_shipment_state
           expect(order.shipment_state).to eq 'partial'
         end
@@ -260,7 +261,9 @@ module OrderManagement
 
       context '#before_save_hook' do
         let(:distributor) { build(:distributor_enterprise) }
-        let(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
+        let(:shipment) {
+          create(:shipment_with, :shipping_method, shipping_method: shipping_method)
+        }
 
         before do
           order.distributor = distributor

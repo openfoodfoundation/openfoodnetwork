@@ -379,7 +379,7 @@ Spree::Order.class_eval do
   end
 
   # Update attributes of a record in the database without callbacks, validations etc.
-  #   This was originally a ext to ActiveRecord in Spree but only used for Spree::Order
+  #   This was originally an extension to ActiveRecord in Spree but only used for Spree::Order
   def update_attributes_without_callbacks(attributes)
     assign_attributes(attributes)
     Spree::Order.where(id: id).update_all(attributes)

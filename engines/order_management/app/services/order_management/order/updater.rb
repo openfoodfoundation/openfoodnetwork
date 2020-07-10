@@ -52,10 +52,10 @@ module OrderManagement
 
       # Updates the following Order total values:
       #
-      # - payment_total - the total value of all finalized Payments (excluding non-finalized Payments)
-      # - item_total - the total value of all LineItems
-      # - adjustment_total - the total value of all adjustments
-      # - total - the "order total". This is equivalent to item_total plus adjustment_total
+      # - payment_total - total value of all finalized Payments (excludes non-finalized Payments)
+      # - item_total - total value of all LineItems
+      # - adjustment_total - total value of all adjustments
+      # - total - order total, it's the equivalent to item_total plus adjustment_total
       def update_totals
         order.payment_total = payments.completed.map(&:amount).sum
         order.item_total = line_items.map(&:amount).sum
@@ -160,9 +160,9 @@ module OrderManagement
       end
 
       def infer_state(balance)
-        if balance > 0
+        if balance.positive?
           'balance_due'
-        elsif balance < 0
+        elsif balance.negative?
           'credit_owed'
         elsif balance.zero?
           'paid'
