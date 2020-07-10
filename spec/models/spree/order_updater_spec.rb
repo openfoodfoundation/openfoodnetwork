@@ -2,8 +2,10 @@ require 'spec_helper'
 
 module Spree
   describe OrderUpdater do
-    let(:order) { stub_model(Spree::Order, :backordered? => false) }
+    let(:order) { build(:order) }
     let(:updater) { Spree::OrderUpdater.new(order) }
+
+    before { allow(order).to receive(:backordered?) { false } }
 
     it "updates totals" do
       payments = [double(:amount => 5), double(:amount => 5)]
@@ -16,10 +18,10 @@ module Spree
       order.stub_chain(:adjustments, :eligible).and_return(adjustments)
 
       updater.update_totals
-      order.payment_total.should == 10
-      order.item_total.should == 30
-      order.adjustment_total.should == -10
-      order.total.should == 20
+      expect(order.payment_total).to eq 10
+      expect(order.item_total).to eq 30
+      expect(order.adjustment_total).to eq -10
+      expect(order.total).to eq 20
     end
 
     context "updating shipment state" do
@@ -30,10 +32,10 @@ module Spree
       end
 
       it "is backordered" do
-        order.stub :backordered? => true
+        allow(order).to receive(:backordered?) { true }
         updater.update_shipment_state
 
-        order.shipment_state.should == 'backorder'
+        expect(order.shipment_state).to eq 'backorder'
       end
 
       it "is nil" do
@@ -41,7 +43,7 @@ module Spree
         order.stub_chain(:shipments, :count).and_return(0)
 
         updater.update_shipment_state
-        order.shipment_state.should be_nil
+        expect(order.shipment_state).to be_nil
       end
 
 
@@ -49,14 +51,14 @@ module Spree
         it "is #{state}" do
           order.stub_chain(:shipments, :states).and_return([state])
           updater.update_shipment_state
-          order.shipment_state.should == state.to_s
+          expect(order.shipment_state).to eq state.to_s
         end
       end
 
       it "is partial" do
         order.stub_chain(:shipments, :states).and_return(["pending", "ready"])
         updater.update_shipment_state
-        order.shipment_state.should == 'partial'
+        expect(order.shipment_state).to eq 'partial'
       end
     end
 
@@ -65,14 +67,14 @@ module Spree
         order.stub_chain(:payments, :last, :state).and_return('failed')
 
         updater.update_payment_state
-        order.payment_state.should == 'failed'
+        expect(order.payment_state).to eq 'failed'
       end
 
       it "is balance due with no line items" do
         order.stub_chain(:line_items, :empty?).and_return(true)
 
         updater.update_payment_state
-        order.payment_state.should == 'balance_due'
+        expect(order.payment_state).to eq 'balance_due'
       end
 
       it "is credit owed if payment is above total" do
@@ -81,7 +83,7 @@ module Spree
         order.stub :total => 30
 
         updater.update_payment_state
-        order.payment_state.should == 'credit_owed'
+        expect(order.payment_state).to eq 'credit_owed'
       end
 
       it "is paid if order is paid in full" do
@@ -90,26 +92,27 @@ module Spree
         order.stub :total => 30
 
         updater.update_payment_state
-        order.payment_state.should == 'paid'
+        expect(order.payment_state).to eq 'paid'
       end
     end
 
     it "state change" do
+      order = create(:order)
       order.shipment_state = 'shipped'
       state_changes = double
-      order.stub :state_changes => state_changes
-      state_changes.should_receive(:create).with(
+      allow(order).to receive(:state_changes) { state_changes }
+      expect(state_changes).to receive(:create).with(
         :previous_state => nil,
         :next_state => 'shipped',
         :name => 'shipment',
-        :user_id => nil
+        :user_id => order.user_id
       )
 
       order.state_changed('shipment')
     end
 
     context "completed order" do
-      before { order.stub completed?: true }
+      before { allow(order).to receive(:completed?) { true } }
 
       it "updates payment state" do
         expect(updater).to receive(:update_payment_state)
@@ -122,7 +125,7 @@ module Spree
       end
 
       it "updates each shipment" do
-        shipment = stub_model(Spree::Shipment)
+        shipment = build(:shipment)
         shipments = [shipment]
         order.stub :shipments => shipments
         shipments.stub :states => []
@@ -130,7 +133,7 @@ module Spree
         shipments.stub :pending => []
         shipments.stub :shipped => []
 
-        shipment.should_receive(:update!).with(order)
+        expect(shipment).to receive(:update!).with(order)
         updater.update
       end
     end
@@ -149,7 +152,7 @@ module Spree
       end
 
       it "doesnt update each shipment" do
-        shipment = stub_model(Spree::Shipment)
+        shipment = build(:shipment)
         shipments = [shipment]
         order.stub :shipments => shipments
         shipments.stub :states => []
@@ -163,7 +166,7 @@ module Spree
     end
 
     it "updates totals twice" do
-      updater.should_receive(:update_totals).twice
+      expect(updater).to receive(:update_totals).twice
       updater.update
     end
 
@@ -206,8 +209,8 @@ module Spree
 
           updater.update_promotion_adjustments
 
-          order.adjustments.eligible.promotion.count.should == 1
-          order.adjustments.eligible.promotion.first.label.should == 'Promotion C'
+          expect(order.adjustments.eligible.promotion.count).to eq 1
+          expect(order.adjustments.eligible.promotion.first.label).to eq 'Promotion C'
         end
 
         context "multiple adjustments and the best one is not eligible" do
@@ -222,7 +225,7 @@ module Spree
           # regression for #3274
           it "still makes the previous best eligible adjustment valid" do
             updater.update_promotion_adjustments
-            order.adjustments.eligible.promotion.first.label.should == 'Promotion A'
+            expect(order.adjustments.eligible.promotion.first.label).to eq 'Promotion A'
           end
         end
 
@@ -233,8 +236,8 @@ module Spree
 
           updater.update_promotion_adjustments
 
-          order.adjustments.eligible.promotion.count.should == 1
-          order.adjustments.eligible.promotion.first.amount.to_i.should == -200
+          expect(order.adjustments.eligible.promotion.count).to eq 1
+          expect(order.adjustments.eligible.promotion.first.amount.to_i).to eq -200
         end
 
         it "should only include eligible adjustments in promo_total" do
@@ -246,7 +249,7 @@ module Spree
                               :eligible   => false,
                               :label      => 'Bad promo')
 
-          order.promo_total.to_f.should == -100.to_f
+          expect(order.promo_total.to_f).to eq -100.to_f
         end
       end
     end
