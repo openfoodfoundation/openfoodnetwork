@@ -10,19 +10,19 @@ module Spree
     before { allow(order).to receive(:backordered?) { false } }
 
     it "updates totals" do
-      payments = [double(:amount => 5), double(:amount => 5)]
+      payments = [double(amount: 5), double(amount: 5)]
       allow(order).to receive_message_chain(:payments, :completed).and_return(payments)
 
-      line_items = [double(:amount => 10), double(:amount => 20)]
-      allow(order).to receive_messages :line_items => line_items
+      line_items = [double(amount: 10), double(amount: 20)]
+      allow(order).to receive_messages line_items: line_items
 
-      adjustments = [double(:amount => 10), double(:amount => -20)]
+      adjustments = [double(amount: 10), double(amount: -20)]
       allow(order).to receive_message_chain(:adjustments, :eligible).and_return(adjustments)
 
       updater.update_totals
       expect(order.payment_total).to eq 10
       expect(order.item_total).to eq 30
-      expect(order.adjustment_total).to eq -10
+      expect(order.adjustment_total).to eq(-10)
       expect(order.total).to eq 20
     end
 
@@ -48,7 +48,6 @@ module Spree
         expect(order.shipment_state).to be_nil
       end
 
-
       ["shipped", "ready", "pending"].each do |state|
         it "is #{state}" do
           allow(order).to receive_message_chain(:shipments, :states).and_return([state])
@@ -70,10 +69,10 @@ module Spree
       state_changes = double
       allow(order).to receive(:state_changes) { state_changes }
       expect(state_changes).to receive(:create).with(
-        :previous_state => nil,
-        :next_state => 'shipped',
-        :name => 'shipment',
-        :user_id => order.user_id
+        previous_state: nil,
+        next_state: 'shipped',
+        name: 'shipment',
+        user_id: order.user_id
       )
 
       order.state_changed('shipment')
@@ -95,11 +94,11 @@ module Spree
       it "updates each shipment" do
         shipment = build(:shipment)
         shipments = [shipment]
-        allow(order).to receive_messages :shipments => shipments
-        allow(shipments).to receive_messages :states => []
-        allow(shipments).to receive_messages :ready => []
-        allow(shipments).to receive_messages :pending => []
-        allow(shipments).to receive_messages :shipped => []
+        allow(order).to receive_messages shipments: shipments
+        allow(shipments).to receive_messages states: []
+        allow(shipments).to receive_messages ready: []
+        allow(shipments).to receive_messages pending: []
+        allow(shipments).to receive_messages shipped: []
 
         expect(shipment).to receive(:update!).with(order)
         updater.update
@@ -122,11 +121,11 @@ module Spree
       it "doesnt update each shipment" do
         shipment = build(:shipment)
         shipments = [shipment]
-        allow(order).to receive_messages :shipments => shipments
-        allow(shipments).to receive_messages :states => []
-        allow(shipments).to receive_messages :ready => []
-        allow(shipments).to receive_messages :pending => []
-        allow(shipments).to receive_messages :shipped => []
+        allow(order).to receive_messages shipments: shipments
+        allow(shipments).to receive_messages states: []
+        allow(shipments).to receive_messages ready: []
+        allow(shipments).to receive_messages pending: []
+        allow(shipments).to receive_messages shipped: []
 
         expect(shipment).not_to receive(:update!).with(order)
         updater.update
