@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 module Spree
@@ -59,40 +61,6 @@ module Spree
         allow(order).to receive_message_chain(:shipments, :states).and_return(["pending", "ready"])
         updater.update_shipment_state
         expect(order.shipment_state).to eq 'partial'
-      end
-    end
-
-    context "updating payment state" do
-      it "is failed if last payment failed" do
-        allow(order).to receive_message_chain(:payments, :last, :state).and_return('failed')
-
-        updater.update_payment_state
-        expect(order.payment_state).to eq 'failed'
-      end
-
-      it "is balance due with no line items" do
-        allow(order).to receive_message_chain(:line_items, :empty?).and_return(true)
-
-        updater.update_payment_state
-        expect(order.payment_state).to eq 'balance_due'
-      end
-
-      it "is credit owed if payment is above total" do
-        allow(order).to receive_message_chain(:line_items, :empty?).and_return(false)
-        allow(order).to receive_messages :payment_total => 31
-        allow(order).to receive_messages :total => 30
-
-        updater.update_payment_state
-        expect(order.payment_state).to eq 'credit_owed'
-      end
-
-      it "is paid if order is paid in full" do
-        allow(order).to receive_message_chain(:line_items, :empty?).and_return(false)
-        allow(order).to receive_messages :payment_total => 30
-        allow(order).to receive_messages :total => 30
-
-        updater.update_payment_state
-        expect(order.payment_state).to eq 'paid'
       end
     end
 
@@ -173,83 +141,151 @@ module Spree
     context "update adjustments" do
       context "shipments" do
         it "updates" do
-          expect(updater).to receive(:update_shipping_adjustments)
+          expect(updater).to receive(:update_all_adjustments)
           updater.update
         end
       end
+    end
 
-      context "promotions" do
-        let(:originator) do
-          originator = Spree::Promotion::Actions::CreateAdjustment.create
-          calculator = Spree::Calculator::PerItem.create(:calculable => originator)
-          originator.calculator = calculator
-          originator.save
-          originator
+    it "is failed if no valid payments" do
+      allow(order).to receive_message_chain(:payments, :valid, :empty?).and_return(true)
+
+      updater.update_payment_state
+      expect(order.payment_state).to eq('failed')
+    end
+
+    context "payment total is greater than order total" do
+      it "is credit_owed" do
+        order.payment_total = 2
+        order.total = 1
+
+        expect {
+          updater.update_payment_state
+        }.to change { order.payment_state }.to 'credit_owed'
+      end
+    end
+
+    context "order total is greater than payment total" do
+      it "is credit_owed" do
+        order.payment_total = 1
+        order.total = 2
+
+        expect {
+          updater.update_payment_state
+        }.to change { order.payment_state }.to 'balance_due'
+      end
+    end
+
+    context "order total equals payment total" do
+      it "is paid" do
+        order.payment_total = 30
+        order.total = 30
+
+        expect {
+          updater.update_payment_state
+        }.to change { order.payment_state }.to 'paid'
+      end
+    end
+
+    context "order is canceled" do
+      before do
+        order.state = 'canceled'
+      end
+
+      context "and is still unpaid" do
+        it "is void" do
+          order.payment_total = 0
+          order.total = 30
+          expect {
+            updater.update_payment_state
+          }.to change { order.payment_state }.to 'void'
         end
+      end
 
-        def create_adjustment(label, amount)
-          create(:adjustment, :adjustable => order,
-                              :originator => originator,
-                              :amount     => amount,
-                              :state      => "closed",
-                              :label      => label,
-                              :mandatory  => false)
+      context "and is paid" do
+        it "is credit_owed" do
+          order.payment_total = 30
+          order.total = 30
+          allow(order).to receive_message_chain(:payments, :valid, :empty?).and_return(false)
+          allow(order).to receive_message_chain(:payments, :completed, :empty?).and_return(false)
+          expect {
+            updater.update_payment_state
+          }.to change { order.payment_state }.to 'credit_owed'
         end
+      end
 
-        it "should make all but the most valuable promotion adjustment ineligible, leaving non promotion adjustments alone" do
-          create_adjustment("Promotion A", -100)
-          create_adjustment("Promotion B", -200)
-          create_adjustment("Promotion C", -300)
-          create(:adjustment, :adjustable => order,
-                              :originator => nil,
-                              :amount => -500,
-                              :state => "closed",
-                              :label => "Some other credit")
-          order.adjustments.each {|a| a.update_column(:eligible, true)}
-
-          updater.update_promotion_adjustments
-
-          expect(order.adjustments.eligible.promotion.count).to eq 1
-          expect(order.adjustments.eligible.promotion.first.label).to eq 'Promotion C'
+      context "and payment is refunded" do
+        it "is void" do
+          order.payment_total = 0
+          order.total = 30
+          allow(order).to receive_message_chain(:payments, :valid, :empty?).and_return(false)
+          allow(order).to receive_message_chain(:payments, :completed, :empty?).and_return(false)
+          expect {
+            updater.update_payment_state
+          }.to change { order.payment_state }.to 'void'
         end
+      end
+    end
 
-        context "multiple adjustments and the best one is not eligible" do
-          let!(:promo_a) { create_adjustment("Promotion A", -100) }
-          let!(:promo_c) { create_adjustment("Promotion C", -300) }
+    context 'when the set payment_state does not match the last payment_state' do
+      before { order.payment_state = 'previous_to_paid' }
 
-          before do
-            promo_a.update_column(:eligible, true)
-            promo_c.update_column(:eligible, false)
-          end
+      context 'and the order is being updated' do
+        before { allow(order).to receive(:persisted?) { true } }
 
-          # regression for #3274
-          it "still makes the previous best eligible adjustment valid" do
-            updater.update_promotion_adjustments
-            expect(order.adjustments.eligible.promotion.first.label).to eq 'Promotion A'
-          end
+        it 'creates a new state_change for the order' do
+          expect { updater.update_payment_state }
+            .to change { order.state_changes.size }.by(1)
         end
+      end
 
-        it "should only leave one adjustment even if 2 have the same amount" do
-          create_adjustment("Promotion A", -100)
-          create_adjustment("Promotion B", -200)
-          create_adjustment("Promotion C", -200)
+      context 'and the order is being created' do
+        before { allow(order).to receive(:persisted?) { false } }
 
-          updater.update_promotion_adjustments
-
-          expect(order.adjustments.eligible.promotion.count).to eq 1
-          expect(order.adjustments.eligible.promotion.first.amount.to_i).to eq -200
+        it 'creates a new state_change for the order' do
+          expect { updater.update_payment_state }
+            .not_to change { order.state_changes.size }
         end
+      end
+    end
 
-        it "should only include eligible adjustments in promo_total" do
-          create_adjustment("Promotion A", -100)
-          create(:adjustment, :adjustable => order,
-                              :originator => nil,
-                              :amount     => -1000,
-                              :state      => "closed",
-                              :eligible   => false,
-                              :label      => 'Bad promo')
+    context 'when the set payment_state matches the last payment_state' do
+      before { order.payment_state = 'paid' }
 
-          expect(order.promo_total.to_f).to eq -100.to_f
+      it 'does not create any state_change' do
+        expect { updater.update_payment_state }
+          .not_to change { order.state_changes.size }
+      end
+    end
+
+    context '#before_save_hook' do
+      let(:distributor) { build(:distributor_enterprise) }
+      let(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
+
+      before do
+        order.distributor = distributor
+        order.shipments = [shipment]
+      end
+
+      context 'when shipping method is pickup' do
+        let(:shipping_method) { create(:shipping_method_with, :pickup) }
+        let(:address) { build(:address, firstname: 'joe') }
+        before { distributor.address = address }
+
+        it "populates the shipping address from distributor" do
+          updater.before_save_hook
+          expect(order.ship_address.address1).to eq(distributor.address.address1)
+        end
+      end
+
+      context 'when shipping_method is delivery' do
+        let(:shipping_method) { create(:shipping_method_with, :delivery) }
+        let(:address) { build(:address, firstname: 'will') }
+        before { order.ship_address = address }
+
+        it "does not populate the shipping address from distributor" do
+          updater.before_save_hook
+          expect(order.ship_address.firstname).to eq("will")
         end
       end
     end
