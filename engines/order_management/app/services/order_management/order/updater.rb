@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Spree
-  class OrderUpdater
+module OrderManagement::Order
+  class Updater
     attr_reader :order
     delegate :payments, :line_items, :adjustments, :shipments, :update_hooks, to: :order
 

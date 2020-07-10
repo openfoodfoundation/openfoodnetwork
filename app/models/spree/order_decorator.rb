@@ -90,7 +90,7 @@ Spree::Order.class_eval do
   }
 
   def updater
-    @updater ||= Spree::OrderUpdater.new(self)
+    @updater ||= OrderManagement::Order::Updater.new(self)
   end
 
   def create_proposed_shipments

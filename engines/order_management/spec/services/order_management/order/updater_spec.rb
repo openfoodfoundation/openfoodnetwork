@@ -2,10 +2,10 @@
 
 require 'spec_helper'
 
-module Spree
-  describe OrderUpdater do
+module OrderManagement::Order
+  describe Updater do
     let(:order) { build(:order) }
-    let(:updater) { Spree::OrderUpdater.new(order) }
+    let(:updater) { OrderManagement::Order::Updater.new(order) }
 
     before { allow(order).to receive(:backordered?) { false } }
 
