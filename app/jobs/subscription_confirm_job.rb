@@ -45,30 +45,30 @@ class SubscriptionConfirmJob
   def confirm_order!(order)
     record_order(order)
 
-    if process_payment!(order)
-      send_confirmation_email(order)
-    else
-      send_failed_payment_email(order)
-    end
+    process_payment!(order)
+    send_confirmation_email(order)
   rescue StandardError => e
-    Bugsnag.notify(e, order: order)
-    send_failed_payment_email(order, e.message)
+    if order.errors.any?
+      send_failed_payment_email(order)
+    else
+      Bugsnag.notify(e, order: order)
+      send_failed_payment_email(order, e.message)
+    end
   end
 
+  # Process the order payment and raise if it's not successful
   def process_payment!(order)
-    return false if order.errors.present?
-    return true unless order.payment_required?
+    raise if order.errors.present?
+    return unless order.payment_required?
 
     setup_payment!(order)
-    return false if order.errors.any?
+    raise if order.errors.any?
 
     authorize_payment!(order)
-    return false if order.errors.any?
+    raise if order.errors.any?
 
     order.process_payments!
-    return false if order.errors.any?
-
-    true
+    raise if order.errors.any?
   end
 
   def setup_payment!(order)
