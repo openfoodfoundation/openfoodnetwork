@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module Core
     class Environment
@@ -9,4 +11,3 @@ module Spree
     end
   end
 end
-
