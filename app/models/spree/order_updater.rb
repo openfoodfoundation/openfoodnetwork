@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class OrderUpdater
     attr_reader :order
@@ -24,34 +26,36 @@ module Spree
         shipments.each { |shipment| shipment.update!(order) }
         update_shipment_state
       end
-      
+
       update_promotion_adjustments
       update_shipping_adjustments
       # update totals a second time in case updated adjustments have an effect on the total
       update_totals
 
-      order.update_attributes_without_callbacks({
-        payment_state: order.payment_state,
-        shipment_state: order.shipment_state,
-        item_total: order.item_total,
-        adjustment_total: order.adjustment_total,
-        payment_total: order.payment_total,
-        total: order.total
-      })
+      order.update_attributes_without_callbacks(
+        {
+          payment_state: order.payment_state,
+          shipment_state: order.shipment_state,
+          item_total: order.item_total,
+          adjustment_total: order.adjustment_total,
+          payment_total: order.payment_total,
+          total: order.total
+        }
+      )
 
       run_hooks
     end
 
     def run_hooks
-      update_hooks.each { |hook| order.send hook }
+      update_hooks.each { |hook| order.__send__(hook) }
     end
 
     # Updates the following Order total values:
     #
-    # +payment_total+      The total value of all finalized Payments (NOTE: non-finalized Payments are excluded)
-    # +item_total+         The total value of all LineItems
-    # +adjustment_total+   The total value of all adjustments (promotions, credits, etc.)
-    # +total+              The so-called "order total."  This is equivalent to +item_total+ plus +adjustment_total+.
+    # - payment_total - the total value of all finalized Payments (excluding non-finalized Payments)
+    # - item_total - the total value of all LineItems
+    # - adjustment_total - the total value of all adjustments
+    # - total - the "order total". This is equivalent to item_total plus adjustment_total
     def update_totals
       order.payment_total = payments.completed.map(&:amount).sum
       order.item_total = line_items.map(&:amount).sum
@@ -61,14 +65,17 @@ module Spree
 
     # Updates the +shipment_state+ attribute according to the following logic:
     #
-    # shipped   when all Shipments are in the "shipped" state
-    # partial   when at least one Shipment has a state of "shipped" and there is another Shipment with a state other than "shipped"
-    #           or there are InventoryUnits associated with the order that have a state of "sold" but are not associated with a Shipment.
-    # ready     when all Shipments are in the "ready" state
-    # backorder when there is backordered inventory associated with an order
-    # pending   when all Shipments are in the "pending" state
+    # - shipped - when all Shipments are in the "shipped" state
+    # - partial - when 1. at least one Shipment has a state of "shipped"
+    #                       and there is another Shipment with a state other than "shipped"
+    #                  or 2. there are InventoryUnits associated with the order that
+    #                          have a state of "sold" but are not associated with a Shipment
+    # - ready - when all Shipments are in the "ready" state
+    # - backorder - when there is backordered inventory associated with an order
+    # - pending - when all Shipments are in the "pending" state
     #
-    # The +shipment_state+ value helps with reporting, etc. since it provides a quick and easy way to locate Orders needing attention.
+    # The +shipment_state+ value helps with reporting, etc. since it provides a quick and easy way
+    #   to locate Orders needing attention.
     def update_shipment_state
       if order.backordered?
         order.shipment_state = 'backorder'
@@ -94,21 +101,21 @@ module Spree
 
     # Updates the +payment_state+ attribute according to the following logic:
     #
-    # paid          when +payment_total+ is equal to +total+
-    # balance_due   when +payment_total+ is less than +total+
-    # credit_owed   when +payment_total+ is greater than +total+
-    # failed        when most recent payment is in the failed state
+    # - paid - when +payment_total+ is equal to +total+
+    # - balance_due - when +payment_total+ is less than +total+
+    # - credit_owed - when +payment_total+ is greater than +total+
+    # - failed - when most recent payment is in the failed state
     #
-    # The +payment_state+ value helps with reporting, etc. since it provides a quick and easy way to locate Orders needing attention.
+    # The +payment_state+ value helps with reporting, etc. since it provides a quick and easy way
+    #   to locate Orders needing attention.
     def update_payment_state
-
-      #line_item are empty when user empties cart
+      # line_items are empty when user empties cart
       if line_items.empty? || round_money(order.payment_total) < round_money(order.total)
-        if payments.present? && payments.last.state == 'failed'
-          order.payment_state = 'failed'
-        else
-          order.payment_state = 'balance_due'
-        end
+        order.payment_state = if payments.present? && payments.last.state == 'failed'
+                                'failed'
+                              else
+                                'balance_due'
+                              end
       elsif round_money(order.payment_total) > round_money(order.total)
         order.payment_state = 'credit_owed'
       else
@@ -133,7 +140,7 @@ module Spree
     # Shipping adjustments don't receive order on update! because they calculated
     # over a shipping / package object rather than an order object
     def update_shipping_adjustments
-      order.adjustments.reload.shipping.each { |adjustment| adjustment.update! }
+      order.adjustments.reload.shipping.each(&:update!)
     end
 
     def before_save_hook
@@ -142,18 +149,18 @@ module Spree
 
     private
 
-      # Picks one (and only one) promotion to be eligible for this order
-      # This promotion provides the most discount, and if two promotions
-      # have the same amount, then it will pick the latest one.
-      def choose_best_promotion_adjustment
-        if best_promotion_adjustment = order.adjustments.promotion.eligible.reorder("amount ASC, created_at DESC").first
-          other_promotions = order.adjustments.promotion.where("id NOT IN (?)", best_promotion_adjustment.id)
-          other_promotions.update_all(eligible: false)
-        end
-      end
+    # Picks one (and only one) promotion to be eligible for this order
+    # This promotion provides the most discount, and if two promotions
+    # have the same amount, then it will pick the latest one.
+    def choose_best_promotion_adjustment
+      return unless best_promotion_adjustment = order.adjustments.promotion.eligible.reorder("amount ASC, created_at DESC").first
 
-      def round_money(n)
-        (n * 100).round / 100.0
-      end
+      other_promotions = order.adjustments.promotion.where("id NOT IN (?)", best_promotion_adjustment.id)
+      other_promotions.update_all(eligible: false)
+    end
+
+    def round_money(value)
+      (value * 100).round / 100.0
+    end
   end
 end
