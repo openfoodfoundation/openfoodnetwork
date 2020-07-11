@@ -24,7 +24,7 @@ describe Spree::Core::CalculatedAdjustments do
     let(:target) { order }
 
     it "should be associated with the target" do
-      target.adjustments.should_receive(:create)
+      expect(target.adjustments).to receive(:create)
       tax_rate.create_adjustment("foo", target, order)
     end
 
@@ -42,7 +42,7 @@ describe Spree::Core::CalculatedAdjustments do
     end
 
     context "when the calculator returns 0" do
-      before { calculator.stub(compute: 0) }
+      before { allow(calculator).to receive_messages(compute: 0) }
 
       context "when adjustment is mandatory" do
         before { tax_rate.create_adjustment("foo", target, order, true) }
@@ -66,7 +66,7 @@ describe Spree::Core::CalculatedAdjustments do
     it "should update the adjustment using its calculator (and the specified source)" do
       adjustment = double(:adjustment).as_null_object
       calculable = double :calculable
-      adjustment.should_receive(:update_column).with(:amount, 10)
+      expect(adjustment).to receive(:update_column).with(:amount, 10)
       tax_rate.update_adjustment(adjustment, calculable)
     end
   end

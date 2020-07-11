@@ -12,8 +12,8 @@ module Spree
 
         context "init" do
           it "calls override!" do
-            MailSettings.should_receive(:new).and_return(subject)
-            subject.should_receive(:override!)
+            expect(MailSettings).to receive(:new).and_return(subject)
+            expect(subject).to receive(:override!)
             MailSettings.init
           end
         end
@@ -80,7 +80,7 @@ module Spree
 
         context "init" do
           it "doesnt calls override!" do
-            subject.should_not_receive(:override!)
+            expect(subject).not_to receive(:override!)
             MailSettings.init
           end
         end

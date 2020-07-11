@@ -16,8 +16,8 @@ describe Spree::Core::TokenResource do
 
   context '#token' do
     it 'should return the token of the associated permission' do
-      order.stub tokenized_permission: permission
-      permission.stub token: 'foo'
+      allow(order).to receive_messages tokenized_permission: permission
+      allow(permission).to receive_messages token: 'foo'
       expect(order.token).to eq 'foo'
     end
 
