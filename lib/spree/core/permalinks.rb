@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'stringex'
 
 module Spree
@@ -10,23 +12,23 @@ module Spree
       end
 
       module ClassMethods
-        def make_permalink(options={})
+        def make_permalink(options = {})
           options[:field] ||= :permalink
           self.permalink_options = options
 
-          if self.connected?
-            if self.table_exists? && self.column_names.include?(permalink_options[:field].to_s)
-              before_validation(:on => :create) { save_permalink }
-            end
-          end
+          return unless connected? &&
+                        table_exists? &&
+                        column_names.include?(permalink_options[:field].to_s)
+
+          before_validation(on: :create) { save_permalink }
         end
 
         def find_by_param(value, *args)
-          self.send("find_by_#{permalink_field}", value, *args)
+          __send__("find_by_#{permalink_field}", value, *args)
         end
 
         def find_by_param!(value, *args)
-          self.send("find_by_#{permalink_field}!", value, *args)
+          __send__("find_by_#{permalink_field}!", value, *args)
         end
 
         def permalink_field
@@ -44,22 +46,24 @@ module Spree
       end
 
       def generate_permalink
-        "#{self.class.permalink_prefix}#{Array.new(9){rand(9)}.join}"
+        "#{self.class.permalink_prefix}#{Array.new(9) { rand(9) }.join}"
       end
 
-      def save_permalink(permalink_value=self.to_param)
-        self.with_lock do
+      def save_permalink(permalink_value = to_param)
+        with_lock do
           permalink_value ||= generate_permalink
 
           field = self.class.permalink_field
-            # Do other links exist with this permalink?
-            other = self.class.where("#{self.class.table_name}.#{field} LIKE ?", "#{permalink_value}%")
-            if other.any?
-              # Find the existing permalink with the highest number, and increment that number.
-              # (If none of the existing permalinks have a number, this will evaluate to 1.)
-              number = other.map { |o| o.send(field)[/-(\d+)$/, 1].to_i }.max + 1
-              permalink_value += "-#{number.to_s}"
-            end
+
+          # Do other links exist with this permalink?
+          other = self.class.
+            where("#{self.class.table_name}.#{field} LIKE ?", "#{permalink_value}%")
+          if other.any?
+            # Find the existing permalink with the highest number, and increment that number.
+            # (If none of the existing permalinks have a number, this will evaluate to 1.)
+            number = other.map { |o| o.__send__(field)[/-(\d+)$/, 1].to_i }.max + 1
+            permalink_value += "-#{number}"
+          end
           write_attribute(field, permalink_value)
         end
       end
@@ -67,5 +71,5 @@ module Spree
   end
 end
 
-ActiveRecord::Base.send :include, Spree::Core::Permalinks
-ActiveRecord::Relation.send :include, Spree::Core::Permalinks
+ActiveRecord::Base.__send__ :include, Spree::Core::Permalinks
+ActiveRecord::Relation.__send__ :include, Spree::Core::Permalinks

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class ProductDuplicator
     attr_accessor :product
@@ -13,7 +15,7 @@ module Spree
       new_product.option_types = product.option_types if product.has_variants?
 
       # allow site to do some customization
-      new_product.send(:duplicate_extra, product) if new_product.respond_to?(:duplicate_extra)
+      new_product.__send__(:duplicate_extra, product) if new_product.respond_to?(:duplicate_extra)
       new_product.save!
       new_product
     end
@@ -45,7 +47,7 @@ module Spree
 
     def duplicate_image(image)
       new_image = image.dup
-      new_image.assign_attributes(:attachment => image.attachment.clone)
+      new_image.assign_attributes(attachment: image.attachment.clone)
       new_image
     end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Allows us to intercept any outbound mail message and make last minute changes
 # (such as specifying a "from" address or sending to a test email account)
 #
@@ -13,9 +15,9 @@ module Spree
           message.to = Config[:intercept_email]
         end
 
-        if Config[:mail_bcc].present?
-          message.bcc ||= Config[:mail_bcc]
-        end
+        return if Config[:mail_bcc].blank?
+
+        message.bcc ||= Config[:mail_bcc]
       end
     end
   end

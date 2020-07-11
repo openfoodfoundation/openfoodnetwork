@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 # We'll use the OrderMailer as a quick and easy way to test. IF it works here
 # it works for all email (in theory.)
 describe Spree::OrderMailer do
-  let(:order) { Spree::Order.new(:email => "customer@example.com") }
+  let(:order) { Spree::Order.new(email: "customer@example.com") }
   let(:message) { Spree::OrderMailer.confirm_email(order) }
 
   before(:all) do
@@ -22,7 +24,7 @@ describe Spree::OrderMailer do
       Spree::Config[:mails_from] = "no-reply@foobar.com"
       message.deliver
       @email = ActionMailer::Base.deliveries.first
-      @email.from.should == ["no-reply@foobar.com"]
+      expect(@email.from).to eq ["no-reply@foobar.com"]
     end
 
     it "should use the provided from address" do
@@ -31,15 +33,15 @@ describe Spree::OrderMailer do
       message.to = "test@test.com"
       message.deliver
       email = ActionMailer::Base.deliveries.first
-      email.from.should == ["override@foobar.com"]
-      email.to.should == ["test@test.com"]
+      expect(email.from).to eq ["override@foobar.com"]
+      expect(email.to).to eq ["test@test.com"]
     end
 
     it "should add the bcc email when provided" do
       Spree::Config[:mail_bcc] = "bcc-foo@foobar.com"
       message.deliver
       @email = ActionMailer::Base.deliveries.first
-      @email.bcc.should == ["bcc-foo@foobar.com"]
+      expect(@email.bcc).to eq ["bcc-foo@foobar.com"]
     end
 
     context "when intercept_email is provided" do
@@ -55,14 +57,14 @@ describe Spree::OrderMailer do
         Spree::Config[:intercept_email] = "intercept@foobar.com"
         message.deliver
         @email = ActionMailer::Base.deliveries.first
-        @email.to.should == ["intercept@foobar.com"]
+        expect(@email.to).to eq ["intercept@foobar.com"]
       end
 
       it "should modify the subject to include the original email" do
         Spree::Config[:intercept_email] = "intercept@foobar.com"
         message.deliver
         @email = ActionMailer::Base.deliveries.first
-        @email.subject.match(/customer@example\.com/).should be_true
+        expect(@email.subject.match(/customer@example\.com/)).to be_true
       end
     end
 
@@ -71,7 +73,7 @@ describe Spree::OrderMailer do
         Spree::Config[:intercept_email] = ""
         message.deliver
         @email = ActionMailer::Base.deliveries.first
-        @email.to.should == ["customer@example.com"]
+        expect(@email.to).to eq ["customer@example.com"]
       end
     end
   end

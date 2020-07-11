@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 module Spree
@@ -20,7 +22,6 @@ module Spree
           before { Config.enable_mail_delivery = true }
 
           context "overrides appplication defaults" do
-
             context "authentication method is none" do
               before do
                 Config.mail_host = "smtp.example.com"
@@ -40,11 +41,11 @@ module Spree
               it { ActionMailer::Base.smtp_settings[:enable_starttls_auto].should be_true }
 
               it "doesnt touch user name config" do
-                ActionMailer::Base.smtp_settings[:user_name].should == nil
+                expect(ActionMailer::Base.smtp_settings[:user_name]).to be_nil
               end
 
               it "doesnt touch password config" do
-                ActionMailer::Base.smtp_settings[:password].should == nil
+                expect(ActionMailer::Base.smtp_settings[:password]).to be_nil
               end
             end
           end

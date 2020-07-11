@@ -1,19 +1,21 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 module Spree
   describe Spree::ProductDuplicator do
     let(:product) do
       double 'Product',
-        :name => "foo",
-        :taxons => [],
-        :product_properties => [property],
-        :master => variant,
-        :has_variants? => false
+             name: "foo",
+             taxons: [],
+             product_properties: [property],
+             master: variant,
+             has_variants?: false
     end
 
     let(:new_product) do
       double 'New Product',
-        :save! => true
+             save!: true
     end
 
     let(:property) do
@@ -26,26 +28,25 @@ module Spree
 
     let(:variant) do
       double 'Variant',
-        :sku => "12345",
-        :price => 19.99,
-        :currency => "AUD",
-        :images => [image]
+             sku: "12345",
+             price: 19.99,
+             currency: "AUD",
+             images: [image]
     end
 
     let(:new_variant) do
       double 'New Variant',
-        :sku => "12345"
+             sku: "12345"
     end
 
     let(:image) do
       double 'Image',
-        :attachment => double('Attachment')
+             attachment: double('Attachment')
     end
 
     let(:new_image) do
       double 'New Image'
     end
-
 
     before do
       product.should_receive(:dup).and_return(new_product)
@@ -73,7 +74,7 @@ module Spree
       image.attachment.should_receive(:clone).and_return(image.attachment)
 
       new_image.should_receive(:assign_attributes).
-        with(:attachment => image.attachment).
+        with(attachment: image.attachment).
         and_return(new_image)
 
       new_property.should_receive(:created_at=).with(nil)
@@ -81,7 +82,5 @@ module Spree
 
       duplicator.duplicate
     end
-
   end
 end
-

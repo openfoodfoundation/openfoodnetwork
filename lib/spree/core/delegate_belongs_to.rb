@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ##
 # Creates methods on object which delegate to an association proxy.
 # see delegate_belongs_to for two uses
@@ -19,14 +21,14 @@ module DelegateBelongsTo
   extend ActiveSupport::Concern
 
   module ClassMethods
-
-    @@default_rejected_delegate_columns = ['created_at','created_on','updated_at','updated_on','lock_version','type','id','position','parent_id','lft','rgt']
+    @@default_rejected_delegate_columns = ['created_at', 'created_on', 'updated_at',
+                                           'updated_on', 'lock_version', 'type', 'id',
+                                           'position', 'parent_id', 'lft', 'rgt']
     mattr_accessor :default_rejected_delegate_columns
 
     ##
     # Creates methods for accessing and setting attributes on an association.  Uses same
     # default list of attributes as delegates_to_association.
-    # @todo Integrate this with ActiveRecord::Dirty, so if you set a property through one of these setters and then call save on this object, it will save the associated object automatically.
     # delegate_belongs_to :contact
     # delegate_belongs_to :contact, [:defaults]  ## same as above, and useless
     # delegate_belongs_to :contact, [:defaults, :address, :fullname], :class_name => 'VCard'
@@ -39,51 +41,54 @@ module DelegateBelongsTo
       attrs.each do |attr|
         class_def attr do |*args|
           if args.empty?
-            send(:delegator_for, association).send(attr)
+            __send__(:delegator_for, association).__send__(attr)
           else
-            send(:delegator_for, association).send(attr, *args)
+            __send__(:delegator_for, association).__send__(attr, *args)
           end
         end
         class_def "#{attr}=" do |val|
-          send(:delegator_for, association).send("#{attr}=", val)
+          __send__(:delegator_for, association).__send__("#{attr}=", val)
         end
       end
     end
 
     protected
 
-      def get_association_column_names(association, without_default_rejected_delegate_columns=true)
-        begin
-          association_klass = reflect_on_association(association).klass
-          methods = association_klass.column_names
-          methods.reject!{|x|default_rejected_delegate_columns.include?(x.to_s)} if without_default_rejected_delegate_columns
-          return methods
-        rescue
-          return []
-        end
+    def get_association_column_names(association, without_default_rejected_delegate_columns = true)
+      association_klass = reflect_on_association(association).klass
+      methods = association_klass.column_names
+      if without_default_rejected_delegate_columns
+        methods.reject!{ |x| default_rejected_delegate_columns.include?(x.to_s) }
+      end
+      methods
+    rescue
+      []
+    end
+
+    ##
+    # initialize_association :belongs_to, :contact
+    def initialize_association(type, association, opts = {})
+      unless [:belongs_to].include?(type.to_s.to_sym)
+        raise 'Illegal or unimplemented association type.'
       end
 
-      ##
-      # initialize_association :belongs_to, :contact
-      def initialize_association(type, association, opts={})
-        raise 'Illegal or unimplemented association type.' unless [:belongs_to].include?(type.to_s.to_sym)
-        send type, association, opts if reflect_on_association(association).nil?
-      end
+      __send__(type, association, opts) if reflect_on_association(association).nil?
+    end
 
     private
 
-      def class_def(name, method=nil, &blk)
-        class_eval { method.nil? ? define_method(name, &blk) : define_method(name, method) }
-      end
-
+    def class_def(name, method = nil, &blk)
+      class_eval { method.nil? ? define_method(name, &blk) : define_method(name, method) }
+    end
   end
 
   def delegator_for(association)
-    send("#{association}=", self.class.reflect_on_association(association).klass.new) if send(association).nil?
-    send(association)
+    if __send__(association).nil?
+      __send__("#{association}=", self.class.reflect_on_association(association).klass.new)
+    end
+    __send__(association)
   end
   protected :delegator_for
-
 end
 
-ActiveRecord::Base.send :include, DelegateBelongsTo
+ActiveRecord::Base.__send__(:include, DelegateBelongsTo)

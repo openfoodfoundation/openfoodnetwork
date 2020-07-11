@@ -1,17 +1,19 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
-# Its pretty difficult to test this module in isolation b/c it needs to work in conjunction with an actual class that
-# extends ActiveRecord::Base and has a corresponding table in the database.  So we'll just test it using Order and
-# ShippingMethod instead since those classes are including the module.
+# Its pretty difficult to test this module in isolation b/c it needs to work in conjunction
+#   with an actual class that extends ActiveRecord::Base and has a corresponding table in the DB.
+#   So we'll just test it using Order and ShippingMethod. These classes are including the module.
 describe Spree::Core::CalculatedAdjustments do
-
   let(:calculator) { mock_model(Spree::Calculator, :compute => 10, :[]= => nil) }
 
   it "should add has_one :calculator relationship" do
-    assert Spree::ShippingMethod.reflect_on_all_associations(:has_one).map(&:name).include?(:calculator)
+    assert Spree::ShippingMethod.
+      reflect_on_all_associations(:has_one).map(&:name).include?(:calculator)
   end
 
-  let(:tax_rate) { Spree::TaxRate.new(:calculator => calculator) }
+  let(:tax_rate) { Spree::TaxRate.new(calculator: calculator) }
 
   context "#create_adjustment and its resulting adjustment" do
     let(:order) { Spree::Order.create }
@@ -25,9 +27,9 @@ describe Spree::Core::CalculatedAdjustments do
     it "should have the correct originator and an amount derived from the calculator and supplied calculable" do
       adjustment = tax_rate.create_adjustment("foo", target, order)
       adjustment.should_not be_nil
-      adjustment.amount.should == 10
-      adjustment.source.should == order
-      adjustment.originator.should == tax_rate
+      expect(adjustment.amount).to eq 10
+      expect(adjustment.source).to eq order
+      expect(adjustment.originator).to eq tax_rate
     end
 
     it "should be mandatory if true is supplied for that parameter" do
@@ -36,13 +38,13 @@ describe Spree::Core::CalculatedAdjustments do
     end
 
     context "when the calculator returns 0" do
-      before { calculator.stub :compute => 0 }
+      before { calculator.stub(compute: 0) }
 
       context "when adjustment is mandatory" do
         before { tax_rate.create_adjustment("foo", target, order, true) }
 
         it "should create an adjustment" do
-          Spree::Adjustment.count.should == 1
+          expect(Spree::Adjustment.count).to eq 1
         end
       end
 
@@ -50,11 +52,10 @@ describe Spree::Core::CalculatedAdjustments do
         before { tax_rate.create_adjustment("foo", target, order, false) }
 
         it "should not create an adjustment" do
-          Spree::Adjustment.count.should == 0
+          expect(Spree::Adjustment.count).to eq 0
         end
       end
     end
-
   end
 
   context "#update_adjustment" do
@@ -65,5 +66,4 @@ describe Spree::Core::CalculatedAdjustments do
       tax_rate.update_adjustment(adjustment, calculable)
     end
   end
-
 end
