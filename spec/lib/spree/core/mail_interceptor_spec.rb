@@ -46,11 +46,11 @@ describe Spree::OrderMailer do
 
     context "when intercept_email is provided" do
       it "should strip the bcc recipients" do
-        message.bcc.should be_blank
+        expect(message.bcc).to be_blank
       end
 
       it "should strip the cc recipients" do
-        message.cc.should be_blank
+        expect(message.cc).to be_blank
       end
 
       it "should replace the receipient with the specified address" do
@@ -64,7 +64,7 @@ describe Spree::OrderMailer do
         Spree::Config[:intercept_email] = "intercept@foobar.com"
         message.deliver
         @email = ActionMailer::Base.deliveries.first
-        expect(@email.subject.match(/customer@example\.com/)).to be_true
+        expect(@email.subject.match(/customer@example\.com/)).to be_truthy
       end
     end
 

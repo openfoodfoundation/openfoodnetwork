@@ -6,14 +6,18 @@ require 'spec_helper'
 #   with an actual class that extends ActiveRecord::Base and has a corresponding table in the DB.
 #   So we'll just test it using Order and ShippingMethod. These classes are including the module.
 describe Spree::Core::CalculatedAdjustments do
-  let(:calculator) { mock_model(Spree::Calculator, :compute => 10, :[]= => nil) }
+  let(:calculator) { build(:calculator) }
+  let(:tax_rate) { Spree::TaxRate.new(calculator: calculator) }
+
+  before do
+    allow(calculator).to receive(:compute) { 10 }
+    allow(calculator).to receive(:[]) { nil }
+  end
 
   it "should add has_one :calculator relationship" do
     assert Spree::ShippingMethod.
       reflect_on_all_associations(:has_one).map(&:name).include?(:calculator)
   end
-
-  let(:tax_rate) { Spree::TaxRate.new(calculator: calculator) }
 
   context "#create_adjustment and its resulting adjustment" do
     let(:order) { Spree::Order.create }
@@ -26,7 +30,7 @@ describe Spree::Core::CalculatedAdjustments do
 
     it "should have the correct originator and an amount derived from the calculator and supplied calculable" do
       adjustment = tax_rate.create_adjustment("foo", target, order)
-      adjustment.should_not be_nil
+      expect(adjustment).not_to be_nil
       expect(adjustment.amount).to eq 10
       expect(adjustment.source).to eq order
       expect(adjustment.originator).to eq tax_rate
@@ -34,7 +38,7 @@ describe Spree::Core::CalculatedAdjustments do
 
     it "should be mandatory if true is supplied for that parameter" do
       adjustment = tax_rate.create_adjustment("foo", target, order, true)
-      adjustment.should be_mandatory
+      expect(adjustment).to be_mandatory
     end
 
     context "when the calculator returns 0" do

@@ -7,7 +7,7 @@ require 'spec_helper'
 #   So we'll just test it using Order instead since it included the module.
 describe Spree::Core::TokenResource do
   let(:order) { Spree::Order.new }
-  let(:permission) { mock_model(Spree::TokenizedPermission) }
+  let(:permission) { double(Spree::TokenizedPermission) }
 
   it 'should add has_one :tokenized_permission relationship' do
     assert Spree::Order.
@@ -18,18 +18,18 @@ describe Spree::Core::TokenResource do
     it 'should return the token of the associated permission' do
       order.stub tokenized_permission: permission
       permission.stub token: 'foo'
-      order.token.should == 'foo'
+      expect(order.token).to eq 'foo'
     end
 
     it 'should return nil if there is no associated permission' do
-      order.token.should be_nil
+      expect(order.token).to be_nil
     end
   end
 
   context '#create_token' do
     it 'should create a randomized 16 character token' do
       token = order.create_token
-      token.size.should == 16
+      expect(token.size).to eq 16
     end
   end
 end
