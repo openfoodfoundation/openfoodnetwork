@@ -39,16 +39,18 @@ module Spree
         protect_from_connection_error do
           check_environment
 
-          if payment_method.payment_profiles_supported?
-            # Gateways supporting payment profiles will need access to credit card object because this stores the payment profile information
-            # so supply the authorization itself as well as the credit card, rather than just the authorization code
-            response = payment_method.capture(self, source, gateway_options)
-          else
-            # Standard ActiveMerchant capture usage
-            response = payment_method.capture(money.money.cents,
+          response = if payment_method.payment_profiles_supported?
+                       # Gateways supporting payment profiles will need access to credit
+                       # card object because this stores the payment profile information
+                       # so supply the authorization itself as well as the credit card,
+                       # rather than just the authorization code
+                       payment_method.capture(self, source, gateway_options)
+                     else
+                       # Standard ActiveMerchant capture usage
+                       payment_method.capture(money.money.cents,
                                               response_code,
                                               gateway_options)
-          end
+                     end
 
           handle_response(response, :complete, :failure)
         end
@@ -60,14 +62,17 @@ module Spree
         protect_from_connection_error do
           check_environment
 
-          if payment_method.payment_profiles_supported?
-            # Gateways supporting payment profiles will need access to credit card object because this stores the payment profile information
-            # so supply the authorization itself as well as the credit card, rather than just the authorization code
-            response = payment_method.void(response_code, source, gateway_options)
-          else
-            # Standard ActiveMerchant void usage
-            response = payment_method.void(response_code, gateway_options)
-          end
+          response = if payment_method.payment_profiles_supported?
+                       # Gateways supporting payment profiles will need access to credit
+                       # card object because this stores the payment profile information
+                       # so supply the authorization itself as well as the credit card,
+                       # rather than just the authorization code
+                       payment_method.void(response_code, source, gateway_options)
+                     else
+                       # Standard ActiveMerchant void usage
+                       payment_method.void(response_code, gateway_options)
+                     end
+
           record_response(response)
 
           if response.success?
@@ -83,14 +88,28 @@ module Spree
         protect_from_connection_error do
           check_environment
 
-          credit_amount ||= credit_allowed >= order.outstanding_balance.abs ? order.outstanding_balance.abs : credit_allowed.abs
+          credit_amount ||= if credit_allowed >= order.outstanding_balance.abs
+                              order.outstanding_balance.abs
+                            else
+                              credit_allowed.abs
+                            end
+
           credit_amount = credit_amount.to_f
 
-          if payment_method.payment_profiles_supported?
-            response = payment_method.credit((credit_amount * 100).round, source, response_code, gateway_options)
-          else
-            response = payment_method.credit((credit_amount * 100).round, response_code, gateway_options)
-          end
+          response = if payment_method.payment_profiles_supported?
+                       payment_method.credit(
+                         (credit_amount * 100).round,
+                         source,
+                         response_code,
+                         gateway_options
+                       )
+                     else
+                       payment_method.credit(
+                         (credit_amount * 100).round,
+                         response_code,
+                         gateway_options
+                       )
+                     end
 
           record_response(response)
 
@@ -115,11 +134,20 @@ module Spree
 
           refund_amount = calculate_refund_amount(refund_amount)
 
-          if payment_method.payment_profiles_supported?
-            response = payment_method.refund((refund_amount * 100).round, source, response_code, gateway_options)
-          else
-            response = payment_method.refund((refund_amount * 100).round, response_code, gateway_options)
-          end
+          response = if payment_method.payment_profiles_supported?
+                       payment_method.refund(
+                         (refund_amount * 100).round,
+                         source,
+                         response_code,
+                         gateway_options
+                       )
+                     else
+                       payment_method.refund(
+                         (refund_amount * 100).round,
+                         response_code,
+                         gateway_options
+                       )
+                     end
 
           record_response(response)
 
@@ -168,7 +196,11 @@ module Spree
       private
 
       def calculate_refund_amount(refund_amount = nil)
-        refund_amount ||= credit_allowed >= order.outstanding_balance.abs ? order.outstanding_balance.abs : credit_allowed.abs
+        refund_amount ||= if credit_allowed >= order.outstanding_balance.abs
+                            order.outstanding_balance.abs
+                          else
+                            credit_allowed.abs
+                          end
         refund_amount.to_f
       end
 
@@ -176,9 +208,12 @@ module Spree
         protect_from_connection_error do
           check_environment
 
-          response = payment_method.send(action, (amount * 100).round,
-                                         source,
-                                         gateway_options)
+          response = payment_method.public_send(
+            action,
+            (amount * 100).round,
+            source,
+            gateway_options
+          )
           handle_response(response, success_state, :failure)
         end
       end
@@ -196,9 +231,9 @@ module Spree
               self.cvv_response_message = response.cvv_result['message']
             end
           end
-          send("#{success_state}!")
+          __send__("#{success_state}!")
         else
-          send(failure_state)
+          __send__(failure_state)
           gateway_error(response)
         end
       end
