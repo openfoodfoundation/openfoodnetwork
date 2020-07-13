@@ -3,59 +3,62 @@
 module OrderManagement
   module Reports
     class ReportSummariser
-      def initialize(group_column, report_rows, report)
-        @group_column = group_column
-        @report_rows = report_rows
+      def initialize(report)
         @report = report
       end
 
       def call
-        unless @group_column.blank? || @report.summary_row.blank? || exclude_summaries?
-          insert_summary_rows
-        end
+        return if skip_summaries?
 
-        @report_rows
+        insert_summary_rows
       end
 
       private
+
+      attr_accessor :report
+      delegate :report_rows, :summary_group, :summary_row, to: :report
+
+      def skip_summaries?
+        summary_group.blank? || summary_row.blank? || exclude_summaries?
+      end
 
       def insert_summary_rows
         grouped_rows = []
         previous_grouping = nil
 
-        @report_rows.each_with_index do |row, row_index|
-          current_grouping = row[@group_column]
+        report_rows.each_with_index do |row, row_index|
+          current_grouping = row[summary_group]
 
           if previous_grouping.present? && current_grouping != previous_grouping
-            grouped_rows << build_summary_row(@group_column, previous_grouping, @report.summary_row)
+            grouped_rows << build_summary_row(summary_group, previous_grouping, summary_row)
           end
 
           grouped_rows << row
           previous_grouping = current_grouping
 
           if last_row?(row_index)
-            grouped_rows << build_summary_row(@group_column, previous_grouping, @report.summary_row)
+            grouped_rows << build_summary_row(summary_group, previous_grouping, summary_row)
           end
         end
 
-        @report_rows = grouped_rows
+        report.report_rows = grouped_rows
       end
 
       def build_summary_row(group_column, group_key, options)
-        summary_row = initialize_empty_row
-        group_rows = @report_rows.select{ |row| row[group_column] == group_key }
+        summary = initialize_empty_row
+        group_rows = report_rows.select{ |row| row[group_column] == group_key }
 
-        summary_row[:summary_row_title] = options[:title]
+        summary[:summary_row_title] = options[:title]
 
         (options[:sum] || []).each do |sum_column|
-          summary_row[sum_column] = group_rows.sum{ |group_row| group_row[sum_column] }
+          summary[sum_column] = group_rows.sum{ |group_row| group_row[sum_column] }
         end
 
         (options[:show_first] || []).each do |first_column|
-          summary_row[first_column] = group_rows.first[first_column]
+          summary[first_column] = group_rows.first[first_column]
         end
 
-        summary_row
+        summary
       end
 
       def initialize_empty_row
@@ -68,15 +71,15 @@ module OrderManagement
       end
 
       def last_row?(row_index)
-        @report_rows.length == row_index + 1
+        report_rows.length == row_index + 1
       end
 
       def exclude_summaries?
-        @report.options[:exclude_summaries]
+        report.options[:exclude_summaries]
       end
 
       def report_headers
-        @report_rows.first&.keys
+        report_rows.first&.keys
       end
     end
   end

@@ -5,48 +5,46 @@ module OrderManagement
     class ReportBuilder
       def initialize(report)
         @report = report
-        @report_rows = []
       end
 
       def call
         build_rows
 
-        return [] unless @report_rows.length
+        return [] unless report_rows.length
 
-        order_by(@report.ordering)
-        summarise_group(@report.summary_group)
-        remove_columns(@report.hide_columns)
-
-        @report_rows
+        order_results
+        insert_summaries
+        remove_hidden_columns
       end
 
       private
 
+      attr_reader :report
+      delegate :report_rows, :hide_columns, :mask_data, to: :report
+
       def build_rows
-        @report.collection.each do |object|
-          row = @report.report_row(object)
+        report.collection.each do |object|
+          row = report.report_row(object)
 
           replace_sensitive_data!(object, row) if mask_data
 
-          @report_rows << row
+          report_rows << row
         end
       end
 
-      def order_by(sort_keys)
-        return unless sort_keys.length
-
-        @report_rows = ReportOrderer.new(@report_rows, sort_keys, @report).call
+      def order_results
+        ReportOrderer.new(report).call
       end
 
-      def summarise_group(group_column)
-        @report_rows = ReportSummariser.new(group_column, @report_rows, @report).call
+      def insert_summaries
+        ReportSummariser.new(report).call
       end
 
-      def remove_columns(columns)
-        return unless columns.length
+      def remove_hidden_columns
+        return unless hide_columns.length
 
-        @report_rows.each do |row|
-          row.except!(*columns)
+        report_rows.each do |row|
+          row.except!(*hide_columns)
         end
       end
 
@@ -56,10 +54,6 @@ module OrderManagement
         mask_data[:columns].each do |column|
           row[column] = mask_data[:replacement]
         end
-      end
-
-      def mask_data
-        @report.mask_data
       end
     end
   end

@@ -14,11 +14,14 @@ describe OrderManagement::Reports::ReportSummariser do
   let(:group_column) { :supplier }
   let(:report_options) { { exclude_summaries: false } }
   let(:report_object) { instance_double(OrderManagement::Reports::Report) }
-  let(:service) { described_class.new(group_column, report_rows, report_object) }
+  let(:service) { described_class.new(report_object) }
 
   before do
+    allow(report_object).to receive(:report_rows) { report_rows }
+    allow(report_object).to receive(:report_rows=)
     allow(report_object).to receive(:options) { report_options }
     allow(report_object).to receive(:headers) { [:id, :supplier, :product, :quantity] }
+    allow(report_object).to receive(:summary_group) { group_column }
     allow(report_object).to receive(:summary_row) {
       { title: "TOTALS", sum: [:quantity] }
     }

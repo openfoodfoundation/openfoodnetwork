@@ -9,7 +9,8 @@ describe OrderManagement::Reports::ReportRenderer do
       { id: 2, name: 'onions', quantity: 6 }
     ]
   }
-  let(:service) { described_class.new(report_rows) }
+  let(:report) { OpenStruct.new(report_rows: report_rows) }
+  let(:service) { described_class.new(report) }
 
   describe "#table_headers" do
     it "returns the report's table headers" do

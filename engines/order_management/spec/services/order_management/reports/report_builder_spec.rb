@@ -14,18 +14,20 @@ describe OrderManagement::Reports::ReportBuilder do
   let(:mask_data) { nil }
   let(:hide_columns) { [] }
   let(:report_object) { instance_double(OrderManagement::Reports::Report) }
+  let(:report_rows) { [] }
 
   let(:service) { described_class.new(report_object) }
 
   before do
+    allow(report_object).to receive(:report_rows) { report_rows }
     allow(report_object).to receive(:options) { report_options }
     allow(report_object).to receive(:collection) { collection }
     allow(report_object).to receive(:ordering) { ordering }
+    allow(report_object).to receive(:order_subgroup)
     allow(report_object).to receive(:summary_group) { nil }
     allow(report_object).to receive(:summary_row) { [] }
     allow(report_object).to receive(:mask_data) { mask_data }
     allow(report_object).to receive(:hide_columns) { hide_columns }
-    allow(report_object).to receive(:headers)
   end
 
   describe "creating report data from an ActiveRecord query" do

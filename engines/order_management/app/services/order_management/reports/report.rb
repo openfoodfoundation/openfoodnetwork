@@ -7,6 +7,7 @@ module OrderManagement
                :to_csv, :to_xlsx, :to_ods, :to_json, to: :report_renderer
 
       attr_reader :options
+      attr_accessor :report_rows
 
       def initialize(current_user, ransack_params, options = {})
         @current_user = current_user
@@ -18,7 +19,7 @@ module OrderManagement
       end
 
       def headers
-        @report_rows.first.andand.keys || []
+        report_rows.first.andand.keys || []
       end
 
       # Implement the template methods below to create a custom report.
@@ -62,11 +63,11 @@ module OrderManagement
       attr_reader :current_user, :ransack_params
 
       def build_report
-        @report_rows = ReportBuilder.new(self).call
+        ReportBuilder.new(self).call
       end
 
       def report_renderer
-        @report_renderer ||= ReportRenderer.new(@report_rows)
+        @report_renderer ||= ReportRenderer.new(self)
       end
     end
   end

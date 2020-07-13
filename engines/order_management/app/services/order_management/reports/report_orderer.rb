@@ -3,14 +3,12 @@
 module OrderManagement
   module Reports
     class ReportOrderer
-      def initialize(report_rows, sorting_rules, report)
-        @report_rows = report_rows
-        @sorting_rules = sorting_rules
+      def initialize(report)
         @report = report
       end
 
       def call
-        return unless sorting_rules.length
+        return unless ordering.length
 
         sort_rows
         order_subgroups
@@ -18,20 +16,21 @@ module OrderManagement
 
       private
 
-      attr_reader :sorting_rules
+      attr_reader :report
+      delegate :report_rows, :ordering, :order_subgroup, to: :report
 
       def sort_rows
-        @report_rows.sort! do |row1, row2|
+        report_rows.sort! do |row1, row2|
           sort_key1(row1, row2) <=> sort_key2(row1, row2)
         end
       end
 
       def ascending_columns
-        sorting_rules.select { |key| key.to_s.ends_with?('!') }
+        ordering.select { |key| key.to_s.ends_with?('!') }
       end
 
       def desc_columns
-        sorting_rules.map { |key| key.to_s.sub(/\!\z/, '').to_sym }
+        ordering.map { |key| key.to_s.sub(/\!\z/, '').to_sym }
       end
 
       def asc_columns
@@ -47,12 +46,12 @@ module OrderManagement
       end
 
       def order_subgroups
-        return @report_rows unless @report.order_subgroup
+        return report_rows unless order_subgroup
 
-        @report_rows.
-          group_by{ |row| row[@report.order_subgroup[:group]] }.
+        report.report_rows = report_rows.
+          group_by{ |row| row[order_subgroup[:group]] }.
           values.
-          sort_by { |item| item.first[@report.order_subgroup[:order]] }.
+          sort_by { |item| item.first[order_subgroup[:order]] }.
           flatten
       end
     end
