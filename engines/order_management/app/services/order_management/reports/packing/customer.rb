@@ -20,7 +20,12 @@ module OrderManagement
         end
 
         def ordering
-          [:hub, :order_id, :last_name, :supplier, :product, :variant]
+          [:hub, :order_id, :supplier, :product, :variant]
+        end
+
+        def order_subgroup
+          { group: :order_id,
+            order: :last_name }
         end
 
         def summary_group

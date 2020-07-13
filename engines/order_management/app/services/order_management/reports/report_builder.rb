@@ -35,7 +35,7 @@ module OrderManagement
       def order_by(sort_keys)
         return unless sort_keys.length
 
-        @report_rows = ReportOrderer.new(@report_rows, sort_keys).call
+        @report_rows = ReportOrderer.new(@report_rows, sort_keys, @report).call
       end
 
       def summarise_group(group_column)

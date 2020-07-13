@@ -33,6 +33,10 @@ module OrderManagement
         []
       end
 
+      def order_subgroup
+        nil
+      end
+
       def summary_group
         nil
       end
