@@ -33,7 +33,7 @@ module Spree
     end
 
     describe "ensuring that tax rate is marked as tax included_in_price" do
-      let(:tax_rate) { create(:tax_rate, included_in_price: false, calculator: Spree::Calculator::DefaultTax.new) }
+      let(:tax_rate) { create(:tax_rate, included_in_price: false, calculator: Calculator::DefaultTax.new) }
 
       it "sets included_in_price to true" do
         tax_rate.send(:with_tax_included_in_price) do

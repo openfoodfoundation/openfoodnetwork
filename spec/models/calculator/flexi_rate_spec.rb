@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Spree::Calculator::FlexiRate do
+describe Calculator::FlexiRate do
   let(:line_item) { build(:line_item, quantity: quantity) }
   let(:calculator) do
-    Spree::Calculator::FlexiRate.new(
+    Calculator::FlexiRate.new(
       preferred_first_item: 2,
       preferred_additional_item: 1,
       preferred_max_items: 3
@@ -27,7 +27,7 @@ describe Spree::Calculator::FlexiRate do
   end
 
   it "allows creation of new object with all the attributes" do
-    Spree::Calculator::FlexiRate.new(preferred_first_item: 1, preferred_additional_item: 1, preferred_max_items: 1)
+    Calculator::FlexiRate.new(preferred_first_item: 1, preferred_additional_item: 1, preferred_max_items: 1)
   end
 
   context "extends LocalizedNumber" do

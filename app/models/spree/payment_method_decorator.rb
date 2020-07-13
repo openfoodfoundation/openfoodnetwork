@@ -49,7 +49,7 @@ Spree::PaymentMethod.class_eval do
       self.class.include Spree::Core::CalculatedAdjustments
     end
 
-    self.calculator ||= Spree::Calculator::FlatRate.new(preferred_amount: 0)
+    self.calculator ||= Calculator::FlatRate.new(preferred_amount: 0)
   end
 
   def has_distributor?(distributor)

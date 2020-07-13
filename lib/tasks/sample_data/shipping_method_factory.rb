@@ -39,7 +39,7 @@ class ShippingMethodFactory
       name: "Home delivery #{enterprise.name}",
       description: "yummy food delivered at your door",
       require_ship_address: true,
-      calculator_type: "Spree::Calculator::FlatRate"
+      calculator_type: "Calculator::FlatRate"
     )
     delivery.calculator.preferred_amount = 2
     delivery.calculator.save!

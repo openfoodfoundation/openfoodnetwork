@@ -18,7 +18,7 @@ FactoryBot.define do
   factory :tag_rule, class: TagRule::DiscountOrder do
     enterprise { FactoryBot.create :distributor_enterprise }
     before(:create) do |tr|
-      tr.calculator = Spree::Calculator::FlatPercentItemTotal.new(calculable: tr)
+      tr.calculator = Calculator::FlatPercentItemTotal.new(calculable: tr)
     end
   end
 end
