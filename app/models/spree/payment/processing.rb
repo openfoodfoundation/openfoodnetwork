@@ -88,13 +88,7 @@ module Spree
         protect_from_connection_error do
           check_environment
 
-          credit_amount ||= if credit_allowed >= order.outstanding_balance.abs
-                              order.outstanding_balance.abs
-                            else
-                              credit_allowed.abs
-                            end
-
-          credit_amount = credit_amount.to_f
+          credit_amount = calculate_refund_amount(credit_amount)
 
           response = if payment_method.payment_profiles_supported?
                        payment_method.credit(
