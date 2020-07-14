@@ -9,8 +9,8 @@ describe Spree::ShipmentMailer do
     variant = build(:variant, product: product)
     line_item = build(:line_item, variant: variant, order: order, quantity: 1, price: 5)
     shipment = build(:shipment)
-    shipment.stub(line_items: [line_item], order: order)
-    shipment.stub(tracking_url: "TRACK_ME")
+    allow(shipment).to receive_messages(line_items: [line_item], order: order)
+    allow(shipment).to receive_messages(tracking_url: "TRACK_ME")
     shipment
   end
 
@@ -28,7 +28,7 @@ describe Spree::ShipmentMailer do
   end
 
   it "shipment_email accepts an shipment id as an alternative to an Shipment object" do
-    Spree::Shipment.should_receive(:find).with(shipment.id).and_return(shipment)
+    expect(Spree::Shipment).to receive(:find).with(shipment.id).and_return(shipment)
     expect {
       shipped_email = Spree::ShipmentMailer.shipped_email(shipment.id)
     }.to_not raise_error

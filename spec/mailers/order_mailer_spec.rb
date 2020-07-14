@@ -21,14 +21,14 @@ describe Spree::OrderMailer do
     end
 
     it "confirm_email_for_customer accepts an order id as an alternative to an Order object" do
-      Spree::Order.should_receive(:find).with(order.id).and_return(order)
+      expect(Spree::Order).to receive(:find).with(order.id).and_return(order)
       expect {
         confirmation_email = Spree::OrderMailer.confirm_email_for_customer(order.id)
       }.to_not raise_error
     end
 
     it "cancel_email accepts an order id as an alternative to an Order object" do
-      Spree::Order.should_receive(:find).with(order.id).and_return(order)
+      expect(Spree::Order).to receive(:find).with(order.id).and_return(order)
       expect {
         cancel_email = Spree::OrderMailer.cancel_email(order.id)
       }.to_not raise_error
