@@ -1,9 +1,9 @@
-= Spree.t('shipment_mailer.shipped_email.dear_customer')
+= t('.dear_customer')
 
-= Spree.t('shipment_mailer.shipped_email.instructions')
+= t('.instructions')
 
 = "============================================================"
-= Spree.t('shipment_mailer.shipped_email.shipment_summary')
+= t('.shipment_summary')
 = "============================================================"
 - @shipment.manifest.each do |item|
   = item.variant.sku
@@ -12,8 +12,8 @@
 = "============================================================"
 
 - if @shipment.tracking
-  = Spree.t('shipment_mailer.shipped_email.track_information', tracking: @shipment.tracking)
+  = t('.track_information', tracking: @shipment.tracking)
 - if @shipment.tracking_url
-  = Spree.t('shipment_mailer.shipped_email.track_link', url: @shipment.tracking_url)
+  = t('.track_link', url: @shipment.tracking_url)
 
-= Spree.t('shipment_mailer.shipped_email.thanks')
+= t('.thanks')
