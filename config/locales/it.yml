@@ -181,8 +181,7 @@ it:
         title: Altro errore (%{count} gentili richieste)
         explainer: L'elaborazione automatica di queste gentili richieste non è riuscita per una ragione sconosciuta. Questo non dovrebbe accadere, ti preghiamo di contattarci se visualizzi questo messaggio.
   home: "OFN"
-  title: Open Food Network
-  welcome_to: 'Benvenuto su '
+  title: "Open Food Network"
   site_meta_description: "Cominciamo da zero. Con i produttori e gli allevatori pronti a raccontare le loro storie, sinceramente e orgogliosamente. Con i distributori pronti a connettere le persone con i prodotti in modo giusto ed equo. Con i compratori che credono che migliori decisioni per l'acquisto settimanale possano..."
   search_by_name: Cerca per nome o zona...
   producers_join: I Produttori sono ora invitati ad unirsi ad Open Food Network
@@ -1709,8 +1708,7 @@ it:
   password: Password
   remember_me: Ricordami
   are_you_sure: "Sei sicuro?"
-  orders_open: Richieste aperte
-  closing: "In chiusura "
+  orders_open: "Richieste aperte"
   going_back_to_home_page: "Reindirizzamento alla homepage"
   creating: In creazione
   updating: In aggiornamento

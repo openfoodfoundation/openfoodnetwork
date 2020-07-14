@@ -181,8 +181,7 @@ nb:
         title: Annen Feil (%{count} bestillinger)
         explainer: Automatisk behandling av disse bestillingene mislyktes av en ukjent grunn. Dette bør ikke skje, vennligst kontakt oss hvis du ser dette.
   home: "OFN"
-  title: Open Food Network
-  welcome_to: 'Velkommen til '
+  title: "Open Food Network"
   site_meta_description: "Vi begynner fra grunnen. Med bønder og dyrkere klare til å fortelle sine historier, stolt og virkelig. Med distributører klare til å koble mennesker med produkter på en rettferdig og ærlig måte. Med kunder som tror på at ukentlige innkjøpsrutiner kan..."
   search_by_name: Søk på navn eller sted...
   producers_join: Norske produsenter er nå velkommen til å bli med i Open Food Network.
@@ -1713,8 +1712,7 @@ nb:
   password: Passord
   remember_me: Husk meg
   are_you_sure: "Er du sikker?"
-  orders_open: Åpen for bestilling
-  closing: "Stenger "
+  orders_open: "Åpen for bestilling"
   going_back_to_home_page: "Tar deg tilbake til hjemmesiden"
   creating: Oppretter
   updating: Oppdaterer

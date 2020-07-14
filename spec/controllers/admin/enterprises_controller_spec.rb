@@ -192,7 +192,7 @@ describe Admin::EnterprisesController, type: :controller do
                             id: tag_rule,
                             type: "TagRule::DiscountOrder",
                             preferred_customer_tags: "some,new,tags",
-                            calculator_type: "Spree::Calculator::FlatPercentItemTotal",
+                            calculator_type: "Calculator::FlatPercentItemTotal",
                             calculator_attributes: { id: tag_rule.calculator.id, preferred_flat_percent: "15" }
                           }
                         }
@@ -211,7 +211,7 @@ describe Admin::EnterprisesController, type: :controller do
                             id: "",
                             type: "TagRule::DiscountOrder",
                             preferred_customer_tags: "tags,are,awesome",
-                            calculator_type: "Spree::Calculator::FlatPercentItemTotal",
+                            calculator_type: "Calculator::FlatPercentItemTotal",
                             calculator_attributes: { id: "", preferred_flat_percent: "24" }
                           }
                         }

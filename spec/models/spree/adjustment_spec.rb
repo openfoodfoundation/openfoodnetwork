@@ -127,7 +127,7 @@ module Spree
 
       describe "EnterpriseFee adjustments" do
         let(:zone)             { create(:zone_with_member) }
-        let(:fee_tax_rate)     { create(:tax_rate, included_in_price: true, calculator: Calculator::DefaultTax.new, zone: zone, amount: 0.1) }
+        let(:fee_tax_rate)     { create(:tax_rate, included_in_price: true, calculator: ::Calculator::DefaultTax.new, zone: zone, amount: 0.1) }
         let(:fee_tax_category) { create(:tax_category, tax_rates: [fee_tax_rate]) }
 
         let(:coordinator) { create(:distributor_enterprise, charges_sales_tax: true) }
@@ -143,7 +143,7 @@ module Spree
           end
 
           context "when enterprise fees are taxed per-order" do
-            let(:enterprise_fee) { create(:enterprise_fee, enterprise: coordinator, tax_category: fee_tax_category, calculator: Calculator::FlatRate.new(preferred_amount: 50.0)) }
+            let(:enterprise_fee) { create(:enterprise_fee, enterprise: coordinator, tax_category: fee_tax_category, calculator: ::Calculator::FlatRate.new(preferred_amount: 50.0)) }
 
             describe "when the tax rate includes the tax in the price" do
               it "records the tax on the enterprise fee adjustments" do
@@ -181,7 +181,7 @@ module Spree
           end
 
           context "when enterprise fees are taxed per-item" do
-            let(:enterprise_fee) { create(:enterprise_fee, enterprise: coordinator, tax_category: fee_tax_category, calculator: Calculator::PerItem.new(preferred_amount: 50.0)) }
+            let(:enterprise_fee) { create(:enterprise_fee, enterprise: coordinator, tax_category: fee_tax_category, calculator: ::Calculator::PerItem.new(preferred_amount: 50.0)) }
 
             describe "when the tax rate includes the tax in the price" do
               it "records the tax on the enterprise fee adjustments" do
@@ -205,7 +205,7 @@ module Spree
         end
 
         context "when enterprise fees inherit their tax_category from the product they are applied to" do
-          let(:product_tax_rate)             { create(:tax_rate, included_in_price: true, calculator: Calculator::DefaultTax.new, zone: zone, amount: 0.2) }
+          let(:product_tax_rate)             { create(:tax_rate, included_in_price: true, calculator: ::Calculator::DefaultTax.new, zone: zone, amount: 0.2) }
           let(:product_tax_category)         { create(:tax_category, tax_rates: [product_tax_rate]) }
 
           before do
@@ -216,7 +216,7 @@ module Spree
           end
 
           context "when enterprise fees are taxed per-order" do
-            let(:enterprise_fee) { create(:enterprise_fee, enterprise: coordinator, inherits_tax_category: true, calculator: Calculator::FlatRate.new(preferred_amount: 50.0)) }
+            let(:enterprise_fee) { create(:enterprise_fee, enterprise: coordinator, inherits_tax_category: true, calculator: ::Calculator::FlatRate.new(preferred_amount: 50.0)) }
 
             describe "when the tax rate includes the tax in the price" do
               it "records no tax on the enterprise fee adjustments" do
@@ -246,7 +246,7 @@ module Spree
           end
 
           context "when enterprise fees are taxed per-item" do
-            let(:enterprise_fee) { create(:enterprise_fee, enterprise: coordinator, inherits_tax_category: true, calculator: Calculator::PerItem.new(preferred_amount: 50.0)) }
+            let(:enterprise_fee) { create(:enterprise_fee, enterprise: coordinator, inherits_tax_category: true, calculator: ::Calculator::PerItem.new(preferred_amount: 50.0)) }
 
             describe "when the tax rate includes the tax in the price" do
               it "records the tax on the enterprise fee adjustments" do
