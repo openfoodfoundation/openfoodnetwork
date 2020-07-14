@@ -46,23 +46,6 @@ module AuthenticationWorkflow
     # click_button 'Login'
   end
 
-  def login_to_consumer_section
-    user_role = Spree::Role.find_or_create_by!(name: 'user')
-    user = create_enterprise_user(
-      email: 'someone@ofn.org',
-      password: 'passw0rd',
-      password_confirmation: 'passw0rd',
-      remember_me: false,
-      persistence_token: 'pass',
-      login: 'someone@ofn.org'
-    )
-
-    user.spree_roles << user_role
-
-    visit spree.login_path
-    fill_in_and_submit_login_form user
-  end
-
   def fill_in_and_submit_login_form(user)
     fill_in "email", with: user.email
     fill_in "password", with: user.password

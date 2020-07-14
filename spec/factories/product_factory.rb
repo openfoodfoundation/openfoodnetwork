@@ -36,7 +36,7 @@ FactoryBot.define do
       create(:tax_rate, amount: proxy.tax_rate_amount,
                         tax_category: product.tax_category,
                         included_in_price: true,
-                        calculator: Spree::Calculator::DefaultTax.new,
+                        calculator: Calculator::DefaultTax.new,
                         zone: proxy.zone,
                         name: proxy.tax_rate_name)
     end

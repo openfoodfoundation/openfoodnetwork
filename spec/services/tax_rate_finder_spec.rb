@@ -66,7 +66,7 @@ describe TaxRateFinder do
       create(
         :tax_rate,
         amount: amount,
-        calculator: Spree::Calculator::DefaultTax.new,
+        calculator: Calculator::DefaultTax.new,
         zone: zone
       )
     end
