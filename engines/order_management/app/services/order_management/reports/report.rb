@@ -50,8 +50,8 @@ module OrderManagement
         []
       end
 
-      def mask_data
-        nil
+      def mask_data_rules
+        []
       end
 
       def self.report_subtypes

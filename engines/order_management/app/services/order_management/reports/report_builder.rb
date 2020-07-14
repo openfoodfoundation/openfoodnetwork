@@ -20,13 +20,13 @@ module OrderManagement
       private
 
       attr_reader :report
-      delegate :report_rows, :hide_columns, :mask_data, to: :report
+      delegate :report_rows, :hide_columns, :mask_data_rules, to: :report
 
       def build_rows
         report.collection.each do |object|
           row = report.report_row(object)
 
-          replace_sensitive_data!(object, row) if mask_data
+          replace_sensitive_data!(object, row)
 
           report_rows << row
         end
@@ -49,10 +49,14 @@ module OrderManagement
       end
 
       def replace_sensitive_data!(object, row)
-        return unless mask_data[:rule].call(object)
+        return if mask_data_rules.empty?
 
-        mask_data[:columns].each do |column|
-          row[column] = mask_data[:replacement]
+        mask_data_rules.each do |mask|
+          next unless mask[:rule].call(object)
+
+          mask[:columns].each do |column|
+            row[column] = mask[:replacement]
+          end
         end
       end
     end

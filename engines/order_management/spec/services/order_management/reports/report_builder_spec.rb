@@ -11,7 +11,7 @@ describe OrderManagement::Reports::ReportBuilder do
   let(:report_options) { { exclude_summaries: false } }
   let(:collection) { Spree::LineItem.includes(:order) }
   let(:ordering) { [:id] }
-  let(:mask_data) { nil }
+  let(:mask_data_rules) { [] }
   let(:hide_columns) { [] }
   let(:report_object) { instance_double(OrderManagement::Reports::Report) }
   let(:report_rows) { [] }
@@ -26,7 +26,7 @@ describe OrderManagement::Reports::ReportBuilder do
     allow(report_object).to receive(:order_subgroup)
     allow(report_object).to receive(:summary_group) { nil }
     allow(report_object).to receive(:summary_row) { [] }
-    allow(report_object).to receive(:mask_data) { mask_data }
+    allow(report_object).to receive(:mask_data_rules) { mask_data_rules }
     allow(report_object).to receive(:hide_columns) { hide_columns }
   end
 
@@ -128,12 +128,12 @@ describe OrderManagement::Reports::ReportBuilder do
   end
 
   describe "masking sensitive data with a given rule" do
-    let(:mask_data) {
-      {
+    let(:mask_data_rules) {
+      [{
         columns: [:price, :quantity],
         replacement: "MASKED!",
         rule: proc{ |object| object.quantity > 2 }
-      }
+      }]
     }
 
     before do
@@ -155,6 +155,34 @@ describe OrderManagement::Reports::ReportBuilder do
           { id: line_item4.id, price: "MASKED!", quantity: "MASKED!" },
         ]
       )
+    end
+
+    context "with multiple rules" do
+      let(:mask_data_rules) {
+        [
+          {
+           columns: [:price],
+           replacement: "MASK 1",
+           rule: proc{ |object| object.quantity > 2 }
+          },
+          {
+            columns: [:quantity],
+            replacement: "MASK 2",
+            rule: proc{ |object| object.quantity > 3 }
+          }
+        ]
+      }
+
+      it "masks specified fields based on rules" do
+        expect(service.call).to eq(
+          [
+            { id: line_item1.id, price: line_item1.price.to_i, quantity: line_item1.quantity },
+            { id: line_item2.id, price: line_item2.price.to_i, quantity: line_item2.quantity },
+            { id: line_item3.id, price: "MASK 1", quantity: line_item3.quantity },
+            { id: line_item4.id, price: "MASK 1", quantity: "MASK 2" },
+          ]
+        )
+      end
     end
   end
 end

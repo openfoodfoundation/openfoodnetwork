@@ -20,12 +20,12 @@ module OrderManagement
           [:order_id]
         end
 
-        def mask_data
-          {
+        def mask_data_rules
+          [{
             columns: [:customer_code, :first_name, :last_name],
             replacement: I18n.t("hidden_field", scope: i18n_scope),
             rule: proc{ |line_item| !can_view_customer_data?(line_item) }
-          }
+          }]
         end
 
         private
