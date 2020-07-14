@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Spree::OrderMailer do
@@ -6,12 +8,12 @@ describe Spree::OrderMailer do
   contect "original spree specs" do
     let(:order) do
       order = stub_model(Spree::Order)
-      product = stub_model(Spree::Product, :name => %Q{The "BEST" product})
-      variant = stub_model(Spree::Variant, :product => product)
-      price = stub_model(Spree::Price, :variant => variant, :amount => 5.00)
-      line_item = stub_model(Spree::LineItem, :variant => variant, :order => order, :quantity => 1, :price => 4.99)
-      variant.stub(:default_price => price)
-      order.stub(:line_items => [line_item])
+      product = stub_model(Spree::Product, name: %{The "BEST" product})
+      variant = stub_model(Spree::Variant, product: product)
+      price = stub_model(Spree::Price, variant: variant, amount: 5.00)
+      line_item = stub_model(Spree::LineItem, variant: variant, order: order, quantity: 1, price: 4.99)
+      variant.stub(default_price: price)
+      order.stub(line_items: [line_item])
       order
     end
 
@@ -44,15 +46,15 @@ describe Spree::OrderMailer do
     context "only shows eligible adjustments in emails" do
       before do
         order.adjustments.create(
-          :label    => "Eligible Adjustment",
-          :amount   => 10,
-          :eligible => true
+          label: "Eligible Adjustment",
+          amount: 10,
+          eligible: true
         )
 
         order.adjustments.create!(
-          :label    => "Ineligible Adjustment",
-          :amount   => -10,
-          :eligible => false
+          label: "Ineligible Adjustment",
+          amount: -10,
+          eligible: false
         )
       end
 
@@ -85,8 +87,8 @@ describe Spree::OrderMailer do
     context "emails must be translatable" do
       context "pt-BR locale" do
         before do
-          pt_br_confirm_mail = { :spree => { :order_mailer => { :confirm_email => { :dear_customer => 'Caro Cliente,' } } } }
-          pt_br_cancel_mail = { :spree => { :order_mailer => { :cancel_email => { :order_summary_canceled => 'Resumo da Pedido [CANCELADA]' } } } }
+          pt_br_confirm_mail = { spree: { order_mailer: { confirm_email: { dear_customer: 'Caro Cliente,' } } } }
+          pt_br_cancel_mail = { spree: { order_mailer: { cancel_email: { order_summary_canceled: 'Resumo da Pedido [CANCELADA]' } } } }
           I18n.backend.store_translations :'pt-BR', pt_br_confirm_mail
           I18n.backend.store_translations :'pt-BR', pt_br_cancel_mail
           I18n.locale = :'pt-BR'
