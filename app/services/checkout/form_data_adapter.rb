@@ -34,11 +34,16 @@ module Checkout
     end
 
     def fill_in_card_type
-      payment = params[:order][:payments_attributes]&.first&.dig(:source_attributes)
+      return unless payment_source_attributes
 
-      return if payment&.dig(:number).blank?
+      return if payment_source_attributes.dig(:number).blank?
 
-      payment[:cc_type] ||= card_brand(payment[:number])
+      payment_source_attributes[:cc_type] ||= card_brand(payment_source_attributes[:number])
+    end
+
+    def payment_source_attributes
+      @payment_source_attributes ||=
+        params[:order][:payments_attributes]&.first&.dig(:source_attributes)
     end
 
     def card_brand(number)
