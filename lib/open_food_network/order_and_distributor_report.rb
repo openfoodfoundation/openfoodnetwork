@@ -47,13 +47,19 @@ module OpenFoodNetwork
       orders.select{ |order| orders_with_hidden_details(orders).include? order }.each do |order|
         # TODO We should really be hiding customer code here too, but until we
         # have an actual association between order and customer, it's a bit tricky
+
+        unless order.distributor.preferences[:show_customer_names_to_suppliers]
+          order.bill_address.andand.
+            assign_attributes(firstname: I18n.t('admin.reports.hidden'), lastname: "")
+          order.ship_address.andand.
+            assign_attributes(firstname: I18n.t('admin.reports.hidden'), lastname: "")
+        end
+
         order.bill_address.andand.
-          assign_attributes(firstname: I18n.t('admin.reports.hidden'),
-                            lastname: "", phone: "", address1: "", address2: "",
+          assign_attributes(phone: "", address1: "", address2: "",
                             city: "", zipcode: "", state: nil)
         order.ship_address.andand.
-          assign_attributes(firstname: I18n.t('admin.reports.hidden'),
-                            lastname: "", phone: "", address1: "", address2: "",
+          assign_attributes(phone: "", address1: "", address2: "",
                             city: "", zipcode: "", state: nil)
         order.assign_attributes(email: I18n.t('admin.reports.hidden'))
       end
