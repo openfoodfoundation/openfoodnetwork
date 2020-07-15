@@ -12,6 +12,8 @@ module Checkout
 
       move_payment_source_to_payment_attributes!
 
+      fill_in_card_type
+
       set_amount_in_payments_attributes
 
       construct_saved_card_attributes if @params[:order][:existing_card_id]
@@ -29,6 +31,18 @@ module Checkout
                     payment_source_params = delete_payment_source_params!
 
       @params[:order][:payments_attributes].first[:source_attributes] = payment_source_params
+    end
+
+    def fill_in_card_type
+      payment = params[:order][:payments_attributes]&.first&.dig(:source_attributes)
+
+      return if payment&.dig(:number).blank?
+
+      payment[:cc_type] ||= card_brand(payment[:number])
+    end
+
+    def card_brand(number)
+      ActiveMerchant::Billing::CreditCard.brand?(number)
     end
 
     def delete_payment_source_params!
