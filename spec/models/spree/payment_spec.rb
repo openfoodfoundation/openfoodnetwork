@@ -541,16 +541,17 @@ describe Spree::Payment do
         end
 
         context "when successfully connecting to the gateway" do
-          xit "should create a payment profile" do
+          it "should create a payment profile" do
             gateway.name = 'Gateway'
             gateway.distributors << create(:distributor_enterprise)
             gateway.save!
 
             payment.payment_method = gateway
+            payment.source.save_requested_by_customer = true
 
             expect(gateway).to receive(:create_profile)
 
-            payment = Spree::Payment.create(
+            Spree::Payment.create(
               :amount => 100,
               :order => create(:order),
               :source => card,
