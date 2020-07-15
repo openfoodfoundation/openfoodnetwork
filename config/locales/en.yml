@@ -35,6 +35,7 @@ en:
       spree/payment:
         amount: Amount
         state: State
+        source: Source
       spree/product:
         primary_taxon: "Product Category"
         supplier: "Supplier"
