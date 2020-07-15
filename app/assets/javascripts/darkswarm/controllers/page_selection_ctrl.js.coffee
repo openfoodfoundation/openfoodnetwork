@@ -1,4 +1,4 @@
-Darkswarm.controller "PageSelectionCtrl", ($scope, $location) ->
+Darkswarm.controller "PageSelectionCtrl", ($scope, $rootScope, $location) ->
   $scope.selectedPage = ->
     # The path looks like `/contact` for the URL `https://ofn.org/shop#/contact`.
     # We remove the slash at the beginning.
@@ -15,3 +15,8 @@ Darkswarm.controller "PageSelectionCtrl", ($scope, $location) ->
   $scope.whitelistPages = (pages) ->
     $scope.whitelist = pages
     $scope.lastPage = pages[0]
+
+  # when an order cycle is changed, ensure the shop tab is active to save a click
+  $rootScope.$on "orderCycleSelected", ->
+    if $scope.selectedPage() != "shop"
+      $location.path("shop")
