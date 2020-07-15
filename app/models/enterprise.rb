@@ -6,6 +6,7 @@ class Enterprise < ActiveRecord::Base
   preference :shopfront_closed_message, :text, default: ""
   preference :shopfront_taxon_order, :string, default: ""
   preference :shopfront_order_cycle_order, :string, default: "orders_close_at"
+  preference :show_customer_names_to_suppliers, :boolean, default: false
 
   # This is hopefully a temporary measure, pending the arrival of multiple named inventories
   # for shops. We need this here to allow hubs to restrict visible variants to only those in
