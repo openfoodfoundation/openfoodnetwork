@@ -182,6 +182,7 @@ en_GB:
         explainer: Automatic processing of these orders failed for an unknown reason. This should not occur, please contact us if you are seeing this.
   home: "OFN"
   title: "Open Food Network"
+  welcome_to: "Welcome to"
   site_meta_description: "The Open Food Network software platform allows farmers to sell produce online, at a price that works for them. It has been built specifically for selling food so it can handle tricky measures or stock levels that only food has - a dozen eggs, a bunch of parsley, a whole chicken that varies in weight…"
   search_by_name: Search by name, town, county or postcode...
   producers_join: UK producers are now welcome to join Open Food Network UK.
@@ -1713,6 +1714,7 @@ en_GB:
   remember_me: Remember Me
   are_you_sure: "Are you sure?"
   orders_open: "Orders open"
+  closing: "Closing"
   going_back_to_home_page: "Taking you back to the home page"
   creating: Creating
   updating: Updating
