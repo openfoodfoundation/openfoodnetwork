@@ -2811,7 +2811,7 @@ en_CA:
     city: "City"
     zip: "Postal Code"
     country: "Country"
-    state: "Province"
+    state: "State"
     phone: "Phone"
     update: "Update"
     use_billing_address: "Use Billing Address"

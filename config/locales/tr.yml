@@ -221,7 +221,7 @@ tr:
   edit: Düzenle
   clone: Kopyala
   distributors: Dağıtımcılar
-  bulk_order_management: Toplu Sipariş Yönetimi
+  bulk_order_management: TOPLU SİPARİŞ YÖNETİMİ
   enterprises: İşletmeler
   enterprise_groups: AĞLAR
   reports: Raporlar
@@ -256,7 +256,7 @@ tr:
   processing_payment: "Ödeme İşlemi Gerçekleştiriliyor.."
   no_pending_payments: "Bekleyen ödeme yok"
   invalid_payment_state: "Geçersiz ödeme durumu"
-  filter_results: Sonuçları Filtrele
+  filter_results: SONUÇLARI FİLTRELE
   quantity: Miktar
   pick_up: Teslim Alma
   copy: Kopyala
@@ -593,7 +593,7 @@ tr:
         product_unit: "Ürün: Birim"
         weight_volume: "Ağırlık / Hacim"
         ask: "Sor?"
-        page_title: "Toplu Sipariş Yönetimi"
+        page_title: "TOPLU SİPARİŞ YÖNETİMİ"
         actions_delete: "Seçilenleri Sil"
         loading: "Siparişler yükleniyor"
         no_results: "Sipariş bulunamadı."
@@ -730,8 +730,8 @@ tr:
               sizi ziyaret edenler tarafından görülecek. (örn. neden kapalı olduğunu
               ve ne zaman açılacağını belirtebilirsiniz)
           shopfront_category_ordering: "DÜKKAN KATEGORİ SIRALAMASI"
-          open_date: "Açılış Tarihi"
-          close_date: "Kapanış Tarih"
+          open_date: "AÇILIŞ TARİHİ"
+          close_date: "KAPANIŞ TARİHİ"
         social:
           twitter_placeholder: "Örneğin. @the_usta"
           instagram_placeholder: "Örneğin. the_usta"
@@ -795,21 +795,21 @@ tr:
         producer: ÜRETİCİ
       change_type_form:
         producer_profile: ÜRETİCİ PROFİLİ
-        connect_ofn: AGA üzerinden bağlan
+        connect_ofn: AGA PLATFORMUNA KATIL
         always_free: HER ZAMAN ÜCRETSİZ
         producer_description_text: Ürünlerinizi Açık Gıda Ağı'na yükleyin. Böylece ürünleriniz pazar hesapları üzerinden satışa sunulabilir.
         producer_shop: ÜRETİCİ DÜKKANI
-        sell_your_produce: Kendi ürününü sat
+        sell_your_produce: KENDİ ÜRÜNÜNÜ SAT
         producer_shop_description_text: Açık Gıda Ağı üzerinden açtığınız bireysel dükkanınız ile ürünlerinizi doğrudan müşterilere ulaştırabilirsiniz.
         producer_shop_description_text2: Üretici Dükkanı sadece sizin ürünleriniz içindir.  Üretiminiz haricindeki ürünleri satabilmek için lütfen 'Üretici Pazarı' seçeneğini seçin.
         producer_hub: ÜRETİCİ PAZARI
-        producer_hub_text: Kendi ürünleriniz ile beraber başkalarının ürünlerini de satın
+        producer_hub_text: KENDİ ÜRÜNLERİNİZ İLE BERABER BAŞKALARININ ÜRÜNLERİNİ DE SATIN
         producer_hub_description_text: İşletmeniz, yerel gıda sisteminizin bel kemiğidir. Açık Gıda Ağı'ndaki mağazanız aracılığıyla kendi ürünlerinizi ve çevrenizdeki diğer üreticilerin ürünlerini beraber satabilirsiniz.
         profile: Yalnızca Profil
         get_listing: Görünür ol
         profile_description_text: İnsanlar Açık Gıda Ağı üzerinden sizi bulabilir ve sizinle iletişim kurabilir. İşletmeniz haritada ve listelerde görünür olacak.
         hub_shop: Türetici Pazarı
-        hub_shop_text: Başkalarının ürünlerini satın
+        hub_shop_text: BAŞKALARININ ÜRÜNLERİNİ SATIN
         hub_shop_description_text: İşletmeniz yerel gıda sisteminizin belkemiğidir. Diğer işletmelerin ürünlerini bir araya getirebilir, Açık Gıda Ağı'na kayıtlı dükkanınız üzerinden alıcılara ulaştırabilirsiniz.
         choose_option: Lütfen yukarıdaki seçeneklerden birini seçin.
         change_now: Değiştir
@@ -897,10 +897,10 @@ tr:
         outgoing: "3. GİDEN ÜRÜNLER"
       exchange_form:
         pickup_time_tip: Bu sipariş dönemine ait siparişlerin müşteriler için hazır olma tarihi
-        pickup_instructions_placeholder: "Teslimat Talimatları"
+        pickup_instructions_placeholder: "TESLİMAT DETAYLARI"
         pickup_instructions_tip: Bu talimatlar, siparişi tamamladıktan sonra müşterilere iletilir
         pickup_time_placeholder: "Teslimat (örn. Tarih / Saat)"
-        receival_instructions_placeholder: "Teslim Alma talimatları"
+        receival_instructions_placeholder: "TESLİM ALMA TALİMATLARI"
         add_fee: 'Ücret ekle'
         remove: 'Kaldır'
         selected: 'seçildi'
@@ -1581,7 +1581,7 @@ tr:
   components_filters_clearfilters: "TÜM FİLTRELERİ TEMİZLE"
   groups_title: Gruplar
   groups_headline: Gruplar
-  groups_text: "Her üretici özeldir ve her işletmenin ortaya koyabileceği farklı bir değer vardır. Üyelerimiz, ürünlerini, emeklerini ve gıdanın ortak değerleri paylaşan üretici, türetici ve dağıtımcı kolektifleridir. Bu bileşenler, adil ve temiz gıdaya ulaşım yollarını kolaylaştırır ve bozulmuş gıda sistemini hep beraber düzeltmemize yardımcı olur."
+  groups_text: "Her üretici özeldir ve her işletmenin ortaya koyabileceği farklı bir değer vardır. Üyelerimiz, ürünlerini, emeklerini ve gıdanın ortak değerlerini paylaşan üretici, türetici ve dağıtımcı kolektifleridir. Bu bileşenler, adil ve temiz gıdaya ulaşım yollarını kolaylaştırır ve bozulmuş gıda sistemini düzeltmemize öncülük ederler."
   groups_search: "İsim veya anahtar kelime ile ara"
   groups_no_groups: "Ağ bulunamadı"
   groups_about: "Hakkımızda"
@@ -1615,7 +1615,7 @@ tr:
   producers_about: Hakkımızda
   producers_buy: Alışveriş ürünleri
   producers_contact: İLETİŞİM
-  producers_contact_phone: Ara
+  producers_contact_phone: 'Tel:'
   producers_contact_social: Takip et
   producers_buy_at_html: "%{enterprise} ürünleri için buradan alışveriş yapın:"
   producers_filter: Filtrele
@@ -1918,7 +1918,7 @@ tr:
   ok: tamam
   not_visible: görünmez
   you_have_no_orders_yet: "Henüz siparişiniz yok"
-  show_only_complete_orders: "Yalnızca tamamlanan siparişleri göster"
+  show_only_complete_orders: "YALNIZCA TAMAMLANAN SİPARİŞLERİ GÖSTER"
   successfully_created: '%{resource} BAŞARIYLA OLUŞTURULDU!'
   successfully_removed: '%{resource} BAŞARIYLA KALDIRILDI!'
   successfully_updated: '%{resource} BAŞARIYLA GÜNCELLENDİ!'
@@ -2025,8 +2025,8 @@ tr:
   spree_admin_product_category: Ürün Kategorisi
   spree_admin_variant_unit_name: Varyant Birimi Adı
   unit_name: "Birim adı"
-  change_package: "Hesap Türünü Değiştir"
-  spree_admin_single_enterprise_hint: "İpucu: İnsanların sizi bulmasına izin vermek için, alttaki görünürlük kısmını açın."
+  change_package: "HESAP TÜRÜNÜ DEĞİŞTİR"
+  spree_admin_single_enterprise_hint: "İpucu: İnsanların sizi bulmasına izin vermek için 'Görünür' olmayı ayarlamayı unutmayın:"
   spree_admin_eg_pickup_from_school: "Örn. 'Teslimat noktası: Moda İlkokulu Bahçesi'"
   spree_admin_eg_collect_your_order: "Örn. Lütfen siparişinizi Moda Cad. No:17 Temiz Dükkan'dan teslim alınız."
   spree_classification_primary_taxon_error: "%{taxon} cinsi, %{product}ürününün birincil cinsidir ve silinemez"
@@ -2129,7 +2129,7 @@ tr:
   report_header_incoming_transport: Gelen Nakliye
   report_header_special_instructions: Özel Talimatlar
   report_header_order_number: Sipariş numarası
-  report_header_date: tarih
+  report_header_date: Tarih
   report_header_confirmation_date: Onay tarihi
   report_header_tags: ETİKETLER
   report_header_items: Kalemler
@@ -2429,8 +2429,8 @@ tr:
               en iyi şekilde yönetmeniz için tüm imkanları ve araçları sağlamaya hazırız.
           get_listing: Görünür Olun
           always_free: HER ZAMAN ÜCRETSİZ
-          sell_produce_others: Başkalarının ürünlerini sat
-          sell_own_produce: Kendi ürününü sat
+          sell_produce_others: BAŞKALARININ ÜRÜNLERİNİ SAT
+          sell_own_produce: KENDİ ÜRÜNÜNÜ SAT
           sell_both: Kendi ürünlerini ve başkalarının ürünlerini sat
         enterprise_producer:
           producer: Üretici
@@ -2966,7 +2966,7 @@ tr:
       tab:
         dashboard: "KONTROL PANELİ"
         orders: "SİPARİŞLER"
-        bulk_order_management: "Toplu Sipariş Yönetimi"
+        bulk_order_management: "TOPLU SİPARİŞ YÖNETİMİ"
         subscriptions: "Üyelikler"
         products: "Ürünler"
         option_types: "Seçenek Türleri"
