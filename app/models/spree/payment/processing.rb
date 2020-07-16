@@ -12,7 +12,7 @@ module Spree
 
         unless payment_method.supports?(source)
           invalidate!
-          raise Core::GatewayError.new(Spree.t(:payment_method_not_supported))
+          raise Core::GatewayError, Spree.t(:payment_method_not_supported)
         end
 
         if payment_method.auto_capture?

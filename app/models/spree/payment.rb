@@ -10,6 +10,7 @@ module Spree
     IDENTIFIER_CHARS = (('A'..'Z').to_a + ('0'..'9').to_a - %w(0 1 I O)).freeze
 
     delegate :line_items, to: :order
+    delegate :currency, to: :order
 
     belongs_to :order, class_name: 'Spree::Order'
     belongs_to :source, polymorphic: true
@@ -68,8 +69,6 @@ module Spree
       end
     end
 
-    delegate :currency, to: :order
-
     def money
       Spree::Money.new(amount, currency: currency)
     end
@@ -87,9 +86,6 @@ module Spree
       credit_allowed.positive?
     end
 
-    # see https://github.com/spree/spree/issues/981
-    #
-    # Import from future Spree v.2.3.0 d470b31798f37
     def build_source
       return if source_attributes.nil?
       return unless payment_method.andand.payment_source_class
