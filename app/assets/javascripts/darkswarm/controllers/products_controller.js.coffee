@@ -49,6 +49,7 @@ Darkswarm.controller "ProductsCtrl", ($scope, $sce, $filter, $rootScope, Product
   $scope.$watch 'query', (newValue, oldValue) -> $scope.loadProducts() if newValue != oldValue
   $scope.$watchCollection 'activeTaxons', (newValue, oldValue) -> $scope.loadProducts() if newValue != oldValue
   $scope.$watchCollection 'activeProperties', (newValue, oldValue) -> $scope.loadProducts() if newValue != oldValue
+  $scope.$watch 'Products.loading', (newValue, oldValue) -> $scope.update_filters() if newValue == false && newValue != oldValue
 
   $scope.loadProducts = ->
     $scope.page = 1
