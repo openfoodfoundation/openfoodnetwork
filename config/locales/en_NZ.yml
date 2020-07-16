@@ -182,6 +182,7 @@ en_NZ:
         explainer: Automatic processing of these orders failed for an unknown reason. This should not occur, please contact us if you are seeing this.
   home: "OFN"
   title: "Open Food Network"
+  welcome_to: "Welcome to"
   site_meta_description: "We begin from the ground up. With farmers, growers, and producers ready to tell their stories proudly and truly. With distributors ready to connect people with products fairly and honestly. With buyers who believe that better weekly shopping decisions can…"
   search_by_name: Search by name or suburb...
   producers_join: New Zealand producers are now welcome to join the Open Food Network.
@@ -1160,7 +1161,7 @@ en_NZ:
       mobile_menu:
         cart: "Cart"
     register_call:
-      selling_on_ofn: "Interested in getting on the Open Food Network?"
+      selling_on_ofn: "Want to set up a shop on the Open Food Network?"
       register: "Register here"
     footer:
       footer_secure: "Secure and trusted."
@@ -1713,6 +1714,7 @@ en_NZ:
   remember_me: Remember Me
   are_you_sure: "Are you sure?"
   orders_open: "Orders open"
+  closing: "Closing"
   going_back_to_home_page: "Taking you back to the home page"
   creating: Creating
   updating: Updating
