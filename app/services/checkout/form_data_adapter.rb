@@ -12,6 +12,8 @@ module Checkout
 
       move_payment_source_to_payment_attributes!
 
+      fill_in_card_type
+
       set_amount_in_payments_attributes
 
       construct_saved_card_attributes if @params[:order][:existing_card_id]
@@ -29,6 +31,28 @@ module Checkout
                     payment_source_params = delete_payment_source_params!
 
       @params[:order][:payments_attributes].first[:source_attributes] = payment_source_params
+    end
+
+    # Ensures cc_type is always passed to the model by inferring the type when
+    # the frontend didn't provide it. This fixes Pin Payments specifically
+    # although it might be useful for future payment gateways.
+    #
+    # More details:  app/assets/javascripts/darkswarm/services/checkout.js.coffee#L70-L98
+    def fill_in_card_type
+      return unless payment_source_attributes
+
+      return if payment_source_attributes.dig(:number).blank?
+
+      payment_source_attributes[:cc_type] ||= card_brand(payment_source_attributes[:number])
+    end
+
+    def payment_source_attributes
+      @payment_source_attributes ||=
+        params[:order][:payments_attributes]&.first&.dig(:source_attributes)
+    end
+
+    def card_brand(number)
+      ActiveMerchant::Billing::CreditCard.brand?(number)
     end
 
     def delete_payment_source_params!
