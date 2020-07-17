@@ -32,7 +32,19 @@ module Spree
     # invalidate previously entered payments
     after_create :invalidate_old_payments
 
+    # Prevents #validate_source to end up in a chain of validations, from
+    # payment to payment up until the original credit card record.
+    #
+    # All payments are validated before saving thus, we get nothing by checking
+    # they are valid in the future. Quite the opposite. Stripe is accepting
+    # refunds whose source are cards that were valid when the payment was
+    # placed but are now expired, and we consider them invalid.
+    #
+    # Skipping the source validation when applying a refund avoids this
+    # situation. We trust the payment gateway.
+    attr_accessor :skip_source_validation
     attr_accessor :source_attributes
+
     after_initialize :build_source
 
     scope :from_credit_card, -> { where(source_type: 'Spree::CreditCard') }
@@ -151,7 +163,7 @@ module Spree
     end
 
     def validate_source
-      if source && !source.valid?
+      if source && !skip_source_validation && !source.valid?
         source.errors.each do |field, error|
           field_name = I18n.t("activerecord.attributes.#{source.class.to_s.underscore}.#{field}")
           errors.add(Spree.t(source.class.to_s.demodulize.underscore), "#{field_name} #{error}")
@@ -176,8 +188,12 @@ module Spree
       gateway_error e
     end
 
+    # Inherited from Spree, makes newly entered payments invalidate previously
+    # entered payments so the most recent payment is used by the gateway.
     def invalidate_old_payments
-      order.payments.with_state('checkout').where("id != ?", id).each(&:invalidate!)
+      order.payments.with_state('checkout').where("id != ?", id).each do |payment|
+        payment.update_column(:state, 'invalid')
+      end
     end
 
     def update_order

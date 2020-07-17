@@ -401,6 +401,25 @@ describe Spree::Payment do
             expect(offsetting_payment.response_code).to eq('12345')
             expect(offsetting_payment.source).to eq(payment)
           end
+
+          context 'and the source payment card is expired' do
+            let(:card) do
+              Spree::CreditCard.new(month: 12, year: 1995, number: '4111111111111111')
+            end
+
+            let(:successful_response) do
+              ActiveMerchant::Billing::Response.new(true, "Yay!")
+            end
+
+            it 'lets the new payment to be saved' do
+              allow(payment.order).to receive(:outstanding_balance) { 100 }
+              allow(payment).to receive(:credit_allowed) { 10 }
+
+              offsetting_payment = payment.credit!
+
+              expect(offsetting_payment).to be_valid
+            end
+          end
         end
       end
     end

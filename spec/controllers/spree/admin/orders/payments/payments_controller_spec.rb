@@ -157,6 +157,8 @@ describe Spree::Admin::PaymentsController, type: :controller do
 
       let(:params) { { e: 'credit', order_id: order.number, id: payment.id } }
 
+      let(:successful_response) { ActiveMerchant::Billing::Response.new(true, "Yay!") }
+
       before do
         allow(request).to receive(:referer) { 'http://foo.com' }
         allow(Spree::Payment).to receive(:find).with(payment.id.to_s) { payment }
@@ -179,6 +181,14 @@ describe Spree::Admin::PaymentsController, type: :controller do
 
         expect(flash[:error]).to eq('validation error')
         expect(response).to redirect_to('http://foo.com')
+      end
+
+      it 'displays a success message and redirects to the referer' do
+        allow(payment_method).to receive(:credit) { successful_response }
+
+        spree_put :fire, params
+
+        expect(flash[:success]).to eq(I18n.t(:payment_updated))
       end
     end
   end
