@@ -194,7 +194,7 @@ module Spree
       return if session[:access_token] || params[:token] || spree_current_user
 
       flash[:error] = I18n.t("spree.orders.edit.login_to_view_order")
-      require_login_then_redirect_to request.env['PATH_INFO']
+      redirect_to main_app.root_path(anchor: "login?after_login=#{request.env['PATH_INFO']}")
     end
 
     def order_to_update

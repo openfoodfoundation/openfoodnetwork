@@ -63,10 +63,6 @@ module Spree
 
           user.generate_spree_api_key!
         end
-
-        def require_login_then_redirect_to(url)
-          redirect_to main_app.root_path(anchor: "login?after_login=#{url}")
-        end
       end
     end
   end
