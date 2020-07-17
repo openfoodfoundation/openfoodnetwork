@@ -176,7 +176,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    combine_pdf (1.0.16)
+    combine_pdf (1.0.17)
       ruby-rc4 (>= 0.1.5)
     compass (1.0.3)
       chunky_png (~> 1.2)
