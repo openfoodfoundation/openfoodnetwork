@@ -108,7 +108,7 @@ module Spree
           record_response(response)
 
           if response.success?
-            self.class.create(
+            self.class.create!(
               order: order,
               source: self,
               payment_method: payment_method,

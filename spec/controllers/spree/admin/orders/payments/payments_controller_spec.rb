@@ -148,14 +148,25 @@ describe Spree::Admin::PaymentsController, type: :controller do
 
       let(:params) { { e: 'credit', order_id: order.number, id: payment.id } }
 
+      before { allow(request).to receive(:referer) { 'http://foo.com' } }
+
       it 'handles gateway errors' do
-        allow(request).to receive(:referer) { 'http://foo.com' }
         allow_any_instance_of(payment_method.class)
           .to receive(:credit).and_raise(Spree::Core::GatewayError, 'error message')
 
         spree_put :fire, params
 
         expect(flash[:error]).to eq('error message')
+        expect(response).to redirect_to('http://foo.com')
+      end
+
+      it 'handles validation errors' do
+        allow(Spree::Payment).to receive(:find).with(payment.id.to_s) { payment }
+        allow(payment).to receive(:credit!).and_raise(StandardError, 'validation error')
+
+        spree_put :fire, params
+
+        expect(flash[:error]).to eq('validation error')
         expect(response).to redirect_to('http://foo.com')
       end
     end
