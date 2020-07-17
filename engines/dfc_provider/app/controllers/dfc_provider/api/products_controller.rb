@@ -15,8 +15,8 @@ module DfcProvider
 
       def index
         products = @enterprise.
-          inventory_variants.
-          includes(:product, :inventory_items)
+          supplied_products.
+          includes(variants: :product)
 
         serialized_data = ::DfcProvider::ProductSerializer.
           new(products, base_url).
