@@ -2,11 +2,7 @@ require 'spec_helper'
 
 describe Spree::Payment do
   context 'original specs from Spree' do
-    let(:order) do
-      order = Spree::Order.new(:bill_address => Spree::Address.new,
-                               :ship_address => Spree::Address.new)
-    end
-
+    let(:order) { create(:order) }
     let(:gateway) do
       gateway = Spree::Gateway::Bogus.new(:environment => 'test', :active => true)
       gateway.stub :source_required => true
@@ -339,7 +335,7 @@ describe Spree::Payment do
 
       context "#credit" do
         before do
-          payment.state = 'complete'
+          payment.state = 'completed'
           payment.response_code = '123'
         end
 
