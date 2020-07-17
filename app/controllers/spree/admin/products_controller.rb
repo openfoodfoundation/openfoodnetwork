@@ -9,15 +9,12 @@ module Spree
       include OpenFoodNetwork::SpreeApiKeyLoader
       include OrderCyclesHelper
       include EnterprisesHelper
+      include ProductFilterHelper
 
       before_action :load_data
       before_action :load_form_data, only: [:index, :new, :create, :edit, :update]
       before_action :load_spree_api_key, only: [:index, :variant_overrides]
       before_action :strip_new_properties, only: [:create, :update]
-
-      PRODUCT_FILTER = [
-        'query', 'producerFilter', 'categoryFilter', 'sorting', 'importDateFilter'
-      ].freeze
 
       def new
         @object.shipping_category = DefaultShippingCategory.find_or_create
@@ -58,9 +55,7 @@ module Spree
       end
 
       def edit
-        filters = product_filters(params)
-        @url_filters = filters.empty? ? "" : "?#{filters.to_query}"
-
+        @url_filters = product_filters(params)
         super
       end
 
@@ -258,10 +253,6 @@ module Spree
 
       def set_product_master_variant_price_to_zero
         @product.price = 0 if @product.price.nil?
-      end
-
-      def product_filters(params)
-        params.select { |k, _v| PRODUCT_FILTER.include?(k) }
       end
     end
   end
