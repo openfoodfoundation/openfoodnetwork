@@ -4,14 +4,51 @@ module Spree
   module Admin
     class VariantsController < ResourceController
       helper 'spree/products'
+      include ProductFilterHelper
+
       belongs_to 'spree/product', find_by: :permalink
       new_action.before :new_before
 
+      def index
+        @url_filters = product_filters(request.query_parameters)
+      end
+
+      def edit
+        @url_filters = product_filters(request.query_parameters)
+
+        super
+      end
+
+      def update
+        @url_filter = product_filters(request.query_parameters)
+
+        if @object.update(permitted_resource_params)
+          flash[:success] = flash_message_for(@object, :successfully_updated)
+          redirect_to admin_product_variants_url(params[:product_id], @url_filter)
+        else
+          redirect_to edit_admin_product_variant_url(params[:product_id], @object, @url_filter)
+        end
+      end
+
+      def new
+        @url_filters = product_filters(request.query_parameters)
+
+        super
+      end
+
       def create
+        @url_filter = product_filters(request.query_parameters)
+
         on_demand = params[:variant].delete(:on_demand)
         on_hand = params[:variant].delete(:on_hand)
 
-        super
+        @object.attributes = permitted_resource_params
+        if @object.save
+          flash[:success] = flash_message_for(@object, :successfully_created)
+          redirect_to admin_product_variants_url(params[:product_id], @url_filter)
+        else
+          redirect_to new_admin_product_variant_url(params[:product_id], @url_filter)
+        end
 
         return unless @object.present? && @object.valid?
 
@@ -26,6 +63,8 @@ module Spree
       end
 
       def destroy
+        @url_filter = product_filters(request.query_parameters)
+
         @variant = Spree::Variant.find(params[:id])
         flash[:success] = if VariantDeleter.new.delete(@variant)
                             Spree.t('notice_messages.variant_deleted')
@@ -34,7 +73,7 @@ module Spree
                           end
 
         respond_with(@variant) do |format|
-          format.html { redirect_to admin_product_variants_url(params[:product_id]) }
+          format.html { redirect_to admin_product_variants_url(params[:product_id], @url_filter) }
         end
       end
 

@@ -1,7 +1,11 @@
 = render partial: 'spree/shared/error_messages', locals: { target: @variant }
 
-= form_for [:admin, @product, @variant] do |f|
+= form_for [:admin, @product, @variant], :url => admin_product_variants_path(@product, @url_filters) do |f|
   %fieldset{'data-hook' => "admin_variant_new_form"}
     %legend{align: "center"}= t('.new_variant')
     = render partial: 'form', locals: { f: f }
-    = render partial: 'spree/admin/shared/new_resource_links'
+
+  .form-buttons.filter-actions.actions
+    = button t('actions.create'), 'icon-ok'
+    %span.or= t(:or)
+    = button_link_to t('actions.cancel'), collection_url(@url_filters), icon: 'icon-remove'

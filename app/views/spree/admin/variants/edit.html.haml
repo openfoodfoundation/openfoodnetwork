@@ -4,8 +4,11 @@
 
 = render partial: 'spree/shared/error_messages', locals: { target: @variant }
 
-= form_for [:admin, @product, @variant] do |f|
+= form_for [:admin, @product, @variant], :url => admin_product_variant_path(@product, @variant, @url_filters) do |f|
   %fieldset.no-border-top
     %div
       = render partial: 'form', locals: { f: f }
-    = render partial: 'spree/admin/shared/edit_resource_links'
+  .form-buttons.filter-actions.actions
+    = button t(:update), 'icon-refresh'
+    %span.or= t(:or)
+    = button_link_to t(:cancel), collection_url(@url_filters), icon: 'icon-remove'
