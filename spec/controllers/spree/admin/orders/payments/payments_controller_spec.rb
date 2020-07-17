@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Spree::Admin::PaymentsController, type: :controller do
@@ -141,17 +143,27 @@ describe Spree::Admin::PaymentsController, type: :controller do
 
   describe '#fire' do
     context 'on credit event' do
-      let(:shop) { create(:enterprise) }
-      let(:payment_method) { create(:stripe_sca_payment_method, distributor_ids: [create(:distributor_enterprise).id], preferred_enterprise_id: shop.id) }
+      let(:payment_method) do
+        create(
+          :stripe_sca_payment_method,
+          distributor_ids: [create(:distributor_enterprise).id],
+          preferred_enterprise_id: create(:enterprise).id
+        )
+      end
       let(:order) { create(:order, state: 'complete') }
-      let(:payment) { create(:payment, order: order, payment_method: payment_method, amount: order.total) }
+      let(:payment) do
+        create(:payment, order: order, payment_method: payment_method, amount: order.total)
+      end
 
       let(:params) { { e: 'credit', order_id: order.number, id: payment.id } }
 
-      before { allow(request).to receive(:referer) { 'http://foo.com' } }
+      before do
+        allow(request).to receive(:referer) { 'http://foo.com' }
+        allow(Spree::Payment).to receive(:find).with(payment.id.to_s) { payment }
+      end
 
       it 'handles gateway errors' do
-        allow_any_instance_of(payment_method.class)
+        allow(payment.payment_method)
           .to receive(:credit).and_raise(Spree::Core::GatewayError, 'error message')
 
         spree_put :fire, params
@@ -161,7 +173,6 @@ describe Spree::Admin::PaymentsController, type: :controller do
       end
 
       it 'handles validation errors' do
-        allow(Spree::Payment).to receive(:find).with(payment.id.to_s) { payment }
         allow(payment).to receive(:credit!).and_raise(StandardError, 'validation error')
 
         spree_put :fire, params
