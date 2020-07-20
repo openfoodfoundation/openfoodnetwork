@@ -3331,6 +3331,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           stripe:
             error_saving_payment: Error saving payment
             submitting_payment: Submitting payment...
+          paypal:
+            no_payment_via_admin_backend: No Payment Via Admin Backend
       products:
         image_upload_error: "The product image was not recognised. Please upload an image in PNG or JPG format."
         new:
