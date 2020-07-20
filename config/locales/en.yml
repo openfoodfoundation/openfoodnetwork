@@ -2902,6 +2902,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   shipping_tax_rate: "Shipping Tax Rate"
   category: "Category"
   delivery: "Delivery"
+  description: "Description"
+  display: "Display"
+  tags: "Tags"
   temperature_controlled: "Temperature Controlled"
   new_product: "New Product"
 
