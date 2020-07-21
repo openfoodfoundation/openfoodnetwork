@@ -34,7 +34,7 @@ class Api::Admin::ForOrderCycle::EnterpriseSerializer < ActiveModel::Serializer
         visible_for(order_cycle.coordinator).
         select('DISTINCT spree_products.*')
     end
-    products_relation.order(:name)
+    products_relation
   end
 
   def products
