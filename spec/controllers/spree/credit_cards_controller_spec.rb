@@ -88,7 +88,7 @@ describe Spree::CreditCardsController, type: :controller do
       context "but the card is not owned by the user" do
         it "redirects to unauthorized" do
           spree_put :update, params
-          expect(response).to redirect_to spree.unauthorized_path
+          expect(response).to redirect_to unauthorized_path
         end
       end
 
@@ -135,7 +135,7 @@ describe Spree::CreditCardsController, type: :controller do
       context "but the card is not owned by the user" do
         it "redirects to unauthorized" do
           spree_delete :destroy, params
-          expect(response).to redirect_to spree.unauthorized_path
+          expect(response).to redirect_to unauthorized_path
         end
       end
 
