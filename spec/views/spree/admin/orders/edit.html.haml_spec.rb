@@ -35,4 +35,15 @@ describe "spree/admin/orders/edit.html.haml" do
       expect(rendered).to have_content("Order Total $36.00")
     end
   end
+
+  describe "actions dropwdown" do
+    it "contains all the actions buttons" do
+      render
+
+      expect(rendered).to have_content("Resend Confirmation")
+      expect(rendered).to have_content("Send Invoice")
+      expect(rendered).to have_content("Print Invoices")
+      expect(rendered).to have_content("Cancel Order")
+    end
+  end
 end
