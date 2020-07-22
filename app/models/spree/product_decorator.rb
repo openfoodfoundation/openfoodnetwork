@@ -63,8 +63,7 @@ Spree::Product.class_eval do
   scope :visible_for, lambda { |enterprise|
     joins('LEFT OUTER JOIN spree_variants AS o_spree_variants ON (o_spree_variants.product_id = spree_products.id)').
       joins('LEFT OUTER JOIN inventory_items AS o_inventory_items ON (o_spree_variants.id = o_inventory_items.variant_id)').
-      where('o_inventory_items.enterprise_id = (?) AND visible = (?)', enterprise, true).
-      select('DISTINCT spree_products.*')
+      where('o_inventory_items.enterprise_id = (?) AND visible = (?)', enterprise, true)
   }
 
   # -- Scopes
