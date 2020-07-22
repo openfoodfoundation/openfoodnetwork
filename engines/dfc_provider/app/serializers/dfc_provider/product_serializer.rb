@@ -13,25 +13,85 @@ module DfcProvider
       {
         "@context" =>
         {
-          "DFC" => "http://datafoodconsortium.org/ontologies/DFC_FullModel.owl#",
+          "dfc" => "http://datafoodconsortium.org/ontologies/DFC_FullModel.owl#",
           "@base" => @base_url
         },
-        "@id" => "/enterprise/products",
-        "DFC:supplies" => serialized_products
+        "@id" => "/enterprise/default/products",
+        "@id" => "/personId",
+        "@type"=> "dfc:Person",
+        "dfc:familyName" => "Doe",
+        "dfc:firtsName" => "Jhon",
+        "dfc:hasAdress" => {
+          "@type" => "dfc:Address",
+          "dfc:city" =>"",
+          "dfc:country" =>"",
+          "dfc:postcode" => "",
+          "dfc:street" => ""
+        },
+        "dfc:affiliates" => [
+          {
+            "@id" => "/entrepriseId",
+            "@type" => "dfc:Entreprise",
+            "dfc:VATnumber" => "",
+            "dfc:defines" => [],
+            "dfc:supplies" => supplied_products,
+            "dfc:manages" => managed_products
+          }
+        ]
       }
     end
 
     private
 
-    def serialized_products
-      @products.map do |variant|
+    def supplied_products
+      @products.map do |product|
+        variant = product.variants.first
         {
-          "DFC:description" => variant.name,
-          "DFC:quantity" => variant.total_on_hand,
-          "@id" => variant.id,
-          "DFC:hasUnit" => { "@id" => "/unit/#{variant.unit_description.presence || 'piece'}" }
+          "@id" => "/products/#{product.id}",
+          "dfc:hasUnit":{
+            "@id" => "/unit/#{variant.unit_description.presence || 'piece'}",
+            "rdfs:label" => "#{variant.unit_description.presence || 'piece'}"
+          },
+          "dfc:quantity" => "99.99",
+          "dfc:description" => product.name,
+          "dfc:totalTheoriticalStock" => nil,
+          "dfc:brand" => '',
+          "dfc:claim" => '',
+          "dfc:image" => product.images.first.try(:attahcement, :url),
+          "lifeTime" => "supply lifeTime",
+          "dfc:physicalCharacterisctics" => "supply physical characterisctics",
+          "dfc:quantity" => "supply quantity"
         }
       end
+    end
+
+    def managed_products
+      @products.map do |product|
+        product.variants.map do |variant|
+          {
+            "@id" => "/catalogItemId1",
+            "@type" => "dfc:CatalogItem",
+            "dfc:references" => {
+              "@type" => "@id",
+              "@id" => "/suppliedProduct/item3"
+            },
+            "dfc:sku" => product.sku,
+            "dfc:stockLimitation" => nil,
+            "dfc:offeredThrough" => [
+              {
+                "@id" => "offerId1",
+                "@type" => "dfc:Offer",
+                "dfc:offeresTo" => {
+                  "@type" => "@id",
+                  "@id" => "/customerCategoryId1"
+                },
+                "dfc:price" => variant.price,
+                "dfc:stockLimitation" => 0,
+              }
+            ]
+          }
+        end
+      end.flatten
     end
   end
 end
