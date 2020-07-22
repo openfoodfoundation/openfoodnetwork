@@ -391,13 +391,13 @@ describe Spree::Payment do
 
         context "when response is successful" do
           it "should create an offsetting payment" do
-            Spree::Payment.should_receive(:create!)
+            expect(Spree::Payment).to receive(:create!)
             payment.credit!
           end
 
           it "resulting payment should have correct values" do
-            payment.order.stub :outstanding_balance => 100
-            payment.stub :credit_allowed => 10
+            allow(payment.order).to receive(:outstanding_balance) { 100 }
+            allow(payment).to receive(:credit_allowed) { 10 }
 
             offsetting_payment = payment.credit!
             expect(offsetting_payment.amount.to_f).to eq(-10)
