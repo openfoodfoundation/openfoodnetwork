@@ -14,15 +14,7 @@ module DfcProvider
       respond_to :json
 
       def index
-        products = @enterprise.
-          supplied_products.
-          includes(variants: :product)
-
-        serialized_data = ::DfcProvider::ProductSerializer.
-          new(products, base_url).
-          serialized_data
-
-        render json: serialized_data
+        render json: serialized_data_for(@user)
       end
 
       private
@@ -54,16 +46,22 @@ module DfcProvider
         head :unauthorized
       end
 
-      def base_url
-        "#{root_url}api/dfc_provider"
-      end
-
       def access_token
         request.headers['Authorization'].to_s.split(' ').last
       end
 
       def authorization_control
         DfcProvider::AuthorizationControl.new(access_token)
+      end
+
+      def serialized_data_for(user)
+        {
+          "@context" =>
+          {
+            "dfc" => "http://datafoodconsortium.org/ontologies/DFC_FullModel.owl#",
+            "@base" => "#{root_url}api/dfc_provider"
+          }
+        }.merge(DfcProvider::PersonSerializer.new(user).serialized_data)
       end
     end
   end
