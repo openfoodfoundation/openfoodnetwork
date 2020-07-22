@@ -725,7 +725,7 @@ describe Spree::Payment do
       end
     end
 
-    describe "refunding" do
+    describe "refund!" do
       let(:payment) { create(:payment) }
       let(:success) { double(success?: true, authorization: 'abc123') }
       let(:failure) { double(success?: false) }
