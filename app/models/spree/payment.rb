@@ -188,7 +188,6 @@ module Spree
     # is used by the gateway.
     def invalidate_old_payments
       order.payments.with_state('checkout').where("id != ?", id).each do |payment|
-
         # Using update_column skips validations and so it skips validate_source. As we are just
         # invalidating past payments here, we don't want to validate all of them at this stage.
         payment.update_column(:state, 'invalid')
