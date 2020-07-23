@@ -5,15 +5,9 @@ require 'spec_helper'
 describe DfcProvider::Api::ProductsController, type: :controller do
   render_views
 
-  let(:user) { create(:user) }
-  let(:enterprise) { create(:distributor_enterprise, owner: user) }
-  let(:product) { create(:simple_product, supplier: enterprise ) }
-  let!(:visible_inventory_item) do
-    create(:inventory_item,
-           enterprise: enterprise,
-           variant: product.variants.first,
-           visible: true)
-  end
+  let!(:user) { create(:user) }
+  let!(:enterprise) { create(:distributor_enterprise, owner: user) }
+  let!(:product) { create(:simple_product, supplier: enterprise ) }
 
   describe('.index') do
     context 'with authorization token' do
@@ -37,9 +31,13 @@ describe DfcProvider::Api::ProductsController, type: :controller do
                 expect(response.status).to eq 200
               end
 
-              it 'renders the related product' do
+              it 'renders the required content' do
                 expect(response.body)
-                  .to include(product.variants.first.name)
+                  .to include(product.name)
+                expect(response.body)
+                  .to include(user.email)
+                expect(response.body)
+                  .to include("offers/#{product.variants.first.id}")
               end
             end
 
@@ -60,9 +58,13 @@ describe DfcProvider::Api::ProductsController, type: :controller do
               expect(response.status).to eq 200
             end
 
-            it 'renders the related product' do
+            it 'renders the required content' do
               expect(response.body)
-                .to include(product.variants.first.name)
+                .to include(product.name)
+              expect(response.body)
+                .to include(user.email)
+              expect(response.body)
+                .to include("offers/#{product.variants.first.id}")
             end
           end
         end

@@ -10,7 +10,7 @@ module DfcProvider
 
     def serialized_data
       {
-        "@id" => "/entrepriseId",
+        "@id" => "/entreprises/#{@enterprise.id}",
         "@type" => "dfc:Entreprise",
         "dfc:VATnumber" => nil,
         "dfc:defines" => [],

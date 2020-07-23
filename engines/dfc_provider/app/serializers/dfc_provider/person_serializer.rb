@@ -16,10 +16,10 @@ module DfcProvider
         "dfc:firtsName" => @user.email,
         "dfc:hasAdress" => {
           "@type" => "dfc:Address",
-          "dfc:city" => "",
-          "dfc:country" => "",
-          "dfc:postcode" =>"",
-          "dfc:street" => ""
+          "dfc:city" => nil,
+          "dfc:country" => nil,
+          "dfc:postcode" => nil,
+          "dfc:street" => nil
         },
         "dfc:affiliates" => affiliates_serialized_data
       }
@@ -28,7 +28,7 @@ module DfcProvider
     private
 
     def affiliates_serialized_data
-      @user.enterprises.each do |enterprise|
+      @user.enterprises.map do |enterprise|
         EnterpriseSerializer.new(enterprise).serialized_data
       end
     end
