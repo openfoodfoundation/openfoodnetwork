@@ -138,8 +138,13 @@ module OrderManagement
         private
 
         def line_item_includes
-          [{ order: [:bill_address],
-             variant: [{ option_values: :option_type }, { product: :supplier }] }]
+          [
+            {
+              order: [:bill_address],
+              variant: [{ option_values: :option_type }, { product: :supplier }]
+            },
+            :option_values
+          ]
         end
 
         def order_permissions
