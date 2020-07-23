@@ -13,7 +13,6 @@ Spree::Core::Engine.routes.draw do
   resources :users, :only => [:edit, :update]
 
   devise_scope :spree_user do
-    get '/login' => 'user_sessions#new', :as => :login
     post '/login' => 'user_sessions#create', :as => :create_new_session
     get '/logout' => 'user_sessions#destroy', :as => :logout
     get '/signup' => 'user_registrations#new', :as => :signup

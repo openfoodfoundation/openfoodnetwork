@@ -11,7 +11,9 @@ module Spree
       current_spree_user
     end
 
-    delegate :login_path, to: :spree, prefix: true
+    def spree_login_path
+      main_app.login_path
+    end
 
     delegate :signup_path, to: :spree, prefix: true
 
