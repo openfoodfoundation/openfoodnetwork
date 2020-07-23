@@ -432,8 +432,8 @@ Spree::Order.class_eval do
   # amount here.
   def charge_shipping_and_payment_fees!
     update_totals
-    return unless payments.any?
+    return unless pending_payments.any?
 
-    payments.first.update_attribute :amount, total
+    pending_payments.first.update_attribute :amount, total
   end
 end
