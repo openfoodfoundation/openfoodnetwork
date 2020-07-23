@@ -191,6 +191,7 @@ module Spree
         # Using update_column skips validations and so it skips validate_source. As we are just
         # invalidating past payments here, we don't want to validate all of them at this stage.
         payment.update_column(:state, 'invalid')
+        payment.ensure_correct_adjustment
       end
     end
 
