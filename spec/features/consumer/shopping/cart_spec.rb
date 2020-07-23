@@ -80,7 +80,7 @@ feature "full-page cart", js: true do
     describe "admin and handling flat fees" do
       context "when there are fees" do
         let(:handling_fee) {
-          create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 1),
+          create(:enterprise_fee, calculator: Calculator::FlatRate.new(preferred_amount: 1),
                                   enterprise: order_cycle.coordinator, fee_type: 'admin')
         }
 

@@ -21,7 +21,7 @@ feature '
 
       # This calculator doesn't handle a `nil` order well.
       # That has been useful in finding bugs. ;-)
-      payment_method.calculator = Spree::Calculator::FlatPercentItemTotal.new
+      payment_method.calculator = Calculator::FlatPercentItemTotal.new
       payment_method.save!
     end
 

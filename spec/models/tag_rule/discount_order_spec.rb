@@ -73,7 +73,7 @@ describe TagRule::DiscountOrder, type: :model do
     end
 
     context "when shipping charges apply" do
-      let!(:shipping_method) { create(:shipping_method, calculator: Spree::Calculator::FlatRate.new( preferred_amount: 25.00 ) ) }
+      let!(:shipping_method) { create(:shipping_method, calculator: Calculator::FlatRate.new( preferred_amount: 25.00 ) ) }
       before do
         shipping_method.create_adjustment("Shipping", order, order, true)
       end

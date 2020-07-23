@@ -43,7 +43,7 @@ ca:
               after_orders_open_at: s'ha de fer amb el termini obert
         variant_override:
           count_on_hand:
-            using_producer_stock_settings_but_count_on_hand_set: "ha d'estar en blanc perquè s'utilitza la configuració de l'inventari de la productora"
+            using_producer_stock_settings_but_count_on_hand_set: "ha d'estar en blanc perquè s'utilitza la configuració d'estoc de la productora"
             on_demand_but_count_on_hand_set: "ha d'estar en blanc si és sota demanda"
             limited_stock_but_no_count_on_hand: "cal especificar-se perquè força existències limitades"
   activemodel:
@@ -182,6 +182,7 @@ ca:
         explainer: El processament automàtic d'aquestes comandes va fallar per un motiu desconegut. Això no hauria de passar, si us plau, contacteu amb nosaltres si esteu veient això.
   home: "OFN"
   title: "Open Food Network"
+  welcome_to: "Benvingut a "
   site_meta_description: "Comencem des de baix. Amb agricultors i productors disposats a explicar les seves històries amb orgull i sinceritat. Amb distribuïdors connectant persones i productes de manera justa i honesta. Amb compradors que creuen que millors decisions de compra setmanal poden ..."
   search_by_name: Cercar per nom o barri ...
   producers_join: Els productors australians son ara benvinguts a unir-se a Open Food Network.
@@ -1716,6 +1717,7 @@ ca:
   remember_me: Recorda'm
   are_you_sure: "Estàs segur?"
   orders_open: "Comandes obertes"
+  closing: "Tancant"
   going_back_to_home_page: "Tornant a la pàgina d'inici"
   creating: Creant
   updating: Actualitzant
@@ -2073,6 +2075,7 @@ ca:
   hub_sidebar_at_least: "Cal seleccionar almenys un grup "
   hub_sidebar_blue: "blau"
   hub_sidebar_red: "vermell"
+  order_cycles_closed_for_hub: "La botiga que has triat està temporalment tancada per a fer comandes. Sisplau, prova una mica més tard"
   report_customers_distributor: "Distribuïdora"
   report_customers_supplier: "Proveïdora"
   report_customers_cycle: "Cicle de Comanda"
@@ -2309,6 +2312,7 @@ ca:
   order_cycles_email_to_producers_notice: 'Els correus electrònics per enviar a les productores estan en cua.'
   order_cycles_no_permission_to_coordinate_error: "Cap de les vostres organitzacions té permís per coordinar un cicle de comanda"
   order_cycles_no_permission_to_create_error: "No teniu permís per crear un cicle de comandes coordinat per aquesta organització"
+  order_cycle_closed: "El cicle de comandes que has triat acaba de tancar. Sisplau prova en un altre moment."
   back_to_orders_list: "Torna a la llista de comandes"
   no_orders_found: "No s'han trobat comandes"
   order_information: "Informació de la comanda"
@@ -2564,7 +2568,7 @@ ca:
         'yes': "Sota demanda"
     variant_overrides:
       on_demand:
-        use_producer_settings: "Utilitzeu la configuració d'inventari de la productora"
+        use_producer_settings: "Utilitzeu la configuració d'estoc de la productora"
         'yes': "Sí"
         'no': "No"
       inventory_products: "Productes de l'inventari"

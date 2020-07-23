@@ -1,8 +1,14 @@
+# frozen_string_literal: false
+
+require_dependency 'spree/calculator'
 require 'spree/localized_number'
 
-module Spree
-  Calculator::PerItem.class_eval do
+module Calculator
+  class PerItem < Spree::Calculator
     extend Spree::LocalizedNumber
+
+    preference :amount, :decimal, default: 0
+    preference :currency, :string, default: Spree::Config[:currency]
 
     localize_number :preferred_amount
 
@@ -14,11 +20,7 @@ module Spree
       return 0 if object.nil?
 
       number_of_line_items = line_items_for(object).reduce(0) do |sum, line_item|
-        value_to_add = if matching_products.blank? || matching_products.include?(line_item.product)
-                         line_item.quantity
-                       else
-                         0
-                       end
+        value_to_add = line_item.quantity
         sum + value_to_add
       end
       preferred_amount * number_of_line_items

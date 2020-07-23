@@ -6,9 +6,5 @@ module Spree
 
     include I18nHelper
     before_action :set_locale
-
-    def unauthorized
-      render 'shared/unauthorized', status: :unauthorized
-    end
   end
 end

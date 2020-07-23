@@ -99,11 +99,11 @@ module OrderManagement
         context "using flat rate calculators" do
           let(:shipping_method) {
             create(:shipping_method,
-                   calculator: Spree::Calculator::FlatRate.new(preferred_amount: 12.34))
+                   calculator: Calculator::FlatRate.new(preferred_amount: 12.34))
           }
           let(:payment_method) {
             create(:payment_method,
-                   calculator: Spree::Calculator::FlatRate.new(preferred_amount: 9.12))
+                   calculator: Calculator::FlatRate.new(preferred_amount: 9.12))
           }
 
           it "calculates fees based on the rates provided" do
@@ -116,13 +116,13 @@ module OrderManagement
         context "using flat percent item total calculators" do
           let(:shipping_method) {
             create(:shipping_method,
-                   calculator: Spree::Calculator::FlatPercentItemTotal.new(
+                   calculator: Calculator::FlatPercentItemTotal.new(
                      preferred_flat_percent: 10
                    ))
           }
           let(:payment_method) {
             create(:payment_method,
-                   calculator: Spree::Calculator::FlatPercentItemTotal.new(
+                   calculator: Calculator::FlatPercentItemTotal.new(
                      preferred_flat_percent: 20
                    ))
           }
@@ -154,11 +154,11 @@ module OrderManagement
         context "using per item calculators" do
           let(:shipping_method) {
             create(:shipping_method,
-                   calculator: Spree::Calculator::PerItem.new(preferred_amount: 1.2))
+                   calculator: Calculator::PerItem.new(preferred_amount: 1.2))
           }
           let(:payment_method) {
             create(:payment_method,
-                   calculator: Spree::Calculator::PerItem.new(preferred_amount: 0.3))
+                   calculator: Calculator::PerItem.new(preferred_amount: 0.3))
           }
 
           it "calculates fees based on the number of items and rate provided" do

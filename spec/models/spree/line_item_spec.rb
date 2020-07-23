@@ -35,7 +35,7 @@ module Spree
       end
 
       describe "finding line items with and without tax" do
-        let(:tax_rate) { create(:tax_rate, calculator: Spree::Calculator::DefaultTax.new) }
+        let(:tax_rate) { create(:tax_rate, calculator: Calculator::DefaultTax.new) }
         let!(:adjustment1) { create(:adjustment, originator: tax_rate, label: "TR", amount: 123, included_tax: 10.00) }
 
         before do
@@ -97,7 +97,7 @@ module Spree
       end
 
       it "caps at zero when stock is negative" do
-        v.update! on_hand: -2
+        v.__send__(:stock_item).update_column(:count_on_hand, -2)
         li.cap_quantity_at_stock!
         expect(li.reload.quantity).to eq 0
       end
@@ -123,7 +123,7 @@ module Spree
           before { vo.update(count_on_hand: -3) }
 
           it "caps at zero" do
-            v.update(on_hand: -2)
+            v.__send__(:stock_item).update_column(:count_on_hand, -2)
             li.cap_quantity_at_stock!
             expect(li.reload.quantity).to eq 0
           end
@@ -311,7 +311,7 @@ module Spree
     describe "tax" do
       let(:li_no_tax)   { create(:line_item) }
       let(:li_tax)      { create(:line_item) }
-      let(:tax_rate)    { create(:tax_rate, calculator: Spree::Calculator::DefaultTax.new) }
+      let(:tax_rate)    { create(:tax_rate, calculator: Calculator::DefaultTax.new) }
       let!(:adjustment) { create(:adjustment, adjustable: li_tax, originator: tax_rate, label: "TR", amount: 123, included_tax: 10.00) }
 
       context "checking if a line item has tax included" do

@@ -901,6 +901,7 @@ ActiveRecord::Schema.define(version: 20200702112157) do
     t.datetime "updated_at",                        null: false
     t.boolean  "backorderable",     default: false
     t.datetime "deleted_at"
+    t.integer  "lock_version",      default: 0
   end
 
   add_index "spree_stock_items", ["stock_location_id", "variant_id"], name: "stock_item_by_loc_and_var_id", using: :btree
