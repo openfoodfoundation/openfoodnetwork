@@ -19,5 +19,7 @@ class MoveCalculatorsPreferencesOutsideSpreeNamespace < ActiveRecord::Migration
           AND NOT EXISTS (SELECT 1 FROM spree_preferences existing_pref
                            WHERE existing_pref.key = " + updated_pref_key + ")"
     )
+
+    Rails.cache.clear
   end
 end
