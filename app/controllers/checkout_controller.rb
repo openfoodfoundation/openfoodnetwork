@@ -255,10 +255,9 @@ class CheckoutController < Spree::StoreController
 
   def rescue_from_spree_gateway_error(error)
     flash[:error] = t(:spree_gateway_error_flash_for_checkout, error: error.message)
-    respond_to do |format|
-      format.html { render :edit }
-      format.json { render json: { flash: flash.to_hash }, status: :bad_request }
-    end
+    # This can also happen during the edit action
+    #   but the response needed here is the same as when the update action fails
+    update_failed_response
   end
 
   def permitted_params
