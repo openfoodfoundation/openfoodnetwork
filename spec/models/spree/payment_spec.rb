@@ -2,11 +2,7 @@ require 'spec_helper'
 
 describe Spree::Payment do
   context 'original specs from Spree' do
-    let(:order) do
-      order = Spree::Order.new(:bill_address => Spree::Address.new,
-                               :ship_address => Spree::Address.new)
-    end
-
+    let(:order) { create(:order) }
     let(:gateway) do
       gateway = Spree::Gateway::Bogus.new(:environment => 'test', :active => true)
       gateway.stub :source_required => true
@@ -339,7 +335,7 @@ describe Spree::Payment do
 
       context "#credit" do
         before do
-          payment.state = 'complete'
+          payment.state = 'completed'
           payment.response_code = '123'
         end
 
@@ -391,19 +387,38 @@ describe Spree::Payment do
 
         context "when response is successful" do
           it "should create an offsetting payment" do
-            Spree::Payment.should_receive(:create)
+            expect(Spree::Payment).to receive(:create!)
             payment.credit!
           end
 
           it "resulting payment should have correct values" do
-            payment.order.stub :outstanding_balance => 100
-            payment.stub :credit_allowed => 10
+            allow(payment.order).to receive(:outstanding_balance) { 100 }
+            allow(payment).to receive(:credit_allowed) { 10 }
 
             offsetting_payment = payment.credit!
             expect(offsetting_payment.amount.to_f).to eq(-10)
             expect(offsetting_payment).to be_completed
             expect(offsetting_payment.response_code).to eq('12345')
             expect(offsetting_payment.source).to eq(payment)
+          end
+
+          context 'and the source payment card is expired' do
+            let(:card) do
+              Spree::CreditCard.new(month: 12, year: 1995, number: '4111111111111111')
+            end
+
+            let(:successful_response) do
+              ActiveMerchant::Billing::Response.new(true, "Yay!")
+            end
+
+            it 'lets the new payment to be saved' do
+              allow(payment.order).to receive(:outstanding_balance) { 100 }
+              allow(payment).to receive(:credit_allowed) { 10 }
+
+              offsetting_payment = payment.credit!
+
+              expect(offsetting_payment).to be_valid
+            end
           end
         end
       end
@@ -710,7 +725,7 @@ describe Spree::Payment do
       end
     end
 
-    describe "refunding" do
+    describe "refund!" do
       let(:payment) { create(:payment) }
       let(:success) { double(success?: true, authorization: 'abc123') }
       let(:failure) { double(success?: false) }

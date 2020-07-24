@@ -108,13 +108,14 @@ module Spree
           record_response(response)
 
           if response.success?
-            self.class.create(
+            self.class.create!(
               order: order,
               source: self,
               payment_method: payment_method,
               amount: credit_amount.abs * -1,
               response_code: response.authorization,
-              state: 'completed'
+              state: 'completed',
+              skip_source_validation: true
             )
           else
             gateway_error(response)
@@ -146,12 +147,15 @@ module Spree
           record_response(response)
 
           if response.success?
-            self.class.create(order: order,
-                              source: self,
-                              payment_method: payment_method,
-                              amount: refund_amount.abs * -1,
-                              response_code: response.authorization,
-                              state: 'completed')
+            self.class.create!(
+              order: order,
+              source: self,
+              payment_method: payment_method,
+              amount: refund_amount.abs * -1,
+              response_code: response.authorization,
+              state: 'completed',
+              skip_source_validation: true
+            )
           else
             gateway_error(response)
           end

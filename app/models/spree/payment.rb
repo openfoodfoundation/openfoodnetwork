@@ -22,7 +22,7 @@ module Spree
 
     has_one :adjustment, as: :source, dependent: :destroy
 
-    before_validation :validate_source
+    validate :validate_source
     before_save :set_unique_identifier
 
     after_save :create_payment_profile, if: :profiles_supported?
@@ -32,7 +32,15 @@ module Spree
     # invalidate previously entered payments
     after_create :invalidate_old_payments
 
+    # Skips the validation of the source (for example, credit card) of the payment.
+    #
+    # This is used in refunds as the validation of the card can fail but the refund can go through,
+    #    we trust the payment gateway in these cases. For example, Stripe is accepting refunds with
+    #    source cards that were valid when the payment was placed but are now expired, and we
+    #    consider them invalid.
+    attr_accessor :skip_source_validation
     attr_accessor :source_attributes
+
     after_initialize :build_source
 
     scope :from_credit_card, -> { where(source_type: 'Spree::CreditCard') }
@@ -151,7 +159,7 @@ module Spree
     end
 
     def validate_source
-      if source && !source.valid?
+      if source && !skip_source_validation && !source.valid?
         source.errors.each do |field, error|
           field_name = I18n.t("activerecord.attributes.#{source.class.to_s.underscore}.#{field}")
           errors.add(Spree.t(source.class.to_s.demodulize.underscore), "#{field_name} #{error}")
@@ -176,8 +184,15 @@ module Spree
       gateway_error e
     end
 
+    # Makes newly entered payments invalidate previously entered payments so the most recent payment
+    # is used by the gateway.
     def invalidate_old_payments
-      order.payments.with_state('checkout').where("id != ?", id).each(&:invalidate!)
+      order.payments.with_state('checkout').where.not(id: id).each do |payment|
+        # Using update_column skips validations and so it skips validate_source. As we are just
+        # invalidating past payments here, we don't want to validate all of them at this stage.
+        payment.update_column(:state, 'invalid')
+        payment.ensure_correct_adjustment
+      end
     end
 
     def update_order

@@ -61,7 +61,7 @@ module Spree
         else
           flash[:error] = t(:cannot_perform_operation)
         end
-      rescue Spree::Core::GatewayError => e
+      rescue StandardError => e
         flash[:error] = e.message
       ensure
         redirect_to request.referer
