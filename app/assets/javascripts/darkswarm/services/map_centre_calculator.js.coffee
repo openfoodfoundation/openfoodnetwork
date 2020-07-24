@@ -1,10 +1,17 @@
-Darkswarm.factory 'MapCentreCalculator', ->
+Darkswarm.factory 'MapCentreCalculator', (Enterprises, openStreetMapConfig) ->
   new class MapCentreCalculator
-    calculate_latitude: (coordinates) =>
-      @_calculate("latitude", coordinates)
 
-    calculate_longitude: (coordinates) =>
-      @_calculate("longitude", coordinates)
+    initialLatitude: =>
+      if Enterprises.geocodedEnterprises().length > 0
+        @_calculate("latitude", Enterprises.geocodedEnterprises())
+      else
+        openStreetMapConfig.open_street_map_default_latitude
+
+    initialLongitude: =>
+      if Enterprises.geocodedEnterprises().length > 0
+        @_calculate("longitude", Enterprises.geocodedEnterprises())
+      else
+        openStreetMapConfig.open_street_map_default_longitude
 
     _calculate: (angleName, coordinates) =>
       positiveAngles = []

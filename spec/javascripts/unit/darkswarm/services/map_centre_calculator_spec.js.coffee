@@ -1,5 +1,6 @@
 describe 'MapCentreCalculator service', ->
   MapCentreCalculator = null
+  Enterprises = null
   defaultLongitude = null
   defaultLatitude = null
 
@@ -7,27 +8,42 @@ describe 'MapCentreCalculator service', ->
     module 'Darkswarm'
     defaultLongitude = -6
     defaultLatitude = 53
+    angular.module('Darkswarm').value 'openStreetMapConfig', {
+      open_street_map_default_latitude: 76.26,
+      open_street_map_default_longitude: -42.66
+    }
 
-    inject (_MapCentreCalculator_)->
+    inject (_MapCentreCalculator_, _Enterprises_)->
       MapCentreCalculator = _MapCentreCalculator_
+      Enterprises = _Enterprises_
 
-  describe "calculate_latitude", ->
-    it "calculates the center latitude", ->
-      coordinates = [
+  describe "initialLatitude", ->
+    it "calculates the center latitude of any present geocoded enterprises", ->
+      Enterprises.geocodedEnterprises = -> [
         { latitude: 53, longitude: defaultLongitude },
         { latitude: 54, longitude: defaultLongitude }
       ]
 
-      expect(MapCentreCalculator.calculate_latitude(coordinates)).toEqual 53.5
+      expect(MapCentreCalculator.initialLatitude()).toEqual 53.5
 
-  describe "calculate_longitude", ->
-    it "calculates the center longitude", ->
-      coordinates = [
+    it "returns the default configured latitude when there are no geocoded enterprises present", ->
+      Enterprises.geocodedEnterprises = -> []
+
+      expect(MapCentreCalculator.initialLatitude()).toEqual 76.26
+
+  describe "initialLongitude", ->
+    it "calculates the center longitude of any present geocoded enterprises", ->
+      Enterprises.geocodedEnterprises = -> [
         { latitude: defaultLatitude, longitude: -6 },
         { latitude: defaultLatitude, longitude: -7 }
       ]
 
-      expect(MapCentreCalculator.calculate_longitude(coordinates)).toEqual -6.5
+      expect(MapCentreCalculator.initialLongitude()).toEqual -6.5
+
+    it "returns the default configured longitude when there are no geocoded enterprises present", ->
+      Enterprises.geocodedEnterprises = -> []
+
+      expect(MapCentreCalculator.initialLongitude()).toEqual -42.66
 
   describe "_calculate", ->
     it "calculates the average angle correctly when given a single angle", ->

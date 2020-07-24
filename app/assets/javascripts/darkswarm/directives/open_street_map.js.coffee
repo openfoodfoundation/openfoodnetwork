@@ -36,10 +36,10 @@ Darkswarm.directive 'ofnOpenStreetMap', ($window, MapCentreCalculator, Enterpris
       zoomLevel = 6
       map = L.map('open-street-map')
       L.tileLayer.provider(openStreetMapProviderName, openStreetMapProviderOptions).addTo(map)
-      map.setView([initialLatitude(), initialLongitude()], zoomLevel)
+      map.setView([MapCentreCalculator.initialLatitude(), MapCentreCalculator.initialLongitude()], zoomLevel)
 
     displayEnterprises = ->
-      for enterprise in geocodedEnterprises()
+      for enterprise in Enterprises.geocodedEnterprises()
         marker = buildMarker(enterprise, { lat: enterprise.latitude, lng: enterprise.longitude }, enterprise.name).addTo(map)
         enterpriseNames.push(enterpriseName(enterprise))
         markers.push(marker)
@@ -53,24 +53,8 @@ Darkswarm.directive 'ofnOpenStreetMap', ($window, MapCentreCalculator, Enterpris
         search: searchEnterprises
       )
       overwriteInlinePositionRelativeToAbsoluteOnSearchField()
-      if geocodedEnterprises().length == 0
+      if Enterprises.geocodedEnterprises().length == 0
         disableSearchField()
-
-    geocodedEnterprises = () ->
-      Enterprises.enterprises.filter (enterprise) ->
-        enterprise.latitude? && enterprise.longitude?
-
-    initialLatitude = () ->
-      if geocodedEnterprises().length > 0
-        MapCentreCalculator.calculate_latitude(geocodedEnterprises())
-      else
-        openStreetMapConfig.open_street_map_default_latitude
-
-    initialLongitude = () ->
-      if geocodedEnterprises().length > 0
-        MapCentreCalculator.calculate_longitude(geocodedEnterprises())
-      else
-        openStreetMapConfig.open_street_map_default_longitude
 
     overwriteInlinePositionRelativeToAbsoluteOnSearchField = ->
       $('#open-street-map--search').css("position", "absolute")
