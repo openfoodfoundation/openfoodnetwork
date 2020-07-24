@@ -162,19 +162,30 @@ feature '
 
       # Check the url still includes the filters
       uri = URI.parse(current_url)
-      expect("#{uri.path}?#{uri.query}").to eq "#{spree.edit_admin_product_path(product)}?#{filter_query}"
+      expect("#{uri.path}?#{uri.query}").to eq spree.edit_admin_product_path(product, producerFilter: 2)
 
       # Link back to the bulk product update page should include the filters
-      expect(page).to have_link(I18n.t('admin.products.back_to_products_list'), href: %r{admin\/products#\?#{filter_query}})
-      expect(page).to have_link(I18n.t(:cancel), href: %r{admin\/products#\?#{filter_query}})
+      expected_admin_product_url = Regexp.new(Regexp.escape("#{spree.admin_products_path}#?#{filter_query}"))
+      expect(page).to have_link(I18n.t('admin.products.back_to_products_list'), href: expected_admin_product_url)
+      expect(page).to have_link(I18n.t(:cancel), href: expected_admin_product_url)
 
-      # Sidebar link should include the filters
-      expect(page).to have_link(I18n.t('admin.products.tabs.product_details'), href: %r{admin\/products\/#{product.permalink}\/edit\?#{filter_query}})
-      expect(page).to have_link(I18n.t('admin.products.tabs.images'), href: %r{admin\/products\/#{product.permalink}\/images\?#{filter_query}})
-      expect(page).to have_link(I18n.t('admin.products.tabs.variants'), href: %r{admin\/products\/#{product.permalink}\/variants\?#{filter_query}})
-      expect(page).to have_link(I18n.t('admin.products.tabs.product_properties'), href: %r{admin\/products\/#{product.permalink}\/product_properties\?#{filter_query}})
-      expect(page).to have_link(I18n.t('admin.products.tabs.group_buy_options'), href: %r{admin\/products\/#{product.permalink}\/group_buy_options\?#{filter_query}})
-      expect(page).to have_link(I18n.t(:search), href: %r{admin\/products\/#{product.permalink}\/seo\?#{filter_query}})
+      expected_product_url = Regexp.new(Regexp.escape(spree.edit_admin_product_path(product.permalink, producerFilter: 2)))
+      expect(page).to have_link(I18n.t('admin.products.tabs.product_details'), href: expected_product_url)
+
+      expected_product_image_url = Regexp.new(Regexp.escape(spree.admin_product_images_path(product.permalink, producerFilter: 2)))
+      expect(page).to have_link(I18n.t('admin.products.tabs.images'), href: expected_product_image_url)
+
+      expected_product_variant_url = Regexp.new(Regexp.escape(spree.admin_product_variants_path(product.permalink, producerFilter: 2)))
+      expect(page).to have_link(I18n.t('admin.products.tabs.variants'), href: expected_product_variant_url)
+
+      expected_product_properties_url = Regexp.new(Regexp.escape(spree.admin_product_product_properties_path(product.permalink, producerFilter: 2)))
+      expect(page).to have_link(I18n.t('admin.products.tabs.product_properties'), href: expected_product_properties_url)
+
+      expected_product_group_buy_option_url = Regexp.new(Regexp.escape(spree.group_buy_options_admin_product_path(product.permalink, producerFilter: 2)))
+      expect(page).to have_link(I18n.t('admin.products.tabs.group_buy_options'), href: expected_product_group_buy_option_url)
+
+      expected_product_seo_url = Regexp.new(Regexp.escape(spree.seo_admin_product_path(product.permalink, producerFilter: 2)))
+      expect(page).to have_link(I18n.t(:search), href: expected_product_seo_url)
     end
 
     scenario "editing product group buy options" do

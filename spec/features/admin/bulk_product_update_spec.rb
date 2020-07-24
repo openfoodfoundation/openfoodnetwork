@@ -521,7 +521,7 @@ feature '
           find("a.edit-product").click
         end
 
-        expect(URI.parse(current_url).path).to eq "/admin/products/#{p1.permalink}/edit"
+        expect(URI.parse(current_url).path).to eq spree.edit_admin_product_path(v1.product.permalink)
       end
 
       it "shows an edit button for products, which takes the user to the standard edit page for that product, url includes selected filter" do
@@ -536,7 +536,7 @@ feature '
         end
 
         uri = URI.parse(current_url)
-        expect("#{uri.path}?#{uri.query}").to eq "/admin/products/#{p1.permalink}/edit?producerFilter=#{p1.supplier.id}"
+        expect("#{uri.path}?#{uri.query}").to eq spree.edit_admin_product_path(v1.product.permalink, producerFilter: p1.supplier.id)
       end
 
       it "shows an edit button for variants, which takes the user to the standard edit page for that variant" do
@@ -550,7 +550,7 @@ feature '
         end
 
         uri = URI.parse(current_url)
-        expect(URI.parse(current_url).path).to eq "/admin/products/#{v1.product.permalink}/variants/#{v1.id}/edit"
+        expect(URI.parse(current_url).path).to eq spree.edit_admin_product_variant_path(v1.product.permalink, v1.id)
       end
 
       it "shows an edit button for variants, which takes the user to the standard edit page for that variant, url includes selected filter" do
@@ -568,7 +568,7 @@ feature '
         end
 
         uri = URI.parse(current_url)
-        expect("#{uri.path}?#{uri.query}").to eq "/admin/products/#{v1.product.permalink}/variants/#{v1.id}/edit?producerFilter=#{p1.supplier.id}"
+        expect("#{uri.path}?#{uri.query}").to eq spree.edit_admin_product_variant_path(v1.product.permalink, v1.id, producerFilter: p1.supplier.id)
       end
     end
 
