@@ -15,6 +15,7 @@ require 'spree/testing_support/factories'
 #   * order_with_inventory_unit_shipped
 #   * completed_order_with_totals
 #
+
 FactoryBot.define do
   factory :classification, class: Spree::Classification do
   end
