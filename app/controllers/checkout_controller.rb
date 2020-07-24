@@ -138,14 +138,6 @@ class CheckoutController < Spree::StoreController
     current_order.payments.destroy_all if request.put?
   end
 
-  def rescue_from_spree_gateway_error(error)
-    flash[:error] = t(:spree_gateway_error_flash_for_checkout, error: error.message)
-    respond_to do |format|
-      format.html { render :edit }
-      format.json { render json: { flash: flash.to_hash }, status: :bad_request }
-    end
-  end
-
   def valid_payment_intent_provided?
     return false unless params["payment_intent"]&.starts_with?("pi_")
 
@@ -258,6 +250,14 @@ class CheckoutController < Spree::StoreController
       format.json do
         render json: { errors: @order.errors, flash: flash.to_hash }.to_json, status: :bad_request
       end
+    end
+  end
+
+  def rescue_from_spree_gateway_error(error)
+    flash[:error] = t(:spree_gateway_error_flash_for_checkout, error: error.message)
+    respond_to do |format|
+      format.html { render :edit }
+      format.json { render json: { flash: flash.to_hash }, status: :bad_request }
     end
   end
 
