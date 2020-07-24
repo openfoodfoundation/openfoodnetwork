@@ -4,7 +4,7 @@ module CheckoutWorkflow
   end
 
   def checkout_as_guest
-    find("button", text: "Checkout as guest").click
+    click_button "Checkout as guest"
   end
 
   def place_order

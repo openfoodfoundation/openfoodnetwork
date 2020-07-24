@@ -185,9 +185,10 @@ class AbilityDecorator
     can [:admin, :index, :guide, :import, :save, :save_data, :validate_data, :reset_absent_products], ProductImport::ProductImporter
 
     # Reports page
-    can [:admin, :index, :customers, :orders_and_distributors, :group_buys, :bulk_coop, :payments,
+    can [:admin, :index, :customers, :orders_and_distributors, :group_buys, :payments,
          :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :packing],
         Spree::Admin::ReportsController
+    add_bulk_coop_abilities
     add_enterprise_fee_summary_abilities
   end
 
@@ -264,9 +265,10 @@ class AbilityDecorator
     end
 
     # Reports page
-    can [:admin, :index, :customers, :group_buys, :bulk_coop, :sales_tax, :payments,
+    can [:admin, :index, :customers, :group_buys, :sales_tax, :payments,
          :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory,
          :order_cycle_management, :xero_invoices], Spree::Admin::ReportsController
+    add_bulk_coop_abilities
     add_enterprise_fee_summary_abilities
 
     can [:create], Customer
@@ -289,6 +291,13 @@ class AbilityDecorator
     can [:destroy], EnterpriseRelationship do |enterprise_relationship|
       user.enterprises.include? enterprise_relationship.parent
     end
+  end
+
+  def add_bulk_coop_abilities
+    # Reveal the report link in spree/admin/reports#index
+    can [:bulk_coop], Spree::Admin::ReportsController
+    # Allow direct access to the report resource
+    can [:admin, :new, :create], :bulk_coop
   end
 
   def add_enterprise_fee_summary_abilities

@@ -89,6 +89,18 @@ Spree::Order.class_eval do
     where("state != ?", state)
   }
 
+  def create_proposed_shipments
+    adjustments.shipping.delete_all
+    shipments.destroy_all
+
+    packages = OrderManagement::Stock::Coordinator.new(self).packages
+    packages.each do |package|
+      shipments << package.to_shipment
+    end
+
+    shipments
+  end
+
   # -- Methods
   def products_available_from_new_distribution
     # Check that the line_items in the current order are available from a newly selected distribution
@@ -420,8 +432,8 @@ Spree::Order.class_eval do
   # amount here.
   def charge_shipping_and_payment_fees!
     update_totals
-    return unless payments.any?
+    return unless pending_payments.any?
 
-    payments.first.update_attribute :amount, total
+    pending_payments.first.update_attribute :amount, total
   end
 end

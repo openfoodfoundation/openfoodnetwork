@@ -175,8 +175,7 @@ en_DE:
         title: Other Failure (%{count} orders)
         explainer: Automatic processing of these orders failed for an unknown reason. This should not occur, please contact us if you are seeing this.
   home: "OFN"
-  title: Open Food Network
-  welcome_to: 'Welcome to '
+  title: "Open Food Network"
   site_meta_description: "We begin from the ground up. With farmers and growers ready to tell their stories proudly and truly. With distributors ready to connect people with products fairly and honestly. With buyers who believe that better weekly shopping decisions can…"
   search_by_name: Search by name or suburb...
   producers_join: Australian producers are now welcome to join the Open Food Network.
@@ -262,6 +261,7 @@ en_DE:
   backordered: "Backordered"
   on hand: "On Hand"
   ship: "Ship"
+  shipping_category: "Shipping Category"
   actions:
     create_and_add_another: "Create and Add Another"
     create: "Create"
@@ -1109,13 +1109,13 @@ en_DE:
     menu:
       cart:
         cart: "Cart"
+      cart_sidebar:
+        checkout: "Checkout"
+        close: "Close"
       signed_in:
         profile: "Profile"
       mobile_menu:
         cart: "Cart"
-      joyride:
-        checkout: "Checkout now"
-        already_ordered_products: "Already ordered in this order cycle"
     register_call:
       selling_on_ofn: "Interested in getting on the Open Food Network?"
       register: "Register here"
@@ -1655,8 +1655,7 @@ en_DE:
   password: Password
   remember_me: Remember Me
   are_you_sure: "Are you sure?"
-  orders_open: Orders open
-  closing: "Closing "
+  orders_open: "Orders open"
   going_back_to_home_page: "Taking you back to the home page"
   creating: Creating
   updating: Updating
@@ -2627,6 +2626,7 @@ en_DE:
   previous: "Previous"
   last: "Last"
   spree:
+    more: "More"
     your_order_is_empty_add_product: "Your order is empty, please search for and add a product above"
     add_product: "Add Product"
     name_or_sku: "Name or SKU (enter at least first 4 characters of product name)"

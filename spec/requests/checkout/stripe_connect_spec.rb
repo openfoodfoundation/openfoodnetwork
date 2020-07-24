@@ -10,7 +10,7 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
   let!(:shipping_method) do
     create(
       :shipping_method,
-      calculator: Spree::Calculator::FlatRate.new(preferred_amount: 0),
+      calculator: Calculator::FlatRate.new(preferred_amount: 0),
       distributors: [enterprise]
     )
   end

@@ -43,7 +43,7 @@ ca:
               after_orders_open_at: s'ha de fer amb el termini obert
         variant_override:
           count_on_hand:
-            using_producer_stock_settings_but_count_on_hand_set: "ha d'estar en blanc perquè s'utilitza la configuració de l'inventari de la productora"
+            using_producer_stock_settings_but_count_on_hand_set: "ha d'estar en blanc perquè s'utilitza la configuració d'estoc de la productora"
             on_demand_but_count_on_hand_set: "ha d'estar en blanc si és sota demanda"
             limited_stock_but_no_count_on_hand: "cal especificar-se perquè força existències limitades"
   activemodel:
@@ -181,8 +181,8 @@ ca:
         title: Altres errors (%{count} comandes)
         explainer: El processament automàtic d'aquestes comandes va fallar per un motiu desconegut. Això no hauria de passar, si us plau, contacteu amb nosaltres si esteu veient això.
   home: "OFN"
-  title: Open Food Network
-  welcome_to: 'Benvingut a '
+  title: "Open Food Network"
+  welcome_to: "Benvingut a "
   site_meta_description: "Comencem des de baix. Amb agricultors i productors disposats a explicar les seves històries amb orgull i sinceritat. Amb distribuïdors connectant persones i productes de manera justa i honesta. Amb compradors que creuen que millors decisions de compra setmanal poden ..."
   search_by_name: Cercar per nom o barri ...
   producers_join: Els productors australians son ara benvinguts a unir-se a Open Food Network.
@@ -270,6 +270,7 @@ ca:
   backordered: "Reabastit"
   on hand: "Disponibles"
   ship: "Enviament"
+  shipping_category: "Categoria d'enviament"
   actions:
     create_and_add_another: "Crea i afegeix-ne una altra"
     create: "Crear"
@@ -898,7 +899,7 @@ ca:
         incoming: "2. Productes entrants"
         outgoing: "3. Productes sortints"
       exchange_form:
-        pickup_time_tip: Quan les comandes d'aquest cicle de comandes estiguin preparades per a les consumidores
+        pickup_time_tip: Quan les comandes d'aquest cicle de comandes estiguin llestes per a les consumidores
         pickup_instructions_placeholder: "Instruccions de recollida"
         pickup_instructions_tip: Aquestes instruccions es mostraran a les consumidores després d'haver completat una comanda
         pickup_time_placeholder: "Preparat per (és a dir, data / hora)"
@@ -948,7 +949,7 @@ ca:
         distributors: distribuïdores
         variants: variants
       simple_form:
-        ready_for: Preparat per
+        ready_for: Llest per
         ready_for_placeholder: Data / hora
         customer_instructions: Instruccions de la consumidora
         customer_instructions_placeholder: Notes de recollida o de lliurament
@@ -1109,7 +1110,7 @@ ca:
       pause_failure_msg: "Ho sentim, la pausa ha fallat!"
       confirm_unpause_msg: "Si teniu un cicle de comanda obert a la programació d'aquesta subscripció, es crearà una comanda per a aquesta consumidora. Esteu segur que voleu anul·lar aquesta subscripció?"
       unpause_failure_msg: "Ho sentim, la represa ha fallat!"
-      confirm_cancel_open_orders_msg: "Actualment hi ha algunes comandes obertes per a aquesta subscripció. Ja s'ha notificat a les consumidores que les comandes serà atesa. Voleu cancel·lar aquestes comandes o conservar-les?"
+      confirm_cancel_open_orders_msg: "Actualment hi ha algunes comandes obertes per a aquesta subscripció. Ja s'ha notificat a les consumidores que la comanda seran ateses. Voleu cancel·lar aquestes comandes o conservar-les?"
       resume_canceled_orders_msg: "Algunes comandes d'aquesta subscripció es poden reprendre ara mateix. Podeu reprendre-les des del menú desplegable de comandes."
       yes_cancel_them: Cancel·lar-les
       no_keep_them: Conservar-les
@@ -1150,13 +1151,18 @@ ca:
     menu:
       cart:
         cart: "Cistella"
+      cart_sidebar:
+        checkout: "Realitza la comanda"
+        edit_cart: "Edita la cistella"
+        items_in_cart_singular: "%{num} item a la teva cistella"
+        items_in_cart_plural: "%{num} item a la teva cistella"
+        close: "Tanca"
+        cart_empty: "La teva cistella és buida"
+        take_me_shopping: "Porta’m de compres!"
       signed_in:
         profile: "Perfil"
       mobile_menu:
         cart: "Cistella"
-      joyride:
-        checkout: "Validar ara"
-        already_ordered_products: "Ja està demanat en aquest cicle de comanda"
     register_call:
       selling_on_ofn: "Estàs interessat en formar part d'Open Food Network?"
       register: "Registra't aquí"
@@ -1387,7 +1393,7 @@ ca:
   stats_orders: "comandes de menjar"
   checkout_title: Realitza la comanda
   checkout_now: Validar ara
-  checkout_order_ready: Comanda preparada per
+  checkout_order_ready: Comanda llesta per
   checkout_hide: Amaga
   checkout_expand: Expandeix
   checkout_headline: "Estàs preparada per validar la compra?"
@@ -1399,7 +1405,7 @@ ca:
   checkout_default_ship_address: "Desa per defecte com a adreça d'enviament "
   checkout_method_free: Gratuït
   checkout_address_same: L'adreça d'enviament és igual que l'adreça de facturació?
-  checkout_ready_for: "Preparat per:"
+  checkout_ready_for: "Llest per:"
   checkout_instructions: "Alguns comentaris o instruccions especials?"
   checkout_payment: Pagament
   checkout_send: Realitza una comanda ara
@@ -1522,7 +1528,7 @@ ca:
   shopping_groups_part_of: "forma part de:"
   shopping_producers_of_hub: "Productores de%{hub}:"
   enterprises_next_closing: "Tancament de la comanda següent"
-  enterprises_ready_for: "Preparat per"
+  enterprises_ready_for: "Llest per"
   enterprises_choose: "Escull quan vols la teva comanda:"
   maps_open: "Obert"
   maps_closed: "Tancat"
@@ -1667,7 +1673,7 @@ ca:
   orders_fees: Comissions...
   orders_edit_title: Cistella de la compra
   orders_edit_headline: El teu cistell de la compra
-  orders_edit_time: Comanda preparada per
+  orders_edit_time: Comanda llesta per
   orders_edit_continue: Continuar comprant
   orders_edit_checkout: Realitza la compra
   orders_form_empty_cart: "Cistella buida"
@@ -1710,7 +1716,7 @@ ca:
   password: Contrasenya
   remember_me: Recorda'm
   are_you_sure: "Estàs segur?"
-  orders_open: Comandes obertes
+  orders_open: "Comandes obertes"
   closing: "Tancant"
   going_back_to_home_page: "Tornant a la pàgina d'inici"
   creating: Creant
@@ -2069,6 +2075,7 @@ ca:
   hub_sidebar_at_least: "Cal seleccionar almenys un grup "
   hub_sidebar_blue: "blau"
   hub_sidebar_red: "vermell"
+  order_cycles_closed_for_hub: "La botiga que has triat està temporalment tancada per a fer comandes. Sisplau, prova una mica més tard"
   report_customers_distributor: "Distribuïdora"
   report_customers_supplier: "Proveïdora"
   report_customers_cycle: "Cicle de Comanda"
@@ -2305,6 +2312,7 @@ ca:
   order_cycles_email_to_producers_notice: 'Els correus electrònics per enviar a les productores estan en cua.'
   order_cycles_no_permission_to_coordinate_error: "Cap de les vostres organitzacions té permís per coordinar un cicle de comanda"
   order_cycles_no_permission_to_create_error: "No teniu permís per crear un cicle de comandes coordinat per aquesta organització"
+  order_cycle_closed: "El cicle de comandes que has triat acaba de tancar. Sisplau prova en un altre moment."
   back_to_orders_list: "Torna a la llista de comandes"
   no_orders_found: "No s'han trobat comandes"
   order_information: "Informació de la comanda"
@@ -2560,7 +2568,7 @@ ca:
         'yes': "Sota demanda"
     variant_overrides:
       on_demand:
-        use_producer_settings: "Utilitzeu la configuració d'inventari de la productora"
+        use_producer_settings: "Utilitzeu la configuració d'estoc de la productora"
         'yes': "Sí"
         'no': "No"
       inventory_products: "Productes de l'inventari"
@@ -2773,6 +2781,7 @@ ca:
   previous: "Anterior"
   last: "Últim"
   spree:
+    more: "Més"
     your_order_is_empty_add_product: "La comanda està buida, si us plau cerca i afegeix un producte a dalt"
     add_product: "Afegeix un producte"
     name_or_sku: "Nom o codi (introduïu com a mínim els primers 4 caràcters del nom del producte)"

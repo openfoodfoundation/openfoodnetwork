@@ -46,7 +46,7 @@ describe Admin::StripeAccountsController, type: :controller do
 
         it "redirects to unauthorized" do
           spree_delete :destroy, params
-          expect(response).to redirect_to spree.unauthorized_path
+          expect(response).to redirect_to unauthorized_path
         end
       end
 
@@ -93,7 +93,7 @@ describe Admin::StripeAccountsController, type: :controller do
 
       it "redirects to unauthorized" do
         spree_get :status, params
-        expect(response).to redirect_to spree.unauthorized_path
+        expect(response).to redirect_to unauthorized_path
       end
     end
 

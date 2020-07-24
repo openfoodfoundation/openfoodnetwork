@@ -37,8 +37,7 @@ feature "shopping with variant overrides defined", js: true do
     outgoing_exchange.variants = [product1_variant1, product1_variant2, product2_variant1, product1_variant3, product3_variant1, product3_variant2, product4_variant1]
     outgoing_exchange.enterprise_fees << enterprise_fee
     sm.calculator.preferred_amount = 0
-    visit shops_path
-    click_link hub.name
+    visit enterprise_shop_path(hub)
   end
 
   describe "viewing products" do
@@ -66,9 +65,7 @@ feature "shopping with variant overrides defined", js: true do
     end
 
     it "shows the correct prices when products are in the cart" do
-      fill_in "variants[#{product1_variant1.id}]", with: "2"
-      toggle_cart
-      wait_until_enabled '.cart-sidebar a.edit-cart'
+      click_add_to_cart product1_variant1, 2
       visit shop_path
       expect(page).to have_price with_currency(61.11)
     end
@@ -77,14 +74,14 @@ feature "shopping with variant overrides defined", js: true do
     # https://github.com/openfoodfoundation/openfoodnetwork/issues/312
 
     it "shows the overridden price with fees in the quick cart" do
-      fill_in "variants[#{product1_variant1.id}]", with: "2"
+      click_add_to_cart product1_variant1, 2
       toggle_cart
       expect(page).to have_selector "#cart-variant-#{product1_variant1.id} .quantity", text: '2'
       expect(page).to have_selector "#cart-variant-#{product1_variant1.id} .total-price", text: with_currency(122.22)
     end
 
     it "shows the correct prices in the shopping cart" do
-      fill_in "variants[#{product1_variant1.id}]", with: "2"
+      click_add_to_cart product1_variant1, 2
       edit_cart
 
       expect(page).to have_selector "tr.line-item.variant-#{product1_variant1.id} .cart-item-price", text: with_currency(61.11)
@@ -96,7 +93,7 @@ feature "shopping with variant overrides defined", js: true do
     end
 
     it "shows the correct prices in the checkout" do
-      fill_in "variants[#{product1_variant1.id}]", with: "2"
+      click_add_to_cart product1_variant1, 2
       click_checkout
 
       expect(page).to have_selector 'form.edit_order .cart-total', text: with_currency(122.22)
@@ -107,7 +104,7 @@ feature "shopping with variant overrides defined", js: true do
 
   describe "creating orders" do
     it "creates the order with the correct prices" do
-      fill_in "variants[#{product1_variant1.id}]", with: "2"
+      click_add_to_cart product1_variant1, 2
       click_checkout
 
       complete_checkout
@@ -118,7 +115,7 @@ feature "shopping with variant overrides defined", js: true do
     end
 
     it "subtracts stock from the override" do
-      fill_in "variants[#{product1_variant3.id}]", with: "2"
+      click_add_to_cart product1_variant3, 2
       click_checkout
 
       expect do
@@ -129,7 +126,7 @@ feature "shopping with variant overrides defined", js: true do
     end
 
     it "subtracts stock from stock-overridden on_demand variants" do
-      fill_in "variants[#{product3_variant2.id}]", with: "2"
+      click_add_to_cart product3_variant2, 2
       click_checkout
 
       expect do
@@ -140,7 +137,7 @@ feature "shopping with variant overrides defined", js: true do
     end
 
     it "does not subtract stock from overrides that do not override count_on_hand" do
-      fill_in "variants[#{product1_variant1.id}]", with: "2"
+      click_add_to_cart product1_variant1, 2
       click_checkout
       expect do
         complete_checkout
@@ -149,7 +146,7 @@ feature "shopping with variant overrides defined", js: true do
     end
 
     it "does not subtract stock from variants where the override has on_demand: true" do
-      fill_in "variants[#{product4_variant1.id}]", with: "2"
+      click_add_to_cart product4_variant1, 2
       click_checkout
       expect do
         complete_checkout
@@ -159,7 +156,7 @@ feature "shopping with variant overrides defined", js: true do
 
     it "does not show out of stock flags on order confirmation page" do
       product1_variant3.on_hand = 0
-      fill_in "variants[#{product1_variant3.id}]", with: "2"
+      click_add_to_cart product1_variant3, 2
       click_checkout
 
       complete_checkout
@@ -202,7 +199,7 @@ feature "shopping with variant overrides defined", js: true do
 
   def click_checkout
     toggle_cart
-    wait_until_enabled '.cart-sidebar a.edit-cart'
-    first(:link, I18n.t('shared.menu.cart_sidebar.checkout')).click
+    wait_for_cart
+    click_link I18n.t('shared.menu.cart_sidebar.checkout')
   end
 end

@@ -107,7 +107,7 @@ describe 'Products service', ->
     $httpBackend.expectGET(endpoint).respond([product])
     $httpBackend.flush()
     expect(Products.products[0].primaryImage).toBeUndefined()
-    expect(Products.products[0].primaryImageOrMissing).toEqual "/assets/noimage/small.png"
+    expect(Products.products[0].primaryImageOrMissing).toEqual "/noimage/small.png"
 
   it "sets largeImage", ->
     $httpBackend.expectGET(endpoint).respond([productWithImage])

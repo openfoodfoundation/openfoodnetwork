@@ -31,15 +31,5 @@ module OpenFoodNetwork::Reports
     def self.header(*columns)
       self._header = columns
     end
-
-    def self.columns(&block)
-      self._columns = Row.new
-      Blockenspiel.invoke block, _columns
-    end
-
-    def self.organise(&block)
-      self._rules_head = Rule.new
-      Blockenspiel.invoke block, _rules_head
-    end
   end
 end

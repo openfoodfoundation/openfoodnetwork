@@ -4,7 +4,7 @@
   - if line_item.present?
     %tr.stock-item{ "data-item-quantity" => "#{item.quantity}" }
       %td.item-image
-        = mini_image(item.variant)
+        = render 'spree/shared/variant_thumbnail', variant: item.variant
       %td.item-name
         = item.variant.product_and_full_name
       %td.item-price.align-center

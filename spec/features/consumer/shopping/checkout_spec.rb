@@ -26,11 +26,11 @@ feature "As a consumer I want to check out my cart", js: true do
   end
 
   describe "with shipping and payment methods" do
-    let(:free_shipping) { create(:shipping_method, require_ship_address: true, name: "Frogs", description: "yellow", calculator: Spree::Calculator::FlatRate.new(preferred_amount: 0.00)) }
-    let(:shipping_with_fee) { create(:shipping_method, require_ship_address: false, name: "Donkeys", description: "blue", calculator: Spree::Calculator::FlatRate.new(preferred_amount: 4.56)) }
+    let(:free_shipping) { create(:shipping_method, require_ship_address: true, name: "Frogs", description: "yellow", calculator: Calculator::FlatRate.new(preferred_amount: 0.00)) }
+    let(:shipping_with_fee) { create(:shipping_method, require_ship_address: false, name: "Donkeys", description: "blue", calculator: Calculator::FlatRate.new(preferred_amount: 4.56)) }
     let(:tagged_shipping) { create(:shipping_method, require_ship_address: false, name: "Local", tag_list: "local") }
     let!(:check_without_fee) { create(:payment_method, distributors: [distributor], name: "Roger rabbit", type: "Spree::PaymentMethod::Check") }
-    let!(:check_with_fee) { create(:payment_method, distributors: [distributor], calculator: Spree::Calculator::FlatRate.new(preferred_amount: 5.67)) }
+    let!(:check_with_fee) { create(:payment_method, distributors: [distributor], calculator: Calculator::FlatRate.new(preferred_amount: 5.67)) }
     let!(:paypal) do
       Spree::Gateway::PayPalExpress.create!(name: "Paypal", environment: 'test', distributor_ids: [distributor.id]).tap do |pm|
         pm.preferred_login = 'devnull-facilitator_api1.rohanmitchell.com'
@@ -74,7 +74,7 @@ feature "As a consumer I want to check out my cart", js: true do
           fill_out_form
         end
 
-        it "allows user to save default billing address and shipping address" do
+        it "creates a new default billing address and shipping address" do
           expect(user.bill_address).to be_nil
           expect(user.ship_address).to be_nil
 
@@ -92,6 +92,32 @@ feature "As a consumer I want to check out my cart", js: true do
 
           expect(user.reload.bill_address.address1).to eq '123 Your Head'
           expect(user.reload.ship_address.address1).to eq '123 Your Head'
+        end
+
+        context "when the user and customer have existing default addresses" do
+          let(:existing_address) { create(:address) }
+
+          before do
+            user.bill_address = existing_address
+            user.ship_address = existing_address
+          end
+
+          it "updates billing address and shipping address" do
+            expect(order.bill_address).to be_nil
+            expect(order.ship_address).to be_nil
+
+            place_order
+            expect(page).to have_content "Your order has been processed successfully"
+
+            expect(order.reload.bill_address.address1).to eq '123 Your Head'
+            expect(order.reload.ship_address.address1).to eq '123 Your Head'
+
+            expect(order.customer.bill_address.address1).to eq '123 Your Head'
+            expect(order.customer.ship_address.address1).to eq '123 Your Head'
+
+            expect(user.reload.bill_address.address1).to eq '123 Your Head'
+            expect(user.reload.ship_address.address1).to eq '123 Your Head'
+          end
         end
 
         it "it doesn't tell about previous orders" do

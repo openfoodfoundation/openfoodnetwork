@@ -50,7 +50,7 @@ describe Spree::Admin::ShippingMethodsController, type: :controller do
     end
 
     it "updates details of a FlexiRate calculator" do
-      shipping_method.calculator = Spree::Calculator::FlexiRate.new(calculable: shipping_method)
+      shipping_method.calculator = Calculator::FlexiRate.new(calculable: shipping_method)
       params[:shipping_method][:calculator_attributes][:preferred_first_item] = 10
       params[:shipping_method][:calculator_attributes][:preferred_additional_item] = 20
       params[:shipping_method][:calculator_attributes][:preferred_max_items] = 30
@@ -63,7 +63,7 @@ describe Spree::Admin::ShippingMethodsController, type: :controller do
     end
 
     it "updates details of a PriceSack calculator" do
-      shipping_method.calculator = Spree::Calculator::PriceSack.new(calculable: shipping_method)
+      shipping_method.calculator = Calculator::PriceSack.new(calculable: shipping_method)
       params[:shipping_method][:calculator_attributes][:preferred_minimal_amount] = 10
       params[:shipping_method][:calculator_attributes][:preferred_normal_amount] = 20
       params[:shipping_method][:calculator_attributes][:preferred_discount_amount] = 30

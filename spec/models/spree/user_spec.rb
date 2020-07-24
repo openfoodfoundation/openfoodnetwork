@@ -9,23 +9,25 @@ describe Spree.user_class do
     describe "addresses" do
       let(:user) { create(:user, bill_address: create(:address)) }
 
-      it 'updates billing address with new address' do
-        old_bill_address = user.bill_address
-        new_bill_address = create(:address, firstname: 'abc')
+      context "updating addresses via nested attributes" do
+        it 'updates billing address with new address' do
+          old_bill_address = user.bill_address
+          new_bill_address = create(:address, firstname: 'abc')
 
-        user.update(bill_address_attributes: new_bill_address.clone.attributes.merge('id' => old_bill_address.id))
+          user.update(bill_address_attributes: new_bill_address.dup.attributes.merge('id' => old_bill_address.id).except!('created_at', 'updated_at'))
 
-        expect(user.bill_address.id).to eq old_bill_address.id
-        expect(user.bill_address.firstname).to eq new_bill_address.firstname
-      end
+          expect(user.bill_address.id).to eq old_bill_address.id
+          expect(user.bill_address.firstname).to eq new_bill_address.firstname
+        end
 
-      it 'creates new shipping address' do
-        new_ship_address = create(:address, firstname: 'abc')
+        it 'creates new shipping address' do
+          new_ship_address = create(:address, firstname: 'abc')
 
-        user.update(ship_address_attributes: new_ship_address.clone.attributes)
+          user.update(ship_address_attributes: new_ship_address.dup.attributes.except!('created_at', 'updated_at'))
 
-        expect(user.ship_address.id).not_to eq new_ship_address.id
-        expect(user.ship_address.firstname).to eq new_ship_address.firstname
+          expect(user.ship_address.id).not_to eq new_ship_address.id
+          expect(user.ship_address.firstname).to eq new_ship_address.firstname
+        end
       end
     end
 

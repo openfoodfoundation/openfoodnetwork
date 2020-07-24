@@ -42,9 +42,6 @@ describe Spree::Order do
     it "can progress to delivery" do
       shipping_method.shipping_categories << other_shipping_category
 
-      # If the shipping category package splitter is enabled,
-      #   an order with products with two shipping categories will be split into two shipments
-      #   and the spec will fail with a unique constraint error on index_spree_shipments_on_order_id
       order.next
       order.next
       expect(order.state).to eq "delivery"

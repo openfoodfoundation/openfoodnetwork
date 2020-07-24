@@ -3,7 +3,7 @@ ruby "2.3.7"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
 gem 'i18n', '~> 0.6.11'
-gem 'i18n-js', '~> 3.7.0'
+gem 'i18n-js', '~> 3.7.1'
 gem 'rails', '~> 4.0.13'
 gem 'rails-i18n', '~> 4.0'
 gem 'rails_safe_tasks', '~> 1.0'
@@ -33,7 +33,7 @@ gem 'httparty', '~> 0.18' # Used to check alerts in spree_core, this is not used
 gem 'json', '>= 1.7.7'
 gem 'money', '5.1.1'
 gem 'paranoia', '~> 2.0'
-gem 'ransack', '~> 1.2.3'
+gem 'ransack', '~> 1.8.10'
 gem 'state_machine', '1.2.0'
 gem 'stringex', '~> 1.5.1'
 
@@ -75,13 +75,12 @@ gem 'truncate_html', '0.9.2'
 gem 'unicorn'
 
 gem 'actionpack-action_caching'
-# AMS is pinned to 0.8.4 because 0.9.x is a complete re-write, as is 0.10.x
-# Once Rails is updated to 5.x we should bump directly to 0.10.x
+# AMS 0.9.x and 0.10.x are very different from 0.8.4 and the upgrade is not straight forward
+#   AMS is deprecated, we will introduce an alternative at some point
 gem "active_model_serializers", "0.8.4"
 gem 'activerecord-session_store'
 gem 'acts-as-taggable-on', '~> 4.0'
 gem 'angularjs-file-upload-rails', '~> 2.4.1'
-gem 'blockenspiel'
 gem 'custom_error_message', github: 'jeremydurham/custom-err-msg'
 gem 'dalli'
 gem 'diffy'
@@ -110,7 +109,7 @@ gem 'test-unit', '~> 3.3'
 gem 'coffee-rails', '~> 4.2.2'
 gem 'compass-rails'
 
-gem 'mini_racer', '0.2.14'
+gem 'mini_racer', '0.2.15'
 
 gem 'uglifier', '>= 1.0.3'
 
@@ -145,6 +144,7 @@ group :test, :development do
   gem 'letter_opener', '>= 1.4.1'
   gem 'rspec-rails', ">= 3.5.2"
   gem 'rspec-retry'
+  gem 'rswag'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'
   gem 'timecop'

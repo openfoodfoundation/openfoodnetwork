@@ -17,23 +17,5 @@ module OpenFoodNetwork::Reports
       rule.sort(&proc)
       expect(rule.to_h).to eq(group_by: nil, sort_by: proc)
     end
-
-    it "can define a nested rule" do
-      rule.organise(&proc)
-      expect(rule.next).to be_a Rule
-    end
-
-    it "can define a summary row and return it in a hash" do
-      rule.summary_row do
-        column {}
-        column {}
-        column {}
-      end
-
-      expect(rule.to_h[:summary_columns].count).to eq(3)
-      expect(rule.to_h[:summary_columns][0]).to be_a Proc
-      expect(rule.to_h[:summary_columns][1]).to be_a Proc
-      expect(rule.to_h[:summary_columns][2]).to be_a Proc
-    end
   end
 end

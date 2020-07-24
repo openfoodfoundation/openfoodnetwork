@@ -285,7 +285,7 @@ feature '
                          from: 'selected_shipping_rate_id'
           find('.save-method').click
 
-          expect(page).to have_content different_shipping_method_for_distributor1.name
+          expect(page).to have_content "Shipping: #{different_shipping_method_for_distributor1.name}"
         end
       end
 

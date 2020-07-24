@@ -9,13 +9,13 @@ FactoryBot.define do
     end
 
     trait :flat_rate do
-      calculator { Spree::Calculator::FlatRate.new(preferred_amount: 50.0) }
+      calculator { Calculator::FlatRate.new(preferred_amount: 50.0) }
     end
 
     trait :expensive_name do
       name { "Shipping" }
       description { "Expensive" }
-      calculator { Spree::Calculator::FlatRate.new(preferred_amount: 100.55) }
+      calculator { Calculator::FlatRate.new(preferred_amount: 100.55) }
     end
 
     trait :distributor do

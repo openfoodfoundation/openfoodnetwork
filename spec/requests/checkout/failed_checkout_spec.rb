@@ -32,7 +32,7 @@ describe "checking out an order that initially fails", type: :request do
   end
 
   context "when shipping and payment fees apply" do
-    let(:calculator) { Spree::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
+    let(:calculator) { Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
 
     before do
       payment_method.calculator = calculator.dup

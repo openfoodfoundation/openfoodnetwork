@@ -181,8 +181,7 @@ en_IE:
         title: Other Failure (%{count} orders)
         explainer: Automatic processing of these orders failed for an unknown reason. This should not occur, please contact us if you are seeing this.
   home: "OFN"
-  title: Open Food Network
-  welcome_to: 'Welcome to '
+  title: "Open Food Network"
   site_meta_description: "The Open Food Network software platform allows farmers to sell produce online, at a price that works for them. It has been built specifically for selling food so it can handle tricky measures or stock levels that only food has - a dozen eggs, a bunch of parsley, a whole chicken that varies in weight…"
   search_by_name: Search by name, town, county or eircode...
   producers_join: Producers are now welcome to join Open Food Network Ireland.
@@ -270,6 +269,7 @@ en_IE:
   backordered: "Backordered"
   on hand: "In Stock"
   ship: "Ship"
+  shipping_category: "Shipping Category"
   actions:
     create_and_add_another: "Create and Add Another"
     create: "Create"
@@ -370,7 +370,10 @@ en_IE:
         title: "Matomo Settings"
         matomo_url: "Matomo URL"
         matomo_site_id: "Matomo Site ID"
+        matomo_tag_manager_url: "Matomo Tag Manager URL"
+        info_html: "Matomo is a Web and Mobile Analytics application. You can either host Matomo on-premises or use a cloud-hosted service. See <a href='http://matomo.org' target='_blank'>matomo.org</a> for more information."
         config_instructions_html: "Here you can configure the OFN Matomo integration. The Matomo URL below should point to the Matomo instance where the user tracking information will be sent to; if it is left empty, Matomo user tracking will be disabled. The Site ID field is not mandatory but useful if you are tracking more than one website on a single Matomo instance; it can be found on the Matomo instance console."
+        config_instructions_tag_manager_html: "Setting the Matomo Tag Manager URL enables Matomo Tag Manager. This tool allows you to set up analytics events. The Matomo Tag Manager URL is copied from the Install Code section of Matomo Tag Manager. Ensure you select the right container and environment as these options change the URL."
     customers:
       index:
         new_customer: "New Customer"
@@ -476,6 +479,7 @@ en_IE:
         line_number: "Line %{number}:"
         encoding_error: "Please check the language setting of your source file and ensure it is saved with UTF-8 encoding"
         unexpected_error: "Product Import encountered an unexpected error whilst opening the file: %{error_message}"
+        malformed_csv: "Product Import encountered a malformed CSV: %{error_message}"
       index:
         notice: "Notice"
         beta_notice: "This feature is still in beta: you may experience some errors while using it. Please don't hesitate to contact support."
@@ -688,6 +692,7 @@ en_IE:
           ofn_uid_tip: The unique id used to identify the enterprise on Open Food Network.
         shipping_methods:
           name: "Name"
+          applies: "Active?"
           manage: "Manage Shipping Methods"
           create_button: "Create New Shipping Method"
           create_one_button: "Create One Now"
@@ -1142,13 +1147,18 @@ en_IE:
     menu:
       cart:
         cart: "Basket"
+      cart_sidebar:
+        checkout: "Checkout"
+        edit_cart: "Edit cart"
+        items_in_cart_singular: "%{num} item in your cart"
+        items_in_cart_plural: "%{num} items in your cart"
+        close: "Close"
+        cart_empty: "Your cart is empty"
+        take_me_shopping: "Take me shopping!"
       signed_in:
         profile: "Profile"
       mobile_menu:
         cart: "Basket"
-      joyride:
-        checkout: "Checkout now"
-        already_ordered_products: "Already ordered in this order cycle"
     register_call:
       selling_on_ofn: "Interested in selling through the Open Food Network?"
       register: "Register here"
@@ -1250,7 +1260,7 @@ en_IE:
   city: City
   city_placeholder: eg. Dublin
   postcode: Eircode
-  postcode_placeholder: eg. D01 F5P2
+  postcode_placeholder: eg. D01 XXXX
   suburb: Town
   state: County
   country: Country
@@ -1702,8 +1712,7 @@ en_IE:
   password: Password
   remember_me: Remember Me
   are_you_sure: "Are you sure?"
-  orders_open: Orders open
-  closing: "Closing "
+  orders_open: "Orders open"
   going_back_to_home_page: "Taking you back to the home page"
   creating: Creating
   updating: Updating
@@ -1775,17 +1784,17 @@ en_IE:
         producer: "Great! First we need to know a little bit about your farm:"
         enterprise_name_field: "Enterprise Name:"
         producer_name_field: "Farm Name:"
-        producer_name_field_placeholder: "e.g. Charlie's Chilli Farm"
+        producer_name_field_placeholder: "e.g. Charlie's Farm"
         producer_name_field_error: "Sorry, this name has already been taken. Please try another."
         address1_field: "Address line 1:"
-        address1_field_placeholder: "e.g. 123 Apple Drive"
+        address1_field_placeholder: "e.g. 123 Apple Road"
         address1_field_error: "Please enter an address"
         address2_field: "Address line 2:"
         suburb_field: "Town:"
-        suburb_field_placeholder: "eg. Taunton"
+        suburb_field_placeholder: "eg. Kilbride"
         suburb_field_error: "Please enter a postal town"
         postcode_field: "Eircode:"
-        postcode_field_placeholder: "eg. D01 F5P2"
+        postcode_field_placeholder: "eg. D01 XXXX"
         postcode_field_error: "Eircode required"
         state_field: "County:"
         state_field_error: "County Required"
@@ -1933,7 +1942,7 @@ en_IE:
   admin_enterprise_groups_contact_city: "Suburb"
   admin_enterprise_groups_contact_city_placeholder: "eg. Dublin"
   admin_enterprise_groups_contact_zipcode: "Postcode"
-  admin_enterprise_groups_contact_zipcode_placeholder: "eg. 3070"
+  admin_enterprise_groups_contact_zipcode_placeholder: "eg. D01 XXXX"
   admin_enterprise_groups_contact_state_id: "County"
   admin_enterprise_groups_contact_country_id: "Country"
   admin_enterprise_groups_web: "Web Resources"
@@ -2017,7 +2026,7 @@ en_IE:
   change_package: "Change Package"
   spree_admin_single_enterprise_hint: "Hint: To allow people to find you, turn on your visibility under"
   spree_admin_eg_pickup_from_school: "eg. 'Pick-up from Primary School'"
-  spree_admin_eg_collect_your_order: "eg. 'Please collect your order from 123 Imaginary St, Dublin, D01 F5P2'"
+  spree_admin_eg_collect_your_order: "eg. 'Please collect your order from 123 Imaginary St, Dublin, D01 XXXX'"
   spree_classification_primary_taxon_error: "Taxon %{taxon} is the primary taxon of %{product} and cannot be deleted"
   spree_order_availability_error: "Distributor or order cycle cannot supply the products in your cart"
   spree_order_populator_error: "That distributor or order cycle can't supply all the products in your cart. Please choose another."
@@ -2061,6 +2070,7 @@ en_IE:
   hub_sidebar_at_least: "At least one hub must be selected"
   hub_sidebar_blue: "blue"
   hub_sidebar_red: "red"
+  order_cycles_closed_for_hub: "The hub you have selected is temporarily closed for orders. Please try again later."
   report_customers_distributor: "Distributor"
   report_customers_supplier: "Supplier"
   report_customers_cycle: "Order Cycle"
@@ -2297,6 +2307,7 @@ en_IE:
   order_cycles_email_to_producers_notice: 'Emails to be sent to producers have been queued for sending.'
   order_cycles_no_permission_to_coordinate_error: "None of your enterprises have permission to coordinate an order cycle"
   order_cycles_no_permission_to_create_error: "You don't have permission to create an order cycle coordinated by that enterprise"
+  order_cycle_closed: "The order cycle you've selected has just closed. Please try again!"
   back_to_orders_list: "Back to order list"
   no_orders_found: "No Orders Found"
   order_information: "Order Information"
@@ -2768,6 +2779,7 @@ en_IE:
   previous: "Previous"
   last: "Last"
   spree:
+    more: "More"
     your_order_is_empty_add_product: "Your order is empty, please search for and add a product above"
     add_product: "Add Product"
     name_or_sku: "Name or SKU (enter at least first 4 characters of product name)"
@@ -2816,6 +2828,12 @@ en_IE:
     void: "Void"
     login: "Login"
     password: "Password"
+    signature: "Signature"
+    solution: "Solution"
+    landing_page: "Landing Page"
+    server: "Server"
+    test_mode: "Test Mode"
+    logourl: "Logourl"
     configurations: "Configurations"
     general_settings: "General Settings"
     site_name: "Site Name"
@@ -2932,6 +2950,12 @@ en_IE:
     options: "Options"
     actions:
       update: "Update"
+    shared:
+      error_messages:
+        errors_prohibited_this_record_from_being_saved:
+          one: "1 error prohibited this record from being saved:"
+          other: "%{count} errors prohibited this record from being saved:"
+        there_were_problems_with_the_following_fields: "There were problems with the following fields"
     errors:
       messages:
         blank: "can't be blank"
@@ -3074,6 +3098,8 @@ en_IE:
           zone: "Zone"
           calculator: "Calculator"
           display: "Display"
+          both: "Both Checkout and Back office"
+          back_end: "Back office only"
           no_shipping_methods_found: "No shipping methods found"
         new:
           new_shipping_method: "New Shipping Method"
@@ -3085,6 +3111,9 @@ en_IE:
         form:
           categories: "Categories"
           zones: "Zones"
+          both: "Both Checkout and Back office"
+          back_end: "Back office only"
+          deactivation_warning: "De-activating a shipping method can make the shipping method disappear from your list. Alternatively, you can hide a shipping method from the checkout page by setting the option 'Display' to 'back office only'."
       payment_methods:
         index:
           payment_methods: "Payment Methods"
@@ -3096,8 +3125,11 @@ en_IE:
           display: "Display"
           active: "Active"
           both: "Both"
+          front_end: "Checkout only"
+          back_end: "Back office only"
           active_yes: "Yes"
           active_no: "No"
+          no_payment_methods_found: "No payment methods found"
         new:
           new_payment_method: "New Payment Method"
           back_to_payment_methods_list: "Back To Payment Methods List"
@@ -3126,7 +3158,11 @@ en_IE:
           active: "Active"
           active_yes: "Yes"
           active_no: "No"
+          both: "Both Checkout and Back office"
+          front_end: "Checkout only"
+          back_end: "Back office only"
           tags: "Tags"
+          deactivation_warning: "De-activating a payment method can make the payment method disappear from your list. Alternatively, you can hide a payment method from the checkout page by setting the option 'Display' to 'back office only'."
         providers:
           provider: "Provider"
       payments:
@@ -3269,6 +3305,7 @@ en_IE:
       format: '%Y-%m-%d'
       js_format: 'yy-mm-dd'
     orders:
+      error_flash_for_unavailable_items: "An item in your cart has become unavailable. Please update the selected quantities."
       edit:
         login_to_view_order: "Please log in to view your order."
       bought:
@@ -3296,6 +3333,14 @@ en_IE:
       invalid: invalid
     order_mailer:
       cancel_email:
+        customer_greeting: "Dear %{name},"
+        instructions_html: "Your order with <strong>%{distributor}</strong> has been CANCELED. Please retain this cancellation information for your records."
+        dont_cancel: "If you have changed your mind or don't wish to cancel this order please contact %{email}"
+        order_summary_canceled_html: "<strong>Order Summary #%{number} [CANCELED]</strong>"
+        details: "Here are the details of what you ordered:"
+        unpaid_order: "Your order was unpaid so no refund has been made"
+        paid_order: "Your order was paid so %{distributor} has refunded the full amount"
+        credit_order: "Your order was paid so your account has been credited"
         subject: "Cancellation of Order"
       confirm_email:
         subject: "Order Confirmation"

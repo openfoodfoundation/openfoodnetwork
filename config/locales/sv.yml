@@ -47,8 +47,7 @@ sv:
     order_cycle:
       subject: "Sammanställning över beställningsperiod för %{producer}"
   home: "OFN"
-  title: Open Food Network
-  welcome_to: 'Välkommen till'
+  title: "Open Food Network"
   site_meta_description: "Vi börjar från grunden. Med bönder och odlare redo att berätta sina berättelser stolt och verkligt. Med distributörer redo att ansluta människor med produkter rättvist och ärligt. Med köpare som tror att bättre veckovisa köpbeslut kan ..."
   search_by_name: Sök på ortnamn eller förort...
   producers_join: Svenska producenter kan nu gå med i Open Food Network. Välkomna!
@@ -633,11 +632,11 @@ sv:
       show_on_map: "Visa allt på kartan"
   shared:
     menu:
+      cart_sidebar:
+        checkout: "Utcheckning"
+        close: "Stängd"
       signed_in:
         profile: "Profil"
-      joyride:
-        checkout: "Slutför beställning"
-        already_ordered_products: "Redan beställd i denna beställningsomgång"
     register_call:
       selling_on_ofn: "Intresserad av att gå med i Open Food Network?"
       register: "Registrera dig här"
@@ -1069,8 +1068,7 @@ sv:
   password: Lösenord
   remember_me: Kom ihåg mig
   are_you_sure: "Är du säker?"
-  orders_open: Beställningar kan göras
-  closing: "Stänger"
+  orders_open: "Beställningar kan göras"
   going_back_to_home_page: "Tillbaka till startsidan"
   creating: Skapar
   updating: Uppdaterar

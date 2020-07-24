@@ -25,7 +25,7 @@ class Api::Admin::EnterpriseSerializer < ActiveModel::Serializer
       tag_group = find_match(tag_groups, tag_rule.preferred_customer_tags.
                                            split(",").
                                            map{ |t| { text: t } })
-      if tag_group[:rules].empty?
+      if tag_group[:rules].blank?
         tag_groups << tag_group
         tag_group[:position] = tag_groups.count
       end

@@ -1,8 +1,9 @@
 module OpenFoodNetwork
   class OrderGrouper
-    def initialize(rules, column_constructors)
+    def initialize(rules, column_constructors, report = nil)
       @rules = rules
       @column_constructors = column_constructors
+      @report = report
     end
 
     def build_tree(items, remaining_rules)
@@ -38,11 +39,11 @@ module OpenFoodNetwork
     def build_table(groups)
       rows = []
       if is_leaf_node(groups)
-        rows << @column_constructors.map { |column_constructor| column_constructor.call(groups) }
+        rows << build_row(groups)
       else
         groups.each do |key, group|
           if key == :summary_row
-            rows << group[:columns].map { |cols| cols.call(group[:items]) }
+            rows << build_summary_row(group[:columns], group[:items])
           else
             build_table(group).each { |g| rows << g }
           end
@@ -58,6 +59,26 @@ module OpenFoodNetwork
     end
 
     private
+
+    def build_cell(column_constructor, items)
+      if column_constructor.is_a?(Symbol)
+        @report.__send__(column_constructor, items)
+      else
+        column_constructor.call(items)
+      end
+    end
+
+    def build_row(groups)
+      @column_constructors.map do |column_constructor|
+        build_cell(column_constructor, groups)
+      end
+    end
+
+    def build_summary_row(summary_row_column_constructors, items)
+      summary_row_column_constructors.map do |summary_row_column_constructor|
+        build_cell(summary_row_column_constructor, items)
+      end
+    end
 
     def is_leaf_node(node)
       node.is_a? Array

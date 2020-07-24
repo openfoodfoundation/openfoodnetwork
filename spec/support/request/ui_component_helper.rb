@@ -67,10 +67,7 @@ module UIComponentHelper
 
   def toggle_cart
     page.find("#cart").click
-  end
-
-  def cart_dirty
-    page.find("span.cart-span")[:class].include? 'pure-dirty'
+    sleep 0.3 # Allow 300ms for sidebar animation to finish
   end
 
   def wait_for_ajax

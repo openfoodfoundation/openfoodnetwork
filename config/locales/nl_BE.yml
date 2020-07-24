@@ -172,8 +172,7 @@ nl_BE:
         title: Andere mislukking (%{count}orders)
         explainer: De automatische verwerking van deze bestellingen is om een onbekende reden mislukt. Dit mag niet gebeuren, neem contact met ons op als u dit ziet.
   home: "OFN"
-  title: Open Food Network
-  welcome_to: 'Welkom op '
+  title: "Open Food Network"
   site_meta_description: "Dit is wat we doen door een platform te creëren dat verbinding wil maken:\n● gepassioneerde boeren, die zich inzetten voor duurzame en regeneratieve landbouw,\n● handelaren van lokale producten, aanhangers van kortsluitingen, die in volledige transparantie handelen en een eerlijke vergoeding van de producenten garanderen,\n● kopers die de wereld willen veranderen door beter te eten,"
   search_by_name: Zoeken op naam of voorstad....
   producers_join: Belgische producenten zijn nu welkom om zich aan te sluiten bij het Open Food Network.
@@ -257,6 +256,7 @@ nl_BE:
   back_to_payments_list: "Terug naar Betalingslijst"
   on hand: "Bij de Hand"
   ship: "Verzenden"
+  shipping_category: "Verzendcategorie"
   actions:
     create_and_add_another: "Een ander maken en toevoegen"
     create: "Maak"
@@ -1102,13 +1102,13 @@ nl_BE:
     menu:
       cart:
         cart: "kar"
+      cart_sidebar:
+        checkout: "Kassa"
+        close: "Sluit"
       signed_in:
         profile: "Profiel"
       mobile_menu:
         cart: "kar"
-      joyride:
-        checkout: "Naar de kassa"
-        already_ordered_products: "Reeds besteld in de huidige bestelcyclus"
     register_call:
       selling_on_ofn: "Geïnteresseerd om deel uit te maken van het Open Food Network?"
       register: "Registreer hier"
@@ -1648,8 +1648,7 @@ nl_BE:
   password: Wachtwoord
   remember_me: Onthoud Me
   are_you_sure: "Ben je zeker?"
-  orders_open: Openstaande Bestellingen
-  closing: "Sluitend"
+  orders_open: "Openstaande Bestellingen"
   going_back_to_home_page: "Terugkerend naar de startpagina"
   creating: Aanmakend
   updating: Updatend
@@ -2625,6 +2624,7 @@ nl_BE:
   previous: "Voorgaande"
   last: "Laatst"
   spree:
+    more: "Meer"
     your_order_is_empty_add_product: "Je bestelling is leeg, gelieve hierboven  een product te zoeken en toe te voegen "
     add_product: "Voeg een product toe"
     name_or_sku: "Beschrijving of artikelnummer ( tenminste 4 letters van de productnaam invoeren )"

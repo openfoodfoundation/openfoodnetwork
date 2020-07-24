@@ -27,7 +27,7 @@ module Spree
 
       def new
         @order = Order.create
-        @order.created_by = try_spree_current_user
+        @order.created_by = spree_current_user
         @order.save
         redirect_to edit_admin_order_url(@order)
       end

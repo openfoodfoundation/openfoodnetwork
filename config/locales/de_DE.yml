@@ -181,8 +181,7 @@ de_DE:
         title: Andere Fehler (%{count} Bestellungen)
         explainer: Die automatische Verarbeitung dieser Aufträge ist aus einem unbekannten Grund fehlgeschlagen. Dies sollte nicht geschehen, bitte kontaktieren Sie uns, wenn Sie dies sehen.
   home: "OFN"
-  title: Open Food Network
-  welcome_to: 'Willkommen bei'
+  title: "Open Food Network"
   site_meta_description: "Wir starten ganz grundsätzlich. Mit LandwirtInnen und GärtnerInnen, die stolz und ehrlich ihre Geschichte erzählen. Mit Lieferanten, die Menschen fair und vertrauenswürdig mit Produkten verbinden. Mit KonsumentInnen, die glauben, daß ihre wöchentlichen Einkaufsentscheidungen..."
   search_by_name: Suche nach Name oder Ort...
   producers_join: 'Wir laden Deutsche Produzenten ein, jetzt dem Open Food Network beizutreten. '
@@ -270,6 +269,7 @@ de_DE:
   backordered: "Nachbestellt"
   on hand: "Verfügbar"
   ship: "Liefern"
+  shipping_category: "Versandkategorie"
   actions:
     create_and_add_another: "Erstellen und weitere hinzufügen"
     create: "Neu"
@@ -1142,13 +1142,13 @@ de_DE:
     menu:
       cart:
         cart: "Wagen"
+      cart_sidebar:
+        checkout: "Kasse"
+        close: "Abschließen"
       signed_in:
         profile: "Profil"
       mobile_menu:
         cart: "Wagen"
-      joyride:
-        checkout: "Zur Kasse"
-        already_ordered_products: "Bereits in diesem Bestellzyklus bestellt"
     register_call:
       selling_on_ofn: "Sie möchten selbst im Open Food Network verkaufen?"
       register: "Hier anmelden"
@@ -1687,8 +1687,7 @@ de_DE:
   password: Passwort
   remember_me: Erinnere dich an mich
   are_you_sure: "Bist du sicher?"
-  orders_open: Bestellungen öffnen
-  closing: "Schließen"
+  orders_open: "Bestellungen öffnen"
   going_back_to_home_page: "Bring dich zurück auf die Homepage"
   creating: Erstellen
   updating: Aktualisierung
@@ -2741,6 +2740,7 @@ de_DE:
   previous: "Bisherige"
   last: "Zuletzt"
   spree:
+    more: "Mehr"
     your_order_is_empty_add_product: "Ihre Bestellung ist leer. Suchen Sie oben ein Produkt und fügen Sie es hinzu"
     add_product: "Produkt hinzufügen"
     name_or_sku: "Name oder SKU (geben Sie mindestens die ersten 4 Zeichen des Produktnamens ein)"

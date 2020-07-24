@@ -1,0 +1,3445 @@
+en_IN:
+  language_name: "English"
+  activerecord:
+    attributes:
+      enterprise_fee:
+        fee_type: Fee Type
+      spree/order:
+        payment_state: Payment State
+        shipment_state: Shipment State
+        completed_at: Completed At
+        number: Number
+        state: State
+        email: Customer E-Mail
+      spree/payment:
+        amount: Amount
+      spree/product:
+        primary_taxon: "Product Category"
+        supplier: "Supplier"
+        shipping_category_id: "Shipping Category"
+        variant_unit: "Variant Unit"
+        variant_unit_name: "Variant Unit Name"
+      spree/credit_card:
+        base: "Credit Card"
+      order_cycle:
+        orders_close_at: Close date
+      variant_override:
+        count_on_hand: "In Stock"
+    errors:
+      models:
+        spree/user:
+          attributes:
+            email:
+              taken: "There's already an account for this email. Please login or reset your password."
+        spree/order:
+          no_card: There are no authorised credit cards available to charge
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: "has expired"
+        order_cycle:
+          attributes:
+            orders_close_at:
+              after_orders_open_at: must be after open date
+        variant_override:
+          count_on_hand:
+            using_producer_stock_settings_but_count_on_hand_set: "must be blank because using producer stock settings"
+            on_demand_but_count_on_hand_set: "must be blank if on demand"
+            limited_stock_but_no_count_on_hand: "must be specified because forcing limited stock"
+  activemodel:
+    attributes:
+      order_management/reports/enterprise_fee_summary/parameters:
+        start_at: "Start"
+        end_at: "End"
+        distributor_ids: "Hubs"
+        producer_ids: "Pricing"
+        order_cycle_ids: "Order Cycles"
+        enterprise_fee_ids: "Fees Names"
+        shipping_method_ids: "Shipping Methods"
+        payment_method_ids: "Payment Methods"
+    errors:
+      messages:
+        inclusion: "is not included in the list"
+      models:
+        order_management/subscriptions/validator:
+          attributes:
+            subscription_line_items:
+              at_least_one_product: "^Please add at least one product"
+              not_available: "^%{name} is not available from the selected schedule. Your changes have not been saved."
+            ends_at:
+              after_begins_at: "must be after begins at"
+            customer:
+              does_not_belong_to_shop: "does not belong to %{shop}"
+            schedule:
+              not_coordinated_by_shop: "is not coordinated by %{shop}"
+            payment_method:
+              not_available_to_shop: "is not available to %{shop}"
+              invalid_type: "must be a Cash or Stripe method"
+              charges_not_allowed: "^Credit card charges are not allowed by this customer"
+              no_default_card: "^No default card available for this customer"
+            shipping_method:
+              not_available_to_shop: "is not available to %{shop}"
+  devise:
+    confirmations:
+      send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
+      failed_to_send: "An error occurred whilst sending your confirmation email."
+      resend_confirmation_email: "Resend confirmation email."
+      confirmed: "Thanks for confirming your email! You can now log in."
+      not_confirmed: "Your email address could not be confirmed. Perhaps you have already completed this step?"
+    user_confirmations:
+      spree_user:
+        send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
+        confirmation_sent: "Email confirmation sent"
+        confirmation_not_sent: "Error sending confirmation email"
+    user_registrations:
+      spree_user:
+        signed_up_but_unconfirmed: "A message with a confirmation link has been sent to your email address. Please open the link to activate your account."
+        unknown_error: "Something went wrong while creating your account. Check your email address and try again."
+    failure:
+      invalid: |
+          Invalid email or password.
+          Were you a guest last time?  Perhaps you need to create an account or reset your password.
+      unconfirmed: "You have to confirm your account before continuing."
+      already_registered: "This email address is already registered. Please log in to continue, or go back and use another email address."
+    success:
+      logged_in_succesfully: "Logged in successfully"
+    user_passwords:
+      spree_user:
+        updated_not_active: "Your password has been reset, but your email has not been confirmed yet."
+        updated: "Your password was changed successfully. You are now signed in."
+        send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
+  models:
+    order_cycle:
+      cloned_order_cycle_name: "COPY OF %{order_cycle}"
+  validators:
+    date_time_string_validator:
+      not_string_error: "must be a string"
+      invalid_format_error: "must be valid"
+    integer_array_validator:
+      not_array_error: "must be an array"
+      invalid_element_error: "must contain only valid integers"
+  enterprise_mailer:
+    confirmation_instructions:
+      subject: "Please confirm the email address for %{enterprise}"
+    welcome:
+      subject: "%{enterprise} is now on %{sitename}"
+      email_welcome: "Welcome"
+      email_registered: "is now part of"
+      email_userguide_html: "The User Guide with detailed support for setting up your Producer or Hub is here: %{link}"
+      userguide: "Open Food Network User Guide"
+      email_admin_html: "You can manage your account by logging into the %{link} or by clicking on 'Profile' in the top right hand side of the homepage, and selecting Administration."
+      admin_panel: "Admin Panel"
+      email_community_html: "We also have an online forum for community discussion related to OFN software and the unique challenges of running a food enterprise. You are encouraged to join in. We are constantly evolving and your input into this forum will shape what happens next. %{link}"
+      join_community: "Join the community"
+    invite_manager:
+      subject: "%{enterprise} has invited you to be a manager"
+  producer_mailer:
+    order_cycle:
+      subject: "Order cycle report for %{producer}"
+  shipment_mailer:
+    shipped_email:
+      dear_customer: "Dear Customer,"
+      instructions: "Your order has been shipped"
+      shipment_summary: "Shipment Summary"
+      subject: "Shipment Notification"
+      thanks: "Thank you for your order with us."
+      track_information: "Tracking Information: %{tracking}"
+      track_link: "Tracking Link: %{url}"
+  subscription_mailer:
+    placement_summary_email:
+      subject: A summary of recently placed subscription orders
+      greeting: "Hi %{name},"
+      intro: "Below is a summary of the subscription orders that have just been placed for %{shop}."
+    confirmation_summary_email:
+      subject: A summary of recently confirmed subscription orders
+      greeting: "Hi %{name},"
+      intro: "Below is a summary of the subscription orders that have just been finalised for %{shop}."
+    summary_overview:
+      total: A total of %{count} subscriptions were marked for automatic processing.
+      success_zero: Of these, none were processed successfully.
+      success_some: Of these, %{count} were processed successfully.
+      success_all: All were processed successfully.
+      issues: Details of the issues encountered are provided below.
+    summary_detail:
+      no_message_provided: No error message provided
+      changes:
+        title: Insufficient Stock (%{count} orders)
+        explainer: These orders were processed but insufficient stock was available for some requested items
+      empty:
+        title: No Stock (%{count} orders)
+        explainer: These orders were unable to be processed because no stock was available for any requested items
+      complete:
+        title: Already Processed (%{count} orders)
+        explainer: These orders were already marked as complete, and were therefore left untouched
+      processing:
+        title: Error Encountered (%{count} orders)
+        explainer: Automatic processing of these orders failed due to an error. The error has been listed where possible.
+      failed_payment:
+        title: Failed Payment (%{count} orders)
+        explainer: Automatic processing of payment for these orders failed due to an error. The error has been listed where possible.
+      other:
+        title: Other Failure (%{count} orders)
+        explainer: Automatic processing of these orders failed for an unknown reason. This should not occur, please contact us if you are seeing this.
+  home: "OFN"
+  title: "Open Food Network India"
+  welcome_to: "Welcome to "
+  site_meta_description: "The Open Food Network India software platform allows farmers to sell produce online, at a price that works for them. It has been built specifically for selling food so it can handle tricky measures or stock levels that only food has - a dozen eggs, a bunch of parsley, a whole chicken that varies in weight…"
+  search_by_name: Search by name, town, State or postcode...
+  producers_join: India producers are now welcome to join Open Food Network India.
+  charges_sales_tax: Charges VAT?
+  print_invoice: "Print Invoice"
+  print_ticket: "Print Ticket"
+  select_ticket_printer: "Select printer for tickets"
+  send_invoice: "Send Invoice"
+  resend_confirmation: "Resend Confirmation"
+  view_order: "View Order"
+  edit_order: "Edit Order"
+  ship_order: "Ship Order"
+  cancel_order: "Cancel Order"
+  confirm_send_invoice: "An invoice for this order will be sent to the customer. Are you sure you want to continue?"
+  confirm_resend_order_confirmation: "Are you sure you want to resend the order confirmation email?"
+  must_have_valid_business_number: "Please enter your company number."
+  invoice: "Invoice"
+  more: "More"
+  say_no: "No"
+  say_yes: "Yes"
+  ongoing: Ongoing
+  bill_address: Billing Address
+  ship_address: Shipping Address
+  sort_order_cycles_on_shopfront_by: "Sort Order Cycles On Shopfront By"
+  required_fields: Required fields are denoted with an asterisk
+  select_continue: Select and Continue
+  remove: Remove
+  or: or
+  collapse_all: Collapse all
+  expand_all: Expand all
+  loading: Loading...
+  show_more: Show more
+  show_all: Show all
+  show_all_with_more: "Show All (%{num}  More)"
+  cancel: Cancel
+  edit: Edit
+  clone: Clone
+  distributors: Distributors
+  bulk_order_management: Bulk Order Management
+  enterprises: Enterprises
+  enterprise_groups: Groups
+  reports: Reports
+  variant_overrides: Inventory
+  import: Import
+  spree_products: Spree Products
+  all: All
+  current: Current
+  available: Available
+  dashboard: Dashboard
+  undefined: undefined
+  unused: unused
+  admin_and_handling: Admin & Handling
+  profile: Profile
+  supplier_only: Supplier Only
+  has_shopfront: Has Shopfront
+  weight: Weight
+  volume: Volume
+  items: Items
+  summary: Summary
+  detailed: Detailed
+  updated: Updated
+  'yes': "Yes"
+  'no': "No"
+  y: 'Y'
+  n: 'N'
+  powered_by: Powered by
+  blocked_cookies_alert: "Your browser may be blocking cookies needed to use this shopfront. Click below to allow cookies and reload the page."
+  allow_cookies: "Allow Cookies"
+  notes: Notes
+  error: Error
+  processing_payment: "Processing payment..."
+  no_pending_payments: "No pending payments"
+  invalid_payment_state: "Invalid payment state"
+  filter_results: Filter Results
+  quantity: Quantity
+  pick_up: Pick up
+  copy: Copy
+  change_my_password: "Change my password"
+  update_password: "Update password"
+  password_confirmation: Password Confirmation
+  reset_password_token: Reset password
+  expired: has expired, please request a new one
+  back_to_payments_list: "Back to Payments List"
+  maestro_or_solo_cards: "Maestro/Solo cards"
+  backordered: "Backordered"
+  on hand: "In Stock"
+  ship: "Ship"
+  shipping_category: "Shipping Category"
+  actions:
+    create_and_add_another: "Create and Add Another"
+    create: "Create"
+    cancel: "Cancel"
+    save: "Save"
+    edit: "Edit"
+    update: "Update"
+    delete: "Delete"
+  admin:
+    begins_at: Begins At
+    begins_on: Begins On
+    customer: Customer
+    date: Date
+    email: Email
+    ends_at: Ends At
+    ends_on: Ends On
+    name: Name
+    on_hand: In Stock
+    on_demand: Unlimited
+    on_demand?: Unlimited?
+    order_cycle: Order Cycle
+    payment: Payment
+    payment_method: Payment Method
+    phone: Phone
+    price: Price
+    producer: Producer
+    image: Image
+    product: Product
+    quantity: Quantity
+    schedule: Schedule
+    shipping: Shipping
+    shipping_method: Shipping Method
+    shop: Shop
+    sku: SKU
+    status_state: State
+    tags: Tags
+    variant: Variant
+    weight: Weight
+    volume: Volume
+    items: Items
+    select_all: Select all
+    quick_search: Quick Search
+    clear_all: Clear All
+    start_date: "Start Date"
+    end_date: "End Date"
+    form_invalid: "Form contains missing or invalid fields"
+    clear_filters: Clear Filters
+    clear: Clear
+    save: Save
+    cancel: Cancel
+    back: Back
+    show_more: Show more
+    show_n_more: Show %{num} more
+    choose: "Choose..."
+    please_select: Please select...
+    column_save_as_default: Save As Default
+    columns: Columns
+    actions: Actions
+    viewing: "Viewing: %{current_view_name}"
+    description: Description
+    whats_this: What's this?
+    tag_has_rules: "Existing rules for this tag: %{num}"
+    has_one_rule: "has one rule"
+    has_n_rules: "has %{num} rules"
+    unsaved_confirm_leave: "There are unsaved changed on this page. Continue without saving?"
+    unsaved_changes: "You have unsaved changes"
+    shopfront_settings:
+      embedded_shopfront_settings: "Embedded Shopfront Settings"
+      enable_embedded_shopfronts: "Enable Embedded Shopfronts"
+      embedded_shopfronts_whitelist: "External Domains Whitelist"
+    number_localization:
+      number_localization_settings: "Number Localisation Settings"
+      enable_localized_number: "Use the international thousand/decimal separator logic"
+    invoice_settings:
+      edit:
+        title: "Invoice Settings"
+        enable_invoices?: "Enable Invoices?"
+        invoice_style2?: "Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)"
+        enable_receipt_printing?: "Show options for printing receipts using thermal printers in order dropdown?"
+    stripe_connect_settings:
+      edit:
+        title: "Stripe Connect"
+        settings: "Settings"
+        stripe_connect_enabled: Enable shops to accept payments using Stripe Connect?
+        no_api_key_msg: No Stripe account exists for this enterprise.
+        configuration_explanation_html: For detailed instructions on configuring the Stripe Connect integration, please <a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'>consult this guide</a>.
+        status: Status
+        ok: Ok
+        instance_secret_key: Instance Secret Key
+        account_id: Account ID
+        business_name: Business Name
+        charges_enabled: Charges Enabled
+        charges_enabled_warning: "Warning: Charges are not enabled for your account"
+        auth_fail_error: The API key you provided is invalid
+        empty_api_key_error_html: No Stripe API key has been provided. To set your API key, please follow <a href="https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance" target="_blank">these instructions</a>
+    matomo_settings:
+      edit:
+        title: "Matomo Settings"
+        matomo_url: "Matomo URL"
+        matomo_site_id: "Matomo Site ID"
+        matomo_tag_manager_url: "Matomo Tag Manager URL"
+        info_html: "Matomo is a Web and Mobile Analytics application. You can either host Matomo on-premises or use a cloud-hosted service. See <a href='http://matomo.org' target='_blank'>matomo.org</a> for more information."
+        config_instructions_html: "Here you can configure the OFN Matomo integration. The Matomo URL below should point to the Matomo instance where the user tracking information will be sent to; if it is left empty, Matomo user tracking will be disabled. The Site ID field is not mandatory but useful if you are tracking more than one website on a single Matomo instance; it can be found on the Matomo instance console."
+        config_instructions_tag_manager_html: "Setting the Matomo Tag Manager URL enables Matomo Tag Manager. This tool allows you to set up analytics events. The Matomo Tag Manager URL is copied from the Install Code section of Matomo Tag Manager. Ensure you select the right container and environment as these options change the URL."
+    customers:
+      index:
+        new_customer: "New Customer"
+        code: Code
+        duplicate_code: "This code is used already."
+        bill_address: "Billing Address"
+        ship_address: "Shipping Address"
+        update_address_success: 'Address updated successfully.'
+        update_address_error: 'Sorry! Please input all of the required fields!'
+        edit_bill_address: 'Edit Billing Address'
+        edit_ship_address: 'Edit Shipping Address'
+        required_fileds: 'Required fields are denoted with an asterisk'
+        select_country: 'Select Country'
+        select_state: 'Select State'
+        edit: 'Edit'
+        update_address: 'Update Address'
+        confirm_delete: 'Sure to delete?'
+        search_by_email: "Search by email/code..."
+        guest_label: 'Guest checkout'
+      destroy:
+        has_associated_orders: 'Delete failed: customer has associated orders with this shop'
+    contents:
+      edit:
+        title: Content
+        header: Header
+        home_page: Home page
+        producer_signup_page: Producer signup page
+        hub_signup_page: Hub signup page
+        group_signup_page: Group signup page
+        main_links: Main Menu Links
+        footer_and_external_links: Footer and External Links
+        your_content: Your content
+        user_guide: User Guide
+        map: Map
+    enterprise_fees:
+      index:
+        title: "Enterprise Fees"
+        enterprise: "Enterprise"
+        fee_type: "Fee Type"
+        name: "Name"
+        tax_category: "Tax Category"
+        calculator: "Calculator"
+        calculator_values: "Calculator Values"
+        search: "Search"
+        name_placeholder: "e.g. packing fee"
+    enterprise_groups:
+      index:
+        new_button: New Enterprise Group
+    enterprise_roles:
+      form:
+        manages: manages
+      enterprise_role:
+        manages: manages
+    products:
+      unit_name_placeholder: 'eg. bunches'
+      index:
+        unit: Unit
+        display_as: Display As
+        category: Category
+        tax_category: Tax Category
+        inherits_properties?: Inherits Properties?
+        available_on: Available On
+        av_on: "Av. On"
+        import_date: Imported
+        upload_an_image: Upload an image
+      seo:
+        product_search_keywords: "Product Search Keywords"
+        product_search_tip: "Type words to help search your products in the shops. Use space to separate each keyword."
+        SEO_keywords: "SEO Keywords"
+        seo_tip: "Type words to help search your products in the web. Use space to separate each keyword."
+      search: "Search"
+      properties:
+        property_name: "Property Name"
+        inherited_property: "Inherited Property"
+      variants:
+        infinity: "Infinity"
+        to_order_tip: "Items made to order do not have a set stock level, such as loaves of bread made fresh to order."
+      back_to_products_list: "Back to products list"
+      editing_product: "Editing Product"
+      tabs:
+        product_details: "Product Details"
+        group_buy_options: "Group Buy Options"
+        images: "Images"
+        variants: "Variants"
+        product_properties: "Product Properties"
+    product_import:
+      title: Product Import
+      file_not_found: File not found or could not be opened
+      no_data: No data found in spreadsheet
+      confirm_reset: "This will set stock level to zero on all products for this \n enterprise that are not present in the uploaded file"
+      model:
+        no_file: "error: no file uploaded"
+        could_not_process: "could not process file: invalid filetype"
+        incorrect_value: incorrect value
+        conditional_blank: can't be blank if unit_type is blank
+        no_product: did not match any products in the database
+        not_found: not found in database
+        not_updatable: cannot be updated on existing products via product import
+        blank: can't be blank
+        products_no_permission: you do not have permission to manage products for this enterprise
+        inventory_no_permission: you do not have permission to create inventory for this producer
+        none_saved: did not save any products successfully
+        line_number: "Line %{number}:"
+        encoding_error: "Please check the language setting of your source file and ensure it is saved with UTF-8 encoding"
+        unexpected_error: "Product Import encountered an unexpected error whilst opening the file: %{error_message}"
+        malformed_csv: "Product Import found CSV was incorrectly formatted: %{error_message}"
+      index:
+        notice: "Notice"
+        beta_notice: "This feature is still in beta: you may experience some errors while using it. Please don't hesitate to contact support."
+        select_file: Select a spreadsheet to upload
+        spreadsheet: Spreadsheet
+        choose_import_type: Select import type
+        import_into: Import type
+        product_list: Product list
+        inventories: Inventories
+        import: Import
+        upload: Upload
+        csv_templates: CSV Templates
+        product_list_template: Download Product List template
+        inventory_template: Download Inventory template
+        category_values: Available Category Values
+        product_categories: Product Categories
+        tax_categories: Tax Categories
+        shipping_categories: Shipping Categories
+      import:
+        review: Review
+        import: Import
+        save: Save
+        results: Results
+        save_imported: Save imported products
+        no_valid_entries: No valid entries found
+        none_to_save: There are no entries that can be saved
+        some_invalid_entries: Imported file contains invalid entries
+        fix_before_import: Please fix these errors and try importing the file again
+        save_valid?: Save valid entries for now and discard the others?
+        no_errors: No errors detected!
+        save_all_imported?: Save all imported products?
+        options_and_defaults: Import options and defaults
+        no_permission: you do not have permission to manage this enterprise
+        not_found: enterprise could not be found in database
+        no_name: No name
+        blank_enterprise: some products do not have an enterprise defined
+        reset_absent?: Reset absent products
+        reset_absent_tip: Set stock to zero for all exiting products not present in the file
+        overwrite_all: Overwrite all
+        overwrite_empty: Overwrite if empty
+        default_stock: Set stock level
+        default_tax_cat: Set tax category
+        default_shipping_cat: Set shipping category
+        default_available_date: Set available date
+        validation_overview: Import validation overview
+        entries_found: Entries found in imported file
+        entries_with_errors: Items contain errors and will not be imported
+        products_to_create: Products will be created
+        products_to_update: Products will be updated
+        inventory_to_create: Inventory items will be created
+        inventory_to_update: Inventory items will be updated
+        products_to_reset: Existing products will have their stock reset to zero
+        inventory_to_reset: Existing inventory items will have their stock reset to zero
+        line: Line
+        item_line: Item line
+      import_review:
+        not_updatable_tip: "The following fields cannot be updated via bulk import for existing products:"
+        fields_ignored: These fields will be ignored when the imported products are saved.
+      entries_table:
+        not_updatable: This field is not updatable via bulk import on existing products
+      save_results:
+        final_results: Import final results
+        products_created: Products created
+        products_updated: Products updated
+        inventory_created: Inventory items created
+        inventory_updated: Inventory items updated
+        products_reset: Products had stock level reset to zero
+        inventory_reset: Inventory items had stock level reset to zero
+        all_saved: "All items saved successfully"
+        some_saved: "items saved successfully"
+        save_errors: Save errors
+        import_again: Upload Another File
+        view_products: Go To Products Page
+        view_inventory: Go To Inventory Page
+    variant_overrides:
+      loading_flash:
+        loading_inventory: LOADING INVENTORY
+      index:
+        title: Inventory
+        description: Use this page to manage inventories for your enterprises. Any product details set here will override those set on the 'Products' page
+        enable_reset?: Enable Stock Reset?
+        default_stock: "Default stock"
+        inherit?: Inherit?
+        add: Add
+        hide: Hide
+        import_date: Imported
+        select_a_shop: Select A Shop
+        review_now: Review Now
+        new_products_alert_message: There are %{new_product_count} new products available to add to your inventory.
+        currently_empty: Your inventory is currently empty
+        no_matching_products: No matching products found in your inventory
+        no_hidden_products: No products have been hidden from this inventory
+        no_matching_hidden_products: No hidden products match your search criteria
+        no_new_products: No new products are available to add to this inventory
+        no_matching_new_products: No new products match your search criteria
+        inventory_powertip: This is your inventory of products. To add products to your inventory, select 'New Products' from the Viewing dropdown.
+        hidden_powertip: These products have been hidden from your inventory and will not be available to add to your shop. You can click 'Add' to add a product to you inventory.
+        new_powertip: These products are available to be added to your inventory. Click 'Add' to add a product to your inventory, or 'Hide' to hide it from view. You can always change your mind later!
+      controls:
+        back_to_my_inventory: Back to my inventory
+    orders:
+      invoice_email_sent: 'Invoice email has been sent'
+      order_email_resent: 'Order email has been resent'
+      bulk_management:
+        tip: "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required."
+        shared: "Shared Resource?"
+        order_no: "Order No."
+        order_date: "Completed at"
+        max: "Max"
+        product_unit: "Product: Unit"
+        weight_volume: "Weight/Volume"
+        ask: "Ask?"
+        page_title: "Bulk Order Management"
+        actions_delete: "Delete Selected"
+        loading: "Loading orders"
+        no_results: "No orders found."
+        group_buy_unit_size: "Group Buy Unit Size"
+        total_qtt_ordered: "Total Quantity Ordered"
+        max_qtt_ordered: "Max Quantity Ordered"
+        current_fulfilled_units: "Current Fulfilled Units"
+        max_fulfilled_units: "Max Fulfilled Units"
+        order_error: "Some errors must be resolved before you can update orders.\nAny fields with red borders contain errors."
+        variants_without_unit_value: "WARNING: Some variants do not have a unit value"
+      select_variant: "Select a variant"
+    enterprise:
+      select_outgoing_oc_products_from: Select outgoing OC products from
+    enterprises:
+      index:
+        title: Enterprises
+        new_enterprise: New Enterprise
+        producer?: "Producer?"
+        package: Package
+        status: Status
+        manage: Manage
+      form:
+        about_us:
+          desc_short: Short Description
+          desc_short_placeholder: Tell us about your enterprise in one or two sentences
+          desc_long: About Us
+          desc_long_placeholder: Tell customers about yourself. This information appears on your public profile.
+        business_details:
+          abn: Company Number
+          abn_placeholder: eg. 99 123 456 789
+          acn: Charity Number
+          acn_placeholder: eg. 123 456 789
+          display_invoice_logo: Display logo in invoices
+          invoice_text: Add customized text at the end of invoices
+        contact:
+          name: Name
+          name_placeholder: eg. Amanda Plum
+          email_address: Public Email Address
+          email_address_placeholder: eg. hello@food.co.in
+          email_address_tip: "This email address will be displayed in your public profile"
+          phone: Phone
+          phone_placeholder: eg. 98 7654 3210
+          website: Website
+          website_placeholder: eg. www.truffles.co.in
+        enterprise_fees:
+          name: Name
+          fee_type: Fee Type
+          manage_fees: Manage Enterprise Fees
+          no_fees_yet: You don't have any enterprise fees yet.
+          create_button: Create One Now
+        images:
+          logo: Logo
+          promo_image_placeholder: 'This image is displayed in "About Us"'
+          promo_image_note1: 'PLEASE NOTE:'
+          promo_image_note2: Any promo image uploaded here will be cropped to 1200 x 260.
+          promo_image_note3: The promo image is displayed at the top of an enterprise's profile page and pop-ups.
+        inventory_settings:
+          text1: You may opt to manage stock levels and prices in via your
+          inventory: inventory
+          text2: >
+              If you are using the inventory tool, you can select whether new products
+              added by your suppliers need to be added to your inventory before they
+              can be stocked. If you are not using your inventory to manage your products
+              you should select the 'recommended' option below:
+          preferred_product_selection_from_inventory_only_yes: New products can be put into my shopfront (recommended)
+          preferred_product_selection_from_inventory_only_no: New products must be added to my inventory before they can be put into my shopfront
+        payment_methods:
+          name: Name
+          applies: Applies?
+          manage: Manage Payment Methods
+          no_method_yet: You don't have any payment methods yet.
+          create_button: Create New Payment Method
+          create_one_button: Create One Now
+        primary_details:
+          name: Name
+          name_placeholder: eg. Professor Plum's Biodynamic Truffles
+          groups: Groups
+          groups_tip: Select any groups or regions that you are a member of. This will help customers find your enterprise.
+          groups_placeholder: Start typing to search available groups...
+          primary_producer: Primary Producer?
+          primary_producer_tip: Select 'Producer' if you are a primary producer of food.
+          producer: Producer
+          any: Any
+          none: None
+          own: Own
+          sells: Sells
+          sells_tip: "None - enterprise does not sell to customers directly.<br />Own - Enterprise sells own products to customers.<br />Any - Enterprise can sell own or other enterprises products.<br />"
+          visible_in_search: Visible in search?
+          visible_in_search_tip: Determines whether this enterprise will be visible to customers when searching the site.
+          visible: Visible
+          not_visible: Not visible
+          permalink: Permalink (no spaces)
+          permalink_tip: "This permalink is used to create the url to your shop: %{link}your-shop-name/shop"
+          link_to_front: Link to shop front
+          link_to_front_tip: A direct link to your shopfront on the Open Food Network.
+          ofn_uid: OFN UID
+          ofn_uid_tip: The unique id used to identify the enterprise on Open Food Network.
+        shipping_methods:
+          name: "Name"
+          applies: "Active?"
+          manage: "Manage Shipping Methods"
+          create_button: "Create New Shipping Method"
+          create_one_button: "Create One Now"
+          no_method_yet: "You don't have any shipping methods yet."
+        shop_preferences:
+          shopfront_requires_login: "Publicly visible shopfront?"
+          shopfront_requires_login_tip: "Choose whether customers must login to view the shopfront or if it's visible to everybody."
+          shopfront_requires_login_false: "Public"
+          shopfront_requires_login_true: "Visible to registered customers only"
+          recommend_require_login: "We recommend to require users to login when orders can be changed."
+          allow_guest_orders: "Guest orders"
+          allow_guest_orders_tip: "Allow checkout as guest or require a registered user."
+          allow_guest_orders_false: "Require login to order"
+          allow_guest_orders_true: "Allow guest checkout"
+          allow_order_changes: "Change orders"
+          allow_order_changes_tip: "Allow customers to change their order as long the order cycle is open."
+          allow_order_changes_false: "Placed orders cannot be changed / cancelled"
+          allow_order_changes_true: "Customers can change / cancel orders while order cycle is open"
+          enable_subscriptions: "Subscriptions"
+          enable_subscriptions_tip: "Enable subscriptions functionality?"
+          enable_subscriptions_false: "Disabled"
+          enable_subscriptions_true: "Enabled"
+          shopfront_message: "Shopfront Message"
+          shopfront_message_placeholder: >
+              An optional message to welcome customers and explain how to shop with
+              you. If text is entered here it will be displayed in a home tab when
+              customers first arrive at your shopfront.
+          shopfront_message_link_tooltip: "Insert / edit link"
+          shopfront_message_link_prompt: "Please enter a URL to insert"
+          shopfront_closed_message: "Shopfront Closed Message"
+          shopfront_closed_message_placeholder: >
+              A message which provides a more detailed explanation about why your
+              shop is closed and/or when customers can expect it to open again. This
+              is displayed on your shop only when you have no active order cycles
+              (ie. shop is closed).
+          shopfront_category_ordering: "Shopfront Category Ordering"
+          open_date: "Open Date"
+          close_date: "Close Date"
+        social:
+          twitter_placeholder: "eg. @the_prof"
+          instagram_placeholder: "eg. the_prof"
+          facebook_placeholder: "eg. www.facebook.com/PageNameHere"
+          linkedin_placeholder: "eg. www.linkedin.com/in/YourNameHere"
+        stripe_connect:
+          connect_with_stripe: "Connect with Stripe"
+          stripe_connect_intro: "To accept payments using credit card, you will need to connect your stripe account to the Open Food Network. Use the button to the right to get started."
+          stripe_account_connected: "Stripe account connected."
+          disconnect: "Disconnect account"
+          confirm_modal:
+            title: Connect with Stripe
+            part1: Stripe is a payment processing service that allows shops on the OFN to accept credit card payments from customers.
+            part2: To use this feature, you must connect your Stripe account to the OFN. Clicking 'I Agree' below will redirect to you the Stripe website where you can connect an existing Stripe account, or create a new one if you don't already have one.
+            part3: This will allow the Open Food Network to accept credit card payments from customers on your behalf. Please note that you will need to maintain your own Stripe account, pay the fees Stripe charges and handle any chargebacks and customer service yourself.
+            i_agree: I Agree
+            cancel: Cancel
+        tag_rules:
+          default_rules:
+            by_default: By Default
+            no_rules_yet: No default rules apply yet
+            add_new_button: '+ Add A New Default Rule'
+          no_tags_yet: No tags apply to this enterprise yet
+          no_rules_yet: No rules apply to this tag yet
+          for_customers_tagged: 'For customers tagged:'
+          add_new_rule: '+ Add A New Rule'
+          add_new_tag: '+ Add A New Tag'
+        users:
+          email_confirmation_notice_html: "Email confirmation is pending. We've sent a confirmation email to %{email}."
+          resend: Resend
+          owner: 'Owner'
+          contact: "Contact"
+          contact_tip: "The manager who will receive enterprise emails for orders and notifications. Must have a confirmed email adress."
+          owner_tip: The primary user responsible for this enterprise.
+          notifications: Notifications
+          notifications_tip: Notifications about orders will be send to this email address.
+          notifications_placeholder: eg. gustav@truffles.com
+          notifications_note: 'Note: A new email address may need to be confirmed prior to use'
+          managers: Managers
+          managers_tip: The other users with permission to manage this enterprise.
+          invite_manager: "Invite Manager"
+          invite_manager_tip: "Invite an unregistered user to sign up and become a manager of this enterprise."
+          add_unregistered_user: "Add an unregistered user"
+          email_confirmed: "Email confirmed"
+          email_not_confirmed: "Email not confirmed"
+      actions:
+        edit_profile: Settings
+        properties: Properties
+        payment_methods: Payment Methods
+        payment_methods_tip: This enterprise has no payment methods
+        shipping_methods: Shipping Methods
+        shipping_methods_tip: This enterprise has shipping methods
+        enterprise_fees: Enterprise Fees
+        enterprise_fees_tip: This enterprise has no fees
+      admin_index:
+        name: Name
+        role: Role
+        sells: Sells
+        visible: Visible?
+        owner: Owner
+        producer: Producer
+      change_type_form:
+        producer_profile: Producer Profile
+        connect_ofn: Connect through OFN
+        always_free: Free
+        producer_description_text: Add your products to Open Food Network, allowing hubs to stock your products in their stores.
+        producer_shop: Producer Shop
+        sell_your_produce: Sell your own produce
+        producer_shop_description_text: Sell your products directly to customers through your very own Open Food Network shopfront.
+        producer_shop_description_text2: A Producer Shop is for your produce only, if you want to sell produce grown/produced off site, select 'Producer Hub'.
+        producer_hub: Producer Hub
+        producer_hub_text: Sell produce from self and others
+        producer_hub_description_text: Your enterprise is the backbone of your local food system. You can sell your own produce as well as produce aggregated from other enterprises through your shopfront on the Open Food Network.
+        profile: Profile Only
+        get_listing: Get a listing
+        profile_description_text: People can find and contact you on the Open Food Network. Your enterprise will be visible on the map, and will be searchable in listings.
+        hub_shop: Hub Shop
+        hub_shop_text: Sell produce from others
+        hub_shop_description_text: Your enterprise is the backbone of your local food system. You aggregate produce from other enterprises and can sell it through your shop on the Open Food Network.
+        choose_option: Please choose one of the options above.
+        change_now: Change now
+      enterprise_user_index:
+        loading_enterprises: LOADING ENTERPRISES
+        no_enterprises_found: No enterprises found.
+        search_placeholder: Search By Name
+        manage: Manage
+        manage_link: Settings
+        producer?: "Producer?"
+        package: "Package"
+        status: "Status"
+      new_form:
+        owner: Owner
+        owner_tip: The primary user responsible for this enterprise.
+        i_am_producer: I am a Producer
+        contact_name: Contact Name
+      edit:
+        editing: 'Settings:'
+        back_link: Back to enterprises list
+      new:
+        title: New Enterprise
+        back_link: Back to enterprises list
+      remove_logo:
+        remove: "Remove Image"
+        removed_successfully: "Logo removed successfully"
+        immediate_removal_warning: "The logo will be removed immediately after you confirm."
+      remove_promo_image:
+        remove: "Remove Image"
+        removed_successfully: "Promo image removed successfully"
+        immediate_removal_warning: "The promo image will be removed immediately after you confirm."
+      welcome:
+        welcome_title: Welcome to the Open Food Network!
+        welcome_text: You have successfully created a
+        next_step: Next step
+        choose_starting_point: 'Choose your package:'
+        profile: 'Profile'
+        producer_profile: 'Producer Profile'
+      invite_manager:
+        user_already_exists: "User already exists"
+        error: "Something went wrong"
+    order_cycles:
+      loading_flash:
+        loading_order_cycles: LOADING ORDER CYCLES
+        loading: LOADING...
+      new:
+        create: "Create"
+        cancel: "Cancel"
+        back_to_list: "Back To List"
+      edit:
+        advanced_settings: "Advanced Settings"
+        save: "Save"
+        save_and_next: "Save and Next"
+        next: "Next"
+        cancel: "Cancel"
+        back_to_list: "Back To List"
+        save_and_back_to_list: "Save and Back to List"
+        choose_products_from: "Choose Products From:"
+      incoming:
+        incoming: "Incoming"
+        supplier: "Supplier"
+        products: "Products"
+        receival_details: "Receival Details"
+        fees: "Fees"
+        save: "Save"
+        save_and_next: "Save and Next"
+        next: "Next"
+        cancel: "Cancel"
+        back_to_list: "Back To List"
+      outgoing:
+        outgoing: "Outgoing"
+        distributor: "Distributor"
+        products: "Products"
+        tags: "Tags"
+        delivery_details: "Delivery Details"
+        fees: "Fees"
+        previous: "Previous"
+        save: "Save"
+        save_and_back_to_list: "Save and Back to List"
+        cancel: "Cancel"
+        back_to_list: "Back To List"
+      wizard_progress:
+        edit: "1. General Settings"
+        incoming: "2. Incoming Products"
+        outgoing: "3. Outgoing Products"
+      exchange_form:
+        pickup_time_tip: When orders from this OC will be ready for the customer
+        pickup_instructions_placeholder: "Pick-up instructions"
+        pickup_instructions_tip: These instructions are shown to customers after they complete an order
+        pickup_time_placeholder: "Ready for (ie. Date / Time)"
+        receival_instructions_placeholder: "Receival instructions"
+        add_fee: 'Add fee'
+        remove: 'Remove'
+        selected: 'selected'
+      add_exchange_form:
+        add_supplier: 'Add supplier'
+        add_distributor: 'Add distributor'
+      advanced_settings:
+        title: Advanced Settings
+        choose_product_tip: You can restrict products incoming and outgoing to only %{inventory}'s inventory.
+        preferred_product_selection_from_coordinator_inventory_only_here: Coordinator's Inventory Only
+        preferred_product_selection_from_coordinator_inventory_only_all: All Available Products
+        save_reload: Save and Reload Page
+      coordinator_fees:
+        add: Add coordinator fee
+      filters:
+        search_by_order_cycle_name: "Search by Order Cycle name..."
+        involving: "Involving"
+        any_enterprise: "Any Enterprise"
+        any_schedule: "Any Schedule"
+      form:
+        general_settings: "General Settings"
+        incoming: Incoming
+        supplier: Supplier
+        receival_details: Receival details
+        fees: Fees
+        outgoing: Outgoing
+        distributor: Distributor
+        products: Products
+        tags: Tags
+        add_a_tag: Add a tag
+        delivery_details: Pickup / Delivery details
+      index:
+        schedule: Schedule
+        schedules: Schedules
+        new_schedule: New Schedule
+      name_and_timing_form:
+        name: Name
+        orders_open: Orders open at
+        coordinator: Coordinator
+        orders_close: Orders close
+      row:
+        suppliers: suppliers
+        distributors: distributors
+        variants: variants
+      simple_form:
+        ready_for: Ready for
+        ready_for_placeholder: Date / time
+        customer_instructions: Customer instructions
+        customer_instructions_placeholder: Pick-up or delivery notes
+        products: Products
+        fees: Fees
+      destroy_errors:
+        orders_present: That order cycle has been selected by a customer and cannot be deleted. To prevent customers from accessing it, please close it instead.
+        schedule_present: That order cycle is linked to a schedule and cannot be deleted. Please unlink or delete the schedule first.
+      bulk_update:
+        no_data: Hm, something went wrong. No order cycle data found.
+      date_warning:
+        msg: This order cycle is linked to %{n} open subscription orders. Changing this date now will not affect any orders which have already been placed, but should be avoided if possible. Are you sure you want to proceed?
+        cancel: Cancel
+        proceed: Proceed
+    producer_properties:
+      index:
+        title: Producer Properties
+    proxy_orders:
+      cancel:
+        could_not_cancel_the_order: Could not cancel the order
+      resume:
+        could_not_resume_the_order: Could not resume the order
+    shared:
+      user_guide_link:
+        user_guide: User Guide
+      enterprises_hubs_tabs:
+        has_no_payment_methods: "%{enterprise} has no payment methods"
+        has_no_shipping_methods: "%{enterprise} has no shipping methods"
+        has_no_enterprise_fees: "%{enterprise} has no enterprise fees"
+    enterprise_issues:
+      create_new: Create New
+      resend_email: Resend Email
+      has_no_payment_methods: "%{enterprise} currently has no payment methods"
+      has_no_shipping_methods: "%{enterprise} currently has no shipping methods"
+      email_confirmation: "Email confirmation is pending. We've sent a confirmation email to %{email}."
+      not_visible: "%{enterprise} is not visible and so cannot be found on the map or in searches"
+    reports:
+      hidden: HIDDEN
+      unitsize: UNITSIZE
+      total: TOTAL
+      total_items: TOTAL ITEMS
+      supplier_totals: Order Cycle Supplier Totals
+      supplier_totals_by_distributor: Order Cycle Supplier Totals by Distributor
+      totals_by_supplier: Order Cycle Distributor Totals by Supplier
+      customer_totals: Order Cycle Customer Totals
+      all_products: All products
+      inventory: Inventory (on hand)
+      lettuce_share: LettuceShare
+      mailing_list: Mailing List
+      addresses: Addresses
+      payment_methods: Payment Methods Report
+      delivery: Delivery Report
+      tax_types: Tax Types
+      tax_rates: Tax Rates
+      pack_by_customer: Pack By Customer
+      pack_by_supplier: Pack By Supplier
+      orders_and_distributors:
+        name: Orders And Distributors
+        description: Orders with distributor details
+      bulk_coop:
+        name: Bulk Co-Op
+        description: Reports for Bulk Co-Op orders
+      payments:
+        name: Payment Reports
+        description: Reports for Payments
+      orders_and_fulfillment:
+        name: Orders & Fulfillment Reports
+      customers:
+        name: Customers
+      products_and_inventory:
+        name: Products & Inventory
+      users_and_enterprises:
+        name: Users & Enterprises
+        description: Enterprise Ownership & Status
+      order_cycle_management:
+        name: Order Cycle Management
+      sales_tax:
+        name: Sales Tax
+      xero_invoices:
+        name: Xero Invoices
+        description: Invoices for import into Xero
+      packing:
+        name: Packing Reports
+      enterprise_fee_summary:
+        name: "Enterprise Fee Summary"
+        description: "Summary of Enterprise Fees collected"
+    subscriptions:
+      subscriptions: Subscriptions
+      new: New Subscription
+      create: Create Subscription
+      edit: Edit Subscription
+      table:
+        edit_subscription: Edit Subscription
+        pause_subscription: Pause Subscription
+        unpause_subscription: Unpause Subscription
+        cancel_subscription: Cancel Subscription
+      filters:
+        query_placeholder: "Search by email..."
+      setup_explanation:
+        just_a_few_more_steps: 'Just a few more steps before you can begin:'
+        enable_subscriptions: "Enable subscriptions for at least one of your shops"
+        enable_subscriptions_step_1_html: 1. Go to the %{enterprises_link} page, find your shop, and click "Manage"
+        enable_subscriptions_step_2: 2. Under "Shop Preferences", enable the Subscriptions option
+        set_up_shipping_and_payment_methods_html: Set up %{shipping_link} and %{payment_link} methods
+        set_up_shipping_and_payment_methods_note_html: Note that only Cash and Stripe payment methods may<br />be used with subscriptions
+        ensure_at_least_one_customer_html: Ensure that at least one %{customer_link} exists
+        create_at_least_one_schedule: Create at least one Schedule
+        create_at_least_one_schedule_step_1_html: 1. Go to the on the %{order_cycles_link} page
+        create_at_least_one_schedule_step_2: 2. Create an order cycle if you have not already done so
+        create_at_least_one_schedule_step_3: 3. Click '+ New Schedule', and fill out the form
+        once_you_are_done_you_can_html: Once you are done, you can %{reload_this_page_link}
+        reload_this_page: reload this page
+      steps:
+        details: 1. Basic Details
+        address: 2. Address
+        products: 3. Add Products
+        review: 4. Review & Save
+      subscription_line_items:
+        this_is_an_estimate: |
+            The displayed prices are only an estimate and calculated at the time the subscription is changed.
+            If you change prices or fees, orders will be updated, but the subscription will still display the old values.
+        not_in_open_and_upcoming_order_cycles_warning: "There are no open or upcoming order cycles for this product."
+      autocomplete:
+        name_or_sku: "NAME OR SKU"
+        quantity: "Quantity"
+        add: "Add"
+      details:
+        details: Details
+        invalid_error: Oops! Please fill in all of the required fields...
+        allowed_payment_method_types_tip: Only Cash and Stripe payment methods may be used at the moment
+        credit_card: Credit Card
+        charges_not_allowed: Charges are not allowed by this customer
+        no_default_card: Customer has no cards available to charge
+        card_ok: Customer has a card available to charge
+        begins_at_placeholder: "Select a Date"
+        ends_at_placeholder: "Optional"
+      loading_flash:
+        loading: LOADING SUBSCRIPTIONS
+      review:
+        details: Details
+        address: Address
+        products: Products
+        no_open_or_upcoming_order_cycle: "No Upcoming Order Cycle"
+      products_panel:
+        save: "SAVE"
+        saving: "SAVING"
+        saved: "SAVED"
+      product_already_in_order: This product has already been added to the order. Please edit the quantity directly.
+      stock:
+        insufficient_stock: "Insufficient stock available"
+        out_of_stock: "Out of Stock"
+      orders:
+        number: Number
+        confirm_edit: Are you sure you want to edit this order? Doing so may make it more difficult to automatically sync changes to the subscription in the future.
+      confirm_cancel_msg: "Are you sure you want to cancel this subscription? This action cannot be undone."
+      cancel_failure_msg: "Sorry, cancellation failed!"
+      confirm_pause_msg: "Are you sure you want to pause this subscription?"
+      pause_failure_msg: "Sorry, pausing failed!"
+      confirm_unpause_msg: "If you have an open Order Cycle in this subscription's schedule, an order will be created for this customer. Are you sure you want to unpause this subscription?"
+      unpause_failure_msg: "Sorry, unpausing failed!"
+      confirm_cancel_open_orders_msg: "Some orders for this subscription are currently open. The customer has already been notified that the order will be placed. Would you like to cancel these order(s) or keep them?"
+      resume_canceled_orders_msg: "Some orders for this subscription can be resumed right now. You can resume them from the orders dropdown."
+      yes_cancel_them: Cancel them
+      no_keep_them: Keep them
+      yes_i_am_sure: Yes, I'm sure
+      order_update_issues_msg: Some orders could not be automatically updated, this is most likely because they have been manually edited. Please review the issues listed below and make any adjustments to individual orders if required.
+      no_results:
+        no_subscriptions: No subscriptions yet...
+        why_dont_you_add_one: Why don't you add one? :)
+        no_matching_subscriptions: No matching subscriptions found
+    schedules:
+      destroy:
+        associated_subscriptions_error: This schedule cannot be deleted because it has associated subscriptions
+    controllers:
+      enterprises:
+        stripe_connect_cancelled: "Connection to Stripe has been cancelled"
+        stripe_connect_success: "Stripe account connected successfully"
+        stripe_connect_fail: Sorry, the connection of your Stripe account failed
+      stripe_connect_settings:
+        resource: Stripe Connect configuration
+  api:
+    enterprise_logo:
+      destroy_attachment_does_not_exist: "Logo does not exist"
+    enterprise_promo_image:
+      destroy_attachment_does_not_exist: "Promo image does not exist"
+    orders:
+      failed_to_update: "Failed to update order"
+  checkout:
+    already_ordered:
+      cart: "cart"
+      message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
+    failed: "The checkout failed. Please let us know so that we can process your order."
+  shops:
+    hubs:
+      show_closed_shops: "Show closed shops"
+      hide_closed_shops: "Hide closed shops"
+      show_on_map: "Show all on the map"
+  shared:
+    menu:
+      cart:
+        cart: "Basket"
+      cart_sidebar:
+        checkout: "Checkout"
+        edit_cart: "Edit basket"
+        items_in_cart_singular: "%{num} item in your basket"
+        items_in_cart_plural: "%{num} items in your basket"
+        close: "Close"
+        cart_empty: "Your basket is empty"
+        take_me_shopping: "Take me shopping!"
+      signed_in:
+        profile: "Profile"
+      mobile_menu:
+        cart: "Basket"
+    register_call:
+      selling_on_ofn: "Interested in selling through the Open Food Network?"
+      register: "Register here"
+    footer:
+      footer_secure: "Secure and trusted."
+      footer_secure_text: "Open Food Network uses SSL encryption (2048 bit RSA) everywhere to keep your shopping and payment information private. Our servers do not store your credit card details and payments are processed by PCI-compliant services."
+      footer_contact_headline: "Keep in touch"
+      footer_contact_email: "Email us"
+      footer_nav_headline: "Navigate"
+      footer_join_headline: "Join us"
+      footer_join_body: "Create a listing, shop or group directory on the Open Food Network."
+      footer_join_cta: "Tell me more!"
+      footer_legal_call: "Read our"
+      footer_legal_tos: "Terms and conditions"
+      footer_legal_visit: "Find us on"
+      footer_legal_text_html: "Open Food Network is a free and open source software platform. Our content is licensed with %{content_license} and our code with %{code_license}."
+      footer_data_text_with_privacy_policy_html: "We take good care of your data. See our %{privacy_policy} and %{cookies_policy}"
+      footer_data_text_without_privacy_policy_html: "We take good care of your data. See our %{cookies_policy}"
+      footer_data_privacy_policy: "privacy policy"
+      footer_data_cookies_policy: "cookies policy"
+  shop:
+    messages:
+      customer_required:
+        login: "login"
+        signup: "signup"
+        contact: "contact"
+        require_customer_login: "Only approved customers can access this shop."
+        require_login_html: "If you're already an approved customer, %{login} or %{signup} to proceed."
+        require_login_2_html: "Want to start shopping here? Please %{contact} %{enterprise} and ask about joining."
+        require_customer_html: "If you'd like to start shopping here, please %{contact} %{enterprise} to ask about joining."
+      select_oc:
+        select_oc_html: "Please <span class='highlighted'>choose when you want your order</span>, to see what products are available."
+  card_could_not_be_updated: Card could not be updated
+  card_could_not_be_saved: card could not be saved
+  spree_gateway_error_flash_for_checkout: "There was a problem with your payment information: %{error}"
+  invoice_billing_address: "Billing address:"
+  invoice_column_tax: "VAT"
+  invoice_column_price: "Price"
+  invoice_column_item: "Item"
+  invoice_column_qty: "Qty"
+  invoice_column_unit_price_with_taxes: "Unit price (Incl. tax)"
+  invoice_column_unit_price_without_taxes: "Unit price (Excl. tax)"
+  invoice_column_price_with_taxes: "Total price (Incl. tax)"
+  invoice_column_price_without_taxes: "Total price (Excl. tax)"
+  invoice_column_tax_rate: "Tax rate"
+  invoice_tax_total: "VAT Total:"
+  tax_invoice: "TAX INVOICE"
+  tax_total: "Total tax (%{rate}):"
+  total_excl_tax: "Total (Excl. tax):"
+  total_incl_tax: "Total (Incl. tax):"
+  abn: "Company Number:"
+  acn: "Charity Number:"
+  invoice_issued_on: "Invoice issued on:"
+  order_number: "Invoice number:"
+  date_of_transaction: "Date of transaction:"
+  ticket_column_qty: "Qty"
+  ticket_column_item: "Item"
+  ticket_column_unit_price: "Unit Price"
+  ticket_column_total_price: "Total Price"
+  menu_1_title: "Shops"
+  menu_1_url: "/shops"
+  menu_2_title: "Map"
+  menu_2_url: "/map"
+  menu_3_title: "Pricing"
+  menu_3_url: "https://about.openfoodindia.org/pricing/"
+  menu_4_title: "Groups"
+  menu_4_url: "/groups"
+  menu_5_title: "About"
+  menu_5_url: "https://about.openfoodindia.org"
+  menu_6_title: "Blog"
+  menu_6_url: "https://about.openfoodindia.org/blog"
+  menu_7_title: "Support"
+  menu_7_url: "https://about.openfoodindia.org/support"
+  logo: "Logo (640x130)"
+  logo_mobile: "Mobile logo (75x26)"
+  logo_mobile_svg: "Mobile logo (SVG)"
+  home_hero: "Hero image"
+  home_show_stats: "Show statistics"
+  footer_logo: "Logo (220x76)"
+  footer_facebook_url: "Facebook URL"
+  footer_twitter_url: "Twitter URL"
+  footer_instagram_url: "Instagram URL"
+  footer_linkedin_url: "LinkedIn URL"
+  footer_googleplus_url: "Google Plus URL"
+  footer_pinterest_url: "Pinterest URL"
+  footer_email: "Email"
+  footer_links_md: "Links"
+  footer_about_url: "About URL"
+  user_guide_link: "User Guide Link"
+  name: Name
+  first_name: First Name
+  last_name: Last Name
+  email: Email
+  phone: Phone
+  next: Next
+  address: Address
+  address_placeholder: eg. 123 High Street
+  address2: Address (contd.)
+  city: City
+  city_placeholder: eg. Newcastle
+  postcode: Postcode
+  postcode_placeholder: eg. 3070
+  suburb: Suburb
+  state: State
+  country: Country
+  unauthorized: Unauthorized
+  terms_of_service: "Terms of service"
+  on_demand: Unlimited
+  none: None
+  not_allowed: Not allowed
+  no_shipping: no shipping methods
+  no_payment: no payment methods
+  no_shipping_or_payment: no shipping or payment methods
+  unconfirmed: unconfirmed
+  days: days
+  authorization_failure: "Authorisation Failure"
+  label_shop: "Shop"
+  label_shops: "Shops"
+  label_map: "Map"
+  label_producer: "Producer"
+  label_producers: "Producers"
+  label_groups: "Groups"
+  label_about: "About"
+  label_connect: "Connect"
+  label_learn: "Learn"
+  label_blog: "Blog"
+  label_support: "Support"
+  label_shopping: "Shopping"
+  label_login: "Login"
+  label_logout: "Logout"
+  label_signup: "Sign up"
+  label_administration: "Administration"
+  label_admin: "Admin"
+  label_account: "Account"
+  label_more: "Show more"
+  label_less: "Show less"
+  label_notices: "Community Forum"
+  cart_items: "items"
+  cart_headline: "Your shopping cart"
+  total: "Total"
+  cart_updating: "Updating cart..."
+  cart_empty: "Cart empty"
+  cart_edit: "Edit your cart"
+  card_number: Card Number
+  card_securitycode: "Security Code"
+  card_expiry_date: Expiry Date
+  card_masked_digit: "X"
+  card_expiry_abbreviation: "Exp"
+  new_credit_card: "New credit card"
+  my_credit_cards: My credit cards
+  add_new_credit_card: Add new credit card
+  saved_cards: Saved cards
+  add_a_card: Add a Card
+  add_card: Add Card
+  you_have_no_saved_cards: You haven't saved any cards yet
+  saving_credit_card: Saving credit card...
+  card_has_been_removed: "Your card has been removed (number: %{number})"
+  card_could_not_be_removed: Sorry, the card could not be removed
+  invalid_credit_card: "Invalid credit card"
+  ie_warning_headline: "Your browser is out of date :-("
+  ie_warning_text: "For the best Open Food Network experience, we strongly recommend upgrading your browser:"
+  ie_warning_chrome: Download Chrome
+  ie_warning_firefox: Download Firefox
+  ie_warning_ie: Upgrade Internet Explorer
+  ie_warning_other: "Can't upgrade your browser? Try Open Food Network on your smartphone :-)"
+  legal:
+    cookies_policy:
+      header: "How We Use Cookies"
+      desc_part_1: "Cookies are very small text files that are stored on your computer when you visit some websites."
+      desc_part_2: "In OFN we are fully respectful of your privacy. We use only the cookies that are necessary for delivering you the service of selling/buying food online. We don’t sell any of your data. We might in the future propose you to share some of your data to build new commons services that could be useful for the ecosystem (like logistics services for short food systems) but we are not yet there, and we won’t do it without your authorization :-)"
+      desc_part_3: "We use cookies mainly to remember who you are if you 'log in' to the service, or to be able to remember the items you put in your cart even if you are not logged in. If you keep navigating on the website without clicking on “Accept cookies”, we assume you are giving us consent to store the cookies that are essential for the functioning of the website. Here is the list of cookies we use!"
+      essential_cookies: "Essential Cookies"
+      essential_cookies_desc: "The following cookies are strictly necessary for the operation of our website."
+      essential_cookies_note: "Most cookies only contain a unique identifier, but no other data, so your email address and password for instance are never contained in them and never exposed."
+      cookie_domain: "Set By:"
+      cookie_session_desc: "Used to allow the website to remember users between page visits, for example, remember items in your cart."
+      cookie_consent_desc: "Used to maintain status of user consent to store cookies"
+      cookie_remember_me_desc: "Used if the user has requested the website to remember him. This cookie is automatically deleted after 12 days. If as a user you want that cookie to be deleted, you only need to logout. If you don’t want that cookie to be installed on your computer you shouldn’t check the “remember me” checkbox when logging in."
+      cookie_openstreemap_desc: "Used by our friendly open source mapping provider (OpenStreetMap) to ensure that it does not receive too many requests during a given time period, to prevent abuse of their services."
+      cookie_stripe_desc: "Data collected by our payment processor Stripe for fraud detection https://stripe.com/cookies-policy/legal. Not all shops use Stripe as a payment method but it is a good practice to prevent fraud to apply it to all pages. Stripe probably build a picture of which of our pages usually interact with their API and then flag anything unusual. So setting the Stripe cookie has a broader function than simply the provision of a payment method to a user. Removing it could affect the security of the service itself. You can learn more about Stripe and read its privacy policy at https://stripe.com/privacy."
+      statistics_cookies: "Statistics Cookies"
+      statistics_cookies_desc: "The following are not strictly necessary, but help to provide you with the best user experience by allowing us to analyse user behaviour, identify which features you use most, or don’t use, understand user experience issues, etc."
+      statistics_cookies_matomo_desc_html: "To collect and analyse platform usage data, we use <a href='https://matomo.org/' target='_blank'>Matomo</a> (ex Piwik), an open source analytics tool that is GDPR compliant and protects your privacy."
+      statistics_cookies_matomo_optout: "Would you like to opt-out of Matomo analytics? We use Matomo to help us improve our service, but we don't collect any personal data."
+      cookie_matomo_basics_desc: "Matomo first party cookies to collect statistics."
+      cookie_matomo_heatmap_desc: "Matomo Heatmap & Session Recording cookie."
+      cookie_matomo_ignore_desc: "Cookie used to exclude user from being tracked."
+      disabling_cookies_header: "Warning on disabling cookies"
+      disabling_cookies_desc: "As a user you can always allow, block or delete Open Food Network’s or any other website cookies whenever you want to through your browser’s setting control. Each browser has a different operative. Here are the links:"
+      disabling_cookies_firefox_link: "https://support.mozilla.org/en-US/kb/enable-and-disable-cookies-website-preferences"
+      disabling_cookies_chrome_link: "https://support.google.com/chrome/answer/95647"
+      disabling_cookies_ie_link: "https://support.microsoft.com/en-us/help/17442/windows-internet-explorer-delete-manage-cookies"
+      disabling_cookies_safari_link: "https://www.apple.com/legal/privacy/en-ww/cookies/"
+      disabling_cookies_note: "But be aware that if you delete or modify the essential cookies used by Open Food Network, the website won’t work, you will not be able to add anything to your cart neither to checkout for instance."
+    cookies_banner:
+      cookies_usage: "This site uses cookies in order to make your navigation frictionless and secure, and to help us understand how you use it in order to improve the features we offer."
+      cookies_definition: "Cookies are very small text files that are stored on your computer when you visit some websites."
+      cookies_desc: "We use only the cookies that are necessary for delivering you the service of selling/buying food online. We don’t sell any of your data. We use cookies mainly to remember who you are if you ‘log in’ to the service, or to be able to remember the items you put in your cart even if you are not logged in. If you keep navigating on the website without clicking on “Accept cookies”, we assume you are giving us consent to store the cookies that are essential for the functioning of the website."
+      cookies_policy_link_desc: "If you want to learn more, check our"
+      cookies_policy_link: "cookies policy"
+      cookies_accept_button: "Accept Cookies"
+  home_shop: Shop Now
+  brandstory_headline: "Growing Local Food Online"
+  brandstory_intro: "THE online community helping you to build a successful food enterprise"
+  brandstory_part1: "The Open Food Network software platform allows farmers to sell produce online, at a price that works for them. It has been built specifically for selling food so it can handle tricky measures or stock levels that only food has - a dozen eggs, a bunch of parsley, a whole chicken that varies in weight…"
+  brandstory_part2: "Food Producers can create an online shop, collect payments, sell through other shops on the platform and access reduced-rate courier services."
+  brandstory_part3: "Wholesalers can integrate OFN with their existing systems and manage buying groups to  supply customers with their produce through our national network of food hubs and shops."
+  brandstory_part4: "Communities can bring together producers in their local area to create virtual farmers’ markets, building a resilient local food economy."
+  brandstory_part5_strong: "And what’s just as important as the software itself are the values which underpin it. "
+  brandstory_part6: "If you sell good food - as a farmer, farmer’s market, food co-op, or food hub- then choose software that aligns with your values to build food systems for people and planet, not profit.  By working collectively rather than competitively, we share the costs of developing new software, and we ensure that our project is resilient!"
+  learn_body: "Explore models, stories and resources to support you to develop your fair food business or organisation. Find training, events and other opportunities to learn from peers."
+  learn_cta: "Get Inspired"
+  connect_body: "Search our full directories of producers, hubs and groups to find fair food traders near you. List your business or organisation on the OFN so buyers can find you. Join the community to get advice and solve problems together."
+  connect_cta: "Go Exploring"
+  system_headline: "Selling on OFN - 3 easy steps"
+  system_step1: "1. Create Your Enterprise"
+  system_step1_text: "Set up your enterprise with a name, description, photos, contact details and social media links."
+  system_step2: "2. Add Your Products"
+  system_step2_text: "Add products to your shop - your own and/or from other producers around you. Set images, descriptions, prices, stock levels and flexible weights and measures."
+  system_step3: "3. Plan your Deliveries"
+  system_step3_text: "Set up payment methods. Create multiple pick-up points and delivery details. Create recurring orders and regular distributions."
+  cta_headline: "The sustainable Food Network of the future."
+  cta_label: "I'm Ready"
+  stats_headline: "We're creating a new food system."
+  stats_producers: "food producers"
+  stats_shops: "food shops"
+  stats_shoppers: "food shoppers"
+  stats_orders: "food orders"
+  checkout_title: Checkout
+  checkout_now: Checkout now
+  checkout_order_ready: Order ready for
+  checkout_hide: Hide
+  checkout_expand: Expand
+  checkout_headline: "Ok, ready to checkout?"
+  checkout_as_guest: "Checkout as guest"
+  checkout_details: "Your details"
+  checkout_billing: "Billing info"
+  checkout_default_bill_address: "Save as default billing address"
+  checkout_shipping: Shipping info
+  checkout_default_ship_address: "Save as default shipping address"
+  checkout_method_free: Free
+  checkout_address_same: Shipping address same as billing address?
+  checkout_ready_for: "Ready for:"
+  checkout_instructions: "Any comments or special instructions?"
+  checkout_payment: Payment
+  checkout_send: Place order now
+  checkout_your_order: Your order
+  checkout_cart_total: Cart total
+  checkout_shipping_price: Shipping
+  checkout_total_price: Total
+  checkout_back_to_cart: "Back to cart"
+  cost_currency: "Cost Currency"
+  order_paid: PAID
+  order_not_paid: NOT PAID
+  order_total: Total order
+  order_payment: "Paying via:"
+  order_billing_address: Billing address
+  order_delivery_on: Delivery on
+  order_delivery_address: Delivery address
+  order_delivery_time: Delivery time
+  order_special_instructions: "Your notes:"
+  order_pickup_time: Ready for collection
+  order_pickup_instructions: Collection instructions
+  order_produce: Produce
+  order_total_price: Total
+  order_includes_tax: (includes tax)
+  order_payment_paypal_successful: Your payment via PayPal has been processed successfully.
+  order_hub_info: Hub info
+  order_back_to_store: Back To Store
+  order_back_to_cart: Back To Cart
+  bom_tip: "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required."
+  unsaved_changes_warning: "Unsaved changes exist and will be lost if you continue."
+  unsaved_changes_error: "Fields with red borders contain errors."
+  products: "Products"
+  products_in: "in %{oc}"
+  products_at: "at %{distributor}"
+  products_elsewhere: "Products found elsewhere"
+  email_confirmed: "Thank you for confirming your email address."
+  email_confirmation_activate_account: "Before we can activate your new account, we need to confirm your email address."
+  email_confirmation_greeting: "Hi, %{contact}!"
+  email_confirmation_profile_created: "A profile for %{name} has been successfully created! To activate your Profile we need to confirm this email address."
+  email_confirmation_click_link: "Please click the link below to confirm your email and to continue setting up your profile."
+  email_confirmation_link_label: "Confirm this email address »"
+  email_confirmation_help_html: "After confirming your email you can access your administration account for this enterprise. See the %{link} to find out more about %{sitename}'s features and to start using your profile or online store."
+  email_confirmation_notice_unexpected: "You received this message because you signed up on %{sitename}, or were invited to sign up by someone you probably know. If you don't understand why you are receiving this email, please write to %{contact}."
+  email_social: "Connect with Us:"
+  email_contact: "Email us:"
+  email_signoff: "Cheers,"
+  email_signature: "%{sitename} Team"
+  email_confirm_customer_greeting: "Hi %{name},"
+  email_confirm_customer_intro_html: "Thanks for shopping at <strong>%{distributor}</strong>!"
+  email_confirm_customer_number_html: "Order confirmation <strong>#%{number}</strong>"
+  email_confirm_customer_details_html: "Here are your order details from <strong>%{distributor}</strong>:"
+  email_confirm_customer_signoff: "Kind regards,"
+  email_confirm_shop_greeting: "Hi %{name},"
+  email_confirm_shop_order_html: "Well done! You have a new order for <strong>%{distributor}</strong>!"
+  email_confirm_shop_number_html: "Order confirmation <strong>#%{number}</strong>"
+  email_order_summary_item: "Item"
+  email_order_summary_quantity: "Qty"
+  email_order_summary_sku: "Product Code"
+  email_order_summary_price: "Price"
+  email_order_summary_subtotal: "Subtotal:"
+  email_order_summary_total: "Total:"
+  email_order_summary_includes_tax: "(includes tax):"
+  email_payment_paid: PAID
+  email_payment_not_paid: NOT PAID
+  email_payment_summary: Payment summary
+  email_payment_method: "Paying via:"
+  email_so_placement_intro_html: "You have a new order with <strong>%{distributor}</strong>"
+  email_so_placement_details_html: "Here are the details of your order for <strong>%{distributor}</strong>:"
+  email_so_placement_changes: "Unfortunately, not all products that you requested were available. The original quantities that you requested appear crossed-out below."
+  email_so_payment_success_intro_html: "An automatic payment has been processed for your order from <strong>%{distributor}</strong>."
+  email_so_placement_explainer_html: "This order was automatically created for you."
+  email_so_edit_true_html: "You can <a href='%{order_url}'>make changes</a> until orders close on %{orders_close_at}."
+  email_so_edit_false_html: "You can <a href='%{order_url}'>view details of this order</a> at any time."
+  email_so_contact_distributor_html: "If you have any questions you can contact <strong>%{distributor}</strong> via %{email}."
+  email_so_contact_distributor_to_change_order_html: "This order was automatically created for you. You can make changes until orders close on %{orders_close_at} by contacting <strong>%{distributor}</strong> via %{email}."
+  email_so_confirmation_intro_html: "Your order with <strong>%{distributor}</strong> is now confirmed"
+  email_so_confirmation_explainer_html: "This order was automatically placed for you, and it has now been finalised."
+  email_so_confirmation_details_html: "Here's everything you need to know about your order from <strong>%{distributor}</strong>:"
+  email_so_empty_intro_html: "We tried to place a new order with <strong>%{distributor}</strong>, but had some problems..."
+  email_so_empty_explainer_html: "Unfortunately, none of products that you ordered were available, so no order has been placed. The original quantities that you requested appear crossed-out below."
+  email_so_empty_details_html: "Here are the details of the unplaced order for <strong>%{distributor}</strong>:"
+  email_so_failed_payment_intro_html: "We tried to process a payment, but had some problems..."
+  email_so_failed_payment_explainer_html: "The payment for your subscription with <strong>%{distributor}</strong> failed because of a problem with your credit card. <strong>%{distributor}</strong> has been notified of this failed payment."
+  email_so_failed_payment_details_html: "Here are the details of the failure provided by the payment gateway:"
+  email_shipping_delivery_details: Delivery details
+  email_shipping_delivery_time: "Delivery on:"
+  email_shipping_delivery_address: "Delivery address:"
+  email_shipping_collection_details: Collection details
+  email_shipping_collection_time: "Ready for collection:"
+  email_shipping_collection_instructions: "Collection instructions:"
+  email_special_instructions: "Your notes:"
+  email_signup_greeting: Hello!
+  email_signup_welcome: "Welcome to %{sitename}!"
+  email_signup_confirmed_email: "Thanks for confirming your email."
+  email_signup_shop_html: "You can now log in at %{link}."
+  email_signup_text: "Thanks for joining the network. If you are a customer, we look forward to introducing you to many fantastic farmers, wonderful food hubs and delicious food! If you are a producer or food enterprise, we are excited to have you as a part of the network."
+  email_signup_help_html: "We welcome all your questions and feedback; you can use the <em>Send Feedback</em> button on the site or email us at %{email}"
+  invite_email:
+    greeting: "Hello!"
+    invited_to_manage: "You have been invited to manage %{enterprise} on %{instance}."
+    confirm_your_email: "You should have received or will soon receive an email with a confirmation link. You won’t be able to access %{enterprise}'s profile until you have confirmed your email."
+    set_a_password: "You will then be prompted to set a password before you are able to administer the enterprise."
+    mistakenly_sent: "Not sure why you have received this email? Please contact %{owner_email} for more information."
+  producer_mail_greeting: "Dear"
+  producer_mail_text_before: "We now have all the consumer orders for the next food delivery."
+  producer_mail_order_text: "Here is a summary of the orders for your products:"
+  producer_mail_delivery_instructions: "Stock pickup/delivery instructions:"
+  producer_mail_signoff: "Thanks and best wishes"
+  shopping_oc_closed: Orders are closed
+  shopping_oc_closed_description: "Please wait until the next cycle opens (or contact us directly to see if we can accept any late orders)"
+  shopping_oc_last_closed: "The last cycle closed %{distance_of_time} ago"
+  shopping_oc_next_open: "The next cycle opens in %{distance_of_time}"
+  shopping_oc_select: "Select..."
+  shopping_tabs_home: "Notices"
+  shopping_tabs_shop: "Shop"
+  shopping_tabs_about: "About"
+  shopping_tabs_contact: "Contact"
+  shopping_contact_address: "Address"
+  shopping_contact_web: "Contact"
+  shopping_contact_social: "Follow"
+  shopping_groups_part_of: "is part of:"
+  shopping_producers_of_hub: "%{hub}'s producers:"
+  enterprises_next_closing: "Next order closing"
+  enterprises_ready_for: "Ready for"
+  enterprises_choose: "Choose when you want your order:"
+  maps_open: "Open"
+  maps_closed: "Closed"
+  hubs_buy: "Shop for:"
+  hubs_shopping_here: "Shopping here"
+  hubs_orders_closed: "Orders closed"
+  hubs_profile_only: "Profile only"
+  hubs_delivery_options: "Delivery options"
+  hubs_pickup: "Pickup"
+  hubs_delivery: "Delivery"
+  hubs_producers: "Our producers"
+  hubs_filter_by: "Filter by"
+  hubs_filter_type: "Type"
+  hubs_filter_delivery: "Delivery"
+  hubs_filter_property: "Property"
+  hubs_matches: "Showing results for"
+  hubs_intro: Shop in your local area
+  hubs_distance: Closest to
+  hubs_distance_filter: "Show me shops near %{location}"
+  shop_changeable_orders_alert_html:
+    one: Your order with <a href='%{path}' target='_blank'>%{shop} / %{order}</a> is open for review. You can make changes until %{oc_close}.
+    other: You have <a href='%{path}' target='_blank'>%{count} orders with %{shop}</a> currently open for review. You can make changes until %{oc_close}.
+  orders_changeable_orders_alert_html: This order has been confirmed, but you can make changes until <strong>%{oc_close}</strong>.
+  products_clear: Clear
+  products_showing: "Showing:"
+  products_results_for: "Results for"
+  products_or: "or"
+  products_and: "and"
+  products_filters_in: "in"
+  products_with: with
+  products_search: "Search..."
+  products_filter_by: "Filter by"
+  products_filter_selected: "selected"
+  products_filter_heading: "Filters"
+  products_filter_clear: "Clear"
+  products_filter_done: "Done"
+  products_loading: "Loading products..."
+  products_updating_cart: "Updating cart..."
+  products_cart_empty: "Cart empty"
+  products_edit_cart: "Edit your cart"
+  products_from: from
+  products_change: "No changes to save."
+  products_update_error: "Saving failed with the following error(s):"
+  products_update_error_msg: "Saving failed."
+  products_update_error_data: "Save failed due to invalid data:"
+  products_changes_saved: "Changes saved."
+  products_no_results_html: "Sorry, no results found for %{query}"
+  products_clear_search: "Clear search"
+  search_no_results_html: "Sorry, no results found for %{query}. Try another search?"
+  components_profiles_popover: "Profiles do not have a shopfront on the Open Food Network, but may have their own physical or online shop elsewhere"
+  components_profiles_show: "Show profiles"
+  components_filters_nofilters: "No filters"
+  components_filters_clearfilters: "Clear all filters"
+  groups_title: Groups
+  groups_headline: Groups / regions
+  groups_text: "Every producer is unique. Every business has something different to offer. Our groups are collectives of producers, hubs and distributors who share something in common like location, farmers market or philosophy. This makes your shopping experience easier. So explore our groups and have the curating done for you."
+  groups_search: "Search name or keyword"
+  groups_no_groups: "No groups found"
+  groups_about: "About Us"
+  groups_producers: "Our producers"
+  groups_hubs: "Our hubs"
+  groups_contact_web: Contact
+  groups_contact_social: Follow
+  groups_contact_address: Address
+  groups_contact_email: Email us
+  groups_contact_website: Visit our website
+  groups_contact_facebook: Follow us on Facebook
+  groups_signup_title: Sign up as a group
+  groups_signup_headline: Groups sign up
+  groups_signup_intro: "We're an amazing platform for collaborative marketing, the easiest way for your members and stakeholders to reach new markets. We're non-profit, affordable, and simple."
+  groups_signup_email: Email us
+  groups_signup_motivation1: We transform food systems fairly.
+  groups_signup_motivation2: It's why we get out of bed every day. We're a global non-profit, based on open source code. We play fair. You can always trust us.
+  groups_signup_motivation3: We know you have big ideas, and we want to help. We'll share our knowledge, networks and resources. We know that isolation doesn't create change, so we'll partner with you.
+  groups_signup_motivation4: We meet you where you are.
+  groups_signup_motivation5: You might be an alliance of food hubs, producers, or distributors, and an industry body, or a local government.
+  groups_signup_motivation6: Whatever your role in your local food movement, we're ready to help. However you come to wonder what Open Food Network would look like or is doing in your part of the world, let's start the conversation.
+  groups_signup_motivation7: We make food movements make more sense.
+  groups_signup_motivation8: You need to activate and enable your networks, we offer a platform for conversation and action. You need real engagement. We’ll help reach all the players, all the stakeholders, all the sectors.
+  groups_signup_motivation9: You need resourcing. We’ll bring all our experience to bear. You need cooperation. We’ll better connect you to a global network of peers.
+  groups_signup_pricing: Group Account
+  groups_signup_studies: Case Studies
+  groups_signup_contact: Ready to discuss?
+  groups_signup_contact_text: "Get in touch to discover what OFN can do for you:"
+  groups_signup_detail: "Here's the detail."
+  login_invalid: "Invalid email or password"
+  producers_about: About us
+  producers_buy: Shop for
+  producers_contact: Contact
+  producers_contact_phone: Call
+  producers_contact_social: Follow
+  producers_buy_at_html: "Shop for %{enterprise} products at:"
+  producers_filter: Filter by
+  producers_filter_type: Type
+  producers_filter_property: Property
+  producers_title: Producers
+  producers_headline: Find local producers
+  producers_signup_title: Sign up as a producer
+  producers_signup_headline: Food producers. Meet OFN.
+  producers_signup_motivation: Sell your food and tell your stories. Save time and money on every overhead. We support innovation without the risk. We're levelling the playing field.
+  producers_signup_send: Register
+  producers_signup_enterprise: Why the Open Food Network?
+  producers_signup_studies: Stories from our producers.
+  producers_signup_cta_headline: Join now!
+  producers_signup_cta_action: Register
+  producers_signup_detail: Got a question?
+  products_item: Item
+  products_description: Description
+  products_variant: Variant
+  products_quantity: Quantity
+  products_available: Available?
+  products_producer: "Producer"
+  products_price: "Price"
+  name_or_sku: "NAME OR SKU"
+  register_title: Find out more
+  sell_title: "Register"
+  sell_headline: "Get on the Open Food Network!"
+  sell_motivation: "Showcase your beautiful food."
+  sell_producers: "Producers"
+  sell_hubs: "Hubs"
+  sell_groups: "Groups"
+  sell_producers_detail: "Set up a profile for your business on the OFN in just minutes. At any time you can upgrade your profile to an online store and sell your products direct to customers."
+  sell_hubs_detail: "Set up a profile for your food enterprise or organisation on the OFN. At any time you can upgrade your profile to a multi-producer shop."
+  sell_groups_detail: "Set up a tailored directory of enterprises (producers and other food enterprises) for your region or for your organisation."
+  sell_user_guide: "Find out more in our user guide."
+  sell_listing_price: "Listing a profile on OFN India is free. Plans for shops and hubs start from as little as ₹100 per month.  For more detail on pricing visit https://about.openfoodindia.org/pricing/ ."
+  sell_embed: "We collectively budget for new feature development from the international OFN community. This way the huge cost of good software development can be shared. If you want a new feature, chances are someone in France, South Africa, Australia, India or Brazil might want it too! Use the Community Forum to suggest features you'd like to see."
+  sell_ask_services: "Ask us about OFN services."
+  shops_title: Shops
+  shops_headline: Shopping, transformed.
+  shops_text: Food grows in cycles, farmers harvest in cycles, and we order food in cycles. If you find an order cycle closed, check back soon.
+  shops_signup_title: Sign up as a hub
+  shops_signup_headline: Food hubs, unlimited.
+  shops_signup_motivation: Whatever your model, we support you. However you change, we're with you. We're non-profit, independent, and open-sourced. We're the software partners you've dreamed of.
+  shops_signup_action: Join now
+  shops_signup_pricing: Enterprise Accounts
+  shops_signup_stories: Stories from our hubs.
+  shops_signup_help: We're ready to help.
+  shops_signup_help_text: You need a better return. You need new buyers and logistics partners. You need your story told across wholesale, retail, and the kitchen table.
+  shops_signup_detail: Here's the detail.
+  orders: Orders
+  orders_fees: Fees...
+  orders_edit_title: Shopping cart
+  orders_edit_headline: Your shopping cart
+  orders_edit_time: Order ready for
+  orders_edit_continue: Continue shopping
+  orders_edit_checkout: Checkout
+  orders_form_empty_cart: "Empty cart"
+  orders_form_subtotal: Produce subtotal
+  orders_form_admin: Admin & Handling
+  orders_form_total: Total
+  orders_oc_expired_headline: Orders have closed for this order cycle
+  orders_oc_expired_text: "Sorry, orders for this order cycle closed %{time} ago! Please contact your hub directly to see if they can accept late orders."
+  orders_oc_expired_text_others_html: "Sorry, orders for this order cycle closed %{time} ago! Please contact your hub directly to see if they can accept late orders <strong>%{link}</strong>."
+  orders_oc_expired_text_link: "or see the other order cycles available at this hub"
+  orders_oc_expired_email: "Email:"
+  orders_oc_expired_phone: "Phone:"
+  orders_show_title: Order Confirmation
+  orders_show_time: Order ready on
+  orders_show_order_number: "Order #%{number}"
+  orders_show_cancelled: Cancelled
+  orders_show_confirmed: Confirmed
+  orders_your_order_has_been_cancelled: "Your order has been cancelled"
+  orders_could_not_cancel: "Sorry, the order could not be cancelled"
+  orders_cannot_remove_the_final_item: "Cannot remove the final item from an order, please cancel the order instead."
+  orders_bought_items_notice:
+    one: "An additional item is already confirmed for this order cycle"
+    other: "%{count} additional items already confirmed for this order cycle"
+  orders_bought_edit_button: Edit confirmed items
+  orders_bought_already_confirmed: "* already confirmed"
+  orders_confirm_cancel: Are you sure you want to cancel this order?
+  order_processed_successfully: "Your order has been processed successfully"
+  products_cart_distributor_choice: "Distributor for your order:"
+  products_cart_distributor_change: "Your distributor for this order will be changed to %{name} if you add this product to your cart."
+  products_cart_distributor_is: "Your distributor for this order is %{name}."
+  products_distributor_error: "Please complete your order at %{link} before shopping with another distributor."
+  products_oc: "Order cycle for your order:"
+  products_oc_change: "Your order cycle for this order will be changed to %{name} if you add this product to your cart."
+  products_oc_is: "Your order cycle for this order is %{name}."
+  products_oc_error: "Please complete your order from %{link} before shopping in a different order cycle."
+  products_oc_current: "your current order cycle"
+  products_max_quantity: Max quantity
+  products_distributor: Distributor
+  products_distributor_info: When you select a distributor for your order, their address and pickup times will be displayed here.
+  password: Password
+  remember_me: Remember Me
+  are_you_sure: "Are you sure?"
+  orders_open: "Orders open"
+  closing: "Closing "
+  going_back_to_home_page: "Taking you back to the home page"
+  creating: Creating
+  updating: Updating
+  failed_to_create_enterprise: "Failed to create your enterprise."
+  failed_to_create_enterprise_unknown: "Failed to create your enterprise.\nPlease ensure all fields are completely filled out."
+  failed_to_update_enterprise_unknown: "Failed to update your enterprise.\nPlease ensure all fields are completely filled out."
+  enterprise_confirm_delete_message: "This will also delete the %{product} that this enterprise supplies. Are you sure you want to continue?"
+  order_not_saved_yet: "Your order hasn't been saved yet. Give us a few seconds to finish!"
+  filter_by: "Filter by"
+  hide_filters: "Hide filters"
+  one_filter_applied: "1 filter applied"
+  x_filters_applied: " filters applied"
+  submitting_order: "Submitting your order: please wait"
+  confirm_hub_change: "Are you sure? This will change your selected hub and remove any items in your shopping cart."
+  confirm_oc_change: "Are you sure? This will change your selected order cycle and remove any items in your shopping cart."
+  location_placeholder: "Type in a location..."
+  error_required: "can't be blank"
+  error_number: "must be number"
+  error_email: "must be email address"
+  error_not_found_in_database: "%{name} not found in database"
+  error_not_primary_producer: "%{name} is not enabled as a producer"
+  error_no_permission_for_enterprise: "\"%{name}\": you do not have permission to manage products for this enterprise"
+  item_handling_fees: "Item Handling Fees (included in item totals)"
+  january: "January"
+  february: "February"
+  march: "March"
+  april: "April"
+  may: "May"
+  june: "June"
+  july: "July"
+  august: "August"
+  september: "September"
+  october: "October"
+  november: "November"
+  december: "December"
+  email_not_found: "Email address not found"
+  email_unconfirmed: "You must confirm your email address before you can reset your password."
+  email_required: "You must provide an email address"
+  logging_in: "Hold on a moment, we're logging you in"
+  signup_email: "Your email"
+  choose_password: "Choose a password"
+  confirm_password: "Confirm password"
+  action_signup: "Sign up now"
+  forgot_password: "Forgot password?"
+  password_reset_sent: "An email with instructions on resetting your password has been sent!"
+  reset_password: "Reset password"
+  update_and_recalculate_fees: "Update And Recalculate Fees"
+  registration:
+    steps:
+      introduction:
+        registration_greeting: "Hi there!"
+        registration_intro: "You can now create a profile for your Producer or Hub"
+        registration_checklist: "What do I need?"
+        registration_time: "5-10 minutes"
+        registration_enterprise_address: "Enterprise address"
+        registration_contact_details: "Primary contact details"
+        registration_logo: "Your logo image"
+        registration_promo_image: "Landscape image for your profile"
+        registration_about_us: "'About Us' text"
+        registration_outcome_headline: "What do I get?"
+        registration_outcome1_html: "Your profile helps people <strong>find</strong> and <strong>contact</strong> you on the Open Food Network."
+        registration_outcome2: "Use this space to tell the story of your enterprise, to help drive connections to your social and online presence."
+        registration_outcome3: "It's also the first step towards trading on the Open Food Network, or opening an online store."
+        registration_action: "Let's get started!"
+      details:
+        title: "Details"
+        headline: "Let's Get Started"
+        enterprise: "Yippee! First need to know a little bit about your enterprise:"
+        producer: "Great! First we need to know a little bit about your farm:"
+        enterprise_name_field: "Enterprise Name:"
+        producer_name_field: "Farm Name:"
+        producer_name_field_placeholder: "e.g. Charlie's Chilli Farm"
+        producer_name_field_error: "Sorry, this name has already been taken. Please try another."
+        address1_field: "Address line 1:"
+        address1_field_placeholder: "e.g. 123 Apple Drive"
+        address1_field_error: "Please enter an address"
+        address2_field: "Address line 2:"
+        suburb_field: "Town:"
+        suburb_field_placeholder: "eg. Taunton"
+        suburb_field_error: "Please enter a postal town"
+        postcode_field: "Postcode:"
+        postcode_field_placeholder: "eg. TA1 TAA"
+        postcode_field_error: "Postcode required"
+        state_field: "State:"
+        state_field_error: "State Required"
+        country_field: "Country:"
+        country_field_error: "Please select a country"
+      contact:
+        title: "Contact"
+        who_is_managing_enterprise: "Who is responsible for managing %{enterprise}?"
+        contact_field: "Primary Contact"
+        contact_field_placeholder: "Contact Name"
+        contact_field_required: "Please enter a primary contact."
+        phone_field: "Phone number"
+        phone_field_placeholder: "eg. 07123123123"
+      type:
+        title: "Type"
+        headline: "Last step to add %{enterprise}!"
+        question: "Are you a producer?"
+        yes_producer: "Yes, I'm a producer"
+        no_producer: "No, I'm not a producer"
+        producer_field_error: "Please choose one. Are you are producer?"
+        yes_producer_help: "Producers make tasty things to eat and/or drink. You're a producer if you grow, rear, brew, bake, ferment ... etc."
+        no_producer_help: "If you’re not a producer, you’re probably someone who sells and distributes food. You might be a hub, coop, buying group, retailer, wholesaler or other."
+        create_profile: "Create profile"
+      about:
+        title: "About"
+        headline: "Nice one!"
+        message: "Now let's flesh out the details about"
+        success: "Success! %{enterprise} added to the Open Food Network"
+        registration_exit_message: "If you exit this wizard at any stage, you can continue to create your profile by going to the admin interface."
+        enterprise_description: "Short Description"
+        enterprise_description_placeholder: "A short sentence describing your enterprise"
+        enterprise_long_desc: "Long Description"
+        enterprise_long_desc_placeholder: "This is your opportunity to tell the story of your enterprise - what makes you different and wonderful? We'd suggest keeping your description to under 600 characters or 150 words."
+        enterprise_long_desc_length: "%{num} characters / up to 600 recommended"
+        enterprise_abn: "Company Number"
+        enterprise_abn_placeholder: "eg. 99 123 456 789"
+        enterprise_acn: "Charity Number"
+        enterprise_acn_placeholder: "eg. 123 456 789"
+        enterprise_tax_required: "You need to make a selection."
+      images:
+        title: "Images"
+        headline: "Thanks!"
+        description: "Let's upload some pictures so your profile looks great! :)"
+        uploading: "Uploading..."
+        continue: "Continue"
+        back: "Back"
+      logo:
+        select_logo: "Step 1. Select logo image"
+        logo_tip: "Tip: Square images will work best, preferably at least 300×300px"
+        logo_label: "Choose a logo image"
+        logo_drag: "Drag and drop your logo here"
+        review_logo: "Step 2. Review your logo"
+        review_logo_tip: "Tip: for best results, your logo should fill the available space"
+        logo_placeholder: "Your logo will appear here for review once uploaded"
+      promo:
+        select_promo_image: "Step 3. Select promo image"
+        promo_image_tip: "Tip: Shown as a banner, preferred size is 1200×260px"
+        promo_image_label: "Choose a promo image"
+        promo_image_drag: "Drag and drop your promo here"
+        review_promo_image: "Step 4. Review your promo banner"
+        review_promo_image_tip: "Tip: for best results, your promo image should fill the available space"
+        promo_image_placeholder: "Your logo will appear here for review once uploaded"
+      social:
+        title: "Social"
+        enterprise_final_step: "Final step!"
+        enterprise_social_text: "How can people find %{enterprise} online?"
+        website: "Website"
+        website_placeholder: "eg. openfoodnetwork.org.au"
+        facebook: "Facebook"
+        facebook_placeholder: "eg. www.facebook.com/PageNameHere"
+        linkedin: "LinkedIn"
+        linkedin_placeholder: "eg. www.linkedin.com/YourNameHere"
+        twitter: "Twitter"
+        twitter_placeholder: "eg. @twitter_handle"
+        instagram: "Instagram"
+        instagram_placeholder: "eg. @instagram_handle"
+      limit_reached:
+        headline: "Oh no!"
+        message: "You have reached the limit!"
+        text: "You have reached the limit for the number of enterprises you are allowed to own on the"
+        action: "Return to the homepage"
+      finished:
+        headline: "Finished!"
+        thanks: "Thanks for filling out the details for %{enterprise}."
+        login: "You can change or update your enterprise at any stage by logging into Open Food Network and going to Admin."
+        action: "Go to Enterprise Dashboard"
+  back: "Back"
+  continue: "Continue"
+  action_or: "OR"
+  enterprise_limit: Enterprise Limit
+  shipping_method_destroy_error: "That shipping method cannot be deleted as it is referenced by an order: %{number}."
+  fees: "Fees"
+  item_cost: "Item cost"
+  bulk: "Bulk"
+  shop_variant_quantity_min: "min"
+  shop_variant_quantity_max: "max"
+  follow: "Follow"
+  shop_for_products_html: "Shop for <span class=\"turquoise\">%{enterprise}</span> products at:"
+  change_shop: "Change shop to:"
+  shop_at: "Shop now at:"
+  price_breakdown: "Full price breakdown"
+  admin_fee: "Admin fee"
+  sales_fee: "Sales fee"
+  packing_fee: "Packing fee"
+  transport_fee: "Transport fee"
+  fundraising_fee: "Fundraising fee"
+  price_graph: "Price graph"
+  included_tax: "Included tax"
+  balance: "Balance"
+  transaction: "Transaction"
+  transaction_date: "Date"
+  payment_state: "Payment status"
+  shipping_state: "Shipping status"
+  value: "Value"
+  balance_due: "Balance due"
+  credit: "Credit"
+  Paid: "Paid"
+  Ready: "Ready"
+  ok: OK
+  not_visible: not visible
+  you_have_no_orders_yet: "You have no orders yet"
+  show_only_complete_orders: "Only show complete orders"
+  successfully_created: '%{resource} has been successfully created!'
+  successfully_removed: '%{resource} has been successfully removed!'
+  successfully_updated: '%{resource} has been successfully updated!'
+  running_balance: "Running balance"
+  outstanding_balance: "Outstanding balance"
+  admin_enterprise_relationships: "Enterprise Permissions"
+  admin_enterprise_relationships_everything: "Everything"
+  admin_enterprise_relationships_permits: "permits"
+  admin_enterprise_relationships_seach_placeholder: "Search"
+  admin_enterprise_relationships_button_create: "Create"
+  admin_enterprise_relationships_to: "to"
+  admin_enterprise_groups: "Enterprise Groups"
+  admin_enterprise_groups_name: "Name"
+  admin_enterprise_groups_owner: "Owner"
+  admin_enterprise_groups_on_front_page: "On front page?"
+  admin_enterprise_groups_enterprise: "Enterprises"
+  admin_enterprise_groups_data_powertip: "The primary user responsible for this group."
+  admin_enterprise_groups_data_powertip_logo: "This is the logo for the group"
+  admin_enterprise_groups_data_powertip_promo_image: "This image is displayed at the top of the Group profile"
+  admin_enterprise_groups_contact: "Contact"
+  admin_enterprise_groups_contact_phone_placeholder: "eg. 98 7654 3210"
+  admin_enterprise_groups_contact_address1_placeholder: "eg. 123 High Street"
+  admin_enterprise_groups_contact_city: "Suburb"
+  admin_enterprise_groups_contact_city_placeholder: "eg. Newcastle"
+  admin_enterprise_groups_contact_zipcode: "Postcode"
+  admin_enterprise_groups_contact_zipcode_placeholder: "eg. 3070"
+  admin_enterprise_groups_contact_state_id: "State"
+  admin_enterprise_groups_contact_country_id: "Country"
+  admin_enterprise_groups_web: "Web Resources"
+  admin_enterprise_groups_web_twitter: "eg. @the_prof"
+  admin_enterprise_groups_web_website_placeholder: "eg. www.truffles.co.in"
+  admin_order_cycles: "Admin Order Cycles"
+  open: "Open"
+  close: "Close"
+  create: "Create"
+  search: "Search"
+  supplier: "Supplier"
+  product_name: "Product Name"
+  product_description: "Product Description"
+  units: "Unit Size"
+  coordinator: "Coordinator"
+  distributor: "Distributor"
+  enterprise_fees: "Enterprise Fees"
+  process_my_order: "Process My Order"
+  delivery_instructions: Delivery Instructions
+  delivery_method: Delivery Method
+  fee_type: "Fee Type"
+  tax_category: "Tax Category"
+  calculator: "Calculator"
+  calculator_values: "Calculator values"
+  calculator_settings_warning: "If you are changing the calculator type, you must save first before you can edit the calculator settings"
+  flat_percent_per_item: "Flat Percent (per item)"
+  flat_rate_per_item: "Flat Rate (per item)"
+  flat_rate_per_order: "Flat Rate (per order)"
+  flexible_rate: "Flexible Rate"
+  price_sack: "Price Sack"
+  new_order_cycles: "New Order Cycles"
+  new_order_cycle: "New Order Cycle"
+  select_a_coordinator_for_your_order_cycle: "Select a coordinator for your order cycle"
+  notify_producers: 'Notify producers'
+  edit_order_cycle: "Edit Order Cycle"
+  roles: "Roles"
+  update: "Update"
+  delete: Delete
+  add_producer_property: "Add producer property"
+  in_progress: "In Progress"
+  started_at: "Started at"
+  queued: "Queued"
+  scheduled_for: "Scheduled for"
+  customers: "Customers"
+  please_select_hub: "Please select a Hub"
+  loading_customers: "Loading Customers"
+  no_customers_found: "No customers found"
+  go: "Go"
+  hub: "Hub"
+  producer: "Producer"
+  product: "Product"
+  price: "Price"
+  on_hand: "In stock"
+  review: "Review"
+  save_changes: "Save Changes"
+  order_saved: "Order Saved"
+  no_products: No Products
+  spree_admin_overview_enterprises_header: "My Enterprises"
+  spree_admin_overview_enterprises_footer: "MANAGE MY ENTERPRISES"
+  spree_admin_enterprises_hubs_name: "Name"
+  spree_admin_enterprises_create_new: "CREATE NEW"
+  spree_admin_enterprises_shipping_methods: "Shipping Methods"
+  spree_admin_enterprises_fees: "Enterprise Fees"
+  spree_admin_enterprises_none_create_a_new_enterprise: "CREATE A NEW ENTERPRISE"
+  spree_admin_enterprises_none_text: "You don't have any enterprises yet"
+  spree_admin_enterprises_tabs_hubs: "HUBS"
+  spree_admin_enterprises_producers_manage_products: "MANAGE PRODUCTS"
+  spree_admin_enterprises_create_new_product: "CREATE A NEW PRODUCT"
+  spree_admin_single_enterprise_alert_mail_confirmation: "Please confirm the email address for"
+  spree_admin_single_enterprise_alert_mail_sent: "We've sent an email to"
+  spree_admin_overview_action_required: "Action Required"
+  spree_admin_overview_check_your_inbox: "Please check your inbox for further instructions. Thanks!"
+  spree_admin_unit_value: Unit Value
+  spree_admin_unit_description: Unit Description
+  spree_admin_variant_unit: Variant unit
+  spree_admin_variant_unit_scale: Variant unit scale
+  spree_admin_supplier: Supplier
+  spree_admin_product_category: Product Category
+  spree_admin_variant_unit_name: Variant unit name
+  unit_name: "Unit name"
+  change_package: "Change Package"
+  spree_admin_single_enterprise_hint: "Hint: To allow people to find you, turn on your visibility under"
+  spree_admin_eg_pickup_from_school: "eg. 'Pick-up from Primary School'"
+  spree_admin_eg_collect_your_order: "eg. 'Please collect your order from 123 Imaginary St, Newcastle, NE1 1AA'"
+  spree_classification_primary_taxon_error: "Taxon %{taxon} is the primary taxon of %{product} and cannot be deleted"
+  spree_order_availability_error: "Distributor or order cycle cannot supply the products in your cart"
+  spree_order_populator_error: "That distributor or order cycle can't supply all the products in your cart. Please choose another."
+  spree_order_populator_availability_error: "That product is not available from the chosen distributor or order cycle."
+  spree_distributors_error: "At least one hub must be selected"
+  spree_user_enterprise_limit_error: "^%{email} is not permitted to own any more enterprises (limit is %{enterprise_limit})."
+  spree_variant_product_error: must have at least one variant
+  your_profil_live: "Your profile live"
+  on_ofn_map: "on the Open Food Network map"
+  see: "See"
+  live: "live"
+  manage: "Manage"
+  resend: "Resend"
+  add_and_manage_products: "Add & manage products"
+  add_and_manage_order_cycles: "Add & manage order cycles"
+  manage_order_cycles: "Manage order cycles"
+  manage_products: "Manage products"
+  edit_profile_details: "Edit profile details"
+  edit_profile_details_etc: "Change your profile description, images, etc."
+  order_cycle: "Order Cycle"
+  order_cycles: "Order Cycles"
+  enterprise_relationships: "Enterprise permissions"
+  remove_tax: "Remove tax"
+  first_name_begins_with: "First name begins with"
+  last_name_begins_with: "Surname begins with"
+  enterprise_tos_link: "Enterprise Terms of Service link"
+  enterprise_tos_message: "We want to work with people that share our aims and values. As such we ask new enterprises to agree to our "
+  enterprise_tos_link_text: "Terms of Service."
+  enterprise_tos_agree: "I agree to the above Terms of Service"
+  tax_settings: "Tax Settings"
+  products_require_tax_category: "products require tax category"
+  admin_shared_address_1: "Address"
+  admin_shared_address_2: "Address (cont.)"
+  admin_share_city: "City"
+  admin_share_zipcode: "Postcode"
+  admin_share_country: "Country"
+  admin_share_state: "State"
+  hub_sidebar_hubs: "Hubs"
+  hub_sidebar_none_available: "None Available"
+  hub_sidebar_manage: "Manage"
+  hub_sidebar_at_least: "At least one hub must be selected"
+  hub_sidebar_blue: "blue"
+  hub_sidebar_red: "red"
+  order_cycles_closed_for_hub: "The hub you have selected is temporarily closed for orders. Please try again later."
+  report_customers_distributor: "Distributor"
+  report_customers_supplier: "Supplier"
+  report_customers_cycle: "Order Cycle"
+  report_customers_type: "Report Type"
+  report_customers_csv: "Download as csv"
+  report_producers: "Producers:"
+  report_type: "Report Type:"
+  report_hubs: "Hubs:"
+  report_payment: "Payment Methods:"
+  report_distributor: "Distributor:"
+  report_payment_by: 'Payments By Type'
+  report_itemised_payment: 'Itemised Payment Totals'
+  report_payment_totals: 'Payment Totals'
+  report_all: 'all'
+  report_order_cycle: "Order Cycle:"
+  report_enterprises: "Enterprises:"
+  report_users: "Users:"
+  report_tax_rates: Tax rates
+  report_tax_types: Tax types
+  report_header_order_cycle: Order Cycle
+  report_header_user: User
+  report_header_email: Email
+  report_header_status: Status
+  report_header_comments: Comments
+  report_header_first_name: First Name
+  report_header_last_name: Last Name
+  report_header_phone: Phone
+  report_header_suburb: Suburb
+  report_header_address: Address
+  report_header_billing_address: Billing Address
+  report_header_relationship: Relationship
+  report_header_hub: Hub
+  report_header_hub_address: Hub Address
+  report_header_to_hub: To Hub
+  report_header_hub_code: Hub Code
+  report_header_code: Code
+  report_header_paid: Paid?
+  report_header_delivery: Delivery?
+  report_header_shipping: Shipping
+  report_header_shipping_method: Shipping Method
+  report_header_shipping_instructions: Shipping instructions
+  report_header_ship_street: Ship Street
+  report_header_ship_street_2: Ship Street 2
+  report_header_ship_city: Ship City
+  report_header_ship_postcode: Ship Postcode
+  report_header_ship_state: Ship State
+  report_header_billing_street: Billing Street
+  report_header_billing_street_2: Billing Street 2
+  report_header_billing_street_3: Billing Street 3
+  report_header_billing_street_4: Billing Street 4
+  report_header_billing_city: Billing City
+  report_header_billing_postcode: Billing Postcode
+  report_header_billing_state: Billing State
+  report_header_incoming_transport: Incoming Transport
+  report_header_special_instructions: Special Instructions
+  report_header_order_number: Order number
+  report_header_date: Date
+  report_header_confirmation_date: Confirmation Date
+  report_header_tags: Tags
+  report_header_items: Items
+  report_header_items_total: "Items total %{currency_symbol}"
+  report_header_taxable_items_total: "Taxable Items Total (%{currency_symbol})"
+  report_header_sales_tax: "Sales Tax (%{currency_symbol})"
+  report_header_delivery_charge: "Delivery Charge (%{currency_symbol})"
+  report_header_tax_on_delivery: "Tax on Delivery (%{currency_symbol})"
+  report_header_tax_on_fees: "Tax on Fees (%{currency_symbol})"
+  report_header_total_tax: "Total Tax (%{currency_symbol})"
+  report_header_enterprise: Enterprise
+  report_header_customer: Customer
+  report_header_customer_code: Customer Code
+  report_header_product: Product
+  report_header_product_properties: Product Properties
+  report_header_quantity: Quantity
+  report_header_max_quantity: Max Quantity
+  report_header_variant: Variant
+  report_header_variant_value: Variant Value
+  report_header_variant_unit: Variant Unit
+  report_header_total_available: Total available
+  report_header_unallocated: Unallocated
+  report_header_max_quantity_excess: Max Quantity Excess
+  report_header_taxons: Taxons
+  report_header_supplier: Supplier
+  report_header_producer: Producer
+  report_header_producer_suburb: Producer Suburb
+  report_header_unit: Unit
+  report_header_group_buy_unit_quantity: Group Buy Unit Quantity
+  report_header_cost: Cost
+  report_header_shipping_cost: Shipping Cost
+  report_header_curr_cost_per_unit: Curr. Cost per Unit
+  report_header_total_shipping_cost: Total Shipping Cost
+  report_header_payment_method: Payment Method
+  report_header_sells: Sells
+  report_header_visible: Visible
+  report_header_price: Price
+  report_header_unit_size: Unit Size
+  report_header_distributor: Distributor
+  report_header_distributor_address: Distributor address
+  report_header_distributor_city: Distributor city
+  report_header_distributor_postcode: Distributor postcode
+  report_header_delivery_address: Delivery Address
+  report_header_delivery_postcode: Delivery Postcode
+  report_header_bulk_unit_size: Bulk Unit Size
+  report_header_weight: Weight
+  report_header_sum_total: Sum Total
+  report_header_date_of_order: Date of Order
+  report_header_amount_owing: Amount Owing
+  report_header_amount_paid: Amount Paid
+  report_header_units_required: Units Required
+  report_header_remainder: Remainder
+  report_header_order_date: Order date
+  report_header_order_id: Order Id
+  report_header_item_name: Item name
+  report_header_temp_controlled_items: Temp Controlled Items?
+  report_header_customer_name: Customer Name
+  report_header_customer_email: Customer Email
+  report_header_customer_phone: Customer Phone
+  report_header_customer_city: Customer City
+  report_header_payment_state: Payment State
+  report_header_payment_type: Payment Type
+  report_header_item_price: "Item (%{currency})"
+  report_header_item_fees_price: "Item + Fees (%{currency})"
+  report_header_admin_handling_fees: "Admin & Handling (%{currency})"
+  report_header_ship_price: "Ship (%{currency})"
+  report_header_pay_fee_price: "Pay fee (%{currency})"
+  report_header_total_price: "Total (%{currency})"
+  report_header_product_total_price: "Product Total (%{currency})"
+  report_header_shipping_total_price: "Shipping Total (%{currency})"
+  report_header_outstanding_balance_price: "Outstanding Balance (%{currency})"
+  report_header_eft_price: "EFT (%{currency})"
+  report_header_paypal_price: "PayPal (%{currency})"
+  report_header_sku: Product Code
+  report_header_amount: Amount
+  report_header_balance: Balance
+  report_header_total_cost: "Total Cost"
+  report_header_total_ordered: Total Ordered
+  report_header_total_max: Total Max
+  report_header_total_units: Total Units
+  report_header_sum_max_total: "Sum Max Total"
+  report_header_total_excl_vat: "Total excl. tax (%{currency_symbol})"
+  report_header_total_incl_vat: "Total incl. tax (%{currency_symbol})"
+  report_header_temp_controlled: TempControlled?
+  report_header_is_producer: Producer?
+  report_header_not_confirmed: Not Confirmed
+  report_header_gst_on_income: 20%(VAT on Income)
+  report_header_gst_free_income: Zero Rated Income
+  report_header_total_untaxable_produce: Total untaxable produce (no tax)
+  report_header_total_taxable_produce: Total taxable produce (tax inclusive)
+  report_header_total_untaxable_fees: Total untaxable fees (no tax)
+  report_header_total_taxable_fees: Total taxable fees (tax inclusive)
+  report_header_delivery_shipping_cost: Delivery Shipping Cost (tax inclusive)
+  report_header_transaction_fee: Transaction Fee (no tax)
+  report_header_total_untaxable_admin: Total untaxable admin adjustments (no tax)
+  report_header_total_taxable_admin: Total taxable admin adjustments (tax inclusive)
+  initial_invoice_number: "Initial invoice number:"
+  invoice_date: "Invoice date:"
+  due_date: "Invoice date:"
+  account_code: "Account code:"
+  equals: "Equals"
+  contains: "contains"
+  discount: "Discount"
+  filter_products: " Filter Products"
+  delete_product_variant: "The last variant cannot be deleted!"
+  progress: "progress"
+  saving: "Saving.."
+  success: "success"
+  failure: "failure"
+  unsaved_changes_confirmation: "Unsaved changes will be lost. Continue anyway?"
+  one_product_unsaved: "Changes to one product remain unsaved."
+  products_unsaved: "Changes to %{n} products remain unsaved."
+  is_already_manager: "is already a manager!"
+  no_change_to_save: "No change to save"
+  user_invited: "%{email} has been invited to manage this enterprise"
+  add_manager: "Add an existing user"
+  users: "Users"
+  about: "About"
+  images: "Images"
+  web: "Web"
+  primary_details: "Primary Details"
+  adrdress: "Address"
+  contact: "Contact"
+  social: "Social"
+  business_details: "Business Details"
+  properties: "Properties"
+  shipping: "Shipping"
+  shipping_methods: "Shipping Methods"
+  payment_methods: "Payment Methods"
+  payment_method_fee: "Transaction fee"
+  payment_processing_failed: "Payment could not be processed, please check the details you entered"
+  payment_method_not_supported: "That payment method is unsupported. Please choose another one."
+  payment_updated: "Payment Updated"
+  inventory_settings: "Inventory Settings"
+  tag_rules: "Tag Rules"
+  shop_preferences: "Shop Preferences"
+  enterprise_fee_whole_order: Whole order
+  enterprise_fee_by: "%{type} fee by %{role} %{enterprise_name}"
+  validation_msg_relationship_already_established: "^That relationship is already established."
+  validation_msg_at_least_one_hub: "^At least one hub must be selected"
+  validation_msg_tax_category_cant_be_blank: "^Tax Category can't be blank"
+  validation_msg_is_associated_with_an_exising_customer: "is associated with an existing customer"
+  content_configuration_pricing_table: "(TODO: Pricing table)"
+  content_configuration_case_studies: "(TODO: Case studies)"
+  content_configuration_detail: "(TODO: Detail)"
+  enterprise_name_error: "has already been taken. If this is your enterprise and you would like to claim ownership, or if you would like to trade with this enterprise please contact the current manager of this profile at %{email}."
+  enterprise_owner_error: "^%{email} is not permitted to own any more enterprises (limit is %{enterprise_limit})."
+  enterprise_role_uniqueness_error: "^That role is already present."
+  inventory_item_visibility_error: must be true or false
+  product_importer_file_error: "error: no file uploaded"
+  product_importer_spreadsheet_error: "could not process file: invalid filetype"
+  product_importer_products_save_error: did not save any products successfully
+  product_import_file_not_found_notice: 'File not found or could not be opened'
+  product_import_no_data_in_spreadsheet_notice: 'No data found in spreadsheet'
+  order_choosing_hub_notice: Your hub has been selected.
+  order_cycle_selecting_notice: Your order cycle has been selected.
+  adjustments_tax_rate_error: "^Please check that the tax rate for this adjustment is correct."
+  active_distributors_not_ready_for_checkout_message_singular: >-
+      The hub %{distributor_names} is listed in an active order cycle, but does not
+      have valid shipping and payment methods. Until you set these up, customers will
+      not be able to shop at this hub.
+  active_distributors_not_ready_for_checkout_message_plural: >-
+      The hubs %{distributor_names} are listed in an active order cycle, but do not
+      have valid shipping and payment methods. Until you set these up, customers will
+      not be able to shop at these hubs.
+  enterprise_fees_update_notice: Your enterprise fees have been updated.
+  enterprise_register_package_error: "Please select a package"
+  enterprise_register_error: "Could not complete registration for %{enterprise}"
+  enterprise_register_success_notice: "Congratulations! Registration for %{enterprise} is complete!"
+  enterprise_bulk_update_success_notice: "Enterprises updated successfully"
+  enterprise_bulk_update_error: 'Update failed'
+  enterprise_shop_show_error: "The shop you are looking for doesn't exist or is inactive on OFN. Please check other shops."
+  order_cycles_create_notice: 'Your order cycle has been created.'
+  order_cycles_update_notice: 'Your order cycle has been updated.'
+  order_cycles_bulk_update_notice: 'Order cycles have been updated.'
+  order_cycles_clone_notice: "Your order cycle %{name} has been cloned."
+  order_cycles_email_to_producers_notice: 'Emails to be sent to producers have been queued for sending.'
+  order_cycles_no_permission_to_coordinate_error: "None of your enterprises have permission to coordinate an order cycle"
+  order_cycles_no_permission_to_create_error: "You don't have permission to create an order cycle coordinated by that enterprise"
+  order_cycle_closed: "The order cycle you've selected has just closed."
+  back_to_orders_list: "Back to order list"
+  no_orders_found: "No Orders Found"
+  order_information: "Order Information"
+  date_completed: "Date Completed"
+  amount: "Amount"
+  state_names:
+    ready: Ready
+    pending: Pending
+    shipped: Shipped
+  js:
+    saving: 'Saving...'
+    changes_saved: 'Changes saved.'
+    save_changes_first: Save changes first.
+    all_changes_saved: All changes saved
+    unsaved_changes: You have unsaved changes
+    all_changes_saved_successfully: All changes saved successfully
+    oh_no: "Oh no! I was unable to save your changes."
+    unauthorized: "You are unauthorised to access this page."
+    error: Error
+    unavailable: Unavailable
+    profile: Profile
+    hub: Hub
+    shop: Shop
+    choose: Choose
+    resolve_errors: Please resolve the following errors
+    more_items: "+ %{count} More"
+    default_card_updated: Default Card Updated
+    cart:
+      add_to_cart_failed: >
+          There was a problem adding this product to your basket. Perhaps it has become
+          unavailable or the shop is closing.
+    admin:
+      enterprise_limit_reached: "You have reached the standard limit of enterprises per account. Write to %{contact_email} if you need to increase it."
+      modals:
+        got_it: Got it
+        close: "Close"
+        invite: "Invite"
+        invite_title: "Invite an unregistered user"
+        tag_rule_help:
+          title: Tag Rules
+          overview: Overview
+          overview_text: >
+              Tag rules provide a way to describe which items are visible or otherwise
+              to which customers. Items can be Shipping Methods, Payment Methods,
+              Products and Order Cycles.
+          by_default_rules: "'By Default...' Rules"
+          by_default_rules_text: >
+              Default rules allow you to hide items so that they are not visible by
+              default. This behaviour can then be overriden by non-default rules for
+              customers with particular tags.
+          customer_tagged_rules: "'Customers Tagged...' Rules"
+          customer_tagged_rules_text: >
+              By creating rules related to a specific customer tag, you can override
+              the default behaviour (whether it be to show or to hide items) for customers
+              with the specified tag.
+      panels:
+        save: SAVE
+        saved: SAVED
+        saving: SAVING
+        enterprise_package:
+          hub_profile: Hub Profile
+          hub_profile_cost: "COST: Visit our Pricing page for more detail"
+          hub_profile_text1: >
+              People can find and contact you on the Open Food Network. Your enterprise
+              will be visible on the map, and will be searchable in listings.
+          hub_profile_text2: >
+              As a producer, making connections within your local food system through
+              the Open Food Network will always be free.
+          hub_shop: Hub Shop
+          hub_shop_text1: >
+              Hubs can take many forms - CSA, veg box scheme, food co-op, community
+              buying group, farmers’ market, an online shop front for an independent
+              shop and many others…
+          hub_shop_text2: >
+              Products aggregated from lots of local food enterprises can be stocked
+              and sold via your shop front. Hubs can form the backbone of your local
+              food economy.
+          hub_shop_text3: >
+              Open Food Network aims to provide the tools and support for you to run
+              your organisation or business in a manner which suits you.
+
+              If you also want to sell your own products, you will need to switch
+              this enterprise to be a producer.
+          choose_package: Please Choose a Package
+          choose_package_text1: >
+              Your enterprise will not be fully activated until a package is selected
+              from the options on the left.
+          choose_package_text2: >
+              Click on an option to see more detailed information about each package,
+              and hit the red SAVE button when you are done!
+          profile_only: Profile Only
+          profile_only_cost: "There is no cost for a Producer Profile without a shop front."
+          profile_only_text1: >
+              A profile makes you visible and contactable to others and is a way to
+              share your story.
+          profile_only_text2: >
+              You can set up your products and invite other people to sell them for
+              you.
+          profile_only_text3: >
+              You can choose which Open Food Network ‘hubs’ you would like to stock
+              and sell your products.  Leave the hassle of selling your food to someone
+              else and focus on growing, making, brewing, baking...
+          producer_shop: Producer Shop
+          producer_shop_text1: >
+              Sell only your own products directly to customers and buyers with your
+              own Open Food Network shopfront.
+          producer_shop_text2: >
+              If you would also like to stock items grown/baked/made by others, please
+              select ‘Hub’.
+          producer_hub: Producer Hub
+          producer_hub_text1: >
+              Hubs can take many forms - CSA, veg box scheme, food co-op, community
+              buying group, farmers’ market, an online shop front for an independent
+              shop and many others…
+          producer_hub_text2: >
+              Products aggregated from lots of local food enterprises (including your
+              own, if you are also a food producer) can be stocked and sold via your
+              shop front. Hubs can form the backbone of your local food economy.
+          producer_hub_text3: >
+              Open Food Network aims to provide the tools and support for you to run
+              your organisation or business in a manner which suits you.
+          get_listing: Get a listing
+          always_free: Visit our Pricing page for more detail
+          sell_produce_others: Sell produce from others
+          sell_own_produce: Sell your own produce
+          sell_both: Sell products from multiple producers.
+        enterprise_producer:
+          producer: Producer
+          producer_text1: >
+              Farmers, growers, small holders, crofters, cottage enterprises, market
+              gardens, CSAs, community gardens, city farms that make yummy things
+              to eat or drink. You're a food producer if you grow it, raise it, brew
+              it, bake it, ferment it, milk it or mould it.
+          producer_text2: >
+              Food producers can also sell their products (and those of others) through
+              Shops or Hubs on the Open Food Network.
+          non_producer: Non-producer
+          non_producer_text1: >
+              A ‘Non-producer’, such as a Farmers’ Market or veg box co-ordinator,
+              specialises in aggregating food from local producers (eg. farmers, growers,
+              cottage enterprises, community/city gardens) to sell to customers. They
+              do not offer food that they produced themselves for sale.
+          non_producer_text2: >
+              This option is best suited for those wishing to operate Open Food Network
+              ‘Hubs’ but not produce their own food.
+          producer_desc: Producer
+          producer_example: eg. Farmers, growers, small holders, crofters, cottage enterprises, market gardens, CSAs, community gardens, city farms...
+          non_producer_desc: Non-producer
+          non_producer_example: eg. Farmers’ Market/Veg Box Scheme/Community group co-ordinators, Food Hubs, Retail Shops, Wholesale Distributors, Buying Groups, Food Co-ops…
+        enterprise_status:
+          status_title: "%{name} is set up and ready to go!"
+          severity: Severity
+          description: Description
+          resolve: Resolve
+        exchange_products:
+          load_more_variants: "Load More Variants"
+          load_all_variants: "Load All Variants"
+          select_all_variants: "Select All %{total_number_of_variants} Variants"
+          variants_loaded: "%{num_of_variants_loaded} of %{total_number_of_variants} Variants Loaded"
+          loading_variants: "Loading Variants"
+      tag_rules:
+        shipping_method_tagged_top: "Shipping methods tagged"
+        shipping_method_tagged_bottom: "are:"
+        payment_method_tagged_top: "Payment methods tagged"
+        payment_method_tagged_bottom: "are:"
+        order_cycle_tagged_top: "Order Cycles tagged"
+        order_cycle_tagged_bottom: "are:"
+        inventory_tagged_top: "Inventory variants tagged"
+        inventory_tagged_bottom: "are:"
+      new_tag_rule_dialog:
+        select_rule_type: "Select a rule type:"
+        add_rule: "Add Rule"
+      enterprise_fees:
+        inherit_from_product: "Inherit From Product"
+      orders:
+        index:
+          per_page: "%{results} per page"
+          view_file: "View File"
+          compiling_invoices: "Compiling Invoices"
+          bulk_invoice_created: "Bulk Invoice created"
+          bulk_invoice_failed: "Failed to create Bulk Invoice"
+          please_wait: "Please wait until the PDF is ready before closing this window."
+        order_state:
+          address: "address"
+          adjustments: "adjustments"
+          awaiting_return: "awaiting return"
+          canceled: "cancelled"
+          cart: "cart"
+          complete: "complete"
+          confirm: "confirm"
+          delivery: "delivery"
+          paused: "paused"
+          payment: "payment"
+          pending: "pending"
+          resumed: "resumed"
+          returned: "returned"
+          skrill: "skrill"
+        shipment_states:
+          backorder: "backorder"
+          partial: "partial"
+          pending: "pending"
+          ready: "ready"
+          shipped: "shipped"
+          canceled: "cancelled"
+        payment_states:
+          balance_due: "balance due"
+          completed: "completed"
+          checkout: "checkout"
+          credit_owed: "credit owed"
+          failed: "failed"
+          paid: "paid"
+          pending: "pending"
+          processing: "processing"
+          void: "void"
+          invalid: "invalid"
+      resend_user_email_confirmation:
+        resend: "Resend"
+        sending: "Resend..."
+        done: "Resend done ✓"
+        failed: "Resend failed ✗"
+      order_cycles:
+        schedules:
+          adding_a_new_schedule: "Adding A New Schedule"
+          updating_a_schedule: "Updating A Schedule"
+          create_schedule: "Create Schedule"
+          update_schedule: "Update Schedule"
+          delete_schedule: "Delete Schedule"
+          schedule_name_placeholder: "Schedule Name"
+          created_schedule: "Created schedule"
+          updated_schedule: "Updated schedule"
+          deleted_schedule: "Deleted schedule"
+          name_required_error: "Please enter a name for this schedule"
+          no_order_cycles_error: "Please select at least one order cycle (drag and drop)"
+          available: "Available"
+          selected: "Selected"
+      customers:
+        index:
+          add_customer: "Add Customer"
+          add_a_new_customer_for: "Add a new customer for %{shop_name}"
+          customer_placeholder: "customer@example.org"
+          valid_email_error: "Please enter a valid email address"
+      subscriptions:
+        error_saving: "Error saving subscription"
+        new:
+          please_select_a_shop: "Please select a shop"
+    insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
+    out_of_stock:
+      reduced_stock_available: Reduced stock available
+      out_of_stock_text: >
+          While you've been shopping, the stock levels for one or more of the products
+          in your cart have reduced. Here's what's changed:
+      now_out_of_stock: is now out of stock.
+      only_n_remainging: "now only has %{num} remaining."
+    variants:
+      on_demand:
+        'yes': "Unlimited"
+    variant_overrides:
+      on_demand:
+        use_producer_settings: "Use producer stock settings"
+        'yes': "Yes"
+        'no': "No"
+      inventory_products: "Inventory Products"
+      hidden_products: "Hidden Products"
+      new_products: "New Products"
+      reset_stock_levels: Reset Stock Levels To Defaults
+      changes_to: Changes to
+      one_override: one override
+      overrides: overrides
+      remain_unsaved: remain unsaved.
+      no_changes_to_save: No changes to save.'
+      no_authorisation: "I couldn't get authorisation to save those changes, so they remain unsaved."
+      some_trouble: "I had some trouble saving: %{errors}"
+      changing_on_hand_stock: Changing 'in stock' stock levels...
+      stock_reset: Stocks reset to defaults.
+    tag_rules:
+      show_hide_variants: 'Show or Hide variants in my shopfront'
+      show_hide_shipping: 'Show or Hide shipping methods at checkout'
+      show_hide_payment: 'Show or Hide payment methods at checkout'
+      show_hide_order_cycles: 'Show or Hide order cycles in my shopfront'
+      visible: VISIBLE
+      not_visible: NOT VISIBLE
+    services:
+      unsaved_changes_message: Unsaved changes currently exist, save now or ignore?
+      save: SAVE
+      ignore: IGNORE
+      add_to_order_cycle: "add to order cycle"
+      manage_products: "manage products"
+      edit_profile: "edit profile"
+      add_products_to_inventory: "add products to inventory"
+    resources:
+      could_not_delete_customer: 'Could not delete customer'
+    product_import:
+      confirmation: |
+          This will set stock level to zero on all products for this
+          enterprise that are not present in the uploaded file.
+    order_cycles:
+      create_failure: "Failed to create order cycle"
+      update_success: 'Your order cycle has been updated.'
+      update_failure: "Failed to update order cycle"
+      no_distributors: There are no distributors in this order cycle. This order cycle will not be visible to customers until you add one. Would you like to continue saving this order cycle?'
+    enterprises:
+      producer: "Producer"
+      non_producer: "Non-Producer"
+    customers:
+      select_shop: 'Please select a shop first'
+      could_not_create: Sorry! Could not create
+    subscriptions:
+      closes: closes
+      closed: closed
+      close_date_not_set: Close date not set
+    spree:
+      users:
+        order: "Order"
+    registration:
+      welcome_to_ofn: "Welcome to the Open Food Network!"
+      signup_or_login: "Start By signing up (or logging in)"
+      have_an_account: "Already have an account?"
+      action_login: "Log in now."
+  inflections:
+    each:
+      one: "each"
+      other: "each"
+    bunch:
+      one: "bunch"
+      other: "bunches"
+    pack:
+      one: "pack"
+      other: "packs"
+    box:
+      one: "box"
+      other: "boxes"
+    bottle:
+      one: "bottle"
+      other: "bottles"
+    jar:
+      one: "jar"
+      other: "jars"
+    head:
+      one: "head"
+      other: "heads"
+    bag:
+      one: "bag"
+      other: "bags"
+    loaf:
+      one: "loaf"
+      other: "loaves"
+    single:
+      one: "single"
+      other: "singles"
+    tub:
+      one: "tub"
+      other: "tubs"
+    punnet:
+      one: "punnet"
+      other: "punnets"
+    packet:
+      one: "packet"
+      other: "packets"
+    item:
+      one: "item"
+      other: "items"
+    dozen:
+      one: "dozen"
+      other: "dozens"
+    unit:
+      one: "unit"
+      other: "units"
+    serve:
+      one: "serve"
+      other: "serves"
+    tray:
+      one: "tray"
+      other: "trays"
+    piece:
+      one: "piece"
+      other: "pieces"
+    pot:
+      one: "pot"
+      other: "pots"
+    bundle:
+      one: "bundle"
+      other: "bundles"
+    flask:
+      one: "flask"
+      other: "flasks"
+    basket:
+      one: "basket"
+      other: "baskets"
+    sack:
+      one: "sack"
+      other: "sacks"
+  producers:
+    signup:
+      start_free_profile: "Start with a free profile, and expand when you're ready!"
+  order_management:
+    reports:
+      enterprise_fee_summaries:
+        filters:
+          date_range: "Date Range"
+          report_format_csv: "Download as CSV"
+          generate_report: "Generate Report"
+        report:
+          none: "None"
+          select_and_search: "Select filters and click on GENERATE REPORT to access your data."
+      enterprise_fee_summary:
+        date_end_before_start_error: "must be after start"
+        parameter_not_allowed_error: "You are not authorised to use one or more selected filters for this report."
+        fee_calculated_on_transfer_through_all: "All"
+        fee_calculated_on_transfer_through_entire_orders: "Entire Orders through %{distributor}"
+        tax_category_various: "Various"
+        fee_type:
+          payment_method: "Payment Transaction"
+          shipping_method: "Shipment"
+        fee_placements:
+          supplier: "Incoming"
+          distributor: "Outgoing"
+          coordinator: "Coordinator"
+        tax_category_name:
+          shipping_instance_rate: "Platform Rate"
+        formats:
+          csv:
+            header:
+              fee_type: "Fee Type"
+              enterprise_name: "Enterprise Owner"
+              fee_name: "Fee Name"
+              customer_name: "Customer"
+              fee_placement: "Fee Placement"
+              fee_calculated_on_transfer_through_name: "Fee Calc on Transfer Through"
+              tax_category_name: "Tax Category"
+              total_amount: "$$ SUM"
+          html:
+            header:
+              fee_type: "Fee Type"
+              enterprise_name: "Enterprise Owner"
+              fee_name: "Fee Name"
+              customer_name: "Customer"
+              fee_placement: "Fee Placement"
+              fee_calculated_on_transfer_through_name: "Fee Calc on Transfer Through"
+              tax_category_name: "Tax Category"
+              total_amount: "$$ SUM"
+        invalid_filter_parameters: "The filters you selected for this report are invalid."
+  order: "Order"
+  distribution: "Distribution"
+  order_details: "Order Details"
+  customer_details: "Customer Details"
+  adjustments: "Adjustments"
+  payments: "Payments"
+  return_authorizations: "Return Authorisations"
+  payment: "Payment"
+  payment_method: "Payment Method"
+  shipment: "Shipment"
+  shipment_inc_vat: "Shipment including VAT"
+  shipping_tax_rate: "Shipping Tax Rate"
+  category: "Category"
+  delivery: "Delivery"
+  temperature_controlled: "Temperature Controlled"
+  new_product: "New Product"
+  administration: "Administration"
+  logged_in_as: "Logged in as"
+  account: "Account"
+  logout: "Logout"
+  date_range: "Date Range"
+  status: "status"
+  new: "New"
+  start: "Start"
+  end: "End"
+  stop: "Stop"
+  first: "First"
+  previous: "Previous"
+  last: "Last"
+  spree:
+    more: "More"
+    your_order_is_empty_add_product: "Your order is empty, please search for and add a product above"
+    add_product: "Add Product"
+    name_or_sku: "Name or SKU (enter at least first 4 characters of product name)"
+    resend: Resend
+    back_to_orders_list: Back To Orders List
+    return_authorizations: Return Authorisations
+    cannot_create_returns: Cannot create returns as this order has no shipped units.
+    select_stock: "Select stock"
+    location: "Location"
+    count_on_hand: "Count In Stock"
+    quantity: "Quantity"
+    on_demand: "Unlimited"
+    on_hand: "In Stock"
+    package_from: "package from"
+    item_description: "Item Description"
+    price: "Price"
+    total: "Total"
+    edit: "Edit"
+    split: "Split"
+    delete: "Delete"
+    cannot_set_shipping_method_without_address: "Cannot set shipping method until customer details are provided."
+    no_tracking_present: "No tracking details provided."
+    order_total: "Order Total"
+    customer_details: "Customer Details"
+    customer_search: "Customer Search"
+    choose_a_customer: "Choose a customer"
+    account: "Account"
+    billing_address: "Billing Address"
+    shipping_address: "Shipping Address"
+    first_name: "First name"
+    last_name: "Last name"
+    street_address: "Street Address"
+    street_address_2: "Street Address (cont'd)"
+    city: "City"
+    zip: "Postcode"
+    country: "Country"
+    state: "State"
+    phone: "Phone"
+    update: "Update"
+    use_billing_address: "Use Billing Address"
+    adjustments: "Adjustments"
+    continue: "Continue"
+    fill_in_customer_info: "Please fill in customer info"
+    new_payment: "New Payment"
+    capture: "Capture"
+    void: "Void"
+    login: "Login"
+    password: "Password"
+    signature: "Signature"
+    solution: "Solution"
+    landing_page: "Landing Page"
+    server: "Server"
+    test_mode: "Test Mode"
+    logourl: "Logo url"
+    configurations: "Configurations"
+    general_settings: "General Settings"
+    site_name: "Site Name"
+    site_url: "Site URL"
+    default_seo_title: "Default SEO Title"
+    default_meta_description: "Default Meta Description"
+    default_meta_keywords: "Default Meta Keywords"
+    security_settings: "Security Settings"
+    allow_ssl_in_development_and_test: "Allow SSL to be used when in development and test modes"
+    allow_ssl_in_production: "Allow SSL to be used in production mode"
+    allow_ssl_in_staging: "Allow SSL to be used in staging mode"
+    currency_decimal_mark: "Currency decimal mark"
+    currency_settings: "Currency Settings"
+    currency_symbol_position: Put "currency symbol before or after pound amount?"
+    currency_thousands_separator: "Currency thousands separator"
+    hide_cents: "Hide pence"
+    display_currency: "Display currency"
+    choose_currency: "Choose Currency"
+    mail_method_settings: "Mail Method Settings"
+    general: "General"
+    enable_mail_delivery: "Enable Mail Delivery"
+    send_mails_as: "Send Mails As"
+    smtp_send_all_emails_as_from_following_address: "Send all mails as from the following address."
+    send_copy_of_all_mails_to: "Send Copy of All Mails To"
+    smtp_send_copy_to_this_addresses: "Sends a copy of all outgoing mails to this address. For multiple addresses, separate with commas."
+    intercept_email_address: "Intercept Email Address"
+    intercept_email_instructions: "Override email recipient and replace with this address."
+    image_settings: "Image Settings"
+    image_settings_warning: "You will need to regenerate thumbnails if you update the paperclip styles. Use rake paperclip:refresh:thumbnails CLASS=Spree::Image to do this."
+    attachment_default_style: Attachments Style
+    attachment_default_url: "Attachments Default URL"
+    attachment_path: "Attachments Path"
+    attachment_styles: "Paperclip Styles"
+    attachment_url: "Attachments URL"
+    add_new_style: "Add New Style"
+    image_settings_updated: "Image Settings successfully updated."
+    tax_categories: "Tax Categories"
+    listing_tax_categories: "Listing Tax Categories"
+    back_to_tax_categories_list: "Back To Tax Categories List"
+    tax rate: "Tax Rates"
+    new_tax_rate: "New Tax Rate"
+    tax_category: "Tax Category"
+    rate: "Rate"
+    tax_rate_amount_explanation: "Tax rates are a decimal amount to aid in calculations, (i.e. if the tax rate is 5% then enter 0.05)"
+    included_in_price: "Included in Price"
+    show_rate_in_label: "Show rate in label"
+    back_to_tax_rates_list: "Back to Tax Rates List"
+    tax_settings: "Tax Settings"
+    zones: "Zones"
+    new_zone: "New Zone"
+    default_tax: "Default Tax"
+    default_tax_zone: "Default Tax Zone"
+    country_based: "Country Based"
+    state_based: "State Based"
+    countries: "Countries"
+    listing_countries: "Listing Countries"
+    iso_name: "ISO Name"
+    states_required: "Counties Required"
+    editing_country: "Editing Country"
+    back_to_countries_list: "Back to Countries List"
+    states: "Counties"
+    abbreviation: "Abbreviation"
+    new_state: "New State"
+    payment_methods: "Payment Methods"
+    taxonomies: "Taxonomies"
+    new_taxonomy: "New Taxonomy"
+    back_to_taxonomies_list: "Back to Taxonomies List"
+    shipping_methods: "Shipping Methods"
+    shipping_categories: "Shipping Categories"
+    new_shipping_category: "New Shipping Category"
+    back_to_shipping_categories: "Back To Shipping Categories"
+    name: "Name"
+    description: "Description"
+    type: "Type"
+    default: "default"
+    calculator: "Calculator"
+    zone: "Zone"
+    display: "Display"
+    environment: "Environment"
+    active: "Active"
+    nore: "More"
+    no_results: "No results"
+    create: "Create"
+    loading: "Loading"
+    flat_percent: "Flat Percent"
+    per_kg: "Per Kg"
+    amount: "Amount"
+    currency: "Currency"
+    first_item: "First Item Cost"
+    additional_item: "Additional Item Cost"
+    max_items: "Max Items"
+    minimal_amount: "Minimal Amount"
+    normal_amount: "Normal Amount"
+    discount_amount: "Discount Amount"
+    no_images_found: "No Images Found"
+    new_image: "New Image"
+    filename: "Filename"
+    alt_text: "Alternative Text"
+    thumbnail: "Thumbnail"
+    back_to_images_list: "Back To Images List"
+    email: Email
+    account_updated: "Account updated!"
+    email_updated: "The account will be updated once the new email is confirmed."
+    my_account: "My account"
+    date: "Date"
+    time: "Time"
+    inventory_error_flash_for_insufficient_quantity: "An item in your cart has become unavailable."
+    inventory: Inventory
+    zipcode: Postcode
+    weight: Weight (per kg)
+    error_user_destroy_with_orders: "Users with completed orders may not be deleted"
+    cannot_create_payment_without_payment_methods: "You cannot create a payment for an order without any payment methods defined."
+    please_define_payment_methods: "Please define some payment methods first."
+    options: "Options"
+    actions:
+      update: "Update"
+    shared:
+      error_messages:
+        errors_prohibited_this_record_from_being_saved:
+          one: "1 error prohibited this record from being saved:"
+          other: "%{count} errors prohibited this record from being saved:"
+        there_were_problems_with_the_following_fields: "There were problems with the following fields"
+    errors:
+      messages:
+        blank: "can't be blank"
+    layouts:
+      admin:
+        login_nav:
+          header:
+            store: Store
+    admin:
+      tab:
+        dashboard: "Dashboard"
+        orders: "Orders"
+        bulk_order_management: "Bulk Order Management"
+        subscriptions: "Subscriptions"
+        products: "Products"
+        option_types: "Option Types"
+        properties: "Properties"
+        variant_overrides: "Inventory"
+        reports: "Reports"
+        configuration: "Configuration"
+        users: "Users"
+        roles: "Roles"
+        order_cycles: "Order Cycles"
+        enterprises: "Enterprises"
+        enterprise_relationships: "Permissions"
+        customers: "Customers"
+        groups: "Groups"
+      product_properties:
+        index:
+          inherits_properties_checkbox_hint: "Inherit properties from %{supplier}? (unless overridden above)"
+          add_product_properties: "Add Product Properties"
+          select_from_prototype: "Select From Prototype"
+      properties:
+        index:
+          properties: "Properties"
+          new_property: "New Property"
+          name: "Name"
+          presentation: "Presentation"
+        new:
+          new_property: "New Property"
+        edit:
+          editing_property: "Editing Property"
+          back_to_properties_list: "Back To Properties List"
+        form:
+          name: "Name"
+          presentation: "Presentation"
+      return_authorizations:
+        index:
+          new_return_authorization: "New Return Authorisation"
+          return_authorizations: "Return Authorisations"
+          back_to_orders_list: "Back To Orders List"
+          rma_number: "RMA Number"
+          status: "Status"
+          amount: "Amount"
+          cannot_create_returns: "Cannot create returns as this order has no shipped units."
+          continue: "Continue"
+        new:
+          new_return_authorization: "New Return Authorisation"
+          back_to_return_authorizations_list: "Back To Return Authorisation List"
+          continue: "Continue"
+        edit:
+          receive: "receive"
+          are_you_sure: "Are you sure?"
+          return_authorization: "Return Authorisation"
+        form:
+          product: "Product"
+          quantity_shipped: "Quantity Shipped"
+          quantity_returned: "Quantity Returned"
+          return_quantity: "Return Quantity"
+          amount: "Amount"
+          rma_value: "RMA Value"
+          reason: "Reason"
+          stock_location: "Stock Location"
+        states:
+          authorized: "Authorised"
+          received: "Received"
+          canceled: "Canceled"
+      orders:
+        index:
+          listing_orders: "Listing Orders"
+          new_order: "New Order"
+          capture: "Capture"
+          ship: "Ship"
+          edit: "Edit"
+          order_not_updated: "The order could not be updated"
+          note: "Note"
+          first: "First"
+          last: "Last"
+          previous: "Previous"
+          next: "Next"
+          loading: "Loading"
+          no_orders_found: "No Orders Found"
+          results_found: "%{number} Results found."
+          viewing: "Viewing %{start} to %{end}."
+          print_invoices: "Print Invoices"
+        sortable_header:
+          payment_state: "Payment State"
+          shipment_state: "Shipment State"
+          completed_at: "Completed At"
+          number: "Number"
+          state: "State"
+          email: "Customer E-Mail"
+        invoice:
+          issued_on: "Issued on"
+          tax_invoice: "TAX INVOICE"
+          code: "Code"
+          from: "From"
+          to: "Bill to"
+          shipping: "Shipping"
+        form:
+          distribution_fields:
+            title: "Distribution"
+            distributor: "Distributor:"
+            order_cycle: "Order cycle:"
+          line_item_adjustments: "Line Item Adjustments"
+          order_adjustments: "Order Adjustments"
+          order_total: "Order Total"
+      overview:
+        enterprises_header:
+          ofn_with_tip: Enterprises are Producers and/or Hubs and are the basic unit of organisation within the Open Food Network.
+        products:
+          active_products:
+            zero: "You don't have any active products."
+            one: "You have one active product"
+            other: "You have %{count} active products"
+        order_cycles:
+          order_cycles: "Order Cycles"
+          order_cycles_tip: "Order cycles determine when and where your products are available to customers."
+          you_have_active:
+            zero: "You don't have any active order cycles."
+            one: "You have one active order cycle."
+            other: "You have %{count} active order cycles."
+          manage_order_cycles: "MANAGE ORDER CYCLES"
+      shipping_methods:
+        index:
+          shipping_methods: "Shipping Methods"
+          new_shipping_method: "New Shipping Method"
+          name: "Name"
+          products_distributor: "Distributor"
+          zone: "Zone"
+          calculator: "Calculator"
+          display: "Display"
+          both: "Both Checkout and Back office"
+          back_end: "Back office only"
+          no_shipping_methods_found: "No shipping methods found"
+        new:
+          new_shipping_method: "New Shipping Method"
+          back_to_shipping_methods_list: "Back To Shipping Methods List"
+        edit:
+          editing_shipping_method: "Editing Shipping Method"
+          new: "New"
+          back_to_shipping_methods_list: "Back To Shipping Methods List"
+        form:
+          categories: "Categories"
+          zones: "Zones"
+          both: "Both Checkout and Back office"
+          back_end: "Back office only"
+          deactivation_warning: "De-activating a shipping method can make the shipping method disappear from your list. Alternatively, you can hide a shipping method from the checkout page by setting the option 'Display' to 'back office only'."
+      payment_methods:
+        index:
+          payment_methods: "Payment Methods"
+          new_payment_method: "New Payment Method"
+          name: "Name"
+          products_distributor: "Distributor"
+          provider: "Provider"
+          environment: "Environment"
+          display: "Display"
+          active: "Active"
+          both: "Both"
+          front_end: "Checkout only"
+          back_end: "Back office only"
+          active_yes: "Yes"
+          active_no: "No"
+          no_payment_methods_found: "No payment methods found"
+        new:
+          new_payment_method: "New Payment Method"
+          back_to_payment_methods_list: "Back To Payment Methods List"
+        edit:
+          new: "New"
+          editing_payment_method: "Editing Payment Method"
+          back_to_payment_methods_list: "Back To Payment Methods List"
+        stripe_connect:
+          enterprise_select_placeholder: Choose...
+          loading_account_information_msg: Loading account information from stripe, please wait...
+          stripe_disabled_msg: Stripe payments have been disabled by the system administrator.
+          request_failed_msg: Sorry. Something went wrong when trying to verify account details with Stripe...
+          account_missing_msg: No Stripe account exists for this enterprise.
+          connect_one: Connect One
+          access_revoked_msg: Access to this Stripe account has been revoked, please reconnect your account.
+          status: Status
+          connected: Connected
+          account_id: Account ID
+          business_name: Business Name
+          charges_enabled: Charges Enabled
+        form:
+          name: "Name"
+          description: "Description"
+          environment: "Environment"
+          display: "Display"
+          active: "Active"
+          active_yes: "Yes"
+          active_no: "No"
+          both: "Both Checkout and Back office"
+          front_end: "Checkout only"
+          back_end: "Back office only"
+          tags: "Tags"
+          deactivation_warning: "De-activating a payment method can make the payment method disappear from your list. Alternatively, you can hide a payment method from the checkout page by setting the option 'Display' to 'back office only'."
+        providers:
+          provider: "Provider"
+      payments:
+        source_forms:
+          stripe:
+            error_saving_payment: Error saving payment
+            submitting_payment: Submitting payment...
+      products:
+        image_upload_error: "The product image was not recognised. Please upload an image in PNG or JPG format."
+        new:
+          title: "New Product"
+          new_product: "New Product"
+          supplier: "Supplier"
+          product_name: "Product Name"
+          units: "Unit Size"
+          value: "Value"
+          unit_name: "Unit name"
+          price: "Price"
+          on_hand: "In Stock"
+          on_demand: "Unlimited"
+          product_description: "Product Description"
+          image: "Image"
+          or: "or"
+        unit_name_placeholder: 'eg. bunches'
+        index:
+          header:
+            title: Bulk Edit Products
+          indicators:
+            title: LOADING PRODUCTS
+            no_products: "No products yet. Why don't you add some?"
+            no_results: "Sorry, no results match"
+          products_head:
+            name: Name
+            unit: Unit
+            display_as: Display As
+            category: Category
+            tax_category: Tax Category
+            inherits_properties?: Inherits Properties?
+            available_on: Available On
+            av_on: "Av. On"
+            import_date: "Import Date"
+          products_variant:
+            variant_has_n_overrides: "This variant has %{n} override(s)"
+            new_variant: "New variant"
+          product_name: Product Name
+        primary_taxon_form:
+          product_category: Product Category
+        group_buy_form:
+          group_buy: "Group Buy?"
+          bulk_unit_size: Bulk unit size
+        display_as:
+          display_as: Display As
+      reports:
+        table:
+          select_and_search: "Select filters and click on %{option} to access your data."
+        bulk_coop:
+          bulk_coop_supplier_report: 'Bulk Co-op - Totals by Supplier'
+          bulk_coop_allocation: 'Bulk Co-op - Allocation'
+          bulk_coop_packing_sheets: 'Bulk Co-op - Packing Sheets'
+          bulk_coop_customer_payments: 'Bulk Co-op - Customer Payments'
+      users:
+        index:
+          listing_users: "Listing Users"
+          new_user: "New User"
+          user: "User"
+          enterprise_limit: "Enterprise Limit"
+          search: "Search"
+          email: "Email"
+        edit:
+          editing_user: "Editing User"
+          back_to_users_list: "Back To Users List"
+          general_settings: "General Settings"
+        form:
+          email: "Email"
+          roles: "Roles"
+          enterprise_limit: "Enterprise Limit"
+          confirm_password: "Confirm Password"
+          password: "Password"
+        email_confirmation:
+          confirmation_pending: "Email confirmation is pending. We've sent a confirmation email to %{address}."
+      variants:
+        index:
+          sku: "Product Code"
+          price: "Price"
+          options: "Options"
+          no_results: "No results"
+          to_add_variants_you_must_first_define: "To add variants, you must first define"
+          option_types: "Option Types"
+          option_values: "Option Values"
+          and: "and"
+          new_variant: "New Variant"
+          show_active: "Show Active"
+          show_deleted: "Show Deleted"
+        new:
+          new_variant: "New Variant"
+        form:
+          cost_price: "Cost Price"
+          sku: "Product Code"
+          price: "Price"
+          display_as: "Display As"
+          display_name: "Display Name"
+          display_as_placeholder: 'eg. 2 kg'
+          display_name_placeholder: 'eg. Tomatoes'
+        autocomplete:
+          out_of_stock: "Out of Stock"
+          producer_name: "Producer"
+          unit: "Unit"
+      shared:
+        sortable_header:
+          name: "Name"
+          number: "Number"
+          state: "State"
+          payment_state: "Payment State"
+          shipment_state: "Shipment State"
+          email: "Email"
+          total: "Total"
+      general_settings:
+        edit:
+          legal_settings: "Legal Settings"
+          cookies_consent_banner_toggle: "Display cookies consent banner"
+          privacy_policy_url: "Privacy Policy URL"
+          enterprises_require_tos: "Enterprises must accept Terms of Service"
+          cookies_policy_matomo_section: "Display Matomo section on cookies policy page"
+          footer_tos_url: "Terms of Service URL"
+    checkout:
+      payment:
+        stripe:
+          choose_one: Choose one
+          enter_new_card: Enter details for a new card
+          used_saved_card: "Use a saved card:"
+          or_enter_new_card: "Or, enter details for a new card:"
+          remember_this_card: Remember this card?
+        stripe_sca:
+          choose_one: Choose one
+          enter_new_card: Enter details for a new card
+          used_saved_card: "Use a saved card:"
+          or_enter_new_card: "Or, enter details for a new card:"
+          remember_this_card: Remember this card?
+    date_picker:
+      format: '%Y-%m-%d'
+      js_format: 'yy-mm-dd'
+    orders:
+      error_flash_for_unavailable_items: "An item in your basket has become unavailable. Please update the selected quantities."
+      edit:
+        login_to_view_order: "Please log in to view your order."
+      bought:
+        item: "Already ordered in this order cycle"
+      line_item:
+        insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
+        out_of_stock: "Out of Stock"
+        unavailable_item: "Currently unavailable"
+    shipment_states:
+      backorder: backorder
+      partial: partial
+      pending: pending
+      ready: ready
+      shipped: shipped
+    payment_states:
+      balance_due: balance due
+      completed: completed
+      checkout: checkout
+      credit_owed: credit owed
+      failed: failed
+      paid: paid
+      pending: pending
+      processing: processing
+      void: void
+      invalid: invalid
+    order_mailer:
+      cancel_email:
+        customer_greeting: "Dear %{name},"
+        instructions_html: "Your order with <strong>%{distributor}</strong> has been CANCELED. Please retain this cancellation information for your records."
+        dont_cancel: "If you have changed your mind or don't wish to cancel this order please contact %{email}"
+        order_summary_canceled_html: "<strong>Order Summary #%{number} [CANCELED]</strong>"
+        details: "Here are the details of what you ordered:"
+        unpaid_order: "Your order was unpaid so no refund has been made"
+        paid_order: "Your order was paid so %{distributor} has refunded the full amount"
+        credit_order: "Your order was paid so your account has been credited"
+        subject: "Cancellation of Order"
+      confirm_email:
+        subject: "Order Confirmation"
+      invoice_email:
+        hi: "Hi %{name}"
+        invoice_attached_text: Please find attached an invoice for your recent order from
+    order_state:
+      address: address
+      adjustments: adjustments
+      awaiting_return: awaiting return
+      canceled: cancelled
+      cart: cart
+      complete: complete
+      confirm: confirm
+      delivery: delivery
+      paused: paused
+      payment: payment
+      pending: pending
+      resumed: resumed
+      returned: returned
+      skrill: skrill
+    subscription_state:
+      active: active
+      pending: pending
+      ended: ended
+      paused: paused
+      canceled: cancelled
+    user_mailer:
+      reset_password_instructions:
+        request_sent_text: |
+            A request to reset your password has been made.
+            If you did not make this request, simply ignore this email.
+        link_text: >
+            If you did make this request just click the link below:
+        issue_text: |
+            If the above URL does not work try copying and pasting it into your browser.
+            If you continue to have problems please feel free to contact us.
+      confirmation_instructions:
+        subject: Please confirm your OFN account
+    users:
+      form:
+        account_settings: Account Settings
+      show:
+        tabs:
+          orders: Orders
+          cards: Credit Cards
+          transactions: Transactions
+          settings: Account Settings
+        unconfirmed_email: "Pending email confirmation for: %{unconfirmed_email}. Your email address will be updated once the new email is confirmed."
+      orders:
+        open_orders: Open Orders
+        past_orders: Past Orders
+      transactions:
+        transaction_history: Transaction History
+      open_orders:
+        order: Order
+        shop: Shop
+        changes_allowed_until: Changes Allowed Until
+        items: Items
+        total: Total
+        edit: Edit
+        cancel: Cancel
+        closed: Closed
+        until: Until
+      past_orders:
+        order: Order
+        shop: Shop
+        completed_at: Completed At
+        items: Items
+        total: Total
+        paid?: Paid?
+        view: View
+      saved_cards:
+        default?: Default?
+        delete?: Delete?
+      cards:
+        authorised_shops: Authorised Shops
+        authorised_shops_popover: This is the list of shops which are permitted to charge your default credit card for any subscriptions (ie. repeating orders) you may have. Your card details will be kept secure and will not be shared with shop owners. You will always be notified when you are charged.
+        saved_cards_popover: This is the list of cards you have opted to save for later use. Your 'default' will be selected automatically when you checkout an order, and can be charged by any shops you have allowed to do so (see right).
+      authorised_shops:
+        shop_name: "Shop Name"
+        allow_charges?: "Allow Charges?"
+    localized_number:
+      invalid_format: has an invalid format. Please enter a number.
+    api:
+      invalid_api_key: "Invalid API key (%{key}) specified."
+      unauthorized: "You are not authorised to perform that action."
+      invalid_resource: "Invalid resource. Please fix errors and try again."
+      resource_not_found: "The resource you were looking for could not be found."
+      access: "API Access"
+      key: "Key"
+      clear_key: "Clear key"
+      regenerate_key: "Regenerate Key"
+      no_key: "No key"
+      generate_key: "Generate API key"
+      key_generated: "Key generated"
+      key_cleared: "Key cleared"
+      shipment:
+        cannot_ready: "Cannot ready shipment."
+      invalid_taxonomy_id: "Invalid taxonomy id."

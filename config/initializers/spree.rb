@@ -23,14 +23,13 @@ require "#{Rails.root}/app/models/spree/gateway_decorator"
 Spree.config do |config|
   config.shipping_instructions = true
   config.address_requires_state = true
-  config.admin_interface_logo = 'ofn-logo.png'
+  config.admin_interface_logo = '/default_images/ofn-logo.png'
 
   # -- spree_paypal_express
   # Auto-capture payments. Without this option, payments must be manually captured in the paypal interface.
   config.auto_capture = true
   #config.override_actionmailer_config = false
 
-  config.package_factory = Stock::Package
   config.order_updater_decorator = OrderUpdater
 
   # S3 settings

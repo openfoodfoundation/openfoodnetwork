@@ -20,7 +20,7 @@ describe Admin::ProxyOrdersController, type: :controller do
       context 'as a regular user' do
         it 'redirects to unauthorized' do
           spree_put :cancel, params
-          expect(response).to redirect_to spree.unauthorized_path
+          expect(response).to redirect_to unauthorized_path
         end
       end
 
@@ -31,7 +31,7 @@ describe Admin::ProxyOrdersController, type: :controller do
 
           it 'redirects to unauthorized' do
             spree_put :cancel, params
-            expect(response).to redirect_to spree.unauthorized_path
+            expect(response).to redirect_to unauthorized_path
           end
         end
 
@@ -89,7 +89,7 @@ describe Admin::ProxyOrdersController, type: :controller do
       context 'as a regular user' do
         it 'redirects to unauthorized' do
           spree_put :resume, params
-          expect(response).to redirect_to spree.unauthorized_path
+          expect(response).to redirect_to unauthorized_path
         end
       end
 
@@ -100,7 +100,7 @@ describe Admin::ProxyOrdersController, type: :controller do
 
           it 'redirects to unauthorized' do
             spree_put :resume, params
-            expect(response).to redirect_to spree.unauthorized_path
+            expect(response).to redirect_to unauthorized_path
           end
         end
 

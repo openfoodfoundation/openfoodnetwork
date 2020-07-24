@@ -50,7 +50,7 @@ describe "checking out an order with a paypal express payment method", type: :re
   end
 
   context "with a flat percent calculator" do
-    let(:calculator) { Spree::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
+    let(:calculator) { Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
 
     before do
       payment_method.calculator = calculator

@@ -181,8 +181,7 @@ nb:
         title: Annen Feil (%{count} bestillinger)
         explainer: Automatisk behandling av disse bestillingene mislyktes av en ukjent grunn. Dette bør ikke skje, vennligst kontakt oss hvis du ser dette.
   home: "OFN"
-  title: Open Food Network
-  welcome_to: 'Velkommen til '
+  title: "Open Food Network"
   site_meta_description: "Vi begynner fra grunnen. Med bønder og dyrkere klare til å fortelle sine historier, stolt og virkelig. Med distributører klare til å koble mennesker med produkter på en rettferdig og ærlig måte. Med kunder som tror på at ukentlige innkjøpsrutiner kan..."
   search_by_name: Søk på navn eller sted...
   producers_join: Norske produsenter er nå velkommen til å bli med i Open Food Network.
@@ -270,6 +269,7 @@ nb:
   backordered: "Restbestilte"
   on hand: "Tilgjengelig"
   ship: "Levere"
+  shipping_category: "Leveringskategori"
   actions:
     create_and_add_another: "Opprett og legg til en annen"
     create: "Opprett"
@@ -1147,13 +1147,18 @@ nb:
     menu:
       cart:
         cart: "Handlekurv"
+      cart_sidebar:
+        checkout: "Kassen"
+        edit_cart: "Rediger handlevogn"
+        items_in_cart_singular: "%{num} vare i handlekurven"
+        items_in_cart_plural: "%{num} varer i handlekurven"
+        close: "Lukk"
+        cart_empty: "Handlekurven din er tom"
+        take_me_shopping: "Ta meg shopping!"
       signed_in:
         profile: "Profil"
       mobile_menu:
         cart: "Handlekurv"
-      joyride:
-        checkout: "Sjekk ut nå"
-        already_ordered_products: "Allerede bestilt i denne bestillingssyklusen"
     register_call:
       selling_on_ofn: "Interessert i å bli med i Open Food Network?"
       register: "Registrer her"
@@ -1707,8 +1712,7 @@ nb:
   password: Passord
   remember_me: Husk meg
   are_you_sure: "Er du sikker?"
-  orders_open: Åpen for bestilling
-  closing: "Stenger "
+  orders_open: "Åpen for bestilling"
   going_back_to_home_page: "Tar deg tilbake til hjemmesiden"
   creating: Oppretter
   updating: Oppdaterer
@@ -2766,6 +2770,7 @@ nb:
   previous: "Tidligere"
   last: "Siste"
   spree:
+    more: "Mer"
     your_order_is_empty_add_product: "Bestillingen din er tom, vennligst søk etter og legg til et produkt over"
     add_product: "Legg til produkt"
     name_or_sku: "Navn eller SKU (skriv inn minst 4 tegn av produktnavn)"

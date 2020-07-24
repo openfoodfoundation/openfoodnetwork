@@ -21,7 +21,7 @@ describe Admin::InventoryItemsController, type: :controller do
 
         it "redirects to unauthorized" do
           spree_post :create, params
-          expect(response).to redirect_to spree.unauthorized_path
+          expect(response).to redirect_to unauthorized_path
         end
       end
 
@@ -33,7 +33,7 @@ describe Admin::InventoryItemsController, type: :controller do
         context "but the producer has not granted VO permission" do
           it "redirects to unauthorized" do
             spree_post :create, params
-            expect(response).to redirect_to spree.unauthorized_path
+            expect(response).to redirect_to unauthorized_path
           end
         end
 
@@ -84,7 +84,7 @@ describe Admin::InventoryItemsController, type: :controller do
 
         it "redirects to unauthorized" do
           spree_put :update, params
-          expect(response).to redirect_to spree.unauthorized_path
+          expect(response).to redirect_to unauthorized_path
         end
       end
 
@@ -96,7 +96,7 @@ describe Admin::InventoryItemsController, type: :controller do
         context "but the producer has not granted VO permission" do
           it "redirects to unauthorized" do
             spree_put :update, params
-            expect(response).to redirect_to spree.unauthorized_path
+            expect(response).to redirect_to unauthorized_path
           end
         end
 

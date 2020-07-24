@@ -1,6 +1,6 @@
 FactoryBot.define do
   sequence(:calculator_amount)
-  factory :calculator_per_item, class: Spree::Calculator::PerItem do
+  factory :calculator_per_item, class: Calculator::PerItem do
     preferred_amount { generate(:calculator_amount) }
   end
 

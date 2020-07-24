@@ -7,10 +7,11 @@ module PermittedAttributes
     end
 
     def call
-      return @params[:order_cycle] if @params[:order_cycle].empty?
+      return @params[:order_cycle] if @params[:order_cycle].blank?
 
       @params.require(:order_cycle).permit(
         :name, :orders_open_at, :orders_close_at, :coordinator_id,
+        :preferred_product_selection_from_coordinator_inventory_only,
         incoming_exchanges: permitted_exchange_attributes,
         outgoing_exchanges: permitted_exchange_attributes,
         schedule_ids: [], coordinator_fee_ids: []

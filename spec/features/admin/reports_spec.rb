@@ -155,15 +155,6 @@ feature '
     expect(page).to have_content 'Order date'
   end
 
-  scenario "bulk co-op report" do
-    quick_login_as_admin
-    visit spree.admin_reports_path
-    click_link 'Bulk Co-Op'
-    click_button 'Search'
-
-    expect(page).to have_content 'Supplier'
-  end
-
   scenario "payments reports" do
     quick_login_as_admin
     visit spree.admin_reports_path
@@ -179,7 +170,7 @@ feature '
     let(:user1) { create_enterprise_user enterprises: [distributor1] }
     let(:user2) { create_enterprise_user enterprises: [distributor2] }
     let!(:shipping_method) { create(:shipping_method_with, :expensive_name, distributors: [distributor1]) }
-    let(:enterprise_fee) { create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 120.0)) }
+    let(:enterprise_fee) { create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category, calculator: Calculator::FlatRate.new(preferred_amount: 120.0)) }
     let(:order_cycle) { create(:simple_order_cycle, coordinator: distributor1, coordinator_fees: [enterprise_fee], distributors: [distributor1], variants: [product1.master]) }
 
     let!(:zone) { create(:zone_with_member) }
@@ -393,8 +384,8 @@ feature '
     let(:shipping_method) { create(:shipping_method_with, :expensive_name) }
     let(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
 
-    let(:enterprise_fee1) { create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 10)) }
-    let(:enterprise_fee2) { create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 20)) }
+    let(:enterprise_fee1) { create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category, calculator: Calculator::FlatRate.new(preferred_amount: 10)) }
+    let(:enterprise_fee2) { create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category, calculator: Calculator::FlatRate.new(preferred_amount: 20)) }
     let(:order_cycle) { create(:simple_order_cycle, coordinator: distributor1, coordinator_fees: [enterprise_fee1, enterprise_fee2], distributors: [distributor1], variants: [product1.master]) }
 
     let!(:zone) { create(:zone_with_member) }

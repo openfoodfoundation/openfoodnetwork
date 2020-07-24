@@ -10,8 +10,7 @@ describe ContentConfiguration do
     end
 
     def image_exist?(default_url)
-      image_path = default_url.gsub(%r{/assets/}, '/assets/images/')
-      File.exist?(File.join(Rails.root, 'app', image_path))
+      File.exist?(File.join(Rails.root, 'public', default_url))
     end
   end
 end

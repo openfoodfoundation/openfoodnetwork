@@ -1,5 +1,5 @@
-require 'spree/core/controller_helpers/order_decorator'
-require 'spree/core/controller_helpers/auth_decorator'
+require 'spree/core/controller_helpers/order'
+require 'spree/core/controller_helpers/auth'
 
 module Spree
   class OrdersController < Spree::StoreController
@@ -166,7 +166,7 @@ module Spree
     # recalculates the shipment taxes
     def update_totals_and_taxes
       @order.updater.update_totals
-      @order.shipment&.ensure_correct_adjustment_with_included_tax
+      @order.shipment&.ensure_correct_adjustment
     end
 
     # Sets the adjustments to open to perform the block's action and restores
@@ -194,7 +194,7 @@ module Spree
       return if session[:access_token] || params[:token] || spree_current_user
 
       flash[:error] = I18n.t("spree.orders.edit.login_to_view_order")
-      require_login_then_redirect_to request.env['PATH_INFO']
+      redirect_to main_app.root_path(anchor: "login?after_login=#{request.env['PATH_INFO']}")
     end
 
     def order_to_update

@@ -181,8 +181,8 @@ pt_BR:
         title: Outras Falhas(%{count} pedidos)
         explainer: O processamento automático desses pedidos falhou por um motivo desconhecido. Isso não deve ocorrer, entre em contato conosco se você está vendo isso.
   home: "OFB"
-  title: Open Food Brasil
-  welcome_to: 'Bem-vindo a'
+  title: "Open Food Brasil"
+  welcome_to: "Bem vindo a"
   site_meta_description: "A nossa proposta é conectar agricultoras/es, produtoras/es e consumidoras/es que estão próximos entre si. Buscamos, assim, potencializar a circulação e a comercialização de produtos agroecológicos, orgânicos e artesanais em circuitos curtos, bem como criar novas formas de relação, orientadas pela troca, diálogo e confiança."
   search_by_name: Procurar por nome ou localidade
   producers_join: Produtores nacionais estão convidados a se unirem à Open Food Brasil.
@@ -270,6 +270,7 @@ pt_BR:
   backordered: "Pedidos em atraso"
   on hand: "Disponível"
   ship: "Envio"
+  shipping_category: "Tipos de Frete"
   actions:
     create_and_add_another: "Criar e adicionar outro"
     create: "Criar"
@@ -370,7 +371,10 @@ pt_BR:
         title: "Configurações do Matomo"
         matomo_url: "Matomo URL"
         matomo_site_id: "Matomo Site ID"
+        matomo_tag_manager_url: "URL do Gestor de Tag Matomo"
+        info_html: "Matomo é uma aplicação de  Mobile e Web Analytics . Você pode hospedar o Matomo localmente ou usar um serviço de hospedagem na nuvem. Veja <a href='http://matomo.org' target='_blank'>matomo.org</a> para mais informações."
         config_instructions_html: "Aqui você pode configurar a integração do OFN Matomo. O URL do Matomo abaixo deve apontar para a instância do Matomo para onde as informações de rastreamento do usuário serão enviadas; se for deixado em branco, o rastreamento de usuários do Matomo será desativado. O campo ID do site não é obrigatório, mas é útil se você estiver controlando mais de um site em uma única instância do Matomo. ele pode ser encontrado no console da instância Matomo."
+        config_instructions_tag_manager_html: "Ao configurar a URL para o Matomo Tag Manager, você habilita o Matomo Tag Manager. Esta ferramenta permite que você configure eventos de 'analytics'.  A URL do Matomo Tag Manager é copiada do Matomo Tag Manager. Certifique-se de que você seleciou o 'container' e o 'environment' corretos, já que estas opções mudam o URL.  "
     customers:
       index:
         new_customer: "Novo cliente"
@@ -476,6 +480,7 @@ pt_BR:
         line_number: "Linha %{number}:"
         encoding_error: "Verifique a configuração de idioma do seu arquivo de origem e verifique se ele foi salvo com a codificação UTF-8"
         unexpected_error: "A Importação do produto encontrou um erro inesperado ao abrir o arquivo: %{error_message}"
+        malformed_csv: "A importação de produto encontrou um CSV com erro: %{error_message}"
       index:
         notice: "Aviso "
         beta_notice: "Esse recurso ainda está na versão beta: você pode encontrar alguns erros ao usá-lo. Por favor, não hesite em entrar em contato com o suporte."
@@ -1141,13 +1146,18 @@ pt_BR:
     menu:
       cart:
         cart: "Carrinho"
+      cart_sidebar:
+        checkout: "Fechar pedido"
+        edit_cart: "Editar carrinho"
+        items_in_cart_singular: "%{num}intem no seu carrinho"
+        items_in_cart_plural: "%{num}itens no seu carrinho"
+        close: "Fechado"
+        cart_empty: "Seu carrinho está vazio"
+        take_me_shopping: "Quero comprar"
       signed_in:
         profile: "Perfil"
       mobile_menu:
         cart: "Carrinho"
-      joyride:
-        checkout: "Fechar pedido agora"
-        already_ordered_products: "Já pediu neste ciclo de pedidos"
     register_call:
       selling_on_ofn: "Interessado em registrar a sua iniciativa na Open Food Brasil?"
       register: "Registre-se aqui"
@@ -1372,10 +1382,10 @@ pt_BR:
   cta_headline: "Compras que fazem do mundo um lugar melhor."
   cta_label: "Estou pronto"
   stats_headline: "Estamos trabalhando para relocalizar os sistemas agroalimentares"
-  stats_producers: "produtores de alimentos"
-  stats_shops: "lojas de alimentos"
-  stats_shoppers: "consumidores de alimentos"
-  stats_orders: "pedidos de alimentos"
+  stats_producers: "produtores"
+  stats_shops: "lojas"
+  stats_shoppers: "consumidores"
+  stats_orders: "pedidos"
   checkout_title: Fechar pedido
   checkout_now: Fechar pedido agora
   checkout_order_ready: Pedido pronto para
@@ -1612,7 +1622,7 @@ pt_BR:
   producers_title: Produtores
   producers_headline: Encontre produtores locais
   producers_signup_title: Inscreva-se como produtor
-  producers_signup_headline: Produtores de alimentos, empoderados.
+  producers_signup_headline: Visibilidade para o pequeno produtor.
   producers_signup_motivation: Comercialize seus produtos e conte sua história para um mercado novo e diferenciado. Economize tempo e dinheiro em todas as despesas gerais. Nós apoiamos inovação sem risco. Nós nivelamos o campo de jogo.
   producers_signup_send: Junte-se agora
   producers_signup_enterprise: Contas de iniciativas
@@ -1701,7 +1711,7 @@ pt_BR:
   password: Senha
   remember_me: Lembre-me
   are_you_sure: "Tem certeza?"
-  orders_open: Pedidos abertos
+  orders_open: "Pedidos abertos"
   closing: "Fechando"
   going_back_to_home_page: "Voltando à pagina inicial"
   creating: Criando
@@ -2060,6 +2070,7 @@ pt_BR:
   hub_sidebar_at_least: "Pelo menos uma central deve ser selecionado"
   hub_sidebar_blue: "azul"
   hub_sidebar_red: "vermelho"
+  order_cycles_closed_for_hub: "A Central selecionada está temporariamente fechada para pedidos. Por favor tente mais tarde. "
   report_customers_distributor: "Distribuidor"
   report_customers_supplier: "Fornecedor"
   report_customers_cycle: "Ciclo de pedidos"
@@ -2296,6 +2307,7 @@ pt_BR:
   order_cycles_email_to_producers_notice: 'E-mails a serem enviados aos produtores foram encaminhados para envio.'
   order_cycles_no_permission_to_coordinate_error: "Nenhuma das suas iniciativas tem permissão para coordenar um ciclo de pedidos"
   order_cycles_no_permission_to_create_error: "Você não tem permissão para criar um ciclo de pedidos coordenado por esta iniciativa"
+  order_cycle_closed: "O ciclo de pedidos selecionado acabou de fechar, por favor tente novamente depois!"
   back_to_orders_list: "Voltar à lista de pedidos"
   no_orders_found: "Nenhum pedido encontrado"
   order_information: "Informações sobre pedidos"
@@ -2766,6 +2778,7 @@ pt_BR:
   previous: "Anterior"
   last: "Último"
   spree:
+    more: "Mais"
     your_order_is_empty_add_product: "Seu pedido está vazio, pesquise e adicione um produto acima"
     add_product: "Adicionar produto"
     name_or_sku: "Nome ou SKU (digite pelo menos os 4 primeiros caracteres do nome do produto)"
@@ -2811,9 +2824,15 @@ pt_BR:
     fill_in_customer_info: "Por favor, preencha as informações do cliente"
     new_payment: "Novo Pagamento"
     capture: "Capturar"
-    void: "Vazio"
+    void: "Apagar"
     login: "Login"
     password: "Senha"
+    signature: "Assinatura"
+    solution: "Solução"
+    landing_page: "Página Inicial"
+    server: "Servidor"
+    test_mode: "Modo Teste"
+    logourl: "url da logo"
     configurations: "Configurações"
     general_settings: "Configurações Gerais"
     site_name: "Nome do site"
@@ -2930,6 +2949,12 @@ pt_BR:
     options: "Opções"
     actions:
       update: "Atualizar"
+    shared:
+      error_messages:
+        errors_prohibited_this_record_from_being_saved:
+          one: "1 erro não permitiu que este registro fosse salvo:"
+          other: "%{count}erros não permitiram que esse registro fosse salvo:"
+        there_were_problems_with_the_following_fields: "Houve problemas com os seguintes campos"
     errors:
       messages:
         blank: "Não pode ser vazio"
@@ -3087,19 +3112,23 @@ pt_BR:
           zones: "Zonas"
           both: "Tanto Checkout quanto Área Administrativa"
           back_end: "Somente Área Administrativa"
-          deactivation_warning: "Desativar um método de envio pode fazer com que ele desapareça da sua lista. Como alternativa, você pode esconder um método de envio da página de checkout s"
+          deactivation_warning: "Desativar um método de envio pode fazer com que ele desapareça da sua lista. Como alternativa, você pode esconder um método de envio da página de checkout trocando a opção 'Exibição' para 'Somente área administrativa'."
       payment_methods:
         index:
           payment_methods: "Métodos de pagamento"
           new_payment_method: "Novo método de pagamento"
           name: "Nome"
           products_distributor: "Distribuidor"
+          provider: "Provedor"
           environment: "Ambiente"
           display: "Exibição"
+          active: "Ativo"
           both: "Ambos"
+          front_end: "Apenas checkout"
           back_end: "Somente Área Administrativa"
           active_yes: "Sim"
           active_no: "Não"
+          no_payment_methods_found: "Não foi encontrado nenhum método de pagamento"
         new:
           new_payment_method: "Novo método de pagamento"
           back_to_payment_methods_list: "Voltar à lista de formas de pagamento"
@@ -3125,11 +3154,16 @@ pt_BR:
           description: "Descrição"
           environment: "Ambiente"
           display: "Exibição"
+          active: "Ativo"
           active_yes: "Sim"
           active_no: "Não"
           both: "Tanto Checkout quanto Área Administrativa"
+          front_end: "Apenas Checkout"
           back_end: "Somente Área Administrativa"
           tags: "Tags"
+          deactivation_warning: "Desativar o método de pagamento pode fazer com que ele desapareça da sua lista. Como alternativa, você pode escondê-lo da página de checkout, trocando "
+        providers:
+          provider: "Provedor"
       payments:
         source_forms:
           stripe:
@@ -3298,6 +3332,14 @@ pt_BR:
       invalid: inváliod
     order_mailer:
       cancel_email:
+        customer_greeting: "Querid@ %{name},"
+        instructions_html: "Seu pedido com <strong>%{distributor}</strong> foi CANCELADO. Por favor guarde este aviso de cancelamento para seu registro."
+        dont_cancel: "Se você mudou de ideia ou não quer mais cancelar este pedido, por favor entre em contato com %{email}"
+        order_summary_canceled_html: "<strong>Resumo do Pedido #%{number} [CANCELADO]</strong>"
+        details: "Aqui estão os detalhes do seu pedido:"
+        unpaid_order: "O pagamento do pedido foi cancelado, portanto não houve devolução "
+        paid_order: "Seu pedido foi pago, então %{distributor}devolveu o valor total"
+        credit_order: "Seu pedido foi pago, então você ganhou créditos na sua conta"
         subject: "Cancelamento do Pedido"
       confirm_email:
         subject: "Confimação de Pedido"

@@ -11,7 +11,9 @@ class EnterpriseFee < ActiveRecord::Base
   has_many :exchanges, through: :exchange_fees
 
   FEE_TYPES = %w(packing transport admin sales fundraising).freeze
-  PER_ORDER_CALCULATORS = ['Spree::Calculator::FlatRate', 'Spree::Calculator::FlexiRate', 'Spree::Calculator::PriceSack'].freeze
+  PER_ORDER_CALCULATORS = ['Calculator::FlatRate',
+                           'Calculator::FlexiRate',
+                           'Calculator::PriceSack'].freeze
 
   validates :fee_type, inclusion: { in: FEE_TYPES }
   validates :name, presence: true

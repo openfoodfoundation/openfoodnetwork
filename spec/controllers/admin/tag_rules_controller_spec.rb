@@ -19,7 +19,7 @@ describe Admin::TagRulesController, type: :controller do
 
         it "redirects to unauthorized" do
           spree_delete :destroy, params
-          expect(response).to redirect_to spree.unauthorized_path
+          expect(response).to redirect_to unauthorized_path
         end
       end
 

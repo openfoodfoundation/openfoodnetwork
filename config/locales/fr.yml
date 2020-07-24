@@ -181,8 +181,8 @@ fr:
         title: Autre échec (%{count} commandes)
         explainer: Le traitement automatique de ces commandes a échoué pour une raison inconnue. Cela n'aurait pas dû arriver, veuillez nous contacter si vous constatez quelque chose d'anormal.
   home: "OFF"
-  title: Open Food France
-  welcome_to: 'Bienvenue sur '
+  title: "Open Food France"
+  welcome_to: "Bienvenue sur"
   site_meta_description: "Tout commence dans le sol. Avec ces paysans, agriculteurs, producteurs, engagés pour une agriculture durable et régénératrice, et désireux de partager leur histoire et leur passion avec fierté. Avec ces distributeurs souhaitant reconnecter les individus à leurs aliments et aux gens qui les produisent, soutenir les prises de conscience, dans une démarche de transparence, d'honnêteté, en assurant une juste rémunération des producteurs.  Avec ces acheteurs qui croient que de meilleures décisions d'achats peuvent ..."
   search_by_name: Recherche par nom ou département...
   producers_join: Les producteurs et autres hubs basés en France sont invités à rejoindre Open Food France.
@@ -270,6 +270,7 @@ fr:
   backordered: "(à volonté)"
   on hand: "En stock"
   ship: "Expédier"
+  shipping_category: "Condition de transport"
   actions:
     create_and_add_another: "Créer et ajouter nouveau"
     create: "Créer"
@@ -1188,8 +1189,8 @@ fr:
         signup: "inscrivez-vous"
         contact: "contacter"
         require_customer_login: "Seul les acheteurs autorisés peuvent accéder à cette boutique."
-        require_login_html: "Si vous êtes déjà autorisé à accéder à la boutique, %{login}ou %{signup}pour continuer."
-        require_login_2_html: "Vous souhaitez réaliser vos courses ici? Merci de %{contact}%{enterprise} afin d'avoir l'autorisation d'accès à la boutique."
+        require_login_html: "Si vous êtes déjà autorisé à accéder à la boutique, %{login} ou %{signup} pour continuer."
+        require_login_2_html: "Vous souhaitez réaliser vos courses ici ? Merci de %{contact} %{enterprise} afin d'avoir l'autorisation d'accès à la boutique."
         require_customer_html: "Si vous voulez demander à y accéder, veuillez %{contact} %{enterprise}."
       select_oc:
         select_oc_html: "Merci de <span class='highlighted'>sélectionner une option dans la liste déroulante</span>, afin de voir quel produits sont disponibles."
@@ -1652,7 +1653,7 @@ fr:
   sell_hubs_detail: "Créer un profil pour votre entreprise de distribution ou organisation sur OFFrance. A tout moment vous pourrez créer une boutique multi-fournisseurs."
   sell_groups_detail: "Créer un répertoire sur mesure (regroupant différents producteurs et hubs de distribution) pour votre région ou votre organisation."
   sell_user_guide: "En savoir plus en explorant le guide utilisateur."
-  sell_listing_price: "L'inscription sur OFFrance est gratuite. Ouvrir et gérer une boutique sur OFFrance ou créer un groupe sur OFFrance pour votre organisation ou réseau régional, n'est pas gratuit, mais le prix est libre: soit 2% du chiffre d'affaire (ou autre forme de contribution libre designée par votre hub), soit une contribution \"en compétences\" à Open Food France (développement de fonctionnalités, recherche de financement, support utilisateur, etc.), soit un mix des deux."
+  sell_listing_price: "L'inscription sur OFFrance est gratuite. Ouvrir et gérer une boutique sur OFFrance ou créer un groupe sur OFFrance pour votre organisation ou réseau régional, n'est pas gratuit. Il existe deux formules : soit la formule \"petit débrouillard\"  où vous pouvez opter pour un montant libre à nous reverser (mais vous ne pouvez pas disposer de support personnalisé), soit vous nous reversez 1% du volume de vente réalisé sur la plateforme pour bénéfier de notre accompagnement. Ce pourcentage peut être dégressif à partir d'un certain montant. Veuillez nous contacter pour en savoir plus !"
   sell_embed: "Nous pouvons aussi intégrer votre boutique OFFrance dans votre propre site web ou construire un site web d'alimentation locale sur mesure pour votre région."
   sell_ask_services: "Nous consulter sur les services des partenaires OFFrance."
   shops_title: Boutiques
@@ -1714,8 +1715,8 @@ fr:
   password: Mot de passe
   remember_me: Se souvenir de moi
   are_you_sure: "Confirmer?"
-  orders_open: Boutique ouverte
-  closing: "Fermeture "
+  orders_open: "Boutique ouverte"
+  closing: "Fermeture"
   going_back_to_home_page: "Retour à la page d'accueil"
   creating: Création
   updating: Mettre à jour
@@ -2073,6 +2074,7 @@ fr:
   hub_sidebar_at_least: "Sélectionnez un/des hubs"
   hub_sidebar_blue: "bleu"
   hub_sidebar_red: "rouge"
+  order_cycles_closed_for_hub: "La boutique sélectionnée a fermé temporairement ses commandes. Veuillez essayez à nouveau ultérieurement."
   report_customers_distributor: "Distributeur"
   report_customers_supplier: "Fournisseur"
   report_customers_cycle: "Cycle de vente"
@@ -2311,6 +2313,7 @@ fr:
   order_cycles_email_to_producers_notice: 'Les emails à destination des producteurs ont été mis en file d''attente.'
   order_cycles_no_permission_to_coordinate_error: "Aucune de vos entreprises n'a les droits requis pour coordonner un cycle de vente"
   order_cycles_no_permission_to_create_error: "Vous n'avez pas les droits requis pour créer un cycle de vente coordonné par cette entreprise"
+  order_cycle_closed: "Le cycle de vente que vous avez sélectionné a fermé. "
   back_to_orders_list: "Retour à la liste des commandes"
   no_orders_found: "Aucune commande trouvée pour ces critères"
   order_information: "Info commande"
@@ -2802,6 +2805,7 @@ fr:
   previous: "Précédent"
   last: "Fin"
   spree:
+    more: "Plus"
     your_order_is_empty_add_product: "Votre commande est vide, veuillez ajouter des produits"
     add_product: "Ajouter un produit"
     name_or_sku: "Nom ou Ref Produit (entrer au moins les 4 premiers caractères du nom du produit)"
@@ -3135,7 +3139,7 @@ fr:
           zones: "Zones"
           both: "Vu par l'acheteur sur la boutique"
           back_end: "Visible pour l'administration uniquement"
-          deactivation_warning: "Désactiver une méthode de livraison peut engendre sa disparition de la liste ici. Si vous souhaitez uniquement ne plus l'afficher pour l'acheteur, modifiez-là et utilisez l'option d'affichage \"visible pour l'administrateur uniquement\"."
+          deactivation_warning: "Désactiver une méthode de livraison peut engendrer sa disparition de la liste ici. Si vous souhaitez uniquement ne plus l'afficher pour l'acheteur, modifiez-là et utilisez l'option d'affichage \"visible pour l'administrateur uniquement\"."
       payment_methods:
         index:
           payment_methods: "Méthodes de paiement"

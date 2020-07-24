@@ -181,8 +181,7 @@ es:
         title: Otros fallos (%{count} pedidos)
         explainer: El procesamiento automático de estas órdenes falló por un motivo desconocido. Esto no debería ocurrir, contáctanos si estás viendo esto.
   home: "OFN"
-  title: Open Food Network
-  welcome_to: 'Bienvenido a '
+  title: "Open Food Network"
   site_meta_description: "Nosotros empezamos desde abajo. Con granjeros y productoras listas para contar sus historias con orgullo y autenticidad. Con distribuidoras listas para conectar gente con productos de forma justa y honesta. Con compradores que creen que mejores decisiones de compras semanales pueden..."
   search_by_name: Buscar por nombre o municipio...
   producers_join: Las productoras australianas ahora son bienvenidas a unirse a Open Food Network.
@@ -270,6 +269,7 @@ es:
   backordered: "Reabastecido"
   on hand: "Disponibles"
   ship: "Envío"
+  shipping_category: "Categoría de envío"
   actions:
     create_and_add_another: "Crear y agregar otro"
     create: "Crear"
@@ -1149,13 +1149,13 @@ es:
     menu:
       cart:
         cart: "Carrito"
+      cart_sidebar:
+        checkout: "Validar"
+        close: "Cerrar"
       signed_in:
         profile: "Perfil"
       mobile_menu:
         cart: "Carrito"
-      joyride:
-        checkout: "Validar el carrito ahora"
-        already_ordered_products: "Pedido en este ciclo de pedido"
     register_call:
       selling_on_ofn: "¿Estás interesada en entrar en Open Food Network?"
       register: "Regístrate aquí"
@@ -1709,8 +1709,7 @@ es:
   password: Contraseña
   remember_me: Recordarme
   are_you_sure: "¿Está seguro?"
-  orders_open: Pedidos abiertos
-  closing: "Cerrando "
+  orders_open: "Pedidos abiertos"
   going_back_to_home_page: "Le estamos llevando de vuelta a la página de inicio"
   creating: Creando
   updating: Actualizando
@@ -2773,6 +2772,7 @@ es:
   previous: "Anterior"
   last: "Último"
   spree:
+    more: "Más"
     your_order_is_empty_add_product: "Su pedido está vacío, busque y añada un producto arriba"
     add_product: "Añadir Producto"
     name_or_sku: "Nombre o código SKU (ingrese al menos los primeros 4 caracteres del nombre del producto)"

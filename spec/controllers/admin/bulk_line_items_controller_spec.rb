@@ -21,7 +21,7 @@ describe Admin::BulkLineItemsController, type: :controller do
 
       it "should deny me access to the index action" do
         spree_get :index, format: :json
-        expect(response).to redirect_to spree.unauthorized_path
+        expect(response).to redirect_to unauthorized_path
       end
     end
 
@@ -94,7 +94,7 @@ describe Admin::BulkLineItemsController, type: :controller do
         end
 
         it "does not display line items for which my enterprise is a supplier" do
-          expect(response).to redirect_to spree.unauthorized_path
+          expect(response).to redirect_to unauthorized_path
         end
       end
 
@@ -172,7 +172,7 @@ describe Admin::BulkLineItemsController, type: :controller do
         end
 
         it "does not allow access" do
-          expect(response).to redirect_to spree.unauthorized_path
+          expect(response).to redirect_to unauthorized_path
         end
       end
 

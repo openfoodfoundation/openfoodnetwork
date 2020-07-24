@@ -49,41 +49,36 @@ module Openfoodnetwork
     # Register Spree calculators
     initializer 'spree.register.calculators' do |app|
       app.config.spree.calculators.shipping_methods = [
-        Spree::Calculator::FlatPercentItemTotal,
-        Spree::Calculator::FlatRate,
-        Spree::Calculator::FlexiRate,
-        Spree::Calculator::PerItem,
-        Spree::Calculator::PriceSack,
+        Calculator::FlatPercentItemTotal,
+        Calculator::FlatRate,
+        Calculator::FlexiRate,
+        Calculator::PerItem,
+        Calculator::PriceSack,
         Calculator::Weight
       ]
 
       app.config.spree.calculators.add_class('enterprise_fees')
       config.spree.calculators.enterprise_fees = [
         Calculator::FlatPercentPerItem,
-        Spree::Calculator::FlatRate,
-        Spree::Calculator::FlexiRate,
-        Spree::Calculator::PerItem,
-        Spree::Calculator::PriceSack,
+        Calculator::FlatRate,
+        Calculator::FlexiRate,
+        Calculator::PerItem,
+        Calculator::PriceSack,
         Calculator::Weight
       ]
+
       app.config.spree.calculators.add_class('payment_methods')
       config.spree.calculators.payment_methods = [
-        Spree::Calculator::FlatPercentItemTotal,
-        Spree::Calculator::FlatRate,
-        Spree::Calculator::FlexiRate,
-        Spree::Calculator::PerItem,
-        Spree::Calculator::PriceSack
+        Calculator::FlatPercentItemTotal,
+        Calculator::FlatRate,
+        Calculator::FlexiRate,
+        Calculator::PerItem,
+        Calculator::PriceSack
       ]
-    end
 
-    # Every splitter (except Base splitter) will split the order in multiple packages
-    #   Each package will generate a separate shipment in the order
-    #   Base splitter does not split the packages
-    #   So, because in OFN we have locked orders to have only one shipment,
-    #     we must use this splitter and no other
-    initializer "spree.register.stock_splitters" do |app|
-      app.config.spree.stock_splitters = [
-        Spree::Stock::Splitter::Base
+      app.config.spree.calculators.add_class('tax_rates')
+      config.spree.calculators.tax_rates = [
+        Calculator::DefaultTax
       ]
     end
 

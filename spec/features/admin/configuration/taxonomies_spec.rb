@@ -14,8 +14,10 @@ describe "Taxonomies" do
       create(:taxonomy, name: 'Brand')
       create(:taxonomy, name: 'Categories')
       click_link "Taxonomies"
-      within_row(1) { expect(page).to have_content("Brand") }
-      within_row(2) { expect(page).to have_content("Categories") }
+      within("table.index tbody") do
+        expect(page).to have_content("Brand")
+        expect(page).to have_content("Categories")
+      end
     end
   end
 

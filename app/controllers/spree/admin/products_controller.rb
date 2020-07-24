@@ -171,7 +171,7 @@ module Spree
       end
 
       def permitted_resource_params
-        return params[:product] if params[:product].empty?
+        return params[:product] if params[:product].blank?
 
         params.require(:product).permit(::PermittedAttributes::Product.attributes)
       end

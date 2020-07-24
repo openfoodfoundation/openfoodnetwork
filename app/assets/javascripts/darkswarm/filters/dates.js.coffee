@@ -12,4 +12,4 @@ Darkswarm.filter "sensible_timeframe", (date_in_wordsFilter)->
     if moment().add(2, 'days') < moment(date, dateFormat)
       t 'orders_open'
     else
-      t('closing') + date_in_wordsFilter(date)
+      t('closing') + ' ' + date_in_wordsFilter(date)

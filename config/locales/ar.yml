@@ -177,8 +177,7 @@ ar:
         title: فشل آخر (%{count} أوامر)
         explainer: فشلت المعالجة التلقائية لهذه الطلبات لسبب غير معروف. لا ينبغي أن يحدث هذا ، يرجى الاتصال بنا إذا كنت ترى هذا.
   home: "OFN"
-  title: شبكة الغذاء المفتوح
-  welcome_to: 'مرحبا بك في'
+  title: "شبكة الغذاء المفتوح"
   site_meta_description: "نبدأ من الألف إلى الياء. مع المزارعين والمزارعين على استعداد لرواية قصصهم بفخر وحق. مع الموزعين على استعداد لتوصيل الأشخاص بالمنتجات بطريقة عادلة وبصدق. مع المشترين الذين يعتقدون أن أفضل قرارات التسوق الأسبوعية يمكن ..."
   search_by_name: البحث بالاسم أو الضاحية ...
   producers_join: المنتجون الأستراليون مدعوون الآن للانضمام إلى شبكة الغذاء المفتوح.
@@ -266,6 +265,7 @@ ar:
   backordered: "طلبات متأخرة"
   on hand: "متوفر"
   ship: "الشحن"
+  shipping_category: "نوع الشحن"
   actions:
     create_and_add_another: "إنشاء وإضافة آخر"
     create: "انشاء"
@@ -1134,13 +1134,13 @@ ar:
     menu:
       cart:
         cart: "سلة"
+      cart_sidebar:
+        checkout: "تابع للخروج"
+        close: "إغلاق"
       signed_in:
         profile: "الملف الشخصي"
       mobile_menu:
         cart: "سلة"
-      joyride:
-        checkout: "الخروج الآن"
-        already_ordered_products: "تم الطلب بالفعل في دورة الطلب هذه"
     register_call:
       selling_on_ofn: "هل أنت مهتم بالحصول على شبكة الغذاء المفتوح؟"
       register: "سجل هنا"
@@ -1691,8 +1691,7 @@ ar:
   password: كلمه السر
   remember_me: تذكرنى
   are_you_sure: "هل أنت واثق؟"
-  orders_open: الطلب مفتوح
-  closing: "إغلاق"
+  orders_open: "الطلب مفتوح"
   going_back_to_home_page: "الرجوع إلى الصفحة الرئيسية"
   creating: انشاء
   updating: تحديث
@@ -2709,6 +2708,7 @@ ar:
   previous: "السابق"
   last: "الاخير"
   spree:
+    more: "أكثر"
     your_order_is_empty_add_product: "طلبك فارغ ، يرجى البحث عن المنتج أعلاه وإضافته"
     add_product: "أضف منتج"
     name_or_sku: "الاسم أو SKU (أدخل أول 4 أحرف على الأقل من اسم المنتج)"

@@ -7,7 +7,7 @@ module PermittedAttributes
     end
 
     def call
-      return @params[:enterprise] if @params[:enterprise].empty?
+      return @params[:enterprise] if @params[:enterprise].blank?
 
       @params.require(:enterprise).permit(
         basic_permitted_attributes + [

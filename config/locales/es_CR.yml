@@ -181,8 +181,7 @@ es_CR:
         title: Otros fallos (%{count} pedidos)
         explainer: El procesamiento automático de estas órdenes falló por un motivo desconocido. Esto no debería ocurrir, contáctanos si estás viendo esto.
   home: "OFN"
-  title: Open Food Network
-  welcome_to: 'Bienvenido a '
+  title: "Open Food Network"
   site_meta_description: "Nosotros empezamos desde abajo. Con granjeros y productores listos para contar sus historias con orgullo y autenticidad. Con distribuidores listos para conectar gente con productos de forma justa y honesta. Con compradores que creen que mejores decisiones de compras semanales pueden..."
   search_by_name: Buscar por nombre o cantón...
   producers_join: Los productores costarricenses son bienvenidos a unirse ahora a Open Food Network (LaFeriaCR).
@@ -270,6 +269,7 @@ es_CR:
   backordered: "Pedido pendiente"
   on hand: "Disponibles"
   ship: "Envío"
+  shipping_category: "Categoría de envío"
   actions:
     create_and_add_another: "Crear y agregar otro"
     create: "Crear"
@@ -1143,15 +1143,15 @@ es_CR:
     menu:
       cart:
         cart: "Carrito"
+      cart_sidebar:
+        checkout: "Validar el carrito"
+        close: "Cerrar"
       signed_in:
         profile: "Perfil"
       mobile_menu:
         cart: "Carrito"
-      joyride:
-        checkout: "Validar el carrito ahora"
-        already_ordered_products: "Pedido en este ciclo de pedido"
     register_call:
-      selling_on_ofn: "¿Quiere ser parte de Open Food Network (LaFeriaCR)?"
+      selling_on_ofn: "¿Tiene interés en vender a través de Open Food Network (LaFeriaCR)?"
       register: "Regístrarse aquí"
     footer:
       footer_secure: "Seguro y de confianza."
@@ -1692,8 +1692,7 @@ es_CR:
   password: Contraseña
   remember_me: Recordarme
   are_you_sure: "¿Está seguro?"
-  orders_open: Pedidos abiertos
-  closing: "Cerrando "
+  orders_open: "Pedidos abiertos"
   going_back_to_home_page: "Le estamos llevando de vuelta a la página de inicio"
   creating: Creando
   updating: Actualizando
@@ -2752,6 +2751,7 @@ es_CR:
   previous: "Anterior"
   last: "Último"
   spree:
+    more: "Más"
     your_order_is_empty_add_product: "Su pedido está vacío, busque y añada un producto arriba"
     add_product: "Añadir Producto"
     name_or_sku: "Nombre o código SKU (ingrese al menos los primeros 4 caracteres del nombre del producto)"

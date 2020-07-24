@@ -181,8 +181,7 @@ fr_BE:
         title: Autre échec (%{count} commandes)
         explainer: Le traitement automatique de ces commandes a échoué pour une raison inconnue. Cela n'aurait pas dû arriver, veuillez nous contacter si vous constatez quelque chose d'anormal.
   home: "OFN"
-  title: Open Food Network
-  welcome_to: 'Bienvenue sur '
+  title: "Open Food Network"
   site_meta_description: "C’est ce que nous faisons en créant une plateforme qui veut mettre en contact :\n● des paysans passionnés, engagés pour une agriculture durable et régénératrice,\n● des distributeurs de produits locaux, adeptes de circuits courts, qui agissent en toute transparence et assurent une juste rémunération des producteurs,\n● des acheteurs qui veulent changer le monde en mangeant mieux,"
   search_by_name: Recherche par nom ou province...
   producers_join: Les producteurs et autres magasins basés en Belgique sont invités à rejoindre Open Food Network.
@@ -270,6 +269,7 @@ fr_BE:
   backordered: "En rupture de stock"
   on hand: "En stock"
   ship: "Expédier"
+  shipping_category: "Catégorie de livraison"
   actions:
     create_and_add_another: "Créer et ajouter un nouveau"
     create: "Créer"
@@ -1142,13 +1142,13 @@ fr_BE:
     menu:
       cart:
         cart: "Panier"
+      cart_sidebar:
+        checkout: "Etape suivante (coordonnées)"
+        close: "Ferme"
       signed_in:
         profile: "Profil"
       mobile_menu:
         cart: "Panier"
-      joyride:
-        checkout: "Passer la commande"
-        already_ordered_products: "Déjà commandé dans ce cycle de vente"
     register_call:
       selling_on_ofn: "Intéressé·e à vendre sur Open Food Network?"
       register: "Démarrez ici"
@@ -1696,8 +1696,7 @@ fr_BE:
   password: Mot de passe
   remember_me: Se souvenir de moi
   are_you_sure: "Confirmer?"
-  orders_open: Comptoir ouvert
-  closing: "Fermeture "
+  orders_open: "Comptoir ouvert"
   going_back_to_home_page: "Retour à la page d'accueil"
   creating: Création
   updating: Mettre à jour
@@ -2695,6 +2694,7 @@ fr_BE:
   previous: "Précédent"
   last: "Fin"
   spree:
+    more: "Plus"
     your_order_is_empty_add_product: "Votre commande est vide, merci de chercher et d'ajouter un des produits ci-dessus"
     add_product: "Ajoutez un produit"
     name_or_sku: "Nom ou N° d'article (entrer au moins 4 lettres du nom du produit) "

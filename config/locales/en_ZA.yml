@@ -181,8 +181,7 @@ en_ZA:
         title: Other Failure (%{count} orders)
         explainer: Automatic processing of these orders failed for an unknown reason. This should not occur, please contact us if you are seeing this.
   home: "OFN"
-  title: Open Food Network
-  welcome_to: 'Welcome to '
+  title: "Open Food Network"
   site_meta_description: "We begin with healthy soil. With organic farmers and growers proudly rising to tell their stories. With distributors ready to connect people with green, nutritious, fair and affordable products. With buyers who believe that better, more local shopping decisions can seriously change the world."
   search_by_name: Search by name, town, province or postcode...
   producers_join: South African producers are now welcome to join Open Food Network SA.
@@ -270,6 +269,7 @@ en_ZA:
   backordered: "Backordered"
   on hand: "In Stock"
   ship: "Ship"
+  shipping_category: "Shipping Category"
   actions:
     create_and_add_another: "Create and Add Another"
     create: "Create"
@@ -1142,13 +1142,13 @@ en_ZA:
     menu:
       cart:
         cart: "Basket"
+      cart_sidebar:
+        checkout: "Checkout"
+        close: "Close"
       signed_in:
         profile: "Profile"
       mobile_menu:
         cart: "Basket"
-      joyride:
-        checkout: "Checkout now"
-        already_ordered_products: "Already ordered in this order cycle"
     register_call:
       selling_on_ofn: "Interested in selling through the Open Food Network?"
       register: "Register here"
@@ -1217,11 +1217,11 @@ en_ZA:
   menu_4_title: "Groups"
   menu_4_url: "/groups"
   menu_5_title: "About"
-  menu_5_url: "https://www.openfoodnetwork.co.za"
+  menu_5_url: "https://www.openfoodnetwork.co.za/"
   menu_6_title: "Blog"
-  menu_6_url: "https://www.openfoodnetwork.co.za/blog"
+  menu_6_url: "https://www.openfoodnetwork.co.za/blog/"
   menu_7_title: "Support"
-  menu_7_url: "https://www.openfoodnetwork.co.za/support"
+  menu_7_url: "https://www.openfoodnetwork.co.za/support/"
   logo: "Logo (640x130)"
   logo_mobile: "Mobile logo (75x26)"
   logo_mobile_svg: "Mobile logo (SVG)"
@@ -1702,8 +1702,7 @@ en_ZA:
   password: Password
   remember_me: Remember Me
   are_you_sure: "Are you sure?"
-  orders_open: Orders open
-  closing: "Closing "
+  orders_open: "Orders open"
   going_back_to_home_page: "Taking you back to the home page"
   creating: Creating
   updating: Updating
@@ -2690,6 +2689,7 @@ en_ZA:
   previous: "Previous"
   last: "Last"
   spree:
+    more: "More"
     your_order_is_empty_add_product: "Your order is empty, please search for and add a product above"
     add_product: "Add Product"
     name_or_sku: "Name or SKU (enter at least first 4 characters of product name)"

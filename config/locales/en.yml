@@ -207,8 +207,8 @@ en:
         explainer: Automatic processing of these orders failed for an unknown reason. This should not occur, please contact us if you are seeing this.
 
   home: "OFN"
-  title: Open Food Network
-  welcome_to: 'Welcome to '
+  title: "Open Food Network"
+  welcome_to: "Welcome to"
   site_meta_description: "We begin from the ground up. With farmers and growers ready to tell their stories proudly and truly. With distributors ready to connect people with products fairly and honestly. With buyers who believe that better weekly shopping decisions can…"
   search_by_name: Search by name or suburb...
   producers: 'Australian Producers'
@@ -1839,8 +1839,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   password: Password
   remember_me: Remember Me
   are_you_sure: "Are you sure?"
-  orders_open: Orders open
-  closing: "Closing "
+  orders_open: "Orders open"
+  closing: "Closing"
   going_back_to_home_page: "Taking you back to the home page"
   creating: Creating
   updating: Updating

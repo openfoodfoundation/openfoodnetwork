@@ -1,0 +1,4 @@
+- if variant.product.images.length == 0
+  = image_tag("/noimage/mini.png")
+- else
+  = image_tag(variant.product.images.first.attachment.url(:mini))

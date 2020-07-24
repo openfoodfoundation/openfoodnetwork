@@ -181,8 +181,7 @@ fil_PH:
         title: Iba Pang Dahilan ng Error (%{count}na order)
         explainer: Hindi naging matagumpay ang awtomatikong pagproseso ng mga order na ito dahil sa hindi maipaliwanag na kadahilanan. Makipag-uganayan sa amin kung nakikita ang mensaheng ito.
   home: "OFN"
-  title: Open Food Network
-  welcome_to: 'Maligayang Pagdating sa'
+  title: "Open Food Network"
   site_meta_description: "Kami ay nagsimula sa pinakaibaba pataas. Kasama ang mga magsasaka at tagatanim na handang ibahagi at ipagmalaki ang kanilang mga kuwento. May mga tapat at patas na Distributors na handang makipag-usap sa mga gumagawa ng produkto. At mga mamimili na naniniwala na ang mabusising lingguhang pamimili ay..."
   search_by_name: Hanapin gamit ang pangalan o lungsod...
   producers_join: Ang mga Pilipinong producers ay inaanyayahang naming sumali sa Open Food Network.
@@ -270,6 +269,7 @@ fil_PH:
   backordered: "na-backorder"
   on hand: "on hand"
   ship: "ship"
+  shipping_category: "Kategorya ng Pagpapadala"
   actions:
     create_and_add_another: "Gumawa at magdagdag ng isa pa"
     create: "gumawa"
@@ -718,7 +718,7 @@ fil_PH:
               ito ay makikita sa home tab kapag ang customer ay nasa loob na ng inyong
               shopfront.
           shopfront_message_link_tooltip: "ilagay/ i-edit ang link"
-          shopfront_message_link_prompt: "ilagay ang URL na ipapasok"
+          shopfront_message_link_prompt: "ipasok ang URL na ilalagay"
           shopfront_closed_message: "pagsasarang mensahe ng Shopfront"
           shopfront_closed_message_placeholder: >
               isang mensahe na nagbibigay ng mas detalyadong paliwanag kung bakit
@@ -1035,7 +1035,7 @@ fil_PH:
       edit: i-edit ang subscription
       table:
         edit_subscription: i-edit ang subscription
-        pause_subscription: ihinto ang subscription
+        pause_subscription: panandaliang ihinto ang subscription
         unpause_subscription: ituloy ang subscription
         cancel_subscription: kanselahin ang nauulit na order
       filters:
@@ -1074,8 +1074,8 @@ fil_PH:
         allowed_payment_method_types_tip: Cash at pamamaraang Stripe lamang ang maaaring gamitin sa kasalukuyan.
         credit_card: Credit Card
         charges_not_allowed: ang paniningil ay hindi pinapayagan ng customer na ito
-        no_default_card: ang customer ay walang mga card na maaaring singilin
-        card_ok: ang customer ay may card na maaaring singilin
+        no_default_card: ang customer ay walang mga card na maaaring i-charge
+        card_ok: ang customer ay may card na maaaring i-charge
         begins_at_placeholder: "pumili ng petsa"
         ends_at_placeholder: "opsyonal"
       loading_flash:
@@ -1095,7 +1095,7 @@ fil_PH:
         out_of_stock: "Walang stock"
       orders:
         number: bilang
-        confirm_edit: sigurado ka bang nais mo ayusin ang order na ito? maaaring magdulot ito ng mas mahirap na awtomatikong pagsasaayos ng mga subscription sa hinaharap.
+        confirm_edit: sigurado ka bang nais mo i-edit ang order na ito? maaaring magdulot ito ng mas mahirap na awtomatikong pagsasaayos ng mga subscription sa hinaharap.
       confirm_cancel_msg: "sigurado ka bang nais mong kanselahin ang nauulit na order na ito? hindi na ito maaaring ibalik kapag nagawa na."
       cancel_failure_msg: "paumanhin ngunit hindi naging matagumpay ang pagkansela!"
       confirm_pause_msg: "sigurado ka bang nais mong pansamantalang itigil ang subscription na ito?"
@@ -1143,13 +1143,13 @@ fil_PH:
     menu:
       cart:
         cart: "Cart"
+      cart_sidebar:
+        checkout: "checkout"
+        close: "isara"
       signed_in:
         profile: "Profile"
       mobile_menu:
         cart: "Cart"
-      joyride:
-        checkout: "Mag-checkout na"
-        already_ordered_products: "Naka-order na sa order cycle na ito"
     register_call:
       selling_on_ofn: "Interesado ka ba maging parte ng Open Food Network?"
       register: "Magrehistro dito"
@@ -1175,7 +1175,7 @@ fil_PH:
       customer_required:
         login: "mag-log-in"
         signup: "mag-sign-up"
-        contact: "makipag-ugnay"
+        contact: "makipag-ugnayan"
         require_customer_login: "ang mga inaprubahang customer lamang ang maaaring gumamit ng shop na ito."
         require_customer_html: "kung nais mong magsimulang mamili rito, maaaring%{contact}%{enterprise} at magtanong kung paano sumali."
   card_could_not_be_updated: hindi ma-update ang card
@@ -1252,7 +1252,7 @@ fil_PH:
   state: province
   country: Bansa
   unauthorized: hindi awtorisado
-  terms_of_service: "mga palatuntunan ng serbisyo"
+  terms_of_service: "mga tuntunin ng serbisyo"
   on_demand: on demand
   none: wala
   not_allowed: hindi pinapayagan
@@ -1266,7 +1266,7 @@ fil_PH:
   label_shops: "mga shop"
   label_map: "mapa"
   label_producer: "Producer"
-  label_producers: "Producers"
+  label_producers: "Mga Producer"
   label_groups: "mga grupo"
   label_about: "tungkol sa"
   label_connect: "kumonekta"
@@ -1288,7 +1288,7 @@ fil_PH:
   total: "kabuuan"
   cart_updating: "ina-update ang cart"
   cart_empty: "walang laman ang cart"
-  cart_edit: "ayusin ang cart"
+  cart_edit: "i-edit ang cart"
   card_number: numero ng card
   card_securitycode: "Security code"
   card_expiry_date: petsa ng pag-expire
@@ -1297,15 +1297,15 @@ fil_PH:
   new_credit_card: "bagong credit card"
   my_credit_cards: ang aking mga credit card
   add_new_credit_card: magdagdag ng bagong credit card
-  saved_cards: i-save ang mga card
+  saved_cards: naka-save na mga card
   add_a_card: magdagdag ng card
   add_card: idagdag ang card
   you_have_no_saved_cards: wala ka pang nai-save na card.
   saving_credit_card: sine-save ang credit card...
-  card_has_been_removed: "ang iyong card ay tinanggal na (numero:%{number})"
-  card_could_not_be_removed: paumanhin, hindi maalis ang card
+  card_has_been_removed: "ang iyong card ay natanggal na (numero:%{number})"
+  card_could_not_be_removed: paumanhin, hindi matanggal ang card
   invalid_credit_card: "hindi valid ang credit card"
-  ie_warning_headline: "ang iyong browser ay luma na :-("
+  ie_warning_headline: "ang iyong browser ay out of date :-("
   ie_warning_text: "para sa pinakamagandang karanasan sa Open Food Network, mariin naming nirerekomenda ang pag-upgrade ng inyong browser:"
   ie_warning_chrome: i-download ang Chrome
   ie_warning_firefox: i-download ang Firefox
@@ -1692,8 +1692,7 @@ fil_PH:
   password: Password
   remember_me: tandaan ako
   are_you_sure: "Sigurado ka ba?"
-  orders_open: bukas ang mga order
-  closing: "sinasara"
+  orders_open: "bukas ang mga order"
   going_back_to_home_page: "binabalik ka sa homepage"
   creating: ginagawa
   updating: ina-update
@@ -2381,7 +2380,7 @@ fil_PH:
               din ito upang maisalaysay ang inyong kwento.
           profile_only_text2: >
               kung mas nais mong magpokus sa paggawa ng pagkain at ipaubaya sa iba
-              ang pagbebenta nito, hindi kailangan ang shop sa Open Food Network.
+              ang pagbebenta nito, hindi na kailangan ang shop sa Open Food Network.
           profile_only_text3: >
               idagdag ang inyong produkto sa Open Food Network, upang mabigyan ng
               permiso ang mga hub na ilagay ang inyong produkto sa kanilang mga tindahan.
@@ -2390,9 +2389,9 @@ fil_PH:
               Direktang ibenta ang inyong produkto sa mga customer sa pamamagitan
               ng iyong sariling Open Food Network shopfront.
           producer_shop_text2: >
-              ang shop ng Producer ay para lamang sa iyong mga produkto, kung nais
-              mong magtinda ng mga produkto na itinanim/ginawa sa labas ng site, piliin
-              ang 'Hub ng producer'.
+              ang Producer Shop ay para lamang sa iyong mga produkto, kung nais mong
+              magtinda ng mga produkto na itinanim/ginawa sa labas ng site, piliin
+              ang 'Producer Hub'.
           producer_hub: Producer Hub
           producer_hub_text1: >
               ang iyong enterprise ang saligan ng iyong lokal na sistema ng pagkain.
@@ -2400,9 +2399,8 @@ fil_PH:
               pinagsama sama mula sa ibang enterprise sa pamamagitan ng iyong shopfront
               sa Open Food Network.
           producer_hub_text2: >
-              ang mga hub ng producer ay maaring may iba't ibang anyo tulad ng CSA,
-              isang programang veggie-box o isang co-op ng pagkain na may hardin sa
-              rooftop.
+              ang mga producer hub ay maaring may iba't ibang anyo tulad ng CSA, isang
+              programang veggie-box o isang co-op ng pagkain na may hardin sa rooftop.
           producer_hub_text3: >
               ang layunin ng Open Food Network ay sumuporta sa mga modelo ng hub gaano
               man ito karami, kaya ano man ang inyong sitwasyon, nais naming ibigay
@@ -2549,14 +2547,14 @@ fil_PH:
         'yes': "oo"
         'no': "hindi"
       inventory_products: "mga produktong naka-imbentaryo"
-      hidden_products: "mga nakatagong pprodukto"
-      new_products: "bagong produkto"
+      hidden_products: "nakatagong mga produkto"
+      new_products: "bagong mga produkto"
       reset_stock_levels: i-reset ang lebel ng stock sa default
       changes_to: mga pagbabago sa
       one_override: isang override
       overrides: mga override
       remain_unsaved: nananatiling hindi naka-save.
-      no_changes_to_save: walang pagbabago na ise-save
+      no_changes_to_save: walang mga pagbabago na ise-save
       no_authorisation: "hindi ko makuha ang awtorisasyon para i-save ang mga pagbabago kaya mananatili ang mga ito na hindi naka-save."
       some_trouble: "nagkaroon ako ng problema sa pagse-save: %{errors}"
       changing_on_hand_stock: pagbabago sa lebel ng hand stock
@@ -2758,6 +2756,7 @@ fil_PH:
   previous: "nauna"
   last: "huli"
   spree:
+    more: "Karagdagang Impormasyon"
     your_order_is_empty_add_product: "ang iyong order ay walang laman, humanap at magdagdag ng produkto sa itaas."
     add_product: "magdagdag ng produkto"
     name_or_sku: "Pangalan o SKU (ipasok ang 4 na letra sa pangalan ng produkto)"

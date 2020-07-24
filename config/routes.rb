@@ -1,4 +1,5 @@
 Openfoodnetwork::Application.routes.draw do
+
   root :to => 'home#index'
 
   # Redirects from old URLs avoid server errors and helps search engines
@@ -8,6 +9,7 @@ Openfoodnetwork::Application.routes.draw do
   get "/about_us", to: redirect(ContentConfig.footer_about_url)
 
   get "/login", to: redirect("/#/login")
+  get '/unauthorized', :to => 'home#unauthorized', :as => :unauthorized
 
   get "/discourse/login", to: "discourse_sso#login"
   get "/discourse/sso", to: "discourse_sso#sso"
