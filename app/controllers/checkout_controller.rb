@@ -254,13 +254,10 @@ class CheckoutController < Spree::StoreController
   end
 
   def rescue_from_spree_gateway_error(error)
-    Bugsnag.notify(error)
-    checkout_failed
-
     flash[:error] = t(:spree_gateway_error_flash_for_checkout, error: error.message)
     # This can also happen during the edit action
-    #   but the response needed here is the same as when the update action fails
-    update_failed_response
+    #   but the actions and response needed are exactly the same as when the update action fails
+    update_failed(error)
   end
 
   def permitted_params
