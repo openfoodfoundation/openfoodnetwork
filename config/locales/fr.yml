@@ -14,6 +14,7 @@ fr:
       spree/payment:
         amount: Montant
         state: Statut
+        source: Source
       spree/product:
         primary_taxon: "Catégorie Produit"
         supplier: "Fournisseur"
