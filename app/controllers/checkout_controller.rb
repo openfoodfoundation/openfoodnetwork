@@ -152,8 +152,20 @@ class CheckoutController < Spree::StoreController
       checkout_succeeded
       redirect_to(order_path(@order)) && return
     else
+      persist_all_payments if @order.state == "payment"
       flash[:error] = order_error
       checkout_failed
+    end
+  end
+
+  # When a payment fails, the order state machine rollbacks all transactions
+  #   Here we ensure we always persist all payments
+  def persist_all_payments
+    @order.payments.each do |payment|
+      original_payment_state = payment.state
+      if original_payment_state != payment.reload.state
+        payment.update(state: original_payment_state)
+      end
     end
   end
 
