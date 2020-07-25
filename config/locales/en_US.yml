@@ -13,6 +13,7 @@ en_US:
         email: Customer E-mail
       spree/payment:
         amount: Amount
+        state: State
       spree/product:
         primary_taxon: "Product Category"
         supplier: "Supplier"

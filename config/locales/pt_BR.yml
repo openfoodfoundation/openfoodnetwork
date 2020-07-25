@@ -13,6 +13,7 @@ pt_BR:
         email: Email do cliente
       spree/payment:
         amount: Montante
+        state: Estado
       spree/product:
         primary_taxon: "Categoria de Produto"
         supplier: "Fornecedor"

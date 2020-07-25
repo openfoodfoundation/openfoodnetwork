@@ -8,6 +8,8 @@ sv:
         payment_state: Betalningstatus
         shipment_state: Leveransstatus
         state: Region
+      spree/payment:
+        state: Region
       spree/product:
         supplier: "Leverantör"
         variant_unit: "Enhet för variant"

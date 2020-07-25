@@ -13,6 +13,7 @@ fr:
         email: Email acheteur
       spree/payment:
         amount: Montant
+        state: Statut
       spree/product:
         primary_taxon: "Catégorie Produit"
         supplier: "Fournisseur"
@@ -1400,7 +1401,7 @@ fr:
   checkout_details: "Vos informations"
   checkout_billing: "Informations de facturation"
   checkout_default_bill_address: "Sauvegarder comme adresse de facturation par défaut"
-  checkout_shipping: Informations de livraison
+  checkout_shipping: Informations de livraison ou de retrait
   checkout_default_ship_address: "Sauvegarder comme adresse de livraison par défaut"
   checkout_method_free: Pas de frais supplémentaires
   checkout_address_same: Adresse de livraison identique à l'adresse de facturation?
@@ -3144,7 +3145,7 @@ fr:
         index:
           payment_methods: "Méthodes de paiement"
           new_payment_method: "Nouvelle méthode de paiement"
-          name: "Produit/Variante"
+          name: "Nom"
           products_distributor: "Distributeur"
           provider: "Fournisseur"
           environment: "Environnement"
@@ -3177,7 +3178,7 @@ fr:
           business_name: Nom de l'entreprise
           charges_enabled: Frais activés
         form:
-          name: "Produit/Variante"
+          name: "Nom"
           description: "Description"
           environment: "Environnement"
           display: "Afficher"

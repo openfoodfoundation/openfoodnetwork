@@ -13,6 +13,7 @@ en_NZ:
         email: Customer E-Mail
       spree/payment:
         amount: Amount
+        state: State
       spree/product:
         primary_taxon: "Product Category"
         supplier: "Supplier"
@@ -1766,7 +1767,7 @@ en_NZ:
     steps:
       introduction:
         registration_greeting: "Hi there!"
-        registration_intro: "You can now create a profile for your Producer or Hub"
+        registration_intro: "Producer or Hub? You can create a profile"
         registration_checklist: "What do I need?"
         registration_time: "5-10 minutes"
         registration_enterprise_address: "Enterprise address"

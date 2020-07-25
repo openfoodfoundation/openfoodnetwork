@@ -13,6 +13,7 @@ nb:
         email: Epost Kunde
       spree/payment:
         amount: Beløp
+        state: Tilstand
       spree/product:
         primary_taxon: "Produktkategori"
         supplier: "Leverandør"

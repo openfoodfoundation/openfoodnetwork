@@ -13,6 +13,7 @@ ca:
         email: Correu electrònic de la consumidora
       spree/payment:
         amount: Import
+        state: Estat
       spree/product:
         primary_taxon: "Categoria del producte"
         supplier: "Proveïdora"

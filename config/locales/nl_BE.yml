@@ -13,6 +13,7 @@ nl_BE:
         email: Klanten e-mail
       spree/payment:
         amount: Bedrag
+        state: Staat
       spree/product:
         primary_taxon: "Product categorie"
         supplier: "Leverancier"

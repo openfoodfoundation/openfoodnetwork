@@ -13,6 +13,7 @@ fil_PH:
         email: Email ng Parokyano
       spree/payment:
         amount: Halaga
+        state: province
       spree/product:
         primary_taxon: "Kategorya ng Produkto"
         supplier: "Supplier"
@@ -315,7 +316,7 @@ fil_PH:
     clear_all: alisin lahat
     start_date: "Petsa ng Pagsimula"
     end_date: "Petsa ng Pagtatapos"
-    form_invalid: "ang form ay may nawawala o hindi valid na sagot sa mga patlang"
+    form_invalid: "ang form ay may kulang o hindi valid na mga sagot"
     clear_filters: alisin ang mga filter
     clear: alisin
     save: i-save
@@ -355,7 +356,7 @@ fil_PH:
         settings: "settings"
         stripe_connect_enabled: paganahin ang pagtanggap ng mga bayad gamit ang Stripe Connect sa mga Shop?
         no_api_key_msg: walang Stripe account para sa enterprise na ito
-        configuration_explanation_html: para sa detalyadong panuto sa pag-configure ng pagsasama ng Stripe Connect, maaari lamang na<a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'>kumonsulta sa gabay</a>.
+        configuration_explanation_html: para sa detalyadong panuto sa pag-configure upang magamit ang Stripe Connect, maaari lamang na<a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'>kumonsulta sa gabay</a>.
         status: Status
         ok: Ok
         instance_secret_key: Instance Secret Key
@@ -387,11 +388,11 @@ fil_PH:
         select_state: 'pumili ng Lalawigan'
         edit: 'i-edit'
         update_address: 'i-update ang address'
-        confirm_delete: 'siguradong tatanggalin?'
+        confirm_delete: 'siguradong tatanggalin na?'
         search_by_email: "hanapin gamit ang email/code..."
         guest_label: 'Guest checkout'
       destroy:
-        has_associated_orders: 'hindi tagumpay ang pagtanggal: ang customer ay may mga iniugnay na order sa kaniyang shop'
+        has_associated_orders: 'hindi tagumpay ang pagtanggal: ang customer ay may iniugnay na mga order sa kaniyang shop'
     contents:
       edit:
         title: nilalaman
@@ -423,7 +424,7 @@ fil_PH:
       form:
         manages: namamahala
       enterprise_role:
-        manages: namamahala
+        manages: pinamamahalaan
     products:
       unit_name_placeholder: 'hal. mga kumpol'
       index:
@@ -541,7 +542,7 @@ fil_PH:
         products_created: ang mga produkto ay nagawa na
         products_updated: in-update ang mga produkto
         inventory_created: ang mga imbentaryo ng item ay nagawa na
-        inventory_updated: inupdate ang mga inimbentaryong item
+        inventory_updated: inupdate ang mga naka-imbentaryong item
         products_reset: na-reset sa zero ang lebel ng stock ng mga produkto
         inventory_reset: na-reset sa zero ang lebel ng stock ng mga imbentaryo ng item
         all_saved: "lahat ng mga item ay matagumpay na na-save"
@@ -1107,7 +1108,7 @@ fil_PH:
       yes_cancel_them: kanselahin
       no_keep_them: ituloy
       yes_i_am_sure: oo, sigurado ako
-      order_update_issues_msg: ang ibang mga order ay hindi awtomatikong ma-update, sapagkat ito ay manwal na inayos. Tignan ang mga isyu na nakalista sa baba at gawin ang nararapat na pag-aayos sa bawat order kung kinakailangan.
+      order_update_issues_msg: "ang ibang mga order ay hindi awtomatikong ma-update, sapagkat ito ay manwal na inayos. Tignan ang mga isyu na nakalista sa baba at gawin ang nararapat na pag-aayos sa bawat indibiduwal na \norder kung kinakailangan."
       no_results:
         no_subscriptions: wala pang mga subscription....
         why_dont_you_add_one: nais mo bang magdagdag ng isa? :)
@@ -1165,7 +1166,7 @@ fil_PH:
       footer_legal_call: "basahin ang aming"
       footer_legal_tos: "mga tuntunin at kondisyon"
       footer_legal_visit: "Hanapin kami sa"
-      footer_legal_text_html: "ang Open Food Network ay isang libre at bukas ang pinagkukuhanang platform. ang mga nilalaman nito ay lisensiyado ng%{content_license}at ang aming mga code ng %{code_license}."
+      footer_legal_text_html: "ang Open Food Network ay isang libre at open source software platform. ang mga nilalaman nito ay lisensiyado ng%{content_license}at ang aming mga code ng %{code_license}."
       footer_data_text_with_privacy_policy_html: "Pinangangalagaan namin ang inyong impormasyon. Basahin ang aming%{privacy_policy}at%{cookies_policy}"
       footer_data_text_without_privacy_policy_html: "Pinangangalagaan namin ang inyong impormasyon. Basahin ang aming%{cookies_policy}"
       footer_data_privacy_policy: "patakaran ng privacy"
@@ -1280,8 +1281,8 @@ fil_PH:
   label_administration: "administrasyon"
   label_admin: "admin"
   label_account: "Account"
-  label_more: "ipakita lahat"
-  label_less: "ipakita ang mas kaunti"
+  label_more: "ipakita ang iba pa"
+  label_less: "huwag ipakita ang lahat"
   label_notices: "mga abiso"
   cart_items: "mga item"
   cart_headline: "Ang iyong shopping cart"

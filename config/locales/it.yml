@@ -13,6 +13,7 @@ it:
         email: E-Mail Cliente
       spree/payment:
         amount: Quantità
+        state: Stato
       spree/product:
         primary_taxon: "Categoria Prodotto"
         supplier: "Fornitore"

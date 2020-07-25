@@ -13,6 +13,7 @@ tr:
         email: Müşteri E-postası
       spree/payment:
         amount: Tutar
+        state: Durum
       spree/product:
         primary_taxon: "ÜRÜN KATEGORİSİ"
         supplier: "TEDARİKÇİ"
@@ -676,11 +677,11 @@ tr:
           primary_producer: Birincil üretici misiniz?
           primary_producer_tip: Siz de birincil üreticisiyseniz 'Üretici' yi seçin.
           producer: ÜRETİCİ
-          any: Hepsi
-          none: SATMIYOR
+          any: KENDİ VE/VEYA BAŞKASININ ÜRÜNLERİ
+          none: SATIŞ YAPMIYOR
           own: KENDİ ÜRÜNLERİ
           sells: NE SATIYOR
-          sells_tip: "Hiç - İşletme müşterilere doğrudan satış yapmaz. <br /> Kendi - İşletme müşterilerine kendi ürünlerini satar. <br /> Hepsi - İşletme kendi ürünlerini veya diğer işletmelerin ürünlerini satabilir. <br />"
+          sells_tip: "Satış Yapmıyor - İşletme müşterilere doğrudan satış yapmaz. <br /> Kendi Ürünleri - İşletme müşterilerine kendi ürünlerini satar. <br /> Kendi ve/veya başkasının ürünleri - İşletme kendi ürünlerini ve/veya diğer işletmelerin ürünlerini satabilir. <br />"
           visible_in_search: ARAMADA GÖRÜNÜR MÜ?
           visible_in_search_tip: Sitede arama yapılırken bu işletmenin müşteriler tarafından görünür olup olmayacağını belirler.
           visible: GÖRÜNÜR
@@ -1015,7 +1016,7 @@ tr:
       orders_and_fulfillment:
         name: Siparişler ve Gerçekleşme Raporları
       customers:
-        name: MÜŞTERİLER
+        name: Müşteriler
       products_and_inventory:
         name: Ürünler ve Stok
       users_and_enterprises:
@@ -1376,17 +1377,17 @@ tr:
   connect_cta: "Keşfedin"
   system_headline: "Nasıl çalışıyor ?"
   system_step1: "1. Ara"
-  system_step1_text: "Yerel, adil, temiz ve mevsimsel gıda için, bağımsız ve cesur üreticilerimizin ve dağıtımcılarımızın dükkanlarından alışveriş yapın.  Konuma, ürün kategorisine, üretici özelliklerine veya teslimat tercihlerine göre arama yapabilirsiniz. "
+  system_step1_text: "Yerel ve mevsimsel gıda için, bağımsız ve cesur üreticilerimizin ve dağıtımcılarımızın dükkanlarından alışveriş yapın.  "
   system_step2: "2. Alışveriş Yap"
-  system_step2_text: "Gıdanızı yerel üretici tezgahlarından, üretici ve türetici pazarlarından temin edin. Yaşanabilir bir dünya için alışkanlıklarınızı şimdi değiştirin. Gıdanızın ve onu size getiren insanların hikayelerini öğrenin!"
+  system_step2_text: "Gıdanızı yerel üreticilerden ve türetici pazarlarından temin edin. Yaşanabilir bir dünya için alışkanlıklarınızı şimdi değiştirin. "
   system_step3: "3. Teslimat "
-  system_step3_text: "Gıdanıza ulaşmak için adresinize teslim edilmesini  bekleyin. Dilerseniz gıdanız ile daha kişisel bir bağ kurmak için üreticinizi veya pazarını kendiniz ziyaret edin. Doğayla ve gıdayla istediğiniz  şekilde ama gerçek bir bağ kurun. "
+  system_step3_text: "Siparişinizin teslim edilmesini bekleyin veya teslim alım noktasında buluşun. Gıdayla istediğiniz şekilde ama gerçek bir bağ kurun.  "
   cta_headline: "Dünyayı daha iyi bir yer yapan alışveriş biçimi."
-  cta_label: "Hazırım"
+  cta_label: "ALIŞVERİŞE HAZIRIM"
   stats_headline: "Yeni bir gıda sistemi yaratıyoruz."
   stats_producers: "ÜRETİCİ"
   stats_shops: "DÜKKAN"
-  stats_shoppers: "TÜRETİCİ"
+  stats_shoppers: "ALICI"
   stats_orders: "ALIŞVERİŞ"
   checkout_title: Ödeme Yap
   checkout_now: Alışverişi Tamamla
@@ -1521,7 +1522,7 @@ tr:
   shopping_tabs_contact: "İLETİŞİM"
   shopping_contact_address: "Adres"
   shopping_contact_web: "İLETİŞİM"
-  shopping_contact_social: "Takip et"
+  shopping_contact_social: "TAKİP ET"
   shopping_groups_part_of: "şunun parçası:"
   shopping_producers_of_hub: "%{hub} üreticileri:"
   enterprises_next_closing: "Bir sonraki sipariş kapanışı"
@@ -1542,7 +1543,7 @@ tr:
   hubs_filter_delivery: "Eve Teslim"
   hubs_filter_property: "Özellik"
   hubs_matches: "Bunu mu arıyordunuz?"
-  hubs_intro: Bulunduğunuz bölgeden alışveriş yapın
+  hubs_intro: Alışverişe başlayın
   hubs_distance: En yakın
   hubs_distance_filter: "Bana %{location} yakınındaki dükkanları göster"
   shop_changeable_orders_alert_html:
@@ -1588,7 +1589,7 @@ tr:
   groups_producers: "ÜRETİCİLERİMİZ"
   groups_hubs: "Pazarlarımız"
   groups_contact_web: İLETİŞİM
-  groups_contact_social: Takip et
+  groups_contact_social: TAKİP ET
   groups_contact_address: Adres
   groups_contact_email: Bize e-posta gönderin
   groups_contact_website: İnternet sitemizi ziyaret edin
@@ -1616,7 +1617,7 @@ tr:
   producers_buy: Alışveriş ürünleri
   producers_contact: İLETİŞİM
   producers_contact_phone: 'Tel:'
-  producers_contact_social: Takip et
+  producers_contact_social: TAKİP ET
   producers_buy_at_html: "%{enterprise} ürünleri için buradan alışveriş yapın:"
   producers_filter: Filtrele
   producers_filter_type: tür
@@ -1893,7 +1894,7 @@ tr:
   bulk: "toplu"
   shop_variant_quantity_min: "min"
   shop_variant_quantity_max: "maks"
-  follow: "Takip et"
+  follow: "TAKİP ET"
   shop_for_products_html: "<span class=\"turquoise\">%{enterprise}</span> ürünleri için şuradan alışveriş yapın:"
   change_shop: "Dükkanı şuna değiştir:"
   shop_at: "Şimdi alışveriş yapın:"
@@ -2457,7 +2458,7 @@ tr:
           non_producer_example: 'Örn: Manavlar, Gıda Kooperatifleri, Gıda Toplulukları vs.'
         enterprise_status:
           status_title: "%{name} kuruldu ve başlamaya hazır!"
-          severity: Şiddet
+          severity: ÖNEM
           description: Açıklama
           resolve: Çözüm
         exchange_products:
@@ -3103,7 +3104,7 @@ tr:
           new_shipping_method: "YENİ TESLİMAT YÖNTEMİ"
           back_to_shipping_methods_list: "Teslİmat Yöntemlerİne Gerİ Dön"
         edit:
-          editing_shipping_method: "Teslİmat YöntemİNİ Düzenle"
+          editing_shipping_method: "Teslimat Yöntemini Düzenle"
           new: "YENİ"
           back_to_shipping_methods_list: "Teslİmat Yöntemlerİne Gerİ Dön"
         form:

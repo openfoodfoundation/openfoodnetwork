@@ -13,6 +13,7 @@ fr_CA:
         email: Email acheteur
       spree/payment:
         amount: Montant
+        state: Département
       spree/product:
         primary_taxon: "Catégorie Produit"
         supplier: "Fournisseur"

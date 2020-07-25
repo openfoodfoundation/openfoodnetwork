@@ -13,6 +13,7 @@ es:
         email: E-mail del consumidor
       spree/payment:
         amount: Cantidad
+        state: Provincia
       spree/product:
         primary_taxon: "categoría del producto"
         supplier: "Proveedora"

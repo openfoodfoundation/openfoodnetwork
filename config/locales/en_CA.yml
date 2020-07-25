@@ -13,6 +13,7 @@ en_CA:
         email: Customer E-Mail
       spree/payment:
         amount: Amount
+        state: State
       spree/product:
         primary_taxon: "Product Category"
         supplier: "Supplier"
@@ -1161,7 +1162,7 @@ en_CA:
       mobile_menu:
         cart: "Cart"
     register_call:
-      selling_on_ofn: "Interested in getting on the Open Food Network?"
+      selling_on_ofn: "Interested in selling on the Open Food Network?"
       register: "Register here"
     footer:
       footer_secure: "Secure and trusted."

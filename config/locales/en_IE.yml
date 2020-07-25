@@ -13,6 +13,7 @@ en_IE:
         email: Customer E-Mail
       spree/payment:
         amount: Amount
+        state: County
       spree/product:
         primary_taxon: "Product Category"
         supplier: "Supplier"

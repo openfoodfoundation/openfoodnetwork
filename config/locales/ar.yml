@@ -13,6 +13,7 @@ ar:
         email: الايميل الالكتروني للعميل
       spree/payment:
         amount: القيمة
+        state: ولاية
       spree/product:
         primary_taxon: "نوع المنتج "
         supplier: "المورد"
