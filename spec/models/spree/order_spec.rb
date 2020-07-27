@@ -855,12 +855,39 @@ describe Spree::Order do
         order.state = 'delivery' # payment's previous state
 
         allow(order).to receive(:payment_required?) { true }
-        allow(order).to receive(:charge_shipping_and_payment_fees!)
       end
 
-      it 'calls charge_shipping_and_payment_fees!' do
+      it 'calls charge_shipping_and_payment_fees! and updates totals' do
+        expect(order).to receive(:charge_shipping_and_payment_fees!)
+        expect(order).to receive(:update_totals).at_least(:once)
+
         order.next
-        expect(order).to have_received(:charge_shipping_and_payment_fees!)
+      end
+
+      context "payment's amount" do
+        let(:failed_payment) { create(:payment, order: order, state: 'failed', amount: 100) }
+
+        before do
+          allow(order).to receive(:total) { 120 }
+        end
+
+        it 'is not updated for failed payments' do
+          failed_payment
+
+          order.next
+
+          expect(failed_payment.reload.amount).to eq 100
+        end
+
+        it 'is updated only for pending payments' do
+          pending_payment = create(:payment, order: order, state: 'pending', amount: 80)
+          failed_payment
+
+          order.next
+
+          expect(failed_payment.reload.amount).to eq 100
+          expect(pending_payment.reload.amount).to eq 120
+        end
       end
     end
   end
