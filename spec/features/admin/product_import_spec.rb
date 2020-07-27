@@ -7,8 +7,8 @@ feature "Product Import", js: true do
   include WebHelper
 
   let!(:admin) { create(:admin_user) }
-  let!(:user) { create_enterprise_user }
-  let!(:user2) { create_enterprise_user }
+  let!(:user) { create(:user) }
+  let!(:user2) { create(:user) }
   let!(:enterprise) { create(:supplier_enterprise, owner: user, name: "User Enterprise") }
   let!(:enterprise2) { create(:distributor_enterprise, owner: user2, name: "Another Enterprise") }
   let!(:relationship) { create(:enterprise_relationship, parent: enterprise, child: enterprise2, permissions_list: [:create_variant_overrides]) }

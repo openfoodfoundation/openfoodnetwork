@@ -6,8 +6,8 @@ feature '
     As an administrator
     I want to print a ticket for an order
 ', js: true do
-  include AuthenticationWorkflow
   include CheckoutHelper
+  include AuthenticationWorkflow
   include ActionView::Helpers::NumberHelper
 
   context "as an enterprise manager" do
@@ -24,7 +24,7 @@ feature '
     end
 
     before do
-      @enterprise_user = create_enterprise_user
+      @enterprise_user = create(:user)
       @enterprise_user.enterprise_roles.build(enterprise: distributor).save
 
       quick_login_as @enterprise_user

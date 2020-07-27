@@ -4,10 +4,10 @@ feature '
     As a Super User
     I want to setup users to manage an enterprise
 ' do
-  include AuthenticationWorkflow
   include WebHelper
+  include AuthenticationWorkflow
 
-  let!(:user) { create_enterprise_user }
+  let!(:user) { create(:user) }
   let!(:supplier1) { create(:supplier_enterprise, name: 'Supplier 1') }
   let!(:supplier2) { create(:supplier_enterprise, name: 'Supplier 2') }
   let(:supplier_profile) { create(:supplier_enterprise, name: 'Supplier profile', sells: 'none') }

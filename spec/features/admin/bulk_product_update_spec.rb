@@ -658,7 +658,7 @@ feature '
     end
 
     before do
-      @enterprise_user = create_enterprise_user
+      @enterprise_user = create(:user)
       @enterprise_user.enterprise_roles.build(enterprise: supplier_managed1).save
       @enterprise_user.enterprise_roles.build(enterprise: supplier_managed2).save
       @enterprise_user.enterprise_roles.build(enterprise: distributor_managed).save

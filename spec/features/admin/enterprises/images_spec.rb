@@ -1,11 +1,11 @@
 require "spec_helper"
 
 feature "Managing enterprise images" do
-  include AuthenticationWorkflow
   include WebHelper
+  include AuthenticationWorkflow
 
   context "as an Enterprise user", js: true do
-    let(:enterprise_user) { create_enterprise_user(enterprise_limit: 1) }
+    let(:enterprise_user) { create(:user, enterprise_limit: 1) }
     let(:distributor) { create(:distributor_enterprise, name: "First Distributor") }
 
     before do

@@ -24,7 +24,7 @@ feature "
       create(:enterprise_relationship, parent: producer_related, child: hub,
                                        permissions_list: [:create_variant_overrides])
     }
-    let(:user) { create_enterprise_user enterprises: [hub, producer_managed] }
+    let(:user) { create(:user, enterprises: [hub, producer_managed]) }
 
     before { quick_login_as user }
 

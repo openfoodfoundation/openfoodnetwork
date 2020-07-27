@@ -4,8 +4,8 @@ feature '
     As an admin
     I want to set a supplier and distributor(s) for a product
 ' do
-  include AuthenticationWorkflow
   include WebHelper
+  include AuthenticationWorkflow
 
   let!(:taxon) { create(:taxon) }
   let!(:stock_location) { create(:stock_location, backorderable_default: false) }
@@ -97,7 +97,7 @@ feature '
     let!(:tax_category) { create(:tax_category) }
 
     before do
-      @new_user = create_enterprise_user
+      @new_user = create(:user)
       @supplier2 = create(:supplier_enterprise, name: 'Another Supplier')
       @supplier_permitted = create(:supplier_enterprise, name: 'Permitted Supplier')
       @new_user.enterprise_roles.build(enterprise: @supplier2).save

@@ -151,7 +151,7 @@ feature '
 
     context "that is a manager of the coordinator" do
       before do
-        @new_user = create_enterprise_user
+        @new_user = create(:user)
         @new_user.enterprise_roles.build(enterprise: supplier_managed).save
         @new_user.enterprise_roles.build(enterprise: distributor_managed).save
         @new_user.enterprise_roles.build(enterprise: other_distributor_managed).save
@@ -288,7 +288,7 @@ feature '
     end
 
     context "that is a manager of a participating producer" do
-      let(:new_user) { create_enterprise_user }
+      let(:new_user) { create(:user) }
 
       before do
         new_user.enterprise_roles.build(enterprise: supplier_managed).save
@@ -354,7 +354,7 @@ feature '
 
     context "that is the manager of a participating hub" do
       let(:my_distributor) { create(:distributor_enterprise) }
-      let(:new_user) { create_enterprise_user }
+      let(:new_user) { create(:user) }
 
       before do
         create(:enterprise_relationship, parent: supplier_managed, child: my_distributor, permissions_list: [:add_to_order_cycle])
@@ -419,7 +419,7 @@ feature '
   end
 
   describe "simplified interface for enterprise users selling only their own produce" do
-    let(:user) { create_enterprise_user }
+    let(:user) { create(:user) }
     let(:enterprise) { create(:enterprise, is_primary_producer: true, sells: 'own') }
     let!(:p1) { create(:simple_product, supplier: enterprise) }
     let!(:p2) { create(:simple_product, supplier: enterprise) }

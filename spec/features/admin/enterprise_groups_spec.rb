@@ -4,8 +4,8 @@ feature '
     As an administrator
     I want to manage enterprise groups
 ' do
-  include AuthenticationWorkflow
   include WebHelper
+  include AuthenticationWorkflow
 
   before(:each) do
     login_to_admin_section
@@ -107,7 +107,7 @@ feature '
   end
 
   context "as an enterprise user" do
-    let(:user) { create_enterprise_user }
+    let(:user) { create(:user) }
     let!(:enterprise) { create(:distributor_enterprise, owner: user) }
     let!(:group) { create(:enterprise_group, name: 'My Group', owner: user) }
 

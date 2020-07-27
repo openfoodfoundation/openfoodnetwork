@@ -2,9 +2,7 @@ require 'spec_helper'
 
 module Admin
   describe OrderCyclesController, type: :controller do
-    include AuthenticationWorkflow
-
-    let!(:distributor_owner) { create_enterprise_user enterprise_limit: 2 }
+    let!(:distributor_owner) { create(:user) }
 
     before do
       allow(controller).to receive_messages spree_current_user: distributor_owner
@@ -300,7 +298,7 @@ module Admin
     end
 
     describe "notifying producers" do
-      let(:user) { create_enterprise_user }
+      let(:user) { create(:user) }
       let(:admin_user) do
         user = create(:user)
         user.spree_roles << Spree::Role.find_or_create_by!(name: 'admin')

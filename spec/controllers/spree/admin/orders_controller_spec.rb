@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Spree::Admin::OrdersController, type: :controller do
-  include AuthenticationWorkflow
   include OpenFoodNetwork::EmailHelper
 
   describe "#edit" do
@@ -109,7 +108,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
   describe "#index" do
     context "as a regular user" do
-      before { allow(controller).to receive(:spree_current_user) { create_enterprise_user } }
+      before { allow(controller).to receive(:spree_current_user) { create(:user) } }
 
       it "should deny me access to the index action" do
         spree_get :index

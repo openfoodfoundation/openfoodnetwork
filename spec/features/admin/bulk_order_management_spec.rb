@@ -719,7 +719,7 @@ feature '
     let!(:line_item_not_distributed) { create(:line_item_with_shipment, order: o2, product: create(:product, supplier: s1) ) }
 
     before(:each) do
-      @enterprise_user = create_enterprise_user
+      @enterprise_user = create(:user)
       @enterprise_user.enterprise_roles.build(enterprise: s1).save
       @enterprise_user.enterprise_roles.build(enterprise: d1).save
 

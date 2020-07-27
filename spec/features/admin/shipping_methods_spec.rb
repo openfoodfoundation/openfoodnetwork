@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 feature 'shipping methods' do
-  include AuthenticationWorkflow
   include WebHelper
+  include AuthenticationWorkflow
 
   before :each do
     @shipping_method = create(:shipping_method)
@@ -82,7 +82,7 @@ feature 'shipping methods' do
   end
 
   context "as an enterprise user", js: true do
-    let(:enterprise_user) { create_enterprise_user }
+    let(:enterprise_user) { create(:user) }
     let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
     let(:distributor2) { create(:distributor_enterprise, name: 'Second Distributor') }
     let(:distributor3) { create(:distributor_enterprise, name: 'Third Distributor') }

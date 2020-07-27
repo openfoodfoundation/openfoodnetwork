@@ -1,8 +1,6 @@
 require 'spec_helper'
 require 'open_food_network/order_cycle_management_report'
 
-include AuthenticationWorkflow
-
 module OpenFoodNetwork
   describe OrderCycleManagementReport do
     context "as a site admin" do
@@ -37,7 +35,7 @@ module OpenFoodNetwork
     end
 
     context "as an enterprise user" do
-      let!(:user) { create_enterprise_user }
+      let!(:user) { create(:user) }
 
       subject { OrderCycleManagementReport.new user, {}, true }
 

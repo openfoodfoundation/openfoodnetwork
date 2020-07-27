@@ -1,12 +1,11 @@
 require 'spec_helper'
 
 describe UserConfirmationsController, type: :controller do
-  include AuthenticationWorkflow
   include OpenFoodNetwork::EmailHelper
 
-  let!(:user) { create_enterprise_user }
-  let!(:confirmed_user) { create_enterprise_user(confirmed_at: nil) }
-  let!(:unconfirmed_user) { create_enterprise_user(confirmed_at: nil) }
+  let!(:user) { create(:user) }
+  let!(:confirmed_user) { create(:user, confirmed_at: nil) }
+  let!(:unconfirmed_user) { create(:user, confirmed_at: nil) }
   let!(:confirmed_token) { confirmed_user.confirmation_token }
 
   before do

@@ -4,8 +4,8 @@ feature '
     As a Super Admin
     I want to be able to set a distributor on each payment method
 ' do
-  include AuthenticationWorkflow
   include WebHelper
+  include AuthenticationWorkflow
 
   background do
     @distributors = (1..3).map { create(:distributor_enterprise) }
@@ -131,7 +131,7 @@ feature '
   end
 
   context "as an enterprise user", js: true do
-    let(:enterprise_user) { create_enterprise_user }
+    let(:enterprise_user) { create(:user) }
     let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
     let(:distributor2) { create(:distributor_enterprise, name: 'Second Distributor') }
     let(:distributor3) { create(:distributor_enterprise, name: 'Third Distributor') }

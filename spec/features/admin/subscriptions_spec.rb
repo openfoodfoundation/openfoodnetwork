@@ -6,7 +6,7 @@ feature 'Subscriptions' do
   include WebHelper
 
   context "as an enterprise user", js: true do
-    let!(:user) { create_enterprise_user(enterprise_limit: 10) }
+    let!(:user) { create(:user) }
     let!(:shop) { create(:distributor_enterprise, owner: user, enable_subscriptions: true) }
     let!(:shop2) { create(:distributor_enterprise, owner: user, enable_subscriptions: true) }
     let!(:shop_unmanaged) { create(:distributor_enterprise, enable_subscriptions: true) }

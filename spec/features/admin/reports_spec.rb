@@ -4,22 +4,22 @@ feature '
     As an administrator
     I want numbers, all the numbers!
 ' do
-  include AuthenticationWorkflow
   include WebHelper
+  include AuthenticationWorkflow
 
   context "Permissions for different reports" do
     context "As an enterprise user" do
       let(:user) do
-        create_enterprise_user(enterprises: [
-                                 create(:distributor_enterprise)
-                               ])
+        create(:user, enterprises: [create(:distributor_enterprise)])
       end
+
       it "does not show super admin only report" do
         login_to_admin_as user
         click_link "Reports"
         expect(page).not_to have_content "Users & Enterprises"
       end
     end
+
     context "As an admin user" do
       it "shows the super admin only report" do
         login_to_admin_section
@@ -167,8 +167,8 @@ feature '
   describe "sales tax report" do
     let(:distributor1) { create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true) }
     let(:distributor2) { create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true) }
-    let(:user1) { create_enterprise_user enterprises: [distributor1] }
-    let(:user2) { create_enterprise_user enterprises: [distributor2] }
+    let(:user1) { create(:user, enterprises: [distributor1]) }
+    let(:user2) { create(:user, enterprises: [distributor2]) }
     let!(:shipping_method) { create(:shipping_method_with, :expensive_name, distributors: [distributor1]) }
     let(:enterprise_fee) { create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category, calculator: Calculator::FlatRate.new(preferred_amount: 120.0)) }
     let(:order_cycle) { create(:simple_order_cycle, coordinator: distributor1, coordinator_fees: [enterprise_fee], distributors: [distributor1], variants: [product1.master]) }
@@ -329,9 +329,9 @@ feature '
   end
 
   describe "users and enterprises report" do
-    let!(:enterprise1) { create( :enterprise, owner: create_enterprise_user ) }
-    let!(:enterprise2) { create( :enterprise, owner: create_enterprise_user ) }
-    let!(:enterprise3) { create( :enterprise, owner: create_enterprise_user ) }
+    let!(:enterprise1) { create( :enterprise, owner: create(:user) ) }
+    let!(:enterprise2) { create( :enterprise, owner: create(:user) ) }
+    let!(:enterprise3) { create( :enterprise, owner: create(:user) ) }
 
     before do
       enterprise3.enterprise_roles.build( user: enterprise1.owner ).save
@@ -379,8 +379,8 @@ feature '
   describe "Xero invoices report" do
     let(:distributor1) { create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true) }
     let(:distributor2) { create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true) }
-    let(:user1) { create_enterprise_user enterprises: [distributor1] }
-    let(:user2) { create_enterprise_user enterprises: [distributor2] }
+    let(:user1) { create(:user, enterprises: [distributor1]) }
+    let(:user2) { create(:user, enterprises: [distributor2]) }
     let(:shipping_method) { create(:shipping_method_with, :expensive_name) }
     let(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
 

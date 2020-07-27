@@ -6,8 +6,8 @@ feature '
     As an administrator
     I want to create and edit orders
 ', js: true do
-  include AuthenticationWorkflow
   include WebHelper
+  include AuthenticationWorkflow
 
   let(:user) { create(:user) }
   let(:product) { create(:simple_product) }
@@ -187,7 +187,7 @@ feature '
     let(:product) { order_cycle1.products.first }
 
     before(:each) do
-      @enterprise_user = create_enterprise_user
+      @enterprise_user = create(:user)
       @enterprise_user.enterprise_roles.build(enterprise: supplier1).save
       @enterprise_user.enterprise_roles.build(enterprise: coordinator1).save
       @enterprise_user.enterprise_roles.build(enterprise: distributor1).save

@@ -4,8 +4,8 @@ feature '
   As an Administrator
   I want to manage relationships between enterprises
 ', js: true do
-  include AuthenticationWorkflow
   include WebHelper
+  include AuthenticationWorkflow
 
   context "as a site administrator" do
     before { quick_login_as_admin }
@@ -92,7 +92,7 @@ feature '
     let!(:d1) { create(:distributor_enterprise) }
     let!(:d2) { create(:distributor_enterprise) }
     let!(:d3) { create(:distributor_enterprise) }
-    let(:enterprise_user) { create_enterprise_user( enterprises: [d1] ) }
+    let(:enterprise_user) { create(:user, enterprises: [d1] ) }
 
     let!(:er1) { create(:enterprise_relationship, parent: d1, child: d2) }
     let!(:er2) { create(:enterprise_relationship, parent: d2, child: d1) }

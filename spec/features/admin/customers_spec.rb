@@ -6,7 +6,7 @@ feature 'Customers' do
   include WebHelper
 
   context "as an enterprise user" do
-    let(:user) { create_enterprise_user(enterprise_limit: 10) }
+    let(:user) { create(:user, enterprise_limit: 10) }
     let(:managed_distributor1) { create(:distributor_enterprise, owner: user) }
     let(:managed_distributor2) { create(:distributor_enterprise, owner: user) }
     let(:unmanaged_distributor) { create(:distributor_enterprise) }

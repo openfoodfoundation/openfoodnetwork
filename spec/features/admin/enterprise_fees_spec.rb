@@ -4,8 +4,8 @@ feature '
     As an administrator
     I want to manage enterprise fees
 ', js: true do
-  include AuthenticationWorkflow
   include WebHelper
+  include AuthenticationWorkflow
 
   let!(:tax_category_gst) { create(:tax_category, name: 'GST') }
 
@@ -107,7 +107,7 @@ feature '
   end
 
   context "as an enterprise manager" do
-    let(:enterprise_user) { create_enterprise_user }
+    let(:enterprise_user) { create(:user) }
     let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
     let(:distributor2) { create(:distributor_enterprise, name: 'Second Distributor') }
     let(:distributor3) { create(:distributor_enterprise, name: 'Third Distributor') }
