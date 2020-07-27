@@ -2,15 +2,7 @@ module AuthenticationHelper
   include Warden::Test::Helpers
 
   def login_as_admin
-    admin_role = Spree::Role.find_or_create_by!(name: 'admin')
-    admin_user = create(:user,
-                        password: 'passw0rd',
-                        password_confirmation: 'passw0rd',
-                        remember_me: false,
-                        persistence_token: 'pass',
-                        login: 'admin@ofn.org')
-
-    admin_user.spree_roles << admin_role
+    admin_user = create(:admin_user)
     login_as admin_user
     admin_user
   end
