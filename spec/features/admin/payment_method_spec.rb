@@ -5,7 +5,7 @@ feature '
     I want to be able to set a distributor on each payment method
 ' do
   include WebHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   background do
     @distributors = (1..3).map { create(:distributor_enterprise) }

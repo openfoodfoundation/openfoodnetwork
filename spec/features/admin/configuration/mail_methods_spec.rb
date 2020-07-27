@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "Mail Methods" do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   before(:each) do
     login_as_admin_and_visit spree.admin_general_settings_path

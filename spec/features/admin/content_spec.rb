@@ -4,7 +4,7 @@ feature '
   As a site administrator
   I want to configure the site content
 ' do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
 
   before do

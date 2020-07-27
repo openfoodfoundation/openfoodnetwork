@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "checking out an order with a Stripe Connect payment method", type: :request do
   include ShopWorkflow
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include OpenFoodNetwork::ApiHelper
 
   let!(:order_cycle) { create(:simple_order_cycle) }

@@ -7,7 +7,7 @@ feature '
     I want to print a ticket for an order
 ', js: true do
   include CheckoutHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include ActionView::Helpers::NumberHelper
 
   context "as an enterprise manager" do

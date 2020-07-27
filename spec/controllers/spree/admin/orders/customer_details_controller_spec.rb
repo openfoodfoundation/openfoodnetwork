@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   describe "#update" do
     context "adding customer details via newly created admin order" do

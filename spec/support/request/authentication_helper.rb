@@ -1,4 +1,4 @@
-module AuthenticationWorkflow
+module AuthenticationHelper
   include Warden::Test::Helpers
 
   def login_as(user)
@@ -46,7 +46,7 @@ module AuthenticationWorkflow
 end
 
 RSpec.configure do |config|
-  config.extend AuthenticationWorkflow, type: :feature
+  config.extend AuthenticationHelper, type: :feature
 
   # rspec-rails 3 will no longer automatically infer an example group's spec type
   # from the file location. You can explicitly opt-in to the feature using this

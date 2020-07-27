@@ -2,7 +2,7 @@ require 'spec_helper'
 
 feature 'Subscriptions' do
   include AdminHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
 
   context "as an enterprise user", js: true do

@@ -5,7 +5,7 @@ feature '
   I want to be able to manage orders in bulk
 ', js: true do
   include AdminHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
 
   context "listing orders" do

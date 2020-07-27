@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature 'Multilingual', js: true do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
   let(:admin_role) { Spree::Role.find_or_create_by!(name: 'admin') }
   let(:admin_user) { create(:user) }

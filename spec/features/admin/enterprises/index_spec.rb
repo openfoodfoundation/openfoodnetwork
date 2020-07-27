@@ -2,7 +2,7 @@ require 'spec_helper'
 
 feature 'Enterprises Index' do
   include WebHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   context "as an admin user" do
     scenario "listing enterprises" do

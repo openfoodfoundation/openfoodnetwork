@@ -6,7 +6,7 @@ feature "
   Without affecting other hubs that share the same products
 ", js: true do
   include AdminHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
 
   context "as the manager of a hub" do

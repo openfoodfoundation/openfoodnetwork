@@ -5,7 +5,7 @@ feature '
     I want to set a supplier and distributor(s) for a product
 ' do
   include WebHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   let!(:taxon) { create(:taxon) }
   let!(:stock_location) { create(:stock_location, backorderable_default: false) }

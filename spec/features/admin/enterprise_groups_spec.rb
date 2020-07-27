@@ -5,7 +5,7 @@ feature '
     I want to manage enterprise groups
 ' do
   include WebHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   before(:each) do
     login_to_admin_section

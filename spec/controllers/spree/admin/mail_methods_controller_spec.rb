@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Spree::Admin::MailMethodsController do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   before { controller_login_as_admin }
 

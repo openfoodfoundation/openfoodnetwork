@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Admin::InventoryItemsController, type: :controller do
-  # include AuthenticationWorkflow
+  # include AuthenticationHelper
 
   describe "create" do
     context "json" do

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "Tax Rates" do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   let!(:calculator) { create(:calculator_per_item, calculable: create(:order)) }
   let!(:tax_rate) { create(:tax_rate, calculator: calculator) }

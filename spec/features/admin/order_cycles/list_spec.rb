@@ -7,7 +7,7 @@ feature '
     I want to list and filter order cycles
 ', js: true do
   include AdminHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
 
   scenario "listing and filtering order cycles" do

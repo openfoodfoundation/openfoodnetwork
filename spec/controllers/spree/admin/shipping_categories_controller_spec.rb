@@ -5,7 +5,7 @@ require 'spec_helper'
 module Spree
   module Admin
     describe ShippingCategoriesController, type: :controller do
-      include AuthenticationWorkflow
+      include AuthenticationHelper
 
       describe "#create and #update" do
         before { controller_login_as_admin }

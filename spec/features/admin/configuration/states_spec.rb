@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "States" do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   let!(:country) { create(:country) }
 

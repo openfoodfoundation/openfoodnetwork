@@ -6,7 +6,7 @@ feature '
     As an administrator
     I want to be alerted when I navigate away from a dirty order cycle form
 ', js: true do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   scenario "alert when navigating away from dirty form" do
     # Given a 'complex' order cycle form

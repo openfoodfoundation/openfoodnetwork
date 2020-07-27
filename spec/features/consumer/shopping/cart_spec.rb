@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "full-page cart", js: true do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
   include ShopWorkflow
   include UIComponentHelper

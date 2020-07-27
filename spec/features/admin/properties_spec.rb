@@ -6,7 +6,7 @@ feature '
     As an admin
     I want to manage product properties
 ' do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   scenario "creating and editing a property" do
     login_as_admin_and_visit spree.admin_properties_path

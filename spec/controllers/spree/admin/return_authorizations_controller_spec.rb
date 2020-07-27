@@ -5,7 +5,7 @@ require 'spec_helper'
 module Spree
   module Admin
     describe ReturnAuthorizationsController, type: :controller do
-      include AuthenticationWorkflow
+      include AuthenticationHelper
 
       let(:order) do
         create(:order, :with_line_item, :completed,

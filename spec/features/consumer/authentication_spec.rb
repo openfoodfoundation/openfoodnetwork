@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "Authentication", js: true do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include UIComponentHelper
   include OpenFoodNetwork::EmailHelper
 

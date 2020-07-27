@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "Credit Cards", js: true do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   describe "as a logged in user" do
     let(:user) { create(:user) }
     let!(:customer) { create(:customer, user: user) }

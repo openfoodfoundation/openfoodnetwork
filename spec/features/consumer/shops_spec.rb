@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature 'Shops', js: true do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include UIComponentHelper
   include WebHelper
 

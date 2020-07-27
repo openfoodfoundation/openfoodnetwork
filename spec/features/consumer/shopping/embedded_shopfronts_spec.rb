@@ -2,7 +2,7 @@ require 'spec_helper'
 
 feature "Using embedded shopfront functionality", js: true do
   include OpenFoodNetwork::EmbeddedPagesHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
   include ShopWorkflow
   include CheckoutWorkflow

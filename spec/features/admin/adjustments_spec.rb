@@ -4,7 +4,7 @@ feature '
     As an administrator
     I want to manage adjustments on orders
 ', js: true do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
 
   let!(:user) { create(:user) }

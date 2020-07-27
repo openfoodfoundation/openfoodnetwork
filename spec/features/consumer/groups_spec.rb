@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature 'Groups', js: true do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include UIComponentHelper
 
   let(:enterprise) { create(:distributor_enterprise) }

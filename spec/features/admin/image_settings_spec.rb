@@ -4,7 +4,7 @@ feature '
     As an admin
     I want to manage image formats
 ' do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
 
   before(:all) do

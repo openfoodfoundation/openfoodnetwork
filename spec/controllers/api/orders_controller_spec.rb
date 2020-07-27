@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module Api
   describe OrdersController, type: :controller do
-    include AuthenticationWorkflow
+    include AuthenticationHelper
     render_views
 
     let!(:regular_user) { create(:user) }

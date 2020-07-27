@@ -5,7 +5,7 @@ feature '
   I want to manage relationships between enterprises
 ', js: true do
   include WebHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   context "as a site administrator" do
     before { login_as_admin }

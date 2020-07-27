@@ -1,7 +1,7 @@
 require "spec_helper"
 
 feature "Packing Reports", js: true do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
 
   let(:distributor) { create(:distributor_enterprise) }

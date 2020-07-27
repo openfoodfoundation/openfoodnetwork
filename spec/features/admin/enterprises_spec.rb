@@ -5,7 +5,7 @@ feature '
     I want to manage enterprises
 ' do
   include WebHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   scenario "viewing an enterprise" do
     e = create(:enterprise)

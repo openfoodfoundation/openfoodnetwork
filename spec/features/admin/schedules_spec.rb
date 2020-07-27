@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature 'Schedules', js: true do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
 
   context "as an enterprise user" do

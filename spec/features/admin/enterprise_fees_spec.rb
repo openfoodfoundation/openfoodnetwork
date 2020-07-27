@@ -5,7 +5,7 @@ feature '
     I want to manage enterprise fees
 ', js: true do
   include WebHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   let!(:tax_category_gst) { create(:tax_category, name: 'GST') }
 

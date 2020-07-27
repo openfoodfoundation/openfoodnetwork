@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature 'Multilingual', js: true do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
   include ShopWorkflow
   include UIComponentHelper

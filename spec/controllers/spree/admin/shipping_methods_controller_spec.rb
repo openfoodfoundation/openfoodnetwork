@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Spree::Admin::ShippingMethodsController, type: :controller do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   describe "#update" do
     let(:shipping_method) { create(:shipping_method) }

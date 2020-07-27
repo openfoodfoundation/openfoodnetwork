@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "Registration", js: true do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
 
   describe "Registering a Profile" do

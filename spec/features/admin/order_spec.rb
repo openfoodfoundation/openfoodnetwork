@@ -7,7 +7,7 @@ feature '
     I want to create and edit orders
 ', js: true do
   include WebHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   let(:user) { create(:user) }
   let(:product) { create(:simple_product) }

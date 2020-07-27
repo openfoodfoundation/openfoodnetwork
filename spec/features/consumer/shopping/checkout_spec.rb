@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "As a consumer I want to check out my cart", js: true do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include ShopWorkflow
   include CheckoutWorkflow
   include WebHelper

@@ -5,7 +5,7 @@ feature '
   I want to be able to manage products in bulk
 ', js: true do
   include AdminHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
 
   describe "listing products" do

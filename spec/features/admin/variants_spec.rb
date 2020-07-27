@@ -4,7 +4,7 @@ feature '
     As an admin
     I want to manage product variants
 ' do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
 
   scenario "creating a new variant" do

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "As a consumer I want to view products", js: true do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
   include ShopWorkflow
   include UIComponentHelper

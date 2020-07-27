@@ -2,7 +2,7 @@ require 'spec_helper'
 
 feature 'shipping methods' do
   include WebHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   before :each do
     @shipping_method = create(:shipping_method)

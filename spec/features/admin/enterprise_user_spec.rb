@@ -5,7 +5,7 @@ feature '
     I want to setup users to manage an enterprise
 ' do
   include WebHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   let!(:user) { create(:user) }
   let!(:supplier1) { create(:supplier_enterprise, name: 'Supplier 1') }

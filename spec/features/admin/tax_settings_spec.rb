@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature 'Account and Billing Settings' do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
 
   describe "updating" do

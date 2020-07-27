@@ -4,7 +4,7 @@ feature '
     As an admin
     I want to manage payments
 ' do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   let(:order) { create(:completed_order_with_fees) }
 

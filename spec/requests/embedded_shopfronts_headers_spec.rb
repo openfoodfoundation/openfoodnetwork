@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "setting response headers for embedded shopfronts", type: :request do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   let(:enterprise) { create(:distributor_enterprise) }
   let(:user) { enterprise.owner }

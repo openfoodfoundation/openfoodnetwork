@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "Order Management", js: true do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include OpenFoodNetwork::EmailHelper
 
   describe "viewing a completed order" do

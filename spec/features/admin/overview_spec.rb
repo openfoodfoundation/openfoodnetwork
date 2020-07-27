@@ -5,7 +5,7 @@ feature '
   I want to be given information about the state of my enterprises, products and order cycles
 ', js: true do
   include WebHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include ::Spree::TestingSupport::AuthorizationHelpers
 
   context "as an enterprise user" do

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "Zones" do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   before do
     login_as_admin

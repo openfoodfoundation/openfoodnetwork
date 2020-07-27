@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "Account Settings", js: true do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include OpenFoodNetwork::EmailHelper
 
   describe "as a logged in user" do

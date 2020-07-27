@@ -5,7 +5,7 @@ feature '
     I want numbers, all the numbers!
 ' do
   include WebHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   context "Permissions for different reports" do
     context "As an enterprise user" do

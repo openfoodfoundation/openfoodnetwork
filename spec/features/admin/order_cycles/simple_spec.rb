@@ -7,7 +7,7 @@ feature '
     I want to manage simple order cycles
 ', js: true do
   include AdminHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
 
   scenario "updating many order cycle opening/closing times at once", js: true do

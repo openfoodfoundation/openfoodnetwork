@@ -6,7 +6,7 @@ feature '
     As an administrator
     I want to manage orders
 ', js: true do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
 
   let(:user) { create(:user) }

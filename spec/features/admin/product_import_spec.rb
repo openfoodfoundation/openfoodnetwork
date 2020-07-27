@@ -3,7 +3,7 @@ require 'open_food_network/permissions'
 
 feature "Product Import", js: true do
   include AdminHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
 
   let!(:admin) { create(:admin_user) }
