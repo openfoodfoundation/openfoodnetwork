@@ -19,8 +19,7 @@ feature '
                  orders_close_at: Time.zone.local(2041, 12, 12, 12, 12, 12))
 
     # When I go to the order cycles page
-    quick_login_as_admin
-    visit admin_order_cycles_path
+    login_to_admin_and_visit admin_order_cycles_path
 
     # And I fill in some new opening/closing times and save them
     within("tr.order-cycle-#{oc1.id}") do
@@ -77,8 +76,7 @@ feature '
     oc = create(:simple_order_cycle)
 
     # When I clone it
-    quick_login_as_admin
-    visit admin_order_cycles_path
+    login_to_admin_and_visit admin_order_cycles_path
     within "tr.order-cycle-#{oc.id}" do
       find('a.clone-order-cycle').click
     end
@@ -507,8 +505,7 @@ feature '
       ex.update! pickup_time: 'pickup time', pickup_instructions: 'pickup instructions'
 
       # When I edit it
-      quick_login_as_admin
-      visit admin_order_cycles_path
+      login_to_admin_and_visit admin_order_cycles_path
       within "tr.order-cycle-#{oc.id}" do
         find("a.edit-order-cycle").click
       end
@@ -540,8 +537,7 @@ feature '
       ex.update! pickup_time: 'pickup time', pickup_instructions: 'pickup instructions'
 
       # When I edit it
-      quick_login_as_admin
-      visit edit_admin_order_cycle_path oc
+      login_to_admin_and_visit edit_admin_order_cycle_path oc
 
       wait_for_edit_form_to_load_order_cycle(oc)
 
@@ -595,8 +591,7 @@ feature '
 
   scenario "deleting an order cycle" do
     order_cycle = create(:simple_order_cycle, name: "Translusent Berries")
-    quick_login_as_admin
-    visit admin_order_cycles_path
+    login_to_admin_and_visit admin_order_cycles_path
     expect(page).to have_selector "tr.order-cycle-#{order_cycle.id}"
     accept_alert do
       first('a.delete-order-cycle').click

@@ -13,7 +13,7 @@ feature "Packing Reports", js: true do
   before do
     order.line_items << li1
     order.line_items << li2
-    quick_login_as_admin
+    login_as_admin
   end
 
   describe "viewing a report" do

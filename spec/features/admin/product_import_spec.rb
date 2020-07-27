@@ -31,7 +31,7 @@ feature "Product Import", js: true do
   let(:shipping_category_id_str) { Spree::ShippingCategory.all.first.id.to_s }
 
   describe "when importing products from uploaded file" do
-    before { quick_login_as_admin }
+    before { login_as_admin }
     after { File.delete('/tmp/test.csv') }
 
     it "validates entries and saves them if they are all valid and allows viewing new items in Bulk Products" do
@@ -342,7 +342,7 @@ feature "Product Import", js: true do
   end
 
   describe "when dealing with uploaded files" do
-    before { quick_login_as_admin }
+    before { login_as_admin }
 
     it "checks filetype on upload" do
       File.write('/tmp/test.txt', "Wrong filetype!")

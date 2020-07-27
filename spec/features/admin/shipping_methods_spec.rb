@@ -10,7 +10,7 @@ feature 'shipping methods' do
 
   context "as a site admin" do
     before(:each) do
-      quick_login_as_admin
+      login_as_admin
     end
 
     scenario "creating a shipping method owned by some distributors" do

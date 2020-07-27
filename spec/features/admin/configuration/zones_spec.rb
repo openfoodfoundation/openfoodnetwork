@@ -4,16 +4,15 @@ describe "Zones" do
   include AuthenticationWorkflow
 
   before do
-    quick_login_as_admin
+    login_as_admin
     Spree::Zone.delete_all
   end
 
   scenario "list existing zones" do
-    visit spree.admin_dashboard_path
-    click_link "Configuration"
-
+    visit spree.admin_general_settings_path
     create(:zone, name: "eastern", description: "zone is eastern")
     create(:zone, name: "western", description: "cool san fran")
+
     click_link "Zones"
 
     within_row(1) { expect(page).to have_content("eastern") }

@@ -7,7 +7,7 @@ feature "Managing users" do
   context "as super-admin" do
     before do
       setup_email
-      quick_login_as_admin
+      login_as_admin
     end
 
     context "from the index page" do

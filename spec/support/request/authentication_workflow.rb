@@ -5,7 +5,7 @@ module AuthenticationWorkflow
     login_as user
   end
 
-  def quick_login_as_admin
+  def login_as_admin
     admin_role = Spree::Role.find_or_create_by!(name: 'admin')
     admin_user = create(:user,
                         password: 'passw0rd',
@@ -20,12 +20,12 @@ module AuthenticationWorkflow
   end
 
   def login_to_admin_and_visit(path_visit)
-    quick_login_as_admin
+    login_as_admin
     visit path_visit
   end
 
   def login_to_admin_section
-    login_to_admin__and_visit(spree.admin_dashboard_path)
+    login_to_admin_and_visit(spree.admin_dashboard_path)
   end
 
   def login_to_admin_as(user)

@@ -16,12 +16,11 @@ feature 'Account and Billing Settings' do
     end
 
     before do
-      quick_login_as_admin
+      login_as_admin
     end
 
     context "as an admin user" do
       it "loads the page" do
-        visit spree.admin_dashboard_path
         click_link "Configuration"
         click_link "Tax Settings"
 

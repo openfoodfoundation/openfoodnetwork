@@ -10,7 +10,7 @@ feature '
 
   context "listing orders" do
     before :each do
-      quick_login_as_admin
+      login_as_admin
     end
 
     it "displays a message when number of line items is zero" do
@@ -121,7 +121,7 @@ feature '
 
   context "altering line item properties" do
     before :each do
-      quick_login_as_admin
+      login_as_admin
     end
 
     context "tracking changes" do
@@ -177,7 +177,7 @@ feature '
 
   context "using page controls" do
     before :each do
-      quick_login_as_admin
+      login_as_admin
     end
 
     let!(:p1) { create(:product_with_option_types, group_buy: true, group_buy_unit_size: 5000, variant_unit: "weight", variants: [create(:variant, unit_value: 1000)] ) }

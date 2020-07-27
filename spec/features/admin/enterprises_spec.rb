@@ -25,7 +25,7 @@ feature '
     enterprise_fee = create(:enterprise_fee)
 
     # Navigating
-    admin = quick_login_as_admin
+    admin = login_as_admin
     visit '/admin/enterprises'
     click_link 'New Enterprise'
 
@@ -66,7 +66,7 @@ feature '
     enterprise_fee = create(:enterprise_fee, enterprise: @enterprise )
     user = create(:user)
 
-    admin = quick_login_as_admin
+    admin = login_as_admin
 
     visit '/admin/enterprises'
     within "tr.enterprise-#{@enterprise.id}" do
@@ -219,8 +219,7 @@ feature '
       s = create(:supplier_enterprise)
 
       # When I go to its properties page
-      quick_login_as_admin
-      visit admin_enterprises_path
+      login_to_admin_and_visit admin_enterprises_path
       within(".enterprise-#{s.id}") { click_link 'Properties' }
 
       # And I create a property
@@ -243,8 +242,7 @@ feature '
       s.producer_properties.create! property_name: 'Certified Organic', value: 'NASAA 12345'
 
       # When I go to its properties page
-      quick_login_as_admin
-      visit main_app.admin_enterprise_producer_properties_path(s)
+      login_to_admin_and_visit main_app.admin_enterprise_producer_properties_path(s)
 
       # And I update the property
       fill_in 'enterprise_producer_properties_attributes_0_property_name', with: "Biodynamic"
@@ -266,8 +264,7 @@ feature '
       pp = s.producer_properties.create! property_name: 'Certified Organic', value: 'NASAA 12345'
 
       # When I go to its properties page
-      quick_login_as_admin
-      visit main_app.admin_enterprise_producer_properties_path(s)
+      login_to_admin_and_visit main_app.admin_enterprise_producer_properties_path(s)
 
       # And I remove the property
       expect(page).to have_field 'enterprise_producer_properties_attributes_0_property_name', with: 'Certified Organic'

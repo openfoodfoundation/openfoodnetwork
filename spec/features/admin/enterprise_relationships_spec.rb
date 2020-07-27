@@ -8,7 +8,7 @@ feature '
   include AuthenticationWorkflow
 
   context "as a site administrator" do
-    before { quick_login_as_admin }
+    before { login_as_admin }
 
     scenario "listing relationships" do
       # Given some enterprises with relationships

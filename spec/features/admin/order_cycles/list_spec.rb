@@ -128,8 +128,7 @@ feature '
 
     context 'using datepickers' do
       it "correctly opens the datepicker and changes the date field" do
-        quick_login_as_admin
-        visit admin_order_cycles_path
+        login_to_admin_and_visit admin_order_cycles_path
 
         within("tr.order-cycle-#{oc_pt.id}") do
           expect(find('input.datetimepicker', match: :first).value).to start_with '2012-01-01 00:00'
