@@ -67,7 +67,7 @@ feature '
     end
 
     scenario "creating an on-demand product", js: true do
-      login_to_admin_and_visit spree.admin_products_path
+      login_as_admin_and_visit spree.admin_products_path
 
       click_link 'New Product'
 

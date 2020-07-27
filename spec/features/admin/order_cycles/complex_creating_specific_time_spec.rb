@@ -33,7 +33,7 @@ feature '
     distributor_fee = create(:enterprise_fee, enterprise: distributor, name: 'Distributor fee')
 
     # When I go to the new order cycle page
-    login_to_admin_and_visit admin_order_cycles_path
+    login_as_admin_and_visit admin_order_cycles_path
     click_link 'New Order Cycle'
 
     # Select a coordinator since there are two available

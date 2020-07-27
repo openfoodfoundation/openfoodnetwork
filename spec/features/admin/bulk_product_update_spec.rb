@@ -176,7 +176,7 @@ feature '
     shipping_category = create(:shipping_category)
     taxon = create(:taxon)
 
-    login_to_admin_and_visit spree.admin_products_path
+    login_as_admin_and_visit spree.admin_products_path
 
     find("a", text: "NEW PRODUCT").click
     expect(page).to have_content 'NEW PRODUCT'
@@ -511,7 +511,7 @@ feature '
       let!(:v2) { p2.variants.first }
 
       before do
-        login_to_admin_and_visit spree.admin_products_path
+        login_as_admin_and_visit spree.admin_products_path
       end
 
       it "shows an edit button for products, which takes the user to the standard edit page for that product in a new window" do
@@ -554,7 +554,7 @@ feature '
         p2 = FactoryBot.create(:product, name: "P2")
         p3 = FactoryBot.create(:product, name: "P3")
 
-        login_to_admin_and_visit spree.admin_products_path
+        login_as_admin_and_visit spree.admin_products_path
 
         expect(page).to have_selector "a.clone-product", count: 3
 
@@ -578,7 +578,7 @@ feature '
     describe "using column display dropdown" do
       it "shows a column display dropdown, which shows a list of columns when clicked" do
         FactoryBot.create(:simple_product)
-        login_to_admin_and_visit spree.admin_products_path
+        login_as_admin_and_visit spree.admin_products_path
 
         toggle_columns "Available On"
 
@@ -605,7 +605,7 @@ feature '
         p1 = FactoryBot.create(:simple_product, name: "product1", supplier: s1)
         p2 = FactoryBot.create(:simple_product, name: "product2", supplier: s2)
 
-        login_to_admin_and_visit spree.admin_products_path
+        login_as_admin_and_visit spree.admin_products_path
 
         # Page shows the filter controls
         expect(page).to have_select "producer_filter", visible: false
@@ -756,7 +756,7 @@ feature '
     let!(:product) { create(:simple_product, name: "Carrots") }
 
     it "displays product images and image upload modal" do
-      login_to_admin_and_visit spree.admin_products_path
+      login_as_admin_and_visit spree.admin_products_path
 
       within "table#listing_products tr#p_#{product.id}" do
         # Displays product images

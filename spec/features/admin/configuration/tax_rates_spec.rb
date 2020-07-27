@@ -7,7 +7,7 @@ describe "Tax Rates" do
   let!(:tax_rate) { create(:tax_rate, calculator: calculator) }
 
   before do
-    login_to_admin_and_visit spree.admin_general_settings_path
+    login_as_admin_and_visit spree.admin_general_settings_path
   end
 
   # Regression test for #535

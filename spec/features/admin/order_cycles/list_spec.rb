@@ -30,7 +30,7 @@ feature '
     create(:proxy_order, subscription: create(:subscription, schedule: schedule1), order_cycle: oc1)
 
     # When I go to the admin order cycles page
-    login_to_admin_and_visit admin_order_cycles_path
+    login_as_admin_and_visit admin_order_cycles_path
 
     # Then the order cycles should be ordered correctly
     expect(page).to have_selector "#listing_order_cycles tr td:first-child", count: 7
@@ -128,7 +128,7 @@ feature '
 
     context 'using datepickers' do
       it "correctly opens the datepicker and changes the date field" do
-        login_to_admin_and_visit admin_order_cycles_path
+        login_as_admin_and_visit admin_order_cycles_path
 
         within("tr.order-cycle-#{oc_pt.id}") do
           expect(find('input.datetimepicker', match: :first).value).to start_with '2012-01-01 00:00'

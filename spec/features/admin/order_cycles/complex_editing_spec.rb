@@ -19,7 +19,7 @@ feature '
     oc.distributors.last.update_attribute :name, 'ZZZZ'
 
     # When I edit it
-    login_to_admin_and_visit edit_admin_order_cycle_path(oc)
+    login_as_admin_and_visit edit_admin_order_cycle_path(oc)
 
     wait_for_edit_form_to_load_order_cycle(oc)
 

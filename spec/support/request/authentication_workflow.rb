@@ -19,13 +19,13 @@ module AuthenticationWorkflow
     admin_user
   end
 
-  def login_to_admin_and_visit(path_visit)
+  def login_as_admin_and_visit(path_visit)
     login_as_admin
     visit path_visit
   end
 
   def login_to_admin_section
-    login_to_admin_and_visit(spree.admin_dashboard_path)
+    login_as_admin_and_visit(spree.admin_dashboard_path)
   end
 
   def login_to_admin_as(user)

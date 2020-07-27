@@ -21,7 +21,7 @@ feature '
 
   scenario "adding taxed adjustments to an order" do
     # When I go to the adjustments page for the order
-    login_to_admin_and_visit spree.admin_orders_path
+    login_as_admin_and_visit spree.admin_orders_path
     page.find('td.actions a.icon-edit').click
     click_link 'Adjustments'
 
@@ -43,7 +43,7 @@ feature '
     adjustment = create(:adjustment, label: "Extra Adjustment", adjustable: order, amount: 110, included_tax: 10)
 
     # When I go to the adjustments page for the order
-    login_to_admin_and_visit spree.admin_orders_path
+    login_as_admin_and_visit spree.admin_orders_path
     page.find('td.actions a.icon-edit').click
     click_link 'Adjustments'
     page.find('tr', text: 'Extra Adjustment').find('a.icon-edit').click
@@ -66,7 +66,7 @@ feature '
     adjustment = create(:adjustment, label: "Extra Adjustment", adjustable: order, amount: 110, included_tax: 0)
 
     # When I go to the adjustments page for the order
-    login_to_admin_and_visit spree.admin_orders_path
+    login_as_admin_and_visit spree.admin_orders_path
     page.find('td.actions a.icon-edit').click
     click_link 'Adjustments'
     page.find('tr', text: 'Extra Adjustment').find('a.icon-edit').click

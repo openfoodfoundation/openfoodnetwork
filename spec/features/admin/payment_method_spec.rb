@@ -13,7 +13,7 @@ feature '
 
   describe "creating a payment method", js: true do
     scenario "assigning a distributor to the payment method" do
-      login_to_admin_and_visit spree.admin_general_settings_path
+      login_as_admin_and_visit spree.admin_general_settings_path
       click_link 'Payment Methods'
       click_link 'New Payment Method'
 
@@ -68,12 +68,12 @@ feature '
 
     scenario "checking a single distributor is checked by default" do
       2.times.each { Enterprise.last.destroy }
-      login_to_admin_and_visit spree.new_admin_payment_method_path
+      login_as_admin_and_visit spree.new_admin_payment_method_path
       expect(page).to have_field "payment_method_distributor_ids_#{@distributors[0].id}", checked: true
     end
 
     scenario "checking more than a distributor displays no default choice" do
-      login_to_admin_and_visit spree.new_admin_payment_method_path
+      login_as_admin_and_visit spree.new_admin_payment_method_path
       expect(page).to have_field "payment_method_distributor_ids_#{@distributors[0].id}", checked: false
       expect(page).to have_field "payment_method_distributor_ids_#{@distributors[1].id}", checked: false
       expect(page).to have_field "payment_method_distributor_ids_#{@distributors[2].id}", checked: false
@@ -82,7 +82,7 @@ feature '
 
   scenario "updating a payment method", js: true do
     payment_method = create(:payment_method, distributors: [@distributors[0]])
-    login_to_admin_and_visit spree.edit_admin_payment_method_path payment_method
+    login_as_admin_and_visit spree.edit_admin_payment_method_path payment_method
 
     fill_in 'payment_method_name', with: 'New PM Name'
     find(:css, "tags-input .tags input").set "member\n"

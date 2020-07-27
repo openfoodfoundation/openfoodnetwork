@@ -9,7 +9,7 @@ feature 'Enterprises Index' do
       s = create(:supplier_enterprise)
       d = create(:distributor_enterprise)
 
-      login_to_admin_and_visit admin_enterprises_path
+      login_as_admin_and_visit admin_enterprises_path
 
       within("tr.enterprise-#{s.id}") do
         expect(page).to have_content s.name
@@ -44,7 +44,7 @@ feature 'Enterprises Index' do
 
       context "without violating rules" do
         before do
-          login_to_admin_and_visit admin_enterprises_path
+          login_as_admin_and_visit admin_enterprises_path
         end
 
         it "updates the enterprises" do
@@ -70,7 +70,7 @@ feature 'Enterprises Index' do
           d_manager.enterprise_roles.build(enterprise: second_distributor).save
           expect(d.owner).to_not eq d_manager
 
-          login_to_admin_and_visit admin_enterprises_path
+          login_as_admin_and_visit admin_enterprises_path
         end
 
         def enterprise_row_index(enterprise_name)

@@ -9,7 +9,7 @@ feature '
   let(:order) { create(:completed_order_with_fees) }
 
   scenario "visiting the payment form" do
-    login_to_admin_and_visit spree.new_admin_order_payment_path order
+    login_as_admin_and_visit spree.new_admin_order_payment_path order
 
     expect(page).to have_content "New Payment"
   end
@@ -25,7 +25,7 @@ feature '
     end
 
     scenario "visiting the payment form" do
-      login_to_admin_and_visit spree.new_admin_order_payment_path order
+      login_as_admin_and_visit spree.new_admin_order_payment_path order
 
       expect(page).to have_content "New Payment"
     end
@@ -38,7 +38,7 @@ feature '
     end
 
     it "renders the payment details" do
-      login_to_admin_and_visit spree.admin_order_payments_path order
+      login_as_admin_and_visit spree.admin_order_payments_path order
 
       page.click_link("StripeSCA")
       expect(page).to have_content order.payments.last.source.last_digits
@@ -50,7 +50,7 @@ feature '
       end
 
       it "renders the payment details" do
-        login_to_admin_and_visit spree.admin_order_payments_path order
+        login_as_admin_and_visit spree.admin_order_payments_path order
 
         page.click_link("StripeSCA")
         expect(page).to have_content order.payments.last.amount

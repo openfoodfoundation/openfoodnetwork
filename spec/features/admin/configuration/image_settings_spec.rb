@@ -4,7 +4,7 @@ describe "image settings" do
   include AuthenticationWorkflow
 
   before do
-    login_to_admin_and_visit spree.admin_dashboard_path
+    login_as_admin_and_visit spree.admin_dashboard_path
     click_link "Configuration"
     click_link "Image Settings"
   end

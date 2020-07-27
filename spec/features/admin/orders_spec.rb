@@ -29,7 +29,7 @@ feature '
       create(:simple_order_cycle, name: 'Four', orders_close_at: 4.weeks.from_now)
       create(:simple_order_cycle, name: 'Three', orders_close_at: 3.weeks.from_now)
 
-      login_to_admin_and_visit 'admin/orders'
+      login_as_admin_and_visit 'admin/orders'
 
       open_select2('#s2id_q_order_cycle_id_in')
 
@@ -49,7 +49,7 @@ feature '
       order4 = create(:order_with_credit_payment, user: user, distributor: distributor,
                                                   order_cycle: order_cycle4)
 
-      login_to_admin_and_visit 'admin/orders'
+      login_as_admin_and_visit 'admin/orders'
 
       multi_select2_select 'Two', from: 'q_order_cycle_id_in'
       multi_select2_select 'Three', from: 'q_order_cycle_id_in'
@@ -69,7 +69,7 @@ feature '
       end
 
       scenario "capture payment" do
-        login_to_admin_and_visit spree.admin_orders_path
+        login_as_admin_and_visit spree.admin_orders_path
         expect(page).to have_current_path spree.admin_orders_path
 
         # click the 'capture' link for the order
@@ -87,7 +87,7 @@ feature '
 
       scenario "ship order from the orders index page" do
         order.payments.first.capture!
-        login_to_admin_and_visit spree.admin_orders_path
+        login_as_admin_and_visit spree.admin_orders_path
 
         page.find("[data-powertip=Ship]").click
 
@@ -101,7 +101,7 @@ feature '
     scenario "can edit order" do
       incomplete_order = create(:order, distributor: distributor, order_cycle: order_cycle)
 
-      login_to_admin_and_visit spree.admin_orders_path
+      login_as_admin_and_visit spree.admin_orders_path
       uncheck 'Only show complete orders'
       page.find('a.icon-search').click
 

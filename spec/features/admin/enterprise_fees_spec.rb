@@ -13,7 +13,7 @@ feature '
     fee = create(:enterprise_fee, name: '$0.50 / kg', fee_type: 'packing', tax_category: tax_category_gst)
     amount = fee.calculator.preferred_amount
 
-    login_to_admin_and_visit spree.admin_general_settings_path
+    login_as_admin_and_visit spree.admin_general_settings_path
     click_link 'Enterprise Fees'
 
     expect(page).to have_select "enterprise_fee_set_collection_attributes_0_enterprise_id"
@@ -29,7 +29,7 @@ feature '
     e = create(:supplier_enterprise, name: 'Feedme')
 
     # When I go to the enterprise fees page
-    login_to_admin_and_visit admin_enterprise_fees_path
+    login_as_admin_and_visit admin_enterprise_fees_path
 
     # And I fill in the fields for a new enterprise fee and click update
     select 'Feedme', from: 'enterprise_fee_set_collection_attributes_0_enterprise_id'
@@ -57,7 +57,7 @@ feature '
     enterprise = create(:enterprise, name: 'Foo')
 
     # When I go to the enterprise fees page
-    login_to_admin_and_visit admin_enterprise_fees_path
+    login_as_admin_and_visit admin_enterprise_fees_path
 
     # And I update the fields for the enterprise fee and click update
     select 'Foo', from: 'enterprise_fee_set_collection_attributes_0_enterprise_id'
@@ -90,7 +90,7 @@ feature '
     fee = create(:enterprise_fee)
 
     # When I go to the enterprise fees page
-    login_to_admin_and_visit admin_enterprise_fees_path
+    login_as_admin_and_visit admin_enterprise_fees_path
 
     # And I click delete
     accept_alert do

@@ -4,7 +4,7 @@ describe "Taxonomies" do
   include AuthenticationWorkflow
 
   before(:each) do
-    login_to_admin_and_visit spree.admin_general_settings_path
+    login_as_admin_and_visit spree.admin_general_settings_path
   end
 
   context "show" do

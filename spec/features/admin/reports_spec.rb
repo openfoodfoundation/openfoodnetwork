@@ -31,7 +31,7 @@ feature '
 
   describe "Customers report" do
     before do
-      login_to_admin_and_visit spree.admin_reports_path
+      login_as_admin_and_visit spree.admin_reports_path
     end
 
     scenario "customers report" do
@@ -62,7 +62,7 @@ feature '
 
   describe "Order cycle management report" do
     before do
-      login_to_admin_and_visit spree.admin_reports_path
+      login_as_admin_and_visit spree.admin_reports_path
     end
 
     scenario "payment method report" do
@@ -88,7 +88,7 @@ feature '
 
   describe "Packing reports" do
     before do
-      login_to_admin_and_visit spree.admin_reports_path
+      login_as_admin_and_visit spree.admin_reports_path
     end
 
     let(:bill_address1) { create(:address, lastname: "Aman") }
@@ -144,7 +144,7 @@ feature '
   end
 
   scenario "orders and distributors report" do
-    login_to_admin_and_visit spree.admin_reports_path
+    login_as_admin_and_visit spree.admin_reports_path
     click_link 'Orders And Distributors'
     click_button 'Search'
 
@@ -152,7 +152,7 @@ feature '
   end
 
   scenario "payments reports" do
-    login_to_admin_and_visit spree.admin_reports_path
+    login_as_admin_and_visit spree.admin_reports_path
     click_link 'Payment Reports'
     click_button 'Search'
 
@@ -186,7 +186,7 @@ feature '
       order1.reload.update_distribution_charge!
       order1.finalize!
 
-      login_to_admin_and_visit spree.admin_reports_path
+      login_as_admin_and_visit spree.admin_reports_path
 
       click_link "Sales Tax"
       select("Tax types", from: "report_type")
@@ -221,7 +221,7 @@ feature '
 
   describe "orders & fulfilment reports" do
     it "loads the report page" do
-      login_to_admin_and_visit spree.admin_reports_path
+      login_as_admin_and_visit spree.admin_reports_path
       click_link 'Orders & Fulfillment Reports'
 
       expect(page).to have_content 'Supplier'
@@ -246,7 +246,7 @@ feature '
 
       it "is precise to time of day, not just date" do
         # When I generate a customer report with a timeframe that includes one order but not the other
-        login_to_admin_and_visit spree.orders_and_fulfillment_admin_reports_path
+        login_as_admin_and_visit spree.orders_and_fulfillment_admin_reports_path
 
         fill_in 'q_completed_at_gt', with: '2013-04-25 13:00:00'
         fill_in 'q_completed_at_lt', with: '2013-04-25 15:00:00'
@@ -263,7 +263,7 @@ feature '
       oc = create(:simple_order_cycle, name: "My Order Cycle", distributors: [distributor], orders_open_at: Time.zone.now, orders_close_at: nil)
       o = create(:order, order_cycle: oc, distributor: distributor)
 
-      login_to_admin_and_visit spree.orders_and_fulfillment_admin_reports_path
+      login_as_admin_and_visit spree.orders_and_fulfillment_admin_reports_path
 
       expect(page).to have_content "My Order Cycle"
     end
@@ -294,7 +294,7 @@ feature '
     end
 
     it "shows products and inventory report" do
-      login_to_admin_and_visit spree.admin_reports_path
+      login_as_admin_and_visit spree.admin_reports_path
 
       expect(page).to have_content "All products"
       expect(page).to have_content "Inventory (on hand)"
@@ -308,7 +308,7 @@ feature '
     end
 
     it "shows the LettuceShare report" do
-      login_to_admin_and_visit spree.admin_reports_path
+      login_as_admin_and_visit spree.admin_reports_path
       click_link 'LettuceShare'
       click_button "Go"
 
@@ -325,7 +325,7 @@ feature '
     before do
       enterprise3.enterprise_roles.build( user: enterprise1.owner ).save
 
-      login_to_admin_and_visit spree.admin_reports_path
+      login_as_admin_and_visit spree.admin_reports_path
 
       click_link 'Users & Enterprises'
     end
@@ -402,7 +402,7 @@ feature '
         order1.update_attribute :email, 'customer@email.com'
         Timecop.travel(Time.zone.local(2015, 4, 25, 14, 0, 0)) { order1.finalize! }
 
-        login_to_admin_and_visit spree.admin_reports_path
+        login_as_admin_and_visit spree.admin_reports_path
 
         click_link 'Xero Invoices'
       end
