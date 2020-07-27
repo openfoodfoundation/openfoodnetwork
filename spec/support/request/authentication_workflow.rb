@@ -24,19 +24,6 @@ module AuthenticationWorkflow
     visit spree.admin_dashboard_path
   end
 
-  # TODO: Should probably just rename this to create_user
-  def create_enterprise_user( attrs = {} )
-    new_user = build(:user, attrs)
-    new_user.spree_roles = [Spree::Role.find_or_create_by!(name: 'user')]
-    new_user.save
-    if attrs.key? :enterprises
-      attrs[:enterprises].each do |enterprise|
-        enterprise.users << new_user
-      end
-    end
-    new_user
-  end
-
   def login_to_admin_as(user)
     quick_login_as user
     visit spree.admin_dashboard_path
