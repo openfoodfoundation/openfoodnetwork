@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'support/request/authentication_workflow'
 
 describe Spree::CreditCardsController, type: :controller do
   let(:user) { create(:user) }
