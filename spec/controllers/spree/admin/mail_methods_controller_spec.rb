@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Spree::Admin::MailMethodsController do
   include AuthenticationWorkflow
 
-  before { login_as_admin }
+  before { controller_login_as_admin }
 
   context "#update" do
     it "should reinitialize the mail settings" do

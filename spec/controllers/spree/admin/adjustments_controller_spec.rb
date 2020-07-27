@@ -4,7 +4,7 @@ module Spree
   describe Admin::AdjustmentsController, type: :controller do
     include AuthenticationWorkflow
 
-    before { login_as_admin }
+    before { controller_login_as_admin }
 
     describe "setting included tax" do
       let(:order) { create(:order) }

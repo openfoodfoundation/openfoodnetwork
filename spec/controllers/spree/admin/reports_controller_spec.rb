@@ -191,7 +191,7 @@ describe Spree::Admin::ReportsController, type: :controller do
   end
 
   context "Products & Inventory" do
-    before { login_as_admin }
+    before { controller_login_as_admin }
 
     context "with distributors and suppliers" do
       let(:distributors) { [coordinator1, distributor1, distributor2] }
@@ -235,7 +235,7 @@ describe Spree::Admin::ReportsController, type: :controller do
   end
 
   context "My Customers" do
-    before { login_as_admin }
+    before { controller_login_as_admin }
 
     it "should have report types for customers" do
       expect(subject.report_types[:customers]).to eq([
@@ -286,7 +286,7 @@ describe Spree::Admin::ReportsController, type: :controller do
   end
 
   context "Admin" do
-    before { login_as_admin }
+    before { controller_login_as_admin }
 
     describe "users_and_enterprises" do
       let!(:present_objects) { [coordinator1] }

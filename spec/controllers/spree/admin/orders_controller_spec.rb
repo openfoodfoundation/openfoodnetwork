@@ -6,7 +6,7 @@ describe Spree::Admin::OrdersController, type: :controller do
   describe "#edit" do
     let!(:order) { create(:order_with_totals_and_distribution, ship_address: create(:address)) }
 
-    before { login_as_admin }
+    before { controller_login_as_admin }
 
     it "advances the order state" do
       expect {
@@ -40,7 +40,7 @@ describe Spree::Admin::OrdersController, type: :controller do
                  order_cycle_id: order.order_cycle_id } }
     end
 
-    before { login_as_admin }
+    before { controller_login_as_admin }
 
     context "complete order" do
       let(:order) { create :completed_order_with_totals }

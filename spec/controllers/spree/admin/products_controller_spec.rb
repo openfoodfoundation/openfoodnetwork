@@ -134,7 +134,7 @@ describe Spree::Admin::ProductsController, type: :controller do
     }
 
     before do
-      login_as_admin
+      controller_login_as_admin
       create(:stock_location)
     end
 

@@ -8,7 +8,7 @@ module Spree
       include AuthenticationWorkflow
 
       describe "#create and #update" do
-        before { login_as_admin }
+        before { controller_login_as_admin }
 
         it "creates a shipping shipping category" do
           expect {

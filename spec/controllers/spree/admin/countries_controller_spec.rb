@@ -8,7 +8,7 @@ module Spree
       include AuthenticationWorkflow
 
       describe "#update" do
-        before { login_as_admin }
+        before { controller_login_as_admin }
 
         it "updates the name of an existing country" do
           country = create(:country)

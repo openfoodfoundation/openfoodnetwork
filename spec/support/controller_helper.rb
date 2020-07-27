@@ -1,6 +1,6 @@
 module OpenFoodNetwork
   module ControllerHelper
-    def login_as_admin
+    def controller_login_as_admin
       @admin_user ||= begin
         user = create(:user)
         user.spree_roles << Spree::Role.find_or_create_by!(name: 'admin')

@@ -13,7 +13,7 @@ module Spree
       end
 
       before do
-        login_as_admin
+        controller_login_as_admin
 
         # Pay the order
         order.payments.first.complete
