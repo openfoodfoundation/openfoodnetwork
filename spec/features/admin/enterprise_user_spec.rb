@@ -19,8 +19,7 @@ feature '
     context "with a limitted number of owned enterprises" do
       scenario "setting the enterprise ownership limit" do
         expect(user.enterprise_limit).to eq 5
-        login_to_admin_section
-        click_link 'Users'
+        login_to_admin_and_visit spree.admin_users_path
         click_link user.email
 
         fill_in "user_enterprise_limit", with: 2

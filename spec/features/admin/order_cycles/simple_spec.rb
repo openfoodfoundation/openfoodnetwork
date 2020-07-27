@@ -100,8 +100,7 @@ feature '
       end
 
       it "displays a warning on the order cycles screen" do
-        quick_login_as_admin
-        visit admin_order_cycles_path
+        login_to_admin_and_visit admin_order_cycles_path
         expect(page).to have_content "The hub #{hub.name} is listed in an active order cycle, but does not have valid shipping and payment methods. Until you set these up, customers will not be able to shop at this hub."
       end
     end

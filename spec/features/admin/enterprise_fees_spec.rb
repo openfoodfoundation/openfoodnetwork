@@ -13,8 +13,7 @@ feature '
     fee = create(:enterprise_fee, name: '$0.50 / kg', fee_type: 'packing', tax_category: tax_category_gst)
     amount = fee.calculator.preferred_amount
 
-    login_to_admin_section
-    click_link 'Configuration'
+    login_to_admin_and_visit spree.admin_general_settings_path
     click_link 'Enterprise Fees'
 
     expect(page).to have_select "enterprise_fee_set_collection_attributes_0_enterprise_id"

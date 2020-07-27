@@ -30,8 +30,7 @@ feature '
     create(:proxy_order, subscription: create(:subscription, schedule: schedule1), order_cycle: oc1)
 
     # When I go to the admin order cycles page
-    login_to_admin_section
-    click_link 'Order Cycles'
+    login_to_admin_and_visit admin_order_cycles_path
 
     # Then the order cycles should be ordered correctly
     expect(page).to have_selector "#listing_order_cycles tr td:first-child", count: 7

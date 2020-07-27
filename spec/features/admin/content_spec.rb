@@ -8,8 +8,7 @@ feature '
   include WebHelper
 
   before do
-    login_to_admin_section
-    click_link 'Configuration'
+    login_to_admin_and_visit spree.admin_general_settings_path
     click_link 'Content'
   end
 

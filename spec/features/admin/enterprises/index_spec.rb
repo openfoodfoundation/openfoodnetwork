@@ -9,8 +9,7 @@ feature 'Enterprises Index' do
       s = create(:supplier_enterprise)
       d = create(:distributor_enterprise)
 
-      login_to_admin_section
-      click_link 'Enterprises'
+      login_to_admin_and_visit admin_enterprises_path
 
       within("tr.enterprise-#{s.id}") do
         expect(page).to have_content s.name

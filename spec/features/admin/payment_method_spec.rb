@@ -13,9 +13,7 @@ feature '
 
   describe "creating a payment method", js: true do
     scenario "assigning a distributor to the payment method" do
-      login_to_admin_section
-
-      click_link 'Configuration'
+      login_to_admin_and_visit spree.admin_general_settings_path
       click_link 'Payment Methods'
       click_link 'New Payment Method'
 

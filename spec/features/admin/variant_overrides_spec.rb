@@ -401,9 +401,7 @@ feature "
       let(:product) { order_cycle.products.first }
 
       before do
-        login_to_admin_section
-
-        visit 'admin/orders/new'
+        login_to_admin_and_visit 'admin/orders/new'
         select2_select distributor.name, from: 'order_distributor_id'
         select2_select order_cycle.name, from: 'order_order_cycle_id'
         click_button 'Next'
