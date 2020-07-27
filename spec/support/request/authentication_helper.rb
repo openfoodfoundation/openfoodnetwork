@@ -1,10 +1,6 @@
 module AuthenticationHelper
   include Warden::Test::Helpers
 
-  def login_as(user)
-    login_as user
-  end
-
   def login_as_admin
     admin_role = Spree::Role.find_or_create_by!(name: 'admin')
     admin_user = create(:user,
