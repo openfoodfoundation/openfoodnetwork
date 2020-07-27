@@ -24,7 +24,7 @@ feature "As a consumer I want to check out my cart", js: true do
     end
 
     it "does not render the login form when logged in" do
-      quick_login_as user
+      login_as user
       visit checkout_path
       within "section[role='main']" do
         expect(page).to have_no_content "Login"

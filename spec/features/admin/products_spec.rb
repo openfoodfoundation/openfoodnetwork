@@ -104,7 +104,7 @@ feature '
       create(:enterprise_relationship, parent: @supplier_permitted, child: @supplier2,
                                        permissions_list: [:manage_products])
 
-      quick_login_as @new_user
+      login_as @new_user
     end
 
     context "products do not require a tax category" do

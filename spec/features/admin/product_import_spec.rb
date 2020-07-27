@@ -408,7 +408,7 @@ feature "Product Import", js: true do
       end
       File.write('/tmp/test.csv', csv_data)
 
-      quick_login_as user
+      login_as user
       visit main_app.admin_product_import_path
 
       attach_file 'file', '/tmp/test.csv'
@@ -432,7 +432,7 @@ feature "Product Import", js: true do
     let(:tmp_csv_path) { "/tmp/test.csv" }
 
     before do
-      quick_login_as admin
+      login_as admin
       visit main_app.admin_product_import_path
     end
 

@@ -109,7 +109,7 @@ feature "Order Management", js: true do
       order.save
       order.reload
 
-      quick_login_as user
+      login_as user
     end
 
     it 'shows the name of the shipping method' do

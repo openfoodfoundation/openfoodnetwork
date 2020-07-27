@@ -1,7 +1,7 @@
 module AuthenticationWorkflow
   include Warden::Test::Helpers
 
-  def quick_login_as(user)
+  def login_as(user)
     login_as user
   end
 
@@ -15,7 +15,7 @@ module AuthenticationWorkflow
                         login: 'admin@ofn.org')
 
     admin_user.spree_roles << admin_role
-    quick_login_as admin_user
+    login_as admin_user
     admin_user
   end
 
@@ -29,7 +29,7 @@ module AuthenticationWorkflow
   end
 
   def login_to_admin_as(user)
-    quick_login_as user
+    login_as user
     visit spree.admin_dashboard_path
   end
 

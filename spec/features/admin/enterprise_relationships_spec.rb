@@ -98,7 +98,7 @@ feature '
     let!(:er2) { create(:enterprise_relationship, parent: d2, child: d1) }
     let!(:er3) { create(:enterprise_relationship, parent: d2, child: d3) }
 
-    before { quick_login_as enterprise_user }
+    before { login_as enterprise_user }
 
     scenario "enterprise user can only see relationships involving their enterprises" do
       visit admin_enterprise_relationships_path

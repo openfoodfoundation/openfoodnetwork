@@ -244,7 +244,7 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
 
     before do
       params[:order][:existing_card_id] = credit_card.id
-      quick_login_as(order.user)
+      login_as(order.user)
 
       # Requests a token
       stub_request(:post, "https://api.stripe.com/v1/tokens")

@@ -14,7 +14,7 @@ feature "Account Settings", js: true do
 
     before do
       setup_email
-      quick_login_as user
+      login_as user
       visit "/account"
       click_link I18n.t('spree.users.show.tabs.settings')
       expect(page).to have_content I18n.t('spree.users.form.account_settings')

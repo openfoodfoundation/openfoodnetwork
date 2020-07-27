@@ -11,7 +11,7 @@ feature 'Subscriptions' do
     let!(:shop2) { create(:distributor_enterprise, owner: user, enable_subscriptions: true) }
     let!(:shop_unmanaged) { create(:distributor_enterprise, enable_subscriptions: true) }
 
-    before { quick_login_as user }
+    before { login_as user }
 
     context 'listing subscriptions' do
       let!(:subscription) { create(:subscription, shop: shop, with_items: true, with_proxy_orders: true) }

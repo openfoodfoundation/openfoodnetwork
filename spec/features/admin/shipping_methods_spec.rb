@@ -94,7 +94,7 @@ feature 'shipping methods' do
     before(:each) do
       enterprise_user.enterprise_roles.build(enterprise: distributor1).save
       enterprise_user.enterprise_roles.build(enterprise: distributor2).save
-      quick_login_as enterprise_user
+      login_as enterprise_user
     end
 
     it "creating a shipping method" do

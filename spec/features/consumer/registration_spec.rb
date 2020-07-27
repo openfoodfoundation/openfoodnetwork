@@ -154,7 +154,7 @@ feature "Registration", js: true do
     let!(:user2) { create(:user) }
 
     before do
-      quick_login_as user2
+      login_as user2
     end
 
     context "if accepting Terms of Service is not required" do

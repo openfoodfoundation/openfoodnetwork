@@ -11,7 +11,7 @@ feature "Managing enterprise images" do
     before do
       enterprise_user.enterprise_roles.build(enterprise: distributor).save!
 
-      quick_login_as enterprise_user
+      login_as enterprise_user
       visit edit_admin_enterprise_path(distributor)
     end
 

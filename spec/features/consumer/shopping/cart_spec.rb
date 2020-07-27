@@ -262,7 +262,7 @@ feature "full-page cart", js: true do
         order.distributor.allow_order_changes = true
         order.distributor.save
         add_product_to_cart order, product_with_tax
-        quick_login_as user
+        login_as user
         visit main_app.cart_path
       end
 

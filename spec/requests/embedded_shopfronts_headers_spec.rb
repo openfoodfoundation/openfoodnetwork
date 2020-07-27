@@ -7,7 +7,7 @@ describe "setting response headers for embedded shopfronts", type: :request do
   let(:user) { enterprise.owner }
 
   before do
-    quick_login_as(user)
+    login_as(user)
   end
 
   context "with embedded shopfront disabled" do

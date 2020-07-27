@@ -26,7 +26,7 @@ feature "
     }
     let(:user) { create(:user, enterprises: [hub, producer_managed]) }
 
-    before { quick_login_as user }
+    before { login_as user }
 
     describe "selecting a hub" do
       let!(:er1) {
@@ -471,7 +471,7 @@ feature "
       last_variant = inventory_items.last.variant
       first_variant.product.update!(name: "A First Product")
       last_variant.product.update!(name: "Z Last Product")
-      quick_login_as supplier.users.first
+      login_as supplier.users.first
       visit admin_inventory_path
 
       expect(page).to have_text first_variant.name

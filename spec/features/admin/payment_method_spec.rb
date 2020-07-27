@@ -45,7 +45,7 @@ feature '
       end
 
       it "communicates the status of the stripe connection to the user" do
-        quick_login_as user
+        login_as user
         visit spree.new_admin_payment_method_path
 
         select2_select "Stripe", from: "payment_method_type"
@@ -136,7 +136,7 @@ feature '
     before(:each) do
       enterprise_user.enterprise_roles.build(enterprise: distributor1).save
       enterprise_user.enterprise_roles.build(enterprise: distributor2).save
-      quick_login_as enterprise_user
+      login_as enterprise_user
     end
 
     it "I can get to the new enterprise page" do

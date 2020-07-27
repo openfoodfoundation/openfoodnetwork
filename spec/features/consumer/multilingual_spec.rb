@@ -77,14 +77,14 @@ feature 'Multilingual', js: true do
 
       expect_menu_and_cookie_in_es
       expect(user.locale).to be_nil
-      quick_login_as user
+      login_as user
       visit root_path
 
       expect_menu_and_cookie_in_es
     end
 
     it 'updates user locale and stays in cookie after logout' do
-      quick_login_as user
+      login_as user
       visit root_path(locale: 'es')
       user.reload
 

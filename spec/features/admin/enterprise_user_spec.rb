@@ -34,7 +34,7 @@ feature '
   describe "system management lockdown" do
     before do
       user.enterprise_roles.create!(enterprise: supplier1)
-      quick_login_as user
+      login_as user
     end
 
     scenario "should not be able to see system configuration" do

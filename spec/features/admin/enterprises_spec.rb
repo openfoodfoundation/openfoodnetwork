@@ -291,7 +291,7 @@ feature '
       enterprise_user.enterprise_roles.build(enterprise: supplier1).save
       enterprise_user.enterprise_roles.build(enterprise: distributor1).save
 
-      quick_login_as enterprise_user
+      login_as enterprise_user
     end
 
     context "when I have reached my enterprise ownership limit" do

@@ -111,7 +111,7 @@ feature 'Enterprises Index' do
       enterprise_manager.enterprise_roles.build(enterprise: supplier1).save
       enterprise_manager.enterprise_roles.build(enterprise: distributor1).save
 
-      quick_login_as enterprise_manager
+      login_as enterprise_manager
     end
 
     context "listing enterprises", js: true do
@@ -166,7 +166,7 @@ feature 'Enterprises Index' do
     let!(:owned_distributor) { create(:distributor_enterprise, name: 'Owned Distributor', owner: user) }
 
     before do
-      quick_login_as user
+      login_as user
     end
 
     context "listing enterprises", js: true do

@@ -112,7 +112,7 @@ feature '
     let!(:group) { create(:enterprise_group, name: 'My Group', owner: user) }
 
     it "lets me access enterprise groups" do
-      quick_login_as user
+      login_as user
       visit spree.admin_dashboard_path
       click_link 'Groups'
       expect(page).to have_content 'My Group'

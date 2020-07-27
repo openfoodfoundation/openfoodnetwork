@@ -723,7 +723,7 @@ feature '
       @enterprise_user.enterprise_roles.build(enterprise: s1).save
       @enterprise_user.enterprise_roles.build(enterprise: d1).save
 
-      quick_login_as @enterprise_user
+      login_as @enterprise_user
     end
 
     it "displays a Bulk Management Tab under the Orders item" do

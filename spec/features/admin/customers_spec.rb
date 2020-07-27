@@ -18,7 +18,7 @@ feature 'Customers' do
       let!(:customer4) { create(:customer, enterprise: managed_distributor2) }
 
       before do
-        quick_login_as user
+        login_as user
         visit admin_customers_path
       end
 

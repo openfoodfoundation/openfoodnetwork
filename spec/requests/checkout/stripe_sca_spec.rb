@@ -289,7 +289,7 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
 
       before do
         params[:order][:existing_card_id] = credit_card.id
-        quick_login_as(order.user)
+        login_as(order.user)
       end
 
       context "and the payment intent and payment method requests are accepted" do

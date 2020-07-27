@@ -153,7 +153,7 @@ feature '
         @new_user.enterprise_roles.build(enterprise: distributor_managed).save
         @new_user.enterprise_roles.build(enterprise: other_distributor_managed).save
 
-        quick_login_as @new_user
+        login_as @new_user
       end
 
       scenario "viewing a list of order cycles I am coordinating" do

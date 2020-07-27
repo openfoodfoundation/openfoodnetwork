@@ -144,7 +144,7 @@ feature '
     order.shipping_method.update_attribute :require_ship_address, true
 
     # When I create a new order
-    quick_login_as user
+    login_as user
     new_order_with_distribution(distributor, order_cycle)
     targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
     find('button.add_variant').click
@@ -187,7 +187,7 @@ feature '
       @enterprise_user.enterprise_roles.build(enterprise: coordinator1).save
       @enterprise_user.enterprise_roles.build(enterprise: distributor1).save
 
-      quick_login_as @enterprise_user
+      login_as @enterprise_user
     end
 
     feature "viewing the edit page" do
