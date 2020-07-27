@@ -136,7 +136,7 @@ describe Admin::EnterprisesController, type: :controller do
         let!(:property) { create(:property, name: "A nice name") }
 
         before do
-          login_as_enterprise_user [producer]
+          controller_login_as_enterprise_user [producer]
         end
 
         context "when a submitted property does not already exist" do
@@ -177,7 +177,7 @@ describe Admin::EnterprisesController, type: :controller do
         let!(:tag_rule) { create(:tag_rule, enterprise: enterprise) }
 
         before do
-          login_as_enterprise_user [enterprise]
+          controller_login_as_enterprise_user [enterprise]
         end
 
         context "discount order rules" do

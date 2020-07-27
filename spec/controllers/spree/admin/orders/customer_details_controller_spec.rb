@@ -37,7 +37,7 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
       }
 
       before do
-        login_as_enterprise_user [order.distributor]
+        controller_login_as_enterprise_user [order.distributor]
       end
 
       it "advances the order state" do

@@ -6,7 +6,7 @@ describe Spree::Admin::SearchController, type: :controller do
     let!(:manager) { create(:user, email: "test2@email.com" ) }
     let!(:random) { create(:user, email: "test3@email.com" ) }
     let!(:enterprise) { create(:enterprise, owner: owner, users: [owner, manager]) }
-    before { login_as_enterprise_user [enterprise] }
+    before { controller_login_as_enterprise_user [enterprise] }
 
     describe 'searching for known users' do
       describe "when search query is not an exact match" do

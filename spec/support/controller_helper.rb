@@ -10,7 +10,7 @@ module OpenFoodNetwork
       allow(controller).to receive_messages(spree_current_user: @admin_user)
     end
 
-    def login_as_enterprise_user(enterprises)
+    def controller_login_as_enterprise_user(enterprises)
       @enterprise_user ||= begin
         user = create(:user)
         user.spree_roles = []

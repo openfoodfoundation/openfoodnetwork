@@ -102,7 +102,7 @@ module Admin
         let(:params) { { format: :json, order_cycle: {} } }
 
         before do
-          login_as_enterprise_user([shop])
+          controller_login_as_enterprise_user([shop])
           allow(OrderCycleForm).to receive(:new) { form_mock }
         end
 
@@ -148,7 +148,7 @@ module Admin
       end
 
       context "as a manager of the coordinator" do
-        before { login_as_enterprise_user([coordinator]) }
+        before { controller_login_as_enterprise_user([coordinator]) }
         let(:params) { { format: :json, id: order_cycle.id, order_cycle: {} } }
 
         context "when updating succeeds" do
