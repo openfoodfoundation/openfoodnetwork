@@ -9,7 +9,7 @@ describe "Zones" do
   end
 
   scenario "list existing zones" do
-    visit spree.admin_general_settings_path
+    visit spree.edit_admin_general_settings_path
     create(:zone, name: "eastern", description: "zone is eastern")
     create(:zone, name: "western", description: "cool san fran")
 
