@@ -13,9 +13,13 @@ class OrderWorkflow
     advance_order!(advance_order_options)
   end
 
-  def next
+  def next(options = {})
     tries ||= 3
-    order.next
+    result = order.next
+
+    after_transition_hook(options)
+
+    result
   rescue ActiveRecord::StaleObjectError
     retry unless (tries -= 1).zero?
     false

@@ -175,9 +175,7 @@ class CheckoutController < Spree::StoreController
         return if redirect_to_payment_gateway
       end
 
-      @order.select_shipping_method(shipping_method_id) if @order.state == "delivery"
-
-      next if OrderWorkflow.new(@order).next
+      next if OrderWorkflow.new(@order).next({ shipping_method_id: shipping_method_id })
 
       return update_failed
     end
