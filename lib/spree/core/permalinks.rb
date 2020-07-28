@@ -71,5 +71,5 @@ module Spree
   end
 end
 
-ActiveRecord::Base.__send__ :include, Spree::Core::Permalinks
-ActiveRecord::Relation.__send__ :include, Spree::Core::Permalinks
+ActiveRecord::Base.include(Spree::Core::Permalinks)
+ActiveRecord::Relation.include(Spree::Core::Permalinks)

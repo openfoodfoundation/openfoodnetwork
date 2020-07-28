@@ -91,4 +91,4 @@ module DelegateBelongsTo
   protected :delegator_for
 end
 
-ActiveRecord::Base.__send__(:include, DelegateBelongsTo)
+ActiveRecord::Base.include(DelegateBelongsTo)

@@ -65,15 +65,15 @@ module Spree
             calculator.compute(calculable)
           end
 
-          private
-
           def self.model_name_without_spree_namespace
             to_s.tableize.gsub('/', '_').sub('spree_', '')
           end
+          private_class_method :model_name_without_spree_namespace
 
           def self.spree_calculators
             Rails.application.config.spree.calculators
           end
+          private_class_method :spree_calculators
         end
       end
     end
