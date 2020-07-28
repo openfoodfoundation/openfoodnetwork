@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class Order < ActiveRecord::Base
     module Checkout
@@ -38,8 +40,8 @@ module Spree
             # To avoid multiple occurrences of the same transition being defined
             # On first definition, state_machines will not be defined
             state_machines.clear if respond_to?(:state_machines)
-            state_machine :state, :initial => :cart do
-              klass.next_event_transitions.each { |t| transition(t.merge(:on => :next)) }
+            state_machine :state, initial: :cart do
+              klass.next_event_transitions.each { |t| transition(t.merge(on: :next)) }
 
               # Persist the state on the order
               after_transition do |order|
@@ -48,46 +50,46 @@ module Spree
               end
 
               event :cancel do
-                transition :to => :canceled, :if => :allow_cancel?
+                transition to: :canceled, if: :allow_cancel?
               end
 
               event :return do
-                transition :to => :returned, :from => :awaiting_return, :unless => :awaiting_returns?
+                transition to: :returned, from: :awaiting_return, unless: :awaiting_returns?
               end
 
               event :resume do
-                transition :to => :resumed, :from => :canceled, :if => :allow_resume?
+                transition to: :resumed, from: :canceled, if: :allow_resume?
               end
 
               event :authorize_return do
-                transition :to => :awaiting_return
+                transition to: :awaiting_return
               end
 
               if states[:payment]
-                before_transition :to => :complete do |order|
+                before_transition to: :complete do |order|
                   order.process_payments! if order.payment_required?
                 end
               end
 
-              before_transition :from => :cart, :do => :ensure_line_items_present
+              before_transition from: :cart, do: :ensure_line_items_present
 
-              before_transition :to => :delivery, :do => :create_proposed_shipments
-              before_transition :to => :delivery, :do => :ensure_available_shipping_rates
+              before_transition to: :delivery, do: :create_proposed_shipments
+              before_transition to: :delivery, do: :ensure_available_shipping_rates
 
-              after_transition :to => :complete, :do => :finalize!
-              after_transition :to => :delivery, :do => :create_tax_charge!
-              after_transition :to => :resumed,  :do => :after_resume
-              after_transition :to => :canceled, :do => :after_cancel
+              after_transition to: :complete, do: :finalize!
+              after_transition to: :delivery, do: :create_tax_charge!
+              after_transition to: :resumed,  do: :after_resume
+              after_transition to: :canceled, do: :after_cancel
             end
           end
 
-          def self.go_to_state(name, options={})
-            self.checkout_steps[name] = options
+          def self.go_to_state(name, options = {})
+            checkout_steps[name] = options
             previous_states.each do |state|
-              add_transition({:from => state, :to => name}.merge(options))
+              add_transition({ from: state, to: name }.merge(options))
             end
             if options[:if]
-              self.previous_states << name
+              previous_states << name
             else
               self.previous_states = [name]
             end
@@ -96,43 +98,44 @@ module Spree
           def self.insert_checkout_step(name, options = {})
             before = options.delete(:before)
             after = options.delete(:after) unless before
-            after = self.checkout_steps.keys.last unless before || after
+            after = checkout_steps.keys.last unless before || after
 
-            cloned_steps = self.checkout_steps.clone
-            cloned_removed_transitions = self.removed_transitions.clone
-            self.checkout_flow do
+            cloned_steps = checkout_steps.clone
+            cloned_removed_transitions = removed_transitions.clone
+            checkout_flow do
               cloned_steps.each_pair do |key, value|
-                self.go_to_state(name, options) if key == before
-                self.go_to_state(key, value)
-                self.go_to_state(name, options) if key == after
+                go_to_state(name, options) if key == before
+                go_to_state(key, value)
+                go_to_state(name, options) if key == after
               end
               cloned_removed_transitions.each do |transition|
-                self.remove_transition(transition)
+                remove_transition(transition)
               end
             end
           end
 
           def self.remove_checkout_step(name)
-            cloned_steps = self.checkout_steps.clone
-            cloned_removed_transitions = self.removed_transitions.clone
-            self.checkout_flow do
+            cloned_steps = checkout_steps.clone
+            cloned_removed_transitions = removed_transitions.clone
+            checkout_flow do
               cloned_steps.each_pair do |key, value|
-                self.go_to_state(key, value) unless key == name
+                go_to_state(key, value) unless key == name
               end
               cloned_removed_transitions.each do |transition|
-                self.remove_transition(transition)
+                remove_transition(transition)
               end
             end
           end
 
-          def self.remove_transition(options={})
-            self.removed_transitions << options
-            self.next_event_transitions.delete(find_transition(options))
+          def self.remove_transition(options = {})
+            removed_transitions << options
+            next_event_transitions.delete(find_transition(options))
           end
 
-          def self.find_transition(options={})
+          def self.find_transition(options = {})
             return nil if options.nil? || !options.include?(:from) || !options.include?(:to)
-            self.next_event_transitions.detect do |transition|
+
+            next_event_transitions.detect do |transition|
               transition[options[:from].to_sym] == options[:to].to_sym
             end
           end
@@ -146,12 +149,15 @@ module Spree
           end
 
           def self.add_transition(options)
-            self.next_event_transitions << { options.delete(:from) => options.delete(:to) }.merge(options)
+            next_event_transitions << { options.delete(:from) => options.delete(:to) }.
+              merge(options)
           end
 
           def checkout_steps
-            steps = self.class.checkout_steps.each_with_object([]) { |(step, options), checkout_steps|
+            steps = self.class.checkout_steps.
+              each_with_object([]) { |(step, options), checkout_steps|
               next if options.include?(:if) && !options[:if].call(self)
+
               checkout_steps << step
             }.map(&:to_s)
             # Ensure there is always a complete step
@@ -159,12 +165,12 @@ module Spree
             steps
           end
 
-          def has_checkout_step?(step)
-            step.present? ? self.checkout_steps.include?(step) : false
+          def checkout_step?(step)
+            step.present? ? checkout_steps.include?(step) : false
           end
 
           def checkout_step_index(step)
-            self.checkout_steps.index(step)
+            checkout_steps.index(step)
           end
 
           def self.removed_transitions
@@ -172,7 +178,10 @@ module Spree
           end
 
           def can_go_to_state?(state)
-            return false unless self.state.present? && has_checkout_step?(state) && has_checkout_step?(self.state)
+            return false unless self.state.present? &&
+                                checkout_step?(state) &&
+                                checkout_step?(self.state)
+
             checkout_step_index(state) > checkout_step_index(self.state)
           end
         end
