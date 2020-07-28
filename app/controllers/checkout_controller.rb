@@ -148,7 +148,7 @@ class CheckoutController < Spree::StoreController
   end
 
   def handle_redirect_from_stripe
-    if advance_order_state(@order) && order_complete?
+    if OrderWorkflow.new(@order).next && order_complete?
       checkout_succeeded
       redirect_to(order_path(@order)) && return
     else
@@ -177,7 +177,7 @@ class CheckoutController < Spree::StoreController
 
       @order.select_shipping_method(shipping_method_id) if @order.state == "delivery"
 
-      next if advance_order_state(@order)
+      next if OrderWorkflow.new(@order).next
 
       return update_failed
     end
@@ -192,15 +192,6 @@ class CheckoutController < Spree::StoreController
 
     render json: { path: redirect_path }, status: :ok
     true
-  end
-
-  # Perform order.next, guarding against StaleObjectErrors
-  def advance_order_state(order)
-    tries ||= 3
-    order.next
-  rescue ActiveRecord::StaleObjectError
-    retry unless (tries -= 1).zero?
-    false
   end
 
   def order_error

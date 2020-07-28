@@ -13,6 +13,14 @@ class OrderWorkflow
     advance_order!(advance_order_options)
   end
 
+  def next
+    tries ||= 3
+    order.next
+  rescue ActiveRecord::StaleObjectError
+    retry unless (tries -= 1).zero?
+    false
+  end
+
   private
 
   def advance_order_options
