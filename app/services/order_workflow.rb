@@ -1,15 +1,15 @@
-class AdvanceOrderService
+class OrderWorkflow
   attr_reader :order
 
   def initialize(order)
     @order = order
   end
 
-  def call
+  def complete
     advance_order(advance_order_options)
   end
 
-  def call!
+  def complete!
     advance_order!(advance_order_options)
   end
 
