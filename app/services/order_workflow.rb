@@ -55,5 +55,19 @@ class OrderWorkflow
     if order.state == "delivery"
       order.select_shipping_method(options[:shipping_method_id]) if options[:shipping_method_id]
     end
+
+    persist_all_payments if order.state == "payment"
   end
+
+  # When a payment fails, the order state machine rollbacks all transactions
+  #   Here we ensure we always persist all payments
+  def persist_all_payments
+    order.payments.each do |payment|
+      original_payment_state = payment.state
+      if original_payment_state != payment.reload.state
+        payment.update(state: original_payment_state)
+      end
+    end
+  end
+
 end
