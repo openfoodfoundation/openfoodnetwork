@@ -1,6 +1,6 @@
 ### Getting Started
 
-This is a general guide to setting up an Open Food Network development environment on your local machine.
+This is a general guide to setting up an Open Food Network **development environment on your local machine**. If you want to setup OFN on a server, please have a look at the [ofn-install deployment guide](https://github.com/openfoodfoundation/ofn-install/wiki).
 
 ### Requirements
 
