@@ -34,7 +34,7 @@ describe Spree::Order do
 
     it '.remove_transition' do
       options = { from: transitions.first.keys.first, to: transitions.first.values.first }
-      Spree::Order.stub(:next_event_transition).and_return([options])
+      allow(Spree::Order).to receive(:next_event_transition).and_return([options])
       expect(Spree::Order.remove_transition(options)).to be_truthy
     end
 
@@ -44,14 +44,14 @@ describe Spree::Order do
 
     context "#checkout_steps" do
       context "when payment not required" do
-        before { order.stub payment_required?: false }
+        before { allow(order).to receive_messages payment_required?: false }
         specify do
           expect(order.checkout_steps).to eq %w(address delivery complete)
         end
       end
 
       context "when payment required" do
-        before { order.stub payment_required?: true }
+        before { allow(order).to receive_messages payment_required?: true }
         specify do
           expect(order.checkout_steps).to eq %w(address delivery payment complete)
         end
@@ -78,14 +78,14 @@ describe Spree::Order do
     context "from address" do
       before do
         order.state = 'address'
-        order.stub(:has_available_payment)
+        allow(order).to receive(:has_available_payment)
         order.shipments << create(:shipment)
         order.email = "user@example.com"
         order.save!
       end
 
       it "transitions to delivery" do
-        order.stub(ensure_available_shipping_rates: true)
+        allow(order).to receive_messages(ensure_available_shipping_rates: true)
         order.next!
         expect(order.state).to eq "delivery"
       end
@@ -108,7 +108,7 @@ describe Spree::Order do
 
       context "with payment required" do
         before do
-          order.stub payment_required?: true
+          allow(order).to receive_messages payment_required?: true
         end
 
         it "transitions to payment" do
@@ -119,7 +119,7 @@ describe Spree::Order do
 
       context "without payment required" do
         before do
-          order.stub payment_required?: false
+          allow(order).to receive_messages payment_required?: false
         end
 
         it "transitions to complete" do
@@ -136,8 +136,8 @@ describe Spree::Order do
 
      context "when payment is required" do
         before do
-          order.stub confirmation_required?: false
-          order.stub payment_required?: true
+          allow(order).to receive_messages confirmation_required?: false
+          allow(order).to receive_messages payment_required?: true
         end
 
         it "transitions to complete" do
@@ -150,7 +150,7 @@ describe Spree::Order do
       # Regression test for #2028
       context "when payment is not required" do
         before do
-          order.stub payment_required?: false
+          allow(order).to receive_messages payment_required?: false
         end
 
         it "does not call process payments" do
@@ -174,7 +174,7 @@ describe Spree::Order do
 
     it "should only call default transitions once when checkout_flow is redefined" do
       order = SubclassedOrder.new
-      order.stub payment_required?: true
+      allow(order).to receive_messages payment_required?: true
       expect(order).to receive(:process_payments!).once
       order.state = "payment"
       order.next!
@@ -227,7 +227,7 @@ describe Spree::Order do
     end
 
     it "does not attempt to process payments" do
-      order.stub_chain(:line_items, :present?).and_return(true)
+      allow(order).to receive_message_chain(:line_items, :present?).and_return(true)
       expect(order).to_not receive(:payment_required?)
       expect(order).to_not receive(:process_payments!)
       order.next!
