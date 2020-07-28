@@ -8,8 +8,6 @@ describe Spree::Order do
       [
         { address: :delivery },
         { delivery: :payment },
-        { payment: :confirm },
-        { confirm: :complete },
         { payment: :complete },
         { delivery: :complete }
       ]
@@ -17,83 +15,63 @@ describe Spree::Order do
 
     it "has the following transitions" do
       transitions.each do |transition|
+        puts transition.keys.first
+        puts transition.values.first
         transition = Spree::Order.find_transition(from: transition.keys.first,
                                                   to: transition.values.first)
-        transition.should_not be_nil
+        expect(transition).to_not be_nil
       end
     end
 
     it "does not have a transition from delivery to confirm" do
       transition = Spree::Order.find_transition(from: :delivery, to: :confirm)
-      transition.should be_nil
+      expect(transition).to be_nil
     end
 
     it '.find_transition when contract was broken' do
-      Spree::Order.find_transition({ foo: :bar, baz: :dog }).should be_false
+      expect(Spree::Order.find_transition({ foo: :bar, baz: :dog })).to be_falsy
     end
 
     it '.remove_transition' do
       options = { from: transitions.first.keys.first, to: transitions.first.values.first }
       Spree::Order.stub(:next_event_transition).and_return([options])
-      Spree::Order.remove_transition(options).should be_true
+      expect(Spree::Order.remove_transition(options)).to be_truthy
     end
 
     it '.remove_transition when contract was broken' do
-      Spree::Order.remove_transition(nil).should be_false
+      expect(Spree::Order.remove_transition(nil)).to be_falsy
     end
 
     context "#checkout_steps" do
-      context "when confirmation not required" do
-        before do
-          order.stub confirmation_required?: false
-          order.stub payment_required?: true
-        end
-
-        specify do
-          order.checkout_steps.should == %w(address delivery payment complete)
-        end
-      end
-
-      context "when confirmation required" do
-        before do
-          order.stub confirmation_required?: true
-          order.stub payment_required?: true
-        end
-
-        specify do
-          order.checkout_steps.should == %w(address delivery payment confirm complete)
-        end
-      end
-
       context "when payment not required" do
         before { order.stub payment_required?: false }
         specify do
-          order.checkout_steps.should == %w(address delivery complete)
+          expect(order.checkout_steps).to eq %w(address delivery complete)
         end
       end
 
       context "when payment required" do
         before { order.stub payment_required?: true }
         specify do
-          order.checkout_steps.should == %w(address delivery payment complete)
+          expect(order.checkout_steps).to eq %w(address delivery payment complete)
         end
       end
     end
 
     it "starts out at cart" do
-      order.state.should == "cart"
+      expect(order.state).to eq "cart"
     end
 
     it "transitions to address" do
       order.line_items << FactoryGirl.create(:line_item)
       order.email = "user@example.com"
       order.next!
-      order.state.should == "address"
+      expect(order.state).to eq "address"
     end
 
     it "cannot transition to address without any line items" do
-      order.line_items.should be_blank
-      lambda { order.next! }.should raise_error(StateMachine::InvalidTransition,
+      expect(order.line_items).to be_blank
+      expect(lambda { order.next! }).to raise_error(StateMachine::InvalidTransition,
                                                 /#{Spree.t(:there_are_no_items_for_this_order)}/)
     end
 
@@ -101,7 +79,7 @@ describe Spree::Order do
       before do
         order.state = 'address'
         order.stub(:has_available_payment)
-        shipment = FactoryGirl.create(:shipment, order: order)
+        order.shipments << create(:shipment)
         order.email = "user@example.com"
         order.save!
       end
@@ -109,14 +87,14 @@ describe Spree::Order do
       it "transitions to delivery" do
         order.stub(ensure_available_shipping_rates: true)
         order.next!
-        order.state.should == "delivery"
+        expect(order.state).to eq "delivery"
       end
 
       context "cannot transition to delivery" do
         context "if there are no shipping rates for any shipment" do
           specify do
             transition = lambda { order.next! }
-            transition.should raise_error(StateMachine::InvalidTransition,
+            expect(transition).to raise_error(StateMachine::InvalidTransition,
                                           /#{Spree.t(:items_cannot_be_shipped)}/)
           end
         end
@@ -135,7 +113,7 @@ describe Spree::Order do
 
         it "transitions to payment" do
           order.next!
-          order.state.should == 'payment'
+          expect(order.state).to eq 'payment'
         end
       end
 
@@ -146,7 +124,7 @@ describe Spree::Order do
 
         it "transitions to complete" do
           order.next!
-          order.state.should == "complete"
+          expect(order.state).to eq "complete"
         end
       end
     end
@@ -156,27 +134,16 @@ describe Spree::Order do
         order.state = 'payment'
       end
 
-      context "with confirmation required" do
-        before do
-          order.stub confirmation_required?: true
-        end
-
-        it "transitions to confirm" do
-          order.next!
-          order.state.should == "confirm"
-        end
-      end
-
-      context "without confirmation required" do
+     context "when payment is required" do
         before do
           order.stub confirmation_required?: false
           order.stub payment_required?: true
         end
 
         it "transitions to complete" do
-          order.should_receive(:process_payments!).once.and_return true
+          expect(order).to receive(:process_payments!).once.and_return true
           order.next!
-          order.state.should == "complete"
+          expect(order.state).to eq "complete"
         end
       end
 
@@ -187,9 +154,9 @@ describe Spree::Order do
         end
 
         it "does not call process payments" do
-          order.should_not_receive(:process_payments!)
+          expect(order).to_not receive(:process_payments!)
           order.next!
-          order.state.should == "complete"
+          expect(order.state).to eq "complete"
         end
       end
     end
@@ -208,10 +175,10 @@ describe Spree::Order do
     it "should only call default transitions once when checkout_flow is redefined" do
       order = SubclassedOrder.new
       order.stub payment_required?: true
-      order.should_receive(:process_payments!).once
+      expect(order).to receive(:process_payments!).once
       order.state = "payment"
       order.next!
-      order.state.should == "complete"
+      expect(order.state).to eq "complete"
     end
   end
 
@@ -231,16 +198,16 @@ describe Spree::Order do
     end
 
     it "should not keep old event transitions when checkout_flow is redefined" do
-      Spree::Order.next_event_transitions.should == [{ cart: :payment }, { payment: :complete }]
+      expect(Spree::Order.next_event_transitions).to eq [{ cart: :payment }, { payment: :complete }]
     end
 
     it "should not keep old events when checkout_flow is redefined" do
       state_machine = Spree::Order.state_machine
-      state_machine.states.any? { |s| s.name == :address }.should be_false
+      expect(state_machine.states.any? { |s| s.name == :address }).to be_falsy
       known_states = state_machine.events[:next].branches.map(&:known_states).flatten
-      known_states.should_not include(:address)
-      known_states.should_not include(:delivery)
-      known_states.should_not include(:confirm)
+      expect(known_states).to_not include(:address)
+      expect(known_states).to_not include(:delivery)
+      expect(known_states).to_not include(:confirm)
     end
   end
 
@@ -261,8 +228,8 @@ describe Spree::Order do
 
     it "does not attempt to process payments" do
       order.stub_chain(:line_items, :present?).and_return(true)
-      order.should_not_receive(:payment_required?)
-      order.should_not_receive(:process_payments!)
+      expect(order).to_not receive(:payment_required?)
+      expect(order).to_not receive(:process_payments!)
       order.next!
     end
   end
@@ -281,7 +248,7 @@ describe Spree::Order do
 
     it "should maintain removed transitions" do
       transition = Spree::Order.find_transition(from: :delivery, to: :confirm)
-      transition.should be_nil
+      expect(transition).to be_nil
     end
 
     context "before" do
@@ -293,7 +260,7 @@ describe Spree::Order do
 
       specify do
         order = Spree::Order.new
-        order.checkout_steps.should == %w(new_step before_address address delivery complete)
+        expect(order.checkout_steps).to eq %w(new_step before_address address delivery complete)
       end
     end
 
@@ -306,7 +273,7 @@ describe Spree::Order do
 
       specify do
         order = Spree::Order.new
-        order.checkout_steps.should == %w(new_step address after_address delivery complete)
+        expect(order.checkout_steps).to eq %w(new_step address after_address delivery complete)
       end
     end
   end
@@ -325,12 +292,12 @@ describe Spree::Order do
 
     it "should maintain removed transitions" do
       transition = Spree::Order.find_transition(from: :delivery, to: :confirm)
-      transition.should be_nil
+      expect(transition).to be_nil
     end
 
     specify do
       order = Spree::Order.new
-      order.checkout_steps.should == %w(delivery complete)
+      expect(order.checkout_steps).to eq %w(delivery complete)
     end
   end
 
