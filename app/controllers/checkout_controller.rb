@@ -51,6 +51,8 @@ class CheckoutController < Spree::StoreController
 
     checkout_workflow(params_adapter.shipping_method_id)
   rescue Spree::Core::GatewayError => e
+    # This rescue is not replaceable by the generic rescue_from above because otherwise the rescue
+    #   below (StandardError) would catch the GatewayError and report it as a generic error
     rescue_from_spree_gateway_error(e)
   rescue StandardError => e
     flash[:error] = I18n.t("checkout.failed")
