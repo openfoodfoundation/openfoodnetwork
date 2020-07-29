@@ -32,8 +32,6 @@ class CheckoutController < Spree::StoreController
 
   helper 'spree/orders'
 
-  rescue_from Spree::Core::GatewayError, with: :rescue_from_spree_gateway_error
-
   def edit
     return handle_redirect_from_stripe if valid_payment_intent_provided?
 
@@ -41,6 +39,8 @@ class CheckoutController < Spree::StoreController
     # a version of paypal that uses this controller, and more specifically
     # the #action_failed method, then we can remove this call
     OrderCheckoutRestart.new(@order).call
+  rescue Spree::Core::GatewayError => e
+    rescue_from_spree_gateway_error(e)
   end
 
   def update
@@ -51,8 +51,6 @@ class CheckoutController < Spree::StoreController
 
     checkout_workflow(params_adapter.shipping_method_id)
   rescue Spree::Core::GatewayError => e
-    # This rescue is not replaceable by the generic rescue_from above because otherwise the rescue
-    #   below (StandardError) would catch the GatewayError and report it as a generic error
     rescue_from_spree_gateway_error(e)
   rescue StandardError => e
     flash[:error] = I18n.t("checkout.failed")
