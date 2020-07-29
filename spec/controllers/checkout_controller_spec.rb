@@ -67,10 +67,31 @@ describe CheckoutController, type: :controller do
         allow(order).to receive_message_chain(:insufficient_stock_lines, :empty?).and_return true
       end
 
-      it "does not redirect" do
-        expect(order_cycle_distributed_variants).to receive(:distributes_order_variants?).with(order).and_return(true)
-        get :edit
-        expect(response).to be_success
+      describe "order variants are distributed in the OC" do
+        before do
+          expect(order_cycle_distributed_variants).to receive(:distributes_order_variants?).with(order).and_return(true)
+        end
+
+        it "does not redirect" do
+          get :edit
+          expect(response).to be_success
+        end
+
+        it "returns a specific flash message when Spree::Core::GatewayError occurs" do
+          order_checkout_restart = double(:order_checkout_restart)
+          allow(OrderCheckoutRestart).to receive(:new) { order_checkout_restart }
+          call_count = 0
+          allow(order_checkout_restart).to receive(:call) do
+            call_count += 1
+            raise Spree::Core::GatewayError.new("Gateway blow up") if call_count == 1
+          end
+
+          spree_post :edit
+
+          expect(response.status).to eq(200)
+          flash_message = I18n.t(:spree_gateway_error_flash_for_checkout, error: "Gateway blow up")
+          expect(flash[:error]).to eq flash_message
+        end
       end
 
       describe "when the order is in payment state and a stripe payment intent is provided" do
@@ -228,6 +249,15 @@ describe CheckoutController, type: :controller do
       spree_post :update, format: :json, order: {}
       expect(response.status).to eq(400)
       expect(response.body).to eq({ errors: {}, flash: { error: I18n.t("checkout.failed") } }.to_json)
+    end
+
+    it "returns a specific error on Spree::Core::GatewayError" do
+      allow(order).to receive(:update).and_raise(Spree::Core::GatewayError.new("Gateway blow up"))
+      spree_post :update, format: :json, order: {}
+
+      expect(response.status).to eq(400)
+      flash_message = I18n.t(:spree_gateway_error_flash_for_checkout, error: "Gateway blow up")
+      expect(json_response["flash"]["error"]).to eq flash_message
     end
 
     describe "stale object handling" do
