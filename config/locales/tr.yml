@@ -14,6 +14,7 @@ tr:
       spree/payment:
         amount: Tutar
         state: Durum
+        source: Kaynak
       spree/product:
         primary_taxon: "ÜRÜN KATEGORİSİ"
         supplier: "TEDARİKÇİ"
