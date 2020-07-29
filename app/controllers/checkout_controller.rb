@@ -39,13 +39,13 @@ class CheckoutController < Spree::StoreController
 
     # This is only required because of spree_paypal_express. If we implement
     # a version of paypal that uses this controller, and more specifically
-    # the #update_failed method, then we can remove this call
+    # the #action_failed method, then we can remove this call
     OrderCheckoutRestart.new(@order).call
   end
 
   def update
     params_adapter = Checkout::FormDataAdapter.new(permitted_params, @order, spree_current_user)
-    return update_failed unless @order.update(params_adapter.params[:order])
+    return action_failed unless @order.update(params_adapter.params[:order])
 
     fire_event('spree.checkout.update')
 
@@ -54,7 +54,7 @@ class CheckoutController < Spree::StoreController
     rescue_from_spree_gateway_error(e)
   rescue StandardError => e
     flash[:error] = I18n.t("checkout.failed")
-    update_failed(e)
+    action_failed(e)
   end
 
   # Clears the cached order. Required for #current_order to return a new order
@@ -152,7 +152,6 @@ class CheckoutController < Spree::StoreController
       checkout_succeeded
       redirect_to(order_path(@order)) && return
     else
-      flash[:error] = order_error
       checkout_failed
     end
   end
@@ -165,7 +164,7 @@ class CheckoutController < Spree::StoreController
 
       next if OrderWorkflow.new(@order).next({ shipping_method_id: shipping_method_id })
 
-      return update_failed
+      return action_failed
     end
 
     update_response
@@ -193,7 +192,7 @@ class CheckoutController < Spree::StoreController
       checkout_succeeded
       update_succeeded_response
     else
-      update_failed(RuntimeError.new("Order not complete after the checkout workflow"))
+      action_failed(RuntimeError.new("Order not complete after the checkout workflow"))
     end
   end
 
@@ -219,19 +218,18 @@ class CheckoutController < Spree::StoreController
     end
   end
 
-  def update_failed(error = RuntimeError.new(order_error))
-    Bugsnag.notify(error)
-
-    flash[:error] = order_error if flash.blank?
-    checkout_failed
-    update_failed_response
+  def action_failed(error = RuntimeError.new(order_error))
+    checkout_failed(error)
+    action_failed_response
   end
 
-  def checkout_failed
+  def checkout_failed(error = RuntimeError.new(order_error))
+    Bugsnag.notify(error)
+    flash[:error] = order_error if flash.blank?
     Checkout::PostCheckoutActions.new(@order).failure
   end
 
-  def update_failed_response
+  def action_failed_response
     respond_to do |format|
       format.html do
         render :edit
@@ -244,9 +242,7 @@ class CheckoutController < Spree::StoreController
 
   def rescue_from_spree_gateway_error(error)
     flash[:error] = t(:spree_gateway_error_flash_for_checkout, error: error.message)
-    # This can also happen during the edit action
-    #   but the actions and response needed are exactly the same as when the update action fails
-    update_failed(error)
+    action_failed(error)
   end
 
   def permitted_params

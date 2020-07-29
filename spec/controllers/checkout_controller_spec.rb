@@ -298,7 +298,7 @@ describe CheckoutController, type: :controller do
     end
   end
 
-  describe "#update_failed" do
+  describe "#action_failed" do
     let(:restart_checkout) { instance_double(OrderCheckoutRestart, call: true) }
 
     before do
@@ -312,7 +312,7 @@ describe CheckoutController, type: :controller do
       expect(restart_checkout).to receive(:call)
       expect(controller).to receive(:respond_to)
 
-      controller.send(:update_failed)
+      controller.send(:action_failed)
     end
   end
 end
