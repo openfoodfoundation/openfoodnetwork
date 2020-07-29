@@ -64,8 +64,8 @@ class OrderWorkflow
   def persist_all_payments
     order.payments.each do |payment|
       original_payment_state = payment.state
-      if original_payment_state != payment.reload.state
-        payment.update(state: original_payment_state)
+      if original_payment_state != Spree::Payment.find(payment.id).state
+        payment.reload.update(state: original_payment_state)
       end
     end
   end
