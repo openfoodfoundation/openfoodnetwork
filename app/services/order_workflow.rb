@@ -59,15 +59,21 @@ class OrderWorkflow
     persist_all_payments if order.state == "payment"
   end
 
-  # When a payment fails, the order state machine rollbacks all transactions
-  #   Here we ensure we always persist all payments
+  # When a payment fails, the order state machine stays in 'payment' and rollbacks all transactions
+  #   This rollback also reverts the payment state from 'failed', 'void' or 'invalid' to 'pending'
+  #   Despite the rollback, the in-memory payment still has the correct state, so we persist it
   def persist_all_payments
     order.payments.each do |payment|
-      original_payment_state = payment.state
-      if original_payment_state != Spree::Payment.find(payment.id).state
-        payment.reload.update(state: original_payment_state)
+      in_memory_payment_state = payment.state
+      if different_from_db_payment_state?(in_memory_payment_state, payment.id)
+        payment.reload.update(state: in_memory_payment_state)
       end
     end
   end
 
+  # Verifies if the in-memory payment state is different from the one stored in the database
+  #   This is be done without reloading the payment so that in-memory data is not changed
+  def different_from_db_payment_state?(in_memory_payment_state, payment_id)
+    in_memory_payment_state != Spree::Payment.find(payment_id).state
+  end
 end
