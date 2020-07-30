@@ -17,7 +17,13 @@ Better to have at least 2GB free on your computer in order to download images an
 
 Open a terminal with a shell.
 
-Clone the repository:
+Clone the repository. If you're planning on contributing code to the project (which we [LOVE](CONTRIBUTING.md)), it is a good idea to begin by forking this repo using the Fork button in the top-right corner of this screen. You should then be able to use git clone to copy your fork onto your local machine.
+
+```sh
+$ git clone https://github.com/YOUR_GITHUB_USERNAME_HERE/openfoodnetwork
+```
+
+Otherwise, if you just want to get things running, clone from the OFN main repo:
 
 ```sh
 $ git clone git@github.com:openfoodfoundation/openfoodnetwork.git
