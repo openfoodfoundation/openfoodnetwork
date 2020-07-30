@@ -2186,6 +2186,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   remove_tax: "Remove tax"
   first_name_begins_with: "First name begins with"
   last_name_begins_with: "Last name begins with"
+  shipping_method: "Shipping method"
+  new_order: "New Order"
 
   enterprise_tos_link: "Enterprise Terms of Service link"
   enterprise_tos_message: "We want to work with people that share our aims and values. As such we ask new enterprises to agree to our "
