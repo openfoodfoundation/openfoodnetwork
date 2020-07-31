@@ -1962,6 +1962,7 @@ fr:
   supplier: "Fournisseur"
   product_name: "Nom du Produit"
   product_description: "Description du Produit"
+  permalink: "Permalien"
   shipping_categories: "Conditions de transport"
   units: "Unité de mesure"
   coordinator: "Coordinateur"
@@ -2059,6 +2060,7 @@ fr:
   remove_tax: "Retirer TVA"
   first_name_begins_with: "Prénom commence par"
   last_name_begins_with: "Nom de famille commence par"
+  shipping_method: "Méthode de livraison"
   new_order: "Nouvelle commande"
   enterprise_tos_link: "Lien vers les Conditions Générales d'Utilisation"
   enterprise_tos_message: "Nous soutenons la mise en place d'un système alimentaire résilient et durable, et souhaitons œuvrer avec des entreprises qui partagent nos valeurs et notre vision. Ainsi, nous demandons aux entreprises s'enregistrant sur Open Food France de valider nos "
@@ -3200,6 +3202,8 @@ fr:
           stripe:
             error_saving_payment: Erreur à l'enregistrement du paiement
             submitting_payment: Envoi du paiement...
+          paypal:
+            no_payment_via_admin_backend: 'Il n''est pas encore possible de payer avec Paypal via l''administration. '
       products:
         image_upload_error: "L'image du produit n'a pas été reconnue. Veuillez importer une image au format PNG ou JPG."
         new:
