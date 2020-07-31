@@ -35,8 +35,14 @@ feature '
 
       click_link 'New Variant'
 
+      uri = URI.parse(current_url)
+      expect("#{uri.path}?#{uri.query}").to eq spree.new_admin_product_variant_path(product, filter)
+
       # Cancel link should include product filter
-      expect(page).to have_link(I18n.t('actions.cancel'), href: %r{variants\?#{filter.to_query}})
+      expected_cancel_url = Regexp.new(
+        Regexp.escape(spree.admin_product_variants_path(product, filter))
+      )
+      expect(page).to have_link(I18n.t('actions.cancel'), href: expected_cancel_url)
     end
   end
 
@@ -51,17 +57,28 @@ feature '
 
       visit spree.admin_product_variants_path(product, filter)
 
-      expect(page).to have_link("New Variant", href: %r{variants\/new\?#{filter.to_query}})
-      expect(page).to have_link("Show Deleted", href: %r{variants\?deleted=on&#{filter.to_query}})
+      expected_new_url = Regexp.new(
+        Regexp.escape(spree.new_admin_product_variant_path(product, filter))
+      )
+      expect(page).to have_link("New Variant", href: expected_new_url)
+
+      expected_show_delete_url = Regexp.new(
+        Regexp.escape(spree.admin_product_variants_path(product, { deleted: 'on' }.merge(filter)))
+      )
+      expect(page).to have_link("Show Deleted", href: expected_show_delete_url)
 
       # Variant link should include product filter
       variant = product.variants.first
-      expect(page).to have_link(
-        I18n.t(:edit), href: %r{variants\/#{variant.id}\/edit\?#{filter.to_query}}
+
+      expected_edit_url = Regexp.new(
+        Regexp.escape(spree.edit_admin_product_variant_path(product, variant, filter))
       )
-      expect(page).to have_link(
-        I18n.t(:delete), href: %r{variants\/#{variant.id}\?#{filter.to_query}}
+      expect(page).to have_link(I18n.t(:edit), href: expected_edit_url)
+
+      expected_delete_url = Regexp.new(
+        Regexp.escape(spree.admin_product_variant_path(product, variant, filter))
       )
+      expect(page).to have_link(I18n.t(:delete), href: expected_delete_url)
     end
   end
 
@@ -75,7 +92,10 @@ feature '
       page.find('table.index .icon-edit').click
 
       # Cancel link should include product filter
-      expect(page).to have_link(I18n.t('actions.cancel'), href: %r{variants\?#{filter.to_query}})
+      expected_cancel_url = Regexp.new(
+        Regexp.escape(spree.admin_product_variants_path(product, filter))
+      )
+      expect(page).to have_link(I18n.t('actions.cancel'), href: expected_cancel_url)
     end
 
     scenario "when variant_unit is weight" do
