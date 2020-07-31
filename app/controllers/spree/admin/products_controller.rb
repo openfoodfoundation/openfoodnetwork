@@ -9,7 +9,6 @@ module Spree
       include OpenFoodNetwork::SpreeApiKeyLoader
       include OrderCyclesHelper
       include EnterprisesHelper
-      include ProductFilterHelper
 
       before_action :load_data
       before_action :load_form_data, only: [:index, :new, :create, :edit, :update]
@@ -18,13 +17,13 @@ module Spree
 
       def new
         @object.shipping_category = DefaultShippingCategory.find_or_create
-        super
       end
 
       def create
         delete_stock_params_and_set_after do
-          @prototype = Spree::Prototype.find(params[:product][:prototype_id]) if \
-            params[:product][:prototype_id].present?
+          if params[:product][:prototype_id].present?
+            @prototype = Spree::Prototype.find(params[:product][:prototype_id])
+          end
 
           @object.attributes = permitted_resource_params
           if @object.save
@@ -55,12 +54,11 @@ module Spree
       end
 
       def edit
-        @url_filters = product_filters(params)
-        super
+        @url_filters = ::ProductFilters.new.extract(params)
       end
 
       def update
-        @url_filter = product_filters(request.query_parameters)
+        @url_filters = ::ProductFilters.new.extract(request.query_parameters)
 
         original_supplier_id = @product.supplier_id
         delete_stock_params_and_set_after do
@@ -72,7 +70,7 @@ module Spree
 
             flash[:success] = flash_message_for(@object, :successfully_updated)
           end
-          redirect_to edit_admin_product_url(@object, @url_filter)
+          redirect_to edit_admin_product_url(@object, @url_filters)
         end
       end
 
