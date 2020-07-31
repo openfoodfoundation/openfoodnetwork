@@ -3,9 +3,9 @@
 = render partial: 'spree/shared/error_messages', locals: { target: @image }
 
 - content_for :page_actions do
-  %li= button_link_to t('spree.back_to_images_list'), admin_product_images_url(@product), icon: 'icon-arrow-left'
+  %li= button_link_to t('spree.back_to_images_list'), admin_product_images_url(@product, @url_filters), icon: 'icon-arrow-left'
 
-= form_for [:admin, @product, @image], html: { multipart: true } do |f|
+= form_for [:admin, @product, @image], url: admin_product_image_path(@product, @image, @url_filters), html: { multipart: true } do |f|
   %fieldset
     %legend{align: "center"}= @image.attachment_file_name
     .field.alpha.three.columns.align-center
@@ -18,4 +18,4 @@
     .form-buttons.filter-actions.actions
       = button t('spree.actions.update'), 'icon-refresh'
       %span.or= t('spree.or')
-      = link_to t('spree.actions.cancel'), admin_product_images_url(@product), id: 'cancel_link', class: 'button icon-remove'
+      = link_to t('spree.actions.cancel'), admin_product_images_url(@product, @url_filters), id: 'cancel_link', class: 'button icon-remove'
