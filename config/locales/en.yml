@@ -347,8 +347,6 @@ en:
     volume: Volume
     items: Items
     select_all: Select all
-    subscription:
-      subscriptions: Subscriptions
 
     # General form elements
     quick_search: Quick Search
@@ -1093,10 +1091,13 @@ en:
         name: "Enterprise Fee Summary"
         description: "Summary of Enterprise Fees collected"
     subscriptions:
-      subscriptions: Subscriptions
-      new: New Subscription
-      create: Create Subscription
-      edit: Edit Subscription
+      index:
+        title: "Subscriptions"
+        new: "New Subscription"
+      new:
+        title: "New Subscription"
+      edit:
+        title: "Edit Subscription"
       table:
         edit_subscription: Edit Subscription
         pause_subscription: Pause Subscription
@@ -1105,6 +1106,7 @@ en:
       filters:
         query_placeholder: "Search by email..."
       setup_explanation:
+        title: "Subscriptions"
         just_a_few_more_steps: 'Just a few more steps before you can begin:'
         enable_subscriptions: "Enable subscriptions for at least one of your shops"
         enable_subscriptions_step_1_html: 1. Go to the %{enterprises_link} page, find your shop, and click "Manage"
@@ -1118,6 +1120,8 @@ en:
         create_at_least_one_schedule_step_3: 3. Click '+ New Schedule', and fill out the form
         once_you_are_done_you_can_html: Once you are done, you can %{reload_this_page_link}
         reload_this_page: reload this page
+      form:
+        create: "Create Subscription"
       steps:
         details: 1. Basic Details
         address: 2. Address
