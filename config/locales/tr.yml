@@ -125,9 +125,9 @@ tr:
       subject: "Lütfen %{enterprise} için e-posta adresini doğrulayın"
     welcome:
       subject: "%{enterprise} şimdi %{sitename} 'de"
-      email_welcome: "Hoşgeldiniz"
+      email_welcome: "Aramıza Hoşgeldiniz "
       email_registered: "şimdi bir parçası"
-      email_userguide_html: "Tezgah veya Pazar hesapları ayarları ile ilgili ayrıntılı desteğe sahip Kullanıcı Kılavuzu burada: %{link}"
+      email_userguide_html: "Dükkan veya Pazar hesapları ayarları ile ilgili ayrıntılı desteğe sahip Kullanıcı Kılavuzu burada: %{link}"
       userguide: "Açık Gıda Ağı Kullanıcı Kılavuzu"
       email_admin_html: "%{link}'dan oturum açarak veya ana sayfanın sağ üst kısmındaki ayarlar simgesini tıkladıktan sonra Yönetim' butonu üzerinden hesabınızı yönetebilirsiniz."
       admin_panel: "YönetiİCİ Panelİ"
@@ -1619,7 +1619,7 @@ tr:
   producers_contact: İLETİŞİM
   producers_contact_phone: 'Tel:'
   producers_contact_social: TAKİP ET
-  producers_buy_at_html: "%{enterprise} ürünleri için buradan alışveriş yapın:"
+  producers_buy_at_html: "%{enterprise} ÜRÜNLERİNİ SATIN ALIN:"
   producers_filter: Filtrele
   producers_filter_type: tür
   producers_filter_property: Özellik
@@ -1896,7 +1896,7 @@ tr:
   shop_variant_quantity_min: "min"
   shop_variant_quantity_max: "maks"
   follow: "TAKİP ET"
-  shop_for_products_html: "<span class=\"turquoise\">%{enterprise}</span> ürünleri için şuradan alışveriş yapın:"
+  shop_for_products_html: "<span class=\"turquoise\">%{enterprise}</span> ÜRÜNLERİNİ SATIN ALIN:"
   change_shop: "Dükkanı şuna değiştir:"
   shop_at: "Şimdi alışveriş yapın:"
   price_breakdown: "Fiyat dökümü"
@@ -1960,6 +1960,7 @@ tr:
   supplier: "Tedarikçi"
   product_name: "Ürün Adı"
   product_description: "Ürün Açıklaması"
+  shipping_categories: "Teslimat Kategorileri"
   units: "Ölçü Birimi"
   coordinator: "KOORDİNATÖR"
   distributor: "Dağıtımcı"
@@ -2056,6 +2057,7 @@ tr:
   remove_tax: "Vergiyi kaldır"
   first_name_begins_with: "Adının BAŞ HARFİ"
   last_name_begins_with: "Soyadının BAŞ HARFİ"
+  new_order: "Yeni Sipariş"
   enterprise_tos_link: "İşletme Üyelik Sözleşmesi bağlantısı"
   enterprise_tos_message: "Amaçlarımızı ve değerlerimizi paylaşan insanlarla çalışmak istiyoruz. Yasal zorunluluk gereği de yeni işletmelerden kabul etmesini istiyoruz:"
   enterprise_tos_link_text: "Üyelik Sözleşmesi"

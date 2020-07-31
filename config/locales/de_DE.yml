@@ -1931,6 +1931,7 @@ de_DE:
   supplier: "Anbieter"
   product_name: "Produktname"
   product_description: "Produktbeschreibung"
+  shipping_categories: "Versandkategorien"
   units: "Einheitsgröße"
   coordinator: "Koordinator"
   distributor: "Verteiler"
