@@ -347,6 +347,8 @@ en:
     volume: Volume
     items: Items
     select_all: Select all
+    subscription:
+      subscriptions: Subscriptions
 
     # General form elements
     quick_search: Quick Search
