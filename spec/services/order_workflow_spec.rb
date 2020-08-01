@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe AdvanceOrderService do
+describe OrderWorkflow do
   let!(:distributor) { create(:distributor_enterprise) }
   let!(:order) do
     create(:order_with_totals_and_distribution, distributor: distributor,
@@ -13,7 +13,7 @@ describe AdvanceOrderService do
 
   it "transitions the order multiple steps" do
     expect(order.state).to eq("cart")
-    service.call
+    service.complete
     order.reload
     expect(order.state).to eq("complete")
   end
@@ -30,7 +30,7 @@ describe AdvanceOrderService do
 
     it "retains delivery method of the order" do
       order.select_shipping_method(shipping_method_b.id)
-      service.call
+      service.complete
       order.reload
       expect(order.shipping_method).to eq(shipping_method_b)
     end
@@ -38,7 +38,7 @@ describe AdvanceOrderService do
 
   context "when raising on error" do
     it "transitions the order multiple steps" do
-      service.call!
+      service.complete!
       order.reload
       expect(order.state).to eq("complete")
     end
@@ -49,7 +49,7 @@ describe AdvanceOrderService do
       end
 
       it "raises error" do
-        expect { service.call! }.to raise_error(StateMachine::InvalidTransition)
+        expect { service.complete! }.to raise_error(StateMachine::InvalidTransition)
       end
     end
   end

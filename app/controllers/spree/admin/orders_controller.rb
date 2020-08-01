@@ -35,7 +35,7 @@ module Spree
       def edit
         @order.shipments.map(&:refresh_rates)
 
-        AdvanceOrderService.new(@order).call
+        OrderWorkflow.new(@order).complete
 
         # The payment step shows an error of 'No pending payments'
         # Clearing the errors from the order object will stop this error
