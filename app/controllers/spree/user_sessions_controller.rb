@@ -39,7 +39,17 @@ module Spree
       end
     end
 
+    def destroy
+      # Logout will clear session data including shopfront_redirect
+      #   Here we store it before actually logging out so that the redirect works correctly
+      @shopfront_redirect = session[:shopfront_redirect]
+
+      super
+    end
+
     private
+
+    attr_reader :shopfront_redirect
 
     def accurate_title
       Spree.t(:login)

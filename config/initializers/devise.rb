@@ -90,10 +90,6 @@ Devise.setup do |config|
   # Time interval to unlock the account if :time is enabled as unlock_strategy.
   # config.unlock_in = 1.hour
 
-  # ==> Configuration for :token_authenticatable
-  # Defines name of the authentication token params key
-  config.token_authentication_key = :auth_token
-
   # ==> Scopes configuration
   # Turn scoped views on. Before rendering 'sessions/new', it will first check for
   # 'users/sessions/new'. It's turned off by default because it's slower if you
@@ -140,4 +136,9 @@ Devise.setup do |config|
   config.sign_out_via = :get
 
   config.case_insensitive_keys = [:email]
+end
+
+Devise::TokenAuthenticatable.setup do |config|
+  # Defines name of the authentication token params key
+  config.token_authentication_key = :auth_token
 end

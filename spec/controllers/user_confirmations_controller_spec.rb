@@ -11,7 +11,7 @@ describe UserConfirmationsController, type: :controller do
 
   before do
     @request.env["devise.mapping"] = Devise.mappings[:spree_user]
-    confirmed_user.confirm!
+    confirmed_user.confirm
   end
 
   context "confirming a user" do
@@ -52,7 +52,8 @@ describe UserConfirmationsController, type: :controller do
         unconfirmed_user.reset_password_token = Devise.friendly_token
         unconfirmed_user.save!
         spree_get :show, confirmation_token: unconfirmed_user.confirmation_token
-        expect(response).to redirect_to spree.edit_spree_user_password_path(reset_password_token: unconfirmed_user.reset_password_token)
+        expect(response).to be_redirect
+        expect(response.body).to include spree.edit_spree_user_password_path
       end
     end
   end
