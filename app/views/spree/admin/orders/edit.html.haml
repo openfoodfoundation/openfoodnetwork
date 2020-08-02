@@ -29,6 +29,3 @@
 
     %div{"data-hook" => "admin_order_edit_form"}
       = render :partial => 'form', :locals => { :order => @order }
-
-:coffee
-  angular.bootstrap(document.getElementById("links-dropdown"),['admin.dropdown'])
