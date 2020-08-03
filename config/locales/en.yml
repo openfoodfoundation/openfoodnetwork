@@ -305,6 +305,9 @@ en:
   "on hand": "On Hand"
   ship: "Ship"
   shipping_category: "Shipping Category"
+  height: "Height"
+  width: "Width"
+  depth: "Depth"
 
   actions:
     create_and_add_another: "Create and Add Another"
