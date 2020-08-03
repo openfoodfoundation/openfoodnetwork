@@ -1529,7 +1529,7 @@ ca:
   shopping_contact_social: "Segueix"
   shopping_groups_part_of: "forma part de:"
   shopping_producers_of_hub: "Productores de%{hub}:"
-  enterprises_next_closing: "Tancament de la comanda següent"
+  enterprises_next_closing: "La següent comanda tanca"
   enterprises_ready_for: "Llest per"
   enterprises_choose: "Escull quan vols la teva comanda:"
   maps_open: "Obert"
@@ -1963,6 +1963,7 @@ ca:
   supplier: "Proveïdora"
   product_name: "Nom del producte"
   product_description: "Descripció del producte"
+  permalink: "Enllaç permanent"
   shipping_categories: "Tipus d'enviament"
   units: "Mida d'unitat"
   coordinator: "Coordinador"
@@ -2060,6 +2061,7 @@ ca:
   remove_tax: "Suprimeix comissions"
   first_name_begins_with: "El nom comença amb"
   last_name_begins_with: "El cognom comença amb"
+  shipping_method: "Mètode d'enviament"
   new_order: "Nova comanda"
   enterprise_tos_link: "Enllaç a les condicions d'ús de l'organització"
   enterprise_tos_message: "Volem treballar amb persones que comparteixen els nostres objectius i valors. Com a tal, demanem a les noves organitzacions que acceptin la nostra"
@@ -3176,6 +3178,8 @@ ca:
           stripe:
             error_saving_payment: Error en desar el pagament
             submitting_payment: S'està lliurant el pagament...
+          paypal:
+            no_payment_via_admin_backend: Els pagaments amb Paypal no es poden capturar des de l'administració
       products:
         image_upload_error: "No s'ha reconegut la imatge del producte. Carregueu una imatge en format PNG o JPG."
         new:

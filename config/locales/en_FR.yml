@@ -1960,6 +1960,7 @@ en_FR:
   supplier: "Supplier"
   product_name: "Product Name"
   product_description: "Product Description"
+  permalink: "Permalink"
   shipping_categories: "Shipping Categories"
   units: "Unit Size"
   coordinator: "Coordinator"
@@ -2057,6 +2058,7 @@ en_FR:
   remove_tax: "Remove tax"
   first_name_begins_with: "First name begins with"
   last_name_begins_with: "Last name begins with"
+  shipping_method: "Shipping method"
   new_order: "New Order"
   enterprise_tos_link: "Enterprise Terms of Service link"
   enterprise_tos_message: "We want to work with people that share our aims and values. As such we ask new enterprises to agree to our "
@@ -3170,6 +3172,8 @@ en_FR:
           stripe:
             error_saving_payment: Error saving payment
             submitting_payment: Submitting payment...
+          paypal:
+            no_payment_via_admin_backend: Paypal payments cannot be captured in the Backoffice
       products:
         image_upload_error: "The product image was not recognised. Please upload an image in PNG or JPG format."
         new:

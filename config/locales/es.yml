@@ -1962,6 +1962,7 @@ es:
   supplier: "Proveedora"
   product_name: "nombre del producto"
   product_description: "Descripción del producto"
+  permalink: "Enlace permanente"
   shipping_categories: "Categorías de envío"
   units: "Unidad de medida"
   coordinator: "Coordinadora"
@@ -2059,6 +2060,7 @@ es:
   remove_tax: "Eliminar impuesto"
   first_name_begins_with: "El nombre comienza con"
   last_name_begins_with: "El apellido comienza con"
+  shipping_method: "Método de envío"
   new_order: "Nuevo pedido"
   enterprise_tos_link: "Enlace a los Términos del Servicio de la Organización"
   enterprise_tos_message: "Queremos trabajar con personas que compartan nuestros objetivos y valores. Por ello, pedimos a las nuevas organizaciones que acepten"
@@ -3176,6 +3178,8 @@ es:
           stripe:
             error_saving_payment: Error al guardar el pago
             submitting_payment: Enviando pago...
+          paypal:
+            no_payment_via_admin_backend: Los pagos de PayPal no se pueden capturar desde l'administración
       products:
         image_upload_error: "La imagen del producto no fue reconocida. Por favor, cargue una imagen en formato PNG o JPG."
         new:
