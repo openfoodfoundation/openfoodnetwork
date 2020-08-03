@@ -1,19 +1,30 @@
-= t('.dear_customer')
+%p
+  = t('.dear_customer')
+%p
+  = t('.instructions')
 
-= t('.instructions')
+%p
+  = "============================================================"
+  %br
+  = t('.shipment_summary')
+  %br
+  = "============================================================"
 
-= "============================================================"
-= t('.shipment_summary')
-= "============================================================"
-- @shipment.manifest.each do |item|
-  = item.variant.sku
-  = item.variant.product.name
-  = item.variant.options_text
-= "============================================================"
+%p
+  - @shipment.manifest.each do |item|
+    = item.variant.sku
+    = item.variant.product.name
+    = item.variant.options_text
+  %br
+  = "============================================================"
 
 - if @shipment.tracking
-  = t('.track_information', tracking: @shipment.tracking)
-- if @shipment.tracking_url
-  = t('.track_link', url: @shipment.tracking_url)
+  %p
+    = t('.track_information', tracking: @shipment.tracking)
 
-= t('.thanks')
+- if @shipment.tracking_url
+  %p
+    = t('.track_link', url: @shipment.tracking_url)
+
+%p
+  = t('.thanks')
