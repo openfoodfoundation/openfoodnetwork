@@ -1960,6 +1960,7 @@ tr:
   supplier: "Tedarikçi"
   product_name: "Ürün Adı"
   product_description: "Ürün Açıklaması"
+  permalink: "Permalink"
   shipping_categories: "Teslimat Kategorileri"
   units: "Ölçü Birimi"
   coordinator: "KOORDİNATÖR"
@@ -2057,6 +2058,7 @@ tr:
   remove_tax: "Vergiyi kaldır"
   first_name_begins_with: "Adının BAŞ HARFİ"
   last_name_begins_with: "Soyadının BAŞ HARFİ"
+  shipping_method: "Teslimat Yöntemi"
   new_order: "Yeni Sipariş"
   enterprise_tos_link: "İşletme Üyelik Sözleşmesi bağlantısı"
   enterprise_tos_message: "Amaçlarımızı ve değerlerimizi paylaşan insanlarla çalışmak istiyoruz. Yasal zorunluluk gereği de yeni işletmelerden kabul etmesini istiyoruz:"
@@ -3172,6 +3174,8 @@ tr:
           stripe:
             error_saving_payment: Ödeme kaydedilirken hata oluştu
             submitting_payment: Ödeme gönderiliyor ...
+          paypal:
+            no_payment_via_admin_backend: Paypal ödemeleri alınamıyor.
       products:
         image_upload_error: "Ürün resmi tanınamadı. Lütfen PNG veya JPG biçiminde bir resim yükleyin."
         new:
