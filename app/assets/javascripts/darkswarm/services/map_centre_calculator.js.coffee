@@ -14,16 +14,10 @@ Darkswarm.factory 'MapCentreCalculator', (Enterprises, openStreetMapConfig) ->
         openStreetMapConfig.open_street_map_default_longitude
 
     _calculate: (angleName, coordinates) =>
-      positiveAngles = []
-      negativeAngles = []
       angles = []
 
       for coordinate in coordinates
         angles.push(coordinate[angleName])
-        if coordinate[angleName] > 0
-          positiveAngles.push(coordinate[angleName])
-        else
-          negativeAngles.push(coordinate[angleName])
 
       minimumAngle = Math.min.apply(null, angles)
       maximumAngle = Math.max.apply(null, angles)
