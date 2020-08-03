@@ -3,7 +3,7 @@
 module Spree
   class OrderMailer < BaseMailer
     helper HtmlHelper
-    helper CheckoutHelper
+    helper ::CheckoutHelper
     helper SpreeCurrencyHelper
     helper OrderHelper
     include I18nHelper
