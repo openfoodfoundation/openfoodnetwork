@@ -14,6 +14,7 @@ nb:
       spree/payment:
         amount: Beløp
         state: Tilstand
+        source: Kilde
       spree/product:
         primary_taxon: "Produktkategori"
         supplier: "Leverandør"
@@ -183,6 +184,7 @@ nb:
         explainer: Automatisk behandling av disse bestillingene mislyktes av en ukjent grunn. Dette bør ikke skje, vennligst kontakt oss hvis du ser dette.
   home: "OFN"
   title: "Open Food Network"
+  welcome_to: "Velkommen til"
   site_meta_description: "Vi begynner fra grunnen. Med bønder og dyrkere klare til å fortelle sine historier, stolt og virkelig. Med distributører klare til å koble mennesker med produkter på en rettferdig og ærlig måte. Med kunder som tror på at ukentlige innkjøpsrutiner kan..."
   search_by_name: Søk på navn eller sted...
   producers_join: Norske produsenter er nå velkommen til å bli med i Open Food Network.
@@ -1714,6 +1716,7 @@ nb:
   remember_me: Husk meg
   are_you_sure: "Er du sikker?"
   orders_open: "Åpen for bestilling"
+  closing: "Stenger"
   going_back_to_home_page: "Tar deg tilbake til hjemmesiden"
   creating: Oppretter
   updating: Oppdaterer
@@ -1957,6 +1960,7 @@ nb:
   supplier: "Leverandør"
   product_name: "Produktnavn"
   product_description: "Produktbeskrivelse"
+  permalink: "Permalink"
   shipping_categories: "Fraktkategorier"
   units: "Enhetsstørrelse"
   coordinator: "Koordinator"
@@ -2054,6 +2058,7 @@ nb:
   remove_tax: "Fjern avgift"
   first_name_begins_with: "Fornavn begynner med"
   last_name_begins_with: "Etternavn begynner med"
+  shipping_method: "Leveringsmetode"
   new_order: "Ny bestilling"
   enterprise_tos_link: "Lenke til Tjenestevilkår for Bedrifter"
   enterprise_tos_message: "Vi ønsker å jobbe med bedrifter som deler våre mål og verdier. Derfor ber vi nye bedrifter om å godta vår"
@@ -2073,6 +2078,7 @@ nb:
   hub_sidebar_at_least: "Minst én hub må være valgt"
   hub_sidebar_blue: "blå"
   hub_sidebar_red: "rød"
+  order_cycles_closed_for_hub: "Huben du har valgt er midlertidig lukket for bestillinger. Vennligst prøv igjen senere."
   report_customers_distributor: "Distributør"
   report_customers_supplier: "Leverandør"
   report_customers_cycle: "Bestillingsrunde"
@@ -2309,6 +2315,7 @@ nb:
   order_cycles_email_to_producers_notice: 'E-poster som skal sendes til produsentene har blitt satt i kø for sending.'
   order_cycles_no_permission_to_coordinate_error: "Ingen av bedriftene dine har tillatelse til å koordinere en bestillingsrunde"
   order_cycles_no_permission_to_create_error: "Du har ikke rettigheter til å opprette en bestillingsrunde som er koordinert av den bedriften"
+  order_cycle_closed: "Bestillingsrunden du har valgt har akkurat stengt. Vennligst prøv igjen!"
   back_to_orders_list: "Tilbake til bestillingslisten"
   no_orders_found: "Ingen bestillinger funnet"
   order_information: "Bestillingsinformasjon"
@@ -3164,6 +3171,8 @@ nb:
           stripe:
             error_saving_payment: Feil ved lagring av betaling
             submitting_payment: Sender inn betaling...
+          paypal:
+            no_payment_via_admin_backend: Paypal-betalinger kan ikke behandles i Backoffice
       products:
         image_upload_error: "Produktbildet ble ikke gjenkjent. Last opp et bilde i PNG- eller JPG-format."
         new:
