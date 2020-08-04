@@ -273,6 +273,9 @@ fr:
   on hand: "En stock"
   ship: "Expédier"
   shipping_category: "Condition de transport"
+  height: "Hauteur"
+  width: "Largeur"
+  depth: "Profondeur"
   actions:
     create_and_add_another: "Créer et ajouter nouveau"
     create: "Créer"
