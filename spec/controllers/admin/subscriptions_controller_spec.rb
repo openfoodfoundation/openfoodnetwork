@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Admin::SubscriptionsController, type: :controller do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include OpenFoodNetwork::EmailHelper
 
   describe 'index' do

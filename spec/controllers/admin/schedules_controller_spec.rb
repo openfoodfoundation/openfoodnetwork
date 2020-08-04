@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Admin::SchedulesController, type: :controller do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   describe "index" do
     let!(:coordinated_order_cycle) { create(:simple_order_cycle) }

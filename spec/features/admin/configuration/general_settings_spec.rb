@@ -1,11 +1,10 @@
 require 'spec_helper'
 
 describe "General Settings" do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   before(:each) do
-    quick_login_as_admin
-    visit spree.admin_dashboard_path
+    login_as_admin_and_visit spree.admin_dashboard_path
     click_link "Configuration"
     click_link "General Settings"
   end

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Admin::ProxyOrdersController, type: :controller do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   describe 'cancel' do
     let!(:user) { create(:user, enterprise_limit: 10) }

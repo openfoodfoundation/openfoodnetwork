@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "As a consumer I want to shop with a distributor", js: true do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
   include ShopWorkflow
   include UIComponentHelper
@@ -485,7 +485,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
         let(:user) { create(:user, bill_address: address, ship_address: address) }
 
         before do
-          quick_login_as user
+          login_as user
         end
 
         context "as non-customer" do
@@ -533,7 +533,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
         let!(:returning_user) { create(:user, email: unregistered_customer.email) }
 
         before do
-          quick_login_as returning_user
+          login_as returning_user
         end
 
         it "shows the products without customer only message" do

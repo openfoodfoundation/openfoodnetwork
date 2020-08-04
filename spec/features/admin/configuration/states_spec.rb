@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 describe "States" do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   let!(:country) { create(:country) }
 
   before(:each) do
-    quick_login_as_admin
+    login_as_admin
     @hungary = Spree::Country.create!(name: "Hungary", iso_name: "Hungary")
     Spree::Config[:default_country_id] = country.id
   end

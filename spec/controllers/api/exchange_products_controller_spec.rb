@@ -4,7 +4,7 @@ require 'spec_helper'
 
 module Api
   describe ExchangeProductsController, type: :controller do
-    include AuthenticationWorkflow
+    include AuthenticationHelper
 
     let(:order_cycle) { create(:order_cycle) }
     let(:exchange) { order_cycle.exchanges.incoming.first }

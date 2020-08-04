@@ -2,9 +2,7 @@ require 'spec_helper'
 
 module Admin
   describe OrderCyclesController, type: :controller do
-    include AuthenticationWorkflow
-
-    let!(:distributor_owner) { create_enterprise_user enterprise_limit: 2 }
+    let!(:distributor_owner) { create(:user) }
 
     before do
       allow(controller).to receive_messages spree_current_user: distributor_owner
@@ -104,7 +102,7 @@ module Admin
         let(:params) { { format: :json, order_cycle: {} } }
 
         before do
-          login_as_enterprise_user([shop])
+          controller_login_as_enterprise_user([shop])
           allow(OrderCycleForm).to receive(:new) { form_mock }
         end
 
@@ -150,7 +148,7 @@ module Admin
       end
 
       context "as a manager of the coordinator" do
-        before { login_as_enterprise_user([coordinator]) }
+        before { controller_login_as_enterprise_user([coordinator]) }
         let(:params) { { format: :json, id: order_cycle.id, order_cycle: {} } }
 
         context "when updating succeeds" do
@@ -300,7 +298,7 @@ module Admin
     end
 
     describe "notifying producers" do
-      let(:user) { create_enterprise_user }
+      let(:user) { create(:user) }
       let(:admin_user) do
         user = create(:user)
         user.spree_roles << Spree::Role.find_or_create_by!(name: 'admin')

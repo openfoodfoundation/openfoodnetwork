@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe Admin::InventoryItemsController, type: :controller do
-  # include AuthenticationWorkflow
-
   describe "create" do
     context "json" do
       let(:format) { :json }

@@ -1,13 +1,13 @@
 require "spec_helper"
 
 feature "Managing users" do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include OpenFoodNetwork::EmailHelper
 
   context "as super-admin" do
     before do
       setup_email
-      quick_login_as_admin
+      login_as_admin
     end
 
     context "from the index page" do

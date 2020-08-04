@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "shopping with variant overrides defined", js: true do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
   include ShopWorkflow
   include CheckoutWorkflow

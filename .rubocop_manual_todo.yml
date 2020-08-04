@@ -644,7 +644,7 @@ Metrics/MethodLength:
   - spec/features/consumer/shopping/checkout_paypal_spec.rb
   - spec/features/consumer/shopping/variant_overrides_spec.rb
   - spec/models/product_importer_spec.rb
-  - spec/support/request/authentication_workflow.rb
+  - spec/support/request/authentication_helper.rb
 
 Metrics/ClassLength:
   Max: 100

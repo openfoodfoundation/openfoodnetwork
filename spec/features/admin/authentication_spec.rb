@@ -2,7 +2,7 @@ require 'spec_helper'
 
 feature "Authentication", js: true do
   include UIComponentHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
 
   let(:user) { create(:user, password: "password", password_confirmation: "password") }

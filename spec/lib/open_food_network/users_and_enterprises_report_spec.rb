@@ -3,8 +3,6 @@ require 'open_food_network/users_and_enterprises_report'
 
 module OpenFoodNetwork
   describe UsersAndEnterprisesReport do
-    include AuthenticationWorkflow
-
     describe "users_and_enterprises" do
       let!(:owners_and_enterprises) { double(:owners_and_enterprises) }
       let!(:managers_and_enterprises) { double(:managers_and_enterprises) }
@@ -63,8 +61,8 @@ module OpenFoodNetwork
     end
 
     describe "filtering results" do
-      let!(:enterprise1) { create(:enterprise, owner: create_enterprise_user ) }
-      let!(:enterprise2) { create(:enterprise, owner: create_enterprise_user ) }
+      let!(:enterprise1) { create(:enterprise, owner: create(:user) ) }
+      let!(:enterprise2) { create(:enterprise, owner: create(:user) ) }
 
       describe "for owners and enterprises" do
         describe "by enterprise id" do
@@ -103,8 +101,8 @@ module OpenFoodNetwork
         end
 
         describe "by user id" do
-          let!(:manager1) { create_enterprise_user }
-          let!(:manager2) { create_enterprise_user }
+          let!(:manager1) { create(:user) }
+          let!(:manager2) { create(:user) }
           let!(:params) { { user_id_in: [manager1.id.to_s] } }
           let!(:subject) { OpenFoodNetwork::UsersAndEnterprisesReport.new params, true }
 

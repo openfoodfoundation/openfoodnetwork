@@ -1,11 +1,9 @@
 require 'spec_helper'
 
 describe Enterprise do
-  include AuthenticationWorkflow
-
   describe "sending emails" do
     describe "on creation" do
-      let!(:user) { create_enterprise_user( enterprise_limit: 2 ) }
+      let!(:user) { create(:user) }
       let!(:enterprise) { create(:enterprise, owner: user) }
 
       it "sends a welcome email" do
@@ -82,8 +80,8 @@ describe Enterprise do
     end
 
     describe "ownership" do
-      let(:u1) { create_enterprise_user }
-      let(:u2) { create_enterprise_user }
+      let(:u1) { create(:user) }
+      let(:u2) { create(:user) }
       let!(:e) { create(:enterprise, owner: u1 ) }
 
       it "adds new owner to list of managers" do

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "checking out an order with a Stripe Connect payment method", type: :request do
   include ShopWorkflow
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include OpenFoodNetwork::ApiHelper
 
   let!(:order_cycle) { create(:simple_order_cycle) }
@@ -244,7 +244,7 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
 
     before do
       params[:order][:existing_card_id] = credit_card.id
-      quick_login_as(order.user)
+      login_as(order.user)
 
       # Requests a token
       stub_request(:post, "https://api.stripe.com/v1/tokens")

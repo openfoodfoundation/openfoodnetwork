@@ -7,7 +7,7 @@ feature '
     I want to create/update complex order cycles with a specific time
 ', js: true do
   include AdminHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
 
   let(:order_cycle_opening_time) { Time.zone.local(2040, 11, 0o6, 0o6, 0o0, 0o0).strftime("%F %T %z") }
@@ -33,8 +33,7 @@ feature '
     distributor_fee = create(:enterprise_fee, enterprise: distributor, name: 'Distributor fee')
 
     # When I go to the new order cycle page
-    quick_login_as_admin
-    visit admin_order_cycles_path
+    login_as_admin_and_visit admin_order_cycles_path
     click_link 'New Order Cycle'
 
     # Select a coordinator since there are two available

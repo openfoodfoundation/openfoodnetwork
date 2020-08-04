@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Spree::Admin::ShippingMethodsController, type: :controller do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   describe "#update" do
     let(:shipping_method) { create(:shipping_method) }
@@ -16,7 +16,7 @@ describe Spree::Admin::ShippingMethodsController, type: :controller do
       }
     }
 
-    before { login_as_admin }
+    before { controller_login_as_admin }
 
     it "updates preferred_amount and preferred_currency of a FlatRate calculator" do
       shipping_method.calculator = create(:calculator_flat_rate, calculable: shipping_method)
@@ -81,7 +81,7 @@ describe Spree::Admin::ShippingMethodsController, type: :controller do
       let(:shipping_method) { create(:shipping_method) }
 
       scenario "is soft deleted" do
-        login_as_admin
+        controller_login_as_admin
         expect(shipping_method.deleted_at).to be_nil
 
         spree_delete :destroy, "id" => shipping_method.id
@@ -94,7 +94,7 @@ describe Spree::Admin::ShippingMethodsController, type: :controller do
       let(:order) { create(:order_with_line_items) }
 
       scenario "is not soft deleted" do
-        login_as_admin
+        controller_login_as_admin
         expect(order.shipping_method.deleted_at).to be_nil
 
         spree_delete :destroy, "id" => order.shipping_method.id

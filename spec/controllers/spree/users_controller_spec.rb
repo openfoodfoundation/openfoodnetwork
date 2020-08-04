@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Spree::UsersController, type: :controller do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   describe "show" do
     let!(:u1) { create(:user) }

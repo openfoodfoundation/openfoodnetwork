@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe Spree::Admin::ImageSettingsController do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
-  before { login_as_admin }
+  before { controller_login_as_admin }
 
   context "updating image settings" do
     it "should be able to update paperclip settings" do

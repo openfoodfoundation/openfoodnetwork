@@ -1338,7 +1338,7 @@ Style/FrozenStringLiteralComment:
     - 'spec/support/performance_helper.rb'
     - 'spec/support/products_helper.rb'
     - 'spec/support/request/admin_helper.rb'
-    - 'spec/support/request/authentication_workflow.rb'
+    - 'spec/support/request/authentication_helper.rb'
     - 'spec/support/request/checkout_workflow.rb'
     - 'spec/support/request/cookie_helper.rb'
     - 'spec/support/request/distribution_helper.rb'

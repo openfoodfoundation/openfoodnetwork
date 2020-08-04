@@ -65,7 +65,7 @@ describe Spree::Admin::ReportsController, type: :controller do
   context "Coordinator Enterprise User" do
     let!(:present_objects) { [orderA1, orderA2, orderB1, orderB2] }
 
-    before { login_as_enterprise_user [coordinator1] }
+    before { controller_login_as_enterprise_user [coordinator1] }
 
     describe 'Orders & Fulfillment' do
       it "shows all orders in order cycles I coordinate" do
@@ -79,7 +79,7 @@ describe Spree::Admin::ReportsController, type: :controller do
 
   # As a Distributor Enterprise user for distributor1
   context "Distributor Enterprise User" do
-    before { login_as_enterprise_user [distributor1] }
+    before { controller_login_as_enterprise_user [distributor1] }
 
     describe 'Orders and Distributors' do
       let!(:present_objects) { [orderA1, orderA2, orderB1, orderB2] }
@@ -132,7 +132,7 @@ describe Spree::Admin::ReportsController, type: :controller do
 
   # As a Supplier Enterprise user for supplier1
   context "Supplier" do
-    before { login_as_enterprise_user [supplier1] }
+    before { controller_login_as_enterprise_user [supplier1] }
 
     describe 'index' do
       it "loads reports relevant to producers" do
@@ -191,7 +191,7 @@ describe Spree::Admin::ReportsController, type: :controller do
   end
 
   context "Products & Inventory" do
-    before { login_as_admin }
+    before { controller_login_as_admin }
 
     context "with distributors and suppliers" do
       let(:distributors) { [coordinator1, distributor1, distributor2] }
@@ -235,7 +235,7 @@ describe Spree::Admin::ReportsController, type: :controller do
   end
 
   context "My Customers" do
-    before { login_as_admin }
+    before { controller_login_as_admin }
 
     it "should have report types for customers" do
       expect(subject.report_types[:customers]).to eq([
@@ -286,7 +286,7 @@ describe Spree::Admin::ReportsController, type: :controller do
   end
 
   context "Admin" do
-    before { login_as_admin }
+    before { controller_login_as_admin }
 
     describe "users_and_enterprises" do
       let!(:present_objects) { [coordinator1] }

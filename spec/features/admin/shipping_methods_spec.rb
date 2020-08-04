@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 feature 'shipping methods' do
-  include AuthenticationWorkflow
   include WebHelper
+  include AuthenticationHelper
 
   before :each do
     @shipping_method = create(:shipping_method)
@@ -10,7 +10,7 @@ feature 'shipping methods' do
 
   context "as a site admin" do
     before(:each) do
-      quick_login_as_admin
+      login_as_admin
     end
 
     scenario "creating a shipping method owned by some distributors" do
@@ -82,7 +82,7 @@ feature 'shipping methods' do
   end
 
   context "as an enterprise user", js: true do
-    let(:enterprise_user) { create_enterprise_user }
+    let(:enterprise_user) { create(:user) }
     let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
     let(:distributor2) { create(:distributor_enterprise, name: 'Second Distributor') }
     let(:distributor3) { create(:distributor_enterprise, name: 'Third Distributor') }
@@ -94,7 +94,7 @@ feature 'shipping methods' do
     before(:each) do
       enterprise_user.enterprise_roles.build(enterprise: distributor1).save
       enterprise_user.enterprise_roles.build(enterprise: distributor2).save
-      quick_login_as enterprise_user
+      login_as enterprise_user
     end
 
     it "creating a shipping method" do

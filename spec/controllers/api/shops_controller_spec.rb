@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe Api::ShopsController, type: :controller do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   render_views
 
   context "as a non-authenticated user" do
