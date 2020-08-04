@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe Admin::VariantOverridesController, type: :controller do
-  # include AuthenticationHelper
-
   describe "bulk_update" do
     context "json" do
       let(:format) { :json }
