@@ -22,9 +22,10 @@ module DfcProvider
     private
 
     def products
-      @products ||= @enterprise.
-                    supplied_products.
-                    includes(variants: :product)
+      @products ||=
+        @enterprise.
+          supplied_products.
+          includes(variants: :product)
     end
 
     def serialized_supplied_products

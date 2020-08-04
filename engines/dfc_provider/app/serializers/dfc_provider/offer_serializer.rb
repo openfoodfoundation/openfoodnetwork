@@ -17,7 +17,7 @@ module DfcProvider
           "@id" => "/customerCategoryId1"
         },
         "dfc:price" => @variant.price,
-        "dfc:stockLimitation" => @variant.total_on_hand,
+        "dfc:stockLimitation" => @variant.on_hand,
       }
     end
   end

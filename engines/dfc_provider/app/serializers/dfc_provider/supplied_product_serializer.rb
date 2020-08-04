@@ -12,10 +12,10 @@ module DfcProvider
       {
         "@id" => "/products/#{@product.id}",
         "dfc:hasUnit" => {
-          "@id" => "/unit/#{@product.unit_description.presence || 'piece'}",
-          "rdfs:label" => "#{@product.unit_description.presence || 'piece'}"
+          "@id" => "/unit/#{unit_name}",
+          "rdfs:label" => unit_name
         },
-        "dfc:quantity" => @product.total_on_hand,
+        "dfc:quantity" => @product.on_hand,
         "dfc:description" => @product.name,
         "dfc:totalTheoriticalStock" => nil,
         "dfc:brand" => nil,
@@ -24,6 +24,12 @@ module DfcProvider
         "lifeTime" => nil,
         "dfc:physicalCharacterisctics" => nil
       }
+    end
+
+    private
+
+    def unit_name
+      @product.unit_description.presence || 'piece'
     end
   end
 end

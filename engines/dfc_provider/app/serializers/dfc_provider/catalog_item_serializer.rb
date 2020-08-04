@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Serializer used to render a DFC CatalogItemt from an OFN Product
+# Serializer used to render a DFC CatalogItem from an OFN Product
 # into JSON-LD format based on DFC ontology
 module DfcProvider
   class CatalogItemSerializer
