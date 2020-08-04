@@ -273,6 +273,9 @@ ca:
   on hand: "Disponibles"
   ship: "Enviament"
   shipping_category: "Categoria d'enviament"
+  height: "Alçada"
+  width: "Amplada"
+  depth: "Profunditat"
   actions:
     create_and_add_another: "Crea i afegeix-ne una altra"
     create: "Crear"
