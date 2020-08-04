@@ -273,6 +273,9 @@ es:
   on hand: "Disponibles"
   ship: "Envío"
   shipping_category: "Categoría de envío"
+  height: "Altura"
+  width: "Anchura"
+  depth: "Profundidad"
   actions:
     create_and_add_another: "Crear y agregar otro"
     create: "Crear"
@@ -3179,7 +3182,7 @@ es:
             error_saving_payment: Error al guardar el pago
             submitting_payment: Enviando pago...
           paypal:
-            no_payment_via_admin_backend: Los pagos de PayPal no se pueden capturar desde l'administración
+            no_payment_via_admin_backend: Los pagos de PayPal no se pueden capturar desde la administración
       products:
         image_upload_error: "La imagen del producto no fue reconocida. Por favor, cargue una imagen en formato PNG o JPG."
         new:
