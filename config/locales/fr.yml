@@ -1041,10 +1041,13 @@ fr:
         name: "Résumé des marges et commissions"
         description: "Résumé des marges et commissions collectées"
     subscriptions:
-      subscriptions: Abonnements
-      new: Nouvel abonnement
-      create: Créer abonnement
-      edit: Mettre à jour Abonnement
+      index:
+        title: "Abonnements"
+        new: "Nouvel abonnement"
+      new:
+        title: "Nouvel abonnement"
+      edit:
+        title: "Mettre à jour Abonnement"
       table:
         edit_subscription: Mettre à jour Abonnement
         pause_subscription: Mettre en pause Abonnement
@@ -1053,6 +1056,7 @@ fr:
       filters:
         query_placeholder: "Recherche par email"
       setup_explanation:
+        title: "Abonnements"
         just_a_few_more_steps: 'Encore quelques étapes avant de pouvoir commencer:'
         enable_subscriptions: "Activez la fonction abonnements pour au moins une de vos boutiques"
         enable_subscriptions_step_1_html: 1. Allez à %{enterprises_link}, trouvez votre boutique, et cliquez sur "Gérer"
@@ -1066,6 +1070,8 @@ fr:
         create_at_least_one_schedule_step_3: 3. Cliquez sur "+ Nouveau Rythme d'abonnement", et remplissez le formulaire
         once_you_are_done_you_can_html: Une fois que c'est fait, vous pouvez %{reload_this_page_link}
         reload_this_page: recharger cette page
+      form:
+        create: "Créer abonnement"
       steps:
         details: 1. Informations de base
         address: 2. Adresse
