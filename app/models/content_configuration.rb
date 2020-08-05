@@ -21,6 +21,8 @@ class ContentConfiguration < Spree::Preferences::FileConfiguration
   preference :open_street_map_enabled, :boolean, default: false
   preference :open_street_map_provider_name, :string, default: "OpenStreetMap.Mapnik"
   preference :open_street_map_provider_options, :text, default: "{}"
+  preference :open_street_map_default_latitude, :string, default: "-37.4713077"
+  preference :open_street_map_default_longitude, :string, default: "144.7851531"
 
   # Producer sign-up page
   # All the following defaults using I18n don't work.
