@@ -1,0 +1,30 @@
+%p
+  = t('.dear_customer')
+%p
+  = t('.instructions')
+
+%p
+  = "============================================================"
+  %br
+  = t('.shipment_summary')
+  %br
+  = "============================================================"
+
+%p
+  - @shipment.manifest.each do |item|
+    = item.variant.sku
+    = item.variant.product.name
+    = item.variant.options_text
+  %br
+  = "============================================================"
+
+- if @shipment.tracking
+  %p
+    = t('.track_information', tracking: @shipment.tracking)
+
+- if @shipment.tracking_url
+  %p
+    = t('.track_link', url: @shipment.tracking_url)
+
+%p
+  = t('.thanks')

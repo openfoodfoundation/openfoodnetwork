@@ -3525,6 +3525,32 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       invoice_email:
         hi: "Hi %{name}"
         invoice_attached_text: Please find attached an invoice for your recent order from
+    user_mailer:
+      reset_password_instructions:
+        request_sent_text: |
+          A request to reset your password has been made.
+          If you did not make this request, simply ignore this email.
+        link_text: >
+          If you did make this request just click the link below:
+        issue_text: |
+          If the above URL does not work try copying and pasting it into your browser.
+          If you continue to have problems please feel free to contact us.
+      confirmation_instructions:
+        subject: "Please confirm your OFN account"
+    shipment_mailer:
+      shipped_email:
+        dear_customer: "Dear Customer,"
+        instructions: "Your order has been shipped"
+        shipment_summary: "Shipment Summary"
+        subject: "Shipment Notification"
+        thanks: "Thank you for your business."
+        track_information: ! "Tracking Information: %{tracking}"
+        track_link: ! "Tracking Link: %{url}"
+    test_mailer:
+      test_email:
+        greeting: "Congratulations!"
+        message: "If you have received this email, then your email settings are correct."
+        subject: "Test Mail"
     order_state:
       address: address
       adjustments: adjustments
@@ -3546,18 +3572,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       ended: ended
       paused: paused
       canceled: cancelled
-    user_mailer:
-      reset_password_instructions:
-        request_sent_text: |
-          A request to reset your password has been made.
-          If you did not make this request, simply ignore this email.
-        link_text: >
-          If you did make this request just click the link below:
-        issue_text: |
-          If the above URL does not work try copying and pasting it into your browser.
-          If you continue to have problems please feel free to contact us.
-      confirmation_instructions:
-        subject: Please confirm your OFN account
     users:
       form:
         account_settings: Account Settings
