@@ -18,7 +18,7 @@ module Calculator
     private
 
     def total_weight(line_items)
-      line_items.sum do |line_item|
+      line_items.to_a.sum do |line_item|
         line_item_weight(line_item)
       end
     end
