@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe Spree::Admin::MailMethodsController do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
-  before { login_as_admin }
+  before { controller_login_as_admin }
 
   context "#update" do
     it "should reinitialize the mail settings" do
@@ -18,8 +18,10 @@ describe Spree::Admin::MailMethodsController do
                           spree_api_key: 'fake',
                           id: nil,
                           owned_groups: nil)
-    allow(user).to receive_messages(enterprises: [create(:enterprise)], has_spree_role?: true)
-    allow(controller).to receive_messages(try_spree_current_user: user)
+    allow(user).to receive_messages(enterprises: [create(:enterprise)],
+                                    has_spree_role?: true,
+                                    locale: nil)
+    allow(controller).to receive_messages(spree_current_user: user)
     Spree::Config[:enable_mail_delivery] = "1"
     ActionMailer::Base.perform_deliveries = true
 

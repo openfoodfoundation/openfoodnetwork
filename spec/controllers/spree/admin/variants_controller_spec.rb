@@ -3,7 +3,7 @@ require 'spec_helper'
 module Spree
   module Admin
     describe VariantsController, type: :controller do
-      before { login_as_admin }
+      before { controller_login_as_admin }
 
       describe "#index" do
         describe "deleted variants" do

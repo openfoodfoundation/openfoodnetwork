@@ -7,7 +7,7 @@ feature '
     I want to manage complex order cycles
 ', js: true do
   include AdminHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
 
   scenario "editing an order cycle with an exchange between the same enterprise" do
@@ -20,8 +20,7 @@ feature '
     oc_outgoing = create(:simple_order_cycle, coordinator: c, distributors: [c])
 
     # When I edit the first order cycle, the exchange should appear as incoming
-    quick_login_as_admin
-    visit admin_order_cycle_incoming_path(oc_incoming)
+    login_as_admin_and_visit admin_order_cycle_incoming_path(oc_incoming)
     expect(page).to have_selector 'table.exchanges tr.supplier'
     visit admin_order_cycle_outgoing_path(oc_incoming)
     expect(page).not_to have_selector 'table.exchanges tr.distributor'

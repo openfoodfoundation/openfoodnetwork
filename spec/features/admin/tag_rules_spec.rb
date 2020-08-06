@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature 'Tag Rules', js: true do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
 
   let!(:enterprise) { create(:distributor_enterprise) }
@@ -242,8 +242,7 @@ feature 'Tag Rules', js: true do
   end
 
   def visit_tag_rules
-    login_to_admin_section
-    visit main_app.edit_admin_enterprise_path(enterprise)
+    login_as_admin_and_visit main_app.edit_admin_enterprise_path(enterprise)
     expect(page).to have_content "PRIMARY DETAILS"
     click_link "Tag Rules"
   end

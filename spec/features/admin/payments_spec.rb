@@ -4,13 +4,12 @@ feature '
     As an admin
     I want to manage payments
 ' do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   let(:order) { create(:completed_order_with_fees) }
 
   scenario "visiting the payment form" do
-    quick_login_as_admin
-    visit spree.new_admin_order_payment_path order
+    login_as_admin_and_visit spree.new_admin_order_payment_path order
 
     expect(page).to have_content "New Payment"
   end
@@ -21,13 +20,12 @@ feature '
 
       # This calculator doesn't handle a `nil` order well.
       # That has been useful in finding bugs. ;-)
-      payment_method.calculator = Spree::Calculator::FlatPercentItemTotal.new
+      payment_method.calculator = Calculator::FlatPercentItemTotal.new
       payment_method.save!
     end
 
     scenario "visiting the payment form" do
-      quick_login_as_admin
-      visit spree.new_admin_order_payment_path order
+      login_as_admin_and_visit spree.new_admin_order_payment_path order
 
       expect(page).to have_content "New Payment"
     end
@@ -40,8 +38,7 @@ feature '
     end
 
     it "renders the payment details" do
-      quick_login_as_admin
-      visit spree.admin_order_payments_path order
+      login_as_admin_and_visit spree.admin_order_payments_path order
 
       page.click_link("StripeSCA")
       expect(page).to have_content order.payments.last.source.last_digits
@@ -53,8 +50,7 @@ feature '
       end
 
       it "renders the payment details" do
-        quick_login_as_admin
-        visit spree.admin_order_payments_path order
+        login_as_admin_and_visit spree.admin_order_payments_path order
 
         page.click_link("StripeSCA")
         expect(page).to have_content order.payments.last.amount

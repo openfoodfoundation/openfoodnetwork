@@ -16,7 +16,7 @@ module OpenFoodNetwork
         describe "summing all the per-item fees for the variant in the specified hub + order cycle" do
           let(:enterprise_fee1) { create(:enterprise_fee, amount: 20) }
           let(:enterprise_fee2) { create(:enterprise_fee, amount: 3) }
-          let(:enterprise_fee3) { create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 2)) }
+          let(:enterprise_fee3) { create(:enterprise_fee, calculator: Calculator::FlatRate.new(preferred_amount: 2)) }
 
           describe "supplier fees" do
             let!(:exchange1) {
@@ -131,7 +131,7 @@ module OpenFoodNetwork
         let(:order) { create(:order, distributor: distributor, order_cycle: order_cycle) }
         let!(:line_item) { create(:line_item, order: order, variant: product1.master) }
         let(:enterprise_fee_line_item) { create(:enterprise_fee) }
-        let(:enterprise_fee_order) { create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 2)) }
+        let(:enterprise_fee_order) { create(:enterprise_fee, calculator: Calculator::FlatRate.new(preferred_amount: 2)) }
         let!(:exchange) { create(:exchange, order_cycle: order_cycle, sender: coordinator, receiver: distributor, incoming: false, variants: [product1.master]) }
 
         before { order.reload }

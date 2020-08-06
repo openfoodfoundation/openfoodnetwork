@@ -409,7 +409,7 @@ describe OrderSyncer do
 
       context "when order is complete" do
         it "does not update the line_item quantities and adds the order to order_update_issues with insufficient stock" do
-          AdvanceOrderService.new(order).call
+          OrderWorkflow.new(order).complete
 
           expect(syncer.sync!).to be true
 
@@ -423,7 +423,7 @@ describe OrderSyncer do
         it "does not update the line_item quantities and adds the order to order_update_issues with out of stock" do
           # this single item available is used when the order is completed below, making the item out of stock
           variant.update_attribute(:on_hand, 1)
-          AdvanceOrderService.new(order).call
+          OrderWorkflow.new(order).complete
 
           expect(syncer.sync!).to be true
 
@@ -507,7 +507,7 @@ describe OrderSyncer do
       end
 
       context "when order is complete" do
-        before { AdvanceOrderService.new(order).call }
+        before { OrderWorkflow.new(order).complete }
 
         it "does not add line_item and adds the order to order_update_issues" do
           expect(syncer.sync!).to be true

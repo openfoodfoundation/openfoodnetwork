@@ -80,7 +80,11 @@
 //= require moment/nb.js
 //= require moment/pt-br.js
 //= require moment/pt.js
+//= require moment/ru.js
 //= require moment/sv.js
+//= require moment/ca.js
+//= require moment/ar.js
+//= require moment/tr.js
 
 // foundation
 //= require ../shared/mm-foundation-tpls-0.9.0-20180826174721.min.js

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module Api
   describe EnterpriseFeesController, type: :controller do
-    include AuthenticationWorkflow
+    include AuthenticationHelper
 
     let!(:unreferenced_fee) { create(:enterprise_fee) }
     let!(:referenced_fee) { create(:enterprise_fee) }

@@ -19,7 +19,7 @@ describe SubscriptionConfirmJob do
     let(:proxy_orders) { job.send(:unconfirmed_proxy_orders) }
 
     before do
-      AdvanceOrderService.new(order).call!
+      OrderWorkflow.new(order).complete!
     end
 
     it "returns proxy orders that meet all of the criteria" do
@@ -126,7 +126,7 @@ describe SubscriptionConfirmJob do
     let(:order) { proxy_order.initialise_order! }
 
     before do
-      AdvanceOrderService.new(order).call!
+      OrderWorkflow.new(order).complete!
       allow(job).to receive(:send_confirmation_email).and_call_original
       setup_email
       expect(job).to receive(:record_order)

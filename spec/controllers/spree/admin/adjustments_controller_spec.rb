@@ -2,13 +2,13 @@ require 'spec_helper'
 
 module Spree
   describe Admin::AdjustmentsController, type: :controller do
-    include AuthenticationWorkflow
+    include AuthenticationHelper
 
-    before { login_as_admin }
+    before { controller_login_as_admin }
 
     describe "setting included tax" do
       let(:order) { create(:order) }
-      let(:tax_rate) { create(:tax_rate, amount: 0.1, calculator: Spree::Calculator::DefaultTax.new) }
+      let(:tax_rate) { create(:tax_rate, amount: 0.1, calculator: Calculator::DefaultTax.new) }
 
       describe "creating an adjustment" do
         it "sets included tax to zero when no tax rate is specified" do

@@ -4,8 +4,8 @@ feature '
     As an administrator
     I want to manage enterprise fees
 ', js: true do
-  include AuthenticationWorkflow
   include WebHelper
+  include AuthenticationHelper
 
   let!(:tax_category_gst) { create(:tax_category, name: 'GST') }
 
@@ -13,8 +13,7 @@ feature '
     fee = create(:enterprise_fee, name: '$0.50 / kg', fee_type: 'packing', tax_category: tax_category_gst)
     amount = fee.calculator.preferred_amount
 
-    login_to_admin_section
-    click_link 'Configuration'
+    login_as_admin_and_visit spree.edit_admin_general_settings_path
     click_link 'Enterprise Fees'
 
     expect(page).to have_select "enterprise_fee_set_collection_attributes_0_enterprise_id"
@@ -30,8 +29,7 @@ feature '
     e = create(:supplier_enterprise, name: 'Feedme')
 
     # When I go to the enterprise fees page
-    quick_login_as_admin
-    visit admin_enterprise_fees_path
+    login_as_admin_and_visit admin_enterprise_fees_path
 
     # And I fill in the fields for a new enterprise fee and click update
     select 'Feedme', from: 'enterprise_fee_set_collection_attributes_0_enterprise_id'
@@ -59,8 +57,7 @@ feature '
     enterprise = create(:enterprise, name: 'Foo')
 
     # When I go to the enterprise fees page
-    quick_login_as_admin
-    visit admin_enterprise_fees_path
+    login_as_admin_and_visit admin_enterprise_fees_path
 
     # And I update the fields for the enterprise fee and click update
     select 'Foo', from: 'enterprise_fee_set_collection_attributes_0_enterprise_id'
@@ -93,8 +90,7 @@ feature '
     fee = create(:enterprise_fee)
 
     # When I go to the enterprise fees page
-    quick_login_as_admin
-    visit admin_enterprise_fees_path
+    login_as_admin_and_visit admin_enterprise_fees_path
 
     # And I click delete
     accept_alert do
@@ -107,7 +103,7 @@ feature '
   end
 
   context "as an enterprise manager" do
-    let(:enterprise_user) { create_enterprise_user }
+    let(:enterprise_user) { create(:user) }
     let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
     let(:distributor2) { create(:distributor_enterprise, name: 'Second Distributor') }
     let(:distributor3) { create(:distributor_enterprise, name: 'Third Distributor') }
@@ -117,7 +113,7 @@ feature '
     before(:each) do
       enterprise_user.enterprise_roles.build(enterprise: distributor1).save
       enterprise_user.enterprise_roles.build(enterprise: distributor2).save
-      quick_login_as enterprise_user
+      login_as enterprise_user
     end
 
     it "creates enterprise fees" do

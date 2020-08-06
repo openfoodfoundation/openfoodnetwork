@@ -5,10 +5,10 @@ require 'spec_helper'
 module Spree
   module Admin
     describe ShippingCategoriesController, type: :controller do
-      include AuthenticationWorkflow
+      include AuthenticationHelper
 
       describe "#create and #update" do
-        before { login_as_admin }
+        before { controller_login_as_admin }
 
         it "creates a shipping shipping category" do
           expect {

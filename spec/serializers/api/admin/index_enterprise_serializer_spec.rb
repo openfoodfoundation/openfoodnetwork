@@ -1,11 +1,9 @@
 require 'spec_helper'
 
 describe Api::Admin::IndexEnterpriseSerializer do
-  include AuthenticationWorkflow
-
   let(:enterprise) { create(:distributor_enterprise) }
   context "when spree_current_user is a manager" do
-    let(:user) { create_enterprise_user }
+    let(:user) { create(:user) }
     before do
       user.enterprise_roles.create(enterprise: enterprise)
     end

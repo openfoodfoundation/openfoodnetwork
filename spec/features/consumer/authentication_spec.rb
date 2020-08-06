@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 feature "Authentication", js: true do
+  include AuthenticationHelper
   include UIComponentHelper
   include OpenFoodNetwork::EmailHelper
 
@@ -27,6 +28,7 @@ feature "Authentication", js: true do
           browse_as_large
           open_login_modal
         end
+
         scenario "showing login" do
           expect(page).to have_login_modal
         end
@@ -105,8 +107,31 @@ feature "Authentication", js: true do
             end.to enqueue_job Delayed::PerformableMethod
             expect(Delayed::Job.last.payload_object.method_name).to eq(:send_reset_password_instructions_without_delay)
           end
+
+          context "user with unconfirmed email" do
+            let(:email) { "test@example.org" }
+            let!(:user) { Spree::User.create(email: email, unconfirmed_email: email, password: "secret") }
+
+            scenario "cannot reset password before confirming email" do
+              fill_in "Your email", with: email
+              click_reset_password_button
+              expect(page).to have_content I18n.t('email_unconfirmed')
+              page.find("a", text: I18n.t('devise.confirmations.resend_confirmation_email')).click
+              expect(page).to have_content I18n.t('devise.confirmations.send_instructions')
+
+              visit spree.spree_user_confirmation_path(confirmation_token: user.confirmation_token)
+              expect(user.reload.confirmed?).to be true
+              expect(page).to have_text I18n.t('devise.confirmations.confirmed')
+
+              select_login_tab "Forgot Password?"
+              fill_in "Your email", with: email
+              click_reset_password_button
+              expect(page).to have_reset_password
+            end
+          end
         end
       end
+
       describe "as medium" do
         before do
           browse_as_medium
@@ -134,6 +159,58 @@ feature "Authentication", js: true do
       visit "/login"
       uri = URI.parse(current_url)
       expect(uri.path + "#" + uri.fragment).to eq('/#/login')
+    end
+
+    describe "with user locales" do
+      before do
+        visit root_path
+        open_login_modal
+      end
+
+      context "when the user has a valid locale saved" do
+        before do
+          user.update!(locale: "es")
+        end
+
+        it "logs in successfully, applying the saved locale" do
+          fill_in_and_submit_login_form(user)
+          expect_logged_in
+
+          expect(page).to have_content I18n.t(:home_shop, locale: :es).upcase
+        end
+      end
+
+      context "when the user has an unavailable locale saved" do
+        before do
+          user.update!(locale: "xx")
+        end
+
+        it "logs in successfully and resets the user's locale to the default" do
+          fill_in_and_submit_login_form(user)
+          expect_logged_in
+
+          expect(page).to have_content I18n.t(:home_shop, locale: :en).upcase
+          expect(user.reload.locale).to eq "en"
+        end
+      end
+
+      context "when the user has never selected a locale, but one has been selected before login" do
+        before do
+          user.update!(locale: nil)
+        end
+
+        it "logs in successfully and uses the locale from cookies" do
+          page.driver.browser.manage.add_cookie(name: 'locale', value: 'es')
+
+          fill_in_and_submit_login_form(user)
+          expect_logged_in
+
+          expect(page).to have_content I18n.t(:home_shop, locale: :es).upcase
+          expect(user.reload.locale).to eq "es"
+
+          page.driver.browser.manage.delete_cookie('locale')
+        end
+      end
     end
   end
 end

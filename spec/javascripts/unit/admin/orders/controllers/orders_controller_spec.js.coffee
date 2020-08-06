@@ -63,3 +63,14 @@ describe "ordersCtrl", ->
       expect(Orders.index).toHaveBeenCalledWith(jasmine.objectContaining({
         'q[order_cycle_id_in][]': ['4', '5']
       }))
+
+    it "filters orders on inclusive dates", ->
+      $scope['q']['completed_at_gteq'] = '2020-06-08'
+      $scope['q']['completed_at_lteq'] = '2020-06-09'
+
+      $scope.fetchResults()
+
+      expect(Orders.index).toHaveBeenCalledWith(jasmine.objectContaining({
+        'q[completed_at_gteq]': '2020-06-08 00:00:00'
+        'q[completed_at_lteq]': '2020-06-09 23:59:59'
+      }))

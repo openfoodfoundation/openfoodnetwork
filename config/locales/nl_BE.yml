@@ -13,6 +13,7 @@ nl_BE:
         email: Klanten e-mail
       spree/payment:
         amount: Bedrag
+        state: Staat
       spree/product:
         primary_taxon: "Product categorie"
         supplier: "Leverancier"
@@ -172,8 +173,7 @@ nl_BE:
         title: Andere mislukking (%{count}orders)
         explainer: De automatische verwerking van deze bestellingen is om een onbekende reden mislukt. Dit mag niet gebeuren, neem contact met ons op als u dit ziet.
   home: "OFN"
-  title: Open Food Network
-  welcome_to: 'Welkom op '
+  title: "Open Food Network"
   site_meta_description: "Dit is wat we doen door een platform te creëren dat verbinding wil maken:\n● gepassioneerde boeren, die zich inzetten voor duurzame en regeneratieve landbouw,\n● handelaren van lokale producten, aanhangers van kortsluitingen, die in volledige transparantie handelen en een eerlijke vergoeding van de producenten garanderen,\n● kopers die de wereld willen veranderen door beter te eten,"
   search_by_name: Zoeken op naam of voorstad....
   producers_join: Belgische producenten zijn nu welkom om zich aan te sluiten bij het Open Food Network.
@@ -1649,8 +1649,7 @@ nl_BE:
   password: Wachtwoord
   remember_me: Onthoud Me
   are_you_sure: "Ben je zeker?"
-  orders_open: Openstaande Bestellingen
-  closing: "Sluitend"
+  orders_open: "Openstaande Bestellingen"
   going_back_to_home_page: "Terugkerend naar de startpagina"
   creating: Aanmakend
   updating: Updatend
@@ -1892,6 +1891,7 @@ nl_BE:
   supplier: "Leverancier"
   product_name: "Naam produkt"
   product_description: "Beschrijving product"
+  shipping_categories: "Verzendingscategorieën"
   units: "Stukgrootte"
   coordinator: "Coördinator"
   distributor: "Distributeur"
@@ -1987,6 +1987,7 @@ nl_BE:
   remove_tax: "Verwijder belasting"
   first_name_begins_with: "Voornaam begint met"
   last_name_begins_with: "Familienaam begint met "
+  new_order: "Nieuwe bestelling"
   enterprise_tos_link: "Link Voorwaarden Onderneming"
   enterprise_tos_message: "We willen met mensen werken die onze normen en waarden en delen. Daarom vragen wij aan de nieuwe bedrijven akkoord te gaan met onze  "
   enterprise_tos_link_text: "Dienstvoorwaarden"

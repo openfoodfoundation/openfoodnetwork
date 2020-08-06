@@ -45,7 +45,7 @@ class OrderFactory
 
   def create_complete_order
     order = create_cart_order
-    AdvanceOrderService.new(order).call
+    OrderWorkflow.new(order).complete
     order
   end
 

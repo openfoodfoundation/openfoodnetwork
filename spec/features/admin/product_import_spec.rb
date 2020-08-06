@@ -3,12 +3,12 @@ require 'open_food_network/permissions'
 
 feature "Product Import", js: true do
   include AdminHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
 
   let!(:admin) { create(:admin_user) }
-  let!(:user) { create_enterprise_user }
-  let!(:user2) { create_enterprise_user }
+  let!(:user) { create(:user) }
+  let!(:user2) { create(:user) }
   let!(:enterprise) { create(:supplier_enterprise, owner: user, name: "User Enterprise") }
   let!(:enterprise2) { create(:distributor_enterprise, owner: user2, name: "Another Enterprise") }
   let!(:relationship) { create(:enterprise_relationship, parent: enterprise, child: enterprise2, permissions_list: [:create_variant_overrides]) }
@@ -31,7 +31,7 @@ feature "Product Import", js: true do
   let(:shipping_category_id_str) { Spree::ShippingCategory.all.first.id.to_s }
 
   describe "when importing products from uploaded file" do
-    before { quick_login_as_admin }
+    before { login_as_admin }
     after { File.delete('/tmp/test.csv') }
 
     it "validates entries and saves them if they are all valid and allows viewing new items in Bulk Products" do
@@ -342,7 +342,7 @@ feature "Product Import", js: true do
   end
 
   describe "when dealing with uploaded files" do
-    before { quick_login_as_admin }
+    before { login_as_admin }
 
     it "checks filetype on upload" do
       File.write('/tmp/test.txt', "Wrong filetype!")
@@ -408,7 +408,7 @@ feature "Product Import", js: true do
       end
       File.write('/tmp/test.csv', csv_data)
 
-      quick_login_as user
+      login_as user
       visit main_app.admin_product_import_path
 
       attach_file 'file', '/tmp/test.csv'
@@ -432,7 +432,7 @@ feature "Product Import", js: true do
     let(:tmp_csv_path) { "/tmp/test.csv" }
 
     before do
-      quick_login_as admin
+      login_as admin
       visit main_app.admin_product_import_path
     end
 

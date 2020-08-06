@@ -58,7 +58,7 @@ describe Spree::OrdersController, type: :controller do
 
       it "redirects to unauthorized" do
         spree_get :show, id: order.number
-        expect(response.status).to eq(401)
+        expect(response).to redirect_to unauthorized_path
       end
     end
 
@@ -415,9 +415,11 @@ describe Spree::OrdersController, type: :controller do
     let(:params) { { id: order.number } }
 
     context "when the user does not have permission to cancel the order" do
+      before { allow(controller).to receive(:spree_current_user) { create(:user) } }
+
       it "responds with unauthorized" do
         spree_put :cancel, params
-        expect(response).to render_template 'shared/unauthorized'
+        expect(response).to redirect_to unauthorized_path
       end
     end
 

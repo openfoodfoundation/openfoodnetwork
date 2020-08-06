@@ -1,7 +1,7 @@
 require "spec_helper"
 
 feature "Packing Reports", js: true do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
 
   let(:distributor) { create(:distributor_enterprise) }
@@ -13,7 +13,7 @@ feature "Packing Reports", js: true do
   before do
     order.line_items << li1
     order.line_items << li2
-    quick_login_as_admin
+    login_as_admin
   end
 
   describe "viewing a report" do

@@ -13,6 +13,8 @@ tr:
         email: Müşteri E-postası
       spree/payment:
         amount: Tutar
+        state: Durum
+        source: Kaynak
       spree/product:
         primary_taxon: "ÜRÜN KATEGORİSİ"
         supplier: "TEDARİKÇİ"
@@ -53,7 +55,7 @@ tr:
         end_at: "BİTİŞ"
         distributor_ids: "Pazarlar"
         producer_ids: "ÜRETİCİLER"
-        order_cycle_ids: "SİPARİŞ DÖNEMLERİ"
+        order_cycle_ids: "Sipariş Dönemleri"
         enterprise_fee_ids: "ÜCRET İSİMLERİ"
         shipping_method_ids: "TESLİMAT YÖNTEMLERİ"
         payment_method_ids: "ÖDEME YÖNTEMLERİ"
@@ -123,9 +125,9 @@ tr:
       subject: "Lütfen %{enterprise} için e-posta adresini doğrulayın"
     welcome:
       subject: "%{enterprise} şimdi %{sitename} 'de"
-      email_welcome: "Hoşgeldiniz"
+      email_welcome: "Aramıza Hoşgeldiniz "
       email_registered: "şimdi bir parçası"
-      email_userguide_html: "Tezgah veya Pazar hesapları ayarları ile ilgili ayrıntılı desteğe sahip Kullanıcı Kılavuzu burada: %{link}"
+      email_userguide_html: "Dükkan veya Pazar hesapları ayarları ile ilgili ayrıntılı desteğe sahip Kullanıcı Kılavuzu burada: %{link}"
       userguide: "Açık Gıda Ağı Kullanıcı Kılavuzu"
       email_admin_html: "%{link}'dan oturum açarak veya ana sayfanın sağ üst kısmındaki ayarlar simgesini tıkladıktan sonra Yönetim' butonu üzerinden hesabınızı yönetebilirsiniz."
       admin_panel: "YönetiİCİ Panelİ"
@@ -181,8 +183,8 @@ tr:
         title: Diğer Hatalar (%{count} sipariş)
         explainer: Bu siparişlerin otomatik olarak işlenmesi bilinmeyen bir nedenden dolayı başarısız oldu. Bu gerçekleşmemesi gereken bir durum, bu hatayı alıyorsanız lütfen bizimle iletişime geçin.
   home: "AGA"
-  title: Açık Gıda Ağı
-  welcome_to: 'Hoşgeldiniz'
+  title: "Açık Gıda Ağı"
+  welcome_to: "Hoşgeldiniz"
   site_meta_description: "Açık Gıda Ağı, bağımsız, adil ve temiz bir gıda sistemi oluşturmak için tasarlanan bir sosyal girişim projesidir. Üretici ve türeticilerin bir araya gelerek aracısız bir gıda düzeni ile her açıdan daha sağlıklı bir toplum yaratmaları için çözümler sunar.  Toplum yararına çalışır, iletişim, dayanışma ve şeffaflığı destekler."
   search_by_name: Üretici adına veya konuma göre arama yapın...
   producers_join: Bağımsız gıda üreticileri! Açık Gıda Ağı sizler için kullanıma açıldı.
@@ -221,7 +223,7 @@ tr:
   edit: Düzenle
   clone: Kopyala
   distributors: Dağıtımcılar
-  bulk_order_management: Toplu Sipariş Yönetimi
+  bulk_order_management: TOPLU SİPARİŞ YÖNETİMİ
   enterprises: İşletmeler
   enterprise_groups: AĞLAR
   reports: Raporlar
@@ -256,7 +258,7 @@ tr:
   processing_payment: "Ödeme İşlemi Gerçekleştiriliyor.."
   no_pending_payments: "Bekleyen ödeme yok"
   invalid_payment_state: "Geçersiz ödeme durumu"
-  filter_results: Sonuçları Filtrele
+  filter_results: SONUÇLARI FİLTRELE
   quantity: Miktar
   pick_up: Teslim Alma
   copy: Kopyala
@@ -593,7 +595,7 @@ tr:
         product_unit: "Ürün: Birim"
         weight_volume: "Ağırlık / Hacim"
         ask: "Sor?"
-        page_title: "Toplu Sipariş Yönetimi"
+        page_title: "TOPLU SİPARİŞ YÖNETİMİ"
         actions_delete: "Seçilenleri Sil"
         loading: "Siparişler yükleniyor"
         no_results: "Sipariş bulunamadı."
@@ -676,11 +678,11 @@ tr:
           primary_producer: Birincil üretici misiniz?
           primary_producer_tip: Siz de birincil üreticisiyseniz 'Üretici' yi seçin.
           producer: ÜRETİCİ
-          any: Hepsi
-          none: SATMIYOR
+          any: KENDİ VE/VEYA BAŞKASININ ÜRÜNLERİ
+          none: SATIŞ YAPMIYOR
           own: KENDİ ÜRÜNLERİ
           sells: NE SATIYOR
-          sells_tip: "Hiç - İşletme müşterilere doğrudan satış yapmaz. <br /> Kendi - İşletme müşterilerine kendi ürünlerini satar. <br /> Hepsi - İşletme kendi ürünlerini veya diğer işletmelerin ürünlerini satabilir. <br />"
+          sells_tip: "Satış Yapmıyor - İşletme müşterilere doğrudan satış yapmaz. <br /> Kendi Ürünleri - İşletme müşterilerine kendi ürünlerini satar. <br /> Kendi ve/veya başkasının ürünleri - İşletme kendi ürünlerini ve/veya diğer işletmelerin ürünlerini satabilir. <br />"
           visible_in_search: ARAMADA GÖRÜNÜR MÜ?
           visible_in_search_tip: Sitede arama yapılırken bu işletmenin müşteriler tarafından görünür olup olmayacağını belirler.
           visible: GÖRÜNÜR
@@ -725,13 +727,13 @@ tr:
           shopfront_message_link_prompt: "Lütfen eklemek için bir URL girin"
           shopfront_closed_message: "KAPALI DÜKKAN MESAJI"
           shopfront_closed_message_placeholder: >
-              Mağazanızın neden satışa kapalı olduğunu ve ne zaman açılacağını müşterilerinize
+              Dükkanınızın neden satışa kapalı olduğunu ve ne zaman açılacağını müşterilerinize
               açıklayan bir mesaj yazın. Bu mesaj, açık bir sipariş döneminiz olmadığında
               sizi ziyaret edenler tarafından görülecek. (örn. neden kapalı olduğunu
               ve ne zaman açılacağını belirtebilirsiniz)
           shopfront_category_ordering: "DÜKKAN KATEGORİ SIRALAMASI"
-          open_date: "Açılış Tarihi"
-          close_date: "Kapanış Tarih"
+          open_date: "AÇILIŞ TARİHİ"
+          close_date: "KAPANIŞ TARİHİ"
         social:
           twitter_placeholder: "Örneğin. @the_usta"
           instagram_placeholder: "Örneğin. the_usta"
@@ -795,21 +797,21 @@ tr:
         producer: ÜRETİCİ
       change_type_form:
         producer_profile: ÜRETİCİ PROFİLİ
-        connect_ofn: AGA üzerinden bağlan
+        connect_ofn: AGA PLATFORMUNA KATIL
         always_free: HER ZAMAN ÜCRETSİZ
         producer_description_text: Ürünlerinizi Açık Gıda Ağı'na yükleyin. Böylece ürünleriniz pazar hesapları üzerinden satışa sunulabilir.
         producer_shop: ÜRETİCİ DÜKKANI
-        sell_your_produce: Kendi ürününü sat
+        sell_your_produce: KENDİ ÜRÜNÜNÜ SAT
         producer_shop_description_text: Açık Gıda Ağı üzerinden açtığınız bireysel dükkanınız ile ürünlerinizi doğrudan müşterilere ulaştırabilirsiniz.
         producer_shop_description_text2: Üretici Dükkanı sadece sizin ürünleriniz içindir.  Üretiminiz haricindeki ürünleri satabilmek için lütfen 'Üretici Pazarı' seçeneğini seçin.
         producer_hub: ÜRETİCİ PAZARI
-        producer_hub_text: Kendi ürünleriniz ile beraber başkalarının ürünlerini de satın
+        producer_hub_text: KENDİ ÜRÜNLERİNİZ İLE BERABER BAŞKALARININ ÜRÜNLERİNİ DE SATIN
         producer_hub_description_text: İşletmeniz, yerel gıda sisteminizin bel kemiğidir. Açık Gıda Ağı'ndaki mağazanız aracılığıyla kendi ürünlerinizi ve çevrenizdeki diğer üreticilerin ürünlerini beraber satabilirsiniz.
         profile: Yalnızca Profil
         get_listing: Görünür ol
         profile_description_text: İnsanlar Açık Gıda Ağı üzerinden sizi bulabilir ve sizinle iletişim kurabilir. İşletmeniz haritada ve listelerde görünür olacak.
         hub_shop: Türetici Pazarı
-        hub_shop_text: Başkalarının ürünlerini satın
+        hub_shop_text: BAŞKALARININ ÜRÜNLERİNİ SATIN
         hub_shop_description_text: İşletmeniz yerel gıda sisteminizin belkemiğidir. Diğer işletmelerin ürünlerini bir araya getirebilir, Açık Gıda Ağı'na kayıtlı dükkanınız üzerinden alıcılara ulaştırabilirsiniz.
         choose_option: Lütfen yukarıdaki seçeneklerden birini seçin.
         change_now: Değiştir
@@ -897,15 +899,15 @@ tr:
         outgoing: "3. GİDEN ÜRÜNLER"
       exchange_form:
         pickup_time_tip: Bu sipariş dönemine ait siparişlerin müşteriler için hazır olma tarihi
-        pickup_instructions_placeholder: "Teslimat Talimatları"
+        pickup_instructions_placeholder: "TESLİMAT DETAYLARI"
         pickup_instructions_tip: Bu talimatlar, siparişi tamamladıktan sonra müşterilere iletilir
         pickup_time_placeholder: "Teslimat (örn. Tarih / Saat)"
-        receival_instructions_placeholder: "Teslim Alma talimatları"
+        receival_instructions_placeholder: "TESLİM ALMA TALİMATLARI"
         add_fee: 'Ücret ekle'
         remove: 'Kaldır'
         selected: 'seçildi'
       add_exchange_form:
-        add_supplier: 'Tedarikçi ekle'
+        add_supplier: 'TEDARİKÇİ EKLE'
         add_distributor: 'Dağıtımcı ekle'
       advanced_settings:
         title: Gelişmiş Ayarlar
@@ -938,7 +940,7 @@ tr:
         new_schedule: Yeni Takvim
       name_and_timing_form:
         name: Ad
-        orders_open: 'SİPARİŞ AÇILIŞ:'
+        orders_open: Siparişler Açık
         coordinator: KOORDİNATÖR
         orders_close: SİPARİŞ KAPANIŞ
       row:
@@ -1015,7 +1017,7 @@ tr:
       orders_and_fulfillment:
         name: Siparişler ve Gerçekleşme Raporları
       customers:
-        name: MÜŞTERİLER
+        name: Müşteriler
       products_and_inventory:
         name: Ürünler ve Stok
       users_and_enterprises:
@@ -1361,7 +1363,7 @@ tr:
       cookies_policy_link_desc: "Daha fazla bilgi edinmek istiyorsanız,"
       cookies_policy_link: "çerezler politikası"
       cookies_accept_button: "Çerezleri kabul et"
-  home_shop: 'ŞİMDİ ALIŞVERİŞE BAŞLAYIN '
+  home_shop: 'ALIŞVERİŞE BAŞLAYIN '
   brandstory_headline: "Bağımsız, adil ve temiz gıda ..."
   brandstory_intro: "Bazen sistemi düzeltmenin en iyi yolu yeni bir sistem yaratmaktır…"
   brandstory_part1: "Açık Gıda Ağı, adil, temiz bir gıda sistemi oluşturmak için tasarlanan bir sosyal girişim projesidir. Üretici ve türeticilerin bir araya gelerek aracısız bir gıda düzeni ile her açıdan daha sağlıklı bir toplum yaratmaları için çözümler sunar. Toplum yararına çalışır, iletişim, dürüstlük ve dayanışmayı destekler."
@@ -1376,17 +1378,17 @@ tr:
   connect_cta: "Keşfedin"
   system_headline: "Nasıl çalışıyor ?"
   system_step1: "1. Ara"
-  system_step1_text: "Yerel, adil, temiz ve mevsimsel gıda için, bağımsız ve cesur üreticilerimizin mağazalarından alışveriş yapın.  Konuma, ürün kategorisine, üretici özelliklerine veya teslimat tercihlerine göre arama yapabilirsiniz. "
+  system_step1_text: "Yerel ve mevsimsel gıda için, bağımsız ve cesur üreticilerimizin ve dağıtımcılarımızın dükkanlarından alışveriş yapın.  "
   system_step2: "2. Alışveriş Yap"
-  system_step2_text: "Gıdanızı yerel üretici tezgahlarından, üretici ve türetici pazarlarından temin edin. Yaşanabilir bir dünya için alışkanlıklarınızı şimdi değiştirin. Gıdanızın ve onu size getiren insanların hikayelerini öğrenin!"
+  system_step2_text: "Gıdanızı yerel üreticilerden ve türetici pazarlarından temin edin. Yaşanabilir bir dünya için alışkanlıklarınızı şimdi değiştirin. "
   system_step3: "3. Teslimat "
-  system_step3_text: "Gıdanıza ulaşmak için adresinize teslim edilmesini  bekleyin. Dilerseniz gıdanız ile daha kişisel bir bağ kurmak için üreticinizi veya pazarını kendiniz ziyaret edin. Doğayla ve gıdayla istediğiniz  şekilde ama gerçek bir bağ kurun. "
+  system_step3_text: "Siparişinizin teslim edilmesini bekleyin veya teslim alım noktasında buluşun. Gıdayla istediğiniz şekilde ama gerçek bir bağ kurun.  "
   cta_headline: "Dünyayı daha iyi bir yer yapan alışveriş biçimi."
-  cta_label: "Hazırım"
+  cta_label: "ALIŞVERİŞE HAZIRIM"
   stats_headline: "Yeni bir gıda sistemi yaratıyoruz."
   stats_producers: "ÜRETİCİ"
-  stats_shops: "MAĞAZA"
-  stats_shoppers: "TÜRETİCİ"
+  stats_shops: "DÜKKAN"
+  stats_shoppers: "ALICI"
   stats_orders: "ALIŞVERİŞ"
   checkout_title: Ödeme Yap
   checkout_now: Alışverişi Tamamla
@@ -1521,7 +1523,7 @@ tr:
   shopping_tabs_contact: "İLETİŞİM"
   shopping_contact_address: "Adres"
   shopping_contact_web: "İLETİŞİM"
-  shopping_contact_social: "Takip et"
+  shopping_contact_social: "TAKİP ET"
   shopping_groups_part_of: "şunun parçası:"
   shopping_producers_of_hub: "%{hub} üreticileri:"
   enterprises_next_closing: "Bir sonraki sipariş kapanışı"
@@ -1542,7 +1544,7 @@ tr:
   hubs_filter_delivery: "Eve Teslim"
   hubs_filter_property: "Özellik"
   hubs_matches: "Bunu mu arıyordunuz?"
-  hubs_intro: Bulunduğunuz bölgeden alışveriş yapın
+  hubs_intro: Alışverişe başlayın
   hubs_distance: En yakın
   hubs_distance_filter: "Bana %{location} yakınındaki dükkanları göster"
   shop_changeable_orders_alert_html:
@@ -1581,14 +1583,14 @@ tr:
   components_filters_clearfilters: "TÜM FİLTRELERİ TEMİZLE"
   groups_title: Gruplar
   groups_headline: Gruplar
-  groups_text: "Her üretici özeldir ve her işletmenin ortaya koyabileceği farklı bir değer vardır. Üyelerimiz, ürünlerini, emeklerini ve gıdanın ortak değerleri paylaşan üretici, türetici ve dağıtımcı kolektifleridir. Bu bileşenler, adil ve temiz gıdaya ulaşım yollarını kolaylaştırır ve bozulmuş gıda sistemini hep beraber düzeltmemize yardımcı olur."
+  groups_text: "Her üretici özeldir ve her işletmenin ortaya koyabileceği farklı bir değer vardır. Üyelerimiz, ürünlerini, emeklerini ve gıdanın ortak değerlerini paylaşan üretici, türetici ve dağıtımcı kolektifleridir. Bu bileşenler, adil ve temiz gıdaya ulaşım yollarını kolaylaştırır ve bozulmuş gıda sistemini düzeltmemize öncülük ederler."
   groups_search: "İsim veya anahtar kelime ile ara"
   groups_no_groups: "Ağ bulunamadı"
   groups_about: "Hakkımızda"
   groups_producers: "ÜRETİCİLERİMİZ"
   groups_hubs: "Pazarlarımız"
   groups_contact_web: İLETİŞİM
-  groups_contact_social: Takip et
+  groups_contact_social: TAKİP ET
   groups_contact_address: Adres
   groups_contact_email: Bize e-posta gönderin
   groups_contact_website: İnternet sitemizi ziyaret edin
@@ -1615,9 +1617,9 @@ tr:
   producers_about: Hakkımızda
   producers_buy: Alışveriş ürünleri
   producers_contact: İLETİŞİM
-  producers_contact_phone: Ara
-  producers_contact_social: Takip et
-  producers_buy_at_html: "%{enterprise} ürünleri için buradan alışveriş yapın:"
+  producers_contact_phone: 'Tel:'
+  producers_contact_social: TAKİP ET
+  producers_buy_at_html: "%{enterprise} ÜRÜNLERİNİ SATIN ALIN:"
   producers_filter: Filtrele
   producers_filter_type: tür
   producers_filter_property: Özellik
@@ -1713,7 +1715,7 @@ tr:
   password: Parola
   remember_me: Beni Hatırla
   are_you_sure: "Emin misiniz?"
-  orders_open: Siparişler açık
+  orders_open: "Siparişler Açık"
   closing: "Kapanış"
   going_back_to_home_page: "Ana sayfaya yönlendiriliyorsunuz.."
   creating: oluşturuluyor
@@ -1886,15 +1888,15 @@ tr:
   back: "Geri"
   continue: "Devam et"
   action_or: "VEYA"
-  enterprise_limit: İşletme Limiti
+  enterprise_limit: İŞLETME LİMİTİ
   shipping_method_destroy_error: "Bu teslimat yöntemi silinemez çünkü tamamlanmış siparişler mevcut\n: %{number}."
   fees: "Ücretler"
   item_cost: "Ürün maliyeti"
   bulk: "toplu"
   shop_variant_quantity_min: "min"
   shop_variant_quantity_max: "maks"
-  follow: "Takip et"
-  shop_for_products_html: "<span class=\"turquoise\">%{enterprise}</span> ürünleri için şuradan alışveriş yapın:"
+  follow: "TAKİP ET"
+  shop_for_products_html: "<span class=\"turquoise\">%{enterprise}</span> ÜRÜNLERİNİ SATIN ALIN:"
   change_shop: "Dükkanı şuna değiştir:"
   shop_at: "Şimdi alışveriş yapın:"
   price_breakdown: "Fiyat dökümü"
@@ -1918,7 +1920,7 @@ tr:
   ok: tamam
   not_visible: görünmez
   you_have_no_orders_yet: "Henüz siparişiniz yok"
-  show_only_complete_orders: "Yalnızca tamamlanan siparişleri göster"
+  show_only_complete_orders: "YALNIZCA TAMAMLANAN SİPARİŞLERİ GÖSTER"
   successfully_created: '%{resource} BAŞARIYLA OLUŞTURULDU!'
   successfully_removed: '%{resource} BAŞARIYLA KALDIRILDI!'
   successfully_updated: '%{resource} BAŞARIYLA GÜNCELLENDİ!'
@@ -1958,6 +1960,8 @@ tr:
   supplier: "Tedarikçi"
   product_name: "Ürün Adı"
   product_description: "Ürün Açıklaması"
+  permalink: "Permalink"
+  shipping_categories: "Teslimat Kategorileri"
   units: "Ölçü Birimi"
   coordinator: "KOORDİNATÖR"
   distributor: "Dağıtımcı"
@@ -1983,7 +1987,7 @@ tr:
   roles: "Roller"
   update: "Güncelle"
   delete: Sil
-  add_producer_property: "Üretici özelliği ekle"
+  add_producer_property: "ÜRETİCİ ÖZELLİĞİ EKLE"
   in_progress: "Devam ediyor"
   started_at: "Başlama tarihi"
   queued: "sıraya eklendi"
@@ -2025,8 +2029,8 @@ tr:
   spree_admin_product_category: Ürün Kategorisi
   spree_admin_variant_unit_name: Varyant Birimi Adı
   unit_name: "Birim adı"
-  change_package: "Hesap Türünü Değiştir"
-  spree_admin_single_enterprise_hint: "İpucu: İnsanların sizi bulmasına izin vermek için, alttaki görünürlük kısmını açın."
+  change_package: "HESAP TÜRÜNÜ DEĞİŞTİR"
+  spree_admin_single_enterprise_hint: "İpucu: İnsanların sizi bulmasına izin vermek için 'Görünür' olmayı ayarlamayı unutmayın:"
   spree_admin_eg_pickup_from_school: "Örn. 'Teslimat noktası: Moda İlkokulu Bahçesi'"
   spree_admin_eg_collect_your_order: "Örn. Lütfen siparişinizi Moda Cad. No:17 Temiz Dükkan'dan teslim alınız."
   spree_classification_primary_taxon_error: "%{taxon} cinsi, %{product}ürününün birincil cinsidir ve silinemez"
@@ -2054,6 +2058,8 @@ tr:
   remove_tax: "Vergiyi kaldır"
   first_name_begins_with: "Adının BAŞ HARFİ"
   last_name_begins_with: "Soyadının BAŞ HARFİ"
+  shipping_method: "Teslimat Yöntemi"
+  new_order: "Yeni Sipariş"
   enterprise_tos_link: "İşletme Üyelik Sözleşmesi bağlantısı"
   enterprise_tos_message: "Amaçlarımızı ve değerlerimizi paylaşan insanlarla çalışmak istiyoruz. Yasal zorunluluk gereği de yeni işletmelerden kabul etmesini istiyoruz:"
   enterprise_tos_link_text: "Üyelik Sözleşmesi"
@@ -2129,7 +2135,7 @@ tr:
   report_header_incoming_transport: Gelen Nakliye
   report_header_special_instructions: Özel Talimatlar
   report_header_order_number: Sipariş numarası
-  report_header_date: tarih
+  report_header_date: Tarih
   report_header_confirmation_date: Onay tarihi
   report_header_tags: ETİKETLER
   report_header_items: Kalemler
@@ -2265,7 +2271,7 @@ tr:
   payment_updated: "Ödeme Güncellendi"
   inventory_settings: "Stok Ayarları"
   tag_rules: "ETİKET KURALLARI"
-  shop_preferences: "Mağaza Tercihleri"
+  shop_preferences: "Dükkan Tercihleri"
   enterprise_fee_whole_order: Tüm sipariş
   enterprise_fee_by: "%{role}%{enterprise_name} tarafından%{type} ücreti"
   validation_msg_relationship_already_established: "^ Bu ilişki zaten kurulmuş."
@@ -2429,8 +2435,8 @@ tr:
               en iyi şekilde yönetmeniz için tüm imkanları ve araçları sağlamaya hazırız.
           get_listing: Görünür Olun
           always_free: HER ZAMAN ÜCRETSİZ
-          sell_produce_others: Başkalarının ürünlerini sat
-          sell_own_produce: Kendi ürününü sat
+          sell_produce_others: BAŞKALARININ ÜRÜNLERİNİ SAT
+          sell_own_produce: KENDİ ÜRÜNÜNÜ SAT
           sell_both: Kendi ürünlerini ve başkalarının ürünlerini sat
         enterprise_producer:
           producer: Üretici
@@ -2457,7 +2463,7 @@ tr:
           non_producer_example: 'Örn: Manavlar, Gıda Kooperatifleri, Gıda Toplulukları vs.'
         enterprise_status:
           status_title: "%{name} kuruldu ve başlamaya hazır!"
-          severity: Şiddet
+          severity: ÖNEM
           description: Açıklama
           resolve: Çözüm
         exchange_products:
@@ -2591,10 +2597,10 @@ tr:
       unsaved_changes_message: Kaydedilmemiş değişiklikler var, şimdi kaydet veya yoksay?
       save: KAYDET
       ignore: YOKSAY
-      add_to_order_cycle: "sipariş dönemine ekle"
-      manage_products: "ürünleri yönet"
-      edit_profile: "profili Düzenle"
-      add_products_to_inventory: "Stoka ürün ekle"
+      add_to_order_cycle: "SİPARİŞ DÖNEMİNE EKLE"
+      manage_products: "ÜRÜNLERİ YÖNET"
+      edit_profile: "PROFİLİ DÜZENLE"
+      add_products_to_inventory: "STOKA ÜRÜN EKLE"
     resources:
       could_not_delete_customer: 'Müşteri silinemedi'
     product_import:
@@ -2966,7 +2972,7 @@ tr:
       tab:
         dashboard: "KONTROL PANELİ"
         orders: "SİPARİŞLER"
-        bulk_order_management: "Toplu Sipariş Yönetimi"
+        bulk_order_management: "TOPLU SİPARİŞ YÖNETİMİ"
         subscriptions: "Üyelikler"
         products: "Ürünler"
         option_types: "Seçenek Türleri"
@@ -3103,7 +3109,7 @@ tr:
           new_shipping_method: "YENİ TESLİMAT YÖNTEMİ"
           back_to_shipping_methods_list: "Teslİmat Yöntemlerİne Gerİ Dön"
         edit:
-          editing_shipping_method: "Teslİmat YöntemİNİ Düzenle"
+          editing_shipping_method: "Teslimat Yöntemini Düzenle"
           new: "YENİ"
           back_to_shipping_methods_list: "Teslİmat Yöntemlerİne Gerİ Dön"
         form:
@@ -3168,6 +3174,8 @@ tr:
           stripe:
             error_saving_payment: Ödeme kaydedilirken hata oluştu
             submitting_payment: Ödeme gönderiliyor ...
+          paypal:
+            no_payment_via_admin_backend: Paypal ödemeleri alınamıyor.
       products:
         image_upload_error: "Ürün resmi tanınamadı. Lütfen PNG veya JPG biçiminde bir resim yükleyin."
         new:
@@ -3226,7 +3234,7 @@ tr:
           listing_users: "Kullanıcılar Listeleniyor"
           new_user: "Yeni Kullanıcı"
           user: "Kullanıcı"
-          enterprise_limit: "İşletme Limiti"
+          enterprise_limit: "İŞLETME LİMİTİ"
           search: "Ara"
           email: "E-posta"
         edit:
@@ -3236,7 +3244,7 @@ tr:
         form:
           email: "E-posta"
           roles: "Roller"
-          enterprise_limit: "İşletme Limiti"
+          enterprise_limit: "İŞLETME LİMİTİ"
           confirm_password: "Parolayı Onayla"
           password: "Parola"
         email_confirmation:

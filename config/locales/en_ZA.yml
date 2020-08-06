@@ -13,6 +13,7 @@ en_ZA:
         email: Customer E-Mail
       spree/payment:
         amount: Amount
+        state: Province
       spree/product:
         primary_taxon: "Product Category"
         supplier: "Supplier"
@@ -181,8 +182,7 @@ en_ZA:
         title: Other Failure (%{count} orders)
         explainer: Automatic processing of these orders failed for an unknown reason. This should not occur, please contact us if you are seeing this.
   home: "OFN"
-  title: Open Food Network
-  welcome_to: 'Welcome to '
+  title: "Open Food Network"
   site_meta_description: "We begin with healthy soil. With organic farmers and growers proudly rising to tell their stories. With distributors ready to connect people with green, nutritious, fair and affordable products. With buyers who believe that better, more local shopping decisions can seriously change the world."
   search_by_name: Search by name, town, province or postcode...
   producers_join: South African producers are now welcome to join Open Food Network SA.
@@ -1703,8 +1703,7 @@ en_ZA:
   password: Password
   remember_me: Remember Me
   are_you_sure: "Are you sure?"
-  orders_open: Orders open
-  closing: "Closing "
+  orders_open: "Orders open"
   going_back_to_home_page: "Taking you back to the home page"
   creating: Creating
   updating: Updating
@@ -1948,6 +1947,7 @@ en_ZA:
   supplier: "Supplier"
   product_name: "Product Name"
   product_description: "Product Description"
+  shipping_categories: "Shipping Categories"
   units: "Unit Size"
   coordinator: "Coordinator"
   distributor: "Distributor"
@@ -2044,6 +2044,7 @@ en_ZA:
   remove_tax: "Remove tax"
   first_name_begins_with: "First name begins with"
   last_name_begins_with: "Surname begins with"
+  new_order: "New Order"
   enterprise_tos_link: "Enterprise Terms of Service link"
   enterprise_tos_message: "We want to work with people that share our aims and values. As such we ask new enterprises to agree to our "
   enterprise_tos_link_text: "Terms of Service."

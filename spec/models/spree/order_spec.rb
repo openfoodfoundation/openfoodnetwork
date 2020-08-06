@@ -137,7 +137,7 @@ describe Spree::Order do
     let(:li) { create(:line_item, order: o) }
 
     it "returns the sum of eligible enterprise fee adjustments" do
-      ef = create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new )
+      ef = create(:enterprise_fee, calculator: Calculator::FlatRate.new )
       ef.calculator.set_preference :amount, 123.45
       a = ef.create_adjustment("adjustment", o, o, true)
 
@@ -145,7 +145,7 @@ describe Spree::Order do
     end
 
     it "does not include ineligible adjustments" do
-      ef = create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new )
+      ef = create(:enterprise_fee, calculator: Calculator::FlatRate.new )
       ef.calculator.set_preference :amount, 123.45
       a = ef.create_adjustment("adjustment", o, o, true)
 
@@ -155,7 +155,7 @@ describe Spree::Order do
     end
 
     it "does not include adjustments that do not originate from enterprise fees" do
-      sm = create(:shipping_method, calculator: Spree::Calculator::FlatRate.new )
+      sm = create(:shipping_method, calculator: Calculator::FlatRate.new )
       sm.calculator.set_preference :amount, 123.45
       sm.create_adjustment("adjustment", o, o, true)
 
@@ -163,7 +163,7 @@ describe Spree::Order do
     end
 
     it "does not include adjustments whose source is a line item" do
-      ef = create(:enterprise_fee, calculator: Spree::Calculator::PerItem.new )
+      ef = create(:enterprise_fee, calculator: Calculator::PerItem.new )
       ef.calculator.set_preference :amount, 123.45
       ef.create_adjustment("adjustment", li.order, li, true)
 
@@ -669,7 +669,7 @@ describe Spree::Order do
     end
 
     context "changing the shipping method to one without fees" do
-      let(:shipping_method) { create(:shipping_method, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 0)) }
+      let(:shipping_method) { create(:shipping_method, calculator: Calculator::FlatRate.new(preferred_amount: 0)) }
 
       it "updates shipping fees" do
         order.shipments = [create(:shipment_with, :shipping_method, shipping_method: shipping_method)]
@@ -681,7 +681,7 @@ describe Spree::Order do
     end
 
     context "changing the payment method to one without fees" do
-      let(:payment_method) { create(:payment_method, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 0)) }
+      let(:payment_method) { create(:payment_method, calculator: Calculator::FlatRate.new(preferred_amount: 0)) }
 
       it "removes transaction fees" do
         # Change the payment method
@@ -855,12 +855,39 @@ describe Spree::Order do
         order.state = 'delivery' # payment's previous state
 
         allow(order).to receive(:payment_required?) { true }
-        allow(order).to receive(:charge_shipping_and_payment_fees!)
       end
 
-      it 'calls charge_shipping_and_payment_fees!' do
+      it 'calls charge_shipping_and_payment_fees! and updates totals' do
+        expect(order).to receive(:charge_shipping_and_payment_fees!)
+        expect(order).to receive(:update_totals).at_least(:once)
+
         order.next
-        expect(order).to have_received(:charge_shipping_and_payment_fees!)
+      end
+
+      context "payment's amount" do
+        let(:failed_payment) { create(:payment, order: order, state: 'failed', amount: 100) }
+
+        before do
+          allow(order).to receive(:total) { 120 }
+        end
+
+        it 'is not updated for failed payments' do
+          failed_payment
+
+          order.next
+
+          expect(failed_payment.reload.amount).to eq 100
+        end
+
+        it 'is updated only for pending payments' do
+          pending_payment = create(:payment, order: order, state: 'pending', amount: 80)
+          failed_payment
+
+          order.next
+
+          expect(failed_payment.reload.amount).to eq 100
+          expect(pending_payment.reload.amount).to eq 120
+        end
       end
     end
   end

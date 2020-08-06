@@ -2,12 +2,10 @@ require 'spec_helper'
 require 'open_food_network/permissions'
 
 describe ProductImport::ProductImporter do
-  include AuthenticationWorkflow
-
   let!(:admin) { create(:admin_user) }
-  let!(:user) { create_enterprise_user }
-  let!(:user2) { create_enterprise_user }
-  let!(:user3) { create_enterprise_user }
+  let!(:user) { create(:user) }
+  let!(:user2) { create(:user) }
+  let!(:user3) { create(:user) }
   let!(:enterprise) { create(:enterprise, is_primary_producer: true, owner: user, name: "User Enterprise") }
   let!(:enterprise2) { create(:distributor_enterprise, is_primary_producer: true, owner: user2, name: "Another Enterprise") }
   let!(:enterprise3) { create(:distributor_enterprise, is_primary_producer: true, owner: user3, name: "And Another Enterprise") }

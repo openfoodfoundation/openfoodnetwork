@@ -6,15 +6,14 @@ feature '
     As an administrator
     I want to be alerted when I navigate away from a dirty order cycle form
 ', js: true do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   scenario "alert when navigating away from dirty form" do
     # Given a 'complex' order cycle form
     oc = create(:order_cycle)
 
     # When I edit the form
-    quick_login_as_admin
-    visit edit_admin_order_cycle_path(oc)
+    login_as_admin_and_visit edit_admin_order_cycle_path(oc)
 
     wait_for_edit_form_to_load_order_cycle(oc)
 

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature 'External services' do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   describe "bugherd" do
     before do

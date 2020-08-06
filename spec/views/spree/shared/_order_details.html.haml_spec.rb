@@ -3,7 +3,7 @@
 require "spec_helper"
 
 describe "spree/shared/_order_details.html.haml" do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   helper Spree::BaseHelper
 
   let(:order) { create(:completed_order_with_fees) }

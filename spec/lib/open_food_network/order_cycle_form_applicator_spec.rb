@@ -4,9 +4,7 @@ require 'open_food_network/order_cycle_form_applicator'
 
 module OpenFoodNetwork
   describe OrderCycleFormApplicator do
-    include AuthenticationWorkflow
-
-    let!(:user) { create_enterprise_user }
+    let!(:user) { create(:user) }
 
     context "unit specs" do
       it "creates new exchanges for incoming_exchanges" do

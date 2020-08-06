@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'open_food_network/orders_and_fulfillments_report'
 
 describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   let(:distributor) { create(:distributor_enterprise) }
   let(:order_cycle) { create(:simple_order_cycle) }

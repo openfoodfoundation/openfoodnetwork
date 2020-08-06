@@ -1,8 +1,6 @@
 require "spec_helper"
 
 describe "spree/admin/orders/index.html.haml" do
-  include AuthenticationWorkflow
-
   around do |example|
     original_config = Spree::Config[:enable_invoices?]
     example.run
@@ -16,7 +14,7 @@ describe "spree/admin/orders/index.html.haml" do
       end
     end
 
-    allow(view).to receive_messages spree_current_user: create_enterprise_user
+    allow(view).to receive_messages spree_current_user: create(:user)
   end
 
   describe "print invoices button" do

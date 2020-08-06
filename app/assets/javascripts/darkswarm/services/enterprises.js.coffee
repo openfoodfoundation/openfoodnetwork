@@ -84,3 +84,8 @@ Darkswarm.factory 'Enterprises', (enterprises, ShopsResource, CurrentHub, Taxons
 
     resetDistance: ->
       enterprise.distance = null for enterprise in @enterprises
+
+    geocodedEnterprises: =>
+      @enterprises.filter (enterprise) ->
+        enterprise.latitude? && enterprise.longitude?
+

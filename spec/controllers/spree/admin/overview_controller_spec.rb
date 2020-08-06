@@ -1,15 +1,13 @@
 require 'spec_helper'
 
 describe Spree::Admin::OverviewController, type: :controller do
-  include AuthenticationWorkflow
-
   describe "#index" do
     before do
       allow(controller).to receive(:spree_current_user).and_return(user)
     end
 
     context "when user owns only one enterprise" do
-      let(:user) { create_enterprise_user }
+      let(:user) { create(:user) }
       let!(:enterprise) { create(:distributor_enterprise, owner: user) }
 
       context "when the referer is not an admin page" do
@@ -48,7 +46,7 @@ describe Spree::Admin::OverviewController, type: :controller do
     end
 
     context "when user owns multiple enterprises" do
-      let(:user) { create_enterprise_user(enterprise_limit: 2) }
+      let(:user) { create(:user) }
 
       let!(:enterprise1) { create(:distributor_enterprise, owner: user) }
       before { create(:distributor_enterprise, owner: user) }

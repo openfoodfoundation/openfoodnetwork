@@ -49,7 +49,7 @@ describe Spree::UserMailer do
   describe '#reset_password_instructions' do
     describe 'message contents' do
       before do
-        @message = described_class.reset_password_instructions(user)
+        @message = described_class.reset_password_instructions(user, nil)
       end
 
       context 'subject includes' do
@@ -72,7 +72,7 @@ describe Spree::UserMailer do
     describe 'legacy support for User object' do
       it 'sends an email' do
         expect do
-          Spree::UserMailer.reset_password_instructions(user).deliver
+          Spree::UserMailer.reset_password_instructions(user, nil).deliver
         end.to change(ActionMailer::Base.deliveries, :size).by(1)
       end
     end

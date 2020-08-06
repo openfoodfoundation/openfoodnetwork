@@ -13,6 +13,8 @@ fr:
         email: Email acheteur
       spree/payment:
         amount: Montant
+        state: Statut
+        source: Source
       spree/product:
         primary_taxon: "Catégorie Produit"
         supplier: "Fournisseur"
@@ -181,8 +183,8 @@ fr:
         title: Autre échec (%{count} commandes)
         explainer: Le traitement automatique de ces commandes a échoué pour une raison inconnue. Cela n'aurait pas dû arriver, veuillez nous contacter si vous constatez quelque chose d'anormal.
   home: "OFF"
-  title: Open Food France
-  welcome_to: 'Bienvenue sur '
+  title: "Open Food France"
+  welcome_to: "Bienvenue sur"
   site_meta_description: "Tout commence dans le sol. Avec ces paysans, agriculteurs, producteurs, engagés pour une agriculture durable et régénératrice, et désireux de partager leur histoire et leur passion avec fierté. Avec ces distributeurs souhaitant reconnecter les individus à leurs aliments et aux gens qui les produisent, soutenir les prises de conscience, dans une démarche de transparence, d'honnêteté, en assurant une juste rémunération des producteurs.  Avec ces acheteurs qui croient que de meilleures décisions d'achats peuvent ..."
   search_by_name: Recherche par nom ou département...
   producers_join: Les producteurs et autres hubs basés en France sont invités à rejoindre Open Food France.
@@ -271,6 +273,9 @@ fr:
   on hand: "En stock"
   ship: "Expédier"
   shipping_category: "Condition de transport"
+  height: "Hauteur"
+  width: "Largeur"
+  depth: "Profondeur"
   actions:
     create_and_add_another: "Créer et ajouter nouveau"
     create: "Créer"
@@ -1151,7 +1156,7 @@ fr:
       cart:
         cart: "Panier"
       cart_sidebar:
-        checkout: "Etape suivante (coordonnées)"
+        checkout: "Etape suivante"
         edit_cart: "Modifier le panier"
         items_in_cart_singular: "%{num} élément dans le panier"
         items_in_cart_plural: "%{num} éléments dans le panier"
@@ -1400,7 +1405,7 @@ fr:
   checkout_details: "Vos informations"
   checkout_billing: "Informations de facturation"
   checkout_default_bill_address: "Sauvegarder comme adresse de facturation par défaut"
-  checkout_shipping: Informations de livraison
+  checkout_shipping: Informations de livraison ou de retrait
   checkout_default_ship_address: "Sauvegarder comme adresse de livraison par défaut"
   checkout_method_free: Pas de frais supplémentaires
   checkout_address_same: Adresse de livraison identique à l'adresse de facturation?
@@ -1715,8 +1720,8 @@ fr:
   password: Mot de passe
   remember_me: Se souvenir de moi
   are_you_sure: "Confirmer?"
-  orders_open: Boutique ouverte
-  closing: "Fermeture "
+  orders_open: "Boutique ouverte"
+  closing: "Fermeture"
   going_back_to_home_page: "Retour à la page d'accueil"
   creating: Création
   updating: Mettre à jour
@@ -1960,6 +1965,8 @@ fr:
   supplier: "Fournisseur"
   product_name: "Nom du Produit"
   product_description: "Description du Produit"
+  permalink: "Permalien"
+  shipping_categories: "Conditions de transport"
   units: "Unité de mesure"
   coordinator: "Coordinateur"
   distributor: "Distributeur"
@@ -2056,6 +2063,8 @@ fr:
   remove_tax: "Retirer TVA"
   first_name_begins_with: "Prénom commence par"
   last_name_begins_with: "Nom de famille commence par"
+  shipping_method: "Méthode de livraison"
+  new_order: "Nouvelle commande"
   enterprise_tos_link: "Lien vers les Conditions Générales d'Utilisation"
   enterprise_tos_message: "Nous soutenons la mise en place d'un système alimentaire résilient et durable, et souhaitons œuvrer avec des entreprises qui partagent nos valeurs et notre vision. Ainsi, nous demandons aux entreprises s'enregistrant sur Open Food France de valider nos "
   enterprise_tos_link_text: "Conditions d'utilisation"
@@ -3139,12 +3148,12 @@ fr:
           zones: "Zones"
           both: "Vu par l'acheteur sur la boutique"
           back_end: "Visible pour l'administration uniquement"
-          deactivation_warning: "Désactiver une méthode de livraison peut engendre sa disparition de la liste ici. Si vous souhaitez uniquement ne plus l'afficher pour l'acheteur, modifiez-là et utilisez l'option d'affichage \"visible pour l'administrateur uniquement\"."
+          deactivation_warning: "Désactiver une méthode de livraison peut engendrer sa disparition de la liste ici. Si vous souhaitez uniquement ne plus l'afficher pour l'acheteur, modifiez-là et utilisez l'option d'affichage \"visible pour l'administrateur uniquement\"."
       payment_methods:
         index:
           payment_methods: "Méthodes de paiement"
           new_payment_method: "Nouvelle méthode de paiement"
-          name: "Produit/Variante"
+          name: "Nom"
           products_distributor: "Distributeur"
           provider: "Fournisseur"
           environment: "Environnement"
@@ -3177,7 +3186,7 @@ fr:
           business_name: Nom de l'entreprise
           charges_enabled: Frais activés
         form:
-          name: "Produit/Variante"
+          name: "Nom"
           description: "Description"
           environment: "Environnement"
           display: "Afficher"
@@ -3196,6 +3205,8 @@ fr:
           stripe:
             error_saving_payment: Erreur à l'enregistrement du paiement
             submitting_payment: Envoi du paiement...
+          paypal:
+            no_payment_via_admin_backend: 'Il n''est pas encore possible de payer avec Paypal via l''administration. '
       products:
         image_upload_error: "L'image du produit n'a pas été reconnue. Veuillez importer une image au format PNG ou JPG."
         new:

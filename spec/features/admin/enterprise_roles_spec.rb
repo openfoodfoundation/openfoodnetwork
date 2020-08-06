@@ -4,7 +4,7 @@ feature '
   As an Administrator
   I want to manage relationships between users and enterprises
 ', js: true do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
   include OpenFoodNetwork::EmailHelper
 

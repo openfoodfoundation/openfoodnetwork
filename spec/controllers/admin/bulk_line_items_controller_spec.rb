@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe Admin::BulkLineItemsController, type: :controller do
-  include AuthenticationWorkflow
-
   describe '#index' do
     render_views
 
@@ -17,11 +15,11 @@ describe Admin::BulkLineItemsController, type: :controller do
     let!(:line_item4) { FactoryBot.create(:line_item_with_shipment, order: order3) }
 
     context "as a normal user" do
-      before { allow(controller).to receive_messages spree_current_user: create_enterprise_user }
+      before { allow(controller).to receive_messages spree_current_user: create(:user) }
 
       it "should deny me access to the index action" do
         spree_get :index, format: :json
-        expect(response).to redirect_to spree.unauthorized_path
+        expect(response).to redirect_to unauthorized_path
       end
     end
 
@@ -94,7 +92,7 @@ describe Admin::BulkLineItemsController, type: :controller do
         end
 
         it "does not display line items for which my enterprise is a supplier" do
-          expect(response).to redirect_to spree.unauthorized_path
+          expect(response).to redirect_to unauthorized_path
         end
       end
 
@@ -172,7 +170,7 @@ describe Admin::BulkLineItemsController, type: :controller do
         end
 
         it "does not allow access" do
-          expect(response).to redirect_to spree.unauthorized_path
+          expect(response).to redirect_to unauthorized_path
         end
       end
 

@@ -13,6 +13,7 @@ ar:
         email: الايميل الالكتروني للعميل
       spree/payment:
         amount: القيمة
+        state: ولاية
       spree/product:
         primary_taxon: "نوع المنتج "
         supplier: "المورد"
@@ -177,8 +178,7 @@ ar:
         title: فشل آخر (%{count} أوامر)
         explainer: فشلت المعالجة التلقائية لهذه الطلبات لسبب غير معروف. لا ينبغي أن يحدث هذا ، يرجى الاتصال بنا إذا كنت ترى هذا.
   home: "OFN"
-  title: شبكة الغذاء المفتوح
-  welcome_to: 'مرحبا بك في'
+  title: "شبكة الغذاء المفتوح"
   site_meta_description: "نبدأ من الألف إلى الياء. مع المزارعين والمزارعين على استعداد لرواية قصصهم بفخر وحق. مع الموزعين على استعداد لتوصيل الأشخاص بالمنتجات بطريقة عادلة وبصدق. مع المشترين الذين يعتقدون أن أفضل قرارات التسوق الأسبوعية يمكن ..."
   search_by_name: البحث بالاسم أو الضاحية ...
   producers_join: المنتجون الأستراليون مدعوون الآن للانضمام إلى شبكة الغذاء المفتوح.
@@ -1692,8 +1692,7 @@ ar:
   password: كلمه السر
   remember_me: تذكرنى
   are_you_sure: "هل أنت واثق؟"
-  orders_open: الطلب مفتوح
-  closing: "إغلاق"
+  orders_open: "الطلب مفتوح"
   going_back_to_home_page: "الرجوع إلى الصفحة الرئيسية"
   creating: انشاء
   updating: تحديث
@@ -1936,6 +1935,7 @@ ar:
   supplier: "المورد"
   product_name: "اسم المنتج"
   product_description: "وصف المنتج"
+  shipping_categories: "فئات الشحن"
   units: "حجم الوحدة"
   coordinator: "منسق"
   distributor: "الموزع"
@@ -2032,6 +2032,7 @@ ar:
   remove_tax: "إزالة الضريبة"
   first_name_begins_with: "الاسم الأول يبدأ بـ"
   last_name_begins_with: "اسم العائلة يبدأ بـ"
+  new_order: "طلب جديد"
   enterprise_tos_link: "شروط المؤسسة لخدمة الرابط"
   enterprise_tos_message: "نريد العمل مع أشخاص يشاركوننا أهدافنا وقيمنا. على هذا النحو ، نطلب من المؤسسات الجديدة الموافقة على"
   enterprise_tos_link_text: "شروط الخدمة."

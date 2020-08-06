@@ -10,13 +10,13 @@ describe Spree::Admin::ProductsController, type: :controller do
       end
 
       before do
-        login_as_enterprise_user [s_managed]
+        controller_login_as_enterprise_user [s_managed]
         spree_post :bulk_update,
                    "products" => [{ "id" => product.id, "name" => "Pine nuts" }]
       end
 
       it "denies access" do
-        expect(response).to redirect_to spree.unauthorized_url
+        expect(response).to redirect_to unauthorized_path
       end
 
       it "does not update any product" do
@@ -38,7 +38,7 @@ describe Spree::Admin::ProductsController, type: :controller do
         )
       end
 
-      before { login_as_enterprise_user([producer]) }
+      before { controller_login_as_enterprise_user([producer]) }
 
       it 'fails' do
         spree_post :bulk_update,
@@ -92,7 +92,7 @@ describe Spree::Admin::ProductsController, type: :controller do
         )
       end
 
-      before { login_as_enterprise_user([producer]) }
+      before { controller_login_as_enterprise_user([producer]) }
 
       it 'does not fail' do
         spree_post :bulk_update,
@@ -134,7 +134,7 @@ describe Spree::Admin::ProductsController, type: :controller do
     }
 
     before do
-      login_as_admin
+      controller_login_as_admin
       create(:stock_location)
     end
 
@@ -174,7 +174,7 @@ describe Spree::Admin::ProductsController, type: :controller do
     let!(:product) { create(:simple_product, supplier: producer) }
 
     before do
-      login_as_enterprise_user [producer]
+      controller_login_as_enterprise_user [producer]
     end
 
     describe "change product supplier" do
