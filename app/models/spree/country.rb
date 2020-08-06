@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class Country < ActiveRecord::Base
     has_many :states, -> { order('name ASC') }
@@ -6,7 +8,7 @@ module Spree
 
     def self.states_required_by_country_id
       states_required = Hash.new(true)
-      all.each { |country| states_required[country.id.to_s]= country.states_required }
+      all.find_each { |country| states_required[country.id.to_s] = country.states_required }
       states_required
     end
 
