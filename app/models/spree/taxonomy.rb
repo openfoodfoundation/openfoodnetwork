@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class Taxonomy < ActiveRecord::Base
     validates :name, presence: true
@@ -7,16 +9,16 @@ module Spree
 
     after_save :set_name
 
-    default_scope -> { order("#{self.table_name}.position") }
+    default_scope -> { order("#{table_name}.position") }
 
     private
-      def set_name
-        if root
-          root.update_column(:name, name)
-        else
-          self.root = Taxon.create!(taxonomy_id: id, name: name)
-        end
-      end
 
+    def set_name
+      if root
+        root.update_column(:name, name)
+      else
+        self.root = Taxon.create!(taxonomy_id: id, name: name)
+      end
+    end
   end
 end

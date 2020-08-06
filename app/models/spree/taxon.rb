@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module Spree
   class Taxon < ActiveRecord::Base
     acts_as_nested_set dependent: :destroy
 
-    belongs_to :taxonomy, class_name: 'Spree::Taxonomy', :touch => true
+    belongs_to :taxonomy, class_name: 'Spree::Taxonomy', touch: true
     has_many :classifications, dependent: :destroy
     has_many :products, through: :classifications
 
@@ -11,16 +13,16 @@ module Spree
     validates :name, presence: true
 
     has_attached_file :icon,
-      styles: { mini: '32x32>', normal: '128x128>' },
-      default_style: :mini,
-      url: '/spree/taxons/:id/:style/:basename.:extension',
-      path: ':rails_root/public/spree/taxons/:id/:style/:basename.:extension',
-      default_url: '/assets/default_taxon.png'
+                      styles: { mini: '32x32>', normal: '128x128>' },
+                      default_style: :mini,
+                      url: '/spree/taxons/:id/:style/:basename.:extension',
+                      path: ':rails_root/public/spree/taxons/:id/:style/:basename.:extension',
+                      default_url: '/assets/default_taxon.png'
 
     include Spree::Core::S3Support
     supports_s3 :icon
 
-    include Spree::Core::ProductFilters  # for detailed defs of filters
+    include Spree::Core::ProductFilters # for detailed defs of filters
 
     # Indicate which filters should be used for this taxon
     def applicable_filters
@@ -56,10 +58,10 @@ module Spree
     end
 
     def pretty_name
-      ancestor_chain = self.ancestors.inject("") do |name, ancestor|
+      ancestor_chain = ancestors.inject("") do |name, ancestor|
         name += "#{ancestor.name} -> "
       end
-      ancestor_chain + "#{name}"
+      ancestor_chain + name.to_s
     end
 
     # Find all the taxons of supplied products for each enterprise, indexed by enterprise.

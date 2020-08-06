@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 module Spree
   describe Taxon do
-    let(:taxon) { Spree::Taxon.new(:name => "Ruby on Rails") }
+    let(:taxon) { Spree::Taxon.new(name: "Ruby on Rails") }
 
     let(:e) { create(:supplier_enterprise) }
     let!(:t1) { create(:taxon) }
@@ -63,8 +65,8 @@ module Spree
 
       context "with parent taxon" do
         before do
-          taxon.stub :parent_id => 123
-          taxon.stub :parent => mock_model(Spree::Taxon, :permalink => "brands")
+          taxon.stub parent_id: 123
+          taxon.stub parent: mock_model(Spree::Taxon, permalink: "brands")
         end
 
         it "should set permalink correctly when taxon has parent" do
@@ -92,7 +94,7 @@ module Spree
 
       it "does not error out" do
         pending "breaks in Rails 4 with postgres, see https://github.com/rails/rails/issues/10995"
-        expect { taxonomy.root.children.where(:name => "Some name").first_or_create }.not_to raise_error
+        expect { taxonomy.root.children.where(name: "Some name").first_or_create }.not_to raise_error
       end
     end
   end

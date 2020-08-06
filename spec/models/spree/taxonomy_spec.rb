@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Spree::Taxonomy do
   context "#destroy" do
     before do
-       @taxonomy = create(:taxonomy)
-       @root_taxon = @taxonomy.root
-       @child_taxon = create(:taxon, :taxonomy_id => @taxonomy.id, :parent => @root_taxon)
+      @taxonomy = create(:taxonomy)
+      @root_taxon = @taxonomy.root
+      @child_taxon = create(:taxon, taxonomy_id: @taxonomy.id, parent: @root_taxon)
     end
 
     it "should destroy all associated taxons" do
@@ -15,4 +17,3 @@ describe Spree::Taxonomy do
     end
   end
 end
-
