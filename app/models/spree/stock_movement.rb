@@ -19,8 +19,6 @@ module Spree
     private
 
     def update_stock_item_quantity
-      return unless Spree::Config[:track_inventory_levels]
-
       stock_item.adjust_count_on_hand quantity
     end
   end
