@@ -4,8 +4,8 @@ feature '
     As an admin
     I want to set a supplier and distributor(s) for a product
 ' do
-  include AuthenticationWorkflow
   include WebHelper
+  include AuthenticationHelper
 
   let!(:taxon) { create(:taxon) }
   let!(:stock_location) { create(:stock_location, backorderable_default: false) }
@@ -67,8 +67,7 @@ feature '
     end
 
     scenario "creating an on-demand product", js: true do
-      quick_login_as_admin
-      visit spree.admin_products_path
+      login_as_admin_and_visit spree.admin_products_path
 
       click_link 'New Product'
 
@@ -97,7 +96,7 @@ feature '
     let!(:tax_category) { create(:tax_category) }
 
     before do
-      @new_user = create_enterprise_user
+      @new_user = create(:user)
       @supplier2 = create(:supplier_enterprise, name: 'Another Supplier')
       @supplier_permitted = create(:supplier_enterprise, name: 'Permitted Supplier')
       @new_user.enterprise_roles.build(enterprise: @supplier2).save
@@ -105,7 +104,7 @@ feature '
       create(:enterprise_relationship, parent: @supplier_permitted, child: @supplier2,
                                        permissions_list: [:manage_products])
 
-      quick_login_as @new_user
+      login_as @new_user
     end
 
     context "products do not require a tax category" do

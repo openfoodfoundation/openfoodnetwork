@@ -4,15 +4,15 @@ feature '
   As a backend user
   I want to be given information about the state of my enterprises, products and order cycles
 ', js: true do
-  include AuthenticationWorkflow
   include WebHelper
+  include AuthenticationHelper
   include ::Spree::TestingSupport::AuthorizationHelpers
 
   context "as an enterprise user" do
     before do
-      @enterprise_user = create_enterprise_user
+      @enterprise_user = create(:user)
       allow_any_instance_of(Spree::Admin::OverviewController).to receive(:spree_current_user).and_return @enterprise_user
-      quick_login_as @enterprise_user
+      login_as @enterprise_user
     end
 
     context "with an enterprise" do

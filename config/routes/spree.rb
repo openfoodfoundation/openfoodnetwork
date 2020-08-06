@@ -1,7 +1,5 @@
 # Overriding Devise routes to use our own controller
 Spree::Core::Engine.routes.draw do
-  root to: 'home#index'
-
   devise_for :spree_user,
              :class_name => 'Spree::User',
              :controllers => { :sessions => 'spree/user_sessions',
@@ -15,7 +13,6 @@ Spree::Core::Engine.routes.draw do
   resources :users, :only => [:edit, :update]
 
   devise_scope :spree_user do
-    get '/login' => 'user_sessions#new', :as => :login
     post '/login' => 'user_sessions#create', :as => :create_new_session
     get '/logout' => 'user_sessions#destroy', :as => :logout
     get '/signup' => 'user_registrations#new', :as => :signup
@@ -174,8 +171,6 @@ Spree::Core::Engine.routes.draw do
 
   # Used by spree_paypal_express
   get '/checkout/:state', :to => 'checkout#edit', :as => :checkout_state
-
-  get '/unauthorized', :to => 'home#unauthorized', :as => :unauthorized
   get '/content/cvv', :to => 'content#cvv', :as => :cvv
   get '/content/*path', :to => 'content#show', :as => :content
 end

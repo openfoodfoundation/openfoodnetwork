@@ -363,6 +363,13 @@ Rails/UniqueValidationWithoutIndex:
     - 'app/models/customer.rb'
     - 'app/models/exchange.rb'
 
+# Offense count: 2
+# Configuration parameters: Include.
+# Include: app/models/**/*.rb
+Rails/UniqueValidationWithoutIndex:
+  Exclude:
+    - 'app/models/spree/stock_item.rb'
+
 # Offense count: 1
 # Configuration parameters: Environments.
 # Environments: development, test, production
@@ -1331,7 +1338,7 @@ Style/FrozenStringLiteralComment:
     - 'spec/support/performance_helper.rb'
     - 'spec/support/products_helper.rb'
     - 'spec/support/request/admin_helper.rb'
-    - 'spec/support/request/authentication_workflow.rb'
+    - 'spec/support/request/authentication_helper.rb'
     - 'spec/support/request/checkout_workflow.rb'
     - 'spec/support/request/cookie_helper.rb'
     - 'spec/support/request/distribution_helper.rb'

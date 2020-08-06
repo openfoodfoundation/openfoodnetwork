@@ -3,7 +3,7 @@ ruby "2.3.7"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
 gem 'i18n', '~> 0.6.11'
-gem 'i18n-js', '~> 3.7.0'
+gem 'i18n-js', '~> 3.7.1'
 gem 'rails', '~> 4.1.16'
 gem 'rails-i18n', '~> 4.0'
 gem 'rails_safe_tasks', '~> 1.0'
@@ -49,8 +49,9 @@ gem 'stripe'
 # which is needed for Pin Payments (and possibly others).
 gem 'activemerchant', '~> 1.78.0'
 
-gem 'devise', '~> 3.0.1'
+gem 'devise', '~> 3.5.10' # v4.0.0 needs rails 4.1
 gem 'devise-encryptable'
+gem 'devise-token_authenticatable', '~> 0.4.10' # v0.5.0 needs devise v4
 gem 'jwt', '~> 2.2'
 gem 'oauth2', '~> 1.4.4' # Used for Stripe Connect
 

@@ -6,8 +6,8 @@ feature '
     As an administrator
     I want to create and edit orders
 ', js: true do
-  include AuthenticationWorkflow
   include WebHelper
+  include AuthenticationHelper
 
   let(:user) { create(:user) }
   let(:product) { create(:simple_product) }
@@ -43,8 +43,7 @@ feature '
     distributor_disabled = create(:distributor_enterprise)
     create(:simple_order_cycle, name: 'Two')
 
-    quick_login_as_admin
-    visit spree.admin_orders_path
+    login_as_admin_and_visit spree.admin_orders_path
     click_link 'New Order'
 
     # Distributors without an order cycle should be shown as disabled
@@ -79,8 +78,7 @@ feature '
   end
 
   scenario "can add a product to an existing order" do
-    quick_login_as_admin
-    visit spree.edit_admin_order_path(order)
+    login_as_admin_and_visit spree.edit_admin_order_path(order)
 
     targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
 
@@ -102,8 +100,7 @@ feature '
     order.user = nil
     order.save
 
-    quick_login_as_admin
-    visit spree.edit_admin_order_path(order)
+    login_as_admin_and_visit spree.edit_admin_order_path(order)
 
     expect(page).to have_select2 "order_distributor_id", with_options: [d.name]
     select2_select d.name, from: 'order_distributor_id'
@@ -117,15 +114,13 @@ feature '
   scenario "can't add products to an order outside the order's hub and order cycle" do
     product = create(:simple_product)
 
-    quick_login_as_admin
-    visit spree.edit_admin_order_path(order)
+    login_as_admin_and_visit spree.edit_admin_order_path(order)
 
     expect(page).not_to have_select2 "add_variant_id", with_options: [product.name]
   end
 
   scenario "can't change distributor or order cycle once order has been finalized" do
-    quick_login_as_admin
-    visit spree.edit_admin_order_path(order)
+    login_as_admin_and_visit spree.edit_admin_order_path(order)
 
     expect(page).not_to have_select2 'order_distributor_id'
     expect(page).not_to have_select2 'order_order_cycle_id'
@@ -149,7 +144,7 @@ feature '
     order.shipping_method.update_attribute :require_ship_address, true
 
     # When I create a new order
-    quick_login_as user
+    login_as user
     new_order_with_distribution(distributor, order_cycle)
     targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
     find('button.add_variant').click
@@ -187,12 +182,12 @@ feature '
     let(:product) { order_cycle1.products.first }
 
     before(:each) do
-      @enterprise_user = create_enterprise_user
+      @enterprise_user = create(:user)
       @enterprise_user.enterprise_roles.build(enterprise: supplier1).save
       @enterprise_user.enterprise_roles.build(enterprise: coordinator1).save
       @enterprise_user.enterprise_roles.build(enterprise: distributor1).save
 
-      quick_login_as @enterprise_user
+      login_as @enterprise_user
     end
 
     feature "viewing the edit page" do

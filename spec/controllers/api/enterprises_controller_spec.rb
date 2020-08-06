@@ -1,13 +1,12 @@
 require 'spec_helper'
 
 describe Api::EnterprisesController, type: :controller do
-  include AuthenticationWorkflow
   render_views
 
   let(:enterprise) { create(:distributor_enterprise) }
 
   context "as an enterprise owner" do
-    let(:enterprise_owner) { create_enterprise_user enterprise_limit: 10 }
+    let(:enterprise_owner) { create(:user) }
     let!(:enterprise) { create(:distributor_enterprise, owner: enterprise_owner) }
 
     before do
@@ -52,7 +51,7 @@ describe Api::EnterprisesController, type: :controller do
   end
 
   context "as an enterprise manager" do
-    let(:enterprise_manager) { create_enterprise_user }
+    let(:enterprise_manager) { create(:user) }
 
     before do
       enterprise_manager.enterprise_roles.build(enterprise: enterprise).save
@@ -74,7 +73,7 @@ describe Api::EnterprisesController, type: :controller do
   end
 
   context "as an non-managing user" do
-    let(:non_managing_user) { create_enterprise_user }
+    let(:non_managing_user) { create(:user) }
 
     before do
       allow(Enterprise)

@@ -10,7 +10,6 @@
       .trans-sentence
         %div
           %span.fat-taxons{"ng-repeat" => "taxon in hub.taxons"}
-            %render-svg{path: "{{taxon.icon}}"}
             %span{"ng-bind" => "::taxon.name"}
         %div
           %span.fat-properties{"ng-repeat" => "property in hub.distributed_properties"}

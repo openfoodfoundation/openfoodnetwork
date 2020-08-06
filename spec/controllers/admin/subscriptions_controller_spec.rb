@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Admin::SubscriptionsController, type: :controller do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include OpenFoodNetwork::EmailHelper
 
   describe 'index' do
@@ -18,7 +18,7 @@ describe Admin::SubscriptionsController, type: :controller do
       context 'as a regular user' do
         it 'redirects to unauthorized' do
           spree_get :index, params
-          expect(response).to redirect_to spree.unauthorized_path
+          expect(response).to redirect_to unauthorized_path
         end
       end
 
@@ -55,7 +55,7 @@ describe Admin::SubscriptionsController, type: :controller do
       context 'as a regular user' do
         it 'redirects to unauthorized' do
           spree_get :index, params
-          expect(response).to redirect_to spree.unauthorized_path
+          expect(response).to redirect_to unauthorized_path
         end
       end
 
@@ -120,7 +120,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
       it 'redirects to unauthorized' do
         spree_post :create, params
-        expect(response).to redirect_to spree.unauthorized_path
+        expect(response).to redirect_to unauthorized_path
       end
     end
 
@@ -272,7 +272,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
       it 'redirects to unauthorized' do
         spree_post :update, params
-        expect(response).to redirect_to spree.unauthorized_path
+        expect(response).to redirect_to unauthorized_path
       end
     end
 
@@ -390,7 +390,7 @@ describe Admin::SubscriptionsController, type: :controller do
       context 'as a regular user' do
         it 'redirects to unauthorized' do
           spree_put :cancel, params
-          expect(response).to redirect_to spree.unauthorized_path
+          expect(response).to redirect_to unauthorized_path
         end
       end
 
@@ -401,7 +401,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
           it 'redirects to unauthorized' do
             spree_put :cancel, params
-            expect(response).to redirect_to spree.unauthorized_path
+            expect(response).to redirect_to unauthorized_path
           end
         end
 
@@ -489,7 +489,7 @@ describe Admin::SubscriptionsController, type: :controller do
       context 'as a regular user' do
         it 'redirects to unauthorized' do
           spree_put :pause, params
-          expect(response).to redirect_to spree.unauthorized_path
+          expect(response).to redirect_to unauthorized_path
         end
       end
 
@@ -500,7 +500,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
           it 'redirects to unauthorized' do
             spree_put :pause, params
-            expect(response).to redirect_to spree.unauthorized_path
+            expect(response).to redirect_to unauthorized_path
           end
         end
 
@@ -588,7 +588,7 @@ describe Admin::SubscriptionsController, type: :controller do
       context 'as a regular user' do
         it 'redirects to unauthorized' do
           spree_put :unpause, params
-          expect(response).to redirect_to spree.unauthorized_path
+          expect(response).to redirect_to unauthorized_path
         end
       end
 
@@ -599,7 +599,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
           it 'redirects to unauthorized' do
             spree_put :unpause, params
-            expect(response).to redirect_to spree.unauthorized_path
+            expect(response).to redirect_to unauthorized_path
           end
         end
 

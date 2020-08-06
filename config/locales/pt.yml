@@ -13,6 +13,7 @@ pt:
         email: Email do/a Consumidor/a
       spree/payment:
         amount: Quantia
+        state: Estado
       spree/product:
         primary_taxon: "Categoria de Produto"
         supplier: "Fornecedor"
@@ -166,8 +167,7 @@ pt:
         title: Outra Falha (%{count} encomendas)
         explainer: 'O processamento automático destas encomendas falhou devido a uma razão desconhecida. Isto não deveria estar a acontecer, por favor contacte-nos se estiver a ver esta mensagem. '
   home: "OFN"
-  title: Open Food Network
-  welcome_to: 'Bem-vindo à'
+  title: "Open Food Network"
   site_meta_description: "Começamos a partir da terra. Com agricultores e produtores prontos a contarem as suas histórias com um brilho nos olhos. Com distribuidores prontos a estabelecerem ligações entre pessoas e produtos de forma justa e honesta. Com consumidores que acreditam que melhores decisões no momento da compra..."
   search_by_name: Procurar por nome ou localidade...
   producers_join: Produtores e produtoras de proximidade, estão convidados a juntarem-se à Open Food Network!
@@ -1623,8 +1623,7 @@ pt:
   password: Palavra-passe
   remember_me: Lembrar meu login
   are_you_sure: "Tem a certeza?"
-  orders_open: Encomendas abertas
-  closing: "Fechando"
+  orders_open: "Encomendas abertas"
   going_back_to_home_page: "Voltando à pagina inicial"
   creating: Criando
   updating: Atualizando
@@ -1865,6 +1864,7 @@ pt:
   supplier: "Fornecedor"
   product_name: "Nome do Produto"
   product_description: "Descrição do Produto"
+  shipping_categories: "Categorias de Envio"
   units: "Tamanho unitário"
   coordinator: "Coordenador"
   distributor: "Distribuidor"
@@ -1959,6 +1959,7 @@ pt:
   remove_tax: "Remover imposto"
   first_name_begins_with: "Primeiro nome começa com"
   last_name_begins_with: "Último nome começa com"
+  new_order: "Nova Encomenda"
   enterprise_tos_link: "Ligação para Termos de Serviço da Organização"
   enterprise_tos_message: "Queremos trabalhar com pessoas que partilham os nossos objectivos e valores. Por isso pedimos às organizações novas que concordem com os nossos"
   enterprise_tos_link_text: "Termos de Serviço."

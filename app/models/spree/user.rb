@@ -34,10 +34,6 @@ module Spree
 
     # We use the same options as Spree and add :confirmable
     devise :confirmable, reconfirmable: true
-    # TODO: Later versions of devise have a dedicated after_confirmation callback, so use that
-    after_update :welcome_after_confirm, if: lambda {
-      confirmation_token_changed? && confirmation_token.nil?
-    }
 
     class DestroyWithOrdersError < StandardError; end
 
@@ -49,13 +45,13 @@ module Spree
       has_spree_role?('admin')
     end
 
-    def send_reset_password_instructions
-      generate_reset_password_token!
-      UserMailer.reset_password_instructions(id).deliver
-    end
     # handle_asynchronously will define send_reset_password_instructions_with_delay.
     # If handle_asynchronously is called twice, we get an infinite job loop.
     handle_asynchronously :send_reset_password_instructions unless method_defined? :send_reset_password_instructions_with_delay
+
+    def regenerate_reset_password_token
+      set_reset_password_token
+    end
 
     def known_users
       if admin?
@@ -82,9 +78,9 @@ module Spree
       customers.find_by(enterprise_id: enterprise)
     end
 
-    def welcome_after_confirm
-      # Send welcome email if we are confirming an user's email
-      # Note: this callback only runs on email confirmation
+    # This is a Devise Confirmable callback that runs on email confirmation
+    # It sends a welcome email after the user email is confirmed
+    def after_confirmation
       return unless confirmed? && unconfirmed_email.nil? && !unconfirmed_email_changed?
 
       send_signup_confirmation

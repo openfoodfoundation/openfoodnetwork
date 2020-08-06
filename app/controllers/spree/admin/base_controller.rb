@@ -24,7 +24,7 @@ module Spree
       # This is in Spree::Core::ControllerHelpers::Auth
       # But you can't easily reopen modules in Ruby
       def unauthorized
-        if try_spree_current_user
+        if spree_current_user
           flash[:error] = t(:authorization_failure)
           redirect_to '/unauthorized'
         else

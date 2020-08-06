@@ -1,4 +1,4 @@
-Darkswarm.directive 'ofnOpenStreetMap', ($window, Enterprises, EnterpriseModal, availableCountries, openStreetMapConfig) ->
+Darkswarm.directive 'ofnOpenStreetMap', ($window, MapCentreCalculator, Enterprises, EnterpriseModal, availableCountries, openStreetMapConfig) ->
   restrict: 'E'
   replace: true
   scope: true
@@ -10,34 +10,6 @@ Darkswarm.directive 'ofnOpenStreetMap', ($window, Enterprises, EnterpriseModal, 
     enterpriseNames = []
     openStreetMapProviderName = openStreetMapConfig.open_street_map_provider_name
     openStreetMapProviderOptions = JSON.parse(openStreetMapConfig.open_street_map_provider_options)
-
-    average = (values) ->
-      total = values.reduce (sum, value) ->
-        sum = sum + value
-      , 0
-      total / values.length
-
-    averageAngle = (angleName) ->
-      positiveAngles = []
-      negativeAngles = []
-      for enterprise in Enterprises.enterprises
-        if enterprise.latitude? && enterprise.longitude?
-          if enterprise[angleName] > 0
-            positiveAngles.push(enterprise[angleName])
-          else
-            negativeAngles.push(enterprise[angleName])
-
-      averageNegativeAngle = average(negativeAngles)
-      averagePositiveAngle = average(positiveAngles)
-
-      if negativeAngles.length == 0
-        averagePositiveAngle
-      else if positiveAngles.length == 0
-        averageNegativeAngle
-      else if averagePositiveAngle > averageNegativeAngle
-        averagePositiveAngle - averageNegativeAngle
-      else
-        averageNegativeAngle - averagePositiveAngle
 
     buildMarker = (enterprise, latlng, title) ->
       icon = L.icon
@@ -61,28 +33,31 @@ Darkswarm.directive 'ofnOpenStreetMap', ($window, Enterprises, EnterpriseModal, 
 
     displayMap = ->
       setMapDimensions()
-      averageLatitude = averageAngle("latitude")
-      averageLongitude = averageAngle("longitude")
       zoomLevel = 6
       map = L.map('open-street-map')
       L.tileLayer.provider(openStreetMapProviderName, openStreetMapProviderOptions).addTo(map)
-      map.setView([averageLatitude, averageLongitude], zoomLevel)
+      map.setView([MapCentreCalculator.initialLatitude(), MapCentreCalculator.initialLongitude()], zoomLevel)
 
     displayEnterprises = ->
-      for enterprise in Enterprises.enterprises
-        if enterprise.latitude? && enterprise.longitude?
-          marker = buildMarker(enterprise, { lat: enterprise.latitude, lng: enterprise.longitude }, enterprise.name).addTo(map)
-          enterpriseNames.push(enterpriseName(enterprise))
-          markers.push(marker)
+      for enterprise in Enterprises.geocodedEnterprises()
+        marker = buildMarker(enterprise, { lat: enterprise.latitude, lng: enterprise.longitude }, enterprise.name).addTo(map)
+        enterpriseNames.push(enterpriseName(enterprise))
+        markers.push(marker)
+
+    disableSearchField = () =>
+      $('#open-street-map--search input').prop("disabled", true)
 
     displaySearchField = () ->
       new Autocomplete('#open-street-map--search',
         onSubmit: goToEnterprise
         search: searchEnterprises
       )
-      overwriteInlinePositionRelativeToPositionSearchField = ->
-        $('#open-street-map--search').css("position", "absolute")
-      overwriteInlinePositionRelativeToPositionSearchField()
+      overwriteInlinePositionRelativeToAbsoluteOnSearchField()
+      if Enterprises.geocodedEnterprises().length == 0
+        disableSearchField()
+
+    overwriteInlinePositionRelativeToAbsoluteOnSearchField = ->
+      $('#open-street-map--search').css("position", "absolute")
 
     searchEnterprises = (input) ->
       if input.length < 1

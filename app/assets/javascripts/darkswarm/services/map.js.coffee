@@ -2,9 +2,7 @@ Darkswarm.factory "OfnMap", (Enterprises, EnterpriseListModal, MapConfiguration)
   new class OfnMap
     constructor: ->
       @coordinates = {}
-      @enterprises = Enterprises.enterprises.filter (enterprise) ->
-        # Remove enterprises w/o lat or long
-        enterprise.latitude != null || enterprise.longitude != null
+      @enterprises = Enterprises.geocodedEnterprises()
       @enterprises = @enterprise_markers(@enterprises)
 
     enterprise_markers: (enterprises) ->

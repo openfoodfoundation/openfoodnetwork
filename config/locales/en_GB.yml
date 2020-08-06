@@ -13,6 +13,7 @@ en_GB:
         email: Customer E-Mail
       spree/payment:
         amount: Amount
+        state: State
       spree/product:
         primary_taxon: "Product Category"
         supplier: "Supplier"
@@ -181,8 +182,8 @@ en_GB:
         title: Other Failure (%{count} orders)
         explainer: Automatic processing of these orders failed for an unknown reason. This should not occur, please contact us if you are seeing this.
   home: "OFN"
-  title: Open Food Network
-  welcome_to: 'Welcome to '
+  title: "Open Food Network"
+  welcome_to: "Welcome to"
   site_meta_description: "The Open Food Network software platform allows farmers to sell produce online, at a price that works for them. It has been built specifically for selling food so it can handle tricky measures or stock levels that only food has - a dozen eggs, a bunch of parsley, a whole chicken that varies in weight…"
   search_by_name: Search by name, town, county or postcode...
   producers_join: UK producers are now welcome to join Open Food Network UK.
@@ -1713,8 +1714,8 @@ en_GB:
   password: Password
   remember_me: Remember Me
   are_you_sure: "Are you sure?"
-  orders_open: Orders open
-  closing: "Closing "
+  orders_open: "Orders open"
+  closing: "Closing"
   going_back_to_home_page: "Taking you back to the home page"
   creating: Creating
   updating: Updating
@@ -1958,6 +1959,7 @@ en_GB:
   supplier: "Supplier"
   product_name: "Product Name"
   product_description: "Product Description"
+  shipping_categories: "Shipping Categories"
   units: "Unit Size"
   coordinator: "Coordinator"
   distributor: "Distributor"
@@ -2054,6 +2056,7 @@ en_GB:
   remove_tax: "Remove tax"
   first_name_begins_with: "First name begins with"
   last_name_begins_with: "Surname begins with"
+  new_order: "New Order"
   enterprise_tos_link: "Enterprise Terms of Service link"
   enterprise_tos_message: "We want to work with people that share our aims and values. As such we ask new enterprises to agree to our "
   enterprise_tos_link_text: "Terms of Service."

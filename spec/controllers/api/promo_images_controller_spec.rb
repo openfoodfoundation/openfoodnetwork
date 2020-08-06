@@ -2,7 +2,7 @@ require "spec_helper"
 
 module Api
   describe PromoImagesController, type: :controller do
-    include AuthenticationWorkflow
+    include AuthenticationHelper
 
     let(:admin_user) { create(:admin_user) }
     let(:enterprise_owner) { create(:user) }

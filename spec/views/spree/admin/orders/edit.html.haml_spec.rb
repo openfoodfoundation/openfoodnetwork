@@ -1,7 +1,6 @@
 require "spec_helper"
 
 describe "spree/admin/orders/edit.html.haml" do
-  include AuthenticationWorkflow
   helper Spree::BaseHelper # required to make pretty_time work
 
   around do |example|
@@ -17,7 +16,7 @@ describe "spree/admin/orders/edit.html.haml" do
       end
     end
 
-    allow(view).to receive_messages spree_current_user: create_enterprise_user
+    allow(view).to receive_messages spree_current_user: create(:user)
 
     order = create(:completed_order_with_fees)
     order.distributor = create(:distributor_enterprise)

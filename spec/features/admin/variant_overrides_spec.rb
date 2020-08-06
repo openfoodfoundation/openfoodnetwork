@@ -6,7 +6,7 @@ feature "
   Without affecting other hubs that share the same products
 ", js: true do
   include AdminHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
 
   context "as the manager of a hub" do
@@ -24,9 +24,9 @@ feature "
       create(:enterprise_relationship, parent: producer_related, child: hub,
                                        permissions_list: [:create_variant_overrides])
     }
-    let(:user) { create_enterprise_user enterprises: [hub, producer_managed] }
+    let(:user) { create(:user, enterprises: [hub, producer_managed]) }
 
-    before { quick_login_as user }
+    before { login_as user }
 
     describe "selecting a hub" do
       let!(:er1) {
@@ -401,9 +401,7 @@ feature "
       let(:product) { order_cycle.products.first }
 
       before do
-        login_to_admin_section
-
-        visit 'admin/orders/new'
+        login_as_admin_and_visit spree.new_admin_order_path
         select2_select distributor.name, from: 'order_distributor_id'
         select2_select order_cycle.name, from: 'order_order_cycle_id'
         click_button 'Next'
@@ -473,7 +471,7 @@ feature "
       last_variant = inventory_items.last.variant
       first_variant.product.update!(name: "A First Product")
       last_variant.product.update!(name: "Z Last Product")
-      quick_login_as supplier.users.first
+      login_as supplier.users.first
       visit admin_inventory_path
 
       expect(page).to have_text first_variant.name

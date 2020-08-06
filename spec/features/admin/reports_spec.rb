@@ -4,22 +4,22 @@ feature '
     As an administrator
     I want numbers, all the numbers!
 ' do
-  include AuthenticationWorkflow
   include WebHelper
+  include AuthenticationHelper
 
   context "Permissions for different reports" do
     context "As an enterprise user" do
       let(:user) do
-        create_enterprise_user(enterprises: [
-                                 create(:distributor_enterprise)
-                               ])
+        create(:user, enterprises: [create(:distributor_enterprise)])
       end
+
       it "does not show super admin only report" do
         login_to_admin_as user
         click_link "Reports"
         expect(page).not_to have_content "Users & Enterprises"
       end
     end
+
     context "As an admin user" do
       it "shows the super admin only report" do
         login_to_admin_section
@@ -31,8 +31,7 @@ feature '
 
   describe "Customers report" do
     before do
-      quick_login_as_admin
-      visit spree.admin_reports_path
+      login_as_admin_and_visit spree.admin_reports_path
     end
 
     scenario "customers report" do
@@ -63,8 +62,7 @@ feature '
 
   describe "Order cycle management report" do
     before do
-      quick_login_as_admin
-      visit spree.admin_reports_path
+      login_as_admin_and_visit spree.admin_reports_path
     end
 
     scenario "payment method report" do
@@ -90,8 +88,7 @@ feature '
 
   describe "Packing reports" do
     before do
-      quick_login_as_admin
-      visit spree.admin_reports_path
+      login_as_admin_and_visit spree.admin_reports_path
     end
 
     let(:bill_address1) { create(:address, lastname: "Aman") }
@@ -147,8 +144,7 @@ feature '
   end
 
   scenario "orders and distributors report" do
-    quick_login_as_admin
-    visit spree.admin_reports_path
+    login_as_admin_and_visit spree.admin_reports_path
     click_link 'Orders And Distributors'
     click_button 'Search'
 
@@ -156,8 +152,7 @@ feature '
   end
 
   scenario "payments reports" do
-    quick_login_as_admin
-    visit spree.admin_reports_path
+    login_as_admin_and_visit spree.admin_reports_path
     click_link 'Payment Reports'
     click_button 'Search'
 
@@ -167,10 +162,10 @@ feature '
   describe "sales tax report" do
     let(:distributor1) { create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true) }
     let(:distributor2) { create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true) }
-    let(:user1) { create_enterprise_user enterprises: [distributor1] }
-    let(:user2) { create_enterprise_user enterprises: [distributor2] }
+    let(:user1) { create(:user, enterprises: [distributor1]) }
+    let(:user2) { create(:user, enterprises: [distributor2]) }
     let!(:shipping_method) { create(:shipping_method_with, :expensive_name, distributors: [distributor1]) }
-    let(:enterprise_fee) { create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 120.0)) }
+    let(:enterprise_fee) { create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category, calculator: Calculator::FlatRate.new(preferred_amount: 120.0)) }
     let(:order_cycle) { create(:simple_order_cycle, coordinator: distributor1, coordinator_fees: [enterprise_fee], distributors: [distributor1], variants: [product1.master]) }
 
     let!(:zone) { create(:zone_with_member) }
@@ -191,8 +186,7 @@ feature '
       order1.reload.update_distribution_charge!
       order1.finalize!
 
-      quick_login_as_admin
-      visit spree.admin_reports_path
+      login_as_admin_and_visit spree.admin_reports_path
 
       click_link "Sales Tax"
       select("Tax types", from: "report_type")
@@ -227,8 +221,7 @@ feature '
 
   describe "orders & fulfilment reports" do
     it "loads the report page" do
-      quick_login_as_admin
-      visit spree.admin_reports_path
+      login_as_admin_and_visit spree.admin_reports_path
       click_link 'Orders & Fulfillment Reports'
 
       expect(page).to have_content 'Supplier'
@@ -253,8 +246,7 @@ feature '
 
       it "is precise to time of day, not just date" do
         # When I generate a customer report with a timeframe that includes one order but not the other
-        quick_login_as_admin
-        visit spree.orders_and_fulfillment_admin_reports_path
+        login_as_admin_and_visit spree.orders_and_fulfillment_admin_reports_path
 
         fill_in 'q_completed_at_gt', with: '2013-04-25 13:00:00'
         fill_in 'q_completed_at_lt', with: '2013-04-25 15:00:00'
@@ -271,8 +263,7 @@ feature '
       oc = create(:simple_order_cycle, name: "My Order Cycle", distributors: [distributor], orders_open_at: Time.zone.now, orders_close_at: nil)
       o = create(:order, order_cycle: oc, distributor: distributor)
 
-      quick_login_as_admin
-      visit spree.orders_and_fulfillment_admin_reports_path
+      login_as_admin_and_visit spree.orders_and_fulfillment_admin_reports_path
 
       expect(page).to have_content "My Order Cycle"
     end
@@ -303,8 +294,7 @@ feature '
     end
 
     it "shows products and inventory report" do
-      quick_login_as_admin
-      visit spree.admin_reports_path
+      login_as_admin_and_visit spree.admin_reports_path
 
       expect(page).to have_content "All products"
       expect(page).to have_content "Inventory (on hand)"
@@ -318,8 +308,7 @@ feature '
     end
 
     it "shows the LettuceShare report" do
-      quick_login_as_admin
-      visit spree.admin_reports_path
+      login_as_admin_and_visit spree.admin_reports_path
       click_link 'LettuceShare'
       click_button "Go"
 
@@ -329,15 +318,14 @@ feature '
   end
 
   describe "users and enterprises report" do
-    let!(:enterprise1) { create( :enterprise, owner: create_enterprise_user ) }
-    let!(:enterprise2) { create( :enterprise, owner: create_enterprise_user ) }
-    let!(:enterprise3) { create( :enterprise, owner: create_enterprise_user ) }
+    let!(:enterprise1) { create( :enterprise, owner: create(:user) ) }
+    let!(:enterprise2) { create( :enterprise, owner: create(:user) ) }
+    let!(:enterprise3) { create( :enterprise, owner: create(:user) ) }
 
     before do
       enterprise3.enterprise_roles.build( user: enterprise1.owner ).save
 
-      quick_login_as_admin
-      visit spree.admin_reports_path
+      login_as_admin_and_visit spree.admin_reports_path
 
       click_link 'Users & Enterprises'
     end
@@ -379,13 +367,13 @@ feature '
   describe "Xero invoices report" do
     let(:distributor1) { create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true) }
     let(:distributor2) { create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true) }
-    let(:user1) { create_enterprise_user enterprises: [distributor1] }
-    let(:user2) { create_enterprise_user enterprises: [distributor2] }
+    let(:user1) { create(:user, enterprises: [distributor1]) }
+    let(:user2) { create(:user, enterprises: [distributor2]) }
     let(:shipping_method) { create(:shipping_method_with, :expensive_name) }
     let(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
 
-    let(:enterprise_fee1) { create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 10)) }
-    let(:enterprise_fee2) { create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 20)) }
+    let(:enterprise_fee1) { create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category, calculator: Calculator::FlatRate.new(preferred_amount: 10)) }
+    let(:enterprise_fee2) { create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category, calculator: Calculator::FlatRate.new(preferred_amount: 20)) }
     let(:order_cycle) { create(:simple_order_cycle, coordinator: distributor1, coordinator_fees: [enterprise_fee1, enterprise_fee2], distributors: [distributor1], variants: [product1.master]) }
 
     let!(:zone) { create(:zone_with_member) }
@@ -414,8 +402,7 @@ feature '
         order1.update_attribute :email, 'customer@email.com'
         Timecop.travel(Time.zone.local(2015, 4, 25, 14, 0, 0)) { order1.finalize! }
 
-        quick_login_as_admin
-        visit spree.admin_reports_path
+        login_as_admin_and_visit spree.admin_reports_path
 
         click_link 'Xero Invoices'
       end

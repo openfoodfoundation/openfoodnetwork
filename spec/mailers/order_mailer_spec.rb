@@ -1,7 +1,81 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Spree::OrderMailer do
   include OpenFoodNetwork::EmailHelper
+
+  context "basic behaviour" do
+    let(:order) { build(:order_with_totals_and_distribution) }
+
+    context ":from not set explicitly" do
+      it "falls back to spree config" do
+        message = Spree::OrderMailer.confirm_email_for_customer(order)
+        expect(message.from).to eq [Spree::Config[:mails_from]]
+      end
+    end
+
+    it "doesn't aggressively escape double quotes in confirmation body" do
+      confirmation_email = Spree::OrderMailer.confirm_email_for_customer(order)
+      expect(confirmation_email.body).to_not include("&quot;")
+    end
+
+    it "confirm_email_for_customer accepts an order id as an alternative to an Order object" do
+      expect(Spree::Order).to receive(:find).with(order.id).and_return(order)
+      expect {
+        confirmation_email = Spree::OrderMailer.confirm_email_for_customer(order.id)
+      }.to_not raise_error
+    end
+
+    it "cancel_email accepts an order id as an alternative to an Order object" do
+      expect(Spree::Order).to receive(:find).with(order.id).and_return(order)
+      expect {
+        cancel_email = Spree::OrderMailer.cancel_email(order.id)
+      }.to_not raise_error
+    end
+  end
+
+  context "only shows eligible adjustments in emails" do
+    let(:order) { create(:order_with_totals_and_distribution) }
+
+    before do
+      order.adjustments.create(
+        label: "Eligible Adjustment",
+        amount: 10,
+        eligible: true
+      )
+
+      order.adjustments.create!(
+        label: "Ineligible Adjustment",
+        amount: 0,
+      )
+    end
+
+    let!(:confirmation_email) { Spree::OrderMailer.confirm_email_for_customer(order) }
+    let!(:cancel_email) { Spree::OrderMailer.cancel_email(order) }
+
+    specify do
+      expect(confirmation_email.body).to_not include("Ineligible Adjustment")
+    end
+
+    specify do
+      expect(cancel_email.body).to_not include("Ineligible Adjustment")
+    end
+  end
+
+  context "displays line item price" do
+    let(:order) { create(:order_with_totals_and_distribution) }
+
+    specify do
+      confirmation_email = Spree::OrderMailer.confirm_email_for_customer(order)
+      expect(confirmation_email.body).to include("3.00")
+    end
+
+    specify do
+      cancel_email = Spree::OrderMailer.cancel_email(order)
+      expect(cancel_email.body).to include("3.00")
+    end
+  end
 
   describe "order confimation" do
     let(:bill_address) { create(:address) }

@@ -13,6 +13,7 @@ de_DE:
         email: E-Mail des Kunden
       spree/payment:
         amount: Betrag
+        state: Status
       spree/product:
         primary_taxon: "Produktkategorie"
         supplier: "Anbieter"
@@ -181,8 +182,7 @@ de_DE:
         title: Andere Fehler (%{count} Bestellungen)
         explainer: Die automatische Verarbeitung dieser Aufträge ist aus einem unbekannten Grund fehlgeschlagen. Dies sollte nicht geschehen, bitte kontaktieren Sie uns, wenn Sie dies sehen.
   home: "OFN"
-  title: Open Food Network
-  welcome_to: 'Willkommen bei'
+  title: "Open Food Network"
   site_meta_description: "Wir starten ganz grundsätzlich. Mit LandwirtInnen und GärtnerInnen, die stolz und ehrlich ihre Geschichte erzählen. Mit Lieferanten, die Menschen fair und vertrauenswürdig mit Produkten verbinden. Mit KonsumentInnen, die glauben, daß ihre wöchentlichen Einkaufsentscheidungen..."
   search_by_name: Suche nach Name oder Ort...
   producers_join: 'Wir laden Deutsche Produzenten ein, jetzt dem Open Food Network beizutreten. '
@@ -1688,8 +1688,7 @@ de_DE:
   password: Passwort
   remember_me: Erinnere dich an mich
   are_you_sure: "Bist du sicher?"
-  orders_open: Bestellungen öffnen
-  closing: "Schließen"
+  orders_open: "Bestellungen öffnen"
   going_back_to_home_page: "Bring dich zurück auf die Homepage"
   creating: Erstellen
   updating: Aktualisierung
@@ -1932,6 +1931,7 @@ de_DE:
   supplier: "Anbieter"
   product_name: "Produktname"
   product_description: "Produktbeschreibung"
+  shipping_categories: "Versandkategorien"
   units: "Einheitsgröße"
   coordinator: "Koordinator"
   distributor: "Verteiler"

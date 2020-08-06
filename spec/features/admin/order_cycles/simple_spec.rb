@@ -7,7 +7,7 @@ feature '
     I want to manage simple order cycles
 ', js: true do
   include AdminHelper
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
 
   scenario "updating many order cycle opening/closing times at once", js: true do
@@ -19,8 +19,7 @@ feature '
                  orders_close_at: Time.zone.local(2041, 12, 12, 12, 12, 12))
 
     # When I go to the order cycles page
-    quick_login_as_admin
-    visit admin_order_cycles_path
+    login_as_admin_and_visit admin_order_cycles_path
 
     # And I fill in some new opening/closing times and save them
     within("tr.order-cycle-#{oc1.id}") do
@@ -77,8 +76,7 @@ feature '
     oc = create(:simple_order_cycle)
 
     # When I clone it
-    quick_login_as_admin
-    visit admin_order_cycles_path
+    login_as_admin_and_visit admin_order_cycles_path
     within "tr.order-cycle-#{oc.id}" do
       find('a.clone-order-cycle').click
     end
@@ -100,8 +98,7 @@ feature '
       end
 
       it "displays a warning on the order cycles screen" do
-        quick_login_as_admin
-        visit admin_order_cycles_path
+        login_as_admin_and_visit admin_order_cycles_path
         expect(page).to have_content "The hub #{hub.name} is listed in an active order cycle, but does not have valid shipping and payment methods. Until you set these up, customers will not be able to shop at this hub."
       end
     end
@@ -151,12 +148,12 @@ feature '
 
     context "that is a manager of the coordinator" do
       before do
-        @new_user = create_enterprise_user
+        @new_user = create(:user)
         @new_user.enterprise_roles.build(enterprise: supplier_managed).save
         @new_user.enterprise_roles.build(enterprise: distributor_managed).save
         @new_user.enterprise_roles.build(enterprise: other_distributor_managed).save
 
-        quick_login_as @new_user
+        login_as @new_user
       end
 
       scenario "viewing a list of order cycles I am coordinating" do
@@ -288,7 +285,7 @@ feature '
     end
 
     context "that is a manager of a participating producer" do
-      let(:new_user) { create_enterprise_user }
+      let(:new_user) { create(:user) }
 
       before do
         new_user.enterprise_roles.build(enterprise: supplier_managed).save
@@ -354,7 +351,7 @@ feature '
 
     context "that is the manager of a participating hub" do
       let(:my_distributor) { create(:distributor_enterprise) }
-      let(:new_user) { create_enterprise_user }
+      let(:new_user) { create(:user) }
 
       before do
         create(:enterprise_relationship, parent: supplier_managed, child: my_distributor, permissions_list: [:add_to_order_cycle])
@@ -419,7 +416,7 @@ feature '
   end
 
   describe "simplified interface for enterprise users selling only their own produce" do
-    let(:user) { create_enterprise_user }
+    let(:user) { create(:user) }
     let(:enterprise) { create(:enterprise, is_primary_producer: true, sells: 'own') }
     let!(:p1) { create(:simple_product, supplier: enterprise) }
     let!(:p2) { create(:simple_product, supplier: enterprise) }
@@ -508,8 +505,7 @@ feature '
       ex.update! pickup_time: 'pickup time', pickup_instructions: 'pickup instructions'
 
       # When I edit it
-      quick_login_as_admin
-      visit admin_order_cycles_path
+      login_as_admin_and_visit admin_order_cycles_path
       within "tr.order-cycle-#{oc.id}" do
         find("a.edit-order-cycle").click
       end
@@ -541,8 +537,7 @@ feature '
       ex.update! pickup_time: 'pickup time', pickup_instructions: 'pickup instructions'
 
       # When I edit it
-      quick_login_as_admin
-      visit edit_admin_order_cycle_path oc
+      login_as_admin_and_visit edit_admin_order_cycle_path oc
 
       wait_for_edit_form_to_load_order_cycle(oc)
 
@@ -596,8 +591,7 @@ feature '
 
   scenario "deleting an order cycle" do
     order_cycle = create(:simple_order_cycle, name: "Translusent Berries")
-    quick_login_as_admin
-    visit admin_order_cycles_path
+    login_as_admin_and_visit admin_order_cycles_path
     expect(page).to have_selector "tr.order-cycle-#{order_cycle.id}"
     accept_alert do
       first('a.delete-order-cycle').click

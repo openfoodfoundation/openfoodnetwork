@@ -4,7 +4,7 @@ feature '
     As an admin
     I want to manage image formats
 ' do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
 
   before(:all) do
@@ -20,8 +20,7 @@ feature '
 
   scenario "setting the image format for a paperclip style" do
     # When I go to the image settings page
-    login_to_admin_section
-    visit spree.edit_admin_image_settings_path
+    login_as_admin_and_visit spree.edit_admin_image_settings_path
 
     # All the styles should default to "Unchanged"
     expect(page).to have_select 'attachment_styles_format_mini',    selected: 'Unchanged'

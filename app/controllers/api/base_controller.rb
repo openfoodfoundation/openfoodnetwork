@@ -53,7 +53,7 @@ module Api
 
     # Use logged in user (spree_current_user) for API authentication (current_api_user)
     def authenticate_user
-      return if @current_api_user = try_spree_current_user
+      return if @current_api_user = spree_current_user
 
       if api_key.blank?
         # An anonymous user

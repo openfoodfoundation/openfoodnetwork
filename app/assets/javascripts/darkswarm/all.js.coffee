@@ -37,7 +37,11 @@
 #= require moment/nb.js
 #= require moment/pt-br.js
 #= require moment/pt.js
+#= require moment/ru.js
 #= require moment/sv.js
+#= require moment/ca.js
+#= require moment/ar.js
+#= require moment/tr.js
 #
 #= require modernizr
 #

@@ -13,6 +13,8 @@ es:
         email: E-mail del consumidor
       spree/payment:
         amount: Cantidad
+        state: Provincia
+        source: Source
       spree/product:
         primary_taxon: "categoría del producto"
         supplier: "Proveedora"
@@ -181,8 +183,8 @@ es:
         title: Otros fallos (%{count} pedidos)
         explainer: El procesamiento automático de estas órdenes falló por un motivo desconocido. Esto no debería ocurrir, contáctanos si estás viendo esto.
   home: "OFN"
-  title: Open Food Network
-  welcome_to: 'Bienvenido a '
+  title: "Open Food Network"
+  welcome_to: "Bienvenido a"
   site_meta_description: "Nosotros empezamos desde abajo. Con granjeros y productoras listas para contar sus historias con orgullo y autenticidad. Con distribuidoras listas para conectar gente con productos de forma justa y honesta. Con compradores que creen que mejores decisiones de compras semanales pueden..."
   search_by_name: Buscar por nombre o municipio...
   producers_join: Las productoras australianas ahora son bienvenidas a unirse a Open Food Network.
@@ -1152,7 +1154,12 @@ es:
         cart: "Carrito"
       cart_sidebar:
         checkout: "Validar"
+        edit_cart: "Editar carrito"
+        items_in_cart_singular: "%{num} artículo en su carrito"
+        items_in_cart_plural: "%{num} artículos en su carrito"
         close: "Cerrar"
+        cart_empty: "Tu carrito esta vacío"
+        take_me_shopping: "¡Llévame de compras!"
       signed_in:
         profile: "Perfil"
       mobile_menu:
@@ -1710,8 +1717,8 @@ es:
   password: Contraseña
   remember_me: Recordarme
   are_you_sure: "¿Está seguro?"
-  orders_open: Pedidos abiertos
-  closing: "Cerrando "
+  orders_open: "Pedidos abiertos"
+  closing: "Cerrando"
   going_back_to_home_page: "Le estamos llevando de vuelta a la página de inicio"
   creating: Creando
   updating: Actualizando
@@ -1955,6 +1962,8 @@ es:
   supplier: "Proveedora"
   product_name: "nombre del producto"
   product_description: "Descripción del producto"
+  permalink: "Enlace permanente"
+  shipping_categories: "Categorías de envío"
   units: "Unidad de medida"
   coordinator: "Coordinadora"
   distributor: "Distribuidor"
@@ -2051,6 +2060,8 @@ es:
   remove_tax: "Eliminar impuesto"
   first_name_begins_with: "El nombre comienza con"
   last_name_begins_with: "El apellido comienza con"
+  shipping_method: "Método de envío"
+  new_order: "Nuevo pedido"
   enterprise_tos_link: "Enlace a los Términos del Servicio de la Organización"
   enterprise_tos_message: "Queremos trabajar con personas que compartan nuestros objetivos y valores. Por ello, pedimos a las nuevas organizaciones que acepten"
   enterprise_tos_link_text: "Términos del Servicio."
@@ -2069,6 +2080,7 @@ es:
   hub_sidebar_at_least: "Al menos un grupo debe ser seleccionado"
   hub_sidebar_blue: "azul"
   hub_sidebar_red: "rojo"
+  order_cycles_closed_for_hub: "El grupo que ha seleccionado está temporalmente cerrado para pedidos. Por favor, inténtelo de nuevo más tarde."
   report_customers_distributor: "Distribuidor"
   report_customers_supplier: "Proveedora"
   report_customers_cycle: "Ciclo de Pedido"
@@ -2305,6 +2317,7 @@ es:
   order_cycles_email_to_producers_notice: 'Los correos electrónicos que se enviarán a las productoras se han puesto en cola para enviarlos.'
   order_cycles_no_permission_to_coordinate_error: "Ninguna de tus organizaciones tiene permiso para coordinar un ciclo de pedido"
   order_cycles_no_permission_to_create_error: "No tienes permiso para crear un ciclo de pedido coordinado por esta empresa."
+  order_cycle_closed: "El ciclo de pedido que ha seleccionado se acaba de cerrar. ¡Inténtalo de nuevo!"
   back_to_orders_list: "Volver a la lista de pedidos"
   no_orders_found: "No se encontraron pedidos"
   order_information: "información del pedido"
@@ -3165,6 +3178,8 @@ es:
           stripe:
             error_saving_payment: Error al guardar el pago
             submitting_payment: Enviando pago...
+          paypal:
+            no_payment_via_admin_backend: Los pagos de PayPal no se pueden capturar desde l'administración
       products:
         image_upload_error: "La imagen del producto no fue reconocida. Por favor, cargue una imagen en formato PNG o JPG."
         new:

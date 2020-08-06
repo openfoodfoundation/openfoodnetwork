@@ -47,7 +47,7 @@ describe OrderFactory do
     end
 
     it "retains address, delivery, and payment attributes until completion of the order" do
-      AdvanceOrderService.new(order).call
+      OrderWorkflow.new(order).complete
 
       order.reload
 

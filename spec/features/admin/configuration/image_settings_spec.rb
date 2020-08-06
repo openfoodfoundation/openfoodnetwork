@@ -1,11 +1,10 @@
 require 'spec_helper'
 
 describe "image settings" do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
 
   before do
-    quick_login_as_admin
-    visit spree.admin_dashboard_path
+    login_as_admin_and_visit spree.admin_dashboard_path
     click_link "Configuration"
     click_link "Image Settings"
   end

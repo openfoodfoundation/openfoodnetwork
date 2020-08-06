@@ -13,6 +13,7 @@ en_NZ:
         email: Customer E-Mail
       spree/payment:
         amount: Amount
+        state: State
       spree/product:
         primary_taxon: "Product Category"
         supplier: "Supplier"
@@ -181,8 +182,8 @@ en_NZ:
         title: Other Failure (%{count} orders)
         explainer: Automatic processing of these orders failed for an unknown reason. This should not occur, please contact us if you are seeing this.
   home: "OFN"
-  title: Open Food Network
-  welcome_to: 'Welcome to '
+  title: "Open Food Network"
+  welcome_to: "Welcome to"
   site_meta_description: "We begin from the ground up. With farmers, growers, and producers ready to tell their stories proudly and truly. With distributors ready to connect people with products fairly and honestly. With buyers who believe that better weekly shopping decisions can…"
   search_by_name: Search by name or suburb...
   producers_join: New Zealand producers are now welcome to join the Open Food Network.
@@ -1161,7 +1162,7 @@ en_NZ:
       mobile_menu:
         cart: "Cart"
     register_call:
-      selling_on_ofn: "Interested in getting on the Open Food Network?"
+      selling_on_ofn: "Want to set up a shop on the Open Food Network?"
       register: "Register here"
     footer:
       footer_secure: "Secure and trusted."
@@ -1170,7 +1171,7 @@ en_NZ:
       footer_contact_email: "Email us"
       footer_nav_headline: "Navigate"
       footer_join_headline: "Join us"
-      footer_join_body: "Create a listing, shop or group directory on the Open Food Network."
+      footer_join_body: "Create a listing, build a shop or group directory on the Open Food Network."
       footer_join_cta: "Tell me more!"
       footer_legal_call: "Read our"
       footer_legal_tos: "Terms and conditions"
@@ -1378,7 +1379,7 @@ en_NZ:
   system_step1: "1. Search"
   system_step1_text: "Search our diverse, independent shops for seasonal local food. Search by neighbourhood and food category, or whether you prefer delivery or pickup."
   system_step2: "2. Shop"
-  system_step2_text: "Transform your transactions with affordable local food from diverse producers and hubs. Know the stories behind your food and the people who make it!"
+  system_step2_text: "Choose what you want, checkout as guest or make an account, you are good to go. Its that simple. If you'd like a box every week then ask for a subscription."
   system_step3: "3. Pick-up / Delivery"
   system_step3_text: "Hang on for your delivery, or visit your producer or hub for a more personal connection with your food. Food shopping as diverse as nature intended it."
   cta_headline: "Shopping that makes the world a better place."
@@ -1713,8 +1714,8 @@ en_NZ:
   password: Password
   remember_me: Remember Me
   are_you_sure: "Are you sure?"
-  orders_open: Orders open
-  closing: "Closing "
+  orders_open: "Orders open"
+  closing: "Closing"
   going_back_to_home_page: "Taking you back to the home page"
   creating: Creating
   updating: Updating
@@ -1766,7 +1767,7 @@ en_NZ:
     steps:
       introduction:
         registration_greeting: "Hi there!"
-        registration_intro: "You can now create a profile for your Producer or Hub"
+        registration_intro: "Producer or Hub? You can create a profile"
         registration_checklist: "What do I need?"
         registration_time: "5-10 minutes"
         registration_enterprise_address: "Enterprise address"
@@ -1958,6 +1959,7 @@ en_NZ:
   supplier: "Supplier"
   product_name: "Product Name"
   product_description: "Product Description"
+  shipping_categories: "Shipping Categories"
   units: "Unit Size"
   coordinator: "Coordinator"
   distributor: "Distributor"
@@ -2054,6 +2056,7 @@ en_NZ:
   remove_tax: "Remove tax"
   first_name_begins_with: "First name begins with"
   last_name_begins_with: "Last name begins with"
+  new_order: "New Order"
   enterprise_tos_link: "Enterprise Terms of Service link"
   enterprise_tos_message: "We want to work with people that share our aims and values. As such we ask new enterprises to agree to our "
   enterprise_tos_link_text: "Terms of Service."

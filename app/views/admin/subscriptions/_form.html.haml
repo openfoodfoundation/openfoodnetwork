@@ -4,7 +4,7 @@
       %a.button{ href: main_app.admin_subscriptions_path, ng: { show: "['details','review'].indexOf(view) >= 0" } }= t(:cancel)
       %input{ type: "button", value: t(:back), ng: { click: 'back()', show: '!!backCallbacks[view]'} }
       %input.red{ type: "button", value: t(:next), ng: { click: 'next()', show: '!!nextCallbacks[view]' } }
-      %input.red{ type: "submit", value: t('admin.subscriptions.create'), ng: { show: "view == 'review'" } }
+      %input.red{ type: "submit", value: t('.create'), ng: { show: "view == 'review'" } }
     %div{ ng: { show: 'subscription.id' } }
       %a.button{ href: main_app.admin_subscriptions_path }= t(:close)
       %input.red{ type: "button", value: t(:review), ng: { click: "setView('review')", show: "view != 'review'" } }

@@ -59,7 +59,7 @@ module Spree
       if @user
         authorize! params[:action].to_sym, @user
       else
-        redirect_to spree.login_path
+        redirect_to main_app.login_path
       end
     end
 

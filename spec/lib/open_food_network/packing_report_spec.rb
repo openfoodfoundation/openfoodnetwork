@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'open_food_network/packing_report'
 
-include AuthenticationWorkflow
+include AuthenticationHelper
 
 module OpenFoodNetwork
   describe PackingReport do

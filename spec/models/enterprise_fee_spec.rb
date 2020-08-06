@@ -60,17 +60,17 @@ describe EnterpriseFee do
   describe "scopes" do
     describe "finding per-item enterprise fees" do
       it "does not return fees with FlatRate, FlexiRate and PriceSack calculators" do
-        create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new)
-        create(:enterprise_fee, calculator: Spree::Calculator::FlexiRate.new)
-        create(:enterprise_fee, calculator: Spree::Calculator::PriceSack.new)
+        create(:enterprise_fee, calculator: Calculator::FlatRate.new)
+        create(:enterprise_fee, calculator: Calculator::FlexiRate.new)
+        create(:enterprise_fee, calculator: Calculator::PriceSack.new)
 
         expect(EnterpriseFee.per_item).to be_empty
       end
 
       it "returns fees with any other calculator" do
-        ef1 = create(:enterprise_fee, calculator: Spree::Calculator::DefaultTax.new)
+        ef1 = create(:enterprise_fee, calculator: Calculator::DefaultTax.new)
         ef2 = create(:enterprise_fee, calculator: Calculator::FlatPercentPerItem.new)
-        ef3 = create(:enterprise_fee, calculator: Spree::Calculator::PerItem.new)
+        ef3 = create(:enterprise_fee, calculator: Calculator::PerItem.new)
 
         expect(EnterpriseFee.per_item).to match_array [ef1, ef2, ef3]
       end
@@ -78,17 +78,17 @@ describe EnterpriseFee do
 
     describe "finding per-order enterprise fees" do
       it "returns fees with FlatRate, FlexiRate and PriceSack calculators" do
-        ef1 = create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new)
-        ef2 = create(:enterprise_fee, calculator: Spree::Calculator::FlexiRate.new)
-        ef3 = create(:enterprise_fee, calculator: Spree::Calculator::PriceSack.new)
+        ef1 = create(:enterprise_fee, calculator: Calculator::FlatRate.new)
+        ef2 = create(:enterprise_fee, calculator: Calculator::FlexiRate.new)
+        ef3 = create(:enterprise_fee, calculator: Calculator::PriceSack.new)
 
         expect(EnterpriseFee.per_order).to match_array [ef1, ef2, ef3]
       end
 
       it "does not return fees with any other calculator" do
-        ef1 = create(:enterprise_fee, calculator: Spree::Calculator::DefaultTax.new)
+        ef1 = create(:enterprise_fee, calculator: Calculator::DefaultTax.new)
         ef2 = create(:enterprise_fee, calculator: Calculator::FlatPercentPerItem.new)
-        ef3 = create(:enterprise_fee, calculator: Spree::Calculator::PerItem.new)
+        ef3 = create(:enterprise_fee, calculator: Calculator::PerItem.new)
 
         expect(EnterpriseFee.per_order).to be_empty
       end

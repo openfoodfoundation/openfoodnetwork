@@ -5,7 +5,7 @@ feature '
     I want to see a list of producers
     So that I can shop at hubs distributing their products
 ', js: true do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
   include UIComponentHelper
 

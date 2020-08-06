@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module Api
   describe ProductImagesController, type: :controller do
-    include AuthenticationWorkflow
+    include AuthenticationHelper
     render_views
 
     describe "uploading an image" do

@@ -109,7 +109,7 @@ describe Spree.user_class do
       setup_email
 
       expect do
-        create(:user, confirmed_at: nil).confirm!
+        create(:user, confirmed_at: nil).confirm
       end.to enqueue_job ConfirmSignupJob
     end
   end

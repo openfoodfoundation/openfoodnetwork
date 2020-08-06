@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "Credit Cards", js: true do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   describe "as a logged in user" do
     let(:user) { create(:user) }
     let!(:customer) { create(:customer, user: user) }
@@ -9,7 +9,7 @@ feature "Credit Cards", js: true do
     let!(:non_default_card) { create(:credit_card, user_id: user.id, gateway_customer_profile_id: 'cus_FDTG') }
 
     before do
-      quick_login_as user
+      login_as user
 
       allow(Stripe).to receive(:api_key) { "sk_test_xxxx" }
       allow(Stripe).to receive(:publishable_key) { "some_token" }

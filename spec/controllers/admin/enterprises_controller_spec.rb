@@ -2,8 +2,6 @@ require 'spec_helper'
 require 'open_food_network/order_cycle_permissions'
 
 describe Admin::EnterprisesController, type: :controller do
-  include AuthenticationWorkflow
-
   let(:user) { create(:user) }
   let(:admin_user) { create(:admin_user) }
   let(:distributor_manager) { create(:user, enterprise_limit: 10, enterprises: [distributor]) }
@@ -138,7 +136,7 @@ describe Admin::EnterprisesController, type: :controller do
         let!(:property) { create(:property, name: "A nice name") }
 
         before do
-          login_as_enterprise_user [producer]
+          controller_login_as_enterprise_user [producer]
         end
 
         context "when a submitted property does not already exist" do
@@ -179,7 +177,7 @@ describe Admin::EnterprisesController, type: :controller do
         let!(:tag_rule) { create(:tag_rule, enterprise: enterprise) }
 
         before do
-          login_as_enterprise_user [enterprise]
+          controller_login_as_enterprise_user [enterprise]
         end
 
         context "discount order rules" do
@@ -192,7 +190,7 @@ describe Admin::EnterprisesController, type: :controller do
                             id: tag_rule,
                             type: "TagRule::DiscountOrder",
                             preferred_customer_tags: "some,new,tags",
-                            calculator_type: "Spree::Calculator::FlatPercentItemTotal",
+                            calculator_type: "Calculator::FlatPercentItemTotal",
                             calculator_attributes: { id: tag_rule.calculator.id, preferred_flat_percent: "15" }
                           }
                         }
@@ -211,7 +209,7 @@ describe Admin::EnterprisesController, type: :controller do
                             id: "",
                             type: "TagRule::DiscountOrder",
                             preferred_customer_tags: "tags,are,awesome",
-                            calculator_type: "Spree::Calculator::FlatPercentItemTotal",
+                            calculator_type: "Calculator::FlatPercentItemTotal",
                             calculator_attributes: { id: "", preferred_flat_percent: "24" }
                           }
                         }
@@ -294,7 +292,7 @@ describe Admin::EnterprisesController, type: :controller do
 
       it "does not allow access" do
         spree_post :register, id: enterprise.id, sells: 'none'
-        expect(response).to redirect_to spree.unauthorized_path
+        expect(response).to redirect_to unauthorized_path
       end
     end
 
@@ -306,7 +304,7 @@ describe Admin::EnterprisesController, type: :controller do
 
       it "does not allow access" do
         spree_post :register, id: enterprise.id, sells: 'none'
-        expect(response).to redirect_to spree.unauthorized_path
+        expect(response).to redirect_to unauthorized_path
       end
     end
 
@@ -366,18 +364,8 @@ describe Admin::EnterprisesController, type: :controller do
   end
 
   describe "bulk updating enterprises" do
-    let!(:original_owner) do
-      user = create_enterprise_user
-      user.enterprise_limit = 2
-      user.save!
-      user
-    end
-    let!(:new_owner) do
-      user = create_enterprise_user
-      user.enterprise_limit = 2
-      user.save!
-      user
-    end
+    let!(:original_owner) { create(:user) }
+    let!(:new_owner) { create(:user) }
     let!(:profile_enterprise1) { create(:enterprise, sells: 'none', owner: original_owner ) }
     let!(:profile_enterprise2) { create(:enterprise, sells: 'none', owner: original_owner ) }
 
@@ -441,7 +429,7 @@ describe Admin::EnterprisesController, type: :controller do
   end
 
   describe "for_order_cycle" do
-    let!(:user) { create_enterprise_user }
+    let!(:user) { create(:user) }
     let!(:enterprise) { create(:enterprise, sells: 'any', owner: user) }
     let(:permission_mock) { double(:permission) }
 
@@ -487,7 +475,7 @@ describe Admin::EnterprisesController, type: :controller do
   end
 
   describe "visible" do
-    let!(:user) { create(:user, enterprise_limit: 10) }
+    let!(:user) { create(:user) }
     let!(:visible_enterprise) { create(:enterprise, sells: 'any', owner: user) }
     let!(:not_visible_enterprise) { create(:enterprise, sells: 'any') }
 
@@ -508,10 +496,10 @@ describe Admin::EnterprisesController, type: :controller do
   describe "index" do
     context "as super admin" do
       let(:super_admin) { create(:admin_user) }
-      let!(:user) { create_enterprise_user(enterprise_limit: 10) }
+      let!(:user) { create(:user) }
       let!(:enterprise1) { create(:enterprise, sells: 'any', owner: user) }
       let!(:enterprise2) { create(:enterprise, sells: 'own', owner: user) }
-      let!(:enterprise3) { create(:enterprise, sells: 'any', owner: create_enterprise_user ) }
+      let!(:enterprise3) { create(:enterprise, sells: 'any', owner: create(:user) ) }
 
       before do
         allow(controller).to receive_messages spree_current_user: super_admin
@@ -533,10 +521,10 @@ describe Admin::EnterprisesController, type: :controller do
     end
 
     context "as an enterprise user" do
-      let!(:user) { create_enterprise_user(enterprise_limit: 10) }
+      let!(:user) { create(:user) }
       let!(:enterprise1) { create(:enterprise, sells: 'any', owner: user) }
       let!(:enterprise2) { create(:enterprise, sells: 'own', owner: user) }
-      let!(:enterprise3) { create(:enterprise, sells: 'any', owner: create_enterprise_user ) }
+      let!(:enterprise3) { create(:enterprise, sells: 'any', owner: create(:user) ) }
 
       before do
         allow(controller).to receive_messages spree_current_user: user

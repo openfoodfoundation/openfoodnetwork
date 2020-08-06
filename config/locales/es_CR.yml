@@ -13,6 +13,7 @@ es_CR:
         email: Correo electrónico del cliente
       spree/payment:
         amount: Cantidad
+        state: Provincia
       spree/product:
         primary_taxon: "Categoría del producto"
         supplier: "Proveedor"
@@ -181,8 +182,7 @@ es_CR:
         title: Otros fallos (%{count} pedidos)
         explainer: El procesamiento automático de estas órdenes falló por un motivo desconocido. Esto no debería ocurrir, contáctanos si estás viendo esto.
   home: "OFN"
-  title: Open Food Network
-  welcome_to: 'Bienvenido a '
+  title: "Open Food Network"
   site_meta_description: "Nosotros empezamos desde abajo. Con granjeros y productores listos para contar sus historias con orgullo y autenticidad. Con distribuidores listos para conectar gente con productos de forma justa y honesta. Con compradores que creen que mejores decisiones de compras semanales pueden..."
   search_by_name: Buscar por nombre o cantón...
   producers_join: Los productores costarricenses son bienvenidos a unirse ahora a Open Food Network (LaFeriaCR).
@@ -1693,8 +1693,7 @@ es_CR:
   password: Contraseña
   remember_me: Recordarme
   are_you_sure: "¿Está seguro?"
-  orders_open: Pedidos abiertos
-  closing: "Cerrando "
+  orders_open: "Pedidos abiertos"
   going_back_to_home_page: "Le estamos llevando de vuelta a la página de inicio"
   creating: Creando
   updating: Actualizando
@@ -1938,6 +1937,7 @@ es_CR:
   supplier: "Proveedora"
   product_name: "nombre del producto"
   product_description: "Descripción del producto"
+  shipping_categories: "Categorías de envío"
   units: "Unidad de medida"
   coordinator: "Coordinadora"
   distributor: "Distribuidor"
@@ -2034,6 +2034,7 @@ es_CR:
   remove_tax: "Eliminar impuesto"
   first_name_begins_with: "El nombre comienza con"
   last_name_begins_with: "El apellido comienza con"
+  new_order: "Nuevo pedido"
   enterprise_tos_link: "Enlace a los Términos del Servicio de la Organización"
   enterprise_tos_message: "Queremos trabajar con personas que compartan nuestros objetivos y valores. Por ello, pedimos a las nuevas organizaciones que acepten"
   enterprise_tos_link_text: "Términos del Servicio."

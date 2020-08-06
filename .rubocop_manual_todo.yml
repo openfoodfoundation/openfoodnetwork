@@ -54,7 +54,6 @@ Layout/LineLength:
   - app/models/concerns/variant_stock.rb
   - app/models/content_configuration.rb
   - app/models/customer.rb
-  - app/models/enterprise_fee.rb
   - app/models/enterprise_group.rb
   - app/models/enterprise_role.rb
   - app/models/inventory_item.rb
@@ -109,7 +108,6 @@ Layout/LineLength:
   - lib/open_food_network/scope_variants_for_search.rb
   - lib/open_food_network/variant_and_line_item_naming.rb
   - lib/open_food_network/xero_invoices_report.rb
-  - lib/spree/core/controller_helpers/respond_with_decorator.rb
   - lib/spree/localized_number.rb
   - lib/spree/product_filters.rb
   - lib/tasks/data.rake
@@ -428,7 +426,9 @@ Metrics/AbcSize:
   - lib/open_food_network/variant_and_line_item_naming.rb
   - lib/open_food_network/xero_invoices_report.rb
   - lib/spree/api/controller_setup.rb
-  - lib/spree/core/controller_helpers/respond_with_decorator.rb
+  - lib/spree/core/controller_helpers/order.rb
+  - lib/spree/core/controller_helpers/respond_with.rb
+  - lib/spree/core/controller_helpers/ssl.rb
   - lib/spree/localized_number.rb
   - lib/stripe/account_connector.rb
   - lib/tasks/enterprises.rake
@@ -462,6 +462,8 @@ Metrics/BlockLength:
   ]
   Exclude:
   - app/models/spree/shipment.rb
+  - lib/spree/core/controller_helpers/common.rb
+  - lib/spree/core/controller_helpers/ssl.rb
   - lib/tasks/data.rake
   - spec/controllers/spree/admin/invoices_controller_spec.rb
   - spec/factories/enterprise_factory.rb
@@ -506,8 +508,9 @@ Metrics/CyclomaticComplexity:
   - lib/discourse/single_sign_on.rb
   - lib/open_food_network/bulk_coop_report.rb
   - lib/open_food_network/enterprise_issue_validator.rb
-  - lib/spree/core/controller_helpers/order_decorator.rb
-  - lib/spree/core/controller_helpers/respond_with_decorator.rb
+  - lib/spree/core/controller_helpers/order.rb
+  - lib/spree/core/controller_helpers/respond_with.rb
+  - lib/spree/core/controller_helpers/ssl.rb
   - lib/spree/localized_number.rb
   - spec/models/product_importer_spec.rb
 
@@ -531,8 +534,9 @@ Metrics/PerceivedComplexity:
   - lib/discourse/single_sign_on.rb
   - lib/open_food_network/bulk_coop_report.rb
   - lib/open_food_network/enterprise_issue_validator.rb
-  - lib/spree/core/controller_helpers/order_decorator.rb
-  - lib/spree/core/controller_helpers/respond_with_decorator.rb
+  - lib/spree/core/controller_helpers/order.rb
+  - lib/spree/core/controller_helpers/respond_with.rb
+  - lib/spree/core/controller_helpers/ssl.rb
   - lib/spree/localized_number.rb
   - spec/models/product_importer_spec.rb
 
@@ -627,7 +631,10 @@ Metrics/MethodLength:
   - lib/open_food_network/users_and_enterprises_report.rb
   - lib/open_food_network/xero_invoices_report.rb
   - lib/spree/api/controller_setup.rb
-  - lib/spree/core/controller_helpers/respond_with_decorator.rb
+  - lib/spree/core/controller_helpers/auth.rb
+  - lib/spree/core/controller_helpers/order.rb
+  - lib/spree/core/controller_helpers/respond_with.rb
+  - lib/spree/core/controller_helpers/ssl.rb
   - lib/spree/localized_number.rb
   - lib/stripe/profile_storer.rb
   - lib/tasks/data/truncate_data.rb
@@ -637,7 +644,7 @@ Metrics/MethodLength:
   - spec/features/consumer/shopping/checkout_paypal_spec.rb
   - spec/features/consumer/shopping/variant_overrides_spec.rb
   - spec/models/product_importer_spec.rb
-  - spec/support/request/authentication_workflow.rb
+  - spec/support/request/authentication_helper.rb
 
 Metrics/ClassLength:
   Max: 100

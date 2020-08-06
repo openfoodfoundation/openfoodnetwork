@@ -3,7 +3,7 @@
 require "spec_helper"
 
 feature "enterprise fee summaries", js: true do
-  include AuthenticationWorkflow
+  include AuthenticationHelper
   include WebHelper
 
   let!(:distributor) { create(:distributor_enterprise) }
