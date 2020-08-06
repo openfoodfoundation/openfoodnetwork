@@ -12,10 +12,4 @@ describe Spree::State do
     expect(Spree::State.find_all_by_name_or_abbr("California")).to include(state)
     expect(Spree::State.find_all_by_name_or_abbr("CA")).to include(state)
   end
-
-  it "can find all states group by country id" do
-    state = create(:state)
-    country_hash = { state.country_id.to_s => [[state.id, state.name]] }
-    expect(Spree::State.states_group_by_country_id).to eq country_hash
-  end
 end
