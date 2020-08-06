@@ -178,11 +178,6 @@ FactoryBot.define do
 end
 
 FactoryBot.modify do
-  factory :address do
-    state { Spree::State.find_by name: 'Victoria' }
-    country { Spree::Country.find_by name: 'Australia' || Spree::Country.first }
-  end
-
   factory :credit_card do
     cc_type 'visa'
   end
