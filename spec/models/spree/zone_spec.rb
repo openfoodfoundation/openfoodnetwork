@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Spree::Zone do
@@ -220,7 +222,6 @@ describe Spree::Zone do
       before { @source.members.create(zoneable: country1) }
 
       context "when all states contained in one of the countries we check against" do
-
         before do
           state1 = create(:state, country: country1)
           @target.members.create(zoneable: state1)
@@ -232,7 +233,6 @@ describe Spree::Zone do
       end
 
       context "when some states contained in one of the countries we check against" do
-
         before do
           state1 = create(:state, country: country1)
           @target.members.create(zoneable: state1)
@@ -245,7 +245,6 @@ describe Spree::Zone do
       end
 
       context "when none of the states contained in any of the countries we check against" do
-
         before do
           @target.members.create(zoneable: create(:state, country: country2))
           @target.members.create(zoneable: create(:state, country: country2))
@@ -256,7 +255,6 @@ describe Spree::Zone do
         end
       end
     end
-
   end
 
   context "#save" do
