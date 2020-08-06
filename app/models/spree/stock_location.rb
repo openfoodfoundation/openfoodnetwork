@@ -19,13 +19,6 @@ module Spree
       stock_items.create!(variant: variant, backorderable: backorderable_default)
     end
 
-    # Return either an existing stock item or create a new one. Useful in
-    # scenarios where the user might not know whether there is already a stock
-    # item for a given variant
-    def set_up_stock_item(variant)
-      stock_item(variant) || propagate_variant(variant)
-    end
-
     def stock_item(variant)
       stock_items.where(variant_id: variant).order(:id).first
     end

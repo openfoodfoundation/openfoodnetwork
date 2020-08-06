@@ -18,21 +18,6 @@ module Spree
       context "given a variant" do
         subject { StockLocation.create(name: "testing", propagate_all_variants: false) }
 
-        context "set up" do
-          it "creates stock item" do
-            subject.should_receive(:propagate_variant)
-            subject.set_up_stock_item(variant)
-          end
-
-          context "stock item exists" do
-            let!(:stock_item) { subject.propagate_variant(variant) }
-
-            it "returns existing stock item" do
-              subject.set_up_stock_item(variant).should == stock_item
-            end
-          end
-        end
-
         context "propagate variants" do
           let(:stock_item) { subject.propagate_variant(variant) }
 
