@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 module Spree
@@ -102,7 +104,7 @@ module Spree
     end
 
     it 'finds a count_on_hand for a variant' do
-       subject.count_on_hand(variant).should eq 10
+      subject.count_on_hand(variant).should eq 10
     end
 
     it 'finds determines if you a variant is backorderable' do
@@ -128,8 +130,8 @@ module Spree
     end
 
     it 'can be deactivated' do
-      create(:stock_location, :active => true)
-      create(:stock_location, :active => false)
+      create(:stock_location, active: true)
+      create(:stock_location, active: false)
       Spree::StockLocation.active.count.should eq 1
     end
 
