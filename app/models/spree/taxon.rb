@@ -41,9 +41,9 @@ module Spree
     # Creates permalink based on Stringex's .to_url method
     def set_permalink
       if parent.present?
-        self.permalink = [parent.permalink, (permalink.blank? ? name.to_url : permalink.split('/').last)].join('/')
-      else
-        self.permalink = name.to_url if permalink.blank?
+        self.permalink = [parent.permalink, permalink_end].join('/')
+      elsif permalink.blank?
+        self.permalink = name.to_url
       end
     end
 
@@ -99,6 +99,14 @@ module Spree
         ts[t.enterprise_id.to_i] ||= Set.new
         ts[t.enterprise_id.to_i] << t.id
       end
+    end
+
+    private
+
+    def permalink_end
+      return name.to_url if permalink.blank?
+
+      permalink.split('/').last
     end
   end
 end

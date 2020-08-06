@@ -11,10 +11,11 @@ module Spree
     private
 
     def dont_destroy_if_primary_taxon
-      if product.primary_taxon == taxon
-        errors.add :base, I18n.t(:spree_classification_primary_taxon_error, taxon: taxon.name, product: product.name)
-        false
-      end
+      return unless product.primary_taxon == taxon
+
+      errors.add :base, I18n.t(:spree_classification_primary_taxon_error, taxon: taxon.name,
+                                                                          product: product.name)
+      false
     end
   end
 end
