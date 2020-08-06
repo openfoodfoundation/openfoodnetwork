@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # The preference_cache_key is used to determine if the preference
 # can be set. The default behavior is to return nil if there is no
 # id value. On ActiveRecords, new objects will have their preferences
@@ -9,23 +11,17 @@
 # and copy all the definitions allowing the subclass to add
 # additional defintions without affecting the base
 module Spree::Preferences::Preferable
-
   def self.included(base)
     base.class_eval do
       extend Spree::Preferences::PreferableClassMethods
 
       if respond_to?(:after_create)
-        after_create do |obj|
-          obj.save_pending_preferences
-        end
+        after_create(&:save_pending_preferences)
       end
 
       if respond_to?(:after_destroy)
-        after_destroy do |obj|
-          obj.clear_preferences
-        end
+        after_destroy(&:clear_preferences)
       end
-
     end
   end
 
@@ -57,7 +53,7 @@ module Spree::Preferences::Preferable
   end
 
   def has_preference!(name)
-    raise NoMethodError.new "#{name} preference not defined" unless has_preference? name
+    raise NoMethodError, "#{name} preference not defined" unless has_preference? name
   end
 
   def has_preference?(name)
@@ -78,18 +74,20 @@ module Spree::Preferences::Preferable
 
   def preference_cache_key(name)
     return unless id
+
     [ENV["RAILS_CACHE_ID"], self.class.name, name, id].join('::').underscore
   end
 
   def save_pending_preferences
     return unless @pending_preferences
+
     @pending_preferences.each do |name, value|
       set_preference(name, value)
     end
   end
 
   def clear_preferences
-    preferences.keys.each {|pref| preference_store.delete preference_cache_key(pref)}
+    preferences.keys.each { |pref| preference_store.delete preference_cache_key(pref) }
   end
 
   private
@@ -101,6 +99,7 @@ module Spree::Preferences::Preferable
 
   def get_pending_preference(name)
     return unless @pending_preferences
+
     @pending_preferences[name]
   end
 
@@ -111,7 +110,7 @@ module Spree::Preferences::Preferable
     when :password
       value.to_s
     when :decimal
-      BigDecimal.new(value.to_s).round(2, BigDecimal::ROUND_HALF_UP)
+      BigDecimal(value.to_s).round(2, BigDecimal::ROUND_HALF_UP)
     when :integer
       value.to_i
     when :boolean
@@ -119,10 +118,10 @@ module Spree::Preferences::Preferable
          value.nil? ||
          value == 0 ||
          value =~ /^(f|false|0)$/i ||
-         (value.respond_to? :empty? and value.empty?)
-         false
+         (value.respond_to?(:empty?) && value.empty?)
+        false
       else
-         true
+        true
       end
     else
       value
@@ -132,6 +131,4 @@ module Spree::Preferences::Preferable
   def preference_store
     Spree::Preferences::Store.instance
   end
-
 end
-

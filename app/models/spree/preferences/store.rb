@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Use singleton class Spree::Preferences::Store.instance to access
 #
 # StoreInstance has a persistence flag that is on by default,
@@ -7,7 +9,6 @@
 require 'singleton'
 
 module Spree::Preferences
-
   class StoreInstance
     attr_accessor :persistence
 
@@ -23,10 +24,10 @@ module Spree::Preferences
 
     def exist?(key)
       @cache.exist?(key) ||
-      should_persist? && Spree::Preference.where(:key => key).exists?
+        should_persist? && Spree::Preference.where(key: key).exists?
     end
 
-    def get(key,fallback=nil)
+    def get(key, fallback = nil)
       # return the retrieved value, if it's in the cache
       # use unless nil? incase the value is actually boolean false
       #
@@ -39,7 +40,7 @@ module Spree::Preferences
         # has been cleared from the cache
 
         # does it exist in the database?
-        if Spree::Preference.table_exists? && preference = Spree::Preference.find_by_key(key)
+        if Spree::Preference.table_exists? && preference = Spree::Preference.find_by(key: key)
           # it does exist, so let's put it back into the cache
           @cache.write(preference.key, preference.value)
 
@@ -55,7 +56,7 @@ module Spree::Preferences
         @cache.write(key, fallback)
       end
 
-      return fallback
+      fallback
     end
 
     def delete(key)
@@ -72,7 +73,7 @@ module Spree::Preferences
     def persist(cache_key, value, type)
       return unless should_persist?
 
-      preference = Spree::Preference.where(:key => cache_key).first_or_initialize
+      preference = Spree::Preference.where(key: cache_key).first_or_initialize
       preference.value = value
       preference.value_type = type
       preference.save
@@ -81,18 +82,16 @@ module Spree::Preferences
     def destroy(cache_key)
       return unless should_persist?
 
-      preference = Spree::Preference.find_by_key(cache_key)
-      preference.destroy if preference
+      preference = Spree::Preference.find_by(key: cache_key)
+      preference&.destroy
     end
 
     def should_persist?
       @persistence && Spree::Preference.connected? && Spree::Preference.table_exists?
     end
-
   end
 
   class Store < StoreInstance
     include Singleton
   end
-
 end

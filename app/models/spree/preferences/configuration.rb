@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This takes the preferrable methods and adds some
 # syntatic sugar to access the preferences
 #
@@ -33,7 +35,7 @@ module Spree::Preferences
     end
 
     def reset
-      preferences.each do |name, value|
+      preferences.each do |name, _value|
         set_preference name, preference_default(name)
       end
     end
@@ -66,6 +68,5 @@ module Spree::Preferences
         super
       end
     end
-
   end
 end

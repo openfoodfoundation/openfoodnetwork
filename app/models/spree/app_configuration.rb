@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This is the primary location for defining spree preferences
 #
 # This file allows us to add global configuration variables, which
@@ -23,7 +25,6 @@ require "spree/core/search/base"
 
 module Spree
   class AppConfiguration < Preferences::Configuration
-
     # Alphabetized to more easily lookup particular preferences
     preference :address_requires_state, :boolean, default: true # should state/state_name be required
     preference :admin_interface_logo, :string, default: 'logo/spree_50.png'
@@ -59,14 +60,14 @@ module Spree
     preference :orders_per_page, :integer, default: 15
     preference :prices_inc_tax, :boolean, default: false
     preference :products_per_page, :integer, default: 12
-    preference :redirect_https_to_http, :boolean, :default => false
+    preference :redirect_https_to_http, :boolean, default: false
     preference :require_master_price, :boolean, default: true
     preference :shipment_inc_vat, :boolean, default: false
     preference :shipping_instructions, :boolean, default: false # Request instructions/info for shipping
     preference :show_only_complete_orders_by_default, :boolean, default: true
-    preference :show_variant_full_price, :boolean, default: false #Displays variant full price or difference with product price. Default false to be compatible with older behavior
+    preference :show_variant_full_price, :boolean, default: false # Displays variant full price or difference with product price. Default false to be compatible with older behavior
     preference :show_products_without_price, :boolean, default: false
-    preference :show_raw_product_description, :boolean, :default => false
+    preference :show_raw_product_description, :boolean, default: false
     preference :site_name, :string, default: 'Spree Demo Site'
     preference :site_url, :string, default: 'demo.spreecommerce.com'
     preference :tax_using_ship_address, :boolean, default: true
@@ -87,18 +88,18 @@ module Spree
     preference :s3_host_alias, :string
 
     # Default mail headers settings
-    preference :enable_mail_delivery, :boolean, :default => false
-    preference :mails_from, :string, :default => 'spree@example.com'
-    preference :mail_bcc, :string, :default => 'spree@example.com'
-    preference :intercept_email, :string, :default => nil
+    preference :enable_mail_delivery, :boolean, default: false
+    preference :mails_from, :string, default: 'spree@example.com'
+    preference :mail_bcc, :string, default: 'spree@example.com'
+    preference :intercept_email, :string, default: nil
 
     # Default smtp settings
-    preference :override_actionmailer_config, :boolean, :default => true
-    preference :mail_host, :string, :default => 'localhost'
-    preference :mail_domain, :string, :default => 'localhost'
-    preference :mail_port, :integer, :default => 25
-    preference :secure_connection_type, :string, :default => Core::MailSettings::SECURE_CONNECTION_TYPES[0]
-    preference :mail_auth_type, :string, :default => Core::MailSettings::MAIL_AUTH[0]
+    preference :override_actionmailer_config, :boolean, default: true
+    preference :mail_host, :string, default: 'localhost'
+    preference :mail_domain, :string, default: 'localhost'
+    preference :mail_port, :integer, default: 25
+    preference :secure_connection_type, :string, default: Core::MailSettings::SECURE_CONNECTION_TYPES[0]
+    preference :mail_auth_type, :string, default: Core::MailSettings::MAIL_AUTH[0]
     preference :smtp_username, :string
     preference :smtp_password, :string
 
@@ -145,9 +146,7 @@ module Spree
       @searcher_class ||= Spree::Core::Search::Base
     end
 
-    def searcher_class=(sclass)
-      @searcher_class = sclass
-    end
+    attr_writer :searcher_class
 
     attr_writer :package_factory, :order_updater_decorator
 

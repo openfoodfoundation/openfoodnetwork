@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Spree::Preference do
-
   it "should require a key" do
     @preference = Spree::Preference.new
     @preference.key = :test
@@ -18,7 +19,7 @@ describe Spree::Preference do
       p.key = key
       p.save
 
-      Spree::Preference.find_by_key(key)
+      Spree::Preference.find_by(key: key)
     end
 
     it ":boolean" do
@@ -92,7 +93,5 @@ describe Spree::Preference do
       pref.value.should eq value
       pref.value_type.should == value_type.to_s
     end
-
   end
-
 end

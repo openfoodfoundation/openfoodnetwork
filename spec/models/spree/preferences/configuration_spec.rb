@@ -1,10 +1,11 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Spree::Preferences::Configuration do
-
   before :all do
     class AppConfig < Spree::Preferences::Configuration
-      preference :color, :string, :default => :blue
+      preference :color, :string, default: :blue
     end
     @config = AppConfig.new
   end
@@ -23,8 +24,4 @@ describe Spree::Preferences::Configuration do
     @config.set :color, 'green'
     @config.get(:color).should eq 'green'
   end
-
 end
-
-
-
