@@ -29,29 +29,29 @@ module Spree
 
       def get_preference(name)
         has_preference! name
-        send self.class.preference_getter_method(name)
+        __send__ self.class.preference_getter_method(name)
       end
       alias :preferred :get_preference
       alias :prefers? :get_preference
 
       def set_preference(name, value)
         has_preference! name
-        send self.class.preference_setter_method(name), value
+        __send__ self.class.preference_setter_method(name), value
       end
 
       def preference_type(name)
         has_preference! name
-        send self.class.preference_type_getter_method(name)
+        __send__ self.class.preference_type_getter_method(name)
       end
 
       def preference_default(name)
         has_preference! name
-        send self.class.preference_default_getter_method(name)
+        __send__ self.class.preference_default_getter_method(name)
       end
 
       def preference_description(name)
         has_preference! name
-        send self.class.preference_description_getter_method(name)
+        __send__ self.class.preference_description_getter_method(name)
       end
 
       def has_preference!(name)
@@ -65,13 +65,9 @@ module Spree
       def preferences
         prefs = {}
         methods.grep(/^prefers_.*\?$/).each do |pref_method|
-          prefs[pref_method.to_s.gsub(/prefers_|\?/, '').to_sym] = send(pref_method)
+          prefs[pref_method.to_s.gsub(/prefers_|\?/, '').to_sym] = __send__(pref_method)
         end
         prefs
-      end
-
-      def prefers?(name)
-        get_preference(name)
       end
 
       def preference_cache_key(name)
@@ -118,7 +114,7 @@ module Spree
         when :boolean
           if value.is_a?(FalseClass) ||
              value.nil? ||
-             value == 0 ||
+             value.zero? ||
              value =~ /^(f|false|0)$/i ||
              (value.respond_to?(:empty?) && value.empty?)
             false

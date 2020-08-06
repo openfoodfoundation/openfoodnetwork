@@ -52,9 +52,9 @@ module Spree
           set_preference name, value
         end
 
-        if args.size == 2
-          set_preference args[0], args[1]
-        end
+        return unless args.size == 2
+
+        set_preference args[0], args[1]
       end
 
       def method_missing(method, *args)
