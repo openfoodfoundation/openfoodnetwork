@@ -9,13 +9,13 @@ describe Spree::Preferences::Store do
 
   it "sets and gets a key" do
     @store.set :test, 1, :integer
-    @store.exist?(:test).should be_true
-    @store.get(:test).should eq 1
+    expect(@store.exist?(:test)).to be_truthy
+    expect(@store.get(:test)).to eq 1
   end
 
   it "can set and get false values when cache return nil" do
     @store.set :test, false, :boolean
-    @store.get(:test).should be_false
+    expect(@store.get(:test)).to be_falsy
   end
 
   it "will return db value when cache is emtpy and cache the db value" do
@@ -25,24 +25,24 @@ describe Spree::Preferences::Store do
     preference.save
 
     Rails.cache.clear
-    @store.get(:test).should eq '123'
-    Rails.cache.read(:test).should eq '123'
+    expect(@store.get(:test)).to eq '123'
+    expect(Rails.cache.read(:test)).to eq '123'
   end
 
   it "should return and cache fallback value when supplied" do
     Rails.cache.clear
-    @store.get(:test, false).should be_false
-    Rails.cache.read(:test).should be_false
+    expect(@store.get(:test, false)).to be_falsy
+    expect(Rails.cache.read(:test)).to be_falsy
   end
 
   it "should return and cache fallback value when persistence is disabled (i.e. on bootstrap)" do
     Rails.cache.clear
     @store.stub(should_persist?: false)
-    @store.get(:test, true).should be_true
-    Rails.cache.read(:test).should be_true
+    expect(@store.get(:test, true)).to be_truthy
+    expect(Rails.cache.read(:test)).to be_truthy
   end
 
   it "should return nil when key can't be found and fallback value is not supplied" do
-    @store.get(:random_key).should be_nil
+    expect(@store.get(:random_key)).to be_nil
   end
 end

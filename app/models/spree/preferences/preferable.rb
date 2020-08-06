@@ -114,7 +114,7 @@ module Spree
         when :boolean
           if value.is_a?(FalseClass) ||
              value.nil? ||
-             value.zero? ||
+             value == 0 ||
              value =~ /^(f|false|0)$/i ||
              (value.respond_to?(:empty?) && value.empty?)
             false

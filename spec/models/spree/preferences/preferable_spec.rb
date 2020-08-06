@@ -34,13 +34,13 @@ describe Spree::Preferences::Preferable do
 
   describe "preference definitions" do
     it "parent should not see child definitions" do
-      expect(@a.has_preference?(:color)).to be_true
-      expect(@a.has_preference?(:flavor)).not_to be_true
+      expect(@a.has_preference?(:color)).to be_truthy
+      expect(@a.has_preference?(:flavor)).not_to be_truthy
     end
 
     it "child should have parent and own definitions" do
-      expect(@b.has_preference?(:color)).to be_true
-      expect(@b.has_preference?(:flavor)).to be_true
+      expect(@b.has_preference?(:color)).to be_truthy
+      expect(@b.has_preference?(:flavor)).to be_truthy
     end
 
     it "instances have defaults" do
@@ -50,8 +50,8 @@ describe Spree::Preferences::Preferable do
     end
 
     it "can be asked if it has a preference definition" do
-      expect(@a.has_preference?(:color)).to be_true
-      expect(@a.has_preference?(:bad)).to be_false
+      expect(@a.has_preference?(:color)).to be_truthy
+      expect(@a.has_preference?(:bad)).to be_falsy
     end
 
     it "can be asked and raises" do
@@ -124,12 +124,12 @@ describe Spree::Preferences::Preferable do
 
       it "retrieves a preference from the database before falling back to default" do
         preference = double(value: "chatreuse", key: 'a/color/123')
-        expect(Spree::Preference).to receive(:find_by_key).and_return(preference)
+        expect(Spree::Preference).to receive(:find_by).and_return(preference)
         expect(@a.preferred_color).to eq 'chatreuse'
       end
 
       it "defaults if no database key exists" do
-        expect(Spree::Preference).to receive(:find_by_key).and_return(nil)
+        expect(Spree::Preference).to receive(:find_by).and_return(nil)
         expect(@a.preferred_color).to eq 'green'
       end
     end
@@ -174,28 +174,28 @@ describe Spree::Preferences::Preferable do
 
       it "with strings" do
         @a.set_preference(:is_boolean, '0')
-        expect(@a.preferences[:is_boolean]).to be_false
+        expect(@a.preferences[:is_boolean]).to be_falsy
         @a.set_preference(:is_boolean, 'f')
-        expect(@a.preferences[:is_boolean]).to be_false
+        expect(@a.preferences[:is_boolean]).to be_falsy
         @a.set_preference(:is_boolean, 't')
-        expect(@a.preferences[:is_boolean]).to be_true
+        expect(@a.preferences[:is_boolean]).to be_truthy
       end
 
       it "with integers" do
         @a.set_preference(:is_boolean, 0)
-        expect(@a.preferences[:is_boolean]).to be_false
+        expect(@a.preferences[:is_boolean]).to be_falsy
         @a.set_preference(:is_boolean, 1)
-        expect(@a.preferences[:is_boolean]).to be_true
+        expect(@a.preferences[:is_boolean]).to be_truthy
       end
 
       it "with an empty string" do
         @a.set_preference(:is_boolean, '')
-        expect(@a.preferences[:is_boolean]).to be_false
+        expect(@a.preferences[:is_boolean]).to be_falsy
       end
 
       it "with an empty hash" do
         @a.set_preference(:is_boolean, [])
-        expect(@a.preferences[:is_boolean]).to be_false
+        expect(@a.preferences[:is_boolean]).to be_falsy
       end
     end
 
@@ -212,7 +212,7 @@ describe Spree::Preferences::Preferable do
       end
 
       it "with hash" do
-        expect(@a.preferences[:product_attributes]).to eq {}
+        expect(@a.preferences[:product_attributes]).to eq({})
         @a.set_preference(:product_attributes, { id: 1, name: 2 })
         attributes_hash = { id: 1, name: 2 }
         expect(@a.preferences[:product_attributes]).to eq attributes_hash
@@ -318,9 +318,9 @@ describe Spree::Preferences::Preferable do
 
   it "can add and remove preferences" do
     A.preference :test_temp, :boolean, default: true
-    expect(@a.preferred_test_temp).to be_true
+    expect(@a.preferred_test_temp).to be_truthy
     A.remove_preference :test_temp
-    expect(@a.has_preference?(:test_temp)).to be_false
-    expect(@a.respond_to?(:preferred_test_temp)).to be_false
+    expect(@a.has_preference?(:test_temp)).to be_falsy
+    expect(@a.respond_to?(:preferred_test_temp)).to be_falsy
   end
 end

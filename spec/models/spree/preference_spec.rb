@@ -8,7 +8,7 @@ describe Spree::Preference do
     @preference.key = :test
     @preference.value_type = :boolean
     @preference.value = true
-    @preference.should be_valid
+    expect(@preference).to be_valid
   end
 
   describe "type coversion for values" do
@@ -27,8 +27,8 @@ describe Spree::Preference do
       value = true
       key = "boolean_key"
       pref = round_trip_preference(key, value, value_type)
-      pref.value.should eq value
-      pref.value_type.should == value_type.to_s
+      expect(pref.value).to eq value
+      expect(pref.value_type).to eq value_type.to_s
     end
 
     it "false :boolean" do
@@ -36,8 +36,8 @@ describe Spree::Preference do
       value = false
       key = "boolean_key"
       pref = round_trip_preference(key, value, value_type)
-      pref.value.should eq value
-      pref.value_type.should == value_type.to_s
+      expect(pref.value).to eq value
+      expect(pref.value_type).to eq value_type.to_s
     end
 
     it ":integer" do
@@ -45,8 +45,8 @@ describe Spree::Preference do
       value = 10
       key = "integer_key"
       pref = round_trip_preference(key, value, value_type)
-      pref.value.should eq value
-      pref.value_type.should == value_type.to_s
+      expect(pref.value).to eq value
+      expect(pref.value_type).to eq value_type.to_s
     end
 
     it ":decimal" do
@@ -54,8 +54,8 @@ describe Spree::Preference do
       value = 1.5
       key = "decimal_key"
       pref = round_trip_preference(key, value, value_type)
-      pref.value.should eq value
-      pref.value_type.should == value_type.to_s
+      expect(pref.value).to eq value
+      expect(pref.value_type).to eq value_type.to_s
     end
 
     it ":string" do
@@ -63,8 +63,8 @@ describe Spree::Preference do
       value = "This is a string"
       key = "string_key"
       pref = round_trip_preference(key, value, value_type)
-      pref.value.should eq value
-      pref.value_type.should == value_type.to_s
+      expect(pref.value).to eq value
+      expect(pref.value_type).to eq value_type.to_s
     end
 
     it ":text" do
@@ -72,8 +72,8 @@ describe Spree::Preference do
       value = "This is a string stored as text"
       key = "text_key"
       pref = round_trip_preference(key, value, value_type)
-      pref.value.should eq value
-      pref.value_type.should == value_type.to_s
+      expect(pref.value).to eq value
+      expect(pref.value_type).to eq value_type.to_s
     end
 
     it ":password" do
@@ -81,8 +81,8 @@ describe Spree::Preference do
       value = "This is a password"
       key = "password_key"
       pref = round_trip_preference(key, value, value_type)
-      pref.value.should eq value
-      pref.value_type.should == value_type.to_s
+      expect(pref.value).to eq value
+      expect(pref.value_type).to eq value_type.to_s
     end
 
     it ":any" do
@@ -90,8 +90,8 @@ describe Spree::Preference do
       value = [1, 2]
       key = "any_key"
       pref = round_trip_preference(key, value, value_type)
-      pref.value.should eq value
-      pref.value_type.should == value_type.to_s
+      expect(pref.value).to eq value
+      expect(pref.value_type).to eq value_type.to_s
     end
   end
 end

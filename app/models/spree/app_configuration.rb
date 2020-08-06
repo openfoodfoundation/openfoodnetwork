@@ -163,15 +163,5 @@ module Spree
     end
 
     attr_writer :searcher_class
-
-    attr_writer :package_factory, :order_updater_decorator
-
-    def package_factory
-      @package_factory ||= Spree::Stock::Package
-    end
-
-    def order_updater_decorator
-      @order_updater_decorator ||= NullDecorator
-    end
   end
 end
