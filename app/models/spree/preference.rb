@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Spree::Preference < ActiveRecord::Base
   serialize :value
 
@@ -16,13 +18,13 @@ class Spree::Preference < ActiveRecord::Base
       when :password
         self[:value].to_s
       when :decimal
-        BigDecimal.new(self[:value].to_s).round(2, BigDecimal::ROUND_HALF_UP)
+        BigDecimal(self[:value].to_s).round(2, BigDecimal::ROUND_HALF_UP)
       when :integer
         self[:value].to_i
       when :boolean
         (self[:value].to_s =~ /^[t|1]/i) != nil
       else
-        self[:value].is_a?(String) ? YAML.load(self[:value]) : self[:value]
+        self[:value].is_a?(String) ? YAML.safe_load(self[:value]) : self[:value]
       end
     else
       self[:value]

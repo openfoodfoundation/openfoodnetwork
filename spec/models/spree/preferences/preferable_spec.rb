@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Spree::Preferences::Preferable do
-
   before :all do
     class A
       include Spree::Preferences::Preferable
@@ -11,7 +12,7 @@ describe Spree::Preferences::Preferable do
         @id = rand(999)
       end
 
-      preference :color, :string, :default => 'green', :description => "My Favorite Color"
+      preference :color, :string, default: 'green', description: "My Favorite Color"
     end
 
     class B < A
@@ -21,9 +22,9 @@ describe Spree::Preferences::Preferable do
 
   before :each do
     @a = A.new
-    @a.stub(:persisted? => true)
+    @a.stub(persisted?: true)
     @b = B.new
-    @b.stub(:persisted? => true)
+    @b.stub(persisted?: true)
 
     # ensure we're persisting as that is the default
     #
@@ -79,7 +80,6 @@ describe Spree::Preferences::Preferable do
         @a.get_preference :flavor
       }.to raise_error(NoMethodError, "flavor preference not defined")
     end
-
   end
 
   describe "preference access" do
@@ -114,7 +114,7 @@ describe Spree::Preferences::Preferable do
     it "builds a hash of preferences" do
       @b.preferred_flavor = :strawberry
       @b.preferences[:flavor].should eq 'strawberry'
-      @b.preferences[:color].should eq 'green' #default from A
+      @b.preferences[:color].should eq 'green' # default from A
     end
 
     context "database fallback" do
@@ -123,7 +123,7 @@ describe Spree::Preferences::Preferable do
       end
 
       it "retrieves a preference from the database before falling back to default" do
-        preference = double(:value => "chatreuse", :key => 'a/color/123')
+        preference = double(value: "chatreuse", key: 'a/color/123')
         Spree::Preference.should_receive(:find_by_key).and_return(preference)
         @a.preferred_color.should == 'chatreuse'
       end
@@ -133,7 +133,6 @@ describe Spree::Preferences::Preferable do
         @a.preferred_color.should == 'green'
       end
     end
-
 
     context "converts integer preferences to integer values" do
       before do
@@ -147,7 +146,6 @@ describe Spree::Preferences::Preferable do
         @a.set_preference(:is_integer, '')
         @a.preferences[:is_integer].should == 0
       end
-
     end
 
     context "converts decimal preferences to BigDecimal values" do
@@ -171,7 +169,7 @@ describe Spree::Preferences::Preferable do
 
     context "converts boolean preferences to boolean values" do
       before do
-        A.preference :is_boolean, :boolean, :default => true
+        A.preference :is_boolean, :boolean, default: true
       end
 
       it "with strings" do
@@ -203,8 +201,8 @@ describe Spree::Preferences::Preferable do
 
     context "converts any preferences to any values" do
       before do
-        A.preference :product_ids, :any, :default => []
-        A.preference :product_attributes, :any, :default => {}
+        A.preference :product_ids, :any, default: []
+        A.preference :product_attributes, :any, default: {}
       end
 
       it "with array" do
@@ -215,11 +213,10 @@ describe Spree::Preferences::Preferable do
 
       it "with hash" do
         @a.preferences[:product_attributes].should == {}
-        @a.set_preference(:product_attributes, {:id => 1, :name => 2})
-        @a.preferences[:product_attributes].should == {:id => 1, :name => 2}
+        @a.set_preference(:product_attributes, { id: 1, name: 2 })
+        @a.preferences[:product_attributes].should == { id: 1, name: 2 }
       end
     end
-
   end
 
   describe "persisted preferables" do
@@ -241,8 +238,8 @@ describe Spree::Preferences::Preferable do
       CreatePrefTest.migrate(:up)
 
       class PrefTest < ActiveRecord::Base
-        preference :pref_test_pref, :string, :default => 'abc'
-        preference :pref_test_any, :any, :default => []
+        preference :pref_test_pref, :string, default: 'abc'
+        preference :pref_test_any, :any, default: []
       end
     end
 
@@ -306,7 +303,7 @@ describe Spree::Preferences::Preferable do
       @pt.preferred_pref_test_pref = 'lmn'
       @pt.save!
       @pt.destroy
-      @pt1 = PrefTest.new(:col => 'aaaa')
+      @pt1 = PrefTest.new(col: 'aaaa')
       @pt1.id = @pt.id
       @pt1.save!
       @pt1.get_preference(:pref_test_pref).should_not == 'lmn'
@@ -315,17 +312,14 @@ describe Spree::Preferences::Preferable do
   end
 
   it "builds cache keys" do
-    @a.preference_cache_key(:color).should match /a\/color\/\d+/
+    @a.preference_cache_key(:color).should match %r{a/color/\d+}
   end
 
   it "can add and remove preferences" do
-    A.preference :test_temp, :boolean, :default => true
+    A.preference :test_temp, :boolean, default: true
     @a.preferred_test_temp.should be_true
     A.remove_preference :test_temp
     @a.has_preference?(:test_temp).should be_false
     @a.respond_to?(:preferred_test_temp).should be_false
   end
-
 end
-
-
