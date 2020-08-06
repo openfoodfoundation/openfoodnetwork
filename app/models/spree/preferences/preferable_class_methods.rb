@@ -46,13 +46,27 @@ module Spree
       end
 
       def remove_preference(name)
-        remove_method preference_getter_method(name) if method_defined? preference_getter_method(name)
-        remove_method preference_setter_method(name) if method_defined? preference_setter_method(name)
-        remove_method prefers_getter_method(name) if method_defined? prefers_getter_method(name)
-        remove_method prefers_setter_method(name) if method_defined? prefers_setter_method(name)
-        remove_method preference_default_getter_method(name) if method_defined? preference_default_getter_method(name)
-        remove_method preference_type_getter_method(name) if method_defined? preference_type_getter_method(name)
-        remove_method preference_description_getter_method(name) if method_defined? preference_description_getter_method(name)
+        if method_defined? preference_getter_method(name)
+          remove_method preference_getter_method(name)
+        end
+        if method_defined? preference_setter_method(name)
+          remove_method preference_setter_method(name)
+        end
+        if method_defined? prefers_getter_method(name)
+          remove_method prefers_getter_method(name)
+        end
+        if method_defined? prefers_setter_method(name)
+          remove_method prefers_setter_method(name)
+        end
+        if method_defined? preference_default_getter_method(name)
+          remove_method preference_default_getter_method(name)
+        end
+        if method_defined? preference_type_getter_method(name)
+          remove_method preference_type_getter_method(name)
+        end
+        if method_defined? preference_description_getter_method(name)
+          remove_method preference_description_getter_method(name)
+        end
       end
 
       def preference_getter_method(name)
