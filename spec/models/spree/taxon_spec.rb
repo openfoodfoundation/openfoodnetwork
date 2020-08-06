@@ -65,8 +65,8 @@ module Spree
 
       context "with parent taxon" do
         before do
-          taxon.stub parent_id: 123
-          taxon.stub parent: build(:taxon, permalink: "brands")
+          allow(taxon).to receive_messages parent_id: 123
+          allow(taxon).to receive_messages parent: build(:taxon, permalink: "brands")
         end
 
         it "should set permalink correctly when taxon has parent" do
