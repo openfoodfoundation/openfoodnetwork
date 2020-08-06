@@ -22,50 +22,52 @@
 # a.preferred_color
 #
 #
-module Spree::Preferences
-  class Configuration
-    include Spree::Preferences::Preferable
+module Spree
+  module Preferences
+    class Configuration
+      include Spree::Preferences::Preferable
 
-    def configure
-      yield(self) if block_given?
-    end
-
-    def preference_cache_key(name)
-      [ENV['RAILS_CACHE_ID'], self.class.name, name].flatten.join('::').underscore
-    end
-
-    def reset
-      preferences.each do |name, _value|
-        set_preference name, preference_default(name)
-      end
-    end
-
-    alias :[] :get_preference
-    alias :[]= :set_preference
-
-    alias :get :get_preference
-
-    def set(*args)
-      options = args.extract_options!
-      options.each do |name, value|
-        set_preference name, value
+      def configure
+        yield(self) if block_given?
       end
 
-      if args.size == 2
-        set_preference args[0], args[1]
+      def preference_cache_key(name)
+        [ENV['RAILS_CACHE_ID'], self.class.name, name].flatten.join('::').underscore
       end
-    end
 
-    def method_missing(method, *args)
-      name = method.to_s.gsub('=', '')
-      if has_preference? name
-        if method.to_s =~ /=$/
-          set_preference(name, args.first)
-        else
-          get_preference name
+      def reset
+        preferences.each do |name, _value|
+          set_preference name, preference_default(name)
         end
-      else
-        super
+      end
+
+      alias :[] :get_preference
+      alias :[]= :set_preference
+
+      alias :get :get_preference
+
+      def set(*args)
+        options = args.extract_options!
+        options.each do |name, value|
+          set_preference name, value
+        end
+
+        if args.size == 2
+          set_preference args[0], args[1]
+        end
+      end
+
+      def method_missing(method, *args)
+        name = method.to_s.gsub('=', '')
+        if has_preference? name
+          if method.to_s =~ /=$/
+            set_preference(name, args.first)
+          else
+            get_preference name
+          end
+        else
+          super
+        end
       end
     end
   end
