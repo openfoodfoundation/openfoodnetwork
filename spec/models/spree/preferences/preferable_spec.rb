@@ -22,9 +22,9 @@ describe Spree::Preferences::Preferable do
 
   before :each do
     @a = A.new
-    @a.stub(persisted?: true)
+    allow(@a).to receive_messages(persisted?: true)
     @b = B.new
-    @b.stub(persisted?: true)
+    allow(@b).to receive_messages(persisted?: true)
 
     # ensure we're persisting as that is the default
     #

@@ -37,7 +37,7 @@ describe Spree::Preferences::Store do
 
   it "should return and cache fallback value when persistence is disabled (i.e. on bootstrap)" do
     Rails.cache.clear
-    @store.stub(should_persist?: false)
+    allow(@store).to receive_messages(should_persist?: false)
     expect(@store.get(:test, true)).to be_truthy
     expect(Rails.cache.read(:test)).to be_truthy
   end
