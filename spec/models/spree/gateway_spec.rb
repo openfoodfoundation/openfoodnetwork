@@ -17,7 +17,7 @@ describe Spree::Gateway do
 
   it "passes through all arguments on a method_missing call" do
     gateway = TestGateway.new
-    gateway.provider.should_receive(:imaginary_method).with('foo')
+    expect(gateway.provider).to receive(:imaginary_method).with('foo')
     gateway.imaginary_method('foo')
   end
 end

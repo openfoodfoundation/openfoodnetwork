@@ -17,7 +17,7 @@ module Spree
       end
 
       def stub_rails_env(environment)
-        Rails.stub(env: ActiveSupport::StringInquirer.new(environment))
+        allow(Rails).to receive_messages(env: ActiveSupport::StringInquirer.new(environment))
       end
 
       let(:credit_card) { Spree::CreditCard.new }
@@ -39,7 +39,7 @@ module Spree
                                                     :capture => @success_response,
                                                     :void => @success_response,
                                                     :credit => @success_response
-        @payment.stub payment_method: @payment_gateway
+        allow(@payment).to receive_messages payment_method: @payment_gateway
       end
 
       context "#can_capture?" do
