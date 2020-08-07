@@ -75,7 +75,6 @@ module Spree
     delegate :images_attributes=, :display_as=, to: :master
 
     after_create :set_master_variant_defaults
-    after_create :add_properties_and_option_types_from_prototype
     after_create :build_variants_from_option_values_hash, if: :option_values_hash
     after_save :save_master
 
@@ -238,12 +237,6 @@ module Spree
       end
     end
 
-    # Adding properties and option types on creation based on a chosen prototype
-    attr_reader :prototype_id
-    def prototype_id=(value)
-      @prototype_id = value.to_i
-    end
-
     # Ensures option_types and product_option_types exist for keys in option_values_hash
     def ensure_option_types_exist_for_values_hash
       return if option_values_hash.nil?
@@ -265,7 +258,6 @@ module Spree
 
     # Called by Spree::Product::duplicate before saving.
     def duplicate_extra(_parent)
-      # Spree sets the SKU to "COPY OF #{parent sku}".
       master.sku = ''
     end
 
@@ -294,17 +286,6 @@ module Spree
           arel_table[field].matches("%#{value}%")
         }.inject(:or)
       }.inject(:or)
-    end
-
-    # Suitable for displaying only variants that has at least one option value.
-    # There may be scenarios where an option type is removed and along with it
-    # all option values. At that point all variants associated with only those
-    # values should not be displayed to frontend users. Otherwise it breaks the
-    # idea of having variants
-    def variants_and_option_values(current_currency = nil)
-      variants.includes(:option_values).active(current_currency).select do |variant|
-        variant.option_values.any?
-      end
     end
 
     def empty_option_values?
@@ -422,15 +403,6 @@ module Spree
         )
       end
       save
-    end
-
-    def add_properties_and_option_types_from_prototype
-      return unless prototype_id && prototype = Spree::Prototype.find_by(id: prototype_id)
-
-      prototype.properties.each do |property|
-        product_properties.create(property: property)
-      end
-      self.option_types = prototype.option_types
     end
 
     # ensures the master variant is flagged as such
