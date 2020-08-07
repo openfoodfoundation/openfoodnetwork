@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spree/concerns/payment_method_distributors'
 
 module Spree
@@ -23,7 +25,7 @@ module Spree
 
     def provider
       gateway_options = options
-      gateway_options.delete :login if gateway_options.has_key?(:login) and gateway_options[:login].nil?
+      gateway_options.delete :login if gateway_options.key?(:login) && gateway_options[:login].nil?
       if gateway_options[:server]
         ActiveMerchant::Billing::Base.gateway_mode = gateway_options[:server].to_sym
       end
@@ -31,7 +33,7 @@ module Spree
     end
 
     def options
-      self.preferences.inject({}){ |memo, (key, value)| memo[key.to_sym] = value; memo }
+      preferences.each_with_object({}){ |(key, value), memo| memo[key.to_sym] = value; }
     end
 
     def method_missing(method, *args)
@@ -53,6 +55,7 @@ module Spree
     def supports?(source)
       return true unless provider_class.respond_to? :supports?
       return false unless source.brand
+
       provider_class.supports?(source.brand)
     end
   end

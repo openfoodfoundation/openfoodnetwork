@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class PaymentMethod::Check < PaymentMethod
     def actions
@@ -14,11 +16,11 @@ module Spree
       payment.state != 'void'
     end
 
-    def capture(*args)
+    def capture(*_args)
       ActiveMerchant::Billing::Response.new(true, "", {}, {})
     end
 
-    def void(*args)
+    def void(*_args)
       ActiveMerchant::Billing::Response.new(true, "", {}, {})
     end
 

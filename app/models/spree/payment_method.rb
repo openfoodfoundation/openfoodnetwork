@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spree/concerns/payment_method_distributors'
 
 module Spree
@@ -8,7 +10,7 @@ module Spree
     acts_as_taggable
     acts_as_paranoid
 
-    DISPLAY = [:both, :front_end, :back_end]
+    DISPLAY = [:both, :front_end, :back_end].freeze
     default_scope -> { where(deleted_at: nil) }
 
     has_many :credit_cards, class_name: "Spree::CreditCard" # from Spree v.2.3.0 d470b31798f37
@@ -70,20 +72,20 @@ module Spree
     def self.available(display_on = 'both')
       all.select do |p|
         p.active &&
-        (p.display_on == display_on.to_s || p.display_on.blank?) &&
-        (p.environment == Rails.env || p.environment.blank?)
+          (p.display_on == display_on.to_s || p.display_on.blank?) &&
+          (p.environment == Rails.env || p.environment.blank?)
       end
     end
 
     def self.active?
-      where(type: self.to_s, environment: Rails.env, active: true).count > 0
+      where(type: to_s, environment: Rails.env, active: true).count > 0
     end
 
     def method_type
       type.demodulize.downcase
     end
 
-    def self.find_with_destroyed *args
+    def self.find_with_destroyed(*args)
       unscoped { find(*args) }
     end
 
@@ -99,7 +101,7 @@ module Spree
       Spree::Config[:auto_capture]
     end
 
-    def supports?(source)
+    def supports?(_source)
       true
     end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class CreditCard < ActiveRecord::Base
     # Should be able to remove once we reach Spree v2.2.0
@@ -32,28 +34,32 @@ module Spree
     end
 
     def number=(num)
-      @number = num.gsub(/[^0-9]/, '') rescue nil
+      @number = begin
+                  num.gsub(/[^0-9]/, '')
+                rescue StandardError
+                  nil
+                end
     end
 
     # cc_type is set by jquery.payment, which helpfully provides different
     # types from Active Merchant. Converting them is necessary.
     def cc_type=(type)
       real_type = case type
-      when 'mastercard', 'maestro'
-        'master'
-      when 'amex'
-        'american_express'
-      when 'dinersclub'
-        'diners_club'
-      else
-        type
+                  when 'mastercard', 'maestro'
+                    'master'
+                  when 'amex'
+                    'american_express'
+                  when 'dinersclub'
+                    'diners_club'
+                  else
+                    type
       end
       self[:cc_type] = real_type
     end
 
     def set_last_digits
-      number.to_s.gsub!(/\s/,'')
-      verification_value.to_s.gsub!(/\s/,'')
+      number.to_s.gsub!(/\s/, '')
+      verification_value.to_s.gsub!(/\s/, '')
       self.last_digits ||= number.to_s.length <= 4 ? number : number.to_s.slice(-4..-1)
     end
 
@@ -93,6 +99,7 @@ module Spree
     def can_credit?(payment)
       return false unless payment.completed?
       return false unless payment.order.payment_state == 'credit_owed'
+
       payment.credit_allowed > 0
     end
 
@@ -103,12 +110,12 @@ module Spree
 
     def to_active_merchant
       ActiveMerchant::Billing::CreditCard.new(
-        :number => number,
-        :month => month,
-        :year => year,
-        :verification_value => verification_value,
-        :first_name => first_name,
-        :last_name => last_name
+        number: number,
+        month: month,
+        year: year,
+        verification_value: verification_value,
+        first_name: first_name,
+        last_name: last_name
       )
     end
 

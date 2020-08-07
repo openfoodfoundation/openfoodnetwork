@@ -8,11 +8,11 @@ module Spree
 
         [nil, 'both', 'front_end', 'back_end'].each do |display_on|
           Spree::Gateway::Test.create(
-            :name => 'Display Both',
-            :display_on => display_on,
-            :active => true,
-            :environment => 'test',
-            :description => 'foofah'
+            name: 'Display Both',
+            display_on: display_on,
+            active: true,
+            environment: 'test',
+            description: 'foofah'
           )
         end
         Spree::PaymentMethod.all.size.should == 4
@@ -34,7 +34,7 @@ module Spree
         Spree::PaymentMethod.available(:back_end).size.should == 2
       end
     end
-    
+
     it "orders payment methods by name" do
       pm1 = create(:payment_method, name: 'ZZ')
       pm2 = create(:payment_method, name: 'AA')

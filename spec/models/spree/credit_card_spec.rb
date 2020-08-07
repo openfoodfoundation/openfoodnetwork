@@ -3,7 +3,7 @@ require 'spec_helper'
 module Spree
   describe CreditCard do
     describe "original specs from Spree" do
-      let(:valid_credit_card_attributes) { { number: '4111111111111111', verification_value: '123', month: 12, year: Time.now.year + 1 } }
+      let(:valid_credit_card_attributes) { { number: '4111111111111111', verification_value: '123', month: 12, year: Time.zone.now.year + 1 } }
 
       def self.payment_states
         Spree::Payment.state_machine.states.keys
@@ -16,34 +16,32 @@ module Spree
       let(:credit_card) { Spree::CreditCard.new }
 
       before(:each) do
-
         @order = create(:order)
-        @payment = Spree::Payment.create(:amount => 100, :order => @order)
+        @payment = Spree::Payment.create(amount: 100, order: @order)
 
         @success_response = double('gateway_response', success?: true, authorization: '123', avs_result: { 'code' => 'avs-code' })
         @fail_response = double('gateway_response', success?: false)
 
         @payment_gateway = mock_model(Spree::PaymentMethod,
-          payment_profiles_supported?: true,
-          authorize: @success_response,
-          purchase: @success_response,
-          capture: @success_response,
-          void: @success_response,
-          credit: @success_response,
-          environment: 'test'
-        )
+                                      payment_profiles_supported?: true,
+                                      authorize: @success_response,
+                                      purchase: @success_response,
+                                      capture: @success_response,
+                                      void: @success_response,
+                                      credit: @success_response,
+                                      environment: 'test')
 
         @payment.stub payment_method: @payment_gateway
       end
 
       context "#can_capture?" do
         it "should be true if payment is pending" do
-          payment = mock_model(Spree::Payment, pending?: true, created_at: Time.now)
+          payment = mock_model(Spree::Payment, pending?: true, created_at: Time.zone.now)
           credit_card.can_capture?(payment).should be_true
         end
 
         it "should be true if payment is checkout" do
-          payment = mock_model(Spree::Payment, pending?: false, checkout?: true, created_at: Time.now)
+          payment = mock_model(Spree::Payment, pending?: false, checkout?: true, created_at: Time.zone.now)
           credit_card.can_capture?(payment).should be_true
         end
       end
@@ -94,24 +92,24 @@ module Spree
 
         it "does not run expiration in the past validation if month is not set" do
           credit_card.month = nil
-          credit_card.year = Time.now.year
+          credit_card.year = Time.zone.now.year
           credit_card.should_not be_valid
           credit_card.errors[:base].should be_blank
         end
 
         it "does not run expiration in the past validation if year is not set" do
-          credit_card.month = Time.now.month
+          credit_card.month = Time.zone.now.month
           credit_card.year = nil
           credit_card.should_not be_valid
           credit_card.errors[:base].should be_blank
         end
-        
+
         it "does not run expiration in the past validation if year and month are empty" do
           credit_card.year = ""
           credit_card.month = ""
           credit_card.should_not be_valid
           credit_card.errors[:card].should be_blank
-        end 
+        end
 
         it "should only validate on create" do
           credit_card.attributes = valid_credit_card_attributes
@@ -147,7 +145,7 @@ module Spree
         end
 
         it "should not raise an exception on non-string input" do
-          credit_card.number = Hash.new
+          credit_card.number = ({})
           credit_card.number.should be_nil
         end
       end
@@ -176,12 +174,12 @@ module Spree
           expect { credit_card.payments.to_a }.not_to raise_error
         end
       end
-      
+
       context "#to_active_merchant" do
         before do
           credit_card.number = "4111111111111111"
-          credit_card.year = Time.now.year
-          credit_card.month = Time.now.month
+          credit_card.year = Time.zone.now.year
+          credit_card.month = Time.zone.now.month
           credit_card.first_name = "Bob"
           credit_card.last_name = "Boblaw"
           credit_card.verification_value = 123
@@ -190,8 +188,8 @@ module Spree
         it "converts to an ActiveMerchant::Billing::CreditCard object" do
           am_card = credit_card.to_active_merchant
           am_card.number.should == "4111111111111111"
-          am_card.year.should == Time.now.year
-          am_card.month.should == Time.now.month
+          am_card.year.should == Time.zone.now.year
+          am_card.month.should == Time.zone.now.month
           am_card.first_name.should == "Bob"
           am_card.last_name = "Boblaw"
           am_card.verification_value.should == 123
