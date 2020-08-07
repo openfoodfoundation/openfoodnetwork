@@ -1,11 +1,16 @@
+require 'spree/concerns/payment_method_distributors'
+
 module Spree
   class Gateway < PaymentMethod
+    include Spree::PaymentMethodDistributors
+
     delegate_belongs_to :provider, :authorize, :purchase, :capture, :void, :credit
 
     validates :name, :type, presence: true
 
-    preference :server, :string, default: 'test'
-    preference :test_mode, :boolean, default: true
+    # Default to live
+    preference :server, :string, default: 'live'
+    preference :test_mode, :boolean, default: false
 
     def payment_source_class
       CreditCard

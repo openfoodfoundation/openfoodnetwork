@@ -1,15 +1,25 @@
 module Spree
   class CreditCard < ActiveRecord::Base
+    # Should be able to remove once we reach Spree v2.2.0
+    # https://github.com/spree/spree/commit/411010f3975c919ab298cb63962ee492455b415c
+    belongs_to :payment_method
+    belongs_to :user
+
     has_many :payments, as: :source
 
     before_save :set_last_digits
 
     attr_accessor :number, :verification_value
+    # For holding customer preference in memory
+    attr_writer :save_requested_by_customer
 
     validates :month, :year, numericality: { only_integer: true }
     validates :number, presence: true, unless: :has_payment_profile?, on: :create
     validates :verification_value, presence: true, unless: :has_payment_profile?, on: :create
     validate :expiry_not_in_the_past
+
+    after_create :ensure_single_default_card
+    after_save :ensure_single_default_card, if: :default_card_needs_updating?
 
     scope :with_payment_profile, -> { where('gateway_customer_profile_id IS NOT NULL') }
 
@@ -86,8 +96,9 @@ module Spree
       payment.credit_allowed > 0
     end
 
+    # Allows us to use a gateway_payment_profile_id to store Stripe Tokens
     def has_payment_profile?
-      gateway_customer_profile_id.present?
+      gateway_customer_profile_id.present? || gateway_payment_profile_id.present?
     end
 
     def to_active_merchant
@@ -101,6 +112,10 @@ module Spree
       )
     end
 
+    def save_requested_by_customer?
+      !!@save_requested_by_customer
+    end
+
     private
 
     def expiry_not_in_the_past
@@ -110,6 +125,26 @@ module Spree
           errors.add(:base, :card_expired)
         end
       end
+    end
+
+    def reusable?
+      gateway_customer_profile_id.present?
+    end
+
+    def default_missing?
+      !user.credit_cards.exists?(is_default: true)
+    end
+
+    def default_card_needs_updating?
+      is_default_changed? || gateway_customer_profile_id_changed?
+    end
+
+    def ensure_single_default_card
+      return unless user
+      return unless is_default? || (reusable? && default_missing?)
+
+      user.credit_cards.update_all(['is_default=(id=?)', id])
+      self.is_default = true
     end
   end
 end
