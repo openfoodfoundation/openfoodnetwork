@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class Price < ActiveRecord::Base
     acts_as_paranoid without_default_scope: true
@@ -48,7 +50,5 @@ module Spree
 
       price.to_d
     end
-
   end
 end
-

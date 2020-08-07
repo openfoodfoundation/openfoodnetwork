@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class ProductProperty < ActiveRecord::Base
     belongs_to :product, class_name: "Spree::Product", touch: true
@@ -6,15 +8,15 @@ module Spree
     validates :property, presence: true
     validates :value, length: { maximum: 255 }
 
-    default_scope -> { order("#{self.table_name}.position") }
+    default_scope -> { order("#{table_name}.position") }
 
     # virtual attributes for use with AJAX completion stuff
     def property_name
-      property.name if property
+      property&.name
     end
 
     def property_name=(name)
-      unless name.blank?
+      if name.present?
         unless property = Property.find_by(name: name)
           property = Property.create(name: name, presentation: name)
         end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class ProductOptionType < ActiveRecord::Base
     after_destroy :remove_option_values

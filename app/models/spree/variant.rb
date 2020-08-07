@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'open_food_network/enterprise_fee_calculator'
 require 'variant_units/variant_and_line_item_naming'
 require 'concerns/variant_stock'
@@ -28,12 +30,12 @@ module Spree
     accepts_nested_attributes_for :images
 
     has_one :default_price,
-      -> { where currency: Spree::Config[:currency] },
-      class_name: 'Spree::Price',
-      dependent: :destroy
+            -> { where currency: Spree::Config[:currency] },
+            class_name: 'Spree::Price',
+            dependent: :destroy
     has_many :prices,
-      class_name: 'Spree::Price',
-      dependent: :destroy
+             class_name: 'Spree::Price',
+             dependent: :destroy
     delegate_belongs_to :default_price, :display_price, :display_amount, :price, :price=, :currency if Spree::Price.table_exists?
 
     has_many :exchange_variants
@@ -45,7 +47,7 @@ module Spree
 
     validate :check_price
     validates :price, numericality: { greater_than_or_equal_to: 0 }, presence: true, if: proc { Spree::Config[:require_master_price] }
-    validates :cost_price, numericality: { greater_than_or_equal_to: 0, allow_nil: true } if self.table_exists? && self.column_names.include?('cost_price')
+    validates :cost_price, numericality: { greater_than_or_equal_to: 0, allow_nil: true } if table_exists? && column_names.include?('cost_price')
 
     validates :unit_value, presence: true, if: ->(variant) {
       %w(weight volume).include?(variant.product.andand.variant_unit)
@@ -180,24 +182,25 @@ module Spree
 
     def set_option_value(opt_name, opt_value)
       # no option values on master
-      return if self.is_master
+      return if is_master
 
       option_type = Spree::OptionType.where(name: opt_name).first_or_initialize do |o|
         o.presentation = opt_name
         o.save!
       end
 
-      current_value = self.option_values.detect { |o| o.option_type.name == opt_name }
+      current_value = option_values.detect { |o| o.option_type.name == opt_name }
 
-      unless current_value.nil?
-        return if current_value.name == opt_value
-        self.option_values.delete(current_value)
-      else
+      if current_value.nil?
         # then we have to check to make sure that the product has the option type
-        unless self.product.option_types.include? option_type
-          self.product.option_types << option_type
-          self.product.save
+        unless product.option_types.include? option_type
+          product.option_types << option_type
+          product.save
         end
+      else
+        return if current_value.name == opt_value
+
+        option_values.delete(current_value)
       end
 
       option_value = Spree::OptionValue.where(option_type_id: option_type.id, name: opt_value).first_or_initialize do |o|
@@ -205,20 +208,20 @@ module Spree
         o.save!
       end
 
-      self.option_values << option_value
-      self.save
+      option_values << option_value
+      save
     end
 
     def option_value(opt_name)
-      self.option_values.detect { |o| o.option_type.name == opt_name }.try(:presentation)
+      option_values.detect { |o| o.option_type.name == opt_name }.try(:presentation)
     end
 
     def has_default_price?
-      !self.default_price.nil?
+      !default_price.nil?
     end
 
     def price_in(currency)
-      prices.select{ |price| price.currency == currency }.first || Spree::Price.new(variant_id: self.id, currency: currency)
+      prices.select{ |price| price.currency == currency }.first || Spree::Price.new(variant_id: id, currency: currency)
     end
 
     def amount_in(currency)
@@ -235,7 +238,7 @@ module Spree
     def product
       Spree::Product.unscoped { super }
     end
-    
+
     # can_supply? is implemented in VariantStock
     def in_stock?(quantity = 1)
       can_supply?(quantity)
@@ -246,47 +249,49 @@ module Spree
     end
 
     private
-      # strips all non-price-like characters from the price, taking into account locale settings
-      def parse_price(price)
-        return price unless price.is_a?(String)
 
-        separator, delimiter = I18n.t([:'number.currency.format.separator', :'number.currency.format.delimiter'])
-        non_price_characters = /[^0-9\-#{separator}]/
-        price.gsub!(non_price_characters, '') # strip everything else first
-        price.gsub!(separator, '.') unless separator == '.' # then replace the locale-specific decimal separator with the standard separator if necessary
+    # strips all non-price-like characters from the price, taking into account locale settings
+    def parse_price(price)
+      return price unless price.is_a?(String)
 
-        price.to_d
+      separator, delimiter = I18n.t([:'number.currency.format.separator', :'number.currency.format.delimiter'])
+      non_price_characters = /[^0-9\-#{separator}]/
+      price.gsub!(non_price_characters, '') # strip everything else first
+      price.gsub!(separator, '.') unless separator == '.' # then replace the locale-specific decimal separator with the standard separator if necessary
+
+      price.to_d
+    end
+
+    # Ensures a new variant takes the product master price when price is not supplied
+    def check_price
+      if price.nil? && Spree::Config[:require_master_price]
+        raise 'No master variant found to infer price' unless product&.master
+        raise 'Must supply price for variant or master.price for product.' if self == product.master
+
+        self.price = product.master.price
       end
-
-      # Ensures a new variant takes the product master price when price is not supplied
-      def check_price
-        if price.nil? && Spree::Config[:require_master_price]
-          raise 'No master variant found to infer price' unless (product && product.master)
-          raise 'Must supply price for variant or master.price for product.' if self == product.master
-          self.price = product.master.price
-        end
-        if currency.nil?
-          self.currency = Spree::Config[:currency]
-        end
+      if currency.nil?
+        self.currency = Spree::Config[:currency]
       end
+    end
 
-      def save_default_price
-        default_price.save if default_price && (default_price.changed? || default_price.new_record?)
-      end
+    def save_default_price
+      default_price.save if default_price && (default_price.changed? || default_price.new_record?)
+    end
 
-      def set_cost_currency
-        self.cost_currency = Spree::Config[:currency] if cost_currency.nil? || cost_currency.empty?
-      end
+    def set_cost_currency
+      self.cost_currency = Spree::Config[:currency] if cost_currency.blank?
+    end
 
-      def create_stock_items
-        StockLocation.all.each do |stock_location|
-          stock_location.propagate_variant(self) if stock_location.propagate_all_variants?
-        end
+    def create_stock_items
+      StockLocation.all.find_each do |stock_location|
+        stock_location.propagate_variant(self) if stock_location.propagate_all_variants?
       end
+    end
 
-      def set_position
-        self.update_column(:position, product.variants.maximum(:position).to_i + 1)
-      end
+    def set_position
+      update_column(:position, product.variants.maximum(:position).to_i + 1)
+    end
 
     def update_weight_from_unit_value
       self.weight = weight_from_unit_value if product.variant_unit == 'weight' && unit_value.present?
