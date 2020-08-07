@@ -33,11 +33,6 @@ module Spree
       new(country: country)
     end
 
-    # Can modify an address if it's not been used in an order (but checkouts controller has finer control)
-    # def editable?
-    #   new_record? || (shipments.empty? && checkouts.empty?)
-    # end
-
     def full_name
       "#{firstname} #{lastname}".strip
     end
@@ -49,7 +44,8 @@ module Spree
     def same_as?(other)
       return false if other.nil?
 
-      attributes.except('id', 'updated_at', 'created_at') == other.attributes.except('id', 'updated_at', 'created_at')
+      attributes.except('id', 'updated_at', 'created_at') ==
+        other.attributes.except('id', 'updated_at', 'created_at')
     end
 
     alias same_as same_as?
@@ -62,17 +58,21 @@ module Spree
       self.class.new(attributes.except('id', 'updated_at', 'created_at'))
     end
 
-    def ==(other_address)
+    def ==(other)
       self_attrs = attributes
-      other_attrs = other_address.respond_to?(:attributes) ? other_address.attributes : {}
+      other_attrs = other.respond_to?(:attributes) ? other.attributes : {}
 
-      [self_attrs, other_attrs].each { |attrs| attrs.except!('id', 'created_at', 'updated_at', 'order_id') }
+      [self_attrs, other_attrs].each { |attrs|
+        attrs.except!('id', 'created_at', 'updated_at', 'order_id')
+      }
 
       self_attrs == other_attrs
     end
 
     def empty?
-      attributes.except('id', 'created_at', 'updated_at', 'order_id', 'country_id').all? { |_, v| v.nil? }
+      attributes.except('id', 'created_at', 'updated_at', 'order_id', 'country_id').all? { |_, v|
+        v.nil?
+      }
     end
 
     # Generates an ActiveMerchant compatible address hash
@@ -121,20 +121,19 @@ module Spree
       return if country.blank? || !Spree::Config[:address_requires_state]
       return unless country.states_required
 
-      # ensure associated state belongs to country
+      # Ensure associated state belongs to country
       if state.present?
         if state.country == country
           self.state_name = nil # not required as we have a valid state and country combo
+        elsif state_name.present?
+          self.state = nil
         else
-          if state_name.present?
-            self.state = nil
-          else
-            errors.add(:state, :invalid)
-          end
+          errors.add(:state, :invalid)
         end
       end
 
-      # ensure state_name belongs to country without states, or that it matches a predefined state name/abbr
+      # Ensure state_name belongs to country without states,
+      #   or that it matches a predefined state name/abbr
       if state_name.present?
         if country.states.present?
           states = country.states.find_all_by_name_or_abbr(state_name)

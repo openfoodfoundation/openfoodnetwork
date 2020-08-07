@@ -90,7 +90,7 @@ module Spree
     end
 
     def selected_shipping_rate
-      shipping_rates.where(selected: true).first
+      shipping_rates.find_by(selected: true)
     end
 
     def selected_shipping_rate_id
@@ -294,7 +294,7 @@ module Spree
       record = true
       while record
         random = "H#{Array.new(11) { rand(9) }.join}"
-        record = self.class.where(number: random).first
+        record = self.class.find_by(number: random)
       end
       self.number = random
     end

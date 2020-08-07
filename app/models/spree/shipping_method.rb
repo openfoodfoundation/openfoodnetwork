@@ -14,7 +14,9 @@ module Spree
     has_many :shipping_categories, through: :shipping_method_categories
     has_many :shipping_rates
     has_many :distributor_shipping_methods
-    has_many :distributors, through: :distributor_shipping_methods, class_name: 'Enterprise', foreign_key: 'distributor_id'
+    has_many :distributors, through: :distributor_shipping_methods,
+                            class_name: 'Enterprise',
+                            foreign_key: 'distributor_id'
 
     has_and_belongs_to_many :zones, join_table: 'spree_shipping_methods_zones',
                                     class_name: 'Spree::Zone',
@@ -31,7 +33,8 @@ module Spree
         where(nil)
       else
         joins(:distributors).
-          where('distributors_shipping_methods.distributor_id IN (?)', user.enterprises.select(&:id)).
+          where('distributors_shipping_methods.distributor_id IN (?)',
+                user.enterprises.select(&:id)).
           select('DISTINCT spree_shipping_methods.*')
       end
     }
@@ -46,7 +49,9 @@ module Spree
     }
 
     scope :by_name, -> { order('spree_shipping_methods.name ASC') }
-    scope :display_on_checkout, -> { where("spree_shipping_methods.display_on is null OR spree_shipping_methods.display_on = ''") }
+    scope :display_on_checkout, -> {
+      where("spree_shipping_methods.display_on is null OR spree_shipping_methods.display_on = ''")
+    }
 
     def adjustment_label
       I18n.t('shipping')
@@ -64,7 +69,7 @@ module Spree
     end
 
     def self.calculators
-      spree_calculators.send model_name_without_spree_namespace
+      spree_calculators.__send__ model_name_without_spree_namespace
     end
 
     # Some shipping methods are only meant to be set via backend
@@ -98,20 +103,20 @@ module Spree
       ]
     end
 
-    private
-
-    def at_least_one_shipping_category
-      if shipping_categories.empty?
-        errors[:base] << "You need to select at least one shipping category"
-      end
-    end
-
     def self.on_backend_query
       "#{table_name}.display_on != 'front_end' OR #{table_name}.display_on IS NULL"
     end
 
     def self.on_frontend_query
       "#{table_name}.display_on != 'back_end' OR #{table_name}.display_on IS NULL"
+    end
+
+    private
+
+    def at_least_one_shipping_category
+      return unless shipping_categories.empty?
+
+      errors[:base] << "You need to select at least one shipping category"
     end
 
     def touch_distributors
