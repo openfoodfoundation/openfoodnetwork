@@ -218,12 +218,12 @@ module Spree
     describe '#in_stock?' do
       context 'when stock_items are not backorderable' do
         before do
-          Spree::StockItem.any_instance.stub(backorderable: false)
+          allow_any_instance_of(Spree::StockItem).to receive_messages(backorderable: false)
         end
 
         context 'when stock_items in stock' do
           before do
-            Spree::StockItem.any_instance.stub(count_on_hand: 10)
+            allow_any_instance_of(Spree::StockItem).to receive_messages(count_on_hand: 10)
           end
 
           it 'returns true if stock_items in stock' do
@@ -233,8 +233,8 @@ module Spree
 
         context 'when stock_items out of stock' do
           before do
-            Spree::StockItem.any_instance.stub(backorderable: false)
-            Spree::StockItem.any_instance.stub(count_on_hand: 0)
+            allow_any_instance_of(Spree::StockItem).to receive_messages(backorderable: false)
+            allow_any_instance_of(Spree::StockItem).to receive_messages(count_on_hand: 0)
           end
 
           it 'return false if stock_items out of stock' do
@@ -258,12 +258,12 @@ module Spree
 
       context 'when stock_items are backorderable' do
         before do
-          Spree::StockItem.any_instance.stub(backorderable?: true)
+          allow_any_instance_of(Spree::StockItem).to receive_messages(backorderable?: true)
         end
 
         context 'when stock_items out of stock' do
           before do
-            Spree::StockItem.any_instance.stub(count_on_hand: 0)
+            allow_any_instance_of(Spree::StockItem).to receive_messages(count_on_hand: 0)
           end
 
           it 'returns true if stock_items in stock' do
