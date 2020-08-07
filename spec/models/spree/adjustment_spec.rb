@@ -18,31 +18,31 @@ module Spree
       context "when originator present" do
         let(:originator) { double("originator", update_adjustment: nil) }
         before do
-          originator.stub update_amount: true
-          adjustment.stub originator: originator, label: 'adjustment', amount: 0
+          allow(originator).to receive_messages update_amount: true
+          allow(adjustment).to receive_messages originator: originator, label: 'adjustment', amount: 0
         end
         it "should do nothing when closed" do
           adjustment.close
-          originator.should_not_receive(:update_adjustment)
+          expect(originator).not_to receive(:update_adjustment)
           adjustment.update!
         end
         it "should do nothing when finalized" do
           adjustment.finalize
-          originator.should_not_receive(:update_adjustment)
+          expect(originator).not_to receive(:update_adjustment)
           adjustment.update!
         end
         it "should set the eligibility" do
-          adjustment.should_receive(:set_eligibility)
+          expect(adjustment).to receive(:set_eligibility)
           adjustment.update!
         end
         it "should ask the originator to update_adjustment" do
-          originator.should_receive(:update_adjustment)
+          expect(originator).to receive(:update_adjustment)
           adjustment.update!
         end
       end
       it "should do nothing when originator is nil" do
-        adjustment.stub originator: nil
-        adjustment.should_not_receive(:amount=)
+        allow(adjustment).to receive_messages originator: nil
+        expect(adjustment).not_to receive(:amount=)
         adjustment.update!
       end
     end
@@ -67,7 +67,7 @@ module Spree
           expect(adjustment).to be_eligible
         end
         it "should be eligible if `promotion?` even if not `mandatory?`" do
-          adjustment.should_receive(:promotion?).and_return(true)
+          expect(adjustment).to receive(:promotion?).and_return(true)
           adjustment.mandatory = false
           adjustment.set_eligibility
           expect(adjustment).to be_eligible
@@ -88,13 +88,13 @@ module Spree
         end
         it "should be eligible if not mandatory and eligible for the originator" do
           adjustment.mandatory = false
-          adjustment.stub(eligible_for_originator?: true)
+          allow(adjustment).to receive_messages(eligible_for_originator?: true)
           adjustment.set_eligibility
           expect(adjustment).to be_eligible
         end
         it "should not be eligible if not mandatory not eligible for the originator" do
           adjustment.mandatory = false
-          adjustment.stub(eligible_for_originator?: false)
+          allow(adjustment).to receive_messages(eligible_for_originator?: false)
           adjustment.set_eligibility
           expect(adjustment).to_not be_eligible
         end
@@ -108,7 +108,7 @@ module Spree
           amount: 10,
           label: "Foo"
         )
-        order.should_receive(:update!)
+        expect(order).to receive(:update!)
         adjustment.save
       end
     end
@@ -157,11 +157,11 @@ module Spree
         let(:originator) { Spree::TaxRate.new }
         before { adjustment.originator = originator }
         context "and originator is eligible for order" do
-          before { originator.stub(eligible?: true) }
+          before { allow(originator).to receive_messages(eligible?: true) }
           specify { expect(adjustment).to be_eligible_for_originator }
         end
         context "and originator is not eligible for order" do
-          before { originator.stub(eligible?: false) }
+          before { allow(originator).to receive_messages(eligible?: false) }
           specify { expect(adjustment).to_not be_eligible_for_originator }
         end
       end
@@ -189,7 +189,7 @@ module Spree
       context "with currency set to JPY" do
         context "when adjustable is set to an order" do
           before do
-            order.stub(:currency) { 'JPY' }
+            allow(order).to receive(:currency) { 'JPY' }
             adjustment.adjustable = order
           end
 
