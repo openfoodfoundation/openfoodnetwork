@@ -16,12 +16,12 @@ module Spree
     end
 
     def property_name=(name)
-      if name.present?
-        unless property = Property.find_by(name: name)
-          property = Property.create(name: name, presentation: name)
-        end
-        self.property = property
+      return if name.blank?
+
+      unless property = Property.find_by(name: name)
+        property = Property.create(name: name, presentation: name)
       end
+      self.property = property
     end
   end
 end

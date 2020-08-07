@@ -34,19 +34,22 @@ module Spree
     private
 
     def check_price
-      if currency.nil?
-        self.currency = Spree::Config[:currency]
-      end
+      return unless currency.nil?
+
+      self.currency = Spree::Config[:currency]
     end
 
     # strips all non-price-like characters from the price, taking into account locale settings
     def parse_price(price)
       return price unless price.is_a?(String)
 
-      separator, delimiter = I18n.t([:'number.currency.format.separator', :'number.currency.format.delimiter'])
+      separator, _delimiter = I18n.t([:'number.currency.format.separator',
+                                      :'number.currency.format.delimiter'])
       non_price_characters = /[^0-9\-#{separator}]/
-      price.gsub!(non_price_characters, '') # strip everything else first
-      price.gsub!(separator, '.') unless separator == '.' # then replace the locale-specific decimal separator with the standard separator if necessary
+      # Strip everything else first
+      price.gsub!(non_price_characters, '')
+      # Then replace the locale-specific decimal separator with the standard separator if necessary
+      price.gsub!(separator, '.') unless separator == '.'
 
       price.to_d
     end

@@ -26,7 +26,9 @@ module Spree
 
     has_and_belongs_to_many :option_values, join_table: :spree_option_values_variants
 
-    has_many :images, -> { order(:position) }, as: :viewable, dependent: :destroy, class_name: "Spree::Image"
+    has_many :images, -> { order(:position) }, as: :viewable,
+                                               dependent: :destroy,
+                                               class_name: "Spree::Image"
     accepts_nested_attributes_for :images
 
     has_one :default_price,
@@ -46,7 +48,9 @@ module Spree
     localize_number :price, :cost_price, :weight
 
     validate :check_price
-    validates :price, numericality: { greater_than_or_equal_to: 0 }, presence: true, if: proc { Spree::Config[:require_master_price] }
+    validates :price, numericality: { greater_than_or_equal_to: 0 },
+                      presence: true,
+                      if: proc { Spree::Config[:require_master_price] }
     validates :cost_price, numericality: { greater_than_or_equal_to: 0, allow_nil: true } if table_exists? && column_names.include?('cost_price')
 
     validates :unit_value, presence: true, if: ->(variant) {
@@ -89,7 +93,8 @@ module Spree
     }
 
     scope :for_distribution, lambda { |order_cycle, distributor|
-      where('spree_variants.id IN (?)', order_cycle.variants_distributed_by(distributor).select(&:id))
+      where('spree_variants.id IN (?)', order_cycle.variants_distributed_by(distributor).
+        select(&:id))
     }
 
     scope :visible_for, lambda { |enterprise|
@@ -203,7 +208,8 @@ module Spree
         option_values.delete(current_value)
       end
 
-      option_value = Spree::OptionValue.where(option_type_id: option_type.id, name: opt_value).first_or_initialize do |o|
+      option_value = Spree::OptionValue.where(option_type_id: option_type.id,
+                                              name: opt_value).first_or_initialize do |o|
         o.presentation = opt_value
         o.save!
       end
@@ -221,7 +227,8 @@ module Spree
     end
 
     def price_in(currency)
-      prices.select{ |price| price.currency == currency }.first || Spree::Price.new(variant_id: id, currency: currency)
+      prices.select{ |price| price.currency == currency }.first ||
+        Spree::Price.new(variant_id: id, currency: currency)
     end
 
     def amount_in(currency)
@@ -254,10 +261,13 @@ module Spree
     def parse_price(price)
       return price unless price.is_a?(String)
 
-      separator, delimiter = I18n.t([:'number.currency.format.separator', :'number.currency.format.delimiter'])
+      separator, _delimiter = I18n.t([:'number.currency.format.separator',
+                                      :'number.currency.format.delimiter'])
       non_price_characters = /[^0-9\-#{separator}]/
-      price.gsub!(non_price_characters, '') # strip everything else first
-      price.gsub!(separator, '.') unless separator == '.' # then replace the locale-specific decimal separator with the standard separator if necessary
+      # Strip everything else first
+      price.gsub!(non_price_characters, '')
+      # Then replace the locale-specific decimal separator with the standard separator if necessary
+      price.gsub!(separator, '.') unless separator == '.'
 
       price.to_d
     end
@@ -270,9 +280,10 @@ module Spree
 
         self.price = product.master.price
       end
-      if currency.nil?
-        self.currency = Spree::Config[:currency]
-      end
+
+      return unless currency.nil?
+
+      self.currency = Spree::Config[:currency]
     end
 
     def save_default_price
@@ -294,7 +305,9 @@ module Spree
     end
 
     def update_weight_from_unit_value
-      self.weight = weight_from_unit_value if product.variant_unit == 'weight' && unit_value.present?
+      return unless product.variant_unit == 'weight' && unit_value.present?
+
+      self.weight = weight_from_unit_value
     end
 
     def destruction
