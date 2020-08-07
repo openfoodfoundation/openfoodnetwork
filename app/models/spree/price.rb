@@ -1,5 +1,7 @@
 module Spree
   class Price < ActiveRecord::Base
+    acts_as_paranoid without_default_scope: true
+
     belongs_to :variant, class_name: 'Spree::Variant'
 
     validate :check_price
@@ -22,10 +24,14 @@ module Spree
       self[:amount] = parse_price(price)
     end
 
-    private
-    def check_price
-      raise "Price must belong to a variant" if variant.nil?
+    # Allow prices to access associated soft-deleted variants.
+    def variant
+      Spree::Variant.unscoped { super }
+    end
 
+    private
+
+    def check_price
       if currency.nil?
         self.currency = Spree::Config[:currency]
       end
