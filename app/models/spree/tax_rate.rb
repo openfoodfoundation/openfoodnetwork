@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
 module Spree
   class DefaultTaxZoneValidator < ActiveModel::Validator
@@ -26,7 +26,7 @@ module Spree
     scope :by_zone, ->(zone) { where(zone_id: zone) }
 
     # Gets the array of TaxRates appropriate for the specified order
-    def match(order)
+    def self.match(order)
       return [] if order.distributor && !order.distributor.charges_sales_tax
       return [] unless order.tax_zone
 
@@ -39,7 +39,7 @@ module Spree
       order.adjustments.tax.destroy_all
       order.line_item_adjustments.where(originator_type: 'Spree::TaxRate').destroy_all
 
-      match(order).each do |rate|
+      self.match(order).each do |rate|
         rate.adjust(order)
       end
     end

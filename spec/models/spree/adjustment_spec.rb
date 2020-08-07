@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module Spree
   describe Adjustment do
-    let(:order) { mock_model(Spree::Order, update!: nil) }
+    let(:order) { build(:order) }
     let(:adjustment) { Spree::Adjustment.create(label: "Adjustment", amount: 5) }
 
     describe "scopes" do
@@ -64,18 +64,18 @@ module Spree
         it "should be eligible if mandatory?" do
           adjustment.mandatory = true
           adjustment.set_eligibility
-          adjustment.should be_eligible
+          expect(adjustment).to be_eligible
         end
         it "should be eligible if `promotion?` even if not `mandatory?`" do
           adjustment.should_receive(:promotion?).and_return(true)
           adjustment.mandatory = false
           adjustment.set_eligibility
-          adjustment.should be_eligible
+          expect(adjustment).to be_eligible
         end
         it "should not be eligible unless mandatory?" do
           adjustment.mandatory = false
           adjustment.set_eligibility
-          adjustment.should_not be_eligible
+          expect(adjustment).to_not be_eligible
         end
       end
 
@@ -84,19 +84,19 @@ module Spree
         it "should be eligible if mandatory?" do
           adjustment.mandatory = true
           adjustment.set_eligibility
-          adjustment.should be_eligible
+          expect(adjustment).to be_eligible
         end
         it "should be eligible if not mandatory and eligible for the originator" do
           adjustment.mandatory = false
           adjustment.stub(eligible_for_originator?: true)
           adjustment.set_eligibility
-          adjustment.should be_eligible
+          expect(adjustment).to be_eligible
         end
         it "should not be eligible if not mandatory not eligible for the originator" do
           adjustment.mandatory = false
           adjustment.stub(eligible_for_originator?: false)
           adjustment.set_eligibility
-          adjustment.should_not be_eligible
+          expect(adjustment).to_not be_eligible
         end
       end
     end
@@ -119,50 +119,50 @@ module Spree
       context "#immutable?" do
         it "is true when adjustment state isn't open" do
           adjustment.state = "closed"
-          adjustment.should be_immutable
+          expect(adjustment).to be_immutable
           adjustment.state = "finalized"
-          adjustment.should be_immutable
+          expect(adjustment).to be_immutable
         end
 
         it "is false when adjustment state is open" do
           adjustment.state = "open"
-          adjustment.should_not be_immutable
+          expect(adjustment).to_not be_immutable
         end
       end
 
       context "#finalized?" do
         it "is true when adjustment state is finalized" do
           adjustment.state = "finalized"
-          adjustment.should be_finalized
+          expect(adjustment).to be_finalized
         end
 
         it "is false when adjustment state isn't finalized" do
           adjustment.state = "closed"
-          adjustment.should_not be_finalized
+          expect(adjustment).to_not be_finalized
           adjustment.state = "open"
-          adjustment.should_not be_finalized
+          expect(adjustment).to_not be_finalized
         end
       end
     end
 
     context "#eligible_for_originator?" do
       context "with no originator" do
-        specify { adjustment.should be_eligible_for_originator }
+        specify { expect(adjustment).to be_eligible_for_originator }
       end
       context "with originator that doesn't have 'eligible?'" do
-        before { adjustment.originator = mock_model(Spree::TaxRate) }
-        specify { adjustment.should be_eligible_for_originator }
+        before { adjustment.originator = build(:tax_rate) }
+        specify { expect(adjustment).to be_eligible_for_originator }
       end
       context "with originator that has 'eligible?'" do
         let(:originator) { Spree::TaxRate.new }
         before { adjustment.originator = originator }
         context "and originator is eligible for order" do
           before { originator.stub(eligible?: true) }
-          specify { adjustment.should be_eligible_for_originator }
+          specify { expect(adjustment).to be_eligible_for_originator }
         end
         context "and originator is not eligible for order" do
           before { originator.stub(eligible?: false) }
-          specify { adjustment.should_not be_eligible_for_originator }
+          specify { expect(adjustment).to_not be_eligible_for_originator }
         end
       end
     end
@@ -174,7 +174,7 @@ module Spree
         before { Spree::Config[:display_currency] = true }
 
         it "shows the currency" do
-          adjustment.display_amount.to_s.should == "$10.55 USD"
+          expect(adjustment.display_amount.to_s).to eq "$10.55 #{Spree::Config[:currency]}"
         end
       end
 
@@ -182,7 +182,7 @@ module Spree
         before { Spree::Config[:display_currency] = false }
 
         it "does not include the currency" do
-          adjustment.display_amount.to_s.should == "$10.55"
+          expect(adjustment.display_amount.to_s).to eq "$10.55"
         end
       end
 
@@ -194,13 +194,13 @@ module Spree
           end
 
           it "displays in JPY" do
-            adjustment.display_amount.to_s.should == "¥11"
+            expect(adjustment.display_amount.to_s).to eq "¥11"
           end
         end
 
         context "when adjustable is nil" do
           it "displays in the default currency" do
-            adjustment.display_amount.to_s.should == "$10.55"
+            expect(adjustment.display_amount.to_s).to eq "$10.55"
           end
         end
       end
@@ -208,7 +208,7 @@ module Spree
 
     context '#currency' do
       it 'returns the globally configured currency' do
-        adjustment.currency.should == 'USD'
+        expect(adjustment.currency).to eq Spree::Config[:currency]
       end
     end
 
@@ -415,8 +415,10 @@ module Spree
         end
 
         context "when enterprise fees inherit their tax_category from the product they are applied to" do
-          let(:product_tax_rate)             { create(:tax_rate, included_in_price: true, calculator: ::Calculator::DefaultTax.new, zone: zone, amount: 0.2) }
-          let(:product_tax_category)         { create(:tax_category, tax_rates: [product_tax_rate]) }
+          let(:product_tax_rate) {
+            create(:tax_rate, included_in_price: true, calculator: ::Calculator::DefaultTax.new, zone: zone, amount: 0.2)
+          }
+          let(:product_tax_category) { create(:tax_category, tax_rates: [product_tax_rate]) }
 
           before do
             variant.product.update_attribute(:tax_category_id, product_tax_category.id)
