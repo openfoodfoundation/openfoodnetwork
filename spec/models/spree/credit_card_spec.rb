@@ -3,7 +3,14 @@ require 'spec_helper'
 module Spree
   describe CreditCard do
     describe "original specs from Spree" do
-      let(:valid_credit_card_attributes) { { number: '4111111111111111', verification_value: '123', month: 12, year: Time.zone.now.year + 1 } }
+      let(:valid_credit_card_attributes) {
+        {
+          number: '4111111111111111',
+          verification_value: '123',
+          month: 12,
+          year: Time.zone.now.year + 1
+        }
+      }
 
       def self.payment_states
         Spree::Payment.state_machine.states.keys
@@ -19,7 +26,9 @@ module Spree
         @order = create(:order)
         @payment = Spree::Payment.create(amount: 100, order: @order)
 
-        @success_response = double('gateway_response', success?: true, authorization: '123', avs_result: { 'code' => 'avs-code' })
+        @success_response = double('gateway_response', success?: true,
+                                                       authorization: '123',
+                                                       avs_result: { 'code' => 'avs-code' })
         @fail_response = double('gateway_response', success?: false)
 
         @payment_gateway = mock_model(Spree::PaymentMethod,
@@ -41,7 +50,9 @@ module Spree
         end
 
         it "should be true if payment is checkout" do
-          payment = mock_model(Spree::Payment, pending?: false, checkout?: true, created_at: Time.zone.now)
+          payment = mock_model(Spree::Payment, pending?: false,
+                                               checkout?: true,
+                                               created_at: Time.zone.now)
           credit_card.can_capture?(payment).should be_true
         end
       end
@@ -60,12 +71,16 @@ module Spree
         end
 
         it "should be false when order payment_state is not 'credit_owed'" do
-          payment = mock_model(Spree::Payment, completed?: true, order: mock_model(Spree::Order, payment_state: 'paid'))
+          payment = mock_model(Spree::Payment,
+                               completed?: true,
+                               order: mock_model(Spree::Order, payment_state: 'paid'))
           credit_card.can_credit?(payment).should be_false
         end
 
         it "should be false when credit_allowed is zero" do
-          payment = mock_model(Spree::Payment, completed?: true, credit_allowed: 0, order: mock_model(Spree::Order, payment_state: 'credit_owed'))
+          payment = mock_model(Spree::Payment,
+                               completed?: true, credit_allowed: 0,
+                               order: mock_model(Spree::Order, payment_state: 'credit_owed'))
           credit_card.can_credit?(payment).should be_false
         end
       end
@@ -74,20 +89,20 @@ module Spree
         it "should validate presence of number" do
           credit_card.attributes = valid_credit_card_attributes.except(:number)
           credit_card.should_not be_valid
-          credit_card.errors[:number].should == ["can't be blank"]
+          expect(credit_card.errors[:number]).to eq ["can't be blank"]
         end
 
         it "should validate presence of security code" do
           credit_card.attributes = valid_credit_card_attributes.except(:verification_value)
           credit_card.should_not be_valid
-          credit_card.errors[:verification_value].should == ["can't be blank"]
+          expect(credit_card.errors[:verification_value]).to eq ["can't be blank"]
         end
 
         it "should validate expiration is not in the past" do
           credit_card.month = 1.month.ago.month
           credit_card.year = 1.month.ago.year
           credit_card.should_not be_valid
-          credit_card.errors[:base].should == ["Card has expired"]
+          expect(credit_card.errors[:base]).to eq ["Card has expired"]
         end
 
         it "does not run expiration in the past validation if month is not set" do
@@ -138,10 +153,10 @@ module Spree
       context "#number=" do
         it "should strip non-numeric characters from card input" do
           credit_card.number = "6011000990139424"
-          credit_card.number.should == "6011000990139424"
+          expect(credit_card.number).to eq "6011000990139424"
 
           credit_card.number = "  6011-0009-9013-9424  "
-          credit_card.number.should == "6011000990139424"
+          expect(credit_card.number).to eq "6011000990139424"
         end
 
         it "should not raise an exception on non-string input" do
@@ -153,19 +168,19 @@ module Spree
       context "#cc_type=" do
         it "converts between the different types" do
           credit_card.cc_type = 'mastercard'
-          credit_card.cc_type.should == 'master'
+          expect(credit_card.cc_type).to eq 'master'
 
           credit_card.cc_type = 'maestro'
-          credit_card.cc_type.should == 'master'
+          expect(credit_card.cc_type).to eq 'master'
 
           credit_card.cc_type = 'amex'
-          credit_card.cc_type.should == 'american_express'
+          expect(credit_card.cc_type).to eq 'american_express'
 
           credit_card.cc_type = 'dinersclub'
-          credit_card.cc_type.should == 'diners_club'
+          expect(credit_card.cc_type).to eq 'diners_club'
 
           credit_card.cc_type = 'some_outlandish_cc_type'
-          credit_card.cc_type.should == 'some_outlandish_cc_type'
+          expect(credit_card.cc_type).to eq 'some_outlandish_cc_type'
         end
       end
 
@@ -187,12 +202,12 @@ module Spree
 
         it "converts to an ActiveMerchant::Billing::CreditCard object" do
           am_card = credit_card.to_active_merchant
-          am_card.number.should == "4111111111111111"
-          am_card.year.should == Time.zone.now.year
-          am_card.month.should == Time.zone.now.month
-          am_card.first_name.should == "Bob"
+          expect(am_card.number).to eq "4111111111111111"
+          expect(am_card.year).to eq Time.zone.now.year
+          expect(am_card.month).to eq Time.zone.now.month
+          expect(am_card.first_name).to eq "Bob"
           am_card.last_name = "Boblaw"
-          am_card.verification_value.should == 123
+          expect(am_card.verification_value).to eq 123
         end
       end
     end

@@ -11,9 +11,9 @@ module Spree
 
     before_save :set_last_digits
 
-    attr_accessor :number, :verification_value
-    # For holding customer preference in memory
-    attr_writer :save_requested_by_customer
+    attr_accessor :verification_value
+    attr_reader :number
+    attr_writer :save_requested_by_customer # For holding customer preference in memory
 
     validates :month, :year, numericality: { only_integer: true }
     validates :number, presence: true, unless: :has_payment_profile?, on: :create
@@ -53,7 +53,7 @@ module Spree
                     'diners_club'
                   else
                     type
-      end
+                  end
       self[:cc_type] = real_type
     end
 
@@ -94,13 +94,13 @@ module Spree
       !payment.void?
     end
 
-    # Indicates whether its possible to credit the payment.  Note that most gateways require that the
-    # payment be settled first which generally happens within 12-24 hours of the transaction.
+    # Indicates whether its possible to credit the payment. Note that most gateways require that the
+    #   payment be settled first which generally happens within 12-24 hours of the transaction.
     def can_credit?(payment)
       return false unless payment.completed?
       return false unless payment.order.payment_state == 'credit_owed'
 
-      payment.credit_allowed > 0
+      payment.credit_allowed.positive?
     end
 
     # Allows us to use a gateway_payment_profile_id to store Stripe Tokens
@@ -126,12 +126,12 @@ module Spree
     private
 
     def expiry_not_in_the_past
-      if year.present? && month.present?
-        time = "#{year}-#{month}-1".to_time
-        if time < Time.zone.now.to_time.beginning_of_month
-          errors.add(:base, :card_expired)
-        end
-      end
+      return unless year.present? && month.present?
+
+      time = "#{year}-#{month}-1".to_time
+      return unless time < Time.zone.now.to_time.beginning_of_month
+
+      errors.add(:base, :card_expired)
     end
 
     def reusable?

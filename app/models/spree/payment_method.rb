@@ -28,7 +28,8 @@ module Spree
         where(nil)
       else
         joins(:distributors).
-          where('distributors_payment_methods.distributor_id IN (?)', user.enterprises.select(&:id)).
+          where('distributors_payment_methods.distributor_id IN (?)',
+                user.enterprises.select(&:id)).
           select('DISTINCT spree_payment_methods.*')
       end
     }
@@ -78,7 +79,7 @@ module Spree
     end
 
     def self.active?
-      where(type: to_s, environment: Rails.env, active: true).count > 0
+      where(type: to_s, environment: Rails.env, active: true).count.positive?
     end
 
     def method_type
