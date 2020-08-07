@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module Spree
   class ShippingMethod < ActiveRecord::Base
     include Spree::Core::CalculatedAdjustments
-    DISPLAY = [:both, :front_end, :back_end]
+    DISPLAY = [:both, :front_end, :back_end].freeze
 
     acts_as_taggable
 
@@ -14,9 +16,9 @@ module Spree
     has_many :distributor_shipping_methods
     has_many :distributors, through: :distributor_shipping_methods, class_name: 'Enterprise', foreign_key: 'distributor_id'
 
-    has_and_belongs_to_many :zones, :join_table => 'spree_shipping_methods_zones',
-                                    :class_name => 'Spree::Zone',
-                                    :foreign_key => 'shipping_method_id'
+    has_and_belongs_to_many :zones, join_table: 'spree_shipping_methods_zones',
+                                    class_name: 'Spree::Zone',
+                                    foreign_key: 'shipping_method_id'
 
     validates :name, presence: true
     validate :distributor_validation
@@ -67,7 +69,7 @@ module Spree
 
     # Some shipping methods are only meant to be set via backend
     def frontend?
-      self.display_on != "back_end"
+      display_on != "back_end"
     end
 
     def has_distributor?(distributor)
@@ -97,19 +99,20 @@ module Spree
     end
 
     private
-      def at_least_one_shipping_category
-        if self.shipping_categories.empty?
-          self.errors[:base] << "You need to select at least one shipping category"
-        end
-      end
 
-      def self.on_backend_query
-        "#{table_name}.display_on != 'front_end' OR #{table_name}.display_on IS NULL"
+    def at_least_one_shipping_category
+      if shipping_categories.empty?
+        errors[:base] << "You need to select at least one shipping category"
       end
+    end
 
-      def self.on_frontend_query
-        "#{table_name}.display_on != 'back_end' OR #{table_name}.display_on IS NULL"
-      end
+    def self.on_backend_query
+      "#{table_name}.display_on != 'front_end' OR #{table_name}.display_on IS NULL"
+    end
+
+    def self.on_frontend_query
+      "#{table_name}.display_on != 'back_end' OR #{table_name}.display_on IS NULL"
+    end
 
     def touch_distributors
       distributors.each do |distributor|
