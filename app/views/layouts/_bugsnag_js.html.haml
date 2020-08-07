@@ -1,10 +1,8 @@
 - bugsnag_js_key = ENV['BUGSNAG_JS_KEY'] || ENV['BUGSNAG_API_KEY']
 - if bugsnag_js_key.present?
-  %script{src: "//d2wy8f7a9ursnm.cloudfront.net/v6/bugsnag.min.js"}
+  %script{src: "//d2wy8f7a9ursnm.cloudfront.net/v7/bugsnag.min.js"}
   :javascript
-    window.bugsnagClient = bugsnag({
+    Bugsnag.start({
       apiKey: "#{bugsnag_js_key}",
-      beforeSend: function (report) {
-        report.app.releaseStage = "#{Rails.env}"
-      }
-    });
+      releaseStage: "#{Rails.env}"
+    })
