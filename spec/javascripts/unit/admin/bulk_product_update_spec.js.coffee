@@ -246,7 +246,7 @@ describe "filtering products for submission to database", ->
     ]
 
 describe "AdminProductEditCtrl", ->
-  $ctrl = $scope = $timeout = $httpBackend = BulkProducts = DirtyProducts = DisplayProperties = windowStub = null
+  $ctrl = $scope = $timeout = $httpBackend = BulkProducts = DirtyProducts = DisplayProperties = ProductFiltersService = windowStub = null
 
   beforeEach ->
     module "ofn.admin"
@@ -258,7 +258,7 @@ describe "AdminProductEditCtrl", ->
       $provide.value 'columns', []
       null
 
-  beforeEach inject((_$controller_, _$timeout_, $rootScope, _$httpBackend_, _BulkProducts_, _DirtyProducts_, _DisplayProperties_) ->
+  beforeEach inject((_$controller_, _$timeout_, $rootScope, _$httpBackend_, _BulkProducts_, _DirtyProducts_, _DisplayProperties_, _ProductFiltersService_) ->
     $scope = $rootScope.$new()
     $ctrl = _$controller_
     $timeout = _$timeout_
@@ -266,8 +266,9 @@ describe "AdminProductEditCtrl", ->
     BulkProducts = _BulkProducts_
     DirtyProducts = _DirtyProducts_
     DisplayProperties = _DisplayProperties_
+    ProductFiltersService = _ProductFiltersService_
 
-    # Stub the window object so we don't get redirected when href is updated 
+    # Stub the window object so we don't get redirected when href is updated
     windowStub = {navigator: {userAgent: 'foo'}, location: {href: ''}}
 
     $ctrl "AdminProductEditCtrl", {$scope: $scope, $timeout: $timeout, $window: windowStub}
@@ -282,7 +283,7 @@ describe "AdminProductEditCtrl", ->
       expect($scope.fetchProducts.calls.count()).toBe 1
 
     it "gets a list of products applying filters from the url", inject ($location) ->
-      query = 'lala' 
+      query = 'lala'
       producerFilter = 2
       categoryFilter = 5
       sorting = 'name desc'
@@ -291,11 +292,11 @@ describe "AdminProductEditCtrl", ->
 
       $scope.initialise()
 
-      expect($scope.query).toBe query
-      expect($scope.producerFilter).toBe producerFilter
-      expect($scope.categoryFilter).toBe categoryFilter
-      expect($scope.sorting).toBe sorting
-      expect($scope.importDateFilter).toBe importDateFilter
+      expect($scope.q.query).toBe query
+      expect($scope.q.producerFilter).toBe producerFilter
+      expect($scope.q.categoryFilter).toBe categoryFilter
+      expect($scope.q.sorting).toBe sorting
+      expect($scope.q.importDateFilter).toBe importDateFilter
 
   describe "fetching products", ->
     $q = null
@@ -316,18 +317,18 @@ describe "AdminProductEditCtrl", ->
       $scope.$digest()
       expect($scope.resetProducts).toHaveBeenCalled()
 
-    it "updates url wihth filter after data has been received", inject ($location, $window) ->
+    it "updates url with filter after data has been received", inject ($location, $window) ->
       query = 'lala'
       producerFilter = 2
       categoryFilter = 5
       sorting = 'name desc'
       importDateFilter = '2020-06-08'
 
-      $scope.query = query
-      $scope.producerFilter = producerFilter
-      $scope.categoryFilter = categoryFilter
-      $scope.sorting = sorting
-      $scope.importDateFilter = importDateFilter
+      $scope.q.query = query
+      $scope.q.producerFilter = producerFilter
+      $scope.q.categoryFilter = categoryFilter
+      $scope.q.sorting = sorting
+      $scope.q.importDateFilter = importDateFilter
 
       $scope.fetchProducts()
       $scope.$digest()
@@ -995,14 +996,14 @@ describe "AdminProductEditCtrl", ->
       it 'should load edit product page including the selected filters', inject ($httpParamSerializer) ->
         query = 'lala'
         category = 3
-        $scope.query = query
-        $scope.categoryFilter = category
+        $scope.q.query = query
+        $scope.q.categoryFilter = category
 
         # use $httpParamSerializer as it will sort parameters alphabetically
         expectedFilter = $httpParamSerializer({ query: query, categoryFilter: category })
 
         $scope.editWarn(testProduct, null)
-        
+
         expect(windowStub.location.href).toBe(
           "/admin/products/#{testProduct.permalink_live}/edit?#{expectedFilter}"
         )
@@ -1010,13 +1011,13 @@ describe "AdminProductEditCtrl", ->
   describe "filtering products", ->
     describe "clearing filters", ->
       it "resets filter variables", ->
-        $scope.query = "lala"
-        $scope.producerFilter = "5"
-        $scope.categoryFilter = "6"
+        $scope.q.query = "lala"
+        $scope.q.producerFilter = "5"
+        $scope.q.categoryFilter = "6"
         $scope.resetSelectFilters()
-        expect($scope.query).toBe ""
-        expect($scope.producerFilter).toBeUndefined
-        expect($scope.categoryFilter).toBeUndefined
+        expect($scope.q.query).toBe ""
+        expect($scope.q.producerFilter).toBeUndefined
+        expect($scope.q.categoryFilter).toBeUndefined
 
 
 describe "converting arrays of objects with ids to an object with ids as keys", ->

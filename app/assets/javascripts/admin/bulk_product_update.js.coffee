@@ -1,4 +1,4 @@
-angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $filter, $http, $window, $location, $httpParamSerializer, BulkProducts, DisplayProperties, DirtyProducts, VariantUnitManager, StatusMessage, producers, Taxons, Columns, tax_categories, RequestMonitor, SortOptions, ErrorsParser) ->
+angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $filter, $http, $window, $location, BulkProducts, DisplayProperties, DirtyProducts, VariantUnitManager, StatusMessage, producers, Taxons, Columns, tax_categories, RequestMonitor, SortOptions, ErrorsParser, ProductFiltersService) ->
   $scope.StatusMessage = StatusMessage
 
   $scope.columns = Columns.columns
@@ -14,11 +14,13 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
   ]
 
   productFilters = ['producerFilter', 'categoryFilter', 'query', 'sorting', 'importDateFilter']
-  $scope.producerFilter = ""
-  $scope.categoryFilter = ""
-  $scope.importDateFilter = ""
-  $scope.query = ""
-  $scope.sorting = ""
+  $scope.q = {
+    producerFilter: ""
+    categoryFilter: ""
+    importDateFilter: ""
+    query: ""
+    sorting: ""
+  }
 
   $scope.producers = producers
   $scope.taxons = Taxons.all
@@ -30,13 +32,8 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
 
   $scope.sortOptions = SortOptions
 
-  loadFilterFromUrl = ->
-    filters = $location.search()
-    for filter in productFilters
-      $scope[filter] = if filters[filter] then filters[filter] else ""
-
   $scope.initialise = ->
-    loadFilterFromUrl()
+    $scope.q = ProductFiltersService.loadFromUrl($location.search())
     $scope.fetchProducts()
 
   $scope.$watchCollection '[query, producerFilter, categoryFilter, importDateFilter, per_page]', ->
@@ -50,33 +47,33 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     filters = {}
     for filter in productFilters
       filters[filter] = $scope[filter] if $scope[filter]
-    
+
     filters
 
   $scope.fetchProducts = ->
     removeClearedValues()
     params = {
-      'q[name_cont]': $scope.query,
-      'q[supplier_id_eq]': $scope.producerFilter,
-      'q[primary_taxon_id_eq]': $scope.categoryFilter,
-      'q[s]': $scope.sorting,
-      import_date: $scope.importDateFilter,
+      'q[name_cont]': $scope.q.query,
+      'q[supplier_id_eq]': $scope.q.producerFilter,
+      'q[primary_taxon_id_eq]': $scope.q.categoryFilter,
+      'q[s]': $scope.q.sorting,
+      import_date: $scope.q.importDateFilter,
       page: $scope.page,
       per_page: $scope.per_page
     }
     RequestMonitor.load(BulkProducts.fetch(params).$promise).then ->
       # update url with the filters used
-      $location.search(generateFilter())
+      $location.search(ProductFiltersService.generate($scope.q))
       $scope.resetProducts()
 
   removeClearedValues = ->
-    delete $scope.producerFilter if $scope.producerFilter == "0"
-    delete $scope.categoryFilter if $scope.categoryFilter == "0"
-    delete $scope.importDateFilter if $scope.importDateFilter == "0"
+    delete $scope.q.producerFilter if $scope.q.producerFilter == "0"
+    delete $scope.q.categoryFilter if $scope.q.categoryFilter == "0"
+    delete $scope.q.importDateFilter if $scope.q.importDateFilter == "0"
 
   $timeout ->
     if $scope.showLatestImport
-      $scope.importDateFilter = $scope.importDates[1].id
+      $scope.q.importDateFilter = $scope.importDates[1].id
 
   $scope.resetProducts = ->
     DirtyProducts.clear()
@@ -106,10 +103,10 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     $scope.visibleTab = tab
 
   $scope.resetSelectFilters = ->
-    $scope.query = ""
-    $scope.producerFilter = "0"
-    $scope.categoryFilter = "0"
-    $scope.importDateFilter = "0"
+    $scope.q.query = ""
+    $scope.q.producerFilter = "0"
+    $scope.q.categoryFilter = "0"
+    $scope.q.importDateFilter = "0"
     $scope.fetchProducts()
 
   $scope.$watch 'sortOptions', (sort) ->
@@ -127,9 +124,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
 
   $scope.editWarn = (product, variant) ->
     if confirm_unsaved_changes()
-      filterUrl = $httpParamSerializer(generateFilter())
-      filterUrl = "?#{filterUrl}" if filterUrl isnt ""
-      $window.location.href = "#{editProductUrl(product, variant)}#{filterUrl}"
+      $window.location.href = ProductFiltersService.buildUrl(editProductUrl(product, variant), $scope.q)
 
   $scope.toggleShowAllVariants = ->
     showVariants = !DisplayProperties.showVariants 0
@@ -226,10 +221,10 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
       data:
         products: productsToSubmit
         filters:
-          'q[name_cont]': $scope.query
-          'q[supplier_id_eq]': $scope.producerFilter
-          'q[primary_taxon_id_eq]': $scope.categoryFilter
-          import_date: $scope.importDateFilter
+          'q[name_cont]': $scope.q.query
+          'q[supplier_id_eq]': $scope.q.producerFilter
+          'q[primary_taxon_id_eq]': $scope.q.categoryFilter
+          import_date: $scope.q.importDateFilter
         page: $scope.page
         per_page: $scope.per_page
     ).success((data) ->
