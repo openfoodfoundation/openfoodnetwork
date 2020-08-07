@@ -7,7 +7,7 @@ module Spree
 
       context '#duplicate' do
         before do
-          product.stub taxons: [create(:taxon)]
+          allow(product).to receive_messages taxons: [create(:taxon)]
         end
 
         it 'duplicates product' do
@@ -238,7 +238,7 @@ module Spree
     describe '#total_on_hand' do
       it 'returns sum of stock items count_on_hand' do
         product = build(:product)
-        product.stub stock_items: [double(Spree::StockItem, count_on_hand: 5)]
+        allow(product).to receive_messages stock_items: [double(Spree::StockItem, count_on_hand: 5)]
         expect(product.total_on_hand).to eql(5)
       end
     end
