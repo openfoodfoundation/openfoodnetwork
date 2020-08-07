@@ -8,12 +8,12 @@ module Spree
     context "validations" do
       it "should validate price is greater than 0" do
         variant.price = -1
-        variant.should be_invalid
+        expect(variant).to be_invalid
       end
 
       it "should validate price is 0" do
         variant.price = 0
-        variant.should be_valid
+        expect(variant).to be_valid
       end
     end
 
@@ -45,13 +45,13 @@ module Spree
         let(:multi_variant) { @multi_variant }
 
         it "should set option value" do
-          multi_variant.option_value('media_type').should be_nil
+          expect(multi_variant.option_value('media_type')).to be_nil
 
           multi_variant.set_option_value('media_type', 'DVD')
-          multi_variant.option_value('media_type').should == 'DVD'
+          expect(multi_variant.option_value('media_type')).to == 'DVD'
 
           multi_variant.set_option_value('media_type', 'CD')
-          multi_variant.option_value('media_type').should == 'CD'
+          expect(multi_variant.option_value('media_type')).to == 'CD'
         end
 
         it "should not duplicate associated option values when set multiple times" do
@@ -77,13 +77,13 @@ module Spree
           let(:multi_variant) { @multi_variant }
 
           it "should set option value" do
-            multi_variant.option_value('media_type').should be_nil
+            expect(multi_variant.option_value('media_type')).to be_nil
 
             multi_variant.set_option_value('media_type', 'DVD')
-            multi_variant.option_value('media_type').should == 'DVD'
+            expect(multi_variant.option_value('media_type')).to == 'DVD'
 
             multi_variant.set_option_value('media_type', 'CD')
-            multi_variant.option_value('media_type').should == 'CD'
+            expect(multi_variant.option_value('media_type')).to == 'CD'
           end
 
           it "should not duplicate associated option values when set multiple times" do
@@ -115,7 +115,7 @@ module Spree
         context "with decimal point" do
           it "captures the proper amount for a formatted price" do
             variant.price = '1,599.99'
-            variant.price.should == 1599.99
+            expect(variant.price).to == 1599.99
           end
         end
 
@@ -123,7 +123,7 @@ module Spree
           it "captures the proper amount for a formatted price" do
             I18n.locale = :de
             variant.price = '1.599,99'
-            variant.price.should == 1599.99
+            expect(variant.price).to == 1599.99
           end
         end
 
@@ -131,7 +131,7 @@ module Spree
           it "uses the price as is" do
             I18n.locale = :de
             variant.price = 1599.99
-            variant.price.should == 1599.99
+            expect(variant.price).to == 1599.99
           end
         end
       end
@@ -140,7 +140,7 @@ module Spree
         context "with decimal point" do
           it "captures the proper amount for a formatted price" do
             variant.cost_price = '1,599.99'
-            variant.cost_price.should == 1599.99
+            expect(variant.cost_price).to == 1599.99
           end
         end
 
@@ -148,7 +148,7 @@ module Spree
           it "captures the proper amount for a formatted price" do
             I18n.locale = :de
             variant.cost_price = '1.599,99'
-            variant.cost_price.should == 1599.99
+            expect(variant.cost_price).to == 1599.99
           end
         end
 
@@ -156,7 +156,7 @@ module Spree
           it "uses the price as is" do
             I18n.locale = :de
             variant.cost_price = 1599.99
-            variant.cost_price.should == 1599.99
+            expect(variant.cost_price).to == 1599.99
           end
         end
       end
@@ -164,14 +164,14 @@ module Spree
 
     context "#currency" do
       it "returns the globally configured currency" do
-        variant.currency.should == "USD"
+        expect(variant.currency).to == "USD"
       end
     end
 
     context "#display_amount" do
       it "returns a Spree::Money" do
         variant.price = 21.22
-        variant.display_amount.to_s.should == "$21.22"
+        expect(variant.display_amount.to_s).to == "$21.22"
       end
     end
 
@@ -180,7 +180,7 @@ module Spree
         before { variant.cost_currency = nil }
         it "populates cost currency with the default value on save" do
           variant.save!
-          variant.cost_currency.should == "USD"
+          expect(variant.cost_currency).to == "USD"
         end
       end
     end
@@ -195,7 +195,7 @@ module Spree
         let(:currency) { nil }
 
         it "returns 0" do
-          subject.to_s.should == "$0.00"
+          expect(subject.to_s).to == "$0.00"
         end
       end
 
@@ -203,7 +203,7 @@ module Spree
         let(:currency) { 'EUR' }
 
         it "returns the value in the EUR" do
-          subject.to_s.should == "€33.33"
+          expect(subject.to_s).to == "€33.33"
         end
       end
 
@@ -211,7 +211,7 @@ module Spree
         let(:currency) { 'USD' }
 
         it "returns the value in the USD" do
-          subject.to_s.should == "$19.99"
+          expect(subject.to_s).to == "$19.99"
         end
       end
     end
@@ -227,7 +227,7 @@ module Spree
         let(:currency) { nil }
 
         it "returns nil" do
-          subject.should be_nil
+          expect(subject).to be_nil
         end
       end
 
@@ -235,7 +235,7 @@ module Spree
         let(:currency) { 'EUR' }
 
         it "returns the value in the EUR" do
-          subject.should == 33.33
+          expect(subject).to == 33.33
         end
       end
 
@@ -243,7 +243,7 @@ module Spree
         let(:currency) { 'USD' }
 
         it "returns the value in the USD" do
-          subject.should == 19.99
+          expect(subject).to == 19.99
         end
       end
     end
@@ -267,7 +267,7 @@ module Spree
     describe "set_position" do
       it "sets variant position after creation" do
         variant = create(:variant)
-        variant.position.should_not be_nil
+        expect(variant.position).to_not be_nil
       end
     end
 
@@ -287,7 +287,7 @@ module Spree
           end
 
           it 'returns true if stock_items in stock' do
-            variant.in_stock?.should be_true
+            expect(variant.in_stock?).to be_truthy
           end
         end
 
@@ -298,7 +298,7 @@ module Spree
           end
 
           it 'return false if stock_items out of stock' do
-            variant.in_stock?.should be_false
+            expect(variant.in_stock?).to be_falsy
           end
         end
 
@@ -308,10 +308,10 @@ module Spree
           end
 
           it 'returns correctt value' do
-            variant.in_stock?.should be_true
-            variant.in_stock?(2).should be_true
-            variant.in_stock?(10).should be_true
-            variant.in_stock?(11).should be_false
+            expect(variant.in_stock?).to be_truthy
+            expect(variant.in_stock?(2)).to be_truthy
+            expect(variant.in_stock?(10)).to be_truthy
+            expect(variant.in_stock?(11)).to be_falsy
           end
         end
       end
@@ -327,7 +327,7 @@ module Spree
           end
 
           it 'returns true if stock_items in stock' do
-            variant.in_stock?.should be_true
+            expect(variant.in_stock?).to be_truthy
           end
         end
       end
@@ -336,7 +336,7 @@ module Spree
     describe '#total_on_hand' do
       it 'should be infinite if track_inventory_levels is false' do
         Spree::Config[:track_inventory_levels] = false
-        build(:variant).total_on_hand.should eql(Float::INFINITY)
+        expect(build(:variant).total_on_hand).to eql(Float::INFINITY)
       end
 
       it 'should match quantifier total_on_hand' do

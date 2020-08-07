@@ -12,10 +12,9 @@ module Spree
 
         it 'duplicates product' do
           clone = product.duplicate
-          clone.name.should == 'COPY OF ' + product.name
-          clone.master.sku.should == 'COPY OF ' + product.master.sku
-          clone.taxons.should == product.taxons
-          clone.images.size.should == product.images.size
+          expect(clone.name).to eq 'COPY OF ' + product.name
+          expect(clone.master.sku).to eq ''
+          expect(clone.images.size).to eq product.images.size
         end
 
         it 'calls #duplicate_extra' do
@@ -26,7 +25,7 @@ module Spree
           end
 
           clone = product.duplicate
-          clone.name.should == product.name.reverse
+          expect(clone.name).to eq product.name.reverse
         end
       end
 
@@ -34,8 +33,8 @@ module Spree
         context "#destroy" do
           it "should set deleted_at value" do
             product.destroy
-            product.deleted_at.should_not be_nil
-            product.master.deleted_at.should_not be_nil
+            expect(product.deleted_at).to_not be_nil
+            expect(product.master.deleted_at).to_not be_nil
           end
         end
       end
@@ -48,8 +47,8 @@ module Spree
         context "#destroy" do
           it "should set deleted_at value" do
             product.destroy
-            product.deleted_at.should_not be_nil
-            product.variants_including_master.all? { |v| !v.deleted_at.nil? }.should be_true
+            expect(product.deleted_at).to_not be_nil
+            expect(product.variants_including_master.all? { |v| !v.deleted_at.nil? }).to be_truthy
           end
         end
       end
@@ -58,7 +57,7 @@ module Spree
         # Regression test for Spree #1173
         it 'strips non-price characters' do
           product.price = "$10"
-          product.price.should == 10.0
+          expect(product.price).to eq 10.0
         end
       end
 
@@ -69,7 +68,7 @@ module Spree
           before { Spree::Config[:display_currency] = true }
 
           it "shows the currency" do
-            product.display_price.to_s.should == "$10.55 USD"
+            expect(product.display_price.to_s).to eq "$10.55 #{Spree::Config[:currency]}"
           end
         end
 
@@ -77,7 +76,7 @@ module Spree
           before { Spree::Config[:display_currency] = false }
 
           it "does not include the currency" do
-            product.display_price.to_s.should == "$10.55"
+            expect(product.display_price.to_s).to eq "$10.55"
           end
         end
 
@@ -89,7 +88,7 @@ module Spree
           end
 
           it "displays the currency in yen" do
-            product.display_price.to_s.should == "¥11"
+            expect(product.display_price.to_s).to eq "¥11"
           end
         end
       end
@@ -97,51 +96,29 @@ module Spree
       context "#available?" do
         it "should be available if date is in the past" do
           product.available_on = 1.day.ago
-          product.should be_available
+          expect(product).to be_available
         end
 
         it "should not be available if date is nil or in the future" do
           product.available_on = nil
-          product.should_not be_available
+          expect(product).to_not be_available
 
           product.available_on = 1.day.from_now
-          product.should_not be_available
-        end
-      end
-
-      context "variants_and_option_values" do
-        let!(:high) { create(:variant, product: product) }
-        let!(:low) { create(:variant, product: product) }
-
-        before { high.option_values.destroy_all }
-
-        it "returns only variants with option values" do
-          product.variants_and_option_values.should == [low]
+          expect(product).to_not be_available
         end
       end
 
       describe 'Variants sorting' do
         context 'without master variant' do
           it 'sorts variants by position' do
-            product.variants.to_sql.should match(/ORDER BY (\`|\")spree_variants(\`|\").position ASC/)
+            expect(product.variants.to_sql).to match(/ORDER BY (\`|\")spree_variants(\`|\").position ASC/)
           end
         end
 
         context 'with master variant' do
           it 'sorts variants by position' do
-            product.variants_including_master.to_sql.should match(/ORDER BY (\`|\")spree_variants(\`|\").position ASC/)
+            expect(product.variants_including_master.to_sql).to match(/ORDER BY (\`|\")spree_variants(\`|\").position ASC/)
           end
-        end
-      end
-
-      context "has stock movements" do
-        let(:product) { create(:product) }
-        let(:variant) { product.master }
-        let(:stock_item) { variant.stock_items.first }
-
-        it "doesnt raise ReadOnlyRecord error" do
-          Spree::StockMovement.create!(stock_item: stock_item, quantity: 1)
-          expect { product.destroy }.not_to raise_error
         end
       end
     end
@@ -154,14 +131,14 @@ module Spree
         before { product.valid? }
 
         it "increments name" do
-          product.permalink.should == 'foo-1'
+          expect(product.permalink).to eq 'foo-1'
         end
       end
 
       context "build permalink with quotes" do
-        it "saves quotes" do
+        it "does not save quotes" do
           product = create(:product, name: "Joe's", permalink: "joe's")
-          product.permalink.should == "joe's"
+          expect(product.permalink).to eq "joe-s"
         end
       end
 
@@ -173,14 +150,14 @@ module Spree
         it "cannot create another product with the same permalink" do
           pending '[Spree build] Failing spec'
           @product2 = create(:product, name: 'foo')
-          lambda do
+          expect do
             @product2.update(permalink: @product1.permalink)
-          end.should raise_error(ActiveRecord::RecordNotUnique)
+          end.to raise_error(ActiveRecord::RecordNotUnique)
         end
       end
 
       it "supports Chinese" do
-        create(:product, name: "你好").permalink.should == "ni-hao"
+        expect(create(:product, name: "你好").permalink).to eq "ni-hao"
       end
 
       context "manual permalink override" do
@@ -189,10 +166,10 @@ module Spree
         it "calling save_permalink with a parameter" do
           product.name = "foobar"
           product.save
-          product.permalink.should == "foo"
+          expect(product.permalink).to eq "foo"
 
           product.save_permalink(product.name)
-          product.permalink.should == "foobar"
+          expect(product.permalink).to eq "foobar"
         end
       end
 
@@ -200,11 +177,11 @@ module Spree
         let(:product) { create(:product, name: "foo") }
 
         it "should create product with same permalink from name like deleted product" do
-          product.permalink.should == "foo"
+          expect(product.permalink).to eq "foo"
           product.destroy
 
           new_product = create(:product, name: "foo")
-          new_product.permalink.should == "foo"
+          expect(new_product.permalink).to eq "foo"
         end
       end
     end
@@ -214,10 +191,10 @@ module Spree
 
       it "should properly assign properties" do
         product.set_property('the_prop', 'value1')
-        product.property('the_prop').should == 'value1'
+        expect(product.property('the_prop')).to eq 'value1'
 
         product.set_property('the_prop', 'value2')
-        product.property('the_prop').should == 'value2'
+        expect(product.property('the_prop')).to eq 'value2'
       end
 
       it "should not create duplicate properties when set_property is called" do
@@ -231,7 +208,7 @@ module Spree
           product.set_property('the_prop_new', 'value')
           product.save
           product.reload
-          product.property('the_prop_new').should == 'value'
+          expect(product.property('the_prop_new')).to eq 'value'
         }.to change { product.properties.length }.by(1)
       end
 
@@ -240,83 +217,8 @@ module Spree
         Spree::Property.where(name: 'foo').first_or_create!(presentation: "Foo's Presentation Name")
         product.set_property('foo', 'value1')
         product.set_property('bar', 'value2')
-        Spree::Property.where(name: 'foo').first.presentation.should == "Foo's Presentation Name"
-        Spree::Property.where(name: 'bar').first.presentation.should == "bar"
-      end
-    end
-
-    context '#create' do
-      let!(:prototype) { create(:prototype) }
-      let!(:product) { Spree::Product.new(name: "Foo", price: 1.99, shipping_category_id: create(:shipping_category).id) }
-
-      before { product.prototype_id = prototype.id }
-
-      context "when prototype is supplied" do
-        it "should create properties based on the prototype" do
-          product.save
-          product.properties.count.should == 1
-        end
-      end
-
-      context "when prototype with option types is supplied" do
-        def build_option_type_with_values(name, values)
-          ot = create(:option_type, name: name)
-          values.each do |val|
-            ot.option_values.create(name: val.downcase, presentation: val)
-          end
-          ot
-        end
-
-        let(:prototype) do
-          size = build_option_type_with_values("size", %w(Small Medium Large))
-          create(:prototype, name: "Size", option_types: [size])
-        end
-
-        let(:option_values_hash) do
-          hash = {}
-          prototype.option_types.each do |i|
-            hash[i.id.to_s] = i.option_value_ids
-          end
-          hash
-        end
-
-        it "should create option types based on the prototype" do
-          product.save
-          product.option_type_ids.length.should == 1
-          product.option_type_ids.should == prototype.option_type_ids
-        end
-
-        it "should create product option types based on the prototype" do
-          product.save
-          product.product_option_types.pluck(:option_type_id).should == prototype.option_type_ids
-        end
-
-        it "should create variants from an option values hash with one option type" do
-          product.option_values_hash = option_values_hash
-          product.save
-          product.variants.length.should == 3
-        end
-
-        it "should still create variants when option_values_hash is given but prototype id is nil" do
-          product.option_values_hash = option_values_hash
-          product.prototype_id = nil
-          product.save
-          product.option_type_ids.length.should == 1
-          product.option_type_ids.should == prototype.option_type_ids
-          product.variants.length.should == 3
-        end
-
-        it "should create variants from an option values hash with multiple option types" do
-          color = build_option_type_with_values("color", %w(Red Green Blue))
-          logo  = build_option_type_with_values("logo", %w(Ruby Rails Nginx))
-          option_values_hash[color.id.to_s] = color.option_value_ids
-          option_values_hash[logo.id.to_s] = logo.option_value_ids
-          product.option_values_hash = option_values_hash
-          product.save
-          product.reload
-          product.option_type_ids.length.should == 3
-          product.variants.length.should == 27
-        end
+        expect(Spree::Property.where(name: 'foo').first.presentation).to eq "Foo's Presentation Name"
+        expect(Spree::Property.where(name: 'bar').first.presentation).to eq "bar"
       end
     end
 
@@ -336,13 +238,13 @@ module Spree
     describe '#total_on_hand' do
       it 'should be infinite if track_inventory_levels is false' do
         Spree::Config[:track_inventory_levels] = false
-        build(:product).total_on_hand.should eql(Float::INFINITY)
+        expect(build(:product).total_on_hand).to eql(Float::INFINITY)
       end
 
       it 'should return sum of stock items count_on_hand' do
         product = build(:product)
         product.stub stock_items: [double(Spree::StockItem, count_on_hand: 5)]
-        product.total_on_hand.should eql(5)
+        expect(product.total_on_hand).to eql(5)
       end
     end
 
